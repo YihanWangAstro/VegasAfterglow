@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="800" height="850" viewBox="0 0 800 850" xmlns="http://www.w3.org/2000/svg">
+
+  <!-- Definitions: gradients & glow filter -->
+  <defs>
+    <!-- Radial background gradient -->
+    <radialGradient id="bg-grad" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#2a2a44"/>
+      <stop offset="100%" stop-color="#1a1a2e"/>
+    </radialGradient>
+
+    <!-- Jet stroke gradient -->
+    <linearGradient id="jet-grad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#ffcc00" />
+      <stop offset="100%" stop-color="#ff6600" />
+    </linearGradient>
+
+    <!-- Text glow filter -->
+    <filter id="text-glow">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="3" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    
+    <!-- Radiating animation -->
+    <radialGradient id="radiate-grad" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="rgba(255,255,255,0.3)"/>
+      <stop offset="100%" stop-color="rgba(255,255,255,0)"/>
+    </radialGradient>
+  </defs>
+
+  <!-- Background circle with radial gradient -->
+  <circle cx="400" cy="400" r="350" fill="url(#bg-grad)" />
+  
+  <!-- Radiating pulse effect -->
+  <g>
+    <circle cx="400" cy="400" r="10" fill="none" stroke="#ff6666" stroke-width="8" opacity="0.6">
+      <animate attributeName="r" values="10;300" dur="6s" repeatCount="indefinite" />
+      <animate attributeName="opacity" values="0.6;0" dur="6s" repeatCount="indefinite" />
+    </circle>
+    <circle cx="400" cy="400" r="10" fill="none" stroke="#39A275" stroke-width="8" opacity="0.6">
+      <animate attributeName="r" values="10;300" dur="6s" begin="2s" repeatCount="indefinite" />
+      <animate attributeName="opacity" values="0.6;0" dur="6s" begin="2s" repeatCount="indefinite" />
+    </circle>
+    <circle cx="400" cy="400" r="10" fill="none" stroke="#0066cc" stroke-width="8" opacity="0.6">
+      <animate attributeName="r" values="10;300" dur="6s" begin="4s" repeatCount="indefinite" />
+      <animate attributeName="opacity" values="0.6;0" dur="6s" begin="4s" repeatCount="indefinite" />
+    </circle>
+  </g>
+
+  <!-- Afterglow rings with animation (removed rotation) -->
+  <g opacity="0.9" fill="none">
+    <!-- Outermost ring (stationary) -->
+    <g transform="translate(400, 400)">
+      <path d="M0,-300 A300,300 0 0,1 300,0 A300,300 0 0,1 0,300 A300,300 0 0,1 -300,0 A300,300 0 0,1 0,-300 Z"
+            stroke="#ff6666" stroke-width="15" stroke-dasharray="40,25" opacity="0.5">
+        <animateTransform
+            attributeName="transform"
+            type="rotate"
+            from="0 0 0"
+            to="360 0 0"
+            dur="320s"
+            repeatCount="indefinite"/>
+      </path>
+    </g>
+
+    <!-- Middle rings (stationary) -->
+    <g transform="translate(400, 400)">
+      <path d="M0,-225 A225,225 0 0,1 225,0 A225,225 0 0,1 0,225 A225,225 0 0,1 -225,0 A225,225 0 0,1 0,-225 Z"
+            stroke="#39A275" stroke-width="15" stroke-dasharray="20,15">
+        <animateTransform
+            attributeName="transform"
+            type="rotate"
+            from="0 0 0"
+            to="360 0 0"
+            dur="240s"
+            repeatCount="indefinite"/>
+      </path>
+    </g>
+    
+    <g transform="translate(400, 400)">
+      <path d="M0,-150 A150,150 0 0,1 150,0 A150,150 0 0,1 0,150 A150,150 0 0,1 -150,0 A150,150 0 0,1 0,-150 Z"
+            stroke="#0066cc" stroke-width="15" stroke-dasharray="15,10">
+        <animateTransform
+            attributeName="transform"
+            type="rotate"
+            from="0 0 0"
+            to="-360 0 0"
+            dur="200s"
+            repeatCount="indefinite"/>
+      </path>
+    </g>
+  </g>
+
+  <!-- Directional jets with gradient stroke -->
+  <path d="M400,400 L550,250 C600,200 620,180 650,150"
+        stroke="url(#jet-grad)" stroke-width="32" fill="none" stroke-linecap="round"/>
+  <path d="M400,400 L250,550 C200,600 180,620 150,650"
+        stroke="url(#jet-grad)" stroke-width="32" fill="none" stroke-linecap="round"/>
+
+  <!-- Central burst - no animation (GRB central engine at rest) -->
+  <circle cx="400" cy="400" r="60" fill="#ff9e00" />
+  <circle cx="400" cy="400" r="35" fill="#ffcc00" />
+
+  <!-- Brand Text with glow, nudged up -->
+  <text x="400" y="830"
+        font-family="Arial, sans-serif"
+        font-weight="bold"
+        font-size="105"
+        text-anchor="middle"
+        fill="#39A275"
+        filter="url(#text-glow)">
+    VegasAfterglow
+  </text>
+</svg>

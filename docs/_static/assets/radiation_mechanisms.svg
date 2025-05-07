@@ -1,0 +1,273 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="450" height="350" viewBox="0 0 450 350" xmlns="http://www.w3.org/2000/svg">
+    <!-- Background - removing solid background for transparency -->
+    
+    <!-- Definitions -->
+    <defs>
+        <!-- Gradient for electrons -->
+        <radialGradient id="electronGlow" cx="0.5" cy="0.5" r="0.5" fx="0.5" fy="0.5">
+            <stop offset="0%" stop-color="#80C0FF" stop-opacity="1"/>
+            <stop offset="100%" stop-color="#3377FF" stop-opacity="0"/>
+        </radialGradient>
+        
+        <!-- Gradient for photons -->
+        <radialGradient id="photonGlow" cx="0.5" cy="0.5" r="0.5" fx="0.5" fy="0.5">
+            <stop offset="0%" stop-color="#FFFF99" stop-opacity="1"/>
+            <stop offset="100%" stop-color="#FFCC00" stop-opacity="0"/>
+        </radialGradient>
+        
+        <!-- Gradient for IC photons -->
+        <radialGradient id="icPhotonGlow" cx="0.5" cy="0.5" r="0.5" fx="0.5" fy="0.5">
+            <stop offset="0%" stop-color="#FF5599" stop-opacity="1"/>
+            <stop offset="100%" stop-color="#FF0066" stop-opacity="0"/>
+        </radialGradient>
+        
+        <!-- Arrow marker -->
+        <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="0" refY="3.5" orient="auto">
+            <polygon points="0 0, 10 3.5, 0 7" fill="#FFFFFF"/>
+        </marker>
+        
+        <!-- Magnetic field line pattern -->
+        <pattern id="magneticPattern" patternUnits="userSpaceOnUse" width="60" height="20" patternTransform="rotate(45)">
+            <path d="M0,10 Q15,20 30,10 Q45,0 60,10" stroke="#5577CC" stroke-width="1.5" fill="none"/>
+        </pattern>
+    </defs>
+    
+    <!-- Shock front -->
+    <g transform="translate(100, 180)">
+        <rect x="0" y="-150" width="15" height="300" fill="#FF5500" opacity="0.7">
+            <animate attributeName="opacity" values="0.5;0.9;0.5" dur="3s" repeatCount="indefinite"/>
+        </rect>
+        <text x="7" y="-160" font-family="Arial" font-size="12" fill="#FFFFFF" text-anchor="middle">Shock Front</text>
+        
+        <!-- Direction labels for clarity -->
+        <text x="-20" y="0" font-family="Arial" font-size="10" fill="#AAAAAA" text-anchor="end">Upstream</text>
+        <text x="35" y="0" font-family="Arial" font-size="10" fill="#AAAAAA" text-anchor="start">Downstream</text>
+        
+        <!-- Shock motion direction arrow -->
+        <path d="M 0,30 L -20,30" stroke="#AAAAAA" stroke-width="1" marker-end="url(#arrowhead)"/>
+        <text x="-10" y="25" font-family="Arial" font-size="8" fill="#AAAAAA" text-anchor="middle">Shock Motion</text>
+    </g>
+    
+    <!-- Magnetic field region -->
+    <rect x="115" y="70" width="300" height="260" fill="url(#magneticPattern)" opacity="0.15"/>
+    
+    <!-- Synchrotron Process - Upper Half -->
+    <g transform="translate(0, -30)">
+        <!-- Region label -->
+        <text x="250" y="90" font-family="Arial" font-size="14" fill="#AAAAFF" text-anchor="middle">Synchrotron Radiation</text>
+        
+        <!-- Magnetic field lines -->
+        <g transform="translate(150, 120)">
+            <path d="M0,0 Q20,10 40,0 Q60,-10 80,0 Q100,10 120,0" stroke="#5577CC" stroke-width="2" fill="none"/>
+            <path d="M0,30 Q20,40 40,30 Q60,20 80,30 Q100,40 120,30" stroke="#5577CC" stroke-width="2" fill="none"/>
+            <text x="60" y="-15" font-family="Arial" font-size="11" fill="#5577CC" text-anchor="middle">Magnetic Field</text>
+        </g>
+        
+        <!-- Electron - now animating along a helical path without the visible path line -->
+        <circle cx="200" cy="160" r="8" fill="#3377FF">
+            <animateMotion dur="4s" repeatCount="indefinite" 
+                path="M0,0 
+                    C4,6 8,0 12,-6 
+                    C16,-12 20,-6 24,0 
+                    C28,6 32,0 36,-6 
+                    C40,-12 44,-6 48,0 
+                    C52,6 56,0 60,-6 
+                    C64,-12 68,-6 72,0 
+                    C68,6 64,0 60,-6 
+                    C56,-12 52,-6 48,0 
+                    C44,6 40,0 36,-6 
+                    C32,-12 28,-6 24,0 
+                    C20,6 16,0 12,-6 
+                    C8,-12 4,-6 0,0"/>
+        </circle>
+        <circle cx="200" cy="160" r="12" fill="url(#electronGlow)" opacity="0.7">
+            <animateMotion dur="4s" repeatCount="indefinite" 
+                path="M0,0 
+                    C4,6 8,0 12,-6 
+                    C16,-12 20,-6 24,0 
+                    C28,6 32,0 36,-6 
+                    C40,-12 44,-6 48,0 
+                    C52,6 56,0 60,-6 
+                    C64,-12 68,-6 72,0 
+                    C68,6 64,0 60,-6 
+                    C56,-12 52,-6 48,0 
+                    C44,6 40,0 36,-6 
+                    C32,-12 28,-6 24,0 
+                    C20,6 16,0 12,-6 
+                    C8,-12 4,-6 0,0"/>
+        </circle>
+        
+        <!-- Synchrotron photons - moving toward upstream -->
+        <g>
+            <!-- Photon 1 - moving left (upstream) -->
+            <circle cx="180" cy="145" r="4" fill="#FFCC00">
+                <animate attributeName="cx" values="180;50;50" dur="4s" begin="0s" repeatCount="indefinite"/>
+                <animate attributeName="cy" values="145;120;120" dur="4s" begin="0s" repeatCount="indefinite"/>
+                <animate attributeName="opacity" values="0;1;1" dur="4s" begin="0s" repeatCount="indefinite"/>
+            </circle>
+            <circle cx="180" cy="145" r="8" fill="url(#photonGlow)" opacity="0.7">
+                <animate attributeName="cx" values="180;50;50" dur="4s" begin="0s" repeatCount="indefinite"/>
+                <animate attributeName="cy" values="145;120;120" dur="4s" begin="0s" repeatCount="indefinite"/>
+                <animate attributeName="opacity" values="0;0.7;0.7" dur="4s" begin="0s" repeatCount="indefinite"/>
+            </circle>
+            
+            <!-- Photon 2 - moving left (upstream) -->
+            <circle cx="220" cy="175" r="4" fill="#FFCC00">
+                <animate attributeName="cx" values="220;50;50" dur="4s" begin="1s" repeatCount="indefinite"/>
+                <animate attributeName="cy" values="175;155;155" dur="4s" begin="1s" repeatCount="indefinite"/>
+                <animate attributeName="opacity" values="0;1;1" dur="4s" begin="1s" repeatCount="indefinite"/>
+            </circle>
+            <circle cx="220" cy="175" r="8" fill="url(#photonGlow)" opacity="0.7">
+                <animate attributeName="cx" values="220;50;50" dur="4s" begin="1s" repeatCount="indefinite"/>
+                <animate attributeName="cy" values="175;155;155" dur="4s" begin="1s" repeatCount="indefinite"/>
+                <animate attributeName="opacity" values="0;0.7;0.7" dur="4s" begin="1s" repeatCount="indefinite"/>
+            </circle>
+            
+            <!-- Photon 3 - moving left (upstream) -->
+            <circle cx="250" cy="150" r="4" fill="#FFCC00">
+                <animate attributeName="cx" values="250;50;50" dur="4s" begin="2s" repeatCount="indefinite"/>
+                <animate attributeName="cy" values="150;135;135" dur="4s" begin="2s" repeatCount="indefinite"/>
+                <animate attributeName="opacity" values="0;1;1" dur="4s" begin="2s" repeatCount="indefinite"/>
+            </circle>
+            <circle cx="250" cy="150" r="8" fill="url(#photonGlow)" opacity="0.7">
+                <animate attributeName="cx" values="250;50;50" dur="4s" begin="2s" repeatCount="indefinite"/>
+                <animate attributeName="cy" values="150;135;135" dur="4s" begin="2s" repeatCount="indefinite"/>
+                <animate attributeName="opacity" values="0;0.7;0.7" dur="4s" begin="2s" repeatCount="indefinite"/>
+            </circle>
+        </g>
+        
+        <!-- Label for synchrotron photons -->
+        <text x="60" y="150" font-family="Arial" font-size="12" fill="#FFCC00" text-anchor="middle">Synchrotron Photons</text>
+    </g>
+    
+    <!-- Inverse Compton Process - Middle Section - ANIMATED -->
+    <g transform="translate(0, 40)">
+        <!-- Region label -->
+        <text x="210" y="220" font-family="Arial" font-size="14" fill="#FFAACC" text-anchor="middle">Inverse Compton Scattering</text>
+        
+        <!-- Central electron -->
+        <circle cx="200" cy="250" r="8" fill="#3377FF"/>
+        <circle cx="200" cy="250" r="12" fill="url(#electronGlow)" opacity="0.7"/>
+        
+        <!-- Animated incoming synchrotron photons - from right to left -->
+        <!-- Incoming photon 1 -->
+        <circle cx="260" cy="240" r="4" fill="#FFCC00">
+            <animate attributeName="cx" values="320;260;200" dur="3.5s" begin="0s" repeatCount="indefinite"/>
+            <animate attributeName="cy" values="240;240;250" dur="3.5s" begin="0s" repeatCount="indefinite"/>
+            <animate attributeName="opacity" values="1;1;0" dur="3.5s" begin="0s" repeatCount="indefinite"/>
+        </circle>
+        <circle cx="260" cy="240" r="8" fill="url(#photonGlow)" opacity="0.7">
+            <animate attributeName="cx" values="320;260;200" dur="3.5s" begin="0s" repeatCount="indefinite"/>
+            <animate attributeName="cy" values="240;240;250" dur="3.5s" begin="0s" repeatCount="indefinite"/>
+            <animate attributeName="opacity" values="0.7;0.7;0" dur="3.5s" begin="0s" repeatCount="indefinite"/>
+        </circle>
+        
+        <!-- Incoming photon 2 -->
+        <circle cx="260" cy="260" r="4" fill="#FFCC00">
+            <animate attributeName="cx" values="320;260;200" dur="3.5s" begin="1.2s" repeatCount="indefinite"/>
+            <animate attributeName="cy" values="260;260;250" dur="3.5s" begin="1.2s" repeatCount="indefinite"/>
+            <animate attributeName="opacity" values="1;1;0" dur="3.5s" begin="1.2s" repeatCount="indefinite"/>
+        </circle>
+        <circle cx="260" cy="260" r="8" fill="url(#photonGlow)" opacity="0.7">
+            <animate attributeName="cx" values="320;260;200" dur="3.5s" begin="1.2s" repeatCount="indefinite"/>
+            <animate attributeName="cy" values="260;260;250" dur="3.5s" begin="1.2s" repeatCount="indefinite"/>
+            <animate attributeName="opacity" values="0.7;0.7;0" dur="3.5s" begin="1.2s" repeatCount="indefinite"/>
+        </circle>
+        
+        <!-- Incoming photon 3 -->
+        <circle cx="260" cy="250" r="4" fill="#FFCC00">
+            <animate attributeName="cx" values="320;260;200" dur="3.5s" begin="2.4s" repeatCount="indefinite"/>
+            <animate attributeName="cy" values="250;250;250" dur="3.5s" begin="2.4s" repeatCount="indefinite"/>
+            <animate attributeName="opacity" values="1;1;0" dur="3.5s" begin="2.4s" repeatCount="indefinite"/>
+        </circle>
+        <circle cx="260" cy="250" r="8" fill="url(#photonGlow)" opacity="0.7">
+            <animate attributeName="cx" values="320;260;200" dur="3.5s" begin="2.4s" repeatCount="indefinite"/>
+            <animate attributeName="cy" values="250;250;250" dur="3.5s" begin="2.4s" repeatCount="indefinite"/>
+            <animate attributeName="opacity" values="0.7;0.7;0" dur="3.5s" begin="2.4s" repeatCount="indefinite"/>
+        </circle>
+        
+        <!-- Animated scattered high-energy IC photons - going left -->
+        <!-- IC photon 1 -->
+        <circle cx="180" cy="240" r="5" fill="#FF3399">
+            <animate attributeName="cx" values="200;140;80" dur="3s" begin="0.5s" repeatCount="indefinite"/>
+            <animate attributeName="cy" values="250;240;230" dur="3s" begin="0.5s" repeatCount="indefinite"/>
+            <animate attributeName="opacity" values="0;1;1" dur="3s" begin="0.5s" repeatCount="indefinite"/>
+        </circle>
+        <circle cx="180" cy="240" r="10" fill="url(#icPhotonGlow)" opacity="0.7">
+            <animate attributeName="cx" values="200;140;80" dur="3s" begin="0.5s" repeatCount="indefinite"/>
+            <animate attributeName="cy" values="250;240;230" dur="3s" begin="0.5s" repeatCount="indefinite"/>
+            <animate attributeName="opacity" values="0;0.7;0.7" dur="3s" begin="0.5s" repeatCount="indefinite"/>
+        </circle>
+        
+        <!-- IC photon 2 -->
+        <circle cx="180" cy="250" r="5" fill="#FF3399">
+            <animate attributeName="cx" values="200;140;80" dur="3s" begin="1.7s" repeatCount="indefinite"/>
+            <animate attributeName="cy" values="250;250;250" dur="3s" begin="1.7s" repeatCount="indefinite"/>
+            <animate attributeName="opacity" values="0;1;1" dur="3s" begin="1.7s" repeatCount="indefinite"/>
+        </circle>
+        <circle cx="180" cy="250" r="10" fill="url(#icPhotonGlow)" opacity="0.7">
+            <animate attributeName="cx" values="200;140;80" dur="3s" begin="1.7s" repeatCount="indefinite"/>
+            <animate attributeName="cy" values="250;250;250" dur="3s" begin="1.7s" repeatCount="indefinite"/>
+            <animate attributeName="opacity" values="0;0.7;0.7" dur="3s" begin="1.7s" repeatCount="indefinite"/>
+        </circle>
+        
+        <!-- IC photon 3 -->
+        <circle cx="180" cy="260" r="5" fill="#FF3399">
+            <animate attributeName="cx" values="200;140;80" dur="3s" begin="2.9s" repeatCount="indefinite"/>
+            <animate attributeName="cy" values="250;260;270" dur="3s" begin="2.9s" repeatCount="indefinite"/>
+            <animate attributeName="opacity" values="0;1;1" dur="3s" begin="2.9s" repeatCount="indefinite"/>
+        </circle>
+        <circle cx="180" cy="260" r="10" fill="url(#icPhotonGlow)" opacity="0.7">
+            <animate attributeName="cx" values="200;140;80" dur="3s" begin="2.9s" repeatCount="indefinite"/>
+            <animate attributeName="cy" values="250;260;270" dur="3s" begin="2.9s" repeatCount="indefinite"/>
+            <animate attributeName="opacity" values="0;0.7;0.7" dur="3s" begin="2.9s" repeatCount="indefinite"/>
+        </circle>
+        
+        <!-- Label for IC photons -->
+        <text x="65" y="240" font-family="Arial" font-size="12" fill="#FF3399" text-anchor="middle">High-Energy IC Photon</text>
+    </g>
+    
+    <!-- Self-Absorption Process - Middle Right Section -->
+    <g transform="translate(320, 200)">
+        <!-- Region label -->
+        <text x="0" y="-30" font-family="Arial" font-size="14" fill="#AAAAFF" text-anchor="middle">Synchrotron Self-Absorption</text>
+        
+        <!-- Cloud of absorbing plasma -->
+        <ellipse cx="0" cy="0" rx="50" ry="30" fill="#224477" opacity="0.3" stroke="#5577CC" stroke-width="1"/>
+        <text x="0" y="30" font-family="Arial" font-size="10" fill="#AAAAAA" text-anchor="middle">Absorbing Region</text>
+        
+        <!-- Incoming photons that get absorbed -->
+        <!-- Photon 1 -->
+        <circle cx="50" cy="-15" r="4" fill="#FFCC00">
+            <animate attributeName="cx" values="120;50;20" dur="3s" begin="0s" repeatCount="indefinite"/>
+            <animate attributeName="cy" values="-15;-15;-10" dur="3s" begin="0s" repeatCount="indefinite"/>
+            <animate attributeName="opacity" values="1;1;0" dur="3s" begin="0s" repeatCount="indefinite"/>
+            <animate attributeName="r" values="4;2;0" dur="3s" begin="0s" repeatCount="indefinite"/>
+        </circle>
+        <circle cx="50" cy="-15" r="8" fill="url(#photonGlow)" opacity="0.7">
+            <animate attributeName="cx" values="120;50;20" dur="3s" begin="0s" repeatCount="indefinite"/>
+            <animate attributeName="cy" values="-15;-15;-10" dur="3s" begin="0s" repeatCount="indefinite"/>
+            <animate attributeName="opacity" values="0.7;0.4;0" dur="3s" begin="0s" repeatCount="indefinite"/>
+            <animate attributeName="r" values="8;4;0" dur="3s" begin="0s" repeatCount="indefinite"/>
+        </circle>
+        
+        <!-- Photon 2 -->
+        <circle cx="50" cy="10" r="4" fill="#FFCC00">
+            <animate attributeName="cx" values="120;50;10" dur="3.5s" begin="0.5s" repeatCount="indefinite"/>
+            <animate attributeName="cy" values="10;10;5" dur="3.5s" begin="0.5s" repeatCount="indefinite"/>
+            <animate attributeName="opacity" values="1;1;0" dur="3.5s" begin="0.5s" repeatCount="indefinite"/>
+            <animate attributeName="r" values="4;2;0" dur="3.5s" begin="0.5s" repeatCount="indefinite"/>
+        </circle>
+        <circle cx="50" cy="10" r="8" fill="url(#photonGlow)" opacity="0.7">
+            <animate attributeName="cx" values="120;50;10" dur="3.5s" begin="0.5s" repeatCount="indefinite"/>
+            <animate attributeName="cy" values="10;10;5" dur="3.5s" begin="0.5s" repeatCount="indefinite"/>
+            <animate attributeName="opacity" values="0.7;0.4;0" dur="3.5s" begin="0.5s" repeatCount="indefinite"/>
+            <animate attributeName="r" values="8;4;0" dur="3.5s" begin="0.5s" repeatCount="indefinite"/>
+        </circle>
+        
+        <!-- Low frequency/energy photons can't escape -->
+        <text x="70" y="0" font-family="Arial" font-size="10" fill="#FFCC00" text-anchor="middle">Low-frequency photons</text>
+        <text x="70" y="15" font-family="Arial" font-size="10" fill="#FFCC00" text-anchor="middle">are absorbed</text>
+    </g>
+</svg> 

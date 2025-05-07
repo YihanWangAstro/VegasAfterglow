@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="500" height="250" viewBox="0 0 500 250" xmlns="http://www.w3.org/2000/svg">
+    <!-- Background - removing solid background for transparency -->
+    
+    <!-- 1. NON-AXISYMMETRIC JETS SECTION (Left) - HELICAL SPIRAL STRUCTURE -->
+    <g transform="translate(100, 215) scale(1.8)">
+        <!-- Section Title -->
+        <text x="0" y="-105" font-family="Arial" font-size="8" fill="#AAAAFF" text-anchor="middle">Non-Axisymmetric Jets</text>
+        
+        <!-- Central engine -->
+        <circle cx="0" cy="0" r="8" fill="#ffcc00">
+            <animate attributeName="opacity" values="0.7;1;0.7" dur="2s" repeatCount="indefinite"/>
+        </circle>
+        
+        <!-- Helical Spiral Structure -->
+        <defs>
+            <!-- Gradient for spiral coloring -->
+            <linearGradient id="spiralGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                <stop offset="0%" stop-color="#FF9500" stop-opacity="0.8"/>
+                <stop offset="100%" stop-color="#6666FF" stop-opacity="0.4"/>
+            </linearGradient>
+        </defs>
+        
+        <!-- Main jet cone to establish direction -->
+        <path d="M0,-5 L12,-80 A15,10 0 0,1 0,-85 A15,10 0 0,1 -12,-80 Z" 
+              fill="#333355" fill-opacity="0.2" stroke="#555577" stroke-width="0.5"/>
+        
+        <!-- Helical spiral paths - these create the 3D spiral effect -->
+        <path d="M0,0 
+                C-5,-10 -10,-20 -8,-30 
+                C-5,-40 5,-50 8,-60 
+                C10,-70 0,-80 -8,-85" 
+              stroke="url(#spiralGradient)" stroke-width="2.5" fill="none">
+            <animate attributeName="stroke-width" values="2.5;3;2.5" dur="3s" repeatCount="indefinite"/>
+            <animate attributeName="stroke-opacity" values="0.7;1;0.7" dur="3s" repeatCount="indefinite"/>
+        </path>
+        
+        <path d="M0,0 
+                C5,-10 10,-20 8,-30 
+                C5,-40 -5,-50 -8,-60 
+                C-10,-70 0,-80 8,-85" 
+              stroke="url(#spiralGradient)" stroke-width="2.5" fill="none">
+            <animate attributeName="stroke-width" values="2.5;3;2.5" dur="3s" repeatCount="indefinite" begin="1.5s"/>
+            <animate attributeName="stroke-opacity" values="0.7;1;0.7" dur="3s" repeatCount="indefinite" begin="1.5s"/>
+        </path>
+        
+        <!-- Animated particles flowing through the spiral -->
+        <g>
+            <!-- Left spiral particles -->
+            <circle cx="0" cy="0" r="1.5" fill="#FFAA00">
+                <animateMotion 
+                    path="M0,0 C-5,-10 -10,-20 -8,-30 C-5,-40 5,-50 8,-60 C10,-70 0,-80 -8,-85"
+                    dur="3s" repeatCount="indefinite"/>
+                <animate attributeName="opacity" values="0;1;0" dur="3s" repeatCount="indefinite"/>
+            </circle>
+            
+            <circle cx="0" cy="0" r="1.5" fill="#FFAA00">
+                <animateMotion 
+                    path="M0,0 C-5,-10 -10,-20 -8,-30 C-5,-40 5,-50 8,-60 C10,-70 0,-80 -8,-85"
+                    dur="3s" begin="1s" repeatCount="indefinite"/>
+                <animate attributeName="opacity" values="0;1;0" dur="3s" begin="1s" repeatCount="indefinite"/>
+            </circle>
+            
+            <circle cx="0" cy="0" r="1.5" fill="#FFAA00">
+                <animateMotion 
+                    path="M0,0 C-5,-10 -10,-20 -8,-30 C-5,-40 5,-50 8,-60 C10,-70 0,-80 -8,-85"
+                    dur="3s" begin="2s" repeatCount="indefinite"/>
+                <animate attributeName="opacity" values="0;1;0" dur="3s" begin="2s" repeatCount="indefinite"/>
+            </circle>
+            
+            <!-- Right spiral particles -->
+            <circle cx="0" cy="0" r="1.5" fill="#99AAFF">
+                <animateMotion 
+                    path="M0,0 C5,-10 10,-20 8,-30 C5,-40 -5,-50 -8,-60 C-10,-70 0,-80 8,-85"
+                    dur="3s" begin="0.5s" repeatCount="indefinite"/>
+                <animate attributeName="opacity" values="0;1;0" dur="3s" begin="0.5s" repeatCount="indefinite"/>
+            </circle>
+            
+            <circle cx="0" cy="0" r="1.5" fill="#99AAFF">
+                <animateMotion 
+                    path="M0,0 C5,-10 10,-20 8,-30 C5,-40 -5,-50 -8,-60 C-10,-70 0,-80 8,-85"
+                    dur="3s" begin="1.5s" repeatCount="indefinite"/>
+                <animate attributeName="opacity" values="0;1;0" dur="3s" begin="1.5s" repeatCount="indefinite"/>
+            </circle>
+            
+            <circle cx="0" cy="0" r="1.5" fill="#99AAFF">
+                <animateMotion 
+                    path="M0,0 C5,-10 10,-20 8,-30 C5,-40 -5,-50 -8,-60 C-10,-70 0,-80 8,-85"
+                    dur="3s" begin="2.5s" repeatCount="indefinite"/>
+                <animate attributeName="opacity" values="0;1;0" dur="3s" begin="2.5s" repeatCount="indefinite"/>
+            </circle>
+        </g>
+        
+        <!-- Rotation indicator -->
+        <path d="M-15,-20 A20,10 0 1,0 15,-20" stroke="#FFFFFF" stroke-width="0.75" stroke-dasharray="2,1" fill="none"/>
+        <path d="M15,-20 L18,-15 L12,-15 Z" fill="#FFFFFF" stroke="#FFFFFF" stroke-width="0.5"/>
+    </g>
+    
+    <!-- 2. STRUCTURED JET PROFILES SECTION (Middle) -->
+    <g transform="translate(250, 215) scale(1.8)">
+        <!-- Section Title -->
+        <text x="0" y="-105" font-family="Arial" font-size="8" fill="#AAAAFF" text-anchor="middle">Structured Jet Profiles</text>
+        
+        <!-- Central engine -->
+        <circle cx="0" cy="0" r="8" fill="#ffcc00">
+            <animate attributeName="opacity" values="0.7;1;0.7" dur="2s" repeatCount="indefinite"/>
+        </circle>
+        
+        <!-- Collimated jet with structured profiles -->
+        <!-- Energy contours (orange/red) - outer layer -->
+        <path d="M0,-5 L15,-80 A15,10 0 0,1 0,-85 A15,10 0 0,1 -15,-80 Z" fill="#FF5500" fill-opacity="0.3" stroke="#FF5500" stroke-width="1.5"/>
+        <text x="30" y="-50" font-family="Arial" font-size="7" fill="#FF5500">Energy</text>
+        
+        <!-- Lorentz factor contours (blue) - middle layer -->
+        <path d="M0,-5 L10,-70 A10,7 0 0,1 0,-75 A10,7 0 0,1 -10,-70 Z" fill="#5599FF" fill-opacity="0.3" stroke="#5599FF" stroke-width="1.5"/>
+        <text x="-35" y="-50" font-family="Arial" font-size="7" fill="#5599FF">Lorentz Factor</text>
+        
+        <!-- Magnetization contours (purple) - inner layer -->
+        <path d="M0,-5 L6,-60 A6,4 0 0,1 0,-62 A6,4 0 0,1 -6,-60 Z" fill="#AA66CC" fill-opacity="0.3" stroke="#AA66CC" stroke-width="1.5"/>
+        <text x="0" y="-30" font-family="Arial" font-size="7" fill="#AA66CC">Magnetization</text>
+        
+        <!-- Angular profile indicators -->
+        <g transform="translate(0, -15)">
+            <path d="M0,0 L15,-65" stroke="#FFFFFF" stroke-width="0.5" stroke-dasharray="2,1"/>
+            <path d="M0,0 L-15,-65" stroke="#FFFFFF" stroke-width="0.5" stroke-dasharray="2,1"/>
+            <text x="0" y="-5" font-family="Arial" font-size="6" fill="#FFFFFF" text-anchor="middle">θ</text>
+        </g>
+    </g>
+    
+    <!-- 3. JET SPREADING SECTION (Right) -->
+    <g transform="translate(400, 215) scale(1.8)">
+        <!-- Section Title -->
+        <text x="0" y="-105" font-family="Arial" font-size="8" fill="#AAAAFF" text-anchor="middle">Jet Spreading</text>
+        
+        <!-- Central engine -->
+        <circle cx="0" cy="0" r="8" fill="#ffcc00">
+            <animate attributeName="opacity" values="0.7;1;0.7" dur="2s" repeatCount="indefinite"/>
+        </circle>
+        
+        <!-- Brighter spreading jet with fixed symmetry -->
+        <!-- Initial narrow collimated jet -->
+        <path d="M0,-5 L-7,-75 L0,-80 L7,-75 L0,-5 Z" fill="#5ee7ff" fill-opacity="0.6">
+            <animate attributeName="opacity" values="0.6;0.2;0.6" dur="4s" begin="0s" repeatCount="indefinite"/>
+        </path>
+        
+        <!-- Moderate spreading jet animation -->
+        <path d="M0,-5 L-15,-70 L0,-80 L15,-70 L0,-5 Z" fill="#29ccff" fill-opacity="0.5">
+            <animate attributeName="opacity" values="0.1;0.5;0.1" dur="4s" begin="1s" repeatCount="indefinite"/>
+        </path>
+        
+        <!-- Final wider jet but still collimated -->
+        <path d="M0,-5 L-25,-65 L0,-80 L25,-65 L0,-5 Z" fill="#0088ff" fill-opacity="0.4">
+            <animate attributeName="opacity" values="0.0;0.4;0.0" dur="4s" begin="2s" repeatCount="indefinite"/>
+        </path>
+        
+        <!-- Spreading indicators -->
+        <path d="M-7,-40 A40,40 0 0,1 7,-40" stroke="#FFFFFF" stroke-width="0.75" stroke-dasharray="2,1" fill="none"/>
+        <path d="M-15,-50 A50,50 0 0,1 15,-50" stroke="#FFFFFF" stroke-width="0.75" stroke-dasharray="2,1" fill="none">
+            <animate attributeName="opacity" values="0.0;1.0;0.0" dur="4s" begin="1s" repeatCount="indefinite"/>
+        </path>
+        <path d="M-25,-60 A60,60 0 0,1 25,-60" stroke="#FFFFFF" stroke-width="0.75" stroke-dasharray="2,1" fill="none">
+            <animate attributeName="opacity" values="0.0;1.0;0.0" dur="4s" begin="2s" repeatCount="indefinite"/>
+        </path>
+    </g>
+</svg> 
