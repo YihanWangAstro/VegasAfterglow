@@ -1,4 +1,4 @@
-from .types import ModelParams, Setups, ObsData, VegasMC, FitResult, ParamDef, Scale
+from .types import ModelParams, Setups, ObsData, VegasMC, FitResult, ParamDef, Scale, Emission
 from .runner import Fitter
 
 __all__ = [
@@ -10,4 +10,5 @@ __all__ = [
     "Fitter",
     "ParamDef",
     "Scale",
+    "Emission"
 ]
