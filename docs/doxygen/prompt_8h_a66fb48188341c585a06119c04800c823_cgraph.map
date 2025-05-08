@@ -1,0 +1,7 @@
+<map id="gen_coasting_shock" name="gen_coasting_shock">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,31,159,56"/>
+<area shape="rect" id="Node000002" href="$physics_8h.html#ab8aa624dd63313487d8f5ecf52170d76" title="Converts Lorentz factor (gamma) to velocity fraction (beta)" alt="" coords="207,5,335,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="159,30,192,26,193,31,159,36"/>
+<area shape="rect" id="Node000003" href="$classCoord.html#aa6d43ba2bc7c11b17e3de19da26e4507" title="Returns the dimensions of the coordinate arrays." alt="" coords="217,55,324,80"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="159,50,204,56,203,61,159,56"/>
+</map>

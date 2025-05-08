@@ -1,0 +1,16 @@
+<map id="SynPhotons::compute_log2_I_nu" name="SynPhotons::compute_log2_I_nu">
+<area shape="rect" id="Node000001" title="Calculates the base&#45;2 logarithm of synchrotron intensity at a given frequency." alt="" coords="5,70,168,110"/>
+<area shape="rect" id="Node000002" href="$structInverseComptonY.html#a59226978ce361a575783edde4335c1df" title="Calculates the effective Y parameter at a specific frequency and spectral index." alt="" coords="216,41,416,81"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="168,77,202,73,203,78,169,82"/>
+<area shape="rect" id="Node000006" href="$utilities_8h.html#afe0a1b1b7509ac4df83fcc0e510f281b" title="Fast approximation of the base&#45;2 logarithm." alt="" coords="843,80,926,105"/>
+<area shape="poly" id="edge7_Node000001_Node000006" title=" " alt="" coords="168,89,216,90,829,90,829,96,216,95,168,95"/>
+<area shape="rect" id="Node000003" href="$structInverseComptonY.html#ab69f7b0d11f611834e1b7c13e30de1ef" title="Calculates the effective Y parameter for a given frequency and spectral index." alt="" coords="464,41,664,81"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="416,58,450,58,450,63,416,63"/>
+<area shape="rect" id="Node000004" href="$utilities_8h.html#a4520a27a10a2aef33c99ad8c679da404" title="Fast approximation of a raised to the power of b." alt="" coords="712,5,793,31"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="652,38,698,28,699,33,653,43"/>
+<area shape="rect" id="Node000007" href="$utilities_8h.html#a5069f3665d3ad6f8eced520eae62e400" title="Computes a^(2/3)" alt="" coords="720,55,785,80"/>
+<area shape="poly" id="edge6_Node000003_Node000007" title=" " alt="" coords="664,62,706,63,706,68,664,67"/>
+<area shape="rect" id="Node000005" href="$utilities_8h.html#afc584c30c352192de6847b1f4b8caf0e" title="Fast approximation of 2 raised to a power." alt="" coords="841,5,928,31"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="794,15,827,15,827,21,794,21"/>
+<area shape="poly" id="edge5_Node000004_Node000006" title=" " alt="" coords="778,29,850,71,848,75,775,33"/>
+</map>

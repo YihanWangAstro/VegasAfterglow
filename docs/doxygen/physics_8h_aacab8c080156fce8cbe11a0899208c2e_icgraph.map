@@ -1,0 +1,11 @@
+<map id="sedov_length" name="sedov_length">
+<area shape="rect" id="Node000001" title="Computes the Sedov length—a characteristic scale for blast wave deceleration." alt="" coords="224,80,333,105"/>
+<area shape="rect" id="Node000002" href="$physics_8cpp.html#a5409fe925e017608d8ecf3d60c4d2645" title="Calculates the engine duration needed to achieve a specific shell thickness parameter." alt="" coords="11,5,171,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="242,76,175,44,141,33,143,28,177,40,244,71"/>
+<area shape="rect" id="Node000003" href="$physics_8h.html#a5eea411672a7046ac9978a36b969c896" title="Returns the radius at which the reverse shock crosses, defined as the thick shell deceleration radius..." alt="" coords="17,55,164,80"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="210,86,164,80,164,75,211,81"/>
+<area shape="rect" id="Node000004" href="$physics_8cpp.html#a4a53f1fb094eaa818e9bfdd727cb440c" title="Computes the radius at which the reverse shock transitions." alt="" coords="13,104,168,129"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="211,104,169,109,168,104,210,99"/>
+<area shape="rect" id="Node000005" href="$physics_8cpp.html#a0c9a7556a1af055d96c7f6e236b32e20" title="Computes the dimensionless parameter (ξ) that characterizes the shell geometry." alt="" coords="5,153,176,179"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="242,114,177,143,139,156,138,151,175,138,240,109"/>
+</map>

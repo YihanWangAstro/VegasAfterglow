@@ -7,19 +7,21 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Python API Reference &mdash; VegasAfterglow 0.1.0 documentation</title>
-      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
       <link rel="stylesheet" type="text/css" href="_static/graphviz.css?v=fd3f3429" />
-      <link rel="stylesheet" type="text/css" href="_static/css/custom.css" />
+      <link rel="stylesheet" type="text/css" href="_static/css/custom.css?v=bbaaf2ba" />
+      <link rel="stylesheet" type="text/css" href="_static/css/custom.css?v=bbaaf2ba" />
 
   
     <link rel="shortcut icon" href="_static/logo.svg"/>
     <link rel="canonical" href="https://yihanwangastro.github.io/VegasAfterglow/docs/python_api.html" />
       <script src="_static/jquery.js?v=5d32c60e"></script>
       <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="_static/documentation_options.js?v=2caa9db7"></script>
+      <script src="_static/documentation_options.js?v=01f34227"></script>
       <script src="_static/doctools.js?v=9a2dae69"></script>
       <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="_static/js/custom.js?v=72f89627"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -63,12 +65,14 @@
 <li class="toctree-l1"><a class="reference internal" href="quickstart.html">Quickstart</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="quickstart.html#installation">Installation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="quickstart.html#basic-usage">Basic Usage</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="quickstart.html#setting-up-a-simple-model">Setting up a simple model</a></li>
-<li class="toctree-l3"><a class="reference internal" href="quickstart.html#calculating-light-curves">Calculating light curves</a></li>
-<li class="toctree-l3"><a class="reference internal" href="quickstart.html#plotting-the-results">Plotting the results</a></li>
-<li class="toctree-l3"><a class="reference internal" href="quickstart.html#using-a-structured-jet-model">Using a structured jet model</a></li>
-<li class="toctree-l3"><a class="reference internal" href="quickstart.html#using-a-wind-medium">Using a wind medium</a></li>
-<li class="toctree-l3"><a class="reference internal" href="quickstart.html#computing-a-spectrum">Computing a spectrum</a></li>
+<li class="toctree-l3"><a class="reference internal" href="quickstart.html#preparing-observational-data">Preparing Observational Data</a></li>
+<li class="toctree-l3"><a class="reference internal" href="quickstart.html#setting-up-the-model-configuration">Setting up the Model Configuration</a></li>
+<li class="toctree-l3"><a class="reference internal" href="quickstart.html#defining-mcmc-parameters">Defining MCMC Parameters</a></li>
+<li class="toctree-l3"><a class="reference internal" href="quickstart.html#running-the-mcmc">Running the MCMC</a></li>
+<li class="toctree-l3"><a class="reference internal" href="quickstart.html#analyzing-the-results">Analyzing the Results</a></li>
+<li class="toctree-l3"><a class="reference internal" href="quickstart.html#generating-model-predictions">Generating Model Predictions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="quickstart.html#visualizing-parameter-correlations">Visualizing Parameter Correlations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="quickstart.html#checking-mcmc-convergence">Checking MCMC Convergence</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="quickstart.html#next-steps">Next Steps</a></li>
@@ -77,14 +81,16 @@
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Python API Reference</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#overview">Overview</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#key-components">Key Components</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#core-classes">Core Classes</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#jet-models">Jet Models</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#ambient-media">Ambient Media</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#radiation-processes">Radiation Processes</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#shock-dynamics">Shock Dynamics</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#data-fitting">Data Fitting</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#results">Results</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#utilities">Utilities</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#core-classes">Core Classes</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#obsdata">ObsData</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#setups">Setups</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#modelparams">ModelParams</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#paramdef-and-scale">ParamDef and Scale</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#fitter">Fitter</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#fitresult">FitResult</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#vegasmc">VegasMC</a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="#documenting-python-code">Documenting Python Code</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#class-and-function-documentation">Class and Function Documentation</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#example-class">Example Class</a></li>
@@ -95,97 +101,45 @@
 <li class="toctree-l1"><a class="reference internal" href="cpp_api.html">C++ API Reference</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="cpp_api.html#overview">Overview</a></li>
 <li class="toctree-l2"><a class="reference internal" href="cpp_api.html#key-components">Key Components</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cpp_api.html#using-the-c-api">Using the C++ API</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="cpp_api.html#including-headers">Including Headers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="cpp_api.html#building-custom-applications">Building Custom Applications</a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="cpp_api.html#c-api-documentation">C++ API Documentation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="cpp_api.html#namespaces">Namespaces</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="cpp_api.html#_CPPv43con"><code class="docutils literal notranslate"><span class="pre">con</span></code></a><ul>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N3con1cE"><code class="docutils literal notranslate"><span class="pre">c</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N3con2c2E"><code class="docutils literal notranslate"><span class="pre">c2</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N3con1eE"><code class="docutils literal notranslate"><span class="pre">e</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N3con2e2E"><code class="docutils literal notranslate"><span class="pre">e2</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N3con2e3E"><code class="docutils literal notranslate"><span class="pre">e3</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N3con9Gamma_cutE"><code class="docutils literal notranslate"><span class="pre">Gamma_cut</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N3con1hE"><code class="docutils literal notranslate"><span class="pre">h</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N3con2H0E"><code class="docutils literal notranslate"><span class="pre">H0</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N3con3infE"><code class="docutils literal notranslate"><span class="pre">inf</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N3con2meE"><code class="docutils literal notranslate"><span class="pre">me</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N3con2mpE"><code class="docutils literal notranslate"><span class="pre">mp</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N3con7Omega_LE"><code class="docutils literal notranslate"><span class="pre">Omega_L</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N3con7Omega_mE"><code class="docutils literal notranslate"><span class="pre">Omega_m</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N3con2piE"><code class="docutils literal notranslate"><span class="pre">pi</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N3con6sigmaTE"><code class="docutils literal notranslate"><span class="pre">sigmaT</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="cpp_api.html#_CPPv44math"><code class="docutils literal notranslate"><span class="pre">math</span></code></a><ul>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4I00EN4math7combineEDa2F12F2"><code class="docutils literal notranslate"><span class="pre">combine()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N4math15const_injectionEv"><code class="docutils literal notranslate"><span class="pre">const_injection()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N4math8gaussianE4Real4Real"><code class="docutils literal notranslate"><span class="pre">gaussian()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N4math9isotropicE4Real"><code class="docutils literal notranslate"><span class="pre">isotropic()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N4math8powerlawE4Real4Real4Real"><code class="docutils literal notranslate"><span class="pre">powerlaw()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N4math18powerlaw_injectionE4Real4Real"><code class="docutils literal notranslate"><span class="pre">powerlaw_injection()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N4math16square_injectionE4Real4Real"><code class="docutils literal notranslate"><span class="pre">square_injection()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N4math14step_injectionE4Real"><code class="docutils literal notranslate"><span class="pre">step_injection()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4I0EN4math7t_indepEDa2F1"><code class="docutils literal notranslate"><span class="pre">t_indep()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N4math6tophatE4Real4Real"><code class="docutils literal notranslate"><span class="pre">tophat()</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="cpp_api.html#_CPPv43evn"><code class="docutils literal notranslate"><span class="pre">evn</span></code></a><ul>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N3evn3ISME4Real"><code class="docutils literal notranslate"><span class="pre">ISM()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N3evn4windE4Real"><code class="docutils literal notranslate"><span class="pre">wind()</span></code></a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="cpp_api.html#core-classes">Core Classes</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="cpp_api.html#_CPPv46Medium"><code class="docutils literal notranslate"><span class="pre">Medium</span></code></a><ul>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N6Medium4massE"><code class="docutils literal notranslate"><span class="pre">mass</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N6Medium3rhoE"><code class="docutils literal notranslate"><span class="pre">rho</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="cpp_api.html#_CPPv46Ejecta"><code class="docutils literal notranslate"><span class="pre">Ejecta</span></code></a><ul>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N6Ejecta7deps_dtE"><code class="docutils literal notranslate"><span class="pre">deps_dt</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N6Ejecta5dm_dtE"><code class="docutils literal notranslate"><span class="pre">dm_dt</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N6Ejecta5eps_kE"><code class="docutils literal notranslate"><span class="pre">eps_k</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N6Ejecta6Gamma0E"><code class="docutils literal notranslate"><span class="pre">Gamma0</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N6Ejecta6sigma0E"><code class="docutils literal notranslate"><span class="pre">sigma0</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N6Ejecta9spreadingE"><code class="docutils literal notranslate"><span class="pre">spreading</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N6Ejecta2T0E"><code class="docutils literal notranslate"><span class="pre">T0</span></code></a></li>
-</ul>
-</li>
-</ul>
-</li>
 <li class="toctree-l2"><a class="reference internal" href="cpp_api.html#jet-models">Jet Models</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="cpp_api.html#_CPPv49TophatJet"><code class="docutils literal notranslate"><span class="pre">TophatJet</span></code></a><ul>
 <li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N9TophatJet9TophatJetE4Real4Real4Real"><code class="docutils literal notranslate"><span class="pre">TophatJet()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4NK9TophatJet5eps_kE4Real4Real"><code class="docutils literal notranslate"><span class="pre">eps_k()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4NK9TophatJet6Gamma0E4Real4Real"><code class="docutils literal notranslate"><span class="pre">Gamma0()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N9TophatJet9spreadingE"><code class="docutils literal notranslate"><span class="pre">spreading</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N9TophatJet2T0E"><code class="docutils literal notranslate"><span class="pre">T0</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N9TophatJet6eps_k_E"><code class="docutils literal notranslate"><span class="pre">eps_k_</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N9TophatJet7Gamma0_E"><code class="docutils literal notranslate"><span class="pre">Gamma0_</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N9TophatJet8theta_c_E"><code class="docutils literal notranslate"><span class="pre">theta_c_</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N9TophatJet9spreadingE"><code class="docutils literal notranslate"><span class="pre">spreading</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="cpp_api.html#_CPPv411GaussianJet"><code class="docutils literal notranslate"><span class="pre">GaussianJet</span></code></a><ul>
 <li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N11GaussianJet11GaussianJetE4Real4Real4Real"><code class="docutils literal notranslate"><span class="pre">GaussianJet()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4NK11GaussianJet5eps_kE4Real4Real"><code class="docutils literal notranslate"><span class="pre">eps_k()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4NK11GaussianJet6Gamma0E4Real4Real"><code class="docutils literal notranslate"><span class="pre">Gamma0()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N11GaussianJet9spreadingE"><code class="docutils literal notranslate"><span class="pre">spreading</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N11GaussianJet2T0E"><code class="docutils literal notranslate"><span class="pre">T0</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N11GaussianJet6eps_k_E"><code class="docutils literal notranslate"><span class="pre">eps_k_</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N11GaussianJet7Gamma0_E"><code class="docutils literal notranslate"><span class="pre">Gamma0_</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N11GaussianJet5norm_E"><code class="docutils literal notranslate"><span class="pre">norm_</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N11GaussianJet9spreadingE"><code class="docutils literal notranslate"><span class="pre">spreading</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="cpp_api.html#_CPPv411PowerLawJet"><code class="docutils literal notranslate"><span class="pre">PowerLawJet</span></code></a><ul>
 <li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N11PowerLawJet11PowerLawJetE4Real4Real4Real4Real"><code class="docutils literal notranslate"><span class="pre">PowerLawJet()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4NK11PowerLawJet5eps_kE4Real4Real"><code class="docutils literal notranslate"><span class="pre">eps_k()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4NK11PowerLawJet6Gamma0E4Real4Real"><code class="docutils literal notranslate"><span class="pre">Gamma0()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N11PowerLawJet9spreadingE"><code class="docutils literal notranslate"><span class="pre">spreading</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N11PowerLawJet2T0E"><code class="docutils literal notranslate"><span class="pre">T0</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N11PowerLawJet6eps_k_E"><code class="docutils literal notranslate"><span class="pre">eps_k_</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N11PowerLawJet7Gamma0_E"><code class="docutils literal notranslate"><span class="pre">Gamma0_</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N11PowerLawJet2k_E"><code class="docutils literal notranslate"><span class="pre">k_</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N11PowerLawJet8theta_c_E"><code class="docutils literal notranslate"><span class="pre">theta_c_</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N11PowerLawJet9spreadingE"><code class="docutils literal notranslate"><span class="pre">spreading</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="cpp_api.html#_CPPv46Ejecta"><code class="docutils literal notranslate"><span class="pre">Ejecta</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N6Ejecta5eps_kE"><code class="docutils literal notranslate"><span class="pre">eps_k</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N6Ejecta6Gamma0E"><code class="docutils literal notranslate"><span class="pre">Gamma0</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N6Ejecta6sigma0E"><code class="docutils literal notranslate"><span class="pre">sigma0</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N6Ejecta7deps_dtE"><code class="docutils literal notranslate"><span class="pre">deps_dt</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N6Ejecta5dm_dtE"><code class="docutils literal notranslate"><span class="pre">dm_dt</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N6Ejecta2T0E"><code class="docutils literal notranslate"><span class="pre">T0</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N6Ejecta9spreadingE"><code class="docutils literal notranslate"><span class="pre">spreading</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -193,16 +147,19 @@
 <li class="toctree-l2"><a class="reference internal" href="cpp_api.html#ambient-medium">Ambient Medium</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="cpp_api.html#_CPPv43ISM"><code class="docutils literal notranslate"><span class="pre">ISM</span></code></a><ul>
 <li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N3ISM3ISME4Real"><code class="docutils literal notranslate"><span class="pre">ISM()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4NK3ISM4massE4Real4Real4Real"><code class="docutils literal notranslate"><span class="pre">mass()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4NK3ISM3rhoE4Real4Real4Real"><code class="docutils literal notranslate"><span class="pre">rho()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N3ISM4rho_E"><code class="docutils literal notranslate"><span class="pre">rho_</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4NK3ISM4massE4Real4Real4Real"><code class="docutils literal notranslate"><span class="pre">mass()</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="cpp_api.html#_CPPv44Wind"><code class="docutils literal notranslate"><span class="pre">Wind</span></code></a><ul>
 <li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N4Wind4WindE4Real"><code class="docutils literal notranslate"><span class="pre">Wind()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4NK4Wind4massE4Real4Real4Real"><code class="docutils literal notranslate"><span class="pre">mass()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4NK4Wind3rhoE4Real4Real4Real"><code class="docutils literal notranslate"><span class="pre">rho()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N4Wind1AE"><code class="docutils literal notranslate"><span class="pre">A</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4NK4Wind4massE4Real4Real4Real"><code class="docutils literal notranslate"><span class="pre">mass()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="cpp_api.html#_CPPv46Medium"><code class="docutils literal notranslate"><span class="pre">Medium</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N6Medium3rhoE"><code class="docutils literal notranslate"><span class="pre">rho</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N6Medium4massE"><code class="docutils literal notranslate"><span class="pre">mass</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -212,54 +169,44 @@
 <li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4NK10SynPhotons12compute_I_nuE4Real"><code class="docutils literal notranslate"><span class="pre">compute_I_nu()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4NK10SynPhotons17compute_log2_I_nuE4Real"><code class="docutils literal notranslate"><span class="pre">compute_log2_I_nu()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N10SynPhotons15update_constantEv"><code class="docutils literal notranslate"><span class="pre">update_constant()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N10SynPhotons1eE"><code class="docutils literal notranslate"><span class="pre">e</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N10SynPhotons14log2_I_nu_peakE"><code class="docutils literal notranslate"><span class="pre">log2_I_nu_peak</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N10SynPhotons9log2_nu_aE"><code class="docutils literal notranslate"><span class="pre">log2_nu_a</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N10SynPhotons9log2_nu_cE"><code class="docutils literal notranslate"><span class="pre">log2_nu_c</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N10SynPhotons9log2_nu_mE"><code class="docutils literal notranslate"><span class="pre">log2_nu_m</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N10SynPhotons9log2_nu_ME"><code class="docutils literal notranslate"><span class="pre">log2_nu_M</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N10SynPhotons4nu_aE"><code class="docutils literal notranslate"><span class="pre">nu_a</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N10SynPhotons4nu_cE"><code class="docutils literal notranslate"><span class="pre">nu_c</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N10SynPhotons4nu_mE"><code class="docutils literal notranslate"><span class="pre">nu_m</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N10SynPhotons4nu_cE"><code class="docutils literal notranslate"><span class="pre">nu_c</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N10SynPhotons4nu_aE"><code class="docutils literal notranslate"><span class="pre">nu_a</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N10SynPhotons4nu_ME"><code class="docutils literal notranslate"><span class="pre">nu_M</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4NK10SynPhotons21compute_log2_spectrumE4Real"><code class="docutils literal notranslate"><span class="pre">compute_log2_spectrum()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4NK10SynPhotons16compute_spectrumE4Real"><code class="docutils literal notranslate"><span class="pre">compute_spectrum()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N10SynPhotons3C1_E"><code class="docutils literal notranslate"><span class="pre">C1_</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N10SynPhotons3C2_E"><code class="docutils literal notranslate"><span class="pre">C2_</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N10SynPhotons3C3_E"><code class="docutils literal notranslate"><span class="pre">C3_</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N10SynPhotons8log2_C1_E"><code class="docutils literal notranslate"><span class="pre">log2_C1_</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N10SynPhotons8log2_C2_E"><code class="docutils literal notranslate"><span class="pre">log2_C2_</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N10SynPhotons8log2_C3_E"><code class="docutils literal notranslate"><span class="pre">log2_C3_</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N10SynPhotons8log2_C4_E"><code class="docutils literal notranslate"><span class="pre">log2_C4_</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N10SynPhotons14log2_I_nu_peakE"><code class="docutils literal notranslate"><span class="pre">log2_I_nu_peak</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N10SynPhotons9log2_nu_mE"><code class="docutils literal notranslate"><span class="pre">log2_nu_m</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N10SynPhotons9log2_nu_cE"><code class="docutils literal notranslate"><span class="pre">log2_nu_c</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N10SynPhotons9log2_nu_aE"><code class="docutils literal notranslate"><span class="pre">log2_nu_a</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N10SynPhotons9log2_nu_ME"><code class="docutils literal notranslate"><span class="pre">log2_nu_M</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N10SynPhotons1eE"><code class="docutils literal notranslate"><span class="pre">e</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="cpp_api.html#_CPPv412SynElectrons"><code class="docutils literal notranslate"><span class="pre">SynElectrons</span></code></a><ul>
 <li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4NK12SynElectrons22compute_column_num_denE4Real"><code class="docutils literal notranslate"><span class="pre">compute_column_num_den()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N12SynElectrons14column_num_denE"><code class="docutils literal notranslate"><span class="pre">column_num_den</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N12SynElectrons7gamma_aE"><code class="docutils literal notranslate"><span class="pre">gamma_a</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N12SynElectrons7gamma_cE"><code class="docutils literal notranslate"><span class="pre">gamma_c</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N12SynElectrons7gamma_mE"><code class="docutils literal notranslate"><span class="pre">gamma_m</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N12SynElectrons7gamma_ME"><code class="docutils literal notranslate"><span class="pre">gamma_M</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N12SynElectrons9I_nu_peakE"><code class="docutils literal notranslate"><span class="pre">I_nu_peak</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N12SynElectrons7gamma_mE"><code class="docutils literal notranslate"><span class="pre">gamma_m</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N12SynElectrons7gamma_cE"><code class="docutils literal notranslate"><span class="pre">gamma_c</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N12SynElectrons7gamma_aE"><code class="docutils literal notranslate"><span class="pre">gamma_a</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N12SynElectrons7gamma_ME"><code class="docutils literal notranslate"><span class="pre">gamma_M</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N12SynElectrons1pE"><code class="docutils literal notranslate"><span class="pre">p</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N12SynElectrons6regimeE"><code class="docutils literal notranslate"><span class="pre">regime</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N12SynElectrons14column_num_denE"><code class="docutils literal notranslate"><span class="pre">column_num_den</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N12SynElectrons3Y_cE"><code class="docutils literal notranslate"><span class="pre">Y_c</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N12SynElectrons6regimeE"><code class="docutils literal notranslate"><span class="pre">regime</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N12SynElectrons2YsE"><code class="docutils literal notranslate"><span class="pre">Ys</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4NK12SynElectrons22compute_gamma_spectrumE4Real"><code class="docutils literal notranslate"><span class="pre">compute_gamma_spectrum()</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="cpp_api.html#_CPPv415InverseComptonY"><code class="docutils literal notranslate"><span class="pre">InverseComptonY</span></code></a><ul>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N15InverseComptonY15InverseComptonYEv"><code class="docutils literal notranslate"><span class="pre">InverseComptonY()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N15InverseComptonY15InverseComptonYE4Real4Real4Real4Real"><code class="docutils literal notranslate"><span class="pre">InverseComptonY()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N15InverseComptonY15InverseComptonYE4Real"><code class="docutils literal notranslate"><span class="pre">InverseComptonY()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4NK15InverseComptonY20compute_val_at_gammaE4Real4Real"><code class="docutils literal notranslate"><span class="pre">compute_val_at_gamma()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N15InverseComptonY15InverseComptonYEv"><code class="docutils literal notranslate"><span class="pre">InverseComptonY()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4NK15InverseComptonY17compute_val_at_nuE4Real4Real"><code class="docutils literal notranslate"><span class="pre">compute_val_at_nu()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N15InverseComptonY11gamma_hat_cE"><code class="docutils literal notranslate"><span class="pre">gamma_hat_c</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N15InverseComptonY11gamma_hat_mE"><code class="docutils literal notranslate"><span class="pre">gamma_hat_m</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N15InverseComptonY8nu_hat_cE"><code class="docutils literal notranslate"><span class="pre">nu_hat_c</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4NK15InverseComptonY20compute_val_at_gammaE4Real4Real"><code class="docutils literal notranslate"><span class="pre">compute_val_at_gamma()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N15InverseComptonY8nu_hat_mE"><code class="docutils literal notranslate"><span class="pre">nu_hat_m</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N15InverseComptonY6regimeE"><code class="docutils literal notranslate"><span class="pre">regime</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N15InverseComptonY8nu_hat_cE"><code class="docutils literal notranslate"><span class="pre">nu_hat_c</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N15InverseComptonY11gamma_hat_mE"><code class="docutils literal notranslate"><span class="pre">gamma_hat_m</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N15InverseComptonY11gamma_hat_cE"><code class="docutils literal notranslate"><span class="pre">gamma_hat_c</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N15InverseComptonY3Y_TE"><code class="docutils literal notranslate"><span class="pre">Y_T</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N15InverseComptonY6regimeE"><code class="docutils literal notranslate"><span class="pre">regime</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N15InverseComptonY18compute_Y_ThompsonERK15InverseComptonY"><code class="docutils literal notranslate"><span class="pre">compute_Y_Thompson()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N15InverseComptonY23compute_Y_tilt_at_gammaERK15InverseComptonY4Real4Real"><code class="docutils literal notranslate"><span class="pre">compute_Y_tilt_at_gamma()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N15InverseComptonY20compute_Y_tilt_at_nuERK15InverseComptonY4Real4Real"><code class="docutils literal notranslate"><span class="pre">compute_Y_tilt_at_nu()</span></code></a></li>
@@ -269,24 +216,21 @@
 </li>
 <li class="toctree-l2"><a class="reference internal" href="cpp_api.html#shock-dynamics">Shock Dynamics</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="cpp_api.html#_CPPv45Shock"><code class="docutils literal notranslate"><span class="pre">Shock</span></code></a><ul>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N5Shock5ShockEv"><code class="docutils literal notranslate"><span class="pre">Shock()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N5Shock5ShockE6size_t6size_t6size_t4Real4Real"><code class="docutils literal notranslate"><span class="pre">Shock()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N5Shock6resizeE6size_t6size_t6size_t"><code class="docutils literal notranslate"><span class="pre">resize()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N5Shock5ShockEv"><code class="docutils literal notranslate"><span class="pre">Shock()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4NK5Shock5shapeEv"><code class="docutils literal notranslate"><span class="pre">shape()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N5Shock1BE"><code class="docutils literal notranslate"><span class="pre">B</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N5Shock14column_num_denE"><code class="docutils literal notranslate"><span class="pre">column_num_den</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N5Shock5eps_BE"><code class="docutils literal notranslate"><span class="pre">eps_B</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N5Shock5eps_eE"><code class="docutils literal notranslate"><span class="pre">eps_e</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N5Shock6resizeE6size_t6size_t6size_t"><code class="docutils literal notranslate"><span class="pre">resize()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N5Shock6t_comvE"><code class="docutils literal notranslate"><span class="pre">t_comv</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N5Shock1rE"><code class="docutils literal notranslate"><span class="pre">r</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N5Shock5thetaE"><code class="docutils literal notranslate"><span class="pre">theta</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N5Shock5GammaE"><code class="docutils literal notranslate"><span class="pre">Gamma</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N5Shock9Gamma_relE"><code class="docutils literal notranslate"><span class="pre">Gamma_rel</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N5Shock1BE"><code class="docutils literal notranslate"><span class="pre">B</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N5Shock14column_num_denE"><code class="docutils literal notranslate"><span class="pre">column_num_den</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N5Shock13injection_idxE"><code class="docutils literal notranslate"><span class="pre">injection_idx</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N5Shock1rE"><code class="docutils literal notranslate"><span class="pre">r</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N5Shock8requiredE"><code class="docutils literal notranslate"><span class="pre">required</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N5Shock6t_comvE"><code class="docutils literal notranslate"><span class="pre">t_comv</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N5Shock5thetaE"><code class="docutils literal notranslate"><span class="pre">theta</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N5Shock8phi_sizeE"><code class="docutils literal notranslate"><span class="pre">phi_size</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N5Shock6t_sizeE"><code class="docutils literal notranslate"><span class="pre">t_size</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N5Shock10theta_sizeE"><code class="docutils literal notranslate"><span class="pre">theta_size</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N5Shock5eps_eE"><code class="docutils literal notranslate"><span class="pre">eps_e</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N5Shock5eps_BE"><code class="docutils literal notranslate"><span class="pre">eps_B</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="cpp_api.html#_CPPv4I00E14SimpleShockEqn"><code class="docutils literal notranslate"><span class="pre">SimpleShockEqn</span></code></a><ul>
@@ -294,15 +238,11 @@
 <li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N14SimpleShockEqn14SimpleShockEqnERK6MediumRK6Ejecta4Real4Real4Real4Real"><code class="docutils literal notranslate"><span class="pre">SimpleShockEqn()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4NK14SimpleShockEqnclERK5StateR5State4Real"><code class="docutils literal notranslate"><span class="pre">operator()()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4NK14SimpleShockEqn14set_init_stateER5State4Real"><code class="docutils literal notranslate"><span class="pre">set_init_state()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N14SimpleShockEqn6ejectaE"><code class="docutils literal notranslate"><span class="pre">ejecta</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N14SimpleShockEqn5eps_eE"><code class="docutils literal notranslate"><span class="pre">eps_e</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N14SimpleShockEqn6mediumE"><code class="docutils literal notranslate"><span class="pre">medium</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N14SimpleShockEqn6ejectaE"><code class="docutils literal notranslate"><span class="pre">ejecta</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N14SimpleShockEqn3phiE"><code class="docutils literal notranslate"><span class="pre">phi</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N14SimpleShockEqn6theta0E"><code class="docutils literal notranslate"><span class="pre">theta0</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4NK14SimpleShockEqn9dGamma_dtE4RealRK5StateRK5State"><code class="docutils literal notranslate"><span class="pre">dGamma_dt()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N14SimpleShockEqn7dOmega0E"><code class="docutils literal notranslate"><span class="pre">dOmega0</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N14SimpleShockEqn7m_shellE"><code class="docutils literal notranslate"><span class="pre">m_shell</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N14SimpleShockEqn7theta_sE"><code class="docutils literal notranslate"><span class="pre">theta_s</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N14SimpleShockEqn5eps_eE"><code class="docutils literal notranslate"><span class="pre">eps_e</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="cpp_api.html#_CPPv4I00E15ForwardShockEqn"><code class="docutils literal notranslate"><span class="pre">ForwardShockEqn</span></code></a><ul>
@@ -310,47 +250,33 @@
 <li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N15ForwardShockEqn15ForwardShockEqnERK6MediumRK6Ejecta4Real4Real4Real4Real"><code class="docutils literal notranslate"><span class="pre">ForwardShockEqn()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4NK15ForwardShockEqnclERK5StateR5State4Real"><code class="docutils literal notranslate"><span class="pre">operator()()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4NK15ForwardShockEqn14set_init_stateER5State4Real"><code class="docutils literal notranslate"><span class="pre">set_init_state()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N15ForwardShockEqn6ejectaE"><code class="docutils literal notranslate"><span class="pre">ejecta</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N15ForwardShockEqn5eps_eE"><code class="docutils literal notranslate"><span class="pre">eps_e</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N15ForwardShockEqn6mediumE"><code class="docutils literal notranslate"><span class="pre">medium</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N15ForwardShockEqn6ejectaE"><code class="docutils literal notranslate"><span class="pre">ejecta</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N15ForwardShockEqn3phiE"><code class="docutils literal notranslate"><span class="pre">phi</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N15ForwardShockEqn6theta0E"><code class="docutils literal notranslate"><span class="pre">theta0</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4NK15ForwardShockEqn9dGamma_dtE4Real4RealRK5StateRK5State4Real"><code class="docutils literal notranslate"><span class="pre">dGamma_dt()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4NK15ForwardShockEqn5dU_dtE4Real4RealRK5StateRK5State4Real"><code class="docutils literal notranslate"><span class="pre">dU_dt()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N15ForwardShockEqn7dOmega0E"><code class="docutils literal notranslate"><span class="pre">dOmega0</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N15ForwardShockEqn7m_shellE"><code class="docutils literal notranslate"><span class="pre">m_shell</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N15ForwardShockEqn7theta_sE"><code class="docutils literal notranslate"><span class="pre">theta_s</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N15ForwardShockEqn5eps_eE"><code class="docutils literal notranslate"><span class="pre">eps_e</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="cpp_api.html#_CPPv4I00E10FRShockEqn"><code class="docutils literal notranslate"><span class="pre">FRShockEqn</span></code></a><ul>
 <li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N10FRShockEqn5StateE"><code class="docutils literal notranslate"><span class="pre">State</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N10FRShockEqn10FRShockEqnERK6MediumRK6Ejecta4Real4Real4Real"><code class="docutils literal notranslate"><span class="pre">FRShockEqn()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N10FRShockEqnclERK5StateR5State4Real"><code class="docutils literal notranslate"><span class="pre">operator()()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4NK10FRShockEqn14set_init_stateER5State4Real"><code class="docutils literal notranslate"><span class="pre">set_init_state()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N10FRShockEqn15set_cross_stateERK5State4Real"><code class="docutils literal notranslate"><span class="pre">set_cross_state()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4NK10FRShockEqn23compute_crossing_Gamma3ERK5State"><code class="docutils literal notranslate"><span class="pre">compute_crossing_Gamma3()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4NK10FRShockEqn25compute_crossed_Gamma_relERK5State"><code class="docutils literal notranslate"><span class="pre">compute_crossed_Gamma_rel()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4NK10FRShockEqn17compute_crossed_BERK5State"><code class="docutils literal notranslate"><span class="pre">compute_crossed_B()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4NK10FRShockEqn22compute_crossed_Gamma3E4Real4Real"><code class="docutils literal notranslate"><span class="pre">compute_crossed_Gamma3()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4NK10FRShockEqn25compute_crossed_Gamma_relERK5State"><code class="docutils literal notranslate"><span class="pre">compute_crossed_Gamma_rel()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4NK10FRShockEqn23compute_crossing_Gamma3ERK5State"><code class="docutils literal notranslate"><span class="pre">compute_crossing_Gamma3()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4NK10FRShockEqn19compute_shell_sigmaERK5State"><code class="docutils literal notranslate"><span class="pre">compute_shell_sigma()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4NK10FRShockEqn12is_injectingE4Real"><code class="docutils literal notranslate"><span class="pre">is_injecting()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N10FRShockEqnclERK5StateR5State4Real"><code class="docutils literal notranslate"><span class="pre">operator()()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N10FRShockEqn15set_cross_stateERK5State4Real"><code class="docutils literal notranslate"><span class="pre">set_cross_state()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4NK10FRShockEqn14set_init_stateER5State4Real"><code class="docutils literal notranslate"><span class="pre">set_init_state()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N10FRShockEqn6mediumE"><code class="docutils literal notranslate"><span class="pre">medium</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N10FRShockEqn6ejectaE"><code class="docutils literal notranslate"><span class="pre">ejecta</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N10FRShockEqn3phiE"><code class="docutils literal notranslate"><span class="pre">phi</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N10FRShockEqn6theta0E"><code class="docutils literal notranslate"><span class="pre">theta0</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N10FRShockEqn5eps_eE"><code class="docutils literal notranslate"><span class="pre">eps_e</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N10FRShockEqn6Gamma4E"><code class="docutils literal notranslate"><span class="pre">Gamma4</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N10FRShockEqn6mediumE"><code class="docutils literal notranslate"><span class="pre">medium</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N10FRShockEqn3phiE"><code class="docutils literal notranslate"><span class="pre">phi</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N10FRShockEqn3r_xE"><code class="docutils literal notranslate"><span class="pre">r_x</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N10FRShockEqn6theta0E"><code class="docutils literal notranslate"><span class="pre">theta0</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N10FRShockEqn3u_xE"><code class="docutils literal notranslate"><span class="pre">u_x</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4NK10FRShockEqn18get_injection_rateE4Real"><code class="docutils literal notranslate"><span class="pre">get_injection_rate()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N10FRShockEqn15adiabatic_constE"><code class="docutils literal notranslate"><span class="pre">adiabatic_const</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N10FRShockEqn7crossedE"><code class="docutils literal notranslate"><span class="pre">crossed</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N10FRShockEqn8deps0_dtE"><code class="docutils literal notranslate"><span class="pre">deps0_dt</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N10FRShockEqn6dm0_dtE"><code class="docutils literal notranslate"><span class="pre">dm0_dt</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N10FRShockEqn11e_mag_constE"><code class="docutils literal notranslate"><span class="pre">e_mag_const</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N10FRShockEqn11gamma_hat_xE"><code class="docutils literal notranslate"><span class="pre">gamma_hat_x</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N10FRShockEqn10N_electronE"><code class="docutils literal notranslate"><span class="pre">N_electron</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N10FRShockEqn2u4E"><code class="docutils literal notranslate"><span class="pre">u4</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N10FRShockEqn3r_xE"><code class="docutils literal notranslate"><span class="pre">r_x</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -358,49 +284,37 @@
 <li class="toctree-l2"><a class="reference internal" href="cpp_api.html#physics-and-utilities">Physics and Utilities</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="cpp_api.html#_CPPv48Observer"><code class="docutils literal notranslate"><span class="pre">Observer</span></code></a><ul>
 <li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N8Observer8ObserverEv"><code class="docutils literal notranslate"><span class="pre">Observer()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4IDpEN8Observer4fluxE5ArrayRK5ArrayRK5ArrayDpRK10PhotonGrid"><code class="docutils literal notranslate"><span class="pre">flux()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N8Observer7observeERK5CoordRK5Shock4Real4Real"><code class="docutils literal notranslate"><span class="pre">observe()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N8Observer10observe_atERK5ArrayRK5CoordR5Shock4Real4Real"><code class="docutils literal notranslate"><span class="pre">observe_at()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4IDpEN8Observer13specific_fluxE8MeshGridRK5ArrayRK5ArrayDpRK10PhotonGrid"><code class="docutils literal notranslate"><span class="pre">specific_flux()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4IDpEN8Observer13specific_fluxE5ArrayRK5Array4RealDpRK10PhotonGrid"><code class="docutils literal notranslate"><span class="pre">specific_flux()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4IDpEN8Observer13specific_fluxE8MeshGridRK5ArrayRK5ArrayDpRK10PhotonGrid"><code class="docutils literal notranslate"><span class="pre">specific_flux()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4IDpEN8Observer4fluxE5ArrayRK5ArrayRK5ArrayDpRK10PhotonGrid"><code class="docutils literal notranslate"><span class="pre">flux()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4IDpEN8Observer7spectraE8MeshGridRK5ArrayRK5ArrayDpRK10PhotonGrid"><code class="docutils literal notranslate"><span class="pre">spectra()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4IDpEN8Observer8spectrumE5ArrayRK5Array4RealDpRK10PhotonGrid"><code class="docutils literal notranslate"><span class="pre">spectrum()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N8Observer15update_requiredER8MaskGridRK5Array"><code class="docutils literal notranslate"><span class="pre">update_required()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N8Observer4timeE"><code class="docutils literal notranslate"><span class="pre">time</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N8Observer15build_time_gridERK5CoordRK5Shock4Real4Real"><code class="docutils literal notranslate"><span class="pre">build_time_grid()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N8Observer21calc_emission_surfaceERK5CoordRK5Shock"><code class="docutils literal notranslate"><span class="pre">calc_emission_surface()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N8Observer10calc_t_obsERK5CoordRK5Shock"><code class="docutils literal notranslate"><span class="pre">calc_t_obs()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4NK8Observer11interpolateERK11InterpState6size_t6size_t6size_t4Real"><code class="docutils literal notranslate"><span class="pre">interpolate()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4IDpEN8Observer14set_boundariesEbR11InterpState6size_t6size_t6size_t4RealDpRK10PhotonGrid"><code class="docutils literal notranslate"><span class="pre">set_boundaries()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N8Observer12eff_phi_gridE"><code class="docutils literal notranslate"><span class="pre">eff_phi_grid</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N8Observer6jet_3dE"><code class="docutils literal notranslate"><span class="pre">jet_3d</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N8Observer11lg2_dopplerE"><code class="docutils literal notranslate"><span class="pre">lg2_doppler</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N8Observer14lg2_one_plus_zE"><code class="docutils literal notranslate"><span class="pre">lg2_one_plus_z</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N8Observer11lg2_surfaceE"><code class="docutils literal notranslate"><span class="pre">lg2_surface</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N8Observer5lg2_tE"><code class="docutils literal notranslate"><span class="pre">lg2_t</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N8Observer9lumi_distE"><code class="docutils literal notranslate"><span class="pre">lumi_dist</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N8Observer10one_plus_zE"><code class="docutils literal notranslate"><span class="pre">one_plus_z</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N8Observer6t_gridE"><code class="docutils literal notranslate"><span class="pre">t_grid</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N8Observer10theta_gridE"><code class="docutils literal notranslate"><span class="pre">theta_grid</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N8Observer11InterpStateE"><code class="docutils literal notranslate"><span class="pre">Observer::InterpState</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="cpp_api.html#_CPPv45Coord"><code class="docutils literal notranslate"><span class="pre">Coord</span></code></a><ul>
 <li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N5Coord5CoordEv"><code class="docutils literal notranslate"><span class="pre">Coord()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4NK5Coord5shapeEv"><code class="docutils literal notranslate"><span class="pre">shape()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N5Coord3phiE"><code class="docutils literal notranslate"><span class="pre">phi</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N5Coord1tE"><code class="docutils literal notranslate"><span class="pre">t</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N5Coord5thetaE"><code class="docutils literal notranslate"><span class="pre">theta</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N5Coord1tE"><code class="docutils literal notranslate"><span class="pre">t</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N5Coord10theta_viewE"><code class="docutils literal notranslate"><span class="pre">theta_view</span></code></a></li>
 </ul>
 </li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="cpp_api.html#performance-considerations">Performance Considerations</a></li>
 <li class="toctree-l2"><a class="reference internal" href="cpp_api.html#documenting-c-code">Documenting C++ Code</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="cpp_api.html#class-and-function-documentation">Class and Function Documentation</a></li>
 <li class="toctree-l3"><a class="reference internal" href="cpp_api.html#member-variable-documentation">Member Variable Documentation</a></li>
 <li class="toctree-l3"><a class="reference internal" href="cpp_api.html#template-function-documentation">Template Function Documentation</a></li>
 <li class="toctree-l3"><a class="reference internal" href="cpp_api.html#inline-function-documentation">Inline Function Documentation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="cpp_api.html#c-20-attribute-documentation">C++20 Attribute Documentation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="cpp_api.html#special-member-function-documentation">Special Member Function Documentation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="cpp_api.html#private-member-documentation">Private Member Documentation</a></li>
 <li class="toctree-l3"><a class="reference internal" href="cpp_api.html#example-class">Example Class</a></li>
 </ul>
 </li>
@@ -434,60 +348,6 @@
 <li class="toctree-l2"><a class="reference internal" href="examples.html#sample-scripts">Sample Scripts</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="test_class.html">Test Class Documentation</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="test_class.html#gaussianjet-class">GaussianJet Class</a></li>
-<li class="toctree-l2"><a class="reference internal" href="test_class.html#details-for-gaussianjet-functions">Details for GaussianJet Functions</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="test_class.html#constructor">Constructor</a></li>
-<li class="toctree-l3"><a class="reference internal" href="test_class.html#energy-distribution">Energy Distribution</a></li>
-<li class="toctree-l3"><a class="reference internal" href="test_class.html#lorentz-factor-profile">Lorentz Factor Profile</a></li>
-<li class="toctree-l3"><a class="reference internal" href="test_class.html#class-members">Class Members</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="test_class.html#_CPPv4N11GaussianJet2T0E"><code class="docutils literal notranslate"><span class="pre">T0</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="test_class.html#_CPPv4N11GaussianJet9spreadingE"><code class="docutils literal notranslate"><span class="pre">spreading</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="test_class.html#private-members">Private Members</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="test_class.html#_CPPv4N11GaussianJet5norm_E"><code class="docutils literal notranslate"><span class="pre">norm_</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="test_class.html#_CPPv4N11GaussianJet6eps_k_E"><code class="docutils literal notranslate"><span class="pre">eps_k_</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="test_class.html#_CPPv4N11GaussianJet7Gamma0_E"><code class="docutils literal notranslate"><span class="pre">Gamma0_</span></code></a></li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="documentation_guide.html">Documentation Guide</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="documentation_guide.html#overview">Overview</a></li>
-<li class="toctree-l2"><a class="reference internal" href="documentation_guide.html#documentation-structure">Documentation Structure</a></li>
-<li class="toctree-l2"><a class="reference internal" href="documentation_guide.html#directory-structure">Directory Structure</a></li>
-<li class="toctree-l2"><a class="reference internal" href="documentation_guide.html#build-system">Build System</a></li>
-<li class="toctree-l2"><a class="reference internal" href="documentation_guide.html#building-the-documentation">Building the Documentation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="documentation_guide.html#continuous-integration">Continuous Integration</a></li>
-<li class="toctree-l2"><a class="reference internal" href="documentation_guide.html#documenting-c-code">Documenting C++ Code</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="documentation_guide.html#class-documentation">Class Documentation</a></li>
-<li class="toctree-l3"><a class="reference internal" href="documentation_guide.html#method-documentation">Method Documentation</a></li>
-<li class="toctree-l3"><a class="reference internal" href="documentation_guide.html#member-variable-documentation">Member Variable Documentation</a></li>
-<li class="toctree-l3"><a class="reference internal" href="documentation_guide.html#file-documentation">File Documentation</a></li>
-<li class="toctree-l3"><a class="reference internal" href="documentation_guide.html#namespace-documentation">Namespace Documentation</a></li>
-<li class="toctree-l3"><a class="reference internal" href="documentation_guide.html#mathematical-formulas">Mathematical Formulas</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="documentation_guide.html#documenting-python-code">Documenting Python Code</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="documentation_guide.html#id1">Class Documentation</a></li>
-<li class="toctree-l3"><a class="reference internal" href="documentation_guide.html#id2">Method Documentation</a></li>
-<li class="toctree-l3"><a class="reference internal" href="documentation_guide.html#function-documentation">Function Documentation</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="documentation_guide.html#documentation-for-rst-files">Documentation for RST Files</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="documentation_guide.html#section-headers">Section Headers</a></li>
-<li class="toctree-l3"><a class="reference internal" href="documentation_guide.html#code-examples">Code Examples</a></li>
-<li class="toctree-l3"><a class="reference internal" href="documentation_guide.html#cross-references">Cross-References</a></li>
-<li class="toctree-l3"><a class="reference internal" href="documentation_guide.html#id3">Mathematical Formulas</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="documentation_guide.html#tips-for-good-documentation">Tips for Good Documentation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="documentation_guide.html#common-mistakes-to-avoid">Common Mistakes to Avoid</a></li>
-</ul>
-</li>
 <li class="toctree-l1"><a class="reference internal" href="contributing.html">Contributing</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="contributing.html#getting-started">Getting Started</a></li>
 <li class="toctree-l2"><a class="reference internal" href="contributing.html#installation-for-development">Installation for Development</a></li>
@@ -504,6 +364,7 @@
 <li class="toctree-l2"><a class="reference internal" href="contributing.html#building-documentation">Building Documentation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="contributing.html#testing">Testing</a></li>
 <li class="toctree-l2"><a class="reference internal" href="contributing.html#pull-request-process">Pull Request Process</a></li>
+<li class="toctree-l2"><a class="reference internal" href="contributing.html#issues-and-feedback">Issues and Feedback</a></li>
 <li class="toctree-l2"><a class="reference internal" href="contributing.html#code-of-conduct">Code of Conduct</a></li>
 <li class="toctree-l2"><a class="reference internal" href="contributing.html#license">License</a></li>
 </ul>
@@ -526,6 +387,7 @@
       <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
       <li class="breadcrumb-item active">Python API Reference</li>
       <li class="wy-breadcrumbs-aside">
+            <a href="_sources/python_api.rst.txt" rel="nofollow"> View page source</a>
       </li>
   </ul>
   <hr/>
@@ -534,20 +396,23 @@
            <div itemprop="articleBody">
              
   <section id="python-api-reference">
-<h1>Python API Reference<a class="headerlink" href="#python-api-reference" title="Link to this heading"></a></h1>
+<h1>Python API Reference</h1>
 <nav class="contents local" id="table-of-contents">
 <p class="topic-title">Table of Contents</p>
 <ul class="simple">
 <li><p><a class="reference internal" href="#overview" id="id1">Overview</a></p></li>
 <li><p><a class="reference internal" href="#key-components" id="id2">Key Components</a></p></li>
-<li><p><a class="reference internal" href="#core-classes" id="id3">Core Classes</a></p></li>
-<li><p><a class="reference internal" href="#jet-models" id="id4">Jet Models</a></p></li>
-<li><p><a class="reference internal" href="#ambient-media" id="id5">Ambient Media</a></p></li>
-<li><p><a class="reference internal" href="#radiation-processes" id="id6">Radiation Processes</a></p></li>
-<li><p><a class="reference internal" href="#shock-dynamics" id="id7">Shock Dynamics</a></p></li>
-<li><p><a class="reference internal" href="#data-fitting" id="id8">Data Fitting</a></p></li>
-<li><p><a class="reference internal" href="#results" id="id9">Results</a></p></li>
-<li><p><a class="reference internal" href="#utilities" id="id10">Utilities</a></p></li>
+<li><p><a class="reference internal" href="#core-classes" id="id3">Core Classes</a></p>
+<ul>
+<li><p><a class="reference internal" href="#obsdata" id="id4">ObsData</a></p></li>
+<li><p><a class="reference internal" href="#setups" id="id5">Setups</a></p></li>
+<li><p><a class="reference internal" href="#modelparams" id="id6">ModelParams</a></p></li>
+<li><p><a class="reference internal" href="#paramdef-and-scale" id="id7">ParamDef and Scale</a></p></li>
+<li><p><a class="reference internal" href="#fitter" id="id8">Fitter</a></p></li>
+<li><p><a class="reference internal" href="#fitresult" id="id9">FitResult</a></p></li>
+<li><p><a class="reference internal" href="#vegasmc" id="id10">VegasMC</a></p></li>
+</ul>
+</li>
 <li><p><a class="reference internal" href="#documenting-python-code" id="id11">Documenting Python Code</a></p>
 <ul>
 <li><p><a class="reference internal" href="#class-and-function-documentation" id="id12">Class and Function Documentation</a></p></li>
@@ -557,51 +422,120 @@
 </ul>
 </nav>
 <section id="overview">
-<h2><a class="toc-backref" href="#id1" role="doc-backlink">Overview</a><a class="headerlink" href="#overview" title="Link to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id1" role="doc-backlink">Overview</a></h2>
 <p>The Python API provides a user-friendly interface to VegasAfterglow’s C++ core, enabling easy model setup, simulation execution, and result analysis. All major C++ components are exposed through Python bindings with an intuitive interface.</p>
 </section>
 <section id="key-components">
-<h2><a class="toc-backref" href="#id2" role="doc-backlink">Key Components</a><a class="headerlink" href="#key-components" title="Link to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id2" role="doc-backlink">Key Components</a></h2>
 <p>The Python API is organized into several core components:</p>
 <ul class="simple">
-<li><p><strong>Model Creation</strong>: Classes for defining GRB afterglow models</p></li>
-<li><p><strong>Jet Models</strong>: Classes for different jet structure profiles (TophatJet, GaussianJet, PowerLawJet)</p></li>
-<li><p><strong>Ambient Media</strong>: Classes for defining the circumburst environment (ISM, Wind)</p></li>
-<li><p><strong>Radiation Processes</strong>: Components for calculating emission mechanisms (Synchrotron, SynchrotronSelfCompton)</p></li>
-<li><p><strong>Shock Dynamics</strong>: Forward and reverse shock physics</p></li>
-<li><p><strong>Data Fitting</strong>: Tools for comparing models with observational data using MCMC methods</p></li>
-<li><p><strong>Results Processing</strong>: Classes for handling and visualizing simulation results</p></li>
+<li><p><strong>Data Representation</strong>: Classes for handling observational data and model parameters</p></li>
+<li><p><strong>MCMC Framework</strong>: Tools for parameter fitting and posterior exploration</p></li>
+<li><p><strong>Model Configuration</strong>: Classes for setting up the physical model</p></li>
+<li><p><strong>Results Processing</strong>: Tools for handling simulation outputs</p></li>
 </ul>
 </section>
 <section id="core-classes">
-<h2><a class="toc-backref" href="#id3" role="doc-backlink">Core Classes</a><a class="headerlink" href="#core-classes" title="Link to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id3" role="doc-backlink">Core Classes</a></h2>
+<section id="obsdata">
+<h3><a class="toc-backref" href="#id4" role="doc-backlink">ObsData</a></h3>
+<p>The <code class="xref any docutils literal notranslate"><span class="pre">ObsData</span></code> class is used to store and manage observational data, including light curves and spectra. It provides methods to add observational data from various sources.</p>
+<p>Example:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">VegasAfterglow</span><span class="w"> </span><span class="kn">import</span> <span class="n">ObsData</span>
+
+<span class="c1"># Create an instance to store observational data</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">ObsData</span><span class="p">()</span>
+
+<span class="c1"># Add light curve data</span>
+<span class="n">data</span><span class="o">.</span><span class="n">add_light_curve</span><span class="p">(</span><span class="n">nu_cgs</span><span class="o">=</span><span class="mf">4.84e14</span><span class="p">,</span> <span class="n">t_cgs</span><span class="o">=</span><span class="n">time_data</span><span class="p">,</span> <span class="n">Fnu_cgs</span><span class="o">=</span><span class="n">flux_data</span><span class="p">,</span> <span class="n">Fnu_err</span><span class="o">=</span><span class="n">flux_error</span><span class="p">)</span>
+
+<span class="c1"># Add spectrum data</span>
+<span class="n">data</span><span class="o">.</span><span class="n">add_spectrum</span><span class="p">(</span><span class="n">t_cgs</span><span class="o">=</span><span class="mi">3000</span><span class="p">,</span> <span class="n">nu_cgs</span><span class="o">=</span><span class="n">nu_data</span><span class="p">,</span> <span class="n">Fnu_cgs</span><span class="o">=</span><span class="n">spectrum_data</span><span class="p">,</span> <span class="n">Fnu_err</span><span class="o">=</span><span class="n">spectrum_error</span><span class="p">)</span>
+</pre></div>
+</div>
 </section>
-<section id="jet-models">
-<h2><a class="toc-backref" href="#id4" role="doc-backlink">Jet Models</a><a class="headerlink" href="#jet-models" title="Link to this heading"></a></h2>
+<section id="setups">
+<h3><a class="toc-backref" href="#id5" role="doc-backlink">Setups</a></h3>
+<p>The <code class="xref any docutils literal notranslate"><span class="pre">Setups</span></code> class defines global properties and environment settings for the model. These settings remain fixed during the MCMC process.</p>
+<p>Example:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">VegasAfterglow</span><span class="w"> </span><span class="kn">import</span> <span class="n">Setups</span>
+
+<span class="c1"># Create configuration</span>
+<span class="n">cfg</span> <span class="o">=</span> <span class="n">Setups</span><span class="p">()</span>
+
+<span class="c1"># Source properties</span>
+<span class="n">cfg</span><span class="o">.</span><span class="n">lumi_dist</span> <span class="o">=</span> <span class="mf">3.364e28</span>    <span class="c1"># Luminosity distance [cm]</span>
+<span class="n">cfg</span><span class="o">.</span><span class="n">z</span> <span class="o">=</span> <span class="mf">1.58</span>               <span class="c1"># Redshift</span>
+
+<span class="c1"># Physical model configuration</span>
+<span class="n">cfg</span><span class="o">.</span><span class="n">medium</span> <span class="o">=</span> <span class="s2">&quot;wind&quot;</span>        <span class="c1"># Ambient medium: &quot;wind&quot;, &quot;ISM&quot;, or &quot;user&quot;</span>
+<span class="n">cfg</span><span class="o">.</span><span class="n">jet</span> <span class="o">=</span> <span class="s2">&quot;powerlaw&quot;</span>       <span class="c1"># Jet structure: &quot;powerlaw&quot;, &quot;gaussian&quot;, &quot;tophat&quot;, or &quot;user&quot;</span>
+</pre></div>
+</div>
 </section>
-<section id="ambient-media">
-<h2><a class="toc-backref" href="#id5" role="doc-backlink">Ambient Media</a><a class="headerlink" href="#ambient-media" title="Link to this heading"></a></h2>
+<section id="modelparams">
+<h3><a class="toc-backref" href="#id6" role="doc-backlink">ModelParams</a></h3>
+<p>The <code class="xref any docutils literal notranslate"><span class="pre">ModelParams</span></code> class stores the physical parameters that define the GRB afterglow model. These parameters are varied during the MCMC fitting process.</p>
 </section>
-<section id="radiation-processes">
-<h2><a class="toc-backref" href="#id6" role="doc-backlink">Radiation Processes</a><a class="headerlink" href="#radiation-processes" title="Link to this heading"></a></h2>
+<section id="paramdef-and-scale">
+<h3><a class="toc-backref" href="#id7" role="doc-backlink">ParamDef and Scale</a></h3>
+<p>These classes are used to define parameters for MCMC exploration, including their name, initial value, prior range, and sampling scale:</p>
+<p>Example:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">VegasAfterglow</span><span class="w"> </span><span class="kn">import</span> <span class="n">ParamDef</span><span class="p">,</span> <span class="n">Scale</span>
+
+<span class="n">mc_params</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;E_iso&quot;</span><span class="p">,</span>    <span class="mf">1e52</span><span class="p">,</span>  <span class="mf">1e50</span><span class="p">,</span>  <span class="mf">1e54</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">LOG</span><span class="p">),</span>       <span class="c1"># Isotropic energy [erg]</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;Gamma0&quot;</span><span class="p">,</span>     <span class="mi">30</span><span class="p">,</span>     <span class="mi">5</span><span class="p">,</span>  <span class="mi">1000</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">LOG</span><span class="p">),</span>       <span class="c1"># Lorentz factor at the core</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;theta_c&quot;</span><span class="p">,</span>   <span class="mf">0.2</span><span class="p">,</span>   <span class="mf">0.0</span><span class="p">,</span>   <span class="mf">0.5</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">LINEAR</span><span class="p">),</span>    <span class="c1"># Core half-opening angle [rad]</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;theta_v&quot;</span><span class="p">,</span>   <span class="mf">0.</span><span class="p">,</span>  <span class="kc">None</span><span class="p">,</span>  <span class="kc">None</span><span class="p">,</span>   <span class="n">Scale</span><span class="o">.</span><span class="n">FIXED</span><span class="p">),</span>     <span class="c1"># Viewing angle [rad]</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;p&quot;</span><span class="p">,</span>         <span class="mf">2.5</span><span class="p">,</span>     <span class="mi">2</span><span class="p">,</span>     <span class="mi">3</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">LINEAR</span><span class="p">),</span>    <span class="c1"># Shocked electron power law index</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;eps_e&quot;</span><span class="p">,</span>     <span class="mf">0.1</span><span class="p">,</span>  <span class="mf">1e-2</span><span class="p">,</span>   <span class="mf">0.5</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">LOG</span><span class="p">),</span>       <span class="c1"># Electron energy fraction</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;eps_B&quot;</span><span class="p">,</span>    <span class="mf">1e-2</span><span class="p">,</span>  <span class="mf">1e-4</span><span class="p">,</span>   <span class="mf">0.5</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">LOG</span><span class="p">),</span>       <span class="c1"># Magnetic field energy fraction</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;A_star&quot;</span><span class="p">,</span>   <span class="mf">0.01</span><span class="p">,</span>  <span class="mf">1e-3</span><span class="p">,</span>     <span class="mi">1</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">LOG</span><span class="p">),</span>       <span class="c1"># Wind parameter</span>
+<span class="p">]</span>
+</pre></div>
+</div>
 </section>
-<section id="shock-dynamics">
-<h2><a class="toc-backref" href="#id7" role="doc-backlink">Shock Dynamics</a><a class="headerlink" href="#shock-dynamics" title="Link to this heading"></a></h2>
+<section id="fitter">
+<h3><a class="toc-backref" href="#id8" role="doc-backlink">Fitter</a></h3>
+<p>The <code class="xref any docutils literal notranslate"><span class="pre">Fitter</span></code> class provides a high-level interface for MCMC fitting of GRB afterglow models to observational data.</p>
+<p>Example:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">VegasAfterglow</span><span class="w"> </span><span class="kn">import</span> <span class="n">Fitter</span>
+
+<span class="c1"># Create the fitter object</span>
+<span class="n">fitter</span> <span class="o">=</span> <span class="n">Fitter</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">cfg</span><span class="p">)</span>
+
+<span class="c1"># Run the MCMC fitting</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">fitter</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span>
+    <span class="n">param_defs</span><span class="o">=</span><span class="n">mc_params</span><span class="p">,</span>          <span class="c1"># Parameter definitions</span>
+    <span class="n">resolution</span><span class="o">=</span><span class="p">(</span><span class="mi">24</span><span class="p">,</span> <span class="mi">24</span><span class="p">,</span> <span class="mi">24</span><span class="p">),</span>       <span class="c1"># Grid resolution (phi, theta, time)</span>
+    <span class="n">total_steps</span><span class="o">=</span><span class="mi">10000</span><span class="p">,</span>             <span class="c1"># Total number of MCMC steps</span>
+    <span class="n">burn_frac</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span>                 <span class="c1"># Fraction of steps to discard as burn-in</span>
+    <span class="n">thin</span><span class="o">=</span><span class="mi">1</span>                         <span class="c1"># Thinning factor</span>
+<span class="p">)</span>
+
+<span class="c1"># Generate light curves with best-fit parameters</span>
+<span class="n">lc_best</span> <span class="o">=</span> <span class="n">fitter</span><span class="o">.</span><span class="n">light_curves</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">best_params</span><span class="p">,</span> <span class="n">t_out</span><span class="p">,</span> <span class="n">bands</span><span class="p">)</span>
+
+<span class="c1"># Generate spectra with best-fit parameters</span>
+<span class="n">spec_best</span> <span class="o">=</span> <span class="n">fitter</span><span class="o">.</span><span class="n">spectra</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">best_params</span><span class="p">,</span> <span class="n">nu_out</span><span class="p">,</span> <span class="n">times</span><span class="p">)</span>
+</pre></div>
+</div>
 </section>
-<section id="data-fitting">
-<h2><a class="toc-backref" href="#id8" role="doc-backlink">Data Fitting</a><a class="headerlink" href="#data-fitting" title="Link to this heading"></a></h2>
+<section id="fitresult">
+<h3><a class="toc-backref" href="#id9" role="doc-backlink">FitResult</a></h3>
+<p>The <code class="xref any docutils literal notranslate"><span class="pre">FitResult</span></code> class stores the results of an MCMC fit, including the posterior samples, log probabilities, and best-fit parameters.</p>
 </section>
-<section id="results">
-<h2><a class="toc-backref" href="#id9" role="doc-backlink">Results</a><a class="headerlink" href="#results" title="Link to this heading"></a></h2>
+<section id="vegasmc">
+<h3><a class="toc-backref" href="#id10" role="doc-backlink">VegasMC</a></h3>
+<p>The <code class="xref any docutils literal notranslate"><span class="pre">VegasMC</span></code> class is the core calculator for MCMC sampling, providing efficient computation of model likelihood based on the specified parameters.</p>
 </section>
-<section id="utilities">
-<h2><a class="toc-backref" href="#id10" role="doc-backlink">Utilities</a><a class="headerlink" href="#utilities" title="Link to this heading"></a></h2>
 </section>
 <section id="documenting-python-code">
-<h2><a class="toc-backref" href="#id11" role="doc-backlink">Documenting Python Code</a><a class="headerlink" href="#documenting-python-code" title="Link to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id11" role="doc-backlink">Documenting Python Code</a></h2>
 <p>When contributing to the Python codebase, please follow these documentation guidelines:</p>
 <section id="class-and-function-documentation">
-<h3><a class="toc-backref" href="#id12" role="doc-backlink">Class and Function Documentation</a><a class="headerlink" href="#class-and-function-documentation" title="Link to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id12" role="doc-backlink">Class and Function Documentation</a></h3>
 <p>Use NumPy-style docstrings for all classes and functions:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">function</span><span class="p">(</span><span class="n">param1</span><span class="p">,</span> <span class="n">param2</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
@@ -631,46 +565,33 @@
 </div>
 </section>
 <section id="example-class">
-<h3><a class="toc-backref" href="#id13" role="doc-backlink">Example Class</a><a class="headerlink" href="#example-class" title="Link to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id13" role="doc-backlink">Example Class</a></h3>
 <p>Here’s an example of a well-documented class:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">GaussianJet</span><span class="p">:</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">ParamDef</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    A class representing a structured jet model with Gaussian profile.</span>
+<span class="sd">    Single-parameter definition for MCMC.</span>
 
-<span class="sd">    This class implements a jet with angular structure, where the energy</span>
-<span class="sd">    and Lorentz factor follow a Gaussian profile with angle from the jet axis.</span>
+<span class="sd">    This class defines a parameter to be used in MCMC fitting, including</span>
+<span class="sd">    its name, initial value, prior range, and sampling scale.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
-<span class="sd">    core_energy : float</span>
-<span class="sd">        The isotropic-equivalent energy in the jet core (ergs)</span>
-<span class="sd">    core_lorentz : float</span>
-<span class="sd">        The initial bulk Lorentz factor in the jet core</span>
-<span class="sd">    theta_core : float</span>
-<span class="sd">        The angular size of the jet core (radians)</span>
-<span class="sd">    viewer_angle : float, optional</span>
-<span class="sd">        The viewing angle relative to the jet axis (radians)</span>
+<span class="sd">    name : str</span>
+<span class="sd">        The parameter name</span>
+<span class="sd">    init : float</span>
+<span class="sd">        Initial value for the parameter</span>
+<span class="sd">    lower : float, optional</span>
+<span class="sd">        Lower bound for the parameter (not needed for FIXED scale)</span>
+<span class="sd">    upper : float, optional</span>
+<span class="sd">        Upper bound for the parameter (not needed for FIXED scale)</span>
+<span class="sd">    scale : Scale, optional</span>
+<span class="sd">        Sampling scale (LINEAR, LOG, or FIXED), default is LINEAR</span>
 
-<span class="sd">    Attributes</span>
-<span class="sd">    ----------</span>
-<span class="sd">    theta_core : float</span>
-<span class="sd">        Core angle of the jet (radians)</span>
+<span class="sd">    Notes</span>
+<span class="sd">    -----</span>
+<span class="sd">    When scale=LOG, we sample log10(x), then transform via 10**v.</span>
+<span class="sd">    When scale=FIXED, the parameter never appears in the sampler.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-
-    <span class="k">def</span><span class="w"> </span><span class="nf">get_energy_at_angle</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">theta</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Get the energy at a specific angle.</span>
-
-<span class="sd">        Parameters</span>
-<span class="sd">        ----------</span>
-<span class="sd">        theta : float</span>
-<span class="sd">            Angle from the jet axis (radians)</span>
-
-<span class="sd">        Returns</span>
-<span class="sd">        -------</span>
-<span class="sd">        float</span>
-<span class="sd">            Energy at the specified angle (ergs)</span>
-<span class="sd">        &quot;&quot;&quot;</span>
 </pre></div>
 </div>
 <p>For more details on NumPy-style docstrings, see the <a class="reference internal" href="contributing.html"><span class="doc">Contributing</span></a> page.</p>

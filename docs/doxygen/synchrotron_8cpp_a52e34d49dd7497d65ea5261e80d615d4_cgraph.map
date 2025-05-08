@@ -1,0 +1,17 @@
+<map id="compute_gamma_c" name="compute_gamma_c">
+<area shape="rect" id="Node000001" title="Calculates cooling Lorentz factor based on comoving time, magnetic field, and IC parameters." alt="" coords="5,45,156,70"/>
+<area shape="rect" id="Node000002" href="$structInverseComptonY.html#a05b76b4d84f50b82728333a42362fc0f" title="Returns the Thomson Y parameter from the provided InverseComptonY object." alt="" coords="204,5,404,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="156,44,190,39,191,44,156,49"/>
+<area shape="rect" id="Node000003" href="$structInverseComptonY.html#a9a35d3af9bd23acdde9d09d38ee116eb" title="Calculates the effective Y parameter at a specific Lorentz factor and spectral index." alt="" coords="204,69,404,109"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="156,65,191,70,190,76,156,71"/>
+<area shape="rect" id="Node000004" href="$structInverseComptonY.html#ae483ec2ba4108fbf96fb15c3e978c0b3" title="Calculates the effective Y parameter for a given Lorentz factor and spectral index." alt="" coords="452,69,652,109"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="404,87,438,87,438,92,404,92"/>
+<area shape="rect" id="Node000005" href="$utilities_8h.html#a4520a27a10a2aef33c99ad8c679da404" title="Fast approximation of a raised to the power of b." alt="" coords="700,51,781,77"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="652,73,686,69,687,74,653,78"/>
+<area shape="rect" id="Node000008" href="$utilities_8h.html#ae490b13fdcc1b917ecdd08c0cecf3556" title="Computes a^(4/3)" alt="" coords="708,101,773,126"/>
+<area shape="poly" id="edge7_Node000004_Node000008" title=" " alt="" coords="653,99,695,105,694,110,652,105"/>
+<area shape="rect" id="Node000006" href="$utilities_8h.html#afc584c30c352192de6847b1f4b8caf0e" title="Fast approximation of 2 raised to a power." alt="" coords="829,27,916,53"/>
+<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="781,54,815,48,816,53,782,59"/>
+<area shape="rect" id="Node000007" href="$utilities_8h.html#afe0a1b1b7509ac4df83fcc0e510f281b" title="Fast approximation of the base&#45;2 logarithm." alt="" coords="831,77,914,102"/>
+<area shape="poly" id="edge6_Node000005_Node000007" title=" " alt="" coords="782,69,818,76,817,81,781,74"/>
+</map>

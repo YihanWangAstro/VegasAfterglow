@@ -1,0 +1,7 @@
+<map id="Observer::spectrum" name="Observer::spectrum">
+<area shape="rect" id="Node000001" title="Computes the spectrum at a single observation time." alt="" coords="480,5,631,31"/>
+<area shape="rect" id="Node000002" href="$structMultiBandModel.html#aa8fa5188553abf9f7f7b2c0321c27752" title=" " alt="" coords="204,5,432,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="466,21,432,21,432,15,466,15"/>
+<area shape="rect" id="Node000003" href="$pybind_8cpp.html#a8c92987849ad296e28ec6c07c8e7860b" title=" " alt="" coords="5,5,156,31"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="190,21,156,21,156,15,190,15"/>
+</map>

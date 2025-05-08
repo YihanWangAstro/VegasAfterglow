@@ -1,0 +1,7 @@
+<map id="fast_pow" name="fast_pow">
+<area shape="rect" id="Node000001" title="Fast approximation of a raised to the power of b." alt="" coords="5,31,87,56"/>
+<area shape="rect" id="Node000002" href="$utilities_8h.html#afc584c30c352192de6847b1f4b8caf0e" title="Fast approximation of 2 raised to a power." alt="" coords="135,5,221,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="86,33,121,26,122,32,87,38"/>
+<area shape="rect" id="Node000003" href="$utilities_8h.html#afe0a1b1b7509ac4df83fcc0e510f281b" title="Fast approximation of the base&#45;2 logarithm." alt="" coords="137,55,219,80"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="87,48,124,55,123,60,86,53"/>
+</map>

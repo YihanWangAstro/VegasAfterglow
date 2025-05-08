@@ -1,0 +1,5 @@
+<map id="eq_space_loglog_interp" name="eq_space_loglog_interp">
+<area shape="rect" id="Node000001" title="Logarithmic interpolation for equally spaced x&#45;values in log space." alt="" coords="5,5,180,31"/>
+<area shape="rect" id="Node000002" href="$utilities_8cpp.html#a367745c657e66d712ce7c153b1d065b7" title="Point&#45;wise logarithmic interpolation between two points." alt="" coords="228,5,375,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="180,15,214,15,214,21,180,21"/>
+</map>

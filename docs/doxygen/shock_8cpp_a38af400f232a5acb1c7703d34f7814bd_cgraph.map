@@ -1,0 +1,9 @@
+<map id="compute_4vel_jump" name="compute_4vel_jump">
+<area shape="rect" id="Node000001" title="Computes the ratio of upstream to downstream four&#45;velocity across the shock front." alt="" coords="5,31,160,56"/>
+<area shape="rect" id="Node000002" href="$shock_8cpp.html#a09f75d8bc0c1cd36d03a413edd7283d8" title="Computes the downstream four&#45;velocity for a given relative Lorentz factor and magnetization parameter..." alt="" coords="208,5,381,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="160,31,194,27,195,33,160,37"/>
+<area shape="rect" id="Node000004" href="$shock_8h.html#ab0d0c4b81c0c5525c81eb24d70c4b010" title="Computes the upstream four&#45;velocity from downstream four&#45;velocity and relative Lorentz factor." alt="" coords="217,55,372,80"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="160,49,204,54,204,60,160,55"/>
+<area shape="rect" id="Node000003" href="$physics_8h.html#a2a95c6b3f1236d69328af7199a772a23" title="Computes adiabatic index as a function of Lorentz factor." alt="" coords="429,5,539,31"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="382,15,415,15,415,21,382,21"/>
+</map>

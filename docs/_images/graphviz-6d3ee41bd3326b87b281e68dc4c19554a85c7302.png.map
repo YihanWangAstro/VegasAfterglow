@@ -1,0 +1,7 @@
+<map id="%3" name="%3">
+<area shape="rect" id="node1" title="Ejecta" alt="" coords="76,101,159,149"/>
+<area shape="rect" id="node2" title="FRShockEqn&lt; Ejecta, Medium &gt;" alt="" coords="5,5,344,53"/>
+<area shape="poly" id="edge2" title="usage" alt="" coords="163,55,141,91,136,88,158,52"/>
+<area shape="rect" id="node3" title="Medium" alt="" coords="183,101,283,149"/>
+<area shape="poly" id="edge1" title="usage" alt="" coords="191,52,214,88,210,91,187,55"/>
+</map>

@@ -1,0 +1,5 @@
+<map id="GaussianJet::Gamma0" name="GaussianJet::Gamma0">
+<area shape="rect" id="Node000001" title="Initial Lorentz factor as a function of phi and theta, with Gaussian falloff." alt="" coords="5,5,172,31"/>
+<area shape="rect" id="Node000002" href="$utilities_8h.html#a19a0be066f6b80639b5863a493990601" title="Fast approximation of the exponential function." alt="" coords="220,5,299,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="172,15,206,15,206,21,172,21"/>
+</map>

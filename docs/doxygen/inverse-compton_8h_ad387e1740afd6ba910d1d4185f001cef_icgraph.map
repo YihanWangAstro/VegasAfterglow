@@ -1,0 +1,5 @@
+<map id="compton_sigma" name="compton_sigma">
+<area shape="rect" id="Node000001" title="Computes the Compton scattering cross&#45;section as a function of frequency (nu)." alt="" coords="165,5,292,31"/>
+<area shape="rect" id="Node000002" href="$structICPhoton.html#aea42facc0caac8c19d9e1d81b6df35c1" title="Generates the IC photon spectrum from the given electron and photon data." alt="" coords="5,5,117,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="152,21,117,21,117,15,152,15"/>
+</map>

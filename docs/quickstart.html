@@ -7,19 +7,21 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Quickstart &mdash; VegasAfterglow 0.1.0 documentation</title>
-      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
       <link rel="stylesheet" type="text/css" href="_static/graphviz.css?v=fd3f3429" />
-      <link rel="stylesheet" type="text/css" href="_static/css/custom.css" />
+      <link rel="stylesheet" type="text/css" href="_static/css/custom.css?v=bbaaf2ba" />
+      <link rel="stylesheet" type="text/css" href="_static/css/custom.css?v=bbaaf2ba" />
 
   
     <link rel="shortcut icon" href="_static/logo.svg"/>
     <link rel="canonical" href="https://yihanwangastro.github.io/VegasAfterglow/docs/quickstart.html" />
       <script src="_static/jquery.js?v=5d32c60e"></script>
       <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="_static/documentation_options.js?v=2caa9db7"></script>
+      <script src="_static/documentation_options.js?v=01f34227"></script>
       <script src="_static/doctools.js?v=9a2dae69"></script>
       <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="_static/js/custom.js?v=72f89627"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -63,12 +65,14 @@
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Quickstart</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#installation">Installation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#basic-usage">Basic Usage</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#setting-up-a-simple-model">Setting up a simple model</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#calculating-light-curves">Calculating light curves</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#plotting-the-results">Plotting the results</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#using-a-structured-jet-model">Using a structured jet model</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#using-a-wind-medium">Using a wind medium</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#computing-a-spectrum">Computing a spectrum</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#preparing-observational-data">Preparing Observational Data</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#setting-up-the-model-configuration">Setting up the Model Configuration</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#defining-mcmc-parameters">Defining MCMC Parameters</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#running-the-mcmc">Running the MCMC</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#analyzing-the-results">Analyzing the Results</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#generating-model-predictions">Generating Model Predictions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#visualizing-parameter-correlations">Visualizing Parameter Correlations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#checking-mcmc-convergence">Checking MCMC Convergence</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#next-steps">Next Steps</a></li>
@@ -77,14 +81,16 @@
 <li class="toctree-l1"><a class="reference internal" href="python_api.html">Python API Reference</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="python_api.html#overview">Overview</a></li>
 <li class="toctree-l2"><a class="reference internal" href="python_api.html#key-components">Key Components</a></li>
-<li class="toctree-l2"><a class="reference internal" href="python_api.html#core-classes">Core Classes</a></li>
-<li class="toctree-l2"><a class="reference internal" href="python_api.html#jet-models">Jet Models</a></li>
-<li class="toctree-l2"><a class="reference internal" href="python_api.html#ambient-media">Ambient Media</a></li>
-<li class="toctree-l2"><a class="reference internal" href="python_api.html#radiation-processes">Radiation Processes</a></li>
-<li class="toctree-l2"><a class="reference internal" href="python_api.html#shock-dynamics">Shock Dynamics</a></li>
-<li class="toctree-l2"><a class="reference internal" href="python_api.html#data-fitting">Data Fitting</a></li>
-<li class="toctree-l2"><a class="reference internal" href="python_api.html#results">Results</a></li>
-<li class="toctree-l2"><a class="reference internal" href="python_api.html#utilities">Utilities</a></li>
+<li class="toctree-l2"><a class="reference internal" href="python_api.html#core-classes">Core Classes</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="python_api.html#obsdata">ObsData</a></li>
+<li class="toctree-l3"><a class="reference internal" href="python_api.html#setups">Setups</a></li>
+<li class="toctree-l3"><a class="reference internal" href="python_api.html#modelparams">ModelParams</a></li>
+<li class="toctree-l3"><a class="reference internal" href="python_api.html#paramdef-and-scale">ParamDef and Scale</a></li>
+<li class="toctree-l3"><a class="reference internal" href="python_api.html#fitter">Fitter</a></li>
+<li class="toctree-l3"><a class="reference internal" href="python_api.html#fitresult">FitResult</a></li>
+<li class="toctree-l3"><a class="reference internal" href="python_api.html#vegasmc">VegasMC</a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="python_api.html#documenting-python-code">Documenting Python Code</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="python_api.html#class-and-function-documentation">Class and Function Documentation</a></li>
 <li class="toctree-l3"><a class="reference internal" href="python_api.html#example-class">Example Class</a></li>
@@ -95,97 +101,45 @@
 <li class="toctree-l1"><a class="reference internal" href="cpp_api.html">C++ API Reference</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="cpp_api.html#overview">Overview</a></li>
 <li class="toctree-l2"><a class="reference internal" href="cpp_api.html#key-components">Key Components</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cpp_api.html#using-the-c-api">Using the C++ API</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="cpp_api.html#including-headers">Including Headers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="cpp_api.html#building-custom-applications">Building Custom Applications</a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="cpp_api.html#c-api-documentation">C++ API Documentation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="cpp_api.html#namespaces">Namespaces</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="cpp_api.html#_CPPv43con"><code class="docutils literal notranslate"><span class="pre">con</span></code></a><ul>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N3con1cE"><code class="docutils literal notranslate"><span class="pre">c</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N3con2c2E"><code class="docutils literal notranslate"><span class="pre">c2</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N3con1eE"><code class="docutils literal notranslate"><span class="pre">e</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N3con2e2E"><code class="docutils literal notranslate"><span class="pre">e2</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N3con2e3E"><code class="docutils literal notranslate"><span class="pre">e3</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N3con9Gamma_cutE"><code class="docutils literal notranslate"><span class="pre">Gamma_cut</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N3con1hE"><code class="docutils literal notranslate"><span class="pre">h</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N3con2H0E"><code class="docutils literal notranslate"><span class="pre">H0</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N3con3infE"><code class="docutils literal notranslate"><span class="pre">inf</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N3con2meE"><code class="docutils literal notranslate"><span class="pre">me</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N3con2mpE"><code class="docutils literal notranslate"><span class="pre">mp</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N3con7Omega_LE"><code class="docutils literal notranslate"><span class="pre">Omega_L</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N3con7Omega_mE"><code class="docutils literal notranslate"><span class="pre">Omega_m</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N3con2piE"><code class="docutils literal notranslate"><span class="pre">pi</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N3con6sigmaTE"><code class="docutils literal notranslate"><span class="pre">sigmaT</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="cpp_api.html#_CPPv44math"><code class="docutils literal notranslate"><span class="pre">math</span></code></a><ul>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4I00EN4math7combineEDa2F12F2"><code class="docutils literal notranslate"><span class="pre">combine()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N4math15const_injectionEv"><code class="docutils literal notranslate"><span class="pre">const_injection()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N4math8gaussianE4Real4Real"><code class="docutils literal notranslate"><span class="pre">gaussian()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N4math9isotropicE4Real"><code class="docutils literal notranslate"><span class="pre">isotropic()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N4math8powerlawE4Real4Real4Real"><code class="docutils literal notranslate"><span class="pre">powerlaw()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N4math18powerlaw_injectionE4Real4Real"><code class="docutils literal notranslate"><span class="pre">powerlaw_injection()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N4math16square_injectionE4Real4Real"><code class="docutils literal notranslate"><span class="pre">square_injection()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N4math14step_injectionE4Real"><code class="docutils literal notranslate"><span class="pre">step_injection()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4I0EN4math7t_indepEDa2F1"><code class="docutils literal notranslate"><span class="pre">t_indep()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N4math6tophatE4Real4Real"><code class="docutils literal notranslate"><span class="pre">tophat()</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="cpp_api.html#_CPPv43evn"><code class="docutils literal notranslate"><span class="pre">evn</span></code></a><ul>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N3evn3ISME4Real"><code class="docutils literal notranslate"><span class="pre">ISM()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N3evn4windE4Real"><code class="docutils literal notranslate"><span class="pre">wind()</span></code></a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="cpp_api.html#core-classes">Core Classes</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="cpp_api.html#_CPPv46Medium"><code class="docutils literal notranslate"><span class="pre">Medium</span></code></a><ul>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N6Medium4massE"><code class="docutils literal notranslate"><span class="pre">mass</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N6Medium3rhoE"><code class="docutils literal notranslate"><span class="pre">rho</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="cpp_api.html#_CPPv46Ejecta"><code class="docutils literal notranslate"><span class="pre">Ejecta</span></code></a><ul>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N6Ejecta7deps_dtE"><code class="docutils literal notranslate"><span class="pre">deps_dt</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N6Ejecta5dm_dtE"><code class="docutils literal notranslate"><span class="pre">dm_dt</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N6Ejecta5eps_kE"><code class="docutils literal notranslate"><span class="pre">eps_k</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N6Ejecta6Gamma0E"><code class="docutils literal notranslate"><span class="pre">Gamma0</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N6Ejecta6sigma0E"><code class="docutils literal notranslate"><span class="pre">sigma0</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N6Ejecta9spreadingE"><code class="docutils literal notranslate"><span class="pre">spreading</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N6Ejecta2T0E"><code class="docutils literal notranslate"><span class="pre">T0</span></code></a></li>
-</ul>
-</li>
-</ul>
-</li>
 <li class="toctree-l2"><a class="reference internal" href="cpp_api.html#jet-models">Jet Models</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="cpp_api.html#_CPPv49TophatJet"><code class="docutils literal notranslate"><span class="pre">TophatJet</span></code></a><ul>
 <li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N9TophatJet9TophatJetE4Real4Real4Real"><code class="docutils literal notranslate"><span class="pre">TophatJet()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4NK9TophatJet5eps_kE4Real4Real"><code class="docutils literal notranslate"><span class="pre">eps_k()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4NK9TophatJet6Gamma0E4Real4Real"><code class="docutils literal notranslate"><span class="pre">Gamma0()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N9TophatJet9spreadingE"><code class="docutils literal notranslate"><span class="pre">spreading</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N9TophatJet2T0E"><code class="docutils literal notranslate"><span class="pre">T0</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N9TophatJet6eps_k_E"><code class="docutils literal notranslate"><span class="pre">eps_k_</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N9TophatJet7Gamma0_E"><code class="docutils literal notranslate"><span class="pre">Gamma0_</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N9TophatJet8theta_c_E"><code class="docutils literal notranslate"><span class="pre">theta_c_</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N9TophatJet9spreadingE"><code class="docutils literal notranslate"><span class="pre">spreading</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="cpp_api.html#_CPPv411GaussianJet"><code class="docutils literal notranslate"><span class="pre">GaussianJet</span></code></a><ul>
 <li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N11GaussianJet11GaussianJetE4Real4Real4Real"><code class="docutils literal notranslate"><span class="pre">GaussianJet()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4NK11GaussianJet5eps_kE4Real4Real"><code class="docutils literal notranslate"><span class="pre">eps_k()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4NK11GaussianJet6Gamma0E4Real4Real"><code class="docutils literal notranslate"><span class="pre">Gamma0()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N11GaussianJet9spreadingE"><code class="docutils literal notranslate"><span class="pre">spreading</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N11GaussianJet2T0E"><code class="docutils literal notranslate"><span class="pre">T0</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N11GaussianJet6eps_k_E"><code class="docutils literal notranslate"><span class="pre">eps_k_</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N11GaussianJet7Gamma0_E"><code class="docutils literal notranslate"><span class="pre">Gamma0_</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N11GaussianJet5norm_E"><code class="docutils literal notranslate"><span class="pre">norm_</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N11GaussianJet9spreadingE"><code class="docutils literal notranslate"><span class="pre">spreading</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="cpp_api.html#_CPPv411PowerLawJet"><code class="docutils literal notranslate"><span class="pre">PowerLawJet</span></code></a><ul>
 <li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N11PowerLawJet11PowerLawJetE4Real4Real4Real4Real"><code class="docutils literal notranslate"><span class="pre">PowerLawJet()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4NK11PowerLawJet5eps_kE4Real4Real"><code class="docutils literal notranslate"><span class="pre">eps_k()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4NK11PowerLawJet6Gamma0E4Real4Real"><code class="docutils literal notranslate"><span class="pre">Gamma0()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N11PowerLawJet9spreadingE"><code class="docutils literal notranslate"><span class="pre">spreading</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N11PowerLawJet2T0E"><code class="docutils literal notranslate"><span class="pre">T0</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N11PowerLawJet6eps_k_E"><code class="docutils literal notranslate"><span class="pre">eps_k_</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N11PowerLawJet7Gamma0_E"><code class="docutils literal notranslate"><span class="pre">Gamma0_</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N11PowerLawJet2k_E"><code class="docutils literal notranslate"><span class="pre">k_</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N11PowerLawJet8theta_c_E"><code class="docutils literal notranslate"><span class="pre">theta_c_</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N11PowerLawJet9spreadingE"><code class="docutils literal notranslate"><span class="pre">spreading</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="cpp_api.html#_CPPv46Ejecta"><code class="docutils literal notranslate"><span class="pre">Ejecta</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N6Ejecta5eps_kE"><code class="docutils literal notranslate"><span class="pre">eps_k</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N6Ejecta6Gamma0E"><code class="docutils literal notranslate"><span class="pre">Gamma0</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N6Ejecta6sigma0E"><code class="docutils literal notranslate"><span class="pre">sigma0</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N6Ejecta7deps_dtE"><code class="docutils literal notranslate"><span class="pre">deps_dt</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N6Ejecta5dm_dtE"><code class="docutils literal notranslate"><span class="pre">dm_dt</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N6Ejecta2T0E"><code class="docutils literal notranslate"><span class="pre">T0</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N6Ejecta9spreadingE"><code class="docutils literal notranslate"><span class="pre">spreading</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -193,16 +147,19 @@
 <li class="toctree-l2"><a class="reference internal" href="cpp_api.html#ambient-medium">Ambient Medium</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="cpp_api.html#_CPPv43ISM"><code class="docutils literal notranslate"><span class="pre">ISM</span></code></a><ul>
 <li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N3ISM3ISME4Real"><code class="docutils literal notranslate"><span class="pre">ISM()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4NK3ISM4massE4Real4Real4Real"><code class="docutils literal notranslate"><span class="pre">mass()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4NK3ISM3rhoE4Real4Real4Real"><code class="docutils literal notranslate"><span class="pre">rho()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N3ISM4rho_E"><code class="docutils literal notranslate"><span class="pre">rho_</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4NK3ISM4massE4Real4Real4Real"><code class="docutils literal notranslate"><span class="pre">mass()</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="cpp_api.html#_CPPv44Wind"><code class="docutils literal notranslate"><span class="pre">Wind</span></code></a><ul>
 <li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N4Wind4WindE4Real"><code class="docutils literal notranslate"><span class="pre">Wind()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4NK4Wind4massE4Real4Real4Real"><code class="docutils literal notranslate"><span class="pre">mass()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4NK4Wind3rhoE4Real4Real4Real"><code class="docutils literal notranslate"><span class="pre">rho()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N4Wind1AE"><code class="docutils literal notranslate"><span class="pre">A</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4NK4Wind4massE4Real4Real4Real"><code class="docutils literal notranslate"><span class="pre">mass()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="cpp_api.html#_CPPv46Medium"><code class="docutils literal notranslate"><span class="pre">Medium</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N6Medium3rhoE"><code class="docutils literal notranslate"><span class="pre">rho</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N6Medium4massE"><code class="docutils literal notranslate"><span class="pre">mass</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -212,54 +169,44 @@
 <li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4NK10SynPhotons12compute_I_nuE4Real"><code class="docutils literal notranslate"><span class="pre">compute_I_nu()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4NK10SynPhotons17compute_log2_I_nuE4Real"><code class="docutils literal notranslate"><span class="pre">compute_log2_I_nu()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N10SynPhotons15update_constantEv"><code class="docutils literal notranslate"><span class="pre">update_constant()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N10SynPhotons1eE"><code class="docutils literal notranslate"><span class="pre">e</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N10SynPhotons14log2_I_nu_peakE"><code class="docutils literal notranslate"><span class="pre">log2_I_nu_peak</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N10SynPhotons9log2_nu_aE"><code class="docutils literal notranslate"><span class="pre">log2_nu_a</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N10SynPhotons9log2_nu_cE"><code class="docutils literal notranslate"><span class="pre">log2_nu_c</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N10SynPhotons9log2_nu_mE"><code class="docutils literal notranslate"><span class="pre">log2_nu_m</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N10SynPhotons9log2_nu_ME"><code class="docutils literal notranslate"><span class="pre">log2_nu_M</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N10SynPhotons4nu_aE"><code class="docutils literal notranslate"><span class="pre">nu_a</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N10SynPhotons4nu_cE"><code class="docutils literal notranslate"><span class="pre">nu_c</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N10SynPhotons4nu_mE"><code class="docutils literal notranslate"><span class="pre">nu_m</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N10SynPhotons4nu_cE"><code class="docutils literal notranslate"><span class="pre">nu_c</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N10SynPhotons4nu_aE"><code class="docutils literal notranslate"><span class="pre">nu_a</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N10SynPhotons4nu_ME"><code class="docutils literal notranslate"><span class="pre">nu_M</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4NK10SynPhotons21compute_log2_spectrumE4Real"><code class="docutils literal notranslate"><span class="pre">compute_log2_spectrum()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4NK10SynPhotons16compute_spectrumE4Real"><code class="docutils literal notranslate"><span class="pre">compute_spectrum()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N10SynPhotons3C1_E"><code class="docutils literal notranslate"><span class="pre">C1_</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N10SynPhotons3C2_E"><code class="docutils literal notranslate"><span class="pre">C2_</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N10SynPhotons3C3_E"><code class="docutils literal notranslate"><span class="pre">C3_</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N10SynPhotons8log2_C1_E"><code class="docutils literal notranslate"><span class="pre">log2_C1_</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N10SynPhotons8log2_C2_E"><code class="docutils literal notranslate"><span class="pre">log2_C2_</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N10SynPhotons8log2_C3_E"><code class="docutils literal notranslate"><span class="pre">log2_C3_</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N10SynPhotons8log2_C4_E"><code class="docutils literal notranslate"><span class="pre">log2_C4_</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N10SynPhotons14log2_I_nu_peakE"><code class="docutils literal notranslate"><span class="pre">log2_I_nu_peak</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N10SynPhotons9log2_nu_mE"><code class="docutils literal notranslate"><span class="pre">log2_nu_m</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N10SynPhotons9log2_nu_cE"><code class="docutils literal notranslate"><span class="pre">log2_nu_c</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N10SynPhotons9log2_nu_aE"><code class="docutils literal notranslate"><span class="pre">log2_nu_a</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N10SynPhotons9log2_nu_ME"><code class="docutils literal notranslate"><span class="pre">log2_nu_M</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N10SynPhotons1eE"><code class="docutils literal notranslate"><span class="pre">e</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="cpp_api.html#_CPPv412SynElectrons"><code class="docutils literal notranslate"><span class="pre">SynElectrons</span></code></a><ul>
 <li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4NK12SynElectrons22compute_column_num_denE4Real"><code class="docutils literal notranslate"><span class="pre">compute_column_num_den()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N12SynElectrons14column_num_denE"><code class="docutils literal notranslate"><span class="pre">column_num_den</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N12SynElectrons7gamma_aE"><code class="docutils literal notranslate"><span class="pre">gamma_a</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N12SynElectrons7gamma_cE"><code class="docutils literal notranslate"><span class="pre">gamma_c</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N12SynElectrons7gamma_mE"><code class="docutils literal notranslate"><span class="pre">gamma_m</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N12SynElectrons7gamma_ME"><code class="docutils literal notranslate"><span class="pre">gamma_M</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N12SynElectrons9I_nu_peakE"><code class="docutils literal notranslate"><span class="pre">I_nu_peak</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N12SynElectrons7gamma_mE"><code class="docutils literal notranslate"><span class="pre">gamma_m</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N12SynElectrons7gamma_cE"><code class="docutils literal notranslate"><span class="pre">gamma_c</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N12SynElectrons7gamma_aE"><code class="docutils literal notranslate"><span class="pre">gamma_a</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N12SynElectrons7gamma_ME"><code class="docutils literal notranslate"><span class="pre">gamma_M</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N12SynElectrons1pE"><code class="docutils literal notranslate"><span class="pre">p</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N12SynElectrons6regimeE"><code class="docutils literal notranslate"><span class="pre">regime</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N12SynElectrons14column_num_denE"><code class="docutils literal notranslate"><span class="pre">column_num_den</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N12SynElectrons3Y_cE"><code class="docutils literal notranslate"><span class="pre">Y_c</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N12SynElectrons6regimeE"><code class="docutils literal notranslate"><span class="pre">regime</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N12SynElectrons2YsE"><code class="docutils literal notranslate"><span class="pre">Ys</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4NK12SynElectrons22compute_gamma_spectrumE4Real"><code class="docutils literal notranslate"><span class="pre">compute_gamma_spectrum()</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="cpp_api.html#_CPPv415InverseComptonY"><code class="docutils literal notranslate"><span class="pre">InverseComptonY</span></code></a><ul>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N15InverseComptonY15InverseComptonYEv"><code class="docutils literal notranslate"><span class="pre">InverseComptonY()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N15InverseComptonY15InverseComptonYE4Real4Real4Real4Real"><code class="docutils literal notranslate"><span class="pre">InverseComptonY()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N15InverseComptonY15InverseComptonYE4Real"><code class="docutils literal notranslate"><span class="pre">InverseComptonY()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4NK15InverseComptonY20compute_val_at_gammaE4Real4Real"><code class="docutils literal notranslate"><span class="pre">compute_val_at_gamma()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N15InverseComptonY15InverseComptonYEv"><code class="docutils literal notranslate"><span class="pre">InverseComptonY()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4NK15InverseComptonY17compute_val_at_nuE4Real4Real"><code class="docutils literal notranslate"><span class="pre">compute_val_at_nu()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N15InverseComptonY11gamma_hat_cE"><code class="docutils literal notranslate"><span class="pre">gamma_hat_c</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N15InverseComptonY11gamma_hat_mE"><code class="docutils literal notranslate"><span class="pre">gamma_hat_m</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N15InverseComptonY8nu_hat_cE"><code class="docutils literal notranslate"><span class="pre">nu_hat_c</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4NK15InverseComptonY20compute_val_at_gammaE4Real4Real"><code class="docutils literal notranslate"><span class="pre">compute_val_at_gamma()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N15InverseComptonY8nu_hat_mE"><code class="docutils literal notranslate"><span class="pre">nu_hat_m</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N15InverseComptonY6regimeE"><code class="docutils literal notranslate"><span class="pre">regime</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N15InverseComptonY8nu_hat_cE"><code class="docutils literal notranslate"><span class="pre">nu_hat_c</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N15InverseComptonY11gamma_hat_mE"><code class="docutils literal notranslate"><span class="pre">gamma_hat_m</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N15InverseComptonY11gamma_hat_cE"><code class="docutils literal notranslate"><span class="pre">gamma_hat_c</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N15InverseComptonY3Y_TE"><code class="docutils literal notranslate"><span class="pre">Y_T</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N15InverseComptonY6regimeE"><code class="docutils literal notranslate"><span class="pre">regime</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N15InverseComptonY18compute_Y_ThompsonERK15InverseComptonY"><code class="docutils literal notranslate"><span class="pre">compute_Y_Thompson()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N15InverseComptonY23compute_Y_tilt_at_gammaERK15InverseComptonY4Real4Real"><code class="docutils literal notranslate"><span class="pre">compute_Y_tilt_at_gamma()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N15InverseComptonY20compute_Y_tilt_at_nuERK15InverseComptonY4Real4Real"><code class="docutils literal notranslate"><span class="pre">compute_Y_tilt_at_nu()</span></code></a></li>
@@ -269,24 +216,21 @@
 </li>
 <li class="toctree-l2"><a class="reference internal" href="cpp_api.html#shock-dynamics">Shock Dynamics</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="cpp_api.html#_CPPv45Shock"><code class="docutils literal notranslate"><span class="pre">Shock</span></code></a><ul>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N5Shock5ShockEv"><code class="docutils literal notranslate"><span class="pre">Shock()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N5Shock5ShockE6size_t6size_t6size_t4Real4Real"><code class="docutils literal notranslate"><span class="pre">Shock()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N5Shock6resizeE6size_t6size_t6size_t"><code class="docutils literal notranslate"><span class="pre">resize()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N5Shock5ShockEv"><code class="docutils literal notranslate"><span class="pre">Shock()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4NK5Shock5shapeEv"><code class="docutils literal notranslate"><span class="pre">shape()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N5Shock1BE"><code class="docutils literal notranslate"><span class="pre">B</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N5Shock14column_num_denE"><code class="docutils literal notranslate"><span class="pre">column_num_den</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N5Shock5eps_BE"><code class="docutils literal notranslate"><span class="pre">eps_B</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N5Shock5eps_eE"><code class="docutils literal notranslate"><span class="pre">eps_e</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N5Shock6resizeE6size_t6size_t6size_t"><code class="docutils literal notranslate"><span class="pre">resize()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N5Shock6t_comvE"><code class="docutils literal notranslate"><span class="pre">t_comv</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N5Shock1rE"><code class="docutils literal notranslate"><span class="pre">r</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N5Shock5thetaE"><code class="docutils literal notranslate"><span class="pre">theta</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N5Shock5GammaE"><code class="docutils literal notranslate"><span class="pre">Gamma</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N5Shock9Gamma_relE"><code class="docutils literal notranslate"><span class="pre">Gamma_rel</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N5Shock1BE"><code class="docutils literal notranslate"><span class="pre">B</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N5Shock14column_num_denE"><code class="docutils literal notranslate"><span class="pre">column_num_den</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N5Shock13injection_idxE"><code class="docutils literal notranslate"><span class="pre">injection_idx</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N5Shock1rE"><code class="docutils literal notranslate"><span class="pre">r</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N5Shock8requiredE"><code class="docutils literal notranslate"><span class="pre">required</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N5Shock6t_comvE"><code class="docutils literal notranslate"><span class="pre">t_comv</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N5Shock5thetaE"><code class="docutils literal notranslate"><span class="pre">theta</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N5Shock8phi_sizeE"><code class="docutils literal notranslate"><span class="pre">phi_size</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N5Shock6t_sizeE"><code class="docutils literal notranslate"><span class="pre">t_size</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N5Shock10theta_sizeE"><code class="docutils literal notranslate"><span class="pre">theta_size</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N5Shock5eps_eE"><code class="docutils literal notranslate"><span class="pre">eps_e</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N5Shock5eps_BE"><code class="docutils literal notranslate"><span class="pre">eps_B</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="cpp_api.html#_CPPv4I00E14SimpleShockEqn"><code class="docutils literal notranslate"><span class="pre">SimpleShockEqn</span></code></a><ul>
@@ -294,15 +238,11 @@
 <li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N14SimpleShockEqn14SimpleShockEqnERK6MediumRK6Ejecta4Real4Real4Real4Real"><code class="docutils literal notranslate"><span class="pre">SimpleShockEqn()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4NK14SimpleShockEqnclERK5StateR5State4Real"><code class="docutils literal notranslate"><span class="pre">operator()()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4NK14SimpleShockEqn14set_init_stateER5State4Real"><code class="docutils literal notranslate"><span class="pre">set_init_state()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N14SimpleShockEqn6ejectaE"><code class="docutils literal notranslate"><span class="pre">ejecta</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N14SimpleShockEqn5eps_eE"><code class="docutils literal notranslate"><span class="pre">eps_e</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N14SimpleShockEqn6mediumE"><code class="docutils literal notranslate"><span class="pre">medium</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N14SimpleShockEqn6ejectaE"><code class="docutils literal notranslate"><span class="pre">ejecta</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N14SimpleShockEqn3phiE"><code class="docutils literal notranslate"><span class="pre">phi</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N14SimpleShockEqn6theta0E"><code class="docutils literal notranslate"><span class="pre">theta0</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4NK14SimpleShockEqn9dGamma_dtE4RealRK5StateRK5State"><code class="docutils literal notranslate"><span class="pre">dGamma_dt()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N14SimpleShockEqn7dOmega0E"><code class="docutils literal notranslate"><span class="pre">dOmega0</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N14SimpleShockEqn7m_shellE"><code class="docutils literal notranslate"><span class="pre">m_shell</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N14SimpleShockEqn7theta_sE"><code class="docutils literal notranslate"><span class="pre">theta_s</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N14SimpleShockEqn5eps_eE"><code class="docutils literal notranslate"><span class="pre">eps_e</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="cpp_api.html#_CPPv4I00E15ForwardShockEqn"><code class="docutils literal notranslate"><span class="pre">ForwardShockEqn</span></code></a><ul>
@@ -310,47 +250,33 @@
 <li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N15ForwardShockEqn15ForwardShockEqnERK6MediumRK6Ejecta4Real4Real4Real4Real"><code class="docutils literal notranslate"><span class="pre">ForwardShockEqn()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4NK15ForwardShockEqnclERK5StateR5State4Real"><code class="docutils literal notranslate"><span class="pre">operator()()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4NK15ForwardShockEqn14set_init_stateER5State4Real"><code class="docutils literal notranslate"><span class="pre">set_init_state()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N15ForwardShockEqn6ejectaE"><code class="docutils literal notranslate"><span class="pre">ejecta</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N15ForwardShockEqn5eps_eE"><code class="docutils literal notranslate"><span class="pre">eps_e</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N15ForwardShockEqn6mediumE"><code class="docutils literal notranslate"><span class="pre">medium</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N15ForwardShockEqn6ejectaE"><code class="docutils literal notranslate"><span class="pre">ejecta</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N15ForwardShockEqn3phiE"><code class="docutils literal notranslate"><span class="pre">phi</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N15ForwardShockEqn6theta0E"><code class="docutils literal notranslate"><span class="pre">theta0</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4NK15ForwardShockEqn9dGamma_dtE4Real4RealRK5StateRK5State4Real"><code class="docutils literal notranslate"><span class="pre">dGamma_dt()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4NK15ForwardShockEqn5dU_dtE4Real4RealRK5StateRK5State4Real"><code class="docutils literal notranslate"><span class="pre">dU_dt()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N15ForwardShockEqn7dOmega0E"><code class="docutils literal notranslate"><span class="pre">dOmega0</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N15ForwardShockEqn7m_shellE"><code class="docutils literal notranslate"><span class="pre">m_shell</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N15ForwardShockEqn7theta_sE"><code class="docutils literal notranslate"><span class="pre">theta_s</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N15ForwardShockEqn5eps_eE"><code class="docutils literal notranslate"><span class="pre">eps_e</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="cpp_api.html#_CPPv4I00E10FRShockEqn"><code class="docutils literal notranslate"><span class="pre">FRShockEqn</span></code></a><ul>
 <li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N10FRShockEqn5StateE"><code class="docutils literal notranslate"><span class="pre">State</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N10FRShockEqn10FRShockEqnERK6MediumRK6Ejecta4Real4Real4Real"><code class="docutils literal notranslate"><span class="pre">FRShockEqn()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N10FRShockEqnclERK5StateR5State4Real"><code class="docutils literal notranslate"><span class="pre">operator()()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4NK10FRShockEqn14set_init_stateER5State4Real"><code class="docutils literal notranslate"><span class="pre">set_init_state()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N10FRShockEqn15set_cross_stateERK5State4Real"><code class="docutils literal notranslate"><span class="pre">set_cross_state()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4NK10FRShockEqn23compute_crossing_Gamma3ERK5State"><code class="docutils literal notranslate"><span class="pre">compute_crossing_Gamma3()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4NK10FRShockEqn25compute_crossed_Gamma_relERK5State"><code class="docutils literal notranslate"><span class="pre">compute_crossed_Gamma_rel()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4NK10FRShockEqn17compute_crossed_BERK5State"><code class="docutils literal notranslate"><span class="pre">compute_crossed_B()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4NK10FRShockEqn22compute_crossed_Gamma3E4Real4Real"><code class="docutils literal notranslate"><span class="pre">compute_crossed_Gamma3()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4NK10FRShockEqn25compute_crossed_Gamma_relERK5State"><code class="docutils literal notranslate"><span class="pre">compute_crossed_Gamma_rel()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4NK10FRShockEqn23compute_crossing_Gamma3ERK5State"><code class="docutils literal notranslate"><span class="pre">compute_crossing_Gamma3()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4NK10FRShockEqn19compute_shell_sigmaERK5State"><code class="docutils literal notranslate"><span class="pre">compute_shell_sigma()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4NK10FRShockEqn12is_injectingE4Real"><code class="docutils literal notranslate"><span class="pre">is_injecting()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N10FRShockEqnclERK5StateR5State4Real"><code class="docutils literal notranslate"><span class="pre">operator()()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N10FRShockEqn15set_cross_stateERK5State4Real"><code class="docutils literal notranslate"><span class="pre">set_cross_state()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4NK10FRShockEqn14set_init_stateER5State4Real"><code class="docutils literal notranslate"><span class="pre">set_init_state()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N10FRShockEqn6mediumE"><code class="docutils literal notranslate"><span class="pre">medium</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N10FRShockEqn6ejectaE"><code class="docutils literal notranslate"><span class="pre">ejecta</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N10FRShockEqn3phiE"><code class="docutils literal notranslate"><span class="pre">phi</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N10FRShockEqn6theta0E"><code class="docutils literal notranslate"><span class="pre">theta0</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N10FRShockEqn5eps_eE"><code class="docutils literal notranslate"><span class="pre">eps_e</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N10FRShockEqn6Gamma4E"><code class="docutils literal notranslate"><span class="pre">Gamma4</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N10FRShockEqn6mediumE"><code class="docutils literal notranslate"><span class="pre">medium</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N10FRShockEqn3phiE"><code class="docutils literal notranslate"><span class="pre">phi</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N10FRShockEqn3r_xE"><code class="docutils literal notranslate"><span class="pre">r_x</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N10FRShockEqn6theta0E"><code class="docutils literal notranslate"><span class="pre">theta0</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N10FRShockEqn3u_xE"><code class="docutils literal notranslate"><span class="pre">u_x</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4NK10FRShockEqn18get_injection_rateE4Real"><code class="docutils literal notranslate"><span class="pre">get_injection_rate()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N10FRShockEqn15adiabatic_constE"><code class="docutils literal notranslate"><span class="pre">adiabatic_const</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N10FRShockEqn7crossedE"><code class="docutils literal notranslate"><span class="pre">crossed</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N10FRShockEqn8deps0_dtE"><code class="docutils literal notranslate"><span class="pre">deps0_dt</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N10FRShockEqn6dm0_dtE"><code class="docutils literal notranslate"><span class="pre">dm0_dt</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N10FRShockEqn11e_mag_constE"><code class="docutils literal notranslate"><span class="pre">e_mag_const</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N10FRShockEqn11gamma_hat_xE"><code class="docutils literal notranslate"><span class="pre">gamma_hat_x</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N10FRShockEqn10N_electronE"><code class="docutils literal notranslate"><span class="pre">N_electron</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N10FRShockEqn2u4E"><code class="docutils literal notranslate"><span class="pre">u4</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N10FRShockEqn3r_xE"><code class="docutils literal notranslate"><span class="pre">r_x</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -358,49 +284,37 @@
 <li class="toctree-l2"><a class="reference internal" href="cpp_api.html#physics-and-utilities">Physics and Utilities</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="cpp_api.html#_CPPv48Observer"><code class="docutils literal notranslate"><span class="pre">Observer</span></code></a><ul>
 <li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N8Observer8ObserverEv"><code class="docutils literal notranslate"><span class="pre">Observer()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4IDpEN8Observer4fluxE5ArrayRK5ArrayRK5ArrayDpRK10PhotonGrid"><code class="docutils literal notranslate"><span class="pre">flux()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N8Observer7observeERK5CoordRK5Shock4Real4Real"><code class="docutils literal notranslate"><span class="pre">observe()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N8Observer10observe_atERK5ArrayRK5CoordR5Shock4Real4Real"><code class="docutils literal notranslate"><span class="pre">observe_at()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4IDpEN8Observer13specific_fluxE8MeshGridRK5ArrayRK5ArrayDpRK10PhotonGrid"><code class="docutils literal notranslate"><span class="pre">specific_flux()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4IDpEN8Observer13specific_fluxE5ArrayRK5Array4RealDpRK10PhotonGrid"><code class="docutils literal notranslate"><span class="pre">specific_flux()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4IDpEN8Observer13specific_fluxE8MeshGridRK5ArrayRK5ArrayDpRK10PhotonGrid"><code class="docutils literal notranslate"><span class="pre">specific_flux()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4IDpEN8Observer4fluxE5ArrayRK5ArrayRK5ArrayDpRK10PhotonGrid"><code class="docutils literal notranslate"><span class="pre">flux()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4IDpEN8Observer7spectraE8MeshGridRK5ArrayRK5ArrayDpRK10PhotonGrid"><code class="docutils literal notranslate"><span class="pre">spectra()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4IDpEN8Observer8spectrumE5ArrayRK5Array4RealDpRK10PhotonGrid"><code class="docutils literal notranslate"><span class="pre">spectrum()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N8Observer15update_requiredER8MaskGridRK5Array"><code class="docutils literal notranslate"><span class="pre">update_required()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N8Observer4timeE"><code class="docutils literal notranslate"><span class="pre">time</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N8Observer15build_time_gridERK5CoordRK5Shock4Real4Real"><code class="docutils literal notranslate"><span class="pre">build_time_grid()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N8Observer21calc_emission_surfaceERK5CoordRK5Shock"><code class="docutils literal notranslate"><span class="pre">calc_emission_surface()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N8Observer10calc_t_obsERK5CoordRK5Shock"><code class="docutils literal notranslate"><span class="pre">calc_t_obs()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4NK8Observer11interpolateERK11InterpState6size_t6size_t6size_t4Real"><code class="docutils literal notranslate"><span class="pre">interpolate()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4IDpEN8Observer14set_boundariesEbR11InterpState6size_t6size_t6size_t4RealDpRK10PhotonGrid"><code class="docutils literal notranslate"><span class="pre">set_boundaries()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N8Observer12eff_phi_gridE"><code class="docutils literal notranslate"><span class="pre">eff_phi_grid</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N8Observer6jet_3dE"><code class="docutils literal notranslate"><span class="pre">jet_3d</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N8Observer11lg2_dopplerE"><code class="docutils literal notranslate"><span class="pre">lg2_doppler</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N8Observer14lg2_one_plus_zE"><code class="docutils literal notranslate"><span class="pre">lg2_one_plus_z</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N8Observer11lg2_surfaceE"><code class="docutils literal notranslate"><span class="pre">lg2_surface</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N8Observer5lg2_tE"><code class="docutils literal notranslate"><span class="pre">lg2_t</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N8Observer9lumi_distE"><code class="docutils literal notranslate"><span class="pre">lumi_dist</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N8Observer10one_plus_zE"><code class="docutils literal notranslate"><span class="pre">one_plus_z</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N8Observer6t_gridE"><code class="docutils literal notranslate"><span class="pre">t_grid</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N8Observer10theta_gridE"><code class="docutils literal notranslate"><span class="pre">theta_grid</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N8Observer11InterpStateE"><code class="docutils literal notranslate"><span class="pre">Observer::InterpState</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="cpp_api.html#_CPPv45Coord"><code class="docutils literal notranslate"><span class="pre">Coord</span></code></a><ul>
 <li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N5Coord5CoordEv"><code class="docutils literal notranslate"><span class="pre">Coord()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4NK5Coord5shapeEv"><code class="docutils literal notranslate"><span class="pre">shape()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N5Coord3phiE"><code class="docutils literal notranslate"><span class="pre">phi</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N5Coord1tE"><code class="docutils literal notranslate"><span class="pre">t</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N5Coord5thetaE"><code class="docutils literal notranslate"><span class="pre">theta</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N5Coord1tE"><code class="docutils literal notranslate"><span class="pre">t</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="cpp_api.html#_CPPv4N5Coord10theta_viewE"><code class="docutils literal notranslate"><span class="pre">theta_view</span></code></a></li>
 </ul>
 </li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="cpp_api.html#performance-considerations">Performance Considerations</a></li>
 <li class="toctree-l2"><a class="reference internal" href="cpp_api.html#documenting-c-code">Documenting C++ Code</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="cpp_api.html#class-and-function-documentation">Class and Function Documentation</a></li>
 <li class="toctree-l3"><a class="reference internal" href="cpp_api.html#member-variable-documentation">Member Variable Documentation</a></li>
 <li class="toctree-l3"><a class="reference internal" href="cpp_api.html#template-function-documentation">Template Function Documentation</a></li>
 <li class="toctree-l3"><a class="reference internal" href="cpp_api.html#inline-function-documentation">Inline Function Documentation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="cpp_api.html#c-20-attribute-documentation">C++20 Attribute Documentation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="cpp_api.html#special-member-function-documentation">Special Member Function Documentation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="cpp_api.html#private-member-documentation">Private Member Documentation</a></li>
 <li class="toctree-l3"><a class="reference internal" href="cpp_api.html#example-class">Example Class</a></li>
 </ul>
 </li>
@@ -434,60 +348,6 @@
 <li class="toctree-l2"><a class="reference internal" href="examples.html#sample-scripts">Sample Scripts</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="test_class.html">Test Class Documentation</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="test_class.html#gaussianjet-class">GaussianJet Class</a></li>
-<li class="toctree-l2"><a class="reference internal" href="test_class.html#details-for-gaussianjet-functions">Details for GaussianJet Functions</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="test_class.html#constructor">Constructor</a></li>
-<li class="toctree-l3"><a class="reference internal" href="test_class.html#energy-distribution">Energy Distribution</a></li>
-<li class="toctree-l3"><a class="reference internal" href="test_class.html#lorentz-factor-profile">Lorentz Factor Profile</a></li>
-<li class="toctree-l3"><a class="reference internal" href="test_class.html#class-members">Class Members</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="test_class.html#_CPPv4N11GaussianJet2T0E"><code class="docutils literal notranslate"><span class="pre">T0</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="test_class.html#_CPPv4N11GaussianJet9spreadingE"><code class="docutils literal notranslate"><span class="pre">spreading</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="test_class.html#private-members">Private Members</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="test_class.html#_CPPv4N11GaussianJet5norm_E"><code class="docutils literal notranslate"><span class="pre">norm_</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="test_class.html#_CPPv4N11GaussianJet6eps_k_E"><code class="docutils literal notranslate"><span class="pre">eps_k_</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="test_class.html#_CPPv4N11GaussianJet7Gamma0_E"><code class="docutils literal notranslate"><span class="pre">Gamma0_</span></code></a></li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="documentation_guide.html">Documentation Guide</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="documentation_guide.html#overview">Overview</a></li>
-<li class="toctree-l2"><a class="reference internal" href="documentation_guide.html#documentation-structure">Documentation Structure</a></li>
-<li class="toctree-l2"><a class="reference internal" href="documentation_guide.html#directory-structure">Directory Structure</a></li>
-<li class="toctree-l2"><a class="reference internal" href="documentation_guide.html#build-system">Build System</a></li>
-<li class="toctree-l2"><a class="reference internal" href="documentation_guide.html#building-the-documentation">Building the Documentation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="documentation_guide.html#continuous-integration">Continuous Integration</a></li>
-<li class="toctree-l2"><a class="reference internal" href="documentation_guide.html#documenting-c-code">Documenting C++ Code</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="documentation_guide.html#class-documentation">Class Documentation</a></li>
-<li class="toctree-l3"><a class="reference internal" href="documentation_guide.html#method-documentation">Method Documentation</a></li>
-<li class="toctree-l3"><a class="reference internal" href="documentation_guide.html#member-variable-documentation">Member Variable Documentation</a></li>
-<li class="toctree-l3"><a class="reference internal" href="documentation_guide.html#file-documentation">File Documentation</a></li>
-<li class="toctree-l3"><a class="reference internal" href="documentation_guide.html#namespace-documentation">Namespace Documentation</a></li>
-<li class="toctree-l3"><a class="reference internal" href="documentation_guide.html#mathematical-formulas">Mathematical Formulas</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="documentation_guide.html#documenting-python-code">Documenting Python Code</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="documentation_guide.html#id1">Class Documentation</a></li>
-<li class="toctree-l3"><a class="reference internal" href="documentation_guide.html#id2">Method Documentation</a></li>
-<li class="toctree-l3"><a class="reference internal" href="documentation_guide.html#function-documentation">Function Documentation</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="documentation_guide.html#documentation-for-rst-files">Documentation for RST Files</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="documentation_guide.html#section-headers">Section Headers</a></li>
-<li class="toctree-l3"><a class="reference internal" href="documentation_guide.html#code-examples">Code Examples</a></li>
-<li class="toctree-l3"><a class="reference internal" href="documentation_guide.html#cross-references">Cross-References</a></li>
-<li class="toctree-l3"><a class="reference internal" href="documentation_guide.html#id3">Mathematical Formulas</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="documentation_guide.html#tips-for-good-documentation">Tips for Good Documentation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="documentation_guide.html#common-mistakes-to-avoid">Common Mistakes to Avoid</a></li>
-</ul>
-</li>
 <li class="toctree-l1"><a class="reference internal" href="contributing.html">Contributing</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="contributing.html#getting-started">Getting Started</a></li>
 <li class="toctree-l2"><a class="reference internal" href="contributing.html#installation-for-development">Installation for Development</a></li>
@@ -504,6 +364,7 @@
 <li class="toctree-l2"><a class="reference internal" href="contributing.html#building-documentation">Building Documentation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="contributing.html#testing">Testing</a></li>
 <li class="toctree-l2"><a class="reference internal" href="contributing.html#pull-request-process">Pull Request Process</a></li>
+<li class="toctree-l2"><a class="reference internal" href="contributing.html#issues-and-feedback">Issues and Feedback</a></li>
 <li class="toctree-l2"><a class="reference internal" href="contributing.html#code-of-conduct">Code of Conduct</a></li>
 <li class="toctree-l2"><a class="reference internal" href="contributing.html#license">License</a></li>
 </ul>
@@ -526,6 +387,7 @@
       <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
       <li class="breadcrumb-item active">Quickstart</li>
       <li class="wy-breadcrumbs-aside">
+            <a href="_sources/quickstart.rst.txt" rel="nofollow"> View page source</a>
       </li>
   </ul>
   <hr/>
@@ -534,10 +396,10 @@
            <div itemprop="articleBody">
              
   <section id="quickstart">
-<h1>Quickstart<a class="headerlink" href="#quickstart" title="Link to this heading"></a></h1>
-<p>This guide will help you get started with VegasAfterglow quickly. We’ll cover basic installation, setting up a simple model, and running your first afterglow simulation.</p>
+<h1>Quickstart</h1>
+<p>This guide will help you get started with VegasAfterglow quickly. We’ll cover basic installation, setting up a simple model, and running your first afterglow parameter estimation.</p>
 <section id="installation">
-<h2>Installation<a class="headerlink" href="#installation" title="Link to this heading"></a></h2>
+<h2>Installation</h2>
 <p>The easiest way to install VegasAfterglow is via pip:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span>VegasAfterglow
 </pre></div>
@@ -545,178 +407,217 @@
 <p>For more detailed installation instructions, see the <a class="reference internal" href="installation.html"><span class="doc">Installation</span></a> page.</p>
 </section>
 <section id="basic-usage">
-<h2>Basic Usage<a class="headerlink" href="#basic-usage" title="Link to this heading"></a></h2>
-<p>First, let’s import the necessary modules:</p>
+<h2>Basic Usage</h2>
+<p>VegasAfterglow is designed to efficiently model gamma-ray burst (GRB) afterglows and perform Markov Chain Monte Carlo (MCMC) parameter estimation. Let’s start by importing the necessary modules:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">VegasAfterglow</span><span class="w"> </span><span class="kn">import</span> <span class="n">Model</span><span class="p">,</span> <span class="n">TophatJet</span><span class="p">,</span> <span class="n">ISM</span><span class="p">,</span> <span class="n">Synchrotron</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">VegasAfterglow</span><span class="w"> </span><span class="kn">import</span> <span class="n">ObsData</span><span class="p">,</span> <span class="n">Setups</span><span class="p">,</span> <span class="n">Fitter</span><span class="p">,</span> <span class="n">ParamDef</span><span class="p">,</span> <span class="n">Scale</span>
 </pre></div>
 </div>
-<section id="setting-up-a-simple-model">
-<h3>Setting up a simple model<a class="headerlink" href="#setting-up-a-simple-model" title="Link to this heading"></a></h3>
-<p>To create a basic GRB afterglow model, we need to define three core components:</p>
-<ol class="arabic simple">
-<li><p>The <strong>Jet</strong>: Describes the relativistic outflow from the central engine</p></li>
-<li><p>The <strong>Ambient Medium</strong>: Defines the environment surrounding the GRB</p></li>
-<li><p>The <strong>Radiation Process</strong>: Specifies the emission mechanism</p></li>
-</ol>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Create a simple on-axis top-hat jet</span>
-<span class="c1"># Parameters: theta_c (core angle), E_iso (isotropic energy), Gamma0 (Lorentz factor)</span>
-<span class="n">jet</span> <span class="o">=</span> <span class="n">TophatJet</span><span class="p">(</span>
-    <span class="n">theta_c</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span>        <span class="c1"># Core angle in radians</span>
-    <span class="n">E_iso</span><span class="o">=</span><span class="mf">1e53</span><span class="p">,</span>         <span class="c1"># Isotropic-equivalent energy in ergs</span>
-    <span class="n">Gamma0</span><span class="o">=</span><span class="mi">300</span>          <span class="c1"># Initial bulk Lorentz factor</span>
-<span class="p">)</span>
+<section id="preparing-observational-data">
+<h3>Preparing Observational Data</h3>
+<p>First, we need to create an instance to store observational data through the <code class="xref any docutils literal notranslate"><span class="pre">ObsData</span></code> class. You can add light curves (specific flux vs. time) and spectra (specific flux vs. frequency) in multiple ways:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Create an instance to store observational data</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">ObsData</span><span class="p">()</span>
 
-<span class="c1"># Create a uniform ISM medium</span>
-<span class="c1"># Parameter: n_ism (number density in cm^-3)</span>
-<span class="n">medium</span> <span class="o">=</span> <span class="n">ISM</span><span class="p">(</span><span class="n">n_ism</span><span class="o">=</span><span class="mf">1.0</span><span class="p">)</span>
+<span class="c1"># Method 1: Add data directly from lists or numpy arrays</span>
 
-<span class="c1"># Create a synchrotron radiation process</span>
-<span class="c1"># Parameters: epsilon_e, epsilon_B (energy fractions), p (electron index)</span>
-<span class="n">radiation</span> <span class="o">=</span> <span class="n">Synchrotron</span><span class="p">(</span>
-    <span class="n">epsilon_e</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span>      <span class="c1"># Fraction of energy in electrons</span>
-    <span class="n">epsilon_B</span><span class="o">=</span><span class="mf">0.01</span><span class="p">,</span>     <span class="c1"># Fraction of energy in magnetic field</span>
-    <span class="n">p</span><span class="o">=</span><span class="mf">2.2</span>               <span class="c1"># Electron energy index</span>
-<span class="p">)</span>
+<span class="c1"># For light curves</span>
+<span class="n">t_data</span> <span class="o">=</span> <span class="p">[</span><span class="mf">1e3</span><span class="p">,</span> <span class="mf">2e3</span><span class="p">,</span> <span class="mf">5e3</span><span class="p">,</span> <span class="mf">1e4</span><span class="p">,</span> <span class="mf">2e4</span><span class="p">]</span>  <span class="c1"># Time in seconds</span>
+<span class="n">flux_data</span> <span class="o">=</span> <span class="p">[</span><span class="mf">1e-26</span><span class="p">,</span> <span class="mf">8e-27</span><span class="p">,</span> <span class="mf">5e-27</span><span class="p">,</span> <span class="mf">3e-27</span><span class="p">,</span> <span class="mf">2e-27</span><span class="p">]</span>  <span class="c1"># Specific flux in erg/cm²/s/Hz</span>
+<span class="n">flux_err</span> <span class="o">=</span> <span class="p">[</span><span class="mf">1e-28</span><span class="p">,</span> <span class="mf">8e-28</span><span class="p">,</span> <span class="mf">5e-28</span><span class="p">,</span> <span class="mf">3e-28</span><span class="p">,</span> <span class="mf">2e-28</span><span class="p">]</span>  <span class="c1"># Specific flux error</span>
+<span class="n">data</span><span class="o">.</span><span class="n">add_light_curve</span><span class="p">(</span><span class="n">nu_cgs</span><span class="o">=</span><span class="mf">4.84e14</span><span class="p">,</span> <span class="n">t_cgs</span><span class="o">=</span><span class="n">t_data</span><span class="p">,</span> <span class="n">Fnu_cgs</span><span class="o">=</span><span class="n">flux_data</span><span class="p">,</span> <span class="n">Fnu_err</span><span class="o">=</span><span class="n">flux_err</span><span class="p">)</span>
 
-<span class="c1"># Create the model</span>
-<span class="n">model</span> <span class="o">=</span> <span class="n">Model</span><span class="p">(</span><span class="n">jet</span><span class="o">=</span><span class="n">jet</span><span class="p">,</span> <span class="n">medium</span><span class="o">=</span><span class="n">medium</span><span class="p">,</span> <span class="n">radiation</span><span class="o">=</span><span class="n">radiation</span><span class="p">)</span>
-</pre></div>
-</div>
-</section>
-<section id="calculating-light-curves">
-<h3>Calculating light curves<a class="headerlink" href="#calculating-light-curves" title="Link to this heading"></a></h3>
-<p>Once we have set up our model, we can calculate light curves at different frequencies:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Define observation times (in seconds)</span>
-<span class="n">times</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">logspace</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>  <span class="c1"># 100 seconds to 10^7 seconds</span>
+<span class="c1"># For spectra</span>
+<span class="n">nu_data</span> <span class="o">=</span> <span class="p">[</span><span class="mf">1e14</span><span class="p">,</span> <span class="mf">3e14</span><span class="p">,</span> <span class="mf">5e14</span><span class="p">,</span> <span class="mf">1e15</span><span class="p">]</span>  <span class="c1"># Frequencies in Hz</span>
+<span class="n">spectrum_data</span> <span class="o">=</span> <span class="p">[</span><span class="mf">2e-27</span><span class="p">,</span> <span class="mf">1.8e-27</span><span class="p">,</span> <span class="mf">1.6e-27</span><span class="p">,</span> <span class="mf">1.2e-27</span><span class="p">]</span>  <span class="c1"># Specific flux values</span>
+<span class="n">spectrum_err</span> <span class="o">=</span> <span class="p">[</span><span class="mf">2e-29</span><span class="p">,</span> <span class="mf">1.8e-29</span><span class="p">,</span> <span class="mf">1.6e-29</span><span class="p">,</span> <span class="mf">1.2e-29</span><span class="p">]</span>  <span class="c1"># Specific flux errors</span>
+<span class="n">data</span><span class="o">.</span><span class="n">add_spectrum</span><span class="p">(</span><span class="n">t_cgs</span><span class="o">=</span><span class="mi">3000</span><span class="p">,</span> <span class="n">nu_cgs</span><span class="o">=</span><span class="n">nu_data</span><span class="p">,</span> <span class="n">Fnu_cgs</span><span class="o">=</span><span class="n">spectrum_data</span><span class="p">,</span> <span class="n">Fnu_err</span><span class="o">=</span><span class="n">spectrum_err</span><span class="p">)</span>
 
-<span class="c1"># Define observation frequencies (in Hz)</span>
-<span class="n">frequencies</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span>
-    <span class="mf">1e9</span><span class="p">,</span>   <span class="c1"># 1 GHz (radio)</span>
-    <span class="mf">5e14</span><span class="p">,</span>  <span class="c1"># Optical R-band</span>
-    <span class="mf">1e17</span>   <span class="c1"># X-ray (~0.4 keV)</span>
-<span class="p">])</span>
+<span class="c1"># Method 2: Load from CSV files</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
 
-<span class="c1"># Calculate light curves</span>
-<span class="n">results</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">calculate_light_curves</span><span class="p">(</span><span class="n">times</span><span class="p">,</span> <span class="n">frequencies</span><span class="p">)</span>
+<span class="c1"># Define your bands and files</span>
+<span class="n">bands</span> <span class="o">=</span> <span class="p">[</span><span class="mf">2.4e17</span><span class="p">,</span> <span class="mf">4.84e14</span><span class="p">]</span>  <span class="c1"># Example: X-ray, optical R-band</span>
+<span class="n">lc_files</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;data/x-ray.csv&quot;</span><span class="p">,</span> <span class="s2">&quot;data/r-band.csv&quot;</span><span class="p">]</span>
+
+<span class="c1"># Load light curves from files</span>
+<span class="k">for</span> <span class="n">nu</span><span class="p">,</span> <span class="n">fname</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">bands</span><span class="p">,</span> <span class="n">lc_files</span><span class="p">):</span>
+    <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">fname</span><span class="p">)</span>
+    <span class="n">data</span><span class="o">.</span><span class="n">add_light_curve</span><span class="p">(</span><span class="n">nu_cgs</span><span class="o">=</span><span class="n">nu</span><span class="p">,</span> <span class="n">t_cgs</span><span class="o">=</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;t&quot;</span><span class="p">],</span> <span class="n">Fnu_cgs</span><span class="o">=</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;Fv_obs&quot;</span><span class="p">],</span> <span class="n">Fnu_err</span><span class="o">=</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;Fv_err&quot;</span><span class="p">])</span>
 </pre></div>
 </div>
 </section>
-<section id="plotting-the-results">
-<h3>Plotting the results<a class="headerlink" href="#plotting-the-results" title="Link to this heading"></a></h3>
-<p>Let’s visualize the light curves:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<section id="setting-up-the-model-configuration">
+<h3>Setting up the Model Configuration</h3>
+<p>The <code class="xref any docutils literal notranslate"><span class="pre">Setups</span></code> class defines the global properties and environment for your model. These settings remain fixed during the MCMC process:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">cfg</span> <span class="o">=</span> <span class="n">Setups</span><span class="p">()</span>
 
-<span class="n">labels</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Radio (1 GHz)&#39;</span><span class="p">,</span> <span class="s1">&#39;Optical (R-band)&#39;</span><span class="p">,</span> <span class="s1">&#39;X-ray (0.4 keV)&#39;</span><span class="p">]</span>
+<span class="c1"># Source properties</span>
+<span class="n">cfg</span><span class="o">.</span><span class="n">lumi_dist</span> <span class="o">=</span> <span class="mf">3.364e28</span>  <span class="c1"># Luminosity distance [cm]</span>
+<span class="n">cfg</span><span class="o">.</span><span class="n">z</span> <span class="o">=</span> <span class="mf">1.58</span>              <span class="c1"># Redshift</span>
 
-<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">nu</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">frequencies</span><span class="p">):</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">loglog</span><span class="p">(</span><span class="n">times</span><span class="p">,</span> <span class="n">results</span><span class="p">[:,</span> <span class="n">i</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="n">labels</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+<span class="c1"># Physical model configuration</span>
+<span class="n">cfg</span><span class="o">.</span><span class="n">medium</span> <span class="o">=</span> <span class="s2">&quot;wind&quot;</span>       <span class="c1"># Ambient medium: &quot;wind&quot;, &quot;ISM&quot; or &quot;user&quot;</span>
+<span class="n">cfg</span><span class="o">.</span><span class="n">jet</span> <span class="o">=</span> <span class="s2">&quot;powerlaw&quot;</span>      <span class="c1"># Jet structure: &quot;powerlaw&quot;, &quot;gaussian&quot;, &quot;tophat&quot; or &quot;user&quot;</span>
 
+<span class="c1"># Optional: Advanced grid settings (default is 24, 24, 24)</span>
+<span class="c1"># cfg.phi_num = 24        # Number of grid points in phi direction</span>
+<span class="c1"># cfg.theta_num = 24      # Number of grid points in theta direction</span>
+<span class="c1"># cfg.t_num = 24          # Number of time grid points</span>
+</pre></div>
+</div>
+</section>
+<section id="defining-mcmc-parameters">
+<h3>Defining MCMC Parameters</h3>
+<p>The <code class="xref any docutils literal notranslate"><span class="pre">ParamDef</span></code> class is used to define the parameters for MCMC exploration. Each parameter requires a name, initial value, prior range, and sampling scale:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">mc_params</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;E_iso&quot;</span><span class="p">,</span>    <span class="mf">1e52</span><span class="p">,</span>  <span class="mf">1e50</span><span class="p">,</span>  <span class="mf">1e54</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">LOG</span><span class="p">),</span>       <span class="c1"># Isotropic energy [erg]</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;Gamma0&quot;</span><span class="p">,</span>     <span class="mi">30</span><span class="p">,</span>     <span class="mi">5</span><span class="p">,</span>  <span class="mi">1000</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">LOG</span><span class="p">),</span>       <span class="c1"># Lorentz factor at the core</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;theta_c&quot;</span><span class="p">,</span>   <span class="mf">0.2</span><span class="p">,</span>   <span class="mf">0.0</span><span class="p">,</span>   <span class="mf">0.5</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">LINEAR</span><span class="p">),</span>    <span class="c1"># Core half-opening angle [rad]</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;theta_v&quot;</span><span class="p">,</span>   <span class="mf">0.</span><span class="p">,</span>  <span class="kc">None</span><span class="p">,</span>  <span class="kc">None</span><span class="p">,</span>   <span class="n">Scale</span><span class="o">.</span><span class="n">FIXED</span><span class="p">),</span>     <span class="c1"># Viewing angle [rad]</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;p&quot;</span><span class="p">,</span>         <span class="mf">2.5</span><span class="p">,</span>     <span class="mi">2</span><span class="p">,</span>     <span class="mi">3</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">LINEAR</span><span class="p">),</span>    <span class="c1"># Shocked electron power law index</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;eps_e&quot;</span><span class="p">,</span>     <span class="mf">0.1</span><span class="p">,</span>  <span class="mf">1e-2</span><span class="p">,</span>   <span class="mf">0.5</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">LOG</span><span class="p">),</span>       <span class="c1"># Electron energy fraction</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;eps_B&quot;</span><span class="p">,</span>    <span class="mf">1e-2</span><span class="p">,</span>  <span class="mf">1e-4</span><span class="p">,</span>   <span class="mf">0.5</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">LOG</span><span class="p">),</span>       <span class="c1"># Magnetic field energy fraction</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;A_star&quot;</span><span class="p">,</span>   <span class="mf">0.01</span><span class="p">,</span>  <span class="mf">1e-3</span><span class="p">,</span>     <span class="mi">1</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">LOG</span><span class="p">),</span>       <span class="c1"># Wind parameter</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;xi&quot;</span><span class="p">,</span>        <span class="mf">0.5</span><span class="p">,</span>  <span class="mf">1e-3</span><span class="p">,</span>     <span class="mi">1</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">LOG</span><span class="p">),</span>       <span class="c1"># Electron acceleration fraction</span>
+<span class="p">]</span>
+</pre></div>
+</div>
+<p>The parameters you include depend on your model configuration:
+- For “wind” medium: use <code class="xref any docutils literal notranslate"><span class="pre">A_star</span></code> parameter
+- For “ISM” medium: use <code class="xref any docutils literal notranslate"><span class="pre">n_ism</span></code> parameter instead
+- Different jet structures may require different parameters</p>
+<p>Scale types:
+- <code class="xref any docutils literal notranslate"><span class="pre">Scale.LOG</span></code>: Sample in logarithmic space (log10) - ideal for parameters spanning multiple orders of magnitude
+- <code class="xref any docutils literal notranslate"><span class="pre">Scale.LINEAR</span></code>: Sample in linear space - appropriate for parameters with narrower ranges
+- <code class="xref any docutils literal notranslate"><span class="pre">Scale.FIXED</span></code>: Keep parameter fixed at the initial value - use for parameters you don’t want to vary</p>
+</section>
+<section id="running-the-mcmc">
+<h3>Running the MCMC</h3>
+<p>Initialize the <code class="xref any docutils literal notranslate"><span class="pre">Fitter</span></code> class with your data and configuration, then run the MCMC process:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Create the fitter object</span>
+<span class="n">fitter</span> <span class="o">=</span> <span class="n">Fitter</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">cfg</span><span class="p">)</span>
+
+<span class="c1"># Run the MCMC fitting</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">fitter</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span>
+    <span class="n">param_defs</span><span class="o">=</span><span class="n">mc_params</span><span class="p">,</span>          <span class="c1"># Parameter definitions</span>
+    <span class="n">resolution</span><span class="o">=</span><span class="p">(</span><span class="mi">24</span><span class="p">,</span> <span class="mi">24</span><span class="p">,</span> <span class="mi">24</span><span class="p">),</span>       <span class="c1"># Grid resolution (phi, theta, time)</span>
+    <span class="n">total_steps</span><span class="o">=</span><span class="mi">10000</span><span class="p">,</span>             <span class="c1"># Total number of MCMC steps</span>
+    <span class="n">burn_frac</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span>                 <span class="c1"># Fraction of steps to discard as burn-in</span>
+    <span class="n">thin</span><span class="o">=</span><span class="mi">1</span>                         <span class="c1"># Thinning factor</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="analyzing-the-results">
+<h3>Analyzing the Results</h3>
+<p>Examine the posterior distribution to understand parameter constraints:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Print best-fit parameters (maximum likelihood)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Best-fit parameters:&quot;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">val</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">labels</span><span class="p">,</span> <span class="n">result</span><span class="o">.</span><span class="n">best_params</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  </span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">val</span><span class="si">:</span><span class="s2">.4g</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="c1"># Compute median and credible intervals</span>
+<span class="n">flat_chain</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="n">samples</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">result</span><span class="o">.</span><span class="n">samples</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+<span class="n">medians</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">median</span><span class="p">(</span><span class="n">flat_chain</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">lower</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">percentile</span><span class="p">(</span><span class="n">flat_chain</span><span class="p">,</span> <span class="mi">16</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">upper</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">percentile</span><span class="p">(</span><span class="n">flat_chain</span><span class="p">,</span> <span class="mi">84</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Parameter constraints (median and 68</span><span class="si">% c</span><span class="s2">redible intervals):&quot;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">name</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">labels</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  </span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">medians</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="si">:</span><span class="s2">.4g</span><span class="si">}</span><span class="s2"> (+</span><span class="si">{</span><span class="n">upper</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">-</span><span class="n">medians</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="si">:</span><span class="s2">.4g</span><span class="si">}</span><span class="s2">, -</span><span class="si">{</span><span class="n">medians</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">-</span><span class="n">lower</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="si">:</span><span class="s2">.4g</span><span class="si">}</span><span class="s2">)&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="generating-model-predictions">
+<h3>Generating Model Predictions</h3>
+<p>Use samples from the posterior to generate model predictions with uncertainties:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Define time and frequency ranges for predictions</span>
+<span class="n">t_out</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">logspace</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">150</span><span class="p">)</span>
+<span class="n">bands</span> <span class="o">=</span> <span class="p">[</span><span class="mf">2.4e17</span><span class="p">,</span> <span class="mf">4.84e14</span><span class="p">]</span>  <span class="c1"># X-ray and optical R-band</span>
+
+<span class="c1"># Generate light curves with the best-fit model</span>
+<span class="n">lc_best</span> <span class="o">=</span> <span class="n">fitter</span><span class="o">.</span><span class="n">light_curves</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">best_params</span><span class="p">,</span> <span class="n">t_out</span><span class="p">,</span> <span class="n">bands</span><span class="p">)</span>
+
+<span class="c1"># Generate spectra at specific times</span>
+<span class="n">nu_out</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">logspace</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">150</span><span class="p">)</span>
+<span class="n">times</span> <span class="o">=</span> <span class="p">[</span><span class="mi">3000</span><span class="p">]</span>  <span class="c1"># 3000 seconds</span>
+<span class="n">spec_best</span> <span class="o">=</span> <span class="n">fitter</span><span class="o">.</span><span class="n">spectra</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">best_params</span><span class="p">,</span> <span class="n">nu_out</span><span class="p">,</span> <span class="n">times</span><span class="p">)</span>
+
+<span class="c1"># Plot the light curves</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">nu</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">bands</span><span class="p">):</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">loglog</span><span class="p">(</span><span class="n">t_out</span><span class="p">,</span> <span class="n">lc_best</span><span class="p">[:,</span> <span class="n">i</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;ν = </span><span class="si">{</span><span class="n">nu</span><span class="si">:</span><span class="s1">.2e</span><span class="si">}</span><span class="s1"> Hz&#39;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Time (s)&#39;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Flux Density (erg/cm²/s/Hz)&#39;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;GRB Afterglow Light Curves&#39;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="n">which</span><span class="o">=</span><span class="s1">&#39;both&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
 </section>
-<section id="using-a-structured-jet-model">
-<h3>Using a structured jet model<a class="headerlink" href="#using-a-structured-jet-model" title="Link to this heading"></a></h3>
-<p>Let’s try a more complex model with a Gaussian structured jet:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Create a Gaussian structured jet</span>
-<span class="c1"># Parameters: theta_c (core angle), E_iso (isotropic energy), Gamma0 (Lorentz factor)</span>
-<span class="n">gaussian_jet</span> <span class="o">=</span> <span class="n">GaussianJet</span><span class="p">(</span>
-    <span class="n">theta_c</span><span class="o">=</span><span class="mf">0.05</span><span class="p">,</span>        <span class="c1"># Core angle in radians</span>
-    <span class="n">E_iso</span><span class="o">=</span><span class="mf">1e53</span><span class="p">,</span>          <span class="c1"># Isotropic-equivalent energy in ergs</span>
-    <span class="n">Gamma0</span><span class="o">=</span><span class="mi">300</span>           <span class="c1"># Initial bulk Lorentz factor</span>
-<span class="p">)</span>
+<section id="visualizing-parameter-correlations">
+<h3>Visualizing Parameter Correlations</h3>
+<p>Corner plots are essential for visualizing parameter correlations and posterior distributions:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">corner</span>
 
-<span class="c1"># Update the model with the new jet</span>
-<span class="n">model</span><span class="o">.</span><span class="n">set_jet</span><span class="p">(</span><span class="n">gaussian_jet</span><span class="p">)</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">plot_corner</span><span class="p">(</span><span class="n">flat_chain</span><span class="p">,</span> <span class="n">labels</span><span class="p">,</span> <span class="n">filename</span><span class="o">=</span><span class="s2">&quot;corner_plot.png&quot;</span><span class="p">):</span>
+    <span class="n">fig</span> <span class="o">=</span> <span class="n">corner</span><span class="o">.</span><span class="n">corner</span><span class="p">(</span>
+        <span class="n">flat_chain</span><span class="p">,</span>
+        <span class="n">labels</span><span class="o">=</span><span class="n">labels</span><span class="p">,</span>
+        <span class="n">quantiles</span><span class="o">=</span><span class="p">[</span><span class="mf">0.16</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.84</span><span class="p">],</span>  <span class="c1"># For median and ±1σ</span>
+        <span class="n">show_titles</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">title_kwargs</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;fontsize&quot;</span><span class="p">:</span> <span class="mi">14</span><span class="p">},</span>
+        <span class="n">label_kwargs</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;fontsize&quot;</span><span class="p">:</span> <span class="mi">14</span><span class="p">},</span>
+        <span class="n">truths</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">median</span><span class="p">(</span><span class="n">flat_chain</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">),</span>  <span class="c1"># Show median values</span>
+        <span class="n">truth_color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">,</span>
+        <span class="n">bins</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span>
+        <span class="n">fill_contours</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">levels</span><span class="o">=</span><span class="p">[</span><span class="mf">0.16</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.68</span><span class="p">],</span>  <span class="c1"># 1σ and 2σ contours</span>
+        <span class="n">color</span><span class="o">=</span><span class="s1">&#39;k&#39;</span>
+    <span class="p">)</span>
+    <span class="n">fig</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">300</span><span class="p">,</span> <span class="n">bbox_inches</span><span class="o">=</span><span class="s1">&#39;tight&#39;</span><span class="p">)</span>
 
-<span class="c1"># Recalculate with the structured jet</span>
-<span class="n">results_gaussian</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">calculate_light_curves</span><span class="p">(</span><span class="n">times</span><span class="p">,</span> <span class="n">frequencies</span><span class="p">)</span>
-
-<span class="c1"># Compare with the original top-hat jet</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
-
-<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">nu</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">frequencies</span><span class="p">):</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">loglog</span><span class="p">(</span><span class="n">times</span><span class="p">,</span> <span class="n">results</span><span class="p">[:,</span> <span class="n">i</span><span class="p">],</span> <span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;C</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;TophatJet </span><span class="si">{</span><span class="n">labels</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">loglog</span><span class="p">(</span><span class="n">times</span><span class="p">,</span> <span class="n">results_gaussian</span><span class="p">[:,</span> <span class="n">i</span><span class="p">],</span> <span class="s1">&#39;-&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;C</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;GaussianJet </span><span class="si">{</span><span class="n">labels</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
-
-<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Time (s)&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Flux Density (erg/cm²/s/Hz)&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Comparison of Jet Models&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="n">which</span><span class="o">=</span><span class="s1">&#39;both&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+<span class="c1"># Create the corner plot</span>
+<span class="n">flat_chain</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="n">samples</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">result</span><span class="o">.</span><span class="n">samples</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+<span class="n">plot_corner</span><span class="p">(</span><span class="n">flat_chain</span><span class="p">,</span> <span class="n">result</span><span class="o">.</span><span class="n">labels</span><span class="p">)</span>
 </pre></div>
 </div>
 </section>
-<section id="using-a-wind-medium">
-<h3>Using a wind medium<a class="headerlink" href="#using-a-wind-medium" title="Link to this heading"></a></h3>
-<p>Let’s change the ambient medium to a stellar wind profile:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Create a stellar wind medium</span>
-<span class="c1"># Parameter: A_star (wind density parameter)</span>
-<span class="n">wind</span> <span class="o">=</span> <span class="n">Wind</span><span class="p">(</span><span class="n">A_star</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span>
+<section id="checking-mcmc-convergence">
+<h3>Checking MCMC Convergence</h3>
+<p>Trace plots help verify MCMC convergence:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">plot_trace</span><span class="p">(</span><span class="n">chain</span><span class="p">,</span> <span class="n">labels</span><span class="p">,</span> <span class="n">filename</span><span class="o">=</span><span class="s2">&quot;trace_plot.png&quot;</span><span class="p">):</span>
+    <span class="n">nsteps</span><span class="p">,</span> <span class="n">nwalkers</span><span class="p">,</span> <span class="n">ndim</span> <span class="o">=</span> <span class="n">chain</span><span class="o">.</span><span class="n">shape</span>
+    <span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">ndim</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mf">2.5</span> <span class="o">*</span> <span class="n">ndim</span><span class="p">),</span> <span class="n">sharex</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
-<span class="c1"># Update the model</span>
-<span class="n">model</span><span class="o">.</span><span class="n">set_medium</span><span class="p">(</span><span class="n">wind</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">ndim</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">nwalkers</span><span class="p">):</span>
+            <span class="n">axes</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">chain</span><span class="p">[:,</span> <span class="n">j</span><span class="p">,</span> <span class="n">i</span><span class="p">],</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+        <span class="n">axes</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="n">labels</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
 
-<span class="c1"># Calculate new results with wind medium</span>
-<span class="n">results_wind</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">calculate_light_curves</span><span class="p">(</span><span class="n">times</span><span class="p">,</span> <span class="n">frequencies</span><span class="p">)</span>
+    <span class="n">axes</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Step&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">300</span><span class="p">)</span>
 
-<span class="c1"># Plot and compare</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
-
-<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">nu</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">frequencies</span><span class="p">):</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">loglog</span><span class="p">(</span><span class="n">times</span><span class="p">,</span> <span class="n">results_gaussian</span><span class="p">[:,</span> <span class="n">i</span><span class="p">],</span> <span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;C</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;ISM </span><span class="si">{</span><span class="n">labels</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">loglog</span><span class="p">(</span><span class="n">times</span><span class="p">,</span> <span class="n">results_wind</span><span class="p">[:,</span> <span class="n">i</span><span class="p">],</span> <span class="s1">&#39;-&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;C</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;Wind </span><span class="si">{</span><span class="n">labels</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
-
-<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Time (s)&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Flux Density (erg/cm²/s/Hz)&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Comparison of Ambient Media&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="n">which</span><span class="o">=</span><span class="s1">&#39;both&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
-</pre></div>
-</div>
-</section>
-<section id="computing-a-spectrum">
-<h3>Computing a spectrum<a class="headerlink" href="#computing-a-spectrum" title="Link to this heading"></a></h3>
-<p>We can also calculate the spectrum at a specific time:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Define a wide range of frequencies</span>
-<span class="n">frequencies_spectrum</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">logspace</span><span class="p">(</span><span class="mi">9</span><span class="p">,</span> <span class="mi">19</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>  <span class="c1"># 1 GHz to 10^19 Hz</span>
-
-<span class="c1"># Calculate spectrum at 1 day post-burst</span>
-<span class="n">t_day</span> <span class="o">=</span> <span class="mi">86400</span>  <span class="c1"># seconds in a day</span>
-<span class="n">spectrum</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">calculate_spectrum</span><span class="p">(</span><span class="n">t_day</span><span class="p">,</span> <span class="n">frequencies_spectrum</span><span class="p">)</span>
-
-<span class="c1"># Plot the spectrum</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">loglog</span><span class="p">(</span><span class="n">frequencies_spectrum</span><span class="p">,</span> <span class="n">spectrum</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Frequency (Hz)&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Flux Density (erg/cm²/s/Hz)&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;GRB Afterglow Spectrum at t = </span><span class="si">{</span><span class="n">t_day</span><span class="o">/</span><span class="mi">86400</span><span class="si">:</span><span class="s1">.1f</span><span class="si">}</span><span class="s1"> days&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="n">which</span><span class="o">=</span><span class="s1">&#39;both&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+<span class="c1"># Create the trace plot</span>
+<span class="n">plot_trace</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">samples</span><span class="p">,</span> <span class="n">result</span><span class="o">.</span><span class="n">labels</span><span class="p">)</span>
 </pre></div>
 </div>
 </section>
 </section>
 <section id="next-steps">
-<h2>Next Steps<a class="headerlink" href="#next-steps" title="Link to this heading"></a></h2>
-<p>Now that you’ve created your first models, here are some ways to extend them:</p>
-<ul class="simple">
-<li><p>Try different parameter values to see how they affect the afterglow evolution</p></li>
-<li><p>Explore off-axis viewing with <cite>GaussianJet(theta_c=0.05, E_iso=1e53, Gamma0=300, viewer_angle=0.2)</cite></p></li>
-<li><p>Use the <cite>PowerLawJet</cite> class to model jets with power-law profiles</p></li>
-<li><p>Add inverse Compton scattering with the <cite>SynchrotronSelfCompton</cite> class</p></li>
-<li><p>Compare models with observational data using the <cite>Fitter</cite> class</p></li>
-</ul>
-<p>For more detailed examples, see the <a class="reference internal" href="examples.html"><span class="doc">Examples</span></a> page.</p>
+<h2>Next Steps</h2>
+<p>Now that you’ve run your first MCMC parameter estimation, here are some suggested next steps:</p>
+<ol class="arabic simple">
+<li><p><strong>Prior Ranges</strong>: Adjust the prior ranges based on theoretical constraints for your GRB event</p></li>
+<li><p><strong>Convergence Testing</strong>: Experiment with different numbers of steps and check convergence metrics</p></li>
+<li><p><strong>Model Comparison</strong>: Try different physical models (e.g., wind vs. ISM medium, or different jet structures)</p></li>
+<li><p><strong>Physical Interpretation</strong>: Connect your parameter constraints with physical processes in GRB afterglows</p></li>
+<li><p><strong>Examine Examples</strong>: See the <a class="reference internal" href="examples.html"><span class="doc">Examples</span></a> page for more detailed examples</p></li>
+</ol>
+<p>For more advanced users, you can also check the C++ interface for creating custom problem generators (see <a class="reference internal" href="cpp_api.html"><span class="doc">C++ API Reference</span></a>).</p>
 </section>
 </section>
 

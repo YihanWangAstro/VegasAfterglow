@@ -1,0 +1,5 @@
+<map id="compute_gamma_peak" name="compute_gamma_peak">
+<area shape="rect" id="Node000001" title="Determines the peak Lorentz factor directly from a SynElectrons object." alt="" coords="5,5,180,31"/>
+<area shape="rect" id="Node000002" href="$synchrotron_8cpp.html#a5f1c40226e12d8dee51a76c99524fd11" title="Determines the electron Lorentz factor at which the number density peaks." alt="" coords="228,5,403,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="180,15,214,15,214,21,180,21"/>
+</map>

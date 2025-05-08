@@ -1,0 +1,13 @@
+<map id="MultiBandModel::estimate_chi2" name="MultiBandModel::estimate_chi2">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,56,233,81"/>
+<area shape="rect" id="Node000002" href="$structMultiBandData.html#a631c6982c88e97795ffef3edb81253d8" title=" " alt="" coords="281,5,500,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="188,53,308,31,309,36,189,59"/>
+<area shape="rect" id="Node000003" href="$classObserver.html#a781d46ba549ae9a7ec4e3049a735586f" title="Computes the specific flux at a single observed frequency." alt="" coords="733,81,903,107"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="234,70,720,88,720,93,234,75"/>
+<area shape="rect" id="Node000004" href="$classObserver.html#af16bf4c5175405ae1c88a78b8afdd8c4" title="Computes the spectrum at a single observation time." alt="" coords="315,107,466,132"/>
+<area shape="poly" id="edge4_Node000001_Node000004" title=" " alt="" coords="189,79,309,101,308,107,188,84"/>
+<area shape="poly" id="edge3_Node000003_Node000003" title=" " alt="" coords="785,83,778,73,782,63,795,57,818,55,846,58,857,68,854,72,844,63,818,60,797,62,786,67,783,72,789,80"/>
+<area shape="rect" id="Node000005" href="$classObserver.html#ac9ed4fb8ae8b336286c176423401ba30" title="Computes the spectrum at multiple observation times." alt="" coords="548,107,685,132"/>
+<area shape="poly" id="edge5_Node000004_Node000005" title=" " alt="" coords="466,117,534,117,534,122,466,122"/>
+<area shape="poly" id="edge6_Node000005_Node000003" title=" " alt="" coords="685,108,719,104,720,109,686,113"/>
+</map>

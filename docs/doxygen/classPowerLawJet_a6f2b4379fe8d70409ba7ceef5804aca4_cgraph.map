@@ -1,0 +1,9 @@
+<map id="PowerLawJet::eps_k" name="PowerLawJet::eps_k">
+<area shape="rect" id="Node000001" title="Energy per solid angle as a function of phi and theta, with power&#45;law falloff." alt="" coords="5,31,156,56"/>
+<area shape="rect" id="Node000002" href="$utilities_8h.html#a4520a27a10a2aef33c99ad8c679da404" title="Fast approximation of a raised to the power of b." alt="" coords="204,31,285,56"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="156,41,190,41,190,46,156,46"/>
+<area shape="rect" id="Node000003" href="$utilities_8h.html#afc584c30c352192de6847b1f4b8caf0e" title="Fast approximation of 2 raised to a power." alt="" coords="333,5,420,31"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="285,33,319,26,320,32,286,38"/>
+<area shape="rect" id="Node000004" href="$utilities_8h.html#afe0a1b1b7509ac4df83fcc0e510f281b" title="Fast approximation of the base&#45;2 logarithm." alt="" coords="335,55,418,80"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="286,48,322,55,321,60,285,53"/>
+</map>

@@ -1,0 +1,5 @@
+<map id="Observer::update_required" name="Observer::update_required">
+<area shape="rect" id="Node000001" title="Updates the required grid points for observation." alt="" coords="5,5,200,31"/>
+<area shape="rect" id="Node000002" href="$observer_8h.html#aa53249b087b9b9d83f4c06e808deeed9" title="Helper function that advances an iterator through an array until the value exceeds the target." alt="" coords="248,5,333,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="200,15,234,15,234,21,200,21"/>
+</map>

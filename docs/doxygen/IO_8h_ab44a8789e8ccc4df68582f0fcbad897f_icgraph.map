@@ -1,0 +1,6 @@
+<map id="write_npz_recursive" name="write_npz_recursive">
+<area shape="rect" id="Node000001" title="Helper recursive function for writing multiple arrays to a single NPZ file." alt="" coords="139,29,291,55"/>
+<area shape="poly" id="edge2_Node000001_Node000001" title=" " alt="" coords="244,19,235,11,215,8,197,10,188,15,186,20,191,28,187,31,181,21,184,11,196,5,215,3,237,6,247,15"/>
+<area shape="rect" id="Node000002" href="$IO_8h.html#ab2322609f2abfdba52fcfb6afa857c62" title="Write multiple named arrays to a single NPZ file." alt="" coords="5,29,91,55"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="125,45,91,45,91,39,125,39"/>
+</map>

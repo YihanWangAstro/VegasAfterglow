@@ -1,0 +1,7 @@
+<map id="SimpleShockEqn&lt; Ejecta, Medium &gt;" name="SimpleShockEqn&lt; Ejecta, Medium &gt;">
+<area shape="rect" id="Node000001" title="Represents the forward shock equation for a given Jet." alt="" coords="5,93,195,133"/>
+<area shape="rect" id="Node000002" href="$classMedium.html" title="Represents the generic medium or any user&#45;defined surrounding medium that the GRB jet interacts with." alt="" coords="16,5,91,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="55,44,61,68,78,91,74,95,56,70,50,45"/>
+<area shape="rect" id="Node000003" href="$classEjecta.html" title="Represents generic ejecta properties for a simulation." alt="" coords="115,5,178,31"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="137,44,112,94,107,92,132,42"/>
+</map>

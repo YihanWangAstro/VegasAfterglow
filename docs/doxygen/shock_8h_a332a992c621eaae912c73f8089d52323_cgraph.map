@@ -1,0 +1,5 @@
+<map id="compute_dec_time" name="compute_dec_time">
+<area shape="rect" id="Node000001" title="Computes the deceleration time for the shock based on the equation system and time bounds." alt="" coords="5,5,152,31"/>
+<area shape="rect" id="Node000002" href="$physics_8h.html#ab8aa624dd63313487d8f5ecf52170d76" title="Converts Lorentz factor (gamma) to velocity fraction (beta)" alt="" coords="200,5,328,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="152,15,186,15,186,21,152,21"/>
+</map>

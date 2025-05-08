@@ -1,0 +1,22 @@
+<map id="Observer::specific_flux" name="Observer::specific_flux">
+<area shape="rect" id="Node000001" title="Computes the specific flux at a single observed frequency." alt="" coords="897,91,1067,116"/>
+<area shape="poly" id="edge7_Node000001_Node000001" title=" " alt="" coords="1018,81,1008,73,982,70,961,72,950,77,947,82,953,89,949,93,942,83,946,73,959,67,982,64,1010,68,1021,77"/>
+<area shape="rect" id="Node000002" href="$structMultiBandModel.html#aa8fa5188553abf9f7f7b2c0321c27752" title=" " alt="" coords="204,130,432,155"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="884,112,433,139,432,133,884,107"/>
+<area shape="rect" id="Node000004" href="$classObserver.html#a9fc133aa2f06b425634470424da9daa3" title="Computes the integrated flux over a frequency band." alt="" coords="724,66,837,91"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="883,94,838,88,838,83,884,89"/>
+<area shape="rect" id="Node000005" href="$structMultiBandModel.html#a81292c1adf3c0a12f67edd7825a31dd1" title=" " alt="" coords="235,25,401,65"/>
+<area shape="poly" id="edge5_Node000001_Node000005" title=" " alt="" coords="952,85,905,55,878,42,849,32,790,19,729,12,607,9,494,18,401,31,400,26,493,13,607,4,729,7,790,14,850,27,880,37,908,51,955,81"/>
+<area shape="rect" id="Node000006" href="$classObserver.html#ac9ed4fb8ae8b336286c176423401ba30" title="Computes the spectrum at multiple observation times." alt="" coords="712,167,849,192"/>
+<area shape="poly" id="edge8_Node000001_Node000006" title=" " alt="" coords="936,124,816,170,814,165,934,119"/>
+<area shape="rect" id="Node000003" href="$pybind_8cpp.html#a8c92987849ad296e28ec6c07c8e7860b" title=" " alt="" coords="5,130,156,155"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="190,145,156,145,156,140,190,140"/>
+<area shape="poly" id="edge4_Node000004_Node000004" title=" " alt="" coords="816,56,806,48,781,44,759,47,748,51,746,57,752,64,748,67,741,57,744,48,758,41,781,39,809,43,820,52"/>
+<area shape="poly" id="edge6_Node000005_Node000003" title=" " alt="" coords="257,73,114,132,112,127,255,68"/>
+<area shape="rect" id="Node000007" href="$structMultiBandModel.html#a0ad0a665dba9eb93f1715a9556530d9e" title=" " alt="" coords="480,216,664,242"/>
+<area shape="poly" id="edge9_Node000006_Node000007" title=" " alt="" coords="714,198,627,219,626,214,712,193"/>
+<area shape="rect" id="Node000008" href="$classObserver.html#af16bf4c5175405ae1c88a78b8afdd8c4" title="Computes the spectrum at a single observation time." alt="" coords="497,167,647,192"/>
+<area shape="poly" id="edge11_Node000006_Node000008" title=" " alt="" coords="698,182,647,182,647,177,698,177"/>
+<area shape="poly" id="edge10_Node000007_Node000003" title=" " alt="" coords="479,217,204,169,145,158,146,153,204,164,480,212"/>
+<area shape="poly" id="edge12_Node000008_Node000002" title=" " alt="" coords="483,169,404,158,405,153,484,164"/>
+</map>

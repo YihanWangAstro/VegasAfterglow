@@ -1,0 +1,5 @@
+<map id="compute_sound_speed" name="compute_sound_speed">
+<area shape="rect" id="Node000001" title="Computes the sound speed in the shocked medium based on the relative Lorentz factor." alt="" coords="5,5,176,31"/>
+<area shape="rect" id="Node000002" href="$physics_8h.html#a2a95c6b3f1236d69328af7199a772a23" title="Computes adiabatic index as a function of Lorentz factor." alt="" coords="224,5,333,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="177,15,210,15,210,21,177,21"/>
+</map>

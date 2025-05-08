@@ -1,0 +1,7 @@
+<map id="SynPhotons" name="SynPhotons">
+<area shape="rect" id="Node000001" title="Represents synchrotron photons in the comoving frame and provides spectral functions." alt="" coords="25,181,123,207"/>
+<area shape="rect" id="Node000002" href="$structSynElectrons.html" title="Represents synchrotron&#45;emitting electrons in the comoving frame along with their energy distribution ..." alt="" coords="21,93,127,119"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="77,133,77,181,71,181,71,133"/>
+<area shape="rect" id="Node000003" href="$structInverseComptonY.html" title="Handles Inverse Compton Y parameter calculations and related threshold values." alt="" coords="5,5,143,31"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="77,45,77,93,71,93,71,45"/>
+</map>

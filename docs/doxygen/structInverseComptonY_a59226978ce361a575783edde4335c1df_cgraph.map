@@ -1,0 +1,13 @@
+<map id="InverseComptonY::compute_Y_tilt_at_nu" name="InverseComptonY::compute_Y_tilt_at_nu">
+<area shape="rect" id="Node000001" title="Calculates the effective Y parameter at a specific frequency and spectral index." alt="" coords="5,47,205,87"/>
+<area shape="rect" id="Node000002" href="$structInverseComptonY.html#ab69f7b0d11f611834e1b7c13e30de1ef" title="Calculates the effective Y parameter for a given frequency and spectral index." alt="" coords="253,47,453,87"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="205,65,240,65,240,70,205,70"/>
+<area shape="rect" id="Node000003" href="$utilities_8h.html#a4520a27a10a2aef33c99ad8c679da404" title="Fast approximation of a raised to the power of b." alt="" coords="501,29,583,55"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="453,51,487,47,488,52,454,56"/>
+<area shape="rect" id="Node000006" href="$utilities_8h.html#a5069f3665d3ad6f8eced520eae62e400" title="Computes a^(2/3)" alt="" coords="509,79,575,104"/>
+<area shape="poly" id="edge5_Node000002_Node000006" title=" " alt="" coords="454,77,496,83,496,88,453,83"/>
+<area shape="rect" id="Node000004" href="$utilities_8h.html#afc584c30c352192de6847b1f4b8caf0e" title="Fast approximation of 2 raised to a power." alt="" coords="631,5,717,31"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="582,32,617,26,618,31,583,37"/>
+<area shape="rect" id="Node000005" href="$utilities_8h.html#afe0a1b1b7509ac4df83fcc0e510f281b" title="Fast approximation of the base&#45;2 logarithm." alt="" coords="633,55,715,80"/>
+<area shape="poly" id="edge4_Node000003_Node000005" title=" " alt="" coords="583,47,620,54,619,59,582,52"/>
+</map>

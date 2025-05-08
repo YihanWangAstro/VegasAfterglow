@@ -1,0 +1,8 @@
+<map id="Observer::spectrum" name="Observer::spectrum">
+<area shape="rect" id="Node000001" title="Computes the spectrum at a single observation time." alt="" coords="5,29,156,55"/>
+<area shape="rect" id="Node000002" href="$classObserver.html#ac9ed4fb8ae8b336286c176423401ba30" title="Computes the spectrum at multiple observation times." alt="" coords="204,29,341,55"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="156,39,190,39,190,45,156,45"/>
+<area shape="rect" id="Node000003" href="$classObserver.html#a781d46ba549ae9a7ec4e3049a735586f" title="Computes the specific flux at a single observed frequency." alt="" coords="389,29,559,55"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="342,39,376,39,376,45,342,45"/>
+<area shape="poly" id="edge3_Node000003_Node000003" title=" " alt="" coords="441,31,434,21,438,11,451,5,474,3,502,6,513,16,510,20,500,11,474,8,453,10,442,15,439,20,445,28"/>
+</map>

@@ -1,0 +1,11 @@
+<map id="pow23" name="pow23">
+<area shape="rect" id="Node000001" title="Computes a^(2/3)" alt="" coords="747,35,812,60"/>
+<area shape="rect" id="Node000002" href="$structInverseComptonY.html#ab69f7b0d11f611834e1b7c13e30de1ef" title="Calculates the effective Y parameter for a given frequency and spectral index." alt="" coords="499,27,699,67"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="733,50,699,50,699,45,733,45"/>
+<area shape="rect" id="Node000003" href="$structInverseComptonY.html#a59226978ce361a575783edde4335c1df" title="Calculates the effective Y parameter at a specific frequency and spectral index." alt="" coords="251,27,451,67"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="485,50,451,50,451,45,485,45"/>
+<area shape="rect" id="Node000004" href="$structSynPhotons.html#a380508572a0fc6f50ef8fd58420492ba" title="Calculates the synchrotron intensity at a given frequency." alt="" coords="5,5,203,31"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="237,36,202,32,203,27,237,31"/>
+<area shape="rect" id="Node000005" href="$structSynPhotons.html#ab6aec9da3210a04c044f4596f82ee21a" title="Calculates the base&#45;2 logarithm of synchrotron intensity at a given frequency." alt="" coords="23,55,185,95"/>
+<area shape="poly" id="edge4_Node000003_Node000005" title=" " alt="" coords="237,63,186,69,185,63,236,58"/>
+</map>

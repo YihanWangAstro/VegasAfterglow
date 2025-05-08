@@ -1,0 +1,25 @@
+var searchData=
+[
+  ['fast_20math_20functions_0',['Fast Math Functions',['../group__FastMath.html',1,'']]],
+  ['fast_5fexp_1',['fast_exp',['../utilities_8h.html#a19a0be066f6b80639b5863a493990601',1,'utilities.h']]],
+  ['fast_5fexp2_2',['fast_exp2',['../utilities_8h.html#afc584c30c352192de6847b1f4b8caf0e',1,'utilities.h']]],
+  ['fast_5flog_3',['fast_log',['../utilities_8h.html#aa9e4ad2688dbac62957b8d908a58bff7',1,'utilities.h']]],
+  ['fast_5flog2_4',['fast_log2',['../utilities_8h.html#afe0a1b1b7509ac4df83fcc0e510f281b',1,'utilities.h']]],
+  ['fast_5fpow_5',['fast_pow',['../utilities_8h.html#a4520a27a10a2aef33c99ad8c679da404',1,'utilities.h']]],
+  ['find_5fjet_5fedge_6',['find_jet_edge',['../physics_8h.html#a93b293665d09bfbff381bb3ae7b5545c',1,'physics.h']]],
+  ['finding_20methods_7',['Root Finding Methods',['../group__RootFinding.html',1,'']]],
+  ['flux_8',['flux',['../classObserver.html#a9fc133aa2f06b425634470424da9daa3',1,'Observer']]],
+  ['flux_5fcgs_9',['flux_cgs',['../namespaceunit.html#ad35a8d191f16b2928b242ef566cca653',1,'unit']]],
+  ['flux_5fden_5fcgs_10',['flux_den_cgs',['../namespaceunit.html#a4808047893e65d1942893de10e0a9c97',1,'unit']]],
+  ['forward_2dshock_2ehpp_11',['forward-shock.hpp',['../forward-shock_8hpp.html',1,'']]],
+  ['forward_2dshock_2etpp_12',['forward-shock.tpp',['../forward-shock_8tpp.html',1,'']]],
+  ['forwardshockeqn_13',['forwardshockeqn',['../classForwardShockEqn.html',1,'ForwardShockEqn&lt; Ejecta, Medium &gt;'],['../classForwardShockEqn.html#a14ed23a76ae6df294394c4e07580afef',1,'ForwardShockEqn::ForwardShockEqn()']]],
+  ['forwardstate_14',['ForwardState',['../structForwardState.html',1,'']]],
+  ['frshockeqn_15',['frshockeqn',['../classFRShockEqn.html',1,'FRShockEqn&lt; Ejecta, Medium &gt;'],['../classFRShockEqn.html#a40faa2ff5b6cae9a72d6c3a3f7dfa705',1,'FRShockEqn::FRShockEqn()']]],
+  ['func_16',['func',['../namespacefunc.html',1,'']]],
+  ['function_20type_20definitions_17',['Function Type Definitions',['../group__FunctionTypes.html',1,'']]],
+  ['functions_18',['functions',['../group__BasicMath.html',1,'Basic Math Functions'],['../group__FastMath.html',1,'Fast Math Functions'],['../group__GammaConversions.html',1,'Gamma Conversion and Adiabatic Index Functions'],['../group__IC__Functions.html',1,'IC Photon and Electron Cooling Functions'],['../group__Interpolation.html',1,'Interpolation Functions'],['../group__IC__Calculation.html',1,'Inverse Compton Calculation Constants and Functions'],['../group__IO__Functions.html',1,'Output and Printing Functions']]],
+  ['fv_5ferr_19',['fv_err',['../structLightCurveData.html#ae96ec61ac1b03c83e681c4e8ebf5bc35',1,'LightCurveData::Fv_err'],['../structSpectrumData.html#a3a5f544ce875ffcccaab074d54acf5a7',1,'SpectrumData::Fv_err']]],
+  ['fv_5fmodel_20',['fv_model',['../structLightCurveData.html#aceea5fff8916b2cdfb4f1b51f198ed92',1,'LightCurveData::Fv_model'],['../structSpectrumData.html#ab2e927149a668d3e3292f5c06e71ead0',1,'SpectrumData::Fv_model']]],
+  ['fv_5fobs_21',['fv_obs',['../structSpectrumData.html#adf50b08a3eb62a78a03ec187b58c7877',1,'SpectrumData::Fv_obs'],['../structLightCurveData.html#a8d18653944d2cf85e222b08e06bce84e',1,'LightCurveData::Fv_obs']]]
+];

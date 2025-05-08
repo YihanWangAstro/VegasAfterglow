@@ -1,0 +1,15 @@
+<map id="SynPhotons::compute_I_nu" name="SynPhotons::compute_I_nu">
+<area shape="rect" id="Node000001" title="Calculates the synchrotron intensity at a given frequency." alt="" coords="5,55,203,80"/>
+<area shape="rect" id="Node000002" href="$structInverseComptonY.html#a59226978ce361a575783edde4335c1df" title="Calculates the effective Y parameter at a specific frequency and spectral index." alt="" coords="251,47,451,87"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="203,65,237,65,237,70,203,70"/>
+<area shape="rect" id="Node000003" href="$structInverseComptonY.html#ab69f7b0d11f611834e1b7c13e30de1ef" title="Calculates the effective Y parameter for a given frequency and spectral index." alt="" coords="499,47,699,87"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="451,65,485,65,485,70,451,70"/>
+<area shape="rect" id="Node000004" href="$utilities_8h.html#a4520a27a10a2aef33c99ad8c679da404" title="Fast approximation of a raised to the power of b." alt="" coords="747,29,828,55"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="699,51,733,47,733,52,699,56"/>
+<area shape="rect" id="Node000007" href="$utilities_8h.html#a5069f3665d3ad6f8eced520eae62e400" title="Computes a^(2/3)" alt="" coords="755,79,820,104"/>
+<area shape="poly" id="edge6_Node000003_Node000007" title=" " alt="" coords="699,77,742,83,741,88,699,83"/>
+<area shape="rect" id="Node000005" href="$utilities_8h.html#afc584c30c352192de6847b1f4b8caf0e" title="Fast approximation of 2 raised to a power." alt="" coords="876,5,963,31"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="828,32,862,26,863,31,829,37"/>
+<area shape="rect" id="Node000006" href="$utilities_8h.html#afe0a1b1b7509ac4df83fcc0e510f281b" title="Fast approximation of the base&#45;2 logarithm." alt="" coords="878,55,961,80"/>
+<area shape="poly" id="edge5_Node000004_Node000006" title=" " alt="" coords="829,47,865,54,864,59,828,52"/>
+</map>

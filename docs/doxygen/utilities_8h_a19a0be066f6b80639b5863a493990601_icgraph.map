@@ -1,0 +1,7 @@
+<map id="fast_exp" name="fast_exp">
+<area shape="rect" id="Node000001" title="Fast approximation of the exponential function." alt="" coords="220,31,299,56"/>
+<area shape="rect" id="Node000002" href="$classGaussianJet.html#a17e4cc949abbbd26b44b0b96c938eefb" title="Energy per solid angle as a function of phi and theta, with Gaussian falloff." alt="" coords="16,5,161,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="206,38,161,31,162,26,207,33"/>
+<area shape="rect" id="Node000003" href="$classGaussianJet.html#a9c76f0d0e02fd686f7b081962275d49b" title="Initial Lorentz factor as a function of phi and theta, with Gaussian falloff." alt="" coords="5,55,172,80"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="207,53,173,58,172,53,206,48"/>
+</map>

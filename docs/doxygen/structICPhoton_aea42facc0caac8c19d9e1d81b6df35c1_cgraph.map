@@ -1,0 +1,7 @@
+<map id="ICPhoton::gen" name="ICPhoton::gen">
+<area shape="rect" id="Node000001" title="Generates the IC photon spectrum from the given electron and photon data." alt="" coords="5,31,117,56"/>
+<area shape="rect" id="Node000002" href="$inverse-compton_8cpp.html#ad387e1740afd6ba910d1d4185f001cef" title="Computes the Compton scattering cross&#45;section as a function of frequency (nu)." alt="" coords="165,5,292,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="117,32,151,27,152,32,118,38"/>
+<area shape="rect" id="Node000003" href="$utilities_8h.html#ac47d1412f3f1791737d0f963267096f1" title="Returns the value of a single parameter." alt="" coords="205,55,252,80"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="118,49,192,60,192,65,117,54"/>
+</map>

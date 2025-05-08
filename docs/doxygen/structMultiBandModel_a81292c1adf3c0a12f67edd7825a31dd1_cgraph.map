@@ -1,0 +1,8 @@
+<map id="MultiBandModel::light_curves" name="MultiBandModel::light_curves">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,35,171,75"/>
+<area shape="rect" id="Node000002" href="$mcmc_8cpp.html#af175bb41afc8bd3d54468bf3af22a1fb" title=" " alt="" coords="220,5,387,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="170,38,216,30,217,36,171,44"/>
+<area shape="rect" id="Node000003" href="$classObserver.html#a781d46ba549ae9a7ec4e3049a735586f" title="Computes the specific flux at a single observed frequency." alt="" coords="219,79,388,104"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="171,67,214,74,213,79,171,72"/>
+<area shape="poly" id="edge3_Node000003_Node000003" title=" " alt="" coords="268,80,261,70,265,60,279,54,303,52,333,56,345,65,342,69,331,61,303,57,281,59,269,64,266,70,273,77"/>
+</map>

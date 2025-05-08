@@ -1,0 +1,15 @@
+<map id="SynElectrons::compute_column_num_den" name="SynElectrons::compute_column_num_den">
+<area shape="rect" id="Node000001" title="Calculates the electron column number density at a specific Lorentz factor." alt="" coords="5,47,176,87"/>
+<area shape="rect" id="Node000002" href="$structInverseComptonY.html#a9a35d3af9bd23acdde9d09d38ee116eb" title="Calculates the effective Y parameter at a specific Lorentz factor and spectral index." alt="" coords="224,47,424,87"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="177,65,210,65,210,70,177,70"/>
+<area shape="rect" id="Node000003" href="$structInverseComptonY.html#ae483ec2ba4108fbf96fb15c3e978c0b3" title="Calculates the effective Y parameter for a given Lorentz factor and spectral index." alt="" coords="472,47,672,87"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="424,65,458,65,458,70,424,70"/>
+<area shape="rect" id="Node000004" href="$utilities_8h.html#a4520a27a10a2aef33c99ad8c679da404" title="Fast approximation of a raised to the power of b." alt="" coords="720,29,801,55"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="672,51,706,47,707,52,673,56"/>
+<area shape="rect" id="Node000007" href="$utilities_8h.html#ae490b13fdcc1b917ecdd08c0cecf3556" title="Computes a^(4/3)" alt="" coords="728,79,793,104"/>
+<area shape="poly" id="edge6_Node000003_Node000007" title=" " alt="" coords="673,77,715,83,714,88,672,83"/>
+<area shape="rect" id="Node000005" href="$utilities_8h.html#afc584c30c352192de6847b1f4b8caf0e" title="Fast approximation of 2 raised to a power." alt="" coords="849,5,936,31"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="801,32,835,26,836,31,802,37"/>
+<area shape="rect" id="Node000006" href="$utilities_8h.html#afe0a1b1b7509ac4df83fcc0e510f281b" title="Fast approximation of the base&#45;2 logarithm." alt="" coords="851,55,934,80"/>
+<area shape="poly" id="edge5_Node000004_Node000006" title=" " alt="" coords="802,47,838,54,837,59,801,52"/>
+</map>

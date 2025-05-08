@@ -1,0 +1,27 @@
+<map id="adiabatic_idx" name="adiabatic_idx">
+<area shape="rect" id="Node000001" title="Computes adiabatic index as a function of Lorentz factor." alt="" coords="757,79,867,104"/>
+<area shape="rect" id="Node000002" href="$shock_8cpp.html#a09f75d8bc0c1cd36d03a413edd7283d8" title="Computes the downstream four&#45;velocity for a given relative Lorentz factor and magnetization parameter..." alt="" coords="532,29,705,55"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="748,78,669,57,670,52,749,73"/>
+<area shape="rect" id="Node000006" href="$shock_8h.html#a55391189d6bdd1e0ddbc2d039424a0cc" title="Computes the sound speed in the shocked medium based on the relative Lorentz factor." alt="" coords="533,79,704,104"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="744,94,704,94,704,89,744,89"/>
+<area shape="rect" id="Node000008" href="$synchrotron_8cpp.html#a5b1694deb534f1df0ba3515fdf52b65a" title=" " alt="" coords="528,152,709,177"/>
+<area shape="poly" id="edge7_Node000001_Node000008" title=" " alt="" coords="766,111,654,154,653,149,764,106"/>
+<area shape="rect" id="Node000003" href="$shock_8cpp.html#a38af400f232a5acb1c7703d34f7814bd" title="Computes the ratio of upstream to downstream four&#45;velocity across the shock front." alt="" coords="292,29,447,55"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="518,45,447,45,447,39,518,39"/>
+<area shape="rect" id="Node000004" href="$shock_8h.html#a1d7e0662ed14532ed7d41d5aa0a740c0" title="Computes the downstream number density from upstream density, relative Lorentz factor,..." alt="" coords="5,5,211,31"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="278,36,211,30,211,25,279,31"/>
+<area shape="rect" id="Node000005" href="$shock_8h.html#a0322692389b6133782039ae39dd13b55" title="Saves the shock state at a given grid point (i,j,k)." alt="" coords="39,55,177,80"/>
+<area shape="poly" id="edge4_Node000003_Node000005" title=" " alt="" coords="279,53,178,63,177,58,278,48"/>
+<area shape="rect" id="Node000007" href="$shock_8h.html#a906fecbe0261996ea42e3da81ef9a8d4" title="Computes the rate at which the shock shell spreads in the comoving frame." alt="" coords="259,79,480,104"/>
+<area shape="poly" id="edge6_Node000006_Node000007" title=" " alt="" coords="520,94,480,94,480,89,520,89"/>
+<area shape="rect" id="Node000009" href="$synchrotron_8cpp.html#afd4184652bfb1fac7ee55a159f618767" title="Creates and returns a new electron grid based on shock parameters." alt="" coords="281,128,458,153"/>
+<area shape="poly" id="edge8_Node000008_Node000009" title=" " alt="" coords="514,157,458,152,458,147,515,152"/>
+<area shape="rect" id="Node000010" href="$synchrotron_8cpp.html#a6fb32a514d942797b3beffa16aaf467a" title="Populates an existing electron grid with values based on shock parameters." alt="" coords="281,177,458,203"/>
+<area shape="poly" id="edge9_Node000008_Node000010" title=" " alt="" coords="515,178,458,184,458,178,514,173"/>
+<area shape="rect" id="Node000011" href="$synchrotron_8cpp.html#aecff2eca5f5a9c7e2a94481eb96e597f" title="Updates electron properties throughout the grid based on shock parameters and IC Y values." alt="" coords="291,227,448,252"/>
+<area shape="poly" id="edge10_Node000008_Node000011" title=" " alt="" coords="573,185,481,217,432,229,430,224,479,211,571,180"/>
+<area shape="rect" id="Node000012" href="$inverse-compton_8cpp.html#ad7c1306e2402033ff31ce1f00cf1e3f2" title="Applies Klein&#45;Nishina cooling to electrons based on photon distribution." alt="" coords="61,201,155,227"/>
+<area shape="poly" id="edge11_Node000011_Node000012" title=" " alt="" coords="276,233,155,221,156,216,277,228"/>
+<area shape="rect" id="Node000013" href="$inverse-compton_8cpp.html#ae4c1495aa74372b72c2d5d61d1d53b62" title="Applies Thomson cooling to electrons based on photon distribution." alt="" coords="40,251,176,276"/>
+<area shape="poly" id="edge12_Node000011_Node000013" title=" " alt="" coords="277,250,177,260,176,254,277,245"/>
+</map>

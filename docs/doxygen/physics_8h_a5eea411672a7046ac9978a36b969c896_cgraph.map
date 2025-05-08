@@ -1,0 +1,5 @@
+<map id="RS_crossing_radius" name="RS_crossing_radius">
+<area shape="rect" id="Node000001" title="Returns the radius at which the reverse shock crosses, defined as the thick shell deceleration radius..." alt="" coords="5,5,152,31"/>
+<area shape="rect" id="Node000002" href="$physics_8h.html#aacab8c080156fce8cbe11a0899208c2e" title="Computes the Sedov length—a characteristic scale for blast wave deceleration." alt="" coords="200,5,309,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="152,15,186,15,186,21,152,21"/>
+</map>

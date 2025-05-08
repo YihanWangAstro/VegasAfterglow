@@ -1,0 +1,5 @@
+<map id="compute_downstr_4vel" name="compute_downstr_4vel">
+<area shape="rect" id="Node000001" title="Computes the downstream four&#45;velocity for a given relative Lorentz factor and magnetization parameter..." alt="" coords="5,5,179,31"/>
+<area shape="rect" id="Node000002" href="$physics_8h.html#a2a95c6b3f1236d69328af7199a772a23" title="Computes adiabatic index as a function of Lorentz factor." alt="" coords="227,5,336,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="179,15,213,15,213,21,179,21"/>
+</map>

@@ -1,0 +1,9 @@
+<map id="compute_downstr_4vel" name="compute_downstr_4vel">
+<area shape="rect" id="Node000001" title="Computes the downstream four&#45;velocity for a given relative Lorentz factor and magnetization parameter..." alt="" coords="461,31,635,56"/>
+<area shape="rect" id="Node000002" href="$shock_8cpp.html#a38af400f232a5acb1c7703d34f7814bd" title="Computes the ratio of upstream to downstream four&#45;velocity across the shock front." alt="" coords="259,31,413,56"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="447,46,414,46,414,41,447,41"/>
+<area shape="rect" id="Node000003" href="$shock_8h.html#a1d7e0662ed14532ed7d41d5aa0a740c0" title="Computes the downstream number density from upstream density, relative Lorentz factor,..." alt="" coords="5,5,211,31"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="245,36,210,32,211,27,245,31"/>
+<area shape="rect" id="Node000004" href="$shock_8h.html#a0322692389b6133782039ae39dd13b55" title="Saves the shock state at a given grid point (i,j,k)." alt="" coords="39,55,177,80"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="245,56,178,63,177,57,244,50"/>
+</map>
