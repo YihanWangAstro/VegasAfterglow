@@ -1,6 +1,6 @@
 var classTophatJet =
 [
-    [ "TophatJet", "classTophatJet.html#aed2dcfb092f3ddc0ff8ce175879d42dd", null ],
+    [ "TophatJet", "classTophatJet.html#abe166f2a89874e03542d6e2d042826d2", null ],
     [ "eps_k", "classTophatJet.html#a5e878a0b40f3dcd67094fb2141e19925", null ],
     [ "Gamma0", "classTophatJet.html#a89374a73ef8bbaec174846b778ccfb6f", null ],
     [ "spreading", "classTophatJet.html#aff514e356b2b7c08acaf3608baa261d0", null ],

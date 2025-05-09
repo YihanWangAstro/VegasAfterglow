@@ -1,0 +1,629 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GRB Afterglow Physics &mdash; VegasAfterglow 0.1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=20074c1a" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="_static/graphviz.css?v=fd3f3429" />
+      <link rel="stylesheet" type="text/css" href="_static/css/custom.css?v=c0df17a3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/custom.css?v=c0df17a3" />
+
+  
+    <link rel="shortcut icon" href="_static/logo.svg"/>
+    <link rel="canonical" href="https://yihanwangastro.github.io/VegasAfterglow/docs/physics.html" />
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=01f34227"></script>
+      <script src="_static/doctools.js?v=9a2dae69"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      <script src="_static/js/custom.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            VegasAfterglow
+              <img src="_static/logo.svg" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="quickstart.html">Quickstart</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="python_api.html">Python API Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cpp_api.html">C++ API Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contributing.html">Contributing</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">VegasAfterglow</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">GRB Afterglow Physics</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/physics.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="grb-afterglow-physics">
+<h1>GRB Afterglow Physics<a class="headerlink" href="#grb-afterglow-physics" title="Link to this heading"></a></h1>
+<section id="introduction">
+<h2>Introduction<a class="headerlink" href="#introduction" title="Link to this heading"></a></h2>
+<p>Gamma-ray bursts (GRBs) are among the most energetic astrophysical transients in the universe. They are often associated with:</p>
+<ul class="simple">
+<li><p>Mergers of compact objects (e.g., binary neutron stars, neutron star-black hole systems)</p></li>
+<li><p>Massive star collapses (collapsar model)</p></li>
+</ul>
+<p>The multi-wavelength afterglow emission provides crucial insights into:</p>
+<ul class="simple">
+<li><p>The structure of relativistic jets</p></li>
+<li><p>The surrounding environment</p></li>
+<li><p>The underlying shock physics</p></li>
+</ul>
+<p>VegasAfterglow offers a comprehensive modeling framework for GRB afterglows with unprecedented flexibility and computational efficiency. This document outlines the key physical processes implemented in the framework, starting with jet and medium properties, followed by shock dynamics, and finally radiation mechanisms.</p>
+</section>
+<section id="jets-and-medium">
+<h2>Jets and Medium<a class="headerlink" href="#jets-and-medium" title="Link to this heading"></a></h2>
+<p>The properties of the relativistic outflow and the ambient medium are foundational to any afterglow model. VegasAfterglow employs a flexible approach to represent diverse jet structures and environmental conditions.</p>
+<p>VegasAfterglow solves the afterglow emission on a 3D grid of spherical coordinates <span class="math notranslate nohighlight">\((t, \theta, \phi)\)</span>, where:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(t\)</span> is the observation time for an on-axis observer</p></li>
+<li><p><span class="math notranslate nohighlight">\(\theta\)</span> is the polar angle</p></li>
+<li><p><span class="math notranslate nohighlight">\(\phi\)</span> is the azimuthal angle</p></li>
+</ul>
+<p>The jet is modeled as a relativistic outflow with profiles for:</p>
+<ul class="simple">
+<li><p>Lorentz factor <span class="math notranslate nohighlight">\(\Gamma_{0}(\phi, \theta)\)</span></p></li>
+<li><p>Energy <span class="math notranslate nohighlight">\(\frac{dE}{d\Omega}(\phi, \theta)\)</span></p></li>
+<li><p>Magnetization <span class="math notranslate nohighlight">\(\sigma(\phi,\theta)\)</span></p></li>
+</ul>
+<p>In the afterglow calculation, the jet is decomposed into a grid of elements on <span class="math notranslate nohighlight">\(\theta\)</span> and <span class="math notranslate nohighlight">\(\phi\)</span>, with each jet element evolving independently.</p>
+<section id="jet-profiles">
+<h3>Jet Profiles<a class="headerlink" href="#jet-profiles" title="Link to this heading"></a></h3>
+<p>VegasAfterglow supports arbitrary user-defined jet profiles, with several common models built-in:</p>
+<dl>
+<dt><strong>Top-hat Jet</strong></dt><dd><p>The simplest jet profile, with constant parameters within a certain opening angle <span class="math notranslate nohighlight">\(\theta_{\rm c}\)</span> and zero outside:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\Gamma_{0}(\phi, \theta) = \begin{cases}
+    \Gamma_{\rm 0}, &amp; \theta\leq\theta_{\rm c} \\
+    1, &amp; \theta&gt;\theta_{\rm c}
+\end{cases}\end{split}\]</div>
+<div class="math notranslate nohighlight">
+\[\begin{split}\frac{dE}{d\Omega}(\phi, \theta) = \begin{cases}
+    \frac{E_{\rm iso}}{4\pi}, &amp; \theta\leq\theta_{\rm c} \\
+    0, &amp; \theta&gt;\theta_{\rm c}
+\end{cases}\end{split}\]</div>
+<div class="math notranslate nohighlight">
+\[\begin{split}\sigma(\phi, \theta) = \begin{cases}
+    \sigma_{\rm 0}, &amp; \theta\leq\theta_{\rm c} \\
+    0, &amp; \theta&gt;\theta_{\rm c}
+\end{cases}\end{split}\]</div>
+</dd>
+<dt><strong>Gaussian Jet</strong></dt><dd><p>A jet profile with Gaussian distribution:</p>
+<div class="math notranslate nohighlight">
+\[\Gamma_{0}(\phi, \theta) = (\Gamma_{\rm 0}-1)\exp\left(-\frac{\theta^{2}}{2\theta_{\rm c}^{2}}\right)+1\]</div>
+<div class="math notranslate nohighlight">
+\[\frac{dE}{d\Omega}(\phi, \theta) = \frac{E_{\rm iso}}{4\pi}\exp\left(-\frac{\theta^{2}}{2\theta_{\rm c}^{2}}\right)\]</div>
+<div class="math notranslate nohighlight">
+\[\sigma(\phi, \theta) = \sigma_{\rm 0}\]</div>
+</dd>
+<dt><strong>Power-law Jet</strong></dt><dd><p>A jet profile with power-law distribution:</p>
+<div class="math notranslate nohighlight">
+\[\Gamma_{0}(\phi, \theta) = (\Gamma_{\rm 0}-1)\left(1+\frac{\theta}{\theta_{\rm c}}\right)^{-k}+1\]</div>
+<div class="math notranslate nohighlight">
+\[\frac{dE}{d\Omega}(\phi, \theta) = \frac{E_{\rm iso}}{4\pi}\left(1+\frac{\theta}{\theta_{\rm c}}\right)^{-k}\]</div>
+<div class="math notranslate nohighlight">
+\[\sigma(\phi, \theta) = \sigma_{\rm 0}\]</div>
+</dd>
+</dl>
+</section>
+<section id="energy-injection">
+<h3>Energy Injection<a class="headerlink" href="#energy-injection" title="Link to this heading"></a></h3>
+<p>Energy injection is crucial for modeling afterglow emission of GRBs that show plateau features. VegasAfterglow provides arbitrary user-defined energy injection profiles <span class="math notranslate nohighlight">\(L_{\rm inj}(\phi, \theta, t)\)</span>.</p>
+<p>A common model is the magnetar spin-down model, approximated as an isotropic power-law decay function:</p>
+<div class="math notranslate nohighlight">
+\[\frac{d L_{\rm inj}}{d\Omega}(\phi, \theta, t) = \frac{L_{\rm 0}}{4\pi}\left(1+\frac{t}{t_{\rm 0}}\right)^{-q}\]</div>
+<div class="math notranslate nohighlight">
+\[\sigma(\phi, \theta) = \infty\]</div>
+<p>where <span class="math notranslate nohighlight">\(\sigma = \infty\)</span> assumes an ideal Poynting-flux dominated wind with no matter injection.</p>
+</section>
+<section id="ambient-medium">
+<h3>Ambient Medium<a class="headerlink" href="#ambient-medium" title="Link to this heading"></a></h3>
+<p>The properties of the circumburst environment significantly influence afterglow evolution. The ambient medium can be user-defined through functions <span class="math notranslate nohighlight">\(m(\phi,\theta, r)\)</span> and <span class="math notranslate nohighlight">\(\rho(\phi, \theta, r)\)</span>. Two standard models are:</p>
+<p><strong>Homogeneous Medium (ISM)</strong></p>
+<div class="math notranslate nohighlight">
+\[\rho(\phi, \theta, r) = n_{0} m_{\rm p}\]</div>
+<p>where <span class="math notranslate nohighlight">\(n_{0}\)</span> is the number density of the interstellar medium.</p>
+<p><strong>Wind-like Medium</strong></p>
+<div class="math notranslate nohighlight">
+\[\rho(\phi, \theta, r) = \frac{A}{r^k}\]</div>
+<p>where <span class="math notranslate nohighlight">\(A\)</span> is related to the mass-loss rate and <span class="math notranslate nohighlight">\(k\)</span> is the wind profile index (typically 2 for a stellar wind).</p>
+</section>
+</section>
+<section id="shock-dynamics">
+<h2>Shock Dynamics<a class="headerlink" href="#shock-dynamics" title="Link to this heading"></a></h2>
+<p>As the relativistic jet propagates through the ambient medium, it drives a shock wave that accelerates particles and amplifies magnetic fields. Understanding the dynamics of these shocks is crucial for accurate afterglow modeling.</p>
+<section id="shock-jump-conditions">
+<h3>Shock Jump Conditions<a class="headerlink" href="#shock-jump-conditions" title="Link to this heading"></a></h3>
+<p>The fundamental physical principles governing the behavior of relativistic shocks are formulated through the shock jump conditions, which relate quantities across the shock discontinuity.</p>
+<p>In the rest frame of the shock, the continuity equation is:</p>
+<div class="math notranslate nohighlight">
+\[n_{\rm u} u_{\rm us} = n_{\rm d} u_{\rm ds}\]</div>
+<p>where:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(n_{\rm u}\)</span> and <span class="math notranslate nohighlight">\(n_{\rm d}\)</span> are the proton number density in the upstream and downstream</p></li>
+<li><p><span class="math notranslate nohighlight">\(u_{\rm us}\)</span> and <span class="math notranslate nohighlight">\(u_{\rm ds}\)</span> are the four-velocities</p></li>
+</ul>
+<p>Combined with magnetic flux conservation, energy conservation, and enthalpy conservation across the shock front, one can derive:</p>
+<div class="math notranslate nohighlight">
+\[u_{\rm us} = u_{\rm ds}\Gamma_{\rm ud}+\sqrt{(u_{\rm ds}^{2}+1)(\Gamma_{\rm ud}^{2}-1)}\]</div>
+<div class="math notranslate nohighlight">
+\[Au_{\rm ds}^6 + Bu_{\rm ds}^4 +Cu_{\rm ds}^2+D = 0\]</div>
+<p>where:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}A &amp;= \hat\gamma_{\rm ud}(2-\hat\gamma_{\rm ud})(\Gamma_{\rm ud}-1)+2\\
+B &amp;= -(\Gamma_{\rm ud}+1)[(2-\hat\gamma_{\rm ud})(\hat\gamma_{\rm ud}\Gamma_{\rm ud}^2+1)+\hat\gamma_{\rm ud}(\hat\gamma_{\rm ud}-1)\Gamma_{\rm ud}]\sigma_{\rm u}\\
+&amp;-(\Gamma_{\rm ud}-1)[\hat\gamma_{\rm ud}(2-\hat\gamma_{\rm ud})(\Gamma_{\rm ud}^2-2)+(2\Gamma_{\rm ud}+3)]\\
+C &amp;= (\Gamma_{\rm ud}+1)[\hat\gamma_{\rm ud}(1-\hat\gamma_{\rm ud}/4)(\Gamma_{\rm ud}^2-1)+1]\sigma_{\rm u}^2\\
+&amp;+(\Gamma_{\rm ud}^2-1)[2\hat\gamma_{\rm ud}-(2-\hat\gamma_{\rm ud})(\hat\gamma_{\rm ud}\Gamma_{\rm ud}-1)]\sigma_{\rm u}\\
+&amp;+(\Gamma_{\rm ud}+1)(\Gamma_{\rm ud}-1)^2(\hat\gamma_{\rm ud}-1)^2\\
+D &amp;= -(\Gamma_{\rm ud}-1)(\Gamma_{\rm ud}+1)^2(2-\hat\gamma_{\rm ud})^2\sigma_{\rm u}^2/4\\
+\hat\gamma_{\rm ud} &amp;= \frac{4\Gamma_{\rm ud}+1}{3\Gamma_{\rm ud}}\end{split}\]</div>
+<p>The solution for <span class="math notranslate nohighlight">\(u_{\rm ds}^2\)</span> can be derived as:</p>
+<div class="math notranslate nohighlight">
+\[u_{\rm ds}^2 = 2\sqrt{\frac{-P}{3}}\cos\left(\frac{1}{3}\arccos\left(\frac{3Q}{2P}\sqrt{\frac{-3}{P}}\right)-\frac{2\pi}{3}\right)-\frac{\mathcal{B}}{3}\]</div>
+<p>where:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\mathcal{B} &amp;= \frac{B}{A}, \mathcal{C} = \frac{C}{A}, \mathcal{D} = \frac{D}{A}\\
+P &amp;= \mathcal{C} - \frac{\mathcal{B}^{2}}{3}\\
+Q &amp;= \frac{2\mathcal{B}^{3}}{27}-\frac{\mathcal{BC}}{3}+\mathcal{D}\end{split}\]</div>
+<p>For unmagnetized upstream where <span class="math notranslate nohighlight">\(\sigma_{\rm u}=0\)</span>, the solution simplifies to:</p>
+<div class="math notranslate nohighlight">
+\[u_{\rm ds}^2 = \frac{(\Gamma_{\rm ud}-1)(\hat\gamma_{\rm ud}-1)^{2}}{\hat\gamma_{\rm ud}(2-\hat\gamma_{\rm ud})(\Gamma_{\rm ud}-1)+2}\]</div>
+<div class="math notranslate nohighlight">
+\[u_{\rm us}^2 = \frac{(\Gamma_{\rm ud}-1)(\hat\gamma_{\rm ud}\Gamma_{\rm ud}+1)^{2}}{\hat\gamma_{\rm ud}(2-\hat\gamma_{\rm ud})(\Gamma_{\rm ud}-1)+2}\]</div>
+<p>and the density compression ratio becomes:</p>
+<div class="math notranslate nohighlight">
+\[\frac{n_{\rm d}}{n_{\rm u}} = \frac{\hat\gamma_{\rm ud}\Gamma_{\rm ud}+1}{\hat\gamma_{\rm ud}-1} = 4\Gamma_{\rm ud}\]</div>
+<p>The internal energy density generated in the downstream due to shock heating is:</p>
+<div class="math notranslate nohighlight">
+\[e_{\rm d} = (\Gamma_{\rm ud}-1)n_{\rm d} m_{\rm p} c^2\]</div>
+<p>The downstream co-moving magnetic field is given by:</p>
+<div class="math notranslate nohighlight">
+\[\vec B_{\rm d} = \vec B_{\rm d, o} + \vec B_{\rm d, w} =
+\frac{u_{\rm us}}{u_{\rm ds}}\vec B_{\rm u,o} +
+\sqrt{8\pi\epsilon_{\rm B}e_{\rm d}}\frac{\vec B_{\rm d, w}}{B_{\rm d, w}}\]</div>
+<p>where <span class="math notranslate nohighlight">\(B_{\rm d, o}\)</span> is the ordered magnetic field and <span class="math notranslate nohighlight">\(B_{\rm d, w}\)</span> is the unordered magnetic field generated by Weibel instability, with <span class="math notranslate nohighlight">\(\epsilon_{\rm B}\)</span> being the magnetic energy fraction.</p>
+<p>The general magnetic energy fraction can be approximated as:</p>
+<div class="math notranslate nohighlight">
+\[\bar{\epsilon}_{\rm B} = \frac{B_{\rm d}^{2}}{8\pi e_{\rm d}} \sim
+\frac{\sigma_{\rm u}}{3(1+\sigma_{\rm u})} + \epsilon_{\rm B}\]</div>
+</section>
+<section id="shock-lorentz-factor">
+<h3>Shock Lorentz Factor<a class="headerlink" href="#shock-lorentz-factor" title="Link to this heading"></a></h3>
+<p>The evolution of the shock’s Lorentz factor determines the energy dissipation rate and consequently the afterglow light curve properties. For a given relative Lorentz factor <span class="math notranslate nohighlight">\(\Gamma_{\rm ud}\)</span> between upstream and downstream, the shock jump conditions provide the downstream proton number density <span class="math notranslate nohighlight">\(n_{\rm d}\)</span> and co-moving magnetic field <span class="math notranslate nohighlight">\(B_{\rm d}\)</span> required for radiation calculations.</p>
+<p>The relative Lorentz factor is given by:</p>
+<div class="math notranslate nohighlight">
+\[\Gamma_{\rm ud} = \Gamma_{\rm u}\Gamma_{\rm d} - \sqrt{(\Gamma_{\rm u}^2-1)(\Gamma_{\rm d}^2-1)}\]</div>
+<p>where <span class="math notranslate nohighlight">\(\Gamma_{\rm u}\)</span> and <span class="math notranslate nohighlight">\(\Gamma_{\rm d}\)</span> are the Lorentz factors of the upstream and downstream regions.</p>
+</section>
+<section id="reverse-shock-crossing">
+<h3>Reverse Shock Crossing<a class="headerlink" href="#reverse-shock-crossing" title="Link to this heading"></a></h3>
+<p>When the relativistic jet encounters the ambient medium, a two-shock structure forms: a forward shock propagating into the medium and a reverse shock moving back into the jet material. This phase is crucial for early afterglow emission.</p>
+<p>As the jet collides with the ambient medium, a forward shock and reverse shock pair is generated (if reverse shock conditions are met). These shocks divide the system into four regions:</p>
+<ol class="arabic simple">
+<li><p>Unshocked medium (upstream of forward shock)</p></li>
+<li><p>Shocked medium (downstream of forward shock)</p></li>
+<li><p>Shocked jet (downstream of reverse shock)</p></li>
+<li><p>Unshocked jet (upstream of reverse shock)</p></li>
+</ol>
+<p>During the reverse shock crossing phase, we need to combine the shock jump conditions of forward and reverse shocks. For the forward shock:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}n_2 &amp;= 4\Gamma_{12}n_1 \\
+e_2 &amp;= (\Gamma_{12}-1)n_2m_{\rm p}c^2\end{split}\]</div>
+<p>where <span class="math notranslate nohighlight">\(n_1\)</span> is the ambient medium density and <span class="math notranslate nohighlight">\(\Gamma_{12}\)</span> is the relative Lorentz factor between regions 1 and 2.</p>
+<p>For the reverse shock:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}n_3 &amp;= \frac{u_{4s}}{u_{3s}}n_4 = \left(\Gamma_{43}+\frac{\sqrt{(u_{\rm 3s}^{2}+1)(\Gamma_{\rm 43}^{2}-1)}}{u_{3s}}\right)n_4 \\
+e_3 &amp;= (\Gamma_{43}-1)n_3m_{\rm p} c^2 \\
+{B_{3}^{2}} &amp;= \frac{u_{4s}^{2}}{u_{3s}^{2}}{B_{4}^{2}}\end{split}\]</div>
+<p>where:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}n_4 &amp;= \frac{E_{\rm jet}}{4\pi r^2\Delta^\prime\Gamma_{4}m_{p}c^{2}(1+\sigma_{4})} \\
+{B_{4}^{2}} &amp;= 4\pi\sigma_4 n_4 m_{\rm p}c^2\end{split}\]</div>
+<p>with <span class="math notranslate nohighlight">\(\Delta^\prime\)</span> being the shock width in the co-moving frame.</p>
+<p>The force balance at the discontinuity gives:</p>
+<div class="math notranslate nohighlight">
+\[p_2 = (\hat\gamma_{12}-1)e_2=(\hat\gamma_{43}-1)e_3+ \frac{B_{3}^{2}}{8\pi} = p_3\]</div>
+<p>Combining these equations, we get:</p>
+<div class="math notranslate nohighlight">
+\[1 = \frac{p_2}{p_3} \sim \frac{n_1(\Gamma_{12}^2-1)}{n_4(1+\sigma_4)(\Gamma_{43}^2-1)}\]</div>
+<p>Since <span class="math notranslate nohighlight">\(\Gamma_1\)</span>, <span class="math notranslate nohighlight">\(\Gamma_4\)</span>, <span class="math notranslate nohighlight">\(n_1\)</span> and <span class="math notranslate nohighlight">\(n_4\)</span> are known, and <span class="math notranslate nohighlight">\(\Gamma_2=\Gamma_3\)</span>, we can solve for <span class="math notranslate nohighlight">\(\Gamma_2\)</span> during the reverse shock crossing phase.</p>
+<p>If the pressure in region 4 (unshocked jet) is too strong, the reverse shock cannot form. The reverse shock generation condition is:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\sigma_4 &amp;\lesssim 8(\hat\gamma_{12}-1)\Gamma_{12}(\Gamma_{12}-1)\frac{n_{1}}{n_{4}} \\
+&amp;= \frac{8}{3}(\Gamma_{12}^2-1)\frac{n_{1}}{n_{4}} \\
+&amp;\sim \frac{8}{3}(\Gamma_{4}^2-1)\frac{n_{1}}{n_{4}}\end{split}\]</div>
+<p>For energy conservation during long-lasting reverse shock crossings, VegasAfterglow implements an effective mechanical model. The total energy as the blast wave propagates to radius <span class="math notranslate nohighlight">\(r\)</span> should be:</p>
+<div class="math notranslate nohighlight">
+\[E_{\rm jet}+E_{\rm medium}=N_{4,0}\Gamma_4m_pc^2(1+\sigma_4)+N_2m_pc^2\]</div>
+<p>The total energy in regions 2, 3, and 4 is:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}E_2+E_3+E_4 &amp;= N_2[\Gamma_2+\Gamma_{\rm eff,2}(\Gamma_{21}-1)]m_pc^2\\
+&amp;+N_3[\Gamma_3+\Gamma_{\rm eff,3}(\Gamma_{43}-1)]m_pc^2(1+\sigma_4)\\
+&amp;+ N_4\Gamma_4m_pc^2(1+\sigma_4)\end{split}\]</div>
+<p>where:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\Gamma_{\rm eff,2} &amp;= \frac{\hat\gamma_{21}\Gamma_2^2-\hat\gamma_{21}+1}{\Gamma_2}\\
+\Gamma_{\rm eff,3} &amp;= \frac{\hat\gamma_{43}\Gamma_3^2-\hat\gamma_{43}+1}{\Gamma_3}\end{split}\]</div>
+<p>Using energy conservation and particle number conservation:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}E_{\rm jet}+E_{\rm medium} &amp;= E_2+E_3+E_4\\
+N_{4,0} &amp;= N_3+N_4\end{split}\]</div>
+<p>And with <span class="math notranslate nohighlight">\(\Gamma_3=\Gamma_2=\Gamma_{21}\)</span>, we get:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}0 &amp;= N_2[\Gamma_3-1+\Gamma_{\rm eff,2}(\Gamma_{3}-1)]\\
+&amp;+N_3(1+\sigma_4)[\Gamma_3-\Gamma_4+\Gamma_{\rm eff,3}(\Gamma_{43}-1)]\end{split}\]</div>
+<p>The shocked proton number <span class="math notranslate nohighlight">\(N_3\)</span> can be expressed as:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}N_{3}(r) &amp;= \int_{0}^{r} 4\pi r^{\prime 2}n_3\frac{d\Delta_3^\prime}{dr^{\prime}}dr^\prime\\
+\frac{d\Delta_3^\prime}{dr} &amp;= \frac{\Gamma_3}{\Gamma_{4}}\left(\frac{n_{1}}{n_{4}(1+\sigma_{4})}\right)^{1/2}\left(1-\frac{\Gamma_{4}n_{4}}{\Gamma_{3}n_{3}}\right)^{-1}\end{split}\]</div>
+<p>The reverse shock completely crosses the jet when:</p>
+<div class="math notranslate nohighlight">
+\[N_{3}(r_x) = N_{4} \equiv \frac{E_{\rm jet}}{\Gamma_{4}m_{p}c^{2}(1+\sigma_{4})}\]</div>
+<p>where <span class="math notranslate nohighlight">\(r_x\)</span> is the crossing radius.</p>
+</section>
+<section id="post-reverse-shock-crossing-phase">
+<h3>Post-Reverse Shock Crossing Phase<a class="headerlink" href="#post-reverse-shock-crossing-phase" title="Link to this heading"></a></h3>
+<p>Once the reverse shock completely traverses the jet material, the dynamics enter a new regime characterized by adiabatic expansion and gradual deceleration. This phase is essential for modeling the mid-to-late afterglow emission.</p>
+<p>After the reverse shock has fully crossed the jet (<span class="math notranslate nohighlight">\(N_3 = N_{4,0}\)</span>), the shocked jet material enters the post-crossing phase. In this phase, the dynamics follow a self-similar solution that smoothly transitions from the Newtonian regime to the relativistic Blandford-McKee solution.</p>
+<p>The dynamics for both the forward and reverse shocks need to be treated separately after crossing.</p>
+<p><strong>Forward Shock Dynamics</strong></p>
+<p>The forward shock continues to propagate into the ambient medium and is governed by energy conservation in the blast wave. VegasAfterglow carefully accounts for pressure, radiation, and adiabatic expansion:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}{d}[\Gamma_2M_{\rm tot}c^2+\Gamma_{\rm eff}U] &amp;= c^2{dm}+\Gamma_{\rm eff}dU_{\rm rad}+L_{\rm inj}dt_{\rm eng}\\
+{dU} &amp;= {dU_{\rm sh}}+dU_{\rm ad}+{dU_{\rm rad}}\\
+M_{\rm tot} &amp;= M_0 + m + m_{\rm inj}\end{split}\]</div>
+<p>where <span class="math notranslate nohighlight">\(E_{\rm jet}=\Gamma_{2}M_{0}c^{2}\)</span> with <span class="math notranslate nohighlight">\(M_{0}\)</span> the equivalent initial rest mass of the jet, <span class="math notranslate nohighlight">\(m\)</span> is the total collected mass, <span class="math notranslate nohighlight">\(m_{\rm inj}\)</span> is the injected mass, <span class="math notranslate nohighlight">\(U\)</span> is the internal energy in the blast wave, <span class="math notranslate nohighlight">\(dU_{\rm sh}\)</span> is increased internal energy due to shock heating, <span class="math notranslate nohighlight">\(dU_{\rm ad}\)</span> is the lost internal energy due to adiabatic expansion, <span class="math notranslate nohighlight">\(dU_{\rm rad}\)</span> is lost internal energy due to radiation, and <span class="math notranslate nohighlight">\(L_{\rm inj}\)</span> is the injection luminosity.</p>
+<p>These quantities are defined as:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\Gamma_{\rm eff} &amp;= \frac{\hat{\gamma}_{2}\Gamma_{2}^{2}-\hat{\gamma}_{2}+1}{\Gamma_{2}}\\
+dU_{\rm sh} &amp;= c^2 (\Gamma_2-1)dm\\
+dU_{\rm ad} &amp;= -(\hat{\gamma}_2-1)\bigg(\frac{3}{r}dr-\frac{1}{\Gamma_{2}}d\Gamma_2\bigg)U\\
+dU_{\rm rad} &amp;= -\epsilon(\Gamma_2-1)c^2dm\\
+\epsilon &amp;= \epsilon_{\rm rad}\epsilon_{e}\end{split}\]</div>
+<p>The blast wave equation for <span class="math notranslate nohighlight">\(\Gamma_2\)</span> evolution can then be written as:</p>
+<div class="math notranslate nohighlight">
+\[\dot\Gamma_{2} = \frac{-(\Gamma_{\rm eff}+1)(\Gamma_2-1)c^2\dot{m}-\Gamma_{\rm eff}\dot U_{\rm ad}+L_{\rm inj} - c^2\Gamma_{2}\dot m_{\rm inj}}{(M_{0}+ m +m_{\rm inj})c^{2}+U\frac{d\Gamma_{\rm eff}}{d\Gamma_2}}\]</div>
+<p><strong>Reverse Shock Dynamics</strong></p>
+<p>For the reverse shock, the four-velocity evolution in the post-crossing phase follows a power-law profile:</p>
+<div class="math notranslate nohighlight">
+\[u = u_x \left(\frac{r}{r_x}\right)^{-g}\]</div>
+<p>where <span class="math notranslate nohighlight">\(u_x\)</span> is the four-velocity at the crossing radius <span class="math notranslate nohighlight">\(r_x\)</span>, and <span class="math notranslate nohighlight">\(g\)</span> is the power-law index that depends on the relative Lorentz factor <span class="math notranslate nohighlight">\(\Gamma_{\rm rel}\)</span>.</p>
+<p>The scaling laws after reverse shock crossing vary between thin and thick shell regimes:</p>
+<ol class="arabic">
+<li><p><strong>Thin Shell Regime</strong> (Newtonian reverse shock):</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}n_3 &amp;\propto r^{-\frac{2(3+g)}{\hat\gamma_{43}+1}}\\
+p_3 &amp;\propto r^{-\frac{2(3+g)\hat\gamma_{43}}{\hat\gamma_{43}+1}}\\
+\frac{p_3}{n_3} &amp;\propto r^{-\frac{2(3+g)(\hat\gamma_{43}-1)}{\hat\gamma_{43}+1}}\end{split}\]</div>
+</li>
+<li><p><strong>Thick Shell Regime</strong> (Relativistic reverse shock):</p>
+<p>Before shell expansion:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}n_3 &amp;\propto r^{-2}\\
+p_3 &amp;\propto r^{-2\hat\gamma_{43}}\\
+\frac{p_3}{n_3} &amp;\propto r^{2(1-\hat\gamma_{43})}\end{split}\]</div>
+<p>After shell expansion:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}n_3 &amp;\propto r^{-(3+g)}\\
+p_3 &amp;\propto r^{-(3+g)\hat\gamma_{43}}\\
+\frac{p_3}{n_3} &amp;\propto r^{(3+g)(1-\hat\gamma_{43})}\end{split}\]</div>
+</li>
+</ol>
+<p>The power-law index <span class="math notranslate nohighlight">\(g\)</span> transitions smoothly between different regimes:</p>
+<div class="math notranslate nohighlight">
+\[g = g_{\rm low} + (g_{\rm high} - g_{\rm low})\frac{p}{1+p}\]</div>
+<p>with:</p>
+<div class="math notranslate nohighlight">
+\[p = \sqrt{\sqrt{\Gamma_{\rm rel} - 1}}\]</div>
+<p>For a homogeneous medium (ISM), <span class="math notranslate nohighlight">\(g_{\rm low} = 1.5\)</span> in the Newtonian regime, and <span class="math notranslate nohighlight">\(g_{\rm high} = 3.5\)</span> in the ultra-relativistic regime (Blandford-McKee limit).</p>
+<p>The shell width evolution is also important for determining the dynamics:</p>
+<div class="math notranslate nohighlight">
+\[\Delta^\prime = \Delta^\prime_0+ c_s t^\prime\]</div>
+<p>where <span class="math notranslate nohighlight">\(c_s\)</span> is the sound speed in the co-moving frame:</p>
+<div class="math notranslate nohighlight">
+\[c_s = c\sqrt{\frac{\hat\gamma_{43}(\hat\gamma_{43}-1)(\Gamma_{43}-1)}{1+\hat\gamma_{43}(\Gamma_{43}-1)}}\]</div>
+<p>The post-crossing evolution preserves the total number of electrons (particle number conservation):</p>
+<div class="math notranslate nohighlight">
+\[n_3 r^2 \Delta^\prime \propto r^0\]</div>
+<p>which leads to:</p>
+<div class="math notranslate nohighlight">
+\[n_3(r) = n_{3}(r_x)\left(\frac{r}{r_x}\right)^{-2}\left(\frac{\Delta^\prime}{\Delta_x^\prime}\right)^{-1}\]</div>
+<p>The pressure evolves according to adiabatic expansion:</p>
+<div class="math notranslate nohighlight">
+\[p_3 \propto n_3^{\hat{\gamma}_{43}}\]</div>
+<p>which gives:</p>
+<div class="math notranslate nohighlight">
+\[p_3(r) = p_{3}(r_x)\left(\frac{r}{r_x}\right)^{-2\hat{\gamma}_{43}}\left(\frac{\Delta^\prime}{\Delta_x^\prime}\right)^{-\hat{\gamma}_{43}}\]</div>
+<p>The average electron Lorentz factor in region 3 (used for synchrotron radiation calculation) is:</p>
+<div class="math notranslate nohighlight">
+\[\bar\gamma_3(r) \propto \frac{p_3}{n_3} \propto \left(\frac{r}{r_x}\right)^{2(1-\hat{\gamma}_{43})}\left(\frac{\Delta^\prime}{\Delta_x^\prime}\right)^{1-\hat{\gamma}_{43}}\]</div>
+<p>This detailed treatment of post-crossing dynamics allows VegasAfterglow to accurately model the afterglow emission from the earliest phases through the transition to the self-similar regime and into the non-relativistic phase.</p>
+</section>
+<section id="jet-spreading">
+<h3>Jet Spreading<a class="headerlink" href="#jet-spreading" title="Link to this heading"></a></h3>
+<p>As the jet propagates and decelerates, it also expands laterally. This lateral spreading significantly affects the observed light curve, particularly for off-axis observers.</p>
+<p>VegasAfterglow models lateral expansion of the jet through:</p>
+<div class="math notranslate nohighlight">
+\[\frac{d\theta}{dt} = F(u)\sqrt{\frac{2u^2+3}{4u^2+3}}\frac{1}{2\Gamma}\frac{dr}{dt}\]</div>
+<div class="math notranslate nohighlight">
+\[F(u) = \left[1+\left(\frac{u}{Q\theta_s}\right)^2\right]^{-1}\]</div>
+<p>where <span class="math notranslate nohighlight">\(u = \Gamma\beta\)</span> and <span class="math notranslate nohighlight">\(\frac{dr}{dt} = \beta c/(1-\beta)\)</span>.</p>
+</section>
+</section>
+<section id="radiation-processes">
+<h2>Radiation Processes<a class="headerlink" href="#radiation-processes" title="Link to this heading"></a></h2>
+<p>The observed afterglow emission arises from various radiation mechanisms as relativistic particles interact with magnetic fields and ambient photons. VegasAfterglow implements detailed treatments of these processes to generate accurate multi-wavelength light curves.</p>
+<section id="electron-population">
+<h3>Electron Population<a class="headerlink" href="#electron-population" title="Link to this heading"></a></h3>
+<p>Particle acceleration at relativistic shocks produces a non-thermal distribution of electrons, which are the primary emitters in the afterglow.</p>
+<p>In relativistic shocks, the dissipation of kinetic energy accelerates particles to relativistic energies. The comoving internal energy density behind the shock is:</p>
+<div class="math notranslate nohighlight">
+\[\mathcal{U} = (\Gamma-1)n_pm_pc^2\]</div>
+<p>where <span class="math notranslate nohighlight">\(n_p\)</span> is the downstream proton number density.</p>
+<p>A fraction of this energy goes to magnetic fields:</p>
+<div class="math notranslate nohighlight">
+\[\frac{B^{\prime2}}{8\pi} = \epsilon_B\mathcal{U}\]</div>
+<p>And to non-thermal electrons:</p>
+<div class="math notranslate nohighlight">
+\[(\bar\gamma-1)n_em_ec^2 = \epsilon_e\mathcal{U} = \epsilon_en_p(\Gamma-1)m_pc^2\]</div>
+<p>where <span class="math notranslate nohighlight">\(\bar\gamma\)</span> is the average Lorentz factor of the accelerated electrons.</p>
+<p>The electron energy distribution typically follows a power law:</p>
+<div class="math notranslate nohighlight">
+\[N(\gamma) \propto \gamma^{-p}, \quad \gamma_m \leq \gamma \leq \gamma_M\]</div>
+<p>where <span class="math notranslate nohighlight">\(\gamma_m\)</span> and <span class="math notranslate nohighlight">\(\gamma_M\)</span> are the minimum and maximum Lorentz factors.</p>
+<p>The minimum Lorentz factor <span class="math notranslate nohighlight">\(\gamma_m\)</span> can be determined from the energy equations:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\gamma_m= \begin{cases}
+\frac{p-2}{p-1}\frac{\epsilon_e}{\xi}(\Gamma-1)\frac{m_p}{m_e}+1, &amp; p&gt;2\\
+\ln^{-1}(\frac{\gamma_M}{\gamma_m})\frac{\epsilon_e}{\xi}(\Gamma-1)\frac{m_p}{m_e}+1, &amp; p=2\\
+\left(\frac{2-p}{p-1}\frac{\epsilon_e}{\xi}(\Gamma-1)\frac{m_p}{m_e}\gamma_M^{p-2}\right)^{1/(p-1)}+1, &amp; p&lt;2
+\end{cases}\end{split}\]</div>
+<p>where <span class="math notranslate nohighlight">\(\xi = \frac{n_e}{n_p}\)</span> is the electron-to-proton number ratio.</p>
+<p>The cooling of electrons due to synchrotron radiation and inverse Compton scattering is described by:</p>
+<div class="math notranslate nohighlight">
+\[\frac{d\gamma}{dt^\prime}m_ec^2 = -P_{\rm syn} = -\frac{4}{3}\sigma_Tc\gamma^2\beta^2\frac{B^{\prime2}}{8\pi}(1+\tilde{Y})\]</div>
+<p>where <span class="math notranslate nohighlight">\(\tilde{Y}\)</span> is the Compton Y-parameter that accounts for the inverse Compton cooling.</p>
+<p>The cooling time is:</p>
+<div class="math notranslate nohighlight">
+\[t_c^\prime = \left|\frac{\gamma_c}{\dot{\gamma_c}}\right| = \frac{6\pi m_ec^2\gamma_c}{\sigma_Tc(\gamma_c^2-1)B^{\prime2}(1+\tilde{Y})}\]</div>
+<p>The cooling Lorentz factor <span class="math notranslate nohighlight">\(\gamma_c\)</span> is then:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\gamma_c &amp;= \frac{1}{2}\left(\bar{\gamma}_c+\sqrt{\bar{\gamma}^2_c+4}\right)\\
+\bar{\gamma}_c &amp;= \frac{6\pi m_ec}{\sigma_TB^{\prime2}(1+\tilde{Y})t^\prime}\end{split}\]</div>
+<p>The self-absorption frequency <span class="math notranslate nohighlight">\(\nu_a\)</span> defines where synchrotron photons are self-absorbed. It can be derived as the intersection point between synchrotron and blackbody spectra:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}I_{\rm \nu}^{\rm bb}(\nu_a) &amp;= I_{\nu}^{\rm syn}(\nu_a) \sim 2kT\frac{\nu_a^2}{c^2}\\
+kT &amp;= (\hat\gamma_{p}-1)(\gamma_{p}-1)m_ec^2\end{split}\]</div>
+<p>The absorption Lorentz factor <span class="math notranslate nohighlight">\(\gamma_a\)</span> is given by:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\gamma_a = \begin{cases}
+\left(\frac{I_{\nu,p}c^2}{2kT\nu_{p}^{1/3}}\right)^{3/5}, &amp; \nu_{p}&lt;\nu_a\\
+\left(\frac{I_{\nu,p}}{2m_e(\hat\gamma_{p}-1)}\sqrt{\frac{3eB^\prime}{4\pi m_ec}}\right)^{2/5}, &amp; \nu_{p}=\nu_a
+\end{cases}\end{split}\]</div>
+<p>where:</p>
+<div class="math notranslate nohighlight">
+\[I_{\rm\nu,p}^{\rm syn} = P_{\rm syn, p}\frac{f_{\rm syn}N_e\xi}{4\pi \delta^\prime} = \frac{\sqrt{3}}{2}\frac{(p-1)B^\prime e^3}{m_ec^2}\frac{f_{\rm syn}\Sigma_e\xi}{4\pi}\]</div>
+<p>The electron distribution function depends on the ordering of characteristic Lorentz factors. For slow cooling with weak absorption (<span class="math notranslate nohighlight">\(\gamma_a&lt;\gamma_m&lt;\gamma_c\)</span>):</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\frac{dN_e^{\rm syn}}{d\gamma}= \begin{cases}
+n_0(p-1)\gamma_m^{p-1}\gamma^{-p}, &amp; \gamma_m&lt;\gamma&lt;\gamma_c\\
+n_0(p-1)\gamma_m^{p-1}\gamma_c\gamma^{-p-1}, &amp; \gamma_c&lt;\gamma
+\end{cases}\end{split}\]</div>
+<p>For fast cooling with weak absorption (<span class="math notranslate nohighlight">\(\gamma_a&lt;\gamma_c&lt;\gamma_m\)</span>):</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\frac{dN_e^{\rm syn}}{d\gamma}= \begin{cases}
+n_0\gamma_c\gamma^{-2}, &amp; \gamma_c&lt;\gamma&lt;\gamma_m\\
+n_0\gamma_m^{p-1}\gamma_c\gamma^{-p-1}, &amp; \gamma_m&lt;\gamma
+\end{cases}\end{split}\]</div>
+</section>
+<section id="synchrotron-radiation">
+<h3>Synchrotron Radiation<a class="headerlink" href="#synchrotron-radiation" title="Link to this heading"></a></h3>
+<p>The characteristic synchrotron emission frequency is:</p>
+<div class="math notranslate nohighlight">
+\[\nu = \frac{3eB^\prime\gamma^2}{4\pi m_e c}\]</div>
+<p>The synchrotron spectrum is approximated as a multi-segment broken power law, with different forms depending on the ordering of key frequencies:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(\nu_a\)</span> - self-absorption frequency</p></li>
+<li><p><span class="math notranslate nohighlight">\(\nu_m\)</span> - characteristic frequency of minimum energy electrons</p></li>
+<li><p><span class="math notranslate nohighlight">\(\nu_c\)</span> - cooling frequency</p></li>
+</ul>
+<p>These define different regimes (e.g., slow cooling with <span class="math notranslate nohighlight">\(\nu_m &lt; \nu_c\)</span> or fast cooling with <span class="math notranslate nohighlight">\(\nu_c &lt; \nu_m\)</span>).</p>
+<p>Below are the functional forms for various spectral regimes:</p>
+<p><strong>(I) Slow cooling with weak absorption</strong> (<span class="math notranslate nohighlight">\(\nu_a&lt;\nu_m&lt;\nu_c\)</span>):</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}F_\nu=F_{\rm\nu,max}\begin{cases}
+\left(\frac{\nu_a}{\nu_m}\right)^{1/3}\left(\frac{\nu}{\nu_a}\right)^{2}, &amp; \nu&lt;\nu_a\\
+\left(\frac{\nu}{\nu_m}\right)^{1/3}, &amp; \nu_a&lt;\nu&lt;\nu_m\\
+\left(\frac{\nu}{\nu_m}\right)^{-(p-1)/2}, &amp; \nu_m&lt;\nu&lt;\nu_c\\
+\left(\frac{\nu_c}{\nu_m}\right)^{-(p-1)/2}\left(\frac{\nu}{\nu_c}\right)^{-p/2}, &amp; \nu_c&lt;\nu&lt;\nu_M
+\end{cases}\end{split}\]</div>
+<p><strong>(II) Slow cooling with weak absorption</strong> (<span class="math notranslate nohighlight">\(\nu_m&lt;\nu_a&lt;\nu_c\)</span>):</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}F_\nu=F_{\rm\nu,max}\begin{cases}
+\left(\frac{\nu_m}{\nu_a}\right)^{(p+4)/2}\left(\frac{\nu}{\nu_m}\right)^{2}, &amp; \nu&lt;\nu_m\\
+\left(\frac{\nu_a}{\nu_m}\right)^{-(p-1)/2}\left(\frac{\nu}{\nu_a}\right)^{5/2}, &amp; \nu_m&lt;\nu&lt;\nu_a\\
+\left(\frac{\nu}{\nu_m}\right)^{-(p-1)/2}, &amp; \nu_a&lt;\nu&lt;\nu_c\\
+\left(\frac{\nu_c}{\nu_m}\right)^{-(p-1)/2}\left(\frac{\nu}{\nu_c}\right)^{-p/2}, &amp; \nu_c&lt;\nu&lt;\nu_M
+\end{cases}\end{split}\]</div>
+<p><strong>(III) Fast cooling with weak absorption</strong> (<span class="math notranslate nohighlight">\(\nu_a&lt;\nu_c&lt;\nu_m\)</span>):</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}F_\nu=F_{\rm\nu,max}\begin{cases}
+\left(\frac{\nu_a}{\nu_c}\right)^{1/3}\left(\frac{\nu}{\nu_a}\right)^{2}, &amp; \nu&lt;\nu_a\\
+\left(\frac{\nu}{\nu_c}\right)^{1/3}, &amp; \nu_a&lt;\nu&lt;\nu_c\\
+\left(\frac{\nu}{\nu_c}\right)^{-1/2}, &amp; \nu_c&lt;\nu&lt;\nu_m\\
+\left(\frac{\nu_m}{\nu_c}\right)^{-1/2}\left(\frac{\nu}{\nu_m}\right)^{-p/2}, &amp; \nu_m&lt;\nu&lt;\nu_M
+\end{cases}\end{split}\]</div>
+<p><strong>(IV) Fast cooling with strong absorption</strong> (<span class="math notranslate nohighlight">\(\nu_c&lt;\nu_a&lt;\nu_m\)</span>):</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}F_\nu=F_{\rm\nu,max}\begin{cases}
+\left(\frac{\nu}{\nu_a}\right)^{2}, &amp; \nu&lt;\nu_a\\
+\mathcal{R}_4\left(\frac{\nu}{\nu_a}\right)^{-1/2}, &amp; \nu_a&lt;\nu&lt;\nu_m\\
+\mathcal{R}_4\left(\frac{\nu_m}{\nu_a}\right)^{-1/2}\left(\frac{\nu}{\nu_m}\right)^{-p/2}, &amp; \nu_m&lt;\nu&lt;\nu_M
+\end{cases}\end{split}\]</div>
+<p>where <span class="math notranslate nohighlight">\(\mathcal{R}_4=\frac{\gamma_c}{3\gamma_a}\)</span></p>
+<p><strong>(V) Slow cooling with strong absorption</strong> (<span class="math notranslate nohighlight">\(\nu_m&lt;\nu_c&lt;\nu_a\)</span>):</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}F_\nu=F_{\rm\nu,max}\begin{cases}
+\left(\frac{\nu}{\nu_a}\right)^{2}, &amp; \nu&lt;\nu_a\\
+\mathcal{R}_5\left(\frac{\nu}{\nu_a}\right)^{-p/2}, &amp; \nu_a&lt;\nu&lt;\nu_M
+\end{cases}\end{split}\]</div>
+<p>where <span class="math notranslate nohighlight">\(\mathcal{R}_5=(p-1)\frac{\gamma_c}{3\gamma_a}\left(\frac{\gamma_m}{\gamma_a}\right)^{p-1}\)</span></p>
+<p><strong>(VI) Fast cooling with strong absorption</strong> (<span class="math notranslate nohighlight">\(\nu_c&lt;\nu_m&lt;\nu_a\)</span>):</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}F_\nu=F_{\rm\nu,max}\begin{cases}
+\left(\frac{\nu}{\nu_a}\right)^{2}, &amp; \nu&lt;\nu_a\\
+\mathcal{R}_6\left(\frac{\nu}{\nu_a}\right)^{-p/2}, &amp; \nu_a&lt;\nu&lt;\nu_M
+\end{cases}\end{split}\]</div>
+<p>where <span class="math notranslate nohighlight">\(\mathcal{R}_6=\frac{\gamma_c}{3\gamma_a}\left(\frac{\gamma_m}{\gamma_a}\right)^{p-1}\)</span></p>
+</section>
+<section id="inverse-compton-process">
+<h3>Inverse Compton Process<a class="headerlink" href="#inverse-compton-process" title="Link to this heading"></a></h3>
+<p>Inverse Compton (IC) scattering is modeled through:</p>
+<div class="math notranslate nohighlight">
+\[I_\nu^{\rm IC} = \delta^\prime\int_{\gamma_m}^\infty\frac{dN}{d\gamma}(\gamma)d\gamma\int_0^{x_0}\sigma_c(x)I_{\nu}^{\rm syn}(x)dx\]</div>
+<p>where <span class="math notranslate nohighlight">\(\sigma_c\)</span> is the Klein-Nishina cross-section, accounting for the quantum effects at high energies:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\sigma_c &amp;= \frac{3}{4}\sigma_T\left[\frac{1+x}{x^3}\left\{\frac{2x(1+x)}{1+2x}-\ln(1+2x)\right\}\right.\\
+&amp;\left.+\frac{1}{2x}\ln(1+2x)-\frac{1+3x}{(1+2x)^2} \right]\\
+x &amp;= \frac{h\nu}{m_ec^2}\end{split}\]</div>
+<p>The IC cooling affects the electron distribution. Defining <span class="math notranslate nohighlight">\(\hat\gamma_i=\frac{m_ec^2}{h\nu_i}\)</span>, the modified electron distribution due to IC cooling is:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\frac{dN^{\rm IC}_e}{d\gamma}(\gamma)=\frac{dN^{\rm syn}_e}{d\gamma}(\gamma)\begin{cases}
+1, &amp; \gamma&lt;\gamma_c\\
+\frac{1+\tilde{Y}(\gamma_c)}{1+\tilde{Y}(\gamma)}, &amp; \gamma&gt;\gamma_c
+\end{cases}\end{split}\]</div>
+<p>For <span class="math notranslate nohighlight">\(\hat\gamma_m&lt;\hat\gamma_c\)</span> (corresponding to <span class="math notranslate nohighlight">\(\nu_m &gt; \nu_c\)</span>):</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\tilde{Y}(\gamma)=\begin{cases}
+Y_T, &amp; \gamma&lt;\hat\gamma_m\\
+Y_T\left(\frac{\gamma}{\hat\gamma_m}\right)^{-1/2}, &amp; \hat\gamma_m&lt;\gamma&lt;\hat\gamma_c\\
+Y_T\left(\frac{\gamma}{\gamma_c}\right)^{-4/3}\left(\frac{\hat\gamma_m}{\hat\gamma_c}\right)^{1/2}, &amp; \hat\gamma_c&lt;\gamma
+\end{cases}\end{split}\]</div>
+<p>For <span class="math notranslate nohighlight">\(\hat\gamma_c&lt;\hat\gamma_m\)</span> (corresponding to <span class="math notranslate nohighlight">\(\nu_c &gt; \nu_m\)</span>):</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\tilde{Y}(\gamma)=\begin{cases}
+Y_T, &amp; \gamma&lt;\hat\gamma_c\\
+Y_T\left(\frac{\gamma}{\hat\gamma_c}\right)^{(p-3)/2}, &amp; \hat\gamma_c&lt;\gamma&lt;\hat\gamma_m\\
+Y_T\left(\frac{\gamma}{\gamma_m}\right)^{-4/3}\left(\frac{\hat\gamma_m}{\hat\gamma_c}\right)^{(p-3)/2}, &amp; \hat\gamma_c&lt;\gamma
+\end{cases}\end{split}\]</div>
+<p>The synchrotron spectrum is also modified by IC cooling:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}I_\nu^{\rm syn, IC}(\nu)=I_\nu^{\rm syn}(\nu)\begin{cases}
+1, &amp; \nu&lt;\nu_c\\
+\frac{1+\tilde{Y}(\nu_c)}{1+\tilde{Y}(\nu)}, &amp; \nu&gt;\nu_c
+\end{cases}\end{split}\]</div>
+<p>For <span class="math notranslate nohighlight">\(\hat\nu_m&lt;\hat\nu_c\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\tilde{Y}(\nu)=\begin{cases}
+Y_T, &amp; \nu&lt;\hat\nu_m\\
+Y_T\left(\frac{\nu}{\hat\nu_m}\right)^{-1/4}, &amp; \hat\nu_m&lt;\nu&lt;\hat\nu_c\\
+Y_T\left(\frac{\nu}{\nu_c}\right)^{-2/3}\left(\frac{\hat\nu_m}{\hat\nu_c}\right)^{1/4}, &amp; \hat\nu_c&lt;\nu
+\end{cases}\end{split}\]</div>
+<p>For <span class="math notranslate nohighlight">\(\hat\nu_c&lt;\hat\nu_m\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\tilde{Y}(\nu)=\begin{cases}
+Y_T, &amp; \nu&lt;\hat\nu_c\\
+Y_T\left(\frac{\nu}{\hat\nu_c}\right)^{(p-3)/4}, &amp; \hat\nu_c&lt;\nu&lt;\hat\nu_m\\
+Y_T\left(\frac{\nu}{\nu_m}\right)^{-2/3}\left(\frac{\hat\nu_m}{\hat\nu_c}\right)^{(p-3)/4}, &amp; \hat\nu_c&lt;\nu
+\end{cases}\end{split}\]</div>
+</section>
+</section>
+<section id="observed-emission">
+<h2>Observed Emission<a class="headerlink" href="#observed-emission" title="Link to this heading"></a></h2>
+<p>The final step in afterglow modeling is translating the emission properties in the comoving frame to the observer frame, accounting for relativistic effects and geometry.</p>
+<p>The observed emission depends on geometry and relativistic effects. For a given observer angle, the Doppler factor is:</p>
+<div class="math notranslate nohighlight">
+\[\mathcal{D} = \frac{1}{\Gamma(1-\beta\cos w)}\]</div>
+<p>where <span class="math notranslate nohighlight">\(\cos w = \sin\theta\cos\phi\sin\theta_v+\cos\theta\cos\theta_v\)</span>.</p>
+<p>The observed time is:</p>
+<div class="math notranslate nohighlight">
+\[t_{\rm obs} = (1+z)\left[t+\frac{r}{c}\cos w\right]\]</div>
+<p>And the observed flux:</p>
+<div class="math notranslate nohighlight">
+\[F_\nu(\nu,\tilde{t}) = \frac{1+z}{4\pi D_L^2}\iint_{t_{\rm obs}=\tilde{t}} 4\pi r^2 I_{\nu^\prime}(\nu^\prime)\mathcal{D}^3d\Omega dr\]</div>
+<p>where <span class="math notranslate nohighlight">\(\nu^\prime = \frac{1+z}{\mathcal{D}}\nu\)</span>.</p>
+</section>
+<section id="references">
+<h2>References<a class="headerlink" href="#references" title="Link to this heading"></a></h2>
+<p>For detailed exploration of GRB afterglow physics, see:</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, VegasAfterglow Team.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

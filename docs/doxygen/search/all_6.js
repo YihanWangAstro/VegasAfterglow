@@ -1,7 +1,7 @@
 var searchData=
 [
   ['g_0',['g',['../namespaceunit.html#af4ac5b90426ecc30143a4e0f495978b6',1,'unit']]],
-  ['gamma_1',['gamma',['../structForwardState.html#a1f7f63273d731979440606b69413eac3',1,'ForwardState::Gamma'],['../structSimpleState.html#aa220fc39562c5384c863d3d7a9d39aee',1,'SimpleState::Gamma'],['../classCoastingShock.html#a174cc05509ef0c4aca0d2e5f0b7a7343',1,'CoastingShock::Gamma'],['../classShock.html#af26b390f5806dc838dd5a2f63c1b0bd9',1,'Shock::Gamma']]],
+  ['gamma_1',['gamma',['../structForwardState.html#a1f7f63273d731979440606b69413eac3',1,'ForwardState::Gamma'],['../classCoastingShock.html#a174cc05509ef0c4aca0d2e5f0b7a7343',1,'CoastingShock::Gamma'],['../classShock.html#af26b390f5806dc838dd5a2f63c1b0bd9',1,'Shock::Gamma'],['../structSimpleState.html#aa220fc39562c5384c863d3d7a9d39aee',1,'SimpleState::Gamma']]],
   ['gamma_20conversion_20and_20adiabatic_20index_20functions_2',['Gamma Conversion and Adiabatic Index Functions',['../group__GammaConversions.html',1,'']]],
   ['gamma0_3',['gamma0',['../classEjecta.html#a6993f0ec67bf03b7c80e9a7c10e65640',1,'Ejecta::Gamma0'],['../structParams.html#a936879f34880349fc5c813219834519d',1,'Params::Gamma0'],['../classTophatJet.html#a89374a73ef8bbaec174846b778ccfb6f',1,'TophatJet::Gamma0()'],['../classGaussianJet.html#a9c76f0d0e02fd686f7b081962275d49b',1,'GaussianJet::Gamma0()'],['../classPowerLawJet.html#a476eed410b28500b7209768b81434502',1,'PowerLawJet::Gamma0()']]],
   ['gamma4_4',['Gamma4',['../classFRShockEqn.html#a69ca2d095d52823456e2c9cad98132c2',1,'FRShockEqn']]],
@@ -14,7 +14,7 @@ var searchData=
   ['gamma_5frel_11',['Gamma_rel',['../classShock.html#a4ea5bc5a9958d2d19dac34b2d097eed0',1,'Shock']]],
   ['gamma_5fto_5fbeta_12',['gamma_to_beta',['../physics_8h.html#ab8aa624dd63313487d8f5ecf52170d76',1,'physics.h']]],
   ['gauss_13',['Gauss',['../namespaceunit.html#afe6ab6092d118630921fa2b1ba3c888e',1,'unit']]],
-  ['gaussianjet_14',['gaussianjet',['../classGaussianJet.html',1,'GaussianJet'],['../classGaussianJet.html#a6d971c13e815621895bc9488b7897b66',1,'GaussianJet::GaussianJet()']]],
+  ['gaussianjet_14',['gaussianjet',['../classGaussianJet.html',1,'GaussianJet'],['../classGaussianJet.html#adbfec46147c6fd9f22258acade623122',1,'GaussianJet::GaussianJet()']]],
   ['gen_15',['gen',['../structICPhoton.html#aea42facc0caac8c19d9e1d81b6df35c1',1,'ICPhoton']]],
   ['gen_5fcoasting_5fshock_16',['gen_coasting_shock',['../prompt_8h.html#a66fb48188341c585a06119c04800c823',1,'prompt.h']]],
   ['gen_5fic_5fphotons_17',['gen_ic_photons',['../inverse-compton_8h.html#a6a5093f20708b2fb36a07a8de717f8ec',1,'gen_IC_photons(SynElectronGrid const &amp;electron, SynPhotonGrid const &amp;photon):&#160;inverse-compton.cpp'],['../inverse-compton_8cpp.html#a93eb9d2bb37cfda02acbe75db106c174',1,'gen_IC_photons(SynElectronGrid const &amp;e, SynPhotonGrid const &amp;ph):&#160;inverse-compton.cpp']]],
@@ -25,10 +25,9 @@ var searchData=
   ['generate_5fsyn_5fphotons_22',['generate_syn_photons',['../synchrotron_8h.html#a331f545228d2b18e84e0252510e295f8',1,'generate_syn_photons(Shock const &amp;shock, SynElectronGrid const &amp;electrons):&#160;synchrotron.cpp'],['../synchrotron_8h.html#a0f78089bdc9e329056d89812794298b9',1,'generate_syn_photons(SynPhotonGrid &amp;photons, Shock const &amp;shock, SynElectronGrid const &amp;electrons):&#160;synchrotron.cpp'],['../synchrotron_8cpp.html#a68ca390be3c37e7c5f3286335daba749',1,'generate_syn_photons(Shock const &amp;shock, SynElectronGrid const &amp;e):&#160;synchrotron.cpp'],['../synchrotron_8cpp.html#ac2384d3417ed32a6ce6e55e6cf3be655',1,'generate_syn_photons(SynPhotonGrid &amp;ph, Shock const &amp;shock, SynElectronGrid const &amp;e):&#160;synchrotron.cpp']]],
   ['generation_23',['Synchrotron Grid Creation and Generation',['../group__SynchrotronFunctions.html',1,'']]],
   ['gev_24',['GeV',['../namespaceunit.html#a72e916028823a9789da7785db1d7c17a',1,'unit']]],
-  ['grid_25',['Grid',['../structMultiBandModel.html#a8f135197cb5052e6615839d2a083c23b',1,'MultiBandModel']]],
-  ['grid_20creation_20and_20generation_26',['Synchrotron Grid Creation and Generation',['../group__SynchrotronFunctions.html',1,'']]],
-  ['grid_20type_20aliases_27',['Synchrotron Grid Type Aliases',['../group__SynchrotronGrids.html',1,'']]],
-  ['grid_20utilities_28',['Array and Grid Utilities',['../group__Mesh__Utilities.html',1,'']]],
-  ['grid_5fsolve_5ffwd_5fshock_29',['grid_solve_fwd_shock',['../forward-shock_8hpp.html#a454f4f345bf2516fd61180798fd56146',1,'forward-shock.hpp']]],
-  ['gyr_30',['Gyr',['../namespaceunit.html#a48f40dde4001ab058bb1b94072ce4470',1,'unit']]]
+  ['grid_20creation_20and_20generation_25',['Synchrotron Grid Creation and Generation',['../group__SynchrotronFunctions.html',1,'']]],
+  ['grid_20type_20aliases_26',['Synchrotron Grid Type Aliases',['../group__SynchrotronGrids.html',1,'']]],
+  ['grid_20utilities_27',['Array and Grid Utilities',['../group__Mesh__Utilities.html',1,'']]],
+  ['grid_5fsolve_5ffwd_5fshock_28',['grid_solve_fwd_shock',['../forward-shock_8hpp.html#a454f4f345bf2516fd61180798fd56146',1,'forward-shock.hpp']]],
+  ['gyr_29',['Gyr',['../namespaceunit.html#a48f40dde4001ab058bb1b94072ce4470',1,'unit']]]
 ];

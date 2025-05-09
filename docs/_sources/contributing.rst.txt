@@ -6,12 +6,12 @@ Contributing
    :depth: 2
 
 Getting Started
---------------
+---------------
 
 Thank you for considering contributing to VegasAfterglow! This document provides guidelines for contributing to the project.
 
 Installation for Development
----------------------------
+----------------------------
 
 1. Fork the repository on GitHub
 2. Clone your fork locally:
@@ -34,7 +34,7 @@ Installation for Development
     pip install pytest black flake8 sphinx sphinx_rtd_theme breathe
 
 Coding Standards
----------------
+----------------
 
 C++ Code
 ^^^^^^^^
@@ -48,7 +48,7 @@ C++ Code
 * Leverage C++20 features when appropriate (concepts, ranges, etc.)
 
 Python Code
-^^^^^^^^^^
+^^^^^^^^^^^
 
 * Follow PEP 8 style guidelines
 * Use type hints for function signatures
@@ -57,12 +57,12 @@ Python Code
 * Support Python 3.8 and higher
 
 Documentation Guidelines
-----------------------
+------------------------
 
 Documentation for VegasAfterglow consists of both C++ API documentation (using Doxygen) and Python API documentation (using Sphinx with Napoleon). Proper documentation is essential for maintaining code quality and improving user experience.
 
 C++ Documentation
-^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^
 
 All C++ code should be documented using Doxygen-style comments:
 
@@ -104,7 +104,7 @@ All C++ code should be documented using Doxygen-style comments:
        */
 
 Python Documentation
-^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^
 
 For Python code, use NumPy-style docstrings:
 
@@ -136,7 +136,7 @@ For Python code, use NumPy-style docstrings:
         """
 
 Building Documentation
---------------------
+----------------------
 
 To build the documentation locally:
 
@@ -165,7 +165,7 @@ To build the documentation locally:
     # Open docs/build/html/index.html in your browser
 
 Testing
-------
+-------
 
 Before submitting a pull request, please run the test suite:
 
@@ -180,7 +180,7 @@ For C++ tests, you can use:
     make tests
 
 Pull Request Process
-------------------
+--------------------
 
 1. Update the README.md and documentation with details of changes, if applicable
 2. Update the test suite to include tests for your changes
@@ -189,7 +189,7 @@ Pull Request Process
 5. Your pull request will be reviewed by the maintainers
 
 Issues and Feedback
------------------
+-------------------
 
 If you encounter any issues, have questions about the code, or want to request new features:
 
@@ -199,11 +199,11 @@ If you encounter any issues, have questions about the code, or want to request n
    - This allows other users to see the problem/solution as well
 
 Code of Conduct
--------------
+---------------
 
 Please be respectful and considerate of others when contributing to this project. Harassment and abusive behavior will not be tolerated.
 
 License
-------
+-------
 
 By contributing to this project, you agree that your contributions will be licensed under the project's BSD-3-Clause License. 

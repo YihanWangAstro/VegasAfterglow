@@ -1,5 +1,7 @@
 var classEjecta =
 [
+    [ "Ejecta", "classEjecta.html#a3ba7d93839cd4a8a3b3f4c5ec5e66efa", null ],
+    [ "Ejecta", "classEjecta.html#a240a0ed7fbc307a27d92ffa3d8057107", null ],
     [ "deps_dt", "classEjecta.html#a1cd7491361913dd37cf4efe8e3a0376a", null ],
     [ "dm_dt", "classEjecta.html#a74ab20785693d39f5ec9a13edf2c0cd7", null ],
     [ "eps_k", "classEjecta.html#a1952705ec5647300cd09255dcfc786cd", null ],

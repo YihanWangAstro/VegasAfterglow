@@ -1,6 +1,6 @@
 var classPowerLawJet =
 [
-    [ "PowerLawJet", "classPowerLawJet.html#a58f62a6ae50535b18dd4400e863d90c9", null ],
+    [ "PowerLawJet", "classPowerLawJet.html#ac319bcc6d1cc74fda47c49a143c09e78", null ],
     [ "eps_k", "classPowerLawJet.html#a6f2b4379fe8d70409ba7ceef5804aca4", null ],
     [ "Gamma0", "classPowerLawJet.html#a476eed410b28500b7209768b81434502", null ],
     [ "spreading", "classPowerLawJet.html#a783b242334d9723f19a3f724b65629b5", null ],

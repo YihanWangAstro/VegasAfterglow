@@ -5,7 +5,7 @@
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="884,112,433,139,432,133,884,107"/>
 <area shape="rect" id="Node000004" href="$classObserver.html#a9fc133aa2f06b425634470424da9daa3" title="Computes the integrated flux over a frequency band." alt="" coords="724,66,837,91"/>
 <area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="883,94,838,88,838,83,884,89"/>
-<area shape="rect" id="Node000005" href="$structMultiBandModel.html#a81292c1adf3c0a12f67edd7825a31dd1" title=" " alt="" coords="235,25,401,65"/>
+<area shape="rect" id="Node000005" href="$structMultiBandModel.html#a041063f7ee0ccf24878f440b91ef7147" title=" " alt="" coords="235,25,401,65"/>
 <area shape="poly" id="edge5_Node000001_Node000005" title=" " alt="" coords="952,85,905,55,878,42,849,32,790,19,729,12,607,9,494,18,401,31,400,26,493,13,607,4,729,7,790,14,850,27,880,37,908,51,955,81"/>
 <area shape="rect" id="Node000006" href="$classObserver.html#ac9ed4fb8ae8b336286c176423401ba30" title="Computes the spectrum at multiple observation times." alt="" coords="712,167,849,192"/>
 <area shape="poly" id="edge8_Node000001_Node000006" title=" " alt="" coords="936,124,816,170,814,165,934,119"/>
@@ -13,7 +13,7 @@
 <area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="190,145,156,145,156,140,190,140"/>
 <area shape="poly" id="edge4_Node000004_Node000004" title=" " alt="" coords="816,56,806,48,781,44,759,47,748,51,746,57,752,64,748,67,741,57,744,48,758,41,781,39,809,43,820,52"/>
 <area shape="poly" id="edge6_Node000005_Node000003" title=" " alt="" coords="257,73,114,132,112,127,255,68"/>
-<area shape="rect" id="Node000007" href="$structMultiBandModel.html#a0ad0a665dba9eb93f1715a9556530d9e" title=" " alt="" coords="480,216,664,242"/>
+<area shape="rect" id="Node000007" href="$structMultiBandModel.html#addc177e083d29bfe10094625b516ece7" title=" " alt="" coords="480,216,664,242"/>
 <area shape="poly" id="edge9_Node000006_Node000007" title=" " alt="" coords="714,198,627,219,626,214,712,193"/>
 <area shape="rect" id="Node000008" href="$classObserver.html#af16bf4c5175405ae1c88a78b8afdd8c4" title="Computes the spectrum at a single observation time." alt="" coords="497,167,647,192"/>
 <area shape="poly" id="edge11_Node000006_Node000008" title=" " alt="" coords="698,182,647,182,647,177,698,177"/>

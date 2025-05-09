@@ -4,7 +4,7 @@ Quickstart
 This guide will help you get started with VegasAfterglow quickly. We'll cover basic installation, setting up a simple model, and running your first afterglow parameter estimation.
 
 Installation
------------
+------------
 
 The easiest way to install VegasAfterglow is via pip:
 
@@ -15,7 +15,7 @@ The easiest way to install VegasAfterglow is via pip:
 For more detailed installation instructions, see the :doc:`installation` page.
 
 Basic Usage
-----------
+-----------
 
 VegasAfterglow is designed to efficiently model gamma-ray burst (GRB) afterglows and perform Markov Chain Monte Carlo (MCMC) parameter estimation. Let's start by importing the necessary modules:
 
@@ -26,9 +26,9 @@ VegasAfterglow is designed to efficiently model gamma-ray burst (GRB) afterglows
     from VegasAfterglow import ObsData, Setups, Fitter, ParamDef, Scale
 
 Preparing Observational Data
-^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-First, we need to create an instance to store observational data through the `ObsData` class. You can add light curves (specific flux vs. time) and spectra (specific flux vs. frequency) in multiple ways:
+First, we need to create an instance to store observational data through the ``ObsData`` class. You can add light curves (specific flux vs. time) and spectra (specific flux vs. frequency) in multiple ways:
 
 .. code-block:: python
 
@@ -62,9 +62,9 @@ First, we need to create an instance to store observational data through the `Ob
         data.add_light_curve(nu_cgs=nu, t_cgs=df["t"], Fnu_cgs=df["Fv_obs"], Fnu_err=df["Fv_err"])
 
 Setting up the Model Configuration
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-The `Setups` class defines the global properties and environment for your model. These settings remain fixed during the MCMC process:
+The ``Setups`` class defines the global properties and environment for your model. These settings remain fixed during the MCMC process:
 
 .. code-block:: python
 
@@ -84,9 +84,9 @@ The `Setups` class defines the global properties and environment for your model.
     # cfg.t_num = 24          # Number of time grid points
 
 Defining MCMC Parameters
-^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^
 
-The `ParamDef` class is used to define the parameters for MCMC exploration. Each parameter requires a name, initial value, prior range, and sampling scale:
+The ``ParamDef`` class is used to define the parameters for MCMC exploration. Each parameter requires a name, initial value, prior range, and sampling scale:
 
 .. code-block:: python
 
@@ -103,19 +103,19 @@ The `ParamDef` class is used to define the parameters for MCMC exploration. Each
     ]
 
 The parameters you include depend on your model configuration:
-- For "wind" medium: use `A_star` parameter 
-- For "ISM" medium: use `n_ism` parameter instead
+- For "wind" medium: use ``A_star`` parameter 
+- For "ISM" medium: use ``n_ism`` parameter instead
 - Different jet structures may require different parameters
 
 Scale types:
-- `Scale.LOG`: Sample in logarithmic space (log10) - ideal for parameters spanning multiple orders of magnitude
-- `Scale.LINEAR`: Sample in linear space - appropriate for parameters with narrower ranges
-- `Scale.FIXED`: Keep parameter fixed at the initial value - use for parameters you don't want to vary
+- ``Scale.LOG``: Sample in logarithmic space (log10) - ideal for parameters spanning multiple orders of magnitude
+- ``Scale.LINEAR``: Sample in linear space - appropriate for parameters with narrower ranges
+- ``Scale.FIXED``: Keep parameter fixed at the initial value - use for parameters you don't want to vary
 
 Running the MCMC
-^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^
 
-Initialize the `Fitter` class with your data and configuration, then run the MCMC process:
+Initialize the ``Fitter`` class with your data and configuration, then run the MCMC process:
 
 .. code-block:: python
 
@@ -132,7 +132,7 @@ Initialize the `Fitter` class with your data and configuration, then run the MCM
     )
 
 Analyzing the Results
-^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^
 
 Examine the posterior distribution to understand parameter constraints:
 
@@ -154,7 +154,7 @@ Examine the posterior distribution to understand parameter constraints:
         print(f"  {name}: {medians[i]:.4g} (+{upper[i]-medians[i]:.4g}, -{medians[i]-lower[i]:.4g})")
 
 Generating Model Predictions
-^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Use samples from the posterior to generate model predictions with uncertainties:
 
@@ -183,7 +183,7 @@ Use samples from the posterior to generate model predictions with uncertainties:
     plt.show()
 
 Visualizing Parameter Correlations
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Corner plots are essential for visualizing parameter correlations and posterior distributions:
 
@@ -213,7 +213,7 @@ Corner plots are essential for visualizing parameter correlations and posterior 
     plot_corner(flat_chain, result.labels)
 
 Checking MCMC Convergence
-^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Trace plots help verify MCMC convergence:
 
@@ -236,7 +236,7 @@ Trace plots help verify MCMC convergence:
     plot_trace(result.samples, result.labels)
 
 Next Steps
----------
+----------
 
 Now that you've run your first MCMC parameter estimation, here are some suggested next steps:
 

@@ -1,17 +1,17 @@
 Python API Reference
-===================
+====================
 
 .. contents:: Table of Contents
    :local:
    :depth: 2
 
 Overview
--------
+--------
 
 The Python API provides a user-friendly interface to VegasAfterglow's C++ core, enabling easy model setup, simulation execution, and result analysis. All major C++ components are exposed through Python bindings with an intuitive interface.
 
 Key Components
--------------
+--------------
 
 The Python API is organized into several core components:
 
@@ -21,7 +21,9 @@ The Python API is organized into several core components:
 * **Results Processing**: Tools for handling simulation outputs
 
 Core Classes
------------
+------------
+
+.. _api-obsdata:
 
 ObsData
 ^^^^^^^
@@ -47,6 +49,8 @@ Example:
     
     # Add spectrum data
     data.add_spectrum(t_cgs=3000, nu_cgs=nu_data, Fnu_cgs=spectrum_data, Fnu_err=spectrum_error)
+
+.. _api-setups:
 
 Setups
 ^^^^^^
@@ -75,8 +79,10 @@ Example:
     cfg.medium = "wind"        # Ambient medium: "wind", "ISM", or "user"
     cfg.jet = "powerlaw"       # Jet structure: "powerlaw", "gaussian", "tophat", or "user"
 
+.. _api-modelparams:
+
 ModelParams
-^^^^^^^^^^
+^^^^^^^^^^^
 
 .. autoclass:: VegasAfterglow.ModelParams
    :members:
@@ -85,13 +91,22 @@ ModelParams
 
 The `ModelParams` class stores the physical parameters that define the GRB afterglow model. These parameters are varied during the MCMC fitting process.
 
+.. _api-paramdef:
+
 ParamDef and Scale
-^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^
+
+.. _ParamDef:
 
 .. autoclass:: VegasAfterglow.ParamDef
    :members:
    :undoc-members:
    :show-inheritance:
+
+.. _api-scale:
+.. _api-scale-log:
+.. _api-scale-linear:
+.. _api-scale-fixed:
 
 .. autoclass:: VegasAfterglow.Scale
    :members:
@@ -116,6 +131,20 @@ Example:
         ParamDef("eps_B",    1e-2,  1e-4,   0.5,  Scale.LOG),       # Magnetic field energy fraction
         ParamDef("A_star",   0.01,  1e-3,     1,  Scale.LOG),       # Wind parameter
     ]
+
+.. _A_star:
+
+For wind medium models, you would use the A_star parameter as shown above.
+
+.. _n_ism:
+
+For ISM medium models, you would use the density parameter instead:
+
+.. code-block:: python
+
+    ParamDef("n_ism",     0.1,  1e-3,    10,  Scale.LOG),       # ISM density [cm^-3]
+
+.. _api-fitter:
 
 Fitter
 ^^^^^^
@@ -151,6 +180,8 @@ Example:
     # Generate spectra with best-fit parameters
     spec_best = fitter.spectra(result.best_params, nu_out, times)
 
+.. _api-fitresult:
+
 FitResult
 ^^^^^^^^^
 
@@ -160,6 +191,8 @@ FitResult
    :show-inheritance:
 
 The `FitResult` class stores the results of an MCMC fit, including the posterior samples, log probabilities, and best-fit parameters.
+
+.. _api-vegasmc:
 
 VegasMC
 ^^^^^^^
@@ -172,12 +205,12 @@ VegasMC
 The `VegasMC` class is the core calculator for MCMC sampling, providing efficient computation of model likelihood based on the specified parameters.
 
 Documenting Python Code
----------------------
+-----------------------
 
 When contributing to the Python codebase, please follow these documentation guidelines:
 
 Class and Function Documentation
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Use NumPy-style docstrings for all classes and functions:
 
@@ -209,7 +242,7 @@ Use NumPy-style docstrings for all classes and functions:
         """
 
 Example Class
-^^^^^^^^^^^
+^^^^^^^^^^^^^
 
 Here's an example of a well-documented class:
 

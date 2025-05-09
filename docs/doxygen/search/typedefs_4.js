@@ -1,4 +1,6 @@
 var searchData=
 [
-  ['list_0',['list',['../structMultiBandData.html#a1c2ed42120c5568abd0a1007951d16d3',1,'MultiBandData::List'],['../structMultiBandModel.html#aba262bdd90dd4b1bf6fa6c3de64c880f',1,'MultiBandModel::List']]]
+  ['promptphotonsgrid_0',['PromptPhotonsGrid',['../prompt_8h.html#a2abf283a7169e39103fb128d439a8b0e',1,'prompt.h']]],
+  ['pyarray_1',['PyArray',['../pybind_8h.html#a06c55931188bd694c6e070a50e95344c',1,'pybind.h']]],
+  ['pygrid_2',['PyGrid',['../pybind_8h.html#ac1d4addade56d129930395ee7527601e',1,'pybind.h']]]
 ];

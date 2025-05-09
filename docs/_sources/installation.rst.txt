@@ -2,7 +2,7 @@ Installation
 ============
 
 Prerequisites
-------------
+-------------
 
 VegasAfterglow requires the following to build:
 
@@ -20,10 +20,10 @@ VegasAfterglow requires the following to build:
   * Make (GNU Make 4.0+ recommended) [if you want to compile & run the C++ code]
 
 Python Installation
-------------------
+-------------------
 
 From PyPI (Recommended)
-^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^
 
 The easiest way to install VegasAfterglow is via pip:
 
@@ -34,7 +34,7 @@ The easiest way to install VegasAfterglow is via pip:
 VegasAfterglow requires Python 3.8 or higher.
 
 From Source
-^^^^^^^^^^
+^^^^^^^^^^^
 
 To install from source, first clone the repository:
 
@@ -50,7 +50,7 @@ Then, build and install:
     pip install .
 
 C++ Installation
----------------
+----------------
 
 For advanced users who want to compile and use the C++ library directly:
 
@@ -76,7 +76,7 @@ For advanced users who want to compile and use the C++ library directly:
        make tests
 
 Requirements
------------
+------------
 
 * Python 3.8 or higher
 * C++20 compatible compiler (for building from source)

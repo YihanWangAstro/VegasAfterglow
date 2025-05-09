@@ -1,8 +1,8 @@
 var searchData=
 [
   ['a_5fstar_0',['A_star',['../structParams.html#a15b9f0b0ca2df7a9190562d0aaa19814',1,'Params']]],
-  ['add_5flight_5fcurve_1',['add_light_curve',['../structMultiBandData.html#aabad3e79de7832c4da036c6ebc14a423',1,'MultiBandData']]],
-  ['add_5fspectrum_2',['add_spectrum',['../structMultiBandData.html#a5a1ffd2bd44789493f47dfdf28373b3d',1,'MultiBandData']]],
+  ['add_5flight_5fcurve_1',['add_light_curve',['../structMultiBandData.html#ab15b29ad6db1c7be7bb62d8d4b218411',1,'MultiBandData']]],
+  ['add_5fspectrum_2',['add_spectrum',['../structMultiBandData.html#a36b9e6baef1a0ab8ac972bc46ebf5618',1,'MultiBandData']]],
   ['adiabatic_20index_20functions_3',['Gamma Conversion and Adiabatic Index Functions',['../group__GammaConversions.html',1,'']]],
   ['adiabatic_5fidx_4',['adiabatic_idx',['../physics_8h.html#a2a95c6b3f1236d69328af7199a772a23',1,'physics.h']]],
   ['afterglow_2eh_5',['afterglow.h',['../afterglow_8h.html',1,'']]],

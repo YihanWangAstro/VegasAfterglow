@@ -1,7 +1,0 @@
-<map id="ICPhoton::I_nu" name="ICPhoton::I_nu">
-<area shape="rect" id="Node000001" title="Returns the photon intensity at frequency nu." alt="" coords="5,5,120,31"/>
-<area shape="rect" id="Node000002" href="$utilities_8cpp.html#ad3bc8b592ec28b18768172f7a21bd8c2" title="Log&#45;log interpolation for equally spaced x&#45;values in log space." alt="" coords="168,5,343,31"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="120,15,154,15,154,21,120,21"/>
-<area shape="rect" id="Node000003" href="$utilities_8cpp.html#a367745c657e66d712ce7c153b1d065b7" title="Point&#45;wise logarithmic interpolation between two points." alt="" coords="391,5,537,31"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="343,15,377,15,377,21,343,21"/>
-</map>

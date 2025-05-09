@@ -9,8 +9,9 @@ var searchData=
   ['theta0_6',['theta0',['../classForwardShockEqn.html#a5dc2e510565b607caa4eee42e053c8d3',1,'ForwardShockEqn::theta0'],['../classFRShockEqn.html#a54ea36bb3fddcc4ccab1708c752e3092',1,'FRShockEqn::theta0'],['../classSimpleShockEqn.html#ad193653f550dbdcec374e78e6aad0282',1,'SimpleShockEqn::theta0']]],
   ['theta_5fc_7',['theta_c',['../structParams.html#a0a6c4ac1f5f7f81dd2e13c107e085252',1,'Params']]],
   ['theta_5fgrid_8',['theta_grid',['../structConfigParams.html#a348c6dc4521792cda406963d7869f56d',1,'ConfigParams']]],
-  ['theta_5fv_9',['theta_v',['../structParams.html#a06f6248c051974549dd20d9e656be92c',1,'Params']]],
-  ['theta_5fview_10',['theta_view',['../classCoord.html#aeb5bef37e495fdeefad735154e99bf73',1,'Coord']]],
-  ['theta_5fw_11',['theta_w',['../structParams.html#a5167ca63b8539ca83ab43d542de787fc',1,'Params']]],
-  ['time_12',['time',['../classObserver.html#a7b83dbbff538d3f079f8e662d3686ada',1,'Observer']]]
+  ['theta_5fobs_9',['theta_obs',['../classPyObserver.html#a44289f4d1236019685063b1ce914154d',1,'PyObserver']]],
+  ['theta_5fv_10',['theta_v',['../structParams.html#a06f6248c051974549dd20d9e656be92c',1,'Params']]],
+  ['theta_5fview_11',['theta_view',['../classCoord.html#aeb5bef37e495fdeefad735154e99bf73',1,'Coord']]],
+  ['theta_5fw_12',['theta_w',['../structParams.html#a5167ca63b8539ca83ab43d542de787fc',1,'Params']]],
+  ['time_13',['time',['../classObserver.html#a7b83dbbff538d3f079f8e662d3686ada',1,'Observer']]]
 ];

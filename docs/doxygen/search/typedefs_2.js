@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['grid_0',['Grid',['../structMultiBandModel.html#a8f135197cb5052e6615839d2a083c23b',1,'MultiBandModel']]]
+  ['icphotongrid_0',['ICPhotonGrid',['../inverse-compton_8h.html#adcfaf3d2807fe6de421ca3e9c5332252',1,'inverse-compton.h']]]
 ];

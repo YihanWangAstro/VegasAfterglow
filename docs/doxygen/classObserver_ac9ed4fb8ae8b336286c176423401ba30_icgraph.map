@@ -1,6 +1,6 @@
 <map id="Observer::spectra" name="Observer::spectra">
 <area shape="rect" id="Node000001" title="Computes the spectrum at multiple observation times." alt="" coords="679,29,816,55"/>
-<area shape="rect" id="Node000002" href="$structMultiBandModel.html#a0ad0a665dba9eb93f1715a9556530d9e" title=" " alt="" coords="226,5,410,31"/>
+<area shape="rect" id="Node000002" href="$structMultiBandModel.html#addc177e083d29bfe10094625b516ece7" title=" " alt="" coords="226,5,410,31"/>
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="665,40,410,26,410,20,665,35"/>
 <area shape="rect" id="Node000004" href="$classObserver.html#af16bf4c5175405ae1c88a78b8afdd8c4" title="Computes the spectrum at a single observation time." alt="" coords="480,55,631,80"/>
 <area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="665,56,631,60,631,55,664,50"/>

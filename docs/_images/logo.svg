@@ -111,6 +111,8 @@
         font-size="105"
         text-anchor="middle"
         fill="#39A275"
+        stroke-width="1.5"
+        stroke="black"
         filter="url(#text-glow)">
     VegasAfterglow
   </text>

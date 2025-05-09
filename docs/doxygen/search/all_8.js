@@ -1,7 +1,7 @@
 var searchData=
 [
   ['i0_0',['I0',['../structIntegratorGrid.html#a15142f0263de0b86d0f5b04529813a93',1,'IntegratorGrid']]],
-  ['i_5fnu_1',['i_nu',['../structPromptPhotons.html#a6b69b9bf72058f1469cfa2141f79e853',1,'PromptPhotons::I_nu()'],['../structICPhoton.html#acec4229fdd2ac9d793faac068ec92888',1,'ICPhoton::I_nu()']]],
+  ['i_5fnu_1',['I_nu',['../structPromptPhotons.html#a6b69b9bf72058f1469cfa2141f79e853',1,'PromptPhotons']]],
   ['i_5fnu_5fpeak_2',['I_nu_peak',['../structSynElectrons.html#a95ec04bf20c4e0027578159ff6a354b0',1,'SynElectrons']]],
   ['ic_20photon_20and_20electron_20cooling_20functions_3',['IC Photon and Electron Cooling Functions',['../group__IC__Functions.html',1,'']]],
   ['ic_5fx0_4',['IC_x0',['../inverse-compton_8h.html#a2bf720c7c87d960838095b276b09c664',1,'inverse-compton.h']]],
@@ -11,7 +11,7 @@ var searchData=
   ['inf_8',['inf',['../namespacecon.html#ad61313f4a5b7876e54ae46d02d4a04bd',1,'con']]],
   ['injection_5fidx_9',['injection_idx',['../classShock.html#a876908cb852c77b1053c91b54692c2ff',1,'Shock']]],
   ['integratorgrid_10',['integratorgrid',['../structIntegratorGrid.html',1,'IntegratorGrid'],['../structIntegratorGrid.html#a46acfc0ee150cd702693f3a504b91e64',1,'IntegratorGrid::IntegratorGrid()']]],
-  ['interp_11',['interp',['../utilities_8h.html#a27a2109102c59d7d973cdc5960724672',1,'interp(Real x0, Array const &amp;x, Array const &amp;y, bool lo_extrap=false, bool hi_extrap=false):&#160;utilities.cpp'],['../utilities_8cpp.html#aca15558424fea07c17af7937c03a0f2a',1,'interp(Real xi, Array const &amp;x, Array const &amp;y, bool lo_extrap, bool hi_extrap):&#160;utilities.cpp']]],
+  ['interp_11',['interp',['../utilities_8cpp.html#aca15558424fea07c17af7937c03a0f2a',1,'interp(Real xi, Array const &amp;x, Array const &amp;y, bool lo_extrap, bool hi_extrap):&#160;utilities.cpp'],['../utilities_8h.html#a27a2109102c59d7d973cdc5960724672',1,'interp(Real x0, Array const &amp;x, Array const &amp;y, bool lo_extrap=false, bool hi_extrap=false):&#160;utilities.cpp']]],
   ['interpolation_20functions_12',['Interpolation Functions',['../group__Interpolation.html',1,'']]],
   ['inverse_20compton_20calculation_20constants_20and_20functions_13',['Inverse Compton Calculation Constants and Functions',['../group__IC__Calculation.html',1,'']]],
   ['inverse_2dcompton_2ecpp_14',['inverse-compton.cpp',['../inverse-compton_8cpp.html',1,'']]],

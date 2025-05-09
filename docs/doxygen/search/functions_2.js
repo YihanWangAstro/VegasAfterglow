@@ -11,7 +11,7 @@ var searchData=
   ['compute_5fcrossed_5fgamma_5frel_8',['compute_crossed_Gamma_rel',['../classFRShockEqn.html#a27e73d9c60526a8e17b95bfc6e7f34ca',1,'FRShockEqn']]],
   ['compute_5fcrossing_5fgamma3_9',['compute_crossing_Gamma3',['../classFRShockEqn.html#a62665870747748704c9c38488d2ca3ef',1,'FRShockEqn']]],
   ['compute_5fdec_5ftime_10',['compute_dec_time',['../shock_8h.html#a332a992c621eaae912c73f8089d52323',1,'shock.h']]],
-  ['compute_5fdownstr_5f4vel_11',['compute_downstr_4vel',['../shock_8cpp.html#a09f75d8bc0c1cd36d03a413edd7283d8',1,'compute_downstr_4vel(Real gamma_rel, Real sigma):&#160;shock.cpp'],['../shock_8h.html#a09f75d8bc0c1cd36d03a413edd7283d8',1,'compute_downstr_4vel(Real gamma_rel, Real sigma):&#160;shock.cpp']]],
+  ['compute_5fdownstr_5f4vel_11',['compute_downstr_4vel',['../shock_8h.html#a09f75d8bc0c1cd36d03a413edd7283d8',1,'compute_downstr_4vel(Real gamma_rel, Real sigma):&#160;shock.cpp'],['../shock_8cpp.html#a09f75d8bc0c1cd36d03a413edd7283d8',1,'compute_downstr_4vel(Real gamma_rel, Real sigma):&#160;shock.cpp']]],
   ['compute_5fdownstr_5feth_12',['compute_downstr_eth',['../shock_8h.html#a54a18a4b2edea5b333bae4e08ed2b68d',1,'shock.h']]],
   ['compute_5fdownstr_5fnum_5fden_13',['compute_downstr_num_den',['../shock_8h.html#a1d7e0662ed14532ed7d41d5aa0a740c0',1,'shock.h']]],
   ['compute_5fdr_5fdt_14',['compute_dr_dt',['../shock_8h.html#a49b14420b5231323cb4940496ddc0956',1,'shock.h']]],
@@ -20,9 +20,9 @@ var searchData=
   ['compute_5feffective_5fgamma_17',['compute_effective_Gamma',['../shock_8h.html#a1daab7936c7a7201b192aaec9bd0a8a7',1,'shock.h']]],
   ['compute_5fgamma_5fc_18',['compute_gamma_c',['../synchrotron_8cpp.html#a52e34d49dd7497d65ea5261e80d615d4',1,'compute_gamma_c(Real t_com, Real B, InverseComptonY const &amp;Ys, Real p):&#160;synchrotron.cpp'],['../synchrotron_8h.html#a52e34d49dd7497d65ea5261e80d615d4',1,'compute_gamma_c(Real t_com, Real B, InverseComptonY const &amp;Ys, Real p):&#160;synchrotron.cpp']]],
   ['compute_5fgamma_5ffrom_5frelative_19',['compute_Gamma_from_relative',['../shock_8h.html#a70465220fb5998b1d45d11ac165a9e67',1,'shock.h']]],
-  ['compute_5fgamma_5fpeak_20',['compute_gamma_peak',['../synchrotron_8cpp.html#a71dd98bf97f7ca32d046bef60ebe11c4',1,'compute_gamma_peak(SynElectrons const &amp;e):&#160;synchrotron.cpp'],['../synchrotron_8cpp.html#a5f1c40226e12d8dee51a76c99524fd11',1,'compute_gamma_peak(Real gamma_a, Real gamma_m, Real gamma_c):&#160;synchrotron.cpp'],['../synchrotron_8h.html#a5f1c40226e12d8dee51a76c99524fd11',1,'compute_gamma_peak(Real gamma_a, Real gamma_m, Real gamma_c):&#160;synchrotron.cpp']]],
-  ['compute_5fi_5fnu_21',['compute_I_nu',['../structSynPhotons.html#a380508572a0fc6f50ef8fd58420492ba',1,'SynPhotons']]],
-  ['compute_5flog2_5fi_5fnu_22',['compute_log2_I_nu',['../structSynPhotons.html#ab6aec9da3210a04c044f4596f82ee21a',1,'SynPhotons']]],
+  ['compute_5fgamma_5fpeak_20',['compute_gamma_peak',['../synchrotron_8cpp.html#a71dd98bf97f7ca32d046bef60ebe11c4',1,'compute_gamma_peak(SynElectrons const &amp;e):&#160;synchrotron.cpp'],['../synchrotron_8h.html#a5f1c40226e12d8dee51a76c99524fd11',1,'compute_gamma_peak(Real gamma_a, Real gamma_m, Real gamma_c):&#160;synchrotron.cpp'],['../synchrotron_8cpp.html#a5f1c40226e12d8dee51a76c99524fd11',1,'compute_gamma_peak(Real gamma_a, Real gamma_m, Real gamma_c):&#160;synchrotron.cpp']]],
+  ['compute_5fi_5fnu_21',['compute_i_nu',['../structSynPhotons.html#a380508572a0fc6f50ef8fd58420492ba',1,'SynPhotons::compute_I_nu()'],['../structICPhoton.html#a5affc62546509c3510d21ad7f25a9b04',1,'ICPhoton::compute_I_nu(Real nu) const']]],
+  ['compute_5flog2_5fi_5fnu_22',['compute_log2_i_nu',['../structICPhoton.html#a998210d5d3aca981bc7cafd7d6247069',1,'ICPhoton::compute_log2_I_nu()'],['../structSynPhotons.html#ab6aec9da3210a04c044f4596f82ee21a',1,'SynPhotons::compute_log2_I_nu()']]],
   ['compute_5fregion4_5fnum_5fden_23',['compute_region4_num_den',['../shock_8h.html#a0c2a479b9becd710ac78cdb76a138dc2',1,'shock.h']]],
   ['compute_5frel_5fgamma_24',['compute_rel_gamma',['../shock_8h.html#a7b72b7c46b478ce3d1a15677c5046dcb',1,'compute_rel_Gamma(Real gamma1, Real gamma2):&#160;shock.h'],['../shock_8h.html#aa9a3f62c0c028cbdc8a2db2d47a7299f',1,'compute_rel_Gamma(Real gamma1, Real gamma2, Real beta1, Real beta2):&#160;shock.h']]],
   ['compute_5fshell_5fsigma_25',['compute_shell_sigma',['../classFRShockEqn.html#a6b9e03ae15cc1510b5e4ae7f8f8adcf9',1,'FRShockEqn']]],
@@ -32,7 +32,7 @@ var searchData=
   ['compute_5fsyn_5ffreq_29',['compute_syn_freq',['../synchrotron_8h.html#a936bfaa522ec8295a21d253e5453188d',1,'compute_syn_freq(Real gamma, Real B):&#160;synchrotron.cpp'],['../synchrotron_8cpp.html#a936bfaa522ec8295a21d253e5453188d',1,'compute_syn_freq(Real gamma, Real B):&#160;synchrotron.cpp']]],
   ['compute_5fsyn_5fgamma_30',['compute_syn_gamma',['../synchrotron_8cpp.html#a85433be4a0da2f510240a603da8f7dff',1,'synchrotron.cpp']]],
   ['compute_5fsyn_5fgamma_5fa_31',['compute_syn_gamma_a',['../synchrotron_8cpp.html#a5b1694deb534f1df0ba3515fdf52b65a',1,'synchrotron.cpp']]],
-  ['compute_5fsyn_5fgamma_5fm_32',['compute_syn_gamma_m',['../synchrotron_8cpp.html#a1c5ae0a77c927eb60684c180ba559567',1,'compute_syn_gamma_M(Real B, InverseComptonY const &amp;Ys, Real p):&#160;synchrotron.cpp'],['../synchrotron_8cpp.html#a0095a83d7309c92bcf2d807436b2615c',1,'compute_syn_gamma_m(Real Gamma_rel, Real gamma_M, Real eps_e, Real p, Real xi):&#160;synchrotron.cpp']]],
+  ['compute_5fsyn_5fgamma_5fm_32',['compute_syn_gamma_m',['../synchrotron_8cpp.html#a0095a83d7309c92bcf2d807436b2615c',1,'compute_syn_gamma_m(Real Gamma_rel, Real gamma_M, Real eps_e, Real p, Real xi):&#160;synchrotron.cpp'],['../synchrotron_8cpp.html#a1c5ae0a77c927eb60684c180ba559567',1,'compute_syn_gamma_M(Real B, InverseComptonY const &amp;Ys, Real p):&#160;synchrotron.cpp']]],
   ['compute_5fsyn_5fpeak_5fpower_33',['compute_syn_peak_power',['../synchrotron_8cpp.html#a7f6b35414b0d45eff0677786294fc97c',1,'synchrotron.cpp']]],
   ['compute_5fupstr_5f4vel_34',['compute_upstr_4vel',['../shock_8h.html#ab0d0c4b81c0c5525c81eb24d70c4b010',1,'shock.h']]],
   ['compute_5fupstr_5fmag_5fp_35',['compute_upstr_mag_p',['../shock_8h.html#a0751f7de465c025ab223448bfd0da9a2',1,'shock.h']]],
@@ -42,6 +42,5 @@ var searchData=
   ['compute_5fy_5ftilt_5fat_5fgamma_39',['compute_Y_tilt_at_gamma',['../structInverseComptonY.html#a9a35d3af9bd23acdde9d09d38ee116eb',1,'InverseComptonY']]],
   ['compute_5fy_5ftilt_5fat_5fnu_40',['compute_Y_tilt_at_nu',['../structInverseComptonY.html#a59226978ce361a575783edde4335c1df',1,'InverseComptonY']]],
   ['configure_41',['configure',['../structMultiBandModel.html#aac1b3b59c614be83121a2232dda009d5',1,'MultiBandModel']]],
-  ['convert_5fto_5fstd_5fvector_42',['convert_to_std_vector',['../mcmc_8cpp.html#af175bb41afc8bd3d54468bf3af22a1fb',1,'mcmc.cpp']]],
-  ['coord_43',['Coord',['../classCoord.html#a14caa1114c95058bd25e1a7ff2ad8e43',1,'Coord']]]
+  ['coord_42',['Coord',['../classCoord.html#a14caa1114c95058bd25e1a7ff2ad8e43',1,'Coord']]]
 ];

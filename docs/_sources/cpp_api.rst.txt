@@ -1,17 +1,17 @@
 C++ API Reference
-================
+=================
 
 .. contents:: Table of Contents
    :local:
    :depth: 2
 
 Overview
--------
+--------
 
 VegasAfterglow's C++ core provides high-performance computation capabilities for GRB afterglow modeling. This section documents the C++ API for advanced users and developers who want to work directly with the C++ library. The library requires a C++20 compatible compiler.
 
 Key Components
--------------
+--------------
 
 The C++ API is organized into several core components:
 
@@ -23,12 +23,12 @@ The C++ API is organized into several core components:
 * **Utilities**: Helper functions and mathematical tools for GRB afterglow calculations
 
 Using the C++ API
----------------
+-----------------
 
 After compiling the library, you can create custom applications that use VegasAfterglow's core functionality:
 
 Including Headers
-^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^
 
 To use VegasAfterglow directly from C++, include the main header:
 
@@ -37,7 +37,7 @@ To use VegasAfterglow directly from C++, include the main header:
     #include "afterglow.h"              // Main header for afterglow models
 
 Building Custom Applications
-^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Compile your C++ application, linking against the VegasAfterglow library:
 
@@ -45,13 +45,13 @@ Compile your C++ application, linking against the VegasAfterglow library:
 
     g++ -std=c++20 -I/path/to/VegasAfterglow/include -L/path/to/VegasAfterglow/lib -o my_program my_program.cpp -lvegasafterglow
 
-Replace `/path/to/VegasAfterglow/` with the actual path to your VegasAfterglow installation.
+.. note:: Replace ``/path/to/VegasAfterglow/`` with the actual path to your VegasAfterglow installation.
 
 C++ API Documentation
--------------------
+---------------------
 
 Jet Models
----------
+----------
 
 .. doxygenclass:: TophatJet
    :members:
@@ -74,7 +74,7 @@ Jet Models
    :allow-dot-graphs:
 
 Ambient Medium
-------------
+--------------
 
 .. doxygenclass:: ISM
    :members:
@@ -92,7 +92,7 @@ Ambient Medium
    :allow-dot-graphs:
 
 Radiation Processes
------------------
+-------------------
 
 .. doxygenstruct:: SynPhotons
    :members:
@@ -110,7 +110,7 @@ Radiation Processes
    :allow-dot-graphs:
 
 Shock Dynamics
-------------
+--------------
 
 .. doxygenclass:: Shock
    :members:
@@ -133,7 +133,7 @@ Shock Dynamics
    :allow-dot-graphs:
 
 Physics and Utilities
-------------------
+---------------------
 
 .. doxygenclass:: Observer
    :members:
@@ -146,7 +146,7 @@ Physics and Utilities
    :allow-dot-graphs:
 
 Performance Considerations
------------------------
+--------------------------
 
 VegasAfterglow's C++ core is designed for exceptional computational performance:
 
@@ -159,12 +159,12 @@ VegasAfterglow's C++ core is designed for exceptional computational performance:
 These optimizations enable the generation of a 30-point single-frequency light curve in approximately 0.6 milliseconds on an Apple M2 chip with a single core, and full MCMC parameter estimation with 10,000 steps in seconds to minutes on standard laptop hardware.
 
 Documenting C++ Code
-------------------
+--------------------
 
 When contributing to the C++ codebase, please follow these documentation guidelines:
 
 Class and Function Documentation
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Use Doxygen-style comments for all classes and functions:
 
@@ -184,9 +184,9 @@ Use Doxygen-style comments for all classes and functions:
      ********************************************************************************************************************/
 
 Member Variable Documentation
-^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-For member variables, use inline Doxygen comments with `///<`:
+For member variables, use inline Doxygen comments with the triple-slash syntax:
 
 .. code-block:: cpp
 
@@ -194,7 +194,7 @@ For member variables, use inline Doxygen comments with `///<`:
     double gamma0; ///< Initial bulk Lorentz factor
 
 Template Function Documentation
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 For template functions, make sure to document both the template parameters and the function parameters:
 
@@ -216,7 +216,7 @@ For template functions, make sure to document both the template parameters and t
     }
 
 Inline Function Documentation
-^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 For inline functions, use specialized documentation to explain why the function is inline and include important implementation details:
 
@@ -238,7 +238,7 @@ For inline functions, use specialized documentation to explain why the function 
     }
 
 C++20 Attribute Documentation
-^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 For functions with C++20 attributes, use the specialized tags:
 
@@ -259,7 +259,7 @@ For functions with C++20 attributes, use the specialized tags:
     }
 
 Special Member Function Documentation
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 For special member functions, use the dedicated aliases:
 
@@ -285,7 +285,7 @@ For special member functions, use the dedicated aliases:
     JetModel& operator=(JetModel&& other) noexcept;
 
 Private Member Documentation
-^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Even though private members won't appear in the public API documentation, they should be properly documented in the code for maintainability:
 
@@ -303,7 +303,7 @@ Even though private members won't appear in the public API documentation, they s
         double energy_; ///< Internal energy storage
 
 Example Class
-^^^^^^^^^^^
+^^^^^^^^^^^^^
 
 Here's an example of a well-documented class:
 
