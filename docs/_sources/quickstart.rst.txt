@@ -17,7 +17,11 @@ For more detailed installation instructions, see the :doc:`installation` page.
 Basic Usage
 -----------
 
-VegasAfterglow is designed to efficiently model gamma-ray burst (GRB) afterglows and perform Markov Chain Monte Carlo (MCMC) parameter estimation. Let's start by importing the necessary modules:
+VegasAfterglow is designed to efficiently model gamma-ray burst (GRB) afterglows and perform Markov Chain Monte Carlo (MCMC) parameter estimation. 
+
+Direct Model Calculation
+------------------------
+Before diving into MCMC parameter estimation, you can directly use VegasAfterglow to generate light curves and spectra from a specific model. Let's start by importing the necessary modules:
 
 .. code-block:: python
 
@@ -25,10 +29,8 @@ VegasAfterglow is designed to efficiently model gamma-ray burst (GRB) afterglows
     import matplotlib.pyplot as plt
     from VegasAfterglow import ISM, TophatJet, Observer, Radiation, Model
 
-Direct Model Calculation
-------------------------
 
-Before diving into MCMC parameter estimation, you can directly use VegasAfterglow to generate light curves and spectra from a specific model:
+Then, let's set up the physical components of our afterglow model, including the environment, jet, observer, and radiation parameters:
 
 .. code-block:: python
 
@@ -97,7 +99,7 @@ Spectral Analysis
 We can also examine how the broadband spectrum evolves at different times after the burst:
 
 .. code-block:: python
-    
+
     # 1. Define broad frequency range (10⁵ to 10²² Hz) 
     frequencies = np.logspace(5, 22, 200)  
 
@@ -137,12 +139,22 @@ We can also examine how the broadband spectrum evolves at different times after 
 Parameter Estimation with MCMC
 ------------------------------
 
-For more advanced analysis, VegasAfterglow provides powerful MCMC capabilities to fit model parameters to observational data. First, you'll need to prepare your data:
+For more advanced analysis, VegasAfterglow provides powerful MCMC capabilities to fit model parameters to observational data. 
 
-Preparing Observational Data
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+First, let's import the necessary modules:
 
-First, we need to create an instance to store observational data through the ``ObsData`` class. You can add light curves (specific flux vs. time) and spectra (specific flux vs. frequency) in multiple ways:
+.. code-block:: python
+
+    import numpy as np
+    import matplotlib.pyplot as plt
+    import pandas as pd
+    import corner
+    from VegasAfterglow import ObsData, Setups, Fitter, ParamDef, Scale
+
+Preparing Data and Configuring the Model
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+VegasAfterglow provides flexible options for loading observational data through the ``ObsData`` class. You can add light curves (specific flux vs. time) and spectra (specific flux vs. frequency) in multiple ways:
 
 .. code-block:: python
 
@@ -154,51 +166,62 @@ First, we need to create an instance to store observational data through the ``O
     # For light curves
     t_data = [1e3, 2e3, 5e3, 1e4, 2e4]  # Time in seconds
     flux_data = [1e-26, 8e-27, 5e-27, 3e-27, 2e-27]  # Specific flux in erg/cm²/s/Hz
-    flux_err = [1e-28, 8e-28, 5e-28, 3e-28, 2e-28]  # Specific flux error
+    flux_err = [1e-28, 8e-28, 5e-28, 3e-28, 2e-28]  # Specific flux error in erg/cm²/s/Hz
     data.add_light_curve(nu_cgs=4.84e14, t_cgs=t_data, Fnu_cgs=flux_data, Fnu_err=flux_err)
-    
+
     # For spectra
-    nu_data = [1e14, 3e14, 5e14, 1e15]  # Frequencies in Hz
-    spectrum_data = [2e-27, 1.8e-27, 1.6e-27, 1.2e-27]  # Specific flux values
-    spectrum_err = [2e-29, 1.8e-29, 1.6e-29, 1.2e-29]  # Specific flux errors
+    nu_data = [...]  # Frequencies in Hz
+    spectrum_data = [...] # Specific flux values in erg/cm²/s/Hz
+    spectrum_err = [...]   # Specific flux errors in erg/cm²/s/Hz
     data.add_spectrum(t_cgs=3000, nu_cgs=nu_data, Fnu_cgs=spectrum_data, Fnu_err=spectrum_err)
 
+.. code-block:: python
+
     # Method 2: Load from CSV files
-    import pandas as pd
-    
+    data = ObsData()
     # Define your bands and files
-    bands = [2.4e17, 4.84e14]  # Example: X-ray, optical R-band
-    lc_files = ["data/x-ray.csv", "data/r-band.csv"]
-    
+    bands = [2.4e17, 4.84e14, 1.4e14]  # Example: X-ray, optical R-band
+    lc_files = ["data/ep.csv", "data/r.csv", "data/vt-r.csv"]
+
     # Load light curves from files
     for nu, fname in zip(bands, lc_files):
         df = pd.read_csv(fname)
         data.add_light_curve(nu_cgs=nu, t_cgs=df["t"], Fnu_cgs=df["Fv_obs"], Fnu_err=df["Fv_err"])
 
-Setting up the Model Configuration
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    times = [3000] # Example: time in seconds
+    spec_files = ["data/ep-spec.csv"]
+
+    # Load spectra from files
+    for t, fname in zip(times, spec_files):
+        df = pd.read_csv(fname)
+        data.add_spectrum(t_cgs=t, nu_cgs=df["nu"], Fnu_cgs=df["Fv_obs"], Fnu_err=df["Fv_err"])
+
+.. note::
+   The ``ObsData`` interface is designed to be flexible. You can mix and match different data sources, and add multiple light curves at different frequencies as well as multiple spectra at different times.
 
 The ``Setups`` class defines the global properties and environment for your model. These settings remain fixed during the MCMC process:
 
 .. code-block:: python
 
     cfg = Setups()
-    
-    # Source properties
-    cfg.lumi_dist = 3.364e28  # Luminosity distance [cm]  
-    cfg.z = 1.58              # Redshift
-    
-    # Physical model configuration
-    cfg.medium = "wind"       # Ambient medium: "wind", "ISM" or "user"
-    cfg.jet = "powerlaw"      # Jet structure: "powerlaw", "gaussian", "tophat" or "user"
-    
-    # Optional: Advanced grid settings (default is 24, 24, 24)
-    # cfg.phi_num = 24        # Number of grid points in phi direction
-    # cfg.theta_num = 24      # Number of grid points in theta direction
-    # cfg.t_num = 24          # Number of time grid points
 
-Defining MCMC Parameters
-^^^^^^^^^^^^^^^^^^^^^^^^
+    # Source properties
+    cfg.lumi_dist = 3.364e28    # Luminosity distance [cm]  
+    cfg.z = 1.58               # Redshift
+
+    # Physical model configuration
+    cfg.medium = "wind"        # Ambient medium: "wind", "ISM" (Interstellar Medium) or "user" (user-defined)
+    cfg.jet = "powerlaw"       # Jet structure: "powerlaw", "gaussian", "tophat" or "user" (user-defined)
+
+    # Optional: Advanced grid settings. Default (24, 24, 24) is optimized to converge for most cases.
+    # cfg.phi_num = 24         # Number of grid points in phi direction
+    # cfg.theta_num = 24       # Number of grid points in theta direction
+    # cfg.t_num = 24           # Number of time grid points
+
+These settings affect how the model is calculated but are not varied during the MCMC process.
+
+Defining Parameters and Running MCMC
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 The ``ParamDef`` class is used to define the parameters for MCMC exploration. Each parameter requires a name, initial value, prior range, and sampling scale:
 
@@ -216,18 +239,16 @@ The ``ParamDef`` class is used to define the parameters for MCMC exploration. Ea
         ParamDef("xi",        0.5,  1e-3,     1,  Scale.LOG),       # Electron acceleration fraction
     ]
 
+**Scale Types:**
+    - ``Scale.LOG``: Sample in logarithmic space (log10) - ideal for parameters spanning multiple orders of magnitude
+    - ``Scale.LINEAR``: Sample in linear space - appropriate for parameters with narrower ranges
+    - ``Scale.FIXED``: Keep parameter fixed at the initial value - use for parameters you don't want to vary
+
+**Parameter Choices:**
 The parameters you include depend on your model configuration:
-- For "wind" medium: use ``A_star`` parameter 
-- For "ISM" medium: use ``n_ism`` parameter instead
-- Different jet structures may require different parameters
-
-Scale types:
-- ``Scale.LOG``: Sample in logarithmic space (log10) - ideal for parameters spanning multiple orders of magnitude
-- ``Scale.LINEAR``: Sample in linear space - appropriate for parameters with narrower ranges
-- ``Scale.FIXED``: Keep parameter fixed at the initial value - use for parameters you don't want to vary
-
-Running the MCMC
-^^^^^^^^^^^^^^^^
+    - For "wind" medium: use ``A_star`` parameter 
+    - For "ISM" medium: use ``n_ism`` parameter instead
+    - Different jet structures may require different parameters
 
 Initialize the ``Fitter`` class with your data and configuration, then run the MCMC process:
 
@@ -235,7 +256,7 @@ Initialize the ``Fitter`` class with your data and configuration, then run the M
 
     # Create the fitter object
     fitter = Fitter(data, cfg)
-    
+
     # Run the MCMC fitting
     result = fitter.fit(
         param_defs=mc_params,          # Parameter definitions
@@ -245,107 +266,89 @@ Initialize the ``Fitter`` class with your data and configuration, then run the M
         thin=1                         # Thinning factor
     )
 
-Analyzing the Results
-^^^^^^^^^^^^^^^^^^^^^^
+The ``result`` object contains:
+    - ``samples``: The MCMC chain samples (posterior distribution)
+    - ``labels``: Parameter names
+    - ``best_params``: Maximum likelihood parameter values
 
-Examine the posterior distribution to understand parameter constraints:
+Analyzing Results and Generating Predictions
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Check the best-fit parameters and their uncertainties:
 
 .. code-block:: python
 
     # Print best-fit parameters (maximum likelihood)
     print("Best-fit parameters:")
     for name, val in zip(result.labels, result.best_params):
-        print(f"  {name}: {val:.4g}")
-    
+        print(f"  {name}: {val:.4f}")
+
     # Compute median and credible intervals
     flat_chain = result.samples.reshape(-1, result.samples.shape[-1])
     medians = np.median(flat_chain, axis=0)
     lower = np.percentile(flat_chain, 16, axis=0)
     upper = np.percentile(flat_chain, 84, axis=0)
-    
+
     print("\nParameter constraints (median and 68% credible intervals):")
     for i, name in enumerate(result.labels):
-        print(f"  {name}: {medians[i]:.4g} (+{upper[i]-medians[i]:.4g}, -{medians[i]-lower[i]:.4g})")
+        print(f"  {name}: {medians[i]:.4f} (+{upper[i]-medians[i]:.4f}, -{medians[i]-lower[i]:.4f})")
 
-Generating Model Predictions
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-After running MCMC and obtaining the best-fit parameters, you can generate model predictions for light curves and spectra:
+Use the best-fit parameters to generate model predictions:
 
 .. code-block:: python
 
-   # Define time and frequency ranges for predictions
-   times = np.logspace(2, 6, 100)  # Time range from 100s to 10⁶s
-   bands = np.array([2.4e17, 4.84e14, 1.4e14])  # X-ray, R-band, VT-band in Hz
-   
-   # Generate light curves with the best-fit model
-   model_flux = fitter.light_curves(result.best_params, times, bands)
-   
-   # Plot data with best-fit model
-   plt.figure(figsize=(6, 4))
-   for i, nu in enumerate(bands):
-       # Plot observational data
-       t_obs = data.light_curves[i].t
-       f_obs = data.light_curves[i].flux
-       f_err = data.light_curves[i].flux_err
-       plt.errorbar(t_obs, f_obs, yerr=f_err, fmt='o', 
-                   label=f'{nu/1e14:.1f}e14 Hz data')
-       
-       # Plot best-fit model
-       plt.plot(times, model_flux[i], '-', label=f'{nu/1e14:.1f}e14 Hz model')
-   
-   plt.xscale('log')
-   plt.yscale('log')
-   plt.xlabel('Time (s)')
-   plt.ylabel('Flux Density (erg/cm²/s/Hz)')
-   plt.legend()
-   plt.title('Best-Fit Model Light Curves')
-   plt.tight_layout()
-   plt.savefig('mcmc_light_curves.png', dpi=300)
+    # Define time and frequency ranges for predictions
+    t_out = np.logspace(2, 9, 150)
+    bands = [2.4e17, 4.84e14, 1.4e14] 
 
-   # Generate spectra at specific times
-   frequencies = np.logspace(8, 18, 100)  # Frequency range from 10⁸ to 10¹⁸ Hz
-   epochs = np.array([1e3, 1e4, 1e5])  # Times at which to compute spectra
-   
-   # Calculate spectra at each epoch
-   model_spectra = fitter.spectra(result.best_params, frequencies, epochs)
-   
-   # Plot the spectra
-   plt.figure(figsize=(6, 4))
-   colors = plt.cm.viridis(np.linspace(0, 1, len(epochs)))
-   
-   for i, t in enumerate(epochs):
-       exp = int(np.floor(np.log10(t)))
-       base = t / 10**exp
-       plt.loglog(frequencies, model_spectra[i], color=colors[i], 
-                 label=fr'${base:.1f} \times 10^{{{exp}}}$ s')
-   
-   # Mark the observing bands
-   for i, band in enumerate(bands):
-       plt.axvline(band, ls='--', color=f'C{i}')
-   
-   plt.xlabel('Frequency (Hz)')
-   plt.ylabel('Flux Density (erg/cm²/s/Hz)')
-   plt.legend()
-   plt.title('Model Spectra at Different Times')
-   plt.tight_layout()
-   plt.savefig('mcmc_spectra.png', dpi=300)
+    # Generate light curves with the best-fit model
+    lc_best = fitter.light_curves(result.best_params, t_out, bands)
 
-This code generates light curves and spectra using the best-fit parameters from the MCMC run, comparing the model predictions with the observed data. The plots help visualize how well the model fits the data and let you explore the spectral evolution over time.
+    nu_out = np.logspace(6, 20, 150)
+    times = [3000]
+    # Generate model spectra at the specified times using the best-fit parameters
+    spec_best = fitter.spectra(result.best_params, nu_out, times)
 
-These examples demonstrate the core functionality of VegasAfterglow for modeling GRB afterglows. The code is designed to be highly efficient, allowing for rapid exploration of parameter space and comparison with observational data.
+Now you can plot the best-fit model:
 
-For more advanced users, you can also check the C++ interface for creating custom problem generators (see :doc:`cpp_api`).
+.. code-block:: python
 
-Visualizing Parameter Correlations
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    def draw_bestfit(t, lc_fit, nu, spec_fit):
+        # Create figure with two subplots
+        fig, (ax1, ax2) = plt.subplots(2, 1, figsize=(4.5, 7.5))
+        
+        # Plot light curves
+        shifts = [1, 1, 200]
+        colors = ['blue', 'orange', 'green']
+        
+        for i in range(len(lc_files)):
+            df = pd.read_csv(lc_files[i])
+            ax1.errorbar(df["t"], df["Fv_obs"] * shifts[i], df["Fv_err"] * shifts[i], 
+                        fmt='o', color=colors[i], label=lc_files[i])
+            ax1.plot(t, np.array(lc_fit[i]) * shifts[i], color=colors[i], lw=1)
+
+        # Plot spectra
+        for i in range(len(spec_files)):
+            df = pd.read_csv(spec_files[i])
+            ax2.errorbar(df["nu"], df["Fv_obs"] * shifts[i], df["Fv_err"] * shifts[i], 
+                        fmt='o', color=colors[i], label=spec_files[i])
+            ax2.plot(nu, np.array(spec_fit[0]) * shifts[i], color=colors[i], lw=1)
+
+        # Configure axes
+        for ax, xlabel, ylabel in [(ax1, 't [s]', r'$F_\nu$ [erg/cm$^2$/s/Hz]'),
+                                  (ax2, r'$\nu$ [Hz]', r'$F_\nu$ [erg/cm$^2$/s/Hz]')]:
+            ax.set_xscale('log'); ax.set_yscale('log')
+            ax.set_xlabel(xlabel); ax.set_ylabel(ylabel)
+            ax.legend()
+
+        plt.tight_layout()
+
+    draw_bestfit(t_out, lc_best, nu_out, spec_best)
 
 Corner plots are essential for visualizing parameter correlations and posterior distributions:
 
 .. code-block:: python
 
-    import corner
-    
     def plot_corner(flat_chain, labels, filename="corner_plot.png"):
         fig = corner.corner(
             flat_chain,
@@ -357,48 +360,19 @@ Corner plots are essential for visualizing parameter correlations and posterior 
             truths=np.median(flat_chain, axis=0),  # Show median values
             truth_color='red',
             bins=30,
+            smooth=1,
             fill_contours=True,
             levels=[0.16, 0.5, 0.68],  # 1σ and 2σ contours
             color='k'
         )
         fig.savefig(filename, dpi=300, bbox_inches='tight')
-    
+
     # Create the corner plot
     flat_chain = result.samples.reshape(-1, result.samples.shape[-1])
     plot_corner(flat_chain, result.labels)
 
-Checking MCMC Convergence
-^^^^^^^^^^^^^^^^^^^^^^^^^
-
-Trace plots help verify MCMC convergence:
-
-.. code-block:: python
-
-    def plot_trace(chain, labels, filename="trace_plot.png"):
-        nsteps, nwalkers, ndim = chain.shape
-        fig, axes = plt.subplots(ndim, figsize=(10, 2.5 * ndim), sharex=True)
-        
-        for i in range(ndim):
-            for j in range(nwalkers):
-                axes[i].plot(chain[:, j, i], alpha=0.5, lw=0.5)
-            axes[i].set_ylabel(labels[i])
-            
-        axes[-1].set_xlabel("Step")
-        plt.tight_layout()
-        plt.savefig(filename, dpi=300)
-    
-    # Create the trace plot
-    plot_trace(result.samples, result.labels)
-
 Next Steps
 ----------
 
-Now that you've run your first MCMC parameter estimation, here are some suggested next steps:
+See the :doc:`examples` page for more detailed examples
 
-1. **Prior Ranges**: Adjust the prior ranges based on theoretical constraints for your GRB event
-2. **Convergence Testing**: Experiment with different numbers of steps and check convergence metrics
-3. **Model Comparison**: Try different physical models (e.g., wind vs. ISM medium, or different jet structures)
-4. **Physical Interpretation**: Connect your parameter constraints with physical processes in GRB afterglows
-5. **Examine Examples**: See the :doc:`examples` page for more detailed examples
-
-For more advanced users, you can also check the C++ interface for creating custom problem generators (see :doc:`cpp_api`). 

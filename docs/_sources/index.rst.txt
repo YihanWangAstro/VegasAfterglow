@@ -25,7 +25,7 @@ Key Features
 * **Radiation Mechanisms**: Synchrotron radiation, Synchrotron Self-Absorption (SSA), and Inverse Compton (IC) including Synchrotron Self-Compton (SSC) with Klein-Nishina corrections.
 * **High Performance**: Ultra-fast model evaluation, with a 30-point single-frequency light curve (forward shock & synchrotron only) generated in ~0.6 milliseconds on an Apple M2 chip.
 * **Rapid MCMC Exploration**: Parameter estimation with 10,000 MCMC steps for 8 parameters on 20 data points across multi-wavelength in ~10-30 seconds on an 8-core Apple M2 chip.
-* **Cross-platform**: Works on Linux, macOS, and Windows with C++20 compatible compilers.
+* **Cross-platform**: Works on Linux, macOS, and Windows.
 
 .. toctree::
    :maxdepth: 2
