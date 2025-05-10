@@ -23,7 +23,121 @@ VegasAfterglow is designed to efficiently model gamma-ray burst (GRB) afterglows
 
     import numpy as np
     import matplotlib.pyplot as plt
-    from VegasAfterglow import ObsData, Setups, Fitter, ParamDef, Scale
+    from VegasAfterglow import ISM, TophatJet, Observer, Radiation, Model
+
+Direct Model Calculation
+------------------------
+
+Before diving into MCMC parameter estimation, you can directly use VegasAfterglow to generate light curves and spectra from a specific model:
+
+.. code-block:: python
+
+    # 1. Define the circumburst environment (constant density ISM)
+    medium = ISM(n_ism=1)
+
+    # 2. Configure the jet structure (top-hat with opening angle, energy, and Lorentz factor)
+    jet = TophatJet(theta_c=0.1, E_iso=1e52, Gamma0=300)
+
+    # 3. Set observer parameters (distance, redshift, viewing angle)
+    obs = Observer(lumi_dist=1e26, z=0.1, theta_obs=0)
+
+    # 4. Define radiation microphysics parameters
+    rad = Radiation(eps_e=1e-1, eps_B=1e-3, p=2.3)
+
+    # 5. Combine all components into a complete afterglow model
+    model = Model(jet=jet, medium=medium, observer=obs, forward_rad=rad)
+
+Light Curve Calculation
+^^^^^^^^^^^^^^^^^^^^^^^
+
+Now, let's compute and plot multi-wavelength light curves to see how the afterglow evolves over time:
+
+.. code-block:: python
+
+    # 1. Create logarithmic time array from 10² to 10⁸ seconds (100s to ~3yrs)
+    times = np.logspace(2, 8, 200)  
+
+    # 2. Define observing frequencies (radio, optical, X-ray bands in Hz)
+    bands = np.array([1e9, 1e14, 1e17])  
+
+    # 3. Calculate the afterglow emission at each time and frequency
+    results = model.specific_flux(times, bands)
+
+    # 4. Visualize the multi-wavelength light curves
+    plt.figure(figsize=(4.8, 3.6), dpi=200)
+
+    # 5. Plot each frequency band 
+    for i, nu in enumerate(bands):
+        exp = int(np.floor(np.log10(nu)))
+        base = nu / 10**exp
+        plt.loglog(times, results['syn'][i,:], label=fr'${base:.1f} \times 10^{{{exp}}}$ Hz')
+
+    # 6. Add annotations for important transitions
+    plt.annotate('jet break', xy=(3e4, 1e-26), xytext=(3e3, 5e-28), 
+                arrowprops=dict(arrowstyle='->'))
+    plt.annotate(r'$\nu_m=\nu_a$', xy=(3e5, 3e-25), xytext=(5.5e4, 5e-24), 
+                arrowprops=dict(arrowstyle='->'))
+    
+    plt.xlabel('Time (s)')
+    plt.ylabel('Flux Density (erg/cm²/s/Hz)')
+    plt.legend()
+    plt.title('Light Curves')
+    plt.tight_layout()
+    plt.savefig('assets/quick-lc.png', dpi=300)
+
+.. figure:: /_static/images/quick-lc.png
+   :width: 600
+   :align: center
+   
+   Running the light curve script will produce this figure showing the afterglow evolution across different frequencies.
+
+Spectral Analysis
+^^^^^^^^^^^^^^^^^
+
+We can also examine how the broadband spectrum evolves at different times after the burst:
+
+.. code-block:: python
+    
+    # 1. Define broad frequency range (10⁵ to 10²² Hz) 
+    frequencies = np.logspace(5, 22, 200)  
+
+    # 2. Select specific time epochs for spectral snapshots 
+    epochs = np.array([1e2, 1e3, 1e4, 1e5, 1e6, 1e7, 1e8])
+
+    # 3. Calculate spectra at each epoch
+    results = model.spectra(frequencies, epochs)
+
+    # 4. Plot broadband spectra at each epoch
+    plt.figure(figsize=(4.8, 3.6), dpi=200)
+    colors = plt.cm.viridis(np.linspace(0, 1, len(epochs)))
+
+    for i, t in enumerate(epochs):
+        exp = int(np.floor(np.log10(t)))
+        base = t / 10**exp
+        plt.loglog(frequencies, results['syn'][i,:], color=colors[i], 
+                  label=fr'${base:.1f} \times 10^{{{exp}}}$ s')
+
+    # 5. Add vertical lines marking the bands from the light curve plot
+    for i, band in enumerate(bands):
+        plt.axvline(band, ls='--', color=f'C{i}')
+
+    plt.xlabel('Frequency (Hz)')
+    plt.ylabel('Flux Density (erg/cm²/s/Hz)')
+    plt.legend(ncol=2)
+    plt.title('Synchrotron Spectra')
+    plt.tight_layout()
+    plt.savefig('assets/quick-spec.png', dpi=300)
+
+.. figure:: /_static/images/quick-spec.png
+   :width: 600
+   :align: center
+   
+   The spectral analysis code will generate this visualization showing spectra at different times, with vertical lines indicating the frequencies calculated in the light curve example.
+
+Parameter Estimation with MCMC
+------------------------------
+
+For more advanced analysis, VegasAfterglow provides powerful MCMC capabilities to fit model parameters to observational data. First, you'll need to prepare your data:
 
 Preparing Observational Data
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -156,31 +270,72 @@ Examine the posterior distribution to understand parameter constraints:
 Generating Model Predictions
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Use samples from the posterior to generate model predictions with uncertainties:
+After running MCMC and obtaining the best-fit parameters, you can generate model predictions for light curves and spectra:
 
 .. code-block:: python
 
-    # Define time and frequency ranges for predictions
-    t_out = np.logspace(2, 9, 150)
-    bands = [2.4e17, 4.84e14]  # X-ray and optical R-band
-    
-    # Generate light curves with the best-fit model
-    lc_best = fitter.light_curves(result.best_params, t_out, bands)
-    
-    # Generate spectra at specific times
-    nu_out = np.logspace(6, 20, 150)
-    times = [3000]  # 3000 seconds
-    spec_best = fitter.spectra(result.best_params, nu_out, times)
-    
-    # Plot the light curves
-    plt.figure(figsize=(10, 6))
-    for i, nu in enumerate(bands):
-        plt.loglog(t_out, lc_best[:, i], label=f'ν = {nu:.2e} Hz')
-    plt.xlabel('Time (s)')
-    plt.ylabel('Flux Density (erg/cm²/s/Hz)')
-    plt.legend()
-    plt.grid(True, which='both', linestyle='--', alpha=0.5)
-    plt.show()
+   # Define time and frequency ranges for predictions
+   times = np.logspace(2, 6, 100)  # Time range from 100s to 10⁶s
+   bands = np.array([2.4e17, 4.84e14, 1.4e14])  # X-ray, R-band, VT-band in Hz
+   
+   # Generate light curves with the best-fit model
+   model_flux = fitter.light_curves(result.best_params, times, bands)
+   
+   # Plot data with best-fit model
+   plt.figure(figsize=(6, 4))
+   for i, nu in enumerate(bands):
+       # Plot observational data
+       t_obs = data.light_curves[i].t
+       f_obs = data.light_curves[i].flux
+       f_err = data.light_curves[i].flux_err
+       plt.errorbar(t_obs, f_obs, yerr=f_err, fmt='o', 
+                   label=f'{nu/1e14:.1f}e14 Hz data')
+       
+       # Plot best-fit model
+       plt.plot(times, model_flux[i], '-', label=f'{nu/1e14:.1f}e14 Hz model')
+   
+   plt.xscale('log')
+   plt.yscale('log')
+   plt.xlabel('Time (s)')
+   plt.ylabel('Flux Density (erg/cm²/s/Hz)')
+   plt.legend()
+   plt.title('Best-Fit Model Light Curves')
+   plt.tight_layout()
+   plt.savefig('mcmc_light_curves.png', dpi=300)
+
+   # Generate spectra at specific times
+   frequencies = np.logspace(8, 18, 100)  # Frequency range from 10⁸ to 10¹⁸ Hz
+   epochs = np.array([1e3, 1e4, 1e5])  # Times at which to compute spectra
+   
+   # Calculate spectra at each epoch
+   model_spectra = fitter.spectra(result.best_params, frequencies, epochs)
+   
+   # Plot the spectra
+   plt.figure(figsize=(6, 4))
+   colors = plt.cm.viridis(np.linspace(0, 1, len(epochs)))
+   
+   for i, t in enumerate(epochs):
+       exp = int(np.floor(np.log10(t)))
+       base = t / 10**exp
+       plt.loglog(frequencies, model_spectra[i], color=colors[i], 
+                 label=fr'${base:.1f} \times 10^{{{exp}}}$ s')
+   
+   # Mark the observing bands
+   for i, band in enumerate(bands):
+       plt.axvline(band, ls='--', color=f'C{i}')
+   
+   plt.xlabel('Frequency (Hz)')
+   plt.ylabel('Flux Density (erg/cm²/s/Hz)')
+   plt.legend()
+   plt.title('Model Spectra at Different Times')
+   plt.tight_layout()
+   plt.savefig('mcmc_spectra.png', dpi=300)
+
+This code generates light curves and spectra using the best-fit parameters from the MCMC run, comparing the model predictions with the observed data. The plots help visualize how well the model fits the data and let you explore the spectral evolution over time.
+
+These examples demonstrate the core functionality of VegasAfterglow for modeling GRB afterglows. The code is designed to be highly efficient, allowing for rapid exploration of parameter space and comparison with observational data.
+
+For more advanced users, you can also check the C++ interface for creating custom problem generators (see :doc:`cpp_api`).
 
 Visualizing Parameter Correlations
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^

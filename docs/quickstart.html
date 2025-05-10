@@ -54,7 +54,13 @@
 <li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Quickstart</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#installation">Installation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#basic-usage">Basic Usage</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#basic-usage">Basic Usage</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#direct-model-calculation">Direct Model Calculation</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#light-curve-calculation">Light Curve Calculation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#spectral-analysis">Spectral Analysis</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#parameter-estimation-with-mcmc">Parameter Estimation with MCMC</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#preparing-observational-data">Preparing Observational Data</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#setting-up-the-model-configuration">Setting up the Model Configuration</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#defining-mcmc-parameters">Defining MCMC Parameters</a></li>
@@ -114,9 +120,118 @@
 <p>VegasAfterglow is designed to efficiently model gamma-ray burst (GRB) afterglows and perform Markov Chain Monte Carlo (MCMC) parameter estimation. Let’s start by importing the necessary modules:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">VegasAfterglow</span><span class="w"> </span><span class="kn">import</span> <span class="n">ObsData</span><span class="p">,</span> <span class="n">Setups</span><span class="p">,</span> <span class="n">Fitter</span><span class="p">,</span> <span class="n">ParamDef</span><span class="p">,</span> <span class="n">Scale</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">VegasAfterglow</span><span class="w"> </span><span class="kn">import</span> <span class="n">ISM</span><span class="p">,</span> <span class="n">TophatJet</span><span class="p">,</span> <span class="n">Observer</span><span class="p">,</span> <span class="n">Radiation</span><span class="p">,</span> <span class="n">Model</span>
 </pre></div>
 </div>
+</section>
+<section id="direct-model-calculation">
+<h2>Direct Model Calculation<a class="headerlink" href="#direct-model-calculation" title="Link to this heading"></a></h2>
+<p>Before diving into MCMC parameter estimation, you can directly use VegasAfterglow to generate light curves and spectra from a specific model:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># 1. Define the circumburst environment (constant density ISM)</span>
+<span class="n">medium</span> <span class="o">=</span> <span class="n">ISM</span><span class="p">(</span><span class="n">n_ism</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="c1"># 2. Configure the jet structure (top-hat with opening angle, energy, and Lorentz factor)</span>
+<span class="n">jet</span> <span class="o">=</span> <span class="n">TophatJet</span><span class="p">(</span><span class="n">theta_c</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">E_iso</span><span class="o">=</span><span class="mf">1e52</span><span class="p">,</span> <span class="n">Gamma0</span><span class="o">=</span><span class="mi">300</span><span class="p">)</span>
+
+<span class="c1"># 3. Set observer parameters (distance, redshift, viewing angle)</span>
+<span class="n">obs</span> <span class="o">=</span> <span class="n">Observer</span><span class="p">(</span><span class="n">lumi_dist</span><span class="o">=</span><span class="mf">1e26</span><span class="p">,</span> <span class="n">z</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">theta_obs</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+<span class="c1"># 4. Define radiation microphysics parameters</span>
+<span class="n">rad</span> <span class="o">=</span> <span class="n">Radiation</span><span class="p">(</span><span class="n">eps_e</span><span class="o">=</span><span class="mf">1e-1</span><span class="p">,</span> <span class="n">eps_B</span><span class="o">=</span><span class="mf">1e-3</span><span class="p">,</span> <span class="n">p</span><span class="o">=</span><span class="mf">2.3</span><span class="p">)</span>
+
+<span class="c1"># 5. Combine all components into a complete afterglow model</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">Model</span><span class="p">(</span><span class="n">jet</span><span class="o">=</span><span class="n">jet</span><span class="p">,</span> <span class="n">medium</span><span class="o">=</span><span class="n">medium</span><span class="p">,</span> <span class="n">observer</span><span class="o">=</span><span class="n">obs</span><span class="p">,</span> <span class="n">forward_rad</span><span class="o">=</span><span class="n">rad</span><span class="p">)</span>
+</pre></div>
+</div>
+<section id="light-curve-calculation">
+<h3>Light Curve Calculation<a class="headerlink" href="#light-curve-calculation" title="Link to this heading"></a></h3>
+<p>Now, let’s compute and plot multi-wavelength light curves to see how the afterglow evolves over time:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># 1. Create logarithmic time array from 10² to 10⁸ seconds (100s to ~3yrs)</span>
+<span class="n">times</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">logspace</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">200</span><span class="p">)</span>
+
+<span class="c1"># 2. Define observing frequencies (radio, optical, X-ray bands in Hz)</span>
+<span class="n">bands</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">1e9</span><span class="p">,</span> <span class="mf">1e14</span><span class="p">,</span> <span class="mf">1e17</span><span class="p">])</span>
+
+<span class="c1"># 3. Calculate the afterglow emission at each time and frequency</span>
+<span class="n">results</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">specific_flux</span><span class="p">(</span><span class="n">times</span><span class="p">,</span> <span class="n">bands</span><span class="p">)</span>
+
+<span class="c1"># 4. Visualize the multi-wavelength light curves</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mf">4.8</span><span class="p">,</span> <span class="mf">3.6</span><span class="p">),</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">200</span><span class="p">)</span>
+
+<span class="c1"># 5. Plot each frequency band</span>
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">nu</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">bands</span><span class="p">):</span>
+    <span class="n">exp</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">floor</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="n">nu</span><span class="p">)))</span>
+    <span class="n">base</span> <span class="o">=</span> <span class="n">nu</span> <span class="o">/</span> <span class="mi">10</span><span class="o">**</span><span class="n">exp</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">loglog</span><span class="p">(</span><span class="n">times</span><span class="p">,</span> <span class="n">results</span><span class="p">[</span><span class="s1">&#39;syn&#39;</span><span class="p">][</span><span class="n">i</span><span class="p">,:],</span> <span class="n">label</span><span class="o">=</span><span class="sa">fr</span><span class="s1">&#39;$</span><span class="si">{</span><span class="n">base</span><span class="si">:</span><span class="s1">.1f</span><span class="si">}</span><span class="s1"> \times 10^</span><span class="se">{{</span><span class="si">{</span><span class="n">exp</span><span class="si">}</span><span class="se">}}</span><span class="s1">$ Hz&#39;</span><span class="p">)</span>
+
+<span class="c1"># 6. Add annotations for important transitions</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">annotate</span><span class="p">(</span><span class="s1">&#39;jet break&#39;</span><span class="p">,</span> <span class="n">xy</span><span class="o">=</span><span class="p">(</span><span class="mf">3e4</span><span class="p">,</span> <span class="mf">1e-26</span><span class="p">),</span> <span class="n">xytext</span><span class="o">=</span><span class="p">(</span><span class="mf">3e3</span><span class="p">,</span> <span class="mf">5e-28</span><span class="p">),</span>
+            <span class="n">arrowprops</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">arrowstyle</span><span class="o">=</span><span class="s1">&#39;-&gt;&#39;</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">annotate</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;$\nu_m=\nu_a$&#39;</span><span class="p">,</span> <span class="n">xy</span><span class="o">=</span><span class="p">(</span><span class="mf">3e5</span><span class="p">,</span> <span class="mf">3e-25</span><span class="p">),</span> <span class="n">xytext</span><span class="o">=</span><span class="p">(</span><span class="mf">5.5e4</span><span class="p">,</span> <span class="mf">5e-24</span><span class="p">),</span>
+            <span class="n">arrowprops</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">arrowstyle</span><span class="o">=</span><span class="s1">&#39;-&gt;&#39;</span><span class="p">))</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Time (s)&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Flux Density (erg/cm²/s/Hz)&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Light Curves&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s1">&#39;assets/quick-lc.png&#39;</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">300</span><span class="p">)</span>
+</pre></div>
+</div>
+<figure class="align-center" id="id1">
+<a class="reference internal image-reference" href="_images/quick-lc.png"><img alt="_images/quick-lc.png" src="_images/quick-lc.png" style="width: 600px;" />
+</a>
+<figcaption>
+<p><span class="caption-text">Running the light curve script will produce this figure showing the afterglow evolution across different frequencies.</span><a class="headerlink" href="#id1" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+</section>
+<section id="spectral-analysis">
+<h3>Spectral Analysis<a class="headerlink" href="#spectral-analysis" title="Link to this heading"></a></h3>
+<p>We can also examine how the broadband spectrum evolves at different times after the burst:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># 1. Define broad frequency range (10⁵ to 10²² Hz)</span>
+<span class="n">frequencies</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">logspace</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">22</span><span class="p">,</span> <span class="mi">200</span><span class="p">)</span>
+
+<span class="c1"># 2. Select specific time epochs for spectral snapshots</span>
+<span class="n">epochs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">1e2</span><span class="p">,</span> <span class="mf">1e3</span><span class="p">,</span> <span class="mf">1e4</span><span class="p">,</span> <span class="mf">1e5</span><span class="p">,</span> <span class="mf">1e6</span><span class="p">,</span> <span class="mf">1e7</span><span class="p">,</span> <span class="mf">1e8</span><span class="p">])</span>
+
+<span class="c1"># 3. Calculate spectra at each epoch</span>
+<span class="n">results</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">spectra</span><span class="p">(</span><span class="n">frequencies</span><span class="p">,</span> <span class="n">epochs</span><span class="p">)</span>
+
+<span class="c1"># 4. Plot broadband spectra at each epoch</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mf">4.8</span><span class="p">,</span> <span class="mf">3.6</span><span class="p">),</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">200</span><span class="p">)</span>
+<span class="n">colors</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">cm</span><span class="o">.</span><span class="n">viridis</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">epochs</span><span class="p">)))</span>
+
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">t</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">epochs</span><span class="p">):</span>
+    <span class="n">exp</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">floor</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="n">t</span><span class="p">)))</span>
+    <span class="n">base</span> <span class="o">=</span> <span class="n">t</span> <span class="o">/</span> <span class="mi">10</span><span class="o">**</span><span class="n">exp</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">loglog</span><span class="p">(</span><span class="n">frequencies</span><span class="p">,</span> <span class="n">results</span><span class="p">[</span><span class="s1">&#39;syn&#39;</span><span class="p">][</span><span class="n">i</span><span class="p">,:],</span> <span class="n">color</span><span class="o">=</span><span class="n">colors</span><span class="p">[</span><span class="n">i</span><span class="p">],</span>
+              <span class="n">label</span><span class="o">=</span><span class="sa">fr</span><span class="s1">&#39;$</span><span class="si">{</span><span class="n">base</span><span class="si">:</span><span class="s1">.1f</span><span class="si">}</span><span class="s1"> \times 10^</span><span class="se">{{</span><span class="si">{</span><span class="n">exp</span><span class="si">}</span><span class="se">}}</span><span class="s1">$ s&#39;</span><span class="p">)</span>
+
+<span class="c1"># 5. Add vertical lines marking the bands from the light curve plot</span>
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">band</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">bands</span><span class="p">):</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">band</span><span class="p">,</span> <span class="n">ls</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;C</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Frequency (Hz)&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Flux Density (erg/cm²/s/Hz)&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">ncol</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Synchrotron Spectra&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s1">&#39;assets/quick-spec.png&#39;</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">300</span><span class="p">)</span>
+</pre></div>
+</div>
+<figure class="align-center" id="id2">
+<a class="reference internal image-reference" href="_images/quick-spec.png"><img alt="_images/quick-spec.png" src="_images/quick-spec.png" style="width: 600px;" />
+</a>
+<figcaption>
+<p><span class="caption-text">The spectral analysis code will generate this visualization showing spectra at different times, with vertical lines indicating the frequencies calculated in the light curve example.</span><a class="headerlink" href="#id2" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+</section>
+</section>
+<section id="parameter-estimation-with-mcmc">
+<h2>Parameter Estimation with MCMC<a class="headerlink" href="#parameter-estimation-with-mcmc" title="Link to this heading"></a></h2>
+<p>For more advanced analysis, VegasAfterglow provides powerful MCMC capabilities to fit model parameters to observational data. First, you’ll need to prepare your data:</p>
 <section id="preparing-observational-data">
 <h3>Preparing Observational Data<a class="headerlink" href="#preparing-observational-data" title="Link to this heading"></a></h3>
 <p>First, we need to create an instance to store observational data through the <code class="docutils literal notranslate"><span class="pre">ObsData</span></code> class. You can add light curves (specific flux vs. time) and spectra (specific flux vs. frequency) in multiple ways:</p>
@@ -235,30 +350,68 @@
 </section>
 <section id="generating-model-predictions">
 <h3>Generating Model Predictions<a class="headerlink" href="#generating-model-predictions" title="Link to this heading"></a></h3>
-<p>Use samples from the posterior to generate model predictions with uncertainties:</p>
+<p>After running MCMC and obtaining the best-fit parameters, you can generate model predictions for light curves and spectra:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Define time and frequency ranges for predictions</span>
-<span class="n">t_out</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">logspace</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">150</span><span class="p">)</span>
-<span class="n">bands</span> <span class="o">=</span> <span class="p">[</span><span class="mf">2.4e17</span><span class="p">,</span> <span class="mf">4.84e14</span><span class="p">]</span>  <span class="c1"># X-ray and optical R-band</span>
+<span class="n">times</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">logspace</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>  <span class="c1"># Time range from 100s to 10⁶s</span>
+<span class="n">bands</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">2.4e17</span><span class="p">,</span> <span class="mf">4.84e14</span><span class="p">,</span> <span class="mf">1.4e14</span><span class="p">])</span>  <span class="c1"># X-ray, R-band, VT-band in Hz</span>
 
 <span class="c1"># Generate light curves with the best-fit model</span>
-<span class="n">lc_best</span> <span class="o">=</span> <span class="n">fitter</span><span class="o">.</span><span class="n">light_curves</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">best_params</span><span class="p">,</span> <span class="n">t_out</span><span class="p">,</span> <span class="n">bands</span><span class="p">)</span>
+<span class="n">model_flux</span> <span class="o">=</span> <span class="n">fitter</span><span class="o">.</span><span class="n">light_curves</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">best_params</span><span class="p">,</span> <span class="n">times</span><span class="p">,</span> <span class="n">bands</span><span class="p">)</span>
 
-<span class="c1"># Generate spectra at specific times</span>
-<span class="n">nu_out</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">logspace</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">150</span><span class="p">)</span>
-<span class="n">times</span> <span class="o">=</span> <span class="p">[</span><span class="mi">3000</span><span class="p">]</span>  <span class="c1"># 3000 seconds</span>
-<span class="n">spec_best</span> <span class="o">=</span> <span class="n">fitter</span><span class="o">.</span><span class="n">spectra</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">best_params</span><span class="p">,</span> <span class="n">nu_out</span><span class="p">,</span> <span class="n">times</span><span class="p">)</span>
-
-<span class="c1"># Plot the light curves</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<span class="c1"># Plot data with best-fit model</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
 <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">nu</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">bands</span><span class="p">):</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">loglog</span><span class="p">(</span><span class="n">t_out</span><span class="p">,</span> <span class="n">lc_best</span><span class="p">[:,</span> <span class="n">i</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;ν = </span><span class="si">{</span><span class="n">nu</span><span class="si">:</span><span class="s1">.2e</span><span class="si">}</span><span class="s1"> Hz&#39;</span><span class="p">)</span>
+    <span class="c1"># Plot observational data</span>
+    <span class="n">t_obs</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">light_curves</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">t</span>
+    <span class="n">f_obs</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">light_curves</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">flux</span>
+    <span class="n">f_err</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">light_curves</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">flux_err</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">errorbar</span><span class="p">(</span><span class="n">t_obs</span><span class="p">,</span> <span class="n">f_obs</span><span class="p">,</span> <span class="n">yerr</span><span class="o">=</span><span class="n">f_err</span><span class="p">,</span> <span class="n">fmt</span><span class="o">=</span><span class="s1">&#39;o&#39;</span><span class="p">,</span>
+                <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">nu</span><span class="o">/</span><span class="mf">1e14</span><span class="si">:</span><span class="s1">.1f</span><span class="si">}</span><span class="s1">e14 Hz data&#39;</span><span class="p">)</span>
+
+    <span class="c1"># Plot best-fit model</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">times</span><span class="p">,</span> <span class="n">model_flux</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="s1">&#39;-&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">nu</span><span class="o">/</span><span class="mf">1e14</span><span class="si">:</span><span class="s1">.1f</span><span class="si">}</span><span class="s1">e14 Hz model&#39;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">xscale</span><span class="p">(</span><span class="s1">&#39;log&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">yscale</span><span class="p">(</span><span class="s1">&#39;log&#39;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Time (s)&#39;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Flux Density (erg/cm²/s/Hz)&#39;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="n">which</span><span class="o">=</span><span class="s1">&#39;both&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Best-Fit Model Light Curves&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s1">&#39;mcmc_light_curves.png&#39;</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">300</span><span class="p">)</span>
+
+<span class="c1"># Generate spectra at specific times</span>
+<span class="n">frequencies</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">logspace</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">18</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>  <span class="c1"># Frequency range from 10⁸ to 10¹⁸ Hz</span>
+<span class="n">epochs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">1e3</span><span class="p">,</span> <span class="mf">1e4</span><span class="p">,</span> <span class="mf">1e5</span><span class="p">])</span>  <span class="c1"># Times at which to compute spectra</span>
+
+<span class="c1"># Calculate spectra at each epoch</span>
+<span class="n">model_spectra</span> <span class="o">=</span> <span class="n">fitter</span><span class="o">.</span><span class="n">spectra</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">best_params</span><span class="p">,</span> <span class="n">frequencies</span><span class="p">,</span> <span class="n">epochs</span><span class="p">)</span>
+
+<span class="c1"># Plot the spectra</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+<span class="n">colors</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">cm</span><span class="o">.</span><span class="n">viridis</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">epochs</span><span class="p">)))</span>
+
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">t</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">epochs</span><span class="p">):</span>
+    <span class="n">exp</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">floor</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="n">t</span><span class="p">)))</span>
+    <span class="n">base</span> <span class="o">=</span> <span class="n">t</span> <span class="o">/</span> <span class="mi">10</span><span class="o">**</span><span class="n">exp</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">loglog</span><span class="p">(</span><span class="n">frequencies</span><span class="p">,</span> <span class="n">model_spectra</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="n">colors</span><span class="p">[</span><span class="n">i</span><span class="p">],</span>
+              <span class="n">label</span><span class="o">=</span><span class="sa">fr</span><span class="s1">&#39;$</span><span class="si">{</span><span class="n">base</span><span class="si">:</span><span class="s1">.1f</span><span class="si">}</span><span class="s1"> \times 10^</span><span class="se">{{</span><span class="si">{</span><span class="n">exp</span><span class="si">}</span><span class="se">}}</span><span class="s1">$ s&#39;</span><span class="p">)</span>
+
+<span class="c1"># Mark the observing bands</span>
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">band</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">bands</span><span class="p">):</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">band</span><span class="p">,</span> <span class="n">ls</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;C</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Frequency (Hz)&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Flux Density (erg/cm²/s/Hz)&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Model Spectra at Different Times&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s1">&#39;mcmc_spectra.png&#39;</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">300</span><span class="p">)</span>
 </pre></div>
 </div>
+<p>This code generates light curves and spectra using the best-fit parameters from the MCMC run, comparing the model predictions with the observed data. The plots help visualize how well the model fits the data and let you explore the spectral evolution over time.</p>
+<p>These examples demonstrate the core functionality of VegasAfterglow for modeling GRB afterglows. The code is designed to be highly efficient, allowing for rapid exploration of parameter space and comparison with observational data.</p>
+<p>For more advanced users, you can also check the C++ interface for creating custom problem generators (see <a class="reference internal" href="cpp_api.html"><span class="doc">C++ API Reference</span></a>).</p>
 </section>
 <section id="visualizing-parameter-correlations">
 <h3>Visualizing Parameter Correlations<a class="headerlink" href="#visualizing-parameter-correlations" title="Link to this heading"></a></h3>

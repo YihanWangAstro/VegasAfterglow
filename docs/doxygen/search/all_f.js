@@ -30,7 +30,7 @@ var searchData=
   ['pygaussianjet_27',['pygaussianjet',['../pymodel_8cpp.html#aa9825b7404f58b5ea75012ae89ef858e',1,'PyGaussianJet(Real theta_c, Real E_iso, Real Gamma0, bool spreading, Real T0):&#160;pymodel.cpp'],['../pymodel_8h.html#a15a0cb76edad6808a40f715c0b319acd',1,'PyGaussianJet(Real theta_c, Real E_iso, Real Gamma0, bool spreading=false, Real T0=1 *unit::sec):&#160;pymodel.cpp']]],
   ['pygrid_28',['PyGrid',['../pybind_8h.html#ac1d4addade56d129930395ee7527601e',1,'pybind.h']]],
   ['pyism_29',['pyism',['../pymodel_8h.html#a43af01d16838e6513792deaeb727fbe5',1,'PyISM(Real n_ism):&#160;pymodel.cpp'],['../pymodel_8cpp.html#a43af01d16838e6513792deaeb727fbe5',1,'PyISM(Real n_ism):&#160;pymodel.cpp']]],
-  ['pymodel_30',['pymodel',['../classPyModel.html#aba9af74f7546295238983148d55ff64e',1,'PyModel::PyModel()'],['../classPyModel.html',1,'PyModel']]],
+  ['pymodel_30',['pymodel',['../classPyModel.html#adf79561ee62c867b3e158943329e291b',1,'PyModel::PyModel()'],['../classPyModel.html',1,'PyModel']]],
   ['pymodel_2ecpp_31',['pymodel.cpp',['../pymodel_8cpp.html',1,'']]],
   ['pymodel_2eh_32',['pymodel.h',['../pymodel_8h.html',1,'']]],
   ['pyobserver_33',['pyobserver',['../classPyObserver.html#a81483263bfdc173c4ca6287add88ad9a',1,'PyObserver::PyObserver()'],['../classPyObserver.html',1,'PyObserver']]],

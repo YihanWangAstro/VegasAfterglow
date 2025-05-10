@@ -1,9 +1,0 @@
-<map id="generate_syn_photons" name="generate_syn_photons">
-<area shape="rect" id="Node000001" title="Populates an existing photon grid with values based on shock and electron grid." alt="" coords="5,55,175,80"/>
-<area shape="rect" id="Node000002" href="$synchrotron_8cpp.html#a936bfaa522ec8295a21d253e5453188d" title="Calculates synchrotron frequency for a given Lorentz factor and magnetic field." alt="" coords="223,5,365,31"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="143,52,227,31,228,37,144,57"/>
-<area shape="rect" id="Node000003" href="$utilities_8h.html#afe0a1b1b7509ac4df83fcc0e510f281b" title="Fast approximation of the base&#45;2 logarithm." alt="" coords="253,55,335,80"/>
-<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="175,65,239,65,239,70,175,70"/>
-<area shape="rect" id="Node000004" href="$classShock.html#a182095c7ca3cfd83d9d22d2627c10466" title="Returns grid dimensions as a tuple." alt="" coords="240,104,348,129"/>
-<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="144,77,228,98,227,103,143,83"/>
-</map>

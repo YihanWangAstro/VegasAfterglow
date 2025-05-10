@@ -878,7 +878,6 @@ $(document).ready(function(){initNavTree('synchrotron_8cpp_source.html',''); ini
 <div class="line"><a id="l00732" name="l00732"></a><span class="lineno">  732</span>}</div>
 </div>
 <div class="line"><a id="l00733" name="l00733"></a><span class="lineno">  733</span> </div>
-<div class="foldopen" id="foldopen00734" data-start="{" data-end="}">
 <div class="line"><a id="l00734" name="l00734"></a><span class="lineno"><a class="line" href="synchrotron_8h.html#a901300e562505fb294c074fa1e678308">  734</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="synchrotron_8cpp.html#afd4184652bfb1fac7ee55a159f618767">generate_syn_electrons</a>(<a class="code hl_typedef" href="synchrotron_8h.html#a1ed93cca9de717545d10f8619effaf3a">SynElectronGrid</a>&amp; electrons, <a class="code hl_class" href="classShock.html">Shock</a> <span class="keyword">const</span>&amp; shock, <a class="code hl_typedef" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> p, <a class="code hl_typedef" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> xi) {</div>
 <div class="line"><a id="l00735" name="l00735"></a><span class="lineno">  735</span>    <span class="keyword">auto</span> [phi_size, theta_size, t_size] = shock.<a class="code hl_function" href="classShock.html#a182095c7ca3cfd83d9d22d2627c10466">shape</a>();</div>
 <div class="line"><a id="l00736" name="l00736"></a><span class="lineno">  736</span> </div>
@@ -903,90 +902,85 @@ $(document).ready(function(){initNavTree('synchrotron_8cpp_source.html',''); ini
 <div class="line"><a id="l00755" name="l00755"></a><span class="lineno">  755</span>                e.gamma_m = <a class="code hl_function" href="synchrotron_8cpp.html#a0095a83d7309c92bcf2d807436b2615c">compute_syn_gamma_m</a>(Gamma_rel, e.gamma_M, shock.<a class="code hl_variable" href="classShock.html#aac23d6e20adac6a71006e101cb667f76">eps_e</a>, p, xi);</div>
 <div class="line"><a id="l00756" name="l00756"></a><span class="lineno">  756</span>                <span class="comment">// Fraction of synchrotron electrons; the rest are cyclotron</span></div>
 <div class="line"><a id="l00757" name="l00757"></a><span class="lineno">  757</span>                <a class="code hl_typedef" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> f = 1.;</div>
-<div class="line"><a id="l00758" name="l00758"></a><span class="lineno">  758</span>                <span class="keywordflow">if</span> (1 &lt; e.gamma_m &amp;&amp; e.gamma_m &lt; gamma_syn_limit) {</div>
-<div class="line"><a id="l00759" name="l00759"></a><span class="lineno">  759</span>                    f = std::min(<a class="code hl_function" href="utilities_8h.html#a4520a27a10a2aef33c99ad8c679da404">fast_pow</a>((gamma_syn_limit - 1) / (e.gamma_m - 1), 1 - p), 1_r);</div>
-<div class="line"><a id="l00760" name="l00760"></a><span class="lineno">  760</span>                    e.gamma_m = gamma_syn_limit;</div>
-<div class="line"><a id="l00761" name="l00761"></a><span class="lineno">  761</span>                }</div>
-<div class="line"><a id="l00762" name="l00762"></a><span class="lineno">  762</span>                e.column_num_den = Sigma * f * xi;</div>
-<div class="line"><a id="l00763" name="l00763"></a><span class="lineno">  763</span>                e.I_nu_peak = <a class="code hl_function" href="synchrotron_8cpp.html#a7f6b35414b0d45eff0677786294fc97c">compute_syn_peak_power</a>(B, p) * e.column_num_den / (4 * <a class="code hl_variable" href="namespacecon.html#aa0ccd904b754d0f907898a942516d121">con::pi</a>);</div>
-<div class="line"><a id="l00764" name="l00764"></a><span class="lineno">  764</span>                <span class="keywordflow">if</span> (k &lt;= k_inj) {</div>
-<div class="line"><a id="l00765" name="l00765"></a><span class="lineno">  765</span>                    e.gamma_c = <a class="code hl_function" href="synchrotron_8cpp.html#a52e34d49dd7497d65ea5261e80d615d4">compute_gamma_c</a>(t_com, B, electrons(i, j, k).Ys, p);</div>
-<div class="line"><a id="l00766" name="l00766"></a><span class="lineno">  766</span>                } <span class="keywordflow">else</span> {  <span class="comment">// no shocked electron injection, just adiabatic cooling</span></div>
-<div class="line"><a id="l00767" name="l00767"></a><span class="lineno">  767</span>                    e.gamma_c = electrons(i, j, k_inj).gamma_c * e.gamma_m / electrons(i, j, k_inj).gamma_m;</div>
-<div class="line"><a id="l00768" name="l00768"></a><span class="lineno">  768</span>                    e.gamma_M = e.gamma_c;</div>
-<div class="line"><a id="l00769" name="l00769"></a><span class="lineno">  769</span>                }</div>
-<div class="line"><a id="l00770" name="l00770"></a><span class="lineno">  770</span>                e.gamma_a = <a class="code hl_function" href="synchrotron_8cpp.html#a5b1694deb534f1df0ba3515fdf52b65a">compute_syn_gamma_a</a>(Gamma_rel, B, e.I_nu_peak, e.gamma_m, e.gamma_c);</div>
-<div class="line"><a id="l00771" name="l00771"></a><span class="lineno">  771</span>                e.regime = <a class="code hl_function" href="synchrotron_8cpp.html#a5813eed02877ed5f35a34e929a68d263">determine_regime</a>(e.gamma_a, e.gamma_c, e.gamma_m);</div>
-<div class="line"><a id="l00772" name="l00772"></a><span class="lineno">  772</span>                e.p = p;</div>
-<div class="line"><a id="l00773" name="l00773"></a><span class="lineno">  773</span>            }</div>
-<div class="line"><a id="l00774" name="l00774"></a><span class="lineno">  774</span>        }</div>
-<div class="line"><a id="l00775" name="l00775"></a><span class="lineno">  775</span>    }</div>
-<div class="line"><a id="l00776" name="l00776"></a><span class="lineno">  776</span>}</div>
-</div>
-<div class="line"><a id="l00777" name="l00777"></a><span class="lineno">  777</span> </div>
-<div class="foldopen" id="foldopen00778" data-start="{" data-end="}">
-<div class="line"><a id="l00778" name="l00778"></a><span class="lineno"><a class="line" href="synchrotron_8h.html#a331f545228d2b18e84e0252510e295f8">  778</a></span><a class="code hl_typedef" href="synchrotron_8h.html#a0ab8637927d98b2552ae0f5b9eb5e5c2">SynPhotonGrid</a> <a class="code hl_function" href="synchrotron_8cpp.html#a68ca390be3c37e7c5f3286335daba749">generate_syn_photons</a>(<a class="code hl_class" href="classShock.html">Shock</a> <span class="keyword">const</span>&amp; shock, <a class="code hl_typedef" href="synchrotron_8h.html#a1ed93cca9de717545d10f8619effaf3a">SynElectronGrid</a> <span class="keyword">const</span>&amp; e) {</div>
-<div class="line"><a id="l00779" name="l00779"></a><span class="lineno">  779</span>    <span class="keyword">auto</span> [phi_size, theta_size, t_size] = shock.<a class="code hl_function" href="classShock.html#a182095c7ca3cfd83d9d22d2627c10466">shape</a>();</div>
-<div class="line"><a id="l00780" name="l00780"></a><span class="lineno">  780</span> </div>
-<div class="line"><a id="l00781" name="l00781"></a><span class="lineno">  781</span>    <a class="code hl_typedef" href="synchrotron_8h.html#a0ab8637927d98b2552ae0f5b9eb5e5c2">SynPhotonGrid</a> ph({phi_size, theta_size, t_size});</div>
-<div class="line"><a id="l00782" name="l00782"></a><span class="lineno">  782</span> </div>
-<div class="line"><a id="l00783" name="l00783"></a><span class="lineno">  783</span>    <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> i = 0; i &lt; phi_size; ++i) {</div>
-<div class="line"><a id="l00784" name="l00784"></a><span class="lineno">  784</span>        <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> j = 0; j &lt; theta_size; ++j) {</div>
-<div class="line"><a id="l00785" name="l00785"></a><span class="lineno">  785</span>            <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> k = 0; k &lt; t_size; ++k) {</div>
-<div class="line"><a id="l00786" name="l00786"></a><span class="lineno">  786</span>                ph(i, j, k).e = &amp;(e(i, j, k));</div>
-<div class="line"><a id="l00787" name="l00787"></a><span class="lineno">  787</span>                <span class="keywordflow">if</span> (shock.<a class="code hl_variable" href="classShock.html#a936f940f338d2661a8f85e36fcd8f01d">required</a>(i, j, k) == 0) {</div>
-<div class="line"><a id="l00788" name="l00788"></a><span class="lineno">  788</span>                    <span class="keywordflow">continue</span>;</div>
-<div class="line"><a id="l00789" name="l00789"></a><span class="lineno">  789</span>                }</div>
-<div class="line"><a id="l00790" name="l00790"></a><span class="lineno">  790</span>                <a class="code hl_typedef" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> B = shock.<a class="code hl_variable" href="classShock.html#a48c444d1bd42f1b933aa4282b5634bf2">B</a>(i, j, k);</div>
-<div class="line"><a id="l00791" name="l00791"></a><span class="lineno">  791</span> </div>
-<div class="line"><a id="l00792" name="l00792"></a><span class="lineno">  792</span>                ph(i, j, k).nu_M = <a class="code hl_function" href="synchrotron_8cpp.html#a936bfaa522ec8295a21d253e5453188d">compute_syn_freq</a>(e(i, j, k).gamma_M, B);</div>
-<div class="line"><a id="l00793" name="l00793"></a><span class="lineno">  793</span>                ph(i, j, k).nu_m = <a class="code hl_function" href="synchrotron_8cpp.html#a936bfaa522ec8295a21d253e5453188d">compute_syn_freq</a>(e(i, j, k).gamma_m, B);</div>
-<div class="line"><a id="l00794" name="l00794"></a><span class="lineno">  794</span>                ph(i, j, k).nu_c = <a class="code hl_function" href="synchrotron_8cpp.html#a936bfaa522ec8295a21d253e5453188d">compute_syn_freq</a>(e(i, j, k).gamma_c, B);</div>
-<div class="line"><a id="l00795" name="l00795"></a><span class="lineno">  795</span>                ph(i, j, k).nu_a = <a class="code hl_function" href="synchrotron_8cpp.html#a936bfaa522ec8295a21d253e5453188d">compute_syn_freq</a>(e(i, j, k).gamma_a, B);</div>
-<div class="line"><a id="l00796" name="l00796"></a><span class="lineno">  796</span> </div>
-<div class="line"><a id="l00797" name="l00797"></a><span class="lineno">  797</span>                ph(i, j, k).log2_I_nu_peak = <a class="code hl_function" href="utilities_8h.html#afe0a1b1b7509ac4df83fcc0e510f281b">fast_log2</a>(e(i, j, k).I_nu_peak);</div>
-<div class="line"><a id="l00798" name="l00798"></a><span class="lineno">  798</span>                ph(i, j, k).log2_nu_m = <a class="code hl_function" href="utilities_8h.html#afe0a1b1b7509ac4df83fcc0e510f281b">fast_log2</a>(ph(i, j, k).nu_m);</div>
-<div class="line"><a id="l00799" name="l00799"></a><span class="lineno">  799</span>                ph(i, j, k).log2_nu_c = <a class="code hl_function" href="utilities_8h.html#afe0a1b1b7509ac4df83fcc0e510f281b">fast_log2</a>(ph(i, j, k).nu_c);</div>
-<div class="line"><a id="l00800" name="l00800"></a><span class="lineno">  800</span>                ph(i, j, k).log2_nu_a = <a class="code hl_function" href="utilities_8h.html#afe0a1b1b7509ac4df83fcc0e510f281b">fast_log2</a>(ph(i, j, k).nu_a);</div>
-<div class="line"><a id="l00801" name="l00801"></a><span class="lineno">  801</span>                ph(i, j, k).log2_nu_M = <a class="code hl_function" href="utilities_8h.html#afe0a1b1b7509ac4df83fcc0e510f281b">fast_log2</a>(ph(i, j, k).nu_M);</div>
-<div class="line"><a id="l00802" name="l00802"></a><span class="lineno">  802</span>                ph(i, j, k).update_constant();</div>
-<div class="line"><a id="l00803" name="l00803"></a><span class="lineno">  803</span>            }</div>
-<div class="line"><a id="l00804" name="l00804"></a><span class="lineno">  804</span>        }</div>
-<div class="line"><a id="l00805" name="l00805"></a><span class="lineno">  805</span>    }</div>
-<div class="line"><a id="l00806" name="l00806"></a><span class="lineno">  806</span>    <span class="keywordflow">return</span> ph;</div>
-<div class="line"><a id="l00807" name="l00807"></a><span class="lineno">  807</span>}</div>
-</div>
-<div class="line"><a id="l00808" name="l00808"></a><span class="lineno">  808</span> </div>
-<div class="foldopen" id="foldopen00809" data-start="{" data-end="}">
-<div class="line"><a id="l00809" name="l00809"></a><span class="lineno"><a class="line" href="synchrotron_8h.html#a0f78089bdc9e329056d89812794298b9">  809</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="synchrotron_8cpp.html#a68ca390be3c37e7c5f3286335daba749">generate_syn_photons</a>(<a class="code hl_typedef" href="synchrotron_8h.html#a0ab8637927d98b2552ae0f5b9eb5e5c2">SynPhotonGrid</a>&amp; ph, <a class="code hl_class" href="classShock.html">Shock</a> <span class="keyword">const</span>&amp; shock, <a class="code hl_typedef" href="synchrotron_8h.html#a1ed93cca9de717545d10f8619effaf3a">SynElectronGrid</a> <span class="keyword">const</span>&amp; e) {</div>
-<div class="line"><a id="l00810" name="l00810"></a><span class="lineno">  810</span>    <span class="keyword">auto</span> [phi_size, theta_size, t_size] = shock.<a class="code hl_function" href="classShock.html#a182095c7ca3cfd83d9d22d2627c10466">shape</a>();</div>
-<div class="line"><a id="l00811" name="l00811"></a><span class="lineno">  811</span> </div>
-<div class="line"><a id="l00812" name="l00812"></a><span class="lineno">  812</span>    ph.resize({phi_size, theta_size, t_size});</div>
-<div class="line"><a id="l00813" name="l00813"></a><span class="lineno">  813</span>    <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> i = 0; i &lt; phi_size; ++i) {</div>
-<div class="line"><a id="l00814" name="l00814"></a><span class="lineno">  814</span>        <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> j = 0; j &lt; theta_size; ++j) {</div>
-<div class="line"><a id="l00815" name="l00815"></a><span class="lineno">  815</span>            <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> k = 0; k &lt; t_size; ++k) {</div>
-<div class="line"><a id="l00816" name="l00816"></a><span class="lineno">  816</span>                ph(i, j, k).e = &amp;(e(i, j, k));</div>
-<div class="line"><a id="l00817" name="l00817"></a><span class="lineno">  817</span>                <span class="keywordflow">if</span> (shock.<a class="code hl_variable" href="classShock.html#a936f940f338d2661a8f85e36fcd8f01d">required</a>(i, j, k) == 0) {</div>
-<div class="line"><a id="l00818" name="l00818"></a><span class="lineno">  818</span>                    <span class="keywordflow">continue</span>;</div>
-<div class="line"><a id="l00819" name="l00819"></a><span class="lineno">  819</span>                }</div>
-<div class="line"><a id="l00820" name="l00820"></a><span class="lineno">  820</span>                <a class="code hl_typedef" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> B = shock.<a class="code hl_variable" href="classShock.html#a48c444d1bd42f1b933aa4282b5634bf2">B</a>(i, j, k);</div>
-<div class="line"><a id="l00821" name="l00821"></a><span class="lineno">  821</span> </div>
-<div class="line"><a id="l00822" name="l00822"></a><span class="lineno">  822</span>                ph(i, j, k).nu_M = <a class="code hl_function" href="synchrotron_8cpp.html#a936bfaa522ec8295a21d253e5453188d">compute_syn_freq</a>(e(i, j, k).gamma_M, B);</div>
-<div class="line"><a id="l00823" name="l00823"></a><span class="lineno">  823</span>                ph(i, j, k).nu_m = <a class="code hl_function" href="synchrotron_8cpp.html#a936bfaa522ec8295a21d253e5453188d">compute_syn_freq</a>(e(i, j, k).gamma_m, B);</div>
-<div class="line"><a id="l00824" name="l00824"></a><span class="lineno">  824</span>                ph(i, j, k).nu_c = <a class="code hl_function" href="synchrotron_8cpp.html#a936bfaa522ec8295a21d253e5453188d">compute_syn_freq</a>(e(i, j, k).gamma_c, B);</div>
-<div class="line"><a id="l00825" name="l00825"></a><span class="lineno">  825</span>                ph(i, j, k).nu_a = <a class="code hl_function" href="synchrotron_8cpp.html#a936bfaa522ec8295a21d253e5453188d">compute_syn_freq</a>(e(i, j, k).gamma_a, B);</div>
-<div class="line"><a id="l00826" name="l00826"></a><span class="lineno">  826</span> </div>
-<div class="line"><a id="l00827" name="l00827"></a><span class="lineno">  827</span>                ph(i, j, k).log2_I_nu_peak = <a class="code hl_function" href="utilities_8h.html#afe0a1b1b7509ac4df83fcc0e510f281b">fast_log2</a>(e(i, j, k).I_nu_peak);</div>
-<div class="line"><a id="l00828" name="l00828"></a><span class="lineno">  828</span>                ph(i, j, k).log2_nu_m = <a class="code hl_function" href="utilities_8h.html#afe0a1b1b7509ac4df83fcc0e510f281b">fast_log2</a>(ph(i, j, k).nu_m);</div>
-<div class="line"><a id="l00829" name="l00829"></a><span class="lineno">  829</span>                ph(i, j, k).log2_nu_c = <a class="code hl_function" href="utilities_8h.html#afe0a1b1b7509ac4df83fcc0e510f281b">fast_log2</a>(ph(i, j, k).nu_c);</div>
-<div class="line"><a id="l00830" name="l00830"></a><span class="lineno">  830</span>                ph(i, j, k).log2_nu_a = <a class="code hl_function" href="utilities_8h.html#afe0a1b1b7509ac4df83fcc0e510f281b">fast_log2</a>(ph(i, j, k).nu_a);</div>
-<div class="line"><a id="l00831" name="l00831"></a><span class="lineno">  831</span>                ph(i, j, k).log2_nu_M = <a class="code hl_function" href="utilities_8h.html#afe0a1b1b7509ac4df83fcc0e510f281b">fast_log2</a>(ph(i, j, k).nu_M);</div>
-<div class="line"><a id="l00832" name="l00832"></a><span class="lineno">  832</span>                ph(i, j, k).update_constant();</div>
-<div class="line"><a id="l00833" name="l00833"></a><span class="lineno">  833</span>            }</div>
-<div class="line"><a id="l00834" name="l00834"></a><span class="lineno">  834</span>        }</div>
-<div class="line"><a id="l00835" name="l00835"></a><span class="lineno">  835</span>    }</div>
-<div class="line"><a id="l00836" name="l00836"></a><span class="lineno">  836</span>}</div>
-</div>
+<div class="line"><a id="l00758" name="l00758"></a><span class="lineno">  758</span>                <span class="comment">/*if (1 &lt; e.gamma_m &amp;&amp; e.gamma_m &lt; gamma_syn_limit) {</span></div>
+<div class="line"><a id="l00759" name="l00759"></a><span class="lineno">  759</span><span class="comment">                    f = std::min(fast_pow((gamma_syn_limit - 1) / (e.gamma_m - 1), 1 - p), 1_r);</span></div>
+<div class="line"><a id="l00760" name="l00760"></a><span class="lineno">  760</span><span class="comment">                    e.gamma_m = gamma_syn_limit;</span></div>
+<div class="line"><a id="l00761" name="l00761"></a><span class="lineno">  761</span><span class="comment">                }</span></div>
+<div class="line"><a id="l00762" name="l00762"></a><span class="lineno">  762</span><span class="comment">                e.column_num_den = Sigma * f * xi;</span></div>
+<div class="line"><a id="l00763" name="l00763"></a><span class="lineno">  763</span><span class="comment">                e.I_nu_peak = compute_syn_peak_power(B, p) * e.column_num_den / (4 * con::pi);</span></div>
+<div class="line"><a id="l00764" name="l00764"></a><span class="lineno">  764</span><span class="comment">                if (k &lt;= k_inj) {</span></div>
+<div class="line"><a id="l00765" name="l00765"></a><span class="lineno">  765</span><span class="comment">                    e.gamma_c = compute_gamma_c(t_com, B, electrons(i, j, k).Ys, p);</span></div>
+<div class="line"><a id="l00766" name="l00766"></a><span class="lineno">  766</span><span class="comment">                } else {  // no shocked electron injection, just adiabatic cooling</span></div>
+<div class="line"><a id="l00767" name="l00767"></a><span class="lineno">  767</span><span class="comment">                    e.gamma_c = electrons(i, j, k_inj).gamma_c * e.gamma_m / electrons(i, j, k_inj).gamma_m;</span></div>
+<div class="line"><a id="l00768" name="l00768"></a><span class="lineno">  768</span><span class="comment">                    e.gamma_M = e.gamma_c;</span></div>
+<div class="line"><a id="l00769" name="l00769"></a><span class="lineno">  769</span><span class="comment">                }</span></div>
+<div class="line"><a id="l00770" name="l00770"></a><span class="lineno">  770</span><span class="comment">                e.gamma_a = compute_syn_gamma_a(Gamma_rel, B, e.I_nu_peak, e.gamma_m, e.gamma_c);</span></div>
+<div class="line"><a id="l00771" name="l00771"></a><span class="lineno">  771</span><span class="comment">                e.regime = determine_regime(e.gamma_a, e.gamma_c, e.gamma_m);</span></div>
+<div class="line"><a id="l00772" name="l00772"></a><span class="lineno">  772</span><span class="comment">                e.p = p;</span></div>
+<div class="line"><a id="l00773" name="l00773"></a><span class="lineno">  773</span><span class="comment">            }</span></div>
+<div class="line"><a id="l00774" name="l00774"></a><span class="lineno">  774</span><span class="comment">        }</span></div>
+<div class="line"><a id="l00775" name="l00775"></a><span class="lineno">  775</span><span class="comment">    }</span></div>
+<div class="line"><a id="l00776" name="l00776"></a><span class="lineno">  776</span><span class="comment">}</span></div>
+<div class="line"><a id="l00777" name="l00777"></a><span class="lineno">  777</span><span class="comment"></span> </div>
+<div class="line"><a id="l00778" name="l00778"></a><span class="lineno">  778</span><span class="comment">SynPhotonGrid generate_syn_photons(Shock const&amp; shock, SynElectronGrid const&amp; e) {</span></div>
+<div class="line"><a id="l00779" name="l00779"></a><span class="lineno">  779</span><span class="comment">    auto [phi_size, theta_size, t_size] = shock.shape();</span></div>
+<div class="line"><a id="l00780" name="l00780"></a><span class="lineno">  780</span><span class="comment"></span> </div>
+<div class="line"><a id="l00781" name="l00781"></a><span class="lineno">  781</span><span class="comment">    SynPhotonGrid ph({phi_size, theta_size, t_size});</span></div>
+<div class="line"><a id="l00782" name="l00782"></a><span class="lineno">  782</span><span class="comment"></span> </div>
+<div class="line"><a id="l00783" name="l00783"></a><span class="lineno">  783</span><span class="comment">    for (size_t i = 0; i &lt; phi_size; ++i) {</span></div>
+<div class="line"><a id="l00784" name="l00784"></a><span class="lineno">  784</span><span class="comment">        for (size_t j = 0; j &lt; theta_size; ++j) {</span></div>
+<div class="line"><a id="l00785" name="l00785"></a><span class="lineno">  785</span><span class="comment">            for (size_t k = 0; k &lt; t_size; ++k) {</span></div>
+<div class="line"><a id="l00786" name="l00786"></a><span class="lineno">  786</span><span class="comment">                ph(i, j, k).e = &amp;(e(i, j, k));</span></div>
+<div class="line"><a id="l00787" name="l00787"></a><span class="lineno">  787</span><span class="comment">                if (shock.required(i, j, k) == 0) {</span></div>
+<div class="line"><a id="l00788" name="l00788"></a><span class="lineno">  788</span><span class="comment">                    continue;</span></div>
+<div class="line"><a id="l00789" name="l00789"></a><span class="lineno">  789</span><span class="comment">                }</span></div>
+<div class="line"><a id="l00790" name="l00790"></a><span class="lineno">  790</span><span class="comment">                Real B = shock.B(i, j, k);</span></div>
+<div class="line"><a id="l00791" name="l00791"></a><span class="lineno">  791</span><span class="comment"></span> </div>
+<div class="line"><a id="l00792" name="l00792"></a><span class="lineno">  792</span><span class="comment">                ph(i, j, k).nu_M = compute_syn_freq(e(i, j, k).gamma_M, B);</span></div>
+<div class="line"><a id="l00793" name="l00793"></a><span class="lineno">  793</span><span class="comment">                ph(i, j, k).nu_m = compute_syn_freq(e(i, j, k).gamma_m, B);</span></div>
+<div class="line"><a id="l00794" name="l00794"></a><span class="lineno">  794</span><span class="comment">                ph(i, j, k).nu_c = compute_syn_freq(e(i, j, k).gamma_c, B);</span></div>
+<div class="line"><a id="l00795" name="l00795"></a><span class="lineno">  795</span><span class="comment">                ph(i, j, k).nu_a = compute_syn_freq(e(i, j, k).gamma_a, B);</span></div>
+<div class="line"><a id="l00796" name="l00796"></a><span class="lineno">  796</span><span class="comment"></span> </div>
+<div class="line"><a id="l00797" name="l00797"></a><span class="lineno">  797</span><span class="comment">                ph(i, j, k).log2_I_nu_peak = fast_log2(e(i, j, k).I_nu_peak);</span></div>
+<div class="line"><a id="l00798" name="l00798"></a><span class="lineno">  798</span><span class="comment">                ph(i, j, k).log2_nu_m = fast_log2(ph(i, j, k).nu_m);</span></div>
+<div class="line"><a id="l00799" name="l00799"></a><span class="lineno">  799</span><span class="comment">                ph(i, j, k).log2_nu_c = fast_log2(ph(i, j, k).nu_c);</span></div>
+<div class="line"><a id="l00800" name="l00800"></a><span class="lineno">  800</span><span class="comment">                ph(i, j, k).log2_nu_a = fast_log2(ph(i, j, k).nu_a);</span></div>
+<div class="line"><a id="l00801" name="l00801"></a><span class="lineno">  801</span><span class="comment">                ph(i, j, k).log2_nu_M = fast_log2(ph(i, j, k).nu_M);</span></div>
+<div class="line"><a id="l00802" name="l00802"></a><span class="lineno">  802</span><span class="comment">                ph(i, j, k).update_constant();</span></div>
+<div class="line"><a id="l00803" name="l00803"></a><span class="lineno">  803</span><span class="comment">            }</span></div>
+<div class="line"><a id="l00804" name="l00804"></a><span class="lineno">  804</span><span class="comment">        }</span></div>
+<div class="line"><a id="l00805" name="l00805"></a><span class="lineno">  805</span><span class="comment">    }</span></div>
+<div class="line"><a id="l00806" name="l00806"></a><span class="lineno">  806</span><span class="comment">    return ph;</span></div>
+<div class="line"><a id="l00807" name="l00807"></a><span class="lineno">  807</span><span class="comment">}</span></div>
+<div class="line"><a id="l00808" name="l00808"></a><span class="lineno">  808</span><span class="comment"></span> </div>
+<div class="line"><a id="l00809" name="l00809"></a><span class="lineno">  809</span><span class="comment">void generate_syn_photons(SynPhotonGrid&amp; ph, Shock const&amp; shock, SynElectronGrid const&amp; e) {</span></div>
+<div class="line"><a id="l00810" name="l00810"></a><span class="lineno">  810</span><span class="comment">    auto [phi_size, theta_size, t_size] = shock.shape();</span></div>
+<div class="line"><a id="l00811" name="l00811"></a><span class="lineno">  811</span><span class="comment"></span> </div>
+<div class="line"><a id="l00812" name="l00812"></a><span class="lineno">  812</span><span class="comment">    ph.resize({phi_size, theta_size, t_size});</span></div>
+<div class="line"><a id="l00813" name="l00813"></a><span class="lineno">  813</span><span class="comment">    for (size_t i = 0; i &lt; phi_size; ++i) {</span></div>
+<div class="line"><a id="l00814" name="l00814"></a><span class="lineno">  814</span><span class="comment">        for (size_t j = 0; j &lt; theta_size; ++j) {</span></div>
+<div class="line"><a id="l00815" name="l00815"></a><span class="lineno">  815</span><span class="comment">            for (size_t k = 0; k &lt; t_size; ++k) {</span></div>
+<div class="line"><a id="l00816" name="l00816"></a><span class="lineno">  816</span><span class="comment">                ph(i, j, k).e = &amp;(e(i, j, k));</span></div>
+<div class="line"><a id="l00817" name="l00817"></a><span class="lineno">  817</span><span class="comment">                if (shock.required(i, j, k) == 0) {</span></div>
+<div class="line"><a id="l00818" name="l00818"></a><span class="lineno">  818</span><span class="comment">                    continue;</span></div>
+<div class="line"><a id="l00819" name="l00819"></a><span class="lineno">  819</span><span class="comment">                }</span></div>
+<div class="line"><a id="l00820" name="l00820"></a><span class="lineno">  820</span><span class="comment">                Real B = shock.B(i, j, k);</span></div>
+<div class="line"><a id="l00821" name="l00821"></a><span class="lineno">  821</span><span class="comment"></span> </div>
+<div class="line"><a id="l00822" name="l00822"></a><span class="lineno">  822</span><span class="comment">                ph(i, j, k).nu_M = compute_syn_freq(e(i, j, k).gamma_M, B);</span></div>
+<div class="line"><a id="l00823" name="l00823"></a><span class="lineno">  823</span><span class="comment">                ph(i, j, k).nu_m = compute_syn_freq(e(i, j, k).gamma_m, B);</span></div>
+<div class="line"><a id="l00824" name="l00824"></a><span class="lineno">  824</span><span class="comment">                ph(i, j, k).nu_c = compute_syn_freq(e(i, j, k).gamma_c, B);</span></div>
+<div class="line"><a id="l00825" name="l00825"></a><span class="lineno">  825</span><span class="comment">                ph(i, j, k).nu_a = compute_syn_freq(e(i, j, k).gamma_a, B);</span></div>
+<div class="line"><a id="l00826" name="l00826"></a><span class="lineno">  826</span><span class="comment"></span> </div>
+<div class="line"><a id="l00827" name="l00827"></a><span class="lineno">  827</span><span class="comment">                ph(i, j, k).log2_I_nu_peak = fast_log2(e(i, j, k).I_nu_peak);</span></div>
+<div class="line"><a id="l00828" name="l00828"></a><span class="lineno">  828</span><span class="comment">                ph(i, j, k).log2_nu_m = fast_log2(ph(i, j, k).nu_m);</span></div>
+<div class="line"><a id="l00829" name="l00829"></a><span class="lineno">  829</span><span class="comment">                ph(i, j, k).log2_nu_c = fast_log2(ph(i, j, k).nu_c);</span></div>
+<div class="line"><a id="l00830" name="l00830"></a><span class="lineno">  830</span><span class="comment">                ph(i, j, k).log2_nu_a = fast_log2(ph(i, j, k).nu_a);</span></div>
+<div class="line"><a id="l00831" name="l00831"></a><span class="lineno">  831</span><span class="comment">                ph(i, j, k).log2_nu_M = fast_log2(ph(i, j, k).nu_M);</span></div>
+<div class="line"><a id="l00832" name="l00832"></a><span class="lineno">  832</span><span class="comment">                ph(i, j, k).update_constant();</span></div>
+<div class="line"><a id="l00833" name="l00833"></a><span class="lineno">  833</span><span class="comment">            }</span></div>
+<div class="line"><a id="l00834" name="l00834"></a><span class="lineno">  834</span><span class="comment">        }</span></div>
+<div class="line"><a id="l00835" name="l00835"></a><span class="lineno">  835</span><span class="comment">    }</span></div>
+<div class="line"><a id="l00836" name="l00836"></a><span class="lineno">  836</span><span class="comment">}</span></div>
 <div class="ttc" id="aafterglow_8h_html"><div class="ttname"><a href="afterglow_8h.html">afterglow.h</a></div></div>
 <div class="ttc" id="aclassShock_html"><div class="ttname"><a href="classShock.html">Shock</a></div><div class="ttdoc">Represents a shock wave in an astrophysical environment.</div><div class="ttdef"><b>Definition</b> <a href="shock_8h_source.html#l00027">shock.h:27</a></div></div>
 <div class="ttc" id="aclassShock_html_a182095c7ca3cfd83d9d22d2627c10466"><div class="ttname"><a href="classShock.html#a182095c7ca3cfd83d9d22d2627c10466">Shock::shape</a></div><div class="ttdeci">auto shape() const</div><div class="ttdoc">Returns grid dimensions as a tuple.</div><div class="ttdef"><b>Definition</b> <a href="shock_8h_source.html#l00058">shock.h:58</a></div></div>
@@ -1056,14 +1050,12 @@ $(document).ready(function(){initNavTree('synchrotron_8cpp_source.html',''); ini
 <div class="ttc" id="asynchrotron_8cpp_html_a59b47fc71384572d072692740171988e"><div class="ttname"><a href="synchrotron_8cpp.html#a59b47fc71384572d072692740171988e">order</a></div><div class="ttdeci">bool order(Real a, Real b, Real c)</div><div class="ttdef"><b>Definition</b> <a href="synchrotron_8cpp_source.html#l00152">synchrotron.cpp:152</a></div></div>
 <div class="ttc" id="asynchrotron_8cpp_html_a5b1694deb534f1df0ba3515fdf52b65a"><div class="ttname"><a href="synchrotron_8cpp.html#a5b1694deb534f1df0ba3515fdf52b65a">compute_syn_gamma_a</a></div><div class="ttdeci">Real compute_syn_gamma_a(Real Gamma_rel, Real B, Real I_syn_peak, Real gamma_m, Real gamma_c)</div><div class="ttdef"><b>Definition</b> <a href="synchrotron_8cpp_source.html#l00605">synchrotron.cpp:605</a></div></div>
 <div class="ttc" id="asynchrotron_8cpp_html_a5f1c40226e12d8dee51a76c99524fd11"><div class="ttname"><a href="synchrotron_8cpp.html#a5f1c40226e12d8dee51a76c99524fd11">compute_gamma_peak</a></div><div class="ttdeci">Real compute_gamma_peak(Real gamma_a, Real gamma_m, Real gamma_c)</div><div class="ttdoc">Determines the electron Lorentz factor at which the number density peaks.</div><div class="ttdef"><b>Definition</b> <a href="synchrotron_8cpp_source.html#l00636">synchrotron.cpp:636</a></div></div>
-<div class="ttc" id="asynchrotron_8cpp_html_a68ca390be3c37e7c5f3286335daba749"><div class="ttname"><a href="synchrotron_8cpp.html#a68ca390be3c37e7c5f3286335daba749">generate_syn_photons</a></div><div class="ttdeci">SynPhotonGrid generate_syn_photons(Shock const &amp;shock, SynElectronGrid const &amp;e)</div><div class="ttdoc">Creates and returns a new photon grid based on shock and electron grid.</div><div class="ttdef"><b>Definition</b> <a href="synchrotron_8cpp_source.html#l00778">synchrotron.cpp:778</a></div></div>
 <div class="ttc" id="asynchrotron_8cpp_html_a7f6b35414b0d45eff0677786294fc97c"><div class="ttname"><a href="synchrotron_8cpp.html#a7f6b35414b0d45eff0677786294fc97c">compute_syn_peak_power</a></div><div class="ttdeci">Real compute_syn_peak_power(Real B, Real p)</div><div class="ttdef"><b>Definition</b> <a href="synchrotron_8cpp_source.html#l00478">synchrotron.cpp:478</a></div></div>
 <div class="ttc" id="asynchrotron_8cpp_html_a85433be4a0da2f510240a603da8f7dff"><div class="ttname"><a href="synchrotron_8cpp.html#a85433be4a0da2f510240a603da8f7dff">compute_syn_gamma</a></div><div class="ttdeci">Real compute_syn_gamma(Real nu, Real B)</div><div class="ttdef"><b>Definition</b> <a href="synchrotron_8cpp_source.html#l00508">synchrotron.cpp:508</a></div></div>
 <div class="ttc" id="asynchrotron_8cpp_html_a936bfaa522ec8295a21d253e5453188d"><div class="ttname"><a href="synchrotron_8cpp.html#a936bfaa522ec8295a21d253e5453188d">compute_syn_freq</a></div><div class="ttdeci">Real compute_syn_freq(Real gamma, Real B)</div><div class="ttdoc">Calculates synchrotron frequency for a given Lorentz factor and magnetic field.</div><div class="ttdef"><b>Definition</b> <a href="synchrotron_8cpp_source.html#l00493">synchrotron.cpp:493</a></div></div>
 <div class="ttc" id="asynchrotron_8cpp_html_aecff2eca5f5a9c7e2a94481eb96e597f"><div class="ttname"><a href="synchrotron_8cpp.html#aecff2eca5f5a9c7e2a94481eb96e597f">update_electrons_4Y</a></div><div class="ttdeci">void update_electrons_4Y(SynElectronGrid &amp;e, Shock const &amp;shock)</div><div class="ttdoc">Updates electron properties throughout the grid based on shock parameters and IC Y values.</div><div class="ttdef"><b>Definition</b> <a href="synchrotron_8cpp_source.html#l00655">synchrotron.cpp:655</a></div></div>
 <div class="ttc" id="asynchrotron_8cpp_html_afd4184652bfb1fac7ee55a159f618767"><div class="ttname"><a href="synchrotron_8cpp.html#afd4184652bfb1fac7ee55a159f618767">generate_syn_electrons</a></div><div class="ttdeci">SynElectronGrid generate_syn_electrons(Shock const &amp;shock, Real p, Real xi)</div><div class="ttdoc">Creates and returns a new electron grid based on shock parameters.</div><div class="ttdef"><b>Definition</b> <a href="synchrotron_8cpp_source.html#l00688">synchrotron.cpp:688</a></div></div>
 <div class="ttc" id="asynchrotron_8h_html"><div class="ttname"><a href="synchrotron_8h.html">synchrotron.h</a></div></div>
-<div class="ttc" id="asynchrotron_8h_html_a0ab8637927d98b2552ae0f5b9eb5e5c2"><div class="ttname"><a href="synchrotron_8h.html#a0ab8637927d98b2552ae0f5b9eb5e5c2">SynPhotonGrid</a></div><div class="ttdeci">xt::xtensor&lt; SynPhotons, 3 &gt; SynPhotonGrid</div><div class="ttdoc">Type alias for 3D grid of synchrotron photons.</div><div class="ttdef"><b>Definition</b> <a href="synchrotron_8h_source.html#l00247">synchrotron.h:247</a></div></div>
 <div class="ttc" id="asynchrotron_8h_html_a1ed93cca9de717545d10f8619effaf3a"><div class="ttname"><a href="synchrotron_8h.html#a1ed93cca9de717545d10f8619effaf3a">SynElectronGrid</a></div><div class="ttdeci">xt::xtensor&lt; SynElectrons, 3 &gt; SynElectronGrid</div><div class="ttdoc">Type alias for 3D grid of synchrotron electrons.</div><div class="ttdef"><b>Definition</b> <a href="synchrotron_8h_source.html#l00249">synchrotron.h:249</a></div></div>
 <div class="ttc" id="autilities_8h_html"><div class="ttname"><a href="utilities_8h.html">utilities.h</a></div></div>
 <div class="ttc" id="autilities_8h_html_a0becc9a5c35cc2648c3d65c88790caf8"><div class="ttname"><a href="utilities_8h.html#a0becc9a5c35cc2648c3d65c88790caf8">pow52</a></div><div class="ttdeci">Real pow52(Real a)</div><div class="ttdoc">Computes a^(5/2)</div><div class="ttdef"><b>Definition</b> <a href="utilities_8h_source.html#l00152">utilities.h:152</a></div></div>

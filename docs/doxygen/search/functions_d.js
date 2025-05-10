@@ -10,7 +10,7 @@ var searchData=
   ['pybind11_5fmodule_7',['PYBIND11_MODULE',['../pybind_8cpp.html#a8c92987849ad296e28ec6c07c8e7860b',1,'pybind.cpp']]],
   ['pygaussianjet_8',['pygaussianjet',['../pymodel_8cpp.html#aa9825b7404f58b5ea75012ae89ef858e',1,'PyGaussianJet(Real theta_c, Real E_iso, Real Gamma0, bool spreading, Real T0):&#160;pymodel.cpp'],['../pymodel_8h.html#a15a0cb76edad6808a40f715c0b319acd',1,'PyGaussianJet(Real theta_c, Real E_iso, Real Gamma0, bool spreading=false, Real T0=1 *unit::sec):&#160;pymodel.cpp']]],
   ['pyism_9',['pyism',['../pymodel_8h.html#a43af01d16838e6513792deaeb727fbe5',1,'PyISM(Real n_ism):&#160;pymodel.cpp'],['../pymodel_8cpp.html#a43af01d16838e6513792deaeb727fbe5',1,'PyISM(Real n_ism):&#160;pymodel.cpp']]],
-  ['pymodel_10',['PyModel',['../classPyModel.html#aba9af74f7546295238983148d55ff64e',1,'PyModel']]],
+  ['pymodel_10',['PyModel',['../classPyModel.html#adf79561ee62c867b3e158943329e291b',1,'PyModel']]],
   ['pyobserver_11',['PyObserver',['../classPyObserver.html#a81483263bfdc173c4ca6287add88ad9a',1,'PyObserver']]],
   ['pypowerlawjet_12',['pypowerlawjet',['../pymodel_8cpp.html#a8c76a2811ffa8e6fc65b25ddcbccd066',1,'PyPowerLawJet(Real theta_c, Real E_iso, Real Gamma0, Real k, bool spreading, Real T0):&#160;pymodel.cpp'],['../pymodel_8h.html#a0c39941d93a6f0265c851dc3d7b1788b',1,'PyPowerLawJet(Real theta_c, Real E_iso, Real Gamma0, Real k, bool spreading=false, Real T0=1 *unit::sec):&#160;pymodel.cpp']]],
   ['pyradiation_13',['PyRadiation',['../classPyRadiation.html#a9afa30ef03f060ad652e550282f53eb8',1,'PyRadiation']]],

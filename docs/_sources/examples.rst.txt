@@ -13,36 +13,74 @@ Setting up a simple afterglow model
 
 .. code-block:: python
 
-    import numpy as np
     import matplotlib.pyplot as plt
-    from VegasAfterglow import Model, TophatJet, ISM, Synchrotron
-
-    # Set up the model components
-    jet = TophatJet(theta_c=0.1, E_iso=1e53, Gamma0=300)
-    medium = ISM(n_ism=1.0)
-    radiation = Synchrotron(epsilon_e=0.1, epsilon_B=0.01, p=2.2)
-
-    # Create the model
-    model = Model(jet=jet, medium=medium, radiation=radiation)
-
-    # Define times and frequencies for calculation
-    times = np.logspace(2, 7, 100)  # 100 seconds to 10^7 seconds
-    frequencies = np.array([1e9, 1e14, 1e17])  # Radio, optical, X-ray
-
-    # Run the simulation
-    results = model.calculate_light_curves(times, frequencies)
-
-    # Plot the results
-    plt.figure(figsize=(10, 6))
-    for i, nu in enumerate(frequencies):
-        plt.loglog(times, results[:, i], label=f'{nu:.1e} Hz')
+    import numpy as np
+    from VegasAfterglow import ISM, TophatJet, Observer, Radiation, Model
     
+    # Define the circumburst environment (constant density ISM)
+    medium = ISM(n_ism=1)
+
+    # Configure the jet structure (top-hat with opening angle, energy, and Lorentz factor)
+    jet = TophatJet(theta_c=0.1, E_iso=1e52, Gamma0=300)
+
+    # Set observer parameters (distance, redshift, viewing angle)
+    obs = Observer(lumi_dist=1e26, z=0.1, theta_obs=0)
+
+    # Define radiation microphysics parameters
+    rad = Radiation(eps_e=1e-1, eps_B=1e-3, p=2.3)
+
+    # Combine all components into a complete afterglow model
+    model = Model(jet=jet, medium=medium, observer=obs, forward_rad=rad)
+
+    times = np.logspace(2, 8, 200)  
+
+    # Define observing frequencies (radio, optical, X-ray bands in Hz)
+    bands = np.array([1e9, 1e14, 1e17])  
+
+    # Calculate the afterglow emission at each time and frequency
+    results = model.specific_flux(times, bands)
+
+    # Visualize the multi-wavelength light curves
+    plt.figure(figsize=(4.8, 3.6),dpi=200)
+
+    # Plot each frequency band 
+    for i, nu in enumerate(bands):
+        exp = int(np.floor(np.log10(nu)))
+        base = nu / 10**exp
+    plt.loglog(times, results['syn'][i,:], label=fr'${base:.1f} \times 10^{{{exp}}}$ Hz')
+
     plt.xlabel('Time (s)')
     plt.ylabel('Flux Density (erg/cm²/s/Hz)')
     plt.legend()
-    plt.title('GRB Afterglow Light Curves')
-    plt.grid(True, which='both', linestyle='--', alpha=0.5)
-    plt.show()
+
+    # Define broad frequency range (10⁵ to 10²² Hz) 
+    frequencies = np.logspace(5, 22, 200)  
+
+    # Select specific time epochs for spectral snapshots 
+    epochs = np.array([1e2, 1e3, 1e4, 1e5 ,1e6, 1e7, 1e8])
+
+    # Calculate spectra at each epoch
+    results = model.spectra(frequencies, epochs)
+
+    # Plot broadband spectra at each epoch
+    plt.figure(figsize=(4.8, 3.6),dpi=200)
+    colors = plt.cm.viridis(np.linspace(0,1,len(epochs)))
+
+    for i, t in enumerate(epochs):
+        exp = int(np.floor(np.log10(t)))
+        base = t / 10**exp
+        plt.loglog(frequencies, results['syn'][i,:], color=colors[i], label=fr'${base:.1f} \times 10^{{{exp}}}$ s')
+
+    # Add vertical lines marking the bands from the light curve plot
+    for i, band in enumerate(bands):
+        exp = int(np.floor(np.log10(band)))
+        base = band / 10**exp
+        plt.axvline(band,ls='--',color='C'+str(i))
+
+    plt.xlabel('frequency (Hz)')
+    plt.ylabel('flux density (erg/cm²/s/Hz)')
+    plt.legend(ncol=2)
+    plt.title('Synchrotron Spectra')
 
 Structured Jet Models
 ---------------------

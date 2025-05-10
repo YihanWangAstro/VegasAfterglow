@@ -10,21 +10,21 @@
 <area shape="poly" id="edge6_Node000001_Node000006" title=" " alt="" coords="90,333,134,281,166,251,203,226,237,210,239,215,205,230,170,255,138,285,94,337"/>
 <area shape="rect" id="Node000011" href="$structMultiBandModel.html#a041063f7ee0ccf24878f440b91ef7147" title=" " alt="" coords="747,267,912,307"/>
 <area shape="poly" id="edge13_Node000001_Node000011" title=" " alt="" coords="138,333,204,321,348,306,492,296,733,286,733,291,493,301,348,311,204,327,139,338"/>
-<area shape="rect" id="Node000012" href="$pymodel_8cpp.html#aa9825b7404f58b5ea75012ae89ef858e" title=" " alt="" coords="261,335,375,361"/>
+<area shape="rect" id="Node000012" href="$pymodel_8cpp.html#aa9825b7404f58b5ea75012ae89ef858e" title="Creates a Gaussian jet model where energy and Lorentz factor follow Gaussian distribution." alt="" coords="261,335,375,361"/>
 <area shape="poly" id="edge15_Node000001_Node000012" title=" " alt="" coords="156,345,247,345,247,351,156,351"/>
-<area shape="rect" id="Node000013" href="$pymodel_8cpp.html#a43af01d16838e6513792deaeb727fbe5" title=" " alt="" coords="287,385,349,410"/>
+<area shape="rect" id="Node000013" href="$pymodel_8cpp.html#a43af01d16838e6513792deaeb727fbe5" title="Creates a constant density ISM (Interstellar Medium) environment." alt="" coords="287,385,349,410"/>
 <area shape="poly" id="edge16_Node000001_Node000013" title=" " alt="" coords="143,358,274,386,273,391,142,363"/>
-<area shape="rect" id="Node000014" href="$pymodel_8cpp.html#a8c76a2811ffa8e6fc65b25ddcbccd066" title=" " alt="" coords="257,434,379,459"/>
+<area shape="rect" id="Node000014" href="$pymodel_8cpp.html#a8c76a2811ffa8e6fc65b25ddcbccd066" title="Creates a power&#45;law jet model where energy and Lorentz factor follow power&#45;law distribution." alt="" coords="257,434,379,459"/>
 <area shape="poly" id="edge17_Node000001_Node000014" title=" " alt="" coords="100,359,146,390,205,420,245,432,243,437,203,425,143,394,97,363"/>
-<area shape="rect" id="Node000015" href="$pymodel_8cpp.html#a97a4f1046771333c4f11e13c4e6ab171" title=" " alt="" coords="269,483,367,509"/>
+<area shape="rect" id="Node000015" href="$pymodel_8cpp.html#a97a4f1046771333c4f11e13c4e6ab171" title="Creates a top&#45;hat jet model where energy and Lorentz factor are constant within theta_c." alt="" coords="269,483,367,509"/>
 <area shape="poly" id="edge18_Node000001_Node000015" title=" " alt="" coords="93,359,137,414,169,444,205,470,230,480,256,487,254,492,228,485,203,474,165,448,133,417,89,363"/>
-<area shape="rect" id="Node000016" href="$pymodel_8cpp.html#af5469e939faefb859e1f4b22e1e0bd02" title=" " alt="" coords="283,533,353,558"/>
+<area shape="rect" id="Node000016" href="$pymodel_8cpp.html#af5469e939faefb859e1f4b22e1e0bd02" title="Creates a wind environment with density profile ρ ∝ r^&#45;2." alt="" coords="283,533,353,558"/>
 <area shape="poly" id="edge19_Node000001_Node000016" title=" " alt="" coords="90,360,105,393,129,436,163,482,205,519,237,533,270,540,269,546,235,538,203,524,159,485,125,439,100,395,85,362"/>
-<area shape="rect" id="Node000017" href="$classPyModel.html#aff0f26fa2c72824720c6d16189ad996b" title=" " alt="" coords="235,582,401,607"/>
+<area shape="rect" id="Node000017" href="$classPyModel.html#aff0f26fa2c72824720c6d16189ad996b" title="Calculate specific flux at given times and frequencies." alt="" coords="235,582,401,607"/>
 <area shape="poly" id="edge20_Node000001_Node000017" title=" " alt="" coords="88,360,100,402,123,458,158,518,180,545,206,569,223,579,220,583,202,573,176,549,153,521,118,461,95,403,83,362"/>
 <area shape="rect" id="Node000018" href="$structMultiBandModel.html#addc177e083d29bfe10094625b516ece7" title=" " alt="" coords="497,234,681,259"/>
 <area shape="poly" id="edge21_Node000001_Node000018" title=" " alt="" coords="98,333,144,303,203,276,275,259,348,248,483,241,483,246,349,253,276,264,205,281,146,308,101,337"/>
-<area shape="rect" id="Node000019" href="$classPyModel.html#a0539613ba084e5b5bf472c978fdaa39f" title=" " alt="" coords="251,631,385,657"/>
+<area shape="rect" id="Node000019" href="$classPyModel.html#a0539613ba084e5b5bf472c978fdaa39f" title="Calculate spectra (flux vs frequency) at different times Returns transposed arrays compared to specif..." alt="" coords="251,631,385,657"/>
 <area shape="poly" id="edge23_Node000001_Node000019" title=" " alt="" coords="86,360,95,409,116,480,132,517,152,555,176,589,206,618,238,635,236,639,202,622,172,592,147,557,127,520,111,481,90,410,81,361"/>
 <area shape="rect" id="Node000003" href="$mcmc_8cpp.html#acad85304132da867746b1ca8c7daa1bf" title=" " alt="" coords="519,23,659,49"/>
 <area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="394,26,506,30,506,35,393,31"/>
