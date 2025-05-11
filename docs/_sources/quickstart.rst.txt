@@ -35,13 +35,13 @@ Then, let's set up the physical components of our afterglow model, including the
 .. code-block:: python
 
     # 1. Define the circumburst environment (constant density ISM)
-    medium = ISM(n_ism=1)
+    medium = ISM(n_ism=1) # in cgs unit
 
     # 2. Configure the jet structure (top-hat with opening angle, energy, and Lorentz factor)
-    jet = TophatJet(theta_c=0.1, E_iso=1e52, Gamma0=300)
+    jet = TophatJet(theta_c=0.1, E_iso=1e52, Gamma0=300) # in cgs unit
 
     # 3. Set observer parameters (distance, redshift, viewing angle)
-    obs = Observer(lumi_dist=1e26, z=0.1, theta_obs=0)
+    obs = Observer(lumi_dist=1e26, z=0.1, theta_obs=0) # in cgs unit
 
     # 4. Define radiation microphysics parameters
     rad = Radiation(eps_e=1e-1, eps_B=1e-3, p=2.3)
