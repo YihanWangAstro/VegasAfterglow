@@ -1,0 +1,6 @@
+<map id="PyModel::spectra" name="PyModel::spectra">
+<area shape="rect" id="Node000001" title="Calculate spectra (flux vs frequency) at different times Returns transposed arrays compared to specif..." alt="" coords="5,29,140,55"/>
+<area shape="rect" id="Node000002" href="$utilities_8h.html#ab8e81118f023df135835db8cce4f5f42" title="Returns the value of a single parameter." alt="" coords="188,29,239,55"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="140,39,174,39,174,45,140,45"/>
+<area shape="poly" id="edge2_Node000002_Node000002" title=" " alt="" coords="190,30,185,21,187,11,197,5,213,3,233,6,241,15,237,18,230,11,213,8,199,10,192,15,190,20,194,28"/>
+</map>

@@ -213,10 +213,6 @@ The ``Setups`` class defines the global properties and environment for your mode
     cfg.medium = "wind"        # Ambient medium: "wind", "ISM" (Interstellar Medium) or "user" (user-defined)
     cfg.jet = "powerlaw"       # Jet structure: "powerlaw", "gaussian", "tophat" or "user" (user-defined)
 
-    # Optional: Advanced grid settings. Default (24, 24, 24) is optimized to converge for most cases.
-    # cfg.phi_num = 24         # Number of grid points in phi direction
-    # cfg.theta_num = 24       # Number of grid points in theta direction
-    # cfg.t_num = 24           # Number of time grid points
 
 These settings affect how the model is calculated but are not varied during the MCMC process.
 
@@ -231,7 +227,7 @@ The ``ParamDef`` class is used to define the parameters for MCMC exploration. Ea
         ParamDef("E_iso",    1e52,  1e50,  1e54,  Scale.LOG),       # Isotropic energy [erg]
         ParamDef("Gamma0",     30,     5,  1000,  Scale.LOG),       # Lorentz factor at the core
         ParamDef("theta_c",   0.2,   0.0,   0.5,  Scale.LINEAR),    # Core half-opening angle [rad]
-        ParamDef("theta_v",   0.,  None,  None,   Scale.FIXED),     # Viewing angle [rad]
+        ParamDef("theta_v",    0.,  None,  None,  Scale.FIXED),     # Viewing angle [rad]
         ParamDef("p",         2.5,     2,     3,  Scale.LINEAR),    # Shocked electron power law index
         ParamDef("eps_e",     0.1,  1e-2,   0.5,  Scale.LOG),       # Electron energy fraction
         ParamDef("eps_B",    1e-2,  1e-4,   0.5,  Scale.LOG),       # Magnetic field energy fraction
@@ -260,7 +256,7 @@ Initialize the ``Fitter`` class with your data and configuration, then run the M
     # Run the MCMC fitting
     result = fitter.fit(
         param_defs=mc_params,          # Parameter definitions
-        resolution=(24, 24, 24),       # Grid resolution (phi, theta, time)
+        resolution=(0.1, 1, 5),        # Grid resolution (see more details in `Examples`)
         total_steps=10000,             # Total number of MCMC steps
         burn_frac=0.3,                 # Fraction of steps to discard as burn-in
         thin=1                         # Thinning factor

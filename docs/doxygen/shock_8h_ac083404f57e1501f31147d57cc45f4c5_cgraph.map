@@ -1,0 +1,6 @@
+<map id="compute_swept_mass" name="compute_swept_mass">
+<area shape="rect" id="Node000001" title="Computes the swept&#45;up mass for a shock based on the equation system and current state." alt="" coords="5,29,172,55"/>
+<area shape="rect" id="Node000002" href="$utilities_8h.html#ab8e81118f023df135835db8cce4f5f42" title="Returns the value of a single parameter." alt="" coords="220,29,271,55"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="172,39,206,39,206,45,172,45"/>
+<area shape="poly" id="edge2_Node000002_Node000002" title=" " alt="" coords="219,31,214,21,217,11,228,5,245,3,267,6,276,15,272,19,264,11,245,8,229,10,221,15,219,20,224,28"/>
+</map>

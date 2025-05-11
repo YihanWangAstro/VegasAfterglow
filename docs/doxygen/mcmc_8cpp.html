@@ -257,8 +257,8 @@ Include dependency graph for mcmc.cpp:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:acad85304132da867746b1ca8c7daa1bf" id="r_acad85304132da867746b1ca8c7daa1bf"><td class="memTemplParams" colspan="2">template&lt;typename <a class="el" href="mesh_8h.html#afd05120c4d579ec7fa4906f677781a83">Array</a> &gt; </td></tr>
-<tr class="memitem:acad85304132da867746b1ca8c7daa1bf"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="mcmc_8cpp.html#acad85304132da867746b1ca8c7daa1bf">sort_synchronized</a> (<a class="el" href="mesh_8h.html#afd05120c4d579ec7fa4906f677781a83">Array</a> &amp;a, <a class="el" href="mesh_8h.html#afd05120c4d579ec7fa4906f677781a83">Array</a> &amp;b, <a class="el" href="mesh_8h.html#afd05120c4d579ec7fa4906f677781a83">Array</a> &amp;c)</td></tr>
+<tr class="memitem:acad85304132da867746b1ca8c7daa1bf" id="r_acad85304132da867746b1ca8c7daa1bf"><td class="memTemplParams" colspan="2">template&lt;<a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">typename</a> <a class="el" href="mesh_8h.html#afd05120c4d579ec7fa4906f677781a83">Array</a> &gt; </td></tr>
+<tr class="memitem:acad85304132da867746b1ca8c7daa1bf"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">void</a>&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="mcmc_8cpp.html#acad85304132da867746b1ca8c7daa1bf">sort_synchronized</a> (<a class="el" href="mesh_8h.html#afd05120c4d579ec7fa4906f677781a83">Array</a> &amp;<a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">a</a>, <a class="el" href="mesh_8h.html#afd05120c4d579ec7fa4906f677781a83">Array</a> &amp;<a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">b</a>, <a class="el" href="mesh_8h.html#afd05120c4d579ec7fa4906f677781a83">Array</a> &amp;c)</td></tr>
 <tr class="separator:acad85304132da867746b1ca8c7daa1bf"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Function Documentation</h2>
@@ -268,10 +268,10 @@ Functions</h2></td></tr>
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename <a class="el" href="mesh_8h.html#afd05120c4d579ec7fa4906f677781a83">Array</a> &gt; </div>
+template&lt;<a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">typename</a> <a class="el" href="mesh_8h.html#afd05120c4d579ec7fa4906f677781a83">Array</a> &gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">void sort_synchronized </td>
+          <td class="memname"><a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">void</a> sort_synchronized </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="mesh_8h.html#afd05120c4d579ec7fa4906f677781a83">Array</a> &amp;&#160;</td>
           <td class="paramname"><em>a</em>, </td>
@@ -298,30 +298,42 @@ template&lt;typename <a class="el" href="mesh_8h.html#afd05120c4d579ec7fa4906f67
 
 <p class="definition">Definition at line <a class="el" href="mcmc_8cpp_source.html#l00018">18</a> of file <a class="el" href="mcmc_8cpp_source.html">mcmc.cpp</a>.</p>
 <div class="fragment"><div class="line"><span class="lineno">   18</span>                                                     {</div>
-<div class="line"><span class="lineno">   19</span>    std::size_t N = a.size();</div>
+<div class="line"><span class="lineno">   19</span>    std::size_t <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">N</a> = <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">a</a>.size();</div>
 <div class="line"><span class="lineno">   20</span> </div>
-<div class="line"><span class="lineno">   21</span>    std::vector&lt;std::size_t&gt; idx(N);</div>
-<div class="line"><span class="lineno">   22</span>    std::iota(idx.begin(), idx.end(), 0);</div>
+<div class="line"><span class="lineno">   21</span>    std::vector&lt;std::size_t&gt; <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">idx</a>(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">N</a>);</div>
+<div class="line"><span class="lineno">   22</span>    std::iota(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">idx</a>.begin(), <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">idx</a>.end(), 0);</div>
 <div class="line"><span class="lineno">   23</span> </div>
-<div class="line"><span class="lineno">   24</span>    std::sort(idx.begin(), idx.end(), [&amp;](std::size_t i, std::size_t j) { return a(i) &lt; a(j); });</div>
+<div class="line"><span class="lineno">   24</span>    std::sort(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">idx</a>.begin(), <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">idx</a>.end(), [&amp;](std::size_t <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a>, std::size_t <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">j</a>) { return a(i) &lt; a(j); });</div>
 <div class="line"><span class="lineno">   25</span> </div>
-<div class="line"><span class="lineno">   26</span>    <a class="code hl_typedef" href="mesh_8h.html#afd05120c4d579ec7fa4906f677781a83">Array</a> a_sorted = xt::empty&lt;double&gt;({N});</div>
-<div class="line"><span class="lineno">   27</span>    <a class="code hl_typedef" href="mesh_8h.html#afd05120c4d579ec7fa4906f677781a83">Array</a> b_sorted = xt::empty&lt;double&gt;({N});</div>
-<div class="line"><span class="lineno">   28</span>    <a class="code hl_typedef" href="mesh_8h.html#afd05120c4d579ec7fa4906f677781a83">Array</a> c_sorted = xt::empty&lt;double&gt;({N});</div>
+<div class="line"><span class="lineno">   26</span>    <a class="code hl_typedef" href="mesh_8h.html#afd05120c4d579ec7fa4906f677781a83">Array</a> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">a_sorted</a> = xt::empty&lt;double&gt;({<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">N</a>});</div>
+<div class="line"><span class="lineno">   27</span>    <a class="code hl_typedef" href="mesh_8h.html#afd05120c4d579ec7fa4906f677781a83">Array</a> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">b_sorted</a> = xt::empty&lt;double&gt;({<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">N</a>});</div>
+<div class="line"><span class="lineno">   28</span>    <a class="code hl_typedef" href="mesh_8h.html#afd05120c4d579ec7fa4906f677781a83">Array</a> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">c_sorted</a> = xt::empty&lt;double&gt;({<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">N</a>});</div>
 <div class="line"><span class="lineno">   29</span> </div>
-<div class="line"><span class="lineno">   30</span>    <span class="keywordflow">for</span> (std::size_t i = 0; i &lt; N; ++i) {</div>
-<div class="line"><span class="lineno">   31</span>        a_sorted(i) = a(idx[i]);</div>
-<div class="line"><span class="lineno">   32</span>        b_sorted(i) = b(idx[i]);</div>
-<div class="line"><span class="lineno">   33</span>        c_sorted(i) = <a class="code hl_variable" href="namespacecon.html#a2ff3edf57629ccb9a49d5bde7278a7c4">c</a>(idx[i]);</div>
+<div class="line"><span class="lineno">   30</span>    <span class="keywordflow">for</span> (std::size_t <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a> = 0; <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a> &lt; <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">N</a>; ++<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a>) {</div>
+<div class="line"><span class="lineno">   31</span>        <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">a_sorted</a>(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a>) = <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">a</a>(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">idx</a>[<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a>]);</div>
+<div class="line"><span class="lineno">   32</span>        <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">b_sorted</a>(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a>) = <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">b</a>(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">idx</a>[<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a>]);</div>
+<div class="line"><span class="lineno">   33</span>        <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">c_sorted</a>(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a>) = <a class="code hl_variable" href="namespacecon.html#a2ff3edf57629ccb9a49d5bde7278a7c4">c</a>(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">idx</a>[<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a>]);</div>
 <div class="line"><span class="lineno">   34</span>    }</div>
 <div class="line"><span class="lineno">   35</span> </div>
-<div class="line"><span class="lineno">   36</span>    a = std::move(a_sorted);</div>
-<div class="line"><span class="lineno">   37</span>    b = std::move(b_sorted);</div>
-<div class="line"><span class="lineno">   38</span>    <a class="code hl_variable" href="namespacecon.html#a2ff3edf57629ccb9a49d5bde7278a7c4">c</a> = std::move(c_sorted);</div>
+<div class="line"><span class="lineno">   36</span>    <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">a</a> = std::move(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">a_sorted</a>);</div>
+<div class="line"><span class="lineno">   37</span>    <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">b</a> = std::move(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">b_sorted</a>);</div>
+<div class="line"><span class="lineno">   38</span>    <a class="code hl_variable" href="namespacecon.html#a2ff3edf57629ccb9a49d5bde7278a7c4">c</a> = std::move(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">c_sorted</a>);</div>
 <div class="line"><span class="lineno">   39</span>}</div>
 <div class="ttc" id="amesh_8h_html_afd05120c4d579ec7fa4906f677781a83"><div class="ttname"><a href="mesh_8h.html#afd05120c4d579ec7fa4906f677781a83">Array</a></div><div class="ttdeci">xt::xtensor&lt; Real, 1 &gt; Array</div><div class="ttdoc">Type alias for 1D arrays (e.g., time points)</div><div class="ttdef"><b>Definition</b> <a href="mesh_8h_source.html#l00036">mesh.h:36</a></div></div>
 <div class="ttc" id="anamespacecon_html_a2ff3edf57629ccb9a49d5bde7278a7c4"><div class="ttname"><a href="namespacecon.html#a2ff3edf57629ccb9a49d5bde7278a7c4">con::c</a></div><div class="ttdeci">constexpr Real c</div><div class="ttdoc">Speed of light (normalized to 1 in code units)</div><div class="ttdef"><b>Definition</b> <a href="macros_8h_source.html#l00081">macros.h:81</a></div></div>
+<div class="ttc" id="autilities_8h_html_ab8e81118f023df135835db8cce4f5f42"><div class="ttname"><a href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">max</a></div><div class="ttdeci">T max(T value)</div><div class="ttdoc">Returns the value of a single parameter.</div><div class="ttdef"><b>Definition</b> <a href="utilities_8h_source.html#l00330">utilities.h:330</a></div></div>
 </div><!-- fragment --><div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="mcmc_8cpp_acad85304132da867746b1ca8c7daa1bf_cgraph.png" border="0" usemap="#amcmc_8cpp_acad85304132da867746b1ca8c7daa1bf_cgraph" alt=""/></div>
+<map name="amcmc_8cpp_acad85304132da867746b1ca8c7daa1bf_cgraph" id="amcmc_8cpp_acad85304132da867746b1ca8c7daa1bf_cgraph">
+<area shape="rect" title=" " alt="" coords="5,29,145,55"/>
+<area shape="rect" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42" title="Returns the value of a single parameter." alt="" coords="193,29,244,55"/>
+<area shape="poly" title=" " alt="" coords="145,39,179,39,179,45,145,45"/>
+<area shape="poly" title=" " alt="" coords="195,30,190,21,192,11,202,5,219,3,238,6,247,15,243,18,236,11,219,8,204,10,197,15,195,20,199,28"/>
+</map>
+</div>
+<div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="mcmc_8cpp_acad85304132da867746b1ca8c7daa1bf_icgraph.png" border="0" usemap="#amcmc_8cpp_acad85304132da867746b1ca8c7daa1bf_icgraph" alt=""/></div>

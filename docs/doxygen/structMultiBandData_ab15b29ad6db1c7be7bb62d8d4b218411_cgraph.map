@@ -1,5 +1,9 @@
 <map id="MultiBandData::add_light_curve" name="MultiBandData::add_light_curve">
-<area shape="rect" id="Node000001" title=" " alt="" coords="5,5,156,45"/>
-<area shape="rect" id="Node000002" href="$mcmc_8cpp.html#acad85304132da867746b1ca8c7daa1bf" title=" " alt="" coords="204,13,344,38"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="156,23,190,23,190,28,156,28"/>
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,22,156,62"/>
+<area shape="rect" id="Node000002" href="$utilities_8h.html#ab8e81118f023df135835db8cce4f5f42" title="Returns the value of a single parameter." alt="" coords="392,29,443,55"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="156,39,378,39,378,45,156,45"/>
+<area shape="rect" id="Node000003" href="$mcmc_8cpp.html#acad85304132da867746b1ca8c7daa1bf" title=" " alt="" coords="204,55,344,80"/>
+<area shape="poly" id="edge3_Node000001_Node000003" title=" " alt="" coords="157,49,191,54,190,59,156,55"/>
+<area shape="poly" id="edge2_Node000002_Node000002" title=" " alt="" coords="393,30,388,21,391,11,401,5,417,3,437,6,445,15,442,18,434,11,417,8,403,10,395,15,394,20,398,28"/>
+<area shape="poly" id="edge4_Node000003_Node000002" title=" " alt="" coords="344,52,378,46,378,51,344,58"/>
 </map>

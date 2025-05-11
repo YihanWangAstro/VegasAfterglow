@@ -1,0 +1,6 @@
+<map id="fast_log" name="fast_log">
+<area shape="rect" id="Node000001" title="Fast approximation of the natural logarithm." alt="" coords="5,29,80,55"/>
+<area shape="rect" id="Node000002" href="$utilities_8h.html#ab8e81118f023df135835db8cce4f5f42" title="Returns the value of a single parameter." alt="" coords="128,29,179,55"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="81,39,114,39,114,45,81,45"/>
+<area shape="poly" id="edge2_Node000002_Node000002" title=" " alt="" coords="134,30,130,21,132,12,140,5,153,3,169,6,176,14,171,18,166,11,153,8,142,10,137,14,136,20,139,28"/>
+</map>

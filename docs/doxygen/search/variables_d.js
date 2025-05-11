@@ -8,6 +8,6 @@ var searchData=
   ['nu_5fc_5',['nu_c',['../structSynPhotons.html#a910353b5e644e1472843f39f1ad02196',1,'SynPhotons']]],
   ['nu_5fhat_5fc_6',['nu_hat_c',['../structInverseComptonY.html#af1354e1c9f8b66c6b9124e4259001031',1,'InverseComptonY']]],
   ['nu_5fhat_5fm_7',['nu_hat_m',['../structInverseComptonY.html#a4445129e6d9d31db888aa957ad210d7c',1,'InverseComptonY']]],
-  ['nu_5fm_8',['nu_m',['../structSynPhotons.html#a3e708c5152a525914f55fab62ca00c2c',1,'SynPhotons::nu_M'],['../structSynPhotons.html#abc96bae4050dcae54cc99ac5c7973586',1,'SynPhotons::nu_m']]],
+  ['nu_5fm_8',['nu_m',['../structSynPhotons.html#abc96bae4050dcae54cc99ac5c7973586',1,'SynPhotons::nu_m'],['../structSynPhotons.html#a3e708c5152a525914f55fab62ca00c2c',1,'SynPhotons::nu_M']]],
   ['num_9',['num',['../structIntegratorGrid.html#ab85d115b19e98d65e187aa88861c7274',1,'IntegratorGrid']]]
 ];

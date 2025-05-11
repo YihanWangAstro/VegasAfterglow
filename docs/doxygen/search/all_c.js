@@ -15,7 +15,7 @@ var searchData=
   ['mcmc_2ecpp_12',['mcmc.cpp',['../mcmc_8cpp.html',1,'']]],
   ['mcmc_2eh_13',['mcmc.h',['../mcmc_8h.html',1,'']]],
   ['me_14',['me',['../namespacecon.html#a740c8edb3d4f2d904a1c76002f84fb7e',1,'con']]],
-  ['medium_15',['medium',['../classFRShockEqn.html#a516430d788da457f99a0a9f913c4555c',1,'FRShockEqn::medium'],['../structConfigParams.html#aac924ce1108981926235f565f75d75fe',1,'ConfigParams::medium'],['../classSimpleShockEqn.html#a542dc5b45178ca91cf1dabfc4cfa9829',1,'SimpleShockEqn::medium'],['../classMedium.html#a84f13d397d1d752877e4218a515650e5',1,'Medium::Medium()'],['../classMedium.html',1,'Medium'],['../classForwardShockEqn.html#a0bec65b319edbb6294eee8057370be57',1,'ForwardShockEqn::medium'],['../classMedium.html#ab077493d8330ddd77c1ef434908adf73',1,'Medium::Medium()']]],
+  ['medium_15',['medium',['../structConfigParams.html#aac924ce1108981926235f565f75d75fe',1,'ConfigParams::medium'],['../classMedium.html#ab077493d8330ddd77c1ef434908adf73',1,'Medium::Medium()=default'],['../classMedium.html#a84f13d397d1d752877e4218a515650e5',1,'Medium::Medium(TernaryFunc rho, TernaryFunc mass) noexcept'],['../classForwardShockEqn.html#a0bec65b319edbb6294eee8057370be57',1,'ForwardShockEqn::medium'],['../classMedium.html',1,'Medium'],['../classSimpleShockEqn.html#a542dc5b45178ca91cf1dabfc4cfa9829',1,'SimpleShockEqn::medium'],['../classFRShockEqn.html#a516430d788da457f99a0a9f913c4555c',1,'FRShockEqn::medium']]],
   ['medium_2eh_16',['medium.h',['../medium_8h.html',1,'']]],
   ['mesh_2ecpp_17',['mesh.cpp',['../mesh_8cpp.html',1,'']]],
   ['mesh_2eh_18',['mesh.h',['../mesh_8h.html',1,'']]],

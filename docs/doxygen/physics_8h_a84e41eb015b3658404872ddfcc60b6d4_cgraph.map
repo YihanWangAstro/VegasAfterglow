@@ -1,0 +1,13 @@
+<map id="auto_grid" name="auto_grid">
+<area shape="rect" id="Node000001" title="Constructs a coordinate grid (Coord) for shock evolution." alt="" coords="5,81,88,107"/>
+<area shape="rect" id="Node000002" href="$physics_8h.html#ac4c8cf9cb5f69037bce0ab40487f9428" title=" " alt="" coords="136,5,288,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="71,79,135,48,167,33,169,38,137,52,74,84"/>
+<area shape="rect" id="Node000003" href="$physics_8h.html#ab8aa624dd63313487d8f5ecf52170d76" title="Converts Lorentz factor (gamma) to velocity fraction (beta)" alt="" coords="336,31,464,56"/>
+<area shape="poly" id="edge4_Node000001_Node000003" title=" " alt="" coords="88,86,322,52,323,57,89,91"/>
+<area shape="rect" id="Node000004" href="$physics_8h.html#a93b293665d09bfbff381bb3ae7b5545c" title="Determines the edge of the jet based on a given gamma cut&#45;off using binary search." alt="" coords="157,107,267,132"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="89,98,144,106,143,111,88,103"/>
+<area shape="rect" id="Node000005" href="$utilities_8h.html#ab8e81118f023df135835db8cce4f5f42" title="Returns the value of a single parameter." alt="" coords="187,180,237,205"/>
+<area shape="poly" id="edge5_Node000001_Node000005" title=" " alt="" coords="71,105,179,170,176,175,68,109"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="289,26,322,30,322,35,288,31"/>
+<area shape="poly" id="edge6_Node000005_Node000005" title=" " alt="" coords="184,181,178,172,182,162,193,156,212,153,235,157,244,165,241,169,232,162,212,159,195,161,186,165,184,171,189,178"/>
+</map>

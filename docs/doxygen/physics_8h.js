@@ -1,7 +1,8 @@
 var physics_8h =
 [
+    [ "adaptive_theta_grid", "physics_8h.html#ac4c8cf9cb5f69037bce0ab40487f9428", null ],
     [ "adiabatic_idx", "physics_8h.html#a2a95c6b3f1236d69328af7199a772a23", null ],
-    [ "auto_grid", "physics_8h.html#ae0f752d8742d0164bd2cf1d80a0e3c7b", null ],
+    [ "auto_grid", "physics_8h.html#a84e41eb015b3658404872ddfcc60b6d4", null ],
     [ "calc_engine_duration", "physics_8h.html#a5409fe925e017608d8ecf3d60c4d2645", null ],
     [ "dec_radius", "physics_8h.html#a16e6d4e1f68c841fdcf843930bdff2d4", null ],
     [ "find_jet_edge", "physics_8h.html#a93b293665d09bfbff381bb3ae7b5545c", null ],

@@ -103,12 +103,12 @@ $(document).ready(function(){initNavTree('structSpectrumData.html',''); initResi
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:ae03448f7cb3f6a28b8aeb87035805a81" id="r_ae03448f7cb3f6a28b8aeb87035805a81"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structSpectrumData.html#ae03448f7cb3f6a28b8aeb87035805a81">estimate_chi2</a> () const</td></tr>
+<tr class="memitem:ae03448f7cb3f6a28b8aeb87035805a81" id="r_ae03448f7cb3f6a28b8aeb87035805a81"><td class="memItemLeft" align="right" valign="top"><a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">double</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structSpectrumData.html#ae03448f7cb3f6a28b8aeb87035805a81">estimate_chi2</a> () <a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">const</a></td></tr>
 <tr class="separator:ae03448f7cb3f6a28b8aeb87035805a81"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
-<tr class="memitem:a0fc14f4333a560b120639e600ce1e6d5" id="r_a0fc14f4333a560b120639e600ce1e6d5"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structSpectrumData.html#a0fc14f4333a560b120639e600ce1e6d5">t</a> {0}</td></tr>
+<tr class="memitem:a0fc14f4333a560b120639e600ce1e6d5" id="r_a0fc14f4333a560b120639e600ce1e6d5"><td class="memItemLeft" align="right" valign="top"><a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">double</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structSpectrumData.html#a0fc14f4333a560b120639e600ce1e6d5">t</a> {0}</td></tr>
 <tr class="separator:a0fc14f4333a560b120639e600ce1e6d5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab67ffb47a2b818d1dab9957eeab4cc04" id="r_ab67ffb47a2b818d1dab9957eeab4cc04"><td class="memItemLeft" align="right" valign="top"><a class="el" href="mesh_8h.html#afd05120c4d579ec7fa4906f677781a83">Array</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structSpectrumData.html#ab67ffb47a2b818d1dab9957eeab4cc04">nu</a></td></tr>
 <tr class="separator:ab67ffb47a2b818d1dab9957eeab4cc04"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -130,7 +130,7 @@ Public Attributes</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">double SpectrumData::estimate_chi2 </td>
+          <td class="memname"><a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">double</a> SpectrumData::estimate_chi2 </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const</td>
@@ -140,19 +140,31 @@ Public Attributes</h2></td></tr>
 
 <p class="definition">Definition at line <a class="el" href="mcmc_8cpp_source.html#l00051">51</a> of file <a class="el" href="mcmc_8cpp_source.html">mcmc.cpp</a>.</p>
 <div class="fragment"><div class="line"><span class="lineno">   51</span>                                         {</div>
-<div class="line"><span class="lineno">   52</span>    <span class="keywordtype">double</span> chi_square = 0;</div>
-<div class="line"><span class="lineno">   53</span>    <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> i = 0; i &lt; <a class="code hl_variable" href="structSpectrumData.html#ab67ffb47a2b818d1dab9957eeab4cc04">nu</a>.size(); ++i) {</div>
-<div class="line"><span class="lineno">   54</span>        <span class="keywordflow">if</span> (<a class="code hl_variable" href="structSpectrumData.html#a3a5f544ce875ffcccaab074d54acf5a7">Fv_err</a>[i] == 0) <span class="keywordflow">continue</span>;</div>
-<div class="line"><span class="lineno">   55</span>        <span class="keywordtype">double</span> diff = <a class="code hl_variable" href="structSpectrumData.html#adf50b08a3eb62a78a03ec187b58c7877">Fv_obs</a>[i] - <a class="code hl_variable" href="structSpectrumData.html#ab2e927149a668d3e3292f5c06e71ead0">Fv_model</a>[i];</div>
-<div class="line"><span class="lineno">   56</span>        chi_square += (diff * diff) / (<a class="code hl_variable" href="structSpectrumData.html#a3a5f544ce875ffcccaab074d54acf5a7">Fv_err</a>[i] * <a class="code hl_variable" href="structSpectrumData.html#a3a5f544ce875ffcccaab074d54acf5a7">Fv_err</a>[i]);</div>
+<div class="line"><span class="lineno">   52</span>    <span class="keywordtype">double</span> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">chi_square</a> = 0;</div>
+<div class="line"><span class="lineno">   53</span>    <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a> = 0; <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a> &lt; <a class="code hl_variable" href="structSpectrumData.html#ab67ffb47a2b818d1dab9957eeab4cc04">nu</a>.size(); ++<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a>) {</div>
+<div class="line"><span class="lineno">   54</span>        <span class="keywordflow">if</span> (<a class="code hl_variable" href="structSpectrumData.html#a3a5f544ce875ffcccaab074d54acf5a7">Fv_err</a>[<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a>] == 0) <span class="keywordflow">continue</span>;</div>
+<div class="line"><span class="lineno">   55</span>        <span class="keywordtype">double</span> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">diff</a> = <a class="code hl_variable" href="structSpectrumData.html#adf50b08a3eb62a78a03ec187b58c7877">Fv_obs</a>[<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a>] - <a class="code hl_variable" href="structSpectrumData.html#ab2e927149a668d3e3292f5c06e71ead0">Fv_model</a>[<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a>];</div>
+<div class="line"><span class="lineno">   56</span>        <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">chi_square</a> += (<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">diff</a> * <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">diff</a>) / (<a class="code hl_variable" href="structSpectrumData.html#a3a5f544ce875ffcccaab074d54acf5a7">Fv_err</a>[<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a>] * <a class="code hl_variable" href="structSpectrumData.html#a3a5f544ce875ffcccaab074d54acf5a7">Fv_err</a>[<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a>]);</div>
 <div class="line"><span class="lineno">   57</span>    }</div>
-<div class="line"><span class="lineno">   58</span>    <span class="keywordflow">return</span> chi_square;</div>
+<div class="line"><span class="lineno">   58</span>    <span class="keywordflow">return</span> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">chi_square</a>;</div>
 <div class="line"><span class="lineno">   59</span>}</div>
 <div class="ttc" id="astructSpectrumData_html_a3a5f544ce875ffcccaab074d54acf5a7"><div class="ttname"><a href="structSpectrumData.html#a3a5f544ce875ffcccaab074d54acf5a7">SpectrumData::Fv_err</a></div><div class="ttdeci">Array Fv_err</div><div class="ttdef"><b>Definition</b> <a href="mcmc_8h_source.html#l00032">mcmc.h:32</a></div></div>
 <div class="ttc" id="astructSpectrumData_html_ab2e927149a668d3e3292f5c06e71ead0"><div class="ttname"><a href="structSpectrumData.html#ab2e927149a668d3e3292f5c06e71ead0">SpectrumData::Fv_model</a></div><div class="ttdeci">Array Fv_model</div><div class="ttdef"><b>Definition</b> <a href="mcmc_8h_source.html#l00033">mcmc.h:33</a></div></div>
 <div class="ttc" id="astructSpectrumData_html_ab67ffb47a2b818d1dab9957eeab4cc04"><div class="ttname"><a href="structSpectrumData.html#ab67ffb47a2b818d1dab9957eeab4cc04">SpectrumData::nu</a></div><div class="ttdeci">Array nu</div><div class="ttdef"><b>Definition</b> <a href="mcmc_8h_source.html#l00030">mcmc.h:30</a></div></div>
 <div class="ttc" id="astructSpectrumData_html_adf50b08a3eb62a78a03ec187b58c7877"><div class="ttname"><a href="structSpectrumData.html#adf50b08a3eb62a78a03ec187b58c7877">SpectrumData::Fv_obs</a></div><div class="ttdeci">Array Fv_obs</div><div class="ttdef"><b>Definition</b> <a href="mcmc_8h_source.html#l00031">mcmc.h:31</a></div></div>
-</div><!-- fragment -->
+<div class="ttc" id="autilities_8h_html_ab8e81118f023df135835db8cce4f5f42"><div class="ttname"><a href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">max</a></div><div class="ttdeci">T max(T value)</div><div class="ttdoc">Returns the value of a single parameter.</div><div class="ttdef"><b>Definition</b> <a href="utilities_8h_source.html#l00330">utilities.h:330</a></div></div>
+</div><!-- fragment --><div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="structSpectrumData_ae03448f7cb3f6a28b8aeb87035805a81_cgraph.png" border="0" usemap="#astructSpectrumData_ae03448f7cb3f6a28b8aeb87035805a81_cgraph" alt=""/></div>
+<map name="astructSpectrumData_ae03448f7cb3f6a28b8aeb87035805a81_cgraph" id="astructSpectrumData_ae03448f7cb3f6a28b8aeb87035805a81_cgraph">
+<area shape="rect" title=" " alt="" coords="5,29,220,55"/>
+<area shape="rect" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42" title="Returns the value of a single parameter." alt="" coords="268,29,319,55"/>
+<area shape="poly" title=" " alt="" coords="220,39,254,39,254,45,220,45"/>
+<area shape="poly" title=" " alt="" coords="266,32,258,22,260,12,272,5,293,3,320,7,327,12,329,19,324,20,323,16,318,12,293,8,274,10,264,15,263,21,270,29"/>
+</map>
+</div>
+
 </div>
 </div>
 <h2 class="groupheader">Member Data Documentation</h2>
@@ -227,7 +239,7 @@ Public Attributes</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">double SpectrumData::t {0}</td>
+          <td class="memname"><a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">double</a> SpectrumData::t {0}</td>
         </tr>
       </table>
 </div><div class="memdoc">

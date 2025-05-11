@@ -1,0 +1,6 @@
+<map id="compute_syn_peak_power" name="compute_syn_peak_power">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,29,200,55"/>
+<area shape="rect" id="Node000002" href="$utilities_8h.html#ab8e81118f023df135835db8cce4f5f42" title="Returns the value of a single parameter." alt="" coords="248,29,299,55"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="200,39,234,39,234,45,200,45"/>
+<area shape="poly" id="edge2_Node000002_Node000002" title=" " alt="" coords="246,32,239,22,242,12,254,5,273,3,298,7,307,16,303,20,295,11,273,8,255,10,246,15,244,21,250,28"/>
+</map>

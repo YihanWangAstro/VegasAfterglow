@@ -170,6 +170,7 @@
 <span class="c1"># Combine all components into a complete afterglow model</span>
 <span class="n">model</span> <span class="o">=</span> <span class="n">Model</span><span class="p">(</span><span class="n">jet</span><span class="o">=</span><span class="n">jet</span><span class="p">,</span> <span class="n">medium</span><span class="o">=</span><span class="n">medium</span><span class="p">,</span> <span class="n">observer</span><span class="o">=</span><span class="n">obs</span><span class="p">,</span> <span class="n">forward_rad</span><span class="o">=</span><span class="n">rad</span><span class="p">)</span>
 
+<span class="c1"># Define time range for light curve calculation</span>
 <span class="n">times</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">logspace</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">200</span><span class="p">)</span>
 
 <span class="c1"># Define observing frequencies (radio, optical, X-ray bands in Hz)</span>

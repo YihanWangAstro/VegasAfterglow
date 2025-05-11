@@ -32,6 +32,7 @@ Setting up a simple afterglow model
     # Combine all components into a complete afterglow model
     model = Model(jet=jet, medium=medium, observer=obs, forward_rad=rad)
 
+    # Define time range for light curve calculation
     times = np.logspace(2, 8, 200)  
 
     # Define observing frequencies (radio, optical, X-ray bands in Hz)

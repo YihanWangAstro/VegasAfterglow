@@ -1,7 +1,12 @@
 <map id="fast_pow" name="fast_pow">
-<area shape="rect" id="Node000001" title="Fast approximation of a raised to the power of b." alt="" coords="5,31,87,56"/>
+<area shape="rect" id="Node000001" title="Fast approximation of a raised to the power of b." alt="" coords="5,56,87,81"/>
 <area shape="rect" id="Node000002" href="$utilities_8h.html#afc584c30c352192de6847b1f4b8caf0e" title="Fast approximation of 2 raised to a power." alt="" coords="135,5,221,31"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="86,33,121,26,122,32,87,38"/>
-<area shape="rect" id="Node000003" href="$utilities_8h.html#afe0a1b1b7509ac4df83fcc0e510f281b" title="Fast approximation of the base&#45;2 logarithm." alt="" coords="137,55,219,80"/>
-<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="87,48,124,55,123,60,86,53"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="79,53,131,33,133,38,81,58"/>
+<area shape="rect" id="Node000003" href="$utilities_8h.html#ab8e81118f023df135835db8cce4f5f42" title="Returns the value of a single parameter." alt="" coords="269,56,320,81"/>
+<area shape="poly" id="edge6_Node000001_Node000003" title=" " alt="" coords="87,66,256,66,256,71,87,71"/>
+<area shape="rect" id="Node000004" href="$utilities_8h.html#afe0a1b1b7509ac4df83fcc0e510f281b" title="Fast approximation of the base&#45;2 logarithm." alt="" coords="137,107,219,132"/>
+<area shape="poly" id="edge4_Node000001_Node000004" title=" " alt="" coords="81,79,133,99,131,104,79,84"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="209,28,258,50,256,55,207,33"/>
+<area shape="poly" id="edge3_Node000003_Node000003" title=" " alt="" coords="275,57,271,48,273,38,281,32,295,29,311,33,318,41,314,45,308,37,295,35,283,37,277,41,276,47,279,55"/>
+<area shape="poly" id="edge5_Node000004_Node000003" title=" " alt="" coords="207,104,256,83,258,87,209,109"/>
 </map>

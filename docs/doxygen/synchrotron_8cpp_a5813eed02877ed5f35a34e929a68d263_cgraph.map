@@ -1,5 +1,9 @@
 <map id="determine_regime" name="determine_regime">
-<area shape="rect" id="Node000001" title=" " alt="" coords="5,5,148,31"/>
-<area shape="rect" id="Node000002" href="$synchrotron_8cpp.html#a59b47fc71384572d072692740171988e" title=" " alt="" coords="196,5,252,31"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="148,15,182,15,182,21,148,21"/>
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,29,148,55"/>
+<area shape="rect" id="Node000002" href="$utilities_8h.html#ab8e81118f023df135835db8cce4f5f42" title="Returns the value of a single parameter." alt="" coords="300,29,351,55"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="148,39,286,39,286,45,148,45"/>
+<area shape="rect" id="Node000003" href="$synchrotron_8cpp.html#a59b47fc71384572d072692740171988e" title=" " alt="" coords="196,55,252,80"/>
+<area shape="poly" id="edge3_Node000001_Node000003" title=" " alt="" coords="149,52,183,58,182,63,148,57"/>
+<area shape="poly" id="edge2_Node000002_Node000002" title=" " alt="" coords="307,30,304,21,306,12,313,5,325,3,340,6,346,15,342,18,337,11,325,8,315,10,310,14,309,20,312,28"/>
+<area shape="poly" id="edge4_Node000003_Node000002" title=" " alt="" coords="252,58,286,49,287,54,253,63"/>
 </map>

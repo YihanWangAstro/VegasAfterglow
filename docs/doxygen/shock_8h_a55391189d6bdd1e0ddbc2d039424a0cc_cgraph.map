@@ -1,5 +1,8 @@
 <map id="compute_sound_speed" name="compute_sound_speed">
-<area shape="rect" id="Node000001" title="Computes the sound speed in the shocked medium based on the relative Lorentz factor." alt="" coords="5,5,176,31"/>
+<area shape="rect" id="Node000001" title="Computes the sound speed in the shocked medium based on the relative Lorentz factor." alt="" coords="5,43,176,68"/>
 <area shape="rect" id="Node000002" href="$physics_8h.html#a2a95c6b3f1236d69328af7199a772a23" title="Computes adiabatic index as a function of Lorentz factor." alt="" coords="224,5,333,31"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="177,15,210,15,210,21,177,21"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="155,40,210,29,211,34,156,45"/>
+<area shape="rect" id="Node000003" href="$utilities_8h.html#ab8e81118f023df135835db8cce4f5f42" title="Returns the value of a single parameter." alt="" coords="253,79,304,104"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="158,65,240,81,239,87,157,71"/>
+<area shape="poly" id="edge3_Node000003_Node000003" title=" " alt="" coords="251,83,242,72,244,62,256,55,279,52,308,57,315,63,316,70,311,71,310,66,305,62,279,57,258,60,248,65,247,71,255,79"/>
 </map>

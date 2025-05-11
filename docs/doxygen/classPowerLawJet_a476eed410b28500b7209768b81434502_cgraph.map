@@ -1,9 +1,14 @@
 <map id="PowerLawJet::Gamma0" name="PowerLawJet::Gamma0">
-<area shape="rect" id="Node000001" title="Initial Lorentz factor as a function of phi and theta, with power&#45;law falloff." alt="" coords="5,31,179,56"/>
-<area shape="rect" id="Node000002" href="$utilities_8h.html#a4520a27a10a2aef33c99ad8c679da404" title="Fast approximation of a raised to the power of b." alt="" coords="227,31,308,56"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="179,41,213,41,213,46,179,46"/>
+<area shape="rect" id="Node000001" title="Initial Lorentz factor as a function of phi and theta, with power&#45;law falloff." alt="" coords="5,56,179,81"/>
+<area shape="rect" id="Node000002" href="$utilities_8h.html#a4520a27a10a2aef33c99ad8c679da404" title="Fast approximation of a raised to the power of b." alt="" coords="227,56,308,81"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="179,66,213,66,213,71,179,71"/>
 <area shape="rect" id="Node000003" href="$utilities_8h.html#afc584c30c352192de6847b1f4b8caf0e" title="Fast approximation of 2 raised to a power." alt="" coords="356,5,443,31"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="308,33,342,26,343,32,309,38"/>
-<area shape="rect" id="Node000004" href="$utilities_8h.html#afe0a1b1b7509ac4df83fcc0e510f281b" title="Fast approximation of the base&#45;2 logarithm." alt="" coords="358,55,441,80"/>
-<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="309,48,345,55,344,60,308,53"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="300,53,352,33,354,38,302,58"/>
+<area shape="rect" id="Node000004" href="$utilities_8h.html#ab8e81118f023df135835db8cce4f5f42" title="Returns the value of a single parameter." alt="" coords="491,56,541,81"/>
+<area shape="poly" id="edge7_Node000002_Node000004" title=" " alt="" coords="308,66,477,66,477,71,308,71"/>
+<area shape="rect" id="Node000005" href="$utilities_8h.html#afe0a1b1b7509ac4df83fcc0e510f281b" title="Fast approximation of the base&#45;2 logarithm." alt="" coords="358,107,441,132"/>
+<area shape="poly" id="edge5_Node000002_Node000005" title=" " alt="" coords="302,79,354,99,352,104,300,84"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="431,28,479,50,477,55,428,33"/>
+<area shape="poly" id="edge4_Node000004_Node000004" title=" " alt="" coords="496,57,492,48,494,38,502,32,516,29,532,33,539,41,535,45,529,37,516,35,504,37,499,41,497,47,501,55"/>
+<area shape="poly" id="edge6_Node000005_Node000004" title=" " alt="" coords="428,104,477,83,479,87,431,109"/>
 </map>

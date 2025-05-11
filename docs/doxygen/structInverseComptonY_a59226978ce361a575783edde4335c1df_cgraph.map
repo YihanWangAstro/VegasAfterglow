@@ -1,13 +1,19 @@
 <map id="InverseComptonY::compute_Y_tilt_at_nu" name="InverseComptonY::compute_Y_tilt_at_nu">
-<area shape="rect" id="Node000001" title="Calculates the effective Y parameter at a specific frequency and spectral index." alt="" coords="5,47,205,87"/>
-<area shape="rect" id="Node000002" href="$structInverseComptonY.html#ab69f7b0d11f611834e1b7c13e30de1ef" title="Calculates the effective Y parameter for a given frequency and spectral index." alt="" coords="253,47,453,87"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="205,65,240,65,240,70,205,70"/>
-<area shape="rect" id="Node000003" href="$utilities_8h.html#a4520a27a10a2aef33c99ad8c679da404" title="Fast approximation of a raised to the power of b." alt="" coords="501,29,583,55"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="453,51,487,47,488,52,454,56"/>
-<area shape="rect" id="Node000006" href="$utilities_8h.html#a5069f3665d3ad6f8eced520eae62e400" title="Computes a^(2/3)" alt="" coords="509,79,575,104"/>
-<area shape="poly" id="edge5_Node000002_Node000006" title=" " alt="" coords="454,77,496,83,496,88,453,83"/>
+<area shape="rect" id="Node000001" title="Calculates the effective Y parameter at a specific frequency and spectral index." alt="" coords="5,99,205,139"/>
+<area shape="rect" id="Node000002" href="$structInverseComptonY.html#ab69f7b0d11f611834e1b7c13e30de1ef" title="Calculates the effective Y parameter for a given frequency and spectral index." alt="" coords="253,99,453,139"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="205,117,240,117,240,122,205,122"/>
+<area shape="rect" id="Node000003" href="$utilities_8h.html#a4520a27a10a2aef33c99ad8c679da404" title="Fast approximation of a raised to the power of b." alt="" coords="501,81,583,107"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="453,103,487,99,488,104,454,108"/>
+<area shape="rect" id="Node000007" href="$utilities_8h.html#a5069f3665d3ad6f8eced520eae62e400" title="Computes a^(2/3)" alt="" coords="509,131,575,156"/>
+<area shape="poly" id="edge9_Node000002_Node000007" title=" " alt="" coords="454,129,496,135,496,140,453,135"/>
 <area shape="rect" id="Node000004" href="$utilities_8h.html#afc584c30c352192de6847b1f4b8caf0e" title="Fast approximation of 2 raised to a power." alt="" coords="631,5,717,31"/>
-<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="582,32,617,26,618,31,583,37"/>
-<area shape="rect" id="Node000005" href="$utilities_8h.html#afe0a1b1b7509ac4df83fcc0e510f281b" title="Fast approximation of the base&#45;2 logarithm." alt="" coords="633,55,715,80"/>
-<area shape="poly" id="edge4_Node000003_Node000005" title=" " alt="" coords="583,47,620,54,619,59,582,52"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="564,79,638,36,640,40,567,83"/>
+<area shape="rect" id="Node000005" href="$utilities_8h.html#ab8e81118f023df135835db8cce4f5f42" title="Returns the value of a single parameter." alt="" coords="765,81,816,107"/>
+<area shape="poly" id="edge8_Node000003_Node000005" title=" " alt="" coords="583,91,752,91,752,97,583,97"/>
+<area shape="rect" id="Node000006" href="$utilities_8h.html#afe0a1b1b7509ac4df83fcc0e510f281b" title="Fast approximation of the base&#45;2 logarithm." alt="" coords="633,107,715,132"/>
+<area shape="poly" id="edge6_Node000003_Node000006" title=" " alt="" coords="583,99,620,106,619,111,582,104"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="696,29,761,72,758,76,693,33"/>
+<area shape="poly" id="edge5_Node000005_Node000005" title=" " alt="" coords="771,82,767,73,769,64,777,57,791,55,807,58,814,66,810,70,804,63,791,60,779,62,773,66,772,72,775,80"/>
+<area shape="poly" id="edge7_Node000006_Node000005" title=" " alt="" coords="715,108,751,100,752,105,716,113"/>
+<area shape="poly" id="edge10_Node000007_Node000005" title=" " alt="" coords="575,147,642,152,680,150,716,142,742,130,764,114,768,118,745,135,718,147,680,155,642,157,575,152"/>
 </map>

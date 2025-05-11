@@ -1,0 +1,6 @@
+<map id="fast_exp" name="fast_exp">
+<area shape="rect" id="Node000001" title="Fast approximation of the exponential function." alt="" coords="5,29,84,55"/>
+<area shape="rect" id="Node000002" href="$utilities_8h.html#ab8e81118f023df135835db8cce4f5f42" title="Returns the value of a single parameter." alt="" coords="132,29,183,55"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="84,39,118,39,118,45,84,45"/>
+<area shape="poly" id="edge2_Node000002_Node000002" title=" " alt="" coords="138,30,134,21,136,12,144,5,157,3,173,6,180,14,176,18,170,11,157,8,146,10,140,14,139,20,143,28"/>
+</map>
