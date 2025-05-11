@@ -31,7 +31,7 @@ var searchData=
   ['compute_5fswept_5fmass_28',['compute_swept_mass',['../shock_8h.html#ac083404f57e1501f31147d57cc45f4c5',1,'shock.h']]],
   ['compute_5fsyn_5ffreq_29',['compute_syn_freq',['../synchrotron_8h.html#a936bfaa522ec8295a21d253e5453188d',1,'compute_syn_freq(Real gamma, Real B):&#160;synchrotron.cpp'],['../synchrotron_8cpp.html#a936bfaa522ec8295a21d253e5453188d',1,'compute_syn_freq(Real gamma, Real B):&#160;synchrotron.cpp']]],
   ['compute_5fsyn_5fgamma_30',['compute_syn_gamma',['../synchrotron_8cpp.html#a85433be4a0da2f510240a603da8f7dff',1,'synchrotron.cpp']]],
-  ['compute_5fsyn_5fgamma_5fa_31',['compute_syn_gamma_a',['../synchrotron_8cpp.html#a5b1694deb534f1df0ba3515fdf52b65a',1,'synchrotron.cpp']]],
+  ['compute_5fsyn_5fgamma_5fa_31',['compute_syn_gamma_a',['../synchrotron_8cpp.html#ab09dbe28fcecfc3d846577c1c34fcca6',1,'synchrotron.cpp']]],
   ['compute_5fsyn_5fgamma_5fm_32',['compute_syn_gamma_m',['../synchrotron_8cpp.html#a1c5ae0a77c927eb60684c180ba559567',1,'compute_syn_gamma_M(Real B, InverseComptonY const &amp;Ys, Real p):&#160;synchrotron.cpp'],['../synchrotron_8cpp.html#a0095a83d7309c92bcf2d807436b2615c',1,'compute_syn_gamma_m(Real Gamma_rel, Real gamma_M, Real eps_e, Real p, Real xi):&#160;synchrotron.cpp']]],
   ['compute_5fsyn_5fpeak_5fpower_33',['compute_syn_peak_power',['../synchrotron_8cpp.html#a7f6b35414b0d45eff0677786294fc97c',1,'synchrotron.cpp']]],
   ['compute_5fupstr_5f4vel_34',['compute_upstr_4vel',['../shock_8h.html#ab0d0c4b81c0c5525c81eb24d70c4b010',1,'shock.h']]],

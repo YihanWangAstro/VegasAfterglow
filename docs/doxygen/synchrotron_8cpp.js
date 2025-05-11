@@ -5,7 +5,7 @@ var synchrotron_8cpp =
     [ "compute_gamma_peak", "synchrotron_8cpp.html#a71dd98bf97f7ca32d046bef60ebe11c4", null ],
     [ "compute_syn_freq", "synchrotron_8cpp.html#a936bfaa522ec8295a21d253e5453188d", null ],
     [ "compute_syn_gamma", "synchrotron_8cpp.html#a85433be4a0da2f510240a603da8f7dff", null ],
-    [ "compute_syn_gamma_a", "synchrotron_8cpp.html#a5b1694deb534f1df0ba3515fdf52b65a", null ],
+    [ "compute_syn_gamma_a", "synchrotron_8cpp.html#ab09dbe28fcecfc3d846577c1c34fcca6", null ],
     [ "compute_syn_gamma_M", "synchrotron_8cpp.html#a1c5ae0a77c927eb60684c180ba559567", null ],
     [ "compute_syn_gamma_m", "synchrotron_8cpp.html#a0095a83d7309c92bcf2d807436b2615c", null ],
     [ "compute_syn_peak_power", "synchrotron_8cpp.html#a7f6b35414b0d45eff0677786294fc97c", null ],
