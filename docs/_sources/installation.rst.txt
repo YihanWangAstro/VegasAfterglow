@@ -15,6 +15,10 @@ VegasAfterglow requires the following to build:
   * **macOS**: Apple Clang 13+ (with Xcode 13+) or GCC 10+ (via Homebrew)
   * **Windows**: MSVC 19.29+ (Visual Studio 2019 16.10+) or MinGW-w64 with GCC 10+
 
+* **CMake 3.15+**:
+  
+  * Required for building the python package from source
+
 * **Build tools**:
 
   * Make (GNU Make 4.0+ recommended) [if you want to compile & run the C++ code]

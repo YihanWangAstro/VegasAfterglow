@@ -1,5 +1,7 @@
 <map id="eq_space_loglog_interp" name="eq_space_loglog_interp">
-<area shape="rect" id="Node000001" title="Logarithmic interpolation for equally spaced x&#45;values in log space." alt="" coords="232,5,407,31"/>
-<area shape="rect" id="Node000002" href="$structICPhoton.html#a5affc62546509c3510d21ad7f25a9b04" title="Returns the photon intensity at frequency nu." alt="" coords="5,5,184,31"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="218,21,184,21,184,15,218,15"/>
+<area shape="rect" id="Node000001" title="Logarithmic interpolation for equally spaced x&#45;values in log space." alt="" coords="495,5,669,31"/>
+<area shape="rect" id="Node000002" href="$structICPhoton.html#a5affc62546509c3510d21ad7f25a9b04" title="Returns the photon intensity at frequency nu." alt="" coords="268,5,447,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="481,21,447,21,447,15,481,15"/>
+<area shape="rect" id="Node000003" href="$structICPhoton.html#a998210d5d3aca981bc7cafd7d6247069" title="Computes the base&#45;2 logarithm of the synchrotron intensity at a given frequency." alt="" coords="5,5,220,31"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="254,21,220,21,220,15,254,15"/>
 </map>

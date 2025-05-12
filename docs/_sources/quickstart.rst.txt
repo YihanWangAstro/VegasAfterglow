@@ -75,10 +75,12 @@ Now, let's compute and plot multi-wavelength light curves to see how the aftergl
         plt.loglog(times, results['syn'][i,:], label=fr'${base:.1f} \times 10^{{{exp}}}$ Hz')
 
     # 6. Add annotations for important transitions
-    plt.annotate('jet break', xy=(3e4, 1e-26), xytext=(3e3, 5e-28), 
-                arrowprops=dict(arrowstyle='->'))
-    plt.annotate(r'$\nu_m=\nu_a$', xy=(3e5, 3e-25), xytext=(5.5e4, 5e-24), 
-                arrowprops=dict(arrowstyle='->'))
+    def add_note(plt):
+        plt.annotate('jet break',xy=(3e4, 1e-26), xytext=(3e3, 5e-28), arrowprops=dict(arrowstyle='->'))
+        plt.annotate(r'$\nu_m=\nu_a$',xy=(6e5, 3e-25), xytext=(7.5e4, 5e-24), arrowprops=dict(arrowstyle='->'))
+        plt.annotate(r'$\nu=\nu_a$',xy=(1.5e6, 4e-25), xytext=(7.5e5, 5e-24), arrowprops=dict(arrowstyle='->'))
+
+    add_note(plt)
     
     plt.xlabel('Time (s)')
     plt.ylabel('Flux Density (erg/cm²/s/Hz)')
