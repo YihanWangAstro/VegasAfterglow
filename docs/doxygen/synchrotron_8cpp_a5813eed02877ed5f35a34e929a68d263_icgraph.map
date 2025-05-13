@@ -4,10 +4,10 @@
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="418,54,332,33,333,28,419,49"/>
 <area shape="rect" id="Node000003" href="$synchrotron_8cpp.html#a6fb32a514d942797b3beffa16aaf467a" title="Populates an existing electron grid with values based on shock parameters." alt="" coords="189,55,367,80"/>
 <area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="401,70,367,70,367,65,401,65"/>
-<area shape="rect" id="Node000004" href="$synchrotron_8cpp.html#aecff2eca5f5a9c7e2a94481eb96e597f" title="Updates electron properties throughout the grid based on shock parameters and IC Y values." alt="" coords="199,104,357,129"/>
+<area shape="rect" id="Node000004" href="$synchrotron_8cpp.html#af56f9b4417a5f3e717102da3e81a7d37" title="Updates electron properties throughout the grid based on shock parameters and IC Y values." alt="" coords="199,104,357,129"/>
 <area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="419,86,333,107,332,101,418,81"/>
-<area shape="rect" id="Node000005" href="$inverse-compton_8cpp.html#a31f7a573a50ad47d3ee5513fda0e643e" title="Applies Klein&#45;Nishina cooling to electrons based on photon distribution." alt="" coords="26,79,121,104"/>
+<area shape="rect" id="Node000005" href="$inverse-compton_8cpp.html#af25c21cb4c714787c8260f220a6c2ee9" title="Applies Klein&#45;Nishina cooling to electrons based on photon distribution." alt="" coords="26,79,121,104"/>
 <area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="185,108,120,100,121,94,186,103"/>
-<area shape="rect" id="Node000006" href="$inverse-compton_8cpp.html#ac6f78f0faf7e878eac4d764080d232b2" title="Applies Thomson cooling to electrons based on photon distribution." alt="" coords="5,128,141,153"/>
+<area shape="rect" id="Node000006" href="$inverse-compton_8cpp.html#a330c8cd380f08f2ddce282201dae597b" title="Applies Thomson cooling to electrons based on photon distribution." alt="" coords="5,128,141,153"/>
 <area shape="poly" id="edge5_Node000004_Node000006" title=" " alt="" coords="186,130,142,135,141,130,185,125"/>
 </map>

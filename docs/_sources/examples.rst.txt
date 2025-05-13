@@ -83,52 +83,6 @@ Setting up a simple afterglow model
     plt.legend(ncol=2)
     plt.title('Synchrotron Spectra')
 
-Structured Jet Models
----------------------
-
-Gaussian Jet
-^^^^^^^^^^^^
-
-.. code-block:: python
-
-    from VegasAfterglow import GaussianJet
-
-    # Create a structured jet with Gaussian energy profile
-    gaussian_jet = GaussianJet(
-        theta_c=0.05,         # Core angular size (radians)
-        E_iso=1e53,           # Isotropic-equivalent energy (ergs)
-        Gamma0=300            # Initial Lorentz factor
-    )
-
-    # Update the model with the structured jet
-    model.set_jet(gaussian_jet)
-    
-    # Off-axis viewing angle
-    model.set_viewing_angle(0.2)  # 0.2 radians off-axis
-    
-    # Recalculate with the structured jet
-    results_gaussian = model.calculate_light_curves(times, frequencies)
-
-Power-Law Jet
-^^^^^^^^^^^^^
-
-.. code-block:: python
-
-    from VegasAfterglow import PowerLawJet
-
-    # Create a power-law structured jet
-    powerlaw_jet = PowerLawJet(
-        theta_c=0.05,         # Core angular size (radians)
-        E_iso=1e53,           # Isotropic-equivalent energy (ergs)
-        Gamma0=300,           # Initial Lorentz factor
-        k=2.0                 # Power-law index
-    )
-
-    # Update the model with the power-law jet
-    model.set_jet(powerlaw_jet)
-    
-    # Recalculate with the power-law jet
-    results_powerlaw = model.calculate_light_curves(times, frequencies)
 
 Ambient Media Models
 --------------------
@@ -143,38 +97,140 @@ Wind Medium
     # Create a stellar wind medium
     wind = Wind(A_star=0.1)  # A* parameter
 
-    # Update the model with the wind medium
-    model.set_medium(wind)
-    
-    # Recalculate with the wind medium
-    results_wind = model.calculate_light_curves(times, frequencies)
+    #..other settings
+    model = Model(medium=wind, ...)
 
 User-Defined Medium
 ^^^^^^^^^^^^^^^^^^^
 
 .. code-block:: python
 
-    from VegasAfterglow import UserDefinedMedium
+    from VegasAfterglow import Medium
 
     # Define a custom density profile function
     def custom_density(phi, theta, r):
-        # Example: A medium with a density cavity
-        r_cavity = 1e17  # Cavity radius in cm
-        rho_0 = 1.67e-24  # Base density in g/cm³
+        #return what ever density profile you want as a function of phi, theta, and r
         
-        if r < r_cavity:
-            return 0.1 * rho_0  # Lower density inside cavity
-        else:
-            return rho_0 * (r/r_cavity)**(-2)  # Wind-like outside
+
+    def custom_mass(phi, theta, r):
+        #return the integral of the density profile over r.
+        #you may keep the consistency of the mass profile with the density profile
+        #the purpose of providing the extra mass profile is to reduce the extra computations.
     
     # Create a user-defined medium
-    custom_medium = UserDefinedMedium(density_func=custom_density)
+    medium = Medium(rho=custom_density, mass=custom_mass)
     
-    # Update the model
-    model.set_medium(custom_medium)
+    #..other settings
+    model = Model(medium=medium, ...)
+
+
+Structured Jet Models
+---------------------
+
+Gaussian Jet
+^^^^^^^^^^^^
+
+.. code-block:: python
+
+    from VegasAfterglow import GaussianJet
+
+    # Create a structured jet with Gaussian energy profile
+    jet = GaussianJet(
+        theta_c=0.05,         # Core angular size (radians)
+        E_iso=1e53,           # Isotropic-equivalent energy (ergs)
+        Gamma0=300            # Initial Lorentz factor
+    )
+
+    #..other settings
+    model = Model(jet=jet, ...)
+
+Power-Law Jet
+^^^^^^^^^^^^^
+
+.. code-block:: python
+
+    from VegasAfterglow import PowerLawJet
+
+    # Create a power-law structured jet
+    jet = PowerLawJet(
+        theta_c=0.05,         # Core angular size (radians)
+        E_iso=1e53,           # Isotropic-equivalent energy (ergs)
+        Gamma0=300,           # Initial Lorentz factor
+        k=2.0                 # Power-law index
+    )
+
+    #..other settings
+    model = Model(jet=jet, ...)
+
+Jet with Spreading
+^^^^^^^^^^^^^
+
+.. code-block:: python
+
+    from VegasAfterglow import TophatJet
+
+    # Create a power-law structured jet
+    jet = TophatJet(
+        theta_c=0.05,        
+        E_iso=1e53,          
+        Gamma0=300,         
+        spreading=True       # Enable spreading
+    )
+
+    #..other settings
+    model = Model(jet=jet, ...)
+
+.. note::
+    The jet spreading (Lateral Expansion) is experimental and only works for the top-hat jet, Gaussian jet, and power-law jet with a jet core.
+    The spreading prescription may not work for arbitrary user-defined jet structures.
+
+User-Defined Jet
+^^^^^^^^^^^^^^^^
+
+You may also define your own jet structure by providing the energy and lorentz factor profile.
+Those two profiles are required to complete a jet structure. You may also provide the magnetization profile, enregy injection profile, and mass injection profile.
+Those profiles are optional and will be set to zero function if not provided.
+
+.. code-block:: python
+
+    from VegasAfterglow import Ejecta
+
+    # Define a custom energy profile function, required to complete the jet structure
+    def energy(phi, theta):
+        #return what ever energy PER SOLID ANGLE profile you want as a function of phi and theta
+
+    # Define a custom lorentz factor profile function, required to complete the jet structure
+    def lorentz(phi, theta):
+        #return what ever lorentz factor profile you want as a function of phi and theta
     
-    # Recalculate with the custom medium
-    results_custom = model.calculate_light_curves(times, frequencies)
+    # Define a custom magnetization profile function, optional
+    def magnetization(phi, theta):
+        #return what ever magnetization profile you want as a function of phi and theta
+
+    # Define a custom energy injection profile function, optional
+    def energy_injection(phi, theta, t):
+        #return what ever energy injection PER SOLID ANGLE profile you want as a function of phi, theta, and time
+
+    # Define a custom mass injection profile function, optional
+    def mass_injection(phi, theta, t):
+        #returnwhat ever mass injection PER SOLID ANGLE profile you want as a function of phi, theta, and time
+
+    # Create a user-defined jet
+    jet = Ejecta(energy=energy, lorentz=lorentz, magnetization=magnetization, energy_injection=energy_injection, mass_injection=mass_injection)
+
+    #..other settings
+
+    #if your jet is not axisymmetric, set axisymmetric to False
+    model = Model(jet=jet, ..., axisymmetric=False, resolutions=(0.3, 2., 5.))
+
+    # the user-defined jet structure could be spiky, if the default resolution may not resolve the jet structure, if that is the case, you can try a finer resolution (phi_ppd, theta_ppd, t_ppd)
+    # where phi_ppd is the number of points per degree in the phi direction, theta_ppd is the number of points per degree in the theta direction, and t_ppd is the number of points per decade in the time direction    .
+    
+.. note::
+    Setting usere-defined structured jet in the Python level is OK for light curve and spectrum calculation. However, it is not recommended for MCMC parameter fitting.
+    The reason is that setting user-defined profiles in the Python level leads to a large overhead due to the Python-C++ inter-process communication.
+    Users are recommended to set up the user-defined jet structure in the C++ level for MCMC parameter fitting for better performance.
+        
 
 Radiation Processes
 -------------------

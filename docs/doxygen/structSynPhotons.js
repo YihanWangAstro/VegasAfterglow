@@ -3,7 +3,7 @@ var structSynPhotons =
     [ "compute_I_nu", "structSynPhotons.html#a380508572a0fc6f50ef8fd58420492ba", null ],
     [ "compute_log2_I_nu", "structSynPhotons.html#ab6aec9da3210a04c044f4596f82ee21a", null ],
     [ "update_constant", "structSynPhotons.html#a631859af4fe11f0312e78f2fbaa39e80", null ],
-    [ "e", "structSynPhotons.html#a5621110edbe0883008ee0f480891e85b", null ],
+    [ "elec", "structSynPhotons.html#ad573b729cb32e05e27f306cb0d181fdc", null ],
     [ "log2_I_nu_peak", "structSynPhotons.html#a403b9242f1f973d1413fb07a05fb1ce7", null ],
     [ "log2_nu_a", "structSynPhotons.html#ab6d5d7a3f83de2ddce7c8c8c17a9af9a", null ],
     [ "log2_nu_c", "structSynPhotons.html#a3f3227248f96db80e3bbbaec7cbd8206", null ],

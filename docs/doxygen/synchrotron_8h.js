@@ -12,5 +12,5 @@ var synchrotron_8h =
     [ "generate_syn_electrons", "synchrotron_8h.html#a901300e562505fb294c074fa1e678308", null ],
     [ "generate_syn_photons", "synchrotron_8h.html#a331f545228d2b18e84e0252510e295f8", null ],
     [ "generate_syn_photons", "synchrotron_8h.html#a0f78089bdc9e329056d89812794298b9", null ],
-    [ "update_electrons_4Y", "synchrotron_8h.html#aecff2eca5f5a9c7e2a94481eb96e597f", null ]
+    [ "update_electrons_4Y", "synchrotron_8h.html#af56f9b4417a5f3e717102da3e81a7d37", null ]
 ];

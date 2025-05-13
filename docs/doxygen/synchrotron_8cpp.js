@@ -12,8 +12,8 @@ var synchrotron_8cpp =
     [ "determine_regime", "synchrotron_8cpp.html#a5813eed02877ed5f35a34e929a68d263", null ],
     [ "generate_syn_electrons", "synchrotron_8cpp.html#afd4184652bfb1fac7ee55a159f618767", null ],
     [ "generate_syn_electrons", "synchrotron_8cpp.html#a6fb32a514d942797b3beffa16aaf467a", null ],
-    [ "generate_syn_photons", "synchrotron_8cpp.html#a68ca390be3c37e7c5f3286335daba749", null ],
-    [ "generate_syn_photons", "synchrotron_8cpp.html#ac2384d3417ed32a6ce6e55e6cf3be655", null ],
+    [ "generate_syn_photons", "synchrotron_8cpp.html#a331f545228d2b18e84e0252510e295f8", null ],
+    [ "generate_syn_photons", "synchrotron_8cpp.html#a0f78089bdc9e329056d89812794298b9", null ],
     [ "order", "synchrotron_8cpp.html#a59b47fc71384572d072692740171988e", null ],
-    [ "update_electrons_4Y", "synchrotron_8cpp.html#aecff2eca5f5a9c7e2a94481eb96e597f", null ]
+    [ "update_electrons_4Y", "synchrotron_8cpp.html#af56f9b4417a5f3e717102da3e81a7d37", null ]
 ];

@@ -10,11 +10,11 @@
 <area shape="poly" id="edge5_Node000002_Node000006" title=" " alt="" coords="435,86,338,107,337,101,434,80"/>
 <area shape="rect" id="Node000007" href="$synchrotron_8cpp.html#a6fb32a514d942797b3beffa16aaf467a" title="Populates an existing electron grid with values based on shock parameters." alt="" coords="189,153,367,179"/>
 <area shape="poly" id="edge6_Node000002_Node000007" title=" " alt="" coords="431,87,416,95,402,107,393,119,384,132,368,144,343,156,341,151,365,140,380,128,389,116,398,103,413,90,429,83"/>
-<area shape="rect" id="Node000008" href="$synchrotron_8cpp.html#aecff2eca5f5a9c7e2a94481eb96e597f" title="Updates electron properties throughout the grid based on shock parameters and IC Y values." alt="" coords="199,55,357,80"/>
+<area shape="rect" id="Node000008" href="$synchrotron_8cpp.html#af56f9b4417a5f3e717102da3e81a7d37" title="Updates electron properties throughout the grid based on shock parameters and IC Y values." alt="" coords="199,55,357,80"/>
 <area shape="poly" id="edge7_Node000002_Node000008" title=" " alt="" coords="418,70,357,70,357,65,418,65"/>
-<area shape="rect" id="Node000004" href="$inverse-compton_8cpp.html#a31f7a573a50ad47d3ee5513fda0e643e" title="Applies Klein&#45;Nishina cooling to electrons based on photon distribution." alt="" coords="26,5,121,31"/>
+<area shape="rect" id="Node000004" href="$inverse-compton_8cpp.html#af25c21cb4c714787c8260f220a6c2ee9" title="Applies Klein&#45;Nishina cooling to electrons based on photon distribution." alt="" coords="26,5,121,31"/>
 <area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="183,21,121,21,121,15,183,15"/>
-<area shape="rect" id="Node000005" href="$inverse-compton_8cpp.html#ac6f78f0faf7e878eac4d764080d232b2" title="Applies Thomson cooling to electrons based on photon distribution." alt="" coords="5,55,141,80"/>
+<area shape="rect" id="Node000005" href="$inverse-compton_8cpp.html#a330c8cd380f08f2ddce282201dae597b" title="Applies Thomson cooling to electrons based on photon distribution." alt="" coords="5,55,141,80"/>
 <area shape="poly" id="edge4_Node000003_Node000005" title=" " alt="" coords="212,36,127,57,126,52,211,31"/>
 <area shape="poly" id="edge8_Node000008_Node000004" title=" " alt="" coords="211,54,120,32,122,27,212,49"/>
 <area shape="poly" id="edge9_Node000008_Node000005" title=" " alt="" coords="186,70,142,70,142,65,186,65"/>

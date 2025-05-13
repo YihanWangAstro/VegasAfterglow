@@ -60,8 +60,8 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "IO_8cpp.html",
-"inverse-compton_8h.html#aca4102bfefd39902a464c456253645cc",
-"structConfigParams.html#a1f053f68eb1c33050291db9a28ac49af"
+"inverse-compton_8h.html#ac7dc4640209861b76e05ae991771552e",
+"structConfigParams.html#a1a1cd801dbf1871cff2cec2f868d3e87"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

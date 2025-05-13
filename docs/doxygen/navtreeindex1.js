@@ -1,5 +1,6 @@
 var NAVTREEINDEX1 =
 {
+"inverse-compton_8h.html#ac7dc4640209861b76e05ae991771552e":[4,0,0,2,5],
 "inverse-compton_8h.html#aca4102bfefd39902a464c456253645cc":[4,0,0,2,4],
 "inverse-compton_8h.html#adcfaf3d2807fe6de421ca3e9c5332252":[4,0,0,2,2],
 "inverse-compton_8h_source.html":[4,0,0,2],
@@ -248,6 +249,5 @@ var NAVTREEINDEX1 =
 "simple-shock_8hpp_source.html":[4,0,0,13],
 "simple-shock_8tpp.html":[4,0,2,1,3],
 "simple-shock_8tpp_source.html":[4,0,2,1,3],
-"structConfigParams.html":[3,0,1],
-"structConfigParams.html#a1a1cd801dbf1871cff2cec2f868d3e87":[3,0,1,4]
+"structConfigParams.html":[3,0,1]
 };

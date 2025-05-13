@@ -22,11 +22,11 @@
 <area shape="poly" id="edge32_Node000002_Node000022" title=" " alt="" coords="1192,450,1182,485,1165,527,1142,570,1110,606,1085,622,1082,618,1106,602,1137,567,1161,525,1177,484,1187,449"/>
 <area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="421,298,413,292,400,277,393,262,388,232,383,203,377,189,365,176,348,165,351,160,368,172,381,186,388,202,393,231,398,261,404,274,416,288,425,294"/>
 <area shape="poly" id="edge4_Node000003_Node000005" title=" " alt="" coords="409,303,367,297,367,292,410,298"/>
-<area shape="rect" id="Node000006" href="$synchrotron_8cpp.html#aecff2eca5f5a9c7e2a94481eb96e597f" title="Updates electron properties throughout the grid based on shock parameters and IC Y values." alt="" coords="199,186,357,212"/>
+<area shape="rect" id="Node000006" href="$synchrotron_8cpp.html#af56f9b4417a5f3e717102da3e81a7d37" title="Updates electron properties throughout the grid based on shock parameters and IC Y values." alt="" coords="199,186,357,212"/>
 <area shape="poly" id="edge5_Node000003_Node000006" title=" " alt="" coords="436,301,413,292,388,277,365,259,298,214,301,210,368,254,391,272,416,287,438,296"/>
-<area shape="rect" id="Node000007" href="$inverse-compton_8cpp.html#a31f7a573a50ad47d3ee5513fda0e643e" title="Applies Klein&#45;Nishina cooling to electrons based on photon distribution." alt="" coords="26,101,121,126"/>
+<area shape="rect" id="Node000007" href="$inverse-compton_8cpp.html#af25c21cb4c714787c8260f220a6c2ee9" title="Applies Klein&#45;Nishina cooling to electrons based on photon distribution." alt="" coords="26,101,121,126"/>
 <area shape="poly" id="edge6_Node000006_Node000007" title=" " alt="" coords="213,185,188,176,97,129,100,124,190,171,214,180"/>
-<area shape="rect" id="Node000008" href="$inverse-compton_8cpp.html#ac6f78f0faf7e878eac4d764080d232b2" title="Applies Thomson cooling to electrons based on photon distribution." alt="" coords="5,162,141,188"/>
+<area shape="rect" id="Node000008" href="$inverse-compton_8cpp.html#a330c8cd380f08f2ddce282201dae597b" title="Applies Thomson cooling to electrons based on photon distribution." alt="" coords="5,162,141,188"/>
 <area shape="poly" id="edge7_Node000006_Node000008" title=" " alt="" coords="185,191,141,186,142,180,186,186"/>
 <area shape="rect" id="Node000010" href="$structInverseComptonY.html#a9a35d3af9bd23acdde9d09d38ee116eb" title="Calculates the effective Y parameter at a specific Lorentz factor and spectral index." alt="" coords="660,180,860,220"/>
 <area shape="poly" id="edge9_Node000009_Node000010" title=" " alt="" coords="894,218,860,214,861,209,895,213"/>

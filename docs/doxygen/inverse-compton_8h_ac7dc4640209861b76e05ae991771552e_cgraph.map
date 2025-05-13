@@ -4,9 +4,9 @@
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="82,206,185,161,187,166,84,211"/>
 <area shape="rect" id="Node000009" href="$utilities_8h.html#ab8e81118f023df135835db8cce4f5f42" title="Returns the value of a single parameter." alt="" coords="1436,297,1487,322"/>
 <area shape="poly" id="edge22_Node000001_Node000009" title=" " alt="" coords="61,207,95,164,119,139,146,118,223,66,288,30,321,18,358,9,449,3,1171,3,1238,4,1292,11,1316,20,1340,32,1390,74,1409,98,1425,125,1447,182,1458,238,1462,282,1457,283,1452,239,1441,184,1420,127,1405,101,1386,78,1337,37,1314,24,1290,16,1238,9,1171,8,449,8,358,15,323,23,290,35,226,71,150,122,123,143,99,167,65,210"/>
-<area shape="rect" id="Node000013" href="$synchrotron_8cpp.html#a68ca390be3c37e7c5f3286335daba749" title="Creates and returns a new photon grid based on shock and electron grid." alt="" coords="854,498,1023,523"/>
+<area shape="rect" id="Node000013" href="$synchrotron_8cpp.html#a331f545228d2b18e84e0252510e295f8" title="Creates and returns a new photon grid based on shock and electron grid." alt="" coords="854,498,1023,523"/>
 <area shape="poly" id="edge18_Node000001_Node000013" title=" " alt="" coords="66,233,107,282,173,351,214,387,259,422,308,452,358,476,420,497,484,511,550,521,615,526,737,528,840,521,841,526,737,533,614,532,549,526,483,517,418,502,356,481,305,457,256,426,211,391,169,355,103,285,62,236"/>
-<area shape="rect" id="Node000015" href="$synchrotron_8cpp.html#aecff2eca5f5a9c7e2a94481eb96e597f" title="Updates electron properties throughout the grid based on shock parameters and IC Y values." alt="" coords="150,266,307,291"/>
+<area shape="rect" id="Node000015" href="$synchrotron_8cpp.html#af56f9b4417a5f3e717102da3e81a7d37" title="Updates electron properties throughout the grid based on shock parameters and IC Y values." alt="" coords="150,266,307,291"/>
 <area shape="poly" id="edge23_Node000001_Node000015" title=" " alt="" coords="93,232,177,259,175,264,92,237"/>
 <area shape="rect" id="Node000003" href="$synchrotron_8cpp.html#a52e34d49dd7497d65ea5261e80d615d4" title="Calculates cooling Lorentz factor based on comoving time, magnetic field, and IC parameters." alt="" coords="375,157,525,182"/>
 <area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="310,152,361,157,361,162,309,157"/>
