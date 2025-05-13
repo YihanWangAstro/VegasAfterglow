@@ -1,0 +1,18 @@
+<map id="ICPhoton::compute_IC_spectrum" name="ICPhoton::compute_IC_spectrum">
+<area shape="rect" id="Node000001" title="Generates the IC photon spectrum from the given electron and photon data." alt="" coords="5,92,171,132"/>
+<area shape="rect" id="Node000002" href="$structICPhoton.html#a492bf9ae4f3c3c8f5d018a805a5400ce" title="Fill the input spectrum data for the IC photon spectrum." alt="" coords="240,5,384,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="140,89,246,48,248,53,142,94"/>
+<area shape="rect" id="Node000003" href="$structICPhoton.html#a6a2ac815d7fa191cddae0bebe39cdae6" title="Fill the integration grid for the IC photon spectrum." alt="" coords="453,74,668,99"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="171,105,439,90,440,96,171,110"/>
+<area shape="rect" id="Node000005" href="$structICPhoton.html#adb8ba3eab2bb357bf40a6433bd2a1eb8" title="Get the integration bounds for the IC photon spectrum." alt="" coords="219,120,405,160"/>
+<area shape="poly" id="edge5_Node000001_Node000005" title=" " alt="" coords="171,120,205,124,205,129,171,125"/>
+<area shape="rect" id="Node000007" href="$structICPhoton.html#ab70e82101720e70c36fbf3208c9097c5" title="Integrate the IC photon spectrum." alt="" coords="487,177,634,217"/>
+<area shape="poly" id="edge8_Node000001_Node000007" title=" " alt="" coords="125,130,169,151,219,169,285,183,352,191,474,197,473,202,351,196,284,188,218,175,167,156,123,135"/>
+<area shape="rect" id="Node000004" href="$utilities_8h.html#ab8e81118f023df135835db8cce4f5f42" title="Returns the value of a single parameter." alt="" coords="716,127,767,153"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="614,97,669,112,704,124,702,129,667,117,613,102"/>
+<area shape="poly" id="edge4_Node000004_Node000004" title=" " alt="" coords="714,130,706,120,708,110,720,103,741,101,768,105,775,110,777,117,772,118,771,114,766,110,741,106,722,108,712,113,711,119,718,127"/>
+<area shape="rect" id="Node000006" href="$utilities_8h.html#ac47d1412f3f1791737d0f963267096f1" title="Returns the value of a single parameter." alt="" coords="537,127,584,153"/>
+<area shape="poly" id="edge6_Node000005_Node000006" title=" " alt="" coords="406,137,524,137,524,143,406,143"/>
+<area shape="poly" id="edge7_Node000006_Node000004" title=" " alt="" coords="584,137,702,137,702,143,584,143"/>
+<area shape="poly" id="edge9_Node000007_Node000004" title=" " alt="" coords="629,175,667,163,702,151,703,156,669,168,631,180"/>
+</map>

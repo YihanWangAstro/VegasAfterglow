@@ -1,6 +1,6 @@
 <map id="compute_gamma_c" name="compute_gamma_c">
 <area shape="rect" id="Node000001" title="Calculates cooling Lorentz factor based on comoving time, magnetic field, and IC parameters." alt="" coords="415,80,565,105"/>
-<area shape="rect" id="Node000002" href="$inverse-compton_8cpp.html#a54bc152dfd9a704c9362782e822b2cff" title=" " alt="" coords="205,5,351,31"/>
+<area shape="rect" id="Node000002" href="$inverse-compton_8cpp.html#acd9474d0630c4e995f6902006749d116" title=" " alt="" coords="197,5,359,31"/>
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="448,77,366,45,329,33,331,28,368,39,450,72"/>
 <area shape="rect" id="Node000005" href="$synchrotron_8cpp.html#afd4184652bfb1fac7ee55a159f618767" title="Creates and returns a new electron grid based on shock parameters." alt="" coords="189,104,367,129"/>
 <area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="401,105,367,109,366,104,400,100"/>
@@ -9,7 +9,7 @@
 <area shape="rect" id="Node000007" href="$synchrotron_8cpp.html#aecff2eca5f5a9c7e2a94481eb96e597f" title="Updates electron properties throughout the grid based on shock parameters and IC Y values." alt="" coords="199,55,357,80"/>
 <area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="401,85,356,79,357,74,401,79"/>
 <area shape="rect" id="Node000003" href="$inverse-compton_8cpp.html#a31f7a573a50ad47d3ee5513fda0e643e" title="Applies Klein&#45;Nishina cooling to electrons based on photon distribution." alt="" coords="26,5,121,31"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="191,21,121,21,121,15,191,15"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="183,21,121,21,121,15,183,15"/>
 <area shape="rect" id="Node000004" href="$inverse-compton_8cpp.html#ac6f78f0faf7e878eac4d764080d232b2" title="Applies Thomson cooling to electrons based on photon distribution." alt="" coords="5,55,141,80"/>
 <area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="212,36,127,57,126,52,211,31"/>
 <area shape="poly" id="edge7_Node000007_Node000003" title=" " alt="" coords="211,54,120,32,122,27,212,49"/>

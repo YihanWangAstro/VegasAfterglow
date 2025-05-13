@@ -1,5 +1,7 @@
 <map id="min" name="min">
-<area shape="rect" id="Node000001" title="Returns the value of a single parameter." alt="" coords="165,5,212,31"/>
-<area shape="rect" id="Node000002" href="$structICPhoton.html#a2f1977c7f9c16f2e824387227fd53ee4" title="Generates the IC photon spectrum from the given electron and photon data." alt="" coords="5,5,117,31"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="151,21,117,21,117,15,151,15"/>
+<area shape="rect" id="Node000001" title="Returns the value of a single parameter." alt="" coords="453,13,500,38"/>
+<area shape="rect" id="Node000002" href="$structICPhoton.html#adb8ba3eab2bb357bf40a6433bd2a1eb8" title="Get the integration bounds for the IC photon spectrum." alt="" coords="219,5,405,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="440,28,405,28,405,23,440,23"/>
+<area shape="rect" id="Node000003" href="$structICPhoton.html#aabcd1cc2a89ddb1683292dfefa74b14a" title="Generates the IC photon spectrum from the given electron and photon data." alt="" coords="5,5,171,45"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="204,28,171,28,171,23,204,23"/>
 </map>

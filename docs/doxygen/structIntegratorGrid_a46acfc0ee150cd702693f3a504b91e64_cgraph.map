@@ -1,7 +1,0 @@
-<map id="IntegratorGrid::IntegratorGrid" name="IntegratorGrid::IntegratorGrid">
-<area shape="rect" id="Node000001" title="Constructor: Initializes the grid with given x and y boundaries." alt="" coords="5,31,217,56"/>
-<area shape="rect" id="Node000002" href="$mesh_8h.html#a885b165e8d9c9d20f27ec99329a0c3cb" title="Converts boundary values to center values using linear interpolation." alt="" coords="265,5,416,31"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="217,29,251,25,252,30,218,34"/>
-<area shape="rect" id="Node000003" href="$mesh_8h.html#a0e6cb24e48783ee795905c2f78e476a6" title="Creates an array with logarithmically spaced values." alt="" coords="301,55,381,80"/>
-<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="218,52,287,59,287,64,217,57"/>
-</map>

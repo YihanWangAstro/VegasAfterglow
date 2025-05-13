@@ -1,5 +1,0 @@
-<map id="logspace" name="logspace">
-<area shape="rect" id="Node000001" title="Creates an array with logarithmically spaced values." alt="" coords="265,5,345,31"/>
-<area shape="rect" id="Node000002" href="$structIntegratorGrid.html#a46acfc0ee150cd702693f3a504b91e64" title="Constructor: Initializes the grid with given x and y boundaries." alt="" coords="5,5,217,31"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="252,21,217,21,217,15,252,15"/>
-</map>

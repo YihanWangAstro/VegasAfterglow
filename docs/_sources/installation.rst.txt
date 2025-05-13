@@ -58,7 +58,7 @@ GitHub Repository
 
 The source code is available on GitHub:
 
-`https://github.com/YihanWangAstro/VegasAfterglow <https://github.com/YihanWangAstro/VegasAfterglow>`_
+`VegasAfterglow GitHub Repository <https://github.com/YihanWangAstro/VegasAfterglow>`_
 
 C++ Installation
 ----------------

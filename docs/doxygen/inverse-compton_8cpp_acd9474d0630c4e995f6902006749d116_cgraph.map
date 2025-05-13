@@ -1,0 +1,29 @@
+<map id="compute_Thomson_Y" name="compute_Thomson_Y">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,259,167,284"/>
+<area shape="rect" id="Node000002" href="$synchrotron_8cpp.html#a52e34d49dd7497d65ea5261e80d615d4" title="Calculates cooling Lorentz factor based on comoving time, magnetic field, and IC parameters." alt="" coords="215,179,365,204"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="118,256,243,207,245,212,120,261"/>
+<area shape="rect" id="Node000008" href="$utilities_8h.html#ab8e81118f023df135835db8cce4f5f42" title="Returns the value of a single parameter." alt="" coords="1173,132,1224,157"/>
+<area shape="poly" id="edge16_Node000001_Node000008" title=" " alt="" coords="167,269,512,269,951,269,1003,266,1042,256,1079,238,1124,212,1152,190,1176,166,1180,170,1156,194,1127,216,1081,243,1044,261,1003,271,951,274,512,274,167,274"/>
+<area shape="rect" id="Node000011" href="$inverse-compton_8cpp.html#ad89f660f1954e9c12551a19840d656bb" title=" " alt="" coords="255,309,325,335"/>
+<area shape="poly" id="edge15_Node000001_Node000011" title=" " alt="" coords="139,282,242,307,241,313,137,287"/>
+<area shape="rect" id="Node000003" href="$structInverseComptonY.html#a05b76b4d84f50b82728333a42362fc0f" title="Returns the Thomson Y parameter from the provided InverseComptonY object." alt="" coords="413,79,613,119"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="314,176,412,129,432,121,434,126,414,134,316,181"/>
+<area shape="rect" id="Node000004" href="$structInverseComptonY.html#a9a35d3af9bd23acdde9d09d38ee116eb" title="Calculates the effective Y parameter at a specific Lorentz factor and spectral index." alt="" coords="413,143,613,183"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="365,179,399,175,400,180,366,185"/>
+<area shape="poly" id="edge14_Node000002_Node000008" title=" " alt="" coords="366,196,545,210,760,218,951,218,1010,212,1067,198,1118,179,1160,161,1162,166,1120,184,1068,203,1011,218,951,223,760,223,545,216,365,202"/>
+<area shape="rect" id="Node000005" href="$structInverseComptonY.html#ae483ec2ba4108fbf96fb15c3e978c0b3" title="Calculates the effective Y parameter for a given Lorentz factor and spectral index." alt="" coords="661,143,861,183"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="613,161,648,161,648,166,613,166"/>
+<area shape="rect" id="Node000006" href="$utilities_8h.html#a4520a27a10a2aef33c99ad8c679da404" title="Fast approximation of a raised to the power of b." alt="" coords="909,81,991,107"/>
+<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="816,141,901,109,903,114,817,146"/>
+<area shape="rect" id="Node000010" href="$utilities_8h.html#ae490b13fdcc1b917ecdd08c0cecf3556" title="Computes a^(4/3)" alt="" coords="917,157,983,183"/>
+<area shape="poly" id="edge12_Node000005_Node000010" title=" " alt="" coords="862,164,904,166,903,171,862,170"/>
+<area shape="rect" id="Node000007" href="$utilities_8h.html#afc584c30c352192de6847b1f4b8caf0e" title="Fast approximation of 2 raised to a power." alt="" coords="1039,5,1125,31"/>
+<area shape="poly" id="edge6_Node000006_Node000007" title=" " alt="" coords="972,79,1046,36,1048,40,975,83"/>
+<area shape="poly" id="edge11_Node000006_Node000008" title=" " alt="" coords="991,85,1055,81,1091,84,1126,91,1153,104,1176,120,1172,125,1150,109,1124,97,1090,89,1055,86,991,90"/>
+<area shape="rect" id="Node000009" href="$utilities_8h.html#afe0a1b1b7509ac4df83fcc0e510f281b" title="Fast approximation of the base&#45;2 logarithm." alt="" coords="1041,107,1123,132"/>
+<area shape="poly" id="edge9_Node000006_Node000009" title=" " alt="" coords="991,99,1028,106,1027,111,990,104"/>
+<area shape="poly" id="edge7_Node000007_Node000008" title=" " alt="" coords="1104,29,1127,48,1159,84,1184,119,1179,122,1154,87,1123,52,1100,33"/>
+<area shape="poly" id="edge8_Node000008_Node000008" title=" " alt="" coords="1179,133,1175,124,1177,114,1185,108,1199,105,1215,109,1222,117,1218,121,1212,113,1199,111,1187,113,1181,117,1180,123,1183,131"/>
+<area shape="poly" id="edge10_Node000009_Node000008" title=" " alt="" coords="1124,126,1160,134,1159,139,1123,131"/>
+<area shape="poly" id="edge13_Node000010_Node000008" title=" " alt="" coords="983,164,1159,146,1160,151,983,169"/>
+</map>

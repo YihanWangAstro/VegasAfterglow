@@ -92,6 +92,7 @@ $(document).ready(function(){initNavTree('structIntegratorGrid.html',''); initRe
 
 <div class="header">
   <div class="summary">
+<a href="#pub-types">Public Types</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pub-attribs">Public Attributes</a> &#124;
 <a href="#pub-static-attribs">Static Public Attributes</a> &#124;
@@ -105,62 +106,97 @@ $(document).ready(function(){initNavTree('structIntegratorGrid.html',''); initRe
 
 <p><code>#include &lt;<a class="el" href="inverse-compton_8h_source.html">inverse-compton.h</a>&gt;</code></p>
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-types" name="pub-types"></a>
+Public Types</h2></td></tr>
+<tr class="memitem:a3ec4f449b3e2e56623fcb02204181dc4" id="r_a3ec4f449b3e2e56623fcb02204181dc4"><td class="memTemplParams" colspan="2">template&lt;std::size_t N&gt; </td></tr>
+<tr class="memitem:a3ec4f449b3e2e56623fcb02204181dc4"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">using</a>&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="structIntegratorGrid.html#a3ec4f449b3e2e56623fcb02204181dc4">StackArray</a> = xt::xtensor_fixed&lt; <a class="el" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a>, xt::xshape&lt; <a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">N</a> &gt; &gt;</td></tr>
+<tr class="separator:a3ec4f449b3e2e56623fcb02204181dc4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a695bba8cdaf6bfb06c7edfc2997a650f" id="r_a695bba8cdaf6bfb06c7edfc2997a650f"><td class="memTemplParams" colspan="2">template&lt;std::size_t N, std::size_t M&gt; </td></tr>
+<tr class="memitem:a695bba8cdaf6bfb06c7edfc2997a650f"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">using</a>&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="structIntegratorGrid.html#a695bba8cdaf6bfb06c7edfc2997a650f">StackMesh</a> = xt::xtensor_fixed&lt; <a class="el" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a>, xt::xshape&lt; <a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">N</a>, <a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">M</a> &gt; &gt;</td></tr>
+<tr class="separator:a695bba8cdaf6bfb06c7edfc2997a650f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a46acfc0ee150cd702693f3a504b91e64" id="r_a46acfc0ee150cd702693f3a504b91e64"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structIntegratorGrid.html#a46acfc0ee150cd702693f3a504b91e64">IntegratorGrid</a> (<a class="el" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> <a class="el" href="structIntegratorGrid.html#ab43ff1b771120a88932741f6a0a8ab04">x_min</a>, <a class="el" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> <a class="el" href="structIntegratorGrid.html#af64d07e3c66c0475c80a1b86fcadf5ec">x_max</a>, <a class="el" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> <a class="el" href="structIntegratorGrid.html#a593af8bad81b71e51a666c1e1395cd96">y_min</a>, <a class="el" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> <a class="el" href="structIntegratorGrid.html#a0102a11552748306e1f715b5951e1e6e">y_max</a>)</td></tr>
-<tr class="memdesc:a46acfc0ee150cd702693f3a504b91e64"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor: Initializes the grid with given x and y boundaries.  <br /></td></tr>
-<tr class="separator:a46acfc0ee150cd702693f3a504b91e64"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a85a2344454b6e1899f69a8a4ff6ae396" id="r_a85a2344454b6e1899f69a8a4ff6ae396"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structIntegratorGrid.html#a85a2344454b6e1899f69a8a4ff6ae396">IntegratorGrid</a> (<a class="el" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> <a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">nu_min</a>, <a class="el" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> <a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">nu_max</a>, <a class="el" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> <a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">gamma_min</a>, <a class="el" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> <a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">gamma_max</a>)</td></tr>
+<tr class="memdesc:a85a2344454b6e1899f69a8a4ff6ae396"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor: Initializes the grid with given nu and gamma boundaries.  <br /></td></tr>
+<tr class="separator:a85a2344454b6e1899f69a8a4ff6ae396"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
-<tr class="memitem:ab43ff1b771120a88932741f6a0a8ab04" id="r_ab43ff1b771120a88932741f6a0a8ab04"><td class="memItemLeft" align="right" valign="top"><a class="el" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structIntegratorGrid.html#ab43ff1b771120a88932741f6a0a8ab04">x_min</a></td></tr>
-<tr class="memdesc:ab43ff1b771120a88932741f6a0a8ab04"><td class="mdescLeft">&#160;</td><td class="mdescRight">Minimum x-value.  <br /></td></tr>
-<tr class="separator:ab43ff1b771120a88932741f6a0a8ab04"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af64d07e3c66c0475c80a1b86fcadf5ec" id="r_af64d07e3c66c0475c80a1b86fcadf5ec"><td class="memItemLeft" align="right" valign="top"><a class="el" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structIntegratorGrid.html#af64d07e3c66c0475c80a1b86fcadf5ec">x_max</a></td></tr>
-<tr class="memdesc:af64d07e3c66c0475c80a1b86fcadf5ec"><td class="mdescLeft">&#160;</td><td class="mdescRight">Maximum x-value.  <br /></td></tr>
-<tr class="separator:af64d07e3c66c0475c80a1b86fcadf5ec"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a593af8bad81b71e51a666c1e1395cd96" id="r_a593af8bad81b71e51a666c1e1395cd96"><td class="memItemLeft" align="right" valign="top"><a class="el" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structIntegratorGrid.html#a593af8bad81b71e51a666c1e1395cd96">y_min</a></td></tr>
-<tr class="memdesc:a593af8bad81b71e51a666c1e1395cd96"><td class="mdescLeft">&#160;</td><td class="mdescRight">Minimum y-value.  <br /></td></tr>
-<tr class="separator:a593af8bad81b71e51a666c1e1395cd96"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0102a11552748306e1f715b5951e1e6e" id="r_a0102a11552748306e1f715b5951e1e6e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structIntegratorGrid.html#a0102a11552748306e1f715b5951e1e6e">y_max</a></td></tr>
-<tr class="memdesc:a0102a11552748306e1f715b5951e1e6e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Maximum y-value.  <br /></td></tr>
-<tr class="separator:a0102a11552748306e1f715b5951e1e6e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abe87eb4d312853bec7463139111c2c26" id="r_abe87eb4d312853bec7463139111c2c26"><td class="memItemLeft" align="right" valign="top">std::array&lt; <a class="el" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a>, <a class="el" href="structIntegratorGrid.html#ab85d115b19e98d65e187aa88861c7274">num</a>+1 &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structIntegratorGrid.html#abe87eb4d312853bec7463139111c2c26">x_bin</a> {0}</td></tr>
-<tr class="memdesc:abe87eb4d312853bec7463139111c2c26"><td class="mdescLeft">&#160;</td><td class="mdescRight">Bin edges for x.  <br /></td></tr>
-<tr class="separator:abe87eb4d312853bec7463139111c2c26"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4db3ec8e787fb535b732dec92f9991a8" id="r_a4db3ec8e787fb535b732dec92f9991a8"><td class="memItemLeft" align="right" valign="top">std::array&lt; <a class="el" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a>, <a class="el" href="structIntegratorGrid.html#ab85d115b19e98d65e187aa88861c7274">num</a>+1 &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structIntegratorGrid.html#a4db3ec8e787fb535b732dec92f9991a8">y_bin</a> {0}</td></tr>
-<tr class="memdesc:a4db3ec8e787fb535b732dec92f9991a8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Bin edges for y.  <br /></td></tr>
-<tr class="separator:a4db3ec8e787fb535b732dec92f9991a8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af7c36a2ffdb8c8fa6a2fb87b3fd680ed" id="r_af7c36a2ffdb8c8fa6a2fb87b3fd680ed"><td class="memItemLeft" align="right" valign="top">std::array&lt; <a class="el" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a>, <a class="el" href="structIntegratorGrid.html#ab85d115b19e98d65e187aa88861c7274">num</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structIntegratorGrid.html#af7c36a2ffdb8c8fa6a2fb87b3fd680ed">x</a> {0}</td></tr>
-<tr class="memdesc:af7c36a2ffdb8c8fa6a2fb87b3fd680ed"><td class="mdescLeft">&#160;</td><td class="mdescRight">Center values for x.  <br /></td></tr>
-<tr class="separator:af7c36a2ffdb8c8fa6a2fb87b3fd680ed"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a53f7a95fa29d77e0d3baf255893ff3cb" id="r_a53f7a95fa29d77e0d3baf255893ff3cb"><td class="memItemLeft" align="right" valign="top">std::array&lt; <a class="el" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a>, <a class="el" href="structIntegratorGrid.html#ab85d115b19e98d65e187aa88861c7274">num</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structIntegratorGrid.html#a53f7a95fa29d77e0d3baf255893ff3cb">y</a> {0}</td></tr>
-<tr class="memdesc:a53f7a95fa29d77e0d3baf255893ff3cb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Center values for y.  <br /></td></tr>
-<tr class="separator:a53f7a95fa29d77e0d3baf255893ff3cb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0ded0cf62f63c2ed8904a044f9e90286" id="r_a0ded0cf62f63c2ed8904a044f9e90286"><td class="memItemLeft" align="right" valign="top">std::array&lt; <a class="el" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a>, <a class="el" href="structIntegratorGrid.html#ab85d115b19e98d65e187aa88861c7274">num</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structIntegratorGrid.html#a0ded0cf62f63c2ed8904a044f9e90286">j_syn</a> {0}</td></tr>
-<tr class="memdesc:a0ded0cf62f63c2ed8904a044f9e90286"><td class="mdescLeft">&#160;</td><td class="mdescRight">Synchrotron intensity at each x center.  <br /></td></tr>
-<tr class="separator:a0ded0cf62f63c2ed8904a044f9e90286"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab5d51a773bb731805807cd752754b348" id="r_ab5d51a773bb731805807cd752754b348"><td class="memItemLeft" align="right" valign="top">std::array&lt; <a class="el" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a>, <a class="el" href="structIntegratorGrid.html#ab85d115b19e98d65e187aa88861c7274">num</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structIntegratorGrid.html#ab5d51a773bb731805807cd752754b348">ns</a> {0}</td></tr>
-<tr class="memdesc:ab5d51a773bb731805807cd752754b348"><td class="mdescLeft">&#160;</td><td class="mdescRight">Number density at each y center.  <br /></td></tr>
-<tr class="separator:ab5d51a773bb731805807cd752754b348"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a15142f0263de0b86d0f5b04529813a93" id="r_a15142f0263de0b86d0f5b04529813a93"><td class="memItemLeft" align="right" valign="top">std::array&lt; std::array&lt; <a class="el" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a>, <a class="el" href="structIntegratorGrid.html#ab85d115b19e98d65e187aa88861c7274">num</a> &gt;, <a class="el" href="structIntegratorGrid.html#ab85d115b19e98d65e187aa88861c7274">num</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structIntegratorGrid.html#a15142f0263de0b86d0f5b04529813a93">I0</a> {{{0}}}</td></tr>
-<tr class="memdesc:a15142f0263de0b86d0f5b04529813a93"><td class="mdescLeft">&#160;</td><td class="mdescRight">2D array to store computed intermediate values.  <br /></td></tr>
-<tr class="separator:a15142f0263de0b86d0f5b04529813a93"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6d3c0192cd52c554009794303a026d68" id="r_a6d3c0192cd52c554009794303a026d68"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structIntegratorGrid.html#a3ec4f449b3e2e56623fcb02204181dc4">StackArray</a>&lt; <a class="el" href="structIntegratorGrid.html#ab85d115b19e98d65e187aa88861c7274">num</a>+1 &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structIntegratorGrid.html#a6d3c0192cd52c554009794303a026d68">nu_edge</a> {0}</td></tr>
+<tr class="memdesc:a6d3c0192cd52c554009794303a026d68"><td class="mdescLeft">&#160;</td><td class="mdescRight">Bin edges for nu.  <br /></td></tr>
+<tr class="separator:a6d3c0192cd52c554009794303a026d68"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2eab29055ad10b15da2f1b03c16d0d30" id="r_a2eab29055ad10b15da2f1b03c16d0d30"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structIntegratorGrid.html#a3ec4f449b3e2e56623fcb02204181dc4">StackArray</a>&lt; <a class="el" href="structIntegratorGrid.html#ab85d115b19e98d65e187aa88861c7274">num</a>+1 &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structIntegratorGrid.html#a2eab29055ad10b15da2f1b03c16d0d30">gamma_edge</a> {0}</td></tr>
+<tr class="memdesc:a2eab29055ad10b15da2f1b03c16d0d30"><td class="mdescLeft">&#160;</td><td class="mdescRight">Bin edges for gamma.  <br /></td></tr>
+<tr class="separator:a2eab29055ad10b15da2f1b03c16d0d30"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae04d6653b0951122c4b813a837695b0e" id="r_ae04d6653b0951122c4b813a837695b0e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structIntegratorGrid.html#a3ec4f449b3e2e56623fcb02204181dc4">StackArray</a>&lt; <a class="el" href="structIntegratorGrid.html#ab85d115b19e98d65e187aa88861c7274">num</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structIntegratorGrid.html#ae04d6653b0951122c4b813a837695b0e">nu</a> {0}</td></tr>
+<tr class="memdesc:ae04d6653b0951122c4b813a837695b0e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Center values for nu.  <br /></td></tr>
+<tr class="separator:ae04d6653b0951122c4b813a837695b0e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aaa70803b4be04dd650bb5761bbe1e9fd" id="r_aaa70803b4be04dd650bb5761bbe1e9fd"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structIntegratorGrid.html#a3ec4f449b3e2e56623fcb02204181dc4">StackArray</a>&lt; <a class="el" href="structIntegratorGrid.html#ab85d115b19e98d65e187aa88861c7274">num</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structIntegratorGrid.html#aaa70803b4be04dd650bb5761bbe1e9fd">gamma</a> {0}</td></tr>
+<tr class="memdesc:aaa70803b4be04dd650bb5761bbe1e9fd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Center values for gamma.  <br /></td></tr>
+<tr class="separator:aaa70803b4be04dd650bb5761bbe1e9fd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a417a91be160679f29b91392af9080ef4" id="r_a417a91be160679f29b91392af9080ef4"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structIntegratorGrid.html#a3ec4f449b3e2e56623fcb02204181dc4">StackArray</a>&lt; <a class="el" href="structIntegratorGrid.html#ab85d115b19e98d65e187aa88861c7274">num</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structIntegratorGrid.html#a417a91be160679f29b91392af9080ef4">I_nu_syn</a> {0}</td></tr>
+<tr class="memdesc:a417a91be160679f29b91392af9080ef4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Synchrotron intensity at each nu center.  <br /></td></tr>
+<tr class="separator:a417a91be160679f29b91392af9080ef4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:affcb4eed2e71ec42cf15623b55e077bc" id="r_affcb4eed2e71ec42cf15623b55e077bc"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structIntegratorGrid.html#a3ec4f449b3e2e56623fcb02204181dc4">StackArray</a>&lt; <a class="el" href="structIntegratorGrid.html#ab85d115b19e98d65e187aa88861c7274">num</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structIntegratorGrid.html#affcb4eed2e71ec42cf15623b55e077bc">column_den</a> {0}</td></tr>
+<tr class="memdesc:affcb4eed2e71ec42cf15623b55e077bc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Number density at each gamma center.  <br /></td></tr>
+<tr class="separator:affcb4eed2e71ec42cf15623b55e077bc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab86ed8ad36afbd1a3efd92ba47137229" id="r_ab86ed8ad36afbd1a3efd92ba47137229"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structIntegratorGrid.html#a695bba8cdaf6bfb06c7edfc2997a650f">StackMesh</a>&lt; <a class="el" href="structIntegratorGrid.html#ab85d115b19e98d65e187aa88861c7274">num</a>, <a class="el" href="structIntegratorGrid.html#ab85d115b19e98d65e187aa88861c7274">num</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structIntegratorGrid.html#ab86ed8ad36afbd1a3efd92ba47137229">I0</a> {{{0}}}</td></tr>
+<tr class="memdesc:ab86ed8ad36afbd1a3efd92ba47137229"><td class="mdescLeft">&#160;</td><td class="mdescRight">2D array to store computed intermediate values.  <br /></td></tr>
+<tr class="separator:ab86ed8ad36afbd1a3efd92ba47137229"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-static-attribs" name="pub-static-attribs"></a>
 Static Public Attributes</h2></td></tr>
-<tr class="memitem:ab85d115b19e98d65e187aa88861c7274" id="r_ab85d115b19e98d65e187aa88861c7274"><td class="memItemLeft" align="right" valign="top"><a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">static</a> <a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">constexpr</a> <a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">size_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structIntegratorGrid.html#ab85d115b19e98d65e187aa88861c7274">num</a> {32}</td></tr>
+<tr class="memitem:ab85d115b19e98d65e187aa88861c7274" id="r_ab85d115b19e98d65e187aa88861c7274"><td class="memItemLeft" align="right" valign="top"><a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">static</a> <a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">constexpr</a> <a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">size_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structIntegratorGrid.html#ab85d115b19e98d65e187aa88861c7274">num</a> {64}</td></tr>
 <tr class="memdesc:ab85d115b19e98d65e187aa88861c7274"><td class="mdescLeft">&#160;</td><td class="mdescRight">Number of bins.  <br /></td></tr>
 <tr class="separator:ab85d115b19e98d65e187aa88861c7274"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Defines a grid for numerical integration in log-space. </p>
-<p>Given minimum and maximum values for x and y, it computes logarithmically spaced bins (x_bin and y_bin) and then determines center values (x and y) from those bins. </p>
+<p>Stack struct to avoid memory allocation.</p>
+<p>Given minimum and maximum values for nu and gamma, it computes logarithmically spaced bins (nu_edge and gamma_edge) and then determines center values (nu and gamma) from those bins. </p>
 
-<p class="definition">Definition at line <a class="el" href="inverse-compton_8h_source.html#l00047">47</a> of file <a class="el" href="inverse-compton_8h_source.html">inverse-compton.h</a>.</p>
-</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="a46acfc0ee150cd702693f3a504b91e64" name="a46acfc0ee150cd702693f3a504b91e64"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a46acfc0ee150cd702693f3a504b91e64">&#9670;&#160;</a></span>IntegratorGrid()</h2>
+<p class="definition">Definition at line <a class="el" href="inverse-compton_8h_source.html#l00048">48</a> of file <a class="el" href="inverse-compton_8h_source.html">inverse-compton.h</a>.</p>
+</div><h2 class="groupheader">Member Typedef Documentation</h2>
+<a id="a3ec4f449b3e2e56623fcb02204181dc4" name="a3ec4f449b3e2e56623fcb02204181dc4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3ec4f449b3e2e56623fcb02204181dc4">&#9670;&#160;</a></span>StackArray</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;std::size_t N&gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">using</a> <a class="el" href="structIntegratorGrid.html#a3ec4f449b3e2e56623fcb02204181dc4">IntegratorGrid::StackArray</a> =  xt::xtensor_fixed&lt;<a class="el" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a>, xt::xshape&lt;<a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">N</a>&gt; &gt;</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="inverse-compton_8h_source.html#l00050">50</a> of file <a class="el" href="inverse-compton_8h_source.html">inverse-compton.h</a>.</p>
+
+</div>
+</div>
+<a id="a695bba8cdaf6bfb06c7edfc2997a650f" name="a695bba8cdaf6bfb06c7edfc2997a650f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a695bba8cdaf6bfb06c7edfc2997a650f">&#9670;&#160;</a></span>StackMesh</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;std::size_t N, std::size_t M&gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">using</a> <a class="el" href="structIntegratorGrid.html#a695bba8cdaf6bfb06c7edfc2997a650f">IntegratorGrid::StackMesh</a> =  xt::xtensor_fixed&lt;<a class="el" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a>, xt::xshape&lt;<a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">N</a>, <a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">M</a>&gt; &gt;</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="inverse-compton_8h_source.html#l00053">53</a> of file <a class="el" href="inverse-compton_8h_source.html">inverse-compton.h</a>.</p>
+
+</div>
+</div>
+<h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a id="a85a2344454b6e1899f69a8a4ff6ae396" name="a85a2344454b6e1899f69a8a4ff6ae396"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a85a2344454b6e1899f69a8a4ff6ae396">&#9670;&#160;</a></span>IntegratorGrid()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -172,25 +208,25 @@ Static Public Attributes</h2></td></tr>
           <td class="memname">IntegratorGrid::IntegratorGrid </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a>&#160;</td>
-          <td class="paramname"><em>x_min</em>, </td>
+          <td class="paramname"><em>nu_min</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype"><a class="el" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a>&#160;</td>
-          <td class="paramname"><em>x_max</em>, </td>
+          <td class="paramname"><em>nu_max</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype"><a class="el" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a>&#160;</td>
-          <td class="paramname"><em>y_min</em>, </td>
+          <td class="paramname"><em>gamma_min</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype"><a class="el" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a>&#160;</td>
-          <td class="paramname"><em>y_max</em>&#160;</td>
+          <td class="paramname"><em>gamma_max</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -205,104 +241,177 @@ Static Public Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Constructor: Initializes the grid with given x and y boundaries. </p>
+<p>Constructor: Initializes the grid with given nu and gamma boundaries. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">x_min</td><td>Minimum x-value </td></tr>
-    <tr><td class="paramname">x_max</td><td>Maximum x-value </td></tr>
-    <tr><td class="paramname">y_min</td><td>Minimum y-value </td></tr>
-    <tr><td class="paramname">y_max</td><td>Maximum y-value </td></tr>
+    <tr><td class="paramname">nu_min</td><td>Minimum nu-value </td></tr>
+    <tr><td class="paramname">nu_max</td><td>Maximum nu-value </td></tr>
+    <tr><td class="paramname">gamma_min</td><td>Minimum gamma-value </td></tr>
+    <tr><td class="paramname">gamma_max</td><td>Maximum gamma-value </td></tr>
   </table>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="inverse-compton_8h_source.html#l00055">55</a> of file <a class="el" href="inverse-compton_8h_source.html">inverse-compton.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   56</span>        : <a class="code hl_variable" href="structIntegratorGrid.html#ab43ff1b771120a88932741f6a0a8ab04">x_min</a>(<a class="code hl_variable" href="structIntegratorGrid.html#ab43ff1b771120a88932741f6a0a8ab04">x_min</a>), <a class="code hl_variable" href="structIntegratorGrid.html#af64d07e3c66c0475c80a1b86fcadf5ec">x_max</a>(<a class="code hl_variable" href="structIntegratorGrid.html#af64d07e3c66c0475c80a1b86fcadf5ec">x_max</a>), <a class="code hl_variable" href="structIntegratorGrid.html#a593af8bad81b71e51a666c1e1395cd96">y_min</a>(<a class="code hl_variable" href="structIntegratorGrid.html#a593af8bad81b71e51a666c1e1395cd96">y_min</a>), <a class="code hl_variable" href="structIntegratorGrid.html#a0102a11552748306e1f715b5951e1e6e">y_max</a>(<a class="code hl_variable" href="structIntegratorGrid.html#a0102a11552748306e1f715b5951e1e6e">y_max</a>) {</div>
-<div class="line"><span class="lineno">   57</span>        <a class="code hl_function" href="mesh_8h.html#a0e6cb24e48783ee795905c2f78e476a6">logspace</a>(std::log10(<a class="code hl_variable" href="structIntegratorGrid.html#ab43ff1b771120a88932741f6a0a8ab04">x_min</a>), std::log10(<a class="code hl_variable" href="structIntegratorGrid.html#af64d07e3c66c0475c80a1b86fcadf5ec">x_max</a>), <a class="code hl_variable" href="structIntegratorGrid.html#abe87eb4d312853bec7463139111c2c26">x_bin</a>);  <span class="comment">// Generate logarithmically spaced bin edges for x.</span></div>
-<div class="line"><span class="lineno">   58</span>        <a class="code hl_function" href="mesh_8h.html#a0e6cb24e48783ee795905c2f78e476a6">logspace</a>(std::log10(<a class="code hl_variable" href="structIntegratorGrid.html#a593af8bad81b71e51a666c1e1395cd96">y_min</a>), std::log10(<a class="code hl_variable" href="structIntegratorGrid.html#a0102a11552748306e1f715b5951e1e6e">y_max</a>), <a class="code hl_variable" href="structIntegratorGrid.html#a4db3ec8e787fb535b732dec92f9991a8">y_bin</a>);  <span class="comment">// Generate logarithmically spaced bin edges for y.</span></div>
-<div class="line"><span class="lineno">   59</span>        <a class="code hl_function" href="mesh_8h.html#a885b165e8d9c9d20f27ec99329a0c3cb">boundary_to_center</a>(<a class="code hl_variable" href="structIntegratorGrid.html#abe87eb4d312853bec7463139111c2c26">x_bin</a>, <a class="code hl_variable" href="structIntegratorGrid.html#af7c36a2ffdb8c8fa6a2fb87b3fd680ed">x</a>);                           <span class="comment">// Compute center values for x.</span></div>
-<div class="line"><span class="lineno">   60</span>        <a class="code hl_function" href="mesh_8h.html#a885b165e8d9c9d20f27ec99329a0c3cb">boundary_to_center</a>(<a class="code hl_variable" href="structIntegratorGrid.html#a4db3ec8e787fb535b732dec92f9991a8">y_bin</a>, <a class="code hl_variable" href="structIntegratorGrid.html#a53f7a95fa29d77e0d3baf255893ff3cb">y</a>);                           <span class="comment">// Compute center values for y.</span></div>
-<div class="line"><span class="lineno">   61</span>    }</div>
-<div class="ttc" id="amesh_8h_html_a0e6cb24e48783ee795905c2f78e476a6"><div class="ttname"><a href="mesh_8h.html#a0e6cb24e48783ee795905c2f78e476a6">logspace</a></div><div class="ttdeci">void logspace(Real start, Real end, Arr &amp;result)</div><div class="ttdoc">Creates an array with logarithmically spaced values.</div><div class="ttdef"><b>Definition</b> <a href="mesh_8h_source.html#l00153">mesh.h:153</a></div></div>
-<div class="ttc" id="amesh_8h_html_a885b165e8d9c9d20f27ec99329a0c3cb"><div class="ttname"><a href="mesh_8h.html#a885b165e8d9c9d20f27ec99329a0c3cb">boundary_to_center</a></div><div class="ttdeci">void boundary_to_center(Arr1 const &amp;boundary, Arr2 &amp;center)</div><div class="ttdoc">Converts boundary values to center values using linear interpolation.</div><div class="ttdef"><b>Definition</b> <a href="mesh_8h_source.html#l00171">mesh.h:171</a></div></div>
-<div class="ttc" id="astructIntegratorGrid_html_a0102a11552748306e1f715b5951e1e6e"><div class="ttname"><a href="structIntegratorGrid.html#a0102a11552748306e1f715b5951e1e6e">IntegratorGrid::y_max</a></div><div class="ttdeci">Real y_max</div><div class="ttdoc">Maximum y-value.</div><div class="ttdef"><b>Definition</b> <a href="inverse-compton_8h_source.html#l00066">inverse-compton.h:66</a></div></div>
-<div class="ttc" id="astructIntegratorGrid_html_a4db3ec8e787fb535b732dec92f9991a8"><div class="ttname"><a href="structIntegratorGrid.html#a4db3ec8e787fb535b732dec92f9991a8">IntegratorGrid::y_bin</a></div><div class="ttdeci">std::array&lt; Real, num+1 &gt; y_bin</div><div class="ttdoc">Bin edges for y.</div><div class="ttdef"><b>Definition</b> <a href="inverse-compton_8h_source.html#l00069">inverse-compton.h:69</a></div></div>
-<div class="ttc" id="astructIntegratorGrid_html_a53f7a95fa29d77e0d3baf255893ff3cb"><div class="ttname"><a href="structIntegratorGrid.html#a53f7a95fa29d77e0d3baf255893ff3cb">IntegratorGrid::y</a></div><div class="ttdeci">std::array&lt; Real, num &gt; y</div><div class="ttdoc">Center values for y.</div><div class="ttdef"><b>Definition</b> <a href="inverse-compton_8h_source.html#l00071">inverse-compton.h:71</a></div></div>
-<div class="ttc" id="astructIntegratorGrid_html_a593af8bad81b71e51a666c1e1395cd96"><div class="ttname"><a href="structIntegratorGrid.html#a593af8bad81b71e51a666c1e1395cd96">IntegratorGrid::y_min</a></div><div class="ttdeci">Real y_min</div><div class="ttdoc">Minimum y-value.</div><div class="ttdef"><b>Definition</b> <a href="inverse-compton_8h_source.html#l00065">inverse-compton.h:65</a></div></div>
-<div class="ttc" id="astructIntegratorGrid_html_ab43ff1b771120a88932741f6a0a8ab04"><div class="ttname"><a href="structIntegratorGrid.html#ab43ff1b771120a88932741f6a0a8ab04">IntegratorGrid::x_min</a></div><div class="ttdeci">Real x_min</div><div class="ttdoc">Minimum x-value.</div><div class="ttdef"><b>Definition</b> <a href="inverse-compton_8h_source.html#l00063">inverse-compton.h:63</a></div></div>
-<div class="ttc" id="astructIntegratorGrid_html_abe87eb4d312853bec7463139111c2c26"><div class="ttname"><a href="structIntegratorGrid.html#abe87eb4d312853bec7463139111c2c26">IntegratorGrid::x_bin</a></div><div class="ttdeci">std::array&lt; Real, num+1 &gt; x_bin</div><div class="ttdoc">Bin edges for x.</div><div class="ttdef"><b>Definition</b> <a href="inverse-compton_8h_source.html#l00068">inverse-compton.h:68</a></div></div>
-<div class="ttc" id="astructIntegratorGrid_html_af64d07e3c66c0475c80a1b86fcadf5ec"><div class="ttname"><a href="structIntegratorGrid.html#af64d07e3c66c0475c80a1b86fcadf5ec">IntegratorGrid::x_max</a></div><div class="ttdeci">Real x_max</div><div class="ttdoc">Maximum x-value.</div><div class="ttdef"><b>Definition</b> <a href="inverse-compton_8h_source.html#l00064">inverse-compton.h:64</a></div></div>
-<div class="ttc" id="astructIntegratorGrid_html_af7c36a2ffdb8c8fa6a2fb87b3fd680ed"><div class="ttname"><a href="structIntegratorGrid.html#af7c36a2ffdb8c8fa6a2fb87b3fd680ed">IntegratorGrid::x</a></div><div class="ttdeci">std::array&lt; Real, num &gt; x</div><div class="ttdoc">Center values for x.</div><div class="ttdef"><b>Definition</b> <a href="inverse-compton_8h_source.html#l00070">inverse-compton.h:70</a></div></div>
+<p class="definition">Definition at line <a class="el" href="inverse-compton_8h_source.html#l00061">61</a> of file <a class="el" href="inverse-compton_8h_source.html">inverse-compton.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   61</span>                                                                             {</div>
+<div class="line"><span class="lineno">   62</span>        <span class="comment">// Generate logarithmically spaced bin edges for nu.</span></div>
+<div class="line"><span class="lineno">   63</span>        <a class="code hl_variable" href="structIntegratorGrid.html#a6d3c0192cd52c554009794303a026d68">nu_edge</a> = xt::logspace(std::log10(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">nu_min</a>), std::log10(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">nu_max</a>), <a class="code hl_variable" href="structIntegratorGrid.html#ab85d115b19e98d65e187aa88861c7274">num</a> + 1);</div>
+<div class="line"><span class="lineno">   64</span>        <span class="comment">// Generate logarithmically spaced bin edges for gamma.</span></div>
+<div class="line"><span class="lineno">   65</span>        <a class="code hl_variable" href="structIntegratorGrid.html#a2eab29055ad10b15da2f1b03c16d0d30">gamma_edge</a> = xt::logspace(std::log10(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">gamma_min</a>), std::log10(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">gamma_max</a>), <a class="code hl_variable" href="structIntegratorGrid.html#ab85d115b19e98d65e187aa88861c7274">num</a> + 1);</div>
+<div class="line"><span class="lineno">   66</span>        <a class="code hl_function" href="mesh_8h.html#a885b165e8d9c9d20f27ec99329a0c3cb">boundary_to_center</a>(<a class="code hl_variable" href="structIntegratorGrid.html#a6d3c0192cd52c554009794303a026d68">nu_edge</a>, <a class="code hl_variable" href="structIntegratorGrid.html#ae04d6653b0951122c4b813a837695b0e">nu</a>);        <span class="comment">// Compute center values for nu.</span></div>
+<div class="line"><span class="lineno">   67</span>        <a class="code hl_function" href="mesh_8h.html#a885b165e8d9c9d20f27ec99329a0c3cb">boundary_to_center</a>(<a class="code hl_variable" href="structIntegratorGrid.html#a2eab29055ad10b15da2f1b03c16d0d30">gamma_edge</a>, <a class="code hl_variable" href="structIntegratorGrid.html#aaa70803b4be04dd650bb5761bbe1e9fd">gamma</a>);  <span class="comment">// Compute center values for gamma.</span></div>
+<div class="line"><span class="lineno">   68</span>    }</div>
+<div class="ttc" id="amesh_8h_html_a885b165e8d9c9d20f27ec99329a0c3cb"><div class="ttname"><a href="mesh_8h.html#a885b165e8d9c9d20f27ec99329a0c3cb">boundary_to_center</a></div><div class="ttdeci">void boundary_to_center(Arr1 const &amp;boundary, Arr2 &amp;center)</div><div class="ttdoc">Converts boundary values to center values using linear interpolation.</div><div class="ttdef"><b>Definition</b> <a href="mesh_8h_source.html#l00153">mesh.h:153</a></div></div>
+<div class="ttc" id="astructIntegratorGrid_html_a2eab29055ad10b15da2f1b03c16d0d30"><div class="ttname"><a href="structIntegratorGrid.html#a2eab29055ad10b15da2f1b03c16d0d30">IntegratorGrid::gamma_edge</a></div><div class="ttdeci">StackArray&lt; num+1 &gt; gamma_edge</div><div class="ttdoc">Bin edges for gamma.</div><div class="ttdef"><b>Definition</b> <a href="inverse-compton_8h_source.html#l00072">inverse-compton.h:72</a></div></div>
+<div class="ttc" id="astructIntegratorGrid_html_a6d3c0192cd52c554009794303a026d68"><div class="ttname"><a href="structIntegratorGrid.html#a6d3c0192cd52c554009794303a026d68">IntegratorGrid::nu_edge</a></div><div class="ttdeci">StackArray&lt; num+1 &gt; nu_edge</div><div class="ttdoc">Bin edges for nu.</div><div class="ttdef"><b>Definition</b> <a href="inverse-compton_8h_source.html#l00071">inverse-compton.h:71</a></div></div>
+<div class="ttc" id="astructIntegratorGrid_html_aaa70803b4be04dd650bb5761bbe1e9fd"><div class="ttname"><a href="structIntegratorGrid.html#aaa70803b4be04dd650bb5761bbe1e9fd">IntegratorGrid::gamma</a></div><div class="ttdeci">StackArray&lt; num &gt; gamma</div><div class="ttdoc">Center values for gamma.</div><div class="ttdef"><b>Definition</b> <a href="inverse-compton_8h_source.html#l00074">inverse-compton.h:74</a></div></div>
+<div class="ttc" id="astructIntegratorGrid_html_ab85d115b19e98d65e187aa88861c7274"><div class="ttname"><a href="structIntegratorGrid.html#ab85d115b19e98d65e187aa88861c7274">IntegratorGrid::num</a></div><div class="ttdeci">static constexpr size_t num</div><div class="ttdoc">Number of bins.</div><div class="ttdef"><b>Definition</b> <a href="inverse-compton_8h_source.html#l00070">inverse-compton.h:70</a></div></div>
+<div class="ttc" id="astructIntegratorGrid_html_ae04d6653b0951122c4b813a837695b0e"><div class="ttname"><a href="structIntegratorGrid.html#ae04d6653b0951122c4b813a837695b0e">IntegratorGrid::nu</a></div><div class="ttdeci">StackArray&lt; num &gt; nu</div><div class="ttdoc">Center values for nu.</div><div class="ttdef"><b>Definition</b> <a href="inverse-compton_8h_source.html#l00073">inverse-compton.h:73</a></div></div>
+<div class="ttc" id="autilities_8h_html_ab8e81118f023df135835db8cce4f5f42"><div class="ttname"><a href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">max</a></div><div class="ttdeci">T max(T value)</div><div class="ttdoc">Returns the value of a single parameter.</div><div class="ttdef"><b>Definition</b> <a href="utilities_8h_source.html#l00330">utilities.h:330</a></div></div>
 </div><!-- fragment --><div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
-<div class="center"><img src="structIntegratorGrid_a46acfc0ee150cd702693f3a504b91e64_cgraph.png" border="0" usemap="#astructIntegratorGrid_a46acfc0ee150cd702693f3a504b91e64_cgraph" alt=""/></div>
-<map name="astructIntegratorGrid_a46acfc0ee150cd702693f3a504b91e64_cgraph" id="astructIntegratorGrid_a46acfc0ee150cd702693f3a504b91e64_cgraph">
-<area shape="rect" title="Constructor: Initializes the grid with given x and y boundaries." alt="" coords="5,31,217,56"/>
+<div class="center"><img src="structIntegratorGrid_a85a2344454b6e1899f69a8a4ff6ae396_cgraph.png" border="0" usemap="#astructIntegratorGrid_a85a2344454b6e1899f69a8a4ff6ae396_cgraph" alt=""/></div>
+<map name="astructIntegratorGrid_a85a2344454b6e1899f69a8a4ff6ae396_cgraph" id="astructIntegratorGrid_a85a2344454b6e1899f69a8a4ff6ae396_cgraph">
+<area shape="rect" title="Constructor: Initializes the grid with given nu and gamma boundaries." alt="" coords="5,5,217,31"/>
 <area shape="rect" href="mesh_8h.html#a885b165e8d9c9d20f27ec99329a0c3cb" title="Converts boundary values to center values using linear interpolation." alt="" coords="265,5,416,31"/>
-<area shape="poly" title=" " alt="" coords="217,29,251,25,252,30,218,34"/>
-<area shape="rect" href="mesh_8h.html#a0e6cb24e48783ee795905c2f78e476a6" title="Creates an array with logarithmically spaced values." alt="" coords="301,55,381,80"/>
-<area shape="poly" title=" " alt="" coords="218,52,287,59,287,64,217,57"/>
+<area shape="poly" title=" " alt="" coords="217,15,251,15,251,21,217,21"/>
 </map>
 </div>
 
 </div>
 </div>
 <h2 class="groupheader">Member Data Documentation</h2>
-<a id="a15142f0263de0b86d0f5b04529813a93" name="a15142f0263de0b86d0f5b04529813a93"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a15142f0263de0b86d0f5b04529813a93">&#9670;&#160;</a></span>I0</h2>
+<a id="affcb4eed2e71ec42cf15623b55e077bc" name="affcb4eed2e71ec42cf15623b55e077bc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#affcb4eed2e71ec42cf15623b55e077bc">&#9670;&#160;</a></span>column_den</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">std::array&lt;std::array&lt;<a class="el" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a>, <a class="el" href="structIntegratorGrid.html#ab85d115b19e98d65e187aa88861c7274">num</a>&gt;, <a class="el" href="structIntegratorGrid.html#ab85d115b19e98d65e187aa88861c7274">num</a>&gt; IntegratorGrid::I0 {{{0}}}</td>
+          <td class="memname"><a class="el" href="structIntegratorGrid.html#a3ec4f449b3e2e56623fcb02204181dc4">StackArray</a>&lt;<a class="el" href="structIntegratorGrid.html#ab85d115b19e98d65e187aa88861c7274">num</a>&gt; IntegratorGrid::column_den {0}</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Number density at each gamma center. </p>
+
+<p class="definition">Definition at line <a class="el" href="inverse-compton_8h_source.html#l00076">76</a> of file <a class="el" href="inverse-compton_8h_source.html">inverse-compton.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   76</span>{0};      <span class="comment">///&lt; Number density at each gamma center.</span></div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="aaa70803b4be04dd650bb5761bbe1e9fd" name="aaa70803b4be04dd650bb5761bbe1e9fd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aaa70803b4be04dd650bb5761bbe1e9fd">&#9670;&#160;</a></span>gamma</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="structIntegratorGrid.html#a3ec4f449b3e2e56623fcb02204181dc4">StackArray</a>&lt;<a class="el" href="structIntegratorGrid.html#ab85d115b19e98d65e187aa88861c7274">num</a>&gt; IntegratorGrid::gamma {0}</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Center values for gamma. </p>
+
+<p class="definition">Definition at line <a class="el" href="inverse-compton_8h_source.html#l00074">74</a> of file <a class="el" href="inverse-compton_8h_source.html">inverse-compton.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   74</span>{0};           <span class="comment">///&lt; Center values for gamma.</span></div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a2eab29055ad10b15da2f1b03c16d0d30" name="a2eab29055ad10b15da2f1b03c16d0d30"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2eab29055ad10b15da2f1b03c16d0d30">&#9670;&#160;</a></span>gamma_edge</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="structIntegratorGrid.html#a3ec4f449b3e2e56623fcb02204181dc4">StackArray</a>&lt;<a class="el" href="structIntegratorGrid.html#ab85d115b19e98d65e187aa88861c7274">num</a> + 1&gt; IntegratorGrid::gamma_edge {0}</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Bin edges for gamma. </p>
+
+<p class="definition">Definition at line <a class="el" href="inverse-compton_8h_source.html#l00072">72</a> of file <a class="el" href="inverse-compton_8h_source.html">inverse-compton.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   72</span>{0};  <span class="comment">///&lt; Bin edges for gamma.</span></div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="ab86ed8ad36afbd1a3efd92ba47137229" name="ab86ed8ad36afbd1a3efd92ba47137229"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab86ed8ad36afbd1a3efd92ba47137229">&#9670;&#160;</a></span>I0</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="structIntegratorGrid.html#a695bba8cdaf6bfb06c7edfc2997a650f">StackMesh</a>&lt;<a class="el" href="structIntegratorGrid.html#ab85d115b19e98d65e187aa88861c7274">num</a>, <a class="el" href="structIntegratorGrid.html#ab85d115b19e98d65e187aa88861c7274">num</a>&gt; IntegratorGrid::I0 {{{0}}}</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 <p>2D array to store computed intermediate values. </p>
 
-<p class="definition">Definition at line <a class="el" href="inverse-compton_8h_source.html#l00074">74</a> of file <a class="el" href="inverse-compton_8h_source.html">inverse-compton.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   74</span>{{{0}}};  <span class="comment">///&lt; 2D array to store computed intermediate values.</span></div>
+<p class="definition">Definition at line <a class="el" href="inverse-compton_8h_source.html#l00077">77</a> of file <a class="el" href="inverse-compton_8h_source.html">inverse-compton.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   77</span>{{{0}}};      <span class="comment">///&lt; 2D array to store computed intermediate values.</span></div>
 </div><!-- fragment -->
 </div>
 </div>
-<a id="a0ded0cf62f63c2ed8904a044f9e90286" name="a0ded0cf62f63c2ed8904a044f9e90286"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0ded0cf62f63c2ed8904a044f9e90286">&#9670;&#160;</a></span>j_syn</h2>
+<a id="a417a91be160679f29b91392af9080ef4" name="a417a91be160679f29b91392af9080ef4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a417a91be160679f29b91392af9080ef4">&#9670;&#160;</a></span>I_nu_syn</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">std::array&lt;<a class="el" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a>, <a class="el" href="structIntegratorGrid.html#ab85d115b19e98d65e187aa88861c7274">num</a>&gt; IntegratorGrid::j_syn {0}</td>
+          <td class="memname"><a class="el" href="structIntegratorGrid.html#a3ec4f449b3e2e56623fcb02204181dc4">StackArray</a>&lt;<a class="el" href="structIntegratorGrid.html#ab85d115b19e98d65e187aa88861c7274">num</a>&gt; IntegratorGrid::I_nu_syn {0}</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Synchrotron intensity at each x center. </p>
+<p>Synchrotron intensity at each nu center. </p>
 
-<p class="definition">Definition at line <a class="el" href="inverse-compton_8h_source.html#l00072">72</a> of file <a class="el" href="inverse-compton_8h_source.html">inverse-compton.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   72</span>{0};                    <span class="comment">///&lt; Synchrotron intensity at each x center.</span></div>
+<p class="definition">Definition at line <a class="el" href="inverse-compton_8h_source.html#l00075">75</a> of file <a class="el" href="inverse-compton_8h_source.html">inverse-compton.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   75</span>{0};        <span class="comment">///&lt; Synchrotron intensity at each nu center.</span></div>
 </div><!-- fragment -->
 </div>
 </div>
-<a id="ab5d51a773bb731805807cd752754b348" name="ab5d51a773bb731805807cd752754b348"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab5d51a773bb731805807cd752754b348">&#9670;&#160;</a></span>ns</h2>
+<a id="ae04d6653b0951122c4b813a837695b0e" name="ae04d6653b0951122c4b813a837695b0e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae04d6653b0951122c4b813a837695b0e">&#9670;&#160;</a></span>nu</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">std::array&lt;<a class="el" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a>, <a class="el" href="structIntegratorGrid.html#ab85d115b19e98d65e187aa88861c7274">num</a>&gt; IntegratorGrid::ns {0}</td>
+          <td class="memname"><a class="el" href="structIntegratorGrid.html#a3ec4f449b3e2e56623fcb02204181dc4">StackArray</a>&lt;<a class="el" href="structIntegratorGrid.html#ab85d115b19e98d65e187aa88861c7274">num</a>&gt; IntegratorGrid::nu {0}</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Number density at each y center. </p>
+<p>Center values for nu. </p>
 
 <p class="definition">Definition at line <a class="el" href="inverse-compton_8h_source.html#l00073">73</a> of file <a class="el" href="inverse-compton_8h_source.html">inverse-compton.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   73</span>{0};                       <span class="comment">///&lt; Number density at each y center.</span></div>
+<div class="fragment"><div class="line"><span class="lineno">   73</span>{0};              <span class="comment">///&lt; Center values for nu.</span></div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a6d3c0192cd52c554009794303a026d68" name="a6d3c0192cd52c554009794303a026d68"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6d3c0192cd52c554009794303a026d68">&#9670;&#160;</a></span>nu_edge</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="structIntegratorGrid.html#a3ec4f449b3e2e56623fcb02204181dc4">StackArray</a>&lt;<a class="el" href="structIntegratorGrid.html#ab85d115b19e98d65e187aa88861c7274">num</a> + 1&gt; IntegratorGrid::nu_edge {0}</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Bin edges for nu. </p>
+
+<p class="definition">Definition at line <a class="el" href="inverse-compton_8h_source.html#l00071">71</a> of file <a class="el" href="inverse-compton_8h_source.html">inverse-compton.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   71</span>{0};     <span class="comment">///&lt; Bin edges for nu.</span></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -316,7 +425,7 @@ Here is the call graph for this function:</div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">constexpr</a> <a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">size_t</a> IntegratorGrid::num {32}</td>
+          <td class="memname"><a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">constexpr</a> <a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">size_t</a> IntegratorGrid::num {64}</td>
         </tr>
       </table>
   </td>
@@ -328,157 +437,9 @@ Here is the call graph for this function:</div>
 
 <p>Number of bins. </p>
 
-<p class="definition">Definition at line <a class="el" href="inverse-compton_8h_source.html#l00067">67</a> of file <a class="el" href="inverse-compton_8h_source.html">inverse-compton.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   67</span>{32};                   <span class="comment">///&lt; Number of bins.</span></div>
-</div><!-- fragment -->
-</div>
-</div>
-<a id="af7c36a2ffdb8c8fa6a2fb87b3fd680ed" name="af7c36a2ffdb8c8fa6a2fb87b3fd680ed"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af7c36a2ffdb8c8fa6a2fb87b3fd680ed">&#9670;&#160;</a></span>x</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">std::array&lt;<a class="el" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a>, <a class="el" href="structIntegratorGrid.html#ab85d115b19e98d65e187aa88861c7274">num</a>&gt; IntegratorGrid::x {0}</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Center values for x. </p>
-
 <p class="definition">Definition at line <a class="el" href="inverse-compton_8h_source.html#l00070">70</a> of file <a class="el" href="inverse-compton_8h_source.html">inverse-compton.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   70</span>{0};                        <span class="comment">///&lt; Center values for x.</span></div>
+<div class="fragment"><div class="line"><span class="lineno">   70</span>{64};    <span class="comment">///&lt; Number of bins.</span></div>
 </div><!-- fragment -->
-</div>
-</div>
-<a id="abe87eb4d312853bec7463139111c2c26" name="abe87eb4d312853bec7463139111c2c26"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#abe87eb4d312853bec7463139111c2c26">&#9670;&#160;</a></span>x_bin</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">std::array&lt;<a class="el" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a>, <a class="el" href="structIntegratorGrid.html#ab85d115b19e98d65e187aa88861c7274">num</a> + 1&gt; IntegratorGrid::x_bin {0}</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Bin edges for x. </p>
-
-<p class="definition">Definition at line <a class="el" href="inverse-compton_8h_source.html#l00068">68</a> of file <a class="el" href="inverse-compton_8h_source.html">inverse-compton.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   68</span>{0};                <span class="comment">///&lt; Bin edges for x.</span></div>
-</div><!-- fragment -->
-</div>
-</div>
-<a id="af64d07e3c66c0475c80a1b86fcadf5ec" name="af64d07e3c66c0475c80a1b86fcadf5ec"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af64d07e3c66c0475c80a1b86fcadf5ec">&#9670;&#160;</a></span>x_max</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> IntegratorGrid::x_max</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Maximum x-value. </p>
-
-<p class="definition">Definition at line <a class="el" href="inverse-compton_8h_source.html#l00064">64</a> of file <a class="el" href="inverse-compton_8h_source.html">inverse-compton.h</a>.</p>
-
-</div>
-</div>
-<a id="ab43ff1b771120a88932741f6a0a8ab04" name="ab43ff1b771120a88932741f6a0a8ab04"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab43ff1b771120a88932741f6a0a8ab04">&#9670;&#160;</a></span>x_min</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> IntegratorGrid::x_min</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Minimum x-value. </p>
-
-<p class="definition">Definition at line <a class="el" href="inverse-compton_8h_source.html#l00063">63</a> of file <a class="el" href="inverse-compton_8h_source.html">inverse-compton.h</a>.</p>
-
-</div>
-</div>
-<a id="a53f7a95fa29d77e0d3baf255893ff3cb" name="a53f7a95fa29d77e0d3baf255893ff3cb"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a53f7a95fa29d77e0d3baf255893ff3cb">&#9670;&#160;</a></span>y</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">std::array&lt;<a class="el" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a>, <a class="el" href="structIntegratorGrid.html#ab85d115b19e98d65e187aa88861c7274">num</a>&gt; IntegratorGrid::y {0}</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Center values for y. </p>
-
-<p class="definition">Definition at line <a class="el" href="inverse-compton_8h_source.html#l00071">71</a> of file <a class="el" href="inverse-compton_8h_source.html">inverse-compton.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   71</span>{0};                        <span class="comment">///&lt; Center values for y.</span></div>
-</div><!-- fragment -->
-</div>
-</div>
-<a id="a4db3ec8e787fb535b732dec92f9991a8" name="a4db3ec8e787fb535b732dec92f9991a8"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4db3ec8e787fb535b732dec92f9991a8">&#9670;&#160;</a></span>y_bin</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">std::array&lt;<a class="el" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a>, <a class="el" href="structIntegratorGrid.html#ab85d115b19e98d65e187aa88861c7274">num</a> + 1&gt; IntegratorGrid::y_bin {0}</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Bin edges for y. </p>
-
-<p class="definition">Definition at line <a class="el" href="inverse-compton_8h_source.html#l00069">69</a> of file <a class="el" href="inverse-compton_8h_source.html">inverse-compton.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   69</span>{0};                <span class="comment">///&lt; Bin edges for y.</span></div>
-</div><!-- fragment -->
-</div>
-</div>
-<a id="a0102a11552748306e1f715b5951e1e6e" name="a0102a11552748306e1f715b5951e1e6e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0102a11552748306e1f715b5951e1e6e">&#9670;&#160;</a></span>y_max</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> IntegratorGrid::y_max</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Maximum y-value. </p>
-
-<p class="definition">Definition at line <a class="el" href="inverse-compton_8h_source.html#l00066">66</a> of file <a class="el" href="inverse-compton_8h_source.html">inverse-compton.h</a>.</p>
-
-</div>
-</div>
-<a id="a593af8bad81b71e51a666c1e1395cd96" name="a593af8bad81b71e51a666c1e1395cd96"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a593af8bad81b71e51a666c1e1395cd96">&#9670;&#160;</a></span>y_min</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> IntegratorGrid::y_min</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Minimum y-value. </p>
-
-<p class="definition">Definition at line <a class="el" href="inverse-compton_8h_source.html#l00065">65</a> of file <a class="el" href="inverse-compton_8h_source.html">inverse-compton.h</a>.</p>
-
 </div>
 </div>
 <hr/>The documentation for this struct was generated from the following file:<ul>

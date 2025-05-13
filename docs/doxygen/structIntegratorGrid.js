@@ -1,16 +1,14 @@
 var structIntegratorGrid =
 [
-    [ "IntegratorGrid", "structIntegratorGrid.html#a46acfc0ee150cd702693f3a504b91e64", null ],
-    [ "I0", "structIntegratorGrid.html#a15142f0263de0b86d0f5b04529813a93", null ],
-    [ "j_syn", "structIntegratorGrid.html#a0ded0cf62f63c2ed8904a044f9e90286", null ],
-    [ "ns", "structIntegratorGrid.html#ab5d51a773bb731805807cd752754b348", null ],
-    [ "num", "structIntegratorGrid.html#ab85d115b19e98d65e187aa88861c7274", null ],
-    [ "x", "structIntegratorGrid.html#af7c36a2ffdb8c8fa6a2fb87b3fd680ed", null ],
-    [ "x_bin", "structIntegratorGrid.html#abe87eb4d312853bec7463139111c2c26", null ],
-    [ "x_max", "structIntegratorGrid.html#af64d07e3c66c0475c80a1b86fcadf5ec", null ],
-    [ "x_min", "structIntegratorGrid.html#ab43ff1b771120a88932741f6a0a8ab04", null ],
-    [ "y", "structIntegratorGrid.html#a53f7a95fa29d77e0d3baf255893ff3cb", null ],
-    [ "y_bin", "structIntegratorGrid.html#a4db3ec8e787fb535b732dec92f9991a8", null ],
-    [ "y_max", "structIntegratorGrid.html#a0102a11552748306e1f715b5951e1e6e", null ],
-    [ "y_min", "structIntegratorGrid.html#a593af8bad81b71e51a666c1e1395cd96", null ]
+    [ "StackArray", "structIntegratorGrid.html#a3ec4f449b3e2e56623fcb02204181dc4", null ],
+    [ "StackMesh", "structIntegratorGrid.html#a695bba8cdaf6bfb06c7edfc2997a650f", null ],
+    [ "IntegratorGrid", "structIntegratorGrid.html#a85a2344454b6e1899f69a8a4ff6ae396", null ],
+    [ "column_den", "structIntegratorGrid.html#affcb4eed2e71ec42cf15623b55e077bc", null ],
+    [ "gamma", "structIntegratorGrid.html#aaa70803b4be04dd650bb5761bbe1e9fd", null ],
+    [ "gamma_edge", "structIntegratorGrid.html#a2eab29055ad10b15da2f1b03c16d0d30", null ],
+    [ "I0", "structIntegratorGrid.html#ab86ed8ad36afbd1a3efd92ba47137229", null ],
+    [ "I_nu_syn", "structIntegratorGrid.html#a417a91be160679f29b91392af9080ef4", null ],
+    [ "nu", "structIntegratorGrid.html#ae04d6653b0951122c4b813a837695b0e", null ],
+    [ "nu_edge", "structIntegratorGrid.html#a6d3c0192cd52c554009794303a026d68", null ],
+    [ "num", "structIntegratorGrid.html#ab85d115b19e98d65e187aa88861c7274", null ]
 ];

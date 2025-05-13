@@ -38,9 +38,9 @@
 <area shape="poly" id="edge14_Node000011_Node000003" title=" " alt="" coords="439,119,340,140,339,134,438,113"/>
 <area shape="poly" id="edge15_Node000011_Node000004" title=" " alt="" coords="427,119,416,126,398,149,391,172,385,197,369,225,338,252,307,271,304,267,335,247,365,221,380,195,386,171,393,146,413,122,424,115"/>
 <area shape="poly" id="edge16_Node000011_Node000005" title=" " alt="" coords="429,120,416,127,402,138,393,150,383,163,368,176,340,189,338,184,365,171,380,160,388,147,398,134,413,122,427,115"/>
-<area shape="rect" id="Node000012" href="$inverse-compton_8cpp.html#a54bc152dfd9a704c9362782e822b2cff" title=" " alt="" coords="205,88,351,113"/>
-<area shape="poly" id="edge11_Node000011_Node000012" title=" " alt="" coords="424,103,352,103,352,98,424,98"/>
-<area shape="poly" id="edge12_Node000012_Node000006" title=" " alt="" coords="191,109,121,113,121,108,191,103"/>
+<area shape="rect" id="Node000012" href="$inverse-compton_8cpp.html#acd9474d0630c4e995f6902006749d116" title=" " alt="" coords="197,88,359,113"/>
+<area shape="poly" id="edge11_Node000011_Node000012" title=" " alt="" coords="424,103,359,103,359,98,424,98"/>
+<area shape="poly" id="edge12_Node000012_Node000006" title=" " alt="" coords="184,109,121,113,121,108,183,104"/>
 <area shape="poly" id="edge13_Node000012_Node000007" title=" " alt="" coords="213,119,190,127,102,165,100,160,188,122,212,114"/>
 <area shape="poly" id="edge18_Node000013_Node000003" title=" " alt="" coords="407,152,367,152,367,147,407,147"/>
 <area shape="poly" id="edge19_Node000013_Node000004" title=" " alt="" coords="479,172,303,271,300,267,476,167"/>
