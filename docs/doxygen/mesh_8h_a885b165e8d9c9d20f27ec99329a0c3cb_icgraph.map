@@ -1,5 +1,7 @@
 <map id="boundary_to_center" name="boundary_to_center">
-<area shape="rect" id="Node000001" title="Converts boundary values to center values using linear interpolation." alt="" coords="265,5,416,31"/>
+<area shape="rect" id="Node000001" title="Converts boundary values to center values using linear interpolation." alt="" coords="265,35,416,60"/>
 <area shape="rect" id="Node000002" href="$structIntegratorGrid.html#a85a2344454b6e1899f69a8a4ff6ae396" title="Constructor: Initializes the grid with given nu and gamma boundaries." alt="" coords="5,5,217,31"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="252,21,217,21,217,15,252,15"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="251,39,210,33,211,28,252,33"/>
+<area shape="rect" id="Node000003" href="$structIntegratorGridDynamic.html#a634d5aebf0b5b2d65fb5efae1f5a233d" title="Constructor: Initializes the grid with given nu and gamma boundaries." alt="" coords="22,55,201,95"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="252,61,201,67,201,62,251,56"/>
 </map>

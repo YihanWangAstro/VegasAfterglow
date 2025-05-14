@@ -1,6 +1,7 @@
 var inverse_compton_8h =
 [
     [ "IntegratorGrid", "structIntegratorGrid.html", "structIntegratorGrid" ],
+    [ "IntegratorGridDynamic", "structIntegratorGridDynamic.html", "structIntegratorGridDynamic" ],
     [ "ICPhoton", "structICPhoton.html", "structICPhoton" ],
     [ "ICPhotonGrid", "inverse-compton_8h.html#adcfaf3d2807fe6de421ca3e9c5332252", null ],
     [ "compton_cross_section", "inverse-compton_8h.html#a689ca8481a7d3e7e760a3300503f2781", null ],

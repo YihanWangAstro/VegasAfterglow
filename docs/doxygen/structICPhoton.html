@@ -134,6 +134,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:ab70e82101720e70c36fbf3208c9097c5" id="r_ab70e82101720e70c36fbf3208c9097c5"><td class="memItemLeft" align="right" valign="top"><a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">void</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structICPhoton.html#ab70e82101720e70c36fbf3208c9097c5">integrate_IC_spectrum</a> (<a class="el" href="structIntegratorGrid.html">IntegratorGrid</a> <a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">const</a> &amp;<a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">grid</a>) <a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">noexcept</a></td></tr>
 <tr class="memdesc:ab70e82101720e70c36fbf3208c9097c5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Integrate the IC photon spectrum.  <br /></td></tr>
 <tr class="separator:ab70e82101720e70c36fbf3208c9097c5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a16b673b4609b852f6f2af36f9258b8d0" id="r_a16b673b4609b852f6f2af36f9258b8d0"><td class="memItemLeft" align="right" valign="top"><a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">void</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structICPhoton.html#a16b673b4609b852f6f2af36f9258b8d0">remove_zero_tail</a> () <a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">noexcept</a></td></tr>
+<tr class="memdesc:a16b673b4609b852f6f2af36f9258b8d0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Remove the zero tail of the IC photon spectrum.  <br /></td></tr>
+<tr class="separator:a16b673b4609b852f6f2af36f9258b8d0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
@@ -160,7 +163,7 @@ Static Public Attributes</h2></td></tr>
 <div class="textblock"><p>Represents a single inverse Compton (IC) photon. </p>
 <p>Contains methods to compute the photon intensity I_nu and to generate an IC photon spectrum based on electron and synchrotron photon properties. </p>
 
-<p class="definition">Definition at line <a class="el" href="inverse-compton_8h_source.html#l00088">88</a> of file <a class="el" href="inverse-compton_8h_source.html">inverse-compton.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="inverse-compton_8h_source.html#l00124">124</a> of file <a class="el" href="inverse-compton_8h_source.html">inverse-compton.h</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a163f4f83a64dabdbd15d0ef0ff0c037d" name="a163f4f83a64dabdbd15d0ef0ff0c037d"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a163f4f83a64dabdbd15d0ef0ff0c037d">&#9670;&#160;</a></span>ICPhoton()</h2>
@@ -223,12 +226,12 @@ Static Public Attributes</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>The intensity at the given frequency </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="inverse-compton_8cpp_source.html#l00113">113</a> of file <a class="el" href="inverse-compton_8cpp_source.html">inverse-compton.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  113</span>                                                  {</div>
-<div class="line"><span class="lineno">  114</span>    <span class="keywordflow">return</span> <a class="code hl_function" href="utilities_8h.html#ae9c8c6da28c8a103219d3e89aab6d384">eq_space_loglog_interp</a>(nu, this-&gt;<a class="code hl_variable" href="structICPhoton.html#ab1c6a9c7a94c0930200ac029f1c6b239">nu_IC_</a>, this-&gt;<a class="code hl_variable" href="structICPhoton.html#ab7256f35bcc475b1d46545938fdeb6a9">I_nu_IC_</a>, <span class="keyword">true</span>, <span class="keyword">true</span>);</div>
-<div class="line"><span class="lineno">  115</span>}</div>
-<div class="ttc" id="astructICPhoton_html_ab1c6a9c7a94c0930200ac029f1c6b239"><div class="ttname"><a href="structICPhoton.html#ab1c6a9c7a94c0930200ac029f1c6b239">ICPhoton::nu_IC_</a></div><div class="ttdeci">Array nu_IC_</div><div class="ttdoc">Frequency grid for the IC photon spectrum.</div><div class="ttdef"><b>Definition</b> <a href="inverse-compton_8h_source.html#l00135">inverse-compton.h:135</a></div></div>
-<div class="ttc" id="astructICPhoton_html_ab7256f35bcc475b1d46545938fdeb6a9"><div class="ttname"><a href="structICPhoton.html#ab7256f35bcc475b1d46545938fdeb6a9">ICPhoton::I_nu_IC_</a></div><div class="ttdeci">Array I_nu_IC_</div><div class="ttdoc">IC photon spectrum intensity array.</div><div class="ttdef"><b>Definition</b> <a href="inverse-compton_8h_source.html#l00134">inverse-compton.h:134</a></div></div>
+<p class="definition">Definition at line <a class="el" href="inverse-compton_8cpp_source.html#l00123">123</a> of file <a class="el" href="inverse-compton_8cpp_source.html">inverse-compton.cpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  123</span>                                                  {</div>
+<div class="line"><span class="lineno">  124</span>    <span class="keywordflow">return</span> <a class="code hl_function" href="utilities_8h.html#ae9c8c6da28c8a103219d3e89aab6d384">eq_space_loglog_interp</a>(nu, this-&gt;<a class="code hl_variable" href="structICPhoton.html#ab1c6a9c7a94c0930200ac029f1c6b239">nu_IC_</a>, this-&gt;<a class="code hl_variable" href="structICPhoton.html#ab7256f35bcc475b1d46545938fdeb6a9">I_nu_IC_</a>, <span class="keyword">true</span>, <span class="keyword">true</span>);</div>
+<div class="line"><span class="lineno">  125</span>}</div>
+<div class="ttc" id="astructICPhoton_html_ab1c6a9c7a94c0930200ac029f1c6b239"><div class="ttname"><a href="structICPhoton.html#ab1c6a9c7a94c0930200ac029f1c6b239">ICPhoton::nu_IC_</a></div><div class="ttdeci">Array nu_IC_</div><div class="ttdoc">Frequency grid for the IC photon spectrum.</div><div class="ttdef"><b>Definition</b> <a href="inverse-compton_8h_source.html#l00171">inverse-compton.h:171</a></div></div>
+<div class="ttc" id="astructICPhoton_html_ab7256f35bcc475b1d46545938fdeb6a9"><div class="ttname"><a href="structICPhoton.html#ab7256f35bcc475b1d46545938fdeb6a9">ICPhoton::I_nu_IC_</a></div><div class="ttdeci">Array I_nu_IC_</div><div class="ttdoc">IC photon spectrum intensity array.</div><div class="ttdef"><b>Definition</b> <a href="inverse-compton_8h_source.html#l00170">inverse-compton.h:170</a></div></div>
 <div class="ttc" id="autilities_8h_html_ae9c8c6da28c8a103219d3e89aab6d384"><div class="ttname"><a href="utilities_8h.html#ae9c8c6da28c8a103219d3e89aab6d384">eq_space_loglog_interp</a></div><div class="ttdeci">Real eq_space_loglog_interp(Real x0, Array const &amp;x, Array const &amp;y, bool lo_extrap=false, bool hi_extrap=false)</div><div class="ttdoc">Log-log interpolation for equally spaced x-values in log space.</div><div class="ttdef"><b>Definition</b> <a href="utilities_8cpp_source.html#l00181">utilities.cpp:181</a></div></div>
 </div><!-- fragment --><div class="dynheader">
 Here is the call graph for this function:</div>
@@ -315,32 +318,35 @@ template&lt;<a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5
 <li>Finally, integrate over the grid to populate the IC photon spectrum (I_nu_IC_). </li>
 </ul>
 
-<p class="definition">Definition at line <a class="el" href="inverse-compton_8h_source.html#l00231">231</a> of file <a class="el" href="inverse-compton_8h_source.html">inverse-compton.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  231</span>                                                                                                       {</div>
-<div class="line"><span class="lineno">  232</span>    <span class="comment">// Get integration boundaries</span></div>
-<div class="line"><span class="lineno">  233</span>    <span class="keyword">auto</span> [<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">nu0_min</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">nu0_max</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">gamma_min</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">gamma_max</a>] = <a class="code hl_function" href="structICPhoton.html#adb8ba3eab2bb357bf40a6433bd2a1eb8">get_integration_bounds</a>(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">electrons</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">photons</a>);</div>
-<div class="line"><span class="lineno">  234</span> </div>
-<div class="line"><span class="lineno">  235</span>    <span class="comment">// Construct an integration grid in nu0 and gamma</span></div>
-<div class="line"><span class="lineno">  236</span>    <a class="code hl_struct" href="structIntegratorGrid.html">IntegratorGrid</a> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">grid</a>(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">nu0_min</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">nu0_max</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">gamma_min</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">gamma_max</a>);</div>
-<div class="line"><span class="lineno">  237</span> </div>
-<div class="line"><span class="lineno">  238</span>    <a class="code hl_function" href="structICPhoton.html#a492bf9ae4f3c3c8f5d018a805a5400ce">fill_input_spectrum</a>(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">grid</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">electrons</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">photons</a>);</div>
-<div class="line"><span class="lineno">  239</span> </div>
-<div class="line"><span class="lineno">  240</span>    <span class="comment">// Compute the differential contributions</span></div>
-<div class="line"><span class="lineno">  241</span>    <a class="code hl_function" href="structICPhoton.html#a6a2ac815d7fa191cddae0bebe39cdae6">fill_integration_grid</a>(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">grid</a>, KN);</div>
-<div class="line"><span class="lineno">  242</span> </div>
-<div class="line"><span class="lineno">  243</span>    <span class="comment">// Perform final integration</span></div>
-<div class="line"><span class="lineno">  244</span>    <a class="code hl_function" href="structICPhoton.html#ab70e82101720e70c36fbf3208c9097c5">integrate_IC_spectrum</a>(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">grid</a>);</div>
-<div class="line"><span class="lineno">  245</span> </div>
-<div class="line"><span class="lineno">  246</span>    <span class="comment">// Convert to log space for interpolation</span></div>
-<div class="line"><span class="lineno">  247</span>    <a class="code hl_variable" href="structICPhoton.html#a7b0195c715a3ec0278d01c03a1a77bd4">log2_I_nu_</a> = xt::log2(<a class="code hl_variable" href="structICPhoton.html#ab7256f35bcc475b1d46545938fdeb6a9">I_nu_IC_</a>);</div>
-<div class="line"><span class="lineno">  248</span>    <a class="code hl_variable" href="structICPhoton.html#aa9e3490684a32d4842fa7fbf5e12ce8b">log2_nu_IC_</a> = xt::log2(<a class="code hl_variable" href="structICPhoton.html#ab1c6a9c7a94c0930200ac029f1c6b239">nu_IC_</a>);</div>
-<div class="line"><span class="lineno">  249</span>}</div>
-<div class="ttc" id="astructICPhoton_html_a492bf9ae4f3c3c8f5d018a805a5400ce"><div class="ttname"><a href="structICPhoton.html#a492bf9ae4f3c3c8f5d018a805a5400ce">ICPhoton::fill_input_spectrum</a></div><div class="ttdeci">void fill_input_spectrum(IntegratorGrid &amp;grid, Electrons const &amp;electrons, Photons const &amp;photons) noexcept</div><div class="ttdoc">Fill the input spectrum data for the IC photon spectrum.</div><div class="ttdef"><b>Definition</b> <a href="inverse-compton_8h_source.html#l00264">inverse-compton.h:264</a></div></div>
+<p class="definition">Definition at line <a class="el" href="inverse-compton_8h_source.html#l00274">274</a> of file <a class="el" href="inverse-compton_8h_source.html">inverse-compton.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  274</span>                                                                                                       {</div>
+<div class="line"><span class="lineno">  275</span>    <span class="comment">// Get integration boundaries</span></div>
+<div class="line"><span class="lineno">  276</span>    <span class="keyword">auto</span> [<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">nu0_min</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">nu0_max</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">gamma_min</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">gamma_max</a>] = <a class="code hl_function" href="structICPhoton.html#adb8ba3eab2bb357bf40a6433bd2a1eb8">get_integration_bounds</a>(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">electrons</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">photons</a>);</div>
+<div class="line"><span class="lineno">  277</span> </div>
+<div class="line"><span class="lineno">  278</span>    <span class="comment">// Construct an integration grid in nu0 and gamma</span></div>
+<div class="line"><span class="lineno">  279</span>    <a class="code hl_struct" href="structIntegratorGrid.html">IntegratorGrid</a> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">grid</a>(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">nu0_min</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">nu0_max</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">gamma_min</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">gamma_max</a>);</div>
+<div class="line"><span class="lineno">  280</span> </div>
+<div class="line"><span class="lineno">  281</span>    <a class="code hl_function" href="structICPhoton.html#a492bf9ae4f3c3c8f5d018a805a5400ce">fill_input_spectrum</a>(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">grid</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">electrons</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">photons</a>);</div>
+<div class="line"><span class="lineno">  282</span> </div>
+<div class="line"><span class="lineno">  283</span>    <span class="comment">// Compute the differential contributions</span></div>
+<div class="line"><span class="lineno">  284</span>    <a class="code hl_function" href="structICPhoton.html#a6a2ac815d7fa191cddae0bebe39cdae6">fill_integration_grid</a>(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">grid</a>, KN);</div>
+<div class="line"><span class="lineno">  285</span> </div>
+<div class="line"><span class="lineno">  286</span>    <span class="comment">// Perform final integration</span></div>
+<div class="line"><span class="lineno">  287</span>    <a class="code hl_function" href="structICPhoton.html#ab70e82101720e70c36fbf3208c9097c5">integrate_IC_spectrum</a>(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">grid</a>);</div>
+<div class="line"><span class="lineno">  288</span> </div>
+<div class="line"><span class="lineno">  289</span>    <a class="code hl_function" href="structICPhoton.html#a16b673b4609b852f6f2af36f9258b8d0">remove_zero_tail</a>();</div>
+<div class="line"><span class="lineno">  290</span> </div>
+<div class="line"><span class="lineno">  291</span>    <span class="comment">// Convert to log space for interpolation</span></div>
+<div class="line"><span class="lineno">  292</span>    <a class="code hl_variable" href="structICPhoton.html#a7b0195c715a3ec0278d01c03a1a77bd4">log2_I_nu_</a> = xt::log2(<a class="code hl_variable" href="structICPhoton.html#ab7256f35bcc475b1d46545938fdeb6a9">I_nu_IC_</a>);</div>
+<div class="line"><span class="lineno">  293</span>    <a class="code hl_variable" href="structICPhoton.html#aa9e3490684a32d4842fa7fbf5e12ce8b">log2_nu_IC_</a> = xt::log2(<a class="code hl_variable" href="structICPhoton.html#ab1c6a9c7a94c0930200ac029f1c6b239">nu_IC_</a>);</div>
+<div class="line"><span class="lineno">  294</span>}</div>
+<div class="ttc" id="astructICPhoton_html_a16b673b4609b852f6f2af36f9258b8d0"><div class="ttname"><a href="structICPhoton.html#a16b673b4609b852f6f2af36f9258b8d0">ICPhoton::remove_zero_tail</a></div><div class="ttdeci">void remove_zero_tail() noexcept</div><div class="ttdoc">Remove the zero tail of the IC photon spectrum.</div><div class="ttdef"><b>Definition</b> <a href="inverse-compton_8cpp_source.html#l00067">inverse-compton.cpp:67</a></div></div>
+<div class="ttc" id="astructICPhoton_html_a492bf9ae4f3c3c8f5d018a805a5400ce"><div class="ttname"><a href="structICPhoton.html#a492bf9ae4f3c3c8f5d018a805a5400ce">ICPhoton::fill_input_spectrum</a></div><div class="ttdeci">void fill_input_spectrum(IntegratorGrid &amp;grid, Electrons const &amp;electrons, Photons const &amp;photons) noexcept</div><div class="ttdoc">Fill the input spectrum data for the IC photon spectrum.</div><div class="ttdef"><b>Definition</b> <a href="inverse-compton_8h_source.html#l00309">inverse-compton.h:309</a></div></div>
 <div class="ttc" id="astructICPhoton_html_a6a2ac815d7fa191cddae0bebe39cdae6"><div class="ttname"><a href="structICPhoton.html#a6a2ac815d7fa191cddae0bebe39cdae6">ICPhoton::fill_integration_grid</a></div><div class="ttdeci">void fill_integration_grid(IntegratorGrid &amp;grid, bool KN) noexcept</div><div class="ttdoc">Fill the integration grid for the IC photon spectrum.</div><div class="ttdef"><b>Definition</b> <a href="inverse-compton_8cpp_source.html#l00018">inverse-compton.cpp:18</a></div></div>
-<div class="ttc" id="astructICPhoton_html_a7b0195c715a3ec0278d01c03a1a77bd4"><div class="ttname"><a href="structICPhoton.html#a7b0195c715a3ec0278d01c03a1a77bd4">ICPhoton::log2_I_nu_</a></div><div class="ttdeci">Array log2_I_nu_</div><div class="ttdoc">Base-2 logarithm of the IC photon spectrum intensity array.</div><div class="ttdef"><b>Definition</b> <a href="inverse-compton_8h_source.html#l00136">inverse-compton.h:136</a></div></div>
-<div class="ttc" id="astructICPhoton_html_aa9e3490684a32d4842fa7fbf5e12ce8b"><div class="ttname"><a href="structICPhoton.html#aa9e3490684a32d4842fa7fbf5e12ce8b">ICPhoton::log2_nu_IC_</a></div><div class="ttdeci">Array log2_nu_IC_</div><div class="ttdoc">Base-2 logarithm of the frequency grid for the IC photon spectrum.</div><div class="ttdef"><b>Definition</b> <a href="inverse-compton_8h_source.html#l00137">inverse-compton.h:137</a></div></div>
-<div class="ttc" id="astructICPhoton_html_ab70e82101720e70c36fbf3208c9097c5"><div class="ttname"><a href="structICPhoton.html#ab70e82101720e70c36fbf3208c9097c5">ICPhoton::integrate_IC_spectrum</a></div><div class="ttdeci">void integrate_IC_spectrum(IntegratorGrid const &amp;grid) noexcept</div><div class="ttdoc">Integrate the IC photon spectrum.</div><div class="ttdef"><b>Definition</b> <a href="inverse-compton_8cpp_source.html#l00040">inverse-compton.cpp:40</a></div></div>
-<div class="ttc" id="astructICPhoton_html_adb8ba3eab2bb357bf40a6433bd2a1eb8"><div class="ttname"><a href="structICPhoton.html#adb8ba3eab2bb357bf40a6433bd2a1eb8">ICPhoton::get_integration_bounds</a></div><div class="ttdeci">std::tuple&lt; Real, Real, Real, Real &gt; get_integration_bounds(Electrons const &amp;electrons, Photons const &amp;photons) noexcept</div><div class="ttdoc">Get the integration bounds for the IC photon spectrum.</div><div class="ttdef"><b>Definition</b> <a href="inverse-compton_8h_source.html#l00252">inverse-compton.h:252</a></div></div>
+<div class="ttc" id="astructICPhoton_html_a7b0195c715a3ec0278d01c03a1a77bd4"><div class="ttname"><a href="structICPhoton.html#a7b0195c715a3ec0278d01c03a1a77bd4">ICPhoton::log2_I_nu_</a></div><div class="ttdeci">Array log2_I_nu_</div><div class="ttdoc">Base-2 logarithm of the IC photon spectrum intensity array.</div><div class="ttdef"><b>Definition</b> <a href="inverse-compton_8h_source.html#l00172">inverse-compton.h:172</a></div></div>
+<div class="ttc" id="astructICPhoton_html_aa9e3490684a32d4842fa7fbf5e12ce8b"><div class="ttname"><a href="structICPhoton.html#aa9e3490684a32d4842fa7fbf5e12ce8b">ICPhoton::log2_nu_IC_</a></div><div class="ttdeci">Array log2_nu_IC_</div><div class="ttdoc">Base-2 logarithm of the frequency grid for the IC photon spectrum.</div><div class="ttdef"><b>Definition</b> <a href="inverse-compton_8h_source.html#l00173">inverse-compton.h:173</a></div></div>
+<div class="ttc" id="astructICPhoton_html_ab70e82101720e70c36fbf3208c9097c5"><div class="ttname"><a href="structICPhoton.html#ab70e82101720e70c36fbf3208c9097c5">ICPhoton::integrate_IC_spectrum</a></div><div class="ttdeci">void integrate_IC_spectrum(IntegratorGrid const &amp;grid) noexcept</div><div class="ttdoc">Integrate the IC photon spectrum.</div><div class="ttdef"><b>Definition</b> <a href="inverse-compton_8cpp_source.html#l00039">inverse-compton.cpp:39</a></div></div>
+<div class="ttc" id="astructICPhoton_html_adb8ba3eab2bb357bf40a6433bd2a1eb8"><div class="ttname"><a href="structICPhoton.html#adb8ba3eab2bb357bf40a6433bd2a1eb8">ICPhoton::get_integration_bounds</a></div><div class="ttdeci">std::tuple&lt; Real, Real, Real, Real &gt; get_integration_bounds(Electrons const &amp;electrons, Photons const &amp;photons) noexcept</div><div class="ttdoc">Get the integration bounds for the IC photon spectrum.</div><div class="ttdef"><b>Definition</b> <a href="inverse-compton_8h_source.html#l00297">inverse-compton.h:297</a></div></div>
 <div class="ttc" id="astructIntegratorGrid_html"><div class="ttname"><a href="structIntegratorGrid.html">IntegratorGrid</a></div><div class="ttdoc">Defines a grid for numerical integration in log-space.</div><div class="ttdef"><b>Definition</b> <a href="inverse-compton_8h_source.html#l00048">inverse-compton.h:48</a></div></div>
 <div class="ttc" id="autilities_8h_html_ab8e81118f023df135835db8cce4f5f42"><div class="ttname"><a href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">max</a></div><div class="ttdeci">T max(T value)</div><div class="ttdoc">Returns the value of a single parameter.</div><div class="ttdef"><b>Definition</b> <a href="utilities_8h_source.html#l00330">utilities.h:330</a></div></div>
 </div><!-- fragment --><div class="dynheader">
@@ -348,22 +354,28 @@ Here is the call graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="structICPhoton_aabcd1cc2a89ddb1683292dfefa74b14a_cgraph.png" border="0" usemap="#astructICPhoton_aabcd1cc2a89ddb1683292dfefa74b14a_cgraph" alt=""/></div>
 <map name="astructICPhoton_aabcd1cc2a89ddb1683292dfefa74b14a_cgraph" id="astructICPhoton_aabcd1cc2a89ddb1683292dfefa74b14a_cgraph">
-<area shape="rect" title="Generates the IC photon spectrum from the given electron and photon data." alt="" coords="5,92,171,132"/>
-<area shape="rect" href="structICPhoton.html#a492bf9ae4f3c3c8f5d018a805a5400ce" title="Fill the input spectrum data for the IC photon spectrum." alt="" coords="240,5,384,45"/>
-<area shape="poly" title=" " alt="" coords="140,89,246,48,248,53,142,94"/>
-<area shape="rect" href="structICPhoton.html#a6a2ac815d7fa191cddae0bebe39cdae6" title="Fill the integration grid for the IC photon spectrum." alt="" coords="453,74,668,99"/>
-<area shape="poly" title=" " alt="" coords="171,105,439,90,440,96,171,110"/>
-<area shape="rect" href="structICPhoton.html#adb8ba3eab2bb357bf40a6433bd2a1eb8" title="Get the integration bounds for the IC photon spectrum." alt="" coords="219,120,405,160"/>
-<area shape="poly" title=" " alt="" coords="171,120,205,124,205,129,171,125"/>
-<area shape="rect" href="structICPhoton.html#ab70e82101720e70c36fbf3208c9097c5" title="Integrate the IC photon spectrum." alt="" coords="487,177,634,217"/>
-<area shape="poly" title=" " alt="" coords="125,130,169,151,219,169,285,183,352,191,474,197,473,202,351,196,284,188,218,175,167,156,123,135"/>
-<area shape="rect" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42" title="Returns the value of a single parameter." alt="" coords="716,127,767,153"/>
-<area shape="poly" title=" " alt="" coords="614,97,669,112,704,124,702,129,667,117,613,102"/>
-<area shape="poly" title=" " alt="" coords="714,130,706,120,708,110,720,103,741,101,768,105,775,110,777,117,772,118,771,114,766,110,741,106,722,108,712,113,711,119,718,127"/>
-<area shape="rect" href="utilities_8h.html#ac47d1412f3f1791737d0f963267096f1" title="Returns the value of a single parameter." alt="" coords="537,127,584,153"/>
-<area shape="poly" title=" " alt="" coords="406,137,524,137,524,143,406,143"/>
-<area shape="poly" title=" " alt="" coords="584,137,702,137,702,143,584,143"/>
-<area shape="poly" title=" " alt="" coords="629,175,667,163,702,151,703,156,669,168,631,180"/>
+<area shape="rect" title="Generates the IC photon spectrum from the given electron and photon data." alt="" coords="5,120,171,160"/>
+<area shape="rect" href="structICPhoton.html#a492bf9ae4f3c3c8f5d018a805a5400ce" title="Fill the input spectrum data for the IC photon spectrum." alt="" coords="254,5,398,45"/>
+<area shape="poly" title=" " alt="" coords="114,118,161,86,218,55,240,46,242,51,220,60,164,91,117,122"/>
+<area shape="rect" href="structICPhoton.html#a6a2ac815d7fa191cddae0bebe39cdae6" title="Fill the integration grid for the IC photon spectrum." alt="" coords="219,70,433,95"/>
+<area shape="poly" title=" " alt="" coords="169,117,218,105,257,96,259,101,219,111,171,123"/>
+<area shape="rect" href="structICPhoton.html#adb8ba3eab2bb357bf40a6433bd2a1eb8" title="Get the integration bounds for the IC photon spectrum." alt="" coords="233,120,419,160"/>
+<area shape="poly" title=" " alt="" coords="171,137,219,137,219,143,171,143"/>
+<area shape="rect" href="structICPhoton.html#ab70e82101720e70c36fbf3208c9097c5" title="Integrate the IC photon spectrum." alt="" coords="509,177,655,217"/>
+<area shape="poly" title=" " alt="" coords="162,157,219,169,365,186,495,193,495,198,364,191,218,175,161,163"/>
+<area shape="rect" href="structICPhoton.html#a16b673b4609b852f6f2af36f9258b8d0" title="Remove the zero tail of the IC photon spectrum." alt="" coords="481,242,683,267"/>
+<area shape="poly" title=" " alt="" coords="128,158,171,178,219,196,282,212,347,225,468,243,467,248,346,231,281,218,218,201,169,183,126,163"/>
+<area shape="rect" href="inverse-compton_8cpp.html#a689ca8481a7d3e7e760a3300503f2781" title="Computes the Compton scattering cross&#45;section as a function of frequency (nu)." alt="" coords="495,26,669,51"/>
+<area shape="poly" title=" " alt="" coords="400,67,494,51,495,56,401,73"/>
+<area shape="rect" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42" title="Returns the value of a single parameter." alt="" coords="731,127,781,153"/>
+<area shape="poly" title=" " alt="" coords="434,83,554,92,683,112,718,122,717,128,682,117,554,97,434,88"/>
+<area shape="poly" title=" " alt="" coords="639,49,684,68,713,90,737,115,733,118,710,94,681,73,637,54"/>
+<area shape="poly" title=" " alt="" coords="729,130,721,120,724,110,736,103,756,101,781,105,791,115,786,119,779,110,756,106,737,108,728,113,726,119,733,127"/>
+<area shape="rect" href="utilities_8h.html#ac47d1412f3f1791737d0f963267096f1" title="Returns the value of a single parameter." alt="" coords="559,127,605,153"/>
+<area shape="poly" title=" " alt="" coords="420,137,545,137,545,143,420,143"/>
+<area shape="poly" title=" " alt="" coords="605,137,717,137,717,143,605,143"/>
+<area shape="poly" title=" " alt="" coords="642,175,716,150,718,155,644,180"/>
+<area shape="poly" title=" " alt="" coords="655,240,681,227,715,197,739,163,743,166,719,200,684,232,657,244"/>
 </map>
 </div>
 
@@ -402,20 +414,20 @@ Here is the call graph for this function:</div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>The base-2 logarithm of the synchrotron intensity at the given frequency </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="inverse-compton_8cpp_source.html#l00117">117</a> of file <a class="el" href="inverse-compton_8cpp_source.html">inverse-compton.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  117</span>                                                            {</div>
-<div class="line"><span class="lineno">  118</span>    <a class="code hl_typedef" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">dnu</a> = <a class="code hl_variable" href="structICPhoton.html#aa9e3490684a32d4842fa7fbf5e12ce8b">log2_nu_IC_</a>(1) - <a class="code hl_variable" href="structICPhoton.html#aa9e3490684a32d4842fa7fbf5e12ce8b">log2_nu_IC_</a>(0);</div>
-<div class="line"><span class="lineno">  119</span>    <span class="keywordtype">size_t</span> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">idx</a> = <span class="keyword">static_cast&lt;</span><span class="keywordtype">size_t</span><span class="keyword">&gt;</span>((<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">log2_nu</a> - <a class="code hl_variable" href="structICPhoton.html#aa9e3490684a32d4842fa7fbf5e12ce8b">log2_nu_IC_</a>(0)) / <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">dnu</a> + 1);</div>
-<div class="line"><span class="lineno">  120</span>    <span class="keywordflow">if</span> (<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">idx</a> &lt; 1) {</div>
-<div class="line"><span class="lineno">  121</span>        <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">idx</a> = 1;</div>
-<div class="line"><span class="lineno">  122</span>    } <span class="keywordflow">else</span> <span class="keywordflow">if</span> (<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">idx</a> &gt; <a class="code hl_variable" href="structICPhoton.html#aa9e3490684a32d4842fa7fbf5e12ce8b">log2_nu_IC_</a>.size() - 1) {</div>
-<div class="line"><span class="lineno">  123</span>        <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">idx</a> = <a class="code hl_variable" href="structICPhoton.html#aa9e3490684a32d4842fa7fbf5e12ce8b">log2_nu_IC_</a>.size() - 1;</div>
-<div class="line"><span class="lineno">  124</span>    }</div>
-<div class="line"><span class="lineno">  125</span> </div>
-<div class="line"><span class="lineno">  126</span>    <a class="code hl_typedef" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> slope = (<a class="code hl_variable" href="structICPhoton.html#a7b0195c715a3ec0278d01c03a1a77bd4">log2_I_nu_</a>(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">idx</a>) - <a class="code hl_variable" href="structICPhoton.html#a7b0195c715a3ec0278d01c03a1a77bd4">log2_I_nu_</a>(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">idx</a> - 1)) / <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">dnu</a>;</div>
-<div class="line"><span class="lineno">  127</span> </div>
-<div class="line"><span class="lineno">  128</span>    <span class="keywordflow">return</span> <a class="code hl_variable" href="structICPhoton.html#a7b0195c715a3ec0278d01c03a1a77bd4">log2_I_nu_</a>(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">idx</a> - 1) + slope * (<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">log2_nu</a> - <a class="code hl_variable" href="structICPhoton.html#aa9e3490684a32d4842fa7fbf5e12ce8b">log2_nu_IC_</a>(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">idx</a> - 1));</div>
-<div class="line"><span class="lineno">  129</span>}</div>
+<p class="definition">Definition at line <a class="el" href="inverse-compton_8cpp_source.html#l00127">127</a> of file <a class="el" href="inverse-compton_8cpp_source.html">inverse-compton.cpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  127</span>                                                            {</div>
+<div class="line"><span class="lineno">  128</span>    <a class="code hl_typedef" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">dnu</a> = <a class="code hl_variable" href="structICPhoton.html#aa9e3490684a32d4842fa7fbf5e12ce8b">log2_nu_IC_</a>(1) - <a class="code hl_variable" href="structICPhoton.html#aa9e3490684a32d4842fa7fbf5e12ce8b">log2_nu_IC_</a>(0);</div>
+<div class="line"><span class="lineno">  129</span>    <span class="keywordtype">size_t</span> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">idx</a> = <span class="keyword">static_cast&lt;</span><span class="keywordtype">size_t</span><span class="keyword">&gt;</span>((<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">log2_nu</a> - <a class="code hl_variable" href="structICPhoton.html#aa9e3490684a32d4842fa7fbf5e12ce8b">log2_nu_IC_</a>(0)) / <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">dnu</a> + 1);</div>
+<div class="line"><span class="lineno">  130</span>    <span class="keywordflow">if</span> (<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">idx</a> &lt; 1) {</div>
+<div class="line"><span class="lineno">  131</span>        <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">idx</a> = 1;</div>
+<div class="line"><span class="lineno">  132</span>    } <span class="keywordflow">else</span> <span class="keywordflow">if</span> (<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">idx</a> &gt; <a class="code hl_variable" href="structICPhoton.html#aa9e3490684a32d4842fa7fbf5e12ce8b">log2_nu_IC_</a>.size() - 1) {</div>
+<div class="line"><span class="lineno">  133</span>        <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">idx</a> = <a class="code hl_variable" href="structICPhoton.html#aa9e3490684a32d4842fa7fbf5e12ce8b">log2_nu_IC_</a>.size() - 1;</div>
+<div class="line"><span class="lineno">  134</span>    }</div>
+<div class="line"><span class="lineno">  135</span> </div>
+<div class="line"><span class="lineno">  136</span>    <a class="code hl_typedef" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> slope = (<a class="code hl_variable" href="structICPhoton.html#a7b0195c715a3ec0278d01c03a1a77bd4">log2_I_nu_</a>(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">idx</a>) - <a class="code hl_variable" href="structICPhoton.html#a7b0195c715a3ec0278d01c03a1a77bd4">log2_I_nu_</a>(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">idx</a> - 1)) / <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">dnu</a>;</div>
+<div class="line"><span class="lineno">  137</span> </div>
+<div class="line"><span class="lineno">  138</span>    <span class="keywordflow">return</span> <a class="code hl_variable" href="structICPhoton.html#a7b0195c715a3ec0278d01c03a1a77bd4">log2_I_nu_</a>(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">idx</a> - 1) + slope * (<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">log2_nu</a> - <a class="code hl_variable" href="structICPhoton.html#aa9e3490684a32d4842fa7fbf5e12ce8b">log2_nu_IC_</a>(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">idx</a> - 1));</div>
+<div class="line"><span class="lineno">  139</span>}</div>
 <div class="ttc" id="amacros_8h_html_a4b04262b81aa7d31eb5d2f607e2a35de"><div class="ttname"><a href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a></div><div class="ttdeci">double Real</div><div class="ttdoc">Type alias for floating-point precision used throughout the code.</div><div class="ttdef"><b>Definition</b> <a href="macros_8h_source.html#l00022">macros.h:22</a></div></div>
 </div><!-- fragment --><div class="dynheader">
 Here is the call graph for this function:</div>
@@ -490,14 +502,14 @@ template&lt;<a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="inverse-compton_8h_source.html#l00264">264</a> of file <a class="el" href="inverse-compton_8h_source.html">inverse-compton.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  264</span>                                                                                                                    {</div>
-<div class="line"><span class="lineno">  265</span>    <span class="comment">// For each bin in nu0, compute the synchrotron intensity and column number density</span></div>
-<div class="line"><span class="lineno">  266</span>    <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a> = 0; <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a> &lt; <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">grid</a>.num; <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a>++) {</div>
-<div class="line"><span class="lineno">  267</span>        <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">grid</a>.I_nu_syn(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a>) = <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">photons</a>.compute_I_nu(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">grid</a>.nu(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a>));</div>
-<div class="line"><span class="lineno">  268</span>        <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">grid</a>.column_den(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a>) = <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">electrons</a>.compute_column_num_den(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">grid</a>.gamma(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a>));</div>
-<div class="line"><span class="lineno">  269</span>    }</div>
-<div class="line"><span class="lineno">  270</span>}</div>
+<p class="definition">Definition at line <a class="el" href="inverse-compton_8h_source.html#l00309">309</a> of file <a class="el" href="inverse-compton_8h_source.html">inverse-compton.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  309</span>                                                                                                                    {</div>
+<div class="line"><span class="lineno">  310</span>    <span class="comment">// For each bin in nu0, compute the synchrotron intensity and column number density</span></div>
+<div class="line"><span class="lineno">  311</span>    <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a> = 0; <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a> &lt; <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">grid</a>.num; <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a>++) {</div>
+<div class="line"><span class="lineno">  312</span>        <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">grid</a>.I_nu_syn(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a>) = <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">photons</a>.compute_I_nu(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">grid</a>.nu(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a>));</div>
+<div class="line"><span class="lineno">  313</span>        <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">grid</a>.column_den(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a>) = <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">electrons</a>.compute_column_num_den(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">grid</a>.gamma(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a>));</div>
+<div class="line"><span class="lineno">  314</span>    }</div>
+<div class="line"><span class="lineno">  315</span>}</div>
 </div><!-- fragment --><div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
@@ -564,30 +576,31 @@ Here is the caller graph for this function:</div>
 <div class="line"><span class="lineno">   24</span>            <a class="code hl_typedef" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">dS</a> = std::fabs(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">dnu</a> * <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">dgamma</a>);</div>
 <div class="line"><span class="lineno">   25</span>            <a class="code hl_typedef" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">gamma_nu</a> = <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">grid</a>.nu(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a>) * <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">grid</a>.gamma(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">j</a>);</div>
 <div class="line"><span class="lineno">   26</span>            <a class="code hl_typedef" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">factor</a> = 4 * <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">gamma_nu</a> * <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">gamma_nu</a>;</div>
-<div class="line"><span class="lineno">   27</span>            <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">grid</a>.I0(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">j</a>) = KN &amp;&amp; (<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">grid</a>.nu(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a>) / <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">grid</a>.gamma(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">j</a>) * (<a class="code hl_variable" href="namespacecon.html#a07ddec20ab09a3078fce714358b65b4b">con::h</a> / <a class="code hl_variable" href="namespacecon.html#ae1b8cddbe12f755f5d01b86b0e2b9e14">con::mec2</a>) &gt; 1)</div>
-<div class="line"><span class="lineno">   28</span>                                ? 0</div>
-<div class="line"><span class="lineno">   29</span>                                : <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">grid</a>.column_den(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">j</a>) * <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">grid</a>.I_nu_syn(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a>) * <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">dS</a> / <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">factor</a> * <a class="code hl_variable" href="namespacecon.html#ad19e5b64c85c3e709fd0944358be97f6">con::sigmaT</a>;</div>
-<div class="line"><span class="lineno">   30</span>            <span class="comment">/*if (KN) {</span></div>
-<div class="line"><span class="lineno">   31</span><span class="comment">                grid.I0(i, j) = grid.column_den(j) * grid.I_nu_syn(i) * dS / factor *</span></div>
-<div class="line"><span class="lineno">   32</span><span class="comment">                                compton_cross_section(grid.nu(i) / grid.gamma(j));</span></div>
-<div class="line"><span class="lineno">   33</span><span class="comment">            } else {</span></div>
-<div class="line"><span class="lineno">   34</span><span class="comment">                grid.I0(i, j) = grid.column_den(j) * grid.I_nu_syn(i) * dS / factor * con::sigmaT;</span></div>
-<div class="line"><span class="lineno">   35</span><span class="comment">            }*/</span></div>
-<div class="line"><span class="lineno">   36</span>        }</div>
-<div class="line"><span class="lineno">   37</span>    }</div>
-<div class="line"><span class="lineno">   38</span>}</div>
-<div class="ttc" id="anamespacecon_html_a07ddec20ab09a3078fce714358b65b4b"><div class="ttname"><a href="namespacecon.html#a07ddec20ab09a3078fce714358b65b4b">con::h</a></div><div class="ttdeci">constexpr Real h</div><div class="ttdoc">Planck constant in code units.</div><div class="ttdef"><b>Definition</b> <a href="macros_8h_source.html#l00087">macros.h:87</a></div></div>
+<div class="line"><span class="lineno">   27</span>            <span class="comment">/*grid.I0(i, j) = (KN &amp;&amp; (gamma_nu * (con::h / con::mec2) &gt; 1))</span></div>
+<div class="line"><span class="lineno">   28</span><span class="comment">                                ? 0</span></div>
+<div class="line"><span class="lineno">   29</span><span class="comment">                                : grid.column_den(j) * grid.I_nu_syn(i) * dS / factor * con::sigmaT;*/</span></div>
+<div class="line"><span class="lineno">   30</span>            <span class="keywordflow">if</span> (KN) {</div>
+<div class="line"><span class="lineno">   31</span>                <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">grid</a>.I0(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">j</a>) = <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">grid</a>.column_den(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">j</a>) * <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">grid</a>.I_nu_syn(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a>) * <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">dS</a> / <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">factor</a> * <a class="code hl_function" href="inverse-compton_8h.html#a689ca8481a7d3e7e760a3300503f2781">compton_cross_section</a>(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">gamma_nu</a>);</div>
+<div class="line"><span class="lineno">   32</span>            } <span class="keywordflow">else</span> {</div>
+<div class="line"><span class="lineno">   33</span>                <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">grid</a>.I0(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">j</a>) = <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">grid</a>.column_den(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">j</a>) * <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">grid</a>.I_nu_syn(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a>) * <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">dS</a> / <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">factor</a> * <a class="code hl_variable" href="namespacecon.html#ad19e5b64c85c3e709fd0944358be97f6">con::sigmaT</a>;</div>
+<div class="line"><span class="lineno">   34</span>            }</div>
+<div class="line"><span class="lineno">   35</span>        }</div>
+<div class="line"><span class="lineno">   36</span>    }</div>
+<div class="line"><span class="lineno">   37</span>}</div>
+<div class="ttc" id="ainverse-compton_8h_html_a689ca8481a7d3e7e760a3300503f2781"><div class="ttname"><a href="inverse-compton_8h.html#a689ca8481a7d3e7e760a3300503f2781">compton_cross_section</a></div><div class="ttdeci">Real compton_cross_section(Real nu)</div><div class="ttdoc">Computes the Compton scattering cross-section as a function of frequency (nu).</div><div class="ttdef"><b>Definition</b> <a href="inverse-compton_8cpp_source.html#l00141">inverse-compton.cpp:141</a></div></div>
 <div class="ttc" id="anamespacecon_html_ad19e5b64c85c3e709fd0944358be97f6"><div class="ttname"><a href="namespacecon.html#ad19e5b64c85c3e709fd0944358be97f6">con::sigmaT</a></div><div class="ttdeci">constexpr Real sigmaT</div><div class="ttdoc">Thomson cross-section in code units.</div><div class="ttdef"><b>Definition</b> <a href="macros_8h_source.html#l00092">macros.h:92</a></div></div>
-<div class="ttc" id="anamespacecon_html_ae1b8cddbe12f755f5d01b86b0e2b9e14"><div class="ttname"><a href="namespacecon.html#ae1b8cddbe12f755f5d01b86b0e2b9e14">con::mec2</a></div><div class="ttdeci">constexpr Real mec2</div><div class="ttdoc">Electron rest energy in code units.</div><div class="ttdef"><b>Definition</b> <a href="macros_8h_source.html#l00085">macros.h:85</a></div></div>
 </div><!-- fragment --><div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="structICPhoton_a6a2ac815d7fa191cddae0bebe39cdae6_cgraph.png" border="0" usemap="#astructICPhoton_a6a2ac815d7fa191cddae0bebe39cdae6_cgraph" alt=""/></div>
 <map name="astructICPhoton_a6a2ac815d7fa191cddae0bebe39cdae6_cgraph" id="astructICPhoton_a6a2ac815d7fa191cddae0bebe39cdae6_cgraph">
-<area shape="rect" title="Fill the integration grid for the IC photon spectrum." alt="" coords="5,29,220,55"/>
-<area shape="rect" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42" title="Returns the value of a single parameter." alt="" coords="268,29,319,55"/>
-<area shape="poly" title=" " alt="" coords="220,39,254,39,254,45,220,45"/>
-<area shape="poly" title=" " alt="" coords="266,32,258,22,260,12,272,5,293,3,320,7,327,12,329,19,324,20,323,16,318,12,293,8,274,10,264,15,263,21,270,29"/>
+<area shape="rect" title="Fill the integration grid for the IC photon spectrum." alt="" coords="5,31,220,56"/>
+<area shape="rect" href="inverse-compton_8cpp.html#a689ca8481a7d3e7e760a3300503f2781" title="Computes the Compton scattering cross&#45;section as a function of frequency (nu)." alt="" coords="268,5,443,31"/>
+<area shape="poly" title=" " alt="" coords="220,29,254,26,255,31,221,35"/>
+<area shape="rect" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42" title="Returns the value of a single parameter." alt="" coords="491,31,541,56"/>
+<area shape="poly" title=" " alt="" coords="220,41,477,41,477,46,220,46"/>
+<area shape="poly" title=" " alt="" coords="437,28,477,35,477,40,436,33"/>
+<area shape="poly" title=" " alt="" coords="489,32,483,22,486,13,498,6,516,4,538,7,547,16,544,20,536,12,516,9,499,11,491,16,489,22,494,29"/>
 </map>
 </div>
 <div class="dynheader">
@@ -656,16 +669,16 @@ template&lt;<a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5
 </dl>
 <p>This template member function computes the minimum and maximum values for the synchrotron frequency (nu0) and electron Lorentz factor (gamma) </p><dl class="section return"><dt>Returns</dt><dd>A tuple containing the minimum and maximum values for nu0, gamma, nu_min, and nu_max </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="inverse-compton_8h_source.html#l00252">252</a> of file <a class="el" href="inverse-compton_8h_source.html">inverse-compton.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  253</span>                                                                                                     {</div>
-<div class="line"><span class="lineno">  254</span>    <a class="code hl_typedef" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">nu0_min</a> = <a class="code hl_function" href="utilities_8h.html#ac47d1412f3f1791737d0f963267096f1">min</a>(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">photons</a>.nu_m, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">photons</a>.nu_c, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">photons</a>.nu_a) / 1<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">e5</a>;</div>
-<div class="line"><span class="lineno">  255</span>    <a class="code hl_typedef" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">nu0_max</a> = <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">photons</a>.nu_M * 5;</div>
-<div class="line"><span class="lineno">  256</span> </div>
-<div class="line"><span class="lineno">  257</span>    <a class="code hl_typedef" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">gamma_min</a> = <a class="code hl_function" href="utilities_8h.html#ac47d1412f3f1791737d0f963267096f1">min</a>(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">electrons</a>.gamma_m, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">electrons</a>.gamma_c, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">electrons</a>.gamma_a);</div>
-<div class="line"><span class="lineno">  258</span>    <a class="code hl_typedef" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">gamma_max</a> = <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">electrons</a>.gamma_M * 5;</div>
-<div class="line"><span class="lineno">  259</span> </div>
-<div class="line"><span class="lineno">  260</span>    <span class="keywordflow">return</span> std::make_tuple(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">nu0_min</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">nu0_max</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">gamma_min</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">gamma_max</a>);</div>
-<div class="line"><span class="lineno">  261</span>}</div>
+<p class="definition">Definition at line <a class="el" href="inverse-compton_8h_source.html#l00297">297</a> of file <a class="el" href="inverse-compton_8h_source.html">inverse-compton.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  298</span>                                                                                                     {</div>
+<div class="line"><span class="lineno">  299</span>    <a class="code hl_typedef" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">nu0_min</a> = <a class="code hl_function" href="utilities_8h.html#ac47d1412f3f1791737d0f963267096f1">min</a>(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">photons</a>.nu_m, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">photons</a>.nu_c, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">photons</a>.nu_a) / 1<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">e5</a>;</div>
+<div class="line"><span class="lineno">  300</span>    <a class="code hl_typedef" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">nu0_max</a> = <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">photons</a>.nu_M * 5;</div>
+<div class="line"><span class="lineno">  301</span> </div>
+<div class="line"><span class="lineno">  302</span>    <a class="code hl_typedef" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">gamma_min</a> = <a class="code hl_function" href="utilities_8h.html#ac47d1412f3f1791737d0f963267096f1">min</a>(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">electrons</a>.gamma_m, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">electrons</a>.gamma_c, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">electrons</a>.gamma_a);</div>
+<div class="line"><span class="lineno">  303</span>    <a class="code hl_typedef" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">gamma_max</a> = <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">electrons</a>.gamma_M * 5;</div>
+<div class="line"><span class="lineno">  304</span> </div>
+<div class="line"><span class="lineno">  305</span>    <span class="keywordflow">return</span> std::make_tuple(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">nu0_min</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">nu0_max</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">gamma_min</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">gamma_max</a>);</div>
+<div class="line"><span class="lineno">  306</span>}</div>
 <div class="ttc" id="autilities_8h_html_ac47d1412f3f1791737d0f963267096f1"><div class="ttname"><a href="utilities_8h.html#ac47d1412f3f1791737d0f963267096f1">min</a></div><div class="ttdeci">T min(T value)</div><div class="ttdoc">Returns the value of a single parameter.</div><div class="ttdef"><b>Definition</b> <a href="utilities_8h_source.html#l00302">utilities.h:302</a></div></div>
 </div><!-- fragment --><div class="dynheader">
 Here is the call graph for this function:</div>
@@ -725,36 +738,36 @@ Here is the caller graph for this function:</div>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="inverse-compton_8cpp_source.html#l00040">40</a> of file <a class="el" href="inverse-compton_8cpp_source.html">inverse-compton.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   40</span>                                                                        {</div>
-<div class="line"><span class="lineno">   41</span>    <span class="comment">// Calculate output frequency range</span></div>
-<div class="line"><span class="lineno">   42</span>    <a class="code hl_typedef" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">gamma_min</a> = <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">grid</a>.gamma.front();</div>
-<div class="line"><span class="lineno">   43</span>    <a class="code hl_typedef" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">gamma_max</a> = <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">grid</a>.gamma.back();</div>
-<div class="line"><span class="lineno">   44</span>    <a class="code hl_typedef" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">nu0_min</a> = <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">grid</a>.nu.front();</div>
-<div class="line"><span class="lineno">   45</span>    <a class="code hl_typedef" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">nu0_max</a> = <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">grid</a>.nu.back();</div>
-<div class="line"><span class="lineno">   46</span> </div>
-<div class="line"><span class="lineno">   47</span>    <a class="code hl_typedef" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">nu_min</a> = 4 * <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">gamma_min</a> * <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">gamma_min</a> * <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">nu0_min</a> * <a class="code hl_variable" href="inverse-compton_8h.html#a2bf720c7c87d960838095b276b09c664">IC_x0</a> * 0.999;  <span class="comment">// 0.999 to avoid the nu_IC_&gt;max(max_freq)</span></div>
-<div class="line"><span class="lineno">   48</span>    <a class="code hl_typedef" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">nu_max</a> = 4 * <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">gamma_max</a> * <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">gamma_max</a> * <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">nu0_max</a> * <a class="code hl_variable" href="inverse-compton_8h.html#a2bf720c7c87d960838095b276b09c664">IC_x0</a> * 0.999;</div>
-<div class="line"><span class="lineno">   49</span> </div>
-<div class="line"><span class="lineno">   50</span>    <a class="code hl_variable" href="structICPhoton.html#ab1c6a9c7a94c0930200ac029f1c6b239">nu_IC_</a> = xt::logspace(std::log10(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">nu_min</a>), std::log10(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">nu_max</a>), <a class="code hl_variable" href="structICPhoton.html#a0325e0801b12c80a6665a5293cbff3fd">spectrum_resol</a>);</div>
-<div class="line"><span class="lineno">   51</span>    <a class="code hl_variable" href="structICPhoton.html#ab7256f35bcc475b1d46545938fdeb6a9">I_nu_IC_</a> = xt::zeros&lt;Real&gt;({<a class="code hl_variable" href="structICPhoton.html#a0325e0801b12c80a6665a5293cbff3fd">spectrum_resol</a>});</div>
-<div class="line"><span class="lineno">   52</span> </div>
-<div class="line"><span class="lineno">   53</span>    <span class="comment">// Integrate over the grid to compute the final IC photon spectrum</span></div>
-<div class="line"><span class="lineno">   54</span>    <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a> = 0; <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a> &lt; <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">grid</a>.num; ++<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a>) {</div>
-<div class="line"><span class="lineno">   55</span>        <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">j</a> = 0; <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">j</a> &lt; <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">grid</a>.num; ++<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">j</a>) {</div>
-<div class="line"><span class="lineno">   56</span>            <a class="code hl_typedef" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">max_freq</a> = 4 * <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">grid</a>.gamma(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">j</a>) * <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">grid</a>.gamma(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">j</a>) * <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">grid</a>.nu(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a>) * <a class="code hl_variable" href="inverse-compton_8h.html#a2bf720c7c87d960838095b276b09c664">IC_x0</a>;</div>
-<div class="line"><span class="lineno">   57</span>            <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">k</a> = 0; <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">k</a> &lt; <a class="code hl_variable" href="structICPhoton.html#ab1c6a9c7a94c0930200ac029f1c6b239">nu_IC_</a>.size(); ++<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">k</a>) {</div>
-<div class="line"><span class="lineno">   58</span>                <span class="keywordflow">if</span> (<a class="code hl_variable" href="structICPhoton.html#ab1c6a9c7a94c0930200ac029f1c6b239">nu_IC_</a>(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">k</a>) &lt;= <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">max_freq</a>) {</div>
-<div class="line"><span class="lineno">   59</span>                    <a class="code hl_variable" href="structICPhoton.html#ab7256f35bcc475b1d46545938fdeb6a9">I_nu_IC_</a>(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">k</a>) += <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">grid</a>.I0(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">j</a>) * <a class="code hl_variable" href="structICPhoton.html#ab1c6a9c7a94c0930200ac029f1c6b239">nu_IC_</a>(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">k</a>);</div>
-<div class="line"><span class="lineno">   60</span>                } <span class="keywordflow">else</span> {</div>
-<div class="line"><span class="lineno">   61</span>                    <span class="keywordflow">break</span>;</div>
-<div class="line"><span class="lineno">   62</span>                }</div>
-<div class="line"><span class="lineno">   63</span>            }</div>
-<div class="line"><span class="lineno">   64</span>        }</div>
-<div class="line"><span class="lineno">   65</span>    }</div>
-<div class="line"><span class="lineno">   66</span>}</div>
+<p class="definition">Definition at line <a class="el" href="inverse-compton_8cpp_source.html#l00039">39</a> of file <a class="el" href="inverse-compton_8cpp_source.html">inverse-compton.cpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   39</span>                                                                        {</div>
+<div class="line"><span class="lineno">   40</span>    <span class="comment">// Calculate output frequency range</span></div>
+<div class="line"><span class="lineno">   41</span>    <a class="code hl_typedef" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">gamma_min</a> = <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">grid</a>.gamma.front();</div>
+<div class="line"><span class="lineno">   42</span>    <a class="code hl_typedef" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">gamma_max</a> = <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">grid</a>.gamma.back();</div>
+<div class="line"><span class="lineno">   43</span>    <a class="code hl_typedef" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">nu0_min</a> = <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">grid</a>.nu.front();</div>
+<div class="line"><span class="lineno">   44</span>    <a class="code hl_typedef" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">nu0_max</a> = <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">grid</a>.nu.back();</div>
+<div class="line"><span class="lineno">   45</span> </div>
+<div class="line"><span class="lineno">   46</span>    <a class="code hl_typedef" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">nu_min</a> = 4 * <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">gamma_min</a> * <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">gamma_min</a> * <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">nu0_min</a> * <a class="code hl_variable" href="inverse-compton_8h.html#a2bf720c7c87d960838095b276b09c664">IC_x0</a> * 0.999;  <span class="comment">// 0.999 to avoid the nu_IC_&gt;max(max_freq)</span></div>
+<div class="line"><span class="lineno">   47</span>    <a class="code hl_typedef" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">nu_max</a> = 4 * <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">gamma_max</a> * <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">gamma_max</a> * <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">nu0_max</a> * <a class="code hl_variable" href="inverse-compton_8h.html#a2bf720c7c87d960838095b276b09c664">IC_x0</a> * 0.999;</div>
+<div class="line"><span class="lineno">   48</span> </div>
+<div class="line"><span class="lineno">   49</span>    <a class="code hl_variable" href="structICPhoton.html#ab1c6a9c7a94c0930200ac029f1c6b239">nu_IC_</a> = xt::logspace(std::log10(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">nu_min</a>), std::log10(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">nu_max</a>), <a class="code hl_variable" href="structICPhoton.html#a0325e0801b12c80a6665a5293cbff3fd">spectrum_resol</a>);</div>
+<div class="line"><span class="lineno">   50</span>    <a class="code hl_variable" href="structICPhoton.html#ab7256f35bcc475b1d46545938fdeb6a9">I_nu_IC_</a> = xt::zeros&lt;Real&gt;({<a class="code hl_variable" href="structICPhoton.html#a0325e0801b12c80a6665a5293cbff3fd">spectrum_resol</a>});</div>
+<div class="line"><span class="lineno">   51</span> </div>
+<div class="line"><span class="lineno">   52</span>    <span class="comment">// Integrate over the grid to compute the final IC photon spectrum</span></div>
+<div class="line"><span class="lineno">   53</span>    <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a> = 0; <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a> &lt; <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">grid</a>.num; ++<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a>) {</div>
+<div class="line"><span class="lineno">   54</span>        <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">j</a> = 0; <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">j</a> &lt; <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">grid</a>.num; ++<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">j</a>) {</div>
+<div class="line"><span class="lineno">   55</span>            <a class="code hl_typedef" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">max_freq</a> = 4 * <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">grid</a>.gamma(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">j</a>) * <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">grid</a>.gamma(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">j</a>) * <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">grid</a>.nu(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a>) * <a class="code hl_variable" href="inverse-compton_8h.html#a2bf720c7c87d960838095b276b09c664">IC_x0</a>;</div>
+<div class="line"><span class="lineno">   56</span>            <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">k</a> = 0; <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">k</a> &lt; <a class="code hl_variable" href="structICPhoton.html#ab1c6a9c7a94c0930200ac029f1c6b239">nu_IC_</a>.size(); ++<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">k</a>) {</div>
+<div class="line"><span class="lineno">   57</span>                <span class="keywordflow">if</span> (<a class="code hl_variable" href="structICPhoton.html#ab1c6a9c7a94c0930200ac029f1c6b239">nu_IC_</a>(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">k</a>) &lt;= <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">max_freq</a>) {</div>
+<div class="line"><span class="lineno">   58</span>                    <a class="code hl_variable" href="structICPhoton.html#ab7256f35bcc475b1d46545938fdeb6a9">I_nu_IC_</a>(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">k</a>) += <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">grid</a>.I0(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">j</a>) * <a class="code hl_variable" href="structICPhoton.html#ab1c6a9c7a94c0930200ac029f1c6b239">nu_IC_</a>(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">k</a>);</div>
+<div class="line"><span class="lineno">   59</span>                } <span class="keywordflow">else</span> {</div>
+<div class="line"><span class="lineno">   60</span>                    <span class="keywordflow">break</span>;</div>
+<div class="line"><span class="lineno">   61</span>                }</div>
+<div class="line"><span class="lineno">   62</span>            }</div>
+<div class="line"><span class="lineno">   63</span>        }</div>
+<div class="line"><span class="lineno">   64</span>    }</div>
+<div class="line"><span class="lineno">   65</span>}</div>
 <div class="ttc" id="ainverse-compton_8h_html_a2bf720c7c87d960838095b276b09c664"><div class="ttname"><a href="inverse-compton_8h.html#a2bf720c7c87d960838095b276b09c664">IC_x0</a></div><div class="ttdeci">const Real IC_x0</div><div class="ttdoc">A constant used in the IC photon calculation, defined as √2/3.</div><div class="ttdef"><b>Definition</b> <a href="inverse-compton_8h_source.html#l00029">inverse-compton.h:29</a></div></div>
-<div class="ttc" id="astructICPhoton_html_a0325e0801b12c80a6665a5293cbff3fd"><div class="ttname"><a href="structICPhoton.html#a0325e0801b12c80a6665a5293cbff3fd">ICPhoton::spectrum_resol</a></div><div class="ttdeci">static constexpr size_t spectrum_resol</div><div class="ttdoc">Resolution of the computed IC spectrum.</div><div class="ttdef"><b>Definition</b> <a href="inverse-compton_8h_source.html#l00094">inverse-compton.h:94</a></div></div>
+<div class="ttc" id="astructICPhoton_html_a0325e0801b12c80a6665a5293cbff3fd"><div class="ttname"><a href="structICPhoton.html#a0325e0801b12c80a6665a5293cbff3fd">ICPhoton::spectrum_resol</a></div><div class="ttdeci">static constexpr size_t spectrum_resol</div><div class="ttdoc">Resolution of the computed IC spectrum.</div><div class="ttdef"><b>Definition</b> <a href="inverse-compton_8h_source.html#l00130">inverse-compton.h:130</a></div></div>
 </div><!-- fragment --><div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -779,6 +792,67 @@ Here is the caller graph for this function:</div>
 
 </div>
 </div>
+<a id="a16b673b4609b852f6f2af36f9258b8d0" name="a16b673b4609b852f6f2af36f9258b8d0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a16b673b4609b852f6f2af36f9258b8d0">&#9670;&#160;</a></span>remove_zero_tail()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">void</a> ICPhoton::remove_zero_tail </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Remove the zero tail of the IC photon spectrum. </p>
+
+<p class="definition">Definition at line <a class="el" href="inverse-compton_8cpp_source.html#l00067">67</a> of file <a class="el" href="inverse-compton_8cpp_source.html">inverse-compton.cpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   67</span>                                         {</div>
+<div class="line"><span class="lineno">   68</span>    <span class="keywordtype">size_t</span> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">idx</a> = <a class="code hl_variable" href="structICPhoton.html#ab7256f35bcc475b1d46545938fdeb6a9">I_nu_IC_</a>.size();</div>
+<div class="line"><span class="lineno">   69</span>    <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a> = <a class="code hl_variable" href="structICPhoton.html#ab7256f35bcc475b1d46545938fdeb6a9">I_nu_IC_</a>.size() - 1; <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a> &gt;= 0; --<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a>) {</div>
+<div class="line"><span class="lineno">   70</span>        <span class="keywordflow">if</span> (<a class="code hl_variable" href="structICPhoton.html#ab7256f35bcc475b1d46545938fdeb6a9">I_nu_IC_</a>(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a>) != 0) {</div>
+<div class="line"><span class="lineno">   71</span>            <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">idx</a> = <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a>;</div>
+<div class="line"><span class="lineno">   72</span>            <span class="keywordflow">break</span>;</div>
+<div class="line"><span class="lineno">   73</span>        }</div>
+<div class="line"><span class="lineno">   74</span>    }</div>
+<div class="line"><span class="lineno">   75</span>    <a class="code hl_variable" href="structICPhoton.html#ab1c6a9c7a94c0930200ac029f1c6b239">nu_IC_</a> = xt::view(<a class="code hl_variable" href="structICPhoton.html#ab1c6a9c7a94c0930200ac029f1c6b239">nu_IC_</a>, xt::range(0, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">idx</a> + 1));</div>
+<div class="line"><span class="lineno">   76</span>    <a class="code hl_variable" href="structICPhoton.html#ab7256f35bcc475b1d46545938fdeb6a9">I_nu_IC_</a> = xt::view(<a class="code hl_variable" href="structICPhoton.html#ab7256f35bcc475b1d46545938fdeb6a9">I_nu_IC_</a>, xt::range(0, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">idx</a> + 1));</div>
+<div class="line"><span class="lineno">   77</span>}</div>
+</div><!-- fragment --><div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="structICPhoton_a16b673b4609b852f6f2af36f9258b8d0_cgraph.png" border="0" usemap="#astructICPhoton_a16b673b4609b852f6f2af36f9258b8d0_cgraph" alt=""/></div>
+<map name="astructICPhoton_a16b673b4609b852f6f2af36f9258b8d0_cgraph" id="astructICPhoton_a16b673b4609b852f6f2af36f9258b8d0_cgraph">
+<area shape="rect" title="Remove the zero tail of the IC photon spectrum." alt="" coords="5,29,207,55"/>
+<area shape="rect" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42" title="Returns the value of a single parameter." alt="" coords="255,29,305,55"/>
+<area shape="poly" title=" " alt="" coords="207,39,241,39,241,45,207,45"/>
+<area shape="poly" title=" " alt="" coords="253,32,245,22,248,12,260,5,280,3,305,7,315,17,310,21,303,12,280,8,261,10,252,15,250,21,257,29"/>
+</map>
+</div>
+<div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="structICPhoton_a16b673b4609b852f6f2af36f9258b8d0_icgraph.png" border="0" usemap="#astructICPhoton_a16b673b4609b852f6f2af36f9258b8d0_icgraph" alt=""/></div>
+<map name="astructICPhoton_a16b673b4609b852f6f2af36f9258b8d0_icgraph" id="astructICPhoton_a16b673b4609b852f6f2af36f9258b8d0_icgraph">
+<area shape="rect" title="Remove the zero tail of the IC photon spectrum." alt="" coords="219,13,420,38"/>
+<area shape="rect" href="structICPhoton.html#aabcd1cc2a89ddb1683292dfefa74b14a" title="Generates the IC photon spectrum from the given electron and photon data." alt="" coords="5,5,171,45"/>
+<area shape="poly" title=" " alt="" coords="205,28,171,28,171,23,205,23"/>
+</map>
+</div>
+
+</div>
+</div>
 <h2 class="groupheader">Member Data Documentation</h2>
 <a id="ab7256f35bcc475b1d46545938fdeb6a9" name="ab7256f35bcc475b1d46545938fdeb6a9"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ab7256f35bcc475b1d46545938fdeb6a9">&#9670;&#160;</a></span>I_nu_IC_</h2>
@@ -794,7 +868,7 @@ Here is the caller graph for this function:</div>
 
 <p>IC photon spectrum intensity array. </p>
 
-<p class="definition">Definition at line <a class="el" href="inverse-compton_8h_source.html#l00134">134</a> of file <a class="el" href="inverse-compton_8h_source.html">inverse-compton.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="inverse-compton_8h_source.html#l00170">170</a> of file <a class="el" href="inverse-compton_8h_source.html">inverse-compton.h</a>.</p>
 
 </div>
 </div>
@@ -812,7 +886,7 @@ Here is the caller graph for this function:</div>
 
 <p>Base-2 logarithm of the IC photon spectrum intensity array. </p>
 
-<p class="definition">Definition at line <a class="el" href="inverse-compton_8h_source.html#l00136">136</a> of file <a class="el" href="inverse-compton_8h_source.html">inverse-compton.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="inverse-compton_8h_source.html#l00172">172</a> of file <a class="el" href="inverse-compton_8h_source.html">inverse-compton.h</a>.</p>
 
 </div>
 </div>
@@ -830,7 +904,7 @@ Here is the caller graph for this function:</div>
 
 <p>Base-2 logarithm of the frequency grid for the IC photon spectrum. </p>
 
-<p class="definition">Definition at line <a class="el" href="inverse-compton_8h_source.html#l00137">137</a> of file <a class="el" href="inverse-compton_8h_source.html">inverse-compton.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="inverse-compton_8h_source.html#l00173">173</a> of file <a class="el" href="inverse-compton_8h_source.html">inverse-compton.h</a>.</p>
 
 </div>
 </div>
@@ -848,7 +922,7 @@ Here is the caller graph for this function:</div>
 
 <p>Frequency grid for the IC photon spectrum. </p>
 
-<p class="definition">Definition at line <a class="el" href="inverse-compton_8h_source.html#l00135">135</a> of file <a class="el" href="inverse-compton_8h_source.html">inverse-compton.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="inverse-compton_8h_source.html#l00171">171</a> of file <a class="el" href="inverse-compton_8h_source.html">inverse-compton.h</a>.</p>
 
 </div>
 </div>
@@ -874,8 +948,8 @@ Here is the caller graph for this function:</div>
 
 <p>Resolution of the computed IC spectrum. </p>
 
-<p class="definition">Definition at line <a class="el" href="inverse-compton_8h_source.html#l00094">94</a> of file <a class="el" href="inverse-compton_8h_source.html">inverse-compton.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   94</span>{64};</div>
+<p class="definition">Definition at line <a class="el" href="inverse-compton_8h_source.html#l00130">130</a> of file <a class="el" href="inverse-compton_8h_source.html">inverse-compton.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  130</span>{64};</div>
 </div><!-- fragment -->
 </div>
 </div>

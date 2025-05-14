@@ -268,7 +268,7 @@ $(document).ready(function(){initNavTree('reverse-shock_8tpp_source.html',''); i
 <div class="line"><a id="l00167" name="l00167"></a><span class="lineno">  167</span> </div>
 <div class="line"><a id="l00168" name="l00168"></a><span class="lineno">  168</span>        return eps2 + eps3;</div>
 <div class="line"><a id="l00169" name="l00169"></a><span class="lineno">  169</span>    };</div>
-<div class="line"><a id="l00170" name="l00170"></a><span class="lineno">  170</span>    constexpr Real r_tol = 1e-3;</div>
+<div class="line"><a id="l00170" name="l00170"></a><span class="lineno">  170</span>    constexpr Real r_tol = 1e-4;</div>
 <div class="line"><a id="l00171" name="l00171"></a><span class="lineno">  171</span>    return root_bisect(func, 1, Gamma4, r_tol);</div>
 <div class="line"><a id="l00172" name="l00172"></a><span class="lineno">  172</span>}</div>
 <div class="line"><a id="l00173" name="l00173"></a><span class="lineno">  173</span> </div>
@@ -668,7 +668,7 @@ $(document).ready(function(){initNavTree('reverse-shock_8tpp_source.html',''); i
 <div class="line"><a id="l00567" name="l00567"></a><span class="lineno">  567</span>        Real theta_s =</div>
 <div class="line"><a id="l00568" name="l00568"></a><span class="lineno">  568</span>            jet_spreading_edge(jet, medium, coord.phi(i), coord.theta.front(), coord.theta.back(), coord.t.front());</div>
 <div class="line"><a id="l00569" name="l00569"></a><span class="lineno">  569</span>        for (size_t j = 0; j &lt; theta_size; ++j) {</div>
-<div class="line"><a id="l00570" name="l00570"></a><span class="lineno">  570</span>            // auto eqn_f = ForwardShockEqn(medium, jet, inject, coord.phi(i), coord.theta(j), eps_e);</div>
+<div class="line"><a id="l00570" name="l00570"></a><span class="lineno">  570</span>            // auto eqn_f = ForwardShockEqn(medium, jet, coord.phi(i), coord.theta(j), eps_e_f, theta_s);</div>
 <div class="line"><a id="l00571" name="l00571"></a><span class="lineno">  571</span>            auto eqn_f = SimpleShockEqn(medium, jet, coord.phi(i), coord.theta(j), eps_e_f, theta_s);</div>
 <div class="line"><a id="l00572" name="l00572"></a><span class="lineno">  572</span>            auto eqn_r = FRShockEqn(medium, jet, coord.phi(i), coord.theta(j), eps_e_r);</div>
 <div class="line"><a id="l00573" name="l00573"></a><span class="lineno">  573</span>            // Solve the forward-reverse shock shell</div>

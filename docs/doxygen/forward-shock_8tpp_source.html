@@ -240,68 +240,67 @@ $(document).ready(function(){initNavTree('forward-shock_8tpp_source.html',''); i
 <div class="line"><a id="l00139" name="l00139"></a><span class="lineno">  139</span>    // Set constant parameters for the unshocked medium</div>
 <div class="line"><a id="l00140" name="l00140"></a><span class="lineno">  140</span>    constexpr Real gamma1 = 1;  // Lorentz factor of unshocked medium (at rest)</div>
 <div class="line"><a id="l00141" name="l00141"></a><span class="lineno">  141</span>    constexpr Real sigma1 = 0;  // Magnetization of unshocked medium</div>
-<div class="line"><a id="l00142" name="l00142"></a><span class="lineno">  142</span> </div>
-<div class="line"><a id="l00143" name="l00143"></a><span class="lineno">  143</span>    // Update the shock state with calculated values</div>
-<div class="line"><a id="l00144" name="l00144"></a><span class="lineno">  144</span>    save_shock_state(shock, i, j, k, state, state.Gamma, gamma1, m2 / con::mp, n1, sigma1);</div>
-<div class="line"><a id="l00145" name="l00145"></a><span class="lineno">  145</span>}</div>
-<div class="line"><a id="l00146" name="l00146"></a><span class="lineno">  146</span> </div>
-<div class="line"><a id="l00147" name="l00147"></a><span class="lineno">  147</span>template &lt;typename FwdEqn, typename View&gt;</div>
-<div class="line"><a id="l00148" name="l00148"></a><span class="lineno">  148</span>void grid_solve_fwd_shock(size_t i, size_t j, View const&amp; t, Shock&amp; shock, FwdEqn const&amp; eqn, double rtol) {</div>
-<div class="line"><a id="l00149" name="l00149"></a><span class="lineno">  149</span>    using namespace boost::numeric::odeint;</div>
-<div class="line"><a id="l00150" name="l00150"></a><span class="lineno">  150</span> </div>
-<div class="line"><a id="l00151" name="l00151"></a><span class="lineno">  151</span>    // Initialize state array</div>
-<div class="line"><a id="l00152" name="l00152"></a><span class="lineno">  152</span>    typename FwdEqn::State state;</div>
-<div class="line"><a id="l00153" name="l00153"></a><span class="lineno">  153</span> </div>
-<div class="line"><a id="l00154" name="l00154"></a><span class="lineno">  154</span>    // Get initial time and set up initial conditions</div>
-<div class="line"><a id="l00155" name="l00155"></a><span class="lineno">  155</span>    Real t_dec = compute_dec_time(eqn, t.back());</div>
-<div class="line"><a id="l00156" name="l00156"></a><span class="lineno">  156</span>    Real t0 = min(t.front(), t_dec, 1 * unit::sec);</div>
-<div class="line"><a id="l00157" name="l00157"></a><span class="lineno">  157</span>    eqn.set_init_state(state, t0);</div>
-<div class="line"><a id="l00158" name="l00158"></a><span class="lineno">  158</span> </div>
-<div class="line"><a id="l00159" name="l00159"></a><span class="lineno">  159</span>    // Early exit if initial Lorentz factor is below cutoff</div>
-<div class="line"><a id="l00160" name="l00160"></a><span class="lineno">  160</span>    if (state.Gamma &lt;= con::Gamma_cut) {</div>
-<div class="line"><a id="l00161" name="l00161"></a><span class="lineno">  161</span>        set_stopping_shock(i, j, shock, state);</div>
-<div class="line"><a id="l00162" name="l00162"></a><span class="lineno">  162</span>        return;</div>
-<div class="line"><a id="l00163" name="l00163"></a><span class="lineno">  163</span>    }</div>
-<div class="line"><a id="l00164" name="l00164"></a><span class="lineno">  164</span> </div>
-<div class="line"><a id="l00165" name="l00165"></a><span class="lineno">  165</span>    // Set up ODE solver with adaptive step size control</div>
-<div class="line"><a id="l00166" name="l00166"></a><span class="lineno">  166</span>    auto stepper = make_dense_output(rtol, rtol, runge_kutta_dopri5&lt;typename FwdEqn::State&gt;());</div>
-<div class="line"><a id="l00167" name="l00167"></a><span class="lineno">  167</span> </div>
-<div class="line"><a id="l00168" name="l00168"></a><span class="lineno">  168</span>    stepper.initialize(state, t0, 0.01 * t0);</div>
-<div class="line"><a id="l00169" name="l00169"></a><span class="lineno">  169</span> </div>
-<div class="line"><a id="l00170" name="l00170"></a><span class="lineno">  170</span>    // Solve ODE and update shock state at each requested time point</div>
-<div class="line"><a id="l00171" name="l00171"></a><span class="lineno">  171</span>    for (size_t k = 0; stepper.current_time() &lt;= t.back();) {</div>
-<div class="line"><a id="l00172" name="l00172"></a><span class="lineno">  172</span>        // Advance solution by one adaptive step</div>
-<div class="line"><a id="l00173" name="l00173"></a><span class="lineno">  173</span>        stepper.do_step(eqn);</div>
-<div class="line"><a id="l00174" name="l00174"></a><span class="lineno">  174</span> </div>
-<div class="line"><a id="l00175" name="l00175"></a><span class="lineno">  175</span>        // Update shock state for all time points that have been passed in this step</div>
-<div class="line"><a id="l00176" name="l00176"></a><span class="lineno">  176</span>        while (k &lt; t.size() &amp;&amp; stepper.current_time() &gt; t(k)) {</div>
-<div class="line"><a id="l00177" name="l00177"></a><span class="lineno">  177</span>            stepper.calc_state(t(k), state);</div>
-<div class="line"><a id="l00178" name="l00178"></a><span class="lineno">  178</span>            save_fwd_shock_state(i, j, k, eqn, state, shock);</div>
-<div class="line"><a id="l00179" name="l00179"></a><span class="lineno">  179</span>            ++k;</div>
-<div class="line"><a id="l00180" name="l00180"></a><span class="lineno">  180</span>        }</div>
-<div class="line"><a id="l00181" name="l00181"></a><span class="lineno">  181</span>    }</div>
-<div class="line"><a id="l00182" name="l00182"></a><span class="lineno">  182</span>}</div>
-<div class="line"><a id="l00183" name="l00183"></a><span class="lineno">  183</span> </div>
-<div class="line"><a id="l00184" name="l00184"></a><span class="lineno">  184</span>template &lt;typename Ejecta, typename Medium&gt;</div>
-<div class="line"><a id="l00185" name="l00185"></a><span class="lineno">  185</span>Shock generate_fwd_shock(Coord const&amp; coord, Medium const&amp; medium, Ejecta const&amp; jet, Real eps_e, Real eps_B,</div>
-<div class="line"><a id="l00186" name="l00186"></a><span class="lineno">  186</span>                         Real rtol) {</div>
-<div class="line"><a id="l00187" name="l00187"></a><span class="lineno">  187</span>    auto [phi_size, theta_size, t_size] = coord.shape();  // Unpack coordinate dimensions</div>
-<div class="line"><a id="l00188" name="l00188"></a><span class="lineno">  188</span>    size_t phi_size_needed = coord.t.shape()[0];</div>
-<div class="line"><a id="l00189" name="l00189"></a><span class="lineno">  189</span>    Shock shock(phi_size_needed, theta_size, t_size, eps_e, eps_B);</div>
-<div class="line"><a id="l00190" name="l00190"></a><span class="lineno">  190</span> </div>
-<div class="line"><a id="l00191" name="l00191"></a><span class="lineno">  191</span>    for (size_t i = 0; i &lt; phi_size_needed; ++i) {</div>
-<div class="line"><a id="l00192" name="l00192"></a><span class="lineno">  192</span>        Real theta_s =</div>
-<div class="line"><a id="l00193" name="l00193"></a><span class="lineno">  193</span>            jet_spreading_edge(jet, medium, coord.phi(i), coord.theta.front(), coord.theta.back(), coord.t.front());</div>
-<div class="line"><a id="l00194" name="l00194"></a><span class="lineno">  194</span>        for (size_t j = 0; j &lt; theta_size; ++j) {</div>
-<div class="line"><a id="l00195" name="l00195"></a><span class="lineno">  195</span>            // auto eqn = ForwardShockEqn(medium, jet, coord.phi[i], coord.theta[j], eps_e, theta_s);</div>
-<div class="line"><a id="l00196" name="l00196"></a><span class="lineno">  196</span>            auto eqn = SimpleShockEqn(medium, jet, coord.phi(i), coord.theta(j), eps_e, theta_s);</div>
-<div class="line"><a id="l00197" name="l00197"></a><span class="lineno">  197</span>            //  Solve the shock shell for this theta slice</div>
-<div class="line"><a id="l00198" name="l00198"></a><span class="lineno">  198</span>            grid_solve_fwd_shock(i, j, xt::view(coord.t, i, j, xt::all()), shock, eqn, rtol);</div>
-<div class="line"><a id="l00199" name="l00199"></a><span class="lineno">  199</span>        }</div>
-<div class="line"><a id="l00200" name="l00200"></a><span class="lineno">  200</span>    }</div>
-<div class="line"><a id="l00201" name="l00201"></a><span class="lineno">  201</span> </div>
-<div class="line"><a id="l00202" name="l00202"></a><span class="lineno">  202</span>    return shock;</div>
-<div class="line"><a id="l00203" name="l00203"></a><span class="lineno">  203</span>}</div>
+<div class="line"><a id="l00142" name="l00142"></a><span class="lineno">  142</span>    // Update the shock state with calculated values</div>
+<div class="line"><a id="l00143" name="l00143"></a><span class="lineno">  143</span>    save_shock_state(shock, i, j, k, state, state.Gamma, gamma1, m2 / con::mp, n1, sigma1);</div>
+<div class="line"><a id="l00144" name="l00144"></a><span class="lineno">  144</span>}</div>
+<div class="line"><a id="l00145" name="l00145"></a><span class="lineno">  145</span> </div>
+<div class="line"><a id="l00146" name="l00146"></a><span class="lineno">  146</span>template &lt;typename FwdEqn, typename View&gt;</div>
+<div class="line"><a id="l00147" name="l00147"></a><span class="lineno">  147</span>void grid_solve_fwd_shock(size_t i, size_t j, View const&amp; t, Shock&amp; shock, FwdEqn const&amp; eqn, double rtol) {</div>
+<div class="line"><a id="l00148" name="l00148"></a><span class="lineno">  148</span>    using namespace boost::numeric::odeint;</div>
+<div class="line"><a id="l00149" name="l00149"></a><span class="lineno">  149</span> </div>
+<div class="line"><a id="l00150" name="l00150"></a><span class="lineno">  150</span>    // Initialize state array</div>
+<div class="line"><a id="l00151" name="l00151"></a><span class="lineno">  151</span>    typename FwdEqn::State state;</div>
+<div class="line"><a id="l00152" name="l00152"></a><span class="lineno">  152</span> </div>
+<div class="line"><a id="l00153" name="l00153"></a><span class="lineno">  153</span>    // Get initial time and set up initial conditions</div>
+<div class="line"><a id="l00154" name="l00154"></a><span class="lineno">  154</span>    Real t_dec = compute_dec_time(eqn, t.back());</div>
+<div class="line"><a id="l00155" name="l00155"></a><span class="lineno">  155</span>    Real t0 = min(t.front(), t_dec, 1 * unit::sec);</div>
+<div class="line"><a id="l00156" name="l00156"></a><span class="lineno">  156</span>    eqn.set_init_state(state, t0);</div>
+<div class="line"><a id="l00157" name="l00157"></a><span class="lineno">  157</span> </div>
+<div class="line"><a id="l00158" name="l00158"></a><span class="lineno">  158</span>    // Early exit if initial Lorentz factor is below cutoff</div>
+<div class="line"><a id="l00159" name="l00159"></a><span class="lineno">  159</span>    if (state.Gamma &lt;= con::Gamma_cut) {</div>
+<div class="line"><a id="l00160" name="l00160"></a><span class="lineno">  160</span>        set_stopping_shock(i, j, shock, state);</div>
+<div class="line"><a id="l00161" name="l00161"></a><span class="lineno">  161</span>        return;</div>
+<div class="line"><a id="l00162" name="l00162"></a><span class="lineno">  162</span>    }</div>
+<div class="line"><a id="l00163" name="l00163"></a><span class="lineno">  163</span> </div>
+<div class="line"><a id="l00164" name="l00164"></a><span class="lineno">  164</span>    // Set up ODE solver with adaptive step size control</div>
+<div class="line"><a id="l00165" name="l00165"></a><span class="lineno">  165</span>    auto stepper = make_dense_output(rtol, rtol, runge_kutta_dopri5&lt;typename FwdEqn::State&gt;());</div>
+<div class="line"><a id="l00166" name="l00166"></a><span class="lineno">  166</span> </div>
+<div class="line"><a id="l00167" name="l00167"></a><span class="lineno">  167</span>    stepper.initialize(state, t0, 0.01 * t0);</div>
+<div class="line"><a id="l00168" name="l00168"></a><span class="lineno">  168</span> </div>
+<div class="line"><a id="l00169" name="l00169"></a><span class="lineno">  169</span>    // Solve ODE and update shock state at each requested time point</div>
+<div class="line"><a id="l00170" name="l00170"></a><span class="lineno">  170</span>    for (size_t k = 0; stepper.current_time() &lt;= t.back();) {</div>
+<div class="line"><a id="l00171" name="l00171"></a><span class="lineno">  171</span>        // Advance solution by one adaptive step</div>
+<div class="line"><a id="l00172" name="l00172"></a><span class="lineno">  172</span>        stepper.do_step(eqn);</div>
+<div class="line"><a id="l00173" name="l00173"></a><span class="lineno">  173</span> </div>
+<div class="line"><a id="l00174" name="l00174"></a><span class="lineno">  174</span>        // Update shock state for all time points that have been passed in this step</div>
+<div class="line"><a id="l00175" name="l00175"></a><span class="lineno">  175</span>        while (k &lt; t.size() &amp;&amp; stepper.current_time() &gt; t(k)) {</div>
+<div class="line"><a id="l00176" name="l00176"></a><span class="lineno">  176</span>            stepper.calc_state(t(k), state);</div>
+<div class="line"><a id="l00177" name="l00177"></a><span class="lineno">  177</span>            save_fwd_shock_state(i, j, k, eqn, state, shock);</div>
+<div class="line"><a id="l00178" name="l00178"></a><span class="lineno">  178</span>            ++k;</div>
+<div class="line"><a id="l00179" name="l00179"></a><span class="lineno">  179</span>        }</div>
+<div class="line"><a id="l00180" name="l00180"></a><span class="lineno">  180</span>    }</div>
+<div class="line"><a id="l00181" name="l00181"></a><span class="lineno">  181</span>}</div>
+<div class="line"><a id="l00182" name="l00182"></a><span class="lineno">  182</span> </div>
+<div class="line"><a id="l00183" name="l00183"></a><span class="lineno">  183</span>template &lt;typename Ejecta, typename Medium&gt;</div>
+<div class="line"><a id="l00184" name="l00184"></a><span class="lineno">  184</span>Shock generate_fwd_shock(Coord const&amp; coord, Medium const&amp; medium, Ejecta const&amp; jet, Real eps_e, Real eps_B,</div>
+<div class="line"><a id="l00185" name="l00185"></a><span class="lineno">  185</span>                         Real rtol) {</div>
+<div class="line"><a id="l00186" name="l00186"></a><span class="lineno">  186</span>    auto [phi_size, theta_size, t_size] = coord.shape();  // Unpack coordinate dimensions</div>
+<div class="line"><a id="l00187" name="l00187"></a><span class="lineno">  187</span>    size_t phi_size_needed = coord.t.shape()[0];</div>
+<div class="line"><a id="l00188" name="l00188"></a><span class="lineno">  188</span>    Shock shock(phi_size_needed, theta_size, t_size, eps_e, eps_B);</div>
+<div class="line"><a id="l00189" name="l00189"></a><span class="lineno">  189</span> </div>
+<div class="line"><a id="l00190" name="l00190"></a><span class="lineno">  190</span>    for (size_t i = 0; i &lt; phi_size_needed; ++i) {</div>
+<div class="line"><a id="l00191" name="l00191"></a><span class="lineno">  191</span>        Real theta_s =</div>
+<div class="line"><a id="l00192" name="l00192"></a><span class="lineno">  192</span>            jet_spreading_edge(jet, medium, coord.phi(i), coord.theta.front(), coord.theta.back(), coord.t.front());</div>
+<div class="line"><a id="l00193" name="l00193"></a><span class="lineno">  193</span>        for (size_t j = 0; j &lt; theta_size; ++j) {</div>
+<div class="line"><a id="l00194" name="l00194"></a><span class="lineno">  194</span>            // auto eqn = ForwardShockEqn(medium, jet, coord.phi(i), coord.theta(j), eps_e, theta_s);</div>
+<div class="line"><a id="l00195" name="l00195"></a><span class="lineno">  195</span>            auto eqn = SimpleShockEqn(medium, jet, coord.phi(i), coord.theta(j), eps_e, theta_s);</div>
+<div class="line"><a id="l00196" name="l00196"></a><span class="lineno">  196</span>            //   Solve the shock shell for this theta slice</div>
+<div class="line"><a id="l00197" name="l00197"></a><span class="lineno">  197</span>            grid_solve_fwd_shock(i, j, xt::view(coord.t, i, j, xt::all()), shock, eqn, rtol);</div>
+<div class="line"><a id="l00198" name="l00198"></a><span class="lineno">  198</span>        }</div>
+<div class="line"><a id="l00199" name="l00199"></a><span class="lineno">  199</span>    }</div>
+<div class="line"><a id="l00200" name="l00200"></a><span class="lineno">  200</span> </div>
+<div class="line"><a id="l00201" name="l00201"></a><span class="lineno">  201</span>    return shock;</div>
+<div class="line"><a id="l00202" name="l00202"></a><span class="lineno">  202</span>}</div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->

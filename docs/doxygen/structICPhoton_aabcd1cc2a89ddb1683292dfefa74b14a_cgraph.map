@@ -1,18 +1,24 @@
 <map id="ICPhoton::compute_IC_spectrum" name="ICPhoton::compute_IC_spectrum">
-<area shape="rect" id="Node000001" title="Generates the IC photon spectrum from the given electron and photon data." alt="" coords="5,92,171,132"/>
-<area shape="rect" id="Node000002" href="$structICPhoton.html#a492bf9ae4f3c3c8f5d018a805a5400ce" title="Fill the input spectrum data for the IC photon spectrum." alt="" coords="240,5,384,45"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="140,89,246,48,248,53,142,94"/>
-<area shape="rect" id="Node000003" href="$structICPhoton.html#a6a2ac815d7fa191cddae0bebe39cdae6" title="Fill the integration grid for the IC photon spectrum." alt="" coords="453,74,668,99"/>
-<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="171,105,439,90,440,96,171,110"/>
-<area shape="rect" id="Node000005" href="$structICPhoton.html#adb8ba3eab2bb357bf40a6433bd2a1eb8" title="Get the integration bounds for the IC photon spectrum." alt="" coords="219,120,405,160"/>
-<area shape="poly" id="edge5_Node000001_Node000005" title=" " alt="" coords="171,120,205,124,205,129,171,125"/>
-<area shape="rect" id="Node000007" href="$structICPhoton.html#ab70e82101720e70c36fbf3208c9097c5" title="Integrate the IC photon spectrum." alt="" coords="487,177,634,217"/>
-<area shape="poly" id="edge8_Node000001_Node000007" title=" " alt="" coords="125,130,169,151,219,169,285,183,352,191,474,197,473,202,351,196,284,188,218,175,167,156,123,135"/>
-<area shape="rect" id="Node000004" href="$utilities_8h.html#ab8e81118f023df135835db8cce4f5f42" title="Returns the value of a single parameter." alt="" coords="716,127,767,153"/>
-<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="614,97,669,112,704,124,702,129,667,117,613,102"/>
-<area shape="poly" id="edge4_Node000004_Node000004" title=" " alt="" coords="714,130,706,120,708,110,720,103,741,101,768,105,775,110,777,117,772,118,771,114,766,110,741,106,722,108,712,113,711,119,718,127"/>
-<area shape="rect" id="Node000006" href="$utilities_8h.html#ac47d1412f3f1791737d0f963267096f1" title="Returns the value of a single parameter." alt="" coords="537,127,584,153"/>
-<area shape="poly" id="edge6_Node000005_Node000006" title=" " alt="" coords="406,137,524,137,524,143,406,143"/>
-<area shape="poly" id="edge7_Node000006_Node000004" title=" " alt="" coords="584,137,702,137,702,143,584,143"/>
-<area shape="poly" id="edge9_Node000007_Node000004" title=" " alt="" coords="629,175,667,163,702,151,703,156,669,168,631,180"/>
+<area shape="rect" id="Node000001" title="Generates the IC photon spectrum from the given electron and photon data." alt="" coords="5,120,171,160"/>
+<area shape="rect" id="Node000002" href="$structICPhoton.html#a492bf9ae4f3c3c8f5d018a805a5400ce" title="Fill the input spectrum data for the IC photon spectrum." alt="" coords="254,5,398,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="114,118,161,86,218,55,240,46,242,51,220,60,164,91,117,122"/>
+<area shape="rect" id="Node000003" href="$structICPhoton.html#a6a2ac815d7fa191cddae0bebe39cdae6" title="Fill the integration grid for the IC photon spectrum." alt="" coords="219,70,433,95"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="169,117,218,105,257,96,259,101,219,111,171,123"/>
+<area shape="rect" id="Node000006" href="$structICPhoton.html#adb8ba3eab2bb357bf40a6433bd2a1eb8" title="Get the integration bounds for the IC photon spectrum." alt="" coords="233,120,419,160"/>
+<area shape="poly" id="edge7_Node000001_Node000006" title=" " alt="" coords="171,137,219,137,219,143,171,143"/>
+<area shape="rect" id="Node000008" href="$structICPhoton.html#ab70e82101720e70c36fbf3208c9097c5" title="Integrate the IC photon spectrum." alt="" coords="509,177,655,217"/>
+<area shape="poly" id="edge10_Node000001_Node000008" title=" " alt="" coords="162,157,219,169,365,186,495,193,495,198,364,191,218,175,161,163"/>
+<area shape="rect" id="Node000009" href="$structICPhoton.html#a16b673b4609b852f6f2af36f9258b8d0" title="Remove the zero tail of the IC photon spectrum." alt="" coords="481,242,683,267"/>
+<area shape="poly" id="edge12_Node000001_Node000009" title=" " alt="" coords="128,158,171,178,219,196,282,212,347,225,468,243,467,248,346,231,281,218,218,201,169,183,126,163"/>
+<area shape="rect" id="Node000004" href="$inverse-compton_8cpp.html#a689ca8481a7d3e7e760a3300503f2781" title="Computes the Compton scattering cross&#45;section as a function of frequency (nu)." alt="" coords="495,26,669,51"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="400,67,494,51,495,56,401,73"/>
+<area shape="rect" id="Node000005" href="$utilities_8h.html#ab8e81118f023df135835db8cce4f5f42" title="Returns the value of a single parameter." alt="" coords="731,127,781,153"/>
+<area shape="poly" id="edge6_Node000003_Node000005" title=" " alt="" coords="434,83,554,92,683,112,718,122,717,128,682,117,554,97,434,88"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="639,49,684,68,713,90,737,115,733,118,710,94,681,73,637,54"/>
+<area shape="poly" id="edge5_Node000005_Node000005" title=" " alt="" coords="729,130,721,120,724,110,736,103,756,101,781,105,791,115,786,119,779,110,756,106,737,108,728,113,726,119,733,127"/>
+<area shape="rect" id="Node000007" href="$utilities_8h.html#ac47d1412f3f1791737d0f963267096f1" title="Returns the value of a single parameter." alt="" coords="559,127,605,153"/>
+<area shape="poly" id="edge8_Node000006_Node000007" title=" " alt="" coords="420,137,545,137,545,143,420,143"/>
+<area shape="poly" id="edge9_Node000007_Node000005" title=" " alt="" coords="605,137,717,137,717,143,605,143"/>
+<area shape="poly" id="edge11_Node000008_Node000005" title=" " alt="" coords="642,175,716,150,718,155,644,180"/>
+<area shape="poly" id="edge13_Node000009_Node000005" title=" " alt="" coords="655,240,681,227,715,197,739,163,743,166,719,200,684,232,657,244"/>
 </map>

@@ -9,7 +9,7 @@ var searchData=
   ['cm2_6',['cm2',['../namespaceunit.html#ad762a0ede549f5e21607910dc248c850',1,'unit']]],
   ['cm3_7',['cm3',['../namespaceunit.html#a8643f62ec4132cb409d20f4252d0bfe0',1,'unit']]],
   ['coastingshock_8',['coastingshock',['../classCoastingShock.html',1,'CoastingShock'],['../classCoastingShock.html#a2ee281695c79f94341a3cada31383a13',1,'CoastingShock::CoastingShock(size_t phi_size, size_t theta_size, size_t t_size)'],['../classCoastingShock.html#a49710dd41b951683d2c20bf44202206b',1,'CoastingShock::CoastingShock()=delete']]],
-  ['column_5fden_9',['column_den',['../structIntegratorGrid.html#affcb4eed2e71ec42cf15623b55e077bc',1,'IntegratorGrid']]],
+  ['column_5fden_9',['column_den',['../structIntegratorGrid.html#affcb4eed2e71ec42cf15623b55e077bc',1,'IntegratorGrid::column_den'],['../structIntegratorGridDynamic.html#a11643441810c68e0b6e0dbd240de6a08',1,'IntegratorGridDynamic::column_den']]],
   ['column_5fnum_5fden_10',['column_num_den',['../classShock.html#a23f0fe35dbf88d041f355a574718594c',1,'Shock::column_num_den'],['../structSynElectrons.html#a3fe65ec66ffc31242875722beaf50608',1,'SynElectrons::column_num_den']]],
   ['compton_20calculation_20constants_20and_20functions_11',['Inverse Compton Calculation Constants and Functions',['../group__IC__Calculation.html',1,'']]],
   ['compton_5fcross_5fsection_12',['compton_cross_section',['../inverse-compton_8cpp.html#a689ca8481a7d3e7e760a3300503f2781',1,'compton_cross_section(Real nu):&#160;inverse-compton.cpp'],['../inverse-compton_8h.html#a689ca8481a7d3e7e760a3300503f2781',1,'compton_cross_section(Real nu):&#160;inverse-compton.cpp']]],

@@ -225,6 +225,8 @@ Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structIntegratorGrid.html">IntegratorGrid</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines a grid for numerical integration in log-space.  <a href="structIntegratorGrid.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structIntegratorGridDynamic.html">IntegratorGridDynamic</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structICPhoton.html">ICPhoton</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Represents a single inverse Compton (IC) photon.  <a href="structICPhoton.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -271,7 +273,7 @@ Variables</h2></td></tr>
 
 <p>Defines a 3D grid (using xt::xtensor) for storing <a class="el" href="structICPhoton.html" title="Represents a single inverse Compton (IC) photon.">ICPhoton</a> objects. </p>
 
-<p class="definition">Definition at line <a class="el" href="inverse-compton_8h_source.html#l00188">188</a> of file <a class="el" href="inverse-compton_8h_source.html">inverse-compton.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="inverse-compton_8h_source.html#l00231">231</a> of file <a class="el" href="inverse-compton_8h_source.html">inverse-compton.h</a>.</p>
 
 </div>
 </div>
@@ -309,26 +311,27 @@ Variables</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>For x = (h * nu) / (me * c²) &lt;= 1, returns the Thomson cross-section (<a class="el" href="namespacecon.html#ad19e5b64c85c3e709fd0944358be97f6" title="Thomson cross-section in code units.">con::sigmaT</a>), otherwise 0 </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="inverse-compton_8cpp_source.html#l00131">131</a> of file <a class="el" href="inverse-compton_8cpp_source.html">inverse-compton.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  131</span>                                    {</div>
-<div class="line"><span class="lineno">  132</span>    <a class="code hl_typedef" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">x</a> = <a class="code hl_variable" href="namespacecon.html#a07ddec20ab09a3078fce714358b65b4b">con::h</a> / (<a class="code hl_variable" href="namespacecon.html#a740c8edb3d4f2d904a1c76002f84fb7e">con::me</a> * <a class="code hl_variable" href="namespacecon.html#a26ef2b83dd09c356e324bd243b498764">con::c2</a>) * nu;</div>
-<div class="line"><span class="lineno">  133</span>    <span class="keywordflow">if</span> (<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">x</a> &lt;= 1) {</div>
-<div class="line"><span class="lineno">  134</span>        <span class="keywordflow">return</span> <a class="code hl_variable" href="namespacecon.html#ad19e5b64c85c3e709fd0944358be97f6">con::sigmaT</a>;</div>
-<div class="line"><span class="lineno">  135</span>    } <span class="keywordflow">else</span> {</div>
-<div class="line"><span class="lineno">  136</span>        <span class="keywordflow">return</span> 0;</div>
-<div class="line"><span class="lineno">  137</span>    }</div>
-<div class="line"><span class="lineno">  138</span>    <span class="comment">/*</span></div>
-<div class="line"><span class="lineno">  139</span><span class="comment">    if (x &lt; 1e-2) {</span></div>
-<div class="line"><span class="lineno">  140</span><span class="comment">         return con::sigmaT * (1 - 2 * x);</span></div>
-<div class="line"><span class="lineno">  141</span><span class="comment">     } else if (x &gt; 1e2) {</span></div>
-<div class="line"><span class="lineno">  142</span><span class="comment">         return 3. / 8 * con::sigmaT * (log(2 * x) + 1.0 / 2) / x;</span></div>
-<div class="line"><span class="lineno">  143</span><span class="comment">     } else {</span></div>
-<div class="line"><span class="lineno">  144</span><span class="comment">         return 0.75 * con::sigmaT *</span></div>
-<div class="line"><span class="lineno">  145</span><span class="comment">                ((1 + x) / (x * x * x) * (2 * x * (1 + x) / (1 + 2 * x) - log(1 + 2 * x)) + log(1 + 2 * x) / (2 * x) -</span></div>
-<div class="line"><span class="lineno">  146</span><span class="comment">                 (1 + 3 * x) / (1 + 2 * x) / (1 + 2 * x));</span></div>
-<div class="line"><span class="lineno">  147</span><span class="comment">     }</span></div>
-<div class="line"><span class="lineno">  148</span><span class="comment">    */</span></div>
-<div class="line"><span class="lineno">  149</span>}</div>
+<p class="definition">Definition at line <a class="el" href="inverse-compton_8cpp_source.html#l00141">141</a> of file <a class="el" href="inverse-compton_8cpp_source.html">inverse-compton.cpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  141</span>                                    {</div>
+<div class="line"><span class="lineno">  142</span>    <a class="code hl_typedef" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">x</a> = <a class="code hl_variable" href="namespacecon.html#a07ddec20ab09a3078fce714358b65b4b">con::h</a> / (<a class="code hl_variable" href="namespacecon.html#a740c8edb3d4f2d904a1c76002f84fb7e">con::me</a> * <a class="code hl_variable" href="namespacecon.html#a26ef2b83dd09c356e324bd243b498764">con::c2</a>) * nu;</div>
+<div class="line"><span class="lineno">  143</span>    <span class="comment">/*if (x &lt;= 1) {</span></div>
+<div class="line"><span class="lineno">  144</span><span class="comment">        return con::sigmaT;</span></div>
+<div class="line"><span class="lineno">  145</span><span class="comment">    } else {</span></div>
+<div class="line"><span class="lineno">  146</span><span class="comment">        return 0;</span></div>
+<div class="line"><span class="lineno">  147</span><span class="comment">    }*/</span></div>
+<div class="line"><span class="lineno">  148</span> </div>
+<div class="line"><span class="lineno">  149</span>    <span class="keywordflow">if</span> (<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">x</a> &lt; 1e-2) {</div>
+<div class="line"><span class="lineno">  150</span>        <span class="keywordflow">return</span> <a class="code hl_variable" href="namespacecon.html#ad19e5b64c85c3e709fd0944358be97f6">con::sigmaT</a> * (1 - 2 * <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">x</a>);</div>
+<div class="line"><span class="lineno">  151</span>    } <span class="keywordflow">else</span> <span class="keywordflow">if</span> (<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">x</a> &gt; 1e2) {</div>
+<div class="line"><span class="lineno">  152</span>        <span class="keywordflow">return</span> 3. / 8 * <a class="code hl_variable" href="namespacecon.html#ad19e5b64c85c3e709fd0944358be97f6">con::sigmaT</a> * (<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">log</a>(2 * <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">x</a>) + 0.5) / <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">x</a>;</div>
+<div class="line"><span class="lineno">  153</span>    } <span class="keywordflow">else</span> {</div>
+<div class="line"><span class="lineno">  154</span>        <a class="code hl_typedef" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">log_term</a> = <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">log</a>(1 + 2 * <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">x</a>);</div>
+<div class="line"><span class="lineno">  155</span>        <a class="code hl_typedef" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">term1</a> = 1 + 2 * <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">x</a>;</div>
+<div class="line"><span class="lineno">  156</span>        <span class="keywordflow">return</span> 0.75 * <a class="code hl_variable" href="namespacecon.html#ad19e5b64c85c3e709fd0944358be97f6">con::sigmaT</a> *</div>
+<div class="line"><span class="lineno">  157</span>               ((1 + <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">x</a>) / (<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">x</a> * <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">x</a> * <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">x</a>) * (2 * <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">x</a> * (1 + <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">x</a>) / <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">term1</a> - <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">log_term</a>) + <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">log_term</a> / (2 * <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">x</a>) -</div>
+<div class="line"><span class="lineno">  158</span>                (1 + 3 * <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">x</a>) / (<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">term1</a> * <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">term1</a>));</div>
+<div class="line"><span class="lineno">  159</span>    }</div>
+<div class="line"><span class="lineno">  160</span>}</div>
 <div class="ttc" id="amacros_8h_html_a4b04262b81aa7d31eb5d2f607e2a35de"><div class="ttname"><a href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a></div><div class="ttdeci">double Real</div><div class="ttdoc">Type alias for floating-point precision used throughout the code.</div><div class="ttdef"><b>Definition</b> <a href="macros_8h_source.html#l00022">macros.h:22</a></div></div>
 <div class="ttc" id="anamespacecon_html_a07ddec20ab09a3078fce714358b65b4b"><div class="ttname"><a href="namespacecon.html#a07ddec20ab09a3078fce714358b65b4b">con::h</a></div><div class="ttdeci">constexpr Real h</div><div class="ttdoc">Planck constant in code units.</div><div class="ttdef"><b>Definition</b> <a href="macros_8h_source.html#l00087">macros.h:87</a></div></div>
 <div class="ttc" id="anamespacecon_html_a26ef2b83dd09c356e324bd243b498764"><div class="ttname"><a href="namespacecon.html#a26ef2b83dd09c356e324bd243b498764">con::c2</a></div><div class="ttdeci">constexpr Real c2</div><div class="ttdoc">Speed of light squared.</div><div class="ttdef"><b>Definition</b> <a href="macros_8h_source.html#l00082">macros.h:82</a></div></div>
@@ -344,6 +347,18 @@ Here is the call graph for this function:</div>
 <area shape="rect" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42" title="Returns the value of a single parameter." alt="" coords="228,29,279,55"/>
 <area shape="poly" title=" " alt="" coords="180,39,214,39,214,45,180,45"/>
 <area shape="poly" title=" " alt="" coords="226,31,221,21,224,11,235,5,253,3,275,6,285,15,281,19,273,11,253,8,237,10,228,15,226,20,231,28"/>
+</map>
+</div>
+<div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="inverse-compton_8h_a689ca8481a7d3e7e760a3300503f2781_icgraph.png" border="0" usemap="#ainverse-compton_8h_a689ca8481a7d3e7e760a3300503f2781_icgraph" alt=""/></div>
+<map name="ainverse-compton_8h_a689ca8481a7d3e7e760a3300503f2781_icgraph" id="ainverse-compton_8h_a689ca8481a7d3e7e760a3300503f2781_icgraph">
+<area shape="rect" title="Computes the Compton scattering cross&#45;section as a function of frequency (nu)." alt="" coords="481,13,656,38"/>
+<area shape="rect" href="structICPhoton.html#a6a2ac815d7fa191cddae0bebe39cdae6" title="Fill the integration grid for the IC photon spectrum." alt="" coords="219,13,433,38"/>
+<area shape="poly" title=" " alt="" coords="467,28,433,28,433,23,467,23"/>
+<area shape="rect" href="structICPhoton.html#aabcd1cc2a89ddb1683292dfefa74b14a" title="Generates the IC photon spectrum from the given electron and photon data." alt="" coords="5,5,171,45"/>
+<area shape="poly" title=" " alt="" coords="205,28,171,28,171,23,205,23"/>
 </map>
 </div>
 
@@ -399,24 +414,24 @@ Here is the call graph for this function:</div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>A 3D grid of IC photons </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="inverse-compton_8cpp_source.html#l00151">151</a> of file <a class="el" href="inverse-compton_8cpp_source.html">inverse-compton.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  151</span>                                                                                                                   {</div>
-<div class="line"><span class="lineno">  152</span>    <span class="keywordtype">size_t</span> phi_size = <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">electrons</a>.shape()[0];</div>
-<div class="line"><span class="lineno">  153</span>    <span class="keywordtype">size_t</span> theta_size = <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">electrons</a>.shape()[1];</div>
-<div class="line"><span class="lineno">  154</span>    <span class="keywordtype">size_t</span> t_size = <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">electrons</a>.shape()[2];</div>
-<div class="line"><span class="lineno">  155</span>    <a class="code hl_typedef" href="inverse-compton_8h.html#adcfaf3d2807fe6de421ca3e9c5332252">ICPhotonGrid</a> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">IC_ph</a>({phi_size, theta_size, t_size});</div>
-<div class="line"><span class="lineno">  156</span> </div>
-<div class="line"><span class="lineno">  157</span>    <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a> = 0; <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a> &lt; phi_size; ++<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a>) {</div>
-<div class="line"><span class="lineno">  158</span>        <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">j</a> = 0; <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">j</a> &lt; theta_size; ++<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">j</a>) {</div>
-<div class="line"><span class="lineno">  159</span>            <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">k</a> = 0; <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">k</a> &lt; t_size; ++<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">k</a>) {</div>
-<div class="line"><span class="lineno">  160</span>                <span class="comment">// Generate the IC photon spectrum for each grid cell.</span></div>
-<div class="line"><span class="lineno">  161</span>                <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">IC_ph</a>(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">j</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">k</a>).compute_IC_spectrum(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">electrons</a>(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">j</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">k</a>), <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">photons</a>(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">j</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">k</a>), KN);</div>
-<div class="line"><span class="lineno">  162</span>            }</div>
-<div class="line"><span class="lineno">  163</span>        }</div>
-<div class="line"><span class="lineno">  164</span>    }</div>
-<div class="line"><span class="lineno">  165</span>    <span class="keywordflow">return</span> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">IC_ph</a>;</div>
-<div class="line"><span class="lineno">  166</span>}</div>
-<div class="ttc" id="ainverse-compton_8h_html_adcfaf3d2807fe6de421ca3e9c5332252"><div class="ttname"><a href="inverse-compton_8h.html#adcfaf3d2807fe6de421ca3e9c5332252">ICPhotonGrid</a></div><div class="ttdeci">xt::xtensor&lt; ICPhoton, 3 &gt; ICPhotonGrid</div><div class="ttdoc">Defines a 3D grid (using xt::xtensor) for storing ICPhoton objects.</div><div class="ttdef"><b>Definition</b> <a href="inverse-compton_8h_source.html#l00188">inverse-compton.h:188</a></div></div>
+<p class="definition">Definition at line <a class="el" href="inverse-compton_8cpp_source.html#l00162">162</a> of file <a class="el" href="inverse-compton_8cpp_source.html">inverse-compton.cpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  162</span>                                                                                                                   {</div>
+<div class="line"><span class="lineno">  163</span>    <span class="keywordtype">size_t</span> phi_size = <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">electrons</a>.shape()[0];</div>
+<div class="line"><span class="lineno">  164</span>    <span class="keywordtype">size_t</span> theta_size = <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">electrons</a>.shape()[1];</div>
+<div class="line"><span class="lineno">  165</span>    <span class="keywordtype">size_t</span> t_size = <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">electrons</a>.shape()[2];</div>
+<div class="line"><span class="lineno">  166</span>    <a class="code hl_typedef" href="inverse-compton_8h.html#adcfaf3d2807fe6de421ca3e9c5332252">ICPhotonGrid</a> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">IC_ph</a>({phi_size, theta_size, t_size});</div>
+<div class="line"><span class="lineno">  167</span> </div>
+<div class="line"><span class="lineno">  168</span>    <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a> = 0; <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a> &lt; phi_size; ++<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a>) {</div>
+<div class="line"><span class="lineno">  169</span>        <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">j</a> = 0; <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">j</a> &lt; theta_size; ++<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">j</a>) {</div>
+<div class="line"><span class="lineno">  170</span>            <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">k</a> = 0; <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">k</a> &lt; t_size; ++<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">k</a>) {</div>
+<div class="line"><span class="lineno">  171</span>                <span class="comment">// Generate the IC photon spectrum for each grid cell.</span></div>
+<div class="line"><span class="lineno">  172</span>                <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">IC_ph</a>(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">j</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">k</a>).compute_IC_spectrum(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">electrons</a>(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">j</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">k</a>), <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">photons</a>(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">j</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">k</a>), KN);</div>
+<div class="line"><span class="lineno">  173</span>            }</div>
+<div class="line"><span class="lineno">  174</span>        }</div>
+<div class="line"><span class="lineno">  175</span>    }</div>
+<div class="line"><span class="lineno">  176</span>    <span class="keywordflow">return</span> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">IC_ph</a>;</div>
+<div class="line"><span class="lineno">  177</span>}</div>
+<div class="ttc" id="ainverse-compton_8h_html_adcfaf3d2807fe6de421ca3e9c5332252"><div class="ttname"><a href="inverse-compton_8h.html#adcfaf3d2807fe6de421ca3e9c5332252">ICPhotonGrid</a></div><div class="ttdeci">xt::xtensor&lt; ICPhoton, 3 &gt; ICPhotonGrid</div><div class="ttdoc">Defines a 3D grid (using xt::xtensor) for storing ICPhoton objects.</div><div class="ttdef"><b>Definition</b> <a href="inverse-compton_8h_source.html#l00231">inverse-compton.h:231</a></div></div>
 </div><!-- fragment --><div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -473,26 +488,26 @@ Here is the call graph for this function:</div>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="inverse-compton_8cpp_source.html#l00186">186</a> of file <a class="el" href="inverse-compton_8cpp_source.html">inverse-compton.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  186</span>                                                                                        {</div>
-<div class="line"><span class="lineno">  187</span>    <span class="keywordtype">size_t</span> phi_size = <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">electrons</a>.shape()[0];</div>
-<div class="line"><span class="lineno">  188</span>    <span class="keywordtype">size_t</span> theta_size = <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">electrons</a>.shape()[1];</div>
-<div class="line"><span class="lineno">  189</span>    <span class="keywordtype">size_t</span> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">r_size</a> = <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">electrons</a>.shape()[2];</div>
-<div class="line"><span class="lineno">  190</span>    <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a> = 0; <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a> &lt; phi_size; ++<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a>) {</div>
-<div class="line"><span class="lineno">  191</span>        <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">j</a> = 0; <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">j</a> &lt; theta_size; ++<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">j</a>) {</div>
-<div class="line"><span class="lineno">  192</span>            <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">k</a> = 0; <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">k</a> &lt; <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">r_size</a>; ++<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">k</a>) {</div>
-<div class="line"><span class="lineno">  193</span>                <a class="code hl_typedef" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> Y_T = <a class="code hl_function" href="inverse-compton_8cpp.html#acd9474d0630c4e995f6902006749d116">compute_Thomson_Y</a>(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">shock</a>.B(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">j</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">k</a>), <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">shock</a>.t_comv(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">j</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">k</a>), <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">shock</a>.eps_e, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">shock</a>.eps_B,</div>
-<div class="line"><span class="lineno">  194</span>                                             <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">electrons</a>(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">j</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">k</a>));</div>
-<div class="line"><span class="lineno">  195</span>                <span class="comment">// Clear existing Ys and emplace a new InverseComptonY with additional synchrotron frequency parameters.</span></div>
-<div class="line"><span class="lineno">  196</span>                <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">electrons</a>(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">j</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">k</a>).Ys =</div>
-<div class="line"><span class="lineno">  197</span>                    <a class="code hl_struct" href="structInverseComptonY.html">InverseComptonY</a>(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">photons</a>(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">j</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">k</a>).nu_m, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">photons</a>(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">j</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">k</a>).nu_c, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">shock</a>.B(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">j</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">k</a>), Y_T);</div>
-<div class="line"><span class="lineno">  198</span>            }</div>
-<div class="line"><span class="lineno">  199</span>        }</div>
-<div class="line"><span class="lineno">  200</span>    }</div>
-<div class="line"><span class="lineno">  201</span>    <a class="code hl_function" href="synchrotron_8h.html#af56f9b4417a5f3e717102da3e81a7d37">update_electrons_4Y</a>(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">electrons</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">shock</a>);</div>
-<div class="line"><span class="lineno">  202</span>    <a class="code hl_function" href="synchrotron_8h.html#a331f545228d2b18e84e0252510e295f8">generate_syn_photons</a>(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">photons</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">shock</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">electrons</a>);</div>
-<div class="line"><span class="lineno">  203</span>}</div>
-<div class="ttc" id="ainverse-compton_8cpp_html_acd9474d0630c4e995f6902006749d116"><div class="ttname"><a href="inverse-compton_8cpp.html#acd9474d0630c4e995f6902006749d116">compute_Thomson_Y</a></div><div class="ttdeci">Real compute_Thomson_Y(Real B, Real t_com, Real eps_e, Real eps_B, SynElectrons const &amp;e)</div><div class="ttdef"><b>Definition</b> <a href="inverse-compton_8cpp_source.html#l00098">inverse-compton.cpp:98</a></div></div>
+<p class="definition">Definition at line <a class="el" href="inverse-compton_8cpp_source.html#l00197">197</a> of file <a class="el" href="inverse-compton_8cpp_source.html">inverse-compton.cpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  197</span>                                                                                        {</div>
+<div class="line"><span class="lineno">  198</span>    <span class="keywordtype">size_t</span> phi_size = <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">electrons</a>.shape()[0];</div>
+<div class="line"><span class="lineno">  199</span>    <span class="keywordtype">size_t</span> theta_size = <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">electrons</a>.shape()[1];</div>
+<div class="line"><span class="lineno">  200</span>    <span class="keywordtype">size_t</span> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">r_size</a> = <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">electrons</a>.shape()[2];</div>
+<div class="line"><span class="lineno">  201</span>    <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a> = 0; <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a> &lt; phi_size; ++<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a>) {</div>
+<div class="line"><span class="lineno">  202</span>        <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">j</a> = 0; <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">j</a> &lt; theta_size; ++<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">j</a>) {</div>
+<div class="line"><span class="lineno">  203</span>            <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">k</a> = 0; <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">k</a> &lt; <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">r_size</a>; ++<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">k</a>) {</div>
+<div class="line"><span class="lineno">  204</span>                <a class="code hl_typedef" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> Y_T = <a class="code hl_function" href="inverse-compton_8cpp.html#acd9474d0630c4e995f6902006749d116">compute_Thomson_Y</a>(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">shock</a>.B(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">j</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">k</a>), <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">shock</a>.t_comv(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">j</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">k</a>), <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">shock</a>.eps_e, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">shock</a>.eps_B,</div>
+<div class="line"><span class="lineno">  205</span>                                             <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">electrons</a>(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">j</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">k</a>));</div>
+<div class="line"><span class="lineno">  206</span>                <span class="comment">// Clear existing Ys and emplace a new InverseComptonY with additional synchrotron frequency parameters.</span></div>
+<div class="line"><span class="lineno">  207</span>                <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">electrons</a>(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">j</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">k</a>).Ys =</div>
+<div class="line"><span class="lineno">  208</span>                    <a class="code hl_struct" href="structInverseComptonY.html">InverseComptonY</a>(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">photons</a>(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">j</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">k</a>).nu_m, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">photons</a>(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">j</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">k</a>).nu_c, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">shock</a>.B(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">j</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">k</a>), Y_T);</div>
+<div class="line"><span class="lineno">  209</span>            }</div>
+<div class="line"><span class="lineno">  210</span>        }</div>
+<div class="line"><span class="lineno">  211</span>    }</div>
+<div class="line"><span class="lineno">  212</span>    <a class="code hl_function" href="synchrotron_8h.html#af56f9b4417a5f3e717102da3e81a7d37">update_electrons_4Y</a>(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">electrons</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">shock</a>);</div>
+<div class="line"><span class="lineno">  213</span>    <a class="code hl_function" href="synchrotron_8h.html#a331f545228d2b18e84e0252510e295f8">generate_syn_photons</a>(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">photons</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">shock</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">electrons</a>);</div>
+<div class="line"><span class="lineno">  214</span>}</div>
+<div class="ttc" id="ainverse-compton_8cpp_html_acd9474d0630c4e995f6902006749d116"><div class="ttname"><a href="inverse-compton_8cpp.html#acd9474d0630c4e995f6902006749d116">compute_Thomson_Y</a></div><div class="ttdeci">Real compute_Thomson_Y(Real B, Real t_com, Real eps_e, Real eps_B, SynElectrons const &amp;e)</div><div class="ttdef"><b>Definition</b> <a href="inverse-compton_8cpp_source.html#l00108">inverse-compton.cpp:108</a></div></div>
 <div class="ttc" id="astructInverseComptonY_html"><div class="ttname"><a href="structInverseComptonY.html">InverseComptonY</a></div><div class="ttdoc">Handles Inverse Compton Y parameter calculations and related threshold values.</div><div class="ttdef"><b>Definition</b> <a href="synchrotron_8h_source.html#l00021">synchrotron.h:21</a></div></div>
 <div class="ttc" id="asynchrotron_8h_html_a331f545228d2b18e84e0252510e295f8"><div class="ttname"><a href="synchrotron_8h.html#a331f545228d2b18e84e0252510e295f8">generate_syn_photons</a></div><div class="ttdeci">SynPhotonGrid generate_syn_photons(Shock const &amp;shock, SynElectronGrid const &amp;electrons)</div><div class="ttdoc">Creates and returns a new photon grid based on shock and electron grid.</div><div class="ttdef"><b>Definition</b> <a href="synchrotron_8cpp_source.html#l00752">synchrotron.cpp:752</a></div></div>
 <div class="ttc" id="asynchrotron_8h_html_af56f9b4417a5f3e717102da3e81a7d37"><div class="ttname"><a href="synchrotron_8h.html#af56f9b4417a5f3e717102da3e81a7d37">update_electrons_4Y</a></div><div class="ttdeci">void update_electrons_4Y(SynElectronGrid &amp;electrons, Shock const &amp;shock)</div><div class="ttdoc">Updates electron properties throughout the grid based on shock parameters and IC Y values.</div><div class="ttdef"><b>Definition</b> <a href="synchrotron_8cpp_source.html#l00630">synchrotron.cpp:630</a></div></div>
@@ -501,65 +516,66 @@ Here is the call graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="inverse-compton_8h_ac7dc4640209861b76e05ae991771552e_cgraph.png" border="0" usemap="#ainverse-compton_8h_ac7dc4640209861b76e05ae991771552e_cgraph" alt=""/></div>
 <map name="ainverse-compton_8h_ac7dc4640209861b76e05ae991771552e_cgraph" id="ainverse-compton_8h_ac7dc4640209861b76e05ae991771552e_cgraph">
-<area shape="rect" title="Applies Klein&#45;Nishina cooling to electrons based on photon distribution." alt="" coords="5,209,100,234"/>
-<area shape="rect" href="inverse-compton_8cpp.html#acd9474d0630c4e995f6902006749d116" title=" " alt="" coords="148,133,309,158"/>
-<area shape="poly" title=" " alt="" coords="82,206,185,161,187,166,84,211"/>
-<area shape="rect" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42" title="Returns the value of a single parameter." alt="" coords="1436,297,1487,322"/>
-<area shape="poly" title=" " alt="" coords="61,207,95,164,119,139,146,118,223,66,288,30,321,18,358,9,449,3,1171,3,1238,4,1292,11,1316,20,1340,32,1390,74,1409,98,1425,125,1447,182,1458,238,1462,282,1457,283,1452,239,1441,184,1420,127,1405,101,1386,78,1337,37,1314,24,1290,16,1238,9,1171,8,449,8,358,15,323,23,290,35,226,71,150,122,123,143,99,167,65,210"/>
-<area shape="rect" href="synchrotron_8cpp.html#a331f545228d2b18e84e0252510e295f8" title="Creates and returns a new photon grid based on shock and electron grid." alt="" coords="854,498,1023,523"/>
-<area shape="poly" title=" " alt="" coords="66,233,107,282,173,351,214,387,259,422,308,452,358,476,420,497,484,511,550,521,615,526,737,528,840,521,841,526,737,533,614,532,549,526,483,517,418,502,356,481,305,457,256,426,211,391,169,355,103,285,62,236"/>
-<area shape="rect" href="synchrotron_8cpp.html#af56f9b4417a5f3e717102da3e81a7d37" title="Updates electron properties throughout the grid based on shock parameters and IC Y values." alt="" coords="150,266,307,291"/>
-<area shape="poly" title=" " alt="" coords="93,232,177,259,175,264,92,237"/>
-<area shape="rect" href="synchrotron_8cpp.html#a52e34d49dd7497d65ea5261e80d615d4" title="Calculates cooling Lorentz factor based on comoving time, magnetic field, and IC parameters." alt="" coords="375,157,525,182"/>
-<area shape="poly" title=" " alt="" coords="310,152,361,157,361,162,309,157"/>
-<area shape="poly" title=" " alt="" coords="255,130,302,110,357,92,449,71,521,59,595,54,689,53,1171,53,1237,54,1290,60,1315,67,1339,79,1390,118,1420,157,1441,202,1453,246,1460,283,1455,284,1448,247,1436,204,1416,160,1386,122,1336,84,1313,72,1289,65,1237,59,1171,59,689,59,595,60,522,64,450,76,358,97,304,115,257,135"/>
-<area shape="rect" href="inverse-compton_8cpp.html#ad89f660f1954e9c12551a19840d656bb" title=" " alt="" coords="415,107,485,133"/>
-<area shape="poly" title=" " alt="" coords="309,134,401,123,402,128,310,139"/>
-<area shape="rect" href="structInverseComptonY.html#a05b76b4d84f50b82728333a42362fc0f" title="Returns the Thomson Y parameter from the provided InverseComptonY object." alt="" coords="591,144,791,184"/>
-<area shape="poly" title=" " alt="" coords="525,165,577,164,577,169,525,170"/>
-<area shape="rect" href="structInverseComptonY.html#a9a35d3af9bd23acdde9d09d38ee116eb" title="Calculates the effective Y parameter at a specific Lorentz factor and spectral index." alt="" coords="591,259,791,299"/>
-<area shape="poly" title=" " alt="" coords="497,180,544,196,598,222,646,249,644,254,595,227,542,201,496,185"/>
-<area shape="poly" title=" " alt="" coords="496,154,590,129,687,115,763,107,937,104,1171,104,1236,104,1289,108,1337,124,1390,159,1416,187,1435,221,1457,282,1452,284,1430,223,1411,191,1386,163,1334,129,1287,113,1236,109,1171,109,937,109,763,112,688,120,591,135,498,159"/>
+<area shape="rect" title="Applies Klein&#45;Nishina cooling to electrons based on photon distribution." alt="" coords="5,284,100,309"/>
+<area shape="rect" href="inverse-compton_8cpp.html#acd9474d0630c4e995f6902006749d116" title=" " alt="" coords="148,199,309,224"/>
+<area shape="poly" title=" " alt="" coords="79,281,188,228,190,233,81,286"/>
+<area shape="rect" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42" title="Returns the value of a single parameter." alt="" coords="1436,297,1487,323"/>
+<area shape="poly" title=" " alt="" coords="60,282,110,215,149,170,196,123,251,78,312,40,378,14,413,7,449,5,1171,5,1237,3,1290,5,1315,10,1339,20,1364,35,1390,57,1411,83,1428,111,1450,174,1461,235,1463,283,1458,283,1455,235,1445,175,1423,114,1407,86,1386,61,1361,40,1337,25,1313,15,1290,10,1237,8,1171,10,449,10,414,12,380,19,315,45,254,82,200,127,153,174,114,219,64,285"/>
+<area shape="rect" href="synchrotron_8cpp.html#a331f545228d2b18e84e0252510e295f8" title="Creates and returns a new photon grid based on shock and electron grid." alt="" coords="854,575,1023,600"/>
+<area shape="poly" title=" " alt="" coords="68,308,103,341,149,377,236,425,329,465,424,498,519,525,611,545,697,560,841,578,840,583,697,565,610,550,518,530,422,503,327,470,234,430,147,382,100,346,64,312"/>
+<area shape="rect" href="synchrotron_8cpp.html#af56f9b4417a5f3e717102da3e81a7d37" title="Updates electron properties throughout the grid based on shock parameters and IC Y values." alt="" coords="150,341,307,367"/>
+<area shape="poly" title=" " alt="" coords="93,307,177,335,175,340,92,312"/>
+<area shape="rect" href="synchrotron_8cpp.html#a52e34d49dd7497d65ea5261e80d615d4" title="Calculates cooling Lorentz factor based on comoving time, magnetic field, and IC parameters." alt="" coords="375,227,525,252"/>
+<area shape="poly" title=" " alt="" coords="310,219,361,225,361,231,309,224"/>
+<area shape="poly" title=" " alt="" coords="250,196,321,159,427,112,489,90,555,72,622,60,689,55,1171,55,1236,53,1289,52,1313,55,1338,63,1363,77,1390,97,1409,117,1424,141,1446,192,1457,242,1462,284,1456,284,1452,243,1441,193,1420,143,1405,121,1386,101,1360,81,1336,68,1312,61,1289,57,1236,58,1171,61,689,61,623,65,556,77,491,95,429,117,323,163,253,201"/>
+<area shape="rect" href="inverse-compton_8cpp.html#ad89f660f1954e9c12551a19840d656bb" title=" " alt="" coords="655,169,726,195"/>
+<area shape="poly" title=" " alt="" coords="309,204,641,182,642,188,310,209"/>
+<area shape="rect" href="structInverseComptonY.html#a05b76b4d84f50b82728333a42362fc0f" title="Returns the Thomson Y parameter from the provided InverseComptonY object." alt="" coords="591,219,791,259"/>
+<area shape="poly" title=" " alt="" coords="525,237,577,237,577,242,525,242"/>
+<area shape="rect" href="structInverseComptonY.html#a9a35d3af9bd23acdde9d09d38ee116eb" title="Calculates the effective Y parameter at a specific Lorentz factor and spectral index." alt="" coords="591,283,791,323"/>
+<area shape="poly" title=" " alt="" coords="500,250,602,277,601,282,498,255"/>
+<area shape="poly" title=" " alt="" coords="466,224,519,189,554,170,590,154,684,125,760,111,838,106,937,106,1171,106,1235,102,1287,97,1311,98,1336,103,1362,114,1390,132,1407,147,1421,166,1441,207,1454,248,1460,283,1455,284,1449,250,1436,209,1416,169,1403,151,1386,136,1359,118,1334,108,1311,103,1287,102,1235,107,1171,111,937,111,838,112,761,116,686,130,592,159,556,174,522,193,469,229"/>
 <area shape="rect" href="structInverseComptonY.html#ae483ec2ba4108fbf96fb15c3e978c0b3" title="Calculates the effective Y parameter for a given Lorentz factor and spectral index." alt="" coords="839,239,1039,279"/>
-<area shape="poly" title=" " alt="" coords="791,268,825,265,825,271,791,273"/>
-<area shape="rect" href="utilities_8h.html#a4520a27a10a2aef33c99ad8c679da404" title="Fast approximation of a raised to the power of b." alt="" coords="1129,246,1211,271"/>
-<area shape="poly" title=" " alt="" coords="1039,256,1116,256,1116,261,1039,261"/>
-<area shape="rect" href="utilities_8h.html#ae490b13fdcc1b917ecdd08c0cecf3556" title="Computes a^(4/3)" alt="" coords="1312,195,1377,221"/>
-<area shape="poly" title=" " alt="" coords="1039,239,1086,232,1298,209,1298,215,1087,237,1039,244"/>
-<area shape="rect" href="utilities_8h.html#afc584c30c352192de6847b1f4b8caf0e" title="Fast approximation of 2 raised to a power." alt="" coords="1301,297,1388,322"/>
-<area shape="poly" title=" " alt="" coords="1212,268,1289,291,1287,296,1210,273"/>
-<area shape="poly" title=" " alt="" coords="1211,259,1293,267,1389,283,1424,293,1422,298,1387,288,1293,272,1211,264"/>
-<area shape="rect" href="utilities_8h.html#afe0a1b1b7509ac4df83fcc0e510f281b" title="Fast approximation of the base&#45;2 logarithm." alt="" coords="1303,398,1386,423"/>
-<area shape="poly" title=" " alt="" coords="1188,270,1320,387,1317,391,1184,274"/>
-<area shape="poly" title=" " alt="" coords="1388,307,1422,307,1422,312,1388,312"/>
-<area shape="poly" title=" " alt="" coords="1441,298,1437,288,1439,279,1448,272,1461,270,1477,274,1484,282,1480,285,1475,278,1461,275,1450,277,1444,282,1443,288,1446,296"/>
-<area shape="poly" title=" " alt="" coords="1362,396,1386,377,1436,330,1440,334,1390,381,1366,400"/>
-<area shape="poly" title=" " alt="" coords="1366,219,1390,238,1440,285,1436,289,1386,242,1362,223"/>
-<area shape="poly" title=" " alt="" coords="961,521,1037,564,1090,588,1149,608,1211,622,1274,625,1304,622,1333,614,1360,603,1386,586,1400,569,1412,543,1432,473,1446,397,1455,335,1460,336,1452,398,1438,475,1417,545,1404,572,1390,590,1363,607,1335,620,1305,627,1274,631,1211,627,1148,613,1088,592,1035,568,958,526"/>
-<area shape="poly" title=" " alt="" coords="993,495,1253,432,1289,423,1291,428,1254,437,995,501"/>
-<area shape="rect" href="synchrotron_8cpp.html#a936bfaa522ec8295a21d253e5453188d" title="Calculates synchrotron frequency for a given Lorentz factor and magnetic field." alt="" coords="1099,397,1241,422"/>
-<area shape="poly" title=" " alt="" coords="965,496,1086,439,1121,425,1123,430,1088,444,967,500"/>
-<area shape="poly" title=" " alt="" coords="246,264,294,231,356,196,388,184,390,189,358,201,297,235,249,268"/>
-<area shape="poly" title=" " alt="" coords="307,276,577,276,577,281,307,281"/>
-<area shape="poly" title=" " alt="" coords="278,289,358,308,720,385,880,410,1087,432,1194,436,1301,433,1327,436,1347,441,1365,442,1387,434,1411,414,1429,388,1442,360,1451,334,1456,336,1447,362,1434,390,1415,417,1389,438,1366,447,1346,446,1326,442,1301,439,1194,441,1086,437,879,415,719,390,357,313,276,294"/>
-<area shape="rect" href="synchrotron_8cpp.html#ab09dbe28fcecfc3d846577c1c34fcca6" title=" " alt="" coords="848,323,1029,349"/>
-<area shape="poly" title=" " alt="" coords="308,283,591,308,835,326,834,332,590,313,307,289"/>
-<area shape="rect" href="synchrotron_8cpp.html#a1c5ae0a77c927eb60684c180ba559567" title=" " alt="" coords="357,211,543,237"/>
-<area shape="poly" title=" " alt="" coords="280,263,384,238,385,243,281,269"/>
-<area shape="rect" href="synchrotron_8cpp.html#a5813eed02877ed5f35a34e929a68d263" title=" " alt="" coords="1099,549,1241,574"/>
-<area shape="poly" title=" " alt="" coords="236,291,250,329,275,381,311,434,333,457,359,477,403,502,449,523,547,555,648,576,749,587,847,590,937,587,1085,573,1085,578,938,593,847,595,749,592,647,581,545,561,447,528,400,506,356,481,330,461,307,437,270,383,245,331,231,293"/>
-<area shape="poly" title=" " alt="" coords="977,321,1117,273,1119,279,979,326"/>
-<area shape="poly" title=" " alt="" coords="1030,333,1388,332,1422,323,1424,328,1388,337,1030,339"/>
-<area shape="poly" title=" " alt="" coords="977,346,1087,383,1111,390,1110,395,1086,388,976,351"/>
-<area shape="rect" href="synchrotron_8cpp.html#a85433be4a0da2f510240a603da8f7dff" title=" " alt="" coords="1087,347,1253,373"/>
-<area shape="poly" title=" " alt="" coords="1030,343,1073,347,1073,353,1029,348"/>
-<area shape="poly" title=" " alt="" coords="501,209,596,185,597,190,502,214"/>
-<area shape="poly" title=" " alt="" coords="507,234,589,253,588,258,506,239"/>
-<area shape="poly" title=" " alt="" coords="543,215,1038,183,1273,174,1351,175,1389,180,1415,202,1434,229,1447,257,1456,283,1451,284,1442,259,1429,231,1411,205,1387,185,1351,180,1273,180,1038,189,543,220"/>
-<area shape="poly" title=" " alt="" coords="1241,547,1278,537,1316,523,1353,503,1386,478,1413,445,1432,406,1445,368,1453,335,1458,337,1450,369,1437,408,1417,447,1390,482,1356,508,1318,528,1279,542,1242,553"/>
-<area shape="rect" href="synchrotron_8cpp.html#a59b47fc71384572d072692740171988e" title=" " alt="" coords="1317,550,1373,575"/>
-<area shape="poly" title=" " alt="" coords="1242,559,1303,560,1303,565,1242,565"/>
-<area shape="poly" title=" " alt="" coords="1366,548,1386,529,1414,479,1434,426,1447,375,1454,335,1459,336,1452,377,1439,427,1419,482,1390,532,1370,552"/>
+<area shape="poly" title=" " alt="" coords="790,283,825,277,826,282,791,288"/>
+<area shape="rect" href="utilities_8h.html#a4520a27a10a2aef33c99ad8c679da404" title="Fast approximation of a raised to the power of b." alt="" coords="1129,247,1211,272"/>
+<area shape="poly" title=" " alt="" coords="1039,257,1116,257,1116,262,1039,262"/>
+<area shape="rect" href="utilities_8h.html#ae490b13fdcc1b917ecdd08c0cecf3556" title="Computes a^(4/3)" alt="" coords="1312,147,1377,172"/>
+<area shape="poly" title=" " alt="" coords="1020,237,1298,168,1299,173,1022,242"/>
+<area shape="rect" href="utilities_8h.html#afc584c30c352192de6847b1f4b8caf0e" title="Fast approximation of 2 raised to a power." alt="" coords="1301,196,1388,221"/>
+<area shape="poly" title=" " alt="" coords="1210,245,1287,222,1289,228,1212,250"/>
+<area shape="poly" title=" " alt="" coords="1211,259,1293,267,1389,283,1424,293,1422,299,1387,289,1293,273,1211,264"/>
+<area shape="rect" href="utilities_8h.html#afe0a1b1b7509ac4df83fcc0e510f281b" title="Fast approximation of the base&#45;2 logarithm." alt="" coords="1303,297,1386,323"/>
+<area shape="poly" title=" " alt="" coords="1212,268,1291,292,1289,297,1210,273"/>
+<area shape="poly" title=" " alt="" coords="1366,219,1390,239,1440,286,1436,289,1386,243,1362,224"/>
+<area shape="poly" title=" " alt="" coords="1441,298,1437,289,1439,279,1448,273,1461,271,1477,274,1484,282,1480,286,1475,279,1461,276,1450,278,1444,282,1443,288,1446,296"/>
+<area shape="poly" title=" " alt="" coords="1387,307,1422,307,1422,313,1387,313"/>
+<area shape="poly" title=" " alt="" coords="1375,170,1390,181,1411,206,1428,233,1453,283,1448,286,1424,236,1406,209,1386,185,1372,174"/>
+<area shape="poly" title=" " alt="" coords="726,183,864,198,1039,225,1116,242,1115,247,1038,230,863,203,726,188"/>
+<area shape="poly" title=" " alt="" coords="997,597,1085,609,1137,611,1191,609,1246,600,1298,585,1345,560,1386,525,1403,504,1417,479,1437,427,1449,377,1455,336,1461,337,1455,378,1442,429,1422,482,1407,507,1390,529,1348,565,1300,590,1247,606,1192,614,1137,616,1085,614,997,603"/>
+<area shape="poly" title=" " alt="" coords="954,572,994,535,1036,486,1050,458,1057,433,1065,409,1085,385,1134,353,1188,332,1242,318,1289,311,1290,316,1243,323,1189,337,1136,358,1088,389,1070,412,1062,435,1055,460,1041,489,998,539,957,576"/>
+<area shape="rect" href="synchrotron_8cpp.html#a936bfaa522ec8295a21d253e5453188d" title="Calculates synchrotron frequency for a given Lorentz factor and magnetic field." alt="" coords="1099,549,1241,575"/>
+<area shape="poly" title=" " alt="" coords="1024,575,1085,569,1085,574,1024,581"/>
+<area shape="poly" title=" " alt="" coords="249,339,356,277,403,255,405,260,359,282,252,343"/>
+<area shape="poly" title=" " alt="" coords="308,347,419,339,542,326,577,321,577,326,543,331,419,344,308,352"/>
+<area shape="poly" title=" " alt="" coords="243,365,290,414,323,443,359,468,510,556,573,589,634,616,697,636,765,650,844,658,937,661,1171,661,1238,660,1291,651,1315,643,1338,630,1386,587,1408,558,1425,525,1438,491,1447,455,1456,388,1458,336,1464,337,1462,389,1452,456,1443,492,1430,528,1413,561,1390,590,1341,634,1317,648,1293,657,1239,665,1171,666,937,666,844,663,765,655,696,641,632,621,571,594,507,560,356,472,319,447,286,418,239,368"/>
+<area shape="rect" href="synchrotron_8cpp.html#ab09dbe28fcecfc3d846577c1c34fcca6" title=" " alt="" coords="848,449,1029,475"/>
+<area shape="poly" title=" " alt="" coords="247,365,295,398,326,415,358,427,420,444,483,455,612,469,732,472,834,468,834,474,732,477,612,474,483,461,419,449,357,433,323,419,292,402,244,369"/>
+<area shape="rect" href="synchrotron_8cpp.html#a1c5ae0a77c927eb60684c180ba559567" title=" " alt="" coords="357,291,543,316"/>
+<area shape="poly" title=" " alt="" coords="285,339,380,316,381,322,286,344"/>
+<area shape="rect" href="synchrotron_8cpp.html#a5813eed02877ed5f35a34e929a68d263" title=" " alt="" coords="1099,399,1241,424"/>
+<area shape="poly" title=" " alt="" coords="308,357,591,377,1085,404,1085,410,591,382,307,362"/>
+<area shape="poly" title=" " alt="" coords="946,447,998,374,1039,329,1085,289,1115,273,1118,278,1088,294,1042,333,1003,377,950,451"/>
+<area shape="poly" title=" " alt="" coords="970,472,1049,500,1101,513,1158,524,1217,528,1277,525,1334,511,1387,485,1403,471,1417,454,1438,413,1450,372,1455,336,1461,337,1455,373,1443,415,1422,457,1407,475,1389,490,1336,516,1278,530,1217,534,1157,529,1100,519,1048,505,968,477"/>
+<area shape="poly" title=" " alt="" coords="967,472,1088,528,1123,542,1121,547,1086,532,965,477"/>
+<area shape="rect" href="synchrotron_8cpp.html#a85433be4a0da2f510240a603da8f7dff" title=" " alt="" coords="1087,448,1253,473"/>
+<area shape="poly" title=" " alt="" coords="1030,459,1073,459,1073,464,1030,464"/>
+<area shape="poly" title=" " alt="" coords="498,288,601,260,602,265,500,293"/>
+<area shape="poly" title=" " alt="" coords="543,301,577,301,577,306,543,306"/>
+<area shape="poly" title=" " alt="" coords="499,313,591,333,764,354,937,358,1171,358,1280,354,1387,333,1422,322,1424,327,1389,338,1281,359,1171,363,937,363,763,359,590,338,498,319"/>
+<area shape="poly" title=" " alt="" coords="1241,409,1314,400,1351,391,1387,377,1417,356,1441,331,1444,335,1420,360,1389,382,1353,396,1315,406,1242,414"/>
+<area shape="rect" href="synchrotron_8cpp.html#a59b47fc71384572d072692740171988e" title=" " alt="" coords="1317,449,1373,475"/>
+<area shape="poly" title=" " alt="" coords="1215,422,1304,448,1303,453,1214,427"/>
+<area shape="poly" title=" " alt="" coords="1364,447,1386,428,1421,380,1446,334,1451,336,1426,383,1390,432,1368,451"/>
 </map>
 </div>
 
@@ -607,88 +623,89 @@ Here is the call graph for this function:</div>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="inverse-compton_8cpp_source.html#l00168">168</a> of file <a class="el" href="inverse-compton_8cpp_source.html">inverse-compton.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  168</span>                                                                                             {</div>
-<div class="line"><span class="lineno">  169</span>    <span class="keywordtype">size_t</span> phi_size = <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">electrons</a>.shape()[0];</div>
-<div class="line"><span class="lineno">  170</span>    <span class="keywordtype">size_t</span> theta_size = <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">electrons</a>.shape()[1];</div>
-<div class="line"><span class="lineno">  171</span>    <span class="keywordtype">size_t</span> t_size = <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">electrons</a>.shape()[2];</div>
-<div class="line"><span class="lineno">  172</span> </div>
-<div class="line"><span class="lineno">  173</span>    <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a> = 0; <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a> &lt; phi_size; <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a>++) {</div>
-<div class="line"><span class="lineno">  174</span>        <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">j</a> = 0; <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">j</a> &lt; theta_size; ++<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">j</a>) {</div>
-<div class="line"><span class="lineno">  175</span>            <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">k</a> = 0; <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">k</a> &lt; t_size; ++<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">k</a>) {</div>
-<div class="line"><span class="lineno">  176</span>                <a class="code hl_typedef" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> Y_T = <a class="code hl_function" href="inverse-compton_8cpp.html#acd9474d0630c4e995f6902006749d116">compute_Thomson_Y</a>(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">shock</a>.B(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">j</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">k</a>), <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">shock</a>.t_comv(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">j</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">k</a>), <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">shock</a>.eps_e, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">shock</a>.eps_B,</div>
-<div class="line"><span class="lineno">  177</span>                                             <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">electrons</a>(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">j</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">k</a>));</div>
-<div class="line"><span class="lineno">  178</span>                <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">electrons</a>(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">j</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">k</a>).Ys = <a class="code hl_struct" href="structInverseComptonY.html">InverseComptonY</a>(Y_T);</div>
-<div class="line"><span class="lineno">  179</span>            }</div>
-<div class="line"><span class="lineno">  180</span>        }</div>
-<div class="line"><span class="lineno">  181</span>    }</div>
-<div class="line"><span class="lineno">  182</span>    <a class="code hl_function" href="synchrotron_8h.html#af56f9b4417a5f3e717102da3e81a7d37">update_electrons_4Y</a>(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">electrons</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">shock</a>);</div>
-<div class="line"><span class="lineno">  183</span>    <a class="code hl_function" href="synchrotron_8h.html#a331f545228d2b18e84e0252510e295f8">generate_syn_photons</a>(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">photons</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">shock</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">electrons</a>);</div>
-<div class="line"><span class="lineno">  184</span>}</div>
+<p class="definition">Definition at line <a class="el" href="inverse-compton_8cpp_source.html#l00179">179</a> of file <a class="el" href="inverse-compton_8cpp_source.html">inverse-compton.cpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  179</span>                                                                                             {</div>
+<div class="line"><span class="lineno">  180</span>    <span class="keywordtype">size_t</span> phi_size = <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">electrons</a>.shape()[0];</div>
+<div class="line"><span class="lineno">  181</span>    <span class="keywordtype">size_t</span> theta_size = <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">electrons</a>.shape()[1];</div>
+<div class="line"><span class="lineno">  182</span>    <span class="keywordtype">size_t</span> t_size = <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">electrons</a>.shape()[2];</div>
+<div class="line"><span class="lineno">  183</span> </div>
+<div class="line"><span class="lineno">  184</span>    <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a> = 0; <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a> &lt; phi_size; <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a>++) {</div>
+<div class="line"><span class="lineno">  185</span>        <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">j</a> = 0; <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">j</a> &lt; theta_size; ++<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">j</a>) {</div>
+<div class="line"><span class="lineno">  186</span>            <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">k</a> = 0; <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">k</a> &lt; t_size; ++<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">k</a>) {</div>
+<div class="line"><span class="lineno">  187</span>                <a class="code hl_typedef" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> Y_T = <a class="code hl_function" href="inverse-compton_8cpp.html#acd9474d0630c4e995f6902006749d116">compute_Thomson_Y</a>(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">shock</a>.B(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">j</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">k</a>), <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">shock</a>.t_comv(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">j</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">k</a>), <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">shock</a>.eps_e, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">shock</a>.eps_B,</div>
+<div class="line"><span class="lineno">  188</span>                                             <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">electrons</a>(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">j</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">k</a>));</div>
+<div class="line"><span class="lineno">  189</span>                <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">electrons</a>(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">j</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">k</a>).Ys = <a class="code hl_struct" href="structInverseComptonY.html">InverseComptonY</a>(Y_T);</div>
+<div class="line"><span class="lineno">  190</span>            }</div>
+<div class="line"><span class="lineno">  191</span>        }</div>
+<div class="line"><span class="lineno">  192</span>    }</div>
+<div class="line"><span class="lineno">  193</span>    <a class="code hl_function" href="synchrotron_8h.html#af56f9b4417a5f3e717102da3e81a7d37">update_electrons_4Y</a>(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">electrons</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">shock</a>);</div>
+<div class="line"><span class="lineno">  194</span>    <a class="code hl_function" href="synchrotron_8h.html#a331f545228d2b18e84e0252510e295f8">generate_syn_photons</a>(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">photons</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">shock</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">electrons</a>);</div>
+<div class="line"><span class="lineno">  195</span>}</div>
 </div><!-- fragment --><div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="inverse-compton_8h_a83d78cd6b52bd3932fb1ae9561a1c148_cgraph.png" border="0" usemap="#ainverse-compton_8h_a83d78cd6b52bd3932fb1ae9561a1c148_cgraph" alt=""/></div>
 <map name="ainverse-compton_8h_a83d78cd6b52bd3932fb1ae9561a1c148_cgraph" id="ainverse-compton_8h_a83d78cd6b52bd3932fb1ae9561a1c148_cgraph">
-<area shape="rect" title="Applies Thomson cooling to electrons based on photon distribution." alt="" coords="5,209,141,234"/>
-<area shape="rect" href="inverse-compton_8cpp.html#acd9474d0630c4e995f6902006749d116" title=" " alt="" coords="189,133,351,158"/>
-<area shape="poly" title=" " alt="" coords="106,206,223,161,225,166,108,211"/>
-<area shape="rect" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42" title="Returns the value of a single parameter." alt="" coords="1477,297,1528,322"/>
-<area shape="poly" title=" " alt="" coords="84,207,127,164,157,140,188,118,266,69,331,33,363,20,399,10,441,5,490,3,1213,3,1279,4,1333,11,1357,20,1381,32,1431,74,1451,98,1466,125,1488,182,1499,238,1503,282,1498,283,1494,239,1483,184,1462,127,1446,101,1427,78,1378,37,1355,24,1332,16,1279,9,1213,8,490,8,441,10,400,16,365,25,333,37,269,73,191,122,160,144,131,168,88,210"/>
-<area shape="rect" href="synchrotron_8cpp.html#a331f545228d2b18e84e0252510e295f8" title="Creates and returns a new photon grid based on shock and electron grid." alt="" coords="895,498,1065,523"/>
-<area shape="poly" title=" " alt="" coords="87,232,132,281,203,350,247,387,295,421,346,452,400,476,461,496,526,510,591,520,656,525,779,526,882,520,882,526,779,532,656,530,591,525,525,516,460,501,398,481,344,457,292,426,244,391,200,354,128,285,83,236"/>
-<area shape="rect" href="synchrotron_8cpp.html#af56f9b4417a5f3e717102da3e81a7d37" title="Updates electron properties throughout the grid based on shock parameters and IC Y values." alt="" coords="191,266,349,291"/>
-<area shape="poly" title=" " alt="" coords="118,232,214,260,212,265,117,237"/>
-<area shape="rect" href="synchrotron_8cpp.html#a52e34d49dd7497d65ea5261e80d615d4" title="Calculates cooling Lorentz factor based on comoving time, magnetic field, and IC parameters." alt="" coords="416,157,567,182"/>
-<area shape="poly" title=" " alt="" coords="351,152,403,157,402,162,351,157"/>
-<area shape="poly" title=" " alt="" coords="296,130,343,110,398,92,490,71,563,59,636,54,731,53,1213,53,1279,54,1332,60,1356,67,1380,79,1431,118,1462,157,1482,202,1495,246,1501,283,1496,284,1490,247,1477,204,1457,160,1427,122,1377,84,1354,72,1330,65,1278,59,1213,59,731,59,636,60,563,64,491,76,399,97,345,115,299,135"/>
-<area shape="rect" href="inverse-compton_8cpp.html#ad89f660f1954e9c12551a19840d656bb" title=" " alt="" coords="456,107,527,133"/>
-<area shape="poly" title=" " alt="" coords="351,134,442,123,443,128,351,139"/>
-<area shape="rect" href="structInverseComptonY.html#a05b76b4d84f50b82728333a42362fc0f" title="Returns the Thomson Y parameter from the provided InverseComptonY object." alt="" coords="632,144,832,184"/>
-<area shape="poly" title=" " alt="" coords="567,165,618,164,618,169,567,170"/>
-<area shape="rect" href="structInverseComptonY.html#a9a35d3af9bd23acdde9d09d38ee116eb" title="Calculates the effective Y parameter at a specific Lorentz factor and spectral index." alt="" coords="632,259,832,299"/>
-<area shape="poly" title=" " alt="" coords="539,180,585,196,639,222,687,249,685,254,636,227,583,201,537,185"/>
-<area shape="poly" title=" " alt="" coords="538,154,631,129,728,115,804,107,979,104,1213,104,1278,104,1330,108,1378,124,1431,159,1457,187,1476,221,1498,282,1493,284,1471,223,1453,191,1428,163,1376,129,1329,113,1277,109,1213,109,979,109,805,112,729,120,633,135,539,159"/>
+<area shape="rect" title="Applies Thomson cooling to electrons based on photon distribution." alt="" coords="5,284,141,309"/>
+<area shape="rect" href="inverse-compton_8cpp.html#acd9474d0630c4e995f6902006749d116" title=" " alt="" coords="189,199,351,224"/>
+<area shape="poly" title=" " alt="" coords="103,281,226,227,228,232,105,286"/>
+<area shape="rect" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42" title="Returns the value of a single parameter." alt="" coords="1477,297,1528,323"/>
+<area shape="poly" title=" " alt="" coords="81,282,134,215,176,170,226,123,284,78,348,40,417,14,453,7,490,5,1213,5,1278,3,1332,5,1356,10,1380,20,1405,35,1431,57,1453,83,1470,111,1492,174,1502,235,1505,283,1499,283,1497,235,1487,175,1465,114,1448,86,1427,61,1402,40,1378,25,1355,15,1331,10,1278,8,1213,10,490,10,454,12,419,19,350,45,287,82,230,127,180,174,138,219,86,285"/>
+<area shape="rect" href="synchrotron_8cpp.html#a331f545228d2b18e84e0252510e295f8" title="Creates and returns a new photon grid based on shock and electron grid." alt="" coords="895,575,1065,600"/>
+<area shape="poly" title=" " alt="" coords="92,307,135,341,191,377,279,422,372,460,468,491,563,518,740,555,882,575,881,581,739,560,562,523,466,497,371,465,277,427,188,382,132,345,89,312"/>
+<area shape="rect" href="synchrotron_8cpp.html#af56f9b4417a5f3e717102da3e81a7d37" title="Updates electron properties throughout the grid based on shock parameters and IC Y values." alt="" coords="191,341,349,367"/>
+<area shape="poly" title=" " alt="" coords="118,307,214,335,212,340,117,312"/>
+<area shape="rect" href="synchrotron_8cpp.html#a52e34d49dd7497d65ea5261e80d615d4" title="Calculates cooling Lorentz factor based on comoving time, magnetic field, and IC parameters." alt="" coords="416,227,567,252"/>
+<area shape="poly" title=" " alt="" coords="351,219,403,225,402,231,351,224"/>
+<area shape="poly" title=" " alt="" coords="292,196,362,159,469,112,531,90,596,72,663,60,731,55,1213,55,1277,53,1330,52,1355,55,1379,63,1404,77,1431,97,1450,117,1466,141,1487,192,1498,242,1503,284,1498,284,1493,243,1482,193,1461,143,1446,121,1428,101,1401,81,1377,68,1353,61,1330,57,1278,58,1213,61,731,61,664,65,597,77,532,95,471,117,365,163,294,201"/>
+<area shape="rect" href="inverse-compton_8cpp.html#ad89f660f1954e9c12551a19840d656bb" title=" " alt="" coords="697,169,767,195"/>
+<area shape="poly" title=" " alt="" coords="351,204,683,182,683,188,351,209"/>
+<area shape="rect" href="structInverseComptonY.html#a05b76b4d84f50b82728333a42362fc0f" title="Returns the Thomson Y parameter from the provided InverseComptonY object." alt="" coords="632,219,832,259"/>
+<area shape="poly" title=" " alt="" coords="567,237,618,237,618,242,567,242"/>
+<area shape="rect" href="structInverseComptonY.html#a9a35d3af9bd23acdde9d09d38ee116eb" title="Calculates the effective Y parameter at a specific Lorentz factor and spectral index." alt="" coords="632,283,832,323"/>
+<area shape="poly" title=" " alt="" coords="541,250,644,277,642,282,540,255"/>
+<area shape="poly" title=" " alt="" coords="508,224,561,189,595,170,631,154,726,125,802,111,879,106,979,106,1213,106,1276,102,1328,97,1353,98,1377,103,1403,114,1431,132,1448,147,1462,166,1483,207,1495,248,1501,283,1496,284,1490,250,1478,209,1457,169,1444,151,1428,136,1401,118,1376,108,1352,103,1328,102,1277,107,1213,111,979,111,880,112,802,116,727,130,633,159,597,174,563,193,511,229"/>
 <area shape="rect" href="structInverseComptonY.html#ae483ec2ba4108fbf96fb15c3e978c0b3" title="Calculates the effective Y parameter for a given Lorentz factor and spectral index." alt="" coords="880,239,1080,279"/>
-<area shape="poly" title=" " alt="" coords="832,268,866,265,867,271,832,273"/>
-<area shape="rect" href="utilities_8h.html#a4520a27a10a2aef33c99ad8c679da404" title="Fast approximation of a raised to the power of b." alt="" coords="1171,246,1252,271"/>
-<area shape="poly" title=" " alt="" coords="1080,256,1157,256,1157,261,1080,261"/>
-<area shape="rect" href="utilities_8h.html#ae490b13fdcc1b917ecdd08c0cecf3556" title="Computes a^(4/3)" alt="" coords="1353,195,1419,221"/>
-<area shape="poly" title=" " alt="" coords="1080,239,1128,232,1339,209,1340,215,1128,237,1081,244"/>
-<area shape="rect" href="utilities_8h.html#afc584c30c352192de6847b1f4b8caf0e" title="Fast approximation of 2 raised to a power." alt="" coords="1343,297,1429,322"/>
-<area shape="poly" title=" " alt="" coords="1253,268,1330,291,1329,296,1251,273"/>
-<area shape="poly" title=" " alt="" coords="1252,259,1335,267,1430,283,1465,293,1463,298,1429,288,1334,272,1252,264"/>
-<area shape="rect" href="utilities_8h.html#afe0a1b1b7509ac4df83fcc0e510f281b" title="Fast approximation of the base&#45;2 logarithm." alt="" coords="1345,398,1427,423"/>
-<area shape="poly" title=" " alt="" coords="1229,270,1362,387,1358,391,1226,274"/>
-<area shape="poly" title=" " alt="" coords="1430,307,1464,307,1464,312,1430,312"/>
-<area shape="poly" title=" " alt="" coords="1483,298,1479,288,1481,279,1489,272,1503,270,1519,274,1526,282,1522,285,1516,278,1503,275,1491,277,1485,282,1484,288,1487,296"/>
-<area shape="poly" title=" " alt="" coords="1404,396,1428,377,1478,330,1481,334,1431,381,1407,400"/>
-<area shape="poly" title=" " alt="" coords="1407,219,1431,238,1481,285,1478,289,1428,242,1404,223"/>
-<area shape="poly" title=" " alt="" coords="1002,521,1078,564,1132,588,1191,608,1253,622,1315,625,1345,622,1374,614,1402,603,1428,586,1441,569,1454,543,1474,473,1488,397,1496,335,1501,336,1493,398,1479,475,1459,545,1446,572,1431,590,1404,607,1376,620,1346,627,1315,631,1252,627,1189,613,1130,592,1076,568,1000,526"/>
-<area shape="poly" title=" " alt="" coords="1035,495,1294,432,1331,423,1332,428,1295,437,1036,501"/>
-<area shape="rect" href="synchrotron_8cpp.html#a936bfaa522ec8295a21d253e5453188d" title="Calculates synchrotron frequency for a given Lorentz factor and magnetic field." alt="" coords="1140,397,1283,422"/>
-<area shape="poly" title=" " alt="" coords="1006,496,1127,439,1162,425,1164,430,1129,444,1008,500"/>
-<area shape="poly" title=" " alt="" coords="287,264,336,231,398,196,429,184,431,189,400,201,338,235,290,268"/>
-<area shape="poly" title=" " alt="" coords="349,276,618,276,618,281,349,281"/>
-<area shape="poly" title=" " alt="" coords="319,289,399,308,762,385,921,410,1128,432,1235,436,1343,433,1368,436,1388,441,1407,442,1428,434,1452,414,1470,388,1484,360,1493,334,1498,336,1489,362,1475,390,1456,417,1431,438,1408,447,1388,446,1367,442,1343,439,1235,441,1128,437,921,415,761,390,398,313,318,294"/>
-<area shape="rect" href="synchrotron_8cpp.html#ab09dbe28fcecfc3d846577c1c34fcca6" title=" " alt="" coords="889,323,1071,349"/>
-<area shape="poly" title=" " alt="" coords="349,283,632,308,876,326,876,332,632,313,348,289"/>
-<area shape="rect" href="synchrotron_8cpp.html#a1c5ae0a77c927eb60684c180ba559567" title=" " alt="" coords="399,211,584,237"/>
-<area shape="poly" title=" " alt="" coords="321,263,425,238,427,243,323,269"/>
-<area shape="rect" href="synchrotron_8cpp.html#a5813eed02877ed5f35a34e929a68d263" title=" " alt="" coords="1140,549,1283,574"/>
-<area shape="poly" title=" " alt="" coords="278,291,292,329,316,381,352,434,375,457,400,477,444,502,491,523,588,555,689,576,790,587,888,590,979,587,1126,573,1127,578,979,593,888,595,790,592,688,581,587,561,489,528,442,506,397,481,371,461,348,437,312,383,287,331,273,293"/>
-<area shape="poly" title=" " alt="" coords="1018,321,1158,273,1160,279,1020,326"/>
-<area shape="poly" title=" " alt="" coords="1071,333,1429,332,1464,323,1465,328,1430,337,1071,339"/>
-<area shape="poly" title=" " alt="" coords="1019,346,1129,383,1153,390,1151,395,1127,388,1017,351"/>
-<area shape="rect" href="synchrotron_8cpp.html#a85433be4a0da2f510240a603da8f7dff" title=" " alt="" coords="1128,347,1295,373"/>
-<area shape="poly" title=" " alt="" coords="1071,343,1115,347,1114,353,1071,348"/>
-<area shape="poly" title=" " alt="" coords="542,209,637,185,639,190,544,214"/>
-<area shape="poly" title=" " alt="" coords="548,234,631,253,629,258,547,239"/>
-<area shape="poly" title=" " alt="" coords="584,215,1079,183,1314,174,1392,175,1430,180,1456,202,1475,229,1489,257,1498,283,1493,284,1484,259,1470,231,1452,205,1428,185,1392,180,1314,180,1079,189,584,220"/>
-<area shape="poly" title=" " alt="" coords="1282,547,1319,537,1358,523,1395,503,1427,478,1454,445,1473,406,1486,368,1494,335,1499,337,1492,369,1478,408,1459,447,1431,482,1398,508,1360,528,1321,542,1284,553"/>
-<area shape="rect" href="synchrotron_8cpp.html#a59b47fc71384572d072692740171988e" title=" " alt="" coords="1358,550,1414,575"/>
-<area shape="poly" title=" " alt="" coords="1283,559,1344,560,1344,565,1283,565"/>
-<area shape="poly" title=" " alt="" coords="1407,548,1427,529,1455,479,1475,426,1488,375,1495,335,1501,336,1493,377,1480,427,1460,482,1431,532,1411,552"/>
+<area shape="poly" title=" " alt="" coords="832,283,866,277,867,282,833,288"/>
+<area shape="rect" href="utilities_8h.html#a4520a27a10a2aef33c99ad8c679da404" title="Fast approximation of a raised to the power of b." alt="" coords="1171,247,1252,272"/>
+<area shape="poly" title=" " alt="" coords="1080,257,1157,257,1157,262,1080,262"/>
+<area shape="rect" href="utilities_8h.html#ae490b13fdcc1b917ecdd08c0cecf3556" title="Computes a^(4/3)" alt="" coords="1353,147,1419,172"/>
+<area shape="poly" title=" " alt="" coords="1062,237,1339,168,1341,173,1063,242"/>
+<area shape="rect" href="utilities_8h.html#afc584c30c352192de6847b1f4b8caf0e" title="Fast approximation of 2 raised to a power." alt="" coords="1343,196,1429,221"/>
+<area shape="poly" title=" " alt="" coords="1251,245,1329,222,1330,228,1253,250"/>
+<area shape="poly" title=" " alt="" coords="1252,259,1335,267,1430,283,1465,293,1463,299,1429,289,1334,273,1252,264"/>
+<area shape="rect" href="utilities_8h.html#afe0a1b1b7509ac4df83fcc0e510f281b" title="Fast approximation of the base&#45;2 logarithm." alt="" coords="1345,297,1427,323"/>
+<area shape="poly" title=" " alt="" coords="1253,268,1332,292,1331,297,1251,273"/>
+<area shape="poly" title=" " alt="" coords="1407,219,1431,239,1481,286,1478,289,1428,243,1404,224"/>
+<area shape="poly" title=" " alt="" coords="1483,298,1479,289,1481,279,1489,273,1503,271,1519,274,1526,282,1522,286,1516,279,1503,276,1491,278,1485,282,1484,288,1487,296"/>
+<area shape="poly" title=" " alt="" coords="1428,307,1463,307,1463,313,1428,313"/>
+<area shape="poly" title=" " alt="" coords="1416,170,1431,181,1452,206,1470,233,1494,283,1489,286,1465,236,1448,209,1427,185,1413,174"/>
+<area shape="poly" title=" " alt="" coords="768,183,905,198,1080,225,1158,242,1157,247,1080,230,904,203,767,188"/>
+<area shape="poly" title=" " alt="" coords="1039,597,1127,609,1178,611,1233,609,1287,600,1339,585,1387,560,1427,525,1444,504,1458,479,1479,427,1491,377,1497,336,1502,337,1496,378,1484,429,1463,482,1449,507,1431,529,1390,565,1341,590,1288,606,1233,614,1178,616,1126,614,1038,603"/>
+<area shape="poly" title=" " alt="" coords="995,572,1035,535,1078,486,1092,458,1098,433,1106,409,1126,385,1175,353,1229,332,1283,318,1331,311,1331,316,1284,323,1231,337,1177,358,1130,389,1111,412,1103,435,1097,460,1082,489,1039,539,999,576"/>
+<area shape="rect" href="synchrotron_8cpp.html#a936bfaa522ec8295a21d253e5453188d" title="Calculates synchrotron frequency for a given Lorentz factor and magnetic field." alt="" coords="1140,549,1283,575"/>
+<area shape="poly" title=" " alt="" coords="1065,575,1126,569,1126,574,1065,581"/>
+<area shape="poly" title=" " alt="" coords="290,339,397,277,444,255,447,260,400,282,293,343"/>
+<area shape="poly" title=" " alt="" coords="349,347,460,339,584,326,618,321,619,326,584,331,461,344,349,352"/>
+<area shape="poly" title=" " alt="" coords="284,365,331,414,364,443,400,468,551,556,615,589,676,616,738,636,807,650,886,658,979,661,1213,661,1280,660,1333,651,1356,643,1379,630,1427,587,1449,558,1466,525,1479,491,1488,455,1498,388,1500,336,1505,337,1503,389,1494,456,1484,492,1471,528,1454,561,1431,590,1382,634,1358,648,1334,657,1280,665,1213,666,979,666,885,663,806,655,737,641,674,621,612,594,549,560,397,472,361,447,328,418,280,368"/>
+<area shape="rect" href="synchrotron_8cpp.html#ab09dbe28fcecfc3d846577c1c34fcca6" title=" " alt="" coords="889,449,1071,475"/>
+<area shape="poly" title=" " alt="" coords="289,365,336,398,367,415,399,427,461,444,525,455,653,469,774,472,875,468,875,474,774,477,653,474,524,461,460,449,398,433,365,419,333,402,285,369"/>
+<area shape="rect" href="synchrotron_8cpp.html#a1c5ae0a77c927eb60684c180ba559567" title=" " alt="" coords="399,291,584,316"/>
+<area shape="poly" title=" " alt="" coords="326,339,421,316,423,322,327,344"/>
+<area shape="rect" href="synchrotron_8cpp.html#a5813eed02877ed5f35a34e929a68d263" title=" " alt="" coords="1140,399,1283,424"/>
+<area shape="poly" title=" " alt="" coords="349,357,632,377,1126,404,1126,410,632,382,349,362"/>
+<area shape="poly" title=" " alt="" coords="987,447,1040,374,1080,329,1126,289,1157,273,1159,278,1130,294,1084,333,1044,377,991,451"/>
+<area shape="poly" title=" " alt="" coords="1012,472,1090,500,1142,513,1199,524,1259,528,1318,525,1375,511,1428,485,1445,471,1459,454,1479,413,1491,372,1497,336,1502,337,1496,373,1484,415,1463,457,1449,475,1431,490,1377,516,1319,530,1259,534,1198,529,1141,519,1089,505,1010,477"/>
+<area shape="poly" title=" " alt="" coords="1009,472,1129,528,1164,542,1162,547,1127,532,1006,477"/>
+<area shape="rect" href="synchrotron_8cpp.html#a85433be4a0da2f510240a603da8f7dff" title=" " alt="" coords="1128,448,1295,473"/>
+<area shape="poly" title=" " alt="" coords="1071,459,1114,459,1114,464,1071,464"/>
+<area shape="poly" title=" " alt="" coords="540,288,642,260,644,265,541,293"/>
+<area shape="poly" title=" " alt="" coords="584,301,618,301,618,306,584,306"/>
+<area shape="poly" title=" " alt="" coords="541,313,632,333,805,354,979,358,1213,358,1322,354,1429,333,1464,322,1465,327,1430,338,1322,359,1213,363,979,363,804,359,632,338,539,319"/>
+<area shape="poly" title=" " alt="" coords="1282,409,1355,400,1393,391,1428,377,1458,356,1482,331,1486,335,1462,360,1431,382,1394,396,1356,406,1283,414"/>
+<area shape="rect" href="synchrotron_8cpp.html#a59b47fc71384572d072692740171988e" title=" " alt="" coords="1358,449,1414,475"/>
+<area shape="poly" title=" " alt="" coords="1257,422,1346,448,1344,453,1255,427"/>
+<area shape="poly" title=" " alt="" coords="1406,447,1427,428,1462,380,1487,334,1492,336,1467,383,1431,432,1409,451"/>
 </map>
 </div>
 

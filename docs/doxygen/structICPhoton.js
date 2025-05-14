@@ -8,6 +8,7 @@ var structICPhoton =
     [ "fill_integration_grid", "structICPhoton.html#a6a2ac815d7fa191cddae0bebe39cdae6", null ],
     [ "get_integration_bounds", "structICPhoton.html#adb8ba3eab2bb357bf40a6433bd2a1eb8", null ],
     [ "integrate_IC_spectrum", "structICPhoton.html#ab70e82101720e70c36fbf3208c9097c5", null ],
+    [ "remove_zero_tail", "structICPhoton.html#a16b673b4609b852f6f2af36f9258b8d0", null ],
     [ "I_nu_IC_", "structICPhoton.html#ab7256f35bcc475b1d46545938fdeb6a9", null ],
     [ "log2_I_nu_", "structICPhoton.html#a7b0195c715a3ec0278d01c03a1a77bd4", null ],
     [ "log2_nu_IC_", "structICPhoton.html#aa9e3490684a32d4842fa7fbf5e12ce8b", null ],
