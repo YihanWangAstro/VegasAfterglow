@@ -1,6 +1,5 @@
 var synchrotron_8h =
 [
-    [ "InverseComptonY", "structInverseComptonY.html", "structInverseComptonY" ],
     [ "SynElectrons", "structSynElectrons.html", "structSynElectrons" ],
     [ "SynPhotons", "structSynPhotons.html", "structSynPhotons" ],
     [ "SynElectronGrid", "synchrotron_8h.html#a1ed93cca9de717545d10f8619effaf3a", null ],

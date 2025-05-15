@@ -9,7 +9,7 @@ var searchData=
   ['ic_5fcooling_6',['IC_cooling',['../classPyRadiation.html#af478f2ab9f481bcac1a9f96dac1368e0',1,'PyRadiation']]],
   ['ic_5fx0_7',['IC_x0',['../inverse-compton_8h.html#a2bf720c7c87d960838095b276b09c664',1,'inverse-compton.h']]],
   ['icphoton_8',['icphoton',['../structICPhoton.html',1,'ICPhoton'],['../structICPhoton.html#a163f4f83a64dabdbd15d0ef0ff0c037d',1,'ICPhoton::ICPhoton()']]],
-  ['icphotongrid_9',['ICPhotonGrid',['../inverse-compton_8h.html#adcfaf3d2807fe6de421ca3e9c5332252',1,'inverse-compton.h']]],
+  ['icphotongrid_9',['ICPhotonGrid',['../inverse-compton_8h.html#ab408d6b9a087160261ae396763eaf060',1,'inverse-compton.h']]],
   ['index_20functions_10',['Gamma Conversion and Adiabatic Index Functions',['../group__GammaConversions.html',1,'']]],
   ['inf_11',['inf',['../namespacecon.html#ad61313f4a5b7876e54ae46d02d4a04bd',1,'con']]],
   ['injection_5fidx_12',['injection_idx',['../classShock.html#a876908cb852c77b1053c91b54692c2ff',1,'Shock']]],

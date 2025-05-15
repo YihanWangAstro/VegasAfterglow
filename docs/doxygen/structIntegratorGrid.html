@@ -156,7 +156,7 @@ Static Public Attributes</h2></td></tr>
 <p>Stack struct to avoid memory allocation.</p>
 <p>Given minimum and maximum values for nu and gamma, it computes logarithmically spaced bins (nu_edge and gamma_edge) and then determines center values (nu and gamma) from those bins. </p>
 
-<p class="definition">Definition at line <a class="el" href="inverse-compton_8h_source.html#l00048">48</a> of file <a class="el" href="inverse-compton_8h_source.html">inverse-compton.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="inverse-compton_8h_source.html#l00145">145</a> of file <a class="el" href="inverse-compton_8h_source.html">inverse-compton.h</a>.</p>
 </div><h2 class="groupheader">Member Typedef Documentation</h2>
 <a id="a3ec4f449b3e2e56623fcb02204181dc4" name="a3ec4f449b3e2e56623fcb02204181dc4"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a3ec4f449b3e2e56623fcb02204181dc4">&#9670;&#160;</a></span>StackArray</h2>
@@ -172,7 +172,7 @@ template&lt;std::size_t N&gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="inverse-compton_8h_source.html#l00050">50</a> of file <a class="el" href="inverse-compton_8h_source.html">inverse-compton.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="inverse-compton_8h_source.html#l00147">147</a> of file <a class="el" href="inverse-compton_8h_source.html">inverse-compton.h</a>.</p>
 
 </div>
 </div>
@@ -190,7 +190,7 @@ template&lt;std::size_t N, std::size_t M&gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="inverse-compton_8h_source.html#l00053">53</a> of file <a class="el" href="inverse-compton_8h_source.html">inverse-compton.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="inverse-compton_8h_source.html#l00150">150</a> of file <a class="el" href="inverse-compton_8h_source.html">inverse-compton.h</a>.</p>
 
 </div>
 </div>
@@ -252,22 +252,22 @@ template&lt;std::size_t N, std::size_t M&gt; </div>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="inverse-compton_8h_source.html#l00061">61</a> of file <a class="el" href="inverse-compton_8h_source.html">inverse-compton.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   61</span>                                                                             {</div>
-<div class="line"><span class="lineno">   62</span>        <span class="comment">// Generate logarithmically spaced bin edges for nu.</span></div>
-<div class="line"><span class="lineno">   63</span>        <a class="code hl_variable" href="structIntegratorGrid.html#a6d3c0192cd52c554009794303a026d68">nu_edge</a> = xt::logspace(std::log10(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">nu_min</a>), std::log10(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">nu_max</a>), <a class="code hl_variable" href="structIntegratorGrid.html#ab85d115b19e98d65e187aa88861c7274">num</a> + 1);</div>
-<div class="line"><span class="lineno">   64</span>        <span class="comment">// Generate logarithmically spaced bin edges for gamma.</span></div>
-<div class="line"><span class="lineno">   65</span>        <a class="code hl_variable" href="structIntegratorGrid.html#a2eab29055ad10b15da2f1b03c16d0d30">gamma_edge</a> = xt::logspace(std::log10(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">gamma_min</a>), std::log10(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">gamma_max</a>), <a class="code hl_variable" href="structIntegratorGrid.html#ab85d115b19e98d65e187aa88861c7274">num</a> + 1);</div>
-<div class="line"><span class="lineno">   66</span>        <a class="code hl_function" href="mesh_8h.html#a885b165e8d9c9d20f27ec99329a0c3cb">boundary_to_center</a>(<a class="code hl_variable" href="structIntegratorGrid.html#a6d3c0192cd52c554009794303a026d68">nu_edge</a>, <a class="code hl_variable" href="structIntegratorGrid.html#ae04d6653b0951122c4b813a837695b0e">nu</a>);        <span class="comment">// Compute center values for nu.</span></div>
-<div class="line"><span class="lineno">   67</span>        <a class="code hl_function" href="mesh_8h.html#a885b165e8d9c9d20f27ec99329a0c3cb">boundary_to_center</a>(<a class="code hl_variable" href="structIntegratorGrid.html#a2eab29055ad10b15da2f1b03c16d0d30">gamma_edge</a>, <a class="code hl_variable" href="structIntegratorGrid.html#aaa70803b4be04dd650bb5761bbe1e9fd">gamma</a>);  <span class="comment">// Compute center values for gamma.</span></div>
-<div class="line"><span class="lineno">   68</span>    }</div>
+<p class="definition">Definition at line <a class="el" href="inverse-compton_8h_source.html#l00158">158</a> of file <a class="el" href="inverse-compton_8h_source.html">inverse-compton.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  158</span>                                                                             {</div>
+<div class="line"><span class="lineno">  159</span>        <span class="comment">// Generate logarithmically spaced bin edges for nu.</span></div>
+<div class="line"><span class="lineno">  160</span>        <a class="code hl_variable" href="structIntegratorGrid.html#a6d3c0192cd52c554009794303a026d68">nu_edge</a> = xt::logspace(std::log10(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">nu_min</a>), std::log10(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">nu_max</a>), <a class="code hl_variable" href="structIntegratorGrid.html#ab85d115b19e98d65e187aa88861c7274">num</a> + 1);</div>
+<div class="line"><span class="lineno">  161</span>        <span class="comment">// Generate logarithmically spaced bin edges for gamma.</span></div>
+<div class="line"><span class="lineno">  162</span>        <a class="code hl_variable" href="structIntegratorGrid.html#a2eab29055ad10b15da2f1b03c16d0d30">gamma_edge</a> = xt::logspace(std::log10(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">gamma_min</a>), std::log10(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">gamma_max</a>), <a class="code hl_variable" href="structIntegratorGrid.html#ab85d115b19e98d65e187aa88861c7274">num</a> + 1);</div>
+<div class="line"><span class="lineno">  163</span>        <a class="code hl_function" href="mesh_8h.html#a885b165e8d9c9d20f27ec99329a0c3cb">boundary_to_center</a>(<a class="code hl_variable" href="structIntegratorGrid.html#a6d3c0192cd52c554009794303a026d68">nu_edge</a>, <a class="code hl_variable" href="structIntegratorGrid.html#ae04d6653b0951122c4b813a837695b0e">nu</a>);        <span class="comment">// Compute center values for nu.</span></div>
+<div class="line"><span class="lineno">  164</span>        <a class="code hl_function" href="mesh_8h.html#a885b165e8d9c9d20f27ec99329a0c3cb">boundary_to_center</a>(<a class="code hl_variable" href="structIntegratorGrid.html#a2eab29055ad10b15da2f1b03c16d0d30">gamma_edge</a>, <a class="code hl_variable" href="structIntegratorGrid.html#aaa70803b4be04dd650bb5761bbe1e9fd">gamma</a>);  <span class="comment">// Compute center values for gamma.</span></div>
+<div class="line"><span class="lineno">  165</span>    }</div>
 <div class="ttc" id="amesh_8h_html_a885b165e8d9c9d20f27ec99329a0c3cb"><div class="ttname"><a href="mesh_8h.html#a885b165e8d9c9d20f27ec99329a0c3cb">boundary_to_center</a></div><div class="ttdeci">void boundary_to_center(Arr1 const &amp;boundary, Arr2 &amp;center)</div><div class="ttdoc">Converts boundary values to center values using linear interpolation.</div><div class="ttdef"><b>Definition</b> <a href="mesh_8h_source.html#l00153">mesh.h:153</a></div></div>
-<div class="ttc" id="astructIntegratorGrid_html_a2eab29055ad10b15da2f1b03c16d0d30"><div class="ttname"><a href="structIntegratorGrid.html#a2eab29055ad10b15da2f1b03c16d0d30">IntegratorGrid::gamma_edge</a></div><div class="ttdeci">StackArray&lt; num+1 &gt; gamma_edge</div><div class="ttdoc">Bin edges for gamma.</div><div class="ttdef"><b>Definition</b> <a href="inverse-compton_8h_source.html#l00072">inverse-compton.h:72</a></div></div>
-<div class="ttc" id="astructIntegratorGrid_html_a6d3c0192cd52c554009794303a026d68"><div class="ttname"><a href="structIntegratorGrid.html#a6d3c0192cd52c554009794303a026d68">IntegratorGrid::nu_edge</a></div><div class="ttdeci">StackArray&lt; num+1 &gt; nu_edge</div><div class="ttdoc">Bin edges for nu.</div><div class="ttdef"><b>Definition</b> <a href="inverse-compton_8h_source.html#l00071">inverse-compton.h:71</a></div></div>
-<div class="ttc" id="astructIntegratorGrid_html_aaa70803b4be04dd650bb5761bbe1e9fd"><div class="ttname"><a href="structIntegratorGrid.html#aaa70803b4be04dd650bb5761bbe1e9fd">IntegratorGrid::gamma</a></div><div class="ttdeci">StackArray&lt; num &gt; gamma</div><div class="ttdoc">Center values for gamma.</div><div class="ttdef"><b>Definition</b> <a href="inverse-compton_8h_source.html#l00074">inverse-compton.h:74</a></div></div>
-<div class="ttc" id="astructIntegratorGrid_html_ab85d115b19e98d65e187aa88861c7274"><div class="ttname"><a href="structIntegratorGrid.html#ab85d115b19e98d65e187aa88861c7274">IntegratorGrid::num</a></div><div class="ttdeci">static constexpr size_t num</div><div class="ttdoc">Number of bins.</div><div class="ttdef"><b>Definition</b> <a href="inverse-compton_8h_source.html#l00070">inverse-compton.h:70</a></div></div>
-<div class="ttc" id="astructIntegratorGrid_html_ae04d6653b0951122c4b813a837695b0e"><div class="ttname"><a href="structIntegratorGrid.html#ae04d6653b0951122c4b813a837695b0e">IntegratorGrid::nu</a></div><div class="ttdeci">StackArray&lt; num &gt; nu</div><div class="ttdoc">Center values for nu.</div><div class="ttdef"><b>Definition</b> <a href="inverse-compton_8h_source.html#l00073">inverse-compton.h:73</a></div></div>
-<div class="ttc" id="autilities_8h_html_ab8e81118f023df135835db8cce4f5f42"><div class="ttname"><a href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">max</a></div><div class="ttdeci">T max(T value)</div><div class="ttdoc">Returns the value of a single parameter.</div><div class="ttdef"><b>Definition</b> <a href="utilities_8h_source.html#l00330">utilities.h:330</a></div></div>
+<div class="ttc" id="astructIntegratorGrid_html_a2eab29055ad10b15da2f1b03c16d0d30"><div class="ttname"><a href="structIntegratorGrid.html#a2eab29055ad10b15da2f1b03c16d0d30">IntegratorGrid::gamma_edge</a></div><div class="ttdeci">StackArray&lt; num+1 &gt; gamma_edge</div><div class="ttdoc">Bin edges for gamma.</div><div class="ttdef"><b>Definition</b> <a href="inverse-compton_8h_source.html#l00169">inverse-compton.h:169</a></div></div>
+<div class="ttc" id="astructIntegratorGrid_html_a6d3c0192cd52c554009794303a026d68"><div class="ttname"><a href="structIntegratorGrid.html#a6d3c0192cd52c554009794303a026d68">IntegratorGrid::nu_edge</a></div><div class="ttdeci">StackArray&lt; num+1 &gt; nu_edge</div><div class="ttdoc">Bin edges for nu.</div><div class="ttdef"><b>Definition</b> <a href="inverse-compton_8h_source.html#l00168">inverse-compton.h:168</a></div></div>
+<div class="ttc" id="astructIntegratorGrid_html_aaa70803b4be04dd650bb5761bbe1e9fd"><div class="ttname"><a href="structIntegratorGrid.html#aaa70803b4be04dd650bb5761bbe1e9fd">IntegratorGrid::gamma</a></div><div class="ttdeci">StackArray&lt; num &gt; gamma</div><div class="ttdoc">Center values for gamma.</div><div class="ttdef"><b>Definition</b> <a href="inverse-compton_8h_source.html#l00171">inverse-compton.h:171</a></div></div>
+<div class="ttc" id="astructIntegratorGrid_html_ab85d115b19e98d65e187aa88861c7274"><div class="ttname"><a href="structIntegratorGrid.html#ab85d115b19e98d65e187aa88861c7274">IntegratorGrid::num</a></div><div class="ttdeci">static constexpr size_t num</div><div class="ttdoc">Number of bins.</div><div class="ttdef"><b>Definition</b> <a href="inverse-compton_8h_source.html#l00167">inverse-compton.h:167</a></div></div>
+<div class="ttc" id="astructIntegratorGrid_html_ae04d6653b0951122c4b813a837695b0e"><div class="ttname"><a href="structIntegratorGrid.html#ae04d6653b0951122c4b813a837695b0e">IntegratorGrid::nu</a></div><div class="ttdeci">StackArray&lt; num &gt; nu</div><div class="ttdoc">Center values for nu.</div><div class="ttdef"><b>Definition</b> <a href="inverse-compton_8h_source.html#l00170">inverse-compton.h:170</a></div></div>
+<div class="ttc" id="autilities_8h_html_ab8e81118f023df135835db8cce4f5f42"><div class="ttname"><a href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">max</a></div><div class="ttdeci">T max(T value)</div><div class="ttdoc">Returns the value of a single parameter.</div><div class="ttdef"><b>Definition</b> <a href="utilities_8h_source.html#l00287">utilities.h:287</a></div></div>
 </div><!-- fragment --><div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -296,8 +296,8 @@ Here is the call graph for this function:</div>
 
 <p>Number density at each gamma center. </p>
 
-<p class="definition">Definition at line <a class="el" href="inverse-compton_8h_source.html#l00076">76</a> of file <a class="el" href="inverse-compton_8h_source.html">inverse-compton.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   76</span>{0};      <span class="comment">///&lt; Number density at each gamma center.</span></div>
+<p class="definition">Definition at line <a class="el" href="inverse-compton_8h_source.html#l00173">173</a> of file <a class="el" href="inverse-compton_8h_source.html">inverse-compton.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  173</span>{0};      <span class="comment">///&lt; Number density at each gamma center.</span></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -315,8 +315,8 @@ Here is the call graph for this function:</div>
 
 <p>Center values for gamma. </p>
 
-<p class="definition">Definition at line <a class="el" href="inverse-compton_8h_source.html#l00074">74</a> of file <a class="el" href="inverse-compton_8h_source.html">inverse-compton.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   74</span>{0};           <span class="comment">///&lt; Center values for gamma.</span></div>
+<p class="definition">Definition at line <a class="el" href="inverse-compton_8h_source.html#l00171">171</a> of file <a class="el" href="inverse-compton_8h_source.html">inverse-compton.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  171</span>{0};           <span class="comment">///&lt; Center values for gamma.</span></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -334,8 +334,8 @@ Here is the call graph for this function:</div>
 
 <p>Bin edges for gamma. </p>
 
-<p class="definition">Definition at line <a class="el" href="inverse-compton_8h_source.html#l00072">72</a> of file <a class="el" href="inverse-compton_8h_source.html">inverse-compton.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   72</span>{0};  <span class="comment">///&lt; Bin edges for gamma.</span></div>
+<p class="definition">Definition at line <a class="el" href="inverse-compton_8h_source.html#l00169">169</a> of file <a class="el" href="inverse-compton_8h_source.html">inverse-compton.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  169</span>{0};  <span class="comment">///&lt; Bin edges for gamma.</span></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -353,8 +353,8 @@ Here is the call graph for this function:</div>
 
 <p>2D array to store computed intermediate values. </p>
 
-<p class="definition">Definition at line <a class="el" href="inverse-compton_8h_source.html#l00077">77</a> of file <a class="el" href="inverse-compton_8h_source.html">inverse-compton.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   77</span>{{{0}}};      <span class="comment">///&lt; 2D array to store computed intermediate values.</span></div>
+<p class="definition">Definition at line <a class="el" href="inverse-compton_8h_source.html#l00174">174</a> of file <a class="el" href="inverse-compton_8h_source.html">inverse-compton.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  174</span>{{{0}}};      <span class="comment">///&lt; 2D array to store computed intermediate values.</span></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -372,8 +372,8 @@ Here is the call graph for this function:</div>
 
 <p>Synchrotron intensity at each nu center. </p>
 
-<p class="definition">Definition at line <a class="el" href="inverse-compton_8h_source.html#l00075">75</a> of file <a class="el" href="inverse-compton_8h_source.html">inverse-compton.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   75</span>{0};        <span class="comment">///&lt; Synchrotron intensity at each nu center.</span></div>
+<p class="definition">Definition at line <a class="el" href="inverse-compton_8h_source.html#l00172">172</a> of file <a class="el" href="inverse-compton_8h_source.html">inverse-compton.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  172</span>{0};        <span class="comment">///&lt; Synchrotron intensity at each nu center.</span></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -391,8 +391,8 @@ Here is the call graph for this function:</div>
 
 <p>Center values for nu. </p>
 
-<p class="definition">Definition at line <a class="el" href="inverse-compton_8h_source.html#l00073">73</a> of file <a class="el" href="inverse-compton_8h_source.html">inverse-compton.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   73</span>{0};              <span class="comment">///&lt; Center values for nu.</span></div>
+<p class="definition">Definition at line <a class="el" href="inverse-compton_8h_source.html#l00170">170</a> of file <a class="el" href="inverse-compton_8h_source.html">inverse-compton.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  170</span>{0};              <span class="comment">///&lt; Center values for nu.</span></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -410,8 +410,8 @@ Here is the call graph for this function:</div>
 
 <p>Bin edges for nu. </p>
 
-<p class="definition">Definition at line <a class="el" href="inverse-compton_8h_source.html#l00071">71</a> of file <a class="el" href="inverse-compton_8h_source.html">inverse-compton.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   71</span>{0};     <span class="comment">///&lt; Bin edges for nu.</span></div>
+<p class="definition">Definition at line <a class="el" href="inverse-compton_8h_source.html#l00168">168</a> of file <a class="el" href="inverse-compton_8h_source.html">inverse-compton.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  168</span>{0};     <span class="comment">///&lt; Bin edges for nu.</span></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -437,8 +437,8 @@ Here is the call graph for this function:</div>
 
 <p>Number of bins. </p>
 
-<p class="definition">Definition at line <a class="el" href="inverse-compton_8h_source.html#l00070">70</a> of file <a class="el" href="inverse-compton_8h_source.html">inverse-compton.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   70</span>{128};   <span class="comment">///&lt; Number of bins.</span></div>
+<p class="definition">Definition at line <a class="el" href="inverse-compton_8h_source.html#l00167">167</a> of file <a class="el" href="inverse-compton_8h_source.html">inverse-compton.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  167</span>{128};   <span class="comment">///&lt; Number of bins.</span></div>
 </div><!-- fragment -->
 </div>
 </div>

@@ -1,8 +1,10 @@
 var NAVTREEINDEX1 =
 {
-"inverse-compton_8h.html#ac7dc4640209861b76e05ae991771552e":[4,0,0,2,6],
-"inverse-compton_8h.html#aca4102bfefd39902a464c456253645cc":[4,0,0,2,5],
-"inverse-compton_8h.html#adcfaf3d2807fe6de421ca3e9c5332252":[4,0,0,2,3],
+"inverse-compton_8h.html#a689ca8481a7d3e7e760a3300503f2781":[4,0,0,2,7],
+"inverse-compton_8h.html#a83d78cd6b52bd3932fb1ae9561a1c148":[4,0,0,2,10],
+"inverse-compton_8h.html#ab408d6b9a087160261ae396763eaf060":[4,0,0,2,4],
+"inverse-compton_8h.html#ac7dc4640209861b76e05ae991771552e":[4,0,0,2,9],
+"inverse-compton_8h.html#aca4102bfefd39902a464c456253645cc":[4,0,0,2,8],
 "inverse-compton_8h_source.html":[4,0,0,2],
 "jet_8h.html":[4,0,0,4],
 "jet_8h.html#a6fac8621479aea05abf6fef54a4df256":[4,0,0,4,4],
@@ -247,7 +249,5 @@ var NAVTREEINDEX1 =
 "shock_8h_source.html":[4,0,0,12],
 "simple-shock_8hpp.html":[4,0,0,13],
 "simple-shock_8hpp_source.html":[4,0,0,13],
-"simple-shock_8tpp.html":[4,0,2,1,3],
-"simple-shock_8tpp_source.html":[4,0,2,1,3],
-"structConfigParams.html":[3,0,1]
+"simple-shock_8tpp.html":[4,0,2,1,3]
 };

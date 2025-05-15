@@ -247,7 +247,7 @@ var NAVTREEINDEX0 =
 "inverse-compton_8cpp.html#af25c21cb4c714787c8260f220a6c2ee9":[4,0,2,2,0,4],
 "inverse-compton_8cpp_source.html":[4,0,2,2,0],
 "inverse-compton_8h.html":[4,0,0,2],
-"inverse-compton_8h.html#a2bf720c7c87d960838095b276b09c664":[4,0,0,2,8],
-"inverse-compton_8h.html#a689ca8481a7d3e7e760a3300503f2781":[4,0,0,2,4],
-"inverse-compton_8h.html#a83d78cd6b52bd3932fb1ae9561a1c148":[4,0,0,2,7]
+"inverse-compton_8h.html#a0ab8637927d98b2552ae0f5b9eb5e5c2":[4,0,0,2,6],
+"inverse-compton_8h.html#a1ed93cca9de717545d10f8619effaf3a":[4,0,0,2,5],
+"inverse-compton_8h.html#a2bf720c7c87d960838095b276b09c664":[4,0,0,2,11]
 };
