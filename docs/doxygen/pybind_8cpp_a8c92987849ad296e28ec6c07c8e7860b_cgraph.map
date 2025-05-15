@@ -12,13 +12,13 @@
 <area shape="poly" id="edge11_Node000001_Node000007" title=" " alt="" coords="93,391,139,350,170,328,203,308,241,293,243,298,205,313,173,332,143,355,97,395"/>
 <area shape="rect" id="Node000009" href="$structMultiBandModel.html#a041063f7ee0ccf24878f440b91ef7147" title=" " alt="" coords="507,367,672,407"/>
 <area shape="poly" id="edge15_Node000001_Node000009" title=" " alt="" coords="108,390,152,373,204,359,279,351,356,351,429,357,494,365,493,371,429,362,356,356,280,356,204,364,154,378,110,395"/>
-<area shape="rect" id="Node000010" href="$pymodel_8cpp.html#a498efd172e5ed6ff70fdc127605b7aca" title="Creates a Gaussian jet model where energy and Lorentz factor follow Gaussian distribution." alt="" coords="532,431,647,457"/>
+<area shape="rect" id="Node000010" href="$pymodel_8cpp.html#a5fe485d60bb0066791e55de6f5e6c642" title="Creates a Gaussian jet model where energy and Lorentz factor follow Gaussian distribution." alt="" coords="532,431,647,457"/>
 <area shape="poly" id="edge18_Node000001_Node000010" title=" " alt="" coords="156,397,285,394,359,396,432,403,457,409,481,416,519,426,518,431,479,421,455,414,432,408,359,401,285,399,156,402"/>
 <area shape="rect" id="Node000011" href="$pymodel_8cpp.html#a43af01d16838e6513792deaeb727fbe5" title="Creates a constant density ISM (Interstellar Medium) environment." alt="" coords="287,418,349,443"/>
 <area shape="poly" id="edge20_Node000001_Node000011" title=" " alt="" coords="157,411,273,423,273,429,156,416"/>
-<area shape="rect" id="Node000012" href="$pymodel_8cpp.html#aae9b8856a29c079d62391007b4886d9b" title="Creates a power&#45;law jet model where energy and Lorentz factor follow power&#45;law distribution." alt="" coords="529,481,650,506"/>
+<area shape="rect" id="Node000012" href="$pymodel_8cpp.html#abe4a60136f663f326e6333055ff53f3c" title="Creates a power&#45;law jet model where energy and Lorentz factor follow power&#45;law distribution." alt="" coords="529,481,650,506"/>
 <area shape="poly" id="edge21_Node000001_Node000012" title=" " alt="" coords="109,416,153,435,205,452,287,469,370,480,515,490,515,495,370,485,286,474,203,457,151,440,106,421"/>
-<area shape="rect" id="Node000013" href="$pymodel_8cpp.html#a73c3d7b8415c180270a4cedd467904fc" title="Creates a top&#45;hat jet model where energy and Lorentz factor are constant within theta_c." alt="" coords="540,530,639,555"/>
+<area shape="rect" id="Node000013" href="$pymodel_8cpp.html#a48952343f9ba50f32ab1efad3e6a6ba4" title="Creates a top&#45;hat jet model where energy and Lorentz factor are constant within theta_c." alt="" coords="540,530,639,555"/>
 <area shape="poly" id="edge23_Node000001_Node000013" title=" " alt="" coords="97,416,142,455,172,475,205,491,289,517,377,532,458,539,526,541,526,547,458,545,376,537,288,522,203,496,170,479,139,459,93,420"/>
 <area shape="rect" id="Node000014" href="$pymodel_8cpp.html#af5469e939faefb859e1f4b22e1e0bd02" title="Creates a wind environment with density profile ρ ∝ r^&#45;2." alt="" coords="283,570,353,595"/>
 <area shape="poly" id="edge25_Node000001_Node000014" title=" " alt="" coords="91,417,134,480,167,517,205,549,237,564,270,573,268,578,235,569,203,553,163,521,130,483,87,420"/>
