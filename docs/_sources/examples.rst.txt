@@ -334,13 +334,15 @@ MCMC Parameter Fitting
     
     # Define parameters with priors
     params = [
-        ParamDef("E_iso", 51.0, 54.0, Scale.LOG10),  # log10(E_iso/erg)
-        ParamDef("theta_c", 0.01, 0.3, Scale.LINEAR),  # Core angle in radians
-        ParamDef("theta_v", 0.0, 0.5, Scale.LINEAR),  # Viewing angle in radians
-        ParamDef("n_ism", -3.0, 1.0, Scale.LOG10),  # log10(n/cm^-3)
-        ParamDef("p", 2.1, 2.7, Scale.LINEAR),  # Electron energy index
-        ParamDef("epsilon_e", -2.5, -0.5, Scale.LOG10),  # log10(epsilon_e)
-        ParamDef("epsilon_B", -5.0, -0.5, Scale.LOG10),  # log10(epsilon_B)
+        ParamDef("E_iso",      1e50,  1e54,  Scale.LOG),       # Isotropic energy [erg]
+        ParamDef("Gamma0",        5,  1000,  Scale.LOG),       # Lorentz factor at the core
+        ParamDef("theta_c",     0.0,   0.5,  Scale.LINEAR),    # Core half-opening angle [rad]
+        ParamDef("theta_v",     0.0,   0.0,  Scale.FIXED),     # Viewing angle [rad]
+        ParamDef("p",             2,     3,  Scale.LINEAR),    # Shocked electron power law index
+        ParamDef("eps_e",      1e-2,   0.5,  Scale.LOG),       # Electron energy fraction
+        ParamDef("eps_B",      1e-4,   0.5,  Scale.LOG),       # Magnetic field energy fraction
+        ParamDef("A_star",     1e-3,     1,  Scale.LOG),       # Wind parameter
+        ParamDef("xi",         1e-3,     1,  Scale.LOG),       # Electron acceleration fraction
     ]
     
     # Create the fitter with default model setup

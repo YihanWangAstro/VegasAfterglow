@@ -12,6 +12,7 @@ var shock_8h =
     [ "compute_dtheta_dt", "shock_8h.html#ac667cca4e484b343ff3988383a75cd55", null ],
     [ "compute_effective_Gamma", "shock_8h.html#a1daab7936c7a7201b192aaec9bd0a8a7", null ],
     [ "compute_Gamma_from_relative", "shock_8h.html#a70465220fb5998b1d45d11ac165a9e67", null ],
+    [ "compute_radiative_efficiency", "shock_8h.html#ac21551f9d4f4eb003348a1b9b3a35567", null ],
     [ "compute_region4_num_den", "shock_8h.html#a0c2a479b9becd710ac78cdb76a138dc2", null ],
     [ "compute_rel_Gamma", "shock_8h.html#a7b72b7c46b478ce3d1a15677c5046dcb", null ],
     [ "compute_rel_Gamma", "shock_8h.html#aa9a3f62c0c028cbdc8a2db2d47a7299f", null ],
@@ -20,6 +21,6 @@ var shock_8h =
     [ "compute_swept_mass", "shock_8h.html#ac083404f57e1501f31147d57cc45f4c5", null ],
     [ "compute_upstr_4vel", "shock_8h.html#ab0d0c4b81c0c5525c81eb24d70c4b010", null ],
     [ "compute_upstr_mag_p", "shock_8h.html#a0751f7de465c025ab223448bfd0da9a2", null ],
-    [ "save_shock_state", "shock_8h.html#a0322692389b6133782039ae39dd13b55", null ],
+    [ "save_shock_state", "shock_8h.html#a0dc6778e1b8dd591df9f98a4d7a6d26f", null ],
     [ "set_stopping_shock", "shock_8h.html#a908d0ea000d53a924575023c0e857060", null ]
 ];

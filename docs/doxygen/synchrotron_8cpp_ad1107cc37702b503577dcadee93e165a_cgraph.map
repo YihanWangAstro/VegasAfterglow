@@ -1,0 +1,22 @@
+<map id="compute_syn_gamma_a" name="compute_syn_gamma_a">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,107,187,132"/>
+<area shape="rect" id="Node000002" href="$synchrotron_8cpp.html#a936bfaa522ec8295a21d253e5453188d" title="Calculates synchrotron frequency for a given Lorentz factor and magnetic field." alt="" coords="247,8,389,33"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="116,104,168,74,234,42,253,35,254,40,236,47,171,79,119,109"/>
+<area shape="rect" id="Node000003" href="$synchrotron_8cpp.html#a85433be4a0da2f510240a603da8f7dff" title=" " alt="" coords="235,57,401,83"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="153,104,246,83,247,88,154,109"/>
+<area shape="rect" id="Node000004" href="$utilities_8h.html#a4520a27a10a2aef33c99ad8c679da404" title="Fast approximation of a raised to the power of b." alt="" coords="277,107,359,132"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="187,117,263,117,263,122,187,122"/>
+<area shape="rect" id="Node000006" href="$utilities_8h.html#ab8e81118f023df135835db8cce4f5f42" title="Returns the value of a single parameter." alt="" coords="592,107,643,132"/>
+<area shape="poly" id="edge10_Node000001_Node000006" title=" " alt="" coords="157,129,235,141,390,153,457,152,543,141,578,132,580,137,545,146,458,157,390,159,234,146,156,135"/>
+<area shape="rect" id="Node000008" href="$utilities_8h.html#a29a716285d00743072d357c4a64a7f85" title="Finds the root of a function using the bisection method." alt="" coords="449,208,544,233"/>
+<area shape="poly" id="edge11_Node000001_Node000008" title=" " alt="" coords="119,130,170,159,236,186,287,199,341,208,436,217,436,222,340,213,286,204,234,191,168,164,116,135"/>
+<area shape="rect" id="Node000005" href="$utilities_8h.html#afc584c30c352192de6847b1f4b8caf0e" title="Fast approximation of 2 raised to a power." alt="" coords="453,5,540,31"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="358,108,400,92,424,71,448,48,463,36,466,41,451,52,428,75,403,96,360,113"/>
+<area shape="poly" id="edge9_Node000004_Node000006" title=" " alt="" coords="358,106,444,90,494,87,544,91,580,101,578,106,544,97,494,93,444,95,359,111"/>
+<area shape="rect" id="Node000007" href="$utilities_8h.html#afe0a1b1b7509ac4df83fcc0e510f281b" title="Fast approximation of the base&#45;2 logarithm." alt="" coords="455,107,538,132"/>
+<area shape="poly" id="edge7_Node000004_Node000007" title=" " alt="" coords="359,117,441,117,441,122,359,122"/>
+<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="519,29,546,48,596,95,592,99,542,52,516,33"/>
+<area shape="poly" id="edge6_Node000006_Node000006" title=" " alt="" coords="596,108,592,98,594,89,603,82,617,80,634,83,641,92,637,95,631,88,617,85,605,87,599,92,598,98,601,105"/>
+<area shape="poly" id="edge8_Node000007_Node000006" title=" " alt="" coords="539,117,578,117,578,122,539,122"/>
+<area shape="poly" id="edge12_Node000008_Node000006" title=" " alt="" coords="516,206,542,187,592,140,596,144,546,191,519,210"/>
+</map>

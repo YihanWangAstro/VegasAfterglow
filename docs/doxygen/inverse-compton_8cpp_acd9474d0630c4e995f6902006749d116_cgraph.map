@@ -1,6 +1,6 @@
 <map id="compute_Thomson_Y" name="compute_Thomson_Y">
 <area shape="rect" id="Node000001" title=" " alt="" coords="5,101,167,126"/>
-<area shape="rect" id="Node000002" href="$synchrotron_8cpp.html#a52e34d49dd7497d65ea5261e80d615d4" title="Calculates cooling Lorentz factor based on comoving time, magnetic field, and IC parameters." alt="" coords="215,101,365,126"/>
+<area shape="rect" id="Node000002" href="$synchrotron_8cpp.html#a2e3e0590c05be72f722acd3b077abd16" title="Calculates cooling Lorentz factor based on comoving time, magnetic field, and IC parameters." alt="" coords="215,101,365,126"/>
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="167,111,201,111,201,116,167,116"/>
 <area shape="rect" id="Node000008" href="$utilities_8h.html#ab8e81118f023df135835db8cce4f5f42" title="Returns the value of a single parameter." alt="" coords="1173,119,1224,145"/>
 <area shape="poly" id="edge17_Node000001_Node000008" title=" " alt="" coords="116,98,185,71,282,40,395,14,454,6,512,3,951,3,1004,6,1044,16,1081,35,1127,62,1156,83,1180,107,1176,111,1152,88,1124,66,1079,39,1042,21,1003,11,951,8,512,8,454,11,396,19,283,45,186,76,118,103"/>

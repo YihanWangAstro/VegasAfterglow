@@ -1,5 +1,0 @@
-<map id="IntegratorGridDynamic::IntegratorGridDynamic" name="IntegratorGridDynamic::IntegratorGridDynamic">
-<area shape="rect" id="Node000001" title="Constructor: Initializes the grid with given nu and gamma boundaries." alt="" coords="5,5,184,45"/>
-<area shape="rect" id="Node000002" href="$mesh_8h.html#a885b165e8d9c9d20f27ec99329a0c3cb" title="Converts boundary values to center values using linear interpolation." alt="" coords="232,13,383,38"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="184,23,218,23,218,28,184,28"/>
-</map>

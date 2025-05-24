@@ -1,0 +1,7 @@
+<map id="cyclotron_correction" name="cyclotron_correction">
+<area shape="rect" id="Node000001" title=" " alt="" coords="231,31,385,56"/>
+<area shape="rect" id="Node000002" href="$synchrotron_8cpp.html#a61b8afa248e61a5726a0e48983f99fdf" title="Creates and returns a new electron grid based on shock parameters." alt="" coords="5,5,183,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="217,35,183,31,183,26,217,30"/>
+<area shape="rect" id="Node000003" href="$synchrotron_8cpp.html#aad9e6e41fee6cbff0952e1d343b890f5" title="Populates an existing electron grid with values based on shock parameters." alt="" coords="5,55,183,80"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="217,56,183,60,183,55,217,51"/>
+</map>

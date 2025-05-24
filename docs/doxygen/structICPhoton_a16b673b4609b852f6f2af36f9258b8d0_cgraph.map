@@ -1,6 +1,0 @@
-<map id="ICPhoton::remove_zero_tail" name="ICPhoton::remove_zero_tail">
-<area shape="rect" id="Node000001" title="Remove the zero tail of the IC photon spectrum." alt="" coords="5,29,207,55"/>
-<area shape="rect" id="Node000002" href="$utilities_8h.html#ab8e81118f023df135835db8cce4f5f42" title="Returns the value of a single parameter." alt="" coords="255,29,305,55"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="207,39,241,39,241,45,207,45"/>
-<area shape="poly" id="edge2_Node000002_Node000002" title=" " alt="" coords="253,32,245,22,248,12,260,5,280,3,305,7,315,17,310,21,303,12,280,8,261,10,252,15,250,21,257,29"/>
-</map>

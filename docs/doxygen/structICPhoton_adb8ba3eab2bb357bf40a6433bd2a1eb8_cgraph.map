@@ -1,8 +1,0 @@
-<map id="ICPhoton::get_integration_bounds" name="ICPhoton::get_integration_bounds">
-<area shape="rect" id="Node000001" title="Get the integration bounds for the IC photon spectrum." alt="" coords="5,22,192,62"/>
-<area shape="rect" id="Node000002" href="$utilities_8h.html#ac47d1412f3f1791737d0f963267096f1" title="Returns the value of a single parameter." alt="" coords="240,29,287,55"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="192,39,226,39,226,45,192,45"/>
-<area shape="rect" id="Node000003" href="$utilities_8h.html#ab8e81118f023df135835db8cce4f5f42" title="Returns the value of a single parameter." alt="" coords="335,29,385,55"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="287,39,321,39,321,45,287,45"/>
-<area shape="poly" id="edge3_Node000003_Node000003" title=" " alt="" coords="343,30,339,21,341,12,348,5,360,3,374,6,380,15,376,18,371,11,360,8,351,10,346,14,345,20,348,28"/>
-</map>

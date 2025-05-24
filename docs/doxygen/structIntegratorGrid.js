@@ -1,9 +1,7 @@
 var structIntegratorGrid =
 [
-    [ "StackArray", "structIntegratorGrid.html#a3ec4f449b3e2e56623fcb02204181dc4", null ],
-    [ "StackMesh", "structIntegratorGrid.html#a695bba8cdaf6bfb06c7edfc2997a650f", null ],
     [ "IntegratorGrid", "structIntegratorGrid.html#a85a2344454b6e1899f69a8a4ff6ae396", null ],
-    [ "column_den", "structIntegratorGrid.html#affcb4eed2e71ec42cf15623b55e077bc", null ],
+    [ "column_num_den", "structIntegratorGrid.html#ad755be46b75a4b57a970edae33633f04", null ],
     [ "gamma", "structIntegratorGrid.html#aaa70803b4be04dd650bb5761bbe1e9fd", null ],
     [ "gamma_edge", "structIntegratorGrid.html#a2eab29055ad10b15da2f1b03c16d0d30", null ],
     [ "I0", "structIntegratorGrid.html#ab86ed8ad36afbd1a3efd92ba47137229", null ],

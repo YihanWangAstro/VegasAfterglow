@@ -1,5 +1,6 @@
 var physics_8h =
 [
+    [ "RadParams", "structRadParams.html", "structRadParams" ],
     [ "adaptive_theta_grid", "physics_8h.html#ac4c8cf9cb5f69037bce0ab40487f9428", null ],
     [ "adiabatic_idx", "physics_8h.html#a2a95c6b3f1236d69328af7199a772a23", null ],
     [ "auto_grid", "physics_8h.html#a84e41eb015b3658404872ddfcc60b6d4", null ],

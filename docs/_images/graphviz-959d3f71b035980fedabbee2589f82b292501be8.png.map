@@ -1,0 +1,5 @@
+<map id="%3" name="%3">
+<area shape="rect" id="node1" title="RadParams" alt="" coords="5,101,136,149"/>
+<area shape="rect" id="node2" title="Shock" alt="" coords="31,5,110,53"/>
+<area shape="poly" id="edge1" title="usage" alt="" coords="73,54,73,88,68,88,68,54"/>
+</map>

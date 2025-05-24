@@ -1,5 +1,0 @@
-<map id="ICPhoton::remove_zero_tail" name="ICPhoton::remove_zero_tail">
-<area shape="rect" id="Node000001" title="Remove the zero tail of the IC photon spectrum." alt="" coords="219,13,420,38"/>
-<area shape="rect" id="Node000002" href="$structICPhoton.html#aabcd1cc2a89ddb1683292dfefa74b14a" title="Generates the IC photon spectrum from the given electron and photon data." alt="" coords="5,5,171,45"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="205,28,171,28,171,23,205,23"/>
-</map>

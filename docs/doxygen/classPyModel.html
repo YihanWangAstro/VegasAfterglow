@@ -118,7 +118,7 @@ Public Member Functions</h2></td></tr>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Main model class for afterglow calculations. </p>
 
-<p class="definition">Definition at line <a class="el" href="pymodel_8h_source.html#l00150">150</a> of file <a class="el" href="pymodel_8h_source.html">pymodel.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="pymodel_8h_source.html#l00147">147</a> of file <a class="el" href="pymodel_8h_source.html">pymodel.h</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="ac7d6f3f58304eefee08b7254df8eb56f" name="ac7d6f3f58304eefee08b7254df8eb56f"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ac7d6f3f58304eefee08b7254df8eb56f">&#9670;&#160;</a></span>PyModel()</h2>
@@ -204,17 +204,17 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="pymodel_8h_source.html#l00165">165</a> of file <a class="el" href="pymodel_8h_source.html">pymodel.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  169</span>        : jet(jet),</div>
-<div class="line"><span class="lineno">  170</span>          medium(medium),</div>
-<div class="line"><span class="lineno">  171</span>          obs_setup(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">observer</a>),</div>
-<div class="line"><span class="lineno">  172</span>          fwd_rad(fwd_rad),</div>
-<div class="line"><span class="lineno">  173</span>          rvs_rad_opt(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">rvs_rad</a>),</div>
-<div class="line"><span class="lineno">  174</span>          phi_resol(std::get&lt;0&gt;(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">resolutions</a>)),</div>
-<div class="line"><span class="lineno">  175</span>          theta_resol(std::get&lt;1&gt;(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">resolutions</a>)),</div>
-<div class="line"><span class="lineno">  176</span>          t_resol(std::get&lt;2&gt;(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">resolutions</a>)),</div>
-<div class="line"><span class="lineno">  177</span>          rtol(rtol),</div>
-<div class="line"><span class="lineno">  178</span>          axisymmetric(axisymmetric) {}</div>
+<p class="definition">Definition at line <a class="el" href="pymodel_8h_source.html#l00162">162</a> of file <a class="el" href="pymodel_8h_source.html">pymodel.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  166</span>        : jet(jet),</div>
+<div class="line"><span class="lineno">  167</span>          medium(medium),</div>
+<div class="line"><span class="lineno">  168</span>          obs_setup(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">observer</a>),</div>
+<div class="line"><span class="lineno">  169</span>          fwd_rad(fwd_rad),</div>
+<div class="line"><span class="lineno">  170</span>          rvs_rad_opt(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">rvs_rad</a>),</div>
+<div class="line"><span class="lineno">  171</span>          phi_resol(std::get&lt;0&gt;(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">resolutions</a>)),</div>
+<div class="line"><span class="lineno">  172</span>          theta_resol(std::get&lt;1&gt;(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">resolutions</a>)),</div>
+<div class="line"><span class="lineno">  173</span>          t_resol(std::get&lt;2&gt;(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">resolutions</a>)),</div>
+<div class="line"><span class="lineno">  174</span>          rtol(rtol),</div>
+<div class="line"><span class="lineno">  175</span>          axisymmetric(axisymmetric) {}</div>
 <div class="ttc" id="autilities_8h_html_ab8e81118f023df135835db8cce4f5f42"><div class="ttname"><a href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">max</a></div><div class="ttdeci">T max(T value)</div><div class="ttdoc">Returns the value of a single parameter.</div><div class="ttdef"><b>Definition</b> <a href="utilities_8h_source.html#l00287">utilities.h:287</a></div></div>
 </div><!-- fragment -->
 </div>
@@ -256,13 +256,13 @@ Public Member Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>FluxDict Dictionary with synchrotron and IC flux components </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="pymodel_8cpp_source.html#l00141">141</a> of file <a class="el" href="pymodel_8cpp_source.html">pymodel.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  141</span>                                                                           {</div>
-<div class="line"><span class="lineno">  142</span>    <a class="code hl_typedef" href="mesh_8h.html#afd05120c4d579ec7fa4906f677781a83">Array</a> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">t_obs</a> = t * <a class="code hl_variable" href="namespaceunit.html#a4e7c438655d3f34c7c30a155ec38f250">unit::sec</a>;</div>
-<div class="line"><span class="lineno">  143</span>    <a class="code hl_typedef" href="mesh_8h.html#afd05120c4d579ec7fa4906f677781a83">Array</a> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">nu_obs</a> = nu * <a class="code hl_variable" href="namespaceunit.html#a78d8f4bc3be7867d8171f2759251dad1">unit::Hz</a>;</div>
-<div class="line"><span class="lineno">  144</span> </div>
-<div class="line"><span class="lineno">  145</span>    <span class="keywordflow">return</span> compute_specific_flux(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">t_obs</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">nu_obs</a>);</div>
-<div class="line"><span class="lineno">  146</span>}</div>
+<p class="definition">Definition at line <a class="el" href="pymodel_8cpp_source.html#l00140">140</a> of file <a class="el" href="pymodel_8cpp_source.html">pymodel.cpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  140</span>                                                                           {</div>
+<div class="line"><span class="lineno">  141</span>    <a class="code hl_typedef" href="mesh_8h.html#afd05120c4d579ec7fa4906f677781a83">Array</a> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">t_obs</a> = t * <a class="code hl_variable" href="namespaceunit.html#a4e7c438655d3f34c7c30a155ec38f250">unit::sec</a>;</div>
+<div class="line"><span class="lineno">  142</span>    <a class="code hl_typedef" href="mesh_8h.html#afd05120c4d579ec7fa4906f677781a83">Array</a> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">nu_obs</a> = nu * <a class="code hl_variable" href="namespaceunit.html#a78d8f4bc3be7867d8171f2759251dad1">unit::Hz</a>;</div>
+<div class="line"><span class="lineno">  143</span> </div>
+<div class="line"><span class="lineno">  144</span>    <span class="keywordflow">return</span> compute_specific_flux(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">t_obs</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">nu_obs</a>);</div>
+<div class="line"><span class="lineno">  145</span>}</div>
 <div class="ttc" id="amesh_8h_html_afd05120c4d579ec7fa4906f677781a83"><div class="ttname"><a href="mesh_8h.html#afd05120c4d579ec7fa4906f677781a83">Array</a></div><div class="ttdeci">xt::xtensor&lt; Real, 1 &gt; Array</div><div class="ttdoc">Type alias for 1D arrays (e.g., time points)</div><div class="ttdef"><b>Definition</b> <a href="mesh_8h_source.html#l00036">mesh.h:36</a></div></div>
 <div class="ttc" id="anamespaceunit_html_a4e7c438655d3f34c7c30a155ec38f250"><div class="ttname"><a href="namespaceunit.html#a4e7c438655d3f34c7c30a155ec38f250">unit::sec</a></div><div class="ttdeci">constexpr Real sec</div><div class="ttdoc">Second in code units.</div><div class="ttdef"><b>Definition</b> <a href="macros_8h_source.html#l00040">macros.h:40</a></div></div>
 <div class="ttc" id="anamespaceunit_html_a78d8f4bc3be7867d8171f2759251dad1"><div class="ttname"><a href="namespaceunit.html#a78d8f4bc3be7867d8171f2759251dad1">unit::Hz</a></div><div class="ttdeci">constexpr Real Hz</div><div class="ttdoc">Hertz (frequency) in code units.</div><div class="ttdef"><b>Definition</b> <a href="macros_8h_source.html#l00046">macros.h:46</a></div></div>
@@ -326,19 +326,19 @@ Here is the caller graph for this function:</div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>FluxDict Dictionary with flux arrays (frequency as first dimension) </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="pymodel_8cpp_source.html#l00148">148</a> of file <a class="el" href="pymodel_8cpp_source.html">pymodel.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  148</span>                                                                     {</div>
-<div class="line"><span class="lineno">  149</span>    <a class="code hl_typedef" href="mesh_8h.html#afd05120c4d579ec7fa4906f677781a83">Array</a> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">nu_obs</a> = nu * <a class="code hl_variable" href="namespaceunit.html#a78d8f4bc3be7867d8171f2759251dad1">unit::Hz</a>;</div>
-<div class="line"><span class="lineno">  150</span>    <a class="code hl_typedef" href="mesh_8h.html#afd05120c4d579ec7fa4906f677781a83">Array</a> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">t_obs</a> = t * <a class="code hl_variable" href="namespaceunit.html#a4e7c438655d3f34c7c30a155ec38f250">unit::sec</a>;</div>
-<div class="line"><span class="lineno">  151</span> </div>
-<div class="line"><span class="lineno">  152</span>    FluxDict <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">flux_dict</a> = compute_specific_flux(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">t_obs</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">nu_obs</a>);</div>
-<div class="line"><span class="lineno">  153</span> </div>
-<div class="line"><span class="lineno">  154</span>    <span class="keywordflow">for</span> (<span class="keyword">auto</span> <span class="keyword">const</span>&amp; [<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">key</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">value</a>] : <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">flux_dict</a>) {</div>
-<div class="line"><span class="lineno">  155</span>        <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">flux_dict</a>[<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">key</a>] = xt::transpose(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">value</a>);</div>
-<div class="line"><span class="lineno">  156</span>    }</div>
-<div class="line"><span class="lineno">  157</span> </div>
-<div class="line"><span class="lineno">  158</span>    <span class="keywordflow">return</span> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">flux_dict</a>;</div>
-<div class="line"><span class="lineno">  159</span>}</div>
+<p class="definition">Definition at line <a class="el" href="pymodel_8cpp_source.html#l00147">147</a> of file <a class="el" href="pymodel_8cpp_source.html">pymodel.cpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  147</span>                                                                     {</div>
+<div class="line"><span class="lineno">  148</span>    <a class="code hl_typedef" href="mesh_8h.html#afd05120c4d579ec7fa4906f677781a83">Array</a> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">nu_obs</a> = nu * <a class="code hl_variable" href="namespaceunit.html#a78d8f4bc3be7867d8171f2759251dad1">unit::Hz</a>;</div>
+<div class="line"><span class="lineno">  149</span>    <a class="code hl_typedef" href="mesh_8h.html#afd05120c4d579ec7fa4906f677781a83">Array</a> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">t_obs</a> = t * <a class="code hl_variable" href="namespaceunit.html#a4e7c438655d3f34c7c30a155ec38f250">unit::sec</a>;</div>
+<div class="line"><span class="lineno">  150</span> </div>
+<div class="line"><span class="lineno">  151</span>    FluxDict <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">flux_dict</a> = compute_specific_flux(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">t_obs</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">nu_obs</a>);</div>
+<div class="line"><span class="lineno">  152</span> </div>
+<div class="line"><span class="lineno">  153</span>    <span class="keywordflow">for</span> (<span class="keyword">auto</span> <span class="keyword">const</span>&amp; [<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">key</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">value</a>] : <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">flux_dict</a>) {</div>
+<div class="line"><span class="lineno">  154</span>        <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">flux_dict</a>[<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">key</a>] = xt::transpose(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">value</a>);</div>
+<div class="line"><span class="lineno">  155</span>    }</div>
+<div class="line"><span class="lineno">  156</span> </div>
+<div class="line"><span class="lineno">  157</span>    <span class="keywordflow">return</span> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">flux_dict</a>;</div>
+<div class="line"><span class="lineno">  158</span>}</div>
 </div><!-- fragment --><div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">

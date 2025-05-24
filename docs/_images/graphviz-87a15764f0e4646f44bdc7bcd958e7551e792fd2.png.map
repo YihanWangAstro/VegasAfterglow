@@ -1,7 +1,0 @@
-<map id="%3" name="%3">
-<area shape="rect" id="node1" title="Ejecta" alt="" coords="95,101,178,149"/>
-<area shape="rect" id="node2" title="Medium" alt="" coords="203,101,303,149"/>
-<area shape="rect" id="node3" title="SimpleShockEqn&lt; Ejecta, Medium &gt;" alt="" coords="5,5,383,53"/>
-<area shape="poly" id="edge2" title="usage" alt="" coords="182,55,160,91,155,88,178,52"/>
-<area shape="poly" id="edge1" title="usage" alt="" coords="211,52,233,88,229,91,206,55"/>
-</map>

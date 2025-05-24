@@ -183,45 +183,48 @@ Public Attributes</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Column number density at the specified Lorentz factor </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="synchrotron_8cpp_source.html#l00019">19</a> of file <a class="el" href="synchrotron_8cpp_source.html">synchrotron.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   19</span>                                                          {</div>
-<div class="line"><span class="lineno">   20</span>    <span class="keywordflow">if</span> (gamma &lt; <a class="code hl_variable" href="structSynElectrons.html#a99879fd40758e9bca125100ffd799fc6">gamma_c</a>) {</div>
-<div class="line"><span class="lineno">   21</span>        <span class="keywordflow">return</span> <a class="code hl_variable" href="structSynElectrons.html#a3fe65ec66ffc31242875722beaf50608">column_num_den</a> * compute_gamma_spectrum(gamma);  <span class="comment">// Below cooling Lorentz factor: direct scaling</span></div>
-<div class="line"><span class="lineno">   22</span>    } <span class="keywordflow">else</span> {</div>
-<div class="line"><span class="lineno">   23</span>        <span class="keywordflow">return</span> <a class="code hl_variable" href="structSynElectrons.html#a3fe65ec66ffc31242875722beaf50608">column_num_den</a> * compute_gamma_spectrum(gamma) * (1 + <a class="code hl_variable" href="structSynElectrons.html#a8f6f82711ad7212348f13d3a49c2d4b5">Y_c</a>) /</div>
-<div class="line"><span class="lineno">   24</span>               (1 + <a class="code hl_function" href="structInverseComptonY.html#a9a35d3af9bd23acdde9d09d38ee116eb">InverseComptonY::compute_Y_tilt_at_gamma</a>(<a class="code hl_variable" href="structSynElectrons.html#a96402c1ba35b1a66de649f47f9a4e3b5">Ys</a>, gamma, <a class="code hl_variable" href="structSynElectrons.html#a25948b39422b587f0048fc5899c120c2">p</a>));</div>
-<div class="line"><span class="lineno">   25</span>    }</div>
-<div class="line"><span class="lineno">   26</span>}</div>
+<p class="definition">Definition at line <a class="el" href="synchrotron_8cpp_source.html#l00018">18</a> of file <a class="el" href="synchrotron_8cpp_source.html">synchrotron.cpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   18</span>                                                          {</div>
+<div class="line"><span class="lineno">   19</span>    <span class="keywordflow">if</span> (gamma &lt; <a class="code hl_variable" href="structSynElectrons.html#a99879fd40758e9bca125100ffd799fc6">gamma_c</a>) {  <span class="comment">// Below cooling Lorentz factor: direct scaling</span></div>
+<div class="line"><span class="lineno">   20</span>        <span class="keywordflow">return</span> <a class="code hl_variable" href="structSynElectrons.html#a3fe65ec66ffc31242875722beaf50608">column_num_den</a> * compute_gamma_spectrum(gamma) * <a class="code hl_function" href="utilities_8h.html#afc584c30c352192de6847b1f4b8caf0e">fast_exp2</a>(-gamma / <a class="code hl_variable" href="structSynElectrons.html#aecf574c857a1b1930faf5ae00c4a9af3">gamma_M</a>);</div>
+<div class="line"><span class="lineno">   21</span>    } <span class="keywordflow">else</span> {</div>
+<div class="line"><span class="lineno">   22</span>        <span class="keywordflow">return</span> <a class="code hl_variable" href="structSynElectrons.html#a3fe65ec66ffc31242875722beaf50608">column_num_den</a> * compute_gamma_spectrum(gamma) * <a class="code hl_function" href="utilities_8h.html#afc584c30c352192de6847b1f4b8caf0e">fast_exp2</a>(-gamma / <a class="code hl_variable" href="structSynElectrons.html#aecf574c857a1b1930faf5ae00c4a9af3">gamma_M</a>) * (1 + <a class="code hl_variable" href="structSynElectrons.html#a8f6f82711ad7212348f13d3a49c2d4b5">Y_c</a>) /</div>
+<div class="line"><span class="lineno">   23</span>               (1 + <a class="code hl_function" href="structInverseComptonY.html#a9a35d3af9bd23acdde9d09d38ee116eb">InverseComptonY::compute_Y_tilt_at_gamma</a>(<a class="code hl_variable" href="structSynElectrons.html#a96402c1ba35b1a66de649f47f9a4e3b5">Ys</a>, gamma, <a class="code hl_variable" href="structSynElectrons.html#a25948b39422b587f0048fc5899c120c2">p</a>));</div>
+<div class="line"><span class="lineno">   24</span>    }</div>
+<div class="line"><span class="lineno">   25</span>}</div>
 <div class="ttc" id="astructInverseComptonY_html_a9a35d3af9bd23acdde9d09d38ee116eb"><div class="ttname"><a href="structInverseComptonY.html#a9a35d3af9bd23acdde9d09d38ee116eb">InverseComptonY::compute_Y_tilt_at_gamma</a></div><div class="ttdeci">static Real compute_Y_tilt_at_gamma(InverseComptonY const &amp;Ys, Real gamma, Real p)</div><div class="ttdoc">Calculates the effective Y parameter at a specific Lorentz factor and spectral index.</div><div class="ttdef"><b>Definition</b> <a href="inverse-compton_8cpp_source.html#l00108">inverse-compton.cpp:108</a></div></div>
 <div class="ttc" id="astructSynElectrons_html_a25948b39422b587f0048fc5899c120c2"><div class="ttname"><a href="structSynElectrons.html#a25948b39422b587f0048fc5899c120c2">SynElectrons::p</a></div><div class="ttdeci">Real p</div><div class="ttdoc">Power-law index for the electron energy distribution.</div><div class="ttdef"><b>Definition</b> <a href="synchrotron_8h_source.html#l00030">synchrotron.h:30</a></div></div>
 <div class="ttc" id="astructSynElectrons_html_a3fe65ec66ffc31242875722beaf50608"><div class="ttname"><a href="structSynElectrons.html#a3fe65ec66ffc31242875722beaf50608">SynElectrons::column_num_den</a></div><div class="ttdeci">Real column_num_den</div><div class="ttdoc">Normalized column number density.</div><div class="ttdef"><b>Definition</b> <a href="synchrotron_8h_source.html#l00031">synchrotron.h:31</a></div></div>
 <div class="ttc" id="astructSynElectrons_html_a8f6f82711ad7212348f13d3a49c2d4b5"><div class="ttname"><a href="structSynElectrons.html#a8f6f82711ad7212348f13d3a49c2d4b5">SynElectrons::Y_c</a></div><div class="ttdeci">Real Y_c</div><div class="ttdoc">Inverse Compton Y parameter at cooling frequency.</div><div class="ttdef"><b>Definition</b> <a href="synchrotron_8h_source.html#l00032">synchrotron.h:32</a></div></div>
 <div class="ttc" id="astructSynElectrons_html_a96402c1ba35b1a66de649f47f9a4e3b5"><div class="ttname"><a href="structSynElectrons.html#a96402c1ba35b1a66de649f47f9a4e3b5">SynElectrons::Ys</a></div><div class="ttdeci">InverseComptonY Ys</div><div class="ttdoc">InverseComptonY parameters for this electron population.</div><div class="ttdef"><b>Definition</b> <a href="synchrotron_8h_source.html#l00034">synchrotron.h:34</a></div></div>
 <div class="ttc" id="astructSynElectrons_html_a99879fd40758e9bca125100ffd799fc6"><div class="ttname"><a href="structSynElectrons.html#a99879fd40758e9bca125100ffd799fc6">SynElectrons::gamma_c</a></div><div class="ttdeci">Real gamma_c</div><div class="ttdoc">Cooling electron Lorentz factor.</div><div class="ttdef"><b>Definition</b> <a href="synchrotron_8h_source.html#l00027">synchrotron.h:27</a></div></div>
+<div class="ttc" id="astructSynElectrons_html_aecf574c857a1b1930faf5ae00c4a9af3"><div class="ttname"><a href="structSynElectrons.html#aecf574c857a1b1930faf5ae00c4a9af3">SynElectrons::gamma_M</a></div><div class="ttdeci">Real gamma_M</div><div class="ttdoc">Maximum electron Lorentz factor.</div><div class="ttdef"><b>Definition</b> <a href="synchrotron_8h_source.html#l00029">synchrotron.h:29</a></div></div>
+<div class="ttc" id="autilities_8h_html_afc584c30c352192de6847b1f4b8caf0e"><div class="ttname"><a href="utilities_8h.html#afc584c30c352192de6847b1f4b8caf0e">fast_exp2</a></div><div class="ttdeci">double fast_exp2(double x)</div><div class="ttdoc">Fast approximation of 2 raised to a power.</div><div class="ttdef"><b>Definition</b> <a href="utilities_8h_source.html#l00416">utilities.h:416</a></div></div>
 </div><!-- fragment --><div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="structSynElectrons_aa9cf9a61afc9c3476b7dcbef6cfe4ec9_cgraph.png" border="0" usemap="#astructSynElectrons_aa9cf9a61afc9c3476b7dcbef6cfe4ec9_cgraph" alt=""/></div>
 <map name="astructSynElectrons_aa9cf9a61afc9c3476b7dcbef6cfe4ec9_cgraph" id="astructSynElectrons_aa9cf9a61afc9c3476b7dcbef6cfe4ec9_cgraph">
-<area shape="rect" title="Calculates the electron column number density at a specific Lorentz factor." alt="" coords="5,99,176,139"/>
-<area shape="rect" href="structInverseComptonY.html#a9a35d3af9bd23acdde9d09d38ee116eb" title="Calculates the effective Y parameter at a specific Lorentz factor and spectral index." alt="" coords="224,99,424,139"/>
-<area shape="poly" title=" " alt="" coords="177,117,210,117,210,122,177,122"/>
-<area shape="rect" href="structInverseComptonY.html#ae483ec2ba4108fbf96fb15c3e978c0b3" title="Calculates the effective Y parameter for a given Lorentz factor and spectral index." alt="" coords="472,99,672,139"/>
-<area shape="poly" title=" " alt="" coords="424,117,458,117,458,122,424,122"/>
-<area shape="rect" href="utilities_8h.html#a4520a27a10a2aef33c99ad8c679da404" title="Fast approximation of a raised to the power of b." alt="" coords="720,81,801,107"/>
-<area shape="poly" title=" " alt="" coords="672,103,706,99,707,104,673,108"/>
-<area shape="rect" href="utilities_8h.html#ae490b13fdcc1b917ecdd08c0cecf3556" title="Computes a^(4/3)" alt="" coords="728,131,793,156"/>
-<area shape="poly" title=" " alt="" coords="673,129,715,135,714,140,672,135"/>
-<area shape="rect" href="utilities_8h.html#afc584c30c352192de6847b1f4b8caf0e" title="Fast approximation of 2 raised to a power." alt="" coords="849,5,936,31"/>
-<area shape="poly" title=" " alt="" coords="783,79,856,36,859,40,785,83"/>
-<area shape="rect" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42" title="Returns the value of a single parameter." alt="" coords="984,81,1035,107"/>
-<area shape="poly" title=" " alt="" coords="802,91,970,91,970,97,802,97"/>
-<area shape="rect" href="utilities_8h.html#afe0a1b1b7509ac4df83fcc0e510f281b" title="Fast approximation of the base&#45;2 logarithm." alt="" coords="851,107,934,132"/>
-<area shape="poly" title=" " alt="" coords="802,99,838,106,837,111,801,104"/>
-<area shape="poly" title=" " alt="" coords="915,29,979,72,976,76,912,33"/>
-<area shape="poly" title=" " alt="" coords="989,82,985,73,987,64,996,57,1009,55,1025,58,1032,66,1028,70,1023,63,1009,60,998,62,992,66,991,72,994,80"/>
-<area shape="poly" title=" " alt="" coords="934,108,970,100,971,105,935,113"/>
-<area shape="poly" title=" " alt="" coords="794,147,860,152,898,150,935,142,961,130,983,114,986,118,963,135,937,147,899,155,860,157,793,152"/>
+<area shape="rect" title="Calculates the electron column number density at a specific Lorentz factor." alt="" coords="5,97,176,137"/>
+<area shape="rect" href="structInverseComptonY.html#a9a35d3af9bd23acdde9d09d38ee116eb" title="Calculates the effective Y parameter at a specific Lorentz factor and spectral index." alt="" coords="224,67,424,107"/>
+<area shape="poly" title=" " alt="" coords="176,103,210,99,211,104,177,109"/>
+<area shape="rect" href="utilities_8h.html#afc584c30c352192de6847b1f4b8caf0e" title="Fast approximation of 2 raised to a power." alt="" coords="849,132,936,157"/>
+<area shape="poly" title=" " alt="" coords="176,117,836,140,835,145,176,122"/>
+<area shape="rect" href="structInverseComptonY.html#ae483ec2ba4108fbf96fb15c3e978c0b3" title="Calculates the effective Y parameter for a given Lorentz factor and spectral index." alt="" coords="472,67,672,107"/>
+<area shape="poly" title=" " alt="" coords="424,85,458,85,458,90,424,90"/>
+<area shape="rect" href="utilities_8h.html#a4520a27a10a2aef33c99ad8c679da404" title="Fast approximation of a raised to the power of b." alt="" coords="720,79,801,104"/>
+<area shape="poly" title=" " alt="" coords="672,87,706,88,706,93,672,92"/>
+<area shape="rect" href="utilities_8h.html#ae490b13fdcc1b917ecdd08c0cecf3556" title="Computes a^(4/3)" alt="" coords="728,5,793,31"/>
+<area shape="poly" title=" " alt="" coords="626,65,714,32,716,37,628,70"/>
+<area shape="poly" title=" " alt="" coords="794,102,849,124,847,129,792,107"/>
+<area shape="rect" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42" title="Returns the value of a single parameter." alt="" coords="984,56,1035,81"/>
+<area shape="poly" title=" " alt="" coords="801,85,970,69,970,75,802,90"/>
+<area shape="rect" href="utilities_8h.html#afe0a1b1b7509ac4df83fcc0e510f281b" title="Fast approximation of the base&#45;2 logarithm." alt="" coords="851,31,934,56"/>
+<area shape="poly" title=" " alt="" coords="795,76,843,58,845,63,797,81"/>
+<area shape="poly" title=" " alt="" coords="912,130,976,87,979,91,915,134"/>
+<area shape="poly" title=" " alt="" coords="989,57,985,48,987,38,996,32,1009,29,1025,33,1032,41,1028,45,1023,37,1009,35,998,37,992,41,991,47,994,55"/>
+<area shape="poly" title=" " alt="" coords="935,50,971,58,970,63,934,55"/>
+<area shape="poly" title=" " alt="" coords="793,10,860,5,899,7,937,15,963,28,986,44,983,49,961,33,935,21,898,13,860,10,794,15"/>
 </map>
 </div>
 

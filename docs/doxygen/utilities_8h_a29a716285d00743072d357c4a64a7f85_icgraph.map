@@ -1,9 +1,19 @@
 <map id="root_bisect" name="root_bisect">
-<area shape="rect" id="Node000001" title="Finds the root of a function using the bisection method." alt="" coords="465,31,560,56"/>
-<area shape="rect" id="Node000002" href="$synchrotron_8cpp.html#a0095a83d7309c92bcf2d807436b2615c" title=" " alt="" coords="231,31,417,56"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="451,46,418,46,418,41,451,41"/>
-<area shape="rect" id="Node000003" href="$synchrotron_8cpp.html#afd4184652bfb1fac7ee55a159f618767" title="Creates and returns a new electron grid based on shock parameters." alt="" coords="5,5,183,31"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="217,34,183,30,183,25,217,29"/>
-<area shape="rect" id="Node000004" href="$synchrotron_8cpp.html#a6fb32a514d942797b3beffa16aaf467a" title="Populates an existing electron grid with values based on shock parameters." alt="" coords="5,55,183,80"/>
-<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="217,57,183,61,183,55,217,52"/>
+<area shape="rect" id="Node000001" title="Finds the root of a function using the bisection method." alt="" coords="649,31,744,56"/>
+<area shape="rect" id="Node000002" href="$synchrotron_8cpp.html#ad1107cc37702b503577dcadee93e165a" title=" " alt="" coords="417,55,599,80"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="636,54,599,58,598,53,635,48"/>
+<area shape="rect" id="Node000008" href="$synchrotron_8cpp.html#a0095a83d7309c92bcf2d807436b2615c" title=" " alt="" coords="415,5,601,31"/>
+<area shape="poly" id="edge7_Node000001_Node000008" title=" " alt="" coords="635,38,601,33,602,28,636,33"/>
+<area shape="rect" id="Node000003" href="$synchrotron_8cpp.html#a61b8afa248e61a5726a0e48983f99fdf" title="Creates and returns a new electron grid based on shock parameters." alt="" coords="189,55,367,80"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="403,70,367,70,367,65,403,65"/>
+<area shape="rect" id="Node000004" href="$synchrotron_8cpp.html#aad9e6e41fee6cbff0952e1d343b890f5" title="Populates an existing electron grid with values based on shock parameters." alt="" coords="189,5,367,31"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="435,54,338,33,339,28,436,49"/>
+<area shape="rect" id="Node000005" href="$synchrotron_8cpp.html#af56f9b4417a5f3e717102da3e81a7d37" title="Updates electron properties throughout the grid based on shock parameters and IC Y values." alt="" coords="199,104,357,129"/>
+<area shape="poly" id="edge4_Node000002_Node000005" title=" " alt="" coords="436,85,339,107,338,101,435,80"/>
+<area shape="rect" id="Node000006" href="$inverse-compton_8cpp.html#af25c21cb4c714787c8260f220a6c2ee9" title="Applies Klein&#45;Nishina cooling to electrons based on photon distribution." alt="" coords="26,79,121,104"/>
+<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="185,108,120,100,121,94,186,103"/>
+<area shape="rect" id="Node000007" href="$inverse-compton_8cpp.html#a330c8cd380f08f2ddce282201dae597b" title="Applies Thomson cooling to electrons based on photon distribution." alt="" coords="5,128,141,153"/>
+<area shape="poly" id="edge6_Node000005_Node000007" title=" " alt="" coords="186,130,142,135,141,130,185,125"/>
+<area shape="poly" id="edge8_Node000008_Node000003" title=" " alt="" coords="436,36,339,57,338,52,435,31"/>
+<area shape="poly" id="edge9_Node000008_Node000004" title=" " alt="" coords="401,21,367,21,367,15,401,15"/>
 </map>

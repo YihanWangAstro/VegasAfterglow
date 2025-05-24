@@ -1,57 +1,61 @@
 <map id="fast_pow" name="fast_pow">
-<area shape="rect" id="Node000001" title="Fast approximation of a raised to the power of b." alt="" coords="1156,417,1237,442"/>
-<area shape="rect" id="Node000002" href="$synchrotron_8cpp.html#ab09dbe28fcecfc3d846577c1c34fcca6" title=" " alt="" coords="423,72,604,97"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="1188,404,1179,367,1163,323,1139,279,1106,241,1048,200,984,167,917,140,848,121,780,106,716,97,604,87,605,82,716,91,781,101,850,115,919,135,987,162,1051,195,1110,237,1144,276,1168,321,1184,366,1193,403"/>
-<area shape="rect" id="Node000003" href="$synchrotron_8cpp.html#afd4184652bfb1fac7ee55a159f618767" title="Creates and returns a new electron grid based on shock parameters." alt="" coords="189,106,367,132"/>
-<area shape="poly" id="edge30_Node000001_Node000003" title=" " alt="" coords="1191,404,1185,355,1171,293,1146,228,1128,198,1106,172,1026,101,987,74,948,53,910,36,872,23,793,10,710,10,621,21,415,62,352,83,302,109,299,104,350,78,414,57,620,15,710,5,793,5,873,18,912,31,951,48,990,70,1029,97,1110,168,1133,195,1151,226,1177,291,1191,354,1197,403"/>
-<area shape="rect" id="Node000004" href="$synchrotron_8cpp.html#a6fb32a514d942797b3beffa16aaf467a" title="Populates an existing electron grid with values based on shock parameters." alt="" coords="189,262,367,288"/>
-<area shape="poly" id="edge31_Node000001_Node000004" title=" " alt="" coords="1153,415,1107,400,1003,381,914,371,834,369,760,369,685,369,606,364,517,351,414,326,389,314,366,302,331,290,333,285,368,297,392,309,416,321,518,346,606,359,685,364,760,364,834,364,914,366,1004,375,1109,395,1154,410"/>
-<area shape="rect" id="Node000008" href="$structInverseComptonY.html#ae483ec2ba4108fbf96fb15c3e978c0b3" title="Calculates the effective Y parameter for a given Lorentz factor and spectral index." alt="" coords="908,251,1108,291"/>
-<area shape="poly" id="edge7_Node000001_Node000008" title=" " alt="" coords="1176,408,1145,371,1106,333,1047,293,1050,289,1110,329,1149,367,1180,404"/>
-<area shape="rect" id="Node000014" href="$structInverseComptonY.html#ab69f7b0d11f611834e1b7c13e30de1ef" title="Calculates the effective Y parameter for a given frequency and spectral index." alt="" coords="908,438,1108,478"/>
-<area shape="poly" id="edge22_Node000001_Node000014" title=" " alt="" coords="1143,440,1108,446,1108,440,1142,435"/>
-<area shape="rect" id="Node000018" href="$classPowerLawJet.html#a6f2b4379fe8d70409ba7ceef5804aca4" title="Energy per solid angle as a function of phi and theta, with power&#45;law falloff." alt="" coords="933,502,1083,528"/>
-<area shape="poly" id="edge26_Node000001_Node000018" title=" " alt="" coords="1171,453,1142,474,1109,492,1073,505,1072,500,1107,487,1140,469,1168,449"/>
-<area shape="rect" id="Node000019" href="$inverse-compton_8cpp.html#ad89f660f1954e9c12551a19840d656bb" title=" " alt="" coords="725,388,795,413"/>
-<area shape="poly" id="edge27_Node000001_Node000019" title=" " alt="" coords="1142,429,796,405,796,400,1142,424"/>
-<area shape="rect" id="Node000020" href="$classPowerLawJet.html#a476eed410b28500b7209768b81434502" title="Initial Lorentz factor as a function of phi and theta, with power&#45;law falloff." alt="" coords="921,552,1095,577"/>
-<area shape="poly" id="edge29_Node000001_Node000020" title=" " alt="" coords="1185,456,1154,501,1134,524,1109,543,1086,554,1084,549,1107,538,1130,520,1150,497,1180,453"/>
-<area shape="rect" id="Node000021" href="$jet_8h.html#a6fac8621479aea05abf6fef54a4df256" title="Creates a Lorentz factor distribution using the Liang &amp; Ghirlanda (2010) prescription." alt="" coords="932,601,1084,626"/>
-<area shape="poly" id="edge32_Node000001_Node000021" title=" " alt="" coords="1191,456,1180,488,1163,524,1140,561,1110,592,1085,605,1083,600,1106,588,1136,558,1159,522,1175,486,1186,455"/>
-<area shape="rect" id="Node000022" href="$structSynPhotons.html#a631859af4fe11f0312e78f2fbaa39e80" title="Updates cached calculation constants used for efficiently computing synchrotron spectra." alt="" coords="933,651,1083,691"/>
-<area shape="poly" id="edge33_Node000001_Node000022" title=" " alt="" coords="1194,457,1185,497,1170,547,1145,597,1129,620,1110,641,1085,657,1082,653,1106,637,1125,617,1140,594,1165,545,1180,496,1189,456"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="414,102,365,109,364,104,413,97"/>
-<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="481,107,448,132,417,162,402,186,395,208,387,230,368,252,347,265,344,260,365,248,383,227,390,207,397,184,413,159,445,127,478,103"/>
-<area shape="rect" id="Node000005" href="$synchrotron_8cpp.html#af56f9b4417a5f3e717102da3e81a7d37" title="Updates electron properties throughout the grid based on shock parameters and IC Y values." alt="" coords="199,213,357,238"/>
-<area shape="poly" id="edge4_Node000002_Node000005" title=" " alt="" coords="450,104,416,119,379,142,345,168,294,215,290,211,341,164,376,138,413,114,448,99"/>
-<area shape="rect" id="Node000006" href="$inverse-compton_8cpp.html#af25c21cb4c714787c8260f220a6c2ee9" title="Applies Klein&#45;Nishina cooling to electrons based on photon distribution." alt="" coords="26,226,121,252"/>
-<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="186,234,121,239,121,233,185,229"/>
-<area shape="rect" id="Node000007" href="$inverse-compton_8cpp.html#a330c8cd380f08f2ddce282201dae597b" title="Applies Thomson cooling to electrons based on photon distribution." alt="" coords="5,288,141,313"/>
-<area shape="poly" id="edge6_Node000005_Node000007" title=" " alt="" coords="213,245,190,252,102,290,100,285,188,247,212,240"/>
-<area shape="rect" id="Node000009" href="$structInverseComptonY.html#a9a35d3af9bd23acdde9d09d38ee116eb" title="Calculates the effective Y parameter at a specific Lorentz factor and spectral index." alt="" coords="660,230,860,270"/>
-<area shape="poly" id="edge8_Node000008_Node000009" title=" " alt="" coords="894,264,860,261,860,256,895,259"/>
-<area shape="poly" id="edge21_Node000009_Node000005" title=" " alt="" coords="723,224,672,190,642,174,611,163,557,150,514,147,470,152,415,163,382,173,351,187,300,215,297,211,348,182,380,168,414,158,469,146,514,142,558,145,613,158,644,169,675,185,726,219"/>
-<area shape="rect" id="Node000010" href="$structSynElectrons.html#aa9cf9a61afc9c3476b7dcbef6cfe4ec9" title="Calculates the electron column number density at a specific Lorentz factor." alt="" coords="428,172,599,212"/>
-<area shape="poly" id="edge9_Node000009_Node000010" title=" " alt="" coords="659,229,598,215,599,210,661,224"/>
-<area shape="rect" id="Node000011" href="$synchrotron_8cpp.html#a52e34d49dd7497d65ea5261e80d615d4" title="Calculates cooling Lorentz factor based on comoving time, magnetic field, and IC parameters." alt="" coords="438,286,589,312"/>
-<area shape="poly" id="edge10_Node000009_Node000011" title=" " alt="" coords="647,275,578,289,577,284,646,270"/>
-<area shape="rect" id="Node000013" href="$synchrotron_8cpp.html#a1c5ae0a77c927eb60684c180ba559567" title=" " alt="" coords="421,237,606,262"/>
-<area shape="poly" id="edge17_Node000009_Node000013" title=" " alt="" coords="646,252,606,252,606,247,646,247"/>
-<area shape="poly" id="edge14_Node000011_Node000003" title=" " alt="" coords="425,283,413,276,395,259,386,241,378,223,365,202,328,164,293,134,297,130,331,160,369,199,383,220,391,239,399,255,416,272,428,279"/>
-<area shape="poly" id="edge15_Node000011_Node000004" title=" " alt="" coords="424,293,366,287,367,281,425,287"/>
-<area shape="poly" id="edge16_Node000011_Node000005" title=" " alt="" coords="441,285,414,276,366,252,331,241,333,236,368,247,416,271,442,280"/>
-<area shape="rect" id="Node000012" href="$inverse-compton_8cpp.html#acd9474d0630c4e995f6902006749d116" title=" " alt="" coords="197,312,359,337"/>
-<area shape="poly" id="edge11_Node000011_Node000012" title=" " alt="" coords="424,311,359,318,359,313,424,306"/>
-<area shape="poly" id="edge12_Node000012_Node000006" title=" " alt="" coords="213,310,188,302,97,254,100,250,190,297,214,305"/>
-<area shape="poly" id="edge13_Node000012_Node000007" title=" " alt="" coords="183,316,141,311,142,306,184,311"/>
-<area shape="poly" id="edge18_Node000013_Node000003" title=" " alt="" coords="434,235,413,227,376,205,341,179,290,134,294,130,345,175,379,200,416,222,436,230"/>
-<area shape="poly" id="edge19_Node000013_Node000004" title=" " alt="" coords="407,264,367,268,366,263,407,259"/>
-<area shape="poly" id="edge20_Node000013_Node000005" title=" " alt="" coords="407,242,357,236,357,231,407,236"/>
-<area shape="rect" id="Node000015" href="$structInverseComptonY.html#a59226978ce361a575783edde4335c1df" title="Calculates the effective Y parameter at a specific frequency and spectral index." alt="" coords="660,438,860,478"/>
-<area shape="poly" id="edge23_Node000014_Node000015" title=" " alt="" coords="895,460,860,460,860,455,895,455"/>
-<area shape="rect" id="Node000016" href="$structSynPhotons.html#a380508572a0fc6f50ef8fd58420492ba" title="Calculates the synchrotron intensity at a given frequency." alt="" coords="415,441,612,466"/>
-<area shape="poly" id="edge24_Node000015_Node000016" title=" " alt="" coords="646,459,612,458,612,453,646,453"/>
-<area shape="rect" id="Node000017" href="$structSynPhotons.html#ab6aec9da3210a04c044f4596f82ee21a" title="Calculates the base&#45;2 logarithm of synchrotron intensity at a given frequency." alt="" coords="432,491,595,531"/>
-<area shape="poly" id="edge25_Node000015_Node000017" title=" " alt="" coords="654,483,595,496,594,491,653,478"/>
-<area shape="poly" id="edge28_Node000019_Node000012" title=" " alt="" coords="711,402,577,394,495,385,414,371,359,356,311,340,312,335,361,351,415,366,496,379,577,388,711,397"/>
+<area shape="rect" id="Node000001" title="Fast approximation of a raised to the power of b." alt="" coords="1171,265,1252,291"/>
+<area shape="rect" id="Node000002" href="$shock_8h.html#ac21551f9d4f4eb003348a1b9b3a35567" title="Computes the radiative efficiency based on the radiative constant, comoving time, Lorentz factor,..." alt="" coords="908,20,1123,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="1204,253,1196,212,1180,162,1156,110,1140,87,1121,67,1089,48,1092,43,1124,63,1144,84,1161,108,1185,160,1201,210,1209,252"/>
+<area shape="rect" id="Node000003" href="$synchrotron_8cpp.html#ad1107cc37702b503577dcadee93e165a" title=" " alt="" coords="423,55,604,80"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="1197,254,1168,205,1146,181,1121,162,1059,131,1003,114,951,108,901,108,793,114,731,113,660,105,566,83,567,77,660,99,731,108,793,109,901,103,952,102,1004,109,1061,126,1124,157,1150,177,1172,202,1201,252"/>
+<area shape="rect" id="Node000009" href="$structInverseComptonY.html#ae483ec2ba4108fbf96fb15c3e978c0b3" title="Calculates the effective Y parameter for a given Lorentz factor and spectral index." alt="" coords="915,171,1115,211"/>
+<area shape="poly" id="edge8_Node000001_Node000009" title=" " alt="" coords="1176,261,1122,232,1076,214,1078,209,1124,228,1178,256"/>
+<area shape="rect" id="Node000015" href="$structInverseComptonY.html#ab69f7b0d11f611834e1b7c13e30de1ef" title="Calculates the effective Y parameter for a given frequency and spectral index." alt="" coords="915,286,1115,326"/>
+<area shape="poly" id="edge23_Node000001_Node000015" title=" " alt="" coords="1157,288,1116,294,1115,289,1157,283"/>
+<area shape="rect" id="Node000019" href="$synchrotron_8cpp.html#a24565975b0dc6b5677b304bd8bc95a6a" title=" " alt="" coords="436,5,591,31"/>
+<area shape="poly" id="edge27_Node000001_Node000019" title=" " alt="" coords="1201,253,1191,221,1175,183,1152,146,1121,116,1093,105,1043,92,898,68,591,29,591,24,899,62,1044,87,1095,100,1124,112,1156,143,1180,181,1196,219,1207,251"/>
+<area shape="rect" id="Node000020" href="$classPowerLawJet.html#a6f2b4379fe8d70409ba7ceef5804aca4" title="Energy per solid angle as a function of phi and theta, with power&#45;law falloff." alt="" coords="940,351,1091,376"/>
+<area shape="poly" id="edge30_Node000001_Node000020" title=" " alt="" coords="1186,301,1157,322,1124,340,1087,353,1085,348,1122,336,1154,317,1183,297"/>
+<area shape="rect" id="Node000021" href="$inverse-compton_8cpp.html#ad89f660f1954e9c12551a19840d656bb" title=" " alt="" coords="725,264,795,289"/>
+<area shape="poly" id="edge31_Node000001_Node000021" title=" " alt="" coords="1157,278,1123,277,938,276,796,278,796,273,938,271,1123,271,1157,273"/>
+<area shape="rect" id="Node000022" href="$classPowerLawJet.html#a476eed410b28500b7209768b81434502" title="Initial Lorentz factor as a function of phi and theta, with power&#45;law falloff." alt="" coords="929,400,1102,425"/>
+<area shape="poly" id="edge33_Node000001_Node000022" title=" " alt="" coords="1199,304,1169,349,1148,372,1124,391,1101,402,1098,397,1121,386,1145,368,1165,346,1195,301"/>
+<area shape="rect" id="Node000023" href="$jet_8h.html#a6fac8621479aea05abf6fef54a4df256" title="Creates a Lorentz factor distribution using the Liang &amp; Ghirlanda (2010) prescription." alt="" coords="939,449,1091,475"/>
+<area shape="poly" id="edge34_Node000001_Node000023" title=" " alt="" coords="1206,305,1195,336,1178,373,1155,409,1124,440,1093,456,1090,451,1121,436,1151,406,1173,370,1190,334,1201,303"/>
+<area shape="rect" id="Node000024" href="$structSynPhotons.html#a631859af4fe11f0312e78f2fbaa39e80" title="Updates cached calculation constants used for efficiently computing synchrotron spectra." alt="" coords="940,499,1091,539"/>
+<area shape="poly" id="edge35_Node000001_Node000024" title=" " alt="" coords="1209,305,1200,346,1185,395,1160,446,1144,469,1124,489,1092,509,1089,504,1121,485,1140,465,1155,443,1180,393,1195,344,1204,304"/>
+<area shape="rect" id="Node000004" href="$synchrotron_8cpp.html#a61b8afa248e61a5726a0e48983f99fdf" title="Creates and returns a new electron grid based on shock parameters." alt="" coords="189,55,367,80"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="408,70,367,70,367,65,408,65"/>
+<area shape="rect" id="Node000005" href="$synchrotron_8cpp.html#aad9e6e41fee6cbff0952e1d343b890f5" title="Populates an existing electron grid with values based on shock parameters." alt="" coords="189,104,367,129"/>
+<area shape="poly" id="edge4_Node000003_Node000005" title=" " alt="" coords="439,85,340,107,339,101,438,80"/>
+<area shape="rect" id="Node000006" href="$synchrotron_8cpp.html#af56f9b4417a5f3e717102da3e81a7d37" title="Updates electron properties throughout the grid based on shock parameters and IC Y values." alt="" coords="199,153,357,179"/>
+<area shape="poly" id="edge5_Node000003_Node000006" title=" " alt="" coords="429,87,416,94,402,105,393,117,383,130,368,143,340,156,338,151,365,138,380,127,388,114,398,101,413,89,427,82"/>
+<area shape="rect" id="Node000007" href="$inverse-compton_8cpp.html#af25c21cb4c714787c8260f220a6c2ee9" title="Applies Klein&#45;Nishina cooling to electrons based on photon distribution." alt="" coords="26,153,121,179"/>
+<area shape="poly" id="edge6_Node000006_Node000007" title=" " alt="" coords="185,169,121,169,121,163,185,163"/>
+<area shape="rect" id="Node000008" href="$inverse-compton_8cpp.html#a330c8cd380f08f2ddce282201dae597b" title="Applies Thomson cooling to electrons based on photon distribution." alt="" coords="5,203,141,228"/>
+<area shape="poly" id="edge7_Node000006_Node000008" title=" " alt="" coords="212,184,127,205,126,200,211,179"/>
+<area shape="rect" id="Node000010" href="$structInverseComptonY.html#a9a35d3af9bd23acdde9d09d38ee116eb" title="Calculates the effective Y parameter at a specific Lorentz factor and spectral index." alt="" coords="660,171,860,211"/>
+<area shape="poly" id="edge9_Node000009_Node000010" title=" " alt="" coords="902,194,860,194,860,189,902,189"/>
+<area shape="poly" id="edge22_Node000010_Node000006" title=" " alt="" coords="646,199,534,200,414,194,334,181,335,176,415,189,534,195,646,194"/>
+<area shape="rect" id="Node000011" href="$structSynElectrons.html#aa9cf9a61afc9c3476b7dcbef6cfe4ec9" title="Calculates the electron column number density at a specific Lorentz factor." alt="" coords="428,254,599,294"/>
+<area shape="poly" id="edge10_Node000010_Node000011" title=" " alt="" coords="688,218,575,256,573,251,686,213"/>
+<area shape="rect" id="Node000012" href="$synchrotron_8cpp.html#a2e3e0590c05be72f722acd3b077abd16" title="Calculates cooling Lorentz factor based on comoving time, magnetic field, and IC parameters." alt="" coords="438,153,589,179"/>
+<area shape="poly" id="edge11_Node000010_Node000012" title=" " alt="" coords="646,182,589,176,589,171,647,177"/>
+<area shape="rect" id="Node000014" href="$synchrotron_8cpp.html#a1c5ae0a77c927eb60684c180ba559567" title=" " alt="" coords="421,104,606,129"/>
+<area shape="poly" id="edge18_Node000010_Node000014" title=" " alt="" coords="691,169,611,143,569,132,571,127,613,138,693,164"/>
+<area shape="poly" id="edge15_Node000012_Node000004" title=" " alt="" coords="430,151,413,143,398,130,388,118,380,105,365,94,341,82,343,78,368,89,384,102,393,115,402,127,416,138,432,146"/>
+<area shape="poly" id="edge16_Node000012_Node000005" title=" " alt="" coords="438,153,339,132,340,127,439,148"/>
+<area shape="poly" id="edge17_Node000012_Node000006" title=" " alt="" coords="424,169,357,169,357,163,424,163"/>
+<area shape="rect" id="Node000013" href="$inverse-compton_8cpp.html#acd9474d0630c4e995f6902006749d116" title=" " alt="" coords="197,203,359,228"/>
+<area shape="poly" id="edge12_Node000012_Node000013" title=" " alt="" coords="439,184,340,205,339,200,438,179"/>
+<area shape="poly" id="edge13_Node000013_Node000007" title=" " alt="" coords="211,202,120,180,122,175,212,197"/>
+<area shape="poly" id="edge14_Node000013_Node000008" title=" " alt="" coords="183,218,142,218,142,213,183,213"/>
+<area shape="poly" id="edge19_Node000014_Node000004" title=" " alt="" coords="438,104,339,83,340,77,439,99"/>
+<area shape="poly" id="edge20_Node000014_Node000005" title=" " alt="" coords="407,119,367,119,367,114,407,114"/>
+<area shape="poly" id="edge21_Node000014_Node000006" title=" " alt="" coords="439,135,340,156,339,151,438,130"/>
+<area shape="rect" id="Node000016" href="$structInverseComptonY.html#a59226978ce361a575783edde4335c1df" title="Calculates the effective Y parameter at a specific frequency and spectral index." alt="" coords="660,369,860,409"/>
+<area shape="poly" id="edge24_Node000015_Node000016" title=" " alt="" coords="937,333,909,342,821,371,819,366,907,337,936,328"/>
+<area shape="rect" id="Node000017" href="$structSynPhotons.html#a380508572a0fc6f50ef8fd58420492ba" title="Calculates the synchrotron intensity at a given frequency." alt="" coords="415,433,612,459"/>
+<area shape="poly" id="edge25_Node000016_Node000017" title=" " alt="" coords="661,414,569,436,568,431,659,409"/>
+<area shape="rect" id="Node000018" href="$structSynPhotons.html#ab6aec9da3210a04c044f4596f82ee21a" title="Calculates the base&#45;2 logarithm of synchrotron intensity at a given frequency." alt="" coords="432,369,595,409"/>
+<area shape="poly" id="edge26_Node000016_Node000018" title=" " alt="" coords="646,391,595,391,595,386,646,386"/>
+<area shape="poly" id="edge28_Node000019_Node000004" title=" " alt="" coords="439,36,340,57,339,52,438,31"/>
+<area shape="poly" id="edge29_Node000019_Node000005" title=" " alt="" coords="429,38,416,44,402,56,393,68,383,81,368,94,340,106,338,101,365,89,380,77,388,65,398,52,413,40,427,33"/>
+<area shape="poly" id="edge32_Node000021_Node000013" title=" " alt="" coords="712,294,652,309,576,320,495,322,454,318,414,309,376,293,342,271,291,230,294,226,345,267,379,288,415,303,455,312,495,317,576,315,651,304,711,289"/>
 </map>

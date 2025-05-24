@@ -1,0 +1,9 @@
+<map id="%3" name="%3">
+<area shape="rect" id="node1" title="Ejecta" alt="" coords="43,101,126,149"/>
+<area shape="rect" id="node2" title="ForwardShockEqn&lt; Ejecta, Medium &gt;" alt="" coords="5,5,396,53"/>
+<area shape="poly" id="edge2" title="usage" alt="" coords="174,56,125,95,122,91,170,52"/>
+<area shape="rect" id="node3" title="Medium" alt="" coords="151,101,251,149"/>
+<area shape="poly" id="edge1" title="usage" alt="" coords="203,54,203,88,198,88,198,54"/>
+<area shape="rect" id="node4" title="RadParams" alt="" coords="274,101,405,149"/>
+<area shape="poly" id="edge3" title="usage" alt="" coords="236,51,295,91,292,96,233,56"/>
+</map>

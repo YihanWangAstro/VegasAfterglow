@@ -1,10 +1,10 @@
 <map id="compute_syn_gamma" name="compute_syn_gamma">
 <area shape="rect" id="Node000001" title=" " alt="" coords="644,55,811,80"/>
-<area shape="rect" id="Node000002" href="$synchrotron_8cpp.html#ab09dbe28fcecfc3d846577c1c34fcca6" title=" " alt="" coords="415,55,596,80"/>
+<area shape="rect" id="Node000002" href="$synchrotron_8cpp.html#ad1107cc37702b503577dcadee93e165a" title=" " alt="" coords="415,55,596,80"/>
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="630,70,596,70,596,65,630,65"/>
-<area shape="rect" id="Node000003" href="$synchrotron_8cpp.html#afd4184652bfb1fac7ee55a159f618767" title="Creates and returns a new electron grid based on shock parameters." alt="" coords="189,5,367,31"/>
+<area shape="rect" id="Node000003" href="$synchrotron_8cpp.html#a61b8afa248e61a5726a0e48983f99fdf" title="Creates and returns a new electron grid based on shock parameters." alt="" coords="189,5,367,31"/>
 <area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="432,54,337,33,338,28,433,49"/>
-<area shape="rect" id="Node000004" href="$synchrotron_8cpp.html#a6fb32a514d942797b3beffa16aaf467a" title="Populates an existing electron grid with values based on shock parameters." alt="" coords="189,55,367,80"/>
+<area shape="rect" id="Node000004" href="$synchrotron_8cpp.html#aad9e6e41fee6cbff0952e1d343b890f5" title="Populates an existing electron grid with values based on shock parameters." alt="" coords="189,55,367,80"/>
 <area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="401,70,367,70,367,65,401,65"/>
 <area shape="rect" id="Node000005" href="$synchrotron_8cpp.html#af56f9b4417a5f3e717102da3e81a7d37" title="Updates electron properties throughout the grid based on shock parameters and IC Y values." alt="" coords="199,104,357,129"/>
 <area shape="poly" id="edge4_Node000002_Node000005" title=" " alt="" coords="433,86,338,107,337,101,432,80"/>

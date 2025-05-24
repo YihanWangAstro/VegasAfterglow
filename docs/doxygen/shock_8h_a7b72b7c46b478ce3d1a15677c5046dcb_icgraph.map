@@ -1,5 +1,5 @@
 <map id="compute_rel_Gamma" name="compute_rel_Gamma">
 <area shape="rect" id="Node000001" title="Computes the relative Lorentz factor between two frames with given Lorentz factors." alt="" coords="192,5,355,31"/>
-<area shape="rect" id="Node000002" href="$shock_8h.html#a0322692389b6133782039ae39dd13b55" title="Saves the shock state at a given grid point (i,j,k)." alt="" coords="5,5,144,31"/>
+<area shape="rect" id="Node000002" href="$shock_8h.html#a0dc6778e1b8dd591df9f98a4d7a6d26f" title="Saves the shock state at a given grid point (i,j,k)." alt="" coords="5,5,144,31"/>
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="178,21,145,21,145,15,178,15"/>
 </map>

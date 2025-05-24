@@ -1,14 +1,14 @@
 <map id="InverseComptonY::compute_Y_Thompson" name="InverseComptonY::compute_Y_Thompson">
 <area shape="rect" id="Node000001" title="Returns the Thomson Y parameter from the provided InverseComptonY object." alt="" coords="648,73,848,113"/>
-<area shape="rect" id="Node000002" href="$synchrotron_8cpp.html#a52e34d49dd7497d65ea5261e80d615d4" title="Calculates cooling Lorentz factor based on comoving time, magnetic field, and IC parameters." alt="" coords="432,55,583,80"/>
+<area shape="rect" id="Node000002" href="$synchrotron_8cpp.html#a2e3e0590c05be72f722acd3b077abd16" title="Calculates cooling Lorentz factor based on comoving time, magnetic field, and IC parameters." alt="" coords="432,55,583,80"/>
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="634,83,583,78,583,73,635,78"/>
 <area shape="rect" id="Node000009" href="$synchrotron_8cpp.html#a1c5ae0a77c927eb60684c180ba559567" title=" " alt="" coords="415,104,600,129"/>
 <area shape="poly" id="edge10_Node000001_Node000009" title=" " alt="" coords="635,107,601,110,600,105,634,101"/>
 <area shape="rect" id="Node000003" href="$inverse-compton_8cpp.html#acd9474d0630c4e995f6902006749d116" title=" " alt="" coords="197,5,359,31"/>
 <area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="434,54,337,33,338,28,435,49"/>
-<area shape="rect" id="Node000006" href="$synchrotron_8cpp.html#afd4184652bfb1fac7ee55a159f618767" title="Creates and returns a new electron grid based on shock parameters." alt="" coords="189,104,367,129"/>
+<area shape="rect" id="Node000006" href="$synchrotron_8cpp.html#a61b8afa248e61a5726a0e48983f99fdf" title="Creates and returns a new electron grid based on shock parameters." alt="" coords="189,104,367,129"/>
 <area shape="poly" id="edge5_Node000002_Node000006" title=" " alt="" coords="435,86,338,107,337,101,434,80"/>
-<area shape="rect" id="Node000007" href="$synchrotron_8cpp.html#a6fb32a514d942797b3beffa16aaf467a" title="Populates an existing electron grid with values based on shock parameters." alt="" coords="189,153,367,179"/>
+<area shape="rect" id="Node000007" href="$synchrotron_8cpp.html#aad9e6e41fee6cbff0952e1d343b890f5" title="Populates an existing electron grid with values based on shock parameters." alt="" coords="189,153,367,179"/>
 <area shape="poly" id="edge6_Node000002_Node000007" title=" " alt="" coords="431,87,416,95,402,107,393,119,384,132,368,144,343,156,341,151,365,140,380,128,389,116,398,103,413,90,429,83"/>
 <area shape="rect" id="Node000008" href="$synchrotron_8cpp.html#af56f9b4417a5f3e717102da3e81a7d37" title="Updates electron properties throughout the grid based on shock parameters and IC Y values." alt="" coords="199,55,357,80"/>
 <area shape="poly" id="edge7_Node000002_Node000008" title=" " alt="" coords="418,70,357,70,357,65,418,65"/>
