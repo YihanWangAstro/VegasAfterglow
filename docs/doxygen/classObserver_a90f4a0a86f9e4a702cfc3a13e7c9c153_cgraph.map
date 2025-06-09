@@ -1,8 +1,9 @@
 <map id="Observer::update_required" name="Observer::update_required">
-<area shape="rect" id="Node000001" title="Updates the required grid points for observation." alt="" coords="5,43,200,68"/>
+<area shape="rect" id="Node000001" title="Updates the required grid points for observation." alt="" coords="5,31,200,56"/>
 <area shape="rect" id="Node000002" href="$observer_8h.html#aa53249b087b9b9d83f4c06e808deeed9" title="Helper function that advances an iterator through an array until the value exceeds the target." alt="" coords="248,5,333,31"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="167,40,234,26,235,32,168,45"/>
-<area shape="rect" id="Node000003" href="$utilities_8h.html#ab8e81118f023df135835db8cce4f5f42" title="Returns the value of a single parameter." alt="" coords="265,79,316,104"/>
-<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="170,65,252,81,251,87,169,71"/>
-<area shape="poly" id="edge3_Node000003_Node000003" title=" " alt="" coords="263,83,254,72,256,62,268,55,291,52,320,57,327,63,328,70,323,71,322,66,317,62,291,57,270,60,260,65,259,71,267,79"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="197,28,234,23,235,28,198,33"/>
+<area shape="rect" id="Node000003" href="$utilities_8h.html#ab8e81118f023df135835db8cce4f5f42" title="Returns the value of a single parameter." alt="" coords="381,31,432,56"/>
+<area shape="poly" id="edge4_Node000001_Node000003" title=" " alt="" coords="200,41,367,41,367,46,200,46"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="334,25,368,32,367,38,333,30"/>
+<area shape="poly" id="edge3_Node000003_Node000003" title=" " alt="" coords="387,32,383,22,385,13,393,6,407,4,423,7,430,16,426,19,420,12,407,9,395,11,389,16,388,22,391,29"/>
 </map>

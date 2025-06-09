@@ -4,6 +4,7 @@ var classObserver =
     [ "flux", "classObserver.html#a9fc133aa2f06b425634470424da9daa3", null ],
     [ "observe", "classObserver.html#a7e6b3154ceb89b3ff90758b874c2016d", null ],
     [ "observe_at", "classObserver.html#a20935ae9f08821dd146a71d1c6a3175d", null ],
+    [ "point_specific_flux", "classObserver.html#a7b484d41004528905788d3d31c4f2d88", null ],
     [ "specific_flux", "classObserver.html#a63679ba1972c386be330f8b51397b9a4", null ],
     [ "specific_flux", "classObserver.html#a781d46ba549ae9a7ec4e3049a735586f", null ],
     [ "spectra", "classObserver.html#ac9ed4fb8ae8b336286c176423401ba30", null ],

@@ -1,9 +1,9 @@
 <map id="point_loglog_interp" name="point_loglog_interp">
-<area shape="rect" id="Node000001" title="Point&#45;wise logarithmic interpolation between two points." alt="" coords="455,31,601,56"/>
-<area shape="rect" id="Node000002" href="$utilities_8cpp.html#ad3bc8b592ec28b18768172f7a21bd8c2" title="Log&#45;log interpolation for equally spaced x&#45;values in log space." alt="" coords="232,5,407,31"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="441,35,407,31,407,26,441,30"/>
-<area shape="rect" id="Node000004" href="$utilities_8cpp.html#a655bf7e9ee550858e65af14c66fb4aec" title="Log&#45;log interpolation (both x and y are in log space)" alt="" coords="266,55,373,80"/>
-<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="441,56,373,64,373,59,441,51"/>
-<area shape="rect" id="Node000003" href="$structICPhoton.html#af441f21198c8402e8f95be56807f8823" title="Returns the photon intensity at frequency nu." alt="" coords="5,5,184,31"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="218,21,184,21,184,15,218,15"/>
+<area shape="rect" id="Node000001" title="Point&#45;wise logarithmic interpolation between two points." alt="" coords="459,31,605,56"/>
+<area shape="rect" id="Node000002" href="$utilities_8cpp.html#ad3bc8b592ec28b18768172f7a21bd8c2" title="Log&#45;log interpolation for equally spaced x&#45;values in log space." alt="" coords="236,5,411,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="445,35,411,31,411,26,445,30"/>
+<area shape="rect" id="Node000004" href="$utilities_8cpp.html#a655bf7e9ee550858e65af14c66fb4aec" title="Log&#45;log interpolation (both x and y are in log space)" alt="" coords="270,55,377,80"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="445,56,377,64,377,59,445,51"/>
+<area shape="rect" id="Node000003" href="$structICPhoton.html#a563c2743d04a8fbf9fc16b865235d60b" title="Returns the photon specific power at frequency nu." alt="" coords="5,5,188,31"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="222,21,188,21,188,15,222,15"/>
 </map>

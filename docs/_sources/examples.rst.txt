@@ -39,7 +39,7 @@ Setting up a simple afterglow model
     bands = np.array([1e9, 1e14, 1e17])  
 
     # Calculate the afterglow emission at each time and frequency
-    results = model.specific_flux(times, bands)
+    results = model.specific_flux_matrix(times, bands)
 
     # Visualize the multi-wavelength light curves
     plt.figure(figsize=(4.8, 3.6),dpi=200)
@@ -61,7 +61,7 @@ Setting up a simple afterglow model
     epochs = np.array([1e2, 1e3, 1e4, 1e5 ,1e6, 1e7, 1e8])
 
     # Calculate spectra at each epoch
-    results = model.spectra(frequencies, epochs)
+    results = model.specific_flux_matrix(epochs, frequencies)
 
     # Plot broadband spectra at each epoch
     plt.figure(figsize=(4.8, 3.6),dpi=200)
@@ -70,7 +70,7 @@ Setting up a simple afterglow model
     for i, t in enumerate(epochs):
         exp = int(np.floor(np.log10(t)))
         base = t / 10**exp
-        plt.loglog(frequencies, results['syn'][i,:], color=colors[i], label=fr'${base:.1f} \times 10^{{{exp}}}$ s')
+        plt.loglog(frequencies, results['syn'][:,i], color=colors[i], label=fr'${base:.1f} \times 10^{{{exp}}}$ s')
 
     # Add vertical lines marking the bands from the light curve plot
     for i, band in enumerate(bands):

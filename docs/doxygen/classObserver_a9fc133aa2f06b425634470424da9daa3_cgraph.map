@@ -1,9 +1,13 @@
 <map id="Observer::flux" name="Observer::flux">
-<area shape="rect" id="Node000001" title="Computes the integrated flux over a frequency band." alt="" coords="5,43,119,68"/>
-<area shape="poly" id="edge2_Node000001_Node000001" title=" " alt="" coords="30,44,24,34,27,24,40,18,62,16,88,20,99,28,96,32,86,24,62,21,42,23,31,28,29,34,35,41"/>
+<area shape="rect" id="Node000001" title="Computes the integrated flux over a frequency band." alt="" coords="5,56,119,81"/>
+<area shape="poly" id="edge2_Node000001_Node000001" title=" " alt="" coords="30,57,24,48,27,38,40,32,62,29,88,33,99,42,96,46,86,38,62,35,42,37,31,41,29,47,35,54"/>
 <area shape="rect" id="Node000002" href="$mesh_8h.html#aba66986baad5475a202c20a92bda036e" title="Converts boundary values to center values using geometric mean (logarithmic interpolation)" alt="" coords="167,5,345,31"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="118,42,176,31,177,36,119,47"/>
-<area shape="rect" id="Node000003" href="$classObserver.html#a781d46ba549ae9a7ec4e3049a735586f" title="Computes the specific flux at a single observed frequency." alt="" coords="171,79,341,104"/>
-<area shape="poly" id="edge3_Node000001_Node000003" title=" " alt="" coords="119,63,174,74,173,79,118,68"/>
-<area shape="poly" id="edge4_Node000003_Node000003" title=" " alt="" coords="224,80,218,70,221,60,234,54,256,52,282,56,293,64,290,68,280,60,256,57,236,59,225,64,223,70,229,77"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="111,53,193,32,194,37,112,58"/>
+<area shape="rect" id="Node000003" href="$utilities_8h.html#ab8e81118f023df135835db8cce4f5f42" title="Returns the value of a single parameter." alt="" coords="393,93,444,119"/>
+<area shape="poly" id="edge3_Node000001_Node000003" title=" " alt="" coords="119,70,346,91,380,97,379,102,345,97,119,75"/>
+<area shape="rect" id="Node000004" href="$classObserver.html#a781d46ba549ae9a7ec4e3049a735586f" title="Computes the specific flux at a single observed frequency." alt="" coords="171,131,341,156"/>
+<area shape="poly" id="edge5_Node000001_Node000004" title=" " alt="" coords="97,79,211,123,209,128,95,84"/>
+<area shape="poly" id="edge4_Node000003_Node000003" title=" " alt="" coords="391,95,386,85,389,75,400,69,419,67,441,70,451,79,447,83,439,75,419,72,402,74,393,79,391,84,396,92"/>
+<area shape="poly" id="edge6_Node000004_Node000003" title=" " alt="" coords="311,128,379,112,380,117,313,133"/>
+<area shape="poly" id="edge7_Node000004_Node000004" title=" " alt="" coords="229,132,223,122,226,113,237,106,256,104,278,107,288,116,284,120,276,112,256,109,239,111,230,116,228,122,233,129"/>
 </map>

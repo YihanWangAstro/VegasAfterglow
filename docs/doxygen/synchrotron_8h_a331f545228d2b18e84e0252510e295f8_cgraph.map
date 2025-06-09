@@ -1,11 +1,7 @@
 <map id="generate_syn_photons" name="generate_syn_photons">
-<area shape="rect" id="Node000001" title="Creates and returns a new photon grid based on shock and electron grid." alt="" coords="5,55,175,80"/>
-<area shape="rect" id="Node000002" href="$synchrotron_8cpp.html#a936bfaa522ec8295a21d253e5453188d" title="Calculates synchrotron frequency for a given Lorentz factor and magnetic field." alt="" coords="223,5,365,31"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="143,52,227,31,228,37,144,57"/>
-<area shape="rect" id="Node000003" href="$utilities_8h.html#afe0a1b1b7509ac4df83fcc0e510f281b" title="Fast approximation of the base&#45;2 logarithm." alt="" coords="253,55,335,80"/>
-<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="175,65,239,65,239,70,175,70"/>
-<area shape="rect" id="Node000004" href="$utilities_8h.html#ab8e81118f023df135835db8cce4f5f42" title="Returns the value of a single parameter." alt="" coords="413,80,464,105"/>
-<area shape="poly" id="edge5_Node000001_Node000004" title=" " alt="" coords="149,77,223,89,318,93,399,92,399,97,318,98,222,94,148,83"/>
-<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="336,72,400,83,399,89,335,77"/>
-<area shape="poly" id="edge4_Node000004_Node000004" title=" " alt="" coords="414,81,409,72,412,62,422,56,439,53,459,57,467,65,463,69,456,62,439,59,424,61,416,65,414,71,419,79"/>
+<area shape="rect" id="Node000001" title="Creates and returns a new photon grid based on shock and electron grid." alt="" coords="5,29,175,55"/>
+<area shape="poly" id="edge1_Node000001_Node000001" title=" " alt="" coords="63,31,58,21,61,11,72,5,90,3,112,6,121,15,117,19,109,11,90,8,74,10,65,15,63,20,68,28"/>
+<area shape="rect" id="Node000002" href="$utilities_8h.html#ab8e81118f023df135835db8cce4f5f42" title="Returns the value of a single parameter." alt="" coords="223,29,273,55"/>
+<area shape="poly" id="edge2_Node000001_Node000002" title=" " alt="" coords="175,39,208,39,208,45,175,45"/>
+<area shape="poly" id="edge3_Node000002_Node000002" title=" " alt="" coords="221,31,216,21,219,11,230,5,248,3,270,6,279,15,275,19,267,11,248,8,232,10,223,15,221,20,226,28"/>
 </map>

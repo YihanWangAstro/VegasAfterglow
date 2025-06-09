@@ -148,9 +148,9 @@ Public Attributes</h2></td></tr>
 <tr class="memitem:a48c444d1bd42f1b933aa4282b5634bf2" id="r_a48c444d1bd42f1b933aa4282b5634bf2"><td class="memItemLeft" align="right" valign="top"><a class="el" href="mesh_8h.html#a6b76cc05bedc7fd9499c0bd3eec3bcb5">MeshGrid3d</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classShock.html#a48c444d1bd42f1b933aa4282b5634bf2">B</a></td></tr>
 <tr class="memdesc:a48c444d1bd42f1b933aa4282b5634bf2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Comoving magnetic field.  <br /></td></tr>
 <tr class="separator:a48c444d1bd42f1b933aa4282b5634bf2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afb8e77d7cb03b28000d9e2e9743ac0b0" id="r_afb8e77d7cb03b28000d9e2e9743ac0b0"><td class="memItemLeft" align="right" valign="top"><a class="el" href="mesh_8h.html#a6b76cc05bedc7fd9499c0bd3eec3bcb5">MeshGrid3d</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classShock.html#afb8e77d7cb03b28000d9e2e9743ac0b0">proton_column_num_den</a></td></tr>
-<tr class="memdesc:afb8e77d7cb03b28000d9e2e9743ac0b0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Downstream proton column number density.  <br /></td></tr>
-<tr class="separator:afb8e77d7cb03b28000d9e2e9743ac0b0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a05c8bb643bb0adba96f4b56bdc98bf1f" id="r_a05c8bb643bb0adba96f4b56bdc98bf1f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="mesh_8h.html#a6b76cc05bedc7fd9499c0bd3eec3bcb5">MeshGrid3d</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classShock.html#a05c8bb643bb0adba96f4b56bdc98bf1f">proton_num</a></td></tr>
+<tr class="memdesc:a05c8bb643bb0adba96f4b56bdc98bf1f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Downstream proton number.  <br /></td></tr>
+<tr class="separator:a05c8bb643bb0adba96f4b56bdc98bf1f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a876908cb852c77b1053c91b54692c2ff" id="r_a876908cb852c77b1053c91b54692c2ff"><td class="memItemLeft" align="right" valign="top"><a class="el" href="mesh_8h.html#ae7ec6be5d638ad03ae6697ff2b71ef91">MeshGrid</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classShock.html#a876908cb852c77b1053c91b54692c2ff">injection_idx</a></td></tr>
 <tr class="memdesc:a876908cb852c77b1053c91b54692c2ff"><td class="mdescLeft">&#160;</td><td class="mdescRight">Beyond which grid index there is no electron injection.  <br /></td></tr>
 <tr class="separator:a876908cb852c77b1053c91b54692c2ff"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -217,19 +217,20 @@ Public Attributes</h2></td></tr>
 </dl>
 
 <p class="definition">Definition at line <a class="el" href="shock_8cpp_source.html#l00010">10</a> of file <a class="el" href="shock_8cpp_source.html">shock.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   11</span>    : <a class="code hl_variable" href="classShock.html#a2f750335b1c4474905426fd1a78b006a">t_comv</a>({phi_size, theta_size, t_size}, 0),                 <span class="comment">// Initialize comoving time grid with 0</span></div>
-<div class="line"><span class="lineno">   12</span>      <a class="code hl_variable" href="classShock.html#ad2c035218f2e59c0e84c40fa96ff5497">r</a>({phi_size, theta_size, t_size}, 0),                      <span class="comment">// Initialize radius grid with 0</span></div>
-<div class="line"><span class="lineno">   13</span>      <a class="code hl_variable" href="classShock.html#a144dc338f3f004d48e5b629479e782be">theta</a>({phi_size, theta_size, t_size}, 0),                  <span class="comment">// Initialize theta grid with 0</span></div>
-<div class="line"><span class="lineno">   14</span>      <a class="code hl_variable" href="classShock.html#af26b390f5806dc838dd5a2f63c1b0bd9">Gamma</a>({phi_size, theta_size, t_size}, 1),                  <span class="comment">// Initialize Gamma grid with 1</span></div>
-<div class="line"><span class="lineno">   15</span>      <a class="code hl_variable" href="classShock.html#a4ea5bc5a9958d2d19dac34b2d097eed0">Gamma_rel</a>({phi_size, theta_size, t_size}, 1),              <span class="comment">// Initialize Gamma_rel grid with 1</span></div>
-<div class="line"><span class="lineno">   16</span>      <a class="code hl_variable" href="classShock.html#a48c444d1bd42f1b933aa4282b5634bf2">B</a>({phi_size, theta_size, t_size}, 0),                      <span class="comment">// Initialize magnetic field grid with 0</span></div>
-<div class="line"><span class="lineno">   17</span>      <a class="code hl_variable" href="classShock.html#afb8e77d7cb03b28000d9e2e9743ac0b0">proton_column_num_den</a>({phi_size, theta_size, t_size}, 0),  <span class="comment">// Initialize column density grid with 0</span></div>
-<div class="line"><span class="lineno">   18</span>      <a class="code hl_variable" href="classShock.html#a876908cb852c77b1053c91b54692c2ff">injection_idx</a>({phi_size, theta_size}, t_size),             <span class="comment">// Initialize cross index grid with t_size</span></div>
-<div class="line"><span class="lineno">   19</span>      <a class="code hl_variable" href="classShock.html#a936f940f338d2661a8f85e36fcd8f01d">required</a>({phi_size, theta_size, t_size}, 1),               <span class="comment">// Initialize required grid with true</span></div>
-<div class="line"><span class="lineno">   20</span>      <a class="code hl_variable" href="classShock.html#acc651304bf82aa85e52210074dee3673">rad</a>(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">rad_params</a>),                                           <span class="comment">// Set radiation parameters</span></div>
-<div class="line"><span class="lineno">   21</span>      phi_size(phi_size),                                        <span class="comment">// Store phi grid size</span></div>
-<div class="line"><span class="lineno">   22</span>      theta_size(theta_size),                                    <span class="comment">// Store theta grid size</span></div>
+<div class="fragment"><div class="line"><span class="lineno">   11</span>    : <a class="code hl_variable" href="classShock.html#a2f750335b1c4474905426fd1a78b006a">t_comv</a>({phi_size, theta_size, t_size}, 0),      <span class="comment">// Initialize comoving time grid with 0</span></div>
+<div class="line"><span class="lineno">   12</span>      <a class="code hl_variable" href="classShock.html#ad2c035218f2e59c0e84c40fa96ff5497">r</a>({phi_size, theta_size, t_size}, 0),           <span class="comment">// Initialize radius grid with 0</span></div>
+<div class="line"><span class="lineno">   13</span>      <a class="code hl_variable" href="classShock.html#a144dc338f3f004d48e5b629479e782be">theta</a>({phi_size, theta_size, t_size}, 0),       <span class="comment">// Initialize theta grid with 0</span></div>
+<div class="line"><span class="lineno">   14</span>      <a class="code hl_variable" href="classShock.html#af26b390f5806dc838dd5a2f63c1b0bd9">Gamma</a>({phi_size, theta_size, t_size}, 1),       <span class="comment">// Initialize Gamma grid with 1</span></div>
+<div class="line"><span class="lineno">   15</span>      <a class="code hl_variable" href="classShock.html#a4ea5bc5a9958d2d19dac34b2d097eed0">Gamma_rel</a>({phi_size, theta_size, t_size}, 1),   <span class="comment">// Initialize Gamma_rel grid with 1</span></div>
+<div class="line"><span class="lineno">   16</span>      <a class="code hl_variable" href="classShock.html#a48c444d1bd42f1b933aa4282b5634bf2">B</a>({phi_size, theta_size, t_size}, 0),           <span class="comment">// Initialize magnetic field grid with 0</span></div>
+<div class="line"><span class="lineno">   17</span>      <a class="code hl_variable" href="classShock.html#a05c8bb643bb0adba96f4b56bdc98bf1f">proton_num</a>({phi_size, theta_size, t_size}, 0),  <span class="comment">// Initialize column density grid with 0</span></div>
+<div class="line"><span class="lineno">   18</span>      <a class="code hl_variable" href="classShock.html#a876908cb852c77b1053c91b54692c2ff">injection_idx</a>({phi_size, theta_size}, t_size),  <span class="comment">// Initialize cross index grid with t_size</span></div>
+<div class="line"><span class="lineno">   19</span>      <a class="code hl_variable" href="classShock.html#a936f940f338d2661a8f85e36fcd8f01d">required</a>({phi_size, theta_size, t_size}, 1),    <span class="comment">// Initialize required grid with true</span></div>
+<div class="line"><span class="lineno">   20</span>      <a class="code hl_variable" href="classShock.html#acc651304bf82aa85e52210074dee3673">rad</a>(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">rad_params</a>),                                <span class="comment">// Set radiation parameters</span></div>
+<div class="line"><span class="lineno">   21</span>      phi_size(phi_size),                             <span class="comment">// Store phi grid size</span></div>
+<div class="line"><span class="lineno">   22</span>      theta_size(theta_size),                         <span class="comment">// Store theta grid size</span></div>
 <div class="line"><span class="lineno">   23</span>      t_size(t_size) {}</div>
+<div class="ttc" id="aclassShock_html_a05c8bb643bb0adba96f4b56bdc98bf1f"><div class="ttname"><a href="classShock.html#a05c8bb643bb0adba96f4b56bdc98bf1f">Shock::proton_num</a></div><div class="ttdeci">MeshGrid3d proton_num</div><div class="ttdoc">Downstream proton number.</div><div class="ttdef"><b>Definition</b> <a href="shock_8h_source.html#l00050">shock.h:50</a></div></div>
 <div class="ttc" id="aclassShock_html_a144dc338f3f004d48e5b629479e782be"><div class="ttname"><a href="classShock.html#a144dc338f3f004d48e5b629479e782be">Shock::theta</a></div><div class="ttdeci">MeshGrid3d theta</div><div class="ttdoc">Theta for jet spreading.</div><div class="ttdef"><b>Definition</b> <a href="shock_8h_source.html#l00046">shock.h:46</a></div></div>
 <div class="ttc" id="aclassShock_html_a2f750335b1c4474905426fd1a78b006a"><div class="ttname"><a href="classShock.html#a2f750335b1c4474905426fd1a78b006a">Shock::t_comv</a></div><div class="ttdeci">MeshGrid3d t_comv</div><div class="ttdoc">Comoving time.</div><div class="ttdef"><b>Definition</b> <a href="shock_8h_source.html#l00044">shock.h:44</a></div></div>
 <div class="ttc" id="aclassShock_html_a48c444d1bd42f1b933aa4282b5634bf2"><div class="ttname"><a href="classShock.html#a48c444d1bd42f1b933aa4282b5634bf2">Shock::B</a></div><div class="ttdeci">MeshGrid3d B</div><div class="ttdoc">Comoving magnetic field.</div><div class="ttdef"><b>Definition</b> <a href="shock_8h_source.html#l00049">shock.h:49</a></div></div>
@@ -239,7 +240,6 @@ Public Attributes</h2></td></tr>
 <div class="ttc" id="aclassShock_html_acc651304bf82aa85e52210074dee3673"><div class="ttname"><a href="classShock.html#acc651304bf82aa85e52210074dee3673">Shock::rad</a></div><div class="ttdeci">RadParams rad</div><div class="ttdoc">Radiation parameters.</div><div class="ttdef"><b>Definition</b> <a href="shock_8h_source.html#l00053">shock.h:53</a></div></div>
 <div class="ttc" id="aclassShock_html_ad2c035218f2e59c0e84c40fa96ff5497"><div class="ttname"><a href="classShock.html#ad2c035218f2e59c0e84c40fa96ff5497">Shock::r</a></div><div class="ttdeci">MeshGrid3d r</div><div class="ttdoc">Radius.</div><div class="ttdef"><b>Definition</b> <a href="shock_8h_source.html#l00045">shock.h:45</a></div></div>
 <div class="ttc" id="aclassShock_html_af26b390f5806dc838dd5a2f63c1b0bd9"><div class="ttname"><a href="classShock.html#af26b390f5806dc838dd5a2f63c1b0bd9">Shock::Gamma</a></div><div class="ttdeci">MeshGrid3d Gamma</div><div class="ttdoc">Bulk Lorentz factor.</div><div class="ttdef"><b>Definition</b> <a href="shock_8h_source.html#l00047">shock.h:47</a></div></div>
-<div class="ttc" id="aclassShock_html_afb8e77d7cb03b28000d9e2e9743ac0b0"><div class="ttname"><a href="classShock.html#afb8e77d7cb03b28000d9e2e9743ac0b0">Shock::proton_column_num_den</a></div><div class="ttdeci">MeshGrid3d proton_column_num_den</div><div class="ttdoc">Downstream proton column number density.</div><div class="ttdef"><b>Definition</b> <a href="shock_8h_source.html#l00050">shock.h:50</a></div></div>
 <div class="ttc" id="autilities_8h_html_ab8e81118f023df135835db8cce4f5f42"><div class="ttname"><a href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">max</a></div><div class="ttdeci">T max(T value)</div><div class="ttdoc">Returns the value of a single parameter.</div><div class="ttdef"><b>Definition</b> <a href="utilities_8h_source.html#l00287">utilities.h:287</a></div></div>
 </div><!-- fragment -->
 </div>
@@ -323,7 +323,7 @@ Public Attributes</h2></td></tr>
 <div class="line"><span class="lineno">   32</span>    <a class="code hl_variable" href="classShock.html#af26b390f5806dc838dd5a2f63c1b0bd9">Gamma</a>.resize({phi_size, theta_size, t_size});</div>
 <div class="line"><span class="lineno">   33</span>    <a class="code hl_variable" href="classShock.html#a4ea5bc5a9958d2d19dac34b2d097eed0">Gamma_rel</a>.resize({phi_size, theta_size, t_size});</div>
 <div class="line"><span class="lineno">   34</span>    <a class="code hl_variable" href="classShock.html#a48c444d1bd42f1b933aa4282b5634bf2">B</a>.resize({phi_size, theta_size, t_size});</div>
-<div class="line"><span class="lineno">   35</span>    <a class="code hl_variable" href="classShock.html#afb8e77d7cb03b28000d9e2e9743ac0b0">proton_column_num_den</a>.resize({phi_size, theta_size, t_size});</div>
+<div class="line"><span class="lineno">   35</span>    <a class="code hl_variable" href="classShock.html#a05c8bb643bb0adba96f4b56bdc98bf1f">proton_num</a>.resize({phi_size, theta_size, t_size});</div>
 <div class="line"><span class="lineno">   36</span>    <a class="code hl_variable" href="classShock.html#a876908cb852c77b1053c91b54692c2ff">injection_idx</a>.resize({phi_size, theta_size});</div>
 <div class="line"><span class="lineno">   37</span>    <a class="code hl_variable" href="classShock.html#a876908cb852c77b1053c91b54692c2ff">injection_idx</a>.fill(t_size);</div>
 <div class="line"><span class="lineno">   38</span>    <a class="code hl_variable" href="classShock.html#a936f940f338d2661a8f85e36fcd8f01d">required</a>.resize({phi_size, theta_size, t_size});</div>
@@ -435,19 +435,19 @@ Public Attributes</h2></td></tr>
 
 </div>
 </div>
-<a id="afb8e77d7cb03b28000d9e2e9743ac0b0" name="afb8e77d7cb03b28000d9e2e9743ac0b0"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#afb8e77d7cb03b28000d9e2e9743ac0b0">&#9670;&#160;</a></span>proton_column_num_den</h2>
+<a id="a05c8bb643bb0adba96f4b56bdc98bf1f" name="a05c8bb643bb0adba96f4b56bdc98bf1f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a05c8bb643bb0adba96f4b56bdc98bf1f">&#9670;&#160;</a></span>proton_num</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="mesh_8h.html#a6b76cc05bedc7fd9499c0bd3eec3bcb5">MeshGrid3d</a> Shock::proton_column_num_den</td>
+          <td class="memname"><a class="el" href="mesh_8h.html#a6b76cc05bedc7fd9499c0bd3eec3bcb5">MeshGrid3d</a> Shock::proton_num</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Downstream proton column number density. </p>
+<p>Downstream proton number. </p>
 
 <p class="definition">Definition at line <a class="el" href="shock_8h_source.html#l00050">50</a> of file <a class="el" href="shock_8h_source.html">shock.h</a>.</p>
 

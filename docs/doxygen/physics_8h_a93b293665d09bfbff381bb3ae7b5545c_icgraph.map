@@ -1,5 +1,5 @@
 <map id="find_jet_edge" name="find_jet_edge">
 <area shape="rect" id="Node000001" title="Determines the edge of the jet based on a given gamma cut&#45;off using binary search." alt="" coords="136,5,245,31"/>
-<area shape="rect" id="Node000002" href="$physics_8h.html#a84e41eb015b3658404872ddfcc60b6d4" title="Constructs a coordinate grid (Coord) for shock evolution." alt="" coords="5,5,88,31"/>
+<area shape="rect" id="Node000002" href="$mesh_8h.html#ae3e9605b2c69cf526bd26727b015b7d8" title="Constructs a coordinate grid (Coord) for shock evolution." alt="" coords="5,5,88,31"/>
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="122,21,88,21,88,15,122,15"/>
 </map>

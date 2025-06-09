@@ -1,0 +1,15 @@
+<map id="compute_single_elec_P_nu_max" name="compute_single_elec_P_nu_max">
+<area shape="rect" id="Node000001" title=" " alt="" coords="632,47,791,87"/>
+<area shape="rect" id="Node000002" href="$synchrotron_8cpp.html#ad0ce654aca1c62f43ae108ca8772ed0f" title=" " alt="" coords="420,29,579,55"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="618,59,579,54,579,49,618,54"/>
+<area shape="rect" id="Node000007" href="$synchrotron_8cpp.html#a0f78089bdc9e329056d89812794298b9" title="Populates an existing photon grid with values based on shock and electron grid." alt="" coords="415,79,584,104"/>
+<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="618,81,585,84,584,79,618,75"/>
+<area shape="rect" id="Node000003" href="$synchrotron_8cpp.html#aad9e6e41fee6cbff0952e1d343b890f5" title="Populates an existing electron grid with values based on shock parameters." alt="" coords="189,5,367,31"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="406,35,366,30,367,25,407,29"/>
+<area shape="rect" id="Node000004" href="$synchrotron_8cpp.html#af56f9b4417a5f3e717102da3e81a7d37" title="Updates electron properties throughout the grid based on shock parameters and IC Y values." alt="" coords="199,55,357,80"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="406,55,357,61,356,56,406,50"/>
+<area shape="rect" id="Node000005" href="$inverse-compton_8cpp.html#af25c21cb4c714787c8260f220a6c2ee9" title="Applies Klein&#45;Nishina cooling to electrons based on photon distribution." alt="" coords="26,29,121,55"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="185,59,120,50,121,45,186,53"/>
+<area shape="rect" id="Node000006" href="$inverse-compton_8cpp.html#a330c8cd380f08f2ddce282201dae597b" title="Applies Thomson cooling to electrons based on photon distribution." alt="" coords="5,79,141,104"/>
+<area shape="poly" id="edge5_Node000004_Node000006" title=" " alt="" coords="186,81,142,86,141,81,185,75"/>
+</map>

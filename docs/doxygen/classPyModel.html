@@ -108,12 +108,12 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:ac7d6f3f58304eefee08b7254df8eb56f" id="r_ac7d6f3f58304eefee08b7254df8eb56f"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classPyModel.html#ac7d6f3f58304eefee08b7254df8eb56f">PyModel</a> (<a class="el" href="classEjecta.html">Ejecta</a> jet, <a class="el" href="classMedium.html">Medium</a> medium, <a class="el" href="classPyObserver.html">PyObserver</a> <a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">observer</a>, <a class="el" href="classPyRadiation.html">PyRadiation</a> fwd_rad, std::optional&lt; <a class="el" href="classPyRadiation.html">PyRadiation</a> &gt; <a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">rvs_rad</a>=std::nullopt, std::tuple&lt; <a class="el" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a>, <a class="el" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a>, <a class="el" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> &gt; <a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">resolutions</a>=std::make_tuple(0.3, 2., 5.), <a class="el" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> rtol=1e-5, <a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">bool</a> axisymmetric=<a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">true</a>)</td></tr>
 <tr class="memdesc:ac7d6f3f58304eefee08b7254df8eb56f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct afterglow model with given components.  <br /></td></tr>
 <tr class="separator:ac7d6f3f58304eefee08b7254df8eb56f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6e2f014bdb455058927d269e8be0fac6" id="r_a6e2f014bdb455058927d269e8be0fac6"><td class="memItemLeft" align="right" valign="top">FluxDict&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classPyModel.html#a6e2f014bdb455058927d269e8be0fac6">specific_flux_matrix</a> (<a class="el" href="pybind_8h.html#a06c55931188bd694c6e070a50e95344c">PyArray</a> <a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">const</a> &amp;t, <a class="el" href="pybind_8h.html#a06c55931188bd694c6e070a50e95344c">PyArray</a> <a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">const</a> &amp;nu)</td></tr>
+<tr class="memdesc:a6e2f014bdb455058927d269e8be0fac6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculate specific flux at given times and frequencies.  <br /></td></tr>
+<tr class="separator:a6e2f014bdb455058927d269e8be0fac6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aff0f26fa2c72824720c6d16189ad996b" id="r_aff0f26fa2c72824720c6d16189ad996b"><td class="memItemLeft" align="right" valign="top">FluxDict&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classPyModel.html#aff0f26fa2c72824720c6d16189ad996b">specific_flux</a> (<a class="el" href="pybind_8h.html#a06c55931188bd694c6e070a50e95344c">PyArray</a> <a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">const</a> &amp;t, <a class="el" href="pybind_8h.html#a06c55931188bd694c6e070a50e95344c">PyArray</a> <a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">const</a> &amp;nu)</td></tr>
 <tr class="memdesc:aff0f26fa2c72824720c6d16189ad996b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculate specific flux at given times and frequencies.  <br /></td></tr>
 <tr class="separator:aff0f26fa2c72824720c6d16189ad996b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0539613ba084e5b5bf472c978fdaa39f" id="r_a0539613ba084e5b5bf472c978fdaa39f"><td class="memItemLeft" align="right" valign="top">FluxDict&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classPyModel.html#a0539613ba084e5b5bf472c978fdaa39f">spectra</a> (<a class="el" href="pybind_8h.html#a06c55931188bd694c6e070a50e95344c">PyArray</a> <a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">const</a> &amp;nu, <a class="el" href="pybind_8h.html#a06c55931188bd694c6e070a50e95344c">PyArray</a> <a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">const</a> &amp;t)</td></tr>
-<tr class="memdesc:a0539613ba084e5b5bf472c978fdaa39f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculate spectra (flux vs frequency) at different times Returns transposed arrays compared to specific_flux.  <br /></td></tr>
-<tr class="separator:a0539613ba084e5b5bf472c978fdaa39f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Main model class for afterglow calculations. </p>
@@ -256,14 +256,20 @@ Public Member Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>FluxDict Dictionary with synchrotron and IC flux components </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="pymodel_8cpp_source.html#l00140">140</a> of file <a class="el" href="pymodel_8cpp_source.html">pymodel.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  140</span>                                                                           {</div>
-<div class="line"><span class="lineno">  141</span>    <a class="code hl_typedef" href="mesh_8h.html#afd05120c4d579ec7fa4906f677781a83">Array</a> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">t_obs</a> = t * <a class="code hl_variable" href="namespaceunit.html#a4e7c438655d3f34c7c30a155ec38f250">unit::sec</a>;</div>
-<div class="line"><span class="lineno">  142</span>    <a class="code hl_typedef" href="mesh_8h.html#afd05120c4d579ec7fa4906f677781a83">Array</a> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">nu_obs</a> = nu * <a class="code hl_variable" href="namespaceunit.html#a78d8f4bc3be7867d8171f2759251dad1">unit::Hz</a>;</div>
-<div class="line"><span class="lineno">  143</span> </div>
-<div class="line"><span class="lineno">  144</span>    <span class="keywordflow">return</span> compute_specific_flux(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">t_obs</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">nu_obs</a>);</div>
-<div class="line"><span class="lineno">  145</span>}</div>
-<div class="ttc" id="amesh_8h_html_afd05120c4d579ec7fa4906f677781a83"><div class="ttname"><a href="mesh_8h.html#afd05120c4d579ec7fa4906f677781a83">Array</a></div><div class="ttdeci">xt::xtensor&lt; Real, 1 &gt; Array</div><div class="ttdoc">Type alias for 1D arrays (e.g., time points)</div><div class="ttdef"><b>Definition</b> <a href="mesh_8h_source.html#l00036">mesh.h:36</a></div></div>
+<p class="definition">Definition at line <a class="el" href="pymodel_8cpp_source.html#l00148">148</a> of file <a class="el" href="pymodel_8cpp_source.html">pymodel.cpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  148</span>                                                                           {</div>
+<div class="line"><span class="lineno">  149</span>    <a class="code hl_typedef" href="mesh_8h.html#afd05120c4d579ec7fa4906f677781a83">Array</a> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">t_obs</a> = t * <a class="code hl_variable" href="namespaceunit.html#a4e7c438655d3f34c7c30a155ec38f250">unit::sec</a>;</div>
+<div class="line"><span class="lineno">  150</span>    <a class="code hl_typedef" href="mesh_8h.html#afd05120c4d579ec7fa4906f677781a83">Array</a> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">nu_obs</a> = nu * <a class="code hl_variable" href="namespaceunit.html#a78d8f4bc3be7867d8171f2759251dad1">unit::Hz</a>;</div>
+<div class="line"><span class="lineno">  151</span>    <span class="keywordtype">bool</span> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">return_trace</a> = <span class="keyword">true</span>;</div>
+<div class="line"><span class="lineno">  152</span> </div>
+<div class="line"><span class="lineno">  153</span>    <span class="keywordflow">if</span> (<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">t_obs</a>.size() != <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">nu_obs</a>.size()) {</div>
+<div class="line"><span class="lineno">  154</span>        std::cout &lt;&lt; <span class="stringliteral">&quot;t_obs and nu_obs must have the same size&quot;</span> &lt;&lt; std::endl;</div>
+<div class="line"><span class="lineno">  155</span>        <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">exit</a>(0);</div>
+<div class="line"><span class="lineno">  156</span>    }</div>
+<div class="line"><span class="lineno">  157</span> </div>
+<div class="line"><span class="lineno">  158</span>    <span class="keywordflow">return</span> compute_specific_flux(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">t_obs</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">nu_obs</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">return_trace</a>);</div>
+<div class="line"><span class="lineno">  159</span>}</div>
+<div class="ttc" id="amesh_8h_html_afd05120c4d579ec7fa4906f677781a83"><div class="ttname"><a href="mesh_8h.html#afd05120c4d579ec7fa4906f677781a83">Array</a></div><div class="ttdeci">xt::xtensor&lt; Real, 1 &gt; Array</div><div class="ttdoc">Type alias for 1D arrays (e.g., time points)</div><div class="ttdef"><b>Definition</b> <a href="mesh_8h_source.html#l00037">mesh.h:37</a></div></div>
 <div class="ttc" id="anamespaceunit_html_a4e7c438655d3f34c7c30a155ec38f250"><div class="ttname"><a href="namespaceunit.html#a4e7c438655d3f34c7c30a155ec38f250">unit::sec</a></div><div class="ttdeci">constexpr Real sec</div><div class="ttdoc">Second in code units.</div><div class="ttdef"><b>Definition</b> <a href="macros_8h_source.html#l00040">macros.h:40</a></div></div>
 <div class="ttc" id="anamespaceunit_html_a78d8f4bc3be7867d8171f2759251dad1"><div class="ttname"><a href="namespaceunit.html#a78d8f4bc3be7867d8171f2759251dad1">unit::Hz</a></div><div class="ttdeci">constexpr Real Hz</div><div class="ttdoc">Hertz (frequency) in code units.</div><div class="ttdef"><b>Definition</b> <a href="macros_8h_source.html#l00046">macros.h:46</a></div></div>
 </div><!-- fragment --><div class="dynheader">
@@ -290,23 +296,23 @@ Here is the caller graph for this function:</div>
 
 </div>
 </div>
-<a id="a0539613ba084e5b5bf472c978fdaa39f" name="a0539613ba084e5b5bf472c978fdaa39f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0539613ba084e5b5bf472c978fdaa39f">&#9670;&#160;</a></span>spectra()</h2>
+<a id="a6e2f014bdb455058927d269e8be0fac6" name="a6e2f014bdb455058927d269e8be0fac6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6e2f014bdb455058927d269e8be0fac6">&#9670;&#160;</a></span>specific_flux_matrix()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">auto</a> PyModel::spectra </td>
+          <td class="memname"><a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">auto</a> PyModel::specific_flux_matrix </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="pybind_8h.html#a06c55931188bd694c6e070a50e95344c">PyArray</a> <a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">const</a> &amp;&#160;</td>
-          <td class="paramname"><em>nu</em>, </td>
+          <td class="paramname"><em>t</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype"><a class="el" href="pybind_8h.html#a06c55931188bd694c6e070a50e95344c">PyArray</a> <a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">const</a> &amp;&#160;</td>
-          <td class="paramname"><em>t</em>&#160;</td>
+          <td class="paramname"><em>nu</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -316,48 +322,43 @@ Here is the caller graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p>Calculate spectra (flux vs frequency) at different times Returns transposed arrays compared to specific_flux. </p>
+<p>Calculate specific flux at given times and frequencies. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">nu</td><td><a class="el" href="classObserver.html" title="Represents an observer in the GRB afterglow simulation.">Observer</a> frequency array [Hz] </td></tr>
     <tr><td class="paramname">t</td><td><a class="el" href="classObserver.html" title="Represents an observer in the GRB afterglow simulation.">Observer</a> time array [seconds] </td></tr>
+    <tr><td class="paramname">nu</td><td><a class="el" href="classObserver.html" title="Represents an observer in the GRB afterglow simulation.">Observer</a> frequency array [Hz] </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>FluxDict Dictionary with flux arrays (frequency as first dimension) </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>FluxDict Dictionary with synchrotron and IC flux components </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="pymodel_8cpp_source.html#l00147">147</a> of file <a class="el" href="pymodel_8cpp_source.html">pymodel.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  147</span>                                                                     {</div>
-<div class="line"><span class="lineno">  148</span>    <a class="code hl_typedef" href="mesh_8h.html#afd05120c4d579ec7fa4906f677781a83">Array</a> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">nu_obs</a> = nu * <a class="code hl_variable" href="namespaceunit.html#a78d8f4bc3be7867d8171f2759251dad1">unit::Hz</a>;</div>
-<div class="line"><span class="lineno">  149</span>    <a class="code hl_typedef" href="mesh_8h.html#afd05120c4d579ec7fa4906f677781a83">Array</a> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">t_obs</a> = t * <a class="code hl_variable" href="namespaceunit.html#a4e7c438655d3f34c7c30a155ec38f250">unit::sec</a>;</div>
-<div class="line"><span class="lineno">  150</span> </div>
-<div class="line"><span class="lineno">  151</span>    FluxDict <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">flux_dict</a> = compute_specific_flux(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">t_obs</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">nu_obs</a>);</div>
-<div class="line"><span class="lineno">  152</span> </div>
-<div class="line"><span class="lineno">  153</span>    <span class="keywordflow">for</span> (<span class="keyword">auto</span> <span class="keyword">const</span>&amp; [<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">key</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">value</a>] : <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">flux_dict</a>) {</div>
-<div class="line"><span class="lineno">  154</span>        <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">flux_dict</a>[<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">key</a>] = xt::transpose(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">value</a>);</div>
-<div class="line"><span class="lineno">  155</span>    }</div>
-<div class="line"><span class="lineno">  156</span> </div>
-<div class="line"><span class="lineno">  157</span>    <span class="keywordflow">return</span> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">flux_dict</a>;</div>
-<div class="line"><span class="lineno">  158</span>}</div>
+<p class="definition">Definition at line <a class="el" href="pymodel_8cpp_source.html#l00161">161</a> of file <a class="el" href="pymodel_8cpp_source.html">pymodel.cpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  161</span>                                                                                  {</div>
+<div class="line"><span class="lineno">  162</span>    <a class="code hl_typedef" href="mesh_8h.html#afd05120c4d579ec7fa4906f677781a83">Array</a> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">t_obs</a> = t * <a class="code hl_variable" href="namespaceunit.html#a4e7c438655d3f34c7c30a155ec38f250">unit::sec</a>;</div>
+<div class="line"><span class="lineno">  163</span>    <a class="code hl_typedef" href="mesh_8h.html#afd05120c4d579ec7fa4906f677781a83">Array</a> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">nu_obs</a> = nu * <a class="code hl_variable" href="namespaceunit.html#a78d8f4bc3be7867d8171f2759251dad1">unit::Hz</a>;</div>
+<div class="line"><span class="lineno">  164</span>    <span class="keywordtype">bool</span> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">return_trace</a> = <span class="keyword">false</span>;</div>
+<div class="line"><span class="lineno">  165</span> </div>
+<div class="line"><span class="lineno">  166</span>    <span class="keywordflow">return</span> compute_specific_flux(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">t_obs</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">nu_obs</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">return_trace</a>);</div>
+<div class="line"><span class="lineno">  167</span>}</div>
 </div><!-- fragment --><div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
-<div class="center"><img src="classPyModel_a0539613ba084e5b5bf472c978fdaa39f_cgraph.png" border="0" usemap="#aclassPyModel_a0539613ba084e5b5bf472c978fdaa39f_cgraph" alt=""/></div>
-<map name="aclassPyModel_a0539613ba084e5b5bf472c978fdaa39f_cgraph" id="aclassPyModel_a0539613ba084e5b5bf472c978fdaa39f_cgraph">
-<area shape="rect" title="Calculate spectra (flux vs frequency) at different times Returns transposed arrays compared to specif..." alt="" coords="5,29,140,55"/>
-<area shape="rect" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42" title="Returns the value of a single parameter." alt="" coords="188,29,239,55"/>
-<area shape="poly" title=" " alt="" coords="140,39,174,39,174,45,140,45"/>
-<area shape="poly" title=" " alt="" coords="190,30,185,21,187,11,197,5,213,3,233,6,241,15,237,18,230,11,213,8,199,10,192,15,190,20,194,28"/>
+<div class="center"><img src="classPyModel_a6e2f014bdb455058927d269e8be0fac6_cgraph.png" border="0" usemap="#aclassPyModel_a6e2f014bdb455058927d269e8be0fac6_cgraph" alt=""/></div>
+<map name="aclassPyModel_a6e2f014bdb455058927d269e8be0fac6_cgraph" id="aclassPyModel_a6e2f014bdb455058927d269e8be0fac6_cgraph">
+<area shape="rect" title="Calculate specific flux at given times and frequencies." alt="" coords="5,22,172,62"/>
+<area shape="rect" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42" title="Returns the value of a single parameter." alt="" coords="220,29,271,55"/>
+<area shape="poly" title=" " alt="" coords="172,39,206,39,206,45,172,45"/>
+<area shape="poly" title=" " alt="" coords="219,31,214,21,217,11,228,5,245,3,267,6,276,15,272,19,264,11,245,8,229,10,221,15,219,20,224,28"/>
 </map>
 </div>
 <div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
-<div class="center"><img src="classPyModel_a0539613ba084e5b5bf472c978fdaa39f_icgraph.png" border="0" usemap="#aclassPyModel_a0539613ba084e5b5bf472c978fdaa39f_icgraph" alt=""/></div>
-<map name="aclassPyModel_a0539613ba084e5b5bf472c978fdaa39f_icgraph" id="aclassPyModel_a0539613ba084e5b5bf472c978fdaa39f_icgraph">
-<area shape="rect" title="Calculate spectra (flux vs frequency) at different times Returns transposed arrays compared to specif..." alt="" coords="204,5,339,31"/>
-<area shape="rect" href="pybind_8cpp.html#a8c92987849ad296e28ec6c07c8e7860b" title=" " alt="" coords="5,5,156,31"/>
-<area shape="poly" title=" " alt="" coords="190,21,156,21,156,15,190,15"/>
+<div class="center"><img src="classPyModel_a6e2f014bdb455058927d269e8be0fac6_icgraph.png" border="0" usemap="#aclassPyModel_a6e2f014bdb455058927d269e8be0fac6_icgraph" alt=""/></div>
+<map name="aclassPyModel_a6e2f014bdb455058927d269e8be0fac6_icgraph" id="aclassPyModel_a6e2f014bdb455058927d269e8be0fac6_icgraph">
+<area shape="rect" title="Calculate specific flux at given times and frequencies." alt="" coords="204,5,371,45"/>
+<area shape="rect" href="pybind_8cpp.html#a8c92987849ad296e28ec6c07c8e7860b" title=" " alt="" coords="5,13,156,38"/>
+<area shape="poly" title=" " alt="" coords="190,28,156,28,156,23,190,23"/>
 </map>
 </div>
 

@@ -5,6 +5,7 @@ var mesh_8h =
     [ "MaskGrid", "mesh_8h.html#afb738e18bf395ef0903c8c5d6f37c47f", null ],
     [ "MeshGrid", "mesh_8h.html#ae7ec6be5d638ad03ae6697ff2b71ef91", null ],
     [ "MeshGrid3d", "mesh_8h.html#a6b76cc05bedc7fd9499c0bd3eec3bcb5", null ],
+    [ "auto_grid", "mesh_8h.html#ae3e9605b2c69cf526bd26727b015b7d8", null ],
     [ "boundary_to_center", "mesh_8h.html#a885b165e8d9c9d20f27ec99329a0c3cb", null ],
     [ "boundary_to_center", "mesh_8h.html#ae1622b29b5488dbee3ef9068b9f8c7d4", null ],
     [ "boundary_to_center_log", "mesh_8h.html#aba66986baad5475a202c20a92bda036e", null ],

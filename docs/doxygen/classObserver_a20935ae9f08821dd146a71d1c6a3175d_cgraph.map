@@ -1,11 +1,12 @@
 <map id="Observer::observe_at" name="Observer::observe_at">
-<area shape="rect" id="Node000001" title="Sets up the Observer for flux calculation at specific observation times." alt="" coords="5,53,167,79"/>
-<area shape="rect" id="Node000002" href="$utilities_8h.html#ab8e81118f023df135835db8cce4f5f42" title="Returns the value of a single parameter." alt="" coords="475,29,525,55"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="167,59,461,42,461,47,167,64"/>
-<area shape="rect" id="Node000003" href="$classObserver.html#a90f4a0a86f9e4a702cfc3a13e7c9c153" title="Updates the required grid points for observation." alt="" coords="215,79,409,104"/>
-<area shape="poly" id="edge3_Node000001_Node000003" title=" " alt="" coords="167,72,201,76,201,82,166,78"/>
-<area shape="poly" id="edge2_Node000002_Node000002" title=" " alt="" coords="472,33,463,23,465,12,478,5,500,3,529,8,536,14,537,21,532,22,532,16,527,12,500,8,479,10,469,15,468,22,476,30"/>
-<area shape="poly" id="edge5_Node000003_Node000002" title=" " alt="" coords="360,76,460,49,462,55,362,81"/>
-<area shape="rect" id="Node000004" href="$observer_8h.html#aa53249b087b9b9d83f4c06e808deeed9" title="Helper function that advances an iterator through an array until the value exceeds the target." alt="" coords="457,79,543,104"/>
-<area shape="poly" id="edge4_Node000003_Node000004" title=" " alt="" coords="410,89,444,89,444,94,410,94"/>
+<area shape="rect" id="Node000001" title="Sets up the Observer for flux calculation at specific observation times." alt="" coords="5,5,167,31"/>
+<area shape="rect" id="Node000002" href="$utilities_8h.html#ab8e81118f023df135835db8cce4f5f42" title="Returns the value of a single parameter." alt="" coords="591,31,641,56"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="167,10,340,7,442,11,543,22,578,29,577,35,542,27,442,16,340,12,167,15"/>
+<area shape="rect" id="Node000003" href="$classObserver.html#a90f4a0a86f9e4a702cfc3a13e7c9c153" title="Updates the required grid points for observation." alt="" coords="215,31,409,56"/>
+<area shape="poly" id="edge3_Node000001_Node000003" title=" " alt="" coords="167,24,201,28,201,34,166,30"/>
+<area shape="poly" id="edge2_Node000002_Node000002" title=" " alt="" coords="596,32,592,22,594,13,602,6,616,4,632,7,639,16,635,19,629,12,616,9,604,11,599,16,597,22,601,29"/>
+<area shape="poly" id="edge6_Node000003_Node000002" title=" " alt="" coords="410,41,577,41,577,46,410,46"/>
+<area shape="rect" id="Node000004" href="$observer_8h.html#aa53249b087b9b9d83f4c06e808deeed9" title="Helper function that advances an iterator through an array until the value exceeds the target." alt="" coords="457,81,543,107"/>
+<area shape="poly" id="edge4_Node000003_Node000004" title=" " alt="" coords="361,54,445,76,443,82,359,59"/>
+<area shape="poly" id="edge5_Node000004_Node000002" title=" " alt="" coords="529,79,577,57,579,62,531,84"/>
 </map>
