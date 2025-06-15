@@ -63,7 +63,7 @@ Now, let's compute and plot multi-wavelength light curves to see how the aftergl
     bands = np.array([1e9, 1e14, 1e17])  
 
     # 3. Calculate the afterglow emission at each time and frequency
-    results = model.specific_flux(times, bands)
+    results = model.specific_flux_matrix(times, bands)
 
     # 4. Visualize the multi-wavelength light curves
     plt.figure(figsize=(4.8, 3.6), dpi=200)
@@ -221,20 +221,20 @@ These settings affect how the model is calculated but are not varied during the 
 Defining Parameters and Running MCMC
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-The ``ParamDef`` class is used to define the parameters for MCMC exploration. Each parameter requires a name, initial value, prior range, and sampling scale:
+The ``ParamDef`` class is used to define the parameters for MCMC exploration. Each parameter requires a name, prior range, and sampling scale:
 
 .. code-block:: python
 
     mc_params = [
-        ParamDef("E_iso",    1e52,  1e50,  1e54,  Scale.LOG),       # Isotropic energy [erg]
-        ParamDef("Gamma0",     30,     5,  1000,  Scale.LOG),       # Lorentz factor at the core
-        ParamDef("theta_c",   0.2,   0.0,   0.5,  Scale.LINEAR),    # Core half-opening angle [rad]
-        ParamDef("theta_v",    0.,  None,  None,  Scale.FIXED),     # Viewing angle [rad]
-        ParamDef("p",         2.5,     2,     3,  Scale.LINEAR),    # Shocked electron power law index
-        ParamDef("eps_e",     0.1,  1e-2,   0.5,  Scale.LOG),       # Electron energy fraction
-        ParamDef("eps_B",    1e-2,  1e-4,   0.5,  Scale.LOG),       # Magnetic field energy fraction
-        ParamDef("A_star",   0.01,  1e-3,     1,  Scale.LOG),       # Wind parameter
-        ParamDef("xi",        0.5,  1e-3,     1,  Scale.LOG),       # Electron acceleration fraction
+        ParamDef("E_iso",   1e50,  1e54,  Scale.LOG),       # Isotropic energy [erg]
+        ParamDef("Gamma0",     5,  1000,  Scale.LOG),       # Lorentz factor at the core
+        ParamDef("theta_c",  0.0,   0.5,  Scale.LINEAR),    # Core half-opening angle [rad]
+        ParamDef("theta_v",  0.0,   0.0,  Scale.FIXED),     # Viewing angle [rad]
+        ParamDef("p",          2,     3,  Scale.LINEAR),    # Shocked electron power law index
+        ParamDef("eps_e",   1e-2,   0.5,  Scale.LOG),       # Electron energy fraction
+        ParamDef("eps_B",   1e-4,   0.5,  Scale.LOG),       # Magnetic field energy fraction
+        ParamDef("A_star",  1e-3,     1,  Scale.LOG),       # Wind parameter
+        ParamDef("xi",      1e-3,     1,  Scale.LOG),       # Electron acceleration fraction
     ]
 
 **Scale Types:**
