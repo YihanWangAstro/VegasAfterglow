@@ -63,7 +63,7 @@ Now, let's compute and plot multi-wavelength light curves to see how the aftergl
     bands = np.array([1e9, 1e14, 1e17])  
 
     # 3. Calculate the afterglow emission at each time and frequency
-    results = model.specific_flux_matrix(times, bands)
+    results = model.specific_flux(times, bands)
 
     # 4. Visualize the multi-wavelength light curves
     plt.figure(figsize=(4.8, 3.6), dpi=200)
@@ -109,17 +109,16 @@ We can also examine how the broadband spectrum evolves at different times after 
     epochs = np.array([1e2, 1e3, 1e4, 1e5, 1e6, 1e7, 1e8])
 
     # 3. Calculate spectra at each epoch
-    results = model.spectra(frequencies, epochs)
+    results = model.specific_flux(epochs, frequencies)
 
     # 4. Plot broadband spectra at each epoch
-    plt.figure(figsize=(4.8, 3.6), dpi=200)
-    colors = plt.cm.viridis(np.linspace(0, 1, len(epochs)))
+    plt.figure(figsize=(4.8, 3.6),dpi=200)
+    colors = plt.cm.viridis(np.linspace(0,1,len(epochs)))
 
     for i, t in enumerate(epochs):
         exp = int(np.floor(np.log10(t)))
         base = t / 10**exp
-        plt.loglog(frequencies, results['syn'][i,:], color=colors[i], 
-                  label=fr'${base:.1f} \times 10^{{{exp}}}$ s')
+        plt.loglog(frequencies, results['syn'][:,i], color=colors[i], label=fr'${base:.1f} \times 10^{{{exp}}}$ s')
 
     # 5. Add vertical lines marking the bands from the light curve plot
     for i, band in enumerate(bands):
@@ -212,7 +211,7 @@ The ``Setups`` class defines the global properties and environment for your mode
     cfg.z = 1.58               # Redshift
 
     # Physical model configuration
-    cfg.medium = "wind"        # Ambient medium: "wind", "ISM" (Interstellar Medium) or "user" (user-defined)
+    cfg.medium = "wind"        # Ambient medium: "wind", "ism" (Interstellar Medium) or "user" (user-defined)
     cfg.jet = "powerlaw"       # Jet structure: "powerlaw", "gaussian", "tophat" or "user" (user-defined)
 
 

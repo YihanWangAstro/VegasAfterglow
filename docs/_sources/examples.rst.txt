@@ -39,7 +39,7 @@ Setting up a simple afterglow model
     bands = np.array([1e9, 1e14, 1e17])  
 
     # Calculate the afterglow emission at each time and frequency
-    results = model.specific_flux_matrix(times, bands)
+    results = model.specific_flux(times, bands)
 
     # Visualize the multi-wavelength light curves
     plt.figure(figsize=(4.8, 3.6),dpi=200)
@@ -48,7 +48,7 @@ Setting up a simple afterglow model
     for i, nu in enumerate(bands):
         exp = int(np.floor(np.log10(nu)))
         base = nu / 10**exp
-    plt.loglog(times, results['syn'][i,:], label=fr'${base:.1f} \times 10^{{{exp}}}$ Hz')
+        plt.loglog(times, results['syn'][i,:], label=fr'${base:.1f} \times 10^{{{exp}}}$ Hz')
 
     plt.xlabel('Time (s)')
     plt.ylabel('Flux Density (erg/cm²/s/Hz)')
@@ -61,7 +61,7 @@ Setting up a simple afterglow model
     epochs = np.array([1e2, 1e3, 1e4, 1e5 ,1e6, 1e7, 1e8])
 
     # Calculate spectra at each epoch
-    results = model.specific_flux_matrix(epochs, frequencies)
+    results = model.specific_flux(epochs, frequencies)
 
     # Plot broadband spectra at each epoch
     plt.figure(figsize=(4.8, 3.6),dpi=200)
@@ -235,84 +235,85 @@ Those profiles are optional and will be set to zero function if not provided.
 Radiation Processes
 -------------------
 
-Synchrotron Self-Compton
+Inverse Compton Cooling
 ^^^^^^^^^^^^^^^^^^^^^^^^    
 
 .. code-block:: python
 
-    from VegasAfterglow import SynchrotronSelfCompton
+    from VegasAfterglow import Radiation
 
-    # Create a model with synchrotron self-Compton
-    ssc = SynchrotronSelfCompton(
-        epsilon_e=0.1,
-        epsilon_B=1e-3,  # Lower magnetization favors IC
-        p=2.2,
-        include_KN=True  # Include Klein-Nishina effects
-    )
-    
-    # Update the model
-    model.set_radiation(ssc)
-    
-    # Calculate over a broader frequency range to capture IC component
-    frequencies_broad = np.logspace(9, 24, 50)  # Radio to gamma-rays
-    
-    # Calculate spectrum at a specific time
-    t_spec = 1e4  # 10,000 seconds
-    spectrum = model.calculate_spectrum(t_spec, frequencies_broad)
-    
-    # Plot the spectrum with components
-    plt.figure(figsize=(10, 6))
-    plt.loglog(frequencies_broad, spectrum, 'b-', label='Total')
-    plt.loglog(frequencies_broad, model.get_synchrotron_spectrum(), 'r--', label='Synchrotron')
-    plt.loglog(frequencies_broad, model.get_ic_spectrum(), 'g--', label='Inverse Compton')
-    
-    plt.xlabel('Frequency (Hz)')
-    plt.ylabel('Flux Density (erg/cm²/s/Hz)')
-    plt.legend()
-    plt.title(f'GRB Afterglow Spectrum at t = {t_spec} s')
-    plt.grid(True, which='both', linestyle='--', alpha=0.5)
-    plt.show()
+    # Create a radiation model with inverse Compton cooling (with Klein-Nishina correction) on synchrotron radiation
+    rad = Radiation(eps_e=1e-1, eps_B=1e-3, p=2.3, IC_cooling=True, KN=False)
 
-Advanced Features
------------------
+    #..other settings
+    model = Model(forward_rad=rad, ...)
+
+Self-Synchrotron Compton Radiation
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. code-block:: python
+
+    from VegasAfterglow import Radiation
+
+    # Create a radiation model with self-Compton radiation
+    rad = Radiation(eps_e=1e-1, eps_B=1e-3, p=2.3, SSC=True, KN=True, IC_cooling=True)
+
+    #..other settings
+    model = Model(forward_rad=rad, ...)
+
+    times = np.logspace(2, 8, 200)  
+    bands = np.array([1e9, 1e14, 1e17])  
+
+    results = model.specific_flux(times, bands)
+
+    plt.figure(figsize=(4.8, 3.6),dpi=200)
+
+    # Plot each frequency band 
+    for i, nu in enumerate(bands):
+        exp = int(np.floor(np.log10(nu)))
+        base = nu / 10**exp
+        plt.loglog(times, results['syn'][i,:], label=fr'${base:.1f} \times 10^{{{exp}}}$ Hz')#synchrotron
+        plt.loglog(times, results['IC'][i,:], label=fr'${base:.1f} \times 10^{{{exp}}}$ Hz')#SSC
+
+.. note::
+    (IC_cooling = False, KN = False, SSC = True): The IC radiation is calculated based on synchrotron spectrum without IC cooling.
+    (IC_cooling = True, KN = False, SSC = True): The IC radiation is calculated based on synchrotron spectrum with IC cooling without Klein-Nishina correction.
+    (IC_cooling = True, KN = True, SSC = True): The IC radiation is calculated based on synchrotron spectrum with IC cooling and Klein-Nishina correction.
 
 Reverse Shock
 ^^^^^^^^^^^^^
 
 .. code-block:: python
+    from VegasAfterglow import Radiation
 
-    # Create a model with reverse shock component
-    model_with_rs = Model(
-        jet=jet, 
-        medium=medium, 
-        radiation=radiation,
-        include_reverse_shock=True
-    )
+    # Create a radiation model with self-Compton radiation
+    fwd_rad = Radiation(eps_e=1e-1, eps_B=1e-3, p=2.3, SSC=True, KN=True, IC_cooling=True)
+    rvs_rad = Radiation(eps_e=1e-2, eps_B=1e-4, p=2.4, SSC=False, KN=False, IC_cooling=False)
+
+    #..other settings
+    model = Model(forward_rad=fwd_rad, reverse_rad=rvs_rad, ...)
+
+    times = np.logspace(2, 8, 200)  
+    bands = np.array([1e9, 1e14, 1e17])  
+
+    results = model.specific_flux(times, bands)
     
-    # Set reverse shock parameters
-    model_with_rs.set_reverse_shock_parameters(
-        RB=0.1,  # Magnetic field ratio between reverse and forward shock
-        Re=1.0   # Electron energy ratio between reverse and forward shock
-    )
+    plt.figure(figsize=(4.8, 3.6),dpi=200)
+
+    # Plot each frequency band 
+    for i, nu in enumerate(bands):
+        exp = int(np.floor(np.log10(nu)))
+        base = nu / 10**exp
+        plt.loglog(times, results['syn'][i,:], label=fr'${base:.1f} \times 10^{{{exp}}}$ Hz')
+        plt.loglog(times, results['IC'][i,:], label=fr'${base:.1f} \times 10^{{{exp}}}$ Hz')
+        plt.loglog(times, results['syn_rvs'][i,:], label=fr'${base:.1f} \times 10^{{{exp}}}$ Hz')#reverse shock synchrotron
+
+.. note::
+    You may increase the resolution of the grid to improve the accuracy of the reverse shock synchrotron radiation.
     
-    # Calculate light curves including reverse shock
-    results_with_rs = model_with_rs.calculate_light_curves(times, frequencies)
-    
-    # Plot forward vs reverse shock components
-    plt.figure(figsize=(10, 6))
-    for i, nu in enumerate(frequencies):
-        plt.loglog(times, results_with_rs[:, i], label=f'Total {nu:.1e} Hz')
-        plt.loglog(times, model_with_rs.get_forward_shock_light_curve(i), '--', 
-                  label=f'FS {nu:.1e} Hz')
-        plt.loglog(times, model_with_rs.get_reverse_shock_light_curve(i), ':', 
-                  label=f'RS {nu:.1e} Hz')
-    
-    plt.xlabel('Time (s)')
-    plt.ylabel('Flux Density (erg/cm²/s/Hz)')
-    plt.legend()
-    plt.title('GRB Afterglow with Reverse Shock')
-    plt.grid(True, which='both', linestyle='--', alpha=0.5)
-    plt.show()
+Advanced Features
+-----------------
+
 
 MCMC Parameter Fitting
 ^^^^^^^^^^^^^^^^^^^^^^

@@ -1,9 +1,0 @@
-<map id="Observer::point_specific_flux" name="Observer::point_specific_flux">
-<area shape="rect" id="Node000001" title="Computes the specific flux at a single observed frequency for multiple observation times." alt="" coords="5,31,215,56"/>
-<area shape="rect" id="Node000002" href="$observer_8h.html#aa53249b087b9b9d83f4c06e808deeed9" title="Helper function that advances an iterator through an array until the value exceeds the target." alt="" coords="263,5,348,31"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="208,28,249,23,249,28,209,33"/>
-<area shape="rect" id="Node000003" href="$utilities_8h.html#ab8e81118f023df135835db8cce4f5f42" title="Returns the value of a single parameter." alt="" coords="396,31,447,56"/>
-<area shape="poly" id="edge4_Node000001_Node000003" title=" " alt="" coords="215,41,382,41,382,46,215,46"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="349,25,383,32,382,38,348,30"/>
-<area shape="poly" id="edge3_Node000003_Node000003" title=" " alt="" coords="401,32,397,22,399,13,408,6,421,4,437,7,444,16,440,19,435,12,421,9,410,11,404,16,403,22,406,29"/>
-</map>

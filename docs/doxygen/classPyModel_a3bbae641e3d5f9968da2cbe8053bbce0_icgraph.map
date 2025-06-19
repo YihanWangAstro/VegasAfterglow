@@ -1,5 +1,5 @@
-<map id="PyModel::specific_flux_matrix" name="PyModel::specific_flux_matrix">
-<area shape="rect" id="Node000001" title="Calculate specific flux at given times and frequencies." alt="" coords="204,5,371,45"/>
+<map id="PyModel::specific_flux_series" name="PyModel::specific_flux_series">
+<area shape="rect" id="Node000001" title="Calculate specific flux at given time and frequency (t_i,nu_i) series." alt="" coords="204,5,371,45"/>
 <area shape="rect" id="Node000002" href="$pybind_8cpp.html#a8c92987849ad296e28ec6c07c8e7860b" title=" " alt="" coords="5,13,156,38"/>
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="190,28,156,28,156,23,190,23"/>
 </map>

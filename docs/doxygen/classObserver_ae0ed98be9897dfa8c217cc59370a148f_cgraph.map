@@ -1,0 +1,6 @@
+<map id="Observer::specific_flux_series" name="Observer::specific_flux_series">
+<area shape="rect" id="Node000001" title="Computes the specific flux at a single observed frequency for multiple observation times." alt="" coords="5,22,144,62"/>
+<area shape="rect" id="Node000002" href="$utilities_8h.html#ab8e81118f023df135835db8cce4f5f42" title="Returns the value of a single parameter." alt="" coords="192,29,243,55"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="144,39,178,39,178,45,144,45"/>
+<area shape="poly" id="edge2_Node000002_Node000002" title=" " alt="" coords="193,30,188,21,191,11,201,5,217,3,237,6,245,15,242,18,234,11,217,8,203,10,195,15,194,20,198,28"/>
+</map>
