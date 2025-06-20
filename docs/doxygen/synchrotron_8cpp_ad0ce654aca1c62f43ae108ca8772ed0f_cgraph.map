@@ -1,5 +1,8 @@
 <map id="compute_syn_I_peak" name="compute_syn_I_peak">
-<area shape="rect" id="Node000001" title=" " alt="" coords="5,13,164,38"/>
-<area shape="rect" id="Node000002" href="$synchrotron_8cpp.html#a35361f36f8d73e95dffabdc7cb0f3177" title=" " alt="" coords="212,5,371,45"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="164,23,198,23,198,28,164,28"/>
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,29,164,55"/>
+<area shape="rect" id="Node000002" href="$synchrotron_8cpp.html#a35361f36f8d73e95dffabdc7cb0f3177" title=" " alt="" coords="212,22,371,62"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="164,39,198,39,198,45,164,45"/>
+<area shape="rect" id="Node000003" href="$utilities_8h.html#ab8e81118f023df135835db8cce4f5f42" title="Returns the value of a single parameter." alt="" coords="419,29,469,55"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="371,39,405,39,405,45,371,45"/>
+<area shape="poly" id="edge3_Node000003_Node000003" title=" " alt="" coords="418,31,413,21,416,11,426,5,444,3,465,6,474,15,470,19,463,11,444,8,428,10,420,15,418,20,423,28"/>
 </map>

@@ -230,7 +230,40 @@ Those profiles are optional and will be set to zero function if not provided.
     Setting usere-defined structured jet in the Python level is OK for light curve and spectrum calculation. However, it is not recommended for MCMC parameter fitting.
     The reason is that setting user-defined profiles in the Python level leads to a large overhead due to the Python-C++ inter-process communication.
     Users are recommended to set up the user-defined jet structure in the C++ level for MCMC parameter fitting for better performance.
-        
+
+Reverse Shock
+^^^^^^^^^^^^^
+
+.. code-block:: python
+
+    from VegasAfterglow import Radiation
+
+    # Create a radiation model with self-Compton radiation
+    fwd_rad = Radiation(eps_e=1e-1, eps_B=1e-3, p=2.3, SSC=True, KN=True, IC_cooling=True)
+    rvs_rad = Radiation(eps_e=1e-2, eps_B=1e-4, p=2.4, SSC=False, KN=False, IC_cooling=False)
+
+    #..other settings
+    model = Model(forward_rad=fwd_rad, reverse_rad=rvs_rad, ...)
+
+    times = np.logspace(2, 8, 200)  
+    
+    bands = np.array([1e9, 1e14, 1e17])  
+
+    results = model.specific_flux(times, bands)
+    
+    plt.figure(figsize=(4.8, 3.6),dpi=200)
+
+    # Plot each frequency band 
+    for i, nu in enumerate(bands):
+        exp = int(np.floor(np.log10(nu)))
+        base = nu / 10**exp
+        plt.loglog(times, results['syn'][i,:], label=fr'${base:.1f} \times 10^{{{exp}}}$ Hz')
+        plt.loglog(times, results['IC'][i,:], label=fr'${base:.1f} \times 10^{{{exp}}}$ Hz')
+        plt.loglog(times, results['syn_rvs'][i,:], label=fr'${base:.1f} \times 10^{{{exp}}}$ Hz')#reverse shock synchrotron
+
+.. note::
+    You may increase the resolution of the grid to improve the accuracy of the reverse shock synchrotron radiation.
+          
 
 Radiation Processes
 -------------------
@@ -262,6 +295,7 @@ Self-Synchrotron Compton Radiation
     model = Model(forward_rad=rad, ...)
 
     times = np.logspace(2, 8, 200)  
+
     bands = np.array([1e9, 1e14, 1e17])  
 
     results = model.specific_flux(times, bands)
@@ -277,40 +311,11 @@ Self-Synchrotron Compton Radiation
 
 .. note::
     (IC_cooling = False, KN = False, SSC = True): The IC radiation is calculated based on synchrotron spectrum without IC cooling.
+
     (IC_cooling = True, KN = False, SSC = True): The IC radiation is calculated based on synchrotron spectrum with IC cooling without Klein-Nishina correction.
+
     (IC_cooling = True, KN = True, SSC = True): The IC radiation is calculated based on synchrotron spectrum with IC cooling and Klein-Nishina correction.
-
-Reverse Shock
-^^^^^^^^^^^^^
-
-.. code-block:: python
-    from VegasAfterglow import Radiation
-
-    # Create a radiation model with self-Compton radiation
-    fwd_rad = Radiation(eps_e=1e-1, eps_B=1e-3, p=2.3, SSC=True, KN=True, IC_cooling=True)
-    rvs_rad = Radiation(eps_e=1e-2, eps_B=1e-4, p=2.4, SSC=False, KN=False, IC_cooling=False)
-
-    #..other settings
-    model = Model(forward_rad=fwd_rad, reverse_rad=rvs_rad, ...)
-
-    times = np.logspace(2, 8, 200)  
-    bands = np.array([1e9, 1e14, 1e17])  
-
-    results = model.specific_flux(times, bands)
-    
-    plt.figure(figsize=(4.8, 3.6),dpi=200)
-
-    # Plot each frequency band 
-    for i, nu in enumerate(bands):
-        exp = int(np.floor(np.log10(nu)))
-        base = nu / 10**exp
-        plt.loglog(times, results['syn'][i,:], label=fr'${base:.1f} \times 10^{{{exp}}}$ Hz')
-        plt.loglog(times, results['IC'][i,:], label=fr'${base:.1f} \times 10^{{{exp}}}$ Hz')
-        plt.loglog(times, results['syn_rvs'][i,:], label=fr'${base:.1f} \times 10^{{{exp}}}$ Hz')#reverse shock synchrotron
-
-.. note::
-    You may increase the resolution of the grid to improve the accuracy of the reverse shock synchrotron radiation.
-    
+  
 Advanced Features
 -----------------
 

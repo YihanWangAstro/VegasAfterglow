@@ -130,7 +130,7 @@ $(document).ready(function(){initNavTree('reverse-shock_8tpp_source.html',''); i
 <div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span>    Real gamma34 = compute_rel_Gamma(gamma4, gamma3, beta4, beta3);</div>
 <div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span>    Real ratio_u = compute_4vel_jump(gamma34, sigma);</div>
 <div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span>    Real column_den3 = m4 * ratio_u / width;</div>
-<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span>    Real dx3dt = (beta4 - beta3) * con::c / ((1 - beta3) * ((gamma3 * ratio_u) / gamma4 - 1));</div>
+<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span>    Real dx3dt = (beta4 - beta3) * con::c / ((1 - beta3) * (gamma3 * ratio_u / gamma4 - 1));</div>
 <div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span>    return column_den3 * dx3dt * gamma3;</div>
 <div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span>}</div>
 <div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span> </div>
