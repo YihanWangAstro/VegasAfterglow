@@ -10,5 +10,6 @@ var structReverseState =
     [ "r", "structReverseState.html#a1d228a9211bd05c57668347829be3c96", null ],
     [ "t_comv", "structReverseState.html#a11c8a586124c98f25f5f550ecb9c80c4", null ],
     [ "theta", "structReverseState.html#a648d7f025736edf48ff33fb011c03fdb", null ],
+    [ "width_cross", "structReverseState.html#a0850e9fa249afda9fb719f9cd99dffde", null ],
     [ "width_shell", "structReverseState.html#ab143a70c318716211231ce3f90f01fbb", null ]
 ];

@@ -243,10 +243,10 @@ Reverse Shock
     rvs_rad = Radiation(eps_e=1e-2, eps_B=1e-4, p=2.4, SSC=False, KN=False, IC_cooling=False)
 
     #..other settings
-    model = Model(forward_rad=fwd_rad, reverse_rad=rvs_rad, ...)
+    model = Model(forward_rad=fwd_rad, reverse_rad=rvs_rad, resolutions=(1, 5, 5),...)
 
     times = np.logspace(2, 8, 200)  
-    
+
     bands = np.array([1e9, 1e14, 1e17])  
 
     results = model.specific_flux(times, bands)
