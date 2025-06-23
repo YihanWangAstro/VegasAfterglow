@@ -30,7 +30,7 @@ Setting up a simple afterglow model
     rad = Radiation(eps_e=1e-1, eps_B=1e-3, p=2.3)
 
     # Combine all components into a complete afterglow model
-    model = Model(jet=jet, medium=medium, observer=obs, forward_rad=rad)
+    model = Model(jet=jet, medium=medium, observer=obs, forward_rad=rad, resolutions=(0.3,3,5))
 
     # Define time range for light curve calculation
     times = np.logspace(2, 8, 200)  
@@ -221,7 +221,7 @@ Those profiles are optional and will be set to zero function if not provided.
     #..other settings
 
     #if your jet is not axisymmetric, set axisymmetric to False
-    model = Model(jet=jet, ..., axisymmetric=False, resolutions=(0.3, 2., 5.))
+    model = Model(jet=jet, ..., axisymmetric=False, resolutions=(0.3, 5, 10))
 
     # the user-defined jet structure could be spiky, if the default resolution may not resolve the jet structure, if that is the case, you can try a finer resolution (phi_ppd, theta_ppd, t_ppd)
     # where phi_ppd is the number of points per degree in the phi direction, theta_ppd is the number of points per degree in the theta direction, and t_ppd is the number of points per decade in the time direction    .
@@ -246,7 +246,7 @@ Reverse Shock
     rvs_rad = Radiation(eps_e=1e-2, eps_B=1e-4, p=2.4, SSC=False, KN=False, IC_cooling=False)
 
     #..other settings
-    model = Model(forward_rad=fwd_rad, reverse_rad=rvs_rad, resolutions=(1, 5, 5),...)
+    model = Model(forward_rad=fwd_rad, reverse_rad=rvs_rad, resolutions=(0.5, 10, 10),...)
 
     times = np.logspace(2, 8, 200)  
 
