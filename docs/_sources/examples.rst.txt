@@ -238,6 +238,9 @@ Reverse Shock
 
     from VegasAfterglow import Radiation
 
+    #set the jet duration to be 100 seconds, the default is 1 second. The jet duration affects the reverse shock thickness (thin shell or thick shell).
+    jet = TophatJet(theta_c=0.1, E_iso=1e52, Gamma0=300, T0 = 100)
+
     # Create a radiation model with self-Compton radiation
     fwd_rad = Radiation(eps_e=1e-1, eps_B=1e-3, p=2.3, SSC=True, KN=True, IC_cooling=True)
     rvs_rad = Radiation(eps_e=1e-2, eps_B=1e-4, p=2.4, SSC=False, KN=False, IC_cooling=False)
