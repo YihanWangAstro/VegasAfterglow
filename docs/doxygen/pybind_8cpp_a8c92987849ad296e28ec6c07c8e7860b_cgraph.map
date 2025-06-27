@@ -1,53 +1,54 @@
 <map id="PYBIND11_MODULE" name="PYBIND11_MODULE">
-<area shape="rect" id="Node000001" title=" " alt="" coords="5,457,156,482"/>
-<area shape="rect" id="Node000002" href="$structMultiBandData.html#ab15b29ad6db1c7be7bb62d8d4b218411" title=" " alt="" coords="243,125,393,165"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="81,456,90,404,110,329,126,287,146,247,171,208,202,175,228,159,231,164,206,179,176,212,151,249,131,290,115,330,95,405,86,457"/>
-<area shape="rect" id="Node000003" href="$utilities_8h.html#ab8e81118f023df135835db8cce4f5f42" title="Returns the value of a single parameter." alt="" coords="747,413,797,438"/>
-<area shape="poly" id="edge17_Node000001_Node000003" title=" " alt="" coords="79,456,82,392,87,347,97,297,112,245,134,195,163,149,202,111,267,67,330,34,392,13,453,4,514,7,575,24,637,55,701,99,717,121,731,153,752,237,765,328,772,399,766,399,760,328,747,238,726,155,713,123,697,103,634,59,573,29,513,12,453,9,393,18,333,39,270,72,206,115,168,152,138,197,117,247,102,298,92,348,87,393,84,456"/>
-<area shape="rect" id="Node000005" href="$structMultiBandData.html#a36b9e6baef1a0ab8ac972bc46ebf5618" title=" " alt="" coords="243,189,393,229"/>
-<area shape="poly" id="edge6_Node000001_Node000005" title=" " alt="" coords="83,455,96,415,120,359,155,299,177,271,202,246,228,229,231,234,206,250,181,274,159,302,125,361,101,417,88,457"/>
-<area shape="rect" id="Node000006" href="$structMultiBandModel.html#aac1b3b59c614be83121a2232dda009d5" title=" " alt="" coords="491,255,687,281"/>
-<area shape="poly" id="edge9_Node000001_Node000006" title=" " alt="" coords="84,455,98,421,122,374,157,327,178,306,203,290,240,272,279,260,360,246,438,245,507,251,507,256,438,250,360,252,280,265,241,277,205,294,182,311,161,331,127,377,103,423,89,457"/>
-<area shape="rect" id="Node000007" href="$structMultiBandModel.html#aa8fa5188553abf9f7f7b2c0321c27752" title=" " alt="" coords="204,305,432,330"/>
-<area shape="poly" id="edge11_Node000001_Node000007" title=" " alt="" coords="90,455,134,402,166,373,203,347,237,332,239,337,205,352,170,377,138,406,94,458"/>
-<area shape="rect" id="Node000009" href="$structMultiBandModel.html#a041063f7ee0ccf24878f440b91ef7147" title=" " alt="" coords="507,405,672,445"/>
-<area shape="poly" id="edge15_Node000001_Node000009" title=" " alt="" coords="105,454,150,434,203,419,279,409,356,405,493,411,493,417,356,411,279,414,205,424,152,439,107,459"/>
-<area shape="rect" id="Node000010" href="$pymodel_8cpp.html#a5fe485d60bb0066791e55de6f5e6c642" title="Creates a Gaussian jet model where energy and Lorentz factor follow Gaussian distribution." alt="" coords="532,470,647,495"/>
-<area shape="poly" id="edge18_Node000001_Node000010" title=" " alt="" coords="131,454,204,441,318,432,368,434,432,441,457,447,481,455,519,464,518,469,479,460,455,452,432,447,368,439,318,438,204,447,132,459"/>
-<area shape="rect" id="Node000011" href="$pymodel_8cpp.html#a43af01d16838e6513792deaeb727fbe5" title="Creates a constant density ISM (Interstellar Medium) environment." alt="" coords="287,457,349,482"/>
-<area shape="poly" id="edge20_Node000001_Node000011" title=" " alt="" coords="156,467,273,467,273,472,156,472"/>
-<area shape="rect" id="Node000012" href="$pymodel_8cpp.html#abe4a60136f663f326e6333055ff53f3c" title="Creates a power&#45;law jet model where energy and Lorentz factor follow power&#45;law distribution." alt="" coords="529,519,650,545"/>
-<area shape="poly" id="edge21_Node000001_Node000012" title=" " alt="" coords="141,479,204,491,371,511,515,524,515,529,371,516,204,496,140,485"/>
-<area shape="rect" id="Node000013" href="$pymodel_8cpp.html#a48952343f9ba50f32ab1efad3e6a6ba4" title="Creates a top&#45;hat jet model where energy and Lorentz factor are constant within theta_c." alt="" coords="540,569,639,594"/>
-<area shape="poly" id="edge23_Node000001_Node000013" title=" " alt="" coords="106,480,151,502,205,523,291,544,378,559,526,575,526,580,377,564,290,549,203,528,149,507,103,484"/>
-<area shape="rect" id="Node000014" href="$pymodel_8cpp.html#af5469e939faefb859e1f4b22e1e0bd02" title="Creates a wind environment with density profile ρ ∝ r^&#45;2." alt="" coords="283,609,353,634"/>
-<area shape="poly" id="edge25_Node000001_Node000014" title=" " alt="" coords="94,481,138,532,170,562,205,587,237,601,270,611,268,616,235,606,203,592,166,566,134,536,90,484"/>
-<area shape="rect" id="Node000015" href="$classPyModel.html#aff0f26fa2c72824720c6d16189ad996b" title="Calculate specific flux at given times and frequencies." alt="" coords="506,622,673,647"/>
-<area shape="poly" id="edge26_Node000001_Node000015" title=" " alt="" coords="89,481,102,516,126,562,160,608,181,627,205,643,247,660,291,670,336,675,381,675,466,665,536,649,537,654,467,670,381,680,336,680,290,675,245,665,203,648,178,632,157,611,122,565,98,518,84,483"/>
-<area shape="rect" id="Node000016" href="$classPyModel.html#a3bbae641e3d5f9968da2cbe8053bbce0" title="Calculate specific flux at given time and frequency (t_i,nu_i) series." alt="" coords="235,709,401,749"/>
-<area shape="poly" id="edge28_Node000001_Node000016" title=" " alt="" coords="88,482,101,522,125,577,159,637,181,664,206,689,224,701,221,705,202,693,177,668,155,640,120,580,96,524,83,483"/>
-<area shape="rect" id="Node000017" href="$classPyModel.html#ae3ece455a95fba21e689344a976720e3" title="Calculate specific flux at given time and frequency (t_i,nu_i) series, sorted by t_i." alt="" coords="235,773,401,813"/>
-<area shape="poly" id="edge30_Node000001_Node000017" title=" " alt="" coords="86,482,95,533,115,608,131,649,151,689,176,727,206,759,224,772,221,776,202,763,171,730,146,692,126,651,110,610,90,534,81,482"/>
-<area shape="rect" id="Node000018" href="$structMultiBandModel.html#addc177e083d29bfe10094625b516ece7" title=" " alt="" coords="226,838,410,863"/>
-<area shape="poly" id="edge32_Node000001_Node000018" title=" " alt="" coords="85,482,89,544,106,636,121,687,142,737,170,783,206,823,216,831,212,835,202,827,166,787,137,739,116,689,101,637,84,544,80,482"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="374,123,446,104,532,94,577,95,621,102,662,116,700,139,715,157,728,185,749,257,763,336,771,399,765,399,757,336,743,259,723,187,711,160,697,143,660,121,619,107,576,100,532,99,447,109,376,128"/>
-<area shape="rect" id="Node000004" href="$mcmc_8cpp.html#acad85304132da867746b1ca8c7daa1bf" title=" " alt="" coords="519,154,659,179"/>
-<area shape="poly" id="edge4_Node000002_Node000004" title=" " alt="" coords="394,148,506,157,506,163,393,154"/>
-<area shape="poly" id="edge3_Node000003_Node000003" title=" " alt="" coords="744,416,736,406,738,395,750,388,772,386,799,391,807,396,808,403,803,404,802,399,797,395,772,391,752,393,742,399,741,405,749,413"/>
-<area shape="poly" id="edge5_Node000004_Node000003" title=" " alt="" coords="661,174,682,183,700,197,720,219,735,245,757,301,768,355,773,398,767,399,763,355,752,302,731,247,715,223,697,201,679,188,658,179"/>
-<area shape="poly" id="edge7_Node000005_Node000003" title=" " alt="" coords="394,204,476,204,565,208,645,219,677,229,700,240,718,257,732,276,753,318,765,362,771,398,766,399,760,363,748,320,728,278,714,260,697,245,675,233,644,225,565,214,475,209,394,209"/>
-<area shape="poly" id="edge8_Node000005_Node000004" title=" " alt="" coords="393,195,505,177,506,182,394,200"/>
-<area shape="poly" id="edge10_Node000006_Node000003" title=" " alt="" coords="680,278,700,290,725,314,743,343,766,398,761,400,739,346,721,317,697,294,678,283"/>
-<area shape="poly" id="edge14_Node000007_Node000003" title=" " alt="" coords="412,327,549,352,625,370,700,391,735,405,733,410,698,396,624,375,548,357,412,333"/>
-<area shape="rect" id="Node000008" href="$structMultiBandData.html#a631c6982c88e97795ffef3edb81253d8" title=" " alt="" coords="480,305,699,330"/>
-<area shape="poly" id="edge12_Node000007_Node000008" title=" " alt="" coords="432,315,466,315,466,320,432,320"/>
-<area shape="poly" id="edge13_Node000008_Node000003" title=" " alt="" coords="655,328,700,347,731,372,756,400,752,404,728,376,697,352,653,333"/>
-<area shape="poly" id="edge16_Node000009_Node000003" title=" " alt="" coords="672,423,733,423,733,428,672,428"/>
-<area shape="poly" id="edge19_Node000010_Node000003" title=" " alt="" coords="646,469,698,455,733,441,735,446,700,460,647,474"/>
-<area shape="poly" id="edge22_Node000012_Node000003" title=" " alt="" coords="650,522,674,515,697,504,729,478,753,448,757,452,733,482,700,509,676,520,651,527"/>
-<area shape="poly" id="edge24_Node000013_Node000003" title=" " alt="" coords="638,576,669,568,697,554,720,531,738,503,761,450,766,452,743,506,724,534,700,558,671,573,640,581"/>
-<area shape="poly" id="edge27_Node000015_Node000003" title=" " alt="" coords="670,620,697,603,726,568,745,527,758,486,765,451,770,452,763,487,750,529,730,571,700,607,672,624"/>
-<area shape="poly" id="edge29_Node000016_Node000003" title=" " alt="" coords="402,734,472,733,551,723,591,713,629,699,665,681,697,657,717,635,733,609,754,553,765,497,768,452,773,452,770,498,760,554,738,612,721,638,700,661,667,685,631,704,592,719,552,729,473,739,402,740"/>
-<area shape="poly" id="edge31_Node000017_Node000003" title=" " alt="" coords="402,804,473,808,552,802,591,794,629,781,665,763,697,739,711,719,724,688,745,607,758,520,766,452,771,452,764,521,750,608,729,690,716,722,701,743,668,768,632,786,593,799,552,807,473,813,401,809"/>
-<area shape="poly" id="edge33_Node000018_Node000003" title=" " alt="" coords="372,861,445,871,532,873,577,868,620,857,661,839,697,813,715,787,729,748,741,699,750,644,762,535,767,451,772,452,767,535,756,645,747,700,735,749,719,789,701,816,664,843,622,862,578,873,532,878,444,877,371,866"/>
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,422,156,447"/>
+<area shape="rect" id="Node000002" href="$structMultiBandData.html#ab15b29ad6db1c7be7bb62d8d4b218411" title=" " alt="" coords="243,37,393,77"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="80,421,86,361,103,272,119,222,140,173,167,127,202,87,228,70,231,75,206,91,172,130,145,176,124,224,109,273,91,362,85,422"/>
+<area shape="rect" id="Node000003" href="$utilities_8h.html#ab8e81118f023df135835db8cce4f5f42" title="Returns the value of a single parameter." alt="" coords="747,405,797,430"/>
+<area shape="poly" id="edge17_Node000001_Node000003" title=" " alt="" coords="82,421,93,379,116,321,132,291,151,261,175,235,203,214,240,194,273,185,305,182,335,184,400,195,437,200,480,201,514,198,543,192,596,179,620,176,645,177,672,185,700,202,721,221,737,243,759,295,770,347,773,390,768,390,765,348,754,296,733,246,717,224,697,206,670,190,644,182,621,181,597,184,545,198,514,204,480,207,437,205,399,200,335,189,305,187,274,190,242,199,205,218,179,239,156,265,136,293,121,323,98,381,87,422"/>
+<area shape="rect" id="Node000005" href="$structMultiBandData.html#a36b9e6baef1a0ab8ac972bc46ebf5618" title=" " alt="" coords="243,101,393,141"/>
+<area shape="poly" id="edge6_Node000001_Node000005" title=" " alt="" coords="81,421,92,372,113,302,129,263,149,225,173,189,202,158,228,141,231,145,206,162,177,193,154,228,134,266,118,304,97,374,87,422"/>
+<area shape="rect" id="Node000006" href="$structMultiBandModel.html#aac1b3b59c614be83121a2232dda009d5" title=" " alt="" coords="491,217,687,242"/>
+<area shape="poly" id="edge9_Node000001_Node000006" title=" " alt="" coords="84,421,98,386,122,340,157,293,178,272,203,255,238,238,276,225,355,211,432,208,500,212,500,218,432,213,355,216,278,230,240,243,205,259,182,276,161,296,127,343,103,388,89,423"/>
+<area shape="rect" id="Node000007" href="$structMultiBandModel.html#aa8fa5188553abf9f7f7b2c0321c27752" title=" " alt="" coords="204,270,432,295"/>
+<area shape="poly" id="edge11_Node000001_Node000007" title=" " alt="" coords="90,420,134,368,166,338,203,312,237,297,239,302,205,317,170,342,138,371,94,423"/>
+<area shape="rect" id="Node000009" href="$structMultiBandModel.html#a041063f7ee0ccf24878f440b91ef7147" title=" " alt="" coords="507,368,672,408"/>
+<area shape="poly" id="edge15_Node000001_Node000009" title=" " alt="" coords="105,419,150,400,203,384,279,374,356,370,493,375,493,380,356,376,279,379,205,389,152,405,107,424"/>
+<area shape="rect" id="Node000010" href="$pymodel_8cpp.html#aebad6fd71005d1bec168be9482a8e953" title="Creates a Gaussian jet model where energy and Lorentz factor follow Gaussian distribution." alt="" coords="532,433,647,458"/>
+<area shape="poly" id="edge18_Node000001_Node000010" title=" " alt="" coords="131,419,204,407,318,398,432,407,521,427,520,432,432,412,318,404,204,412,132,424"/>
+<area shape="rect" id="Node000011" href="$pymodel_8cpp.html#a43af01d16838e6513792deaeb727fbe5" title="Creates a constant density ISM (Interstellar Medium) environment." alt="" coords="287,422,349,447"/>
+<area shape="poly" id="edge20_Node000001_Node000011" title=" " alt="" coords="156,432,273,432,273,437,156,437"/>
+<area shape="rect" id="Node000012" href="$pymodel_8cpp.html#ae7277e61b6c679670f55b7e974a01a30" title="Creates a power&#45;law jet model where energy and Lorentz factor follow power&#45;law distribution." alt="" coords="529,482,650,507"/>
+<area shape="poly" id="edge21_Node000001_Node000012" title=" " alt="" coords="141,445,204,456,371,475,515,487,515,493,371,481,204,461,140,450"/>
+<area shape="rect" id="Node000013" href="$pymodel_8cpp.html#ae1719874122ee6d02040114286d1270a" title="Creates a top&#45;hat jet model where energy and Lorentz factor are constant within theta_c." alt="" coords="540,531,639,557"/>
+<area shape="poly" id="edge23_Node000001_Node000013" title=" " alt="" coords="106,445,151,467,205,487,291,507,378,522,526,538,526,543,377,527,290,513,203,492,149,472,104,450"/>
+<area shape="rect" id="Node000014" href="$pymodel_8cpp.html#af5469e939faefb859e1f4b22e1e0bd02" title="Creates a wind environment with density profile ρ ∝ r^&#45;2." alt="" coords="554,581,625,606"/>
+<area shape="poly" id="edge25_Node000001_Node000014" title=" " alt="" coords="95,446,140,491,171,515,205,535,249,552,294,565,387,582,472,590,540,592,540,597,472,595,386,588,293,570,247,557,203,540,168,520,136,495,91,449"/>
+<area shape="rect" id="Node000015" href="$classPyModel.html#aff0f26fa2c72824720c6d16189ad996b" title="Calculate specific flux at given times and frequencies." alt="" coords="235,625,401,650"/>
+<area shape="poly" id="edge27_Node000001_Node000015" title=" " alt="" coords="90,446,106,478,131,521,164,565,206,603,233,618,230,622,202,607,160,569,126,524,101,481,85,449"/>
+<area shape="rect" id="Node000016" href="$classPyModel.html#a3bbae641e3d5f9968da2cbe8053bbce0" title="Calculate specific flux at given time and frequency (t_i,nu_i) series." alt="" coords="235,675,401,715"/>
+<area shape="poly" id="edge29_Node000001_Node000016" title=" " alt="" coords="88,447,100,488,123,545,158,607,180,635,206,659,224,671,221,675,202,663,176,638,154,610,119,548,95,490,83,448"/>
+<area shape="rect" id="Node000017" href="$classPyModel.html#ae3ece455a95fba21e689344a976720e3" title="Calculate specific flux at given time and frequency (t_i,nu_i) series, sorted by t_i." alt="" coords="235,739,401,779"/>
+<area shape="poly" id="edge31_Node000001_Node000017" title=" " alt="" coords="86,447,95,498,115,573,131,614,151,655,176,692,206,724,224,737,221,741,202,729,171,695,146,657,126,616,110,575,90,499,81,448"/>
+<area shape="rect" id="Node000018" href="$structMultiBandModel.html#addc177e083d29bfe10094625b516ece7" title=" " alt="" coords="226,803,410,829"/>
+<area shape="poly" id="edge33_Node000001_Node000018" title=" " alt="" coords="85,447,89,509,106,601,121,652,142,702,170,749,206,789,216,796,212,800,202,792,166,752,137,705,116,654,101,603,84,509,80,447"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="372,34,444,15,487,7,531,3,576,4,621,11,663,26,700,50,719,74,734,111,746,157,755,208,767,311,772,391,767,391,762,312,750,209,741,158,729,113,714,77,697,54,660,31,619,16,576,9,531,9,487,13,445,20,374,40"/>
+<area shape="rect" id="Node000004" href="$mcmc_8cpp.html#acad85304132da867746b1ca8c7daa1bf" title=" " alt="" coords="519,65,659,90"/>
+<area shape="poly" id="edge4_Node000002_Node000004" title=" " alt="" coords="394,60,506,68,506,74,393,65"/>
+<area shape="poly" id="edge3_Node000003_Node000003" title=" " alt="" coords="744,408,736,398,738,387,750,380,772,378,799,383,807,388,808,395,803,396,802,391,797,387,772,383,752,385,742,390,741,396,749,405"/>
+<area shape="poly" id="edge5_Node000004_Node000003" title=" " alt="" coords="661,84,682,93,701,107,715,129,727,160,748,240,762,324,771,390,765,391,757,325,742,241,722,162,710,132,697,111,679,98,658,88"/>
+<area shape="poly" id="edge7_Node000005_Node000003" title=" " alt="" coords="393,117,476,117,566,122,646,135,678,145,700,158,714,175,726,199,746,264,770,390,764,391,740,265,721,201,709,177,697,162,676,150,645,140,565,128,476,122,393,122"/>
+<area shape="poly" id="edge8_Node000005_Node000004" title=" " alt="" coords="393,106,505,88,506,93,394,112"/>
+<area shape="poly" id="edge10_Node000006_Node000003" title=" " alt="" coords="666,240,700,259,727,290,746,325,760,360,768,390,763,392,755,362,742,327,723,293,697,263,663,244"/>
+<area shape="poly" id="edge14_Node000007_Node000003" title=" " alt="" coords="382,267,452,259,534,259,577,263,620,271,661,284,700,303,723,321,741,344,764,390,760,393,736,347,719,325,697,307,659,289,618,276,576,268,534,264,452,265,383,272"/>
+<area shape="rect" id="Node000008" href="$structMultiBandData.html#a631c6982c88e97795ffef3edb81253d8" title=" " alt="" coords="480,318,699,343"/>
+<area shape="poly" id="edge12_Node000007_Node000008" title=" " alt="" coords="391,293,504,313,503,318,390,298"/>
+<area shape="poly" id="edge13_Node000008_Node000003" title=" " alt="" coords="667,341,700,353,728,372,751,393,748,397,725,376,697,358,665,346"/>
+<area shape="poly" id="edge16_Node000009_Node000003" title=" " alt="" coords="673,399,734,408,733,414,672,404"/>
+<area shape="poly" id="edge19_Node000010_Node000003" title=" " alt="" coords="647,434,733,420,734,426,648,439"/>
+<area shape="poly" id="edge22_Node000012_Node000003" title=" " alt="" coords="650,482,698,467,744,437,747,441,700,472,651,487"/>
+<area shape="poly" id="edge24_Node000013_Node000003" title=" " alt="" coords="638,537,669,530,697,516,716,500,733,481,757,441,762,444,737,484,720,504,700,521,670,535,639,543"/>
+<area shape="poly" id="edge26_Node000014_Node000003" title=" " alt="" coords="625,590,662,583,680,576,697,566,722,538,741,505,755,472,763,443,768,444,760,473,746,508,727,541,700,570,683,581,664,588,626,595"/>
+<area shape="poly" id="edge28_Node000015_Node000003" title=" " alt="" coords="367,647,438,660,525,665,571,662,616,653,658,638,697,615,716,598,730,578,751,531,763,484,767,444,773,444,768,484,756,533,735,580,719,602,700,619,660,643,617,658,571,667,525,670,437,665,366,653"/>
+<area shape="poly" id="edge30_Node000016_Node000003" title=" " alt="" coords="399,712,469,722,548,723,588,718,627,708,664,693,697,671,709,656,721,632,741,569,755,500,764,443,770,444,761,501,746,570,726,634,714,659,700,675,666,697,629,713,589,723,549,728,469,727,398,717"/>
+<area shape="poly" id="edge32_Node000017_Node000003" title=" " alt="" coords="402,761,483,763,571,761,647,750,676,742,697,730,712,710,725,680,745,599,759,512,766,443,771,444,764,512,751,600,730,681,716,713,700,734,679,746,648,756,571,766,483,768,401,766"/>
+<area shape="poly" id="edge34_Node000018_Node000003" title=" " alt="" coords="381,826,453,834,538,832,581,826,623,814,662,795,697,770,713,747,727,711,748,618,760,520,767,443,772,444,766,520,753,619,732,713,718,749,701,774,665,800,625,819,583,831,539,838,453,839,380,831"/>
 </map>

@@ -4,9 +4,10 @@ var pymodel_8h =
     [ "PyObserver", "classPyObserver.html", "classPyObserver" ],
     [ "PyRadiation", "classPyRadiation.html", "classPyRadiation" ],
     [ "PyModel", "classPyModel.html", "classPyModel" ],
-    [ "PyGaussianJet", "pymodel_8h.html#acbf4629093044b6071dbc1287394fd5a", null ],
+    [ "convert_unit", "pymodel_8h.html#aa920671831cc213a5c0858813e42279f", null ],
+    [ "PyGaussianJet", "pymodel_8h.html#a640334bcb244a98e359f42b86331eab3", null ],
     [ "PyISM", "pymodel_8h.html#a43af01d16838e6513792deaeb727fbe5", null ],
-    [ "PyPowerLawJet", "pymodel_8h.html#a620ad36365eae5cc3cb27676259a46a0", null ],
-    [ "PyTophatJet", "pymodel_8h.html#a408a8d371081a364097039be6895a986", null ],
+    [ "PyPowerLawJet", "pymodel_8h.html#a5ef49c4f8ed2f2ac8af761d51a811e34", null ],
+    [ "PyTophatJet", "pymodel_8h.html#af1f230ff03a5fe38e4b897e3dc219782", null ],
     [ "PyWind", "pymodel_8h.html#af5469e939faefb859e1f4b22e1e0bd02", null ]
 ];

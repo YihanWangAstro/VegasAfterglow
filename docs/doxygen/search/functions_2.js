@@ -36,7 +36,7 @@ var searchData=
   ['compute_5fsyn_5ffreq_33',['compute_syn_freq',['../synchrotron_8h.html#a936bfaa522ec8295a21d253e5453188d',1,'compute_syn_freq(Real gamma, Real B):&#160;synchrotron.cpp'],['../synchrotron_8cpp.html#a936bfaa522ec8295a21d253e5453188d',1,'compute_syn_freq(Real gamma, Real B):&#160;synchrotron.cpp']]],
   ['compute_5fsyn_5fgamma_34',['compute_syn_gamma',['../synchrotron_8cpp.html#a85433be4a0da2f510240a603da8f7dff',1,'synchrotron.cpp']]],
   ['compute_5fsyn_5fgamma_5fa_35',['compute_syn_gamma_a',['../synchrotron_8cpp.html#ad1107cc37702b503577dcadee93e165a',1,'synchrotron.cpp']]],
-  ['compute_5fsyn_5fgamma_5fm_36',['compute_syn_gamma_m',['../synchrotron_8cpp.html#a1c5ae0a77c927eb60684c180ba559567',1,'compute_syn_gamma_M(Real B, InverseComptonY const &amp;Ys, Real p):&#160;synchrotron.cpp'],['../synchrotron_8cpp.html#a0095a83d7309c92bcf2d807436b2615c',1,'compute_syn_gamma_m(Real Gamma_rel, Real gamma_M, Real eps_e, Real p, Real xi):&#160;synchrotron.cpp']]],
+  ['compute_5fsyn_5fgamma_5fm_36',['compute_syn_gamma_m',['../synchrotron_8cpp.html#a0095a83d7309c92bcf2d807436b2615c',1,'compute_syn_gamma_m(Real Gamma_rel, Real gamma_M, Real eps_e, Real p, Real xi):&#160;synchrotron.cpp'],['../synchrotron_8cpp.html#a1c5ae0a77c927eb60684c180ba559567',1,'compute_syn_gamma_M(Real B, InverseComptonY const &amp;Ys, Real p):&#160;synchrotron.cpp']]],
   ['compute_5fsyn_5fi_5fpeak_37',['compute_syn_I_peak',['../synchrotron_8cpp.html#ad0ce654aca1c62f43ae108ca8772ed0f',1,'synchrotron.cpp']]],
   ['compute_5fthomson_5fy_38',['compute_Thomson_Y',['../inverse-compton_8cpp.html#acd9474d0630c4e995f6902006749d116',1,'inverse-compton.cpp']]],
   ['compute_5fupstr_5f4vel_39',['compute_upstr_4vel',['../shock_8h.html#ab0d0c4b81c0c5525c81eb24d70c4b010',1,'shock.h']]],
@@ -47,6 +47,7 @@ var searchData=
   ['compute_5fy_5ftilt_5fat_5fgamma_44',['compute_Y_tilt_at_gamma',['../structInverseComptonY.html#a9a35d3af9bd23acdde9d09d38ee116eb',1,'InverseComptonY']]],
   ['compute_5fy_5ftilt_5fat_5fnu_45',['compute_Y_tilt_at_nu',['../structInverseComptonY.html#a59226978ce361a575783edde4335c1df',1,'InverseComptonY']]],
   ['configure_46',['configure',['../structMultiBandModel.html#aac1b3b59c614be83121a2232dda009d5',1,'MultiBandModel']]],
-  ['coord_47',['Coord',['../classCoord.html#a14caa1114c95058bd25e1a7ff2ad8e43',1,'Coord']]],
-  ['cyclotron_5fcorrection_48',['cyclotron_correction',['../synchrotron_8cpp.html#a018aa6d904c7b40ecbcefd494a4b60e4',1,'synchrotron.cpp']]]
+  ['convert_5funit_47',['convert_unit',['../pymodel_8cpp.html#aa920671831cc213a5c0858813e42279f',1,'convert_unit(Ejecta &amp;jet, Medium &amp;medium):&#160;pymodel.cpp'],['../pymodel_8h.html#aa920671831cc213a5c0858813e42279f',1,'convert_unit(Ejecta &amp;jet, Medium &amp;medium):&#160;pymodel.cpp']]],
+  ['coord_48',['Coord',['../classCoord.html#a14caa1114c95058bd25e1a7ff2ad8e43',1,'Coord']]],
+  ['cyclotron_5fcorrection_49',['cyclotron_correction',['../synchrotron_8cpp.html#a018aa6d904c7b40ecbcefd494a4b60e4',1,'synchrotron.cpp']]]
 ];

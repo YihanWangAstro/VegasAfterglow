@@ -61,7 +61,7 @@ var NAVTREEINDEX =
 [
 "IO_8cpp.html",
 "inverse-compton_8h.html#a927ff1c4d5d8f2adde3e6f1819dcf3a2",
-"simple-shock_8tpp.html"
+"simple-shock_8hpp.html"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';
