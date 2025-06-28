@@ -63,16 +63,16 @@
 <li class="toctree-l3"><a class="reference internal" href="#user-defined-medium">User-Defined Medium</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#structured-jet-models">Structured Jet Models</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#jet-models">Jet Models</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#gaussian-jet">Gaussian Jet</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#power-law-jet">Power-Law Jet</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#jet-with-spreading">Jet with Spreading</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#magnetar-spin-down">Magnetar Spin-down</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#user-defined-jet">User-Defined Jet</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#reverse-shock">Reverse Shock</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#radiation-processes">Radiation Processes</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#reverse-shock-emission">Reverse Shock Emission</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#inverse-compton-cooling">Inverse Compton Cooling</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#self-synchrotron-compton-radiation">Self-Synchrotron Compton Radiation</a></li>
 </ul>
@@ -129,18 +129,18 @@
 <li><p><a class="reference internal" href="#user-defined-medium" id="id5">User-Defined Medium</a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#structured-jet-models" id="id6">Structured Jet Models</a></p>
+<li><p><a class="reference internal" href="#jet-models" id="id6">Jet Models</a></p>
 <ul>
 <li><p><a class="reference internal" href="#gaussian-jet" id="id7">Gaussian Jet</a></p></li>
 <li><p><a class="reference internal" href="#power-law-jet" id="id8">Power-Law Jet</a></p></li>
 <li><p><a class="reference internal" href="#jet-with-spreading" id="id9">Jet with Spreading</a></p></li>
 <li><p><a class="reference internal" href="#magnetar-spin-down" id="id10">Magnetar Spin-down</a></p></li>
 <li><p><a class="reference internal" href="#user-defined-jet" id="id11">User-Defined Jet</a></p></li>
-<li><p><a class="reference internal" href="#reverse-shock" id="id12">Reverse Shock</a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#radiation-processes" id="id13">Radiation Processes</a></p>
+<li><p><a class="reference internal" href="#radiation-processes" id="id12">Radiation Processes</a></p>
 <ul>
+<li><p><a class="reference internal" href="#reverse-shock-emission" id="id13">Reverse Shock Emission</a></p></li>
 <li><p><a class="reference internal" href="#inverse-compton-cooling" id="id14">Inverse Compton Cooling</a></p></li>
 <li><p><a class="reference internal" href="#self-synchrotron-compton-radiation" id="id15">Self-Synchrotron Compton Radiation</a></p></li>
 </ul>
@@ -270,8 +270,8 @@
 </div>
 </section>
 </section>
-<section id="structured-jet-models">
-<h2><a class="toc-backref" href="#id6" role="doc-backlink">Structured Jet Models</a><a class="headerlink" href="#structured-jet-models" title="Link to this heading"></a></h2>
+<section id="jet-models">
+<h2><a class="toc-backref" href="#id6" role="doc-backlink">Jet Models</a><a class="headerlink" href="#jet-models" title="Link to this heading"></a></h2>
 <section id="gaussian-jet">
 <h3><a class="toc-backref" href="#id7" role="doc-backlink">Gaussian Jet</a><a class="headerlink" href="#gaussian-jet" title="Link to this heading"></a></h3>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">VegasAfterglow</span><span class="w"> </span><span class="kn">import</span> <span class="n">GaussianJet</span>
@@ -399,8 +399,11 @@ The reason is that setting user-defined profiles in the Python level leads to a 
 Users are recommended to set up the user-defined jet structure in the C++ level for MCMC parameter fitting for better performance.</p>
 </div>
 </section>
-<section id="reverse-shock">
-<h3><a class="toc-backref" href="#id12" role="doc-backlink">Reverse Shock</a><a class="headerlink" href="#reverse-shock" title="Link to this heading"></a></h3>
+</section>
+<section id="radiation-processes">
+<h2><a class="toc-backref" href="#id12" role="doc-backlink">Radiation Processes</a><a class="headerlink" href="#radiation-processes" title="Link to this heading"></a></h2>
+<section id="reverse-shock-emission">
+<h3><a class="toc-backref" href="#id13" role="doc-backlink">Reverse Shock Emission</a><a class="headerlink" href="#reverse-shock-emission" title="Link to this heading"></a></h3>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">VegasAfterglow</span><span class="w"> </span><span class="kn">import</span> <span class="n">Radiation</span>
 
 <span class="c1">#set the jet duration to be 100 seconds, the default is 1 second. The jet duration affects the reverse shock thickness (thin shell or thick shell).</span>
@@ -434,14 +437,11 @@ Users are recommended to set up the user-defined jet structure in the C++ level 
 <p>You may increase the resolution of the grid to improve the accuracy of the reverse shock synchrotron radiation.</p>
 </div>
 </section>
-</section>
-<section id="radiation-processes">
-<h2><a class="toc-backref" href="#id13" role="doc-backlink">Radiation Processes</a><a class="headerlink" href="#radiation-processes" title="Link to this heading"></a></h2>
 <section id="inverse-compton-cooling">
 <h3><a class="toc-backref" href="#id14" role="doc-backlink">Inverse Compton Cooling</a><a class="headerlink" href="#inverse-compton-cooling" title="Link to this heading"></a></h3>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">VegasAfterglow</span><span class="w"> </span><span class="kn">import</span> <span class="n">Radiation</span>
 
-<span class="c1"># Create a radiation model with inverse Compton cooling (with Klein-Nishina correction) on synchrotron radiation</span>
+<span class="c1"># Create a radiation model with inverse Compton cooling (without Klein-Nishina correction) on synchrotron radiation</span>
 <span class="n">rad</span> <span class="o">=</span> <span class="n">Radiation</span><span class="p">(</span><span class="n">eps_e</span><span class="o">=</span><span class="mf">1e-1</span><span class="p">,</span> <span class="n">eps_B</span><span class="o">=</span><span class="mf">1e-3</span><span class="p">,</span> <span class="n">p</span><span class="o">=</span><span class="mf">2.3</span><span class="p">,</span> <span class="n">IC_cooling</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">KN</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 
 <span class="c1">#..other settings</span>
@@ -478,8 +478,8 @@ Users are recommended to set up the user-defined jet structure in the C++ level 
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>(IC_cooling = False, KN = False, SSC = True): The IC radiation is calculated based on synchrotron spectrum without IC cooling.</p>
-<p>(IC_cooling = True, KN = False, SSC = True): The IC radiation is calculated based on synchrotron spectrum with IC cooling without Klein-Nishina correction.</p>
-<p>(IC_cooling = True, KN = True, SSC = True): The IC radiation is calculated based on synchrotron spectrum with IC cooling and Klein-Nishina correction.</p>
+<p>(IC_cooling = True, KN = False, SSC = True): The IC radiation is calculated based on synchrotron spectrum with IC cooling, but without Klein-Nishina correction.</p>
+<p>(IC_cooling = True, KN = True, SSC = True): The IC radiation is calculated based on synchrotron spectrum with both IC cooling and Klein-Nishina correction.</p>
 </div>
 </section>
 </section>

@@ -127,8 +127,8 @@ User-Defined Medium
     model = Model(medium=medium, ...)
 
 
-Structured Jet Models
----------------------
+Jet Models
+----------
 
 Gaussian Jet
 ^^^^^^^^^^^^
@@ -260,9 +260,13 @@ Those profiles are optional and will be set to zero function if not provided.
     Setting usere-defined structured jet in the Python level is OK for light curve and spectrum calculation. However, it is not recommended for MCMC parameter fitting.
     The reason is that setting user-defined profiles in the Python level leads to a large overhead due to the Python-C++ inter-process communication.
     Users are recommended to set up the user-defined jet structure in the C++ level for MCMC parameter fitting for better performance.
+          
 
-Reverse Shock
-^^^^^^^^^^^^^
+Radiation Processes
+-------------------
+
+Reverse Shock Emission
+^^^^^^^^^^^^^^^^^^^^^^    
 
 .. code-block:: python
 
@@ -295,19 +299,16 @@ Reverse Shock
 
 .. note::
     You may increase the resolution of the grid to improve the accuracy of the reverse shock synchrotron radiation.
-          
 
-Radiation Processes
--------------------
 
 Inverse Compton Cooling
-^^^^^^^^^^^^^^^^^^^^^^^^    
+^^^^^^^^^^^^^^^^^^^^^^^    
 
 .. code-block:: python
 
     from VegasAfterglow import Radiation
 
-    # Create a radiation model with inverse Compton cooling (with Klein-Nishina correction) on synchrotron radiation
+    # Create a radiation model with inverse Compton cooling (without Klein-Nishina correction) on synchrotron radiation
     rad = Radiation(eps_e=1e-1, eps_B=1e-3, p=2.3, IC_cooling=True, KN=False)
 
     #..other settings
@@ -344,9 +345,9 @@ Self-Synchrotron Compton Radiation
 .. note::
     (IC_cooling = False, KN = False, SSC = True): The IC radiation is calculated based on synchrotron spectrum without IC cooling.
 
-    (IC_cooling = True, KN = False, SSC = True): The IC radiation is calculated based on synchrotron spectrum with IC cooling without Klein-Nishina correction.
+    (IC_cooling = True, KN = False, SSC = True): The IC radiation is calculated based on synchrotron spectrum with IC cooling, but without Klein-Nishina correction.
 
-    (IC_cooling = True, KN = True, SSC = True): The IC radiation is calculated based on synchrotron spectrum with IC cooling and Klein-Nishina correction.
+    (IC_cooling = True, KN = True, SSC = True): The IC radiation is calculated based on synchrotron spectrum with both IC cooling and Klein-Nishina correction.
   
 Advanced Features
 -----------------
