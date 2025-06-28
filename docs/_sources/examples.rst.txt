@@ -187,7 +187,7 @@ Jet with Spreading
     The jet spreading (Lateral Expansion) is experimental and only works for the top-hat jet, Gaussian jet, and power-law jet with a jet core.
     The spreading prescription may not work for arbitrary user-defined jet structures.
 
-Magnetar Spin Down
+Magnetar Spin-down
 ^^^^^^^^^^^^^^^^^^
 
 .. code-block:: python
@@ -207,7 +207,7 @@ Magnetar Spin Down
     )
 
 .. note::
-    The magnetar spin-down implement injection function in the default form of L_0*(1+t/t_0)^(-q) for theta < theta_c.
+    The magnetar spin-down implement injection function in the default form of L_0*(1+t/t_0)^(-q) for theta < theta_c. You can pass the `magnetar` argument to the power-law and Gaussian jet as well.
 
 
 User-Defined Jet
