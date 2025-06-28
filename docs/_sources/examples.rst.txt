@@ -110,19 +110,19 @@ User-Defined Medium
     m_p = 1.6726219e-24  # Proton mass in grams
 
     # Define a custom density profile function
-    def custom_density(phi, theta, r):# r in cm, phi and theta in radians
+    def density(phi, theta, r):# r in cm, phi and theta in radians
         return m_p # n_ism =  1 cm^-3
         #return what ever density profile (g/cm^3) you want as a function of phi, theta, and r
         
-    def custom_mass(phi, theta, r):# r in cm, phi and theta in radians
+    def swept_mass(phi, theta, r):# r in cm, phi and theta in radians
         return m_p * r * r * r / 3
         #return the swept up mass PER SOLID ANGLE (g) over r (\int_0^r rho*r*r dr).
         #you may keep the consistency of the mass profile with the density profile
         #the purpose of providing the extra mass profile is to reduce the extra computations.
     
     # Create a user-defined medium
-    medium = Medium(rho=custom_density, mass=custom_mass)
-    
+    medium = Medium(rho=density, mass=swept_mass)
+
     #..other settings
     model = Model(medium=medium, ...)
 
@@ -187,6 +187,28 @@ Jet with Spreading
     The jet spreading (Lateral Expansion) is experimental and only works for the top-hat jet, Gaussian jet, and power-law jet with a jet core.
     The spreading prescription may not work for arbitrary user-defined jet structures.
 
+Magnetar Spin Down
+^^^^^^^^^^^^^^^^^^
+
+.. code-block:: python
+
+    from VegasAfterglow import Magnetar
+
+    # Create a power-law structured jet
+    jet = TophatJet(
+        theta_c=0.05,
+        E_iso=1e53,
+        Gamma0=300,
+        magnetar=Magnetar(
+            L_0=1e46,  # Luminosity (erg/s)
+            t_0=100    # Characteristic time (s)
+        )
+    )
+
+.. note::
+    The magnetar spin-down implement injection function in the default form of L_0*(1+t/t_0)^(-2) for theta < theta_c.
+
+
 User-Defined Jet
 ^^^^^^^^^^^^^^^^
 
@@ -200,8 +222,8 @@ Those profiles are optional and will be set to zero function if not provided.
 
     # Define a custom energy profile function, required to complete the jet structure
     def energy(phi, theta):
-        return 1e53 # E_iso = 1e53 erg isotropic fireball
-        #return what ever energy PER SOLID ANGLE profile you want as a function of phi and theta
+        return 1e53  # E_iso = 1e53 erg isotropic fireball
+        #return what ever energy profile you want as a function of phi and theta in unit of erg [not erg per solid angle]
 
     # Define a custom lorentz factor profile function, required to complete the jet structure
     def lorentz(phi, theta):
@@ -215,12 +237,12 @@ Those profiles are optional and will be set to zero function if not provided.
 
     # Define a custom energy injection profile function, optional
     def energy_injection(phi, theta, t):
-        return 1e46*(1 + t/100)**(-2) # L = 1e46 erg/s, t0 = 100 seconds
-        #return what ever energy injection PER SOLID ANGLE profile you want as a function of phi, theta, and time
+        return 1e46 * (1 + t / 100)**(-2) # L = 1e46 erg/s, t0 = 100 seconds
+        #return what ever energy injection  profile you want as a function of phi, theta, and time in unit of erg/s [not erg/s per solid angle]
 
     # Define a custom mass injection profile function, optional
     def mass_injection(phi, theta, t):
-        #returnwhat ever mass injection PER SOLID ANGLE profile you want as a function of phi, theta, and time
+        #return what ever mass injection profile you want as a function of phi, theta, and time in unit of g/s [not g/s per solid angle]
 
     # Create a user-defined jet
     jet = Ejecta(energy=energy, lorentz=lorentz, magnetization=magnetization, energy_injection=energy_injection, mass_injection=mass_injection)
@@ -268,7 +290,6 @@ Reverse Shock
         exp = int(np.floor(np.log10(nu)))
         base = nu / 10**exp
         plt.loglog(times, results['syn'][i,:], label=fr'${base:.1f} \times 10^{{{exp}}}$ Hz')
-        plt.loglog(times, results['IC'][i,:], label=fr'${base:.1f} \times 10^{{{exp}}}$ Hz')
         plt.loglog(times, results['syn_rvs'][i,:], label=fr'${base:.1f} \times 10^{{{exp}}}$ Hz')#reverse shock synchrotron
 
 .. note::
