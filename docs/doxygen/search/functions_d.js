@@ -10,7 +10,7 @@ var searchData=
   ['pybind11_5fmodule_7',['PYBIND11_MODULE',['../pybind_8cpp.html#a8c92987849ad296e28ec6c07c8e7860b',1,'pybind.cpp']]],
   ['pygaussianjet_8',['pygaussianjet',['../pymodel_8h.html#a640334bcb244a98e359f42b86331eab3',1,'PyGaussianJet(Real theta_c, Real E_iso, Real Gamma0, bool spreading=false, Real duration=1, std::optional&lt; PyMagnetar &gt; magnetar=std::nullopt):&#160;pymodel.cpp'],['../pymodel_8cpp.html#aebad6fd71005d1bec168be9482a8e953',1,'PyGaussianJet(Real theta_c, Real E_iso, Real Gamma0, bool spreading, Real duration, std::optional&lt; PyMagnetar &gt; magnetar):&#160;pymodel.cpp']]],
   ['pyism_9',['pyism',['../pymodel_8h.html#a43af01d16838e6513792deaeb727fbe5',1,'PyISM(Real n_ism):&#160;pymodel.cpp'],['../pymodel_8cpp.html#a43af01d16838e6513792deaeb727fbe5',1,'PyISM(Real n_ism):&#160;pymodel.cpp']]],
-  ['pymagnetar_10',['PyMagnetar',['../structPyMagnetar.html#a76e140a72f996ad76e01877c9008ea6b',1,'PyMagnetar']]],
+  ['pymagnetar_10',['PyMagnetar',['../structPyMagnetar.html#a47c0e3b93b429f1b5dd56461f7f27646',1,'PyMagnetar']]],
   ['pymodel_11',['PyModel',['../classPyModel.html#ac7d6f3f58304eefee08b7254df8eb56f',1,'PyModel']]],
   ['pyobserver_12',['PyObserver',['../classPyObserver.html#a81483263bfdc173c4ca6287add88ad9a',1,'PyObserver']]],
   ['pypowerlawjet_13',['pypowerlawjet',['../pymodel_8cpp.html#ae7277e61b6c679670f55b7e974a01a30',1,'PyPowerLawJet(Real theta_c, Real E_iso, Real Gamma0, Real k, bool spreading, Real duration, std::optional&lt; PyMagnetar &gt; magnetar):&#160;pymodel.cpp'],['../pymodel_8h.html#a5ef49c4f8ed2f2ac8af761d51a811e34',1,'PyPowerLawJet(Real theta_c, Real E_iso, Real Gamma0, Real k, bool spreading=false, Real duration=1, std::optional&lt; PyMagnetar &gt; magnetar=std::nullopt):&#160;pymodel.cpp']]],

@@ -34,7 +34,7 @@ var searchData=
   ['pygaussianjet_31',['pygaussianjet',['../pymodel_8h.html#a640334bcb244a98e359f42b86331eab3',1,'PyGaussianJet(Real theta_c, Real E_iso, Real Gamma0, bool spreading=false, Real duration=1, std::optional&lt; PyMagnetar &gt; magnetar=std::nullopt):&#160;pymodel.cpp'],['../pymodel_8cpp.html#aebad6fd71005d1bec168be9482a8e953',1,'PyGaussianJet(Real theta_c, Real E_iso, Real Gamma0, bool spreading, Real duration, std::optional&lt; PyMagnetar &gt; magnetar):&#160;pymodel.cpp']]],
   ['pygrid_32',['PyGrid',['../pybind_8h.html#ac1d4addade56d129930395ee7527601e',1,'pybind.h']]],
   ['pyism_33',['pyism',['../pymodel_8h.html#a43af01d16838e6513792deaeb727fbe5',1,'PyISM(Real n_ism):&#160;pymodel.cpp'],['../pymodel_8cpp.html#a43af01d16838e6513792deaeb727fbe5',1,'PyISM(Real n_ism):&#160;pymodel.cpp']]],
-  ['pymagnetar_34',['pymagnetar',['../structPyMagnetar.html',1,'PyMagnetar'],['../structPyMagnetar.html#a76e140a72f996ad76e01877c9008ea6b',1,'PyMagnetar::PyMagnetar()']]],
+  ['pymagnetar_34',['pymagnetar',['../structPyMagnetar.html',1,'PyMagnetar'],['../structPyMagnetar.html#a47c0e3b93b429f1b5dd56461f7f27646',1,'PyMagnetar::PyMagnetar()']]],
   ['pymodel_35',['pymodel',['../classPyModel.html#ac7d6f3f58304eefee08b7254df8eb56f',1,'PyModel::PyModel()'],['../classPyModel.html',1,'PyModel']]],
   ['pymodel_2ecpp_36',['pymodel.cpp',['../pymodel_8cpp.html',1,'']]],
   ['pymodel_2eh_37',['pymodel.h',['../pymodel_8h.html',1,'']]],

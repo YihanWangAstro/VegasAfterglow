@@ -1,5 +1,6 @@
 var NAVTREEINDEX2 =
 {
+"shock_8h_source.html":[4,0,0,12],
 "simple-shock_8hpp.html":[4,0,0,13],
 "simple-shock_8hpp_source.html":[4,0,0,13],
 "simple-shock_8tpp.html":[4,0,2,1,3],
@@ -95,9 +96,10 @@ var NAVTREEINDEX2 =
 "structPromptPhotons.html#ab54b4857265596371c0945944d82f735":[3,0,20,2],
 "structPromptPhotons.html#add7d339afb9fe847e25f9c1464c818be":[3,0,20,1],
 "structPyMagnetar.html":[3,0,21],
-"structPyMagnetar.html#a064f69bd2354e6630abfb97a776d9cc2":[3,0,21,2],
+"structPyMagnetar.html#a064f69bd2354e6630abfb97a776d9cc2":[3,0,21,3],
+"structPyMagnetar.html#a2dcda99a23b911362ce24c59934050f0":[3,0,21,2],
+"structPyMagnetar.html#a47c0e3b93b429f1b5dd56461f7f27646":[3,0,21,0],
 "structPyMagnetar.html#a64ff027ce4566d2c40bbe27dd7fa1a8d":[3,0,21,1],
-"structPyMagnetar.html#a76e140a72f996ad76e01877c9008ea6b":[3,0,21,0],
 "structRadParams.html":[3,0,25],
 "structRadParams.html#a0521194caf6b87cb685fa67fd92204c7":[3,0,25,0],
 "structRadParams.html#a2cc7b716052dd86936f3684bd8ec0853":[3,0,25,2],

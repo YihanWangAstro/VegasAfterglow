@@ -1,10 +1,16 @@
 var searchData=
 [
-  ['width_5fcross_0',['width_cross',['../structReverseState.html#a0850e9fa249afda9fb719f9cd99dffde',1,'ReverseState']]],
-  ['width_5fshell_1',['width_shell',['../structReverseState.html#ab143a70c318716211231ce3f90f01fbb',1,'ReverseState']]],
-  ['wind_2',['wind',['../classWind.html#a22b0ef6ba702c55973e8409c51cc959c',1,'Wind::Wind()'],['../classWind.html',1,'Wind']]],
-  ['write_5fcsv_3',['write_csv',['../IO_8h.html#a7be9dfde4e5dba8765c1c670e6aaafc8',1,'write_csv(std::string const &amp;filename, Array const &amp;array, Real unit=1.0):&#160;IO.cpp'],['../IO_8h.html#ae41c20909c2cb09f4336d370cf382e28',1,'write_csv(std::string const &amp;filename, MeshGrid const &amp;grid, Real unit=1.0):&#160;IO.cpp'],['../IO_8h.html#aaa31ecac784f8cc9679c445e2b75a690',1,'write_csv(std::string const &amp;filename, MeshGrid3d const &amp;grid3d, Real unit=1.0):&#160;IO.cpp'],['../IO_8cpp.html#a8222a27a38a56ddfab0c85dcb166b093',1,'write_csv(std::string const &amp;filename, Array const &amp;array, Real unit):&#160;IO.cpp'],['../IO_8cpp.html#afe9b0c0925836025e21e527cd38fdf54',1,'write_csv(std::string const &amp;filename, MeshGrid const &amp;grid, Real unit):&#160;IO.cpp'],['../IO_8cpp.html#a070b8d156a931c1514e0ba476f80bb54',1,'write_csv(std::string const &amp;filename, MeshGrid3d const &amp;grid3d, Real unit):&#160;IO.cpp']]],
-  ['write_5fnpy_4',['write_npy',['../IO_8h.html#a6a0ff8279e7d7521e15e939447168a45',1,'IO.h']]],
-  ['write_5fnpz_5',['write_npz',['../IO_8h.html#a7627cf6e33b8be0a2867d213b12732e6',1,'write_npz(std::string const &amp;filename, SynPhotonGrid const &amp;syn_ph):&#160;IO.cpp'],['../IO_8cpp.html#a8deca4f8a063da93b80d02eb6ec7f51d',1,'write_npz(std::string const &amp;filename, Shock const &amp;shock):&#160;IO.cpp'],['../IO_8cpp.html#a8324dae1c76d65b1b62427e877eec379',1,'write_npz(std::string const &amp;filename, SynElectronGrid const &amp;e):&#160;IO.cpp'],['../IO_8cpp.html#aa7f2bd86734f8d27bda9a4ce4256cee7',1,'write_npz(std::string const &amp;filename, SynPhotonGrid const &amp;ph):&#160;IO.cpp'],['../IO_8cpp.html#a0f117cd1c1e4d78329fdfd4de609a905',1,'write_npz(std::string const &amp;filename, Coord const &amp;coord):&#160;IO.cpp'],['../IO_8h.html#ab2322609f2abfdba52fcfb6afa857c62',1,'write_npz(std::string const &amp;filename, Args const &amp;... args):&#160;IO.h'],['../IO_8h.html#a0a6d5f057ee90e0ee899688721c6d7ef',1,'write_npz(std::string const &amp;filename, const T &amp;array, Real unit=1.0):&#160;IO.h'],['../IO_8h.html#a0f117cd1c1e4d78329fdfd4de609a905',1,'write_npz(std::string const &amp;filename, Coord const &amp;coord):&#160;IO.cpp'],['../IO_8h.html#a8deca4f8a063da93b80d02eb6ec7f51d',1,'write_npz(std::string const &amp;filename, Shock const &amp;shock):&#160;IO.cpp'],['../IO_8h.html#a8de7e53913a8a573d1a69bdcf009afdb',1,'write_npz(std::string const &amp;filename, SynElectronGrid const &amp;syn_e):&#160;IO.cpp']]],
-  ['write_5fnpz_5frecursive_6',['write_npz_recursive',['../IO_8h.html#ab44a8789e8ccc4df68582f0fcbad897f',1,'IO.h']]]
+  ['u_0',['u',['../structForwardState.html#a6b1bb80c9e94cbcde29e7e048c29679e',1,'ForwardState']]],
+  ['u_5fx_1',['u_x',['../classFRShockEqn.html#a93c481f03f787c180d8e97a2b6662ad6',1,'FRShockEqn']]],
+  ['ujy_2',['uJy',['../namespaceunit.html#a738b134e141d6acdbb335374689e6825',1,'unit']]],
+  ['unaryfunc_3',['UnaryFunc',['../utilities_8h.html#a0427d0ebbf7fe79ded8fe1b24c7cc931',1,'utilities.h']]],
+  ['unit_4',['unit',['../namespaceunit.html',1,'']]],
+  ['update_20and_20parameter_20calculation_5',['Synchrotron Update and Parameter Calculation',['../group__SynchrotronUpdates.html',1,'']]],
+  ['update_5fconstant_6',['update_constant',['../structSynPhotons.html#a631859af4fe11f0312e78f2fbaa39e80',1,'SynPhotons']]],
+  ['update_5felectrons_5f4y_7',['update_electrons_4y',['../synchrotron_8h.html#af56f9b4417a5f3e717102da3e81a7d37',1,'update_electrons_4Y(SynElectronGrid &amp;electrons, Shock const &amp;shock):&#160;synchrotron.cpp'],['../synchrotron_8cpp.html#af56f9b4417a5f3e717102da3e81a7d37',1,'update_electrons_4Y(SynElectronGrid &amp;electrons, Shock const &amp;shock):&#160;synchrotron.cpp']]],
+  ['update_5frequired_8',['update_required',['../classObserver.html#a90f4a0a86f9e4a702cfc3a13e7c9c153',1,'Observer']]],
+  ['utilities_9',['utilities',['../group__Mesh__Utilities.html',1,'Array and Grid Utilities'],['../group__ShockUtilities.html',1,'Shock Utilities']]],
+  ['utilities_2ecpp_10',['utilities.cpp',['../utilities_8cpp.html',1,'']]],
+  ['utilities_2eh_11',['utilities.h',['../utilities_8h.html',1,'']]],
+  ['utility_20templates_12',['Utility Templates',['../group__UtilityTemplates.html',1,'']]]
 ];

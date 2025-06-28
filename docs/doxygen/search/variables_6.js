@@ -10,7 +10,7 @@ var searchData=
   ['gamma_5fedge_7',['gamma_edge',['../structIntegratorGrid.html#a2eab29055ad10b15da2f1b03c16d0d30',1,'IntegratorGrid']]],
   ['gamma_5fhat_5fc_8',['gamma_hat_c',['../structInverseComptonY.html#a2ab9ce5800c93ef0ba56b1953c97c035',1,'InverseComptonY']]],
   ['gamma_5fhat_5fm_9',['gamma_hat_m',['../structInverseComptonY.html#a0025a8715ca91f593e4413020e095e71',1,'InverseComptonY']]],
-  ['gamma_5fm_10',['gamma_m',['../structSynElectrons.html#aecf574c857a1b1930faf5ae00c4a9af3',1,'SynElectrons::gamma_M'],['../structSynElectrons.html#a4cfe5375f620c71ed77acdcd743a2639',1,'SynElectrons::gamma_m']]],
+  ['gamma_5fm_10',['gamma_m',['../structSynElectrons.html#a4cfe5375f620c71ed77acdcd743a2639',1,'SynElectrons::gamma_m'],['../structSynElectrons.html#aecf574c857a1b1930faf5ae00c4a9af3',1,'SynElectrons::gamma_M']]],
   ['gamma_5frel_11',['Gamma_rel',['../classShock.html#a4ea5bc5a9958d2d19dac34b2d097eed0',1,'Shock']]],
   ['gauss_12',['Gauss',['../namespaceunit.html#afe6ab6092d118630921fa2b1ba3c888e',1,'unit']]],
   ['gev_13',['GeV',['../namespaceunit.html#a72e916028823a9789da7785db1d7c17a',1,'unit']]],

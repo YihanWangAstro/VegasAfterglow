@@ -1,10 +1,10 @@
 var searchData=
 [
-  ['sec_0',['sec',['../namespaceunit.html#a4e7c438655d3f34c7c30a155ec38f250',1,'unit']]],
-  ['sigma0_1',['sigma0',['../classEjecta.html#abc25c1fa9cdee20b4431cf94796dcbef',1,'Ejecta']]],
-  ['sigmat_2',['sigmaT',['../namespacecon.html#ad19e5b64c85c3e709fd0944358be97f6',1,'con']]],
-  ['spectrum_3',['spectrum',['../structMultiBandData.html#ae85d58a07051d5df9bfbd2d7c30161a5',1,'MultiBandData']]],
-  ['spectrum_5fresol_4',['spectrum_resol',['../structICPhoton.html#a0325e0801b12c80a6665a5293cbff3fd',1,'ICPhoton']]],
-  ['spreading_5',['spreading',['../classEjecta.html#a8de0be09be7bd262e246c756699addd0',1,'Ejecta::spreading'],['../classTophatJet.html#aff514e356b2b7c08acaf3608baa261d0',1,'TophatJet::spreading'],['../classGaussianJet.html#a9ee23bc79cff844132e7eeb55e174d49',1,'GaussianJet::spreading'],['../classPowerLawJet.html#a783b242334d9723f19a3f724b65629b5',1,'PowerLawJet::spreading']]],
-  ['ssc_6',['SSC',['../classPyRadiation.html#a81b185a1e6242db99e1a6a804fee1979',1,'PyRadiation']]]
+  ['r_0',['r',['../structForwardState.html#a5f1fe0089487bcfc1373f4e096ba1994',1,'ForwardState::r'],['../classCoastingShock.html#a8fc6803e5e936e8450750ed14b3283b0',1,'CoastingShock::r'],['../structReverseState.html#a1d228a9211bd05c57668347829be3c96',1,'ReverseState::r'],['../classShock.html#ad2c035218f2e59c0e84c40fa96ff5497',1,'Shock::r'],['../structSimpleState.html#a2ff54c1b8ab30c123c8611066ace67e0',1,'SimpleState::r']]],
+  ['r_5fx_1',['r_x',['../classFRShockEqn.html#ad2816287efc4e43d9579376efb29693b',1,'FRShockEqn']]],
+  ['rad_2',['rad',['../classForwardShockEqn.html#ac16f3ded8d2abc1df25586c1fd806047',1,'ForwardShockEqn::rad'],['../classFRShockEqn.html#aabd1cc652c246e1a0bc5ba9b11fb87d2',1,'FRShockEqn::rad'],['../classShock.html#acc651304bf82aa85e52210074dee3673',1,'Shock::rad'],['../classSimpleShockEqn.html#a1d9196760446085c7d8dfe8b27568488',1,'SimpleShockEqn::rad'],['../classPyRadiation.html#ac19d3052d34fc8c82280ec02a392edcb',1,'PyRadiation::rad']]],
+  ['regime_3',['regime',['../structInverseComptonY.html#ab895ebc5dcf0238a117c7f55260a50c5',1,'InverseComptonY::regime'],['../structSynElectrons.html#a921f1ee7f5bf087c1bd255da68091460',1,'SynElectrons::regime']]],
+  ['required_4',['required',['../classShock.html#a936f940f338d2661a8f85e36fcd8f01d',1,'Shock']]],
+  ['rho_5',['rho',['../classMedium.html#a419de8e407c9c9f75d1b76fdedf5d3eb',1,'Medium']]],
+  ['rtol_6',['rtol',['../structConfigParams.html#a1a1cd801dbf1871cff2cec2f868d3e87',1,'ConfigParams']]]
 ];

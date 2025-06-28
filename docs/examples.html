@@ -338,14 +338,15 @@ The spreading prescription may not work for arbitrary user-defined jet structure
     <span class="n">Gamma0</span><span class="o">=</span><span class="mi">300</span><span class="p">,</span>
     <span class="n">magnetar</span><span class="o">=</span><span class="n">Magnetar</span><span class="p">(</span>
         <span class="n">L_0</span><span class="o">=</span><span class="mf">1e46</span><span class="p">,</span>  <span class="c1"># Luminosity (erg/s)</span>
-        <span class="n">t_0</span><span class="o">=</span><span class="mi">100</span>    <span class="c1"># Characteristic time (s)</span>
+        <span class="n">t_0</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span>    <span class="c1"># Characteristic time (s)</span>
+        <span class="n">q</span><span class="o">=</span><span class="mi">2</span>
     <span class="p">)</span>
 <span class="p">)</span>
 </pre></div>
 </div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>The magnetar spin-down implement injection function in the default form of L_0*(1+t/t_0)^(-2) for theta &lt; theta_c.</p>
+<p>The magnetar spin-down implement injection function in the default form of L_0*(1+t/t_0)^(-q) for theta &lt; theta_c.</p>
 </div>
 </section>
 <section id="user-defined-jet">

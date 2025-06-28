@@ -1,5 +1,6 @@
 var NAVTREEINDEX1 =
 {
+"inverse-compton_8h.html#a83d78cd6b52bd3932fb1ae9561a1c148":[4,0,0,2,11],
 "inverse-compton_8h.html#a927ff1c4d5d8f2adde3e6f1819dcf3a2":[4,0,0,2,4],
 "inverse-compton_8h.html#ab408d6b9a087160261ae396763eaf060":[4,0,0,2,3],
 "inverse-compton_8h.html#ab8cedd9dad49cd36d2d4126e5c1291dc":[4,0,0,2,5],
@@ -248,6 +249,5 @@ var NAVTREEINDEX1 =
 "shock_8h.html#ac21551f9d4f4eb003348a1b9b3a35567":[4,0,0,12,12],
 "shock_8h.html#ac667cca4e484b343ff3988383a75cd55":[4,0,0,12,9],
 "shock_8h.html#ac9f33883cbf8961d948ef62692866a2b":[4,0,0,12,2],
-"shock_8h.html#aeaa7a2d945a00f2c7f24d39c499b1df0":[4,0,0,12,8],
-"shock_8h_source.html":[4,0,0,12]
+"shock_8h.html#aeaa7a2d945a00f2c7f24d39c499b1df0":[4,0,0,12,8]
 };

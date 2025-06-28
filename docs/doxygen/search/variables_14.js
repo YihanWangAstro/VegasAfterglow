@@ -1,5 +1,6 @@
 var searchData=
 [
-  ['width_5fcross_0',['width_cross',['../structReverseState.html#a0850e9fa249afda9fb719f9cd99dffde',1,'ReverseState']]],
-  ['width_5fshell_1',['width_shell',['../structReverseState.html#ab143a70c318716211231ce3f90f01fbb',1,'ReverseState']]]
+  ['u_0',['u',['../structForwardState.html#a6b1bb80c9e94cbcde29e7e048c29679e',1,'ForwardState']]],
+  ['u_5fx_1',['u_x',['../classFRShockEqn.html#a93c481f03f787c180d8e97a2b6662ad6',1,'FRShockEqn']]],
+  ['ujy_2',['uJy',['../namespaceunit.html#a738b134e141d6acdbb335374689e6825',1,'unit']]]
 ];

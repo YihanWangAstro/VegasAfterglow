@@ -121,7 +121,7 @@ Public Member Functions</h2></td></tr>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Main model class for afterglow calculations. </p>
 
-<p class="definition">Definition at line <a class="el" href="pymodel_8h_source.html#l00158">158</a> of file <a class="el" href="pymodel_8h_source.html">pymodel.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="pymodel_8h_source.html#l00159">159</a> of file <a class="el" href="pymodel_8h_source.html">pymodel.h</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="ac7d6f3f58304eefee08b7254df8eb56f" name="ac7d6f3f58304eefee08b7254df8eb56f"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ac7d6f3f58304eefee08b7254df8eb56f">&#9670;&#160;</a></span>PyModel()</h2>
@@ -207,19 +207,19 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="pymodel_8h_source.html#l00173">173</a> of file <a class="el" href="pymodel_8h_source.html">pymodel.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  177</span>        : jet(jet),</div>
-<div class="line"><span class="lineno">  178</span>          medium(medium),</div>
-<div class="line"><span class="lineno">  179</span>          obs_setup(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">observer</a>),</div>
-<div class="line"><span class="lineno">  180</span>          fwd_rad(fwd_rad),</div>
-<div class="line"><span class="lineno">  181</span>          rvs_rad_opt(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">rvs_rad</a>),</div>
-<div class="line"><span class="lineno">  182</span>          phi_resol(std::get&lt;0&gt;(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">resolutions</a>)),</div>
-<div class="line"><span class="lineno">  183</span>          theta_resol(std::get&lt;1&gt;(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">resolutions</a>)),</div>
-<div class="line"><span class="lineno">  184</span>          t_resol(std::get&lt;2&gt;(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">resolutions</a>)),</div>
-<div class="line"><span class="lineno">  185</span>          rtol(rtol),</div>
-<div class="line"><span class="lineno">  186</span>          axisymmetric(axisymmetric) {</div>
-<div class="line"><span class="lineno">  187</span>        <a class="code hl_function" href="pymodel_8h.html#aa920671831cc213a5c0858813e42279f">convert_unit</a>(this-&gt;jet, this-&gt;medium);</div>
-<div class="line"><span class="lineno">  188</span>    }</div>
+<p class="definition">Definition at line <a class="el" href="pymodel_8h_source.html#l00174">174</a> of file <a class="el" href="pymodel_8h_source.html">pymodel.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  178</span>        : jet(jet),</div>
+<div class="line"><span class="lineno">  179</span>          medium(medium),</div>
+<div class="line"><span class="lineno">  180</span>          obs_setup(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">observer</a>),</div>
+<div class="line"><span class="lineno">  181</span>          fwd_rad(fwd_rad),</div>
+<div class="line"><span class="lineno">  182</span>          rvs_rad_opt(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">rvs_rad</a>),</div>
+<div class="line"><span class="lineno">  183</span>          phi_resol(std::get&lt;0&gt;(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">resolutions</a>)),</div>
+<div class="line"><span class="lineno">  184</span>          theta_resol(std::get&lt;1&gt;(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">resolutions</a>)),</div>
+<div class="line"><span class="lineno">  185</span>          t_resol(std::get&lt;2&gt;(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">resolutions</a>)),</div>
+<div class="line"><span class="lineno">  186</span>          rtol(rtol),</div>
+<div class="line"><span class="lineno">  187</span>          axisymmetric(axisymmetric) {</div>
+<div class="line"><span class="lineno">  188</span>        <a class="code hl_function" href="pymodel_8h.html#aa920671831cc213a5c0858813e42279f">convert_unit</a>(this-&gt;jet, this-&gt;medium);</div>
+<div class="line"><span class="lineno">  189</span>    }</div>
 <div class="ttc" id="apymodel_8h_html_aa920671831cc213a5c0858813e42279f"><div class="ttname"><a href="pymodel_8h.html#aa920671831cc213a5c0858813e42279f">convert_unit</a></div><div class="ttdeci">void convert_unit(Ejecta &amp;jet, Medium &amp;medium)</div><div class="ttdoc">Convert Ejecta and Medium units to internal code units.</div><div class="ttdef"><b>Definition</b> <a href="pymodel_8cpp_source.html#l00098">pymodel.cpp:98</a></div></div>
 <div class="ttc" id="autilities_8h_html_ab8e81118f023df135835db8cce4f5f42"><div class="ttname"><a href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">max</a></div><div class="ttdeci">T max(T value)</div><div class="ttdoc">Returns the value of a single parameter.</div><div class="ttdef"><b>Definition</b> <a href="utilities_8h_source.html#l00287">utilities.h:287</a></div></div>
 </div><!-- fragment --><div class="dynheader">

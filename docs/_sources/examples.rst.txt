@@ -201,12 +201,13 @@ Magnetar Spin Down
         Gamma0=300,
         magnetar=Magnetar(
             L_0=1e46,  # Luminosity (erg/s)
-            t_0=100    # Characteristic time (s)
+            t_0=100,    # Characteristic time (s)
+            q=2
         )
     )
 
 .. note::
-    The magnetar spin-down implement injection function in the default form of L_0*(1+t/t_0)^(-2) for theta < theta_c.
+    The magnetar spin-down implement injection function in the default form of L_0*(1+t/t_0)^(-q) for theta < theta_c.
 
 
 User-Defined Jet
