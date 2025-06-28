@@ -194,7 +194,7 @@ Magnetar Spin Down
 
     from VegasAfterglow import Magnetar
 
-    # Create a power-law structured jet
+    # Create a tophat jet with magnetar spin-down energy injection
     jet = TophatJet(
         theta_c=0.05,
         E_iso=1e53,
@@ -221,31 +221,31 @@ Those profiles are optional and will be set to zero function if not provided.
     from VegasAfterglow import Ejecta
 
     # Define a custom energy profile function, required to complete the jet structure
-    def energy(phi, theta):
+    def E_iso_profile(phi, theta):
         return 1e53  # E_iso = 1e53 erg isotropic fireball
         #return what ever energy profile you want as a function of phi and theta in unit of erg [not erg per solid angle]
 
     # Define a custom lorentz factor profile function, required to complete the jet structure
-    def lorentz(phi, theta):
+    def Gamma0_profile(phi, theta):
         return 300 # Gamma0 = 300
         #return what ever lorentz factor profile you want as a function of phi and theta
     
     # Define a custom magnetization profile function, optional
-    def magnetization(phi, theta):
+    def sigma0_profile(phi, theta):
         return 0.1 # sigma = 0.1
         #return what ever magnetization profile you want as a function of phi and theta
 
     # Define a custom energy injection profile function, optional
-    def energy_injection(phi, theta, t):
+    def E_dot_profile(phi, theta, t):
         return 1e46 * (1 + t / 100)**(-2) # L = 1e46 erg/s, t0 = 100 seconds
         #return what ever energy injection  profile you want as a function of phi, theta, and time in unit of erg/s [not erg/s per solid angle]
 
     # Define a custom mass injection profile function, optional
-    def mass_injection(phi, theta, t):
+    def M_dot_profile(phi, theta, t):
         #return what ever mass injection profile you want as a function of phi, theta, and time in unit of g/s [not g/s per solid angle]
 
     # Create a user-defined jet
-    jet = Ejecta(energy=energy, lorentz=lorentz, magnetization=magnetization, energy_injection=energy_injection, mass_injection=mass_injection)
+    jet = Ejecta(E_iso=E_iso_profile, Gamma0=Gamma0_profile, sigma0=sigma0_profile, E_dot=E_dot_profile, M_dot=M_dot_profile)
 
     #..other settings
 
