@@ -253,7 +253,7 @@
 <span class="c1"># Define a custom density profile function</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">density</span><span class="p">(</span><span class="n">phi</span><span class="p">,</span> <span class="n">theta</span><span class="p">,</span> <span class="n">r</span><span class="p">):</span><span class="c1"># r in cm, phi and theta in radians</span>
     <span class="k">return</span> <span class="n">m_p</span> <span class="c1"># n_ism =  1 cm^-3</span>
-    <span class="c1">#return what ever density profile (g/cm^3) you want as a function of phi, theta, and r</span>
+    <span class="c1">#return whatever density profile (g/cm^3) you want as a function of phi, theta, and r</span>
 
 <span class="k">def</span><span class="w"> </span><span class="nf">swept_mass</span><span class="p">(</span><span class="n">phi</span><span class="p">,</span> <span class="n">theta</span><span class="p">,</span> <span class="n">r</span><span class="p">):</span><span class="c1"># r in cm, phi and theta in radians</span>
     <span class="k">return</span> <span class="n">m_p</span> <span class="o">*</span> <span class="n">r</span> <span class="o">*</span> <span class="n">r</span> <span class="o">*</span> <span class="n">r</span> <span class="o">/</span> <span class="mi">3</span>
@@ -309,7 +309,6 @@
 <h3><a class="toc-backref" href="#id9" role="doc-backlink">Jet with Spreading</a><a class="headerlink" href="#jet-with-spreading" title="Link to this heading"></a></h3>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">VegasAfterglow</span><span class="w"> </span><span class="kn">import</span> <span class="n">TophatJet</span>
 
-<span class="c1"># Create a power-law structured jet</span>
 <span class="n">jet</span> <span class="o">=</span> <span class="n">TophatJet</span><span class="p">(</span>
     <span class="n">theta_c</span><span class="o">=</span><span class="mf">0.05</span><span class="p">,</span>
     <span class="n">E_iso</span><span class="o">=</span><span class="mf">1e53</span><span class="p">,</span>
@@ -331,22 +330,13 @@ The spreading prescription may not work for arbitrary user-defined jet structure
 <h3><a class="toc-backref" href="#id10" role="doc-backlink">Magnetar Spin-down</a><a class="headerlink" href="#magnetar-spin-down" title="Link to this heading"></a></h3>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">VegasAfterglow</span><span class="w"> </span><span class="kn">import</span> <span class="n">Magnetar</span>
 
-<span class="c1"># Create a tophat jet with magnetar spin-down energy injection</span>
-<span class="n">jet</span> <span class="o">=</span> <span class="n">TophatJet</span><span class="p">(</span>
-    <span class="n">theta_c</span><span class="o">=</span><span class="mf">0.05</span><span class="p">,</span>
-    <span class="n">E_iso</span><span class="o">=</span><span class="mf">1e53</span><span class="p">,</span>
-    <span class="n">Gamma0</span><span class="o">=</span><span class="mi">300</span><span class="p">,</span>
-    <span class="n">magnetar</span><span class="o">=</span><span class="n">Magnetar</span><span class="p">(</span>
-        <span class="n">L_0</span><span class="o">=</span><span class="mf">1e46</span><span class="p">,</span>  <span class="c1"># Luminosity (erg/s)</span>
-        <span class="n">t_0</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span>    <span class="c1"># Characteristic time (s)</span>
-        <span class="n">q</span><span class="o">=</span><span class="mi">2</span>
-    <span class="p">)</span>
-<span class="p">)</span>
+<span class="c1"># Create a tophat jet with magnetar spin-down energy injection; Luminosity 1e46 erg/s, t_0 = 100 seconds, and q = 2</span>
+<span class="n">jet</span> <span class="o">=</span> <span class="n">TophatJet</span><span class="p">(</span><span class="n">theta_c</span><span class="o">=</span><span class="mf">0.05</span><span class="p">,</span> <span class="n">E_iso</span><span class="o">=</span><span class="mf">1e53</span><span class="p">,</span> <span class="n">Gamma0</span><span class="o">=</span><span class="mi">300</span><span class="p">,</span> <span class="n">magnetar</span><span class="o">=</span><span class="n">Magnetar</span><span class="p">(</span><span class="n">L_0</span><span class="o">=</span><span class="mf">1e46</span><span class="p">,</span> <span class="n">t_0</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">q</span><span class="o">=</span><span class="mi">2</span><span class="p">))</span>
 </pre></div>
 </div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>The magnetar spin-down implement injection function in the default form of L_0*(1+t/t_0)^(-q) for theta &lt; theta_c. You can pass the <code class="xref any docutils literal notranslate"><span class="pre">magnetar</span></code> argument to the power-law and Gaussian jet as well.</p>
+<p>The magnetar spin-down injection is implemented in the default form L_0*(1+t/t_0)^(-q) for theta &lt; theta_c. You can pass the <code class="xref any docutils literal notranslate"><span class="pre">magnetar</span></code> argument to the power-law and Gaussian jet as well.</p>
 </div>
 </section>
 <section id="user-defined-jet">
@@ -359,26 +349,26 @@ Those profiles are optional and will be set to zero function if not provided.</p
 <span class="c1"># Define a custom energy profile function, required to complete the jet structure</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">E_iso_profile</span><span class="p">(</span><span class="n">phi</span><span class="p">,</span> <span class="n">theta</span><span class="p">):</span>
     <span class="k">return</span> <span class="mf">1e53</span>  <span class="c1"># E_iso = 1e53 erg isotropic fireball</span>
-    <span class="c1">#return what ever energy profile you want as a function of phi and theta in unit of erg [not erg per solid angle]</span>
+    <span class="c1">#return whatever energy profile you want as a function of phi and theta in unit of erg [not erg per solid angle]</span>
 
 <span class="c1"># Define a custom lorentz factor profile function, required to complete the jet structure</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">Gamma0_profile</span><span class="p">(</span><span class="n">phi</span><span class="p">,</span> <span class="n">theta</span><span class="p">):</span>
     <span class="k">return</span> <span class="mi">300</span> <span class="c1"># Gamma0 = 300</span>
-    <span class="c1">#return what ever lorentz factor profile you want as a function of phi and theta</span>
+    <span class="c1">#return whatever lorentz factor profile you want as a function of phi and theta</span>
 
 <span class="c1"># Define a custom magnetization profile function, optional</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">sigma0_profile</span><span class="p">(</span><span class="n">phi</span><span class="p">,</span> <span class="n">theta</span><span class="p">):</span>
     <span class="k">return</span> <span class="mf">0.1</span> <span class="c1"># sigma = 0.1</span>
-    <span class="c1">#return what ever magnetization profile you want as a function of phi and theta</span>
+    <span class="c1">#return whatever magnetization profile you want as a function of phi and theta</span>
 
 <span class="c1"># Define a custom energy injection profile function, optional</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">E_dot_profile</span><span class="p">(</span><span class="n">phi</span><span class="p">,</span> <span class="n">theta</span><span class="p">,</span> <span class="n">t</span><span class="p">):</span>
     <span class="k">return</span> <span class="mf">1e46</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">t</span> <span class="o">/</span> <span class="mi">100</span><span class="p">)</span><span class="o">**</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">)</span> <span class="c1"># L = 1e46 erg/s, t0 = 100 seconds</span>
-    <span class="c1">#return what ever energy injection  profile you want as a function of phi, theta, and time in unit of erg/s [not erg/s per solid angle]</span>
+    <span class="c1">#return whatever energy injection  profile you want as a function of phi, theta, and time in unit of erg/s [not erg/s per solid angle]</span>
 
 <span class="c1"># Define a custom mass injection profile function, optional</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">M_dot_profile</span><span class="p">(</span><span class="n">phi</span><span class="p">,</span> <span class="n">theta</span><span class="p">,</span> <span class="n">t</span><span class="p">):</span>
-    <span class="c1">#return what ever mass injection profile you want as a function of phi, theta, and time in unit of g/s [not g/s per solid angle]</span>
+    <span class="c1">#return whatever mass injection profile you want as a function of phi, theta, and time in unit of g/s [not g/s per solid angle]</span>
 
 <span class="c1"># Create a user-defined jet</span>
 <span class="n">jet</span> <span class="o">=</span> <span class="n">Ejecta</span><span class="p">(</span><span class="n">E_iso</span><span class="o">=</span><span class="n">E_iso_profile</span><span class="p">,</span> <span class="n">Gamma0</span><span class="o">=</span><span class="n">Gamma0_profile</span><span class="p">,</span> <span class="n">sigma0</span><span class="o">=</span><span class="n">sigma0_profile</span><span class="p">,</span> <span class="n">E_dot</span><span class="o">=</span><span class="n">E_dot_profile</span><span class="p">,</span> <span class="n">M_dot</span><span class="o">=</span><span class="n">M_dot_profile</span><span class="p">)</span>
@@ -394,7 +384,7 @@ Those profiles are optional and will be set to zero function if not provided.</p
 </div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>Setting usere-defined structured jet in the Python level is OK for light curve and spectrum calculation. However, it is not recommended for MCMC parameter fitting.
+<p>Setting user-defined structured jet in the Python level is OK for light curve and spectrum calculation. However, it is not recommended for MCMC parameter fitting if you do care about the performance.
 The reason is that setting user-defined profiles in the Python level leads to a large overhead due to the Python-C++ inter-process communication.
 Users are recommended to set up the user-defined jet structure in the C++ level for MCMC parameter fitting for better performance.</p>
 </div>

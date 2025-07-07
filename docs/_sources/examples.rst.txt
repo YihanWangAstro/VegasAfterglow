@@ -112,7 +112,7 @@ User-Defined Medium
     # Define a custom density profile function
     def density(phi, theta, r):# r in cm, phi and theta in radians
         return m_p # n_ism =  1 cm^-3
-        #return what ever density profile (g/cm^3) you want as a function of phi, theta, and r
+        #return whatever density profile (g/cm^3) you want as a function of phi, theta, and r
         
     def swept_mass(phi, theta, r):# r in cm, phi and theta in radians
         return m_p * r * r * r / 3
@@ -172,7 +172,6 @@ Jet with Spreading
 
     from VegasAfterglow import TophatJet
 
-    # Create a power-law structured jet
     jet = TophatJet(
         theta_c=0.05,        
         E_iso=1e53,          
@@ -194,20 +193,11 @@ Magnetar Spin-down
 
     from VegasAfterglow import Magnetar
 
-    # Create a tophat jet with magnetar spin-down energy injection
-    jet = TophatJet(
-        theta_c=0.05,
-        E_iso=1e53,
-        Gamma0=300,
-        magnetar=Magnetar(
-            L_0=1e46,  # Luminosity (erg/s)
-            t_0=100,    # Characteristic time (s)
-            q=2
-        )
-    )
+    # Create a tophat jet with magnetar spin-down energy injection; Luminosity 1e46 erg/s, t_0 = 100 seconds, and q = 2
+    jet = TophatJet(theta_c=0.05, E_iso=1e53, Gamma0=300, magnetar=Magnetar(L_0=1e46, t_0=100, q=2))
 
 .. note::
-    The magnetar spin-down implement injection function in the default form of L_0*(1+t/t_0)^(-q) for theta < theta_c. You can pass the `magnetar` argument to the power-law and Gaussian jet as well.
+    The magnetar spin-down injection is implemented in the default form L_0*(1+t/t_0)^(-q) for theta < theta_c. You can pass the `magnetar` argument to the power-law and Gaussian jet as well.
 
 
 User-Defined Jet
@@ -224,26 +214,26 @@ Those profiles are optional and will be set to zero function if not provided.
     # Define a custom energy profile function, required to complete the jet structure
     def E_iso_profile(phi, theta):
         return 1e53  # E_iso = 1e53 erg isotropic fireball
-        #return what ever energy profile you want as a function of phi and theta in unit of erg [not erg per solid angle]
+        #return whatever energy profile you want as a function of phi and theta in unit of erg [not erg per solid angle]
 
     # Define a custom lorentz factor profile function, required to complete the jet structure
     def Gamma0_profile(phi, theta):
         return 300 # Gamma0 = 300
-        #return what ever lorentz factor profile you want as a function of phi and theta
+        #return whatever lorentz factor profile you want as a function of phi and theta
     
     # Define a custom magnetization profile function, optional
     def sigma0_profile(phi, theta):
         return 0.1 # sigma = 0.1
-        #return what ever magnetization profile you want as a function of phi and theta
+        #return whatever magnetization profile you want as a function of phi and theta
 
     # Define a custom energy injection profile function, optional
     def E_dot_profile(phi, theta, t):
         return 1e46 * (1 + t / 100)**(-2) # L = 1e46 erg/s, t0 = 100 seconds
-        #return what ever energy injection  profile you want as a function of phi, theta, and time in unit of erg/s [not erg/s per solid angle]
+        #return whatever energy injection  profile you want as a function of phi, theta, and time in unit of erg/s [not erg/s per solid angle]
 
     # Define a custom mass injection profile function, optional
     def M_dot_profile(phi, theta, t):
-        #return what ever mass injection profile you want as a function of phi, theta, and time in unit of g/s [not g/s per solid angle]
+        #return whatever mass injection profile you want as a function of phi, theta, and time in unit of g/s [not g/s per solid angle]
 
     # Create a user-defined jet
     jet = Ejecta(E_iso=E_iso_profile, Gamma0=Gamma0_profile, sigma0=sigma0_profile, E_dot=E_dot_profile, M_dot=M_dot_profile)
@@ -257,7 +247,7 @@ Those profiles are optional and will be set to zero function if not provided.
     # where phi_ppd is the number of points per degree in the phi direction, theta_ppd is the number of points per degree in the theta direction, and t_ppd is the number of points per decade in the time direction    .
     
 .. note::
-    Setting usere-defined structured jet in the Python level is OK for light curve and spectrum calculation. However, it is not recommended for MCMC parameter fitting.
+    Setting user-defined structured jet in the Python level is OK for light curve and spectrum calculation. However, it is not recommended for MCMC parameter fitting if you do care about the performance.
     The reason is that setting user-defined profiles in the Python level leads to a large overhead due to the Python-C++ inter-process communication.
     Users are recommended to set up the user-defined jet structure in the C++ level for MCMC parameter fitting for better performance.
           

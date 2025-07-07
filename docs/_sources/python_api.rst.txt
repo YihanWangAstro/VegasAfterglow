@@ -122,14 +122,14 @@ Example:
     from VegasAfterglow import ParamDef, Scale
     
     mc_params = [
-        ParamDef("E_iso",    1e52,  1e50,  1e54,  Scale.LOG),       # Isotropic energy [erg]
-        ParamDef("Gamma0",     30,     5,  1000,  Scale.LOG),       # Lorentz factor at the core
-        ParamDef("theta_c",   0.2,   0.0,   0.5,  Scale.LINEAR),    # Core half-opening angle [rad]
-        ParamDef("theta_v",   0.,  None,  None,   Scale.FIXED),     # Viewing angle [rad]
-        ParamDef("p",         2.5,     2,     3,  Scale.LINEAR),    # Shocked electron power law index
-        ParamDef("eps_e",     0.1,  1e-2,   0.5,  Scale.LOG),       # Electron energy fraction
-        ParamDef("eps_B",    1e-2,  1e-4,   0.5,  Scale.LOG),       # Magnetic field energy fraction
-        ParamDef("A_star",   0.01,  1e-3,     1,  Scale.LOG),       # Wind parameter
+        ParamDef("E_iso",   1e50,  1e54,  Scale.LOG),       # Isotropic energy [erg]
+        ParamDef("Gamma0",     5,  1000,  Scale.LOG),       # Lorentz factor at the core
+        ParamDef("theta_c",  0.0,   0.5,  Scale.LINEAR),    # Core half-opening angle [rad]
+        ParamDef("theta_v",  0.0,   0.0,  Scale.FIXED),     # Viewing angle [rad]
+        ParamDef("p",          2,     3,  Scale.LINEAR),    # Shocked electron power law index
+        ParamDef("eps_e",   1e-2,   0.5,  Scale.LOG),       # Electron energy fraction
+        ParamDef("eps_B",   1e-4,   0.5,  Scale.LOG),       # Magnetic field energy fraction
+        ParamDef("A_star",  1e-3,     1,  Scale.LOG),       # Wind parameter
     ]
 
 .. _A_star:
@@ -168,7 +168,7 @@ Example:
     # Run the MCMC fitting
     result = fitter.fit(
         param_defs=mc_params,          # Parameter definitions
-        resolution=(24, 24, 24),       # Grid resolution (phi, theta, time)
+        resolution=(1, 5, 10),       # Grid resolution (phi, theta, time)
         total_steps=10000,             # Total number of MCMC steps
         burn_frac=0.3,                 # Fraction of steps to discard as burn-in
         thin=1                         # Thinning factor
