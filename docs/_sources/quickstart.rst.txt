@@ -233,7 +233,7 @@ The ``ParamDef`` class is used to define the parameters for MCMC exploration. Ea
         ParamDef("eps_e",   1e-2,   0.5,  Scale.LOG),       # Electron energy fraction
         ParamDef("eps_B",   1e-4,   0.5,  Scale.LOG),       # Magnetic field energy fraction
         ParamDef("A_star",  1e-3,     1,  Scale.LOG),       # Wind parameter
-        ParamDef("xi",      1e-3,     1,  Scale.LOG),       # Electron acceleration fraction
+        ParamDef("xi_e",    1e-3,     1,  Scale.LOG),       # Electron acceleration fraction
     ]
 
 **Scale Types:**

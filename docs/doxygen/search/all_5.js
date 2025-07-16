@@ -14,13 +14,14 @@ var searchData=
   ['force_5fimport_5farray_11',['FORCE_IMPORT_ARRAY',['../pybind_8cpp.html#a17aae50ec30d0ac23ea339b4d09812a6',1,'pybind.cpp']]],
   ['forward_2dshock_2ehpp_12',['forward-shock.hpp',['../forward-shock_8hpp.html',1,'']]],
   ['forward_2dshock_2etpp_13',['forward-shock.tpp',['../forward-shock_8tpp.html',1,'']]],
-  ['forwardshockeqn_14',['forwardshockeqn',['../classForwardShockEqn.html#ab6f8ee9e3cdacb06659e0b4be35c0589',1,'ForwardShockEqn::ForwardShockEqn()'],['../classForwardShockEqn.html',1,'ForwardShockEqn&lt; Ejecta, Medium &gt;']]],
-  ['forwardstate_15',['ForwardState',['../structForwardState.html',1,'']]],
-  ['frshockeqn_16',['frshockeqn',['../classFRShockEqn.html',1,'FRShockEqn&lt; Ejecta, Medium &gt;'],['../classFRShockEqn.html#a812d6a3eec780f40ad529ed8e67f3e76',1,'FRShockEqn::FRShockEqn()']]],
-  ['func_17',['func',['../namespacefunc.html',1,'']]],
-  ['function_20type_20definitions_18',['Function Type Definitions',['../group__FunctionTypes.html',1,'']]],
-  ['functions_19',['functions',['../group__BasicMath.html',1,'Basic Math Functions'],['../group__FastMath.html',1,'Fast Math Functions'],['../group__GammaConversions.html',1,'Gamma Conversion and Adiabatic Index Functions'],['../group__IC__Functions.html',1,'IC Photon and Electron Cooling Functions'],['../group__Interpolation.html',1,'Interpolation Functions'],['../group__IC__Calculation.html',1,'Inverse Compton Calculation Constants and Functions'],['../group__IO__Functions.html',1,'Output and Printing Functions']]],
-  ['fv_5ferr_20',['fv_err',['../structLightCurveData.html#ae96ec61ac1b03c83e681c4e8ebf5bc35',1,'LightCurveData::Fv_err'],['../structSpectrumData.html#a3a5f544ce875ffcccaab074d54acf5a7',1,'SpectrumData::Fv_err']]],
-  ['fv_5fmodel_21',['fv_model',['../structLightCurveData.html#aceea5fff8916b2cdfb4f1b51f198ed92',1,'LightCurveData::Fv_model'],['../structSpectrumData.html#ab2e927149a668d3e3292f5c06e71ead0',1,'SpectrumData::Fv_model']]],
-  ['fv_5fobs_22',['fv_obs',['../structSpectrumData.html#adf50b08a3eb62a78a03ec187b58c7877',1,'SpectrumData::Fv_obs'],['../structLightCurveData.html#a8d18653944d2cf85e222b08e06bce84e',1,'LightCurveData::Fv_obs']]]
+  ['forward_5fssc_14',['forward_SSC',['../structConfigParams.html#ac86b756a8184e59161c8392457c4d989',1,'ConfigParams']]],
+  ['forwardshockeqn_15',['forwardshockeqn',['../classForwardShockEqn.html#ab6f8ee9e3cdacb06659e0b4be35c0589',1,'ForwardShockEqn::ForwardShockEqn()'],['../classForwardShockEqn.html',1,'ForwardShockEqn&lt; Ejecta, Medium &gt;']]],
+  ['forwardstate_16',['ForwardState',['../structForwardState.html',1,'']]],
+  ['frshockeqn_17',['frshockeqn',['../classFRShockEqn.html',1,'FRShockEqn&lt; Ejecta, Medium &gt;'],['../classFRShockEqn.html#a812d6a3eec780f40ad529ed8e67f3e76',1,'FRShockEqn::FRShockEqn()']]],
+  ['func_18',['func',['../namespacefunc.html',1,'']]],
+  ['function_20type_20definitions_19',['Function Type Definitions',['../group__FunctionTypes.html',1,'']]],
+  ['functions_20',['functions',['../group__BasicMath.html',1,'Basic Math Functions'],['../group__FastMath.html',1,'Fast Math Functions'],['../group__GammaConversions.html',1,'Gamma Conversion and Adiabatic Index Functions'],['../group__IC__Functions.html',1,'IC Photon and Electron Cooling Functions'],['../group__Interpolation.html',1,'Interpolation Functions'],['../group__IC__Calculation.html',1,'Inverse Compton Calculation Constants and Functions'],['../group__IO__Functions.html',1,'Output and Printing Functions']]],
+  ['fv_5ferr_21',['fv_err',['../structLightCurveData.html#ae96ec61ac1b03c83e681c4e8ebf5bc35',1,'LightCurveData::Fv_err'],['../structSpectrumData.html#a3a5f544ce875ffcccaab074d54acf5a7',1,'SpectrumData::Fv_err']]],
+  ['fv_5fmodel_22',['fv_model',['../structLightCurveData.html#aceea5fff8916b2cdfb4f1b51f198ed92',1,'LightCurveData::Fv_model'],['../structSpectrumData.html#ab2e927149a668d3e3292f5c06e71ead0',1,'SpectrumData::Fv_model']]],
+  ['fv_5fobs_23',['fv_obs',['../structSpectrumData.html#adf50b08a3eb62a78a03ec187b58c7877',1,'SpectrumData::Fv_obs'],['../structLightCurveData.html#a8d18653944d2cf85e222b08e06bce84e',1,'LightCurveData::Fv_obs']]]
 ];

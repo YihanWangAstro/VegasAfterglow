@@ -10,11 +10,13 @@ var searchData=
   ['resize_7',['resize',['../classShock.html#a21251939d5191865d40e31bd3155ec3a',1,'Shock']]],
   ['reverse_2dshock_2ehpp_8',['reverse-shock.hpp',['../reverse-shock_8hpp.html',1,'']]],
   ['reverse_2dshock_2etpp_9',['reverse-shock.tpp',['../reverse-shock_8tpp.html',1,'']]],
-  ['reversestate_10',['ReverseState',['../structReverseState.html',1,'']]],
-  ['rho_11',['rho',['../classISM.html#ab288e7072dc13d792244458db8e0d6da',1,'ISM::rho()'],['../classWind.html#ab5224ceb8e690e272e1fa39c598b1999',1,'Wind::rho()'],['../classMedium.html#a419de8e407c9c9f75d1b76fdedf5d3eb',1,'Medium::rho']]],
-  ['root_20finding_20methods_12',['Root Finding Methods',['../group__RootFinding.html',1,'']]],
-  ['root_5fbisect_13',['root_bisect',['../utilities_8h.html#a29a716285d00743072d357c4a64a7f85',1,'utilities.h']]],
-  ['rs_5fcrossing_5fradius_14',['RS_crossing_radius',['../physics_8h.html#a5eea411672a7046ac9978a36b969c896',1,'physics.h']]],
-  ['rs_5ftransition_5fradius_15',['rs_transition_radius',['../physics_8h.html#a4a53f1fb094eaa818e9bfdd727cb440c',1,'RS_transition_radius(Real E_iso, Real n_ism, Real Gamma0, Real engine_dura):&#160;physics.cpp'],['../physics_8cpp.html#a4a53f1fb094eaa818e9bfdd727cb440c',1,'RS_transition_radius(Real E_iso, Real n_ism, Real Gamma0, Real engine_dura):&#160;physics.cpp']]],
-  ['rtol_16',['rtol',['../structConfigParams.html#a1a1cd801dbf1871cff2cec2f868d3e87',1,'ConfigParams']]]
+  ['reverse_5fshock_10',['reverse_shock',['../structConfigParams.html#afd7d1014b342a9864dc4cc21aaa4689b',1,'ConfigParams']]],
+  ['reverse_5fssc_11',['reverse_SSC',['../structConfigParams.html#a99cf4ed0ebe5d35eb917e1c609fac1e3',1,'ConfigParams']]],
+  ['reversestate_12',['ReverseState',['../structReverseState.html',1,'']]],
+  ['rho_13',['rho',['../classISM.html#ab288e7072dc13d792244458db8e0d6da',1,'ISM::rho()'],['../classWind.html#ab5224ceb8e690e272e1fa39c598b1999',1,'Wind::rho()'],['../classMedium.html#a419de8e407c9c9f75d1b76fdedf5d3eb',1,'Medium::rho']]],
+  ['root_20finding_20methods_14',['Root Finding Methods',['../group__RootFinding.html',1,'']]],
+  ['root_5fbisect_15',['root_bisect',['../utilities_8h.html#a29a716285d00743072d357c4a64a7f85',1,'utilities.h']]],
+  ['rs_5fcrossing_5fradius_16',['RS_crossing_radius',['../physics_8h.html#a5eea411672a7046ac9978a36b969c896',1,'physics.h']]],
+  ['rs_5ftransition_5fradius_17',['rs_transition_radius',['../physics_8h.html#a4a53f1fb094eaa818e9bfdd727cb440c',1,'RS_transition_radius(Real E_iso, Real n_ism, Real Gamma0, Real engine_dura):&#160;physics.cpp'],['../physics_8cpp.html#a4a53f1fb094eaa818e9bfdd727cb440c',1,'RS_transition_radius(Real E_iso, Real n_ism, Real Gamma0, Real engine_dura):&#160;physics.cpp']]],
+  ['rtol_18',['rtol',['../structConfigParams.html#a1a1cd801dbf1871cff2cec2f868d3e87',1,'ConfigParams']]]
 ];
