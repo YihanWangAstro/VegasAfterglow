@@ -1,6 +1,6 @@
 <map id="auto_grid" name="auto_grid">
 <area shape="rect" id="Node000001" title="Constructs a coordinate grid (Coord) for shock evolution." alt="" coords="5,56,88,81"/>
-<area shape="rect" id="Node000002" href="$physics_8h.html#a93b293665d09bfbff381bb3ae7b5545c" title="Determines the edge of the jet based on a given gamma cut&#45;off using binary search." alt="" coords="145,5,255,31"/>
+<area shape="rect" id="Node000002" href="$mesh_8h.html#a71b7cc9ed9e5943e9cafb837e06f427d" title="Determines the edge of the jet based on a given gamma cut&#45;off using binary search." alt="" coords="145,5,255,31"/>
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="85,53,147,33,149,38,87,58"/>
 <area shape="rect" id="Node000003" href="$utilities_8h.html#ab8e81118f023df135835db8cce4f5f42" title="Returns the value of a single parameter." alt="" coords="312,31,363,56"/>
 <area shape="poly" id="edge5_Node000001_Node000003" title=" " alt="" coords="88,62,298,44,299,49,88,68"/>
