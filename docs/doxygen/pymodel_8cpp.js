@@ -5,5 +5,6 @@ var pymodel_8cpp =
     [ "PyISM", "pymodel_8cpp.html#a43af01d16838e6513792deaeb727fbe5", null ],
     [ "PyPowerLawJet", "pymodel_8cpp.html#ae7277e61b6c679670f55b7e974a01a30", null ],
     [ "PyTophatJet", "pymodel_8cpp.html#ae1719874122ee6d02040114286d1270a", null ],
+    [ "PyTwoComponentJet", "pymodel_8cpp.html#a066d884fe1e091bebeb5d813f67c754c", null ],
     [ "PyWind", "pymodel_8cpp.html#af5469e939faefb859e1f4b22e1e0bd02", null ]
 ];

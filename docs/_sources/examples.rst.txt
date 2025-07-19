@@ -165,6 +165,26 @@ Power-Law Jet
     #..other settings
     model = Model(jet=jet, ...)
 
+Two-Component Jet
+^^^^^^^^^^^^^^^^^
+
+.. code-block:: python
+
+    from VegasAfterglow import TwoComponentJet
+
+    # Create a two-component jet
+    jet = TwoComponentJet(
+        theta_n=0.05,        # Narrow component angular size (radians)
+        E_iso_n=1e53,        # Isotropic-equivalent energy of the narrow component (ergs)
+        Gamma0_n=300,        # Initial Lorentz factor of the narrow component
+        theta_w=0.1,         # Wide component angular size (radians)
+        E_iso_w=1e52,        # Isotropic-equivalent energy of the wide component (ergs)
+        Gamma0_w=100         # Initial Lorentz factor of the wide component
+    )
+
+    #..other settings
+    model = Model(jet=jet, ...)
+
 Jet with Spreading
 ^^^^^^^^^^^^^
 

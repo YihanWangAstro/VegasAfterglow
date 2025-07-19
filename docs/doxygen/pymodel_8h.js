@@ -9,5 +9,6 @@ var pymodel_8h =
     [ "PyISM", "pymodel_8h.html#a43af01d16838e6513792deaeb727fbe5", null ],
     [ "PyPowerLawJet", "pymodel_8h.html#a5ef49c4f8ed2f2ac8af761d51a811e34", null ],
     [ "PyTophatJet", "pymodel_8h.html#af1f230ff03a5fe38e4b897e3dc219782", null ],
+    [ "PyTwoComponentJet", "pymodel_8h.html#a0d64f315837691f06d95073e98fe1a91", null ],
     [ "PyWind", "pymodel_8h.html#af5469e939faefb859e1f4b22e1e0bd02", null ]
 ];
