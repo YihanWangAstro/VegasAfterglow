@@ -506,21 +506,25 @@ Here is the call graph for this function:</div>
 <dl class="section return"><dt>Returns</dt><dd>Velocity fraction (beta = v/c) </dd></dl>
 
 <p class="definition">Definition at line <a class="el" href="physics_8h_source.html#l00117">117</a> of file <a class="el" href="physics_8h_source.html">physics.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  117</span>{ <span class="keywordflow">return</span> std::sqrt(1 - 1 / (gamma * gamma)); }</div>
+<div class="fragment"><div class="line"><span class="lineno">  117</span>{ <span class="keywordflow">return</span> std::sqrt(gamma * gamma - 1) / gamma; }</div>
 </div><!-- fragment --><div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="physics_8h_ab8aa624dd63313487d8f5ecf52170d76_icgraph.png" border="0" usemap="#aphysics_8h_ab8aa624dd63313487d8f5ecf52170d76_icgraph" alt=""/></div>
 <map name="aphysics_8h_ab8aa624dd63313487d8f5ecf52170d76_icgraph" id="aphysics_8h_ab8aa624dd63313487d8f5ecf52170d76_icgraph">
-<area shape="rect" title="Converts Lorentz factor (gamma) to velocity fraction (beta)" alt="" coords="212,80,340,105"/>
-<area shape="rect" href="mesh_8h.html#ae3e9605b2c69cf526bd26727b015b7d8" title="Constructs a coordinate grid (Coord) for shock evolution." alt="" coords="43,5,126,31"/>
-<area shape="poly" title=" " alt="" coords="236,76,163,44,125,32,127,27,165,40,238,71"/>
-<area shape="rect" href="shock_8h.html#a332a992c621eaae912c73f8089d52323" title="Computes the deceleration time for the shock based on the equation system and time bounds." alt="" coords="11,55,158,80"/>
-<area shape="poly" title=" " alt="" coords="198,85,158,80,159,74,199,80"/>
-<area shape="rect" href="prompt_8h.html#a66fb48188341c585a06119c04800c823" title=" " alt="" coords="8,104,161,129"/>
-<area shape="poly" title=" " alt="" coords="199,105,162,110,161,104,198,100"/>
-<area shape="rect" href="prompt_8cpp.html#a179563049db5bed00a5663ff3932eed4" title=" " alt="" coords="5,153,164,179"/>
-<area shape="poly" title=" " alt="" coords="236,113,165,143,128,156,127,151,163,138,234,109"/>
+<area shape="rect" title="Converts Lorentz factor (gamma) to velocity fraction (beta)" alt="" coords="589,80,717,105"/>
+<area shape="rect" href="mesh_8h.html#ae3e9605b2c69cf526bd26727b015b7d8" title="Constructs a coordinate grid (Coord) for shock evolution." alt="" coords="421,5,503,31"/>
+<area shape="poly" title=" " alt="" coords="613,76,540,44,503,32,504,27,542,40,615,71"/>
+<area shape="rect" href="shock_8h.html#a332a992c621eaae912c73f8089d52323" title="Computes the deceleration time for the shock based on the equation system and time bounds." alt="" coords="389,55,535,80"/>
+<area shape="poly" title=" " alt="" coords="575,85,535,80,536,74,576,80"/>
+<area shape="rect" href="prompt_8h.html#a66fb48188341c585a06119c04800c823" title=" " alt="" coords="385,104,539,129"/>
+<area shape="poly" title=" " alt="" coords="576,105,539,110,539,104,575,100"/>
+<area shape="rect" href="prompt_8cpp.html#a179563049db5bed00a5663ff3932eed4" title=" " alt="" coords="383,153,541,179"/>
+<area shape="poly" title=" " alt="" coords="613,113,542,143,506,156,504,151,540,138,611,109"/>
+<area shape="rect" href="classPyModel.html#ab7bbdfe47a2b21d3a9cc685c962c5da2" title="Get details of the model configuration." alt="" coords="204,5,335,31"/>
+<area shape="poly" title=" " alt="" coords="407,21,335,21,335,15,407,15"/>
+<area shape="rect" href="pybind_8cpp.html#a8c92987849ad296e28ec6c07c8e7860b" title=" " alt="" coords="5,5,156,31"/>
+<area shape="poly" title=" " alt="" coords="190,21,156,21,156,15,190,15"/>
 </map>
 </div>
 

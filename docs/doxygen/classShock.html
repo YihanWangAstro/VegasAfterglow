@@ -149,7 +149,7 @@ Public Attributes</h2></td></tr>
 <tr class="memdesc:a48c444d1bd42f1b933aa4282b5634bf2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Comoving magnetic field.  <br /></td></tr>
 <tr class="separator:a48c444d1bd42f1b933aa4282b5634bf2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a05c8bb643bb0adba96f4b56bdc98bf1f" id="r_a05c8bb643bb0adba96f4b56bdc98bf1f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="mesh_8h.html#a6b76cc05bedc7fd9499c0bd3eec3bcb5">MeshGrid3d</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classShock.html#a05c8bb643bb0adba96f4b56bdc98bf1f">proton_num</a></td></tr>
-<tr class="memdesc:a05c8bb643bb0adba96f4b56bdc98bf1f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Downstream proton number.  <br /></td></tr>
+<tr class="memdesc:a05c8bb643bb0adba96f4b56bdc98bf1f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Downstream proton number per solid angle.  <br /></td></tr>
 <tr class="separator:a05c8bb643bb0adba96f4b56bdc98bf1f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a876908cb852c77b1053c91b54692c2ff" id="r_a876908cb852c77b1053c91b54692c2ff"><td class="memItemLeft" align="right" valign="top"><a class="el" href="mesh_8h.html#ae7ec6be5d638ad03ae6697ff2b71ef91">MeshGrid</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classShock.html#a876908cb852c77b1053c91b54692c2ff">injection_idx</a></td></tr>
 <tr class="memdesc:a876908cb852c77b1053c91b54692c2ff"><td class="mdescLeft">&#160;</td><td class="mdescRight">Beyond which grid index there is no electron injection.  <br /></td></tr>
@@ -230,7 +230,7 @@ Public Attributes</h2></td></tr>
 <div class="line"><span class="lineno">   21</span>      phi_size(phi_size),                             <span class="comment">// Store phi grid size</span></div>
 <div class="line"><span class="lineno">   22</span>      theta_size(theta_size),                         <span class="comment">// Store theta grid size</span></div>
 <div class="line"><span class="lineno">   23</span>      t_size(t_size) {}</div>
-<div class="ttc" id="aclassShock_html_a05c8bb643bb0adba96f4b56bdc98bf1f"><div class="ttname"><a href="classShock.html#a05c8bb643bb0adba96f4b56bdc98bf1f">Shock::proton_num</a></div><div class="ttdeci">MeshGrid3d proton_num</div><div class="ttdoc">Downstream proton number.</div><div class="ttdef"><b>Definition</b> <a href="shock_8h_source.html#l00050">shock.h:50</a></div></div>
+<div class="ttc" id="aclassShock_html_a05c8bb643bb0adba96f4b56bdc98bf1f"><div class="ttname"><a href="classShock.html#a05c8bb643bb0adba96f4b56bdc98bf1f">Shock::proton_num</a></div><div class="ttdeci">MeshGrid3d proton_num</div><div class="ttdoc">Downstream proton number per solid angle.</div><div class="ttdef"><b>Definition</b> <a href="shock_8h_source.html#l00050">shock.h:50</a></div></div>
 <div class="ttc" id="aclassShock_html_a144dc338f3f004d48e5b629479e782be"><div class="ttname"><a href="classShock.html#a144dc338f3f004d48e5b629479e782be">Shock::theta</a></div><div class="ttdeci">MeshGrid3d theta</div><div class="ttdoc">Theta for jet spreading.</div><div class="ttdef"><b>Definition</b> <a href="shock_8h_source.html#l00046">shock.h:46</a></div></div>
 <div class="ttc" id="aclassShock_html_a2f750335b1c4474905426fd1a78b006a"><div class="ttname"><a href="classShock.html#a2f750335b1c4474905426fd1a78b006a">Shock::t_comv</a></div><div class="ttdeci">MeshGrid3d t_comv</div><div class="ttdoc">Comoving time.</div><div class="ttdef"><b>Definition</b> <a href="shock_8h_source.html#l00044">shock.h:44</a></div></div>
 <div class="ttc" id="aclassShock_html_a48c444d1bd42f1b933aa4282b5634bf2"><div class="ttname"><a href="classShock.html#a48c444d1bd42f1b933aa4282b5634bf2">Shock::B</a></div><div class="ttdeci">MeshGrid3d B</div><div class="ttdoc">Comoving magnetic field.</div><div class="ttdef"><b>Definition</b> <a href="shock_8h_source.html#l00049">shock.h:49</a></div></div>
@@ -447,7 +447,7 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Downstream proton number. </p>
+<p>Downstream proton number per solid angle. </p>
 
 <p class="definition">Definition at line <a class="el" href="shock_8h_source.html#l00050">50</a> of file <a class="el" href="shock_8h_source.html">shock.h</a>.</p>
 

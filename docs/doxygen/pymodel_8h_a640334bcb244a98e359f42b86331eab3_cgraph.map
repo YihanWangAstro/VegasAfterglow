@@ -1,6 +1,9 @@
 <map id="PyGaussianJet" name="PyGaussianJet">
-<area shape="rect" id="Node000001" title="Creates a Gaussian jet model where energy and Lorentz factor follow Gaussian distribution." alt="" coords="5,29,120,55"/>
-<area shape="rect" id="Node000002" href="$utilities_8h.html#ab8e81118f023df135835db8cce4f5f42" title="Returns the value of a single parameter." alt="" coords="168,29,219,55"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="120,39,154,39,154,45,120,45"/>
-<area shape="poly" id="edge2_Node000002_Node000002" title=" " alt="" coords="171,30,166,21,169,11,178,5,193,3,211,6,219,14,215,18,209,11,193,8,180,10,173,14,172,20,176,28"/>
+<area shape="rect" id="Node000001" title="Creates a Gaussian jet model where energy and Lorentz factor follow Gaussian distribution." alt="" coords="5,31,120,56"/>
+<area shape="rect" id="Node000002" href="$utilities_8h.html#a19a0be066f6b80639b5863a493990601" title="Fast approximation of the exponential function." alt="" coords="168,5,247,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="120,31,154,25,155,30,121,36"/>
+<area shape="rect" id="Node000003" href="$utilities_8h.html#ab8e81118f023df135835db8cce4f5f42" title="Returns the value of a single parameter." alt="" coords="295,31,345,56"/>
+<area shape="poly" id="edge4_Node000001_Node000003" title=" " alt="" coords="121,41,281,41,281,46,121,46"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="248,24,282,32,280,37,247,29"/>
+<area shape="poly" id="edge3_Node000003_Node000003" title=" " alt="" coords="300,32,296,22,298,13,307,6,320,4,336,7,343,16,339,19,333,12,320,9,309,11,303,16,302,22,305,30"/>
 </map>

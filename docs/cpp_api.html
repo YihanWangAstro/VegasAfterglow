@@ -256,6 +256,9 @@
 <li class="toctree-l4"><a class="reference internal" href="#_CPPv4IDpEN8Observer8spectrumE5ArrayRK5Array4RealDpRK10PhotonGrid"><code class="docutils literal notranslate"><span class="pre">spectrum()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#_CPPv4N8Observer15update_requiredER8MaskGridRK5Array"><code class="docutils literal notranslate"><span class="pre">update_required()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#_CPPv4N8Observer4timeE"><code class="docutils literal notranslate"><span class="pre">time</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N8Observer5lg2_tE"><code class="docutils literal notranslate"><span class="pre">lg2_t</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N8Observer11lg2_dopplerE"><code class="docutils literal notranslate"><span class="pre">lg2_doppler</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N8Observer9lg2_OmegaE"><code class="docutils literal notranslate"><span class="pre">lg2_Omega</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="#_CPPv45Coord"><code class="docutils literal notranslate"><span class="pre">Coord</span></code></a><ul>
@@ -1382,7 +1385,7 @@
 <dl class="cpp var">
 <dt class="sig sig-object cpp" id="_CPPv4N5Shock10proton_numE">
 <span id="_CPPv3N5Shock10proton_numE"></span><span id="_CPPv2N5Shock10proton_numE"></span><span id="Shock::proton_num__MeshGrid3d"></span><span class="target" id="VegasAfterglowclassShock_1a05c8bb643bb0adba96f4b56bdc98bf1f"></span><span class="n"><span class="pre">MeshGrid3d</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">proton_num</span></span></span><a class="headerlink" href="#_CPPv4N5Shock10proton_numE" title="Link to this definition"></a><br /></dt>
-<dd><p>Downstream proton number. </p>
+<dd><p>Downstream proton number per solid angle. </p>
 </dd></dl>
 
 <dl class="cpp var">
@@ -2101,6 +2104,24 @@ Returns the spectrum (as an Array) at a single observation time by computing the
 <dt class="sig sig-object cpp" id="_CPPv4N8Observer4timeE">
 <span id="_CPPv3N8Observer4timeE"></span><span id="_CPPv2N8Observer4timeE"></span><span id="Observer::time__MeshGrid3d"></span><span class="target" id="VegasAfterglowclassObserver_1a7b83dbbff538d3f079f8e662d3686ada"></span><span class="n"><span class="pre">MeshGrid3d</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">time</span></span></span><a class="headerlink" href="#_CPPv4N8Observer4timeE" title="Link to this definition"></a><br /></dt>
 <dd><p>Grid of observation times. </p>
+</dd></dl>
+
+<dl class="cpp var">
+<dt class="sig sig-object cpp" id="_CPPv4N8Observer5lg2_tE">
+<span id="_CPPv3N8Observer5lg2_tE"></span><span id="_CPPv2N8Observer5lg2_tE"></span><span id="Observer::lg2_t__MeshGrid3d"></span><span class="target" id="VegasAfterglowclassObserver_1aa4f3a6cbcc458b937c75befa86e04e2d"></span><span class="n"><span class="pre">MeshGrid3d</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">lg2_t</span></span></span><a class="headerlink" href="#_CPPv4N8Observer5lg2_tE" title="Link to this definition"></a><br /></dt>
+<dd><p>Log2 of observation time grid. </p>
+</dd></dl>
+
+<dl class="cpp var">
+<dt class="sig sig-object cpp" id="_CPPv4N8Observer11lg2_dopplerE">
+<span id="_CPPv3N8Observer11lg2_dopplerE"></span><span id="_CPPv2N8Observer11lg2_dopplerE"></span><span id="Observer::lg2_doppler__MeshGrid3d"></span><span class="target" id="VegasAfterglowclassObserver_1a19627eca15595c8eb01d1e1ace2ffb2a"></span><span class="n"><span class="pre">MeshGrid3d</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">lg2_doppler</span></span></span><a class="headerlink" href="#_CPPv4N8Observer11lg2_dopplerE" title="Link to this definition"></a><br /></dt>
+<dd><p>Log2 of Doppler factor grid. </p>
+</dd></dl>
+
+<dl class="cpp var">
+<dt class="sig sig-object cpp" id="_CPPv4N8Observer9lg2_OmegaE">
+<span id="_CPPv3N8Observer9lg2_OmegaE"></span><span id="_CPPv2N8Observer9lg2_OmegaE"></span><span id="Observer::lg2_Omega__MeshGrid3d"></span><span class="target" id="VegasAfterglowclassObserver_1a48c472be08c58af862fc131bc99cf4d3"></span><span class="n"><span class="pre">MeshGrid3d</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">lg2_Omega</span></span></span><a class="headerlink" href="#_CPPv4N8Observer9lg2_OmegaE" title="Link to this definition"></a><br /></dt>
+<dd><p>Log2 of observe frame solid angle grid. </p>
 </dd></dl>
 
 </div>

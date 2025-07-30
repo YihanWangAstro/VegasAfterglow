@@ -4,6 +4,7 @@ var pymodel_8h =
     [ "PyObserver", "classPyObserver.html", "classPyObserver" ],
     [ "PyRadiation", "classPyRadiation.html", "classPyRadiation" ],
     [ "PyModel", "classPyModel.html", "classPyModel" ],
+    [ "ArrayDict", "pymodel_8h.html#a57b73bcaf050a51dcca8fd2cd4ce930c", null ],
     [ "convert_unit", "pymodel_8h.html#aa920671831cc213a5c0858813e42279f", null ],
     [ "PyGaussianJet", "pymodel_8h.html#a640334bcb244a98e359f42b86331eab3", null ],
     [ "PyISM", "pymodel_8h.html#a43af01d16838e6513792deaeb727fbe5", null ],

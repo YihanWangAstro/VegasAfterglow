@@ -129,7 +129,7 @@ Public Attributes</h2></td></tr>
 <div class="textblock"><p>Implements a power-law jet profile where properties follow a power-law distribution with angle. </p>
 <p>This class provides a model for GRB jets with a power-law decay, characterized by core angle theta_c, isotropic equivalent energy E_iso, initial Lorentz factor Gamma0, and power-law index k. </p>
 
-<p class="definition">Definition at line <a class="el" href="jet_8h_source.html#l00185">185</a> of file <a class="el" href="jet_8h_source.html">jet.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="jet_8h_source.html#l00187">187</a> of file <a class="el" href="jet_8h_source.html">jet.h</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="ac319bcc6d1cc74fda47c49a143c09e78" name="ac319bcc6d1cc74fda47c49a143c09e78"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ac319bcc6d1cc74fda47c49a143c09e78">&#9670;&#160;</a></span>PowerLawJet()</h2>
@@ -202,11 +202,11 @@ Public Attributes</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="jet_8h_source.html#l00198">198</a> of file <a class="el" href="jet_8h_source.html">jet.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  199</span>        : theta_c_(theta_c), eps_k_(E_iso / (4 * <a class="code hl_variable" href="namespacecon.html#aa0ccd904b754d0f907898a942516d121">con::pi</a>)), Gamma0_(<a class="code hl_function" href="classPowerLawJet.html#a476eed410b28500b7209768b81434502">Gamma0</a>), k_(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">k</a>), <a class="code hl_variable" href="classPowerLawJet.html#aefe6b9e991605a6b451090adad143e39">T0</a>(<a class="code hl_variable" href="classPowerLawJet.html#aefe6b9e991605a6b451090adad143e39">T0</a>), <a class="code hl_variable" href="classPowerLawJet.html#a783b242334d9723f19a3f724b65629b5">spreading</a>(<a class="code hl_variable" href="classPowerLawJet.html#a783b242334d9723f19a3f724b65629b5">spreading</a>) {}</div>
-<div class="ttc" id="aclassPowerLawJet_html_a476eed410b28500b7209768b81434502"><div class="ttname"><a href="classPowerLawJet.html#a476eed410b28500b7209768b81434502">PowerLawJet::Gamma0</a></div><div class="ttdeci">Real Gamma0(Real phi, Real theta) const noexcept</div><div class="ttdoc">Initial Lorentz factor as a function of phi and theta, with power-law falloff.</div><div class="ttdef"><b>Definition</b> <a href="jet_8h_source.html#l00219">jet.h:219</a></div></div>
-<div class="ttc" id="aclassPowerLawJet_html_a783b242334d9723f19a3f724b65629b5"><div class="ttname"><a href="classPowerLawJet.html#a783b242334d9723f19a3f724b65629b5">PowerLawJet::spreading</a></div><div class="ttdeci">bool spreading</div><div class="ttdoc">Flag indicating if the ejecta spreads laterally during evolution.</div><div class="ttdef"><b>Definition</b> <a href="jet_8h_source.html#l00224">jet.h:224</a></div></div>
-<div class="ttc" id="aclassPowerLawJet_html_aefe6b9e991605a6b451090adad143e39"><div class="ttname"><a href="classPowerLawJet.html#aefe6b9e991605a6b451090adad143e39">PowerLawJet::T0</a></div><div class="ttdeci">Real T0</div><div class="ttdoc">Duration of the ejecta in seconds.</div><div class="ttdef"><b>Definition</b> <a href="jet_8h_source.html#l00222">jet.h:222</a></div></div>
+<p class="definition">Definition at line <a class="el" href="jet_8h_source.html#l00200">200</a> of file <a class="el" href="jet_8h_source.html">jet.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  201</span>        : theta_c_(theta_c), eps_k_(E_iso / (4 * <a class="code hl_variable" href="namespacecon.html#aa0ccd904b754d0f907898a942516d121">con::pi</a>)), Gamma0_(<a class="code hl_function" href="classPowerLawJet.html#a476eed410b28500b7209768b81434502">Gamma0</a>), k_(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">k</a>), <a class="code hl_variable" href="classPowerLawJet.html#aefe6b9e991605a6b451090adad143e39">T0</a>(<a class="code hl_variable" href="classPowerLawJet.html#aefe6b9e991605a6b451090adad143e39">T0</a>), <a class="code hl_variable" href="classPowerLawJet.html#a783b242334d9723f19a3f724b65629b5">spreading</a>(<a class="code hl_variable" href="classPowerLawJet.html#a783b242334d9723f19a3f724b65629b5">spreading</a>) {}</div>
+<div class="ttc" id="aclassPowerLawJet_html_a476eed410b28500b7209768b81434502"><div class="ttname"><a href="classPowerLawJet.html#a476eed410b28500b7209768b81434502">PowerLawJet::Gamma0</a></div><div class="ttdeci">Real Gamma0(Real phi, Real theta) const noexcept</div><div class="ttdoc">Initial Lorentz factor as a function of phi and theta, with power-law falloff.</div><div class="ttdef"><b>Definition</b> <a href="jet_8h_source.html#l00221">jet.h:221</a></div></div>
+<div class="ttc" id="aclassPowerLawJet_html_a783b242334d9723f19a3f724b65629b5"><div class="ttname"><a href="classPowerLawJet.html#a783b242334d9723f19a3f724b65629b5">PowerLawJet::spreading</a></div><div class="ttdeci">bool spreading</div><div class="ttdoc">Flag indicating if the ejecta spreads laterally during evolution.</div><div class="ttdef"><b>Definition</b> <a href="jet_8h_source.html#l00228">jet.h:228</a></div></div>
+<div class="ttc" id="aclassPowerLawJet_html_aefe6b9e991605a6b451090adad143e39"><div class="ttname"><a href="classPowerLawJet.html#aefe6b9e991605a6b451090adad143e39">PowerLawJet::T0</a></div><div class="ttdeci">Real T0</div><div class="ttdoc">Duration of the ejecta in seconds.</div><div class="ttdef"><b>Definition</b> <a href="jet_8h_source.html#l00226">jet.h:226</a></div></div>
 <div class="ttc" id="anamespacecon_html_aa0ccd904b754d0f907898a942516d121"><div class="ttname"><a href="namespacecon.html#aa0ccd904b754d0f907898a942516d121">con::pi</a></div><div class="ttdeci">constexpr Real pi</div><div class="ttdoc">Pi.</div><div class="ttdef"><b>Definition</b> <a href="macros_8h_source.html#l00091">macros.h:91</a></div></div>
 <div class="ttc" id="autilities_8h_html_ab8e81118f023df135835db8cce4f5f42"><div class="ttname"><a href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">max</a></div><div class="ttdeci">T max(T value)</div><div class="ttdoc">Returns the value of a single parameter.</div><div class="ttdef"><b>Definition</b> <a href="utilities_8h_source.html#l00287">utilities.h:287</a></div></div>
 </div><!-- fragment -->
@@ -257,8 +257,8 @@ Public Attributes</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Energy per solid angle with power-law angular dependence </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="jet_8h_source.html#l00209">209</a> of file <a class="el" href="jet_8h_source.html">jet.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  209</span>{ <span class="keywordflow">return</span> eps_k_ * <a class="code hl_function" href="utilities_8h.html#a4520a27a10a2aef33c99ad8c679da404">fast_pow</a>(theta / theta_c_, -k_); }</div>
+<p class="definition">Definition at line <a class="el" href="jet_8h_source.html#l00211">211</a> of file <a class="el" href="jet_8h_source.html">jet.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  211</span>{ <span class="keywordflow">return</span> eps_k_ / (1 + <a class="code hl_function" href="utilities_8h.html#a4520a27a10a2aef33c99ad8c679da404">fast_pow</a>(theta / theta_c_, k_)); }</div>
 <div class="ttc" id="autilities_8h_html_a4520a27a10a2aef33c99ad8c679da404"><div class="ttname"><a href="utilities_8h.html#a4520a27a10a2aef33c99ad8c679da404">fast_pow</a></div><div class="ttdeci">Real fast_pow(Real a, Real b)</div><div class="ttdoc">Fast approximation of a raised to the power of b.</div><div class="ttdef"><b>Definition</b> <a href="utilities_8h_source.html#l00448">utilities.h:448</a></div></div>
 </div><!-- fragment --><div class="dynheader">
 Here is the call graph for this function:</div>
@@ -326,8 +326,10 @@ Here is the call graph for this function:</div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Lorentz factor with power-law angular dependence </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="jet_8h_source.html#l00219">219</a> of file <a class="el" href="jet_8h_source.html">jet.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  219</span>{ <span class="keywordflow">return</span> Gamma0_ * <a class="code hl_function" href="utilities_8h.html#a4520a27a10a2aef33c99ad8c679da404">fast_pow</a>(theta / theta_c_, -k_); }</div>
+<p class="definition">Definition at line <a class="el" href="jet_8h_source.html#l00221">221</a> of file <a class="el" href="jet_8h_source.html">jet.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  221</span>                                                            {</div>
+<div class="line"><span class="lineno">  222</span>        <span class="keywordflow">return</span> (Gamma0_ - 1) / (1 + <a class="code hl_function" href="utilities_8h.html#a4520a27a10a2aef33c99ad8c679da404">fast_pow</a>(theta / theta_c_, k_)) + 1;</div>
+<div class="line"><span class="lineno">  223</span>    }</div>
 </div><!-- fragment --><div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -365,8 +367,8 @@ Here is the call graph for this function:</div>
 
 <p>Flag indicating if the ejecta spreads laterally during evolution. </p>
 
-<p class="definition">Definition at line <a class="el" href="jet_8h_source.html#l00224">224</a> of file <a class="el" href="jet_8h_source.html">jet.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  224</span>{<span class="keyword">false</span>};</div>
+<p class="definition">Definition at line <a class="el" href="jet_8h_source.html#l00228">228</a> of file <a class="el" href="jet_8h_source.html">jet.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  228</span>{<span class="keyword">false</span>};</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -384,8 +386,8 @@ Here is the call graph for this function:</div>
 
 <p>Duration of the ejecta in seconds. </p>
 
-<p class="definition">Definition at line <a class="el" href="jet_8h_source.html#l00222">222</a> of file <a class="el" href="jet_8h_source.html">jet.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  222</span>{1 * <a class="code hl_variable" href="namespaceunit.html#a4e7c438655d3f34c7c30a155ec38f250">unit::sec</a>};</div>
+<p class="definition">Definition at line <a class="el" href="jet_8h_source.html#l00226">226</a> of file <a class="el" href="jet_8h_source.html">jet.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  226</span>{1 * <a class="code hl_variable" href="namespaceunit.html#a4e7c438655d3f34c7c30a155ec38f250">unit::sec</a>};</div>
 <div class="ttc" id="anamespaceunit_html_a4e7c438655d3f34c7c30a155ec38f250"><div class="ttname"><a href="namespaceunit.html#a4e7c438655d3f34c7c30a155ec38f250">unit::sec</a></div><div class="ttdeci">constexpr Real sec</div><div class="ttdoc">Second in code units.</div><div class="ttdef"><b>Definition</b> <a href="macros_8h_source.html#l00040">macros.h:40</a></div></div>
 </div><!-- fragment -->
 </div>

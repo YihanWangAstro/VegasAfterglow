@@ -149,6 +149,15 @@ Public Attributes</h2></td></tr>
 <tr class="memitem:a7b83dbbff538d3f079f8e662d3686ada" id="r_a7b83dbbff538d3f079f8e662d3686ada"><td class="memItemLeft" align="right" valign="top"><a class="el" href="mesh_8h.html#a6b76cc05bedc7fd9499c0bd3eec3bcb5">MeshGrid3d</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classObserver.html#a7b83dbbff538d3f079f8e662d3686ada">time</a></td></tr>
 <tr class="memdesc:a7b83dbbff538d3f079f8e662d3686ada"><td class="mdescLeft">&#160;</td><td class="mdescRight">Grid of observation times.  <br /></td></tr>
 <tr class="separator:a7b83dbbff538d3f079f8e662d3686ada"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa4f3a6cbcc458b937c75befa86e04e2d" id="r_aa4f3a6cbcc458b937c75befa86e04e2d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="mesh_8h.html#a6b76cc05bedc7fd9499c0bd3eec3bcb5">MeshGrid3d</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classObserver.html#aa4f3a6cbcc458b937c75befa86e04e2d">lg2_t</a></td></tr>
+<tr class="memdesc:aa4f3a6cbcc458b937c75befa86e04e2d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Log2 of observation time grid.  <br /></td></tr>
+<tr class="separator:aa4f3a6cbcc458b937c75befa86e04e2d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a19627eca15595c8eb01d1e1ace2ffb2a" id="r_a19627eca15595c8eb01d1e1ace2ffb2a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="mesh_8h.html#a6b76cc05bedc7fd9499c0bd3eec3bcb5">MeshGrid3d</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classObserver.html#a19627eca15595c8eb01d1e1ace2ffb2a">lg2_doppler</a></td></tr>
+<tr class="memdesc:a19627eca15595c8eb01d1e1ace2ffb2a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Log2 of Doppler factor grid.  <br /></td></tr>
+<tr class="separator:a19627eca15595c8eb01d1e1ace2ffb2a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a48c472be08c58af862fc131bc99cf4d3" id="r_a48c472be08c58af862fc131bc99cf4d3"><td class="memItemLeft" align="right" valign="top"><a class="el" href="mesh_8h.html#a6b76cc05bedc7fd9499c0bd3eec3bcb5">MeshGrid3d</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classObserver.html#a48c472be08c58af862fc131bc99cf4d3">lg2_Omega</a></td></tr>
+<tr class="memdesc:a48c472be08c58af862fc131bc99cf4d3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Log2 of observe frame solid angle grid.  <br /></td></tr>
+<tr class="separator:a48c472be08c58af862fc131bc99cf4d3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Represents an observer in the GRB afterglow simulation. </p>
@@ -506,10 +515,10 @@ template&lt;typename... PhotonGrid&gt; </div>
 <div class="line"><span class="lineno">  324</span>            <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">j</a> = 0; <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">j</a> &lt; theta_grid; <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">j</a>++) {</div>
 <div class="line"><span class="lineno">  325</span>                <span class="comment">// Skip observation times that are below the grid&#39;s start time</span></div>
 <div class="line"><span class="lineno">  326</span>                <span class="keywordtype">size_t</span> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">t_idx</a> = 0;</div>
-<div class="line"><span class="lineno">  327</span>                <a class="code hl_function" href="observer_8h.html#aa53249b087b9b9d83f4c06e808deeed9">iterate_to</a>(lg2_t(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">j</a>, 0), <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">lg2_t_obs</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">t_idx</a>);</div>
+<div class="line"><span class="lineno">  327</span>                <a class="code hl_function" href="observer_8h.html#aa53249b087b9b9d83f4c06e808deeed9">iterate_to</a>(<a class="code hl_variable" href="classObserver.html#aa4f3a6cbcc458b937c75befa86e04e2d">lg2_t</a>(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">j</a>, 0), <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">lg2_t_obs</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">t_idx</a>);</div>
 <div class="line"><span class="lineno">  328</span> </div>
 <div class="line"><span class="lineno">  329</span>                <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">k</a> = 0; <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">k</a> &lt; t_grid - 1 &amp;&amp; <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">t_idx</a> &lt; <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">t_obs_len</a>; <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">k</a>++) {</div>
-<div class="line"><span class="lineno">  330</span>                    <a class="code hl_typedef" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">lg2_t_hi</a> = lg2_t(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">j</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">k</a> + 1);</div>
+<div class="line"><span class="lineno">  330</span>                    <a class="code hl_typedef" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">lg2_t_hi</a> = <a class="code hl_variable" href="classObserver.html#aa4f3a6cbcc458b937c75befa86e04e2d">lg2_t</a>(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">j</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">k</a> + 1);</div>
 <div class="line"><span class="lineno">  331</span>                    <span class="keywordflow">if</span> (<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">lg2_t_hi</a> &lt; <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">lg2_t_obs</a>(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">t_idx</a>)) {</div>
 <div class="line"><span class="lineno">  332</span>                        <span class="keywordflow">continue</span>;</div>
 <div class="line"><span class="lineno">  333</span>                    } <span class="keywordflow">else</span> {</div>
@@ -532,6 +541,7 @@ template&lt;typename... PhotonGrid&gt; </div>
 <div class="line"><span class="lineno">  350</span> </div>
 <div class="line"><span class="lineno">  351</span>    <span class="keywordflow">return</span> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">F_nu</a>;</div>
 <div class="line"><span class="lineno">  352</span>}</div>
+<div class="ttc" id="aclassObserver_html_aa4f3a6cbcc458b937c75befa86e04e2d"><div class="ttname"><a href="classObserver.html#aa4f3a6cbcc458b937c75befa86e04e2d">Observer::lg2_t</a></div><div class="ttdeci">MeshGrid3d lg2_t</div><div class="ttdoc">Log2 of observation time grid.</div><div class="ttdef"><b>Definition</b> <a href="observer_8h_source.html#l00161">observer.h:161</a></div></div>
 <div class="ttc" id="anamespacecon_html_aa0ccd904b754d0f907898a942516d121"><div class="ttname"><a href="namespacecon.html#aa0ccd904b754d0f907898a942516d121">con::pi</a></div><div class="ttdeci">constexpr Real pi</div><div class="ttdoc">Pi.</div><div class="ttdef"><b>Definition</b> <a href="macros_8h_source.html#l00091">macros.h:91</a></div></div>
 <div class="ttc" id="aobserver_8h_html_aa53249b087b9b9d83f4c06e808deeed9"><div class="ttname"><a href="observer_8h.html#aa53249b087b9b9d83f4c06e808deeed9">iterate_to</a></div><div class="ttdeci">void iterate_to(Real value, Array const &amp;arr, size_t &amp;it) noexcept</div><div class="ttdoc">Helper function that advances an iterator through an array until the value exceeds the target.</div><div class="ttdef"><b>Definition</b> <a href="observer_8h_source.html#l00273">observer.h:273</a></div></div>
 </div><!-- fragment --><div class="dynheader">
@@ -705,11 +715,11 @@ template&lt;typename... PhotonGrid&gt; </div>
 <div class="line"><span class="lineno">  368</span>    <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a> = 0; <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a> &lt; eff_phi_grid; <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a>++) {</div>
 <div class="line"><span class="lineno">  369</span>        <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">j</a> = 0; <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">j</a> &lt; theta_grid; <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">j</a>++) {</div>
 <div class="line"><span class="lineno">  370</span>            <span class="keywordtype">size_t</span> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">t_idx</a> = 0;</div>
-<div class="line"><span class="lineno">  371</span>            <a class="code hl_function" href="observer_8h.html#aa53249b087b9b9d83f4c06e808deeed9">iterate_to</a>(lg2_t(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">j</a>, 0), <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">lg2_t_obs</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">t_idx</a>);</div>
+<div class="line"><span class="lineno">  371</span>            <a class="code hl_function" href="observer_8h.html#aa53249b087b9b9d83f4c06e808deeed9">iterate_to</a>(<a class="code hl_variable" href="classObserver.html#aa4f3a6cbcc458b937c75befa86e04e2d">lg2_t</a>(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">j</a>, 0), <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">lg2_t_obs</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">t_idx</a>);</div>
 <div class="line"><span class="lineno">  372</span> </div>
 <div class="line"><span class="lineno">  373</span>            <span class="keywordtype">size_t</span> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">k</a> = 0;</div>
 <div class="line"><span class="lineno">  374</span>            <span class="keywordflow">while</span> (<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">t_idx</a> &lt; <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">t_obs_len</a> &amp;&amp; <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">k</a> &lt; t_grid - 1) {</div>
-<div class="line"><span class="lineno">  375</span>                <a class="code hl_typedef" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">lg2_t_hi</a> = lg2_t(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">j</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">k</a> + 1);</div>
+<div class="line"><span class="lineno">  375</span>                <a class="code hl_typedef" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">lg2_t_hi</a> = <a class="code hl_variable" href="classObserver.html#aa4f3a6cbcc458b937c75befa86e04e2d">lg2_t</a>(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">j</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">k</a> + 1);</div>
 <div class="line"><span class="lineno">  376</span>                <span class="keywordflow">if</span> (<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">lg2_t_hi</a> &lt; <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">lg2_t_obs</a>(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">t_idx</a>)) {</div>
 <div class="line"><span class="lineno">  377</span>                    <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">k</a>++;</div>
 <div class="line"><span class="lineno">  378</span>                    <span class="keywordflow">continue</span>;</div>
@@ -952,11 +962,11 @@ Here is the call graph for this function:</div>
 <div class="line"><span class="lineno">  112</span>        <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">j</a> = 0; <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">j</a> &lt; theta_grid; <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">j</a>++) {</div>
 <div class="line"><span class="lineno">  113</span>            <span class="comment">// Skip observation times that are below the grid&#39;s start time</span></div>
 <div class="line"><span class="lineno">  114</span>            <span class="keywordtype">size_t</span> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">t_idx</a> = 0;</div>
-<div class="line"><span class="lineno">  115</span>            <a class="code hl_function" href="observer_8h.html#aa53249b087b9b9d83f4c06e808deeed9">iterate_to</a>(lg2_t(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">j</a>, 0), <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">log2_t_obs</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">t_idx</a>);</div>
+<div class="line"><span class="lineno">  115</span>            <a class="code hl_function" href="observer_8h.html#aa53249b087b9b9d83f4c06e808deeed9">iterate_to</a>(<a class="code hl_variable" href="classObserver.html#aa4f3a6cbcc458b937c75befa86e04e2d">lg2_t</a>(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">j</a>, 0), <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">log2_t_obs</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">t_idx</a>);</div>
 <div class="line"><span class="lineno">  116</span>            <span class="comment">// find the grid points that are required for the interpolation.</span></div>
 <div class="line"><span class="lineno">  117</span>            <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">k</a> = 0; <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">k</a> &lt; t_grid - 1 &amp;&amp; <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">t_idx</a> &lt; <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">t_obs_size</a>; <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">k</a>++) {</div>
-<div class="line"><span class="lineno">  118</span>                <a class="code hl_typedef" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> <span class="keyword">const</span> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">t_lo</a> = lg2_t(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">j</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">k</a>);</div>
-<div class="line"><span class="lineno">  119</span>                <a class="code hl_typedef" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> <span class="keyword">const</span> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">t_hi</a> = lg2_t(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">j</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">k</a> + 1);</div>
+<div class="line"><span class="lineno">  118</span>                <a class="code hl_typedef" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> <span class="keyword">const</span> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">t_lo</a> = <a class="code hl_variable" href="classObserver.html#aa4f3a6cbcc458b937c75befa86e04e2d">lg2_t</a>(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">j</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">k</a>);</div>
+<div class="line"><span class="lineno">  119</span>                <a class="code hl_typedef" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> <span class="keyword">const</span> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">t_hi</a> = <a class="code hl_variable" href="classObserver.html#aa4f3a6cbcc458b937c75befa86e04e2d">lg2_t</a>(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">j</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">k</a> + 1);</div>
 <div class="line"><span class="lineno">  120</span> </div>
 <div class="line"><span class="lineno">  121</span>                <span class="keywordflow">if</span> (<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">t_lo</a> &lt; <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">log2_t_obs</a>(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">t_idx</a>) &amp;&amp; <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">log2_t_obs</a>(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">t_idx</a>) &lt;= <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">t_hi</a>) {</div>
 <div class="line"><span class="lineno">  122</span>                    required(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i_eff</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">j</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">k</a>) = 1;</div>
@@ -995,6 +1005,60 @@ Here is the caller graph for this function:</div>
 </div>
 </div>
 <h2 class="groupheader">Member Data Documentation</h2>
+<a id="a19627eca15595c8eb01d1e1ace2ffb2a" name="a19627eca15595c8eb01d1e1ace2ffb2a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a19627eca15595c8eb01d1e1ace2ffb2a">&#9670;&#160;</a></span>lg2_doppler</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="mesh_8h.html#a6b76cc05bedc7fd9499c0bd3eec3bcb5">MeshGrid3d</a> Observer::lg2_doppler</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Log2 of Doppler factor grid. </p>
+
+<p class="definition">Definition at line <a class="el" href="observer_8h_source.html#l00162">162</a> of file <a class="el" href="observer_8h_source.html">observer.h</a>.</p>
+
+</div>
+</div>
+<a id="a48c472be08c58af862fc131bc99cf4d3" name="a48c472be08c58af862fc131bc99cf4d3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a48c472be08c58af862fc131bc99cf4d3">&#9670;&#160;</a></span>lg2_Omega</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="mesh_8h.html#a6b76cc05bedc7fd9499c0bd3eec3bcb5">MeshGrid3d</a> Observer::lg2_Omega</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Log2 of observe frame solid angle grid. </p>
+
+<p class="definition">Definition at line <a class="el" href="observer_8h_source.html#l00163">163</a> of file <a class="el" href="observer_8h_source.html">observer.h</a>.</p>
+
+</div>
+</div>
+<a id="aa4f3a6cbcc458b937c75befa86e04e2d" name="aa4f3a6cbcc458b937c75befa86e04e2d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa4f3a6cbcc458b937c75befa86e04e2d">&#9670;&#160;</a></span>lg2_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="mesh_8h.html#a6b76cc05bedc7fd9499c0bd3eec3bcb5">MeshGrid3d</a> Observer::lg2_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Log2 of observation time grid. </p>
+
+<p class="definition">Definition at line <a class="el" href="observer_8h_source.html#l00161">161</a> of file <a class="el" href="observer_8h_source.html">observer.h</a>.</p>
+
+</div>
+</div>
 <a id="a7b83dbbff538d3f079f8e662d3686ada" name="a7b83dbbff538d3f079f8e662d3686ada"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a7b83dbbff538d3f079f8e662d3686ada">&#9670;&#160;</a></span>time</h2>
 

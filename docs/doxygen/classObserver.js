@@ -10,5 +10,8 @@ var classObserver =
     [ "spectra", "classObserver.html#ac9ed4fb8ae8b336286c176423401ba30", null ],
     [ "spectrum", "classObserver.html#af16bf4c5175405ae1c88a78b8afdd8c4", null ],
     [ "update_required", "classObserver.html#a90f4a0a86f9e4a702cfc3a13e7c9c153", null ],
+    [ "lg2_doppler", "classObserver.html#a19627eca15595c8eb01d1e1ace2ffb2a", null ],
+    [ "lg2_Omega", "classObserver.html#a48c472be08c58af862fc131bc99cf4d3", null ],
+    [ "lg2_t", "classObserver.html#aa4f3a6cbcc458b937c75befa86e04e2d", null ],
     [ "time", "classObserver.html#a7b83dbbff538d3f079f8e662d3686ada", null ]
 ];
