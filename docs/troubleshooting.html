@@ -1,0 +1,337 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Troubleshooting &mdash; VegasAfterglow 0.1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=20074c1a" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="_static/graphviz.css?v=fd3f3429" />
+      <link rel="stylesheet" type="text/css" href="_static/css/custom.css?v=c0df17a3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/custom.css?v=c0df17a3" />
+
+  
+    <link rel="shortcut icon" href="_static/logo.svg"/>
+    <link rel="canonical" href="https://yihanwangastro.github.io/VegasAfterglow/docs/troubleshooting.html" />
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=01f34227"></script>
+      <script src="_static/doctools.js?v=9a2dae69"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="_static/js/custom.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Contributing" href="contributing.html" />
+    <link rel="prev" title="C++ API Reference" href="cpp_api.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            VegasAfterglow
+              <img src="_static/logo.svg" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="quickstart.html">Quickstart</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="parameter_reference.html">Parameter Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="python_api.html">Python API Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cpp_api.html">C++ API Reference</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Troubleshooting</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#common-issues">Common Issues</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#model-setup-and-calculation">Model Setup and Calculation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#mcmc-fitting-issues">MCMC Fitting Issues</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#data-and-file-issues">Data and File Issues</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#installation-and-environment">Installation and Environment</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#performance-guidelines">Performance Guidelines</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#resolution-parameters">Resolution Parameters</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#memory-usage">Memory Usage</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#getting-help">Getting Help</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#best-practices">Best Practices</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#model-development-workflow">Model Development Workflow</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="contributing.html">Contributing</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">VegasAfterglow</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Troubleshooting</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/troubleshooting.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="troubleshooting">
+<h1>Troubleshooting<a class="headerlink" href="#troubleshooting" title="Link to this heading"></a></h1>
+<p>This page addresses common issues and questions that users encounter when working with VegasAfterglow.</p>
+<section id="common-issues">
+<h2>Common Issues<a class="headerlink" href="#common-issues" title="Link to this heading"></a></h2>
+<section id="model-setup-and-calculation">
+<h3>Model Setup and Calculation<a class="headerlink" href="#model-setup-and-calculation" title="Link to this heading"></a></h3>
+<p><strong>Q: My light curve has strange spikes or discontinuities</strong></p>
+<p>A: This is usually caused by one of the following:</p>
+<ul class="simple">
+<li><p><strong>Time array ordering</strong>: Ensure your time array is in ascending order when using <code class="docutils literal notranslate"><span class="pre">specific_flux()</span></code>. Use <code class="docutils literal notranslate"><span class="pre">specific_flux_sorted_series()</span></code> for better performance with sorted arrays.</p></li>
+<li><p><strong>Resolution too low</strong>: Increase the resolution parameters in <code class="docutils literal notranslate"><span class="pre">Model(resolutions=(phi_ppd,</span> <span class="pre">theta_ppd,</span> <span class="pre">t_ppd))</span></code></p></li>
+<li><p><strong>User-defined profiles</strong>: For custom jet/medium profiles, ensure they are smooth and well-behaved</p></li>
+</ul>
+<p><strong>Q: My calculation is extremely slow</strong></p>
+<p>A: Performance can be improved by:</p>
+<ul class="simple">
+<li><p><strong>Reducing resolution</strong>: Use <code class="docutils literal notranslate"><span class="pre">resolutions=(0.1,</span> <span class="pre">3,</span> <span class="pre">5)</span></code> for speed, <code class="docutils literal notranslate"><span class="pre">(0.3,</span> <span class="pre">5,</span> <span class="pre">10)</span></code> for accuracy</p></li>
+<li><p><strong>Limiting frequency/time ranges</strong>: Calculate only the bands and times you need</p></li>
+<li><p><strong>Using built-in profiles</strong>: Built-in jet structures are faster than user-defined Python functions</p></li>
+<li><p><strong>For MCMC</strong>: Consider using fewer parameters or coarser resolution</p></li>
+</ul>
+<p><strong>Q: I get numerical errors or NaN values</strong></p>
+<p>A: Check for:</p>
+<ul class="simple">
+<li><p><strong>Extreme parameter values</strong>: Ensure parameters are within physically reasonable ranges</p></li>
+<li><p><strong>Zero or negative values</strong>: Some parameters (like energies, densities) must be positive</p></li>
+<li><p><strong>Resolution mismatch</strong>: Very fine resolution with short time arrays can cause issues</p></li>
+</ul>
+<p><strong>Q: My model doesn’t match basic expectations (wrong slope, normalization)</strong></p>
+<p>A: Verify:</p>
+<ul class="simple">
+<li><p><strong>Units</strong>: All inputs should be in CGS units (see parameter reference table)</p></li>
+<li><p><strong>Observer frame vs source frame</strong>: Times and frequencies are in observer frame</p></li>
+<li><p><strong>Jet opening angle</strong>: <code class="docutils literal notranslate"><span class="pre">theta_c</span></code> is in radians, not degrees</p></li>
+</ul>
+</section>
+<section id="mcmc-fitting-issues">
+<h3>MCMC Fitting Issues<a class="headerlink" href="#mcmc-fitting-issues" title="Link to this heading"></a></h3>
+<p><strong>Q: MCMC chains don’t converge or get stuck</strong></p>
+<p>A: Try the following:</p>
+<ul class="simple">
+<li><p><strong>Check parameter ranges</strong>: Ensure prior ranges include the true values</p></li>
+<li><p><strong>Use better initial guesses</strong>: Set <code class="docutils literal notranslate"><span class="pre">ParamDef</span></code> initial values closer to expected results</p></li>
+<li><p><strong>Increase burn-in</strong>: Use <code class="docutils literal notranslate"><span class="pre">burn_frac=0.5</span></code> or higher for difficult problems</p></li>
+<li><p><strong>More walkers</strong>: Use <code class="docutils literal notranslate"><span class="pre">n_walkers</span> <span class="pre">&gt;</span> <span class="pre">2</span> <span class="pre">*</span> <span class="pre">n_parameters</span></code> (emcee recommendation)</p></li>
+<li><p><strong>Check data quality</strong>: Ensure observational uncertainties are realistic</p></li>
+</ul>
+<p><strong>Q: MCMC is too slow for practical use</strong></p>
+<p>A: Optimization strategies:</p>
+<ul class="simple">
+<li><p><strong>Reduce resolution</strong>: Use <code class="docutils literal notranslate"><span class="pre">resolution=(0.5,</span> <span class="pre">3,</span> <span class="pre">5)</span></code> for initial exploration</p></li>
+<li><p><strong>Fewer parameters</strong>: Fix some parameters with <code class="docutils literal notranslate"><span class="pre">Scale.FIXED</span></code></p></li>
+<li><p><strong>Coarser time/frequency grids</strong>: Use fewer data points for initial fits</p></li>
+<li><p><strong>Parallel processing</strong>: Ensure you’re using multiple cores</p></li>
+</ul>
+<p><strong>Q: Parameter constraints seem unrealistic</strong></p>
+<p>A: Check:</p>
+<ul class="simple">
+<li><p><strong>Parameter scaling</strong>: Use <code class="docutils literal notranslate"><span class="pre">Scale.LOG</span></code> for parameters spanning orders of magnitude</p></li>
+<li><p><strong>Prior ranges</strong>: Ensure they’re physically motivated and not too restrictive</p></li>
+<li><p><strong>Model degeneracies</strong>: Some parameters may be strongly correlated</p></li>
+<li><p><strong>Data coverage</strong>: Limited frequency/time coverage can lead to poor constraints</p></li>
+</ul>
+</section>
+<section id="data-and-file-issues">
+<h3>Data and File Issues<a class="headerlink" href="#data-and-file-issues" title="Link to this heading"></a></h3>
+<p><strong>Q: I can’t load my observational data</strong></p>
+<p>A: Common data loading issues:</p>
+<ul class="simple">
+<li><p><strong>File format</strong>: Ensure CSV files have the expected column names (<code class="docutils literal notranslate"><span class="pre">t</span></code>, <code class="docutils literal notranslate"><span class="pre">Fv_obs</span></code>, <code class="docutils literal notranslate"><span class="pre">Fv_err</span></code>, <code class="docutils literal notranslate"><span class="pre">nu</span></code>)</p></li>
+<li><p><strong>Units</strong>: Data should be in CGS units (times in seconds, frequencies in Hz, fluxes in erg/cm²/s/Hz)</p></li>
+<li><p><strong>Missing values</strong>: Remove or interpolate NaN/infinite values</p></li>
+<li><p><strong>File paths</strong>: Use absolute paths or ensure files are in the correct directory</p></li>
+</ul>
+<p><strong>Q: Error messages about missing dependencies</strong></p>
+<p>A: Install required packages:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span>numpy<span class="w"> </span>scipy<span class="w"> </span>matplotlib<span class="w"> </span>pandas<span class="w"> </span>corner<span class="w"> </span>emcee
+</pre></div>
+</div>
+<p>For specific features:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span>jupyter<span class="w">  </span><span class="c1"># For notebook examples</span>
+pip<span class="w"> </span>install<span class="w"> </span>h5py<span class="w">     </span><span class="c1"># For saving large datasets</span>
+</pre></div>
+</div>
+</section>
+<section id="installation-and-environment">
+<h3>Installation and Environment<a class="headerlink" href="#installation-and-environment" title="Link to this heading"></a></h3>
+<p><strong>Q: Installation fails on my system</strong></p>
+<p>A: Platform-specific solutions:</p>
+<ul class="simple">
+<li><p><strong>macOS Apple Silicon</strong>: Try <code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">--no-deps</span> <span class="pre">VegasAfterglow</span></code> then install dependencies separately</p></li>
+<li><p><strong>Windows</strong>: Ensure Visual Studio Build Tools are installed</p></li>
+<li><p><strong>Linux</strong>: May need development packages (<code class="docutils literal notranslate"><span class="pre">python3-dev</span></code>, <code class="docutils literal notranslate"><span class="pre">build-essential</span></code>)</p></li>
+<li><p><strong>Conda environments</strong>: Use <code class="docutils literal notranslate"><span class="pre">pip</span></code> within conda, not <code class="docutils literal notranslate"><span class="pre">conda</span> <span class="pre">install</span></code></p></li>
+</ul>
+<p><strong>Q: ImportError when importing VegasAfterglow</strong></p>
+<p>A: Check:</p>
+<ul class="simple">
+<li><p><strong>Python version</strong>: VegasAfterglow requires Python 3.8+</p></li>
+<li><p><strong>Virtual environment</strong>: Ensure you’re in the correct environment</p></li>
+<li><p><strong>Installation location</strong>: Try <code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">show</span> <span class="pre">VegasAfterglow</span></code> to verify installation</p></li>
+<li><p><strong>Conflicting packages</strong>: Try installing in a clean environment</p></li>
+</ul>
+</section>
+</section>
+<section id="performance-guidelines">
+<h2>Performance Guidelines<a class="headerlink" href="#performance-guidelines" title="Link to this heading"></a></h2>
+<section id="resolution-parameters">
+<h3>Resolution Parameters<a class="headerlink" href="#resolution-parameters" title="Link to this heading"></a></h3>
+<p>The <code class="docutils literal notranslate"><span class="pre">resolutions</span></code> parameter in <code class="docutils literal notranslate"><span class="pre">Model()</span></code> controls computational accuracy vs speed:</p>
+<table class="docutils align-default" id="id1">
+<caption><span class="caption-text">Resolution Guidelines</span><a class="headerlink" href="#id1" title="Link to this table"></a></caption>
+<colgroup>
+<col style="width: 20.0%" />
+<col style="width: 25.0%" />
+<col style="width: 25.0%" />
+<col style="width: 30.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Use Case</p></th>
+<th class="head"><p>Resolution</p></th>
+<th class="head"><p>Speed</p></th>
+<th class="head"><p>Accuracy</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Initial exploration</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">(0.1,</span> <span class="pre">3,</span> <span class="pre">5)</span></code></p></td>
+<td><p>Very Fast</p></td>
+<td><p>Low</p></td>
+</tr>
+<tr class="row-odd"><td><p>Standard calculations</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">(0.3,</span> <span class="pre">3,</span> <span class="pre">5)</span></code></p></td>
+<td><p>Fast</p></td>
+<td><p>Good</p></td>
+</tr>
+<tr class="row-even"><td><p>MCMC fitting</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">(0.3,</span> <span class="pre">5,</span> <span class="pre">10)</span></code></p></td>
+<td><p>Moderate</p></td>
+<td><p>High</p></td>
+</tr>
+<tr class="row-odd"><td><p>Publication quality</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">(0.3,</span> <span class="pre">10,</span> <span class="pre">15)</span></code></p></td>
+<td><p>Slow</p></td>
+<td><p>Very High</p></td>
+</tr>
+</tbody>
+</table>
+<p>Where <code class="docutils literal notranslate"><span class="pre">resolutions=(phi_ppd,</span> <span class="pre">theta_ppd,</span> <span class="pre">t_ppd)</span></code>:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">phi_ppd</span></code>: Points per degree in azimuthal direction</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">theta_ppd</span></code>: Points per degree in polar direction</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">t_ppd</span></code>: Points per decade in time direction</p></li>
+</ul>
+</section>
+<section id="memory-usage">
+<h3>Memory Usage<a class="headerlink" href="#memory-usage" title="Link to this heading"></a></h3>
+<p>For large parameter studies or high-resolution calculations:</p>
+<ul class="simple">
+<li><p><strong>Limit output arrays</strong>: Calculate only needed times/frequencies</p></li>
+<li><p><strong>Use generators</strong>: Process results in chunks rather than storing everything</p></li>
+<li><p><strong>Clear variables</strong>: Use <code class="docutils literal notranslate"><span class="pre">del</span></code> to free memory between calculations</p></li>
+<li><p><strong>Monitor usage</strong>: Use <code class="docutils literal notranslate"><span class="pre">htop</span></code> or Task Manager to monitor memory consumption</p></li>
+</ul>
+</section>
+</section>
+<section id="getting-help">
+<h2>Getting Help<a class="headerlink" href="#getting-help" title="Link to this heading"></a></h2>
+<p>If you encounter issues not covered here:</p>
+<ol class="arabic simple">
+<li><p><strong>Check the examples</strong>: The <a class="reference internal" href="examples.html"><span class="doc">Examples</span></a> page covers many common use cases</p></li>
+<li><p><strong>Search existing issues</strong>: Visit our <a class="reference external" href="https://github.com/YihanWangAstro/VegasAfterglow/issues">GitHub Issues</a></p></li>
+<li><p><strong>Create a new issue</strong>: Include:</p>
+<ul class="simple">
+<li><p>VegasAfterglow version: <code class="docutils literal notranslate"><span class="pre">import</span> <span class="pre">VegasAfterglow;</span> <span class="pre">print(VegasAfterglow.__version__)</span></code></p></li>
+<li><p>Python version and platform</p></li>
+<li><p>Minimal code example that reproduces the problem</p></li>
+<li><p>Full error traceback</p></li>
+</ul>
+</li>
+<li><p><strong>Discussion forum</strong>: For general questions about GRB physics or methodology</p></li>
+</ol>
+</section>
+<section id="best-practices">
+<h2>Best Practices<a class="headerlink" href="#best-practices" title="Link to this heading"></a></h2>
+<section id="model-development-workflow">
+<h3>Model Development Workflow<a class="headerlink" href="#model-development-workflow" title="Link to this heading"></a></h3>
+<ol class="arabic simple">
+<li><p><strong>Start simple</strong>: Begin with built-in jet types and standard parameters</p></li>
+<li><p><strong>Validate physics</strong>: Check that results match analytical expectations for simple cases</p></li>
+<li><p><strong>Parameter exploration</strong>: Use direct model calculations before MCMC</p></li>
+<li><p><strong>Incremental complexity</strong>: Add features (reverse shock, IC, etc.) one at a time</p></li>
+<li><p><strong>Resolution testing</strong>: Verify results are converged by increasing resolution</p></li>
+</ol>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="cpp_api.html" class="btn btn-neutral float-left" title="C++ API Reference" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="contributing.html" class="btn btn-neutral float-right" title="Contributing" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, VegasAfterglow Team.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

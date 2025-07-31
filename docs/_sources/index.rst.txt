@@ -34,8 +34,10 @@ Key Features
    installation
    quickstart
    examples
+   parameter_reference
    python_api
    cpp_api
+   troubleshooting
    contributing
 
 Indices and tables

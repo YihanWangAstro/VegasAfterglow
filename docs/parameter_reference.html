@@ -1,0 +1,625 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Parameter Reference &mdash; VegasAfterglow 0.1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=20074c1a" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="_static/graphviz.css?v=fd3f3429" />
+      <link rel="stylesheet" type="text/css" href="_static/css/custom.css?v=c0df17a3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/custom.css?v=c0df17a3" />
+
+  
+    <link rel="shortcut icon" href="_static/logo.svg"/>
+    <link rel="canonical" href="https://yihanwangastro.github.io/VegasAfterglow/docs/parameter_reference.html" />
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=01f34227"></script>
+      <script src="_static/doctools.js?v=9a2dae69"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      <script src="_static/js/custom.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Python API Reference" href="python_api.html" />
+    <link rel="prev" title="Examples" href="examples.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            VegasAfterglow
+              <img src="_static/logo.svg" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="quickstart.html">Quickstart</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples.html">Examples</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Parameter Reference</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#physical-parameters">Physical Parameters</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#jet-structure-parameters">Jet Structure Parameters</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#ambient-medium-parameters">Ambient Medium Parameters</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#observer-parameters">Observer Parameters</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#radiation-microphysics-parameters">Radiation Microphysics Parameters</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#energy-injection-parameters-magnetar">Energy Injection Parameters (Magnetar)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#two-component-jet-parameters">Two-Component Jet Parameters</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#computational-parameters">Computational Parameters</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#model-resolution">Model Resolution</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#mcmc-parameters">MCMC Parameters</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#parameter-scaling-types">Parameter Scaling Types</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#parameter-relationships-and-constraints">Parameter Relationships and Constraints</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#physical-constraints">Physical Constraints</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#typical-parameter-combinations">Typical Parameter Combinations</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#unit-conversions">Unit Conversions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#parameter-degeneracies">Parameter Degeneracies</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="python_api.html">Python API Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cpp_api.html">C++ API Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="troubleshooting.html">Troubleshooting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contributing.html">Contributing</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">VegasAfterglow</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Parameter Reference</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/parameter_reference.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="parameter-reference">
+<h1>Parameter Reference<a class="headerlink" href="#parameter-reference" title="Link to this heading"></a></h1>
+<p>This page provides a comprehensive reference for all parameters used in VegasAfterglow, including their physical meanings, typical ranges, and units.</p>
+<section id="physical-parameters">
+<h2>Physical Parameters<a class="headerlink" href="#physical-parameters" title="Link to this heading"></a></h2>
+<section id="jet-structure-parameters">
+<h3>Jet Structure Parameters<a class="headerlink" href="#jet-structure-parameters" title="Link to this heading"></a></h3>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 15.0%" />
+<col style="width: 15.0%" />
+<col style="width: 10.0%" />
+<col style="width: 20.0%" />
+<col style="width: 40.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Parameter</p></th>
+<th class="head"><p>Symbol</p></th>
+<th class="head"><p>Units</p></th>
+<th class="head"><p>Typical Range</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">E_iso</span></code></p></td>
+<td><p><span class="math notranslate nohighlight">\(E_{\rm iso}\)</span></p></td>
+<td><p>erg</p></td>
+<td><p><span class="math notranslate nohighlight">\(10^{50} - 10^{54}\)</span></p></td>
+<td><p>Isotropic-equivalent kinetic energy of the jet</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">Gamma0</span></code></p></td>
+<td><p><span class="math notranslate nohighlight">\(\Gamma_0\)</span></p></td>
+<td><p>dimensionless</p></td>
+<td><p><span class="math notranslate nohighlight">\(10 - 1000\)</span></p></td>
+<td><p>Initial bulk Lorentz factor of the jet</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">theta_c</span></code></p></td>
+<td><p><span class="math notranslate nohighlight">\(\theta_c\)</span></p></td>
+<td><p>radians</p></td>
+<td><p><span class="math notranslate nohighlight">\(0.01 - 0.5\)</span></p></td>
+<td><p>Half-opening angle of the jet core</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">theta_v</span></code></p></td>
+<td><p><span class="math notranslate nohighlight">\(\theta_v\)</span></p></td>
+<td><p>radians</p></td>
+<td><p><span class="math notranslate nohighlight">\(0 - \pi/2\)</span></p></td>
+<td><p>Viewing angle (angle between jet axis and line of sight)</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">duration</span></code></p></td>
+<td><p><span class="math notranslate nohighlight">\(T_{\rm dur}\)</span></p></td>
+<td><p>seconds</p></td>
+<td><p><span class="math notranslate nohighlight">\(0.1 - 1000\)</span></p></td>
+<td><p>Duration of energy injection (affects reverse shock)</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">k</span></code></p></td>
+<td><p><span class="math notranslate nohighlight">\(k\)</span></p></td>
+<td><p>dimensionless</p></td>
+<td><p><span class="math notranslate nohighlight">\(1 - 10\)</span></p></td>
+<td><p>Power-law index for structured jets (PowerLawJet only)</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">sigma0</span></code></p></td>
+<td><p><span class="math notranslate nohighlight">\(\sigma_0\)</span></p></td>
+<td><p>dimensionless</p></td>
+<td><p><span class="math notranslate nohighlight">\(0.001 - 10\)</span></p></td>
+<td><p>Initial magnetization parameter</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="ambient-medium-parameters">
+<h3>Ambient Medium Parameters<a class="headerlink" href="#ambient-medium-parameters" title="Link to this heading"></a></h3>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 15.0%" />
+<col style="width: 15.0%" />
+<col style="width: 10.0%" />
+<col style="width: 20.0%" />
+<col style="width: 40.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Parameter</p></th>
+<th class="head"><p>Symbol</p></th>
+<th class="head"><p>Units</p></th>
+<th class="head"><p>Typical Range</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">n_ism</span></code></p></td>
+<td><p><span class="math notranslate nohighlight">\(n_{\rm ISM}\)</span></p></td>
+<td><p>cm⁻³</p></td>
+<td><p><span class="math notranslate nohighlight">\(10^{-4} - 10^{3}\)</span></p></td>
+<td><p>Number density of uniform ISM</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">A_star</span></code></p></td>
+<td><p><span class="math notranslate nohighlight">\(A_*\)</span></p></td>
+<td><p>dimensionless</p></td>
+<td><p><span class="math notranslate nohighlight">\(10^{-3} - 10\)</span></p></td>
+<td><p>Wind parameter: <span class="math notranslate nohighlight">\(\rho = A_* \times 5 \times 10^{11} r^{-2}\)</span> g/cm³</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="observer-parameters">
+<h3>Observer Parameters<a class="headerlink" href="#observer-parameters" title="Link to this heading"></a></h3>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 15.0%" />
+<col style="width: 15.0%" />
+<col style="width: 10.0%" />
+<col style="width: 20.0%" />
+<col style="width: 40.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Parameter</p></th>
+<th class="head"><p>Symbol</p></th>
+<th class="head"><p>Units</p></th>
+<th class="head"><p>Typical Range</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">lumi_dist</span></code></p></td>
+<td><p><span class="math notranslate nohighlight">\(d_L\)</span></p></td>
+<td><p>cm</p></td>
+<td><p><span class="math notranslate nohighlight">\(10^{26} - 10^{29}\)</span></p></td>
+<td><p>Luminosity distance to the source</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">z</span></code></p></td>
+<td><p><span class="math notranslate nohighlight">\(z\)</span></p></td>
+<td><p>dimensionless</p></td>
+<td><p><span class="math notranslate nohighlight">\(0.01 - 10\)</span></p></td>
+<td><p>Cosmological redshift</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="radiation-microphysics-parameters">
+<h3>Radiation Microphysics Parameters<a class="headerlink" href="#radiation-microphysics-parameters" title="Link to this heading"></a></h3>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 15.0%" />
+<col style="width: 15.0%" />
+<col style="width: 10.0%" />
+<col style="width: 20.0%" />
+<col style="width: 40.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Parameter</p></th>
+<th class="head"><p>Symbol</p></th>
+<th class="head"><p>Units</p></th>
+<th class="head"><p>Typical Range</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">eps_e</span></code></p></td>
+<td><p><span class="math notranslate nohighlight">\(\epsilon_e\)</span></p></td>
+<td><p>dimensionless</p></td>
+<td><p><span class="math notranslate nohighlight">\(10^{-3} - 0.5\)</span></p></td>
+<td><p>Fraction of shock energy in relativistic electrons</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">eps_B</span></code></p></td>
+<td><p><span class="math notranslate nohighlight">\(\epsilon_B\)</span></p></td>
+<td><p>dimensionless</p></td>
+<td><p><span class="math notranslate nohighlight">\(10^{-6} - 0.5\)</span></p></td>
+<td><p>Fraction of shock energy in magnetic field</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">p</span></code></p></td>
+<td><p><span class="math notranslate nohighlight">\(p\)</span></p></td>
+<td><p>dimensionless</p></td>
+<td><p><span class="math notranslate nohighlight">\(2.01 - 3.5\)</span></p></td>
+<td><p>Power-law index of electron energy distribution</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">xi_e</span></code></p></td>
+<td><p><span class="math notranslate nohighlight">\(\xi_e\)</span></p></td>
+<td><p>dimensionless</p></td>
+<td><p><span class="math notranslate nohighlight">\(10^{-3} - 1\)</span></p></td>
+<td><p>Electron acceleration efficiency</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="energy-injection-parameters-magnetar">
+<h3>Energy Injection Parameters (Magnetar)<a class="headerlink" href="#energy-injection-parameters-magnetar" title="Link to this heading"></a></h3>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 15.0%" />
+<col style="width: 15.0%" />
+<col style="width: 10.0%" />
+<col style="width: 20.0%" />
+<col style="width: 40.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Parameter</p></th>
+<th class="head"><p>Symbol</p></th>
+<th class="head"><p>Units</p></th>
+<th class="head"><p>Typical Range</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">L_0</span></code></p></td>
+<td><p><span class="math notranslate nohighlight">\(L_0\)</span></p></td>
+<td><p>erg/s</p></td>
+<td><p><span class="math notranslate nohighlight">\(10^{44} - 10^{48}\)</span></p></td>
+<td><p>Initial luminosity of magnetar spin-down</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">t_0</span></code></p></td>
+<td><p><span class="math notranslate nohighlight">\(t_0\)</span></p></td>
+<td><p>seconds</p></td>
+<td><p><span class="math notranslate nohighlight">\(10 - 10^4\)</span></p></td>
+<td><p>Characteristic spin-down timescale</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">q</span></code></p></td>
+<td><p><span class="math notranslate nohighlight">\(q\)</span></p></td>
+<td><p>dimensionless</p></td>
+<td><p><span class="math notranslate nohighlight">\(1 - 6\)</span></p></td>
+<td><p>Power-law index of spin-down: <span class="math notranslate nohighlight">\(L(t) = L_0(1+t/t_0)^{-q}\)</span></p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="two-component-jet-parameters">
+<h3>Two-Component Jet Parameters<a class="headerlink" href="#two-component-jet-parameters" title="Link to this heading"></a></h3>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 15.0%" />
+<col style="width: 15.0%" />
+<col style="width: 10.0%" />
+<col style="width: 20.0%" />
+<col style="width: 40.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Parameter</p></th>
+<th class="head"><p>Symbol</p></th>
+<th class="head"><p>Units</p></th>
+<th class="head"><p>Typical Range</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">theta_n</span></code></p></td>
+<td><p><span class="math notranslate nohighlight">\(\theta_n\)</span></p></td>
+<td><p>radians</p></td>
+<td><p><span class="math notranslate nohighlight">\(0.01 - 0.2\)</span></p></td>
+<td><p>Half-opening angle of narrow component</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">E_iso_n</span></code></p></td>
+<td><p><span class="math notranslate nohighlight">\(E_{\rm iso,n}\)</span></p></td>
+<td><p>erg</p></td>
+<td><p><span class="math notranslate nohighlight">\(10^{51} - 10^{54}\)</span></p></td>
+<td><p>Isotropic energy of narrow component</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">Gamma0_n</span></code></p></td>
+<td><p><span class="math notranslate nohighlight">\(\Gamma_{0,n}\)</span></p></td>
+<td><p>dimensionless</p></td>
+<td><p><span class="math notranslate nohighlight">\(100 - 1000\)</span></p></td>
+<td><p>Initial Lorentz factor of narrow component</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">theta_w</span></code></p></td>
+<td><p><span class="math notranslate nohighlight">\(\theta_w\)</span></p></td>
+<td><p>radians</p></td>
+<td><p><span class="math notranslate nohighlight">\(0.1 - 0.5\)</span></p></td>
+<td><p>Half-opening angle of wide component</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">E_iso_w</span></code></p></td>
+<td><p><span class="math notranslate nohighlight">\(E_{\rm iso,w}\)</span></p></td>
+<td><p>erg</p></td>
+<td><p><span class="math notranslate nohighlight">\(10^{50} - 10^{53}\)</span></p></td>
+<td><p>Isotropic energy of wide component</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">Gamma0_w</span></code></p></td>
+<td><p><span class="math notranslate nohighlight">\(\Gamma_{0,w}\)</span></p></td>
+<td><p>dimensionless</p></td>
+<td><p><span class="math notranslate nohighlight">\(10 - 300\)</span></p></td>
+<td><p>Initial Lorentz factor of wide component</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="computational-parameters">
+<h2>Computational Parameters<a class="headerlink" href="#computational-parameters" title="Link to this heading"></a></h2>
+<section id="model-resolution">
+<h3>Model Resolution<a class="headerlink" href="#model-resolution" title="Link to this heading"></a></h3>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 21.4%" />
+<col style="width: 21.4%" />
+<col style="width: 57.1%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Parameter</p></th>
+<th class="head"><p>Units</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">phi_ppd</span></code></p></td>
+<td><p>points/degree</p></td>
+<td><p>Angular resolution in azimuthal direction</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">theta_ppd</span></code></p></td>
+<td><p>points/degree</p></td>
+<td><p>Angular resolution in polar direction</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">t_ppd</span></code></p></td>
+<td><p>points/decade</p></td>
+<td><p>Temporal resolution (logarithmic spacing)</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="mcmc-parameters">
+<h3>MCMC Parameters<a class="headerlink" href="#mcmc-parameters" title="Link to this heading"></a></h3>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 20.0%" />
+<col style="width: 20.0%" />
+<col style="width: 60.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Parameter</p></th>
+<th class="head"><p>Typical Value</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">total_steps</span></code></p></td>
+<td><p>1000-50000</p></td>
+<td><p>Total number of MCMC steps per walker</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">burn_frac</span></code></p></td>
+<td><p>0.2-0.5</p></td>
+<td><p>Fraction of steps to discard as burn-in</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">thin</span></code></p></td>
+<td><p>1-10</p></td>
+<td><p>Thinning factor (keep every nth sample)</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">n_walkers</span></code></p></td>
+<td><p>2×n_params to 10×n_params</p></td>
+<td><p>Number of ensemble walkers</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="parameter-scaling-types">
+<h2>Parameter Scaling Types<a class="headerlink" href="#parameter-scaling-types" title="Link to this heading"></a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 20.0%" />
+<col style="width: 80.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Scale Type</p></th>
+<th class="head"><p>Description and Usage</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">Scale.LOG</span></code></p></td>
+<td><p>Sample in log₁₀ space. Use for parameters spanning multiple orders of magnitude (energies, densities, microphysics parameters)</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">Scale.LINEAR</span></code></p></td>
+<td><p>Sample in linear space. Use for parameters with limited ranges (angles, power-law indices)</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">Scale.FIXED</span></code></p></td>
+<td><p>Keep parameter fixed at initial value. Use when you don’t want to vary a parameter</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="parameter-relationships-and-constraints">
+<h2>Parameter Relationships and Constraints<a class="headerlink" href="#parameter-relationships-and-constraints" title="Link to this heading"></a></h2>
+<section id="physical-constraints">
+<h3>Physical Constraints<a class="headerlink" href="#physical-constraints" title="Link to this heading"></a></h3>
+<p><strong>Energy Conservation:</strong></p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(E_{\rm iso}\)</span> should be consistent with the kinetic energy available from the central engine</p></li>
+<li><p>For structured jets: <span class="math notranslate nohighlight">\(E_{\rm iso} = \int E(\theta) d\Omega\)</span> over the jet solid angle</p></li>
+</ul>
+<p><strong>Causality:</strong></p>
+<ul class="simple">
+<li><p>Light travel time sets minimum variability timescale: <span class="math notranslate nohighlight">\(\delta t \geq R/c\Gamma^2\)</span></p></li>
+<li><p>Jet opening angle and Lorentz factor: <span class="math notranslate nohighlight">\(\theta_c \gtrsim 1/\Gamma_0\)</span> for causal contact</p></li>
+</ul>
+<p><strong>Microphysics:</strong></p>
+<ul class="simple">
+<li><p>Energy fractions: <span class="math notranslate nohighlight">\(\epsilon_e + \epsilon_B \leq 1\)</span> (though often <span class="math notranslate nohighlight">\(\ll 1\)</span>)</p></li>
+<li><p>Electron power-law index: <span class="math notranslate nohighlight">\(p &gt; 2\)</span> for finite energy in fast-cooling regime</p></li>
+</ul>
+</section>
+<section id="typical-parameter-combinations">
+<h3>Typical Parameter Combinations<a class="headerlink" href="#typical-parameter-combinations" title="Link to this heading"></a></h3>
+<p><strong>Short GRB (Neutron Star Merger):</strong></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;E_iso&quot;</span><span class="p">,</span>     <span class="mf">5e50</span><span class="p">,</span>  <span class="mf">5e52</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">LOG</span><span class="p">),</span>
+<span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;Gamma0&quot;</span><span class="p">,</span>    <span class="mi">50</span><span class="p">,</span>    <span class="mi">500</span><span class="p">,</span>   <span class="n">Scale</span><span class="o">.</span><span class="n">LOG</span><span class="p">),</span>
+<span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;theta_c&quot;</span><span class="p">,</span>   <span class="mf">0.05</span><span class="p">,</span>  <span class="mf">0.3</span><span class="p">,</span>   <span class="n">Scale</span><span class="o">.</span><span class="n">LINEAR</span><span class="p">),</span>
+<span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;theta_v&quot;</span><span class="p">,</span>   <span class="mf">0.1</span><span class="p">,</span>   <span class="mf">0.5</span><span class="p">,</span>   <span class="n">Scale</span><span class="o">.</span><span class="n">LINEAR</span><span class="p">),</span>
+<span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;eps_e&quot;</span><span class="p">,</span>     <span class="mf">0.01</span><span class="p">,</span>  <span class="mf">0.3</span><span class="p">,</span>   <span class="n">Scale</span><span class="o">.</span><span class="n">LOG</span><span class="p">),</span>
+<span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;eps_B&quot;</span><span class="p">,</span>     <span class="mf">1e-4</span><span class="p">,</span>  <span class="mf">0.1</span><span class="p">,</span>   <span class="n">Scale</span><span class="o">.</span><span class="n">LOG</span><span class="p">),</span>
+<span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;p&quot;</span><span class="p">,</span>         <span class="mf">2.1</span><span class="p">,</span>   <span class="mf">2.8</span><span class="p">,</span>   <span class="n">Scale</span><span class="o">.</span><span class="n">LINEAR</span><span class="p">),</span>
+</pre></div>
+</div>
+<p><strong>Long GRB (Collapsar):</strong></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;E_iso&quot;</span><span class="p">,</span>     <span class="mf">1e52</span><span class="p">,</span>  <span class="mf">1e54</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">LOG</span><span class="p">),</span>
+<span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;Gamma0&quot;</span><span class="p">,</span>    <span class="mi">100</span><span class="p">,</span>   <span class="mi">1000</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">LOG</span><span class="p">),</span>
+<span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;theta_c&quot;</span><span class="p">,</span>   <span class="mf">0.02</span><span class="p">,</span>  <span class="mf">0.2</span><span class="p">,</span>   <span class="n">Scale</span><span class="o">.</span><span class="n">LINEAR</span><span class="p">),</span>
+<span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;theta_v&quot;</span><span class="p">,</span>   <span class="mf">0.0</span><span class="p">,</span>   <span class="mf">0.1</span><span class="p">,</span>   <span class="n">Scale</span><span class="o">.</span><span class="n">LINEAR</span><span class="p">),</span>
+<span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;eps_e&quot;</span><span class="p">,</span>     <span class="mf">0.1</span><span class="p">,</span>   <span class="mf">0.5</span><span class="p">,</span>   <span class="n">Scale</span><span class="o">.</span><span class="n">LOG</span><span class="p">),</span>
+<span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;eps_B&quot;</span><span class="p">,</span>     <span class="mf">1e-3</span><span class="p">,</span>  <span class="mf">0.1</span><span class="p">,</span>   <span class="n">Scale</span><span class="o">.</span><span class="n">LOG</span><span class="p">),</span>
+<span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;p&quot;</span><span class="p">,</span>         <span class="mf">2.2</span><span class="p">,</span>   <span class="mf">2.6</span><span class="p">,</span>   <span class="n">Scale</span><span class="o">.</span><span class="n">LINEAR</span><span class="p">),</span>
+</pre></div>
+</div>
+<p><strong>Kilonova-associated GRB:</strong></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;E_iso&quot;</span><span class="p">,</span>     <span class="mf">1e49</span><span class="p">,</span>  <span class="mf">1e52</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">LOG</span><span class="p">),</span>
+<span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;Gamma0&quot;</span><span class="p">,</span>    <span class="mi">10</span><span class="p">,</span>    <span class="mi">300</span><span class="p">,</span>   <span class="n">Scale</span><span class="o">.</span><span class="n">LOG</span><span class="p">),</span>
+<span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;theta_c&quot;</span><span class="p">,</span>   <span class="mf">0.1</span><span class="p">,</span>   <span class="mf">0.5</span><span class="p">,</span>   <span class="n">Scale</span><span class="o">.</span><span class="n">LINEAR</span><span class="p">),</span>
+<span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;theta_v&quot;</span><span class="p">,</span>   <span class="mf">0.2</span><span class="p">,</span>   <span class="mf">0.8</span><span class="p">,</span>   <span class="n">Scale</span><span class="o">.</span><span class="n">LINEAR</span><span class="p">),</span>
+<span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;eps_e&quot;</span><span class="p">,</span>     <span class="mf">0.01</span><span class="p">,</span>  <span class="mf">0.3</span><span class="p">,</span>   <span class="n">Scale</span><span class="o">.</span><span class="n">LOG</span><span class="p">),</span>
+<span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;eps_B&quot;</span><span class="p">,</span>     <span class="mf">1e-5</span><span class="p">,</span>  <span class="mf">1e-2</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">LOG</span><span class="p">),</span>
+<span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;p&quot;</span><span class="p">,</span>         <span class="mf">2.1</span><span class="p">,</span>   <span class="mf">2.8</span><span class="p">,</span>   <span class="n">Scale</span><span class="o">.</span><span class="n">LINEAR</span><span class="p">),</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="unit-conversions">
+<h2>Unit Conversions<a class="headerlink" href="#unit-conversions" title="Link to this heading"></a></h2>
+<p>Common unit conversions for convenience:</p>
+<p><strong>Distance:</strong></p>
+<ul class="simple">
+<li><p>1 Mpc = 3.086 × 10²⁴ cm</p></li>
+<li><p>1 kpc = 3.086 × 10²¹ cm</p></li>
+<li><p>Luminosity distance: <span class="math notranslate nohighlight">\(d_L = (1+z) \times d_A\)</span> (angular diameter distance)</p></li>
+</ul>
+<p><strong>Energy:</strong></p>
+<ul class="simple">
+<li><p>1 BeV = 1.602 × 10⁻³ erg</p></li>
+<li><p>1 keV = 1.602 × 10⁻⁹ erg</p></li>
+<li><p>Solar rest mass energy: <span class="math notranslate nohighlight">\(M_\odot c^2 = 1.8 \times 10^{54}\)</span> erg</p></li>
+</ul>
+<p><strong>Angles:</strong></p>
+<ul class="simple">
+<li><p>1 degree = π/180 ≈ 0.01745 radians</p></li>
+<li><p>1 arcminute = π/10800 ≈ 2.91 × 10⁻⁴ radians</p></li>
+<li><p>1 arcsecond = π/648000 ≈ 4.85 × 10⁻⁶ radians</p></li>
+</ul>
+<p><strong>Frequencies:</strong></p>
+<ul class="simple">
+<li><p>X-ray (1 keV): ν ≈ 2.4 × 10¹⁷ Hz</p></li>
+<li><p>Optical (V-band): ν ≈ 5.5 × 10¹⁴ Hz</p></li>
+<li><p>Radio (1 GHz): ν = 10⁹ Hz</p></li>
+</ul>
+</section>
+<section id="parameter-degeneracies">
+<h2>Parameter Degeneracies<a class="headerlink" href="#parameter-degeneracies" title="Link to this heading"></a></h2>
+<p>Understanding parameter correlations helps in MCMC fitting:</p>
+<p><strong>Strong Correlations:</strong></p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(E_{\rm iso}\)</span> ↔ <span class="math notranslate nohighlight">\(n_{\rm ISM}\)</span>: Higher energy can compensate for lower density</p></li>
+<li><p><span class="math notranslate nohighlight">\(\epsilon_e\)</span> ↔ <span class="math notranslate nohighlight">\(\epsilon_B\)</span>: Microphysics parameters are often correlated</p></li>
+<li><p><span class="math notranslate nohighlight">\(\theta_c\)</span> ↔ <span class="math notranslate nohighlight">\(\theta_v\)</span>: Jet geometry parameters affect observed flux similarly</p></li>
+</ul>
+<p><strong>Frequency-dependent Constraints:</strong></p>
+<ul class="simple">
+<li><p><strong>Radio data</strong>: Most sensitive to <span class="math notranslate nohighlight">\(\epsilon_B\)</span>, <span class="math notranslate nohighlight">\(n_{\rm ISM}\)</span></p></li>
+<li><p><strong>Optical data</strong>: Constrains <span class="math notranslate nohighlight">\(\epsilon_e\)</span>, <span class="math notranslate nohighlight">\(p\)</span>, <span class="math notranslate nohighlight">\(E_{\rm iso}\)</span></p></li>
+<li><p><strong>X-ray data</strong>: Sensitive to <span class="math notranslate nohighlight">\(\Gamma_0\)</span>, high-frequency cutoffs</p></li>
+</ul>
+<p><strong>Time-dependent Constraints:</strong></p>
+<ul class="simple">
+<li><p><strong>Early times (&lt; 1 day)</strong>: Constrain <span class="math notranslate nohighlight">\(\Gamma_0\)</span>, <span class="math notranslate nohighlight">\(\epsilon_e\)</span></p></li>
+<li><p><strong>Jet break time</strong>: Determines <span class="math notranslate nohighlight">\(\theta_c\)</span>, <span class="math notranslate nohighlight">\(E_{\rm iso}\)</span></p></li>
+<li><p><strong>Late times (&gt; 100 days)</strong>: Sensitive to <span class="math notranslate nohighlight">\(n_{\rm ISM}\)</span>, <span class="math notranslate nohighlight">\(p\)</span></p></li>
+</ul>
+<p>For more detailed information on parameter estimation strategies, see the <a class="reference internal" href="examples.html"><span class="doc">Examples</span></a> page.</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="examples.html" class="btn btn-neutral float-left" title="Examples" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="python_api.html" class="btn btn-neutral float-right" title="Python API Reference" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, VegasAfterglow Team.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

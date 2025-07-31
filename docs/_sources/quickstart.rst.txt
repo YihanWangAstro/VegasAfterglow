@@ -607,5 +607,7 @@ Corner plots are essential for visualizing parameter correlations and posterior 
 Next Steps
 ----------
 
-See the :doc:`examples` page for more detailed examples
+- See the :doc:`examples` page for more detailed examples
+- Check the :doc:`parameter_reference` for comprehensive parameter documentation
+- Visit the :doc:`troubleshooting` page if you encounter any issues
 

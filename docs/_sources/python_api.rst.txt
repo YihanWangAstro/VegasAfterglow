@@ -144,6 +144,8 @@ For ISM medium models, you would use the density parameter instead:
 
     ParamDef("n_ism",     0.1,  1e-3,    10,  Scale.LOG),       # ISM density [cm^-3]
 
+For a comprehensive list of all available parameters, their physical meanings, typical ranges, and usage guidelines, see the :doc:`parameter_reference` page.
+
 .. _api-fitter:
 
 Fitter
