@@ -15,10 +15,10 @@ var searchData=
   ['shock_12',['shock',['../classShock.html#a0bdc1bfb873fe39ba4d4fcbded4666f2',1,'Shock::Shock() noexcept=default'],['../classShock.html#ac4cbdd70892414adbdb7fc01071e49e0',1,'Shock::Shock(size_t phi_size, size_t theta_size, size_t t_size, RadParams const &amp;rad_params)']]],
   ['simpleshockeqn_13',['SimpleShockEqn',['../classSimpleShockEqn.html#a2ad30f482d445461e6d230c052205763',1,'SimpleShockEqn']]],
   ['sort_5fsynchronized_14',['sort_synchronized',['../mcmc_8cpp.html#acad85304132da867746b1ca8c7daa1bf',1,'mcmc.cpp']]],
-  ['specific_5fflux_15',['specific_flux',['../classPyModel.html#aff0f26fa2c72824720c6d16189ad996b',1,'PyModel::specific_flux()'],['../classObserver.html#a63679ba1972c386be330f8b51397b9a4',1,'Observer::specific_flux(Array const &amp;t_obs, Array const &amp;nu_obs, PhotonGrid const &amp;... photons)'],['../classObserver.html#a781d46ba549ae9a7ec4e3049a735586f',1,'Observer::specific_flux(Array const &amp;t_obs, Real nu_obs, PhotonGrid const &amp;... photons)']]],
-  ['specific_5fflux_5fseries_16',['specific_flux_series',['../classPyModel.html#a3bbae641e3d5f9968da2cbe8053bbce0',1,'PyModel::specific_flux_series()'],['../classObserver.html#ae0ed98be9897dfa8c217cc59370a148f',1,'Observer::specific_flux_series()']]],
+  ['specific_5fflux_15',['specific_flux',['../classPyModel.html#aff0f26fa2c72824720c6d16189ad996b',1,'PyModel::specific_flux()'],['../classObserver.html#aa94e78ed4ae13668898afa7b7872dd5e',1,'Observer::specific_flux(Array const &amp;t_obs, Array const &amp;nu_obs, PhotonGrid &amp;... photons)'],['../classObserver.html#ac7c7076f2141ddbf45e39b769fa2b1d6',1,'Observer::specific_flux(Array const &amp;t_obs, Real nu_obs, PhotonGrid &amp;... photons)']]],
+  ['specific_5fflux_5fseries_16',['specific_flux_series',['../classPyModel.html#a3bbae641e3d5f9968da2cbe8053bbce0',1,'PyModel::specific_flux_series()'],['../classObserver.html#a7d4d2660f62cdaced381ea05dbce681e',1,'Observer::specific_flux_series()']]],
   ['specific_5fflux_5fsorted_5fseries_17',['specific_flux_sorted_series',['../classPyModel.html#ae3ece455a95fba21e689344a976720e3',1,'PyModel']]],
-  ['spectra_18',['spectra',['../classObserver.html#ac9ed4fb8ae8b336286c176423401ba30',1,'Observer::spectra()'],['../structMultiBandModel.html#addc177e083d29bfe10094625b516ece7',1,'MultiBandModel::spectra()']]],
-  ['spectrum_19',['spectrum',['../classObserver.html#af16bf4c5175405ae1c88a78b8afdd8c4',1,'Observer']]],
+  ['spectra_18',['spectra',['../classObserver.html#a249108b1a0668a1072551a04029ac4bd',1,'Observer::spectra()'],['../structMultiBandModel.html#addc177e083d29bfe10094625b516ece7',1,'MultiBandModel::spectra()']]],
+  ['spectrum_19',['spectrum',['../classObserver.html#a62391baf0c84fbab7fc9c6716fc53f4c',1,'Observer']]],
   ['stepfunc_20',['stepFunc',['../utilities_8h.html#ae8a530e53b68fc1f195dcc370652e17c',1,'utilities.h']]]
 ];

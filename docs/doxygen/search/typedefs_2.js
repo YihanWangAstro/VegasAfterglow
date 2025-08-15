@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['icphotongrid_0',['ICPhotonGrid',['../inverse-compton_8h.html#ab408d6b9a087160261ae396763eaf060',1,'inverse-compton.h']]]
+  ['electrongrid_0',['ElectronGrid',['../inverse-compton_8h.html#aaaf75fefdf774abf61fcab7b65b90bcd',1,'inverse-compton.h']]]
 ];

@@ -1,9 +1,7 @@
 <map id="point_loglog_interp" name="point_loglog_interp">
-<area shape="rect" id="Node000001" title="Point&#45;wise logarithmic interpolation between two points." alt="" coords="459,31,605,56"/>
-<area shape="rect" id="Node000002" href="$utilities_8cpp.html#ad3bc8b592ec28b18768172f7a21bd8c2" title="Log&#45;log interpolation for equally spaced x&#45;values in log space." alt="" coords="236,5,411,31"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="445,35,411,31,411,26,445,30"/>
-<area shape="rect" id="Node000004" href="$utilities_8cpp.html#a655bf7e9ee550858e65af14c66fb4aec" title="Log&#45;log interpolation (both x and y are in log space)" alt="" coords="270,55,377,80"/>
-<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="445,56,377,64,377,59,445,51"/>
-<area shape="rect" id="Node000003" href="$structICPhoton.html#a563c2743d04a8fbf9fc16b865235d60b" title="Returns the photon specific power at frequency nu." alt="" coords="5,5,188,31"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="222,21,188,21,188,15,222,15"/>
+<area shape="rect" id="Node000001" title="Point&#45;wise logarithmic interpolation between two points." alt="" coords="228,31,375,56"/>
+<area shape="rect" id="Node000002" href="$utilities_8cpp.html#ad3bc8b592ec28b18768172f7a21bd8c2" title="Log&#45;log interpolation for equally spaced x&#45;values in log space." alt="" coords="5,5,180,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="214,35,180,31,180,26,215,30"/>
+<area shape="rect" id="Node000003" href="$utilities_8cpp.html#a655bf7e9ee550858e65af14c66fb4aec" title="Log&#45;log interpolation (both x and y are in log space)" alt="" coords="39,55,146,80"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="215,56,147,64,146,59,214,51"/>
 </map>

@@ -1,6 +1,6 @@
 <map id="boundary_to_center_log" name="boundary_to_center_log">
 <area shape="rect" id="Node000001" title="Converts boundary values to center values using geometric mean (logarithmic interpolation)" alt="" coords="167,29,345,55"/>
-<area shape="rect" id="Node000002" href="$classObserver.html#a9fc133aa2f06b425634470424da9daa3" title="Computes the integrated flux over a frequency band." alt="" coords="5,29,119,55"/>
+<area shape="rect" id="Node000002" href="$classObserver.html#a2ba9427e3fe0d3f70fb4b670327c0b6d" title="Computes the integrated flux over a frequency band." alt="" coords="5,29,119,55"/>
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="153,45,119,45,119,39,153,39"/>
 <area shape="poly" id="edge2_Node000002_Node000002" title=" " alt="" coords="96,19,86,11,62,8,42,10,31,15,29,20,35,28,30,31,24,21,27,11,40,5,62,3,88,6,99,15"/>
 </map>

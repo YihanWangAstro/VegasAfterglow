@@ -1,7 +1,8 @@
 var searchData=
 [
-  ['fast_20math_20functions_0',['Fast Math Functions',['../group__FastMath.html',1,'']]],
-  ['finding_20methods_1',['Root Finding Methods',['../group__RootFinding.html',1,'']]],
-  ['function_20type_20definitions_2',['Function Type Definitions',['../group__FunctionTypes.html',1,'']]],
-  ['functions_3',['functions',['../group__BasicMath.html',1,'Basic Math Functions'],['../group__FastMath.html',1,'Fast Math Functions'],['../group__GammaConversions.html',1,'Gamma Conversion and Adiabatic Index Functions'],['../group__IC__Functions.html',1,'IC Photon and Electron Cooling Functions'],['../group__Interpolation.html',1,'Interpolation Functions'],['../group__IC__Calculation.html',1,'Inverse Compton Calculation Constants and Functions'],['../group__IO__Functions.html',1,'Output and Printing Functions']]]
+  ['gamma_20conversion_20and_20adiabatic_20index_20functions_0',['Gamma Conversion and Adiabatic Index Functions',['../group__GammaConversions.html',1,'']]],
+  ['generation_1',['Synchrotron Grid Creation and Generation',['../group__SynchrotronFunctions.html',1,'']]],
+  ['grid_20creation_20and_20generation_2',['Synchrotron Grid Creation and Generation',['../group__SynchrotronFunctions.html',1,'']]],
+  ['grid_20type_20aliases_3',['Synchrotron Grid Type Aliases',['../group__SynchrotronGrids.html',1,'']]],
+  ['grid_20utilities_4',['Array and Grid Utilities',['../group__Mesh__Utilities.html',1,'']]]
 ];

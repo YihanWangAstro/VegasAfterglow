@@ -1,7 +1,0 @@
-<map id="%3" name="%3">
-<area shape="rect" id="node1" title="InverseComptonY" alt="" coords="5,197,196,245"/>
-<area shape="rect" id="node2" title="SynElectrons" alt="" coords="26,101,175,149"/>
-<area shape="poly" id="edge1" title="usage" alt="" coords="103,150,103,184,98,184,98,150"/>
-<area shape="rect" id="node3" title="SynPhotons" alt="" coords="33,5,168,53"/>
-<area shape="poly" id="edge2" title="usage" alt="" coords="103,54,103,88,98,88,98,54"/>
-</map>

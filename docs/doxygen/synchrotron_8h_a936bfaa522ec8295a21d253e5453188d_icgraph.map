@@ -10,8 +10,8 @@
 <area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="405,34,367,30,367,25,406,29"/>
 <area shape="rect" id="Node000004" href="$synchrotron_8cpp.html#af56f9b4417a5f3e717102da3e81a7d37" title="Updates electron properties throughout the grid based on shock parameters and IC Y values." alt="" coords="199,55,357,80"/>
 <area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="405,56,357,61,357,56,405,51"/>
-<area shape="rect" id="Node000005" href="$inverse-compton_8cpp.html#af25c21cb4c714787c8260f220a6c2ee9" title="Applies Klein&#45;Nishina cooling to electrons based on photon distribution." alt="" coords="26,29,121,55"/>
+<area shape="rect" id="Node000005" href="$inverse-compton_8h.html#ab62ca35731dffb2c89ee00c15bd1e1ee" title="Applies Klein&#45;Nishina cooling to electrons based on photon distribution." alt="" coords="26,29,121,55"/>
 <area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="185,59,120,50,121,45,186,53"/>
-<area shape="rect" id="Node000006" href="$inverse-compton_8cpp.html#a330c8cd380f08f2ddce282201dae597b" title="Applies Thomson cooling to electrons based on photon distribution." alt="" coords="5,79,141,104"/>
+<area shape="rect" id="Node000006" href="$inverse-compton_8h.html#ac0534ea09f08d9b55cb3316050c4aa53" title="Applies Thomson cooling to electrons based on photon distribution." alt="" coords="5,79,141,104"/>
 <area shape="poly" id="edge5_Node000004_Node000006" title=" " alt="" coords="186,81,142,86,141,81,185,75"/>
 </map>

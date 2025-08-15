@@ -1,0 +1,5 @@
+<map id="compton_cross_section" name="compton_cross_section">
+<area shape="rect" id="Node000001" title="Computes the Compton scattering cross&#45;section as a function of frequency (nu)." alt="" coords="232,5,407,31"/>
+<area shape="rect" id="Node000002" href="$structICPhoton.html#ae7d4fbf06ebcb9b66f8938803ec8c32c" title="Returns the photon specific intensity." alt="" coords="5,5,184,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="218,21,184,21,184,15,218,15"/>
+</map>

@@ -1,7 +1,5 @@
 var topics =
 [
-    [ "Inverse Compton Calculation Constants and Functions", "group__IC__Calculation.html", null ],
-    [ "IC Photon and Electron Cooling Functions", "group__IC__Functions.html", null ],
     [ "Output and Printing Functions", "group__IO__Functions.html", null ],
     [ "Array and Grid Utilities", "group__Mesh__Utilities.html", null ],
     [ "Gamma Conversion and Adiabatic Index Functions", "group__GammaConversions.html", null ],

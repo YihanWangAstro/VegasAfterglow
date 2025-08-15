@@ -114,7 +114,7 @@
 <p><strong>Q: My light curve has strange spikes or discontinuities</strong></p>
 <p>A: This is usually caused by one of the following:</p>
 <ul class="simple">
-<li><p><strong>Time array ordering</strong>: Ensure your time array is in ascending order when using <code class="docutils literal notranslate"><span class="pre">specific_flux()</span></code>. Use <code class="docutils literal notranslate"><span class="pre">specific_flux_sorted_series()</span></code> for better performance with sorted arrays.</p></li>
+<li><p><strong>Time array ordering</strong>: Ensure your time array is in ascending order when using <code class="docutils literal notranslate"><span class="pre">specific_flux()</span></code>. Use <code class="docutils literal notranslate"><span class="pre">specific_flux_series()</span></code> for random order time arrays.</p></li>
 <li><p><strong>Resolution too low</strong>: Increase the resolution parameters in <code class="docutils literal notranslate"><span class="pre">Model(resolutions=(phi_ppd,</span> <span class="pre">theta_ppd,</span> <span class="pre">t_ppd))</span></code></p></li>
 <li><p><strong>User-defined profiles</strong>: For custom jet/medium profiles, ensure they are smooth and well-behaved</p></li>
 </ul>

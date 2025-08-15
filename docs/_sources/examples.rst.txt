@@ -84,6 +84,27 @@ Setting up a simple afterglow model
     plt.legend(ncol=2)
     plt.title('Synchrotron Spectra')
 
+Calculate flux on time-frequency pairs
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Suppose you want to calculate the flux at specific time-frequency pairs (t_i, nu_i) instead of a grid (t_i, nu_j), you can use the following method:
+
+.. code-block:: python
+
+    # Define time range for light curve calculation
+    times = np.logspace(2, 8, 200)  
+
+    # Define observing frequencies (must be the same length as times)
+    bands = np.logspace(9,17, 200)  
+
+    results = model.specific_flux_series(times, bands) #times array could be random order
+
+    #or 
+    results = model.specific_flux_sorted_series(times, bands)# times array must be in ascending order (higher performance)
+
+    # the returned results is a dictionary contains arrays of the same shape as the input times and bands.
+
+
 
 Ambient Media Models
 --------------------
@@ -363,28 +384,6 @@ Self-Synchrotron Compton Radiation
 Advanced Features
 -----------------
 
-Calculate flux on time-frequency pairs
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-Suppose you want to calculate the flux at specific time-frequency pairs (t_i, nu_i) instead of a grid (t_i, nu_j), you can use the following method:
-
-.. code-block:: python
-
-    # Define time range for light curve calculation
-    times = np.logspace(2, 8, 200)  
-
-    # Define observing frequencies (must be the same length as times)
-    bands = np.logspace(9,17, 200)  
-
-    results = model.specific_flux_series(times, bands) #times array could be random order
-
-    #or 
-    results = model.specific_flux_sorted_series(times, bands)# times array must be in ascending order (higher performance)
-
-    # the returned results is a dictionary contains arrays of the same shape as the input times and bands.
-
-
-
 MCMC Parameter Fitting
 ^^^^^^^^^^^^^^^^^^^^^^
 
@@ -430,32 +429,4 @@ MCMC Parameter Fitting
     # Plot the posterior distributions
     fitter.plot_corner()
 
-Parameter Study
-^^^^^^^^^^^^^^^
 
-.. code-block:: python
-
-    # Study the effect of electron energy index p
-    p_values = np.linspace(2.0, 3.0, 5)
-    
-    plt.figure(figsize=(10, 6))
-    
-    # Fix a frequency to study (optical)
-    nu_index = 1  # Optical band
-    
-    for p in p_values:
-        # Update the radiation model
-        model.radiation.p = p
-        
-        # Calculate new light curve
-        results_p = model.calculate_light_curves(times, frequencies)
-        
-        # Plot
-        plt.loglog(times, results_p[:, nu_index], label=f'p = {p:.1f}')
-    
-    plt.xlabel('Time (s)')
-    plt.ylabel('Flux Density (erg/cm²/s/Hz)')
-    plt.legend()
-    plt.title('Effect of Electron Energy Index (p) on Optical Light Curves')
-    plt.grid(True, which='both', linestyle='--', alpha=0.5)
-    plt.show()

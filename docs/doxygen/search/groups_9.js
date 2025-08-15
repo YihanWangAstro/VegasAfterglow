@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['output_20and_20printing_20functions_0',['Output and Printing Functions',['../group__IO__Functions.html',1,'']]]
+  ['parameter_20calculation_0',['Synchrotron Update and Parameter Calculation',['../group__SynchrotronUpdates.html',1,'']]],
+  ['printing_20functions_1',['Output and Printing Functions',['../group__IO__Functions.html',1,'']]]
 ];

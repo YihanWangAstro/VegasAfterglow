@@ -13,7 +13,7 @@ Model Setup and Calculation
 
 A: This is usually caused by one of the following:
 
-- **Time array ordering**: Ensure your time array is in ascending order when using ``specific_flux()``. Use ``specific_flux_sorted_series()`` for better performance with sorted arrays.
+- **Time array ordering**: Ensure your time array is in ascending order when using ``specific_flux()``. Use ``specific_flux_series()`` for random order time arrays.
 - **Resolution too low**: Increase the resolution parameters in ``Model(resolutions=(phi_ppd, theta_ppd, t_ppd))``
 - **User-defined profiles**: For custom jet/medium profiles, ensure they are smooth and well-behaved
 

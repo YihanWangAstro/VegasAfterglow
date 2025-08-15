@@ -1,14 +1,16 @@
 <map id="generate_syn_photons" name="generate_syn_photons">
-<area shape="rect" id="Node000001" title="Populates an existing photon grid with values based on shock and electron grid." alt="" coords="5,95,175,121"/>
-<area shape="rect" id="Node000002" href="$synchrotron_8cpp.html#a35361f36f8d73e95dffabdc7cb0f3177" title=" " alt="" coords="223,5,381,45"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="123,93,236,48,238,53,125,98"/>
-<area shape="rect" id="Node000003" href="$utilities_8h.html#ab8e81118f023df135835db8cce4f5f42" title="Returns the value of a single parameter." alt="" coords="429,70,480,95"/>
-<area shape="poly" id="edge7_Node000001_Node000003" title=" " alt="" coords="175,99,416,83,416,88,175,105"/>
-<area shape="rect" id="Node000004" href="$synchrotron_8cpp.html#a936bfaa522ec8295a21d253e5453188d" title="Calculates synchrotron frequency for a given Lorentz factor and magnetic field." alt="" coords="231,121,373,146"/>
-<area shape="poly" id="edge4_Node000001_Node000004" title=" " alt="" coords="175,115,217,121,216,126,174,121"/>
-<area shape="rect" id="Node000005" href="$utilities_8h.html#afe0a1b1b7509ac4df83fcc0e510f281b" title="Fast approximation of the base&#45;2 logarithm." alt="" coords="261,170,343,195"/>
-<area shape="poly" id="edge5_Node000001_Node000005" title=" " alt="" coords="125,118,224,155,248,163,247,168,222,160,123,123"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="357,43,418,66,416,71,355,48"/>
-<area shape="poly" id="edge3_Node000003_Node000003" title=" " alt="" coords="429,71,424,62,426,52,437,46,455,43,476,47,485,55,481,59,473,52,455,49,439,51,431,55,429,61,434,69"/>
-<area shape="poly" id="edge6_Node000005_Node000003" title=" " alt="" coords="342,171,380,155,410,131,434,105,438,108,413,135,383,160,345,176"/>
+<area shape="rect" id="Node000001" title="Populates an existing photon grid with values based on shock and electron grid." alt="" coords="5,80,175,105"/>
+<area shape="rect" id="Node000002" href="$synchrotron_8cpp.html#a936bfaa522ec8295a21d253e5453188d" title="Calculates synchrotron frequency for a given Lorentz factor and magnetic field." alt="" coords="231,5,373,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="121,77,222,39,244,32,245,37,224,45,123,82"/>
+<area shape="rect" id="Node000003" href="$synchrotron_8cpp.html#ad0ce654aca1c62f43ae108ca8772ed0f" title=" " alt="" coords="223,55,381,80"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="174,80,209,76,209,81,175,85"/>
+<area shape="rect" id="Node000005" href="$utilities_8h.html#ab8e81118f023df135835db8cce4f5f42" title="Returns the value of a single parameter." alt="" coords="636,105,687,131"/>
+<area shape="poly" id="edge8_Node000001_Node000005" title=" " alt="" coords="175,94,622,114,622,119,175,99"/>
+<area shape="rect" id="Node000006" href="$utilities_8h.html#afe0a1b1b7509ac4df83fcc0e510f281b" title="Fast approximation of the base&#45;2 logarithm." alt="" coords="467,156,550,181"/>
+<area shape="poly" id="edge6_Node000001_Node000006" title=" " alt="" coords="124,103,171,119,223,134,347,154,454,163,454,169,346,159,222,139,169,124,122,108"/>
+<area shape="rect" id="Node000004" href="$synchrotron_8cpp.html#a35361f36f8d73e95dffabdc7cb0f3177" title=" " alt="" coords="429,41,588,81"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="382,62,415,61,416,66,382,67"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="563,78,624,102,622,107,562,83"/>
+<area shape="poly" id="edge5_Node000005_Node000005" title=" " alt="" coords="636,107,630,97,633,87,644,81,661,79,682,82,691,91,688,95,680,87,661,84,646,86,637,91,636,96,640,104"/>
+<area shape="poly" id="edge7_Node000006_Node000005" title=" " alt="" coords="547,153,622,128,623,133,549,158"/>
 </map>

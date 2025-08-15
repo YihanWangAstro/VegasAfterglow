@@ -1,16 +1,9 @@
 var NAVTREEINDEX1 =
 {
-"inverse-compton_8h.html":[4,0,0,2],
-"inverse-compton_8h.html#a0ab8637927d98b2552ae0f5b9eb5e5c2":[4,0,0,2,7],
-"inverse-compton_8h.html#a1ed93cca9de717545d10f8619effaf3a":[4,0,0,2,6],
-"inverse-compton_8h.html#a689ca8481a7d3e7e760a3300503f2781":[4,0,0,2,8],
-"inverse-compton_8h.html#a83d78cd6b52bd3932fb1ae9561a1c148":[4,0,0,2,11],
-"inverse-compton_8h.html#a927ff1c4d5d8f2adde3e6f1819dcf3a2":[4,0,0,2,4],
-"inverse-compton_8h.html#ab408d6b9a087160261ae396763eaf060":[4,0,0,2,3],
-"inverse-compton_8h.html#ab8cedd9dad49cd36d2d4126e5c1291dc":[4,0,0,2,5],
-"inverse-compton_8h.html#ac7dc4640209861b76e05ae991771552e":[4,0,0,2,10],
-"inverse-compton_8h.html#aca4102bfefd39902a464c456253645cc":[4,0,0,2,9],
-"inverse-compton_8h.html#af77ecb3b882119e9d24786b64815975f":[4,0,0,2,12],
+"inverse-compton_8h.html#ac0534ea09f08d9b55cb3316050c4aa53":[4,0,0,2,10],
+"inverse-compton_8h.html#ac0e54b69e936d960013b8cc6ddd9d329":[4,0,0,2,6],
+"inverse-compton_8h.html#ad89f660f1954e9c12551a19840d656bb":[4,0,0,2,7],
+"inverse-compton_8h.html#af77ecb3b882119e9d24786b64815975f":[4,0,0,2,11],
 "inverse-compton_8h_source.html":[4,0,0,2],
 "jet_8h.html":[4,0,0,4],
 "jet_8h.html#a6fac8621479aea05abf6fef54a4df256":[4,0,0,4,4],
@@ -249,5 +242,12 @@ var NAVTREEINDEX1 =
 "shock_8h.html#a49b14420b5231323cb4940496ddc0956":[4,0,0,12,7],
 "shock_8h.html#a54a18a4b2edea5b333bae4e08ed2b68d":[4,0,0,12,5],
 "shock_8h.html#a55391189d6bdd1e0ddbc2d039424a0cc":[4,0,0,12,17],
-"shock_8h.html#a70465220fb5998b1d45d11ac165a9e67":[4,0,0,12,11]
+"shock_8h.html#a70465220fb5998b1d45d11ac165a9e67":[4,0,0,12,11],
+"shock_8h.html#a7b72b7c46b478ce3d1a15677c5046dcb":[4,0,0,12,14],
+"shock_8h.html#a906fecbe0261996ea42e3da81ef9a8d4":[4,0,0,12,16],
+"shock_8h.html#a908d0ea000d53a924575023c0e857060":[4,0,0,12,22],
+"shock_8h.html#aa9a3f62c0c028cbdc8a2db2d47a7299f":[4,0,0,12,15],
+"shock_8h.html#ab0d0c4b81c0c5525c81eb24d70c4b010":[4,0,0,12,19],
+"shock_8h.html#ac083404f57e1501f31147d57cc45f4c5":[4,0,0,12,18],
+"shock_8h.html#ac21551f9d4f4eb003348a1b9b3a35567":[4,0,0,12,12]
 };

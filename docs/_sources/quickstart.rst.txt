@@ -198,7 +198,7 @@ You will get a comprehensive list of keys representing the internal quantities, 
 - ``nu_m_fwd``: 3D numpy array of comoving frame injection frequencies for the forward shock in Hz
 - ``nu_c_fwd``: 3D numpy array of comoving frame cooling frequencies for the forward shock in Hz
 - ``nu_M_fwd``: 3D numpy array of comoving frame maximum frequencies for the forward shock in Hz
-- ``P_nu_max_fwd``: 3D numpy array of comoving frame synchrotron maximum flux densities for the forward shock in erg/cm²/s/Hz
+- ``I_nu_max_fwd``: 3D numpy array of comoving frame synchrotron maximum specific intensities for the forward shock in erg/cm²/s/Hz
 - ``Doppler_fwd``: 3D numpy array of Doppler factors for the forward shock
 
 Multi-Parameter Evolution Visualization
