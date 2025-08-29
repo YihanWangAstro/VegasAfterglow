@@ -192,6 +192,9 @@ void MultiBandModel::build_system(Params const& param, Array const& t_eval, Obse
     } else if (config.jet == "powerlaw") {
         jet.eps_k = math::powerlaw(theta_c, E_iso / (4 * con::pi), param.k_jet);
         jet.Gamma0 = math::powerlaw(theta_c, Gamma0, param.k_jet);
+    } else if (config.jet == "powerlawgeneral") {
+        jet.eps_k = math::powerlaw(param.theta_c, E_iso / (4 * con::pi), param.k_jet);
+        jet.Gamma0 = math::powerlaw(param.theta_cG, Gamma0, param.kG_jet);
     } else {
         std::cerr << "Error: Unknown jet type" << std::endl;
     }

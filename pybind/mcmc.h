@@ -49,6 +49,7 @@ struct Params {
     double E_iso{1e52};
     double Gamma0{300};
     double theta_c{0.1};
+    double theta_cG{0.1};
     double theta_v{0};
     double theta_w{con::pi / 2};
     double p{2.3};
@@ -58,6 +59,7 @@ struct Params {
     double A_star{0.01};
     double xi_e{1};
     double k_jet{2};
+    double kG_jet{2};
 };
 
 struct ConfigParams {

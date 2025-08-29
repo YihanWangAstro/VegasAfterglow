@@ -234,6 +234,71 @@ class PowerLawJet {
     Real const k_{2};        ///< Power-law index for angular dependence
 };
 
+
+/**
+ * <!-- ************************************************************************************** -->
+ * @class PowerLawGeneralJet
+ * @brief Implements a general power-law jet profile where properties follow a power-law distribution with angle.
+ * @details This class provides a model for GRB jets with a power-law decay, characterized by core angles, 
+ *          isotropic equivalent energy E_iso, initial Lorentz factor Gamma0, and power-law indices.
+ * <!-- ************************************************************************************** -->
+ */
+class PowerLawGeneralJet {
+   public:
+    /**
+     * <!-- ************************************************************************************** -->
+     * @brief Constructor: Initialize with core angle, isotropic energy, initial Lorentz factor, and power-law index
+     * @param theta_c Core angle of the jet
+     * @param theta_cG Core angle of the jet
+     * @param E_iso Isotropic equivalent energy
+     * @param Gamma0 Initial Lorentz factor
+     * @param k Power-law index
+     * @param kG Power-law index
+     * @param T0 Duration of the ejecta
+     * @param spreading Flag indicating if the ejecta spreads laterally during evolution
+     * <!-- ************************************************************************************** -->
+     */
+    PowerLawGeneralJet(Real theta_c, Real theta_cG, Real E_iso, Real Gamma0, Real k, Real kG, bool spreading = false, Real T0 = 1 * unit::sec) noexcept
+        : theta_c_(theta_c), theta_cG_(theta_cG), eps_k_(E_iso / (4 * con::pi)), Gamma0_(Gamma0), k_(k), kG_(kG), T0(T0), spreading(spreading) {}
+
+    /**
+     * <!-- ************************************************************************************** -->
+     * @brief Energy per solid angle as a function of phi and theta, with power-law falloff
+     * @param phi Azimuthal angle (unused)
+     * @param theta Polar angle
+     * @return Energy per solid angle with power-law angular dependence
+     * <!-- ************************************************************************************** -->
+     */
+    inline Real eps_k(Real phi, Real theta) const noexcept { return eps_k_ / (1 + fast_pow(theta / theta_c_, k_)); }
+
+    /**
+     * <!-- ************************************************************************************** -->
+     * @brief Initial Lorentz factor as a function of phi and theta, with power-law falloff
+     * @param phi Azimuthal angle (unused)
+     * @param theta Polar angle
+     * @return Lorentz factor with power-law angular dependence
+     * <!-- ************************************************************************************** -->
+     */
+    inline Real Gamma0(Real phi, Real theta) const noexcept {
+        return (Gamma0_ - 1) / (1 + fast_pow(theta / theta_cG_, kG_)) + 1;
+    }
+
+    /// Duration of the ejecta in seconds
+    Real T0{1 * unit::sec};
+    /// Flag indicating if the ejecta spreads laterally during evolution
+    bool spreading{false};
+
+   private:
+    Real const theta_c_{0};  ///< Core angle of the jet
+    Real const theta_cG_{0};  ///< Core angle of the jet
+    Real const eps_k_{0};    ///< Energy per solid angle at the core
+    Real const Gamma0_{1};   ///< Initial Lorentz factor at the core
+    Real const k_{2};        ///< Power-law index for energy angular dependence
+    Real const kG_{2};        ///< Power-law index for LF angular dependence
+};
+
+
+
 /**
  * <!-- ************************************************************************************** -->
  * @namespace math

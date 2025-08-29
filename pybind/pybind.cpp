@@ -31,6 +31,9 @@ PYBIND11_MODULE(VegasAfterglowC, m) {
     m.def("PowerLawJet", &PyPowerLawJet, py::arg("theta_c"), py::arg("E_iso"), py::arg("Gamma0"), py::arg("k"),
           py::arg("spreading") = false, py::arg("duration") = 1, py::arg("magnetar") = py::none());
 
+    m.def("PowerLawGeneralJet", &PyPowerLawGeneralJet, py::arg("theta_c"), py::arg("theta_cG"), py::arg("E_iso"), py::arg("Gamma0"), py::arg("k"), py::arg("kG"),
+          py::arg("spreading") = false, py::arg("duration") = 1, py::arg("magnetar") = py::none());
+
     m.def("TwoComponentJet", &PyTwoComponentJet, py::arg("theta_n"), py::arg("E_iso_n"), py::arg("Gamma0_n"),
           py::arg("theta_w"), py::arg("E_iso_w"), py::arg("Gamma0_w"), py::arg("spreading") = false,
           py::arg("duration") = 1, py::arg("magnetar") = py::none());
@@ -81,6 +84,7 @@ PYBIND11_MODULE(VegasAfterglowC, m) {
         .def_readwrite("E_iso", &Params::E_iso)
         .def_readwrite("Gamma0", &Params::Gamma0)
         .def_readwrite("theta_c", &Params::theta_c)
+        .def_readwrite("theta_cG", &Params::theta_cG)
         .def_readwrite("theta_v", &Params::theta_v)
         .def_readwrite("theta_w", &Params::theta_w)
         .def_readwrite("p", &Params::p)
@@ -90,13 +94,14 @@ PYBIND11_MODULE(VegasAfterglowC, m) {
         .def_readwrite("A_star", &Params::A_star)
         .def_readwrite("xi_e", &Params::xi_e)
         .def_readwrite("k_jet", &Params::k_jet)
+        .def_readwrite("kG_jet", &Params::kG_jet)
         .def("__repr__", [](const Params &p) {
             return "<Params E_iso=" + std::to_string(p.E_iso) + ", Gamma0=" + std::to_string(p.Gamma0) +
-                   ", theta_c=" + std::to_string(p.theta_c) + ", theta_v=" + std::to_string(p.theta_v) +
+                   ", theta_c=" + std::to_string(p.theta_c) + ", theta_cG=" + std::to_string(p.theta_cG) + ", theta_v=" + std::to_string(p.theta_v) +
                    ", theta_w=" + std::to_string(p.theta_w) + ", p=" + std::to_string(p.p) +
                    ", eps_e=" + std::to_string(p.eps_e) + ", eps_B=" + std::to_string(p.eps_B) +
                    ", n_ism=" + std::to_string(p.n_ism) + ", A_star=" + std::to_string(p.A_star) +
-                   ", xi_e=" + std::to_string(p.xi_e) + ", k_jet=" + std::to_string(p.k_jet) + ">";
+                   ", xi_e=" + std::to_string(p.xi_e) + ", k_jet=" + std::to_string(p.k_jet) + ", kG_jet=" + std::to_string(p.kG_jet) + ">";
         });
     // Parameters for modeling that are not used in the MCMC
     py::class_<ConfigParams>(m, "Setups")

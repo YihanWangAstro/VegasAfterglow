@@ -80,6 +80,23 @@ Ejecta PyPowerLawJet(Real theta_c, Real E_iso, Real Gamma0, Real k, bool spreadi
                      std::optional<PyMagnetar> magnetar = std::nullopt);
 
 /**
+ * @brief Creates a general power-law jet model 
+ *
+ * @param theta_c Core angle of the jet for energy [radians]
+ * @param theta_cG Core angle of the jet for LF [radians]
+ * @param E_iso Isotropic-equivalent energy at the center [erg]
+ * @param Gamma0 Initial Lorentz factor at the center
+ * @param k Power-law index for energy
+ * @param kG Power-law index for LF
+ * @param spreading Whether to include jet lateral spreading
+ * @param duration Engine activity time [seconds]
+ * @param magnetar Optional magnetar model
+ * @return Ejecta Configured jet with power-law profile
+ */
+Ejecta PyPowerLawGeneralJet(Real theta_c, Real theta_cG, Real E_iso, Real Gamma0, Real k, Real kG, bool spreading = false, Real duration = 1,
+                     std::optional<PyMagnetar> magnetar = std::nullopt);
+                     
+/**
  * @brief Creates a two-component jet model with different properties for narrow and wide components
  * @param theta_n Core angle of the narrow component [radians]
  * @param E_iso_n Isotropic-equivalent energy of the narrow component [erg]
