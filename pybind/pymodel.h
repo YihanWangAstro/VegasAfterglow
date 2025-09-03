@@ -83,7 +83,7 @@ Ejecta PyPowerLawJet(Real theta_c, Real E_iso, Real Gamma0, Real k, bool spreadi
  * @brief Creates a general power-law jet model 
  *
  * @param theta_c Core angle of the jet for energy [radians]
- * @param theta_cG Core angle of the jet for LF [radians]
+ * @param theta_cG Core angle of the jet for Lorentz factor [radians]
  * @param E_iso Isotropic-equivalent energy at the center [erg]
  * @param Gamma0 Initial Lorentz factor at the center
  * @param k Power-law index for energy

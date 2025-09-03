@@ -239,8 +239,10 @@ class PowerLawJet {
  * <!-- ************************************************************************************** -->
  * @class PowerLawGeneralJet
  * @brief Implements a general power-law jet profile where properties follow a power-law distribution with angle.
- * @details This class provides a model for GRB jets with a power-law decay, characterized by core angles, 
- *          isotropic equivalent energy E_iso, initial Lorentz factor Gamma0, and power-law indices.
+ * @details This class provides a model for GRB jets with a power-law decay, characterized by two core angles 
+ *          (one for energy and another for Lorentz factor),  isotropic equivalent energy E_iso,
+ *          initial Lorentz factor Gamma0, and two power-law indices for the energy and Lorentz factor 
+ *          angular profiles.
  * <!-- ************************************************************************************** -->
  */
 class PowerLawGeneralJet {

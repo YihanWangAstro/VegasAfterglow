@@ -87,7 +87,6 @@ Ejecta PyPowerLawGeneralJet(Real theta_c, Real theta_cG, Real E_iso, Real Gamma0
     jet.spreading = spreading;
     jet.T0 = duration;
 
-    /*
     if (magnetar) {
         jet.deps_dt = [=](Real phi, Real theta, Real t) {
             if (theta <= theta_c) {
@@ -97,7 +96,7 @@ Ejecta PyPowerLawGeneralJet(Real theta_c, Real theta_cG, Real E_iso, Real Gamma0
                 return 0.;
             }
         };
-    } */
+    } 
 
     return jet;
 }
