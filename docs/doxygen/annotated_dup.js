@@ -18,6 +18,7 @@ var annotated_dup =
     [ "MultiBandModel", "structMultiBandModel.html", "structMultiBandModel" ],
     [ "Observer", "classObserver.html", "classObserver" ],
     [ "Params", "structParams.html", "structParams" ],
+    [ "PowerLawGeneralJet", "classPowerLawGeneralJet.html", "classPowerLawGeneralJet" ],
     [ "PowerLawJet", "classPowerLawJet.html", "classPowerLawJet" ],
     [ "PromptPhotons", "structPromptPhotons.html", "structPromptPhotons" ],
     [ "PyMagnetar", "structPyMagnetar.html", "structPyMagnetar" ],

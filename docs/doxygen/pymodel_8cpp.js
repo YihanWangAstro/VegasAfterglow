@@ -3,6 +3,7 @@ var pymodel_8cpp =
     [ "convert_unit", "pymodel_8cpp.html#aa920671831cc213a5c0858813e42279f", null ],
     [ "PyGaussianJet", "pymodel_8cpp.html#aebad6fd71005d1bec168be9482a8e953", null ],
     [ "PyISM", "pymodel_8cpp.html#a43af01d16838e6513792deaeb727fbe5", null ],
+    [ "PyPowerLawGeneralJet", "pymodel_8cpp.html#acf31aea4e1471216bdbf521c4d511fb8", null ],
     [ "PyPowerLawJet", "pymodel_8cpp.html#ae7277e61b6c679670f55b7e974a01a30", null ],
     [ "PyTophatJet", "pymodel_8cpp.html#ae1719874122ee6d02040114286d1270a", null ],
     [ "PyTwoComponentJet", "pymodel_8cpp.html#a066d884fe1e091bebeb5d813f67c754c", null ],

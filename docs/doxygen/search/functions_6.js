@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['gamma0_0',['gamma0',['../classGaussianJet.html#a9c76f0d0e02fd686f7b081962275d49b',1,'GaussianJet::Gamma0()'],['../classPowerLawJet.html#a476eed410b28500b7209768b81434502',1,'PowerLawJet::Gamma0()'],['../classTophatJet.html#a89374a73ef8bbaec174846b778ccfb6f',1,'TophatJet::Gamma0()']]],
+  ['gamma0_0',['gamma0',['../classGaussianJet.html#a9c76f0d0e02fd686f7b081962275d49b',1,'GaussianJet::Gamma0()'],['../classPowerLawJet.html#a476eed410b28500b7209768b81434502',1,'PowerLawJet::Gamma0()'],['../classPowerLawGeneralJet.html#a77fd3c5991cca6025f287fcf35326b89',1,'PowerLawGeneralJet::Gamma0()'],['../classTophatJet.html#a89374a73ef8bbaec174846b778ccfb6f',1,'TophatJet::Gamma0()']]],
   ['gamma_5fto_5fbeta_1',['gamma_to_beta',['../physics_8h.html#ab8aa624dd63313487d8f5ecf52170d76',1,'physics.h']]],
   ['gaussianjet_2',['GaussianJet',['../classGaussianJet.html#adbfec46147c6fd9f22258acade623122',1,'GaussianJet']]],
   ['gen_5fcoasting_5fshock_3',['gen_coasting_shock',['../prompt_8h.html#a66fb48188341c585a06119c04800c823',1,'prompt.h']]],

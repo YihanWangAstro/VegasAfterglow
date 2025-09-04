@@ -1,0 +1,15 @@
+<map id="PyPowerLawGeneralJet" name="PyPowerLawGeneralJet">
+<area shape="rect" id="Node000001" title="Creates a general power&#45;law jet model." alt="" coords="5,132,177,157"/>
+<area shape="rect" id="Node000002" href="$utilities_8h.html#a4520a27a10a2aef33c99ad8c679da404" title="Fast approximation of a raised to the power of b." alt="" coords="225,81,307,107"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="135,129,211,107,213,112,137,134"/>
+<area shape="rect" id="Node000004" href="$utilities_8h.html#ab8e81118f023df135835db8cce4f5f42" title="Returns the value of a single parameter." alt="" coords="489,81,540,107"/>
+<area shape="poly" id="edge8_Node000001_Node000004" title=" " alt="" coords="167,155,227,161,297,163,370,158,440,142,466,130,488,114,492,118,469,135,442,147,370,163,297,168,227,166,166,160"/>
+<area shape="rect" id="Node000003" href="$utilities_8h.html#afc584c30c352192de6847b1f4b8caf0e" title="Fast approximation of 2 raised to a power." alt="" coords="355,5,441,31"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="288,79,362,36,364,40,291,83"/>
+<area shape="poly" id="edge7_Node000002_Node000004" title=" " alt="" coords="307,91,476,91,476,97,307,97"/>
+<area shape="rect" id="Node000005" href="$utilities_8h.html#afe0a1b1b7509ac4df83fcc0e510f281b" title="Fast approximation of the base&#45;2 logarithm." alt="" coords="357,107,439,132"/>
+<area shape="poly" id="edge5_Node000002_Node000005" title=" " alt="" coords="307,99,344,106,343,111,306,104"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="420,29,485,72,482,76,417,33"/>
+<area shape="poly" id="edge4_Node000004_Node000004" title=" " alt="" coords="495,82,491,73,493,64,501,57,515,55,531,58,538,66,534,70,528,63,515,60,503,62,497,66,496,72,499,80"/>
+<area shape="poly" id="edge6_Node000005_Node000004" title=" " alt="" coords="439,108,475,100,476,105,440,113"/>
+</map>

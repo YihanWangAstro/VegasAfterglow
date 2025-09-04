@@ -1,7 +1,7 @@
 var searchData=
 [
   ['g_0',['g',['../namespaceunit.html#af4ac5b90426ecc30143a4e0f495978b6',1,'unit']]],
-  ['gamma_1',['gamma',['../structForwardState.html#a1f7f63273d731979440606b69413eac3',1,'ForwardState::Gamma'],['../classCoastingShock.html#a174cc05509ef0c4aca0d2e5f0b7a7343',1,'CoastingShock::Gamma'],['../classShock.html#af26b390f5806dc838dd5a2f63c1b0bd9',1,'Shock::Gamma'],['../structSimpleState.html#aa220fc39562c5384c863d3d7a9d39aee',1,'SimpleState::Gamma'],['../structICPhoton.html#a4a9a1bbe5c93583d940158f5401663ee',1,'ICPhoton::gamma']]],
+  ['gamma_1',['gamma',['../classCoastingShock.html#a174cc05509ef0c4aca0d2e5f0b7a7343',1,'CoastingShock::Gamma'],['../classShock.html#af26b390f5806dc838dd5a2f63c1b0bd9',1,'Shock::Gamma'],['../structSimpleState.html#aa220fc39562c5384c863d3d7a9d39aee',1,'SimpleState::Gamma'],['../structICPhoton.html#a4a9a1bbe5c93583d940158f5401663ee',1,'ICPhoton::gamma'],['../structForwardState.html#a1f7f63273d731979440606b69413eac3',1,'ForwardState::Gamma']]],
   ['gamma0_2',['gamma0',['../classEjecta.html#a6993f0ec67bf03b7c80e9a7c10e65640',1,'Ejecta::Gamma0'],['../structParams.html#a936879f34880349fc5c813219834519d',1,'Params::Gamma0']]],
   ['gamma4_3',['Gamma4',['../classFRShockEqn.html#a69ca2d095d52823456e2c9cad98132c2',1,'FRShockEqn']]],
   ['gamma_5fa_4',['gamma_a',['../structSynElectrons.html#aa2e8c9dd55662d992284bd1baf49797c',1,'SynElectrons']]],
