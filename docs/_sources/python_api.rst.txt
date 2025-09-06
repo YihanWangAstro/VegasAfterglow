@@ -177,10 +177,10 @@ Example:
     )
     
     # Generate light curves with best-fit parameters
-    lc_best = fitter.light_curves(result.best_params, t_out, bands)
+    lc_best = fitter.specific_flux(result.best_params, t_out, bands)
     
     # Generate spectra with best-fit parameters
-    spec_best = fitter.spectra(result.best_params, nu_out, times)
+    spec_best = fitter.specific_flux(result.best_params, times, nu_out)
 
 .. _api-fitresult:
 

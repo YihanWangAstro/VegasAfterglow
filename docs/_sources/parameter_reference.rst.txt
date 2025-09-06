@@ -178,18 +178,18 @@ Two-Component Jet Parameters
      - Units
      - Typical Range
      - Description
-   * - ``theta_n``
-     - :math:`\theta_n`
+   * - ``theta_c``
+     - :math:`\theta_c`
      - radians
      - :math:`0.01 - 0.2`
      - Half-opening angle of narrow component
-   * - ``E_iso_n``
-     - :math:`E_{\rm iso,n}`
+   * - ``E_iso_c``
+     - :math:`E_{\rm iso,c}`
      - erg
      - :math:`10^{51} - 10^{54}`
      - Isotropic energy of narrow component
-   * - ``Gamma0_n``
-     - :math:`\Gamma_{0,n}`
+   * - ``Gamma0_c``
+     - :math:`\Gamma_{0,c}`
      - dimensionless
      - :math:`100 - 1000`
      - Initial Lorentz factor of narrow component

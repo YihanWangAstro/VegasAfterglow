@@ -536,12 +536,12 @@ Use the best-fit parameters to generate model predictions:
     bands = [2.4e17, 4.84e14, 1.4e14] 
 
     # Generate light curves with the best-fit model
-    lc_best = fitter.light_curves(result.best_params, t_out, bands)
+    lc_best = fitter.specific_flux(result.best_params, t_out, bands)
 
     nu_out = np.logspace(6, 20, 150)
     times = [3000]
     # Generate model spectra at the specified times using the best-fit parameters
-    spec_best = fitter.spectra(result.best_params, nu_out, times)
+    spec_best = fitter.specific_flux(result.best_params, times, nu_out)
 
 Now you can plot the best-fit model:
 

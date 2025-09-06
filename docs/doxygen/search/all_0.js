@@ -1,8 +1,8 @@
 var searchData=
 [
   ['a_5fstar_0',['A_star',['../structParams.html#a15b9f0b0ca2df7a9190562d0aaa19814',1,'Params']]],
-  ['adaptive_5fphi_1',['adaptive_phi',['../mesh_8h.html#a3ca32361c539c9922ebfc94a8cc66040',1,'mesh.h']]],
-  ['adaptive_5ftheta_2',['adaptive_theta',['../mesh_8h.html#abc9519dd5e37fbb5bf7904f9bec62ade',1,'mesh.h']]],
+  ['adaptive_5fphi_5fgrid_1',['adaptive_phi_grid',['../mesh_8h.html#a83ae490737edde6ad03ede25e371a071',1,'mesh.h']]],
+  ['adaptive_5ftheta_5fgrid_2',['adaptive_theta_grid',['../mesh_8h.html#a3dc6828dd13a70c0c203dba03e765cea',1,'mesh.h']]],
   ['add_5flight_5fcurve_3',['add_light_curve',['../structMultiBandData.html#ab1ff8b5942b1b5c63b8502ec5b045985',1,'MultiBandData']]],
   ['add_5fspectrum_4',['add_spectrum',['../structMultiBandData.html#a94dc83f28a6f637526b10a8211748e2e',1,'MultiBandData']]],
   ['adiabatic_20index_20functions_5',['Gamma Conversion and Adiabatic Index Functions',['../group__GammaConversions.html',1,'']]],

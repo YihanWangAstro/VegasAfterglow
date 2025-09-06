@@ -231,10 +231,10 @@
 <span class="p">)</span>
 
 <span class="c1"># Generate light curves with best-fit parameters</span>
-<span class="n">lc_best</span> <span class="o">=</span> <span class="n">fitter</span><span class="o">.</span><span class="n">light_curves</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">best_params</span><span class="p">,</span> <span class="n">t_out</span><span class="p">,</span> <span class="n">bands</span><span class="p">)</span>
+<span class="n">lc_best</span> <span class="o">=</span> <span class="n">fitter</span><span class="o">.</span><span class="n">specific_flux</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">best_params</span><span class="p">,</span> <span class="n">t_out</span><span class="p">,</span> <span class="n">bands</span><span class="p">)</span>
 
 <span class="c1"># Generate spectra with best-fit parameters</span>
-<span class="n">spec_best</span> <span class="o">=</span> <span class="n">fitter</span><span class="o">.</span><span class="n">spectra</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">best_params</span><span class="p">,</span> <span class="n">nu_out</span><span class="p">,</span> <span class="n">times</span><span class="p">)</span>
+<span class="n">spec_best</span> <span class="o">=</span> <span class="n">fitter</span><span class="o">.</span><span class="n">specific_flux</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">best_params</span><span class="p">,</span> <span class="n">times</span><span class="p">,</span> <span class="n">nu_out</span><span class="p">)</span>
 </pre></div>
 </div>
 </section>

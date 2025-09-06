@@ -108,7 +108,7 @@ For observations with finite exposure times, you can calculate time-averaged flu
 
 .. code-block:: python
 
-    # Define observation times (center of exposure)
+    # Define observation times (start of exposure)
     times = np.logspace(2, 8, 50)  
     
     # Define observing frequencies (must be the same length as times)
@@ -168,12 +168,12 @@ User-Defined Medium
 
     from VegasAfterglow import Medium
 
-    m_p = 1.6726219e-24  # Proton mass in grams
+    mp = 1.67e-24 # proton mass in gram
 
     # Define a custom density profile function
     def density(phi, theta, r):# r in cm, phi and theta in radians
-        return m_p # n_ism =  1 cm^-3
-        #return whatever density profile (g/cm^3) you want as a function of phi, theta, and r
+        return mp # n_ism =  1 cm^-3
+        #return whatever density profile (cm^-3) you want as a function of phi, theta, and r
     
     # Create a user-defined medium
     medium = Medium(rho=density)
@@ -338,15 +338,15 @@ Those profiles are optional and will be set to zero function if not provided.
     #..other settings
 
     #if your jet is not axisymmetric, set axisymmetric to False
-    model = Model(jet=jet, ..., axisymmetric=False, resolutions=(0.3, 5, 10))
+    model = Model(jet=jet, ..., axisymmetric=False, resolutions=(0.3, 1, 10))
 
-    # the user-defined jet structure could be spiky, if the default resolution may not resolve the jet structure, if that is the case, you can try a finer resolution (phi_ppd, theta_ppd, t_ppd)
+    # the user-defined jet structure could be spiky, the default resolution may not resolve the jet structure. if that is the case, you can try a finer resolution (phi_ppd, theta_ppd, t_ppd)
     # where phi_ppd is the number of points per degree in the phi direction, theta_ppd is the number of points per degree in the theta direction, and t_ppd is the number of points per decade in the time direction    .
 
 .. note::
     Setting user-defined structured jet in the Python level is OK for light curve and spectrum calculation. However, it is not recommended for MCMC parameter fitting if you do care about the performance.
     The reason is that setting user-defined profiles in the Python level leads to a large overhead due to the Python-C++ inter-process communication.
-    Users are recommended to set up the user-defined jet structure in the C++ level for MCMC parameter fitting for better performance.
+    Users are recommended to set up the user-defined jet structure in the C++ level for MCMC parameter fitting for better performance, if you want the best performance.
           
 
 Radiation Processes

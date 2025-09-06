@@ -142,8 +142,8 @@ Jet Structure Variations
         ParamDef("theta_v",    0,   0.5,  Scale.LINEAR),  # Allow off-axis viewing
         
         # Power-law structure parameters
-        ParamDef("k_e",      1.5,   3.0,  Scale.LINEAR),  # Energy power-law index
-        ParamDef("k_g",      1.5,   3.0,  Scale.LINEAR),  # Lorentz factor power-law
+        ParamDef("k_e",      1.5,   3.0,  Scale.LINEAR),  # Energy power-law index, default 2.0 if not specified
+        ParamDef("k_g",      1.5,   3.0,  Scale.LINEAR),  # Lorentz factor power-law, default 2.0 if not specified
         
         # Medium and microphysics (same as default)
         ParamDef("n_ism",   1e-3,   100,  Scale.LOG),
