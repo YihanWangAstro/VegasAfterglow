@@ -99,11 +99,32 @@ Suppose you want to calculate the flux at specific time-frequency pairs (t_i, nu
 
     results = model.specific_flux_series(times, bands) #times array could be random order
 
-    #or 
-    results = model.specific_flux_sorted_series(times, bands)# times array must be in ascending order (higher performance)
-
     # the returned results is a dictionary contains arrays of the same shape as the input times and bands.
 
+Calculate flux with exposure time averaging
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+For observations with finite exposure times, you can calculate time-averaged flux by sampling multiple points within each exposure:
+
+.. code-block:: python
+
+    # Define observation times (center of exposure)
+    times = np.logspace(2, 8, 50)  
+    
+    # Define observing frequencies (must be the same length as times)
+    bands = np.logspace(9, 17, 50)  
+    
+    # Define exposure times for each observation (in seconds)
+    expo_time = np.ones_like(times) * 100  # 100-second exposures
+    
+    # Calculate time-averaged flux with 20 sample points per exposure
+    results = model.specific_flux_series_with_expo(times, bands, expo_time, num_points=20)
+    
+    # The returned results is a dictionary with arrays of the same shape as input times and bands
+    # Each flux value represents the average over the corresponding exposure time
+
+.. note::
+    The function samples `num_points` evenly spaced within each exposure time and averages the computed flux. Higher `num_points` gives more accurate time averaging but increases computation time. The minimum value is 2.
 
 
 Ambient Media Models
