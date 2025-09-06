@@ -1,0 +1,10 @@
+<map id="is_ascending" name="is_ascending">
+<area shape="rect" id="Node000001" title=" " alt="" coords="419,35,525,60"/>
+<area shape="rect" id="Node000002" href="$classPyModel.html#aff0f26fa2c72824720c6d16189ad996b" title="Calculate specific flux at given times and frequencies." alt="" coords="204,5,371,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="405,39,367,33,368,28,405,34"/>
+<area shape="rect" id="Node000004" href="$classPyModel.html#a3bbae641e3d5f9968da2cbe8053bbce0" title="Calculate specific flux at given time and frequency (t_i,nu_i) series." alt="" coords="204,55,371,95"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="406,60,371,65,370,60,405,55"/>
+<area shape="rect" id="Node000003" href="$pybind_8cpp.html#a8c92987849ad296e28ec6c07c8e7860b" title=" " alt="" coords="5,35,156,60"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="191,34,157,39,156,34,190,29"/>
+<area shape="poly" id="edge4_Node000004_Node000003" title=" " alt="" coords="190,65,156,60,157,55,191,60"/>
+</map>

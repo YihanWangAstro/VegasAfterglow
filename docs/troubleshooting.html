@@ -155,7 +155,7 @@
 <p><strong>Q: MCMC is too slow for practical use</strong></p>
 <p>A: Optimization strategies:</p>
 <ul class="simple">
-<li><p><strong>Reduce resolution</strong>: Use <code class="docutils literal notranslate"><span class="pre">resolution=(0.5,</span> <span class="pre">3,</span> <span class="pre">5)</span></code> for initial exploration</p></li>
+<li><p><strong>Reduce resolution</strong>: Use <code class="docutils literal notranslate"><span class="pre">resolution=(0.5,</span> <span class="pre">1,</span> <span class="pre">5)</span></code> for initial exploration</p></li>
 <li><p><strong>Fewer parameters</strong>: Fix some parameters with <code class="docutils literal notranslate"><span class="pre">Scale.FIXED</span></code></p></li>
 <li><p><strong>Coarser time/frequency grids</strong>: Use fewer data points for initial fits</p></li>
 <li><p><strong>Parallel processing</strong>: Ensure you’re using multiple cores</p></li>
@@ -232,22 +232,22 @@ pip<span class="w"> </span>install<span class="w"> </span>h5py<span class="w">  
 </thead>
 <tbody>
 <tr class="row-even"><td><p>Initial exploration</p></td>
-<td><p><code class="docutils literal notranslate"><span class="pre">(0.1,</span> <span class="pre">3,</span> <span class="pre">5)</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">(0.2,</span> <span class="pre">1,</span> <span class="pre">5)</span></code></p></td>
 <td><p>Very Fast</p></td>
 <td><p>Low</p></td>
 </tr>
 <tr class="row-odd"><td><p>Standard calculations</p></td>
-<td><p><code class="docutils literal notranslate"><span class="pre">(0.3,</span> <span class="pre">3,</span> <span class="pre">5)</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">(0.3,</span> <span class="pre">1,</span> <span class="pre">10)</span></code></p></td>
 <td><p>Fast</p></td>
 <td><p>Good</p></td>
 </tr>
 <tr class="row-even"><td><p>MCMC fitting</p></td>
-<td><p><code class="docutils literal notranslate"><span class="pre">(0.3,</span> <span class="pre">5,</span> <span class="pre">10)</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">(0.3,</span> <span class="pre">1,</span> <span class="pre">10)</span></code></p></td>
 <td><p>Moderate</p></td>
 <td><p>High</p></td>
 </tr>
 <tr class="row-odd"><td><p>Publication quality</p></td>
-<td><p><code class="docutils literal notranslate"><span class="pre">(0.3,</span> <span class="pre">10,</span> <span class="pre">15)</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">(0.3,</span> <span class="pre">5,</span> <span class="pre">20)</span></code></p></td>
 <td><p>Slow</p></td>
 <td><p>Very High</p></td>
 </tr>

@@ -1,7 +1,9 @@
 var searchData=
 [
-  ['add_5flight_5fcurve_0',['add_light_curve',['../structMultiBandData.html#ab15b29ad6db1c7be7bb62d8d4b218411',1,'MultiBandData']]],
-  ['add_5fspectrum_1',['add_spectrum',['../structMultiBandData.html#a36b9e6baef1a0ab8ac972bc46ebf5618',1,'MultiBandData']]],
-  ['adiabatic_5fidx_2',['adiabatic_idx',['../physics_8h.html#a2a95c6b3f1236d69328af7199a772a23',1,'physics.h']]],
-  ['auto_5fgrid_3',['auto_grid',['../mesh_8h.html#ae3e9605b2c69cf526bd26727b015b7d8',1,'mesh.h']]]
+  ['adaptive_5fphi_0',['adaptive_phi',['../mesh_8h.html#a3ca32361c539c9922ebfc94a8cc66040',1,'mesh.h']]],
+  ['adaptive_5ftheta_1',['adaptive_theta',['../mesh_8h.html#abc9519dd5e37fbb5bf7904f9bec62ade',1,'mesh.h']]],
+  ['add_5flight_5fcurve_2',['add_light_curve',['../structMultiBandData.html#ab1ff8b5942b1b5c63b8502ec5b045985',1,'MultiBandData']]],
+  ['add_5fspectrum_3',['add_spectrum',['../structMultiBandData.html#a94dc83f28a6f637526b10a8211748e2e',1,'MultiBandData']]],
+  ['adiabatic_5fidx_4',['adiabatic_idx',['../physics_8h.html#a2a95c6b3f1236d69328af7199a772a23',1,'physics.h']]],
+  ['auto_5fgrid_5',['auto_grid',['../mesh_8h.html#a017f88b3242fdadb28e664f27725643a',1,'mesh.h']]]
 ];

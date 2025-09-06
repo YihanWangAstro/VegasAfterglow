@@ -253,31 +253,29 @@
 <span class="n">rad</span> <span class="o">=</span> <span class="n">Radiation</span><span class="p">(</span><span class="n">eps_e</span><span class="o">=</span><span class="mf">1e-1</span><span class="p">,</span> <span class="n">eps_B</span><span class="o">=</span><span class="mf">1e-3</span><span class="p">,</span> <span class="n">p</span><span class="o">=</span><span class="mf">2.3</span><span class="p">)</span>
 
 <span class="c1"># Include resolution parameters for detailed internal tracking</span>
-<span class="n">model</span> <span class="o">=</span> <span class="n">Model</span><span class="p">(</span><span class="n">jet</span><span class="o">=</span><span class="n">jet</span><span class="p">,</span> <span class="n">medium</span><span class="o">=</span><span class="n">medium</span><span class="p">,</span> <span class="n">observer</span><span class="o">=</span><span class="n">obs</span><span class="p">,</span> <span class="n">forward_rad</span><span class="o">=</span><span class="n">rad</span><span class="p">,</span> <span class="n">resolutions</span><span class="o">=</span><span class="p">(</span><span class="mf">0.1</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">10</span><span class="p">))</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">Model</span><span class="p">(</span><span class="n">jet</span><span class="o">=</span><span class="n">jet</span><span class="p">,</span> <span class="n">medium</span><span class="o">=</span><span class="n">medium</span><span class="p">,</span> <span class="n">observer</span><span class="o">=</span><span class="n">obs</span><span class="p">,</span> <span class="n">forward_rad</span><span class="o">=</span><span class="n">rad</span><span class="p">,</span> <span class="n">resolutions</span><span class="o">=</span><span class="p">(</span><span class="mf">0.3</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">10</span><span class="p">))</span>
 </pre></div>
 </div>
 </section>
 <section id="accessing-simulation-quantities">
 <h4>Accessing Simulation Quantities<a class="headerlink" href="#accessing-simulation-quantities" title="Link to this heading"></a></h4>
 <p>Now, let’s access the internal simulation quantities using the <code class="docutils literal notranslate"><span class="pre">details</span></code> method:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">times</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">logspace</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
-
-<span class="c1"># Get the simulation details</span>
-<span class="n">details</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">details</span><span class="p">(</span><span class="n">times</span><span class="p">)</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Get the simulation details over a time range</span>
+<span class="n">details</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">details</span><span class="p">(</span><span class="n">t_min</span><span class="o">=</span><span class="mf">1e0</span><span class="p">,</span> <span class="n">t_max</span><span class="o">=</span><span class="mf">1e8</span><span class="p">)</span>
 
 <span class="c1"># Print the keys of the internal quantities</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Simulation details:&quot;</span><span class="p">,</span> <span class="n">details</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
 </pre></div>
 </div>
-<p>You will get a comprehensive list of keys representing the internal quantities, such as <code class="docutils literal notranslate"><span class="pre">t_src</span></code>, <code class="docutils literal notranslate"><span class="pre">t_comv_fwd</span></code>, <code class="docutils literal notranslate"><span class="pre">EAT_fwd</span></code>, and many more. The available quantities include:</p>
+<p>You will get a comprehensive list of keys representing the internal quantities, such as <code class="docutils literal notranslate"><span class="pre">t_src</span></code>, <code class="docutils literal notranslate"><span class="pre">t_comv_fwd</span></code>, <code class="docutils literal notranslate"><span class="pre">t_obs_fwd</span></code>, and many more. The available quantities include:</p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">phi</span></code>: 1D numpy array of azimuthal angles in radians</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">theta</span></code>: 1D numpy array of polar angles in radians</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">t_src</span></code>: 3D numpy array of source frame times on coordinate (phi_i, theta_j, t_k) grid in seconds</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">t_comv_fwd</span></code>: 3D numpy array of comoving times for the forward shock in seconds</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">EAT_fwd</span></code>: 3D numpy array of observer times for the forward shock in seconds</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">Gamma_downstr_fwd</span></code>: 3D numpy array of downstream Lorentz factors for the forward shock</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">Gamma_rel_fwd</span></code>: 3D numpy array of relative Lorentz factors between upstream and downstream for the forward shock</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">t_obs_fwd</span></code>: 3D numpy array of observer times for the forward shock in seconds</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Gamma_fwd</span></code>: 3D numpy array of downstream Lorentz factors for the forward shock</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Gamma_th_fwd</span></code>: 3D numpy array of thermal Lorentz factors for the forward shock</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">r_fwd</span></code>: 3D numpy array of lab frame radii in centimeters</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">B_fwd</span></code>: 3D numpy array of downstream comoving magnetic field strengths for the forward shock in Gauss</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">theta_fwd</span></code>: 3D numpy array of polar angles for the forward shock in radians</p></li>
@@ -298,10 +296,10 @@
 <section id="multi-parameter-evolution-visualization">
 <h4>Multi-Parameter Evolution Visualization<a class="headerlink" href="#multi-parameter-evolution-visualization" title="Link to this heading"></a></h4>
 <p>To analyze the temporal evolution of physical parameters across different reference frames, we can visualize how key quantities evolve in the source frame, comoving frame, and observer frame. This code creates a comprehensive multi-panel figure displaying the temporal evolution of fundamental shock parameters across all three reference frames:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">keys</span> <span class="o">=</span><span class="p">[</span><span class="s1">&#39;Gamma_rel_fwd&#39;</span><span class="p">,</span> <span class="s1">&#39;B_fwd&#39;</span><span class="p">,</span> <span class="s1">&#39;N_p_fwd&#39;</span><span class="p">,</span><span class="s1">&#39;r_fwd&#39;</span><span class="p">,</span><span class="s1">&#39;N_e_fwd&#39;</span><span class="p">,</span><span class="s1">&#39;P_nu_max_fwd&#39;</span><span class="p">]</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">keys</span> <span class="o">=</span><span class="p">[</span><span class="s1">&#39;Gamma_fwd&#39;</span><span class="p">,</span> <span class="s1">&#39;B_fwd&#39;</span><span class="p">,</span> <span class="s1">&#39;N_p_fwd&#39;</span><span class="p">,</span><span class="s1">&#39;r_fwd&#39;</span><span class="p">,</span><span class="s1">&#39;N_e_fwd&#39;</span><span class="p">,</span><span class="s1">&#39;P_nu_max_fwd&#39;</span><span class="p">]</span>
 <span class="n">ylabels</span> <span class="o">=</span> <span class="p">[</span><span class="sa">r</span><span class="s1">&#39;$\Gamma$&#39;</span><span class="p">,</span> <span class="sa">r</span><span class="s1">&#39;$B^\prime$ [G]&#39;</span><span class="p">,</span> <span class="sa">r</span><span class="s1">&#39;$N_p$&#39;</span><span class="p">,</span> <span class="sa">r</span><span class="s1">&#39;$r$ [cm]&#39;</span><span class="p">,</span> <span class="sa">r</span><span class="s1">&#39;$N_e$&#39;</span><span class="p">,</span> <span class="sa">r</span><span class="s1">&#39;$P_{\nu, \rm max}^\prime$ [erg/s/Hz]&#39;</span><span class="p">]</span>
 
-<span class="n">frames</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;t_src&#39;</span><span class="p">,</span> <span class="s1">&#39;t_comv_fwd&#39;</span><span class="p">,</span> <span class="s1">&#39;EAT_fwd&#39;</span><span class="p">]</span>
+<span class="n">frames</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;t_src&#39;</span><span class="p">,</span> <span class="s1">&#39;t_comv_fwd&#39;</span><span class="p">,</span> <span class="s1">&#39;t_obs_fwd&#39;</span><span class="p">]</span>
 <span class="n">titles</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;source frame&#39;</span><span class="p">,</span> <span class="s1">&#39;comoving frame&#39;</span><span class="p">,</span> <span class="s1">&#39;observer frame&#39;</span><span class="p">]</span>
 <span class="n">colors</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;C0&#39;</span><span class="p">,</span> <span class="s1">&#39;C1&#39;</span><span class="p">,</span> <span class="s1">&#39;C2&#39;</span><span class="p">]</span>
 <span class="n">xlabels</span> <span class="o">=</span> <span class="p">[</span><span class="sa">r</span><span class="s1">&#39;$t_{\rm src}$ [s]&#39;</span><span class="p">,</span> <span class="sa">r</span><span class="s1">&#39;$t^\prime$ [s]&#39;</span><span class="p">,</span> <span class="sa">r</span><span class="s1">&#39;$t_{\rm obs}$ [s]&#39;</span><span class="p">]</span>
@@ -334,7 +332,7 @@
 <section id="electron-energy-distribution-analysis">
 <h4>Electron Energy Distribution Analysis<a class="headerlink" href="#electron-energy-distribution-analysis" title="Link to this heading"></a></h4>
 <p>This visualization focuses specifically on the characteristic electron energies (self-absorption, injection, and cooling) in both the comoving frame and observer frame, illustrating the relativistic transformation effects:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">frames</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;t_src&#39;</span><span class="p">,</span> <span class="s1">&#39;t_comv_fwd&#39;</span><span class="p">,</span> <span class="s1">&#39;EAT_fwd&#39;</span><span class="p">]</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">frames</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;t_src&#39;</span><span class="p">,</span> <span class="s1">&#39;t_comv_fwd&#39;</span><span class="p">,</span> <span class="s1">&#39;t_obs_fwd&#39;</span><span class="p">]</span>
 <span class="n">xlabels</span> <span class="o">=</span> <span class="p">[</span><span class="sa">r</span><span class="s1">&#39;$t_{\rm src}$ [s]&#39;</span><span class="p">,</span> <span class="sa">r</span><span class="s1">&#39;$t^\prime$ [s]&#39;</span><span class="p">,</span> <span class="sa">r</span><span class="s1">&#39;$t_{\rm obs}$ [s]&#39;</span><span class="p">]</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span> <span class="p">(</span><span class="mf">4.2</span><span class="o">*</span><span class="nb">len</span><span class="p">(</span><span class="n">frames</span><span class="p">),</span> <span class="mf">3.6</span><span class="p">))</span>
 
@@ -364,7 +362,7 @@
 <section id="synchrotron-frequency-evolution">
 <h4>Synchrotron Frequency Evolution<a class="headerlink" href="#synchrotron-frequency-evolution" title="Link to this heading"></a></h4>
 <p>This analysis tracks the evolution of characteristic synchrotron frequencies, demonstrating how the spectral break frequencies change over time and how Doppler boosting affects the observed spectrum:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">frames</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;t_src&#39;</span><span class="p">,</span> <span class="s1">&#39;t_comv_fwd&#39;</span><span class="p">,</span> <span class="s1">&#39;EAT_fwd&#39;</span><span class="p">]</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">frames</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;t_src&#39;</span><span class="p">,</span> <span class="s1">&#39;t_comv_fwd&#39;</span><span class="p">,</span> <span class="s1">&#39;t_obs_fwd&#39;</span><span class="p">]</span>
 <span class="n">xlabels</span> <span class="o">=</span> <span class="p">[</span><span class="sa">r</span><span class="s1">&#39;$t_{\rm src}$ [s]&#39;</span><span class="p">,</span> <span class="sa">r</span><span class="s1">&#39;$t^\prime$ [s]&#39;</span><span class="p">,</span> <span class="sa">r</span><span class="s1">&#39;$t_{\rm obs}$ [s]&#39;</span><span class="p">]</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span> <span class="p">(</span><span class="mf">4.2</span><span class="o">*</span><span class="nb">len</span><span class="p">(</span><span class="n">frames</span><span class="p">),</span> <span class="mf">3.6</span><span class="p">))</span>
 
@@ -434,7 +432,7 @@
 
 <span class="n">theta</span> <span class="o">=</span> <span class="n">details</span><span class="p">[</span><span class="s1">&#39;theta_fwd&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">,:,:]</span>
 <span class="n">r</span>     <span class="o">=</span> <span class="n">details</span><span class="p">[</span><span class="s1">&#39;r_fwd&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">,:,:]</span>
-<span class="n">t_obs</span> <span class="o">=</span> <span class="n">details</span><span class="p">[</span><span class="s1">&#39;EAT_fwd&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">,:,:]</span>
+<span class="n">t_obs</span> <span class="o">=</span> <span class="n">details</span><span class="p">[</span><span class="s1">&#39;t_obs_fwd&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">,:,:]</span>
 
 <span class="n">scale</span> <span class="o">=</span> <span class="mf">3.0</span>
 <span class="n">c</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">contourf</span><span class="p">(</span><span class="n">theta</span><span class="o">*</span><span class="n">scale</span><span class="p">,</span> <span class="n">r</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="n">t_obs</span><span class="p">),</span> <span class="n">levels</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;viridis&#39;</span><span class="p">)</span>
@@ -487,6 +485,8 @@
 <span class="n">flux_data</span> <span class="o">=</span> <span class="p">[</span><span class="mf">1e-26</span><span class="p">,</span> <span class="mf">8e-27</span><span class="p">,</span> <span class="mf">5e-27</span><span class="p">,</span> <span class="mf">3e-27</span><span class="p">,</span> <span class="mf">2e-27</span><span class="p">]</span>  <span class="c1"># Specific flux in erg/cm²/s/Hz</span>
 <span class="n">flux_err</span> <span class="o">=</span> <span class="p">[</span><span class="mf">1e-28</span><span class="p">,</span> <span class="mf">8e-28</span><span class="p">,</span> <span class="mf">5e-28</span><span class="p">,</span> <span class="mf">3e-28</span><span class="p">,</span> <span class="mf">2e-28</span><span class="p">]</span>  <span class="c1"># Specific flux error in erg/cm²/s/Hz</span>
 <span class="n">data</span><span class="o">.</span><span class="n">add_light_curve</span><span class="p">(</span><span class="n">nu_cgs</span><span class="o">=</span><span class="mf">4.84e14</span><span class="p">,</span> <span class="n">t_cgs</span><span class="o">=</span><span class="n">t_data</span><span class="p">,</span> <span class="n">Fnu_cgs</span><span class="o">=</span><span class="n">flux_data</span><span class="p">,</span> <span class="n">Fnu_err</span><span class="o">=</span><span class="n">flux_err</span><span class="p">)</span>
+<span class="c1"># You can also assign weights to each data point to account for systematic uncertainties or correlations. You don&#39;t need to worry about the weights&#39; normalization, the code will normalize them automatically.</span>
+<span class="c1">#data.add_light_curve(nu_cgs=4.84e14, t_cgs=t_data, Fnu_cgs=flux_data, Fnu_err=flux_err, weights=np.ones(len(t_data)))</span>
 
 <span class="c1"># For spectra</span>
 <span class="n">nu_data</span> <span class="o">=</span> <span class="p">[</span><span class="o">...</span><span class="p">]</span>  <span class="c1"># Frequencies in Hz</span>
@@ -527,8 +527,8 @@
 <span class="n">cfg</span><span class="o">.</span><span class="n">z</span> <span class="o">=</span> <span class="mf">1.58</span>               <span class="c1"># Redshift</span>
 
 <span class="c1"># Physical model configuration</span>
-<span class="n">cfg</span><span class="o">.</span><span class="n">medium</span> <span class="o">=</span> <span class="s2">&quot;wind&quot;</span>        <span class="c1"># Ambient medium: &quot;wind&quot;, &quot;ism&quot; (Interstellar Medium) or &quot;user&quot; (user-defined)</span>
-<span class="n">cfg</span><span class="o">.</span><span class="n">jet</span> <span class="o">=</span> <span class="s2">&quot;powerlaw&quot;</span>       <span class="c1"># Jet structure: &quot;powerlaw&quot;, &quot;gaussian&quot;, &quot;tophat&quot; or &quot;user&quot; (user-defined)</span>
+<span class="n">cfg</span><span class="o">.</span><span class="n">medium</span> <span class="o">=</span> <span class="s2">&quot;wind&quot;</span>
+<span class="n">cfg</span><span class="o">.</span><span class="n">jet</span> <span class="o">=</span> <span class="s2">&quot;powerlaw&quot;</span>
 </pre></div>
 </div>
 <p>These settings affect how the model is calculated but are not varied during the MCMC process.</p>
@@ -573,7 +573,7 @@ The parameters you include depend on your model configuration:</p>
 <span class="c1"># Run the MCMC fitting</span>
 <span class="n">result</span> <span class="o">=</span> <span class="n">fitter</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span>
     <span class="n">param_defs</span><span class="o">=</span><span class="n">mc_params</span><span class="p">,</span>          <span class="c1"># Parameter definitions</span>
-    <span class="n">resolution</span><span class="o">=</span><span class="p">(</span><span class="mf">0.1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">),</span>        <span class="c1"># Grid resolution (see more details in `Examples`)</span>
+    <span class="n">resolution</span><span class="o">=</span><span class="p">(</span><span class="mf">0.3</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span>        <span class="c1"># Grid resolution (see more details in `Examples`)</span>
     <span class="n">total_steps</span><span class="o">=</span><span class="mi">10000</span><span class="p">,</span>             <span class="c1"># Total number of MCMC steps</span>
     <span class="n">burn_frac</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span>                 <span class="c1"># Fraction of steps to discard as burn-in</span>
     <span class="n">thin</span><span class="o">=</span><span class="mi">1</span>                         <span class="c1"># Thinning factor</span>

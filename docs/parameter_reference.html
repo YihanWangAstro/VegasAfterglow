@@ -116,67 +116,6 @@
 <h2>Physical Parameters<a class="headerlink" href="#physical-parameters" title="Link to this heading"></a></h2>
 <section id="jet-structure-parameters">
 <h3>Jet Structure Parameters<a class="headerlink" href="#jet-structure-parameters" title="Link to this heading"></a></h3>
-<table class="docutils align-default">
-<colgroup>
-<col style="width: 15.0%" />
-<col style="width: 15.0%" />
-<col style="width: 10.0%" />
-<col style="width: 20.0%" />
-<col style="width: 40.0%" />
-</colgroup>
-<thead>
-<tr class="row-odd"><th class="head"><p>Parameter</p></th>
-<th class="head"><p>Symbol</p></th>
-<th class="head"><p>Units</p></th>
-<th class="head"><p>Typical Range</p></th>
-<th class="head"><p>Description</p></th>
-</tr>
-</thead>
-<tbody>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">E_iso</span></code></p></td>
-<td><p><span class="math notranslate nohighlight">\(E_{\rm iso}\)</span></p></td>
-<td><p>erg</p></td>
-<td><p><span class="math notranslate nohighlight">\(10^{50} - 10^{54}\)</span></p></td>
-<td><p>Isotropic-equivalent kinetic energy of the jet</p></td>
-</tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">Gamma0</span></code></p></td>
-<td><p><span class="math notranslate nohighlight">\(\Gamma_0\)</span></p></td>
-<td><p>dimensionless</p></td>
-<td><p><span class="math notranslate nohighlight">\(10 - 1000\)</span></p></td>
-<td><p>Initial bulk Lorentz factor of the jet</p></td>
-</tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">theta_c</span></code></p></td>
-<td><p><span class="math notranslate nohighlight">\(\theta_c\)</span></p></td>
-<td><p>radians</p></td>
-<td><p><span class="math notranslate nohighlight">\(0.01 - 0.5\)</span></p></td>
-<td><p>Half-opening angle of the jet core</p></td>
-</tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">theta_v</span></code></p></td>
-<td><p><span class="math notranslate nohighlight">\(\theta_v\)</span></p></td>
-<td><p>radians</p></td>
-<td><p><span class="math notranslate nohighlight">\(0 - \pi/2\)</span></p></td>
-<td><p>Viewing angle (angle between jet axis and line of sight)</p></td>
-</tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">duration</span></code></p></td>
-<td><p><span class="math notranslate nohighlight">\(T_{\rm dur}\)</span></p></td>
-<td><p>seconds</p></td>
-<td><p><span class="math notranslate nohighlight">\(0.1 - 1000\)</span></p></td>
-<td><p>Duration of energy injection (affects reverse shock)</p></td>
-</tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">k</span></code></p></td>
-<td><p><span class="math notranslate nohighlight">\(k\)</span></p></td>
-<td><p>dimensionless</p></td>
-<td><p><span class="math notranslate nohighlight">\(1 - 10\)</span></p></td>
-<td><p>Power-law index for structured jets (PowerLawJet only)</p></td>
-</tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">sigma0</span></code></p></td>
-<td><p><span class="math notranslate nohighlight">\(\sigma_0\)</span></p></td>
-<td><p>dimensionless</p></td>
-<td><p><span class="math notranslate nohighlight">\(0.001 - 10\)</span></p></td>
-<td><p>Initial magnetization parameter</p></td>
-</tr>
-</tbody>
-</table>
 </section>
 <section id="ambient-medium-parameters">
 <h3>Ambient Medium Parameters<a class="headerlink" href="#ambient-medium-parameters" title="Link to this heading"></a></h3>
@@ -311,14 +250,14 @@
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">L_0</span></code></p></td>
-<td><p><span class="math notranslate nohighlight">\(L_0\)</span></p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">L0</span></code></p></td>
+<td><p><span class="math notranslate nohighlight">\(L0\)</span></p></td>
 <td><p>erg/s</p></td>
 <td><p><span class="math notranslate nohighlight">\(10^{44} - 10^{48}\)</span></p></td>
 <td><p>Initial luminosity of magnetar spin-down</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">t_0</span></code></p></td>
-<td><p><span class="math notranslate nohighlight">\(t_0\)</span></p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">t0</span></code></p></td>
+<td><p><span class="math notranslate nohighlight">\(t0\)</span></p></td>
 <td><p>seconds</p></td>
 <td><p><span class="math notranslate nohighlight">\(10 - 10^4\)</span></p></td>
 <td><p>Characteristic spin-down timescale</p></td>
@@ -327,7 +266,7 @@
 <td><p><span class="math notranslate nohighlight">\(q\)</span></p></td>
 <td><p>dimensionless</p></td>
 <td><p><span class="math notranslate nohighlight">\(1 - 6\)</span></p></td>
-<td><p>Power-law index of spin-down: <span class="math notranslate nohighlight">\(L(t) = L_0(1+t/t_0)^{-q}\)</span></p></td>
+<td><p>Power-law index of spin-down: <span class="math notranslate nohighlight">\(L(t) = L0(1+t/t0)^{-q}\)</span></p></td>
 </tr>
 </tbody>
 </table>

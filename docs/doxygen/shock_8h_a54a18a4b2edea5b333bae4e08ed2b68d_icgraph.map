@@ -1,5 +1,0 @@
-<map id="compute_downstr_eth" name="compute_downstr_eth">
-<area shape="rect" id="Node000001" title="Computes the downstream thermal energy density." alt="" coords="192,5,359,31"/>
-<area shape="rect" id="Node000002" href="$shock_8h.html#a0dc6778e1b8dd591df9f98a4d7a6d26f" title="Saves the shock state at a given grid point (i,j,k)." alt="" coords="5,5,144,31"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="178,21,144,21,144,15,178,15"/>
-</map>

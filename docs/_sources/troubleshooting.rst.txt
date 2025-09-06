@@ -59,7 +59,7 @@ A: Try the following:
 
 A: Optimization strategies:
 
-- **Reduce resolution**: Use ``resolution=(0.5, 3, 5)`` for initial exploration
+- **Reduce resolution**: Use ``resolution=(0.5, 1, 5)`` for initial exploration
 - **Fewer parameters**: Fix some parameters with ``Scale.FIXED``
 - **Coarser time/frequency grids**: Use fewer data points for initial fits
 - **Parallel processing**: Ensure you're using multiple cores
@@ -138,19 +138,19 @@ The ``resolutions`` parameter in ``Model()`` controls computational accuracy vs 
      - Speed
      - Accuracy
    * - Initial exploration
-     - ``(0.1, 3, 5)``
+     - ``(0.2, 1, 5)``
      - Very Fast
      - Low
    * - Standard calculations
-     - ``(0.3, 3, 5)``
+     - ``(0.3, 1, 10)``
      - Fast
      - Good
    * - MCMC fitting
-     - ``(0.3, 5, 10)``
+     - ``(0.3, 1, 10)``
      - Moderate
      - High
    * - Publication quality
-     - ``(0.3, 10, 15)``
+     - ``(0.3, 5, 20)``
      - Slow
      - Very High
 

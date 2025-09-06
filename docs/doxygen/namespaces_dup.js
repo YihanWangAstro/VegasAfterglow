@@ -12,11 +12,13 @@ var namespaces_dup =
       [ "inf", "namespacecon.html#ad61313f4a5b7876e54ae46d02d4a04bd", null ],
       [ "me", "namespacecon.html#a740c8edb3d4f2d904a1c76002f84fb7e", null ],
       [ "mec2", "namespacecon.html#ae1b8cddbe12f755f5d01b86b0e2b9e14", null ],
+      [ "min_obs_time", "namespacecon.html#a567e367066c9354a3cb44b696905b2a0", null ],
       [ "mp", "namespacecon.html#a47a54b8f758d02e6f8b85e41207ae620", null ],
       [ "mpc2", "namespacecon.html#a3069b33fec8e9e6ab27263b1bb30ad57", null ],
       [ "Omega_L", "namespacecon.html#ac228afba286b912a3ce0009d63c4b802", null ],
       [ "Omega_m", "namespacecon.html#af7e2aaa6311d30f35a07dc75fa9c4516", null ],
       [ "pi", "namespacecon.html#aa0ccd904b754d0f907898a942516d121", null ],
+      [ "sigma_cut", "namespacecon.html#ae257fca076d03dd535871a9824d2f178", null ],
       [ "sigmaT", "namespacecon.html#ad19e5b64c85c3e709fd0944358be97f6", null ]
     ] ],
     [ "evn", "namespaceevn.html", null ],

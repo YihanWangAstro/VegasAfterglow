@@ -1,7 +1,7 @@
 var searchData=
 [
-  ['y_5fc_0',['y_c',['../structSynElectrons.html#a8f6f82711ad7212348f13d3a49c2d4b5',1,'SynElectrons::Y_c'],['../structSynPhotons.html#ad359df8271da605a643410e7f9377727',1,'SynPhotons::Y_c']]],
-  ['y_5ft_1',['Y_T',['../structInverseComptonY.html#a3b05a1e8119feb60443f3617d7924de7',1,'InverseComptonY']]],
-  ['yr_2',['yr',['../namespaceunit.html#a28b5c14bd65aeeebf1db1d974bc266e6',1,'unit']]],
-  ['ys_3',['ys',['../structSynElectrons.html#a96402c1ba35b1a66de649f47f9a4e3b5',1,'SynElectrons::Ys'],['../structSynPhotons.html#ab371ef6a39b529f55794bfc96f35bfc2',1,'SynPhotons::Ys']]]
+  ['x3_0',['x3',['../structReverseState.html#af37c22d20f3c18b5cb5c3e993bcc8c0f',1,'ReverseState']]],
+  ['x4_1',['x4',['../structReverseState.html#a994a741601f29ac7aa7ac5be6887c62d',1,'ReverseState']]],
+  ['xi_5fe_2',['xi_e',['../structRadParams.html#a762cf0c07a2dc70ef2e3472a517fff7e',1,'RadParams::xi_e'],['../structParams.html#aaaa784676e56b15aa459418b253a6fab',1,'Params::xi_e']]],
+  ['xi_5fe_5fr_3',['xi_e_r',['../structParams.html#a68be57cc31ea61f458a3623785bfceab',1,'Params']]]
 ];

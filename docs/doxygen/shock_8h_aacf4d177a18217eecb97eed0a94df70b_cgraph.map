@@ -1,0 +1,6 @@
+<map id="compute_adiabatic_cooling_rate2" name="compute_adiabatic_cooling_rate2">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,22,205,62"/>
+<area shape="rect" id="Node000002" href="$utilities_8h.html#ab8e81118f023df135835db8cce4f5f42" title="Returns the value of a single parameter." alt="" coords="253,29,304,55"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="205,39,239,39,239,45,205,45"/>
+<area shape="poly" id="edge2_Node000002_Node000002" title=" " alt="" coords="251,32,244,22,246,12,258,5,279,3,304,7,313,17,309,21,302,12,279,8,260,10,251,15,249,21,255,29"/>
+</map>

@@ -34,6 +34,7 @@ Key Features
    installation
    quickstart
    examples
+   mcmc_fitting
    parameter_reference
    python_api
    cpp_api

@@ -297,26 +297,23 @@ Functions</h2></td></tr>
 <dl class="section return"><dt>Returns</dt><dd>Adiabatic index </dd></dl>
 
 <p class="definition">Definition at line <a class="el" href="physics_8h_source.html#l00126">126</a> of file <a class="el" href="physics_8h_source.html">physics.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  126</span>{ <span class="keywordflow">return</span> (4 * gamma + 1) / (3 * gamma); }</div>
+<div class="fragment"><div class="line"><span class="lineno">  126</span>{ <span class="keywordflow">return</span> 4.0 / 3.0 + 1 / (3 * gamma); }</div>
 </div><!-- fragment --><div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="physics_8h_a2a95c6b3f1236d69328af7199a772a23_icgraph.png" border="0" usemap="#aphysics_8h_a2a95c6b3f1236d69328af7199a772a23_icgraph" alt=""/></div>
 <map name="aphysics_8h_a2a95c6b3f1236d69328af7199a772a23_icgraph" id="aphysics_8h_a2a95c6b3f1236d69328af7199a772a23_icgraph">
-<area shape="rect" title="Computes adiabatic index as a function of Lorentz factor." alt="" coords="749,56,859,81"/>
-<area shape="rect" href="shock_8cpp.html#a09f75d8bc0c1cd36d03a413edd7283d8" title="Computes the downstream four&#45;velocity for a given relative Lorentz factor and magnetization parameter..." alt="" coords="528,5,701,31"/>
-<area shape="poly" title=" " alt="" coords="742,55,662,33,664,28,743,50"/>
-<area shape="rect" href="shock_8h.html#a0dc6778e1b8dd591df9f98a4d7a6d26f" title="Saves the shock state at a given grid point (i,j,k)." alt="" coords="39,55,177,80"/>
-<area shape="poly" title=" " alt="" coords="735,71,178,70,178,65,735,66"/>
-<area shape="rect" href="shock_8h.html#a55391189d6bdd1e0ddbc2d039424a0cc" title="Computes the sound speed in the shocked medium based on the relative Lorentz factor." alt="" coords="529,107,700,132"/>
-<area shape="poly" title=" " alt="" coords="743,88,664,109,662,104,742,82"/>
-<area shape="rect" href="shock_8cpp.html#a38af400f232a5acb1c7703d34f7814bd" title="Computes the ratio of upstream to downstream four&#45;velocity across the shock front." alt="" coords="292,5,447,31"/>
-<area shape="poly" title=" " alt="" coords="514,21,447,21,447,15,514,15"/>
-<area shape="rect" href="shock_8h.html#a1d7e0662ed14532ed7d41d5aa0a740c0" title="Computes the downstream number density from upstream density, relative Lorentz factor,..." alt="" coords="5,5,211,31"/>
-<area shape="poly" title=" " alt="" coords="278,21,211,21,211,15,278,15"/>
-<area shape="poly" title=" " alt="" coords="288,36,177,57,176,52,287,31"/>
-<area shape="rect" href="shock_8h.html#a906fecbe0261996ea42e3da81ef9a8d4" title="Computes the rate at which the shock shell spreads in the comoving frame." alt="" coords="259,107,480,132"/>
-<area shape="poly" title=" " alt="" coords="516,122,480,122,480,117,516,117"/>
+<area shape="rect" title="Computes adiabatic index as a function of Lorentz factor." alt="" coords="713,31,823,56"/>
+<area shape="rect" href="shock_8cpp.html#a09f75d8bc0c1cd36d03a413edd7283d8" title="Computes the downstream four&#45;velocity for a given relative Lorentz factor and magnetization parameter..." alt="" coords="492,5,665,31"/>
+<area shape="poly" title=" " alt="" coords="700,37,665,32,666,27,700,32"/>
+<area shape="rect" href="shock_8h.html#a55391189d6bdd1e0ddbc2d039424a0cc" title="Computes the sound speed in the shocked medium based on the relative Lorentz factor." alt="" coords="493,55,664,80"/>
+<area shape="poly" title=" " alt="" coords="700,55,664,59,664,54,700,49"/>
+<area shape="rect" href="shock_8h.html#a4bdfde6dc952db299a39011d15d27413" title="Computes the ratio of upstream to downstream four&#45;velocity across the shock front." alt="" coords="256,5,411,31"/>
+<area shape="poly" title=" " alt="" coords="478,21,411,21,411,15,478,15"/>
+<area shape="rect" href="shock_8h.html#a56526dae2aafc8713048d8f3297afa78" title="Computes the compression ratio across the shock." alt="" coords="5,5,175,31"/>
+<area shape="poly" title=" " alt="" coords="242,21,175,21,175,15,242,15"/>
+<area shape="rect" href="shock_8h.html#a17e2ac26fbfde30e15374d8aed124d7c" title="Computes the rate at which the shock shell spreads in the comoving frame." alt="" coords="223,55,444,80"/>
+<area shape="poly" title=" " alt="" coords="480,70,444,70,444,65,480,65"/>
 </map>
 </div>
 
@@ -512,16 +509,14 @@ Here is the caller graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="physics_8h_ab8aa624dd63313487d8f5ecf52170d76_icgraph.png" border="0" usemap="#aphysics_8h_ab8aa624dd63313487d8f5ecf52170d76_icgraph" alt=""/></div>
 <map name="aphysics_8h_ab8aa624dd63313487d8f5ecf52170d76_icgraph" id="aphysics_8h_ab8aa624dd63313487d8f5ecf52170d76_icgraph">
-<area shape="rect" title="Converts Lorentz factor (gamma) to velocity fraction (beta)" alt="" coords="589,80,717,105"/>
-<area shape="rect" href="mesh_8h.html#ae3e9605b2c69cf526bd26727b015b7d8" title="Constructs a coordinate grid (Coord) for shock evolution." alt="" coords="421,5,503,31"/>
-<area shape="poly" title=" " alt="" coords="613,76,540,44,503,32,504,27,542,40,615,71"/>
-<area shape="rect" href="shock_8h.html#a332a992c621eaae912c73f8089d52323" title="Computes the deceleration time for the shock based on the equation system and time bounds." alt="" coords="389,55,535,80"/>
-<area shape="poly" title=" " alt="" coords="575,85,535,80,536,74,576,80"/>
-<area shape="rect" href="prompt_8h.html#a66fb48188341c585a06119c04800c823" title=" " alt="" coords="385,104,539,129"/>
-<area shape="poly" title=" " alt="" coords="576,105,539,110,539,104,575,100"/>
-<area shape="rect" href="prompt_8cpp.html#a179563049db5bed00a5663ff3932eed4" title=" " alt="" coords="383,153,541,179"/>
-<area shape="poly" title=" " alt="" coords="613,113,542,143,506,156,504,151,540,138,611,109"/>
-<area shape="rect" href="classPyModel.html#ab7bbdfe47a2b21d3a9cc685c962c5da2" title="Get details of the model configuration." alt="" coords="204,5,335,31"/>
+<area shape="rect" title="Converts Lorentz factor (gamma) to velocity fraction (beta)" alt="" coords="589,55,717,80"/>
+<area shape="rect" href="mesh_8h.html#a017f88b3242fdadb28e664f27725643a" title="Constructs a coordinate grid (Coord) for shock evolution." alt="" coords="421,5,503,31"/>
+<area shape="poly" title=" " alt="" coords="590,54,503,31,504,26,591,49"/>
+<area shape="rect" href="prompt_8h.html#a66fb48188341c585a06119c04800c823" title=" " alt="" coords="385,55,539,80"/>
+<area shape="poly" title=" " alt="" coords="576,70,539,70,539,65,576,65"/>
+<area shape="rect" href="prompt_8cpp.html#a179563049db5bed00a5663ff3932eed4" title=" " alt="" coords="383,104,541,129"/>
+<area shape="poly" title=" " alt="" coords="591,86,513,106,512,101,590,81"/>
+<area shape="rect" href="classPyModel.html#a3440b0852a67952d09b9017ef6784fd0" title="Get details of the model configuration." alt="" coords="204,5,335,31"/>
 <area shape="poly" title=" " alt="" coords="407,21,335,21,335,15,407,15"/>
 <area shape="rect" href="pybind_8cpp.html#a8c92987849ad296e28ec6c07c8e7860b" title=" " alt="" coords="5,5,156,31"/>
 <area shape="poly" title=" " alt="" coords="190,21,156,21,156,15,190,15"/>

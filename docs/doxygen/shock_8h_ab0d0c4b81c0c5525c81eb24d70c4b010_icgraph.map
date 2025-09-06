@@ -1,9 +1,7 @@
 <map id="compute_upstr_4vel" name="compute_upstr_4vel">
-<area shape="rect" id="Node000001" title="Computes the upstream four&#45;velocity from downstream four&#45;velocity and relative Lorentz factor." alt="" coords="461,31,616,56"/>
-<area shape="rect" id="Node000002" href="$shock_8cpp.html#a38af400f232a5acb1c7703d34f7814bd" title="Computes the ratio of upstream to downstream four&#45;velocity across the shock front." alt="" coords="259,31,413,56"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="448,46,414,46,414,41,448,41"/>
-<area shape="rect" id="Node000003" href="$shock_8h.html#a1d7e0662ed14532ed7d41d5aa0a740c0" title="Computes the downstream number density from upstream density, relative Lorentz factor,..." alt="" coords="5,5,211,31"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="245,36,210,32,211,27,245,31"/>
-<area shape="rect" id="Node000004" href="$shock_8h.html#a0dc6778e1b8dd591df9f98a4d7a6d26f" title="Saves the shock state at a given grid point (i,j,k)." alt="" coords="39,55,177,80"/>
-<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="245,56,178,63,177,57,244,50"/>
+<area shape="rect" id="Node000001" title="Computes the upstream four&#45;velocity from downstream four&#45;velocity and relative Lorentz factor." alt="" coords="425,5,580,31"/>
+<area shape="rect" id="Node000002" href="$shock_8h.html#a4bdfde6dc952db299a39011d15d27413" title="Computes the ratio of upstream to downstream four&#45;velocity across the shock front." alt="" coords="223,5,377,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="412,21,378,21,378,15,412,15"/>
+<area shape="rect" id="Node000003" href="$shock_8h.html#a56526dae2aafc8713048d8f3297afa78" title="Computes the compression ratio across the shock." alt="" coords="5,5,175,31"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="209,21,175,21,175,15,209,15"/>
 </map>

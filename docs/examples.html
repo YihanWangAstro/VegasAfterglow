@@ -61,6 +61,7 @@
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#ambient-media-models">Ambient Media Models</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#wind-medium">Wind Medium</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#stratified-medium">Stratified Medium</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#user-defined-medium">User-Defined Medium</a></li>
 </ul>
 </li>
@@ -68,6 +69,7 @@
 <li class="toctree-l3"><a class="reference internal" href="#gaussian-jet">Gaussian Jet</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#power-law-jet">Power-Law Jet</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#two-component-jet">Two-Component Jet</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#step-power-law-jet">Step Power-Law Jet</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#jet-with-spreading">Jet with Spreading</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#magnetar-spin-down">Magnetar Spin-down</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#user-defined-jet">User-Defined Jet</a></li>
@@ -77,10 +79,6 @@
 <li class="toctree-l3"><a class="reference internal" href="#reverse-shock-emission">Reverse Shock Emission</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#inverse-compton-cooling">Inverse Compton Cooling</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#self-synchrotron-compton-radiation">Self-Synchrotron Compton Radiation</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="#advanced-features">Advanced Features</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#mcmc-parameter-fitting">MCMC Parameter Fitting</a></li>
 </ul>
 </li>
 </ul>
@@ -130,29 +128,26 @@
 <li><p><a class="reference internal" href="#ambient-media-models" id="id4">Ambient Media Models</a></p>
 <ul>
 <li><p><a class="reference internal" href="#wind-medium" id="id5">Wind Medium</a></p></li>
-<li><p><a class="reference internal" href="#user-defined-medium" id="id6">User-Defined Medium</a></p></li>
+<li><p><a class="reference internal" href="#stratified-medium" id="id6">Stratified Medium</a></p></li>
+<li><p><a class="reference internal" href="#user-defined-medium" id="id7">User-Defined Medium</a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#jet-models" id="id7">Jet Models</a></p>
+<li><p><a class="reference internal" href="#jet-models" id="id8">Jet Models</a></p>
 <ul>
-<li><p><a class="reference internal" href="#gaussian-jet" id="id8">Gaussian Jet</a></p></li>
-<li><p><a class="reference internal" href="#power-law-jet" id="id9">Power-Law Jet</a></p></li>
-<li><p><a class="reference internal" href="#two-component-jet" id="id10">Two-Component Jet</a></p></li>
-<li><p><a class="reference internal" href="#jet-with-spreading" id="id11">Jet with Spreading</a></p></li>
-<li><p><a class="reference internal" href="#magnetar-spin-down" id="id12">Magnetar Spin-down</a></p></li>
-<li><p><a class="reference internal" href="#user-defined-jet" id="id13">User-Defined Jet</a></p></li>
+<li><p><a class="reference internal" href="#gaussian-jet" id="id9">Gaussian Jet</a></p></li>
+<li><p><a class="reference internal" href="#power-law-jet" id="id10">Power-Law Jet</a></p></li>
+<li><p><a class="reference internal" href="#two-component-jet" id="id11">Two-Component Jet</a></p></li>
+<li><p><a class="reference internal" href="#step-power-law-jet" id="id12">Step Power-Law Jet</a></p></li>
+<li><p><a class="reference internal" href="#jet-with-spreading" id="id13">Jet with Spreading</a></p></li>
+<li><p><a class="reference internal" href="#magnetar-spin-down" id="id14">Magnetar Spin-down</a></p></li>
+<li><p><a class="reference internal" href="#user-defined-jet" id="id15">User-Defined Jet</a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#radiation-processes" id="id14">Radiation Processes</a></p>
+<li><p><a class="reference internal" href="#radiation-processes" id="id16">Radiation Processes</a></p>
 <ul>
-<li><p><a class="reference internal" href="#reverse-shock-emission" id="id15">Reverse Shock Emission</a></p></li>
-<li><p><a class="reference internal" href="#inverse-compton-cooling" id="id16">Inverse Compton Cooling</a></p></li>
-<li><p><a class="reference internal" href="#self-synchrotron-compton-radiation" id="id17">Self-Synchrotron Compton Radiation</a></p></li>
-</ul>
-</li>
-<li><p><a class="reference internal" href="#advanced-features" id="id18">Advanced Features</a></p>
-<ul>
-<li><p><a class="reference internal" href="#mcmc-parameter-fitting" id="id19">MCMC Parameter Fitting</a></p></li>
+<li><p><a class="reference internal" href="#reverse-shock-emission" id="id17">Reverse Shock Emission</a></p></li>
+<li><p><a class="reference internal" href="#inverse-compton-cooling" id="id18">Inverse Compton Cooling</a></p></li>
+<li><p><a class="reference internal" href="#self-synchrotron-compton-radiation" id="id19">Self-Synchrotron Compton Radiation</a></p></li>
 </ul>
 </li>
 </ul>
@@ -178,7 +173,7 @@
 <span class="n">rad</span> <span class="o">=</span> <span class="n">Radiation</span><span class="p">(</span><span class="n">eps_e</span><span class="o">=</span><span class="mf">1e-1</span><span class="p">,</span> <span class="n">eps_B</span><span class="o">=</span><span class="mf">1e-3</span><span class="p">,</span> <span class="n">p</span><span class="o">=</span><span class="mf">2.3</span><span class="p">,</span> <span class="n">xi_e</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 
 <span class="c1"># Combine all components into a complete afterglow model</span>
-<span class="n">model</span> <span class="o">=</span> <span class="n">Model</span><span class="p">(</span><span class="n">jet</span><span class="o">=</span><span class="n">jet</span><span class="p">,</span> <span class="n">medium</span><span class="o">=</span><span class="n">medium</span><span class="p">,</span> <span class="n">observer</span><span class="o">=</span><span class="n">obs</span><span class="p">,</span> <span class="n">forward_rad</span><span class="o">=</span><span class="n">rad</span><span class="p">,</span> <span class="n">resolutions</span><span class="o">=</span><span class="p">(</span><span class="mf">0.3</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">5</span><span class="p">))</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">Model</span><span class="p">(</span><span class="n">jet</span><span class="o">=</span><span class="n">jet</span><span class="p">,</span> <span class="n">medium</span><span class="o">=</span><span class="n">medium</span><span class="p">,</span> <span class="n">observer</span><span class="o">=</span><span class="n">obs</span><span class="p">,</span> <span class="n">forward_rad</span><span class="o">=</span><span class="n">rad</span><span class="p">,</span> <span class="n">resolutions</span><span class="o">=</span><span class="p">(</span><span class="mf">0.3</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">10</span><span class="p">))</span>
 
 <span class="c1"># Define time range for light curve calculation</span>
 <span class="n">times</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">logspace</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">200</span><span class="p">)</span>
@@ -267,8 +262,24 @@
 </pre></div>
 </div>
 </section>
+<section id="stratified-medium">
+<h3><a class="toc-backref" href="#id6" role="doc-backlink">Stratified Medium</a><a class="headerlink" href="#stratified-medium" title="Link to this heading"></a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">VegasAfterglow</span><span class="w"> </span><span class="kn">import</span> <span class="n">Wind</span>
+
+<span class="c1"># Create a stratified stellar wind medium;</span>
+<span class="c1"># smooth transited stratified medium. Inner region, n(r) = n_0, middle region n(r) \propto 1/r^2, outer region n(r)=n_ism</span>
+<span class="c1"># A = 0 (default): fallback to n = n_ism</span>
+<span class="c1"># n_0 = inf (default): wind bubble, from wind profile to ism profile</span>
+<span class="c1"># A = 0 &amp; n_0 = inf: pure wind;</span>
+<span class="n">wind</span> <span class="o">=</span> <span class="n">Wind</span><span class="p">(</span><span class="n">A_star</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">n_ism</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">n_0</span> <span class="o">=</span> <span class="mf">1e-3</span><span class="p">)</span>
+
+<span class="c1">#..other settings</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">Model</span><span class="p">(</span><span class="n">medium</span><span class="o">=</span><span class="n">wind</span><span class="p">,</span> <span class="o">...</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
 <section id="user-defined-medium">
-<h3><a class="toc-backref" href="#id6" role="doc-backlink">User-Defined Medium</a><a class="headerlink" href="#user-defined-medium" title="Link to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id7" role="doc-backlink">User-Defined Medium</a><a class="headerlink" href="#user-defined-medium" title="Link to this heading"></a></h3>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">VegasAfterglow</span><span class="w"> </span><span class="kn">import</span> <span class="n">Medium</span>
 
 <span class="n">m_p</span> <span class="o">=</span> <span class="mf">1.6726219e-24</span>  <span class="c1"># Proton mass in grams</span>
@@ -278,14 +289,8 @@
     <span class="k">return</span> <span class="n">m_p</span> <span class="c1"># n_ism =  1 cm^-3</span>
     <span class="c1">#return whatever density profile (g/cm^3) you want as a function of phi, theta, and r</span>
 
-<span class="k">def</span><span class="w"> </span><span class="nf">swept_mass</span><span class="p">(</span><span class="n">phi</span><span class="p">,</span> <span class="n">theta</span><span class="p">,</span> <span class="n">r</span><span class="p">):</span><span class="c1"># r in cm, phi and theta in radians</span>
-    <span class="k">return</span> <span class="n">m_p</span> <span class="o">*</span> <span class="n">r</span> <span class="o">*</span> <span class="n">r</span> <span class="o">*</span> <span class="n">r</span> <span class="o">/</span> <span class="mi">3</span>
-    <span class="c1">#return the swept up mass PER SOLID ANGLE (g) over r (\int_0^r rho*r*r dr).</span>
-    <span class="c1">#you may keep the consistency of the mass profile with the density profile</span>
-    <span class="c1">#the purpose of providing the extra mass profile is to reduce the extra computations.</span>
-
 <span class="c1"># Create a user-defined medium</span>
-<span class="n">medium</span> <span class="o">=</span> <span class="n">Medium</span><span class="p">(</span><span class="n">rho</span><span class="o">=</span><span class="n">density</span><span class="p">,</span> <span class="n">mass</span><span class="o">=</span><span class="n">swept_mass</span><span class="p">)</span>
+<span class="n">medium</span> <span class="o">=</span> <span class="n">Medium</span><span class="p">(</span><span class="n">rho</span><span class="o">=</span><span class="n">density</span><span class="p">)</span>
 
 <span class="c1">#..other settings</span>
 <span class="n">model</span> <span class="o">=</span> <span class="n">Model</span><span class="p">(</span><span class="n">medium</span><span class="o">=</span><span class="n">medium</span><span class="p">,</span> <span class="o">...</span><span class="p">)</span>
@@ -294,9 +299,9 @@
 </section>
 </section>
 <section id="jet-models">
-<h2><a class="toc-backref" href="#id7" role="doc-backlink">Jet Models</a><a class="headerlink" href="#jet-models" title="Link to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id8" role="doc-backlink">Jet Models</a><a class="headerlink" href="#jet-models" title="Link to this heading"></a></h2>
 <section id="gaussian-jet">
-<h3><a class="toc-backref" href="#id8" role="doc-backlink">Gaussian Jet</a><a class="headerlink" href="#gaussian-jet" title="Link to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id9" role="doc-backlink">Gaussian Jet</a><a class="headerlink" href="#gaussian-jet" title="Link to this heading"></a></h3>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">VegasAfterglow</span><span class="w"> </span><span class="kn">import</span> <span class="n">GaussianJet</span>
 
 <span class="c1"># Create a structured jet with Gaussian energy profile</span>
@@ -312,7 +317,7 @@
 </div>
 </section>
 <section id="power-law-jet">
-<h3><a class="toc-backref" href="#id9" role="doc-backlink">Power-Law Jet</a><a class="headerlink" href="#power-law-jet" title="Link to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id10" role="doc-backlink">Power-Law Jet</a><a class="headerlink" href="#power-law-jet" title="Link to this heading"></a></h3>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">VegasAfterglow</span><span class="w"> </span><span class="kn">import</span> <span class="n">PowerLawJet</span>
 
 <span class="c1"># Create a power-law structured jet</span>
@@ -320,7 +325,8 @@
     <span class="n">theta_c</span><span class="o">=</span><span class="mf">0.05</span><span class="p">,</span>         <span class="c1"># Core angular size (radians)</span>
     <span class="n">E_iso</span><span class="o">=</span><span class="mf">1e53</span><span class="p">,</span>           <span class="c1"># Isotropic-equivalent energy (ergs)</span>
     <span class="n">Gamma0</span><span class="o">=</span><span class="mi">300</span><span class="p">,</span>           <span class="c1"># Initial Lorentz factor</span>
-    <span class="n">k</span><span class="o">=</span><span class="mf">2.0</span>                 <span class="c1"># Power-law index</span>
+    <span class="n">k_e</span><span class="o">=</span><span class="mf">2.0</span><span class="p">,</span>              <span class="c1"># Power-law index for energy angular dependence</span>
+    <span class="n">k_g</span><span class="o">=</span><span class="mf">2.0</span>               <span class="c1"># Power-law index for Lorentz factor angular dependence</span>
 <span class="p">)</span>
 
 <span class="c1">#..other settings</span>
@@ -329,14 +335,14 @@
 </div>
 </section>
 <section id="two-component-jet">
-<h3><a class="toc-backref" href="#id10" role="doc-backlink">Two-Component Jet</a><a class="headerlink" href="#two-component-jet" title="Link to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id11" role="doc-backlink">Two-Component Jet</a><a class="headerlink" href="#two-component-jet" title="Link to this heading"></a></h3>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">VegasAfterglow</span><span class="w"> </span><span class="kn">import</span> <span class="n">TwoComponentJet</span>
 
 <span class="c1"># Create a two-component jet</span>
 <span class="n">jet</span> <span class="o">=</span> <span class="n">TwoComponentJet</span><span class="p">(</span>
-    <span class="n">theta_n</span><span class="o">=</span><span class="mf">0.05</span><span class="p">,</span>        <span class="c1"># Narrow component angular size (radians)</span>
-    <span class="n">E_iso_n</span><span class="o">=</span><span class="mf">1e53</span><span class="p">,</span>        <span class="c1"># Isotropic-equivalent energy of the narrow component (ergs)</span>
-    <span class="n">Gamma0_n</span><span class="o">=</span><span class="mi">300</span><span class="p">,</span>        <span class="c1"># Initial Lorentz factor of the narrow component</span>
+    <span class="n">theta_c</span><span class="o">=</span><span class="mf">0.05</span><span class="p">,</span>        <span class="c1"># Narrow component angular size (radians)</span>
+    <span class="n">E_iso_c</span><span class="o">=</span><span class="mf">1e53</span><span class="p">,</span>        <span class="c1"># Isotropic-equivalent energy of the narrow component (ergs)</span>
+    <span class="n">Gamma0_c</span><span class="o">=</span><span class="mi">300</span><span class="p">,</span>        <span class="c1"># Initial Lorentz factor of the narrow component</span>
     <span class="n">theta_w</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span>         <span class="c1"># Wide component angular size (radians)</span>
     <span class="n">E_iso_w</span><span class="o">=</span><span class="mf">1e52</span><span class="p">,</span>        <span class="c1"># Isotropic-equivalent energy of the wide component (ergs)</span>
     <span class="n">Gamma0_w</span><span class="o">=</span><span class="mi">100</span>         <span class="c1"># Initial Lorentz factor of the wide component</span>
@@ -347,8 +353,28 @@
 </pre></div>
 </div>
 </section>
+<section id="step-power-law-jet">
+<h3><a class="toc-backref" href="#id12" role="doc-backlink">Step Power-Law Jet</a><a class="headerlink" href="#step-power-law-jet" title="Link to this heading"></a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">VegasAfterglow</span><span class="w"> </span><span class="kn">import</span> <span class="n">StepPowerLawJet</span>
+
+<span class="c1"># Create a step power-law structured jet (uniform core with sharp transition)</span>
+<span class="n">jet</span> <span class="o">=</span> <span class="n">StepPowerLawJet</span><span class="p">(</span>
+    <span class="n">theta_c</span><span class="o">=</span><span class="mf">0.05</span><span class="p">,</span>        <span class="c1"># Core angular size (radians)</span>
+    <span class="n">E_iso_c</span><span class="o">=</span><span class="mf">1e53</span><span class="p">,</span>        <span class="c1"># Isotropic-equivalent energy of the core component (ergs)</span>
+    <span class="n">Gamma0_c</span><span class="o">=</span><span class="mi">300</span><span class="p">,</span>        <span class="c1"># Initial Lorentz factor of the core component</span>
+    <span class="n">E_iso_w</span><span class="o">=</span><span class="mf">1e52</span><span class="p">,</span>        <span class="c1"># Isotropic-equivalent energy of the wide component (ergs)</span>
+    <span class="n">Gamma0_w</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span>        <span class="c1"># Initial Lorentz factor of the wide component</span>
+    <span class="n">k_e</span><span class="o">=</span><span class="mf">2.0</span><span class="p">,</span>             <span class="c1"># Power-law index for energy angular dependence</span>
+    <span class="n">k_g</span><span class="o">=</span><span class="mf">2.0</span>              <span class="c1"># Power-law index for Lorentz factor angular dependence</span>
+<span class="p">)</span>
+
+<span class="c1">#..other settings</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">Model</span><span class="p">(</span><span class="n">jet</span><span class="o">=</span><span class="n">jet</span><span class="p">,</span> <span class="o">...</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
 <section id="jet-with-spreading">
-<h3><a class="toc-backref" href="#id11" role="doc-backlink">Jet with Spreading</a><a class="headerlink" href="#jet-with-spreading" title="Link to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id13" role="doc-backlink">Jet with Spreading</a><a class="headerlink" href="#jet-with-spreading" title="Link to this heading"></a></h3>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">VegasAfterglow</span><span class="w"> </span><span class="kn">import</span> <span class="n">TophatJet</span>
 
 <span class="n">jet</span> <span class="o">=</span> <span class="n">TophatJet</span><span class="p">(</span>
@@ -369,20 +395,20 @@ The spreading prescription may not work for arbitrary user-defined jet structure
 </div>
 </section>
 <section id="magnetar-spin-down">
-<h3><a class="toc-backref" href="#id12" role="doc-backlink">Magnetar Spin-down</a><a class="headerlink" href="#magnetar-spin-down" title="Link to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id14" role="doc-backlink">Magnetar Spin-down</a><a class="headerlink" href="#magnetar-spin-down" title="Link to this heading"></a></h3>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">VegasAfterglow</span><span class="w"> </span><span class="kn">import</span> <span class="n">Magnetar</span>
 
 <span class="c1"># Create a tophat jet with magnetar spin-down energy injection; Luminosity 1e46 erg/s, t_0 = 100 seconds, and q = 2</span>
-<span class="n">jet</span> <span class="o">=</span> <span class="n">TophatJet</span><span class="p">(</span><span class="n">theta_c</span><span class="o">=</span><span class="mf">0.05</span><span class="p">,</span> <span class="n">E_iso</span><span class="o">=</span><span class="mf">1e53</span><span class="p">,</span> <span class="n">Gamma0</span><span class="o">=</span><span class="mi">300</span><span class="p">,</span> <span class="n">magnetar</span><span class="o">=</span><span class="n">Magnetar</span><span class="p">(</span><span class="n">L_0</span><span class="o">=</span><span class="mf">1e46</span><span class="p">,</span> <span class="n">t_0</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">q</span><span class="o">=</span><span class="mi">2</span><span class="p">))</span>
+<span class="n">jet</span> <span class="o">=</span> <span class="n">TophatJet</span><span class="p">(</span><span class="n">theta_c</span><span class="o">=</span><span class="mf">0.05</span><span class="p">,</span> <span class="n">E_iso</span><span class="o">=</span><span class="mf">1e53</span><span class="p">,</span> <span class="n">Gamma0</span><span class="o">=</span><span class="mi">300</span><span class="p">,</span> <span class="n">magnetar</span><span class="o">=</span><span class="n">Magnetar</span><span class="p">(</span><span class="n">L0</span><span class="o">=</span><span class="mf">1e46</span><span class="p">,</span> <span class="n">t0</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">q</span><span class="o">=</span><span class="mi">2</span><span class="p">))</span>
 </pre></div>
 </div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>The magnetar spin-down injection is implemented in the default form L_0*(1+t/t_0)^(-q) for theta &lt; theta_c. You can pass the <code class="xref any docutils literal notranslate"><span class="pre">magnetar</span></code> argument to the power-law and Gaussian jet as well.</p>
+<p>The magnetar spin-down injection is implemented in the default form L0*(1+t/t0)^(-q) for theta &lt; theta_c. You can pass the <code class="xref any docutils literal notranslate"><span class="pre">magnetar</span></code> argument to the power-law and Gaussian jet as well.</p>
 </div>
 </section>
 <section id="user-defined-jet">
-<h3><a class="toc-backref" href="#id13" role="doc-backlink">User-Defined Jet</a><a class="headerlink" href="#user-defined-jet" title="Link to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id15" role="doc-backlink">User-Defined Jet</a><a class="headerlink" href="#user-defined-jet" title="Link to this heading"></a></h3>
 <p>You may also define your own jet structure by providing the energy and lorentz factor profile.
 Those two profiles are required to complete a jet structure. You may also provide the magnetization profile, enregy injection profile, and mass injection profile.
 Those profiles are optional and will be set to zero function if not provided.</p>
@@ -433,9 +459,9 @@ Users are recommended to set up the user-defined jet structure in the C++ level 
 </section>
 </section>
 <section id="radiation-processes">
-<h2><a class="toc-backref" href="#id14" role="doc-backlink">Radiation Processes</a><a class="headerlink" href="#radiation-processes" title="Link to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id16" role="doc-backlink">Radiation Processes</a><a class="headerlink" href="#radiation-processes" title="Link to this heading"></a></h2>
 <section id="reverse-shock-emission">
-<h3><a class="toc-backref" href="#id15" role="doc-backlink">Reverse Shock Emission</a><a class="headerlink" href="#reverse-shock-emission" title="Link to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id17" role="doc-backlink">Reverse Shock Emission</a><a class="headerlink" href="#reverse-shock-emission" title="Link to this heading"></a></h3>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">VegasAfterglow</span><span class="w"> </span><span class="kn">import</span> <span class="n">Radiation</span>
 
 <span class="c1">#set the jet duration to be 100 seconds, the default is 1 second. The jet duration affects the reverse shock thickness (thin shell or thick shell).</span>
@@ -470,7 +496,7 @@ Users are recommended to set up the user-defined jet structure in the C++ level 
 </div>
 </section>
 <section id="inverse-compton-cooling">
-<h3><a class="toc-backref" href="#id16" role="doc-backlink">Inverse Compton Cooling</a><a class="headerlink" href="#inverse-compton-cooling" title="Link to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id18" role="doc-backlink">Inverse Compton Cooling</a><a class="headerlink" href="#inverse-compton-cooling" title="Link to this heading"></a></h3>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">VegasAfterglow</span><span class="w"> </span><span class="kn">import</span> <span class="n">Radiation</span>
 
 <span class="c1"># Create a radiation model with inverse Compton cooling (without Klein-Nishina correction) on synchrotron radiation</span>
@@ -482,7 +508,7 @@ Users are recommended to set up the user-defined jet structure in the C++ level 
 </div>
 </section>
 <section id="self-synchrotron-compton-radiation">
-<h3><a class="toc-backref" href="#id17" role="doc-backlink">Self-Synchrotron Compton Radiation</a><a class="headerlink" href="#self-synchrotron-compton-radiation" title="Link to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id19" role="doc-backlink">Self-Synchrotron Compton Radiation</a><a class="headerlink" href="#self-synchrotron-compton-radiation" title="Link to this heading"></a></h3>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">VegasAfterglow</span><span class="w"> </span><span class="kn">import</span> <span class="n">Radiation</span>
 
 <span class="c1"># Create a radiation model with self-Compton radiation</span>
@@ -512,53 +538,6 @@ Users are recommended to set up the user-defined jet structure in the C++ level 
 <p>(IC_cooling = False, KN = False, SSC = True): The IC radiation is calculated based on synchrotron spectrum without IC cooling.</p>
 <p>(IC_cooling = True, KN = False, SSC = True): The IC radiation is calculated based on synchrotron spectrum with IC cooling, but without Klein-Nishina correction.</p>
 <p>(IC_cooling = True, KN = True, SSC = True): The IC radiation is calculated based on synchrotron spectrum with both IC cooling and Klein-Nishina correction.</p>
-</div>
-</section>
-</section>
-<section id="advanced-features">
-<h2><a class="toc-backref" href="#id18" role="doc-backlink">Advanced Features</a><a class="headerlink" href="#advanced-features" title="Link to this heading"></a></h2>
-<section id="mcmc-parameter-fitting">
-<h3><a class="toc-backref" href="#id19" role="doc-backlink">MCMC Parameter Fitting</a><a class="headerlink" href="#mcmc-parameter-fitting" title="Link to this heading"></a></h3>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">VegasAfterglow</span><span class="w"> </span><span class="kn">import</span> <span class="n">ObsData</span><span class="p">,</span> <span class="n">Fitter</span><span class="p">,</span> <span class="n">ParamDef</span><span class="p">,</span> <span class="n">Scale</span>
-
-<span class="c1"># Create observation data object</span>
-<span class="n">data</span> <span class="o">=</span> <span class="n">ObsData</span><span class="p">()</span>
-
-<span class="c1"># Add some observational data (light curves)</span>
-<span class="n">t_data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">1e3</span><span class="p">,</span> <span class="mf">2e3</span><span class="p">,</span> <span class="mf">5e3</span><span class="p">,</span> <span class="mf">1e4</span><span class="p">,</span> <span class="mf">2e4</span><span class="p">])</span>  <span class="c1"># Time in seconds</span>
-<span class="n">flux_data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">1e-26</span><span class="p">,</span> <span class="mf">8e-27</span><span class="p">,</span> <span class="mf">5e-27</span><span class="p">,</span> <span class="mf">3e-27</span><span class="p">,</span> <span class="mf">2e-27</span><span class="p">])</span>  <span class="c1"># Specific flux</span>
-<span class="n">flux_err</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">1e-28</span><span class="p">,</span> <span class="mf">8e-28</span><span class="p">,</span> <span class="mf">5e-28</span><span class="p">,</span> <span class="mf">3e-28</span><span class="p">,</span> <span class="mf">2e-28</span><span class="p">])</span>  <span class="c1"># Flux error</span>
-
-<span class="c1"># Add a light curve at optical frequency (5e14 Hz)</span>
-<span class="n">data</span><span class="o">.</span><span class="n">add_light_curve</span><span class="p">(</span><span class="n">nu</span><span class="o">=</span><span class="mf">5e14</span><span class="p">,</span> <span class="n">t</span><span class="o">=</span><span class="n">t_data</span><span class="p">,</span> <span class="n">flux</span><span class="o">=</span><span class="n">flux_data</span><span class="p">,</span> <span class="n">flux_err</span><span class="o">=</span><span class="n">flux_err</span><span class="p">)</span>
-
-<span class="c1"># Define parameters with priors</span>
-<span class="n">params</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;E_iso&quot;</span><span class="p">,</span>      <span class="mf">1e50</span><span class="p">,</span>  <span class="mf">1e54</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">LOG</span><span class="p">),</span>       <span class="c1"># Isotropic energy [erg]</span>
-    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;Gamma0&quot;</span><span class="p">,</span>        <span class="mi">5</span><span class="p">,</span>  <span class="mi">1000</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">LOG</span><span class="p">),</span>       <span class="c1"># Lorentz factor at the core</span>
-    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;theta_c&quot;</span><span class="p">,</span>     <span class="mf">0.0</span><span class="p">,</span>   <span class="mf">0.5</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">LINEAR</span><span class="p">),</span>    <span class="c1"># Core half-opening angle [rad]</span>
-    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;theta_v&quot;</span><span class="p">,</span>     <span class="mf">0.0</span><span class="p">,</span>   <span class="mf">0.0</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">FIXED</span><span class="p">),</span>     <span class="c1"># Viewing angle [rad]</span>
-    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;p&quot;</span><span class="p">,</span>             <span class="mi">2</span><span class="p">,</span>     <span class="mi">3</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">LINEAR</span><span class="p">),</span>    <span class="c1"># Shocked electron power law index</span>
-    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;eps_e&quot;</span><span class="p">,</span>      <span class="mf">1e-2</span><span class="p">,</span>   <span class="mf">0.5</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">LOG</span><span class="p">),</span>       <span class="c1"># Electron energy fraction</span>
-    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;eps_B&quot;</span><span class="p">,</span>      <span class="mf">1e-4</span><span class="p">,</span>   <span class="mf">0.5</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">LOG</span><span class="p">),</span>       <span class="c1"># Magnetic field energy fraction</span>
-    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;A_star&quot;</span><span class="p">,</span>     <span class="mf">1e-3</span><span class="p">,</span>     <span class="mi">1</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">LOG</span><span class="p">),</span>       <span class="c1"># Wind parameter</span>
-    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;xi_e&quot;</span><span class="p">,</span>       <span class="mf">1e-3</span><span class="p">,</span>     <span class="mi">1</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">LOG</span><span class="p">),</span>       <span class="c1"># Electron acceleration fraction</span>
-<span class="p">]</span>
-
-<span class="c1"># Create the fitter with default model setup</span>
-<span class="n">fitter</span> <span class="o">=</span> <span class="n">Fitter</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">)</span>
-
-<span class="c1"># Run MCMC</span>
-<span class="n">samples</span><span class="p">,</span> <span class="n">log_probs</span> <span class="o">=</span> <span class="n">fitter</span><span class="o">.</span><span class="n">run_mcmc</span><span class="p">(</span>
-    <span class="n">n_walkers</span><span class="o">=</span><span class="mi">32</span><span class="p">,</span>  <span class="c1"># Number of walkers</span>
-    <span class="n">n_steps</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span>  <span class="c1"># Number of steps per walker</span>
-    <span class="n">n_burn</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span>    <span class="c1"># Number of burn-in steps to discard</span>
-    <span class="n">progress</span><span class="o">=</span><span class="kc">True</span>  <span class="c1"># Show progress bar</span>
-<span class="p">)</span>
-
-<span class="c1"># Plot the posterior distributions</span>
-<span class="n">fitter</span><span class="o">.</span><span class="n">plot_corner</span><span class="p">()</span>
-</pre></div>
 </div>
 </section>
 </section>

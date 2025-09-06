@@ -1,8 +1,8 @@
 <map id="root_bisect" name="root_bisect">
 <area shape="rect" id="Node000001" title="Finds the root of a function using the bisection method." alt="" coords="649,31,744,56"/>
-<area shape="rect" id="Node000002" href="$synchrotron_8cpp.html#ad1107cc37702b503577dcadee93e165a" title=" " alt="" coords="417,55,599,80"/>
+<area shape="rect" id="Node000002" href="$synchrotron_8cpp.html#ab03558b02ba5a002aec91d7f02e35cb9" title=" " alt="" coords="417,55,599,80"/>
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="636,54,599,58,598,53,635,48"/>
-<area shape="rect" id="Node000007" href="$synchrotron_8cpp.html#a0095a83d7309c92bcf2d807436b2615c" title=" " alt="" coords="415,5,601,31"/>
+<area shape="rect" id="Node000007" href="$synchrotron_8cpp.html#a4b39af5c95314d5fdfaa278a1b8a5e9e" title=" " alt="" coords="415,5,601,31"/>
 <area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="635,38,601,33,602,28,636,33"/>
 <area shape="rect" id="Node000003" href="$synchrotron_8cpp.html#aad9e6e41fee6cbff0952e1d343b890f5" title="Populates an existing electron grid with values based on shock parameters." alt="" coords="189,5,367,31"/>
 <area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="435,54,338,33,339,28,436,49"/>

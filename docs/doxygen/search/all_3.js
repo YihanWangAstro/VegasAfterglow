@@ -6,9 +6,8 @@ var searchData=
   ['definitions_3',['Function Type Definitions',['../group__FunctionTypes.html',1,'']]],
   ['deg_4',['deg',['../namespaceunit.html#a65622c562478c2a005e36f63b02df162',1,'unit']]],
   ['deps_5fdt_5',['deps_dt',['../classEjecta.html#a1cd7491361913dd37cf4efe8e3a0376a',1,'Ejecta']]],
-  ['details_6',['details',['../classPyModel.html#ab7bbdfe47a2b21d3a9cc685c962c5da2',1,'PyModel']]],
+  ['details_6',['details',['../classPyModel.html#a3440b0852a67952d09b9017ef6784fd0',1,'PyModel']]],
   ['determine_5fregime_7',['determine_regime',['../synchrotron_8cpp.html#a5813eed02877ed5f35a34e929a68d263',1,'synchrotron.cpp']]],
-  ['dgamma_8',['dgamma',['../structICPhoton.html#aa633a4f504dbc96e629635f38d9d4c80',1,'ICPhoton']]],
-  ['dm_5fdt_9',['dm_dt',['../classEjecta.html#a74ab20785693d39f5ec9a13edf2c0cd7',1,'Ejecta']]],
-  ['dnu0_10',['dnu0',['../structICPhoton.html#a7035c5a80eae344b2c5f65eb0d2a3b7d',1,'ICPhoton']]]
+  ['dm_5fdt_8',['dm_dt',['../classEjecta.html#a74ab20785693d39f5ec9a13edf2c0cd7',1,'Ejecta']]],
+  ['duration_9',['duration',['../structParams.html#a7b507398142947cd5da78229b35548ab',1,'Params']]]
 ];

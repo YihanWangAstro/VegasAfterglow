@@ -1,17 +1,27 @@
 var structParams =
 [
     [ "A_star", "structParams.html#a15b9f0b0ca2df7a9190562d0aaa19814", null ],
+    [ "duration", "structParams.html#a7b507398142947cd5da78229b35548ab", null ],
     [ "E_iso", "structParams.html#aa4bd60af75bf162ca75e100f11035ff6", null ],
+    [ "E_iso_w", "structParams.html#af99a1e55da593f8c28ed74d56ecf8580", null ],
     [ "eps_B", "structParams.html#a0ecedb7ded82df330c388c3ef666910b", null ],
+    [ "eps_B_r", "structParams.html#a5f393c97af8a1e00df7a6bd8cfa24ac6", null ],
     [ "eps_e", "structParams.html#a74ec7b90f09fa91a590f71616bb194a4", null ],
+    [ "eps_e_r", "structParams.html#a3d27e71adc8b1d6a02d80bc5136dc741", null ],
     [ "Gamma0", "structParams.html#a936879f34880349fc5c813219834519d", null ],
-    [ "k_jet", "structParams.html#adb86717840ca10ac00842393e984dcae", null ],
-    [ "kG_jet", "structParams.html#a6443e4300c9267d327c9a39e30814cb0", null ],
+    [ "Gamma0_w", "structParams.html#a41358abbe69879f6be62829b80d8663d", null ],
+    [ "k_e", "structParams.html#a59abc96da494cc27e1d99161269a55bc", null ],
+    [ "k_g", "structParams.html#a9a3a4d2ddb3d56fdaebe27d2e0723752", null ],
+    [ "L0", "structParams.html#a134c673110781587acce1747b730dc30", null ],
+    [ "n0", "structParams.html#a0fee422ac0a42542a7854a8777bc805a", null ],
     [ "n_ism", "structParams.html#aa37255854273f569ab5d2ea86d6ca65b", null ],
     [ "p", "structParams.html#a88c722edb59986aeb3cbb81a9efa449a", null ],
+    [ "p_r", "structParams.html#a207de179e6e90a0b5b92b79425b8bda5", null ],
+    [ "q", "structParams.html#a3e55799c13ae55d4af479d1390c8261e", null ],
+    [ "t0", "structParams.html#a9f280b0b92834d894efdb38e573ab79d", null ],
     [ "theta_c", "structParams.html#a0a6c4ac1f5f7f81dd2e13c107e085252", null ],
-    [ "theta_cG", "structParams.html#a4b99480ebd05670bfd5dd536d86f0f4e", null ],
     [ "theta_v", "structParams.html#a06f6248c051974549dd20d9e656be92c", null ],
     [ "theta_w", "structParams.html#a5167ca63b8539ca83ab43d542de787fc", null ],
-    [ "xi_e", "structParams.html#aaaa784676e56b15aa459418b253a6fab", null ]
+    [ "xi_e", "structParams.html#aaaa784676e56b15aa459418b253a6fab", null ],
+    [ "xi_e_r", "structParams.html#a68be57cc31ea61f458a3623785bfceab", null ]
 ];

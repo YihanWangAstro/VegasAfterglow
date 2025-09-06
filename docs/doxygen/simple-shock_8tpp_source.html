@@ -118,89 +118,90 @@ $(document).ready(function(){initNavTree('simple-shock_8tpp_source.html',''); in
 <div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span>      rad(rad_params),</div>
 <div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span>      dOmega0(1 - std::cos(theta0)),</div>
 <div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span>      theta_s(theta_s),</div>
-<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span>      m_shell(0) {</div>
-<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span>    m_shell = ejecta.eps_k(phi, theta0) / ejecta.Gamma0(phi, theta0) / con::c2;</div>
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span>      m_jet0(0) {</div>
+<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span>    m_jet0 = ejecta.eps_k(phi, theta0) / ejecta.Gamma0(phi, theta0) / con::c2;</div>
 <div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span>    if constexpr (HasSigma&lt;Ejecta&gt;) {</div>
-<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span>        m_shell /= 1 + ejecta.sigma0(phi, theta0);</div>
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span>        m_jet0 /= 1 + ejecta.sigma0(phi, theta0);</div>
 <div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span>    }</div>
-<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span>    rad_const = 16. / 3 * con::mp * con::sigmaT * con::c / (con::me * con::me) * (rad.p - 2) / (rad.p - 1) * rad.eps_e *</div>
-<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span>                rad.eps_B / rad.xi_e;</div>
-<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span>}</div>
-<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span> </div>
-<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span>template &lt;typename Ejecta, typename Medium&gt;</div>
-<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span>void SimpleShockEqn&lt;Ejecta, Medium&gt;::operator()(State const&amp; state, State&amp; diff, Real t) const noexcept {</div>
-<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span>    Real beta = gamma_to_beta(state.Gamma);</div>
-<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span> </div>
-<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span>    diff.r = compute_dr_dt(beta);</div>
-<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span>    diff.t_comv = compute_dt_dt_comv(state.Gamma, beta);</div>
-<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span> </div>
-<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span>    if (ejecta.spreading &amp;&amp; state.theta &lt; 0.5 * con::pi) {</div>
-<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span>        diff.theta = compute_dtheta_dt(theta_s, state.theta, diff.r, state.r, state.Gamma);</div>
-<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span>    } else {</div>
-<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span>        diff.theta = 0;</div>
-<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span>    }</div>
-<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span> </div>
-<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span>    if constexpr (State::mass_inject) {</div>
-<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span>        diff.m_shell = ejecta.dm_dt(phi, theta0, t);</div>
-<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span>    }</div>
-<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span> </div>
-<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span>    if constexpr (State::energy_inject) {</div>
-<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>        diff.eps_shell = ejecta.deps_dt(phi, theta0, t);</div>
-<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>    }</div>
-<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span> </div>
-<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span>    Real rho = medium.rho(phi, state.theta, state.r);</div>
-<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span>    Real dm_dt_swept = state.r * state.r * rho * diff.r;</div>
-<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span> </div>
-<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span>    Real eps_rad = compute_radiative_efficiency(rad_const, state.t_comv, state.Gamma, rho, rad.eps_e, rad.p);</div>
-<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span>    </div>
-<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span>    diff.Gamma = dGamma_dt(eps_rad, dm_dt_swept, state, diff);</div>
-<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span>}</div>
-<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span> </div>
-<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span>template &lt;typename Ejecta, typename Medium&gt;</div>
-<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span>Real SimpleShockEqn&lt;Ejecta, Medium&gt;::dGamma_dt(Real eps_rad, Real dm_dt_swept, State const&amp; state,</div>
-<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span>                                               State const&amp; diff) const noexcept {</div>
-<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span>    Real m_swept = compute_swept_mass(*this, state);</div>
-<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span>    Real m_shell = this-&gt;m_shell;</div>
-<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span> </div>
-<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span>    if (ejecta.spreading) {</div>
-<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span>        Real f_spread = (1 - std::cos(state.theta)) / dOmega0;</div>
-<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span>        dm_dt_swept = dm_dt_swept * f_spread + m_swept / dOmega0 * std::sin(state.theta) * diff.theta;</div>
-<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span>        m_swept *= f_spread;</div>
-<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span>    }</div>
-<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span> </div>
-<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span>    double a1 = (1 - state.Gamma * state.Gamma) * dm_dt_swept;</div>
-<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span> </div>
-<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span>    if constexpr (State::energy_inject) {</div>
-<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span>        a1 += diff.eps_shell / con::c2;</div>
-<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span>    }</div>
-<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span> </div>
-<div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span>    if constexpr (State::mass_inject) {</div>
-<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span>        a1 -= state.Gamma * diff.m_shell;</div>
-<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span>        m_shell = state.m_shell;</div>
-<div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span>    }</div>
-<div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span> </div>
-<div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span>    return a1 / (m_shell + eps_rad * m_swept + 2 * (1 - eps_rad) * state.Gamma * m_swept);</div>
-<div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span>}</div>
-<div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span> </div>
-<div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span>template &lt;typename Ejecta, typename Medium&gt;</div>
-<div class="line"><a id="l00085" name="l00085"></a><span class="lineno">   85</span>void SimpleShockEqn&lt;Ejecta, Medium&gt;::set_init_state(State&amp; state, Real t0) const noexcept {</div>
-<div class="line"><a id="l00086" name="l00086"></a><span class="lineno">   86</span>    state.Gamma = ejecta.Gamma0(phi, theta0);</div>
-<div class="line"><a id="l00087" name="l00087"></a><span class="lineno">   87</span> </div>
-<div class="line"><a id="l00088" name="l00088"></a><span class="lineno">   88</span>    Real beta0 = gamma_to_beta(state.Gamma);</div>
-<div class="line"><a id="l00089" name="l00089"></a><span class="lineno">   89</span>    state.r = beta0 * con::c * t0 / (1 - beta0);</div>
-<div class="line"><a id="l00090" name="l00090"></a><span class="lineno">   90</span> </div>
-<div class="line"><a id="l00091" name="l00091"></a><span class="lineno">   91</span>    state.t_comv = state.r / std::sqrt(state.Gamma * state.Gamma - 1) / con::c;</div>
-<div class="line"><a id="l00092" name="l00092"></a><span class="lineno">   92</span> </div>
-<div class="line"><a id="l00093" name="l00093"></a><span class="lineno">   93</span>    state.theta = theta0;</div>
-<div class="line"><a id="l00094" name="l00094"></a><span class="lineno">   94</span> </div>
-<div class="line"><a id="l00095" name="l00095"></a><span class="lineno">   95</span>    if constexpr (State::energy_inject) {</div>
-<div class="line"><a id="l00096" name="l00096"></a><span class="lineno">   96</span>        state.eps_shell = ejecta.eps_k(phi, theta0);</div>
-<div class="line"><a id="l00097" name="l00097"></a><span class="lineno">   97</span>    }</div>
-<div class="line"><a id="l00098" name="l00098"></a><span class="lineno">   98</span> </div>
-<div class="line"><a id="l00099" name="l00099"></a><span class="lineno">   99</span>    if constexpr (State::mass_inject) {</div>
-<div class="line"><a id="l00100" name="l00100"></a><span class="lineno">  100</span>        state.m_shell = m_shell;</div>
-<div class="line"><a id="l00101" name="l00101"></a><span class="lineno">  101</span>    }</div>
-<div class="line"><a id="l00102" name="l00102"></a><span class="lineno">  102</span>}</div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span>}</div>
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span> </div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span>template &lt;typename Ejecta, typename Medium&gt;</div>
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span>void SimpleShockEqn&lt;Ejecta, Medium&gt;::operator()(State const&amp; state, State&amp; diff, Real t) const noexcept {</div>
+<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span>    Real beta = gamma_to_beta(state.Gamma);</div>
+<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span> </div>
+<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span>    diff.r = compute_dr_dt(beta);</div>
+<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span>    diff.t_comv = compute_dt_dt_comv(state.Gamma, beta);</div>
+<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span> </div>
+<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span>    if (ejecta.spreading &amp;&amp; state.theta &lt; 0.5 * con::pi) {</div>
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span>        diff.theta = compute_dtheta_dt(theta_s, state.theta, diff.r, state.r, state.Gamma);</div>
+<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span>    } else {</div>
+<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span>        diff.theta = 0;</div>
+<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span>    }</div>
+<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span> </div>
+<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span>    if constexpr (State::mass_inject) {</div>
+<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span>        diff.m_jet = ejecta.dm_dt(phi, theta0, t);</div>
+<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span>    }</div>
+<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span> </div>
+<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span>    if constexpr (State::energy_inject) {</div>
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span>        diff.eps_jet = ejecta.deps_dt(phi, theta0, t);</div>
+<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span>    }</div>
+<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span> </div>
+<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>    Real rho = medium.rho(phi, state.theta, state.r);</div>
+<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>    diff.m2 = state.r * state.r * rho * diff.r;</div>
+<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span> </div>
+<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span>    Real e_th = (state.Gamma - 1) * 4 * state.Gamma * rho * con::c2;</div>
+<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span>    Real eps_rad = compute_radiative_efficiency(state.t_comv, state.Gamma, e_th, rad);</div>
+<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span> </div>
+<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span>    diff.Gamma = dGamma_dt(eps_rad, state, diff);</div>
+<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span>}</div>
+<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span> </div>
+<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span>template &lt;typename Ejecta, typename Medium&gt;</div>
+<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span>Real SimpleShockEqn&lt;Ejecta, Medium&gt;::dGamma_dt(Real eps_rad, State const&amp; state, State const&amp; diff) const noexcept {</div>
+<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span>    Real m_swept = state.m2;</div>
+<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span>    Real m_jet = this-&gt;m_jet0;</div>
+<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span>    Real dm_dt_swept = diff.m2;</div>
+<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span> </div>
+<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span>    if (ejecta.spreading) {</div>
+<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span>        Real f_spread = (1 - std::cos(state.theta)) / dOmega0;</div>
+<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span>        dm_dt_swept = dm_dt_swept * f_spread + m_swept / dOmega0 * std::sin(state.theta) * diff.theta;</div>
+<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span>        m_swept *= f_spread;</div>
+<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span>    }</div>
+<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span> </div>
+<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span>    double a1 = (1 - state.Gamma * state.Gamma) * dm_dt_swept;</div>
+<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span> </div>
+<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span>    if constexpr (State::energy_inject) {</div>
+<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span>        a1 += diff.eps_jet / con::c2;</div>
+<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span>    }</div>
+<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span> </div>
+<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span>    if constexpr (State::mass_inject) {</div>
+<div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span>        a1 -= state.Gamma * diff.m_jet;</div>
+<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span>        m_jet = state.m_jet;</div>
+<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span>    }</div>
+<div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span> </div>
+<div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span>    return a1 / (m_jet + eps_rad * m_swept + 2 * (1 - eps_rad) * state.Gamma * m_swept);</div>
+<div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span>}</div>
+<div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span> </div>
+<div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span>template &lt;typename Ejecta, typename Medium&gt;</div>
+<div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span>void SimpleShockEqn&lt;Ejecta, Medium&gt;::set_init_state(State&amp; state, Real t0) const noexcept {</div>
+<div class="line"><a id="l00085" name="l00085"></a><span class="lineno">   85</span>    state.Gamma = ejecta.Gamma0(phi, theta0);</div>
+<div class="line"><a id="l00086" name="l00086"></a><span class="lineno">   86</span> </div>
+<div class="line"><a id="l00087" name="l00087"></a><span class="lineno">   87</span>    Real beta0 = gamma_to_beta(state.Gamma);</div>
+<div class="line"><a id="l00088" name="l00088"></a><span class="lineno">   88</span>    state.r = beta0 * con::c * t0 / (1 - beta0);</div>
+<div class="line"><a id="l00089" name="l00089"></a><span class="lineno">   89</span> </div>
+<div class="line"><a id="l00090" name="l00090"></a><span class="lineno">   90</span>    state.t_comv = state.r / std::sqrt(state.Gamma * state.Gamma - 1) / con::c;</div>
+<div class="line"><a id="l00091" name="l00091"></a><span class="lineno">   91</span> </div>
+<div class="line"><a id="l00092" name="l00092"></a><span class="lineno">   92</span>    state.m2 = medium.rho(phi, theta0, state.r) * state.r * state.r * state.r / 3;</div>
+<div class="line"><a id="l00093" name="l00093"></a><span class="lineno">   93</span> </div>
+<div class="line"><a id="l00094" name="l00094"></a><span class="lineno">   94</span>    state.theta = theta0;</div>
+<div class="line"><a id="l00095" name="l00095"></a><span class="lineno">   95</span> </div>
+<div class="line"><a id="l00096" name="l00096"></a><span class="lineno">   96</span>    if constexpr (State::energy_inject) {</div>
+<div class="line"><a id="l00097" name="l00097"></a><span class="lineno">   97</span>        state.eps_jet = ejecta.eps_k(phi, theta0);</div>
+<div class="line"><a id="l00098" name="l00098"></a><span class="lineno">   98</span>    }</div>
+<div class="line"><a id="l00099" name="l00099"></a><span class="lineno">   99</span> </div>
+<div class="line"><a id="l00100" name="l00100"></a><span class="lineno">  100</span>    if constexpr (State::mass_inject) {</div>
+<div class="line"><a id="l00101" name="l00101"></a><span class="lineno">  101</span>        state.m_jet = m_jet0;</div>
+<div class="line"><a id="l00102" name="l00102"></a><span class="lineno">  102</span>    }</div>
+<div class="line"><a id="l00103" name="l00103"></a><span class="lineno">  103</span>}</div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->

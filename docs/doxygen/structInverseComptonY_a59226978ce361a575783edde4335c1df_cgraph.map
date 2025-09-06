@@ -1,19 +1,21 @@
 <map id="InverseComptonY::compute_Y_tilt_at_nu" name="InverseComptonY::compute_Y_tilt_at_nu">
-<area shape="rect" id="Node000001" title="Calculates the effective Y parameter at a specific frequency and spectral index." alt="" coords="5,99,205,139"/>
-<area shape="rect" id="Node000002" href="$structInverseComptonY.html#ab69f7b0d11f611834e1b7c13e30de1ef" title="Calculates the effective Y parameter for a given frequency and spectral index." alt="" coords="253,99,453,139"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="205,117,240,117,240,122,205,122"/>
+<area shape="rect" id="Node000001" title="Calculates the effective Y parameter at a specific frequency and spectral index." alt="" coords="5,223,205,263"/>
+<area shape="rect" id="Node000002" href="$structInverseComptonY.html#ab69f7b0d11f611834e1b7c13e30de1ef" title="Calculates the effective Y parameter for a given frequency and spectral index." alt="" coords="253,173,453,213"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="203,221,241,213,242,218,204,226"/>
+<area shape="rect" id="Node000005" href="$utilities_8h.html#ab8e81118f023df135835db8cce4f5f42" title="Returns the value of a single parameter." alt="" coords="765,132,816,157"/>
+<area shape="poly" id="edge12_Node000001_Node000005" title=" " alt="" coords="205,247,382,251,482,249,582,242,652,237,681,230,716,214,746,192,770,167,774,170,750,196,719,219,683,235,653,242,583,247,483,254,382,257,205,252"/>
 <area shape="rect" id="Node000003" href="$utilities_8h.html#a4520a27a10a2aef33c99ad8c679da404" title="Fast approximation of a raised to the power of b." alt="" coords="501,81,583,107"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="453,103,487,99,488,104,454,108"/>
-<area shape="rect" id="Node000007" href="$utilities_8h.html#a5069f3665d3ad6f8eced520eae62e400" title="Computes a^(2/3)" alt="" coords="509,131,575,156"/>
-<area shape="poly" id="edge9_Node000002_Node000007" title=" " alt="" coords="454,129,496,135,496,140,453,135"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="392,170,504,111,506,115,394,175"/>
+<area shape="poly" id="edge9_Node000002_Node000005" title=" " alt="" coords="454,179,751,146,752,151,454,184"/>
+<area shape="rect" id="Node000007" href="$utilities_8h.html#a5069f3665d3ad6f8eced520eae62e400" title="Computes a^(2/3)" alt="" coords="509,208,575,233"/>
+<area shape="poly" id="edge10_Node000002_Node000007" title=" " alt="" coords="454,205,496,211,495,217,453,210"/>
 <area shape="rect" id="Node000004" href="$utilities_8h.html#afc584c30c352192de6847b1f4b8caf0e" title="Fast approximation of 2 raised to a power." alt="" coords="631,5,717,31"/>
 <area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="564,79,638,36,640,40,567,83"/>
-<area shape="rect" id="Node000005" href="$utilities_8h.html#ab8e81118f023df135835db8cce4f5f42" title="Returns the value of a single parameter." alt="" coords="765,81,816,107"/>
-<area shape="poly" id="edge8_Node000003_Node000005" title=" " alt="" coords="583,91,752,91,752,97,583,97"/>
+<area shape="poly" id="edge8_Node000003_Node000005" title=" " alt="" coords="583,85,647,81,683,84,718,91,745,104,768,120,764,125,742,109,716,97,682,89,647,86,583,90"/>
 <area shape="rect" id="Node000006" href="$utilities_8h.html#afe0a1b1b7509ac4df83fcc0e510f281b" title="Fast approximation of the base&#45;2 logarithm." alt="" coords="633,107,715,132"/>
 <area shape="poly" id="edge6_Node000003_Node000006" title=" " alt="" coords="583,99,620,106,619,111,582,104"/>
-<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="696,29,761,72,758,76,693,33"/>
-<area shape="poly" id="edge5_Node000005_Node000005" title=" " alt="" coords="771,82,767,73,769,64,777,57,791,55,807,58,814,66,810,70,804,63,791,60,779,62,773,66,772,72,775,80"/>
-<area shape="poly" id="edge7_Node000006_Node000005" title=" " alt="" coords="715,108,751,100,752,105,716,113"/>
-<area shape="poly" id="edge10_Node000007_Node000005" title=" " alt="" coords="575,147,642,152,680,150,716,142,742,130,764,114,768,118,745,135,718,147,680,155,642,157,575,152"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="696,29,719,48,751,84,776,119,771,122,746,87,715,52,692,33"/>
+<area shape="poly" id="edge5_Node000005_Node000005" title=" " alt="" coords="771,133,767,124,769,114,777,108,791,105,807,109,814,117,810,121,804,113,791,111,779,113,773,117,772,123,775,131"/>
+<area shape="poly" id="edge7_Node000006_Node000005" title=" " alt="" coords="716,126,752,134,751,139,715,131"/>
+<area shape="poly" id="edge11_Node000007_Node000005" title=" " alt="" coords="575,216,641,206,716,186,760,163,762,168,718,191,642,212,575,221"/>
 </map>

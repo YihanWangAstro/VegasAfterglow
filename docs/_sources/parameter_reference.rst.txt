@@ -43,11 +43,16 @@ Jet Structure Parameters
      - seconds
      - :math:`0.1 - 1000`
      - Duration of energy injection (affects reverse shock)
-   * - ``k``
-     - :math:`k`
+   * - ``k_e``
+     - :math:`k_e`
      - dimensionless
      - :math:`1 - 10`
-     - Power-law index for structured jets (PowerLawJet only)
+     - Energy Power-law index for structured jets (PowerLawJet only)
+  * - ``k_g``
+     - :math:`k_g`
+     - dimensionless
+     - :math:`1 - 10`
+     - Lorentz factor Power-law index for structured jets (PowerLawJet only)
    * - ``sigma0``
      - :math:`\sigma_0`
      - dimensionless
@@ -145,13 +150,13 @@ Energy Injection Parameters (Magnetar)
      - Units
      - Typical Range
      - Description
-   * - ``L_0``
-     - :math:`L_0`
+   * - ``L0``
+     - :math:`L0`
      - erg/s
      - :math:`10^{44} - 10^{48}`
      - Initial luminosity of magnetar spin-down
-   * - ``t_0``
-     - :math:`t_0`
+   * - ``t0``
+     - :math:`t0`
      - seconds
      - :math:`10 - 10^4`
      - Characteristic spin-down timescale
@@ -159,7 +164,7 @@ Energy Injection Parameters (Magnetar)
      - :math:`q`
      - dimensionless
      - :math:`1 - 6`
-     - Power-law index of spin-down: :math:`L(t) = L_0(1+t/t_0)^{-q}`
+     - Power-law index of spin-down: :math:`L(t) = L0(1+t/t0)^{-q}`
 
 Two-Component Jet Parameters
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^

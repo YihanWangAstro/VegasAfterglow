@@ -1,6 +1,7 @@
 var searchData=
 [
-  ['z_0',['z',['../structConfigParams.html#a1f053f68eb1c33050291db9a28ac49af',1,'ConfigParams::z'],['../classPyObserver.html#a7eff175b5dc92c4b68ba024e940ee86f',1,'PyObserver::z']]],
-  ['zero_5f2d_1',['zero_2d',['../namespacefunc.html#aa8d78887fec25d1452c0dd3e83fe792f',1,'func']]],
-  ['zero_5f3d_2',['zero_3d',['../namespacefunc.html#af35a6de707510b3b09306132d94d3b72',1,'func']]]
+  ['y_5fc_0',['y_c',['../structSynElectrons.html#a8f6f82711ad7212348f13d3a49c2d4b5',1,'SynElectrons::Y_c'],['../structSynPhotons.html#ad359df8271da605a643410e7f9377727',1,'SynPhotons::Y_c']]],
+  ['y_5ft_1',['Y_T',['../structInverseComptonY.html#a3b05a1e8119feb60443f3617d7924de7',1,'InverseComptonY']]],
+  ['yr_2',['yr',['../namespaceunit.html#a28b5c14bd65aeeebf1db1d974bc266e6',1,'unit']]],
+  ['ys_3',['ys',['../structSynElectrons.html#a96402c1ba35b1a66de649f47f9a4e3b5',1,'SynElectrons::Ys'],['../structSynPhotons.html#ab371ef6a39b529f55794bfc96f35bfc2',1,'SynPhotons::Ys']]]
 ];

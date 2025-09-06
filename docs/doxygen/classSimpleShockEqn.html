@@ -132,7 +132,7 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:aee403b3fa4ba1baf1ae64e2d008aa80f" id="r_aee403b3fa4ba1baf1ae64e2d008aa80f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">void</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classSimpleShockEqn.html#aee403b3fa4ba1baf1ae64e2d008aa80f">operator()</a> (<a class="el" href="classSimpleShockEqn.html#aff35acb016a961cb3ca9f43edc92c2c8">State</a> <a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">const</a> &amp;<a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">state</a>, <a class="el" href="classSimpleShockEqn.html#aff35acb016a961cb3ca9f43edc92c2c8">State</a> &amp;<a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">diff</a>, <a class="el" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> t) <a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">const</a> <a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">noexcept</a></td></tr>
 <tr class="memdesc:aee403b3fa4ba1baf1ae64e2d008aa80f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Computes the derivatives of the state variables with respect to engine time t.  <br /></td></tr>
 <tr class="separator:aee403b3fa4ba1baf1ae64e2d008aa80f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8ba76df69c46f5d81f512a95fa9f59d4" id="r_a8ba76df69c46f5d81f512a95fa9f59d4"><td class="memItemLeft" align="right" valign="top"><a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">void</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classSimpleShockEqn.html#a8ba76df69c46f5d81f512a95fa9f59d4">set_init_state</a> (<a class="el" href="classSimpleShockEqn.html#aff35acb016a961cb3ca9f43edc92c2c8">State</a> &amp;<a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">state</a>, <a class="el" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> <a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">t0</a>) <a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">const</a> <a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">noexcept</a></td></tr>
+<tr class="memitem:a8ba76df69c46f5d81f512a95fa9f59d4" id="r_a8ba76df69c46f5d81f512a95fa9f59d4"><td class="memItemLeft" align="right" valign="top"><a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">void</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classSimpleShockEqn.html#a8ba76df69c46f5d81f512a95fa9f59d4">set_init_state</a> (<a class="el" href="classSimpleShockEqn.html#aff35acb016a961cb3ca9f43edc92c2c8">State</a> &amp;<a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">state</a>, <a class="el" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> t0) <a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">const</a> <a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">noexcept</a></td></tr>
 <tr class="memdesc:a8ba76df69c46f5d81f512a95fa9f59d4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes the state vector at time t0.  <br /></td></tr>
 <tr class="separator:a8ba76df69c46f5d81f512a95fa9f59d4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
@@ -159,7 +159,7 @@ Public Attributes</h2></td></tr>
 class SimpleShockEqn&lt; Ejecta, Medium &gt;</div><p>Represents the forward shock equation for a given Jet. </p>
 <p>It defines a state vector and overloads <a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42" title="Returns the value of a single parameter.">operator()</a> to compute the derivatives of the state with respect to time t. It also declares helper functions for the derivatives. Simple version from Huang et al. 2000 </p>
 
-<p class="definition">Definition at line <a class="el" href="simple-shock_8hpp_source.html#l00055">55</a> of file <a class="el" href="simple-shock_8hpp_source.html">simple-shock.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="simple-shock_8hpp_source.html#l00056">56</a> of file <a class="el" href="simple-shock_8hpp_source.html">simple-shock.hpp</a>.</p>
 </div><h2 class="groupheader">Member Typedef Documentation</h2>
 <a id="aff35acb016a961cb3ca9f43edc92c2c8" name="aff35acb016a961cb3ca9f43edc92c2c8"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#aff35acb016a961cb3ca9f43edc92c2c8">&#9670;&#160;</a></span>State</h2>
@@ -175,7 +175,7 @@ template&lt;<a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="simple-shock_8hpp_source.html#l00057">57</a> of file <a class="el" href="simple-shock_8hpp_source.html">simple-shock.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="simple-shock_8hpp_source.html#l00058">58</a> of file <a class="el" href="simple-shock_8hpp_source.html">simple-shock.hpp</a>.</p>
 
 </div>
 </div>
@@ -366,7 +366,7 @@ template&lt;<a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5
 
 <p>Reference to the ejecta properties. </p>
 
-<p class="definition">Definition at line <a class="el" href="simple-shock_8hpp_source.html#l00097">97</a> of file <a class="el" href="simple-shock_8hpp_source.html">simple-shock.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="simple-shock_8hpp_source.html#l00098">98</a> of file <a class="el" href="simple-shock_8hpp_source.html">simple-shock.hpp</a>.</p>
 
 </div>
 </div>
@@ -386,7 +386,7 @@ template&lt;<a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5
 
 <p>Reference to the medium properties. </p>
 
-<p class="definition">Definition at line <a class="el" href="simple-shock_8hpp_source.html#l00096">96</a> of file <a class="el" href="simple-shock_8hpp_source.html">simple-shock.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="simple-shock_8hpp_source.html#l00097">97</a> of file <a class="el" href="simple-shock_8hpp_source.html">simple-shock.hpp</a>.</p>
 
 </div>
 </div>
@@ -406,8 +406,8 @@ template&lt;<a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5
 
 <p>Angular coordinate phi. </p>
 
-<p class="definition">Definition at line <a class="el" href="simple-shock_8hpp_source.html#l00098">98</a> of file <a class="el" href="simple-shock_8hpp_source.html">simple-shock.hpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   98</span>{0};     <span class="comment">///&lt; Angular coordinate phi</span></div>
+<p class="definition">Definition at line <a class="el" href="simple-shock_8hpp_source.html#l00099">99</a> of file <a class="el" href="simple-shock_8hpp_source.html">simple-shock.hpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   99</span>{0};     <span class="comment">///&lt; Angular coordinate phi</span></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -427,7 +427,7 @@ template&lt;<a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5
 
 <p>Radiation parameters. </p>
 
-<p class="definition">Definition at line <a class="el" href="simple-shock_8hpp_source.html#l00100">100</a> of file <a class="el" href="simple-shock_8hpp_source.html">simple-shock.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="simple-shock_8hpp_source.html#l00101">101</a> of file <a class="el" href="simple-shock_8hpp_source.html">simple-shock.hpp</a>.</p>
 
 </div>
 </div>
@@ -447,8 +447,8 @@ template&lt;<a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5
 
 <p>Angular coordinate theta. </p>
 
-<p class="definition">Definition at line <a class="el" href="simple-shock_8hpp_source.html#l00099">99</a> of file <a class="el" href="simple-shock_8hpp_source.html">simple-shock.hpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   99</span>{0};  <span class="comment">///&lt; Angular coordinate theta</span></div>
+<p class="definition">Definition at line <a class="el" href="simple-shock_8hpp_source.html#l00100">100</a> of file <a class="el" href="simple-shock_8hpp_source.html">simple-shock.hpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  100</span>{0};  <span class="comment">///&lt; Angular coordinate theta</span></div>
 </div><!-- fragment -->
 </div>
 </div>

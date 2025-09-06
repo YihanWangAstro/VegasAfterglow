@@ -106,9 +106,9 @@ $(document).ready(function(){initNavTree('classMedium.html',''); initResizable()
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a84f13d397d1d752877e4218a515650e5" id="r_a84f13d397d1d752877e4218a515650e5"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMedium.html#a84f13d397d1d752877e4218a515650e5">Medium</a> (<a class="el" href="utilities_8h.html#a919434df3bde5e6090dbff542b658478">TernaryFunc</a> <a class="el" href="classMedium.html#a419de8e407c9c9f75d1b76fdedf5d3eb">rho</a>, <a class="el" href="utilities_8h.html#a919434df3bde5e6090dbff542b658478">TernaryFunc</a> <a class="el" href="classMedium.html#abb5e112825e59730e2e6d7e14ecd3d27">mass</a>) <a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">noexcept</a></td></tr>
-<tr class="memdesc:a84f13d397d1d752877e4218a515650e5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor: Initialize with density function and mass function.  <br /></td></tr>
-<tr class="separator:a84f13d397d1d752877e4218a515650e5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aacd7cf0b6fb4dee7adf3a5f2d32356e7" id="r_aacd7cf0b6fb4dee7adf3a5f2d32356e7"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMedium.html#aacd7cf0b6fb4dee7adf3a5f2d32356e7">Medium</a> (<a class="el" href="utilities_8h.html#a919434df3bde5e6090dbff542b658478">TernaryFunc</a> <a class="el" href="classMedium.html#a419de8e407c9c9f75d1b76fdedf5d3eb">rho</a>) <a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">noexcept</a></td></tr>
+<tr class="memdesc:aacd7cf0b6fb4dee7adf3a5f2d32356e7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor: Initialize with density function.  <br /></td></tr>
+<tr class="separator:aacd7cf0b6fb4dee7adf3a5f2d32356e7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab077493d8330ddd77c1ef434908adf73" id="r_ab077493d8330ddd77c1ef434908adf73"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMedium.html#ab077493d8330ddd77c1ef434908adf73">Medium</a> ()=<a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">default</a></td></tr>
 <tr class="separator:ab077493d8330ddd77c1ef434908adf73"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
@@ -117,9 +117,6 @@ Public Attributes</h2></td></tr>
 <tr class="memitem:a419de8e407c9c9f75d1b76fdedf5d3eb" id="r_a419de8e407c9c9f75d1b76fdedf5d3eb"><td class="memItemLeft" align="right" valign="top"><a class="el" href="utilities_8h.html#a919434df3bde5e6090dbff542b658478">TernaryFunc</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMedium.html#a419de8e407c9c9f75d1b76fdedf5d3eb">rho</a> {<a class="el" href="namespacefunc.html#af35a6de707510b3b09306132d94d3b72">func::zero_3d</a>}</td></tr>
 <tr class="memdesc:a419de8e407c9c9f75d1b76fdedf5d3eb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Density function that returns the mass density at a given position (phi, theta, r) The function is initialized to zero by default.  <br /></td></tr>
 <tr class="separator:a419de8e407c9c9f75d1b76fdedf5d3eb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abb5e112825e59730e2e6d7e14ecd3d27" id="r_abb5e112825e59730e2e6d7e14ecd3d27"><td class="memItemLeft" align="right" valign="top"><a class="el" href="utilities_8h.html#a919434df3bde5e6090dbff542b658478">TernaryFunc</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMedium.html#abb5e112825e59730e2e6d7e14ecd3d27">mass</a> {<a class="el" href="namespacefunc.html#af35a6de707510b3b09306132d94d3b72">func::zero_3d</a>}</td></tr>
-<tr class="memdesc:abb5e112825e59730e2e6d7e14ecd3d27"><td class="mdescLeft">&#160;</td><td class="mdescRight">Mass function that returns the integrated mass per solid angle within a radius r at position (phi, theta, r).  <br /></td></tr>
-<tr class="separator:abb5e112825e59730e2e6d7e14ecd3d27"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Represents the generic medium or any user-defined surrounding medium that the GRB jet interacts with. </p>
@@ -127,8 +124,8 @@ Public Attributes</h2></td></tr>
 
 <p class="definition">Definition at line <a class="el" href="medium_8h_source.html#l00018">18</a> of file <a class="el" href="medium_8h_source.html">medium.h</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="a84f13d397d1d752877e4218a515650e5" name="a84f13d397d1d752877e4218a515650e5"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a84f13d397d1d752877e4218a515650e5">&#9670;&#160;</a></span>Medium() <span class="overload">[1/2]</span></h2>
+<a id="aacd7cf0b6fb4dee7adf3a5f2d32356e7" name="aacd7cf0b6fb4dee7adf3a5f2d32356e7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aacd7cf0b6fb4dee7adf3a5f2d32356e7">&#9670;&#160;</a></span>Medium() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -140,18 +137,8 @@ Public Attributes</h2></td></tr>
           <td class="memname">Medium::Medium </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="utilities_8h.html#a919434df3bde5e6090dbff542b658478">TernaryFunc</a>&#160;</td>
-          <td class="paramname"><em>rho</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
+          <td class="paramname"><em>rho</em></td><td>)</td>
           <td></td>
-          <td class="paramtype"><a class="el" href="utilities_8h.html#a919434df3bde5e6090dbff542b658478">TernaryFunc</a>&#160;</td>
-          <td class="paramname"><em>mass</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
         </tr>
       </table>
   </td>
@@ -161,19 +148,17 @@ Public Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Constructor: Initialize with density function and mass function. </p>
+<p>Constructor: Initialize with density function. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">rho</td><td>Density function </td></tr>
-    <tr><td class="paramname">mass</td><td>Mass function </td></tr>
   </table>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="medium_8h_source.html#l00027">27</a> of file <a class="el" href="medium_8h_source.html">medium.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   27</span>: <a class="code hl_variable" href="classMedium.html#a419de8e407c9c9f75d1b76fdedf5d3eb">rho</a>(<a class="code hl_variable" href="classMedium.html#a419de8e407c9c9f75d1b76fdedf5d3eb">rho</a>), <a class="code hl_variable" href="classMedium.html#abb5e112825e59730e2e6d7e14ecd3d27">mass</a>(<a class="code hl_variable" href="classMedium.html#abb5e112825e59730e2e6d7e14ecd3d27">mass</a>) {}</div>
-<div class="ttc" id="aclassMedium_html_a419de8e407c9c9f75d1b76fdedf5d3eb"><div class="ttname"><a href="classMedium.html#a419de8e407c9c9f75d1b76fdedf5d3eb">Medium::rho</a></div><div class="ttdeci">TernaryFunc rho</div><div class="ttdoc">Density function that returns the mass density at a given position (phi, theta, r) The function is in...</div><div class="ttdef"><b>Definition</b> <a href="medium_8h_source.html#l00033">medium.h:33</a></div></div>
-<div class="ttc" id="aclassMedium_html_abb5e112825e59730e2e6d7e14ecd3d27"><div class="ttname"><a href="classMedium.html#abb5e112825e59730e2e6d7e14ecd3d27">Medium::mass</a></div><div class="ttdeci">TernaryFunc mass</div><div class="ttdoc">Mass function that returns the integrated mass per solid angle within a radius r at position (phi,...</div><div class="ttdef"><b>Definition</b> <a href="medium_8h_source.html#l00037">medium.h:37</a></div></div>
+<p class="definition">Definition at line <a class="el" href="medium_8h_source.html#l00026">26</a> of file <a class="el" href="medium_8h_source.html">medium.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   26</span>: <a class="code hl_variable" href="classMedium.html#a419de8e407c9c9f75d1b76fdedf5d3eb">rho</a>(<a class="code hl_variable" href="classMedium.html#a419de8e407c9c9f75d1b76fdedf5d3eb">rho</a>) {}</div>
+<div class="ttc" id="aclassMedium_html_a419de8e407c9c9f75d1b76fdedf5d3eb"><div class="ttname"><a href="classMedium.html#a419de8e407c9c9f75d1b76fdedf5d3eb">Medium::rho</a></div><div class="ttdeci">TernaryFunc rho</div><div class="ttdoc">Density function that returns the mass density at a given position (phi, theta, r) The function is in...</div><div class="ttdef"><b>Definition</b> <a href="medium_8h_source.html#l00032">medium.h:32</a></div></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -203,27 +188,6 @@ Public Attributes</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Member Data Documentation</h2>
-<a id="abb5e112825e59730e2e6d7e14ecd3d27" name="abb5e112825e59730e2e6d7e14ecd3d27"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#abb5e112825e59730e2e6d7e14ecd3d27">&#9670;&#160;</a></span>mass</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="utilities_8h.html#a919434df3bde5e6090dbff542b658478">TernaryFunc</a> Medium::mass {<a class="el" href="namespacefunc.html#af35a6de707510b3b09306132d94d3b72">func::zero_3d</a>}</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Mass function that returns the integrated mass per solid angle within a radius r at position (phi, theta, r). </p>
-<p>please make sure this is consistent with the density function, where m = \int rho * r^2 dr </p>
-
-<p class="definition">Definition at line <a class="el" href="medium_8h_source.html#l00037">37</a> of file <a class="el" href="medium_8h_source.html">medium.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   37</span>{<a class="code hl_variable" href="namespacefunc.html#af35a6de707510b3b09306132d94d3b72">func::zero_3d</a>};</div>
-<div class="ttc" id="anamespacefunc_html_af35a6de707510b3b09306132d94d3b72"><div class="ttname"><a href="namespacefunc.html#af35a6de707510b3b09306132d94d3b72">func::zero_3d</a></div><div class="ttdeci">constexpr auto zero_3d</div><div class="ttdef"><b>Definition</b> <a href="utilities_8h_source.html#l00086">utilities.h:86</a></div></div>
-</div><!-- fragment -->
-</div>
-</div>
 <a id="a419de8e407c9c9f75d1b76fdedf5d3eb" name="a419de8e407c9c9f75d1b76fdedf5d3eb"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a419de8e407c9c9f75d1b76fdedf5d3eb">&#9670;&#160;</a></span>rho</h2>
 
@@ -238,8 +202,9 @@ Public Attributes</h2></td></tr>
 
 <p>Density function that returns the mass density at a given position (phi, theta, r) The function is initialized to zero by default. </p>
 
-<p class="definition">Definition at line <a class="el" href="medium_8h_source.html#l00033">33</a> of file <a class="el" href="medium_8h_source.html">medium.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   33</span>{<a class="code hl_variable" href="namespacefunc.html#af35a6de707510b3b09306132d94d3b72">func::zero_3d</a>};</div>
+<p class="definition">Definition at line <a class="el" href="medium_8h_source.html#l00032">32</a> of file <a class="el" href="medium_8h_source.html">medium.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   32</span>{<a class="code hl_variable" href="namespacefunc.html#af35a6de707510b3b09306132d94d3b72">func::zero_3d</a>};</div>
+<div class="ttc" id="anamespacefunc_html_af35a6de707510b3b09306132d94d3b72"><div class="ttname"><a href="namespacefunc.html#af35a6de707510b3b09306132d94d3b72">func::zero_3d</a></div><div class="ttdeci">constexpr auto zero_3d</div><div class="ttdef"><b>Definition</b> <a href="utilities_8h_source.html#l00086">utilities.h:86</a></div></div>
 </div><!-- fragment -->
 </div>
 </div>

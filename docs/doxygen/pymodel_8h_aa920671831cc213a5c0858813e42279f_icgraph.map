@@ -1,5 +1,5 @@
 <map id="convert_unit" name="convert_unit">
 <area shape="rect" id="Node000001" title="Convert Ejecta and Medium units to internal code units." alt="" coords="196,5,299,31"/>
-<area shape="rect" id="Node000002" href="$classPyModel.html#ac7d6f3f58304eefee08b7254df8eb56f" title="Construct afterglow model with given components." alt="" coords="5,5,148,31"/>
+<area shape="rect" id="Node000002" href="$classPyModel.html#a4e18a53bf3cc6134238a51169cc87cd2" title="Construct afterglow model with given components." alt="" coords="5,5,148,31"/>
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="182,21,148,21,148,15,182,15"/>
 </map>
