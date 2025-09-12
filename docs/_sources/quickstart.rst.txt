@@ -17,7 +17,7 @@ For more detailed installation instructions, see the :doc:`installation` page.
 Basic Usage
 -----------
 
-VegasAfterglow is designed to efficiently model gamma-ray burst (GRB) afterglows and perform Markov Chain Monte Carlo (MCMC) parameter estimation. 
+VegasAfterglow is designed to efficiently model gamma-ray burst (GRB) afterglows and perform Markov Chain Monte Carlo (MCMC) parameter estimation.
 
 Direct Model Calculation
 ------------------------
@@ -57,10 +57,10 @@ Now, let's compute and plot multi-wavelength light curves to see how the aftergl
 .. code-block:: python
 
     # 1. Create logarithmic time array from 10² to 10⁸ seconds (100s to ~3yrs)
-    times = np.logspace(2, 8, 200)  
+    times = np.logspace(2, 8, 200)
 
     # 2. Define observing frequencies (radio, optical, X-ray bands in Hz)
-    bands = np.array([1e9, 1e14, 1e17])  
+    bands = np.array([1e9, 1e14, 1e17])
 
     # 3. Calculate the afterglow emission at each time and frequency
     results = model.specific_flux(times, bands)
@@ -68,7 +68,7 @@ Now, let's compute and plot multi-wavelength light curves to see how the aftergl
     # 4. Visualize the multi-wavelength light curves
     plt.figure(figsize=(4.8, 3.6), dpi=200)
 
-    # 5. Plot each frequency band 
+    # 5. Plot each frequency band
     for i, nu in enumerate(bands):
         exp = int(np.floor(np.log10(nu)))
         base = nu / 10**exp
@@ -81,7 +81,7 @@ Now, let's compute and plot multi-wavelength light curves to see how the aftergl
         plt.annotate(r'$\nu=\nu_a$',xy=(1.5e6, 4e-25), xytext=(7.5e5, 5e-24), arrowprops=dict(arrowstyle='->'))
 
     add_note(plt)
-    
+
     plt.xlabel('Time (s)')
     plt.ylabel('Flux Density (erg/cm²/s/Hz)')
     plt.legend()
@@ -92,7 +92,7 @@ Now, let's compute and plot multi-wavelength light curves to see how the aftergl
 .. figure:: /_static/images/quick-lc.png
    :width: 600
    :align: center
-   
+
    Running the light curve script will produce this figure showing the afterglow evolution across different frequencies.
 
 Spectral Analysis
@@ -102,10 +102,10 @@ We can also examine how the broadband spectrum evolves at different times after 
 
 .. code-block:: python
 
-    # 1. Define broad frequency range (10⁵ to 10²² Hz) 
-    frequencies = np.logspace(5, 22, 200)  
+    # 1. Define broad frequency range (10⁵ to 10²² Hz)
+    frequencies = np.logspace(5, 22, 200)
 
-    # 2. Select specific time epochs for spectral snapshots 
+    # 2. Select specific time epochs for spectral snapshots
     epochs = np.array([1e2, 1e3, 1e4, 1e5, 1e6, 1e7, 1e8])
 
     # 3. Calculate spectra at each epoch
@@ -134,7 +134,7 @@ We can also examine how the broadband spectrum evolves at different times after 
 .. figure:: /_static/images/quick-spec.png
    :width: 600
    :align: center
-   
+
    The spectral analysis code will generate this visualization showing spectra at different times, with vertical lines indicating the frequencies calculated in the light curve example.
 
 Internal Quantities Evolution
@@ -178,7 +178,7 @@ Now, let's access the internal simulation quantities using the ``details`` metho
 You will get a comprehensive list of keys representing the internal quantities, such as ``t_src``, ``t_comv_fwd``, ``t_obs_fwd``, and many more. The available quantities include:
 
 - ``phi``: 1D numpy array of azimuthal angles in radians
-- ``theta``: 1D numpy array of polar angles in radians  
+- ``theta``: 1D numpy array of polar angles in radians
 - ``t_src``: 3D numpy array of source frame times on coordinate (phi_i, theta_j, t_k) grid in seconds
 - ``t_comv_fwd``: 3D numpy array of comoving times for the forward shock in seconds
 - ``t_obs_fwd``: 3D numpy array of observer times for the forward shock in seconds
@@ -224,7 +224,7 @@ To analyze the temporal evolution of physical parameters across different refere
                 plt.title(titles[i])
             plt.loglog(details[frame][0, 0, :], details[key][0, 0, :], color='k',lw=2.5)
             plt.loglog(details[frame][0, 0, :], details[key][0, 0, :], color=colors[i])
-            
+
             plt.xlabel(xlabels[i])
             plt.ylabel(ylabels[j])
 
@@ -234,7 +234,7 @@ To analyze the temporal evolution of physical parameters across different refere
 .. figure:: /_static/images/shock_quantities.png
    :width: 1000
    :align: center
-   
+
    Multi-parameter evolution showing fundamental shock parameters across three reference frames.
 
 Electron Energy Distribution Analysis
@@ -265,7 +265,7 @@ This visualization focuses specifically on the characteristic electron energies 
 .. figure:: /_static/images/electron_quantities.png
    :width: 1000
    :align: center
-   
+
    Evolution of characteristic electron energies showing relativistic transformation effects.
 
 Synchrotron Frequency Evolution
@@ -296,7 +296,7 @@ This analysis tracks the evolution of characteristic synchrotron frequencies, de
 .. figure:: /_static/images/photon_quantities.png
    :width: 1000
    :align: center
-   
+
    Evolution of characteristic synchrotron frequencies showing spectral break evolution and Doppler effects.
 
 Doppler Factor Spatial Distribution
@@ -314,13 +314,13 @@ This polar plot visualizes the spatial distribution of the Doppler factor across
     D     = details['Doppler_fwd'][0,:,:]
 
     # Polar contour plot
-    scale = 3.0  
+    scale = 3.0
     c = ax.contourf(theta*scale, r, np.log10(D), levels=30, cmap='viridis')
 
-    ax.set_rscale('log')  
-    true_ticks = np.linspace(0, 0.3, 6)             
-    ax.set_xticks(true_ticks * scale)               
-    ax.set_xticklabels([f"{t:.2f}" for t in true_ticks])  
+    ax.set_rscale('log')
+    true_ticks = np.linspace(0, 0.3, 6)
+    ax.set_xticks(true_ticks * scale)
+    ax.set_xticklabels([f"{t:.2f}" for t in true_ticks])
     ax.set_xlim(0,0.3*scale)
     ax.set_ylabel(r'$\theta$ [rad]')
     ax.set_xlabel(r'$r$ [cm]')
@@ -332,7 +332,7 @@ This polar plot visualizes the spatial distribution of the Doppler factor across
 .. figure:: /_static/images/doppler.png
    :width: 600
    :align: center
-   
+
    Spatial distribution of Doppler factor showing relativistic beaming effects across the jet structure.
 
 Equal Arrival Time Surface Visualization
@@ -349,13 +349,13 @@ This final visualization maps the equal arrival time surfaces in polar coordinat
     r     = details['r_fwd'][0,:,:]
     t_obs = details['t_obs_fwd'][0,:,:]
 
-    scale = 3.0  
+    scale = 3.0
     c = ax.contourf(theta*scale, r, np.log10(t_obs), levels=30, cmap='viridis')
 
-    ax.set_rscale('log')  
-    true_ticks = np.linspace(0, 0.3, 6)             
-    ax.set_xticks(true_ticks * scale)               
-    ax.set_xticklabels([f"{t:.2f}" for t in true_ticks])  
+    ax.set_rscale('log')
+    true_ticks = np.linspace(0, 0.3, 6)
+    ax.set_xticks(true_ticks * scale)
+    ax.set_xticklabels([f"{t:.2f}" for t in true_ticks])
     ax.set_xlim(0,0.3*scale)
     ax.set_ylabel(r'$\theta$ [rad]')
     ax.set_xlabel(r'$r$ [cm]')
@@ -367,7 +367,7 @@ This final visualization maps the equal arrival time surfaces in polar coordinat
 .. figure:: /_static/images/EAT.png
    :width: 600
    :align: center
-   
+
    Equal arrival time surfaces showing how light travel time effects determine light curve morphology.
 
 These examples demonstrate VegasAfterglow's comprehensive capability for analyzing internal quantities and understanding the underlying physics of GRB afterglows. The detailed access to microphysical parameters enables advanced studies of shock dynamics, relativistic effects, and radiation mechanisms across different reference frames.
@@ -375,7 +375,7 @@ These examples demonstrate VegasAfterglow's comprehensive capability for analyzi
 Parameter Estimation with MCMC
 ------------------------------
 
-For more advanced analysis, VegasAfterglow provides powerful MCMC capabilities to fit model parameters to observational data. 
+For more advanced analysis, VegasAfterglow provides powerful MCMC capabilities to fit model parameters to observational data.
 
 First, let's import the necessary modules:
 
@@ -398,7 +398,7 @@ VegasAfterglow provides flexible options for loading observational data through 
     data = ObsData()
 
     # Method 1: Add data directly from lists or numpy arrays
-    
+
     # For light curves
     t_data = [1e3, 2e3, 5e3, 1e4, 2e4]  # Time in seconds
     flux_data = [1e-26, 8e-27, 5e-27, 3e-27, 2e-27]  # Specific flux in erg/cm²/s/Hz
@@ -444,12 +444,12 @@ The ``Setups`` class defines the global properties and environment for your mode
     cfg = Setups()
 
     # Source properties
-    cfg.lumi_dist = 3.364e28    # Luminosity distance [cm]  
+    cfg.lumi_dist = 3.364e28    # Luminosity distance [cm]
     cfg.z = 1.58               # Redshift
 
     # Physical model configuration
-    cfg.medium = "wind"        
-    cfg.jet = "powerlaw"      
+    cfg.medium = "wind"
+    cfg.jet = "powerlaw"
 
 
 These settings affect how the model is calculated but are not varied during the MCMC process.
@@ -480,7 +480,7 @@ The ``ParamDef`` class is used to define the parameters for MCMC exploration. Ea
 
 **Parameter Choices:**
 The parameters you include depend on your model configuration:
-    - For "wind" medium: use ``A_star`` parameter 
+    - For "wind" medium: use ``A_star`` parameter
     - For "ISM" medium: use ``n_ism`` parameter instead
     - Different jet structures may require different parameters
 
@@ -533,7 +533,7 @@ Use the best-fit parameters to generate model predictions:
 
     # Define time and frequency ranges for predictions
     t_out = np.logspace(2, 9, 150)
-    bands = [2.4e17, 4.84e14, 1.4e14] 
+    bands = [2.4e17, 4.84e14, 1.4e14]
 
     # Generate light curves with the best-fit model
     lc_best = fitter.specific_flux(result.best_params, t_out, bands)
@@ -550,21 +550,21 @@ Now you can plot the best-fit model:
     def draw_bestfit(t, lc_fit, nu, spec_fit):
         # Create figure with two subplots
         fig, (ax1, ax2) = plt.subplots(2, 1, figsize=(4.5, 7.5))
-        
+
         # Plot light curves
         shifts = [1, 1, 200]
         colors = ['blue', 'orange', 'green']
-        
+
         for i in range(len(lc_files)):
             df = pd.read_csv(lc_files[i])
-            ax1.errorbar(df["t"], df["Fv_obs"] * shifts[i], df["Fv_err"] * shifts[i], 
+            ax1.errorbar(df["t"], df["Fv_obs"] * shifts[i], df["Fv_err"] * shifts[i],
                         fmt='o', color=colors[i], label=lc_files[i])
             ax1.plot(t, np.array(lc_fit[i]) * shifts[i], color=colors[i], lw=1)
 
         # Plot spectra
         for i in range(len(spec_files)):
             df = pd.read_csv(spec_files[i])
-            ax2.errorbar(df["nu"], df["Fv_obs"] * shifts[i], df["Fv_err"] * shifts[i], 
+            ax2.errorbar(df["nu"], df["Fv_obs"] * shifts[i], df["Fv_err"] * shifts[i],
                         fmt='o', color=colors[i], label=spec_files[i])
             ax2.plot(nu, np.array(spec_fit[0]) * shifts[i], color=colors[i], lw=1)
 
@@ -611,4 +611,3 @@ Next Steps
 - See the :doc:`examples` page for more detailed examples
 - Check the :doc:`parameter_reference` for comprehensive parameter documentation
 - Visit the :doc:`troubleshooting` page if you encounter any issues
-

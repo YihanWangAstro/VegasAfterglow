@@ -40,7 +40,7 @@ var NAVTREE =
       [ "Class Members", "functions.html", [
         [ "All", "functions.html", "functions_dup" ],
         [ "Functions", "functions_func.html", null ],
-        [ "Variables", "functions_vars.html", null ],
+        [ "Variables", "functions_vars.html", "functions_vars" ],
         [ "Typedefs", "functions_type.html", null ]
       ] ]
     ] ],
@@ -60,9 +60,9 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "IO_8cpp.html",
-"inverse-compton_8h.html#af77ecb3b882119e9d24786b64815975f",
-"shock_8h.html#a883342c984636074c4b8daa7ba094b96",
-"utilities_8h.html#ae490b13fdcc1b917ecdd08c0cecf3556"
+"group__GammaConversions.html",
+"pymodel_8h.html#aa920671831cc213a5c0858813e42279f",
+"synchrotron_8h.html#a52e34d49dd7497d65ea5261e80d615d4"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

@@ -17,7 +17,7 @@ var searchData=
   ['inversecomptony_14',['inversecomptony',['../structInverseComptonY.html#a8ddd88e2b0ae996e2bf8a79630653392',1,'InverseComptonY::InverseComptonY() noexcept'],['../structInverseComptonY.html#a868e013d09d617985b93a16c2674f705',1,'InverseComptonY::InverseComptonY(Real Y_T) noexcept'],['../structInverseComptonY.html#ae2e1d231f5adf0f9a49bd915d6c616e3',1,'InverseComptonY::InverseComptonY(Real nu_m, Real nu_c, Real B, Real Y_T) noexcept'],['../structInverseComptonY.html',1,'InverseComptonY']]],
   ['io_2ecpp_15',['IO.cpp',['../IO_8cpp.html',1,'']]],
   ['io_2eh_16',['IO.h',['../IO_8h.html',1,'']]],
-  ['is_5fascending_17',['is_ascending',['../pymodel_8cpp.html#a65fbb7ac1dd1f2667e68724a512f691c',1,'pymodel.cpp']]],
+  ['is_5fascending_17',['is_ascending',['../pybind_8h.html#a65fbb7ac1dd1f2667e68724a512f691c',1,'pybind.h']]],
   ['is_5flinear_5fscale_18',['is_linear_scale',['../mesh_8h.html#a96ef72fee28b62c498d20beb0ad567d7',1,'is_linear_scale(Array const &amp;arr, Real tolerance=1e-6):&#160;mesh.cpp'],['../mesh_8cpp.html#a1bd8e2ab0390290ac1b6f0182f676135',1,'is_linear_scale(Array const &amp;arr, Real tolerance):&#160;mesh.cpp']]],
   ['is_5flog_5fscale_19',['is_log_scale',['../mesh_8h.html#ab2f5236a85158b036631823e0e495c90',1,'is_log_scale(Array const &amp;arr, Real tolerance=1e-6):&#160;mesh.cpp'],['../mesh_8cpp.html#a713edabb87bc52e8dadec89988ab68cd',1,'is_log_scale(Array const &amp;arr, Real tolerance):&#160;mesh.cpp']]],
   ['ism_20',['ism',['../classISM.html#a84b54625cac41da743d803e3425e5c6c',1,'ISM::ISM()'],['../classISM.html',1,'ISM']]],

@@ -115,14 +115,14 @@
 <p><strong>Q: My light curve has strange spikes or discontinuities</strong></p>
 <p>A: This is usually caused by one of the following:</p>
 <ul class="simple">
-<li><p><strong>Time array ordering</strong>: Ensure your time array is in ascending order when using <code class="docutils literal notranslate"><span class="pre">specific_flux()</span></code>. Use <code class="docutils literal notranslate"><span class="pre">specific_flux_series()</span></code> for random order time arrays.</p></li>
+<li><p><strong>Time array ordering</strong>: Ensure your time array is in ascending order when using <code class="docutils literal notranslate"><span class="pre">specific_flux()</span></code>.</p></li>
 <li><p><strong>Resolution too low</strong>: Increase the resolution parameters in <code class="docutils literal notranslate"><span class="pre">Model(resolutions=(phi_ppd,</span> <span class="pre">theta_ppd,</span> <span class="pre">t_ppd))</span></code></p></li>
 <li><p><strong>User-defined profiles</strong>: For custom jet/medium profiles, ensure they are smooth and well-behaved</p></li>
 </ul>
 <p><strong>Q: My calculation is extremely slow</strong></p>
 <p>A: Performance can be improved by:</p>
 <ul class="simple">
-<li><p><strong>Reducing resolution</strong>: Use <code class="docutils literal notranslate"><span class="pre">resolutions=(0.1,</span> <span class="pre">3,</span> <span class="pre">5)</span></code> for speed, <code class="docutils literal notranslate"><span class="pre">(0.3,</span> <span class="pre">5,</span> <span class="pre">10)</span></code> for accuracy</p></li>
+<li><p><strong>Reducing resolution</strong>: Use <code class="docutils literal notranslate"><span class="pre">resolutions=(0.1,</span> <span class="pre">1,</span> <span class="pre">10)</span></code> for speed, <code class="docutils literal notranslate"><span class="pre">(0.3,</span> <span class="pre">5,</span> <span class="pre">20)</span></code> for accuracy</p></li>
 <li><p><strong>Limiting frequency/time ranges</strong>: Calculate only the bands and times you need</p></li>
 <li><p><strong>Using built-in profiles</strong>: Built-in jet structures are faster than user-defined Python functions</p></li>
 <li><p><strong>For MCMC</strong>: Consider using fewer parameters or coarser resolution</p></li>
@@ -156,7 +156,7 @@
 <p><strong>Q: MCMC is too slow for practical use</strong></p>
 <p>A: Optimization strategies:</p>
 <ul class="simple">
-<li><p><strong>Reduce resolution</strong>: Use <code class="docutils literal notranslate"><span class="pre">resolution=(0.5,</span> <span class="pre">1,</span> <span class="pre">5)</span></code> for initial exploration</p></li>
+<li><p><strong>Reduce resolution</strong>: Use <code class="docutils literal notranslate"><span class="pre">resolution=(0.3,</span> <span class="pre">1,</span> <span class="pre">10)</span></code> for initial exploration</p></li>
 <li><p><strong>Fewer parameters</strong>: Fix some parameters with <code class="docutils literal notranslate"><span class="pre">Scale.FIXED</span></code></p></li>
 <li><p><strong>Coarser time/frequency grids</strong>: Use fewer data points for initial fits</p></li>
 <li><p><strong>Parallel processing</strong>: Ensure you’re using multiple cores</p></li>
@@ -243,7 +243,7 @@ pip<span class="w"> </span>install<span class="w"> </span>h5py<span class="w">  
 <td><p>Good</p></td>
 </tr>
 <tr class="row-even"><td><p>MCMC fitting</p></td>
-<td><p><code class="docutils literal notranslate"><span class="pre">(0.3,</span> <span class="pre">1,</span> <span class="pre">10)</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">(0.3,</span> <span class="pre">2,</span> <span class="pre">15)</span></code></p></td>
 <td><p>Moderate</p></td>
 <td><p>High</p></td>
 </tr>
@@ -257,8 +257,8 @@ pip<span class="w"> </span>install<span class="w"> </span>h5py<span class="w">  
 <p>Where <code class="docutils literal notranslate"><span class="pre">resolutions=(phi_ppd,</span> <span class="pre">theta_ppd,</span> <span class="pre">t_ppd)</span></code>:</p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">phi_ppd</span></code>: Points per degree in azimuthal direction</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">theta_ppd</span></code>: Points per degree in polar direction</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">t_ppd</span></code>: Points per decade in time direction</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">theta_ppd</span></code>: Points per degree in polar direction. The code sets a minimum of 56 points across the jet profile.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">t_ppd</span></code>: Points per decade in time direction. The code sets a minimum of 24 time points.</p></li>
 </ul>
 </section>
 <section id="memory-usage">

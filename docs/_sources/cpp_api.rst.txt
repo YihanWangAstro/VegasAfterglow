@@ -138,7 +138,7 @@ Physics and Utilities
 .. doxygenclass:: Observer
    :members:
    :undoc-members:
-   :allow-dot-graphs:   
+   :allow-dot-graphs:
 
 .. doxygenclass:: Coord
    :members:
@@ -228,7 +228,7 @@ For inline functions, use specialized documentation to explain why the function 
      *
      * @param x The value to square
      * @return The squared value
-     * 
+     *
      * @inline_details
      * Uses direct multiplication instead of std::pow for better performance.
      * Handles both positive and negative inputs correctly.
@@ -248,7 +248,7 @@ For functions with C++20 attributes, use the specialized tags:
      * @brief Calculate the inverse of a value
      * @nodiscard
      * @constexpr
-     * 
+     *
      * @param value The input value (must not be zero)
      * @return The inverse of the input value (1/value)
      * @throws std::invalid_argument if value is zero
@@ -270,13 +270,13 @@ For special member functions, use the dedicated aliases:
      * Initializes with default empty state.
      */
     JetModel();
-    
+
     /**
      * @copyctor
      * @param other The jet model to copy
      */
     JetModel(const JetModel& other);
-    
+
     /**
      * @moveassign
      * @param other The jet model to move from
@@ -294,12 +294,12 @@ Even though private members won't appear in the public API documentation, they s
     private:
         /**
          * @brief Calculate internal jet dynamics
-         * 
+         *
          * @param time Current simulation time
          * @return Energy distribution at current time
          */
         double calculateDynamics(double time);
-        
+
         double energy_; ///< Internal energy storage
 
 Example Class
@@ -324,7 +324,7 @@ Here's an example of a well-documented class:
          * @param Gamma0 Initial Lorentz factor
          ********************************************************************************************************************/
         GaussianJet(Real theta_c, Real E_iso, Real Gamma0) noexcept;
-        
+
         /********************************************************************************************************************
          * @brief Energy per solid angle as a function of phi and theta, with Gaussian falloff
          * @param phi Azimuthal angle (unused)
@@ -332,21 +332,21 @@ Here's an example of a well-documented class:
          * @return Energy per solid angle with Gaussian angular dependence
          ********************************************************************************************************************/
         Real eps_k(Real phi, Real theta) const noexcept;
-        
+
         /**
          * @brief Get the core angle of the jet
          * @nodiscard
          * @return Core angle in radians
          */
         [[nodiscard]] inline Real getTheta_c() const noexcept;
-        
+
         /**
          * @brief Get the isotropic equivalent energy
          * @nodiscard
          * @return Energy in ergs
          */
         [[nodiscard]] inline Real getE_iso() const noexcept;
-        
+
         /**
          * @brief Get the initial Lorentz factor
          * @nodiscard

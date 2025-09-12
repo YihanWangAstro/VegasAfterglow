@@ -9,7 +9,7 @@ Physical Parameters
 Jet Structure Parameters
 ^^^^^^^^^^^^^^^^^^^^^^^^
 
-.. list-table:: 
+.. list-table::
    :header-rows: 1
    :widths: 15 15 10 20 40
 
@@ -62,7 +62,7 @@ Jet Structure Parameters
 Ambient Medium Parameters
 ^^^^^^^^^^^^^^^^^^^^^^^^^
 
-.. list-table:: 
+.. list-table::
    :header-rows: 1
    :widths: 15 15 10 20 40
 
@@ -85,7 +85,7 @@ Ambient Medium Parameters
 Observer Parameters
 ^^^^^^^^^^^^^^^^^^^
 
-.. list-table:: 
+.. list-table::
    :header-rows: 1
    :widths: 15 15 10 20 40
 
@@ -108,7 +108,7 @@ Observer Parameters
 Radiation Microphysics Parameters
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-.. list-table:: 
+.. list-table::
    :header-rows: 1
    :widths: 15 15 10 20 40
 
@@ -141,7 +141,7 @@ Radiation Microphysics Parameters
 Energy Injection Parameters (Magnetar)
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-.. list-table:: 
+.. list-table::
    :header-rows: 1
    :widths: 15 15 10 20 40
 
@@ -169,7 +169,7 @@ Energy Injection Parameters (Magnetar)
 Two-Component Jet Parameters
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-.. list-table:: 
+.. list-table::
    :header-rows: 1
    :widths: 15 15 10 20 40
 
@@ -215,7 +215,7 @@ Computational Parameters
 Model Resolution
 ^^^^^^^^^^^^^^^^
 
-.. list-table:: 
+.. list-table::
    :header-rows: 1
    :widths: 15 15 40
 
@@ -235,7 +235,7 @@ Model Resolution
 MCMC Parameters
 ^^^^^^^^^^^^^^^
 
-.. list-table:: 
+.. list-table::
    :header-rows: 1
    :widths: 20 20 60
 
@@ -258,7 +258,7 @@ MCMC Parameters
 Parameter Scaling Types
 -----------------------
 
-.. list-table:: 
+.. list-table::
    :header-rows: 1
    :widths: 20 80
 
@@ -318,7 +318,7 @@ Common unit conversions for convenience:
 **Frequencies:**
 
 - X-ray (1 keV): ν ≈ 2.4 × 10¹⁷ Hz
-- Optical (V-band): ν ≈ 5.5 × 10¹⁴ Hz  
+- Optical (V-band): ν ≈ 5.5 × 10¹⁴ Hz
 - Radio (1 GHz): ν = 10⁹ Hz
 
 Parameter Degeneracies

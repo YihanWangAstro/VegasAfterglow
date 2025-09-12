@@ -1,7 +1,7 @@
 var structPyMagnetar =
 [
-    [ "PyMagnetar", "structPyMagnetar.html#a47c0e3b93b429f1b5dd56461f7f27646", null ],
-    [ "L_0", "structPyMagnetar.html#a64ff027ce4566d2c40bbe27dd7fa1a8d", null ],
+    [ "PyMagnetar", "structPyMagnetar.html#a088ac94a2447c79d31eed3edcf3114d0", null ],
+    [ "L0", "structPyMagnetar.html#a5e9de2fdf00ab4a29a1988c1e09d02b6", null ],
     [ "q", "structPyMagnetar.html#a2dcda99a23b911362ce24c59934050f0", null ],
-    [ "t_0", "structPyMagnetar.html#a064f69bd2354e6630abfb97a776d9cc2", null ]
+    [ "t0", "structPyMagnetar.html#aac488f2dea4704845b1b2c9c4664cde8", null ]
 ];

@@ -23,7 +23,7 @@
         <feMergeNode in="SourceGraphic"/>
       </feMerge>
     </filter>
-    
+
     <!-- Radiating animation -->
     <radialGradient id="radiate-grad" cx="50%" cy="50%" r="50%">
       <stop offset="0%" stop-color="rgba(255,255,255,0.3)"/>
@@ -33,7 +33,7 @@
 
   <!-- Background circle with radial gradient -->
   <circle cx="400" cy="400" r="350" fill="url(#bg-grad)" />
-  
+
   <!-- Radiating pulse effect -->
   <g>
     <circle cx="400" cy="400" r="10" fill="none" stroke="#ff6666" stroke-width="8" opacity="0.6">
@@ -79,7 +79,7 @@
             repeatCount="indefinite"/>
       </path>
     </g>
-    
+
     <g transform="translate(400, 400)">
       <path d="M0,-150 A150,150 0 0,1 150,0 A150,150 0 0,1 0,150 A150,150 0 0,1 -150,0 A150,150 0 0,1 0,-150 Z"
             stroke="#0066cc" stroke-width="15" stroke-dasharray="15,10">

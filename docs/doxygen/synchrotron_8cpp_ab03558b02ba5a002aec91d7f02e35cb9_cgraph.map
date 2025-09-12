@@ -1,24 +1,22 @@
 <map id="compute_syn_gamma_a" name="compute_syn_gamma_a">
 <area shape="rect" id="Node000001" title=" " alt="" coords="5,107,187,132"/>
-<area shape="rect" id="Node000002" href="$synchrotron_8cpp.html#a936bfaa522ec8295a21d253e5453188d" title="Calculates synchrotron frequency for a given Lorentz factor and magnetic field." alt="" coords="449,5,592,31"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="116,104,168,75,234,47,285,35,338,26,435,17,436,22,338,31,286,40,235,53,170,80,118,109"/>
-<area shape="rect" id="Node000003" href="$utilities_8h.html#ab8e81118f023df135835db8cce4f5f42" title="Returns the value of a single parameter." alt="" coords="640,157,691,183"/>
-<area shape="poly" id="edge12_Node000001_Node000003" title=" " alt="" coords="153,104,234,91,336,83,417,84,496,98,593,129,633,148,631,153,591,134,494,103,416,90,337,89,235,97,154,109"/>
-<area shape="rect" id="Node000004" href="$synchrotron_8cpp.html#a85433be4a0da2f510240a603da8f7dff" title=" " alt="" coords="235,107,401,132"/>
-<area shape="poly" id="edge4_Node000001_Node000004" title=" " alt="" coords="187,117,221,117,221,122,187,122"/>
-<area shape="rect" id="Node000005" href="$utilities_8h.html#a4520a27a10a2aef33c99ad8c679da404" title="Fast approximation of a raised to the power of b." alt="" coords="277,183,359,208"/>
-<area shape="poly" id="edge6_Node000001_Node000005" title=" " alt="" coords="135,130,268,176,266,181,133,135"/>
-<area shape="rect" id="Node000008" href="$utilities_8h.html#a29a716285d00743072d357c4a64a7f85" title="Finds the root of a function using the bisection method." alt="" coords="271,283,365,308"/>
-<area shape="poly" id="edge13_Node000001_Node000008" title=" " alt="" coords="115,130,292,272,288,276,112,134"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="562,29,594,48,615,71,632,96,657,143,652,146,628,99,611,74,590,52,559,33"/>
-<area shape="poly" id="edge3_Node000003_Node000003" title=" " alt="" coords="641,158,636,149,638,139,649,133,665,131,685,134,694,143,690,146,683,139,665,136,650,138,643,143,641,148,645,156"/>
-<area shape="poly" id="edge5_Node000004_Node000003" title=" " alt="" coords="402,129,627,162,626,167,401,134"/>
-<area shape="poly" id="edge11_Node000005_Node000003" title=" " alt="" coords="359,190,626,170,626,175,359,195"/>
-<area shape="rect" id="Node000006" href="$utilities_8h.html#afc584c30c352192de6847b1f4b8caf0e" title="Fast approximation of 2 raised to a power." alt="" coords="477,208,564,233"/>
-<area shape="poly" id="edge7_Node000005_Node000006" title=" " alt="" coords="359,198,464,211,464,216,359,203"/>
-<area shape="rect" id="Node000007" href="$utilities_8h.html#afe0a1b1b7509ac4df83fcc0e510f281b" title="Fast approximation of the base&#45;2 logarithm." alt="" coords="479,257,562,283"/>
-<area shape="poly" id="edge9_Node000005_Node000007" title=" " alt="" coords="353,206,450,242,472,250,470,255,448,247,351,211"/>
-<area shape="poly" id="edge8_Node000006_Node000003" title=" " alt="" coords="557,205,626,181,628,186,559,210"/>
-<area shape="poly" id="edge10_Node000007_Node000003" title=" " alt="" coords="561,257,591,242,620,218,644,192,648,195,624,222,593,247,563,261"/>
-<area shape="poly" id="edge14_Node000008_Node000003" title=" " alt="" coords="364,305,413,315,472,320,534,314,563,306,591,293,615,273,633,248,655,195,660,197,637,250,618,277,593,298,565,311,535,319,472,325,413,320,363,311"/>
+<area shape="rect" id="Node000002" href="$synchrotron_8cpp.html#a936bfaa522ec8295a21d253e5453188d" title="Calculates synchrotron frequency for a given Lorentz factor and magnetic field." alt="" coords="247,8,389,33"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="116,104,168,74,234,42,253,35,254,40,236,47,171,79,119,109"/>
+<area shape="rect" id="Node000003" href="$synchrotron_8cpp.html#a85433be4a0da2f510240a603da8f7dff" title=" " alt="" coords="235,57,401,83"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="153,104,246,83,247,88,154,109"/>
+<area shape="rect" id="Node000004" href="$utilities_8h.html#a4520a27a10a2aef33c99ad8c679da404" title="Fast approximation of a raised to the power of b." alt="" coords="277,107,359,132"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="187,117,263,117,263,122,187,122"/>
+<area shape="rect" id="Node000006" href="$utilities_8h.html#ab8e81118f023df135835db8cce4f5f42" title="Returns the value of a single parameter." alt="" coords="592,107,643,132"/>
+<area shape="poly" id="edge10_Node000001_Node000006" title=" " alt="" coords="157,129,235,141,390,153,457,152,543,141,578,132,580,137,545,146,458,157,390,159,234,146,156,135"/>
+<area shape="rect" id="Node000008" href="$utilities_8h.html#a29a716285d00743072d357c4a64a7f85" title="Finds the root of a function using the bisection method." alt="" coords="449,208,544,233"/>
+<area shape="poly" id="edge11_Node000001_Node000008" title=" " alt="" coords="119,130,170,159,236,186,287,199,341,208,436,217,436,222,340,213,286,204,234,191,168,164,116,135"/>
+<area shape="rect" id="Node000005" href="$utilities_8h.html#afc584c30c352192de6847b1f4b8caf0e" title="Fast approximation of 2 raised to a power." alt="" coords="453,5,540,31"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="358,108,400,92,424,71,448,48,463,36,466,41,451,52,428,75,403,96,360,113"/>
+<area shape="poly" id="edge9_Node000004_Node000006" title=" " alt="" coords="358,106,444,90,494,87,544,91,580,101,578,106,544,97,494,93,444,95,359,111"/>
+<area shape="rect" id="Node000007" href="$utilities_8h.html#afe0a1b1b7509ac4df83fcc0e510f281b" title="Fast approximation of the base&#45;2 logarithm." alt="" coords="455,107,538,132"/>
+<area shape="poly" id="edge7_Node000004_Node000007" title=" " alt="" coords="359,117,441,117,441,122,359,122"/>
+<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="519,29,546,48,596,95,592,99,542,52,516,33"/>
+<area shape="poly" id="edge6_Node000006_Node000006" title=" " alt="" coords="596,108,592,98,594,89,603,82,617,80,634,83,641,92,637,95,631,88,617,85,605,87,599,92,598,98,601,105"/>
+<area shape="poly" id="edge8_Node000007_Node000006" title=" " alt="" coords="539,117,578,117,578,122,539,122"/>
+<area shape="poly" id="edge12_Node000008_Node000006" title=" " alt="" coords="516,206,542,187,592,140,596,144,546,191,519,210"/>
 </map>

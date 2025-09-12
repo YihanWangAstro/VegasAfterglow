@@ -72,7 +72,7 @@ All C++ code should be documented using Doxygen-style comments:
 
       /**
        * @brief Brief description of the function or class
-       * 
+       *
        * Detailed description that can span multiple lines and provide
        * more in-depth information about the functionality.
        *
@@ -95,7 +95,7 @@ All C++ code should be documented using Doxygen-style comments:
 
       /**
        * @brief Calculates the synchrotron spectral power
-       * 
+       *
        * The formula used is:
        * \f[
        *    P(\nu) = \frac{4\pi}{3} r_e m_e c^2 \gamma^2 B^2 F(\nu/\nu_c)
@@ -206,4 +206,4 @@ Please be respectful and considerate of others when contributing to this project
 License
 -------
 
-By contributing to this project, you agree that your contributions will be licensed under the project's BSD-3-Clause License. 
+By contributing to this project, you agree that your contributions will be licensed under the project's BSD-3-Clause License.

@@ -467,9 +467,11 @@ Variables</h2></td></tr>
 <p>Literal operator for converting long double literals to Real. </p>
 
 <p class="definition">Definition at line <a class="el" href="macros_8h_source.html#l00025">25</a> of file <a class="el" href="macros_8h_source.html">macros.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   25</span>{ <span class="keywordflow">return</span> <span class="keyword">static_cast&lt;</span><a class="code hl_typedef" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a><span class="keyword">&gt;</span>(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">x</a>); }</div>
+<div class="fragment"><div class="line"><span class="lineno">   25</span>                                            {</div>
+<div class="line"><span class="lineno">   26</span>    <span class="keywordflow">return</span> <span class="keyword">static_cast&lt;</span><a class="code hl_typedef" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a><span class="keyword">&gt;</span>(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">x</a>);</div>
+<div class="line"><span class="lineno">   27</span>}</div>
 <div class="ttc" id="amacros_8h_html_a4b04262b81aa7d31eb5d2f607e2a35de"><div class="ttname"><a href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a></div><div class="ttdeci">double Real</div><div class="ttdoc">Type alias for floating-point precision used throughout the code.</div><div class="ttdef"><b>Definition</b> <a href="macros_8h_source.html#l00022">macros.h:22</a></div></div>
-<div class="ttc" id="autilities_8h_html_ab8e81118f023df135835db8cce4f5f42"><div class="ttname"><a href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">max</a></div><div class="ttdeci">T max(T value)</div><div class="ttdoc">Returns the value of a single parameter.</div><div class="ttdef"><b>Definition</b> <a href="utilities_8h_source.html#l00287">utilities.h:287</a></div></div>
+<div class="ttc" id="autilities_8h_html_ab8e81118f023df135835db8cce4f5f42"><div class="ttname"><a href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">max</a></div><div class="ttdeci">T max(T value)</div><div class="ttdoc">Returns the value of a single parameter.</div><div class="ttdef"><b>Definition</b> <a href="utilities_8h_source.html#l00311">utilities.h:311</a></div></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -499,8 +501,10 @@ Variables</h2></td></tr>
 
 <p>Literal operator for converting integer literals to Real. </p>
 
-<p class="definition">Definition at line <a class="el" href="macros_8h_source.html#l00028">28</a> of file <a class="el" href="macros_8h_source.html">macros.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   28</span>{ <span class="keywordflow">return</span> <span class="keyword">static_cast&lt;</span><a class="code hl_typedef" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a><span class="keyword">&gt;</span>(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">x</a>); }</div>
+<p class="definition">Definition at line <a class="el" href="macros_8h_source.html#l00030">30</a> of file <a class="el" href="macros_8h_source.html">macros.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   30</span>                                                   {</div>
+<div class="line"><span class="lineno">   31</span>    <span class="keywordflow">return</span> <span class="keyword">static_cast&lt;</span><a class="code hl_typedef" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a><span class="keyword">&gt;</span>(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">x</a>);</div>
+<div class="line"><span class="lineno">   32</span>}</div>
 </div><!-- fragment -->
 </div>
 </div>

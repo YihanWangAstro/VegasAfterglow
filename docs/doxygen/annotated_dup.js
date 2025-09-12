@@ -5,6 +5,7 @@ var annotated_dup =
     [ "Coord", "classCoord.html", "classCoord" ],
     [ "Ejecta", "classEjecta.html", "classEjecta" ],
     [ "Empty", "classEmpty.html", null ],
+    [ "FluxData", "structFluxData.html", "structFluxData" ],
     [ "ForwardShockEqn", "classForwardShockEqn.html", "classForwardShockEqn" ],
     [ "ForwardState", "structForwardState.html", "structForwardState" ],
     [ "FRShockEqn", "classFRShockEqn.html", "classFRShockEqn" ],

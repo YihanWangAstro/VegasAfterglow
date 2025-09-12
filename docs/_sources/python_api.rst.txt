@@ -40,13 +40,13 @@ Example:
 .. code-block:: python
 
     from VegasAfterglow import ObsData
-    
+
     # Create an instance to store observational data
     data = ObsData()
-    
+
     # Add light curve data
     data.add_light_curve(nu_cgs=4.84e14, t_cgs=time_data, Fnu_cgs=flux_data, Fnu_err=flux_error)
-    
+
     # Add spectrum data
     data.add_spectrum(t_cgs=3000, nu_cgs=nu_data, Fnu_cgs=spectrum_data, Fnu_err=spectrum_error)
 
@@ -67,14 +67,14 @@ Example:
 .. code-block:: python
 
     from VegasAfterglow import Setups
-    
+
     # Create configuration
     cfg = Setups()
-    
+
     # Source properties
-    cfg.lumi_dist = 3.364e28    # Luminosity distance [cm]  
+    cfg.lumi_dist = 3.364e28    # Luminosity distance [cm]
     cfg.z = 1.58               # Redshift
-    
+
     # Physical model configuration
     cfg.medium = "wind"        # Ambient medium: "wind", "ISM", or "user"
     cfg.jet = "powerlaw"       # Jet structure: "powerlaw", "gaussian", "tophat", or "user"
@@ -120,7 +120,7 @@ Example:
 .. code-block:: python
 
     from VegasAfterglow import ParamDef, Scale
-    
+
     mc_params = [
         ParamDef("E_iso",   1e50,  1e54,  Scale.LOG),       # Isotropic energy [erg]
         ParamDef("Gamma0",     5,  1000,  Scale.LOG),       # Lorentz factor at the core
@@ -163,10 +163,10 @@ Example:
 .. code-block:: python
 
     from VegasAfterglow import Fitter
-    
+
     # Create the fitter object
     fitter = Fitter(data, cfg)
-    
+
     # Run the MCMC fitting
     result = fitter.fit(
         param_defs=mc_params,          # Parameter definitions
@@ -175,10 +175,10 @@ Example:
         burn_frac=0.3,                 # Fraction of steps to discard as burn-in
         thin=1                         # Thinning factor
     )
-    
+
     # Generate light curves with best-fit parameters
     lc_best = fitter.specific_flux(result.best_params, t_out, bands)
-    
+
     # Generate spectra with best-fit parameters
     spec_best = fitter.specific_flux(result.best_params, times, nu_out)
 
@@ -253,10 +253,10 @@ Here's an example of a well-documented class:
     class ParamDef:
         """
         Single-parameter definition for MCMC.
-        
+
         This class defines a parameter to be used in MCMC fitting, including
         its name, initial value, prior range, and sampling scale.
-        
+
         Parameters
         ----------
         name : str
@@ -269,11 +269,11 @@ Here's an example of a well-documented class:
             Upper bound for the parameter (not needed for FIXED scale)
         scale : Scale, optional
             Sampling scale (LINEAR, LOG, or FIXED), default is LINEAR
-            
+
         Notes
         -----
         When scale=LOG, we sample log10(x), then transform via 10**v.
         When scale=FIXED, the parameter never appears in the sampler.
         """
 
-For more details on NumPy-style docstrings, see the :doc:`contributing` page. 
+For more details on NumPy-style docstrings, see the :doc:`contributing` page.

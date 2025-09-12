@@ -16,7 +16,7 @@ VegasAfterglow requires the following to build:
   * **Windows**: MSVC 19.29+ (Visual Studio 2019 16.10+) or MinGW-w64 with GCC 10+
 
 * **CMake 3.15+**:
-  
+
   * Required for building the python package from source
 
 * **Build tools**:
@@ -91,4 +91,4 @@ Requirements
 
 * Python 3.8 or higher
 * C++20 compatible compiler (for building from source)
-* NumPy, SciPy, and other dependencies (automatically installed when using pip) 
+* NumPy, SciPy, and other dependencies (automatically installed when using pip)

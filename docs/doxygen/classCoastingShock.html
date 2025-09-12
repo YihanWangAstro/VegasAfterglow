@@ -158,12 +158,12 @@ Public Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="prompt_8cpp_source.html#l00010">10</a> of file <a class="el" href="prompt_8cpp_source.html">prompt.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   11</span>    : <a class="code hl_variable" href="classCoastingShock.html#a8fc6803e5e936e8450750ed14b3283b0">r</a>({phi_size, theta_size, t_size}, 0),        <span class="comment">// Initialize engine time grid with 0</span></div>
-<div class="line"><span class="lineno">   12</span>      <a class="code hl_variable" href="classCoastingShock.html#a2f12306e68678543e9dae0d92dcca21b">theta</a>({phi_size, theta_size, t_size}, 0),    <span class="comment">// Initialize theta grid with 0</span></div>
-<div class="line"><span class="lineno">   13</span>      <a class="code hl_variable" href="classCoastingShock.html#a174cc05509ef0c4aca0d2e5f0b7a7343">Gamma</a>({phi_size, theta_size, t_size}, 1),    <span class="comment">// Initialize Gamma_rel grid with 1</span></div>
-<div class="line"><span class="lineno">   14</span>      <a class="code hl_variable" href="classCoastingShock.html#ab94699fa87c9feb1fa9da4784b7fe771">epsilon</a>({phi_size, theta_size, t_size}, 0),  <span class="comment">// Initialize column density grid with 0</span></div>
-<div class="line"><span class="lineno">   15</span>      phi_size(phi_size),                          <span class="comment">// Store phi grid size</span></div>
-<div class="line"><span class="lineno">   16</span>      theta_size(theta_size),                      <span class="comment">// Store theta grid size</span></div>
+<div class="fragment"><div class="line"><span class="lineno">   11</span>    : <a class="code hl_variable" href="classCoastingShock.html#a8fc6803e5e936e8450750ed14b3283b0">r</a>({phi_size, theta_size, t_size}, 0),       <span class="comment">// Initialize engine time grid with 0</span></div>
+<div class="line"><span class="lineno">   12</span>      <a class="code hl_variable" href="classCoastingShock.html#a2f12306e68678543e9dae0d92dcca21b">theta</a>({phi_size, theta_size, t_size}, 0),   <span class="comment">// Initialize theta grid with 0</span></div>
+<div class="line"><span class="lineno">   13</span>      <a class="code hl_variable" href="classCoastingShock.html#a174cc05509ef0c4aca0d2e5f0b7a7343">Gamma</a>({phi_size, theta_size, t_size}, 1),   <span class="comment">// Initialize Gamma_rel grid with 1</span></div>
+<div class="line"><span class="lineno">   14</span>      <a class="code hl_variable" href="classCoastingShock.html#ab94699fa87c9feb1fa9da4784b7fe771">epsilon</a>({phi_size, theta_size, t_size}, 0), <span class="comment">// Initialize column density grid with 0</span></div>
+<div class="line"><span class="lineno">   15</span>      phi_size(phi_size),                         <span class="comment">// Store phi grid size</span></div>
+<div class="line"><span class="lineno">   16</span>      theta_size(theta_size),                     <span class="comment">// Store theta grid size</span></div>
 <div class="line"><span class="lineno">   17</span>      t_size(t_size) {}</div>
 <div class="ttc" id="aclassCoastingShock_html_a174cc05509ef0c4aca0d2e5f0b7a7343"><div class="ttname"><a href="classCoastingShock.html#a174cc05509ef0c4aca0d2e5f0b7a7343">CoastingShock::Gamma</a></div><div class="ttdeci">MeshGrid3d Gamma</div><div class="ttdef"><b>Definition</b> <a href="prompt_8h_source.html#l00031">prompt.h:31</a></div></div>
 <div class="ttc" id="aclassCoastingShock_html_a2f12306e68678543e9dae0d92dcca21b"><div class="ttname"><a href="classCoastingShock.html#a2f12306e68678543e9dae0d92dcca21b">CoastingShock::theta</a></div><div class="ttdeci">MeshGrid3d theta</div><div class="ttdef"><b>Definition</b> <a href="prompt_8h_source.html#l00030">prompt.h:30</a></div></div>
@@ -222,7 +222,7 @@ Public Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="prompt_8h_source.html#l00034">34</a> of file <a class="el" href="prompt_8h_source.html">prompt.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   34</span>{ <span class="keywordflow">return</span> std::make_tuple(phi_size, theta_size, t_size); }  <span class="comment">// Returns grid dimensions</span></div>
+<div class="fragment"><div class="line"><span class="lineno">   34</span>{ <span class="keywordflow">return</span> std::make_tuple(phi_size, theta_size, t_size); } <span class="comment">// Returns grid dimensions</span></div>
 </div><!-- fragment --><div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">

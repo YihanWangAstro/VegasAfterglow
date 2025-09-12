@@ -13,7 +13,7 @@ Model Setup and Calculation
 
 A: This is usually caused by one of the following:
 
-- **Time array ordering**: Ensure your time array is in ascending order when using ``specific_flux()``. Use ``specific_flux_series()`` for random order time arrays.
+- **Time array ordering**: Ensure your time array is in ascending order when using ``specific_flux()``.
 - **Resolution too low**: Increase the resolution parameters in ``Model(resolutions=(phi_ppd, theta_ppd, t_ppd))``
 - **User-defined profiles**: For custom jet/medium profiles, ensure they are smooth and well-behaved
 
@@ -21,7 +21,7 @@ A: This is usually caused by one of the following:
 
 A: Performance can be improved by:
 
-- **Reducing resolution**: Use ``resolutions=(0.1, 3, 5)`` for speed, ``(0.3, 5, 10)`` for accuracy
+- **Reducing resolution**: Use ``resolutions=(0.1, 1, 10)`` for speed, ``(0.3, 5, 20)`` for accuracy
 - **Limiting frequency/time ranges**: Calculate only the bands and times you need
 - **Using built-in profiles**: Built-in jet structures are faster than user-defined Python functions
 - **For MCMC**: Consider using fewer parameters or coarser resolution
@@ -59,7 +59,7 @@ A: Try the following:
 
 A: Optimization strategies:
 
-- **Reduce resolution**: Use ``resolution=(0.5, 1, 5)`` for initial exploration
+- **Reduce resolution**: Use ``resolution=(0.3, 1, 10)`` for initial exploration
 - **Fewer parameters**: Fix some parameters with ``Scale.FIXED``
 - **Coarser time/frequency grids**: Use fewer data points for initial fits
 - **Parallel processing**: Ensure you're using multiple cores
@@ -146,7 +146,7 @@ The ``resolutions`` parameter in ``Model()`` controls computational accuracy vs 
      - Fast
      - Good
    * - MCMC fitting
-     - ``(0.3, 1, 10)``
+     - ``(0.3, 2, 15)``
      - Moderate
      - High
    * - Publication quality
@@ -157,8 +157,8 @@ The ``resolutions`` parameter in ``Model()`` controls computational accuracy vs 
 Where ``resolutions=(phi_ppd, theta_ppd, t_ppd)``:
 
 - ``phi_ppd``: Points per degree in azimuthal direction
-- ``theta_ppd``: Points per degree in polar direction
-- ``t_ppd``: Points per decade in time direction
+- ``theta_ppd``: Points per degree in polar direction. The code sets a minimum of 56 points across the jet profile.
+- ``t_ppd``: Points per decade in time direction. The code sets a minimum of 24 time points.
 
 Memory Usage
 ^^^^^^^^^^^^
@@ -178,7 +178,7 @@ If you encounter issues not covered here:
 1. **Check the examples**: The :doc:`examples` page covers many common use cases
 2. **Search existing issues**: Visit our `GitHub Issues <https://github.com/YihanWangAstro/VegasAfterglow/issues>`_
 3. **Create a new issue**: Include:
-   
+
    - VegasAfterglow version: ``import VegasAfterglow; print(VegasAfterglow.__version__)``
    - Python version and platform
    - Minimal code example that reproduces the problem
@@ -197,7 +197,3 @@ Model Development Workflow
 3. **Parameter exploration**: Use direct model calculations before MCMC
 4. **Incremental complexity**: Add features (reverse shock, IC, etc.) one at a time
 5. **Resolution testing**: Verify results are converged by increasing resolution
-
-
-
-

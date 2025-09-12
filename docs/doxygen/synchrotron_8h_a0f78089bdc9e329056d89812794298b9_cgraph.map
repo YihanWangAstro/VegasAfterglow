@@ -1,17 +1,16 @@
 <map id="generate_syn_photons" name="generate_syn_photons">
-<area shape="rect" id="Node000001" title="Populates an existing photon grid with values based on shock and electron grid." alt="" coords="5,83,175,108"/>
-<area shape="rect" id="Node000002" href="$synchrotron_8cpp.html#a936bfaa522ec8295a21d253e5453188d" title="Calculates synchrotron frequency for a given Lorentz factor and magnetic field." alt="" coords="437,5,580,31"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="121,80,168,63,222,47,326,30,423,20,424,25,327,35,223,53,170,68,123,85"/>
-<area shape="rect" id="Node000003" href="$utilities_8h.html#ab8e81118f023df135835db8cce4f5f42" title="Returns the value of a single parameter." alt="" coords="636,85,687,111"/>
-<area shape="poly" id="edge9_Node000001_Node000003" title=" " alt="" coords="175,91,364,89,588,91,622,93,622,98,588,97,364,94,175,96"/>
-<area shape="rect" id="Node000004" href="$synchrotron_8cpp.html#ad0ce654aca1c62f43ae108ca8772ed0f" title=" " alt="" coords="223,111,381,136"/>
-<area shape="poly" id="edge4_Node000001_Node000004" title=" " alt="" coords="175,104,209,108,209,114,174,109"/>
-<area shape="rect" id="Node000006" href="$utilities_8h.html#afe0a1b1b7509ac4df83fcc0e510f281b" title="Fast approximation of the base&#45;2 logarithm." alt="" coords="261,164,343,189"/>
-<area shape="poly" id="edge7_Node000001_Node000006" title=" " alt="" coords="123,106,224,146,252,157,250,162,222,151,121,111"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="546,28,589,48,633,75,630,80,587,52,544,33"/>
-<area shape="poly" id="edge3_Node000003_Node000003" title=" " alt="" coords="636,87,630,77,633,67,644,61,661,59,682,62,691,71,688,75,680,67,661,64,646,66,637,71,636,76,640,84"/>
-<area shape="rect" id="Node000005" href="$synchrotron_8cpp.html#a35361f36f8d73e95dffabdc7cb0f3177" title=" " alt="" coords="429,106,588,146"/>
-<area shape="poly" id="edge5_Node000004_Node000005" title=" " alt="" coords="382,122,416,122,416,127,382,127"/>
-<area shape="poly" id="edge6_Node000005_Node000003" title=" " alt="" coords="588,109,622,102,623,108,589,114"/>
-<area shape="poly" id="edge8_Node000006_Node000003" title=" " alt="" coords="344,179,394,182,456,181,523,174,587,156,615,139,638,119,642,123,618,144,589,160,524,179,457,187,394,187,344,184"/>
+<area shape="rect" id="Node000001" title="Populates an existing photon grid with values based on shock and electron grid." alt="" coords="5,80,175,105"/>
+<area shape="rect" id="Node000002" href="$synchrotron_8cpp.html#a936bfaa522ec8295a21d253e5453188d" title="Calculates synchrotron frequency for a given Lorentz factor and magnetic field." alt="" coords="231,5,373,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="121,77,222,39,244,32,245,37,224,45,123,82"/>
+<area shape="rect" id="Node000003" href="$synchrotron_8cpp.html#ad0ce654aca1c62f43ae108ca8772ed0f" title=" " alt="" coords="223,55,381,80"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="174,80,209,76,209,81,175,85"/>
+<area shape="rect" id="Node000005" href="$utilities_8h.html#ab8e81118f023df135835db8cce4f5f42" title="Returns the value of a single parameter." alt="" coords="636,105,687,131"/>
+<area shape="poly" id="edge8_Node000001_Node000005" title=" " alt="" coords="175,94,622,114,622,119,175,99"/>
+<area shape="rect" id="Node000006" href="$utilities_8h.html#afe0a1b1b7509ac4df83fcc0e510f281b" title="Fast approximation of the base&#45;2 logarithm." alt="" coords="467,156,550,181"/>
+<area shape="poly" id="edge6_Node000001_Node000006" title=" " alt="" coords="124,103,171,119,223,134,347,154,454,163,454,169,346,159,222,139,169,124,122,108"/>
+<area shape="rect" id="Node000004" href="$synchrotron_8cpp.html#a35361f36f8d73e95dffabdc7cb0f3177" title=" " alt="" coords="429,41,588,81"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="382,62,415,61,416,66,382,67"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="563,78,624,102,622,107,562,83"/>
+<area shape="poly" id="edge5_Node000005_Node000005" title=" " alt="" coords="636,107,630,97,633,87,644,81,661,79,682,82,691,91,688,95,680,87,661,84,646,86,637,91,636,96,640,104"/>
+<area shape="poly" id="edge7_Node000006_Node000005" title=" " alt="" coords="547,153,622,128,623,133,549,158"/>
 </map>

@@ -18,7 +18,7 @@ var searchData=
   ['mcmc_2eh_15',['mcmc.h',['../mcmc_8h.html',1,'']]],
   ['me_16',['me',['../namespacecon.html#a740c8edb3d4f2d904a1c76002f84fb7e',1,'con']]],
   ['mec2_17',['mec2',['../namespacecon.html#ae1b8cddbe12f755f5d01b86b0e2b9e14',1,'con']]],
-  ['medium_18',['medium',['../structConfigParams.html#aac924ce1108981926235f565f75d75fe',1,'ConfigParams::medium'],['../classMedium.html',1,'Medium'],['../classSimpleShockEqn.html#a542dc5b45178ca91cf1dabfc4cfa9829',1,'SimpleShockEqn::medium'],['../classFRShockEqn.html#a516430d788da457f99a0a9f913c4555c',1,'FRShockEqn::medium'],['../classForwardShockEqn.html#a0bec65b319edbb6294eee8057370be57',1,'ForwardShockEqn::medium'],['../classMedium.html#ab077493d8330ddd77c1ef434908adf73',1,'Medium::Medium()=default'],['../classMedium.html#aacd7cf0b6fb4dee7adf3a5f2d32356e7',1,'Medium::Medium(TernaryFunc rho) noexcept']]],
+  ['medium_18',['medium',['../classMedium.html#ab077493d8330ddd77c1ef434908adf73',1,'Medium::Medium()'],['../classMedium.html',1,'Medium'],['../classMedium.html#aacd7cf0b6fb4dee7adf3a5f2d32356e7',1,'Medium::Medium()'],['../structConfigParams.html#aac924ce1108981926235f565f75d75fe',1,'ConfigParams::medium'],['../classSimpleShockEqn.html#a542dc5b45178ca91cf1dabfc4cfa9829',1,'SimpleShockEqn::medium'],['../classFRShockEqn.html#a516430d788da457f99a0a9f913c4555c',1,'FRShockEqn::medium'],['../classForwardShockEqn.html#a0bec65b319edbb6294eee8057370be57',1,'ForwardShockEqn::medium']]],
   ['medium_2eh_19',['medium.h',['../medium_8h.html',1,'']]],
   ['merge_5fgrids_20',['merge_grids',['../mesh_8h.html#a3c066f2c8e6d102d7a56de8cb42cf5a8',1,'mesh.h']]],
   ['mesh_2ecpp_21',['mesh.cpp',['../mesh_8cpp.html',1,'']]],

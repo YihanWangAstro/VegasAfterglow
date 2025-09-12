@@ -491,12 +491,12 @@ Users are recommended to set up the user-defined jet structure in the C++ level 
 <span class="c1">#set the jet duration to be 100 seconds, the default is 1 second. The jet duration affects the reverse shock thickness (thin shell or thick shell).</span>
 <span class="n">jet</span> <span class="o">=</span> <span class="n">TophatJet</span><span class="p">(</span><span class="n">theta_c</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">E_iso</span><span class="o">=</span><span class="mf">1e52</span><span class="p">,</span> <span class="n">Gamma0</span><span class="o">=</span><span class="mi">300</span><span class="p">,</span> <span class="n">duration</span> <span class="o">=</span> <span class="mi">100</span><span class="p">)</span>
 
-<span class="c1"># Create a radiation model with self-Compton radiation</span>
+<span class="c1"># Create a radiation model with both forward and reverse shock synchrotron radiation</span>
 <span class="n">fwd_rad</span> <span class="o">=</span> <span class="n">Radiation</span><span class="p">(</span><span class="n">eps_e</span><span class="o">=</span><span class="mf">1e-1</span><span class="p">,</span> <span class="n">eps_B</span><span class="o">=</span><span class="mf">1e-3</span><span class="p">,</span> <span class="n">p</span><span class="o">=</span><span class="mf">2.3</span><span class="p">)</span>
 <span class="n">rvs_rad</span> <span class="o">=</span> <span class="n">Radiation</span><span class="p">(</span><span class="n">eps_e</span><span class="o">=</span><span class="mf">1e-2</span><span class="p">,</span> <span class="n">eps_B</span><span class="o">=</span><span class="mf">1e-4</span><span class="p">,</span> <span class="n">p</span><span class="o">=</span><span class="mf">2.4</span><span class="p">)</span>
 
 <span class="c1">#..other settings</span>
-<span class="n">model</span> <span class="o">=</span> <span class="n">Model</span><span class="p">(</span><span class="n">forward_rad</span><span class="o">=</span><span class="n">fwd_rad</span><span class="p">,</span> <span class="n">reverse_rad</span><span class="o">=</span><span class="n">rvs_rad</span><span class="p">,</span> <span class="n">resolutions</span><span class="o">=</span><span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span><span class="o">...</span><span class="p">)</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">Model</span><span class="p">(</span><span class="n">forward_rad</span><span class="o">=</span><span class="n">fwd_rad</span><span class="p">,</span> <span class="n">reverse_rad</span><span class="o">=</span><span class="n">rvs_rad</span><span class="p">,</span> <span class="n">resolutions</span><span class="o">=</span><span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span><span class="o">...</span><span class="p">)</span>
 
 <span class="n">times</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">logspace</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">200</span><span class="p">)</span>
 
@@ -516,7 +516,7 @@ Users are recommended to set up the user-defined jet structure in the C++ level 
 </div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>You may increase the resolution of the grid to improve the accuracy of the reverse shock synchrotron radiation.</p>
+<p>You may increase the resolution of the grid to improve the accuracy of the reverse shock synchrotron radiation if you see spiky features.</p>
 </div>
 </section>
 <section id="inverse-compton-cooling">

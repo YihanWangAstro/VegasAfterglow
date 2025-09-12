@@ -1,7 +1,6 @@
 var pymodel_8cpp =
 [
     [ "convert_unit", "pymodel_8cpp.html#aa920671831cc213a5c0858813e42279f", null ],
-    [ "is_ascending", "pymodel_8cpp.html#a65fbb7ac1dd1f2667e68724a512f691c", null ],
     [ "PyGaussianJet", "pymodel_8cpp.html#aebad6fd71005d1bec168be9482a8e953", null ],
     [ "PyISM", "pymodel_8cpp.html#a43af01d16838e6513792deaeb727fbe5", null ],
     [ "PyPowerLawJet", "pymodel_8cpp.html#a3c02f138a0e774d5b0c5d2ad25f0fa85", null ],

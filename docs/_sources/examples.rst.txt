@@ -16,7 +16,7 @@ Setting up a simple afterglow model
     import matplotlib.pyplot as plt
     import numpy as np
     from VegasAfterglow import ISM, TophatJet, Observer, Radiation, Model
-    
+
     # Define the circumburst environment (constant density ISM)
     medium = ISM(n_ism=1)
 
@@ -33,10 +33,10 @@ Setting up a simple afterglow model
     model = Model(jet=jet, medium=medium, observer=obs, forward_rad=rad, resolutions=(0.3,1,10))
 
     # Define time range for light curve calculation
-    times = np.logspace(2, 8, 200)  
+    times = np.logspace(2, 8, 200)
 
     # Define observing frequencies (radio, optical, X-ray bands in Hz)
-    bands = np.array([1e9, 1e14, 1e17])  
+    bands = np.array([1e9, 1e14, 1e17])
 
     # Calculate the afterglow emission at each time and frequency
     # NOTE that the times array needs to be in ascending order
@@ -45,7 +45,7 @@ Setting up a simple afterglow model
     # Visualize the multi-wavelength light curves
     plt.figure(figsize=(4.8, 3.6),dpi=200)
 
-    # Plot each frequency band 
+    # Plot each frequency band
     for i, nu in enumerate(bands):
         exp = int(np.floor(np.log10(nu)))
         base = nu / 10**exp
@@ -55,10 +55,10 @@ Setting up a simple afterglow model
     plt.ylabel('Flux Density (erg/cm²/s/Hz)')
     plt.legend()
 
-    # Define broad frequency range (10⁵ to 10²² Hz) 
-    frequencies = np.logspace(5, 22, 200)  
+    # Define broad frequency range (10⁵ to 10²² Hz)
+    frequencies = np.logspace(5, 22, 200)
 
-    # Select specific time epochs for spectral snapshots 
+    # Select specific time epochs for spectral snapshots
     epochs = np.array([1e2, 1e3, 1e4, 1e5 ,1e6, 1e7, 1e8])
 
     # Calculate spectra at each epoch
@@ -92,10 +92,10 @@ Suppose you want to calculate the flux at specific time-frequency pairs (t_i, nu
 .. code-block:: python
 
     # Define time range for light curve calculation
-    times = np.logspace(2, 8, 200)  
+    times = np.logspace(2, 8, 200)
 
     # Define observing frequencies (must be the same length as times)
-    bands = np.logspace(9,17, 200)  
+    bands = np.logspace(9,17, 200)
 
     results = model.specific_flux_series(times, bands) #times array could be random order
 
@@ -109,17 +109,17 @@ For observations with finite exposure times, you can calculate time-averaged flu
 .. code-block:: python
 
     # Define observation times (start of exposure)
-    times = np.logspace(2, 8, 50)  
-    
+    times = np.logspace(2, 8, 50)
+
     # Define observing frequencies (must be the same length as times)
-    bands = np.logspace(9, 17, 50)  
-    
+    bands = np.logspace(9, 17, 50)
+
     # Define exposure times for each observation (in seconds)
     expo_time = np.ones_like(times) * 100  # 100-second exposures
-    
+
     # Calculate time-averaged flux with 20 sample points per exposure
     results = model.specific_flux_series_with_expo(times, bands, expo_time, num_points=20)
-    
+
     # The returned results is a dictionary with arrays of the same shape as input times and bands
     # Each flux value represents the average over the corresponding exposure time
 
@@ -155,7 +155,7 @@ Stratified Medium
     # A = 0 (default): fallback to n = n_ism
     # n_0 = inf (default): wind bubble, from wind profile to ism profile
     # A = 0 & n_0 = inf: pure wind;
-    wind = Wind(A_star=0.1, n_ism = 1, n_0 = 1e-3)  
+    wind = Wind(A_star=0.1, n_ism = 1, n_0 = 1e-3)
 
     #..other settings
     model = Model(medium=wind, ...)
@@ -174,7 +174,7 @@ User-Defined Medium
     def density(phi, theta, r):# r in cm, phi and theta in radians
         return mp # n_ism =  1 cm^-3
         #return whatever density profile (cm^-3) you want as a function of phi, theta, and r
-    
+
     # Create a user-defined medium
     medium = Medium(rho=density)
 
@@ -270,9 +270,9 @@ Jet with Spreading
     from VegasAfterglow import TophatJet
 
     jet = TophatJet(
-        theta_c=0.05,        
-        E_iso=1e53,          
-        Gamma0=300,         
+        theta_c=0.05,
+        E_iso=1e53,
+        Gamma0=300,
         spreading=True       # Enable spreading
     )
 
@@ -317,7 +317,7 @@ Those profiles are optional and will be set to zero function if not provided.
     def Gamma0_profile(phi, theta):
         return 300 # Gamma0 = 300
         #return whatever lorentz factor profile you want as a function of phi and theta
-    
+
     # Define a custom magnetization profile function, optional
     def sigma0_profile(phi, theta):
         return 0.1 # sigma = 0.1
@@ -347,13 +347,13 @@ Those profiles are optional and will be set to zero function if not provided.
     Setting user-defined structured jet in the Python level is OK for light curve and spectrum calculation. However, it is not recommended for MCMC parameter fitting if you do care about the performance.
     The reason is that setting user-defined profiles in the Python level leads to a large overhead due to the Python-C++ inter-process communication.
     Users are recommended to set up the user-defined jet structure in the C++ level for MCMC parameter fitting for better performance, if you want the best performance.
-          
+
 
 Radiation Processes
 -------------------
 
 Reverse Shock Emission
-^^^^^^^^^^^^^^^^^^^^^^    
+^^^^^^^^^^^^^^^^^^^^^^
 
 .. code-block:: python
 
@@ -362,22 +362,22 @@ Reverse Shock Emission
     #set the jet duration to be 100 seconds, the default is 1 second. The jet duration affects the reverse shock thickness (thin shell or thick shell).
     jet = TophatJet(theta_c=0.1, E_iso=1e52, Gamma0=300, duration = 100)
 
-    # Create a radiation model with self-Compton radiation
+    # Create a radiation model with both forward and reverse shock synchrotron radiation
     fwd_rad = Radiation(eps_e=1e-1, eps_B=1e-3, p=2.3)
     rvs_rad = Radiation(eps_e=1e-2, eps_B=1e-4, p=2.4)
 
     #..other settings
-    model = Model(forward_rad=fwd_rad, reverse_rad=rvs_rad, resolutions=(0.5, 10, 10),...)
+    model = Model(forward_rad=fwd_rad, reverse_rad=rvs_rad, resolutions=(0.5, 1, 10),...)
 
-    times = np.logspace(2, 8, 200)  
+    times = np.logspace(2, 8, 200)
 
-    bands = np.array([1e9, 1e14, 1e17])  
+    bands = np.array([1e9, 1e14, 1e17])
 
     results = model.specific_flux(times, bands)
-    
+
     plt.figure(figsize=(4.8, 3.6),dpi=200)
 
-    # Plot each frequency band 
+    # Plot each frequency band
     for i, nu in enumerate(bands):
         exp = int(np.floor(np.log10(nu)))
         base = nu / 10**exp
@@ -385,11 +385,11 @@ Reverse Shock Emission
         plt.loglog(times, results['syn_rvs'][i,:], label=fr'${base:.1f} \times 10^{{{exp}}}$ Hz')#reverse shock synchrotron
 
 .. note::
-    You may increase the resolution of the grid to improve the accuracy of the reverse shock synchrotron radiation.
+    You may increase the resolution of the grid to improve the accuracy of the reverse shock synchrotron radiation if you see spiky features.
 
 
 Inverse Compton Cooling
-^^^^^^^^^^^^^^^^^^^^^^^    
+^^^^^^^^^^^^^^^^^^^^^^^
 
 .. code-block:: python
 
@@ -414,15 +414,15 @@ Self-Synchrotron Compton Radiation
     #..other settings
     model = Model(forward_rad=rad, ...)
 
-    times = np.logspace(2, 8, 200)  
+    times = np.logspace(2, 8, 200)
 
-    bands = np.array([1e9, 1e14, 1e17])  
+    bands = np.array([1e9, 1e14, 1e17])
 
     results = model.specific_flux(times, bands)
 
     plt.figure(figsize=(4.8, 3.6),dpi=200)
 
-    # Plot each frequency band 
+    # Plot each frequency band
     for i, nu in enumerate(bands):
         exp = int(np.floor(np.log10(nu)))
         base = nu / 10**exp
@@ -435,9 +435,3 @@ Self-Synchrotron Compton Radiation
     (IC_cooling = True, KN = False, SSC = True): The IC radiation is calculated based on synchrotron spectrum with IC cooling, but without Klein-Nishina correction.
 
     (IC_cooling = True, KN = True, SSC = True): The IC radiation is calculated based on synchrotron spectrum with both IC cooling and Klein-Nishina correction.
-  
-
-
-    
-
-
