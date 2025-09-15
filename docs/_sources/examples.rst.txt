@@ -30,7 +30,7 @@ Setting up a simple afterglow model
     rad = Radiation(eps_e=1e-1, eps_B=1e-3, p=2.3, xi_e=1)
 
     # Combine all components into a complete afterglow model
-    model = Model(jet=jet, medium=medium, observer=obs, forward_rad=rad, resolutions=(0.3,1,10))
+    model = Model(jet=jet, medium=medium, observer=obs, fwd_rad=rad, resolutions=(0.3,1,10))
 
     # Define time range for light curve calculation
     times = np.logspace(2, 8, 200)
@@ -49,7 +49,7 @@ Setting up a simple afterglow model
     for i, nu in enumerate(bands):
         exp = int(np.floor(np.log10(nu)))
         base = nu / 10**exp
-        plt.loglog(times, results['syn'][i,:], label=fr'${base:.1f} \times 10^{{{exp}}}$ Hz')
+        plt.loglog(times, results.total[i,:], label=fr'${base:.1f} \times 10^{{{exp}}}$ Hz')
 
     plt.xlabel('Time (s)')
     plt.ylabel('Flux Density (erg/cm²/s/Hz)')
@@ -71,7 +71,7 @@ Setting up a simple afterglow model
     for i, t in enumerate(epochs):
         exp = int(np.floor(np.log10(t)))
         base = t / 10**exp
-        plt.loglog(frequencies, results['syn'][:,i], color=colors[i], label=fr'${base:.1f} \times 10^{{{exp}}}$ s')
+        plt.loglog(frequencies, results.total[:,i], color=colors[i], label=fr'${base:.1f} \times 10^{{{exp}}}$ s')
 
     # Add vertical lines marking the bands from the light curve plot
     for i, band in enumerate(bands):
@@ -99,7 +99,7 @@ Suppose you want to calculate the flux at specific time-frequency pairs (t_i, nu
 
     results = model.specific_flux_series(times, bands) #times array could be random order
 
-    # the returned results is a dictionary contains arrays of the same shape as the input times and bands.
+    # the returned results is a FluxDict object with arrays of the same shape as the input times and bands.
 
 Calculate flux with exposure time averaging
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -120,7 +120,7 @@ For observations with finite exposure times, you can calculate time-averaged flu
     # Calculate time-averaged flux with 20 sample points per exposure
     results = model.specific_flux_series_with_expo(times, bands, expo_time, num_points=20)
 
-    # The returned results is a dictionary with arrays of the same shape as input times and bands
+    # The returned results is a FluxDict object with arrays of the same shape as input times and bands
     # Each flux value represents the average over the corresponding exposure time
 
 .. note::
@@ -367,7 +367,7 @@ Reverse Shock Emission
     rvs_rad = Radiation(eps_e=1e-2, eps_B=1e-4, p=2.4)
 
     #..other settings
-    model = Model(forward_rad=fwd_rad, reverse_rad=rvs_rad, resolutions=(0.5, 1, 10),...)
+    model = Model(fwd_rad=fwd_rad, rvs_rad=rvs_rad, resolutions=(0.5, 1, 10),...)
 
     times = np.logspace(2, 8, 200)
 
@@ -381,8 +381,8 @@ Reverse Shock Emission
     for i, nu in enumerate(bands):
         exp = int(np.floor(np.log10(nu)))
         base = nu / 10**exp
-        plt.loglog(times, results['syn'][i,:], label=fr'${base:.1f} \times 10^{{{exp}}}$ Hz')
-        plt.loglog(times, results['syn_rvs'][i,:], label=fr'${base:.1f} \times 10^{{{exp}}}$ Hz')#reverse shock synchrotron
+        plt.loglog(times, results.fwd.sync[i,:], label=fr'${base:.1f} \times 10^{{{exp}}}$ Hz (fwd)')
+        plt.loglog(times, results.rvs.sync[i,:], label=fr'${base:.1f} \times 10^{{{exp}}}$ Hz (rvs)')#reverse shock synchrotron
 
 .. note::
     You may increase the resolution of the grid to improve the accuracy of the reverse shock synchrotron radiation if you see spiky features.
@@ -396,10 +396,10 @@ Inverse Compton Cooling
     from VegasAfterglow import Radiation
 
     # Create a radiation model with inverse Compton cooling (without Klein-Nishina correction) on synchrotron radiation
-    rad = Radiation(eps_e=1e-1, eps_B=1e-3, p=2.3, IC_cooling=True, KN=False)
+    rad = Radiation(eps_e=1e-1, eps_B=1e-3, p=2.3, ssc_cooling=True, kn=False)
 
     #..other settings
-    model = Model(forward_rad=rad, ...)
+    model = Model(fwd_rad=rad, ...)
 
 Self-Synchrotron Compton Radiation
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -409,10 +409,10 @@ Self-Synchrotron Compton Radiation
     from VegasAfterglow import Radiation
 
     # Create a radiation model with self-Compton radiation
-    rad = Radiation(eps_e=1e-1, eps_B=1e-3, p=2.3, SSC=True, KN=True, IC_cooling=True)
+    rad = Radiation(eps_e=1e-1, eps_B=1e-3, p=2.3, ssc=True, kn=True, ssc_cooling=True)
 
     #..other settings
-    model = Model(forward_rad=rad, ...)
+    model = Model(fwd_rad=rad, ...)
 
     times = np.logspace(2, 8, 200)
 
@@ -426,12 +426,12 @@ Self-Synchrotron Compton Radiation
     for i, nu in enumerate(bands):
         exp = int(np.floor(np.log10(nu)))
         base = nu / 10**exp
-        plt.loglog(times, results['syn'][i,:], label=fr'${base:.1f} \times 10^{{{exp}}}$ Hz')#synchrotron
-        plt.loglog(times, results['IC'][i,:], label=fr'${base:.1f} \times 10^{{{exp}}}$ Hz')#SSC
+        plt.loglog(times, results.fwd.sync[i,:], label=fr'${base:.1f} \times 10^{{{exp}}}$ Hz (sync)')#synchrotron
+        plt.loglog(times, results.fwd.ssc[i,:], label=fr'${base:.1f} \times 10^{{{exp}}}$ Hz (SSC)')#SSC
 
 .. note::
-    (IC_cooling = False, KN = False, SSC = True): The IC radiation is calculated based on synchrotron spectrum without IC cooling.
+    (ssc_cooling = False, kn = False, ssc = True): The IC radiation is calculated based on synchrotron spectrum without IC cooling.
 
-    (IC_cooling = True, KN = False, SSC = True): The IC radiation is calculated based on synchrotron spectrum with IC cooling, but without Klein-Nishina correction.
+    (ssc_cooling = True, kn = False, ssc = True): The IC radiation is calculated based on synchrotron spectrum with IC cooling, but without Klein-Nishina correction.
 
-    (IC_cooling = True, KN = True, SSC = True): The IC radiation is calculated based on synchrotron spectrum with both IC cooling and Klein-Nishina correction.
+    (ssc_cooling = True, kn = True, ssc = True): The IC radiation is calculated based on synchrotron spectrum with both IC cooling and Klein-Nishina correction.

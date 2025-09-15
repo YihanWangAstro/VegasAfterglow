@@ -198,7 +198,18 @@
                      <span class="n">Fnu_cgs</span><span class="o">=</span><span class="n">flux_data</span><span class="p">,</span> <span class="n">Fnu_err</span><span class="o">=</span><span class="n">flux_err</span><span class="p">,</span>
                      <span class="n">weights</span><span class="o">=</span><span class="n">weights</span><span class="p">)</span>
 
-<span class="c1"># Method 2: Load from CSV files</span>
+<span class="c1"># Method 2: Add frequency-integrated light curve (broadband flux)</span>
+<span class="c1"># For instruments with wide frequency coverage (e.g., BAT, LAT, Fermi)</span>
+<span class="n">nu_min</span> <span class="o">=</span> <span class="mf">1e17</span>  <span class="c1"># Lower frequency bound [Hz]</span>
+<span class="n">nu_max</span> <span class="o">=</span> <span class="mf">1e19</span>  <span class="c1"># Upper frequency bound [Hz]</span>
+<span class="n">num_points</span> <span class="o">=</span> <span class="mi">5</span>  <span class="c1"># Number of frequency points for integration</span>
+
+<span class="n">data</span><span class="o">.</span><span class="n">add_light_curve</span><span class="p">(</span><span class="n">nu_min_cgs</span><span class="o">=</span><span class="n">nu_min</span><span class="p">,</span> <span class="n">nu_max_cgs</span><span class="o">=</span><span class="n">nu_max</span><span class="p">,</span>
+                     <span class="n">num_points</span><span class="o">=</span><span class="n">num_points</span><span class="p">,</span> <span class="n">t_cgs</span><span class="o">=</span><span class="n">t_data</span><span class="p">,</span>
+                     <span class="n">Fnu_cgs</span><span class="o">=</span><span class="n">flux_data</span><span class="p">,</span> <span class="n">Fnu_err</span><span class="o">=</span><span class="n">flux_err</span><span class="p">,</span>
+                     <span class="n">weights</span><span class="o">=</span><span class="n">weights</span><span class="p">)</span>
+
+<span class="c1"># Method 3: Load from CSV files</span>
 <span class="n">bands</span> <span class="o">=</span> <span class="p">[</span><span class="mf">2.4e17</span><span class="p">,</span> <span class="mf">4.84e14</span><span class="p">,</span> <span class="mf">1.4e14</span><span class="p">]</span>  <span class="c1"># X-ray, optical, near-IR</span>
 <span class="n">lc_files</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;data/xray.csv&quot;</span><span class="p">,</span> <span class="s2">&quot;data/optical.csv&quot;</span><span class="p">,</span> <span class="s2">&quot;data/nir.csv&quot;</span><span class="p">]</span>
 
@@ -233,10 +244,10 @@
 
 <span class="c1"># Physics options</span>
 <span class="n">cfg</span><span class="o">.</span><span class="n">rvs_shock</span> <span class="o">=</span> <span class="kc">True</span>      <span class="c1"># Include reverse shock</span>
-<span class="n">cfg</span><span class="o">.</span><span class="n">fwd_SSC</span> <span class="o">=</span> <span class="kc">True</span>        <span class="c1"># Forward shock inverse Compton</span>
-<span class="n">cfg</span><span class="o">.</span><span class="n">rvs_SSC</span> <span class="o">=</span> <span class="kc">False</span>       <span class="c1"># Reverse shock inverse Compton</span>
-<span class="n">cfg</span><span class="o">.</span><span class="n">IC_cooling</span> <span class="o">=</span> <span class="kc">True</span>     <span class="c1"># IC cooling effects</span>
-<span class="n">cfg</span><span class="o">.</span><span class="n">KN</span> <span class="o">=</span> <span class="kc">True</span>             <span class="c1"># Klein-Nishina corrections</span>
+<span class="n">cfg</span><span class="o">.</span><span class="n">fwd_ssc</span> <span class="o">=</span> <span class="kc">True</span>        <span class="c1"># Forward shock inverse Compton</span>
+<span class="n">cfg</span><span class="o">.</span><span class="n">rvs_ssc</span> <span class="o">=</span> <span class="kc">False</span>       <span class="c1"># Reverse shock inverse Compton</span>
+<span class="n">cfg</span><span class="o">.</span><span class="n">ssc_cooling</span> <span class="o">=</span> <span class="kc">True</span>     <span class="c1"># IC cooling effects</span>
+<span class="n">cfg</span><span class="o">.</span><span class="n">kn</span> <span class="o">=</span> <span class="kc">True</span>             <span class="c1"># Klein-Nishina corrections</span>
 <span class="n">cfg</span><span class="o">.</span><span class="n">magnetar</span> <span class="o">=</span> <span class="kc">True</span>       <span class="c1"># Magnetar energy injection</span>
 
 <span class="c1"># Numerical parameters</span>
@@ -319,7 +330,7 @@
 <p><strong>Two-Component Jet</strong></p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">cfg</span> <span class="o">=</span> <span class="n">Setups</span><span class="p">()</span>
 <span class="n">cfg</span><span class="o">.</span><span class="n">medium</span> <span class="o">=</span> <span class="s2">&quot;ism&quot;</span>
-<span class="n">cfg</span><span class="o">.</span><span class="n">jet</span> <span class="o">=</span> <span class="s2">&quot;twocomponent&quot;</span>  <span class="c1"># Two-component jet</span>
+<span class="n">cfg</span><span class="o">.</span><span class="n">jet</span> <span class="o">=</span> <span class="s2">&quot;two_component&quot;</span>  <span class="c1"># Two-component jet</span>
 
 <span class="n">params</span> <span class="o">=</span> <span class="p">[</span>
     <span class="c1"># Narrow component</span>
@@ -345,7 +356,7 @@
 <p><strong>Step Power-law Jet</strong></p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">cfg</span> <span class="o">=</span> <span class="n">Setups</span><span class="p">()</span>
 <span class="n">cfg</span><span class="o">.</span><span class="n">medium</span> <span class="o">=</span> <span class="s2">&quot;ism&quot;</span>
-<span class="n">cfg</span><span class="o">.</span><span class="n">jet</span> <span class="o">=</span> <span class="s2">&quot;steppowerlaw&quot;</span>  <span class="c1"># Step power-law jet</span>
+<span class="n">cfg</span><span class="o">.</span><span class="n">jet</span> <span class="o">=</span> <span class="s2">&quot;step_powerlaw&quot;</span>  <span class="c1"># Step power-law jet</span>
 
 <span class="n">params</span> <span class="o">=</span> <span class="p">[</span>
     <span class="c1"># Core component (uniform)</span>
@@ -547,9 +558,9 @@
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">cfg</span> <span class="o">=</span> <span class="n">Setups</span><span class="p">()</span>
 <span class="n">cfg</span><span class="o">.</span><span class="n">medium</span> <span class="o">=</span> <span class="s2">&quot;ism&quot;</span>        <span class="c1"># Default medium</span>
 <span class="n">cfg</span><span class="o">.</span><span class="n">jet</span> <span class="o">=</span> <span class="s2">&quot;tophat&quot;</span>        <span class="c1"># Default jet</span>
-<span class="n">cfg</span><span class="o">.</span><span class="n">fwd_SSC</span> <span class="o">=</span> <span class="kc">True</span>        <span class="c1"># Forward shock SSC</span>
-<span class="n">cfg</span><span class="o">.</span><span class="n">IC_cooling</span> <span class="o">=</span> <span class="kc">True</span>     <span class="c1"># IC cooling effects</span>
-<span class="n">cfg</span><span class="o">.</span><span class="n">KN</span> <span class="o">=</span> <span class="kc">True</span>             <span class="c1"># Klein-Nishina corrections</span>
+<span class="n">cfg</span><span class="o">.</span><span class="n">fwd_ssc</span> <span class="o">=</span> <span class="kc">True</span>        <span class="c1"># Forward shock SSC</span>
+<span class="n">cfg</span><span class="o">.</span><span class="n">ssc_cooling</span> <span class="o">=</span> <span class="kc">True</span>     <span class="c1"># IC cooling effects</span>
+<span class="n">cfg</span><span class="o">.</span><span class="n">kn</span> <span class="o">=</span> <span class="kc">True</span>             <span class="c1"># Klein-Nishina corrections</span>
 
 <span class="n">params</span> <span class="o">=</span> <span class="p">[</span>
     <span class="c1"># Standard parameters (same as default)</span>
@@ -570,10 +581,10 @@
 <span class="n">cfg</span><span class="o">.</span><span class="n">medium</span> <span class="o">=</span> <span class="s2">&quot;ism&quot;</span>
 <span class="n">cfg</span><span class="o">.</span><span class="n">jet</span> <span class="o">=</span> <span class="s2">&quot;tophat&quot;</span>
 <span class="n">cfg</span><span class="o">.</span><span class="n">rvs_shock</span> <span class="o">=</span> <span class="kc">True</span>      <span class="c1"># Enable reverse shock</span>
-<span class="n">cfg</span><span class="o">.</span><span class="n">fwd_SSC</span> <span class="o">=</span> <span class="kc">True</span>        <span class="c1"># Forward shock SSC</span>
-<span class="n">cfg</span><span class="o">.</span><span class="n">rvs_SSC</span> <span class="o">=</span> <span class="kc">True</span>        <span class="c1"># Reverse shock SSC</span>
-<span class="n">cfg</span><span class="o">.</span><span class="n">IC_cooling</span> <span class="o">=</span> <span class="kc">True</span>
-<span class="n">cfg</span><span class="o">.</span><span class="n">KN</span> <span class="o">=</span> <span class="kc">True</span>
+<span class="n">cfg</span><span class="o">.</span><span class="n">fwd_ssc</span> <span class="o">=</span> <span class="kc">True</span>        <span class="c1"># Forward shock SSC</span>
+<span class="n">cfg</span><span class="o">.</span><span class="n">rvs_ssc</span> <span class="o">=</span> <span class="kc">True</span>        <span class="c1"># Reverse shock SSC</span>
+<span class="n">cfg</span><span class="o">.</span><span class="n">ssc_cooling</span> <span class="o">=</span> <span class="kc">True</span>
+<span class="n">cfg</span><span class="o">.</span><span class="n">kn</span> <span class="o">=</span> <span class="kc">True</span>
 
 <span class="n">params</span> <span class="o">=</span> <span class="p">[</span>
     <span class="c1"># Standard parameters with reverse shock</span>
@@ -667,10 +678,10 @@
 <span class="n">cfg</span><span class="o">.</span><span class="n">medium</span> <span class="o">=</span> <span class="s2">&quot;wind&quot;</span>       <span class="c1"># Stratified medium</span>
 <span class="n">cfg</span><span class="o">.</span><span class="n">jet</span> <span class="o">=</span> <span class="s2">&quot;gaussian&quot;</span>      <span class="c1"># Structured jet</span>
 <span class="n">cfg</span><span class="o">.</span><span class="n">rvs_shock</span> <span class="o">=</span> <span class="kc">True</span>      <span class="c1"># Reverse shock</span>
-<span class="n">cfg</span><span class="o">.</span><span class="n">fwd_SSC</span> <span class="o">=</span> <span class="kc">True</span>        <span class="c1"># Forward SSC</span>
-<span class="n">cfg</span><span class="o">.</span><span class="n">rvs_SSC</span> <span class="o">=</span> <span class="kc">True</span>        <span class="c1"># Reverse SSC</span>
-<span class="n">cfg</span><span class="o">.</span><span class="n">IC_cooling</span> <span class="o">=</span> <span class="kc">True</span>     <span class="c1"># IC cooling</span>
-<span class="n">cfg</span><span class="o">.</span><span class="n">KN</span> <span class="o">=</span> <span class="kc">True</span>             <span class="c1"># Klein-Nishina</span>
+<span class="n">cfg</span><span class="o">.</span><span class="n">fwd_ssc</span> <span class="o">=</span> <span class="kc">True</span>        <span class="c1"># Forward SSC</span>
+<span class="n">cfg</span><span class="o">.</span><span class="n">rvs_ssc</span> <span class="o">=</span> <span class="kc">True</span>        <span class="c1"># Reverse SSC</span>
+<span class="n">cfg</span><span class="o">.</span><span class="n">ssc_cooling</span> <span class="o">=</span> <span class="kc">True</span>     <span class="c1"># IC cooling</span>
+<span class="n">cfg</span><span class="o">.</span><span class="n">kn</span> <span class="o">=</span> <span class="kc">True</span>             <span class="c1"># Klein-Nishina</span>
 <span class="n">cfg</span><span class="o">.</span><span class="n">magnetar</span> <span class="o">=</span> <span class="kc">True</span>       <span class="c1"># Energy injection</span>
 
 <span class="n">params</span> <span class="o">=</span> <span class="p">[</span>
@@ -762,13 +773,22 @@
 <span class="n">t_model</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">logspace</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">200</span><span class="p">)</span>
 <span class="n">nu_model</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">1e9</span><span class="p">,</span> <span class="mf">5e14</span><span class="p">,</span> <span class="mf">2e17</span><span class="p">])</span>  <span class="c1"># Radio, optical, X-ray</span>
 
-<span class="c1"># Light curves</span>
+<span class="c1"># Light curves at specific frequencies</span>
 <span class="n">lc_model</span> <span class="o">=</span> <span class="n">fitter</span><span class="o">.</span><span class="n">specific_flux</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">best_params</span><span class="p">,</span> <span class="n">t_model</span><span class="p">,</span> <span class="n">nu_model</span><span class="p">)</span>
 
 <span class="c1"># Spectra at specific times</span>
 <span class="n">nu_spec</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">logspace</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
 <span class="n">times_spec</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1000</span><span class="p">,</span> <span class="mi">10000</span><span class="p">]</span>
 <span class="n">spec_model</span> <span class="o">=</span> <span class="n">fitter</span><span class="o">.</span><span class="n">specific_flux</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">best_params</span><span class="p">,</span> <span class="n">times_spec</span><span class="p">,</span> <span class="n">nu_spec</span><span class="p">)</span>
+
+<span class="c1"># Frequency-integrated flux (broadband light curves)</span>
+<span class="c1"># Useful for comparing with instruments like Swift/BAT, Fermi/LAT</span>
+<span class="n">nu_min_broad</span> <span class="o">=</span> <span class="mf">1e17</span>  <span class="c1"># Lower frequency bound [Hz]</span>
+<span class="n">nu_max_broad</span> <span class="o">=</span> <span class="mf">1e19</span>  <span class="c1"># Upper frequency bound [Hz]</span>
+<span class="n">num_freq_points</span> <span class="o">=</span> <span class="mi">5</span>  <span class="c1"># Number of frequency points for integration</span>
+
+<span class="n">flux_integrated</span> <span class="o">=</span> <span class="n">fitter</span><span class="o">.</span><span class="n">flux</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">best_params</span><span class="p">,</span> <span class="n">t_model</span><span class="p">,</span>
+                              <span class="n">nu_min_broad</span><span class="p">,</span> <span class="n">nu_max_broad</span><span class="p">,</span> <span class="n">num_freq_points</span><span class="p">)</span>
 </pre></div>
 </div>
 </section>

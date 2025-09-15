@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['con_0',['con',['../namespacecon.html',1,'']]]
+  ['afterglow_0',['afterglow',['../namespaceafterglow.html',1,'']]]
 ];

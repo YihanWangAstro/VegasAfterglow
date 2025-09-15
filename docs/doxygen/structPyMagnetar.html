@@ -99,7 +99,7 @@ $(document).ready(function(){initNavTree('structPyMagnetar.html',''); initResiza
 </div><!--header-->
 <div class="contents">
 
-<p>Magnetar model class.  
+<p>Magnetar model for gamma-ray burst central engine energy injection.  
  <a href="structPyMagnetar.html#details">More...</a></p>
 
 <p><code>#include &lt;<a class="el" href="pymodel_8h_source.html">pymodel.h</a>&gt;</code></p>
@@ -107,23 +107,26 @@ $(document).ready(function(){initNavTree('structPyMagnetar.html',''); initResiza
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a088ac94a2447c79d31eed3edcf3114d0" id="r_a088ac94a2447c79d31eed3edcf3114d0"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structPyMagnetar.html#a088ac94a2447c79d31eed3edcf3114d0">PyMagnetar</a> (<a class="el" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> <a class="el" href="structPyMagnetar.html#a5e9de2fdf00ab4a29a1988c1e09d02b6">L0</a>, <a class="el" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> <a class="el" href="structPyMagnetar.html#aac488f2dea4704845b1b2c9c4664cde8">t0</a>, <a class="el" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> <a class="el" href="structPyMagnetar.html#a2dcda99a23b911362ce24c59934050f0">q</a>=2)</td></tr>
-<tr class="memdesc:a088ac94a2447c79d31eed3edcf3114d0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct a new <a class="el" href="structPyMagnetar.html" title="Magnetar model class.">PyMagnetar</a> object.  <br /></td></tr>
+<tr class="memdesc:a088ac94a2447c79d31eed3edcf3114d0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct a new <a class="el" href="structPyMagnetar.html" title="Magnetar model for gamma-ray burst central engine energy injection.">PyMagnetar</a> object with spin-down parameters.  <br /></td></tr>
 <tr class="separator:a088ac94a2447c79d31eed3edcf3114d0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
 <tr class="memitem:a5e9de2fdf00ab4a29a1988c1e09d02b6" id="r_a5e9de2fdf00ab4a29a1988c1e09d02b6"><td class="memItemLeft" align="right" valign="top"><a class="el" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structPyMagnetar.html#a5e9de2fdf00ab4a29a1988c1e09d02b6">L0</a></td></tr>
+<tr class="memdesc:a5e9de2fdf00ab4a29a1988c1e09d02b6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Characteristic luminosity [erg/s].  <br /></td></tr>
 <tr class="separator:a5e9de2fdf00ab4a29a1988c1e09d02b6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aac488f2dea4704845b1b2c9c4664cde8" id="r_aac488f2dea4704845b1b2c9c4664cde8"><td class="memItemLeft" align="right" valign="top"><a class="el" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structPyMagnetar.html#aac488f2dea4704845b1b2c9c4664cde8">t0</a></td></tr>
+<tr class="memdesc:aac488f2dea4704845b1b2c9c4664cde8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Spin-down time scale [s].  <br /></td></tr>
 <tr class="separator:aac488f2dea4704845b1b2c9c4664cde8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2dcda99a23b911362ce24c59934050f0" id="r_a2dcda99a23b911362ce24c59934050f0"><td class="memItemLeft" align="right" valign="top"><a class="el" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structPyMagnetar.html#a2dcda99a23b911362ce24c59934050f0">q</a></td></tr>
+<tr class="memdesc:a2dcda99a23b911362ce24c59934050f0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Power-law index for spin-down.  <br /></td></tr>
 <tr class="separator:a2dcda99a23b911362ce24c59934050f0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Magnetar model class. </p>
-<p>This class represents a magnetar model with a given luminosity and time scale. The <a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42" title="Returns the value of a single parameter.">operator()</a> function returns the magnetar luminosity as a function of time. </p>
+<div class="textblock"><p>Magnetar model for gamma-ray burst central engine energy injection. </p>
+<p>This class represents a magnetar spin-down model with characteristic luminosity, spin-down time scale, and power-law index. The magnetar provides continuous energy injection into the gamma-ray burst ejecta, following the relation: L(t) = L0 * (1 + t/t0)^(-q). This model is commonly used to explain X-ray plateaus and late-time energy injection in gamma-ray bursts. </p>
 
-<p class="definition">Definition at line <a class="el" href="pymodel_8h_source.html#l00025">25</a> of file <a class="el" href="pymodel_8h_source.html">pymodel.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="pymodel_8h_source.html#l00029">29</a> of file <a class="el" href="pymodel_8h_source.html">pymodel.h</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a088ac94a2447c79d31eed3edcf3114d0" name="a088ac94a2447c79d31eed3edcf3114d0"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a088ac94a2447c79d31eed3edcf3114d0">&#9670;&#160;</a></span>PyMagnetar()</h2>
@@ -165,20 +168,21 @@ Public Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Construct a new <a class="el" href="structPyMagnetar.html" title="Magnetar model class.">PyMagnetar</a> object. </p>
-<dl class="params"><dt>Parameters</dt><dd>
+<p>Construct a new <a class="el" href="structPyMagnetar.html" title="Magnetar model for gamma-ray burst central engine energy injection.">PyMagnetar</a> object with spin-down parameters. </p>
+<p>Initializes the magnetar model with the characteristic luminosity at the reference time, the spin-down time scale, and the power-law index for the energy injection. </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">L0</td><td>Luminosity at t = t0 [erg/s] </td></tr>
-    <tr><td class="paramname">t0</td><td>Time at which luminosity is L0 [s] </td></tr>
+    <tr><td class="paramname">L0</td><td>Characteristic luminosity at reference time t = t0 [erg/s] </td></tr>
+    <tr><td class="paramname">t0</td><td>Spin-down time scale, time at which luminosity drops to L0/2^q [s] </td></tr>
+    <tr><td class="paramname">q</td><td>Power-law index for spin-down evolution (typically 1-3, default 2) </td></tr>
   </table>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="pymodel_8h_source.html#l00032">32</a> of file <a class="el" href="pymodel_8h_source.html">pymodel.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   32</span>: <a class="code hl_variable" href="structPyMagnetar.html#a5e9de2fdf00ab4a29a1988c1e09d02b6">L0</a>(<a class="code hl_variable" href="structPyMagnetar.html#a5e9de2fdf00ab4a29a1988c1e09d02b6">L0</a>), <a class="code hl_variable" href="structPyMagnetar.html#aac488f2dea4704845b1b2c9c4664cde8">t0</a>(<a class="code hl_variable" href="structPyMagnetar.html#aac488f2dea4704845b1b2c9c4664cde8">t0</a>), <a class="code hl_variable" href="structPyMagnetar.html#a2dcda99a23b911362ce24c59934050f0">q</a>(<a class="code hl_variable" href="structPyMagnetar.html#a2dcda99a23b911362ce24c59934050f0">q</a>) {}</div>
-<div class="ttc" id="astructPyMagnetar_html_a2dcda99a23b911362ce24c59934050f0"><div class="ttname"><a href="structPyMagnetar.html#a2dcda99a23b911362ce24c59934050f0">PyMagnetar::q</a></div><div class="ttdeci">Real q</div><div class="ttdef"><b>Definition</b> <a href="pymodel_8h_source.html#l00036">pymodel.h:36</a></div></div>
-<div class="ttc" id="astructPyMagnetar_html_a5e9de2fdf00ab4a29a1988c1e09d02b6"><div class="ttname"><a href="structPyMagnetar.html#a5e9de2fdf00ab4a29a1988c1e09d02b6">PyMagnetar::L0</a></div><div class="ttdeci">Real L0</div><div class="ttdef"><b>Definition</b> <a href="pymodel_8h_source.html#l00034">pymodel.h:34</a></div></div>
-<div class="ttc" id="astructPyMagnetar_html_aac488f2dea4704845b1b2c9c4664cde8"><div class="ttname"><a href="structPyMagnetar.html#aac488f2dea4704845b1b2c9c4664cde8">PyMagnetar::t0</a></div><div class="ttdeci">Real t0</div><div class="ttdef"><b>Definition</b> <a href="pymodel_8h_source.html#l00035">pymodel.h:35</a></div></div>
+<p class="definition">Definition at line <a class="el" href="pymodel_8h_source.html#l00040">40</a> of file <a class="el" href="pymodel_8h_source.html">pymodel.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   40</span>: <a class="code hl_variable" href="structPyMagnetar.html#a5e9de2fdf00ab4a29a1988c1e09d02b6">L0</a>(<a class="code hl_variable" href="structPyMagnetar.html#a5e9de2fdf00ab4a29a1988c1e09d02b6">L0</a>), <a class="code hl_variable" href="structPyMagnetar.html#aac488f2dea4704845b1b2c9c4664cde8">t0</a>(<a class="code hl_variable" href="structPyMagnetar.html#aac488f2dea4704845b1b2c9c4664cde8">t0</a>), <a class="code hl_variable" href="structPyMagnetar.html#a2dcda99a23b911362ce24c59934050f0">q</a>(<a class="code hl_variable" href="structPyMagnetar.html#a2dcda99a23b911362ce24c59934050f0">q</a>) {}</div>
+<div class="ttc" id="astructPyMagnetar_html_a2dcda99a23b911362ce24c59934050f0"><div class="ttname"><a href="structPyMagnetar.html#a2dcda99a23b911362ce24c59934050f0">PyMagnetar::q</a></div><div class="ttdeci">Real q</div><div class="ttdoc">Power-law index for spin-down.</div><div class="ttdef"><b>Definition</b> <a href="pymodel_8h_source.html#l00044">pymodel.h:44</a></div></div>
+<div class="ttc" id="astructPyMagnetar_html_a5e9de2fdf00ab4a29a1988c1e09d02b6"><div class="ttname"><a href="structPyMagnetar.html#a5e9de2fdf00ab4a29a1988c1e09d02b6">PyMagnetar::L0</a></div><div class="ttdeci">Real L0</div><div class="ttdoc">Characteristic luminosity [erg/s].</div><div class="ttdef"><b>Definition</b> <a href="pymodel_8h_source.html#l00042">pymodel.h:42</a></div></div>
+<div class="ttc" id="astructPyMagnetar_html_aac488f2dea4704845b1b2c9c4664cde8"><div class="ttname"><a href="structPyMagnetar.html#aac488f2dea4704845b1b2c9c4664cde8">PyMagnetar::t0</a></div><div class="ttdeci">Real t0</div><div class="ttdoc">Spin-down time scale [s].</div><div class="ttdef"><b>Definition</b> <a href="pymodel_8h_source.html#l00043">pymodel.h:43</a></div></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -195,7 +199,9 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="pymodel_8h_source.html#l00034">34</a> of file <a class="el" href="pymodel_8h_source.html">pymodel.h</a>.</p>
+<p>Characteristic luminosity [erg/s]. </p>
+
+<p class="definition">Definition at line <a class="el" href="pymodel_8h_source.html#l00042">42</a> of file <a class="el" href="pymodel_8h_source.html">pymodel.h</a>.</p>
 
 </div>
 </div>
@@ -211,7 +217,9 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="pymodel_8h_source.html#l00036">36</a> of file <a class="el" href="pymodel_8h_source.html">pymodel.h</a>.</p>
+<p>Power-law index for spin-down. </p>
+
+<p class="definition">Definition at line <a class="el" href="pymodel_8h_source.html#l00044">44</a> of file <a class="el" href="pymodel_8h_source.html">pymodel.h</a>.</p>
 
 </div>
 </div>
@@ -227,7 +235,9 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="pymodel_8h_source.html#l00035">35</a> of file <a class="el" href="pymodel_8h_source.html">pymodel.h</a>.</p>
+<p>Spin-down time scale [s]. </p>
+
+<p class="definition">Definition at line <a class="el" href="pymodel_8h_source.html#l00043">43</a> of file <a class="el" href="pymodel_8h_source.html">pymodel.h</a>.</p>
 
 </div>
 </div>

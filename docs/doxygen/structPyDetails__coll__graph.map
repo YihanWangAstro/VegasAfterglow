@@ -1,0 +1,5 @@
+<map id="PyDetails" name="PyDetails">
+<area shape="rect" id="Node000001" title="Complete simulation details including coordinate system and shock evolution." alt="" coords="5,108,89,133"/>
+<area shape="rect" id="Node000002" href="$structPyShock.html" title="Comprehensive shock evolution data for detailed afterglow analysis." alt="" coords="9,5,86,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="50,45,50,108,45,108,45,45"/>
+</map>

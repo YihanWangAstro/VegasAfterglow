@@ -58,16 +58,24 @@
 <li class="toctree-l1"><a class="reference internal" href="mcmc_fitting.html">MCMC Parameter Fitting</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Parameter Reference</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#physical-parameters">Physical Parameters</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#jet-structure-parameters">Jet Structure Parameters</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#ambient-medium-parameters">Ambient Medium Parameters</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#observer-parameters">Observer Parameters</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#radiation-microphysics-parameters">Radiation Microphysics Parameters</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#energy-injection-parameters-magnetar">Energy Injection Parameters (Magnetar)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#jet-structure-parameters">Jet Structure Parameters</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#two-component-jet-parameters">Two-Component Jet Parameters</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#ambient-medium-parameters">Ambient Medium Parameters</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#forward-shock-radiation-parameters">Forward Shock Radiation Parameters</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#reverse-shock-radiation-parameters">Reverse Shock Radiation Parameters</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#energy-injection-parameters-magnetar">Energy Injection Parameters (Magnetar)</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#model-configuration">Model Configuration</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#jet-types">Jet Types</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#medium-types">Medium Types</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#physics-switches">Physics Switches</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#computational-parameters">Computational Parameters</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#model-resolution">Model Resolution</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#grid-resolution">Grid Resolution</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#numerical-parameters">Numerical Parameters</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#mcmc-parameters">MCMC Parameters</a></li>
 </ul>
 </li>
@@ -76,8 +84,11 @@
 <li class="toctree-l3"><a class="reference internal" href="#physical-constraints">Physical Constraints</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#unit-conversions">Unit Conversions</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#parameter-degeneracies">Parameter Degeneracies</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#unit-system-and-physical-constants">Unit System and Physical Constants</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#common-unit-conversions">Common Unit Conversions</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#parameter-degeneracies-and-fitting-strategies">Parameter Degeneracies and Fitting Strategies</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="python_api.html">Python API Reference</a></li>
@@ -112,46 +123,9 @@
              
   <section id="parameter-reference">
 <h1>Parameter Reference<a class="headerlink" href="#parameter-reference" title="Link to this heading"></a></h1>
-<p>This page provides a comprehensive reference for all parameters used in VegasAfterglow, including their physical meanings, typical ranges, and units.</p>
+<p>This page provides a comprehensive reference for all parameters used in VegasAfterglow, including their physical meanings, typical ranges, and units. All parameters listed here are available in the code and can be set via Python interfaces.</p>
 <section id="physical-parameters">
 <h2>Physical Parameters<a class="headerlink" href="#physical-parameters" title="Link to this heading"></a></h2>
-<section id="jet-structure-parameters">
-<h3>Jet Structure Parameters<a class="headerlink" href="#jet-structure-parameters" title="Link to this heading"></a></h3>
-</section>
-<section id="ambient-medium-parameters">
-<h3>Ambient Medium Parameters<a class="headerlink" href="#ambient-medium-parameters" title="Link to this heading"></a></h3>
-<table class="docutils align-default">
-<colgroup>
-<col style="width: 15.0%" />
-<col style="width: 15.0%" />
-<col style="width: 10.0%" />
-<col style="width: 20.0%" />
-<col style="width: 40.0%" />
-</colgroup>
-<thead>
-<tr class="row-odd"><th class="head"><p>Parameter</p></th>
-<th class="head"><p>Symbol</p></th>
-<th class="head"><p>Units</p></th>
-<th class="head"><p>Typical Range</p></th>
-<th class="head"><p>Description</p></th>
-</tr>
-</thead>
-<tbody>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">n_ism</span></code></p></td>
-<td><p><span class="math notranslate nohighlight">\(n_{\rm ISM}\)</span></p></td>
-<td><p>cm⁻³</p></td>
-<td><p><span class="math notranslate nohighlight">\(10^{-4} - 10^{3}\)</span></p></td>
-<td><p>Number density of uniform ISM</p></td>
-</tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">A_star</span></code></p></td>
-<td><p><span class="math notranslate nohighlight">\(A_*\)</span></p></td>
-<td><p>dimensionless</p></td>
-<td><p><span class="math notranslate nohighlight">\(10^{-3} - 10\)</span></p></td>
-<td><p>Wind parameter: <span class="math notranslate nohighlight">\(\rho = A_* \times 5 \times 10^{11} r^{-2}\)</span> g/cm³</p></td>
-</tr>
-</tbody>
-</table>
-</section>
 <section id="observer-parameters">
 <h3>Observer Parameters<a class="headerlink" href="#observer-parameters" title="Link to this heading"></a></h3>
 <table class="docutils align-default">
@@ -183,11 +157,155 @@
 <td><p><span class="math notranslate nohighlight">\(0.01 - 10\)</span></p></td>
 <td><p>Cosmological redshift</p></td>
 </tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">theta_v</span></code></p></td>
+<td><p><span class="math notranslate nohighlight">\(\theta_v\)</span></p></td>
+<td><p>radians</p></td>
+<td><p><span class="math notranslate nohighlight">\(0 - \pi/2\)</span></p></td>
+<td><p>Viewing angle (angle between jet axis and line of sight)</p></td>
+</tr>
 </tbody>
 </table>
 </section>
-<section id="radiation-microphysics-parameters">
-<h3>Radiation Microphysics Parameters<a class="headerlink" href="#radiation-microphysics-parameters" title="Link to this heading"></a></h3>
+<section id="jet-structure-parameters">
+<h3>Jet Structure Parameters<a class="headerlink" href="#jet-structure-parameters" title="Link to this heading"></a></h3>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 15.0%" />
+<col style="width: 15.0%" />
+<col style="width: 10.0%" />
+<col style="width: 20.0%" />
+<col style="width: 40.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Parameter</p></th>
+<th class="head"><p>Symbol</p></th>
+<th class="head"><p>Units</p></th>
+<th class="head"><p>Typical Range</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">E_iso</span></code></p></td>
+<td><p><span class="math notranslate nohighlight">\(E_{\rm iso}\)</span></p></td>
+<td><p>erg</p></td>
+<td><p><span class="math notranslate nohighlight">\(10^{50} - 10^{54}\)</span></p></td>
+<td><p>Isotropic-equivalent kinetic energy of the jet</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">Gamma0</span></code></p></td>
+<td><p><span class="math notranslate nohighlight">\(\Gamma_0\)</span></p></td>
+<td><p>dimensionless</p></td>
+<td><p><span class="math notranslate nohighlight">\(10 - 1000\)</span></p></td>
+<td><p>Initial bulk Lorentz factor of the jet</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">theta_c</span></code></p></td>
+<td><p><span class="math notranslate nohighlight">\(\theta_c\)</span></p></td>
+<td><p>radians</p></td>
+<td><p><span class="math notranslate nohighlight">\(0.01 - 0.5\)</span></p></td>
+<td><p>Half-opening angle of the jet core</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">duration</span></code></p></td>
+<td><p><span class="math notranslate nohighlight">\(T_{\rm dur}\)</span></p></td>
+<td><p>seconds</p></td>
+<td><p><span class="math notranslate nohighlight">\(0.1 - 1000\)</span></p></td>
+<td><p>Duration of energy injection (affects reverse shock)</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">k_e</span></code></p></td>
+<td><p><span class="math notranslate nohighlight">\(k_e\)</span></p></td>
+<td><p>dimensionless</p></td>
+<td><p><span class="math notranslate nohighlight">\(1 - 10\)</span></p></td>
+<td><p>Energy power-law index for structured jets (PowerLawJet only)</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">k_g</span></code></p></td>
+<td><p><span class="math notranslate nohighlight">\(k_g\)</span></p></td>
+<td><p>dimensionless</p></td>
+<td><p><span class="math notranslate nohighlight">\(1 - 10\)</span></p></td>
+<td><p>Lorentz factor power-law index for structured jets (PowerLawJet only)</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="two-component-jet-parameters">
+<h3>Two-Component Jet Parameters<a class="headerlink" href="#two-component-jet-parameters" title="Link to this heading"></a></h3>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 15.0%" />
+<col style="width: 15.0%" />
+<col style="width: 10.0%" />
+<col style="width: 20.0%" />
+<col style="width: 40.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Parameter</p></th>
+<th class="head"><p>Symbol</p></th>
+<th class="head"><p>Units</p></th>
+<th class="head"><p>Typical Range</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">theta_w</span></code></p></td>
+<td><p><span class="math notranslate nohighlight">\(\theta_w\)</span></p></td>
+<td><p>radians</p></td>
+<td><p><span class="math notranslate nohighlight">\(0.1 - 0.5\)</span></p></td>
+<td><p>Half-opening angle of wide component</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">E_iso_w</span></code></p></td>
+<td><p><span class="math notranslate nohighlight">\(E_{\rm iso,w}\)</span></p></td>
+<td><p>erg</p></td>
+<td><p><span class="math notranslate nohighlight">\(10^{50} - 10^{53}\)</span></p></td>
+<td><p>Isotropic energy of wide component</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">Gamma0_w</span></code></p></td>
+<td><p><span class="math notranslate nohighlight">\(\Gamma_{0,w}\)</span></p></td>
+<td><p>dimensionless</p></td>
+<td><p><span class="math notranslate nohighlight">\(10 - 300\)</span></p></td>
+<td><p>Initial Lorentz factor of wide component</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="ambient-medium-parameters">
+<h3>Ambient Medium Parameters<a class="headerlink" href="#ambient-medium-parameters" title="Link to this heading"></a></h3>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 15.0%" />
+<col style="width: 15.0%" />
+<col style="width: 10.0%" />
+<col style="width: 20.0%" />
+<col style="width: 40.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Parameter</p></th>
+<th class="head"><p>Symbol</p></th>
+<th class="head"><p>Units</p></th>
+<th class="head"><p>Typical Range</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">n_ism</span></code></p></td>
+<td><p><span class="math notranslate nohighlight">\(n_{\rm ISM}\)</span></p></td>
+<td><p>cm⁻³</p></td>
+<td><p><span class="math notranslate nohighlight">\(10^{-4} - 10^{3}\)</span></p></td>
+<td><p>Number density of uniform ISM</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">n0</span></code></p></td>
+<td><p><span class="math notranslate nohighlight">\(n_0\)</span></p></td>
+<td><p>cm⁻³</p></td>
+<td><p><span class="math notranslate nohighlight">\(10^{-4} - 10^{6}\)</span></p></td>
+<td><p>Inner region number density for wind medium</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">A_star</span></code></p></td>
+<td><p><span class="math notranslate nohighlight">\(A_*\)</span></p></td>
+<td><p>dimensionless</p></td>
+<td><p><span class="math notranslate nohighlight">\(10^{-3} - 10\)</span></p></td>
+<td><p>Wind parameter: <span class="math notranslate nohighlight">\(\rho = A_* \times 5 \times 10^{11} r^{-2}\)</span> g/cm³</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="forward-shock-radiation-parameters">
+<h3>Forward Shock Radiation Parameters<a class="headerlink" href="#forward-shock-radiation-parameters" title="Link to this heading"></a></h3>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 15.0%" />
@@ -227,7 +345,53 @@
 <td><p><span class="math notranslate nohighlight">\(\xi_e\)</span></p></td>
 <td><p>dimensionless</p></td>
 <td><p><span class="math notranslate nohighlight">\(10^{-3} - 1\)</span></p></td>
-<td><p>Electron acceleration efficiency</p></td>
+<td><p>Fraction of electrons that are accelerated</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="reverse-shock-radiation-parameters">
+<h3>Reverse Shock Radiation Parameters<a class="headerlink" href="#reverse-shock-radiation-parameters" title="Link to this heading"></a></h3>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 15.0%" />
+<col style="width: 15.0%" />
+<col style="width: 10.0%" />
+<col style="width: 20.0%" />
+<col style="width: 40.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Parameter</p></th>
+<th class="head"><p>Symbol</p></th>
+<th class="head"><p>Units</p></th>
+<th class="head"><p>Typical Range</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">eps_e_r</span></code></p></td>
+<td><p><span class="math notranslate nohighlight">\(\epsilon_{e,r}\)</span></p></td>
+<td><p>dimensionless</p></td>
+<td><p><span class="math notranslate nohighlight">\(10^{-3} - 0.5\)</span></p></td>
+<td><p>Reverse shock fraction of energy in electrons</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">eps_B_r</span></code></p></td>
+<td><p><span class="math notranslate nohighlight">\(\epsilon_{B,r}\)</span></p></td>
+<td><p>dimensionless</p></td>
+<td><p><span class="math notranslate nohighlight">\(10^{-6} - 0.5\)</span></p></td>
+<td><p>Reverse shock fraction of energy in magnetic field</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">p_r</span></code></p></td>
+<td><p><span class="math notranslate nohighlight">\(p_r\)</span></p></td>
+<td><p>dimensionless</p></td>
+<td><p><span class="math notranslate nohighlight">\(2.01 - 3.5\)</span></p></td>
+<td><p>Reverse shock electron energy distribution index</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">xi_e_r</span></code></p></td>
+<td><p><span class="math notranslate nohighlight">\(\xi_{e,r}\)</span></p></td>
+<td><p>dimensionless</p></td>
+<td><p><span class="math notranslate nohighlight">\(10^{-3} - 1\)</span></p></td>
+<td><p>Reverse shock electron acceleration fraction</p></td>
 </tr>
 </tbody>
 </table>
@@ -252,80 +416,117 @@
 </thead>
 <tbody>
 <tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">L0</span></code></p></td>
-<td><p><span class="math notranslate nohighlight">\(L0\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(L_0\)</span></p></td>
 <td><p>erg/s</p></td>
 <td><p><span class="math notranslate nohighlight">\(10^{44} - 10^{48}\)</span></p></td>
-<td><p>Initial luminosity of magnetar spin-down</p></td>
+<td><p>Magnetar luminosity at time t₀</p></td>
 </tr>
 <tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">t0</span></code></p></td>
-<td><p><span class="math notranslate nohighlight">\(t0\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(t_0\)</span></p></td>
 <td><p>seconds</p></td>
 <td><p><span class="math notranslate nohighlight">\(10 - 10^4\)</span></p></td>
-<td><p>Characteristic spin-down timescale</p></td>
+<td><p>Characteristic magnetar spin-down timescale</p></td>
 </tr>
 <tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">q</span></code></p></td>
 <td><p><span class="math notranslate nohighlight">\(q\)</span></p></td>
 <td><p>dimensionless</p></td>
 <td><p><span class="math notranslate nohighlight">\(1 - 6\)</span></p></td>
-<td><p>Power-law index of spin-down: <span class="math notranslate nohighlight">\(L(t) = L0(1+t/t0)^{-q}\)</span></p></td>
+<td><p>Power-law index of spin-down: <span class="math notranslate nohighlight">\(L(t) = L_0(1+t/t_0)^{-q}\)</span></p></td>
 </tr>
 </tbody>
 </table>
 </section>
-<section id="two-component-jet-parameters">
-<h3>Two-Component Jet Parameters<a class="headerlink" href="#two-component-jet-parameters" title="Link to this heading"></a></h3>
+</section>
+<section id="model-configuration">
+<h2>Model Configuration<a class="headerlink" href="#model-configuration" title="Link to this heading"></a></h2>
+<section id="jet-types">
+<h3>Jet Types<a class="headerlink" href="#jet-types" title="Link to this heading"></a></h3>
 <table class="docutils align-default">
 <colgroup>
-<col style="width: 15.0%" />
-<col style="width: 15.0%" />
-<col style="width: 10.0%" />
 <col style="width: 20.0%" />
-<col style="width: 40.0%" />
+<col style="width: 80.0%" />
 </colgroup>
 <thead>
-<tr class="row-odd"><th class="head"><p>Parameter</p></th>
-<th class="head"><p>Symbol</p></th>
-<th class="head"><p>Units</p></th>
-<th class="head"><p>Typical Range</p></th>
+<tr class="row-odd"><th class="head"><p>Jet Type</p></th>
 <th class="head"><p>Description</p></th>
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">theta_c</span></code></p></td>
-<td><p><span class="math notranslate nohighlight">\(\theta_c\)</span></p></td>
-<td><p>radians</p></td>
-<td><p><span class="math notranslate nohighlight">\(0.01 - 0.2\)</span></p></td>
-<td><p>Half-opening angle of narrow component</p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">tophat</span></code></p></td>
+<td><p>Uniform energy and Lorentz factor within opening angle</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">E_iso_c</span></code></p></td>
-<td><p><span class="math notranslate nohighlight">\(E_{\rm iso,c}\)</span></p></td>
-<td><p>erg</p></td>
-<td><p><span class="math notranslate nohighlight">\(10^{51} - 10^{54}\)</span></p></td>
-<td><p>Isotropic energy of narrow component</p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">gaussian</span></code></p></td>
+<td><p>Gaussian angular profile for energy and Lorentz factor</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">Gamma0_c</span></code></p></td>
-<td><p><span class="math notranslate nohighlight">\(\Gamma_{0,c}\)</span></p></td>
-<td><p>dimensionless</p></td>
-<td><p><span class="math notranslate nohighlight">\(100 - 1000\)</span></p></td>
-<td><p>Initial Lorentz factor of narrow component</p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">powerlaw</span></code></p></td>
+<td><p>Power-law angular dependence with indices k_e and k_g</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">theta_w</span></code></p></td>
-<td><p><span class="math notranslate nohighlight">\(\theta_w\)</span></p></td>
-<td><p>radians</p></td>
-<td><p><span class="math notranslate nohighlight">\(0.1 - 0.5\)</span></p></td>
-<td><p>Half-opening angle of wide component</p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">ejecta</span></code></p></td>
+<td><p>Generic ejecta with arbitrary angular profiles</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">E_iso_w</span></code></p></td>
-<td><p><span class="math notranslate nohighlight">\(E_{\rm iso,w}\)</span></p></td>
-<td><p>erg</p></td>
-<td><p><span class="math notranslate nohighlight">\(10^{50} - 10^{53}\)</span></p></td>
-<td><p>Isotropic energy of wide component</p></td>
+</tbody>
+</table>
+</section>
+<section id="medium-types">
+<h3>Medium Types<a class="headerlink" href="#medium-types" title="Link to this heading"></a></h3>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 20.0%" />
+<col style="width: 80.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Medium Type</p></th>
+<th class="head"><p>Description</p></th>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">Gamma0_w</span></code></p></td>
-<td><p><span class="math notranslate nohighlight">\(\Gamma_{0,w}\)</span></p></td>
-<td><p>dimensionless</p></td>
-<td><p><span class="math notranslate nohighlight">\(10 - 300\)</span></p></td>
-<td><p>Initial Lorentz factor of wide component</p></td>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">ism</span></code></p></td>
+<td><p>Uniform interstellar medium with constant density n_ism</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">wind</span></code></p></td>
+<td><p>Stellar wind medium with <span class="math notranslate nohighlight">\(\rho \propto r^{-2}\)</span> profile</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="physics-switches">
+<h3>Physics Switches<a class="headerlink" href="#physics-switches" title="Link to this heading"></a></h3>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 15.0%" />
+<col style="width: 15.0%" />
+<col style="width: 70.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Parameter</p></th>
+<th class="head"><p>Default</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">rvs_shock</span></code></p></td>
+<td><p>false</p></td>
+<td><p>Include reverse shock emission</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">fwd_ssc</span></code></p></td>
+<td><p>false</p></td>
+<td><p>Include forward shock synchrotron self-Compton</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">rvs_ssc</span></code></p></td>
+<td><p>false</p></td>
+<td><p>Include reverse shock synchrotron self-Compton</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">ssc_cooling</span></code></p></td>
+<td><p>false</p></td>
+<td><p>Include inverse Compton cooling</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">kn</span></code></p></td>
+<td><p>false</p></td>
+<td><p>Use Klein-Nishina cross-section for IC scattering</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">magnetar</span></code></p></td>
+<td><p>false</p></td>
+<td><p>Include magnetar energy injection</p></td>
 </tr>
 </tbody>
 </table>
@@ -333,32 +534,59 @@
 </section>
 <section id="computational-parameters">
 <h2>Computational Parameters<a class="headerlink" href="#computational-parameters" title="Link to this heading"></a></h2>
-<section id="model-resolution">
-<h3>Model Resolution<a class="headerlink" href="#model-resolution" title="Link to this heading"></a></h3>
+<section id="grid-resolution">
+<h3>Grid Resolution<a class="headerlink" href="#grid-resolution" title="Link to this heading"></a></h3>
 <table class="docutils align-default">
 <colgroup>
-<col style="width: 21.4%" />
-<col style="width: 21.4%" />
-<col style="width: 57.1%" />
+<col style="width: 15.0%" />
+<col style="width: 15.0%" />
+<col style="width: 10.0%" />
+<col style="width: 60.0%" />
 </colgroup>
 <thead>
 <tr class="row-odd"><th class="head"><p>Parameter</p></th>
+<th class="head"><p>Default</p></th>
 <th class="head"><p>Units</p></th>
 <th class="head"><p>Description</p></th>
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">phi_ppd</span></code></p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">phi_resol</span></code></p></td>
+<td><p>0.3</p></td>
 <td><p>points/degree</p></td>
 <td><p>Angular resolution in azimuthal direction</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">theta_ppd</span></code></p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">theta_resol</span></code></p></td>
+<td><p>1.0</p></td>
 <td><p>points/degree</p></td>
 <td><p>Angular resolution in polar direction</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">t_ppd</span></code></p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">t_resol</span></code></p></td>
+<td><p>10.0</p></td>
 <td><p>points/decade</p></td>
 <td><p>Temporal resolution (logarithmic spacing)</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="numerical-parameters">
+<h3>Numerical Parameters<a class="headerlink" href="#numerical-parameters" title="Link to this heading"></a></h3>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 15.0%" />
+<col style="width: 15.0%" />
+<col style="width: 70.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Parameter</p></th>
+<th class="head"><p>Default</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">rtol</span></code></p></td>
+<td><p>1e-6</p></td>
+<td><p>Relative tolerance for numerical integration</p></td>
 </tr>
 </tbody>
 </table>
@@ -430,7 +658,6 @@
 <p><strong>Energy Conservation:</strong></p>
 <ul class="simple">
 <li><p><span class="math notranslate nohighlight">\(E_{\rm iso}\)</span> should be consistent with the kinetic energy available from the central engine</p></li>
-<li><p>For structured jets: <span class="math notranslate nohighlight">\(E_{\rm iso} = \int E(\theta) d\Omega\)</span> over the jet solid angle</p></li>
 </ul>
 <p><strong>Causality:</strong></p>
 <ul class="simple">
@@ -444,36 +671,39 @@
 </ul>
 </section>
 </section>
-<section id="unit-conversions">
-<h2>Unit Conversions<a class="headerlink" href="#unit-conversions" title="Link to this heading"></a></h2>
-<p>Common unit conversions for convenience:</p>
-<p><strong>Distance:</strong></p>
-<ul class="simple">
-<li><p>1 Mpc = 3.086 × 10²⁴ cm</p></li>
-<li><p>1 kpc = 3.086 × 10²¹ cm</p></li>
-<li><p>Luminosity distance: <span class="math notranslate nohighlight">\(d_L = (1+z) \times d_A\)</span> (angular diameter distance)</p></li>
-</ul>
-<p><strong>Energy:</strong></p>
-<ul class="simple">
-<li><p>1 BeV = 1.602 × 10⁻³ erg</p></li>
-<li><p>1 keV = 1.602 × 10⁻⁹ erg</p></li>
-<li><p>Solar rest mass energy: <span class="math notranslate nohighlight">\(M_\odot c^2 = 1.8 \times 10^{54}\)</span> erg</p></li>
-</ul>
-<p><strong>Angles:</strong></p>
-<ul class="simple">
-<li><p>1 degree = π/180 ≈ 0.01745 radians</p></li>
-<li><p>1 arcminute = π/10800 ≈ 2.91 × 10⁻⁴ radians</p></li>
-<li><p>1 arcsecond = π/648000 ≈ 4.85 × 10⁻⁶ radians</p></li>
-</ul>
-<p><strong>Frequencies:</strong></p>
-<ul class="simple">
-<li><p>X-ray (1 keV): ν ≈ 2.4 × 10¹⁷ Hz</p></li>
-<li><p>Optical (V-band): ν ≈ 5.5 × 10¹⁴ Hz</p></li>
-<li><p>Radio (1 GHz): ν = 10⁹ Hz</p></li>
-</ul>
+<section id="unit-system-and-physical-constants">
+<h2>Unit System and Physical Constants<a class="headerlink" href="#unit-system-and-physical-constants" title="Link to this heading"></a></h2>
+<p>VegasAfterglow uses a normalized unit system defined in <code class="docutils literal notranslate"><span class="pre">macros.h</span></code>:</p>
+<p><strong>Base Units:</strong>
+- Length: <span class="math notranslate nohighlight">\(l_0 = 1.5 \times 10^{13}\)</span> cm
+- Time: <span class="math notranslate nohighlight">\(t_0 = l_0/c = 500\)</span> s
+- Mass: <span class="math notranslate nohighlight">\(m_0 = 2 \times 10^{33}\)</span> g</p>
+<p><strong>Physical Constants (code units):</strong>
+- Speed of light: <span class="math notranslate nohighlight">\(c = 1\)</span>
+- Proton mass: <span class="math notranslate nohighlight">\(m_p = 1.67 \times 10^{-24}\)</span> g
+- Electron mass: <span class="math notranslate nohighlight">\(m_e = m_p/1836\)</span>
+- Thomson cross-section: <span class="math notranslate nohighlight">\(\sigma_T = 6.65 \times 10^{-25}\)</span> cm²</p>
+<p><strong>Cosmological Parameters:</strong>
+- <span class="math notranslate nohighlight">\(\Omega_m = 0.27\)</span> (matter density)
+- <span class="math notranslate nohighlight">\(\Omega_\Lambda = 0.73\)</span> (dark energy density)
+- <span class="math notranslate nohighlight">\(H_0 = 67.66\)</span> km/s/Mpc (Hubble constant)</p>
+<section id="common-unit-conversions">
+<h3>Common Unit Conversions<a class="headerlink" href="#common-unit-conversions" title="Link to this heading"></a></h3>
+<p><strong>Distance:</strong>
+- 1 Mpc = 3.086 × 10²⁴ cm
+- 1 kpc = 3.086 × 10²¹ cm
+- 1 AU = 1.5 × 10¹³ cm</p>
+<p><strong>Energy:</strong>
+- 1 erg = 1 g⋅cm²/s²
+- 1 keV = 1.602 × 10⁻⁹ erg
+- 1 GeV = 1.602 × 10⁻³ erg</p>
+<p><strong>Angles:</strong>
+- 1 degree = π/180 ≈ 0.01745 radians
+- 1 arcminute = π/10800 ≈ 2.91 × 10⁻⁴ radians</p>
 </section>
-<section id="parameter-degeneracies">
-<h2>Parameter Degeneracies<a class="headerlink" href="#parameter-degeneracies" title="Link to this heading"></a></h2>
+</section>
+<section id="parameter-degeneracies-and-fitting-strategies">
+<h2>Parameter Degeneracies and Fitting Strategies<a class="headerlink" href="#parameter-degeneracies-and-fitting-strategies" title="Link to this heading"></a></h2>
 <p>Understanding parameter correlations helps in MCMC fitting:</p>
 <p><strong>Strong Correlations:</strong></p>
 <ul class="simple">
@@ -493,7 +723,7 @@
 <li><p><strong>Jet break time</strong>: Determines <span class="math notranslate nohighlight">\(\theta_c\)</span>, <span class="math notranslate nohighlight">\(E_{\rm iso}\)</span></p></li>
 <li><p><strong>Late times (&gt; 100 days)</strong>: Sensitive to <span class="math notranslate nohighlight">\(n_{\rm ISM}\)</span>, <span class="math notranslate nohighlight">\(p\)</span></p></li>
 </ul>
-<p>For more detailed information on parameter estimation strategies, see the <a class="reference internal" href="examples.html"><span class="doc">Examples</span></a> page.</p>
+<p>For more detailed information on parameter estimation strategies and examples of using these parameters in practice, see the <a class="reference internal" href="examples.html"><span class="doc">Examples</span></a> and <a class="reference internal" href="mcmc_fitting.html"><span class="doc">MCMC Parameter Fitting</span></a> pages.</p>
 </section>
 </section>
 

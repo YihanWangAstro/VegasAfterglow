@@ -9,7 +9,7 @@ var searchData=
   ['fill_5fdata_5farrays_6',['fill_data_arrays',['../structMultiBandData.html#ad2ade97dd269ab683c9fc6716dc0cdea',1,'MultiBandData']]],
   ['find_5fjet_5fedge_7',['find_jet_edge',['../mesh_8h.html#a2abead26b657d59017cbee7b44fc2fca',1,'mesh.h']]],
   ['finding_20methods_8',['Root Finding Methods',['../group__RootFinding.html',1,'']]],
-  ['flux_9',['flux',['../classObserver.html#a2ba9427e3fe0d3f70fb4b670327c0b6d',1,'Observer::flux()'],['../structMultiBandModel.html#a2e5994a6b6d0b467438fe899a2cf0114',1,'MultiBandModel::flux()']]],
+  ['flux_9',['flux',['../classObserver.html#a2ba9427e3fe0d3f70fb4b670327c0b6d',1,'Observer::flux()'],['../structMultiBandModel.html#a2e5994a6b6d0b467438fe899a2cf0114',1,'MultiBandModel::flux()'],['../structFlux.html',1,'Flux']]],
   ['flux_5fcgs_10',['flux_cgs',['../namespaceunit.html#ad35a8d191f16b2928b242ef566cca653',1,'unit']]],
   ['flux_5fdata_11',['flux_data',['../structMultiBandData.html#a0d8b205498be4e9a129395636a665baa',1,'MultiBandData']]],
   ['flux_5fden_5fcgs_12',['flux_den_cgs',['../namespaceunit.html#a4808047893e65d1942893de10e0a9c97',1,'unit']]],
@@ -28,5 +28,6 @@ var searchData=
   ['fv_5ferr_25',['Fv_err',['../structFluxData.html#a5c6b0ad9ba7dffc87376cbca7fa7cd0c',1,'FluxData']]],
   ['fv_5fmodel_26',['Fv_model',['../structFluxData.html#a5c10f6f3d6f4c9d3c07528ae41bd16a9',1,'FluxData']]],
   ['fv_5fobs_27',['Fv_obs',['../structFluxData.html#a6a3819114692164325dcbec864b1c851',1,'FluxData']]],
-  ['fwd_5fssc_28',['fwd_SSC',['../structConfigParams.html#a332f90cf62bf93a176003696be552575',1,'ConfigParams']]]
+  ['fwd_28',['fwd',['../structPyDetails.html#a790135e030da64decb6a2c29c64683fb',1,'PyDetails::fwd'],['../structPyFlux.html#adde189e058cf4485bebf835f2d1ce9f0',1,'PyFlux::fwd']]],
+  ['fwd_5fssc_29',['fwd_ssc',['../structConfigParams.html#ac4aa202165468ce61024971c3c93eeb6',1,'ConfigParams']]]
 ];

@@ -1,13 +1,15 @@
 <map id="gamma_to_beta" name="gamma_to_beta">
-<area shape="rect" id="Node000001" title="Converts Lorentz factor (gamma) to velocity fraction (beta)" alt="" coords="589,55,717,80"/>
-<area shape="rect" id="Node000002" href="$mesh_8h.html#a017f88b3242fdadb28e664f27725643a" title="Constructs a coordinate grid (Coord) for shock evolution." alt="" coords="421,5,503,31"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="590,54,503,31,504,26,591,49"/>
-<area shape="rect" id="Node000005" href="$prompt_8h.html#a66fb48188341c585a06119c04800c823" title=" " alt="" coords="385,55,539,80"/>
-<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="576,70,539,70,539,65,576,65"/>
-<area shape="rect" id="Node000006" href="$prompt_8cpp.html#a179563049db5bed00a5663ff3932eed4" title=" " alt="" coords="383,104,541,129"/>
-<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="591,86,513,106,512,101,590,81"/>
-<area shape="rect" id="Node000003" href="$classPyModel.html#a3440b0852a67952d09b9017ef6784fd0" title="Get details of the model configuration." alt="" coords="204,5,335,31"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="407,21,335,21,335,15,407,15"/>
-<area shape="rect" id="Node000004" href="$pybind_8cpp.html#a8c92987849ad296e28ec6c07c8e7860b" title=" " alt="" coords="5,5,156,31"/>
-<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="190,21,156,21,156,15,190,15"/>
+<area shape="rect" id="Node000001" title="Converts Lorentz factor (gamma) to velocity fraction (beta)" alt="" coords="689,79,817,104"/>
+<area shape="rect" id="Node000002" href="$mesh_8h.html#a017f88b3242fdadb28e664f27725643a" title="Constructs a coordinate grid (Coord) for shock evolution." alt="" coords="521,29,603,55"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="690,78,603,55,604,50,691,73"/>
+<area shape="rect" id="Node000006" href="$prompt_8h.html#a66fb48188341c585a06119c04800c823" title=" " alt="" coords="485,79,639,104"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="676,94,639,94,639,89,676,89"/>
+<area shape="rect" id="Node000007" href="$prompt_8cpp.html#a179563049db5bed00a5663ff3932eed4" title=" " alt="" coords="483,128,641,153"/>
+<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="691,110,613,130,612,125,690,105"/>
+<area shape="rect" id="Node000003" href="$classPyModel.html#a6b7bcc148ef97ee67955c716655213fc" title=" " alt="" coords="204,5,435,31"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="507,39,435,32,435,27,507,34"/>
+<area shape="rect" id="Node000004" href="$classPyModel.html#a3440b0852a67952d09b9017ef6784fd0" title="Get comprehensive details of the shock evolution and model configuration." alt="" coords="254,55,385,80"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="507,50,385,63,385,58,507,45"/>
+<area shape="rect" id="Node000005" href="$pybind_8cpp.html#a8c92987849ad296e28ec6c07c8e7860b" title=" " alt="" coords="5,55,156,80"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="240,70,156,70,156,65,240,65"/>
 </map>

@@ -1,5 +1,5 @@
 <map id="PyModel::details" name="PyModel::details">
-<area shape="rect" id="Node000001" title="Get details of the model configuration." alt="" coords="5,411,136,436"/>
+<area shape="rect" id="Node000001" title="Get comprehensive details of the shock evolution and model configuration." alt="" coords="5,411,136,436"/>
 <area shape="rect" id="Node000002" href="$mesh_8h.html#a017f88b3242fdadb28e664f27725643a" title="Constructs a coordinate grid (Coord) for shock evolution." alt="" coords="221,208,304,233"/>
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="82,409,238,242,242,245,86,412"/>
 <area shape="rect" id="Node000005" href="$utilities_8h.html#ab8e81118f023df135835db8cce4f5f42" title="Returns the value of a single parameter." alt="" coords="965,208,1016,233"/>
@@ -8,7 +8,7 @@
 <area shape="poly" id="edge18_Node000001_Node000011" title=" " alt="" coords="136,421,171,421,171,426,136,426"/>
 <area shape="rect" id="Node000012" href="$reverse-shock_8hpp.html#ab50c063a2b81579f107e7e79f12961b0" title="Generates a pair of forward and reverse shocks." alt="" coords="184,460,341,485"/>
 <area shape="poly" id="edge19_Node000001_Node000012" title=" " alt="" coords="121,433,200,454,198,459,120,439"/>
-<area shape="rect" id="Node000013" href="$pymodel_8cpp.html#a1eef0647b48164a3b3a27cdfb7102aa4" title=" " alt="" coords="600,485,749,511"/>
+<area shape="rect" id="Node000013" href="$pymodel_8cpp.html#a8ffef75ec4ca3ef0464331eb194de1e5" title=" " alt="" coords="600,485,749,511"/>
 <area shape="poly" id="edge21_Node000001_Node000013" title=" " alt="" coords="87,434,129,467,156,483,185,495,237,508,291,517,400,523,502,519,588,510,588,515,503,525,400,529,291,522,236,514,183,501,153,488,126,472,84,439"/>
 <area shape="rect" id="Node000003" href="$mesh_8h.html#a83ae490737edde6ad03ede25e371a071" title=" " alt="" coords="396,159,535,184"/>
 <area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="304,208,399,185,400,190,305,213"/>

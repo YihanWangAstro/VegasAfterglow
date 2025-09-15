@@ -1,0 +1,46 @@
+var hierarchy =
+[
+    [ "CoastingShock", "classCoastingShock.html", null ],
+    [ "ConfigParams", "structConfigParams.html", null ],
+    [ "Coord", "classCoord.html", null ],
+    [ "Ejecta", "classEjecta.html", null ],
+    [ "Empty", "classEmpty.html", null ],
+    [ "Flux", "structFlux.html", null ],
+    [ "FluxData", "structFluxData.html", null ],
+    [ "ForwardShockEqn< Ejecta, Medium >", "classForwardShockEqn.html", null ],
+    [ "ForwardState< Ejecta, Medium >", "structForwardState.html", null ],
+    [ "FRShockEqn< Ejecta, Medium >", "classFRShockEqn.html", null ],
+    [ "GaussianJet", "classGaussianJet.html", null ],
+    [ "ICPhoton< Electrons, Photons >", "structICPhoton.html", null ],
+    [ "std::invalid_argument", null, [
+      [ "afterglow::ValidationError", "classafterglow_1_1ValidationError.html", null ]
+    ] ],
+    [ "InverseComptonY", "structInverseComptonY.html", null ],
+    [ "ISM", "classISM.html", null ],
+    [ "std::logic_error", null, [
+      [ "afterglow::LogicError", "classafterglow_1_1LogicError.html", null ]
+    ] ],
+    [ "Medium", "classMedium.html", null ],
+    [ "MultiBandData", "structMultiBandData.html", null ],
+    [ "MultiBandModel", "structMultiBandModel.html", null ],
+    [ "Observer", "classObserver.html", null ],
+    [ "Params", "structParams.html", null ],
+    [ "PowerLawJet", "classPowerLawJet.html", null ],
+    [ "PromptPhotons", "structPromptPhotons.html", null ],
+    [ "PyDetails", "structPyDetails.html", null ],
+    [ "PyFlux", "structPyFlux.html", null ],
+    [ "PyMagnetar", "structPyMagnetar.html", null ],
+    [ "PyModel", "classPyModel.html", null ],
+    [ "PyObserver", "classPyObserver.html", null ],
+    [ "PyRadiation", "classPyRadiation.html", null ],
+    [ "PyShock", "structPyShock.html", null ],
+    [ "RadParams", "structRadParams.html", null ],
+    [ "ReverseState< Ejecta, Medium >", "structReverseState.html", null ],
+    [ "Shock", "classShock.html", null ],
+    [ "SimpleShockEqn< Ejecta, Medium >", "classSimpleShockEqn.html", null ],
+    [ "SimpleState< Ejecta, Medium >", "structSimpleState.html", null ],
+    [ "SynElectrons", "structSynElectrons.html", null ],
+    [ "SynPhotons", "structSynPhotons.html", null ],
+    [ "TophatJet", "classTophatJet.html", null ],
+    [ "Wind", "classWind.html", null ]
+];

@@ -1,9 +1,0 @@
-<map id="MultiBandData::add_light_curve" name="MultiBandData::add_light_curve">
-<area shape="rect" id="Node000001" title=" " alt="" coords="5,23,156,63"/>
-<area shape="rect" id="Node000002" href="$pybind_8h.html#a65fbb7ac1dd1f2667e68724a512f691c" title=" " alt="" coords="204,5,311,31"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="156,30,190,25,191,30,157,35"/>
-<area shape="rect" id="Node000003" href="$utilities_8h.html#ab8e81118f023df135835db8cce4f5f42" title="Returns the value of a single parameter." alt="" coords="359,31,409,56"/>
-<area shape="poly" id="edge4_Node000001_Node000003" title=" " alt="" coords="156,41,345,41,345,46,156,46"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="311,26,345,33,344,38,310,31"/>
-<area shape="poly" id="edge3_Node000003_Node000003" title=" " alt="" coords="362,32,358,22,360,13,369,6,384,4,401,7,409,16,405,19,399,12,384,9,371,11,365,16,363,22,367,29"/>
-</map>

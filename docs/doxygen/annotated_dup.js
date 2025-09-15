@@ -1,10 +1,15 @@
 var annotated_dup =
 [
+    [ "afterglow", "namespaceafterglow.html", [
+      [ "LogicError", "classafterglow_1_1LogicError.html", "classafterglow_1_1LogicError" ],
+      [ "ValidationError", "classafterglow_1_1ValidationError.html", "classafterglow_1_1ValidationError" ]
+    ] ],
     [ "CoastingShock", "classCoastingShock.html", "classCoastingShock" ],
     [ "ConfigParams", "structConfigParams.html", "structConfigParams" ],
     [ "Coord", "classCoord.html", "classCoord" ],
     [ "Ejecta", "classEjecta.html", "classEjecta" ],
     [ "Empty", "classEmpty.html", null ],
+    [ "Flux", "structFlux.html", "structFlux" ],
     [ "FluxData", "structFluxData.html", "structFluxData" ],
     [ "ForwardShockEqn", "classForwardShockEqn.html", "classForwardShockEqn" ],
     [ "ForwardState", "structForwardState.html", "structForwardState" ],
@@ -20,10 +25,13 @@ var annotated_dup =
     [ "Params", "structParams.html", "structParams" ],
     [ "PowerLawJet", "classPowerLawJet.html", "classPowerLawJet" ],
     [ "PromptPhotons", "structPromptPhotons.html", "structPromptPhotons" ],
+    [ "PyDetails", "structPyDetails.html", "structPyDetails" ],
+    [ "PyFlux", "structPyFlux.html", "structPyFlux" ],
     [ "PyMagnetar", "structPyMagnetar.html", "structPyMagnetar" ],
     [ "PyModel", "classPyModel.html", "classPyModel" ],
     [ "PyObserver", "classPyObserver.html", "classPyObserver" ],
     [ "PyRadiation", "classPyRadiation.html", "classPyRadiation" ],
+    [ "PyShock", "structPyShock.html", "structPyShock" ],
     [ "RadParams", "structRadParams.html", "structRadParams" ],
     [ "ReverseState", "structReverseState.html", "structReverseState" ],
     [ "Shock", "classShock.html", "classShock" ],

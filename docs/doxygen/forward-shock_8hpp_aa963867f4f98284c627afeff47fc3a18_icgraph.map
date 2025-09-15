@@ -1,7 +1,9 @@
 <map id="generate_fwd_shock" name="generate_fwd_shock">
-<area shape="rect" id="Node000001" title="Generates a forward shock model for given coordinates, medium, and jet parameters." alt="" coords="383,5,537,31"/>
-<area shape="rect" id="Node000002" href="$classPyModel.html#a3440b0852a67952d09b9017ef6784fd0" title="Get details of the model configuration." alt="" coords="204,5,335,31"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="368,21,335,21,335,15,368,15"/>
-<area shape="rect" id="Node000003" href="$pybind_8cpp.html#a8c92987849ad296e28ec6c07c8e7860b" title=" " alt="" coords="5,5,156,31"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="190,21,156,21,156,15,190,15"/>
+<area shape="rect" id="Node000001" title="Generates a forward shock model for given coordinates, medium, and jet parameters." alt="" coords="483,31,637,56"/>
+<area shape="rect" id="Node000002" href="$classPyModel.html#a6b7bcc148ef97ee67955c716655213fc" title=" " alt="" coords="204,5,435,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="468,36,435,33,435,27,469,31"/>
+<area shape="rect" id="Node000003" href="$classPyModel.html#a3440b0852a67952d09b9017ef6784fd0" title="Get comprehensive details of the shock evolution and model configuration." alt="" coords="254,55,385,80"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="469,55,385,64,385,58,468,50"/>
+<area shape="rect" id="Node000004" href="$pybind_8cpp.html#a8c92987849ad296e28ec6c07c8e7860b" title=" " alt="" coords="5,55,156,80"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="240,70,156,70,156,65,240,65"/>
 </map>

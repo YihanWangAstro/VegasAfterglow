@@ -1,0 +1,5 @@
+<map id="PyFlux" name="PyFlux">
+<area shape="rect" id="Node000001" title="Complete flux structure combining forward and reverse shock contributions." alt="" coords="5,108,72,133"/>
+<area shape="rect" id="Node000002" href="$structFlux.html" title="Container for synchrotron and synchrotron self&#45;Compton flux components." alt="" coords="13,5,64,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="41,45,41,108,36,108,36,45"/>
+</map>

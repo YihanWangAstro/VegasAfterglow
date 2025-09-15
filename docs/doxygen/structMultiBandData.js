@@ -1,10 +1,12 @@
 var structMultiBandData =
 [
-    [ "add_light_curve", "structMultiBandData.html#ab1ff8b5942b1b5c63b8502ec5b045985", null ],
-    [ "add_light_curve", "structMultiBandData.html#a29a5fe4c5e01878890311691fa452421", null ],
-    [ "add_spectrum", "structMultiBandData.html#a94dc83f28a6f637526b10a8211748e2e", null ],
+    [ "add_light_curve", "structMultiBandData.html#a5986704146c88e42e1d4d221dba607b5", null ],
+    [ "add_light_curve", "structMultiBandData.html#ab2209cd1fa7758e3df4893878dab770c", null ],
+    [ "add_spectrum", "structMultiBandData.html#a071a3ffb1dd36155bbbab7d4dad8ea01", null ],
+    [ "data_points_num", "structMultiBandData.html#aa76ea4485894fd0eb67def9a0cc93045", null ],
     [ "estimate_chi2", "structMultiBandData.html#a631c6982c88e97795ffef3edb81253d8", null ],
     [ "fill_data_arrays", "structMultiBandData.html#ad2ade97dd269ab683c9fc6716dc0cdea", null ],
+    [ "logscale_screen", "structMultiBandData.html#a231028dd529a2a063833bdb58c3bc47f", null ],
     [ "errors", "structMultiBandData.html#a8640e475b62bf5f98f8829f583b01475", null ],
     [ "flux_data", "structMultiBandData.html#a0d8b205498be4e9a129395636a665baa", null ],
     [ "fluxes", "structMultiBandData.html#ab1938ad09632e63a73de79affb826115", null ],

@@ -5,6 +5,6 @@ var searchData=
   ['kev_2',['keV',['../namespaceunit.html#a0f6a9104ac1f80da64cf8a3745ef91dc',1,'unit']]],
   ['kg_3',['kg',['../namespaceunit.html#ade1c58fbd41c73c2639ae6b43ed69b05',1,'unit']]],
   ['km_4',['km',['../namespaceunit.html#a24953d730785c93f5e835b7ac5751acc',1,'unit']]],
-  ['kn_5',['kn',['../structConfigParams.html#a160a1fd01bc0dabbfecec06630de0e33',1,'ConfigParams::KN'],['../classPyRadiation.html#adc41564690440dd41c06419eee980474',1,'PyRadiation::KN']]],
+  ['kn_5',['kn',['../structConfigParams.html#adee8ff17b112827fe4c61161323a2cf5',1,'ConfigParams::kn'],['../classPyRadiation.html#ab5fe05d2f9642ca32b02ce9cf59a4f4e',1,'PyRadiation::kn']]],
   ['kpc_6',['kpc',['../namespaceunit.html#a59c43317f4556f768eccf9af8f731c24',1,'unit']]]
 ];

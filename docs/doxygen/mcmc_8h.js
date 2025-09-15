@@ -5,5 +5,5 @@ var mcmc_8h =
     [ "Params", "structParams.html", "structParams" ],
     [ "ConfigParams", "structConfigParams.html", "structConfigParams" ],
     [ "MultiBandModel", "structMultiBandModel.html", "structMultiBandModel" ],
-    [ "ArrayDict", "mcmc_8h.html#a57b73bcaf050a51dcca8fd2cd4ce930c", null ]
+    [ "PyOutput", "mcmc_8h.html#a2555e7fba0f328daff667ea4bf5711ef", null ]
 ];

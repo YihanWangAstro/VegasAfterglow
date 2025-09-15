@@ -8,5 +8,6 @@ var searchData=
   ['fv_5ferr_5',['Fv_err',['../structFluxData.html#a5c6b0ad9ba7dffc87376cbca7fa7cd0c',1,'FluxData']]],
   ['fv_5fmodel_6',['Fv_model',['../structFluxData.html#a5c10f6f3d6f4c9d3c07528ae41bd16a9',1,'FluxData']]],
   ['fv_5fobs_7',['Fv_obs',['../structFluxData.html#a6a3819114692164325dcbec864b1c851',1,'FluxData']]],
-  ['fwd_5fssc_8',['fwd_SSC',['../structConfigParams.html#a332f90cf62bf93a176003696be552575',1,'ConfigParams']]]
+  ['fwd_8',['fwd',['../structPyFlux.html#adde189e058cf4485bebf835f2d1ce9f0',1,'PyFlux::fwd'],['../structPyDetails.html#a790135e030da64decb6a2c29c64683fb',1,'PyDetails::fwd']]],
+  ['fwd_5fssc_9',['fwd_ssc',['../structConfigParams.html#ac4aa202165468ce61024971c3c93eeb6',1,'ConfigParams']]]
 ];

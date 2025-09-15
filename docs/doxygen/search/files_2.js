@@ -1,7 +1,5 @@
 var searchData=
 [
-  ['inverse_2dcompton_2ecpp_0',['inverse-compton.cpp',['../inverse-compton_8cpp.html',1,'']]],
-  ['inverse_2dcompton_2eh_1',['inverse-compton.h',['../inverse-compton_8h.html',1,'']]],
-  ['io_2ecpp_2',['IO.cpp',['../IO_8cpp.html',1,'']]],
-  ['io_2eh_3',['IO.h',['../IO_8h.html',1,'']]]
+  ['forward_2dshock_2ehpp_0',['forward-shock.hpp',['../forward-shock_8hpp.html',1,'']]],
+  ['forward_2dshock_2etpp_1',['forward-shock.tpp',['../forward-shock_8tpp.html',1,'']]]
 ];

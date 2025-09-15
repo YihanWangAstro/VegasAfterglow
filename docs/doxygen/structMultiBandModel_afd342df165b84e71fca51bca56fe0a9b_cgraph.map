@@ -1,5 +1,5 @@
 <map id="MultiBandModel::specific_flux" name="MultiBandModel::specific_flux">
-<area shape="rect" id="Node000001" title=" " alt="" coords="5,29,221,55"/>
+<area shape="rect" id="Node000001" title="Calculate theoretical flux predictions for given parameters and observation grid." alt="" coords="5,29,221,55"/>
 <area shape="rect" id="Node000002" href="$utilities_8h.html#ab8e81118f023df135835db8cce4f5f42" title="Returns the value of a single parameter." alt="" coords="269,29,320,55"/>
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="222,39,256,39,256,45,222,45"/>
 <area shape="poly" id="edge2_Node000002_Node000002" title=" " alt="" coords="267,33,259,23,261,12,273,5,295,3,322,7,329,13,331,20,326,21,325,16,320,12,295,8,275,10,265,15,264,21,271,29"/>

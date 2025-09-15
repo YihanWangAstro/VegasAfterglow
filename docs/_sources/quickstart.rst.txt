@@ -47,7 +47,7 @@ Then, let's set up the physical components of our afterglow model, including the
     rad = Radiation(eps_e=1e-1, eps_B=1e-3, p=2.3)
 
     # 5. Combine all components into a complete afterglow model
-    model = Model(jet=jet, medium=medium, observer=obs, forward_rad=rad)
+    model = Model(jet=jet, medium=medium, observer=obs, fwd_rad=rad)
 
 Light Curve Calculation
 ^^^^^^^^^^^^^^^^^^^^^^^
@@ -72,7 +72,7 @@ Now, let's compute and plot multi-wavelength light curves to see how the aftergl
     for i, nu in enumerate(bands):
         exp = int(np.floor(np.log10(nu)))
         base = nu / 10**exp
-        plt.loglog(times, results['syn'][i,:], label=fr'${base:.1f} \times 10^{{{exp}}}$ Hz')
+        plt.loglog(times, results.total[i,:], label=fr'${base:.1f} \times 10^{{{exp}}}$ Hz')
 
     # 6. Add annotations for important transitions
     def add_note(plt):
@@ -118,7 +118,7 @@ We can also examine how the broadband spectrum evolves at different times after 
     for i, t in enumerate(epochs):
         exp = int(np.floor(np.log10(t)))
         base = t / 10**exp
-        plt.loglog(frequencies, results['syn'][:,i], color=colors[i], label=fr'${base:.1f} \times 10^{{{exp}}}$ s')
+        plt.loglog(frequencies, results.total[:,i], color=colors[i], label=fr'${base:.1f} \times 10^{{{exp}}}$ s')
 
     # 5. Add vertical lines marking the bands from the light curve plot
     for i, band in enumerate(bands):
@@ -159,7 +159,7 @@ Similar to the light curve generation, let's set up the physical components of o
     rad = Radiation(eps_e=1e-1, eps_B=1e-3, p=2.3)
 
     # Include resolution parameters for detailed internal tracking
-    model = Model(jet=jet, medium=medium, observer=obs, forward_rad=rad, resolutions=(0.3,1,10))
+    model = Model(jet=jet, medium=medium, observer=obs, fwd_rad=rad, resolutions=(0.3,1,10))
 
 Accessing Simulation Quantities
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -172,33 +172,43 @@ Now, let's access the internal simulation quantities using the ``details`` metho
     # Get the simulation details over a time range
     details = model.details(t_min=1e0, t_max=1e8)
 
-    # Print the keys of the internal quantities
-    print("Simulation details:", details.keys())
+    # Print the available attributes
+    print("Simulation details attributes:", dir(details))
+    print("Forward shock attributes:", dir(details.fwd))
 
-You will get a comprehensive list of keys representing the internal quantities, such as ``t_src``, ``t_comv_fwd``, ``t_obs_fwd``, and many more. The available quantities include:
+You will get a ``SimulationDetails`` object with the following structure:
 
-- ``phi``: 1D numpy array of azimuthal angles in radians
-- ``theta``: 1D numpy array of polar angles in radians
-- ``t_src``: 3D numpy array of source frame times on coordinate (phi_i, theta_j, t_k) grid in seconds
-- ``t_comv_fwd``: 3D numpy array of comoving times for the forward shock in seconds
-- ``t_obs_fwd``: 3D numpy array of observer times for the forward shock in seconds
-- ``Gamma_fwd``: 3D numpy array of downstream Lorentz factors for the forward shock
-- ``Gamma_th_fwd``: 3D numpy array of thermal Lorentz factors for the forward shock
-- ``r_fwd``: 3D numpy array of lab frame radii in centimeters
-- ``B_fwd``: 3D numpy array of downstream comoving magnetic field strengths for the forward shock in Gauss
-- ``theta_fwd``: 3D numpy array of polar angles for the forward shock in radians
-- ``N_p_fwd``: 3D numpy array of downstream shocked proton number per solid angle for the forward shock
-- ``N_e_fwd``: 3D numpy array of downstream synchrotron electron number per solid angle for the forward shock
-- ``gamma_a_fwd``: 3D numpy array of comoving frame self-absorption Lorentz factors for the forward shock
-- ``gamma_m_fwd``: 3D numpy array of comoving frame injection Lorentz factors for the forward shock
-- ``gamma_c_fwd``: 3D numpy array of comoving frame cooling Lorentz factors for the forward shock
-- ``gamma_M_fwd``: 3D numpy array of comoving frame maximum Lorentz factors for the forward shock
-- ``nu_a_fwd``: 3D numpy array of comoving frame self-absorption frequencies for the forward shock in Hz
-- ``nu_m_fwd``: 3D numpy array of comoving frame injection frequencies for the forward shock in Hz
-- ``nu_c_fwd``: 3D numpy array of comoving frame cooling frequencies for the forward shock in Hz
-- ``nu_M_fwd``: 3D numpy array of comoving frame maximum frequencies for the forward shock in Hz
-- ``I_nu_max_fwd``: 3D numpy array of comoving frame synchrotron maximum specific intensities for the forward shock in erg/cm²/s/Hz
-- ``Doppler_fwd``: 3D numpy array of Doppler factors for the forward shock
+**Main grid coordinates:**
+
+- ``details.phi``: 1D numpy array of azimuthal angles in radians
+- ``details.theta``: 1D numpy array of polar angles in radians
+- ``details.t_src``: 3D numpy array of source frame times on coordinate (phi_i, theta_j, t_k) grid in seconds
+
+**Forward shock details (accessed via ``details.fwd``):**
+
+- ``details.fwd.t_comv``: 3D numpy array of comoving times for the forward shock in seconds
+- ``details.fwd.t_obs``: 3D numpy array of observer times for the forward shock in seconds
+- ``details.fwd.Gamma``: 3D numpy array of downstream Lorentz factors for the forward shock
+- ``details.fwd.Gamma_th``: 3D numpy array of thermal Lorentz factors for the forward shock
+- ``details.fwd.r``: 3D numpy array of lab frame radii in centimeters
+- ``details.fwd.B_comv``: 3D numpy array of downstream comoving magnetic field strengths for the forward shock in Gauss
+- ``details.fwd.theta``: 3D numpy array of polar angles for the forward shock in radians
+- ``details.fwd.N_p``: 3D numpy array of downstream shocked proton number per solid angle for the forward shock
+- ``details.fwd.N_e``: 3D numpy array of downstream synchrotron electron number per solid angle for the forward shock
+- ``details.fwd.gamma_a``: 3D numpy array of comoving frame self-absorption Lorentz factors for the forward shock
+- ``details.fwd.gamma_m``: 3D numpy array of comoving frame injection Lorentz factors for the forward shock
+- ``details.fwd.gamma_c``: 3D numpy array of comoving frame cooling Lorentz factors for the forward shock
+- ``details.fwd.gamma_M``: 3D numpy array of comoving frame maximum Lorentz factors for the forward shock
+- ``details.fwd.nu_a``: 3D numpy array of comoving frame self-absorption frequencies for the forward shock in Hz
+- ``details.fwd.nu_m``: 3D numpy array of comoving frame injection frequencies for the forward shock in Hz
+- ``details.fwd.nu_c``: 3D numpy array of comoving frame cooling frequencies for the forward shock in Hz
+- ``details.fwd.nu_M``: 3D numpy array of comoving frame maximum frequencies for the forward shock in Hz
+- ``details.fwd.I_nu_max``: 3D numpy array of comoving frame synchrotron maximum specific intensities for the forward shock in erg/cm²/s/Hz
+- ``details.fwd.Doppler``: 3D numpy array of Doppler factors for the forward shock
+
+**Reverse shock details (accessed via ``details.rvs``, if reverse shock is enabled):**
+
+- Similar attributes as forward shock but for the reverse shock component
 
 Multi-Parameter Evolution Visualization
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -207,23 +217,28 @@ To analyze the temporal evolution of physical parameters across different refere
 
 .. code-block:: python
 
-    keys =['Gamma_fwd', 'B_fwd', 'N_p_fwd','r_fwd','N_e_fwd','P_nu_max_fwd']
-    ylabels = [r'$\Gamma$', r'$B^\prime$ [G]', r'$N_p$', r'$r$ [cm]', r'$N_e$', r'$P_{\nu, \rm max}^\prime$ [erg/s/Hz]']
+    attrs =['Gamma', 'B_comv', 'N_p','r','N_e','I_nu_max']
+    ylabels = [r'$\Gamma$', r'$B^\prime$ [G]', r'$N_p$', r'$r$ [cm]', r'$N_e$', r'$I_{\nu, \rm max}^\prime$ [erg/s/Hz]']
 
-    frames = ['t_src', 't_comv_fwd', 't_obs_fwd']
+    frames = ['t_src', 't_comv', 't_obs']
     titles = ['source frame', 'comoving frame', 'observer frame']
     colors = ['C0', 'C1', 'C2']
     xlabels = [r'$t_{\rm src}$ [s]', r'$t^\prime$ [s]', r'$t_{\rm obs}$ [s]']
-    plt.figure(figsize= (4.2*len(frames), 3*len(keys)))
+    plt.figure(figsize= (4.2*len(frames), 3*len(attrs)))
 
     #plot the evolution of various parameters for phi = 0 and theta = 0 (so the first two indexes are 0)
     for i, frame in enumerate(frames):
-        for j, key in enumerate(keys):
-            plt.subplot(len(keys), len(frames) , j * len(frames) + i + 1)
+        for j, attr in enumerate(attrs):
+            plt.subplot(len(attrs), len(frames) , j * len(frames) + i + 1)
             if j == 0:
                 plt.title(titles[i])
-            plt.loglog(details[frame][0, 0, :], details[key][0, 0, :], color='k',lw=2.5)
-            plt.loglog(details[frame][0, 0, :], details[key][0, 0, :], color=colors[i])
+            value = getattr(details.fwd, attr)
+            if frame == 't_src':
+                t = getattr(details, frame)
+            else:
+                t = getattr(details.fwd, frame)
+            plt.loglog(t[0, 0, :], value[0, 0, :], color='k',lw=2.5)
+            plt.loglog(t[0, 0, :], value[0, 0, :], color=colors[i])
 
             plt.xlabel(xlabels[i])
             plt.ylabel(ylabels[j])
@@ -244,18 +259,22 @@ This visualization focuses specifically on the characteristic electron energies 
 
 .. code-block:: python
 
-    frames = ['t_src', 't_comv_fwd', 't_obs_fwd']
+    frames = ['t_src', 't_comv', 't_obs']
     xlabels = [r'$t_{\rm src}$ [s]', r'$t^\prime$ [s]', r'$t_{\rm obs}$ [s]']
     plt.figure(figsize= (4.2*len(frames), 3.6))
 
     for i, frame in enumerate(frames):
         plt.subplot(1, len(frames), i + 1)
-        plt.loglog(details[frame][0, 0, :], details['gamma_a_fwd'][0, 0, :],label=r'$\gamma_a^\prime$',c='firebrick')
-        plt.loglog(details[frame][0, 0, :], details['gamma_m_fwd'][0, 0, :],label=r'$\gamma_m^\prime$',c='yellowgreen')
-        plt.loglog(details[frame][0, 0, :], details['gamma_c_fwd'][0, 0, :],label=r'$\gamma_c^\prime$',c='royalblue')
-        plt.loglog(details[frame][0, 0, :], details['gamma_a_fwd'][0, 0, :]*details['Doppler_fwd'][0,0,:],label=r'$\gamma_a$',ls='--',c='firebrick')
-        plt.loglog(details[frame][0, 0, :], details['gamma_m_fwd'][0, 0, :]*details['Doppler_fwd'][0,0,:],label=r'$\gamma_m$',ls='--',c='yellowgreen')
-        plt.loglog(details[frame][0, 0, :], details['gamma_c_fwd'][0, 0, :]*details['Doppler_fwd'][0,0,:],label=r'$\gamma_c$',ls='--',c='royalblue')
+        if frame == 't_src':
+            t = getattr(details, frame)
+        else:
+            t = getattr(details.fwd, frame)
+        plt.loglog(t[0, 0, :], details.fwd.gamma_a[0, 0, :],label=r'$\gamma_a^\prime$',c='firebrick')
+        plt.loglog(t[0, 0, :], details.fwd.gamma_m[0, 0, :],label=r'$\gamma_m^\prime$',c='yellowgreen')
+        plt.loglog(t[0, 0, :], details.fwd.gamma_c[0, 0, :],label=r'$\gamma_c^\prime$',c='royalblue')
+        plt.loglog(t[0, 0, :], details.fwd.gamma_a[0, 0, :]*details.fwd.Doppler[0,0,:],label=r'$\gamma_a$',ls='--',c='firebrick')
+        plt.loglog(t[0, 0, :], details.fwd.gamma_m[0, 0, :]*details.fwd.Doppler[0,0,:],label=r'$\gamma_m$',ls='--',c='yellowgreen')
+        plt.loglog(t[0, 0, :], details.fwd.gamma_c[0, 0, :]*details.fwd.Doppler[0,0,:],label=r'$\gamma_c$',ls='--',c='royalblue')
         plt.xlabel(xlabels[i])
         plt.ylabel(r'$\gamma_e^\prime$')
         plt.legend(ncol=2)
@@ -275,18 +294,22 @@ This analysis tracks the evolution of characteristic synchrotron frequencies, de
 
 .. code-block:: python
 
-    frames = ['t_src', 't_comv_fwd', 't_obs_fwd']
+    frames = ['t_src', 't_comv', 't_obs']
     xlabels = [r'$t_{\rm src}$ [s]', r'$t^\prime$ [s]', r'$t_{\rm obs}$ [s]']
     plt.figure(figsize= (4.2*len(frames), 3.6))
 
     for i, frame in enumerate(frames):
         plt.subplot(1, len(frames), i + 1)
-        plt.loglog(details[frame][0, 0, :], details['nu_a_fwd'][0, 0, :],label=r'$\nu_a^\prime$',c='firebrick')
-        plt.loglog(details[frame][0, 0, :], details['nu_m_fwd'][0, 0, :],label=r'$\nu_m^\prime$',c='yellowgreen')
-        plt.loglog(details[frame][0, 0, :], details['nu_c_fwd'][0, 0, :],label=r'$\nu_c^\prime$',c='royalblue')
-        plt.loglog(details[frame][0, 0, :], details['nu_a_fwd'][0, 0, :]*details['Doppler_fwd'][0,0,:],label=r'$\nu_a$',ls='--',c='firebrick')
-        plt.loglog(details[frame][0, 0, :], details['nu_m_fwd'][0, 0, :]*details['Doppler_fwd'][0,0,:],label=r'$\nu_m$',ls='--',c='yellowgreen')
-        plt.loglog(details[frame][0, 0, :], details['nu_c_fwd'][0, 0, :]*details['Doppler_fwd'][0,0,:],label=r'$\nu_c$',ls='--',c='royalblue')
+        if frame == 't_src':
+            t = getattr(details, frame)
+        else:
+            t = getattr(details.fwd, frame)
+        plt.loglog(t[0, 0, :], details.fwd.nu_a[0, 0, :],label=r'$\nu_a^\prime$',c='firebrick')
+        plt.loglog(t[0, 0, :], details.fwd.nu_m[0, 0, :],label=r'$\nu_m^\prime$',c='yellowgreen')
+        plt.loglog(t[0, 0, :], details.fwd.nu_c[0, 0, :],label=r'$\nu_c^\prime$',c='royalblue')
+        plt.loglog(t[0, 0, :], details.fwd.nu_a[0, 0, :]*details.fwd.Doppler[0,0,:],label=r'$\nu_a$',ls='--',c='firebrick')
+        plt.loglog(t[0, 0, :], details.fwd.nu_m[0, 0, :]*details.fwd.Doppler[0,0,:],label=r'$\nu_m$',ls='--',c='yellowgreen')
+        plt.loglog(t[0, 0, :], details.fwd.nu_c[0, 0, :]*details.fwd.Doppler[0,0,:],label=r'$\nu_c$',ls='--',c='royalblue')
         plt.xlabel(xlabels[i])
         plt.ylabel(r'$\nu$ [Hz]')
         plt.legend(ncol=2)
@@ -309,9 +332,9 @@ This polar plot visualizes the spatial distribution of the Doppler factor across
     plt.figure(figsize=(6,6))
     ax = plt.subplot(111, polar=True)
 
-    theta = details['theta_fwd'][0,:,:]
-    r     = details['r_fwd'][0,:,:]
-    D     = details['Doppler_fwd'][0,:,:]
+    theta = details.fwd.theta[0,:,:]
+    r     = details.fwd.r[0,:,:]
+    D     = details.fwd.Doppler[0,:,:]
 
     # Polar contour plot
     scale = 3.0
@@ -345,9 +368,9 @@ This final visualization maps the equal arrival time surfaces in polar coordinat
     plt.figure(figsize=(6,6))
     ax = plt.subplot(111, polar=True)
 
-    theta = details['theta_fwd'][0,:,:]
-    r     = details['r_fwd'][0,:,:]
-    t_obs = details['t_obs_fwd'][0,:,:]
+    theta = details.fwd.theta[0,:,:]
+    r     = details.fwd.r[0,:,:]
+    t_obs = details.fwd.t_obs[0,:,:]
 
     scale = 3.0
     c = ax.contourf(theta*scale, r, np.log10(t_obs), levels=30, cmap='viridis')
