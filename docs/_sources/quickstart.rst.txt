@@ -63,7 +63,7 @@ Now, let's compute and plot multi-wavelength light curves to see how the aftergl
     bands = np.array([1e9, 1e14, 1e17])
 
     # 3. Calculate the afterglow emission at each time and frequency
-    results = model.specific_flux(times, bands)
+    results = model.flux_density_grid(times, bands)
 
     # 4. Visualize the multi-wavelength light curves
     plt.figure(figsize=(4.8, 3.6), dpi=200)
@@ -109,7 +109,7 @@ We can also examine how the broadband spectrum evolves at different times after 
     epochs = np.array([1e2, 1e3, 1e4, 1e5, 1e6, 1e7, 1e8])
 
     # 3. Calculate spectra at each epoch
-    results = model.specific_flux(epochs, frequencies)
+    results = model.flux_density_grid(epochs, frequencies)
 
     # 4. Plot broadband spectra at each epoch
     plt.figure(figsize=(4.8, 3.6),dpi=200)
@@ -426,15 +426,15 @@ VegasAfterglow provides flexible options for loading observational data through 
     t_data = [1e3, 2e3, 5e3, 1e4, 2e4]  # Time in seconds
     flux_data = [1e-26, 8e-27, 5e-27, 3e-27, 2e-27]  # Specific flux in erg/cm²/s/Hz
     flux_err = [1e-28, 8e-28, 5e-28, 3e-28, 2e-28]  # Specific flux error in erg/cm²/s/Hz
-    data.add_light_curve(nu_cgs=4.84e14, t_cgs=t_data, Fnu_cgs=flux_data, Fnu_err=flux_err)
+    data.add_flux_density(nu=4.84e14, t=t_data, f_nu=flux_data, err=flux_err)  # All quantities in CGS units
     # You can also assign weights to each data point to account for systematic uncertainties or correlations. You don't need to worry about the weights' normalization, the code will normalize them automatically.
-    #data.add_light_curve(nu_cgs=4.84e14, t_cgs=t_data, Fnu_cgs=flux_data, Fnu_err=flux_err, weights=np.ones(len(t_data)))
+    #data.add_flux_density(nu=4.84e14, t=t_data, f_nu=flux_data, err=flux_err, weights=np.ones(len(t_data)))
 
     # For spectra
     nu_data = [...]  # Frequencies in Hz
     spectrum_data = [...] # Specific flux values in erg/cm²/s/Hz
     spectrum_err = [...]   # Specific flux errors in erg/cm²/s/Hz
-    data.add_spectrum(t_cgs=3000, nu_cgs=nu_data, Fnu_cgs=spectrum_data, Fnu_err=spectrum_err)
+    data.add_spectrum(t=3000, nu=nu_data, f_nu=spectrum_data, err=spectrum_err)  # All quantities in CGS units
 
 .. code-block:: python
 
@@ -447,7 +447,7 @@ VegasAfterglow provides flexible options for loading observational data through 
     # Load light curves from files
     for nu, fname in zip(bands, lc_files):
         df = pd.read_csv(fname)
-        data.add_light_curve(nu_cgs=nu, t_cgs=df["t"], Fnu_cgs=df["Fv_obs"], Fnu_err=df["Fv_err"])
+        data.add_flux_density(nu=nu, t=df["t"], f_nu=df["Fv_obs"], err=df["Fv_err"])  # All quantities in CGS units
 
     times = [3000] # Example: time in seconds
     spec_files = ["data/ep-spec.csv"]
@@ -455,7 +455,7 @@ VegasAfterglow provides flexible options for loading observational data through 
     # Load spectra from files
     for t, fname in zip(times, spec_files):
         df = pd.read_csv(fname)
-        data.add_spectrum(t_cgs=t, nu_cgs=df["nu"], Fnu_cgs=df["Fv_obs"], Fnu_err=df["Fv_err"])
+        data.add_spectrum(t=t, nu=df["nu"], f_nu=df["Fv_obs"], err=df["Fv_err"])  # All quantities in CGS units
 
 .. note::
    The ``ObsData`` interface is designed to be flexible. You can mix and match different data sources, and add multiple light curves at different frequencies as well as multiple spectra at different times.
@@ -488,6 +488,8 @@ The ``ParamDef`` class is used to define the parameters for MCMC exploration. Ea
         ParamDef("E_iso",   1e50,  1e54,  Scale.LOG),       # Isotropic energy [erg]
         ParamDef("Gamma0",     5,  1000,  Scale.LOG),       # Lorentz factor at the core
         ParamDef("theta_c",  0.0,   0.5,  Scale.LINEAR),    # Core half-opening angle [rad]
+        ParamDef("k_e",        2,     2,  Scale.FIXED),     # Energy power law index
+        ParamDef("k_g",        2,     2,  Scale.FIXED),     # Lorentz factor power law index
         ParamDef("theta_v",  0.0,   0.0,  Scale.FIXED),     # Viewing angle [rad]
         ParamDef("p",          2,     3,  Scale.LINEAR),    # Shocked electron power law index
         ParamDef("eps_e",   1e-2,   0.5,  Scale.LOG),       # Electron energy fraction
@@ -559,12 +561,12 @@ Use the best-fit parameters to generate model predictions:
     bands = [2.4e17, 4.84e14, 1.4e14]
 
     # Generate light curves with the best-fit model
-    lc_best = fitter.specific_flux(result.best_params, t_out, bands)
+    lc_best = fitter.flux_density_grid(result.best_params, t_out, bands)
 
     nu_out = np.logspace(6, 20, 150)
     times = [3000]
     # Generate model spectra at the specified times using the best-fit parameters
-    spec_best = fitter.specific_flux(result.best_params, times, nu_out)
+    spec_best = fitter.flux_density_grid(result.best_params, times, nu_out)
 
 Now you can plot the best-fit model:
 

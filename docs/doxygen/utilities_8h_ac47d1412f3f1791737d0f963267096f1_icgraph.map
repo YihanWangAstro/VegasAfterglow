@@ -1,18 +1,18 @@
 <map id="min" name="min">
-<area shape="rect" id="Node000001" title="Returns the value of a single parameter." alt="" coords="1032,31,1079,56"/>
-<area shape="rect" id="Node000002" href="$mesh_8h.html#a49c59d8da915e118c4e550cc9bd4d3d9" title=" " alt="" coords="813,31,984,56"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="1018,46,984,46,984,41,1018,41"/>
-<area shape="rect" id="Node000003" href="$mesh_8h.html#a83ae490737edde6ad03ede25e371a071" title=" " alt="" coords="620,5,759,31"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="800,34,759,29,759,24,800,29"/>
-<area shape="rect" id="Node000008" href="$mesh_8h.html#a3dc6828dd13a70c0c203dba03e765cea" title=" " alt="" coords="613,55,765,80"/>
-<area shape="poly" id="edge7_Node000002_Node000008" title=" " alt="" coords="800,57,766,61,765,56,799,52"/>
-<area shape="rect" id="Node000004" href="$mesh_8h.html#a017f88b3242fdadb28e664f27725643a" title="Constructs a coordinate grid (Coord) for shock evolution." alt="" coords="483,31,565,56"/>
-<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="607,33,566,40,565,34,606,28"/>
-<area shape="rect" id="Node000005" href="$classPyModel.html#a6b7bcc148ef97ee67955c716655213fc" title=" " alt="" coords="204,5,435,31"/>
-<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="469,39,422,33,422,28,469,34"/>
-<area shape="rect" id="Node000006" href="$classPyModel.html#a3440b0852a67952d09b9017ef6784fd0" title="Get comprehensive details of the shock evolution and model configuration." alt="" coords="254,55,385,80"/>
-<area shape="poly" id="edge5_Node000004_Node000006" title=" " alt="" coords="469,52,385,62,385,57,469,47"/>
-<area shape="rect" id="Node000007" href="$pybind_8cpp.html#a8c92987849ad296e28ec6c07c8e7860b" title=" " alt="" coords="5,55,156,80"/>
-<area shape="poly" id="edge6_Node000006_Node000007" title=" " alt="" coords="240,70,156,70,156,65,240,65"/>
-<area shape="poly" id="edge8_Node000008_Node000004" title=" " alt="" coords="600,57,565,52,566,47,601,52"/>
+<area shape="rect" id="Node000001" title="Returns the value of a single parameter." alt="" coords="976,42,1023,67"/>
+<area shape="rect" id="Node000002" href="$mesh_8h.html#a49c59d8da915e118c4e550cc9bd4d3d9" title=" " alt="" coords="757,42,928,67"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="962,57,928,57,928,52,962,52"/>
+<area shape="rect" id="Node000003" href="$mesh_8h.html#a83ae490737edde6ad03ede25e371a071" title=" " alt="" coords="564,17,703,42"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="744,45,703,40,703,35,744,40"/>
+<area shape="rect" id="Node000008" href="$mesh_8h.html#a3dc6828dd13a70c0c203dba03e765cea" title=" " alt="" coords="557,66,709,91"/>
+<area shape="poly" id="edge7_Node000002_Node000008" title=" " alt="" coords="744,69,710,73,709,67,743,63"/>
+<area shape="rect" id="Node000004" href="$mesh_8h.html#a017f88b3242fdadb28e664f27725643a" title="Constructs a coordinate grid (Coord) for shock evolution." alt="" coords="427,42,509,67"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="551,45,510,51,509,46,550,39"/>
+<area shape="rect" id="Node000005" href="$classPyModel.html#a2679af43397e386a0ee6aaea0ad102d8" title=" " alt="" coords="204,5,379,45"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="413,48,378,42,379,37,413,43"/>
+<area shape="rect" id="Node000006" href="$classPyModel.html#a3440b0852a67952d09b9017ef6784fd0" title="Get comprehensive details of the shock evolution and model configuration." alt="" coords="226,70,357,95"/>
+<area shape="poly" id="edge5_Node000004_Node000006" title=" " alt="" coords="413,66,357,75,357,70,412,61"/>
+<area shape="rect" id="Node000007" href="$pybind_8cpp.html#a8c92987849ad296e28ec6c07c8e7860b" title=" " alt="" coords="5,70,156,95"/>
+<area shape="poly" id="edge6_Node000006_Node000007" title=" " alt="" coords="212,85,156,85,156,80,212,80"/>
+<area shape="poly" id="edge8_Node000008_Node000004" title=" " alt="" coords="544,68,509,63,510,58,545,63"/>
 </map>

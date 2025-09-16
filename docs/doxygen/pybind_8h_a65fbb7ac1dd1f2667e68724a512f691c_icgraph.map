@@ -1,12 +1,16 @@
 <map id="is_ascending" name="is_ascending">
-<area shape="rect" id="Node000001" title=" " alt="" coords="419,70,525,95"/>
-<area shape="rect" id="Node000002" href="$structMultiBandData.html#ab2209cd1fa7758e3df4893878dab770c" title="Add frequency&#45;integrated flux measurements over a specified frequency band." alt="" coords="212,5,363,45"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="417,68,351,48,353,43,418,63"/>
-<area shape="rect" id="Node000003" href="$classPyModel.html#aff0f26fa2c72824720c6d16189ad996b" title="Calculate specific flux at given times and frequencies." alt="" coords="204,70,371,95"/>
-<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="405,85,371,85,371,80,405,80"/>
-<area shape="rect" id="Node000005" href="$classPyModel.html#a3bbae641e3d5f9968da2cbe8053bbce0" title="Calculate specific flux at given time and frequency (t_i,nu_i) series." alt="" coords="204,120,371,160"/>
-<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="418,102,353,123,351,117,417,97"/>
-<area shape="rect" id="Node000004" href="$pybind_8cpp.html#a8c92987849ad296e28ec6c07c8e7860b" title=" " alt="" coords="5,99,156,125"/>
-<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="191,99,157,104,156,99,190,94"/>
-<area shape="poly" id="edge5_Node000005_Node000004" title=" " alt="" coords="190,129,156,125,157,120,191,124"/>
+<area shape="rect" id="Node000001" title=" " alt="" coords="449,80,556,105"/>
+<area shape="rect" id="Node000002" href="$structMultiBandData.html#abf821e57acc374b58a3377eb40210067" title="Add frequency&#45;integrated flux measurements over a specified frequency band." alt="" coords="211,5,394,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="466,76,400,44,364,33,366,28,402,40,469,71"/>
+<area shape="rect" id="Node000004" href="$classPyModel.html#a51390496a41c22c7c2dbb8838ac7a2d2" title="Calculate bolometric flux integrated over a frequency range." alt="" coords="247,55,358,80"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="435,87,358,77,359,72,436,82"/>
+<area shape="rect" id="Node000005" href="$classPyModel.html#abf7e6762cb8ca1c8ff429e0a8a7592ad" title="Calculate specific flux at given time and frequency (t_i,nu_i) series." alt="" coords="220,104,385,129"/>
+<area shape="poly" id="edge5_Node000001_Node000005" title=" " alt="" coords="436,103,386,109,385,104,435,98"/>
+<area shape="rect" id="Node000006" href="$classPyModel.html#a7aaf63a15a01165e3c5ad8d935f30414" title="Calculate specific flux at given times and frequencies." alt="" coords="204,153,401,179"/>
+<area shape="poly" id="edge7_Node000001_Node000006" title=" " alt="" coords="467,114,402,143,361,156,360,151,400,138,465,109"/>
+<area shape="rect" id="Node000003" href="$pybind_8cpp.html#a8c92987849ad296e28ec6c07c8e7860b" title=" " alt="" coords="5,80,156,105"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="231,37,205,45,110,82,108,78,203,39,230,32"/>
+<area shape="poly" id="edge4_Node000004_Node000003" title=" " alt="" coords="234,78,157,87,156,81,234,72"/>
+<area shape="poly" id="edge6_Node000005_Node000003" title=" " alt="" coords="206,109,156,103,156,98,207,104"/>
+<area shape="poly" id="edge8_Node000006_Node000003" title=" " alt="" coords="234,152,203,143,111,108,113,103,205,138,235,147"/>
 </map>

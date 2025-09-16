@@ -40,7 +40,7 @@ Setting up a simple afterglow model
 
     # Calculate the afterglow emission at each time and frequency
     # NOTE that the times array needs to be in ascending order
-    results = model.specific_flux(times, bands)
+    results = model.flux_density_grid(times, bands)
 
     # Visualize the multi-wavelength light curves
     plt.figure(figsize=(4.8, 3.6),dpi=200)
@@ -62,7 +62,7 @@ Setting up a simple afterglow model
     epochs = np.array([1e2, 1e3, 1e4, 1e5 ,1e6, 1e7, 1e8])
 
     # Calculate spectra at each epoch
-    results = model.specific_flux(epochs, frequencies)
+    results = model.flux_density_grid(epochs, frequencies)
 
     # Plot broadband spectra at each epoch
     plt.figure(figsize=(4.8, 3.6),dpi=200)
@@ -97,7 +97,7 @@ Suppose you want to calculate the flux at specific time-frequency pairs (t_i, nu
     # Define observing frequencies (must be the same length as times)
     bands = np.logspace(9,17, 200)
 
-    results = model.specific_flux_series(times, bands) #times array could be random order
+    results = model.flux_density(times, bands) #times array could be random order
 
     # the returned results is a FluxDict object with arrays of the same shape as the input times and bands.
 
@@ -118,7 +118,7 @@ For observations with finite exposure times, you can calculate time-averaged flu
     expo_time = np.ones_like(times) * 100  # 100-second exposures
 
     # Calculate time-averaged flux with 20 sample points per exposure
-    results = model.specific_flux_series_with_expo(times, bands, expo_time, num_points=20)
+    results = model.flux_density_exposures(times, bands, expo_time, num_points=20)
 
     # The returned results is a FluxDict object with arrays of the same shape as input times and bands
     # Each flux value represents the average over the corresponding exposure time
@@ -151,11 +151,11 @@ Stratified Medium
     from VegasAfterglow import Wind
 
     # Create a stratified stellar wind medium;
-    # smooth transited stratified medium. Inner region, n(r) = n_0, middle region n(r) \propto 1/r^2, outer region n(r)=n_ism
+    # smooth transited stratified medium. Inner region, n(r) = n0, middle region n(r) \propto 1/r^2, outer region n(r)=n_ism
     # A = 0 (default): fallback to n = n_ism
-    # n_0 = inf (default): wind bubble, from wind profile to ism profile
-    # A = 0 & n_0 = inf: pure wind;
-    wind = Wind(A_star=0.1, n_ism = 1, n_0 = 1e-3)
+    # n0 = inf (default): wind bubble, from wind profile to ism profile
+    # A = 0 & n0 = inf: pure wind;
+    wind = Wind(A_star=0.1, n_ism = 1, n0 = 1e-3)
 
     #..other settings
     model = Model(medium=wind, ...)
@@ -231,8 +231,8 @@ Two-Component Jet
     # Create a two-component jet
     jet = TwoComponentJet(
         theta_c=0.05,        # Narrow component angular size (radians)
-        E_iso_c=1e53,        # Isotropic-equivalent energy of the narrow component (ergs)
-        Gamma0_c=300,        # Initial Lorentz factor of the narrow component
+        E_iso=1e53,          # Isotropic-equivalent energy of the narrow component (ergs)
+        Gamma0=300,          # Initial Lorentz factor of the narrow component
         theta_w=0.1,         # Wide component angular size (radians)
         E_iso_w=1e52,        # Isotropic-equivalent energy of the wide component (ergs)
         Gamma0_w=100         # Initial Lorentz factor of the wide component
@@ -251,8 +251,8 @@ Step Power-Law Jet
     # Create a step power-law structured jet (uniform core with sharp transition)
     jet = StepPowerLawJet(
         theta_c=0.05,        # Core angular size (radians)
-        E_iso_c=1e53,        # Isotropic-equivalent energy of the core component (ergs)
-        Gamma0_c=300,        # Initial Lorentz factor of the core component
+        E_iso=1e53,          # Isotropic-equivalent energy of the core component (ergs)
+        Gamma0=300,          # Initial Lorentz factor of the core component
         E_iso_w=1e52,        # Isotropic-equivalent energy of the wide component (ergs)
         Gamma0_w=100,        # Initial Lorentz factor of the wide component
         k_e=2.0,             # Power-law index for energy angular dependence
@@ -373,7 +373,7 @@ Reverse Shock Emission
 
     bands = np.array([1e9, 1e14, 1e17])
 
-    results = model.specific_flux(times, bands)
+    results = model.flux_density_grid(times, bands)
 
     plt.figure(figsize=(4.8, 3.6),dpi=200)
 
@@ -418,7 +418,7 @@ Self-Synchrotron Compton Radiation
 
     bands = np.array([1e9, 1e14, 1e17])
 
-    results = model.specific_flux(times, bands)
+    results = model.flux_density_grid(times, bands)
 
     plt.figure(figsize=(4.8, 3.6),dpi=200)
 

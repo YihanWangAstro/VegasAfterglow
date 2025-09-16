@@ -93,6 +93,7 @@ $(document).ready(function(){initNavTree('structMultiBandData.html',''); initRes
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pub-static-methods">Static Public Member Functions</a> &#124;
 <a href="#pub-attribs">Public Attributes</a> &#124;
 <a href="structMultiBandData-members.html">List of all members</a>  </div>
   <div class="headertitle"><div class="title">MultiBandData Struct Reference</div></div>
@@ -109,24 +110,27 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a631c6982c88e97795ffef3edb81253d8" id="r_a631c6982c88e97795ffef3edb81253d8"><td class="memItemLeft" align="right" valign="top"><a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">double</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structMultiBandData.html#a631c6982c88e97795ffef3edb81253d8">estimate_chi2</a> () <a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">const</a></td></tr>
 <tr class="memdesc:a631c6982c88e97795ffef3edb81253d8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculate total chi-squared statistic across all observational datasets.  <br /></td></tr>
 <tr class="separator:a631c6982c88e97795ffef3edb81253d8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5986704146c88e42e1d4d221dba607b5" id="r_a5986704146c88e42e1d4d221dba607b5"><td class="memItemLeft" align="right" valign="top"><a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">void</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structMultiBandData.html#a5986704146c88e42e1d4d221dba607b5">add_light_curve</a> (<a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">double</a> nu, <a class="el" href="pybind_8h.html#a06c55931188bd694c6e070a50e95344c">PyArray</a> <a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">const</a> &amp;t, <a class="el" href="pybind_8h.html#a06c55931188bd694c6e070a50e95344c">PyArray</a> <a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">const</a> &amp;Fv_obs, <a class="el" href="pybind_8h.html#a06c55931188bd694c6e070a50e95344c">PyArray</a> <a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">const</a> &amp;Fv_err, std::optional&lt; <a class="el" href="pybind_8h.html#a06c55931188bd694c6e070a50e95344c">PyArray</a> &gt; <a class="el" href="structMultiBandData.html#a082a799cc2a578edb86044c486057582">weights</a>=std::nullopt)</td></tr>
-<tr class="memdesc:a5986704146c88e42e1d4d221dba607b5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add a single-frequency light curve to the observational dataset.  <br /></td></tr>
-<tr class="separator:a5986704146c88e42e1d4d221dba607b5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab2209cd1fa7758e3df4893878dab770c" id="r_ab2209cd1fa7758e3df4893878dab770c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">void</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structMultiBandData.html#ab2209cd1fa7758e3df4893878dab770c">add_light_curve</a> (<a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">double</a> <a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">nu_min</a>, <a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">double</a> <a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">nu_max</a>, <a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">size_t</a> <a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">num_points</a>, <a class="el" href="pybind_8h.html#a06c55931188bd694c6e070a50e95344c">PyArray</a> <a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">const</a> &amp;t, <a class="el" href="pybind_8h.html#a06c55931188bd694c6e070a50e95344c">PyArray</a> <a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">const</a> &amp;Fv_obs, <a class="el" href="pybind_8h.html#a06c55931188bd694c6e070a50e95344c">PyArray</a> <a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">const</a> &amp;Fv_err, std::optional&lt; <a class="el" href="pybind_8h.html#a06c55931188bd694c6e070a50e95344c">PyArray</a> &gt; <a class="el" href="structMultiBandData.html#a082a799cc2a578edb86044c486057582">weights</a>=std::nullopt)</td></tr>
-<tr class="memdesc:ab2209cd1fa7758e3df4893878dab770c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add frequency-integrated flux measurements over a specified frequency band.  <br /></td></tr>
-<tr class="separator:ab2209cd1fa7758e3df4893878dab770c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a61bd4b2b5346bd911a4120447ff00b8b" id="r_a61bd4b2b5346bd911a4120447ff00b8b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">void</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structMultiBandData.html#a61bd4b2b5346bd911a4120447ff00b8b">add_flux_density</a> (<a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">double</a> nu, <a class="el" href="pybind_8h.html#a06c55931188bd694c6e070a50e95344c">PyArray</a> <a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">const</a> &amp;t, <a class="el" href="pybind_8h.html#a06c55931188bd694c6e070a50e95344c">PyArray</a> <a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">const</a> &amp;Fv_obs, <a class="el" href="pybind_8h.html#a06c55931188bd694c6e070a50e95344c">PyArray</a> <a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">const</a> &amp;Fv_err, std::optional&lt; <a class="el" href="pybind_8h.html#a06c55931188bd694c6e070a50e95344c">PyArray</a> &gt; <a class="el" href="structMultiBandData.html#a082a799cc2a578edb86044c486057582">weights</a>=std::nullopt)</td></tr>
+<tr class="memdesc:a61bd4b2b5346bd911a4120447ff00b8b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add a single-frequency light curve to the observational dataset.  <br /></td></tr>
+<tr class="separator:a61bd4b2b5346bd911a4120447ff00b8b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abf821e57acc374b58a3377eb40210067" id="r_abf821e57acc374b58a3377eb40210067"><td class="memItemLeft" align="right" valign="top"><a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">void</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structMultiBandData.html#abf821e57acc374b58a3377eb40210067">add_flux</a> (<a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">double</a> <a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">nu_min</a>, <a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">double</a> <a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">nu_max</a>, <a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">size_t</a> <a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">num_points</a>, <a class="el" href="pybind_8h.html#a06c55931188bd694c6e070a50e95344c">PyArray</a> <a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">const</a> &amp;t, <a class="el" href="pybind_8h.html#a06c55931188bd694c6e070a50e95344c">PyArray</a> <a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">const</a> &amp;Fv_obs, <a class="el" href="pybind_8h.html#a06c55931188bd694c6e070a50e95344c">PyArray</a> <a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">const</a> &amp;Fv_err, std::optional&lt; <a class="el" href="pybind_8h.html#a06c55931188bd694c6e070a50e95344c">PyArray</a> &gt; <a class="el" href="structMultiBandData.html#a082a799cc2a578edb86044c486057582">weights</a>=std::nullopt)</td></tr>
+<tr class="memdesc:abf821e57acc374b58a3377eb40210067"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add frequency-integrated flux measurements over a specified frequency band.  <br /></td></tr>
+<tr class="separator:abf821e57acc374b58a3377eb40210067"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a071a3ffb1dd36155bbbab7d4dad8ea01" id="r_a071a3ffb1dd36155bbbab7d4dad8ea01"><td class="memItemLeft" align="right" valign="top"><a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">void</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structMultiBandData.html#a071a3ffb1dd36155bbbab7d4dad8ea01">add_spectrum</a> (<a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">double</a> t, <a class="el" href="pybind_8h.html#a06c55931188bd694c6e070a50e95344c">PyArray</a> <a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">const</a> &amp;nu, <a class="el" href="pybind_8h.html#a06c55931188bd694c6e070a50e95344c">PyArray</a> <a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">const</a> &amp;Fv_obs, <a class="el" href="pybind_8h.html#a06c55931188bd694c6e070a50e95344c">PyArray</a> <a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">const</a> &amp;Fv_err, std::optional&lt; <a class="el" href="pybind_8h.html#a06c55931188bd694c6e070a50e95344c">PyArray</a> &gt; <a class="el" href="structMultiBandData.html#a082a799cc2a578edb86044c486057582">weights</a>=std::nullopt)</td></tr>
 <tr class="memdesc:a071a3ffb1dd36155bbbab7d4dad8ea01"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add a broadband spectrum at a specific observation time.  <br /></td></tr>
 <tr class="separator:a071a3ffb1dd36155bbbab7d4dad8ea01"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a231028dd529a2a063833bdb58c3bc47f" id="r_a231028dd529a2a063833bdb58c3bc47f"><td class="memItemLeft" align="right" valign="top">std::vector&lt; <a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">size_t</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structMultiBandData.html#a231028dd529a2a063833bdb58c3bc47f">logscale_screen</a> (<a class="el" href="pybind_8h.html#a06c55931188bd694c6e070a50e95344c">PyArray</a> <a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">const</a> &amp;data, <a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">size_t</a> <a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">num_order</a>)</td></tr>
-<tr class="memdesc:a231028dd529a2a063833bdb58c3bc47f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Logarithmically subsample data to reduce computational cost while preserving information.  <br /></td></tr>
-<tr class="separator:a231028dd529a2a063833bdb58c3bc47f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad2ade97dd269ab683c9fc6716dc0cdea" id="r_ad2ade97dd269ab683c9fc6716dc0cdea"><td class="memItemLeft" align="right" valign="top"><a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">void</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structMultiBandData.html#ad2ade97dd269ab683c9fc6716dc0cdea">fill_data_arrays</a> ()</td></tr>
 <tr class="memdesc:ad2ade97dd269ab683c9fc6716dc0cdea"><td class="mdescLeft">&#160;</td><td class="mdescRight">Populate consolidated data arrays from individual <a class="el" href="structFluxData.html" title="Container for observational flux data and model predictions for chi-squared analysis.">FluxData</a> objects.  <br /></td></tr>
 <tr class="separator:ad2ade97dd269ab683c9fc6716dc0cdea"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa76ea4485894fd0eb67def9a0cc93045" id="r_aa76ea4485894fd0eb67def9a0cc93045"><td class="memItemLeft" align="right" valign="top"><a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">size_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structMultiBandData.html#aa76ea4485894fd0eb67def9a0cc93045">data_points_num</a> () <a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">const</a></td></tr>
 <tr class="memdesc:aa76ea4485894fd0eb67def9a0cc93045"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the total number of individual data points across all datasets.  <br /></td></tr>
 <tr class="separator:aa76ea4485894fd0eb67def9a0cc93045"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-static-methods" name="pub-static-methods"></a>
+Static Public Member Functions</h2></td></tr>
+<tr class="memitem:a231028dd529a2a063833bdb58c3bc47f" id="r_a231028dd529a2a063833bdb58c3bc47f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">static</a> std::vector&lt; <a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">size_t</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structMultiBandData.html#a231028dd529a2a063833bdb58c3bc47f">logscale_screen</a> (<a class="el" href="pybind_8h.html#a06c55931188bd694c6e070a50e95344c">PyArray</a> <a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">const</a> &amp;data, <a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">size_t</a> <a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">num_order</a>)</td></tr>
+<tr class="memdesc:a231028dd529a2a063833bdb58c3bc47f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Logarithmically subsample data to reduce computational cost while preserving information.  <br /></td></tr>
+<tr class="separator:a231028dd529a2a063833bdb58c3bc47f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
@@ -162,119 +166,16 @@ Public Attributes</h2></td></tr>
 <div class="textblock"><p>Comprehensive multi-wavelength observational dataset for gamma-ray burst afterglow fitting. </p>
 <p>This structure manages heterogeneous observational data including light curves at different frequencies, broadband spectra at specific times, and combined multi-wavelength datasets. It provides methods for data ingestion, organization, and statistical analysis, serving as the foundation for MCMC parameter estimation and model comparison in afterglow studies. </p>
 
-<p class="definition">Definition at line <a class="el" href="mcmc_8h_source.html#l00072">72</a> of file <a class="el" href="mcmc_8h_source.html">mcmc.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="mcmc_8h_source.html#l00060">60</a> of file <a class="el" href="mcmc_8h_source.html">mcmc.h</a>.</p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
-<a id="a5986704146c88e42e1d4d221dba607b5" name="a5986704146c88e42e1d4d221dba607b5"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5986704146c88e42e1d4d221dba607b5">&#9670;&#160;</a></span>add_light_curve() <span class="overload">[1/2]</span></h2>
+<a id="abf821e57acc374b58a3377eb40210067" name="abf821e57acc374b58a3377eb40210067"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abf821e57acc374b58a3377eb40210067">&#9670;&#160;</a></span>add_flux()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">void</a> MultiBandData::add_light_curve </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">double</a>&#160;</td>
-          <td class="paramname"><em>nu</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="pybind_8h.html#a06c55931188bd694c6e070a50e95344c">PyArray</a> <a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">const</a> &amp;&#160;</td>
-          <td class="paramname"><em>t</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="pybind_8h.html#a06c55931188bd694c6e070a50e95344c">PyArray</a> <a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">const</a> &amp;&#160;</td>
-          <td class="paramname"><em>Fv_obs</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="pybind_8h.html#a06c55931188bd694c6e070a50e95344c">PyArray</a> <a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">const</a> &amp;&#160;</td>
-          <td class="paramname"><em>Fv_err</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">std::optional&lt; <a class="el" href="pybind_8h.html#a06c55931188bd694c6e070a50e95344c">PyArray</a> &gt;&#160;</td>
-          <td class="paramname"><em>weights</em> = <code>std::nullopt</code>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Add a single-frequency light curve to the observational dataset. </p>
-<p>Incorporates time-series flux measurements at a fixed observing frequency, typically used for adding radio, optical, or X-ray light curves to the multi-wavelength dataset for comprehensive afterglow modeling. </p><dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">nu</td><td>Observing frequency [Hz] </td></tr>
-    <tr><td class="paramname">t</td><td>Array of observation times [seconds] </td></tr>
-    <tr><td class="paramname">Fv_obs</td><td>Array of observed flux densities [mJy] </td></tr>
-    <tr><td class="paramname">Fv_err</td><td>Array of observational uncertainties [mJy] </td></tr>
-    <tr><td class="paramname">weights</td><td>Optional statistical weights for each measurement </td></tr>
-  </table>
-  </dd>
-</dl>
-
-<p class="definition">Definition at line <a class="el" href="mcmc_8cpp_source.html#l00162">162</a> of file <a class="el" href="mcmc_8cpp_source.html">mcmc.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  163</span>                                                                  {</div>
-<div class="line"><span class="lineno">  164</span>    <a class="code hl_define" href="error__handling_8h.html#a25363cb5c3a0257b7026be3291271331">AFTERGLOW_REQUIRE</a>(t.size() == Fv_obs.size() &amp;&amp; t.size() == Fv_err.size(), <span class="stringliteral">&quot;light curve array inconsistent length!&quot;</span>);</div>
-<div class="line"><span class="lineno">  165</span> </div>
-<div class="line"><span class="lineno">  166</span>    <a class="code hl_typedef" href="mesh_8h.html#afd05120c4d579ec7fa4906f677781a83">Array</a> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">w</a> = xt::ones&lt;Real&gt;({t.size()});</div>
-<div class="line"><span class="lineno">  167</span> </div>
-<div class="line"><span class="lineno">  168</span>    <span class="keywordflow">if</span> (<a class="code hl_variable" href="structMultiBandData.html#a082a799cc2a578edb86044c486057582">weights</a>) {</div>
-<div class="line"><span class="lineno">  169</span>        <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">w</a> = *<a class="code hl_variable" href="structMultiBandData.html#a082a799cc2a578edb86044c486057582">weights</a>;</div>
-<div class="line"><span class="lineno">  170</span>        <a class="code hl_define" href="error__handling_8h.html#a25363cb5c3a0257b7026be3291271331">AFTERGLOW_REQUIRE</a>(t.size() == <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">w</a>.size(), <span class="stringliteral">&quot;weights array inconsistent length!&quot;</span>);</div>
-<div class="line"><span class="lineno">  171</span>    }</div>
-<div class="line"><span class="lineno">  172</span> </div>
-<div class="line"><span class="lineno">  173</span>    <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a> = 0; <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a> &lt; t.size(); ++<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a>) {</div>
-<div class="line"><span class="lineno">  174</span>        tuple_data.push_back(std::make_tuple(t(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a>) * <a class="code hl_variable" href="namespaceunit.html#a4e7c438655d3f34c7c30a155ec38f250">unit::sec</a>, nu * <a class="code hl_variable" href="namespaceunit.html#a78d8f4bc3be7867d8171f2759251dad1">unit::Hz</a>, Fv_obs(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a>) * <a class="code hl_variable" href="namespaceunit.html#a4808047893e65d1942893de10e0a9c97">unit::flux_den_cgs</a>,</div>
-<div class="line"><span class="lineno">  175</span>                                             Fv_err(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a>) * <a class="code hl_variable" href="namespaceunit.html#a4808047893e65d1942893de10e0a9c97">unit::flux_den_cgs</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">w</a>(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a>)));</div>
-<div class="line"><span class="lineno">  176</span>    }</div>
-<div class="line"><span class="lineno">  177</span>}</div>
-<div class="ttc" id="aerror__handling_8h_html_a25363cb5c3a0257b7026be3291271331"><div class="ttname"><a href="error__handling_8h.html#a25363cb5c3a0257b7026be3291271331">AFTERGLOW_REQUIRE</a></div><div class="ttdeci">#define AFTERGLOW_REQUIRE(condition, message)</div><div class="ttdef"><b>Definition</b> <a href="error__handling_8h_source.html#l00042">error_handling.h:42</a></div></div>
-<div class="ttc" id="amesh_8h_html_afd05120c4d579ec7fa4906f677781a83"><div class="ttname"><a href="mesh_8h.html#afd05120c4d579ec7fa4906f677781a83">Array</a></div><div class="ttdeci">xt::xtensor&lt; Real, 1 &gt; Array</div><div class="ttdoc">Type alias for 1D arrays (e.g., time points)</div><div class="ttdef"><b>Definition</b> <a href="mesh_8h_source.html#l00038">mesh.h:38</a></div></div>
-<div class="ttc" id="anamespaceunit_html_a4808047893e65d1942893de10e0a9c97"><div class="ttname"><a href="namespaceunit.html#a4808047893e65d1942893de10e0a9c97">unit::flux_den_cgs</a></div><div class="ttdeci">constexpr Real flux_den_cgs</div><div class="ttdoc">Flux density in CGS units.</div><div class="ttdef"><b>Definition</b> <a href="macros_8h_source.html#l00060">macros.h:60</a></div></div>
-<div class="ttc" id="anamespaceunit_html_a4e7c438655d3f34c7c30a155ec38f250"><div class="ttname"><a href="namespaceunit.html#a4e7c438655d3f34c7c30a155ec38f250">unit::sec</a></div><div class="ttdeci">constexpr Real sec</div><div class="ttdoc">Second in code units.</div><div class="ttdef"><b>Definition</b> <a href="macros_8h_source.html#l00044">macros.h:44</a></div></div>
-<div class="ttc" id="anamespaceunit_html_a78d8f4bc3be7867d8171f2759251dad1"><div class="ttname"><a href="namespaceunit.html#a78d8f4bc3be7867d8171f2759251dad1">unit::Hz</a></div><div class="ttdeci">constexpr Real Hz</div><div class="ttdoc">Hertz (frequency) in code units.</div><div class="ttdef"><b>Definition</b> <a href="macros_8h_source.html#l00050">macros.h:50</a></div></div>
-<div class="ttc" id="astructMultiBandData_html_a082a799cc2a578edb86044c486057582"><div class="ttname"><a href="structMultiBandData.html#a082a799cc2a578edb86044c486057582">MultiBandData::weights</a></div><div class="ttdeci">Array weights</div><div class="ttdoc">Consolidated array of all statistical weights.</div><div class="ttdef"><b>Definition</b> <a href="mcmc_8h_source.html#l00172">mcmc.h:172</a></div></div>
-<div class="ttc" id="autilities_8h_html_ab8e81118f023df135835db8cce4f5f42"><div class="ttname"><a href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">max</a></div><div class="ttdeci">T max(T value)</div><div class="ttdoc">Returns the value of a single parameter.</div><div class="ttdef"><b>Definition</b> <a href="utilities_8h_source.html#l00311">utilities.h:311</a></div></div>
-</div><!-- fragment --><div class="dynheader">
-Here is the call graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="structMultiBandData_a5986704146c88e42e1d4d221dba607b5_cgraph.png" border="0" usemap="#astructMultiBandData_a5986704146c88e42e1d4d221dba607b5_cgraph" alt=""/></div>
-<map name="astructMultiBandData_a5986704146c88e42e1d4d221dba607b5_cgraph" id="astructMultiBandData_a5986704146c88e42e1d4d221dba607b5_cgraph">
-<area shape="rect" title="Add a single&#45;frequency light curve to the observational dataset." alt="" coords="5,22,156,62"/>
-<area shape="rect" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42" title="Returns the value of a single parameter." alt="" coords="204,29,255,55"/>
-<area shape="poly" title=" " alt="" coords="156,39,190,39,190,45,156,45"/>
-<area shape="poly" title=" " alt="" coords="204,31,199,21,202,11,212,5,229,3,250,6,258,15,255,18,247,11,229,8,214,10,206,15,205,20,209,28"/>
-</map>
-</div>
-<div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="structMultiBandData_a5986704146c88e42e1d4d221dba607b5_icgraph.png" border="0" usemap="#astructMultiBandData_a5986704146c88e42e1d4d221dba607b5_icgraph" alt=""/></div>
-<map name="astructMultiBandData_a5986704146c88e42e1d4d221dba607b5_icgraph" id="astructMultiBandData_a5986704146c88e42e1d4d221dba607b5_icgraph">
-<area shape="rect" title="Add a single&#45;frequency light curve to the observational dataset." alt="" coords="204,5,355,45"/>
-<area shape="rect" href="pybind_8cpp.html#a8c92987849ad296e28ec6c07c8e7860b" title=" " alt="" coords="5,13,156,38"/>
-<area shape="poly" title=" " alt="" coords="191,28,156,28,156,23,191,23"/>
-</map>
-</div>
-
-</div>
-</div>
-<a id="ab2209cd1fa7758e3df4893878dab770c" name="ab2209cd1fa7758e3df4893878dab770c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab2209cd1fa7758e3df4893878dab770c">&#9670;&#160;</a></span>add_light_curve() <span class="overload">[2/2]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">void</a> MultiBandData::add_light_curve </td>
+          <td class="memname"><a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">void</a> MultiBandData::add_flux </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">double</a>&#160;</td>
           <td class="paramname"><em>nu_min</em>, </td>
@@ -338,7 +239,7 @@ Here is the caller graph for this function:</div>
 </dl>
 
 <p class="definition">Definition at line <a class="el" href="mcmc_8cpp_source.html#l00179">179</a> of file <a class="el" href="mcmc_8cpp_source.html">mcmc.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  180</span>                                                                                                                {</div>
+<div class="fragment"><div class="line"><span class="lineno">  180</span>                                                                                  {</div>
 <div class="line"><span class="lineno">  181</span>    <a class="code hl_define" href="error__handling_8h.html#a25363cb5c3a0257b7026be3291271331">AFTERGLOW_REQUIRE</a>(t.size() == Fv_obs.size() &amp;&amp; t.size() == Fv_err.size(), <span class="stringliteral">&quot;light curve array inconsistent length!&quot;</span>);</div>
 <div class="line"><span class="lineno">  182</span>    <a class="code hl_define" href="error__handling_8h.html#a25363cb5c3a0257b7026be3291271331">AFTERGLOW_REQUIRE</a>(<a class="code hl_function" href="pybind_8h.html#a65fbb7ac1dd1f2667e68724a512f691c">is_ascending</a>(t), <span class="stringliteral">&quot;Time array must be in ascending order!&quot;</span>);</div>
 <div class="line"><span class="lineno">  183</span>    <a class="code hl_define" href="error__handling_8h.html#a25363cb5c3a0257b7026be3291271331">AFTERGLOW_REQUIRE</a>(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">nu_min</a> &lt; <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">nu_max</a>, <span class="stringliteral">&quot;nu_min must be less than nu_max!&quot;</span>);</div>
@@ -362,24 +263,137 @@ Here is the caller graph for this function:</div>
 <div class="line"><span class="lineno">  201</span>    <a class="code hl_variable" href="structMultiBandData.html#a0d8b205498be4e9a129395636a665baa">flux_data</a>.emplace_back(</div>
 <div class="line"><span class="lineno">  202</span>        <a class="code hl_struct" href="structFluxData.html">FluxData</a>{t * <a class="code hl_variable" href="namespaceunit.html#a4e7c438655d3f34c7c30a155ec38f250">unit::sec</a>, nu, Fv_obs * <a class="code hl_variable" href="namespaceunit.html#ad35a8d191f16b2928b242ef566cca653">unit::flux_cgs</a>, Fv_err * <a class="code hl_variable" href="namespaceunit.html#ad35a8d191f16b2928b242ef566cca653">unit::flux_cgs</a>, xt::zeros&lt;Real&gt;({t.size()}), <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">w</a>});</div>
 <div class="line"><span class="lineno">  203</span>}</div>
+<div class="ttc" id="aerror__handling_8h_html_a25363cb5c3a0257b7026be3291271331"><div class="ttname"><a href="error__handling_8h.html#a25363cb5c3a0257b7026be3291271331">AFTERGLOW_REQUIRE</a></div><div class="ttdeci">#define AFTERGLOW_REQUIRE(condition, message)</div><div class="ttdef"><b>Definition</b> <a href="error__handling_8h_source.html#l00042">error_handling.h:42</a></div></div>
 <div class="ttc" id="amacros_8h_html_a4b04262b81aa7d31eb5d2f607e2a35de"><div class="ttname"><a href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a></div><div class="ttdeci">double Real</div><div class="ttdoc">Type alias for floating-point precision used throughout the code.</div><div class="ttdef"><b>Definition</b> <a href="macros_8h_source.html#l00022">macros.h:22</a></div></div>
+<div class="ttc" id="amesh_8h_html_afd05120c4d579ec7fa4906f677781a83"><div class="ttname"><a href="mesh_8h.html#afd05120c4d579ec7fa4906f677781a83">Array</a></div><div class="ttdeci">xt::xtensor&lt; Real, 1 &gt; Array</div><div class="ttdoc">Type alias for 1D arrays (e.g., time points)</div><div class="ttdef"><b>Definition</b> <a href="mesh_8h_source.html#l00038">mesh.h:38</a></div></div>
 <div class="ttc" id="anamespaceunit_html_a2aaf4e2317308b8d95e76ef6eaa64256"><div class="ttname"><a href="namespaceunit.html#a2aaf4e2317308b8d95e76ef6eaa64256">unit::len</a></div><div class="ttdeci">constexpr Real len</div><div class="ttdoc">Length unit in cm.</div><div class="ttdef"><b>Definition</b> <a href="macros_8h_source.html#l00042">macros.h:42</a></div></div>
+<div class="ttc" id="anamespaceunit_html_a4e7c438655d3f34c7c30a155ec38f250"><div class="ttname"><a href="namespaceunit.html#a4e7c438655d3f34c7c30a155ec38f250">unit::sec</a></div><div class="ttdeci">constexpr Real sec</div><div class="ttdoc">Second in code units.</div><div class="ttdef"><b>Definition</b> <a href="macros_8h_source.html#l00044">macros.h:44</a></div></div>
+<div class="ttc" id="anamespaceunit_html_a78d8f4bc3be7867d8171f2759251dad1"><div class="ttname"><a href="namespaceunit.html#a78d8f4bc3be7867d8171f2759251dad1">unit::Hz</a></div><div class="ttdeci">constexpr Real Hz</div><div class="ttdoc">Hertz (frequency) in code units.</div><div class="ttdef"><b>Definition</b> <a href="macros_8h_source.html#l00050">macros.h:50</a></div></div>
 <div class="ttc" id="anamespaceunit_html_ad35a8d191f16b2928b242ef566cca653"><div class="ttname"><a href="namespaceunit.html#ad35a8d191f16b2928b242ef566cca653">unit::flux_cgs</a></div><div class="ttdeci">constexpr Real flux_cgs</div><div class="ttdoc">Flux in CGS units.</div><div class="ttdef"><b>Definition</b> <a href="macros_8h_source.html#l00059">macros.h:59</a></div></div>
 <div class="ttc" id="apybind_8h_html_a65fbb7ac1dd1f2667e68724a512f691c"><div class="ttname"><a href="pybind_8h.html#a65fbb7ac1dd1f2667e68724a512f691c">is_ascending</a></div><div class="ttdeci">bool is_ascending(Array const &amp;arr)</div><div class="ttdef"><b>Definition</b> <a href="pybind_8h_source.html#l00020">pybind.h:20</a></div></div>
-<div class="ttc" id="astructFluxData_html"><div class="ttname"><a href="structFluxData.html">FluxData</a></div><div class="ttdoc">Container for observational flux data and model predictions for chi-squared analysis.</div><div class="ttdef"><b>Definition</b> <a href="mcmc_8h_source.html#l00041">mcmc.h:41</a></div></div>
-<div class="ttc" id="astructMultiBandData_html_a0d8b205498be4e9a129395636a665baa"><div class="ttname"><a href="structMultiBandData.html#a0d8b205498be4e9a129395636a665baa">MultiBandData::flux_data</a></div><div class="ttdeci">std::vector&lt; FluxData &gt; flux_data</div><div class="ttdoc">Collection of individual observational datasets.</div><div class="ttdef"><b>Definition</b> <a href="mcmc_8h_source.html#l00177">mcmc.h:177</a></div></div>
+<div class="ttc" id="astructFluxData_html"><div class="ttname"><a href="structFluxData.html">FluxData</a></div><div class="ttdoc">Container for observational flux data and model predictions for chi-squared analysis.</div><div class="ttdef"><b>Definition</b> <a href="mcmc_8h_source.html#l00029">mcmc.h:29</a></div></div>
+<div class="ttc" id="astructMultiBandData_html_a082a799cc2a578edb86044c486057582"><div class="ttname"><a href="structMultiBandData.html#a082a799cc2a578edb86044c486057582">MultiBandData::weights</a></div><div class="ttdeci">Array weights</div><div class="ttdoc">Consolidated array of all statistical weights.</div><div class="ttdef"><b>Definition</b> <a href="mcmc_8h_source.html#l00160">mcmc.h:160</a></div></div>
+<div class="ttc" id="astructMultiBandData_html_a0d8b205498be4e9a129395636a665baa"><div class="ttname"><a href="structMultiBandData.html#a0d8b205498be4e9a129395636a665baa">MultiBandData::flux_data</a></div><div class="ttdeci">std::vector&lt; FluxData &gt; flux_data</div><div class="ttdoc">Collection of individual observational datasets.</div><div class="ttdef"><b>Definition</b> <a href="mcmc_8h_source.html#l00165">mcmc.h:165</a></div></div>
+<div class="ttc" id="autilities_8h_html_ab8e81118f023df135835db8cce4f5f42"><div class="ttname"><a href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">max</a></div><div class="ttdeci">T max(T value)</div><div class="ttdoc">Returns the value of a single parameter.</div><div class="ttdef"><b>Definition</b> <a href="utilities_8h_source.html#l00311">utilities.h:311</a></div></div>
 </div><!-- fragment --><div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
-<div class="center"><img src="structMultiBandData_ab2209cd1fa7758e3df4893878dab770c_cgraph.png" border="0" usemap="#astructMultiBandData_ab2209cd1fa7758e3df4893878dab770c_cgraph" alt=""/></div>
-<map name="astructMultiBandData_ab2209cd1fa7758e3df4893878dab770c_cgraph" id="astructMultiBandData_ab2209cd1fa7758e3df4893878dab770c_cgraph">
-<area shape="rect" title="Add frequency&#45;integrated flux measurements over a specified frequency band." alt="" coords="5,23,156,63"/>
-<area shape="rect" href="pybind_8h.html#a65fbb7ac1dd1f2667e68724a512f691c" title=" " alt="" coords="204,5,311,31"/>
-<area shape="poly" title=" " alt="" coords="156,30,190,25,191,30,157,35"/>
-<area shape="rect" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42" title="Returns the value of a single parameter." alt="" coords="359,31,409,56"/>
-<area shape="poly" title=" " alt="" coords="156,41,345,41,345,46,156,46"/>
-<area shape="poly" title=" " alt="" coords="311,26,345,33,344,38,310,31"/>
-<area shape="poly" title=" " alt="" coords="362,32,358,22,360,13,369,6,384,4,401,7,409,16,405,19,399,12,384,9,371,11,365,16,363,22,367,29"/>
+<div class="center"><img src="structMultiBandData_abf821e57acc374b58a3377eb40210067_cgraph.png" border="0" usemap="#astructMultiBandData_abf821e57acc374b58a3377eb40210067_cgraph" alt=""/></div>
+<map name="astructMultiBandData_abf821e57acc374b58a3377eb40210067_cgraph" id="astructMultiBandData_abf821e57acc374b58a3377eb40210067_cgraph">
+<area shape="rect" title="Add frequency&#45;integrated flux measurements over a specified frequency band." alt="" coords="5,31,188,56"/>
+<area shape="rect" href="pybind_8h.html#a65fbb7ac1dd1f2667e68724a512f691c" title=" " alt="" coords="236,5,343,31"/>
+<area shape="poly" title=" " alt="" coords="188,29,222,24,223,29,189,34"/>
+<area shape="rect" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42" title="Returns the value of a single parameter." alt="" coords="391,31,441,56"/>
+<area shape="poly" title=" " alt="" coords="188,41,377,41,377,46,188,46"/>
+<area shape="poly" title=" " alt="" coords="343,26,377,33,376,38,342,31"/>
+<area shape="poly" title=" " alt="" coords="394,32,390,22,392,13,401,6,416,4,433,7,441,16,437,19,431,12,416,9,403,11,397,16,395,22,399,29"/>
+</map>
+</div>
+<div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="structMultiBandData_abf821e57acc374b58a3377eb40210067_icgraph.png" border="0" usemap="#astructMultiBandData_abf821e57acc374b58a3377eb40210067_icgraph" alt=""/></div>
+<map name="astructMultiBandData_abf821e57acc374b58a3377eb40210067_icgraph" id="astructMultiBandData_abf821e57acc374b58a3377eb40210067_icgraph">
+<area shape="rect" title="Add frequency&#45;integrated flux measurements over a specified frequency band." alt="" coords="204,5,387,31"/>
+<area shape="rect" href="pybind_8cpp.html#a8c92987849ad296e28ec6c07c8e7860b" title=" " alt="" coords="5,5,156,31"/>
+<area shape="poly" title=" " alt="" coords="190,21,156,21,156,15,190,15"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="a61bd4b2b5346bd911a4120447ff00b8b" name="a61bd4b2b5346bd911a4120447ff00b8b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a61bd4b2b5346bd911a4120447ff00b8b">&#9670;&#160;</a></span>add_flux_density()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">void</a> MultiBandData::add_flux_density </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">double</a>&#160;</td>
+          <td class="paramname"><em>nu</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="pybind_8h.html#a06c55931188bd694c6e070a50e95344c">PyArray</a> <a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">const</a> &amp;&#160;</td>
+          <td class="paramname"><em>t</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="pybind_8h.html#a06c55931188bd694c6e070a50e95344c">PyArray</a> <a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">const</a> &amp;&#160;</td>
+          <td class="paramname"><em>Fv_obs</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="pybind_8h.html#a06c55931188bd694c6e070a50e95344c">PyArray</a> <a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">const</a> &amp;&#160;</td>
+          <td class="paramname"><em>Fv_err</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::optional&lt; <a class="el" href="pybind_8h.html#a06c55931188bd694c6e070a50e95344c">PyArray</a> &gt;&#160;</td>
+          <td class="paramname"><em>weights</em> = <code>std::nullopt</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Add a single-frequency light curve to the observational dataset. </p>
+<p>Incorporates time-series flux measurements at a fixed observing frequency, typically used for adding radio, optical, or X-ray light curves to the multi-wavelength dataset for comprehensive afterglow modeling. </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">nu</td><td>Observing frequency [Hz] </td></tr>
+    <tr><td class="paramname">t</td><td>Array of observation times [seconds] </td></tr>
+    <tr><td class="paramname">Fv_obs</td><td>Array of observed flux densities [mJy] </td></tr>
+    <tr><td class="paramname">Fv_err</td><td>Array of observational uncertainties [mJy] </td></tr>
+    <tr><td class="paramname">weights</td><td>Optional statistical weights for each measurement </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="mcmc_8cpp_source.html#l00162">162</a> of file <a class="el" href="mcmc_8cpp_source.html">mcmc.cpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  163</span>                                                                   {</div>
+<div class="line"><span class="lineno">  164</span>    <a class="code hl_define" href="error__handling_8h.html#a25363cb5c3a0257b7026be3291271331">AFTERGLOW_REQUIRE</a>(t.size() == Fv_obs.size() &amp;&amp; t.size() == Fv_err.size(), <span class="stringliteral">&quot;light curve array inconsistent length!&quot;</span>);</div>
+<div class="line"><span class="lineno">  165</span> </div>
+<div class="line"><span class="lineno">  166</span>    <a class="code hl_typedef" href="mesh_8h.html#afd05120c4d579ec7fa4906f677781a83">Array</a> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">w</a> = xt::ones&lt;Real&gt;({t.size()});</div>
+<div class="line"><span class="lineno">  167</span> </div>
+<div class="line"><span class="lineno">  168</span>    <span class="keywordflow">if</span> (<a class="code hl_variable" href="structMultiBandData.html#a082a799cc2a578edb86044c486057582">weights</a>) {</div>
+<div class="line"><span class="lineno">  169</span>        <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">w</a> = *<a class="code hl_variable" href="structMultiBandData.html#a082a799cc2a578edb86044c486057582">weights</a>;</div>
+<div class="line"><span class="lineno">  170</span>        <a class="code hl_define" href="error__handling_8h.html#a25363cb5c3a0257b7026be3291271331">AFTERGLOW_REQUIRE</a>(t.size() == <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">w</a>.size(), <span class="stringliteral">&quot;weights array inconsistent length!&quot;</span>);</div>
+<div class="line"><span class="lineno">  171</span>    }</div>
+<div class="line"><span class="lineno">  172</span> </div>
+<div class="line"><span class="lineno">  173</span>    <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a> = 0; <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a> &lt; t.size(); ++<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a>) {</div>
+<div class="line"><span class="lineno">  174</span>        tuple_data.push_back(std::make_tuple(t(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a>) * <a class="code hl_variable" href="namespaceunit.html#a4e7c438655d3f34c7c30a155ec38f250">unit::sec</a>, nu * <a class="code hl_variable" href="namespaceunit.html#a78d8f4bc3be7867d8171f2759251dad1">unit::Hz</a>, Fv_obs(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a>) * <a class="code hl_variable" href="namespaceunit.html#a4808047893e65d1942893de10e0a9c97">unit::flux_den_cgs</a>,</div>
+<div class="line"><span class="lineno">  175</span>                                             Fv_err(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a>) * <a class="code hl_variable" href="namespaceunit.html#a4808047893e65d1942893de10e0a9c97">unit::flux_den_cgs</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">w</a>(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a>)));</div>
+<div class="line"><span class="lineno">  176</span>    }</div>
+<div class="line"><span class="lineno">  177</span>}</div>
+<div class="ttc" id="anamespaceunit_html_a4808047893e65d1942893de10e0a9c97"><div class="ttname"><a href="namespaceunit.html#a4808047893e65d1942893de10e0a9c97">unit::flux_den_cgs</a></div><div class="ttdeci">constexpr Real flux_den_cgs</div><div class="ttdoc">Flux density in CGS units.</div><div class="ttdef"><b>Definition</b> <a href="macros_8h_source.html#l00060">macros.h:60</a></div></div>
+</div><!-- fragment --><div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="structMultiBandData_a61bd4b2b5346bd911a4120447ff00b8b_cgraph.png" border="0" usemap="#astructMultiBandData_a61bd4b2b5346bd911a4120447ff00b8b_cgraph" alt=""/></div>
+<map name="astructMultiBandData_a61bd4b2b5346bd911a4120447ff00b8b_cgraph" id="astructMultiBandData_a61bd4b2b5346bd911a4120447ff00b8b_cgraph">
+<area shape="rect" title="Add a single&#45;frequency light curve to the observational dataset." alt="" coords="5,22,156,62"/>
+<area shape="rect" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42" title="Returns the value of a single parameter." alt="" coords="204,29,255,55"/>
+<area shape="poly" title=" " alt="" coords="156,39,190,39,190,45,156,45"/>
+<area shape="poly" title=" " alt="" coords="204,31,199,21,202,11,212,5,229,3,250,6,258,15,255,18,247,11,229,8,214,10,206,15,205,20,209,28"/>
+</map>
+</div>
+<div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="structMultiBandData_a61bd4b2b5346bd911a4120447ff00b8b_icgraph.png" border="0" usemap="#astructMultiBandData_a61bd4b2b5346bd911a4120447ff00b8b_icgraph" alt=""/></div>
+<map name="astructMultiBandData_a61bd4b2b5346bd911a4120447ff00b8b_icgraph" id="astructMultiBandData_a61bd4b2b5346bd911a4120447ff00b8b_icgraph">
+<area shape="rect" title="Add a single&#45;frequency light curve to the observational dataset." alt="" coords="204,5,355,45"/>
+<area shape="rect" href="pybind_8cpp.html#a8c92987849ad296e28ec6c07c8e7860b" title=" " alt="" coords="5,13,156,38"/>
+<area shape="poly" title=" " alt="" coords="191,28,156,28,156,23,191,23"/>
 </map>
 </div>
 
@@ -564,10 +578,10 @@ Here is the caller graph for this function:</div>
 <div class="line"><span class="lineno">  105</span>    }</div>
 <div class="line"><span class="lineno">  106</span>    <span class="keywordflow">return</span> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">chi_square</a>;</div>
 <div class="line"><span class="lineno">  107</span>}</div>
-<div class="ttc" id="astructMultiBandData_html_a8640e475b62bf5f98f8829f583b01475"><div class="ttname"><a href="structMultiBandData.html#a8640e475b62bf5f98f8829f583b01475">MultiBandData::errors</a></div><div class="ttdeci">Array errors</div><div class="ttdoc">Consolidated array of all observational uncertainties [mJy].</div><div class="ttdef"><b>Definition</b> <a href="mcmc_8h_source.html#l00171">mcmc.h:171</a></div></div>
-<div class="ttc" id="astructMultiBandData_html_ab1938ad09632e63a73de79affb826115"><div class="ttname"><a href="structMultiBandData.html#ab1938ad09632e63a73de79affb826115">MultiBandData::fluxes</a></div><div class="ttdeci">Array fluxes</div><div class="ttdoc">Consolidated array of all observed flux densities [mJy].</div><div class="ttdef"><b>Definition</b> <a href="mcmc_8h_source.html#l00170">mcmc.h:170</a></div></div>
-<div class="ttc" id="astructMultiBandData_html_aca70edfe9b3e6b496739cc8d619ee2c1"><div class="ttname"><a href="structMultiBandData.html#aca70edfe9b3e6b496739cc8d619ee2c1">MultiBandData::times</a></div><div class="ttdeci">Array times</div><div class="ttdoc">Consolidated array of all observation times [seconds].</div><div class="ttdef"><b>Definition</b> <a href="mcmc_8h_source.html#l00168">mcmc.h:168</a></div></div>
-<div class="ttc" id="astructMultiBandData_html_ad4863b68579929814e8e4c8b161a996a"><div class="ttname"><a href="structMultiBandData.html#ad4863b68579929814e8e4c8b161a996a">MultiBandData::model_fluxes</a></div><div class="ttdeci">Array model_fluxes</div><div class="ttdoc">Consolidated array of all model-predicted flux densities [mJy].</div><div class="ttdef"><b>Definition</b> <a href="mcmc_8h_source.html#l00173">mcmc.h:173</a></div></div>
+<div class="ttc" id="astructMultiBandData_html_a8640e475b62bf5f98f8829f583b01475"><div class="ttname"><a href="structMultiBandData.html#a8640e475b62bf5f98f8829f583b01475">MultiBandData::errors</a></div><div class="ttdeci">Array errors</div><div class="ttdoc">Consolidated array of all observational uncertainties [mJy].</div><div class="ttdef"><b>Definition</b> <a href="mcmc_8h_source.html#l00159">mcmc.h:159</a></div></div>
+<div class="ttc" id="astructMultiBandData_html_ab1938ad09632e63a73de79affb826115"><div class="ttname"><a href="structMultiBandData.html#ab1938ad09632e63a73de79affb826115">MultiBandData::fluxes</a></div><div class="ttdeci">Array fluxes</div><div class="ttdoc">Consolidated array of all observed flux densities [mJy].</div><div class="ttdef"><b>Definition</b> <a href="mcmc_8h_source.html#l00158">mcmc.h:158</a></div></div>
+<div class="ttc" id="astructMultiBandData_html_aca70edfe9b3e6b496739cc8d619ee2c1"><div class="ttname"><a href="structMultiBandData.html#aca70edfe9b3e6b496739cc8d619ee2c1">MultiBandData::times</a></div><div class="ttdeci">Array times</div><div class="ttdoc">Consolidated array of all observation times [seconds].</div><div class="ttdef"><b>Definition</b> <a href="mcmc_8h_source.html#l00156">mcmc.h:156</a></div></div>
+<div class="ttc" id="astructMultiBandData_html_ad4863b68579929814e8e4c8b161a996a"><div class="ttname"><a href="structMultiBandData.html#ad4863b68579929814e8e4c8b161a996a">MultiBandData::model_fluxes</a></div><div class="ttdeci">Array model_fluxes</div><div class="ttdoc">Consolidated array of all model-predicted flux densities [mJy].</div><div class="ttdef"><b>Definition</b> <a href="mcmc_8h_source.html#l00161">mcmc.h:161</a></div></div>
 </div><!-- fragment --><div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -648,9 +662,9 @@ Here is the caller graph for this function:</div>
 <div class="line"><span class="lineno">  262</span>            <a class="code hl_variable" href="structMultiBandData.html#afbffab4bc76c6693f3ac2cabca8db710">t_max</a> = <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">d</a>.t.back();</div>
 <div class="line"><span class="lineno">  263</span>    }</div>
 <div class="line"><span class="lineno">  264</span>}</div>
-<div class="ttc" id="astructMultiBandData_html_a5314ad90f59d9d214f5afad5c4f20dfb"><div class="ttname"><a href="structMultiBandData.html#a5314ad90f59d9d214f5afad5c4f20dfb">MultiBandData::t_min</a></div><div class="ttdeci">double t_min</div><div class="ttdoc">Earliest observation time [seconds].</div><div class="ttdef"><b>Definition</b> <a href="mcmc_8h_source.html#l00174">mcmc.h:174</a></div></div>
-<div class="ttc" id="astructMultiBandData_html_a641b656c306f7720c84dae33ce0745fc"><div class="ttname"><a href="structMultiBandData.html#a641b656c306f7720c84dae33ce0745fc">MultiBandData::frequencies</a></div><div class="ttdeci">Array frequencies</div><div class="ttdoc">Consolidated array of all observation frequencies [Hz].</div><div class="ttdef"><b>Definition</b> <a href="mcmc_8h_source.html#l00169">mcmc.h:169</a></div></div>
-<div class="ttc" id="astructMultiBandData_html_afbffab4bc76c6693f3ac2cabca8db710"><div class="ttname"><a href="structMultiBandData.html#afbffab4bc76c6693f3ac2cabca8db710">MultiBandData::t_max</a></div><div class="ttdeci">double t_max</div><div class="ttdoc">Latest observation time [seconds].</div><div class="ttdef"><b>Definition</b> <a href="mcmc_8h_source.html#l00175">mcmc.h:175</a></div></div>
+<div class="ttc" id="astructMultiBandData_html_a5314ad90f59d9d214f5afad5c4f20dfb"><div class="ttname"><a href="structMultiBandData.html#a5314ad90f59d9d214f5afad5c4f20dfb">MultiBandData::t_min</a></div><div class="ttdeci">double t_min</div><div class="ttdoc">Earliest observation time [seconds].</div><div class="ttdef"><b>Definition</b> <a href="mcmc_8h_source.html#l00162">mcmc.h:162</a></div></div>
+<div class="ttc" id="astructMultiBandData_html_a641b656c306f7720c84dae33ce0745fc"><div class="ttname"><a href="structMultiBandData.html#a641b656c306f7720c84dae33ce0745fc">MultiBandData::frequencies</a></div><div class="ttdeci">Array frequencies</div><div class="ttdoc">Consolidated array of all observation frequencies [Hz].</div><div class="ttdef"><b>Definition</b> <a href="mcmc_8h_source.html#l00157">mcmc.h:157</a></div></div>
+<div class="ttc" id="astructMultiBandData_html_afbffab4bc76c6693f3ac2cabca8db710"><div class="ttname"><a href="structMultiBandData.html#afbffab4bc76c6693f3ac2cabca8db710">MultiBandData::t_max</a></div><div class="ttdeci">double t_max</div><div class="ttdoc">Latest observation time [seconds].</div><div class="ttdef"><b>Definition</b> <a href="mcmc_8h_source.html#l00163">mcmc.h:163</a></div></div>
 </div><!-- fragment --><div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -680,6 +694,9 @@ Here is the caller graph for this function:</div>
 
 <div class="memitem">
 <div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
           <td class="memname">std::vector&lt; <a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">size_t</a> &gt; MultiBandData::logscale_screen </td>
@@ -699,6 +716,11 @@ Here is the caller graph for this function:</div>
           <td></td><td></td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
 
 <p>Logarithmically subsample data to reduce computational cost while preserving information. </p>
@@ -813,7 +835,7 @@ Here is the caller graph for this function:</div>
 
 <p>Consolidated array of all observational uncertainties [mJy]. </p>
 
-<p class="definition">Definition at line <a class="el" href="mcmc_8h_source.html#l00171">171</a> of file <a class="el" href="mcmc_8h_source.html">mcmc.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="mcmc_8h_source.html#l00159">159</a> of file <a class="el" href="mcmc_8h_source.html">mcmc.h</a>.</p>
 
 </div>
 </div>
@@ -831,7 +853,7 @@ Here is the caller graph for this function:</div>
 
 <p>Collection of individual observational datasets. </p>
 
-<p class="definition">Definition at line <a class="el" href="mcmc_8h_source.html#l00177">177</a> of file <a class="el" href="mcmc_8h_source.html">mcmc.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="mcmc_8h_source.html#l00165">165</a> of file <a class="el" href="mcmc_8h_source.html">mcmc.h</a>.</p>
 
 </div>
 </div>
@@ -849,7 +871,7 @@ Here is the caller graph for this function:</div>
 
 <p>Consolidated array of all observed flux densities [mJy]. </p>
 
-<p class="definition">Definition at line <a class="el" href="mcmc_8h_source.html#l00170">170</a> of file <a class="el" href="mcmc_8h_source.html">mcmc.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="mcmc_8h_source.html#l00158">158</a> of file <a class="el" href="mcmc_8h_source.html">mcmc.h</a>.</p>
 
 </div>
 </div>
@@ -867,7 +889,7 @@ Here is the caller graph for this function:</div>
 
 <p>Consolidated array of all observation frequencies [Hz]. </p>
 
-<p class="definition">Definition at line <a class="el" href="mcmc_8h_source.html#l00169">169</a> of file <a class="el" href="mcmc_8h_source.html">mcmc.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="mcmc_8h_source.html#l00157">157</a> of file <a class="el" href="mcmc_8h_source.html">mcmc.h</a>.</p>
 
 </div>
 </div>
@@ -885,7 +907,7 @@ Here is the caller graph for this function:</div>
 
 <p>Consolidated array of all model-predicted flux densities [mJy]. </p>
 
-<p class="definition">Definition at line <a class="el" href="mcmc_8h_source.html#l00173">173</a> of file <a class="el" href="mcmc_8h_source.html">mcmc.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="mcmc_8h_source.html#l00161">161</a> of file <a class="el" href="mcmc_8h_source.html">mcmc.h</a>.</p>
 
 </div>
 </div>
@@ -903,8 +925,8 @@ Here is the caller graph for this function:</div>
 
 <p>Latest observation time [seconds]. </p>
 
-<p class="definition">Definition at line <a class="el" href="mcmc_8h_source.html#l00175">175</a> of file <a class="el" href="mcmc_8h_source.html">mcmc.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  175</span>{0};        <span class="comment">///&lt; Latest observation time [seconds]</span></div>
+<p class="definition">Definition at line <a class="el" href="mcmc_8h_source.html#l00163">163</a> of file <a class="el" href="mcmc_8h_source.html">mcmc.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  163</span>{0};        <span class="comment">///&lt; Latest observation time [seconds]</span></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -922,8 +944,8 @@ Here is the caller graph for this function:</div>
 
 <p>Earliest observation time [seconds]. </p>
 
-<p class="definition">Definition at line <a class="el" href="mcmc_8h_source.html#l00174">174</a> of file <a class="el" href="mcmc_8h_source.html">mcmc.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  174</span>{<a class="code hl_variable" href="namespacecon.html#ad61313f4a5b7876e54ae46d02d4a04bd">con::inf</a>}; <span class="comment">///&lt; Earliest observation time [seconds]</span></div>
+<p class="definition">Definition at line <a class="el" href="mcmc_8h_source.html#l00162">162</a> of file <a class="el" href="mcmc_8h_source.html">mcmc.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  162</span>{<a class="code hl_variable" href="namespacecon.html#ad61313f4a5b7876e54ae46d02d4a04bd">con::inf</a>}; <span class="comment">///&lt; Earliest observation time [seconds]</span></div>
 <div class="ttc" id="anamespacecon_html_ad61313f4a5b7876e54ae46d02d4a04bd"><div class="ttname"><a href="namespacecon.html#ad61313f4a5b7876e54ae46d02d4a04bd">con::inf</a></div><div class="ttdeci">constexpr Real inf</div><div class="ttdoc">Infinity value.</div><div class="ttdef"><b>Definition</b> <a href="macros_8h_source.html#l00101">macros.h:101</a></div></div>
 </div><!-- fragment -->
 </div>
@@ -942,7 +964,7 @@ Here is the caller graph for this function:</div>
 
 <p>Consolidated array of all observation times [seconds]. </p>
 
-<p class="definition">Definition at line <a class="el" href="mcmc_8h_source.html#l00168">168</a> of file <a class="el" href="mcmc_8h_source.html">mcmc.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="mcmc_8h_source.html#l00156">156</a> of file <a class="el" href="mcmc_8h_source.html">mcmc.h</a>.</p>
 
 </div>
 </div>
@@ -960,7 +982,7 @@ Here is the caller graph for this function:</div>
 
 <p>Consolidated array of all statistical weights. </p>
 
-<p class="definition">Definition at line <a class="el" href="mcmc_8h_source.html#l00172">172</a> of file <a class="el" href="mcmc_8h_source.html">mcmc.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="mcmc_8h_source.html#l00160">160</a> of file <a class="el" href="mcmc_8h_source.html">mcmc.h</a>.</p>
 
 </div>
 </div>

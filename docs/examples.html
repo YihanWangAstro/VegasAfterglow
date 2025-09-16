@@ -186,7 +186,7 @@
 
 <span class="c1"># Calculate the afterglow emission at each time and frequency</span>
 <span class="c1"># NOTE that the times array needs to be in ascending order</span>
-<span class="n">results</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">specific_flux</span><span class="p">(</span><span class="n">times</span><span class="p">,</span> <span class="n">bands</span><span class="p">)</span>
+<span class="n">results</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">flux_density_grid</span><span class="p">(</span><span class="n">times</span><span class="p">,</span> <span class="n">bands</span><span class="p">)</span>
 
 <span class="c1"># Visualize the multi-wavelength light curves</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mf">4.8</span><span class="p">,</span> <span class="mf">3.6</span><span class="p">),</span><span class="n">dpi</span><span class="o">=</span><span class="mi">200</span><span class="p">)</span>
@@ -208,7 +208,7 @@
 <span class="n">epochs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">1e2</span><span class="p">,</span> <span class="mf">1e3</span><span class="p">,</span> <span class="mf">1e4</span><span class="p">,</span> <span class="mf">1e5</span> <span class="p">,</span><span class="mf">1e6</span><span class="p">,</span> <span class="mf">1e7</span><span class="p">,</span> <span class="mf">1e8</span><span class="p">])</span>
 
 <span class="c1"># Calculate spectra at each epoch</span>
-<span class="n">results</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">specific_flux</span><span class="p">(</span><span class="n">epochs</span><span class="p">,</span> <span class="n">frequencies</span><span class="p">)</span>
+<span class="n">results</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">flux_density_grid</span><span class="p">(</span><span class="n">epochs</span><span class="p">,</span> <span class="n">frequencies</span><span class="p">)</span>
 
 <span class="c1"># Plot broadband spectra at each epoch</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mf">4.8</span><span class="p">,</span> <span class="mf">3.6</span><span class="p">),</span><span class="n">dpi</span><span class="o">=</span><span class="mi">200</span><span class="p">)</span>
@@ -241,7 +241,7 @@
 <span class="c1"># Define observing frequencies (must be the same length as times)</span>
 <span class="n">bands</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">logspace</span><span class="p">(</span><span class="mi">9</span><span class="p">,</span><span class="mi">17</span><span class="p">,</span> <span class="mi">200</span><span class="p">)</span>
 
-<span class="n">results</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">specific_flux_series</span><span class="p">(</span><span class="n">times</span><span class="p">,</span> <span class="n">bands</span><span class="p">)</span> <span class="c1">#times array could be random order</span>
+<span class="n">results</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">flux_density</span><span class="p">(</span><span class="n">times</span><span class="p">,</span> <span class="n">bands</span><span class="p">)</span> <span class="c1">#times array could be random order</span>
 
 <span class="c1"># the returned results is a FluxDict object with arrays of the same shape as the input times and bands.</span>
 </pre></div>
@@ -260,7 +260,7 @@
 <span class="n">expo_time</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones_like</span><span class="p">(</span><span class="n">times</span><span class="p">)</span> <span class="o">*</span> <span class="mi">100</span>  <span class="c1"># 100-second exposures</span>
 
 <span class="c1"># Calculate time-averaged flux with 20 sample points per exposure</span>
-<span class="n">results</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">specific_flux_series_with_expo</span><span class="p">(</span><span class="n">times</span><span class="p">,</span> <span class="n">bands</span><span class="p">,</span> <span class="n">expo_time</span><span class="p">,</span> <span class="n">num_points</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+<span class="n">results</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">flux_density_exposures</span><span class="p">(</span><span class="n">times</span><span class="p">,</span> <span class="n">bands</span><span class="p">,</span> <span class="n">expo_time</span><span class="p">,</span> <span class="n">num_points</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
 
 <span class="c1"># The returned results is a FluxDict object with arrays of the same shape as input times and bands</span>
 <span class="c1"># Each flux value represents the average over the corresponding exposure time</span>
@@ -291,11 +291,11 @@
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">VegasAfterglow</span><span class="w"> </span><span class="kn">import</span> <span class="n">Wind</span>
 
 <span class="c1"># Create a stratified stellar wind medium;</span>
-<span class="c1"># smooth transited stratified medium. Inner region, n(r) = n_0, middle region n(r) \propto 1/r^2, outer region n(r)=n_ism</span>
+<span class="c1"># smooth transited stratified medium. Inner region, n(r) = n0, middle region n(r) \propto 1/r^2, outer region n(r)=n_ism</span>
 <span class="c1"># A = 0 (default): fallback to n = n_ism</span>
-<span class="c1"># n_0 = inf (default): wind bubble, from wind profile to ism profile</span>
-<span class="c1"># A = 0 &amp; n_0 = inf: pure wind;</span>
-<span class="n">wind</span> <span class="o">=</span> <span class="n">Wind</span><span class="p">(</span><span class="n">A_star</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">n_ism</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">n_0</span> <span class="o">=</span> <span class="mf">1e-3</span><span class="p">)</span>
+<span class="c1"># n0 = inf (default): wind bubble, from wind profile to ism profile</span>
+<span class="c1"># A = 0 &amp; n0 = inf: pure wind;</span>
+<span class="n">wind</span> <span class="o">=</span> <span class="n">Wind</span><span class="p">(</span><span class="n">A_star</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">n_ism</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">n0</span> <span class="o">=</span> <span class="mf">1e-3</span><span class="p">)</span>
 
 <span class="c1">#..other settings</span>
 <span class="n">model</span> <span class="o">=</span> <span class="n">Model</span><span class="p">(</span><span class="n">medium</span><span class="o">=</span><span class="n">wind</span><span class="p">,</span> <span class="o">...</span><span class="p">)</span>
@@ -365,8 +365,8 @@
 <span class="c1"># Create a two-component jet</span>
 <span class="n">jet</span> <span class="o">=</span> <span class="n">TwoComponentJet</span><span class="p">(</span>
     <span class="n">theta_c</span><span class="o">=</span><span class="mf">0.05</span><span class="p">,</span>        <span class="c1"># Narrow component angular size (radians)</span>
-    <span class="n">E_iso_c</span><span class="o">=</span><span class="mf">1e53</span><span class="p">,</span>        <span class="c1"># Isotropic-equivalent energy of the narrow component (ergs)</span>
-    <span class="n">Gamma0_c</span><span class="o">=</span><span class="mi">300</span><span class="p">,</span>        <span class="c1"># Initial Lorentz factor of the narrow component</span>
+    <span class="n">E_iso</span><span class="o">=</span><span class="mf">1e53</span><span class="p">,</span>          <span class="c1"># Isotropic-equivalent energy of the narrow component (ergs)</span>
+    <span class="n">Gamma0</span><span class="o">=</span><span class="mi">300</span><span class="p">,</span>          <span class="c1"># Initial Lorentz factor of the narrow component</span>
     <span class="n">theta_w</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span>         <span class="c1"># Wide component angular size (radians)</span>
     <span class="n">E_iso_w</span><span class="o">=</span><span class="mf">1e52</span><span class="p">,</span>        <span class="c1"># Isotropic-equivalent energy of the wide component (ergs)</span>
     <span class="n">Gamma0_w</span><span class="o">=</span><span class="mi">100</span>         <span class="c1"># Initial Lorentz factor of the wide component</span>
@@ -384,8 +384,8 @@
 <span class="c1"># Create a step power-law structured jet (uniform core with sharp transition)</span>
 <span class="n">jet</span> <span class="o">=</span> <span class="n">StepPowerLawJet</span><span class="p">(</span>
     <span class="n">theta_c</span><span class="o">=</span><span class="mf">0.05</span><span class="p">,</span>        <span class="c1"># Core angular size (radians)</span>
-    <span class="n">E_iso_c</span><span class="o">=</span><span class="mf">1e53</span><span class="p">,</span>        <span class="c1"># Isotropic-equivalent energy of the core component (ergs)</span>
-    <span class="n">Gamma0_c</span><span class="o">=</span><span class="mi">300</span><span class="p">,</span>        <span class="c1"># Initial Lorentz factor of the core component</span>
+    <span class="n">E_iso</span><span class="o">=</span><span class="mf">1e53</span><span class="p">,</span>          <span class="c1"># Isotropic-equivalent energy of the core component (ergs)</span>
+    <span class="n">Gamma0</span><span class="o">=</span><span class="mi">300</span><span class="p">,</span>          <span class="c1"># Initial Lorentz factor of the core component</span>
     <span class="n">E_iso_w</span><span class="o">=</span><span class="mf">1e52</span><span class="p">,</span>        <span class="c1"># Isotropic-equivalent energy of the wide component (ergs)</span>
     <span class="n">Gamma0_w</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span>        <span class="c1"># Initial Lorentz factor of the wide component</span>
     <span class="n">k_e</span><span class="o">=</span><span class="mf">2.0</span><span class="p">,</span>             <span class="c1"># Power-law index for energy angular dependence</span>
@@ -502,7 +502,7 @@ Users are recommended to set up the user-defined jet structure in the C++ level 
 
 <span class="n">bands</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">1e9</span><span class="p">,</span> <span class="mf">1e14</span><span class="p">,</span> <span class="mf">1e17</span><span class="p">])</span>
 
-<span class="n">results</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">specific_flux</span><span class="p">(</span><span class="n">times</span><span class="p">,</span> <span class="n">bands</span><span class="p">)</span>
+<span class="n">results</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">flux_density_grid</span><span class="p">(</span><span class="n">times</span><span class="p">,</span> <span class="n">bands</span><span class="p">)</span>
 
 <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mf">4.8</span><span class="p">,</span> <span class="mf">3.6</span><span class="p">),</span><span class="n">dpi</span><span class="o">=</span><span class="mi">200</span><span class="p">)</span>
 
@@ -545,7 +545,7 @@ Users are recommended to set up the user-defined jet structure in the C++ level 
 
 <span class="n">bands</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">1e9</span><span class="p">,</span> <span class="mf">1e14</span><span class="p">,</span> <span class="mf">1e17</span><span class="p">])</span>
 
-<span class="n">results</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">specific_flux</span><span class="p">(</span><span class="n">times</span><span class="p">,</span> <span class="n">bands</span><span class="p">)</span>
+<span class="n">results</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">flux_density_grid</span><span class="p">(</span><span class="n">times</span><span class="p">,</span> <span class="n">bands</span><span class="p">)</span>
 
 <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mf">4.8</span><span class="p">,</span> <span class="mf">3.6</span><span class="p">),</span><span class="n">dpi</span><span class="o">=</span><span class="mi">200</span><span class="p">)</span>
 

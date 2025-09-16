@@ -1,11 +1,11 @@
 <map id="merge_grids" name="merge_grids">
-<area shape="rect" id="Node000001" title=" " alt="" coords="613,31,716,56"/>
-<area shape="rect" id="Node000002" href="$mesh_8h.html#a017f88b3242fdadb28e664f27725643a" title="Constructs a coordinate grid (Coord) for shock evolution." alt="" coords="483,31,565,56"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="600,46,565,46,565,41,600,41"/>
-<area shape="rect" id="Node000003" href="$classPyModel.html#a6b7bcc148ef97ee67955c716655213fc" title=" " alt="" coords="204,5,435,31"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="469,39,422,33,422,28,469,34"/>
-<area shape="rect" id="Node000004" href="$classPyModel.html#a3440b0852a67952d09b9017ef6784fd0" title="Get comprehensive details of the shock evolution and model configuration." alt="" coords="254,55,385,80"/>
-<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="469,52,385,62,385,57,469,47"/>
-<area shape="rect" id="Node000005" href="$pybind_8cpp.html#a8c92987849ad296e28ec6c07c8e7860b" title=" " alt="" coords="5,55,156,80"/>
-<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="240,70,156,70,156,65,240,65"/>
+<area shape="rect" id="Node000001" title=" " alt="" coords="557,42,660,67"/>
+<area shape="rect" id="Node000002" href="$mesh_8h.html#a017f88b3242fdadb28e664f27725643a" title="Constructs a coordinate grid (Coord) for shock evolution." alt="" coords="427,42,509,67"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="544,57,509,57,509,52,544,52"/>
+<area shape="rect" id="Node000003" href="$classPyModel.html#a2679af43397e386a0ee6aaea0ad102d8" title=" " alt="" coords="204,5,379,45"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="413,48,378,42,379,37,413,43"/>
+<area shape="rect" id="Node000004" href="$classPyModel.html#a3440b0852a67952d09b9017ef6784fd0" title="Get comprehensive details of the shock evolution and model configuration." alt="" coords="226,70,357,95"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="413,66,357,75,357,70,412,61"/>
+<area shape="rect" id="Node000005" href="$pybind_8cpp.html#a8c92987849ad296e28ec6c07c8e7860b" title=" " alt="" coords="5,70,156,95"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="212,85,156,85,156,80,212,80"/>
 </map>

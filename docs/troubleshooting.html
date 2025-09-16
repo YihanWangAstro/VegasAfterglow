@@ -62,6 +62,7 @@
 <li class="toctree-l2"><a class="reference internal" href="#common-issues">Common Issues</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#model-setup-and-calculation">Model Setup and Calculation</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#mcmc-fitting-issues">MCMC Fitting Issues</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#data-selection-issues">Data Selection Issues</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#data-and-file-issues">Data and File Issues</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#installation-and-environment">Installation and Environment</a></li>
 </ul>
@@ -115,7 +116,7 @@
 <p><strong>Q: My light curve has strange spikes or discontinuities</strong></p>
 <p>A: This is usually caused by one of the following:</p>
 <ul class="simple">
-<li><p><strong>Time array ordering</strong>: Ensure your time array is in ascending order when using <code class="docutils literal notranslate"><span class="pre">specific_flux()</span></code>.</p></li>
+<li><p><strong>Time array ordering</strong>: Ensure your time array is in ascending order when using <code class="docutils literal notranslate"><span class="pre">flux_density()</span></code>.</p></li>
 <li><p><strong>Resolution too low</strong>: Increase the resolution parameters in <code class="docutils literal notranslate"><span class="pre">Model(resolutions=(phi_ppd,</span> <span class="pre">theta_ppd,</span> <span class="pre">t_ppd))</span></code></p></li>
 <li><p><strong>User-defined profiles</strong>: For custom jet/medium profiles, ensure they are smooth and well-behaved</p></li>
 </ul>
@@ -152,6 +153,7 @@
 <li><p><strong>Increase burn-in</strong>: Use <code class="docutils literal notranslate"><span class="pre">burn_frac=0.5</span></code> or higher for difficult problems</p></li>
 <li><p><strong>More walkers</strong>: Use <code class="docutils literal notranslate"><span class="pre">n_walkers</span> <span class="pre">&gt;</span> <span class="pre">2</span> <span class="pre">*</span> <span class="pre">n_parameters</span></code> (emcee recommendation)</p></li>
 <li><p><strong>Check data quality</strong>: Ensure observational uncertainties are realistic</p></li>
+<li><p><strong>Start with coarser resolution</strong>: Use <code class="docutils literal notranslate"><span class="pre">resolution=(0.5,</span> <span class="pre">1.5,</span> <span class="pre">7)</span></code> for initial exploration</p></li>
 </ul>
 <p><strong>Q: MCMC is too slow for practical use</strong></p>
 <p>A: Optimization strategies:</p>
@@ -160,6 +162,7 @@
 <li><p><strong>Fewer parameters</strong>: Fix some parameters with <code class="docutils literal notranslate"><span class="pre">Scale.FIXED</span></code></p></li>
 <li><p><strong>Coarser time/frequency grids</strong>: Use fewer data points for initial fits</p></li>
 <li><p><strong>Parallel processing</strong>: Ensure you’re using multiple cores</p></li>
+<li><p><strong>Data screening</strong>: Apply <code class="docutils literal notranslate"><span class="pre">logscale_screen</span></code> to reduce dataset size (see Data Selection section)</p></li>
 </ul>
 <p><strong>Q: Parameter constraints seem unrealistic</strong></p>
 <p>A: Check:</p>
@@ -169,6 +172,101 @@
 <li><p><strong>Model degeneracies</strong>: Some parameters may be strongly correlated</p></li>
 <li><p><strong>Data coverage</strong>: Limited frequency/time coverage can lead to poor constraints</p></li>
 </ul>
+<p><strong>Q: Memory errors during MCMC</strong></p>
+<p>A: Memory optimization:</p>
+<ul class="simple">
+<li><p><strong>Reduce resolution</strong>: Lower <code class="docutils literal notranslate"><span class="pre">resolution</span></code> parameters</p></li>
+<li><p><strong>Decrease number of workers</strong>: Use fewer <code class="docutils literal notranslate"><span class="pre">num_workers</span></code></p></li>
+<li><p><strong>Use thinning</strong>: Set <code class="docutils literal notranslate"><span class="pre">thin</span> <span class="pre">&gt;</span> <span class="pre">1</span></code> to save fewer samples</p></li>
+<li><p><strong>Monitor dataset size</strong>: Check <code class="docutils literal notranslate"><span class="pre">data.data_points_num()</span></code> and use screening if &gt;500 points</p></li>
+</ul>
+<p><strong>Q: MCMC fails or crashes</strong></p>
+<p>A: Check for:</p>
+<ul class="simple">
+<li><p><strong>Data format and units</strong>: Verify all inputs are in CGS units</p></li>
+<li><p><strong>Parameter bounds</strong>: Ensure bounds are physically reasonable</p></li>
+<li><p><strong>Model configuration</strong>: Verify jet type and medium match your data</p></li>
+<li><p><strong>NaN/infinite values</strong>: Remove problematic data points</p></li>
+</ul>
+</section>
+<section id="data-selection-issues">
+<h3>Data Selection Issues<a class="headerlink" href="#data-selection-issues" title="Link to this heading"></a></h3>
+<p><strong>Q: MCMC converges to unrealistic parameters or poor fits</strong></p>
+<p>A: This often indicates data selection problems:</p>
+<dl class="simple">
+<dt><strong>Diagnosis:</strong></dt><dd><ul class="simple">
+<li><p>Check for over-representation of specific frequency bands</p></li>
+<li><p>Look for temporal clustering in your data</p></li>
+<li><p>Verify error bar magnitudes are consistent across bands</p></li>
+<li><p>Calculate points per band: some bands may dominate χ²</p></li>
+</ul>
+</dd>
+<dt><strong>Solutions:</strong></dt><dd><ul class="simple">
+<li><p><strong>Apply logscale_screen</strong>: Use <code class="docutils literal notranslate"><span class="pre">data.logscale_screen(times,</span> <span class="pre">num_order=temporal_decades)</span></code> for dense datasets</p></li>
+<li><p><strong>Balance frequency bands</strong>: Target 10-30 points per band, avoid &gt;100 points in any single band</p></li>
+<li><p><strong>Use weights</strong>: De-emphasize over-sampled regions with the <code class="docutils literal notranslate"><span class="pre">weights</span></code> parameter</p></li>
+<li><p><strong>Consider systematic floors</strong>: Add systematic uncertainty floors for highly precise data</p></li>
+</ul>
+</dd>
+</dl>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Example: Fix imbalanced optical-dominated dataset</span>
+<span class="c1"># Problem: 500 optical points, 20 X-ray points, 10 radio points</span>
+
+<span class="c1"># Solution 1: Reduce optical density using logscale_screen</span>
+<span class="n">optical_indices</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">logscale_screen</span><span class="p">(</span><span class="n">optical_times</span><span class="p">,</span> <span class="n">num_order</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+<span class="n">data</span><span class="o">.</span><span class="n">add_flux_density</span><span class="p">(</span><span class="n">nu</span><span class="o">=</span><span class="mf">5e14</span><span class="p">,</span>
+                     <span class="n">t</span><span class="o">=</span><span class="n">optical_times</span><span class="p">[</span><span class="n">optical_indices</span><span class="p">],</span>  <span class="c1"># ~40 points</span>
+                     <span class="n">f_nu</span><span class="o">=</span><span class="n">optical_flux</span><span class="p">[</span><span class="n">optical_indices</span><span class="p">],</span>
+                     <span class="n">err</span><span class="o">=</span><span class="n">optical_err</span><span class="p">[</span><span class="n">optical_indices</span><span class="p">])</span>
+
+<span class="c1"># Solution 2: Weight by band density to balance contributions</span>
+<span class="n">optical_weight</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">optical_times</span><span class="p">)</span>  <span class="c1"># Down-weight dense band</span>
+<span class="n">xray_weight</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">xray_times</span><span class="p">)</span>        <span class="c1"># Normalize by band size</span>
+</pre></div>
+</div>
+<p><strong>Q: Parameters biased toward late-time behavior</strong></p>
+<p>A: This indicates temporal imbalance in your dataset:</p>
+<dl class="simple">
+<dt><strong>Diagnosis:</strong></dt><dd><ul class="simple">
+<li><p>Too many late-time data points compared to early times</p></li>
+<li><p>Inadequate early-time coverage</p></li>
+<li><p>Strong late-time constraints dominating the χ² calculation</p></li>
+</ul>
+</dd>
+<dt><strong>Solutions:</strong></dt><dd><ul class="simple">
+<li><p><strong>Apply temporal screening</strong>: Use <code class="docutils literal notranslate"><span class="pre">logscale_screen(times,</span> <span class="pre">num_order=temporal_decades)</span></code></p></li>
+<li><p><strong>Ensure early-time representation</strong>: Don’t neglect the first few decades</p></li>
+<li><p><strong>Weight epochs appropriately</strong>: Use temporal weights to balance early vs. late constraints</p></li>
+<li><p><strong>Check data quality</strong>: Verify that late-time error bars are realistic</p></li>
+</ul>
+</dd>
+</dl>
+<p><strong>Q: How many data points should I use for MCMC?</strong></p>
+<p>A: Guidelines for dataset size:</p>
+<ul class="simple">
+<li><p><strong>&lt;50 points</strong>: Small dataset, use fine resolution</p></li>
+<li><p><strong>50-200 points</strong>: Optimal range for most problems</p></li>
+<li><p><strong>200-500 points</strong>: Large dataset, consider coarser resolution</p></li>
+<li><p><strong>&gt;500 points</strong>: Very large, strongly recommend using <code class="docutils literal notranslate"><span class="pre">logscale_screen</span></code></p></li>
+</ul>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p><strong>Data Balance Check</strong>: Before running MCMC, verify your dataset balance:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Check total data points</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Total data points: </span><span class="si">{</span><span class="n">data</span><span class="o">.</span><span class="n">data_points_num</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="c1"># Check balance across bands (requires accessing internal structure)</span>
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">flux_data</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">flux_data</span><span class="p">):</span>
+    <span class="n">nu</span> <span class="o">=</span> <span class="n">flux_data</span><span class="o">.</span><span class="n">nu</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">n_points</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">flux_data</span><span class="o">.</span><span class="n">t</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Band </span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">nu</span><span class="si">:</span><span class="s2">.1e</span><span class="si">}</span><span class="s2"> Hz - </span><span class="si">{</span><span class="n">n_points</span><span class="si">}</span><span class="s2"> points&quot;</span><span class="p">)</span>
+
+<span class="c1"># Flag if imbalanced</span>
+<span class="k">if</span> <span class="n">max_points</span> <span class="o">&gt;</span> <span class="mi">3</span> <span class="o">*</span> <span class="n">min_points</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Warning: Dataset appears imbalanced!&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
 </section>
 <section id="data-and-file-issues">
 <h3>Data and File Issues<a class="headerlink" href="#data-and-file-issues" title="Link to this heading"></a></h3>
@@ -243,9 +341,9 @@ pip<span class="w"> </span>install<span class="w"> </span>h5py<span class="w">  
 <td><p>Good</p></td>
 </tr>
 <tr class="row-even"><td><p>MCMC fitting</p></td>
-<td><p><code class="docutils literal notranslate"><span class="pre">(0.3,</span> <span class="pre">2,</span> <span class="pre">15)</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">(0.3,</span> <span class="pre">2,</span> <span class="pre">10)</span></code></p></td>
 <td><p>Moderate</p></td>
-<td><p>High</p></td>
+<td><p>Good</p></td>
 </tr>
 <tr class="row-odd"><td><p>Publication quality</p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">(0.3,</span> <span class="pre">5,</span> <span class="pre">20)</span></code></p></td>

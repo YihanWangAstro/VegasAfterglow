@@ -7,7 +7,10 @@ var searchData=
   ['fast_5fpow_4',['fast_pow',['../utilities_8h.html#a4520a27a10a2aef33c99ad8c679da404',1,'utilities.h']]],
   ['fill_5fdata_5farrays_5',['fill_data_arrays',['../structMultiBandData.html#ad2ade97dd269ab683c9fc6716dc0cdea',1,'MultiBandData']]],
   ['find_5fjet_5fedge_6',['find_jet_edge',['../mesh_8h.html#a2abead26b657d59017cbee7b44fc2fca',1,'mesh.h']]],
-  ['flux_7',['flux',['../classObserver.html#a2ba9427e3fe0d3f70fb4b670327c0b6d',1,'Observer::flux()'],['../structMultiBandModel.html#a2e5994a6b6d0b467438fe899a2cf0114',1,'MultiBandModel::flux()']]],
-  ['forwardshockeqn_8',['ForwardShockEqn',['../classForwardShockEqn.html#ab6f8ee9e3cdacb06659e0b4be35c0589',1,'ForwardShockEqn']]],
-  ['frshockeqn_9',['FRShockEqn',['../classFRShockEqn.html#a31ec93b77588da76eae053f6b045ee8c',1,'FRShockEqn']]]
+  ['flux_7',['flux',['../classObserver.html#a2ba9427e3fe0d3f70fb4b670327c0b6d',1,'Observer::flux()'],['../structMultiBandModel.html#a2e5994a6b6d0b467438fe899a2cf0114',1,'MultiBandModel::flux()'],['../classPyModel.html#a51390496a41c22c7c2dbb8838ac7a2d2',1,'PyModel::flux(PyArray const &amp;t, double nu_min, double nu_max, size_t num_nu)']]],
+  ['flux_5fdensity_8',['flux_density',['../classPyModel.html#abf7e6762cb8ca1c8ff429e0a8a7592ad',1,'PyModel']]],
+  ['flux_5fdensity_5fexposures_9',['flux_density_exposures',['../classPyModel.html#a4337b83ce5738c04db9a8dc1b97ba868',1,'PyModel']]],
+  ['flux_5fdensity_5fgrid_10',['flux_density_grid',['../structMultiBandModel.html#a722bb96e86f63b1205fd54fdd2e4c323',1,'MultiBandModel::flux_density_grid()'],['../classPyModel.html#a7aaf63a15a01165e3c5ad8d935f30414',1,'PyModel::flux_density_grid()']]],
+  ['forwardshockeqn_11',['ForwardShockEqn',['../classForwardShockEqn.html#ab6f8ee9e3cdacb06659e0b4be35c0589',1,'ForwardShockEqn']]],
+  ['frshockeqn_12',['FRShockEqn',['../classFRShockEqn.html#a31ec93b77588da76eae053f6b045ee8c',1,'FRShockEqn']]]
 ];

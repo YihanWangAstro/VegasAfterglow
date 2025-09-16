@@ -13,7 +13,7 @@ Model Setup and Calculation
 
 A: This is usually caused by one of the following:
 
-- **Time array ordering**: Ensure your time array is in ascending order when using ``specific_flux()``.
+- **Time array ordering**: Ensure your time array is in ascending order when using ``flux_density()``.
 - **Resolution too low**: Increase the resolution parameters in ``Model(resolutions=(phi_ppd, theta_ppd, t_ppd))``
 - **User-defined profiles**: For custom jet/medium profiles, ensure they are smooth and well-behaved
 
@@ -54,6 +54,7 @@ A: Try the following:
 - **Increase burn-in**: Use ``burn_frac=0.5`` or higher for difficult problems
 - **More walkers**: Use ``n_walkers > 2 * n_parameters`` (emcee recommendation)
 - **Check data quality**: Ensure observational uncertainties are realistic
+- **Start with coarser resolution**: Use ``resolution=(0.5, 1.5, 7)`` for initial exploration
 
 **Q: MCMC is too slow for practical use**
 
@@ -63,6 +64,7 @@ A: Optimization strategies:
 - **Fewer parameters**: Fix some parameters with ``Scale.FIXED``
 - **Coarser time/frequency grids**: Use fewer data points for initial fits
 - **Parallel processing**: Ensure you're using multiple cores
+- **Data screening**: Apply ``logscale_screen`` to reduce dataset size (see Data Selection section)
 
 **Q: Parameter constraints seem unrealistic**
 
@@ -72,6 +74,101 @@ A: Check:
 - **Prior ranges**: Ensure they're physically motivated and not too restrictive
 - **Model degeneracies**: Some parameters may be strongly correlated
 - **Data coverage**: Limited frequency/time coverage can lead to poor constraints
+
+**Q: Memory errors during MCMC**
+
+A: Memory optimization:
+
+- **Reduce resolution**: Lower ``resolution`` parameters
+- **Decrease number of workers**: Use fewer ``num_workers``
+- **Use thinning**: Set ``thin > 1`` to save fewer samples
+- **Monitor dataset size**: Check ``data.data_points_num()`` and use screening if >500 points
+
+**Q: MCMC fails or crashes**
+
+A: Check for:
+
+- **Data format and units**: Verify all inputs are in CGS units
+- **Parameter bounds**: Ensure bounds are physically reasonable
+- **Model configuration**: Verify jet type and medium match your data
+- **NaN/infinite values**: Remove problematic data points
+
+Data Selection Issues
+^^^^^^^^^^^^^^^^^^^^^
+
+**Q: MCMC converges to unrealistic parameters or poor fits**
+
+A: This often indicates data selection problems:
+
+**Diagnosis:**
+  - Check for over-representation of specific frequency bands
+  - Look for temporal clustering in your data
+  - Verify error bar magnitudes are consistent across bands
+  - Calculate points per band: some bands may dominate χ²
+
+**Solutions:**
+  - **Apply logscale_screen**: Use ``data.logscale_screen(times, num_order=temporal_decades)`` for dense datasets
+  - **Balance frequency bands**: Target 10-30 points per band, avoid >100 points in any single band
+  - **Use weights**: De-emphasize over-sampled regions with the ``weights`` parameter
+  - **Consider systematic floors**: Add systematic uncertainty floors for highly precise data
+
+.. code-block:: python
+
+    # Example: Fix imbalanced optical-dominated dataset
+    # Problem: 500 optical points, 20 X-ray points, 10 radio points
+
+    # Solution 1: Reduce optical density using logscale_screen
+    optical_indices = data.logscale_screen(optical_times, num_order=4)
+    data.add_flux_density(nu=5e14,
+                         t=optical_times[optical_indices],  # ~40 points
+                         f_nu=optical_flux[optical_indices],
+                         err=optical_err[optical_indices])
+
+    # Solution 2: Weight by band density to balance contributions
+    optical_weight = 1.0 / len(optical_times)  # Down-weight dense band
+    xray_weight = 1.0 / len(xray_times)        # Normalize by band size
+
+**Q: Parameters biased toward late-time behavior**
+
+A: This indicates temporal imbalance in your dataset:
+
+**Diagnosis:**
+  - Too many late-time data points compared to early times
+  - Inadequate early-time coverage
+  - Strong late-time constraints dominating the χ² calculation
+
+**Solutions:**
+  - **Apply temporal screening**: Use ``logscale_screen(times, num_order=temporal_decades)``
+  - **Ensure early-time representation**: Don't neglect the first few decades
+  - **Weight epochs appropriately**: Use temporal weights to balance early vs. late constraints
+  - **Check data quality**: Verify that late-time error bars are realistic
+
+**Q: How many data points should I use for MCMC?**
+
+A: Guidelines for dataset size:
+
+- **<50 points**: Small dataset, use fine resolution
+- **50-200 points**: Optimal range for most problems
+- **200-500 points**: Large dataset, consider coarser resolution
+- **>500 points**: Very large, strongly recommend using ``logscale_screen``
+
+.. tip::
+    **Data Balance Check**: Before running MCMC, verify your dataset balance:
+
+    .. code-block:: python
+
+        # Check total data points
+        print(f"Total data points: {data.data_points_num()}")
+
+        # Check balance across bands (requires accessing internal structure)
+        for i, flux_data in enumerate(data.flux_data):
+            nu = flux_data.nu[0]
+            n_points = len(flux_data.t)
+            print(f"Band {i}: {nu:.1e} Hz - {n_points} points")
+
+        # Flag if imbalanced
+        if max_points > 3 * min_points:
+            print("Warning: Dataset appears imbalanced!")
 
 Data and File Issues
 ^^^^^^^^^^^^^^^^^^^^
@@ -146,9 +243,9 @@ The ``resolutions`` parameter in ``Model()`` controls computational accuracy vs 
      - Fast
      - Good
    * - MCMC fitting
-     - ``(0.3, 2, 15)``
+     - ``(0.3, 2, 10)``
      - Moderate
-     - High
+     - Good
    * - Publication quality
      - ``(0.3, 5, 20)``
      - Slow

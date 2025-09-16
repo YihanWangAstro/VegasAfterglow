@@ -157,10 +157,10 @@
 <span class="n">data</span> <span class="o">=</span> <span class="n">ObsData</span><span class="p">()</span>
 
 <span class="c1"># Add light curve data</span>
-<span class="n">data</span><span class="o">.</span><span class="n">add_light_curve</span><span class="p">(</span><span class="n">nu_cgs</span><span class="o">=</span><span class="mf">4.84e14</span><span class="p">,</span> <span class="n">t_cgs</span><span class="o">=</span><span class="n">time_data</span><span class="p">,</span> <span class="n">Fnu_cgs</span><span class="o">=</span><span class="n">flux_data</span><span class="p">,</span> <span class="n">Fnu_err</span><span class="o">=</span><span class="n">flux_error</span><span class="p">)</span>
+<span class="n">data</span><span class="o">.</span><span class="n">add_flux_density</span><span class="p">(</span><span class="n">nu</span><span class="o">=</span><span class="mf">4.84e14</span><span class="p">,</span> <span class="n">t</span><span class="o">=</span><span class="n">time_data</span><span class="p">,</span> <span class="n">f_nu</span><span class="o">=</span><span class="n">flux_data</span><span class="p">,</span> <span class="n">err</span><span class="o">=</span><span class="n">flux_error</span><span class="p">)</span>  <span class="c1"># All quantities in CGS units</span>
 
 <span class="c1"># Add spectrum data</span>
-<span class="n">data</span><span class="o">.</span><span class="n">add_spectrum</span><span class="p">(</span><span class="n">t_cgs</span><span class="o">=</span><span class="mi">3000</span><span class="p">,</span> <span class="n">nu_cgs</span><span class="o">=</span><span class="n">nu_data</span><span class="p">,</span> <span class="n">Fnu_cgs</span><span class="o">=</span><span class="n">spectrum_data</span><span class="p">,</span> <span class="n">Fnu_err</span><span class="o">=</span><span class="n">spectrum_error</span><span class="p">)</span>
+<span class="n">data</span><span class="o">.</span><span class="n">add_spectrum</span><span class="p">(</span><span class="n">t</span><span class="o">=</span><span class="mi">3000</span><span class="p">,</span> <span class="n">nu</span><span class="o">=</span><span class="n">nu_data</span><span class="p">,</span> <span class="n">f_nu</span><span class="o">=</span><span class="n">spectrum_data</span><span class="p">,</span> <span class="n">err</span><span class="o">=</span><span class="n">spectrum_error</span><span class="p">)</span>  <span class="c1"># All quantities in CGS units</span>
 </pre></div>
 </div>
 </section>
@@ -231,10 +231,10 @@
 <span class="p">)</span>
 
 <span class="c1"># Generate light curves with best-fit parameters</span>
-<span class="n">lc_best</span> <span class="o">=</span> <span class="n">fitter</span><span class="o">.</span><span class="n">specific_flux</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">best_params</span><span class="p">,</span> <span class="n">t_out</span><span class="p">,</span> <span class="n">bands</span><span class="p">)</span>
+<span class="n">lc_best</span> <span class="o">=</span> <span class="n">fitter</span><span class="o">.</span><span class="n">flux_density_grid</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">best_params</span><span class="p">,</span> <span class="n">t_out</span><span class="p">,</span> <span class="n">bands</span><span class="p">)</span>
 
 <span class="c1"># Generate spectra with best-fit parameters</span>
-<span class="n">spec_best</span> <span class="o">=</span> <span class="n">fitter</span><span class="o">.</span><span class="n">specific_flux</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">best_params</span><span class="p">,</span> <span class="n">times</span><span class="p">,</span> <span class="n">nu_out</span><span class="p">)</span>
+<span class="n">spec_best</span> <span class="o">=</span> <span class="n">fitter</span><span class="o">.</span><span class="n">flux_density_grid</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">best_params</span><span class="p">,</span> <span class="n">times</span><span class="p">,</span> <span class="n">nu_out</span><span class="p">)</span>
 </pre></div>
 </div>
 </section>

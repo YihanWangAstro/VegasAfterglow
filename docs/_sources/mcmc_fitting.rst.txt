@@ -40,14 +40,14 @@ The ``ObsData`` class handles multi-wavelength observational data:
     flux_err = [1e-28, 8e-28, 5e-28, 3e-28, 2e-28]   # Error bars
 
     # Add light curve at R-band frequency
-    data.add_light_curve(nu_cgs=4.84e14, t_cgs=t_data,
-                         Fnu_cgs=flux_data, Fnu_err=flux_err)
+    data.add_flux_density(nu=4.84e14, t=t_data,
+                         f_nu=flux_data, err=flux_err)  # All quantities in CGS units
 
     # Optional: Add weights for systematic uncertainties, normalization handled internally
     weights = np.ones(len(t_data))  # Equal weights
-    data.add_light_curve(nu_cgs=2.4e17, t_cgs=t_data,
-                         Fnu_cgs=flux_data, Fnu_err=flux_err,
-                         weights=weights)
+    data.add_flux_density(nu=2.4e17, t=t_data,
+                         f_nu=flux_data, err=flux_err,
+                         weights=weights)  # All quantities in CGS units
 
     # Method 2: Add frequency-integrated light curve (broadband flux)
     # For instruments with wide frequency coverage (e.g., BAT, LAT, Fermi)
@@ -55,10 +55,10 @@ The ``ObsData`` class handles multi-wavelength observational data:
     nu_max = 1e19  # Upper frequency bound [Hz]
     num_points = 5  # Number of frequency points for integration
 
-    data.add_light_curve(nu_min_cgs=nu_min, nu_max_cgs=nu_max,
-                         num_points=num_points, t_cgs=t_data,
-                         Fnu_cgs=flux_data, Fnu_err=flux_err,
-                         weights=weights)
+    data.add_flux(nu_min=nu_min, nu_max=nu_max,
+                         num_points=num_points, t=t_data,
+                         flux=flux_data, err=flux_err,
+                         weights=weights)  # All quantities in CGS units
 
     # Method 3: Load from CSV files
     bands = [2.4e17, 4.84e14, 1.4e14]  # X-ray, optical, near-IR
@@ -66,8 +66,8 @@ The ``ObsData`` class handles multi-wavelength observational data:
 
     for nu, fname in zip(bands, lc_files):
         df = pd.read_csv(fname)
-        data.add_light_curve(nu_cgs=nu, t_cgs=df["t"],
-                             Fnu_cgs=df["Fv_obs"], Fnu_err=df["Fv_err"])
+        data.add_flux_density(nu=nu, t=df["t"],
+                             f_nu=df["Fv_obs"], err=df["Fv_err"])  # All quantities in CGS units
 
     # Add spectra at specific times
     spec_times = [1000, 10000]  # seconds
@@ -75,8 +75,58 @@ The ``ObsData`` class handles multi-wavelength observational data:
 
     for t, fname in zip(spec_times, spec_files):
         df = pd.read_csv(fname)
-        data.add_spectrum(t_cgs=t, nu_cgs=df["nu"],
-                          Fnu_cgs=df["Fv_obs"], Fnu_err=df["Fv_err"])
+        data.add_spectrum(t=t, nu=df["nu"],
+                          f_nu=df["Fv_obs"], err=df["Fv_err"])  # All quantities in CGS units
+
+Data Selection and Optimization
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+**Smart Data Subsampling with logscale_screen**
+
+For large datasets or densely sampled observations, using all available data points can lead to computational inefficiency and biased parameter estimation. The ``logscale_screen`` method provides intelligent data subsampling that maintains the essential information content while reducing computational overhead.
+
+.. code-block:: python
+
+    # Example: Large dense dataset
+    t_dense = np.logspace(2, 7, 1000)  # 1000 time points
+    flux_dense = np.random.lognormal(-60, 0.5, 1000)  # Dense flux measurements
+    flux_err_dense = 0.1 * flux_dense
+
+    # Subsample using logarithmic screening
+    # This selects ~50-100 representative points across 5 decades in time
+    indices = data.logscale_screen(t_dense, num_order=5)
+
+    # Add only the selected subset
+    data.add_flux_density(nu=5e14,
+                         t=t_dense[indices],
+                         f_nu=flux_dense[indices],
+                         err=flux_err_dense[indices])
+
+**Why logscale_screen is Important:**
+
+1. **Prevents Oversampling Bias**: Dense data clusters can dominate the χ² calculation, causing the MCMC to over-fit specific frequency bands or time periods.
+
+2. **Computational Efficiency**: Reduces the number of model evaluations needed during MCMC sampling, significantly improving performance.
+
+3. **Preserves Information**: Unlike uniform thinning, logarithmic sampling maintains representation across all temporal/spectral scales.
+
+4. **Balanced Multi-band Fitting**: Ensures each frequency band contributes proportionally to the parameter constraints.
+
+**Multi-band Balance Guidelines:**
+
+- **Target 10-30 points per frequency band** for balanced constraints
+- **Avoid >100 points in any single band** unless scientifically justified
+- **Maintain temporal coverage** across all evolutionary phases
+- **Weight systematic uncertainties** appropriately using the weights parameter
+
+.. warning::
+    **Common Data Selection Pitfalls:**
+
+    - **Optical-heavy datasets**: Dense optical coverage can bias parameters toward optical-dominant solutions
+    - **Late-time clustering**: Too many late-time points can over-constrain decay slopes at the expense of early physics
+    - **Single-epoch spectra**: Broadband spectra at one time can dominate multi-epoch light curves in χ² space
+
+    **Solution**: Use ``logscale_screen`` and manual data selection to ensure balanced representation across all observational dimensions.
 
 Global Configuration
 ^^^^^^^^^^^^^^^^^^^^
@@ -223,8 +273,8 @@ Jet Structure Variations
 
     params = [
         # Core component (uniform)
-        ParamDef("E_iso_c", 1e51,  1e54,  Scale.LOG),     # Core energy
-        ParamDef("Gamma0_c",  50,   500,  Scale.LOG),     # Core Lorentz factor
+        ParamDef("E_iso",   1e51,  1e54,  Scale.LOG),     # Core energy
+        ParamDef("Gamma0",    50,   500,  Scale.LOG),     # Core Lorentz factor
         ParamDef("theta_c", 0.01,   0.1,  Scale.LINEAR),  # Core boundary
 
         # Wing component (power-law)
@@ -614,6 +664,9 @@ Basic MCMC Execution
 
 .. code-block:: python
 
+    # Check data statistics before MCMC
+    print(f"Total data points: {data.data_points_num()}")
+
     # Create fitter object
     fitter = Fitter(data, cfg, num_workers=8)  # Use 8 CPU cores
 
@@ -661,12 +714,12 @@ Model Predictions
     nu_model = np.array([1e9, 5e14, 2e17])  # Radio, optical, X-ray
 
     # Light curves at specific frequencies
-    lc_model = fitter.specific_flux(result.best_params, t_model, nu_model)
+    lc_model = fitter.flux_density_grid(result.best_params, t_model, nu_model)
 
     # Spectra at specific times
     nu_spec = np.logspace(8, 20, 100)
     times_spec = [1000, 10000]
-    spec_model = fitter.specific_flux(result.best_params, times_spec, nu_spec)
+    spec_model = fitter.flux_density_grid(result.best_params, times_spec, nu_spec)
 
     # Frequency-integrated flux (broadband light curves)
     # Useful for comparing with instruments like Swift/BAT, Fermi/LAT
@@ -718,28 +771,4 @@ Visualization
 Troubleshooting
 ---------------
 
-Common Issues
-^^^^^^^^^^^^^
-
-**Poor Convergence**
-  - Increase burn-in fraction
-  - Use more walkers
-  - Check parameter ranges
-  - Start with coarser resolution
-
-**Memory Errors**
-  - Reduce resolution
-  - Decrease number of workers
-  - Use thinning (thin > 1)
-
-**Slow Performance**
-  - Reduce resolution initially
-  - Use fewer walkers for exploration
-  - Check data size and complexity
-
-**Failed Fits**
-  - Verify data format and units
-  - Check parameter bounds
-  - Ensure model configuration matches data
-
-For more troubleshooting help, see :doc:`troubleshooting`.
+For comprehensive troubleshooting help including MCMC convergence issues, data selection problems, memory optimization, and performance tuning, see :doc:`troubleshooting`.

@@ -13,9 +13,9 @@ var pymodel_8h =
     [ "PyGaussianJet", "pymodel_8h.html#a640334bcb244a98e359f42b86331eab3", null ],
     [ "PyISM", "pymodel_8h.html#a43af01d16838e6513792deaeb727fbe5", null ],
     [ "PyPowerLawJet", "pymodel_8h.html#ab0fc1fa48f04171061fcfcce0a90dfe5", null ],
-    [ "PyPowerLawWing", "pymodel_8h.html#a2fddf89e226af06257265c9c82b3ee34", null ],
-    [ "PyStepPowerLawJet", "pymodel_8h.html#a2a288f14b74f7f42f73cad8febbc31af", null ],
+    [ "PyPowerLawWing", "pymodel_8h.html#a772157739bd087e1e945a469eb04df6e", null ],
+    [ "PyStepPowerLawJet", "pymodel_8h.html#a5a3369eb7b57f229aa810843dbe15b7e", null ],
     [ "PyTophatJet", "pymodel_8h.html#af1f230ff03a5fe38e4b897e3dc219782", null ],
-    [ "PyTwoComponentJet", "pymodel_8h.html#a004fac61fc696ebf698b2e67197c0494", null ],
-    [ "PyWind", "pymodel_8h.html#abc477cac2d5ef3645a9bb6d4c0232913", null ]
+    [ "PyTwoComponentJet", "pymodel_8h.html#ab9df94d937b16f949454e5e8c2f2caf4", null ],
+    [ "PyWind", "pymodel_8h.html#adbbbb3482468157a7048ed754a91a4b9", null ]
 ];

@@ -123,7 +123,7 @@ Ambient Medium Parameters
      - :math:`10^{-4} - 10^{3}`
      - Number density of uniform ISM
    * - ``n0``
-     - :math:`n_0`
+     - :math:`n0`
      - cm⁻³
      - :math:`10^{-4} - 10^{6}`
      - Inner region number density for wind medium
@@ -245,6 +245,10 @@ Jet Types
      - Gaussian angular profile for energy and Lorentz factor
    * - ``powerlaw``
      - Power-law angular dependence with indices k_e and k_g
+   * - ``two_component``
+     - Two-component jet with narrow core and wide wing components
+   * - ``step_powerlaw``
+     - Uniform core with sharp transition to power-law wing
    * - ``ejecta``
      - Generic ejecta with arbitrary angular profiles
 

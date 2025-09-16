@@ -135,7 +135,7 @@ Public Attributes</h2></td></tr>
 <div class="textblock"><p>Container for observational flux data and model predictions for chi-squared analysis. </p>
 <p>This structure organizes time-series flux measurements with their uncertainties, model predictions, and statistical weights. It provides the fundamental data structure for parameter estimation and goodness-of-fit evaluation in afterglow modeling. The structure supports both light curves and spectral measurements. </p>
 
-<p class="definition">Definition at line <a class="el" href="mcmc_8h_source.html#l00041">41</a> of file <a class="el" href="mcmc_8h_source.html">mcmc.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="mcmc_8h_source.html#l00029">29</a> of file <a class="el" href="mcmc_8h_source.html">mcmc.h</a>.</p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
 <a id="a8a66a7f3f7a50a2dcdf5b52b064b0348" name="a8a66a7f3f7a50a2dcdf5b52b064b0348"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a8a66a7f3f7a50a2dcdf5b52b064b0348">&#9670;&#160;</a></span>estimate_chi2()</h2>
@@ -167,11 +167,11 @@ Public Attributes</h2></td></tr>
 <div class="line"><span class="lineno">   90</span>    }</div>
 <div class="line"><span class="lineno">   91</span>    <span class="keywordflow">return</span> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">chi_square</a>;</div>
 <div class="line"><span class="lineno">   92</span>}</div>
-<div class="ttc" id="astructFluxData_html_a0afc30aeb2e7370203951a2a3807761f"><div class="ttname"><a href="structFluxData.html#a0afc30aeb2e7370203951a2a3807761f">FluxData::t</a></div><div class="ttdeci">Array t</div><div class="ttdoc">Observation times [seconds].</div><div class="ttdef"><b>Definition</b> <a href="mcmc_8h_source.html#l00042">mcmc.h:42</a></div></div>
-<div class="ttc" id="astructFluxData_html_a54a1c372a26eaa134f7bbabf1d27dbc0"><div class="ttname"><a href="structFluxData.html#a54a1c372a26eaa134f7bbabf1d27dbc0">FluxData::weights</a></div><div class="ttdeci">Array weights</div><div class="ttdoc">Statistical weights for each data point.</div><div class="ttdef"><b>Definition</b> <a href="mcmc_8h_source.html#l00047">mcmc.h:47</a></div></div>
-<div class="ttc" id="astructFluxData_html_a5c10f6f3d6f4c9d3c07528ae41bd16a9"><div class="ttname"><a href="structFluxData.html#a5c10f6f3d6f4c9d3c07528ae41bd16a9">FluxData::Fv_model</a></div><div class="ttdeci">Array Fv_model</div><div class="ttdoc">Model-predicted flux densities [mJy].</div><div class="ttdef"><b>Definition</b> <a href="mcmc_8h_source.html#l00046">mcmc.h:46</a></div></div>
-<div class="ttc" id="astructFluxData_html_a5c6b0ad9ba7dffc87376cbca7fa7cd0c"><div class="ttname"><a href="structFluxData.html#a5c6b0ad9ba7dffc87376cbca7fa7cd0c">FluxData::Fv_err</a></div><div class="ttdeci">Array Fv_err</div><div class="ttdoc">Observational uncertainties [mJy].</div><div class="ttdef"><b>Definition</b> <a href="mcmc_8h_source.html#l00045">mcmc.h:45</a></div></div>
-<div class="ttc" id="astructFluxData_html_a6a3819114692164325dcbec864b1c851"><div class="ttname"><a href="structFluxData.html#a6a3819114692164325dcbec864b1c851">FluxData::Fv_obs</a></div><div class="ttdeci">Array Fv_obs</div><div class="ttdoc">Observed flux densities [mJy].</div><div class="ttdef"><b>Definition</b> <a href="mcmc_8h_source.html#l00044">mcmc.h:44</a></div></div>
+<div class="ttc" id="astructFluxData_html_a0afc30aeb2e7370203951a2a3807761f"><div class="ttname"><a href="structFluxData.html#a0afc30aeb2e7370203951a2a3807761f">FluxData::t</a></div><div class="ttdeci">Array t</div><div class="ttdoc">Observation times [seconds].</div><div class="ttdef"><b>Definition</b> <a href="mcmc_8h_source.html#l00030">mcmc.h:30</a></div></div>
+<div class="ttc" id="astructFluxData_html_a54a1c372a26eaa134f7bbabf1d27dbc0"><div class="ttname"><a href="structFluxData.html#a54a1c372a26eaa134f7bbabf1d27dbc0">FluxData::weights</a></div><div class="ttdeci">Array weights</div><div class="ttdoc">Statistical weights for each data point.</div><div class="ttdef"><b>Definition</b> <a href="mcmc_8h_source.html#l00035">mcmc.h:35</a></div></div>
+<div class="ttc" id="astructFluxData_html_a5c10f6f3d6f4c9d3c07528ae41bd16a9"><div class="ttname"><a href="structFluxData.html#a5c10f6f3d6f4c9d3c07528ae41bd16a9">FluxData::Fv_model</a></div><div class="ttdeci">Array Fv_model</div><div class="ttdoc">Model-predicted flux densities [mJy].</div><div class="ttdef"><b>Definition</b> <a href="mcmc_8h_source.html#l00034">mcmc.h:34</a></div></div>
+<div class="ttc" id="astructFluxData_html_a5c6b0ad9ba7dffc87376cbca7fa7cd0c"><div class="ttname"><a href="structFluxData.html#a5c6b0ad9ba7dffc87376cbca7fa7cd0c">FluxData::Fv_err</a></div><div class="ttdeci">Array Fv_err</div><div class="ttdoc">Observational uncertainties [mJy].</div><div class="ttdef"><b>Definition</b> <a href="mcmc_8h_source.html#l00033">mcmc.h:33</a></div></div>
+<div class="ttc" id="astructFluxData_html_a6a3819114692164325dcbec864b1c851"><div class="ttname"><a href="structFluxData.html#a6a3819114692164325dcbec864b1c851">FluxData::Fv_obs</a></div><div class="ttdeci">Array Fv_obs</div><div class="ttdoc">Observed flux densities [mJy].</div><div class="ttdef"><b>Definition</b> <a href="mcmc_8h_source.html#l00032">mcmc.h:32</a></div></div>
 <div class="ttc" id="autilities_8h_html_ab8e81118f023df135835db8cce4f5f42"><div class="ttname"><a href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">max</a></div><div class="ttdeci">T max(T value)</div><div class="ttdoc">Returns the value of a single parameter.</div><div class="ttdef"><b>Definition</b> <a href="utilities_8h_source.html#l00311">utilities.h:311</a></div></div>
 </div><!-- fragment --><div class="dynheader">
 Here is the call graph for this function:</div>
@@ -202,7 +202,7 @@ Here is the call graph for this function:</div>
 
 <p>Observational uncertainties [mJy]. </p>
 
-<p class="definition">Definition at line <a class="el" href="mcmc_8h_source.html#l00045">45</a> of file <a class="el" href="mcmc_8h_source.html">mcmc.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="mcmc_8h_source.html#l00033">33</a> of file <a class="el" href="mcmc_8h_source.html">mcmc.h</a>.</p>
 
 </div>
 </div>
@@ -220,7 +220,7 @@ Here is the call graph for this function:</div>
 
 <p>Model-predicted flux densities [mJy]. </p>
 
-<p class="definition">Definition at line <a class="el" href="mcmc_8h_source.html#l00046">46</a> of file <a class="el" href="mcmc_8h_source.html">mcmc.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="mcmc_8h_source.html#l00034">34</a> of file <a class="el" href="mcmc_8h_source.html">mcmc.h</a>.</p>
 
 </div>
 </div>
@@ -238,7 +238,7 @@ Here is the call graph for this function:</div>
 
 <p>Observed flux densities [mJy]. </p>
 
-<p class="definition">Definition at line <a class="el" href="mcmc_8h_source.html#l00044">44</a> of file <a class="el" href="mcmc_8h_source.html">mcmc.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="mcmc_8h_source.html#l00032">32</a> of file <a class="el" href="mcmc_8h_source.html">mcmc.h</a>.</p>
 
 </div>
 </div>
@@ -256,7 +256,7 @@ Here is the call graph for this function:</div>
 
 <p>Observation frequencies [Hz]. </p>
 
-<p class="definition">Definition at line <a class="el" href="mcmc_8h_source.html#l00043">43</a> of file <a class="el" href="mcmc_8h_source.html">mcmc.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="mcmc_8h_source.html#l00031">31</a> of file <a class="el" href="mcmc_8h_source.html">mcmc.h</a>.</p>
 
 </div>
 </div>
@@ -274,7 +274,7 @@ Here is the call graph for this function:</div>
 
 <p>Observation times [seconds]. </p>
 
-<p class="definition">Definition at line <a class="el" href="mcmc_8h_source.html#l00042">42</a> of file <a class="el" href="mcmc_8h_source.html">mcmc.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="mcmc_8h_source.html#l00030">30</a> of file <a class="el" href="mcmc_8h_source.html">mcmc.h</a>.</p>
 
 </div>
 </div>
@@ -292,7 +292,7 @@ Here is the call graph for this function:</div>
 
 <p>Statistical weights for each data point. </p>
 
-<p class="definition">Definition at line <a class="el" href="mcmc_8h_source.html#l00047">47</a> of file <a class="el" href="mcmc_8h_source.html">mcmc.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="mcmc_8h_source.html#l00035">35</a> of file <a class="el" href="mcmc_8h_source.html">mcmc.h</a>.</p>
 
 </div>
 </div>

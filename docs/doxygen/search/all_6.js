@@ -11,7 +11,7 @@ var searchData=
   ['gamma_5fcut_8',['Gamma_cut',['../namespacecon.html#a9c6b1c9b349c790392fa370c8d9e13a8',1,'con']]],
   ['gamma_5fhat_5fc_9',['gamma_hat_c',['../structInverseComptonY.html#a2ab9ce5800c93ef0ba56b1953c97c035',1,'InverseComptonY']]],
   ['gamma_5fhat_5fm_10',['gamma_hat_m',['../structInverseComptonY.html#a0025a8715ca91f593e4413020e095e71',1,'InverseComptonY']]],
-  ['gamma_5fm_11',['gamma_m',['../structSynElectrons.html#aecf574c857a1b1930faf5ae00c4a9af3',1,'SynElectrons::gamma_M'],['../structPyShock.html#ab0edf257f016470b8d2f12707eae4ab0',1,'PyShock::gamma_M'],['../structSynElectrons.html#a4cfe5375f620c71ed77acdcd743a2639',1,'SynElectrons::gamma_m'],['../structPyShock.html#a53a5fc81875ed6b6ecbc2e25155a1880',1,'PyShock::gamma_m']]],
+  ['gamma_5fm_11',['gamma_m',['../structSynElectrons.html#a4cfe5375f620c71ed77acdcd743a2639',1,'SynElectrons::gamma_m'],['../structPyShock.html#a53a5fc81875ed6b6ecbc2e25155a1880',1,'PyShock::gamma_m'],['../structSynElectrons.html#aecf574c857a1b1930faf5ae00c4a9af3',1,'SynElectrons::gamma_M'],['../structPyShock.html#ab0edf257f016470b8d2f12707eae4ab0',1,'PyShock::gamma_M']]],
   ['gamma_5fth_12',['gamma_th',['../classShock.html#aff8a2f43d9c47007f042a3ed1a33f98e',1,'Shock::Gamma_th'],['../structPyShock.html#aac93a14f3649cdd0177aef46023fe6b2',1,'PyShock::Gamma_th']]],
   ['gamma_5fto_5fbeta_13',['gamma_to_beta',['../physics_8h.html#ab8aa624dd63313487d8f5ecf52170d76',1,'physics.h']]],
   ['gauss_14',['Gauss',['../namespaceunit.html#afe6ab6092d118630921fa2b1ba3c888e',1,'unit']]],

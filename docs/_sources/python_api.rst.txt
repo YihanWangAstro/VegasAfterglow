@@ -45,10 +45,10 @@ Example:
     data = ObsData()
 
     # Add light curve data
-    data.add_light_curve(nu_cgs=4.84e14, t_cgs=time_data, Fnu_cgs=flux_data, Fnu_err=flux_error)
+    data.add_flux_density(nu=4.84e14, t=time_data, f_nu=flux_data, err=flux_error)  # All quantities in CGS units
 
     # Add spectrum data
-    data.add_spectrum(t_cgs=3000, nu_cgs=nu_data, Fnu_cgs=spectrum_data, Fnu_err=spectrum_error)
+    data.add_spectrum(t=3000, nu=nu_data, f_nu=spectrum_data, err=spectrum_error)  # All quantities in CGS units
 
 .. _api-setups:
 
@@ -177,10 +177,10 @@ Example:
     )
 
     # Generate light curves with best-fit parameters
-    lc_best = fitter.specific_flux(result.best_params, t_out, bands)
+    lc_best = fitter.flux_density_grid(result.best_params, t_out, bands)
 
     # Generate spectra with best-fit parameters
-    spec_best = fitter.specific_flux(result.best_params, times, nu_out)
+    spec_best = fitter.flux_density_grid(result.best_params, times, nu_out)
 
 .. _api-fitresult:
 
