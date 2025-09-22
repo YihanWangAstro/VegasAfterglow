@@ -126,6 +126,55 @@ For observations with finite exposure times, you can calculate time-averaged flu
 .. note::
     The function samples `num_points` evenly spaced within each exposure time and averages the computed flux. Higher `num_points` gives more accurate time averaging but increases computation time. The minimum value is 2.
 
+Calculate bolometric flux (frequency-integrated)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+For broadband flux measurements integrated over a frequency range (e.g., instrument bandpasses like Swift/BAT, Fermi/LAT):
+
+.. code-block:: python
+
+    # Define time range for broadband light curve calculation
+    times = np.logspace(2, 8, 100)
+
+    # Example 1: Swift/BAT bandpass (15-150 keV ≈ 3.6e18 - 3.6e19 Hz)
+    nu_min_bat = 3.6e18  # Lower frequency bound [Hz]
+    nu_max_bat = 3.6e19  # Upper frequency bound [Hz]
+    num_points = 20      # Number of frequency sampling points for integration
+
+    # Calculate frequency-integrated flux
+    flux_bat = model.flux(times, nu_min_bat, nu_max_bat, num_points)
+
+    # Example 2: Custom optical band (V-band: 5.1e14 ± 5e13 Hz)
+    nu_min_v = 4.6e14    # V-band lower edge [Hz]
+    nu_max_v = 5.6e14    # V-band upper edge [Hz]
+    flux_v = model.flux(times, nu_min_v, nu_max_v, num_points)
+
+    # Plot broadband light curves
+    plt.figure(figsize=(8, 6))
+    plt.loglog(times, flux_bat.total, label='Swift/BAT (15-150 keV)', linewidth=2)
+    plt.loglog(times, flux_v.total, label='V-band optical', linewidth=2)
+
+    plt.xlabel('Time [s]')
+    plt.ylabel('Integrated Flux [erg/cm²/s]')
+    plt.legend()
+    plt.title('Broadband Light Curves')
+
+.. note::
+    **When to use `flux` vs `flux_density_grid`:**
+
+    - Use ``flux()`` for broadband flux measurements (instrument bandpasses, bolometric calculations)
+    - Use ``flux_density_grid()`` for monochromatic flux densities at specific frequencies
+    - The ``flux()`` method integrates over frequency, so units are [erg/cm²/s] instead of [erg/cm²/s/Hz]
+    - Higher ``num_points`` gives more accurate frequency integration but increases computation time
+
+.. tip::
+    **Frequency Integration Guidelines:**
+
+    - **Narrow bands** (Δν/ν < 0.5): Use ``num_points = 5-10``
+    - **Wide bands** (Δν/ν > 1): Use ``num_points = 20-50``
+    - **Very wide bands** (multiple decades): Use ``num_points = 50+``
+    - Monitor convergence by testing different ``num_points`` values
+
 
 Ambient Media Models
 --------------------

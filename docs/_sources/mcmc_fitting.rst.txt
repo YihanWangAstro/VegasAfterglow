@@ -94,7 +94,7 @@ For large datasets or densely sampled observations, using all available data poi
 
     # Subsample using logarithmic screening
     # This selects ~50-100 representative points across 5 decades in time
-    indices = data.logscale_screen(t_dense, num_order=5)
+    indices = ObsData.logscale_screen(t_dense, num_order=5)
 
     # Add only the selected subset
     data.add_flux_density(nu=5e14,
@@ -112,7 +112,7 @@ For large datasets or densely sampled observations, using all available data poi
 
 4. **Balanced Multi-band Fitting**: Ensures each frequency band contributes proportionally to the parameter constraints.
 
-**Multi-band Balance Guidelines:**
+**Data Selection Guidelines:**
 
 - **Target 10-30 points per frequency band** for balanced constraints
 - **Avoid >100 points in any single band** unless scientifically justified
@@ -126,7 +126,7 @@ For large datasets or densely sampled observations, using all available data poi
     - **Late-time clustering**: Too many late-time points can over-constrain decay slopes at the expense of early physics
     - **Single-epoch spectra**: Broadband spectra at one time can dominate multi-epoch light curves in χ² space
 
-    **Solution**: Use ``logscale_screen`` and manual data selection to ensure balanced representation across all observational dimensions.
+    **Solution**: Use ``logscale_screen`` for manual temporal reduction of over-sampled bands.
 
 Global Configuration
 ^^^^^^^^^^^^^^^^^^^^
@@ -689,20 +689,16 @@ Parameter Constraints
 .. code-block:: python
 
     # Print best-fit parameters
-    print("Best-fit parameters:")
-    for name, val in zip(result.labels, result.best_params):
-        print(f"  {name}: {val:.4e}")
+    top_k_data = []
+    for i in range(result.top_k_params.shape[0]):
+        row = {'Rank': i+1, 'chi^2': f"{-2*result.top_k_log_probs[i]:.2f}"}
+        for name, val in zip(result.labels, result.top_k_params[i]):
+            row[name] = f"{val:.4f}"
+        top_k_data.append(row)
 
-    # Compute credible intervals
-    flat_chain = result.samples.reshape(-1, result.samples.shape[-1])
-    medians = np.median(flat_chain, axis=0)
-    lower = np.percentile(flat_chain, 16, axis=0)
-    upper = np.percentile(flat_chain, 84, axis=0)
-
-    print("\nParameter constraints (68% credible intervals):")
-    for i, name in enumerate(result.labels):
-        print(f"  {name}: {medians[i]:.3e} "
-              f"(+{upper[i]-medians[i]:.3e}, -{medians[i]-lower[i]:.3e})")
+    top_k_df = pd.DataFrame(top_k_data)
+    print("Top-k parameters:")
+    print(top_k_df.to_string(index=False))
 
 Model Predictions
 ^^^^^^^^^^^^^^^^^

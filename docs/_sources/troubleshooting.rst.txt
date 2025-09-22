@@ -107,7 +107,7 @@ A: This often indicates data selection problems:
   - Calculate points per band: some bands may dominate χ²
 
 **Solutions:**
-  - **Apply logscale_screen**: Use ``data.logscale_screen(times, num_order=temporal_decades)`` for dense datasets
+  - **Apply logscale_screen**: Use ``ObsData.logscale_screen(times, points_per_decade)`` for manual screening
   - **Balance frequency bands**: Target 10-30 points per band, avoid >100 points in any single band
   - **Use weights**: De-emphasize over-sampled regions with the ``weights`` parameter
   - **Consider systematic floors**: Add systematic uncertainty floors for highly precise data
@@ -117,14 +117,20 @@ A: This often indicates data selection problems:
     # Example: Fix imbalanced optical-dominated dataset
     # Problem: 500 optical points, 20 X-ray points, 10 radio points
 
-    # Solution 1: Reduce optical density using logscale_screen
-    optical_indices = data.logscale_screen(optical_times, num_order=4)
+    # Solution: Manual reduction using logscale_screen
+    data = ObsData()
+    # Add all data normally, but use screening for over-sampled bands
+    optical_indices = ObsData.logscale_screen(optical_times, points_per_decade=4)
     data.add_flux_density(nu=5e14,
                          t=optical_times[optical_indices],  # ~40 points
                          f_nu=optical_flux[optical_indices],
                          err=optical_err[optical_indices])
 
-    # Solution 2: Weight by band density to balance contributions
+    # Add other bands normally
+    data.add_flux_density(nu=2e17, t=xray_times, f_nu=xray_flux, err=xray_err)
+    data.add_flux_density(nu=1e9, t=radio_times, f_nu=radio_flux, err=radio_err)
+
+    # Alternative: Weight by band density to balance contributions
     optical_weight = 1.0 / len(optical_times)  # Down-weight dense band
     xray_weight = 1.0 / len(xray_times)        # Normalize by band size
 
@@ -138,7 +144,7 @@ A: This indicates temporal imbalance in your dataset:
   - Strong late-time constraints dominating the χ² calculation
 
 **Solutions:**
-  - **Apply temporal screening**: Use ``logscale_screen(times, num_order=temporal_decades)``
+  - **Apply temporal screening**: Use ``logscale_screen(times, points_per_decade)`` for manual control
   - **Ensure early-time representation**: Don't neglect the first few decades
   - **Weight epochs appropriately**: Use temporal weights to balance early vs. late constraints
   - **Check data quality**: Verify that late-time error bars are realistic

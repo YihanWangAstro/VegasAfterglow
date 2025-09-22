@@ -202,7 +202,7 @@
 </ul>
 </dd>
 <dt><strong>Solutions:</strong></dt><dd><ul class="simple">
-<li><p><strong>Apply logscale_screen</strong>: Use <code class="docutils literal notranslate"><span class="pre">data.logscale_screen(times,</span> <span class="pre">num_order=temporal_decades)</span></code> for dense datasets</p></li>
+<li><p><strong>Apply logscale_screen</strong>: Use <code class="docutils literal notranslate"><span class="pre">ObsData.logscale_screen(times,</span> <span class="pre">points_per_decade)</span></code> for manual screening</p></li>
 <li><p><strong>Balance frequency bands</strong>: Target 10-30 points per band, avoid &gt;100 points in any single band</p></li>
 <li><p><strong>Use weights</strong>: De-emphasize over-sampled regions with the <code class="docutils literal notranslate"><span class="pre">weights</span></code> parameter</p></li>
 <li><p><strong>Consider systematic floors</strong>: Add systematic uncertainty floors for highly precise data</p></li>
@@ -212,14 +212,20 @@
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Example: Fix imbalanced optical-dominated dataset</span>
 <span class="c1"># Problem: 500 optical points, 20 X-ray points, 10 radio points</span>
 
-<span class="c1"># Solution 1: Reduce optical density using logscale_screen</span>
-<span class="n">optical_indices</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">logscale_screen</span><span class="p">(</span><span class="n">optical_times</span><span class="p">,</span> <span class="n">num_order</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+<span class="c1"># Solution: Manual reduction using logscale_screen</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">ObsData</span><span class="p">()</span>
+<span class="c1"># Add all data normally, but use screening for over-sampled bands</span>
+<span class="n">optical_indices</span> <span class="o">=</span> <span class="n">ObsData</span><span class="o">.</span><span class="n">logscale_screen</span><span class="p">(</span><span class="n">optical_times</span><span class="p">,</span> <span class="n">points_per_decade</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
 <span class="n">data</span><span class="o">.</span><span class="n">add_flux_density</span><span class="p">(</span><span class="n">nu</span><span class="o">=</span><span class="mf">5e14</span><span class="p">,</span>
                      <span class="n">t</span><span class="o">=</span><span class="n">optical_times</span><span class="p">[</span><span class="n">optical_indices</span><span class="p">],</span>  <span class="c1"># ~40 points</span>
                      <span class="n">f_nu</span><span class="o">=</span><span class="n">optical_flux</span><span class="p">[</span><span class="n">optical_indices</span><span class="p">],</span>
                      <span class="n">err</span><span class="o">=</span><span class="n">optical_err</span><span class="p">[</span><span class="n">optical_indices</span><span class="p">])</span>
 
-<span class="c1"># Solution 2: Weight by band density to balance contributions</span>
+<span class="c1"># Add other bands normally</span>
+<span class="n">data</span><span class="o">.</span><span class="n">add_flux_density</span><span class="p">(</span><span class="n">nu</span><span class="o">=</span><span class="mf">2e17</span><span class="p">,</span> <span class="n">t</span><span class="o">=</span><span class="n">xray_times</span><span class="p">,</span> <span class="n">f_nu</span><span class="o">=</span><span class="n">xray_flux</span><span class="p">,</span> <span class="n">err</span><span class="o">=</span><span class="n">xray_err</span><span class="p">)</span>
+<span class="n">data</span><span class="o">.</span><span class="n">add_flux_density</span><span class="p">(</span><span class="n">nu</span><span class="o">=</span><span class="mf">1e9</span><span class="p">,</span> <span class="n">t</span><span class="o">=</span><span class="n">radio_times</span><span class="p">,</span> <span class="n">f_nu</span><span class="o">=</span><span class="n">radio_flux</span><span class="p">,</span> <span class="n">err</span><span class="o">=</span><span class="n">radio_err</span><span class="p">)</span>
+
+<span class="c1"># Alternative: Weight by band density to balance contributions</span>
 <span class="n">optical_weight</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">optical_times</span><span class="p">)</span>  <span class="c1"># Down-weight dense band</span>
 <span class="n">xray_weight</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">xray_times</span><span class="p">)</span>        <span class="c1"># Normalize by band size</span>
 </pre></div>
@@ -234,7 +240,7 @@
 </ul>
 </dd>
 <dt><strong>Solutions:</strong></dt><dd><ul class="simple">
-<li><p><strong>Apply temporal screening</strong>: Use <code class="docutils literal notranslate"><span class="pre">logscale_screen(times,</span> <span class="pre">num_order=temporal_decades)</span></code></p></li>
+<li><p><strong>Apply temporal screening</strong>: Use <code class="docutils literal notranslate"><span class="pre">logscale_screen(times,</span> <span class="pre">points_per_decade)</span></code> for manual control</p></li>
 <li><p><strong>Ensure early-time representation</strong>: Don’t neglect the first few decades</p></li>
 <li><p><strong>Weight epochs appropriately</strong>: Use temporal weights to balance early vs. late constraints</p></li>
 <li><p><strong>Check data quality</strong>: Verify that late-time error bars are realistic</p></li>

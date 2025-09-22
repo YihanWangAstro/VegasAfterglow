@@ -189,9 +189,9 @@ $(document).ready(function(){initNavTree('reverse-shock_8tpp_source.html',''); i
 <div class="line"><a id="l00088" name="l00088"></a><span class="lineno">   88</span>    Real ad_idx = adiabatic_idx(Gamma34);</div>
 <div class="line"><a id="l00089" name="l00089"></a><span class="lineno">   89</span>    Real adiabatic_cooling = compute_adiabatic_cooling_rate2(ad_idx, state.r, state.x3, state.U3_th, diff.r, diff.x3);</div>
 <div class="line"><a id="l00090" name="l00090"></a><span class="lineno">   90</span> </div>
-<div class="line"><a id="l00091" name="l00091"></a><span class="lineno">   91</span>    if (state.m3 &lt; state.m4 || diff.m4 &gt; 0) {  // reverse shock still crossing</div>
+<div class="line"><a id="l00091" name="l00091"></a><span class="lineno">   91</span>    if (state.m3 &lt; state.m4 || diff.m4 &gt; 0) { // reverse shock still crossing</div>
 <div class="line"><a id="l00092" name="l00092"></a><span class="lineno">   92</span>        Real shock_heating = compute_shock_heating_rate(Gamma34, diff.m3);</div>
-<div class="line"><a id="l00093" name="l00093"></a><span class="lineno">   93</span>        Real eps_rad = 0;  ////compute_radiative_efficiency(state.t_comv, state.Gamma, e_th, rad_rvs);</div>
+<div class="line"><a id="l00093" name="l00093"></a><span class="lineno">   93</span>        Real eps_rad = 0; ////compute_radiative_efficiency(state.t_comv, state.Gamma, e_th, rad_rvs);</div>
 <div class="line"><a id="l00094" name="l00094"></a><span class="lineno">   94</span>        return (1 - eps_rad) * shock_heating + adiabatic_cooling;</div>
 <div class="line"><a id="l00095" name="l00095"></a><span class="lineno">   95</span>    } else {</div>
 <div class="line"><a id="l00096" name="l00096"></a><span class="lineno">   96</span>        return adiabatic_cooling;</div>
@@ -357,8 +357,8 @@ $(document).ready(function(){initNavTree('reverse-shock_8tpp_source.html',''); i
 <div class="line"><a id="l00256" name="l00256"></a><span class="lineno">  256</span>    Real ad_idx = adiabatic_idx(state.Gamma);</div>
 <div class="line"><a id="l00257" name="l00257"></a><span class="lineno">  257</span>    state.U2_th = (state.Gamma - 1) * state.m2 * con::c2 / ad_idx;</div>
 <div class="line"><a id="l00258" name="l00258"></a><span class="lineno">  258</span> </div>
-<div class="line"><a id="l00259" name="l00259"></a><span class="lineno">  259</span>    state.m3 = 0;     // calculate_init_m3(Gamma4, state.Gamma, state.m2, sigma4);</div>
-<div class="line"><a id="l00260" name="l00260"></a><span class="lineno">  260</span>    state.U3_th = 0;  //(Gamma34 - 1) * state.m3* con::c2;</div>
+<div class="line"><a id="l00259" name="l00259"></a><span class="lineno">  259</span>    state.m3 = 0;    // calculate_init_m3(Gamma4, state.Gamma, state.m2, sigma4);</div>
+<div class="line"><a id="l00260" name="l00260"></a><span class="lineno">  260</span>    state.U3_th = 0; //(Gamma34 - 1) * state.m3* con::c2;</div>
 <div class="line"><a id="l00261" name="l00261"></a><span class="lineno">  261</span> </div>
 <div class="line"><a id="l00262" name="l00262"></a><span class="lineno">  262</span>    state.x3 = 0;</div>
 <div class="line"><a id="l00263" name="l00263"></a><span class="lineno">  263</span>}</div>
@@ -375,8 +375,8 @@ $(document).ready(function(){initNavTree('reverse-shock_8tpp_source.html',''); i
 <div class="line"><a id="l00274" name="l00274"></a><span class="lineno">  274</span> * &lt;!-- ************************************************************************************** --&gt;</div>
 <div class="line"><a id="l00275" name="l00275"></a><span class="lineno">  275</span> */</div>
 <div class="line"><a id="l00276" name="l00276"></a><span class="lineno">  276</span>inline Real get_post_cross_g(Real gamma_rel, Real k = 0) {</div>
-<div class="line"><a id="l00277" name="l00277"></a><span class="lineno">  277</span>    constexpr Real g_low = 1.5;   // k is the medium power law index</div>
-<div class="line"><a id="l00278" name="l00278"></a><span class="lineno">  278</span>    constexpr Real g_high = 3.5;  // Blandford-McKee limit// TODO: need to be modified for non ISM medium</div>
+<div class="line"><a id="l00277" name="l00277"></a><span class="lineno">  277</span>    constexpr Real g_low = 1.5;  // k is the medium power law index</div>
+<div class="line"><a id="l00278" name="l00278"></a><span class="lineno">  278</span>    constexpr Real g_high = 3.5; // Blandford-McKee limit// TODO: need to be modified for non ISM medium</div>
 <div class="line"><a id="l00279" name="l00279"></a><span class="lineno">  279</span>    Real p = std::sqrt(std::sqrt(std::fabs(gamma_rel - 1)));</div>
 <div class="line"><a id="l00280" name="l00280"></a><span class="lineno">  280</span>    return g_low + (g_high - g_low) * p / (1 + p);</div>
 <div class="line"><a id="l00281" name="l00281"></a><span class="lineno">  281</span>}</div>
@@ -404,9 +404,9 @@ $(document).ready(function(){initNavTree('reverse-shock_8tpp_source.html',''); i
 <div class="line"><a id="l00303" name="l00303"></a><span class="lineno">  303</span> */</div>
 <div class="line"><a id="l00304" name="l00304"></a><span class="lineno">  304</span>inline Real compute_init_comv_shell_width(Real Gamma4, Real t0, Real T) {</div>
 <div class="line"><a id="l00305" name="l00305"></a><span class="lineno">  305</span>    Real beta4 = gamma_to_beta(Gamma4);</div>
-<div class="line"><a id="l00306" name="l00306"></a><span class="lineno">  306</span>    if (t0 &lt; T) {  // pure injection</div>
+<div class="line"><a id="l00306" name="l00306"></a><span class="lineno">  306</span>    if (t0 &lt; T) { // pure injection</div>
 <div class="line"><a id="l00307" name="l00307"></a><span class="lineno">  307</span>        return Gamma4 * t0 * beta4 * con::c;</div>
-<div class="line"><a id="l00308" name="l00308"></a><span class="lineno">  308</span>    } else {  // injection+shell spreading</div>
+<div class="line"><a id="l00308" name="l00308"></a><span class="lineno">  308</span>    } else { // injection+shell spreading</div>
 <div class="line"><a id="l00309" name="l00309"></a><span class="lineno">  309</span>        Real cs = compute_sound_speed(Gamma4);</div>
 <div class="line"><a id="l00310" name="l00310"></a><span class="lineno">  310</span>        return Gamma4 * T * beta4 * con::c + cs * (t0 - T) * Gamma4;</div>
 <div class="line"><a id="l00311" name="l00311"></a><span class="lineno">  311</span>    }</div>
@@ -510,7 +510,7 @@ $(document).ready(function(){initNavTree('reverse-shock_8tpp_source.html',''); i
 <div class="line"><a id="l00409" name="l00409"></a><span class="lineno">  409</span>    using namespace boost::numeric::odeint;</div>
 <div class="line"><a id="l00410" name="l00410"></a><span class="lineno">  410</span> </div>
 <div class="line"><a id="l00411" name="l00411"></a><span class="lineno">  411</span>    typename Eqn::State state;</div>
-<div class="line"><a id="l00412" name="l00412"></a><span class="lineno">  412</span>    Real t0 = 0.1 * unit::sec;</div>
+<div class="line"><a id="l00412" name="l00412"></a><span class="lineno">  412</span>    Real t0 = 0.01 * unit::sec;</div>
 <div class="line"><a id="l00413" name="l00413"></a><span class="lineno">  413</span> </div>
 <div class="line"><a id="l00414" name="l00414"></a><span class="lineno">  414</span>    eqn.set_init_state(state, t0);</div>
 <div class="line"><a id="l00415" name="l00415"></a><span class="lineno">  415</span> </div>

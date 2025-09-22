@@ -537,20 +537,16 @@ Check the best-fit parameters and their uncertainties:
 
 .. code-block:: python
 
-    # Print best-fit parameters (maximum likelihood)
-    print("Best-fit parameters:")
-    for name, val in zip(result.labels, result.best_params):
-        print(f"  {name}: {val:.4f}")
+    top_k_data = []
+    for i in range(result.top_k_params.shape[0]):
+        row = {'Rank': i+1, 'chi^2': f"{-2*result.top_k_log_probs[i]:.2f}"}
+        for name, val in zip(result.labels, result.top_k_params[i]):
+            row[name] = f"{val:.4f}"
+        top_k_data.append(row)
 
-    # Compute median and credible intervals
-    flat_chain = result.samples.reshape(-1, result.samples.shape[-1])
-    medians = np.median(flat_chain, axis=0)
-    lower = np.percentile(flat_chain, 16, axis=0)
-    upper = np.percentile(flat_chain, 84, axis=0)
-
-    print("\nParameter constraints (median and 68% credible intervals):")
-    for i, name in enumerate(result.labels):
-        print(f"  {name}: {medians[i]:.4f} (+{upper[i]-medians[i]:.4f}, -{medians[i]-lower[i]:.4f})")
+    top_k_df = pd.DataFrame(top_k_data)
+    print("Top-k parameters:")
+    print(top_k_df.to_string(index=False))
 
 Use the best-fit parameters to generate model predictions:
 
