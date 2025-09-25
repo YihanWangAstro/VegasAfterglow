@@ -1,8 +1,8 @@
 <map id="iterate_to" name="iterate_to">
 <area shape="rect" id="Node000001" title="Helper function that advances an iterator through an array until the value exceeds the target." alt="" coords="457,63,543,88"/>
-<area shape="rect" id="Node000002" href="$classObserver.html#aa94e78ed4ae13668898afa7b7872dd5e" title="Computes the specific flux at multiple observed frequencies." alt="" coords="227,5,397,31"/>
+<area shape="rect" id="Node000002" href="$classObserver.html#a5fe3b5d16f7cf532e20a6f600485a6b6" title="Computes the specific flux at multiple observed frequencies." alt="" coords="227,5,397,31"/>
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="452,61,409,46,364,33,366,28,410,41,453,55"/>
-<area shape="rect" id="Node000003" href="$classObserver.html#a7d4d2660f62cdaced381ea05dbce681e" title="Computes the specific flux at a single observed frequency for multiple observation times." alt="" coords="243,55,381,95"/>
+<area shape="rect" id="Node000003" href="$classObserver.html#a2497e02305dbf755a7d629311f8e772d" title="Computes the specific flux at a single observed frequency for multiple observation times." alt="" coords="243,55,381,95"/>
 <area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="443,78,381,78,381,73,443,73"/>
 <area shape="rect" id="Node000004" href="$classObserver.html#a90f4a0a86f9e4a702cfc3a13e7c9c153" title="Updates the required grid points for observation." alt="" coords="215,120,409,145"/>
 <area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="453,95,410,110,366,123,364,117,409,105,452,90"/>

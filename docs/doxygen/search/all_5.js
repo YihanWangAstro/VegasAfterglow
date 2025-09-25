@@ -9,7 +9,7 @@ var searchData=
   ['fill_5fdata_5farrays_6',['fill_data_arrays',['../structMultiBandData.html#ad2ade97dd269ab683c9fc6716dc0cdea',1,'MultiBandData']]],
   ['find_5fjet_5fedge_7',['find_jet_edge',['../mesh_8h.html#a2abead26b657d59017cbee7b44fc2fca',1,'mesh.h']]],
   ['finding_20methods_8',['Root Finding Methods',['../group__RootFinding.html',1,'']]],
-  ['flux_9',['flux',['../structMultiBandModel.html#a2e5994a6b6d0b467438fe899a2cf0114',1,'MultiBandModel::flux()'],['../structFlux.html',1,'Flux'],['../classPyModel.html#a51390496a41c22c7c2dbb8838ac7a2d2',1,'PyModel::flux()'],['../classObserver.html#a2ba9427e3fe0d3f70fb4b670327c0b6d',1,'Observer::flux()']]],
+  ['flux_9',['flux',['../structMultiBandModel.html#a2e5994a6b6d0b467438fe899a2cf0114',1,'MultiBandModel::flux()'],['../structFlux.html',1,'Flux'],['../classPyModel.html#a51390496a41c22c7c2dbb8838ac7a2d2',1,'PyModel::flux()'],['../classObserver.html#a2588a9ebaec5465d6b5bd08fadadcb99',1,'Observer::flux()']]],
   ['flux_5fcgs_10',['flux_cgs',['../namespaceunit.html#ad35a8d191f16b2928b242ef566cca653',1,'unit']]],
   ['flux_5fdata_11',['flux_data',['../structMultiBandData.html#a0d8b205498be4e9a129395636a665baa',1,'MultiBandData']]],
   ['flux_5fden_5fcgs_12',['flux_den_cgs',['../namespaceunit.html#a4808047893e65d1942893de10e0a9c97',1,'unit']]],

@@ -234,7 +234,7 @@
 <span class="n">flux_err_dense</span> <span class="o">=</span> <span class="mf">0.1</span> <span class="o">*</span> <span class="n">flux_dense</span>
 
 <span class="c1"># Subsample using logarithmic screening</span>
-<span class="c1"># This selects ~50-100 representative points across 5 decades in time</span>
+<span class="c1"># This selects ~5*5=25 representative points across 5 decades in time</span>
 <span class="n">indices</span> <span class="o">=</span> <span class="n">ObsData</span><span class="o">.</span><span class="n">logscale_screen</span><span class="p">(</span><span class="n">t_dense</span><span class="p">,</span> <span class="n">num_order</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
 
 <span class="c1"># Add only the selected subset</span>
@@ -813,12 +813,12 @@
 <span class="n">nu_model</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">1e9</span><span class="p">,</span> <span class="mf">5e14</span><span class="p">,</span> <span class="mf">2e17</span><span class="p">])</span>  <span class="c1"># Radio, optical, X-ray</span>
 
 <span class="c1"># Light curves at specific frequencies</span>
-<span class="n">lc_model</span> <span class="o">=</span> <span class="n">fitter</span><span class="o">.</span><span class="n">flux_density_grid</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">best_params</span><span class="p">,</span> <span class="n">t_model</span><span class="p">,</span> <span class="n">nu_model</span><span class="p">)</span>
+<span class="n">lc_model</span> <span class="o">=</span> <span class="n">fitter</span><span class="o">.</span><span class="n">flux_density_grid</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">top_k_params</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">t_model</span><span class="p">,</span> <span class="n">nu_model</span><span class="p">)</span>
 
 <span class="c1"># Spectra at specific times</span>
 <span class="n">nu_spec</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">logspace</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
 <span class="n">times_spec</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1000</span><span class="p">,</span> <span class="mi">10000</span><span class="p">]</span>
-<span class="n">spec_model</span> <span class="o">=</span> <span class="n">fitter</span><span class="o">.</span><span class="n">flux_density_grid</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">best_params</span><span class="p">,</span> <span class="n">times_spec</span><span class="p">,</span> <span class="n">nu_spec</span><span class="p">)</span>
+<span class="n">spec_model</span> <span class="o">=</span> <span class="n">fitter</span><span class="o">.</span><span class="n">flux_density_grid</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">top_k_params</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">times_spec</span><span class="p">,</span> <span class="n">nu_spec</span><span class="p">)</span>
 
 <span class="c1"># Frequency-integrated flux (broadband light curves)</span>
 <span class="c1"># Useful for comparing with instruments like Swift/BAT, Fermi/LAT</span>
@@ -826,7 +826,7 @@
 <span class="n">nu_max_broad</span> <span class="o">=</span> <span class="mf">1e19</span>  <span class="c1"># Upper frequency bound [Hz]</span>
 <span class="n">num_freq_points</span> <span class="o">=</span> <span class="mi">5</span>  <span class="c1"># Number of frequency points for integration</span>
 
-<span class="n">flux_integrated</span> <span class="o">=</span> <span class="n">fitter</span><span class="o">.</span><span class="n">flux</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">best_params</span><span class="p">,</span> <span class="n">t_model</span><span class="p">,</span>
+<span class="n">flux_integrated</span> <span class="o">=</span> <span class="n">fitter</span><span class="o">.</span><span class="n">flux</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">top_k_params</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">t_model</span><span class="p">,</span>
                               <span class="n">nu_min_broad</span><span class="p">,</span> <span class="n">nu_max_broad</span><span class="p">,</span> <span class="n">num_freq_points</span><span class="p">)</span>
 </pre></div>
 </div>

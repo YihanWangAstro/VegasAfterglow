@@ -243,7 +243,7 @@
 <span class="c1"># Define observing frequencies (must be the same length as times)</span>
 <span class="n">bands</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">logspace</span><span class="p">(</span><span class="mi">9</span><span class="p">,</span><span class="mi">17</span><span class="p">,</span> <span class="mi">200</span><span class="p">)</span>
 
-<span class="n">results</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">flux_density</span><span class="p">(</span><span class="n">times</span><span class="p">,</span> <span class="n">bands</span><span class="p">)</span> <span class="c1">#times array could be random order</span>
+<span class="n">results</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">flux_density</span><span class="p">(</span><span class="n">times</span><span class="p">,</span> <span class="n">bands</span><span class="p">)</span> <span class="c1">#times array must be in ascending order</span>
 
 <span class="c1"># the returned results is a FluxDict object with arrays of the same shape as the input times and bands.</span>
 </pre></div>
@@ -364,7 +364,7 @@
 <span class="c1"># Define a custom density profile function</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">density</span><span class="p">(</span><span class="n">phi</span><span class="p">,</span> <span class="n">theta</span><span class="p">,</span> <span class="n">r</span><span class="p">):</span><span class="c1"># r in cm, phi and theta in radians</span>
     <span class="k">return</span> <span class="n">mp</span> <span class="c1"># n_ism =  1 cm^-3</span>
-    <span class="c1">#return whatever density profile (cm^-3) you want as a function of phi, theta, and r</span>
+    <span class="c1">#return whatever density profile (g*cm^-3) you want as a function of phi, theta, and r</span>
 
 <span class="c1"># Create a user-defined medium</span>
 <span class="n">medium</span> <span class="o">=</span> <span class="n">Medium</span><span class="p">(</span><span class="n">rho</span><span class="o">=</span><span class="n">density</span><span class="p">)</span>

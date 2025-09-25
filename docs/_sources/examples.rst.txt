@@ -97,7 +97,7 @@ Suppose you want to calculate the flux at specific time-frequency pairs (t_i, nu
     # Define observing frequencies (must be the same length as times)
     bands = np.logspace(9,17, 200)
 
-    results = model.flux_density(times, bands) #times array could be random order
+    results = model.flux_density(times, bands) #times array must be in ascending order
 
     # the returned results is a FluxDict object with arrays of the same shape as the input times and bands.
 
@@ -222,7 +222,7 @@ User-Defined Medium
     # Define a custom density profile function
     def density(phi, theta, r):# r in cm, phi and theta in radians
         return mp # n_ism =  1 cm^-3
-        #return whatever density profile (cm^-3) you want as a function of phi, theta, and r
+        #return whatever density profile (g*cm^-3) you want as a function of phi, theta, and r
 
     # Create a user-defined medium
     medium = Medium(rho=density)

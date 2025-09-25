@@ -1,9 +1,9 @@
 <map id="generate_shock_pair" name="generate_shock_pair">
-<area shape="rect" id="Node000001" title="Generates a pair of forward and reverse shocks." alt="" coords="427,42,584,67"/>
-<area shape="rect" id="Node000002" href="$classPyModel.html#a2679af43397e386a0ee6aaea0ad102d8" title=" " alt="" coords="204,5,379,45"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="413,45,378,40,379,35,414,39"/>
-<area shape="rect" id="Node000003" href="$classPyModel.html#a3440b0852a67952d09b9017ef6784fd0" title="Get comprehensive details of the shock evolution and model configuration." alt="" coords="226,70,357,95"/>
-<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="413,69,357,77,357,72,413,64"/>
-<area shape="rect" id="Node000004" href="$pybind_8cpp.html#a8c92987849ad296e28ec6c07c8e7860b" title=" " alt="" coords="5,70,156,95"/>
-<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="212,85,156,85,156,80,212,80"/>
+<area shape="rect" id="Node000001" title="Generates a pair of forward and reverse shocks." alt="" coords="461,31,619,56"/>
+<area shape="rect" id="Node000002" href="$classPyModel.html#a3debe3d2ed8ff2a53bec469a6711cfa8" title=" " alt="" coords="204,5,413,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="447,36,413,32,414,27,448,31"/>
+<area shape="rect" id="Node000003" href="$classPyModel.html#a3440b0852a67952d09b9017ef6784fd0" title="Get comprehensive details of the shock evolution and model configuration." alt="" coords="243,55,374,80"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="448,56,374,63,374,58,447,50"/>
+<area shape="rect" id="Node000004" href="$pybind_8cpp.html#a8c92987849ad296e28ec6c07c8e7860b" title=" " alt="" coords="5,55,156,80"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="229,70,156,70,156,65,229,65"/>
 </map>

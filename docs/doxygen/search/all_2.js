@@ -25,7 +25,7 @@ var searchData=
   ['compute_5fdtheta_5fdt_22',['compute_dtheta_dt',['../shock_8h.html#ac667cca4e484b343ff3988383a75cd55',1,'shock.h']]],
   ['compute_5feffective_5fgamma_23',['compute_effective_Gamma',['../shock_8h.html#a1daab7936c7a7201b192aaec9bd0a8a7',1,'shock.h']]],
   ['compute_5feffective_5fgamma_5fdgamma_24',['compute_effective_Gamma_dGamma',['../shock_8h.html#afb8d7f3634478ccf6dda85682fe4b9b8',1,'shock.h']]],
-  ['compute_5fflux_5fdensity_25',['compute_flux_density',['../classPyModel.html#a2679af43397e386a0ee6aaea0ad102d8',1,'PyModel']]],
+  ['compute_5femission_25',['compute_emission',['../classPyModel.html#a3debe3d2ed8ff2a53bec469a6711cfa8',1,'PyModel']]],
   ['compute_5fgamma_5fc_26',['compute_gamma_c',['../synchrotron_8cpp.html#a2e3e0590c05be72f722acd3b077abd16',1,'compute_gamma_c(Real t_comv, Real B, InverseComptonY const &amp;Ys, Real p):&#160;synchrotron.cpp'],['../synchrotron_8h.html#a52e34d49dd7497d65ea5261e80d615d4',1,'compute_gamma_c(Real t_com, Real B, InverseComptonY const &amp;Ys, Real p):&#160;synchrotron.cpp']]],
   ['compute_5fgamma_5ffrom_5frelative_27',['compute_Gamma_from_relative',['../shock_8h.html#a70465220fb5998b1d45d11ac165a9e67',1,'shock.h']]],
   ['compute_5fgamma_5fpeak_28',['compute_gamma_peak',['../synchrotron_8h.html#a5f1c40226e12d8dee51a76c99524fd11',1,'compute_gamma_peak(Real gamma_a, Real gamma_m, Real gamma_c):&#160;synchrotron.cpp'],['../synchrotron_8cpp.html#a5f1c40226e12d8dee51a76c99524fd11',1,'compute_gamma_peak(Real gamma_a, Real gamma_m, Real gamma_c):&#160;synchrotron.cpp'],['../synchrotron_8cpp.html#a71dd98bf97f7ca32d046bef60ebe11c4',1,'compute_gamma_peak(SynElectrons const &amp;e):&#160;synchrotron.cpp']]],

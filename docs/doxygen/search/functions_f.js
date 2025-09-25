@@ -13,9 +13,9 @@ var searchData=
   ['shell_5fthickness_5fparam_10',['shell_thickness_param',['../physics_8h.html#a0c9a7556a1af055d96c7f6e236b32e20',1,'shell_thickness_param(Real E_iso, Real n_ism, Real Gamma0, Real engine_dura):&#160;physics.cpp'],['../physics_8cpp.html#a0c9a7556a1af055d96c7f6e236b32e20',1,'shell_thickness_param(Real E_iso, Real n_ism, Real Gamma0, Real engine_dura):&#160;physics.cpp']]],
   ['shock_11',['shock',['../classShock.html#a0bdc1bfb873fe39ba4d4fcbded4666f2',1,'Shock::Shock() noexcept=default'],['../classShock.html#ac4cbdd70892414adbdb7fc01071e49e0',1,'Shock::Shock(size_t phi_size, size_t theta_size, size_t t_size, RadParams const &amp;rad_params)']]],
   ['simpleshockeqn_12',['SimpleShockEqn',['../classSimpleShockEqn.html#a2ad30f482d445461e6d230c052205763',1,'SimpleShockEqn']]],
-  ['specific_5fflux_13',['specific_flux',['../classObserver.html#aa94e78ed4ae13668898afa7b7872dd5e',1,'Observer::specific_flux(Array const &amp;t_obs, Array const &amp;nu_obs, PhotonGrid &amp;... photons)'],['../classObserver.html#ac7c7076f2141ddbf45e39b769fa2b1d6',1,'Observer::specific_flux(Array const &amp;t_obs, Real nu_obs, PhotonGrid &amp;... photons)']]],
-  ['specific_5fflux_5fseries_14',['specific_flux_series',['../classObserver.html#a7d4d2660f62cdaced381ea05dbce681e',1,'Observer']]],
-  ['spectra_15',['spectra',['../classObserver.html#a249108b1a0668a1072551a04029ac4bd',1,'Observer']]],
-  ['spectrum_16',['spectrum',['../classObserver.html#a62391baf0c84fbab7fc9c6716fc53f4c',1,'Observer']]],
+  ['specific_5fflux_13',['specific_flux',['../classObserver.html#a5fe3b5d16f7cf532e20a6f600485a6b6',1,'Observer::specific_flux(Array const &amp;t_obs, Array const &amp;nu_obs, PhotonGrid &amp;photons)'],['../classObserver.html#a5350b13ae5a6c7007ba6459923573136',1,'Observer::specific_flux(Array const &amp;t_obs, Real nu_obs, PhotonGrid &amp;photons)']]],
+  ['specific_5fflux_5fseries_14',['specific_flux_series',['../classObserver.html#a2497e02305dbf755a7d629311f8e772d',1,'Observer']]],
+  ['spectra_15',['spectra',['../classObserver.html#a18a5b8ffa6dad54050d7de094c24094b',1,'Observer']]],
+  ['spectrum_16',['spectrum',['../classObserver.html#a096a45f3fcc7cd273c2bc89199ed74a2',1,'Observer']]],
   ['stepfunc_17',['stepFunc',['../utilities_8h.html#ae8a530e53b68fc1f195dcc370652e17c',1,'utilities.h']]]
 ];

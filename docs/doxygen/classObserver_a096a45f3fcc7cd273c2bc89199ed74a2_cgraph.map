@@ -2,11 +2,11 @@
 <area shape="rect" id="Node000001" title="Computes the spectrum at a single observation time." alt="" coords="5,5,156,31"/>
 <area shape="rect" id="Node000002" href="$utilities_8h.html#ab8e81118f023df135835db8cce4f5f42" title="Returns the value of a single parameter." alt="" coords="607,31,657,56"/>
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="156,11,340,7,450,11,559,22,594,29,593,35,558,27,449,16,340,12,156,16"/>
-<area shape="rect" id="Node000003" href="$classObserver.html#a249108b1a0668a1072551a04029ac4bd" title="Computes the spectrum at multiple observation times." alt="" coords="204,31,341,56"/>
+<area shape="rect" id="Node000003" href="$classObserver.html#a18a5b8ffa6dad54050d7de094c24094b" title="Computes the spectrum at multiple observation times." alt="" coords="204,31,341,56"/>
 <area shape="poly" id="edge3_Node000001_Node000003" title=" " alt="" coords="157,25,190,30,190,35,156,31"/>
 <area shape="poly" id="edge2_Node000002_Node000002" title=" " alt="" coords="605,32,600,22,603,13,614,6,632,4,654,7,663,16,659,20,651,12,632,9,616,11,607,16,605,22,610,29"/>
 <area shape="poly" id="edge4_Node000003_Node000002" title=" " alt="" coords="342,41,593,41,593,46,342,46"/>
-<area shape="rect" id="Node000004" href="$classObserver.html#ac7c7076f2141ddbf45e39b769fa2b1d6" title="Computes the specific flux at a single observed frequency." alt="" coords="389,105,559,131"/>
+<area shape="rect" id="Node000004" href="$classObserver.html#a5350b13ae5a6c7007ba6459923573136" title="Computes the specific flux at a single observed frequency." alt="" coords="389,105,559,131"/>
 <area shape="poly" id="edge5_Node000003_Node000004" title=" " alt="" coords="309,54,427,98,425,103,307,59"/>
 <area shape="poly" id="edge6_Node000004_Node000002" title=" " alt="" coords="501,103,593,58,595,63,503,108"/>
 <area shape="poly" id="edge7_Node000004_Node000004" title=" " alt="" coords="447,107,442,97,445,87,456,81,474,79,496,82,505,91,501,95,493,87,474,84,458,86,449,91,447,96,452,104"/>
