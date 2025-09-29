@@ -11,7 +11,7 @@ var classObserver =
     [ "spectrum", "classObserver.html#a096a45f3fcc7cd273c2bc89199ed74a2", null ],
     [ "update_required", "classObserver.html#a90f4a0a86f9e4a702cfc3a13e7c9c153", null ],
     [ "lg2_doppler", "classObserver.html#a19627eca15595c8eb01d1e1ace2ffb2a", null ],
-    [ "lg2_emission_area", "classObserver.html#a0c30abbdbb3ba34c81883d5c417f6163", null ],
+    [ "lg2_geom_factor", "classObserver.html#ac88ad26be273453fc4accf474b7d481c", null ],
     [ "lg2_t", "classObserver.html#aa4f3a6cbcc458b937c75befa86e04e2d", null ],
     [ "time", "classObserver.html#a7b83dbbff538d3f079f8e662d3686ada", null ]
 ];

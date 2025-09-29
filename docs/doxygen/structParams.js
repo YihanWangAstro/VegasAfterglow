@@ -12,6 +12,7 @@ var structParams =
     [ "Gamma0_w", "structParams.html#a41358abbe69879f6be62829b80d8663d", null ],
     [ "k_e", "structParams.html#a59abc96da494cc27e1d99161269a55bc", null ],
     [ "k_g", "structParams.html#a9a3a4d2ddb3d56fdaebe27d2e0723752", null ],
+    [ "k_m", "structParams.html#ae3335cd735513d6053e804c37cc88d00", null ],
     [ "L0", "structParams.html#a134c673110781587acce1747b730dc30", null ],
     [ "n0", "structParams.html#a0fee422ac0a42542a7854a8777bc805a", null ],
     [ "n_ism", "structParams.html#aa37255854273f569ab5d2ea86d6ca65b", null ],

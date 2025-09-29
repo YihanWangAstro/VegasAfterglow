@@ -17,5 +17,5 @@ var pymodel_8h =
     [ "PyStepPowerLawJet", "pymodel_8h.html#a5a3369eb7b57f229aa810843dbe15b7e", null ],
     [ "PyTophatJet", "pymodel_8h.html#af1f230ff03a5fe38e4b897e3dc219782", null ],
     [ "PyTwoComponentJet", "pymodel_8h.html#ab9df94d937b16f949454e5e8c2f2caf4", null ],
-    [ "PyWind", "pymodel_8h.html#adbbbb3482468157a7048ed754a91a4b9", null ]
+    [ "PyWind", "pymodel_8h.html#ab0bec9da85214d0cc3031b2b87fa9449", null ]
 ];

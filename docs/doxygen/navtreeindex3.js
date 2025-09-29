@@ -1,5 +1,9 @@
 var NAVTREEINDEX3 =
 {
+"structSimpleState.html#ae6536e3a3e70a7c9cd6762554aae61c5":[3,0,33,0],
+"structSimpleState.html#ae88e04c719f20327e92c6502362922eb":[3,0,33,3],
+"structSimpleState.html#af01f2ad0f1a0cb2ef640adc66718ed6a":[3,0,33,6],
+"structSynElectrons.html":[3,0,34],
 "structSynElectrons.html#a0a1a820a33992088b5f9f324cd781d03":[3,0,34,7],
 "structSynElectrons.html#a25948b39422b587f0048fc5899c120c2":[3,0,34,8],
 "structSynElectrons.html#a4cfe5375f620c71ed77acdcd743a2639":[3,0,34,5],

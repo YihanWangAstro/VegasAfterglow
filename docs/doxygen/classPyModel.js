@@ -6,5 +6,8 @@ var classPyModel =
     [ "flux", "classPyModel.html#a51390496a41c22c7c2dbb8838ac7a2d2", null ],
     [ "flux_density", "classPyModel.html#abf7e6762cb8ca1c8ff429e0a8a7592ad", null ],
     [ "flux_density_exposures", "classPyModel.html#a4337b83ce5738c04db9a8dc1b97ba868", null ],
-    [ "flux_density_grid", "classPyModel.html#a7aaf63a15a01165e3c5ad8d935f30414", null ]
+    [ "flux_density_grid", "classPyModel.html#a7aaf63a15a01165e3c5ad8d935f30414", null ],
+    [ "jet_E_iso", "classPyModel.html#ae38662b3ca4b9c523ee46752efcfb9c8", null ],
+    [ "jet_Gamma0", "classPyModel.html#aaab7223dd59e1e5eed5318014b369775", null ],
+    [ "medium", "classPyModel.html#ada69b20b7934062af2c807213a76d4ce", null ]
 ];

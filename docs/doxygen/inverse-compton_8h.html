@@ -477,7 +477,7 @@ template&lt;<a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5
 <div class="line"><span class="lineno">  371</span>}</div>
 <div class="ttc" id="ainverse-compton_8h_html_ad89f660f1954e9c12551a19840d656bb"><div class="ttname"><a href="inverse-compton_8h.html#ad89f660f1954e9c12551a19840d656bb">eta_rad</a></div><div class="ttdeci">Real eta_rad(Real gamma_m, Real gamma_c, Real p)</div><div class="ttdef"><b>Definition</b> <a href="inverse-compton_8h_source.html#l00353">inverse-compton.h:353</a></div></div>
 <div class="ttc" id="anamespacecon_html_af12a6df01bfe61fa034307dfcaa1fe7f"><div class="ttname"><a href="namespacecon.html#af12a6df01bfe61fa034307dfcaa1fe7f">con::e</a></div><div class="ttdeci">constexpr Real e</div><div class="ttdoc">Elementary charge in code units.</div><div class="ttdef"><b>Definition</b> <a href="macros_8h_source.html#l00092">macros.h:92</a></div></div>
-<div class="ttc" id="asynchrotron_8h_html_a52e34d49dd7497d65ea5261e80d615d4"><div class="ttname"><a href="synchrotron_8h.html#a52e34d49dd7497d65ea5261e80d615d4">compute_gamma_c</a></div><div class="ttdeci">Real compute_gamma_c(Real t_com, Real B, InverseComptonY const &amp;Ys, Real p)</div><div class="ttdoc">Calculates cooling Lorentz factor based on comoving time, magnetic field, and IC parameters.</div><div class="ttdef"><b>Definition</b> <a href="synchrotron_8cpp_source.html#l00479">synchrotron.cpp:479</a></div></div>
+<div class="ttc" id="asynchrotron_8h_html_a52e34d49dd7497d65ea5261e80d615d4"><div class="ttname"><a href="synchrotron_8h.html#a52e34d49dd7497d65ea5261e80d615d4">compute_gamma_c</a></div><div class="ttdeci">Real compute_gamma_c(Real t_com, Real B, InverseComptonY const &amp;Ys, Real p)</div><div class="ttdoc">Calculates cooling Lorentz factor based on comoving time, magnetic field, and IC parameters.</div><div class="ttdef"><b>Definition</b> <a href="synchrotron_8cpp_source.html#l00569">synchrotron.cpp:569</a></div></div>
 </div><!-- fragment --><div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -760,78 +760,81 @@ template&lt;<a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5
 <div class="line"><span class="lineno">  410</span>}</div>
 <div class="ttc" id="ainverse-compton_8h_html_ac0e54b69e936d960013b8cc6ddd9d329"><div class="ttname"><a href="inverse-compton_8h.html#ac0e54b69e936d960013b8cc6ddd9d329">compute_Thomson_Y</a></div><div class="ttdeci">Real compute_Thomson_Y(Real B, Real t_com, Real eps_e, Real eps_B, Electrons const &amp;e)</div><div class="ttdef"><b>Definition</b> <a href="inverse-compton_8h_source.html#l00358">inverse-compton.h:358</a></div></div>
 <div class="ttc" id="astructInverseComptonY_html"><div class="ttname"><a href="structInverseComptonY.html">InverseComptonY</a></div><div class="ttdoc">Handles Inverse Compton Y parameter calculations and related threshold values.</div><div class="ttdef"><b>Definition</b> <a href="inverse-compton_8h_source.html#l00024">inverse-compton.h:24</a></div></div>
-<div class="ttc" id="asynchrotron_8h_html_a331f545228d2b18e84e0252510e295f8"><div class="ttname"><a href="synchrotron_8h.html#a331f545228d2b18e84e0252510e295f8">generate_syn_photons</a></div><div class="ttdeci">SynPhotonGrid generate_syn_photons(Shock const &amp;shock, SynElectronGrid const &amp;electrons)</div><div class="ttdoc">Creates and returns a new photon grid based on shock and electron grid.</div><div class="ttdef"><b>Definition</b> <a href="synchrotron_8cpp_source.html#l00662">synchrotron.cpp:662</a></div></div>
-<div class="ttc" id="asynchrotron_8h_html_af56f9b4417a5f3e717102da3e81a7d37"><div class="ttname"><a href="synchrotron_8h.html#af56f9b4417a5f3e717102da3e81a7d37">update_electrons_4Y</a></div><div class="ttdeci">void update_electrons_4Y(SynElectronGrid &amp;electrons, Shock const &amp;shock)</div><div class="ttdoc">Updates electron properties throughout the grid based on shock parameters and IC Y values.</div><div class="ttdef"><b>Definition</b> <a href="synchrotron_8cpp_source.html#l00570">synchrotron.cpp:570</a></div></div>
+<div class="ttc" id="asynchrotron_8h_html_a331f545228d2b18e84e0252510e295f8"><div class="ttname"><a href="synchrotron_8h.html#a331f545228d2b18e84e0252510e295f8">generate_syn_photons</a></div><div class="ttdeci">SynPhotonGrid generate_syn_photons(Shock const &amp;shock, SynElectronGrid const &amp;electrons)</div><div class="ttdoc">Creates and returns a new photon grid based on shock and electron grid.</div><div class="ttdef"><b>Definition</b> <a href="synchrotron_8cpp_source.html#l00775">synchrotron.cpp:775</a></div></div>
+<div class="ttc" id="asynchrotron_8h_html_af56f9b4417a5f3e717102da3e81a7d37"><div class="ttname"><a href="synchrotron_8h.html#af56f9b4417a5f3e717102da3e81a7d37">update_electrons_4Y</a></div><div class="ttdeci">void update_electrons_4Y(SynElectronGrid &amp;electrons, Shock const &amp;shock)</div><div class="ttdoc">Updates electron properties throughout the grid based on shock parameters and IC Y values.</div><div class="ttdef"><b>Definition</b> <a href="synchrotron_8cpp_source.html#l00683">synchrotron.cpp:683</a></div></div>
 </div><!-- fragment --><div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="inverse-compton_8h_ab62ca35731dffb2c89ee00c15bd1e1ee_cgraph.png" border="0" usemap="#ainverse-compton_8h_ab62ca35731dffb2c89ee00c15bd1e1ee_cgraph" alt=""/></div>
 <map name="ainverse-compton_8h_ab62ca35731dffb2c89ee00c15bd1e1ee_cgraph" id="ainverse-compton_8h_ab62ca35731dffb2c89ee00c15bd1e1ee_cgraph">
-<area shape="rect" title="Applies Klein&#45;Nishina cooling to electrons based on photon distribution." alt="" coords="5,537,100,562"/>
-<area shape="rect" href="inverse-compton_8h.html#ac0e54b69e936d960013b8cc6ddd9d329" title=" " alt="" coords="148,537,309,562"/>
-<area shape="poly" title=" " alt="" coords="100,547,135,547,135,552,100,552"/>
-<area shape="rect" href="synchrotron_8cpp.html#a331f545228d2b18e84e0252510e295f8" title="Creates and returns a new photon grid based on shock and electron grid." alt="" coords="854,662,1023,688"/>
-<area shape="poly" title=" " alt="" coords="101,560,149,571,369,616,591,647,721,660,840,668,840,673,721,665,590,652,368,621,147,576,100,565"/>
-<area shape="rect" href="synchrotron_8cpp.html#af56f9b4417a5f3e717102da3e81a7d37" title="Updates electron properties throughout the grid based on shock parameters and IC Y values." alt="" coords="150,349,307,374"/>
-<area shape="poly" title=" " alt="" coords="64,535,204,383,208,387,68,539"/>
-<area shape="rect" href="synchrotron_8cpp.html#a2e3e0590c05be72f722acd3b077abd16" title="Calculates cooling Lorentz factor based on comoving time, magnetic field, and IC parameters." alt="" coords="375,494,525,520"/>
-<area shape="poly" title=" " alt="" coords="295,535,370,520,371,525,296,540"/>
-<area shape="rect" href="inverse-compton_8h.html#ad89f660f1954e9c12551a19840d656bb" title=" " alt="" coords="655,612,726,637"/>
-<area shape="poly" title=" " alt="" coords="309,560,642,614,641,619,308,565"/>
-<area shape="rect" href="structInverseComptonY.html#a05b76b4d84f50b82728333a42362fc0f" title="Returns the Thomson Y parameter from the provided InverseComptonY object." alt="" coords="591,487,791,527"/>
-<area shape="poly" title=" " alt="" coords="525,504,577,504,577,510,525,510"/>
-<area shape="rect" href="structInverseComptonY.html#a9a35d3af9bd23acdde9d09d38ee116eb" title="Calculates the effective Y parameter at a specific Lorentz factor and spectral index." alt="" coords="591,423,791,463"/>
-<area shape="poly" title=" " alt="" coords="498,492,601,464,602,469,500,497"/>
-<area shape="rect" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42" title="Returns the value of a single parameter." alt="" coords="1444,360,1495,385"/>
-<area shape="poly" title=" " alt="" coords="500,517,692,563,821,589,958,612,1094,629,1219,634,1274,631,1322,624,1363,612,1394,596,1415,576,1432,553,1444,527,1453,499,1463,444,1466,399,1471,400,1469,445,1459,500,1449,529,1436,556,1419,580,1398,600,1365,617,1324,629,1274,636,1219,639,1094,634,957,618,820,594,691,568,499,522"/>
-<area shape="rect" href="structInverseComptonY.html#ae483ec2ba4108fbf96fb15c3e978c0b3" title="Calculates the effective Y parameter for a given Lorentz factor and spectral index." alt="" coords="839,510,1039,550"/>
-<area shape="poly" title=" " alt="" coords="756,461,792,473,874,503,872,508,790,478,754,466"/>
-<area shape="rect" href="utilities_8h.html#a4520a27a10a2aef33c99ad8c679da404" title="Fast approximation of a raised to the power of b." alt="" coords="1129,460,1211,485"/>
-<area shape="poly" title=" " alt="" coords="1019,507,1115,483,1116,488,1021,512"/>
-<area shape="rect" href="utilities_8h.html#ae490b13fdcc1b917ecdd08c0cecf3556" title="Computes a^(4/3)" alt="" coords="1316,561,1381,586"/>
-<area shape="poly" title=" " alt="" coords="1039,538,1303,566,1302,572,1039,543"/>
-<area shape="rect" href="utilities_8h.html#afc584c30c352192de6847b1f4b8caf0e" title="Fast approximation of 2 raised to a power." alt="" coords="1305,410,1392,436"/>
-<area shape="poly" title=" " alt="" coords="1210,459,1291,436,1293,441,1212,464"/>
-<area shape="poly" title=" " alt="" coords="1200,483,1240,497,1291,509,1345,510,1370,505,1395,494,1418,475,1437,449,1459,397,1464,399,1441,452,1422,478,1397,499,1372,510,1345,515,1290,514,1239,503,1198,488"/>
-<area shape="rect" href="utilities_8h.html#afe0a1b1b7509ac4df83fcc0e510f281b" title="Fast approximation of the base&#45;2 logarithm." alt="" coords="1307,460,1390,485"/>
-<area shape="poly" title=" " alt="" coords="1211,470,1293,470,1293,475,1211,475"/>
-<area shape="poly" title=" " alt="" coords="1379,408,1430,386,1432,391,1381,413"/>
-<area shape="poly" title=" " alt="" coords="1448,361,1444,351,1446,342,1455,335,1469,333,1486,337,1493,345,1489,348,1483,341,1469,338,1457,340,1451,345,1450,351,1453,359"/>
-<area shape="poly" title=" " alt="" coords="1375,457,1394,445,1423,420,1447,394,1451,398,1427,424,1398,449,1378,462"/>
-<area shape="poly" title=" " alt="" coords="1372,559,1394,540,1418,505,1436,466,1459,398,1464,399,1441,468,1422,507,1398,544,1375,563"/>
-<area shape="poly" title=" " alt="" coords="705,609,837,495,911,474,986,463,1057,461,1116,464,1116,469,1057,467,987,469,912,479,840,500,709,613"/>
-<area shape="poly" title=" " alt="" coords="988,685,1073,701,1125,706,1181,708,1238,703,1294,692,1347,672,1394,641,1407,625,1419,599,1439,532,1454,458,1462,398,1468,399,1459,459,1444,533,1424,601,1412,628,1398,645,1349,676,1296,697,1239,709,1181,713,1125,712,1072,706,987,690"/>
-<area shape="poly" title=" " alt="" coords="901,664,893,654,897,644,913,638,939,636,971,640,983,649,980,653,969,645,939,641,914,643,901,648,898,653,905,661"/>
-<area shape="poly" title=" " alt="" coords="246,373,295,413,359,458,409,486,407,491,356,463,292,417,243,377"/>
-<area shape="poly" title=" " alt="" coords="257,372,303,392,358,410,470,429,577,438,577,443,469,434,357,415,301,397,255,377"/>
-<area shape="poly" title=" " alt="" coords="255,347,302,327,357,309,449,287,521,275,595,270,689,268,1171,268,1237,272,1287,283,1336,301,1397,327,1440,350,1437,355,1395,332,1334,306,1286,288,1236,277,1171,274,689,274,595,275,522,280,450,292,358,314,304,332,257,352"/>
-<area shape="rect" href="synchrotron_8cpp.html#ab03558b02ba5a002aec91d7f02e35cb9" title=" " alt="" coords="848,182,1029,208"/>
-<area shape="poly" title=" " alt="" coords="238,347,285,298,319,271,356,250,417,228,480,211,545,198,609,190,731,183,834,184,834,190,731,188,610,195,546,204,482,216,419,233,358,255,322,276,289,302,242,351"/>
-<area shape="rect" href="synchrotron_8cpp.html#a1c5ae0a77c927eb60684c180ba559567" title=" " alt="" coords="357,376,543,401"/>
-<area shape="poly" title=" " alt="" coords="308,369,344,373,343,378,307,374"/>
-<area shape="rect" href="synchrotron_8cpp.html#ad0ce654aca1c62f43ae108ca8772ed0f" title=" " alt="" coords="371,324,529,349"/>
-<area shape="poly" title=" " alt="" coords="307,350,357,344,357,350,308,355"/>
-<area shape="rect" href="synchrotron_8cpp.html#a5813eed02877ed5f35a34e929a68d263" title=" " alt="" coords="1099,6,1241,32"/>
-<area shape="poly" title=" " alt="" coords="235,347,279,280,314,241,356,208,449,158,548,118,650,86,751,62,848,44,939,31,1085,19,1085,24,939,37,849,49,752,67,651,91,550,123,451,163,359,212,318,245,283,283,239,350"/>
-<area shape="poly" title=" " alt="" coords="956,206,995,245,1041,295,1105,377,1155,447,1150,450,1101,380,1037,298,991,249,952,210"/>
-<area shape="poly" title=" " alt="" coords="968,180,1049,151,1102,137,1161,126,1222,121,1284,125,1343,139,1371,152,1398,168,1417,185,1433,207,1455,256,1466,305,1470,346,1465,347,1461,306,1450,257,1429,210,1414,189,1394,172,1369,156,1341,144,1283,130,1222,126,1162,131,1103,142,1050,156,970,185"/>
-<area shape="rect" href="synchrotron_8cpp.html#a936bfaa522ec8295a21d253e5453188d" title="Calculates synchrotron frequency for a given Lorentz factor and magnetic field." alt="" coords="1099,208,1241,233"/>
-<area shape="poly" title=" " alt="" coords="1030,202,1085,209,1085,214,1029,208"/>
-<area shape="rect" href="synchrotron_8cpp.html#a85433be4a0da2f510240a603da8f7dff" title=" " alt="" coords="1087,56,1253,81"/>
-<area shape="poly" title=" " alt="" coords="956,180,1012,141,1085,98,1117,84,1120,89,1088,103,1015,146,959,184"/>
-<area shape="rect" href="utilities_8h.html#a29a716285d00743072d357c4a64a7f85" title="Finds the root of a function using the bisection method." alt="" coords="1301,182,1396,208"/>
-<area shape="poly" title=" " alt="" coords="1029,192,1288,192,1288,198,1029,198"/>
-<area shape="poly" title=" " alt="" coords="1363,206,1398,251,1457,346,1452,349,1394,254,1359,210"/>
-<area shape="poly" title=" " alt="" coords="471,399,524,435,592,473,608,480,606,485,589,478,521,439,468,404"/>
-<area shape="poly" title=" " alt="" coords="507,399,589,417,588,423,506,404"/>
-<area shape="poly" title=" " alt="" coords="543,384,1430,370,1430,376,543,390"/>
-<area shape="rect" href="synchrotron_8cpp.html#a35361f36f8d73e95dffabdc7cb0f3177" title=" " alt="" coords="859,308,1018,348"/>
-<area shape="poly" title=" " alt="" coords="529,333,845,327,845,333,529,338"/>
-<area shape="poly" title=" " alt="" coords="1018,325,1192,331,1295,339,1396,351,1431,359,1430,364,1396,356,1294,344,1192,336,1018,331"/>
-<area shape="poly" title=" " alt="" coords="1242,4,1281,3,1322,7,1363,19,1398,41,1414,64,1428,97,1449,183,1462,274,1469,346,1463,346,1457,275,1443,184,1423,98,1409,66,1394,45,1360,24,1321,12,1281,8,1242,10"/>
-<area shape="rect" href="synchrotron_8cpp.html#a59b47fc71384572d072692740171988e" title=" " alt="" coords="1321,56,1377,81"/>
-<area shape="poly" title=" " alt="" coords="1217,29,1308,55,1307,60,1216,34"/>
-<area shape="poly" title=" " alt="" coords="1377,79,1398,99,1417,130,1432,163,1453,232,1465,296,1470,346,1464,346,1459,297,1448,234,1427,165,1412,132,1394,102,1373,83"/>
+<area shape="rect" title="Applies Klein&#45;Nishina cooling to electrons based on photon distribution." alt="" coords="5,548,100,574"/>
+<area shape="rect" href="inverse-compton_8h.html#ac0e54b69e936d960013b8cc6ddd9d329" title=" " alt="" coords="148,548,309,574"/>
+<area shape="poly" title=" " alt="" coords="100,558,135,558,135,564,100,564"/>
+<area shape="rect" href="synchrotron_8cpp.html#a331f545228d2b18e84e0252510e295f8" title="Creates and returns a new photon grid based on shock and electron grid." alt="" coords="854,679,1023,704"/>
+<area shape="poly" title=" " alt="" coords="96,571,213,604,358,637,488,657,619,671,840,686,840,691,618,676,487,662,357,642,212,609,95,576"/>
+<area shape="rect" href="synchrotron_8cpp.html#af56f9b4417a5f3e717102da3e81a7d37" title="Updates electron properties throughout the grid based on shock parameters and IC Y values." alt="" coords="150,387,307,412"/>
+<area shape="poly" title=" " alt="" coords="66,546,202,420,205,424,70,550"/>
+<area shape="rect" href="synchrotron_8cpp.html#a2e3e0590c05be72f722acd3b077abd16" title="Calculates cooling Lorentz factor based on comoving time, magnetic field, and IC parameters." alt="" coords="375,468,525,494"/>
+<area shape="poly" title=" " alt="" coords="264,546,400,496,402,501,266,551"/>
+<area shape="rect" href="inverse-compton_8h.html#ad89f660f1954e9c12551a19840d656bb" title=" " alt="" coords="655,627,726,652"/>
+<area shape="poly" title=" " alt="" coords="259,571,305,589,358,605,435,619,513,628,642,636,641,641,512,634,434,624,357,610,303,594,257,576"/>
+<area shape="rect" href="structInverseComptonY.html#a05b76b4d84f50b82728333a42362fc0f" title="Returns the Thomson Y parameter from the provided InverseComptonY object." alt="" coords="591,461,791,501"/>
+<area shape="poly" title=" " alt="" coords="525,478,577,478,577,484,525,484"/>
+<area shape="rect" href="structInverseComptonY.html#a9a35d3af9bd23acdde9d09d38ee116eb" title="Calculates the effective Y parameter at a specific Lorentz factor and spectral index." alt="" coords="591,397,791,437"/>
+<area shape="poly" title=" " alt="" coords="498,466,601,438,602,443,500,471"/>
+<area shape="rect" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42" title="Returns the value of a single parameter." alt="" coords="1436,328,1487,354"/>
+<area shape="poly" title=" " alt="" coords="496,491,684,541,813,571,950,598,1086,617,1211,625,1266,623,1315,616,1355,605,1386,588,1399,574,1410,551,1430,490,1445,422,1454,367,1459,368,1450,423,1435,491,1415,553,1403,577,1390,592,1357,610,1316,622,1267,628,1211,630,1086,622,949,603,812,576,683,546,494,496"/>
+<area shape="rect" href="structInverseComptonY.html#ae483ec2ba4108fbf96fb15c3e978c0b3" title="Calculates the effective Y parameter for a given Lorentz factor and spectral index." alt="" coords="839,448,1039,488"/>
+<area shape="poly" title=" " alt="" coords="790,434,828,442,827,447,788,440"/>
+<area shape="rect" href="utilities_8h.html#a4520a27a10a2aef33c99ad8c679da404" title="Fast approximation of a raised to the power of b." alt="" coords="1129,398,1211,423"/>
+<area shape="poly" title=" " alt="" coords="1019,445,1115,421,1116,426,1021,450"/>
+<area shape="rect" href="utilities_8h.html#ae490b13fdcc1b917ecdd08c0cecf3556" title="Computes a^(4/3)" alt="" coords="1312,452,1377,478"/>
+<area shape="poly" title=" " alt="" coords="1039,464,1298,463,1298,468,1039,470"/>
+<area shape="rect" href="utilities_8h.html#afc584c30c352192de6847b1f4b8caf0e" title="Fast approximation of 2 raised to a power." alt="" coords="1301,354,1388,379"/>
+<area shape="poly" title=" " alt="" coords="1210,398,1287,378,1289,383,1211,403"/>
+<area shape="poly" title=" " alt="" coords="1210,395,1252,376,1265,366,1275,356,1285,346,1300,338,1332,331,1364,328,1422,331,1422,337,1364,333,1333,336,1302,343,1288,351,1278,360,1269,370,1255,381,1212,400"/>
+<area shape="rect" href="utilities_8h.html#afe0a1b1b7509ac4df83fcc0e510f281b" title="Fast approximation of the base&#45;2 logarithm." alt="" coords="1303,403,1386,428"/>
+<area shape="poly" title=" " alt="" coords="1211,409,1289,411,1289,417,1211,414"/>
+<area shape="poly" title=" " alt="" coords="1388,354,1422,347,1423,352,1389,359"/>
+<area shape="poly" title=" " alt="" coords="1441,329,1437,320,1439,310,1448,304,1461,302,1477,305,1484,313,1480,317,1475,310,1461,307,1450,309,1444,313,1443,319,1446,327"/>
+<area shape="poly" title=" " alt="" coords="1367,400,1387,388,1429,359,1432,364,1389,392,1369,405"/>
+<area shape="poly" title=" " alt="" coords="1370,450,1386,438,1419,401,1444,364,1448,367,1423,404,1390,442,1373,454"/>
+<area shape="poly" title=" " alt="" coords="701,625,788,511,801,489,808,469,818,450,837,433,871,416,908,404,983,392,1055,392,1116,398,1115,403,1055,397,984,397,909,409,873,421,840,438,822,453,813,471,805,491,793,514,705,628"/>
+<area shape="poly" title=" " alt="" coords="1006,702,1091,710,1141,711,1193,708,1245,700,1296,686,1344,664,1386,634,1400,615,1412,587,1433,512,1447,431,1455,367,1460,367,1452,432,1438,513,1417,588,1405,618,1390,637,1346,669,1298,691,1246,705,1193,713,1141,716,1091,716,1005,707"/>
+<area shape="poly" title=" " alt="" coords="901,681,893,671,897,661,913,654,939,652,971,656,983,666,980,670,969,661,939,658,914,660,901,664,898,670,905,677"/>
+<area shape="poly" title=" " alt="" coords="263,410,358,446,399,461,397,466,356,451,261,415"/>
+<area shape="poly" title=" " alt="" coords="308,394,419,393,543,397,577,400,577,405,543,402,419,399,308,400"/>
+<area shape="poly" title=" " alt="" coords="232,386,247,346,273,291,309,230,355,175,435,100,470,71,505,47,542,29,584,15,632,7,689,5,1171,5,1237,3,1291,5,1315,10,1340,20,1364,35,1390,58,1403,77,1415,105,1436,176,1459,314,1454,315,1430,178,1410,107,1399,80,1386,61,1361,40,1337,24,1314,15,1290,10,1237,9,1171,10,689,10,633,13,585,21,544,33,508,52,473,75,438,104,359,179,314,233,278,293,252,349,237,388"/>
+<area shape="rect" href="synchrotron_8cpp.html#ab03558b02ba5a002aec91d7f02e35cb9" title=" " alt="" coords="848,247,1029,272"/>
+<area shape="poly" title=" " alt="" coords="294,384,859,272,860,278,295,389"/>
+<area shape="rect" href="synchrotron_8cpp.html#a1c5ae0a77c927eb60684c180ba559567" title=" " alt="" coords="357,412,543,438"/>
+<area shape="poly" title=" " alt="" coords="308,406,344,410,343,415,307,411"/>
+<area shape="rect" href="synchrotron_8cpp.html#ad0ce654aca1c62f43ae108ca8772ed0f" title=" " alt="" coords="371,190,529,215"/>
+<area shape="poly" title=" " alt="" coords="238,385,287,330,356,263,414,220,417,225,359,267,291,334,242,389"/>
+<area shape="rect" href="synchrotron_8cpp.html#a5813eed02877ed5f35a34e929a68d263" title=" " alt="" coords="1099,554,1241,579"/>
+<area shape="poly" title=" " alt="" coords="243,411,289,458,322,483,358,502,455,535,555,558,657,573,758,581,853,584,942,582,1084,573,1085,579,942,588,853,589,757,586,657,578,554,563,453,540,356,507,319,487,286,462,239,414"/>
+<area shape="poly" title=" " alt="" coords="961,270,1140,388,1137,392,958,275"/>
+<area shape="poly" title=" " alt="" coords="951,245,1006,198,1044,172,1086,152,1170,118,1208,104,1243,95,1278,91,1313,95,1350,108,1390,132,1410,150,1426,172,1448,222,1459,272,1462,314,1457,314,1453,273,1443,223,1421,175,1406,154,1386,136,1348,113,1312,101,1278,97,1244,100,1209,109,1172,123,1088,157,1047,177,1009,202,954,249"/>
+<area shape="rect" href="synchrotron_8cpp.html#a936bfaa522ec8295a21d253e5453188d" title="Calculates synchrotron frequency for a given Lorentz factor and magnetic field." alt="" coords="1099,247,1241,272"/>
+<area shape="poly" title=" " alt="" coords="1030,257,1085,257,1085,262,1030,262"/>
+<area shape="rect" href="synchrotron_8cpp.html#a85433be4a0da2f510240a603da8f7dff" title=" " alt="" coords="1087,296,1253,322"/>
+<area shape="poly" title=" " alt="" coords="999,270,1097,291,1096,296,998,275"/>
+<area shape="rect" href="utilities_8h.html#a0becc9a5c35cc2648c3d65c88790caf8" title="Computes a^(5/2)" alt="" coords="1312,147,1377,172"/>
+<area shape="poly" title=" " alt="" coords="958,244,1014,212,1049,196,1086,182,1142,169,1200,162,1298,156,1298,162,1200,167,1143,175,1087,187,1051,201,1016,217,961,249"/>
+<area shape="rect" href="utilities_8h.html#a29a716285d00743072d357c4a64a7f85" title="Finds the root of a function using the bisection method." alt="" coords="1123,198,1217,223"/>
+<area shape="poly" title=" " alt="" coords="998,244,1109,220,1110,226,999,249"/>
+<area shape="poly" title=" " alt="" coords="1367,170,1390,191,1412,222,1429,256,1454,314,1449,316,1425,258,1407,225,1386,195,1364,174"/>
+<area shape="poly" title=" " alt="" coords="1218,206,1256,207,1301,213,1347,224,1389,244,1409,259,1426,277,1450,314,1446,317,1421,280,1405,263,1387,249,1345,230,1300,218,1256,213,1217,211"/>
+<area shape="poly" title=" " alt="" coords="506,435,592,455,590,460,505,440"/>
+<area shape="poly" title=" " alt="" coords="543,419,577,418,577,423,543,424"/>
+<area shape="poly" title=" " alt="" coords="487,410,536,395,590,382,690,367,776,360,922,357,1068,354,1153,346,1253,330,1276,323,1301,316,1345,311,1388,316,1424,324,1422,329,1388,321,1345,317,1302,321,1278,328,1254,335,1154,351,1068,360,922,362,776,365,691,372,591,388,537,400,489,415"/>
+<area shape="rect" href="synchrotron_8cpp.html#a35361f36f8d73e95dffabdc7cb0f3177" title=" " alt="" coords="859,81,1018,121"/>
+<area shape="poly" title=" " alt="" coords="512,187,845,117,846,123,513,192"/>
+<area shape="poly" title=" " alt="" coords="995,78,1079,56,1129,48,1183,43,1237,43,1291,51,1343,68,1390,95,1403,110,1415,133,1435,193,1459,314,1454,315,1429,194,1410,135,1398,113,1386,99,1341,73,1290,56,1237,49,1183,48,1130,53,1080,61,996,83"/>
+<area shape="poly" title=" " alt="" coords="1241,553,1316,529,1353,511,1386,487,1410,459,1429,427,1451,366,1456,368,1434,429,1415,462,1390,491,1356,515,1318,534,1243,558"/>
+<area shape="rect" href="synchrotron_8cpp.html#a59b47fc71384572d072692740171988e" title=" " alt="" coords="1317,554,1373,579"/>
+<area shape="poly" title=" " alt="" coords="1242,564,1303,564,1303,569,1242,569"/>
+<area shape="poly" title=" " alt="" coords="1366,551,1386,533,1411,490,1430,445,1453,366,1458,368,1435,447,1416,493,1390,536,1370,555"/>
 </map>
 </div>
 
@@ -911,71 +914,74 @@ Here is the call graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="inverse-compton_8h_ac0534ea09f08d9b55cb3316050c4aa53_cgraph.png" border="0" usemap="#ainverse-compton_8h_ac0534ea09f08d9b55cb3316050c4aa53_cgraph" alt=""/></div>
 <map name="ainverse-compton_8h_ac0534ea09f08d9b55cb3316050c4aa53_cgraph" id="ainverse-compton_8h_ac0534ea09f08d9b55cb3316050c4aa53_cgraph">
-<area shape="rect" title="Applies Thomson cooling to electrons based on photon distribution." alt="" coords="5,537,141,562"/>
-<area shape="rect" href="inverse-compton_8h.html#ac0e54b69e936d960013b8cc6ddd9d329" title=" " alt="" coords="189,537,351,562"/>
-<area shape="poly" title=" " alt="" coords="141,547,176,547,176,552,141,552"/>
-<area shape="rect" href="synchrotron_8cpp.html#a331f545228d2b18e84e0252510e295f8" title="Creates and returns a new photon grid based on shock and electron grid." alt="" coords="895,662,1065,688"/>
-<area shape="poly" title=" " alt="" coords="134,560,190,571,410,614,632,647,762,660,882,668,881,673,762,665,632,652,409,619,189,576,133,565"/>
-<area shape="rect" href="synchrotron_8cpp.html#af56f9b4417a5f3e717102da3e81a7d37" title="Updates electron properties throughout the grid based on shock parameters and IC Y values." alt="" coords="191,349,349,374"/>
-<area shape="poly" title=" " alt="" coords="86,535,243,383,247,386,90,539"/>
-<area shape="rect" href="synchrotron_8cpp.html#a2e3e0590c05be72f722acd3b077abd16" title="Calculates cooling Lorentz factor based on comoving time, magnetic field, and IC parameters." alt="" coords="416,494,567,520"/>
-<area shape="poly" title=" " alt="" coords="336,535,411,520,412,525,337,540"/>
-<area shape="rect" href="inverse-compton_8h.html#ad89f660f1954e9c12551a19840d656bb" title=" " alt="" coords="697,612,767,637"/>
-<area shape="poly" title=" " alt="" coords="350,560,684,614,683,619,349,565"/>
-<area shape="rect" href="structInverseComptonY.html#a05b76b4d84f50b82728333a42362fc0f" title="Returns the Thomson Y parameter from the provided InverseComptonY object." alt="" coords="632,487,832,527"/>
-<area shape="poly" title=" " alt="" coords="567,504,618,504,618,510,567,510"/>
-<area shape="rect" href="structInverseComptonY.html#a9a35d3af9bd23acdde9d09d38ee116eb" title="Calculates the effective Y parameter at a specific Lorentz factor and spectral index." alt="" coords="632,423,832,463"/>
-<area shape="poly" title=" " alt="" coords="540,492,642,464,644,469,541,497"/>
-<area shape="rect" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42" title="Returns the value of a single parameter." alt="" coords="1485,360,1536,385"/>
-<area shape="poly" title=" " alt="" coords="541,517,733,563,862,589,999,612,1135,629,1260,634,1315,631,1364,624,1404,612,1436,596,1457,576,1473,553,1486,527,1495,499,1505,444,1507,399,1513,400,1510,445,1500,500,1491,529,1478,556,1461,580,1439,600,1406,617,1365,629,1316,636,1260,639,1135,634,999,618,861,594,732,568,540,522"/>
-<area shape="rect" href="structInverseComptonY.html#ae483ec2ba4108fbf96fb15c3e978c0b3" title="Calculates the effective Y parameter for a given Lorentz factor and spectral index." alt="" coords="880,510,1080,550"/>
-<area shape="poly" title=" " alt="" coords="797,461,833,473,915,503,913,508,831,478,796,466"/>
-<area shape="rect" href="utilities_8h.html#a4520a27a10a2aef33c99ad8c679da404" title="Fast approximation of a raised to the power of b." alt="" coords="1171,460,1252,485"/>
-<area shape="poly" title=" " alt="" coords="1061,507,1156,483,1158,488,1062,512"/>
-<area shape="rect" href="utilities_8h.html#ae490b13fdcc1b917ecdd08c0cecf3556" title="Computes a^(4/3)" alt="" coords="1357,561,1423,586"/>
-<area shape="poly" title=" " alt="" coords="1081,538,1344,566,1343,572,1080,543"/>
-<area shape="rect" href="utilities_8h.html#afc584c30c352192de6847b1f4b8caf0e" title="Fast approximation of 2 raised to a power." alt="" coords="1347,410,1433,436"/>
-<area shape="poly" title=" " alt="" coords="1251,459,1333,436,1334,441,1253,464"/>
-<area shape="poly" title=" " alt="" coords="1241,483,1282,497,1332,509,1386,510,1412,505,1436,494,1460,475,1478,449,1500,397,1505,399,1483,452,1464,478,1439,499,1413,510,1386,515,1331,514,1280,503,1239,488"/>
-<area shape="rect" href="utilities_8h.html#afe0a1b1b7509ac4df83fcc0e510f281b" title="Fast approximation of the base&#45;2 logarithm." alt="" coords="1349,460,1431,485"/>
-<area shape="poly" title=" " alt="" coords="1252,470,1335,470,1335,475,1252,475"/>
-<area shape="poly" title=" " alt="" coords="1420,408,1472,386,1474,391,1422,413"/>
-<area shape="poly" title=" " alt="" coords="1490,361,1486,351,1488,342,1496,335,1511,333,1527,337,1535,345,1531,348,1525,341,1511,338,1499,340,1492,345,1491,351,1495,359"/>
-<area shape="poly" title=" " alt="" coords="1417,457,1436,445,1464,420,1488,394,1492,398,1468,424,1439,449,1419,462"/>
-<area shape="poly" title=" " alt="" coords="1413,559,1435,540,1459,505,1478,466,1501,398,1506,399,1483,468,1464,507,1439,544,1417,563"/>
-<area shape="poly" title=" " alt="" coords="747,609,879,495,952,474,1027,463,1098,461,1157,464,1157,469,1098,467,1028,469,953,479,881,500,750,613"/>
-<area shape="poly" title=" " alt="" coords="1029,685,1114,701,1167,706,1222,708,1279,703,1335,692,1388,672,1436,641,1449,625,1461,599,1480,532,1495,458,1504,398,1509,399,1500,459,1486,533,1466,601,1453,628,1439,645,1391,676,1337,697,1280,709,1223,713,1166,712,1114,706,1028,690"/>
-<area shape="poly" title=" " alt="" coords="943,664,935,654,939,644,954,638,980,636,1012,640,1025,649,1021,653,1010,645,980,641,955,643,942,648,940,653,947,661"/>
-<area shape="poly" title=" " alt="" coords="288,373,336,413,400,458,451,486,448,491,397,463,333,417,284,377"/>
-<area shape="poly" title=" " alt="" coords="298,372,345,392,399,410,511,429,618,438,618,443,511,434,398,415,343,397,296,377"/>
-<area shape="poly" title=" " alt="" coords="296,347,343,327,398,309,490,287,563,275,636,270,731,268,1213,268,1278,272,1329,283,1378,301,1438,327,1481,350,1479,355,1436,332,1376,306,1327,288,1278,277,1213,274,731,274,636,275,563,280,491,292,399,314,345,332,299,352"/>
-<area shape="rect" href="synchrotron_8cpp.html#ab03558b02ba5a002aec91d7f02e35cb9" title=" " alt="" coords="889,182,1071,208"/>
-<area shape="poly" title=" " alt="" coords="280,347,326,298,360,271,398,250,458,228,522,211,586,198,651,190,773,183,876,184,876,190,773,188,651,195,587,204,523,216,460,233,400,255,363,276,330,302,284,351"/>
-<area shape="rect" href="synchrotron_8cpp.html#a1c5ae0a77c927eb60684c180ba559567" title=" " alt="" coords="399,376,584,401"/>
-<area shape="poly" title=" " alt="" coords="349,369,385,373,384,378,349,374"/>
-<area shape="rect" href="synchrotron_8cpp.html#ad0ce654aca1c62f43ae108ca8772ed0f" title=" " alt="" coords="412,324,571,349"/>
-<area shape="poly" title=" " alt="" coords="349,350,398,344,399,350,349,355"/>
-<area shape="rect" href="synchrotron_8cpp.html#a5813eed02877ed5f35a34e929a68d263" title=" " alt="" coords="1140,6,1283,32"/>
-<area shape="poly" title=" " alt="" coords="276,347,320,280,356,241,397,208,490,158,589,118,691,86,792,62,890,44,980,31,1126,19,1127,24,981,37,891,49,793,67,692,91,591,123,492,163,400,212,359,245,325,283,281,350"/>
-<area shape="poly" title=" " alt="" coords="997,206,1036,245,1082,295,1147,377,1196,447,1192,450,1142,380,1078,298,1033,249,993,210"/>
-<area shape="poly" title=" " alt="" coords="1009,180,1090,151,1144,137,1202,126,1264,121,1325,125,1385,139,1413,152,1439,168,1459,185,1475,207,1496,256,1508,305,1512,346,1506,347,1502,306,1491,257,1470,210,1455,189,1436,172,1410,156,1383,144,1325,130,1264,126,1203,131,1145,142,1092,156,1011,185"/>
-<area shape="rect" href="synchrotron_8cpp.html#a936bfaa522ec8295a21d253e5453188d" title="Calculates synchrotron frequency for a given Lorentz factor and magnetic field." alt="" coords="1140,208,1283,233"/>
-<area shape="poly" title=" " alt="" coords="1071,202,1127,209,1126,214,1071,208"/>
-<area shape="rect" href="synchrotron_8cpp.html#a85433be4a0da2f510240a603da8f7dff" title=" " alt="" coords="1128,56,1295,81"/>
-<area shape="poly" title=" " alt="" coords="997,180,1054,141,1127,98,1159,84,1161,89,1129,103,1056,146,1000,184"/>
-<area shape="rect" href="utilities_8h.html#a29a716285d00743072d357c4a64a7f85" title="Finds the root of a function using the bisection method." alt="" coords="1343,182,1437,208"/>
-<area shape="poly" title=" " alt="" coords="1071,192,1329,192,1329,198,1071,198"/>
-<area shape="poly" title=" " alt="" coords="1405,206,1440,251,1498,346,1493,349,1435,254,1400,210"/>
-<area shape="poly" title=" " alt="" coords="512,399,565,435,633,473,650,480,648,485,631,478,562,439,509,404"/>
-<area shape="poly" title=" " alt="" coords="548,399,631,417,629,423,547,404"/>
-<area shape="poly" title=" " alt="" coords="584,384,1471,370,1471,376,584,390"/>
-<area shape="rect" href="synchrotron_8cpp.html#a35361f36f8d73e95dffabdc7cb0f3177" title=" " alt="" coords="901,308,1059,348"/>
-<area shape="poly" title=" " alt="" coords="571,333,887,327,887,333,571,338"/>
-<area shape="poly" title=" " alt="" coords="1060,325,1234,331,1336,339,1438,351,1472,359,1471,364,1437,356,1335,344,1233,336,1060,331"/>
-<area shape="poly" title=" " alt="" coords="1283,4,1322,3,1364,7,1404,19,1439,41,1455,64,1469,97,1490,183,1503,274,1510,346,1505,346,1498,275,1485,184,1464,98,1451,66,1436,45,1402,24,1363,12,1322,8,1283,10"/>
-<area shape="rect" href="synchrotron_8cpp.html#a59b47fc71384572d072692740171988e" title=" " alt="" coords="1362,56,1418,81"/>
-<area shape="poly" title=" " alt="" coords="1259,29,1349,55,1348,60,1257,34"/>
-<area shape="poly" title=" " alt="" coords="1418,79,1439,99,1458,130,1473,163,1495,232,1506,296,1511,346,1506,346,1501,297,1489,234,1468,165,1453,132,1435,102,1415,83"/>
+<area shape="rect" title="Applies Thomson cooling to electrons based on photon distribution." alt="" coords="5,548,141,574"/>
+<area shape="rect" href="inverse-compton_8h.html#ac0e54b69e936d960013b8cc6ddd9d329" title=" " alt="" coords="189,548,351,574"/>
+<area shape="poly" title=" " alt="" coords="141,558,176,558,176,564,141,564"/>
+<area shape="rect" href="synchrotron_8cpp.html#a331f545228d2b18e84e0252510e295f8" title="Creates and returns a new photon grid based on shock and electron grid." alt="" coords="895,679,1065,704"/>
+<area shape="poly" title=" " alt="" coords="120,571,245,604,399,637,529,656,660,670,882,685,881,690,660,675,529,661,398,642,244,609,119,576"/>
+<area shape="rect" href="synchrotron_8cpp.html#af56f9b4417a5f3e717102da3e81a7d37" title="Updates electron properties throughout the grid based on shock parameters and IC Y values." alt="" coords="191,387,349,412"/>
+<area shape="poly" title=" " alt="" coords="89,546,241,419,244,423,92,550"/>
+<area shape="rect" href="synchrotron_8cpp.html#a2e3e0590c05be72f722acd3b077abd16" title="Calculates cooling Lorentz factor based on comoving time, magnetic field, and IC parameters." alt="" coords="416,468,567,494"/>
+<area shape="poly" title=" " alt="" coords="305,546,442,496,443,501,307,551"/>
+<area shape="rect" href="inverse-compton_8h.html#ad89f660f1954e9c12551a19840d656bb" title=" " alt="" coords="697,627,767,652"/>
+<area shape="poly" title=" " alt="" coords="301,571,346,589,399,605,476,619,554,628,683,636,683,641,553,634,475,624,398,610,345,594,299,576"/>
+<area shape="rect" href="structInverseComptonY.html#a05b76b4d84f50b82728333a42362fc0f" title="Returns the Thomson Y parameter from the provided InverseComptonY object." alt="" coords="632,461,832,501"/>
+<area shape="poly" title=" " alt="" coords="567,478,618,478,618,484,567,484"/>
+<area shape="rect" href="structInverseComptonY.html#a9a35d3af9bd23acdde9d09d38ee116eb" title="Calculates the effective Y parameter at a specific Lorentz factor and spectral index." alt="" coords="632,397,832,437"/>
+<area shape="poly" title=" " alt="" coords="540,466,642,438,644,443,541,471"/>
+<area shape="rect" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42" title="Returns the value of a single parameter." alt="" coords="1477,328,1528,354"/>
+<area shape="poly" title=" " alt="" coords="537,491,726,541,854,571,991,598,1127,617,1252,625,1308,623,1356,616,1396,605,1428,588,1440,574,1452,551,1471,490,1486,422,1495,367,1500,368,1491,423,1476,491,1457,553,1445,577,1431,592,1398,610,1357,622,1308,628,1252,630,1127,622,990,603,853,576,724,546,535,496"/>
+<area shape="rect" href="structInverseComptonY.html#ae483ec2ba4108fbf96fb15c3e978c0b3" title="Calculates the effective Y parameter for a given Lorentz factor and spectral index." alt="" coords="880,448,1080,488"/>
+<area shape="poly" title=" " alt="" coords="831,434,869,442,868,447,830,440"/>
+<area shape="rect" href="utilities_8h.html#a4520a27a10a2aef33c99ad8c679da404" title="Fast approximation of a raised to the power of b." alt="" coords="1171,398,1252,423"/>
+<area shape="poly" title=" " alt="" coords="1061,445,1156,421,1158,426,1062,450"/>
+<area shape="rect" href="utilities_8h.html#ae490b13fdcc1b917ecdd08c0cecf3556" title="Computes a^(4/3)" alt="" coords="1353,452,1419,478"/>
+<area shape="poly" title=" " alt="" coords="1080,464,1339,463,1339,468,1081,470"/>
+<area shape="rect" href="utilities_8h.html#afc584c30c352192de6847b1f4b8caf0e" title="Fast approximation of 2 raised to a power." alt="" coords="1343,354,1429,379"/>
+<area shape="poly" title=" " alt="" coords="1251,398,1329,378,1330,383,1253,403"/>
+<area shape="poly" title=" " alt="" coords="1251,395,1293,376,1307,366,1316,356,1326,346,1342,338,1373,331,1405,328,1464,331,1463,337,1406,333,1374,336,1344,343,1329,351,1320,360,1310,370,1296,381,1253,400"/>
+<area shape="rect" href="utilities_8h.html#afe0a1b1b7509ac4df83fcc0e510f281b" title="Fast approximation of the base&#45;2 logarithm." alt="" coords="1345,403,1427,428"/>
+<area shape="poly" title=" " alt="" coords="1252,409,1331,411,1331,417,1252,414"/>
+<area shape="poly" title=" " alt="" coords="1429,354,1463,347,1465,352,1430,359"/>
+<area shape="poly" title=" " alt="" coords="1483,329,1479,320,1481,310,1489,304,1503,302,1519,305,1526,313,1522,317,1516,310,1503,307,1491,309,1485,313,1484,319,1487,327"/>
+<area shape="poly" title=" " alt="" coords="1408,400,1428,388,1471,359,1474,364,1431,392,1411,405"/>
+<area shape="poly" title=" " alt="" coords="1411,450,1428,438,1460,401,1485,364,1489,367,1464,404,1431,442,1414,454"/>
+<area shape="poly" title=" " alt="" coords="742,625,830,511,842,489,849,469,859,450,879,433,913,416,949,404,1024,392,1097,392,1157,398,1157,403,1096,397,1025,397,950,409,915,421,881,438,863,453,854,471,847,491,834,514,746,628"/>
+<area shape="poly" title=" " alt="" coords="1047,702,1133,710,1182,711,1234,708,1287,700,1338,686,1385,664,1427,634,1441,615,1454,587,1474,512,1488,431,1496,367,1501,367,1493,432,1479,513,1459,588,1446,618,1431,637,1388,669,1339,691,1288,705,1235,713,1182,716,1132,716,1047,707"/>
+<area shape="poly" title=" " alt="" coords="943,681,935,671,939,661,954,654,980,652,1012,656,1025,666,1021,670,1010,661,980,658,955,660,942,664,940,670,947,677"/>
+<area shape="poly" title=" " alt="" coords="305,410,400,446,441,461,439,466,398,451,303,415"/>
+<area shape="poly" title=" " alt="" coords="349,394,460,393,584,397,618,400,618,405,584,402,460,399,349,400"/>
+<area shape="poly" title=" " alt="" coords="273,386,288,346,314,291,351,230,397,175,476,100,511,71,546,47,583,29,625,15,673,7,731,5,1213,5,1278,3,1332,5,1357,10,1381,20,1405,35,1431,58,1445,77,1457,105,1477,176,1501,314,1495,315,1472,178,1452,107,1440,80,1427,61,1402,40,1378,24,1355,15,1331,10,1278,9,1213,10,731,10,674,13,626,21,585,33,549,52,514,75,480,104,401,179,355,233,319,293,293,349,278,388"/>
+<area shape="rect" href="synchrotron_8cpp.html#ab03558b02ba5a002aec91d7f02e35cb9" title=" " alt="" coords="889,247,1071,272"/>
+<area shape="poly" title=" " alt="" coords="335,384,901,272,902,278,336,389"/>
+<area shape="rect" href="synchrotron_8cpp.html#a1c5ae0a77c927eb60684c180ba559567" title=" " alt="" coords="399,412,584,438"/>
+<area shape="poly" title=" " alt="" coords="349,406,385,410,384,415,349,411"/>
+<area shape="rect" href="synchrotron_8cpp.html#ad0ce654aca1c62f43ae108ca8772ed0f" title=" " alt="" coords="412,190,571,215"/>
+<area shape="poly" title=" " alt="" coords="280,385,328,330,397,263,456,220,459,225,400,267,332,334,284,389"/>
+<area shape="rect" href="synchrotron_8cpp.html#a5813eed02877ed5f35a34e929a68d263" title=" " alt="" coords="1140,554,1283,579"/>
+<area shape="poly" title=" " alt="" coords="284,411,331,458,363,483,400,502,496,535,596,558,698,573,799,581,895,584,983,582,1126,573,1126,579,983,588,895,589,799,586,698,578,596,563,494,540,398,507,360,487,327,462,280,414"/>
+<area shape="poly" title=" " alt="" coords="1002,270,1181,388,1178,392,999,275"/>
+<area shape="poly" title=" " alt="" coords="992,245,1047,198,1085,172,1127,152,1212,118,1249,104,1284,95,1319,91,1354,95,1391,108,1431,132,1451,150,1467,172,1489,222,1500,272,1504,314,1498,314,1495,273,1484,223,1463,175,1447,154,1428,136,1389,113,1353,101,1319,97,1285,100,1251,109,1214,123,1129,157,1088,177,1051,202,996,249"/>
+<area shape="rect" href="synchrotron_8cpp.html#a936bfaa522ec8295a21d253e5453188d" title="Calculates synchrotron frequency for a given Lorentz factor and magnetic field." alt="" coords="1140,247,1283,272"/>
+<area shape="poly" title=" " alt="" coords="1071,257,1126,257,1126,262,1071,262"/>
+<area shape="rect" href="synchrotron_8cpp.html#a85433be4a0da2f510240a603da8f7dff" title=" " alt="" coords="1128,296,1295,322"/>
+<area shape="poly" title=" " alt="" coords="1041,270,1138,291,1137,296,1040,275"/>
+<area shape="rect" href="utilities_8h.html#a0becc9a5c35cc2648c3d65c88790caf8" title="Computes a^(5/2)" alt="" coords="1353,147,1419,172"/>
+<area shape="poly" title=" " alt="" coords="999,244,1055,212,1090,196,1127,182,1184,169,1241,162,1339,156,1340,162,1241,167,1185,175,1129,187,1092,201,1058,217,1002,249"/>
+<area shape="rect" href="utilities_8h.html#a29a716285d00743072d357c4a64a7f85" title="Finds the root of a function using the bisection method." alt="" coords="1164,198,1259,223"/>
+<area shape="poly" title=" " alt="" coords="1040,244,1150,220,1151,226,1041,249"/>
+<area shape="poly" title=" " alt="" coords="1409,170,1431,191,1453,222,1471,256,1495,314,1490,316,1466,258,1448,225,1427,195,1405,174"/>
+<area shape="poly" title=" " alt="" coords="1259,206,1298,207,1342,213,1388,224,1431,244,1450,259,1467,277,1491,314,1487,317,1463,280,1447,263,1428,249,1386,230,1341,218,1297,213,1259,211"/>
+<area shape="poly" title=" " alt="" coords="547,435,633,455,632,460,546,440"/>
+<area shape="poly" title=" " alt="" coords="584,419,618,418,618,423,584,424"/>
+<area shape="poly" title=" " alt="" coords="529,410,577,395,631,382,732,367,817,360,963,357,1109,354,1194,346,1294,330,1318,323,1342,316,1386,311,1430,316,1465,324,1464,329,1429,321,1386,317,1343,321,1319,328,1295,335,1195,351,1110,360,964,362,818,365,732,372,633,388,579,400,530,415"/>
+<area shape="rect" href="synchrotron_8cpp.html#a35361f36f8d73e95dffabdc7cb0f3177" title=" " alt="" coords="901,81,1059,121"/>
+<area shape="poly" title=" " alt="" coords="553,187,887,117,888,123,554,192"/>
+<area shape="poly" title=" " alt="" coords="1036,78,1120,56,1171,48,1224,43,1279,43,1333,51,1384,68,1431,95,1444,110,1456,133,1476,193,1500,314,1495,315,1471,194,1451,135,1440,113,1428,99,1382,73,1331,56,1278,49,1224,48,1171,53,1121,61,1038,83"/>
+<area shape="poly" title=" " alt="" coords="1282,553,1357,529,1394,511,1428,487,1452,459,1470,427,1493,366,1498,368,1475,429,1456,462,1431,491,1397,515,1359,534,1284,558"/>
+<area shape="rect" href="synchrotron_8cpp.html#a59b47fc71384572d072692740171988e" title=" " alt="" coords="1358,554,1414,579"/>
+<area shape="poly" title=" " alt="" coords="1283,564,1344,564,1344,569,1283,569"/>
+<area shape="poly" title=" " alt="" coords="1407,551,1427,533,1453,490,1472,445,1494,366,1499,368,1477,447,1457,493,1431,536,1411,555"/>
 </map>
 </div>
 

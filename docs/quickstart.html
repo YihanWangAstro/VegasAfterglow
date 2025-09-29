@@ -66,6 +66,7 @@
 <li class="toctree-l4"><a class="reference internal" href="#synchrotron-frequency-evolution">Synchrotron Frequency Evolution</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#doppler-factor-spatial-distribution">Doppler Factor Spatial Distribution</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#equal-arrival-time-surface-visualization">Equal Arrival Time Surface Visualization</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#model-configuration-introspection">Model Configuration Introspection</a></li>
 </ul>
 </li>
 </ul>
@@ -481,6 +482,69 @@
 </figcaption>
 </figure>
 <p>These examples demonstrate VegasAfterglow’s comprehensive capability for analyzing internal quantities and understanding the underlying physics of GRB afterglows. The detailed access to microphysical parameters enables advanced studies of shock dynamics, relativistic effects, and radiation mechanisms across different reference frames.</p>
+</section>
+<section id="model-configuration-introspection">
+<h4>Model Configuration Introspection<a class="headerlink" href="#model-configuration-introspection" title="Link to this heading"></a></h4>
+<p>In addition to the <code class="docutils literal notranslate"><span class="pre">details</span></code> method, VegasAfterglow provides model introspection methods to examine the jet and medium configuration at specific coordinates. These methods are useful for understanding the initial setup and validating model configuration:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+
+<span class="c1"># Define coordinate arrays for introspection</span>
+<span class="n">phi</span> <span class="o">=</span> <span class="mf">0.0</span>  <span class="c1"># Azimuthal angle [radians]</span>
+<span class="n">theta</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mi">50</span><span class="p">)</span>  <span class="c1"># Polar angles [radians]</span>
+<span class="n">r</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">logspace</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>  <span class="c1"># Radii [cm]</span>
+
+<span class="c1"># Get jet properties as a function of angle</span>
+<span class="n">E_iso_profile</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">jet_E_iso</span><span class="p">(</span><span class="n">phi</span><span class="p">,</span> <span class="n">theta</span><span class="p">)</span>  <span class="c1"># Isotropic energy [erg]</span>
+<span class="n">Gamma0_profile</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">jet_Gamma0</span><span class="p">(</span><span class="n">phi</span><span class="p">,</span> <span class="n">theta</span><span class="p">)</span>  <span class="c1"># Initial Lorentz factor</span>
+
+<span class="c1"># Get medium density as a function of position</span>
+<span class="c1"># Note: r should be a 1D array for the medium method</span>
+<span class="n">rho_profile</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">medium</span><span class="p">(</span><span class="n">phi</span><span class="p">,</span> <span class="n">theta</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">r</span><span class="p">)</span>  <span class="c1"># Density [g/cm³]</span>
+
+<span class="c1"># Visualize the jet structure</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+
+<span class="c1"># Plot jet energy profile</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">theta</span><span class="p">,</span> <span class="n">E_iso_profile</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;$\theta$ [rad]&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;$E_{\rm iso}$ [erg]&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Jet Energy Profile&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">yscale</span><span class="p">(</span><span class="s1">&#39;log&#39;</span><span class="p">)</span>
+
+<span class="c1"># Plot jet Lorentz factor profile</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">theta</span><span class="p">,</span> <span class="n">Gamma0_profile</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;$\theta$ [rad]&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;$\Gamma_0$&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Jet Lorentz Factor Profile&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">yscale</span><span class="p">(</span><span class="s1">&#39;log&#39;</span><span class="p">)</span>
+
+<span class="c1"># Plot medium density profile</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">loglog</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">rho_profile</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;$r$ [cm]&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;$\rho$ [g/cm³]&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Medium Density Profile&#39;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+<p><strong>Available model introspection methods:</strong></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">model.jet_E_iso(phi,</span> <span class="pre">theta)</span></code>: Returns the isotropic energy distribution [erg] as a function of azimuthal angle <code class="docutils literal notranslate"><span class="pre">phi</span></code> [rad] and polar angle <code class="docutils literal notranslate"><span class="pre">theta</span></code> [rad]</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">model.jet_Gamma0(phi,</span> <span class="pre">theta)</span></code>: Returns the initial Lorentz factor distribution as a function of azimuthal angle <code class="docutils literal notranslate"><span class="pre">phi</span></code> [rad] and polar angle <code class="docutils literal notranslate"><span class="pre">theta</span></code> [rad]</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">model.medium(phi,</span> <span class="pre">theta,</span> <span class="pre">r)</span></code>: Returns the medium density [g/cm³] as a function of azimuthal angle <code class="docutils literal notranslate"><span class="pre">phi</span></code> [rad], polar angle <code class="docutils literal notranslate"><span class="pre">theta</span></code> [rad], and radius <code class="docutils literal notranslate"><span class="pre">r</span></code> [cm]</p></li>
+</ul>
+<p>These methods enable detailed analysis of the model configuration and are particularly useful for:</p>
+<ul class="simple">
+<li><p>Validating jet structure parameters</p></li>
+<li><p>Understanding the angular dependence of jet properties</p></li>
+<li><p>Analyzing medium density profiles</p></li>
+<li><p>Creating publication-quality plots of model setup</p></li>
+<li><p>Debugging complex multi-component jet configurations</p></li>
+</ul>
 </section>
 </section>
 </section>

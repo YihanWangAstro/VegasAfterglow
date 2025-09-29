@@ -395,6 +395,71 @@ This final visualization maps the equal arrival time surfaces in polar coordinat
 
 These examples demonstrate VegasAfterglow's comprehensive capability for analyzing internal quantities and understanding the underlying physics of GRB afterglows. The detailed access to microphysical parameters enables advanced studies of shock dynamics, relativistic effects, and radiation mechanisms across different reference frames.
 
+Model Configuration Introspection
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+In addition to the ``details`` method, VegasAfterglow provides model introspection methods to examine the jet and medium configuration at specific coordinates. These methods are useful for understanding the initial setup and validating model configuration:
+
+.. code-block:: python
+
+    import numpy as np
+
+    # Define coordinate arrays for introspection
+    phi = 0.0  # Azimuthal angle [radians]
+    theta = np.linspace(0, 0.5, 50)  # Polar angles [radians]
+    r = np.logspace(15, 20, 100)  # Radii [cm]
+
+    # Get jet properties as a function of angle
+    E_iso_profile = model.jet_E_iso(phi, theta)  # Isotropic energy [erg]
+    Gamma0_profile = model.jet_Gamma0(phi, theta)  # Initial Lorentz factor
+
+    # Get medium density as a function of position
+    # Note: r should be a 1D array for the medium method
+    rho_profile = model.medium(phi, theta[0], r)  # Density [g/cm³]
+
+    # Visualize the jet structure
+    plt.figure(figsize=(12, 4))
+
+    # Plot jet energy profile
+    plt.subplot(1, 3, 1)
+    plt.plot(theta, E_iso_profile)
+    plt.xlabel(r'$\theta$ [rad]')
+    plt.ylabel(r'$E_{\rm iso}$ [erg]')
+    plt.title('Jet Energy Profile')
+    plt.yscale('log')
+
+    # Plot jet Lorentz factor profile
+    plt.subplot(1, 3, 2)
+    plt.plot(theta, Gamma0_profile)
+    plt.xlabel(r'$\theta$ [rad]')
+    plt.ylabel(r'$\Gamma_0$')
+    plt.title('Jet Lorentz Factor Profile')
+    plt.yscale('log')
+
+    # Plot medium density profile
+    plt.subplot(1, 3, 3)
+    plt.loglog(r, rho_profile)
+    plt.xlabel(r'$r$ [cm]')
+    plt.ylabel(r'$\rho$ [g/cm³]')
+    plt.title('Medium Density Profile')
+
+    plt.tight_layout()
+    plt.show()
+
+**Available model introspection methods:**
+
+- ``model.jet_E_iso(phi, theta)``: Returns the isotropic energy distribution [erg] as a function of azimuthal angle ``phi`` [rad] and polar angle ``theta`` [rad]
+- ``model.jet_Gamma0(phi, theta)``: Returns the initial Lorentz factor distribution as a function of azimuthal angle ``phi`` [rad] and polar angle ``theta`` [rad]
+- ``model.medium(phi, theta, r)``: Returns the medium density [g/cm³] as a function of azimuthal angle ``phi`` [rad], polar angle ``theta`` [rad], and radius ``r`` [cm]
+
+These methods enable detailed analysis of the model configuration and are particularly useful for:
+
+- Validating jet structure parameters
+- Understanding the angular dependence of jet properties
+- Analyzing medium density profiles
+- Creating publication-quality plots of model setup
+- Debugging complex multi-component jet configurations
+
 Parameter Estimation with MCMC
 ------------------------------
 

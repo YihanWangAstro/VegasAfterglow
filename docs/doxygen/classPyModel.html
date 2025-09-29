@@ -106,7 +106,7 @@ $(document).ready(function(){initNavTree('classPyModel.html',''); initResizable(
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a4e18a53bf3cc6134238a51169cc87cd2" id="r_a4e18a53bf3cc6134238a51169cc87cd2"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classPyModel.html#a4e18a53bf3cc6134238a51169cc87cd2">PyModel</a> (<a class="el" href="classEjecta.html">Ejecta</a> jet, <a class="el" href="classMedium.html">Medium</a> medium, <a class="el" href="classPyObserver.html">PyObserver</a> <a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">observer</a>, <a class="el" href="classPyRadiation.html">PyRadiation</a> fwd_rad, std::optional&lt; <a class="el" href="classPyRadiation.html">PyRadiation</a> &gt; <a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">rvs_rad</a>=std::nullopt, std::tuple&lt; <a class="el" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a>, <a class="el" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a>, <a class="el" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> &gt; <a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">resolutions</a>=std::make_tuple(0.3, 1, 10), <a class="el" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> rtol=1e-5, <a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">bool</a> axisymmetric=<a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">true</a>)</td></tr>
+<tr class="memitem:a4e18a53bf3cc6134238a51169cc87cd2" id="r_a4e18a53bf3cc6134238a51169cc87cd2"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classPyModel.html#a4e18a53bf3cc6134238a51169cc87cd2">PyModel</a> (<a class="el" href="classEjecta.html">Ejecta</a> jet, <a class="el" href="classMedium.html">Medium</a> <a class="el" href="classPyModel.html#ada69b20b7934062af2c807213a76d4ce">medium</a>, <a class="el" href="classPyObserver.html">PyObserver</a> <a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">observer</a>, <a class="el" href="classPyRadiation.html">PyRadiation</a> fwd_rad, std::optional&lt; <a class="el" href="classPyRadiation.html">PyRadiation</a> &gt; <a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">rvs_rad</a>=std::nullopt, std::tuple&lt; <a class="el" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a>, <a class="el" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a>, <a class="el" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> &gt; <a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">resolutions</a>=std::make_tuple(0.3, 1, 10), <a class="el" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> rtol=1e-5, <a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">bool</a> axisymmetric=<a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">true</a>)</td></tr>
 <tr class="memdesc:a4e18a53bf3cc6134238a51169cc87cd2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct complete afterglow model with physical and numerical parameters.  <br /></td></tr>
 <tr class="separator:a4e18a53bf3cc6134238a51169cc87cd2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7aaf63a15a01165e3c5ad8d935f30414" id="r_a7aaf63a15a01165e3c5ad8d935f30414"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structPyFlux.html">PyFlux</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classPyModel.html#a7aaf63a15a01165e3c5ad8d935f30414">flux_density_grid</a> (<a class="el" href="pybind_8h.html#a06c55931188bd694c6e070a50e95344c">PyArray</a> <a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">const</a> &amp;t, <a class="el" href="pybind_8h.html#a06c55931188bd694c6e070a50e95344c">PyArray</a> <a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">const</a> &amp;nu)</td></tr>
@@ -124,6 +124,12 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a3440b0852a67952d09b9017ef6784fd0" id="r_a3440b0852a67952d09b9017ef6784fd0"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structPyDetails.html">PyDetails</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classPyModel.html#a3440b0852a67952d09b9017ef6784fd0">details</a> (<a class="el" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> t_min, <a class="el" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> t_max)</td></tr>
 <tr class="memdesc:a3440b0852a67952d09b9017ef6784fd0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get comprehensive details of the shock evolution and model configuration.  <br /></td></tr>
 <tr class="separator:a3440b0852a67952d09b9017ef6784fd0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ada69b20b7934062af2c807213a76d4ce" id="r_ada69b20b7934062af2c807213a76d4ce"><td class="memItemLeft" align="right" valign="top"><a class="el" href="mesh_8h.html#afd05120c4d579ec7fa4906f677781a83">Array</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classPyModel.html#ada69b20b7934062af2c807213a76d4ce">medium</a> (<a class="el" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> phi, <a class="el" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> theta, <a class="el" href="mesh_8h.html#afd05120c4d579ec7fa4906f677781a83">Array</a> <a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">const</a> &amp;r)</td></tr>
+<tr class="separator:ada69b20b7934062af2c807213a76d4ce"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae38662b3ca4b9c523ee46752efcfb9c8" id="r_ae38662b3ca4b9c523ee46752efcfb9c8"><td class="memItemLeft" align="right" valign="top"><a class="el" href="mesh_8h.html#afd05120c4d579ec7fa4906f677781a83">Array</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classPyModel.html#ae38662b3ca4b9c523ee46752efcfb9c8">jet_E_iso</a> (<a class="el" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> phi, <a class="el" href="mesh_8h.html#afd05120c4d579ec7fa4906f677781a83">Array</a> <a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">const</a> &amp;theta)</td></tr>
+<tr class="separator:ae38662b3ca4b9c523ee46752efcfb9c8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aaab7223dd59e1e5eed5318014b369775" id="r_aaab7223dd59e1e5eed5318014b369775"><td class="memItemLeft" align="right" valign="top"><a class="el" href="mesh_8h.html#afd05120c4d579ec7fa4906f677781a83">Array</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classPyModel.html#aaab7223dd59e1e5eed5318014b369775">jet_Gamma0</a> (<a class="el" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> phi, <a class="el" href="mesh_8h.html#afd05120c4d579ec7fa4906f677781a83">Array</a> <a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">const</a> &amp;theta)</td></tr>
+<tr class="separator:aaab7223dd59e1e5eed5318014b369775"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3debe3d2ed8ff2a53bec469a6711cfa8" id="r_a3debe3d2ed8ff2a53bec469a6711cfa8"><td class="memTemplParams" colspan="2">template&lt;<a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">typename</a> <a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">Func</a> &gt; </td></tr>
 <tr class="memitem:a3debe3d2ed8ff2a53bec469a6711cfa8"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">auto</a>&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classPyModel.html#a3debe3d2ed8ff2a53bec469a6711cfa8">compute_emission</a> (<a class="el" href="mesh_8h.html#afd05120c4d579ec7fa4906f677781a83">Array</a> <a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">const</a> &amp;t_obs, <a class="el" href="mesh_8h.html#afd05120c4d579ec7fa4906f677781a83">Array</a> <a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">const</a> &amp;<a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">nu_obs</a>, <a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">Func</a> &amp;&amp;<a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">flux_func</a>) -&gt; <a class="el" href="structPyFlux.html">PyFlux</a></td></tr>
 <tr class="separator:a3debe3d2ed8ff2a53bec469a6711cfa8"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -132,7 +138,7 @@ Public Member Functions</h2></td></tr>
 <div class="textblock"><p>Main gamma-ray burst afterglow model for comprehensive multi-wavelength predictions. </p>
 <p>This class provides the primary interface for gamma-ray burst afterglow modeling, combining jet structure, circumburst medium, observational setup, and radiation physics to compute multi-wavelength light curves, spectra, and internal shock evolution. It handles both forward and optional reverse shock emission with advanced radiation processes including synchrotron emission, synchrotron self- absorption, and inverse Compton scattering. </p>
 
-<p class="definition">Definition at line <a class="el" href="pymodel_8h_source.html#l00383">383</a> of file <a class="el" href="pymodel_8h_source.html">pymodel.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="pymodel_8h_source.html#l00384">384</a> of file <a class="el" href="pymodel_8h_source.html">pymodel.h</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a4e18a53bf3cc6134238a51169cc87cd2" name="a4e18a53bf3cc6134238a51169cc87cd2"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a4e18a53bf3cc6134238a51169cc87cd2">&#9670;&#160;</a></span>PyModel()</h2>
@@ -219,20 +225,21 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="pymodel_8h_source.html#l00401">401</a> of file <a class="el" href="pymodel_8h_source.html">pymodel.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  405</span>        : jet(jet),</div>
-<div class="line"><span class="lineno">  406</span>          medium(medium),</div>
-<div class="line"><span class="lineno">  407</span>          obs_setup(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">observer</a>),</div>
-<div class="line"><span class="lineno">  408</span>          fwd_rad(fwd_rad),</div>
-<div class="line"><span class="lineno">  409</span>          rvs_rad_opt(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">rvs_rad</a>),</div>
-<div class="line"><span class="lineno">  410</span>          phi_resol(std::get&lt;0&gt;(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">resolutions</a>)),</div>
-<div class="line"><span class="lineno">  411</span>          theta_resol(std::get&lt;1&gt;(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">resolutions</a>)),</div>
-<div class="line"><span class="lineno">  412</span>          t_resol(std::get&lt;2&gt;(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">resolutions</a>)),</div>
-<div class="line"><span class="lineno">  413</span>          rtol(rtol),</div>
-<div class="line"><span class="lineno">  414</span>          axisymmetric(axisymmetric) {</div>
-<div class="line"><span class="lineno">  415</span>        <a class="code hl_function" href="pymodel_8h.html#aa920671831cc213a5c0858813e42279f">convert_unit</a>(this-&gt;jet, this-&gt;medium);</div>
-<div class="line"><span class="lineno">  416</span>    }</div>
-<div class="ttc" id="apymodel_8h_html_aa920671831cc213a5c0858813e42279f"><div class="ttname"><a href="pymodel_8h.html#aa920671831cc213a5c0858813e42279f">convert_unit</a></div><div class="ttdeci">void convert_unit(Ejecta &amp;jet, Medium &amp;medium)</div><div class="ttdoc">Convert Ejecta and Medium units to internal code units.</div><div class="ttdef"><b>Definition</b> <a href="pymodel_8cpp_source.html#l00122">pymodel.cpp:122</a></div></div>
+<p class="definition">Definition at line <a class="el" href="pymodel_8h_source.html#l00402">402</a> of file <a class="el" href="pymodel_8h_source.html">pymodel.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  406</span>        : jet_(jet),</div>
+<div class="line"><span class="lineno">  407</span>          medium_(<a class="code hl_function" href="classPyModel.html#ada69b20b7934062af2c807213a76d4ce">medium</a>),</div>
+<div class="line"><span class="lineno">  408</span>          obs_setup(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">observer</a>),</div>
+<div class="line"><span class="lineno">  409</span>          fwd_rad(fwd_rad),</div>
+<div class="line"><span class="lineno">  410</span>          rvs_rad_opt(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">rvs_rad</a>),</div>
+<div class="line"><span class="lineno">  411</span>          phi_resol(std::get&lt;0&gt;(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">resolutions</a>)),</div>
+<div class="line"><span class="lineno">  412</span>          theta_resol(std::get&lt;1&gt;(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">resolutions</a>)),</div>
+<div class="line"><span class="lineno">  413</span>          t_resol(std::get&lt;2&gt;(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">resolutions</a>)),</div>
+<div class="line"><span class="lineno">  414</span>          rtol(rtol),</div>
+<div class="line"><span class="lineno">  415</span>          axisymmetric(axisymmetric) {</div>
+<div class="line"><span class="lineno">  416</span>        <a class="code hl_function" href="pymodel_8h.html#aa920671831cc213a5c0858813e42279f">convert_unit</a>(this-&gt;jet_, this-&gt;medium_);</div>
+<div class="line"><span class="lineno">  417</span>    }</div>
+<div class="ttc" id="aclassPyModel_html_ada69b20b7934062af2c807213a76d4ce"><div class="ttname"><a href="classPyModel.html#ada69b20b7934062af2c807213a76d4ce">PyModel::medium</a></div><div class="ttdeci">Array medium(Real phi, Real theta, Array const &amp;r)</div><div class="ttdef"><b>Definition</b> <a href="pymodel_8cpp_source.html#l00423">pymodel.cpp:423</a></div></div>
+<div class="ttc" id="apymodel_8h_html_aa920671831cc213a5c0858813e42279f"><div class="ttname"><a href="pymodel_8h.html#aa920671831cc213a5c0858813e42279f">convert_unit</a></div><div class="ttdeci">void convert_unit(Ejecta &amp;jet, Medium &amp;medium)</div><div class="ttdoc">Convert Ejecta and Medium units to internal code units.</div><div class="ttdef"><b>Definition</b> <a href="pymodel_8cpp_source.html#l00124">pymodel.cpp:124</a></div></div>
 <div class="ttc" id="autilities_8h_html_ab8e81118f023df135835db8cce4f5f42"><div class="ttname"><a href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">max</a></div><div class="ttdeci">T max(T value)</div><div class="ttdoc">Returns the value of a single parameter.</div><div class="ttdef"><b>Definition</b> <a href="utilities_8h_source.html#l00311">utilities.h:311</a></div></div>
 </div><!-- fragment --><div class="dynheader">
 Here is the call graph for this function:</div>
@@ -285,47 +292,47 @@ template&lt;<a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="pymodel_8h_source.html#l00617">617</a> of file <a class="el" href="pymodel_8h_source.html">pymodel.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  617</span>                                                                                                  {</div>
-<div class="line"><span class="lineno">  618</span>    <a class="code hl_class" href="classCoord.html">Coord</a> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">coord</a> = <a class="code hl_function" href="mesh_8h.html#a017f88b3242fdadb28e664f27725643a">auto_grid</a>(jet, t_obs, this-&gt;theta_w, obs_setup.<a class="code hl_variable" href="classPyObserver.html#a44289f4d1236019685063b1ce914154d">theta_obs</a>, obs_setup.<a class="code hl_variable" href="classPyObserver.html#a7eff175b5dc92c4b68ba024e940ee86f">z</a>, phi_resol, theta_resol,</div>
-<div class="line"><span class="lineno">  619</span>                            t_resol, axisymmetric);</div>
-<div class="line"><span class="lineno">  620</span> </div>
-<div class="line"><span class="lineno">  621</span>    <a class="code hl_struct" href="structPyFlux.html">PyFlux</a> <a class="code hl_function" href="classPyModel.html#a51390496a41c22c7c2dbb8838ac7a2d2">flux</a>;</div>
-<div class="line"><span class="lineno">  622</span> </div>
-<div class="line"><span class="lineno">  623</span>    <a class="code hl_class" href="classObserver.html">Observer</a> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">observer</a>;</div>
-<div class="line"><span class="lineno">  624</span> </div>
-<div class="line"><span class="lineno">  625</span>    <span class="keywordflow">if</span> (!rvs_rad_opt) {</div>
-<div class="line"><span class="lineno">  626</span>        <span class="keyword">auto</span> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">fwd_shock</a> = <a class="code hl_function" href="forward-shock_8hpp.html#aa963867f4f98284c627afeff47fc3a18">generate_fwd_shock</a>(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">coord</a>, medium, jet, fwd_rad.<a class="code hl_variable" href="classPyRadiation.html#ac19d3052d34fc8c82280ec02a392edcb">rad</a>, rtol);</div>
+<p class="definition">Definition at line <a class="el" href="pymodel_8h_source.html#l00624">624</a> of file <a class="el" href="pymodel_8h_source.html">pymodel.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  624</span>                                                                                                  {</div>
+<div class="line"><span class="lineno">  625</span>    <a class="code hl_class" href="classCoord.html">Coord</a> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">coord</a> = <a class="code hl_function" href="mesh_8h.html#a017f88b3242fdadb28e664f27725643a">auto_grid</a>(jet_, t_obs, this-&gt;theta_w, obs_setup.<a class="code hl_variable" href="classPyObserver.html#a44289f4d1236019685063b1ce914154d">theta_obs</a>, obs_setup.<a class="code hl_variable" href="classPyObserver.html#a7eff175b5dc92c4b68ba024e940ee86f">z</a>, phi_resol, theta_resol,</div>
+<div class="line"><span class="lineno">  626</span>                            t_resol, axisymmetric);</div>
 <div class="line"><span class="lineno">  627</span> </div>
-<div class="line"><span class="lineno">  628</span>        single_shock_emission(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">fwd_shock</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">coord</a>, t_obs, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">nu_obs</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">observer</a>, fwd_rad, <a class="code hl_function" href="classPyModel.html#a51390496a41c22c7c2dbb8838ac7a2d2">flux</a>.<a class="code hl_variable" href="structPyFlux.html#adde189e058cf4485bebf835f2d1ce9f0">fwd</a>,</div>
-<div class="line"><span class="lineno">  629</span>                              std::forward&lt;Func&gt;(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">flux_func</a>));</div>
-<div class="line"><span class="lineno">  630</span> </div>
-<div class="line"><span class="lineno">  631</span>        <span class="keywordflow">return</span> <a class="code hl_function" href="classPyModel.html#a51390496a41c22c7c2dbb8838ac7a2d2">flux</a>;</div>
-<div class="line"><span class="lineno">  632</span>    } <span class="keywordflow">else</span> {</div>
-<div class="line"><span class="lineno">  633</span>        <span class="keyword">auto</span> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">rvs_rad</a> = *rvs_rad_opt;</div>
-<div class="line"><span class="lineno">  634</span>        <span class="keyword">auto</span> [<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">fwd_shock</a>, rvs_shock] = <a class="code hl_function" href="reverse-shock_8hpp.html#ab50c063a2b81579f107e7e79f12961b0">generate_shock_pair</a>(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">coord</a>, medium, jet, fwd_rad.<a class="code hl_variable" href="classPyRadiation.html#ac19d3052d34fc8c82280ec02a392edcb">rad</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">rvs_rad</a>.rad, rtol);</div>
-<div class="line"><span class="lineno">  635</span> </div>
-<div class="line"><span class="lineno">  636</span>        single_shock_emission(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">fwd_shock</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">coord</a>, t_obs, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">nu_obs</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">observer</a>, fwd_rad, <a class="code hl_function" href="classPyModel.html#a51390496a41c22c7c2dbb8838ac7a2d2">flux</a>.<a class="code hl_variable" href="structPyFlux.html#adde189e058cf4485bebf835f2d1ce9f0">fwd</a>,</div>
-<div class="line"><span class="lineno">  637</span>                              std::forward&lt;Func&gt;(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">flux_func</a>));</div>
-<div class="line"><span class="lineno">  638</span> </div>
-<div class="line"><span class="lineno">  639</span>        single_shock_emission(rvs_shock, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">coord</a>, t_obs, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">nu_obs</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">observer</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">rvs_rad</a>, <a class="code hl_function" href="classPyModel.html#a51390496a41c22c7c2dbb8838ac7a2d2">flux</a>.<a class="code hl_variable" href="structPyFlux.html#adf8746d12353d9fa116cdff7356687a9">rvs</a>,</div>
-<div class="line"><span class="lineno">  640</span>                              std::forward&lt;Func&gt;(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">flux_func</a>));</div>
-<div class="line"><span class="lineno">  641</span> </div>
-<div class="line"><span class="lineno">  642</span>        <span class="keywordflow">return</span> <a class="code hl_function" href="classPyModel.html#a51390496a41c22c7c2dbb8838ac7a2d2">flux</a>;</div>
-<div class="line"><span class="lineno">  643</span>    }</div>
-<div class="line"><span class="lineno">  644</span>}</div>
+<div class="line"><span class="lineno">  628</span>    <a class="code hl_struct" href="structPyFlux.html">PyFlux</a> <a class="code hl_function" href="classPyModel.html#a51390496a41c22c7c2dbb8838ac7a2d2">flux</a>;</div>
+<div class="line"><span class="lineno">  629</span> </div>
+<div class="line"><span class="lineno">  630</span>    <a class="code hl_class" href="classObserver.html">Observer</a> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">observer</a>;</div>
+<div class="line"><span class="lineno">  631</span> </div>
+<div class="line"><span class="lineno">  632</span>    <span class="keywordflow">if</span> (!rvs_rad_opt) {</div>
+<div class="line"><span class="lineno">  633</span>        <span class="keyword">auto</span> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">fwd_shock</a> = <a class="code hl_function" href="forward-shock_8hpp.html#aa963867f4f98284c627afeff47fc3a18">generate_fwd_shock</a>(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">coord</a>, medium_, jet_, fwd_rad.<a class="code hl_variable" href="classPyRadiation.html#ac19d3052d34fc8c82280ec02a392edcb">rad</a>, rtol);</div>
+<div class="line"><span class="lineno">  634</span> </div>
+<div class="line"><span class="lineno">  635</span>        single_shock_emission(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">fwd_shock</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">coord</a>, t_obs, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">nu_obs</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">observer</a>, fwd_rad, <a class="code hl_function" href="classPyModel.html#a51390496a41c22c7c2dbb8838ac7a2d2">flux</a>.<a class="code hl_variable" href="structPyFlux.html#adde189e058cf4485bebf835f2d1ce9f0">fwd</a>,</div>
+<div class="line"><span class="lineno">  636</span>                              std::forward&lt;Func&gt;(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">flux_func</a>));</div>
+<div class="line"><span class="lineno">  637</span> </div>
+<div class="line"><span class="lineno">  638</span>        <span class="keywordflow">return</span> <a class="code hl_function" href="classPyModel.html#a51390496a41c22c7c2dbb8838ac7a2d2">flux</a>;</div>
+<div class="line"><span class="lineno">  639</span>    } <span class="keywordflow">else</span> {</div>
+<div class="line"><span class="lineno">  640</span>        <span class="keyword">auto</span> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">rvs_rad</a> = *rvs_rad_opt;</div>
+<div class="line"><span class="lineno">  641</span>        <span class="keyword">auto</span> [<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">fwd_shock</a>, rvs_shock] = <a class="code hl_function" href="reverse-shock_8hpp.html#ab50c063a2b81579f107e7e79f12961b0">generate_shock_pair</a>(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">coord</a>, medium_, jet_, fwd_rad.<a class="code hl_variable" href="classPyRadiation.html#ac19d3052d34fc8c82280ec02a392edcb">rad</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">rvs_rad</a>.rad, rtol);</div>
+<div class="line"><span class="lineno">  642</span> </div>
+<div class="line"><span class="lineno">  643</span>        single_shock_emission(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">fwd_shock</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">coord</a>, t_obs, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">nu_obs</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">observer</a>, fwd_rad, <a class="code hl_function" href="classPyModel.html#a51390496a41c22c7c2dbb8838ac7a2d2">flux</a>.<a class="code hl_variable" href="structPyFlux.html#adde189e058cf4485bebf835f2d1ce9f0">fwd</a>,</div>
+<div class="line"><span class="lineno">  644</span>                              std::forward&lt;Func&gt;(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">flux_func</a>));</div>
+<div class="line"><span class="lineno">  645</span> </div>
+<div class="line"><span class="lineno">  646</span>        single_shock_emission(rvs_shock, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">coord</a>, t_obs, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">nu_obs</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">observer</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">rvs_rad</a>, <a class="code hl_function" href="classPyModel.html#a51390496a41c22c7c2dbb8838ac7a2d2">flux</a>.<a class="code hl_variable" href="structPyFlux.html#adf8746d12353d9fa116cdff7356687a9">rvs</a>,</div>
+<div class="line"><span class="lineno">  647</span>                              std::forward&lt;Func&gt;(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">flux_func</a>));</div>
+<div class="line"><span class="lineno">  648</span> </div>
+<div class="line"><span class="lineno">  649</span>        <span class="keywordflow">return</span> <a class="code hl_function" href="classPyModel.html#a51390496a41c22c7c2dbb8838ac7a2d2">flux</a>;</div>
+<div class="line"><span class="lineno">  650</span>    }</div>
+<div class="line"><span class="lineno">  651</span>}</div>
 <div class="ttc" id="aclassCoord_html"><div class="ttname"><a href="classCoord.html">Coord</a></div><div class="ttdoc">Represents a coordinate system with arrays for phi, theta, and t.</div><div class="ttdef"><b>Definition</b> <a href="mesh_8h_source.html#l00055">mesh.h:55</a></div></div>
 <div class="ttc" id="aclassObserver_html"><div class="ttname"><a href="classObserver.html">Observer</a></div><div class="ttdoc">Represents an observer in the GRB afterglow simulation.</div><div class="ttdef"><b>Definition</b> <a href="observer_8h_source.html#l00028">observer.h:28</a></div></div>
-<div class="ttc" id="aclassPyModel_html_a51390496a41c22c7c2dbb8838ac7a2d2"><div class="ttname"><a href="classPyModel.html#a51390496a41c22c7c2dbb8838ac7a2d2">PyModel::flux</a></div><div class="ttdeci">PyFlux flux(PyArray const &amp;t, double nu_min, double nu_max, size_t num_nu)</div><div class="ttdoc">Calculate bolometric flux integrated over a frequency range.</div><div class="ttdef"><b>Definition</b> <a href="pymodel_8cpp_source.html#l00294">pymodel.cpp:294</a></div></div>
-<div class="ttc" id="aclassPyObserver_html_a44289f4d1236019685063b1ce914154d"><div class="ttname"><a href="classPyObserver.html#a44289f4d1236019685063b1ce914154d">PyObserver::theta_obs</a></div><div class="ttdeci">Real theta_obs</div><div class="ttdoc">Viewing angle [radians].</div><div class="ttdef"><b>Definition</b> <a href="pymodel_8h_source.html#l00232">pymodel.h:232</a></div></div>
-<div class="ttc" id="aclassPyObserver_html_a7eff175b5dc92c4b68ba024e940ee86f"><div class="ttname"><a href="classPyObserver.html#a7eff175b5dc92c4b68ba024e940ee86f">PyObserver::z</a></div><div class="ttdeci">Real z</div><div class="ttdoc">Redshift.</div><div class="ttdef"><b>Definition</b> <a href="pymodel_8h_source.html#l00231">pymodel.h:231</a></div></div>
-<div class="ttc" id="aclassPyRadiation_html_ac19d3052d34fc8c82280ec02a392edcb"><div class="ttname"><a href="classPyRadiation.html#ac19d3052d34fc8c82280ec02a392edcb">PyRadiation::rad</a></div><div class="ttdeci">RadParams rad</div><div class="ttdef"><b>Definition</b> <a href="pymodel_8h_source.html#l00268">pymodel.h:268</a></div></div>
+<div class="ttc" id="aclassPyModel_html_a51390496a41c22c7c2dbb8838ac7a2d2"><div class="ttname"><a href="classPyModel.html#a51390496a41c22c7c2dbb8838ac7a2d2">PyModel::flux</a></div><div class="ttdeci">PyFlux flux(PyArray const &amp;t, double nu_min, double nu_max, size_t num_nu)</div><div class="ttdoc">Calculate bolometric flux integrated over a frequency range.</div><div class="ttdef"><b>Definition</b> <a href="pymodel_8cpp_source.html#l00296">pymodel.cpp:296</a></div></div>
+<div class="ttc" id="aclassPyObserver_html_a44289f4d1236019685063b1ce914154d"><div class="ttname"><a href="classPyObserver.html#a44289f4d1236019685063b1ce914154d">PyObserver::theta_obs</a></div><div class="ttdeci">Real theta_obs</div><div class="ttdoc">Viewing angle [radians].</div><div class="ttdef"><b>Definition</b> <a href="pymodel_8h_source.html#l00233">pymodel.h:233</a></div></div>
+<div class="ttc" id="aclassPyObserver_html_a7eff175b5dc92c4b68ba024e940ee86f"><div class="ttname"><a href="classPyObserver.html#a7eff175b5dc92c4b68ba024e940ee86f">PyObserver::z</a></div><div class="ttdeci">Real z</div><div class="ttdoc">Redshift.</div><div class="ttdef"><b>Definition</b> <a href="pymodel_8h_source.html#l00232">pymodel.h:232</a></div></div>
+<div class="ttc" id="aclassPyRadiation_html_ac19d3052d34fc8c82280ec02a392edcb"><div class="ttname"><a href="classPyRadiation.html#ac19d3052d34fc8c82280ec02a392edcb">PyRadiation::rad</a></div><div class="ttdeci">RadParams rad</div><div class="ttdef"><b>Definition</b> <a href="pymodel_8h_source.html#l00269">pymodel.h:269</a></div></div>
 <div class="ttc" id="aforward-shock_8hpp_html_aa963867f4f98284c627afeff47fc3a18"><div class="ttname"><a href="forward-shock_8hpp.html#aa963867f4f98284c627afeff47fc3a18">generate_fwd_shock</a></div><div class="ttdeci">Shock generate_fwd_shock(Coord const &amp;coord, Medium const &amp;medium, Ejecta const &amp;jet, RadParams const &amp;rad_params, Real rtol=1e-5)</div><div class="ttdoc">Generates a forward shock model for given coordinates, medium, and jet parameters.</div></div>
 <div class="ttc" id="amesh_8h_html_a017f88b3242fdadb28e664f27725643a"><div class="ttname"><a href="mesh_8h.html#a017f88b3242fdadb28e664f27725643a">auto_grid</a></div><div class="ttdeci">Coord auto_grid(Ejecta const &amp;jet, Array const &amp;t_obs, Real theta_cut, Real theta_view, Real z, Real phi_ppd=0.3, Real theta_ppd=1, Real t_ppd=5, bool is_axisymmetric=true, Real phi_view=0)</div><div class="ttdoc">Constructs a coordinate grid (Coord) for shock evolution.</div><div class="ttdef"><b>Definition</b> <a href="mesh_8h_source.html#l00421">mesh.h:421</a></div></div>
 <div class="ttc" id="areverse-shock_8hpp_html_ab50c063a2b81579f107e7e79f12961b0"><div class="ttname"><a href="reverse-shock_8hpp.html#ab50c063a2b81579f107e7e79f12961b0">generate_shock_pair</a></div><div class="ttdeci">ShockPair generate_shock_pair(Coord const &amp;coord, Medium const &amp;medium, Ejecta const &amp;jet, RadParams const &amp;rad_fwd, RadParams const &amp;rad_rvs, Real rtol=1e-5)</div><div class="ttdoc">Generates a pair of forward and reverse shocks.</div></div>
-<div class="ttc" id="astructPyFlux_html"><div class="ttname"><a href="structPyFlux.html">PyFlux</a></div><div class="ttdoc">Complete flux structure combining forward and reverse shock contributions.</div><div class="ttdef"><b>Definition</b> <a href="pymodel_8h_source.html#l00312">pymodel.h:312</a></div></div>
-<div class="ttc" id="astructPyFlux_html_adde189e058cf4485bebf835f2d1ce9f0"><div class="ttname"><a href="structPyFlux.html#adde189e058cf4485bebf835f2d1ce9f0">PyFlux::fwd</a></div><div class="ttdeci">Flux fwd</div><div class="ttdoc">Forward shock emission components.</div><div class="ttdef"><b>Definition</b> <a href="pymodel_8h_source.html#l00314">pymodel.h:314</a></div></div>
-<div class="ttc" id="astructPyFlux_html_adf8746d12353d9fa116cdff7356687a9"><div class="ttname"><a href="structPyFlux.html#adf8746d12353d9fa116cdff7356687a9">PyFlux::rvs</a></div><div class="ttdeci">Flux rvs</div><div class="ttdoc">Reverse shock emission components.</div><div class="ttdef"><b>Definition</b> <a href="pymodel_8h_source.html#l00315">pymodel.h:315</a></div></div>
+<div class="ttc" id="astructPyFlux_html"><div class="ttname"><a href="structPyFlux.html">PyFlux</a></div><div class="ttdoc">Complete flux structure combining forward and reverse shock contributions.</div><div class="ttdef"><b>Definition</b> <a href="pymodel_8h_source.html#l00313">pymodel.h:313</a></div></div>
+<div class="ttc" id="astructPyFlux_html_adde189e058cf4485bebf835f2d1ce9f0"><div class="ttname"><a href="structPyFlux.html#adde189e058cf4485bebf835f2d1ce9f0">PyFlux::fwd</a></div><div class="ttdeci">Flux fwd</div><div class="ttdoc">Forward shock emission components.</div><div class="ttdef"><b>Definition</b> <a href="pymodel_8h_source.html#l00315">pymodel.h:315</a></div></div>
+<div class="ttc" id="astructPyFlux_html_adf8746d12353d9fa116cdff7356687a9"><div class="ttname"><a href="structPyFlux.html#adf8746d12353d9fa116cdff7356687a9">PyFlux::rvs</a></div><div class="ttdeci">Flux rvs</div><div class="ttdoc">Reverse shock emission components.</div><div class="ttdef"><b>Definition</b> <a href="pymodel_8h_source.html#l00316">pymodel.h:316</a></div></div>
 </div><!-- fragment --><div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -404,53 +411,53 @@ Here is the call graph for this function:</div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd><a class="el" href="structPyDetails.html" title="Complete simulation details including coordinate system and shock evolution.">PyDetails</a> Structure with comprehensive shock evolution details </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="pymodel_8cpp_source.html#l00222">222</a> of file <a class="el" href="pymodel_8cpp_source.html">pymodel.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  222</span>                                                         {</div>
-<div class="line"><span class="lineno">  223</span>    <a class="code hl_typedef" href="mesh_8h.html#afd05120c4d579ec7fa4906f677781a83">Array</a> t_obs = xt::logspace(std::log10(t_min * <a class="code hl_variable" href="namespaceunit.html#a4e7c438655d3f34c7c30a155ec38f250">unit::sec</a>), std::log10(t_max * <a class="code hl_variable" href="namespaceunit.html#a4e7c438655d3f34c7c30a155ec38f250">unit::sec</a>), 10);</div>
-<div class="line"><span class="lineno">  224</span>    <a class="code hl_class" href="classCoord.html">Coord</a> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">coord</a> = <a class="code hl_function" href="mesh_8h.html#a017f88b3242fdadb28e664f27725643a">auto_grid</a>(jet, t_obs, this-&gt;theta_w, obs_setup.<a class="code hl_variable" href="classPyObserver.html#a44289f4d1236019685063b1ce914154d">theta_obs</a>, obs_setup.<a class="code hl_variable" href="classPyObserver.html#a7eff175b5dc92c4b68ba024e940ee86f">z</a>, phi_resol, theta_resol,</div>
-<div class="line"><span class="lineno">  225</span>                            t_resol, axisymmetric);</div>
-<div class="line"><span class="lineno">  226</span> </div>
-<div class="line"><span class="lineno">  227</span>    <a class="code hl_struct" href="structPyDetails.html">PyDetails</a> <a class="code hl_function" href="classPyModel.html#a3440b0852a67952d09b9017ef6784fd0">details</a>;</div>
+<p class="definition">Definition at line <a class="el" href="pymodel_8cpp_source.html#l00224">224</a> of file <a class="el" href="pymodel_8cpp_source.html">pymodel.cpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  224</span>                                                         {</div>
+<div class="line"><span class="lineno">  225</span>    <a class="code hl_typedef" href="mesh_8h.html#afd05120c4d579ec7fa4906f677781a83">Array</a> t_obs = xt::logspace(std::log10(t_min * <a class="code hl_variable" href="namespaceunit.html#a4e7c438655d3f34c7c30a155ec38f250">unit::sec</a>), std::log10(t_max * <a class="code hl_variable" href="namespaceunit.html#a4e7c438655d3f34c7c30a155ec38f250">unit::sec</a>), 10);</div>
+<div class="line"><span class="lineno">  226</span>    <a class="code hl_class" href="classCoord.html">Coord</a> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">coord</a> = <a class="code hl_function" href="mesh_8h.html#a017f88b3242fdadb28e664f27725643a">auto_grid</a>(jet_, t_obs, this-&gt;theta_w, obs_setup.<a class="code hl_variable" href="classPyObserver.html#a44289f4d1236019685063b1ce914154d">theta_obs</a>, obs_setup.<a class="code hl_variable" href="classPyObserver.html#a7eff175b5dc92c4b68ba024e940ee86f">z</a>, phi_resol, theta_resol,</div>
+<div class="line"><span class="lineno">  227</span>                            t_resol, axisymmetric);</div>
 <div class="line"><span class="lineno">  228</span> </div>
-<div class="line"><span class="lineno">  229</span>    <a class="code hl_function" href="classPyModel.html#a3440b0852a67952d09b9017ef6784fd0">details</a>.<a class="code hl_variable" href="structPyDetails.html#a82763145522b56940d0c651cf1a23d6a">phi</a> = <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">coord</a>.phi;</div>
-<div class="line"><span class="lineno">  230</span>    <a class="code hl_function" href="classPyModel.html#a3440b0852a67952d09b9017ef6784fd0">details</a>.<a class="code hl_variable" href="structPyDetails.html#af69daff65e4fd6872b82763ede45b687">theta</a> = <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">coord</a>.theta;</div>
-<div class="line"><span class="lineno">  231</span>    <a class="code hl_function" href="classPyModel.html#a3440b0852a67952d09b9017ef6784fd0">details</a>.<a class="code hl_variable" href="structPyDetails.html#aa1225d4ad9d93e413ee20044fd180d64">t_src</a> = <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">coord</a>.t / <a class="code hl_variable" href="namespaceunit.html#a4e7c438655d3f34c7c30a155ec38f250">unit::sec</a>;</div>
-<div class="line"><span class="lineno">  232</span> </div>
-<div class="line"><span class="lineno">  233</span>    <a class="code hl_class" href="classObserver.html">Observer</a> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">observer</a>;</div>
+<div class="line"><span class="lineno">  229</span>    <a class="code hl_struct" href="structPyDetails.html">PyDetails</a> <a class="code hl_function" href="classPyModel.html#a3440b0852a67952d09b9017ef6784fd0">details</a>;</div>
+<div class="line"><span class="lineno">  230</span> </div>
+<div class="line"><span class="lineno">  231</span>    <a class="code hl_function" href="classPyModel.html#a3440b0852a67952d09b9017ef6784fd0">details</a>.<a class="code hl_variable" href="structPyDetails.html#a82763145522b56940d0c651cf1a23d6a">phi</a> = <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">coord</a>.phi;</div>
+<div class="line"><span class="lineno">  232</span>    <a class="code hl_function" href="classPyModel.html#a3440b0852a67952d09b9017ef6784fd0">details</a>.<a class="code hl_variable" href="structPyDetails.html#af69daff65e4fd6872b82763ede45b687">theta</a> = <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">coord</a>.theta;</div>
+<div class="line"><span class="lineno">  233</span>    <a class="code hl_function" href="classPyModel.html#a3440b0852a67952d09b9017ef6784fd0">details</a>.<a class="code hl_variable" href="structPyDetails.html#aa1225d4ad9d93e413ee20044fd180d64">t_src</a> = <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">coord</a>.t / <a class="code hl_variable" href="namespaceunit.html#a4e7c438655d3f34c7c30a155ec38f250">unit::sec</a>;</div>
 <div class="line"><span class="lineno">  234</span> </div>
-<div class="line"><span class="lineno">  235</span>    <span class="keywordflow">if</span> (!rvs_rad_opt) {</div>
-<div class="line"><span class="lineno">  236</span>        <span class="keyword">auto</span> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">fwd_shock</a> = <a class="code hl_function" href="forward-shock_8hpp.html#aa963867f4f98284c627afeff47fc3a18">generate_fwd_shock</a>(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">coord</a>, medium, jet, fwd_rad.<a class="code hl_variable" href="classPyRadiation.html#ac19d3052d34fc8c82280ec02a392edcb">rad</a>, rtol);</div>
-<div class="line"><span class="lineno">  237</span> </div>
-<div class="line"><span class="lineno">  238</span>        <a class="code hl_function" href="pymodel_8cpp.html#a8ffef75ec4ca3ef0464331eb194de1e5">save_shock_details</a>(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">fwd_shock</a>, <a class="code hl_function" href="classPyModel.html#a3440b0852a67952d09b9017ef6784fd0">details</a>.<a class="code hl_variable" href="structPyDetails.html#a790135e030da64decb6a2c29c64683fb">fwd</a>);</div>
+<div class="line"><span class="lineno">  235</span>    <a class="code hl_class" href="classObserver.html">Observer</a> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">observer</a>;</div>
+<div class="line"><span class="lineno">  236</span> </div>
+<div class="line"><span class="lineno">  237</span>    <span class="keywordflow">if</span> (!rvs_rad_opt) {</div>
+<div class="line"><span class="lineno">  238</span>        <span class="keyword">auto</span> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">fwd_shock</a> = <a class="code hl_function" href="forward-shock_8hpp.html#aa963867f4f98284c627afeff47fc3a18">generate_fwd_shock</a>(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">coord</a>, medium_, jet_, fwd_rad.<a class="code hl_variable" href="classPyRadiation.html#ac19d3052d34fc8c82280ec02a392edcb">rad</a>, rtol);</div>
 <div class="line"><span class="lineno">  239</span> </div>
-<div class="line"><span class="lineno">  240</span>        single_evo_details(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">fwd_shock</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">coord</a>, t_obs, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">observer</a>, fwd_rad, <a class="code hl_function" href="classPyModel.html#a3440b0852a67952d09b9017ef6784fd0">details</a>.<a class="code hl_variable" href="structPyDetails.html#a790135e030da64decb6a2c29c64683fb">fwd</a>);</div>
+<div class="line"><span class="lineno">  240</span>        <a class="code hl_function" href="pymodel_8cpp.html#a8ffef75ec4ca3ef0464331eb194de1e5">save_shock_details</a>(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">fwd_shock</a>, <a class="code hl_function" href="classPyModel.html#a3440b0852a67952d09b9017ef6784fd0">details</a>.<a class="code hl_variable" href="structPyDetails.html#a790135e030da64decb6a2c29c64683fb">fwd</a>);</div>
 <div class="line"><span class="lineno">  241</span> </div>
-<div class="line"><span class="lineno">  242</span>        <span class="keywordflow">return</span> <a class="code hl_function" href="classPyModel.html#a3440b0852a67952d09b9017ef6784fd0">details</a>;</div>
-<div class="line"><span class="lineno">  243</span>    } <span class="keywordflow">else</span> {</div>
-<div class="line"><span class="lineno">  244</span>        <span class="keyword">auto</span> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">rvs_rad</a> = *rvs_rad_opt;</div>
-<div class="line"><span class="lineno">  245</span>        <span class="keyword">auto</span> [<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">fwd_shock</a>, rvs_shock] = <a class="code hl_function" href="reverse-shock_8hpp.html#ab50c063a2b81579f107e7e79f12961b0">generate_shock_pair</a>(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">coord</a>, medium, jet, fwd_rad.<a class="code hl_variable" href="classPyRadiation.html#ac19d3052d34fc8c82280ec02a392edcb">rad</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">rvs_rad</a>.rad, rtol);</div>
-<div class="line"><span class="lineno">  246</span> </div>
-<div class="line"><span class="lineno">  247</span>        <a class="code hl_function" href="pymodel_8cpp.html#a8ffef75ec4ca3ef0464331eb194de1e5">save_shock_details</a>(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">fwd_shock</a>, <a class="code hl_function" href="classPyModel.html#a3440b0852a67952d09b9017ef6784fd0">details</a>.<a class="code hl_variable" href="structPyDetails.html#a790135e030da64decb6a2c29c64683fb">fwd</a>);</div>
+<div class="line"><span class="lineno">  242</span>        single_evo_details(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">fwd_shock</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">coord</a>, t_obs, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">observer</a>, fwd_rad, <a class="code hl_function" href="classPyModel.html#a3440b0852a67952d09b9017ef6784fd0">details</a>.<a class="code hl_variable" href="structPyDetails.html#a790135e030da64decb6a2c29c64683fb">fwd</a>);</div>
+<div class="line"><span class="lineno">  243</span> </div>
+<div class="line"><span class="lineno">  244</span>        <span class="keywordflow">return</span> <a class="code hl_function" href="classPyModel.html#a3440b0852a67952d09b9017ef6784fd0">details</a>;</div>
+<div class="line"><span class="lineno">  245</span>    } <span class="keywordflow">else</span> {</div>
+<div class="line"><span class="lineno">  246</span>        <span class="keyword">auto</span> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">rvs_rad</a> = *rvs_rad_opt;</div>
+<div class="line"><span class="lineno">  247</span>        <span class="keyword">auto</span> [<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">fwd_shock</a>, rvs_shock] = <a class="code hl_function" href="reverse-shock_8hpp.html#ab50c063a2b81579f107e7e79f12961b0">generate_shock_pair</a>(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">coord</a>, medium_, jet_, fwd_rad.<a class="code hl_variable" href="classPyRadiation.html#ac19d3052d34fc8c82280ec02a392edcb">rad</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">rvs_rad</a>.rad, rtol);</div>
 <div class="line"><span class="lineno">  248</span> </div>
-<div class="line"><span class="lineno">  249</span>        <a class="code hl_function" href="pymodel_8cpp.html#a8ffef75ec4ca3ef0464331eb194de1e5">save_shock_details</a>(rvs_shock, <a class="code hl_function" href="classPyModel.html#a3440b0852a67952d09b9017ef6784fd0">details</a>.<a class="code hl_variable" href="structPyDetails.html#ac996eb361b1a82e930e32cf38416b5fe">rvs</a>);</div>
+<div class="line"><span class="lineno">  249</span>        <a class="code hl_function" href="pymodel_8cpp.html#a8ffef75ec4ca3ef0464331eb194de1e5">save_shock_details</a>(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">fwd_shock</a>, <a class="code hl_function" href="classPyModel.html#a3440b0852a67952d09b9017ef6784fd0">details</a>.<a class="code hl_variable" href="structPyDetails.html#a790135e030da64decb6a2c29c64683fb">fwd</a>);</div>
 <div class="line"><span class="lineno">  250</span> </div>
-<div class="line"><span class="lineno">  251</span>        single_evo_details(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">fwd_shock</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">coord</a>, t_obs, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">observer</a>, fwd_rad, <a class="code hl_function" href="classPyModel.html#a3440b0852a67952d09b9017ef6784fd0">details</a>.<a class="code hl_variable" href="structPyDetails.html#a790135e030da64decb6a2c29c64683fb">fwd</a>);</div>
+<div class="line"><span class="lineno">  251</span>        <a class="code hl_function" href="pymodel_8cpp.html#a8ffef75ec4ca3ef0464331eb194de1e5">save_shock_details</a>(rvs_shock, <a class="code hl_function" href="classPyModel.html#a3440b0852a67952d09b9017ef6784fd0">details</a>.<a class="code hl_variable" href="structPyDetails.html#ac996eb361b1a82e930e32cf38416b5fe">rvs</a>);</div>
 <div class="line"><span class="lineno">  252</span> </div>
-<div class="line"><span class="lineno">  253</span>        single_evo_details(rvs_shock, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">coord</a>, t_obs, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">observer</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">rvs_rad</a>, <a class="code hl_function" href="classPyModel.html#a3440b0852a67952d09b9017ef6784fd0">details</a>.<a class="code hl_variable" href="structPyDetails.html#ac996eb361b1a82e930e32cf38416b5fe">rvs</a>);</div>
+<div class="line"><span class="lineno">  253</span>        single_evo_details(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">fwd_shock</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">coord</a>, t_obs, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">observer</a>, fwd_rad, <a class="code hl_function" href="classPyModel.html#a3440b0852a67952d09b9017ef6784fd0">details</a>.<a class="code hl_variable" href="structPyDetails.html#a790135e030da64decb6a2c29c64683fb">fwd</a>);</div>
 <div class="line"><span class="lineno">  254</span> </div>
-<div class="line"><span class="lineno">  255</span>        <span class="keywordflow">return</span> <a class="code hl_function" href="classPyModel.html#a3440b0852a67952d09b9017ef6784fd0">details</a>;</div>
-<div class="line"><span class="lineno">  256</span>    }</div>
-<div class="line"><span class="lineno">  257</span>}</div>
-<div class="ttc" id="aclassPyModel_html_a3440b0852a67952d09b9017ef6784fd0"><div class="ttname"><a href="classPyModel.html#a3440b0852a67952d09b9017ef6784fd0">PyModel::details</a></div><div class="ttdeci">PyDetails details(Real t_min, Real t_max)</div><div class="ttdoc">Get comprehensive details of the shock evolution and model configuration.</div><div class="ttdef"><b>Definition</b> <a href="pymodel_8cpp_source.html#l00222">pymodel.cpp:222</a></div></div>
+<div class="line"><span class="lineno">  255</span>        single_evo_details(rvs_shock, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">coord</a>, t_obs, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">observer</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">rvs_rad</a>, <a class="code hl_function" href="classPyModel.html#a3440b0852a67952d09b9017ef6784fd0">details</a>.<a class="code hl_variable" href="structPyDetails.html#ac996eb361b1a82e930e32cf38416b5fe">rvs</a>);</div>
+<div class="line"><span class="lineno">  256</span> </div>
+<div class="line"><span class="lineno">  257</span>        <span class="keywordflow">return</span> <a class="code hl_function" href="classPyModel.html#a3440b0852a67952d09b9017ef6784fd0">details</a>;</div>
+<div class="line"><span class="lineno">  258</span>    }</div>
+<div class="line"><span class="lineno">  259</span>}</div>
+<div class="ttc" id="aclassPyModel_html_a3440b0852a67952d09b9017ef6784fd0"><div class="ttname"><a href="classPyModel.html#a3440b0852a67952d09b9017ef6784fd0">PyModel::details</a></div><div class="ttdeci">PyDetails details(Real t_min, Real t_max)</div><div class="ttdoc">Get comprehensive details of the shock evolution and model configuration.</div><div class="ttdef"><b>Definition</b> <a href="pymodel_8cpp_source.html#l00224">pymodel.cpp:224</a></div></div>
 <div class="ttc" id="amesh_8h_html_afd05120c4d579ec7fa4906f677781a83"><div class="ttname"><a href="mesh_8h.html#afd05120c4d579ec7fa4906f677781a83">Array</a></div><div class="ttdeci">xt::xtensor&lt; Real, 1 &gt; Array</div><div class="ttdoc">Type alias for 1D arrays (e.g., time points)</div><div class="ttdef"><b>Definition</b> <a href="mesh_8h_source.html#l00038">mesh.h:38</a></div></div>
 <div class="ttc" id="anamespaceunit_html_a4e7c438655d3f34c7c30a155ec38f250"><div class="ttname"><a href="namespaceunit.html#a4e7c438655d3f34c7c30a155ec38f250">unit::sec</a></div><div class="ttdeci">constexpr Real sec</div><div class="ttdoc">Second in code units.</div><div class="ttdef"><b>Definition</b> <a href="macros_8h_source.html#l00044">macros.h:44</a></div></div>
-<div class="ttc" id="apymodel_8cpp_html_a8ffef75ec4ca3ef0464331eb194de1e5"><div class="ttname"><a href="pymodel_8cpp.html#a8ffef75ec4ca3ef0464331eb194de1e5">save_shock_details</a></div><div class="ttdeci">void save_shock_details(Shock const &amp;shock, PyShock &amp;details)</div><div class="ttdef"><b>Definition</b> <a href="pymodel_8cpp_source.html#l00144">pymodel.cpp:144</a></div></div>
-<div class="ttc" id="astructPyDetails_html"><div class="ttname"><a href="structPyDetails.html">PyDetails</a></div><div class="ttdoc">Complete simulation details including coordinate system and shock evolution.</div><div class="ttdef"><b>Definition</b> <a href="pymodel_8h_source.html#l00362">pymodel.h:362</a></div></div>
-<div class="ttc" id="astructPyDetails_html_a790135e030da64decb6a2c29c64683fb"><div class="ttname"><a href="structPyDetails.html#a790135e030da64decb6a2c29c64683fb">PyDetails::fwd</a></div><div class="ttdeci">PyShock fwd</div><div class="ttdoc">Forward shock evolution details.</div><div class="ttdef"><b>Definition</b> <a href="pymodel_8h_source.html#l00367">pymodel.h:367</a></div></div>
-<div class="ttc" id="astructPyDetails_html_a82763145522b56940d0c651cf1a23d6a"><div class="ttname"><a href="structPyDetails.html#a82763145522b56940d0c651cf1a23d6a">PyDetails::phi</a></div><div class="ttdeci">XTArray phi</div><div class="ttdoc">Azimuthal coordinate array [rad].</div><div class="ttdef"><b>Definition</b> <a href="pymodel_8h_source.html#l00363">pymodel.h:363</a></div></div>
-<div class="ttc" id="astructPyDetails_html_aa1225d4ad9d93e413ee20044fd180d64"><div class="ttname"><a href="structPyDetails.html#aa1225d4ad9d93e413ee20044fd180d64">PyDetails::t_src</a></div><div class="ttdeci">XTArray t_src</div><div class="ttdoc">Source frame time array [s].</div><div class="ttdef"><b>Definition</b> <a href="pymodel_8h_source.html#l00365">pymodel.h:365</a></div></div>
-<div class="ttc" id="astructPyDetails_html_ac996eb361b1a82e930e32cf38416b5fe"><div class="ttname"><a href="structPyDetails.html#ac996eb361b1a82e930e32cf38416b5fe">PyDetails::rvs</a></div><div class="ttdeci">PyShock rvs</div><div class="ttdoc">Reverse shock evolution details.</div><div class="ttdef"><b>Definition</b> <a href="pymodel_8h_source.html#l00368">pymodel.h:368</a></div></div>
-<div class="ttc" id="astructPyDetails_html_af69daff65e4fd6872b82763ede45b687"><div class="ttname"><a href="structPyDetails.html#af69daff65e4fd6872b82763ede45b687">PyDetails::theta</a></div><div class="ttdeci">XTArray theta</div><div class="ttdoc">Polar coordinate array [rad].</div><div class="ttdef"><b>Definition</b> <a href="pymodel_8h_source.html#l00364">pymodel.h:364</a></div></div>
+<div class="ttc" id="apymodel_8cpp_html_a8ffef75ec4ca3ef0464331eb194de1e5"><div class="ttname"><a href="pymodel_8cpp.html#a8ffef75ec4ca3ef0464331eb194de1e5">save_shock_details</a></div><div class="ttdeci">void save_shock_details(Shock const &amp;shock, PyShock &amp;details)</div><div class="ttdef"><b>Definition</b> <a href="pymodel_8cpp_source.html#l00146">pymodel.cpp:146</a></div></div>
+<div class="ttc" id="astructPyDetails_html"><div class="ttname"><a href="structPyDetails.html">PyDetails</a></div><div class="ttdoc">Complete simulation details including coordinate system and shock evolution.</div><div class="ttdef"><b>Definition</b> <a href="pymodel_8h_source.html#l00363">pymodel.h:363</a></div></div>
+<div class="ttc" id="astructPyDetails_html_a790135e030da64decb6a2c29c64683fb"><div class="ttname"><a href="structPyDetails.html#a790135e030da64decb6a2c29c64683fb">PyDetails::fwd</a></div><div class="ttdeci">PyShock fwd</div><div class="ttdoc">Forward shock evolution details.</div><div class="ttdef"><b>Definition</b> <a href="pymodel_8h_source.html#l00368">pymodel.h:368</a></div></div>
+<div class="ttc" id="astructPyDetails_html_a82763145522b56940d0c651cf1a23d6a"><div class="ttname"><a href="structPyDetails.html#a82763145522b56940d0c651cf1a23d6a">PyDetails::phi</a></div><div class="ttdeci">XTArray phi</div><div class="ttdoc">Azimuthal coordinate array [rad].</div><div class="ttdef"><b>Definition</b> <a href="pymodel_8h_source.html#l00364">pymodel.h:364</a></div></div>
+<div class="ttc" id="astructPyDetails_html_aa1225d4ad9d93e413ee20044fd180d64"><div class="ttname"><a href="structPyDetails.html#aa1225d4ad9d93e413ee20044fd180d64">PyDetails::t_src</a></div><div class="ttdeci">XTArray t_src</div><div class="ttdoc">Source frame time array [s].</div><div class="ttdef"><b>Definition</b> <a href="pymodel_8h_source.html#l00366">pymodel.h:366</a></div></div>
+<div class="ttc" id="astructPyDetails_html_ac996eb361b1a82e930e32cf38416b5fe"><div class="ttname"><a href="structPyDetails.html#ac996eb361b1a82e930e32cf38416b5fe">PyDetails::rvs</a></div><div class="ttdeci">PyShock rvs</div><div class="ttdoc">Reverse shock evolution details.</div><div class="ttdef"><b>Definition</b> <a href="pymodel_8h_source.html#l00369">pymodel.h:369</a></div></div>
+<div class="ttc" id="astructPyDetails_html_af69daff65e4fd6872b82763ede45b687"><div class="ttname"><a href="structPyDetails.html#af69daff65e4fd6872b82763ede45b687">PyDetails::theta</a></div><div class="ttdeci">XTArray theta</div><div class="ttdoc">Polar coordinate array [rad].</div><div class="ttdef"><b>Definition</b> <a href="pymodel_8h_source.html#l00365">pymodel.h:365</a></div></div>
 </div><!-- fragment --><div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -556,27 +563,27 @@ Here is the caller graph for this function:</div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd><a class="el" href="structPyFlux.html" title="Complete flux structure combining forward and reverse shock contributions.">PyFlux</a> Structure with synchrotron and inverse Compton flux components </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="pymodel_8cpp_source.html#l00294">294</a> of file <a class="el" href="pymodel_8cpp_source.html">pymodel.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  294</span>                                                                                          {</div>
-<div class="line"><span class="lineno">  295</span>    <a class="code hl_define" href="error__handling_8h.html#a25363cb5c3a0257b7026be3291271331">AFTERGLOW_REQUIRE</a>(<a class="code hl_function" href="pybind_8h.html#a65fbb7ac1dd1f2667e68724a512f691c">is_ascending</a>(t), <span class="stringliteral">&quot;time array must be in ascending order&quot;</span>);</div>
-<div class="line"><span class="lineno">  296</span> </div>
-<div class="line"><span class="lineno">  297</span>    <span class="comment">// Generate frequency array</span></div>
-<div class="line"><span class="lineno">  298</span>    <a class="code hl_typedef" href="mesh_8h.html#afd05120c4d579ec7fa4906f677781a83">Array</a> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">nu_obs</a> = xt::logspace(std::log10(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">nu_min</a> * <a class="code hl_variable" href="namespaceunit.html#a78d8f4bc3be7867d8171f2759251dad1">unit::Hz</a>), std::log10(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">nu_max</a> * <a class="code hl_variable" href="namespaceunit.html#a78d8f4bc3be7867d8171f2759251dad1">unit::Hz</a>), <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">num_nu</a>);</div>
-<div class="line"><span class="lineno">  299</span>    <a class="code hl_typedef" href="mesh_8h.html#afd05120c4d579ec7fa4906f677781a83">Array</a> t_obs = t * <a class="code hl_variable" href="namespaceunit.html#a4e7c438655d3f34c7c30a155ec38f250">unit::sec</a>;</div>
-<div class="line"><span class="lineno">  300</span> </div>
-<div class="line"><span class="lineno">  301</span>    <span class="keyword">auto</span> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">flux_func</a> = [](<a class="code hl_class" href="classObserver.html">Observer</a>&amp; <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">obs</a>, <a class="code hl_typedef" href="mesh_8h.html#afd05120c4d579ec7fa4906f677781a83">Array</a> <span class="keyword">const</span>&amp; t, <a class="code hl_typedef" href="mesh_8h.html#afd05120c4d579ec7fa4906f677781a83">Array</a> <span class="keyword">const</span>&amp; nu, <span class="keyword">auto</span>&amp; photons) -&gt; <a class="code hl_typedef" href="pymodel_8h.html#a8e0af37a4c52f45f722b280057db88a8">XTArray</a> {</div>
-<div class="line"><span class="lineno">  302</span>        <span class="keywordflow">return</span> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">obs</a>.flux(t, nu, photons) / <a class="code hl_variable" href="namespaceunit.html#ad35a8d191f16b2928b242ef566cca653">unit::flux_cgs</a>;</div>
-<div class="line"><span class="lineno">  303</span>    };</div>
-<div class="line"><span class="lineno">  304</span> </div>
-<div class="line"><span class="lineno">  305</span>    <span class="keyword">auto</span> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">result</a> = compute_emission(t_obs, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">nu_obs</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">flux_func</a>);</div>
-<div class="line"><span class="lineno">  306</span>    <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">result</a>.calc_total();</div>
-<div class="line"><span class="lineno">  307</span>    <span class="keywordflow">return</span> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">result</a>;</div>
-<div class="line"><span class="lineno">  308</span>}</div>
+<p class="definition">Definition at line <a class="el" href="pymodel_8cpp_source.html#l00296">296</a> of file <a class="el" href="pymodel_8cpp_source.html">pymodel.cpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  296</span>                                                                                          {</div>
+<div class="line"><span class="lineno">  297</span>    <a class="code hl_define" href="error__handling_8h.html#a25363cb5c3a0257b7026be3291271331">AFTERGLOW_REQUIRE</a>(<a class="code hl_function" href="pybind_8h.html#a65fbb7ac1dd1f2667e68724a512f691c">is_ascending</a>(t), <span class="stringliteral">&quot;time array must be in ascending order&quot;</span>);</div>
+<div class="line"><span class="lineno">  298</span> </div>
+<div class="line"><span class="lineno">  299</span>    <span class="comment">// Generate frequency array</span></div>
+<div class="line"><span class="lineno">  300</span>    <a class="code hl_typedef" href="mesh_8h.html#afd05120c4d579ec7fa4906f677781a83">Array</a> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">nu_obs</a> = xt::logspace(std::log10(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">nu_min</a> * <a class="code hl_variable" href="namespaceunit.html#a78d8f4bc3be7867d8171f2759251dad1">unit::Hz</a>), std::log10(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">nu_max</a> * <a class="code hl_variable" href="namespaceunit.html#a78d8f4bc3be7867d8171f2759251dad1">unit::Hz</a>), <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">num_nu</a>);</div>
+<div class="line"><span class="lineno">  301</span>    <a class="code hl_typedef" href="mesh_8h.html#afd05120c4d579ec7fa4906f677781a83">Array</a> t_obs = t * <a class="code hl_variable" href="namespaceunit.html#a4e7c438655d3f34c7c30a155ec38f250">unit::sec</a>;</div>
+<div class="line"><span class="lineno">  302</span> </div>
+<div class="line"><span class="lineno">  303</span>    <span class="keyword">auto</span> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">flux_func</a> = [](<a class="code hl_class" href="classObserver.html">Observer</a>&amp; <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">obs</a>, <a class="code hl_typedef" href="mesh_8h.html#afd05120c4d579ec7fa4906f677781a83">Array</a> <span class="keyword">const</span>&amp; t, <a class="code hl_typedef" href="mesh_8h.html#afd05120c4d579ec7fa4906f677781a83">Array</a> <span class="keyword">const</span>&amp; nu, <span class="keyword">auto</span>&amp; photons) -&gt; <a class="code hl_typedef" href="pymodel_8h.html#a8e0af37a4c52f45f722b280057db88a8">XTArray</a> {</div>
+<div class="line"><span class="lineno">  304</span>        <span class="keywordflow">return</span> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">obs</a>.flux(t, nu, photons) / <a class="code hl_variable" href="namespaceunit.html#ad35a8d191f16b2928b242ef566cca653">unit::flux_cgs</a>;</div>
+<div class="line"><span class="lineno">  305</span>    };</div>
+<div class="line"><span class="lineno">  306</span> </div>
+<div class="line"><span class="lineno">  307</span>    <span class="keyword">auto</span> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">result</a> = compute_emission(t_obs, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">nu_obs</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">flux_func</a>);</div>
+<div class="line"><span class="lineno">  308</span>    <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">result</a>.calc_total();</div>
+<div class="line"><span class="lineno">  309</span>    <span class="keywordflow">return</span> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">result</a>;</div>
+<div class="line"><span class="lineno">  310</span>}</div>
 <div class="ttc" id="aerror__handling_8h_html_a25363cb5c3a0257b7026be3291271331"><div class="ttname"><a href="error__handling_8h.html#a25363cb5c3a0257b7026be3291271331">AFTERGLOW_REQUIRE</a></div><div class="ttdeci">#define AFTERGLOW_REQUIRE(condition, message)</div><div class="ttdef"><b>Definition</b> <a href="error__handling_8h_source.html#l00042">error_handling.h:42</a></div></div>
 <div class="ttc" id="anamespaceunit_html_a78d8f4bc3be7867d8171f2759251dad1"><div class="ttname"><a href="namespaceunit.html#a78d8f4bc3be7867d8171f2759251dad1">unit::Hz</a></div><div class="ttdeci">constexpr Real Hz</div><div class="ttdoc">Hertz (frequency) in code units.</div><div class="ttdef"><b>Definition</b> <a href="macros_8h_source.html#l00050">macros.h:50</a></div></div>
 <div class="ttc" id="anamespaceunit_html_ad35a8d191f16b2928b242ef566cca653"><div class="ttname"><a href="namespaceunit.html#ad35a8d191f16b2928b242ef566cca653">unit::flux_cgs</a></div><div class="ttdeci">constexpr Real flux_cgs</div><div class="ttdoc">Flux in CGS units.</div><div class="ttdef"><b>Definition</b> <a href="macros_8h_source.html#l00059">macros.h:59</a></div></div>
 <div class="ttc" id="apybind_8h_html_a65fbb7ac1dd1f2667e68724a512f691c"><div class="ttname"><a href="pybind_8h.html#a65fbb7ac1dd1f2667e68724a512f691c">is_ascending</a></div><div class="ttdeci">bool is_ascending(Array const &amp;arr)</div><div class="ttdef"><b>Definition</b> <a href="pybind_8h_source.html#l00020">pybind.h:20</a></div></div>
-<div class="ttc" id="apymodel_8h_html_a8e0af37a4c52f45f722b280057db88a8"><div class="ttname"><a href="pymodel_8h.html#a8e0af37a4c52f45f722b280057db88a8">XTArray</a></div><div class="ttdeci">xt::xarray&lt; Real &gt; XTArray</div><div class="ttdef"><b>Definition</b> <a href="pymodel_8h_source.html#l00287">pymodel.h:287</a></div></div>
+<div class="ttc" id="apymodel_8h_html_a8e0af37a4c52f45f722b280057db88a8"><div class="ttname"><a href="pymodel_8h.html#a8e0af37a4c52f45f722b280057db88a8">XTArray</a></div><div class="ttdeci">xt::xarray&lt; Real &gt; XTArray</div><div class="ttdef"><b>Definition</b> <a href="pymodel_8h_source.html#l00288">pymodel.h:288</a></div></div>
 </div><!-- fragment --><div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -640,25 +647,25 @@ Here is the caller graph for this function:</div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd><a class="el" href="structPyFlux.html" title="Complete flux structure combining forward and reverse shock contributions.">PyFlux</a> Structure with synchrotron and inverse Compton flux components </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="pymodel_8cpp_source.html#l00275">275</a> of file <a class="el" href="pymodel_8cpp_source.html">pymodel.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  275</span>                                                                        {</div>
-<div class="line"><span class="lineno">  276</span>    <a class="code hl_define" href="error__handling_8h.html#a25363cb5c3a0257b7026be3291271331">AFTERGLOW_REQUIRE</a>(</div>
-<div class="line"><span class="lineno">  277</span>        t.size() == nu.size(),</div>
-<div class="line"><span class="lineno">  278</span>        <span class="stringliteral">&quot;time and frequency arrays must have the same size\nIf you intend to get grid-like output, use the &quot;</span></div>
-<div class="line"><span class="lineno">  279</span>        <span class="stringliteral">&quot;generic `flux_density_grid` instead&quot;</span>);</div>
-<div class="line"><span class="lineno">  280</span>    <a class="code hl_define" href="error__handling_8h.html#a25363cb5c3a0257b7026be3291271331">AFTERGLOW_REQUIRE</a>(<a class="code hl_function" href="pybind_8h.html#a65fbb7ac1dd1f2667e68724a512f691c">is_ascending</a>(t), <span class="stringliteral">&quot;time array must be in ascending order&quot;</span>);</div>
-<div class="line"><span class="lineno">  281</span> </div>
-<div class="line"><span class="lineno">  282</span>    <a class="code hl_typedef" href="mesh_8h.html#afd05120c4d579ec7fa4906f677781a83">Array</a> t_obs = t * <a class="code hl_variable" href="namespaceunit.html#a4e7c438655d3f34c7c30a155ec38f250">unit::sec</a>;</div>
-<div class="line"><span class="lineno">  283</span>    <a class="code hl_typedef" href="mesh_8h.html#afd05120c4d579ec7fa4906f677781a83">Array</a> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">nu_obs</a> = nu * <a class="code hl_variable" href="namespaceunit.html#a78d8f4bc3be7867d8171f2759251dad1">unit::Hz</a>;</div>
-<div class="line"><span class="lineno">  284</span> </div>
-<div class="line"><span class="lineno">  285</span>    <span class="keyword">auto</span> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">flux_func</a> = [](<a class="code hl_class" href="classObserver.html">Observer</a>&amp; <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">obs</a>, <a class="code hl_typedef" href="mesh_8h.html#afd05120c4d579ec7fa4906f677781a83">Array</a> <span class="keyword">const</span>&amp; t, <a class="code hl_typedef" href="mesh_8h.html#afd05120c4d579ec7fa4906f677781a83">Array</a> <span class="keyword">const</span>&amp; nu, <span class="keyword">auto</span>&amp; photons) -&gt; <a class="code hl_typedef" href="pymodel_8h.html#a8e0af37a4c52f45f722b280057db88a8">XTArray</a> {</div>
-<div class="line"><span class="lineno">  286</span>        <span class="keywordflow">return</span> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">obs</a>.specific_flux_series(t, nu, photons) / <a class="code hl_variable" href="namespaceunit.html#a4808047893e65d1942893de10e0a9c97">unit::flux_den_cgs</a>;</div>
-<div class="line"><span class="lineno">  287</span>    };</div>
-<div class="line"><span class="lineno">  288</span> </div>
-<div class="line"><span class="lineno">  289</span>    <span class="keyword">auto</span> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">result</a> = compute_emission(t_obs, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">nu_obs</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">flux_func</a>);</div>
-<div class="line"><span class="lineno">  290</span>    <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">result</a>.calc_total();</div>
-<div class="line"><span class="lineno">  291</span>    <span class="keywordflow">return</span> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">result</a>;</div>
-<div class="line"><span class="lineno">  292</span>}</div>
+<p class="definition">Definition at line <a class="el" href="pymodel_8cpp_source.html#l00277">277</a> of file <a class="el" href="pymodel_8cpp_source.html">pymodel.cpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  277</span>                                                                        {</div>
+<div class="line"><span class="lineno">  278</span>    <a class="code hl_define" href="error__handling_8h.html#a25363cb5c3a0257b7026be3291271331">AFTERGLOW_REQUIRE</a>(</div>
+<div class="line"><span class="lineno">  279</span>        t.size() == nu.size(),</div>
+<div class="line"><span class="lineno">  280</span>        <span class="stringliteral">&quot;time and frequency arrays must have the same size\nIf you intend to get grid-like output, use the &quot;</span></div>
+<div class="line"><span class="lineno">  281</span>        <span class="stringliteral">&quot;generic `flux_density_grid` instead&quot;</span>);</div>
+<div class="line"><span class="lineno">  282</span>    <a class="code hl_define" href="error__handling_8h.html#a25363cb5c3a0257b7026be3291271331">AFTERGLOW_REQUIRE</a>(<a class="code hl_function" href="pybind_8h.html#a65fbb7ac1dd1f2667e68724a512f691c">is_ascending</a>(t), <span class="stringliteral">&quot;time array must be in ascending order&quot;</span>);</div>
+<div class="line"><span class="lineno">  283</span> </div>
+<div class="line"><span class="lineno">  284</span>    <a class="code hl_typedef" href="mesh_8h.html#afd05120c4d579ec7fa4906f677781a83">Array</a> t_obs = t * <a class="code hl_variable" href="namespaceunit.html#a4e7c438655d3f34c7c30a155ec38f250">unit::sec</a>;</div>
+<div class="line"><span class="lineno">  285</span>    <a class="code hl_typedef" href="mesh_8h.html#afd05120c4d579ec7fa4906f677781a83">Array</a> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">nu_obs</a> = nu * <a class="code hl_variable" href="namespaceunit.html#a78d8f4bc3be7867d8171f2759251dad1">unit::Hz</a>;</div>
+<div class="line"><span class="lineno">  286</span> </div>
+<div class="line"><span class="lineno">  287</span>    <span class="keyword">auto</span> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">flux_func</a> = [](<a class="code hl_class" href="classObserver.html">Observer</a>&amp; <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">obs</a>, <a class="code hl_typedef" href="mesh_8h.html#afd05120c4d579ec7fa4906f677781a83">Array</a> <span class="keyword">const</span>&amp; t, <a class="code hl_typedef" href="mesh_8h.html#afd05120c4d579ec7fa4906f677781a83">Array</a> <span class="keyword">const</span>&amp; nu, <span class="keyword">auto</span>&amp; photons) -&gt; <a class="code hl_typedef" href="pymodel_8h.html#a8e0af37a4c52f45f722b280057db88a8">XTArray</a> {</div>
+<div class="line"><span class="lineno">  288</span>        <span class="keywordflow">return</span> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">obs</a>.specific_flux_series(t, nu, photons) / <a class="code hl_variable" href="namespaceunit.html#a4808047893e65d1942893de10e0a9c97">unit::flux_den_cgs</a>;</div>
+<div class="line"><span class="lineno">  289</span>    };</div>
+<div class="line"><span class="lineno">  290</span> </div>
+<div class="line"><span class="lineno">  291</span>    <span class="keyword">auto</span> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">result</a> = compute_emission(t_obs, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">nu_obs</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">flux_func</a>);</div>
+<div class="line"><span class="lineno">  292</span>    <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">result</a>.calc_total();</div>
+<div class="line"><span class="lineno">  293</span>    <span class="keywordflow">return</span> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">result</a>;</div>
+<div class="line"><span class="lineno">  294</span>}</div>
 <div class="ttc" id="anamespaceunit_html_a4808047893e65d1942893de10e0a9c97"><div class="ttname"><a href="namespaceunit.html#a4808047893e65d1942893de10e0a9c97">unit::flux_den_cgs</a></div><div class="ttdeci">constexpr Real flux_den_cgs</div><div class="ttdoc">Flux density in CGS units.</div><div class="ttdef"><b>Definition</b> <a href="macros_8h_source.html#l00060">macros.h:60</a></div></div>
 </div><!-- fragment --><div class="dynheader">
 Here is the call graph for this function:</div>
@@ -737,25 +744,25 @@ Here is the caller graph for this function:</div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd><a class="el" href="structPyFlux.html" title="Complete flux structure combining forward and reverse shock contributions.">PyFlux</a> Structure with synchrotron and inverse Compton flux components </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="pymodel_8cpp_source.html#l00370">370</a> of file <a class="el" href="pymodel_8cpp_source.html">pymodel.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  371</span>              {</div>
-<div class="line"><span class="lineno">  372</span>    <a class="code hl_define" href="error__handling_8h.html#a25363cb5c3a0257b7026be3291271331">AFTERGLOW_REQUIRE</a>(t.size() == nu.size() &amp;&amp; t.size() == <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">expo_time</a>.size(),</div>
-<div class="line"><span class="lineno">  373</span>                      <span class="stringliteral">&quot;time, frequency, and exposure time arrays must have the same size&quot;</span>);</div>
-<div class="line"><span class="lineno">  374</span>    <a class="code hl_define" href="error__handling_8h.html#a25363cb5c3a0257b7026be3291271331">AFTERGLOW_REQUIRE</a>(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">num_points</a> &gt;= 2, <span class="stringliteral">&quot;num_points must be at least 2 to sample within each exposure time&quot;</span>);</div>
-<div class="line"><span class="lineno">  375</span> </div>
-<div class="line"><span class="lineno">  376</span>    <span class="keyword">auto</span> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">sampling</a> = generate_exposure_sampling(t, nu, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">expo_time</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">num_points</a>);</div>
+<p class="definition">Definition at line <a class="el" href="pymodel_8cpp_source.html#l00372">372</a> of file <a class="el" href="pymodel_8cpp_source.html">pymodel.cpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  373</span>              {</div>
+<div class="line"><span class="lineno">  374</span>    <a class="code hl_define" href="error__handling_8h.html#a25363cb5c3a0257b7026be3291271331">AFTERGLOW_REQUIRE</a>(t.size() == nu.size() &amp;&amp; t.size() == <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">expo_time</a>.size(),</div>
+<div class="line"><span class="lineno">  375</span>                      <span class="stringliteral">&quot;time, frequency, and exposure time arrays must have the same size&quot;</span>);</div>
+<div class="line"><span class="lineno">  376</span>    <a class="code hl_define" href="error__handling_8h.html#a25363cb5c3a0257b7026be3291271331">AFTERGLOW_REQUIRE</a>(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">num_points</a> &gt;= 2, <span class="stringliteral">&quot;num_points must be at least 2 to sample within each exposure time&quot;</span>);</div>
 <div class="line"><span class="lineno">  377</span> </div>
-<div class="line"><span class="lineno">  378</span>    <span class="keyword">auto</span> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">flux_func</a> = [](<a class="code hl_class" href="classObserver.html">Observer</a>&amp; <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">obs</a>, <a class="code hl_typedef" href="mesh_8h.html#afd05120c4d579ec7fa4906f677781a83">Array</a> <span class="keyword">const</span>&amp; t, <a class="code hl_typedef" href="mesh_8h.html#afd05120c4d579ec7fa4906f677781a83">Array</a> <span class="keyword">const</span>&amp; nu, <span class="keyword">auto</span>&amp; photons) -&gt; <a class="code hl_typedef" href="pymodel_8h.html#a8e0af37a4c52f45f722b280057db88a8">XTArray</a> {</div>
-<div class="line"><span class="lineno">  379</span>        <span class="keywordflow">return</span> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">obs</a>.specific_flux_series(t, nu, photons) / <a class="code hl_variable" href="namespaceunit.html#a4808047893e65d1942893de10e0a9c97">unit::flux_den_cgs</a>;</div>
-<div class="line"><span class="lineno">  380</span>    };</div>
-<div class="line"><span class="lineno">  381</span> </div>
-<div class="line"><span class="lineno">  382</span>    <span class="keyword">auto</span> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">result</a> = compute_emission(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">sampling</a>.t_obs_sorted, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">sampling</a>.nu_obs_sorted, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">flux_func</a>);</div>
+<div class="line"><span class="lineno">  378</span>    <span class="keyword">auto</span> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">sampling</a> = generate_exposure_sampling(t, nu, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">expo_time</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">num_points</a>);</div>
+<div class="line"><span class="lineno">  379</span> </div>
+<div class="line"><span class="lineno">  380</span>    <span class="keyword">auto</span> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">flux_func</a> = [](<a class="code hl_class" href="classObserver.html">Observer</a>&amp; <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">obs</a>, <a class="code hl_typedef" href="mesh_8h.html#afd05120c4d579ec7fa4906f677781a83">Array</a> <span class="keyword">const</span>&amp; t, <a class="code hl_typedef" href="mesh_8h.html#afd05120c4d579ec7fa4906f677781a83">Array</a> <span class="keyword">const</span>&amp; nu, <span class="keyword">auto</span>&amp; photons) -&gt; <a class="code hl_typedef" href="pymodel_8h.html#a8e0af37a4c52f45f722b280057db88a8">XTArray</a> {</div>
+<div class="line"><span class="lineno">  381</span>        <span class="keywordflow">return</span> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">obs</a>.specific_flux_series(t, nu, photons) / <a class="code hl_variable" href="namespaceunit.html#a4808047893e65d1942893de10e0a9c97">unit::flux_den_cgs</a>;</div>
+<div class="line"><span class="lineno">  382</span>    };</div>
 <div class="line"><span class="lineno">  383</span> </div>
-<div class="line"><span class="lineno">  384</span>    average_exposure_flux(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">result</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">sampling</a>.idx_sorted, t.size(), <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">num_points</a>);</div>
+<div class="line"><span class="lineno">  384</span>    <span class="keyword">auto</span> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">result</a> = compute_emission(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">sampling</a>.t_obs_sorted, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">sampling</a>.nu_obs_sorted, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">flux_func</a>);</div>
 <div class="line"><span class="lineno">  385</span> </div>
-<div class="line"><span class="lineno">  386</span>    <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">result</a>.calc_total();</div>
-<div class="line"><span class="lineno">  387</span>    <span class="keywordflow">return</span> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">result</a>;</div>
-<div class="line"><span class="lineno">  388</span>}</div>
+<div class="line"><span class="lineno">  386</span>    average_exposure_flux(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">result</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">sampling</a>.idx_sorted, t.size(), <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">num_points</a>);</div>
+<div class="line"><span class="lineno">  387</span> </div>
+<div class="line"><span class="lineno">  388</span>    <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">result</a>.calc_total();</div>
+<div class="line"><span class="lineno">  389</span>    <span class="keywordflow">return</span> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">result</a>;</div>
+<div class="line"><span class="lineno">  390</span>}</div>
 </div><!-- fragment --><div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -816,21 +823,21 @@ Here is the caller graph for this function:</div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd><a class="el" href="structPyFlux.html" title="Complete flux structure combining forward and reverse shock contributions.">PyFlux</a> Structure with synchrotron and inverse Compton flux components </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="pymodel_8cpp_source.html#l00390">390</a> of file <a class="el" href="pymodel_8cpp_source.html">pymodel.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  390</span>                                                                             {</div>
-<div class="line"><span class="lineno">  391</span>    <a class="code hl_define" href="error__handling_8h.html#a25363cb5c3a0257b7026be3291271331">AFTERGLOW_REQUIRE</a>(<a class="code hl_function" href="pybind_8h.html#a65fbb7ac1dd1f2667e68724a512f691c">is_ascending</a>(t), <span class="stringliteral">&quot;time array must be in ascending order&quot;</span>);</div>
-<div class="line"><span class="lineno">  392</span> </div>
-<div class="line"><span class="lineno">  393</span>    <a class="code hl_typedef" href="mesh_8h.html#afd05120c4d579ec7fa4906f677781a83">Array</a> t_obs = t * <a class="code hl_variable" href="namespaceunit.html#a4e7c438655d3f34c7c30a155ec38f250">unit::sec</a>;</div>
-<div class="line"><span class="lineno">  394</span>    <a class="code hl_typedef" href="mesh_8h.html#afd05120c4d579ec7fa4906f677781a83">Array</a> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">nu_obs</a> = nu * <a class="code hl_variable" href="namespaceunit.html#a78d8f4bc3be7867d8171f2759251dad1">unit::Hz</a>;</div>
-<div class="line"><span class="lineno">  395</span> </div>
-<div class="line"><span class="lineno">  396</span>    <span class="keyword">auto</span> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">flux_func</a> = [](<a class="code hl_class" href="classObserver.html">Observer</a>&amp; <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">obs</a>, <a class="code hl_typedef" href="mesh_8h.html#afd05120c4d579ec7fa4906f677781a83">Array</a> <span class="keyword">const</span>&amp; t, <a class="code hl_typedef" href="mesh_8h.html#afd05120c4d579ec7fa4906f677781a83">Array</a> <span class="keyword">const</span>&amp; nu, <span class="keyword">auto</span>&amp; photons) -&gt; <a class="code hl_typedef" href="pymodel_8h.html#a8e0af37a4c52f45f722b280057db88a8">XTArray</a> {</div>
-<div class="line"><span class="lineno">  397</span>        <span class="keywordflow">return</span> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">obs</a>.specific_flux(t, nu, photons) / <a class="code hl_variable" href="namespaceunit.html#a4808047893e65d1942893de10e0a9c97">unit::flux_den_cgs</a>;</div>
-<div class="line"><span class="lineno">  398</span>    };</div>
-<div class="line"><span class="lineno">  399</span> </div>
-<div class="line"><span class="lineno">  400</span>    <span class="keyword">auto</span> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">result</a> = compute_emission(t_obs, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">nu_obs</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">flux_func</a>);</div>
-<div class="line"><span class="lineno">  401</span>    <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">result</a>.calc_total();</div>
-<div class="line"><span class="lineno">  402</span>    <span class="keywordflow">return</span> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">result</a>;</div>
-<div class="line"><span class="lineno">  403</span>}</div>
+<p class="definition">Definition at line <a class="el" href="pymodel_8cpp_source.html#l00392">392</a> of file <a class="el" href="pymodel_8cpp_source.html">pymodel.cpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  392</span>                                                                             {</div>
+<div class="line"><span class="lineno">  393</span>    <a class="code hl_define" href="error__handling_8h.html#a25363cb5c3a0257b7026be3291271331">AFTERGLOW_REQUIRE</a>(<a class="code hl_function" href="pybind_8h.html#a65fbb7ac1dd1f2667e68724a512f691c">is_ascending</a>(t), <span class="stringliteral">&quot;time array must be in ascending order&quot;</span>);</div>
+<div class="line"><span class="lineno">  394</span> </div>
+<div class="line"><span class="lineno">  395</span>    <a class="code hl_typedef" href="mesh_8h.html#afd05120c4d579ec7fa4906f677781a83">Array</a> t_obs = t * <a class="code hl_variable" href="namespaceunit.html#a4e7c438655d3f34c7c30a155ec38f250">unit::sec</a>;</div>
+<div class="line"><span class="lineno">  396</span>    <a class="code hl_typedef" href="mesh_8h.html#afd05120c4d579ec7fa4906f677781a83">Array</a> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">nu_obs</a> = nu * <a class="code hl_variable" href="namespaceunit.html#a78d8f4bc3be7867d8171f2759251dad1">unit::Hz</a>;</div>
+<div class="line"><span class="lineno">  397</span> </div>
+<div class="line"><span class="lineno">  398</span>    <span class="keyword">auto</span> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">flux_func</a> = [](<a class="code hl_class" href="classObserver.html">Observer</a>&amp; <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">obs</a>, <a class="code hl_typedef" href="mesh_8h.html#afd05120c4d579ec7fa4906f677781a83">Array</a> <span class="keyword">const</span>&amp; t, <a class="code hl_typedef" href="mesh_8h.html#afd05120c4d579ec7fa4906f677781a83">Array</a> <span class="keyword">const</span>&amp; nu, <span class="keyword">auto</span>&amp; photons) -&gt; <a class="code hl_typedef" href="pymodel_8h.html#a8e0af37a4c52f45f722b280057db88a8">XTArray</a> {</div>
+<div class="line"><span class="lineno">  399</span>        <span class="keywordflow">return</span> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">obs</a>.specific_flux(t, nu, photons) / <a class="code hl_variable" href="namespaceunit.html#a4808047893e65d1942893de10e0a9c97">unit::flux_den_cgs</a>;</div>
+<div class="line"><span class="lineno">  400</span>    };</div>
+<div class="line"><span class="lineno">  401</span> </div>
+<div class="line"><span class="lineno">  402</span>    <span class="keyword">auto</span> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">result</a> = compute_emission(t_obs, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">nu_obs</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">flux_func</a>);</div>
+<div class="line"><span class="lineno">  403</span>    <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">result</a>.calc_total();</div>
+<div class="line"><span class="lineno">  404</span>    <span class="keywordflow">return</span> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">result</a>;</div>
+<div class="line"><span class="lineno">  405</span>}</div>
 </div><!-- fragment --><div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -853,6 +860,194 @@ Here is the caller graph for this function:</div>
 <area shape="rect" title="Calculate specific flux at given times and frequencies." alt="" coords="204,5,401,31"/>
 <area shape="rect" href="pybind_8cpp.html#a8c92987849ad296e28ec6c07c8e7860b" title=" " alt="" coords="5,5,156,31"/>
 <area shape="poly" title=" " alt="" coords="190,21,156,21,156,15,190,15"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="ae38662b3ca4b9c523ee46752efcfb9c8" name="ae38662b3ca4b9c523ee46752efcfb9c8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae38662b3ca4b9c523ee46752efcfb9c8">&#9670;&#160;</a></span>jet_E_iso()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="mesh_8h.html#afd05120c4d579ec7fa4906f677781a83">Array</a> PyModel::jet_E_iso </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a>&#160;</td>
+          <td class="paramname"><em>phi</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="mesh_8h.html#afd05120c4d579ec7fa4906f677781a83">Array</a> <a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">const</a> &amp;&#160;</td>
+          <td class="paramname"><em>theta</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="pymodel_8cpp_source.html#l00407">407</a> of file <a class="el" href="pymodel_8cpp_source.html">pymodel.cpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  407</span>                                                     {</div>
+<div class="line"><span class="lineno">  408</span>    <a class="code hl_typedef" href="mesh_8h.html#afd05120c4d579ec7fa4906f677781a83">Array</a> E_iso = xt::zeros&lt;Real&gt;(theta.shape());</div>
+<div class="line"><span class="lineno">  409</span>    <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a> = 0; <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a> &lt; theta.size(); ++<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a>) {</div>
+<div class="line"><span class="lineno">  410</span>        E_iso(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a>) = jet_.<a class="code hl_variable" href="classEjecta.html#a1952705ec5647300cd09255dcfc786cd">eps_k</a>(phi, theta(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a>)) / (<a class="code hl_variable" href="namespaceunit.html#a255e82bd3b0ebb273d6663111278d624">unit::erg</a> / (4 * <a class="code hl_variable" href="namespacecon.html#aa0ccd904b754d0f907898a942516d121">con::pi</a>));</div>
+<div class="line"><span class="lineno">  411</span>    }</div>
+<div class="line"><span class="lineno">  412</span>    <span class="keywordflow">return</span> E_iso;</div>
+<div class="line"><span class="lineno">  413</span>}</div>
+<div class="ttc" id="aclassEjecta_html_a1952705ec5647300cd09255dcfc786cd"><div class="ttname"><a href="classEjecta.html#a1952705ec5647300cd09255dcfc786cd">Ejecta::eps_k</a></div><div class="ttdeci">BinaryFunc eps_k</div><div class="ttdoc">Initial energy per unit solid angle as a function of (phi, theta)</div><div class="ttdef"><b>Definition</b> <a href="jet_8h_source.html#l00043">jet.h:43</a></div></div>
+<div class="ttc" id="anamespacecon_html_aa0ccd904b754d0f907898a942516d121"><div class="ttname"><a href="namespacecon.html#aa0ccd904b754d0f907898a942516d121">con::pi</a></div><div class="ttdeci">constexpr Real pi</div><div class="ttdoc">Pi.</div><div class="ttdef"><b>Definition</b> <a href="macros_8h_source.html#l00095">macros.h:95</a></div></div>
+<div class="ttc" id="anamespaceunit_html_a255e82bd3b0ebb273d6663111278d624"><div class="ttname"><a href="namespaceunit.html#a255e82bd3b0ebb273d6663111278d624">unit::erg</a></div><div class="ttdeci">constexpr Real erg</div><div class="ttdoc">Erg (energy) in code units.</div><div class="ttdef"><b>Definition</b> <a href="macros_8h_source.html#l00051">macros.h:51</a></div></div>
+</div><!-- fragment --><div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="classPyModel_ae38662b3ca4b9c523ee46752efcfb9c8_cgraph.png" border="0" usemap="#aclassPyModel_ae38662b3ca4b9c523ee46752efcfb9c8_cgraph" alt=""/></div>
+<map name="aclassPyModel_ae38662b3ca4b9c523ee46752efcfb9c8_cgraph" id="aclassPyModel_ae38662b3ca4b9c523ee46752efcfb9c8_cgraph">
+<area shape="rect" title=" " alt="" coords="5,29,149,55"/>
+<area shape="rect" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42" title="Returns the value of a single parameter." alt="" coords="197,29,248,55"/>
+<area shape="poly" title=" " alt="" coords="150,39,184,39,184,45,150,45"/>
+<area shape="poly" title=" " alt="" coords="198,30,193,21,196,11,206,5,223,3,243,6,251,15,247,18,240,11,223,8,208,10,200,15,198,20,203,28"/>
+</map>
+</div>
+<div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="classPyModel_ae38662b3ca4b9c523ee46752efcfb9c8_icgraph.png" border="0" usemap="#aclassPyModel_ae38662b3ca4b9c523ee46752efcfb9c8_icgraph" alt=""/></div>
+<map name="aclassPyModel_ae38662b3ca4b9c523ee46752efcfb9c8_icgraph" id="aclassPyModel_ae38662b3ca4b9c523ee46752efcfb9c8_icgraph">
+<area shape="rect" title=" " alt="" coords="204,5,348,31"/>
+<area shape="rect" href="pybind_8cpp.html#a8c92987849ad296e28ec6c07c8e7860b" title=" " alt="" coords="5,5,156,31"/>
+<area shape="poly" title=" " alt="" coords="190,21,156,21,156,15,190,15"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="aaab7223dd59e1e5eed5318014b369775" name="aaab7223dd59e1e5eed5318014b369775"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aaab7223dd59e1e5eed5318014b369775">&#9670;&#160;</a></span>jet_Gamma0()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="mesh_8h.html#afd05120c4d579ec7fa4906f677781a83">Array</a> PyModel::jet_Gamma0 </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a>&#160;</td>
+          <td class="paramname"><em>phi</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="mesh_8h.html#afd05120c4d579ec7fa4906f677781a83">Array</a> <a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">const</a> &amp;&#160;</td>
+          <td class="paramname"><em>theta</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="pymodel_8cpp_source.html#l00415">415</a> of file <a class="el" href="pymodel_8cpp_source.html">pymodel.cpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  415</span>                                                      {</div>
+<div class="line"><span class="lineno">  416</span>    <a class="code hl_typedef" href="mesh_8h.html#afd05120c4d579ec7fa4906f677781a83">Array</a> Gamma0 = xt::zeros&lt;Real&gt;(theta.shape());</div>
+<div class="line"><span class="lineno">  417</span>    <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a> = 0; <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a> &lt; theta.size(); ++<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a>) {</div>
+<div class="line"><span class="lineno">  418</span>        Gamma0(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a>) = jet_.<a class="code hl_variable" href="classEjecta.html#a6993f0ec67bf03b7c80e9a7c10e65640">Gamma0</a>(phi, theta(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a>));</div>
+<div class="line"><span class="lineno">  419</span>    }</div>
+<div class="line"><span class="lineno">  420</span>    <span class="keywordflow">return</span> Gamma0;</div>
+<div class="line"><span class="lineno">  421</span>}</div>
+<div class="ttc" id="aclassEjecta_html_a6993f0ec67bf03b7c80e9a7c10e65640"><div class="ttname"><a href="classEjecta.html#a6993f0ec67bf03b7c80e9a7c10e65640">Ejecta::Gamma0</a></div><div class="ttdeci">BinaryFunc Gamma0</div><div class="ttdoc">Lorentz factor profile in the ejecta as a function of (phi, theta) Default is uniform (one) across al...</div><div class="ttdef"><b>Definition</b> <a href="jet_8h_source.html#l00047">jet.h:47</a></div></div>
+</div><!-- fragment --><div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="classPyModel_aaab7223dd59e1e5eed5318014b369775_cgraph.png" border="0" usemap="#aclassPyModel_aaab7223dd59e1e5eed5318014b369775_cgraph" alt=""/></div>
+<map name="aclassPyModel_aaab7223dd59e1e5eed5318014b369775_cgraph" id="aclassPyModel_aaab7223dd59e1e5eed5318014b369775_cgraph">
+<area shape="rect" title=" " alt="" coords="5,29,176,55"/>
+<area shape="rect" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42" title="Returns the value of a single parameter." alt="" coords="224,29,275,55"/>
+<area shape="poly" title=" " alt="" coords="176,39,210,39,210,45,176,45"/>
+<area shape="poly" title=" " alt="" coords="223,31,217,21,220,11,231,5,249,3,271,6,280,15,277,19,269,11,249,8,233,10,224,15,223,20,227,28"/>
+</map>
+</div>
+<div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="classPyModel_aaab7223dd59e1e5eed5318014b369775_icgraph.png" border="0" usemap="#aclassPyModel_aaab7223dd59e1e5eed5318014b369775_icgraph" alt=""/></div>
+<map name="aclassPyModel_aaab7223dd59e1e5eed5318014b369775_icgraph" id="aclassPyModel_aaab7223dd59e1e5eed5318014b369775_icgraph">
+<area shape="rect" title=" " alt="" coords="204,5,375,31"/>
+<area shape="rect" href="pybind_8cpp.html#a8c92987849ad296e28ec6c07c8e7860b" title=" " alt="" coords="5,5,156,31"/>
+<area shape="poly" title=" " alt="" coords="190,21,156,21,156,15,190,15"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="ada69b20b7934062af2c807213a76d4ce" name="ada69b20b7934062af2c807213a76d4ce"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ada69b20b7934062af2c807213a76d4ce">&#9670;&#160;</a></span>medium()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="mesh_8h.html#afd05120c4d579ec7fa4906f677781a83">Array</a> PyModel::medium </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a>&#160;</td>
+          <td class="paramname"><em>phi</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a>&#160;</td>
+          <td class="paramname"><em>theta</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="mesh_8h.html#afd05120c4d579ec7fa4906f677781a83">Array</a> <a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">const</a> &amp;&#160;</td>
+          <td class="paramname"><em>r</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="pymodel_8cpp_source.html#l00423">423</a> of file <a class="el" href="pymodel_8cpp_source.html">pymodel.cpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  423</span>                                                          {</div>
+<div class="line"><span class="lineno">  424</span>    <a class="code hl_typedef" href="mesh_8h.html#afd05120c4d579ec7fa4906f677781a83">Array</a> rho = xt::zeros&lt;Real&gt;(r.shape());</div>
+<div class="line"><span class="lineno">  425</span>    <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a> = 0; <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a> &lt; r.size(); ++<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a>) {</div>
+<div class="line"><span class="lineno">  426</span>        rho(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a>) = medium_.<a class="code hl_variable" href="classMedium.html#a419de8e407c9c9f75d1b76fdedf5d3eb">rho</a>(phi, theta, r(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a>) * <a class="code hl_variable" href="namespaceunit.html#ab0ce442b00da680dc797592af0b4a2f8">unit::cm</a>) / (<a class="code hl_variable" href="namespaceunit.html#af4ac5b90426ecc30143a4e0f495978b6">unit::g</a> / <a class="code hl_variable" href="namespaceunit.html#a8643f62ec4132cb409d20f4252d0bfe0">unit::cm3</a>);</div>
+<div class="line"><span class="lineno">  427</span>    }</div>
+<div class="line"><span class="lineno">  428</span>    <span class="keywordflow">return</span> rho;</div>
+<div class="line"><span class="lineno">  429</span>}</div>
+<div class="ttc" id="aclassMedium_html_a419de8e407c9c9f75d1b76fdedf5d3eb"><div class="ttname"><a href="classMedium.html#a419de8e407c9c9f75d1b76fdedf5d3eb">Medium::rho</a></div><div class="ttdeci">TernaryFunc rho</div><div class="ttdoc">Density function that returns the mass density at a given position (phi, theta, r) The function is in...</div><div class="ttdef"><b>Definition</b> <a href="medium_8h_source.html#l00032">medium.h:32</a></div></div>
+<div class="ttc" id="anamespaceunit_html_a8643f62ec4132cb409d20f4252d0bfe0"><div class="ttname"><a href="namespaceunit.html#a8643f62ec4132cb409d20f4252d0bfe0">unit::cm3</a></div><div class="ttdeci">constexpr Real cm3</div><div class="ttdoc">Cubic centimeter in code units.</div><div class="ttdef"><b>Definition</b> <a href="macros_8h_source.html#l00046">macros.h:46</a></div></div>
+<div class="ttc" id="anamespaceunit_html_ab0ce442b00da680dc797592af0b4a2f8"><div class="ttname"><a href="namespaceunit.html#ab0ce442b00da680dc797592af0b4a2f8">unit::cm</a></div><div class="ttdeci">constexpr Real cm</div><div class="ttdoc">Centimeter in code units.</div><div class="ttdef"><b>Definition</b> <a href="macros_8h_source.html#l00043">macros.h:43</a></div></div>
+<div class="ttc" id="anamespaceunit_html_af4ac5b90426ecc30143a4e0f495978b6"><div class="ttname"><a href="namespaceunit.html#af4ac5b90426ecc30143a4e0f495978b6">unit::g</a></div><div class="ttdeci">constexpr Real g</div><div class="ttdoc">Gram in code units.</div><div class="ttdef"><b>Definition</b> <a href="macros_8h_source.html#l00047">macros.h:47</a></div></div>
+</div><!-- fragment --><div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="classPyModel_ada69b20b7934062af2c807213a76d4ce_cgraph.png" border="0" usemap="#aclassPyModel_ada69b20b7934062af2c807213a76d4ce_cgraph" alt=""/></div>
+<map name="aclassPyModel_ada69b20b7934062af2c807213a76d4ce_cgraph" id="aclassPyModel_ada69b20b7934062af2c807213a76d4ce_cgraph">
+<area shape="rect" title=" " alt="" coords="5,29,145,55"/>
+<area shape="rect" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42" title="Returns the value of a single parameter." alt="" coords="193,29,244,55"/>
+<area shape="poly" title=" " alt="" coords="145,39,179,39,179,45,145,45"/>
+<area shape="poly" title=" " alt="" coords="195,30,190,21,192,11,202,5,219,3,238,6,247,15,243,18,236,11,219,8,204,10,197,15,195,20,199,28"/>
+</map>
+</div>
+<div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="classPyModel_ada69b20b7934062af2c807213a76d4ce_icgraph.png" border="0" usemap="#aclassPyModel_ada69b20b7934062af2c807213a76d4ce_icgraph" alt=""/></div>
+<map name="aclassPyModel_ada69b20b7934062af2c807213a76d4ce_icgraph" id="aclassPyModel_ada69b20b7934062af2c807213a76d4ce_icgraph">
+<area shape="rect" title=" " alt="" coords="204,5,344,31"/>
+<area shape="rect" href="pybind_8cpp.html#a8c92987849ad296e28ec6c07c8e7860b" title=" " alt="" coords="5,5,156,31"/>
+<area shape="poly" title=" " alt="" coords="190,21,157,21,157,15,190,15"/>
 </map>
 </div>
 
