@@ -228,11 +228,11 @@ class Observer {
      * @param i Phi grid index
      * @param j Theta grid index
      * @param k Time grid index
-     * @param t_obs Observation time (in log2 scale)
+     * @param lg2_t_obs Observation time (in log2 scale)
      * @return The interpolated luminosity value
      * <!-- ************************************************************************************** -->
      */
-    Real interpolate(InterpState const& state, size_t i, size_t j, size_t k, Real t_obs) const noexcept;
+    Real interpolate(InterpState const& state, size_t i, size_t j, size_t k, Real lg2_t_obs) const noexcept;
 
     /**
      * <!-- ************************************************************************************** -->
@@ -324,6 +324,9 @@ MeshGrid Observer::specific_flux(Array const& t_obs, Array const& nu_obs, Photon
 
     MeshGrid F_nu({nu_len, t_obs_len}, 0);
 
+    size_t grid_num = eff_phi_grid * theta_grid;
+    Real lg2_rtol = fast_log2(1e-3 / grid_num);
+
     for (size_t l = 0; l < nu_len; l++) {
         for (size_t i = 0; i < eff_phi_grid; i++) {
             size_t eff_i = i * jet_3d;
@@ -338,7 +341,8 @@ MeshGrid Observer::specific_flux(Array const& t_obs, Array const& nu_obs, Photon
                     if (lg2_t_hi < lg2_t_obs(t_idx)) {
                         continue;
                     } else {
-                        if (set_boundaries(state, eff_i, i, j, k, lg2_nu[l], photons)) {
+                        bool finite = set_boundaries(state, eff_i, i, j, k, lg2_nu[l], photons);
+                        if (finite) [[likely]] {
                             for (; t_idx < t_obs_len && lg2_t_obs(t_idx) <= lg2_t_hi; t_idx++) {
                                 F_nu(l, t_idx) += interpolate(state, i, j, k, lg2_t_obs(t_idx));
                             }
@@ -386,7 +390,8 @@ Array Observer::specific_flux_series(Array const& t_obs, Array const& nu_obs, Ph
                     k++;
                     continue;
                 } else {
-                    if (set_boundaries(state, eff_i, i, j, k, lg2_nu(t_idx), photons)) {
+                    bool finite = set_boundaries(state, eff_i, i, j, k, lg2_nu(t_idx), photons);
+                    if (finite) [[likely]] {
                         F_nu(t_idx) += interpolate(state, i, j, k, lg2_t_obs(t_idx));
                     }
                     t_idx++;

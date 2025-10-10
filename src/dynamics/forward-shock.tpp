@@ -63,10 +63,10 @@ Real ForwardShockEqn<Ejecta, Medium>::compute_dGamma_dt(State const& state, Stat
     Real Gamma2 = state.Gamma * state.Gamma;
     Real Gamma_eff = (ad_idx * (Gamma2 - 1) + 1) / state.Gamma;
     Real dGamma_eff = (ad_idx * (Gamma2 + 1) - 1) / Gamma2;
-    Real dlnVdt = 3 / state.r * diff.r;  // only r term
+    Real dlnVdt = 3 / state.r * diff.r; // only r term
 
     Real m_jet = this->m_jet0;
-    Real U = state.U2_th;  // Internal energy per unit solid angle
+    Real U = state.U2_th; // Internal energy per unit solid angle
 
     if (ejecta.spreading) {
         Real cos_theta = std::cos(state.theta);
@@ -143,8 +143,8 @@ void ForwardShockEqn<Ejecta, Medium>::set_init_state(State& state, Real t0) cons
 template <typename Eqn, typename State>
 void save_fwd_shock_state(size_t i, size_t j, size_t k, Eqn const& eqn, State const& state, Shock& shock) {
     // Set constant parameters for the unshocked medium
-    constexpr Real gamma1 = 1;  // Lorentz factor of unshocked medium (at rest)
-    constexpr Real sigma = 0;   // Magnetization of unshocked medium
+    constexpr Real gamma1 = 1; // Lorentz factor of unshocked medium (at rest)
+    constexpr Real sigma = 0;  // Magnetization of unshocked medium
     constexpr Real B_upstr = 0;
 
     Real comp_ratio = compute_compression(gamma1, state.Gamma, sigma);
@@ -203,7 +203,7 @@ void grid_solve_fwd_shock(size_t i, size_t j, View const& t, Shock& shock, FwdEq
 template <typename Ejecta, typename Medium>
 Shock generate_fwd_shock(Coord const& coord, Medium const& medium, Ejecta const& jet, RadParams const& rad_params,
                          Real rtol) {
-    auto [phi_size, theta_size, t_size] = coord.shape();  // Unpack coordinate dimensions
+    auto [phi_size, theta_size, t_size] = coord.shape(); // Unpack coordinate dimensions
     size_t phi_size_needed = coord.t.shape()[0];
     Shock shock(phi_size_needed, theta_size, t_size, rad_params);
 

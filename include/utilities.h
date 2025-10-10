@@ -336,63 +336,51 @@ T max(T first, Args... args) {
  * <!-- ************************************************************************************** -->
  */
 
-/**
- * <!-- ************************************************************************************** -->
- * @brief Fast approximation of the exponential function
- * @param x The exponent
- * @return e^x
- * <!-- ************************************************************************************** -->
- */
-inline Real fast_exp(Real x) {
-#ifdef EXTREME_SPEED
-    // if (std::isnan(x)) return std::numeric_limits<Real>::quiet_NaN();
-    // if (x == std::numeric_limits<Real>::infinity()) return std::numeric_limits<Real>::infinity();
-    // if (x == -std::numeric_limits<Real>::infinity()) return 0.0;
+constexpr int BUCKET_BITS = 9;                       // 512 buckets
+constexpr size_t BUCKETS = size_t(1) << BUCKET_BITS; // 512
+// With 512 bins across [1,2): max |r| ≈ 1 / 2^(BUCKET_BITS+1) ≈ 9.77e-4
+// Degree-3 Taylor gives neglected term O(r^4) ≲ 1e-12 → ~1e-9 relative overall.
 
-    constexpr Real ln2 = 0.6931471805599453;
-    constexpr Real inv_ln2 = 1.4426950408889634;
+constexpr uint64_t EXP_MASK = 0x7FFull;
+constexpr uint64_t FRAC_MASK = (1ull << 52) - 1;
+constexpr int EXP_BIAS = 1023;
+constexpr double INV_LN2 = 1.4426950408889634073599246810018921;
+struct Tables {
+    std::array<double, BUCKETS> inv_c{};
+    std::array<double, BUCKETS> log2_c{};
+    std::array<uint64_t, BUCKETS> c_bits{}; // optional (not used in hot path)
+    Tables() {
+        const int shift = 52 - BUCKET_BITS;
+        const uint64_t expbits = uint64_t(EXP_BIAS) << 52;
+        for (size_t i = 0; i < BUCKETS; ++i) {
+            uint64_t frac_mid = (uint64_t(i) << shift) | (uint64_t(1) << (shift - 1));
+            uint64_t bits = expbits | frac_mid; // center c_i bits
+            double c = std::bit_cast<double>(bits);
+            c_bits[i] = bits;
+            inv_c[i] = 1.0 / c;
+            log2_c[i] = std::log2(c);
+        }
+    }
+};
 
-    Real y = x * inv_ln2;
-    int64_t k = static_cast<int64_t>(y + (y >= 0 ? 0.5 : -0.5));
-    Real r = x - k * ln2;
-
-    // Real p = 1.0 + r * (1.0 + r * (0.5 + r * (0.166666666666666 + r * 0.041666666666666664)));
-
-    Real p = 1.0 + r * (1.0 + r * (0.5 + r * (0.166666666666666)));
-
-    return std::ldexp(p, k);
-#else
-    return std::exp(x);
-#endif
+inline const Tables& tables() {
+    static const Tables T; // thread-safe init
+    return T;
 }
 
-/**
- * <!-- ************************************************************************************** -->
- * @brief Fast approximation of the natural logarithm
- * @param x The input value
- * @return ln(x)
- * <!-- ************************************************************************************** -->
- */
-inline double fast_log(double x) {
-#ifdef EXTREME_SPEED
-    if (x <= 0.)
-        return -std::numeric_limits<double>::infinity();
-    if (std::isnan(x))
-        return std::numeric_limits<double>::quiet_NaN();
-    if (x == std::numeric_limits<double>::infinity())
-        return std::numeric_limits<double>::infinity();
-
-    uint64_t bits;
-    std::memcpy(&bits, &x, sizeof(x));
-    int64_t exponent = ((bits >> 52) & 0x7FF) - 1023;
-    bits = (bits & 0x000FFFFFFFFFFFFFULL) | 0x3FF0000000000000ULL;
-    double f;
-    std::memcpy(&f, &bits, sizeof(f));
-    double p = -1.49278 + (2.11263 + (-0.729104 + 0.10969 * f) * f) * f;
-    return p + 0.6931471806 * exponent;
-#else
-    return std::log(x);
-#endif
+inline double decompose_normals(double x, int& e) {
+    uint64_t bits = std::bit_cast<uint64_t>(x);
+    uint64_t expo = (bits >> 52) & EXP_MASK;
+    if (expo == 0 || expo == EXP_MASK) {
+        int ee;
+        double m = std::frexp(x, &ee); // [0.5,1)
+        m *= 2.0;
+        e = ee - 1;
+        return m; // -> [1,2)
+    }
+    e = int(expo) - EXP_BIAS;
+    bits = (bits & FRAC_MASK) | (uint64_t(EXP_BIAS) << 52); // force mantissa exponent
+    return std::bit_cast<double>(bits);                     // m in [1,2)
 }
 
 /**
@@ -402,34 +390,36 @@ inline double fast_log(double x) {
  * @return log2(val)
  * <!-- ************************************************************************************** -->
  */
-inline double fast_log2(double val) {
+inline double fast_log2(double x) {
 #ifdef EXTREME_SPEED
-    int64_t* const exp_ptr = reinterpret_cast<int64_t*>(&val);
-    int64_t x = *exp_ptr;
-    int log2 = ((x >> 52) & 0x7FF) - 1023; // extract exponent bits
+    if (std::isnan(x))
+        return std::numeric_limits<double>::quiet_NaN();
+    if (x < 0.0)
+        return std::numeric_limits<double>::quiet_NaN();
+    if (x == 0.0)
+        return -std::numeric_limits<double>::infinity();
+    if (std::isinf(x))
+        return std::numeric_limits<double>::infinity();
 
-    // Step 2: Normalize mantissa to [1.0, 2.0)
-    x &= ~(0x7FFLL << 52); // clear exponent bits
-    x |= (1023LL << 52);   // set exponent to 0
-    *exp_ptr = x;          // val is now normalized to [1.0, 2.0)
-    double mantissa = val;
+    const Tables& T = tables();
 
-    // Step 3: Polynomial approximation of log2(mantissa) in [1, 2)
-    double y = mantissa - 1.0; // small value in [0, 1)
-    double log2_mantissa =
-        y * (1.44269504088896340736 + y * (-0.721347520444482371076 + y * (0.479381953382630073738)));
+    int e;
+    double m = decompose_normals(x, e);
 
-    /*double log2_mantissa =
-        y * (1.44269504088896340736 +  // 1/ln(2)
-        y * (-0.721347520444482371076 +
-        y * (0.479381953382630073738 +
-        y * (-0.360673760222241834679 +
-        y * (0.288539008177138356808 +
-        y * (-0.139304958445395653244))))));*/
+    uint64_t mbits = std::bit_cast<uint64_t>(m);
+    uint64_t frac = mbits & FRAC_MASK; // 52-bit fraction
+    const int shift = 52 - BUCKET_BITS;
+    size_t idx = size_t(frac >> shift); // 0..511
 
-    return log2_mantissa + log2;
+    double r = m * T.inv_c[idx] - 1.0;
+
+    double r2 = r * r;
+    double poly = r + r2 * (-0.5 + r * (1.0 / 3.0));
+    double approx = T.log2_c[idx] + poly * INV_LN2;
+
+    return double(e) + approx;
 #else
-    return std::log2(val);
+    return std::log2(x);
 #endif
 }
 
@@ -442,23 +432,7 @@ inline double fast_log2(double val) {
  */
 inline double fast_exp2(double x) {
 #ifdef EXTREME_SPEED
-    int int_part = (int)x;
-    double frac_part = x - int_part;
-
-    // Polynomial approximation for 2^frac_part where 0 <= frac_part < 1
-    // 4th order polynomial gives good balance of speed and accuracy
-    /*double poly = 1.0 + frac_part * (0.693147180559945 +
-                                     frac_part * (0.240226506959101 +
-                                                  frac_part * (0.0555041086648216 + frac_part *
-       0.00961812910762848)));*/
-    double poly =
-        1.0 + frac_part * (0.693147180559945 + frac_part * (0.240226506959101 + frac_part * (0.0555041086648216)));
-
-    // Combine with integer power of 2 using bit manipulation
-    int64_t bits = ((int64_t)(int_part + 1023)) << 52;
-    double factor = *reinterpret_cast<double*>(&bits);
-
-    return (poly * factor);
+    return std::exp2(x);
 #else
     return std::exp2(x);
 #endif
@@ -474,4 +448,34 @@ inline double fast_exp2(double x) {
  */
 inline Real fast_pow(Real a, Real b) {
     return fast_exp2(b * fast_log2(a));
+}
+
+/**
+ * <!-- ************************************************************************************** -->
+ * @brief Fast approximation of the exponential function
+ * @param x The exponent
+ * @return e^x
+ * <!-- ************************************************************************************** -->
+ */
+inline Real fast_exp(Real x) {
+#ifdef EXTREME_SPEED
+    return fast_exp2(x * 1.4426950408889634); // x / ln(2)
+#else
+    return std::exp(x);
+#endif
+}
+
+/**
+ * <!-- ************************************************************************************** -->
+ * @brief Fast approximation of the natural logarithm
+ * @param x The input value
+ * @return ln(x)
+ * <!-- ************************************************************************************** -->
+ */
+inline double fast_log(double x) {
+#ifdef EXTREME_SPEED
+    return fast_log2(x) * 0.6931471805599453;
+#else
+    return std::log(x);
+#endif
 }
