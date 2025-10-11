@@ -5,7 +5,7 @@
 //                 \_/  \___| \__, | \__,_||___/ /_/   \_\|_|   \__|\___||_|   \__, ||_| \___/  \_/\_/
 //                            |___/                                            |___/
 
-#define FORCE_IMPORT_ARRAY // numpy C api loading, must before any xtensor-python headers
+#define FORCE_IMPORT_ARRAY // numpy C api loading must before any xtensor-python headers
 #include "pybind.h"
 
 #include "mcmc.h"

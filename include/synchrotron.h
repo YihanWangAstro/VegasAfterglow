@@ -38,7 +38,7 @@ struct SynElectrons {
      * @return Column number density at the specified Lorentz factor
      * <!-- ************************************************************************************** -->
      */
-    Real compute_N_gamma(Real gamma) const;
+    [[nodiscard]] Real compute_N_gamma(Real gamma) const;
 
     /**
      * <!-- ************************************************************************************** -->
@@ -47,7 +47,7 @@ struct SynElectrons {
      * @return Column number density of the electron distribution
      * <!-- ************************************************************************************** -->
      */
-    Real compute_column_den(Real gamma) const;
+    [[nodiscard]] Real compute_column_den(Real gamma) const;
 
   private:
     /**
@@ -59,7 +59,7 @@ struct SynElectrons {
      * @return The normalized electron energy spectrum value
      * <!-- ************************************************************************************** -->
      */
-    inline Real compute_spectrum(Real gamma) const;
+    [[nodiscard]] inline Real compute_spectrum(Real gamma) const;
 };
 
 /**
@@ -94,7 +94,7 @@ struct SynPhotons {
      * @return The synchrotron specific intensity at the specified frequency
      * <!-- ************************************************************************************** -->
      */
-    Real compute_I_nu(Real nu) const; ///< Linear power PER SOLID ANGLE
+    [[nodiscard]] Real compute_I_nu(Real nu) const; ///< Linear power PER SOLID ANGLE
 
     /**
      * <!-- ************************************************************************************** -->
@@ -104,7 +104,8 @@ struct SynPhotons {
      * @return Base-2 logarithm of synchrotron specific intensity
      * <!-- ************************************************************************************** -->
      */
-    Real compute_log2_I_nu(Real log2_nu) const; ///<  Log2 specific intensity (for computational efficiency)
+    [[nodiscard]] Real
+    compute_log2_I_nu(Real log2_nu) const; ///<  Log2 specific intensity (for computational efficiency)
 
     /**
      * <!-- ************************************************************************************** -->
@@ -135,7 +136,7 @@ struct SynPhotons {
      * @return The normalized synchrotron spectrum value
      * <!-- ************************************************************************************** -->
      */
-    inline Real compute_spectrum(Real nu) const;
+    [[nodiscard]] inline Real compute_spectrum(Real nu) const;
 
     /**
      * <!-- ************************************************************************************** -->
@@ -145,7 +146,7 @@ struct SynPhotons {
      * @return Base-2 logarithm of the synchrotron spectrum
      * <!-- ************************************************************************************** -->
      */
-    inline Real compute_log2_spectrum(Real log2_nu) const;
+    [[nodiscard]] inline Real compute_log2_spectrum(Real log2_nu) const;
 };
 
 /**

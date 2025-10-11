@@ -27,7 +27,7 @@ class CoastingShock {
 
     MeshGrid3d r;       // radius
     MeshGrid3d theta;   // theta for jet spreading
-    MeshGrid3d Gamma;   // relative lorentz factor between down stream and up stream
+    MeshGrid3d Gamma;   // relative Lorentz factor between down stream and upstream
     MeshGrid3d epsilon; // relative energy per solid angle
 
     [[nodiscard]] auto shape() const {
@@ -35,9 +35,9 @@ class CoastingShock {
     } // Returns grid dimensions
 
   private:
-    size_t const phi_size{0};   // Number of grid points in phi direction
-    size_t const theta_size{0}; // Number of grid points in theta direction
-    size_t const t_size{0};     // Number of grid points in time direction
+    size_t const phi_size{0};   // Number of grid points in the phi direction
+    size_t const theta_size{0}; // Number of grid points in the theta direction
+    size_t const t_size{0};     // Number of grid points in the time direction
 };
 
 template <typename Ejecta>

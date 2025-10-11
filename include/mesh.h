@@ -92,19 +92,6 @@ bool is_log_scale(Array const& arr, Real tolerance = 1e-6);
 
 /**
  * <!-- ************************************************************************************** -->
- * @brief Creates an array with logarithmically spaced values
- * @tparam Arr Type of the output array
- * @param start Starting value (log10)
- * @param end Ending value (log10)
- * @param result Output array to store the results
- * @details This is useful for creating time grids where we need more resolution at early times.
- * <!-- ************************************************************************************** -->
- */
-//template <typename Arr>
-//void logspace(Real start, Real end, Arr& result);
-
-/**
- * <!-- ************************************************************************************** -->
  * @brief Converts boundary values to center values using linear interpolation
  * @tparam Arr1 Type of the input array
  * @tparam Arr2 Type of the output array
@@ -249,17 +236,16 @@ Real find_jet_edge(Ejecta const& jet, Real gamma_cut, Real phi_resol, Real theta
     }
     Real low = 0;
     Real hi = con::pi / 2;
-    Real eps = 1e-9;
+    constexpr Real eps = 1e-9;
     while (hi - low > eps) {
-        Real mid = 0.5 * (low + hi);
-        if (jet.Gamma0(0, mid) > gamma_cut) {
+        if (Real mid = 0.5 * (low + hi); jet.Gamma0(0, mid) > gamma_cut) {
             low = mid;
         } else {
             hi = mid;
         }
     }
 
-    // grid based search for the edge of the jet
+    // grid-based search for the edge of the jet
     size_t phi_num = std::max<size_t>(static_cast<size_t>(360. * phi_resol), 1);
     phi_num = is_axisymmetric ? 1 : phi_num;
     const size_t theta_num = std::max<size_t>(static_cast<size_t>(90. * theta_resol), 32);
@@ -284,7 +270,7 @@ Real find_jet_edge(Ejecta const& jet, Real gamma_cut, Real phi_resol, Real theta
 
 template <typename Ejecta, typename Medium>
 Real jet_spreading_edge(Ejecta const& jet, Medium const& medium, Real phi, Real theta_min, Real theta_max, Real t0) {
-    Real step = (theta_max - theta_min) / 256;
+    const Real step = (theta_max - theta_min) / 256;
     Real theta_s = theta_min;
     Real dp_min = 0;
 
@@ -295,9 +281,9 @@ Real jet_spreading_edge(Ejecta const& jet, Medium const& medium, Real phi, Real 
         // Real rho = medium.rho(phi, theta, 0);
         Real th_lo = std::max(theta - step, theta_min);
         Real th_hi = std::min(theta + step, theta_max);
-        Real dG = (jet.Gamma0(phi, th_hi) - jet.Gamma0(phi, th_lo)) / (th_hi - th_lo);
+        const Real dG = (jet.Gamma0(phi, th_hi) - jet.Gamma0(phi, th_lo)) / (th_hi - th_lo);
         // Real drho = (medium.rho(phi, th_hi, r0) - medium.rho(phi, th_lo, r0)) / (th_hi - th_lo);
-        Real dp = dG; //(2 * G - 1) * rho * dG + (G - 1) * G * drho;
+        const Real dp = dG; //(2 * G - 1) * rho * dG + (G - 1) * G * drho;
 
         if (dp < dp_min) {
             dp_min = dp;
@@ -352,10 +338,10 @@ Array inverse_CFD_sampling(Func&& pdf, Real min, Real max, size_t num) {
 template <typename Ejecta>
 Array adaptive_theta_grid(Ejecta const& jet, Real theta_min, Real theta_max, size_t theta_num, Real theta_v) {
     auto eqn = [=, &jet](Real const& cdf, Real& pdf, Real theta) {
-        Real Gamma = jet.Gamma0(0, theta);
-        Real beta = std::sqrt(std::fabs(Gamma * Gamma - 1)) / Gamma;
+        const Real Gamma = jet.Gamma0(0, theta);
+        const Real beta = std::sqrt(std::fabs(Gamma * Gamma - 1)) / Gamma;
         // Real D = 1 / (Gamma * (1 - beta * std::cos(theta - theta_v)));
-        Real a = (1 - beta) / (1 - beta * std::cos(theta - theta_v));
+        const Real a = (1 - beta) / (1 - beta * std::cos(theta - theta_v));
         pdf = a * Gamma * std::sqrt((Gamma - 1) * Gamma) * std::sin(theta);
         // pdf = D * std::sin(theta);
     };
@@ -370,13 +356,13 @@ Array adaptive_phi_grid(Ejecta const& jet, size_t phi_num, Real theta_v, Real th
     } else {
         Real cos2 = std::cos(theta_v);
         cos2 = cos2 * cos2;
-        Real sin2 = 1 - cos2;
+        const Real sin2 = 1 - cos2;
 
         auto eqn = [=, &jet](Real const& cdf, Real& pdf, Real phi) {
-            Real Gamma = jet.Gamma0(phi, theta_v);
-            Real beta = std::sqrt(std::fabs(Gamma * Gamma - 1)) / Gamma;
+            const Real Gamma = jet.Gamma0(phi, theta_v);
+            const Real beta = std::sqrt(std::fabs(Gamma * Gamma - 1)) / Gamma;
             // Real D = 1 / (Gamma * (1 - beta * (std::cos(phi) * sin2 + cos2)));
-            Real a = (1 - beta) / (1 - beta * (std::cos(phi) * sin2 + cos2));
+            const Real a = (1 - beta) / (1 - beta * (std::cos(phi) * sin2 + cos2));
             pdf = a * Gamma * std::sqrt((Gamma - 1) * Gamma);
             // pdf = D * std::sqrt((Gamma - 1) * Gamma);
         };
@@ -419,12 +405,12 @@ Coord auto_grid(Ejecta const& jet, Array const& t_obs, Real theta_cut, Real thet
     Coord coord;
     coord.theta_view = theta_view;
 
-    Real jet_edge = find_jet_edge(jet, con::Gamma_cut, phi_resol, theta_resol, is_axisymmetric);
+    const Real jet_edge = find_jet_edge(jet, con::Gamma_cut, phi_resol, theta_resol, is_axisymmetric);
     Real theta_min = 1e-6;
     Real theta_max = std::min(jet_edge, theta_cut);
 
     size_t theta_num = std::max<size_t>(static_cast<size_t>((theta_max - theta_min) * 180 / con::pi * theta_resol), 56);
-    size_t uniform_theta_num = static_cast<size_t>(theta_num * 0.3);
+    const size_t uniform_theta_num = static_cast<size_t>(theta_num * 0.3);
     size_t adaptive_theta_num = theta_num - uniform_theta_num;
 
     const Array uniform_theta = xt::linspace(theta_min, theta_max, uniform_theta_num);
@@ -433,9 +419,9 @@ Coord auto_grid(Ejecta const& jet, Array const& t_obs, Real theta_cut, Real thet
 
     // coord.theta = uniform_theta;
 
-    size_t phi_num = std::max<size_t>(static_cast<size_t>(360 * phi_resol), 1);
-    size_t uniform_phi_num = static_cast<size_t>(phi_num * 0.3);
-    size_t adaptive_phi_num = phi_num - uniform_phi_num;
+    const size_t phi_num = std::max<size_t>(static_cast<size_t>(360 * phi_resol), 1);
+    const size_t uniform_phi_num = static_cast<size_t>(phi_num * 0.3);
+    const size_t adaptive_phi_num = phi_num - uniform_phi_num;
 
     const Array uniform_phi = xt::linspace(0., 2 * con::pi, uniform_phi_num);
     const Array adaptive_phi = adaptive_phi_grid(jet, adaptive_phi_num, theta_view, theta_max, is_axisymmetric);

@@ -6,9 +6,6 @@
 //                            |___/                                            |___/
 
 #pragma once
-
-#include <utility>
-
 #include "macros.h"
 #include "mesh.h"
 

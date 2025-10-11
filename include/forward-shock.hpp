@@ -16,26 +16,26 @@
  * @struct ForwardState
  * @brief State vector structure for forward shock calculations.
  * @details Template structure that defines the state vector for forward shock calculations, adapting its size
- *          based on whether the Ejecta class supports mass and energy injection methods.
+ *          based on if the Ejecta class supports mass and energy injection methods.
  * <!-- ************************************************************************************** -->
  */
 template <typename Ejecta, typename Medium>
 struct ForwardState {
     static constexpr bool mass_inject = HasDmdt<Ejecta>;   ///< whether Ejecta class has dmdt method
     static constexpr bool energy_inject = HasDedt<Ejecta>; ///< whether Ejecta class has dedt method
-    /// use least fixed array size for integrator efficiency
+    /// use the least fixed array size for integrator efficiency
     static constexpr size_t array_size = 6 + (mass_inject ? 1 : 0) + (energy_inject ? 1 : 0);
 
     MAKE_THIS_ODEINT_STATE(ForwardState, data, array_size)
 
     union {
         struct {
-            Real Gamma{1};  ///< Lorentz factor
-            Real m2{0};     ///< swept mass
-            Real U2_th{0};  ///< internal energy per solid angle
-            Real r{0};      ///< radius
-            Real t_comv{0}; ///< comoving time
-            Real theta{0};  ///< angle
+            Real Gamma;  ///< Lorentz factor
+            Real m2;     ///< swept mass
+            Real U2_th;  ///< internal energy per solid angle
+            Real r;      ///< radius
+            Real t_comv; ///< comoving time
+            Real theta;  ///< angle
 
             /// shell energy density per solid angle
             [[no_unique_address]] std::conditional_t<energy_inject, Real, class Empty> eps_jet;

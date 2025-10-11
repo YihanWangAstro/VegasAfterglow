@@ -29,8 +29,8 @@ struct ReverseState {
     union {
         struct {
             Real Gamma;  ///< Lorentz factor of the shocked region
-            Real x4;     ///< Comoving frame width of the region 4
-            Real x3;     ///< Comoving frame width of the region 3
+            Real x4;     ///< Comoving frame width of region 4
+            Real x3;     ///< Comoving frame width of region 3
             Real m2;     ///< Shocked medium mass per solid angle
             Real m3;     ///< Shocked ejecta mass per solid angle
             Real U2_th;  ///< internal energy per solid angle in region 3
@@ -63,9 +63,11 @@ class FRShockEqn {
      * @brief Constructor for the FRShockEqn class.
      * @details Initializes the forward-reverse shock equation with the given medium, ejecta, and parameters.
      * @param medium The medium through which the shock propagates
-     * @param ejecta The ejecta driving the shock
+     * @param jet The ejecta driving the shock
      * @param phi Azimuthal angle
      * @param theta Polar angle
+     * @param rad_fwd Radiation params for forward shock
+     * @param rad_rvs Radiation params for reverse shock
      * <!-- ************************************************************************************** -->
      */
     FRShockEqn(Medium const& medium, Ejecta const& jet, Real phi, Real theta, RadParams const& rad_fwd,
@@ -78,7 +80,7 @@ class FRShockEqn {
     Real const phi{0};       ///< Angular coordinate phi
     Real const theta0{0};    ///< Angular coordinate theta
     Real Gamma4{1};          ///< Initial Lorentz factor of the jet
-    Real u_x{0};             ///< Reverse shock crossed four velocity
+    Real u_x{0};             ///< Reverse shock crossed four-velocity
     Real r_x{0};             ///< Reverse shock crossed radius
     Real B3_ordered_x{0};    ///< Ordered magnetic field in region 3 at crossing
     Real V3_comv_x{0};       ///< Comoving Volume in region 3 at crossing
@@ -162,6 +164,8 @@ using ShockPair = std::pair<Shock, Shock>;
  * @param coord Coordinate system definition
  * @param medium The medium through which the shock propagates
  * @param jet The jet (ejecta) driving the shock
+ * @param rad_fwd Radiation params for forward shock
+ * @param rad_rvs Radiation params for reverse shock
  * @param rtol Relative tolerance for ODE solver
  * @return A pair of Shock objects {forward_shock, reverse_shock}
  * <!-- ************************************************************************************** -->

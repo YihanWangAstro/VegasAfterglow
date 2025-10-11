@@ -14,7 +14,7 @@
 #include "utilities.h"
 
 Real SynElectrons::compute_N_gamma(Real gamma) const {
-    if (gamma <= gamma_c) { // Below cooling Lorentz factor: direct scaling
+    if (gamma <= gamma_c) { // Below the cooling Lorentz factor: direct scaling
         return N_e * compute_spectrum(gamma);
     } else {
         return fast_exp2((gamma_c - gamma) / gamma_M) * N_e * compute_spectrum(gamma) * (1 + Y_c) /
@@ -23,7 +23,7 @@ Real SynElectrons::compute_N_gamma(Real gamma) const {
 }
 
 Real SynElectrons::compute_column_den(Real gamma) const {
-    if (gamma <= gamma_c) { // Below cooling Lorentz factor: direct scaling
+    if (gamma <= gamma_c) { // Below the cooling Lorentz factor: direct scaling
         return column_den * compute_spectrum(gamma);
     } else {
         return fast_exp2((gamma_c - gamma) / gamma_M) * column_den * compute_spectrum(gamma) * (1 + Y_c) /
@@ -84,12 +84,12 @@ Real SynElectrons::compute_spectrum(Real gamma) const {
                        gamma_m; // Power-law spectrum between gamma_m and gamma_c
             } else
                 return (p - 1) * fast_pow(gamma / gamma_m, -p) * gamma_c / (gamma * gamma_m);
-            // Above cooling Lorentz factor: exponential cutoff applied
+            // Above the cooling Lorentz factor: exponential cutoff applied
 
             break;
         case 3:
             if (gamma <= gamma_c) {
-                return 0; // Below cooling Lorentz factor, spectrum is zero
+                return 0; // Below cooling Lorentz factor, the spectrum is zero
             } else if (gamma <= gamma_m) {
                 return gamma_c / (gamma * gamma); // Intermediate regime scaling
             } else
@@ -106,7 +106,7 @@ Real SynElectrons::compute_spectrum(Real gamma) const {
                 return gamma_c / (gamma * gamma); // Transition region
             } else
                 return gamma_c / (gamma * gamma_m) * fast_pow(gamma / gamma_m, -p);
-            // High energy tail with exponential cutoff
+            // High-energy tail with exponential cutoff
 
             break;
         case 5: // Gao, Lei, Wu and Zhang 2013 Eq 19
@@ -126,12 +126,12 @@ Real SynElectrons::compute_spectrum(Real gamma) const {
 #else
         case 4:
             if (gamma <= gamma_c) {
-                return 0; // Below cooling Lorentz factor, spectrum is zero
+                return 0; // Below cooling Lorentz factor, the spectrum is zero
             } else if (gamma <= gamma_m) {
                 return gamma_c / (gamma * gamma); // Intermediate regime scaling
             } else
                 return gamma_c / (gamma * gamma_m) * fast_pow(gamma / gamma_m, -p);
-            // High energy tail with exponential cutoff
+            // High-energy tail with exponential cutoff
 
             break;
         case 5:
@@ -145,7 +145,7 @@ Real SynElectrons::compute_spectrum(Real gamma) const {
             break;
         case 6:
             if (gamma <= gamma_c) {
-                return 0; // Below cooling Lorentz factor, spectrum is zero
+                return 0; // Below cooling Lorentz factor, the spectrum is zero
             } else if (gamma <= gamma_m) {
                 return gamma_c / (gamma * gamma); // Intermediate regime scaling
             } else
@@ -696,7 +696,8 @@ void update_electrons_4Y(SynElectronGrid& electrons, Shock const& shock) {
                 elec.gamma_M = compute_syn_gamma_M(B, Ys, p);
                 elec.gamma_c = compute_gamma_c(t_com, B, Ys, p);
 
-                if (k >= k_inj) { // no new shocked electrons, cooling lorentz factor is truncation lorentz factor
+                if (k >=
+                    k_inj) { // no new shocked electrons, the cooling Lorentz factor is the truncation Lorentz factor
                     elec.gamma_c = electrons(i, j, k_inj).gamma_c * elec.gamma_m / electrons(i, j, k_inj).gamma_m;
                     elec.gamma_M = elec.gamma_c;
                 }
@@ -753,7 +754,8 @@ void generate_syn_electrons(SynElectronGrid& electrons, Shock const& shock) {
 
                 elec.gamma_c = compute_gamma_c(t_com, B, electrons(i, j, k).Ys, rad.p);
 
-                if (k >= k_inj) { // no new shocked electrons, cooling lorentz factor is truncation lorentz factor
+                if (k >=
+                    k_inj) { // no new shocked electrons, the cooling Lorentz factor is the truncation Lorentz factor
                     elec.gamma_c = electrons(i, j, k_inj).gamma_c * elec.gamma_m / electrons(i, j, k_inj).gamma_m;
                     elec.gamma_M = elec.gamma_c;
                 }

@@ -30,7 +30,7 @@ class Shock {
      * @brief Constructs a Shock object with the given grid dimensions and energy fractions.
      * @details Initializes various 3D grids for storing physical properties of the shock, including comoving time,
      *          radius, Lorentz factors, magnetic fields, and downstream densities.
-     * @param phi_size Number of grid points in phi direction
+     * @param phi_size Number of grid points in the phi direction
      * @param theta_size Number of grid points in theta direction
      * @param t_size Number of grid points in time direction
      * @param rad_params Radiation parameters
@@ -57,7 +57,7 @@ class Shock {
     /**
      * <!-- ************************************************************************************** -->
      * @brief Resizes all grid components of the Shock object to new dimensions.
-     * @param phi_size New number of grid points in phi direction
+     * @param phi_size New number of grid points in the phi direction
      * @param theta_size New number of grid points in theta direction
      * @param t_size New number of grid points in time direction
      * <!-- ************************************************************************************** -->
@@ -245,8 +245,8 @@ inline Real compute_rel_Gamma(Real gamma1, Real gamma2) {
  * @brief Computes the relative Lorentz factor between two frames with given Lorentz factors and velocities.
  * @param gamma1 First frame's Lorentz factor
  * @param gamma2 Second frame's Lorentz factor
- * @param beta1 First frame's velocity as fraction of light speed
- * @param beta2 Second frame's velocity as fraction of light speed
+ * @param beta1 First frame's velocity as a fraction of light speed
+ * @param beta2 Second frame's velocity as a fraction of light speed
  * @return The relative Lorentz factor between the two frames
  * <!-- ************************************************************************************** -->
  */
@@ -288,7 +288,7 @@ inline Real compute_shock_heating_rate(Real Gamma_rel, Real mdot) {
  * @param Gamma Lorentz factor
  * @param u Internal energy density
  * @param drdt Rate of change of radius
- * @param dGammadt Rate of change of Lorentz factor
+ * @param dGammadt Rate of change of the Lorentz factor
  * @return The adiabatic cooling rate
  * <!-- ************************************************************************************** -->
  */
@@ -424,7 +424,7 @@ inline Real compute_downstr_B(Real eps_B, Real rho_upstr, Real B_upstr, Real Gam
 
 /**
  * <!-- ************************************************************************************** -->
- * @brief Sets a stopping shock state when the Lorentz factor drops below threshold.
+ * @brief Sets a stopping shock state when the Lorentz factor drops below a threshold.
  * @param i Grid index for phi
  * @param j Grid index for theta
  * @param shock Reference to the Shock object to be updated
@@ -433,19 +433,6 @@ inline Real compute_downstr_B(Real eps_B, Real rho_upstr, Real B_upstr, Real Gam
  */
 template <typename State>
 inline void set_stopping_shock(size_t i, size_t j, Shock& shock, State const& state0);
-
-/**
- * <!-- ************************************************************************************** -->
- * @brief Computes the deceleration time for the shock based on the equation system and time bounds.
- * @tparam Eqn Type of the equation system
- * @param eqn The equation system containing ejecta and medium properties
- * @param t_max Maximum time to consider
- * @return The estimated deceleration time
- * @details The deceleration time marks when the shock begins to significantly slow down due to mass sweeping.
- * <!-- ************************************************************************************** -->
- */
-template <typename Eqn>
-Real compute_dec_time(Eqn const& eqn, Real t_max);
 
 //========================================================================================================
 //                                  template function implementation

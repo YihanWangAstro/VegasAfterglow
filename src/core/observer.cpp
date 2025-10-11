@@ -148,7 +148,7 @@ void Observer::build_time_grid(Coord const& coord, Shock const& shock, Real lumi
 
     // Determine if the jet is 3D (more than one phi value)
     jet_3d = static_cast<size_t>((phi_size > 1));
-    // Set effective phi grid size based on the observation angle and jet dimensionality.
+    // Set the effective phi grid size based on the observation angle and jet dimensionality.
     if (coord.theta_view == 0 && jet_3d == 0) {
         this->eff_phi_grid = 1; // optimize for on-axis observer
     } else {

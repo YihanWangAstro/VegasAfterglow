@@ -487,13 +487,13 @@ class PyModel {
      * @return PyDetails Structure with comprehensive shock evolution details
      * <!-- ************************************************************************************** -->
      */
-    PyDetails details(Real t_min, Real t_max) const;
+    [[nodiscard]] PyDetails details(Real t_min, Real t_max) const;
 
-    Array medium(Real phi, Real theta, Array const& r) const;
+    [[nodiscard]] Array medium(Real phi, Real theta, Array const& r) const;
 
-    Array jet_E_iso(Real phi, Array const& theta) const;
+    [[nodiscard]] Array jet_E_iso(Real phi, Array const& theta) const;
 
-    Array jet_Gamma0(Real phi, Array const& theta) const;
+    [[nodiscard]] Array jet_Gamma0(Real phi, Array const& theta) const;
 
   private:
     /**

@@ -37,9 +37,10 @@ auto test_reverse_shock(double xi, double sigma, bool output = true) {
     // auto r_shock = generate_fwd_shock(coord, medium, jet, eps_e, eps_B);
 
     if (output) {
-        write_npz("rshock-data/coord" + std::to_string(xi) + "-" + std::to_string(sigma), coord);
+        /* write_npz("rshock-data/coord" + std::to_string(xi) + "-" + std::to_string(sigma), coord);
         write_npz("rshock-data/f_shock" + std::to_string(xi) + "-" + std::to_string(sigma), f_shock);
         write_npz("rshock-data/r_shock" + std::to_string(xi) + "-" + std::to_string(sigma), r_shock);
+        */
     }
 
     auto t_cross = coord.t(0, 0, r_shock.injection_idx(0, 0)) / unit::sec;
@@ -78,7 +79,7 @@ void test_spreading() {
 
     auto shock = generate_fwd_shock(coord, medium, jet, rad_fwd);
 
-    write_npz("spreading-data/shock", shock);
+    //write_npz("spreading-data/shock", shock);
 }
 
 void test_ic(Real theta_c_) {
@@ -181,7 +182,7 @@ void test_FRS() {
 
     auto flux_rs = obs.specific_flux(t_obs, 1e17 * unit::Hz, photons_rs);
 
-    write_npz("frs/flux", flux);
+    /*write_npz("frs/flux", flux);
     write_npz("frs/flux_rs", flux_rs);
     write_npz("frs/t_obs", t_obs);
 
@@ -191,7 +192,7 @@ void test_FRS() {
     write_npz("frs/elec", elec);
     write_npz("frs/elec_rs", elec_rs);
     write_npz("frs/photons", photons);
-    write_npz("frs/photons_rs", photons_rs);
+    write_npz("frs/photons_rs", photons_rs);*/
 }
 
 int main() {

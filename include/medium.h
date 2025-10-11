@@ -54,7 +54,7 @@ class ISM {
 
     /**
      * <!-- ************************************************************************************** -->
-     * @brief Return density at given position (constant everywhere)
+     * @brief Return density at a given position (constant everywhere)
      * @param phi Azimuthal angle (unused)
      * @param theta Polar angle (unused)
      * @param r Radial distance (unused)
@@ -81,6 +81,8 @@ class Wind {
      * <!-- ************************************************************************************** -->
      * @brief Constructor: Initialize with wind parameter A_star (in standard units)
      * @param A_star Wind density parameter in standard units
+     * @param n_ism number density of ISM at large radii
+     * @param n0 number density of wind at small radii
      * <!-- ************************************************************************************** -->
      */
     explicit Wind(Real A_star, Real n_ism = 0, Real n0 = con::inf) noexcept
@@ -88,7 +90,7 @@ class Wind {
 
     /**
      * <!-- ************************************************************************************** -->
-     * @brief Return density at given position (proportional to 1/r²)
+     * @brief Return density at given positions (proportional to 1/r²)
      * @param phi Azimuthal angle (unused)
      * @param theta Polar angle (unused)
      * @param r Radial distance
@@ -131,6 +133,7 @@ namespace evn {
      * @param A_star Wind parameter in standard units
      * @param n_ism Number density of the ISM [cm^-3]
      * @param n0 Number density of inner region [cm^-3]
+     * @param k power-law index
      * @return functions for density calculation
      * @details Converts A_star to proper units (A_star * 5e11 g/cm) and returns functions that compute
      *          density = A/r² and mass = A*r, representing a steady-state stellar wind where density

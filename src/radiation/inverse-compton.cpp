@@ -15,8 +15,8 @@ InverseComptonY::InverseComptonY(Real nu_m, Real nu_c, Real B, Real Y_T) noexcep
     gamma_hat_m = con::me * con::c2 / con::h / nu_m; // Compute minimum characteristic Lorentz factor
     gamma_hat_c = con::me * con::c2 / con::h / nu_c; // Compute cooling characteristic Lorentz factor
     this->Y_T = Y_T;                                 // Set the Thomson Y parameter
-    nu_hat_m = compute_syn_freq(gamma_hat_m, B);     // Compute corresponding synchrotron frequency for gamma_hat_m
-    nu_hat_c = compute_syn_freq(gamma_hat_c, B);     // Compute corresponding synchrotron frequency for gamma_hat_c
+    nu_hat_m = compute_syn_freq(gamma_hat_m, B);     // Compute the corresponding synchrotron frequency for gamma_hat_m
+    nu_hat_c = compute_syn_freq(gamma_hat_c, B);     // Compute the corresponding synchrotron frequency for gamma_hat_c
 
     if (nu_hat_m <= nu_hat_c) {
         regime = 1; // fast IC cooling regime
@@ -80,7 +80,7 @@ Real InverseComptonY::compute_val_at_nu(Real nu, Real p) const {
             } else if (nu <= nu_hat_c) {
                 return Y_T * std::sqrt(std::sqrt(nu_hat_m / nu)); // Intermediate frequency scaling
             } else
-                return Y_T * pow23(nu_hat_c / nu) * std::sqrt(std::sqrt(nu_hat_m / nu_hat_c)); // High frequency scaling
+                return Y_T * pow23(nu_hat_c / nu) * std::sqrt(std::sqrt(nu_hat_m / nu_hat_c)); // High-frequency scaling
 
             break;
         case 2:
@@ -90,7 +90,7 @@ Real InverseComptonY::compute_val_at_nu(Real nu, Real p) const {
                 return Y_T * fast_pow(nu / nu_hat_c, (p - 3) / 4); // Intermediate frequency scaling
             } else
                 return Y_T * pow23(nu_hat_m / nu) *
-                       fast_pow(nu_hat_m / nu_hat_c, (p - 3) / 4); // High frequency scaling
+                       fast_pow(nu_hat_m / nu_hat_c, (p - 3) / 4); // High-frequency scaling
 
             break;
         default:
@@ -112,7 +112,7 @@ Real InverseComptonY::compute_Y_tilt_at_nu(InverseComptonY const& Ys, Real nu, R
 }
 
 Real compton_cross_section(Real nu) {
-    Real x = con::h / (con::me * con::c2) * nu;
+    const Real x = con::h / (con::me * con::c2) * nu;
     /*if (x <= 1) {
         return con::sigmaT;
     } else {
@@ -124,18 +124,18 @@ Real compton_cross_section(Real nu) {
     } else if (x > 1e2) {
         return 3. / 8 * con::sigmaT * (log(2 * x) + 0.5) / x;
     } else {
-        Real l = std::log1p(2.0 * x); // log(1+2x)
-        Real invx = 1.0 / x;
-        Real invx2 = invx * invx;
-        Real term1 = 1.0 + 2.0 * x;
-        Real invt1 = 1.0 / term1;
-        Real invt1_2 = invt1 * invt1;
+        const Real l = std::log1p(2.0 * x); // log(1+2x)
+        const Real invx = 1.0 / x;
+        const Real invx2 = invx * invx;
+        const Real term1 = 1.0 + 2.0 * x;
+        const Real invt1 = 1.0 / term1;
+        const Real invt1_2 = invt1 * invt1;
 
         // ((1+x)/x^3) * (2x(1+x)/(1+2x) - log(1+2x)) + log(1+2x)/(2x) - (1+3x)/(1+2x)^2
-        Real a = (1.0 + x) * invx2 * invx;          // (1+x)/x^3
-        Real b = (2.0 * x * (1.0 + x)) * invt1 - l; // bracket
-        Real c = 0.5 * l * invx;                    // log_term/(2x)
-        Real d = (1.0 + 3.0 * x) * invt1_2;         // (1+3x)/(1+2x)^2
+        const Real a = (1.0 + x) * invx2 * invx;          // (1+x)/x^3
+        const Real b = (2.0 * x * (1.0 + x)) * invt1 - l; // bracket
+        const Real c = 0.5 * l * invx;                    // log_term/(2x)
+        const Real d = (1.0 + 3.0 * x) * invt1_2;         // (1+3x)/(1+2x)^2
 
         return 0.75 * con::sigmaT * (a * b + c - d);
     }

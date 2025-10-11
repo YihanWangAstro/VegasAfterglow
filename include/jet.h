@@ -126,7 +126,7 @@ class TophatJet {
 /**
  * <!-- ************************************************************************************** -->
  * @class GaussianJet
- * @brief Implements a Gaussian jet profile where properties follow a Gaussian distribution with angle.
+ * @brief Implements a Gaussian jet profile where properties follow a Gaussian distribution with angles.
  * @details This class provides a smooth model for GRB jets, characterized by core angle theta_c,
  *          isotropic equivalent energy E_iso, and initial Lorentz factor Gamma0 at the center.
  * <!-- ************************************************************************************** -->
@@ -182,13 +182,13 @@ class GaussianJet {
   private:
     Real const norm_{0};   ///< Normalization factor for Gaussian distribution
     Real const eps_k_{0};  ///< Peak energy per solid angle at center
-    Real const Gamma0_{1}; ///< Peak Lorentz factor at center
+    Real const Gamma0_{1}; ///< Peak Lorentz factor at the center
 };
 
 /**
  * <!-- ************************************************************************************** -->
  * @class PowerLawJet
- * @brief Implements a power-law jet profile where properties follow a power-law distribution with angle.
+ * @brief Implements a power-law jet profile where properties follow a power-law distribution with angles.
  * @details This class provides a model for GRB jets with a power-law decay, characterized by core angle theta_c,
  *          isotropic equivalent energy E_iso, initial Lorentz factor Gamma0, and power-law index k.
  * <!-- ************************************************************************************** -->
@@ -265,7 +265,7 @@ namespace math {
      * @tparam F2 Type of the temporal function
      * @param f_spatial Function of (phi, theta)
      * @param f_temporal Function of time
-     * @return Combined function where result is the product of both input functions
+     * @return Combined function where a result is the product of both input functions
      * <!-- ************************************************************************************** -->
      */
     template <typename F1, typename F2>
@@ -317,7 +317,7 @@ namespace math {
      * <!-- ************************************************************************************** -->
      * @brief Returns a Gaussian profile function for jet properties
      * @param theta_c Core angle (standard deviation of the Gaussian)
-     * @param height Peak height at center
+     * @param height Peak height at the center
      * @return Function implementing a Gaussian profile
      * <!-- ************************************************************************************** -->
      */
@@ -335,7 +335,7 @@ namespace math {
      * <!-- ************************************************************************************** -->
      * @brief Returns a power-law profile function for jet properties
      * @param theta_c Core angle
-     * @param height Height at center
+     * @param height Height at the center
      * @param k Power-law index
      * @return Function implementing a power-law profile
      * <!-- ************************************************************************************** -->
@@ -436,7 +436,8 @@ namespace math {
      * <!-- ************************************************************************************** -->
      * @brief Creates a step injection profile: returns 1 if t > t0, else 0
      * @param t0 Step time
-     * @param height_low
+     * @param height_low height of low
+     * @param height_high height of high
      * @return Function implementing a step function
      * <!-- ************************************************************************************** -->
      */
@@ -449,6 +450,8 @@ namespace math {
      * @brief Creates a square injection profile: returns 1 if t is between t0 and t1, else 0
      * @param t0 Start time
      * @param t1 End time
+     * @param height_high height of high
+     * @param height_low height of low
      * @return Function implementing a square wave
      * <!-- ************************************************************************************** -->
      */
@@ -461,16 +464,17 @@ namespace math {
      * @brief Creates a power-law injection profile: decaying with power-law index q
      * @param t0 Reference time
      * @param q Power-law decay index
-     * @return Function implementing a power-law decay
+     * @param height height
+     * @return Function implementing power-law decay
      * <!-- ************************************************************************************** -->
      */
-    inline auto powerlaw_injection(Real t0, Real q, Real hight) noexcept {
-        return [=](Real phi, Real theta, Real t) noexcept { return hight * fast_pow(1 + t / t0, -q); };
+    inline auto powerlaw_injection(Real t0, Real q, Real height) noexcept {
+        return [=](Real phi, Real theta, Real t) noexcept { return height * fast_pow(1 + t / t0, -q); };
     }
 
     /**
      * <!-- ************************************************************************************** -->
-     * @brief Creates a magnetar injection profile: returns a power-law decay for theta < theta_c
+     * @brief Creates a magnetar injection profile: returns power-law decay for theta < theta_c
      * @param t0 Reference time
      * @param q Power-law decay index
      * @param L0 Normalization factor
@@ -498,7 +502,7 @@ namespace math {
  * @param e_max Maximum energy
  * @param gamma_max Maximum Lorentz factor
  * @param idx Power-law index relating energy to Lorentz factor
- * @return Function that calculates Lorentz factor based on energy
+ * @return Function that calculates the Lorentz factor based on energy
  * @details Returns a lambda function that computes a Lorentz factor using the Liang & Ghirlanda (2010)
  *          prescription. This is a commonly used model for the Lorentz factor distribution in GRB jets.
  *          The returned function calculates:
@@ -517,7 +521,7 @@ auto LiangGhirlanda2010(F energy_func, Real e_max, Real gamma_max, Real idx) {
         // Calculate the velocity parameter u using power-law scaling
         const Real u = fast_pow(e / e_max, idx) * gamma_max;
 
-        // Convert to Lorentz factor
+        // Convert to the Lorentz factor
         return std::sqrt(1 + u * u);
     };
 }

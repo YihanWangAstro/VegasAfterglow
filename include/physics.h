@@ -12,7 +12,7 @@
 /**
  * <!-- ************************************************************************************** -->
  * @brief Computes the deceleration radius of the shock.
- * @details For a given isotropic energy E_iso, ISM density n_ism, initial Lorentz factor Gamma0,
+ * @details For given isotropic energy E_iso, ISM density n_ism, initial Lorentz factor Gamma0,
  *          and engine duration, the deceleration radius is the maximum of the thin shell and thick shell
  *          deceleration radii.
  * @param E_iso Isotropic energy
@@ -109,7 +109,7 @@ Real calc_engine_duration(Real E_iso, Real n_ism, Real Gamma0, Real xi);
 
 /**
  * <!-- ************************************************************************************** -->
- * @brief Converts Lorentz factor (gamma) to velocity fraction (beta)
+ * @brief Converts Lorentz factor (gamma) to a velocity fraction (beta)
  * @param gamma Lorentz factor
  * @return Velocity fraction (beta = v/c)
  * <!-- ************************************************************************************** -->
@@ -120,7 +120,7 @@ inline Real gamma_to_beta(Real gamma) {
 
 /**
  * <!-- ************************************************************************************** -->
- * @brief Computes adiabatic index as a function of Lorentz factor
+ * @brief Computes adiabatic index as a function of the Lorentz factor
  * @param gamma Lorentz factor
  * @return Adiabatic index
  * <!-- ************************************************************************************** -->

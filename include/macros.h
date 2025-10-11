@@ -70,8 +70,8 @@ namespace unit {
     constexpr Real hr = 3600 * sec;                     ///< Hour in code units
     constexpr Real day = 24 * hr;                       ///< Day in code units
     constexpr Real yr = 365.2425 * day;                 ///< Year in code units
-    constexpr Real Myr = 1e6 * yr;                      ///< Million years in code units
-    constexpr Real Gyr = 1e9 * yr;                      ///< Billion years in code units
+    constexpr Real Myr = 1e6 * yr;                      ///< a Million years in code units
+    constexpr Real Gyr = 1e9 * yr;                      ///< a Billion years in code units
 } // namespace unit
 
 /**

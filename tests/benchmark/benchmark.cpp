@@ -53,8 +53,8 @@ void tests(Real phi_resol, Real theta_resol, Real t_resol, Real n_ism, Real eps_
     Array F_nu = obs.specific_flux(t_obs, nu_obs, syn_ph);
 
     if (verbose) {
-        write_npz(std::format("F_nu{:.1f}-{:.1f}-{:.1f}", phi_resol, theta_resol, t_resol), "F_nu",
-                  xt::eval(F_nu / unit::Jy), "t_obs", xt::eval(t_obs / unit::sec));
+        //write_npz(std::format("F_nu{:.1f}-{:.1f}-{:.1f}", phi_resol, theta_resol, t_resol), "F_nu",
+        //          xt::eval(F_nu / unit::Jy), "t_obs", xt::eval(t_obs / unit::sec));
     }
 
     return;
@@ -67,7 +67,7 @@ int main() {
     Real p = 2.1;
     Real Gamma0 = 300;
 
-    Array E_iso = xt::logspace(std::log10(1e48 * unit::erg), std::log10(1e52 * unit::erg), 1000);
+    Array E_iso = xt::logspace(std::log10(1e48 * unit::erg), std::log10(1e52 * unit::erg), 10);
     Array theta_v = xt::linspace(0.01, 0.5, 10);
 
     Real phi_resolu[] = {0.1, 0.2, 0.4, 0.8, 1.6};

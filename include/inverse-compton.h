@@ -7,7 +7,6 @@
 
 #pragma once
 #include <array>
-#include <vector>
 
 #include "macros.h"
 #include "mesh.h"
@@ -24,8 +23,8 @@ struct InverseComptonY {
      * <!-- ************************************************************************************** -->
      * @brief Initializes an InverseComptonY object with frequency thresholds, magnetic field and Y parameter.
      * @details Computes characteristic gamma values and corresponding frequencies, then determines cooling regime.
-     * @param nu_m Characteristic frequency for minimum Lorentz factor
-     * @param nu_c Characteristic frequency for cooling Lorentz factor
+     * @param nu_m Characteristic frequency for the minimum Lorentz factor
+     * @param nu_c Characteristic frequency for the cooling Lorentz factor
      * @param B Magnetic field strength
      * @param Y_T Thomson Y parameter
      * <!-- ************************************************************************************** -->
@@ -140,7 +139,7 @@ struct ICPhoton {
     ICPhoton(Electrons const& electrons, Photons const& photons, bool KN) noexcept;
     /**
      * <!-- ************************************************************************************** -->
-     * @brief Returns the photon specific intensity.
+     * @brief Returns the photon-specific intensity.
      * @param nu The frequency at which to compute the specific intensity
      * @return The specific intensity at the given frequency
      * <!-- ************************************************************************************** -->
@@ -163,25 +162,26 @@ struct ICPhoton {
   private:
     void generate_grid();
 
+    void fill_integral_table();
+
     Array nu0; // input frequency nu0 grid value
 
-    Array dnu0;
-
-    Array I_nu; // input I_nu
+    Array I_nu_dnu; // input I_nu
 
     Array gamma; // gamma grid boundary values
 
-    Array dgamma;
-
-    Array column_den; // electron column density
+    Array N_e_dgamma; // electron column density
 
     MeshGrid IC_tab;
+
+    Real min_nu_quested{con::inf};
 
     static constexpr size_t gamma_grid_per_order{7}; // Number of frequency bins
 
     static constexpr size_t nu_grid_per_order{5}; // Number of gamma bins
 
     bool KN{false}; // Klein-Nishina flag
+
     bool generated{false};
 };
 
@@ -246,6 +246,9 @@ ICPhoton<Electrons, Photons>::ICPhoton(Electrons const& electrons, Photons const
     : photons(photons), electrons(electrons), KN(KN) {}
 
 template <typename Electrons, typename Photons>
+void ICPhoton<Electrons, Photons>::fill_integral_table() {}
+
+template <typename Electrons, typename Photons>
 void ICPhoton<Electrons, Photons>::generate_grid() {
     const Real gamma_min = std::min(electrons.gamma_m, electrons.gamma_c);
     const Real gamma_max = electrons.gamma_M * 10;
@@ -254,6 +257,10 @@ void ICPhoton<Electrons, Photons>::generate_grid() {
     const Real nu_min = std::min(photons.nu_a, photons.nu_m) / 10;
     const Real nu_max = photons.nu_M * 10;
     const size_t nu_size = static_cast<size_t>(std::log10(nu_max / nu_min) * nu_grid_per_order);
+
+    Array dnu0;
+
+    Array dgamma;
 
     logspace_boundary_center(std::log2(nu_min), std::log2(nu_max), nu_size, nu0, dnu0);
 
@@ -264,15 +271,15 @@ void ICPhoton<Electrons, Photons>::generate_grid() {
     IC_tab = MeshGrid({gamma_size, nu_size}, -1);
     generated = true;
 
-    I_nu = Array::from_shape({nu_size});
-    column_den = Array::from_shape({gamma_size});
+    I_nu_dnu = Array::from_shape({nu_size});
+    N_e_dgamma = Array::from_shape({gamma_size});
 
     for (size_t i = 0; i < gamma_size; ++i) {
-        column_den(i) = electrons.compute_column_den(gamma(i));
+        N_e_dgamma(i) = electrons.compute_column_den(gamma(i)) * dgamma(i);
     }
 
     for (size_t j = 0; j < nu_size; ++j) {
-        I_nu(j) = photons.compute_I_nu(nu0(j));
+        I_nu_dnu(j) = photons.compute_I_nu(nu0(j)) * dnu0(j);
     }
 }
 
@@ -291,8 +298,8 @@ Real ICPhoton<Electrons, Photons>::compute_I_nu(Real nu) {
 
     for (size_t i = gamma_size; i-- > 0;) {
         const Real gamma_i = gamma(i);
-        const Real upscatter = 4 * gamma_i * gamma_i * IC_x0;
-        const Real Ndgamma = column_den(i) * dgamma(i);
+        const Real upscatter = 4 * IC_x0 * gamma_i * gamma_i;
+        const Real Ndgamma = N_e_dgamma(i);
 
         if (nu > upscatter * nu0.back())
             break;
@@ -305,7 +312,7 @@ Real ICPhoton<Electrons, Photons>::compute_I_nu(Real nu) {
                 Real nu_comv = gamma_i * nu0_j;
                 Real inv = 1 / nu_comv;
 
-                const Real grid_value = I_nu(j) * sigma(nu_comv) * inv * inv * dnu0(j);
+                const Real grid_value = I_nu_dnu(j) * sigma(nu_comv) * inv * inv;
                 IC_tab(i, j) = (j != nu_size - 1) ? (IC_tab(i, j + 1) + grid_value) : grid_value;
             }
 

@@ -15,8 +15,8 @@ Shock::Shock(size_t phi_size, size_t theta_size, size_t t_size, RadParams const&
       Gamma_th({phi_size, theta_size, t_size}, 1),   // Initialize Gamma_th grid with 1
       B({phi_size, theta_size, t_size}, 0),          // Initialize magnetic field grid with 0
       N_p({phi_size, theta_size, t_size}, 0),        // Initialize column density grid with 0
-      injection_idx({phi_size, theta_size}, t_size), // Initialize cross index grid with t_size
-      required({phi_size, theta_size, t_size}, 1),   // Initialize required grid with true
+      injection_idx({phi_size, theta_size}, t_size), // Initialize a cross-index grid with t_size
+      required({phi_size, theta_size, t_size}, 1),   // Initialize the required grid with true
       rad(rad_params),                               // Set radiation parameters
       phi_size(phi_size),                            // Store phi grid size
       theta_size(theta_size),                        // Store theta grid size

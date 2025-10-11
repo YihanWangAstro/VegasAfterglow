@@ -44,3 +44,79 @@ endif()
 
 # Install the module into the Python package directory
 install(TARGETS VegasAfterglowC DESTINATION VegasAfterglow)
+
+
+# ============================================================================
+# Test/Benchmark Executables
+# ============================================================================
+
+option(BUILD_TESTS "Build test executables" ON)
+
+if(BUILD_TESTS)
+  # Common source files needed for executables
+  set(VEGAS_CORE_SOURCES
+          src/radiation/synchrotron.cpp
+          src/radiation/inverse-compton.cpp
+          src/radiation/prompt.cpp
+          src/dynamics/shock.cpp
+          src/core/mesh.cpp
+          src/core/observer.cpp
+          src/core/physics.cpp
+  )
+
+  # Demo executable
+  add_executable(demo
+          tests/demo/demo.cpp
+          ${VEGAS_CORE_SOURCES}
+  )
+
+  target_include_directories(demo PRIVATE
+          ${CMAKE_CURRENT_SOURCE_DIR}/include
+          ${CMAKE_CURRENT_SOURCE_DIR}/external
+  )
+
+  target_compile_features(demo PRIVATE cxx_std_20)
+
+  # Add your dependencies (find xtensor, boost, etc. if needed)
+  # target_link_libraries(demo PRIVATE xtensor::xtensor ...)
+
+  # Benchmark executable
+  add_executable(benchmark
+          tests/benchmark/benchmark.cpp
+          ${VEGAS_CORE_SOURCES}
+  )
+
+  target_include_directories(benchmark PRIVATE
+          ${CMAKE_CURRENT_SOURCE_DIR}/include
+          ${CMAKE_CURRENT_SOURCE_DIR}/external
+  )
+
+  target_compile_features(benchmark PRIVATE cxx_std_20)
+
+  # Add your dependencies
+  # target_link_libraries(benchmark PRIVATE xtensor::xtensor ...)
+
+  # Set output directory for test executables
+  set_target_properties(demo benchmark PROPERTIES
+          RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/tests"
+  )
+
+  # Add profiling support for these targets
+  target_compile_options(demo PRIVATE
+          $<$<CONFIG:Profiling>:-pg -g -fno-omit-frame-pointer>
+          $<$<CONFIG:RelWithDebInfo>:-g -fno-omit-frame-pointer>
+  )
+
+  target_link_options(demo PRIVATE
+          $<$<CONFIG:Profiling>:-pg>
+  )
+
+  target_compile_options(benchmark PRIVATE
+          $<$<CONFIG:Profiling>:-pg -g -fno-omit-frame-pointer>
+          $<$<CONFIG:RelWithDebInfo>:-g -fno-omit-frame-pointer>
+  )
+
+  target_link_options(benchmark PRIVATE
+          $<$<CONFIG:Profiling>:-pg>
+  )
+endif()
