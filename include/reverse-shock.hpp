@@ -18,7 +18,7 @@
  *          injection capabilities.
  * <!-- ************************************************************************************** -->
  */
-template <typename Ejecta, typename Medium>
+template <typename Ejecta>
 struct ReverseState {
     static constexpr bool mass_inject = HasDmdt<Ejecta>;   ///< Whether ejecta has mass injection
     static constexpr bool energy_inject = HasDedt<Ejecta>; ///< Whether ejecta has energy injection
@@ -56,21 +56,21 @@ struct ReverseState {
 template <typename Ejecta, typename Medium>
 class FRShockEqn {
   public:
-    using State = ReverseState<Ejecta, Medium>;
+    using State = ReverseState<Ejecta>;
 
     /**
      * <!-- ************************************************************************************** -->
      * @brief Constructor for the FRShockEqn class.
      * @details Initializes the forward-reverse shock equation with the given medium, ejecta, and parameters.
      * @param medium The medium through which the shock propagates
-     * @param jet The ejecta driving the shock
+     * @param ejecta The ejecta driving the shock
      * @param phi Azimuthal angle
      * @param theta Polar angle
      * @param rad_fwd Radiation params for forward shock
      * @param rad_rvs Radiation params for reverse shock
      * <!-- ************************************************************************************** -->
      */
-    FRShockEqn(Medium const& medium, Ejecta const& jet, Real phi, Real theta, RadParams const& rad_fwd,
+    FRShockEqn(Medium const& medium, Ejecta const& ejecta, Real phi, Real theta, RadParams const& rad_fwd,
                RadParams const& rad_rvs);
 
     Medium const& medium;    ///< Reference to the medium properties

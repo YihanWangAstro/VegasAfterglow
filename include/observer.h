@@ -333,10 +333,7 @@ MeshGrid Observer::specific_flux(Array const& t_obs, Array const& nu_obs, Photon
 
             InterpState state;
             for (size_t k = 0; k < t_grid - 1 && t_idx < t_obs_len; k++) {
-                const Real t_hi = time(i, j, k + 1);
-                if (t_hi < t_obs(t_idx)) {
-                    continue;
-                } else {
+                if (const Real t_hi = time(i, j, k + 1); t_hi >= t_obs(t_idx)) {
                     const size_t idx_start = t_idx;
                     iterate_to(t_hi, t_obs, t_idx);
                     const size_t idx_end = t_idx;
@@ -395,7 +392,6 @@ Array Observer::specific_flux_series(Array const& t_obs, Array const& nu_obs, Ph
             while (t_idx < t_obs_len && k < t_grid - 1) {
                 if (time(i, j, k + 1) < t_obs(t_idx)) {
                     k++;
-                    continue;
                 } else {
                     if (set_boundaries(state, eff_i, i, j, k, lg2_nu_src(t_idx), photons)) [[likely]] {
                         //F_nu(t_idx) += loglog_interpolate(state, lg2_t_obs(t_idx), lg2_t(i, j, k));

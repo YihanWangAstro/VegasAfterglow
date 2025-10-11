@@ -405,7 +405,7 @@ class PyModel {
             bool axisymmetric = true)
         : jet_(std::move(jet)),
           medium_(std::move(medium)),
-          obs_setup(observer),
+          obs_setup(std::move(observer)),
           fwd_rad(fwd_rad),
           rvs_rad_opt(rvs_rad),
           phi_resol(std::get<0>(resolutions)),
@@ -502,14 +502,14 @@ class PyModel {
      * @details Template method that handles the core emission calculation logic using internal
      *          dimensionless units. This method sets up the coordinate system, generates
      *          shocks, and delegates to the appropriate emission calculation function.
-     * @param t Observer time array [internal units]
-     * @param nu Observer frequency array [internal units]
+     * @param t_obs Observer time array [internal units]
+     * @param nu_obs Observer frequency array [internal units]
      * @param flux_func Function to compute flux (either specific_flux or specific_flux_series)
      * @return PyFlux Structure with flux components
      * <!-- ************************************************************************************** -->
      */
     template <typename Func>
-    PyFlux compute_emission(Array const& t, Array const& nu, Func&& flux_func);
+    PyFlux compute_emission(Array const& t_obs, Array const& nu_obs, Func&& flux_func);
 
     /**
      * <!-- ************************************************************************************** -->
@@ -520,8 +520,8 @@ class PyModel {
      *          for a complete shock region.
      * @param shock Forward or reverse shock structure
      * @param coord Coordinate system for the simulation
-     * @param t Observer time array [internal units]
-     * @param nu Observer frequency array [internal units]
+     * @param t_obs Observer time array [internal units]
+     * @param nu_obs Observer frequency array [internal units]
      * @param obs Observer object for flux calculation
      * @param rad Radiation parameters controlling microphysics
      * @param emission Output flux structure to populate
@@ -529,8 +529,8 @@ class PyModel {
      * <!-- ************************************************************************************** -->
      */
     template <typename Func>
-    void single_shock_emission(Shock const& shock, Coord const& coord, Array const& t, Array const& nu, Observer& obs,
-                               PyRadiation rad, Flux& emission, Func&& flux_func);
+    void single_shock_emission(Shock const& shock, Coord const& coord, Array const& t_obs, Array const& nu_obs,
+                               Observer& obs, PyRadiation rad, Flux& emission, Func&& flux_func);
 
     /**
      * <!-- ************************************************************************************** -->
@@ -541,14 +541,13 @@ class PyModel {
      *          processes driving the afterglow emission.
      * @param shock Forward or reverse shock structure
      * @param coord Coordinate system for the simulation
-     * @param t Observer time array [internal units]
      * @param obs Observer object for coordinate transformations
      * @param rad Radiation parameters for particle calculations
      * @param details Output structure to populate with shock evolution data
      * <!-- ************************************************************************************** -->
      */
-    void single_evo_details(Shock const& shock, Coord const& coord, Array const& t, Observer& obs,
-                            const PyRadiation& rad, PyShock& details) const;
+    void single_evo_details(Shock const& shock, Coord const& coord, Observer& obs, PyRadiation const& rad,
+                            PyShock& details) const;
 
     /**
      * <!-- ************************************************************************************** -->

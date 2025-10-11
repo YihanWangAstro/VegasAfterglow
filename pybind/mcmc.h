@@ -268,7 +268,7 @@ struct MultiBandModel {
      * @param data Complete multi-wavelength observational dataset for fitting
      * <!-- ************************************************************************************** -->
      */
-    MultiBandModel(MultiBandData data);
+    explicit MultiBandModel(MultiBandData data);
 
     /**
      * <!-- ************************************************************************************** -->
@@ -334,15 +334,15 @@ struct MultiBandModel {
      * @param t_min Minimum time for photon grid generation [seconds]
      * @param t_max Maximum time for photon grid generation [seconds]
      * @param obs Observer object for flux calculations
-     * @param f_photons Forward shock synchrotron photon grid
-     * @param r_photons Reverse shock synchrotron photon grid
-     * @param f_IC_photons Forward shock inverse Compton photon grid
-     * @param r_IC_photons Reverse shock inverse Compton photon grid
+     * @param fwd_photons Forward shock synchrotron photon grid
+     * @param rvs_photons Reverse shock synchrotron photon grid
+     * @param fwd_IC_photons Forward shock inverse Compton photon grid
+     * @param rvs_IC_photons Reverse shock inverse Compton photon grid
      * <!-- ************************************************************************************** -->
      */
     template <typename ICPhotonGrid>
-    void generate_photons(Params const& param, double t_min, double t_max, Observer& obs, SynPhotonGrid& f_photons,
-                          SynPhotonGrid& r_photons, ICPhotonGrid& f_IC_photons, ICPhotonGrid& r_IC_photons);
+    void generate_photons(Params const& param, double t_min, double t_max, Observer& obs, SynPhotonGrid& fwd_photons,
+                          SynPhotonGrid& rvs_photons, ICPhotonGrid& fwd_IC_photons, ICPhotonGrid& rvs_IC_photons);
 
     /**
      * <!-- ************************************************************************************** -->

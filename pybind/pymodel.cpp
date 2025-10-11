@@ -199,8 +199,8 @@ void save_photon_details(PhotonGrid const& photons, PyShock& details) {
     }
 }
 
-void PyModel::single_evo_details(Shock const& shock, Coord const& coord, Array const& t_obs, Observer& obs,
-                                 PyRadiation const& rad, PyShock& details) const {
+void PyModel::single_evo_details(Shock const& shock, Coord const& coord, Observer& obs, PyRadiation const& rad,
+                                 PyShock& details) const {
     obs.observe(coord, shock, obs_setup.lumi_dist, obs_setup.z);
 
     details.t_obs = obs.time / unit::sec;
@@ -239,7 +239,7 @@ auto PyModel::details(Real t_min, Real t_max) const -> PyDetails {
 
         save_shock_details(fwd_shock, details.fwd);
 
-        single_evo_details(fwd_shock, coord, t_obs, observer, fwd_rad, details.fwd);
+        single_evo_details(fwd_shock, coord, observer, fwd_rad, details.fwd);
 
         return details;
     } else {
@@ -250,9 +250,9 @@ auto PyModel::details(Real t_min, Real t_max) const -> PyDetails {
 
         save_shock_details(rvs_shock, details.rvs);
 
-        single_evo_details(fwd_shock, coord, t_obs, observer, fwd_rad, details.fwd);
+        single_evo_details(fwd_shock, coord, observer, fwd_rad, details.fwd);
 
-        single_evo_details(rvs_shock, coord, t_obs, observer, rvs_rad, details.rvs);
+        single_evo_details(rvs_shock, coord, observer, rvs_rad, details.rvs);
 
         return details;
     }
@@ -284,8 +284,8 @@ auto PyModel::flux_density(PyArray const& t, PyArray const& nu) -> PyFlux {
     const Array t_obs = t * unit::sec;
     const Array nu_obs = nu * unit::Hz;
 
-    auto flux_func = [](Observer& obs, Array const& t, Array const& nu, auto& photons) -> XTArray {
-        return obs.specific_flux_series(t, nu, photons) / unit::flux_den_cgs;
+    auto flux_func = [](Observer& obs, Array const& time, Array const& freq, auto& photons) -> XTArray {
+        return obs.specific_flux_series(time, freq, photons) / unit::flux_den_cgs;
     };
 
     auto result = compute_emission(t_obs, nu_obs, flux_func);
@@ -300,8 +300,8 @@ auto PyModel::flux(PyArray const& t, double nu_min, double nu_max, size_t num_nu
     const Array nu_obs = xt::logspace(std::log10(nu_min * unit::Hz), std::log10(nu_max * unit::Hz), num_nu);
     const Array t_obs = t * unit::sec;
 
-    auto flux_func = [](Observer& obs, Array const& t, Array const& nu, auto& photons) -> XTArray {
-        return obs.flux(t, nu, photons) / unit::flux_cgs;
+    auto flux_func = [](Observer& obs, Array const& time, Array const& freq, auto& photons) -> XTArray {
+        return obs.flux(time, freq, photons) / unit::flux_cgs;
     };
 
     auto result = compute_emission(t_obs, nu_obs, flux_func);
@@ -377,8 +377,8 @@ auto PyModel::flux_density_exposures(PyArray const& t, PyArray const& nu, PyArra
 
     const auto sampling = generate_exposure_sampling(t, nu, expo_time, num_points);
 
-    auto flux_func = [](Observer& obs, Array const& t, Array const& nu, auto& photons) -> XTArray {
-        return obs.specific_flux_series(t, nu, photons) / unit::flux_den_cgs;
+    auto flux_func = [](Observer& obs, Array const& time, Array const& freq, auto& photons) -> XTArray {
+        return obs.specific_flux_series(time, freq, photons) / unit::flux_den_cgs;
     };
 
     auto result = compute_emission(sampling.t_obs_sorted, sampling.nu_obs_sorted, flux_func);
@@ -395,8 +395,8 @@ auto PyModel::flux_density_grid(PyArray const& t, PyArray const& nu) -> PyFlux {
     const Array t_obs = t * unit::sec;
     const Array nu_obs = nu * unit::Hz;
 
-    auto flux_func = [](Observer& obs, Array const& t, Array const& nu, auto& photons) -> XTArray {
-        return obs.specific_flux(t, nu, photons) / unit::flux_den_cgs;
+    auto flux_func = [](Observer& obs, Array const& time, Array const& freq, auto& photons) -> XTArray {
+        return obs.specific_flux(time, freq, photons) / unit::flux_den_cgs;
     };
 
     auto result = compute_emission(t_obs, nu_obs, flux_func);

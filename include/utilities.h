@@ -346,12 +346,12 @@ struct Tables {
     std::array<double, BUCKETS> log2_c{};
     std::array<uint64_t, BUCKETS> c_bits{}; // optional (not used in hot path)
     Tables() {
-        const int shift = 52 - BUCKET_BITS;
-        const uint64_t expbits = uint64_t(EXP_BIAS) << 52;
+        constexpr int shift = 52 - BUCKET_BITS;
+        constexpr uint64_t expbits = static_cast<uint64_t>(EXP_BIAS) << 52;
         for (size_t i = 0; i < BUCKETS; ++i) {
-            uint64_t frac_mid = (uint64_t(i) << shift) | (uint64_t(1) << (shift - 1));
+            const uint64_t frac_mid = (static_cast<uint64_t>(i) << shift) | (static_cast<uint64_t>(1) << (shift - 1));
             uint64_t bits = expbits | frac_mid; // center c_i bits
-            double c = std::bit_cast<double>(bits);
+            const double c = std::bit_cast<double>(bits);
             c_bits[i] = bits;
             inv_c[i] = 1.0 / c;
             log2_c[i] = std::log2(c);
@@ -366,7 +366,7 @@ inline const Tables& tables() {
 
 inline double decompose_normals(double x, int& e) {
     uint64_t bits = std::bit_cast<uint64_t>(x);
-    uint64_t expo = (bits >> 52) & EXP_MASK;
+    const uint64_t expo = (bits >> 52) & EXP_MASK;
     if (expo == 0 || expo == EXP_MASK) {
         int ee;
         double m = std::frexp(x, &ee); // [0.5,1)
@@ -374,9 +374,9 @@ inline double decompose_normals(double x, int& e) {
         e = ee - 1;
         return m; // -> [1,2)
     }
-    e = int(expo) - EXP_BIAS;
-    bits = (bits & FRAC_MASK) | (uint64_t(EXP_BIAS) << 52); // force mantissa exponent
-    return std::bit_cast<double>(bits);                     // m in [1,2)
+    e = static_cast<int>(expo) - EXP_BIAS;
+    bits = (bits & FRAC_MASK) | (static_cast<uint64_t>(EXP_BIAS) << 52); // force mantissa exponent
+    return std::bit_cast<double>(bits);                                  // m in [1,2)
 }
 
 /**

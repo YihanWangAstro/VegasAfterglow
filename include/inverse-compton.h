@@ -148,7 +148,7 @@ struct ICPhoton {
 
     /**
      * <!-- ************************************************************************************** -->
-     * @brief Computes the base-2 logarithm of the photon specific intensity at a given frequency.
+     * @brief Computes the base-2 logarithm of the photon-specific intensity at a given frequency.
      * @param log2_nu The base-2 logarithm of the frequency
      * @return The base-2 logarithm of the photon specific intensity at the given frequency
      * <!-- ************************************************************************************** -->
@@ -162,19 +162,15 @@ struct ICPhoton {
   private:
     void generate_grid();
 
-    void fill_integral_table();
-
     Array nu0; // input frequency nu0 grid value
 
     Array I_nu_dnu; // input I_nu
 
     Array gamma; // gamma grid boundary values
 
-    Array N_e_dgamma; // electron column density
+    Array dN_e; // electron column density
 
     MeshGrid IC_tab;
-
-    Real min_nu_quested{con::inf};
 
     static constexpr size_t gamma_grid_per_order{7}; // Number of frequency bins
 
@@ -203,13 +199,13 @@ inline constexpr Real IC_x0 = 0.47140452079103166;
  * @tparam Photons Type of the photon distribution
  * @param electrons The electron grid
  * @param photons The photon grid
- * @param kn flag for Klein-Nishina
+ * @param KN flag for Klein-Nishina
  * @return A 3D grid of IC photons
  * <!-- ************************************************************************************** -->
  */
 template <typename Electrons, typename Photons>
 ICPhotonGrid<Electrons, Photons> generate_IC_photons(ElectronGrid<Electrons> const& electrons,
-                                                     PhotonGrid<Photons> const& photons, bool kn = true) noexcept;
+                                                     PhotonGrid<Photons> const& photons, bool KN = true) noexcept;
 
 /**
  * <!-- ************************************************************************************** -->
@@ -246,9 +242,6 @@ ICPhoton<Electrons, Photons>::ICPhoton(Electrons const& electrons, Photons const
     : photons(photons), electrons(electrons), KN(KN) {}
 
 template <typename Electrons, typename Photons>
-void ICPhoton<Electrons, Photons>::fill_integral_table() {}
-
-template <typename Electrons, typename Photons>
 void ICPhoton<Electrons, Photons>::generate_grid() {
     const Real gamma_min = std::min(electrons.gamma_m, electrons.gamma_c);
     const Real gamma_max = electrons.gamma_M * 10;
@@ -258,24 +251,20 @@ void ICPhoton<Electrons, Photons>::generate_grid() {
     const Real nu_max = photons.nu_M * 10;
     const size_t nu_size = static_cast<size_t>(std::log10(nu_max / nu_min) * nu_grid_per_order);
 
-    Array dnu0;
-
-    Array dgamma;
+    Array dnu0, dgamma;
 
     logspace_boundary_center(std::log2(nu_min), std::log2(nu_max), nu_size, nu0, dnu0);
 
     logspace_boundary_center(std::log2(gamma_min), std::log2(gamma_max), gamma_size, gamma, dgamma);
 
-    // I_nu = Array({nu_size}, -1);
-    // column_den = Array({gamma_size}, -1);
     IC_tab = MeshGrid({gamma_size, nu_size}, -1);
     generated = true;
 
     I_nu_dnu = Array::from_shape({nu_size});
-    N_e_dgamma = Array::from_shape({gamma_size});
+    dN_e = Array::from_shape({gamma_size});
 
     for (size_t i = 0; i < gamma_size; ++i) {
-        N_e_dgamma(i) = electrons.compute_column_den(gamma(i)) * dgamma(i);
+        dN_e(i) = electrons.compute_column_den(gamma(i)) * dgamma(i);
     }
 
     for (size_t j = 0; j < nu_size; ++j) {
@@ -299,7 +288,7 @@ Real ICPhoton<Electrons, Photons>::compute_I_nu(Real nu) {
     for (size_t i = gamma_size; i-- > 0;) {
         const Real gamma_i = gamma(i);
         const Real upscatter = 4 * IC_x0 * gamma_i * gamma_i;
-        const Real Ndgamma = N_e_dgamma(i);
+        const Real Ndgamma = dN_e(i);
 
         if (nu > upscatter * nu0.back())
             break;
@@ -324,6 +313,7 @@ Real ICPhoton<Electrons, Photons>::compute_I_nu(Real nu) {
                 break;
             }
         }
+
         if (extrapolate) {
             IC_I_nu += Ndgamma *
                        (IC_tab(i, 0) + (IC_tab(i, 0) - IC_tab(i, 1)) / (nu0(1) - nu0(0)) * (nu0(0) - nu / upscatter));

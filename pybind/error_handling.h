@@ -12,13 +12,13 @@
 
 namespace afterglow {
 
-    class ValidationError : public std::invalid_argument {
+    class ValidationError final : public std::invalid_argument {
       public:
         explicit ValidationError(const std::string& message) : std::invalid_argument(message) {}
         explicit ValidationError(const char* message) : std::invalid_argument(message) {}
     };
 
-    class LogicError : public std::logic_error {
+    class LogicError final : public std::logic_error {
       public:
         explicit LogicError(const std::string& message) : std::logic_error(message) {}
         explicit LogicError(const char* message) : std::logic_error(message) {}

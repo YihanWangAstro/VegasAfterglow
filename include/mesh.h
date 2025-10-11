@@ -164,6 +164,8 @@ Coord auto_grid(Ejecta const& jet, Array const& t_obs, Real theta_cut, Real thet
  * @tparam Ejecta Type of the jet/ejecta class
  * @param jet The jet/ejecta object
  * @param gamma_cut Lorentz factor cutoff value
+ * @param phi_resol
+ * @param theta_resol
  * @param is_axisymmetric Flag for axisymmetric jets
  * @return Angle (in radians) at which the jet's Lorentz factor drops to gamma_cut
  * <!-- ************************************************************************************** -->

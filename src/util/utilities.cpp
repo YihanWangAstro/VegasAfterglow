@@ -40,7 +40,7 @@ void print_array(Array const& arr) {
 Real point_interp(Real x0, Real x1, Real y0, Real y1, Real xi) {
     if (x0 == x1)
         return y0;
-    Real slope = (y1 - y0) / (x1 - x0);
+    const Real slope = (y1 - y0) / (x1 - x0);
     return y0 + slope * (xi - x0);
 }
 
@@ -61,11 +61,11 @@ Real point_loglog_interp(Real x0, Real x1, Real y0, Real y1, Real xi) {
         return 0;
     if (x0 == x1)
         return y0;
-    Real log_x0 = std::log(x0);
-    Real log_x1 = std::log(x1);
-    Real log_y0 = std::log(y0);
-    Real log_y1 = std::log(y1);
-    Real slope = (log_y1 - log_y0) / (log_x1 - log_x0);
+    const Real log_x0 = std::log(x0);
+    const Real log_x1 = std::log(x1);
+    const Real log_y0 = std::log(y0);
+    const Real log_y1 = std::log(y1);
+    const Real slope = (log_y1 - log_y0) / (log_x1 - log_x0);
     return std::exp(log_y0 + slope * (std::log(xi) - log_x0));
 }
 
@@ -73,7 +73,7 @@ Real point_loglog_interp(Real x0, Real x1, Real y0, Real y1, Real xi) {
  * <!-- ************************************************************************************** -->
  * @brief Linear interpolation for arbitrary x-values.
  * @details Finds the appropriate interval for interpolation and uses point_interp.
- * @param xi The x-value at which to interpolate
+ * @param x0 The x-value at which to interpolate
  * @param x Array of x-coordinates (must be monotonically increasing)
  * @param y Array of y-coordinates
  * @param lo_extrap Whether to extrapolate below the minimum x-value
@@ -81,25 +81,25 @@ Real point_loglog_interp(Real x0, Real x1, Real y0, Real y1, Real xi) {
  * @return The interpolated y-value
  * <!-- ************************************************************************************** -->
  */
-Real interp(Real xi, Array const& x, Array const& y, bool lo_extrap, bool hi_extrap) {
+Real interp(Real x0, Array const& x, Array const& y, bool lo_extrap, bool hi_extrap) {
     if (x.size() < 2 || y.size() < 2 || x.size() != y.size()) {
         std::cout << "incorrect array size for interpolation!\n";
         return 0;
     }
-    auto x_back = x(x.size() - 1);
-    auto y_back = y(y.size() - 1);
+    const auto x_back = x(x.size() - 1);
+    const auto y_back = y(y.size() - 1);
 
-    if (xi < x(0)) {
-        return (!lo_extrap || x(0) == xi) ? y(0) : point_interp(x(0), x(1), y(0), y(1), xi);
-    } else if (xi > x_back) {
-        return (!hi_extrap || x_back == xi) ? y_back
-                                            : point_interp(x(x.size() - 2), x_back, y(y.size() - 2), y_back, xi);
+    if (x0 < x(0)) {
+        return (!lo_extrap || x(0) == x0) ? y(0) : point_interp(x(0), x(1), y(0), y(1), x0);
+    } else if (x0 > x_back) {
+        return (!hi_extrap || x_back == x0) ? y_back
+                                            : point_interp(x(x.size() - 2), x_back, y(y.size() - 2), y_back, x0);
     } else {
-        auto it = std::lower_bound(x.begin(), x.end(), xi);
-        size_t idx = it - x.begin();
-        if (*it == xi)
+        const auto it = std::ranges::lower_bound(x, x0);
+        const size_t idx = it - x.begin();
+        if (*it == x0)
             return y(idx); // Exact match
-        return point_interp(x(idx - 1), x(idx), y(idx - 1), y(idx), xi);
+        return point_interp(x(idx - 1), x(idx), y(idx - 1), y(idx), x0);
     }
 }
 
@@ -121,8 +121,8 @@ Real eq_space_interp(Real xi, Array const& x, Array const& y, bool lo_extrap, bo
         return 0;
     }
 
-    auto x_back = x[x.size() - 1];
-    auto y_back = y[y.size() - 1];
+    const auto x_back = x[x.size() - 1];
+    const auto y_back = y[y.size() - 1];
 
     if (xi <= x[0])
         return (!lo_extrap || x[0] == xi) ? y[0] : point_interp(x[0], x[1], y[0], y[1], xi);
@@ -130,8 +130,8 @@ Real eq_space_interp(Real xi, Array const& x, Array const& y, bool lo_extrap, bo
         return (!hi_extrap || x_back == xi) ? y_back
                                             : point_interp(x[x.size() - 2], x_back, y[y.size() - 2], y_back, xi);
     else {
-        Real dx = x[1] - x[0];
-        size_t idx = static_cast<size_t>((xi - x[0]) / dx + 1);
+        const Real dx = x[1] - x[0];
+        const size_t idx = static_cast<size_t>((xi - x[0]) / dx + 1);
         if (xi == x[idx])
             return y[idx];
         return point_interp(x[idx - 1], x[idx], y[idx - 1], y[idx], xi);
@@ -155,8 +155,8 @@ Real loglog_interp(Real xi, const Array& x, const Array& y, bool lo_extrap, bool
         std::cout << "incorrect array size for interpolation!\n";
         return 0;
     }
-    auto x_back = x[x.size() - 1];
-    auto y_back = y[y.size() - 1];
+    const auto x_back = x[x.size() - 1];
+    const auto y_back = y[y.size() - 1];
 
     if (xi <= x[0]) {
         return (!lo_extrap || x[0] == xi) ? y[0] : point_loglog_interp(x[0], x[1], y[0], y[1], xi);
@@ -164,8 +164,8 @@ Real loglog_interp(Real xi, const Array& x, const Array& y, bool lo_extrap, bool
         return (!hi_extrap || x_back == xi) ? y_back
                                             : point_loglog_interp(x[x.size() - 2], x_back, y[y.size() - 2], y_back, xi);
     } else {
-        auto it = std::lower_bound(x.begin(), x.end(), xi);
-        size_t idx = it - x.begin();
+        const auto it = std::ranges::lower_bound(x, xi);
+        const size_t idx = it - x.begin();
         if (*it == xi)
             return y[idx]; // Exact match
         return point_loglog_interp(x[idx - 1], x[idx], y[idx - 1], y[idx], xi);
@@ -189,8 +189,8 @@ Real eq_space_loglog_interp(Real xi, const Array& x, const Array& y, bool lo_ext
         std::cout << "incorrect array size for interpolation!\n";
         return 0;
     }
-    auto x_back = x[x.size() - 1];
-    auto y_back = y[y.size() - 1];
+    const auto x_back = x[x.size() - 1];
+    const auto y_back = y[y.size() - 1];
 
     if (xi <= x[0]) {
         // std::cout << "here!" << (!lo_extrap || x[0] == xi) ? y[0] : point_loglog_interp(x[0], x[1], y[0], y[1], xi);
@@ -199,9 +199,9 @@ Real eq_space_loglog_interp(Real xi, const Array& x, const Array& y, bool lo_ext
         return (!hi_extrap || x_back == xi) ? y_back
                                             : point_loglog_interp(x[x.size() - 2], x_back, y[y.size() - 2], y_back, xi);
     } else {
-        Real log_x0 = std::log(x[0]);
-        Real dx = std::log(x[1]) - log_x0;
-        size_t idx = static_cast<size_t>((std::log(xi) - log_x0) / dx + 1);
+        const Real log_x0 = std::log(x[0]);
+        const Real dx = std::log(x[1]) - log_x0;
+        const size_t idx = static_cast<size_t>((std::log(xi) - log_x0) / dx + 1);
 
         if (xi == x[idx])
             return y[idx]; // Exact match

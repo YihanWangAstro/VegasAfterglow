@@ -158,7 +158,7 @@ data.add_flux(nu_min=1e14, nu_max=1e15, num_points=5, t=times, flux=flux, err=er
   - **ConfigParams**: `fwd_SSC` → `fwd_ssc`, `rvs_SSC` → `rvs_ssc`, `IC_cooling` → `ssc_cooling`, `KN` → `kn`
   - **PyRadiation**: `IC_cooling` → `ssc_cooling`, `SSC` → `ssc`, `KN` → `kn`
   - **Model Constructor**: `forward_rad` → `fwd_rad`, `reverse_rad` → `rvs_rad`
-  - All parameter names now follow consistent snake_case convention
+  - All parameter names now follow the consistent snake_case convention
 
 #### **Enhanced Code Documentation**
 - **Comprehensive Comments**: Added detailed documentation to all major classes and structures

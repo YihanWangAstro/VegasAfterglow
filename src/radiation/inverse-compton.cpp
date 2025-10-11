@@ -132,10 +132,10 @@ Real compton_cross_section(Real nu) {
         const Real invt1_2 = invt1 * invt1;
 
         // ((1+x)/x^3) * (2x(1+x)/(1+2x) - log(1+2x)) + log(1+2x)/(2x) - (1+3x)/(1+2x)^2
-        const Real a = (1.0 + x) * invx2 * invx;          // (1+x)/x^3
-        const Real b = (2.0 * x * (1.0 + x)) * invt1 - l; // bracket
-        const Real c = 0.5 * l * invx;                    // log_term/(2x)
-        const Real d = (1.0 + 3.0 * x) * invt1_2;         // (1+3x)/(1+2x)^2
+        const Real a = (1.0 + x) * invx2 * invx;        // (1+x)/x^3
+        const Real b = 2.0 * x * (1.0 + x) * invt1 - l; // bracket
+        const Real c = 0.5 * l * invx;                  // log_term/(2x)
+        const Real d = (1.0 + 3.0 * x) * invt1_2;       // (1+3x)/(1+2x)^2
 
         return 0.75 * con::sigmaT * (a * b + c - d);
     }
