@@ -38,7 +38,7 @@ void tests(Real phi_resol, Real theta_resol, Real t_resol, Real n_ism, Real eps_
 
     Observer obs;
 
-    // obs.observe_at(t_obs, coord, f_shock, lumi_dist, z);
+    //obs.observe_at(t_obs, coord, f_shock, lumi_dist, z);
 
     obs.observe(coord, f_shock, lumi_dist, z);
 

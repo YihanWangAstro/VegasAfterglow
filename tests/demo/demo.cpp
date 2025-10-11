@@ -195,6 +195,10 @@ void test_FRS() {
 }
 
 int main() {
+    for (double theta_c = 5; theta_c <= 30; theta_c += 0.01) {
+        test_ic(theta_c);
+    }
+    return 0;
     /*for (Real i = 1; i < 30;) {
         test_ic(i);
         i += 0.01;

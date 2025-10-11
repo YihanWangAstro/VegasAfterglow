@@ -7,8 +7,8 @@
 
 #pragma once
 
-#include <iostream>
 #include <optional>
+#include <utility>
 #include <vector>
 
 #include "afterglow.h"
@@ -403,8 +403,8 @@ class PyModel {
             std::optional<PyRadiation> rvs_rad = std::nullopt,
             std::tuple<Real, Real, Real> resolutions = std::make_tuple(0.3, 1, 10), Real rtol = 1e-5,
             bool axisymmetric = true)
-        : jet_(jet),
-          medium_(medium),
+        : jet_(std::move(jet)),
+          medium_(std::move(medium)),
           obs_setup(observer),
           fwd_rad(fwd_rad),
           rvs_rad_opt(rvs_rad),
@@ -487,13 +487,13 @@ class PyModel {
      * @return PyDetails Structure with comprehensive shock evolution details
      * <!-- ************************************************************************************** -->
      */
-    PyDetails details(Real t_min, Real t_max);
+    PyDetails details(Real t_min, Real t_max) const;
 
-    Array medium(Real phi, Real theta, Array const& r);
+    Array medium(Real phi, Real theta, Array const& r) const;
 
-    Array jet_E_iso(Real phi, Array const& theta);
+    Array jet_E_iso(Real phi, Array const& theta) const;
 
-    Array jet_Gamma0(Real phi, Array const& theta);
+    Array jet_Gamma0(Real phi, Array const& theta) const;
 
   private:
     /**
@@ -547,8 +547,8 @@ class PyModel {
      * @param details Output structure to populate with shock evolution data
      * <!-- ************************************************************************************** -->
      */
-    void single_evo_details(Shock const& shock, Coord const& coord, Array const& t, Observer& obs, PyRadiation rad,
-                            PyShock& details);
+    void single_evo_details(Shock const& shock, Coord const& coord, Array const& t, Observer& obs,
+                            const PyRadiation& rad, PyShock& details) const;
 
     /**
      * <!-- ************************************************************************************** -->
@@ -564,8 +564,8 @@ class PyModel {
         std::vector<size_t> idx_sorted;
     };
 
-    ExposureSampling generate_exposure_sampling(PyArray const& t, PyArray const& nu, PyArray const& expo_time,
-                                                size_t num_points);
+    static ExposureSampling generate_exposure_sampling(PyArray const& t, PyArray const& nu, PyArray const& expo_time,
+                                                       size_t num_points);
 
     /**
      * <!-- ************************************************************************************** -->
@@ -575,8 +575,8 @@ class PyModel {
      *          be observed with finite exposure times.
      * <!-- ************************************************************************************** -->
      */
-    void average_exposure_flux(PyFlux& result, std::vector<size_t> const& idx_sorted, size_t original_size,
-                               size_t num_points);
+    static void average_exposure_flux(PyFlux& result, std::vector<size_t> const& idx_sorted, size_t original_size,
+                                      size_t num_points);
 
     Ejecta jet_;                            ///< Jet model
     Medium medium_;                         ///< Circumburst medium

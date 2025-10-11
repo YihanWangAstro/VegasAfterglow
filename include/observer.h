@@ -9,11 +9,11 @@
 #include <iostream>
 #include <stdexcept>
 #include <thread>
-#include <vector>
 
 #include "afterglow.h"
 #include "macros.h"
 #include "mesh.h"
+#include "xtensor/core/xnoalias.hpp"
 
 /**
  * <!-- ************************************************************************************** -->
@@ -162,9 +162,8 @@ class Observer {
     MeshGrid3d lg2_doppler;     ///< Log2 of Doppler factor grid
     MeshGrid3d lg2_geom_factor; ///< Log2 of observe frame geometric factor (solid angle * r^2 * D^3)
   private:
-    Real one_plus_z{1};     ///< 1 + redshift
-    Real lg2_one_plus_z{0}; ///< Log2(1 + redshift)
-    Real lumi_dist{1};      ///< Luminosity distance
+    Real one_plus_z{1}; ///< 1 + redshift
+    Real lumi_dist{1};  ///< Luminosity distance
 
     // Grid dimensions
     size_t jet_3d{0};       ///< Flag indicating if the jet is non-axis-symmetric (non-zero if true)
@@ -225,14 +224,14 @@ class Observer {
      * <!-- ************************************************************************************** -->
      * @brief Interpolates the luminosity using the observation time (t_obs) in logarithmic space
      * @param state The interpolation state
-     * @param i Phi grid index
-     * @param j Theta grid index
-     * @param k Time grid index
      * @param lg2_t_obs Observation time (in log2 scale)
+     * @param lg2_t_lo Lower boundary of observation time (in log2 scale)
      * @return The interpolated luminosity value
      * <!-- ************************************************************************************** -->
      */
-    Real interpolate(InterpState const& state, size_t i, size_t j, size_t k, Real lg2_t_obs) const noexcept;
+    [[nodiscard]] static Real loglog_interpolate(InterpState const& state, Real lg2_t_obs, Real lg2_t_lo) noexcept;
+
+    [[nodiscard]] static Real interpolate(InterpState const& state, Real lg2_t_obs, Real lg2_t_lo) noexcept;
 
     /**
      * <!-- ************************************************************************************** -->
@@ -243,7 +242,7 @@ class Observer {
      * @param i Phi grid index
      * @param j Theta grid index
      * @param k Time grid index
-     * @param log2_nu Log2 of the observed frequency
+     * @param lg2_nu_src Log2 of the observed frequency
      * @param photons Parameter pack of photon grid objects
      * @details Attempts to set the lower and upper boundary values for logarithmic interpolation.
      *          It updates the internal boundary members for:
@@ -255,7 +254,7 @@ class Observer {
      * <!-- ************************************************************************************** -->
      */
     template <typename PhotonGrid>
-    bool set_boundaries(InterpState& state, size_t eff_i, size_t i, size_t j, size_t k, Real log2_nu,
+    bool set_boundaries(InterpState& state, size_t eff_i, size_t i, size_t j, size_t k, Real lg2_nu_src,
                         PhotonGrid& photons) noexcept;
 };
 
@@ -279,9 +278,9 @@ inline void iterate_to(Real value, Array const& arr, size_t& it) noexcept {
 }
 
 template <typename PhotonGrid>
-bool Observer::set_boundaries(InterpState& state, size_t eff_i, size_t i, size_t j, size_t k, Real lg2_nu_obs,
+bool Observer::set_boundaries(InterpState& state, size_t eff_i, size_t i, size_t j, size_t k, Real lg2_nu_src,
                               PhotonGrid& photons) noexcept {
-    if (state.last_hi == k + 1 && state.last_lg2_nu == lg2_nu_obs) {
+    if (state.last_hi == k + 1 && state.last_lg2_nu == lg2_nu_src) {
         if (!std::isfinite(state.slope)) {
             return false;
         } else {
@@ -293,14 +292,14 @@ bool Observer::set_boundaries(InterpState& state, size_t eff_i, size_t i, size_t
 
     // continuing from previous boundary, shift the high boundary to lower.
     // Calling .I_nu()/.log_I_nu() could be expensive.
-    if (state.last_hi != 0 && k == state.last_hi && lg2_nu_obs == state.last_lg2_nu) {
+    if (state.last_hi != 0 && k == state.last_hi && lg2_nu_src == state.last_lg2_nu) {
         state.lg2_L_nu_lo = state.lg2_L_nu_hi;
     } else {
-        Real lg2_nu_lo = lg2_one_plus_z + lg2_nu_obs - lg2_doppler(i, j, k);
+        Real lg2_nu_lo = lg2_nu_src - lg2_doppler(i, j, k);
         state.lg2_L_nu_lo = photons(eff_i, j, k).compute_log2_I_nu(lg2_nu_lo) + lg2_geom_factor(i, j, k);
     }
 
-    Real lg2_nu_hi = lg2_one_plus_z + lg2_nu_obs - lg2_doppler(i, j, k + 1);
+    Real lg2_nu_hi = lg2_nu_src - lg2_doppler(i, j, k + 1);
     state.lg2_L_nu_hi = photons(eff_i, j, k + 1).compute_log2_I_nu(lg2_nu_hi) + lg2_geom_factor(i, j, k + 1);
 
     state.slope = (state.lg2_L_nu_hi - state.lg2_L_nu_lo) / lg2_t_ratio;
@@ -310,7 +309,7 @@ bool Observer::set_boundaries(InterpState& state, size_t eff_i, size_t i, size_t
     }
 
     state.last_hi = k + 1;
-    state.last_lg2_nu = lg2_nu_obs;
+    state.last_lg2_nu = lg2_nu_src;
     return true;
 }
 
@@ -320,34 +319,35 @@ MeshGrid Observer::specific_flux(Array const& t_obs, Array const& nu_obs, Photon
     size_t nu_len = nu_obs.size();
 
     Array lg2_t_obs = xt::log2(t_obs);
-    Array lg2_nu = xt::log2(nu_obs);
+    Array lg2_nu_src = xt::log2(nu_obs) + std::log2(one_plus_z);
 
     MeshGrid F_nu({nu_len, t_obs_len}, 0);
+    xt::xtensor<Real, 4> lg2_F_nu_ij({eff_phi_grid, theta_grid, nu_len, t_obs_len}, 0);
 
-    size_t grid_num = eff_phi_grid * theta_grid;
-    Real lg2_rtol = fast_log2(1e-3 / grid_num);
+    for (size_t i = 0; i < eff_phi_grid; i++) {
+        size_t eff_i = i * jet_3d;
+        for (size_t j = 0; j < theta_grid; j++) {
+            // Skip observation times that are below the grid's start time
+            size_t t_idx = 0;
+            iterate_to(time(i, j, 0), t_obs, t_idx);
 
-    for (size_t l = 0; l < nu_len; l++) {
-        for (size_t i = 0; i < eff_phi_grid; i++) {
-            size_t eff_i = i * jet_3d;
-            for (size_t j = 0; j < theta_grid; j++) {
-                // Skip observation times that are below the grid's start time
-                size_t t_idx = 0;
-                iterate_to(lg2_t(i, j, 0), lg2_t_obs, t_idx);
+            InterpState state;
+            for (size_t k = 0; k < t_grid - 1 && t_idx < t_obs_len; k++) {
+                Real t_hi = time(i, j, k + 1);
+                if (t_hi < t_obs(t_idx)) {
+                    continue;
+                } else {
+                    size_t idx_start = t_idx;
+                    iterate_to(t_hi, t_obs, t_idx);
+                    size_t idx_end = t_idx;
 
-                InterpState state;
-                for (size_t k = 0; k < t_grid - 1 && t_idx < t_obs_len; k++) {
-                    Real lg2_t_hi = lg2_t(i, j, k + 1);
-                    if (lg2_t_hi < lg2_t_obs(t_idx)) {
-                        continue;
-                    } else {
-                        bool finite = set_boundaries(state, eff_i, i, j, k, lg2_nu[l], photons);
+                    for (size_t l = 0; l < nu_len; l++) {
+                        bool finite = set_boundaries(state, eff_i, i, j, k, lg2_nu_src[l], photons);
                         if (finite) [[likely]] {
-                            for (; t_idx < t_obs_len && lg2_t_obs(t_idx) <= lg2_t_hi; t_idx++) {
-                                F_nu(l, t_idx) += interpolate(state, i, j, k, lg2_t_obs(t_idx));
+                            for (size_t idx = idx_start; idx < idx_end; idx++) {
+                                //F_nu(l, idx) += loglog_interpolate(state, lg2_t_obs(idx), lg2_t(i, j, k));
+                                lg2_F_nu_ij(i, j, l, idx) = interpolate(state, lg2_t_obs(idx), lg2_t(i, j, k));
                             }
-                        } else {
-                            iterate_to(lg2_t_hi, lg2_t_obs, t_idx);
                         }
                     }
                 }
@@ -355,9 +355,18 @@ MeshGrid Observer::specific_flux(Array const& t_obs, Array const& nu_obs, Photon
         }
     }
 
-    // Normalize the flux by the factor (1+z)/(lumi_dist^2).
-    Real const coef = one_plus_z / (lumi_dist * lumi_dist);
-    F_nu *= coef;
+    lg2_F_nu_ij = xt::exp2(lg2_F_nu_ij);
+    for (size_t i = 0; i < eff_phi_grid; i++) {
+        for (size_t j = 0; j < theta_grid; j++) {
+            for (size_t l = 0; l < nu_len; l++) {
+                for (size_t idx = 0; idx < t_obs_len; idx++) {
+                    F_nu(l, idx) += lg2_F_nu_ij(i, j, l, idx);
+                }
+            }
+        }
+    }
+
+    F_nu *= one_plus_z / (lumi_dist * lumi_dist);
 
     return F_nu;
 }
@@ -372,27 +381,29 @@ Array Observer::specific_flux_series(Array const& t_obs, Array const& nu_obs, Ph
     }
 
     Array lg2_t_obs = xt::log2(t_obs);
-    Array lg2_nu = xt::log2(nu_obs);
+    Array lg2_nu_src = xt::log2(nu_obs) + std::log2(one_plus_z);
 
     Array F_nu = xt::zeros<Real>({t_obs_len});
+    xt::xtensor<Real, 3> lg2_F_nu_ij({eff_phi_grid, theta_grid, t_obs_len}, 0);
 
     for (size_t i = 0; i < eff_phi_grid; i++) {
         size_t eff_i = i * jet_3d;
         for (size_t j = 0; j < theta_grid; j++) {
             size_t t_idx = 0;
-            iterate_to(lg2_t(i, j, 0), lg2_t_obs, t_idx);
+            iterate_to(time(i, j, 0), t_obs, t_idx);
 
             size_t k = 0;
             InterpState state;
             while (t_idx < t_obs_len && k < t_grid - 1) {
-                Real lg2_t_hi = lg2_t(i, j, k + 1);
-                if (lg2_t_hi < lg2_t_obs(t_idx)) {
+                Real t_hi = time(i, j, k + 1);
+                if (t_hi < t_obs(t_idx)) {
                     k++;
                     continue;
                 } else {
-                    bool finite = set_boundaries(state, eff_i, i, j, k, lg2_nu(t_idx), photons);
+                    bool finite = set_boundaries(state, eff_i, i, j, k, lg2_nu_src(t_idx), photons);
                     if (finite) [[likely]] {
-                        F_nu(t_idx) += interpolate(state, i, j, k, lg2_t_obs(t_idx));
+                        //F_nu(t_idx) += loglog_interpolate(state, lg2_t_obs(t_idx), lg2_t(i, j, k));
+                        lg2_F_nu_ij(i, j, t_idx) = interpolate(state, lg2_t_obs(t_idx), lg2_t(i, j, k));
                     }
                     t_idx++;
                 }
@@ -400,9 +411,18 @@ Array Observer::specific_flux_series(Array const& t_obs, Array const& nu_obs, Ph
         }
     }
 
+    lg2_F_nu_ij = xt::exp2(lg2_F_nu_ij);
+
+    for (size_t i = 0; i < eff_phi_grid; i++) {
+        for (size_t j = 0; j < theta_grid; j++) {
+            for (size_t t_idx = 0; t_idx < t_obs_len; t_idx++) {
+                F_nu(t_idx) += lg2_F_nu_ij(i, j, t_idx);
+            }
+        }
+    }
+
     // Normalize the flux by the factor (1+z)/(lumi_dist^2).
-    Real const coef = one_plus_z / (lumi_dist * lumi_dist);
-    F_nu *= coef;
+    F_nu *= one_plus_z / (lumi_dist * lumi_dist);
 
     return F_nu;
 }

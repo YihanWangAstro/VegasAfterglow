@@ -7,7 +7,6 @@
 
 #pragma once
 
-#include <type_traits>
 #include <utility>
 
 #include "macros.h"
@@ -252,7 +251,7 @@ Real eq_space_loglog_interp(Real x0, Array const& x, Array const& y, bool lo_ext
 template <typename Fun>
 auto root_bisect(Fun f, decltype(f(0)) low, decltype(f(0)) high, decltype(f(0)) eps = 1e-6) -> decltype(f(0)) {
     using Scalar = decltype(f(0));
-    for (; (high - low) > std::fabs((high + low) * 0.5) * eps;) {
+    while ((high - low) > std::fabs((high + low) * 0.5) * eps) {
         Scalar mid = 0.5 * (high + low);
         if (f(mid) * f(high) > 0)
             high = mid;
@@ -336,8 +335,8 @@ T max(T first, Args... args) {
  * <!-- ************************************************************************************** -->
  */
 
-constexpr int BUCKET_BITS = 9;                       // 512 buckets
-constexpr size_t BUCKETS = size_t(1) << BUCKET_BITS; // 512
+constexpr int BUCKET_BITS = 9;                                    // 512 buckets
+constexpr size_t BUCKETS = static_cast<size_t>(1) << BUCKET_BITS; // 512
 // With 512 bins across [1,2): max |r| ≈ 1 / 2^(BUCKET_BITS+1) ≈ 9.77e-4
 // Degree-3 Taylor gives neglected term O(r^4) ≲ 1e-12 → ~1e-9 relative overall.
 
@@ -386,7 +385,7 @@ inline double decompose_normals(double x, int& e) {
 /**
  * <!-- ************************************************************************************** -->
  * @brief Fast approximation of the base-2 logarithm
- * @param val The input value
+ * @param x The input value
  * @return log2(val)
  * <!-- ************************************************************************************** -->
  */

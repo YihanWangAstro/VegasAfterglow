@@ -7,16 +7,12 @@
 
 #pragma once
 
-#include <cmath>
-
 #include "boost/numeric/odeint.hpp"
 #include "macros.h"
 #include "physics.h"
 #include "xtensor/containers/xadapt.hpp"
-#include "xtensor/containers/xfixed.hpp"
 #include "xtensor/containers/xtensor.hpp"
 #include "xtensor/core/xmath.hpp"
-#include "xtensor/core/xnoalias.hpp"
 #include "xtensor/io/xnpy.hpp"
 #include "xtensor/views/xview.hpp"
 /**
@@ -42,6 +38,8 @@ using MeshGrid = xt::xtensor<Real, 2>;
 using MeshGrid3d = xt::xtensor<Real, 3>;
 /// Type alias for 3D boolean grids for masking operations
 using MaskGrid = xt::xtensor<int, 3>;
+// Type alias for 2D grids
+using IndexGrid = xt::xtensor<size_t, 2>;
 
 /**
  * <!-- ************************************************************************************** -->
@@ -69,7 +67,7 @@ class Coord {
      * @return Tuple containing (n_phi, n_theta, n_t)
      * <!-- ************************************************************************************** -->
      */
-    auto shape() const { return std::make_tuple(phi.size(), theta.size(), t.shape()[2]); }
+    [[nodiscard]] auto shape() const { return std::make_tuple(phi.size(), theta.size(), t.shape()[2]); }
 };
 
 /**
@@ -102,8 +100,8 @@ bool is_log_scale(Array const& arr, Real tolerance = 1e-6);
  * @details This is useful for creating time grids where we need more resolution at early times.
  * <!-- ************************************************************************************** -->
  */
-template <typename Arr>
-void logspace(Real start, Real end, Arr& result);
+//template <typename Arr>
+//void logspace(Real start, Real end, Arr& result);
 
 /**
  * <!-- ************************************************************************************** -->
@@ -158,9 +156,9 @@ Array boundary_to_center_log(Array const& boundary);
  * @param theta_cut Maximum theta value to include
  * @param theta_view Viewing angle
  * @param z Redshift
- * @param phi_ppd Points per degree in phi direction
- * @param theta_ppd Points per degree in theta direction
- * @param t_ppd Points per decade in time direction
+ * @param phi_resol
+ * @param theta_resol
+ * @param t_resol
  * @param is_axisymmetric Whether the jet is axisymmetric (default: true)
  * @param phi_view Viewing angle (default: 0)
  * @return A Coord object with the constructed grid
@@ -170,8 +168,8 @@ Array boundary_to_center_log(Array const& boundary);
  * <!-- ************************************************************************************** -->
  */
 template <typename Ejecta>
-Coord auto_grid(Ejecta const& jet, Array const& t_obs, Real theta_cut, Real theta_view, Real z, Real phi_ppd = 0.3,
-                Real theta_ppd = 1, Real t_ppd = 5, bool is_axisymmetric = true, Real phi_view = 0);
+Coord auto_grid(Ejecta const& jet, Array const& t_obs, Real theta_cut, Real theta_view, Real z, Real phi_resol = 0.3,
+                Real theta_resol = 1, Real t_resol = 5, bool is_axisymmetric = true, Real phi_view = 0);
 
 /**
  * <!-- ************************************************************************************** -->
@@ -179,14 +177,12 @@ Coord auto_grid(Ejecta const& jet, Array const& t_obs, Real theta_cut, Real thet
  * @tparam Ejecta Type of the jet/ejecta class
  * @param jet The jet/ejecta object
  * @param gamma_cut Lorentz factor cutoff value
- * @param phi_ppd Azimuthal resolution (points per degree)
- * @param theta_ppd Polar resolution (points per degree)
  * @param is_axisymmetric Flag for axisymmetric jets
  * @return Angle (in radians) at which the jet's Lorentz factor drops to gamma_cut
  * <!-- ************************************************************************************** -->
  */
 template <typename Ejecta>
-Real find_jet_edge(Ejecta const& jet, Real gamma_cut, Real phi_ppd, Real theta_ppd, bool is_axisymmetric);
+Real find_jet_edge(Ejecta const& jet, Real gamma_cut, Real phi_resol, Real theta_resol, bool is_axisymmetric);
 
 /**
  * <!-- ************************************************************************************** -->
@@ -254,7 +250,7 @@ Real find_jet_edge(Ejecta const& jet, Real gamma_cut, Real phi_resol, Real theta
     Real low = 0;
     Real hi = con::pi / 2;
     Real eps = 1e-9;
-    for (; hi - low > eps;) {
+    while (hi - low > eps) {
         Real mid = 0.5 * (low + hi);
         if (jet.Gamma0(0, mid) > gamma_cut) {
             low = mid;
@@ -266,9 +262,9 @@ Real find_jet_edge(Ejecta const& jet, Real gamma_cut, Real phi_resol, Real theta
     // grid based search for the edge of the jet
     size_t phi_num = std::max<size_t>(static_cast<size_t>(360. * phi_resol), 1);
     phi_num = is_axisymmetric ? 1 : phi_num;
-    size_t theta_num = std::max<size_t>(static_cast<size_t>(90. * theta_resol), 32);
-    auto phi = xt::linspace(0., 2 * con::pi, phi_num);
-    auto theta = xt::linspace(0., con::pi / 2, theta_num);
+    const size_t theta_num = std::max<size_t>(static_cast<size_t>(90. * theta_resol), 32);
+    const auto phi = xt::linspace(0., 2 * con::pi, phi_num);
+    const auto theta = xt::linspace(0., con::pi / 2, theta_num);
 
     Real theta_edge = con::pi / 2;
 
@@ -431,8 +427,8 @@ Coord auto_grid(Ejecta const& jet, Array const& t_obs, Real theta_cut, Real thet
     size_t uniform_theta_num = static_cast<size_t>(theta_num * 0.3);
     size_t adaptive_theta_num = theta_num - uniform_theta_num;
 
-    Array uniform_theta = xt::linspace(theta_min, theta_max, uniform_theta_num);
-    Array adaptive_theta = adaptive_theta_grid(jet, theta_min, theta_max, adaptive_theta_num, theta_view);
+    const Array uniform_theta = xt::linspace(theta_min, theta_max, uniform_theta_num);
+    const Array adaptive_theta = adaptive_theta_grid(jet, theta_min, theta_max, adaptive_theta_num, theta_view);
     coord.theta = merge_grids(uniform_theta, adaptive_theta);
 
     // coord.theta = uniform_theta;
@@ -441,25 +437,25 @@ Coord auto_grid(Ejecta const& jet, Array const& t_obs, Real theta_cut, Real thet
     size_t uniform_phi_num = static_cast<size_t>(phi_num * 0.3);
     size_t adaptive_phi_num = phi_num - uniform_phi_num;
 
-    Array uniform_phi = xt::linspace(0., 2 * con::pi, uniform_phi_num);
-    Array adaptive_phi = adaptive_phi_grid(jet, adaptive_phi_num, theta_view, theta_max, is_axisymmetric);
+    const Array uniform_phi = xt::linspace(0., 2 * con::pi, uniform_phi_num);
+    const Array adaptive_phi = adaptive_phi_grid(jet, adaptive_phi_num, theta_view, theta_max, is_axisymmetric);
     coord.phi = merge_grids(uniform_phi, adaptive_phi);
     // coord.phi = uniform_phi;
 
-    Real t_max = *std::max_element(t_obs.begin(), t_obs.end());
-    Real t_min = *std::min_element(t_obs.begin(), t_obs.end());
+    const Real t_max = *std::ranges::max_element(t_obs);
+    const Real t_min = *std::ranges::min_element(t_obs);
     size_t t_num = std::max<size_t>(static_cast<size_t>(std::log10(t_max / t_min) * t_resol), 24);
 
     size_t phi_size_needed = is_axisymmetric ? 1 : phi_num;
     coord.t = xt::zeros<Real>({phi_size_needed, theta_num, t_num});
     for (size_t i = 0; i < phi_size_needed; ++i) {
         for (size_t j = 0; j < theta_num; ++j) {
-            Real b = gamma_to_beta(jet.Gamma0(coord.phi(i), coord.theta(j)));
+            const Real b = gamma_to_beta(jet.Gamma0(coord.phi(i), coord.theta(j)));
             // Real theta_max = coord.theta(j) + theta_view;
-            Real theta_max = coord.theta.back() + theta_view;
-            Real t_start =
-                std::max<Real>(0.99 * t_min * (1 - b) / (1 - std::cos(theta_max) * b) / (1 + z), 1e-2 * unit::sec);
-            Real t_end = 1.01 * t_max / (1 + z);
+            const Real theta_v_max = coord.theta.back() + theta_view;
+            const Real t_start =
+                std::max<Real>(0.99 * t_min * (1 - b) / (1 - std::cos(theta_v_max) * b) / (1 + z), 1e-2 * unit::sec);
+            const Real t_end = 1.01 * t_max / (1 + z);
             xt::view(coord.t, i, j, xt::all()) = xt::logspace(std::log10(t_start), std::log10(t_end), t_num);
         }
     }

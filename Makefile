@@ -18,7 +18,7 @@ TEST_DIR := tests
 
 # === Compiler & flags ===
 CXX ?= g++
-CXXFLAGS := -std=c++20 -O3 -march=native -flto -Iinclude -Iexternal -w -g -DNDEBUG -DXTENSOR_DISABLE_EXCEPTIONS
+CXXFLAGS := -std=c++20 -O3 -march=native -flto -Iinclude -Iexternal -w -g -DNDEBUG -DXTENSOR_DISABLE_EXCEPTIONS -DXTENSOR_USE_XSIMD
 LDFLAGS := -lz
 
 # Tests: each tests/foo/bar.cpp → tests/foo/bar(.exe)

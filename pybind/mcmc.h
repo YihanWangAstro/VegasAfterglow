@@ -269,7 +269,7 @@ struct MultiBandModel {
      * @param data Complete multi-wavelength observational dataset for fitting
      * <!-- ************************************************************************************** -->
      */
-    MultiBandModel(MultiBandData const& data);
+    MultiBandModel(MultiBandData data);
 
     /**
      * <!-- ************************************************************************************** -->
@@ -355,7 +355,7 @@ struct MultiBandModel {
      * @return Ejecta Configured jet structure for afterglow calculations
      * <!-- ************************************************************************************** -->
      */
-    Ejecta select_jet(Params const& param);
+    [[nodiscard]] Ejecta select_jet(Params const& param) const;
 
     /**
      * <!-- ************************************************************************************** -->
@@ -366,7 +366,7 @@ struct MultiBandModel {
      * @return Medium Configured external medium for afterglow calculations
      * <!-- ************************************************************************************** -->
      */
-    Medium select_medium(Params const& param);
+    [[nodiscard]] Medium select_medium(Params const& param) const;
 
     MultiBandData obs_data; ///< Multi-wavelength observational dataset for fitting
     ConfigParams config;    ///< Numerical and physics configuration parameters

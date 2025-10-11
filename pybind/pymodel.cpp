@@ -113,31 +113,31 @@ Medium PyWind(Real A_star, Real n_ism, Real n0, Real k) {
     Medium medium;
 
     constexpr Real r0 = 1e17; // reference radius
-    Real A = A_star * 5e11 * std::pow(r0, k - 2);
-    Real rho_ism = n_ism * 1.67e-24;
-    Real r0k = A / (n0 * 1.67e-24);
+    const Real A = A_star * 5e11 * std::pow(r0, k - 2);
+    const Real rho_ism = n_ism * 1.67e-24;
+    const Real r0k = A / (n0 * 1.67e-24);
 
     medium.rho = [=](Real phi, Real theta, Real r) { return A / (r0k + std::pow(r, k)) + rho_ism; };
     return medium;
 }
 
 void convert_unit(Ejecta& jet, Medium& medium) {
-    auto eps_k_cgs = jet.eps_k;
+    const auto eps_k_cgs = jet.eps_k;
     jet.eps_k = [=](Real phi, Real theta) { return eps_k_cgs(phi, theta) * (unit::erg / (4 * con::pi)); };
 
-    auto deps_dt_cgs = jet.deps_dt;
+    const auto deps_dt_cgs = jet.deps_dt;
     jet.deps_dt = [=](Real phi, Real theta, Real t) {
         return deps_dt_cgs(phi, theta, t / unit::sec) * (unit::erg / (4 * con::pi * unit::sec));
     };
 
-    auto dm_dt_cgs = jet.dm_dt;
+    const auto dm_dt_cgs = jet.dm_dt;
     jet.dm_dt = [=](Real phi, Real theta, Real t) {
         return dm_dt_cgs(phi, theta, t / unit::sec) * (unit::g / (4 * con::pi * unit::sec));
     };
 
     jet.T0 *= unit::sec;
 
-    auto rho_cgs = medium.rho; // number density from python side
+    const auto rho_cgs = medium.rho; // number density from python side
     medium.rho = [=](Real phi, Real theta, Real r) {
         return rho_cgs(phi, theta, r / unit::cm) * (unit::g / unit::cm3); // convert to density
     };
@@ -200,7 +200,7 @@ void save_photon_details(PhotonGrid const& photons, PyShock& details) {
 }
 
 void PyModel::single_evo_details(Shock const& shock, Coord const& coord, Array const& t_obs, Observer& obs,
-                                 PyRadiation rad, PyShock& details) {
+                                 PyRadiation const& rad, PyShock& details) const {
     obs.observe(coord, shock, obs_setup.lumi_dist, obs_setup.z);
 
     details.t_obs = obs.time / unit::sec;
@@ -221,8 +221,8 @@ void PyModel::single_evo_details(Shock const& shock, Coord const& coord, Array c
     save_photon_details(syn_ph, details);
 }
 
-auto PyModel::details(Real t_min, Real t_max) -> PyDetails {
-    Array t_obs = xt::logspace(std::log10(t_min * unit::sec), std::log10(t_max * unit::sec), 10);
+auto PyModel::details(Real t_min, Real t_max) const -> PyDetails {
+    const Array t_obs = xt::logspace(std::log10(t_min * unit::sec), std::log10(t_max * unit::sec), 10);
     Coord coord = auto_grid(jet_, t_obs, this->theta_w, obs_setup.theta_obs, obs_setup.z, phi_resol, theta_resol,
                             t_resol, axisymmetric);
 
@@ -235,7 +235,7 @@ auto PyModel::details(Real t_min, Real t_max) -> PyDetails {
     Observer observer;
 
     if (!rvs_rad_opt) {
-        auto fwd_shock = generate_fwd_shock(coord, medium_, jet_, fwd_rad.rad, rtol);
+        const auto fwd_shock = generate_fwd_shock(coord, medium_, jet_, fwd_rad.rad, rtol);
 
         save_shock_details(fwd_shock, details.fwd);
 
@@ -243,7 +243,7 @@ auto PyModel::details(Real t_min, Real t_max) -> PyDetails {
 
         return details;
     } else {
-        auto rvs_rad = *rvs_rad_opt;
+        const auto rvs_rad = *rvs_rad_opt;
         auto [fwd_shock, rvs_shock] = generate_shock_pair(coord, medium_, jet_, fwd_rad.rad, rvs_rad.rad, rtol);
 
         save_shock_details(fwd_shock, details.fwd);
@@ -281,8 +281,8 @@ auto PyModel::flux_density(PyArray const& t, PyArray const& nu) -> PyFlux {
         "generic `flux_density_grid` instead");
     AFTERGLOW_REQUIRE(is_ascending(t), "time array must be in ascending order");
 
-    Array t_obs = t * unit::sec;
-    Array nu_obs = nu * unit::Hz;
+    const Array t_obs = t * unit::sec;
+    const Array nu_obs = nu * unit::Hz;
 
     auto flux_func = [](Observer& obs, Array const& t, Array const& nu, auto& photons) -> XTArray {
         return obs.specific_flux_series(t, nu, photons) / unit::flux_den_cgs;
@@ -297,8 +297,8 @@ auto PyModel::flux(PyArray const& t, double nu_min, double nu_max, size_t num_nu
     AFTERGLOW_REQUIRE(is_ascending(t), "time array must be in ascending order");
 
     // Generate frequency array
-    Array nu_obs = xt::logspace(std::log10(nu_min * unit::Hz), std::log10(nu_max * unit::Hz), num_nu);
-    Array t_obs = t * unit::sec;
+    const Array nu_obs = xt::logspace(std::log10(nu_min * unit::Hz), std::log10(nu_max * unit::Hz), num_nu);
+    const Array t_obs = t * unit::sec;
 
     auto flux_func = [](Observer& obs, Array const& t, Array const& nu, auto& photons) -> XTArray {
         return obs.flux(t, nu, photons) / unit::flux_cgs;
@@ -311,15 +311,15 @@ auto PyModel::flux(PyArray const& t, double nu_min, double nu_max, size_t num_nu
 
 auto PyModel::generate_exposure_sampling(PyArray const& t, PyArray const& nu, PyArray const& expo_time,
                                          size_t num_points) -> ExposureSampling {
-    size_t total_points = t.size() * num_points;
+    const size_t total_points = t.size() * num_points;
     Array t_obs = Array::from_shape({total_points});
     Array nu_obs = Array::from_shape({total_points});
     std::vector<size_t> idx(total_points);
 
     // Generate time-frequency samples within each exposure window
     for (size_t i = 0, j = 0; i < t.size() && j < total_points; ++i) {
-        Real t_start = t(i);
-        Real dt = expo_time(i) / (num_points - 1);
+        const Real t_start = t(i);
+        const Real dt = expo_time(i) / (num_points - 1);
 
         for (size_t k = 0; k < num_points && j < total_points; ++k, ++j) {
             t_obs(j) = t_start + k * dt;
@@ -330,14 +330,14 @@ auto PyModel::generate_exposure_sampling(PyArray const& t, PyArray const& nu, Py
 
     std::vector<size_t> sort_indices(total_points);
     std::iota(sort_indices.begin(), sort_indices.end(), 0);
-    std::sort(sort_indices.begin(), sort_indices.end(), [&t_obs](size_t i, size_t j) { return t_obs(i) < t_obs(j); });
+    std::ranges::sort(sort_indices, [&t_obs](size_t i, size_t j) { return t_obs(i) < t_obs(j); });
 
     Array t_obs_sorted = Array::from_shape({total_points});
     Array nu_obs_sorted = Array::from_shape({total_points});
     std::vector<size_t> idx_sorted(idx.size());
 
     for (size_t i = 0; i < sort_indices.size(); ++i) {
-        size_t orig_idx = sort_indices[i];
+        const size_t orig_idx = sort_indices[i];
         t_obs_sorted(i) = t_obs(orig_idx);
         nu_obs_sorted(i) = nu_obs(orig_idx);
         idx_sorted[i] = idx[orig_idx];
@@ -355,7 +355,7 @@ void PyModel::average_exposure_flux(PyFlux& result, std::vector<size_t> const& i
         if (component.size() > 0) {
             Array summed = xt::zeros<Real>({original_size});
             for (size_t j = 0; j < component.size(); j++) {
-                size_t orig_time_idx = idx_sorted[j];
+                const size_t orig_time_idx = idx_sorted[j];
                 summed(orig_time_idx) += component(j);
             }
             summed /= static_cast<Real>(num_points);
@@ -375,7 +375,7 @@ auto PyModel::flux_density_exposures(PyArray const& t, PyArray const& nu, PyArra
                       "time, frequency, and exposure time arrays must have the same size");
     AFTERGLOW_REQUIRE(num_points >= 2, "num_points must be at least 2 to sample within each exposure time");
 
-    auto sampling = generate_exposure_sampling(t, nu, expo_time, num_points);
+    const auto sampling = generate_exposure_sampling(t, nu, expo_time, num_points);
 
     auto flux_func = [](Observer& obs, Array const& t, Array const& nu, auto& photons) -> XTArray {
         return obs.specific_flux_series(t, nu, photons) / unit::flux_den_cgs;
@@ -392,8 +392,8 @@ auto PyModel::flux_density_exposures(PyArray const& t, PyArray const& nu, PyArra
 auto PyModel::flux_density_grid(PyArray const& t, PyArray const& nu) -> PyFlux {
     AFTERGLOW_REQUIRE(is_ascending(t), "time array must be in ascending order");
 
-    Array t_obs = t * unit::sec;
-    Array nu_obs = nu * unit::Hz;
+    const Array t_obs = t * unit::sec;
+    const Array nu_obs = nu * unit::Hz;
 
     auto flux_func = [](Observer& obs, Array const& t, Array const& nu, auto& photons) -> XTArray {
         return obs.specific_flux(t, nu, photons) / unit::flux_den_cgs;
@@ -404,7 +404,7 @@ auto PyModel::flux_density_grid(PyArray const& t, PyArray const& nu) -> PyFlux {
     return result;
 }
 
-Array PyModel::jet_E_iso(Real phi, Array const& theta) {
+Array PyModel::jet_E_iso(Real phi, Array const& theta) const {
     Array E_iso = xt::zeros<Real>(theta.shape());
     for (size_t i = 0; i < theta.size(); ++i) {
         E_iso(i) = jet_.eps_k(phi, theta(i)) / (unit::erg / (4 * con::pi));
@@ -412,7 +412,7 @@ Array PyModel::jet_E_iso(Real phi, Array const& theta) {
     return E_iso;
 }
 
-Array PyModel::jet_Gamma0(Real phi, Array const& theta) {
+Array PyModel::jet_Gamma0(Real phi, Array const& theta) const {
     Array Gamma0 = xt::zeros<Real>(theta.shape());
     for (size_t i = 0; i < theta.size(); ++i) {
         Gamma0(i) = jet_.Gamma0(phi, theta(i));
@@ -420,7 +420,7 @@ Array PyModel::jet_Gamma0(Real phi, Array const& theta) {
     return Gamma0;
 }
 
-Array PyModel::medium(Real phi, Real theta, Array const& r) {
+Array PyModel::medium(Real phi, Real theta, Array const& r) const {
     Array rho = xt::zeros<Real>(r.shape());
     for (size_t i = 0; i < r.size(); ++i) {
         rho(i) = medium_.rho(phi, theta, r(i) * unit::cm) / (unit::g / unit::cm3);

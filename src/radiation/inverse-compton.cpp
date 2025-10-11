@@ -7,10 +7,6 @@
 
 #include "inverse-compton.h"
 
-#include <cmath>
-#include <iostream>
-#include <thread>
-
 #include "IO.h"
 #include "macros.h"
 #include "utilities.h"

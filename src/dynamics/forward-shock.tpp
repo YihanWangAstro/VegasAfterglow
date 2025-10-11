@@ -4,7 +4,7 @@
 //                \ V /|  __/| (_| || (_| |\__ \  / ___ \ |  _|| |_|  __/| |  | (_| || || (_) |\ V  V /
 //                 \_/  \___| \__, | \__,_||___/ /_/   \_\|_|   \__|\___||_|   \__, ||_| \___/  \_/\_/
 //                            |___/                                            |___/
-
+#pragma once
 #include "forward-shock.hpp"
 #include "simple-shock.hpp"
 
@@ -27,7 +27,7 @@ ForwardShockEqn<Ejecta, Medium>::ForwardShockEqn(Medium const& medium, Ejecta co
 
 template <typename Ejecta, typename Medium>
 void ForwardShockEqn<Ejecta, Medium>::operator()(State const& state, State& diff, Real t) const noexcept {
-    Real beta = gamma_to_beta(state.Gamma);
+    const Real beta = gamma_to_beta(state.Gamma);
 
     diff.r = compute_dr_dt(beta);
     diff.t_comv = compute_dt_dt_comv(state.Gamma, beta);
@@ -48,9 +48,9 @@ void ForwardShockEqn<Ejecta, Medium>::operator()(State const& state, State& diff
 
     Real rho = medium.rho(phi, state.theta, state.r);
     diff.m2 = state.r * state.r * rho * diff.r;
-    Real e_th = (state.Gamma - 1) * 4 * state.Gamma * rho * con::c2;
-    Real eps_rad = compute_radiative_efficiency(state.t_comv, state.Gamma, e_th, rad);
-    Real ad_idx = adiabatic_idx(state.Gamma);
+    const Real e_th = (state.Gamma - 1) * 4 * state.Gamma * rho * con::c2;
+    const Real eps_rad = compute_radiative_efficiency(state.t_comv, state.Gamma, e_th, rad);
+    const Real ad_idx = adiabatic_idx(state.Gamma);
     diff.Gamma = compute_dGamma_dt(state, diff, ad_idx);
     diff.U2_th = compute_dU_dt(eps_rad, state, diff, ad_idx);
 }
@@ -60,8 +60,8 @@ Real ForwardShockEqn<Ejecta, Medium>::compute_dGamma_dt(State const& state, Stat
                                                         Real ad_idx) const noexcept {
     Real dm_dt_swept = diff.m2;
     Real m_swept = state.m2;
-    Real Gamma2 = state.Gamma * state.Gamma;
-    Real Gamma_eff = (ad_idx * (Gamma2 - 1) + 1) / state.Gamma;
+    const Real Gamma2 = state.Gamma * state.Gamma;
+    const Real Gamma_eff = (ad_idx * (Gamma2 - 1) + 1) / state.Gamma;
     Real dGamma_eff = (ad_idx * (Gamma2 + 1) - 1) / Gamma2;
     Real dlnVdt = 3 / state.r * diff.r; // only r term
 
@@ -69,9 +69,9 @@ Real ForwardShockEqn<Ejecta, Medium>::compute_dGamma_dt(State const& state, Stat
     Real U = state.U2_th; // Internal energy per unit solid angle
 
     if (ejecta.spreading) {
-        Real cos_theta = std::cos(state.theta);
-        Real sin_theta = std::sin(state.theta);
-        Real f_spread = (1 - cos_theta) / dOmega0;
+        const Real cos_theta = std::cos(state.theta);
+        const Real sin_theta = std::sin(state.theta);
+        const Real f_spread = (1 - cos_theta) / dOmega0;
         dm_dt_swept = dm_dt_swept * f_spread + m_swept / dOmega0 * sin_theta * diff.theta;
         m_swept *= f_spread;
         dlnVdt += sin_theta / (1 - cos_theta) * diff.theta;
@@ -79,7 +79,7 @@ Real ForwardShockEqn<Ejecta, Medium>::compute_dGamma_dt(State const& state, Stat
     }
 
     Real a1 = -(state.Gamma - 1) * (Gamma_eff + 1) * con::c2 * dm_dt_swept;
-    Real a2 = (ad_idx - 1) * Gamma_eff * U * dlnVdt;
+    const Real a2 = (ad_idx - 1) * Gamma_eff * U * dlnVdt;
 
     if constexpr (State::energy_inject) {
         a1 += diff.eps_jet;
@@ -90,8 +90,8 @@ Real ForwardShockEqn<Ejecta, Medium>::compute_dGamma_dt(State const& state, Stat
         m_jet = state.m_jet;
     }
 
-    Real b1 = (m_jet + m_swept) * con::c2;
-    Real b2 = (dGamma_eff + Gamma_eff * (ad_idx - 1) / state.Gamma) * U;
+    const Real b1 = (m_jet + m_swept) * con::c2;
+    const Real b2 = (dGamma_eff + Gamma_eff * (ad_idx - 1) / state.Gamma) * U;
 
     return (a1 + a2) / (b1 + b2);
 }
@@ -100,10 +100,10 @@ template <typename Ejecta, typename Medium>
 Real ForwardShockEqn<Ejecta, Medium>::compute_dU_dt(Real eps_rad, State const& state, State const& diff,
                                                     Real ad_idx) const noexcept {
     Real dm_dt_swept = diff.m2;
-    Real m_swept = state.m2;
+    const Real m_swept = state.m2;
     Real dlnVdt = 3 / state.r * diff.r - diff.Gamma / state.Gamma;
     if (ejecta.spreading) {
-        Real factor = std::sin(state.theta) / (1 - std::cos(state.theta)) * diff.theta;
+        const Real factor = std::sin(state.theta) / (1 - std::cos(state.theta)) * diff.theta;
         dm_dt_swept = dm_dt_swept + m_swept * factor;
         dlnVdt += factor;
         dlnVdt += factor / (ad_idx - 1);
@@ -116,7 +116,7 @@ template <typename Ejecta, typename Medium>
 void ForwardShockEqn<Ejecta, Medium>::set_init_state(State& state, Real t0) const noexcept {
     Real Gamma4 = ejecta.Gamma0(phi, theta0);
 
-    Real beta4 = gamma_to_beta(Gamma4);
+    const Real beta4 = gamma_to_beta(Gamma4);
     state.r = beta4 * con::c * t0 / (1 - beta4);
 
     state.t_comv = state.r / std::sqrt(Gamma4 * Gamma4 - 1) / con::c;
@@ -147,8 +147,8 @@ void save_fwd_shock_state(size_t i, size_t j, size_t k, Eqn const& eqn, State co
     constexpr Real sigma = 0;  // Magnetization of unshocked medium
     constexpr Real B_upstr = 0;
 
-    Real comp_ratio = compute_compression(gamma1, state.Gamma, sigma);
-    Real rho = eqn.medium.rho(eqn.phi, state.theta, state.r);
+    const Real comp_ratio = compute_compression(gamma1, state.Gamma, sigma);
+    const Real rho = eqn.medium.rho(eqn.phi, state.theta, state.r);
 
     Real U_th = 0;
     if constexpr (HasU<State>) {
@@ -157,15 +157,15 @@ void save_fwd_shock_state(size_t i, size_t j, size_t k, Eqn const& eqn, State co
         U_th = (state.Gamma - 1) * state.m2 * con::c2;
     }
 
-    Real Gamma_th = compute_Gamma_therm(U_th, state.m2);
+    const Real Gamma_th = compute_Gamma_therm(U_th, state.m2);
 
-    Real B = compute_downstr_B(shock.rad.eps_B, rho, B_upstr, Gamma_th, comp_ratio);
+    const Real B = compute_downstr_B(shock.rad.eps_B, rho, B_upstr, Gamma_th, comp_ratio);
 
     write_shock_state(shock, i, j, k, state.t_comv, state.r, state.theta, state.Gamma, Gamma_th, B, state.m2);
 }
 
 template <typename FwdEqn, typename View>
-void grid_solve_fwd_shock(size_t i, size_t j, View const& t, Shock& shock, FwdEqn const& eqn, double rtol) {
+void grid_solve_fwd_shock(size_t i, size_t j, View const& t, Shock& shock, FwdEqn const& eqn, Real rtol) {
     using namespace boost::numeric::odeint;
 
     // Initialize state array
@@ -204,7 +204,7 @@ template <typename Ejecta, typename Medium>
 Shock generate_fwd_shock(Coord const& coord, Medium const& medium, Ejecta const& jet, RadParams const& rad_params,
                          Real rtol) {
     auto [phi_size, theta_size, t_size] = coord.shape(); // Unpack coordinate dimensions
-    size_t phi_size_needed = coord.t.shape()[0];
+    const size_t phi_size_needed = coord.t.shape()[0];
     Shock shock(phi_size_needed, theta_size, t_size, rad_params);
 
     for (size_t i = 0; i < phi_size_needed; ++i) {

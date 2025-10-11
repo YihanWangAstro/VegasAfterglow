@@ -7,8 +7,6 @@
 
 #include "synchrotron.h"
 
-#include <cmath>
-
 #include "afterglow.h"
 #include "inverse-compton.h"
 #include "macros.h"
@@ -173,7 +171,7 @@ Real SynPhotons::compute_log2_I_nu(Real log2_nu) const {
     if (log2_nu <= log2_nu_c) { // Below cooling frequency, simple scaling
         return log2_I_nu_max + compute_log2_spectrum(log2_nu);
     } else {
-        Real cooling_factor = (1 + Y_c) / (1 + InverseComptonY::compute_Y_tilt_at_nu(Ys, std::exp2(log2_nu), p));
+        const Real cooling_factor = (1 + Y_c) / (1 + InverseComptonY::compute_Y_tilt_at_nu(Ys, std::exp2(log2_nu), p));
         return log2_I_nu_max + compute_log2_spectrum(log2_nu) + fast_log2(cooling_factor) +
                (nu_c - fast_exp2(log2_nu)) / nu_M;
     }
@@ -488,8 +486,7 @@ Real compute_syn_I_peak(Real B, Real p, Real column_den) {
  * <!-- ************************************************************************************** -->
  */
 Real compute_syn_freq(Real gamma, Real B) {
-    Real nu = 3 * con::e / (4 * con::pi * con::me * con::c) * B * gamma * gamma;
-    return nu;
+    return 3 * con::e / (4 * con::pi * con::me * con::c) * B * gamma * gamma;
 }
 
 /**
@@ -503,8 +500,7 @@ Real compute_syn_freq(Real gamma, Real B) {
  * <!-- ************************************************************************************** -->
  */
 Real compute_syn_gamma(Real nu, Real B) {
-    Real gamma = std::sqrt((4 * con::pi * con::me * con::c / (3 * con::e)) * (nu / B));
-    return gamma;
+    return std::sqrt((4 * con::pi * con::me * con::c / (3 * con::e)) * (nu / B));
 }
 
 /**
@@ -526,7 +522,7 @@ Real compute_syn_gamma_M(Real B, InverseComptonY const& Ys, Real p) {
     Real gamma_M = std::sqrt(6 * con::pi * con::e / con::sigmaT / (B * (1 + Y0)));
     Real Y1 = InverseComptonY::compute_Y_tilt_at_gamma(Ys, gamma_M, p);
 
-    for (; std::fabs((Y1 - Y0) / Y0) > 1e-3;) {
+    while (std::fabs((Y1 - Y0) / Y0) > 1e-3) {
         gamma_M = std::sqrt(6 * con::pi * con::e / con::sigmaT / (B * (1 + Y1)));
         Y0 = Y1;
         Y1 = InverseComptonY::compute_Y_tilt_at_gamma(Ys, gamma_M, p);
@@ -550,7 +546,7 @@ Real compute_syn_gamma_M(Real B, InverseComptonY const& Ys, Real p) {
  * <!-- ************************************************************************************** -->
  */
 Real compute_syn_gamma_m(Real Gamma_th, Real gamma_M, Real eps_e, Real p, Real xi) {
-    Real gamma_ave_minus_1 = eps_e * (Gamma_th - 1) * (con::mp / con::me) / xi;
+    const Real gamma_ave_minus_1 = eps_e * (Gamma_th - 1) * (con::mp / con::me) / xi;
     Real gamma_m_minus_1 = 1;
     if (p > 2) {
         gamma_m_minus_1 = (p - 2) / (p - 1) * gamma_ave_minus_1;
@@ -567,7 +563,7 @@ Real compute_syn_gamma_m(Real Gamma_th, Real gamma_M, Real eps_e, Real p, Real x
 }
 
 Real compute_gamma_c(Real t_comv, Real B, InverseComptonY const& Ys, Real p) {
-    Real ad_cooling = 1;
+    constexpr Real ad_cooling = 1;
     //-sqrt(Gamma * Gamma - 1) * con::c* t_comv / r;  // adiabatic cooling
 
     Real Y0 = InverseComptonY::compute_Y_Thompson(Ys);
@@ -575,7 +571,7 @@ Real compute_gamma_c(Real t_comv, Real B, InverseComptonY const& Ys, Real p) {
     Real gamma_c = (gamma_bar + std::sqrt(gamma_bar * gamma_bar + 4)) / 2; // correction on newtonian regime
 
     Real Y1 = InverseComptonY::compute_Y_tilt_at_gamma(Ys, gamma_c, p);
-    for (; std::fabs((Y1 - Y0) / Y0) > 1e-3;) { // iterate for IC cooling
+    while (std::fabs((Y1 - Y0) / Y0) > 1e-3) { // iterate for IC cooling
         gamma_bar = (6 * con::pi * con::me * con::c / con::sigmaT) / (B * B * (1 + Y1) * t_comv) * ad_cooling;
         gamma_c = (gamma_bar + std::sqrt(gamma_bar * gamma_bar + 4)) / 2;
         Y0 = Y1;
@@ -601,10 +597,10 @@ Real compute_gamma_c(Real t_comv, Real B, InverseComptonY const& Ys, Real p) {
  * <!-- ************************************************************************************** -->
  */
 Real compute_syn_gamma_a(Real B, Real I_syn_peak, Real gamma_m, Real gamma_c, Real gamma_M, Real p) {
-    Real gamma_peak = std::min(gamma_m, gamma_c);
-    Real nu_peak = compute_syn_freq(gamma_peak, B);
+    const Real gamma_peak = std::min(gamma_m, gamma_c);
+    const Real nu_peak = compute_syn_freq(gamma_peak, B);
 
-    Real kT = (gamma_peak - 1) * (con::me * con::c2) / 3;
+    const Real kT = (gamma_peak - 1) * (con::me * con::c2) / 3;
     // 2kT(nu_a/c)^2 = I_peak*(nu_a/nu_peak)^(1/3) // first assume nu_a is in the 1/3 segment
     Real nu_a = fast_pow(I_syn_peak * con::c2 / (std::cbrt(nu_peak) * 2 * kT), 0.6);
 
@@ -631,16 +627,16 @@ Real compute_syn_gamma_a(Real B, Real I_syn_peak, Real gamma_m, Real gamma_c, Re
 #else
     if (nu_a > nu_peak) {        // nu_a is not in the 1/3 segment
         if (gamma_c > gamma_m) { // first assume nu_a is in the -(p-1)/2 segment
-            Real nu_m = compute_syn_freq(gamma_m, B);
+            const Real nu_m = compute_syn_freq(gamma_m, B);
             nu_a = fast_pow(I_syn_peak * con::c2 / (2 * kT) * fast_pow(nu_m, p / 2), 2 / (p + 4));
-            Real nu_c = compute_syn_freq(gamma_c, B);
+            const Real nu_c = compute_syn_freq(gamma_c, B);
             if (nu_a > nu_c) { //  nu_a is not in the -(p-1)/2 but -p/2 segment
                 nu_a = fast_pow(I_syn_peak * con::c2 / (2 * kT) * std::sqrt(nu_c) * fast_pow(nu_m, p / 2), 2 / (p + 5));
             }
         } else { //first assume nu_a is in the -1/2 segment
-            Real nu_c = compute_syn_freq(gamma_c, B);
+            const Real nu_c = compute_syn_freq(gamma_c, B);
             nu_a = fast_pow(I_syn_peak * con::c2 / (2 * kT) * std::sqrt(nu_c), 0.4);
-            Real nu_m = compute_syn_freq(gamma_m, B);
+            const Real nu_m = compute_syn_freq(gamma_m, B);
             if (nu_a > nu_m) { // nu_a is not in the -1/2 segment but -p/2 segment
                 nu_a = fast_pow(I_syn_peak * con::c2 / (2 * kT) * std::sqrt(nu_c) * fast_pow(nu_m, p / 2), 2 / (p + 5));
             }
@@ -652,7 +648,7 @@ Real compute_syn_gamma_a(Real B, Real I_syn_peak, Real gamma_m, Real gamma_c, Re
 }
 
 Real compute_gamma_peak(Real gamma_a, Real gamma_m, Real gamma_c) {
-    Real gamma_peak = std::min(gamma_m, gamma_c);
+    const Real gamma_peak = std::min(gamma_m, gamma_c);
     if (gamma_a > gamma_c) {
         return gamma_a;
     } else {
@@ -685,15 +681,14 @@ void update_electrons_4Y(SynElectronGrid& electrons, Shock const& shock) {
 
     for (size_t i = 0; i < phi_size; ++i) {
         for (size_t j = 0; j < theta_size; ++j) {
-            size_t k_inj = shock.injection_idx(i, j);
+            const size_t k_inj = shock.injection_idx(i, j);
             for (size_t k = 0; k < t_size; ++k) {
                 if (shock.required(i, j, k) == 0) {
                     continue;
                 }
-                Real t_com = shock.t_comv(i, j, k);
-                Real B = shock.B(i, j, k);
-                Real r = shock.r(i, j, k);
-                Real p = electrons(i, j, k).p;
+                const Real t_com = shock.t_comv(i, j, k);
+                const Real B = shock.B(i, j, k);
+                const Real p = electrons(i, j, k).p;
                 // Real Gamma = shock.Gamma(i, j, k);
                 auto& Ys = electrons(i, j, k).Ys;
                 auto& elec = electrons(i, j, k);
@@ -705,7 +700,7 @@ void update_electrons_4Y(SynElectronGrid& electrons, Shock const& shock) {
                     elec.gamma_c = electrons(i, j, k_inj).gamma_c * elec.gamma_m / electrons(i, j, k_inj).gamma_m;
                     elec.gamma_M = elec.gamma_c;
                 }
-                Real I_nu_peak = compute_syn_I_peak(B, p, elec.column_den);
+                const Real I_nu_peak = compute_syn_I_peak(B, p, elec.column_den);
                 elec.gamma_a = compute_syn_gamma_a(B, I_nu_peak, elec.gamma_m, elec.gamma_c, elec.gamma_M, p);
                 elec.regime = determine_regime(elec.gamma_a, elec.gamma_c, elec.gamma_m);
                 elec.Y_c = InverseComptonY::compute_Y_tilt_at_gamma(Ys, elec.gamma_c, p);
@@ -727,22 +722,22 @@ SynElectronGrid generate_syn_electrons(Shock const& shock) {
 void generate_syn_electrons(SynElectronGrid& electrons, Shock const& shock) {
     auto [phi_size, theta_size, t_size] = shock.shape();
 
-    RadParams rad = shock.rad;
+    const RadParams rad = shock.rad;
 
     electrons.resize({phi_size, theta_size, t_size});
 
     for (size_t i = 0; i < phi_size; ++i) {
         for (size_t j = 0; j < theta_size; ++j) {
-            size_t k_inj = shock.injection_idx(i, j);
+            const size_t k_inj = shock.injection_idx(i, j);
             for (size_t k = 0; k < t_size; ++k) {
                 if (shock.required(i, j, k) == 0) {
                     continue;
                 }
-                Real t_com = shock.t_comv(i, j, k);
-                Real B = shock.B(i, j, k);
-                Real r = shock.r(i, j, k);
+                const Real t_com = shock.t_comv(i, j, k);
+                const Real B = shock.B(i, j, k);
+                const Real r = shock.r(i, j, k);
                 // Real Gamma = shock.Gamma(i, j, k);
-                Real Gamma_th = shock.Gamma_th(i, j, k);
+                const Real Gamma_th = shock.Gamma_th(i, j, k);
 
                 auto& elec = electrons(i, j, k);
 
@@ -750,11 +745,11 @@ void generate_syn_electrons(SynElectronGrid& electrons, Shock const& shock) {
                 elec.gamma_m = compute_syn_gamma_m(Gamma_th, elec.gamma_M, rad.eps_e, rad.p, rad.xi_e);
 
                 // Fraction of synchrotron electrons; the rest are cyclotron
-                Real f_syn = cyclotron_correction(elec.gamma_m, rad.p);
+                const Real f_syn = cyclotron_correction(elec.gamma_m, rad.p);
 
                 elec.N_e = shock.N_p(i, j, k) * rad.xi_e * f_syn;
                 elec.column_den = elec.N_e / (r * r);
-                Real I_nu_peak = compute_syn_I_peak(B, rad.p, elec.column_den);
+                const Real I_nu_peak = compute_syn_I_peak(B, rad.p, elec.column_den);
 
                 elec.gamma_c = compute_gamma_c(t_com, B, electrons(i, j, k).Ys, rad.p);
 
@@ -800,7 +795,7 @@ void generate_syn_photons(SynPhotonGrid& photons, Shock const& shock, SynElectro
                     continue;
                 }
 
-                Real B = shock.B(i, j, k);
+                const Real B = shock.B(i, j, k);
 
                 ph.nu_M = compute_syn_freq(elec.gamma_M, B);
                 ph.nu_m = compute_syn_freq(elec.gamma_m, B);

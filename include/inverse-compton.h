@@ -7,8 +7,6 @@
 
 #pragma once
 #include <array>
-#include <cmath>
-#include <tuple>
 #include <vector>
 
 #include "macros.h"
@@ -40,7 +38,7 @@ struct InverseComptonY {
      * @param Y_T Thomson Y parameter
      * <!-- ************************************************************************************** -->
      */
-    InverseComptonY(Real Y_T) noexcept;
+    explicit InverseComptonY(Real Y_T) noexcept;
 
     /**
      * <!-- ************************************************************************************** -->
@@ -66,7 +64,7 @@ struct InverseComptonY {
      * @return The effective Y parameter at the given frequency
      * <!-- ************************************************************************************** -->
      */
-    Real compute_val_at_nu(Real nu, Real p) const;
+    [[nodiscard]] Real compute_val_at_nu(Real nu, Real p) const;
 
     /**
      * <!-- ************************************************************************************** -->
@@ -77,7 +75,7 @@ struct InverseComptonY {
      * @return The effective Y parameter at the given gamma
      * <!-- ************************************************************************************** -->
      */
-    Real compute_val_at_gamma(Real gamma, Real p) const;
+    [[nodiscard]] Real compute_val_at_gamma(Real gamma, Real p) const;
 
     /**
      * <!-- ************************************************************************************** -->
@@ -203,40 +201,41 @@ inline constexpr Real IC_x0 = 0.47140452079103166;
  * @brief Creates and generates an IC photon grid from electron and photon distributions
  * @tparam Electrons Type of the electron distribution
  * @tparam Photons Type of the photon distribution
- * @param electron The electron grid
- * @param photon The photon grid
+ * @param electrons The electron grid
+ * @param photons The photon grid
+ * @param kn flag for Klein-Nishina
  * @return A 3D grid of IC photons
  * <!-- ************************************************************************************** -->
  */
 template <typename Electrons, typename Photons>
-ICPhotonGrid<Electrons, Photons> generate_IC_photons(ElectronGrid<Electrons> const& electron,
-                                                     PhotonGrid<Photons> const& photon, bool kn = true) noexcept;
+ICPhotonGrid<Electrons, Photons> generate_IC_photons(ElectronGrid<Electrons> const& electrons,
+                                                     PhotonGrid<Photons> const& photons, bool kn = true) noexcept;
 
 /**
  * <!-- ************************************************************************************** -->
  * @brief Applies Thomson cooling to electrons based on photon distribution
  * @tparam Electrons Type of the electron distribution
  * @tparam Photons Type of the photon distribution
- * @param electron The electron grid to be modified
- * @param photon The photon grid
+ * @param electrons The electron grid to be modified
+ * @param photons The photon grid
  * @param shock The shock properties
  * <!-- ************************************************************************************** -->
  */
 template <typename Electrons, typename Photons>
-void Thomson_cooling(ElectronGrid<Electrons>& electron, PhotonGrid<Photons>& photon, Shock const& shock);
+void Thomson_cooling(ElectronGrid<Electrons>& electrons, PhotonGrid<Photons>& photons, Shock const& shock);
 
 /**
  * <!-- ************************************************************************************** -->
  * @brief Applies Klein-Nishina cooling to electrons based on photon distribution
  * @tparam Electrons Type of the electron distribution
  * @tparam Photons Type of the photon distribution
- * @param electron The electron grid to be modified
- * @param photon The photon grid
+ * @param electrons The electron grid to be modified
+ * @param photons The photon grid
  * @param shock The shock properties
  * <!-- ************************************************************************************** -->
  */
 template <typename Electrons, typename Photons>
-void KN_cooling(ElectronGrid<Electrons>& electron, PhotonGrid<Photons>& photon, Shock const& shock);
+void KN_cooling(ElectronGrid<Electrons>& electrons, PhotonGrid<Photons>& photons, Shock const& shock);
 
 //========================================================================================================
 //                                  template function implementation
@@ -244,17 +243,17 @@ void KN_cooling(ElectronGrid<Electrons>& electron, PhotonGrid<Photons>& photon, 
 
 template <typename Electrons, typename Photons>
 ICPhoton<Electrons, Photons>::ICPhoton(Electrons const& electrons, Photons const& photons, bool KN) noexcept
-    : electrons(electrons), photons(photons), KN(KN) {}
+    : photons(photons), electrons(electrons), KN(KN) {}
 
 template <typename Electrons, typename Photons>
 void ICPhoton<Electrons, Photons>::generate_grid() {
-    Real gamma_min = std::min(electrons.gamma_m, electrons.gamma_c);
-    Real gamma_max = electrons.gamma_M * 10;
-    size_t gamma_size = static_cast<size_t>(std::log10(gamma_max / gamma_min) * gamma_grid_per_order);
+    const Real gamma_min = std::min(electrons.gamma_m, electrons.gamma_c);
+    const Real gamma_max = electrons.gamma_M * 10;
+    const size_t gamma_size = static_cast<size_t>(std::log10(gamma_max / gamma_min) * gamma_grid_per_order);
 
-    Real nu_min = std::min(photons.nu_a, photons.nu_m) / 10;
-    Real nu_max = photons.nu_M * 10;
-    size_t nu_size = static_cast<size_t>(std::log10(nu_max / nu_min) * nu_grid_per_order);
+    const Real nu_min = std::min(photons.nu_a, photons.nu_m) / 10;
+    const Real nu_max = photons.nu_M * 10;
+    const size_t nu_size = static_cast<size_t>(std::log10(nu_max / nu_min) * nu_grid_per_order);
 
     logspace_boundary_center(std::log2(nu_min), std::log2(nu_max), nu_size, nu0, dnu0);
 
@@ -284,29 +283,29 @@ Real ICPhoton<Electrons, Photons>::compute_I_nu(Real nu) {
 
     Real IC_I_nu = 0;
 
-    size_t gamma_size = gamma.size();
-    size_t nu_size = nu0.size();
+    const size_t gamma_size = gamma.size();
+    const size_t nu_size = nu0.size();
 
     const auto sigma =
         KN ? +[](Real nu_comv) { return compton_cross_section(nu_comv); } : +[](Real) { return con::sigmaT; };
 
     for (size_t i = gamma_size; i-- > 0;) {
-        Real gamma_i = gamma(i);
-        Real upscatter = 4 * gamma_i * gamma_i * IC_x0;
-        Real Ndgamma = column_den(i) * dgamma(i);
+        const Real gamma_i = gamma(i);
+        const Real upscatter = 4 * gamma_i * gamma_i * IC_x0;
+        const Real Ndgamma = column_den(i) * dgamma(i);
 
         if (nu > upscatter * nu0.back())
             break;
 
         bool extrapolate = true;
         for (size_t j = nu_size; j-- > 0;) {
-            Real nu0_j = nu0(j);
+            const Real nu0_j = nu0(j);
 
             if (IC_tab(i, j) < 0) { // integral at (gamma(i), nu(j)) has not been evaluated
                 Real nu_comv = gamma_i * nu0_j;
                 Real inv = 1 / nu_comv;
 
-                Real grid_value = I_nu(j) * sigma(nu_comv) * inv * inv * dnu0(j);
+                const Real grid_value = I_nu(j) * sigma(nu_comv) * inv * inv * dnu0(j);
                 IC_tab(i, j) = (j != nu_size - 1) ? (IC_tab(i, j + 1) + grid_value) : grid_value;
             }
 
@@ -360,7 +359,7 @@ Real compute_Thomson_Y(Real B, Real t_com, Real eps_e, Real eps_B, Electrons con
     Real b = eta_e * eps_e / eps_B;
     Real Y0 = (std::sqrt(1 + 4 * b) - 1) / 2;
     Real Y1 = 2 * Y0;
-    for (; std::fabs((Y1 - Y0) / Y0) > 1e-4;) {
+    while (std::fabs((Y1 - Y0) / Y0) > 1e-4) {
         Y1 = Y0;
         Real gamma_c = compute_gamma_c(t_com, B, e.Ys, e.p);
         eta_e = eta_rad(e.gamma_m, gamma_c, e.p);
@@ -372,15 +371,15 @@ Real compute_Thomson_Y(Real B, Real t_com, Real eps_e, Real eps_B, Electrons con
 
 template <typename Electrons, typename Photons>
 void Thomson_cooling(ElectronGrid<Electrons>& electrons, PhotonGrid<Photons>& photons, Shock const& shock) {
-    size_t phi_size = electrons.shape()[0];
-    size_t theta_size = electrons.shape()[1];
-    size_t t_size = electrons.shape()[2];
+    const size_t phi_size = electrons.shape()[0];
+    const size_t theta_size = electrons.shape()[1];
+    const size_t t_size = electrons.shape()[2];
 
     for (size_t i = 0; i < phi_size; i++) {
         for (size_t j = 0; j < theta_size; ++j) {
             for (size_t k = 0; k < t_size; ++k) {
-                Real Y_T = compute_Thomson_Y(shock.B(i, j, k), shock.t_comv(i, j, k), shock.rad.eps_e, shock.rad.eps_B,
-                                             electrons(i, j, k));
+                const Real Y_T = compute_Thomson_Y(shock.B(i, j, k), shock.t_comv(i, j, k), shock.rad.eps_e,
+                                                   shock.rad.eps_B, electrons(i, j, k));
                 electrons(i, j, k).Ys = InverseComptonY(Y_T);
             }
         }
@@ -391,14 +390,14 @@ void Thomson_cooling(ElectronGrid<Electrons>& electrons, PhotonGrid<Photons>& ph
 
 template <typename Electrons, typename Photons>
 void KN_cooling(ElectronGrid<Electrons>& electrons, PhotonGrid<Photons>& photons, Shock const& shock) {
-    size_t phi_size = electrons.shape()[0];
-    size_t theta_size = electrons.shape()[1];
-    size_t r_size = electrons.shape()[2];
+    const size_t phi_size = electrons.shape()[0];
+    const size_t theta_size = electrons.shape()[1];
+    const size_t r_size = electrons.shape()[2];
     for (size_t i = 0; i < phi_size; ++i) {
         for (size_t j = 0; j < theta_size; ++j) {
             for (size_t k = 0; k < r_size; ++k) {
-                Real Y_T = compute_Thomson_Y(shock.B(i, j, k), shock.t_comv(i, j, k), shock.rad.eps_e, shock.rad.eps_B,
-                                             electrons(i, j, k));
+                const Real Y_T = compute_Thomson_Y(shock.B(i, j, k), shock.t_comv(i, j, k), shock.rad.eps_e,
+                                                   shock.rad.eps_B, electrons(i, j, k));
                 // Clear existing Ys and emplace a new InverseComptonY with additional synchrotron frequency parameters.
                 electrons(i, j, k).Ys =
                     InverseComptonY(photons(i, j, k).nu_m, photons(i, j, k).nu_c, shock.B(i, j, k), Y_T);

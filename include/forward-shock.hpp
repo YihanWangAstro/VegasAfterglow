@@ -30,12 +30,12 @@ struct ForwardState {
 
     union {
         struct {
-            Real Gamma;  ///< Lorentz factor
-            Real m2;     ///< swept mass
-            Real U2_th;  ///< internal energy per solid angle
-            Real r;      ///< radius
-            Real t_comv; ///< comoving time
-            Real theta;  ///< angle
+            Real Gamma{1};  ///< Lorentz factor
+            Real m2{0};     ///< swept mass
+            Real U2_th{0};  ///< internal energy per solid angle
+            Real r{0};      ///< radius
+            Real t_comv{0}; ///< comoving time
+            Real theta{0};  ///< angle
 
             /// shell energy density per solid angle
             [[no_unique_address]] std::conditional_t<energy_inject, Real, class Empty> eps_jet;
@@ -166,7 +166,7 @@ void save_fwd_shock_state(size_t i, size_t j, size_t k, Eqn const& eqn, State co
  * <!-- ************************************************************************************** -->
  */
 template <typename FwdEqn, typename View>
-void grid_solve_fwd_shock(size_t i, size_t j, View const& t, Shock& shock, FwdEqn const& eqn, double rtol);
+void grid_solve_fwd_shock(size_t i, size_t j, View const& t, Shock& shock, FwdEqn const& eqn, Real rtol);
 
 /**
  * <!-- ************************************************************************************** -->

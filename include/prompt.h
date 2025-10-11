@@ -7,7 +7,6 @@
 
 #pragma once
 
-#include "jet.h"
 #include "mesh.h"
 #include "physics.h"
 
@@ -16,7 +15,7 @@ struct PromptPhotons {
     Real nu_0{0};
     Real alpha{0};
 
-    Real I_nu(Real nu) const;
+    [[nodiscard]] Real I_nu(Real nu) const;
 };
 
 using PromptPhotonsGrid = xt::xtensor<PromptPhotons, 3>;
@@ -31,7 +30,9 @@ class CoastingShock {
     MeshGrid3d Gamma;   // relative lorentz factor between down stream and up stream
     MeshGrid3d epsilon; // relative energy per solid angle
 
-    auto shape() const { return std::make_tuple(phi_size, theta_size, t_size); } // Returns grid dimensions
+    [[nodiscard]] auto shape() const {
+        return std::make_tuple(phi_size, theta_size, t_size);
+    } // Returns grid dimensions
 
   private:
     size_t const phi_size{0};   // Number of grid points in phi direction
@@ -45,9 +46,9 @@ CoastingShock gen_coasting_shock(Coord const& coord, Ejecta const& jet) {
     CoastingShock shock(1, theta_size, t_size);
 
     for (size_t j = 0; j < theta_size; ++j) {
-        Real Gamma = jet.Gamma0(coord.phi(0), coord.theta(j));
-        Real beta = gamma_to_beta(Gamma);
-        Real epsilon = jet.eps_k(coord.phi(0), coord.theta(j));
+        const Real Gamma = jet.Gamma0(coord.phi(0), coord.theta(j));
+        const Real beta = gamma_to_beta(Gamma);
+        const Real epsilon = jet.eps_k(coord.phi(0), coord.theta(j));
         for (size_t k = 0; k < t_size; ++k) {
             shock.Gamma(0, j, k) = Gamma;
             shock.epsilon(0, j, k) = epsilon;

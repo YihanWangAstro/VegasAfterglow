@@ -11,13 +11,14 @@
 #include <cmath>
 #include <iostream>
 #include <numeric>
+#include <utility>
 #include <vector>
 
 #include "error_handling.h"
 #include "pybind.h"
 
 std::vector<size_t> MultiBandData::logscale_screen(PyArray const& data, size_t num_order) {
-    size_t total_size = data.size();
+    const size_t total_size = data.size();
 
     if (num_order == 0) {
         std::vector<size_t> indices(total_size);
@@ -25,10 +26,10 @@ std::vector<size_t> MultiBandData::logscale_screen(PyArray const& data, size_t n
         return indices;
     }
 
-    double log_start = std::log10(static_cast<double>(data(0)));
-    double log_end = std::log10(static_cast<double>(data(total_size - 1)));
-    double log_range = log_end - log_start;
-    size_t total_points = static_cast<size_t>(std::ceil(log_range * num_order)) + 1;
+    const double log_start = std::log10(static_cast<double>(data(0)));
+    const double log_end = std::log10(static_cast<double>(data(total_size - 1)));
+    const double log_range = log_end - log_start;
+    const size_t total_points = static_cast<size_t>(std::ceil(log_range * num_order)) + 1;
 
     std::vector<size_t> indices;
     indices.reserve(total_points);
@@ -36,24 +37,24 @@ std::vector<size_t> MultiBandData::logscale_screen(PyArray const& data, size_t n
     // Always include first point
     indices.push_back(0);
 
-    double step = log_range / (total_points - 1);
+    const double step = log_range / (total_points - 1);
 
     for (size_t i = 1; i < total_points - 1; ++i) {
-        double log_target = log_start + i * step;
-        double target_value = std::pow(10.0, log_target);
+        const double log_target = log_start + i * step;
+        const double target_value = std::pow(10.0, log_target);
 
         size_t best_idx = 1;
         double min_diff = std::abs(static_cast<double>(data(1)) - target_value);
 
         for (size_t j = 2; j < total_size - 1; ++j) {
-            double diff = std::abs(static_cast<double>(data(j)) - target_value);
+            const double diff = std::abs(static_cast<double>(data(j)) - target_value);
             if (diff < min_diff) {
                 min_diff = diff;
                 best_idx = j;
             }
         }
 
-        if (std::find(indices.begin(), indices.end(), best_idx) == indices.end()) {
+        if (std::ranges::find(indices, best_idx) == indices.end()) {
             indices.push_back(best_idx);
         }
     }
@@ -63,8 +64,8 @@ std::vector<size_t> MultiBandData::logscale_screen(PyArray const& data, size_t n
         indices.push_back(total_size - 1);
     }
 
-    std::sort(indices.begin(), indices.end());
-    indices.erase(std::unique(indices.begin(), indices.end()), indices.end());
+    std::ranges::sort(indices);
+    indices.erase(std::ranges::unique(indices).begin(), indices.end());
 
     return indices;
 }
@@ -72,10 +73,10 @@ std::vector<size_t> MultiBandData::logscale_screen(PyArray const& data, size_t n
 double FluxData::estimate_chi2() const {
     double chi_square = 0;
     for (size_t i = 0; i < t.size(); ++i) {
-        double error = Fv_err(i);
+        const double error = Fv_err(i);
         //if (error == 0)
         //    continue;
-        double diff = Fv_obs(i) - Fv_model(i);
+        const double diff = Fv_obs(i) - Fv_model(i);
         chi_square += weights(i) * (diff * diff) / (error * error);
     }
     return chi_square;
@@ -84,10 +85,10 @@ double FluxData::estimate_chi2() const {
 double MultiBandData::estimate_chi2() const {
     double chi_square = 0;
     for (size_t i = 0; i < times.size(); ++i) {
-        double error = errors(i);
+        const double error = errors(i);
         //if (error == 0)
         //    continue;
-        double diff = fluxes(i) - model_fluxes(i);
+        const double diff = fluxes(i) - model_fluxes(i);
         chi_square += weights(i) * (diff * diff) / (error * error);
     }
     for (auto& d : flux_data) {
@@ -97,13 +98,13 @@ double MultiBandData::estimate_chi2() const {
     return chi_square;
 }
 
-Ejecta MultiBandModel::select_jet(Params const& param) {
-    Real eps_iso = param.E_iso * unit::erg / (4 * con::pi);
-    Real Gamma0 = param.Gamma0;
-    Real theta_c = param.theta_c;
-    Real theta_w = param.theta_w;
-    Real eps_iso_w = param.E_iso_w * unit::erg / (4 * con::pi);
-    Real Gamma0_w = param.Gamma0_w;
+Ejecta MultiBandModel::select_jet(Params const& param) const {
+    const Real eps_iso = param.E_iso * unit::erg / (4 * con::pi);
+    const Real Gamma0 = param.Gamma0;
+    const Real theta_c = param.theta_c;
+    const Real theta_w = param.theta_w;
+    const Real eps_iso_w = param.E_iso_w * unit::erg / (4 * con::pi);
+    const Real Gamma0_w = param.Gamma0_w;
     Ejecta jet;
     jet.T0 = param.duration * unit::sec;
     if (config.jet == "tophat") {
@@ -138,7 +139,7 @@ Ejecta MultiBandModel::select_jet(Params const& param) {
     return jet;
 }
 
-Medium MultiBandModel::select_medium(Params const& param) {
+Medium MultiBandModel::select_medium(Params const& param) const {
     Medium medium;
     if (config.medium == "ism") {
         medium.rho = evn::ISM(param.n_ism / unit::cm3);
@@ -162,8 +163,8 @@ void MultiBandData::add_flux_density(double nu, PyArray const& t, PyArray const&
     }
 
     for (size_t i = 0; i < t.size(); ++i) {
-        tuple_data.push_back(std::make_tuple(t(i) * unit::sec, nu * unit::Hz, Fv_obs(i) * unit::flux_den_cgs,
-                                             Fv_err(i) * unit::flux_den_cgs, w(i)));
+        tuple_data.emplace_back(t(i) * unit::sec, nu * unit::Hz, Fv_obs(i) * unit::flux_den_cgs,
+                                Fv_err(i) * unit::flux_den_cgs, w(i));
     }
 }
 
@@ -179,7 +180,7 @@ void MultiBandData::add_flux(double nu_min, double nu_max, size_t num_points, Py
         w = *weights;
         AFTERGLOW_REQUIRE(t.size() == w.size(), "weights array inconsistent length!");
 
-        size_t len = w.size();
+        const size_t len = w.size();
         Real weight_sum = 0;
         for (size_t i = 0; i < len; ++i) {
             weight_sum += w(i);
@@ -187,7 +188,7 @@ void MultiBandData::add_flux(double nu_min, double nu_max, size_t num_points, Py
         w /= (weight_sum / len);
     }
 
-    Array nu = xt::logspace(std::log10(nu_min * unit::Hz), std::log10(nu_max * unit::Hz), num_points);
+    const Array nu = xt::logspace(std::log10(nu_min * unit::Hz), std::log10(nu_max * unit::Hz), num_points);
 
     flux_data.emplace_back(
         FluxData{t * unit::sec, nu, Fv_obs * unit::flux_cgs, Fv_err * unit::flux_cgs, xt::zeros<Real>({t.size()}), w});
@@ -205,8 +206,8 @@ void MultiBandData::add_spectrum(double t, PyArray const& nu, PyArray const& Fv_
     }
 
     for (size_t i = 0; i < nu.size(); ++i) {
-        tuple_data.push_back(std::make_tuple(t * unit::sec, nu(i) * unit::Hz, Fv_obs(i) * unit::flux_den_cgs,
-                                             Fv_err(i) * unit::flux_den_cgs, w(i)));
+        tuple_data.emplace_back(t * unit::sec, nu(i) * unit::Hz, Fv_obs(i) * unit::flux_den_cgs,
+                                Fv_err(i) * unit::flux_den_cgs, w(i));
     }
 }
 
@@ -220,8 +221,7 @@ size_t MultiBandData::data_points_num() const {
 
 void MultiBandData::fill_data_arrays() {
     const size_t len = tuple_data.size();
-    std::sort(tuple_data.begin(), tuple_data.end(),
-              [](auto const& a, auto const& b) { return std::get<0>(a) < std::get<0>(b); });
+    std::ranges::sort(tuple_data, [](auto const& a, auto const& b) { return std::get<0>(a) < std::get<0>(b); });
     times = Array::from_shape({len});
     frequencies = Array::from_shape({len});
     fluxes = Array::from_shape({len});
@@ -254,11 +254,10 @@ void MultiBandData::fill_data_arrays() {
     }
 }
 
-MultiBandModel::MultiBandModel(MultiBandData const& data) : obs_data(data) {
+MultiBandModel::MultiBandModel(MultiBandData data) : obs_data(std::move(data)) {
     obs_data.fill_data_arrays();
 
-    AFTERGLOW_REQUIRE((obs_data.times.size() > 0 || obs_data.flux_data.size() > 0),
-                      "No observation time data provided!");
+    AFTERGLOW_REQUIRE((obs_data.times.size() > 0 || !obs_data.flux_data.empty()), "No observation time data provided!");
 }
 
 void MultiBandModel::configure(ConfigParams const& param) {

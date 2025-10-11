@@ -162,10 +162,6 @@ using ShockPair = std::pair<Shock, Shock>;
  * @param coord Coordinate system definition
  * @param medium The medium through which the shock propagates
  * @param jet The jet (ejecta) driving the shock
- * @param eps_e_f Electron energy fraction for forward shock
- * @param eps_B_f Magnetic energy fraction for forward shock
- * @param eps_e_r Electron energy fraction for reverse shock
- * @param eps_B_r Magnetic energy fraction for reverse shock
  * @param rtol Relative tolerance for ODE solver
  * @return A pair of Shock objects {forward_shock, reverse_shock}
  * <!-- ************************************************************************************** -->

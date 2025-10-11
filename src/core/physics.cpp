@@ -9,7 +9,6 @@
 
 #include "mesh.h"
 #include "shock.h"
-#include "utilities.h"
 
 Real dec_radius(Real E_iso, Real n_ism, Real Gamma0, Real engine_dura) {
     return std::max(thin_shell_dec_radius(E_iso, n_ism, Gamma0), thick_shell_dec_radius(E_iso, n_ism, engine_dura));
@@ -32,12 +31,12 @@ Real RS_transition_radius(Real E_iso, Real n_ism, Real Gamma0, Real engine_dura)
 }
 
 Real shell_thickness_param(Real E_iso, Real n_ism, Real Gamma0, Real engine_dura) {
-    Real Sedov_l = sedov_length(E_iso, n_ism);
-    Real shell_width = con::c * engine_dura;
+    const Real Sedov_l = sedov_length(E_iso, n_ism);
+    const Real shell_width = con::c * engine_dura;
     return std::sqrt(Sedov_l / shell_width) * std::pow(Gamma0, -4. / 3);
 }
 
 Real calc_engine_duration(Real E_iso, Real n_ism, Real Gamma0, Real xi) {
-    Real Sedov_l = sedov_length(E_iso, n_ism);
+    const Real Sedov_l = sedov_length(E_iso, n_ism);
     return Sedov_l / (xi * xi * std::pow(Gamma0, 8. / 3) * con::c);
 }

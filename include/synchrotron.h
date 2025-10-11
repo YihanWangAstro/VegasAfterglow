@@ -6,10 +6,7 @@
 //                            |___/                                            |___/
 #pragma once
 
-#include <vector>
-
 #include "inverse-compton.h"
-#include "medium.h"
 #include "mesh.h"
 #include "shock.h"
 

@@ -153,7 +153,7 @@ inline Real sedov_length(Real E_iso, Real n_ism) {
  * <!-- ************************************************************************************** -->
  */
 inline Real RS_crossing_radius(Real E_iso, Real n_ism, Real engine_dura) {
-    Real l = sedov_length(E_iso, n_ism);
+    const Real l = sedov_length(E_iso, n_ism);
     return std::sqrt(std::sqrt(l * l * l * con::c * engine_dura));
 }
 

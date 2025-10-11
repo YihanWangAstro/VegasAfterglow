@@ -40,37 +40,37 @@ void Shock::resize(size_t phi_size, size_t theta_size, size_t t_size) {
 }
 
 Real compute_downstr_4vel(Real gamma_rel, Real sigma) {
-    Real ad_idx = adiabatic_idx(gamma_rel);
-    Real gamma_m_1 = gamma_rel - 1; // (gamma_rel - 1)
-    Real ad_idx_m_2 = ad_idx - 2;   // (ad_idx - 2)
-    Real ad_idx_m_1 = ad_idx - 1;   // (ad_idx - 1)
+    const Real ad_idx = adiabatic_idx(gamma_rel);
+    const Real gamma_m_1 = gamma_rel - 1; // (gamma_rel - 1)
+    const Real ad_idx_m_2 = ad_idx - 2;   // (ad_idx - 2)
+    const Real ad_idx_m_1 = ad_idx - 1;   // (ad_idx - 1)
     if (sigma <= con::sigma_cut) {
         return std::sqrt(std::fabs(gamma_m_1 * ad_idx_m_1 * ad_idx_m_1 / (-ad_idx * ad_idx_m_2 * gamma_m_1 + 2)));
     } else {
-        Real gamma_sq = gamma_rel * gamma_rel; // gamma_rel^2
-        Real gamma_p_1 = gamma_rel + 1;        // (gamma_rel + 1)
+        const Real gamma_sq = gamma_rel * gamma_rel; // gamma_rel^2
+        const Real gamma_p_1 = gamma_rel + 1;        // (gamma_rel + 1)
 
         // Precompute common terms
-        Real term1 = -ad_idx * ad_idx_m_2;
-        Real term2 = gamma_sq - 1;
+        const Real term1 = -ad_idx * ad_idx_m_2;
+        const Real term2 = gamma_sq - 1;
 
         // Compute coefficients
-        Real A = term1 * gamma_m_1 + 2;
-        Real B = -gamma_p_1 * (-ad_idx_m_2 * (ad_idx * gamma_sq + 1) + ad_idx * ad_idx_m_1 * gamma_rel) * sigma -
-                 gamma_m_1 * (term1 * (gamma_sq - 2) + 2 * gamma_rel + 3);
-        Real C = gamma_p_1 * (ad_idx * (1 - ad_idx / 4) * term2 + 1) * sigma * sigma +
-                 term2 * (2 * gamma_rel + ad_idx_m_2 * (ad_idx * gamma_rel - 1)) * sigma +
-                 gamma_p_1 * gamma_m_1 * gamma_m_1 * ad_idx_m_1 * ad_idx_m_1;
-        Real D = -gamma_m_1 * gamma_p_1 * gamma_p_1 * ad_idx_m_2 * ad_idx_m_2 * sigma * sigma / 4;
+        const Real A = term1 * gamma_m_1 + 2;
+        const Real B = -gamma_p_1 * (-ad_idx_m_2 * (ad_idx * gamma_sq + 1) + ad_idx * ad_idx_m_1 * gamma_rel) * sigma -
+                       gamma_m_1 * (term1 * (gamma_sq - 2) + 2 * gamma_rel + 3);
+        const Real C = gamma_p_1 * (ad_idx * (1 - ad_idx / 4) * term2 + 1) * sigma * sigma +
+                       term2 * (2 * gamma_rel + ad_idx_m_2 * (ad_idx * gamma_rel - 1)) * sigma +
+                       gamma_p_1 * gamma_m_1 * gamma_m_1 * ad_idx_m_1 * ad_idx_m_1;
+        const Real D = -gamma_m_1 * gamma_p_1 * gamma_p_1 * ad_idx_m_2 * ad_idx_m_2 * sigma * sigma / 4;
 
-        Real b = B / A;
-        Real c = C / A;
-        Real d = D / A;
-        Real P = c - b * b / 3;
-        Real Q = 2 * b * b * b / 27 - b * c / 3 + d;
-        Real u = std::sqrt(-P / 3);
-        Real v = std::clamp(3 * Q / (2 * P * u), -1.0, 1.0);
-        Real uds = 2 * u * std::cos((std::acos(v) - 2 * con::pi) / 3) - b / 3;
+        const Real b = B / A;
+        const Real c = C / A;
+        const Real d = D / A;
+        const Real P = c - b * b / 3;
+        const Real Q = 2 * b * b * b / 27 - b * c / 3 + d;
+        const Real u = std::sqrt(-P / 3);
+        const Real v = std::clamp(3 * Q / (2 * P * u), -1.0, 1.0);
+        const Real uds = 2 * u * std::cos((std::acos(v) - 2 * con::pi) / 3) - b / 3;
         return std::sqrt(uds);
     }
 }
