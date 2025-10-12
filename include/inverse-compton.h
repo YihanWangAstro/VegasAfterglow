@@ -258,6 +258,7 @@ void ICPhoton<Electrons, Photons>::generate_grid() {
     logspace_boundary_center(std::log2(gamma_min), std::log2(gamma_max), gamma_size, gamma, dgamma);
 
     IC_tab = MeshGrid({gamma_size, nu_size}, -1);
+
     generated = true;
 
     I_nu_dnu = Array::from_shape({nu_size});
@@ -287,10 +288,10 @@ Real ICPhoton<Electrons, Photons>::compute_I_nu(Real nu) {
 
     for (size_t i = gamma_size; i-- > 0;) {
         const Real gamma_i = gamma(i);
-        const Real upscatter = 4 * IC_x0 * gamma_i * gamma_i;
+        const Real nu_seed = nu / (4 * IC_x0 * gamma_i * gamma_i);
         const Real Ndgamma = dN_e(i);
 
-        if (nu > upscatter * nu0.back())
+        if (nu_seed > nu0.back())
             break;
 
         bool extrapolate = true;
@@ -298,16 +299,16 @@ Real ICPhoton<Electrons, Photons>::compute_I_nu(Real nu) {
             const Real nu0_j = nu0(j);
 
             if (IC_tab(i, j) < 0) { // integral at (gamma(i), nu(j)) has not been evaluated
-                Real nu_comv = gamma_i * nu0_j;
-                Real inv = 1 / nu_comv;
+                const Real nu_comv = gamma_i * nu0_j;
+                const Real inv = 1 / nu_comv;
 
                 const Real grid_value = I_nu_dnu(j) * sigma(nu_comv) * inv * inv;
                 IC_tab(i, j) = (j != nu_size - 1) ? (IC_tab(i, j + 1) + grid_value) : grid_value;
             }
 
-            if (upscatter * nu0_j < nu) {
+            if (nu0_j < nu_seed) {
                 IC_I_nu += Ndgamma * (IC_tab(i, j + 1) + (IC_tab(i, j) - IC_tab(i, j + 1)) / (nu0(j + 1) - nu0(j)) *
-                                                             (nu0(j + 1) - nu / upscatter));
+                                                             (nu0(j + 1) - nu_seed));
 
                 extrapolate = false;
                 break;
@@ -315,8 +316,8 @@ Real ICPhoton<Electrons, Photons>::compute_I_nu(Real nu) {
         }
 
         if (extrapolate) {
-            IC_I_nu += Ndgamma *
-                       (IC_tab(i, 0) + (IC_tab(i, 0) - IC_tab(i, 1)) / (nu0(1) - nu0(0)) * (nu0(0) - nu / upscatter));
+            IC_I_nu +=
+                Ndgamma * (IC_tab(i, 0) + (IC_tab(i, 0) - IC_tab(i, 1)) / (nu0(1) - nu0(0)) * (nu0(0) - nu_seed));
         }
     }
 
