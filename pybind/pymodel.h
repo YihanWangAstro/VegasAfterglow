@@ -62,7 +62,7 @@ struct PyMagnetar {
  * <!-- ************************************************************************************** -->
  */
 Ejecta PyTophatJet(Real theta_c, Real E_iso, Real Gamma0, bool spreading = false, Real duration = 1,
-                   std::optional<PyMagnetar> magnetar = std::nullopt);
+                   const std::optional<PyMagnetar>& magnetar = std::nullopt);
 
 /**
  * <!-- ************************************************************************************** -->
@@ -82,7 +82,7 @@ Ejecta PyTophatJet(Real theta_c, Real E_iso, Real Gamma0, bool spreading = false
  * <!-- ************************************************************************************** -->
  */
 Ejecta PyGaussianJet(Real theta_c, Real E_iso, Real Gamma0, bool spreading = false, Real duration = 1,
-                     std::optional<PyMagnetar> magnetar = std::nullopt);
+                     const std::optional<PyMagnetar>& magnetar = std::nullopt);
 
 /**
  * <!-- ************************************************************************************** -->
@@ -104,7 +104,7 @@ Ejecta PyGaussianJet(Real theta_c, Real E_iso, Real Gamma0, bool spreading = fal
  * <!-- ************************************************************************************** -->
  */
 Ejecta PyPowerLawJet(Real theta_c, Real E_iso, Real Gamma0, Real k_e, Real k_g, bool spreading = false,
-                     Real duration = 1, std::optional<PyMagnetar> magnetar = std::nullopt);
+                     Real duration = 1, const std::optional<PyMagnetar>& magnetar = std::nullopt);
 
 /**
  * <!-- ************************************************************************************** -->
@@ -147,7 +147,7 @@ Ejecta PyPowerLawWing(Real theta_c, Real E_iso_w, Real Gamma0_w, Real k_e, Real 
  * <!-- ************************************************************************************** -->
  */
 Ejecta PyStepPowerLawJet(Real theta_c, Real E_iso, Real Gamma0, Real E_iso_w, Real Gamma0_w, Real k_e, Real k_g,
-                         bool spreading, Real duration, std::optional<PyMagnetar> magnetar);
+                         bool spreading, Real duration, const std::optional<PyMagnetar>& magnetar);
 
 /**
  * <!-- ************************************************************************************** -->
@@ -169,7 +169,8 @@ Ejecta PyStepPowerLawJet(Real theta_c, Real E_iso, Real Gamma0, Real E_iso_w, Re
  * <!-- ************************************************************************************** -->
  */
 Ejecta PyTwoComponentJet(Real theta_c, Real E_iso, Real Gamma0, Real theta_w, Real E_iso_w, Real Gamma0_w,
-                         bool spreading = false, Real duration = 1, std::optional<PyMagnetar> magnetar = std::nullopt);
+                         bool spreading = false, Real duration = 1,
+                         const std::optional<PyMagnetar>& magnetar = std::nullopt);
 
 /**
  * <!-- ************************************************************************************** -->
@@ -399,13 +400,13 @@ class PyModel {
      * @param axisymmetric Whether to assume axisymmetric jet structure (default: true)
      * <!-- ************************************************************************************** -->
      */
-    PyModel(Ejecta jet, Medium medium, PyObserver observer, PyRadiation fwd_rad,
-            std::optional<PyRadiation> rvs_rad = std::nullopt,
-            std::tuple<Real, Real, Real> resolutions = std::make_tuple(0.3, 1, 10), Real rtol = 1e-5,
+    PyModel(Ejecta jet, Medium medium, const PyObserver& observer, const PyRadiation& fwd_rad,
+            const std::optional<PyRadiation>& rvs_rad = std::nullopt,
+            const std::tuple<Real, Real, Real>& resolutions = std::make_tuple(0.3, 1, 10), Real rtol = 1e-5,
             bool axisymmetric = true)
         : jet_(std::move(jet)),
           medium_(std::move(medium)),
-          obs_setup(std::move(observer)),
+          obs_setup(observer),
           fwd_rad(fwd_rad),
           rvs_rad_opt(rvs_rad),
           phi_resol(std::get<0>(resolutions)),

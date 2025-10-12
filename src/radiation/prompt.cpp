@@ -21,16 +21,16 @@ PromptPhotonsGrid gen_prompt_photons(CoastingShock const& shock, Real R0, Real n
 
     PromptPhotonsGrid ph({phi_size, theta_size, t_size});
 
-    Real Gamma_c = shock.Gamma(0, 0, 0);
-    Real beta_c = gamma_to_beta(Gamma_c);
+    const Real Gamma_c = shock.Gamma(0, 0, 0);
+    const Real beta_c = gamma_to_beta(Gamma_c);
 
     for (size_t i = 0; i < phi_size; ++i) {
         for (size_t j = 0; j < theta_size; ++j) {
-            Real Gamma = shock.Gamma(i, j, 0);
-            Real beta = gamma_to_beta(Gamma);
-            Real R = R0 * beta / (1 - beta) * (1 - beta_c) / beta_c;
-            Real Rmin = R * 0;
-            Real Rmax = R * 1.;
+            const Real Gamma = shock.Gamma(i, j, 0);
+            const Real beta = gamma_to_beta(Gamma);
+            const Real R = R0 * beta / (1 - beta) * (1 - beta_c) / beta_c;
+            const Real Rmin = R * 0;
+            const Real Rmax = R * 1.;
             for (size_t k = 0; k < t_size; ++k) {
                 if (shock.r(i, j, k) >= Rmin && shock.r(i, j, k) <= Rmax) {
                     ph(i, j, k).E_nu_peak = shock.epsilon(i, j, k);

@@ -82,7 +82,7 @@ struct MultiBandData {
      * <!-- ************************************************************************************** -->
      */
     void add_flux_density(double nu, PyArray const& t, PyArray const& Fv_obs, PyArray const& Fv_err,
-                          std::optional<PyArray> weights = std::nullopt);
+                          std::optional<PyArray> const& weights = std::nullopt);
 
     /**
      * <!-- ************************************************************************************** -->
@@ -100,7 +100,7 @@ struct MultiBandData {
      * <!-- ************************************************************************************** -->
      */
     void add_flux(double nu_min, double nu_max, size_t num_points, PyArray const& t, PyArray const& Fv_obs,
-                  PyArray const& Fv_err, std::optional<PyArray> weights = std::nullopt);
+                  PyArray const& Fv_err, const std::optional<PyArray>& weights = std::nullopt);
 
     /**
      * <!-- ************************************************************************************** -->
@@ -116,7 +116,7 @@ struct MultiBandData {
      * <!-- ************************************************************************************** -->
      */
     void add_spectrum(double t, PyArray const& nu, PyArray const& Fv_obs, PyArray const& Fv_err,
-                      std::optional<PyArray> weights = std::nullopt);
+                      const std::optional<PyArray>& weights = std::nullopt);
 
     /**
      * <!-- ************************************************************************************** -->
@@ -150,7 +150,7 @@ struct MultiBandData {
      * @return size_t Total number of observational data points
      * <!-- ************************************************************************************** -->
      */
-    size_t data_points_num() const;
+    [[nodiscard]] size_t data_points_num() const;
 
     Array times;            ///< Consolidated array of all observation times [seconds]
     Array frequencies;      ///< Consolidated array of all observation frequencies [Hz]

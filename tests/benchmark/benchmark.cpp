@@ -67,7 +67,7 @@ int main() {
     Real p = 2.1;
     Real Gamma0 = 300;
 
-    Array E_iso = xt::logspace(std::log10(1e48 * unit::erg), std::log10(1e52 * unit::erg), 10);
+    Array E_iso = xt::logspace(std::log10(1e48 * unit::erg), std::log10(1e52 * unit::erg), 100);
     Array theta_v = xt::linspace(0.01, 0.5, 10);
 
     Real phi_resolu[] = {0.1, 0.2, 0.4, 0.8, 1.6};

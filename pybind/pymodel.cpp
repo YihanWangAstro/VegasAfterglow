@@ -15,7 +15,7 @@
 #include "xtensor/misc/xsort.hpp"
 
 Ejecta PyTophatJet(Real theta_c, Real E_iso, Real Gamma0, bool spreading, Real duration,
-                   std::optional<PyMagnetar> magnetar) {
+                   const std::optional<PyMagnetar>& magnetar) {
     Ejecta jet;
     jet.eps_k = math::tophat(theta_c, E_iso);
     jet.Gamma0 = math::tophat_plus_one(theta_c, Gamma0 - 1);
@@ -30,7 +30,7 @@ Ejecta PyTophatJet(Real theta_c, Real E_iso, Real Gamma0, bool spreading, Real d
 }
 
 Ejecta PyGaussianJet(Real theta_c, Real E_iso, Real Gamma0, bool spreading, Real duration,
-                     std::optional<PyMagnetar> magnetar) {
+                     const std::optional<PyMagnetar>& magnetar) {
     Ejecta jet;
     jet.eps_k = math::gaussian(theta_c, E_iso);
     jet.Gamma0 = math::gaussian_plus_one(theta_c, Gamma0 - 1);
@@ -45,7 +45,7 @@ Ejecta PyGaussianJet(Real theta_c, Real E_iso, Real Gamma0, bool spreading, Real
 }
 
 Ejecta PyPowerLawJet(Real theta_c, Real E_iso, Real Gamma0, Real k_e, Real k_g, bool spreading, Real duration,
-                     std::optional<PyMagnetar> magnetar) {
+                     const std::optional<PyMagnetar>& magnetar) {
     Ejecta jet;
     jet.eps_k = math::powerlaw(theta_c, E_iso, k_e);
     jet.Gamma0 = math::powerlaw_plus_one(theta_c, Gamma0 - 1, k_g);
@@ -70,7 +70,7 @@ Ejecta PyPowerLawWing(Real theta_c, Real E_iso_w, Real Gamma0_w, Real k_e, Real 
 }
 
 Ejecta PyStepPowerLawJet(Real theta_c, Real E_iso, Real Gamma0, Real E_iso_w, Real Gamma0_w, Real k_e, Real k_g,
-                         bool spreading, Real duration, std::optional<PyMagnetar> magnetar) {
+                         bool spreading, Real duration, const std::optional<PyMagnetar>& magnetar) {
     Ejecta jet;
     jet.eps_k = math::step_powerlaw(theta_c, E_iso, E_iso_w, k_e);
     jet.Gamma0 = math::step_powerlaw_plus_one(theta_c, Gamma0 - 1, Gamma0_w - 1, k_g);
@@ -86,7 +86,7 @@ Ejecta PyStepPowerLawJet(Real theta_c, Real E_iso, Real Gamma0, Real E_iso_w, Re
 }
 
 Ejecta PyTwoComponentJet(Real theta_c, Real E_iso, Real Gamma0, Real theta_w, Real E_iso_w, Real Gamma0_w,
-                         bool spreading, Real duration, std::optional<PyMagnetar> magnetar) {
+                         bool spreading, Real duration, const std::optional<PyMagnetar>& magnetar) {
     Ejecta jet;
     jet.eps_k = math::two_component(theta_c, theta_w, E_iso, E_iso_w);
 
@@ -319,7 +319,7 @@ auto PyModel::generate_exposure_sampling(PyArray const& t, PyArray const& nu, Py
     // Generate time-frequency samples within each exposure window
     for (size_t i = 0, j = 0; i < t.size() && j < total_points; ++i) {
         const Real t_start = t(i);
-        const Real dt = expo_time(i) / (num_points - 1);
+        const Real dt = expo_time(i) / static_cast<Real>(num_points - 1);
 
         for (size_t k = 0; k < num_points && j < total_points; ++k, ++j) {
             t_obs(j) = t_start + k * dt;
@@ -375,15 +375,15 @@ auto PyModel::flux_density_exposures(PyArray const& t, PyArray const& nu, PyArra
                       "time, frequency, and exposure time arrays must have the same size");
     AFTERGLOW_REQUIRE(num_points >= 2, "num_points must be at least 2 to sample within each exposure time");
 
-    const auto sampling = generate_exposure_sampling(t, nu, expo_time, num_points);
+    const auto [t_obs_sorted, nu_obs_sorted, idx_sorted] = generate_exposure_sampling(t, nu, expo_time, num_points);
 
     auto flux_func = [](Observer& obs, Array const& time, Array const& freq, auto& photons) -> XTArray {
         return obs.specific_flux_series(time, freq, photons) / unit::flux_den_cgs;
     };
 
-    auto result = compute_emission(sampling.t_obs_sorted, sampling.nu_obs_sorted, flux_func);
+    auto result = compute_emission(t_obs_sorted, nu_obs_sorted, flux_func);
 
-    average_exposure_flux(result, sampling.idx_sorted, t.size(), num_points);
+    average_exposure_flux(result, idx_sorted, t.size(), num_points);
 
     result.calc_total();
     return result;

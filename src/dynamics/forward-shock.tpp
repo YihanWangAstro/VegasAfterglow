@@ -17,8 +17,7 @@ ForwardShockEqn<Ejecta, Medium>::ForwardShockEqn(Medium const& medium, Ejecta co
       theta0(theta),
       rad(rad_params),
       dOmega0(1 - std::cos(theta)),
-      theta_s(theta_s),
-      m_jet0(0) {
+      theta_s(theta_s){
     m_jet0 = ejecta.eps_k(phi, theta0) / ejecta.Gamma0(phi, theta0) / con::c2;
     if constexpr (HasSigma<Ejecta>) {
         m_jet0 /= 1 + ejecta.sigma0(phi, theta0);
@@ -175,23 +174,23 @@ void grid_solve_fwd_shock(size_t i, size_t j, View const& t, Shock& shock, FwdEq
     Real t0 = std::min(t.front(), 1 * unit::sec);
     eqn.set_init_state(state, t0);
 
-    // Early exit if initial Lorentz factor is below cutoff
+    // Early exit if the initial Lorentz factor is below cutoff
     if (state.Gamma <= con::Gamma_cut) {
         set_stopping_shock(i, j, shock, state);
         return;
     }
 
-    // Set up ODE solver with adaptive step size control
+    // Set up the ODE solver with adaptive step size control
     auto stepper = make_dense_output(rtol, rtol, runge_kutta_dopri5<typename FwdEqn::State>());
 
     stepper.initialize(state, t0, 0.01 * t0);
 
-    // Solve ODE and update shock state at each requested time point
+    // Solve ODE and update the shock state at each requested time point
     for (size_t k = 0; stepper.current_time() <= t.back();) {
         // Advance solution by one adaptive step
         stepper.do_step(eqn);
 
-        // Update shock state for all time points that have been passed in this step
+        // Update shock state for all-time points that have been passed in this step
         while (k < t.size() && stepper.current_time() > t(k)) {
             stepper.calc_state(t(k), state);
             save_fwd_shock_state(i, j, k, eqn, state, shock);

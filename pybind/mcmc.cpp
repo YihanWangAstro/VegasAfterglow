@@ -29,7 +29,7 @@ std::vector<size_t> MultiBandData::logscale_screen(PyArray const& data, size_t n
     const double log_start = std::log10(static_cast<double>(data(0)));
     const double log_end = std::log10(static_cast<double>(data(total_size - 1)));
     const double log_range = log_end - log_start;
-    const size_t total_points = static_cast<size_t>(std::ceil(log_range * num_order)) + 1;
+    const size_t total_points = static_cast<size_t>(std::ceil(log_range * static_cast<double>(num_order))) + 1;
 
     std::vector<size_t> indices;
     indices.reserve(total_points);
@@ -37,7 +37,7 @@ std::vector<size_t> MultiBandData::logscale_screen(PyArray const& data, size_t n
     // Always include first point
     indices.push_back(0);
 
-    const double step = log_range / (total_points - 1);
+    const double step = log_range / static_cast<double>(total_points - 1);
 
     for (size_t i = 1; i < total_points - 1; ++i) {
         const double log_target = log_start + i * step;
@@ -59,7 +59,7 @@ std::vector<size_t> MultiBandData::logscale_screen(PyArray const& data, size_t n
         }
     }
 
-    // Always include last point
+    // Always include the last point
     if (total_size > 1) {
         indices.push_back(total_size - 1);
     }
@@ -152,7 +152,7 @@ Medium MultiBandModel::select_medium(Params const& param) const {
 }
 
 void MultiBandData::add_flux_density(double nu, PyArray const& t, PyArray const& Fv_obs, PyArray const& Fv_err,
-                                     std::optional<PyArray> weights) {
+                                     std::optional<PyArray> const& weights) {
     AFTERGLOW_REQUIRE(t.size() == Fv_obs.size() && t.size() == Fv_err.size(), "light curve array inconsistent length!");
 
     Array w = xt::ones<Real>({t.size()});
@@ -169,7 +169,7 @@ void MultiBandData::add_flux_density(double nu, PyArray const& t, PyArray const&
 }
 
 void MultiBandData::add_flux(double nu_min, double nu_max, size_t num_points, PyArray const& t, PyArray const& Fv_obs,
-                             PyArray const& Fv_err, std::optional<PyArray> weights) {
+                             PyArray const& Fv_err, const std::optional<PyArray>& weights) {
     AFTERGLOW_REQUIRE(t.size() == Fv_obs.size() && t.size() == Fv_err.size(), "light curve array inconsistent length!");
     AFTERGLOW_REQUIRE(is_ascending(t), "Time array must be in ascending order!");
     AFTERGLOW_REQUIRE(nu_min < nu_max, "nu_min must be less than nu_max!");
@@ -195,7 +195,7 @@ void MultiBandData::add_flux(double nu_min, double nu_max, size_t num_points, Py
 }
 
 void MultiBandData::add_spectrum(double t, PyArray const& nu, PyArray const& Fv_obs, PyArray const& Fv_err,
-                                 std::optional<PyArray> weights) {
+                                 const std::optional<PyArray>& weights) {
     AFTERGLOW_REQUIRE(nu.size() == Fv_obs.size() && nu.size() == Fv_err.size(), "spectrum array inconsistent length!");
 
     Array w = xt::ones<Real>({nu.size()});

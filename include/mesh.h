@@ -412,7 +412,7 @@ Coord auto_grid(Ejecta const& jet, Array const& t_obs, Real theta_cut, Real thet
     Real theta_max = std::min(jet_edge, theta_cut);
 
     size_t theta_num = std::max<size_t>(static_cast<size_t>((theta_max - theta_min) * 180 / con::pi * theta_resol), 56);
-    const size_t uniform_theta_num = static_cast<size_t>(theta_num * 0.3);
+    const size_t uniform_theta_num = static_cast<size_t>(static_cast<Real>(theta_num) * 0.3);
     size_t adaptive_theta_num = theta_num - uniform_theta_num;
 
     const Array uniform_theta = xt::linspace(theta_min, theta_max, uniform_theta_num);
@@ -422,7 +422,7 @@ Coord auto_grid(Ejecta const& jet, Array const& t_obs, Real theta_cut, Real thet
     // coord.theta = uniform_theta;
 
     const size_t phi_num = std::max<size_t>(static_cast<size_t>(360 * phi_resol), 1);
-    const size_t uniform_phi_num = static_cast<size_t>(phi_num * 0.3);
+    const size_t uniform_phi_num = static_cast<size_t>(static_cast<Real>(phi_num) * 0.3);
     const size_t adaptive_phi_num = phi_num - uniform_phi_num;
 
     const Array uniform_phi = xt::linspace(0., 2 * con::pi, uniform_phi_num);

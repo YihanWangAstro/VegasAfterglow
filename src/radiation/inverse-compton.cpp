@@ -49,19 +49,19 @@ Real InverseComptonY::compute_val_at_gamma(Real gamma, Real p) const {
                 return Y_T; // For gamma below gamma_hat_m, no modification
             } else if (gamma <= gamma_hat_c) {
                 return Y_T / std::sqrt(gamma / gamma_hat_m); // Intermediate regime scaling
-            } else
+            } else {
                 return Y_T * pow43(gamma_hat_c / gamma) * std::sqrt(gamma_hat_m / gamma_hat_c); // High gamma scaling
-
+            }
             break;
         case 2:
             if (gamma <= gamma_hat_c) {
                 return Y_T; // For gamma below gamma_hat_c, no modification
             } else if (gamma <= gamma_hat_m) {
                 return Y_T * fast_pow(gamma / gamma_hat_c, (p - 3) / 2); // Scaling in intermediate regime
-            } else
+            } else {
                 return Y_T * pow43(gamma_hat_m / gamma) *
                        fast_pow(gamma_hat_m / gamma_hat_c, (p - 3) / 2); // High gamma scaling
-
+            }
             break;
         default:
             return 0;
@@ -79,19 +79,19 @@ Real InverseComptonY::compute_val_at_nu(Real nu, Real p) const {
                 return Y_T; // For frequencies below nu_hat_m, no modification
             } else if (nu <= nu_hat_c) {
                 return Y_T * std::sqrt(std::sqrt(nu_hat_m / nu)); // Intermediate frequency scaling
-            } else
+            } else {
                 return Y_T * pow23(nu_hat_c / nu) * std::sqrt(std::sqrt(nu_hat_m / nu_hat_c)); // High-frequency scaling
-
+            }
             break;
         case 2:
             if (nu <= nu_hat_c) {
                 return Y_T; // For frequencies below nu_hat_c, no modification
             } else if (nu <= nu_hat_m) {
                 return Y_T * fast_pow(nu / nu_hat_c, (p - 3) / 4); // Intermediate frequency scaling
-            } else
+            } else {
                 return Y_T * pow23(nu_hat_m / nu) *
                        fast_pow(nu_hat_m / nu_hat_c, (p - 3) / 4); // High-frequency scaling
-
+            }
             break;
         default:
             return 0;

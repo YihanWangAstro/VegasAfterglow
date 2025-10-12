@@ -231,17 +231,17 @@ void update_electrons_4Y(SynElectronGrid& electrons, Shock const& shock);
 
 /**
  * <!-- ************************************************************************************** -->
- * @brief Calculates cooling Lorentz factor based on comoving time, magnetic field, and IC parameters
+ * @brief Calculates a cooling Lorentz factor based on comoving time, magnetic field, and IC parameters
  * @details Accounts for synchrotron and inverse Compton cooling using an iterative approach
- *          to handle the Lorentz factor dependent IC cooling.
- * @param t_com Comoving time
+ *          to handle the Lorentz factor-dependent IC cooling.
+ * @param t_comv Comoving time
  * @param B Magnetic field
  * @param Ys Inverse Compton Y parameters
  * @param p Power-law index for electron energy distribution
  * @return The cooling Lorentz factor
  * <!-- ************************************************************************************** -->
  */
-Real compute_gamma_c(Real t_com, Real B, InverseComptonY const& Ys, Real p);
+Real compute_gamma_c(Real t_comv, Real B, InverseComptonY const& Ys, Real p);
 
 /**
  * <!-- ************************************************************************************** -->

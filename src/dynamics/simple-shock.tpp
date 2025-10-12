@@ -17,8 +17,7 @@ SimpleShockEqn<Ejecta, Medium>::SimpleShockEqn(Medium const& medium, Ejecta cons
       theta0(theta),
       rad(rad_params),
       dOmega0(1 - std::cos(theta0)),
-      theta_s(theta_s),
-      m_jet0(0) {
+      theta_s(theta_s) {
     m_jet0 = ejecta.eps_k(phi, theta0) / ejecta.Gamma0(phi, theta0) / con::c2;
     if constexpr (HasSigma<Ejecta>) {
         m_jet0 /= 1 + ejecta.sigma0(phi, theta0);

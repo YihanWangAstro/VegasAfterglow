@@ -387,9 +387,8 @@ Array Observer::specific_flux_series(Array const& t_obs, Array const& nu_obs, Ph
             size_t t_idx = 0;
             iterate_to(time(i, j, 0), t_obs, t_idx);
 
-            size_t k = 0;
             InterpState state;
-            while (t_idx < t_obs_len && k < t_grid - 1) {
+            for (size_t k = 0; t_idx < t_obs_len && k < t_grid - 1;) {
                 if (time(i, j, k + 1) < t_obs(t_idx)) {
                     k++;
                 } else {

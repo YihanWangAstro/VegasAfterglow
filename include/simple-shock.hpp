@@ -16,7 +16,7 @@
  * @brief Represents the state vector for the simple shock equation.
  * <!-- ************************************************************************************** -->
  */
-template <typename Ejecta, typename Medium>
+template <typename Ejecta>
 struct SimpleState {
     static constexpr bool mass_inject = HasDmdt<Ejecta>;   ///< whether Ejecta class has dmdt method
     static constexpr bool energy_inject = HasDedt<Ejecta>; ///< whether Ejecta class has dedt method
@@ -55,7 +55,7 @@ struct SimpleState {
 template <typename Ejecta, typename Medium>
 class SimpleShockEqn {
   public:
-    using State = SimpleState<Ejecta, Medium>;
+    using State = SimpleState<Ejecta>;
 
     /**
      * <!-- ************************************************************************************** -->
