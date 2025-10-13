@@ -42,7 +42,7 @@ struct FluxData {
      * @return double Chi-squared value for goodness-of-fit assessment
      * <!-- ************************************************************************************** -->
      */
-    double estimate_chi2() const;
+    [[nodiscard]] double estimate_chi2() const;
 };
 
 /**
@@ -66,7 +66,7 @@ struct MultiBandData {
      * @return double Total chi-squared value for the complete observational dataset
      * <!-- ************************************************************************************** -->
      */
-    double estimate_chi2() const;
+    [[nodiscard]] double estimate_chi2() const;
 
     /**
      * <!-- ************************************************************************************** -->

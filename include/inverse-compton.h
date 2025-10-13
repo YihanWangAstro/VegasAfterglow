@@ -162,15 +162,13 @@ struct ICPhoton {
   private:
     void generate_grid();
 
-    Array nu0; // input frequency nu0 grid value
+    Array log2_nu_IC;
 
-    Array I_nu_dnu; // input I_nu
+    Array log2_I_nu_IC;
 
-    Array gamma; // gamma grid boundary values
+    Real inv_dlog2_nu{0};
 
-    Array dN_e; // electron column density
-
-    MeshGrid IC_tab;
+    //MeshGrid IC_tab;
 
     static constexpr size_t gamma_grid_per_order{7}; // Number of frequency bins
 
@@ -243,90 +241,135 @@ ICPhoton<Electrons, Photons>::ICPhoton(Electrons const& electrons, Photons const
 
 template <typename Electrons, typename Photons>
 void ICPhoton<Electrons, Photons>::generate_grid() {
-    const Real gamma_min = std::min(electrons.gamma_m, electrons.gamma_c);
+    const Real gamma_min = electrons.gamma_m; //std::min(electrons.gamma_m, electrons.gamma_c) / 10;
     const Real gamma_max = electrons.gamma_M * 10;
-    const size_t gamma_size = static_cast<size_t>(std::log10(gamma_max / gamma_min) * gamma_grid_per_order);
+    const size_t gamma_size =
+        static_cast<size_t>(std::max(std::log10(gamma_max / gamma_min), 3.) * gamma_grid_per_order);
 
     const Real nu_min = std::min(photons.nu_a, photons.nu_m) / 10;
     const Real nu_max = photons.nu_M * 10;
-    const size_t nu_size = static_cast<size_t>(std::log10(nu_max / nu_min) * nu_grid_per_order);
+    const size_t nu_size = static_cast<size_t>(std::max(std::log10(nu_max / nu_min), 3.) * nu_grid_per_order);
 
-    Array dnu0, dgamma;
+    Array dnu_sync, dgamma, nu_sync, gamma;
 
-    logspace_boundary_center(std::log2(nu_min), std::log2(nu_max), nu_size, nu0, dnu0);
+    logspace_boundary_center(std::log2(nu_min), std::log2(nu_max), nu_size, nu_sync, dnu_sync);
 
     logspace_boundary_center(std::log2(gamma_min), std::log2(gamma_max), gamma_size, gamma, dgamma);
 
-    IC_tab = MeshGrid({gamma_size, nu_size}, -1);
+    const size_t spectrum_resol = static_cast<size_t>(
+        std::max(5 * std::log10(gamma_max * gamma_max * nu_max / (gamma_min * gamma_min * nu_min)), 15.));
 
-    generated = true;
+    log2_nu_IC = xt::linspace(std::log2(4 * IC_x0 * gamma_min * gamma_min * nu_min),
+                              std::log2(4 * IC_x0 * gamma_max * gamma_max * nu_max), spectrum_resol);
 
-    I_nu_dnu = Array::from_shape({nu_size});
-    dN_e = Array::from_shape({gamma_size});
+    this->inv_dlog2_nu = 1 / (log2_nu_IC(1) - log2_nu_IC(0));
+
+    const Array nu_IC = xt::exp2(log2_nu_IC);
+
+    Array I_nu_IC = xt::zeros<Real>({spectrum_resol});
+
+    Array I_nu_dnu_sync = Array::from_shape({nu_size});
+
+    Array dN_e = Array::from_shape({gamma_size});
 
     for (size_t i = 0; i < gamma_size; ++i) {
         dN_e(i) = electrons.compute_column_den(gamma(i)) * dgamma(i);
     }
 
     for (size_t j = 0; j < nu_size; ++j) {
-        I_nu_dnu(j) = photons.compute_I_nu(nu0(j)) * dnu0(j);
+        I_nu_dnu_sync(j) = photons.compute_I_nu(nu_sync(j)) * dnu_sync(j);
     }
-}
-
-template <typename Electrons, typename Photons>
-Real ICPhoton<Electrons, Photons>::compute_I_nu(Real nu) {
-    if (generated == false)
-        generate_grid();
-
-    Real IC_I_nu = 0;
-
-    const size_t gamma_size = gamma.size();
-    const size_t nu_size = nu0.size();
 
     const auto sigma =
         KN ? +[](Real nu_comv) { return compton_cross_section(nu_comv); } : +[](Real) { return con::sigmaT; };
 
     for (size_t i = gamma_size; i-- > 0;) {
         const Real gamma_i = gamma(i);
-        const Real nu_seed = nu / (4 * IC_x0 * gamma_i * gamma_i);
         const Real Ndgamma = dN_e(i);
+        const Real down_scatter = 1 / (4 * IC_x0 * gamma_i * gamma_i);
 
-        if (nu_seed > nu0.back())
-            break;
+        const Real nu_comv_max = gamma_i * nu_sync.back();
+        Real row_integral = I_nu_dnu_sync.back() * sigma(nu_comv_max) / (nu_comv_max * nu_comv_max);
+        Real slope = 0;
 
-        bool extrapolate = true;
-        for (size_t j = nu_size; j-- > 0;) {
-            const Real nu0_j = nu0(j);
+        int k = spectrum_resol - 1;
 
-            if (IC_tab(i, j) < 0) { // integral at (gamma(i), nu(j)) has not been evaluated
-                const Real nu_comv = gamma_i * nu0_j;
-                const Real inv = 1 / nu_comv;
-
-                const Real grid_value = I_nu_dnu(j) * sigma(nu_comv) * inv * inv;
-                IC_tab(i, j) = (j != nu_size - 1) ? (IC_tab(i, j + 1) + grid_value) : grid_value;
-            }
-
-            if (nu0_j < nu_seed) {
-                IC_I_nu += Ndgamma * (IC_tab(i, j + 1) + (IC_tab(i, j) - IC_tab(i, j + 1)) / (nu0(j + 1) - nu0(j)) *
-                                                             (nu0(j + 1) - nu_seed));
-
-                extrapolate = false;
+        for (; k >= 0; --k) {
+            const Real nu_seed = nu_IC(k) * down_scatter;
+            if (nu_seed < nu_sync.back()) {
                 break;
             }
         }
 
-        if (extrapolate) {
-            IC_I_nu +=
-                Ndgamma * (IC_tab(i, 0) + (IC_tab(i, 0) - IC_tab(i, 1)) / (nu0(1) - nu0(0)) * (nu0(0) - nu_seed));
+        for (size_t j = nu_size - 1; j-- > 0 && k >= 0;) {
+            const Real nu0_j = nu_sync(j);
+            const Real nu_comv = gamma_i * nu0_j;
+            const Real inv = 1 / nu_comv;
+
+            const Real grid_value = I_nu_dnu_sync(j) * sigma(nu_comv) * inv * inv;
+            //slope = grid_value / (nu_sync(j + 1) - nu_sync(j));
+            slope = grid_value / dnu_sync(j);
+
+            const Real base = Ndgamma * (row_integral + slope * nu_sync(j + 1));
+            const Real eff_slope = Ndgamma * slope;
+
+            for (; k >= 0; --k) {
+                const Real nu_seed = nu_IC(k) * down_scatter;
+                if (nu_seed >= nu0_j) {
+                    //I_nu_IC(k) += Ndgamma * (row_integral + slope * (nu_sync(j + 1) - nu_seed));
+                    I_nu_IC(k) += base - eff_slope * nu_seed;
+                } else {
+                    break;
+                }
+            }
+
+            row_integral += grid_value;
+        }
+
+        for (; k >= 0; --k) {
+            const Real nu_seed = nu_IC(k) * down_scatter;
+            I_nu_IC(k) += Ndgamma * (row_integral + slope * (nu_sync.front() - nu_seed));
         }
     }
 
-    return IC_I_nu * nu / 4;
+    log2_I_nu_IC = xt::log2(I_nu_IC * nu_IC * 0.25);
+
+    size_t first_non_zero = 0;
+    for (size_t i = 0; i < I_nu_IC.size(); i++) {
+        if (I_nu_IC(i) != 0) {
+            first_non_zero = i;
+            break;
+        }
+    }
+
+    log2_I_nu_IC = xt::view(log2_I_nu_IC, xt::range(first_non_zero, xt::placeholders::_));
+    log2_nu_IC = xt::view(log2_nu_IC, xt::range(first_non_zero, xt::placeholders::_));
+
+    generated = true;
+}
+
+template <typename Electrons, typename Photons>
+Real ICPhoton<Electrons, Photons>::compute_I_nu(Real nu) {
+    return std::exp2(compute_log2_I_nu(std::log2(nu)));
 }
 
 template <typename Electrons, typename Photons>
 Real ICPhoton<Electrons, Photons>::compute_log2_I_nu(Real log2_nu) {
-    return std::log2(compute_I_nu(std::exp2(log2_nu)));
+    if (generated == false) {
+        generate_grid();
+    }
+
+    size_t idx = 0;
+    if (const Real off_set = (log2_nu - log2_nu_IC(0)); off_set >= 0) {
+        idx = static_cast<size_t>(std::floor(off_set * inv_dlog2_nu));
+    }
+
+    if (idx >= log2_nu_IC.size()) {
+        return -con::inf;
+    } else [[likely]] {
+        return log2_I_nu_IC(idx) +
+               (log2_nu - log2_nu_IC(idx)) * (log2_I_nu_IC(idx + 1) - log2_I_nu_IC(idx)) * inv_dlog2_nu;
+    }
 }
 
 template <typename Electrons, typename Photons>

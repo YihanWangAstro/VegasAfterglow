@@ -34,13 +34,13 @@ std::vector<size_t> MultiBandData::logscale_screen(PyArray const& data, size_t n
     std::vector<size_t> indices;
     indices.reserve(total_points);
 
-    // Always include first point
+    // Always include the first point
     indices.push_back(0);
 
     const double step = log_range / static_cast<double>(total_points - 1);
 
     for (size_t i = 1; i < total_points - 1; ++i) {
-        const double log_target = log_start + i * step;
+        const double log_target = log_start + static_cast<double>(i) * step;
         const double target_value = std::pow(10.0, log_target);
 
         size_t best_idx = 1;
@@ -185,7 +185,7 @@ void MultiBandData::add_flux(double nu_min, double nu_max, size_t num_points, Py
         for (size_t i = 0; i < len; ++i) {
             weight_sum += w(i);
         }
-        w /= (weight_sum / len);
+        w /= (weight_sum / static_cast<double>(len));
     }
 
     const Array nu = xt::logspace(std::log10(nu_min * unit::Hz), std::log10(nu_max * unit::Hz), num_points);
@@ -239,7 +239,7 @@ void MultiBandData::fill_data_arrays() {
         model_fluxes(i) = 0; // Placeholder for model fluxes
         weight_sum += weights(i);
     }
-    weights /= (weight_sum / len);
+    weights /= (weight_sum / static_cast<double>(len));
 
     if (len > 0) {
         this->t_min = times.front();
