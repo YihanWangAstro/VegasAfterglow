@@ -48,7 +48,7 @@ var NAVTREE =
     [ "Files", "files.html", [
       [ "File List", "files.html", "files_dup" ],
       [ "File Members", "globals.html", [
-        [ "All", "globals.html", null ],
+        [ "All", "globals.html", "globals_dup" ],
         [ "Functions", "globals_func.html", null ],
         [ "Variables", "globals_vars.html", null ],
         [ "Typedefs", "globals_type.html", null ],
@@ -62,8 +62,8 @@ var NAVTREEINDEX =
 [
 "IO_8cpp.html",
 "functions_vars_r.html",
-"pybind_8h_source.html",
-"structSimpleState.html#ae6536e3a3e70a7c9cd6762554aae61c5"
+"physics_8h.html#a9b5105d9052bc27223a0bbec5fe49697",
+"structReverseState.html#a7f3bd5458f8f3f9285b2c0cb71400478"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

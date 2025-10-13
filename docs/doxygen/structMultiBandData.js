@@ -1,8 +1,8 @@
 var structMultiBandData =
 [
-    [ "add_flux", "structMultiBandData.html#abf821e57acc374b58a3377eb40210067", null ],
-    [ "add_flux_density", "structMultiBandData.html#a61bd4b2b5346bd911a4120447ff00b8b", null ],
-    [ "add_spectrum", "structMultiBandData.html#a071a3ffb1dd36155bbbab7d4dad8ea01", null ],
+    [ "add_flux", "structMultiBandData.html#a3d3149e512bdfb7005f019879e293158", null ],
+    [ "add_flux_density", "structMultiBandData.html#a95b867e09e94169a3a07daeb0598a040", null ],
+    [ "add_spectrum", "structMultiBandData.html#a836cbe84f113e680f8d6291663112c0f", null ],
     [ "data_points_num", "structMultiBandData.html#aa76ea4485894fd0eb67def9a0cc93045", null ],
     [ "estimate_chi2", "structMultiBandData.html#a631c6982c88e97795ffef3edb81253d8", null ],
     [ "fill_data_arrays", "structMultiBandData.html#ad2ade97dd269ab683c9fc6716dc0cdea", null ],

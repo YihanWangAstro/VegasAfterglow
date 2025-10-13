@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['kn_5fcooling_0',['KN_cooling',['../inverse-compton_8h.html#ab62ca35731dffb2c89ee00c15bd1e1ee',1,'inverse-compton.h']]]
+  ['kn_5fcooling_0',['KN_cooling',['../inverse-compton_8h.html#ac57614f97ddcaab423a5023a04cdf3a1',1,'inverse-compton.h']]]
 ];

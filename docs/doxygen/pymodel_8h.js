@@ -10,12 +10,12 @@ var pymodel_8h =
     [ "PyModel", "classPyModel.html", "classPyModel" ],
     [ "XTArray", "pymodel_8h.html#a8e0af37a4c52f45f722b280057db88a8", null ],
     [ "convert_unit", "pymodel_8h.html#aa920671831cc213a5c0858813e42279f", null ],
-    [ "PyGaussianJet", "pymodel_8h.html#a640334bcb244a98e359f42b86331eab3", null ],
+    [ "PyGaussianJet", "pymodel_8h.html#aef695288c4dfdbaaf71fcd2ed8fb3e3e", null ],
     [ "PyISM", "pymodel_8h.html#a43af01d16838e6513792deaeb727fbe5", null ],
-    [ "PyPowerLawJet", "pymodel_8h.html#ab0fc1fa48f04171061fcfcce0a90dfe5", null ],
+    [ "PyPowerLawJet", "pymodel_8h.html#ac9113e1e593d7b7470e97ad28cf62881", null ],
     [ "PyPowerLawWing", "pymodel_8h.html#a772157739bd087e1e945a469eb04df6e", null ],
-    [ "PyStepPowerLawJet", "pymodel_8h.html#a5a3369eb7b57f229aa810843dbe15b7e", null ],
-    [ "PyTophatJet", "pymodel_8h.html#af1f230ff03a5fe38e4b897e3dc219782", null ],
-    [ "PyTwoComponentJet", "pymodel_8h.html#ab9df94d937b16f949454e5e8c2f2caf4", null ],
+    [ "PyStepPowerLawJet", "pymodel_8h.html#a2e10a24163357e677edd02fb34524a49", null ],
+    [ "PyTophatJet", "pymodel_8h.html#a4951a986ce369081a438b84cbaa12880", null ],
+    [ "PyTwoComponentJet", "pymodel_8h.html#aa76c8dc614b9203d1a3c14e70aa84e2d", null ],
     [ "PyWind", "pymodel_8h.html#ab0bec9da85214d0cc3031b2b87fa9449", null ]
 ];

@@ -1,0 +1,12 @@
+<map id="fast_log2" name="fast_log2">
+<area shape="rect" id="Node000001" title="Fast approximation of the base&#45;2 logarithm." alt="" coords="5,56,88,81"/>
+<area shape="rect" id="Node000002" href="$utilities_8h.html#acd0ec547a29a5a2f768d02b1aef146fa" title=" " alt="" coords="136,5,293,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="87,54,158,32,160,37,89,59"/>
+<area shape="rect" id="Node000003" href="$utilities_8h.html#ab8e81118f023df135835db8cce4f5f42" title="Returns the value of a single parameter." alt="" coords="341,56,392,81"/>
+<area shape="poly" id="edge4_Node000001_Node000003" title=" " alt="" coords="88,66,327,66,327,71,88,71"/>
+<area shape="rect" id="Node000004" href="$utilities_8h.html#aeec24af41c09b6f977fbd1b6209e6501" title=" " alt="" coords="183,107,246,132"/>
+<area shape="poly" id="edge5_Node000001_Node000004" title=" " alt="" coords="89,78,171,104,169,109,87,83"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="255,28,329,53,327,59,253,33"/>
+<area shape="poly" id="edge3_Node000003_Node000003" title=" " alt="" coords="341,57,336,48,338,38,349,32,367,29,388,33,397,41,393,45,385,38,367,35,351,37,343,41,341,47,346,55"/>
+<area shape="poly" id="edge6_Node000004_Node000003" title=" " alt="" coords="245,107,327,79,329,84,247,112"/>
+</map>

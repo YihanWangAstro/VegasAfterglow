@@ -204,7 +204,7 @@ Stratified Medium
     # A = 0 (default): fallback to n = n_ism
     # n0 = inf (default): wind bubble, from wind profile to ism profile
     # A = 0 & n0 = inf: pure wind;
-    wind = Wind(A_star=0.1, n_ism = 1, n0 = 1e-3)
+    wind = Wind(A_star=0.1, n_ism = 1, n0 = 1e3)
 
     #..other settings
     model = Model(medium=wind, ...)
@@ -220,7 +220,7 @@ User-Defined Medium
     mp = 1.67e-24 # proton mass in gram
 
     # Define a custom density profile function
-    def density(phi, theta, r):# r in cm, phi and theta in radians
+    def density(phi, theta, r):# r in cm, phi and theta in radians [scalar]
         return mp # n_ism =  1 cm^-3
         #return whatever density profile (g*cm^-3) you want as a function of phi, theta, and r
 

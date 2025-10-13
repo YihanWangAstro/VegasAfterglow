@@ -361,7 +361,7 @@
 <span class="c1"># A = 0 (default): fallback to n = n_ism</span>
 <span class="c1"># n0 = inf (default): wind bubble, from wind profile to ism profile</span>
 <span class="c1"># A = 0 &amp; n0 = inf: pure wind;</span>
-<span class="n">wind</span> <span class="o">=</span> <span class="n">Wind</span><span class="p">(</span><span class="n">A_star</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">n_ism</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">n0</span> <span class="o">=</span> <span class="mf">1e-3</span><span class="p">)</span>
+<span class="n">wind</span> <span class="o">=</span> <span class="n">Wind</span><span class="p">(</span><span class="n">A_star</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">n_ism</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">n0</span> <span class="o">=</span> <span class="mf">1e3</span><span class="p">)</span>
 
 <span class="c1">#..other settings</span>
 <span class="n">model</span> <span class="o">=</span> <span class="n">Model</span><span class="p">(</span><span class="n">medium</span><span class="o">=</span><span class="n">wind</span><span class="p">,</span> <span class="o">...</span><span class="p">)</span>
@@ -375,7 +375,7 @@
 <span class="n">mp</span> <span class="o">=</span> <span class="mf">1.67e-24</span> <span class="c1"># proton mass in gram</span>
 
 <span class="c1"># Define a custom density profile function</span>
-<span class="k">def</span><span class="w"> </span><span class="nf">density</span><span class="p">(</span><span class="n">phi</span><span class="p">,</span> <span class="n">theta</span><span class="p">,</span> <span class="n">r</span><span class="p">):</span><span class="c1"># r in cm, phi and theta in radians</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">density</span><span class="p">(</span><span class="n">phi</span><span class="p">,</span> <span class="n">theta</span><span class="p">,</span> <span class="n">r</span><span class="p">):</span><span class="c1"># r in cm, phi and theta in radians [scalar]</span>
     <span class="k">return</span> <span class="n">mp</span> <span class="c1"># n_ism =  1 cm^-3</span>
     <span class="c1">#return whatever density profile (g*cm^-3) you want as a function of phi, theta, and r</span>
 

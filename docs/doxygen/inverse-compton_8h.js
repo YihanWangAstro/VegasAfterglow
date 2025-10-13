@@ -8,8 +8,8 @@ var inverse_compton_8h =
     [ "compton_cross_section", "inverse-compton_8h.html#a689ca8481a7d3e7e760a3300503f2781", null ],
     [ "compute_Thomson_Y", "inverse-compton_8h.html#ac0e54b69e936d960013b8cc6ddd9d329", null ],
     [ "eta_rad", "inverse-compton_8h.html#ad89f660f1954e9c12551a19840d656bb", null ],
-    [ "generate_IC_photons", "inverse-compton_8h.html#a53f443dc83471fe73fb54edd45962b54", null ],
-    [ "KN_cooling", "inverse-compton_8h.html#ab62ca35731dffb2c89ee00c15bd1e1ee", null ],
-    [ "Thomson_cooling", "inverse-compton_8h.html#ac0534ea09f08d9b55cb3316050c4aa53", null ],
+    [ "generate_IC_photons", "inverse-compton_8h.html#a925eead80e053d4694be449a199d8214", null ],
+    [ "KN_cooling", "inverse-compton_8h.html#ac57614f97ddcaab423a5023a04cdf3a1", null ],
+    [ "Thomson_cooling", "inverse-compton_8h.html#a976c0ea39114e8fb7e8508f6ce6218d8", null ],
     [ "IC_x0", "inverse-compton_8h.html#af77ecb3b882119e9d24786b64815975f", null ]
 ];

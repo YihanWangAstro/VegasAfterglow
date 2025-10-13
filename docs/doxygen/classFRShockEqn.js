@@ -1,7 +1,7 @@
 var classFRShockEqn =
 [
-    [ "State", "classFRShockEqn.html#a9152b74e09fadafcf2c0e951df128ee8", null ],
-    [ "FRShockEqn", "classFRShockEqn.html#a31ec93b77588da76eae053f6b045ee8c", null ],
+    [ "State", "classFRShockEqn.html#ac165008b8d8b1fa8da4700d0b24a50a2", null ],
+    [ "FRShockEqn", "classFRShockEqn.html#a1c64443c6de177c68f47a6efc4c83d8c", null ],
     [ "compute_shell_sigma", "classFRShockEqn.html#a6b9e03ae15cc1510b5e4ae7f8f8adcf9", null ],
     [ "operator()", "classFRShockEqn.html#a577bc5832d62ea1810248846ace3e4d4", null ],
     [ "save_cross_state", "classFRShockEqn.html#abf5cbd36f3e3491a01a3c5ae4f4ca5d2", null ],

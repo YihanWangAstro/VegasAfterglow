@@ -31,7 +31,7 @@ var searchData=
   ['spreading_28',['spreading',['../classPowerLawJet.html#a783b242334d9723f19a3f724b65629b5',1,'PowerLawJet::spreading'],['../classEjecta.html#a8de0be09be7bd262e246c756699addd0',1,'Ejecta::spreading'],['../classTophatJet.html#aff514e356b2b7c08acaf3608baa261d0',1,'TophatJet::spreading'],['../classGaussianJet.html#a9ee23bc79cff844132e7eeb55e174d49',1,'GaussianJet::spreading']]],
   ['ssc_29',['ssc',['../structFlux.html#a00060eafb1f9c42dc4b2c23d0e8903a0',1,'Flux::ssc'],['../classPyRadiation.html#a8e54b2f905a744304b3296a66f4291ba',1,'PyRadiation::ssc']]],
   ['ssc_5fcooling_30',['ssc_cooling',['../classPyRadiation.html#a1d7e7abb6cc072cc9402430f30522aa6',1,'PyRadiation::ssc_cooling'],['../structConfigParams.html#ae9a0f95152cdc94c22e3aebab7fc3efd',1,'ConfigParams::ssc_cooling']]],
-  ['state_31',['state',['../classSimpleShockEqn.html#aff35acb016a961cb3ca9f43edc92c2c8',1,'SimpleShockEqn::State'],['../classForwardShockEqn.html#a671e0c4914bd74168a4433965af82626',1,'ForwardShockEqn::State'],['../classFRShockEqn.html#a9152b74e09fadafcf2c0e951df128ee8',1,'FRShockEqn::State']]],
+  ['state_31',['state',['../classSimpleShockEqn.html#ae3d27565ef359199ca90c3703987f22a',1,'SimpleShockEqn::State'],['../classForwardShockEqn.html#a1841262edc07d26cffa440fab2b6f81a',1,'ForwardShockEqn::State'],['../classFRShockEqn.html#ac165008b8d8b1fa8da4700d0b24a50a2',1,'FRShockEqn::State']]],
   ['stepfunc_32',['stepFunc',['../utilities_8h.html#ae8a530e53b68fc1f195dcc370652e17c',1,'utilities.h']]],
   ['sync_33',['sync',['../structFlux.html#ab874f7e2384fdd13a9393a754515108c',1,'Flux']]],
   ['synchrotron_20grid_20creation_20and_20generation_34',['Synchrotron Grid Creation and Generation',['../group__SynchrotronFunctions.html',1,'']]],

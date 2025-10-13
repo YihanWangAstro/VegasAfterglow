@@ -7,7 +7,7 @@ var classShock =
     [ "B", "classShock.html#a48c444d1bd42f1b933aa4282b5634bf2", null ],
     [ "Gamma", "classShock.html#af26b390f5806dc838dd5a2f63c1b0bd9", null ],
     [ "Gamma_th", "classShock.html#aff8a2f43d9c47007f042a3ed1a33f98e", null ],
-    [ "injection_idx", "classShock.html#a876908cb852c77b1053c91b54692c2ff", null ],
+    [ "injection_idx", "classShock.html#a5ffabf6d9963528567fa8d398c806a57", null ],
     [ "N_p", "classShock.html#a935ec9fad9c096394707e59f81d0425d", null ],
     [ "r", "classShock.html#ad2c035218f2e59c0e84c40fa96ff5497", null ],
     [ "rad", "classShock.html#acc651304bf82aa85e52210074dee3673", null ],

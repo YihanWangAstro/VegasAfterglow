@@ -140,7 +140,7 @@ Public Attributes</h2></td></tr>
 <div class="textblock"><p>Represents generic ejecta properties for a simulation. </p>
 <p>Uses ternary functions (TernaryFunc) to accept user-defined ejecta that describes various quantities as functions of phi, theta, and time. This class encapsulates all the properties of the material ejected in a gamma-ray burst, including its energy, magnetization, and Lorentz factor profiles. </p>
 
-<p class="definition">Definition at line <a class="el" href="jet_8h_source.html#l00022">22</a> of file <a class="el" href="jet_8h_source.html">jet.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="jet_8h_source.html#l00023">23</a> of file <a class="el" href="jet_8h_source.html">jet.h</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a3ba7d93839cd4a8a3b3f4c5ec5e66efa" name="a3ba7d93839cd4a8a3b3f4c5ec5e66efa"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a3ba7d93839cd4a8a3b3f4c5ec5e66efa">&#9670;&#160;</a></span>Ejecta() <span class="overload">[1/2]</span></h2>
@@ -220,15 +220,21 @@ Public Attributes</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="jet_8h_source.html#l00036">36</a> of file <a class="el" href="jet_8h_source.html">jet.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   38</span>        : <a class="code hl_variable" href="classEjecta.html#a1952705ec5647300cd09255dcfc786cd">eps_k</a>(<a class="code hl_variable" href="classEjecta.html#a1952705ec5647300cd09255dcfc786cd">eps_k</a>), <a class="code hl_variable" href="classEjecta.html#a6993f0ec67bf03b7c80e9a7c10e65640">Gamma0</a>(<a class="code hl_variable" href="classEjecta.html#a6993f0ec67bf03b7c80e9a7c10e65640">Gamma0</a>), <a class="code hl_variable" href="classEjecta.html#abc25c1fa9cdee20b4431cf94796dcbef">sigma0</a>(<a class="code hl_variable" href="classEjecta.html#abc25c1fa9cdee20b4431cf94796dcbef">sigma0</a>), <a class="code hl_variable" href="classEjecta.html#a1cd7491361913dd37cf4efe8e3a0376a">deps_dt</a>(<a class="code hl_variable" href="classEjecta.html#a1cd7491361913dd37cf4efe8e3a0376a">deps_dt</a>), <a class="code hl_variable" href="classEjecta.html#a74ab20785693d39f5ec9a13edf2c0cd7">dm_dt</a>(<a class="code hl_variable" href="classEjecta.html#a74ab20785693d39f5ec9a13edf2c0cd7">dm_dt</a>), <a class="code hl_variable" href="classEjecta.html#a4317c1c49676662f347708942bc61bdf">T0</a>(<a class="code hl_variable" href="classEjecta.html#a4317c1c49676662f347708942bc61bdf">T0</a>), <a class="code hl_variable" href="classEjecta.html#a8de0be09be7bd262e246c756699addd0">spreading</a>(<a class="code hl_variable" href="classEjecta.html#a8de0be09be7bd262e246c756699addd0">spreading</a>) {}</div>
-<div class="ttc" id="aclassEjecta_html_a1952705ec5647300cd09255dcfc786cd"><div class="ttname"><a href="classEjecta.html#a1952705ec5647300cd09255dcfc786cd">Ejecta::eps_k</a></div><div class="ttdeci">BinaryFunc eps_k</div><div class="ttdoc">Initial energy per unit solid angle as a function of (phi, theta)</div><div class="ttdef"><b>Definition</b> <a href="jet_8h_source.html#l00043">jet.h:43</a></div></div>
-<div class="ttc" id="aclassEjecta_html_a1cd7491361913dd37cf4efe8e3a0376a"><div class="ttname"><a href="classEjecta.html#a1cd7491361913dd37cf4efe8e3a0376a">Ejecta::deps_dt</a></div><div class="ttdeci">TernaryFunc deps_dt</div><div class="ttdoc">Energy injection rate per solid angle as a function of (phi, theta, t) Default is no energy injection...</div><div class="ttdef"><b>Definition</b> <a href="jet_8h_source.html#l00054">jet.h:54</a></div></div>
-<div class="ttc" id="aclassEjecta_html_a4317c1c49676662f347708942bc61bdf"><div class="ttname"><a href="classEjecta.html#a4317c1c49676662f347708942bc61bdf">Ejecta::T0</a></div><div class="ttdeci">Real T0</div><div class="ttdoc">Duration of the ejecta in seconds.</div><div class="ttdef"><b>Definition</b> <a href="jet_8h_source.html#l00061">jet.h:61</a></div></div>
-<div class="ttc" id="aclassEjecta_html_a6993f0ec67bf03b7c80e9a7c10e65640"><div class="ttname"><a href="classEjecta.html#a6993f0ec67bf03b7c80e9a7c10e65640">Ejecta::Gamma0</a></div><div class="ttdeci">BinaryFunc Gamma0</div><div class="ttdoc">Lorentz factor profile in the ejecta as a function of (phi, theta) Default is uniform (one) across al...</div><div class="ttdef"><b>Definition</b> <a href="jet_8h_source.html#l00047">jet.h:47</a></div></div>
-<div class="ttc" id="aclassEjecta_html_a74ab20785693d39f5ec9a13edf2c0cd7"><div class="ttname"><a href="classEjecta.html#a74ab20785693d39f5ec9a13edf2c0cd7">Ejecta::dm_dt</a></div><div class="ttdeci">TernaryFunc dm_dt</div><div class="ttdoc">Mass injection rate per unit solid angle as a function of (phi, theta, t) Default is no mass injectio...</div><div class="ttdef"><b>Definition</b> <a href="jet_8h_source.html#l00058">jet.h:58</a></div></div>
-<div class="ttc" id="aclassEjecta_html_a8de0be09be7bd262e246c756699addd0"><div class="ttname"><a href="classEjecta.html#a8de0be09be7bd262e246c756699addd0">Ejecta::spreading</a></div><div class="ttdeci">bool spreading</div><div class="ttdoc">Flag indicating if the ejecta spreads laterally during evolution.</div><div class="ttdef"><b>Definition</b> <a href="jet_8h_source.html#l00064">jet.h:64</a></div></div>
-<div class="ttc" id="aclassEjecta_html_abc25c1fa9cdee20b4431cf94796dcbef"><div class="ttname"><a href="classEjecta.html#abc25c1fa9cdee20b4431cf94796dcbef">Ejecta::sigma0</a></div><div class="ttdeci">BinaryFunc sigma0</div><div class="ttdoc">Initial magnetization parameter as a function of (phi, theta)</div><div class="ttdef"><b>Definition</b> <a href="jet_8h_source.html#l00050">jet.h:50</a></div></div>
+<p class="definition">Definition at line <a class="el" href="jet_8h_source.html#l00037">37</a> of file <a class="el" href="jet_8h_source.html">jet.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   39</span>        : <a class="code hl_variable" href="classEjecta.html#a1952705ec5647300cd09255dcfc786cd">eps_k</a>(std::move(<a class="code hl_variable" href="classEjecta.html#a1952705ec5647300cd09255dcfc786cd">eps_k</a>)),</div>
+<div class="line"><span class="lineno">   40</span>          <a class="code hl_variable" href="classEjecta.html#a6993f0ec67bf03b7c80e9a7c10e65640">Gamma0</a>(std::move(<a class="code hl_variable" href="classEjecta.html#a6993f0ec67bf03b7c80e9a7c10e65640">Gamma0</a>)),</div>
+<div class="line"><span class="lineno">   41</span>          <a class="code hl_variable" href="classEjecta.html#abc25c1fa9cdee20b4431cf94796dcbef">sigma0</a>(std::move(<a class="code hl_variable" href="classEjecta.html#abc25c1fa9cdee20b4431cf94796dcbef">sigma0</a>)),</div>
+<div class="line"><span class="lineno">   42</span>          <a class="code hl_variable" href="classEjecta.html#a1cd7491361913dd37cf4efe8e3a0376a">deps_dt</a>(std::move(<a class="code hl_variable" href="classEjecta.html#a1cd7491361913dd37cf4efe8e3a0376a">deps_dt</a>)),</div>
+<div class="line"><span class="lineno">   43</span>          <a class="code hl_variable" href="classEjecta.html#a74ab20785693d39f5ec9a13edf2c0cd7">dm_dt</a>(std::move(<a class="code hl_variable" href="classEjecta.html#a74ab20785693d39f5ec9a13edf2c0cd7">dm_dt</a>)),</div>
+<div class="line"><span class="lineno">   44</span>          <a class="code hl_variable" href="classEjecta.html#a4317c1c49676662f347708942bc61bdf">T0</a>(<a class="code hl_variable" href="classEjecta.html#a4317c1c49676662f347708942bc61bdf">T0</a>),</div>
+<div class="line"><span class="lineno">   45</span>          <a class="code hl_variable" href="classEjecta.html#a8de0be09be7bd262e246c756699addd0">spreading</a>(<a class="code hl_variable" href="classEjecta.html#a8de0be09be7bd262e246c756699addd0">spreading</a>) {}</div>
+<div class="ttc" id="aclassEjecta_html_a1952705ec5647300cd09255dcfc786cd"><div class="ttname"><a href="classEjecta.html#a1952705ec5647300cd09255dcfc786cd">Ejecta::eps_k</a></div><div class="ttdeci">BinaryFunc eps_k</div><div class="ttdoc">Initial energy per unit solid angle as a function of (phi, theta)</div><div class="ttdef"><b>Definition</b> <a href="jet_8h_source.html#l00050">jet.h:50</a></div></div>
+<div class="ttc" id="aclassEjecta_html_a1cd7491361913dd37cf4efe8e3a0376a"><div class="ttname"><a href="classEjecta.html#a1cd7491361913dd37cf4efe8e3a0376a">Ejecta::deps_dt</a></div><div class="ttdeci">TernaryFunc deps_dt</div><div class="ttdoc">Energy injection rate per solid angle as a function of (phi, theta, t) Default is no energy injection...</div><div class="ttdef"><b>Definition</b> <a href="jet_8h_source.html#l00061">jet.h:61</a></div></div>
+<div class="ttc" id="aclassEjecta_html_a4317c1c49676662f347708942bc61bdf"><div class="ttname"><a href="classEjecta.html#a4317c1c49676662f347708942bc61bdf">Ejecta::T0</a></div><div class="ttdeci">Real T0</div><div class="ttdoc">Duration of the ejecta in seconds.</div><div class="ttdef"><b>Definition</b> <a href="jet_8h_source.html#l00068">jet.h:68</a></div></div>
+<div class="ttc" id="aclassEjecta_html_a6993f0ec67bf03b7c80e9a7c10e65640"><div class="ttname"><a href="classEjecta.html#a6993f0ec67bf03b7c80e9a7c10e65640">Ejecta::Gamma0</a></div><div class="ttdeci">BinaryFunc Gamma0</div><div class="ttdoc">Lorentz factor profile in the ejecta as a function of (phi, theta) Default is uniform (one) across al...</div><div class="ttdef"><b>Definition</b> <a href="jet_8h_source.html#l00054">jet.h:54</a></div></div>
+<div class="ttc" id="aclassEjecta_html_a74ab20785693d39f5ec9a13edf2c0cd7"><div class="ttname"><a href="classEjecta.html#a74ab20785693d39f5ec9a13edf2c0cd7">Ejecta::dm_dt</a></div><div class="ttdeci">TernaryFunc dm_dt</div><div class="ttdoc">Mass injection rate per unit solid angle as a function of (phi, theta, t) Default is no mass injectio...</div><div class="ttdef"><b>Definition</b> <a href="jet_8h_source.html#l00065">jet.h:65</a></div></div>
+<div class="ttc" id="aclassEjecta_html_a8de0be09be7bd262e246c756699addd0"><div class="ttname"><a href="classEjecta.html#a8de0be09be7bd262e246c756699addd0">Ejecta::spreading</a></div><div class="ttdeci">bool spreading</div><div class="ttdoc">Flag indicating if the ejecta spreads laterally during evolution.</div><div class="ttdef"><b>Definition</b> <a href="jet_8h_source.html#l00071">jet.h:71</a></div></div>
+<div class="ttc" id="aclassEjecta_html_abc25c1fa9cdee20b4431cf94796dcbef"><div class="ttname"><a href="classEjecta.html#abc25c1fa9cdee20b4431cf94796dcbef">Ejecta::sigma0</a></div><div class="ttdeci">BinaryFunc sigma0</div><div class="ttdoc">Initial magnetization parameter as a function of (phi, theta)</div><div class="ttdef"><b>Definition</b> <a href="jet_8h_source.html#l00057">jet.h:57</a></div></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -272,9 +278,9 @@ Public Attributes</h2></td></tr>
 
 <p>Energy injection rate per solid angle as a function of (phi, theta, t) Default is no energy injection (zero) </p>
 
-<p class="definition">Definition at line <a class="el" href="jet_8h_source.html#l00054">54</a> of file <a class="el" href="jet_8h_source.html">jet.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   54</span>{<a class="code hl_variable" href="namespacefunc.html#af35a6de707510b3b09306132d94d3b72">func::zero_3d</a>};</div>
-<div class="ttc" id="anamespacefunc_html_af35a6de707510b3b09306132d94d3b72"><div class="ttname"><a href="namespacefunc.html#af35a6de707510b3b09306132d94d3b72">func::zero_3d</a></div><div class="ttdeci">constexpr auto zero_3d</div><div class="ttdef"><b>Definition</b> <a href="utilities_8h_source.html#l00100">utilities.h:100</a></div></div>
+<p class="definition">Definition at line <a class="el" href="jet_8h_source.html#l00061">61</a> of file <a class="el" href="jet_8h_source.html">jet.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   61</span>{<a class="code hl_variable" href="namespacefunc.html#af35a6de707510b3b09306132d94d3b72">func::zero_3d</a>};</div>
+<div class="ttc" id="anamespacefunc_html_af35a6de707510b3b09306132d94d3b72"><div class="ttname"><a href="namespacefunc.html#af35a6de707510b3b09306132d94d3b72">func::zero_3d</a></div><div class="ttdeci">constexpr auto zero_3d</div><div class="ttdef"><b>Definition</b> <a href="utilities_8h_source.html#l00096">utilities.h:96</a></div></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -292,8 +298,8 @@ Public Attributes</h2></td></tr>
 
 <p>Mass injection rate per unit solid angle as a function of (phi, theta, t) Default is no mass injection (zero) </p>
 
-<p class="definition">Definition at line <a class="el" href="jet_8h_source.html#l00058">58</a> of file <a class="el" href="jet_8h_source.html">jet.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   58</span>{<a class="code hl_variable" href="namespacefunc.html#af35a6de707510b3b09306132d94d3b72">func::zero_3d</a>};</div>
+<p class="definition">Definition at line <a class="el" href="jet_8h_source.html#l00065">65</a> of file <a class="el" href="jet_8h_source.html">jet.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   65</span>{<a class="code hl_variable" href="namespacefunc.html#af35a6de707510b3b09306132d94d3b72">func::zero_3d</a>};</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -311,9 +317,9 @@ Public Attributes</h2></td></tr>
 
 <p>Initial energy per unit solid angle as a function of (phi, theta) </p>
 
-<p class="definition">Definition at line <a class="el" href="jet_8h_source.html#l00043">43</a> of file <a class="el" href="jet_8h_source.html">jet.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   43</span>{<a class="code hl_variable" href="namespacefunc.html#aa8d78887fec25d1452c0dd3e83fe792f">func::zero_2d</a>};</div>
-<div class="ttc" id="anamespacefunc_html_aa8d78887fec25d1452c0dd3e83fe792f"><div class="ttname"><a href="namespacefunc.html#aa8d78887fec25d1452c0dd3e83fe792f">func::zero_2d</a></div><div class="ttdeci">constexpr auto zero_2d</div><div class="ttdef"><b>Definition</b> <a href="utilities_8h_source.html#l00101">utilities.h:101</a></div></div>
+<p class="definition">Definition at line <a class="el" href="jet_8h_source.html#l00050">50</a> of file <a class="el" href="jet_8h_source.html">jet.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   50</span>{<a class="code hl_variable" href="namespacefunc.html#aa8d78887fec25d1452c0dd3e83fe792f">func::zero_2d</a>};</div>
+<div class="ttc" id="anamespacefunc_html_aa8d78887fec25d1452c0dd3e83fe792f"><div class="ttname"><a href="namespacefunc.html#aa8d78887fec25d1452c0dd3e83fe792f">func::zero_2d</a></div><div class="ttdeci">constexpr auto zero_2d</div><div class="ttdef"><b>Definition</b> <a href="utilities_8h_source.html#l00097">utilities.h:97</a></div></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -331,9 +337,9 @@ Public Attributes</h2></td></tr>
 
 <p>Lorentz factor profile in the ejecta as a function of (phi, theta) Default is uniform (one) across all angles. </p>
 
-<p class="definition">Definition at line <a class="el" href="jet_8h_source.html#l00047">47</a> of file <a class="el" href="jet_8h_source.html">jet.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   47</span>{<a class="code hl_variable" href="namespacefunc.html#a173bd91e86dee357eb55b4758c5cc20d">func::one_2d</a>};</div>
-<div class="ttc" id="anamespacefunc_html_a173bd91e86dee357eb55b4758c5cc20d"><div class="ttname"><a href="namespacefunc.html#a173bd91e86dee357eb55b4758c5cc20d">func::one_2d</a></div><div class="ttdeci">constexpr auto one_2d</div><div class="ttdef"><b>Definition</b> <a href="utilities_8h_source.html#l00104">utilities.h:104</a></div></div>
+<p class="definition">Definition at line <a class="el" href="jet_8h_source.html#l00054">54</a> of file <a class="el" href="jet_8h_source.html">jet.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   54</span>{<a class="code hl_variable" href="namespacefunc.html#a173bd91e86dee357eb55b4758c5cc20d">func::one_2d</a>};</div>
+<div class="ttc" id="anamespacefunc_html_a173bd91e86dee357eb55b4758c5cc20d"><div class="ttname"><a href="namespacefunc.html#a173bd91e86dee357eb55b4758c5cc20d">func::one_2d</a></div><div class="ttdeci">constexpr auto one_2d</div><div class="ttdef"><b>Definition</b> <a href="utilities_8h_source.html#l00100">utilities.h:100</a></div></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -351,8 +357,8 @@ Public Attributes</h2></td></tr>
 
 <p>Initial magnetization parameter as a function of (phi, theta) </p>
 
-<p class="definition">Definition at line <a class="el" href="jet_8h_source.html#l00050">50</a> of file <a class="el" href="jet_8h_source.html">jet.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   50</span>{<a class="code hl_variable" href="namespacefunc.html#aa8d78887fec25d1452c0dd3e83fe792f">func::zero_2d</a>};</div>
+<p class="definition">Definition at line <a class="el" href="jet_8h_source.html#l00057">57</a> of file <a class="el" href="jet_8h_source.html">jet.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   57</span>{<a class="code hl_variable" href="namespacefunc.html#aa8d78887fec25d1452c0dd3e83fe792f">func::zero_2d</a>};</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -370,8 +376,8 @@ Public Attributes</h2></td></tr>
 
 <p>Flag indicating if the ejecta spreads laterally during evolution. </p>
 
-<p class="definition">Definition at line <a class="el" href="jet_8h_source.html#l00064">64</a> of file <a class="el" href="jet_8h_source.html">jet.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   64</span>{<span class="keyword">false</span>};</div>
+<p class="definition">Definition at line <a class="el" href="jet_8h_source.html#l00071">71</a> of file <a class="el" href="jet_8h_source.html">jet.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   71</span>{<span class="keyword">false</span>};</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -389,8 +395,8 @@ Public Attributes</h2></td></tr>
 
 <p>Duration of the ejecta in seconds. </p>
 
-<p class="definition">Definition at line <a class="el" href="jet_8h_source.html#l00061">61</a> of file <a class="el" href="jet_8h_source.html">jet.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   61</span>{1 * <a class="code hl_variable" href="namespaceunit.html#a4e7c438655d3f34c7c30a155ec38f250">unit::sec</a>};</div>
+<p class="definition">Definition at line <a class="el" href="jet_8h_source.html#l00068">68</a> of file <a class="el" href="jet_8h_source.html">jet.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   68</span>{1 * <a class="code hl_variable" href="namespaceunit.html#a4e7c438655d3f34c7c30a155ec38f250">unit::sec</a>};</div>
 <div class="ttc" id="anamespaceunit_html_a4e7c438655d3f34c7c30a155ec38f250"><div class="ttname"><a href="namespaceunit.html#a4e7c438655d3f34c7c30a155ec38f250">unit::sec</a></div><div class="ttdeci">constexpr Real sec</div><div class="ttdoc">Second in code units.</div><div class="ttdef"><b>Definition</b> <a href="macros_8h_source.html#l00044">macros.h:44</a></div></div>
 </div><!-- fragment -->
 </div>

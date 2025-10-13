@@ -11,7 +11,7 @@
 <area shape="poly" id="edge8_Node000002_Node000005" title=" " alt="" coords="382,86,489,84,607,91,671,105,670,110,606,97,489,90,382,92"/>
 <area shape="rect" id="Node000006" href="$shock_8h.html#ab0d0c4b81c0c5525c81eb24d70c4b010" title="Computes the upstream four&#45;velocity from downstream four&#45;velocity and relative Lorentz factor." alt="" coords="443,107,597,132"/>
 <area shape="poly" id="edge6_Node000002_Node000006" title=" " alt="" coords="382,100,429,106,429,111,381,106"/>
-<area shape="rect" id="Node000004" href="$physics_8h.html#a2a95c6b3f1236d69328af7199a772a23" title="Computes adiabatic index as a function of Lorentz factor." alt="" coords="655,5,764,31"/>
+<area shape="rect" id="Node000004" href="$physics_8h.html#a2a95c6b3f1236d69328af7199a772a23" title="Computes adiabatic index as a function of the Lorentz factor." alt="" coords="655,5,764,31"/>
 <area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="607,15,641,15,641,21,607,21"/>
 <area shape="poly" id="edge4_Node000003_Node000005" title=" " alt="" coords="562,28,608,48,648,72,683,96,680,101,645,76,605,52,560,33"/>
 <area shape="poly" id="edge5_Node000005_Node000005" title=" " alt="" coords="682,111,672,101,674,90,687,83,709,80,739,85,746,92,747,99,742,99,742,94,737,90,709,85,688,88,678,93,677,99,686,107"/>

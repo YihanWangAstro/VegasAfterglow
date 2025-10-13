@@ -1,7 +1,7 @@
 var searchData=
 [
   ['g_0',['g',['../namespaceunit.html#af4ac5b90426ecc30143a4e0f495978b6',1,'unit']]],
-  ['gamma_1',['gamma',['../classCoastingShock.html#a174cc05509ef0c4aca0d2e5f0b7a7343',1,'CoastingShock::Gamma'],['../structReverseState.html#a57f0a4094a890d218f355b7c8a102ebb',1,'ReverseState::Gamma'],['../classShock.html#af26b390f5806dc838dd5a2f63c1b0bd9',1,'Shock::Gamma'],['../structSimpleState.html#aa220fc39562c5384c863d3d7a9d39aee',1,'SimpleState::Gamma'],['../structPyShock.html#a91fcd07f840919a38d4171925e9a4ba0',1,'PyShock::Gamma'],['../structForwardState.html#a1f7f63273d731979440606b69413eac3',1,'ForwardState::Gamma']]],
+  ['gamma_1',['gamma',['../classCoastingShock.html#a174cc05509ef0c4aca0d2e5f0b7a7343',1,'CoastingShock::Gamma'],['../structReverseState.html#ad4b309e2e78d24f1645927e936145b83',1,'ReverseState::Gamma'],['../classShock.html#af26b390f5806dc838dd5a2f63c1b0bd9',1,'Shock::Gamma'],['../structSimpleState.html#a963b0d927c4181184b9fe44d33f7ede3',1,'SimpleState::Gamma'],['../structPyShock.html#a91fcd07f840919a38d4171925e9a4ba0',1,'PyShock::Gamma'],['../structForwardState.html#a6049d4062d05c96a7479daa171efc9ae',1,'ForwardState::Gamma']]],
   ['gamma0_2',['gamma0',['../classEjecta.html#a6993f0ec67bf03b7c80e9a7c10e65640',1,'Ejecta::Gamma0'],['../structParams.html#a936879f34880349fc5c813219834519d',1,'Params::Gamma0']]],
   ['gamma0_5fw_3',['Gamma0_w',['../structParams.html#a41358abbe69879f6be62829b80d8663d',1,'Params']]],
   ['gamma4_4',['Gamma4',['../classFRShockEqn.html#a69ca2d095d52823456e2c9cad98132c2',1,'FRShockEqn']]],

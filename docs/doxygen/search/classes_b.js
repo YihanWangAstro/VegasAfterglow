@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['tophatjet_0',['TophatJet',['../classTophatJet.html',1,'']]]
+  ['tables_0',['Tables',['../structTables.html',1,'']]],
+  ['tophatjet_1',['TophatJet',['../classTophatJet.html',1,'']]]
 ];

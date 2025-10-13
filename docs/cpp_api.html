@@ -472,7 +472,7 @@
 <dl class="cpp class">
 <dt class="sig sig-object cpp" id="_CPPv411GaussianJet">
 <span id="_CPPv311GaussianJet"></span><span id="_CPPv211GaussianJet"></span><span id="GaussianJet"></span><span class="target" id="VegasAfterglowclassGaussianJet"></span><span class="k"><span class="pre">class</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">GaussianJet</span></span></span><a class="headerlink" href="#_CPPv411GaussianJet" title="Link to this definition"></a><br /></dt>
-<dd><p>Implements a Gaussian jet profile where properties follow a Gaussian distribution with angle. </p>
+<dd><p>Implements a Gaussian jet profile where properties follow a Gaussian distribution with angles. </p>
 <p>This class provides a smooth model for GRB jets, characterized by core angle theta_c, isotropic equivalent energy E_iso, and initial Lorentz factor Gamma0 at the center. </p>
 <div class="breathe-sectiondef docutils container">
 <p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-functions">Public Functions</p>
@@ -548,7 +548,7 @@
 <dl class="cpp class">
 <dt class="sig sig-object cpp" id="_CPPv411PowerLawJet">
 <span id="_CPPv311PowerLawJet"></span><span id="_CPPv211PowerLawJet"></span><span id="PowerLawJet"></span><span class="target" id="VegasAfterglowclassPowerLawJet"></span><span class="k"><span class="pre">class</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">PowerLawJet</span></span></span><a class="headerlink" href="#_CPPv411PowerLawJet" title="Link to this definition"></a><br /></dt>
-<dd><p>Implements a power-law jet profile where properties follow a power-law distribution with angle. </p>
+<dd><p>Implements a power-law jet profile where properties follow a power-law distribution with angles. </p>
 <p>This class provides a model for GRB jets with a power-law decay, characterized by core angle theta_c, isotropic equivalent energy E_iso, initial Lorentz factor Gamma0, and power-law index k. </p>
 <div class="breathe-sectiondef docutils container">
 <p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-functions">Public Functions</p>
@@ -714,7 +714,7 @@
 <p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-functions">Public Functions</p>
 <dl class="cpp function">
 <dt class="sig sig-object cpp" id="_CPPv4N3ISM3ISME4Real">
-<span id="_CPPv3N3ISM3ISME4Real"></span><span id="_CPPv2N3ISM3ISME4Real"></span><span id="ISM::ISM__Real"></span><span class="target" id="VegasAfterglowclassISM_1a84b54625cac41da743d803e3425e5c6c"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">ISM</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">Real</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">n_ism</span></span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">noexcept</span></span><a class="headerlink" href="#_CPPv4N3ISM3ISME4Real" title="Link to this definition"></a><br /></dt>
+<span id="_CPPv3N3ISM3ISME4Real"></span><span id="_CPPv2N3ISM3ISME4Real"></span><span id="ISM::ISM__Real"></span><span class="target" id="VegasAfterglowclassISM_1a84b54625cac41da743d803e3425e5c6c"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="k"><span class="pre">explicit</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">ISM</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">Real</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">n_ism</span></span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">noexcept</span></span><a class="headerlink" href="#_CPPv4N3ISM3ISME4Real" title="Link to this definition"></a><br /></dt>
 <dd><p>Constructor: Initialize with particle number density in cm^-3. </p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -726,7 +726,7 @@
 <dl class="cpp function">
 <dt class="sig sig-object cpp" id="_CPPv4NK3ISM3rhoE4Real4Real4Real">
 <span id="_CPPv3NK3ISM3rhoE4Real4Real4Real"></span><span id="_CPPv2NK3ISM3rhoE4Real4Real4Real"></span><span id="ISM::rho__Real.Real.RealC"></span><span class="target" id="VegasAfterglowclassISM_1ab288e7072dc13d792244458db8e0d6da"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="n"><span class="pre">Real</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">rho</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">Real</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">phi</span></span>, <span class="n"><span class="pre">Real</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">theta</span></span>, <span class="n"><span class="pre">Real</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">r</span></span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="k"><span class="pre">noexcept</span></span><a class="headerlink" href="#_CPPv4NK3ISM3rhoE4Real4Real4Real" title="Link to this definition"></a><br /></dt>
-<dd><p>Return density at given position (constant everywhere) </p>
+<dd><p>Return density at a given position (constant everywhere) </p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -753,11 +753,15 @@
 <p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-functions">Public Functions</p>
 <dl class="cpp function">
 <dt class="sig sig-object cpp" id="_CPPv4N4Wind4WindE4Real4Real4Real">
-<span id="_CPPv3N4Wind4WindE4Real4Real4Real"></span><span id="_CPPv2N4Wind4WindE4Real4Real4Real"></span><span id="Wind::Wind__Real.Real.Real"></span><span class="target" id="VegasAfterglowclassWind_1ad1862471c40385dd0e8a7469dabcdc8e"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">Wind</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">Real</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">A_star</span></span>, <span class="n"><span class="pre">Real</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">n_ism</span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="m"><span class="pre">0</span></span>, <span class="n"><span class="pre">Real</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">n0</span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="n"><span class="pre">con</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">inf</span></span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">noexcept</span></span><a class="headerlink" href="#_CPPv4N4Wind4WindE4Real4Real4Real" title="Link to this definition"></a><br /></dt>
+<span id="_CPPv3N4Wind4WindE4Real4Real4Real"></span><span id="_CPPv2N4Wind4WindE4Real4Real4Real"></span><span id="Wind::Wind__Real.Real.Real"></span><span class="target" id="VegasAfterglowclassWind_1ad1862471c40385dd0e8a7469dabcdc8e"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="k"><span class="pre">explicit</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">Wind</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">Real</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">A_star</span></span>, <span class="n"><span class="pre">Real</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">n_ism</span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="m"><span class="pre">0</span></span>, <span class="n"><span class="pre">Real</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">n0</span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="n"><span class="pre">con</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">inf</span></span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">noexcept</span></span><a class="headerlink" href="#_CPPv4N4Wind4WindE4Real4Real4Real" title="Link to this definition"></a><br /></dt>
 <dd><p>Constructor: Initialize with wind parameter A_star (in standard units) </p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>A_star</strong> – <a class="reference internal" href="#VegasAfterglowclassWind"><span class="std std-ref">Wind</span></a> density parameter in standard units </p>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>A_star</strong> – <a class="reference internal" href="#VegasAfterglowclassWind"><span class="std std-ref">Wind</span></a> density parameter in standard units </p></li>
+<li><p><strong>n_ism</strong> – number density of <a class="reference internal" href="#VegasAfterglowclassISM"><span class="std std-ref">ISM</span></a> at large radii </p></li>
+<li><p><strong>n0</strong> – number density of wind at small radii </p></li>
+</ul>
 </dd>
 </dl>
 </dd></dl>
@@ -765,7 +769,7 @@
 <dl class="cpp function">
 <dt class="sig sig-object cpp" id="_CPPv4NK4Wind3rhoE4Real4Real4Real">
 <span id="_CPPv3NK4Wind3rhoE4Real4Real4Real"></span><span id="_CPPv2NK4Wind3rhoE4Real4Real4Real"></span><span id="Wind::rho__Real.Real.RealC"></span><span class="target" id="VegasAfterglowclassWind_1ab5224ceb8e690e272e1fa39c598b1999"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="n"><span class="pre">Real</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">rho</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">Real</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">phi</span></span>, <span class="n"><span class="pre">Real</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">theta</span></span>, <span class="n"><span class="pre">Real</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">r</span></span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="k"><span class="pre">noexcept</span></span><a class="headerlink" href="#_CPPv4NK4Wind3rhoE4Real4Real4Real" title="Link to this definition"></a><br /></dt>
-<dd><p>Return density at given position (proportional to 1/r²) </p>
+<dd><p>Return density at given positions (proportional to 1/r²) </p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -792,7 +796,7 @@
 <p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-functions">Public Functions</p>
 <dl class="cpp function">
 <dt class="sig sig-object cpp" id="_CPPv4N6Medium6MediumE11TernaryFunc">
-<span id="_CPPv3N6Medium6MediumE11TernaryFunc"></span><span id="_CPPv2N6Medium6MediumE11TernaryFunc"></span><span id="Medium::Medium__TernaryFunc"></span><span class="target" id="VegasAfterglowclassMedium_1aacd7cf0b6fb4dee7adf3a5f2d32356e7"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">Medium</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">TernaryFunc</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">rho</span></span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">noexcept</span></span><a class="headerlink" href="#_CPPv4N6Medium6MediumE11TernaryFunc" title="Link to this definition"></a><br /></dt>
+<span id="_CPPv3N6Medium6MediumE11TernaryFunc"></span><span id="_CPPv2N6Medium6MediumE11TernaryFunc"></span><span id="Medium::Medium__TernaryFunc"></span><span class="target" id="VegasAfterglowclassMedium_1aacd7cf0b6fb4dee7adf3a5f2d32356e7"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="k"><span class="pre">explicit</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">Medium</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">TernaryFunc</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">rho</span></span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">noexcept</span></span><a class="headerlink" href="#_CPPv4N6Medium6MediumE11TernaryFunc" title="Link to this definition"></a><br /></dt>
 <dd><p>Constructor: Initialize with density function. </p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -1091,8 +1095,8 @@
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>nu_m</strong> – Characteristic frequency for minimum Lorentz factor </p></li>
-<li><p><strong>nu_c</strong> – Characteristic frequency for cooling Lorentz factor </p></li>
+<li><p><strong>nu_m</strong> – Characteristic frequency for the minimum Lorentz factor </p></li>
+<li><p><strong>nu_c</strong> – Characteristic frequency for the cooling Lorentz factor </p></li>
 <li><p><strong>B</strong> – Magnetic field strength </p></li>
 <li><p><strong>Y_T</strong> – Thomson Y parameter </p></li>
 </ul>
@@ -1102,7 +1106,7 @@
 
 <dl class="cpp function">
 <dt class="sig sig-object cpp" id="_CPPv4N15InverseComptonY15InverseComptonYE4Real">
-<span id="_CPPv3N15InverseComptonY15InverseComptonYE4Real"></span><span id="_CPPv2N15InverseComptonY15InverseComptonYE4Real"></span><span id="InverseComptonY::InverseComptonY__Real"></span><span class="target" id="VegasAfterglowstructInverseComptonY_1a868e013d09d617985b93a16c2674f705"></span><span class="sig-name descname"><span class="n"><span class="pre">InverseComptonY</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">Real</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">Y_T</span></span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">noexcept</span></span><a class="headerlink" href="#_CPPv4N15InverseComptonY15InverseComptonYE4Real" title="Link to this definition"></a><br /></dt>
+<span id="_CPPv3N15InverseComptonY15InverseComptonYE4Real"></span><span id="_CPPv2N15InverseComptonY15InverseComptonYE4Real"></span><span id="InverseComptonY::InverseComptonY__Real"></span><span class="target" id="VegasAfterglowstructInverseComptonY_1a868e013d09d617985b93a16c2674f705"></span><span class="k"><span class="pre">explicit</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">InverseComptonY</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">Real</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">Y_T</span></span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">noexcept</span></span><a class="headerlink" href="#_CPPv4N15InverseComptonY15InverseComptonYE4Real" title="Link to this definition"></a><br /></dt>
 <dd><p>Simple constructor that initializes with only the Thomson Y parameter for special cases. </p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -1281,7 +1285,7 @@
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>phi_size</strong> – Number of grid points in phi direction </p></li>
+<li><p><strong>phi_size</strong> – Number of grid points in the phi direction </p></li>
 <li><p><strong>theta_size</strong> – Number of grid points in theta direction </p></li>
 <li><p><strong>t_size</strong> – Number of grid points in time direction </p></li>
 <li><p><strong>rad_params</strong> – Radiation parameters </p></li>
@@ -1308,7 +1312,7 @@
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>phi_size</strong> – New number of grid points in phi direction </p></li>
+<li><p><strong>phi_size</strong> – New number of grid points in the phi direction </p></li>
 <li><p><strong>theta_size</strong> – New number of grid points in theta direction </p></li>
 <li><p><strong>t_size</strong> – New number of grid points in time direction </p></li>
 </ul>
@@ -1363,7 +1367,7 @@
 
 <dl class="cpp var">
 <dt class="sig sig-object cpp" id="_CPPv4N5Shock13injection_idxE">
-<span id="_CPPv3N5Shock13injection_idxE"></span><span id="_CPPv2N5Shock13injection_idxE"></span><span id="Shock::injection_idx__MeshGrid"></span><span class="target" id="VegasAfterglowclassShock_1a876908cb852c77b1053c91b54692c2ff"></span><span class="n"><span class="pre">MeshGrid</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">injection_idx</span></span></span><a class="headerlink" href="#_CPPv4N5Shock13injection_idxE" title="Link to this definition"></a><br /></dt>
+<span id="_CPPv3N5Shock13injection_idxE"></span><span id="_CPPv2N5Shock13injection_idxE"></span><span id="Shock::injection_idx__IndexGrid"></span><span class="target" id="VegasAfterglowclassShock_1a5ffabf6d9963528567fa8d398c806a57"></span><span class="n"><span class="pre">IndexGrid</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">injection_idx</span></span></span><a class="headerlink" href="#_CPPv4N5Shock13injection_idxE" title="Link to this definition"></a><br /></dt>
 <dd><p>Beyond which grid index there is no electron injection. </p>
 </dd></dl>
 
@@ -1407,7 +1411,7 @@
 <p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-types">Public Types</p>
 <dl class="cpp type">
 <dt class="sig sig-object cpp" id="_CPPv4N14SimpleShockEqn5StateE">
-<span id="_CPPv3N14SimpleShockEqn5StateE"></span><span id="_CPPv2N14SimpleShockEqn5StateE"></span><span class="target" id="VegasAfterglowclassSimpleShockEqn_1aff35acb016a961cb3ca9f43edc92c2c8"></span><span class="k"><span class="pre">using</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">State</span></span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="n"><span class="pre">SimpleState</span></span><span class="p"><span class="pre">&lt;</span></span><a class="reference internal" href="#_CPPv4I00E14SimpleShockEqn" title="SimpleShockEqn::Ejecta"><span class="n"><span class="pre">Ejecta</span></span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4I00E14SimpleShockEqn" title="SimpleShockEqn::Medium"><span class="n"><span class="pre">Medium</span></span></a><span class="p"><span class="pre">&gt;</span></span><a class="headerlink" href="#_CPPv4N14SimpleShockEqn5StateE" title="Link to this definition"></a><br /></dt>
+<span id="_CPPv3N14SimpleShockEqn5StateE"></span><span id="_CPPv2N14SimpleShockEqn5StateE"></span><span class="target" id="VegasAfterglowclassSimpleShockEqn_1ae3d27565ef359199ca90c3703987f22a"></span><span class="k"><span class="pre">using</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">State</span></span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="n"><span class="pre">SimpleState</span></span><span class="p"><span class="pre">&lt;</span></span><a class="reference internal" href="#_CPPv4I00E14SimpleShockEqn" title="SimpleShockEqn::Ejecta"><span class="n"><span class="pre">Ejecta</span></span></a><span class="p"><span class="pre">&gt;</span></span><a class="headerlink" href="#_CPPv4N14SimpleShockEqn5StateE" title="Link to this definition"></a><br /></dt>
 <dd></dd></dl>
 
 </div>
@@ -1532,7 +1536,7 @@
 <p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-types">Public Types</p>
 <dl class="cpp type">
 <dt class="sig sig-object cpp" id="_CPPv4N15ForwardShockEqn5StateE">
-<span id="_CPPv3N15ForwardShockEqn5StateE"></span><span id="_CPPv2N15ForwardShockEqn5StateE"></span><span class="target" id="VegasAfterglowclassForwardShockEqn_1a671e0c4914bd74168a4433965af82626"></span><span class="k"><span class="pre">using</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">State</span></span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="n"><span class="pre">ForwardState</span></span><span class="p"><span class="pre">&lt;</span></span><a class="reference internal" href="#_CPPv4I00E15ForwardShockEqn" title="ForwardShockEqn::Ejecta"><span class="n"><span class="pre">Ejecta</span></span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4I00E15ForwardShockEqn" title="ForwardShockEqn::Medium"><span class="n"><span class="pre">Medium</span></span></a><span class="p"><span class="pre">&gt;</span></span><a class="headerlink" href="#_CPPv4N15ForwardShockEqn5StateE" title="Link to this definition"></a><br /></dt>
+<span id="_CPPv3N15ForwardShockEqn5StateE"></span><span id="_CPPv2N15ForwardShockEqn5StateE"></span><span class="target" id="VegasAfterglowclassForwardShockEqn_1a1841262edc07d26cffa440fab2b6f81a"></span><span class="k"><span class="pre">using</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">State</span></span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="n"><span class="pre">ForwardState</span></span><span class="p"><span class="pre">&lt;</span></span><a class="reference internal" href="#_CPPv4I00E15ForwardShockEqn" title="ForwardShockEqn::Ejecta"><span class="n"><span class="pre">Ejecta</span></span></a><span class="p"><span class="pre">&gt;</span></span><a class="headerlink" href="#_CPPv4N15ForwardShockEqn5StateE" title="Link to this definition"></a><br /></dt>
 <dd></dd></dl>
 
 </div>
@@ -1649,7 +1653,7 @@
 <p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-types">Public Types</p>
 <dl class="cpp type">
 <dt class="sig sig-object cpp" id="_CPPv4N10FRShockEqn5StateE">
-<span id="_CPPv3N10FRShockEqn5StateE"></span><span id="_CPPv2N10FRShockEqn5StateE"></span><span class="target" id="VegasAfterglowclassFRShockEqn_1a9152b74e09fadafcf2c0e951df128ee8"></span><span class="k"><span class="pre">using</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">State</span></span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="n"><span class="pre">ReverseState</span></span><span class="p"><span class="pre">&lt;</span></span><a class="reference internal" href="#_CPPv4I00E10FRShockEqn" title="FRShockEqn::Ejecta"><span class="n"><span class="pre">Ejecta</span></span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4I00E10FRShockEqn" title="FRShockEqn::Medium"><span class="n"><span class="pre">Medium</span></span></a><span class="p"><span class="pre">&gt;</span></span><a class="headerlink" href="#_CPPv4N10FRShockEqn5StateE" title="Link to this definition"></a><br /></dt>
+<span id="_CPPv3N10FRShockEqn5StateE"></span><span id="_CPPv2N10FRShockEqn5StateE"></span><span class="target" id="VegasAfterglowclassFRShockEqn_1ac165008b8d8b1fa8da4700d0b24a50a2"></span><span class="k"><span class="pre">using</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">State</span></span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="n"><span class="pre">ReverseState</span></span><span class="p"><span class="pre">&lt;</span></span><a class="reference internal" href="#_CPPv4I00E10FRShockEqn" title="FRShockEqn::Ejecta"><span class="n"><span class="pre">Ejecta</span></span></a><span class="p"><span class="pre">&gt;</span></span><a class="headerlink" href="#_CPPv4N10FRShockEqn5StateE" title="Link to this definition"></a><br /></dt>
 <dd></dd></dl>
 
 </div>
@@ -1657,7 +1661,7 @@
 <p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-functions">Public Functions</p>
 <dl class="cpp function">
 <dt class="sig sig-object cpp" id="_CPPv4N10FRShockEqn10FRShockEqnERK6MediumRK6Ejecta4Real4RealRK9RadParamsRK9RadParams">
-<span id="_CPPv3N10FRShockEqn10FRShockEqnERK6MediumRK6Ejecta4Real4RealRK9RadParamsRK9RadParams"></span><span id="_CPPv2N10FRShockEqn10FRShockEqnERK6MediumRK6Ejecta4Real4RealRK9RadParamsRK9RadParams"></span><span id="FRShockEqn::FRShockEqn__MediumCR.EjectaCR.Real.Real.RadParamsCR.RadParamsCR"></span><span class="target" id="VegasAfterglowclassFRShockEqn_1a31ec93b77588da76eae053f6b045ee8c"></span><span class="sig-name descname"><span class="n"><span class="pre">FRShockEqn</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4I00E10FRShockEqn" title="FRShockEqn::Medium"><span class="n"><span class="pre">Medium</span></span></a><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">medium</span></span>, <a class="reference internal" href="#_CPPv4I00E10FRShockEqn" title="FRShockEqn::Ejecta"><span class="n"><span class="pre">Ejecta</span></span></a><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">jet</span></span>, <span class="n"><span class="pre">Real</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">phi</span></span>, <span class="n"><span class="pre">Real</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">theta</span></span>, <span class="n"><span class="pre">RadParams</span></span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">rad_fwd</span></span>, <span class="n"><span class="pre">RadParams</span></span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">rad_rvs</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N10FRShockEqn10FRShockEqnERK6MediumRK6Ejecta4Real4RealRK9RadParamsRK9RadParams" title="Link to this definition"></a><br /></dt>
+<span id="_CPPv3N10FRShockEqn10FRShockEqnERK6MediumRK6Ejecta4Real4RealRK9RadParamsRK9RadParams"></span><span id="_CPPv2N10FRShockEqn10FRShockEqnERK6MediumRK6Ejecta4Real4RealRK9RadParamsRK9RadParams"></span><span id="FRShockEqn::FRShockEqn__MediumCR.EjectaCR.Real.Real.RadParamsCR.RadParamsCR"></span><span class="target" id="VegasAfterglowclassFRShockEqn_1a1c64443c6de177c68f47a6efc4c83d8c"></span><span class="sig-name descname"><span class="n"><span class="pre">FRShockEqn</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4I00E10FRShockEqn" title="FRShockEqn::Medium"><span class="n"><span class="pre">Medium</span></span></a><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">medium</span></span>, <a class="reference internal" href="#_CPPv4I00E10FRShockEqn" title="FRShockEqn::Ejecta"><span class="n"><span class="pre">Ejecta</span></span></a><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">ejecta</span></span>, <span class="n"><span class="pre">Real</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">phi</span></span>, <span class="n"><span class="pre">Real</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">theta</span></span>, <span class="n"><span class="pre">RadParams</span></span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">rad_fwd</span></span>, <span class="n"><span class="pre">RadParams</span></span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">rad_rvs</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N10FRShockEqn10FRShockEqnERK6MediumRK6Ejecta4Real4RealRK9RadParamsRK9RadParams" title="Link to this definition"></a><br /></dt>
 <dd><p>Constructor for the <a class="reference internal" href="#VegasAfterglowclassFRShockEqn"><span class="std std-ref">FRShockEqn</span></a> class. </p>
 <p>Initializes the forward-reverse shock equation with the given medium, ejecta, and parameters. </p>
 <dl class="field-list simple">
@@ -1667,6 +1671,8 @@
 <li><p><strong>ejecta</strong> – The ejecta driving the shock </p></li>
 <li><p><strong>phi</strong> – Azimuthal angle </p></li>
 <li><p><strong>theta</strong> – Polar angle </p></li>
+<li><p><strong>rad_fwd</strong> – Radiation params for forward shock </p></li>
+<li><p><strong>rad_rvs</strong> – Radiation params for reverse shock </p></li>
 </ul>
 </dd>
 </dl>
@@ -1777,7 +1783,7 @@
 <dl class="cpp var">
 <dt class="sig sig-object cpp" id="_CPPv4N10FRShockEqn3u_xE">
 <span id="_CPPv3N10FRShockEqn3u_xE"></span><span id="_CPPv2N10FRShockEqn3u_xE"></span><span id="FRShockEqn::u_x__Real"></span><span class="target" id="VegasAfterglowclassFRShockEqn_1a93c481f03f787c180d8e97a2b6662ad6"></span><span class="n"><span class="pre">Real</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">u_x</span></span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="p"><span class="pre">{</span></span><span class="m"><span class="pre">0</span></span><span class="p"><span class="pre">}</span></span><a class="headerlink" href="#_CPPv4N10FRShockEqn3u_xE" title="Link to this definition"></a><br /></dt>
-<dd><p>Reverse shock crossed four velocity. </p>
+<dd><p>Reverse shock crossed four-velocity. </p>
 </dd></dl>
 
 <dl class="cpp var">

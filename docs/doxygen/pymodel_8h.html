@@ -98,8 +98,8 @@ $(document).ready(function(){initNavTree('pymodel_8h.html',''); initResizable();
   <div class="headertitle"><div class="title">pymodel.h File Reference</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><code>#include &lt;iostream&gt;</code><br />
-<code>#include &lt;optional&gt;</code><br />
+<div class="textblock"><code>#include &lt;optional&gt;</code><br />
+<code>#include &lt;utility&gt;</code><br />
 <code>#include &lt;vector&gt;</code><br />
 <code>#include &quot;<a class="el" href="afterglow_8h_source.html">afterglow.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="macros_8h_source.html">macros.h</a>&quot;</code><br />
@@ -109,144 +109,128 @@ Include dependency graph for pymodel.h:</div>
 <div class="dyncontent">
 <div class="center"><img src="pymodel_8h__incl.png" border="0" usemap="#apymodel_8h" alt=""/></div>
 <map name="apymodel_8h" id="apymodel_8h">
-<area shape="rect" title=" " alt="" coords="619,5,709,31"/>
-<area shape="rect" title=" " alt="" coords="195,225,275,251"/>
-<area shape="poly" title=" " alt="" coords="619,22,526,24,415,32,361,39,313,50,274,63,249,81,238,95,231,111,225,146,226,181,231,211,225,212,220,182,219,146,226,109,234,92,245,77,272,58,311,44,360,34,414,26,526,18,618,16"/>
-<area shape="rect" title=" " alt="" coords="259,79,333,104"/>
-<area shape="poly" title=" " alt="" coords="619,30,353,81,347,82,346,77,351,76,618,25"/>
-<area shape="rect" title=" " alt="" coords="195,379,258,405"/>
-<area shape="poly" title=" " alt="" coords="624,33,517,65,383,112,318,140,260,168,214,198,185,227,177,244,174,262,179,300,194,337,212,367,208,369,190,339,174,301,169,262,172,242,180,224,210,194,257,164,315,135,381,108,515,60,622,28"/>
-<area shape="rect" href="afterglow_8h.html" title=" " alt="" coords="966,79,1061,104"/>
-<area shape="poly" title=" " alt="" coords="710,26,953,75,952,80,709,31"/>
-<area shape="rect" href="macros_8h.html" title=" " alt="" coords="321,768,404,793"/>
-<area shape="poly" title=" " alt="" coords="710,18,1067,33,1596,63,1856,82,2076,105,2163,118,2229,132,2272,146,2284,154,2288,163,2288,621,2286,642,2281,660,2261,686,2230,705,2192,723,2161,729,2103,736,1921,747,1385,765,809,776,418,781,418,776,809,771,1385,759,1920,742,2103,730,2160,724,2190,717,2228,700,2257,682,2276,657,2281,641,2283,621,2283,164,2280,158,2269,151,2228,137,2162,123,2076,111,1856,88,1596,68,1066,38,709,24"/>
-<area shape="rect" href="pybind_8h.html" title=" " alt="" coords="2525,79,2603,104"/>
-<area shape="poly" title=" " alt="" coords="710,18,2304,76,2511,85,2511,90,2304,81,710,24"/>
-<area shape="rect" href="IO_8h.html" title=" " alt="" coords="1419,152,1467,177"/>
-<area shape="poly" title=" " alt="" coords="1061,98,1406,155,1405,160,1060,103"/>
-<area shape="rect" href="mesh_8h.html" title=" " alt="" coords="1269,607,1339,632"/>
-<area shape="poly" title=" " alt="" coords="1042,102,1104,130,1188,173,1279,230,1323,262,1364,297,1397,330,1408,347,1417,371,1430,426,1428,471,1411,514,1379,560,1358,583,1336,601,1332,597,1355,579,1375,557,1406,511,1422,470,1424,426,1412,373,1403,349,1393,333,1361,301,1320,266,1276,234,1185,178,1102,135,1040,106"/>
-<area shape="poly" title=" " alt="" coords="1061,91,1253,95,1521,105,1791,123,1903,135,1987,149,2057,158,2121,164,2147,171,2168,184,2182,206,2187,236,2187,621,2187,677,2180,700,2160,722,2132,732,2076,741,1899,755,1655,766,1373,773,805,781,418,782,418,777,805,775,1373,768,1655,761,1899,750,2076,736,2130,727,2157,718,2175,698,2182,676,2181,621,2181,237,2177,207,2164,188,2145,176,2120,169,2056,164,1986,155,1902,140,1790,128,1521,111,1252,101,1061,96"/>
-<area shape="rect" href="physics_8h.html" title=" " alt="" coords="2064,687,2147,713"/>
-<area shape="poly" title=" " alt="" coords="1061,91,1318,100,1494,110,1677,123,1851,142,1996,166,2053,181,2097,197,2125,215,2133,225,2136,236,2136,547,2129,617,2115,675,2110,673,2124,616,2131,547,2131,237,2128,228,2122,219,2095,202,2052,186,1995,171,1850,147,1677,129,1494,115,1318,105,1061,96"/>
-<area shape="rect" href="prompt_8h.html" title=" " alt="" coords="1809,379,1890,405"/>
-<area shape="poly" title=" " alt="" coords="1061,90,1234,94,1464,103,1577,111,1675,121,1749,133,1775,141,1791,150,1813,173,1829,200,1840,229,1848,260,1855,319,1854,366,1849,365,1849,319,1843,261,1835,231,1824,202,1808,176,1788,154,1773,146,1748,139,1674,126,1576,116,1464,108,1234,99,1061,96"/>
-<area shape="rect" href="jet_8h.html" title=" " alt="" coords="1745,460,1796,485"/>
-<area shape="poly" title=" " alt="" coords="1061,94,1242,112,1478,142,1590,162,1684,184,1748,208,1767,222,1773,236,1773,313,1773,446,1768,446,1768,313,1768,237,1762,225,1746,213,1682,189,1589,167,1477,147,1241,117,1060,99"/>
-<area shape="rect" href="utilities_8h.html" title=" " alt="" coords="443,533,525,559"/>
-<area shape="poly" title=" " alt="" coords="979,107,848,154,744,205,638,253,567,271,501,278,383,277,330,281,280,295,256,307,232,324,208,346,185,373,178,392,185,410,217,428,287,460,444,526,442,531,285,465,214,433,181,414,172,392,180,371,204,342,228,319,253,302,278,290,329,276,383,272,500,272,566,266,636,248,741,200,846,150,977,102"/>
-<area shape="rect" href="medium_8h.html" title=" " alt="" coords="520,460,608,485"/>
-<area shape="poly" title=" " alt="" coords="966,98,753,112,467,139,330,159,215,182,171,194,137,208,116,222,109,237,109,312,114,347,129,371,152,390,184,410,209,421,243,431,330,447,507,465,506,470,329,452,242,436,207,426,181,414,149,394,125,374,109,349,104,313,104,236,112,219,135,203,169,189,214,176,329,153,466,134,753,107,966,92"/>
-<area shape="rect" href="synchrotron_8h.html" title=" " alt="" coords="1022,225,1133,251"/>
-<area shape="poly" title=" " alt="" coords="1021,103,1069,212,1064,214,1016,106"/>
-<area shape="rect" href="inverse-compton_8h.html" title=" " alt="" coords="673,299,817,324"/>
-<area shape="poly" title=" " alt="" coords="1001,106,772,292,769,288,998,102"/>
-<area shape="rect" href="forward-shock_8hpp.html" title=" " alt="" coords="889,299,1031,324"/>
-<area shape="poly" title=" " alt="" coords="1013,105,969,286,964,284,1008,104"/>
-<area shape="rect" href="observer_8h.html" title=" " alt="" coords="421,152,512,177"/>
-<area shape="poly" title=" " alt="" coords="966,101,526,158,525,152,965,96"/>
-<area shape="rect" href="reverse-shock_8hpp.html" title=" " alt="" coords="506,299,649,324"/>
-<area shape="poly" title=" " alt="" coords="992,106,614,295,611,290,989,102"/>
-<area shape="rect" href="simple-shock_8hpp.html" title=" " alt="" coords="1166,299,1303,324"/>
-<area shape="poly" title=" " alt="" coords="1027,102,1215,287,1211,290,1023,106"/>
-<area shape="rect" title=" " alt="" coords="1347,225,1405,251"/>
-<area shape="poly" title=" " alt="" coords="1434,179,1398,217,1394,213,1430,176"/>
-<area shape="poly" title=" " alt="" coords="1467,168,1564,189,1612,205,1644,223,1661,243,1669,263,1672,310,1672,474,1669,487,1662,500,1635,523,1597,544,1549,562,1445,592,1353,612,1352,607,1444,587,1548,557,1594,539,1632,519,1658,497,1664,485,1667,474,1667,310,1664,264,1656,246,1641,227,1610,210,1562,194,1466,173"/>
-<area shape="poly" title=" " alt="" coords="1467,165,1511,170,1568,180,1630,197,1689,223,1736,256,1777,295,1836,366,1832,370,1774,299,1733,260,1687,228,1628,202,1567,185,1510,175,1467,170"/>
-<area shape="rect" href="shock_8h.html" title=" " alt="" coords="1115,379,1187,405"/>
-<area shape="poly" title=" " alt="" coords="1444,178,1437,213,1430,233,1420,252,1396,280,1374,297,1316,326,1193,377,1191,372,1314,322,1371,292,1393,276,1415,249,1425,231,1432,211,1439,177"/>
-<area shape="poly" title=" " alt="" coords="1419,173,1147,226,1145,221,1418,168"/>
-<area shape="rect" title=" " alt="" coords="1481,225,1631,251"/>
-<area shape="poly" title=" " alt="" coords="1462,175,1528,216,1525,220,1459,180"/>
-<area shape="rect" title=" " alt="" coords="2034,768,2097,793"/>
-<area shape="poly" title=" " alt="" coords="1340,624,1378,629,1439,633,1516,634,1696,633,1787,635,1872,642,1945,656,1976,666,2001,678,2021,693,2037,713,2059,753,2054,756,2033,716,2017,697,1999,682,1974,670,1944,661,1871,648,1787,641,1696,638,1516,639,1439,638,1377,635,1339,629"/>
-<area shape="rect" title=" " alt="" coords="451,687,639,713"/>
-<area shape="poly" title=" " alt="" coords="1269,626,1014,646,838,662,659,683,623,688,622,683,658,677,838,657,1014,640,1268,620"/>
-<area shape="poly" title=" " alt="" coords="1269,626,960,649,797,666,738,675,704,682,688,691,678,701,668,712,652,722,591,745,528,761,418,778,417,773,527,756,590,740,649,718,664,708,675,698,685,687,702,678,737,669,796,661,960,644,1268,620"/>
-<area shape="poly" title=" " alt="" coords="1340,624,1378,629,1479,639,1565,643,1713,645,1859,651,1945,661,2046,677,2061,681,2060,686,2045,683,1944,666,1859,657,1712,650,1565,648,1479,644,1377,635,1339,629"/>
-<area shape="rect" title=" " alt="" coords="715,680,858,720"/>
-<area shape="poly" title=" " alt="" coords="1269,627,1101,647,872,682,871,677,1101,642,1268,622"/>
-<area shape="rect" title=" " alt="" coords="882,680,1025,720"/>
-<area shape="poly" title=" " alt="" coords="1269,631,1039,682,1038,677,1268,626"/>
-<area shape="rect" title=" " alt="" coords="1049,680,1191,720"/>
-<area shape="poly" title=" " alt="" coords="1278,634,1178,677,1176,672,1276,630"/>
-<area shape="rect" title=" " alt="" coords="1215,687,1393,713"/>
-<area shape="poly" title=" " alt="" coords="1307,632,1307,673,1301,673,1301,632"/>
-<area shape="rect" title=" " alt="" coords="1417,687,1607,713"/>
-<area shape="poly" title=" " alt="" coords="1335,630,1470,680,1468,685,1333,635"/>
-<area shape="rect" title=" " alt="" coords="1632,687,1781,713"/>
-<area shape="poly" title=" " alt="" coords="1340,624,1619,677,1641,682,1640,687,1618,683,1339,630"/>
-<area shape="rect" title=" " alt="" coords="1806,687,1989,713"/>
-<area shape="poly" title=" " alt="" coords="1340,624,1378,629,1586,653,1794,677,1825,682,1824,688,1793,683,1585,658,1377,635,1339,629"/>
-<area shape="rect" title=" " alt="" coords="288,841,347,867"/>
-<area shape="poly" title=" " alt="" coords="357,795,334,831,330,828,353,792"/>
-<area shape="rect" title=" " alt="" coords="371,841,445,867"/>
-<area shape="poly" title=" " alt="" coords="372,792,396,828,391,831,368,795"/>
-<area shape="poly" title=" " alt="" coords="2102,714,2080,757,2075,755,2097,712"/>
-<area shape="poly" title=" " alt="" coords="2064,713,2000,723,1851,735,1654,745,1183,763,418,781,418,776,1183,757,1654,740,1851,729,2000,717,2064,707"/>
-<area shape="poly" title=" " alt="" coords="1849,406,1836,444,1825,466,1810,487,1782,516,1756,534,1689,561,1598,588,1506,605,1421,615,1353,619,1353,614,1420,609,1505,599,1597,582,1687,556,1753,529,1778,512,1806,484,1820,464,1831,442,1844,404"/>
-<area shape="poly" title=" " alt="" coords="1861,403,2089,675,2085,679,1857,407"/>
-<area shape="poly" title=" " alt="" coords="1840,407,1794,452,1790,448,1836,403"/>
-<area shape="poly" title=" " alt="" coords="1797,476,1873,494,1922,510,1975,531,2028,557,2079,591,2124,631,2161,679,2168,700,2161,721,2139,747,2111,765,2108,760,2135,743,2156,719,2163,700,2156,681,2120,634,2076,595,2026,562,1973,535,1920,515,1871,499,1796,481"/>
-<area shape="poly" title=" " alt="" coords="1745,478,540,544,539,539,1745,473"/>
-<area shape="poly" title=" " alt="" coords="526,548,1255,611,1255,616,526,554"/>
-<area shape="poly" title=" " alt="" coords="443,554,416,560,387,571,360,586,340,608,331,626,326,644,328,685,339,723,352,755,347,757,334,725,323,685,321,644,326,624,335,605,357,582,385,566,414,555,442,549"/>
-<area shape="rect" title=" " alt="" coords="350,607,442,632"/>
-<area shape="poly" title=" " alt="" coords="472,561,423,600,419,596,468,557"/>
-<area shape="rect" title=" " alt="" coords="466,607,526,632"/>
-<area shape="poly" title=" " alt="" coords="489,559,494,593,489,594,483,559"/>
-<area shape="poly" title=" " alt="" coords="1161,403,1291,594,1286,597,1156,406"/>
-<area shape="poly" title=" " alt="" coords="1129,407,582,683,579,679,1127,402"/>
-<area shape="poly" title=" " alt="" coords="1180,402,1200,409,1449,494,1695,572,2054,681,2052,686,1693,577,1447,499,1198,415,1178,407"/>
-<area shape="poly" title=" " alt="" coords="1177,402,1199,409,1352,438,1504,456,1636,465,1732,468,1731,474,1636,470,1503,461,1351,444,1198,415,1175,407"/>
-<area shape="rect" title=" " alt="" coords="870,460,925,485"/>
-<area shape="poly" title=" " alt="" coords="1119,407,1097,415,939,462,938,457,1095,409,1117,402"/>
-<area shape="poly" title=" " alt="" coords="1122,407,1097,415,965,439,833,456,622,472,622,466,832,450,964,434,1095,409,1120,402"/>
-<area shape="poly" title=" " alt="" coords="568,485,571,514,569,554,560,596,552,616,539,634,522,649,504,657,468,660,431,662,414,669,397,682,384,698,376,717,367,755,362,754,371,715,380,696,393,678,411,664,430,657,467,655,503,652,519,644,535,630,547,613,555,594,564,553,565,514,563,486"/>
-<area shape="poly" title=" " alt="" coords="553,487,509,526,505,522,549,483"/>
-<area shape="poly" title=" " alt="" coords="1022,242,922,246,790,255,642,272,494,301,463,313,433,326,356,351,278,375,271,377,269,372,277,369,354,346,431,322,461,308,493,296,641,267,789,249,921,240,1022,237"/>
-<area shape="poly" title=" " alt="" coords="1133,239,1201,248,1276,270,1313,287,1346,309,1373,337,1393,371,1402,403,1402,435,1396,467,1385,499,1355,555,1325,597,1321,594,1351,552,1380,497,1391,466,1397,435,1396,403,1388,373,1369,340,1342,313,1310,292,1275,275,1200,254,1132,244"/>
-<area shape="poly" title=" " alt="" coords="1085,250,1142,366,1137,368,1080,252"/>
-<area shape="poly" title=" " alt="" coords="1082,251,1087,283,1087,327,1078,374,1067,395,1052,414,1029,425,988,435,871,451,622,471,621,466,870,446,987,430,1028,420,1049,410,1063,392,1072,372,1082,327,1081,283,1077,251"/>
-<area shape="poly" title=" " alt="" coords="1025,253,813,298,812,293,1023,248"/>
-<area shape="poly" title=" " alt="" coords="674,325,322,375,272,384,271,379,321,369,673,320"/>
-<area shape="poly" title=" " alt="" coords="745,325,740,365,743,389,750,411,771,440,795,456,858,483,967,527,1077,562,1178,589,1256,606,1255,611,1176,594,1076,567,965,532,856,488,792,461,768,443,746,413,737,390,735,365,740,324"/>
-<area shape="poly" title=" " alt="" coords="744,325,726,380,690,462,666,508,637,553,604,596,566,634,548,646,531,652,497,655,467,660,454,667,441,681,433,701,435,709,440,718,464,728,513,737,674,751,896,762,1154,769,1673,776,2020,777,2020,782,1673,781,1154,774,896,767,673,757,512,742,462,733,437,722,430,711,428,700,436,679,450,663,465,655,497,650,530,646,546,641,562,630,600,593,633,550,661,505,685,460,721,378,739,324"/>
-<area shape="poly" title=" " alt="" coords="689,327,627,345,564,374,442,490,324,608,313,638,310,663,313,688,322,719,332,739,344,756,340,759,327,741,318,721,308,689,305,663,308,637,319,605,439,486,561,370,625,340,688,321"/>
-<area shape="poly" title=" " alt="" coords="720,327,628,374,565,415,532,439,510,462,496,491,489,521,484,519,491,489,506,458,529,435,562,410,625,370,718,322"/>
-<area shape="poly" title=" " alt="" coords="805,321,1102,379,1101,384,804,327"/>
-<area shape="poly" title=" " alt="" coords="748,324,754,366,761,389,774,410,792,427,813,441,858,459,856,464,811,446,789,432,770,414,756,391,748,367,743,325"/>
-<area shape="rect" title=" " alt="" coords="784,379,840,405"/>
-<area shape="poly" title=" " alt="" coords="757,322,795,367,791,371,753,326"/>
-<area shape="poly" title=" " alt="" coords="989,322,1111,372,1109,377,987,326"/>
-<area shape="poly" title=" " alt="" coords="939,327,847,375,845,370,937,322"/>
-<area shape="rect" href="forward-shock_8tpp.html" title=" " alt="" coords="865,372,1039,412"/>
-<area shape="poly" title=" " alt="" coords="961,324,958,359,953,358,956,324"/>
-<area shape="poly" title=" " alt="" coords="430,180,286,224,284,219,429,175"/>
-<area shape="poly" title=" " alt="" coords="451,180,390,227,309,305,248,371,244,367,305,301,386,223,448,175"/>
-<area shape="poly" title=" " alt="" coords="512,155,952,99,952,104,513,161"/>
-<area shape="poly" title=" " alt="" coords="475,177,487,212,487,233,478,252,450,278,420,289,390,291,359,288,328,283,295,281,261,285,227,301,195,324,173,349,166,363,164,378,166,394,173,411,197,449,221,478,248,499,277,514,345,535,431,556,505,570,604,582,842,600,1081,610,1255,614,1255,620,1081,615,842,605,603,588,504,576,430,561,344,540,275,519,245,503,218,481,192,452,168,413,161,395,159,378,161,362,168,347,191,320,224,296,260,280,295,275,328,277,360,282,390,286,419,284,447,273,474,249,481,232,481,213,470,178"/>
-<area shape="poly" title=" " alt="" coords="444,180,188,301,156,313,125,320,66,328,42,335,24,346,12,363,8,391,8,621,10,643,17,664,27,682,40,698,76,725,120,745,169,759,219,768,308,776,308,782,218,774,168,764,118,750,73,730,37,702,22,685,12,666,5,644,3,621,3,390,7,361,20,342,40,330,65,323,124,314,155,308,186,296,441,175"/>
-<area shape="rect" title=" " alt="" coords="539,225,626,251"/>
-<area shape="poly" title=" " alt="" coords="487,175,553,216,551,220,484,180"/>
-<area shape="rect" title=" " alt="" coords="400,225,464,251"/>
-<area shape="poly" title=" " alt="" coords="463,179,446,214,441,212,459,176"/>
-<area shape="poly" title=" " alt="" coords="506,326,401,346,354,360,323,374,290,405,254,453,225,503,216,526,213,545,213,621,214,651,218,674,227,695,245,718,275,743,310,761,308,766,272,748,241,722,223,698,213,675,209,651,208,621,208,544,211,525,220,501,250,450,286,402,320,370,352,355,400,341,505,320"/>
-<area shape="poly" title=" " alt="" coords="612,321,771,374,770,379,611,327"/>
-<area shape="rect" href="reverse-shock_8tpp.html" title=" " alt="" coords="333,372,507,412"/>
-<area shape="poly" title=" " alt="" coords="556,326,471,368,469,363,553,322"/>
-<area shape="poly" title=" " alt="" coords="1224,326,1175,372,1171,368,1220,322"/>
-<area shape="poly" title=" " alt="" coords="1166,320,1020,338,936,353,853,375,847,376,845,371,851,369,935,348,1020,332,1166,315"/>
-<area shape="rect" href="simple-shock_8tpp.html" title=" " alt="" coords="1211,372,1379,412"/>
-<area shape="poly" title=" " alt="" coords="1246,323,1274,359,1270,363,1241,326"/>
-<area shape="rect" title=" " alt="" coords="2880,152,3043,177"/>
-<area shape="poly" title=" " alt="" coords="2604,97,2884,147,2883,152,2603,102"/>
-<area shape="rect" title=" " alt="" coords="2323,152,2482,177"/>
-<area shape="poly" title=" " alt="" coords="2539,106,2443,149,2440,144,2537,102"/>
-<area shape="rect" title=" " alt="" coords="2507,152,2621,177"/>
-<area shape="poly" title=" " alt="" coords="2567,104,2567,138,2561,138,2561,104"/>
-<area shape="rect" title=" " alt="" coords="2646,152,2855,177"/>
-<area shape="poly" title=" " alt="" coords="2595,102,2708,145,2707,149,2593,107"/>
+<area shape="rect" title=" " alt="" coords="1537,5,1628,31"/>
+<area shape="rect" title=" " alt="" coords="5,79,80,104"/>
+<area shape="poly" title=" " alt="" coords="1537,23,845,41,415,58,235,69,99,81,95,82,94,77,98,76,234,64,415,53,845,35,1537,18"/>
+<area shape="rect" title=" " alt="" coords="2039,533,2099,559"/>
+<area shape="poly" title=" " alt="" coords="1629,20,1707,30,1806,52,1859,69,1911,91,1960,118,2006,150,2045,185,2070,219,2085,258,2089,310,2089,393,2085,462,2077,520,2071,519,2080,462,2084,393,2084,310,2080,260,2066,222,2041,189,2002,154,1958,122,1909,96,1857,74,1805,58,1706,35,1628,25"/>
+<area shape="rect" title=" " alt="" coords="1501,79,1563,104"/>
+<area shape="poly" title=" " alt="" coords="1576,33,1550,69,1546,66,1572,29"/>
+<area shape="rect" href="afterglow_8h.html" title=" " alt="" coords="1587,79,1682,104"/>
+<area shape="poly" title=" " alt="" coords="1593,29,1620,66,1616,69,1589,33"/>
+<area shape="rect" href="macros_8h.html" title=" " alt="" coords="857,768,940,793"/>
+<area shape="poly" title=" " alt="" coords="1537,22,1211,23,979,28,735,38,502,56,397,67,305,81,228,98,169,117,132,140,123,151,120,164,120,620,126,646,143,668,170,688,207,706,251,721,301,734,414,753,536,766,655,773,844,777,844,783,655,779,535,771,413,759,300,739,249,726,205,711,168,693,139,672,121,648,115,621,115,163,118,149,129,136,167,113,226,93,304,76,396,62,501,50,734,33,979,23,1211,18,1537,16"/>
+<area shape="rect" href="pybind_8h.html" title=" " alt="" coords="2162,79,2241,104"/>
+<area shape="poly" title=" " alt="" coords="1628,21,1843,43,2126,76,2149,79,2148,84,2125,81,1842,48,1628,26"/>
+<area shape="rect" href="IO_8h.html" title=" " alt="" coords="1447,152,1495,177"/>
+<area shape="poly" title=" " alt="" coords="1609,106,1508,150,1506,145,1607,102"/>
+<area shape="rect" href="mesh_8h.html" title=" " alt="" coords="1026,607,1097,632"/>
+<area shape="poly" title=" " alt="" coords="1587,105,1575,107,1446,119,1337,125,1150,126,964,129,855,138,727,155,673,159,618,157,518,152,478,155,446,168,435,179,426,194,421,213,419,237,419,393,423,415,437,436,460,456,489,475,566,510,658,540,758,564,856,584,1012,609,1012,614,855,589,757,569,657,545,564,515,487,480,456,461,433,440,419,417,413,394,413,237,415,212,421,192,430,176,443,164,476,150,518,146,619,152,673,154,726,149,855,132,964,123,1150,120,1336,120,1446,114,1574,101,1587,100"/>
+<area shape="poly" title=" " alt="" coords="1682,90,1763,98,1808,106,1853,120,1893,138,1927,163,1949,196,1955,215,1957,237,1957,393,1954,455,1944,508,1928,555,1904,595,1873,631,1834,663,1787,693,1732,722,1685,735,1605,745,1382,762,954,780,953,775,1381,757,1604,740,1684,729,1730,718,1784,688,1831,659,1869,627,1900,592,1923,552,1939,507,1949,454,1952,393,1952,237,1950,216,1944,198,1923,167,1891,143,1851,125,1807,112,1762,103,1682,96"/>
+<area shape="rect" href="physics_8h.html" title=" " alt="" coords="1847,687,1929,713"/>
+<area shape="poly" title=" " alt="" coords="1683,89,1807,96,1882,107,1958,125,2028,152,2059,170,2086,191,2108,215,2125,243,2136,275,2140,310,2140,474,2136,520,2127,539,2113,560,2072,603,2024,638,1976,665,1933,685,1931,680,1973,660,2021,633,2068,599,2109,557,2123,537,2130,519,2135,474,2135,310,2131,276,2121,245,2104,218,2082,195,2056,174,2025,157,1956,130,1881,112,1806,101,1682,95"/>
+<area shape="rect" href="prompt_8h.html" title=" " alt="" coords="1781,533,1862,559"/>
+<area shape="poly" title=" " alt="" coords="1683,94,1750,106,1787,116,1823,131,1856,149,1882,172,1900,202,1907,236,1907,394,1900,432,1885,469,1864,500,1844,525,1840,522,1860,497,1880,466,1895,431,1901,393,1901,237,1895,203,1878,176,1853,153,1821,135,1786,121,1749,111,1682,99"/>
+<area shape="rect" href="medium_8h.html" title=" " alt="" coords="1677,460,1765,485"/>
+<area shape="poly" title=" " alt="" coords="1683,101,1730,119,1753,133,1773,150,1790,170,1800,189,1804,210,1805,237,1805,313,1803,342,1798,365,1773,413,1745,451,1741,448,1768,411,1793,364,1798,342,1800,313,1800,237,1799,211,1795,191,1785,173,1769,154,1749,137,1727,124,1681,106"/>
+<area shape="rect" href="utilities_8h.html" title=" " alt="" coords="1612,533,1695,559"/>
+<area shape="poly" title=" " alt="" coords="1656,102,1685,123,1718,154,1744,192,1752,214,1755,236,1755,313,1751,366,1744,388,1729,414,1713,430,1697,438,1681,446,1668,461,1658,490,1655,519,1649,519,1652,489,1663,459,1678,442,1694,433,1710,425,1725,410,1739,386,1746,365,1749,313,1749,237,1747,215,1739,194,1713,157,1682,127,1652,106"/>
+<area shape="rect" href="synchrotron_8h.html" title=" " alt="" coords="1126,225,1237,251"/>
+<area shape="poly" title=" " alt="" coords="1595,107,1435,155,1228,223,1226,218,1434,149,1594,102"/>
+<area shape="rect" href="inverse-compton_8h.html" title=" " alt="" coords="1019,299,1163,324"/>
+<area shape="poly" title=" " alt="" coords="1588,104,1317,162,1185,197,1139,213,1115,227,1106,240,1100,255,1094,286,1088,285,1095,253,1101,237,1112,223,1137,209,1183,192,1316,157,1586,99"/>
+<area shape="rect" href="forward-shock_8hpp.html" title=" " alt="" coords="1395,299,1538,324"/>
+<area shape="poly" title=" " alt="" coords="1638,104,1639,133,1636,172,1626,214,1605,252,1573,279,1536,297,1534,292,1570,275,1601,249,1621,212,1631,171,1634,133,1633,104"/>
+<area shape="rect" href="jet_8h.html" title=" " alt="" coords="1992,460,2043,485"/>
+<area shape="poly" title=" " alt="" coords="1683,93,1757,99,1843,110,1922,126,1953,137,1975,150,1994,169,2003,188,2007,210,2008,237,2008,313,2011,385,2017,446,2012,446,2006,386,2003,313,2003,237,2002,210,1998,190,1989,172,1972,154,1951,142,1920,131,1842,115,1756,104,1682,98"/>
+<area shape="rect" href="observer_8h.html" title=" " alt="" coords="739,152,829,177"/>
+<area shape="poly" title=" " alt="" coords="1587,103,1563,107,1356,130,1152,146,843,164,843,158,1151,141,1355,124,1562,101,1586,98"/>
+<area shape="rect" href="reverse-shock_8hpp.html" title=" " alt="" coords="235,299,378,324"/>
+<area shape="poly" title=" " alt="" coords="1587,105,1575,107,1491,110,1352,111,979,111,785,114,610,121,475,134,428,143,399,154,367,182,343,218,326,254,315,286,310,285,321,252,338,215,363,179,396,150,427,138,474,128,610,115,785,108,979,105,1352,106,1491,105,1574,101,1587,100"/>
+<area shape="rect" href="simple-shock_8hpp.html" title=" " alt="" coords="1562,299,1699,324"/>
+<area shape="poly" title=" " alt="" coords="1642,103,1656,151,1661,201,1656,251,1645,287,1640,285,1651,250,1656,201,1651,153,1637,105"/>
+<area shape="rect" title=" " alt="" coords="1312,225,1371,251"/>
+<area shape="poly" title=" " alt="" coords="1451,180,1376,221,1374,216,1449,175"/>
+<area shape="poly" title=" " alt="" coords="1447,175,1367,198,1328,213,1302,228,1278,249,1260,270,1237,312,1219,358,1190,413,1078,596,1074,593,1186,411,1214,355,1232,309,1256,267,1274,246,1298,223,1326,208,1365,193,1446,170"/>
+<area shape="poly" title=" " alt="" coords="1496,167,1587,184,1707,214,1763,233,1811,255,1843,281,1853,295,1856,310,1856,393,1854,428,1848,463,1832,521,1827,519,1843,462,1848,428,1851,393,1851,310,1848,297,1839,284,1808,260,1761,238,1705,219,1586,189,1495,172"/>
+<area shape="rect" href="shock_8h.html" title=" " alt="" coords="1251,379,1323,405"/>
+<area shape="poly" title=" " alt="" coords="1496,174,1523,187,1549,206,1564,228,1565,240,1560,252,1540,272,1520,282,1499,286,1478,286,1433,286,1409,290,1384,301,1340,335,1306,371,1302,367,1336,331,1381,296,1408,285,1432,281,1478,281,1499,281,1518,277,1537,267,1555,249,1560,239,1559,229,1545,210,1521,192,1494,178"/>
+<area shape="poly" title=" " alt="" coords="1447,174,1241,225,1240,220,1446,169"/>
+<area shape="rect" title=" " alt="" coords="1395,225,1546,251"/>
+<area shape="poly" title=" " alt="" coords="1473,178,1473,212,1468,212,1468,178"/>
+<area shape="rect" title=" " alt="" coords="1471,687,1659,713"/>
+<area shape="poly" title=" " alt="" coords="1097,623,1459,677,1489,682,1488,688,1458,683,1097,628"/>
+<area shape="poly" title=" " alt="" coords="1027,629,974,647,948,662,926,682,915,698,908,717,902,754,896,754,903,716,911,696,922,678,945,658,972,642,1025,624"/>
+<area shape="poly" title=" " alt="" coords="1097,621,1833,691,1833,696,1097,627"/>
+<area shape="rect" title=" " alt="" coords="937,680,1079,720"/>
+<area shape="poly" title=" " alt="" coords="1056,634,1031,670,1026,667,1051,631"/>
+<area shape="rect" title=" " alt="" coords="1103,680,1246,720"/>
+<area shape="poly" title=" " alt="" coords="1080,630,1138,670,1135,674,1077,634"/>
+<area shape="rect" title=" " alt="" coords="1270,687,1447,713"/>
+<area shape="poly" title=" " alt="" coords="1098,627,1303,681,1302,686,1097,633"/>
+<area shape="rect" title=" " alt="" coords="504,687,653,713"/>
+<area shape="poly" title=" " alt="" coords="1026,628,869,650,666,683,643,687,642,682,665,677,869,644,1025,623"/>
+<area shape="rect" title=" " alt="" coords="678,687,861,713"/>
+<area shape="poly" title=" " alt="" coords="1026,633,826,686,825,681,1025,628"/>
+<area shape="rect" title=" " alt="" coords="824,841,883,867"/>
+<area shape="poly" title=" " alt="" coords="893,795,870,831,866,828,889,792"/>
+<area shape="rect" title=" " alt="" coords="907,841,981,867"/>
+<area shape="poly" title=" " alt="" coords="908,792,932,828,927,831,904,795"/>
+<area shape="poly" title=" " alt="" coords="1851,715,1818,723,1693,740,1566,754,1318,772,1103,780,954,782,954,777,1103,775,1317,767,1565,749,1693,735,1817,717,1850,710"/>
+<area shape="rect" title=" " alt="" coords="1913,768,1975,793"/>
+<area shape="poly" title=" " alt="" coords="1898,711,1930,755,1926,758,1894,714"/>
+<area shape="poly" title=" " alt="" coords="1781,554,1707,561,1110,616,1110,611,1706,556,1780,549"/>
+<area shape="poly" title=" " alt="" coords="1829,558,1880,674,1875,676,1824,560"/>
+<area shape="poly" title=" " alt="" coords="1277,407,1085,598,1081,594,1273,403"/>
+<area shape="poly" title=" " alt="" coords="1299,403,1548,675,1544,679,1295,407"/>
+<area shape="poly" title=" " alt="" coords="1313,402,1335,409,1402,422,1459,426,1559,423,1607,422,1658,425,1714,436,1778,457,1811,471,1836,484,1856,503,1876,532,1890,568,1896,607,1894,673,1889,673,1890,607,1884,570,1871,535,1852,507,1833,489,1809,476,1776,463,1713,441,1657,431,1607,428,1559,429,1459,432,1401,427,1334,415,1311,407"/>
+<area shape="rect" title=" " alt="" coords="1259,460,1314,485"/>
+<area shape="poly" title=" " alt="" coords="1289,405,1289,446,1284,446,1284,405"/>
+<area shape="poly" title=" " alt="" coords="1314,402,1335,409,1424,430,1514,445,1664,464,1663,469,1513,451,1423,435,1334,415,1312,407"/>
+<area shape="poly" title=" " alt="" coords="1766,480,2026,533,2025,538,1765,486"/>
+<area shape="poly" title=" " alt="" coords="1727,485,1737,529,1743,593,1741,628,1735,662,1722,694,1700,722,1685,732,1659,740,1585,754,1485,764,1371,772,1135,780,954,782,954,777,1135,774,1371,766,1485,759,1584,748,1658,735,1682,727,1697,718,1717,692,1730,661,1736,627,1738,593,1732,530,1722,486"/>
+<area shape="poly" title=" " alt="" coords="1712,488,1676,525,1672,521,1708,484"/>
+<area shape="poly" title=" " alt="" coords="1612,555,1110,615,1110,610,1611,550"/>
+<area shape="poly" title=" " alt="" coords="1662,558,1677,590,1690,633,1693,657,1692,680,1685,702,1673,722,1658,732,1634,740,1562,754,1467,764,1357,772,1130,780,954,782,954,777,1130,774,1357,766,1467,759,1561,749,1632,735,1655,727,1669,718,1681,700,1686,679,1687,657,1684,634,1672,592,1657,560"/>
+<area shape="poly" title=" " alt="" coords="1126,247,1096,254,1064,264,1034,280,1009,301,993,321,986,341,984,391,984,474,990,509,1004,542,1023,571,1042,595,1038,598,1019,575,1000,545,985,511,979,474,979,391,980,340,988,319,1005,297,1031,275,1062,259,1094,249,1125,242"/>
+<area shape="poly" title=" " alt="" coords="1191,249,1273,366,1269,370,1187,252"/>
+<area shape="poly" title=" " alt="" coords="1168,253,1118,292,1115,288,1165,249"/>
+<area shape="poly" title=" " alt="" coords="1092,324,1076,460,1066,593,1060,593,1071,460,1087,324"/>
+<area shape="poly" title=" " alt="" coords="1044,327,923,364,847,394,767,433,686,480,611,537,577,569,546,604,518,641,494,681,487,701,488,709,494,718,517,735,553,749,597,759,647,767,753,775,844,777,844,782,753,780,647,772,596,764,551,754,515,740,490,722,483,711,482,701,490,679,514,638,542,600,573,565,608,533,684,476,764,428,845,390,921,359,1042,321"/>
+<area shape="poly" title=" " alt="" coords="1120,322,1247,372,1245,377,1118,326"/>
+<area shape="poly" title=" " alt="" coords="1092,324,1094,365,1099,389,1110,410,1139,442,1169,459,1247,483,1342,508,1439,525,1527,535,1599,540,1598,545,1527,540,1438,530,1341,513,1246,488,1167,464,1136,446,1106,414,1094,391,1088,366,1087,324"/>
+<area shape="rect" title=" " alt="" coords="1120,379,1176,405"/>
+<area shape="poly" title=" " alt="" coords="1101,323,1134,367,1129,370,1097,326"/>
+<area shape="poly" title=" " alt="" coords="1442,326,1326,376,1324,371,1439,322"/>
+<area shape="poly" title=" " alt="" coords="1421,327,1190,383,1189,378,1420,321"/>
+<area shape="rect" href="forward-shock_8tpp.html" title=" " alt="" coords="1347,372,1522,412"/>
+<area shape="poly" title=" " alt="" coords="1464,325,1450,361,1445,358,1459,323"/>
+<area shape="poly" title=" " alt="" coords="2028,484,2055,521,2051,524,2024,487"/>
+<area shape="poly" title=" " alt="" coords="2017,486,1953,755,1947,754,2012,485"/>
+<area shape="poly" title=" " alt="" coords="1992,482,1709,537,1708,531,1991,476"/>
+<area shape="poly" title=" " alt="" coords="829,159,1140,143,1354,127,1574,103,1574,108,1355,132,1141,148,830,165"/>
+<area shape="poly" title=" " alt="" coords="777,179,760,202,741,234,726,271,720,310,720,474,722,496,729,515,739,533,752,548,787,573,830,591,878,603,926,611,1012,616,1012,622,926,616,876,608,828,596,784,577,748,552,734,536,724,518,717,497,715,474,715,310,721,269,737,231,756,199,772,176"/>
+<area shape="poly" title=" " alt="" coords="739,172,602,190,536,206,511,216,494,227,478,246,471,263,469,310,469,393,466,445,458,491,439,571,436,608,439,643,454,680,482,718,506,735,543,749,589,759,642,767,750,775,844,777,844,783,750,780,641,772,588,765,542,754,504,740,478,722,449,682,434,645,430,608,434,570,452,490,461,444,464,393,464,310,466,262,474,243,490,223,509,212,534,201,601,185,738,167"/>
+<area shape="rect" title=" " alt="" coords="971,225,1051,251"/>
+<area shape="poly" title=" " alt="" coords="821,175,962,219,960,224,820,180"/>
+<area shape="rect" title=" " alt="" coords="505,225,591,251"/>
+<area shape="poly" title=" " alt="" coords="747,180,600,224,599,219,745,175"/>
+<area shape="rect" title=" " alt="" coords="616,225,680,251"/>
+<area shape="poly" title=" " alt="" coords="763,180,683,221,681,217,761,175"/>
+<area shape="rect" title=" " alt="" coords="755,225,946,251"/>
+<area shape="poly" title=" " alt="" coords="797,176,832,213,829,217,793,179"/>
+<area shape="poly" title=" " alt="" coords="317,323,342,371,362,420,366,442,368,471,368,621,368,651,370,676,379,697,399,718,432,736,480,750,538,761,603,768,735,776,844,777,844,783,735,781,602,774,537,766,478,755,430,741,396,722,375,700,365,677,363,652,363,621,363,471,361,443,356,421,338,373,312,325"/>
+<area shape="poly" title=" " alt="" coords="378,317,1106,384,1106,389,378,322"/>
+<area shape="rect" href="reverse-shock_8tpp.html" title=" " alt="" coords="155,372,328,412"/>
+<area shape="poly" title=" " alt="" coords="299,326,268,363,264,360,295,322"/>
+<area shape="poly" title=" " alt="" coords="1562,326,1455,345,1335,375,1328,377,1326,372,1334,369,1454,340,1561,320"/>
+<area shape="poly" title=" " alt="" coords="1562,325,1239,375,1190,384,1189,379,1238,369,1561,320"/>
+<area shape="rect" href="simple-shock_8tpp.html" title=" " alt="" coords="1547,372,1715,412"/>
+<area shape="poly" title=" " alt="" coords="1633,324,1633,358,1628,358,1628,324"/>
+<area shape="rect" title=" " alt="" coords="2144,152,2259,177"/>
+<area shape="poly" title=" " alt="" coords="2204,104,2204,138,2199,138,2199,104"/>
+<area shape="rect" title=" " alt="" coords="2283,152,2493,177"/>
+<area shape="poly" title=" " alt="" coords="2232,102,2346,145,2344,149,2230,107"/>
 </map>
 </div>
 </div><div class="textblock"><div class="dynheader">
@@ -298,24 +282,24 @@ Typedefs</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:af1f230ff03a5fe38e4b897e3dc219782" id="r_af1f230ff03a5fe38e4b897e3dc219782"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classEjecta.html">Ejecta</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="pymodel_8h.html#af1f230ff03a5fe38e4b897e3dc219782">PyTophatJet</a> (<a class="el" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> theta_c, <a class="el" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> E_iso, <a class="el" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> Gamma0, <a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">bool</a> spreading=<a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">false</a>, <a class="el" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> duration=1, <a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">std::optional</a>&lt; <a class="el" href="structPyMagnetar.html">PyMagnetar</a> &gt; magnetar=<a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">std::nullopt</a>)</td></tr>
-<tr class="memdesc:af1f230ff03a5fe38e4b897e3dc219782"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a top-hat jet model with uniform energy and Lorentz factor distributions.  <br /></td></tr>
-<tr class="separator:af1f230ff03a5fe38e4b897e3dc219782"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a640334bcb244a98e359f42b86331eab3" id="r_a640334bcb244a98e359f42b86331eab3"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classEjecta.html">Ejecta</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="pymodel_8h.html#a640334bcb244a98e359f42b86331eab3">PyGaussianJet</a> (<a class="el" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> theta_c, <a class="el" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> E_iso, <a class="el" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> Gamma0, <a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">bool</a> spreading=<a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">false</a>, <a class="el" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> duration=1, <a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">std::optional</a>&lt; <a class="el" href="structPyMagnetar.html">PyMagnetar</a> &gt; magnetar=<a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">std::nullopt</a>)</td></tr>
-<tr class="memdesc:a640334bcb244a98e359f42b86331eab3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a Gaussian jet model with smooth energy and Lorentz factor profiles.  <br /></td></tr>
-<tr class="separator:a640334bcb244a98e359f42b86331eab3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab0fc1fa48f04171061fcfcce0a90dfe5" id="r_ab0fc1fa48f04171061fcfcce0a90dfe5"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classEjecta.html">Ejecta</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="pymodel_8h.html#ab0fc1fa48f04171061fcfcce0a90dfe5">PyPowerLawJet</a> (<a class="el" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> theta_c, <a class="el" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> E_iso, <a class="el" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> Gamma0, <a class="el" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> k_e, <a class="el" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> k_g, <a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">bool</a> spreading=<a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">false</a>, <a class="el" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> duration=1, <a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">std::optional</a>&lt; <a class="el" href="structPyMagnetar.html">PyMagnetar</a> &gt; magnetar=<a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">std::nullopt</a>)</td></tr>
-<tr class="memdesc:ab0fc1fa48f04171061fcfcce0a90dfe5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a power-law structured jet with customizable angular energy distribution.  <br /></td></tr>
-<tr class="separator:ab0fc1fa48f04171061fcfcce0a90dfe5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4951a986ce369081a438b84cbaa12880" id="r_a4951a986ce369081a438b84cbaa12880"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classEjecta.html">Ejecta</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="pymodel_8h.html#a4951a986ce369081a438b84cbaa12880">PyTophatJet</a> (<a class="el" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> theta_c, <a class="el" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> E_iso, <a class="el" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> Gamma0, <a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">bool</a> spreading=<a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">false</a>, <a class="el" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> duration=1, <a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">const</a> <a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">std::optional</a>&lt; <a class="el" href="structPyMagnetar.html">PyMagnetar</a> &gt; &amp;magnetar=<a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">std::nullopt</a>)</td></tr>
+<tr class="memdesc:a4951a986ce369081a438b84cbaa12880"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a top-hat jet model with uniform energy and Lorentz factor distributions.  <br /></td></tr>
+<tr class="separator:a4951a986ce369081a438b84cbaa12880"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aef695288c4dfdbaaf71fcd2ed8fb3e3e" id="r_aef695288c4dfdbaaf71fcd2ed8fb3e3e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classEjecta.html">Ejecta</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="pymodel_8h.html#aef695288c4dfdbaaf71fcd2ed8fb3e3e">PyGaussianJet</a> (<a class="el" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> theta_c, <a class="el" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> E_iso, <a class="el" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> Gamma0, <a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">bool</a> spreading=<a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">false</a>, <a class="el" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> duration=1, <a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">const</a> <a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">std::optional</a>&lt; <a class="el" href="structPyMagnetar.html">PyMagnetar</a> &gt; &amp;magnetar=<a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">std::nullopt</a>)</td></tr>
+<tr class="memdesc:aef695288c4dfdbaaf71fcd2ed8fb3e3e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a Gaussian jet model with smooth energy and Lorentz factor profiles.  <br /></td></tr>
+<tr class="separator:aef695288c4dfdbaaf71fcd2ed8fb3e3e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac9113e1e593d7b7470e97ad28cf62881" id="r_ac9113e1e593d7b7470e97ad28cf62881"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classEjecta.html">Ejecta</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="pymodel_8h.html#ac9113e1e593d7b7470e97ad28cf62881">PyPowerLawJet</a> (<a class="el" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> theta_c, <a class="el" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> E_iso, <a class="el" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> Gamma0, <a class="el" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> k_e, <a class="el" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> k_g, <a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">bool</a> spreading=<a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">false</a>, <a class="el" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> duration=1, <a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">const</a> <a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">std::optional</a>&lt; <a class="el" href="structPyMagnetar.html">PyMagnetar</a> &gt; &amp;magnetar=<a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">std::nullopt</a>)</td></tr>
+<tr class="memdesc:ac9113e1e593d7b7470e97ad28cf62881"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a power-law structured jet with customizable angular energy distribution.  <br /></td></tr>
+<tr class="separator:ac9113e1e593d7b7470e97ad28cf62881"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a772157739bd087e1e945a469eb04df6e" id="r_a772157739bd087e1e945a469eb04df6e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classEjecta.html">Ejecta</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="pymodel_8h.html#a772157739bd087e1e945a469eb04df6e">PyPowerLawWing</a> (<a class="el" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> theta_c, <a class="el" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> E_iso_w, <a class="el" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> Gamma0_w, <a class="el" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> k_e, <a class="el" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> k_g, <a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">bool</a> spreading=<a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">false</a>, <a class="el" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> duration=1)</td></tr>
 <tr class="memdesc:a772157739bd087e1e945a469eb04df6e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a power-law wing jet model with continuous transition from core to wing.  <br /></td></tr>
 <tr class="separator:a772157739bd087e1e945a469eb04df6e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5a3369eb7b57f229aa810843dbe15b7e" id="r_a5a3369eb7b57f229aa810843dbe15b7e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classEjecta.html">Ejecta</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="pymodel_8h.html#a5a3369eb7b57f229aa810843dbe15b7e">PyStepPowerLawJet</a> (<a class="el" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> theta_c, <a class="el" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> E_iso, <a class="el" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> Gamma0, <a class="el" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> E_iso_w, <a class="el" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> Gamma0_w, <a class="el" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> k_e, <a class="el" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> k_g, <a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">bool</a> spreading, <a class="el" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> duration, <a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">std::optional</a>&lt; <a class="el" href="structPyMagnetar.html">PyMagnetar</a> &gt; magnetar)</td></tr>
-<tr class="memdesc:a5a3369eb7b57f229aa810843dbe15b7e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a step power-law jet model: a pencil beam core and powerlaw wing with jump at theta_c.  <br /></td></tr>
-<tr class="separator:a5a3369eb7b57f229aa810843dbe15b7e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab9df94d937b16f949454e5e8c2f2caf4" id="r_ab9df94d937b16f949454e5e8c2f2caf4"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classEjecta.html">Ejecta</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="pymodel_8h.html#ab9df94d937b16f949454e5e8c2f2caf4">PyTwoComponentJet</a> (<a class="el" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> theta_c, <a class="el" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> E_iso, <a class="el" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> Gamma0, <a class="el" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> theta_w, <a class="el" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> E_iso_w, <a class="el" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> Gamma0_w, <a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">bool</a> spreading=<a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">false</a>, <a class="el" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> duration=1, <a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">std::optional</a>&lt; <a class="el" href="structPyMagnetar.html">PyMagnetar</a> &gt; magnetar=<a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">std::nullopt</a>)</td></tr>
-<tr class="memdesc:ab9df94d937b16f949454e5e8c2f2caf4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a two-component jet model with different properties for narrow and wide components.  <br /></td></tr>
-<tr class="separator:ab9df94d937b16f949454e5e8c2f2caf4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2e10a24163357e677edd02fb34524a49" id="r_a2e10a24163357e677edd02fb34524a49"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classEjecta.html">Ejecta</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="pymodel_8h.html#a2e10a24163357e677edd02fb34524a49">PyStepPowerLawJet</a> (<a class="el" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> theta_c, <a class="el" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> E_iso, <a class="el" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> Gamma0, <a class="el" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> E_iso_w, <a class="el" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> Gamma0_w, <a class="el" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> k_e, <a class="el" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> k_g, <a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">bool</a> spreading, <a class="el" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> duration, <a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">const</a> <a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">std::optional</a>&lt; <a class="el" href="structPyMagnetar.html">PyMagnetar</a> &gt; &amp;magnetar)</td></tr>
+<tr class="memdesc:a2e10a24163357e677edd02fb34524a49"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a step power-law jet model: a pencil beam core and powerlaw wing with jump at theta_c.  <br /></td></tr>
+<tr class="separator:a2e10a24163357e677edd02fb34524a49"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa76c8dc614b9203d1a3c14e70aa84e2d" id="r_aa76c8dc614b9203d1a3c14e70aa84e2d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classEjecta.html">Ejecta</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="pymodel_8h.html#aa76c8dc614b9203d1a3c14e70aa84e2d">PyTwoComponentJet</a> (<a class="el" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> theta_c, <a class="el" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> E_iso, <a class="el" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> Gamma0, <a class="el" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> theta_w, <a class="el" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> E_iso_w, <a class="el" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> Gamma0_w, <a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">bool</a> spreading=<a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">false</a>, <a class="el" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> duration=1, <a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">const</a> <a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">std::optional</a>&lt; <a class="el" href="structPyMagnetar.html">PyMagnetar</a> &gt; &amp;magnetar=<a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">std::nullopt</a>)</td></tr>
+<tr class="memdesc:aa76c8dc614b9203d1a3c14e70aa84e2d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a two-component jet model with different properties for narrow and wide components.  <br /></td></tr>
+<tr class="separator:aa76c8dc614b9203d1a3c14e70aa84e2d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a43af01d16838e6513792deaeb727fbe5" id="r_a43af01d16838e6513792deaeb727fbe5"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classMedium.html">Medium</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="pymodel_8h.html#a43af01d16838e6513792deaeb727fbe5">PyISM</a> (<a class="el" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> n_ism)</td></tr>
 <tr class="memdesc:a43af01d16838e6513792deaeb727fbe5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a constant density <a class="el" href="classISM.html" title="Implements a uniform interstellar medium (ISM) with constant density.">ISM</a> (Interstellar <a class="el" href="classMedium.html" title="Represents the generic medium or any user-defined surrounding medium that the GRB jet interacts with.">Medium</a>) environment.  <br /></td></tr>
 <tr class="separator:a43af01d16838e6513792deaeb727fbe5"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -339,7 +323,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="pymodel_8h_source.html#l00288">288</a> of file <a class="el" href="pymodel_8h_source.html">pymodel.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="pymodel_8h_source.html#l00289">289</a> of file <a class="el" href="pymodel_8h_source.html">pymodel.h</a>.</p>
 
 </div>
 </div>
@@ -381,31 +365,31 @@ Functions</h2></td></tr>
 
 <p class="definition">Definition at line <a class="el" href="pymodel_8cpp_source.html#l00124">124</a> of file <a class="el" href="pymodel_8cpp_source.html">pymodel.cpp</a>.</p>
 <div class="fragment"><div class="line"><span class="lineno">  124</span>                                               {</div>
-<div class="line"><span class="lineno">  125</span>    <span class="keyword">auto</span> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">eps_k_cgs</a> = jet.<a class="code hl_variable" href="classEjecta.html#a1952705ec5647300cd09255dcfc786cd">eps_k</a>;</div>
+<div class="line"><span class="lineno">  125</span>    <span class="keyword">const</span> <span class="keyword">auto</span> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">eps_k_cgs</a> = jet.<a class="code hl_variable" href="classEjecta.html#a1952705ec5647300cd09255dcfc786cd">eps_k</a>;</div>
 <div class="line"><span class="lineno">  126</span>    jet.<a class="code hl_variable" href="classEjecta.html#a1952705ec5647300cd09255dcfc786cd">eps_k</a> = [=](<a class="code hl_typedef" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> phi, <a class="code hl_typedef" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> theta) { <span class="keywordflow">return</span> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">eps_k_cgs</a>(phi, theta) * (<a class="code hl_variable" href="namespaceunit.html#a255e82bd3b0ebb273d6663111278d624">unit::erg</a> / (4 * <a class="code hl_variable" href="namespacecon.html#aa0ccd904b754d0f907898a942516d121">con::pi</a>)); };</div>
 <div class="line"><span class="lineno">  127</span> </div>
-<div class="line"><span class="lineno">  128</span>    <span class="keyword">auto</span> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">deps_dt_cgs</a> = jet.<a class="code hl_variable" href="classEjecta.html#a1cd7491361913dd37cf4efe8e3a0376a">deps_dt</a>;</div>
+<div class="line"><span class="lineno">  128</span>    <span class="keyword">const</span> <span class="keyword">auto</span> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">deps_dt_cgs</a> = jet.<a class="code hl_variable" href="classEjecta.html#a1cd7491361913dd37cf4efe8e3a0376a">deps_dt</a>;</div>
 <div class="line"><span class="lineno">  129</span>    jet.<a class="code hl_variable" href="classEjecta.html#a1cd7491361913dd37cf4efe8e3a0376a">deps_dt</a> = [=](<a class="code hl_typedef" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> phi, <a class="code hl_typedef" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> theta, <a class="code hl_typedef" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> t) {</div>
 <div class="line"><span class="lineno">  130</span>        <span class="keywordflow">return</span> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">deps_dt_cgs</a>(phi, theta, t / <a class="code hl_variable" href="namespaceunit.html#a4e7c438655d3f34c7c30a155ec38f250">unit::sec</a>) * (<a class="code hl_variable" href="namespaceunit.html#a255e82bd3b0ebb273d6663111278d624">unit::erg</a> / (4 * <a class="code hl_variable" href="namespacecon.html#aa0ccd904b754d0f907898a942516d121">con::pi</a> * <a class="code hl_variable" href="namespaceunit.html#a4e7c438655d3f34c7c30a155ec38f250">unit::sec</a>));</div>
 <div class="line"><span class="lineno">  131</span>    };</div>
 <div class="line"><span class="lineno">  132</span> </div>
-<div class="line"><span class="lineno">  133</span>    <span class="keyword">auto</span> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">dm_dt_cgs</a> = jet.<a class="code hl_variable" href="classEjecta.html#a74ab20785693d39f5ec9a13edf2c0cd7">dm_dt</a>;</div>
+<div class="line"><span class="lineno">  133</span>    <span class="keyword">const</span> <span class="keyword">auto</span> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">dm_dt_cgs</a> = jet.<a class="code hl_variable" href="classEjecta.html#a74ab20785693d39f5ec9a13edf2c0cd7">dm_dt</a>;</div>
 <div class="line"><span class="lineno">  134</span>    jet.<a class="code hl_variable" href="classEjecta.html#a74ab20785693d39f5ec9a13edf2c0cd7">dm_dt</a> = [=](<a class="code hl_typedef" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> phi, <a class="code hl_typedef" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> theta, <a class="code hl_typedef" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> t) {</div>
 <div class="line"><span class="lineno">  135</span>        <span class="keywordflow">return</span> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">dm_dt_cgs</a>(phi, theta, t / <a class="code hl_variable" href="namespaceunit.html#a4e7c438655d3f34c7c30a155ec38f250">unit::sec</a>) * (<a class="code hl_variable" href="namespaceunit.html#af4ac5b90426ecc30143a4e0f495978b6">unit::g</a> / (4 * <a class="code hl_variable" href="namespacecon.html#aa0ccd904b754d0f907898a942516d121">con::pi</a> * <a class="code hl_variable" href="namespaceunit.html#a4e7c438655d3f34c7c30a155ec38f250">unit::sec</a>));</div>
 <div class="line"><span class="lineno">  136</span>    };</div>
 <div class="line"><span class="lineno">  137</span> </div>
 <div class="line"><span class="lineno">  138</span>    jet.<a class="code hl_variable" href="classEjecta.html#a4317c1c49676662f347708942bc61bdf">T0</a> *= <a class="code hl_variable" href="namespaceunit.html#a4e7c438655d3f34c7c30a155ec38f250">unit::sec</a>;</div>
 <div class="line"><span class="lineno">  139</span> </div>
-<div class="line"><span class="lineno">  140</span>    <span class="keyword">auto</span> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">rho_cgs</a> = medium.<a class="code hl_variable" href="classMedium.html#a419de8e407c9c9f75d1b76fdedf5d3eb">rho</a>; <span class="comment">// number density from python side</span></div>
+<div class="line"><span class="lineno">  140</span>    <span class="keyword">const</span> <span class="keyword">auto</span> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">rho_cgs</a> = medium.<a class="code hl_variable" href="classMedium.html#a419de8e407c9c9f75d1b76fdedf5d3eb">rho</a>; <span class="comment">// number density from python side</span></div>
 <div class="line"><span class="lineno">  141</span>    medium.<a class="code hl_variable" href="classMedium.html#a419de8e407c9c9f75d1b76fdedf5d3eb">rho</a> = [=](<a class="code hl_typedef" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> phi, <a class="code hl_typedef" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> theta, <a class="code hl_typedef" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> r) {</div>
 <div class="line"><span class="lineno">  142</span>        <span class="keywordflow">return</span> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">rho_cgs</a>(phi, theta, r / <a class="code hl_variable" href="namespaceunit.html#ab0ce442b00da680dc797592af0b4a2f8">unit::cm</a>) * (<a class="code hl_variable" href="namespaceunit.html#af4ac5b90426ecc30143a4e0f495978b6">unit::g</a> / <a class="code hl_variable" href="namespaceunit.html#a8643f62ec4132cb409d20f4252d0bfe0">unit::cm3</a>); <span class="comment">// convert to density</span></div>
 <div class="line"><span class="lineno">  143</span>    };</div>
 <div class="line"><span class="lineno">  144</span>}</div>
-<div class="ttc" id="aclassEjecta_html_a1952705ec5647300cd09255dcfc786cd"><div class="ttname"><a href="classEjecta.html#a1952705ec5647300cd09255dcfc786cd">Ejecta::eps_k</a></div><div class="ttdeci">BinaryFunc eps_k</div><div class="ttdoc">Initial energy per unit solid angle as a function of (phi, theta)</div><div class="ttdef"><b>Definition</b> <a href="jet_8h_source.html#l00043">jet.h:43</a></div></div>
-<div class="ttc" id="aclassEjecta_html_a1cd7491361913dd37cf4efe8e3a0376a"><div class="ttname"><a href="classEjecta.html#a1cd7491361913dd37cf4efe8e3a0376a">Ejecta::deps_dt</a></div><div class="ttdeci">TernaryFunc deps_dt</div><div class="ttdoc">Energy injection rate per solid angle as a function of (phi, theta, t) Default is no energy injection...</div><div class="ttdef"><b>Definition</b> <a href="jet_8h_source.html#l00054">jet.h:54</a></div></div>
-<div class="ttc" id="aclassEjecta_html_a4317c1c49676662f347708942bc61bdf"><div class="ttname"><a href="classEjecta.html#a4317c1c49676662f347708942bc61bdf">Ejecta::T0</a></div><div class="ttdeci">Real T0</div><div class="ttdoc">Duration of the ejecta in seconds.</div><div class="ttdef"><b>Definition</b> <a href="jet_8h_source.html#l00061">jet.h:61</a></div></div>
-<div class="ttc" id="aclassEjecta_html_a74ab20785693d39f5ec9a13edf2c0cd7"><div class="ttname"><a href="classEjecta.html#a74ab20785693d39f5ec9a13edf2c0cd7">Ejecta::dm_dt</a></div><div class="ttdeci">TernaryFunc dm_dt</div><div class="ttdoc">Mass injection rate per unit solid angle as a function of (phi, theta, t) Default is no mass injectio...</div><div class="ttdef"><b>Definition</b> <a href="jet_8h_source.html#l00058">jet.h:58</a></div></div>
-<div class="ttc" id="aclassMedium_html_a419de8e407c9c9f75d1b76fdedf5d3eb"><div class="ttname"><a href="classMedium.html#a419de8e407c9c9f75d1b76fdedf5d3eb">Medium::rho</a></div><div class="ttdeci">TernaryFunc rho</div><div class="ttdoc">Density function that returns the mass density at a given position (phi, theta, r) The function is in...</div><div class="ttdef"><b>Definition</b> <a href="medium_8h_source.html#l00032">medium.h:32</a></div></div>
+<div class="ttc" id="aclassEjecta_html_a1952705ec5647300cd09255dcfc786cd"><div class="ttname"><a href="classEjecta.html#a1952705ec5647300cd09255dcfc786cd">Ejecta::eps_k</a></div><div class="ttdeci">BinaryFunc eps_k</div><div class="ttdoc">Initial energy per unit solid angle as a function of (phi, theta)</div><div class="ttdef"><b>Definition</b> <a href="jet_8h_source.html#l00050">jet.h:50</a></div></div>
+<div class="ttc" id="aclassEjecta_html_a1cd7491361913dd37cf4efe8e3a0376a"><div class="ttname"><a href="classEjecta.html#a1cd7491361913dd37cf4efe8e3a0376a">Ejecta::deps_dt</a></div><div class="ttdeci">TernaryFunc deps_dt</div><div class="ttdoc">Energy injection rate per solid angle as a function of (phi, theta, t) Default is no energy injection...</div><div class="ttdef"><b>Definition</b> <a href="jet_8h_source.html#l00061">jet.h:61</a></div></div>
+<div class="ttc" id="aclassEjecta_html_a4317c1c49676662f347708942bc61bdf"><div class="ttname"><a href="classEjecta.html#a4317c1c49676662f347708942bc61bdf">Ejecta::T0</a></div><div class="ttdeci">Real T0</div><div class="ttdoc">Duration of the ejecta in seconds.</div><div class="ttdef"><b>Definition</b> <a href="jet_8h_source.html#l00068">jet.h:68</a></div></div>
+<div class="ttc" id="aclassEjecta_html_a74ab20785693d39f5ec9a13edf2c0cd7"><div class="ttname"><a href="classEjecta.html#a74ab20785693d39f5ec9a13edf2c0cd7">Ejecta::dm_dt</a></div><div class="ttdeci">TernaryFunc dm_dt</div><div class="ttdoc">Mass injection rate per unit solid angle as a function of (phi, theta, t) Default is no mass injectio...</div><div class="ttdef"><b>Definition</b> <a href="jet_8h_source.html#l00065">jet.h:65</a></div></div>
+<div class="ttc" id="aclassMedium_html_a419de8e407c9c9f75d1b76fdedf5d3eb"><div class="ttname"><a href="classMedium.html#a419de8e407c9c9f75d1b76fdedf5d3eb">Medium::rho</a></div><div class="ttdeci">TernaryFunc rho</div><div class="ttdoc">Density function that returns the mass density at a given position (phi, theta, r) The function is in...</div><div class="ttdef"><b>Definition</b> <a href="medium_8h_source.html#l00034">medium.h:34</a></div></div>
 <div class="ttc" id="amacros_8h_html_a4b04262b81aa7d31eb5d2f607e2a35de"><div class="ttname"><a href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a></div><div class="ttdeci">double Real</div><div class="ttdoc">Type alias for floating-point precision used throughout the code.</div><div class="ttdef"><b>Definition</b> <a href="macros_8h_source.html#l00022">macros.h:22</a></div></div>
 <div class="ttc" id="anamespacecon_html_aa0ccd904b754d0f907898a942516d121"><div class="ttname"><a href="namespacecon.html#aa0ccd904b754d0f907898a942516d121">con::pi</a></div><div class="ttdeci">constexpr Real pi</div><div class="ttdoc">Pi.</div><div class="ttdef"><b>Definition</b> <a href="macros_8h_source.html#l00095">macros.h:95</a></div></div>
 <div class="ttc" id="anamespaceunit_html_a255e82bd3b0ebb273d6663111278d624"><div class="ttname"><a href="namespaceunit.html#a255e82bd3b0ebb273d6663111278d624">unit::erg</a></div><div class="ttdeci">constexpr Real erg</div><div class="ttdoc">Erg (energy) in code units.</div><div class="ttdef"><b>Definition</b> <a href="macros_8h_source.html#l00051">macros.h:51</a></div></div>
@@ -413,7 +397,7 @@ Functions</h2></td></tr>
 <div class="ttc" id="anamespaceunit_html_a8643f62ec4132cb409d20f4252d0bfe0"><div class="ttname"><a href="namespaceunit.html#a8643f62ec4132cb409d20f4252d0bfe0">unit::cm3</a></div><div class="ttdeci">constexpr Real cm3</div><div class="ttdoc">Cubic centimeter in code units.</div><div class="ttdef"><b>Definition</b> <a href="macros_8h_source.html#l00046">macros.h:46</a></div></div>
 <div class="ttc" id="anamespaceunit_html_ab0ce442b00da680dc797592af0b4a2f8"><div class="ttname"><a href="namespaceunit.html#ab0ce442b00da680dc797592af0b4a2f8">unit::cm</a></div><div class="ttdeci">constexpr Real cm</div><div class="ttdoc">Centimeter in code units.</div><div class="ttdef"><b>Definition</b> <a href="macros_8h_source.html#l00043">macros.h:43</a></div></div>
 <div class="ttc" id="anamespaceunit_html_af4ac5b90426ecc30143a4e0f495978b6"><div class="ttname"><a href="namespaceunit.html#af4ac5b90426ecc30143a4e0f495978b6">unit::g</a></div><div class="ttdeci">constexpr Real g</div><div class="ttdoc">Gram in code units.</div><div class="ttdef"><b>Definition</b> <a href="macros_8h_source.html#l00047">macros.h:47</a></div></div>
-<div class="ttc" id="autilities_8h_html_ab8e81118f023df135835db8cce4f5f42"><div class="ttname"><a href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">max</a></div><div class="ttdeci">T max(T value)</div><div class="ttdoc">Returns the value of a single parameter.</div><div class="ttdef"><b>Definition</b> <a href="utilities_8h_source.html#l00311">utilities.h:311</a></div></div>
+<div class="ttc" id="autilities_8h_html_ab8e81118f023df135835db8cce4f5f42"><div class="ttname"><a href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">max</a></div><div class="ttdeci">T max(T value)</div><div class="ttdoc">Returns the value of a single parameter.</div><div class="ttdef"><b>Definition</b> <a href="utilities_8h_source.html#l00307">utilities.h:307</a></div></div>
 </div><!-- fragment --><div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -431,15 +415,15 @@ Here is the caller graph for this function:</div>
 <div class="center"><img src="pymodel_8h_aa920671831cc213a5c0858813e42279f_icgraph.png" border="0" usemap="#apymodel_8h_aa920671831cc213a5c0858813e42279f_icgraph" alt=""/></div>
 <map name="apymodel_8h_aa920671831cc213a5c0858813e42279f_icgraph" id="apymodel_8h_aa920671831cc213a5c0858813e42279f_icgraph">
 <area shape="rect" title="Convert Ejecta and Medium units to internal code units." alt="" coords="196,5,299,31"/>
-<area shape="rect" href="classPyModel.html#a4e18a53bf3cc6134238a51169cc87cd2" title="Construct complete afterglow model with physical and numerical parameters." alt="" coords="5,5,148,31"/>
+<area shape="rect" href="classPyModel.html#a32cd29b07bdc0216ee13b9a42b2f325d" title="Construct complete afterglow model with physical and numerical parameters." alt="" coords="5,5,148,31"/>
 <area shape="poly" title=" " alt="" coords="182,21,148,21,148,15,182,15"/>
 </map>
 </div>
 
 </div>
 </div>
-<a id="a640334bcb244a98e359f42b86331eab3" name="a640334bcb244a98e359f42b86331eab3"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a640334bcb244a98e359f42b86331eab3">&#9670;&#160;</a></span>PyGaussianJet()</h2>
+<a id="aef695288c4dfdbaaf71fcd2ed8fb3e3e" name="aef695288c4dfdbaaf71fcd2ed8fb3e3e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aef695288c4dfdbaaf71fcd2ed8fb3e3e">&#9670;&#160;</a></span>PyGaussianJet()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -477,7 +461,7 @@ Here is the caller graph for this function:</div>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">std::optional</a>&lt; <a class="el" href="structPyMagnetar.html">PyMagnetar</a> &gt;&#160;</td>
+          <td class="paramtype"><a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">const</a> <a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">std::optional</a>&lt; <a class="el" href="structPyMagnetar.html">PyMagnetar</a> &gt; &amp;&#160;</td>
           <td class="paramname"><em>magnetar</em> = <code><a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">std::nullopt</a></code>&#160;</td>
         </tr>
         <tr>
@@ -503,7 +487,7 @@ Here is the caller graph for this function:</div>
 <dl class="section return"><dt>Returns</dt><dd><a class="el" href="classEjecta.html" title="Represents generic ejecta properties for a simulation.">Ejecta</a> Configured ejecta object representing the Gaussian jet structure </dd></dl>
 
 <p class="definition">Definition at line <a class="el" href="pymodel_8cpp_source.html#l00032">32</a> of file <a class="el" href="pymodel_8cpp_source.html">pymodel.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   33</span>                                                       {</div>
+<div class="fragment"><div class="line"><span class="lineno">   33</span>                                                              {</div>
 <div class="line"><span class="lineno">   34</span>    <a class="code hl_class" href="classEjecta.html">Ejecta</a> jet;</div>
 <div class="line"><span class="lineno">   35</span>    jet.<a class="code hl_variable" href="classEjecta.html#a1952705ec5647300cd09255dcfc786cd">eps_k</a> = math::gaussian(theta_c, E_iso);</div>
 <div class="line"><span class="lineno">   36</span>    jet.<a class="code hl_variable" href="classEjecta.html#a6993f0ec67bf03b7c80e9a7c10e65640">Gamma0</a> = math::gaussian_plus_one(theta_c, Gamma0 - 1);</div>
@@ -516,14 +500,14 @@ Here is the caller graph for this function:</div>
 <div class="line"><span class="lineno">   43</span> </div>
 <div class="line"><span class="lineno">   44</span>    <span class="keywordflow">return</span> jet;</div>
 <div class="line"><span class="lineno">   45</span>}</div>
-<div class="ttc" id="aclassEjecta_html"><div class="ttname"><a href="classEjecta.html">Ejecta</a></div><div class="ttdoc">Represents generic ejecta properties for a simulation.</div><div class="ttdef"><b>Definition</b> <a href="jet_8h_source.html#l00022">jet.h:22</a></div></div>
-<div class="ttc" id="aclassEjecta_html_a6993f0ec67bf03b7c80e9a7c10e65640"><div class="ttname"><a href="classEjecta.html#a6993f0ec67bf03b7c80e9a7c10e65640">Ejecta::Gamma0</a></div><div class="ttdeci">BinaryFunc Gamma0</div><div class="ttdoc">Lorentz factor profile in the ejecta as a function of (phi, theta) Default is uniform (one) across al...</div><div class="ttdef"><b>Definition</b> <a href="jet_8h_source.html#l00047">jet.h:47</a></div></div>
-<div class="ttc" id="aclassEjecta_html_a8de0be09be7bd262e246c756699addd0"><div class="ttname"><a href="classEjecta.html#a8de0be09be7bd262e246c756699addd0">Ejecta::spreading</a></div><div class="ttdeci">bool spreading</div><div class="ttdoc">Flag indicating if the ejecta spreads laterally during evolution.</div><div class="ttdef"><b>Definition</b> <a href="jet_8h_source.html#l00064">jet.h:64</a></div></div>
+<div class="ttc" id="aclassEjecta_html"><div class="ttname"><a href="classEjecta.html">Ejecta</a></div><div class="ttdoc">Represents generic ejecta properties for a simulation.</div><div class="ttdef"><b>Definition</b> <a href="jet_8h_source.html#l00023">jet.h:23</a></div></div>
+<div class="ttc" id="aclassEjecta_html_a6993f0ec67bf03b7c80e9a7c10e65640"><div class="ttname"><a href="classEjecta.html#a6993f0ec67bf03b7c80e9a7c10e65640">Ejecta::Gamma0</a></div><div class="ttdeci">BinaryFunc Gamma0</div><div class="ttdoc">Lorentz factor profile in the ejecta as a function of (phi, theta) Default is uniform (one) across al...</div><div class="ttdef"><b>Definition</b> <a href="jet_8h_source.html#l00054">jet.h:54</a></div></div>
+<div class="ttc" id="aclassEjecta_html_a8de0be09be7bd262e246c756699addd0"><div class="ttname"><a href="classEjecta.html#a8de0be09be7bd262e246c756699addd0">Ejecta::spreading</a></div><div class="ttdeci">bool spreading</div><div class="ttdoc">Flag indicating if the ejecta spreads laterally during evolution.</div><div class="ttdef"><b>Definition</b> <a href="jet_8h_source.html#l00071">jet.h:71</a></div></div>
 </div><!-- fragment --><div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
-<div class="center"><img src="pymodel_8h_a640334bcb244a98e359f42b86331eab3_icgraph.png" border="0" usemap="#apymodel_8h_a640334bcb244a98e359f42b86331eab3_icgraph" alt=""/></div>
-<map name="apymodel_8h_a640334bcb244a98e359f42b86331eab3_icgraph" id="apymodel_8h_a640334bcb244a98e359f42b86331eab3_icgraph">
+<div class="center"><img src="pymodel_8h_aef695288c4dfdbaaf71fcd2ed8fb3e3e_icgraph.png" border="0" usemap="#apymodel_8h_aef695288c4dfdbaaf71fcd2ed8fb3e3e_icgraph" alt=""/></div>
+<map name="apymodel_8h_aef695288c4dfdbaaf71fcd2ed8fb3e3e_icgraph" id="apymodel_8h_aef695288c4dfdbaaf71fcd2ed8fb3e3e_icgraph">
 <area shape="rect" title="Creates a Gaussian jet model with smooth energy and Lorentz factor profiles." alt="" coords="204,5,319,31"/>
 <area shape="rect" href="pybind_8cpp.html#a8c92987849ad296e28ec6c07c8e7860b" title=" " alt="" coords="5,5,156,31"/>
 <area shape="poly" title=" " alt="" coords="190,21,156,21,156,15,190,15"/>
@@ -564,7 +548,7 @@ Here is the caller graph for this function:</div>
 <div class="line"><span class="lineno">  108</span> </div>
 <div class="line"><span class="lineno">  109</span>    <span class="keywordflow">return</span> medium;</div>
 <div class="line"><span class="lineno">  110</span>}</div>
-<div class="ttc" id="aclassMedium_html"><div class="ttname"><a href="classMedium.html">Medium</a></div><div class="ttdoc">Represents the generic medium or any user-defined surrounding medium that the GRB jet interacts with.</div><div class="ttdef"><b>Definition</b> <a href="medium_8h_source.html#l00018">medium.h:18</a></div></div>
+<div class="ttc" id="aclassMedium_html"><div class="ttname"><a href="classMedium.html">Medium</a></div><div class="ttdoc">Represents the generic medium or any user-defined surrounding medium that the GRB jet interacts with.</div><div class="ttdef"><b>Definition</b> <a href="medium_8h_source.html#l00020">medium.h:20</a></div></div>
 </div><!-- fragment --><div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
@@ -578,8 +562,8 @@ Here is the caller graph for this function:</div>
 
 </div>
 </div>
-<a id="ab0fc1fa48f04171061fcfcce0a90dfe5" name="ab0fc1fa48f04171061fcfcce0a90dfe5"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab0fc1fa48f04171061fcfcce0a90dfe5">&#9670;&#160;</a></span>PyPowerLawJet()</h2>
+<a id="ac9113e1e593d7b7470e97ad28cf62881" name="ac9113e1e593d7b7470e97ad28cf62881"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac9113e1e593d7b7470e97ad28cf62881">&#9670;&#160;</a></span>PyPowerLawJet()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -629,7 +613,7 @@ Here is the caller graph for this function:</div>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">std::optional</a>&lt; <a class="el" href="structPyMagnetar.html">PyMagnetar</a> &gt;&#160;</td>
+          <td class="paramtype"><a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">const</a> <a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">std::optional</a>&lt; <a class="el" href="structPyMagnetar.html">PyMagnetar</a> &gt; &amp;&#160;</td>
           <td class="paramname"><em>magnetar</em> = <code><a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">std::nullopt</a></code>&#160;</td>
         </tr>
         <tr>
@@ -657,7 +641,7 @@ Here is the caller graph for this function:</div>
 <dl class="section return"><dt>Returns</dt><dd><a class="el" href="classEjecta.html" title="Represents generic ejecta properties for a simulation.">Ejecta</a> Configured ejecta object representing the power-law jet structure </dd></dl>
 
 <p class="definition">Definition at line <a class="el" href="pymodel_8cpp_source.html#l00047">47</a> of file <a class="el" href="pymodel_8cpp_source.html">pymodel.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   48</span>                                                       {</div>
+<div class="fragment"><div class="line"><span class="lineno">   48</span>                                                              {</div>
 <div class="line"><span class="lineno">   49</span>    <a class="code hl_class" href="classEjecta.html">Ejecta</a> jet;</div>
 <div class="line"><span class="lineno">   50</span>    jet.<a class="code hl_variable" href="classEjecta.html#a1952705ec5647300cd09255dcfc786cd">eps_k</a> = math::powerlaw(theta_c, E_iso, k_e);</div>
 <div class="line"><span class="lineno">   51</span>    jet.<a class="code hl_variable" href="classEjecta.html#a6993f0ec67bf03b7c80e9a7c10e65640">Gamma0</a> = math::powerlaw_plus_one(theta_c, Gamma0 - 1, k_g);</div>
@@ -673,8 +657,8 @@ Here is the caller graph for this function:</div>
 </div><!-- fragment --><div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
-<div class="center"><img src="pymodel_8h_ab0fc1fa48f04171061fcfcce0a90dfe5_icgraph.png" border="0" usemap="#apymodel_8h_ab0fc1fa48f04171061fcfcce0a90dfe5_icgraph" alt=""/></div>
-<map name="apymodel_8h_ab0fc1fa48f04171061fcfcce0a90dfe5_icgraph" id="apymodel_8h_ab0fc1fa48f04171061fcfcce0a90dfe5_icgraph">
+<div class="center"><img src="pymodel_8h_ac9113e1e593d7b7470e97ad28cf62881_icgraph.png" border="0" usemap="#apymodel_8h_ac9113e1e593d7b7470e97ad28cf62881_icgraph" alt=""/></div>
+<map name="apymodel_8h_ac9113e1e593d7b7470e97ad28cf62881_icgraph" id="apymodel_8h_ac9113e1e593d7b7470e97ad28cf62881_icgraph">
 <area shape="rect" title="Creates a power&#45;law structured jet with customizable angular energy distribution." alt="" coords="204,5,325,31"/>
 <area shape="rect" href="pybind_8cpp.html#a8c92987849ad296e28ec6c07c8e7860b" title=" " alt="" coords="5,5,156,31"/>
 <area shape="poly" title=" " alt="" coords="190,21,156,21,156,15,190,15"/>
@@ -777,8 +761,8 @@ Here is the caller graph for this function:</div>
 
 </div>
 </div>
-<a id="a5a3369eb7b57f229aa810843dbe15b7e" name="a5a3369eb7b57f229aa810843dbe15b7e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5a3369eb7b57f229aa810843dbe15b7e">&#9670;&#160;</a></span>PyStepPowerLawJet()</h2>
+<a id="a2e10a24163357e677edd02fb34524a49" name="a2e10a24163357e677edd02fb34524a49"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2e10a24163357e677edd02fb34524a49">&#9670;&#160;</a></span>PyStepPowerLawJet()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -840,7 +824,7 @@ Here is the caller graph for this function:</div>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">std::optional</a>&lt; <a class="el" href="structPyMagnetar.html">PyMagnetar</a> &gt;&#160;</td>
+          <td class="paramtype"><a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">const</a> <a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">std::optional</a>&lt; <a class="el" href="structPyMagnetar.html">PyMagnetar</a> &gt; &amp;&#160;</td>
           <td class="paramname"><em>magnetar</em>&#160;</td>
         </tr>
         <tr>
@@ -870,7 +854,7 @@ Here is the caller graph for this function:</div>
 <dl class="section return"><dt>Returns</dt><dd><a class="el" href="classEjecta.html" title="Represents generic ejecta properties for a simulation.">Ejecta</a> Configured jet with step power-law profile </dd></dl>
 
 <p class="definition">Definition at line <a class="el" href="pymodel_8cpp_source.html#l00072">72</a> of file <a class="el" href="pymodel_8cpp_source.html">pymodel.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   73</span>                                                                                          {</div>
+<div class="fragment"><div class="line"><span class="lineno">   73</span>                                                                                                 {</div>
 <div class="line"><span class="lineno">   74</span>    <a class="code hl_class" href="classEjecta.html">Ejecta</a> jet;</div>
 <div class="line"><span class="lineno">   75</span>    jet.<a class="code hl_variable" href="classEjecta.html#a1952705ec5647300cd09255dcfc786cd">eps_k</a> = math::step_powerlaw(theta_c, E_iso, E_iso_w, k_e);</div>
 <div class="line"><span class="lineno">   76</span>    jet.<a class="code hl_variable" href="classEjecta.html#a6993f0ec67bf03b7c80e9a7c10e65640">Gamma0</a> = math::step_powerlaw_plus_one(theta_c, Gamma0 - 1, Gamma0_w - 1, k_g);</div>
@@ -887,8 +871,8 @@ Here is the caller graph for this function:</div>
 </div><!-- fragment --><div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
-<div class="center"><img src="pymodel_8h_a5a3369eb7b57f229aa810843dbe15b7e_icgraph.png" border="0" usemap="#apymodel_8h_a5a3369eb7b57f229aa810843dbe15b7e_icgraph" alt=""/></div>
-<map name="apymodel_8h_a5a3369eb7b57f229aa810843dbe15b7e_icgraph" id="apymodel_8h_a5a3369eb7b57f229aa810843dbe15b7e_icgraph">
+<div class="center"><img src="pymodel_8h_a2e10a24163357e677edd02fb34524a49_icgraph.png" border="0" usemap="#apymodel_8h_a2e10a24163357e677edd02fb34524a49_icgraph" alt=""/></div>
+<map name="apymodel_8h_a2e10a24163357e677edd02fb34524a49_icgraph" id="apymodel_8h_a2e10a24163357e677edd02fb34524a49_icgraph">
 <area shape="rect" title="Creates a step power&#45;law jet model: a pencil beam core and powerlaw wing with jump at theta_c." alt="" coords="204,5,355,31"/>
 <area shape="rect" href="pybind_8cpp.html#a8c92987849ad296e28ec6c07c8e7860b" title=" " alt="" coords="5,5,156,31"/>
 <area shape="poly" title=" " alt="" coords="191,21,156,21,156,15,191,15"/>
@@ -897,8 +881,8 @@ Here is the caller graph for this function:</div>
 
 </div>
 </div>
-<a id="af1f230ff03a5fe38e4b897e3dc219782" name="af1f230ff03a5fe38e4b897e3dc219782"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af1f230ff03a5fe38e4b897e3dc219782">&#9670;&#160;</a></span>PyTophatJet()</h2>
+<a id="a4951a986ce369081a438b84cbaa12880" name="a4951a986ce369081a438b84cbaa12880"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4951a986ce369081a438b84cbaa12880">&#9670;&#160;</a></span>PyTophatJet()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -936,7 +920,7 @@ Here is the caller graph for this function:</div>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">std::optional</a>&lt; <a class="el" href="structPyMagnetar.html">PyMagnetar</a> &gt;&#160;</td>
+          <td class="paramtype"><a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">const</a> <a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">std::optional</a>&lt; <a class="el" href="structPyMagnetar.html">PyMagnetar</a> &gt; &amp;&#160;</td>
           <td class="paramname"><em>magnetar</em> = <code><a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">std::nullopt</a></code>&#160;</td>
         </tr>
         <tr>
@@ -962,7 +946,7 @@ Here is the caller graph for this function:</div>
 <dl class="section return"><dt>Returns</dt><dd><a class="el" href="classEjecta.html" title="Represents generic ejecta properties for a simulation.">Ejecta</a> Configured ejecta object representing the top-hat jet structure </dd></dl>
 
 <p class="definition">Definition at line <a class="el" href="pymodel_8cpp_source.html#l00017">17</a> of file <a class="el" href="pymodel_8cpp_source.html">pymodel.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   18</span>                                                     {</div>
+<div class="fragment"><div class="line"><span class="lineno">   18</span>                                                            {</div>
 <div class="line"><span class="lineno">   19</span>    <a class="code hl_class" href="classEjecta.html">Ejecta</a> jet;</div>
 <div class="line"><span class="lineno">   20</span>    jet.<a class="code hl_variable" href="classEjecta.html#a1952705ec5647300cd09255dcfc786cd">eps_k</a> = math::tophat(theta_c, E_iso);</div>
 <div class="line"><span class="lineno">   21</span>    jet.<a class="code hl_variable" href="classEjecta.html#a6993f0ec67bf03b7c80e9a7c10e65640">Gamma0</a> = math::tophat_plus_one(theta_c, Gamma0 - 1);</div>
@@ -978,8 +962,8 @@ Here is the caller graph for this function:</div>
 </div><!-- fragment --><div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
-<div class="center"><img src="pymodel_8h_af1f230ff03a5fe38e4b897e3dc219782_icgraph.png" border="0" usemap="#apymodel_8h_af1f230ff03a5fe38e4b897e3dc219782_icgraph" alt=""/></div>
-<map name="apymodel_8h_af1f230ff03a5fe38e4b897e3dc219782_icgraph" id="apymodel_8h_af1f230ff03a5fe38e4b897e3dc219782_icgraph">
+<div class="center"><img src="pymodel_8h_a4951a986ce369081a438b84cbaa12880_icgraph.png" border="0" usemap="#apymodel_8h_a4951a986ce369081a438b84cbaa12880_icgraph" alt=""/></div>
+<map name="apymodel_8h_a4951a986ce369081a438b84cbaa12880_icgraph" id="apymodel_8h_a4951a986ce369081a438b84cbaa12880_icgraph">
 <area shape="rect" title="Creates a top&#45;hat jet model with uniform energy and Lorentz factor distributions." alt="" coords="204,5,303,31"/>
 <area shape="rect" href="pybind_8cpp.html#a8c92987849ad296e28ec6c07c8e7860b" title=" " alt="" coords="5,5,156,31"/>
 <area shape="poly" title=" " alt="" coords="190,21,156,21,156,15,190,15"/>
@@ -988,8 +972,8 @@ Here is the caller graph for this function:</div>
 
 </div>
 </div>
-<a id="ab9df94d937b16f949454e5e8c2f2caf4" name="ab9df94d937b16f949454e5e8c2f2caf4"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab9df94d937b16f949454e5e8c2f2caf4">&#9670;&#160;</a></span>PyTwoComponentJet()</h2>
+<a id="aa76c8dc614b9203d1a3c14e70aa84e2d" name="aa76c8dc614b9203d1a3c14e70aa84e2d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa76c8dc614b9203d1a3c14e70aa84e2d">&#9670;&#160;</a></span>PyTwoComponentJet()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1045,7 +1029,7 @@ Here is the caller graph for this function:</div>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">std::optional</a>&lt; <a class="el" href="structPyMagnetar.html">PyMagnetar</a> &gt;&#160;</td>
+          <td class="paramtype"><a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">const</a> <a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">std::optional</a>&lt; <a class="el" href="structPyMagnetar.html">PyMagnetar</a> &gt; &amp;&#160;</td>
           <td class="paramname"><em>magnetar</em> = <code><a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">std::nullopt</a></code>&#160;</td>
         </tr>
         <tr>
@@ -1074,7 +1058,7 @@ Here is the caller graph for this function:</div>
 <dl class="section return"><dt>Returns</dt><dd><a class="el" href="classEjecta.html" title="Represents generic ejecta properties for a simulation.">Ejecta</a> Configured two-component jet with specified properties </dd></dl>
 
 <p class="definition">Definition at line <a class="el" href="pymodel_8cpp_source.html#l00088">88</a> of file <a class="el" href="pymodel_8cpp_source.html">pymodel.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   89</span>                                                                                          {</div>
+<div class="fragment"><div class="line"><span class="lineno">   89</span>                                                                                                 {</div>
 <div class="line"><span class="lineno">   90</span>    <a class="code hl_class" href="classEjecta.html">Ejecta</a> jet;</div>
 <div class="line"><span class="lineno">   91</span>    jet.<a class="code hl_variable" href="classEjecta.html#a1952705ec5647300cd09255dcfc786cd">eps_k</a> = math::two_component(theta_c, theta_w, E_iso, E_iso_w);</div>
 <div class="line"><span class="lineno">   92</span> </div>
@@ -1092,8 +1076,8 @@ Here is the caller graph for this function:</div>
 </div><!-- fragment --><div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
-<div class="center"><img src="pymodel_8h_ab9df94d937b16f949454e5e8c2f2caf4_icgraph.png" border="0" usemap="#apymodel_8h_ab9df94d937b16f949454e5e8c2f2caf4_icgraph" alt=""/></div>
-<map name="apymodel_8h_ab9df94d937b16f949454e5e8c2f2caf4_icgraph" id="apymodel_8h_ab9df94d937b16f949454e5e8c2f2caf4_icgraph">
+<div class="center"><img src="pymodel_8h_aa76c8dc614b9203d1a3c14e70aa84e2d_icgraph.png" border="0" usemap="#apymodel_8h_aa76c8dc614b9203d1a3c14e70aa84e2d_icgraph" alt=""/></div>
+<map name="apymodel_8h_aa76c8dc614b9203d1a3c14e70aa84e2d_icgraph" id="apymodel_8h_aa76c8dc614b9203d1a3c14e70aa84e2d_icgraph">
 <area shape="rect" title="Creates a two&#45;component jet model with different properties for narrow and wide components." alt="" coords="204,5,359,31"/>
 <area shape="rect" href="pybind_8cpp.html#a8c92987849ad296e28ec6c07c8e7860b" title=" " alt="" coords="5,5,156,31"/>
 <area shape="poly" title=" " alt="" coords="190,21,156,21,156,15,190,15"/>
@@ -1157,9 +1141,9 @@ Here is the caller graph for this function:</div>
 <div class="line"><span class="lineno">  113</span>    <a class="code hl_class" href="classMedium.html">Medium</a> medium;</div>
 <div class="line"><span class="lineno">  114</span> </div>
 <div class="line"><span class="lineno">  115</span>    <span class="keyword">constexpr</span> <a class="code hl_typedef" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">r0</a> = 1<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">e17</a>; <span class="comment">// reference radius</span></div>
-<div class="line"><span class="lineno">  116</span>    <a class="code hl_typedef" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> A = A_star * 5<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">e11</a> * std::pow(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">r0</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">k</a> - 2);</div>
-<div class="line"><span class="lineno">  117</span>    <a class="code hl_typedef" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> rho_ism = n_ism * 1.67e-24;</div>
-<div class="line"><span class="lineno">  118</span>    <a class="code hl_typedef" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">r0k</a> = A / (n0 * 1.67e-24);</div>
+<div class="line"><span class="lineno">  116</span>    <span class="keyword">const</span> <a class="code hl_typedef" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> A = A_star * 5<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">e11</a> * std::pow(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">r0</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">k</a> - 2);</div>
+<div class="line"><span class="lineno">  117</span>    <span class="keyword">const</span> <a class="code hl_typedef" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> rho_ism = n_ism * 1.67e-24;</div>
+<div class="line"><span class="lineno">  118</span>    <span class="keyword">const</span> <a class="code hl_typedef" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">r0k</a> = A / (n0 * 1.67e-24);</div>
 <div class="line"><span class="lineno">  119</span> </div>
 <div class="line"><span class="lineno">  120</span>    medium.<a class="code hl_variable" href="classMedium.html#a419de8e407c9c9f75d1b76fdedf5d3eb">rho</a> = [=](<a class="code hl_typedef" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> phi, <a class="code hl_typedef" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> theta, <a class="code hl_typedef" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> r) { <span class="keywordflow">return</span> A / (<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">r0k</a> + std::pow(r, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">k</a>)) + rho_ism; };</div>
 <div class="line"><span class="lineno">  121</span>    <span class="keywordflow">return</span> medium;</div>

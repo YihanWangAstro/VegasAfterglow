@@ -97,9 +97,6 @@ $(document).ready(function(){initNavTree('inverse-compton_8cpp.html',''); initRe
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><code>#include &quot;<a class="el" href="inverse-compton_8h_source.html">inverse-compton.h</a>&quot;</code><br />
-<code>#include &lt;cmath&gt;</code><br />
-<code>#include &lt;iostream&gt;</code><br />
-<code>#include &lt;thread&gt;</code><br />
 <code>#include &quot;<a class="el" href="IO_8h_source.html">IO.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="macros_8h_source.html">macros.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="utilities_8h_source.html">utilities.h</a>&quot;</code><br />
@@ -108,96 +105,73 @@ Include dependency graph for inverse-compton.cpp:</div>
 <div class="dyncontent">
 <div class="center"><img src="inverse-compton_8cpp__incl.png" border="0" usemap="#ainverse-compton_8cpp" alt=""/></div>
 <map name="ainverse-compton_8cpp" id="ainverse-compton_8cpp">
-<area shape="rect" title=" " alt="" coords="658,5,817,31"/>
-<area shape="rect" href="inverse-compton_8h.html" title=" " alt="" coords="385,225,529,251"/>
-<area shape="poly" title=" " alt="" coords="724,33,484,219,481,215,721,29"/>
-<area shape="rect" title=" " alt="" coords="979,680,1042,705"/>
-<area shape="poly" title=" " alt="" coords="817,17,1125,23,1324,31,1529,44,1720,62,1880,87,1942,102,1990,120,2021,140,2029,151,2032,163,2032,533,2030,566,2021,592,2004,614,1977,634,1956,643,1922,651,1825,665,1698,675,1555,683,1265,691,1056,694,1056,688,1265,686,1554,677,1698,670,1824,660,1921,646,1954,638,1975,630,2000,610,2016,590,2024,565,2027,533,2027,164,2024,153,2017,143,1988,124,1941,107,1879,92,1719,67,1528,49,1324,37,1125,29,817,22"/>
-<area shape="rect" href="macros_8h.html" title=" " alt="" coords="91,680,173,705"/>
-<area shape="poly" title=" " alt="" coords="658,21,476,25,368,32,261,44,163,62,82,88,51,103,28,121,13,141,8,164,8,533,11,555,18,576,42,614,73,646,104,670,100,674,69,650,38,617,13,578,5,556,3,533,3,163,8,139,24,117,48,99,80,83,161,57,260,39,368,27,476,20,658,16"/>
-<area shape="rect" href="utilities_8h.html" title=" " alt="" coords="236,445,319,471"/>
-<area shape="poly" title=" " alt="" coords="658,24,500,33,409,42,319,55,237,73,170,97,144,111,125,127,113,144,109,164,109,312,112,335,121,356,134,374,151,391,191,418,231,438,229,442,188,423,148,395,130,378,116,358,107,337,104,313,104,163,109,142,121,124,141,107,168,92,235,68,318,50,408,36,500,27,657,18"/>
-<area shape="rect" title=" " alt="" coords="785,79,865,104"/>
-<area shape="poly" title=" " alt="" coords="753,29,802,68,799,72,750,33"/>
-<area shape="rect" title=" " alt="" coords="889,79,953,104"/>
-<area shape="poly" title=" " alt="" coords="768,28,879,71,877,76,766,33"/>
-<area shape="rect" href="IO_8h.html" title=" " alt="" coords="713,79,761,104"/>
-<area shape="poly" title=" " alt="" coords="740,31,740,65,735,65,735,31"/>
-<area shape="rect" title=" " alt="" coords="265,299,321,324"/>
-<area shape="poly" title=" " alt="" coords="432,253,334,296,331,291,430,248"/>
-<area shape="poly" title=" " alt="" coords="453,252,428,308,417,345,412,383,412,459,409,507,401,526,385,546,365,560,345,567,305,568,268,570,251,578,236,593,228,613,229,621,235,630,249,639,273,647,347,661,445,672,559,679,791,687,965,689,965,694,791,692,559,684,445,677,346,667,272,653,247,644,231,634,224,623,222,612,231,591,248,574,266,565,305,563,344,562,363,556,381,542,396,523,404,505,407,459,407,383,411,344,423,306,448,250"/>
-<area shape="rect" title=" " alt="" coords="447,372,502,397"/>
-<area shape="poly" title=" " alt="" coords="461,251,474,358,469,359,456,251"/>
-<area shape="rect" title=" " alt="" coords="713,299,775,324"/>
-<area shape="poly" title=" " alt="" coords="504,248,700,296,699,302,503,253"/>
-<area shape="poly" title=" " alt="" coords="386,249,286,267,231,283,178,304,131,331,93,365,79,385,68,407,61,431,59,457,59,532,64,572,79,609,97,642,116,668,111,671,93,645,74,611,59,573,53,533,53,457,56,430,63,405,74,382,89,362,128,327,176,299,229,278,284,262,385,243"/>
-<area shape="rect" href="mesh_8h.html" title=" " alt="" coords="855,519,926,544"/>
-<area shape="poly" title=" " alt="" coords="502,248,558,267,616,296,648,321,670,343,691,367,719,395,798,458,865,508,862,513,794,463,716,399,687,371,666,347,645,325,613,301,556,272,500,253"/>
-<area shape="rect" href="shock_8h.html" title=" " alt="" coords="531,299,603,324"/>
-<area shape="poly" title=" " alt="" coords="476,248,539,289,536,293,473,253"/>
-<area shape="poly" title=" " alt="" coords="445,253,393,300,336,373,294,435,289,432,331,369,389,297,441,249"/>
-<area shape="rect" title=" " alt="" coords="57,753,116,779"/>
-<area shape="poly" title=" " alt="" coords="127,707,104,743,99,740,122,704"/>
-<area shape="rect" title=" " alt="" coords="140,753,215,779"/>
-<area shape="poly" title=" " alt="" coords="142,704,165,740,160,743,137,707"/>
-<area shape="poly" title=" " alt="" coords="921,542,956,561,987,590,1005,628,1012,665,1007,666,1000,630,983,594,953,565,919,546"/>
-<area shape="poly" title=" " alt="" coords="855,543,836,547,770,557,717,562,667,571,605,594,591,604,581,614,570,625,554,634,506,652,456,666,355,685,262,693,187,695,187,690,262,688,355,679,455,661,505,647,552,630,567,621,577,610,587,600,603,590,665,566,717,557,769,552,836,541,854,537"/>
+<area shape="rect" title=" " alt="" coords="67,5,226,31"/>
+<area shape="rect" href="inverse-compton_8h.html" title=" " alt="" coords="165,225,309,251"/>
+<area shape="poly" title=" " alt="" coords="154,30,230,211,225,213,149,32"/>
+<area shape="rect" href="macros_8h.html" title=" " alt="" coords="141,680,224,705"/>
+<area shape="poly" title=" " alt="" coords="123,33,88,53,50,82,33,100,20,119,11,140,8,164,8,532,11,558,21,580,36,601,54,620,97,650,140,672,137,677,94,655,51,624,32,605,16,583,6,559,3,533,3,163,6,139,15,117,29,96,46,78,85,49,120,28"/>
+<area shape="rect" href="utilities_8h.html" title=" " alt="" coords="144,445,227,471"/>
+<area shape="poly" title=" " alt="" coords="135,33,112,55,87,86,67,123,61,143,59,163,59,313,61,333,68,352,92,386,122,415,153,436,150,441,119,419,87,390,63,354,56,334,53,313,53,163,56,142,62,121,83,83,108,51,131,29"/>
+<area shape="rect" href="IO_8h.html" title=" " alt="" coords="604,79,652,104"/>
+<area shape="poly" title=" " alt="" coords="224,28,591,82,590,87,224,33"/>
+<area shape="rect" title=" " alt="" coords="144,299,200,324"/>
+<area shape="poly" title=" " alt="" coords="229,253,194,290,190,287,225,249"/>
+<area shape="poly" title=" " alt="" coords="205,253,167,272,149,285,134,300,120,321,113,338,109,383,109,532,115,572,129,609,148,642,166,668,162,671,144,645,125,611,110,573,104,533,104,383,108,337,115,318,130,297,146,281,164,267,202,248"/>
+<area shape="rect" href="mesh_8h.html" title=" " alt="" coords="563,519,634,544"/>
+<area shape="poly" title=" " alt="" coords="253,249,575,508,572,512,250,253"/>
+<area shape="rect" href="shock_8h.html" title=" " alt="" coords="437,299,509,324"/>
+<area shape="poly" title=" " alt="" coords="276,248,425,293,423,298,274,253"/>
+<area shape="poly" title=" " alt="" coords="237,252,194,432,189,431,232,250"/>
+<area shape="rect" title=" " alt="" coords="108,753,167,779"/>
+<area shape="poly" title=" " alt="" coords="177,707,154,743,150,740,173,704"/>
+<area shape="rect" title=" " alt="" coords="191,753,265,779"/>
+<area shape="poly" title=" " alt="" coords="192,704,216,740,211,743,188,707"/>
+<area shape="poly" title=" " alt="" coords="579,546,500,594,475,616,448,634,394,655,338,671,238,689,237,683,337,666,392,650,445,630,472,611,497,590,577,542"/>
 <area shape="rect" title=" " alt="" coords="246,599,434,625"/>
-<area shape="poly" title=" " alt="" coords="855,540,680,562,447,595,416,600,416,594,446,589,679,557,855,534"/>
-<area shape="rect" href="physics_8h.html" title=" " alt="" coords="459,599,541,625"/>
-<area shape="poly" title=" " alt="" coords="855,543,836,547,698,568,637,578,561,595,548,598,546,593,559,589,636,573,697,563,836,541,854,538"/>
-<area shape="rect" title=" " alt="" coords="1049,592,1191,632"/>
-<area shape="poly" title=" " alt="" coords="925,541,1053,585,1051,590,923,547"/>
-<area shape="rect" title=" " alt="" coords="1215,592,1358,632"/>
-<area shape="poly" title=" " alt="" coords="927,536,1202,589,1201,594,926,542"/>
-<area shape="rect" title=" " alt="" coords="1382,592,1525,632"/>
-<area shape="poly" title=" " alt="" coords="927,533,1112,553,1369,589,1368,594,1111,558,926,539"/>
-<area shape="rect" title=" " alt="" coords="1549,599,1726,625"/>
-<area shape="poly" title=" " alt="" coords="926,532,1182,551,1358,568,1538,589,1568,594,1568,600,1537,595,1357,573,1181,556,926,537"/>
-<area shape="rect" title=" " alt="" coords="1750,599,1941,625"/>
-<area shape="poly" title=" " alt="" coords="926,531,1259,547,1496,565,1739,589,1774,594,1773,600,1738,595,1496,570,1259,553,926,537"/>
-<area shape="rect" title=" " alt="" coords="616,599,765,625"/>
-<area shape="poly" title=" " alt="" coords="863,546,734,597,732,592,861,542"/>
-<area shape="rect" title=" " alt="" coords="790,599,973,625"/>
-<area shape="poly" title=" " alt="" coords="892,544,887,586,882,585,887,544"/>
-<area shape="poly" title=" " alt="" coords="542,618,604,629,966,683,965,688,604,635,541,624"/>
-<area shape="poly" title=" " alt="" coords="470,627,446,635,307,665,187,686,187,681,306,660,445,629,468,622"/>
-<area shape="poly" title=" " alt="" coords="554,326,502,366,499,361,550,322"/>
-<area shape="poly" title=" " alt="" coords="578,323,612,371,628,400,639,425,652,447,675,469,715,492,759,508,803,518,842,524,841,529,802,523,757,513,713,496,672,473,648,450,634,427,623,402,607,373,573,326"/>
-<area shape="poly" title=" " alt="" coords="564,325,516,421,477,485,430,546,402,572,372,594,369,589,398,568,426,542,472,482,511,419,559,323"/>
-<area shape="poly" title=" " alt="" coords="572,324,577,362,581,418,577,482,571,514,561,545,546,571,527,592,523,588,542,568,556,543,566,513,572,481,575,418,572,363,566,325"/>
-<area shape="rect" href="jet_8h.html" title=" " alt="" coords="729,372,780,397"/>
-<area shape="poly" title=" " alt="" coords="598,322,717,366,715,371,596,327"/>
-<area shape="rect" href="medium_8h.html" title=" " alt="" coords="209,372,297,397"/>
-<area shape="poly" title=" " alt="" coords="531,324,311,373,310,368,530,318"/>
-<area shape="poly" title=" " alt="" coords="780,383,1009,390,1180,400,1368,417,1555,442,1644,459,1727,478,1801,501,1865,527,1917,557,1955,590,1965,612,1963,623,1955,634,1941,641,1914,646,1826,657,1562,674,1056,693,1056,688,1562,669,1826,652,1913,641,1939,636,1952,630,1958,621,1960,613,1951,594,1914,561,1863,532,1799,506,1725,484,1643,464,1554,448,1367,422,1179,405,1008,395,780,389"/>
-<area shape="poly" title=" " alt="" coords="729,392,333,451,332,446,729,387"/>
-<area shape="poly" title=" " alt="" coords="250,473,216,492,185,520,164,557,150,596,136,667,131,666,144,595,159,554,181,517,212,488,247,468"/>
-<area shape="poly" title=" " alt="" coords="319,461,842,522,841,527,319,467"/>
-<area shape="rect" title=" " alt="" coords="279,519,371,544"/>
-<area shape="poly" title=" " alt="" coords="287,470,312,506,308,509,283,473"/>
-<area shape="rect" title=" " alt="" coords="195,519,255,544"/>
-<area shape="poly" title=" " alt="" coords="271,473,244,509,240,506,267,469"/>
-<area shape="poly" title=" " alt="" coords="245,399,220,430,188,476,157,532,137,593,133,631,133,666,128,666,128,631,132,591,152,530,183,473,215,427,241,396"/>
-<area shape="poly" title=" " alt="" coords="260,397,272,431,267,433,255,399"/>
-<area shape="poly" title=" " alt="" coords="762,98,927,150,950,168,967,186,978,208,981,237,981,386,975,423,958,458,937,487,916,511,912,507,933,484,954,455,970,422,976,386,976,237,973,209,963,189,947,172,924,154,761,103"/>
-<area shape="poly" title=" " alt="" coords="713,98,685,104,652,114,620,130,594,154,577,185,568,221,565,255,566,285,561,285,560,255,563,220,572,183,590,150,617,126,650,109,684,98,712,93"/>
-<area shape="rect" title=" " alt="" coords="1016,152,1075,177"/>
-<area shape="poly" title=" " alt="" coords="762,98,774,101,886,127,998,149,1003,151,1002,156,997,155,884,132,773,107,761,103"/>
-<area shape="rect" href="prompt_8h.html" title=" " alt="" coords="799,299,881,324"/>
-<area shape="poly" title=" " alt="" coords="763,98,848,127,904,150,913,168,916,187,913,206,906,226,886,261,863,290,859,287,882,258,902,223,908,205,910,187,908,170,901,154,847,132,761,103"/>
-<area shape="rect" href="synchrotron_8h.html" title=" " alt="" coords="605,152,715,177"/>
-<area shape="poly" title=" " alt="" coords="727,106,685,144,681,141,723,102"/>
-<area shape="rect" title=" " alt="" coords="739,152,890,177"/>
-<area shape="poly" title=" " alt="" coords="752,102,794,141,790,144,748,106"/>
-<area shape="poly" title=" " alt="" coords="845,324,887,504,882,506,840,325"/>
-<area shape="poly" title=" " alt="" coords="838,325,821,360,794,399,728,463,656,518,588,563,535,595,532,590,586,559,653,514,725,459,790,396,816,357,833,323"/>
-<area shape="poly" title=" " alt="" coords="828,326,781,365,777,361,825,322"/>
-<area shape="poly" title=" " alt="" coords="628,180,504,223,502,218,627,175"/>
-<area shape="poly" title=" " alt="" coords="669,176,733,285,728,288,665,179"/>
-<area shape="poly" title=" " alt="" coords="708,175,755,191,807,216,857,251,878,273,896,297,908,324,915,352,918,410,911,464,901,506,896,505,906,463,913,410,910,353,903,326,891,300,874,276,853,255,805,221,753,196,706,180"/>
-<area shape="poly" title=" " alt="" coords="655,179,584,289,579,286,650,176"/>
-<area shape="poly" title=" " alt="" coords="605,174,496,193,434,208,374,228,304,253,279,269,256,300,248,329,250,358,245,358,243,328,251,298,275,265,302,248,372,223,433,203,495,187,604,169"/>
+<area shape="poly" title=" " alt="" coords="564,546,392,598,390,593,562,541"/>
+<area shape="rect" href="physics_8h.html" title=" " alt="" coords="1427,599,1509,625"/>
+<area shape="poly" title=" " alt="" coords="635,538,654,541,769,554,867,558,1035,557,1116,556,1203,560,1301,570,1415,589,1428,593,1427,598,1414,595,1300,575,1203,565,1116,562,1035,562,867,564,769,559,653,547,634,543"/>
+<area shape="rect" title=" " alt="" coords="1093,592,1235,632"/>
+<area shape="poly" title=" " alt="" coords="635,538,654,541,772,557,865,565,959,573,1080,589,1079,594,959,578,864,570,771,562,653,547,634,543"/>
+<area shape="rect" title=" " alt="" coords="1259,592,1402,632"/>
+<area shape="poly" title=" " alt="" coords="635,538,654,541,818,559,948,565,1079,571,1246,589,1245,594,1079,576,948,570,818,564,653,547,634,543"/>
+<area shape="rect" title=" " alt="" coords="510,599,687,625"/>
+<area shape="poly" title=" " alt="" coords="601,544,601,585,596,585,596,544"/>
+<area shape="rect" title=" " alt="" coords="712,599,861,625"/>
+<area shape="poly" title=" " alt="" coords="627,542,748,592,746,597,625,546"/>
+<area shape="rect" title=" " alt="" coords="886,599,1069,625"/>
+<area shape="poly" title=" " alt="" coords="635,538,654,541,909,594,908,599,653,547,634,543"/>
+<area shape="poly" title=" " alt="" coords="1441,627,1415,635,1307,650,1163,662,818,680,478,690,238,693,238,688,478,684,818,675,1163,657,1306,645,1414,629,1439,622"/>
+<area shape="rect" title=" " alt="" coords="1437,680,1499,705"/>
+<area shape="poly" title=" " alt="" coords="1471,625,1471,666,1465,666,1465,625"/>
+<area shape="poly" title=" " alt="" coords="499,322,530,342,558,370,576,404,589,441,600,505,594,505,583,442,571,406,554,374,527,346,496,326"/>
+<area shape="poly" title=" " alt="" coords="471,325,353,587,348,585,466,323"/>
+<area shape="poly" title=" " alt="" coords="496,322,769,468,864,499,946,519,1019,531,1088,539,1233,554,1317,568,1415,589,1426,592,1425,598,1414,595,1316,573,1232,559,1088,545,1018,537,945,524,862,504,767,473,493,326"/>
+<area shape="rect" title=" " alt="" coords="489,372,543,397"/>
+<area shape="poly" title=" " alt="" coords="483,323,504,359,500,362,478,326"/>
+<area shape="rect" href="medium_8h.html" title=" " alt="" coords="275,372,363,397"/>
+<area shape="poly" title=" " alt="" coords="450,326,357,369,355,364,447,322"/>
+<area shape="poly" title=" " alt="" coords="315,399,292,446,195,669,190,667,287,444,310,397"/>
+<area shape="rect" title=" " alt="" coords="302,445,362,471"/>
+<area shape="poly" title=" " alt="" coords="323,397,330,431,325,432,318,398"/>
+<area shape="poly" title=" " alt="" coords="298,400,220,441,218,436,296,395"/>
+<area shape="poly" title=" " alt="" coords="188,471,186,666,180,666,183,471"/>
+<area shape="poly" title=" " alt="" coords="227,464,550,519,549,524,226,469"/>
+<area shape="poly" title=" " alt="" coords="654,101,687,121,718,150,732,172,740,191,744,237,744,386,741,408,733,429,707,465,672,493,638,514,635,510,669,489,703,461,729,426,736,407,739,386,739,237,735,192,727,174,714,154,684,125,651,106"/>
+<area shape="poly" title=" " alt="" coords="604,98,495,117,440,133,420,143,407,154,399,170,397,187,400,205,407,223,428,258,453,287,449,290,424,261,402,226,395,206,392,187,394,168,403,150,417,139,438,128,493,112,603,93"/>
+<area shape="rect" title=" " alt="" coords="829,152,888,177"/>
+<area shape="poly" title=" " alt="" coords="653,98,817,148,815,153,651,103"/>
+<area shape="rect" href="prompt_8h.html" title=" " alt="" coords="779,445,861,471"/>
+<area shape="poly" title=" " alt="" coords="653,95,707,113,736,129,762,150,779,170,789,189,794,210,795,237,795,313,802,377,815,432,810,433,796,378,789,313,789,237,788,211,784,191,774,173,758,154,733,134,705,118,651,100"/>
+<area shape="rect" href="synchrotron_8h.html" title=" " alt="" coords="418,152,529,177"/>
+<area shape="poly" title=" " alt="" coords="605,106,512,149,510,144,603,101"/>
+<area shape="rect" title=" " alt="" coords="553,152,703,177"/>
+<area shape="poly" title=" " alt="" coords="631,104,631,138,625,138,625,104"/>
+<area shape="poly" title=" " alt="" coords="785,473,648,517,646,512,784,468"/>
+<area shape="poly" title=" " alt="" coords="861,464,1098,511,1256,548,1415,589,1425,592,1424,598,1414,595,1254,553,1096,517,860,469"/>
+<area shape="poly" title=" " alt="" coords="436,180,289,224,288,219,435,175"/>
+<area shape="poly" title=" " alt="" coords="530,175,582,192,635,219,658,236,677,257,689,282,693,310,693,386,686,424,669,458,647,488,625,511,621,508,643,485,665,456,681,422,688,386,688,310,684,284,672,260,655,240,632,223,580,197,528,180"/>
+<area shape="poly" title=" " alt="" coords="476,178,476,285,471,285,471,178"/>
 </map>
 </div>
 </div>
@@ -235,43 +209,43 @@ Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Compton cross-section </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="inverse-compton_8cpp_source.html#l00118">118</a> of file <a class="el" href="inverse-compton_8cpp_source.html">inverse-compton.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  118</span>                                    {</div>
-<div class="line"><span class="lineno">  119</span>    <a class="code hl_typedef" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">x</a> = <a class="code hl_variable" href="namespacecon.html#a07ddec20ab09a3078fce714358b65b4b">con::h</a> / (<a class="code hl_variable" href="namespacecon.html#a740c8edb3d4f2d904a1c76002f84fb7e">con::me</a> * <a class="code hl_variable" href="namespacecon.html#a26ef2b83dd09c356e324bd243b498764">con::c2</a>) * nu;</div>
-<div class="line"><span class="lineno">  120</span>    <span class="comment">/*if (x &lt;= 1) {</span></div>
-<div class="line"><span class="lineno">  121</span><span class="comment">        return con::sigmaT;</span></div>
-<div class="line"><span class="lineno">  122</span><span class="comment">    } else {</span></div>
-<div class="line"><span class="lineno">  123</span><span class="comment">        return 0;</span></div>
-<div class="line"><span class="lineno">  124</span><span class="comment">    }*/</span></div>
-<div class="line"><span class="lineno">  125</span> </div>
-<div class="line"><span class="lineno">  126</span>    <span class="keywordflow">if</span> (<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">x</a> &lt; 1e-2) {</div>
-<div class="line"><span class="lineno">  127</span>        <span class="keywordflow">return</span> <a class="code hl_variable" href="namespacecon.html#ad19e5b64c85c3e709fd0944358be97f6">con::sigmaT</a> * (1 - 2 * <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">x</a>);</div>
-<div class="line"><span class="lineno">  128</span>    } <span class="keywordflow">else</span> <span class="keywordflow">if</span> (<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">x</a> &gt; 1e2) {</div>
-<div class="line"><span class="lineno">  129</span>        <span class="keywordflow">return</span> 3. / 8 * <a class="code hl_variable" href="namespacecon.html#ad19e5b64c85c3e709fd0944358be97f6">con::sigmaT</a> * (<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">log</a>(2 * <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">x</a>) + 0.5) / <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">x</a>;</div>
-<div class="line"><span class="lineno">  130</span>    } <span class="keywordflow">else</span> {</div>
-<div class="line"><span class="lineno">  131</span>        <a class="code hl_typedef" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">l</a> = std::log1p(2.0 * <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">x</a>); <span class="comment">// log(1+2x)</span></div>
-<div class="line"><span class="lineno">  132</span>        <a class="code hl_typedef" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">invx</a> = 1.0 / <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">x</a>;</div>
-<div class="line"><span class="lineno">  133</span>        <a class="code hl_typedef" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">invx2</a> = <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">invx</a> * <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">invx</a>;</div>
-<div class="line"><span class="lineno">  134</span>        <a class="code hl_typedef" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">term1</a> = 1.0 + 2.0 * <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">x</a>;</div>
-<div class="line"><span class="lineno">  135</span>        <a class="code hl_typedef" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">invt1</a> = 1.0 / <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">term1</a>;</div>
-<div class="line"><span class="lineno">  136</span>        <a class="code hl_typedef" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">invt1_2</a> = <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">invt1</a> * <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">invt1</a>;</div>
-<div class="line"><span class="lineno">  137</span> </div>
-<div class="line"><span class="lineno">  138</span>        <span class="comment">// ((1+x)/x^3) * (2x(1+x)/(1+2x) - log(1+2x)) + log(1+2x)/(2x) - (1+3x)/(1+2x)^2</span></div>
-<div class="line"><span class="lineno">  139</span>        <a class="code hl_typedef" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">a</a> = (1.0 + <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">x</a>) * <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">invx2</a> * <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">invx</a>;          <span class="comment">// (1+x)/x^3</span></div>
-<div class="line"><span class="lineno">  140</span>        <a class="code hl_typedef" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">b</a> = (2.0 * <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">x</a> * (1.0 + <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">x</a>)) * <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">invt1</a> - <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">l</a>; <span class="comment">// bracket</span></div>
-<div class="line"><span class="lineno">  141</span>        <a class="code hl_typedef" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> <a class="code hl_variable" href="namespacecon.html#a2ff3edf57629ccb9a49d5bde7278a7c4">c</a> = 0.5 * <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">l</a> * <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">invx</a>;                    <span class="comment">// log_term/(2x)</span></div>
-<div class="line"><span class="lineno">  142</span>        <a class="code hl_typedef" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">d</a> = (1.0 + 3.0 * <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">x</a>) * <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">invt1_2</a>;         <span class="comment">// (1+3x)/(1+2x)^2</span></div>
-<div class="line"><span class="lineno">  143</span> </div>
-<div class="line"><span class="lineno">  144</span>        <span class="keywordflow">return</span> 0.75 * <a class="code hl_variable" href="namespacecon.html#ad19e5b64c85c3e709fd0944358be97f6">con::sigmaT</a> * (<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">a</a> * <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">b</a> + <a class="code hl_variable" href="namespacecon.html#a2ff3edf57629ccb9a49d5bde7278a7c4">c</a> - <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">d</a>);</div>
-<div class="line"><span class="lineno">  145</span>    }</div>
-<div class="line"><span class="lineno">  146</span>}</div>
+<p class="definition">Definition at line <a class="el" href="inverse-compton_8cpp_source.html#l00114">114</a> of file <a class="el" href="inverse-compton_8cpp_source.html">inverse-compton.cpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  114</span>                                    {</div>
+<div class="line"><span class="lineno">  115</span>    <span class="keyword">const</span> <a class="code hl_typedef" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">x</a> = <a class="code hl_variable" href="namespacecon.html#a07ddec20ab09a3078fce714358b65b4b">con::h</a> / (<a class="code hl_variable" href="namespacecon.html#a740c8edb3d4f2d904a1c76002f84fb7e">con::me</a> * <a class="code hl_variable" href="namespacecon.html#a26ef2b83dd09c356e324bd243b498764">con::c2</a>) * nu;</div>
+<div class="line"><span class="lineno">  116</span>    <span class="comment">/*if (x &lt;= 1) {</span></div>
+<div class="line"><span class="lineno">  117</span><span class="comment">        return con::sigmaT;</span></div>
+<div class="line"><span class="lineno">  118</span><span class="comment">    } else {</span></div>
+<div class="line"><span class="lineno">  119</span><span class="comment">        return 0;</span></div>
+<div class="line"><span class="lineno">  120</span><span class="comment">    }*/</span></div>
+<div class="line"><span class="lineno">  121</span> </div>
+<div class="line"><span class="lineno">  122</span>    <span class="keywordflow">if</span> (<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">x</a> &lt; 1e-2) {</div>
+<div class="line"><span class="lineno">  123</span>        <span class="keywordflow">return</span> <a class="code hl_variable" href="namespacecon.html#ad19e5b64c85c3e709fd0944358be97f6">con::sigmaT</a> * (1 - 2 * <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">x</a>);</div>
+<div class="line"><span class="lineno">  124</span>    } <span class="keywordflow">else</span> <span class="keywordflow">if</span> (<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">x</a> &gt; 1e2) {</div>
+<div class="line"><span class="lineno">  125</span>        <span class="keywordflow">return</span> 3. / 8 * <a class="code hl_variable" href="namespacecon.html#ad19e5b64c85c3e709fd0944358be97f6">con::sigmaT</a> * (<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">log</a>(2 * <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">x</a>) + 0.5) / <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">x</a>;</div>
+<div class="line"><span class="lineno">  126</span>    } <span class="keywordflow">else</span> {</div>
+<div class="line"><span class="lineno">  127</span>        <span class="keyword">const</span> <a class="code hl_typedef" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">l</a> = std::log1p(2.0 * <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">x</a>); <span class="comment">// log(1+2x)</span></div>
+<div class="line"><span class="lineno">  128</span>        <span class="keyword">const</span> <a class="code hl_typedef" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">invx</a> = 1.0 / <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">x</a>;</div>
+<div class="line"><span class="lineno">  129</span>        <span class="keyword">const</span> <a class="code hl_typedef" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">invx2</a> = <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">invx</a> * <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">invx</a>;</div>
+<div class="line"><span class="lineno">  130</span>        <span class="keyword">const</span> <a class="code hl_typedef" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">term1</a> = 1.0 + 2.0 * <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">x</a>;</div>
+<div class="line"><span class="lineno">  131</span>        <span class="keyword">const</span> <a class="code hl_typedef" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">invt1</a> = 1.0 / <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">term1</a>;</div>
+<div class="line"><span class="lineno">  132</span>        <span class="keyword">const</span> <a class="code hl_typedef" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">invt1_2</a> = <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">invt1</a> * <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">invt1</a>;</div>
+<div class="line"><span class="lineno">  133</span> </div>
+<div class="line"><span class="lineno">  134</span>        <span class="comment">// ((1+x)/x^3) * (2x(1+x)/(1+2x) - log(1+2x)) + log(1+2x)/(2x) - (1+3x)/(1+2x)^2</span></div>
+<div class="line"><span class="lineno">  135</span>        <span class="keyword">const</span> <a class="code hl_typedef" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">a</a> = (1.0 + <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">x</a>) * <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">invx2</a> * <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">invx</a>;        <span class="comment">// (1+x)/x^3</span></div>
+<div class="line"><span class="lineno">  136</span>        <span class="keyword">const</span> <a class="code hl_typedef" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">b</a> = 2.0 * <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">x</a> * (1.0 + <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">x</a>) * <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">invt1</a> - <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">l</a>; <span class="comment">// bracket</span></div>
+<div class="line"><span class="lineno">  137</span>        <span class="keyword">const</span> <a class="code hl_typedef" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> <a class="code hl_variable" href="namespacecon.html#a2ff3edf57629ccb9a49d5bde7278a7c4">c</a> = 0.5 * <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">l</a> * <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">invx</a>;                  <span class="comment">// log_term/(2x)</span></div>
+<div class="line"><span class="lineno">  138</span>        <span class="keyword">const</span> <a class="code hl_typedef" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">d</a> = (1.0 + 3.0 * <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">x</a>) * <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">invt1_2</a>;       <span class="comment">// (1+3x)/(1+2x)^2</span></div>
+<div class="line"><span class="lineno">  139</span> </div>
+<div class="line"><span class="lineno">  140</span>        <span class="keywordflow">return</span> 0.75 * <a class="code hl_variable" href="namespacecon.html#ad19e5b64c85c3e709fd0944358be97f6">con::sigmaT</a> * (<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">a</a> * <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">b</a> + <a class="code hl_variable" href="namespacecon.html#a2ff3edf57629ccb9a49d5bde7278a7c4">c</a> - <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">d</a>);</div>
+<div class="line"><span class="lineno">  141</span>    }</div>
+<div class="line"><span class="lineno">  142</span>}</div>
 <div class="ttc" id="amacros_8h_html_a4b04262b81aa7d31eb5d2f607e2a35de"><div class="ttname"><a href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a></div><div class="ttdeci">double Real</div><div class="ttdoc">Type alias for floating-point precision used throughout the code.</div><div class="ttdef"><b>Definition</b> <a href="macros_8h_source.html#l00022">macros.h:22</a></div></div>
 <div class="ttc" id="anamespacecon_html_a07ddec20ab09a3078fce714358b65b4b"><div class="ttname"><a href="namespacecon.html#a07ddec20ab09a3078fce714358b65b4b">con::h</a></div><div class="ttdeci">constexpr Real h</div><div class="ttdoc">Planck constant in code units.</div><div class="ttdef"><b>Definition</b> <a href="macros_8h_source.html#l00091">macros.h:91</a></div></div>
 <div class="ttc" id="anamespacecon_html_a26ef2b83dd09c356e324bd243b498764"><div class="ttname"><a href="namespacecon.html#a26ef2b83dd09c356e324bd243b498764">con::c2</a></div><div class="ttdeci">constexpr Real c2</div><div class="ttdoc">Speed of light squared.</div><div class="ttdef"><b>Definition</b> <a href="macros_8h_source.html#l00086">macros.h:86</a></div></div>
 <div class="ttc" id="anamespacecon_html_a2ff3edf57629ccb9a49d5bde7278a7c4"><div class="ttname"><a href="namespacecon.html#a2ff3edf57629ccb9a49d5bde7278a7c4">con::c</a></div><div class="ttdeci">constexpr Real c</div><div class="ttdoc">Speed of light (normalized to 1 in code units)</div><div class="ttdef"><b>Definition</b> <a href="macros_8h_source.html#l00085">macros.h:85</a></div></div>
 <div class="ttc" id="anamespacecon_html_a740c8edb3d4f2d904a1c76002f84fb7e"><div class="ttname"><a href="namespacecon.html#a740c8edb3d4f2d904a1c76002f84fb7e">con::me</a></div><div class="ttdeci">constexpr Real me</div><div class="ttdoc">Electron mass in code units.</div><div class="ttdef"><b>Definition</b> <a href="macros_8h_source.html#l00088">macros.h:88</a></div></div>
 <div class="ttc" id="anamespacecon_html_ad19e5b64c85c3e709fd0944358be97f6"><div class="ttname"><a href="namespacecon.html#ad19e5b64c85c3e709fd0944358be97f6">con::sigmaT</a></div><div class="ttdeci">constexpr Real sigmaT</div><div class="ttdoc">Thomson cross-section in code units.</div><div class="ttdef"><b>Definition</b> <a href="macros_8h_source.html#l00096">macros.h:96</a></div></div>
-<div class="ttc" id="autilities_8h_html_ab8e81118f023df135835db8cce4f5f42"><div class="ttname"><a href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">max</a></div><div class="ttdeci">T max(T value)</div><div class="ttdoc">Returns the value of a single parameter.</div><div class="ttdef"><b>Definition</b> <a href="utilities_8h_source.html#l00311">utilities.h:311</a></div></div>
+<div class="ttc" id="autilities_8h_html_ab8e81118f023df135835db8cce4f5f42"><div class="ttname"><a href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">max</a></div><div class="ttdeci">T max(T value)</div><div class="ttdoc">Returns the value of a single parameter.</div><div class="ttdef"><b>Definition</b> <a href="utilities_8h_source.html#l00307">utilities.h:307</a></div></div>
 </div><!-- fragment --><div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -289,7 +263,7 @@ Here is the caller graph for this function:</div>
 <div class="center"><img src="inverse-compton_8cpp_a689ca8481a7d3e7e760a3300503f2781_icgraph.png" border="0" usemap="#ainverse-compton_8cpp_a689ca8481a7d3e7e760a3300503f2781_icgraph" alt=""/></div>
 <map name="ainverse-compton_8cpp_a689ca8481a7d3e7e760a3300503f2781_icgraph" id="ainverse-compton_8cpp_a689ca8481a7d3e7e760a3300503f2781_icgraph">
 <area shape="rect" title="Computes the Compton scattering cross&#45;section as a function of frequency (nu)." alt="" coords="232,5,407,31"/>
-<area shape="rect" href="structICPhoton.html#ae7d4fbf06ebcb9b66f8938803ec8c32c" title="Returns the photon specific intensity." alt="" coords="5,5,184,31"/>
+<area shape="rect" href="structICPhoton.html#ae7d4fbf06ebcb9b66f8938803ec8c32c" title="Returns the photon&#45;specific intensity." alt="" coords="5,5,184,31"/>
 <area shape="poly" title=" " alt="" coords="218,21,184,21,184,15,218,15"/>
 </map>
 </div>

@@ -3,9 +3,9 @@ var searchData=
   ['a_5fstar_0',['A_star',['../structParams.html#a15b9f0b0ca2df7a9190562d0aaa19814',1,'Params']]],
   ['adaptive_5fphi_5fgrid_1',['adaptive_phi_grid',['../mesh_8h.html#a83ae490737edde6ad03ede25e371a071',1,'mesh.h']]],
   ['adaptive_5ftheta_5fgrid_2',['adaptive_theta_grid',['../mesh_8h.html#a3dc6828dd13a70c0c203dba03e765cea',1,'mesh.h']]],
-  ['add_5fflux_3',['add_flux',['../structMultiBandData.html#abf821e57acc374b58a3377eb40210067',1,'MultiBandData']]],
-  ['add_5fflux_5fdensity_4',['add_flux_density',['../structMultiBandData.html#a61bd4b2b5346bd911a4120447ff00b8b',1,'MultiBandData']]],
-  ['add_5fspectrum_5',['add_spectrum',['../structMultiBandData.html#a071a3ffb1dd36155bbbab7d4dad8ea01',1,'MultiBandData']]],
+  ['add_5fflux_3',['add_flux',['../structMultiBandData.html#a3d3149e512bdfb7005f019879e293158',1,'MultiBandData']]],
+  ['add_5fflux_5fdensity_4',['add_flux_density',['../structMultiBandData.html#a95b867e09e94169a3a07daeb0598a040',1,'MultiBandData']]],
+  ['add_5fspectrum_5',['add_spectrum',['../structMultiBandData.html#a836cbe84f113e680f8d6291663112c0f',1,'MultiBandData']]],
   ['adiabatic_20index_20functions_6',['Gamma Conversion and Adiabatic Index Functions',['../group__GammaConversions.html',1,'']]],
   ['adiabatic_5fidx_7',['adiabatic_idx',['../physics_8h.html#a2a95c6b3f1236d69328af7199a772a23',1,'physics.h']]],
   ['afterglow_8',['afterglow',['../namespaceafterglow.html',1,'']]],
@@ -21,7 +21,7 @@ var searchData=
   ['and_20printing_20functions_18',['Output and Printing Functions',['../group__IO__Functions.html',1,'']]],
   ['array_19',['Array',['../mesh_8h.html#afd05120c4d579ec7fa4906f677781a83',1,'mesh.h']]],
   ['array_20and_20grid_20utilities_20',['Array and Grid Utilities',['../group__Mesh__Utilities.html',1,'']]],
-  ['array_5fsize_21',['array_size',['../structSimpleState.html#ae6536e3a3e70a7c9cd6762554aae61c5',1,'SimpleState::array_size'],['../structReverseState.html#a5c2b0b256e464b3822aa68b5fe733671',1,'ReverseState::array_size'],['../structForwardState.html#a866d01d311ef71ef915b474ca81e746f',1,'ForwardState::array_size']]],
+  ['array_5fsize_21',['array_size',['../structSimpleState.html#a45dbd1e3aac5158463b4921844c83819',1,'SimpleState::array_size'],['../structReverseState.html#aa736b47fe33588c1790fea60bf5ea895',1,'ReverseState::array_size'],['../structForwardState.html#ad2a43af97eb49e8694c45fd8fc50f889',1,'ForwardState::array_size']]],
   ['au_22',['au',['../namespaceunit.html#a6cc151b26a5507a0e63f9c9f68adf4d2',1,'unit']]],
-  ['auto_5fgrid_23',['auto_grid',['../mesh_8h.html#a017f88b3242fdadb28e664f27725643a',1,'mesh.h']]]
+  ['auto_5fgrid_23',['auto_grid',['../mesh_8h.html#a7a2706b37f8deef2c42462a57f96fd83',1,'mesh.h']]]
 ];

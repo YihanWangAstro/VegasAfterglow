@@ -1,6 +1,6 @@
 <map id="PyModel::compute_emission" name="PyModel::compute_emission">
 <area shape="rect" id="Node000001" title=" " alt="" coords="5,396,215,422"/>
-<area shape="rect" id="Node000002" href="$mesh_8h.html#a017f88b3242fdadb28e664f27725643a" title="Constructs a coordinate grid (Coord) for shock evolution." alt="" coords="300,219,383,244"/>
+<area shape="rect" id="Node000002" href="$mesh_8h.html#a7a2706b37f8deef2c42462a57f96fd83" title="Constructs a coordinate grid (Coord) for shock evolution." alt="" coords="300,219,383,244"/>
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="126,394,310,251,314,256,129,398"/>
 <area shape="rect" id="Node000005" href="$utilities_8h.html#ab8e81118f023df135835db8cce4f5f42" title="Returns the value of a single parameter." alt="" coords="1037,194,1088,219"/>
 <area shape="poly" id="edge20_Node000001_Node000005" title=" " alt="" coords="215,397,369,386,543,381,755,381,824,383,879,381,905,377,930,368,958,355,988,335,1011,312,1029,285,1052,231,1057,233,1034,287,1015,316,991,339,960,359,932,373,906,382,880,387,824,388,755,386,543,386,370,392,215,402"/>
@@ -13,9 +13,9 @@
 <area shape="poly" id="edge15_Node000002_Node000005" title=" " alt="" coords="358,217,406,186,467,156,522,139,566,130,668,122,760,110,833,97,868,95,905,98,945,108,990,125,1008,136,1024,150,1049,180,1045,183,1021,154,1005,140,988,130,943,113,904,103,868,101,834,103,760,115,668,128,566,136,523,144,469,161,408,190,361,221"/>
 <area shape="rect" id="Node000007" href="$mesh_8h.html#a3dc6828dd13a70c0c203dba03e765cea" title=" " alt="" coords="468,219,620,244"/>
 <area shape="poly" id="edge9_Node000002_Node000007" title=" " alt="" coords="383,229,454,229,454,234,383,234"/>
-<area shape="rect" id="Node000008" href="$mesh_8h.html#a2abead26b657d59017cbee7b44fc2fca" title="Determines the edge of the jet based on a given gamma cut&#45;off using binary search." alt="" coords="699,320,808,346"/>
+<area shape="rect" id="Node000008" href="$mesh_8h.html#a71b7cc9ed9e5943e9cafb837e06f427d" title="Determines the edge of the jet based on a given gamma cut&#45;off using binary search." alt="" coords="699,320,808,346"/>
 <area shape="poly" id="edge12_Node000002_Node000008" title=" " alt="" coords="384,239,688,314,687,320,382,244"/>
-<area shape="rect" id="Node000009" href="$physics_8h.html#ab8aa624dd63313487d8f5ecf52170d76" title="Converts Lorentz factor (gamma) to velocity fraction (beta)" alt="" coords="480,320,608,346"/>
+<area shape="rect" id="Node000009" href="$physics_8h.html#ab8aa624dd63313487d8f5ecf52170d76" title="Converts Lorentz factor (gamma) to a velocity fraction (beta)" alt="" coords="480,320,608,346"/>
 <area shape="poly" id="edge14_Node000002_Node000009" title=" " alt="" coords="365,242,469,299,500,313,498,317,467,303,363,247"/>
 <area shape="rect" id="Node000010" href="$mesh_8h.html#a3c066f2c8e6d102d7a56de8cb42cf5a8" title=" " alt="" coords="887,16,989,42"/>
 <area shape="poly" id="edge16_Node000002_Node000010" title=" " alt="" coords="345,218,360,184,386,140,421,95,443,75,467,59,518,36,572,20,628,10,683,5,788,6,873,15,873,20,788,11,684,10,628,15,573,25,520,41,469,63,446,79,425,98,390,143,365,187,350,220"/>

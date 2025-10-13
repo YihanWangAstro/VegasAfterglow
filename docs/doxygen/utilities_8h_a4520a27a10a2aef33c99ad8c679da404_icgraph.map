@@ -24,16 +24,16 @@
 <area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="409,53,367,58,366,53,408,48"/>
 <area shape="rect" id="Node000005" href="$synchrotron_8cpp.html#af56f9b4417a5f3e717102da3e81a7d37" title="Updates electron properties throughout the grid based on shock parameters and IC Y values." alt="" coords="199,127,357,152"/>
 <area shape="poly" id="edge4_Node000003_Node000005" title=" " alt="" coords="437,58,416,66,303,129,300,124,414,61,435,53"/>
-<area shape="rect" id="Node000006" href="$inverse-compton_8h.html#ab62ca35731dffb2c89ee00c15bd1e1ee" title="Applies Klein&#45;Nishina cooling to electrons based on photon distribution." alt="" coords="26,127,121,152"/>
+<area shape="rect" id="Node000006" href="$inverse-compton_8h.html#ac57614f97ddcaab423a5023a04cdf3a1" title="Applies Klein&#45;Nishina cooling to electrons based on photon distribution." alt="" coords="26,127,121,152"/>
 <area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="185,142,121,142,121,137,185,137"/>
-<area shape="rect" id="Node000007" href="$inverse-compton_8h.html#ac0534ea09f08d9b55cb3316050c4aa53" title="Applies Thomson cooling to electrons based on photon distribution." alt="" coords="5,176,141,201"/>
+<area shape="rect" id="Node000007" href="$inverse-compton_8h.html#a976c0ea39114e8fb7e8508f6ce6218d8" title="Applies Thomson cooling to electrons based on photon distribution." alt="" coords="5,176,141,201"/>
 <area shape="poly" id="edge6_Node000005_Node000007" title=" " alt="" coords="212,158,127,179,126,173,211,153"/>
 <area shape="rect" id="Node000009" href="$structInverseComptonY.html#a9a35d3af9bd23acdde9d09d38ee116eb" title="Calculates the effective Y parameter at a specific Lorentz factor and spectral index." alt="" coords="660,170,860,210"/>
 <area shape="poly" id="edge8_Node000008_Node000009" title=" " alt="" coords="902,193,860,193,860,187,902,187"/>
 <area shape="poly" id="edge20_Node000009_Node000005" title=" " alt="" coords="646,172,612,167,477,154,357,146,357,141,477,149,612,162,647,167"/>
 <area shape="rect" id="Node000010" href="$structSynElectrons.html#a9c0f1754d804880a70f31945eb03cf00" title="Calculates the column number density of the electron distribution." alt="" coords="428,227,599,267"/>
 <area shape="poly" id="edge9_Node000009_Node000010" title=" " alt="" coords="661,216,599,230,598,225,659,211"/>
-<area shape="rect" id="Node000011" href="$synchrotron_8cpp.html#a2e3e0590c05be72f722acd3b077abd16" title="Calculates cooling Lorentz factor based on comoving time, magnetic field, and IC parameters." alt="" coords="438,177,589,203"/>
+<area shape="rect" id="Node000011" href="$synchrotron_8cpp.html#a2e3e0590c05be72f722acd3b077abd16" title="Calculates a cooling Lorentz factor based on comoving time, magnetic field, and IC parameters." alt="" coords="438,177,589,203"/>
 <area shape="poly" id="edge10_Node000009_Node000011" title=" " alt="" coords="646,193,589,193,589,187,646,187"/>
 <area shape="rect" id="Node000013" href="$structSynElectrons.html#ad16be18e12bddcebbcf69f16b0de4483" title="Calculates the comoving electron number (PER SOLID ANGLE) spectrum at a specific Lorentz factor." alt="" coords="428,291,599,331"/>
 <area shape="poly" id="edge16_Node000009_Node000013" title=" " alt="" coords="720,220,670,251,613,282,583,294,581,289,611,277,667,247,717,216"/>

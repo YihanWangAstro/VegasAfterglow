@@ -4,11 +4,17 @@
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="156,66,190,66,190,71,156,71"/>
 <area shape="rect" id="Node000003" href="$utilities_8h.html#afc584c30c352192de6847b1f4b8caf0e" title="Fast approximation of 2 raised to a power." alt="" coords="333,5,420,31"/>
 <area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="278,53,329,33,331,38,280,58"/>
-<area shape="rect" id="Node000004" href="$utilities_8h.html#ab8e81118f023df135835db8cce4f5f42" title="Returns the value of a single parameter." alt="" coords="468,56,519,81"/>
-<area shape="poly" id="edge7_Node000002_Node000004" title=" " alt="" coords="286,66,454,66,454,71,286,71"/>
-<area shape="rect" id="Node000005" href="$utilities_8h.html#afe0a1b1b7509ac4df83fcc0e510f281b" title="Fast approximation of the base&#45;2 logarithm." alt="" coords="335,107,418,132"/>
-<area shape="poly" id="edge5_Node000002_Node000005" title=" " alt="" coords="280,79,331,99,329,104,278,84"/>
-<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="408,28,456,50,454,55,406,33"/>
-<area shape="poly" id="edge4_Node000004_Node000004" title=" " alt="" coords="473,57,469,48,471,38,480,32,493,29,509,33,516,41,512,45,507,37,493,35,482,37,476,41,475,47,478,55"/>
-<area shape="poly" id="edge6_Node000005_Node000004" title=" " alt="" coords="406,104,454,83,456,87,408,109"/>
+<area shape="rect" id="Node000004" href="$utilities_8h.html#ab8e81118f023df135835db8cce4f5f42" title="Returns the value of a single parameter." alt="" coords="673,107,724,132"/>
+<area shape="poly" id="edge11_Node000002_Node000004" title=" " alt="" coords="286,70,660,112,659,118,285,76"/>
+<area shape="rect" id="Node000005" href="$utilities_8h.html#aa67895957aa831a991982a8268ef8349" title="Fast approximation of the base&#45;2 logarithm." alt="" coords="335,132,418,157"/>
+<area shape="poly" id="edge5_Node000002_Node000005" title=" " alt="" coords="269,79,343,123,340,127,267,84"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="420,13,464,13,517,18,573,28,627,48,658,69,682,94,678,98,654,73,624,52,572,34,517,23,464,19,420,18"/>
+<area shape="poly" id="edge4_Node000004_Node000004" title=" " alt="" coords="673,108,668,98,670,89,681,82,699,80,720,83,729,92,725,96,717,88,699,85,683,87,675,92,673,98,678,105"/>
+<area shape="poly" id="edge8_Node000005_Node000004" title=" " alt="" coords="418,139,660,120,660,125,419,144"/>
+<area shape="rect" id="Node000006" href="$utilities_8h.html#acd0ec547a29a5a2f768d02b1aef146fa" title=" " alt="" coords="468,157,625,183"/>
+<area shape="poly" id="edge6_Node000005_Node000006" title=" " alt="" coords="418,148,455,154,454,159,418,153"/>
+<area shape="rect" id="Node000007" href="$utilities_8h.html#aeec24af41c09b6f977fbd1b6209e6501" title=" " alt="" coords="515,207,578,232"/>
+<area shape="poly" id="edge9_Node000005_Node000007" title=" " alt="" coords="399,155,469,193,503,205,501,210,467,198,396,160"/>
+<area shape="poly" id="edge7_Node000006_Node000004" title=" " alt="" coords="585,155,659,129,661,135,587,160"/>
+<area shape="poly" id="edge10_Node000007_Node000004" title=" " alt="" coords="577,211,601,204,624,193,654,168,679,141,683,144,658,172,627,198,603,209,579,216"/>
 </map>

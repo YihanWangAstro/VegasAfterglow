@@ -4,7 +4,7 @@
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="226,52,261,48,261,54,227,57"/>
 <area shape="rect" id="Node000004" href="$utilities_8h.html#ab8e81118f023df135835db8cce4f5f42" title="Returns the value of a single parameter." alt="" coords="523,79,573,104"/>
 <area shape="poly" id="edge5_Node000001_Node000004" title=" " alt="" coords="227,70,509,86,509,92,227,75"/>
-<area shape="rect" id="Node000003" href="$physics_8h.html#a2a95c6b3f1236d69328af7199a772a23" title="Computes adiabatic index as a function of Lorentz factor." alt="" coords="493,5,603,31"/>
+<area shape="rect" id="Node000003" href="$physics_8h.html#a2a95c6b3f1236d69328af7199a772a23" title="Computes adiabatic index as a function of the Lorentz factor." alt="" coords="493,5,603,31"/>
 <area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="446,28,479,24,480,29,446,33"/>
 <area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="409,51,510,79,509,84,407,56"/>
 <area shape="poly" id="edge4_Node000004_Node000004" title=" " alt="" coords="520,83,511,72,513,62,526,55,548,52,577,57,584,63,585,70,580,71,580,66,575,62,548,57,527,60,517,65,516,71,524,79"/>

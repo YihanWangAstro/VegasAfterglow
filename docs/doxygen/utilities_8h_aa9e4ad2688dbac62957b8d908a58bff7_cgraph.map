@@ -1,6 +1,15 @@
 <map id="fast_log" name="fast_log">
-<area shape="rect" id="Node000001" title="Fast approximation of the natural logarithm." alt="" coords="5,29,80,55"/>
-<area shape="rect" id="Node000002" href="$utilities_8h.html#ab8e81118f023df135835db8cce4f5f42" title="Returns the value of a single parameter." alt="" coords="128,29,179,55"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="81,39,114,39,114,45,81,45"/>
-<area shape="poly" id="edge2_Node000002_Node000002" title=" " alt="" coords="134,30,130,21,132,12,140,5,153,3,169,6,176,14,171,18,166,11,153,8,142,10,137,14,136,20,139,28"/>
+<area shape="rect" id="Node000001" title="Fast approximation of the natural logarithm." alt="" coords="5,132,80,157"/>
+<area shape="rect" id="Node000002" href="$utilities_8h.html#aa67895957aa831a991982a8268ef8349" title="Fast approximation of the base&#45;2 logarithm." alt="" coords="128,81,211,107"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="74,129,123,109,125,114,76,134"/>
+<area shape="rect" id="Node000004" href="$utilities_8h.html#ab8e81118f023df135835db8cce4f5f42" title="Returns the value of a single parameter." alt="" coords="464,81,515,107"/>
+<area shape="poly" id="edge8_Node000001_Node000004" title=" " alt="" coords="81,149,145,158,230,164,323,161,370,154,415,142,441,130,463,114,466,118,443,135,417,147,371,159,324,166,229,169,145,164,80,154"/>
+<area shape="rect" id="Node000003" href="$utilities_8h.html#acd0ec547a29a5a2f768d02b1aef146fa" title=" " alt="" coords="259,5,416,31"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="194,79,258,48,290,33,292,38,260,52,196,84"/>
+<area shape="poly" id="edge5_Node000002_Node000004" title=" " alt="" coords="211,91,450,91,450,97,211,97"/>
+<area shape="rect" id="Node000005" href="$utilities_8h.html#aeec24af41c09b6f977fbd1b6209e6501" title=" " alt="" coords="306,107,369,132"/>
+<area shape="poly" id="edge6_Node000002_Node000005" title=" " alt="" coords="211,97,293,110,292,115,210,103"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="374,28,417,48,459,72,456,76,415,52,372,33"/>
+<area shape="poly" id="edge4_Node000004_Node000004" title=" " alt="" coords="464,83,458,73,461,63,472,57,489,55,510,58,519,67,516,71,508,63,489,60,474,62,465,67,464,72,468,80"/>
+<area shape="poly" id="edge7_Node000005_Node000004" title=" " alt="" coords="368,112,450,98,451,103,369,117"/>
 </map>

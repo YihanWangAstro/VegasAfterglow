@@ -1,6 +1,6 @@
 <map id="gen_prompt_photons" name="gen_prompt_photons">
 <area shape="rect" id="Node000001" title=" " alt="" coords="5,43,164,68"/>
-<area shape="rect" id="Node000002" href="$physics_8h.html#ab8aa624dd63313487d8f5ecf52170d76" title="Converts Lorentz factor (gamma) to velocity fraction (beta)" alt="" coords="212,5,340,31"/>
+<area shape="rect" id="Node000002" href="$physics_8h.html#ab8aa624dd63313487d8f5ecf52170d76" title="Converts Lorentz factor (gamma) to a velocity fraction (beta)" alt="" coords="212,5,340,31"/>
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="150,40,198,30,199,36,151,45"/>
 <area shape="rect" id="Node000003" href="$utilities_8h.html#ab8e81118f023df135835db8cce4f5f42" title="Returns the value of a single parameter." alt="" coords="251,79,301,104"/>
 <area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="153,65,238,82,237,87,152,71"/>

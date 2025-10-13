@@ -1,13 +1,13 @@
 var searchData=
 [
   ['m_0',['m',['../namespaceunit.html#a6b886b7bc31732cd2aee3752b854f00c',1,'unit']]],
-  ['m2_1',['m2',['../structReverseState.html#ab5f36d70c054a9d30743d1defa995617',1,'ReverseState::m2'],['../structSimpleState.html#a6c4757cb542b95d9501323d407743da2',1,'SimpleState::m2'],['../structForwardState.html#a68b12c551d60bd51d7e8ca53fb8dc61a',1,'ForwardState::m2']]],
-  ['m3_2',['m3',['../structReverseState.html#a821c42d064bd2213d0e8be459afaafc3',1,'ReverseState']]],
-  ['m4_3',['m4',['../structReverseState.html#a625185723518c386a69aa4484cd5ea3e',1,'ReverseState']]],
-  ['m_5fjet_4',['m_jet',['../structForwardState.html#aa558663a268c89120148f094469178b3',1,'ForwardState::m_jet'],['../structSimpleState.html#af01f2ad0f1a0cb2ef640adc66718ed6a',1,'SimpleState::m_jet']]],
+  ['m2_1',['m2',['../structReverseState.html#a70a3a02e2ab68c63cb1fa8e188c70cc6',1,'ReverseState::m2'],['../structSimpleState.html#a40c7ca51bf084ea345d69f3363ada548',1,'SimpleState::m2'],['../structForwardState.html#a88cc80181569697d41e1a3866e296430',1,'ForwardState::m2']]],
+  ['m3_2',['m3',['../structReverseState.html#a7f3bd5458f8f3f9285b2c0cb71400478',1,'ReverseState']]],
+  ['m4_3',['m4',['../structReverseState.html#ac7c13be5e77049bf5b0ec13cef8087e5',1,'ReverseState']]],
+  ['m_5fjet_4',['m_jet',['../structForwardState.html#af0343da0ae76b3d4f4dc280ac133c681',1,'ForwardState::m_jet'],['../structSimpleState.html#a5487181a62eadbfda0b9655edca5f7df',1,'SimpleState::m_jet']]],
   ['m_5fsun_5',['M_sun',['../namespaceunit.html#a2b0daac51247c1c7fd526630d35dfba5',1,'unit']]],
   ['magnetar_6',['magnetar',['../structConfigParams.html#afe4abce5cdce13c1ac4edee128fc5fac',1,'ConfigParams']]],
-  ['mass_5finject_7',['mass_inject',['../structForwardState.html#aebc51e160f4082d47cfdf67faed9a8a1',1,'ForwardState::mass_inject'],['../structReverseState.html#a8404c2e3dc262eab8f649edda1c4a6ca',1,'ReverseState::mass_inject'],['../structSimpleState.html#ac268215483b9a0e5638c079f2059abe3',1,'SimpleState::mass_inject']]],
+  ['mass_5finject_7',['mass_inject',['../structForwardState.html#aa2b63d1b9c3203d9d7893c5985bdb05d',1,'ForwardState::mass_inject'],['../structReverseState.html#ae3b292a9eef86310c4b52b806203ee1d',1,'ReverseState::mass_inject'],['../structSimpleState.html#abab27aff4431a6c6c69ef4b5af7ea6d4',1,'SimpleState::mass_inject']]],
   ['me_8',['me',['../namespacecon.html#a740c8edb3d4f2d904a1c76002f84fb7e',1,'con']]],
   ['mec2_9',['mec2',['../namespacecon.html#ae1b8cddbe12f755f5d01b86b0e2b9e14',1,'con']]],
   ['medium_10',['medium',['../classSimpleShockEqn.html#a542dc5b45178ca91cf1dabfc4cfa9829',1,'SimpleShockEqn::medium'],['../structConfigParams.html#aac924ce1108981926235f565f75d75fe',1,'ConfigParams::medium'],['../classFRShockEqn.html#a516430d788da457f99a0a9f913c4555c',1,'FRShockEqn::medium'],['../classForwardShockEqn.html#a0bec65b319edbb6294eee8057370be57',1,'ForwardShockEqn::medium']]],

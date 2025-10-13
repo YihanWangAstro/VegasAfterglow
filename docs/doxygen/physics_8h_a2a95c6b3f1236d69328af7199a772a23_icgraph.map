@@ -1,5 +1,5 @@
 <map id="adiabatic_idx" name="adiabatic_idx">
-<area shape="rect" id="Node000001" title="Computes adiabatic index as a function of Lorentz factor." alt="" coords="713,31,823,56"/>
+<area shape="rect" id="Node000001" title="Computes adiabatic index as a function of the Lorentz factor." alt="" coords="713,31,823,56"/>
 <area shape="rect" id="Node000002" href="$shock_8cpp.html#a09f75d8bc0c1cd36d03a413edd7283d8" title="Computes the downstream four&#45;velocity for a given relative Lorentz factor and magnetization parameter..." alt="" coords="492,5,665,31"/>
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="700,37,665,32,666,27,700,32"/>
 <area shape="rect" id="Node000005" href="$shock_8h.html#a55391189d6bdd1e0ddbc2d039424a0cc" title="Computes the sound speed in the shocked medium based on the relative Lorentz factor." alt="" coords="493,55,664,80"/>

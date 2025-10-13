@@ -1,8 +1,11 @@
 <map id="GaussianJet::Gamma0" name="GaussianJet::Gamma0">
-<area shape="rect" id="Node000001" title="Initial Lorentz factor as a function of phi and theta, with Gaussian falloff." alt="" coords="5,29,172,55"/>
-<area shape="rect" id="Node000002" href="$utilities_8h.html#a19a0be066f6b80639b5863a493990601" title="Fast approximation of the exponential function." alt="" coords="220,29,299,55"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="172,39,206,39,206,45,172,45"/>
-<area shape="rect" id="Node000003" href="$utilities_8h.html#ab8e81118f023df135835db8cce4f5f42" title="Returns the value of a single parameter." alt="" coords="347,29,397,55"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="299,39,333,39,333,45,299,45"/>
-<area shape="poly" id="edge3_Node000003_Node000003" title=" " alt="" coords="352,30,348,21,350,12,359,5,372,3,388,6,395,14,391,18,385,11,372,8,361,10,355,14,354,20,357,28"/>
+<area shape="rect" id="Node000001" title="Initial Lorentz factor as a function of phi and theta, with Gaussian falloff." alt="" coords="5,31,172,56"/>
+<area shape="rect" id="Node000002" href="$utilities_8h.html#a19a0be066f6b80639b5863a493990601" title="Fast approximation of the exponential function." alt="" coords="220,31,299,56"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="172,41,206,41,206,46,172,46"/>
+<area shape="rect" id="Node000003" href="$utilities_8h.html#afc584c30c352192de6847b1f4b8caf0e" title="Fast approximation of 2 raised to a power." alt="" coords="347,5,433,31"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="298,33,333,26,334,32,299,38"/>
+<area shape="rect" id="Node000004" href="$utilities_8h.html#ab8e81118f023df135835db8cce4f5f42" title="Returns the value of a single parameter." alt="" coords="481,31,532,56"/>
+<area shape="poly" id="edge5_Node000002_Node000004" title=" " alt="" coords="299,41,467,41,467,46,299,46"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="434,25,469,32,467,38,433,30"/>
+<area shape="poly" id="edge4_Node000004_Node000004" title=" " alt="" coords="487,32,483,22,485,13,493,6,507,4,523,7,530,16,526,19,520,12,507,9,495,11,489,16,488,22,491,29"/>
 </map>

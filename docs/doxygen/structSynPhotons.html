@@ -174,7 +174,7 @@ Public Attributes</h2></td></tr>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Represents synchrotron photons in the comoving frame and provides spectral functions. </p>
 
-<p class="definition">Definition at line <a class="el" href="synchrotron_8h_source.html#l00074">74</a> of file <a class="el" href="synchrotron_8h_source.html">synchrotron.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="synchrotron_8h_source.html#l00071">71</a> of file <a class="el" href="synchrotron_8h_source.html">synchrotron.h</a>.</p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
 <a id="a380508572a0fc6f50ef8fd58420492ba" name="a380508572a0fc6f50ef8fd58420492ba"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a380508572a0fc6f50ef8fd58420492ba">&#9670;&#160;</a></span>compute_I_nu()</h2>
@@ -201,48 +201,54 @@ Public Attributes</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>The synchrotron specific intensity at the specified frequency Linear power PER SOLID ANGLE </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="synchrotron_8cpp_source.html#l00163">163</a> of file <a class="el" href="synchrotron_8cpp_source.html">synchrotron.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  163</span>                                           {</div>
-<div class="line"><span class="lineno">  164</span>    <span class="keywordflow">if</span> (nu &lt;= <a class="code hl_variable" href="structSynPhotons.html#a910353b5e644e1472843f39f1ad02196">nu_c</a>) { <span class="comment">// Below cooling frequency, simple scaling</span></div>
-<div class="line"><span class="lineno">  165</span>        <span class="keywordflow">return</span> <a class="code hl_variable" href="structSynPhotons.html#af3ae343561f7e39f8240a3ba7db8eabd">I_nu_max</a> * compute_spectrum(nu);</div>
-<div class="line"><span class="lineno">  166</span>    } <span class="keywordflow">else</span> {</div>
-<div class="line"><span class="lineno">  167</span>        <span class="keywordflow">return</span> <a class="code hl_function" href="utilities_8h.html#afc584c30c352192de6847b1f4b8caf0e">fast_exp2</a>((<a class="code hl_variable" href="structSynPhotons.html#a910353b5e644e1472843f39f1ad02196">nu_c</a> - nu) / <a class="code hl_variable" href="structSynPhotons.html#a3e708c5152a525914f55fab62ca00c2c">nu_M</a>) * <a class="code hl_variable" href="structSynPhotons.html#af3ae343561f7e39f8240a3ba7db8eabd">I_nu_max</a> * compute_spectrum(nu) * (1 + <a class="code hl_variable" href="structSynPhotons.html#ad359df8271da605a643410e7f9377727">Y_c</a>) /</div>
-<div class="line"><span class="lineno">  168</span>               (1 + <a class="code hl_function" href="structInverseComptonY.html#a59226978ce361a575783edde4335c1df">InverseComptonY::compute_Y_tilt_at_nu</a>(<a class="code hl_variable" href="structSynPhotons.html#ab371ef6a39b529f55794bfc96f35bfc2">Ys</a>, nu, <a class="code hl_variable" href="structSynPhotons.html#a115e2b5ad4da06a18a870be3d56c9326">p</a>));</div>
-<div class="line"><span class="lineno">  169</span>    }</div>
-<div class="line"><span class="lineno">  170</span>}</div>
-<div class="ttc" id="astructInverseComptonY_html_a59226978ce361a575783edde4335c1df"><div class="ttname"><a href="structInverseComptonY.html#a59226978ce361a575783edde4335c1df">InverseComptonY::compute_Y_tilt_at_nu</a></div><div class="ttdeci">static Real compute_Y_tilt_at_nu(InverseComptonY const &amp;Ys, Real nu, Real p)</div><div class="ttdoc">Calculates the effective Y parameter at a specific frequency and spectral index.</div><div class="ttdef"><b>Definition</b> <a href="inverse-compton_8cpp_source.html#l00114">inverse-compton.cpp:114</a></div></div>
-<div class="ttc" id="astructSynPhotons_html_a115e2b5ad4da06a18a870be3d56c9326"><div class="ttname"><a href="structSynPhotons.html#a115e2b5ad4da06a18a870be3d56c9326">SynPhotons::p</a></div><div class="ttdeci">Real p</div><div class="ttdoc">Power-law index for the electron energy distribution.</div><div class="ttdef"><b>Definition</b> <a href="synchrotron_8h_source.html#l00081">synchrotron.h:81</a></div></div>
-<div class="ttc" id="astructSynPhotons_html_a3e708c5152a525914f55fab62ca00c2c"><div class="ttname"><a href="structSynPhotons.html#a3e708c5152a525914f55fab62ca00c2c">SynPhotons::nu_M</a></div><div class="ttdeci">Real nu_M</div><div class="ttdoc">Maximum photon frequency.</div><div class="ttdef"><b>Definition</b> <a href="synchrotron_8h_source.html#l00080">synchrotron.h:80</a></div></div>
-<div class="ttc" id="astructSynPhotons_html_a910353b5e644e1472843f39f1ad02196"><div class="ttname"><a href="structSynPhotons.html#a910353b5e644e1472843f39f1ad02196">SynPhotons::nu_c</a></div><div class="ttdeci">Real nu_c</div><div class="ttdoc">Cooling frequency corresponding to gamma_c.</div><div class="ttdef"><b>Definition</b> <a href="synchrotron_8h_source.html#l00078">synchrotron.h:78</a></div></div>
-<div class="ttc" id="astructSynPhotons_html_ab371ef6a39b529f55794bfc96f35bfc2"><div class="ttname"><a href="structSynPhotons.html#ab371ef6a39b529f55794bfc96f35bfc2">SynPhotons::Ys</a></div><div class="ttdeci">InverseComptonY Ys</div><div class="ttdoc">InverseComptonY parameters for this electron population.</div><div class="ttdef"><b>Definition</b> <a href="synchrotron_8h_source.html#l00090">synchrotron.h:90</a></div></div>
-<div class="ttc" id="astructSynPhotons_html_ad359df8271da605a643410e7f9377727"><div class="ttname"><a href="structSynPhotons.html#ad359df8271da605a643410e7f9377727">SynPhotons::Y_c</a></div><div class="ttdeci">Real Y_c</div><div class="ttdoc">Inverse Compton Y parameter at cooling frequency.</div><div class="ttdef"><b>Definition</b> <a href="synchrotron_8h_source.html#l00088">synchrotron.h:88</a></div></div>
-<div class="ttc" id="astructSynPhotons_html_af3ae343561f7e39f8240a3ba7db8eabd"><div class="ttname"><a href="structSynPhotons.html#af3ae343561f7e39f8240a3ba7db8eabd">SynPhotons::I_nu_max</a></div><div class="ttdeci">Real I_nu_max</div><div class="ttdoc">Maximum specific synchrotron power PER SOLID ANGLE.</div><div class="ttdef"><b>Definition</b> <a href="synchrotron_8h_source.html#l00076">synchrotron.h:76</a></div></div>
-<div class="ttc" id="autilities_8h_html_afc584c30c352192de6847b1f4b8caf0e"><div class="ttname"><a href="utilities_8h.html#afc584c30c352192de6847b1f4b8caf0e">fast_exp2</a></div><div class="ttdeci">double fast_exp2(double x)</div><div class="ttdoc">Fast approximation of 2 raised to a power.</div><div class="ttdef"><b>Definition</b> <a href="utilities_8h_source.html#l00443">utilities.h:443</a></div></div>
+<p class="definition">Definition at line <a class="el" href="synchrotron_8cpp_source.html#l00161">161</a> of file <a class="el" href="synchrotron_8cpp_source.html">synchrotron.cpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  161</span>                                           {</div>
+<div class="line"><span class="lineno">  162</span>    <span class="keywordflow">if</span> (nu &lt;= <a class="code hl_variable" href="structSynPhotons.html#a910353b5e644e1472843f39f1ad02196">nu_c</a>) { <span class="comment">// Below cooling frequency, simple scaling</span></div>
+<div class="line"><span class="lineno">  163</span>        <span class="keywordflow">return</span> <a class="code hl_variable" href="structSynPhotons.html#af3ae343561f7e39f8240a3ba7db8eabd">I_nu_max</a> * compute_spectrum(nu);</div>
+<div class="line"><span class="lineno">  164</span>    } <span class="keywordflow">else</span> {</div>
+<div class="line"><span class="lineno">  165</span>        <span class="keywordflow">return</span> <a class="code hl_function" href="utilities_8h.html#afc584c30c352192de6847b1f4b8caf0e">fast_exp2</a>((<a class="code hl_variable" href="structSynPhotons.html#a910353b5e644e1472843f39f1ad02196">nu_c</a> - nu) / <a class="code hl_variable" href="structSynPhotons.html#a3e708c5152a525914f55fab62ca00c2c">nu_M</a>) * <a class="code hl_variable" href="structSynPhotons.html#af3ae343561f7e39f8240a3ba7db8eabd">I_nu_max</a> * compute_spectrum(nu) * (1 + <a class="code hl_variable" href="structSynPhotons.html#ad359df8271da605a643410e7f9377727">Y_c</a>) /</div>
+<div class="line"><span class="lineno">  166</span>               (1 + <a class="code hl_function" href="structInverseComptonY.html#a59226978ce361a575783edde4335c1df">InverseComptonY::compute_Y_tilt_at_nu</a>(<a class="code hl_variable" href="structSynPhotons.html#ab371ef6a39b529f55794bfc96f35bfc2">Ys</a>, nu, <a class="code hl_variable" href="structSynPhotons.html#a115e2b5ad4da06a18a870be3d56c9326">p</a>));</div>
+<div class="line"><span class="lineno">  167</span>    }</div>
+<div class="line"><span class="lineno">  168</span>}</div>
+<div class="ttc" id="astructInverseComptonY_html_a59226978ce361a575783edde4335c1df"><div class="ttname"><a href="structInverseComptonY.html#a59226978ce361a575783edde4335c1df">InverseComptonY::compute_Y_tilt_at_nu</a></div><div class="ttdeci">static Real compute_Y_tilt_at_nu(InverseComptonY const &amp;Ys, Real nu, Real p)</div><div class="ttdoc">Calculates the effective Y parameter at a specific frequency and spectral index.</div><div class="ttdef"><b>Definition</b> <a href="inverse-compton_8cpp_source.html#l00110">inverse-compton.cpp:110</a></div></div>
+<div class="ttc" id="astructSynPhotons_html_a115e2b5ad4da06a18a870be3d56c9326"><div class="ttname"><a href="structSynPhotons.html#a115e2b5ad4da06a18a870be3d56c9326">SynPhotons::p</a></div><div class="ttdeci">Real p</div><div class="ttdoc">Power-law index for the electron energy distribution.</div><div class="ttdef"><b>Definition</b> <a href="synchrotron_8h_source.html#l00078">synchrotron.h:78</a></div></div>
+<div class="ttc" id="astructSynPhotons_html_a3e708c5152a525914f55fab62ca00c2c"><div class="ttname"><a href="structSynPhotons.html#a3e708c5152a525914f55fab62ca00c2c">SynPhotons::nu_M</a></div><div class="ttdeci">Real nu_M</div><div class="ttdoc">Maximum photon frequency.</div><div class="ttdef"><b>Definition</b> <a href="synchrotron_8h_source.html#l00077">synchrotron.h:77</a></div></div>
+<div class="ttc" id="astructSynPhotons_html_a910353b5e644e1472843f39f1ad02196"><div class="ttname"><a href="structSynPhotons.html#a910353b5e644e1472843f39f1ad02196">SynPhotons::nu_c</a></div><div class="ttdeci">Real nu_c</div><div class="ttdoc">Cooling frequency corresponding to gamma_c.</div><div class="ttdef"><b>Definition</b> <a href="synchrotron_8h_source.html#l00075">synchrotron.h:75</a></div></div>
+<div class="ttc" id="astructSynPhotons_html_ab371ef6a39b529f55794bfc96f35bfc2"><div class="ttname"><a href="structSynPhotons.html#ab371ef6a39b529f55794bfc96f35bfc2">SynPhotons::Ys</a></div><div class="ttdeci">InverseComptonY Ys</div><div class="ttdoc">InverseComptonY parameters for this electron population.</div><div class="ttdef"><b>Definition</b> <a href="synchrotron_8h_source.html#l00087">synchrotron.h:87</a></div></div>
+<div class="ttc" id="astructSynPhotons_html_ad359df8271da605a643410e7f9377727"><div class="ttname"><a href="structSynPhotons.html#ad359df8271da605a643410e7f9377727">SynPhotons::Y_c</a></div><div class="ttdeci">Real Y_c</div><div class="ttdoc">Inverse Compton Y parameter at cooling frequency.</div><div class="ttdef"><b>Definition</b> <a href="synchrotron_8h_source.html#l00085">synchrotron.h:85</a></div></div>
+<div class="ttc" id="astructSynPhotons_html_af3ae343561f7e39f8240a3ba7db8eabd"><div class="ttname"><a href="structSynPhotons.html#af3ae343561f7e39f8240a3ba7db8eabd">SynPhotons::I_nu_max</a></div><div class="ttdeci">Real I_nu_max</div><div class="ttdoc">Maximum specific synchrotron power PER SOLID ANGLE.</div><div class="ttdef"><b>Definition</b> <a href="synchrotron_8h_source.html#l00073">synchrotron.h:73</a></div></div>
+<div class="ttc" id="autilities_8h_html_afc584c30c352192de6847b1f4b8caf0e"><div class="ttname"><a href="utilities_8h.html#afc584c30c352192de6847b1f4b8caf0e">fast_exp2</a></div><div class="ttdeci">double fast_exp2(double x)</div><div class="ttdoc">Fast approximation of 2 raised to a power.</div><div class="ttdef"><b>Definition</b> <a href="utilities_8h_source.html#l00429">utilities.h:429</a></div></div>
 </div><!-- fragment --><div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="structSynPhotons_a380508572a0fc6f50ef8fd58420492ba_cgraph.png" border="0" usemap="#astructSynPhotons_a380508572a0fc6f50ef8fd58420492ba_cgraph" alt=""/></div>
 <map name="astructSynPhotons_a380508572a0fc6f50ef8fd58420492ba_cgraph" id="astructSynPhotons_a380508572a0fc6f50ef8fd58420492ba_cgraph">
-<area shape="rect" title="Calculates the comoving synchrotron specific intensity." alt="" coords="5,104,203,129"/>
-<area shape="rect" href="structInverseComptonY.html#a59226978ce361a575783edde4335c1df" title="Calculates the effective Y parameter at a specific frequency and spectral index." alt="" coords="251,67,451,107"/>
-<area shape="poly" title=" " alt="" coords="203,102,237,98,237,103,203,108"/>
-<area shape="rect" href="utilities_8h.html#afc584c30c352192de6847b1f4b8caf0e" title="Fast approximation of 2 raised to a power." alt="" coords="876,132,963,157"/>
-<area shape="poly" title=" " alt="" coords="203,117,862,140,862,145,203,123"/>
-<area shape="rect" href="structInverseComptonY.html#ab69f7b0d11f611834e1b7c13e30de1ef" title="Calculates the effective Y parameter for a given frequency and spectral index." alt="" coords="499,67,699,107"/>
-<area shape="poly" title=" " alt="" coords="451,85,485,85,485,90,451,90"/>
-<area shape="rect" href="utilities_8h.html#a4520a27a10a2aef33c99ad8c679da404" title="Fast approximation of a raised to the power of b." alt="" coords="747,79,828,104"/>
-<area shape="poly" title=" " alt="" coords="699,87,733,88,733,93,699,92"/>
-<area shape="rect" href="utilities_8h.html#a5069f3665d3ad6f8eced520eae62e400" title="Computes a^(2/3)" alt="" coords="755,5,820,31"/>
-<area shape="poly" title=" " alt="" coords="653,65,741,32,743,37,655,70"/>
-<area shape="poly" title=" " alt="" coords="821,102,876,124,873,129,819,107"/>
-<area shape="rect" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42" title="Returns the value of a single parameter." alt="" coords="1011,56,1061,81"/>
-<area shape="poly" title=" " alt="" coords="828,85,997,69,997,75,828,90"/>
-<area shape="rect" href="utilities_8h.html#afe0a1b1b7509ac4df83fcc0e510f281b" title="Fast approximation of the base&#45;2 logarithm." alt="" coords="878,31,961,56"/>
-<area shape="poly" title=" " alt="" coords="822,76,870,58,872,63,824,81"/>
-<area shape="poly" title=" " alt="" coords="939,130,1003,87,1006,91,941,134"/>
-<area shape="poly" title=" " alt="" coords="1016,57,1012,48,1014,38,1022,32,1036,29,1052,33,1059,41,1055,45,1049,37,1036,35,1024,37,1019,41,1017,47,1021,55"/>
-<area shape="poly" title=" " alt="" coords="962,50,998,58,996,63,961,55"/>
-<area shape="poly" title=" " alt="" coords="820,10,887,5,926,7,964,15,990,28,1013,44,1010,49,987,33,962,21,925,13,887,10,821,15"/>
+<area shape="rect" title="Calculates the comoving synchrotron specific intensity." alt="" coords="5,217,203,242"/>
+<area shape="rect" href="structInverseComptonY.html#a59226978ce361a575783edde4335c1df" title="Calculates the effective Y parameter at a specific frequency and spectral index." alt="" coords="251,180,451,220"/>
+<area shape="poly" title=" " alt="" coords="203,215,237,211,237,216,203,220"/>
+<area shape="rect" href="utilities_8h.html#afc584c30c352192de6847b1f4b8caf0e" title="Fast approximation of 2 raised to a power." alt="" coords="876,245,963,270"/>
+<area shape="poly" title=" " alt="" coords="203,230,862,253,862,258,203,236"/>
+<area shape="rect" href="structInverseComptonY.html#ab69f7b0d11f611834e1b7c13e30de1ef" title="Calculates the effective Y parameter for a given frequency and spectral index." alt="" coords="499,180,699,220"/>
+<area shape="poly" title=" " alt="" coords="451,198,485,198,485,203,451,203"/>
+<area shape="rect" href="utilities_8h.html#a4520a27a10a2aef33c99ad8c679da404" title="Fast approximation of a raised to the power of b." alt="" coords="747,192,828,217"/>
+<area shape="poly" title=" " alt="" coords="699,200,733,200,733,206,699,205"/>
+<area shape="rect" href="utilities_8h.html#a5069f3665d3ad6f8eced520eae62e400" title="Computes a^(2/3)" alt="" coords="755,68,820,93"/>
+<area shape="poly" title=" " alt="" coords="630,178,754,98,756,102,633,182"/>
+<area shape="poly" title=" " alt="" coords="821,215,876,237,873,242,819,220"/>
+<area shape="rect" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42" title="Returns the value of a single parameter." alt="" coords="1216,118,1267,144"/>
+<area shape="poly" title=" " alt="" coords="828,195,1202,134,1203,140,829,200"/>
+<area shape="rect" href="utilities_8h.html#aa67895957aa831a991982a8268ef8349" title="Fast approximation of the base&#45;2 logarithm." alt="" coords="878,118,961,144"/>
+<area shape="poly" title=" " alt="" coords="810,189,882,148,885,153,813,194"/>
+<area shape="poly" title=" " alt="" coords="963,259,1008,260,1060,256,1115,245,1167,223,1186,209,1202,191,1226,155,1230,157,1206,195,1189,213,1169,228,1117,250,1061,261,1008,265,963,264"/>
+<area shape="poly" title=" " alt="" coords="1216,119,1210,110,1213,100,1224,94,1241,92,1262,95,1271,104,1268,107,1260,100,1241,97,1226,99,1217,103,1216,109,1220,117"/>
+<area shape="poly" title=" " alt="" coords="961,128,1202,128,1202,134,961,134"/>
+<area shape="rect" href="utilities_8h.html#acd0ec547a29a5a2f768d02b1aef146fa" title=" " alt="" coords="1011,44,1168,69"/>
+<area shape="poly" title=" " alt="" coords="939,116,1010,78,1027,71,1029,76,1012,83,942,120"/>
+<area shape="rect" href="utilities_8h.html#aeec24af41c09b6f977fbd1b6209e6501" title=" " alt="" coords="1058,93,1121,118"/>
+<area shape="poly" title=" " alt="" coords="960,122,1044,109,1045,115,961,127"/>
+<area shape="poly" title=" " alt="" coords="1141,66,1169,78,1216,108,1213,112,1167,83,1139,71"/>
+<area shape="poly" title=" " alt="" coords="1121,108,1203,122,1202,127,1120,113"/>
+<area shape="poly" title=" " alt="" coords="813,65,878,38,969,12,1019,5,1071,4,1121,11,1169,29,1191,44,1208,63,1232,104,1228,107,1204,67,1187,48,1167,33,1120,16,1070,9,1020,10,970,17,880,43,815,70"/>
 </map>
 </div>
 
@@ -273,21 +279,21 @@ Here is the call graph for this function:</div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Base-2 logarithm of synchrotron specific intensity Log2 specific intensity (for computational efficiency) </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="synchrotron_8cpp_source.html#l00172">172</a> of file <a class="el" href="synchrotron_8cpp_source.html">synchrotron.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  172</span>                                                     {</div>
-<div class="line"><span class="lineno">  173</span>    <span class="keywordflow">if</span> (<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">log2_nu</a> &lt;= <a class="code hl_variable" href="structSynPhotons.html#a3f3227248f96db80e3bbbaec7cbd8206">log2_nu_c</a>) { <span class="comment">// Below cooling frequency, simple scaling</span></div>
-<div class="line"><span class="lineno">  174</span>        <span class="keywordflow">return</span> <a class="code hl_variable" href="structSynPhotons.html#a6a81e48ac112c824c0b95725c41b4c46">log2_I_nu_max</a> + compute_log2_spectrum(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">log2_nu</a>);</div>
-<div class="line"><span class="lineno">  175</span>    } <span class="keywordflow">else</span> {</div>
-<div class="line"><span class="lineno">  176</span>        <a class="code hl_typedef" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">cooling_factor</a> = (1 + <a class="code hl_variable" href="structSynPhotons.html#ad359df8271da605a643410e7f9377727">Y_c</a>) / (1 + <a class="code hl_function" href="structInverseComptonY.html#a59226978ce361a575783edde4335c1df">InverseComptonY::compute_Y_tilt_at_nu</a>(<a class="code hl_variable" href="structSynPhotons.html#ab371ef6a39b529f55794bfc96f35bfc2">Ys</a>, std::exp2(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">log2_nu</a>), <a class="code hl_variable" href="structSynPhotons.html#a115e2b5ad4da06a18a870be3d56c9326">p</a>));</div>
-<div class="line"><span class="lineno">  177</span>        <span class="keywordflow">return</span> <a class="code hl_variable" href="structSynPhotons.html#a6a81e48ac112c824c0b95725c41b4c46">log2_I_nu_max</a> + compute_log2_spectrum(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">log2_nu</a>) + <a class="code hl_function" href="utilities_8h.html#afe0a1b1b7509ac4df83fcc0e510f281b">fast_log2</a>(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">cooling_factor</a>) +</div>
-<div class="line"><span class="lineno">  178</span>               (<a class="code hl_variable" href="structSynPhotons.html#a910353b5e644e1472843f39f1ad02196">nu_c</a> - <a class="code hl_function" href="utilities_8h.html#afc584c30c352192de6847b1f4b8caf0e">fast_exp2</a>(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">log2_nu</a>)) / <a class="code hl_variable" href="structSynPhotons.html#a3e708c5152a525914f55fab62ca00c2c">nu_M</a>;</div>
-<div class="line"><span class="lineno">  179</span>    }</div>
-<div class="line"><span class="lineno">  180</span>}</div>
+<p class="definition">Definition at line <a class="el" href="synchrotron_8cpp_source.html#l00170">170</a> of file <a class="el" href="synchrotron_8cpp_source.html">synchrotron.cpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  170</span>                                                     {</div>
+<div class="line"><span class="lineno">  171</span>    <span class="keywordflow">if</span> (<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">log2_nu</a> &lt;= <a class="code hl_variable" href="structSynPhotons.html#a3f3227248f96db80e3bbbaec7cbd8206">log2_nu_c</a>) { <span class="comment">// Below cooling frequency, simple scaling</span></div>
+<div class="line"><span class="lineno">  172</span>        <span class="keywordflow">return</span> <a class="code hl_variable" href="structSynPhotons.html#a6a81e48ac112c824c0b95725c41b4c46">log2_I_nu_max</a> + compute_log2_spectrum(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">log2_nu</a>);</div>
+<div class="line"><span class="lineno">  173</span>    } <span class="keywordflow">else</span> {</div>
+<div class="line"><span class="lineno">  174</span>        <span class="keyword">const</span> <a class="code hl_typedef" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">cooling_factor</a> = (1 + <a class="code hl_variable" href="structSynPhotons.html#ad359df8271da605a643410e7f9377727">Y_c</a>) / (1 + <a class="code hl_function" href="structInverseComptonY.html#a59226978ce361a575783edde4335c1df">InverseComptonY::compute_Y_tilt_at_nu</a>(<a class="code hl_variable" href="structSynPhotons.html#ab371ef6a39b529f55794bfc96f35bfc2">Ys</a>, std::exp2(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">log2_nu</a>), <a class="code hl_variable" href="structSynPhotons.html#a115e2b5ad4da06a18a870be3d56c9326">p</a>));</div>
+<div class="line"><span class="lineno">  175</span>        <span class="keywordflow">return</span> <a class="code hl_variable" href="structSynPhotons.html#a6a81e48ac112c824c0b95725c41b4c46">log2_I_nu_max</a> + compute_log2_spectrum(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">log2_nu</a>) + <a class="code hl_function" href="utilities_8h.html#aa67895957aa831a991982a8268ef8349">fast_log2</a>(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">cooling_factor</a>) +</div>
+<div class="line"><span class="lineno">  176</span>               (<a class="code hl_variable" href="structSynPhotons.html#a910353b5e644e1472843f39f1ad02196">nu_c</a> - <a class="code hl_function" href="utilities_8h.html#afc584c30c352192de6847b1f4b8caf0e">fast_exp2</a>(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">log2_nu</a>)) / <a class="code hl_variable" href="structSynPhotons.html#a3e708c5152a525914f55fab62ca00c2c">nu_M</a>;</div>
+<div class="line"><span class="lineno">  177</span>    }</div>
+<div class="line"><span class="lineno">  178</span>}</div>
 <div class="ttc" id="amacros_8h_html_a4b04262b81aa7d31eb5d2f607e2a35de"><div class="ttname"><a href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a></div><div class="ttdeci">double Real</div><div class="ttdoc">Type alias for floating-point precision used throughout the code.</div><div class="ttdef"><b>Definition</b> <a href="macros_8h_source.html#l00022">macros.h:22</a></div></div>
-<div class="ttc" id="astructSynPhotons_html_a3f3227248f96db80e3bbbaec7cbd8206"><div class="ttname"><a href="structSynPhotons.html#a3f3227248f96db80e3bbbaec7cbd8206">SynPhotons::log2_nu_c</a></div><div class="ttdeci">Real log2_nu_c</div><div class="ttdoc">Log2 of nu_c.</div><div class="ttdef"><b>Definition</b> <a href="synchrotron_8h_source.html#l00085">synchrotron.h:85</a></div></div>
-<div class="ttc" id="astructSynPhotons_html_a6a81e48ac112c824c0b95725c41b4c46"><div class="ttname"><a href="structSynPhotons.html#a6a81e48ac112c824c0b95725c41b4c46">SynPhotons::log2_I_nu_max</a></div><div class="ttdeci">Real log2_I_nu_max</div><div class="ttdoc">Log2 of I_nu_max (for computational efficiency)</div><div class="ttdef"><b>Definition</b> <a href="synchrotron_8h_source.html#l00083">synchrotron.h:83</a></div></div>
-<div class="ttc" id="autilities_8h_html_ab8e81118f023df135835db8cce4f5f42"><div class="ttname"><a href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">max</a></div><div class="ttdeci">T max(T value)</div><div class="ttdoc">Returns the value of a single parameter.</div><div class="ttdef"><b>Definition</b> <a href="utilities_8h_source.html#l00311">utilities.h:311</a></div></div>
-<div class="ttc" id="autilities_8h_html_afe0a1b1b7509ac4df83fcc0e510f281b"><div class="ttname"><a href="utilities_8h.html#afe0a1b1b7509ac4df83fcc0e510f281b">fast_log2</a></div><div class="ttdeci">double fast_log2(double val)</div><div class="ttdoc">Fast approximation of the base-2 logarithm.</div><div class="ttdef"><b>Definition</b> <a href="utilities_8h_source.html#l00405">utilities.h:405</a></div></div>
+<div class="ttc" id="astructSynPhotons_html_a3f3227248f96db80e3bbbaec7cbd8206"><div class="ttname"><a href="structSynPhotons.html#a3f3227248f96db80e3bbbaec7cbd8206">SynPhotons::log2_nu_c</a></div><div class="ttdeci">Real log2_nu_c</div><div class="ttdoc">Log2 of nu_c.</div><div class="ttdef"><b>Definition</b> <a href="synchrotron_8h_source.html#l00082">synchrotron.h:82</a></div></div>
+<div class="ttc" id="astructSynPhotons_html_a6a81e48ac112c824c0b95725c41b4c46"><div class="ttname"><a href="structSynPhotons.html#a6a81e48ac112c824c0b95725c41b4c46">SynPhotons::log2_I_nu_max</a></div><div class="ttdeci">Real log2_I_nu_max</div><div class="ttdoc">Log2 of I_nu_max (for computational efficiency)</div><div class="ttdef"><b>Definition</b> <a href="synchrotron_8h_source.html#l00080">synchrotron.h:80</a></div></div>
+<div class="ttc" id="autilities_8h_html_aa67895957aa831a991982a8268ef8349"><div class="ttname"><a href="utilities_8h.html#aa67895957aa831a991982a8268ef8349">fast_log2</a></div><div class="ttdeci">double fast_log2(double x)</div><div class="ttdoc">Fast approximation of the base-2 logarithm.</div><div class="ttdef"><b>Definition</b> <a href="utilities_8h_source.html#l00389">utilities.h:389</a></div></div>
+<div class="ttc" id="autilities_8h_html_ab8e81118f023df135835db8cce4f5f42"><div class="ttname"><a href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">max</a></div><div class="ttdeci">T max(T value)</div><div class="ttdoc">Returns the value of a single parameter.</div><div class="ttdef"><b>Definition</b> <a href="utilities_8h_source.html#l00307">utilities.h:307</a></div></div>
 </div><!-- fragment --><div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -298,10 +304,10 @@ Here is the call graph for this function:</div>
 <area shape="poly" title=" " alt="" coords="168,116,202,112,203,117,169,122"/>
 <area shape="rect" href="utilities_8h.html#afc584c30c352192de6847b1f4b8caf0e" title="Fast approximation of 2 raised to a power." alt="" coords="841,145,928,170"/>
 <area shape="poly" title=" " alt="" coords="168,129,828,153,828,158,168,135"/>
-<area shape="rect" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42" title="Returns the value of a single parameter." alt="" coords="976,94,1027,119"/>
-<area shape="poly" title=" " alt="" coords="122,107,166,85,215,65,310,35,386,16,463,6,563,3,754,3,786,5,818,11,879,32,932,59,973,84,970,88,929,63,876,37,816,16,785,10,754,8,563,8,464,11,387,21,312,40,217,71,168,90,125,112"/>
-<area shape="rect" href="utilities_8h.html#afe0a1b1b7509ac4df83fcc0e510f281b" title="Fast approximation of the base&#45;2 logarithm." alt="" coords="843,194,926,219"/>
-<area shape="poly" title=" " alt="" coords="168,138,216,144,566,178,830,200,829,205,565,184,216,149,168,143"/>
+<area shape="rect" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42" title="Returns the value of a single parameter." alt="" coords="1181,145,1232,170"/>
+<area shape="poly" title=" " alt="" coords="122,107,166,85,215,65,310,35,386,16,463,6,563,3,886,3,959,5,1017,14,1071,35,1135,71,1168,100,1193,131,1188,135,1164,104,1132,76,1069,39,1016,19,959,10,886,8,563,8,464,11,387,21,312,40,217,71,168,90,125,112"/>
+<area shape="rect" href="utilities_8h.html#aa67895957aa831a991982a8268ef8349" title="Fast approximation of the base&#45;2 logarithm." alt="" coords="843,195,926,221"/>
+<area shape="poly" title=" " alt="" coords="168,138,216,144,566,179,830,201,829,207,565,184,216,149,168,143"/>
 <area shape="rect" href="structInverseComptonY.html#ab69f7b0d11f611834e1b7c13e30de1ef" title="Calculates the effective Y parameter for a given frequency and spectral index." alt="" coords="464,80,664,120"/>
 <area shape="poly" title=" " alt="" coords="416,97,450,97,450,103,416,103"/>
 <area shape="rect" href="utilities_8h.html#a4520a27a10a2aef33c99ad8c679da404" title="Fast approximation of a raised to the power of b." alt="" coords="712,94,793,119"/>
@@ -309,12 +315,18 @@ Here is the call graph for this function:</div>
 <area shape="rect" href="utilities_8h.html#a5069f3665d3ad6f8eced520eae62e400" title="Computes a^(2/3)" alt="" coords="720,43,785,69"/>
 <area shape="poly" title=" " alt="" coords="650,77,706,64,707,69,651,83"/>
 <area shape="poly" title=" " alt="" coords="788,117,839,137,837,142,786,122"/>
-<area shape="poly" title=" " alt="" coords="794,104,962,104,962,109,794,109"/>
-<area shape="poly" title=" " alt="" coords="769,117,801,147,843,181,849,184,846,189,840,185,798,151,765,121"/>
-<area shape="poly" title=" " alt="" coords="914,142,962,121,964,125,916,147"/>
-<area shape="poly" title=" " alt="" coords="981,95,977,86,979,76,988,70,1001,67,1017,71,1024,79,1020,83,1015,75,1001,73,990,75,984,79,983,85,986,93"/>
-<area shape="poly" title=" " alt="" coords="910,192,926,181,955,155,979,128,983,132,959,158,930,185,913,196"/>
-<area shape="poly" title=" " alt="" coords="786,58,929,85,963,94,962,99,927,91,785,64"/>
+<area shape="poly" title=" " alt="" coords="794,105,944,114,1038,123,1134,136,1168,144,1167,149,1133,141,1038,128,943,119,793,110"/>
+<area shape="poly" title=" " alt="" coords="769,118,843,181,851,186,848,190,840,185,766,122"/>
+<area shape="poly" title=" " alt="" coords="928,155,1168,155,1168,160,928,160"/>
+<area shape="poly" title=" " alt="" coords="1181,146,1176,136,1178,127,1189,120,1207,118,1228,121,1237,130,1233,134,1225,126,1207,123,1191,125,1183,130,1181,136,1186,143"/>
+<area shape="poly" title=" " alt="" coords="898,219,931,252,953,268,977,280,1021,295,1057,302,1092,298,1132,280,1156,261,1174,235,1196,182,1201,184,1179,238,1160,264,1135,285,1093,303,1057,307,1019,300,975,285,950,273,927,256,895,223"/>
+<area shape="rect" href="utilities_8h.html#acd0ec547a29a5a2f768d02b1aef146fa" title=" " alt="" coords="976,195,1133,221"/>
+<area shape="poly" title=" " alt="" coords="926,205,963,205,963,211,926,211"/>
+<area shape="rect" href="utilities_8h.html#aeec24af41c09b6f977fbd1b6209e6501" title=" " alt="" coords="1023,245,1086,270"/>
+<area shape="poly" title=" " alt="" coords="927,217,1011,242,1009,247,925,222"/>
+<area shape="poly" title=" " alt="" coords="1093,193,1167,167,1169,173,1095,198"/>
+<area shape="poly" title=" " alt="" coords="1085,249,1109,242,1132,231,1162,206,1187,179,1191,182,1166,210,1135,236,1111,247,1087,254"/>
+<area shape="poly" title=" " alt="" coords="786,53,851,56,939,64,1037,80,1134,108,1180,134,1178,139,1132,113,1036,85,938,69,851,61,786,59"/>
 </map>
 </div>
 
@@ -338,100 +350,106 @@ Here is the call graph for this function:</div>
 <p>Updates cached calculation constants used for efficiently computing synchrotron spectra. </p>
 <p>Constants vary based on the electron regime (1-6) and involve different power laws. </p>
 
-<p class="definition">Definition at line <a class="el" href="synchrotron_8cpp_source.html#l00182">182</a> of file <a class="el" href="synchrotron_8cpp_source.html">synchrotron.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  182</span>                                 {</div>
-<div class="line"><span class="lineno">  183</span>    <span class="comment">// Update constants based on spectral parameters</span></div>
-<div class="line"><span class="lineno">  184</span>    <span class="keywordflow">if</span> (<a class="code hl_variable" href="structSynPhotons.html#a81ebe2d50873cae996b620cd96fb8e72">regime</a> == 1) {</div>
-<div class="line"><span class="lineno">  185</span>        <span class="comment">// a_m_1_3 = std::cbrt(nu_a / nu_m);  // (nu_a / nu_m)^(1/3)</span></div>
-<div class="line"><span class="lineno">  186</span>        <span class="comment">// c_m_mpa1_2 = fastPow(nu_c / nu_m, (-p + 1) / 2);  // (nu_c / nu_m)^((-p+1)/2)</span></div>
-<div class="line"><span class="lineno">  187</span>        C1_ = std::cbrt(<a class="code hl_variable" href="structSynPhotons.html#abf21c9a421af10e2537cf91c952bfef0">nu_a</a> / <a class="code hl_variable" href="structSynPhotons.html#abc96bae4050dcae54cc99ac5c7973586">nu_m</a>);</div>
-<div class="line"><span class="lineno">  188</span>        C2_ = <a class="code hl_function" href="utilities_8h.html#a4520a27a10a2aef33c99ad8c679da404">fast_pow</a>(<a class="code hl_variable" href="structSynPhotons.html#a910353b5e644e1472843f39f1ad02196">nu_c</a> / <a class="code hl_variable" href="structSynPhotons.html#abc96bae4050dcae54cc99ac5c7973586">nu_m</a>, (-<a class="code hl_variable" href="structSynPhotons.html#a115e2b5ad4da06a18a870be3d56c9326">p</a> + 1) / 2);</div>
-<div class="line"><span class="lineno">  189</span> </div>
-<div class="line"><span class="lineno">  190</span>        log2_C1_ = (<a class="code hl_variable" href="structSynPhotons.html#ab6d5d7a3f83de2ddce7c8c8c17a9af9a">log2_nu_a</a> - <a class="code hl_variable" href="structSynPhotons.html#ad039dd447206d062f055f105c2596a99">log2_nu_m</a>) / 3 - 2 * <a class="code hl_variable" href="structSynPhotons.html#ab6d5d7a3f83de2ddce7c8c8c17a9af9a">log2_nu_a</a>;</div>
-<div class="line"><span class="lineno">  191</span>        log2_C2_ = -<a class="code hl_variable" href="structSynPhotons.html#ad039dd447206d062f055f105c2596a99">log2_nu_m</a> / 3;</div>
-<div class="line"><span class="lineno">  192</span>        log2_C3_ = (<a class="code hl_variable" href="structSynPhotons.html#a115e2b5ad4da06a18a870be3d56c9326">p</a> - 1) / 2 * <a class="code hl_variable" href="structSynPhotons.html#ad039dd447206d062f055f105c2596a99">log2_nu_m</a>;</div>
-<div class="line"><span class="lineno">  193</span>        log2_C4_ = (<a class="code hl_variable" href="structSynPhotons.html#a115e2b5ad4da06a18a870be3d56c9326">p</a> - 1) / 2 * (<a class="code hl_variable" href="structSynPhotons.html#ad039dd447206d062f055f105c2596a99">log2_nu_m</a> - <a class="code hl_variable" href="structSynPhotons.html#a3f3227248f96db80e3bbbaec7cbd8206">log2_nu_c</a>) + <a class="code hl_variable" href="structSynPhotons.html#a115e2b5ad4da06a18a870be3d56c9326">p</a> / 2 * <a class="code hl_variable" href="structSynPhotons.html#a3f3227248f96db80e3bbbaec7cbd8206">log2_nu_c</a>;</div>
-<div class="line"><span class="lineno">  194</span>    } <span class="keywordflow">else</span> <span class="keywordflow">if</span> (<a class="code hl_variable" href="structSynPhotons.html#a81ebe2d50873cae996b620cd96fb8e72">regime</a> == 2) {</div>
-<div class="line"><span class="lineno">  195</span>        <span class="comment">// m_a_pa4_2 = fastPow(nu_m / nu_a, (p + 4) / 2);    // (nu_m / nu_a)^((p+4)/2)</span></div>
-<div class="line"><span class="lineno">  196</span>        <span class="comment">// a_m_mpa1_2 = fastPow(nu_a / nu_m, (-p + 1) / 2);  // (nu_a / nu_m)^((-p+1)/2)</span></div>
-<div class="line"><span class="lineno">  197</span>        <span class="comment">// c_m_mpa1_2 = fastPow(nu_c / nu_m, (-p + 1) / 2);  // (nu_c / nu_m)^((-p+1)/2)</span></div>
-<div class="line"><span class="lineno">  198</span>        C1_ = <a class="code hl_function" href="utilities_8h.html#a4520a27a10a2aef33c99ad8c679da404">fast_pow</a>(<a class="code hl_variable" href="structSynPhotons.html#abc96bae4050dcae54cc99ac5c7973586">nu_m</a> / <a class="code hl_variable" href="structSynPhotons.html#abf21c9a421af10e2537cf91c952bfef0">nu_a</a>, (<a class="code hl_variable" href="structSynPhotons.html#a115e2b5ad4da06a18a870be3d56c9326">p</a> + 4) / 2);</div>
-<div class="line"><span class="lineno">  199</span>        C2_ = <a class="code hl_function" href="utilities_8h.html#a4520a27a10a2aef33c99ad8c679da404">fast_pow</a>(<a class="code hl_variable" href="structSynPhotons.html#abf21c9a421af10e2537cf91c952bfef0">nu_a</a> / <a class="code hl_variable" href="structSynPhotons.html#abc96bae4050dcae54cc99ac5c7973586">nu_m</a>, (-<a class="code hl_variable" href="structSynPhotons.html#a115e2b5ad4da06a18a870be3d56c9326">p</a> + 1) / 2);</div>
-<div class="line"><span class="lineno">  200</span>        C3_ = <a class="code hl_function" href="utilities_8h.html#a4520a27a10a2aef33c99ad8c679da404">fast_pow</a>(<a class="code hl_variable" href="structSynPhotons.html#a910353b5e644e1472843f39f1ad02196">nu_c</a> / <a class="code hl_variable" href="structSynPhotons.html#abc96bae4050dcae54cc99ac5c7973586">nu_m</a>, (-<a class="code hl_variable" href="structSynPhotons.html#a115e2b5ad4da06a18a870be3d56c9326">p</a> + 1) / 2);</div>
-<div class="line"><span class="lineno">  201</span> </div>
-<div class="line"><span class="lineno">  202</span>        log2_C1_ = (<a class="code hl_variable" href="structSynPhotons.html#a115e2b5ad4da06a18a870be3d56c9326">p</a> + 4) / 2 * (<a class="code hl_variable" href="structSynPhotons.html#ad039dd447206d062f055f105c2596a99">log2_nu_m</a> - <a class="code hl_variable" href="structSynPhotons.html#ab6d5d7a3f83de2ddce7c8c8c17a9af9a">log2_nu_a</a>) - 2 * <a class="code hl_variable" href="structSynPhotons.html#ad039dd447206d062f055f105c2596a99">log2_nu_m</a>;</div>
-<div class="line"><span class="lineno">  203</span>        log2_C2_ = (<a class="code hl_variable" href="structSynPhotons.html#a115e2b5ad4da06a18a870be3d56c9326">p</a> - 1) / 2 * (<a class="code hl_variable" href="structSynPhotons.html#ad039dd447206d062f055f105c2596a99">log2_nu_m</a> - <a class="code hl_variable" href="structSynPhotons.html#ab6d5d7a3f83de2ddce7c8c8c17a9af9a">log2_nu_a</a>) - 2.5 * <a class="code hl_variable" href="structSynPhotons.html#ab6d5d7a3f83de2ddce7c8c8c17a9af9a">log2_nu_a</a>;</div>
-<div class="line"><span class="lineno">  204</span>        log2_C3_ = (<a class="code hl_variable" href="structSynPhotons.html#a115e2b5ad4da06a18a870be3d56c9326">p</a> - 1) / 2 * <a class="code hl_variable" href="structSynPhotons.html#ad039dd447206d062f055f105c2596a99">log2_nu_m</a>;</div>
-<div class="line"><span class="lineno">  205</span>        log2_C4_ = (<a class="code hl_variable" href="structSynPhotons.html#a115e2b5ad4da06a18a870be3d56c9326">p</a> - 1) / 2 * (<a class="code hl_variable" href="structSynPhotons.html#ad039dd447206d062f055f105c2596a99">log2_nu_m</a> - <a class="code hl_variable" href="structSynPhotons.html#a3f3227248f96db80e3bbbaec7cbd8206">log2_nu_c</a>) + <a class="code hl_variable" href="structSynPhotons.html#a115e2b5ad4da06a18a870be3d56c9326">p</a> / 2 * <a class="code hl_variable" href="structSynPhotons.html#a3f3227248f96db80e3bbbaec7cbd8206">log2_nu_c</a>;</div>
-<div class="line"><span class="lineno">  206</span>    } <span class="keywordflow">else</span> <span class="keywordflow">if</span> (<a class="code hl_variable" href="structSynPhotons.html#a81ebe2d50873cae996b620cd96fb8e72">regime</a> == 3) {</div>
-<div class="line"><span class="lineno">  207</span>        <span class="comment">// a_c_1_3 = std::cbrt(nu_a / nu_c);  // (nu_a / nu_c)^(1/3)</span></div>
-<div class="line"><span class="lineno">  208</span>        <span class="comment">// c_m_1_2 = std::sqrt(nu_c / nu_m);  // (nu_c / nu_m)^(1/2)</span></div>
-<div class="line"><span class="lineno">  209</span>        C1_ = std::cbrt(<a class="code hl_variable" href="structSynPhotons.html#abf21c9a421af10e2537cf91c952bfef0">nu_a</a> / <a class="code hl_variable" href="structSynPhotons.html#a910353b5e644e1472843f39f1ad02196">nu_c</a>);</div>
-<div class="line"><span class="lineno">  210</span>        C2_ = std::sqrt(<a class="code hl_variable" href="structSynPhotons.html#a910353b5e644e1472843f39f1ad02196">nu_c</a> / <a class="code hl_variable" href="structSynPhotons.html#abc96bae4050dcae54cc99ac5c7973586">nu_m</a>);</div>
-<div class="line"><span class="lineno">  211</span> </div>
-<div class="line"><span class="lineno">  212</span>        log2_C1_ = (<a class="code hl_variable" href="structSynPhotons.html#ab6d5d7a3f83de2ddce7c8c8c17a9af9a">log2_nu_a</a> - <a class="code hl_variable" href="structSynPhotons.html#a3f3227248f96db80e3bbbaec7cbd8206">log2_nu_c</a>) / 3 - 2 * <a class="code hl_variable" href="structSynPhotons.html#ab6d5d7a3f83de2ddce7c8c8c17a9af9a">log2_nu_a</a>;</div>
-<div class="line"><span class="lineno">  213</span>        log2_C2_ = -<a class="code hl_variable" href="structSynPhotons.html#a3f3227248f96db80e3bbbaec7cbd8206">log2_nu_c</a> / 3;</div>
-<div class="line"><span class="lineno">  214</span>        log2_C3_ = <a class="code hl_variable" href="structSynPhotons.html#a3f3227248f96db80e3bbbaec7cbd8206">log2_nu_c</a> / 2;</div>
-<div class="line"><span class="lineno">  215</span>        log2_C4_ = (<a class="code hl_variable" href="structSynPhotons.html#a3f3227248f96db80e3bbbaec7cbd8206">log2_nu_c</a> - <a class="code hl_variable" href="structSynPhotons.html#ad039dd447206d062f055f105c2596a99">log2_nu_m</a>) / 2 + <a class="code hl_variable" href="structSynPhotons.html#a115e2b5ad4da06a18a870be3d56c9326">p</a> / 2 * <a class="code hl_variable" href="structSynPhotons.html#ad039dd447206d062f055f105c2596a99">log2_nu_m</a>;</div>
-<div class="line"><span class="lineno">  216</span>    } <span class="keywordflow">else</span> <span class="keywordflow">if</span> (<a class="code hl_variable" href="structSynPhotons.html#a81ebe2d50873cae996b620cd96fb8e72">regime</a> == 4) {</div>
-<div class="line"><span class="lineno">  217</span>        C1_ = std::sqrt(<a class="code hl_variable" href="structSynPhotons.html#abf21c9a421af10e2537cf91c952bfef0">nu_a</a> / <a class="code hl_variable" href="structSynPhotons.html#abc96bae4050dcae54cc99ac5c7973586">nu_m</a>);</div>
-<div class="line"><span class="lineno">  218</span>        C3_ = 3;</div>
-<div class="line"><span class="lineno">  219</span>        C2_ = std::sqrt(<a class="code hl_variable" href="structSynPhotons.html#a910353b5e644e1472843f39f1ad02196">nu_c</a> / <a class="code hl_variable" href="structSynPhotons.html#abf21c9a421af10e2537cf91c952bfef0">nu_a</a>) / C3_;</div>
+<p class="definition">Definition at line <a class="el" href="synchrotron_8cpp_source.html#l00180">180</a> of file <a class="el" href="synchrotron_8cpp_source.html">synchrotron.cpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  180</span>                                 {</div>
+<div class="line"><span class="lineno">  181</span>    <span class="comment">// Update constants based on spectral parameters</span></div>
+<div class="line"><span class="lineno">  182</span>    <span class="keywordflow">if</span> (<a class="code hl_variable" href="structSynPhotons.html#a81ebe2d50873cae996b620cd96fb8e72">regime</a> == 1) {</div>
+<div class="line"><span class="lineno">  183</span>        <span class="comment">// a_m_1_3 = std::cbrt(nu_a / nu_m);  // (nu_a / nu_m)^(1/3)</span></div>
+<div class="line"><span class="lineno">  184</span>        <span class="comment">// c_m_mpa1_2 = fastPow(nu_c / nu_m, (-p + 1) / 2);  // (nu_c / nu_m)^((-p+1)/2)</span></div>
+<div class="line"><span class="lineno">  185</span>        C1_ = std::cbrt(<a class="code hl_variable" href="structSynPhotons.html#abf21c9a421af10e2537cf91c952bfef0">nu_a</a> / <a class="code hl_variable" href="structSynPhotons.html#abc96bae4050dcae54cc99ac5c7973586">nu_m</a>);</div>
+<div class="line"><span class="lineno">  186</span>        C2_ = <a class="code hl_function" href="utilities_8h.html#a4520a27a10a2aef33c99ad8c679da404">fast_pow</a>(<a class="code hl_variable" href="structSynPhotons.html#a910353b5e644e1472843f39f1ad02196">nu_c</a> / <a class="code hl_variable" href="structSynPhotons.html#abc96bae4050dcae54cc99ac5c7973586">nu_m</a>, (-<a class="code hl_variable" href="structSynPhotons.html#a115e2b5ad4da06a18a870be3d56c9326">p</a> + 1) / 2);</div>
+<div class="line"><span class="lineno">  187</span> </div>
+<div class="line"><span class="lineno">  188</span>        log2_C1_ = (<a class="code hl_variable" href="structSynPhotons.html#ab6d5d7a3f83de2ddce7c8c8c17a9af9a">log2_nu_a</a> - <a class="code hl_variable" href="structSynPhotons.html#ad039dd447206d062f055f105c2596a99">log2_nu_m</a>) / 3 - 2 * <a class="code hl_variable" href="structSynPhotons.html#ab6d5d7a3f83de2ddce7c8c8c17a9af9a">log2_nu_a</a>;</div>
+<div class="line"><span class="lineno">  189</span>        log2_C2_ = -<a class="code hl_variable" href="structSynPhotons.html#ad039dd447206d062f055f105c2596a99">log2_nu_m</a> / 3;</div>
+<div class="line"><span class="lineno">  190</span>        log2_C3_ = (<a class="code hl_variable" href="structSynPhotons.html#a115e2b5ad4da06a18a870be3d56c9326">p</a> - 1) / 2 * <a class="code hl_variable" href="structSynPhotons.html#ad039dd447206d062f055f105c2596a99">log2_nu_m</a>;</div>
+<div class="line"><span class="lineno">  191</span>        log2_C4_ = (<a class="code hl_variable" href="structSynPhotons.html#a115e2b5ad4da06a18a870be3d56c9326">p</a> - 1) / 2 * (<a class="code hl_variable" href="structSynPhotons.html#ad039dd447206d062f055f105c2596a99">log2_nu_m</a> - <a class="code hl_variable" href="structSynPhotons.html#a3f3227248f96db80e3bbbaec7cbd8206">log2_nu_c</a>) + <a class="code hl_variable" href="structSynPhotons.html#a115e2b5ad4da06a18a870be3d56c9326">p</a> / 2 * <a class="code hl_variable" href="structSynPhotons.html#a3f3227248f96db80e3bbbaec7cbd8206">log2_nu_c</a>;</div>
+<div class="line"><span class="lineno">  192</span>    } <span class="keywordflow">else</span> <span class="keywordflow">if</span> (<a class="code hl_variable" href="structSynPhotons.html#a81ebe2d50873cae996b620cd96fb8e72">regime</a> == 2) {</div>
+<div class="line"><span class="lineno">  193</span>        <span class="comment">// m_a_pa4_2 = fastPow(nu_m / nu_a, (p + 4) / 2);    // (nu_m / nu_a)^((p+4)/2)</span></div>
+<div class="line"><span class="lineno">  194</span>        <span class="comment">// a_m_mpa1_2 = fastPow(nu_a / nu_m, (-p + 1) / 2);  // (nu_a / nu_m)^((-p+1)/2)</span></div>
+<div class="line"><span class="lineno">  195</span>        <span class="comment">// c_m_mpa1_2 = fastPow(nu_c / nu_m, (-p + 1) / 2);  // (nu_c / nu_m)^((-p+1)/2)</span></div>
+<div class="line"><span class="lineno">  196</span>        C1_ = <a class="code hl_function" href="utilities_8h.html#a4520a27a10a2aef33c99ad8c679da404">fast_pow</a>(<a class="code hl_variable" href="structSynPhotons.html#abc96bae4050dcae54cc99ac5c7973586">nu_m</a> / <a class="code hl_variable" href="structSynPhotons.html#abf21c9a421af10e2537cf91c952bfef0">nu_a</a>, (<a class="code hl_variable" href="structSynPhotons.html#a115e2b5ad4da06a18a870be3d56c9326">p</a> + 4) / 2);</div>
+<div class="line"><span class="lineno">  197</span>        C2_ = <a class="code hl_function" href="utilities_8h.html#a4520a27a10a2aef33c99ad8c679da404">fast_pow</a>(<a class="code hl_variable" href="structSynPhotons.html#abf21c9a421af10e2537cf91c952bfef0">nu_a</a> / <a class="code hl_variable" href="structSynPhotons.html#abc96bae4050dcae54cc99ac5c7973586">nu_m</a>, (-<a class="code hl_variable" href="structSynPhotons.html#a115e2b5ad4da06a18a870be3d56c9326">p</a> + 1) / 2);</div>
+<div class="line"><span class="lineno">  198</span>        C3_ = <a class="code hl_function" href="utilities_8h.html#a4520a27a10a2aef33c99ad8c679da404">fast_pow</a>(<a class="code hl_variable" href="structSynPhotons.html#a910353b5e644e1472843f39f1ad02196">nu_c</a> / <a class="code hl_variable" href="structSynPhotons.html#abc96bae4050dcae54cc99ac5c7973586">nu_m</a>, (-<a class="code hl_variable" href="structSynPhotons.html#a115e2b5ad4da06a18a870be3d56c9326">p</a> + 1) / 2);</div>
+<div class="line"><span class="lineno">  199</span> </div>
+<div class="line"><span class="lineno">  200</span>        log2_C1_ = (<a class="code hl_variable" href="structSynPhotons.html#a115e2b5ad4da06a18a870be3d56c9326">p</a> + 4) / 2 * (<a class="code hl_variable" href="structSynPhotons.html#ad039dd447206d062f055f105c2596a99">log2_nu_m</a> - <a class="code hl_variable" href="structSynPhotons.html#ab6d5d7a3f83de2ddce7c8c8c17a9af9a">log2_nu_a</a>) - 2 * <a class="code hl_variable" href="structSynPhotons.html#ad039dd447206d062f055f105c2596a99">log2_nu_m</a>;</div>
+<div class="line"><span class="lineno">  201</span>        log2_C2_ = (<a class="code hl_variable" href="structSynPhotons.html#a115e2b5ad4da06a18a870be3d56c9326">p</a> - 1) / 2 * (<a class="code hl_variable" href="structSynPhotons.html#ad039dd447206d062f055f105c2596a99">log2_nu_m</a> - <a class="code hl_variable" href="structSynPhotons.html#ab6d5d7a3f83de2ddce7c8c8c17a9af9a">log2_nu_a</a>) - 2.5 * <a class="code hl_variable" href="structSynPhotons.html#ab6d5d7a3f83de2ddce7c8c8c17a9af9a">log2_nu_a</a>;</div>
+<div class="line"><span class="lineno">  202</span>        log2_C3_ = (<a class="code hl_variable" href="structSynPhotons.html#a115e2b5ad4da06a18a870be3d56c9326">p</a> - 1) / 2 * <a class="code hl_variable" href="structSynPhotons.html#ad039dd447206d062f055f105c2596a99">log2_nu_m</a>;</div>
+<div class="line"><span class="lineno">  203</span>        log2_C4_ = (<a class="code hl_variable" href="structSynPhotons.html#a115e2b5ad4da06a18a870be3d56c9326">p</a> - 1) / 2 * (<a class="code hl_variable" href="structSynPhotons.html#ad039dd447206d062f055f105c2596a99">log2_nu_m</a> - <a class="code hl_variable" href="structSynPhotons.html#a3f3227248f96db80e3bbbaec7cbd8206">log2_nu_c</a>) + <a class="code hl_variable" href="structSynPhotons.html#a115e2b5ad4da06a18a870be3d56c9326">p</a> / 2 * <a class="code hl_variable" href="structSynPhotons.html#a3f3227248f96db80e3bbbaec7cbd8206">log2_nu_c</a>;</div>
+<div class="line"><span class="lineno">  204</span>    } <span class="keywordflow">else</span> <span class="keywordflow">if</span> (<a class="code hl_variable" href="structSynPhotons.html#a81ebe2d50873cae996b620cd96fb8e72">regime</a> == 3) {</div>
+<div class="line"><span class="lineno">  205</span>        <span class="comment">// a_c_1_3 = std::cbrt(nu_a / nu_c);  // (nu_a / nu_c)^(1/3)</span></div>
+<div class="line"><span class="lineno">  206</span>        <span class="comment">// c_m_1_2 = std::sqrt(nu_c / nu_m);  // (nu_c / nu_m)^(1/2)</span></div>
+<div class="line"><span class="lineno">  207</span>        C1_ = std::cbrt(<a class="code hl_variable" href="structSynPhotons.html#abf21c9a421af10e2537cf91c952bfef0">nu_a</a> / <a class="code hl_variable" href="structSynPhotons.html#a910353b5e644e1472843f39f1ad02196">nu_c</a>);</div>
+<div class="line"><span class="lineno">  208</span>        C2_ = std::sqrt(<a class="code hl_variable" href="structSynPhotons.html#a910353b5e644e1472843f39f1ad02196">nu_c</a> / <a class="code hl_variable" href="structSynPhotons.html#abc96bae4050dcae54cc99ac5c7973586">nu_m</a>);</div>
+<div class="line"><span class="lineno">  209</span> </div>
+<div class="line"><span class="lineno">  210</span>        log2_C1_ = (<a class="code hl_variable" href="structSynPhotons.html#ab6d5d7a3f83de2ddce7c8c8c17a9af9a">log2_nu_a</a> - <a class="code hl_variable" href="structSynPhotons.html#a3f3227248f96db80e3bbbaec7cbd8206">log2_nu_c</a>) / 3 - 2 * <a class="code hl_variable" href="structSynPhotons.html#ab6d5d7a3f83de2ddce7c8c8c17a9af9a">log2_nu_a</a>;</div>
+<div class="line"><span class="lineno">  211</span>        log2_C2_ = -<a class="code hl_variable" href="structSynPhotons.html#a3f3227248f96db80e3bbbaec7cbd8206">log2_nu_c</a> / 3;</div>
+<div class="line"><span class="lineno">  212</span>        log2_C3_ = <a class="code hl_variable" href="structSynPhotons.html#a3f3227248f96db80e3bbbaec7cbd8206">log2_nu_c</a> / 2;</div>
+<div class="line"><span class="lineno">  213</span>        log2_C4_ = (<a class="code hl_variable" href="structSynPhotons.html#a3f3227248f96db80e3bbbaec7cbd8206">log2_nu_c</a> - <a class="code hl_variable" href="structSynPhotons.html#ad039dd447206d062f055f105c2596a99">log2_nu_m</a>) / 2 + <a class="code hl_variable" href="structSynPhotons.html#a115e2b5ad4da06a18a870be3d56c9326">p</a> / 2 * <a class="code hl_variable" href="structSynPhotons.html#ad039dd447206d062f055f105c2596a99">log2_nu_m</a>;</div>
+<div class="line"><span class="lineno">  214</span>    } <span class="keywordflow">else</span> <span class="keywordflow">if</span> (<a class="code hl_variable" href="structSynPhotons.html#a81ebe2d50873cae996b620cd96fb8e72">regime</a> == 4) {</div>
+<div class="line"><span class="lineno">  215</span>        C1_ = std::sqrt(<a class="code hl_variable" href="structSynPhotons.html#abf21c9a421af10e2537cf91c952bfef0">nu_a</a> / <a class="code hl_variable" href="structSynPhotons.html#abc96bae4050dcae54cc99ac5c7973586">nu_m</a>);</div>
+<div class="line"><span class="lineno">  216</span>        C3_ = 3;</div>
+<div class="line"><span class="lineno">  217</span>        C2_ = std::sqrt(<a class="code hl_variable" href="structSynPhotons.html#a910353b5e644e1472843f39f1ad02196">nu_c</a> / <a class="code hl_variable" href="structSynPhotons.html#abf21c9a421af10e2537cf91c952bfef0">nu_a</a>) / C3_;</div>
+<div class="line"><span class="lineno">  218</span> </div>
+<div class="line"><span class="lineno">  219</span>        log2_C4_ = <a class="code hl_function" href="utilities_8h.html#aa67895957aa831a991982a8268ef8349">fast_log2</a>(C2_);</div>
 <div class="line"><span class="lineno">  220</span> </div>
-<div class="line"><span class="lineno">  221</span>        log2_C4_ = <a class="code hl_function" href="utilities_8h.html#afe0a1b1b7509ac4df83fcc0e510f281b">fast_log2</a>(C2_);</div>
-<div class="line"><span class="lineno">  222</span> </div>
-<div class="line"><span class="lineno">  223</span>        log2_C1_ = -2 * <a class="code hl_variable" href="structSynPhotons.html#ab6d5d7a3f83de2ddce7c8c8c17a9af9a">log2_nu_a</a>;</div>
-<div class="line"><span class="lineno">  224</span>        log2_C2_ = log2_C4_ + <a class="code hl_variable" href="structSynPhotons.html#ab6d5d7a3f83de2ddce7c8c8c17a9af9a">log2_nu_a</a> / 2;</div>
-<div class="line"><span class="lineno">  225</span>        log2_C3_ = log2_C4_ + (<a class="code hl_variable" href="structSynPhotons.html#ab6d5d7a3f83de2ddce7c8c8c17a9af9a">log2_nu_a</a> - <a class="code hl_variable" href="structSynPhotons.html#ad039dd447206d062f055f105c2596a99">log2_nu_m</a>) / 2 + <a class="code hl_variable" href="structSynPhotons.html#a115e2b5ad4da06a18a870be3d56c9326">p</a> / 2 * <a class="code hl_variable" href="structSynPhotons.html#ad039dd447206d062f055f105c2596a99">log2_nu_m</a>;</div>
-<div class="line"><span class="lineno">  226</span> </div>
-<div class="line"><span class="lineno">  227</span>    } <span class="keywordflow">else</span> <span class="keywordflow">if</span> (<a class="code hl_variable" href="structSynPhotons.html#a81ebe2d50873cae996b620cd96fb8e72">regime</a> == 5) {</div>
-<div class="line"><span class="lineno">  228</span>        C1_ = std::sqrt(<a class="code hl_variable" href="structSynPhotons.html#abc96bae4050dcae54cc99ac5c7973586">nu_m</a> / <a class="code hl_variable" href="structSynPhotons.html#abf21c9a421af10e2537cf91c952bfef0">nu_a</a>);</div>
-<div class="line"><span class="lineno">  229</span>        C3_ = 3 / (<a class="code hl_variable" href="structSynPhotons.html#a115e2b5ad4da06a18a870be3d56c9326">p</a> - 1);</div>
-<div class="line"><span class="lineno">  230</span>        C2_ = std::sqrt(<a class="code hl_variable" href="structSynPhotons.html#a910353b5e644e1472843f39f1ad02196">nu_c</a> / <a class="code hl_variable" href="structSynPhotons.html#abf21c9a421af10e2537cf91c952bfef0">nu_a</a>) * <a class="code hl_function" href="utilities_8h.html#a4520a27a10a2aef33c99ad8c679da404">fast_pow</a>(<a class="code hl_variable" href="structSynPhotons.html#abc96bae4050dcae54cc99ac5c7973586">nu_m</a> / <a class="code hl_variable" href="structSynPhotons.html#abf21c9a421af10e2537cf91c952bfef0">nu_a</a>, (<a class="code hl_variable" href="structSynPhotons.html#a115e2b5ad4da06a18a870be3d56c9326">p</a> - 1) / 2) / C3_;</div>
+<div class="line"><span class="lineno">  221</span>        log2_C1_ = -2 * <a class="code hl_variable" href="structSynPhotons.html#ab6d5d7a3f83de2ddce7c8c8c17a9af9a">log2_nu_a</a>;</div>
+<div class="line"><span class="lineno">  222</span>        log2_C2_ = log2_C4_ + <a class="code hl_variable" href="structSynPhotons.html#ab6d5d7a3f83de2ddce7c8c8c17a9af9a">log2_nu_a</a> / 2;</div>
+<div class="line"><span class="lineno">  223</span>        log2_C3_ = log2_C4_ + (<a class="code hl_variable" href="structSynPhotons.html#ab6d5d7a3f83de2ddce7c8c8c17a9af9a">log2_nu_a</a> - <a class="code hl_variable" href="structSynPhotons.html#ad039dd447206d062f055f105c2596a99">log2_nu_m</a>) / 2 + <a class="code hl_variable" href="structSynPhotons.html#a115e2b5ad4da06a18a870be3d56c9326">p</a> / 2 * <a class="code hl_variable" href="structSynPhotons.html#ad039dd447206d062f055f105c2596a99">log2_nu_m</a>;</div>
+<div class="line"><span class="lineno">  224</span> </div>
+<div class="line"><span class="lineno">  225</span>    } <span class="keywordflow">else</span> <span class="keywordflow">if</span> (<a class="code hl_variable" href="structSynPhotons.html#a81ebe2d50873cae996b620cd96fb8e72">regime</a> == 5) {</div>
+<div class="line"><span class="lineno">  226</span>        C1_ = std::sqrt(<a class="code hl_variable" href="structSynPhotons.html#abc96bae4050dcae54cc99ac5c7973586">nu_m</a> / <a class="code hl_variable" href="structSynPhotons.html#abf21c9a421af10e2537cf91c952bfef0">nu_a</a>);</div>
+<div class="line"><span class="lineno">  227</span>        C3_ = 3 / (<a class="code hl_variable" href="structSynPhotons.html#a115e2b5ad4da06a18a870be3d56c9326">p</a> - 1);</div>
+<div class="line"><span class="lineno">  228</span>        C2_ = std::sqrt(<a class="code hl_variable" href="structSynPhotons.html#a910353b5e644e1472843f39f1ad02196">nu_c</a> / <a class="code hl_variable" href="structSynPhotons.html#abf21c9a421af10e2537cf91c952bfef0">nu_a</a>) * <a class="code hl_function" href="utilities_8h.html#a4520a27a10a2aef33c99ad8c679da404">fast_pow</a>(<a class="code hl_variable" href="structSynPhotons.html#abc96bae4050dcae54cc99ac5c7973586">nu_m</a> / <a class="code hl_variable" href="structSynPhotons.html#abf21c9a421af10e2537cf91c952bfef0">nu_a</a>, (<a class="code hl_variable" href="structSynPhotons.html#a115e2b5ad4da06a18a870be3d56c9326">p</a> - 1) / 2) / C3_;</div>
+<div class="line"><span class="lineno">  229</span> </div>
+<div class="line"><span class="lineno">  230</span>        log2_C4_ = <a class="code hl_function" href="utilities_8h.html#aa67895957aa831a991982a8268ef8349">fast_log2</a>(C2_);</div>
 <div class="line"><span class="lineno">  231</span> </div>
-<div class="line"><span class="lineno">  232</span>        log2_C4_ = <a class="code hl_function" href="utilities_8h.html#afe0a1b1b7509ac4df83fcc0e510f281b">fast_log2</a>(C2_);</div>
-<div class="line"><span class="lineno">  233</span> </div>
-<div class="line"><span class="lineno">  234</span>        log2_C1_ = -2.5 * <a class="code hl_variable" href="structSynPhotons.html#ab6d5d7a3f83de2ddce7c8c8c17a9af9a">log2_nu_a</a>;</div>
-<div class="line"><span class="lineno">  235</span>        log2_C2_ = log2_C4_ + <a class="code hl_variable" href="structSynPhotons.html#a115e2b5ad4da06a18a870be3d56c9326">p</a> / 2 * <a class="code hl_variable" href="structSynPhotons.html#ab6d5d7a3f83de2ddce7c8c8c17a9af9a">log2_nu_a</a>;</div>
-<div class="line"><span class="lineno">  236</span> </div>
-<div class="line"><span class="lineno">  237</span>        log2_C3_ = <a class="code hl_function" href="utilities_8h.html#afe0a1b1b7509ac4df83fcc0e510f281b">fast_log2</a>(C3_);</div>
-<div class="line"><span class="lineno">  238</span>    } <span class="keywordflow">else</span> <span class="keywordflow">if</span> (<a class="code hl_variable" href="structSynPhotons.html#a81ebe2d50873cae996b620cd96fb8e72">regime</a> == 6) {</div>
-<div class="line"><span class="lineno">  239</span>        C1_ = std::sqrt(<a class="code hl_variable" href="structSynPhotons.html#abc96bae4050dcae54cc99ac5c7973586">nu_m</a> / <a class="code hl_variable" href="structSynPhotons.html#abf21c9a421af10e2537cf91c952bfef0">nu_a</a>);</div>
-<div class="line"><span class="lineno">  240</span>        C3_ = 3;</div>
-<div class="line"><span class="lineno">  241</span>        C2_ = std::sqrt(<a class="code hl_variable" href="structSynPhotons.html#a910353b5e644e1472843f39f1ad02196">nu_c</a> / <a class="code hl_variable" href="structSynPhotons.html#abf21c9a421af10e2537cf91c952bfef0">nu_a</a>) * <a class="code hl_function" href="utilities_8h.html#a4520a27a10a2aef33c99ad8c679da404">fast_pow</a>(<a class="code hl_variable" href="structSynPhotons.html#abc96bae4050dcae54cc99ac5c7973586">nu_m</a> / <a class="code hl_variable" href="structSynPhotons.html#abf21c9a421af10e2537cf91c952bfef0">nu_a</a>, (<a class="code hl_variable" href="structSynPhotons.html#a115e2b5ad4da06a18a870be3d56c9326">p</a> - 1) / 2) / C3_;</div>
+<div class="line"><span class="lineno">  232</span>        log2_C1_ = -2.5 * <a class="code hl_variable" href="structSynPhotons.html#ab6d5d7a3f83de2ddce7c8c8c17a9af9a">log2_nu_a</a>;</div>
+<div class="line"><span class="lineno">  233</span>        log2_C2_ = log2_C4_ + <a class="code hl_variable" href="structSynPhotons.html#a115e2b5ad4da06a18a870be3d56c9326">p</a> / 2 * <a class="code hl_variable" href="structSynPhotons.html#ab6d5d7a3f83de2ddce7c8c8c17a9af9a">log2_nu_a</a>;</div>
+<div class="line"><span class="lineno">  234</span> </div>
+<div class="line"><span class="lineno">  235</span>        log2_C3_ = <a class="code hl_function" href="utilities_8h.html#aa67895957aa831a991982a8268ef8349">fast_log2</a>(C3_);</div>
+<div class="line"><span class="lineno">  236</span>    } <span class="keywordflow">else</span> <span class="keywordflow">if</span> (<a class="code hl_variable" href="structSynPhotons.html#a81ebe2d50873cae996b620cd96fb8e72">regime</a> == 6) {</div>
+<div class="line"><span class="lineno">  237</span>        C1_ = std::sqrt(<a class="code hl_variable" href="structSynPhotons.html#abc96bae4050dcae54cc99ac5c7973586">nu_m</a> / <a class="code hl_variable" href="structSynPhotons.html#abf21c9a421af10e2537cf91c952bfef0">nu_a</a>);</div>
+<div class="line"><span class="lineno">  238</span>        C3_ = 3;</div>
+<div class="line"><span class="lineno">  239</span>        C2_ = std::sqrt(<a class="code hl_variable" href="structSynPhotons.html#a910353b5e644e1472843f39f1ad02196">nu_c</a> / <a class="code hl_variable" href="structSynPhotons.html#abf21c9a421af10e2537cf91c952bfef0">nu_a</a>) * <a class="code hl_function" href="utilities_8h.html#a4520a27a10a2aef33c99ad8c679da404">fast_pow</a>(<a class="code hl_variable" href="structSynPhotons.html#abc96bae4050dcae54cc99ac5c7973586">nu_m</a> / <a class="code hl_variable" href="structSynPhotons.html#abf21c9a421af10e2537cf91c952bfef0">nu_a</a>, (<a class="code hl_variable" href="structSynPhotons.html#a115e2b5ad4da06a18a870be3d56c9326">p</a> - 1) / 2) / C3_;</div>
+<div class="line"><span class="lineno">  240</span> </div>
+<div class="line"><span class="lineno">  241</span>        log2_C4_ = <a class="code hl_function" href="utilities_8h.html#aa67895957aa831a991982a8268ef8349">fast_log2</a>(C2_);</div>
 <div class="line"><span class="lineno">  242</span> </div>
-<div class="line"><span class="lineno">  243</span>        log2_C4_ = <a class="code hl_function" href="utilities_8h.html#afe0a1b1b7509ac4df83fcc0e510f281b">fast_log2</a>(C2_);</div>
-<div class="line"><span class="lineno">  244</span> </div>
-<div class="line"><span class="lineno">  245</span>        log2_C1_ = -2.5 * <a class="code hl_variable" href="structSynPhotons.html#ab6d5d7a3f83de2ddce7c8c8c17a9af9a">log2_nu_a</a>;</div>
-<div class="line"><span class="lineno">  246</span>        log2_C2_ = log2_C4_ + <a class="code hl_variable" href="structSynPhotons.html#a115e2b5ad4da06a18a870be3d56c9326">p</a> / 2 * <a class="code hl_variable" href="structSynPhotons.html#ab6d5d7a3f83de2ddce7c8c8c17a9af9a">log2_nu_a</a>;</div>
-<div class="line"><span class="lineno">  247</span> </div>
-<div class="line"><span class="lineno">  248</span>        log2_C3_ = 1.5849625007; <span class="comment">// log2(3)</span></div>
-<div class="line"><span class="lineno">  249</span>    }</div>
-<div class="line"><span class="lineno">  250</span>}</div>
-<div class="ttc" id="astructSynPhotons_html_a81ebe2d50873cae996b620cd96fb8e72"><div class="ttname"><a href="structSynPhotons.html#a81ebe2d50873cae996b620cd96fb8e72">SynPhotons::regime</a></div><div class="ttdeci">size_t regime</div><div class="ttdoc">Regime indicator (1-6, determines spectral shape)</div><div class="ttdef"><b>Definition</b> <a href="synchrotron_8h_source.html#l00089">synchrotron.h:89</a></div></div>
-<div class="ttc" id="astructSynPhotons_html_ab6d5d7a3f83de2ddce7c8c8c17a9af9a"><div class="ttname"><a href="structSynPhotons.html#ab6d5d7a3f83de2ddce7c8c8c17a9af9a">SynPhotons::log2_nu_a</a></div><div class="ttdeci">Real log2_nu_a</div><div class="ttdoc">Log2 of nu_a.</div><div class="ttdef"><b>Definition</b> <a href="synchrotron_8h_source.html#l00086">synchrotron.h:86</a></div></div>
-<div class="ttc" id="astructSynPhotons_html_abc96bae4050dcae54cc99ac5c7973586"><div class="ttname"><a href="structSynPhotons.html#abc96bae4050dcae54cc99ac5c7973586">SynPhotons::nu_m</a></div><div class="ttdeci">Real nu_m</div><div class="ttdoc">Characteristic frequency corresponding to gamma_m.</div><div class="ttdef"><b>Definition</b> <a href="synchrotron_8h_source.html#l00077">synchrotron.h:77</a></div></div>
-<div class="ttc" id="astructSynPhotons_html_abf21c9a421af10e2537cf91c952bfef0"><div class="ttname"><a href="structSynPhotons.html#abf21c9a421af10e2537cf91c952bfef0">SynPhotons::nu_a</a></div><div class="ttdeci">Real nu_a</div><div class="ttdoc">Self-absorption frequency.</div><div class="ttdef"><b>Definition</b> <a href="synchrotron_8h_source.html#l00079">synchrotron.h:79</a></div></div>
-<div class="ttc" id="astructSynPhotons_html_ad039dd447206d062f055f105c2596a99"><div class="ttname"><a href="structSynPhotons.html#ad039dd447206d062f055f105c2596a99">SynPhotons::log2_nu_m</a></div><div class="ttdeci">Real log2_nu_m</div><div class="ttdoc">Log2 of nu_m.</div><div class="ttdef"><b>Definition</b> <a href="synchrotron_8h_source.html#l00084">synchrotron.h:84</a></div></div>
-<div class="ttc" id="autilities_8h_html_a4520a27a10a2aef33c99ad8c679da404"><div class="ttname"><a href="utilities_8h.html#a4520a27a10a2aef33c99ad8c679da404">fast_pow</a></div><div class="ttdeci">Real fast_pow(Real a, Real b)</div><div class="ttdoc">Fast approximation of a raised to the power of b.</div><div class="ttdef"><b>Definition</b> <a href="utilities_8h_source.html#l00475">utilities.h:475</a></div></div>
+<div class="line"><span class="lineno">  243</span>        log2_C1_ = -2.5 * <a class="code hl_variable" href="structSynPhotons.html#ab6d5d7a3f83de2ddce7c8c8c17a9af9a">log2_nu_a</a>;</div>
+<div class="line"><span class="lineno">  244</span>        log2_C2_ = log2_C4_ + <a class="code hl_variable" href="structSynPhotons.html#a115e2b5ad4da06a18a870be3d56c9326">p</a> / 2 * <a class="code hl_variable" href="structSynPhotons.html#ab6d5d7a3f83de2ddce7c8c8c17a9af9a">log2_nu_a</a>;</div>
+<div class="line"><span class="lineno">  245</span> </div>
+<div class="line"><span class="lineno">  246</span>        log2_C3_ = 1.5849625007; <span class="comment">// log2(3)</span></div>
+<div class="line"><span class="lineno">  247</span>    }</div>
+<div class="line"><span class="lineno">  248</span>}</div>
+<div class="ttc" id="astructSynPhotons_html_a81ebe2d50873cae996b620cd96fb8e72"><div class="ttname"><a href="structSynPhotons.html#a81ebe2d50873cae996b620cd96fb8e72">SynPhotons::regime</a></div><div class="ttdeci">size_t regime</div><div class="ttdoc">Regime indicator (1-6, determines spectral shape)</div><div class="ttdef"><b>Definition</b> <a href="synchrotron_8h_source.html#l00086">synchrotron.h:86</a></div></div>
+<div class="ttc" id="astructSynPhotons_html_ab6d5d7a3f83de2ddce7c8c8c17a9af9a"><div class="ttname"><a href="structSynPhotons.html#ab6d5d7a3f83de2ddce7c8c8c17a9af9a">SynPhotons::log2_nu_a</a></div><div class="ttdeci">Real log2_nu_a</div><div class="ttdoc">Log2 of nu_a.</div><div class="ttdef"><b>Definition</b> <a href="synchrotron_8h_source.html#l00083">synchrotron.h:83</a></div></div>
+<div class="ttc" id="astructSynPhotons_html_abc96bae4050dcae54cc99ac5c7973586"><div class="ttname"><a href="structSynPhotons.html#abc96bae4050dcae54cc99ac5c7973586">SynPhotons::nu_m</a></div><div class="ttdeci">Real nu_m</div><div class="ttdoc">Characteristic frequency corresponding to gamma_m.</div><div class="ttdef"><b>Definition</b> <a href="synchrotron_8h_source.html#l00074">synchrotron.h:74</a></div></div>
+<div class="ttc" id="astructSynPhotons_html_abf21c9a421af10e2537cf91c952bfef0"><div class="ttname"><a href="structSynPhotons.html#abf21c9a421af10e2537cf91c952bfef0">SynPhotons::nu_a</a></div><div class="ttdeci">Real nu_a</div><div class="ttdoc">Self-absorption frequency.</div><div class="ttdef"><b>Definition</b> <a href="synchrotron_8h_source.html#l00076">synchrotron.h:76</a></div></div>
+<div class="ttc" id="astructSynPhotons_html_ad039dd447206d062f055f105c2596a99"><div class="ttname"><a href="structSynPhotons.html#ad039dd447206d062f055f105c2596a99">SynPhotons::log2_nu_m</a></div><div class="ttdeci">Real log2_nu_m</div><div class="ttdoc">Log2 of nu_m.</div><div class="ttdef"><b>Definition</b> <a href="synchrotron_8h_source.html#l00081">synchrotron.h:81</a></div></div>
+<div class="ttc" id="autilities_8h_html_a4520a27a10a2aef33c99ad8c679da404"><div class="ttname"><a href="utilities_8h.html#a4520a27a10a2aef33c99ad8c679da404">fast_pow</a></div><div class="ttdeci">Real fast_pow(Real a, Real b)</div><div class="ttdoc">Fast approximation of a raised to the power of b.</div><div class="ttdef"><b>Definition</b> <a href="utilities_8h_source.html#l00445">utilities.h:445</a></div></div>
 </div><!-- fragment --><div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="structSynPhotons_a631859af4fe11f0312e78f2fbaa39e80_cgraph.png" border="0" usemap="#astructSynPhotons_a631859af4fe11f0312e78f2fbaa39e80_cgraph" alt=""/></div>
 <map name="astructSynPhotons_a631859af4fe11f0312e78f2fbaa39e80_cgraph" id="astructSynPhotons_a631859af4fe11f0312e78f2fbaa39e80_cgraph">
-<area shape="rect" title="Updates cached calculation constants used for efficiently computing synchrotron spectra." alt="" coords="5,23,156,63"/>
-<area shape="rect" href="utilities_8h.html#afe0a1b1b7509ac4df83fcc0e510f281b" title="Fast approximation of the base&#45;2 logarithm." alt="" coords="335,5,418,31"/>
-<area shape="poly" title=" " alt="" coords="156,34,321,20,322,25,156,40"/>
-<area shape="rect" href="utilities_8h.html#a4520a27a10a2aef33c99ad8c679da404" title="Fast approximation of a raised to the power of b." alt="" coords="204,56,285,81"/>
-<area shape="poly" title=" " alt="" coords="156,52,191,58,190,63,156,58"/>
-<area shape="rect" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42" title="Returns the value of a single parameter." alt="" coords="468,56,519,81"/>
-<area shape="poly" title=" " alt="" coords="408,28,456,50,454,55,406,33"/>
-<area shape="poly" title=" " alt="" coords="473,57,469,48,471,38,480,32,493,29,509,33,516,41,512,45,507,37,493,35,482,37,476,41,475,47,478,55"/>
-<area shape="poly" title=" " alt="" coords="278,53,329,33,331,38,280,58"/>
-<area shape="poly" title=" " alt="" coords="286,66,454,66,454,71,286,71"/>
-<area shape="rect" href="utilities_8h.html#afc584c30c352192de6847b1f4b8caf0e" title="Fast approximation of 2 raised to a power." alt="" coords="333,107,420,132"/>
-<area shape="poly" title=" " alt="" coords="280,79,331,99,329,104,278,84"/>
-<area shape="poly" title=" " alt="" coords="406,104,454,83,456,87,408,109"/>
+<area shape="rect" title="Updates cached calculation constants used for efficiently computing synchrotron spectra." alt="" coords="5,125,156,165"/>
+<area shape="rect" href="utilities_8h.html#aa67895957aa831a991982a8268ef8349" title="Fast approximation of the base&#45;2 logarithm." alt="" coords="335,107,418,132"/>
+<area shape="poly" title=" " alt="" coords="156,136,321,121,322,127,156,141"/>
+<area shape="rect" href="utilities_8h.html#a4520a27a10a2aef33c99ad8c679da404" title="Fast approximation of a raised to the power of b." alt="" coords="204,157,285,183"/>
+<area shape="poly" title=" " alt="" coords="156,154,191,159,190,164,156,159"/>
+<area shape="rect" href="utilities_8h.html#acd0ec547a29a5a2f768d02b1aef146fa" title=" " alt="" coords="468,5,625,31"/>
+<area shape="poly" title=" " alt="" coords="391,104,424,77,467,48,495,34,497,38,469,52,427,81,394,108"/>
+<area shape="rect" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42" title="Returns the value of a single parameter." alt="" coords="673,107,724,132"/>
+<area shape="poly" title=" " alt="" coords="414,104,468,91,547,83,626,91,661,101,660,106,625,97,547,89,468,97,415,109"/>
+<area shape="rect" href="utilities_8h.html#aeec24af41c09b6f977fbd1b6209e6501" title=" " alt="" coords="515,107,578,132"/>
+<area shape="poly" title=" " alt="" coords="418,117,501,117,501,122,418,122"/>
+<area shape="poly" title=" " alt="" coords="588,28,627,48,656,70,679,94,676,98,652,74,624,52,586,33"/>
+<area shape="poly" title=" " alt="" coords="673,108,668,98,670,89,681,82,699,80,720,83,729,92,725,96,717,88,699,85,683,87,675,92,673,98,678,105"/>
+<area shape="poly" title=" " alt="" coords="578,117,660,117,660,122,578,122"/>
+<area shape="poly" title=" " alt="" coords="278,155,329,135,331,139,280,160"/>
+<area shape="poly" title=" " alt="" coords="286,168,436,163,530,155,625,141,660,131,661,136,626,146,531,160,436,169,286,173"/>
+<area shape="rect" href="utilities_8h.html#afc584c30c352192de6847b1f4b8caf0e" title="Fast approximation of 2 raised to a power." alt="" coords="333,208,420,233"/>
+<area shape="poly" title=" " alt="" coords="280,180,331,201,329,205,278,185"/>
+<area shape="poly" title=" " alt="" coords="420,220,464,220,517,216,572,205,624,186,654,166,678,141,682,145,658,170,627,191,573,210,517,221,464,225,420,226"/>
 </map>
 </div>
 
@@ -452,8 +470,8 @@ Here is the call graph for this function:</div>
 
 <p>Maximum specific synchrotron power PER SOLID ANGLE. </p>
 
-<p class="definition">Definition at line <a class="el" href="synchrotron_8h_source.html#l00076">76</a> of file <a class="el" href="synchrotron_8h_source.html">synchrotron.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   76</span>{0}; <span class="comment">///&lt; Maximum specific synchrotron power PER SOLID ANGLE</span></div>
+<p class="definition">Definition at line <a class="el" href="synchrotron_8h_source.html#l00073">73</a> of file <a class="el" href="synchrotron_8h_source.html">synchrotron.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   73</span>{0}; <span class="comment">///&lt; Maximum specific synchrotron power PER SOLID ANGLE</span></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -471,8 +489,8 @@ Here is the call graph for this function:</div>
 
 <p>Log2 of I_nu_max (for computational efficiency) </p>
 
-<p class="definition">Definition at line <a class="el" href="synchrotron_8h_source.html#l00083">83</a> of file <a class="el" href="synchrotron_8h_source.html">synchrotron.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   83</span>{0}; <span class="comment">///&lt; Log2 of I_nu_max (for computational efficiency)</span></div>
+<p class="definition">Definition at line <a class="el" href="synchrotron_8h_source.html#l00080">80</a> of file <a class="el" href="synchrotron_8h_source.html">synchrotron.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   80</span>{0}; <span class="comment">///&lt; Log2 of I_nu_max (for computational efficiency)</span></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -490,8 +508,8 @@ Here is the call graph for this function:</div>
 
 <p>Log2 of nu_a. </p>
 
-<p class="definition">Definition at line <a class="el" href="synchrotron_8h_source.html#l00086">86</a> of file <a class="el" href="synchrotron_8h_source.html">synchrotron.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   86</span>{0};     <span class="comment">///&lt; Log2 of nu_a</span></div>
+<p class="definition">Definition at line <a class="el" href="synchrotron_8h_source.html#l00083">83</a> of file <a class="el" href="synchrotron_8h_source.html">synchrotron.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   83</span>{0};     <span class="comment">///&lt; Log2 of nu_a</span></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -509,8 +527,8 @@ Here is the call graph for this function:</div>
 
 <p>Log2 of nu_c. </p>
 
-<p class="definition">Definition at line <a class="el" href="synchrotron_8h_source.html#l00085">85</a> of file <a class="el" href="synchrotron_8h_source.html">synchrotron.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   85</span>{0};     <span class="comment">///&lt; Log2 of nu_c</span></div>
+<p class="definition">Definition at line <a class="el" href="synchrotron_8h_source.html#l00082">82</a> of file <a class="el" href="synchrotron_8h_source.html">synchrotron.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   82</span>{0};     <span class="comment">///&lt; Log2 of nu_c</span></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -528,8 +546,8 @@ Here is the call graph for this function:</div>
 
 <p>Log2 of nu_m. </p>
 
-<p class="definition">Definition at line <a class="el" href="synchrotron_8h_source.html#l00084">84</a> of file <a class="el" href="synchrotron_8h_source.html">synchrotron.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   84</span>{0};     <span class="comment">///&lt; Log2 of nu_m</span></div>
+<p class="definition">Definition at line <a class="el" href="synchrotron_8h_source.html#l00081">81</a> of file <a class="el" href="synchrotron_8h_source.html">synchrotron.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   81</span>{0};     <span class="comment">///&lt; Log2 of nu_m</span></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -547,8 +565,8 @@ Here is the call graph for this function:</div>
 
 <p>Log2 of nu_M. </p>
 
-<p class="definition">Definition at line <a class="el" href="synchrotron_8h_source.html#l00087">87</a> of file <a class="el" href="synchrotron_8h_source.html">synchrotron.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   87</span>{0};     <span class="comment">///&lt; Log2 of nu_M</span></div>
+<p class="definition">Definition at line <a class="el" href="synchrotron_8h_source.html#l00084">84</a> of file <a class="el" href="synchrotron_8h_source.html">synchrotron.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   84</span>{0};     <span class="comment">///&lt; Log2 of nu_M</span></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -566,8 +584,8 @@ Here is the call graph for this function:</div>
 
 <p>Self-absorption frequency. </p>
 
-<p class="definition">Definition at line <a class="el" href="synchrotron_8h_source.html#l00079">79</a> of file <a class="el" href="synchrotron_8h_source.html">synchrotron.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   79</span>{0};     <span class="comment">///&lt; Self-absorption frequency</span></div>
+<p class="definition">Definition at line <a class="el" href="synchrotron_8h_source.html#l00076">76</a> of file <a class="el" href="synchrotron_8h_source.html">synchrotron.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   76</span>{0};     <span class="comment">///&lt; Self-absorption frequency</span></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -585,8 +603,8 @@ Here is the call graph for this function:</div>
 
 <p>Cooling frequency corresponding to gamma_c. </p>
 
-<p class="definition">Definition at line <a class="el" href="synchrotron_8h_source.html#l00078">78</a> of file <a class="el" href="synchrotron_8h_source.html">synchrotron.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   78</span>{0};     <span class="comment">///&lt; Cooling frequency corresponding to gamma_c</span></div>
+<p class="definition">Definition at line <a class="el" href="synchrotron_8h_source.html#l00075">75</a> of file <a class="el" href="synchrotron_8h_source.html">synchrotron.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   75</span>{0};     <span class="comment">///&lt; Cooling frequency corresponding to gamma_c</span></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -604,8 +622,8 @@ Here is the call graph for this function:</div>
 
 <p>Characteristic frequency corresponding to gamma_m. </p>
 
-<p class="definition">Definition at line <a class="el" href="synchrotron_8h_source.html#l00077">77</a> of file <a class="el" href="synchrotron_8h_source.html">synchrotron.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   77</span>{0};     <span class="comment">///&lt; Characteristic frequency corresponding to gamma_m</span></div>
+<p class="definition">Definition at line <a class="el" href="synchrotron_8h_source.html#l00074">74</a> of file <a class="el" href="synchrotron_8h_source.html">synchrotron.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   74</span>{0};     <span class="comment">///&lt; Characteristic frequency corresponding to gamma_m</span></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -623,8 +641,8 @@ Here is the call graph for this function:</div>
 
 <p>Maximum photon frequency. </p>
 
-<p class="definition">Definition at line <a class="el" href="synchrotron_8h_source.html#l00080">80</a> of file <a class="el" href="synchrotron_8h_source.html">synchrotron.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   80</span>{0};     <span class="comment">///&lt; Maximum photon frequency</span></div>
+<p class="definition">Definition at line <a class="el" href="synchrotron_8h_source.html#l00077">77</a> of file <a class="el" href="synchrotron_8h_source.html">synchrotron.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   77</span>{0};     <span class="comment">///&lt; Maximum photon frequency</span></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -642,8 +660,8 @@ Here is the call graph for this function:</div>
 
 <p>Power-law index for the electron energy distribution. </p>
 
-<p class="definition">Definition at line <a class="el" href="synchrotron_8h_source.html#l00081">81</a> of file <a class="el" href="synchrotron_8h_source.html">synchrotron.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   81</span>{2.3};      <span class="comment">///&lt; Power-law index for the electron energy distribution</span></div>
+<p class="definition">Definition at line <a class="el" href="synchrotron_8h_source.html#l00078">78</a> of file <a class="el" href="synchrotron_8h_source.html">synchrotron.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   78</span>{2.3};      <span class="comment">///&lt; Power-law index for the electron energy distribution</span></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -661,8 +679,8 @@ Here is the call graph for this function:</div>
 
 <p>Regime indicator (1-6, determines spectral shape) </p>
 
-<p class="definition">Definition at line <a class="el" href="synchrotron_8h_source.html#l00089">89</a> of file <a class="el" href="synchrotron_8h_source.html">synchrotron.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   89</span>{0};      <span class="comment">///&lt; Regime indicator (1-6, determines spectral shape)</span></div>
+<p class="definition">Definition at line <a class="el" href="synchrotron_8h_source.html#l00086">86</a> of file <a class="el" href="synchrotron_8h_source.html">synchrotron.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   86</span>{0};      <span class="comment">///&lt; Regime indicator (1-6, determines spectral shape)</span></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -680,8 +698,8 @@ Here is the call graph for this function:</div>
 
 <p>Inverse Compton Y parameter at cooling frequency. </p>
 
-<p class="definition">Definition at line <a class="el" href="synchrotron_8h_source.html#l00088">88</a> of file <a class="el" href="synchrotron_8h_source.html">synchrotron.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   88</span>{0};           <span class="comment">///&lt; Inverse Compton Y parameter at cooling frequency</span></div>
+<p class="definition">Definition at line <a class="el" href="synchrotron_8h_source.html#l00085">85</a> of file <a class="el" href="synchrotron_8h_source.html">synchrotron.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   85</span>{0};           <span class="comment">///&lt; Inverse Compton Y parameter at cooling frequency</span></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -699,7 +717,7 @@ Here is the call graph for this function:</div>
 
 <p><a class="el" href="structInverseComptonY.html" title="Handles Inverse Compton Y parameter calculations and related threshold values.">InverseComptonY</a> parameters for this electron population. </p>
 
-<p class="definition">Definition at line <a class="el" href="synchrotron_8h_source.html#l00090">90</a> of file <a class="el" href="synchrotron_8h_source.html">synchrotron.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="synchrotron_8h_source.html#l00087">87</a> of file <a class="el" href="synchrotron_8h_source.html">synchrotron.h</a>.</p>
 
 </div>
 </div>

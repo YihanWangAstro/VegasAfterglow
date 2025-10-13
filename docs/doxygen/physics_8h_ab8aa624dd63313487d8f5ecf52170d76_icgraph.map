@@ -1,6 +1,6 @@
 <map id="gamma_to_beta" name="gamma_to_beta">
-<area shape="rect" id="Node000001" title="Converts Lorentz factor (gamma) to velocity fraction (beta)" alt="" coords="668,79,796,104"/>
-<area shape="rect" id="Node000002" href="$mesh_8h.html#a017f88b3242fdadb28e664f27725643a" title="Constructs a coordinate grid (Coord) for shock evolution." alt="" coords="499,29,582,55"/>
+<area shape="rect" id="Node000001" title="Converts Lorentz factor (gamma) to a velocity fraction (beta)" alt="" coords="668,79,796,104"/>
+<area shape="rect" id="Node000002" href="$mesh_8h.html#a7a2706b37f8deef2c42462a57f96fd83" title="Constructs a coordinate grid (Coord) for shock evolution." alt="" coords="499,29,582,55"/>
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="668,78,581,55,583,50,670,73"/>
 <area shape="rect" id="Node000006" href="$prompt_8h.html#a66fb48188341c585a06119c04800c823" title=" " alt="" coords="464,79,617,104"/>
 <area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="654,94,618,94,618,89,654,89"/>
@@ -8,7 +8,7 @@
 <area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="670,110,592,130,590,125,668,105"/>
 <area shape="rect" id="Node000003" href="$classPyModel.html#a3debe3d2ed8ff2a53bec469a6711cfa8" title=" " alt="" coords="204,5,413,31"/>
 <area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="485,39,413,31,414,26,486,34"/>
-<area shape="rect" id="Node000004" href="$classPyModel.html#a3440b0852a67952d09b9017ef6784fd0" title="Get comprehensive details of the shock evolution and model configuration." alt="" coords="243,55,374,80"/>
+<area shape="rect" id="Node000004" href="$classPyModel.html#ac47bbdbe6025c4def5d4a65f3ed6be34" title="Get comprehensive details of the shock evolution and model configuration." alt="" coords="243,55,374,80"/>
 <area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="486,51,375,63,374,58,485,45"/>
 <area shape="rect" id="Node000005" href="$pybind_8cpp.html#a8c92987849ad296e28ec6c07c8e7860b" title=" " alt="" coords="5,55,156,80"/>
 <area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="229,70,156,70,156,65,229,65"/>

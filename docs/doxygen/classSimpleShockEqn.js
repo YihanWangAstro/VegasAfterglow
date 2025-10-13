@@ -1,6 +1,6 @@
 var classSimpleShockEqn =
 [
-    [ "State", "classSimpleShockEqn.html#aff35acb016a961cb3ca9f43edc92c2c8", null ],
+    [ "State", "classSimpleShockEqn.html#ae3d27565ef359199ca90c3703987f22a", null ],
     [ "SimpleShockEqn", "classSimpleShockEqn.html#a2ad30f482d445461e6d230c052205763", null ],
     [ "operator()", "classSimpleShockEqn.html#aee403b3fa4ba1baf1ae64e2d008aa80f", null ],
     [ "set_init_state", "classSimpleShockEqn.html#a8ba76df69c46f5d81f512a95fa9f59d4", null ],

@@ -105,20 +105,20 @@ $(document).ready(function(){initNavTree('simple-shock_8tpp_source.html',''); in
 <div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span>//                \ V /|  __/| (_| || (_| |\__ \  / ___ \ |  _|| |_|  __/| |  | (_| || || (_) |\ V  V /</div>
 <div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span>//                 \_/  \___| \__, | \__,_||___/ /_/   \_\|_|   \__|\___||_|   \__, ||_| \___/  \_/\_/</div>
 <div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span>//                            |___/                                            |___/</div>
-<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span> </div>
-<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span>#include &quot;simple-shock.hpp&quot;</div>
-<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span> </div>
-<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span>template &lt;typename Ejecta, typename Medium&gt;</div>
-<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span>SimpleShockEqn&lt;Ejecta, Medium&gt;::SimpleShockEqn(Medium const&amp; medium, Ejecta const&amp; ejecta, Real phi, Real theta,</div>
-<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span>                                               RadParams const&amp; rad_params, Real theta_s)</div>
-<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span>    : medium(medium),</div>
-<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span>      ejecta(ejecta),</div>
-<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span>      phi(phi),</div>
-<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span>      theta0(theta),</div>
-<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span>      rad(rad_params),</div>
-<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span>      dOmega0(1 - std::cos(theta0)),</div>
-<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span>      theta_s(theta_s),</div>
-<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span>      m_jet0(0) {</div>
+<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span>#pragma once</div>
+<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span> </div>
+<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span>#include &quot;simple-shock.hpp&quot;</div>
+<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span> </div>
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span>template &lt;typename Ejecta, typename Medium&gt;</div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span>SimpleShockEqn&lt;Ejecta, Medium&gt;::SimpleShockEqn(Medium const&amp; medium, Ejecta const&amp; ejecta, Real phi, Real theta,</div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span>                                               RadParams const&amp; rad_params, Real theta_s)</div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span>    : medium(medium),</div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span>      ejecta(ejecta),</div>
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span>      phi(phi),</div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span>      theta0(theta),</div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span>      rad(rad_params),</div>
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span>      dOmega0(1 - std::cos(theta0)),</div>
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span>      theta_s(theta_s) {</div>
 <div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span>    m_jet0 = ejecta.eps_k(phi, theta0) / ejecta.Gamma0(phi, theta0) / con::c2;</div>
 <div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span>    if constexpr (HasSigma&lt;Ejecta&gt;) {</div>
 <div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span>        m_jet0 /= 1 + ejecta.sigma0(phi, theta0);</div>
@@ -127,7 +127,7 @@ $(document).ready(function(){initNavTree('simple-shock_8tpp_source.html',''); in
 <div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span> </div>
 <div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span>template &lt;typename Ejecta, typename Medium&gt;</div>
 <div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span>void SimpleShockEqn&lt;Ejecta, Medium&gt;::operator()(State const&amp; state, State&amp; diff, Real t) const noexcept {</div>
-<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span>    Real beta = gamma_to_beta(state.Gamma);</div>
+<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span>    const Real beta = gamma_to_beta(state.Gamma);</div>
 <div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span> </div>
 <div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span>    diff.r = compute_dr_dt(beta);</div>
 <div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span>    diff.t_comv = compute_dt_dt_comv(state.Gamma, beta);</div>
@@ -149,8 +149,8 @@ $(document).ready(function(){initNavTree('simple-shock_8tpp_source.html',''); in
 <div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>    Real rho = medium.rho(phi, state.theta, state.r);</div>
 <div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>    diff.m2 = state.r * state.r * rho * diff.r;</div>
 <div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span> </div>
-<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span>    Real e_th = (state.Gamma - 1) * 4 * state.Gamma * rho * con::c2;</div>
-<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span>    Real eps_rad = compute_radiative_efficiency(state.t_comv, state.Gamma, e_th, rad);</div>
+<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span>    const Real e_th = (state.Gamma - 1) * 4 * state.Gamma * rho * con::c2;</div>
+<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span>    const Real eps_rad = compute_radiative_efficiency(state.t_comv, state.Gamma, e_th, rad);</div>
 <div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span> </div>
 <div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span>    diff.Gamma = dGamma_dt(eps_rad, state, diff);</div>
 <div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span>}</div>
@@ -162,7 +162,7 @@ $(document).ready(function(){initNavTree('simple-shock_8tpp_source.html',''); in
 <div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span>    Real dm_dt_swept = diff.m2;</div>
 <div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span> </div>
 <div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span>    if (ejecta.spreading) {</div>
-<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span>        Real f_spread = (1 - std::cos(state.theta)) / dOmega0;</div>
+<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span>        const Real f_spread = (1 - std::cos(state.theta)) / dOmega0;</div>
 <div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span>        dm_dt_swept = dm_dt_swept * f_spread + m_swept / dOmega0 * std::sin(state.theta) * diff.theta;</div>
 <div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span>        m_swept *= f_spread;</div>
 <div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span>    }</div>
@@ -185,7 +185,7 @@ $(document).ready(function(){initNavTree('simple-shock_8tpp_source.html',''); in
 <div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span>void SimpleShockEqn&lt;Ejecta, Medium&gt;::set_init_state(State&amp; state, Real t0) const noexcept {</div>
 <div class="line"><a id="l00085" name="l00085"></a><span class="lineno">   85</span>    state.Gamma = ejecta.Gamma0(phi, theta0);</div>
 <div class="line"><a id="l00086" name="l00086"></a><span class="lineno">   86</span> </div>
-<div class="line"><a id="l00087" name="l00087"></a><span class="lineno">   87</span>    Real beta0 = gamma_to_beta(state.Gamma);</div>
+<div class="line"><a id="l00087" name="l00087"></a><span class="lineno">   87</span>    const Real beta0 = gamma_to_beta(state.Gamma);</div>
 <div class="line"><a id="l00088" name="l00088"></a><span class="lineno">   88</span>    state.r = beta0 * con::c * t0 / (1 - beta0);</div>
 <div class="line"><a id="l00089" name="l00089"></a><span class="lineno">   89</span> </div>
 <div class="line"><a id="l00090" name="l00090"></a><span class="lineno">   90</span>    state.t_comv = state.r / std::sqrt(state.Gamma * state.Gamma - 1) / con::c;</div>

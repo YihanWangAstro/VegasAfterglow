@@ -122,7 +122,7 @@ Public Attributes</h2></td></tr>
 <div class="textblock"><p>Represents the generic medium or any user-defined surrounding medium that the GRB jet interacts with. </p>
 <p>The class provides methods to compute the density (rho) as a function of position (phi, theta, r). </p>
 
-<p class="definition">Definition at line <a class="el" href="medium_8h_source.html#l00018">18</a> of file <a class="el" href="medium_8h_source.html">medium.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="medium_8h_source.html#l00020">20</a> of file <a class="el" href="medium_8h_source.html">medium.h</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="aacd7cf0b6fb4dee7adf3a5f2d32356e7" name="aacd7cf0b6fb4dee7adf3a5f2d32356e7"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#aacd7cf0b6fb4dee7adf3a5f2d32356e7">&#9670;&#160;</a></span>Medium() <span class="overload">[1/2]</span></h2>
@@ -143,7 +143,7 @@ Public Attributes</h2></td></tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">explicit</span><span class="mlabel">noexcept</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -156,9 +156,9 @@ Public Attributes</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="medium_8h_source.html#l00026">26</a> of file <a class="el" href="medium_8h_source.html">medium.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   26</span>: <a class="code hl_variable" href="classMedium.html#a419de8e407c9c9f75d1b76fdedf5d3eb">rho</a>(<a class="code hl_variable" href="classMedium.html#a419de8e407c9c9f75d1b76fdedf5d3eb">rho</a>) {}</div>
-<div class="ttc" id="aclassMedium_html_a419de8e407c9c9f75d1b76fdedf5d3eb"><div class="ttname"><a href="classMedium.html#a419de8e407c9c9f75d1b76fdedf5d3eb">Medium::rho</a></div><div class="ttdeci">TernaryFunc rho</div><div class="ttdoc">Density function that returns the mass density at a given position (phi, theta, r) The function is in...</div><div class="ttdef"><b>Definition</b> <a href="medium_8h_source.html#l00032">medium.h:32</a></div></div>
+<p class="definition">Definition at line <a class="el" href="medium_8h_source.html#l00028">28</a> of file <a class="el" href="medium_8h_source.html">medium.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   28</span>: <a class="code hl_variable" href="classMedium.html#a419de8e407c9c9f75d1b76fdedf5d3eb">rho</a>(std::move(<a class="code hl_variable" href="classMedium.html#a419de8e407c9c9f75d1b76fdedf5d3eb">rho</a>)) {}</div>
+<div class="ttc" id="aclassMedium_html_a419de8e407c9c9f75d1b76fdedf5d3eb"><div class="ttname"><a href="classMedium.html#a419de8e407c9c9f75d1b76fdedf5d3eb">Medium::rho</a></div><div class="ttdeci">TernaryFunc rho</div><div class="ttdoc">Density function that returns the mass density at a given position (phi, theta, r) The function is in...</div><div class="ttdef"><b>Definition</b> <a href="medium_8h_source.html#l00034">medium.h:34</a></div></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -202,9 +202,9 @@ Public Attributes</h2></td></tr>
 
 <p>Density function that returns the mass density at a given position (phi, theta, r) The function is initialized to zero by default. </p>
 
-<p class="definition">Definition at line <a class="el" href="medium_8h_source.html#l00032">32</a> of file <a class="el" href="medium_8h_source.html">medium.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   32</span>{<a class="code hl_variable" href="namespacefunc.html#af35a6de707510b3b09306132d94d3b72">func::zero_3d</a>};</div>
-<div class="ttc" id="anamespacefunc_html_af35a6de707510b3b09306132d94d3b72"><div class="ttname"><a href="namespacefunc.html#af35a6de707510b3b09306132d94d3b72">func::zero_3d</a></div><div class="ttdeci">constexpr auto zero_3d</div><div class="ttdef"><b>Definition</b> <a href="utilities_8h_source.html#l00100">utilities.h:100</a></div></div>
+<p class="definition">Definition at line <a class="el" href="medium_8h_source.html#l00034">34</a> of file <a class="el" href="medium_8h_source.html">medium.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   34</span>{<a class="code hl_variable" href="namespacefunc.html#af35a6de707510b3b09306132d94d3b72">func::zero_3d</a>};</div>
+<div class="ttc" id="anamespacefunc_html_af35a6de707510b3b09306132d94d3b72"><div class="ttname"><a href="namespacefunc.html#af35a6de707510b3b09306132d94d3b72">func::zero_3d</a></div><div class="ttdeci">constexpr auto zero_3d</div><div class="ttdef"><b>Definition</b> <a href="utilities_8h_source.html#l00096">utilities.h:96</a></div></div>
 </div><!-- fragment -->
 </div>
 </div>

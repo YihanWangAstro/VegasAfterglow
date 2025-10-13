@@ -39,6 +39,7 @@ var annotated_dup =
     [ "SimpleState", "structSimpleState.html", "structSimpleState" ],
     [ "SynElectrons", "structSynElectrons.html", "structSynElectrons" ],
     [ "SynPhotons", "structSynPhotons.html", "structSynPhotons" ],
+    [ "Tables", "structTables.html", "structTables" ],
     [ "TophatJet", "classTophatJet.html", "classTophatJet" ],
     [ "Wind", "classWind.html", "classWind" ]
 ];
