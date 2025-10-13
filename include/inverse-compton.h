@@ -217,19 +217,10 @@ struct ICPhoton {
      * @param dN_e Array of electron column densities
      * @param I_nu_dnu_sync Array of photon intensities
      * @param dnu_sync Array of synchrotron frequency bin widths
-     * @return Array containing the computed IC intensity spectrum
      * <!-- ************************************************************************************** -->
      */
-    Array compute_IC_spectrum(GridParams const& params, Array const& gamma, Array const& nu_sync, Array const& dN_e,
-                              Array const& I_nu_dnu_sync, Array const& dnu_sync) const;
-
-    /**
-     * <!-- ************************************************************************************** -->
-     * @brief Finalizes the spectrum by removing leading zeros and converting to log space
-     * @param I_nu_IC The computed IC intensity spectrum
-     * <!-- ************************************************************************************** -->
-     */
-    void finalize_spectrum(Array const& I_nu_IC);
+    void compute_IC_spectrum(GridParams const& params, Array const& gamma, Array const& nu_sync, Array const& dN_e,
+                             Array const& I_nu_dnu_sync, Array const& dnu_sync);
 
     Array log2_nu_IC;
 
@@ -316,8 +307,7 @@ void ICPhoton<Electrons, Photons>::generate_grid() {
     Array gamma, dgamma, nu_sync, dnu_sync, dN_e, I_nu_dnu_sync;
     preprocess_distributions(params, gamma, dgamma, nu_sync, dnu_sync, dN_e, I_nu_dnu_sync);
 
-    const Array I_nu_IC = compute_IC_spectrum(params, gamma, nu_sync, dN_e, I_nu_dnu_sync, dnu_sync);
-    finalize_spectrum(I_nu_IC);
+    compute_IC_spectrum(params, gamma, nu_sync, dN_e, I_nu_dnu_sync, dnu_sync);
 
     generated = true;
 }
@@ -373,11 +363,10 @@ void ICPhoton<Electrons, Photons>::preprocess_distributions(GridParams const& pa
 }
 
 template <typename Electrons, typename Photons>
-Array ICPhoton<Electrons, Photons>::compute_IC_spectrum(GridParams const& params, Array const& gamma,
-                                                        Array const& nu_sync, Array const& dN_e,
-                                                        Array const& I_nu_dnu_sync, Array const& dnu_sync) const {
-
-    const Array nu_IC = xt::exp2(log2_nu_IC);
+void ICPhoton<Electrons, Photons>::compute_IC_spectrum(GridParams const& params, Array const& gamma,
+                                                       Array const& nu_sync, Array const& dN_e,
+                                                       Array const& I_nu_dnu_sync, Array const& dnu_sync) {
+    Array nu_IC = xt::exp2(log2_nu_IC);
     Array I_nu_IC = xt::zeros<Real>({params.spectrum_resol});
 
     const auto sigma =
@@ -431,26 +420,7 @@ Array ICPhoton<Electrons, Photons>::compute_IC_spectrum(GridParams const& params
         }
     }
 
-    return I_nu_IC;
-}
-
-template <typename Electrons, typename Photons>
-void ICPhoton<Electrons, Photons>::finalize_spectrum(Array const& I_nu_IC) {
-    const Array nu_IC = xt::exp2(log2_nu_IC);
     log2_I_nu_IC = xt::log2(I_nu_IC * nu_IC * 0.25);
-
-    // Find first non-zero element
-    size_t first_non_zero = 0;
-    for (size_t i = 0; i < I_nu_IC.size(); i++) {
-        if (I_nu_IC(i) != 0) {
-            first_non_zero = i;
-            break;
-        }
-    }
-
-    // Trim leading zeros
-    log2_I_nu_IC = xt::view(log2_I_nu_IC, xt::range(first_non_zero, xt::placeholders::_));
-    log2_nu_IC = xt::view(log2_nu_IC, xt::range(first_non_zero, xt::placeholders::_));
 }
 
 template <typename Electrons, typename Photons>
