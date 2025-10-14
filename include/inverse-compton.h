@@ -160,7 +160,7 @@ struct ICPhoton {
     Electrons electrons;
 
   private:
-    void generate_grid();
+    void generate_spectrum();
 
     /**
      * <!-- ************************************************************************************** -->
@@ -174,6 +174,8 @@ struct ICPhoton {
         Real nu_min;
         Real nu_max;
         size_t nu_size;
+        Real nu_IC_min;
+        Real nu_IC_max;
         size_t spectrum_resol;
     };
 
@@ -226,11 +228,11 @@ struct ICPhoton {
 
     Array log2_I_nu_IC;
 
+    Array interp_slope;
+
     Real inv_dlog2_nu{0};
 
-    //MeshGrid IC_tab;
-
-    static constexpr size_t gamma_grid_per_order{7}; // Number of frequency bins
+    static constexpr size_t gamma_grid_per_order{5}; // Number of frequency bins
 
     static constexpr size_t nu_grid_per_order{5}; // Number of gamma bins
 
@@ -300,7 +302,7 @@ ICPhoton<Electrons, Photons>::ICPhoton(Electrons const& electrons, Photons const
     : photons(photons), electrons(electrons), KN(KN) {}
 
 template <typename Electrons, typename Photons>
-void ICPhoton<Electrons, Photons>::generate_grid() {
+void ICPhoton<Electrons, Photons>::generate_spectrum() {
     const auto params = compute_grid_params();
     initialize_grids(params);
 
@@ -317,27 +319,26 @@ typename ICPhoton<Electrons, Photons>::GridParams ICPhoton<Electrons, Photons>::
     GridParams params;
 
     params.gamma_min = electrons.gamma_m;
-    params.gamma_max = electrons.gamma_M * 10;
+    params.gamma_max = electrons.gamma_M * 30;
     params.gamma_size =
         static_cast<size_t>(std::max(std::log10(params.gamma_max / params.gamma_min), 3.) * gamma_grid_per_order);
 
     params.nu_min = std::min(photons.nu_a, photons.nu_m) / 10;
-    params.nu_max = photons.nu_M * 10;
+    params.nu_max = photons.nu_M * 30;
     params.nu_size = static_cast<size_t>(std::max(std::log10(params.nu_max / params.nu_min), 3.) * nu_grid_per_order);
 
-    params.spectrum_resol =
-        static_cast<size_t>(std::max(5 * std::log10(params.gamma_max * params.gamma_max * params.nu_max /
-                                                    (params.gamma_min * params.gamma_min * params.nu_min)),
-                                     15.));
+    params.nu_IC_min = 4 * IC_x0 * params.nu_min * params.gamma_min * params.gamma_min;
+    params.nu_IC_max = 4 * IC_x0 * params.nu_max * params.gamma_max * params.gamma_max;
+    params.spectrum_resol = static_cast<size_t>(std::max(5 * std::log10(params.nu_IC_max / (params.nu_IC_min)), 15.));
 
     return params;
 }
 
 template <typename Electrons, typename Photons>
 void ICPhoton<Electrons, Photons>::initialize_grids(GridParams const& params) {
-    log2_nu_IC =
-        xt::linspace(std::log2(4 * IC_x0 * params.gamma_min * params.gamma_min * params.nu_min),
-                     std::log2(4 * IC_x0 * params.gamma_max * params.gamma_max * params.nu_max), params.spectrum_resol);
+    log2_nu_IC = xt::linspace(std::log2(params.nu_IC_min), std::log2(params.nu_IC_max), params.spectrum_resol);
+
+    interp_slope = Array::from_shape({params.spectrum_resol - 1});
 
     inv_dlog2_nu = 1 / (log2_nu_IC(1) - log2_nu_IC(0));
 }
@@ -403,6 +404,7 @@ void ICPhoton<Electrons, Photons>::compute_IC_spectrum(GridParams const& params,
 
             for (; k >= 0; --k) {
                 const Real nu_seed = nu_IC(k) * down_scatter;
+
                 if (nu_seed >= nu0_j) {
                     I_nu_IC(k) += base - eff_slope * nu_seed;
                 } else {
@@ -421,6 +423,10 @@ void ICPhoton<Electrons, Photons>::compute_IC_spectrum(GridParams const& params,
     }
 
     log2_I_nu_IC = xt::log2(I_nu_IC * nu_IC * 0.25);
+
+    for (size_t i = 0; i < params.spectrum_resol - 1; ++i) {
+        interp_slope(i) = (log2_I_nu_IC(i + 1) - log2_I_nu_IC(i)) * inv_dlog2_nu;
+    }
 }
 
 template <typename Electrons, typename Photons>
@@ -431,7 +437,7 @@ Real ICPhoton<Electrons, Photons>::compute_I_nu(Real nu) {
 template <typename Electrons, typename Photons>
 Real ICPhoton<Electrons, Photons>::compute_log2_I_nu(Real log2_nu) {
     if (generated == false) {
-        generate_grid();
+        generate_spectrum();
     }
 
     size_t idx = 0;
@@ -439,11 +445,10 @@ Real ICPhoton<Electrons, Photons>::compute_log2_I_nu(Real log2_nu) {
         idx = static_cast<size_t>(std::floor(off_set * inv_dlog2_nu));
     }
 
-    if (idx >= log2_nu_IC.size()) {
+    if (idx >= interp_slope.size()) {
         return -con::inf;
     } else [[likely]] {
-        return log2_I_nu_IC(idx) +
-               (log2_nu - log2_nu_IC(idx)) * (log2_I_nu_IC(idx + 1) - log2_I_nu_IC(idx)) * inv_dlog2_nu;
+        return log2_I_nu_IC(idx) + (log2_nu - log2_nu_IC(idx)) * interp_slope(idx);
     }
 }
 
