@@ -118,10 +118,15 @@ PYBIND11_MODULE(VegasAfterglowC, m) {
         .def_readonly("gamma_c", &PyShock::gamma_c)
         .def_readonly("gamma_M", &PyShock::gamma_M)
         .def_readonly("gamma_a", &PyShock::gamma_a)
+        .def_readonly("gamma_m_hat", &PyShock::gamma_m_hat)
+        .def_readonly("gamma_c_hat", &PyShock::gamma_c_hat)
         .def_readonly("nu_m", &PyShock::nu_m)
         .def_readonly("nu_c", &PyShock::nu_c)
         .def_readonly("nu_M", &PyShock::nu_M)
         .def_readonly("nu_a", &PyShock::nu_a)
+        .def_readonly("nu_m_hat", &PyShock::nu_m_hat)
+        .def_readonly("nu_c_hat", &PyShock::nu_c_hat)
+        .def_readonly("Y_T", &PyShock::Y_T)
         .def_readonly("I_nu_max", &PyShock::I_nu_max)
         .def_readonly("Doppler", &PyShock::Doppler);
 

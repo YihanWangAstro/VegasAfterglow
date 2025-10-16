@@ -9,16 +9,19 @@
 
 #include "IO.h"
 #include "macros.h"
+#include "physics.h"
 #include "utilities.h"
 
-InverseComptonY::InverseComptonY(Real nu_m, Real nu_c, Real B, Real Y_T) noexcept {
-    gamma_hat_m = con::me * con::c2 / con::h / nu_m; // Compute minimum characteristic Lorentz factor
-    gamma_hat_c = con::me * con::c2 / con::h / nu_c; // Compute cooling characteristic Lorentz factor
+InverseComptonY::InverseComptonY(Real gamma_m, Real gamma_c, Real B, Real Y_T) noexcept {
+    const Real nu_m = compute_syn_freq(gamma_m, B);  // Compute minimum synchrotron frequency
+    const Real nu_c = compute_syn_freq(gamma_c, B);  // Compute cooling synchrotron frequency
+    gamma_m_hat = con::me * con::c2 / con::h / nu_m; // Compute minimum characteristic Lorentz factor
+    gamma_c_hat = con::me * con::c2 / con::h / nu_c; // Compute cooling characteristic Lorentz factor
     this->Y_T = Y_T;                                 // Set the Thomson Y parameter
-    nu_hat_m = compute_syn_freq(gamma_hat_m, B);     // Compute the corresponding synchrotron frequency for gamma_hat_m
-    nu_hat_c = compute_syn_freq(gamma_hat_c, B);     // Compute the corresponding synchrotron frequency for gamma_hat_c
+    nu_m_hat = compute_syn_freq(gamma_m_hat, B);     // Compute the corresponding synchrotron frequency for gamma_hat_m
+    nu_c_hat = compute_syn_freq(gamma_c_hat, B);     // Compute the corresponding synchrotron frequency for gamma_hat_c
 
-    if (nu_hat_m <= nu_hat_c) {
+    if (nu_m_hat <= nu_c_hat) {
         regime = 1; // fast IC cooling regime
     } else {
         regime = 2; // slow IC cooling regime
@@ -31,36 +34,36 @@ InverseComptonY::InverseComptonY(Real Y_T) noexcept {
 }
 
 InverseComptonY::InverseComptonY() noexcept {
-    nu_hat_m = 0;
-    nu_hat_c = 0;
-    gamma_hat_m = 0;
-    gamma_hat_c = 0;
+    nu_m_hat = 0;
+    nu_c_hat = 0;
+    gamma_m_hat = 0;
+    gamma_c_hat = 0;
     Y_T = 0;
     regime = 0;
 }
 
-Real InverseComptonY::compute_val_at_gamma(Real gamma, Real p) const {
+Real InverseComptonY::evaluate_at_gamma(Real gamma, Real p) const {
     switch (regime) {
         case 3:
             return Y_T; // In regime 3, simply return Y_T
             break;
         case 1:
-            if (gamma <= gamma_hat_m) {
+            if (gamma <= gamma_m_hat) {
                 return Y_T; // For gamma below gamma_hat_m, no modification
-            } else if (gamma <= gamma_hat_c) {
-                return Y_T / std::sqrt(gamma / gamma_hat_m); // Intermediate regime scaling
+            } else if (gamma <= gamma_c_hat) {
+                return Y_T / std::sqrt(gamma / gamma_m_hat); // Intermediate regime scaling
             } else {
-                return Y_T * pow43(gamma_hat_c / gamma) * std::sqrt(gamma_hat_m / gamma_hat_c); // High gamma scaling
+                return Y_T * pow43(gamma_c_hat / gamma) * std::sqrt(gamma_m_hat / gamma_c_hat); // High gamma scaling
             }
             break;
         case 2:
-            if (gamma <= gamma_hat_c) {
+            if (gamma <= gamma_c_hat) {
                 return Y_T; // For gamma below gamma_hat_c, no modification
-            } else if (gamma <= gamma_hat_m) {
-                return Y_T * fast_pow(gamma / gamma_hat_c, (p - 3) / 2); // Scaling in intermediate regime
+            } else if (gamma <= gamma_m_hat) {
+                return Y_T * fast_pow(gamma / gamma_c_hat, (p - 3) / 2); // Scaling in intermediate regime
             } else {
-                return Y_T * pow43(gamma_hat_m / gamma) *
-                       fast_pow(gamma_hat_m / gamma_hat_c, (p - 3) / 2); // High gamma scaling
+                return Y_T * pow43(gamma_m_hat / gamma) *
+                       fast_pow(gamma_m_hat / gamma_c_hat, (p - 3) / 2); // High gamma scaling
             }
             break;
         default:
@@ -69,46 +72,34 @@ Real InverseComptonY::compute_val_at_gamma(Real gamma, Real p) const {
     }
 }
 
-Real InverseComptonY::compute_val_at_nu(Real nu, Real p) const {
+Real InverseComptonY::evaluate_at_nu(Real nu, Real p) const {
     switch (regime) {
         case 3:
             return Y_T; // In regime 3, simply return Y_T
             break;
         case 1:
-            if (nu <= nu_hat_m) {
+            if (nu <= nu_m_hat) {
                 return Y_T; // For frequencies below nu_hat_m, no modification
-            } else if (nu <= nu_hat_c) {
-                return Y_T * std::sqrt(std::sqrt(nu_hat_m / nu)); // Intermediate frequency scaling
+            } else if (nu <= nu_c_hat) {
+                return Y_T * std::sqrt(std::sqrt(nu_m_hat / nu)); // Intermediate frequency scaling
             } else {
-                return Y_T * pow23(nu_hat_c / nu) * std::sqrt(std::sqrt(nu_hat_m / nu_hat_c)); // High-frequency scaling
+                return Y_T * pow23(nu_c_hat / nu) * std::sqrt(std::sqrt(nu_m_hat / nu_c_hat)); // High-frequency scaling
             }
             break;
         case 2:
-            if (nu <= nu_hat_c) {
+            if (nu <= nu_c_hat) {
                 return Y_T; // For frequencies below nu_hat_c, no modification
-            } else if (nu <= nu_hat_m) {
-                return Y_T * fast_pow(nu / nu_hat_c, (p - 3) / 4); // Intermediate frequency scaling
+            } else if (nu <= nu_m_hat) {
+                return Y_T * fast_pow(nu / nu_c_hat, (p - 3) / 4); // Intermediate frequency scaling
             } else {
-                return Y_T * pow23(nu_hat_m / nu) *
-                       fast_pow(nu_hat_m / nu_hat_c, (p - 3) / 4); // High-frequency scaling
+                return Y_T * pow23(nu_m_hat / nu) *
+                       fast_pow(nu_m_hat / nu_c_hat, (p - 3) / 4); // High-frequency scaling
             }
             break;
         default:
             return 0;
             break;
     }
-}
-
-Real InverseComptonY::compute_Y_Thompson(InverseComptonY const& Ys) {
-    return Ys.Y_T;
-}
-
-Real InverseComptonY::compute_Y_tilt_at_gamma(InverseComptonY const& Ys, Real gamma, Real p) {
-    return Ys.compute_val_at_gamma(gamma, p);
-}
-
-Real InverseComptonY::compute_Y_tilt_at_nu(InverseComptonY const& Ys, Real nu, Real p) {
-    return Ys.compute_val_at_nu(nu, p);
 }
 
 Real compton_cross_section(Real nu) {

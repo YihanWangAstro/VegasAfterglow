@@ -8,6 +8,7 @@
 
 #include "inverse-compton.h"
 #include "mesh.h"
+#include "physics.h"
 #include "shock.h"
 
 /**
@@ -220,28 +221,16 @@ void generate_syn_photons(SynPhotonGrid& photons, Shock const& shock, SynElectro
 
 /**
  * <!-- ************************************************************************************** -->
- * @brief Updates electron properties throughout the grid based on shock parameters and IC Y values.
- * @details Recalculates gamma_M, gamma_c, gamma_a, regime, and Y_c parameters for each grid cell.
- *          Handles both freshly-shocked and adiabatic cooling regions.
- * @param electrons Synchrotron electron grid to update
- * @param shock The shock object containing evolution data
- * <!-- ************************************************************************************** -->
- */
-void update_electrons_4Y(SynElectronGrid& electrons, Shock const& shock);
-
-/**
- * <!-- ************************************************************************************** -->
  * @brief Calculates a cooling Lorentz factor based on comoving time, magnetic field, and IC parameters
  * @details Accounts for synchrotron and inverse Compton cooling using an iterative approach
  *          to handle the Lorentz factor-dependent IC cooling.
  * @param t_comv Comoving time
  * @param B Magnetic field
- * @param Ys Inverse Compton Y parameters
- * @param p Power-law index for electron energy distribution
+ * @param Y Inverse Compton Y parameter
  * @return The cooling Lorentz factor
  * <!-- ************************************************************************************** -->
  */
-Real compute_gamma_c(Real t_comv, Real B, InverseComptonY const& Ys, Real p);
+Real compute_gamma_c(Real t_comv, Real B, Real Y);
 
 /**
  * <!-- ************************************************************************************** -->

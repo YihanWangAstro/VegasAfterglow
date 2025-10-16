@@ -161,6 +161,8 @@ void save_electron_details(ElectronGrid const& electrons, PyShock& details) {
     details.gamma_c = xt::zeros<Real>({shape[0], shape[1], shape[2]});
     details.gamma_a = xt::zeros<Real>({shape[0], shape[1], shape[2]});
     details.gamma_M = xt::zeros<Real>({shape[0], shape[1], shape[2]});
+    details.gamma_m_hat = xt::zeros<Real>({shape[0], shape[1], shape[2]});
+    details.gamma_c_hat = xt::zeros<Real>({shape[0], shape[1], shape[2]});
     details.N_e = xt::zeros<Real>({shape[0], shape[1], shape[2]});
 
     for (size_t i = 0; i < shape[0]; ++i) {
@@ -170,6 +172,8 @@ void save_electron_details(ElectronGrid const& electrons, PyShock& details) {
                 details.gamma_m(i, j, k) = electrons(i, j, k).gamma_m;
                 details.gamma_c(i, j, k) = electrons(i, j, k).gamma_c;
                 details.gamma_M(i, j, k) = electrons(i, j, k).gamma_M;
+                details.gamma_m_hat(i, j, k) = electrons(i, j, k).Ys.gamma_m_hat;
+                details.gamma_c_hat(i, j, k) = electrons(i, j, k).Ys.gamma_c_hat;
                 details.N_e(i, j, k) = electrons(i, j, k).N_e;
             }
         }
@@ -183,7 +187,10 @@ void save_photon_details(PhotonGrid const& photons, PyShock& details) {
     details.nu_c = xt::zeros<Real>({shape[0], shape[1], shape[2]});
     details.nu_a = xt::zeros<Real>({shape[0], shape[1], shape[2]});
     details.nu_M = xt::zeros<Real>({shape[0], shape[1], shape[2]});
+    details.nu_m_hat = xt::zeros<Real>({shape[0], shape[1], shape[2]});
+    details.nu_c_hat = xt::zeros<Real>({shape[0], shape[1], shape[2]});
     details.I_nu_max = xt::zeros<Real>({shape[0], shape[1], shape[2]});
+    details.Y_T = xt::zeros<Real>({shape[0], shape[1], shape[2]});
 
     for (size_t i = 0; i < shape[0]; ++i) {
         for (size_t j = 0; j < shape[1]; ++j) {
@@ -192,8 +199,11 @@ void save_photon_details(PhotonGrid const& photons, PyShock& details) {
                 details.nu_m(i, j, k) = photons(i, j, k).nu_m / unit::Hz;
                 details.nu_c(i, j, k) = photons(i, j, k).nu_c / unit::Hz;
                 details.nu_M(i, j, k) = photons(i, j, k).nu_M / unit::Hz;
+                details.nu_m_hat(i, j, k) = photons(i, j, k).Ys.nu_m_hat / unit::Hz;
+                details.nu_c_hat(i, j, k) = photons(i, j, k).Ys.nu_c_hat / unit::Hz;
                 details.I_nu_max(i, j, k) =
                     photons(i, j, k).I_nu_max / (unit::erg / (unit::Hz * unit::sec * unit::cm2));
+                details.Y_T(i, j, k) = photons(i, j, k).Ys.Y_T;
             }
         }
     }

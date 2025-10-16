@@ -344,10 +344,15 @@ struct PyShock {
     XTArray gamma_c;  ///< Cooling electron Lorentz factor
     XTArray gamma_M;  ///< Maximum electron Lorentz factor
     XTArray gamma_a;  ///< Absorption electron Lorentz factor
-    XTArray nu_m;     ///< Synchrotron frequency for γ_m [Hz]
-    XTArray nu_c;     ///< Synchrotron frequency for γ_c [Hz]
-    XTArray nu_M;     ///< Synchrotron frequency for γ_M [Hz]
-    XTArray nu_a;     ///< Synchrotron frequency for γ_a [Hz]
+    XTArray gamma_m_hat;
+    XTArray gamma_c_hat;
+    XTArray nu_m; ///< Synchrotron frequency for γ_m [Hz]
+    XTArray nu_c; ///< Synchrotron frequency for γ_c [Hz]
+    XTArray nu_M; ///< Synchrotron frequency for γ_M [Hz]
+    XTArray nu_a; ///< Synchrotron frequency for γ_a [Hz]
+    XTArray nu_m_hat;
+    XTArray nu_c_hat;
+    XTArray Y_T;
     XTArray I_nu_max; ///< Maximum specific intensity [erg/s/Hz]
     XTArray Doppler;  ///< Doppler factor for beaming
 };

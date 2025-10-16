@@ -10,6 +10,7 @@
 
 #include "macros.h"
 #include "mesh.h"
+#include "physics.h"
 #include "shock.h"
 #include "utilities.h"
 /**
@@ -23,13 +24,13 @@ struct InverseComptonY {
      * <!-- ************************************************************************************** -->
      * @brief Initializes an InverseComptonY object with frequency thresholds, magnetic field and Y parameter.
      * @details Computes characteristic gamma values and corresponding frequencies, then determines cooling regime.
-     * @param nu_m Characteristic frequency for the minimum Lorentz factor
-     * @param nu_c Characteristic frequency for the cooling Lorentz factor
+     * @param gamma_m Characteristic Lorentz factor for the minimum Lorentz factor
+     * @param gamma_c Characteristic Lorentz factor for the cooling Lorentz factor
      * @param B Magnetic field strength
      * @param Y_T Thomson Y parameter
      * <!-- ************************************************************************************** -->
      */
-    InverseComptonY(Real nu_m, Real nu_c, Real B, Real Y_T) noexcept;
+    InverseComptonY(Real gamma_m, Real gamma_c, Real B, Real Y_T) noexcept;
 
     /**
      * <!-- ************************************************************************************** -->
@@ -47,10 +48,10 @@ struct InverseComptonY {
     InverseComptonY() noexcept;
 
     // Member variables
-    Real nu_hat_m{0};    ///< Frequency threshold for minimum electrons
-    Real nu_hat_c{0};    ///< Frequency threshold for cooling electrons
-    Real gamma_hat_m{0}; ///< Lorentz factor threshold for minimum energy electrons
-    Real gamma_hat_c{0}; ///< Lorentz factor threshold for cooling electrons
+    Real nu_m_hat{0};    ///< Frequency threshold for minimum electrons
+    Real nu_c_hat{0};    ///< Frequency threshold for cooling electrons
+    Real gamma_m_hat{0}; ///< Lorentz factor threshold for minimum energy electrons
+    Real gamma_c_hat{0}; ///< Lorentz factor threshold for cooling electrons
     Real Y_T{0};         ///< Thomson scattering Y parameter
     size_t regime{0};    ///< Indicator for the operating regime (1=fast IC cooling, 2=slow IC cooling, 3=special case)
 
@@ -63,7 +64,7 @@ struct InverseComptonY {
      * @return The effective Y parameter at the given frequency
      * <!-- ************************************************************************************** -->
      */
-    [[nodiscard]] Real compute_val_at_nu(Real nu, Real p) const;
+    [[nodiscard]] Real evaluate_at_nu(Real nu, Real p) const;
 
     /**
      * <!-- ************************************************************************************** -->
@@ -74,41 +75,7 @@ struct InverseComptonY {
      * @return The effective Y parameter at the given gamma
      * <!-- ************************************************************************************** -->
      */
-    [[nodiscard]] Real compute_val_at_gamma(Real gamma, Real p) const;
-
-    /**
-     * <!-- ************************************************************************************** -->
-     * @brief Returns the Thomson Y parameter from the provided InverseComptonY object.
-     * @details Previously supported summing Y parameters from multiple objects.
-     * @param Ys InverseComptonY object
-     * @return The Thomson Y parameter
-     * <!-- ************************************************************************************** -->
-     */
-    static Real compute_Y_Thompson(InverseComptonY const& Ys); ///< Returns Y_T parameter
-
-    /**
-     * <!-- ************************************************************************************** -->
-     * @brief Calculates the effective Y parameter at a specific Lorentz factor and spectral index.
-     * @details Previously supported summing contributions from multiple InverseComptonY objects.
-     * @param Ys InverseComptonY object
-     * @param gamma Electron Lorentz factor
-     * @param p Spectral index of electron distribution
-     * @return The effective Y parameter at the given gamma
-     * <!-- ************************************************************************************** -->
-     */
-    static Real compute_Y_tilt_at_gamma(InverseComptonY const& Ys, Real gamma, Real p);
-
-    /**
-     * <!-- ************************************************************************************** -->
-     * @brief Calculates the effective Y parameter at a specific frequency and spectral index.
-     * @details Previously supported summing contributions from multiple InverseComptonY objects.
-     * @param Ys InverseComptonY object
-     * @param nu Frequency at which to compute the Y parameter
-     * @param p Spectral index of electron distribution
-     * @return The effective Y parameter at the given frequency
-     * <!-- ************************************************************************************** -->
-     */
-    static Real compute_Y_tilt_at_nu(InverseComptonY const& Ys, Real nu, Real p);
+    [[nodiscard]] Real evaluate_at_gamma(Real gamma, Real p) const;
 };
 
 /**
@@ -204,11 +171,11 @@ struct ICPhoton {
      * @param nu_sync Output array for synchrotron frequencies
      * @param dnu_sync Output array for synchrotron frequency bin widths
      * @param dN_e Output array for electron column densities
-     * @param I_nu_dnu_sync Output array for photon intensities
+     * @param I_nu_sync Output array for photon intensities
      * <!-- ************************************************************************************** -->
      */
     void preprocess_distributions(GridParams const& params, Array& gamma, Array& dgamma, Array& nu_sync,
-                                  Array& dnu_sync, Array& dN_e, Array& I_nu_dnu_sync) const;
+                                  Array& dnu_sync, Array& dN_e, Array& I_nu_sync) const;
 
     /**
      * <!-- ************************************************************************************** -->
@@ -217,12 +184,12 @@ struct ICPhoton {
      * @param gamma Array of gamma values
      * @param nu_sync Array of synchrotron frequencies
      * @param dN_e Array of electron column densities
-     * @param I_nu_dnu_sync Array of photon intensities
+     * @param I_nu_sync Array of photon intensities
      * @param dnu_sync Array of synchrotron frequency bin widths
      * <!-- ************************************************************************************** -->
      */
     void compute_IC_spectrum(GridParams const& params, Array const& gamma, Array const& nu_sync, Array const& dN_e,
-                             Array const& I_nu_dnu_sync, Array const& dnu_sync);
+                             Array const& I_nu_sync, Array const& dnu_sync);
 
     Array log2_nu_IC;
 
@@ -232,7 +199,7 @@ struct ICPhoton {
 
     Real inv_dlog2_nu{0};
 
-    static constexpr size_t gamma_grid_per_order{5}; // Number of frequency bins
+    static constexpr size_t gamma_grid_per_order{7}; // Number of frequency bins
 
     static constexpr size_t nu_grid_per_order{5}; // Number of gamma bins
 
@@ -306,10 +273,10 @@ void ICPhoton<Electrons, Photons>::generate_spectrum() {
     const auto params = compute_grid_params();
     initialize_grids(params);
 
-    Array gamma, dgamma, nu_sync, dnu_sync, dN_e, I_nu_dnu_sync;
-    preprocess_distributions(params, gamma, dgamma, nu_sync, dnu_sync, dN_e, I_nu_dnu_sync);
+    Array gamma, dgamma, nu_sync, dnu_sync, dN_e, I_nu_sync;
+    preprocess_distributions(params, gamma, dgamma, nu_sync, dnu_sync, dN_e, I_nu_sync);
 
-    compute_IC_spectrum(params, gamma, nu_sync, dN_e, I_nu_dnu_sync, dnu_sync);
+    compute_IC_spectrum(params, gamma, nu_sync, dN_e, I_nu_sync, dnu_sync);
 
     generated = true;
 }
@@ -329,7 +296,7 @@ typename ICPhoton<Electrons, Photons>::GridParams ICPhoton<Electrons, Photons>::
 
     params.nu_IC_min = 4 * IC_x0 * params.nu_min * params.gamma_min * params.gamma_min;
     params.nu_IC_max = 4 * IC_x0 * params.nu_max * params.gamma_max * params.gamma_max;
-    params.spectrum_resol = static_cast<size_t>(std::max(5 * std::log10(params.nu_IC_max / (params.nu_IC_min)), 15.));
+    params.spectrum_resol = static_cast<size_t>(std::max(10 * std::log10(params.nu_IC_max / (params.nu_IC_min)), 30.));
 
     return params;
 }
@@ -346,7 +313,7 @@ void ICPhoton<Electrons, Photons>::initialize_grids(GridParams const& params) {
 template <typename Electrons, typename Photons>
 void ICPhoton<Electrons, Photons>::preprocess_distributions(GridParams const& params, Array& gamma, Array& dgamma,
                                                             Array& nu_sync, Array& dnu_sync, Array& dN_e,
-                                                            Array& I_nu_dnu_sync) const {
+                                                            Array& I_nu_sync) const {
 
     logspace_boundary_center(std::log2(params.nu_min), std::log2(params.nu_max), params.nu_size, nu_sync, dnu_sync);
     logspace_boundary_center(std::log2(params.gamma_min), std::log2(params.gamma_max), params.gamma_size, gamma,
@@ -357,72 +324,108 @@ void ICPhoton<Electrons, Photons>::preprocess_distributions(GridParams const& pa
         dN_e(i) = electrons.compute_column_den(gamma(i)) * dgamma(i);
     }
 
-    I_nu_dnu_sync = Array::from_shape({params.nu_size});
+    I_nu_sync = Array::from_shape({params.nu_size});
     for (size_t j = 0; j < params.nu_size; ++j) {
-        I_nu_dnu_sync(j) = photons.compute_I_nu(nu_sync(j)) * dnu_sync(j);
+        I_nu_sync(j) = photons.compute_I_nu(nu_sync(j));
     }
 }
 
 template <typename Electrons, typename Photons>
 void ICPhoton<Electrons, Photons>::compute_IC_spectrum(GridParams const& params, Array const& gamma,
-                                                       Array const& nu_sync, Array const& dN_e,
-                                                       Array const& I_nu_dnu_sync, Array const& dnu_sync) {
+                                                       Array const& nu_sync, Array const& dN_e, Array const& I_nu_sync,
+                                                       Array const& dnu_sync) {
     Array nu_IC = xt::exp2(log2_nu_IC);
     Array I_nu_IC = xt::zeros<Real>({params.spectrum_resol});
 
-    const auto sigma =
-        KN ? +[](Real nu_comv) { return compton_cross_section(nu_comv); } : +[](Real) { return con::sigmaT; };
+    //const auto sigma =
+    //    KN ? +[](Real nu_comv) { return compton_cross_section(nu_comv); } : +[](Real) { return con::sigmaT; };
 
-    for (size_t i = params.gamma_size; i-- > 0;) {
-        const Real gamma_i = gamma(i);
-        const Real Ndgamma = dN_e(i);
-        const Real down_scatter = 1 / (4 * IC_x0 * gamma_i * gamma_i);
+    if (KN) { //separate the KN and non-KN case to ensure inline
+        for (size_t i = params.gamma_size; i-- > 0;) {
+            const Real gamma_i = gamma(i);
+            const Real Ndgamma = dN_e(i);
+            const Real down_scatter = 1 / (4 * IC_x0 * gamma_i * gamma_i);
 
-        const Real nu_comv_max = gamma_i * nu_sync.back();
-        Real row_integral = I_nu_dnu_sync.back() * sigma(nu_comv_max) / (nu_comv_max * nu_comv_max);
-        Real slope = 0;
+            const Real nu_comv_max = gamma_i * nu_sync.back();
+            Real row_integral =
+                I_nu_sync.back() * dnu_sync.back() * compton_cross_section(nu_comv_max) / (nu_comv_max * nu_comv_max);
+            Real slope = 0;
+            Real nu_sync_j = 0;
 
-        int k = static_cast<int>(params.spectrum_resol) - 1;
-
-        for (; k >= 0; --k) {
-            const Real nu_seed = nu_IC(k) * down_scatter;
-            if (nu_seed < nu_sync.back()) {
-                break;
-            }
-        }
-
-        for (size_t j = params.nu_size - 1; j-- > 0 && k >= 0;) {
-            const Real nu0_j = nu_sync(j);
-            const Real nu_comv = gamma_i * nu0_j;
-            const Real inv = 1 / nu_comv;
-
-            const Real grid_value = I_nu_dnu_sync(j) * sigma(nu_comv) * inv * inv;
-            slope = grid_value / dnu_sync(j);
-
-            const Real base = Ndgamma * (row_integral + slope * nu_sync(j + 1));
-            const Real eff_slope = Ndgamma * slope;
-
+            int k = static_cast<int>(params.spectrum_resol) - 1;
             for (; k >= 0; --k) {
-                const Real nu_seed = nu_IC(k) * down_scatter;
-
-                if (nu_seed >= nu0_j) {
-                    I_nu_IC(k) += base - eff_slope * nu_seed;
-                } else {
+                if (nu_IC(k) * down_scatter < nu_sync.back()) {
                     break;
                 }
             }
 
-            row_integral += grid_value;
-        }
+            for (size_t j = params.nu_size - 1; j-- > 0 && k >= 0;) {
+                nu_sync_j = nu_sync(j);
+                const Real nu_comv = gamma_i * nu_sync_j;
+                const Real inv = 1 / nu_comv;
 
-        // Handle the remaining low-frequency tail
-        for (; k >= 0; --k) {
-            const Real nu_seed = nu_IC(k) * down_scatter;
-            I_nu_IC(k) += Ndgamma * (row_integral + slope * (nu_sync.front() - nu_seed));
+                slope = I_nu_sync(j) * compton_cross_section(nu_comv) * inv * inv;
+                row_integral += slope * dnu_sync(j);
+
+                for (; k >= 0; --k) {
+                    if (const Real nu_seed = nu_IC(k) * down_scatter; nu_seed >= nu_sync_j) {
+                        I_nu_IC(k) += Ndgamma * (row_integral + slope * (nu_sync_j - nu_seed));
+                    } else {
+                        break;
+                    }
+                }
+            }
+
+            // Handle the remaining low-frequency tail
+            for (; k >= 0; --k) {
+                const Real nu_seed = nu_IC(k) * down_scatter;
+                I_nu_IC(k) += Ndgamma * (row_integral + slope * (nu_sync_j - nu_seed));
+            }
         }
+        log2_I_nu_IC = xt::log2(I_nu_IC * nu_IC * 0.25);
+    } else {
+        Array factor = I_nu_sync / (nu_sync * nu_sync);
+        for (size_t i = params.gamma_size; i-- > 0;) {
+            const Real gamma_i = gamma(i);
+            const Real gamma_i2 = gamma_i * gamma_i;
+            const Real Ndgamma = dN_e(i);
+            const Real down_scatter = 1 / (4 * IC_x0 * gamma_i2);
+            const Real nu_comv_max = gamma_i * nu_sync.back();
+
+            Real row_integral = I_nu_sync.back() * dnu_sync.back() / (nu_comv_max * nu_comv_max);
+            Real slope = 0;
+            Real nu_sync_j = 0;
+
+            int k = static_cast<int>(params.spectrum_resol) - 1;
+            for (; k >= 0; --k) {
+                if (nu_IC(k) * down_scatter < nu_sync.back()) {
+                    break;
+                }
+            }
+
+            for (size_t j = params.nu_size - 1; j-- > 0 && k >= 0;) {
+                nu_sync_j = nu_sync(j);
+
+                slope = factor(j) / gamma_i2;
+                row_integral += slope * dnu_sync(j);
+
+                for (; k >= 0; --k) {
+                    if (const Real nu_seed = nu_IC(k) * down_scatter; nu_seed >= nu_sync_j) {
+                        I_nu_IC(k) += Ndgamma * (row_integral + slope * (nu_sync_j - nu_seed));
+                    } else {
+                        break;
+                    }
+                }
+            }
+
+            // Handle the remaining low-frequency tail
+            for (; k >= 0; --k) {
+                const Real nu_seed = nu_IC(k) * down_scatter;
+                I_nu_IC(k) += Ndgamma * (row_integral + slope * (nu_sync_j - nu_seed));
+            }
+        }
+        log2_I_nu_IC = xt::log2(I_nu_IC * nu_IC * 0.25 * con::sigmaT);
     }
-
-    log2_I_nu_IC = xt::log2(I_nu_IC * nu_IC * 0.25);
 
     for (size_t i = 0; i < params.spectrum_resol - 1; ++i) {
         interp_slope(i) = (log2_I_nu_IC(i + 1) - log2_I_nu_IC(i)) * inv_dlog2_nu;
@@ -474,57 +477,115 @@ inline Real eta_rad(Real gamma_m, Real gamma_c, Real p) {
     return gamma_c < gamma_m ? 1 : fast_pow(gamma_c / gamma_m, (2 - p));
 }
 
-template <typename Electrons>
-Real compute_Thomson_Y(Real B, Real t_com, Real eps_e, Real eps_B, Electrons const& e) {
-    Real eta_e = eta_rad(e.gamma_m, e.gamma_c, e.p);
-    Real b = eta_e * eps_e / eps_B;
-    Real Y0 = (std::sqrt(1 + 4 * b) - 1) / 2;
-    Real Y1 = 2 * Y0;
-    while (std::fabs((Y1 - Y0) / Y0) > 1e-4) {
-        Y1 = Y0;
-        Real gamma_c = compute_gamma_c(t_com, B, e.Ys, e.p);
-        eta_e = eta_rad(e.gamma_m, gamma_c, e.p);
-        b = eta_e * eps_e / eps_B;
-        Y0 = (std::sqrt(1 + 4 * b) - 1) / 2;
+Real compute_gamma_c(Real t_comv, Real B, Real Y);
+Real compute_syn_gamma_M(Real B, Real Y, Real p);
+Real compute_syn_I_peak(Real B, Real p, Real column_den);
+Real compute_syn_gamma_a(Real B, Real I_nu_peak, Real gamma_m, Real gamma_c, Real gamma_M, Real p);
+size_t determine_regime(Real gamma_a, Real gamma_c, Real gamma_m);
+
+inline void update_gamma_c_Thomson(Real& gamma_c, InverseComptonY& Ys, RadParams const& rad, Real B, Real t_com,
+                                   Real gamma_m) {
+    Real eta_e = eta_rad(gamma_m, gamma_c, rad.p);
+    Real b = eta_e * rad.eps_e / rad.eps_B;
+    Real Y_T = (std::sqrt(1 + 4 * b) - 1) / 2;
+
+    Real gamma_c_new = compute_gamma_c(t_com, B, Y_T);
+    while (std::fabs((gamma_c_new - gamma_c) / gamma_c) > 1e-4) {
+        gamma_c = gamma_c_new;
+        eta_e = eta_rad(gamma_m, gamma_c, rad.p);
+        b = eta_e * rad.eps_e / rad.eps_B;
+        Y_T = (std::sqrt(1 + 4 * b) - 1) / 2;
+        gamma_c_new = compute_gamma_c(t_com, B, Y_T);
     }
-    return Y0;
+    gamma_c = gamma_c_new;
+    Ys = InverseComptonY(Y_T);
 }
 
-template <typename Electrons, typename Photons>
-void Thomson_cooling(ElectronGrid<Electrons>& electrons, PhotonGrid<Photons>& photons, Shock const& shock) {
+inline void update_gamma_c_KN(Real& gamma_c, InverseComptonY& Ys, RadParams const& rad, Real B, Real t_com,
+                              Real gamma_m) {
+    Real eta_e = eta_rad(gamma_m, gamma_c, rad.p);
+    Real b = eta_e * rad.eps_e / rad.eps_B;
+    Real Y_T = (std::sqrt(1 + 4 * b) - 1) / 2;
+    Ys = InverseComptonY(gamma_m, gamma_c, B, Y_T);
+    Real Y_c = 0; //Ys.evaluate_at_gamma(gamma_c, rad.p);
+    Real gamma_c_new = compute_gamma_c(t_com, B, Y_c);
+
+    while (std::fabs((gamma_c_new - gamma_c) / gamma_c) > 1e-4) {
+        gamma_c = gamma_c_new;
+        eta_e = eta_rad(gamma_m, gamma_c, rad.p);
+        b = eta_e * rad.eps_e / rad.eps_B;
+        Y_T = (std::sqrt(1 + 4 * b) - 1) / 2;
+        Ys = InverseComptonY(gamma_m, gamma_c, B, Y_T);
+        Y_c = Ys.evaluate_at_gamma(gamma_c, rad.p);
+        gamma_c_new = compute_gamma_c(t_com, B, Y_c);
+    }
+    gamma_c = gamma_c_new;
+}
+
+inline void update_gamma_M(Real& gamma_M, InverseComptonY const& Ys, Real p, Real B) {
+    if (B == 0) {
+        gamma_M = std::numeric_limits<Real>::infinity();
+        return;
+    }
+
+    Real Y0 = Ys.evaluate_at_gamma(gamma_M, p);
+    Real gamma_M_new = compute_syn_gamma_M(B, Y0, p);
+
+    while (std::fabs((gamma_M - gamma_M_new) / gamma_M_new) > 1e-3) {
+        gamma_M = gamma_M_new;
+        Y0 = Ys.evaluate_at_gamma(gamma_M, p);
+        gamma_M_new = compute_syn_gamma_M(B, Y0, p);
+    }
+}
+
+template <typename Electrons, typename Photons, typename Updater>
+void IC_cooling(ElectronGrid<Electrons>& electrons, PhotonGrid<Photons>& photons, Shock const& shock,
+                Updater&& update_gamma_c) {
     const size_t phi_size = electrons.shape()[0];
     const size_t theta_size = electrons.shape()[1];
     const size_t t_size = electrons.shape()[2];
 
-    for (size_t i = 0; i < phi_size; i++) {
+    for (size_t i = 0; i < phi_size; ++i) {
         for (size_t j = 0; j < theta_size; ++j) {
+            const size_t k_inj = shock.injection_idx(i, j);
+
             for (size_t k = 0; k < t_size; ++k) {
-                const Real Y_T = compute_Thomson_Y(shock.B(i, j, k), shock.t_comv(i, j, k), shock.rad.eps_e,
-                                                   shock.rad.eps_B, electrons(i, j, k));
-                electrons(i, j, k).Ys = InverseComptonY(Y_T);
+                if (shock.required(i, j, k) == 0)
+                    continue;
+
+                const Real t_com = shock.t_comv(i, j, k);
+                const Real B = shock.B(i, j, k);
+
+                auto& cell = electrons(i, j, k);
+                auto& Ys = cell.Ys;
+                const Real p = cell.p;
+
+                update_gamma_c(cell.gamma_c, Ys, shock.rad, B, t_com, cell.gamma_m);
+
+                update_gamma_M(cell.gamma_M, Ys, p, B);
+
+                if (k >= k_inj) {
+                    const auto& inj = electrons(i, j, k_inj);
+                    cell.gamma_c = inj.gamma_c * cell.gamma_m / inj.gamma_m;
+                    cell.gamma_M = cell.gamma_c;
+                }
+
+                const Real I_nu_peak = compute_syn_I_peak(B, p, cell.column_den);
+                cell.gamma_a = compute_syn_gamma_a(B, I_nu_peak, cell.gamma_m, cell.gamma_c, cell.gamma_M, p);
+                cell.regime = determine_regime(cell.gamma_a, cell.gamma_c, cell.gamma_m);
+                cell.Y_c = Ys.evaluate_at_gamma(cell.gamma_c, p);
             }
         }
     }
-    update_electrons_4Y(electrons, shock);
     generate_syn_photons(photons, shock, electrons);
 }
 
 template <typename Electrons, typename Photons>
+void Thomson_cooling(ElectronGrid<Electrons>& electrons, PhotonGrid<Photons>& photons, Shock const& shock) {
+    IC_cooling(electrons, photons, shock, update_gamma_c_Thomson);
+}
+
+template <typename Electrons, typename Photons>
 void KN_cooling(ElectronGrid<Electrons>& electrons, PhotonGrid<Photons>& photons, Shock const& shock) {
-    const size_t phi_size = electrons.shape()[0];
-    const size_t theta_size = electrons.shape()[1];
-    const size_t r_size = electrons.shape()[2];
-    for (size_t i = 0; i < phi_size; ++i) {
-        for (size_t j = 0; j < theta_size; ++j) {
-            for (size_t k = 0; k < r_size; ++k) {
-                const Real Y_T = compute_Thomson_Y(shock.B(i, j, k), shock.t_comv(i, j, k), shock.rad.eps_e,
-                                                   shock.rad.eps_B, electrons(i, j, k));
-                // Clear existing Ys and emplace a new InverseComptonY with additional synchrotron frequency parameters.
-                electrons(i, j, k).Ys =
-                    InverseComptonY(photons(i, j, k).nu_m, photons(i, j, k).nu_c, shock.B(i, j, k), Y_T);
-            }
-        }
-    }
-    update_electrons_4Y(electrons, shock);
-    generate_syn_photons(photons, shock, electrons);
+    IC_cooling(electrons, photons, shock, update_gamma_c_KN);
 }
