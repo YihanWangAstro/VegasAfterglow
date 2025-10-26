@@ -7,8 +7,8 @@
 
 #pragma once
 
-#include "mesh.h"
-#include "physics.h"
+#include "../core/mesh.h"
+#include "../core/physics.h"
 
 struct PromptPhotons {
     Real E_nu_peak{0};

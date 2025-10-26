@@ -10,7 +10,7 @@
 #include <algorithm>
 #include <numeric>
 
-#include "afterglow.h"
+#include "../include/afterglow.h"
 #include "error_handling.h"
 #include "xtensor/misc/xsort.hpp"
 

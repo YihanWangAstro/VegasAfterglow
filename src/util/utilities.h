@@ -6,8 +6,8 @@
 //                            |___/                                            |___/
 
 #pragma once
+#include "../core/mesh.h"
 #include "macros.h"
-#include "mesh.h"
 
 class Empty {};
 

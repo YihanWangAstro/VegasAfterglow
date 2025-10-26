@@ -9,10 +9,10 @@
 
 #include <string>
 
-#include "mesh.h"
-#include "prompt.h"
-#include "shock.h"
-#include "synchrotron.h"
+#include "../core/mesh.h"
+#include "../dynamics/shock.h"
+#include "../radiation/prompt.h"
+#include "../radiation/synchrotron.h"
 
 #ifndef NO_XTENSOR_IO
     #include "xtensor-io/xnpz.hpp"

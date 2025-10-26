@@ -6,10 +6,10 @@
 //                            |___/                                            |___/
 #pragma once
 
+#include "../core/mesh.h"
+#include "../core/physics.h"
+#include "../dynamics/shock.h"
 #include "inverse-compton.h"
-#include "mesh.h"
-#include "physics.h"
-#include "shock.h"
 
 /**
  * <!-- ************************************************************************************** -->

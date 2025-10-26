@@ -10,7 +10,7 @@
 #include <cmath>
 #include <utility>
 
-#include "utilities.h"
+#include "../util/utilities.h"
 /**
  * <!-- ************************************************************************************** -->
  * @class Ejecta

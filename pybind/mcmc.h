@@ -9,11 +9,11 @@
 
 #include <vector>
 
-#include "afterglow.h"
-#include "macros.h"
-#include "mesh.h"
+#include "../include/afterglow.h"
+#include "core/mesh.h"
 #include "pybind.h"
-#include "utilities.h"
+#include "util/macros.h"
+#include "util/utilities.h"
 
 /**
  * <!-- ************************************************************************************** -->

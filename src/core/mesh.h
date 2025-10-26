@@ -7,8 +7,8 @@
 
 #pragma once
 
+#include "../util/macros.h"
 #include "boost/numeric/odeint.hpp"
-#include "macros.h"
 #include "physics.h"
 #include "xtensor/containers/xadapt.hpp"
 #include "xtensor/containers/xtensor.hpp"

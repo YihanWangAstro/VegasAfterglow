@@ -7,29 +7,16 @@
 
 #include "synchrotron.h"
 
-#include "afterglow.h"
+#include "../../include/afterglow.h"
+#include "../core/physics.h"
+#include "../util/macros.h"
+#include "../util/utilities.h"
 #include "inverse-compton.h"
-#include "macros.h"
-#include "physics.h"
-#include "utilities.h"
 
-Real SynElectrons::compute_N_gamma(Real gamma) const {
-    if (gamma <= gamma_c) { // Below the cooling Lorentz factor: direct scaling
-        return N_e * compute_spectrum(gamma);
-    } else {
-        return fast_exp2((gamma_c - gamma) / gamma_M) * N_e * compute_spectrum(gamma) * (1 + Y_c) /
-               (1 + Ys.evaluate_at_gamma(gamma, p));
-    }
-}
+//========================================================================================================
+//                                  Helper Functions - Simple Utilities
+//========================================================================================================
 
-Real SynElectrons::compute_column_den(Real gamma) const {
-    if (gamma <= gamma_c) { // Below the cooling Lorentz factor: direct scaling
-        return column_den * compute_spectrum(gamma);
-    } else {
-        return fast_exp2((gamma_c - gamma) / gamma_M) * column_den * compute_spectrum(gamma) * (1 + Y_c) /
-               (1 + Ys.evaluate_at_gamma(gamma, p));
-    }
-}
 /**
  * <!-- ************************************************************************************** -->
  * @internal
@@ -72,6 +59,231 @@ size_t determine_regime(Real a, Real c, Real m) {
     } else
         return 0;
 }
+
+//========================================================================================================
+//                                  Helper Functions - Foundation Physics
+//========================================================================================================
+
+/**
+ * <!-- ************************************************************************************** -->
+ * @internal
+ * @brief Calculates the peak synchrotron power per electron in the comoving frame.
+ * @details Based on magnetic field strength B and power-law index p of the electron distribution.
+ * @param B Magnetic field strength
+ * @param p Power-law index of electron distribution
+ * @return Peak synchrotron power per electron
+ * <!-- ************************************************************************************** -->
+ */
+Real compute_single_elec_P_nu_max(Real B, Real p) {
+    constexpr Real sin_angle_ave = con::pi / 4;
+    constexpr Real Fx_max = 0.92; // Bing's book 5.5
+    return B * (sin_angle_ave * Fx_max * 1.73205080757 * con::e3 / (con::me * con::c2));
+}
+
+/**
+ * <!-- ************************************************************************************** -->
+ * @internal
+ * @brief Calculates the peak synchrotron intensity for a given column number density.
+ * @details Uses the peak synchrotron power and column number density.
+ * @param B Magnetic field strength
+ * @param p Power-law index of electron distribution
+ * @param column_den Column number density
+ * @return Peak synchrotron intensity
+ * <!-- ************************************************************************************** -->
+ */
+Real compute_syn_I_peak(Real B, Real p, Real column_den) {
+    return compute_single_elec_P_nu_max(B, p) * column_den / (4 * con::pi);
+}
+
+/**
+ * <!-- ************************************************************************************** -->
+ * @internal
+ * @brief Calculates the characteristic synchrotron frequency for electrons with a given Lorentz factor.
+ * @details Uses the standard synchrotron formula.
+ * @param gamma Electron Lorentz factor
+ * @param B Magnetic field strength
+ * @return Characteristic synchrotron frequency
+ * <!-- ************************************************************************************** -->
+ */
+Real compute_syn_freq(Real gamma, Real B) {
+    return 3 * con::e / (4 * con::pi * con::me * con::c) * B * gamma * gamma;
+}
+
+/**
+ * <!-- ************************************************************************************** -->
+ * @internal
+ * @brief Calculates the electron Lorentz factor corresponding to a synchrotron frequency.
+ * @details Inverse of the compute_syn_freq function.
+ * @param nu Synchrotron frequency
+ * @param B Magnetic field strength
+ * @return Corresponding electron Lorentz factor
+ * <!-- ************************************************************************************** -->
+ */
+Real compute_syn_gamma(Real nu, Real B) {
+    return std::sqrt((4 * con::pi * con::me * con::c / (3 * con::e)) * (nu / B));
+}
+
+//========================================================================================================
+//                                  Helper Functions - Gamma Computations
+//========================================================================================================
+
+/**
+ * <!-- ************************************************************************************** -->
+ * @internal
+ * @brief Calculates the maximum electron Lorentz factor for synchrotron emission.
+ * @details Uses an iterative approach to account for inverse Compton cooling effects.
+ * @param B Magnetic field strength
+ * @param Ys InverseComptonY object
+ * @param p Spectral index of electron distribution
+ * @return Maximum electron Lorentz factor
+ * <!-- ************************************************************************************** -->
+ */
+Real compute_syn_gamma_M(Real B, Real Y, Real p) {
+    if (B == 0) {
+        return std::numeric_limits<Real>::infinity();
+    }
+    return std::sqrt(6 * con::pi * con::e / con::sigmaT / (B * (1 + Y)));
+}
+
+/**
+ * <!-- ************************************************************************************** -->
+ * @internal
+ * @brief Calculates the minimum electron Lorentz factor for synchrotron emission.
+ * @details Accounts for different power-law indices with special handling for the p=2 case.
+ *          Uses the fraction of shock energy given to electrons (eps_e) and electron fraction (xi).
+ * @param Gamma_th Downstream thermal Lorentz factor
+ * @param gamma_M Maximum electron Lorentz factor
+ * @param eps_e Fraction of shock energy given to electrons
+ * @param p Power-law index of electron distribution
+ * @param xi Fraction of electrons accelerated
+ * @return Minimum electron Lorentz factor
+ * <!-- ************************************************************************************** -->
+ */
+Real compute_syn_gamma_m(Real Gamma_th, Real gamma_M, Real eps_e, Real p, Real xi) {
+    const Real gamma_ave_minus_1 = eps_e * (Gamma_th - 1) * (con::mp / con::me) / xi;
+    Real gamma_m_minus_1 = 1;
+    if (p > 2) {
+        gamma_m_minus_1 = (p - 2) / (p - 1) * gamma_ave_minus_1;
+    } else if (p < 2) {
+        gamma_m_minus_1 = std::pow((2 - p) / (p - 1) * gamma_ave_minus_1 * std::pow(gamma_M, p - 2), 1 / (p - 1));
+    } else {
+        gamma_m_minus_1 = root_bisect(
+            [=](Real x) -> Real {
+                return (x * std::log(gamma_M) - (x + 1) * std::log(x) - gamma_ave_minus_1 - std::log(gamma_M));
+            },
+            0, gamma_M);
+    }
+    return gamma_m_minus_1 + 1;
+}
+
+Real compute_gamma_c(Real t_comv, Real B, Real Y) {
+    constexpr Real ad_cooling = 1;
+    //-sqrt(Gamma * Gamma - 1) * con::c* t_comv / r;  // adiabatic cooling
+
+    const Real gamma_bar = (6 * con::pi * con::me * con::c / con::sigmaT) / (B * B * (1 + Y) * t_comv) * ad_cooling;
+    const Real gamma_c = (gamma_bar + std::sqrt(gamma_bar * gamma_bar + 4)) / 2; // correction on newtonian regime
+
+    return gamma_c;
+}
+
+/**
+ * <!-- ************************************************************************************** -->
+ * @internal
+ * @brief Calculates the self-absorption Lorentz factor by equating synchrotron emission to blackbody.
+ * @details Uses the peak intensity and shock parameters to determine where absorption becomes important.
+ *          Handles both weak and strong absorption regimes.
+ * @param B Magnetic field strength
+ * @param I_syn_peak Peak synchrotron intensity
+ * @param gamma_m Minimum electron Lorentz factor
+ * @param gamma_c Cooling electron Lorentz factor
+ * @param gamma_M Maximum electron Lorentz factor
+ * @param p Power-law index of electron distribution
+ * @return Self-absorption Lorentz factor
+ * <!-- ************************************************************************************** -->
+ */
+Real compute_syn_gamma_a(Real B, Real I_syn_peak, Real gamma_m, Real gamma_c, Real gamma_M, Real p) {
+    const Real gamma_peak = std::min(gamma_m, gamma_c);
+    const Real nu_peak = compute_syn_freq(gamma_peak, B);
+
+    const Real kT = (gamma_peak - 1) * (con::me * con::c2) / 3;
+    // 2kT(nu_a/c)^2 = I_peak*(nu_a/nu_peak)^(1/3) // first assume nu_a is in the 1/3 segment
+    Real nu_a = fast_pow(I_syn_peak * con::c2 / (std::cbrt(nu_peak) * 2 * kT), 0.6);
+
+#ifdef SELF_ABSORPTION_HEATING
+    if (nu_a > nu_peak) { // nu_a is not in the 1/3 segment
+        constexpr Real coef = 3 * con::e / (4 * con::pi * con::me * con::c);
+        if (gamma_c > gamma_m) { // first assume nu_a is in the -(p-1)/2 segment, 2kT(nu_a/nu_m)^2.5 nu_m^2/c^2
+            Real nu_m = compute_syn_freq(gamma_m, B);
+            nu_a = fast_pow(I_syn_peak * con::c2 / (2 * kT) * fast_pow(nu_m, p / 2), 2 / (p + 4));
+            Real nu_c = compute_syn_freq(gamma_c, B);
+            if (nu_a > nu_c) { // nu_a is not in the -(p-1)/2 segment, strong absorption
+                Real C = 1.5 * I_syn_peak / (con::me * pow52(coef * B) * std::sqrt(nu_m));
+                Real gamma_a =
+                    root_bisect([C](Real x) -> Real { return x * x * x * x * x * x - x - C; }, gamma_c, gamma_M);
+                return gamma_a;
+            }
+        } else { // strong absorption
+            Real nu_m = compute_syn_freq(gamma_m, B);
+            Real C = 1.5 * I_syn_peak / (con::me * pow52(coef * B) * std::sqrt(nu_m));
+            Real gamma_a = root_bisect([C](Real x) -> Real { return x * x * x * x * x * x - x - C; }, gamma_c, gamma_M);
+            return gamma_a;
+        }
+    }
+#else
+    if (nu_a > nu_peak) {        // nu_a is not in the 1/3 segment
+        if (gamma_c > gamma_m) { // first assume nu_a is in the -(p-1)/2 segment
+            const Real nu_m = compute_syn_freq(gamma_m, B);
+            nu_a = fast_pow(I_syn_peak * con::c2 / (2 * kT) * fast_pow(nu_m, p / 2), 2 / (p + 4));
+            const Real nu_c = compute_syn_freq(gamma_c, B);
+            if (nu_a > nu_c) { //  nu_a is not in the -(p-1)/2 but -p/2 segment
+                nu_a = fast_pow(I_syn_peak * con::c2 / (2 * kT) * std::sqrt(nu_c) * fast_pow(nu_m, p / 2), 2 / (p + 5));
+            }
+        } else { //first assume nu_a is in the -1/2 segment
+            const Real nu_c = compute_syn_freq(gamma_c, B);
+            nu_a = fast_pow(I_syn_peak * con::c2 / (2 * kT) * std::sqrt(nu_c), 0.4);
+            const Real nu_m = compute_syn_freq(gamma_m, B);
+            if (nu_a > nu_m) { // nu_a is not in the -1/2 segment but -p/2 segment
+                nu_a = fast_pow(I_syn_peak * con::c2 / (2 * kT) * std::sqrt(nu_c) * fast_pow(nu_m, p / 2), 2 / (p + 5));
+            }
+        }
+    }
+
+#endif
+    return compute_syn_gamma(nu_a, B) + 1;
+}
+
+Real compute_gamma_peak(Real gamma_a, Real gamma_m, Real gamma_c) {
+    const Real gamma_peak = std::min(gamma_m, gamma_c);
+    if (gamma_a > gamma_c) {
+        return gamma_a;
+    } else {
+        return gamma_peak;
+    }
+}
+
+/**
+ * <!-- ************************************************************************************** -->
+ * @brief Determines the peak Lorentz factor directly from a SynElectrons object.
+ * @details Convenient wrapper around the three-parameter version.
+ * @param e Synchrotron electron object
+ * @return Peak Lorentz factor
+ * <!-- ************************************************************************************** -->
+ */
+Real compute_gamma_peak(SynElectrons const& e) {
+    return compute_gamma_peak(e.gamma_a, e.gamma_m, e.gamma_c);
+}
+
+Real cyclotron_correction(Real gamma_m, Real p) {
+    Real f = (gamma_m - 1) / gamma_m;
+    if (p > 3) {
+        f = fast_pow(f, (p - 1) / 2);
+    }
+    return f;
+}
+
+//========================================================================================================
+//                                  SynElectrons Class Methods
+//========================================================================================================
 
 Real SynElectrons::compute_spectrum(Real gamma) const {
     switch (regime) {
@@ -158,94 +370,27 @@ Real SynElectrons::compute_spectrum(Real gamma) const {
     }
 }
 
-Real SynPhotons::compute_I_nu(Real nu) const {
-    if (nu <= nu_c) { // Below cooling frequency, simple scaling
-        return I_nu_max * compute_spectrum(nu);
+Real SynElectrons::compute_N_gamma(Real gamma) const {
+    if (gamma <= gamma_c) { // Below the cooling Lorentz factor: direct scaling
+        return N_e * compute_spectrum(gamma);
     } else {
-        return fast_exp2((nu_c - nu) / nu_M) * I_nu_max * compute_spectrum(nu) * (1 + Y_c) /
-               (1 + Ys.evaluate_at_nu(nu, p));
+        return fast_exp2((gamma_c - gamma) / gamma_M) * N_e * compute_spectrum(gamma) * (1 + Y_c) /
+               (1 + Ys.evaluate_at_gamma(gamma, p));
     }
 }
 
-Real SynPhotons::compute_log2_I_nu(Real log2_nu) const {
-    if (log2_nu <= log2_nu_c) { // Below cooling frequency, simple scaling
-        return log2_I_nu_max + compute_log2_spectrum(log2_nu);
+Real SynElectrons::compute_column_den(Real gamma) const {
+    if (gamma <= gamma_c) { // Below the cooling Lorentz factor: direct scaling
+        return column_den * compute_spectrum(gamma);
     } else {
-        const Real cooling_factor = (1 + Y_c) / (1 + Ys.evaluate_at_nu(std::exp2(log2_nu), p));
-        return log2_I_nu_max + compute_log2_spectrum(log2_nu) + fast_log2(cooling_factor) +
-               (nu_c - fast_exp2(log2_nu)) / nu_M;
+        return fast_exp2((gamma_c - gamma) / gamma_M) * column_den * compute_spectrum(gamma) * (1 + Y_c) /
+               (1 + Ys.evaluate_at_gamma(gamma, p));
     }
 }
 
-void SynPhotons::update_constant() {
-    // Update constants based on spectral parameters
-    if (regime == 1) {
-        // a_m_1_3 = std::cbrt(nu_a / nu_m);  // (nu_a / nu_m)^(1/3)
-        // c_m_mpa1_2 = fastPow(nu_c / nu_m, (-p + 1) / 2);  // (nu_c / nu_m)^((-p+1)/2)
-        C1_ = std::cbrt(nu_a / nu_m);
-        C2_ = fast_pow(nu_c / nu_m, (-p + 1) / 2);
-
-        log2_C1_ = (log2_nu_a - log2_nu_m) / 3 - 2 * log2_nu_a;
-        log2_C2_ = -log2_nu_m / 3;
-        log2_C3_ = (p - 1) / 2 * log2_nu_m;
-        log2_C4_ = (p - 1) / 2 * (log2_nu_m - log2_nu_c) + p / 2 * log2_nu_c;
-    } else if (regime == 2) {
-        // m_a_pa4_2 = fastPow(nu_m / nu_a, (p + 4) / 2);    // (nu_m / nu_a)^((p+4)/2)
-        // a_m_mpa1_2 = fastPow(nu_a / nu_m, (-p + 1) / 2);  // (nu_a / nu_m)^((-p+1)/2)
-        // c_m_mpa1_2 = fastPow(nu_c / nu_m, (-p + 1) / 2);  // (nu_c / nu_m)^((-p+1)/2)
-        C1_ = fast_pow(nu_m / nu_a, (p + 4) / 2);
-        C2_ = fast_pow(nu_a / nu_m, (-p + 1) / 2);
-        C3_ = fast_pow(nu_c / nu_m, (-p + 1) / 2);
-
-        log2_C1_ = (p + 4) / 2 * (log2_nu_m - log2_nu_a) - 2 * log2_nu_m;
-        log2_C2_ = (p - 1) / 2 * (log2_nu_m - log2_nu_a) - 2.5 * log2_nu_a;
-        log2_C3_ = (p - 1) / 2 * log2_nu_m;
-        log2_C4_ = (p - 1) / 2 * (log2_nu_m - log2_nu_c) + p / 2 * log2_nu_c;
-    } else if (regime == 3) {
-        // a_c_1_3 = std::cbrt(nu_a / nu_c);  // (nu_a / nu_c)^(1/3)
-        // c_m_1_2 = std::sqrt(nu_c / nu_m);  // (nu_c / nu_m)^(1/2)
-        C1_ = std::cbrt(nu_a / nu_c);
-        C2_ = std::sqrt(nu_c / nu_m);
-
-        log2_C1_ = (log2_nu_a - log2_nu_c) / 3 - 2 * log2_nu_a;
-        log2_C2_ = -log2_nu_c / 3;
-        log2_C3_ = log2_nu_c / 2;
-        log2_C4_ = (log2_nu_c - log2_nu_m) / 2 + p / 2 * log2_nu_m;
-    } else if (regime == 4) {
-        C1_ = std::sqrt(nu_a / nu_m);
-        C3_ = 3;
-        C2_ = std::sqrt(nu_c / nu_a) / C3_;
-
-        log2_C4_ = fast_log2(C2_);
-
-        log2_C1_ = -2 * log2_nu_a;
-        log2_C2_ = log2_C4_ + log2_nu_a / 2;
-        log2_C3_ = log2_C4_ + (log2_nu_a - log2_nu_m) / 2 + p / 2 * log2_nu_m;
-
-    } else if (regime == 5) {
-        C1_ = std::sqrt(nu_m / nu_a);
-        C3_ = 3 / (p - 1);
-        C2_ = std::sqrt(nu_c / nu_a) * fast_pow(nu_m / nu_a, (p - 1) / 2) / C3_;
-
-        log2_C4_ = fast_log2(C2_);
-
-        log2_C1_ = -2.5 * log2_nu_a;
-        log2_C2_ = log2_C4_ + p / 2 * log2_nu_a;
-
-        log2_C3_ = fast_log2(C3_);
-    } else if (regime == 6) {
-        C1_ = std::sqrt(nu_m / nu_a);
-        C3_ = 3;
-        C2_ = std::sqrt(nu_c / nu_a) * fast_pow(nu_m / nu_a, (p - 1) / 2) / C3_;
-
-        log2_C4_ = fast_log2(C2_);
-
-        log2_C1_ = -2.5 * log2_nu_a;
-        log2_C2_ = log2_C4_ + p / 2 * log2_nu_a;
-
-        log2_C3_ = 1.5849625007; // log2(3)
-    }
-}
+//========================================================================================================
+//                                  SynPhotons Class Methods
+//========================================================================================================
 
 Real SynPhotons::compute_spectrum(Real nu) const {
     switch (regime) {
@@ -444,218 +589,98 @@ Real SynPhotons::compute_log2_spectrum(Real log2_nu) const {
     }
 }
 
-/**
- * <!-- ************************************************************************************** -->
- * @internal
- * @brief Calculates the peak synchrotron power per electron in the comoving frame.
- * @details Based on magnetic field strength B and power-law index p of the electron distribution.
- * @param B Magnetic field strength
- * @param p Power-law index of electron distribution
- * @return Peak synchrotron power per electron
- * <!-- ************************************************************************************** -->
- */
-Real compute_single_elec_P_nu_max(Real B, Real p) {
-    constexpr Real sin_angle_ave = con::pi / 4;
-    constexpr Real Fx_max = 0.92; // Bing's book 5.5
-    return B * (sin_angle_ave * Fx_max * 1.73205080757 * con::e3 / (con::me * con::c2));
-}
+void SynPhotons::update_constant() {
+    // Update constants based on spectral parameters
+    if (regime == 1) {
+        // a_m_1_3 = std::cbrt(nu_a / nu_m);  // (nu_a / nu_m)^(1/3)
+        // c_m_mpa1_2 = fastPow(nu_c / nu_m, (-p + 1) / 2);  // (nu_c / nu_m)^((-p+1)/2)
+        C1_ = std::cbrt(nu_a / nu_m);
+        C2_ = fast_pow(nu_c / nu_m, (-p + 1) / 2);
 
-/**
- * <!-- ************************************************************************************** -->
- * @internal
- * @brief Calculates the peak synchrotron intensity for a given column number density.
- * @details Uses the peak synchrotron power and column number density.
- * @param B Magnetic field strength
- * @param p Power-law index of electron distribution
- * @param column_den Column number density
- * @return Peak synchrotron intensity
- * <!-- ************************************************************************************** -->
- */
-Real compute_syn_I_peak(Real B, Real p, Real column_den) {
-    return compute_single_elec_P_nu_max(B, p) * column_den / (4 * con::pi);
-}
+        log2_C1_ = (log2_nu_a - log2_nu_m) / 3 - 2 * log2_nu_a;
+        log2_C2_ = -log2_nu_m / 3;
+        log2_C3_ = (p - 1) / 2 * log2_nu_m;
+        log2_C4_ = (p - 1) / 2 * (log2_nu_m - log2_nu_c) + p / 2 * log2_nu_c;
+    } else if (regime == 2) {
+        // m_a_pa4_2 = fastPow(nu_m / nu_a, (p + 4) / 2);    // (nu_m / nu_a)^((p+4)/2)
+        // a_m_mpa1_2 = fastPow(nu_a / nu_m, (-p + 1) / 2);  // (nu_a / nu_m)^((-p+1)/2)
+        // c_m_mpa1_2 = fastPow(nu_c / nu_m, (-p + 1) / 2);  // (nu_c / nu_m)^((-p+1)/2)
+        C1_ = fast_pow(nu_m / nu_a, (p + 4) / 2);
+        C2_ = fast_pow(nu_a / nu_m, (-p + 1) / 2);
+        C3_ = fast_pow(nu_c / nu_m, (-p + 1) / 2);
 
-/**
- * <!-- ************************************************************************************** -->
- * @internal
- * @brief Calculates the characteristic synchrotron frequency for electrons with a given Lorentz factor.
- * @details Uses the standard synchrotron formula.
- * @param gamma Electron Lorentz factor
- * @param B Magnetic field strength
- * @return Characteristic synchrotron frequency
- * <!-- ************************************************************************************** -->
- */
-Real compute_syn_freq(Real gamma, Real B) {
-    return 3 * con::e / (4 * con::pi * con::me * con::c) * B * gamma * gamma;
-}
+        log2_C1_ = (p + 4) / 2 * (log2_nu_m - log2_nu_a) - 2 * log2_nu_m;
+        log2_C2_ = (p - 1) / 2 * (log2_nu_m - log2_nu_a) - 2.5 * log2_nu_a;
+        log2_C3_ = (p - 1) / 2 * log2_nu_m;
+        log2_C4_ = (p - 1) / 2 * (log2_nu_m - log2_nu_c) + p / 2 * log2_nu_c;
+    } else if (regime == 3) {
+        // a_c_1_3 = std::cbrt(nu_a / nu_c);  // (nu_a / nu_c)^(1/3)
+        // c_m_1_2 = std::sqrt(nu_c / nu_m);  // (nu_c / nu_m)^(1/2)
+        C1_ = std::cbrt(nu_a / nu_c);
+        C2_ = std::sqrt(nu_c / nu_m);
 
-/**
- * <!-- ************************************************************************************** -->
- * @internal
- * @brief Calculates the electron Lorentz factor corresponding to a synchrotron frequency.
- * @details Inverse of the compute_syn_freq function.
- * @param nu Synchrotron frequency
- * @param B Magnetic field strength
- * @return Corresponding electron Lorentz factor
- * <!-- ************************************************************************************** -->
- */
-Real compute_syn_gamma(Real nu, Real B) {
-    return std::sqrt((4 * con::pi * con::me * con::c / (3 * con::e)) * (nu / B));
-}
+        log2_C1_ = (log2_nu_a - log2_nu_c) / 3 - 2 * log2_nu_a;
+        log2_C2_ = -log2_nu_c / 3;
+        log2_C3_ = log2_nu_c / 2;
+        log2_C4_ = (log2_nu_c - log2_nu_m) / 2 + p / 2 * log2_nu_m;
+    } else if (regime == 4) {
+        C1_ = std::sqrt(nu_a / nu_m);
+        C3_ = 3;
+        C2_ = std::sqrt(nu_c / nu_a) / C3_;
 
-/**
- * <!-- ************************************************************************************** -->
- * @internal
- * @brief Calculates the maximum electron Lorentz factor for synchrotron emission.
- * @details Uses an iterative approach to account for inverse Compton cooling effects.
- * @param B Magnetic field strength
- * @param Ys InverseComptonY object
- * @param p Spectral index of electron distribution
- * @return Maximum electron Lorentz factor
- * <!-- ************************************************************************************** -->
- */
-Real compute_syn_gamma_M(Real B, Real Y, Real p) {
-    if (B == 0) {
-        return std::numeric_limits<Real>::infinity();
+        log2_C4_ = fast_log2(C2_);
+
+        log2_C1_ = -2 * log2_nu_a;
+        log2_C2_ = log2_C4_ + log2_nu_a / 2;
+        log2_C3_ = log2_C4_ + (log2_nu_a - log2_nu_m) / 2 + p / 2 * log2_nu_m;
+
+    } else if (regime == 5) {
+        C1_ = std::sqrt(nu_m / nu_a);
+        C3_ = 3 / (p - 1);
+        C2_ = std::sqrt(nu_c / nu_a) * fast_pow(nu_m / nu_a, (p - 1) / 2) / C3_;
+
+        log2_C4_ = fast_log2(C2_);
+
+        log2_C1_ = -2.5 * log2_nu_a;
+        log2_C2_ = log2_C4_ + p / 2 * log2_nu_a;
+
+        log2_C3_ = fast_log2(C3_);
+    } else if (regime == 6) {
+        C1_ = std::sqrt(nu_m / nu_a);
+        C3_ = 3;
+        C2_ = std::sqrt(nu_c / nu_a) * fast_pow(nu_m / nu_a, (p - 1) / 2) / C3_;
+
+        log2_C4_ = fast_log2(C2_);
+
+        log2_C1_ = -2.5 * log2_nu_a;
+        log2_C2_ = log2_C4_ + p / 2 * log2_nu_a;
+
+        log2_C3_ = 1.5849625007; // log2(3)
     }
-    return std::sqrt(6 * con::pi * con::e / con::sigmaT / (B * (1 + Y)));
 }
 
-/**
- * <!-- ************************************************************************************** -->
- * @internal
- * @brief Calculates the minimum electron Lorentz factor for synchrotron emission.
- * @details Accounts for different power-law indices with special handling for the p=2 case.
- *          Uses the fraction of shock energy given to electrons (eps_e) and electron fraction (xi).
- * @param Gamma_th Downstream thermal Lorentz factor
- * @param gamma_M Maximum electron Lorentz factor
- * @param eps_e Fraction of shock energy given to electrons
- * @param p Power-law index of electron distribution
- * @param xi Fraction of electrons accelerated
- * @return Minimum electron Lorentz factor
- * <!-- ************************************************************************************** -->
- */
-Real compute_syn_gamma_m(Real Gamma_th, Real gamma_M, Real eps_e, Real p, Real xi) {
-    const Real gamma_ave_minus_1 = eps_e * (Gamma_th - 1) * (con::mp / con::me) / xi;
-    Real gamma_m_minus_1 = 1;
-    if (p > 2) {
-        gamma_m_minus_1 = (p - 2) / (p - 1) * gamma_ave_minus_1;
-    } else if (p < 2) {
-        gamma_m_minus_1 = std::pow((2 - p) / (p - 1) * gamma_ave_minus_1 * std::pow(gamma_M, p - 2), 1 / (p - 1));
+Real SynPhotons::compute_I_nu(Real nu) const {
+    if (nu <= nu_c) { // Below cooling frequency, simple scaling
+        return I_nu_max * compute_spectrum(nu);
     } else {
-        gamma_m_minus_1 = root_bisect(
-            [=](Real x) -> Real {
-                return (x * std::log(gamma_M) - (x + 1) * std::log(x) - gamma_ave_minus_1 - std::log(gamma_M));
-            },
-            0, gamma_M);
+        return fast_exp2((nu_c - nu) / nu_M) * I_nu_max * compute_spectrum(nu) * (1 + Y_c) /
+               (1 + Ys.evaluate_at_nu(nu, p));
     }
-    return gamma_m_minus_1 + 1;
 }
 
-Real compute_gamma_c(Real t_comv, Real B, Real Y) {
-    constexpr Real ad_cooling = 1;
-    //-sqrt(Gamma * Gamma - 1) * con::c* t_comv / r;  // adiabatic cooling
-
-    Real gamma_bar = (6 * con::pi * con::me * con::c / con::sigmaT) / (B * B * (1 + Y) * t_comv) * ad_cooling;
-    Real gamma_c = (gamma_bar + std::sqrt(gamma_bar * gamma_bar + 4)) / 2; // correction on newtonian regime
-
-    return gamma_c;
-}
-
-/**
- * <!-- ************************************************************************************** -->
- * @internal
- * @brief Calculates the self-absorption Lorentz factor by equating synchrotron emission to blackbody.
- * @details Uses the peak intensity and shock parameters to determine where absorption becomes important.
- *          Handles both weak and strong absorption regimes.
- * @param B Magnetic field strength
- * @param I_syn_peak Peak synchrotron intensity
- * @param gamma_m Minimum electron Lorentz factor
- * @param gamma_c Cooling electron Lorentz factor
- * @param gamma_M Maximum electron Lorentz factor
- * @param p Power-law index of electron distribution
- * @return Self-absorption Lorentz factor
- * <!-- ************************************************************************************** -->
- */
-Real compute_syn_gamma_a(Real B, Real I_syn_peak, Real gamma_m, Real gamma_c, Real gamma_M, Real p) {
-    const Real gamma_peak = std::min(gamma_m, gamma_c);
-    const Real nu_peak = compute_syn_freq(gamma_peak, B);
-
-    const Real kT = (gamma_peak - 1) * (con::me * con::c2) / 3;
-    // 2kT(nu_a/c)^2 = I_peak*(nu_a/nu_peak)^(1/3) // first assume nu_a is in the 1/3 segment
-    Real nu_a = fast_pow(I_syn_peak * con::c2 / (std::cbrt(nu_peak) * 2 * kT), 0.6);
-
-#ifdef SELF_ABSORPTION_HEATING
-    if (nu_a > nu_peak) { // nu_a is not in the 1/3 segment
-        constexpr Real coef = 3 * con::e / (4 * con::pi * con::me * con::c);
-        if (gamma_c > gamma_m) { // first assume nu_a is in the -(p-1)/2 segment, 2kT(nu_a/nu_m)^2.5 nu_m^2/c^2
-            Real nu_m = compute_syn_freq(gamma_m, B);
-            nu_a = fast_pow(I_syn_peak * con::c2 / (2 * kT) * fast_pow(nu_m, p / 2), 2 / (p + 4));
-            Real nu_c = compute_syn_freq(gamma_c, B);
-            if (nu_a > nu_c) { // nu_a is not in the -(p-1)/2 segment, strong absorption
-                Real C = 1.5 * I_syn_peak / (con::me * pow52(coef * B) * std::sqrt(nu_m));
-                Real gamma_a =
-                    root_bisect([C](Real x) -> Real { return x * x * x * x * x * x - x - C; }, gamma_c, gamma_M);
-                return gamma_a;
-            }
-        } else { // strong absorption
-            Real nu_m = compute_syn_freq(gamma_m, B);
-            Real C = 1.5 * I_syn_peak / (con::me * pow52(coef * B) * std::sqrt(nu_m));
-            Real gamma_a = root_bisect([C](Real x) -> Real { return x * x * x * x * x * x - x - C; }, gamma_c, gamma_M);
-            return gamma_a;
-        }
-    }
-#else
-    if (nu_a > nu_peak) {        // nu_a is not in the 1/3 segment
-        if (gamma_c > gamma_m) { // first assume nu_a is in the -(p-1)/2 segment
-            const Real nu_m = compute_syn_freq(gamma_m, B);
-            nu_a = fast_pow(I_syn_peak * con::c2 / (2 * kT) * fast_pow(nu_m, p / 2), 2 / (p + 4));
-            const Real nu_c = compute_syn_freq(gamma_c, B);
-            if (nu_a > nu_c) { //  nu_a is not in the -(p-1)/2 but -p/2 segment
-                nu_a = fast_pow(I_syn_peak * con::c2 / (2 * kT) * std::sqrt(nu_c) * fast_pow(nu_m, p / 2), 2 / (p + 5));
-            }
-        } else { //first assume nu_a is in the -1/2 segment
-            const Real nu_c = compute_syn_freq(gamma_c, B);
-            nu_a = fast_pow(I_syn_peak * con::c2 / (2 * kT) * std::sqrt(nu_c), 0.4);
-            const Real nu_m = compute_syn_freq(gamma_m, B);
-            if (nu_a > nu_m) { // nu_a is not in the -1/2 segment but -p/2 segment
-                nu_a = fast_pow(I_syn_peak * con::c2 / (2 * kT) * std::sqrt(nu_c) * fast_pow(nu_m, p / 2), 2 / (p + 5));
-            }
-        }
-    }
-
-#endif
-    return compute_syn_gamma(nu_a, B) + 1;
-}
-
-Real compute_gamma_peak(Real gamma_a, Real gamma_m, Real gamma_c) {
-    const Real gamma_peak = std::min(gamma_m, gamma_c);
-    if (gamma_a > gamma_c) {
-        return gamma_a;
+Real SynPhotons::compute_log2_I_nu(Real log2_nu) const {
+    if (log2_nu <= log2_nu_c) { // Below cooling frequency, simple scaling
+        return log2_I_nu_max + compute_log2_spectrum(log2_nu);
     } else {
-        return gamma_peak;
+        const Real cooling_factor = (1 + Y_c) / (1 + Ys.evaluate_at_nu(std::exp2(log2_nu), p));
+        return log2_I_nu_max + compute_log2_spectrum(log2_nu) + fast_log2(cooling_factor) +
+               (nu_c - fast_exp2(log2_nu)) / nu_M;
     }
 }
 
-Real cyclotron_correction(Real gamma_m, Real p) {
-    Real f = (gamma_m - 1) / gamma_m;
-    if (p > 3) {
-        f = fast_pow(f, (p - 1) / 2);
-    }
-    return f;
-}
-
-/**
- * <!-- ************************************************************************************** -->
- * @brief Determines the peak Lorentz factor directly from a SynElectrons object.
- * @details Convenient wrapper around the three-parameter version.
- * @param e Synchrotron electron object
- * @return Peak Lorentz factor
- * <!-- ************************************************************************************** -->
- */
-Real compute_gamma_peak(SynElectrons const& e) {
-    return compute_gamma_peak(e.gamma_a, e.gamma_m, e.gamma_c);
-}
+//========================================================================================================
+//                                  Factory Functions - Synchrotron Electrons
+//========================================================================================================
 
 SynElectronGrid generate_syn_electrons(Shock const& shock) {
     auto [phi_size, theta_size, t_size] = shock.shape();
@@ -714,6 +739,10 @@ void generate_syn_electrons(SynElectronGrid& electrons, Shock const& shock) {
         }
     }
 }
+
+//========================================================================================================
+//                                  Factory Functions - Synchrotron Photons
+//========================================================================================================
 
 SynPhotonGrid generate_syn_photons(Shock const& shock, SynElectronGrid const& electrons) {
     auto [phi_size, theta_size, t_size] = shock.shape();

@@ -7,8 +7,8 @@
 
 #include "physics.h"
 
+#include "../dynamics/shock.h"
 #include "mesh.h"
-#include "shock.h"
 
 Real dec_radius(Real E_iso, Real n_ism, Real Gamma0, Real engine_dura) {
     return std::max(thin_shell_dec_radius(E_iso, n_ism, Gamma0), thick_shell_dec_radius(E_iso, n_ism, engine_dura));

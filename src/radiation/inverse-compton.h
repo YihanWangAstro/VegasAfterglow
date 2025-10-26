@@ -8,11 +8,11 @@
 #pragma once
 #include <array>
 
-#include "macros.h"
-#include "mesh.h"
-#include "physics.h"
-#include "shock.h"
-#include "utilities.h"
+#include "../core/mesh.h"
+#include "../core/physics.h"
+#include "../dynamics/shock.h"
+#include "../util/macros.h"
+#include "../util/utilities.h"
 /**
  * <!-- ************************************************************************************** -->
  * @struct InverseComptonY
@@ -30,7 +30,7 @@ struct InverseComptonY {
      * @param Y_T Thomson Y parameter
      * <!-- ************************************************************************************** -->
      */
-    InverseComptonY(Real gamma_m, Real gamma_c, Real B, Real Y_T) noexcept;
+    InverseComptonY(Real gamma_m, Real gamma_c, Real B, Real Y_T, Real eps_e_on_eps_B) noexcept;
 
     /**
      * <!-- ************************************************************************************** -->
@@ -50,8 +50,12 @@ struct InverseComptonY {
     // Member variables
     Real nu_m_hat{0};    ///< Frequency threshold for minimum electrons
     Real nu_c_hat{0};    ///< Frequency threshold for cooling electrons
+    Real nu_self{0};     ///< Frequency threshold for nu_self = nu_self_hat
+    Real nu0{0};         ///< Frequency threshold for Y(nu0) = 1
     Real gamma_m_hat{0}; ///< Lorentz factor threshold for minimum energy electrons
     Real gamma_c_hat{0}; ///< Lorentz factor threshold for cooling electrons
+    Real gamma_self{0};  ///< Lorentz factor threshold for gamma_self = gamma_self_hat
+    Real gamma0{0};      ///< Lorentz factor threshold for Y(gamma0) = 1
     Real Y_T{0};         ///< Thomson scattering Y parameter
     size_t regime{0};    ///< Indicator for the operating regime (1=fast IC cooling, 2=slow IC cooling, 3=special case)
 
@@ -478,65 +482,20 @@ inline Real eta_rad(Real gamma_m, Real gamma_c, Real p) {
 }
 
 Real compute_gamma_c(Real t_comv, Real B, Real Y);
+
 Real compute_syn_gamma_M(Real B, Real Y, Real p);
+
 Real compute_syn_I_peak(Real B, Real p, Real column_den);
+
 Real compute_syn_gamma_a(Real B, Real I_nu_peak, Real gamma_m, Real gamma_c, Real gamma_M, Real p);
+
 size_t determine_regime(Real gamma_a, Real gamma_c, Real gamma_m);
 
-inline void update_gamma_c_Thomson(Real& gamma_c, InverseComptonY& Ys, RadParams const& rad, Real B, Real t_com,
-                                   Real gamma_m) {
-    Real eta_e = eta_rad(gamma_m, gamma_c, rad.p);
-    Real b = eta_e * rad.eps_e / rad.eps_B;
-    Real Y_T = (std::sqrt(1 + 4 * b) - 1) / 2;
+void update_gamma_c_Thomson(Real& gamma_c, InverseComptonY& Ys, RadParams const& rad, Real B, Real t_com, Real gamma_m);
 
-    Real gamma_c_new = compute_gamma_c(t_com, B, Y_T);
-    while (std::fabs((gamma_c_new - gamma_c) / gamma_c) > 1e-4) {
-        gamma_c = gamma_c_new;
-        eta_e = eta_rad(gamma_m, gamma_c, rad.p);
-        b = eta_e * rad.eps_e / rad.eps_B;
-        Y_T = (std::sqrt(1 + 4 * b) - 1) / 2;
-        gamma_c_new = compute_gamma_c(t_com, B, Y_T);
-    }
-    gamma_c = gamma_c_new;
-    Ys = InverseComptonY(Y_T);
-}
+void update_gamma_c_KN(Real& gamma_c, InverseComptonY& Ys, RadParams const& rad, Real B, Real t_com, Real gamma_m);
 
-inline void update_gamma_c_KN(Real& gamma_c, InverseComptonY& Ys, RadParams const& rad, Real B, Real t_com,
-                              Real gamma_m) {
-    Real eta_e = eta_rad(gamma_m, gamma_c, rad.p);
-    Real b = eta_e * rad.eps_e / rad.eps_B;
-    Real Y_T = (std::sqrt(1 + 4 * b) - 1) / 2;
-    Ys = InverseComptonY(gamma_m, gamma_c, B, Y_T);
-    Real Y_c = 0; //Ys.evaluate_at_gamma(gamma_c, rad.p);
-    Real gamma_c_new = compute_gamma_c(t_com, B, Y_c);
-
-    while (std::fabs((gamma_c_new - gamma_c) / gamma_c) > 1e-4) {
-        gamma_c = gamma_c_new;
-        eta_e = eta_rad(gamma_m, gamma_c, rad.p);
-        b = eta_e * rad.eps_e / rad.eps_B;
-        Y_T = (std::sqrt(1 + 4 * b) - 1) / 2;
-        Ys = InverseComptonY(gamma_m, gamma_c, B, Y_T);
-        Y_c = Ys.evaluate_at_gamma(gamma_c, rad.p);
-        gamma_c_new = compute_gamma_c(t_com, B, Y_c);
-    }
-    gamma_c = gamma_c_new;
-}
-
-inline void update_gamma_M(Real& gamma_M, InverseComptonY const& Ys, Real p, Real B) {
-    if (B == 0) {
-        gamma_M = std::numeric_limits<Real>::infinity();
-        return;
-    }
-
-    Real Y0 = Ys.evaluate_at_gamma(gamma_M, p);
-    Real gamma_M_new = compute_syn_gamma_M(B, Y0, p);
-
-    while (std::fabs((gamma_M - gamma_M_new) / gamma_M_new) > 1e-3) {
-        gamma_M = gamma_M_new;
-        Y0 = Ys.evaluate_at_gamma(gamma_M, p);
-        gamma_M_new = compute_syn_gamma_M(B, Y0, p);
-    }
-}
+void update_gamma_M(Real& gamma_M, InverseComptonY const& Ys, Real p, Real B);
 
 template <typename Electrons, typename Photons, typename Updater>
 void IC_cooling(ElectronGrid<Electrons>& electrons, PhotonGrid<Photons>& photons, Shock const& shock,
@@ -556,24 +515,24 @@ void IC_cooling(ElectronGrid<Electrons>& electrons, PhotonGrid<Photons>& photons
                 const Real t_com = shock.t_comv(i, j, k);
                 const Real B = shock.B(i, j, k);
 
-                auto& cell = electrons(i, j, k);
-                auto& Ys = cell.Ys;
-                const Real p = cell.p;
+                auto& elec = electrons(i, j, k);
+                auto& Ys = elec.Ys;
+                const Real p = elec.p;
 
-                update_gamma_c(cell.gamma_c, Ys, shock.rad, B, t_com, cell.gamma_m);
+                update_gamma_c(elec.gamma_c, Ys, shock.rad, B, t_com, elec.gamma_m);
 
-                update_gamma_M(cell.gamma_M, Ys, p, B);
+                update_gamma_M(elec.gamma_M, Ys, p, B);
 
                 if (k >= k_inj) {
                     const auto& inj = electrons(i, j, k_inj);
-                    cell.gamma_c = inj.gamma_c * cell.gamma_m / inj.gamma_m;
-                    cell.gamma_M = cell.gamma_c;
+                    elec.gamma_c = inj.gamma_c * elec.gamma_m / inj.gamma_m;
+                    elec.gamma_M = elec.gamma_c;
                 }
 
-                const Real I_nu_peak = compute_syn_I_peak(B, p, cell.column_den);
-                cell.gamma_a = compute_syn_gamma_a(B, I_nu_peak, cell.gamma_m, cell.gamma_c, cell.gamma_M, p);
-                cell.regime = determine_regime(cell.gamma_a, cell.gamma_c, cell.gamma_m);
-                cell.Y_c = Ys.evaluate_at_gamma(cell.gamma_c, p);
+                const Real I_nu_peak = compute_syn_I_peak(B, p, elec.column_den);
+                elec.gamma_a = compute_syn_gamma_a(B, I_nu_peak, elec.gamma_m, elec.gamma_c, elec.gamma_M, p);
+                elec.regime = determine_regime(elec.gamma_a, elec.gamma_c, elec.gamma_m);
+                elec.Y_c = Ys.evaluate_at_gamma(elec.gamma_c, p);
             }
         }
     }

@@ -7,7 +7,7 @@
 
 #include "mesh.h"
 
-#include "macros.h"
+#include "../util/macros.h"
 
 bool is_linear_scale(Array const& arr, Real tolerance) {
     if (arr.size() < 2)

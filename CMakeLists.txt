@@ -30,6 +30,7 @@ target_link_libraries(VegasAfterglowC PUBLIC pybind11::module Python::NumPy)
 
 target_include_directories(VegasAfterglowC PRIVATE
   "${CMAKE_CURRENT_SOURCE_DIR}/include"
+  "${CMAKE_CURRENT_SOURCE_DIR}/src"
   "${CMAKE_CURRENT_SOURCE_DIR}/external"
 )
 
@@ -72,6 +73,7 @@ if(BUILD_TESTS)
 
   target_include_directories(demo PRIVATE
           ${CMAKE_CURRENT_SOURCE_DIR}/include
+          ${CMAKE_CURRENT_SOURCE_DIR}/src
           ${CMAKE_CURRENT_SOURCE_DIR}/external
   )
 
@@ -88,6 +90,7 @@ if(BUILD_TESTS)
 
   target_include_directories(benchmark PRIVATE
           ${CMAKE_CURRENT_SOURCE_DIR}/include
+          ${CMAKE_CURRENT_SOURCE_DIR}/src
           ${CMAKE_CURRENT_SOURCE_DIR}/external
   )
 

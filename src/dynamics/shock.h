@@ -9,10 +9,10 @@
 
 #include <tuple>
 
+#include "../core/mesh.h"
+#include "../core/physics.h"
+#include "../environment/medium.h"
 #include "boost/numeric/odeint.hpp"
-#include "medium.h"
-#include "mesh.h"
-#include "physics.h"
 
 /**
  * <!-- ************************************************************************************** -->

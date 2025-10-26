@@ -11,9 +11,9 @@
 #include <utility>
 #include <vector>
 
-#include "afterglow.h"
-#include "macros.h"
+#include "../include/afterglow.h"
 #include "pybind.h"
+#include "util/macros.h"
 
 /**
  * <!-- ************************************************************************************** -->
