@@ -1,37 +1,36 @@
 <map id="PyModel::details" name="PyModel::details">
-<area shape="rect" id="Node000001" title="Get comprehensive details of the shock evolution and model configuration." alt="" coords="5,411,136,436"/>
-<area shape="rect" id="Node000002" href="$mesh_8h.html#a7a2706b37f8deef2c42462a57f96fd83" title="Constructs a coordinate grid (Coord) for shock evolution." alt="" coords="221,208,304,233"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="82,409,238,242,242,245,86,412"/>
-<area shape="rect" id="Node000005" href="$utilities_8h.html#ab8e81118f023df135835db8cce4f5f42" title="Returns the value of a single parameter." alt="" coords="965,208,1016,233"/>
-<area shape="poly" id="edge20_Node000001_Node000005" title=" " alt="" coords="125,408,184,397,323,376,385,371,464,370,676,370,747,374,803,379,829,379,856,374,884,363,916,345,939,324,957,298,980,245,985,247,962,300,943,328,919,349,887,368,857,379,830,384,803,385,746,380,676,375,464,375,385,377,324,382,184,402,126,413"/>
-<area shape="rect" id="Node000011" href="$forward-shock_8hpp.html#aa963867f4f98284c627afeff47fc3a18" title="Generates a forward shock model for given coordinates, medium, and jet parameters." alt="" coords="185,411,340,436"/>
-<area shape="poly" id="edge18_Node000001_Node000011" title=" " alt="" coords="136,421,171,421,171,426,136,426"/>
-<area shape="rect" id="Node000012" href="$reverse-shock_8hpp.html#ab50c063a2b81579f107e7e79f12961b0" title="Generates a pair of forward and reverse shocks." alt="" coords="184,460,341,485"/>
-<area shape="poly" id="edge19_Node000001_Node000012" title=" " alt="" coords="121,433,200,454,198,459,120,439"/>
-<area shape="rect" id="Node000013" href="$pymodel_8cpp.html#a8ffef75ec4ca3ef0464331eb194de1e5" title=" " alt="" coords="600,485,749,511"/>
-<area shape="poly" id="edge21_Node000001_Node000013" title=" " alt="" coords="87,434,129,467,156,483,185,495,237,508,291,517,400,523,502,519,588,510,588,515,503,525,400,529,291,522,236,514,183,501,153,488,126,472,84,439"/>
-<area shape="rect" id="Node000003" href="$mesh_8h.html#a83ae490737edde6ad03ede25e371a071" title=" " alt="" coords="396,159,535,184"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="304,208,399,185,400,190,305,213"/>
-<area shape="poly" id="edge15_Node000002_Node000005" title=" " alt="" coords="305,228,390,243,471,249,553,251,715,246,854,235,952,223,952,229,854,240,715,251,553,256,470,254,389,249,304,234"/>
-<area shape="rect" id="Node000007" href="$mesh_8h.html#a3dc6828dd13a70c0c203dba03e765cea" title=" " alt="" coords="389,208,541,233"/>
-<area shape="poly" id="edge9_Node000002_Node000007" title=" " alt="" coords="304,218,376,218,376,223,304,223"/>
-<area shape="rect" id="Node000008" href="$mesh_8h.html#a71b7cc9ed9e5943e9cafb837e06f427d" title="Determines the edge of the jet based on a given gamma cut&#45;off using binary search." alt="" coords="808,309,917,335"/>
-<area shape="poly" id="edge12_Node000002_Node000008" title=" " alt="" coords="283,231,330,261,359,276,390,287,499,311,609,323,711,326,794,324,794,329,711,331,609,328,498,316,389,293,357,281,327,266,280,236"/>
-<area shape="rect" id="Node000009" href="$physics_8h.html#ab8aa624dd63313487d8f5ecf52170d76" title="Converts Lorentz factor (gamma) to a velocity fraction (beta)" alt="" coords="401,57,529,83"/>
-<area shape="poly" id="edge14_Node000002_Node000009" title=" " alt="" coords="273,206,320,156,352,126,388,100,413,86,416,91,391,104,356,131,324,160,277,210"/>
-<area shape="rect" id="Node000010" href="$mesh_8h.html#a3c066f2c8e6d102d7a56de8cb42cf5a8" title=" " alt="" coords="623,5,726,31"/>
-<area shape="poly" id="edge16_Node000002_Node000010" title=" " alt="" coords="281,205,329,175,388,144,431,128,466,120,500,111,540,92,554,81,563,70,573,59,588,48,616,34,619,38,591,52,577,63,567,74,558,85,543,96,502,116,467,125,433,133,390,148,332,180,284,210"/>
-<area shape="rect" id="Node000004" href="$mesh_8h.html#a49c59d8da915e118c4e550cc9bd4d3d9" title=" " alt="" coords="589,157,760,183"/>
-<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="535,168,576,168,576,173,535,174"/>
-<area shape="poly" id="edge8_Node000003_Node000005" title=" " alt="" coords="516,156,671,118,807,91,865,80,890,80,919,92,944,113,963,140,977,168,986,194,981,196,972,170,958,142,940,116,916,96,889,86,865,85,809,97,672,124,517,161"/>
-<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="761,176,918,199,952,207,951,213,917,205,760,181"/>
-<area shape="rect" id="Node000006" href="$utilities_8h.html#ac47d1412f3f1791737d0f963267096f1" title="Returns the value of a single parameter." alt="" coords="839,107,886,132"/>
-<area shape="poly" id="edge6_Node000004_Node000006" title=" " alt="" coords="722,155,826,126,827,131,723,160"/>
-<area shape="poly" id="edge5_Node000005_Node000005" title=" " alt="" coords="969,209,964,200,966,190,976,184,991,181,1008,185,1016,193,1012,197,1006,189,991,187,978,189,971,193,969,199,973,207"/>
-<area shape="poly" id="edge7_Node000006_Node000005" title=" " alt="" coords="887,129,919,149,970,196,966,199,916,153,885,133"/>
-<area shape="poly" id="edge10_Node000007_Node000004" title=" " alt="" coords="518,205,608,183,609,189,519,210"/>
-<area shape="poly" id="edge11_Node000007_Node000005" title=" " alt="" coords="542,218,952,218,952,223,542,223"/>
-<area shape="poly" id="edge13_Node000008_Node000005" title=" " alt="" coords="887,307,916,288,966,242,970,246,919,292,890,311"/>
-<area shape="poly" id="edge17_Node000010_Node000005" title=" " alt="" coords="726,8,771,7,821,11,873,23,897,34,919,48,949,81,969,120,982,160,989,194,984,195,977,161,965,122,945,84,916,52,894,38,871,28,821,16,771,12,726,14"/>
-<area shape="poly" id="edge22_Node000013_Node000005" title=" " alt="" coords="734,483,778,469,826,450,874,423,915,389,941,355,961,317,982,246,987,248,966,319,946,358,919,393,877,428,829,454,780,474,736,488"/>
+<area shape="rect" id="Node000001" title="Get comprehensive details of the shock evolution and model configuration." alt="" coords="5,307,136,332"/>
+<area shape="rect" id="Node000002" href="$mesh_8h.html#a7a2706b37f8deef2c42462a57f96fd83" title="Constructs a coordinate grid (Coord) for shock evolution." alt="" coords="221,232,304,257"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="97,304,183,266,208,258,209,263,185,271,99,309"/>
+<area shape="rect" id="Node000011" href="$forward-shock_8hpp.html#aa963867f4f98284c627afeff47fc3a18" title="Generates a forward shock model for given coordinates, medium, and jet parameters." alt="" coords="185,281,340,307"/>
+<area shape="poly" id="edge19_Node000001_Node000011" title=" " alt="" coords="136,308,171,303,172,309,136,313"/>
+<area shape="rect" id="Node000012" href="$reverse-shock_8hpp.html#ab50c063a2b81579f107e7e79f12961b0" title="Generates a pair of forward and reverse shocks." alt="" coords="184,331,341,356"/>
+<area shape="poly" id="edge20_Node000001_Node000012" title=" " alt="" coords="136,325,171,329,170,334,136,330"/>
+<area shape="rect" id="Node000013" href="$pymodel_8cpp.html#a8ffef75ec4ca3ef0464331eb194de1e5" title=" " alt="" coords="188,380,337,405"/>
+<area shape="poly" id="edge21_Node000001_Node000013" title=" " alt="" coords="100,330,185,366,205,373,203,378,183,371,98,335"/>
+<area shape="rect" id="Node000003" href="$mesh_8h.html#a83ae490737edde6ad03ede25e371a071" title=" " alt="" coords="396,105,535,131"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="275,230,322,187,354,163,388,141,404,133,406,138,391,146,357,167,326,191,279,234"/>
+<area shape="rect" id="Node000005" href="$utilities_8h.html#ab8e81118f023df135835db8cce4f5f42" title="Returns the value of a single parameter." alt="" coords="984,181,1035,207"/>
+<area shape="poly" id="edge16_Node000002_Node000005" title=" " alt="" coords="304,239,970,194,971,199,304,245"/>
+<area shape="rect" id="Node000007" href="$mesh_8h.html#a3dc6828dd13a70c0c203dba03e765cea" title=" " alt="" coords="389,156,541,181"/>
+<area shape="poly" id="edge9_Node000002_Node000007" title=" " alt="" coords="297,229,417,184,418,189,298,234"/>
+<area shape="rect" id="Node000008" href="$mesh_8h.html#a71b7cc9ed9e5943e9cafb837e06f427d" title="Determines the edge of the jet based on a given gamma cut&#45;off using binary search." alt="" coords="620,257,729,283"/>
+<area shape="poly" id="edge12_Node000002_Node000008" title=" " alt="" coords="305,244,606,263,606,268,304,250"/>
+<area shape="rect" id="Node000009" href="$physics_8h.html#ab8aa624dd63313487d8f5ecf52170d76" title="Converts Lorentz factor (gamma) to a velocity fraction (beta)" alt="" coords="808,308,936,333"/>
+<area shape="poly" id="edge14_Node000002_Node000009" title=" " alt="" coords="305,250,390,265,590,291,794,311,794,317,589,297,389,270,304,255"/>
+<area shape="rect" id="Node000010" href="$mesh_8h.html#a3c066f2c8e6d102d7a56de8cb42cf5a8" title=" " alt="" coords="623,359,726,384"/>
+<area shape="poly" id="edge17_Node000002_Node000010" title=" " alt="" coords="305,249,325,256,343,267,359,285,367,304,375,322,391,337,444,360,502,373,559,377,609,376,610,381,559,382,501,378,443,366,388,341,370,325,362,306,355,288,340,271,322,261,303,254"/>
+<area shape="rect" id="Node000004" href="$mesh_8h.html#a49c59d8da915e118c4e550cc9bd4d3d9" title=" " alt="" coords="589,105,760,131"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="535,115,576,115,576,121,535,121"/>
+<area shape="poly" id="edge8_Node000003_Node000005" title=" " alt="" coords="487,103,565,62,620,40,681,20,747,7,813,4,877,13,908,24,938,40,966,67,986,101,999,136,1007,167,1002,168,994,138,982,103,962,70,934,44,906,29,876,18,813,9,747,12,683,25,622,45,568,67,489,108"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="760,117,847,126,893,135,937,147,981,171,979,175,935,152,891,140,846,131,760,122"/>
+<area shape="rect" id="Node000006" href="$utilities_8h.html#ac47d1412f3f1791737d0f963267096f1" title="Returns the value of a single parameter." alt="" coords="849,55,895,80"/>
+<area shape="poly" id="edge6_Node000004_Node000006" title=" " alt="" coords="724,103,835,74,836,79,726,108"/>
+<area shape="poly" id="edge5_Node000005_Node000005" title=" " alt="" coords="986,182,981,173,984,163,993,157,1009,155,1028,158,1036,166,1032,170,1025,163,1009,160,995,162,988,166,987,172,991,180"/>
+<area shape="poly" id="edge7_Node000006_Node000005" title=" " alt="" coords="897,73,938,97,971,132,996,168,991,171,967,136,934,101,894,78"/>
+<area shape="poly" id="edge10_Node000007_Node000004" title=" " alt="" coords="518,153,608,131,609,136,519,158"/>
+<area shape="poly" id="edge11_Node000007_Node000005" title=" " alt="" coords="541,169,971,190,970,195,541,175"/>
+<area shape="poly" id="edge13_Node000008_Node000005" title=" " alt="" coords="730,267,827,260,882,250,935,235,979,213,981,217,937,240,883,255,828,265,730,273"/>
+<area shape="poly" id="edge15_Node000009_Node000005" title=" " alt="" coords="904,306,934,287,967,252,991,217,996,220,971,256,938,291,906,310"/>
+<area shape="poly" id="edge18_Node000010_Node000005" title=" " alt="" coords="727,377,774,381,829,379,884,368,910,358,934,344,961,317,981,284,993,250,1001,219,1006,221,999,251,985,286,965,320,938,348,913,363,886,373,830,385,774,386,726,383"/>
 </map>

@@ -1,0 +1,6 @@
+<map id="compute_syn_gamma_M" name="compute_syn_gamma_M">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,29,191,55"/>
+<area shape="rect" id="Node000002" href="$utilities_8h.html#ab8e81118f023df135835db8cce4f5f42" title="Returns the value of a single parameter." alt="" coords="239,29,289,55"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="191,39,225,39,225,45,191,45"/>
+<area shape="poly" id="edge2_Node000002_Node000002" title=" " alt="" coords="236,31,230,21,234,11,245,5,264,3,287,6,296,15,293,19,284,11,264,8,247,10,238,15,236,20,241,28"/>
+</map>

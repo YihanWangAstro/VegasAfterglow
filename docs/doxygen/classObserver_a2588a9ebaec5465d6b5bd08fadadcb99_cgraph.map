@@ -1,7 +1,7 @@
 <map id="Observer::flux" name="Observer::flux">
 <area shape="rect" id="Node000001" title="Computes the integrated flux over a frequency band." alt="" coords="5,56,119,81"/>
 <area shape="poly" id="edge2_Node000001_Node000001" title=" " alt="" coords="30,57,24,48,27,38,40,32,62,29,88,33,99,42,96,46,86,38,62,35,42,37,31,41,29,47,35,54"/>
-<area shape="rect" id="Node000002" href="$mesh_8h.html#aba66986baad5475a202c20a92bda036e" title="Converts boundary values to center values using geometric mean (logarithmic interpolation)" alt="" coords="167,5,345,31"/>
+<area shape="rect" id="Node000002" href="$mesh_8cpp.html#ac536f77c32691232cb5e7546595fb3d2" title="Converts boundary values to center values using geometric mean." alt="" coords="167,5,345,31"/>
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="111,53,193,32,194,37,112,58"/>
 <area shape="rect" id="Node000003" href="$utilities_8h.html#ab8e81118f023df135835db8cce4f5f42" title="Returns the value of a single parameter." alt="" coords="393,93,444,119"/>
 <area shape="poly" id="edge3_Node000001_Node000003" title=" " alt="" coords="119,70,346,91,380,97,379,102,345,97,119,75"/>

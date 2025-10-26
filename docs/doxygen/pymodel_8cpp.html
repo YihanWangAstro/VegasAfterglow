@@ -99,7 +99,7 @@ $(document).ready(function(){initNavTree('pymodel_8cpp.html',''); initResizable(
 <div class="textblock"><code>#include &quot;<a class="el" href="pymodel_8h_source.html">pymodel.h</a>&quot;</code><br />
 <code>#include &lt;algorithm&gt;</code><br />
 <code>#include &lt;numeric&gt;</code><br />
-<code>#include &quot;<a class="el" href="afterglow_8h_source.html">afterglow.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="afterglow_8h_source.html">../include/afterglow.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="error__handling_8h_source.html">error_handling.h</a>&quot;</code><br />
 <code>#include &quot;xtensor/misc/xsort.hpp&quot;</code><br />
 </div><div class="textblock"><div class="dynheader">
@@ -107,140 +107,143 @@ Include dependency graph for pymodel.cpp:</div>
 <div class="dyncontent">
 <div class="center"><img src="pymodel_8cpp__incl.png" border="0" usemap="#apymodel_8cpp" alt=""/></div>
 <map name="apymodel_8cpp" id="apymodel_8cpp">
-<area shape="rect" title=" " alt="" coords="2135,5,2241,31"/>
-<area shape="rect" href="pymodel_8h.html" title=" " alt="" coords="509,79,600,104"/>
-<area shape="poly" title=" " alt="" coords="2135,24,614,90,613,85,2134,19"/>
-<area shape="rect" href="afterglow_8h.html" title=" " alt="" coords="1393,152,1487,177"/>
-<area shape="poly" title=" " alt="" coords="2135,32,1501,154,1500,149,2134,27"/>
-<area shape="rect" title=" " alt="" coords="2343,915,2417,940"/>
-<area shape="poly" title=" " alt="" coords="2242,17,2406,22,2509,29,2613,42,2710,60,2790,85,2822,101,2846,119,2861,140,2867,163,2867,775,2863,792,2853,808,2836,823,2815,836,2761,859,2695,879,2552,908,2431,924,2431,918,2551,902,2694,874,2759,854,2813,831,2833,818,2848,804,2858,790,2861,774,2861,164,2856,142,2842,123,2819,105,2788,90,2709,65,2612,47,2509,35,2406,27,2242,22"/>
-<area shape="rect" title=" " alt="" coords="2185,79,2271,104"/>
-<area shape="poly" title=" " alt="" coords="2197,30,2217,65,2212,68,2192,32"/>
-<area shape="rect" href="error__handling_8h.html" title=" " alt="" coords="2084,225,2212,251"/>
-<area shape="poly" title=" " alt="" coords="2187,32,2176,79,2154,212,2149,211,2171,78,2182,30"/>
-<area shape="rect" title=" " alt="" coords="2901,79,3072,104"/>
-<area shape="poly" title=" " alt="" coords="2242,21,2883,76,2887,76,2887,82,2882,81,2241,26"/>
-<area shape="rect" title=" " alt="" coords="517,152,592,177"/>
-<area shape="poly" title=" " alt="" coords="557,104,557,138,552,138,552,104"/>
-<area shape="rect" title=" " alt="" coords="718,607,778,632"/>
-<area shape="poly" title=" " alt="" coords="510,105,463,123,440,136,421,154,406,173,398,191,395,237,395,467,397,490,404,511,415,529,429,545,467,571,513,590,564,603,615,611,704,616,704,621,615,616,563,608,511,595,464,576,426,549,410,532,399,513,392,491,389,467,389,237,393,190,401,171,417,150,437,132,460,118,508,100"/>
-<area shape="rect" title=" " alt="" coords="430,152,493,177"/>
-<area shape="poly" title=" " alt="" coords="541,106,489,146,486,141,538,102"/>
-<area shape="poly" title=" " alt="" coords="601,94,1379,156,1379,161,600,99"/>
-<area shape="rect" href="macros_8h.html" title=" " alt="" coords="1896,841,1979,867"/>
-<area shape="poly" title=" " alt="" coords="569,103,588,124,606,151,626,192,632,236,632,694,631,750,638,771,656,791,674,798,712,804,833,816,1197,833,1596,844,1882,849,1882,855,1596,850,1197,839,833,821,711,810,673,803,653,796,633,773,626,750,627,694,627,237,621,193,602,153,584,127,565,106"/>
-<area shape="rect" href="pybind_8h.html" title=" " alt="" coords="210,152,289,177"/>
-<area shape="poly" title=" " alt="" coords="510,106,303,154,302,148,508,101"/>
-<area shape="rect" href="IO_8h.html" title=" " alt="" coords="1323,225,1371,251"/>
-<area shape="poly" title=" " alt="" coords="1427,179,1374,219,1371,215,1423,175"/>
-<area shape="rect" href="mesh_8h.html" title=" " alt="" coords="1261,680,1331,705"/>
-<area shape="poly" title=" " alt="" coords="1393,171,1324,180,1241,202,1200,218,1161,240,1127,267,1098,300,1085,325,1077,351,1075,377,1077,404,1095,458,1125,511,1162,561,1202,605,1273,669,1269,673,1199,609,1158,564,1120,514,1090,460,1072,405,1069,377,1072,350,1080,323,1094,297,1123,263,1158,235,1198,213,1240,196,1323,175,1392,166"/>
-<area shape="poly" title=" " alt="" coords="1488,163,1797,167,2014,173,2242,184,2458,202,2641,227,2712,244,2767,262,2803,284,2813,296,2816,310,2816,695,2808,711,2787,726,2755,741,2713,754,2605,778,2475,800,2202,832,1993,851,1992,846,2202,827,2475,794,2604,773,2711,749,2753,736,2785,722,2804,708,2811,693,2811,310,2808,299,2799,288,2765,267,2711,249,2640,233,2457,207,2241,190,2013,178,1797,172,1488,169"/>
-<area shape="rect" href="physics_8h.html" title=" " alt="" coords="667,761,749,786"/>
-<area shape="poly" title=" " alt="" coords="1393,170,1098,188,935,205,868,215,818,228,768,241,724,252,707,260,694,271,686,288,683,310,683,621,690,689,703,747,698,748,685,690,677,621,677,310,681,286,690,268,704,255,722,247,767,236,817,223,867,210,934,199,1097,182,1392,165"/>
-<area shape="rect" href="prompt_8h.html" title=" " alt="" coords="854,607,935,632"/>
-<area shape="poly" title=" " alt="" coords="1392,170,1285,174,1151,184,1023,201,972,213,935,228,907,244,886,260,874,281,869,310,869,467,876,535,890,593,885,594,871,536,864,467,864,310,869,279,882,257,904,239,932,223,970,208,1022,196,1150,178,1285,169,1392,164"/>
-<area shape="rect" href="medium_8h.html" title=" " alt="" coords="1005,533,1093,559"/>
-<area shape="poly" title=" " alt="" coords="1393,169,1297,172,1181,181,1073,199,1031,212,1002,227,984,245,975,263,971,284,971,310,971,386,977,425,992,462,1012,495,1032,521,1027,524,1008,498,987,465,972,427,965,386,965,310,966,283,970,261,980,242,998,223,1029,207,1072,194,1180,176,1297,167,1392,164"/>
-<area shape="rect" href="utilities_8h.html" title=" " alt="" coords="960,607,1043,632"/>
-<area shape="poly" title=" " alt="" coords="1393,170,1293,174,1169,184,1053,201,1007,213,973,228,949,244,933,261,923,282,920,310,920,386,927,446,946,505,968,555,989,594,985,596,964,558,941,507,922,448,915,386,915,310,918,281,928,258,946,240,971,223,1005,208,1052,196,1169,178,1292,169,1392,164"/>
-<area shape="rect" href="synchrotron_8h.html" title=" " alt="" coords="1385,299,1495,324"/>
-<area shape="poly" title=" " alt="" coords="1443,178,1443,285,1437,285,1437,178"/>
-<area shape="rect" href="inverse-compton_8h.html" title=" " alt="" coords="1435,372,1579,397"/>
-<area shape="poly" title=" " alt="" coords="1451,176,1482,227,1498,262,1511,298,1514,329,1513,358,1508,358,1509,329,1505,299,1493,264,1477,230,1446,179"/>
-<area shape="rect" href="forward-shock_8hpp.html" title=" " alt="" coords="2443,372,2586,397"/>
-<area shape="poly" title=" " alt="" coords="1488,163,1658,165,1892,173,2124,191,2220,205,2292,223,2354,252,2412,290,2460,328,2496,360,2492,364,2456,332,2408,294,2352,257,2290,228,2219,210,2124,196,1891,178,1658,171,1487,169"/>
-<area shape="rect" href="jet_8h.html" title=" " alt="" coords="779,533,829,559"/>
-<area shape="poly" title=" " alt="" coords="1393,171,1087,190,933,206,879,217,849,228,830,245,819,262,814,283,813,310,813,386,808,520,803,519,808,386,808,310,809,282,814,260,826,241,847,223,878,211,932,201,1087,184,1392,165"/>
-<area shape="rect" href="observer_8h.html" title=" " alt="" coords="1664,225,1755,251"/>
-<area shape="poly" title=" " alt="" coords="1477,175,1652,221,1650,226,1476,180"/>
-<area shape="rect" href="reverse-shock_8hpp.html" title=" " alt="" coords="2115,372,2258,397"/>
-<area shape="poly" title=" " alt="" coords="1488,164,1662,169,1893,180,2106,197,2182,209,2225,223,2251,244,2268,267,2274,294,2265,325,2247,349,2225,367,2221,363,2243,345,2260,323,2268,294,2263,270,2248,248,2223,228,2181,214,2105,202,1893,185,1661,175,1487,170"/>
-<area shape="rect" href="simple-shock_8hpp.html" title=" " alt="" coords="2282,372,2419,397"/>
-<area shape="poly" title=" " alt="" coords="1488,164,1668,169,1910,180,2133,197,2213,209,2259,223,2292,252,2317,288,2335,326,2346,358,2341,359,2330,328,2313,291,2288,256,2256,228,2212,214,2132,202,1910,185,1668,174,1488,170"/>
-<area shape="rect" title=" " alt="" coords="2080,299,2139,324"/>
-<area shape="poly" title=" " alt="" coords="1371,239,1633,260,2018,296,2067,302,2066,307,2017,301,1632,265,1371,244"/>
-<area shape="poly" title=" " alt="" coords="1344,252,1326,300,1302,375,1284,465,1280,512,1280,558,1294,666,1289,667,1275,559,1274,512,1279,464,1297,373,1321,298,1339,250"/>
-<area shape="poly" title=" " alt="" coords="1323,242,1277,244,1218,253,1155,271,1125,284,1098,301,1059,333,1025,371,995,412,969,454,929,534,905,595,900,593,924,532,964,451,990,409,1021,367,1055,329,1094,296,1123,279,1154,266,1217,248,1277,239,1322,237"/>
-<area shape="rect" href="shock_8h.html" title=" " alt="" coords="1453,453,1525,478"/>
-<area shape="poly" title=" " alt="" coords="1352,250,1372,316,1391,357,1415,396,1439,421,1464,442,1461,447,1436,425,1411,399,1386,360,1367,318,1347,252"/>
-<area shape="poly" title=" " alt="" coords="1363,249,1416,288,1412,292,1360,253"/>
-<area shape="rect" title=" " alt="" coords="1107,299,1258,324"/>
-<area shape="poly" title=" " alt="" coords="1324,252,1223,296,1221,291,1321,247"/>
-<area shape="rect" title=" " alt="" coords="1843,761,2031,786"/>
-<area shape="poly" title=" " alt="" coords="1332,695,1541,716,1824,751,1859,756,1858,761,1824,756,1541,722,1332,700"/>
-<area shape="poly" title=" " alt="" coords="1332,693,1562,712,1690,728,1742,739,1781,751,1798,760,1809,769,1834,791,1904,833,1901,837,1830,795,1805,773,1795,764,1779,756,1741,744,1689,734,1561,717,1331,699"/>
-<area shape="poly" title=" " alt="" coords="1261,701,763,767,763,762,1260,696"/>
-<area shape="rect" title=" " alt="" coords="875,753,1018,793"/>
-<area shape="poly" title=" " alt="" coords="1261,705,1032,756,1031,750,1260,699"/>
-<area shape="rect" title=" " alt="" coords="1042,753,1185,793"/>
-<area shape="poly" title=" " alt="" coords="1270,708,1171,750,1169,746,1268,703"/>
-<area shape="rect" title=" " alt="" coords="1209,761,1386,786"/>
-<area shape="poly" title=" " alt="" coords="1299,705,1300,747,1294,747,1294,706"/>
-<area shape="rect" title=" " alt="" coords="1411,761,1560,786"/>
-<area shape="poly" title=" " alt="" coords="1325,703,1446,753,1444,758,1323,708"/>
-<area shape="rect" title=" " alt="" coords="1585,761,1767,786"/>
-<area shape="poly" title=" " alt="" coords="1332,699,1607,755,1606,760,1331,704"/>
-<area shape="rect" title=" " alt="" coords="1908,915,1967,940"/>
-<area shape="poly" title=" " alt="" coords="1940,867,1940,901,1935,901,1935,867"/>
-<area shape="poly" title=" " alt="" coords="1979,859,2330,915,2329,921,1979,865"/>
-<area shape="poly" title=" " alt="" coords="740,783,769,791,871,804,1006,816,1332,833,1654,844,1882,849,1882,854,1654,849,1331,838,1006,821,870,809,767,796,739,789"/>
-<area shape="rect" title=" " alt="" coords="613,841,675,867"/>
-<area shape="poly" title=" " alt="" coords="701,788,664,832,660,829,696,784"/>
-<area shape="poly" title=" " alt="" coords="936,627,948,629,1247,681,1246,686,948,635,935,632"/>
-<area shape="poly" title=" " alt="" coords="858,634,813,653,770,682,741,715,721,749,717,746,737,712,766,678,811,649,856,630"/>
-<area shape="poly" title=" " alt="" coords="1490,479,1468,550,1447,594,1418,634,1383,660,1346,679,1343,674,1380,656,1414,630,1443,591,1463,548,1485,477"/>
-<area shape="poly" title=" " alt="" coords="1508,476,1911,751,1908,755,1505,480"/>
-<area shape="poly" title=" " alt="" coords="1461,481,751,758,749,753,1459,476"/>
-<area shape="rect" title=" " alt="" coords="1486,533,1541,559"/>
-<area shape="poly" title=" " alt="" coords="1495,477,1508,519,1503,521,1490,479"/>
-<area shape="poly" title=" " alt="" coords="1454,476,1108,537,1107,532,1453,470"/>
-<area shape="poly" title=" " alt="" coords="1005,560,792,610,791,605,1004,555"/>
-<area shape="poly" title=" " alt="" coords="1056,559,1064,593,1063,614,1057,633,1045,651,1030,666,993,689,952,707,912,721,878,735,856,750,851,758,851,767,855,778,866,791,880,798,909,804,1008,815,1305,832,1637,843,1882,849,1882,854,1637,849,1305,838,1007,820,909,809,878,803,862,795,851,781,845,768,846,756,852,746,875,730,910,716,950,702,990,685,1026,661,1041,647,1052,631,1058,613,1059,594,1051,560"/>
-<area shape="poly" title=" " alt="" coords="1044,561,1019,597,1014,594,1039,558"/>
-<area shape="poly" title=" " alt="" coords="1044,628,1248,677,1247,682,1042,633"/>
-<area shape="poly" title=" " alt="" coords="973,635,913,662,849,701,825,723,810,746,808,769,812,780,820,791,835,798,866,804,970,816,1282,833,1628,844,1882,849,1882,854,1628,849,1281,838,969,821,866,810,833,803,817,795,807,783,803,770,805,744,821,720,846,697,910,657,971,630"/>
-<area shape="poly" title=" " alt="" coords="1417,327,1381,348,1342,378,1325,397,1311,418,1302,440,1299,464,1299,547,1299,666,1293,666,1293,547,1293,464,1297,438,1307,415,1321,394,1339,374,1378,343,1414,322"/>
-<area shape="poly" title=" " alt="" coords="1436,325,1424,358,1421,378,1425,396,1441,421,1462,442,1458,446,1437,425,1420,398,1416,378,1418,357,1431,323"/>
-<area shape="poly" title=" " alt="" coords="1453,323,1488,360,1485,364,1449,326"/>
-<area shape="poly" title=" " alt="" coords="1493,400,1469,421,1443,447,1400,506,1362,568,1309,669,1305,666,1357,566,1396,503,1439,444,1465,417,1490,396"/>
-<area shape="poly" title=" " alt="" coords="1544,395,1650,436,1718,467,1792,507,1865,556,1935,612,1997,678,2024,714,2046,752,2053,773,2046,795,2022,821,1993,838,1990,834,2019,817,2042,792,2048,773,2042,754,2019,717,1993,681,1932,616,1862,560,1789,512,1716,472,1648,440,1542,400"/>
-<area shape="poly" title=" " alt="" coords="1507,398,1497,440,1492,439,1502,397"/>
-<area shape="poly" title=" " alt="" coords="1483,400,1040,603,1038,598,1481,395"/>
-<area shape="rect" title=" " alt="" coords="2328,453,2384,478"/>
-<area shape="poly" title=" " alt="" coords="1579,386,1879,403,2072,420,2266,443,2315,452,2314,457,2265,448,2071,425,1879,408,1579,391"/>
-<area shape="poly" title=" " alt="" coords="2443,399,2432,400,2169,424,1910,443,1539,464,1539,459,1910,438,2168,419,2432,395,2443,393"/>
-<area shape="poly" title=" " alt="" coords="2493,400,2393,449,2390,444,2490,395"/>
-<area shape="rect" href="forward-shock_8tpp.html" title=" " alt="" coords="2601,445,2775,485"/>
-<area shape="poly" title=" " alt="" coords="2541,395,2635,437,2633,442,2539,400"/>
-<area shape="poly" title=" " alt="" coords="797,561,768,597,763,594,793,557"/>
-<area shape="poly" title=" " alt="" coords="807,559,805,593,801,614,793,633,766,663,724,695,683,726,657,755,646,792,645,828,639,827,641,791,652,752,679,722,721,690,762,659,788,631,796,612,800,593,802,559"/>
-<area shape="poly" title=" " alt="" coords="830,554,958,600,956,605,828,559"/>
-<area shape="poly" title=" " alt="" coords="1672,228,1500,183,1501,177,1673,223"/>
-<area shape="poly" title=" " alt="" coords="1674,253,1639,271,1624,284,1612,300,1610,311,1612,324,1616,394,1619,464,1619,547,1617,569,1610,588,1588,621,1555,646,1515,664,1471,677,1426,686,1345,693,1345,688,1425,681,1470,672,1513,659,1553,641,1584,617,1606,586,1611,568,1613,547,1613,464,1611,394,1607,324,1604,311,1607,298,1620,281,1636,267,1671,248"/>
-<area shape="poly" title=" " alt="" coords="1755,239,1824,245,1903,255,1973,272,2001,283,2019,297,2034,329,2047,386,2069,544,2078,702,2076,761,2068,795,2053,812,2034,826,1993,844,1991,839,2031,822,2049,808,2063,792,2071,760,2073,702,2064,544,2042,387,2029,331,2015,300,1998,288,1972,277,1902,260,1823,250,1755,244"/>
-<area shape="rect" title=" " alt="" coords="1621,299,1701,324"/>
-<area shape="poly" title=" " alt="" coords="1704,253,1679,289,1674,286,1699,250"/>
-<area shape="rect" title=" " alt="" coords="2163,299,2250,324"/>
-<area shape="poly" title=" " alt="" coords="1756,242,1925,263,2150,296,2150,301,1924,268,1755,247"/>
-<area shape="rect" title=" " alt="" coords="1725,299,1789,324"/>
-<area shape="poly" title=" " alt="" coords="1719,250,1744,286,1740,289,1715,253"/>
-<area shape="rect" title=" " alt="" coords="1814,299,2005,324"/>
-<area shape="poly" title=" " alt="" coords="1742,248,1864,291,1863,296,1741,253"/>
-<area shape="poly" title=" " alt="" coords="2211,395,2241,415,2267,444,2282,469,2290,492,2293,545,2293,694,2291,718,2284,739,2274,758,2260,774,2224,802,2180,822,2131,837,2082,846,1993,855,1993,849,2081,841,2130,832,2178,817,2221,797,2256,771,2270,755,2279,737,2286,716,2288,694,2288,545,2285,493,2278,472,2263,447,2237,419,2208,400"/>
-<area shape="poly" title=" " alt="" coords="2212,395,2320,445,2318,449,2210,400"/>
-<area shape="rect" href="reverse-shock_8tpp.html" title=" " alt="" coords="2080,445,2253,485"/>
-<area shape="poly" title=" " alt="" coords="2186,398,2177,433,2172,431,2181,397"/>
-<area shape="poly" title=" " alt="" coords="2282,399,2271,400,1848,440,1539,463,1539,458,1848,435,2270,395,2281,393"/>
-<area shape="poly" title=" " alt="" coords="2354,397,2357,439,2352,439,2349,398"/>
-<area shape="rect" href="simple-shock_8tpp.html" title=" " alt="" coords="2408,445,2576,485"/>
-<area shape="poly" title=" " alt="" coords="2373,395,2447,436,2445,441,2370,400"/>
-<area shape="rect" title=" " alt="" coords="5,225,120,251"/>
-<area shape="poly" title=" " alt="" coords="220,180,107,223,105,218,218,175"/>
-<area shape="rect" title=" " alt="" coords="145,225,354,251"/>
-<area shape="poly" title=" " alt="" coords="252,178,252,212,247,212,247,178"/>
-<area shape="poly" title=" " alt="" coords="2144,252,2124,288,2120,285,2139,250"/>
-<area shape="poly" title=" " alt="" coords="2160,249,2191,287,2187,290,2156,253"/>
+<area shape="rect" title=" " alt="" coords="2811,5,2917,31"/>
+<area shape="rect" href="pymodel_8h.html" title=" " alt="" coords="427,79,517,104"/>
+<area shape="poly" title=" " alt="" coords="2810,24,531,91,531,86,2810,18"/>
+<area shape="rect" href="afterglow_8h.html" title=" " alt="" coords="1616,152,1773,177"/>
+<area shape="poly" title=" " alt="" coords="2811,29,1787,155,1787,149,2810,23"/>
+<area shape="rect" title=" " alt="" coords="2479,915,2553,940"/>
+<area shape="poly" title=" " alt="" coords="2918,21,2986,34,3023,44,3058,58,3089,77,3115,100,3132,129,3139,163,3139,775,3134,797,3120,816,3098,834,3069,849,2996,874,2907,894,2812,908,2719,918,2567,927,2567,922,2718,912,2812,903,2907,889,2994,869,3067,844,3095,829,3116,813,3129,794,3133,774,3133,164,3127,131,3111,103,3086,81,3055,63,3021,49,2985,39,2917,27"/>
+<area shape="rect" title=" " alt="" coords="2861,79,2947,104"/>
+<area shape="poly" title=" " alt="" coords="2873,30,2893,65,2888,68,2868,32"/>
+<area shape="rect" href="error__handling_8h.html" title=" " alt="" coords="2760,225,2888,251"/>
+<area shape="poly" title=" " alt="" coords="2863,32,2852,79,2830,212,2825,211,2847,78,2858,30"/>
+<area shape="rect" title=" " alt="" coords="3173,79,3344,104"/>
+<area shape="poly" title=" " alt="" coords="2918,26,3182,74,3181,79,2917,32"/>
+<area shape="rect" title=" " alt="" coords="5,152,80,177"/>
+<area shape="poly" title=" " alt="" coords="427,102,99,155,95,155,94,150,98,149,426,97"/>
+<area shape="rect" title=" " alt="" coords="742,607,802,632"/>
+<area shape="poly" title=" " alt="" coords="427,98,330,111,275,122,223,137,179,157,148,182,139,197,135,212,137,230,145,249,171,291,202,329,236,365,273,398,354,456,440,503,525,541,605,571,729,606,728,611,604,576,523,546,437,508,351,460,270,402,232,369,198,333,167,294,140,252,132,231,130,212,134,194,144,179,176,153,221,132,274,117,329,105,426,93"/>
+<area shape="rect" title=" " alt="" coords="441,152,503,177"/>
+<area shape="poly" title=" " alt="" coords="475,104,475,138,469,138,469,104"/>
+<area shape="poly" title=" " alt="" coords="518,93,1602,155,1602,161,518,98"/>
+<area shape="rect" href="macros_8h.html" title=" " alt="" coords="1615,841,1734,867"/>
+<area shape="poly" title=" " alt="" coords="486,102,504,124,518,151,525,179,525,201,519,251,512,334,504,398,496,462,493,545,493,694,496,703,502,712,529,730,572,747,629,762,774,788,950,809,1137,824,1319,836,1602,848,1601,853,1319,841,1136,830,949,814,774,794,627,767,570,752,527,735,498,716,491,705,488,694,488,545,491,462,499,397,507,333,513,250,519,200,519,179,514,153,499,127,482,106"/>
+<area shape="rect" href="pybind_8h.html" title=" " alt="" coords="338,152,417,177"/>
+<area shape="poly" title=" " alt="" coords="458,106,405,146,402,141,455,102"/>
+<area shape="rect" href="mesh_8h.html" title=" " alt="" coords="2066,680,2169,705"/>
+<area shape="poly" title=" " alt="" coords="1774,167,1918,179,2088,202,2169,219,2241,240,2299,266,2321,281,2337,297,2364,343,2376,386,2373,428,2360,469,2337,510,2307,550,2234,634,2203,659,2169,677,2166,672,2200,655,2230,630,2303,547,2332,507,2355,467,2368,427,2370,387,2359,345,2333,300,2317,285,2296,271,2240,245,2168,224,2087,208,1917,184,1773,173"/>
+<area shape="poly" title=" " alt="" coords="1774,163,1952,167,2058,175,2164,187,2261,205,2341,230,2372,246,2395,265,2411,286,2416,310,2416,386,2419,438,2427,459,2441,484,2464,513,2492,539,2523,562,2557,582,2629,616,2698,646,2756,674,2779,689,2795,706,2803,725,2803,746,2793,769,2772,795,2757,803,2727,809,2630,820,2336,837,2003,848,1748,854,1747,849,2003,843,2335,832,2629,815,2726,804,2755,798,2769,791,2789,766,2798,745,2798,726,2790,709,2775,693,2754,679,2696,650,2627,621,2555,587,2520,566,2488,543,2460,517,2436,487,2422,461,2414,439,2411,386,2411,310,2406,288,2392,269,2369,251,2339,235,2260,210,2163,192,2058,180,1952,173,1774,168"/>
+<area shape="rect" href="physics_8h.html" title=" " alt="" coords="1423,761,1505,786"/>
+<area shape="poly" title=" " alt="" coords="1661,180,1600,205,1525,245,1488,271,1453,301,1422,335,1397,373,1379,423,1372,477,1376,531,1386,584,1402,635,1420,680,1453,747,1448,750,1415,682,1397,636,1381,585,1370,532,1367,476,1374,422,1392,371,1417,332,1449,297,1484,267,1522,241,1597,200,1659,175"/>
+<area shape="rect" href="observer_8h.html" title=" " alt="" coords="2525,372,2648,397"/>
+<area shape="poly" title=" " alt="" coords="1774,163,1931,165,2122,173,2217,180,2304,191,2378,205,2433,223,2479,252,2519,289,2552,327,2575,359,2570,362,2547,330,2515,293,2476,256,2431,228,2377,210,2304,196,2217,185,2122,178,1930,170,1774,168"/>
+<area shape="rect" href="medium_8h.html" title=" " alt="" coords="1987,533,2173,559"/>
+<area shape="poly" title=" " alt="" coords="1774,174,1878,191,1992,218,2046,234,2093,253,2129,274,2153,297,2166,327,2169,358,2166,390,2157,422,2129,480,2100,524,2095,521,2124,477,2152,420,2160,389,2164,358,2160,328,2148,300,2126,278,2090,257,2044,239,1991,223,1877,197,1773,179"/>
+<area shape="rect" href="utilities_8h.html" title=" " alt="" coords="2053,607,2173,632"/>
+<area shape="poly" title=" " alt="" coords="1773,163,2017,166,2343,174,2666,191,2800,205,2900,223,2966,232,3026,239,3051,247,3071,260,3083,280,3088,310,3088,467,3080,485,3057,501,3023,515,2978,529,2861,553,2722,573,2423,601,2187,617,2187,612,2423,596,2721,567,2860,547,2976,524,3021,510,3055,496,3076,481,3083,466,3083,310,3078,282,3067,263,3049,251,3025,244,2966,238,2900,228,2799,210,2666,197,2343,179,2017,171,1773,169"/>
+<area shape="rect" href="forward-shock_8hpp.html" title=" " alt="" coords="891,372,1101,397"/>
+<area shape="poly" title=" " alt="" coords="1616,174,1474,191,1393,207,1314,228,1230,260,1149,298,1027,367,1024,362,1147,293,1228,255,1313,223,1392,202,1473,186,1615,169"/>
+<area shape="rect" href="reverse-shock_8hpp.html" title=" " alt="" coords="657,372,866,397"/>
+<area shape="poly" title=" " alt="" coords="1616,175,1444,193,1343,208,1243,228,1116,262,992,301,803,370,801,365,990,296,1114,256,1242,223,1342,203,1443,188,1616,169"/>
+<area shape="rect" href="simple-shock_8hpp.html" title=" " alt="" coords="1126,372,1330,397"/>
+<area shape="poly" title=" " alt="" coords="1616,175,1467,195,1398,210,1351,228,1314,257,1283,293,1259,329,1241,361,1237,358,1254,327,1279,290,1310,253,1348,223,1396,205,1466,190,1615,170"/>
+<area shape="rect" href="jet_8h.html" title=" " alt="" coords="649,533,788,559"/>
+<area shape="poly" title=" " alt="" coords="1616,171,1350,181,1181,192,1010,206,850,224,717,248,666,262,627,277,603,293,597,302,595,310,595,386,597,439,604,460,619,484,645,508,674,525,672,530,641,512,615,487,599,462,592,440,589,386,589,310,592,299,599,290,624,272,664,257,716,243,849,219,1009,200,1181,186,1349,176,1616,165"/>
+<area shape="rect" href="inverse-compton_8h.html" title=" " alt="" coords="1406,372,1613,397"/>
+<area shape="poly" title=" " alt="" coords="1683,180,1634,227,1574,300,1527,362,1523,359,1569,297,1630,224,1679,176"/>
+<area shape="rect" href="prompt_8h.html" title=" " alt="" coords="1745,607,1887,632"/>
+<area shape="poly" title=" " alt="" coords="1691,179,1668,230,1642,307,1634,351,1631,397,1636,442,1650,484,1676,522,1709,553,1745,579,1778,598,1776,603,1742,583,1705,558,1672,525,1646,487,1631,443,1626,397,1629,351,1637,306,1663,228,1686,177"/>
+<area shape="rect" href="synchrotron_8h.html" title=" " alt="" coords="1688,299,1861,324"/>
+<area shape="poly" title=" " alt="" coords="1704,176,1764,285,1759,288,1699,179"/>
+<area shape="rect" href="IO_8h.html" title=" " alt="" coords="1913,225,1986,251"/>
+<area shape="poly" title=" " alt="" coords="1736,175,1900,220,1898,225,1735,180"/>
+<area shape="poly" title=" " alt="" coords="2066,700,1957,717,1894,733,1835,756,1808,774,1783,796,1711,837,1708,833,1780,791,1805,770,1832,751,1893,728,1956,712,2066,695"/>
+<area shape="rect" title=" " alt="" coords="1581,761,1769,786"/>
+<area shape="poly" title=" " alt="" coords="2066,706,1753,761,1752,756,2065,700"/>
+<area shape="poly" title=" " alt="" coords="2066,701,1850,722,1570,756,1519,764,1518,759,1569,751,1849,717,2066,696"/>
+<area shape="rect" title=" " alt="" coords="2051,753,2194,793"/>
+<area shape="poly" title=" " alt="" coords="2121,705,2123,739,2118,740,2115,706"/>
+<area shape="rect" title=" " alt="" coords="2218,753,2361,793"/>
+<area shape="poly" title=" " alt="" coords="2143,703,2236,745,2234,750,2141,708"/>
+<area shape="rect" title=" " alt="" coords="2385,761,2562,786"/>
+<area shape="poly" title=" " alt="" coords="2169,703,2409,755,2408,760,2168,708"/>
+<area shape="rect" title=" " alt="" coords="2587,761,2736,786"/>
+<area shape="poly" title=" " alt="" coords="2169,697,2349,718,2575,751,2599,755,2598,760,2574,756,2348,723,2169,702"/>
+<area shape="rect" title=" " alt="" coords="1845,761,2027,786"/>
+<area shape="poly" title=" " alt="" coords="2092,708,1976,758,1974,753,2090,703"/>
+<area shape="rect" title=" " alt="" coords="1645,915,1704,940"/>
+<area shape="poly" title=" " alt="" coords="1677,867,1677,901,1672,901,1672,867"/>
+<area shape="poly" title=" " alt="" coords="1734,858,2465,919,2465,924,1734,863"/>
+<area shape="poly" title=" " alt="" coords="1496,784,1632,834,1630,839,1494,789"/>
+<area shape="rect" title=" " alt="" coords="1167,841,1230,867"/>
+<area shape="poly" title=" " alt="" coords="1426,789,1244,842,1242,837,1425,783"/>
+<area shape="poly" title=" " alt="" coords="2537,400,2487,418,2463,431,2440,447,2418,471,2404,494,2388,541,2372,588,2356,611,2332,634,2297,656,2258,672,2183,689,2182,684,2257,667,2295,651,2329,630,2352,608,2367,586,2383,539,2399,492,2414,467,2437,443,2460,427,2485,413,2535,395"/>
+<area shape="poly" title=" " alt="" coords="2648,387,2716,394,2790,405,2856,421,2881,431,2899,443,2918,466,2925,489,2925,545,2925,694,2920,731,2904,757,2878,777,2844,796,2818,805,2778,813,2665,826,2517,836,2349,844,2007,852,1748,855,1748,850,2006,847,2349,838,2517,831,2664,821,2777,807,2816,800,2842,791,2875,773,2900,753,2915,729,2920,694,2920,545,2920,490,2913,469,2896,447,2879,436,2854,426,2789,410,2716,399,2648,393"/>
+<area shape="rect" title=" " alt="" coords="2451,453,2531,478"/>
+<area shape="poly" title=" " alt="" coords="2574,400,2517,446,2514,442,2571,395"/>
+<area shape="rect" title=" " alt="" coords="2961,453,3047,478"/>
+<area shape="poly" title=" " alt="" coords="2649,391,2784,412,2942,443,2956,446,2955,451,2941,448,2783,417,2648,397"/>
+<area shape="rect" title=" " alt="" coords="2555,453,2619,478"/>
+<area shape="poly" title=" " alt="" coords="2589,398,2589,439,2584,439,2584,398"/>
+<area shape="rect" href="shock_8h.html" title=" " alt="" coords="1659,453,1810,478"/>
+<area shape="poly" title=" " alt="" coords="2525,394,1824,458,1824,453,2525,389"/>
+<area shape="poly" title=" " alt="" coords="2601,396,2617,414,2633,437,2640,462,2639,475,2633,487,2603,512,2558,535,2501,554,2438,571,2304,596,2187,613,2187,607,2303,591,2436,565,2500,549,2556,530,2600,508,2629,484,2634,474,2635,463,2628,439,2613,417,2597,399"/>
+<area shape="rect" title=" " alt="" coords="2694,453,2885,478"/>
+<area shape="poly" title=" " alt="" coords="2617,395,2748,445,2746,450,2615,400"/>
+<area shape="poly" title=" " alt="" coords="1756,476,2088,671,2085,675,1753,480"/>
+<area shape="poly" title=" " alt="" coords="1735,479,1682,748,1677,747,1730,478"/>
+<area shape="poly" title=" " alt="" coords="1726,480,1485,752,1481,748,1722,476"/>
+<area shape="rect" title=" " alt="" coords="1755,533,1810,559"/>
+<area shape="poly" title=" " alt="" coords="1744,477,1771,520,1766,523,1739,480"/>
+<area shape="poly" title=" " alt="" coords="1785,475,2017,528,2016,533,1784,481"/>
+<area shape="poly" title=" " alt="" coords="1987,555,816,618,816,613,1986,550"/>
+<area shape="poly" title=" " alt="" coords="2059,561,1901,634,1730,689,1626,725,1590,742,1571,755,1565,773,1572,792,1594,817,1623,834,1621,838,1591,821,1567,795,1559,773,1567,752,1587,737,1624,720,1729,684,1899,630,2056,556"/>
+<area shape="poly" title=" " alt="" coords="2088,558,2105,593,2100,595,2083,560"/>
+<area shape="poly" title=" " alt="" coords="2117,632,2119,666,2113,667,2111,632"/>
+<area shape="poly" title=" " alt="" coords="2174,621,2314,633,2488,656,2573,673,2649,694,2710,720,2733,735,2750,752,2759,773,2757,785,2750,795,2735,802,2705,809,2611,820,2323,837,1999,848,1748,854,1747,849,1998,843,2323,832,2610,814,2704,803,2733,797,2746,791,2752,783,2754,774,2746,755,2730,739,2707,725,2647,699,2572,678,2487,661,2313,638,2173,627"/>
+<area shape="poly" title=" " alt="" coords="1102,394,1646,452,1645,457,1101,400"/>
+<area shape="rect" title=" " alt="" coords="1077,453,1133,478"/>
+<area shape="poly" title=" " alt="" coords="1014,395,1079,442,1076,447,1011,400"/>
+<area shape="rect" title=" " alt="" coords="878,445,1053,485"/>
+<area shape="poly" title=" " alt="" coords="994,398,980,433,975,431,989,397"/>
+<area shape="poly" title=" " alt="" coords="777,395,797,417,817,444,838,492,843,545,843,693,848,707,866,720,931,745,1028,769,1145,790,1397,823,1602,844,1602,849,1397,828,1144,795,1027,774,930,750,863,724,844,710,837,695,837,545,833,494,812,447,793,420,773,399"/>
+<area shape="poly" title=" " alt="" coords="850,395,954,414,1066,443,1072,445,1070,450,1065,448,953,419,849,400"/>
+<area shape="rect" title=" " alt="" coords="629,445,803,485"/>
+<area shape="poly" title=" " alt="" coords="757,399,736,435,731,432,752,396"/>
+<area shape="poly" title=" " alt="" coords="1302,395,1648,448,1647,453,1301,400"/>
+<area shape="poly" title=" " alt="" coords="1211,400,1136,447,1133,443,1208,395"/>
+<area shape="rect" title=" " alt="" coords="1157,445,1325,485"/>
+<area shape="poly" title=" " alt="" coords="1233,397,1238,431,1233,432,1227,398"/>
+<area shape="poly" title=" " alt="" coords="730,557,757,594,753,597,725,561"/>
+<area shape="poly" title=" " alt="" coords="722,558,728,604,743,669,756,703,773,737,795,767,823,791,848,804,884,814,974,831,1072,842,1153,848,1153,853,1071,847,974,836,883,820,846,809,820,796,791,770,769,740,751,706,738,670,722,605,717,559"/>
+<area shape="poly" title=" " alt="" coords="788,548,1900,604,2040,611,2039,617,1900,609,788,553"/>
+<area shape="poly" title=" " alt="" coords="1511,398,1510,429,1514,471,1526,517,1536,538,1549,557,1583,583,1635,607,1700,627,1774,643,1926,669,2053,683,2052,688,1925,674,1773,649,1699,632,1633,612,1580,588,1545,561,1531,540,1521,518,1509,472,1505,429,1506,398"/>
+<area shape="poly" title=" " alt="" coords="1501,399,1484,420,1469,447,1421,545,1399,588,1382,628,1372,668,1372,707,1385,748,1413,792,1424,802,1442,810,1489,825,1546,836,1602,844,1601,849,1545,842,1488,831,1440,815,1421,806,1409,795,1380,750,1367,708,1367,667,1376,627,1394,585,1416,542,1464,444,1480,417,1496,396"/>
+<area shape="poly" title=" " alt="" coords="1506,399,1482,460,1471,502,1467,545,1467,621,1467,747,1461,747,1461,621,1461,545,1466,501,1477,459,1501,397"/>
+<area shape="poly" title=" " alt="" coords="1543,395,1690,446,1688,451,1541,400"/>
+<area shape="poly" title=" " alt="" coords="1523,396,1557,429,1610,473,1674,519,1745,556,1821,582,1899,599,1974,609,2039,614,2039,619,1974,614,1899,604,1819,587,1743,561,1671,523,1606,477,1554,432,1519,400"/>
+<area shape="poly" title=" " alt="" coords="1406,398,1280,416,1212,430,1146,448,1140,450,1139,445,1145,443,1211,425,1279,411,1405,393"/>
+<area shape="poly" title=" " alt="" coords="1865,629,2056,674,2055,679,1864,635"/>
+<area shape="poly" title=" " alt="" coords="1792,635,1625,708,1505,758,1503,753,1623,703,1790,630"/>
+<area shape="poly" title=" " alt="" coords="1833,322,1917,345,1966,363,2016,386,2066,414,2112,447,2154,486,2188,532,2200,558,2203,582,2199,606,2188,633,2172,656,2151,674,2148,670,2168,653,2183,631,2194,604,2198,582,2195,560,2183,535,2150,490,2109,451,2063,418,2014,391,1964,368,1915,350,1832,327"/>
+<area shape="poly" title=" " alt="" coords="1785,323,1807,364,1832,425,1840,459,1842,494,1838,528,1825,560,1806,581,1785,591,1761,598,1735,609,1600,690,1495,755,1492,751,1597,685,1732,604,1760,593,1783,586,1803,577,1820,557,1833,527,1837,494,1834,460,1826,426,1803,367,1780,326"/>
+<area shape="poly" title=" " alt="" coords="1774,325,1744,440,1739,439,1769,323"/>
+<area shape="poly" title=" " alt="" coords="1733,327,1566,371,1565,366,1731,321"/>
+<area shape="poly" title=" " alt="" coords="1986,237,2025,241,2070,251,2114,268,2152,297,2188,337,2216,377,2236,416,2248,456,2252,497,2247,540,2233,585,2210,633,2189,658,2162,676,2160,672,2186,654,2206,631,2228,583,2242,539,2247,497,2243,457,2231,418,2211,379,2184,340,2149,301,2112,273,2068,256,2024,246,1986,242"/>
+<area shape="poly" title=" " alt="" coords="1941,253,1875,326,1758,445,1754,441,1871,322,1937,249"/>
+<area shape="poly" title=" " alt="" coords="1952,251,1952,383,1952,467,1949,489,1942,511,1916,548,1883,579,1850,602,1847,598,1880,575,1912,545,1937,508,1944,488,1947,467,1947,383,1947,251"/>
+<area shape="poly" title=" " alt="" coords="1922,253,1817,296,1815,291,1920,248"/>
+<area shape="rect" title=" " alt="" coords="2264,299,2323,324"/>
+<area shape="poly" title=" " alt="" coords="1987,244,2246,296,2251,297,2250,302,2245,301,1986,249"/>
+<area shape="rect" title=" " alt="" coords="1987,299,2138,324"/>
+<area shape="poly" title=" " alt="" coords="1969,248,2034,289,2031,294,1966,253"/>
+<area shape="rect" title=" " alt="" coords="389,225,504,251"/>
+<area shape="poly" title=" " alt="" coords="391,176,428,214,424,217,387,180"/>
+<area shape="rect" title=" " alt="" coords="155,225,365,251"/>
+<area shape="poly" title=" " alt="" coords="360,180,292,220,290,216,357,175"/>
+<area shape="poly" title=" " alt="" coords="2835,249,2988,440,2984,443,2831,252"/>
+<area shape="poly" title=" " alt="" coords="2760,251,2337,307,2336,302,2760,245"/>
 </map>
 </div>
 </div>
@@ -356,17 +359,6 @@ Functions</h2></td></tr>
 <div class="ttc" id="anamespaceunit_html_af4ac5b90426ecc30143a4e0f495978b6"><div class="ttname"><a href="namespaceunit.html#af4ac5b90426ecc30143a4e0f495978b6">unit::g</a></div><div class="ttdeci">constexpr Real g</div><div class="ttdoc">Gram in code units.</div><div class="ttdef"><b>Definition</b> <a href="macros_8h_source.html#l00047">macros.h:47</a></div></div>
 <div class="ttc" id="autilities_8h_html_ab8e81118f023df135835db8cce4f5f42"><div class="ttname"><a href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">max</a></div><div class="ttdeci">T max(T value)</div><div class="ttdoc">Returns the value of a single parameter.</div><div class="ttdef"><b>Definition</b> <a href="utilities_8h_source.html#l00307">utilities.h:307</a></div></div>
 </div><!-- fragment --><div class="dynheader">
-Here is the call graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="pymodel_8cpp_aa920671831cc213a5c0858813e42279f_cgraph.png" border="0" usemap="#apymodel_8cpp_aa920671831cc213a5c0858813e42279f_cgraph" alt=""/></div>
-<map name="apymodel_8cpp_aa920671831cc213a5c0858813e42279f_cgraph" id="apymodel_8cpp_aa920671831cc213a5c0858813e42279f_cgraph">
-<area shape="rect" title="Convert Ejecta and Medium units to internal code units." alt="" coords="5,29,108,55"/>
-<area shape="rect" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42" title="Returns the value of a single parameter." alt="" coords="156,29,207,55"/>
-<area shape="poly" title=" " alt="" coords="108,39,142,39,142,45,108,45"/>
-<area shape="poly" title=" " alt="" coords="160,30,156,21,158,11,167,5,181,3,198,6,206,14,202,18,196,11,181,8,169,10,162,14,161,20,165,28"/>
-</map>
-</div>
-<div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="pymodel_8cpp_aa920671831cc213a5c0858813e42279f_icgraph.png" border="0" usemap="#apymodel_8cpp_aa920671831cc213a5c0858813e42279f_icgraph" alt=""/></div>
@@ -1106,17 +1098,6 @@ Here is the caller graph for this function:</div>
 <div class="line"><span class="lineno">  121</span>    <span class="keywordflow">return</span> medium;</div>
 <div class="line"><span class="lineno">  122</span>}</div>
 </div><!-- fragment --><div class="dynheader">
-Here is the call graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="pymodel_8cpp_a6712fc3bcfbca1e296a29773aa708fbf_cgraph.png" border="0" usemap="#apymodel_8cpp_a6712fc3bcfbca1e296a29773aa708fbf_cgraph" alt=""/></div>
-<map name="apymodel_8cpp_a6712fc3bcfbca1e296a29773aa708fbf_cgraph" id="apymodel_8cpp_a6712fc3bcfbca1e296a29773aa708fbf_cgraph">
-<area shape="rect" title="Creates a stellar wind environment with r^(&#45;2) density profile." alt="" coords="5,29,76,55"/>
-<area shape="rect" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42" title="Returns the value of a single parameter." alt="" coords="124,29,175,55"/>
-<area shape="poly" title=" " alt="" coords="76,39,110,39,110,45,76,45"/>
-<area shape="poly" title=" " alt="" coords="130,30,127,21,129,12,137,5,149,3,164,6,171,14,167,18,161,11,149,8,139,10,133,14,132,20,135,28"/>
-</map>
-</div>
-<div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="pymodel_8cpp_a6712fc3bcfbca1e296a29773aa708fbf_icgraph.png" border="0" usemap="#apymodel_8cpp_a6712fc3bcfbca1e296a29773aa708fbf_icgraph" alt=""/></div>
@@ -1165,37 +1146,32 @@ template&lt;<a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5
 <div class="line"><span class="lineno">  161</span>    details.<a class="code hl_variable" href="structPyShock.html#aca6cadc2491df53852fd1acc20afebfc">gamma_c</a> = xt::zeros&lt;Real&gt;({shape[0], shape[1], shape[2]});</div>
 <div class="line"><span class="lineno">  162</span>    details.<a class="code hl_variable" href="structPyShock.html#a5597ae87d5318313996b8afc24af5553">gamma_a</a> = xt::zeros&lt;Real&gt;({shape[0], shape[1], shape[2]});</div>
 <div class="line"><span class="lineno">  163</span>    details.<a class="code hl_variable" href="structPyShock.html#ab0edf257f016470b8d2f12707eae4ab0">gamma_M</a> = xt::zeros&lt;Real&gt;({shape[0], shape[1], shape[2]});</div>
-<div class="line"><span class="lineno">  164</span>    details.<a class="code hl_variable" href="structPyShock.html#a87fd9ddc342ebf838b68977e3faaa729">N_e</a> = xt::zeros&lt;Real&gt;({shape[0], shape[1], shape[2]});</div>
-<div class="line"><span class="lineno">  165</span> </div>
-<div class="line"><span class="lineno">  166</span>    <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a> = 0; <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a> &lt; shape[0]; ++<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a>) {</div>
-<div class="line"><span class="lineno">  167</span>        <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">j</a> = 0; <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">j</a> &lt; shape[1]; ++<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">j</a>) {</div>
-<div class="line"><span class="lineno">  168</span>            <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">k</a> = 0; <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">k</a> &lt; shape[2]; ++<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">k</a>) {</div>
-<div class="line"><span class="lineno">  169</span>                details.<a class="code hl_variable" href="structPyShock.html#a5597ae87d5318313996b8afc24af5553">gamma_a</a>(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">j</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">k</a>) = electrons(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">j</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">k</a>).gamma_a;</div>
-<div class="line"><span class="lineno">  170</span>                details.<a class="code hl_variable" href="structPyShock.html#a53a5fc81875ed6b6ecbc2e25155a1880">gamma_m</a>(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">j</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">k</a>) = electrons(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">j</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">k</a>).gamma_m;</div>
-<div class="line"><span class="lineno">  171</span>                details.<a class="code hl_variable" href="structPyShock.html#aca6cadc2491df53852fd1acc20afebfc">gamma_c</a>(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">j</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">k</a>) = electrons(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">j</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">k</a>).gamma_c;</div>
-<div class="line"><span class="lineno">  172</span>                details.<a class="code hl_variable" href="structPyShock.html#ab0edf257f016470b8d2f12707eae4ab0">gamma_M</a>(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">j</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">k</a>) = electrons(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">j</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">k</a>).gamma_M;</div>
-<div class="line"><span class="lineno">  173</span>                details.<a class="code hl_variable" href="structPyShock.html#a87fd9ddc342ebf838b68977e3faaa729">N_e</a>(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">j</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">k</a>) = electrons(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">j</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">k</a>).N_e;</div>
-<div class="line"><span class="lineno">  174</span>            }</div>
-<div class="line"><span class="lineno">  175</span>        }</div>
-<div class="line"><span class="lineno">  176</span>    }</div>
-<div class="line"><span class="lineno">  177</span>}</div>
+<div class="line"><span class="lineno">  164</span>    details.<a class="code hl_variable" href="structPyShock.html#a286774654d696a047dd2430a281ae856">gamma_m_hat</a> = xt::zeros&lt;Real&gt;({shape[0], shape[1], shape[2]});</div>
+<div class="line"><span class="lineno">  165</span>    details.<a class="code hl_variable" href="structPyShock.html#adf5112cfbebdaf5bf2dae5ab925a4fd2">gamma_c_hat</a> = xt::zeros&lt;Real&gt;({shape[0], shape[1], shape[2]});</div>
+<div class="line"><span class="lineno">  166</span>    details.<a class="code hl_variable" href="structPyShock.html#a87fd9ddc342ebf838b68977e3faaa729">N_e</a> = xt::zeros&lt;Real&gt;({shape[0], shape[1], shape[2]});</div>
+<div class="line"><span class="lineno">  167</span> </div>
+<div class="line"><span class="lineno">  168</span>    <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a> = 0; <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a> &lt; shape[0]; ++<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a>) {</div>
+<div class="line"><span class="lineno">  169</span>        <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">j</a> = 0; <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">j</a> &lt; shape[1]; ++<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">j</a>) {</div>
+<div class="line"><span class="lineno">  170</span>            <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">k</a> = 0; <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">k</a> &lt; shape[2]; ++<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">k</a>) {</div>
+<div class="line"><span class="lineno">  171</span>                details.<a class="code hl_variable" href="structPyShock.html#a5597ae87d5318313996b8afc24af5553">gamma_a</a>(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">j</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">k</a>) = electrons(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">j</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">k</a>).gamma_a;</div>
+<div class="line"><span class="lineno">  172</span>                details.<a class="code hl_variable" href="structPyShock.html#a53a5fc81875ed6b6ecbc2e25155a1880">gamma_m</a>(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">j</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">k</a>) = electrons(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">j</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">k</a>).gamma_m;</div>
+<div class="line"><span class="lineno">  173</span>                details.<a class="code hl_variable" href="structPyShock.html#aca6cadc2491df53852fd1acc20afebfc">gamma_c</a>(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">j</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">k</a>) = electrons(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">j</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">k</a>).gamma_c;</div>
+<div class="line"><span class="lineno">  174</span>                details.<a class="code hl_variable" href="structPyShock.html#ab0edf257f016470b8d2f12707eae4ab0">gamma_M</a>(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">j</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">k</a>) = electrons(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">j</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">k</a>).gamma_M;</div>
+<div class="line"><span class="lineno">  175</span>                details.<a class="code hl_variable" href="structPyShock.html#a286774654d696a047dd2430a281ae856">gamma_m_hat</a>(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">j</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">k</a>) = electrons(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">j</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">k</a>).Ys.gamma_m_hat;</div>
+<div class="line"><span class="lineno">  176</span>                details.<a class="code hl_variable" href="structPyShock.html#adf5112cfbebdaf5bf2dae5ab925a4fd2">gamma_c_hat</a>(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">j</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">k</a>) = electrons(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">j</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">k</a>).Ys.gamma_c_hat;</div>
+<div class="line"><span class="lineno">  177</span>                details.<a class="code hl_variable" href="structPyShock.html#a87fd9ddc342ebf838b68977e3faaa729">N_e</a>(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">j</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">k</a>) = electrons(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">j</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">k</a>).N_e;</div>
+<div class="line"><span class="lineno">  178</span>            }</div>
+<div class="line"><span class="lineno">  179</span>        }</div>
+<div class="line"><span class="lineno">  180</span>    }</div>
+<div class="line"><span class="lineno">  181</span>}</div>
+<div class="ttc" id="astructPyShock_html_a286774654d696a047dd2430a281ae856"><div class="ttname"><a href="structPyShock.html#a286774654d696a047dd2430a281ae856">PyShock::gamma_m_hat</a></div><div class="ttdeci">XTArray gamma_m_hat</div><div class="ttdef"><b>Definition</b> <a href="pymodel_8h_source.html#l00347">pymodel.h:347</a></div></div>
 <div class="ttc" id="astructPyShock_html_a53a5fc81875ed6b6ecbc2e25155a1880"><div class="ttname"><a href="structPyShock.html#a53a5fc81875ed6b6ecbc2e25155a1880">PyShock::gamma_m</a></div><div class="ttdeci">XTArray gamma_m</div><div class="ttdoc">Minimum electron Lorentz factor.</div><div class="ttdef"><b>Definition</b> <a href="pymodel_8h_source.html#l00343">pymodel.h:343</a></div></div>
 <div class="ttc" id="astructPyShock_html_a5597ae87d5318313996b8afc24af5553"><div class="ttname"><a href="structPyShock.html#a5597ae87d5318313996b8afc24af5553">PyShock::gamma_a</a></div><div class="ttdeci">XTArray gamma_a</div><div class="ttdoc">Absorption electron Lorentz factor.</div><div class="ttdef"><b>Definition</b> <a href="pymodel_8h_source.html#l00346">pymodel.h:346</a></div></div>
 <div class="ttc" id="astructPyShock_html_a87fd9ddc342ebf838b68977e3faaa729"><div class="ttname"><a href="structPyShock.html#a87fd9ddc342ebf838b68977e3faaa729">PyShock::N_e</a></div><div class="ttdeci">XTArray N_e</div><div class="ttdoc">Total electron number in shock.</div><div class="ttdef"><b>Definition</b> <a href="pymodel_8h_source.html#l00342">pymodel.h:342</a></div></div>
 <div class="ttc" id="astructPyShock_html_ab0edf257f016470b8d2f12707eae4ab0"><div class="ttname"><a href="structPyShock.html#ab0edf257f016470b8d2f12707eae4ab0">PyShock::gamma_M</a></div><div class="ttdeci">XTArray gamma_M</div><div class="ttdoc">Maximum electron Lorentz factor.</div><div class="ttdef"><b>Definition</b> <a href="pymodel_8h_source.html#l00345">pymodel.h:345</a></div></div>
 <div class="ttc" id="astructPyShock_html_aca6cadc2491df53852fd1acc20afebfc"><div class="ttname"><a href="structPyShock.html#aca6cadc2491df53852fd1acc20afebfc">PyShock::gamma_c</a></div><div class="ttdeci">XTArray gamma_c</div><div class="ttdoc">Cooling electron Lorentz factor.</div><div class="ttdef"><b>Definition</b> <a href="pymodel_8h_source.html#l00344">pymodel.h:344</a></div></div>
-</div><!-- fragment --><div class="dynheader">
-Here is the call graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="pymodel_8cpp_ab8c583a7d71f7058861240394ee4395b_cgraph.png" border="0" usemap="#apymodel_8cpp_ab8c583a7d71f7058861240394ee4395b_cgraph" alt=""/></div>
-<map name="apymodel_8cpp_ab8c583a7d71f7058861240394ee4395b_cgraph" id="apymodel_8cpp_ab8c583a7d71f7058861240394ee4395b_cgraph">
-<area shape="rect" title=" " alt="" coords="5,29,169,55"/>
-<area shape="rect" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42" title="Returns the value of a single parameter." alt="" coords="217,29,268,55"/>
-<area shape="poly" title=" " alt="" coords="169,39,204,39,204,45,169,45"/>
-<area shape="poly" title=" " alt="" coords="217,31,211,21,214,11,225,5,243,3,264,6,273,15,269,19,262,11,243,8,227,10,218,15,216,20,221,28"/>
-</map>
-</div>
-
+<div class="ttc" id="astructPyShock_html_adf5112cfbebdaf5bf2dae5ab925a4fd2"><div class="ttname"><a href="structPyShock.html#adf5112cfbebdaf5bf2dae5ab925a4fd2">PyShock::gamma_c_hat</a></div><div class="ttdeci">XTArray gamma_c_hat</div><div class="ttdef"><b>Definition</b> <a href="pymodel_8h_source.html#l00348">pymodel.h:348</a></div></div>
+</div><!-- fragment -->
 </div>
 </div>
 <a id="a329e174f1844f464c16519914c4bf243" name="a329e174f1844f464c16519914c4bf243"></a>
@@ -1226,48 +1202,46 @@ template&lt;<a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="pymodel_8cpp_source.html#l00179">179</a> of file <a class="el" href="pymodel_8cpp_source.html">pymodel.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  179</span>                                                                      {</div>
-<div class="line"><span class="lineno">  180</span>    <span class="keyword">auto</span> shape = photons.shape();</div>
-<div class="line"><span class="lineno">  181</span> </div>
-<div class="line"><span class="lineno">  182</span>    details.<a class="code hl_variable" href="structPyShock.html#a9d61259f3d3c4c23464ec748b3bb9315">nu_m</a> = xt::zeros&lt;Real&gt;({shape[0], shape[1], shape[2]});</div>
-<div class="line"><span class="lineno">  183</span>    details.<a class="code hl_variable" href="structPyShock.html#a3b8bc9bf73c5966bc5fa54c5a96c89cc">nu_c</a> = xt::zeros&lt;Real&gt;({shape[0], shape[1], shape[2]});</div>
-<div class="line"><span class="lineno">  184</span>    details.<a class="code hl_variable" href="structPyShock.html#a3a2c1bc271cfa9161bfea4e1731492e7">nu_a</a> = xt::zeros&lt;Real&gt;({shape[0], shape[1], shape[2]});</div>
-<div class="line"><span class="lineno">  185</span>    details.<a class="code hl_variable" href="structPyShock.html#aa5598e189d0f2d11ef7b0bb15f03da4f">nu_M</a> = xt::zeros&lt;Real&gt;({shape[0], shape[1], shape[2]});</div>
-<div class="line"><span class="lineno">  186</span>    details.<a class="code hl_variable" href="structPyShock.html#a6e28ebccae921ab3cd7c3707d4bf5a95">I_nu_max</a> = xt::zeros&lt;Real&gt;({shape[0], shape[1], shape[2]});</div>
-<div class="line"><span class="lineno">  187</span> </div>
-<div class="line"><span class="lineno">  188</span>    <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a> = 0; <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a> &lt; shape[0]; ++<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a>) {</div>
-<div class="line"><span class="lineno">  189</span>        <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">j</a> = 0; <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">j</a> &lt; shape[1]; ++<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">j</a>) {</div>
-<div class="line"><span class="lineno">  190</span>            <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">k</a> = 0; <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">k</a> &lt; shape[2]; ++<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">k</a>) {</div>
-<div class="line"><span class="lineno">  191</span>                details.<a class="code hl_variable" href="structPyShock.html#a3a2c1bc271cfa9161bfea4e1731492e7">nu_a</a>(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">j</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">k</a>) = photons(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">j</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">k</a>).nu_a / <a class="code hl_variable" href="namespaceunit.html#a78d8f4bc3be7867d8171f2759251dad1">unit::Hz</a>;</div>
-<div class="line"><span class="lineno">  192</span>                details.<a class="code hl_variable" href="structPyShock.html#a9d61259f3d3c4c23464ec748b3bb9315">nu_m</a>(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">j</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">k</a>) = photons(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">j</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">k</a>).nu_m / <a class="code hl_variable" href="namespaceunit.html#a78d8f4bc3be7867d8171f2759251dad1">unit::Hz</a>;</div>
-<div class="line"><span class="lineno">  193</span>                details.<a class="code hl_variable" href="structPyShock.html#a3b8bc9bf73c5966bc5fa54c5a96c89cc">nu_c</a>(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">j</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">k</a>) = photons(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">j</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">k</a>).nu_c / <a class="code hl_variable" href="namespaceunit.html#a78d8f4bc3be7867d8171f2759251dad1">unit::Hz</a>;</div>
-<div class="line"><span class="lineno">  194</span>                details.<a class="code hl_variable" href="structPyShock.html#aa5598e189d0f2d11ef7b0bb15f03da4f">nu_M</a>(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">j</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">k</a>) = photons(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">j</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">k</a>).nu_M / <a class="code hl_variable" href="namespaceunit.html#a78d8f4bc3be7867d8171f2759251dad1">unit::Hz</a>;</div>
-<div class="line"><span class="lineno">  195</span>                details.<a class="code hl_variable" href="structPyShock.html#a6e28ebccae921ab3cd7c3707d4bf5a95">I_nu_max</a>(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">j</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">k</a>) =</div>
-<div class="line"><span class="lineno">  196</span>                    photons(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">j</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">k</a>).I_nu_max / (<a class="code hl_variable" href="namespaceunit.html#a255e82bd3b0ebb273d6663111278d624">unit::erg</a> / (<a class="code hl_variable" href="namespaceunit.html#a78d8f4bc3be7867d8171f2759251dad1">unit::Hz</a> * <a class="code hl_variable" href="namespaceunit.html#a4e7c438655d3f34c7c30a155ec38f250">unit::sec</a> * <a class="code hl_variable" href="namespaceunit.html#ad762a0ede549f5e21607910dc248c850">unit::cm2</a>));</div>
-<div class="line"><span class="lineno">  197</span>            }</div>
-<div class="line"><span class="lineno">  198</span>        }</div>
-<div class="line"><span class="lineno">  199</span>    }</div>
-<div class="line"><span class="lineno">  200</span>}</div>
+<p class="definition">Definition at line <a class="el" href="pymodel_8cpp_source.html#l00183">183</a> of file <a class="el" href="pymodel_8cpp_source.html">pymodel.cpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  183</span>                                                                      {</div>
+<div class="line"><span class="lineno">  184</span>    <span class="keyword">auto</span> shape = photons.shape();</div>
+<div class="line"><span class="lineno">  185</span> </div>
+<div class="line"><span class="lineno">  186</span>    details.<a class="code hl_variable" href="structPyShock.html#a9d61259f3d3c4c23464ec748b3bb9315">nu_m</a> = xt::zeros&lt;Real&gt;({shape[0], shape[1], shape[2]});</div>
+<div class="line"><span class="lineno">  187</span>    details.<a class="code hl_variable" href="structPyShock.html#a3b8bc9bf73c5966bc5fa54c5a96c89cc">nu_c</a> = xt::zeros&lt;Real&gt;({shape[0], shape[1], shape[2]});</div>
+<div class="line"><span class="lineno">  188</span>    details.<a class="code hl_variable" href="structPyShock.html#a3a2c1bc271cfa9161bfea4e1731492e7">nu_a</a> = xt::zeros&lt;Real&gt;({shape[0], shape[1], shape[2]});</div>
+<div class="line"><span class="lineno">  189</span>    details.<a class="code hl_variable" href="structPyShock.html#aa5598e189d0f2d11ef7b0bb15f03da4f">nu_M</a> = xt::zeros&lt;Real&gt;({shape[0], shape[1], shape[2]});</div>
+<div class="line"><span class="lineno">  190</span>    details.<a class="code hl_variable" href="structPyShock.html#a6d6ca5ca3880d31ab37fdc67b6345bb7">nu_m_hat</a> = xt::zeros&lt;Real&gt;({shape[0], shape[1], shape[2]});</div>
+<div class="line"><span class="lineno">  191</span>    details.<a class="code hl_variable" href="structPyShock.html#a2bdec231180b5cba273178653a8b5627">nu_c_hat</a> = xt::zeros&lt;Real&gt;({shape[0], shape[1], shape[2]});</div>
+<div class="line"><span class="lineno">  192</span>    details.<a class="code hl_variable" href="structPyShock.html#a6e28ebccae921ab3cd7c3707d4bf5a95">I_nu_max</a> = xt::zeros&lt;Real&gt;({shape[0], shape[1], shape[2]});</div>
+<div class="line"><span class="lineno">  193</span>    details.<a class="code hl_variable" href="structPyShock.html#a8c9d7cd2952acd075affa5d6341847e1">Y_T</a> = xt::zeros&lt;Real&gt;({shape[0], shape[1], shape[2]});</div>
+<div class="line"><span class="lineno">  194</span> </div>
+<div class="line"><span class="lineno">  195</span>    <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a> = 0; <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a> &lt; shape[0]; ++<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a>) {</div>
+<div class="line"><span class="lineno">  196</span>        <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">j</a> = 0; <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">j</a> &lt; shape[1]; ++<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">j</a>) {</div>
+<div class="line"><span class="lineno">  197</span>            <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">k</a> = 0; <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">k</a> &lt; shape[2]; ++<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">k</a>) {</div>
+<div class="line"><span class="lineno">  198</span>                details.<a class="code hl_variable" href="structPyShock.html#a3a2c1bc271cfa9161bfea4e1731492e7">nu_a</a>(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">j</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">k</a>) = photons(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">j</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">k</a>).nu_a / <a class="code hl_variable" href="namespaceunit.html#a78d8f4bc3be7867d8171f2759251dad1">unit::Hz</a>;</div>
+<div class="line"><span class="lineno">  199</span>                details.<a class="code hl_variable" href="structPyShock.html#a9d61259f3d3c4c23464ec748b3bb9315">nu_m</a>(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">j</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">k</a>) = photons(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">j</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">k</a>).nu_m / <a class="code hl_variable" href="namespaceunit.html#a78d8f4bc3be7867d8171f2759251dad1">unit::Hz</a>;</div>
+<div class="line"><span class="lineno">  200</span>                details.<a class="code hl_variable" href="structPyShock.html#a3b8bc9bf73c5966bc5fa54c5a96c89cc">nu_c</a>(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">j</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">k</a>) = photons(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">j</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">k</a>).nu_c / <a class="code hl_variable" href="namespaceunit.html#a78d8f4bc3be7867d8171f2759251dad1">unit::Hz</a>;</div>
+<div class="line"><span class="lineno">  201</span>                details.<a class="code hl_variable" href="structPyShock.html#aa5598e189d0f2d11ef7b0bb15f03da4f">nu_M</a>(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">j</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">k</a>) = photons(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">j</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">k</a>).nu_M / <a class="code hl_variable" href="namespaceunit.html#a78d8f4bc3be7867d8171f2759251dad1">unit::Hz</a>;</div>
+<div class="line"><span class="lineno">  202</span>                details.<a class="code hl_variable" href="structPyShock.html#a6d6ca5ca3880d31ab37fdc67b6345bb7">nu_m_hat</a>(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">j</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">k</a>) = photons(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">j</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">k</a>).Ys.nu_m_hat / <a class="code hl_variable" href="namespaceunit.html#a78d8f4bc3be7867d8171f2759251dad1">unit::Hz</a>;</div>
+<div class="line"><span class="lineno">  203</span>                details.<a class="code hl_variable" href="structPyShock.html#a2bdec231180b5cba273178653a8b5627">nu_c_hat</a>(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">j</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">k</a>) = photons(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">j</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">k</a>).Ys.nu_c_hat / <a class="code hl_variable" href="namespaceunit.html#a78d8f4bc3be7867d8171f2759251dad1">unit::Hz</a>;</div>
+<div class="line"><span class="lineno">  204</span>                details.<a class="code hl_variable" href="structPyShock.html#a6e28ebccae921ab3cd7c3707d4bf5a95">I_nu_max</a>(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">j</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">k</a>) =</div>
+<div class="line"><span class="lineno">  205</span>                    photons(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">j</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">k</a>).I_nu_max / (<a class="code hl_variable" href="namespaceunit.html#a255e82bd3b0ebb273d6663111278d624">unit::erg</a> / (<a class="code hl_variable" href="namespaceunit.html#a78d8f4bc3be7867d8171f2759251dad1">unit::Hz</a> * <a class="code hl_variable" href="namespaceunit.html#a4e7c438655d3f34c7c30a155ec38f250">unit::sec</a> * <a class="code hl_variable" href="namespaceunit.html#ad762a0ede549f5e21607910dc248c850">unit::cm2</a>));</div>
+<div class="line"><span class="lineno">  206</span>                details.<a class="code hl_variable" href="structPyShock.html#a8c9d7cd2952acd075affa5d6341847e1">Y_T</a>(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">j</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">k</a>) = photons(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">j</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">k</a>).Ys.Y_T;</div>
+<div class="line"><span class="lineno">  207</span>            }</div>
+<div class="line"><span class="lineno">  208</span>        }</div>
+<div class="line"><span class="lineno">  209</span>    }</div>
+<div class="line"><span class="lineno">  210</span>}</div>
 <div class="ttc" id="anamespaceunit_html_a78d8f4bc3be7867d8171f2759251dad1"><div class="ttname"><a href="namespaceunit.html#a78d8f4bc3be7867d8171f2759251dad1">unit::Hz</a></div><div class="ttdeci">constexpr Real Hz</div><div class="ttdoc">Hertz (frequency) in code units.</div><div class="ttdef"><b>Definition</b> <a href="macros_8h_source.html#l00050">macros.h:50</a></div></div>
 <div class="ttc" id="anamespaceunit_html_ad762a0ede549f5e21607910dc248c850"><div class="ttname"><a href="namespaceunit.html#ad762a0ede549f5e21607910dc248c850">unit::cm2</a></div><div class="ttdeci">constexpr Real cm2</div><div class="ttdoc">Square centimeter in code units.</div><div class="ttdef"><b>Definition</b> <a href="macros_8h_source.html#l00045">macros.h:45</a></div></div>
-<div class="ttc" id="astructPyShock_html_a3a2c1bc271cfa9161bfea4e1731492e7"><div class="ttname"><a href="structPyShock.html#a3a2c1bc271cfa9161bfea4e1731492e7">PyShock::nu_a</a></div><div class="ttdeci">XTArray nu_a</div><div class="ttdoc">Synchrotron frequency for γ_a [Hz].</div><div class="ttdef"><b>Definition</b> <a href="pymodel_8h_source.html#l00350">pymodel.h:350</a></div></div>
-<div class="ttc" id="astructPyShock_html_a3b8bc9bf73c5966bc5fa54c5a96c89cc"><div class="ttname"><a href="structPyShock.html#a3b8bc9bf73c5966bc5fa54c5a96c89cc">PyShock::nu_c</a></div><div class="ttdeci">XTArray nu_c</div><div class="ttdoc">Synchrotron frequency for γ_c [Hz].</div><div class="ttdef"><b>Definition</b> <a href="pymodel_8h_source.html#l00348">pymodel.h:348</a></div></div>
-<div class="ttc" id="astructPyShock_html_a6e28ebccae921ab3cd7c3707d4bf5a95"><div class="ttname"><a href="structPyShock.html#a6e28ebccae921ab3cd7c3707d4bf5a95">PyShock::I_nu_max</a></div><div class="ttdeci">XTArray I_nu_max</div><div class="ttdoc">Maximum specific intensity [erg/s/Hz].</div><div class="ttdef"><b>Definition</b> <a href="pymodel_8h_source.html#l00351">pymodel.h:351</a></div></div>
-<div class="ttc" id="astructPyShock_html_a9d61259f3d3c4c23464ec748b3bb9315"><div class="ttname"><a href="structPyShock.html#a9d61259f3d3c4c23464ec748b3bb9315">PyShock::nu_m</a></div><div class="ttdeci">XTArray nu_m</div><div class="ttdoc">Synchrotron frequency for γ_m [Hz].</div><div class="ttdef"><b>Definition</b> <a href="pymodel_8h_source.html#l00347">pymodel.h:347</a></div></div>
-<div class="ttc" id="astructPyShock_html_aa5598e189d0f2d11ef7b0bb15f03da4f"><div class="ttname"><a href="structPyShock.html#aa5598e189d0f2d11ef7b0bb15f03da4f">PyShock::nu_M</a></div><div class="ttdeci">XTArray nu_M</div><div class="ttdoc">Synchrotron frequency for γ_M [Hz].</div><div class="ttdef"><b>Definition</b> <a href="pymodel_8h_source.html#l00349">pymodel.h:349</a></div></div>
-</div><!-- fragment --><div class="dynheader">
-Here is the call graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="pymodel_8cpp_a329e174f1844f464c16519914c4bf243_cgraph.png" border="0" usemap="#apymodel_8cpp_a329e174f1844f464c16519914c4bf243_cgraph" alt=""/></div>
-<map name="apymodel_8cpp_a329e174f1844f464c16519914c4bf243_cgraph" id="apymodel_8cpp_a329e174f1844f464c16519914c4bf243_cgraph">
-<area shape="rect" title=" " alt="" coords="5,29,161,55"/>
-<area shape="rect" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42" title="Returns the value of a single parameter." alt="" coords="209,29,260,55"/>
-<area shape="poly" title=" " alt="" coords="162,39,196,39,196,45,162,45"/>
-<area shape="poly" title=" " alt="" coords="209,31,204,21,207,11,217,5,235,3,255,6,264,15,260,19,253,11,235,8,219,10,211,15,209,20,214,28"/>
-</map>
-</div>
-
+<div class="ttc" id="astructPyShock_html_a2bdec231180b5cba273178653a8b5627"><div class="ttname"><a href="structPyShock.html#a2bdec231180b5cba273178653a8b5627">PyShock::nu_c_hat</a></div><div class="ttdeci">XTArray nu_c_hat</div><div class="ttdef"><b>Definition</b> <a href="pymodel_8h_source.html#l00354">pymodel.h:354</a></div></div>
+<div class="ttc" id="astructPyShock_html_a3a2c1bc271cfa9161bfea4e1731492e7"><div class="ttname"><a href="structPyShock.html#a3a2c1bc271cfa9161bfea4e1731492e7">PyShock::nu_a</a></div><div class="ttdeci">XTArray nu_a</div><div class="ttdoc">Synchrotron frequency for γ_a [Hz].</div><div class="ttdef"><b>Definition</b> <a href="pymodel_8h_source.html#l00352">pymodel.h:352</a></div></div>
+<div class="ttc" id="astructPyShock_html_a3b8bc9bf73c5966bc5fa54c5a96c89cc"><div class="ttname"><a href="structPyShock.html#a3b8bc9bf73c5966bc5fa54c5a96c89cc">PyShock::nu_c</a></div><div class="ttdeci">XTArray nu_c</div><div class="ttdoc">Synchrotron frequency for γ_c [Hz].</div><div class="ttdef"><b>Definition</b> <a href="pymodel_8h_source.html#l00350">pymodel.h:350</a></div></div>
+<div class="ttc" id="astructPyShock_html_a6d6ca5ca3880d31ab37fdc67b6345bb7"><div class="ttname"><a href="structPyShock.html#a6d6ca5ca3880d31ab37fdc67b6345bb7">PyShock::nu_m_hat</a></div><div class="ttdeci">XTArray nu_m_hat</div><div class="ttdef"><b>Definition</b> <a href="pymodel_8h_source.html#l00353">pymodel.h:353</a></div></div>
+<div class="ttc" id="astructPyShock_html_a6e28ebccae921ab3cd7c3707d4bf5a95"><div class="ttname"><a href="structPyShock.html#a6e28ebccae921ab3cd7c3707d4bf5a95">PyShock::I_nu_max</a></div><div class="ttdeci">XTArray I_nu_max</div><div class="ttdoc">Maximum specific intensity [erg/s/Hz].</div><div class="ttdef"><b>Definition</b> <a href="pymodel_8h_source.html#l00356">pymodel.h:356</a></div></div>
+<div class="ttc" id="astructPyShock_html_a8c9d7cd2952acd075affa5d6341847e1"><div class="ttname"><a href="structPyShock.html#a8c9d7cd2952acd075affa5d6341847e1">PyShock::Y_T</a></div><div class="ttdeci">XTArray Y_T</div><div class="ttdef"><b>Definition</b> <a href="pymodel_8h_source.html#l00355">pymodel.h:355</a></div></div>
+<div class="ttc" id="astructPyShock_html_a9d61259f3d3c4c23464ec748b3bb9315"><div class="ttname"><a href="structPyShock.html#a9d61259f3d3c4c23464ec748b3bb9315">PyShock::nu_m</a></div><div class="ttdeci">XTArray nu_m</div><div class="ttdoc">Synchrotron frequency for γ_m [Hz].</div><div class="ttdef"><b>Definition</b> <a href="pymodel_8h_source.html#l00349">pymodel.h:349</a></div></div>
+<div class="ttc" id="astructPyShock_html_aa5598e189d0f2d11ef7b0bb15f03da4f"><div class="ttname"><a href="structPyShock.html#aa5598e189d0f2d11ef7b0bb15f03da4f">PyShock::nu_M</a></div><div class="ttdeci">XTArray nu_M</div><div class="ttdoc">Synchrotron frequency for γ_M [Hz].</div><div class="ttdef"><b>Definition</b> <a href="pymodel_8h_source.html#l00351">pymodel.h:351</a></div></div>
+</div><!-- fragment -->
 </div>
 </div>
 <a id="a8ffef75ec4ca3ef0464331eb194de1e5" name="a8ffef75ec4ca3ef0464331eb194de1e5"></a>
@@ -1315,17 +1289,6 @@ Here is the call graph for this function:</div>
 <div class="ttc" id="astructPyShock_html_aac93a14f3649cdd0177aef46023fe6b2"><div class="ttname"><a href="structPyShock.html#aac93a14f3649cdd0177aef46023fe6b2">PyShock::Gamma_th</a></div><div class="ttdeci">XTArray Gamma_th</div><div class="ttdoc">Thermal Lorentz factor.</div><div class="ttdef"><b>Definition</b> <a href="pymodel_8h_source.html#l00337">pymodel.h:337</a></div></div>
 <div class="ttc" id="astructPyShock_html_afce3c5903b3f175398cb70940f9c2677"><div class="ttname"><a href="structPyShock.html#afce3c5903b3f175398cb70940f9c2677">PyShock::theta</a></div><div class="ttdeci">XTArray theta</div><div class="ttdoc">Polar angle [rad].</div><div class="ttdef"><b>Definition</b> <a href="pymodel_8h_source.html#l00340">pymodel.h:340</a></div></div>
 </div><!-- fragment --><div class="dynheader">
-Here is the call graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="pymodel_8cpp_a8ffef75ec4ca3ef0464331eb194de1e5_cgraph.png" border="0" usemap="#apymodel_8cpp_a8ffef75ec4ca3ef0464331eb194de1e5_cgraph" alt=""/></div>
-<map name="apymodel_8cpp_a8ffef75ec4ca3ef0464331eb194de1e5_cgraph" id="apymodel_8cpp_a8ffef75ec4ca3ef0464331eb194de1e5_cgraph">
-<area shape="rect" title=" " alt="" coords="5,29,155,55"/>
-<area shape="rect" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42" title="Returns the value of a single parameter." alt="" coords="203,29,253,55"/>
-<area shape="poly" title=" " alt="" coords="155,39,189,39,189,45,155,45"/>
-<area shape="poly" title=" " alt="" coords="203,31,198,21,201,11,211,5,228,3,248,6,257,15,253,18,246,11,228,8,213,10,205,15,203,20,208,28"/>
-</map>
-</div>
-<div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="pymodel_8cpp_a8ffef75ec4ca3ef0464331eb194de1e5_icgraph.png" border="0" usemap="#apymodel_8cpp_a8ffef75ec4ca3ef0464331eb194de1e5_icgraph" alt=""/></div>

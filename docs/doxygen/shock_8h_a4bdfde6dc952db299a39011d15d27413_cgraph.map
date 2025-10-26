@@ -1,14 +1,15 @@
 <map id="compute_4vel_jump" name="compute_4vel_jump">
-<area shape="rect" id="Node000001" title="Computes the ratio of upstream to downstream four&#45;velocity across the shock front." alt="" coords="5,67,160,92"/>
-<area shape="rect" id="Node000002" href="$shock_8cpp.html#a09f75d8bc0c1cd36d03a413edd7283d8" title="Computes the downstream four&#45;velocity for a given relative Lorentz factor and magnetization parameter..." alt="" coords="208,16,381,41"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="136,64,227,42,228,47,137,69"/>
-<area shape="rect" id="Node000004" href="$utilities_8h.html#ab8e81118f023df135835db8cce4f5f42" title="Returns the value of a single parameter." alt="" coords="459,79,509,104"/>
-<area shape="poly" id="edge7_Node000001_Node000004" title=" " alt="" coords="160,79,445,88,445,93,160,84"/>
-<area shape="rect" id="Node000005" href="$shock_8h.html#ab0d0c4b81c0c5525c81eb24d70c4b010" title="Computes the upstream four&#45;velocity from downstream four&#45;velocity and relative Lorentz factor." alt="" coords="217,117,372,143"/>
-<area shape="poly" id="edge5_Node000001_Node000005" title=" " alt="" coords="137,90,228,112,227,117,136,95"/>
-<area shape="rect" id="Node000003" href="$physics_8h.html#a2a95c6b3f1236d69328af7199a772a23" title="Computes adiabatic index as a function of the Lorentz factor." alt="" coords="429,5,539,31"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="382,21,415,19,416,25,382,26"/>
-<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="335,39,447,76,445,81,333,44"/>
-<area shape="poly" id="edge4_Node000004_Node000004" title=" " alt="" coords="457,83,447,73,448,62,461,55,484,52,514,57,521,64,522,71,516,71,516,66,512,62,484,57,463,60,453,65,452,71,460,79"/>
-<area shape="poly" id="edge6_Node000005_Node000004" title=" " alt="" coords="357,115,445,97,446,102,358,120"/>
+<area shape="rect" id="Node000001" title="Computes the ratio of upstream to downstream four&#45;velocity across the shock front." alt="" coords="5,107,160,132"/>
+<area shape="rect" id="Node000002" href="$shock_8cpp.html#a09f75d8bc0c1cd36d03a413edd7283d8" title="Computes the downstream four&#45;velocity for a given relative Lorentz factor and magnetization parameter..." alt="" coords="208,56,381,81"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="136,104,227,82,228,87,137,109"/>
+<area shape="rect" id="Node000004" href="$utilities_8h.html#ab8e81118f023df135835db8cce4f5f42" title="Returns the value of a single parameter." alt="" coords="632,81,683,107"/>
+<area shape="poly" id="edge8_Node000001_Node000004" title=" " alt="" coords="160,113,618,93,618,98,161,119"/>
+<area shape="rect" id="Node000005" href="$shock_8h.html#ab0d0c4b81c0c5525c81eb24d70c4b010" title="Computes the upstream four&#45;velocity from downstream four&#45;velocity and relative Lorentz factor." alt="" coords="429,157,584,183"/>
+<area shape="poly" id="edge6_Node000001_Node000005" title=" " alt="" coords="161,129,208,135,416,159,415,164,208,141,160,134"/>
+<area shape="rect" id="Node000003" href="$physics_8h.html#a2a95c6b3f1236d69328af7199a772a23" title="Computes adiabatic index as a function of the Lorentz factor." alt="" coords="452,5,561,31"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="348,53,439,31,440,36,349,58"/>
+<area shape="poly" id="edge5_Node000002_Node000004" title=" " alt="" coords="382,72,619,89,618,94,382,77"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="543,28,585,48,627,72,624,76,583,52,540,33"/>
+<area shape="poly" id="edge4_Node000004_Node000004" title=" " alt="" coords="632,83,627,73,630,63,640,57,657,55,678,58,687,67,683,71,675,63,657,60,642,62,634,67,632,72,637,80"/>
+<area shape="poly" id="edge7_Node000005_Node000004" title=" " alt="" coords="540,155,583,136,624,112,627,116,585,140,543,160"/>
 </map>

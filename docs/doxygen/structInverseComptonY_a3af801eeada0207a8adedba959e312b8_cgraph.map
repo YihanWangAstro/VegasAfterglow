@@ -1,0 +1,9 @@
+<map id="InverseComptonY::InverseComptonY" name="InverseComptonY::InverseComptonY">
+<area shape="rect" id="Node000001" title="Initializes an InverseComptonY object with frequency thresholds, magnetic field and Y parameter." alt="" coords="5,23,196,63"/>
+<area shape="rect" id="Node000002" href="$synchrotron_8cpp.html#a936bfaa522ec8295a21d253e5453188d" title="Calculates synchrotron frequency for a given Lorentz factor and magnetic field." alt="" coords="244,5,387,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="196,29,230,25,231,31,197,35"/>
+<area shape="rect" id="Node000003" href="$utilities_8h.html#ab8e81118f023df135835db8cce4f5f42" title="Returns the value of a single parameter." alt="" coords="435,31,485,56"/>
+<area shape="poly" id="edge4_Node000001_Node000003" title=" " alt="" coords="196,41,421,41,421,46,196,46"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="387,28,421,34,420,39,386,33"/>
+<area shape="poly" id="edge3_Node000003_Node000003" title=" " alt="" coords="435,32,430,22,433,13,443,6,460,4,480,8,489,16,485,20,477,12,460,9,445,11,437,16,436,22,440,29"/>
+</map>

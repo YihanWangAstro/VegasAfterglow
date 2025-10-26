@@ -98,54 +98,54 @@ $(document).ready(function(){initNavTree('shock_8h.html',''); initResizable(); }
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><code>#include &lt;tuple&gt;</code><br />
+<code>#include &quot;<a class="el" href="mesh_8h_source.html">../core/mesh.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="physics_8h_source.html">../core/physics.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="medium_8h_source.html">../environment/medium.h</a>&quot;</code><br />
 <code>#include &quot;boost/numeric/odeint.hpp&quot;</code><br />
-<code>#include &quot;<a class="el" href="medium_8h_source.html">medium.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="mesh_8h_source.html">mesh.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="physics_8h_source.html">physics.h</a>&quot;</code><br />
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for shock.h:</div>
 <div class="dyncontent">
 <div class="center"><img src="shock_8h__incl.png" border="0" usemap="#ashock_8h" alt=""/></div>
 <map name="ashock_8h" id="ashock_8h">
-<area shape="rect" title=" " alt="" coords="638,5,710,31"/>
-<area shape="rect" title=" " alt="" coords="469,79,524,104"/>
-<area shape="poly" title=" " alt="" coords="647,33,538,76,536,71,645,28"/>
-<area shape="rect" title=" " alt="" coords="1008,306,1196,331"/>
-<area shape="poly" title=" " alt="" coords="692,29,1076,296,1073,300,689,33"/>
-<area shape="rect" href="medium_8h.html" title=" " alt="" coords="549,79,637,104"/>
-<area shape="poly" title=" " alt="" coords="663,33,618,72,615,68,659,29"/>
-<area shape="rect" href="mesh_8h.html" title=" " alt="" coords="593,225,664,251"/>
-<area shape="poly" title=" " alt="" coords="675,31,666,94,650,178,640,213,635,211,645,177,661,93,670,31"/>
-<area shape="rect" href="physics_8h.html" title=" " alt="" coords="1221,306,1303,331"/>
-<area shape="poly" title=" " alt="" coords="699,28,795,76,1229,297,1226,302,793,81,696,33"/>
-<area shape="rect" title=" " alt="" coords="468,152,528,177"/>
-<area shape="poly" title=" " alt="" coords="579,106,526,146,523,141,576,102"/>
-<area shape="rect" href="macros_8h.html" title=" " alt="" coords="174,387,257,412"/>
-<area shape="poly" title=" " alt="" coords="549,104,422,133,259,178,179,206,108,235,52,267,31,284,16,300,9,319,12,335,25,348,46,360,102,378,161,389,160,394,101,384,44,365,22,353,8,337,3,318,12,297,27,280,49,263,106,231,177,201,258,173,421,128,548,99"/>
-<area shape="rect" href="utilities_8h.html" title=" " alt="" coords="553,152,635,177"/>
-<area shape="poly" title=" " alt="" coords="596,104,596,138,591,139,590,104"/>
-<area shape="rect" title=" " alt="" coords="141,460,199,485"/>
-<area shape="poly" title=" " alt="" coords="210,414,187,450,183,447,206,411"/>
-<area shape="rect" title=" " alt="" coords="223,460,298,485"/>
-<area shape="poly" title=" " alt="" coords="225,411,248,447,244,450,221,414"/>
-<area shape="poly" title=" " alt="" coords="553,178,245,246,95,281,29,301,21,317,24,332,35,345,54,356,106,375,161,387,160,393,104,380,52,361,32,349,19,334,16,316,26,297,94,276,244,241,552,172"/>
-<area shape="poly" title=" " alt="" coords="602,176,619,212,615,214,597,179"/>
-<area shape="poly" title=" " alt="" coords="665,242,996,296,1025,301,1024,306,995,301,664,248"/>
-<area shape="poly" title=" " alt="" coords="594,250,527,270,454,301,428,321,402,341,335,369,271,388,269,383,333,364,399,336,425,317,451,296,526,265,592,245"/>
-<area shape="poly" title=" " alt="" coords="664,237,759,241,895,251,1051,268,1209,296,1222,299,1220,304,1208,301,1051,273,894,256,759,247,664,243"/>
-<area shape="rect" title=" " alt="" coords="247,299,389,339"/>
-<area shape="poly" title=" " alt="" coords="594,251,403,299,402,294,592,246"/>
-<area shape="rect" title=" " alt="" coords="465,299,608,339"/>
-<area shape="poly" title=" " alt="" coords="617,253,571,292,568,288,613,249"/>
-<area shape="rect" title=" " alt="" coords="632,306,809,331"/>
-<area shape="poly" title=" " alt="" coords="644,249,698,295,695,299,641,253"/>
-<area shape="rect" title=" " alt="" coords="834,306,983,331"/>
-<area shape="poly" title=" " alt="" coords="665,247,855,300,854,305,663,252"/>
-<area shape="rect" title=" " alt="" coords="40,306,223,331"/>
-<area shape="poly" title=" " alt="" coords="594,247,234,301,206,306,205,301,234,296,593,242"/>
-<area shape="poly" title=" " alt="" coords="1235,334,1209,341,1124,354,1011,365,739,382,271,399,270,394,739,377,1011,360,1123,349,1208,336,1233,329"/>
-<area shape="rect" title=" " alt="" coords="1231,387,1293,412"/>
-<area shape="poly" title=" " alt="" coords="1265,332,1265,373,1259,373,1259,332"/>
+<area shape="rect" title=" " alt="" coords="289,5,361,31"/>
+<area shape="rect" title=" " alt="" coords="182,79,237,104"/>
+<area shape="poly" title=" " alt="" coords="308,33,241,74,239,69,305,28"/>
+<area shape="rect" href="mesh_8h.html" title=" " alt="" coords="539,225,653,251"/>
+<area shape="poly" title=" " alt="" coords="341,29,572,214,569,218,338,33"/>
+<area shape="rect" title=" " alt="" coords="113,306,301,331"/>
+<area shape="poly" title=" " alt="" coords="329,31,332,70,330,126,320,191,310,222,296,252,272,280,244,301,240,297,268,276,291,249,305,220,315,189,325,126,326,70,324,31"/>
+<area shape="rect" href="physics_8h.html" title=" " alt="" coords="5,306,88,331"/>
+<area shape="poly" title=" " alt="" coords="317,33,250,106,69,298,65,294,246,102,313,29"/>
+<area shape="rect" href="medium_8h.html" title=" " alt="" coords="617,79,804,104"/>
+<area shape="poly" title=" " alt="" coords="362,23,636,74,635,79,361,29"/>
+<area shape="rect" href="macros_8h.html" title=" " alt="" coords="863,387,982,412"/>
+<area shape="poly" title=" " alt="" coords="588,253,575,271,564,294,560,317,562,327,567,337,585,351,612,362,686,379,771,389,850,394,849,399,770,395,685,385,611,368,583,355,563,340,557,329,554,317,559,292,571,268,584,250"/>
+<area shape="poly" title=" " alt="" coords="540,253,277,306,276,301,539,248"/>
+<area shape="poly" title=" " alt="" coords="539,245,343,262,222,278,101,301,89,304,88,299,99,296,221,273,342,256,538,239"/>
+<area shape="rect" title=" " alt="" coords="958,299,1101,339"/>
+<area shape="poly" title=" " alt="" coords="654,246,945,296,944,301,653,251"/>
+<area shape="rect" title=" " alt="" coords="1125,299,1267,339"/>
+<area shape="poly" title=" " alt="" coords="654,241,853,261,1111,296,1111,301,852,266,653,247"/>
+<area shape="rect" title=" " alt="" coords="325,306,502,331"/>
+<area shape="poly" title=" " alt="" coords="570,253,454,303,452,298,568,248"/>
+<area shape="rect" title=" " alt="" coords="577,306,727,331"/>
+<area shape="poly" title=" " alt="" coords="606,249,638,293,634,296,602,252"/>
+<area shape="rect" title=" " alt="" coords="751,306,934,331"/>
+<area shape="poly" title=" " alt="" coords="633,248,795,299,793,304,631,253"/>
+<area shape="rect" title=" " alt="" coords="848,460,907,485"/>
+<area shape="poly" title=" " alt="" coords="917,414,894,450,890,447,913,411"/>
+<area shape="rect" title=" " alt="" coords="931,460,1005,485"/>
+<area shape="poly" title=" " alt="" coords="932,411,956,447,951,450,928,414"/>
+<area shape="poly" title=" " alt="" coords="76,329,101,336,205,355,312,369,523,388,710,395,850,396,850,402,710,401,523,393,311,375,204,360,99,341,74,334"/>
+<area shape="rect" title=" " alt="" coords="15,387,78,412"/>
+<area shape="poly" title=" " alt="" coords="49,332,49,373,44,373,44,332"/>
+<area shape="poly" title=" " alt="" coords="804,91,924,103,993,116,1064,135,1133,162,1198,197,1257,241,1282,268,1305,297,1313,319,1311,330,1305,340,1284,356,1253,369,1172,387,1080,396,996,400,996,395,1080,391,1171,381,1251,364,1281,352,1301,337,1306,328,1308,319,1300,300,1278,271,1253,245,1196,201,1131,166,1062,140,992,121,924,108,804,96"/>
+<area shape="rect" title=" " alt="" coords="779,152,839,177"/>
+<area shape="poly" title=" " alt="" coords="728,102,784,142,781,146,725,106"/>
+<area shape="rect" href="utilities_8h.html" title=" " alt="" coords="635,152,755,177"/>
+<area shape="poly" title=" " alt="" coords="711,105,703,139,698,138,705,104"/>
+<area shape="poly" title=" " alt="" coords="680,180,625,219,622,215,677,175"/>
+<area shape="poly" title=" " alt="" coords="755,173,893,196,1059,227,1205,263,1255,280,1282,297,1291,319,1282,340,1263,355,1235,368,1160,385,1075,395,996,399,996,394,1074,389,1159,379,1233,362,1260,351,1278,337,1286,319,1278,300,1253,285,1203,268,1058,233,892,201,754,178"/>
 </map>
 </div>
 </div><div class="textblock"><div class="dynheader">
@@ -153,55 +153,55 @@ This graph shows which files directly or indirectly include this file:</div>
 <div class="dyncontent">
 <div class="center"><img src="shock_8h__dep__incl.png" border="0" usemap="#ashock_8hdep" alt=""/></div>
 <map name="ashock_8hdep" id="ashock_8hdep">
-<area shape="rect" title=" " alt="" coords="272,5,344,31"/>
-<area shape="rect" href="IO_8h.html" title=" " alt="" coords="400,225,448,251"/>
-<area shape="poly" title=" " alt="" coords="310,45,311,73,317,103,334,142,359,176,385,202,410,223,407,227,381,206,355,179,329,145,312,105,306,74,304,45"/>
-<area shape="rect" href="forward-shock_8hpp.html" title=" " alt="" coords="26,152,169,177"/>
-<area shape="poly" title=" " alt="" coords="268,39,229,57,190,81,143,119,110,154,106,150,140,115,186,76,226,53,265,34"/>
-<area shape="rect" href="inverse-compton_8h.html" title=" " alt="" coords="580,79,724,104"/>
-<area shape="poly" title=" " alt="" coords="358,27,597,76,596,81,357,32"/>
-<area shape="rect" href="synchrotron_8h.html" title=" " alt="" coords="369,152,479,177"/>
-<area shape="poly" title=" " alt="" coords="313,44,321,73,335,102,365,130,398,150,395,154,362,135,331,106,316,75,308,45"/>
-<area shape="rect" href="physics_8cpp.html" title=" " alt="" coords="345,79,444,104"/>
-<area shape="poly" title=" " alt="" coords="334,37,382,76,379,81,331,41"/>
-<area shape="rect" href="shock_8cpp.html" title=" " alt="" coords="469,79,555,104"/>
-<area shape="poly" title=" " alt="" coords="354,33,480,76,478,81,353,38"/>
-<area shape="rect" href="simple-shock_8hpp.html" title=" " alt="" coords="137,225,274,251"/>
-<area shape="poly" title=" " alt="" coords="279,41,258,58,241,80,224,119,214,160,208,225,203,225,209,159,219,117,236,77,254,55,276,37"/>
-<area shape="rect" href="IO_8cpp.html" title=" " alt="" coords="385,299,447,324"/>
-<area shape="poly" title=" " alt="" coords="424,265,420,299,415,298,419,264"/>
-<area shape="rect" href="afterglow_8h.html" title=" " alt="" coords="265,299,359,324"/>
-<area shape="poly" title=" " alt="" coords="396,260,332,301,329,296,393,256"/>
-<area shape="rect" href="inverse-compton_8cpp.html" title=" " alt="" coords="523,299,682,324"/>
-<area shape="poly" title=" " alt="" coords="461,251,575,296,573,301,460,256"/>
-<area shape="rect" href="mcmc_8h.html" title=" " alt="" coords="241,372,316,397"/>
-<area shape="poly" title=" " alt="" coords="303,338,286,373,282,371,298,335"/>
-<area shape="rect" href="observer_8h.html" title=" " alt="" coords="340,372,431,397"/>
-<area shape="poly" title=" " alt="" coords="328,332,368,370,365,374,324,336"/>
-<area shape="rect" href="pymodel_8cpp.html" title=" " alt="" coords="5,445,112,471"/>
-<area shape="poly" title=" " alt="" coords="252,323,183,340,148,355,116,374,99,391,84,410,66,446,61,444,80,407,95,387,113,370,146,350,181,335,250,317"/>
-<area shape="rect" href="pymodel_8h.html" title=" " alt="" coords="127,372,217,397"/>
-<area shape="poly" title=" " alt="" coords="279,333,196,374,194,369,276,328"/>
-<area shape="rect" href="synchrotron_8cpp.html" title=" " alt="" coords="455,372,582,397"/>
-<area shape="poly" title=" " alt="" coords="359,326,486,369,484,374,357,331"/>
-<area shape="rect" href="mcmc_8cpp.html" title=" " alt="" coords="254,445,343,471"/>
-<area shape="poly" title=" " alt="" coords="288,410,298,444,293,446,283,411"/>
-<area shape="rect" href="pybind_8cpp.html" title=" " alt="" coords="136,445,229,471"/>
-<area shape="poly" title=" " alt="" coords="254,408,200,447,197,443,251,403"/>
-<area shape="poly" title=" " alt="" coords="369,364,329,326,332,322,373,360"/>
-<area shape="rect" href="observer_8cpp.html" title=" " alt="" coords="367,445,473,471"/>
-<area shape="poly" title=" " alt="" coords="399,409,417,444,412,446,395,411"/>
-<area shape="poly" title=" " alt="" coords="178,411,184,445,178,446,173,412"/>
-<area shape="poly" title=" " alt="" coords="143,407,79,447,76,443,140,403"/>
-<area shape="poly" title=" " alt="" coords="102,190,109,221,116,236,126,249,157,272,193,288,230,299,265,304,264,310,229,304,191,293,154,277,122,253,112,239,104,223,97,192"/>
-<area shape="poly" title=" " alt="" coords="567,108,438,131,386,143,359,154,345,170,334,189,321,230,315,269,314,298,309,298,310,269,316,228,330,186,341,167,356,150,384,138,437,125,566,103"/>
-<area shape="poly" title=" " alt="" coords="669,114,691,157,710,212,716,241,716,271,710,299,697,326,673,349,645,365,613,376,583,382,581,377,612,371,642,361,670,345,693,322,705,298,711,270,710,242,705,213,686,159,664,117"/>
-<area shape="poly" title=" " alt="" coords="649,118,608,299,603,298,644,117"/>
-<area shape="poly" title=" " alt="" coords="603,111,462,154,460,149,601,106"/>
-<area shape="poly" title=" " alt="" coords="427,191,427,225,421,225,421,191"/>
-<area shape="poly" title=" " alt="" coords="409,190,323,300,319,297,404,187"/>
-<area shape="poly" title=" " alt="" coords="442,188,462,224,497,308,518,371,513,373,492,309,458,227,437,190"/>
-<area shape="poly" title=" " alt="" coords="235,256,296,296,293,301,232,260"/>
+<area shape="rect" title=" " alt="" coords="358,5,430,31"/>
+<area shape="rect" href="IO_8h.html" title=" " alt="" coords="166,225,214,251"/>
+<area shape="poly" title=" " alt="" coords="375,43,203,227,199,223,371,39"/>
+<area shape="rect" href="forward-shock_8hpp.html" title=" " alt="" coords="348,225,491,251"/>
+<area shape="poly" title=" " alt="" coords="388,44,376,106,374,141,381,176,394,203,410,223,406,227,389,205,375,178,369,142,370,105,383,43"/>
+<area shape="rect" href="inverse-compton_8h.html" title=" " alt="" coords="19,79,163,104"/>
+<area shape="poly" title=" " alt="" coords="345,34,141,81,139,76,344,28"/>
+<area shape="rect" href="synchrotron_8h.html" title=" " alt="" coords="103,152,213,177"/>
+<area shape="poly" title=" " alt="" coords="345,33,290,52,234,81,213,98,194,118,167,153,163,150,190,114,209,94,231,76,288,47,344,28"/>
+<area shape="rect" href="observer_8h.html" title=" " alt="" coords="390,79,481,104"/>
+<area shape="poly" title=" " alt="" coords="410,41,431,77,426,80,405,44"/>
+<area shape="rect" href="physics_8cpp.html" title=" " alt="" coords="555,79,654,104"/>
+<area shape="poly" title=" " alt="" coords="441,32,571,76,570,81,440,37"/>
+<area shape="rect" href="shock_8cpp.html" title=" " alt="" coords="679,79,765,104"/>
+<area shape="poly" title=" " alt="" coords="444,27,679,78,678,83,443,33"/>
+<area shape="rect" href="simple-shock_8hpp.html" title=" " alt="" coords="572,152,709,177"/>
+<area shape="poly" title=" " alt="" coords="427,36,622,150,620,154,424,40"/>
+<area shape="rect" href="IO_8cpp.html" title=" " alt="" coords="289,299,352,324"/>
+<area shape="poly" title=" " alt="" coords="225,255,301,296,298,301,222,260"/>
+<area shape="rect" href="afterglow_8h.html" title=" " alt="" coords="376,299,471,324"/>
+<area shape="poly" title=" " alt="" coords="228,248,386,296,385,301,226,253"/>
+<area shape="rect" href="inverse-compton_8cpp.html" title=" " alt="" coords="107,299,265,324"/>
+<area shape="poly" title=" " alt="" coords="191,265,189,299,184,298,186,264"/>
+<area shape="rect" href="mcmc_8h.html" title=" " alt="" coords="493,372,567,397"/>
+<area shape="poly" title=" " alt="" coords="453,329,514,370,511,374,450,334"/>
+<area shape="rect" href="pymodel_8cpp.html" title=" " alt="" coords="287,445,394,471"/>
+<area shape="poly" title=" " alt="" coords="400,335,383,353,368,373,353,412,345,446,340,444,347,410,364,371,379,350,396,332"/>
+<area shape="rect" href="pymodel_8h.html" title=" " alt="" coords="378,372,469,397"/>
+<area shape="poly" title=" " alt="" coords="426,338,426,372,421,372,421,338"/>
+<area shape="rect" href="synchrotron_8cpp.html" title=" " alt="" coords="5,372,132,397"/>
+<area shape="poly" title=" " alt="" coords="363,327,126,375,125,369,362,322"/>
+<area shape="rect" href="mcmc_8cpp.html" title=" " alt="" coords="536,445,625,471"/>
+<area shape="poly" title=" " alt="" coords="549,407,575,444,570,447,544,410"/>
+<area shape="rect" href="pybind_8cpp.html" title=" " alt="" coords="418,445,511,471"/>
+<area shape="poly" title=" " alt="" coords="512,409,477,447,473,443,508,406"/>
+<area shape="poly" title=" " alt="" coords="439,408,460,444,456,447,435,411"/>
+<area shape="poly" title=" " alt="" coords="401,408,356,447,352,443,398,404"/>
+<area shape="poly" title=" " alt="" coords="423,264,425,298,420,299,418,265"/>
+<area shape="poly" title=" " alt="" coords="138,107,182,125,226,150,260,175,283,198,306,221,337,249,406,296,403,301,334,253,302,225,279,201,256,179,223,154,180,130,136,112"/>
+<area shape="poly" title=" " alt="" coords="89,118,83,152,74,281,71,372,66,372,69,280,78,152,83,117"/>
+<area shape="poly" title=" " alt="" coords="89,118,88,147,93,177,109,214,132,247,175,297,171,300,128,251,105,216,87,178,83,147,84,118"/>
+<area shape="poly" title=" " alt="" coords="114,113,149,150,145,154,110,116"/>
+<area shape="poly" title=" " alt="" coords="171,189,187,224,182,226,166,191"/>
+<area shape="poly" title=" " alt="" coords="185,183,231,215,285,248,341,275,392,296,390,301,339,280,282,253,228,220,182,188"/>
+<area shape="poly" title=" " alt="" coords="148,191,123,240,96,300,74,372,69,371,92,298,118,238,143,188"/>
+<area shape="poly" title=" " alt="" coords="471,109,493,127,510,151,512,164,510,177,513,215,512,232,504,252,479,281,450,301,447,296,476,277,500,249,507,231,507,216,505,177,507,164,505,153,489,131,467,113"/>
+<area shape="rect" href="observer_8cpp.html" title=" " alt="" coords="391,152,496,177"/>
+<area shape="poly" title=" " alt="" coords="441,117,445,152,439,152,436,118"/>
+<area shape="poly" title=" " alt="" coords="624,190,593,222,554,253,504,281,457,301,455,296,502,276,551,248,589,218,620,186"/>
 </map>
 </div>
 </div>
@@ -353,18 +353,19 @@ Here is the call graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="shock_8h_a4bdfde6dc952db299a39011d15d27413_cgraph.png" border="0" usemap="#ashock_8h_a4bdfde6dc952db299a39011d15d27413_cgraph" alt=""/></div>
 <map name="ashock_8h_a4bdfde6dc952db299a39011d15d27413_cgraph" id="ashock_8h_a4bdfde6dc952db299a39011d15d27413_cgraph">
-<area shape="rect" title="Computes the ratio of upstream to downstream four&#45;velocity across the shock front." alt="" coords="5,67,160,92"/>
-<area shape="rect" href="shock_8cpp.html#a09f75d8bc0c1cd36d03a413edd7283d8" title="Computes the downstream four&#45;velocity for a given relative Lorentz factor and magnetization parameter..." alt="" coords="208,16,381,41"/>
-<area shape="poly" title=" " alt="" coords="136,64,227,42,228,47,137,69"/>
-<area shape="rect" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42" title="Returns the value of a single parameter." alt="" coords="459,79,509,104"/>
-<area shape="poly" title=" " alt="" coords="160,79,445,88,445,93,160,84"/>
-<area shape="rect" href="shock_8h.html#ab0d0c4b81c0c5525c81eb24d70c4b010" title="Computes the upstream four&#45;velocity from downstream four&#45;velocity and relative Lorentz factor." alt="" coords="217,117,372,143"/>
-<area shape="poly" title=" " alt="" coords="137,90,228,112,227,117,136,95"/>
-<area shape="rect" href="physics_8h.html#a2a95c6b3f1236d69328af7199a772a23" title="Computes adiabatic index as a function of the Lorentz factor." alt="" coords="429,5,539,31"/>
-<area shape="poly" title=" " alt="" coords="382,21,415,19,416,25,382,26"/>
-<area shape="poly" title=" " alt="" coords="335,39,447,76,445,81,333,44"/>
-<area shape="poly" title=" " alt="" coords="457,83,447,73,448,62,461,55,484,52,514,57,521,64,522,71,516,71,516,66,512,62,484,57,463,60,453,65,452,71,460,79"/>
-<area shape="poly" title=" " alt="" coords="357,115,445,97,446,102,358,120"/>
+<area shape="rect" title="Computes the ratio of upstream to downstream four&#45;velocity across the shock front." alt="" coords="5,107,160,132"/>
+<area shape="rect" href="shock_8cpp.html#a09f75d8bc0c1cd36d03a413edd7283d8" title="Computes the downstream four&#45;velocity for a given relative Lorentz factor and magnetization parameter..." alt="" coords="208,56,381,81"/>
+<area shape="poly" title=" " alt="" coords="136,104,227,82,228,87,137,109"/>
+<area shape="rect" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42" title="Returns the value of a single parameter." alt="" coords="632,81,683,107"/>
+<area shape="poly" title=" " alt="" coords="160,113,618,93,618,98,161,119"/>
+<area shape="rect" href="shock_8h.html#ab0d0c4b81c0c5525c81eb24d70c4b010" title="Computes the upstream four&#45;velocity from downstream four&#45;velocity and relative Lorentz factor." alt="" coords="429,157,584,183"/>
+<area shape="poly" title=" " alt="" coords="161,129,208,135,416,159,415,164,208,141,160,134"/>
+<area shape="rect" href="physics_8h.html#a2a95c6b3f1236d69328af7199a772a23" title="Computes adiabatic index as a function of the Lorentz factor." alt="" coords="452,5,561,31"/>
+<area shape="poly" title=" " alt="" coords="348,53,439,31,440,36,349,58"/>
+<area shape="poly" title=" " alt="" coords="382,72,619,89,618,94,382,77"/>
+<area shape="poly" title=" " alt="" coords="543,28,585,48,627,72,624,76,583,52,540,33"/>
+<area shape="poly" title=" " alt="" coords="632,83,627,73,630,63,640,57,657,55,678,58,687,67,683,71,675,63,657,60,642,62,634,67,632,72,637,80"/>
+<area shape="poly" title=" " alt="" coords="540,155,583,136,624,112,627,116,585,140,543,160"/>
 </map>
 </div>
 <div class="dynheader">
@@ -613,24 +614,25 @@ Here is the call graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="shock_8h_a56526dae2aafc8713048d8f3297afa78_cgraph.png" border="0" usemap="#ashock_8h_a56526dae2aafc8713048d8f3297afa78_cgraph" alt=""/></div>
 <map name="ashock_8h_a56526dae2aafc8713048d8f3297afa78_cgraph" id="ashock_8h_a56526dae2aafc8713048d8f3297afa78_cgraph">
-<area shape="rect" title="Computes the compression ratio across the shock." alt="" coords="5,157,175,183"/>
-<area shape="rect" href="shock_8h.html#a4bdfde6dc952db299a39011d15d27413" title="Computes the ratio of upstream to downstream four&#45;velocity across the shock front." alt="" coords="227,81,381,107"/>
-<area shape="poly" title=" " alt="" coords="126,155,254,109,256,114,128,160"/>
-<area shape="rect" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42" title="Returns the value of a single parameter." alt="" coords="684,107,735,132"/>
-<area shape="poly" title=" " alt="" coords="175,168,372,162,490,154,606,141,670,127,671,132,607,146,490,159,373,167,175,173"/>
-<area shape="rect" href="shock_8h.html#a7b72b7c46b478ce3d1a15677c5046dcb" title="Computes the relative Lorentz factor between two frames with given Lorentz factors." alt="" coords="223,208,385,233"/>
-<area shape="poly" title=" " alt="" coords="145,180,237,202,236,207,144,185"/>
-<area shape="rect" href="shock_8cpp.html#a09f75d8bc0c1cd36d03a413edd7283d8" title="Computes the downstream four&#45;velocity for a given relative Lorentz factor and magnetization parameter..." alt="" coords="433,5,607,31"/>
-<area shape="poly" title=" " alt="" coords="340,79,469,33,471,38,342,84"/>
-<area shape="poly" title=" " alt="" coords="382,86,489,84,607,91,671,105,670,110,606,97,489,90,382,92"/>
-<area shape="rect" href="shock_8h.html#ab0d0c4b81c0c5525c81eb24d70c4b010" title="Computes the upstream four&#45;velocity from downstream four&#45;velocity and relative Lorentz factor." alt="" coords="443,107,597,132"/>
-<area shape="poly" title=" " alt="" coords="382,100,429,106,429,111,381,106"/>
-<area shape="rect" href="physics_8h.html#a2a95c6b3f1236d69328af7199a772a23" title="Computes adiabatic index as a function of the Lorentz factor." alt="" coords="655,5,764,31"/>
-<area shape="poly" title=" " alt="" coords="607,15,641,15,641,21,607,21"/>
-<area shape="poly" title=" " alt="" coords="562,28,608,48,648,72,683,96,680,101,645,76,605,52,560,33"/>
-<area shape="poly" title=" " alt="" coords="682,111,672,101,674,90,687,83,709,80,739,85,746,92,747,99,742,99,742,94,737,90,709,85,688,88,678,93,677,99,686,107"/>
-<area shape="poly" title=" " alt="" coords="598,117,670,117,670,122,598,122"/>
-<area shape="poly" title=" " alt="" coords="386,220,492,213,550,202,606,186,648,165,682,139,685,143,650,169,608,191,551,208,493,218,386,225"/>
+<area shape="rect" title="Computes the compression ratio across the shock." alt="" coords="5,208,175,233"/>
+<area shape="rect" href="shock_8h.html#a4bdfde6dc952db299a39011d15d27413" title="Computes the ratio of upstream to downstream four&#45;velocity across the shock front." alt="" coords="223,132,377,157"/>
+<area shape="poly" title=" " alt="" coords="125,205,250,160,252,165,127,210"/>
+<area shape="rect" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42" title="Returns the value of a single parameter." alt="" coords="857,132,908,157"/>
+<area shape="poly" title=" " alt="" coords="175,219,299,217,458,210,634,193,722,180,809,163,843,154,845,159,810,169,723,185,634,198,458,215,299,223,175,224"/>
+<area shape="rect" href="shock_8h.html#a7b72b7c46b478ce3d1a15677c5046dcb" title="Computes the relative Lorentz factor between two frames with given Lorentz factors." alt="" coords="647,259,809,284"/>
+<area shape="poly" title=" " alt="" coords="174,231,223,237,443,255,633,265,633,270,443,260,222,242,173,236"/>
+<area shape="rect" href="shock_8cpp.html#a09f75d8bc0c1cd36d03a413edd7283d8" title="Computes the downstream four&#45;velocity for a given relative Lorentz factor and magnetization parameter..." alt="" coords="425,56,599,81"/>
+<area shape="poly" title=" " alt="" coords="335,129,462,84,463,89,337,134"/>
+<area shape="poly" title=" " alt="" coords="377,138,573,132,809,135,843,138,843,143,809,141,573,138,378,144"/>
+<area shape="rect" href="shock_8h.html#ab0d0c4b81c0c5525c81eb24d70c4b010" title="Computes the upstream four&#45;velocity from downstream four&#45;velocity and relative Lorentz factor." alt="" coords="435,157,589,183"/>
+<area shape="poly" title=" " alt="" coords="378,151,422,157,421,162,377,157"/>
+<area shape="rect" href="physics_8h.html#a2a95c6b3f1236d69328af7199a772a23" title="Computes adiabatic index as a function of the Lorentz factor." alt="" coords="673,5,783,31"/>
+<area shape="poly" title=" " alt="" coords="567,53,659,31,661,36,568,58"/>
+<area shape="poly" title=" " alt="" coords="599,65,702,74,757,83,810,98,856,122,853,127,808,103,756,89,701,79,599,71"/>
+<area shape="poly" title=" " alt="" coords="775,28,811,48,845,83,870,119,866,122,841,86,808,52,772,33"/>
+<area shape="poly" title=" " alt="" coords="857,133,851,124,854,114,865,108,883,105,904,109,913,117,909,121,902,114,883,111,867,113,858,117,856,123,861,131"/>
+<area shape="poly" title=" " alt="" coords="589,162,844,145,844,150,590,167"/>
+<area shape="poly" title=" " alt="" coords="772,256,808,237,841,203,866,168,870,171,845,207,811,241,775,261"/>
 </map>
 </div>
 
@@ -790,12 +792,13 @@ Here is the call graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="shock_8h_a09f75d8bc0c1cd36d03a413edd7283d8_cgraph.png" border="0" usemap="#ashock_8h_a09f75d8bc0c1cd36d03a413edd7283d8_cgraph" alt=""/></div>
 <map name="ashock_8h_a09f75d8bc0c1cd36d03a413edd7283d8_cgraph" id="ashock_8h_a09f75d8bc0c1cd36d03a413edd7283d8_cgraph">
-<area shape="rect" title="Computes the downstream four&#45;velocity for a given relative Lorentz factor and magnetization parameter..." alt="" coords="5,43,179,68"/>
+<area shape="rect" title="Computes the downstream four&#45;velocity for a given relative Lorentz factor and magnetization parameter..." alt="" coords="5,31,179,56"/>
 <area shape="rect" href="physics_8h.html#a2a95c6b3f1236d69328af7199a772a23" title="Computes adiabatic index as a function of the Lorentz factor." alt="" coords="227,5,336,31"/>
-<area shape="poly" title=" " alt="" coords="157,40,212,29,213,34,158,45"/>
-<area shape="rect" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42" title="Returns the value of a single parameter." alt="" coords="256,79,307,104"/>
-<area shape="poly" title=" " alt="" coords="160,65,243,81,242,87,159,71"/>
-<area shape="poly" title=" " alt="" coords="254,83,244,73,246,62,259,55,281,52,311,57,318,64,319,71,314,71,314,66,309,62,281,57,260,60,250,65,249,71,258,79"/>
+<area shape="poly" title=" " alt="" coords="179,29,212,24,213,30,179,34"/>
+<area shape="rect" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42" title="Returns the value of a single parameter." alt="" coords="384,31,435,56"/>
+<area shape="poly" title=" " alt="" coords="179,41,371,41,371,46,179,46"/>
+<area shape="poly" title=" " alt="" coords="337,26,371,33,370,38,336,31"/>
+<area shape="poly" title=" " alt="" coords="387,32,383,22,385,13,394,6,409,4,427,7,435,16,431,19,424,12,409,9,396,11,390,16,388,22,392,29"/>
 </map>
 </div>
 <div class="dynheader">
@@ -1680,15 +1683,16 @@ Here is the call graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="shock_8h_a17e2ac26fbfde30e15374d8aed124d7c_cgraph.png" border="0" usemap="#ashock_8h_a17e2ac26fbfde30e15374d8aed124d7c_cgraph" alt=""/></div>
 <map name="ashock_8h_a17e2ac26fbfde30e15374d8aed124d7c_cgraph" id="ashock_8h_a17e2ac26fbfde30e15374d8aed124d7c_cgraph">
-<area shape="rect" title="Computes the rate at which the shock shell spreads in the comoving frame." alt="" coords="5,53,227,79"/>
-<area shape="rect" href="shock_8h.html#a55391189d6bdd1e0ddbc2d039424a0cc" title="Computes the sound speed in the shocked medium based on the relative Lorentz factor." alt="" coords="275,28,445,53"/>
-<area shape="poly" title=" " alt="" coords="226,52,261,48,261,54,227,57"/>
-<area shape="rect" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42" title="Returns the value of a single parameter." alt="" coords="523,79,573,104"/>
-<area shape="poly" title=" " alt="" coords="227,70,509,86,509,92,227,75"/>
+<area shape="rect" title="Computes the rate at which the shock shell spreads in the comoving frame." alt="" coords="5,81,227,107"/>
+<area shape="rect" href="shock_8h.html#a55391189d6bdd1e0ddbc2d039424a0cc" title="Computes the sound speed in the shocked medium based on the relative Lorentz factor." alt="" coords="275,56,445,81"/>
+<area shape="poly" title=" " alt="" coords="226,80,261,76,261,82,227,85"/>
+<area shape="rect" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42" title="Returns the value of a single parameter." alt="" coords="651,56,701,81"/>
+<area shape="poly" title=" " alt="" coords="227,94,333,95,445,91,549,82,637,71,637,77,550,88,445,97,333,100,227,100"/>
 <area shape="rect" href="physics_8h.html#a2a95c6b3f1236d69328af7199a772a23" title="Computes adiabatic index as a function of the Lorentz factor." alt="" coords="493,5,603,31"/>
-<area shape="poly" title=" " alt="" coords="446,28,479,24,480,29,446,33"/>
-<area shape="poly" title=" " alt="" coords="409,51,510,79,509,84,407,56"/>
-<area shape="poly" title=" " alt="" coords="520,83,511,72,513,62,526,55,548,52,577,57,584,63,585,70,580,71,580,66,575,62,548,57,527,60,517,65,516,71,524,79"/>
+<area shape="poly" title=" " alt="" coords="407,53,486,32,488,37,409,58"/>
+<area shape="poly" title=" " alt="" coords="446,66,637,66,637,71,446,71"/>
+<area shape="poly" title=" " alt="" coords="582,28,639,51,637,56,580,33"/>
+<area shape="poly" title=" " alt="" coords="654,57,649,48,652,38,661,32,676,29,694,33,702,41,698,45,691,37,676,35,663,37,656,41,655,47,659,55"/>
 </map>
 </div>
 
@@ -1799,12 +1803,13 @@ Here is the call graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="shock_8h_a55391189d6bdd1e0ddbc2d039424a0cc_cgraph.png" border="0" usemap="#ashock_8h_a55391189d6bdd1e0ddbc2d039424a0cc_cgraph" alt=""/></div>
 <map name="ashock_8h_a55391189d6bdd1e0ddbc2d039424a0cc_cgraph" id="ashock_8h_a55391189d6bdd1e0ddbc2d039424a0cc_cgraph">
-<area shape="rect" title="Computes the sound speed in the shocked medium based on the relative Lorentz factor." alt="" coords="5,43,176,68"/>
+<area shape="rect" title="Computes the sound speed in the shocked medium based on the relative Lorentz factor." alt="" coords="5,31,176,56"/>
 <area shape="rect" href="physics_8h.html#a2a95c6b3f1236d69328af7199a772a23" title="Computes adiabatic index as a function of the Lorentz factor." alt="" coords="224,5,333,31"/>
-<area shape="poly" title=" " alt="" coords="155,40,210,29,211,34,156,45"/>
-<area shape="rect" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42" title="Returns the value of a single parameter." alt="" coords="253,79,304,104"/>
-<area shape="poly" title=" " alt="" coords="158,65,240,81,239,87,157,71"/>
-<area shape="poly" title=" " alt="" coords="251,83,242,72,244,62,256,55,279,52,308,57,315,63,316,70,311,71,310,66,305,62,279,57,258,60,248,65,247,71,255,79"/>
+<area shape="poly" title=" " alt="" coords="176,29,210,25,211,30,177,34"/>
+<area shape="rect" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42" title="Returns the value of a single parameter." alt="" coords="381,31,432,56"/>
+<area shape="poly" title=" " alt="" coords="176,41,368,41,368,46,176,46"/>
+<area shape="poly" title=" " alt="" coords="334,26,368,33,367,38,333,31"/>
+<area shape="poly" title=" " alt="" coords="385,32,380,22,382,13,392,6,407,4,424,7,432,16,428,19,422,12,407,9,394,11,387,16,385,22,389,29"/>
 </map>
 </div>
 <div class="dynheader">
@@ -2174,7 +2179,7 @@ Here is the call graph for this function:</div>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_d44c64559bbebec7f509842c48db8b23.html">include</a></li><li class="navelem"><a class="el" href="shock_8h.html">shock.h</a></li>
+    <li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><a class="el" href="dir_261425c25055ac4a48b7253766e15e1a.html">dynamics</a></li><li class="navelem"><a class="el" href="shock_8h.html">shock.h</a></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8 </li>
   </ul>
 </div>

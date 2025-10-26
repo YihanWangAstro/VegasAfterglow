@@ -1,0 +1,5 @@
+<map id="compute_gamma_c" name="compute_gamma_c">
+<area shape="rect" id="Node000001" title="Calculates a cooling Lorentz factor based on comoving time, magnetic field, and IC parameters." alt="" coords="231,5,381,31"/>
+<area shape="rect" id="Node000002" href="$synchrotron_8cpp.html#aad9e6e41fee6cbff0952e1d343b890f5" title="Populates an existing electron grid with values based on shock parameters." alt="" coords="5,5,183,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="217,21,183,21,183,15,217,15"/>
+</map>

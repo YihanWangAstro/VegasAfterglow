@@ -6,7 +6,7 @@ var searchData=
   ['pow43_3',['pow43',['../utilities_8h.html#ae490b13fdcc1b917ecdd08c0cecf3556',1,'utilities.h']]],
   ['pow52_4',['pow52',['../utilities_8h.html#a0becc9a5c35cc2648c3d65c88790caf8',1,'utilities.h']]],
   ['powerlawjet_5',['PowerLawJet',['../classPowerLawJet.html#aa990b4da203279631440b271b0338257',1,'PowerLawJet']]],
-  ['print_5farray_6',['print_array',['../utilities_8h.html#adf1fcdf083723d530f051255c2e395d9',1,'print_array(Array const &amp;arr):&#160;utilities.cpp'],['../utilities_8cpp.html#adf1fcdf083723d530f051255c2e395d9',1,'print_array(Array const &amp;arr):&#160;utilities.cpp']]],
+  ['print_5farray_6',['print_array',['../utilities_8cpp.html#adf1fcdf083723d530f051255c2e395d9',1,'print_array(Array const &amp;arr):&#160;utilities.cpp'],['../utilities_8h.html#adf1fcdf083723d530f051255c2e395d9',1,'print_array(Array const &amp;arr):&#160;utilities.cpp']]],
   ['pybind11_5fmodule_7',['PYBIND11_MODULE',['../pybind_8cpp.html#a8c92987849ad296e28ec6c07c8e7860b',1,'pybind.cpp']]],
   ['pygaussianjet_8',['pygaussianjet',['../pymodel_8h.html#aef695288c4dfdbaaf71fcd2ed8fb3e3e',1,'PyGaussianJet(Real theta_c, Real E_iso, Real Gamma0, bool spreading=false, Real duration=1, const std::optional&lt; PyMagnetar &gt; &amp;magnetar=std::nullopt):&#160;pymodel.cpp'],['../pymodel_8cpp.html#aeb4fc9d5286c8464177e8e5ab220c0f4',1,'PyGaussianJet(Real theta_c, Real E_iso, Real Gamma0, bool spreading, Real duration, const std::optional&lt; PyMagnetar &gt; &amp;magnetar):&#160;pymodel.cpp']]],
   ['pyism_9',['pyism',['../pymodel_8h.html#a43af01d16838e6513792deaeb727fbe5',1,'PyISM(Real n_ism):&#160;pymodel.cpp'],['../pymodel_8cpp.html#a43af01d16838e6513792deaeb727fbe5',1,'PyISM(Real n_ism):&#160;pymodel.cpp']]],

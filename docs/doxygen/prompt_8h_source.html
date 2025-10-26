@@ -108,8 +108,8 @@ $(document).ready(function(){initNavTree('prompt_8h_source.html',''); initResiza
 <div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span> </div>
 <div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span><span class="preprocessor">#pragma once</span></div>
 <div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span> </div>
-<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span><span class="preprocessor">#include &quot;<a class="code" href="mesh_8h.html">mesh.h</a>&quot;</span></div>
-<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span><span class="preprocessor">#include &quot;<a class="code" href="physics_8h.html">physics.h</a>&quot;</span></div>
+<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span><span class="preprocessor">#include &quot;../core/mesh.h&quot;</span></div>
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span><span class="preprocessor">#include &quot;../core/physics.h&quot;</span></div>
 <div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span> </div>
 <div class="foldopen" id="foldopen00013" data-start="{" data-end="};">
 <div class="line"><a id="l00013" name="l00013"></a><span class="lineno"><a class="line" href="structPromptPhotons.html">   13</a></span><span class="keyword">struct </span><a class="code hl_struct" href="structPromptPhotons.html">PromptPhotons</a> {</div>
@@ -182,10 +182,8 @@ $(document).ready(function(){initNavTree('prompt_8h_source.html',''); initResiza
 <div class="ttc" id="aclassEjecta_html_a1952705ec5647300cd09255dcfc786cd"><div class="ttname"><a href="classEjecta.html#a1952705ec5647300cd09255dcfc786cd">Ejecta::eps_k</a></div><div class="ttdeci">BinaryFunc eps_k</div><div class="ttdoc">Initial energy per unit solid angle as a function of (phi, theta)</div><div class="ttdef"><b>Definition</b> <a href="jet_8h_source.html#l00050">jet.h:50</a></div></div>
 <div class="ttc" id="aclassEjecta_html_a6993f0ec67bf03b7c80e9a7c10e65640"><div class="ttname"><a href="classEjecta.html#a6993f0ec67bf03b7c80e9a7c10e65640">Ejecta::Gamma0</a></div><div class="ttdeci">BinaryFunc Gamma0</div><div class="ttdoc">Lorentz factor profile in the ejecta as a function of (phi, theta) Default is uniform (one) across al...</div><div class="ttdef"><b>Definition</b> <a href="jet_8h_source.html#l00054">jet.h:54</a></div></div>
 <div class="ttc" id="amacros_8h_html_a4b04262b81aa7d31eb5d2f607e2a35de"><div class="ttname"><a href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a></div><div class="ttdeci">double Real</div><div class="ttdoc">Type alias for floating-point precision used throughout the code.</div><div class="ttdef"><b>Definition</b> <a href="macros_8h_source.html#l00022">macros.h:22</a></div></div>
-<div class="ttc" id="amesh_8h_html"><div class="ttname"><a href="mesh_8h.html">mesh.h</a></div></div>
 <div class="ttc" id="amesh_8h_html_a6b76cc05bedc7fd9499c0bd3eec3bcb5"><div class="ttname"><a href="mesh_8h.html#a6b76cc05bedc7fd9499c0bd3eec3bcb5">MeshGrid3d</a></div><div class="ttdeci">xt::xtensor&lt; Real, 3 &gt; MeshGrid3d</div><div class="ttdoc">Type alias for 3D grids (e.g., full spatial-temporal data)</div><div class="ttdef"><b>Definition</b> <a href="mesh_8h_source.html#l00038">mesh.h:38</a></div></div>
 <div class="ttc" id="anamespacecon_html_a2ff3edf57629ccb9a49d5bde7278a7c4"><div class="ttname"><a href="namespacecon.html#a2ff3edf57629ccb9a49d5bde7278a7c4">con::c</a></div><div class="ttdeci">constexpr Real c</div><div class="ttdoc">Speed of light (normalized to 1 in code units)</div><div class="ttdef"><b>Definition</b> <a href="macros_8h_source.html#l00085">macros.h:85</a></div></div>
-<div class="ttc" id="aphysics_8h_html"><div class="ttname"><a href="physics_8h.html">physics.h</a></div></div>
 <div class="ttc" id="aphysics_8h_html_ab8aa624dd63313487d8f5ecf52170d76"><div class="ttname"><a href="physics_8h.html#ab8aa624dd63313487d8f5ecf52170d76">gamma_to_beta</a></div><div class="ttdeci">Real gamma_to_beta(Real gamma)</div><div class="ttdoc">Converts Lorentz factor (gamma) to a velocity fraction (beta)</div><div class="ttdef"><b>Definition</b> <a href="physics_8h_source.html#l00117">physics.h:117</a></div></div>
 <div class="ttc" id="aprompt_8h_html_a179563049db5bed00a5663ff3932eed4"><div class="ttname"><a href="prompt_8h.html#a179563049db5bed00a5663ff3932eed4">gen_prompt_photons</a></div><div class="ttdeci">PromptPhotonsGrid gen_prompt_photons(CoastingShock const &amp;shock, Real R0, Real nu_0, Real alpha)</div><div class="ttdef"><b>Definition</b> <a href="prompt_8cpp_source.html#l00019">prompt.cpp:19</a></div></div>
 <div class="ttc" id="aprompt_8h_html_a2abf283a7169e39103fb128d439a8b0e"><div class="ttname"><a href="prompt_8h.html#a2abf283a7169e39103fb128d439a8b0e">PromptPhotonsGrid</a></div><div class="ttdeci">xt::xtensor&lt; PromptPhotons, 3 &gt; PromptPhotonsGrid</div><div class="ttdef"><b>Definition</b> <a href="prompt_8h_source.html#l00021">prompt.h:21</a></div></div>
@@ -201,7 +199,7 @@ $(document).ready(function(){initNavTree('prompt_8h_source.html',''); initResiza
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_d44c64559bbebec7f509842c48db8b23.html">include</a></li><li class="navelem"><a class="el" href="prompt_8h.html">prompt.h</a></li>
+    <li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><a class="el" href="dir_4ecbb2552d02e976219f567964484fc4.html">radiation</a></li><li class="navelem"><a class="el" href="prompt_8h.html">prompt.h</a></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8 </li>
   </ul>
 </div>

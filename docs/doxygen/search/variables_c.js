@@ -10,7 +10,7 @@ var searchData=
   ['mass_5finject_7',['mass_inject',['../structForwardState.html#aa2b63d1b9c3203d9d7893c5985bdb05d',1,'ForwardState::mass_inject'],['../structReverseState.html#ae3b292a9eef86310c4b52b806203ee1d',1,'ReverseState::mass_inject'],['../structSimpleState.html#abab27aff4431a6c6c69ef4b5af7ea6d4',1,'SimpleState::mass_inject']]],
   ['me_8',['me',['../namespacecon.html#a740c8edb3d4f2d904a1c76002f84fb7e',1,'con']]],
   ['mec2_9',['mec2',['../namespacecon.html#ae1b8cddbe12f755f5d01b86b0e2b9e14',1,'con']]],
-  ['medium_10',['medium',['../classSimpleShockEqn.html#a542dc5b45178ca91cf1dabfc4cfa9829',1,'SimpleShockEqn::medium'],['../structConfigParams.html#aac924ce1108981926235f565f75d75fe',1,'ConfigParams::medium'],['../classFRShockEqn.html#a516430d788da457f99a0a9f913c4555c',1,'FRShockEqn::medium'],['../classForwardShockEqn.html#a0bec65b319edbb6294eee8057370be57',1,'ForwardShockEqn::medium']]],
+  ['medium_10',['medium',['../classFRShockEqn.html#a516430d788da457f99a0a9f913c4555c',1,'FRShockEqn::medium'],['../classSimpleShockEqn.html#a542dc5b45178ca91cf1dabfc4cfa9829',1,'SimpleShockEqn::medium'],['../classForwardShockEqn.html#a0bec65b319edbb6294eee8057370be57',1,'ForwardShockEqn::medium'],['../structConfigParams.html#aac924ce1108981926235f565f75d75fe',1,'ConfigParams::medium']]],
   ['mev_11',['MeV',['../namespaceunit.html#a2eb22b37aa30bd73b34bc228f7229115',1,'unit']]],
   ['min_5fobs_5ftime_12',['min_obs_time',['../namespacecon.html#a567e367066c9354a3cb44b696905b2a0',1,'con']]],
   ['mjy_13',['mJy',['../namespaceunit.html#acb88ce91365dfa4148e22780a7d6a0c0',1,'unit']]],

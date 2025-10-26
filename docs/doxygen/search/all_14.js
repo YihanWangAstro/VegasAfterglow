@@ -8,10 +8,12 @@ var searchData=
   ['unit_5',['unit',['../namespaceunit.html',1,'']]],
   ['update_20and_20parameter_20calculation_6',['Synchrotron Update and Parameter Calculation',['../group__SynchrotronUpdates.html',1,'']]],
   ['update_5fconstant_7',['update_constant',['../structSynPhotons.html#a631859af4fe11f0312e78f2fbaa39e80',1,'SynPhotons']]],
-  ['update_5felectrons_5f4y_8',['update_electrons_4y',['../synchrotron_8h.html#af56f9b4417a5f3e717102da3e81a7d37',1,'update_electrons_4Y(SynElectronGrid &amp;electrons, Shock const &amp;shock):&#160;synchrotron.cpp'],['../synchrotron_8cpp.html#af56f9b4417a5f3e717102da3e81a7d37',1,'update_electrons_4Y(SynElectronGrid &amp;electrons, Shock const &amp;shock):&#160;synchrotron.cpp']]],
-  ['update_5frequired_9',['update_required',['../classObserver.html#a90f4a0a86f9e4a702cfc3a13e7c9c153',1,'Observer']]],
-  ['utilities_10',['utilities',['../group__Mesh__Utilities.html',1,'Array and Grid Utilities'],['../group__ShockUtilities.html',1,'Shock Utilities']]],
-  ['utilities_2ecpp_11',['utilities.cpp',['../utilities_8cpp.html',1,'']]],
-  ['utilities_2eh_12',['utilities.h',['../utilities_8h.html',1,'']]],
-  ['utility_20templates_13',['Utility Templates',['../group__UtilityTemplates.html',1,'']]]
+  ['update_5fgamma_5fc_5fkn_8',['update_gamma_c_kn',['../inverse-compton_8cpp.html#a123b8a046ab05711271a4cf3803e2ec9',1,'update_gamma_c_KN(Real &amp;gamma_c, InverseComptonY &amp;Ys, RadParams const &amp;rad, Real B, Real t_com, Real gamma_m):&#160;inverse-compton.cpp'],['../inverse-compton_8h.html#a123b8a046ab05711271a4cf3803e2ec9',1,'update_gamma_c_KN(Real &amp;gamma_c, InverseComptonY &amp;Ys, RadParams const &amp;rad, Real B, Real t_com, Real gamma_m):&#160;inverse-compton.cpp']]],
+  ['update_5fgamma_5fc_5fthomson_9',['update_gamma_c_thomson',['../inverse-compton_8cpp.html#a64fc9fc684b46654d0c18556f19c8b36',1,'update_gamma_c_Thomson(Real &amp;gamma_c, InverseComptonY &amp;Ys, RadParams const &amp;rad, Real B, Real t_com, Real gamma_m):&#160;inverse-compton.cpp'],['../inverse-compton_8h.html#a64fc9fc684b46654d0c18556f19c8b36',1,'update_gamma_c_Thomson(Real &amp;gamma_c, InverseComptonY &amp;Ys, RadParams const &amp;rad, Real B, Real t_com, Real gamma_m):&#160;inverse-compton.cpp']]],
+  ['update_5fgamma_5fm_10',['update_gamma_m',['../inverse-compton_8cpp.html#a1595a8694782ca55acc136e79089e784',1,'update_gamma_M(Real &amp;gamma_M, InverseComptonY const &amp;Ys, Real p, Real B):&#160;inverse-compton.cpp'],['../inverse-compton_8h.html#a1595a8694782ca55acc136e79089e784',1,'update_gamma_M(Real &amp;gamma_M, InverseComptonY const &amp;Ys, Real p, Real B):&#160;inverse-compton.cpp']]],
+  ['update_5frequired_11',['update_required',['../classObserver.html#a90f4a0a86f9e4a702cfc3a13e7c9c153',1,'Observer']]],
+  ['utilities_12',['utilities',['../group__Mesh__Utilities.html',1,'Array and Grid Utilities'],['../group__ShockUtilities.html',1,'Shock Utilities']]],
+  ['utilities_2ecpp_13',['utilities.cpp',['../utilities_8cpp.html',1,'']]],
+  ['utilities_2eh_14',['utilities.h',['../utilities_8h.html',1,'']]],
+  ['utility_20templates_15',['Utility Templates',['../group__UtilityTemplates.html',1,'']]]
 ];

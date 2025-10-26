@@ -1,6 +1,0 @@
-<map id="PyWind" name="PyWind">
-<area shape="rect" id="Node000001" title="Creates a stellar wind environment with r^(&#45;2) density profile." alt="" coords="5,29,76,55"/>
-<area shape="rect" id="Node000002" href="$utilities_8h.html#ab8e81118f023df135835db8cce4f5f42" title="Returns the value of a single parameter." alt="" coords="124,29,175,55"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="76,39,110,39,110,45,76,45"/>
-<area shape="poly" id="edge2_Node000002_Node000002" title=" " alt="" coords="130,30,127,21,129,12,137,5,149,3,164,6,171,14,167,18,161,11,149,8,139,10,133,14,132,20,135,28"/>
-</map>

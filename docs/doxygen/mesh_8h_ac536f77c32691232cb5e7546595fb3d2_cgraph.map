@@ -1,6 +1,0 @@
-<map id="boundary_to_center_log" name="boundary_to_center_log">
-<area shape="rect" id="Node000001" title="Converts boundary values to center values using geometric mean." alt="" coords="5,29,184,55"/>
-<area shape="rect" id="Node000002" href="$utilities_8h.html#ab8e81118f023df135835db8cce4f5f42" title="Returns the value of a single parameter." alt="" coords="232,29,283,55"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="184,39,218,39,218,45,184,45"/>
-<area shape="poly" id="edge2_Node000002_Node000002" title=" " alt="" coords="230,31,224,21,227,11,239,5,257,3,280,6,289,15,286,19,277,11,257,8,240,10,231,15,230,20,235,28"/>
-</map>

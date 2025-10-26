@@ -1,8 +1,5 @@
 <map id="MultiBandModel::MultiBandModel" name="MultiBandModel::MultiBandModel">
-<area shape="rect" id="Node000001" title="Construct MCMC model interface with observational dataset." alt="" coords="5,22,208,62"/>
-<area shape="rect" id="Node000002" href="$structMultiBandData.html#ad2ade97dd269ab683c9fc6716dc0cdea" title="Populate consolidated data arrays from individual FluxData objects." alt="" coords="256,22,399,62"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="208,39,242,39,242,45,208,45"/>
-<area shape="rect" id="Node000003" href="$utilities_8h.html#ab8e81118f023df135835db8cce4f5f42" title="Returns the value of a single parameter." alt="" coords="447,29,497,55"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="399,39,433,39,433,45,399,45"/>
-<area shape="poly" id="edge3_Node000003_Node000003" title=" " alt="" coords="447,30,442,21,445,11,455,5,472,3,492,6,501,15,497,18,489,11,472,8,457,10,449,15,448,20,452,28"/>
+<area shape="rect" id="Node000001" title="Construct MCMC model interface with observational dataset." alt="" coords="5,5,208,45"/>
+<area shape="rect" id="Node000002" href="$structMultiBandData.html#ad2ade97dd269ab683c9fc6716dc0cdea" title="Populate consolidated data arrays from individual FluxData objects." alt="" coords="256,5,399,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="208,23,242,23,242,28,208,28"/>
 </map>

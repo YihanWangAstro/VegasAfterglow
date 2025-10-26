@@ -1,11 +1,21 @@
 <map id="Observer::specific_flux" name="Observer::specific_flux">
-<area shape="rect" id="Node000001" title="Computes the specific flux at a single observed frequency." alt="" coords="389,55,559,80"/>
-<area shape="poly" id="edge3_Node000001_Node000001" title=" " alt="" coords="510,45,500,37,474,33,453,35,442,40,439,46,445,53,441,56,434,46,438,36,451,30,474,28,502,32,513,41"/>
-<area shape="rect" id="Node000002" href="$classObserver.html#a2588a9ebaec5465d6b5bd08fadadcb99" title="Computes the integrated flux over a frequency band." alt="" coords="216,29,329,55"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="375,58,330,52,330,46,376,52"/>
-<area shape="rect" id="Node000003" href="$classObserver.html#a18a5b8ffa6dad54050d7de094c24094b" title="Computes the spectrum at multiple observation times." alt="" coords="204,79,341,104"/>
-<area shape="poly" id="edge4_Node000001_Node000003" title=" " alt="" coords="376,82,342,86,342,80,375,76"/>
-<area shape="poly" id="edge2_Node000002_Node000002" title=" " alt="" coords="307,19,297,11,273,8,252,10,242,15,239,20,245,28,241,31,234,21,238,11,251,5,273,3,299,6,310,15"/>
-<area shape="rect" id="Node000004" href="$classObserver.html#a096a45f3fcc7cd273c2bc89199ed74a2" title="Computes the spectrum at a single observation time." alt="" coords="5,79,156,104"/>
-<area shape="poly" id="edge5_Node000003_Node000004" title=" " alt="" coords="190,94,156,94,156,89,190,89"/>
+<area shape="rect" id="Node000001" title="Computes the specific flux at a single observed frequency." alt="" coords="725,105,895,131"/>
+<area shape="poly" id="edge9_Node000001_Node000001" title=" " alt="" coords="851,96,840,87,810,84,785,86,772,91,770,96,777,103,773,107,765,97,769,87,784,81,810,79,842,83,855,92"/>
+<area shape="rect" id="Node000002" href="$classObserver.html#a2588a9ebaec5465d6b5bd08fadadcb99" title="Computes the integrated flux over a frequency band." alt="" coords="522,55,635,80"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="737,105,635,82,636,77,738,100"/>
+<area shape="rect" id="Node000006" href="$classPyModel.html#a7aaf63a15a01165e3c5ad8d935f30414" title="Calculate specific flux at given times and frequencies." alt="" coords="480,105,677,131"/>
+<area shape="poly" id="edge7_Node000001_Node000006" title=" " alt="" coords="711,121,677,121,677,115,711,115"/>
+<area shape="rect" id="Node000007" href="$classObserver.html#a18a5b8ffa6dad54050d7de094c24094b" title="Computes the spectrum at multiple observation times." alt="" coords="510,155,647,180"/>
+<area shape="poly" id="edge10_Node000001_Node000007" title=" " alt="" coords="737,136,640,157,639,152,736,131"/>
+<area shape="poly" id="edge4_Node000002_Node000002" title=" " alt="" coords="620,46,609,37,579,33,554,35,541,40,538,46,545,53,541,56,533,46,537,36,553,30,579,28,611,32,623,41"/>
+<area shape="rect" id="Node000003" href="$structMultiBandModel.html#aa8fa5188553abf9f7f7b2c0321c27752" title="Calculate chi&#45;squared likelihood for given parameter values." alt="" coords="204,5,432,31"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="508,57,386,33,387,28,509,52"/>
+<area shape="rect" id="Node000005" href="$classPyModel.html#a51390496a41c22c7c2dbb8838ac7a2d2" title="Calculate bolometric flux integrated over a frequency range." alt="" coords="263,55,373,80"/>
+<area shape="poly" id="edge5_Node000002_Node000005" title=" " alt="" coords="508,70,374,70,374,65,508,65"/>
+<area shape="rect" id="Node000004" href="$pybind_8cpp.html#a8c92987849ad296e28ec6c07c8e7860b" title=" " alt="" coords="5,55,156,80"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="243,36,143,57,142,52,242,31"/>
+<area shape="poly" id="edge6_Node000005_Node000004" title=" " alt="" coords="249,70,156,70,156,65,249,65"/>
+<area shape="poly" id="edge8_Node000006_Node000004" title=" " alt="" coords="466,116,340,108,204,94,138,83,139,77,204,89,340,103,466,111"/>
+<area shape="rect" id="Node000008" href="$classObserver.html#a096a45f3fcc7cd273c2bc89199ed74a2" title="Computes the spectrum at a single observation time." alt="" coords="243,156,393,181"/>
+<area shape="poly" id="edge11_Node000007_Node000008" title=" " alt="" coords="496,170,394,171,394,166,496,165"/>
 </map>

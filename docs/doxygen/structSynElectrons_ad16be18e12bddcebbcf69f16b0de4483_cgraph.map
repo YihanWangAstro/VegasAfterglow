@@ -1,28 +1,28 @@
 <map id="SynElectrons::compute_N_gamma" name="SynElectrons::compute_N_gamma">
-<area shape="rect" id="Node000001" title="Calculates the comoving electron number (PER SOLID ANGLE) spectrum at a specific Lorentz factor." alt="" coords="5,210,176,250"/>
-<area shape="rect" id="Node000002" href="$structInverseComptonY.html#a9a35d3af9bd23acdde9d09d38ee116eb" title="Calculates the effective Y parameter at a specific Lorentz factor and spectral index." alt="" coords="224,180,424,220"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="176,216,210,212,211,217,177,221"/>
-<area shape="rect" id="Node000005" href="$utilities_8h.html#afc584c30c352192de6847b1f4b8caf0e" title="Fast approximation of 2 raised to a power." alt="" coords="849,245,936,270"/>
-<area shape="poly" id="edge16_Node000001_Node000005" title=" " alt="" coords="176,230,836,253,835,258,176,235"/>
-<area shape="rect" id="Node000003" href="$structInverseComptonY.html#ae483ec2ba4108fbf96fb15c3e978c0b3" title="Calculates the effective Y parameter for a given Lorentz factor and spectral index." alt="" coords="472,180,672,220"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="424,198,458,198,458,203,424,203"/>
-<area shape="rect" id="Node000004" href="$utilities_8h.html#a4520a27a10a2aef33c99ad8c679da404" title="Fast approximation of a raised to the power of b." alt="" coords="720,192,801,217"/>
-<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="672,200,706,200,706,206,672,205"/>
-<area shape="rect" id="Node000010" href="$utilities_8h.html#ae490b13fdcc1b917ecdd08c0cecf3556" title="Computes a^(4/3)" alt="" coords="728,68,793,93"/>
-<area shape="poly" id="edge14_Node000003_Node000010" title=" " alt="" coords="603,178,727,98,730,102,606,182"/>
-<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="794,215,849,237,847,242,792,220"/>
-<area shape="rect" id="Node000006" href="$utilities_8h.html#ab8e81118f023df135835db8cce4f5f42" title="Returns the value of a single parameter." alt="" coords="1189,118,1240,144"/>
-<area shape="poly" id="edge13_Node000004_Node000006" title=" " alt="" coords="801,195,1175,134,1176,140,802,200"/>
-<area shape="rect" id="Node000007" href="$utilities_8h.html#aa67895957aa831a991982a8268ef8349" title="Fast approximation of the base&#45;2 logarithm." alt="" coords="851,118,934,144"/>
-<area shape="poly" id="edge7_Node000004_Node000007" title=" " alt="" coords="783,189,855,148,858,153,786,194"/>
-<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="936,259,981,260,1034,256,1089,245,1140,223,1159,209,1175,191,1199,155,1204,157,1179,195,1163,213,1143,228,1090,250,1034,261,981,265,936,264"/>
-<area shape="poly" id="edge6_Node000006_Node000006" title=" " alt="" coords="1189,119,1184,110,1186,100,1197,94,1215,92,1236,95,1245,104,1241,107,1233,100,1215,97,1199,99,1191,103,1189,109,1194,117"/>
-<area shape="poly" id="edge10_Node000007_Node000006" title=" " alt="" coords="934,128,1176,128,1176,134,934,134"/>
-<area shape="rect" id="Node000008" href="$utilities_8h.html#acd0ec547a29a5a2f768d02b1aef146fa" title=" " alt="" coords="984,44,1141,69"/>
-<area shape="poly" id="edge8_Node000007_Node000008" title=" " alt="" coords="912,116,983,78,1001,71,1002,76,985,83,915,120"/>
-<area shape="rect" id="Node000009" href="$utilities_8h.html#aeec24af41c09b6f977fbd1b6209e6501" title=" " alt="" coords="1031,93,1094,118"/>
-<area shape="poly" id="edge11_Node000007_Node000009" title=" " alt="" coords="934,122,1017,109,1018,115,934,127"/>
-<area shape="poly" id="edge9_Node000008_Node000006" title=" " alt="" coords="1114,66,1143,78,1189,108,1186,112,1140,83,1112,71"/>
-<area shape="poly" id="edge12_Node000009_Node000006" title=" " alt="" coords="1095,108,1176,122,1175,127,1094,113"/>
-<area shape="poly" id="edge15_Node000010_Node000006" title=" " alt="" coords="786,65,851,38,942,12,993,5,1044,4,1095,11,1143,29,1164,44,1182,63,1206,104,1201,107,1177,67,1160,48,1140,33,1093,16,1044,9,993,10,943,17,853,43,788,70"/>
+<area shape="rect" id="Node000001" title="Calculates the comoving electron number (PER SOLID ANGLE) spectrum at a specific Lorentz factor." alt="" coords="5,216,176,256"/>
+<area shape="rect" id="Node000002" href="$structInverseComptonY.html#ae318101198df1b792c8451eba352071b" title="Calculates the effective Y parameter for a given Lorentz factor and spectral index." alt="" coords="224,40,424,80"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="117,213,283,86,287,90,120,217"/>
+<area shape="rect" id="Node000004" href="$utilities_8h.html#afc584c30c352192de6847b1f4b8caf0e" title="Fast approximation of 2 raised to a power." alt="" coords="601,223,688,248"/>
+<area shape="poly" id="edge16_Node000001_Node000004" title=" " alt="" coords="176,233,587,233,587,238,176,238"/>
+<area shape="rect" id="Node000005" href="$utilities_8h.html#ab8e81118f023df135835db8cce4f5f42" title="Returns the value of a single parameter." alt="" coords="941,123,992,148"/>
+<area shape="poly" id="edge17_Node000001_Node000005" title=" " alt="" coords="161,253,233,271,320,289,415,303,511,309,646,309,719,310,777,308,804,303,831,294,860,280,892,259,914,237,932,211,955,160,960,162,937,214,918,241,895,263,863,284,833,299,805,308,778,313,719,316,646,314,511,314,415,309,319,295,231,276,159,258"/>
+<area shape="rect" id="Node000003" href="$utilities_8h.html#a4520a27a10a2aef33c99ad8c679da404" title="Fast approximation of a raised to the power of b." alt="" coords="472,98,553,123"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="400,77,459,93,458,98,398,82"/>
+<area shape="poly" id="edge13_Node000002_Node000005" title=" " alt="" coords="370,37,418,20,472,6,513,3,553,6,652,7,730,6,767,9,806,16,847,31,895,53,928,79,952,109,948,113,924,83,892,58,845,36,804,22,766,14,730,11,652,12,553,12,513,8,472,11,420,25,371,42"/>
+<area shape="rect" id="Node000009" href="$utilities_8h.html#ae490b13fdcc1b917ecdd08c0cecf3556" title="Computes a^(4/3)" alt="" coords="480,22,545,47"/>
+<area shape="poly" id="edge14_Node000002_Node000009" title=" " alt="" coords="424,43,466,38,467,43,425,49"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="529,121,622,211,619,215,525,125"/>
+<area shape="poly" id="edge12_Node000003_Node000005" title=" " alt="" coords="554,105,703,102,798,105,894,114,928,122,927,127,893,119,798,110,703,107,554,110"/>
+<area shape="rect" id="Node000006" href="$utilities_8h.html#aa67895957aa831a991982a8268ef8349" title="Fast approximation of the base&#45;2 logarithm." alt="" coords="603,123,686,148"/>
+<area shape="poly" id="edge6_Node000003_Node000006" title=" " alt="" coords="554,115,590,122,589,128,553,121"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="689,244,733,251,785,254,840,249,867,242,892,232,912,218,929,199,953,159,957,162,933,202,916,222,895,237,869,247,841,254,786,259,732,256,688,249"/>
+<area shape="poly" id="edge5_Node000005_Node000005" title=" " alt="" coords="941,124,936,114,938,105,949,98,967,96,988,100,997,108,993,112,985,104,967,102,951,103,943,108,941,114,946,121"/>
+<area shape="poly" id="edge9_Node000006_Node000005" title=" " alt="" coords="686,133,928,133,928,138,686,138"/>
+<area shape="rect" id="Node000007" href="$utilities_8h.html#acd0ec547a29a5a2f768d02b1aef146fa" title=" " alt="" coords="736,148,893,174"/>
+<area shape="poly" id="edge7_Node000006_Node000007" title=" " alt="" coords="686,139,723,144,722,150,686,144"/>
+<area shape="rect" id="Node000008" href="$utilities_8h.html#aeec24af41c09b6f977fbd1b6209e6501" title=" " alt="" coords="783,198,846,223"/>
+<area shape="poly" id="edge10_Node000006_Node000008" title=" " alt="" coords="668,146,737,182,771,195,769,200,735,187,665,151"/>
+<area shape="poly" id="edge8_Node000007_Node000005" title=" " alt="" coords="891,145,927,139,928,145,892,151"/>
+<area shape="poly" id="edge11_Node000008_Node000005" title=" " alt="" coords="845,200,892,182,937,154,940,159,895,187,847,205"/>
+<area shape="poly" id="edge15_Node000009_Node000005" title=" " alt="" coords="546,32,611,36,698,46,797,63,894,90,938,113,935,117,892,95,796,68,698,51,610,42,545,38"/>
 </map>

@@ -1,7 +1,7 @@
 var searchData=
 [
   ['m_0',['m',['../namespaceunit.html#a6b886b7bc31732cd2aee3752b854f00c',1,'unit']]],
-  ['m2_1',['m2',['../structForwardState.html#a88cc80181569697d41e1a3866e296430',1,'ForwardState::m2'],['../structReverseState.html#a70a3a02e2ab68c63cb1fa8e188c70cc6',1,'ReverseState::m2'],['../structSimpleState.html#a40c7ca51bf084ea345d69f3363ada548',1,'SimpleState::m2']]],
+  ['m2_1',['m2',['../structSimpleState.html#a40c7ca51bf084ea345d69f3363ada548',1,'SimpleState::m2'],['../structReverseState.html#a70a3a02e2ab68c63cb1fa8e188c70cc6',1,'ReverseState::m2'],['../structForwardState.html#a88cc80181569697d41e1a3866e296430',1,'ForwardState::m2']]],
   ['m3_2',['m3',['../structReverseState.html#a7f3bd5458f8f3f9285b2c0cb71400478',1,'ReverseState']]],
   ['m4_3',['m4',['../structReverseState.html#ac7c13be5e77049bf5b0ec13cef8087e5',1,'ReverseState']]],
   ['m_5fjet_4',['m_jet',['../structSimpleState.html#a5487181a62eadbfda0b9655edca5f7df',1,'SimpleState::m_jet'],['../structForwardState.html#af0343da0ae76b3d4f4dc280ac133c681',1,'ForwardState::m_jet']]],
@@ -10,7 +10,7 @@ var searchData=
   ['magnetar_7',['magnetar',['../structConfigParams.html#afe4abce5cdce13c1ac4edee128fc5fac',1,'ConfigParams']]],
   ['make_5fthis_5fodeint_5fstate_8',['MAKE_THIS_ODEINT_STATE',['../utilities_8h.html#a3fde7e13efab2cb5139f0c7ecbb2964d',1,'utilities.h']]],
   ['maskgrid_9',['MaskGrid',['../mesh_8h.html#afb738e18bf395ef0903c8c5d6f37c47f',1,'mesh.h']]],
-  ['mass_5finject_10',['mass_inject',['../structForwardState.html#aa2b63d1b9c3203d9d7893c5985bdb05d',1,'ForwardState::mass_inject'],['../structReverseState.html#ae3b292a9eef86310c4b52b806203ee1d',1,'ReverseState::mass_inject'],['../structSimpleState.html#abab27aff4431a6c6c69ef4b5af7ea6d4',1,'SimpleState::mass_inject']]],
+  ['mass_5finject_10',['mass_inject',['../structReverseState.html#ae3b292a9eef86310c4b52b806203ee1d',1,'ReverseState::mass_inject'],['../structSimpleState.html#abab27aff4431a6c6c69ef4b5af7ea6d4',1,'SimpleState::mass_inject'],['../structForwardState.html#aa2b63d1b9c3203d9d7893c5985bdb05d',1,'ForwardState::mass_inject']]],
   ['math_11',['math',['../namespacemath.html',1,'']]],
   ['math_20functions_12',['math functions',['../group__BasicMath.html',1,'Basic Math Functions'],['../group__FastMath.html',1,'Fast Math Functions']]],
   ['max_13',['max',['../utilities_8h.html#a997d9d055517ba35482e40f96068979c',1,'max(T first, Args... args):&#160;utilities.h'],['../utilities_8h.html#ab8e81118f023df135835db8cce4f5f42',1,'max(T value):&#160;utilities.h']]],
@@ -18,7 +18,7 @@ var searchData=
   ['mcmc_2eh_15',['mcmc.h',['../mcmc_8h.html',1,'']]],
   ['me_16',['me',['../namespacecon.html#a740c8edb3d4f2d904a1c76002f84fb7e',1,'con']]],
   ['mec2_17',['mec2',['../namespacecon.html#ae1b8cddbe12f755f5d01b86b0e2b9e14',1,'con']]],
-  ['medium_18',['medium',['../classMedium.html#ab077493d8330ddd77c1ef434908adf73',1,'Medium::Medium()'],['../classMedium.html',1,'Medium'],['../classMedium.html#aacd7cf0b6fb4dee7adf3a5f2d32356e7',1,'Medium::Medium()'],['../classPyModel.html#ae1049fe592b9616356f666bcab2a92d3',1,'PyModel::medium()'],['../structConfigParams.html#aac924ce1108981926235f565f75d75fe',1,'ConfigParams::medium'],['../classSimpleShockEqn.html#a542dc5b45178ca91cf1dabfc4cfa9829',1,'SimpleShockEqn::medium'],['../classFRShockEqn.html#a516430d788da457f99a0a9f913c4555c',1,'FRShockEqn::medium'],['../classForwardShockEqn.html#a0bec65b319edbb6294eee8057370be57',1,'ForwardShockEqn::medium']]],
+  ['medium_18',['medium',['../classPyModel.html#ae1049fe592b9616356f666bcab2a92d3',1,'PyModel::medium()'],['../classMedium.html',1,'Medium'],['../classSimpleShockEqn.html#a542dc5b45178ca91cf1dabfc4cfa9829',1,'SimpleShockEqn::medium'],['../classMedium.html#aacd7cf0b6fb4dee7adf3a5f2d32356e7',1,'Medium::Medium(TernaryFunc rho) noexcept'],['../classMedium.html#ab077493d8330ddd77c1ef434908adf73',1,'Medium::Medium()=default'],['../classFRShockEqn.html#a516430d788da457f99a0a9f913c4555c',1,'FRShockEqn::medium'],['../classForwardShockEqn.html#a0bec65b319edbb6294eee8057370be57',1,'ForwardShockEqn::medium'],['../structConfigParams.html#aac924ce1108981926235f565f75d75fe',1,'ConfigParams::medium']]],
   ['medium_2eh_19',['medium.h',['../medium_8h.html',1,'']]],
   ['merge_5fgrids_20',['merge_grids',['../mesh_8h.html#a3c066f2c8e6d102d7a56de8cb42cf5a8',1,'mesh.h']]],
   ['mesh_2ecpp_21',['mesh.cpp',['../mesh_8cpp.html',1,'']]],

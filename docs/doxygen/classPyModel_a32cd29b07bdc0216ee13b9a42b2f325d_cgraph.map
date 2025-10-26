@@ -1,8 +1,5 @@
 <map id="PyModel::PyModel" name="PyModel::PyModel">
-<area shape="rect" id="Node000001" title="Construct complete afterglow model with physical and numerical parameters." alt="" coords="5,29,148,55"/>
-<area shape="rect" id="Node000002" href="$pymodel_8cpp.html#aa920671831cc213a5c0858813e42279f" title="Convert Ejecta and Medium units to internal code units." alt="" coords="196,29,299,55"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="148,39,183,39,183,45,148,45"/>
-<area shape="rect" id="Node000003" href="$utilities_8h.html#ab8e81118f023df135835db8cce4f5f42" title="Returns the value of a single parameter." alt="" coords="347,29,397,55"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="299,39,332,39,332,45,299,45"/>
-<area shape="poly" id="edge3_Node000003_Node000003" title=" " alt="" coords="351,30,346,21,349,11,358,5,372,3,389,6,397,14,393,18,386,11,372,8,360,10,353,14,352,20,356,28"/>
+<area shape="rect" id="Node000001" title="Construct complete afterglow model with physical and numerical parameters." alt="" coords="5,5,148,31"/>
+<area shape="rect" id="Node000002" href="$pymodel_8cpp.html#aa920671831cc213a5c0858813e42279f" title="Convert Ejecta and Medium units to internal code units." alt="" coords="196,5,299,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="148,15,183,15,183,21,148,21"/>
 </map>

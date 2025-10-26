@@ -1,11 +1,12 @@
 <map id="compute_shell_spreading_rate" name="compute_shell_spreading_rate">
-<area shape="rect" id="Node000001" title="Computes the rate at which the shock shell spreads in the comoving frame." alt="" coords="5,53,227,79"/>
-<area shape="rect" id="Node000002" href="$shock_8h.html#a55391189d6bdd1e0ddbc2d039424a0cc" title="Computes the sound speed in the shocked medium based on the relative Lorentz factor." alt="" coords="275,28,445,53"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="226,52,261,48,261,54,227,57"/>
-<area shape="rect" id="Node000004" href="$utilities_8h.html#ab8e81118f023df135835db8cce4f5f42" title="Returns the value of a single parameter." alt="" coords="523,79,573,104"/>
-<area shape="poly" id="edge5_Node000001_Node000004" title=" " alt="" coords="227,70,509,86,509,92,227,75"/>
+<area shape="rect" id="Node000001" title="Computes the rate at which the shock shell spreads in the comoving frame." alt="" coords="5,81,227,107"/>
+<area shape="rect" id="Node000002" href="$shock_8h.html#a55391189d6bdd1e0ddbc2d039424a0cc" title="Computes the sound speed in the shocked medium based on the relative Lorentz factor." alt="" coords="275,56,445,81"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="226,80,261,76,261,82,227,85"/>
+<area shape="rect" id="Node000004" href="$utilities_8h.html#ab8e81118f023df135835db8cce4f5f42" title="Returns the value of a single parameter." alt="" coords="651,56,701,81"/>
+<area shape="poly" id="edge6_Node000001_Node000004" title=" " alt="" coords="227,94,333,95,445,91,549,82,637,71,637,77,550,88,445,97,333,100,227,100"/>
 <area shape="rect" id="Node000003" href="$physics_8h.html#a2a95c6b3f1236d69328af7199a772a23" title="Computes adiabatic index as a function of the Lorentz factor." alt="" coords="493,5,603,31"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="446,28,479,24,480,29,446,33"/>
-<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="409,51,510,79,509,84,407,56"/>
-<area shape="poly" id="edge4_Node000004_Node000004" title=" " alt="" coords="520,83,511,72,513,62,526,55,548,52,577,57,584,63,585,70,580,71,580,66,575,62,548,57,527,60,517,65,516,71,524,79"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="407,53,486,32,488,37,409,58"/>
+<area shape="poly" id="edge5_Node000002_Node000004" title=" " alt="" coords="446,66,637,66,637,71,446,71"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="582,28,639,51,637,56,580,33"/>
+<area shape="poly" id="edge4_Node000004_Node000004" title=" " alt="" coords="654,57,649,48,652,38,661,32,676,29,694,33,702,41,698,45,691,37,676,35,663,37,656,41,655,47,659,55"/>
 </map>

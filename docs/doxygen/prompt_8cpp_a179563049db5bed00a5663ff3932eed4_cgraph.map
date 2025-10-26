@@ -1,8 +1,9 @@
 <map id="gen_prompt_photons" name="gen_prompt_photons">
-<area shape="rect" id="Node000001" title=" " alt="" coords="5,43,164,68"/>
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,31,164,56"/>
 <area shape="rect" id="Node000002" href="$physics_8h.html#ab8aa624dd63313487d8f5ecf52170d76" title="Converts Lorentz factor (gamma) to a velocity fraction (beta)" alt="" coords="212,5,340,31"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="150,40,198,30,199,36,151,45"/>
-<area shape="rect" id="Node000003" href="$utilities_8h.html#ab8e81118f023df135835db8cce4f5f42" title="Returns the value of a single parameter." alt="" coords="251,79,301,104"/>
-<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="153,65,238,82,237,87,152,71"/>
-<area shape="poly" id="edge3_Node000003_Node000003" title=" " alt="" coords="249,83,239,73,240,62,253,55,276,52,306,57,313,64,314,71,308,71,308,66,304,62,276,57,255,60,245,65,244,71,252,79"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="164,30,198,26,199,31,165,35"/>
+<area shape="rect" id="Node000003" href="$utilities_8h.html#ab8e81118f023df135835db8cce4f5f42" title="Returns the value of a single parameter." alt="" coords="388,31,439,56"/>
+<area shape="poly" id="edge4_Node000001_Node000003" title=" " alt="" coords="164,41,374,41,374,46,164,46"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="341,27,374,34,373,39,340,32"/>
+<area shape="poly" id="edge3_Node000003_Node000003" title=" " alt="" coords="390,32,385,22,388,13,397,6,413,4,432,7,440,16,436,19,429,12,413,9,399,11,392,16,391,22,395,29"/>
 </map>

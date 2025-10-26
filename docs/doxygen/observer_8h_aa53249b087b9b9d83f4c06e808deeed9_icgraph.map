@@ -1,11 +1,21 @@
 <map id="iterate_to" name="iterate_to">
-<area shape="rect" id="Node000001" title="Helper function that advances an iterator through an array until the value exceeds the target." alt="" coords="457,63,543,88"/>
-<area shape="rect" id="Node000002" href="$classObserver.html#a5fe3b5d16f7cf532e20a6f600485a6b6" title="Computes the specific flux at multiple observed frequencies." alt="" coords="227,5,397,31"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="452,61,409,46,364,33,366,28,410,41,453,55"/>
-<area shape="rect" id="Node000003" href="$classObserver.html#a2497e02305dbf755a7d629311f8e772d" title="Computes the specific flux at a single observed frequency for multiple observation times." alt="" coords="243,55,381,95"/>
-<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="443,78,381,78,381,73,443,73"/>
-<area shape="rect" id="Node000004" href="$classObserver.html#a90f4a0a86f9e4a702cfc3a13e7c9c153" title="Updates the required grid points for observation." alt="" coords="215,120,409,145"/>
-<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="453,95,410,110,366,123,364,117,409,105,452,90"/>
-<area shape="rect" id="Node000005" href="$classObserver.html#a20935ae9f08821dd146a71d1c6a3175d" title="Sets up the Observer for flux calculation at specific observation times." alt="" coords="5,120,167,145"/>
-<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="201,135,167,135,167,130,201,130"/>
+<area shape="rect" id="Node000001" title="Helper function that advances an iterator through an array until the value exceeds the target." alt="" coords="723,84,808,109"/>
+<area shape="rect" id="Node000002" href="$classObserver.html#a5fe3b5d16f7cf532e20a6f600485a6b6" title="Computes the specific flux at multiple observed frequencies." alt="" coords="493,27,662,52"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="717,82,674,67,629,55,631,49,675,62,719,77"/>
+<area shape="rect" id="Node000003" href="$classObserver.html#a2497e02305dbf755a7d629311f8e772d" title="Computes the specific flux at a single observed frequency for multiple observation times." alt="" coords="508,77,647,117"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="709,99,647,99,647,94,709,94"/>
+<area shape="rect" id="Node000008" href="$classObserver.html#a90f4a0a86f9e4a702cfc3a13e7c9c153" title="Updates the required grid points for observation." alt="" coords="480,141,675,167"/>
+<area shape="poly" id="edge9_Node000001_Node000008" title=" " alt="" coords="719,117,675,131,631,144,629,139,674,126,717,111"/>
+<area shape="rect" id="Node000004" href="$structMultiBandModel.html#aa8fa5188553abf9f7f7b2c0321c27752" title="Calculate chi&#45;squared likelihood for given parameter values." alt="" coords="204,5,432,31"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="502,74,479,66,431,45,390,33,391,28,433,39,481,61,504,69"/>
+<area shape="rect" id="Node000006" href="$classPyModel.html#abf7e6762cb8ca1c8ff429e0a8a7592ad" title="Calculate specific flux at given time and frequency (t_i,nu_i) series." alt="" coords="235,55,401,80"/>
+<area shape="poly" id="edge5_Node000003_Node000006" title=" " alt="" coords="494,90,401,79,401,74,495,85"/>
+<area shape="rect" id="Node000007" href="$classPyModel.html#a4337b83ce5738c04db9a8dc1b97ba868" title="Calculate specific flux with finite exposure time averaging." alt="" coords="235,105,401,145"/>
+<area shape="poly" id="edge7_Node000003_Node000007" title=" " alt="" coords="495,108,401,118,401,113,494,103"/>
+<area shape="rect" id="Node000005" href="$pybind_8cpp.html#a8c92987849ad296e28ec6c07c8e7860b" title=" " alt="" coords="5,55,156,80"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="243,36,143,57,142,52,242,31"/>
+<area shape="poly" id="edge6_Node000006_Node000005" title=" " alt="" coords="222,70,156,70,156,65,222,65"/>
+<area shape="poly" id="edge8_Node000007_Node000005" title=" " alt="" coords="221,104,133,83,135,77,223,99"/>
+<area shape="rect" id="Node000009" href="$classObserver.html#a20935ae9f08821dd146a71d1c6a3175d" title="Sets up the Observer for flux calculation at specific observation times." alt="" coords="237,169,399,195"/>
+<area shape="poly" id="edge10_Node000008_Node000009" title=" " alt="" coords="466,169,399,176,399,171,466,163"/>
 </map>
