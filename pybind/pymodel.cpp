@@ -114,10 +114,16 @@ Medium PyWind(Real A_star, Real n_ism, Real n0, Real k) {
 
     constexpr Real r0 = 1e17; // reference radius
     const Real A = A_star * 5e11 * std::pow(r0, k - 2);
-    const Real rho_ism = n_ism * 1.67e-24;
-    const Real r0k = A / (n0 * 1.67e-24);
 
-    medium.rho = [=](Real phi, Real theta, Real r) { return A / (r0k + std::pow(r, k)) + rho_ism; };
+    if (k >= 0) {
+        const Real rho_ism = n_ism * 1.67e-24;
+        const Real r0k = A / (n0 * 1.67e-24);
+        medium.rho = [=](Real phi, Real theta, Real r) { return A / (r0k + std::pow(r, k)) + rho_ism; };
+    } else {
+        const Real rho0 = n0 * 1.67e-24;
+        const Real r_ism = A / (n_ism * 1.67e-24);
+        medium.rho = [=](Real phi, Real theta, Real r) { return A / (r_ism + std::pow(r, k)) + rho0; };
+    }
     return medium;
 }
 

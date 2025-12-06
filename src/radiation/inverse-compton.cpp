@@ -18,15 +18,14 @@
 
 InverseComptonY::InverseComptonY(Real gamma_m, Real gamma_c, Real B, Real Y_T, Real eps_e_on_eps_B) noexcept {
     constexpr Real B_QED = 4 * con::pi * con::me * con::me * con::c2 * con::c / (3 * con::e * con::h);
-    const Real nu_m = compute_syn_freq(gamma_m, B);  // Compute minimum synchrotron frequency
-    const Real nu_c = compute_syn_freq(gamma_c, B);  // Compute cooling synchrotron frequency
-    gamma_m_hat = con::me * con::c2 / con::h / nu_m; // Compute minimum characteristic Lorentz factor
-    gamma_c_hat = con::me * con::c2 / con::h / nu_c; // Compute cooling characteristic Lorentz factor
+    const Real nu_m = compute_syn_freq(gamma_m, B);
+    const Real nu_c = compute_syn_freq(gamma_c, B);
+    gamma_m_hat = con::me * con::c2 / con::h / nu_m;
+    gamma_c_hat = con::me * con::c2 / con::h / nu_c;
 
-    this->Y_T = Y_T;                             // Set the Thomson Y parameter
-    nu_m_hat = compute_syn_freq(gamma_m_hat, B); // Compute the corresponding synchrotron frequency for gamma_hat_m
-    nu_c_hat = compute_syn_freq(gamma_c_hat, B); // Compute the corresponding synchrotron frequency for gamma_hat_c
-
+    this->Y_T = Y_T; // Set the Thomson Y parameter
+    nu_m_hat = compute_syn_freq(gamma_m_hat, B);
+    nu_c_hat = compute_syn_freq(gamma_c_hat, B);
     if (gamma_m <= gamma_c) { // slow IC cooling regime
         regime = 1;
     } else {                          //fast IC cooling regime
@@ -34,10 +33,10 @@ InverseComptonY::InverseComptonY(Real gamma_m, Real gamma_c, Real B, Real Y_T, R
             regime = 2;
         } else { //strong KN effects
             gamma_self = std::cbrt(B_QED / B);
-            nu_self = compute_syn_freq(gamma_self, B); // Compute the corresponding synchrotron frequency for gamma_self
+            nu_self = compute_syn_freq(gamma_self, B);
 
             gamma0 = std::sqrt(eps_e_on_eps_B * gamma_m * gamma_m_hat);
-            nu0 = compute_syn_freq(gamma0, B); // Compute the corresponding synchrotron frequency for gamma0
+            nu0 = compute_syn_freq(gamma0, B);
 
             if (gamma0 > gamma_m) {
                 regime = 3;
