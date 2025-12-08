@@ -150,8 +150,8 @@
 <ul class="simple">
 <li><p><strong>Check parameter ranges</strong>: Ensure prior ranges include the true values</p></li>
 <li><p><strong>Use better initial guesses</strong>: Set <code class="docutils literal notranslate"><span class="pre">ParamDef</span></code> initial values closer to expected results</p></li>
-<li><p><strong>Increase burn-in</strong>: Use <code class="docutils literal notranslate"><span class="pre">burn_frac=0.5</span></code> or higher for difficult problems</p></li>
-<li><p><strong>More walkers</strong>: Use <code class="docutils literal notranslate"><span class="pre">n_walkers</span> <span class="pre">&gt;</span> <span class="pre">2</span> <span class="pre">*</span> <span class="pre">n_parameters</span></code> (emcee recommendation)</p></li>
+<li><p><strong>Increase live points</strong>: Use <code class="docutils literal notranslate"><span class="pre">nlive=1000</span></code> or higher for difficult problems</p></li>
+<li><p><strong>Lower dlogz</strong>: Use <code class="docutils literal notranslate"><span class="pre">dlogz=0.05</span></code> for better convergence (at cost of runtime)</p></li>
 <li><p><strong>Check data quality</strong>: Ensure observational uncertainties are realistic</p></li>
 <li><p><strong>Start with coarser resolution</strong>: Use <code class="docutils literal notranslate"><span class="pre">resolution=(0.5,</span> <span class="pre">1.5,</span> <span class="pre">7)</span></code> for initial exploration</p></li>
 </ul>
@@ -177,7 +177,7 @@
 <ul class="simple">
 <li><p><strong>Reduce resolution</strong>: Lower <code class="docutils literal notranslate"><span class="pre">resolution</span></code> parameters</p></li>
 <li><p><strong>Decrease number of workers</strong>: Use fewer <code class="docutils literal notranslate"><span class="pre">num_workers</span></code></p></li>
-<li><p><strong>Use thinning</strong>: Set <code class="docutils literal notranslate"><span class="pre">thin</span> <span class="pre">&gt;</span> <span class="pre">1</span></code> to save fewer samples</p></li>
+<li><p><strong>Reduce live points</strong>: Use smaller <code class="docutils literal notranslate"><span class="pre">nlive</span></code> value</p></li>
 <li><p><strong>Monitor dataset size</strong>: Check <code class="docutils literal notranslate"><span class="pre">data.data_points_num()</span></code> and use screening if &gt;500 points</p></li>
 </ul>
 <p><strong>Q: MCMC fails or crashes</strong></p>
@@ -286,7 +286,7 @@
 </ul>
 <p><strong>Q: Error messages about missing dependencies</strong></p>
 <p>A: Install required packages:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span>numpy<span class="w"> </span>scipy<span class="w"> </span>matplotlib<span class="w"> </span>pandas<span class="w"> </span>corner<span class="w"> </span>emcee
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span>numpy<span class="w"> </span>scipy<span class="w"> </span>matplotlib<span class="w"> </span>pandas<span class="w"> </span>corner<span class="w"> </span>bilby
 </pre></div>
 </div>
 <p>For specific features:</p>

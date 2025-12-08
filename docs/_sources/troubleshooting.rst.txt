@@ -51,8 +51,8 @@ A: Try the following:
 
 - **Check parameter ranges**: Ensure prior ranges include the true values
 - **Use better initial guesses**: Set ``ParamDef`` initial values closer to expected results
-- **Increase burn-in**: Use ``burn_frac=0.5`` or higher for difficult problems
-- **More walkers**: Use ``n_walkers > 2 * n_parameters`` (emcee recommendation)
+- **Increase live points**: Use ``nlive=1000`` or higher for difficult problems
+- **Lower dlogz**: Use ``dlogz=0.05`` for better convergence (at cost of runtime)
 - **Check data quality**: Ensure observational uncertainties are realistic
 - **Start with coarser resolution**: Use ``resolution=(0.5, 1.5, 7)`` for initial exploration
 
@@ -81,7 +81,7 @@ A: Memory optimization:
 
 - **Reduce resolution**: Lower ``resolution`` parameters
 - **Decrease number of workers**: Use fewer ``num_workers``
-- **Use thinning**: Set ``thin > 1`` to save fewer samples
+- **Reduce live points**: Use smaller ``nlive`` value
 - **Monitor dataset size**: Check ``data.data_points_num()`` and use screening if >500 points
 
 **Q: MCMC fails or crashes**
@@ -194,7 +194,7 @@ A: Install required packages:
 
 .. code-block:: bash
 
-    pip install numpy scipy matplotlib pandas corner emcee
+    pip install numpy scipy matplotlib pandas corner bilby
 
 For specific features:
 

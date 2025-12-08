@@ -659,21 +659,47 @@ The parameters you include depend on your model configuration:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Create the fitter object</span>
 <span class="n">fitter</span> <span class="o">=</span> <span class="n">Fitter</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">cfg</span><span class="p">)</span>
 
-<span class="c1"># Run the MCMC fitting</span>
+<span class="c1"># Option 1: MCMC with emcee (faster, recommended for quick fitting)</span>
 <span class="n">result</span> <span class="o">=</span> <span class="n">fitter</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span>
-    <span class="n">param_defs</span><span class="o">=</span><span class="n">mc_params</span><span class="p">,</span>          <span class="c1"># Parameter definitions</span>
-    <span class="n">resolution</span><span class="o">=</span><span class="p">(</span><span class="mf">0.3</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span>        <span class="c1"># Grid resolution (see more details in `Examples`)</span>
-    <span class="n">total_steps</span><span class="o">=</span><span class="mi">10000</span><span class="p">,</span>             <span class="c1"># Total number of MCMC steps</span>
-    <span class="n">burn_frac</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span>                 <span class="c1"># Fraction of steps to discard as burn-in</span>
-    <span class="n">thin</span><span class="o">=</span><span class="mi">1</span>                         <span class="c1"># Thinning factor</span>
+    <span class="n">mc_params</span><span class="p">,</span>
+    <span class="n">resolution</span><span class="o">=</span><span class="p">(</span><span class="mf">0.3</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span>       <span class="c1"># Grid resolution (phi, theta, t)</span>
+    <span class="n">sampler</span><span class="o">=</span><span class="s2">&quot;emcee&quot;</span><span class="p">,</span>               <span class="c1"># MCMC sampler</span>
+    <span class="n">nsteps</span><span class="o">=</span><span class="mi">10000</span><span class="p">,</span>                  <span class="c1"># Number of steps per walker</span>
+    <span class="n">nburn</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span>                    <span class="c1"># Burn-in steps to discard</span>
+    <span class="n">thin</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>                        <span class="c1"># Save every nth sample</span>
+    <span class="n">npool</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span>                       <span class="c1"># Number of parallel processes</span>
+    <span class="n">top_k</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>                      <span class="c1"># Number of best-fit parameters to return</span>
+    <span class="n">outdir</span><span class="o">=</span><span class="s2">&quot;bilby_output&quot;</span><span class="p">,</span>         <span class="c1"># Output directory (default)</span>
+    <span class="n">label</span><span class="o">=</span><span class="s2">&quot;afterglow_fit&quot;</span><span class="p">,</span>         <span class="c1"># Run label (default: &quot;afterglow&quot;)</span>
+<span class="p">)</span>
+
+<span class="c1"># Option 2: Nested sampling with dynesty (slower but computes Bayesian evidence)</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">fitter</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span>
+    <span class="n">mc_params</span><span class="p">,</span>
+    <span class="n">resolution</span><span class="o">=</span><span class="p">(</span><span class="mf">0.3</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span>       <span class="c1"># Grid resolution (phi, theta, t)</span>
+    <span class="n">sampler</span><span class="o">=</span><span class="s2">&quot;dynesty&quot;</span><span class="p">,</span>             <span class="c1"># Nested sampling algorithm</span>
+    <span class="n">nlive</span><span class="o">=</span><span class="mi">500</span><span class="p">,</span>                     <span class="c1"># Number of live points</span>
+    <span class="n">dlogz</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span>                     <span class="c1"># Stopping criterion (evidence tolerance)</span>
+    <span class="n">sample</span><span class="o">=</span><span class="s2">&quot;rwalk&quot;</span><span class="p">,</span>                <span class="c1"># Sampling method</span>
+    <span class="n">npool</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span>                       <span class="c1"># Number of parallel processes</span>
+    <span class="n">top_k</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>                      <span class="c1"># Number of best-fit parameters to return</span>
 <span class="p">)</span>
 </pre></div>
 </div>
 <dl class="simple">
+<dt><strong>Important Notes:</strong></dt><dd><ul class="simple">
+<li><p>Parameters with <code class="docutils literal notranslate"><span class="pre">Scale.LOG</span></code> are sampled as <code class="docutils literal notranslate"><span class="pre">log10_&lt;name&gt;</span></code> (e.g., <code class="docutils literal notranslate"><span class="pre">log10_E_iso</span></code>)</p></li>
+<li><p>The sampler works in log10 space for LOG-scale parameters, then transforms back</p></li>
+<li><p>Use <code class="docutils literal notranslate"><span class="pre">npool</span></code> to parallelize likelihood evaluations across multiple CPU cores</p></li>
+</ul>
+</dd>
 <dt>The <code class="docutils literal notranslate"><span class="pre">result</span></code> object contains:</dt><dd><ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">samples</span></code>: The MCMC chain samples (posterior distribution)</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">labels</span></code>: Parameter names</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">best_params</span></code>: Maximum likelihood parameter values</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">samples</span></code>: The posterior samples (shape: [n_samples, 1, n_params])</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">labels</span></code>: Parameter names (with <code class="docutils literal notranslate"><span class="pre">log10_</span></code> prefix for LOG-scale params)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">latex_labels</span></code>: LaTeX-formatted labels for plotting (e.g., <code class="docutils literal notranslate"><span class="pre">$\log_{10}(E_{\rm</span> <span class="pre">iso})$</span></code>)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">top_k_params</span></code>: Top-k maximum likelihood parameter values</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">top_k_log_probs</span></code>: Log probabilities for top-k samples</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">bilby_result</span></code>: Full bilby Result object (for advanced diagnostics)</p></li>
 </ul>
 </dd>
 </dl>
@@ -699,12 +725,12 @@ The parameters you include depend on your model configuration:</p>
 <span class="n">bands</span> <span class="o">=</span> <span class="p">[</span><span class="mf">2.4e17</span><span class="p">,</span> <span class="mf">4.84e14</span><span class="p">,</span> <span class="mf">1.4e14</span><span class="p">]</span>
 
 <span class="c1"># Generate light curves with the best-fit model</span>
-<span class="n">lc_best</span> <span class="o">=</span> <span class="n">fitter</span><span class="o">.</span><span class="n">flux_density_grid</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">best_params</span><span class="p">,</span> <span class="n">t_out</span><span class="p">,</span> <span class="n">bands</span><span class="p">)</span>
+<span class="n">lc_best</span> <span class="o">=</span> <span class="n">fitter</span><span class="o">.</span><span class="n">flux_density_grid</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">top_k_params</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">t_out</span><span class="p">,</span> <span class="n">bands</span><span class="p">)</span>
 
 <span class="n">nu_out</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">logspace</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">150</span><span class="p">)</span>
 <span class="n">times</span> <span class="o">=</span> <span class="p">[</span><span class="mi">3000</span><span class="p">]</span>
 <span class="c1"># Generate model spectra at the specified times using the best-fit parameters</span>
-<span class="n">spec_best</span> <span class="o">=</span> <span class="n">fitter</span><span class="o">.</span><span class="n">flux_density_grid</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">best_params</span><span class="p">,</span> <span class="n">times</span><span class="p">,</span> <span class="n">nu_out</span><span class="p">)</span>
+<span class="n">spec_best</span> <span class="o">=</span> <span class="n">fitter</span><span class="o">.</span><span class="n">flux_density_grid</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">top_k_params</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">times</span><span class="p">,</span> <span class="n">nu_out</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>Now you can plot the best-fit model:</p>
@@ -762,7 +788,7 @@ The parameters you include depend on your model configuration:</p>
 
 <span class="c1"># Create the corner plot</span>
 <span class="n">flat_chain</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="n">samples</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">result</span><span class="o">.</span><span class="n">samples</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
-<span class="n">plot_corner</span><span class="p">(</span><span class="n">flat_chain</span><span class="p">,</span> <span class="n">result</span><span class="o">.</span><span class="n">labels</span><span class="p">)</span>
+<span class="n">plot_corner</span><span class="p">(</span><span class="n">flat_chain</span><span class="p">,</span> <span class="n">result</span><span class="o">.</span><span class="n">latex_labels</span><span class="p">)</span>
 </pre></div>
 </div>
 </section>

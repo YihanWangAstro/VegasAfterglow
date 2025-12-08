@@ -221,26 +221,39 @@
 <span class="c1"># Create the fitter object</span>
 <span class="n">fitter</span> <span class="o">=</span> <span class="n">Fitter</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">cfg</span><span class="p">)</span>
 
-<span class="c1"># Run the MCMC fitting</span>
+<span class="c1"># Option 1: MCMC with emcee (faster, recommended for quick fitting)</span>
 <span class="n">result</span> <span class="o">=</span> <span class="n">fitter</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span>
-    <span class="n">param_defs</span><span class="o">=</span><span class="n">mc_params</span><span class="p">,</span>          <span class="c1"># Parameter definitions</span>
-    <span class="n">resolution</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span>       <span class="c1"># Grid resolution (phi, theta, time)</span>
-    <span class="n">total_steps</span><span class="o">=</span><span class="mi">10000</span><span class="p">,</span>             <span class="c1"># Total number of MCMC steps</span>
-    <span class="n">burn_frac</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span>                 <span class="c1"># Fraction of steps to discard as burn-in</span>
-    <span class="n">thin</span><span class="o">=</span><span class="mi">1</span>                         <span class="c1"># Thinning factor</span>
+    <span class="n">mc_params</span><span class="p">,</span>
+    <span class="n">resolution</span><span class="o">=</span><span class="p">(</span><span class="mf">0.3</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span>       <span class="c1"># Grid resolution (phi, theta, t)</span>
+    <span class="n">sampler</span><span class="o">=</span><span class="s2">&quot;emcee&quot;</span><span class="p">,</span>               <span class="c1"># MCMC sampler</span>
+    <span class="n">nsteps</span><span class="o">=</span><span class="mi">10000</span><span class="p">,</span>                  <span class="c1"># Number of steps per walker</span>
+    <span class="n">nburn</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span>                    <span class="c1"># Burn-in steps to discard</span>
+    <span class="n">npool</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span>                       <span class="c1"># Number of parallel processes</span>
+    <span class="n">top_k</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>                      <span class="c1"># Number of best-fit parameters to return</span>
+<span class="p">)</span>
+
+<span class="c1"># Option 2: Nested sampling with dynesty (slower but computes Bayesian evidence)</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">fitter</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span>
+    <span class="n">mc_params</span><span class="p">,</span>
+    <span class="n">resolution</span><span class="o">=</span><span class="p">(</span><span class="mf">0.3</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span>       <span class="c1"># Grid resolution (phi, theta, t)</span>
+    <span class="n">sampler</span><span class="o">=</span><span class="s2">&quot;dynesty&quot;</span><span class="p">,</span>             <span class="c1"># Nested sampling algorithm</span>
+    <span class="n">nlive</span><span class="o">=</span><span class="mi">500</span><span class="p">,</span>                     <span class="c1"># Number of live points</span>
+    <span class="n">dlogz</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span>                     <span class="c1"># Stopping criterion (evidence tolerance)</span>
+    <span class="n">sample</span><span class="o">=</span><span class="s2">&quot;rwalk&quot;</span><span class="p">,</span>                <span class="c1"># Sampling method</span>
+    <span class="n">npool</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span>                       <span class="c1"># Number of parallel processes</span>
 <span class="p">)</span>
 
 <span class="c1"># Generate light curves with best-fit parameters</span>
-<span class="n">lc_best</span> <span class="o">=</span> <span class="n">fitter</span><span class="o">.</span><span class="n">flux_density_grid</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">best_params</span><span class="p">,</span> <span class="n">t_out</span><span class="p">,</span> <span class="n">bands</span><span class="p">)</span>
+<span class="n">lc_best</span> <span class="o">=</span> <span class="n">fitter</span><span class="o">.</span><span class="n">flux_density_grid</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">top_k_params</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">t_out</span><span class="p">,</span> <span class="n">bands</span><span class="p">)</span>
 
 <span class="c1"># Generate spectra with best-fit parameters</span>
-<span class="n">spec_best</span> <span class="o">=</span> <span class="n">fitter</span><span class="o">.</span><span class="n">flux_density_grid</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">best_params</span><span class="p">,</span> <span class="n">times</span><span class="p">,</span> <span class="n">nu_out</span><span class="p">)</span>
+<span class="n">spec_best</span> <span class="o">=</span> <span class="n">fitter</span><span class="o">.</span><span class="n">flux_density_grid</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">top_k_params</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">times</span><span class="p">,</span> <span class="n">nu_out</span><span class="p">)</span>
 </pre></div>
 </div>
 </section>
 <section id="fitresult">
 <span id="api-fitresult"></span><h3><a class="toc-backref" href="#id9" role="doc-backlink">FitResult</a><a class="headerlink" href="#fitresult" title="Link to this heading"></a></h3>
-<p>The <code class="xref any docutils literal notranslate"><span class="pre">FitResult</span></code> class stores the results of an MCMC fit, including the posterior samples, log probabilities, and best-fit parameters.</p>
+<p>The <code class="xref any docutils literal notranslate"><span class="pre">FitResult</span></code> class stores the results of an MCMC fit, including the posterior samples, log probabilities, top-k best-fit parameters, and the full bilby Result object for diagnostics.</p>
 </section>
 <section id="vegasmc">
 <span id="api-vegasmc"></span><h3><a class="toc-backref" href="#id10" role="doc-backlink">VegasMC</a><a class="headerlink" href="#vegasmc" title="Link to this heading"></a></h3>
