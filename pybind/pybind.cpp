@@ -192,7 +192,61 @@ PYBIND11_MODULE(VegasAfterglowC, m) {
         .def_readwrite("rvs_ssc", &ConfigParams::rvs_ssc)
         .def_readwrite("ssc_cooling", &ConfigParams::ssc_cooling)
         .def_readwrite("kn", &ConfigParams::kn)
-        .def_readwrite("magnetar", &ConfigParams::magnetar);
+        .def_readwrite("magnetar", &ConfigParams::magnetar)
+        .def(py::pickle(
+            [](const ConfigParams& self) {
+                return py::make_tuple(self.lumi_dist, self.z, self.medium, self.jet, self.t_resol, self.phi_resol,
+                                      self.theta_resol, self.rtol, self.rvs_shock, self.fwd_ssc, self.rvs_ssc,
+                                      self.ssc_cooling, self.kn, self.magnetar);
+            },
+            [](py::tuple state) {
+                ConfigParams cfg;
+                cfg.lumi_dist = state[0].cast<double>();
+                cfg.z = state[1].cast<double>();
+                cfg.medium = state[2].cast<std::string>();
+                cfg.jet = state[3].cast<std::string>();
+                cfg.t_resol = state[4].cast<Real>();
+                cfg.phi_resol = state[5].cast<Real>();
+                cfg.theta_resol = state[6].cast<Real>();
+                cfg.rtol = state[7].cast<double>();
+                cfg.rvs_shock = state[8].cast<bool>();
+                cfg.fwd_ssc = state[9].cast<bool>();
+                cfg.rvs_ssc = state[10].cast<bool>();
+                cfg.ssc_cooling = state[11].cast<bool>();
+                cfg.kn = state[12].cast<bool>();
+                cfg.magnetar = state[13].cast<bool>();
+                return cfg;
+            }));
+
+    // FluxData bindings (for integrated flux bands)
+    py::class_<FluxData>(m, "FluxData")
+        .def(py::init<>())
+        .def_property_readonly("t", [](const FluxData& self) { return PyArray(self.t); })
+        .def_property_readonly("nu", [](const FluxData& self) { return PyArray(self.nu); })
+        .def_property_readonly("Fv_obs", [](const FluxData& self) { return PyArray(self.Fv_obs); })
+        .def_property_readonly("Fv_err", [](const FluxData& self) { return PyArray(self.Fv_err); })
+        .def_property_readonly("weights", [](const FluxData& self) { return PyArray(self.weights); })
+        .def(py::pickle(
+            [](const FluxData& self) {
+                return py::make_tuple(PyArray(self.t), PyArray(self.nu), PyArray(self.Fv_obs), PyArray(self.Fv_err),
+                                      PyArray(self.weights));
+            },
+            [](py::tuple state) {
+                FluxData fd;
+                PyArray py_t = state[0].cast<PyArray>();
+                PyArray py_nu = state[1].cast<PyArray>();
+                PyArray py_Fv_obs = state[2].cast<PyArray>();
+                PyArray py_Fv_err = state[3].cast<PyArray>();
+                PyArray py_weights = state[4].cast<PyArray>();
+
+                fd.t = xt::eval(py_t);
+                fd.nu = xt::eval(py_nu);
+                fd.Fv_obs = xt::eval(py_Fv_obs);
+                fd.Fv_err = xt::eval(py_Fv_err);
+                fd.Fv_model = xt::zeros<Real>({fd.t.size()});
+                fd.weights = xt::eval(py_weights);
+                return fd;
+            }));
 
     // MultiBandData bindings
     py::class_<MultiBandData>(m, "ObsData")
@@ -212,7 +266,72 @@ PYBIND11_MODULE(VegasAfterglowC, m) {
 
         .def_static("logscale_screen", &MultiBandData::logscale_screen, py::arg("t"), py::arg("data_density"))
 
-        .def("data_points_num", &MultiBandData::data_points_num);
+        .def("data_points_num", &MultiBandData::data_points_num)
+
+        // Expose internal data as numpy arrays (read-only)
+        .def_property_readonly("times", [](const MultiBandData& self) { return PyArray(self.times); })
+        .def_property_readonly("frequencies", [](const MultiBandData& self) { return PyArray(self.frequencies); })
+        .def_property_readonly("fluxes", [](const MultiBandData& self) { return PyArray(self.fluxes); })
+        .def_property_readonly("errors", [](const MultiBandData& self) { return PyArray(self.errors); })
+        .def_property_readonly("weights", [](const MultiBandData& self) { return PyArray(self.weights); })
+        .def_readonly("t_min", &MultiBandData::t_min)
+        .def_readonly("t_max", &MultiBandData::t_max)
+        .def_readonly("flux_data", &MultiBandData::flux_data)
+
+        // Pickle support
+        .def(py::pickle(
+            [](MultiBandData& self) {
+                // Ensure data arrays are filled before pickling
+                self.fill_data_arrays();
+
+                // Serialize consolidated arrays and flux_data
+                py::list flux_data_list;
+                for (const auto& fd : self.flux_data) {
+                    flux_data_list.append(py::make_tuple(PyArray(fd.t), PyArray(fd.nu), PyArray(fd.Fv_obs),
+                                                         PyArray(fd.Fv_err), PyArray(fd.weights)));
+                }
+                return py::make_tuple(PyArray(self.times), PyArray(self.frequencies), PyArray(self.fluxes),
+                                      PyArray(self.errors), PyArray(self.weights), self.t_min, self.t_max,
+                                      flux_data_list);
+            },
+            [](py::tuple state) {
+                MultiBandData data;
+                // Explicitly copy data from pytensor to xtensor using xt::eval to ensure deep copy
+                PyArray py_times = state[0].cast<PyArray>();
+                PyArray py_frequencies = state[1].cast<PyArray>();
+                PyArray py_fluxes = state[2].cast<PyArray>();
+                PyArray py_errors = state[3].cast<PyArray>();
+                PyArray py_weights = state[4].cast<PyArray>();
+
+                data.times = xt::eval(py_times);
+                data.frequencies = xt::eval(py_frequencies);
+                data.fluxes = xt::eval(py_fluxes);
+                data.errors = xt::eval(py_errors);
+                data.weights = xt::eval(py_weights);
+                data.model_fluxes = xt::zeros<Real>({data.times.size()});
+                data.t_min = state[5].cast<double>();
+                data.t_max = state[6].cast<double>();
+
+                py::list flux_data_list = state[7].cast<py::list>();
+                for (auto item : flux_data_list) {
+                    auto tup = item.cast<py::tuple>();
+                    FluxData fd;
+                    PyArray py_t = tup[0].cast<PyArray>();
+                    PyArray py_nu = tup[1].cast<PyArray>();
+                    PyArray py_Fv_obs = tup[2].cast<PyArray>();
+                    PyArray py_Fv_err = tup[3].cast<PyArray>();
+                    PyArray py_fd_weights = tup[4].cast<PyArray>();
+
+                    fd.t = xt::eval(py_t);
+                    fd.nu = xt::eval(py_nu);
+                    fd.Fv_obs = xt::eval(py_Fv_obs);
+                    fd.Fv_err = xt::eval(py_Fv_err);
+                    fd.Fv_model = xt::zeros<Real>({fd.t.size()});
+                    fd.weights = xt::eval(py_fd_weights);
+                    data.flux_data.push_back(std::move(fd));
+                }
+                return data;
+            }));
 
     // MultiBandModel bindings
     py::class_<MultiBandModel>(m, "VegasMC")

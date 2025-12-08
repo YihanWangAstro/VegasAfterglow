@@ -5,6 +5,46 @@ All notable changes to VegasAfterglow will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v1.1.0] - 2025-12-08
+
+### Added
+
+#### **Bilby MCMC Integration**
+- **Multi-Sampler Support**: Full integration with bilby framework for Bayesian inference
+  - `emcee`: Affine-invariant MCMC ensemble sampler (recommended, fast)
+  - `dynesty`: Dynamic nested sampling (computes Bayesian evidence)
+  - Support for all bilby samplers (`nestle`, `cpnest`, `pymultinest`, `ultranest`, etc.)
+- **Enhanced Result Object**: `FitResult` now includes LaTeX-formatted labels
+  - `latex_labels`: Properly formatted labels for corner plots (e.g., `$\log_{10}(E_{\rm iso})$`)
+  - Automatic formatting for LOG-scale parameters with `log10_` prefix
+- **Parallelization**: Multi-core support via `npool` parameter
+  - Efficient parallel likelihood evaluations across CPU cores
+  - Works with both emcee and dynesty samplers
+
+#### **Flexible Parameter Interface**
+- **LOG-Scale Parameter Naming**: Parameters with `Scale.LOG` automatically prefixed with `log10_`
+  - Example: `E_iso` with `Scale.LOG` becomes `log10_E_iso` in sampler space
+  - Automatic transformation between log10 and physical values
+- **Generic Sampler Configuration**: Pass sampler-specific parameters via `**sampler_kwargs`
+  - Emcee defaults: `nsteps=5000`, `nburn=1000`, `thin=1`, `nwalkers=2*ndim`
+  - Dynesty defaults: `nlive=500`, `dlogz=0.1`, `sample="rwalk"`
+  - Extensible to any bilby-supported sampler
+
+### Documentation
+
+#### **Comprehensive MCMC Guides**
+- **README Updates**: Complete bilby integration examples
+  - Emcee positioned as primary option (Option 1)
+  - Dynesty as secondary option (Option 2) for evidence calculation
+  - All corner plot examples updated to use `result.latex_labels`
+- **Enhanced RST Documentation**:
+  - `mcmc_fitting.rst`: Complete `Fitter.fit()` interface reference with all parameters
+  - `quickstart.rst`: Updated with current sampler options and examples
+  - `python_api.rst`: Refreshed with bilby integration examples
+  - References to bilby documentation for additional samplers
+
+---
+
 ## [v1.0.3] - 2025-09-29
 
 ### Changed

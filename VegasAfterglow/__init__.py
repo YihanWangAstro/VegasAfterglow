@@ -1,4 +1,4 @@
-from .runner import Fitter
+from .runner import AfterglowLikelihood, Fitter
 from .types import (
     ISM,
     Ejecta,
@@ -32,6 +32,7 @@ __all__ = [
     "Fitter",
     "ParamDef",
     "Scale",
+    "AfterglowLikelihood",
     "ISM",
     "Wind",
     "Medium",

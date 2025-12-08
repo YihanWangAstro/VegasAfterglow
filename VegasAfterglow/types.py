@@ -29,14 +29,16 @@ from .VegasAfterglowC import (  # noqa: F401
 @dataclass
 class FitResult:
     """
-    The result of an MCMC fit.
+    The result of a sampling fit.
     """
 
     samples: np.ndarray
     log_probs: np.ndarray
     labels: Sequence[str]
-    top_k_params: np.ndarray
-    top_k_log_probs: np.ndarray
+    latex_labels: Sequence[str] = None  # LaTeX labels for plotting
+    top_k_params: np.ndarray = None
+    top_k_log_probs: np.ndarray = None
+    bilby_result: object = None  # Full bilby Result object (for diagnostics)
 
 
 class Scale(Enum):

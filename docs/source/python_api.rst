@@ -167,20 +167,33 @@ Example:
     # Create the fitter object
     fitter = Fitter(data, cfg)
 
-    # Run the MCMC fitting
+    # Option 1: MCMC with emcee (faster, recommended for quick fitting)
     result = fitter.fit(
-        param_defs=mc_params,          # Parameter definitions
-        resolution=(1, 5, 10),       # Grid resolution (phi, theta, time)
-        total_steps=10000,             # Total number of MCMC steps
-        burn_frac=0.3,                 # Fraction of steps to discard as burn-in
-        thin=1                         # Thinning factor
+        mc_params,
+        resolution=(0.3, 1, 10),       # Grid resolution (phi, theta, t)
+        sampler="emcee",               # MCMC sampler
+        nsteps=10000,                  # Number of steps per walker
+        nburn=1000,                    # Burn-in steps to discard
+        npool=8,                       # Number of parallel processes
+        top_k=10,                      # Number of best-fit parameters to return
+    )
+
+    # Option 2: Nested sampling with dynesty (slower but computes Bayesian evidence)
+    result = fitter.fit(
+        mc_params,
+        resolution=(0.3, 1, 10),       # Grid resolution (phi, theta, t)
+        sampler="dynesty",             # Nested sampling algorithm
+        nlive=500,                     # Number of live points
+        dlogz=0.1,                     # Stopping criterion (evidence tolerance)
+        sample="rwalk",                # Sampling method
+        npool=8,                       # Number of parallel processes
     )
 
     # Generate light curves with best-fit parameters
-    lc_best = fitter.flux_density_grid(result.best_params, t_out, bands)
+    lc_best = fitter.flux_density_grid(result.top_k_params[0], t_out, bands)
 
     # Generate spectra with best-fit parameters
-    spec_best = fitter.flux_density_grid(result.best_params, times, nu_out)
+    spec_best = fitter.flux_density_grid(result.top_k_params[0], times, nu_out)
 
 .. _api-fitresult:
 
@@ -192,7 +205,7 @@ FitResult
    :undoc-members:
    :show-inheritance:
 
-The `FitResult` class stores the results of an MCMC fit, including the posterior samples, log probabilities, and best-fit parameters.
+The `FitResult` class stores the results of an MCMC fit, including the posterior samples, log probabilities, top-k best-fit parameters, and the full bilby Result object for diagnostics.
 
 .. _api-vegasmc:
 

@@ -220,6 +220,11 @@ size_t MultiBandData::data_points_num() const {
 }
 
 void MultiBandData::fill_data_arrays() {
+    // Skip if arrays are already filled (e.g., from pickle deserialization)
+    if (times.size() > 0 || (tuple_data.empty() && !flux_data.empty())) {
+        return;
+    }
+
     const size_t len = tuple_data.size();
     std::ranges::sort(tuple_data, [](auto const& a, auto const& b) { return std::get<0>(a) < std::get<0>(b); });
     times = Array::from_shape({len});

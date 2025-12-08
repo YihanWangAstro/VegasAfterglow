@@ -712,20 +712,48 @@ Initialize the `Fitter` class with your data and configuration, then run the MCM
 # Create the fitter object
 fitter = Fitter(data, cfg)
 
-# Run the MCMC fitting
+# Option 1: MCMC with emcee (faster, recommended for quick fitting)
 result = fitter.fit(
-    param_defs=mc_params,          # Parameter definitions
-    total_steps=10000,             # Total number of MCMC steps
-    burn_frac=0.3,                 # Fraction of steps to discard as burn-in
-    thin=1                         # Thinning factor
+    mc_params,
+    resolution=(0.3, 1, 10),       # Grid resolution (phi, theta, t)
+    sampler="emcee",               # MCMC sampler
+    nsteps=10000,                  # Number of steps per walker
+    nburn=1000,                    # Burn-in steps to discard
+    thin=1,                        # Save every nth sample
+    npool=8,                       # Number of parallel processes
+    top_k=10,                      # Number of best-fit parameters to return
+    outdir="bilby_output",         # Output directory (default)
+    label="afterglow_fit",         # Run label (default: "afterglow")
+)
+
+# Option 2: Nested sampling with dynesty (slower but computes Bayesian evidence)
+result = fitter.fit(
+    mc_params,
+    resolution=(0.3, 1, 10),       # Grid resolution (phi, theta, t)
+    sampler="dynesty",             # Nested sampling algorithm
+    nlive=500,                     # Number of live points
+    dlogz=0.1,                     # Stopping criterion (evidence tolerance)
+    sample="rwalk",                # Sampling method
+    npool=8,                       # Number of parallel processes
+    top_k=10,                      # Number of best-fit parameters to return
+    outdir="bilby_output",         # Output directory (default)
+    label="afterglow_fit",         # Run label (default: "afterglow")
 )
 ```
 
+**Important Notes:**
+- Parameters with `Scale.LOG` are sampled as `log10_<name>` (e.g., `log10_E_iso`)
+- The sampler works in log10 space for LOG-scale parameters, then transforms back
+- Use `npool` to parallelize likelihood evaluations across multiple CPU cores
+
 The `result` object contains:
 
-- `samples`: The MCMC chain samples (posterior distribution)
-- `labels`: Parameter names
-- `best_params`: Maximum likelihood parameter values
+- `samples`: The posterior samples (shape: [n_samples, 1, n_params])
+- `labels`: Parameter names (with `log10_` prefix for LOG-scale params)
+- `latex_labels`: LaTeX-formatted labels for plotting (e.g., `$\log_{10}(E_{\rm iso})$`)
+- `top_k_params`: Top-k maximum likelihood parameter values
+- `top_k_log_probs`: Log probabilities for top-k samples
+- `bilby_result`: Full bilby Result object (for advanced diagnostics)
 
 </details>
 
@@ -827,7 +855,7 @@ def plot_corner(flat_chain, labels, filename="corner_plot.png"):
 
 # Create the corner plot
 flat_chain = result.samples.reshape(-1, result.samples.shape[-1])
-plot_corner(flat_chain, result.labels)
+plot_corner(flat_chain, result.latex_labels)
 ```
 
 </details>
