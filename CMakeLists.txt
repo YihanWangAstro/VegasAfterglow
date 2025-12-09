@@ -12,12 +12,6 @@ elseif(MSVC)
   add_link_options(/LTCG)
 endif()
 
-if(APPLE)
-  if(NOT DEFINED CMAKE_OSX_DEPLOYMENT_TARGET)
-    set(CMAKE_OSX_DEPLOYMENT_TARGET "13.3" CACHE STRING "Minimum macOS deployment target" FORCE)
-  endif()
-endif()
-
 add_compile_definitions(
   NO_XTENSOR_IO
 )
