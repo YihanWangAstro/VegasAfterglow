@@ -5,6 +5,7 @@ import logging
 from typing import Callable, List, Sequence, Tuple, Type
 
 import bilby
+import emcee
 import numpy as np
 
 from .types import FitResult, ModelParams, ObsData, ParamDef, Scale, Setups, VegasMC
@@ -86,7 +87,16 @@ SAMPLER_DEFAULTS = {
         "nact": 10,
         "maxmcmc": 5000,
     },
-    "emcee": {"nsteps": 5000, "nburn": 1000, "thin": 1},
+    "emcee": {
+        "nsteps": 5000,
+        "nburn": 1000,
+        "thin": 1,
+        "moves": [
+            (emcee.moves.StretchMove(), 0.5),
+            (emcee.moves.DEMove(), 0.4),
+            (emcee.moves.DESnookerMove(), 0.1),
+        ],
+    },
 }
 
 
@@ -366,11 +376,6 @@ class Fitter:
         defaults = dict(SAMPLER_DEFAULTS.get(sampler.lower(), {}))
         sampler_lower = sampler.lower()
         run_kwargs["npool"] = npool
-
-        # if sampler_lower == "dynesty" and npool > 1:
-        #    defaults.setdefault("queue_size", max(npool * 2, 8))
-        # elif sampler_lower == "emcee":
-        #    defaults.setdefault("nwalkers", 2 * ndim)
 
         if sampler_lower == "emcee":
             defaults.setdefault("nwalkers", 2 * ndim)

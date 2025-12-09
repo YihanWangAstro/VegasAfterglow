@@ -11,8 +11,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 #### **Bilby MCMC Integration**
 - **Multi-Sampler Support**: Full integration with bilby framework for Bayesian inference
-  - `emcee`: Affine-invariant MCMC ensemble sampler (recommended, fast)
-  - `dynesty`: Dynamic nested sampling (computes Bayesian evidence)
+  - `emcee`: Affine-invariant MCMC ensemble sampler (fast but does not compute evidence)
+  - `dynesty`: Dynamic nested sampling (slow but computes Bayesian evidence)
   - Support for all bilby samplers (`nestle`, `cpnest`, `pymultinest`, `ultranest`, etc.)
 - **Enhanced Result Object**: `FitResult` now includes LaTeX-formatted labels
   - `latex_labels`: Properly formatted labels for corner plots (e.g., `$\log_{10}(E_{\rm iso})$`)
