@@ -61,8 +61,8 @@ Jet Structure Parameters
      - radians
      - :math:`0.01 - 0.5`
      - Half-opening angle of the jet core
-   * - ``duration``
-     - :math:`T_{\rm dur}`
+   * - ``tau``
+     - :math:`\tau`
      - seconds
      - :math:`0.1 - 1000`
      - Duration of energy injection (affects reverse shock)

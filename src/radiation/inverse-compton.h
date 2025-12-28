@@ -307,11 +307,15 @@ typename ICPhoton<Electrons, Photons>::GridParams ICPhoton<Electrons, Photons>::
 
 template <typename Electrons, typename Photons>
 void ICPhoton<Electrons, Photons>::initialize_grids(GridParams const& params) {
-    log2_nu_IC = xt::linspace(std::log2(params.nu_IC_min), std::log2(params.nu_IC_max), params.spectrum_resol);
+    // Ensure minimum spectrum resolution to avoid division by zero and out-of-bounds access
+    const size_t safe_resol = std::max(params.spectrum_resol, static_cast<size_t>(2));
 
-    interp_slope = Array::from_shape({params.spectrum_resol - 1});
+    log2_nu_IC = xt::linspace(std::log2(params.nu_IC_min), std::log2(params.nu_IC_max), safe_resol);
 
-    inv_dlog2_nu = 1 / (log2_nu_IC(1) - log2_nu_IC(0));
+    interp_slope = Array::from_shape({safe_resol - 1});
+
+    const Real dlog2 = log2_nu_IC(1) - log2_nu_IC(0);
+    inv_dlog2_nu = (dlog2 != 0) ? (1 / dlog2) : 0;
 }
 
 template <typename Electrons, typename Photons>

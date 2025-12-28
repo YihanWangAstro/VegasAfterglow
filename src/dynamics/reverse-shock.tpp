@@ -412,7 +412,8 @@ void grid_solve_shock_pair(size_t i, size_t j, View const& t, Shock& shock_fwd, 
     using namespace boost::numeric::odeint;
 
     typename Eqn::State state;
-    Real t0 = 0.01 * unit::sec;
+    Real t_dec = compute_dec_time(eqn, t.back());
+    Real t0 = min(t.front(), 0.01 * unit::sec, t_dec/3);
     eqn.set_init_state(state, t0);
 
     constexpr Real RS_Gamma_limit = 1.03;

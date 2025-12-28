@@ -167,11 +167,11 @@ template <typename FwdEqn, typename View>
 void grid_solve_fwd_shock(size_t i, size_t j, View const& t, Shock& shock, FwdEqn const& eqn, Real rtol) {
     using namespace boost::numeric::odeint;
 
-    // Initialize state array
     typename FwdEqn::State state;
 
     // Get initial time and set up initial conditions
-    Real t0 = std::min(t.front(), 1 * unit::sec);
+    Real t_dec = compute_dec_time(eqn, t.back());
+    Real t0 = min(t.front(), 1 * unit::sec, t_dec/3);
     eqn.set_init_state(state, t0);
 
     // Early exit if the initial Lorentz factor is below cutoff

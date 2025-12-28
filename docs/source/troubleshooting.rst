@@ -107,7 +107,7 @@ A: This often indicates data selection problems:
   - Calculate points per band: some bands may dominate χ²
 
 **Solutions:**
-  - **Apply logscale_screen**: Use ``ObsData.logscale_screen(times, points_per_decade)`` for manual screening
+  - **Apply logscale_screen**: Use ``ObsData.logscale_screen(times, data_density)`` for manual screening
   - **Balance frequency bands**: Target 10-30 points per band, avoid >100 points in any single band
   - **Use weights**: De-emphasize over-sampled regions with the ``weights`` parameter
   - **Consider systematic floors**: Add systematic uncertainty floors for highly precise data
@@ -120,7 +120,7 @@ A: This often indicates data selection problems:
     # Solution: Manual reduction using logscale_screen
     data = ObsData()
     # Add all data normally, but use screening for over-sampled bands
-    optical_indices = ObsData.logscale_screen(optical_times, points_per_decade=4)
+    optical_indices = ObsData.logscale_screen(optical_times, data_density=4)
     data.add_flux_density(nu=5e14,
                          t=optical_times[optical_indices],  # ~40 points
                          f_nu=optical_flux[optical_indices],
@@ -144,7 +144,7 @@ A: This indicates temporal imbalance in your dataset:
   - Strong late-time constraints dominating the χ² calculation
 
 **Solutions:**
-  - **Apply temporal screening**: Use ``logscale_screen(times, points_per_decade)`` for manual control
+  - **Apply temporal screening**: Use ``logscale_screen(times, data_density)`` for manual control
   - **Ensure early-time representation**: Don't neglect the first few decades
   - **Weight epochs appropriately**: Use temporal weights to balance early vs. late constraints
   - **Check data quality**: Verify that late-time error bars are realistic

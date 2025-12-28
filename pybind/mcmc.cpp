@@ -20,6 +20,14 @@
 std::vector<size_t> MultiBandData::logscale_screen(PyArray const& data, size_t num_order) {
     const size_t total_size = data.size();
 
+    // Handle edge cases: empty or single-element arrays
+    if (total_size == 0) {
+        return {};
+    }
+    if (total_size == 1) {
+        return {0};
+    }
+
     if (num_order == 0) {
         std::vector<size_t> indices(total_size);
         std::iota(indices.begin(), indices.end(), 0);
@@ -36,6 +44,14 @@ std::vector<size_t> MultiBandData::logscale_screen(PyArray const& data, size_t n
 
     // Always include the first point
     indices.push_back(0);
+
+    // Handle case where total_points <= 1 (avoid division by zero)
+    if (total_points <= 1) {
+        if (total_size > 1) {
+            indices.push_back(total_size - 1);
+        }
+        return indices;
+    }
 
     const double step = log_range / static_cast<double>(total_points - 1);
 
@@ -185,7 +201,9 @@ void MultiBandData::add_flux(double nu_min, double nu_max, size_t num_points, Py
         for (size_t i = 0; i < len; ++i) {
             weight_sum += w(i);
         }
-        w /= (weight_sum / static_cast<double>(len));
+        if (weight_sum > 0) {
+            w /= (weight_sum / static_cast<double>(len));
+        }
     }
 
     const Array nu = xt::logspace(std::log10(nu_min * unit::Hz), std::log10(nu_max * unit::Hz), num_points);
@@ -244,7 +262,9 @@ void MultiBandData::fill_data_arrays() {
         model_fluxes(i) = 0; // Placeholder for model fluxes
         weight_sum += weights(i);
     }
-    weights /= (weight_sum / static_cast<double>(len));
+    if (weight_sum > 0) {
+        weights /= (weight_sum / static_cast<double>(len));
+    }
 
     if (len > 0) {
         this->t_min = times.front();
@@ -252,6 +272,8 @@ void MultiBandData::fill_data_arrays() {
     }
 
     for (auto& d : flux_data) {
+        if (d.t.size() == 0)
+            continue;
         if (d.t.front() < t_min)
             t_min = d.t.front();
         if (d.t.back() > t_max)

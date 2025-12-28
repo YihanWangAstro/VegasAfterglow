@@ -17,12 +17,14 @@ readme = "README.md"
 authors = [
   {name = "Yihan Wang", email = "yihan.astro@gmail.com"}
 ]
-requires-python = ">=3.7"
+requires-python = ">=3.8"
 dependencies = [
   "numpy>=1.20",
   "scipy>=1.6",
   "pandas>=1.2",
   "bilby>=2.1",
+  "emcee>=3.0",
+  "dynesty>=2.0",
   "corner>=2.2.1",
   "tqdm>=4.0",
 ]

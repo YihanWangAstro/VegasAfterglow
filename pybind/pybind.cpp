@@ -200,6 +200,9 @@ PYBIND11_MODULE(VegasAfterglowC, m) {
                                       self.ssc_cooling, self.kn, self.magnetar);
             },
             [](py::tuple state) {
+                if (state.size() < 14) {
+                    throw std::runtime_error("Invalid ConfigParams pickle state: expected 14 elements");
+                }
                 ConfigParams cfg;
                 cfg.lumi_dist = state[0].cast<double>();
                 cfg.z = state[1].cast<double>();
@@ -232,6 +235,9 @@ PYBIND11_MODULE(VegasAfterglowC, m) {
                                       PyArray(self.weights));
             },
             [](py::tuple state) {
+                if (state.size() < 5) {
+                    throw std::runtime_error("Invalid FluxData pickle state: expected 5 elements");
+                }
                 FluxData fd;
                 PyArray py_t = state[0].cast<PyArray>();
                 PyArray py_nu = state[1].cast<PyArray>();
@@ -295,6 +301,9 @@ PYBIND11_MODULE(VegasAfterglowC, m) {
                                       flux_data_list);
             },
             [](py::tuple state) {
+                if (state.size() < 8) {
+                    throw std::runtime_error("Invalid MultiBandData pickle state: expected 8 elements");
+                }
                 MultiBandData data;
                 // Explicitly copy data from pytensor to xtensor using xt::eval to ensure deep copy
                 PyArray py_times = state[0].cast<PyArray>();
@@ -315,6 +324,9 @@ PYBIND11_MODULE(VegasAfterglowC, m) {
                 py::list flux_data_list = state[7].cast<py::list>();
                 for (auto item : flux_data_list) {
                     auto tup = item.cast<py::tuple>();
+                    if (tup.size() < 5) {
+                        throw std::runtime_error("Invalid FluxData tuple in MultiBandData pickle: expected 5 elements");
+                    }
                     FluxData fd;
                     PyArray py_t = tup[0].cast<PyArray>();
                     PyArray py_nu = tup[1].cast<PyArray>();

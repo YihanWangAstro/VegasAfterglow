@@ -712,7 +712,7 @@ Initialize the `Fitter` class with your data and configuration, then run the MCM
 # Create the fitter object
 fitter = Fitter(data, cfg)
 
-# Option 1: MCMC with emcee (faster, recommended for quick fitting)
+# Option 1: MCMC with emcee (faster, good for unimodal posteriors)
 result = fitter.fit(
     mc_params,
     resolution=(0.3, 1, 10),       # Grid resolution (phi, theta, t)
@@ -726,7 +726,7 @@ result = fitter.fit(
     label="afterglow_fit",         # Run label (default: "afterglow")
 )
 
-# Option 2: Nested sampling with dynesty (slower but computes Bayesian evidence)
+# Option 2: Nested sampling with dynesty (slower, computes evidence, robust for multimodal posteriors)
 result = fitter.fit(
     mc_params,
     resolution=(0.3, 1, 10),       # Grid resolution (phi, theta, t)
@@ -867,12 +867,15 @@ plot_corner(flat_chain, result.latex_labels)
 Comprehensive documentation is available at **[Documentation](https://yihanwangastro.github.io/VegasAfterglow/docs/index.html)** including:
 
 - **Installation Guide**: Detailed instructions for setting up VegasAfterglow
+- **Quick Start**: Get up and running with basic examples
 - **Examples**: Practical examples showing common use cases
+- **MCMC Fitting**: Complete guide to Bayesian parameter estimation with bilby integration
+- **Parameter Reference**: Comprehensive reference for all physical and numerical parameters
 - **Python API Reference**: Complete documentation of the Python interface
 - **C++ API Reference**: Detailed documentation of C++ classes and functions
+- **Physics Background**: Overview of the underlying physical models
+- **Troubleshooting**: Common issues and solutions
 - **Contributing Guide**: Information for developers who wish to contribute
-
-The documentation is regularly updated with the latest features and improvements (not yet officially released).
 
 For a complete history of changes and new features, see our [**Changelog**](CHANGELOG.md).
 
@@ -927,6 +930,6 @@ For the full license text, see the [LICENSE](LICENSE) file in the repository.
 
 We would like to thank the contributors who helped improve VegasAfterglow. **Special thanks to Weihua Lei, Shaoyu Fu, Liang-Jun Chen, Iris Yin, Cuiyuan Dai and Binbin Zhang** for their invaluable work as beta testers, providing feedback and helping with bug fixes during development. We also thank the broader community for their suggestions and support.
 
-If you use VegasAfterglow in your research, please cite the relevant paper(s):
+If you find VegasAfterglow useful in your research, we would be grateful if you could credit the following paper(s):
 
 [https://ui.adsabs.harvard.edu/abs/2025arXiv250710829W/abstract](https://ui.adsabs.harvard.edu/abs/2025arXiv250710829W/abstract)

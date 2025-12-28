@@ -448,7 +448,6 @@ inline void set_stopping_shock(size_t i, size_t j, Shock& shock, State const& st
     xt::view(shock.N_p, i, j, xt::all()) = 0;
 }
 
-/*
 template <typename Eqn>
 Real compute_dec_time(Eqn const& eqn, Real t_max) {
     Real e_k = eqn.ejecta.eps_k(eqn.phi, eqn.theta0);
@@ -463,7 +462,18 @@ Real compute_dec_time(Eqn const& eqn, Real t_max) {
 
     Real r_dec = beta * con::c * t_max / (1 - beta);
     for (size_t i = 0; i < 30; i++) {
-        Real m_swept = eqn.medium.mass(eqn.phi, eqn.theta0, r_dec);
+        // Compute swept-up mass per solid angle by numerical integration
+        // Use simple trapezoidal rule with logarithmic spacing
+        constexpr size_t n_steps = 50;
+        Real m_swept = 0;
+        Real r_prev = 0;
+        for (size_t k = 1; k <= n_steps; k++) {
+            Real r_k = r_dec * static_cast<Real>(k) / n_steps;
+            Real rho_k = eqn.medium.rho(eqn.phi, eqn.theta0, r_k);
+            Real dr = r_k - r_prev;
+            m_swept += rho_k * r_k * r_k * dr;
+            r_prev = r_k;
+        }
         if (m_swept < m_shell / gamma) {
             break;
         }
@@ -471,4 +481,4 @@ Real compute_dec_time(Eqn const& eqn, Real t_max) {
     }
     Real t_dec = r_dec * (1 - beta) / (beta * con::c);
     return t_dec;
-}*/
+}

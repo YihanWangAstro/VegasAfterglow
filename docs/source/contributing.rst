@@ -207,3 +207,8 @@ License
 -------
 
 By contributing to this project, you agree that your contributions will be licensed under the project's BSD-3-Clause License.
+
+Acknowledgment
+--------------
+
+Parts of the documentation and code comments were generated with the assistance of `Claude Code <https://claude.ai/code>`_.
