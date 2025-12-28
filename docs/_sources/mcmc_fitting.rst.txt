@@ -94,7 +94,7 @@ For large datasets or densely sampled observations, using all available data poi
 
     # Subsample using logarithmic screening
     # This selects ~5*5=25 representative points across 5 decades in time
-    indices = ObsData.logscale_screen(t_dense, num_order=5)
+    indices = ObsData.logscale_screen(t_dense, data_density=5)
 
     # Add only the selected subset
     data.add_flux_density(nu=5e14,
@@ -936,6 +936,8 @@ Visualization
 
     import matplotlib.pyplot as plt
     import corner
+
+    flat_chain = result.samples.reshape(-1, result.samples.shape[-1])
 
     # Corner plot for parameter correlations
     fig = corner.corner(

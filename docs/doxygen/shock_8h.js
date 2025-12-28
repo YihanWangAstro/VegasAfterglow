@@ -6,6 +6,7 @@ var shock_8h =
     [ "compute_adiabatic_cooling_rate2", "shock_8h.html#aacf4d177a18217eecb97eed0a94df70b", null ],
     [ "compute_compression", "shock_8h.html#a56526dae2aafc8713048d8f3297afa78", null ],
     [ "compute_comv_weibel_B", "shock_8h.html#ac9f33883cbf8961d948ef62692866a2b", null ],
+    [ "compute_dec_time", "shock_8h.html#a332a992c621eaae912c73f8089d52323", null ],
     [ "compute_downstr_4vel", "shock_8h.html#a09f75d8bc0c1cd36d03a413edd7283d8", null ],
     [ "compute_downstr_B", "shock_8h.html#ac49ae4ef06c1e8ef80f3e15997c34a6a", null ],
     [ "compute_dr_dt", "shock_8h.html#a49b14420b5231323cb4940496ddc0956", null ],
