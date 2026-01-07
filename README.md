@@ -935,4 +935,4 @@ If you find VegasAfterglow useful in your research, we would be grateful if you 
 [https://ui.adsabs.harvard.edu/abs/2025arXiv250710829W/abstract](https://ui.adsabs.harvard.edu/abs/2025arXiv250710829W/abstract)
 [https://ui.adsabs.harvard.edu/abs/2018pgrb.book.....Z/abstract](https://ui.adsabs.harvard.edu/abs/2018pgrb.book.....Z/abstract)
 
-Parts of the documentation and code comments were generated with the assistance of `Claude Code <https://claude.ai/code>`_.
+Parts of the documentation and code comments were generated with the assistance of [Claude Code](https://claude.ai/code).
