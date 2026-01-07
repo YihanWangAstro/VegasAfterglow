@@ -930,6 +930,7 @@ For the full license text, see the [LICENSE](LICENSE) file in the repository.
 
 We would like to thank the contributors who helped improve VegasAfterglow. **Special thanks to Weihua Lei, Shaoyu Fu, Liang-Jun Chen, Iris Yin, Cuiyuan Dai and Binbin Zhang** for their invaluable work as beta testers, providing feedback and helping with bug fixes during development. We also thank the broader community for their suggestions and support.
 
-If you find VegasAfterglow useful in your research, we would be grateful if you could credit the following paper(s):
+If you find VegasAfterglow useful in your research, we would be grateful if you could credit the following papers:
 
 [https://ui.adsabs.harvard.edu/abs/2025arXiv250710829W/abstract](https://ui.adsabs.harvard.edu/abs/2025arXiv250710829W/abstract)
+[https://ui.adsabs.harvard.edu/abs/2018pgrb.book.....Z/abstract](https://ui.adsabs.harvard.edu/abs/2018pgrb.book.....Z/abstract)
