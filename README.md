@@ -952,9 +952,6 @@ If you find VegasAfterglow useful in your research, we would be grateful if you 
 
 **Wang, Y., Chen, C., & Zhang, B. (2026).** VegasAfterglow: A high-performance framework for gamma-ray burst afterglows. *Journal of High Energy Astrophysics*, 50, 100490. [ADS](https://ui.adsabs.harvard.edu/abs/2026JHEAp..5000490W/abstract)
 
-<details>
-<summary><b>BibTeX</b></summary>
-
 ```bibtex
 @article{Wang2026,
   author  = {Wang, Yihan and Chen, Connery and Zhang, Bing},
@@ -967,12 +964,7 @@ If you find VegasAfterglow useful in your research, we would be grateful if you 
 }
 ```
 
-</details>
-
 **Zhang, B. (2018).** The Physics of Gamma-Ray Bursts. Cambridge University Press. [ADS](https://ui.adsabs.harvard.edu/abs/2018pgrb.book.....Z/abstract)
-
-<details>
-<summary><b>BibTeX</b></summary>
 
 ```bibtex
 @book{Zhang2018,
@@ -983,8 +975,6 @@ If you find VegasAfterglow useful in your research, we would be grateful if you 
   doi       = {10.1017/9781139226530}
 }
 ```
-
-</details>
 
 ---
 
