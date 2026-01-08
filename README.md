@@ -50,7 +50,7 @@
 - **Forward and Reverse Shock Modeling:** Simulates both shocks via shock crossing dynamics with arbitrary magnetization levels and shell thicknesses.
 - **Relativistic and Non-Relativistic Regimes:** Accurately models shock evolution across all velocity regimes.
 - **Adiabatic and Radiative Blast Waves:** Supports smooth transition between adiabatic and radiative blast waves.
-- **Ambient Medium:** Supports uniform Interstellar Medium (ISM), stellar wind environments, and user-defined density profiles.
+- **Ambient Medium:** Supports uniform Interstellar Medium (ISM), stellar wind environments, and **[user-defined density profiles](https://yihanwangastro.github.io/VegasAfterglow/docs/examples.html#user-defined-medium)**.
 - **Energy and Mass Injection:** Supports user-defined profiles for continuous energy and/or mass injection into the blast wave.
 
 <br clear="right"/>
@@ -59,7 +59,7 @@
 
 <img align="right" src="https://github.com/YihanWangAstro/VegasAfterglow/raw/main/assets/jet_geometry.svg" width="450"/>
 
-- **Structured Jet Profiles:** Allows user-defined angular profiles for energy distribution, initial Lorentz factor, and magnetization.
+- **Structured Jet Profiles:** Allows **[user-defined angular profiles](https://yihanwangastro.github.io/VegasAfterglow/docs/examples.html#user-defined-jet)** for energy distribution, initial Lorentz factor, and magnetization.
 - **Arbitrary Viewing Angles:** Supports off-axis observers at any viewing angle relative to the jet axis.
 - **Jet Spreading:** Includes lateral expansion dynamics for realistic jet evolution (experimental).
 - **Non-Axisymmetric Jets:** Capable of modeling complex, non-axisymmetric jet structures.
@@ -179,6 +179,24 @@ The following development tools are required:
 ## Usage
 
 ### Quick Start
+
+**Get your first light curve in under 10 lines:**
+
+```python
+from VegasAfterglow import ISM, TophatJet, Observer, Radiation, Model
+import numpy as np
+import matplotlib.pyplot as plt
+
+model = Model(TophatJet(0.1, 1e52, 300), ISM(1), Observer(1e26, 0.1, 0), Radiation(0.1, 1e-3, 2.3))
+times, bands = np.logspace(2, 8, 100), [1e9, 1e14, 1e17]
+results = model.flux_density_grid(times, bands)
+[plt.loglog(times, results.total[i,:]) for i in range(len(bands))]
+plt.xlabel('Time (s)'); plt.ylabel('Flux (erg/cm²/s/Hz)'); plt.show()
+```
+
+Read the detailed sections below for more information.
+
+---
 
 We provide basic example scripts (`script/quick.ipynb`, `script/details.ipynb` and `script/mcmc.ipynb`) that demonstrate how to set up and run afterglow simulations. This section shows how to calculate light curves and spectra for a simple GRB afterglow model without the need for observational data and perform MCMC parameter fitting with observational data. The notebook can be run using either Jupyter Notebook or VSCode with the Jupyter extension.
 
@@ -930,9 +948,44 @@ For the full license text, see the [LICENSE](LICENSE) file in the repository.
 
 We would like to thank the contributors who helped improve VegasAfterglow. **Special thanks to Weihua Lei, Shaoyu Fu, Liang-Jun Chen, Iris Yin, Cuiyuan Dai and Binbin Zhang** for their invaluable work as beta testers, providing feedback and helping with bug fixes during development. We also thank the broader community for their suggestions and support.
 
-If you find VegasAfterglow useful in your research, we would be grateful if you could credit the following papers:
+If you find VegasAfterglow useful in your research, we would be grateful if you could cite:
 
-[https://ui.adsabs.harvard.edu/abs/2025arXiv250710829W/abstract](https://ui.adsabs.harvard.edu/abs/2025arXiv250710829W/abstract)
-[https://ui.adsabs.harvard.edu/abs/2018pgrb.book.....Z/abstract](https://ui.adsabs.harvard.edu/abs/2018pgrb.book.....Z/abstract)
+**Wang, Y., Chen, C., & Zhang, B. (2026).** VegasAfterglow: A high-performance framework for gamma-ray burst afterglows. *Journal of High Energy Astrophysics*, 50, 100490. [ADS](https://ui.adsabs.harvard.edu/abs/2026JHEAp..5000490W/abstract)
+
+<details>
+<summary><b>BibTeX</b></summary>
+
+```bibtex
+@article{Wang2026,
+  author  = {Wang, Yihan and Chen, Connery and Zhang, Bing},
+  title   = {{VegasAfterglow: A high-performance framework for gamma-ray burst afterglows}},
+  journal = {Journal of High Energy Astrophysics},
+  year    = {2026},
+  volume  = {50},
+  pages   = {100490},
+  doi     = {10.1016/j.jheap.2025.100490}
+}
+```
+
+</details>
+
+**Zhang, B. (2018).** The Physics of Gamma-Ray Bursts. Cambridge University Press. [ADS](https://ui.adsabs.harvard.edu/abs/2018pgrb.book.....Z/abstract)
+
+<details>
+<summary><b>BibTeX</b></summary>
+
+```bibtex
+@book{Zhang2018,
+  author    = {Zhang, Bing},
+  title     = {{The Physics of Gamma-Ray Bursts}},
+  publisher = {Cambridge University Press},
+  year      = {2018},
+  doi       = {10.1017/9781139226530}
+}
+```
+
+</details>
+
+---
 
 Parts of the documentation and code comments were generated with the assistance of [Claude Code](https://claude.ai/code).
