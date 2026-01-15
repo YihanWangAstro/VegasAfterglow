@@ -83,15 +83,11 @@
 
 ## Performance Highlights
 
-<img align="right" src="https://github.com/YihanWangAstro/VegasAfterglow/raw/main/assets/convergence_plot.png" width="400"/>
+<img align="left" src="https://github.com/YihanWangAstro/VegasAfterglow/raw/main/assets/convergence_plot.png" width="450"/>
 
-VegasAfterglow delivers exceptional computational performance through deep optimization of its core algorithms:
+VegasAfterglow delivers exceptional computational performance through deep optimization of its core algorithms. A 100-point single-frequency light curve (forward shock and synchrotron emission only) for a structured jet viewed off-axis can be generated in approximately 1 millisecond on a single core of an Apple M2 chip. This performance is achieved through optimized algorithmic design and cache-efficient memory access patterns, enabling comprehensive Bayesian inference on standard laptop hardware in minutes rather than hours or days. The resulting acceleration allows rapid iteration over different physical models and makes VegasAfterglow well suited for both detailed analyses of individual GRB events and large-scale population studies.
 
-- **Ultra-fast Light Curve Computation:** Generates a 100-point single-frequency light curve (forward shock & synchrotron only) from a structured jet viewed off-axis in approximately 1 millisecond on an Apple M2 chip with a single core.
-
-This level of performance is achieved through optimized algorithm implementation and efficient memory access patterns, facilitating comprehensive Bayesian inference on standard laptop hardware in minutes rather than hours or days. The accelerated convergence speed enables rapid iteration through different physical models and makes VegasAfterglow suitable for both detailed analysis of individual GRB events and large-scale population studies.
-
-<br clear="right"/>
+<br clear="left"/>
 
 ---
 
