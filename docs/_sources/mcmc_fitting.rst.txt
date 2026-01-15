@@ -850,19 +850,7 @@ Basic MCMC Execution
     # Create fitter object
     fitter = Fitter(data, cfg)
 
-    # Option 1: MCMC with emcee (faster, recommended for quick fitting, hard to converge for multimodal posteriors)
-    result = fitter.fit(
-        params,
-        resolution=(0.3, 0.3, 10),     # Grid resolution (phi, theta, t)
-        sampler="emcee",               # MCMC sampler
-        nsteps=50000,                  # Number of steps per walker
-        nburn=10000,                    # Burn-in steps to discard
-        thin=1,                        # Save every nth sample
-        npool=8,                       # Number of parallel processes
-        top_k=10,                      # Number of best-fit parameters to return
-    )
-
-    # Option 2: Nested sampling with dynesty (slower but computes Bayesian evidence, robust for multimodal posteriors)
+    # Option 1 (Recommended): Nested sampling with dynesty (computes Bayesian evidence, robust for multimodal posteriors)
     result = fitter.fit(
         params,
         resolution=(0.3, 0.3, 10),     # Grid resolution (phi, theta, t)
@@ -870,6 +858,18 @@ Basic MCMC Execution
         nlive=1000,                    # Number of live points
         walks=100,                     # Number of random walks per live point
         dlogz=0.5,                     # Stopping criterion (evidence tolerance)
+        npool=8,                       # Number of parallel processes
+        top_k=10,                      # Number of best-fit parameters to return
+    )
+
+    # Option 2: MCMC with emcee (faster, good for unimodal posteriors, hard to converge for multimodal posteriors)
+    result = fitter.fit(
+        params,
+        resolution=(0.3, 0.3, 10),     # Grid resolution (phi, theta, t)
+        sampler="emcee",               # MCMC sampler
+        nsteps=50000,                  # Number of steps per walker
+        nburn=10000,                   # Burn-in steps to discard
+        thin=1,                        # Save every nth sample
         npool=8,                       # Number of parallel processes
         top_k=10,                      # Number of best-fit parameters to return
     )

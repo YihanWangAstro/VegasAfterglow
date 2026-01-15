@@ -659,21 +659,7 @@ The parameters you include depend on your model configuration:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Create the fitter object</span>
 <span class="n">fitter</span> <span class="o">=</span> <span class="n">Fitter</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">cfg</span><span class="p">)</span>
 
-<span class="c1"># Option 1: MCMC with emcee (faster, recommended for quick fitting, hard to converge for multimodal posteriors)</span>
-<span class="n">result</span> <span class="o">=</span> <span class="n">fitter</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span>
-    <span class="n">mc_params</span><span class="p">,</span>
-    <span class="n">resolution</span><span class="o">=</span><span class="p">(</span><span class="mf">0.3</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span>       <span class="c1"># Grid resolution (phi, theta, t)</span>
-    <span class="n">sampler</span><span class="o">=</span><span class="s2">&quot;emcee&quot;</span><span class="p">,</span>               <span class="c1"># MCMC sampler</span>
-    <span class="n">nsteps</span><span class="o">=</span><span class="mi">50000</span><span class="p">,</span>                  <span class="c1"># Number of steps per walker</span>
-    <span class="n">nburn</span><span class="o">=</span><span class="mi">10000</span><span class="p">,</span>                    <span class="c1"># Burn-in steps to discard</span>
-    <span class="n">thin</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>                        <span class="c1"># Save every nth sample</span>
-    <span class="n">npool</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span>                       <span class="c1"># Number of parallel processes</span>
-    <span class="n">top_k</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>                      <span class="c1"># Number of best-fit parameters to return</span>
-    <span class="n">outdir</span><span class="o">=</span><span class="s2">&quot;bilby_output&quot;</span><span class="p">,</span>         <span class="c1"># Output directory (default)</span>
-    <span class="n">label</span><span class="o">=</span><span class="s2">&quot;afterglow_fit&quot;</span><span class="p">,</span>         <span class="c1"># Run label (default: &quot;afterglow&quot;)</span>
-<span class="p">)</span>
-
-<span class="c1"># Option 2: Nested sampling with dynesty (slower but computes Bayesian evidence, robust for multimodal posteriors)</span>
+<span class="c1"># Option 1: Nested sampling with dynesty (slower but computes Bayesian evidence, robust for multimodal posteriors)</span>
 <span class="n">result</span> <span class="o">=</span> <span class="n">fitter</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span>
     <span class="n">mc_params</span><span class="p">,</span>
     <span class="n">resolution</span><span class="o">=</span><span class="p">(</span><span class="mf">0.3</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span>     <span class="c1"># Grid resolution (phi, theta, t)</span>
@@ -683,6 +669,20 @@ The parameters you include depend on your model configuration:</p>
     <span class="n">dlogz</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span>                     <span class="c1"># Stopping criterion (evidence tolerance)</span>
     <span class="n">npool</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span>                       <span class="c1"># Number of parallel processes</span>
     <span class="n">top_k</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>                      <span class="c1"># Number of best-fit parameters to return</span>
+<span class="p">)</span>
+
+<span class="c1"># Option 2: MCMC with emcee (faster, recommended for quick fitting, hard to converge for multimodal posteriors)</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">fitter</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span>
+    <span class="n">mc_params</span><span class="p">,</span>
+    <span class="n">resolution</span><span class="o">=</span><span class="p">(</span><span class="mf">0.3</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span>       <span class="c1"># Grid resolution (phi, theta, t)</span>
+    <span class="n">sampler</span><span class="o">=</span><span class="s2">&quot;emcee&quot;</span><span class="p">,</span>               <span class="c1"># MCMC sampler</span>
+    <span class="n">nsteps</span><span class="o">=</span><span class="mi">50000</span><span class="p">,</span>                  <span class="c1"># Number of steps per walker</span>
+    <span class="n">nburn</span><span class="o">=</span><span class="mi">10000</span><span class="p">,</span>                   <span class="c1"># Burn-in steps to discard</span>
+    <span class="n">thin</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>                        <span class="c1"># Save every nth sample</span>
+    <span class="n">npool</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span>                       <span class="c1"># Number of parallel processes</span>
+    <span class="n">top_k</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>                      <span class="c1"># Number of best-fit parameters to return</span>
+    <span class="n">outdir</span><span class="o">=</span><span class="s2">&quot;bilby_output&quot;</span><span class="p">,</span>         <span class="c1"># Output directory (default)</span>
+    <span class="n">label</span><span class="o">=</span><span class="s2">&quot;afterglow_fit&quot;</span><span class="p">,</span>         <span class="c1"># Run label (default: &quot;afterglow&quot;)</span>
 <span class="p">)</span>
 </pre></div>
 </div>

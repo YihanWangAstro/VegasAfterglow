@@ -581,21 +581,7 @@ Initialize the ``Fitter`` class with your data and configuration, then run the M
     # Create the fitter object
     fitter = Fitter(data, cfg)
 
-    # Option 1: MCMC with emcee (faster, recommended for quick fitting, hard to converge for multimodal posteriors)
-    result = fitter.fit(
-        mc_params,
-        resolution=(0.3, 1, 10),       # Grid resolution (phi, theta, t)
-        sampler="emcee",               # MCMC sampler
-        nsteps=50000,                  # Number of steps per walker
-        nburn=10000,                    # Burn-in steps to discard
-        thin=1,                        # Save every nth sample
-        npool=8,                       # Number of parallel processes
-        top_k=10,                      # Number of best-fit parameters to return
-        outdir="bilby_output",         # Output directory (default)
-        label="afterglow_fit",         # Run label (default: "afterglow")
-    )
-
-    # Option 2: Nested sampling with dynesty (slower but computes Bayesian evidence, robust for multimodal posteriors)
+    # Option 1: Nested sampling with dynesty (slower but computes Bayesian evidence, robust for multimodal posteriors)
     result = fitter.fit(
         mc_params,
         resolution=(0.3, 0.3, 10),     # Grid resolution (phi, theta, t)
@@ -606,6 +592,22 @@ Initialize the ``Fitter`` class with your data and configuration, then run the M
         npool=8,                       # Number of parallel processes
         top_k=10,                      # Number of best-fit parameters to return
     )
+
+    # Option 2: MCMC with emcee (faster, recommended for quick fitting, hard to converge for multimodal posteriors)
+    result = fitter.fit(
+        mc_params,
+        resolution=(0.3, 1, 10),       # Grid resolution (phi, theta, t)
+        sampler="emcee",               # MCMC sampler
+        nsteps=50000,                  # Number of steps per walker
+        nburn=10000,                   # Burn-in steps to discard
+        thin=1,                        # Save every nth sample
+        npool=8,                       # Number of parallel processes
+        top_k=10,                      # Number of best-fit parameters to return
+        outdir="bilby_output",         # Output directory (default)
+        label="afterglow_fit",         # Run label (default: "afterglow")
+    )
+
+
 
 **Important Notes:**
     - Parameters with ``Scale.LOG`` are sampled as ``log10_<name>`` (e.g., ``log10_E_iso``)
