@@ -8,7 +8,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Troubleshooting &mdash; VegasAfterglow 0.1.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=20074c1a" />
-      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="_static/graphviz.css?v=fd3f3429" />
       <link rel="stylesheet" type="text/css" href="_static/css/custom.css?v=c0df17a3" />
       <link rel="stylesheet" type="text/css" href="_static/css/custom.css?v=c0df17a3" />
@@ -158,7 +158,7 @@
 <p><strong>Q: MCMC is too slow for practical use</strong></p>
 <p>A: Optimization strategies:</p>
 <ul class="simple">
-<li><p><strong>Reduce resolution</strong>: Use <code class="docutils literal notranslate"><span class="pre">resolution=(0.3,</span> <span class="pre">1,</span> <span class="pre">10)</span></code> for initial exploration</p></li>
+<li><p><strong>Reduce resolution</strong>: Use <code class="docutils literal notranslate"><span class="pre">resolution=(0.3,</span> <span class="pre">0.3,</span> <span class="pre">10)</span></code> for initial exploration</p></li>
 <li><p><strong>Fewer parameters</strong>: Fix some parameters with <code class="docutils literal notranslate"><span class="pre">Scale.FIXED</span></code></p></li>
 <li><p><strong>Coarser time/frequency grids</strong>: Use fewer data points for initial fits</p></li>
 <li><p><strong>Parallel processing</strong>: Ensure you’re using multiple cores</p></li>

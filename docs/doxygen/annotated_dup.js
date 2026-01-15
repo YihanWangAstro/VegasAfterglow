@@ -24,6 +24,7 @@ var annotated_dup =
     [ "Observer", "classObserver.html", "classObserver" ],
     [ "Params", "structParams.html", "structParams" ],
     [ "PowerLawJet", "classPowerLawJet.html", "classPowerLawJet" ],
+    [ "PowerLawSyn", "structPowerLawSyn.html", "structPowerLawSyn" ],
     [ "PromptPhotons", "structPromptPhotons.html", "structPromptPhotons" ],
     [ "PyDetails", "structPyDetails.html", "structPyDetails" ],
     [ "PyFlux", "structPyFlux.html", "structPyFlux" ],
@@ -38,7 +39,6 @@ var annotated_dup =
     [ "SimpleShockEqn", "classSimpleShockEqn.html", "classSimpleShockEqn" ],
     [ "SimpleState", "structSimpleState.html", "structSimpleState" ],
     [ "SynElectrons", "structSynElectrons.html", "structSynElectrons" ],
-    [ "SynPhotons", "structSynPhotons.html", "structSynPhotons" ],
     [ "Tables", "structTables.html", "structTables" ],
     [ "TophatJet", "classTophatJet.html", "classTophatJet" ],
     [ "Wind", "classWind.html", "classWind" ]

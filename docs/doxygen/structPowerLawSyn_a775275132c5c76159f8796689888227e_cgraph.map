@@ -1,0 +1,21 @@
+<map id="PowerLawSyn::update_constant" name="PowerLawSyn::update_constant">
+<area shape="rect" id="Node000001" title="Updates cached calculation constants used for efficiently computing synchrotron spectra." alt="" coords="5,125,171,165"/>
+<area shape="rect" id="Node000002" href="$utilities_8h.html#aa67895957aa831a991982a8268ef8349" title="Fast approximation of the base&#45;2 logarithm." alt="" coords="350,107,433,132"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="170,135,336,121,337,127,171,140"/>
+<area shape="rect" id="Node000006" href="$utilities_8h.html#a4520a27a10a2aef33c99ad8c679da404" title="Fast approximation of a raised to the power of b." alt="" coords="219,157,300,183"/>
+<area shape="poly" id="edge8_Node000001_Node000006" title=" " alt="" coords="171,154,206,159,205,165,170,160"/>
+<area shape="rect" id="Node000003" href="$utilities_8h.html#acd0ec547a29a5a2f768d02b1aef146fa" title=" " alt="" coords="483,5,640,31"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="405,104,439,77,481,48,510,34,512,38,484,52,442,81,409,108"/>
+<area shape="rect" id="Node000004" href="$utilities_8h.html#ab8e81118f023df135835db8cce4f5f42" title="Returns the value of a single parameter." alt="" coords="688,107,739,132"/>
+<area shape="poly" id="edge5_Node000002_Node000004" title=" " alt="" coords="428,104,482,91,561,83,640,91,676,101,674,106,640,97,561,89,483,97,430,109"/>
+<area shape="rect" id="Node000005" href="$utilities_8h.html#aeec24af41c09b6f977fbd1b6209e6501" title=" " alt="" coords="530,107,593,132"/>
+<area shape="poly" id="edge6_Node000002_Node000005" title=" " alt="" coords="433,117,516,117,516,122,433,122"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="603,28,641,48,670,70,694,94,690,98,667,74,639,52,600,33"/>
+<area shape="poly" id="edge4_Node000004_Node000004" title=" " alt="" coords="688,108,682,98,685,89,696,82,713,80,734,83,743,92,740,96,732,88,713,85,698,87,689,92,688,98,692,105"/>
+<area shape="poly" id="edge7_Node000005_Node000004" title=" " alt="" coords="593,117,674,117,674,122,593,122"/>
+<area shape="poly" id="edge11_Node000006_Node000002" title=" " alt="" coords="292,155,344,135,346,139,294,160"/>
+<area shape="poly" id="edge12_Node000006_Node000004" title=" " alt="" coords="300,168,450,163,545,155,639,141,674,131,676,136,641,146,546,160,451,169,300,173"/>
+<area shape="rect" id="Node000007" href="$utilities_8h.html#afc584c30c352192de6847b1f4b8caf0e" title="Fast approximation of 2 raised to a power." alt="" coords="348,208,435,233"/>
+<area shape="poly" id="edge9_Node000006_Node000007" title=" " alt="" coords="294,180,346,201,344,205,292,185"/>
+<area shape="poly" id="edge10_Node000007_Node000004" title=" " alt="" coords="435,220,479,220,531,216,586,205,639,186,669,166,693,141,696,145,672,170,641,191,588,210,532,221,479,225,435,226"/>
+</map>

@@ -8,7 +8,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Python API Reference &mdash; VegasAfterglow 0.1.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=20074c1a" />
-      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="_static/graphviz.css?v=fd3f3429" />
       <link rel="stylesheet" type="text/css" href="_static/css/custom.css?v=c0df17a3" />
       <link rel="stylesheet" type="text/css" href="_static/css/custom.css?v=c0df17a3" />
@@ -235,11 +235,11 @@
 <span class="c1"># Option 2: Nested sampling with dynesty (slower but computes Bayesian evidence)</span>
 <span class="n">result</span> <span class="o">=</span> <span class="n">fitter</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span>
     <span class="n">mc_params</span><span class="p">,</span>
-    <span class="n">resolution</span><span class="o">=</span><span class="p">(</span><span class="mf">0.3</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span>       <span class="c1"># Grid resolution (phi, theta, t)</span>
+    <span class="n">resolution</span><span class="o">=</span><span class="p">(</span><span class="mf">0.3</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span>     <span class="c1"># Grid resolution (phi, theta, t)</span>
     <span class="n">sampler</span><span class="o">=</span><span class="s2">&quot;dynesty&quot;</span><span class="p">,</span>             <span class="c1"># Nested sampling algorithm</span>
-    <span class="n">nlive</span><span class="o">=</span><span class="mi">500</span><span class="p">,</span>                     <span class="c1"># Number of live points</span>
-    <span class="n">dlogz</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span>                     <span class="c1"># Stopping criterion (evidence tolerance)</span>
-    <span class="n">sample</span><span class="o">=</span><span class="s2">&quot;rwalk&quot;</span><span class="p">,</span>                <span class="c1"># Sampling method</span>
+    <span class="n">nlive</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span>                    <span class="c1"># Number of live points</span>
+    <span class="n">walks</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span>                     <span class="c1"># Number of random walks per live point</span>
+    <span class="n">dlogz</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span>                     <span class="c1"># Stopping criterion (evidence tolerance)</span>
     <span class="n">npool</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span>                       <span class="c1"># Number of parallel processes</span>
 <span class="p">)</span>
 

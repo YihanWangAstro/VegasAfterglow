@@ -26,6 +26,7 @@ var hierarchy =
     [ "Observer", "classObserver.html", null ],
     [ "Params", "structParams.html", null ],
     [ "PowerLawJet", "classPowerLawJet.html", null ],
+    [ "PowerLawSyn", "structPowerLawSyn.html", null ],
     [ "PromptPhotons", "structPromptPhotons.html", null ],
     [ "PyDetails", "structPyDetails.html", null ],
     [ "PyFlux", "structPyFlux.html", null ],
@@ -40,7 +41,6 @@ var hierarchy =
     [ "SimpleShockEqn< Ejecta, Medium >", "classSimpleShockEqn.html", null ],
     [ "SimpleState< Ejecta >", "structSimpleState.html", null ],
     [ "SynElectrons", "structSynElectrons.html", null ],
-    [ "SynPhotons", "structSynPhotons.html", null ],
     [ "Tables", "structTables.html", null ],
     [ "TophatJet", "classTophatJet.html", null ],
     [ "Wind", "classWind.html", null ]

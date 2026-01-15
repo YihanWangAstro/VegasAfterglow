@@ -1,7 +1,7 @@
 var searchData=
 [
   ['i_5fnu_0',['I_nu',['../structPromptPhotons.html#a6b69b9bf72058f1469cfa2141f79e853',1,'PromptPhotons']]],
-  ['i_5fnu_5fmax_1',['i_nu_max',['../structSynPhotons.html#af3ae343561f7e39f8240a3ba7db8eabd',1,'SynPhotons::I_nu_max'],['../structPyShock.html#a6e28ebccae921ab3cd7c3707d4bf5a95',1,'PyShock::I_nu_max']]],
+  ['i_5fnu_5fmax_1',['i_nu_max',['../structPowerLawSyn.html#a68c85367f8df25fbe9e9ef0895f84897',1,'PowerLawSyn::I_nu_max'],['../structPyShock.html#a6e28ebccae921ab3cd7c3707d4bf5a95',1,'PyShock::I_nu_max']]],
   ['ic_5fcooling_2',['IC_cooling',['../inverse-compton_8h.html#a296938a441652163ddc6bee2faa9299e',1,'inverse-compton.h']]],
   ['ic_5fx0_3',['IC_x0',['../inverse-compton_8h.html#af77ecb3b882119e9d24786b64815975f',1,'inverse-compton.h']]],
   ['icphoton_4',['icphoton',['../structICPhoton.html',1,'ICPhoton&lt; Electrons, Photons &gt;'],['../structICPhoton.html#aa943b8dc162f2f7224a8ecb485caeb3e',1,'ICPhoton::ICPhoton(Electrons const &amp;electrons, Photons const &amp;photons, bool KN) noexcept'],['../structICPhoton.html#a83c634a93def6d25badc888ca57f3bca',1,'ICPhoton::ICPhoton()=default']]],

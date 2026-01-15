@@ -63,7 +63,7 @@ var NAVTREEINDEX =
 "IO_8cpp.html",
 "functions_vars_q.html",
 "physics_8cpp.html#a853128cff1cc2dbbc46341d6d1386db2",
-"structPyShock.html#aa5598e189d0f2d11ef7b0bb15f03da4f"
+"structPyMagnetar.html#a088ac94a2447c79d31eed3edcf3114d0"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

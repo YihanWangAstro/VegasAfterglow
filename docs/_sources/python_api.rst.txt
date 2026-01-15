@@ -181,11 +181,11 @@ Example:
     # Option 2: Nested sampling with dynesty (slower but computes Bayesian evidence)
     result = fitter.fit(
         mc_params,
-        resolution=(0.3, 1, 10),       # Grid resolution (phi, theta, t)
+        resolution=(0.3, 0.3, 10),     # Grid resolution (phi, theta, t)
         sampler="dynesty",             # Nested sampling algorithm
-        nlive=500,                     # Number of live points
-        dlogz=0.1,                     # Stopping criterion (evidence tolerance)
-        sample="rwalk",                # Sampling method
+        nlive=1000,                    # Number of live points
+        walks=100,                     # Number of random walks per live point
+        dlogz=0.5,                     # Stopping criterion (evidence tolerance)
         npool=8,                       # Number of parallel processes
     )
 

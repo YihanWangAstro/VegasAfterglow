@@ -7,10 +7,10 @@ var searchData=
   ['nu_4',['nu',['../structFluxData.html#a3d8b3e41f12ac4a1a06d89e0f5bd73cc',1,'FluxData']]],
   ['nu0_5',['nu0',['../structInverseComptonY.html#aee671c5e961ee6e79b86f4e7c8045231',1,'InverseComptonY']]],
   ['nu_5f0_6',['nu_0',['../structPromptPhotons.html#a54a5f92e9276e418638ebaac83fa4980',1,'PromptPhotons']]],
-  ['nu_5fa_7',['nu_a',['../structPyShock.html#a3a2c1bc271cfa9161bfea4e1731492e7',1,'PyShock::nu_a'],['../structSynPhotons.html#abf21c9a421af10e2537cf91c952bfef0',1,'SynPhotons::nu_a']]],
-  ['nu_5fc_8',['nu_c',['../structPyShock.html#a3b8bc9bf73c5966bc5fa54c5a96c89cc',1,'PyShock::nu_c'],['../structSynPhotons.html#a910353b5e644e1472843f39f1ad02196',1,'SynPhotons::nu_c']]],
+  ['nu_5fa_7',['nu_a',['../structPyShock.html#a3a2c1bc271cfa9161bfea4e1731492e7',1,'PyShock::nu_a'],['../structPowerLawSyn.html#ad952652650961690e84dca86cb246289',1,'PowerLawSyn::nu_a']]],
+  ['nu_5fc_8',['nu_c',['../structPyShock.html#a3b8bc9bf73c5966bc5fa54c5a96c89cc',1,'PyShock::nu_c'],['../structPowerLawSyn.html#a69b2e32bfd6ffbaa677da50e271e4a9e',1,'PowerLawSyn::nu_c']]],
   ['nu_5fc_5fhat_9',['nu_c_hat',['../structPyShock.html#a2bdec231180b5cba273178653a8b5627',1,'PyShock::nu_c_hat'],['../structInverseComptonY.html#aba46902001dcce68e9a800f6546cfb6f',1,'InverseComptonY::nu_c_hat']]],
-  ['nu_5fm_10',['nu_m',['../structPyShock.html#aa5598e189d0f2d11ef7b0bb15f03da4f',1,'PyShock::nu_M'],['../structSynPhotons.html#a3e708c5152a525914f55fab62ca00c2c',1,'SynPhotons::nu_M'],['../structPyShock.html#a9d61259f3d3c4c23464ec748b3bb9315',1,'PyShock::nu_m'],['../structSynPhotons.html#abc96bae4050dcae54cc99ac5c7973586',1,'SynPhotons::nu_m']]],
+  ['nu_5fm_10',['nu_m',['../structPyShock.html#aa5598e189d0f2d11ef7b0bb15f03da4f',1,'PyShock::nu_M'],['../structPowerLawSyn.html#a26e22b2c12e0eae886766da3ffcc732f',1,'PowerLawSyn::nu_M'],['../structPyShock.html#a9d61259f3d3c4c23464ec748b3bb9315',1,'PyShock::nu_m'],['../structPowerLawSyn.html#a217491ac8c39bcb5c9c9247204653ac8',1,'PowerLawSyn::nu_m']]],
   ['nu_5fm_5fhat_11',['nu_m_hat',['../structPyShock.html#a6d6ca5ca3880d31ab37fdc67b6345bb7',1,'PyShock::nu_m_hat'],['../structInverseComptonY.html#a61f9be458f76f3264a0ce51ff515fc6d',1,'InverseComptonY::nu_m_hat']]],
   ['nu_5fself_12',['nu_self',['../structInverseComptonY.html#af972dfca7ef78bc5cee1b092aca6a877',1,'InverseComptonY']]]
 ];

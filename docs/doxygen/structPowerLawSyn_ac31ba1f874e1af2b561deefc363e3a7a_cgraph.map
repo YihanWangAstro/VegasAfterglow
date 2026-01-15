@@ -1,0 +1,28 @@
+<map id="PowerLawSyn::compute_log2_I_nu" name="PowerLawSyn::compute_log2_I_nu">
+<area shape="rect" id="Node000001" title="Calculates the base&#45;2 logarithm of comoving synchrotron specific intensity at a given frequency." alt="" coords="5,109,183,149"/>
+<area shape="rect" id="Node000002" href="$structInverseComptonY.html#ae89da0295219c94b65f81577fa043ae4" title="Calculates the effective Y parameter for a given frequency and spectral index." alt="" coords="231,80,431,120"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="183,116,217,111,217,117,183,121"/>
+<area shape="rect" id="Node000004" href="$utilities_8h.html#afc584c30c352192de6847b1f4b8caf0e" title="Fast approximation of 2 raised to a power." alt="" coords="608,145,695,170"/>
+<area shape="poly" id="edge15_Node000001_Node000004" title=" " alt="" coords="183,131,595,152,594,157,183,136"/>
+<area shape="rect" id="Node000005" href="$utilities_8h.html#ab8e81118f023df135835db8cce4f5f42" title="Returns the value of a single parameter." alt="" coords="948,145,999,170"/>
+<area shape="poly" id="edge17_Node000001_Node000005" title=" " alt="" coords="133,107,179,85,230,65,371,19,435,7,518,3,653,3,726,5,784,14,838,35,902,71,935,100,959,131,955,135,931,104,898,76,836,39,782,19,726,10,653,8,518,8,436,12,373,24,232,71,181,90,135,112"/>
+<area shape="rect" id="Node000006" href="$utilities_8h.html#aa67895957aa831a991982a8268ef8349" title="Fast approximation of the base&#45;2 logarithm." alt="" coords="610,195,693,221"/>
+<area shape="poly" id="edge16_Node000001_Node000006" title=" " alt="" coords="183,142,231,149,596,199,596,204,230,155,183,147"/>
+<area shape="rect" id="Node000003" href="$utilities_8h.html#a4520a27a10a2aef33c99ad8c679da404" title="Fast approximation of a raised to the power of b." alt="" coords="479,94,560,119"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="431,101,465,102,465,107,431,106"/>
+<area shape="rect" id="Node000009" href="$utilities_8h.html#a5069f3665d3ad6f8eced520eae62e400" title="Computes a^(2/3)" alt="" coords="487,43,552,69"/>
+<area shape="poly" id="edge13_Node000002_Node000009" title=" " alt="" coords="416,77,472,64,473,69,417,83"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="554,117,606,137,604,142,552,122"/>
+<area shape="poly" id="edge12_Node000003_Node000005" title=" " alt="" coords="560,105,710,114,805,123,900,136,935,144,934,149,900,141,805,128,710,119,560,110"/>
+<area shape="poly" id="edge6_Node000003_Node000006" title=" " alt="" coords="536,118,610,181,617,186,614,190,606,185,533,122"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="695,155,934,155,934,160,695,160"/>
+<area shape="poly" id="edge5_Node000005_Node000005" title=" " alt="" coords="948,146,942,136,945,127,956,120,973,118,994,121,1003,130,1000,134,992,126,973,123,958,125,949,130,948,136,952,143"/>
+<area shape="poly" id="edge9_Node000006_Node000005" title=" " alt="" coords="665,219,698,252,719,268,744,280,787,295,823,302,858,298,899,280,923,261,941,235,963,182,968,184,945,238,926,264,901,285,860,303,823,307,786,300,742,285,717,273,694,256,661,223"/>
+<area shape="rect" id="Node000007" href="$utilities_8h.html#acd0ec547a29a5a2f768d02b1aef146fa" title=" " alt="" coords="743,195,900,221"/>
+<area shape="poly" id="edge7_Node000006_Node000007" title=" " alt="" coords="693,205,729,205,729,211,693,211"/>
+<area shape="rect" id="Node000008" href="$utilities_8h.html#aeec24af41c09b6f977fbd1b6209e6501" title=" " alt="" coords="790,245,853,270"/>
+<area shape="poly" id="edge10_Node000006_Node000008" title=" " alt="" coords="694,217,778,242,776,247,692,222"/>
+<area shape="poly" id="edge8_Node000007_Node000005" title=" " alt="" coords="859,193,934,167,936,173,861,198"/>
+<area shape="poly" id="edge11_Node000008_Node000005" title=" " alt="" coords="852,249,876,242,899,231,929,206,953,179,957,182,933,210,901,236,878,247,854,254"/>
+<area shape="poly" id="edge14_Node000009_Node000005" title=" " alt="" coords="552,53,618,56,705,64,804,80,901,108,947,134,944,139,899,113,803,85,705,69,617,61,552,59"/>
+</map>

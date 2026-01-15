@@ -1,9 +1,9 @@
 var synchrotron_8h =
 [
     [ "SynElectrons", "structSynElectrons.html", "structSynElectrons" ],
-    [ "SynPhotons", "structSynPhotons.html", "structSynPhotons" ],
     [ "SynElectronGrid", "synchrotron_8h.html#a1ed93cca9de717545d10f8619effaf3a", null ],
     [ "SynPhotonGrid", "synchrotron_8h.html#a0ab8637927d98b2552ae0f5b9eb5e5c2", null ],
+    [ "SynPhotons", "synchrotron_8h.html#afbcf93fdb631dc1011299367c00e8e29", null ],
     [ "compute_gamma_c", "synchrotron_8h.html#abf07388459a8b39d9b4c5028e53a538e", null ],
     [ "compute_gamma_peak", "synchrotron_8h.html#a5f1c40226e12d8dee51a76c99524fd11", null ],
     [ "compute_syn_freq", "synchrotron_8h.html#a936bfaa522ec8295a21d253e5453188d", null ],

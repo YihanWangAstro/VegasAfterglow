@@ -1,3 +1,5 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="Node000000" href="$structSynElectrons.html" title="Represents synchrotron&#45;emitting electrons in the comoving frame along with their energy distribution ..." alt="" coords="5,5,112,31"/>
+<area shape="rect" id="Node000000" title=" " alt="" coords="5,5,124,31"/>
+<area shape="rect" id="Node000001" href="$classafterglow_1_1LogicError.html" title=" " alt="" coords="172,5,327,31"/>
+<area shape="poly" id="edge2_Node000000_Node000001" title=" " alt="" coords="138,15,172,15,172,21,138,21"/>
 </map>
