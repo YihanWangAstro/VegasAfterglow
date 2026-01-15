@@ -246,11 +246,9 @@ class Fitter:
                 req, incom = rules[config_value]
                 check(req, incom, f"{config_value} {context_name}")
 
-        # Apply lookup-based rules
         apply_rules(MEDIUM_RULES, self.config.medium, "medium")
         apply_rules(JET_RULES, self.config.jet, "jet")
 
-        # Apply toggle-based rules
         for toggle, (required_on, incompatible_off) in TOGGLE_RULES.items():
             enabled = toggle == "forward_shock" or getattr(self.config, toggle, False)
             if enabled:
@@ -321,7 +319,6 @@ class Fitter:
         pl, pu = np.array(lowers), np.array(uppers)
         ndim = len(labels)
 
-        # Validate parameter names
         p_test = ModelParams()
         for pd in defs:
             if not hasattr(p_test, pd.name):
@@ -329,7 +326,6 @@ class Fitter:
 
         self._to_params = ParamTransformer(defs)
 
-        # Create likelihood and priors
         likelihood = AfterglowLikelihood(
             data=self.data,
             config=clone_config(self.config, resolution),
@@ -338,14 +334,12 @@ class Fitter:
             model_cls=VegasMC,
         )
 
-        # Build LaTeX labels: wrap LOG-scale params in \log_{10}(...)
         def get_latex_label(param_name: str, param_def: ParamDef) -> str:
             base_latex = LATEX_LABELS.get(param_def.name, param_def.name)
             if param_def.scale is Scale.LOG:
                 return rf"$\log_{{10}}({base_latex.strip('$')})$"
             return base_latex
 
-        # Map labels back to their param defs for LaTeX generation
         label_to_def = {}
         for pd in defs:
             if pd.scale is not Scale.FIXED:
@@ -361,7 +355,6 @@ class Fitter:
             }
         )
 
-        # Build run kwargs with defaults
         run_kwargs = {
             "likelihood": likelihood,
             "priors": priors,
@@ -372,13 +365,40 @@ class Fitter:
             "resume": resume,
         }
 
-        # Apply sampler-specific defaults and handle parallelization
         defaults = dict(SAMPLER_DEFAULTS.get(sampler.lower(), {}))
         sampler_lower = sampler.lower()
         run_kwargs["npool"] = npool
 
         if sampler_lower == "emcee":
             defaults.setdefault("nwalkers", 2 * ndim)
+
+            # Build initial positions from ParamDef.initial values
+            # Note: pl and pu are already in transformed space (log10 for LOG scale)
+            initial_vals = []
+            idx = 0
+            for pd in defs:
+                if pd.scale is Scale.FIXED:
+                    continue
+                if pd.initial is not None:
+                    # User provides initial in linear space, convert to log10 if LOG scale
+                    val = np.log10(pd.initial) if pd.scale is Scale.LOG else pd.initial
+                else:
+                    # Default to midpoint of bounds (pl/pu already in transformed space)
+                    val = 0.5 * (pl[idx] + pu[idx])
+                initial_vals.append(val)
+                idx += 1
+
+            initial_vals = np.array(initial_vals)
+            nwalkers = sampler_kwargs.get(
+                "nwalkers", defaults.get("nwalkers", 2 * ndim)
+            )
+            # Initialize walkers with random scatter around initial values (20% of range)
+            spread = 0.2 * (pu - pl)
+            pos0 = initial_vals + spread * np.random.randn(nwalkers, ndim)
+            # Clip to prior bounds with small epsilon
+            eps = 1e-6 * (pu - pl)
+            pos0 = np.clip(pos0, pl + eps, pu - eps)
+            defaults["pos0"] = pos0
 
         run_kwargs.update({**defaults, **sampler_kwargs})
 
@@ -387,25 +407,52 @@ class Fitter:
         )
         result = bilby.run_sampler(**run_kwargs)
 
-        # Extract and process results
         samples = result.posterior[list(labels)].values
         log_likelihoods = result.posterior["log_likelihood"].values
 
-        # Find top-k unique fits
-        sorted_idx = np.argsort(log_likelihoods)[::-1]
-        _, unique_idx = np.unique(
-            np.round(samples[sorted_idx], 12), axis=0, return_index=True
-        )
-        final_idx = sorted_idx[np.sort(unique_idx)[:top_k]]
+        # Filter samples within 1-sigma of posterior for each parameter
+        medians = np.median(samples, axis=0)
+        stds = np.std(samples, axis=0)
+        within_1sigma = np.all(np.abs(samples - medians) <= stds, axis=1)
+
+        # If enough samples within 1-sigma, use those; otherwise fall back to all samples
+        if np.sum(within_1sigma) >= top_k:
+            candidate_samples = samples[within_1sigma]
+            candidate_logp = log_likelihoods[within_1sigma]
+        else:
+            logger.warning(
+                "Only %d samples within 1-sigma, using all samples for top-k selection",
+                np.sum(within_1sigma),
+            )
+            candidate_samples = samples
+            candidate_logp = log_likelihoods
+
+        # Sort by likelihood (highest first) and find unique fits
+        sorted_idx = np.argsort(candidate_logp)[::-1]
+        sorted_samples = candidate_samples[sorted_idx]
+        sorted_logp = candidate_logp[sorted_idx]
+
+        # Find unique samples while preserving likelihood order
+        seen = set()
+        unique_indices = []
+        for i, sample in enumerate(np.round(sorted_samples, 12)):
+            key = tuple(sample)
+            if key not in seen:
+                seen.add(key)
+                unique_indices.append(i)
+                if len(unique_indices) >= top_k:
+                    break
+
+        top_k_params = sorted_samples[unique_indices]
+        top_k_log_probs = sorted_logp[unique_indices]
 
         logger.info(
-            "Found %d unique fits (log-L: %.2f to %.2f)",
-            len(final_idx),
-            log_likelihoods[final_idx[0]],
-            log_likelihoods[final_idx[-1]],
+            "Found %d unique fits within 1-sigma (log-L: %.2f to %.2f)",
+            len(unique_indices),
+            top_k_log_probs[0],
+            top_k_log_probs[-1],
         )
 
-        # Extract LaTeX labels from priors for corner plots
         latex_labels = [priors[name].latex_label for name in labels]
 
         return FitResult(
@@ -413,8 +460,8 @@ class Fitter:
             log_probs=log_likelihoods.reshape(-1, 1),
             labels=labels,
             latex_labels=latex_labels,
-            top_k_params=samples[final_idx],
-            top_k_log_probs=log_likelihoods[final_idx],
+            top_k_params=top_k_params,
+            top_k_log_probs=top_k_log_probs,
             bilby_result=result,
         )
 

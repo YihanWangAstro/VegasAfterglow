@@ -59,3 +59,6 @@ class ParamDef:
     lower: float
     upper: float
     scale: Scale = Scale.LINEAR
+    initial: float = (
+        None  # Initial value (in linear space, auto-converted for LOG scale)
+    )

@@ -57,6 +57,7 @@ if(BUILD_TESTS)
   # Common source files needed for executables
   set(VEGAS_CORE_SOURCES
           src/radiation/synchrotron.cpp
+          src/radiation/power-law-syn.cpp
           src/radiation/inverse-compton.cpp
           src/radiation/prompt.cpp
           src/dynamics/shock.cpp

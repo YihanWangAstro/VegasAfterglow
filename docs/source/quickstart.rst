@@ -581,13 +581,13 @@ Initialize the ``Fitter`` class with your data and configuration, then run the M
     # Create the fitter object
     fitter = Fitter(data, cfg)
 
-    # Option 1: MCMC with emcee (faster, recommended for quick fitting)
+    # Option 1: MCMC with emcee (faster, recommended for quick fitting, hard to converge for multimodal posteriors)
     result = fitter.fit(
         mc_params,
         resolution=(0.3, 1, 10),       # Grid resolution (phi, theta, t)
         sampler="emcee",               # MCMC sampler
-        nsteps=10000,                  # Number of steps per walker
-        nburn=1000,                    # Burn-in steps to discard
+        nsteps=50000,                  # Number of steps per walker
+        nburn=10000,                    # Burn-in steps to discard
         thin=1,                        # Save every nth sample
         npool=8,                       # Number of parallel processes
         top_k=10,                      # Number of best-fit parameters to return
@@ -595,14 +595,14 @@ Initialize the ``Fitter`` class with your data and configuration, then run the M
         label="afterglow_fit",         # Run label (default: "afterglow")
     )
 
-    # Option 2: Nested sampling with dynesty (slower but computes Bayesian evidence)
+    # Option 2: Nested sampling with dynesty (slower but computes Bayesian evidence, robust for multimodal posteriors)
     result = fitter.fit(
         mc_params,
-        resolution=(0.3, 1, 10),       # Grid resolution (phi, theta, t)
+        resolution=(0.3, 0.3, 10),     # Grid resolution (phi, theta, t)
         sampler="dynesty",             # Nested sampling algorithm
-        nlive=500,                     # Number of live points
-        dlogz=0.1,                     # Stopping criterion (evidence tolerance)
-        sample="rwalk",                # Sampling method
+        nlive=1000,                    # Number of live points
+        walks=100,                     # Number of random walks per live point
+        dlogz=0.5,                     # Stopping criterion (evidence tolerance)
         npool=8,                       # Number of parallel processes
         top_k=10,                      # Number of best-fit parameters to return
     )

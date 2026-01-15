@@ -671,9 +671,9 @@ The ``Fitter.fit()`` method provides a unified interface for parameter estimatio
     def fit(
         self,
         param_defs: Sequence[ParamDef],      # Parameter definitions
-        resolution: Tuple[float, float, float] = (0.3, 1, 10),  # Grid resolution
+        resolution: Tuple[float, float, float] = (0.3, 0.3, 10),  # Grid resolution
         sampler: str = "dynesty",            # Sampler algorithm
-        npool: int = 1,                      # Number of parallel processes
+        npool: int = 8,                      # Number of parallel processes
         top_k: int = 10,                     # Number of best fits to return
         outdir: str = "bilby_output",        # Output directory
         label: str = "afterglow",            # Run label
@@ -754,12 +754,12 @@ The ``Fitter.fit()`` method provides a unified interface for parameter estimatio
 **Dynesty-Specific Parameters** (``sampler="dynesty"``)
 
 - ``nlive``: Number of live points
-    - Default: 500
+    - Default: 500 (recommended: 1000 for production runs)
     - More points = better evidence estimate but slower
     - Typical range: 500-2000
 
 - ``dlogz``: Evidence tolerance (stopping criterion)
-    - Default: 0.1
+    - Default: 0.1 (recommended: 0.5 for faster convergence)
     - Smaller values = more thorough sampling
     - Typical range: 0.01-0.5
 
@@ -798,7 +798,7 @@ Pass sampler-specific parameters via ``**sampler_kwargs`` in the ``fit()`` metho
     # Using nestle sampler
     result = fitter.fit(
         params,
-        resolution=(0.3, 1, 10),
+        resolution=(0.3, 0.3, 10),
         sampler="nestle",
         nlive=1000,           # nestle-specific parameter
         method='multi',       # nestle-specific: 'classic', 'single', or 'multi'
@@ -850,26 +850,26 @@ Basic MCMC Execution
     # Create fitter object
     fitter = Fitter(data, cfg)
 
-    # Option 1: MCMC with emcee (faster, recommended for quick fitting)
+    # Option 1: MCMC with emcee (faster, recommended for quick fitting, hard to converge for multimodal posteriors)
     result = fitter.fit(
         params,
-        resolution=(0.3, 1, 10),       # Grid resolution (phi, theta, t)
+        resolution=(0.3, 0.3, 10),     # Grid resolution (phi, theta, t)
         sampler="emcee",               # MCMC sampler
-        nsteps=10000,                  # Number of steps per walker
-        nburn=1000,                    # Burn-in steps to discard
+        nsteps=50000,                  # Number of steps per walker
+        nburn=10000,                    # Burn-in steps to discard
         thin=1,                        # Save every nth sample
         npool=8,                       # Number of parallel processes
         top_k=10,                      # Number of best-fit parameters to return
     )
 
-    # Option 2: Nested sampling with dynesty (slower but computes Bayesian evidence)
+    # Option 2: Nested sampling with dynesty (slower but computes Bayesian evidence, robust for multimodal posteriors)
     result = fitter.fit(
         params,
-        resolution=(0.3, 1, 10),       # Grid resolution (phi, theta, t)
+        resolution=(0.3, 0.3, 10),     # Grid resolution (phi, theta, t)
         sampler="dynesty",             # Nested sampling algorithm
-        nlive=500,                     # Number of live points
-        dlogz=0.1,                     # Stopping criterion (evidence tolerance)
-        sample="rwalk",                # Sampling method
+        nlive=1000,                    # Number of live points
+        walks=100,                     # Number of random walks per live point
+        dlogz=0.5,                     # Stopping criterion (evidence tolerance)
         npool=8,                       # Number of parallel processes
         top_k=10,                      # Number of best-fit parameters to return
     )

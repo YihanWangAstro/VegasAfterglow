@@ -60,7 +60,7 @@ A: Try the following:
 
 A: Optimization strategies:
 
-- **Reduce resolution**: Use ``resolution=(0.3, 1, 10)`` for initial exploration
+- **Reduce resolution**: Use ``resolution=(0.3, 0.3, 10)`` for initial exploration
 - **Fewer parameters**: Fix some parameters with ``Scale.FIXED``
 - **Coarser time/frequency grids**: Use fewer data points for initial fits
 - **Parallel processing**: Ensure you're using multiple cores
