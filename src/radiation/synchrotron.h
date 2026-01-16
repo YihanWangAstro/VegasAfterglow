@@ -11,6 +11,7 @@
 #include "../dynamics/shock.h"
 #include "inverse-compton.h"
 #include "power-law-syn.h"
+#include "smooth-power-law-syn.h"
 /**
  * <!-- ************************************************************************************** -->
  * @struct SynElectrons
@@ -71,7 +72,7 @@ struct SynElectrons {
  */
 
 ///< Type alias for Synchrotron Photons
-using SynPhotons = PowerLawSyn;
+using SynPhotons = SmoothPowerLawSyn;
 
 /// Type alias for 3D grid of synchrotron photons
 using SynPhotonGrid = xt::xtensor<SynPhotons, 3>;
