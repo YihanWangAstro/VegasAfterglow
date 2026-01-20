@@ -6,9 +6,7 @@
 //                            |___/                                            |___/
 #pragma once
 
-#include "../core/physics.h"
 #include "inverse-compton.h"
-
 /**
  * <!-- ************************************************************************************** -->
  * @struct PowerLawSyn

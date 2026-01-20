@@ -486,3 +486,18 @@ inline double fast_log(double x) {
     return std::log(x);
 #endif
 }
+
+/**
+ * <!-- ************************************************************************************** -->
+ * @brief Computes log2(1+2^x)
+ * @param x The input value
+ * @return log2(1+2^x)
+ * <!-- ************************************************************************************** -->
+ */
+inline Real log2_softplus(Real x) {
+    if (x > 20.0)
+        return x;
+    if (x < -20.0)
+        return 0.0;
+    return fast_log2(1.0 + fast_exp2(x));
+}

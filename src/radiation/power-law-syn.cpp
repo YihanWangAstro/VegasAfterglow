@@ -7,6 +7,8 @@
 
 #include "power-law-syn.h"
 
+#include "radiation/inverse-compton.h"
+
 //========================================================================================================
 //                                  PowerLawSyn Class Methods
 //========================================================================================================
@@ -280,19 +282,18 @@ void PowerLawSyn::update_constant() {
 
 Real PowerLawSyn::compute_I_nu(Real nu) const {
     if (nu <= nu_c) { // Below cooling frequency, simple scaling
-        return I_nu_max * compute_spectrum(nu);
+        return fast_exp(-nu / nu_M) * I_nu_max * compute_spectrum(nu);
     } else {
-        return fast_exp2((nu_c - nu) / nu_M) * I_nu_max * compute_spectrum(nu) * (1 + Y_c) /
-               (1 + Ys.evaluate_at_nu(nu, p));
+        return fast_exp(-nu / nu_M) * I_nu_max * compute_spectrum(nu) * inverse_compton_correction(*this, nu);
     }
 }
 
 Real PowerLawSyn::compute_log2_I_nu(Real log2_nu) const {
     if (log2_nu <= log2_nu_c) { // Below cooling frequency, simple scaling
-        return log2_I_nu_max + compute_log2_spectrum(log2_nu);
+        return log2_I_nu_max + compute_log2_spectrum(log2_nu) - 1.442695 * fast_exp2(log2_nu) / nu_M;
     } else {
-        const Real cooling_factor = (1 + Y_c) / (1 + Ys.evaluate_at_nu(std::exp2(log2_nu), p));
-        return log2_I_nu_max + compute_log2_spectrum(log2_nu) + fast_log2(cooling_factor) +
-               (nu_c - fast_exp2(log2_nu)) / nu_M;
+        const Real nu = fast_exp2(log2_nu);
+        const Real cooling_factor = inverse_compton_correction(*this, nu);
+        return log2_I_nu_max + compute_log2_spectrum(log2_nu) + fast_log2(cooling_factor) - 1.442695 * nu / nu_M;
     }
 }

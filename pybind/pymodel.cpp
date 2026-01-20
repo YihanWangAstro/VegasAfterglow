@@ -186,7 +186,7 @@ void save_electron_details(ElectronGrid const& electrons, PyShock& details) {
     }
 }
 template <typename PhotonGrid>
-void save_photon_details(PhotonGrid const& photons, PyShock& details) {
+void save_photon_details(PhotonGrid const& photons, PyShock& details, Shock const& shock) {
     auto shape = photons.shape();
 
     details.nu_m = xt::zeros<Real>({shape[0], shape[1], shape[2]});
@@ -205,8 +205,10 @@ void save_photon_details(PhotonGrid const& photons, PyShock& details) {
                 details.nu_m(i, j, k) = photons(i, j, k).nu_m / unit::Hz;
                 details.nu_c(i, j, k) = photons(i, j, k).nu_c / unit::Hz;
                 details.nu_M(i, j, k) = photons(i, j, k).nu_M / unit::Hz;
-                details.nu_m_hat(i, j, k) = photons(i, j, k).Ys.nu_m_hat / unit::Hz;
-                details.nu_c_hat(i, j, k) = photons(i, j, k).Ys.nu_c_hat / unit::Hz;
+                details.nu_m_hat(i, j, k) =
+                    compute_syn_freq(photons(i, j, k).Ys.gamma_m_hat, shock.B(i, j, k)) / unit::Hz;
+                details.nu_c_hat(i, j, k) =
+                    compute_syn_freq(photons(i, j, k).Ys.gamma_c_hat, shock.B(i, j, k)) / unit::Hz;
                 details.I_nu_max(i, j, k) =
                     photons(i, j, k).I_nu_max / (unit::erg / (unit::Hz * unit::sec * unit::cm2));
                 details.Y_T(i, j, k) = photons(i, j, k).Ys.Y_T;
@@ -234,7 +236,7 @@ void PyModel::single_evo_details(Shock const& shock, Coord const& coord, Observe
         }
     }
     save_electron_details(syn_e, details);
-    save_photon_details(syn_ph, details);
+    save_photon_details(syn_ph, details, shock);
 }
 
 auto PyModel::details(Real t_min, Real t_max) const -> PyDetails {

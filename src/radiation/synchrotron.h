@@ -170,3 +170,13 @@ Real compute_gamma_peak(Real gamma_a, Real gamma_m, Real gamma_c);
  * <!-- ************************************************************************************** -->
  */
 Real compute_syn_freq(Real gamma, Real B);
+
+/**
+ * <!-- ************************************************************************************** -->
+ * @brief Calculates electron Lorentz factor corresponding to a given synchrotron frequency
+ * @param nu Synchrotron frequency
+ * @param B Magnetic field
+ * @return The corresponding electron Lorentz factor
+ * <!-- ************************************************************************************** -->
+ */
+Real compute_syn_gamma(Real nu, Real B);

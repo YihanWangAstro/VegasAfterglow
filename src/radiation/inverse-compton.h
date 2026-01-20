@@ -13,6 +13,7 @@
 #include "../dynamics/shock.h"
 #include "../util/macros.h"
 #include "../util/utilities.h"
+
 /**
  * <!-- ************************************************************************************** -->
  * @struct InverseComptonY
@@ -26,19 +27,12 @@ struct InverseComptonY {
      * @details Computes characteristic gamma values and corresponding frequencies, then determines cooling regime.
      * @param gamma_m Characteristic Lorentz factor for the minimum Lorentz factor
      * @param gamma_c Characteristic Lorentz factor for the cooling Lorentz factor
+     * @param p Spectral index of electron distribution
      * @param B Magnetic field strength
-     * @param Y_T Thomson Y parameter
+     * @param Y_T Thomson scattering Y parameter
      * <!-- ************************************************************************************** -->
      */
-    InverseComptonY(Real gamma_m, Real gamma_c, Real B, Real Y_T, Real eps_e_on_eps_B) noexcept;
-
-    /**
-     * <!-- ************************************************************************************** -->
-     * @brief Simple constructor that initializes with only the Thomson Y parameter for special cases.
-     * @param Y_T Thomson Y parameter
-     * <!-- ************************************************************************************** -->
-     */
-    explicit InverseComptonY(Real Y_T) noexcept;
+    InverseComptonY(Real gamma_m, Real gamma_c, Real p, Real B, Real Y_T, bool is_KN) noexcept;
 
     /**
      * <!-- ************************************************************************************** -->
@@ -48,38 +42,40 @@ struct InverseComptonY {
     InverseComptonY() noexcept;
 
     // Member variables
-    Real nu_m_hat{0};    ///< Frequency threshold for minimum electrons
-    Real nu_c_hat{0};    ///< Frequency threshold for cooling electrons
-    Real nu_self{0};     ///< Frequency threshold for nu_self = nu_self_hat
-    Real nu0{0};         ///< Frequency threshold for Y(nu0) = 1
-    Real gamma_m_hat{0}; ///< Lorentz factor threshold for minimum energy electrons
-    Real gamma_c_hat{0}; ///< Lorentz factor threshold for cooling electrons
-    Real gamma_self{0};  ///< Lorentz factor threshold for gamma_self = gamma_self_hat
-    Real gamma0{0};      ///< Lorentz factor threshold for Y(gamma0) = 1
+    Real gamma_m_hat{1}; ///< Lorentz factor threshold for minimum energy electrons
+    Real gamma_c_hat{1}; ///< Lorentz factor threshold for cooling electrons
+    Real gamma_self{1};  ///< Lorentz factor threshold for gamma_self = gamma_self_hat
+    Real gamma0{1};      ///< Lorentz factor threshold for Y(gamma0) = 1
     Real Y_T{0};         ///< Thomson scattering Y parameter
     size_t regime{0};    ///< Indicator for the operating regime (1=fast IC cooling, 2=slow IC cooling, 3=special case)
-
-    /**
-     * <!-- ************************************************************************************** -->
-     * @brief Calculates the effective Y parameter for a given frequency and spectral index.
-     * @details Different scaling relations apply depending on the cooling regime and frequency range.
-     * @param nu Frequency at which to compute the Y parameter
-     * @param p Spectral index of electron distribution
-     * @return The effective Y parameter at the given frequency
-     * <!-- ************************************************************************************** -->
-     */
-    [[nodiscard]] Real evaluate_at_nu(Real nu, Real p) const;
 
     /**
      * <!-- ************************************************************************************** -->
      * @brief Calculates the effective Y parameter for a given Lorentz factor and spectral index.
      * @details Different scaling relations apply depending on the cooling regime and gamma value.
      * @param gamma Electron Lorentz factor
-     * @param p Spectral index of electron distribution
      * @return The effective Y parameter at the given gamma
      * <!-- ************************************************************************************** -->
      */
-    [[nodiscard]] Real evaluate_at_gamma(Real gamma, Real p) const;
+    [[nodiscard]] Real gamma_spectrum(Real gamma) const;
+
+    /**
+     * <!-- ************************************************************************************** -->
+     * @brief Calculates the effective Y parameter for a given synchrotron frequency.
+     * @details Different scaling relations apply depending on the cooling regime and frequency value.
+     * @param nu Synchrotron frequency
+     * @return The effective Y parameter at the given frequency
+     * <!-- ************************************************************************************** -->
+     */
+    [[nodiscard]] Real nu_spectrum(Real nu) const;
+
+    void update_cooling_breaks(Real gamma_c, Real Y_T) noexcept;
+
+  private:
+    Real gamma_m_{1}; ///< Characteristic Lorentz factor for the minimum Lorentz factor
+    Real B_{0};       ///< Magnetic field strength
+    Real p_{2.3};     ///< Spectral index of electron distribution
+    void update_gamma0(Real gamma_c) noexcept;
 };
 
 /**
@@ -481,8 +477,18 @@ ICPhotonGrid<Electrons, Photons> generate_IC_photons(ElectronGrid<Electrons> con
     return IC_ph;
 }
 
-inline Real eta_rad(Real gamma_m, Real gamma_c, Real p) {
-    return gamma_c < gamma_m ? 1 : fast_pow(gamma_c / gamma_m, (2 - p));
+inline Real eta_rad_Thomson(Real gamma_m, Real gamma_c, Real p) {
+    if (gamma_c < gamma_m) {
+        return 1;
+    } else {
+        return fast_pow(gamma_c / gamma_m, 2 - p);
+    }
+}
+
+inline Real compute_Thomson_Y(RadParams const& rad, Real gamma_m, Real gamma_c) {
+    Real eta_e = eta_rad_Thomson(gamma_m, gamma_c, rad.p);
+    Real b = eta_e * rad.eps_e / rad.eps_B;
+    return 0.5 * (std::sqrt(1. + 4. * b) - 1.);
 }
 
 Real compute_gamma_c(Real t_comv, Real B, Real Y);
@@ -495,11 +501,15 @@ Real compute_syn_gamma_a(Real B, Real I_nu_peak, Real gamma_m, Real gamma_c, Rea
 
 size_t determine_regime(Real gamma_a, Real gamma_c, Real gamma_m);
 
+Real compute_gamma_0(Real Y0, Real gamma_m, Real gamma_m_hat);
+
 void update_gamma_c_Thomson(Real& gamma_c, InverseComptonY& Ys, RadParams const& rad, Real B, Real t_com, Real gamma_m);
 
 void update_gamma_c_KN(Real& gamma_c, InverseComptonY& Ys, RadParams const& rad, Real B, Real t_com, Real gamma_m);
 
 void update_gamma_M(Real& gamma_M, InverseComptonY const& Ys, Real p, Real B);
+
+Real compute_syn_gamma(Real nu, Real B);
 
 template <typename Electrons, typename Photons, typename Updater>
 void IC_cooling(ElectronGrid<Electrons>& electrons, PhotonGrid<Photons>& photons, Shock const& shock,
@@ -536,7 +546,7 @@ void IC_cooling(ElectronGrid<Electrons>& electrons, PhotonGrid<Photons>& photons
                 const Real I_nu_peak = compute_syn_I_peak(B, p, elec.column_den);
                 elec.gamma_a = compute_syn_gamma_a(B, I_nu_peak, elec.gamma_m, elec.gamma_c, elec.gamma_M, p);
                 elec.regime = determine_regime(elec.gamma_a, elec.gamma_c, elec.gamma_m);
-                elec.Y_c = Ys.evaluate_at_gamma(elec.gamma_c, p);
+                elec.Y_c = Ys.gamma_spectrum(elec.gamma_c);
             }
         }
     }
@@ -551,4 +561,9 @@ void Thomson_cooling(ElectronGrid<Electrons>& electrons, PhotonGrid<Photons>& ph
 template <typename Electrons, typename Photons>
 void KN_cooling(ElectronGrid<Electrons>& electrons, PhotonGrid<Photons>& photons, Shock const& shock) {
     IC_cooling(electrons, photons, shock, update_gamma_c_KN);
+}
+
+template <typename Photon>
+Real inverse_compton_correction(Photon const& ph, Real nu) {
+    return (1. + ph.Y_c) / (1 + ph.Ys.nu_spectrum(nu));
 }

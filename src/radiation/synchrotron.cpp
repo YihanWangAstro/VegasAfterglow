@@ -375,7 +375,7 @@ Real SynElectrons::compute_N_gamma(Real gamma) const {
         return N_e * compute_spectrum(gamma);
     } else {
         return fast_exp2((gamma_c - gamma) / gamma_M) * N_e * compute_spectrum(gamma) * (1 + Y_c) /
-               (1 + Ys.evaluate_at_gamma(gamma, p));
+               (1 + Ys.gamma_spectrum(gamma));
     }
 }
 
@@ -384,7 +384,7 @@ Real SynElectrons::compute_column_den(Real gamma) const {
         return column_den * compute_spectrum(gamma);
     } else {
         return fast_exp2((gamma_c - gamma) / gamma_M) * column_den * compute_spectrum(gamma) * (1 + Y_c) /
-               (1 + Ys.evaluate_at_gamma(gamma, p));
+               (1 + Ys.gamma_spectrum(gamma));
     }
 }
 
