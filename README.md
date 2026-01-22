@@ -723,7 +723,7 @@ Initialize the `Fitter` class with your data and configuration, then run the MCM
 # Create the fitter object
 fitter = Fitter(data, cfg)
 
-# Option 1 (Recommended): Nested sampling with dynesty (computes evidence, robust for multimodal posteriors)
+# Option 1: Nested sampling with dynesty (computes evidence, robust for multimodal posteriors)
 result = fitter.fit(
     mc_params,
     resolution=(0.3, 0.3, 10),     # Grid resolution (phi, theta, t)
@@ -737,7 +737,7 @@ result = fitter.fit(
     label="afterglow_fit",         # Run label (default: "afterglow")
 )
 
-# Option 2: MCMC with emcee (faster, good for unimodal posteriors, hard to converge for multimodal posteriors)
+# Option 2: MCMC with emcee (faster, good for unimodal posteriors, not optimal for multimodal posteriors)
 result = fitter.fit(
     mc_params,
     resolution=(0.3, 0.3, 10),     # Grid resolution (phi, theta, t)

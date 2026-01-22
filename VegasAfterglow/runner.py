@@ -7,8 +7,12 @@ from typing import Callable, List, Sequence, Tuple, Type
 import bilby
 import emcee
 import numpy as np
+from bilby.core.sampler.emcee import Emcee as BilbyEmcee
 
 from .types import FitResult, ModelParams, ObsData, ParamDef, Scale, Setups, VegasMC
+
+if "moves" not in BilbyEmcee.default_kwargs:
+    BilbyEmcee.default_kwargs = dict(BilbyEmcee.default_kwargs, moves=None)
 
 logger = logging.getLogger(__name__)
 
@@ -92,9 +96,9 @@ SAMPLER_DEFAULTS = {
         "nburn": 1000,
         "thin": 1,
         "moves": [
-            (emcee.moves.StretchMove(), 0.5),
-            (emcee.moves.DEMove(), 0.4),
-            (emcee.moves.DESnookerMove(), 0.1),
+            # (emcee.moves.StretchMove(), 0.5),
+            (emcee.moves.DEMove(), 0.8),
+            (emcee.moves.DESnookerMove(), 0.2),
         ],
     },
 }

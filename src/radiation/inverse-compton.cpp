@@ -97,6 +97,8 @@ void InverseComptonY::update_cooling_breaks(Real gamma_c, Real Y_T) noexcept {
     if (gamma_m_ < gamma_c) { // slow cooling
         regime = 1;
     } else {
+        regime = 2;
+        return;
         if (gamma_m_ < gamma_m_hat) { //weak KN regime (gamma_m < gamma_m_hat)
             regime = 2;
         } else {                 //strong KN regime (gamma_m_hat < gamma_self < gamma_m)

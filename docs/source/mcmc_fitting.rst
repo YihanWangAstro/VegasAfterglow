@@ -614,9 +614,9 @@ Complex Model Combinations
     cfg.rvs_shock = True      # Reverse shock
     cfg.fwd_ssc = True        # Forward SSC
     cfg.rvs_ssc = True        # Reverse SSC
-    cfg.ssc_cooling = True     # IC cooling
+    cfg.ssc_cooling = True    # IC cooling
     cfg.kn = True             # Klein-Nishina
-    cfg.magnetar = True       # Energy injection
+    cfg.magnetar = True       # Magnetar energy injection
 
     params = [
         # Gaussian jet
@@ -672,7 +672,7 @@ The ``Fitter.fit()`` method provides a unified interface for parameter estimatio
         self,
         param_defs: Sequence[ParamDef],      # Parameter definitions
         resolution: Tuple[float, float, float] = (0.3, 0.3, 10),  # Grid resolution
-        sampler: str = "dynesty",            # Sampler algorithm
+        sampler: str = "emcee",              # Sampler algorithm
         npool: int = 8,                      # Number of parallel processes
         top_k: int = 10,                     # Number of best fits to return
         outdir: str = "bilby_output",        # Output directory
@@ -690,9 +690,9 @@ The ``Fitter.fit()`` method provides a unified interface for parameter estimatio
 
 - ``resolution``: Tuple of (phi_res, theta_res, t_res)
     - Controls model computation grid spacing
-    - Lower values = higher accuracy but slower computation
-    - Default: (0.3, 1, 10) provides good balance
-    - Example: (0.1, 0.5, 5) for higher accuracy
+    - Lower values = lower accuracy but faster computation
+    - Default: (0.3, 0.3, 10) provides good balance
+    - Example: (0.1, 1, 15) for higher accuracy
 
 - ``sampler``: Sampling algorithm to use
     - ``"emcee"``: Affine-invariant MCMC ensemble sampler (recommended for speed)

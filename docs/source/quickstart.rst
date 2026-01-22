@@ -593,10 +593,10 @@ Initialize the ``Fitter`` class with your data and configuration, then run the M
         top_k=10,                      # Number of best-fit parameters to return
     )
 
-    # Option 2: MCMC with emcee (faster, recommended for quick fitting, hard to converge for multimodal posteriors)
+    # Option 2: MCMC with emcee (faster, recommended for quick fitting, not optimal for multimodal posteriors)
     result = fitter.fit(
         mc_params,
-        resolution=(0.3, 1, 10),       # Grid resolution (phi, theta, t)
+        resolution=(0.3, 0.3, 10),     # Grid resolution (phi, theta, t)
         sampler="emcee",               # MCMC sampler
         nsteps=50000,                  # Number of steps per walker
         nburn=10000,                   # Burn-in steps to discard

@@ -69,6 +69,12 @@ struct SmoothPowerLawSyn {
     Real smooth_m_slow_{1};   ///<
     Real smooth_c_slow_{1};   ///<
     Real smooth_a_;           ///<
+
+    // Precomputed runtime-dependent constants for optimization
+    Real half_one_minus_p_{0}; ///< Cached 0.5 * (1 - p), used in multiple places
+    Real minus_half_p_{0};     ///< Cached -0.5 * p, used in multiple places
+    Real inv_nu_M_{0};         ///< Cached 1/nu_M for division optimization
+    Real ln2_div_nu_M_{0};     ///< Cached ln(2)/nu_M for exponential term
     // Log2 of calculation constants for faster computation
 
     /**

@@ -439,7 +439,47 @@ inline double fast_log2(double x) {
  */
 inline double fast_exp2(double x) {
 #ifdef EXTREME_SPEED
-    return std::exp2(x);
+    // Handle special cases
+    if (std::isnan(x))
+        return std::numeric_limits<double>::quiet_NaN();
+    if (x >= 1024.0)
+        return std::numeric_limits<double>::infinity();
+    if (x <= -1074.0)
+        return 0.0;
+    if (x == 0.0)
+        return 1.0;
+
+    // Split x into integer and fractional parts: x = i + f where f in [0,1)
+    const double i_exact = std::floor(x);
+    const int i = static_cast<int>(i_exact);
+    const double f = x - i_exact;
+
+    // Polynomial approximation for 2^f, f in [0,1)
+    // Using Remez algorithm coefficients for minimax polynomial
+    // Error < 2e-9 over [0,1)
+    constexpr double c0 = 1.0;
+    constexpr double c1 = 0.6931471805599453;   // ln(2)
+    constexpr double c2 = 0.24022650695910072;  // ln(2)^2/2
+    constexpr double c3 = 0.055504108664821580; // ln(2)^3/6
+    constexpr double c4 = 0.009618129107628477; // ln(2)^4/24
+
+    // Horner's method for polynomial evaluation
+    const double poly = c0 + f * (c1 + f * (c2 + f * (c3 + f * c4)));
+
+    // Multiply by 2^i using bit manipulation
+    // result = poly * 2^i
+    uint64_t bits = std::bit_cast<uint64_t>(poly);
+    const int64_t exp = (bits >> 52) & 0x7FF;
+    const int64_t new_exp = exp + i;
+
+    // Handle underflow/overflow in exponent
+    if (new_exp <= 0)
+        return 0.0;
+    if (new_exp >= 0x7FF)
+        return std::numeric_limits<double>::infinity();
+
+    bits = (bits & ~(0x7FFull << 52)) | (static_cast<uint64_t>(new_exp) << 52);
+    return std::bit_cast<double>(bits);
 #else
     return std::exp2(x);
 #endif

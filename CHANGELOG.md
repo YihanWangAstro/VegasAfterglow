@@ -30,10 +30,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Dynesty defaults: `nlive=500`, `dlogz=0.1`, `sample="rwalk"`
   - Extensible to any bilby-supported sampler
 
-### Notes
-
-- **Emcee Move Strategy**: The emcee sampler within bilby uses the default stretch move strategy. In our previous standalone MCMC implementation (v1.0.3 and earlier), we employed a refined step move strategy optimized for multimodal posterior distributions. Unfortunately, bilby does not expose an interface to customize the move strategy, so users requiring multimodal sampling may need to consider using dynesty or other nested samplers instead.
-
 ### Documentation
 
 #### **Comprehensive MCMC Guides**
