@@ -15,12 +15,13 @@
 //========================================================================================================
 //                                  InverseComptonY Constructors
 //========================================================================================================
-
 InverseComptonY::InverseComptonY(Real gamma_m, Real gamma_c, Real p, Real B, Real Y_T, bool is_KN) noexcept {
     const Real nu_m = compute_syn_freq(gamma_m, B);
-    gamma_m_hat = std::max(con::me * con::c2 / con::h / nu_m, 1.);
+    this->gamma_m_hat = std::max(con::me * con::c2 / con::h / nu_m, 1.0);
 
-    gamma_self = std::max(fast_pow(gamma_m_hat * gamma_m * gamma_m, 1.0 / 3.0), 1.);
+    this->gamma_self = fast_pow(gamma_m_hat * gamma_m * gamma_m, 1.0 / 3.0);
+
+    this->gamma_self3 = gamma_self * gamma_self * gamma_self;
 
     this->B_ = B;
     this->gamma_m_ = gamma_m;
@@ -28,36 +29,42 @@ InverseComptonY::InverseComptonY(Real gamma_m, Real gamma_c, Real p, Real B, Rea
     if (is_KN) {
         update_cooling_breaks(gamma_c, Y_T);
     } else {
-        const Real nu_c = compute_syn_freq(gamma_c, B_);
-        gamma_c_hat = std::max(con::me * con::c2 / con::h / nu_c, 1.);
+        this->gamma_c_hat = compute_gamma_hat(gamma_c);
         this->Y_T = Y_T;
         regime = 0;
+        build_segments();
     }
 }
 
 InverseComptonY::InverseComptonY() noexcept {
-    gamma_m_hat = 1;
-    gamma_c_hat = 1;
-    Y_T = 0;
+    gamma_m_hat = 1.0;
+    gamma_c_hat = 1.0;
+    Y_T = 0.0;
     regime = 0;
+    active_segment_count = 0;
 }
+
+//========================================================================================================
+//                                  InverseComptonY Methods
+//========================================================================================================
 
 void InverseComptonY::update_gamma0(Real gamma_c) noexcept {
     if (Y_T < 1) {
-        gamma0 = 0;
+        gamma0 = 0.0;
         return;
     }
 
     if (gamma_m_ < gamma_c) { // slow cooling
-        gamma0 = fast_pow(Y_T, 2 / (3 - p_)) * gamma_c_hat;
+        gamma0 = fast_pow(Y_T, 2.0 / (3.0 - p_)) * gamma_c_hat;
         if (gamma0 > gamma_m_hat) {
-            gamma0 = gamma_m_hat * fast_pow(Y_T, 3. / 4) * fast_pow(gamma_c / gamma_m_, 0.75 * (p_ - 3));
+            gamma0 = gamma_m_hat * fast_pow(Y_T, 3.0 / 4.0) * fast_pow(gamma_c / gamma_m_, 0.75 * (p_ - 3.0));
         }
+
     } else {                          //fast cooling
         if (gamma_m_ < gamma_m_hat) { //weak KN regime (gamma_m < gamma_m_hat)
             gamma0 = Y_T * Y_T * gamma_m_hat;
             if (gamma0 > gamma_c_hat) {
-                gamma0 = fast_pow(Y_T * gamma_c / gamma_m_, 3. / 4) * gamma_c_hat;
+                gamma0 = fast_pow(Y_T * gamma_c / gamma_m_, 3.0 / 4.0) * gamma_c_hat;
             }
         } else { //strong KN regime (gamma_m_hat < gamma_self < gamma_m)
             gamma0 = Y_T * Y_T * gamma_m_hat;
@@ -66,23 +73,22 @@ void InverseComptonY::update_gamma0(Real gamma_c) noexcept {
                 gamma0 = std::sqrt(Y_T * gamma_m_ * gamma_m_hat);
             }
 
-            if (gamma0 > gamma_m_) {
-                gamma0 =
-                    gamma_m_hat * fast_pow(Y_T, 1. / (4 - p_)) * fast_pow(gamma_m_hat / gamma_m_, (p_ - 3) / (4 - p_));
+            /*if (gamma0 > gamma_m_) {
+                gamma0 = gamma_m_hat * fast_pow(Y_T, 1.0 / (4.0 - p_)) *
+                         fast_pow(gamma_m_hat / gamma_m_, (p_ - 3.0) / (4.0 - p_));
             }
-            Real B3 = gamma_m_ * gamma_m_ / gamma_m_hat;
-            if (gamma0 > B3) {
+            Real gamma_m_hat_hat = compute_gamma_hat(gamma_m_hat);
+            if (gamma0 > gamma_m_hat_hat) {
 
-                Real Y_B3 = Y_T * fast_pow(B3 / gamma_m_, p_ - 3.0) * gamma_m_hat / B3;
-                gamma0 = B3 * fast_pow(Y_B3, 4.0 / (5.0 - p_));
-            }
+                Real Y_B3 = Y_T * fast_pow(gamma_m_hat_hat / gamma_m_, p_ - 3.0) * gamma_m_hat / gamma_m_hat_hat;
+                gamma0 = gamma_m_hat_hat * fast_pow(Y_B3, 4.0 / (5.0 - p_));
+            }*/
         }
     }
 }
 
 void InverseComptonY::update_cooling_breaks(Real gamma_c, Real Y_T) noexcept {
-    const Real nu_c = compute_syn_freq(gamma_c, B_);
-    gamma_c_hat = std::max(con::me * con::c2 / con::h / nu_c, 1.);
+    gamma_c_hat = compute_gamma_hat(gamma_c);
 
     this->Y_T = Y_T; // Set the normalization
 
@@ -90,106 +96,105 @@ void InverseComptonY::update_cooling_breaks(Real gamma_c, Real Y_T) noexcept {
 
     if (gamma_m_ < gamma_c) { // slow cooling
         regime = 1;
-    } else { //fast cooling
-        regime = 2;
-        return;
+    } else {
         if (gamma_m_ < gamma_m_hat) { //weak KN regime (gamma_m < gamma_m_hat)
             regime = 2;
-        } else {               //strong KN regime (gamma_m_hat < gamma_self < gamma_m)
-            if (gamma0 == 0) { // No gamma_0 because Y(gamma)<1 everywhere
-                regime = 3;
+        } else {                 //strong KN regime (gamma_m_hat < gamma_self < gamma_m)
+            if (gamma0 == 0.0) { // No gamma_0 because Y(gamma)<1 everywhere
+                regime = 2;
             } else if (gamma0 < gamma_self) { // (gamma_m_hat <= gamma0 < gamma_self)
-                regime = 4;
+                regime = 3;
             } else if (gamma0 < gamma_m_) { // (gamma_self <= gamma0 < gamma_m)
-                regime = 5;
+                regime = 4;
             } else { // (gamma_m < gamma0)
-                regime = 6;
+                regime = 5;
             }
+        }
+    }
+    build_segments();
+}
+
+void InverseComptonY::build_segments() noexcept {
+    active_segment_count = 0;
+
+    Real current_val = Y_T;
+    Real current_gamma = 1.0;
+
+    auto chain = [&](Real target_gamma, Real slope) {
+        segments[active_segment_count++] = {target_gamma, current_val, slope, current_gamma};
+
+        if (target_gamma > current_gamma) {
+            current_val *= fast_pow(target_gamma / current_gamma, slope);
+            current_gamma = target_gamma;
+        }
+    };
+
+    constexpr Real INF_GAMMA = 1.0e100;
+
+    switch (regime) {
+        case 0: // Thomson
+            chain(INF_GAMMA, 0.0);
+            break;
+
+        case 1: // Slow Cooling
+            chain(gamma_c_hat, 0.0);
+            chain(gamma_m_hat, 0.5 * (p_ - 3.0));
+            chain(INF_GAMMA, -4.0 / 3.0);
+            break;
+
+        case 2: // Fast Cooling, Weak KN
+            chain(gamma_m_hat, 0.0);
+            chain(gamma_c_hat, -0.5);
+            chain(INF_GAMMA, -4.0 / 3.0);
+            break;
+
+        case 3: // Fast Cooling, Strong KN (gamma_m_hat <= gamma0 < gamma_self)
+        {
+            Real gamma0_hat = compute_gamma_hat(gamma0);
+            Real gamma_m_hat_hat = compute_gamma_hat(gamma_m_hat);
+
+            chain(gamma_m_hat, 0.0);
+            chain(gamma0_hat, -0.5);
+            chain(gamma_m_hat_hat, -0.75);
+            chain(INF_GAMMA, -0.5);
+            break;
+        }
+        case 4: // Fast Cooling, Strong KN (gamma_self <= gamma0 < gamma_m)
+        {
+            Real gamma0_hat = compute_gamma_hat(gamma0);
+            Real gamma0_hat_hat = compute_gamma_hat(gamma0_hat);
+            Real gamma_m_hat_hat = compute_gamma_hat(gamma_m_hat);
+
+            chain(gamma_m_hat, 0.0);
+            chain(gamma0_hat, -0.5);
+            chain(gamma0_hat_hat, -1.0);
+            chain(gamma_m_hat_hat, -0.75);
+            chain(INF_GAMMA, -0.5);
+            break;
+        }
+        case 5: // Fast Cooling, Strong KN (gamma_m < gamma0)
+        {
+            Real gamma0_hat = compute_gamma_hat(gamma0);
+            Real gamma_m_hat_hat = compute_gamma_hat(gamma_m_hat);
+            Real gamma0_hat_hat = compute_gamma_hat(gamma0_hat);
+
+            chain(gamma0_hat, 0.0);
+            chain(gamma_m_hat, 0.5 * (p_ - 3.0));
+            chain(gamma_m_hat_hat, -1.0);
+            chain(gamma0_hat_hat, 0.25 * (p_ - 5.0));
+            chain(INF_GAMMA, -0.5);
+            break;
         }
     }
 }
 
-//========================================================================================================
-//                                  InverseComptonY Public Methods
-//========================================================================================================
-
 Real InverseComptonY::gamma_spectrum(Real gamma) const {
-    switch (regime) {
-        case 0:
-            return Y_T; // Thomas only, no KN effects
-            break;
-        case 1:
-            if (gamma <= gamma_c_hat) {
-                return Y_T;
-            } else if (gamma <= gamma_m_hat) {
-                return Y_T * fast_pow(gamma / gamma_c_hat, (p_ - 3) / 2);
-            } else {
-                return Y_T * pow43(gamma_m_hat / gamma) * fast_pow(gamma_m_hat / gamma_c_hat, (p_ - 3) / 2);
-            }
-            break;
-        case 2:
-            if (gamma <= gamma_m_hat) {
-                return Y_T;
-            } else if (gamma <= gamma_c_hat) {
-                return Y_T / std::sqrt(gamma / gamma_m_hat);
-            } else {
-                return Y_T * pow43(gamma_c_hat / gamma) * std::sqrt(gamma_m_hat / gamma_c_hat);
-            }
-            break;
-        case 3:
-            if (gamma <= gamma_m_hat) {
-                return Y_T;
-            } else {
-                return Y_T * std::sqrt(gamma_m_hat / gamma);
-            }
-            break;
-        case 4:
-            if (gamma <= gamma_m_hat) {
-                return Y_T;
-            } else if (gamma <= gamma_m_hat * (gamma_m_ / gamma0) * (gamma_m_ / gamma0)) {
-                return Y_T * std::sqrt(gamma_m_hat / gamma);
-            } else if (gamma <= gamma_m_hat * (gamma_m_ / gamma_m_hat) * (gamma_m_ / gamma_m_hat)) {
-                return Y_T * std::sqrt(gamma_m_ / gamma0) * fast_pow(gamma / gamma_m_hat, -3. / 4);
-            } else {
-                return Y_T * gamma_m_hat * std::sqrt(1 / (gamma0 * gamma));
-            }
-        case 5:
-            if (gamma <= gamma_m_hat) {
-                return Y_T;
-            } else if (gamma <= gamma_m_hat * (gamma_m_ / gamma0) * (gamma_m_ / gamma0)) {
-                return Y_T * std::sqrt(gamma_m_hat / gamma);
-            } else if (gamma <= gamma_m_hat * (gamma0 * gamma0 / (gamma_m_ * gamma_m_hat)) *
-                                    (gamma0 * gamma0 / (gamma_m_ * gamma_m_hat))) {
-                return Y_T * gamma_m_hat * gamma_m_ / (gamma * gamma0);
-            } else if (gamma <= gamma_m_hat * (gamma_m_ / gamma_m_hat) * (gamma_m_ / gamma_m_hat)) {
-                return Y_T * pow32(gamma_m_ / gamma0) * std::sqrt(gamma_m_hat / gamma0) *
-                       fast_pow(gamma / gamma_m_hat, -0.75);
-            } else {
-                return Y_T * gamma_m_hat * gamma_m_ / (gamma0 * gamma0) * std::sqrt(gamma_m_hat / gamma);
-            }
-
-            break;
-
-        case 6:
-            if (gamma <= gamma_m_hat * (gamma_m_ / gamma0) * (gamma_m_ / gamma0)) {
-                return Y_T;
-            } else if (gamma <= gamma_m_hat) {
-                return Y_T * fast_pow(gamma0 * gamma0 * gamma / (gamma_m_ * gamma_m_ * gamma_m_hat), 0.5 * (p_ - 3));
-            } else if (gamma <= gamma_m_hat * (gamma_m_ / gamma_m_hat) * (gamma_m_ / gamma_m_hat)) {
-                return Y_T * fast_pow(gamma0 / gamma_m_, p_ - 3) * gamma_m_hat / gamma;
-            } else if (gamma <= gamma_m_hat * (gamma0 * gamma0 / (gamma_m_ * gamma_m_hat)) *
-                                    (gamma0 * gamma0 / (gamma_m_ * gamma_m_hat))) {
-                return Y_T * fast_pow(gamma_m_ / gamma0, 3 - p_) * fast_pow(gamma_m_ / gamma_m_hat, 0.5 * (1 - p_)) *
-                       fast_pow(gamma / gamma_m_hat, 0.25 * (p_ - 5));
-            } else {
-                return Y_T * gamma_m_hat / gamma0 * fast_pow(gamma_m_ / gamma0, 5 - 2 * p_) *
-                       std::sqrt(gamma_m_hat / gamma);
-            }
-
-        default:
-            return 0;
-            break;
+    for (int i = 0; i < active_segment_count; ++i) {
+        if (gamma <= segments[i].gamma_max) {
+            return segments[i].eval(gamma);
+        }
     }
+    return 0.0;
 }
 
 Real InverseComptonY::nu_spectrum(Real nu) const {
@@ -197,13 +202,16 @@ Real InverseComptonY::nu_spectrum(Real nu) const {
     return gamma_spectrum(gamma);
 }
 
+Real InverseComptonY::compute_gamma_hat(Real gamma) const noexcept {
+    return std::max(gamma_self3 / (gamma * gamma), 1.0);
+}
 //========================================================================================================
 //                                  Helper Functions for Update Functions
 //========================================================================================================
-void update_gamma_c_Thomson(Real& gamma_c, InverseComptonY& Ys, RadParams const& rad, Real B, Real t_com,
-                            Real gamma_m) {
+void update_gamma_c_Thomson(Real& gamma_c, InverseComptonY& Ys, RadParams const& rad, Real B, Real t_com, Real gamma_m,
+                            Real gamma_c_last) {
     Real Y_T = compute_Thomson_Y(rad, gamma_m, gamma_c);
-    Real gamma_c_new = compute_gamma_c(t_com, B, Y_T);
+    Real gamma_c_new = gamma_c_last; //compute_gamma_c(t_com, B, Y_T);
 
     while (std::fabs((gamma_c_new - gamma_c) / gamma_c) > 1e-3) {
         gamma_c = gamma_c_new;
@@ -211,34 +219,38 @@ void update_gamma_c_Thomson(Real& gamma_c, InverseComptonY& Ys, RadParams const&
         gamma_c_new = compute_gamma_c(t_com, B, Y_T);
     }
     gamma_c = gamma_c_new;
-    //Ys = InverseComptonY(Y_T);
     Ys = InverseComptonY(gamma_m, gamma_c, rad.p, B, Y_T, false);
 }
 
-void update_gamma_c_KN(Real& gamma_c, InverseComptonY& Ys, RadParams const& rad, Real B, Real t_com, Real gamma_m) {
+void update_gamma_c_KN(Real& gamma_c, InverseComptonY& Ys, RadParams const& rad, Real B, Real t_com, Real gamma_m,
+                       Real gamma_c_last) {
     // the iteration may converge to just one solution or three solutions, when there are three solutions:
-    // 1. gamma_c_min (IC cooling dominant, Y(gamma_c) > 1). solution for gamma_m > gamma_c_trans
+    // 1. gamma_c_min (IC cooling dominant, Y(gamma_c) > 1). solution for gamma_m < gamma_c_trans
     // 2. gamma_c_trans (unstable state),
-    // 3. gamma_c_max (synchrotron cooling dominant, Y(gamma_c) < 1). solution for gamma_m < gamma_c_trans
+    // 3. gamma_c_max (synchrotron cooling dominant, Y(gamma_c) < 1). solution for gamma_m > gamma_c_trans
 
     Real gamma_c_sync = compute_gamma_c(t_com, B, 0);
     Real gamma_c_trans = std::max(gamma_c_sync * 0.5, 1.0); // where Y(gamma_c) = 1
     Real gamma_c_new = 2 * gamma_c_sync;
 
     if (gamma_m < gamma_c_trans) {
+        //if (gamma_m < gamma_c_sync) {
         gamma_c_new = 1;
     }
+    gamma_c_new = gamma_c_last; //initial guess
 
     Real Y_T = compute_Thomson_Y(rad, gamma_m, gamma_c_new);
     Ys = InverseComptonY(gamma_m, gamma_c_new, rad.p, B, Y_T, true);
-
+    size_t max_iter = 100;
+    size_t iter = 0;
     do {
         gamma_c = gamma_c_new;
         Y_T = compute_Thomson_Y(rad, gamma_m, gamma_c);
         Ys.update_cooling_breaks(gamma_c, Y_T);
         Real Y_c = Ys.gamma_spectrum(gamma_c);
         gamma_c_new = compute_gamma_c(t_com, B, Y_c);
-    } while (std::fabs((gamma_c_new - gamma_c) / gamma_c) > 1e-3);
+        iter++;
+    } while (std::fabs((gamma_c_new - gamma_c) / gamma_c) > 1e-3 && iter < max_iter);
     gamma_c = gamma_c_new;
 }
 

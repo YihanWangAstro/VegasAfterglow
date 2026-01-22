@@ -14,6 +14,15 @@
 #include "../util/macros.h"
 #include "../util/utilities.h"
 
+struct SpectralSegment {
+    Real gamma_max; // Upper energy bound of this segment
+    Real norm;      // Normalization (A) at the reference energy
+    Real slope;     // Power law index (s)
+    Real ref;       // Reference energy (gamma_ref)
+
+    inline Real eval(Real gamma) const { return norm * fast_pow(gamma / ref, slope); }
+};
+
 /**
  * <!-- ************************************************************************************** -->
  * @struct InverseComptonY
@@ -72,10 +81,18 @@ struct InverseComptonY {
     void update_cooling_breaks(Real gamma_c, Real Y_T) noexcept;
 
   private:
-    Real gamma_m_{1}; ///< Characteristic Lorentz factor for the minimum Lorentz factor
-    Real B_{0};       ///< Magnetic field strength
-    Real p_{2.3};     ///< Spectral index of electron distribution
+    Real gamma_m_{1};    ///< Characteristic Lorentz factor for the minimum Lorentz factor
+    Real B_{0};          ///< Magnetic field strength
+    Real p_{2.3};        ///< Spectral index of electron distribution
+    Real gamma_self3{1}; ///< Precomputed gamma_self^3 for efficiency
     void update_gamma0(Real gamma_c) noexcept;
+
+    Real compute_gamma_hat(Real gamma) const noexcept;
+
+    int active_segment_count = 0;
+    std::array<SpectralSegment, 5> segments; // Max 5 segments needed for complex regimes
+
+    void build_segments() noexcept;
 };
 
 /**
@@ -503,9 +520,11 @@ size_t determine_regime(Real gamma_a, Real gamma_c, Real gamma_m);
 
 Real compute_gamma_0(Real Y0, Real gamma_m, Real gamma_m_hat);
 
-void update_gamma_c_Thomson(Real& gamma_c, InverseComptonY& Ys, RadParams const& rad, Real B, Real t_com, Real gamma_m);
+void update_gamma_c_Thomson(Real& gamma_c, InverseComptonY& Ys, RadParams const& rad, Real B, Real t_com, Real gamma_m,
+                            Real gamma_c_last);
 
-void update_gamma_c_KN(Real& gamma_c, InverseComptonY& Ys, RadParams const& rad, Real B, Real t_com, Real gamma_m);
+void update_gamma_c_KN(Real& gamma_c, InverseComptonY& Ys, RadParams const& rad, Real B, Real t_com, Real gamma_m,
+                       Real gamma_c_last);
 
 void update_gamma_M(Real& gamma_M, InverseComptonY const& Ys, Real p, Real B);
 
@@ -532,8 +551,9 @@ void IC_cooling(ElectronGrid<Electrons>& electrons, PhotonGrid<Photons>& photons
                 auto& elec = electrons(i, j, k);
                 auto& Ys = elec.Ys;
                 const Real p = elec.p;
+                const Real gamma_c_last = electrons(i, j, k > 0 ? k - 1 : 0).gamma_c;
 
-                update_gamma_c(elec.gamma_c, Ys, shock.rad, B, t_com, elec.gamma_m);
+                update_gamma_c(elec.gamma_c, Ys, shock.rad, B, t_com, elec.gamma_m, gamma_c_last);
 
                 update_gamma_M(elec.gamma_M, Ys, p, B);
 
