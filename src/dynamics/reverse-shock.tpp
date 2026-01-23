@@ -37,6 +37,29 @@ FRShockEqn<Ejecta, Medium>::FRShockEqn(Medium const& medium, Ejecta const& eject
     }
 }
 
+inline Real smoothstep(Real edge0, Real edge1, Real x) {
+    Real t = (x - edge0) / (edge1 - edge0);
+
+    if (t < 0.0)
+        t = 0.0;
+    else if (t > 1.0)
+        t = 1.0;
+
+    return t * t * (3.0 - 2.0 * t);
+}
+template <typename Ejecta, typename Medium>
+Real FRShockEqn<Ejecta, Medium>::compute_crossing_weight(State const& state, State const& diff, Real t,
+                                                         Real width) const noexcept {
+    if (diff.m4 > 0)
+        return 1.0;
+
+    if (state.m4 <= 0)
+        return 0.0;
+
+    const Real ratio = state.m3 / state.m4;
+    return smoothstep(1.0 + width, 1.0 - width, ratio);
+}
+
 template <typename Ejecta, typename Medium>
 Real FRShockEqn<Ejecta, Medium>::compute_dGamma_dt(State const& state, State const& diff, Real t) const noexcept {
     const Real Gamma34 = compute_rel_Gamma(Gamma4, state.Gamma);
@@ -56,8 +79,9 @@ Real FRShockEqn<Ejecta, Medium>::compute_dGamma_dt(State const& state, State con
     }
 
     const Real a = (state.Gamma - 1) * con::c2 * diff.m2 + (state.Gamma - Gamma4) * con::c2 * diff.m3 +
-             Gamma_eff2 * diff.U2_th + Gamma_eff3 * diff.U3_th - deps_dt;
-    const Real b = (state.m2 + state.m3) * con::c2 + dGamma_eff2_dGamma * state.U2_th + dGamma_eff3_dGamma * state.U3_th;
+                   Gamma_eff2 * diff.U2_th + Gamma_eff3 * diff.U3_th - deps_dt;
+    const Real b =
+        (state.m2 + state.m3) * con::c2 + dGamma_eff2_dGamma * state.U2_th + dGamma_eff3_dGamma * state.U3_th;
 
     if (b == 0 || std::isnan(-a / b) || std::isinf(-a / b)) {
         return 0;
@@ -77,7 +101,8 @@ Real FRShockEqn<Ejecta, Medium>::compute_dU2_dt(State const& state, State const&
 
     const Real shock_heating = compute_shock_heating_rate(state.Gamma, diff.m2);
 
-    const Real adiabatic_cooling = compute_adiabatic_cooling_rate2(ad_idx, state.r, state.x4, state.U2_th, diff.r, diff.x4);
+    const Real adiabatic_cooling =
+        compute_adiabatic_cooling_rate2(ad_idx, state.r, state.x4, state.U2_th, diff.r, diff.x4);
 
     return (1 - eps_rad) * shock_heating + adiabatic_cooling;
 }
@@ -86,20 +111,30 @@ template <typename Ejecta, typename Medium>
 Real FRShockEqn<Ejecta, Medium>::compute_dU3_dt(State const& state, State const& diff, Real t) const noexcept {
     const Real Gamma34 = compute_rel_Gamma(this->Gamma4, state.Gamma);
     const Real ad_idx = adiabatic_idx(Gamma34);
-    const Real adiabatic_cooling = compute_adiabatic_cooling_rate2(ad_idx, state.r, state.x3, state.U3_th, diff.r, diff.x3);
+    const Real adiabatic_cooling =
+        compute_adiabatic_cooling_rate2(ad_idx, state.r, state.x3, state.U3_th, diff.r, diff.x3);
 
-    if (state.m3 < state.m4 || diff.m4 > 0) { // reverse shock still crossing
+    /*if (state.m3 < state.m4 || diff.m4 > 0) { // reverse shock still crossing
         const Real shock_heating = compute_shock_heating_rate(Gamma34, diff.m3);
         constexpr Real eps_rad = 0; ////compute_radiative_efficiency(state.t_comv, state.Gamma, e_th, rad_rvs);
         return (1 - eps_rad) * shock_heating + adiabatic_cooling;
     } else {
         return adiabatic_cooling;
+    }*/
+    //smooth transition around the crossing time, the shell end is not a cliff in real world
+    const Real w = compute_crossing_weight(state, diff, t);
+    Real shock_heating = 0.0;
+    if (w > 1e-3) {
+        const Real heating_rate = compute_shock_heating_rate(Gamma34, diff.m3); // diff.m3 is already smoothed!
+        constexpr Real eps_rad = 0;
+        shock_heating = (1 - eps_rad) * heating_rate;
     }
+    return shock_heating + adiabatic_cooling;
 }
 
 template <typename Ejecta, typename Medium>
 Real FRShockEqn<Ejecta, Medium>::compute_dx3_dt(State const& state, State const& diff, Real t) const noexcept {
-    if ((state.m3 < state.m4 || diff.m4 > 0) && (state.Gamma != this->Gamma4)) {
+    /*if ((state.m3 < state.m4 || diff.m4 > 0) && (state.Gamma != this->Gamma4)) {
         const Real sigma = compute_shell_sigma(state);
         const Real Gamma34 = compute_rel_Gamma(this->Gamma4, state.Gamma);
         const Real beta3 = gamma_to_beta(state.Gamma);
@@ -111,7 +146,25 @@ Real FRShockEqn<Ejecta, Medium>::compute_dx3_dt(State const& state, State const&
     } else {
         const Real Gamma34 = compute_rel_Gamma(this->Gamma4, state.Gamma);
         return compute_shell_spreading_rate(Gamma34, diff.t_comv);
+    }*/
+
+    //smooth transition around the crossing time, the shell end is not a cliff in real world
+    const Real w = compute_crossing_weight(state, diff, t);
+
+    const Real Gamma34 = compute_rel_Gamma(this->Gamma4, state.Gamma);
+    const Real rate_spreading = compute_shell_spreading_rate(Gamma34, diff.t_comv);
+
+    Real rate_crossing = 0.0;
+    if (w > 1e-3 && (state.Gamma != this->Gamma4)) {
+        const Real sigma = compute_shell_sigma(state);
+        const Real beta3 = gamma_to_beta(state.Gamma);
+        const Real beta4 = gamma_to_beta(this->Gamma4);
+        Real comp_ratio = compute_4vel_jump(Gamma34, sigma);
+        Real dx3dt = (beta4 - beta3) * con::c / ((1 - beta3) * (state.Gamma * comp_ratio / this->Gamma4 - 1));
+        rate_crossing = std::fabs(dx3dt * state.Gamma);
     }
+
+    return w * rate_crossing + (1.0 - w) * rate_spreading;
 }
 
 template <typename Ejecta, typename Medium>
@@ -130,7 +183,7 @@ Real FRShockEqn<Ejecta, Medium>::compute_dm2_dt(State const& state, State const&
 
 template <typename Ejecta, typename Medium>
 Real FRShockEqn<Ejecta, Medium>::compute_dm3_dt(State const& state, State const& diff, Real t) const noexcept {
-    if ((state.m3 < state.m4 || diff.m4 > 0) && (state.Gamma != this->Gamma4)) {
+    /*if ((state.m3 < state.m4 || diff.m4 > 0) && (state.Gamma != this->Gamma4)) {
         const Real sigma = compute_shell_sigma(state);
         const Real Gamma34 = compute_rel_Gamma(this->Gamma4, state.Gamma);
         Real comp_ratio = compute_4vel_jump(Gamma34, sigma);
@@ -144,6 +197,27 @@ Real FRShockEqn<Ejecta, Medium>::compute_dm3_dt(State const& state, State const&
         }
     } else {
         return 0.;
+    }*/
+    //smooth transition around the crossing time, the shell end is not a cliff in real world
+    const Real w = compute_crossing_weight(state, diff, t);
+
+    if (w < 1e-3)
+        return 0.0;
+
+    if (state.Gamma != this->Gamma4) {
+        const Real sigma = compute_shell_sigma(state);
+        const Real Gamma34 = compute_rel_Gamma(this->Gamma4, state.Gamma);
+        Real comp_ratio = compute_4vel_jump(Gamma34, sigma);
+
+        if (state.x4 <= 0)
+            return 0.0;
+
+        Real column_den3 = state.m4 * comp_ratio / state.x4;
+        Real theoretical_rate = column_den3 * diff.x3;
+
+        return theoretical_rate * w;
+    } else {
+        return 0.0;
     }
 }
 
@@ -413,7 +487,7 @@ void grid_solve_shock_pair(size_t i, size_t j, View const& t, Shock& shock_fwd, 
 
     typename Eqn::State state;
     Real t_dec = compute_dec_time(eqn, t.back());
-    Real t0 = min(t.front(), 0.01 * unit::sec, t_dec/3);
+    Real t0 = min(t.front(), 0.01 * unit::sec, t_dec / 3);
     eqn.set_init_state(state, t0);
 
     constexpr Real RS_Gamma_limit = 1.03;

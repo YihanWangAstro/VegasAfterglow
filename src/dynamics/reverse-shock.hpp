@@ -126,6 +126,8 @@ class FRShockEqn {
     void save_cross_state(State const& state);
 
   private:
+    inline Real compute_crossing_weight(State const& state, State const& diff, Real t, Real width = 0.1) const noexcept;
+
     inline Real compute_dGamma_dt(State const& state, State const& diff, Real t) const noexcept;
 
     inline Real compute_dU2_dt(State const& state, State const& diff, Real t) const noexcept;
