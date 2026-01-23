@@ -125,14 +125,11 @@ void Observer::calc_solid_angle(Coord const& coord, Shock const& shock) {
                     continue;
                 } */
                 const Real dOmega = std::fabs(dcos(i_eff, j, k) * dphi(i));
-                //lg2_geom_factor(i, j, k) =
-                //    std::log2(dOmega * shock.r(i, j, k) * shock.r(i, j, k)) + 3 * lg2_doppler(i, j, k);
-                lg2_geom_factor(i, j, k) = dOmega * shock.r(i, j, k) * shock.r(i, j, k);
+                lg2_geom_factor(i, j, k) =
+                    std::log2(dOmega * shock.r(i, j, k) * shock.r(i, j, k)) + 3 * lg2_doppler(i, j, k);
             }
         }
     }
-
-    lg2_geom_factor = xt::log2(lg2_geom_factor) + 3 * lg2_doppler;
 }
 
 void Observer::update_required(MaskGrid& required, Array const& t_obs) {
@@ -198,6 +195,31 @@ void Observer::build_time_grid(Coord const& coord, Shock const& shock, Real lumi
 //========================================================================================================
 //                                  Public Interface Methods
 //========================================================================================================
+
+xt::xtensor<size_t, 3> Observer::compute_k_indices(Array const& t_obs) const noexcept {
+    const size_t t_obs_len = t_obs.size();
+    xt::xtensor<size_t, 3> k_indices({eff_phi_grid, theta_grid, t_obs_len}, SIZE_MAX);
+
+    for (size_t i = 0; i < eff_phi_grid; i++) {
+        for (size_t j = 0; j < theta_grid; j++) {
+            // Skip observation times that are below the grid's start time
+            size_t t_idx = 0;
+            iterate_to(time(i, j, 0), t_obs, t_idx);
+
+            // Find the k index for each observation time
+            for (size_t k = 0; k < t_grid - 1 && t_idx < t_obs_len; k++) {
+                const Real t_hi = time(i, j, k + 1);
+                // All observation times in [time(i,j,k), time(i,j,k+1)) map to k
+                while (t_idx < t_obs_len && t_obs(t_idx) <= t_hi) {
+                    k_indices(i, j, t_idx) = k;
+                    t_idx++;
+                }
+            }
+        }
+    }
+
+    return k_indices;
+}
 
 void Observer::observe(Coord const& coord, Shock const& shock, Real luminosity_dist, Real redshift) {
     build_time_grid(coord, shock, luminosity_dist, redshift);

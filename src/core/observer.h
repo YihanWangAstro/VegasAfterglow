@@ -236,7 +236,18 @@ class Observer {
 
     /**
      * <!-- ************************************************************************************** -->
-     * @brief Validates and sets the interpolation boundaries
+     * @brief Pre-computes the k index for each (i, j, idx) grid point.
+     * @details For each observation time t_obs(idx), finds the k such that
+     *          time(i,j,k) <= t_obs(idx) < time(i,j,k+1). This allows the flux
+     *          computation loops to directly look up k without dynamic searching.
+     * @param t_obs Array of observation times
+     * @return 3D tensor of k indices with shape (eff_phi_grid, theta_grid, t_obs_len).
+     *         A value of SIZE_MAX indicates no valid k exists for that (i, j, idx).
+     * <!-- ************************************************************************************** -->
+     */
+    [[nodiscard]] xt::xtensor<size_t, 3> compute_k_indices(Array const& t_obs) const noexcept;
+
+    /**
      * @tparam PhotonGrid Types of photon grid objects
      * @param state The interpolation state to update
      * @param eff_i Effective phi grid index (accounts for jet symmetry)
@@ -321,43 +332,20 @@ MeshGrid Observer::specific_flux(Array const& t_obs, Array const& nu_obs, Photon
 
     const Array lg2_t_obs = xt::log2(t_obs);
     const Array lg2_nu_src = xt::log2(nu_obs) + std::log2(one_plus_z);
+    const auto k_indices = compute_k_indices(t_obs);
 
     MeshGrid F_nu({nu_len, t_obs_len}, 0);
-    xt::xtensor<Real, 4> lg2_F_nu_ij({eff_phi_grid, theta_grid, nu_len, t_obs_len}, -con::inf);
 
     for (size_t i = 0; i < eff_phi_grid; i++) {
-        size_t eff_i = i * jet_3d;
-        for (size_t j = 0; j < theta_grid; j++) {
-            // Skip observation times that are below the grid's start time
-            size_t t_idx = 0;
-            iterate_to(time(i, j, 0), t_obs, t_idx);
-
-            InterpState state;
-            for (size_t k = 0; k < t_grid - 1 && t_idx < t_obs_len; k++) {
-                if (const Real t_hi = time(i, j, k + 1); t_hi >= t_obs(t_idx)) {
-                    const size_t idx_start = t_idx;
-                    iterate_to(t_hi, t_obs, t_idx);
-                    const size_t idx_end = t_idx;
-
-                    for (size_t l = 0; l < nu_len; l++) {
-                        if (set_boundaries(state, eff_i, i, j, k, lg2_nu_src[l], photons)) [[likely]] {
-                            for (size_t idx = idx_start; idx < idx_end; idx++) {
-                                //F_nu(l, idx) += loglog_interpolate(state, lg2_t_obs(idx), lg2_t(i, j, k));
-                                lg2_F_nu_ij(i, j, l, idx) = interpolate(state, lg2_t_obs(idx), lg2_t(i, j, k));
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    }
-
-    lg2_F_nu_ij = xt::exp2(lg2_F_nu_ij);
-    for (size_t i = 0; i < eff_phi_grid; i++) {
+        const size_t eff_i = i * jet_3d;
         for (size_t j = 0; j < theta_grid; j++) {
             for (size_t l = 0; l < nu_len; l++) {
+                InterpState state;
                 for (size_t idx = 0; idx < t_obs_len; idx++) {
-                    F_nu(l, idx) += lg2_F_nu_ij(i, j, l, idx);
+                    const size_t k = k_indices(i, j, idx);
+                    if (k != SIZE_MAX && set_boundaries(state, eff_i, i, j, k, lg2_nu_src[l], photons)) [[likely]] {
+                        F_nu(l, idx) += loglog_interpolate(state, lg2_t_obs(idx), lg2_t(i, j, k));
+                    }
                 }
             }
         }
@@ -380,35 +368,24 @@ Array Observer::specific_flux_series(Array const& t_obs, Array const& nu_obs, Ph
     const Array lg2_nu_src = xt::log2(nu_obs) + std::log2(one_plus_z);
 
     Array F_nu = xt::zeros<Real>({t_obs_len});
-    xt::xtensor<Real, 3> lg2_F_nu_ij({eff_phi_grid, theta_grid, t_obs_len}, -con::inf);
 
     for (size_t i = 0; i < eff_phi_grid; i++) {
-        size_t eff_i = i * jet_3d;
+        const size_t eff_i = i * jet_3d;
         for (size_t j = 0; j < theta_grid; j++) {
-            size_t t_idx = 0;
-            iterate_to(time(i, j, 0), t_obs, t_idx);
+            // Skip observation times below the grid's start time
+            size_t idx = 0;
+            iterate_to(time(i, j, 0), t_obs, idx);
 
             InterpState state;
-            for (size_t k = 0; t_idx < t_obs_len && k < t_grid - 1;) {
-                if (time(i, j, k + 1) < t_obs(t_idx)) {
+            for (size_t k = 0; idx < t_obs_len && k < t_grid - 1;) {
+                if (time(i, j, k + 1) < t_obs(idx)) {
                     k++;
                 } else {
-                    if (set_boundaries(state, eff_i, i, j, k, lg2_nu_src(t_idx), photons)) [[likely]] {
-                        //F_nu(t_idx) += loglog_interpolate(state, lg2_t_obs(t_idx), lg2_t(i, j, k));
-                        lg2_F_nu_ij(i, j, t_idx) = interpolate(state, lg2_t_obs(t_idx), lg2_t(i, j, k));
+                    if (set_boundaries(state, eff_i, i, j, k, lg2_nu_src(idx), photons)) [[likely]] {
+                        F_nu(idx) += loglog_interpolate(state, lg2_t_obs(idx), lg2_t(i, j, k));
                     }
-                    t_idx++;
+                    idx++;
                 }
-            }
-        }
-    }
-
-    lg2_F_nu_ij = xt::exp2(lg2_F_nu_ij);
-
-    for (size_t i = 0; i < eff_phi_grid; i++) {
-        for (size_t j = 0; j < theta_grid; j++) {
-            for (size_t t_idx = 0; t_idx < t_obs_len; t_idx++) {
-                F_nu(t_idx) += lg2_F_nu_ij(i, j, t_idx);
             }
         }
     }
