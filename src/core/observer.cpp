@@ -7,6 +7,8 @@
 
 #include "observer.h"
 
+#include <cstddef>
+
 #include "../util/macros.h"
 #include "../util/utilities.h"
 
@@ -41,6 +43,8 @@ void Observer::calc_t_obs(Coord const& coord, Shock const& shock) {
     }
 
     const size_t shock_phi_size = shock.theta.shape(0);
+    const size_t block_size = theta_grid * t_grid;
+
     for (size_t i = 0; i < shock_phi_size; ++i) {
         for (size_t j = 0; j < theta_grid; ++j) {
             for (size_t k = 0; k < t_grid; ++k) {
@@ -57,27 +61,26 @@ void Observer::calc_t_obs(Coord const& coord, Shock const& shock) {
         for (size_t j = 0; j < theta_grid; ++j) {
             // Compute the cosine of the angle between the local velocity vector and the observer's line of sight.
             for (size_t k = 0; k < t_grid; ++k) {
-                /*if (shock.required(i_eff, j, k) == 0) {
+                if (shock.required(i_eff, j, k) == 0) {
                     continue;
-                }*/
+                }
                 const Real gamma_ = shock.Gamma(i_eff, j, k);
                 const Real r = shock.r(i_eff, j, k);
                 const Real t_eng_ = coord.t(i_eff, j, k);
                 const Real cos_v = sin_theta(i_eff, j, k) * cos_phi * sin_obs + cos_theta(i_eff, j, k) * cos_obs;
+                const Real t_val = (t_eng_ + (1 - cos_v) * r / con::c) * one_plus_z;
 
                 // Compute the Doppler factor: D = 1 / [Gamma * (1 - beta * cos_v)]
                 //lg2_doppler(i, j, k) = -std::log2((gamma_ - std::sqrt(gamma_ * gamma_ - 1) * cos_v));
-                lg2_doppler(i, j, k) = (gamma_ - std::sqrt(gamma_ * gamma_ - 1) * cos_v);
+                lg2_doppler(i, j, k) = -fast_log2(gamma_ - std::sqrt(gamma_ * gamma_ - 1) * cos_v);
 
                 // Compute the observed time: t_obs = [t_eng + (1 - cos_v) * r / c] * (1 + z)
-                time(i, j, k) = (t_eng_ + (1 - cos_v) * r / con::c) * one_plus_z;
+                time(i, j, k) = t_val;
+
+                lg2_t(i, j, k) = std::log2(t_val);
             }
         }
     }
-
-    lg2_doppler = -xt::log2(lg2_doppler);
-
-    xt::noalias(lg2_t) = xt::log2(time);
 }
 
 void Observer::calc_solid_angle(Coord const& coord, Shock const& shock) {

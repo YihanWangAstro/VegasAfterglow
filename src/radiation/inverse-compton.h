@@ -585,5 +585,9 @@ void KN_cooling(ElectronGrid<Electrons>& electrons, PhotonGrid<Photons>& photons
 
 template <typename Photon>
 Real inverse_compton_correction(Photon const& ph, Real nu) {
-    return (1. + ph.Y_c) / (1 + ph.Ys.nu_spectrum(nu));
+    if (ph.Y_c < 1e-3) {
+        return 1.;
+    } else {
+        return (1. + ph.Y_c) / (1 + ph.Ys.nu_spectrum(nu));
+    }
 }
