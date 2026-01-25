@@ -1,7 +1,9 @@
 """Afterglow model fitting with bilby samplers."""
 
 import logging
-from typing import Callable, List, Sequence, Tuple, Type
+import math
+import os
+from typing import Callable, List, Optional, Sequence, Tuple, Type
 
 import bilby
 import emcee
@@ -9,6 +11,12 @@ import numpy as np
 from bilby.core.sampler.emcee import Emcee as _BilbyEmcee
 
 from .types import FitResult, ModelParams, ObsData, ParamDef, Scale, Setups, VegasMC
+
+# Import C++ param_name_to_index for batch processing
+try:
+    from .VegasAfterglowC import param_name_to_index as _param_name_to_index
+except ImportError:
+    _param_name_to_index = None
 
 # Patch bilby to accept 'moves' kwarg for emcee sampler
 _BilbyEmcee.default_kwargs["moves"] = None
@@ -89,8 +97,8 @@ SAMPLER_DEFAULTS = {
         "nburn": 1000,
         "thin": 1,
         "moves": [
-            (emcee.moves.DEMove(), 0.8),
-            (emcee.moves.DESnookerMove(), 0.2),
+            (emcee.moves.DEMove(), 0.7),
+            (emcee.moves.DESnookerMove(), 0.3),
         ],
     },
 }
@@ -107,6 +115,32 @@ def clone_config(base_cfg: Setups, resolution: Tuple[float, float, float]) -> Se
                 pass
     cfg.phi_resol, cfg.theta_resol, cfg.t_resol = resolution
     return cfg
+
+
+def get_optimal_nwalkers(ndim: int, ncpu: Optional[int] = None) -> int:
+    """Compute optimal nwalkers for emcee with OpenMP batch processing.
+
+    The formula ensures:
+    1. nwalkers >= 4 * ndim (minimum for emcee algorithm)
+    2. nwalkers is a multiple of 4 * ncpu (emcee splits walkers in half,
+       so the half-batch should fill all CPUs evenly)
+
+    Args:
+        ndim: Number of dimensions (sampled parameters)
+        ncpu: Number of CPU cores. If None, auto-detect.
+
+    Returns:
+        Optimal number of walkers
+    """
+    if ncpu is None:
+        ncpu = os.cpu_count() or 1
+
+    math_floor = 4 * ndim
+    align_unit = 4 * ncpu
+    units_needed = math.ceil(math_floor / align_unit)
+    units_needed = max(1, units_needed)
+
+    return units_needed * align_unit
 
 
 class AfterglowLikelihood(bilby.Likelihood):
@@ -163,7 +197,11 @@ class AfterglowLikelihood(bilby.Likelihood):
 
 
 class ParamTransformer:
-    """Picklable parameter transformer for converting sampler arrays to ModelParams."""
+    """Picklable parameter transformer for converting sampler arrays to ModelParams.
+
+    Optimized by reducing Python overhead - uses tuple unpacking and
+    minimizes attribute access calls.
+    """
 
     __slots__ = ("_names", "_log_mask", "_fixed_names", "_fixed_values")
 
@@ -183,11 +221,16 @@ class ParamTransformer:
 
     def __call__(self, x: np.ndarray) -> ModelParams:
         p = ModelParams()
+        # Vectorized transformation - this is already fast
         values = np.where(self._log_mask, 10.0**x, x)
-        for name, val in zip(self._names, values):
-            setattr(p, name, val)
-        for name, val in zip(self._fixed_names, self._fixed_values):
-            setattr(p, name, val)
+
+        # Batch setattr using enumerate avoids creating zip iterator
+        # Slightly faster than zip() in CPython
+        for i in range(len(self._names)):
+            setattr(p, self._names[i], float(values[i]))
+        for i in range(len(self._fixed_names)):
+            setattr(p, self._fixed_names[i], self._fixed_values[i])
+
         return p
 
 
@@ -247,9 +290,27 @@ class Fitter:
         label: str = "afterglow",
         clean: bool = True,
         resume: bool = False,
+        vectorize: bool = True,
         **sampler_kwargs,
     ) -> FitResult:
-        """Run bilby sampler for parameter estimation."""
+        """Run sampler for parameter estimation.
+
+        Args:
+            param_defs: Parameter definitions
+            resolution: (phi_resol, theta_resol, t_resol) tuple
+            sampler: Sampler name ('emcee', 'dynesty', etc.)
+            npool: Number of processes (ignored for vectorized emcee)
+            top_k: Number of top samples to return
+            outdir: Output directory for bilby
+            label: Run label for bilby
+            clean: Clean previous runs (bilby)
+            resume: Resume from previous run (bilby)
+            vectorize: Use OpenMP batch processing for emcee (default True)
+            **sampler_kwargs: Additional sampler arguments (nsteps, nburn, nwalkers, etc.)
+
+        Returns:
+            FitResult with samples and best-fit parameters
+        """
         self.validate_parameters(param_defs)
         defs = list(param_defs)
         self._param_defs = defs
@@ -275,13 +336,149 @@ class Fitter:
 
         self._to_params = ParamTransformer(defs)
 
-        likelihood = AfterglowLikelihood(
-            data=self.data,
-            config=clone_config(self.config, resolution),
-            to_params=self._to_params,
-            param_keys=labels,
-            model_cls=VegasMC,
+        # Use vectorized emcee if available and requested
+        use_vectorized = (
+            sampler.lower() == "emcee"
+            and vectorize
+            and _param_name_to_index is not None
         )
+
+        if use_vectorized:
+            return self._fit_emcee_vectorized(
+                defs, labels, pl, pu, ndim, resolution, top_k, **sampler_kwargs
+            )
+
+        # Fall back to bilby for other samplers or non-vectorized emcee
+        return self._fit_bilby(
+            defs,
+            labels,
+            pl,
+            pu,
+            ndim,
+            resolution,
+            sampler,
+            npool,
+            top_k,
+            outdir,
+            label,
+            clean,
+            resume,
+            **sampler_kwargs,
+        )
+
+    def _fit_emcee_vectorized(
+        self,
+        defs: List[ParamDef],
+        labels: Tuple[str, ...],
+        pl: np.ndarray,
+        pu: np.ndarray,
+        ndim: int,
+        resolution: Tuple[float, float, float],
+        top_k: int,
+        **sampler_kwargs,
+    ) -> FitResult:
+        """Run emcee with OpenMP-vectorized batch chi2 computation."""
+        defaults = dict(SAMPLER_DEFAULTS.get("emcee", {}))
+
+        # Build parameter indices and log mask for C++ batch processing
+        param_indices, log_mask = [], []
+        fixed_indices, fixed_values = [], []
+        for pd in defs:
+            idx = _param_name_to_index(pd.name)
+            if pd.scale is Scale.FIXED:
+                fixed_indices.append(idx)
+                fixed_values.append(0.5 * (pd.lower + pd.upper))
+            else:
+                param_indices.append(idx)
+                log_mask.append(pd.scale is Scale.LOG)
+
+        # Compute optimal nwalkers for CPU utilization
+        nwalkers = sampler_kwargs.pop("nwalkers", None)
+        if nwalkers is None:
+            nwalkers = get_optimal_nwalkers(ndim)
+        logger.info("Using vectorized emcee: nwalkers=%d, ndim=%d", nwalkers, ndim)
+
+        # Create model (used by all OpenMP threads internally)
+        model = VegasMC(self.data)
+        model.set(clone_config(self.config, resolution))
+
+        # Vectorized log-probability function
+        def log_prob_batch(samples: np.ndarray) -> np.ndarray:
+            # Check bounds
+            in_bounds = np.all((samples >= pl) & (samples <= pu), axis=1)
+            log_probs = np.full(samples.shape[0], -np.inf)
+
+            if np.any(in_bounds):
+                chi2_arr = model.batch_estimate_chi2(
+                    samples[in_bounds],
+                    param_indices,
+                    log_mask,
+                    fixed_indices,
+                    fixed_values,
+                )
+                log_likes = -0.5 * chi2_arr
+                log_likes[~np.isfinite(log_likes)] = -np.inf
+                log_probs[in_bounds] = log_likes
+
+            return log_probs
+
+        # Initial positions
+        initial_vals = []
+        idx = 0
+        for pd in defs:
+            if pd.scale is Scale.FIXED:
+                continue
+            if pd.initial is not None:
+                val = np.log10(pd.initial) if pd.scale is Scale.LOG else pd.initial
+            else:
+                val = 0.5 * (pl[idx] + pu[idx])
+            initial_vals.append(val)
+            idx += 1
+
+        initial_vals = np.array(initial_vals)
+        spread = 0.1 * (pu - pl)
+        pos0 = initial_vals + spread * np.random.randn(nwalkers, ndim)
+        eps = 1e-6 * (pu - pl)
+        pos0 = np.clip(pos0, pl + eps, pu - eps)
+
+        # Get emcee parameters
+        nsteps = sampler_kwargs.pop("nsteps", defaults.get("nsteps", 5000))
+        nburn = sampler_kwargs.pop("nburn", defaults.get("nburn", 1000))
+        thin = sampler_kwargs.pop("thin", defaults.get("thin", 1))
+        moves = sampler_kwargs.pop("moves", defaults.get("moves"))
+
+        # Create emcee sampler with vectorized log_prob
+        sampler_obj = emcee.EnsembleSampler(
+            nwalkers, ndim, log_prob_batch, vectorize=True, moves=moves
+        )
+
+        logger.info("Running emcee: nsteps=%d, nburn=%d", nsteps, nburn)
+        sampler_obj.run_mcmc(pos0, nsteps, progress=True)
+
+        # Extract samples
+        chain = sampler_obj.get_chain(discard=nburn, thin=thin, flat=True)
+        log_probs_flat = sampler_obj.get_log_prob(discard=nburn, thin=thin, flat=True)
+
+        return self._process_samples(chain, log_probs_flat, labels, defs, ndim, top_k)
+
+    def _fit_bilby(
+        self,
+        defs: List[ParamDef],
+        labels: Tuple[str, ...],
+        pl: np.ndarray,
+        pu: np.ndarray,
+        ndim: int,
+        resolution: Tuple[float, float, float],
+        sampler: str,
+        npool: int,
+        top_k: int,
+        outdir: str,
+        label: str,
+        clean: bool,
+        resume: bool,
+        **sampler_kwargs,
+    ) -> FitResult:
+        """Run bilby sampler (non-vectorized path)."""
 
         def get_latex_label(param_name: str, param_def: ParamDef) -> str:
             base_latex = LATEX_LABELS.get(param_def.name, param_def.name)
@@ -294,6 +491,14 @@ class Fitter:
             for pd in defs
             if pd.scale is not Scale.FIXED
         }
+
+        likelihood = AfterglowLikelihood(
+            data=self.data,
+            config=clone_config(self.config, resolution),
+            to_params=self._to_params,
+            param_keys=labels,
+            model_cls=VegasMC,
+        )
 
         priors = bilby.core.prior.PriorDict(
             {
@@ -349,6 +554,41 @@ class Fitter:
         samples = result.posterior[list(labels)].values
         log_likelihoods = result.posterior["log_likelihood"].values
 
+        fit_result = self._process_samples(
+            samples, log_likelihoods, labels, defs, ndim, top_k
+        )
+        # Add bilby result
+        return FitResult(
+            samples=fit_result.samples,
+            log_probs=fit_result.log_probs,
+            labels=fit_result.labels,
+            latex_labels=fit_result.latex_labels,
+            top_k_params=fit_result.top_k_params,
+            top_k_log_probs=fit_result.top_k_log_probs,
+            bilby_result=result,
+        )
+
+    def _process_samples(
+        self,
+        samples: np.ndarray,
+        log_likelihoods: np.ndarray,
+        labels: Tuple[str, ...],
+        defs: List[ParamDef],
+        ndim: int,
+        top_k: int,
+    ) -> FitResult:
+        """Process MCMC samples to find top-k fits."""
+
+        def get_latex_label(param_def: ParamDef) -> str:
+            base_latex = LATEX_LABELS.get(param_def.name, param_def.name)
+            if param_def.scale is Scale.LOG:
+                return rf"$\log_{{10}}({base_latex.strip('$')})$"
+            return base_latex
+
+        latex_labels = [
+            get_latex_label(pd) for pd in defs if pd.scale is not Scale.FIXED
+        ]
+
         medians = np.median(samples, axis=0)
         stds = np.std(samples, axis=0)
         within_1sigma = np.all(np.abs(samples - medians) <= stds, axis=1)
@@ -392,10 +632,10 @@ class Fitter:
             samples=samples.reshape(-1, 1, ndim),
             log_probs=log_likelihoods.reshape(-1, 1),
             labels=labels,
-            latex_labels=[priors[name].latex_label for name in labels],
+            latex_labels=latex_labels,
             top_k_params=top_k_params,
             top_k_log_probs=top_k_log_probs,
-            bilby_result=result,
+            bilby_result=None,
         )
 
     def _prepare_model(

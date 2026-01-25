@@ -7,6 +7,9 @@
 
 #pragma once
 
+#include <array>
+#include <cstdint>
+#include <string>
 #include <vector>
 
 #include "../include/afterglow.h"
@@ -220,6 +223,27 @@ struct Params {
 
 /**
  * <!-- ************************************************************************************** -->
+ * @brief Compile-time array mapping parameter indices to Params member pointers.
+ * @details Enables O(1) parameter assignment by index without string comparisons.
+ *          Index order: theta_v(0), n_ism(1), n0(2), A_star(3), k_m(4), E_iso(5), Gamma0(6),
+ *          theta_c(7), k_e(8), k_g(9), duration(10), E_iso_w(11), Gamma0_w(12), theta_w(13),
+ *          L0(14), t0(15), q(16), p(17), eps_e(18), eps_B(19), xi_e(20), p_r(21),
+ *          eps_e_r(22), eps_B_r(23), xi_e_r(24)
+ * <!-- ************************************************************************************** -->
+ */
+inline constexpr std::array<double Params::*, 25> kParamPtrs = {
+    &Params::theta_v,  &Params::n_ism,   &Params::n0,       &Params::A_star,  &Params::k_m,
+    &Params::E_iso,    &Params::Gamma0,  &Params::theta_c,  &Params::k_e,     &Params::k_g,
+    &Params::duration, &Params::E_iso_w, &Params::Gamma0_w, &Params::theta_w, &Params::L0,
+    &Params::t0,       &Params::q,       &Params::p,        &Params::eps_e,   &Params::eps_B,
+    &Params::xi_e,     &Params::p_r,     &Params::eps_e_r,  &Params::eps_B_r, &Params::xi_e_r,
+};
+
+/// Map parameter name string to index for Python interface setup
+int param_name_to_index(const std::string& name);
+
+/**
+ * <!-- ************************************************************************************** -->
  * @struct ConfigParams
  * @brief Configuration parameters for numerical setup and advanced physics in afterglow modeling.
  * @details This structure controls the numerical resolution, cosmological setup, and optional
@@ -243,6 +267,33 @@ struct ConfigParams {
     bool ssc_cooling{false};   ///< Whether to include inverse Compton cooling of electrons
     bool kn{false};            ///< Whether to include Klein-Nishina corrections
     bool magnetar{false};      ///< Whether to include magnetar energy injection
+};
+
+/**
+ * <!-- ************************************************************************************** -->
+ * @struct BatchWorkspace
+ * @brief Thread-local workspace for batch chi-squared computation.
+ * @details Holds pre-allocated mutable arrays for model outputs, avoiding repeated allocations
+ *          in the hot loop. Each thread gets its own workspace while sharing read-only
+ *          observation data via const references.
+ * <!-- ************************************************************************************** -->
+ */
+struct BatchWorkspace {
+    Array model_fluxes;                  ///< Pre-allocated array for model flux predictions
+    std::vector<Array> flux_data_models; ///< Pre-allocated arrays for flux_data Fv_model
+    bool initialized{false};             ///< Whether workspace has been sized
+
+    /// Initialize workspace arrays to match observation data dimensions
+    void initialize(size_t tuple_size, std::vector<size_t> const& flux_data_sizes) {
+        if (tuple_size > 0) {
+            model_fluxes = Array::from_shape({tuple_size});
+        }
+        flux_data_models.resize(flux_data_sizes.size());
+        for (size_t i = 0; i < flux_data_sizes.size(); ++i) {
+            flux_data_models[i] = Array::from_shape({flux_data_sizes[i]});
+        }
+        initialized = true;
+    }
 };
 
 /**
@@ -272,6 +323,16 @@ struct MultiBandModel {
 
     /**
      * <!-- ************************************************************************************** -->
+     * @brief Lightweight constructor for batch processing mode.
+     * @details Creates a model configured for use with estimate_chi2_with_workspace().
+     *          Does not copy observation data - only stores configuration.
+     * @param cfg Configuration parameters for physics calculations
+     * <!-- ************************************************************************************** -->
+     */
+    explicit MultiBandModel(ConfigParams const& cfg);
+
+    /**
+     * <!-- ************************************************************************************** -->
      * @brief Configure numerical and physics settings for the afterglow model.
      * @details Sets up the computational parameters including grid resolution, tolerance
      *          settings, and optional advanced physics processes that will be used during
@@ -292,6 +353,39 @@ struct MultiBandModel {
      * <!-- ************************************************************************************** -->
      */
     double estimate_chi2(Params const& param);
+
+    /**
+     * <!-- ************************************************************************************** -->
+     * @brief Chi-squared estimation using pre-allocated workspace (for batch processing).
+     * @details Optimized version that writes model outputs to a pre-allocated workspace,
+     *          avoiding repeated memory allocations in tight loops. Uses const references
+     *          to observation data for thread-safe parallel evaluation.
+     * @param param Complete set of physical model parameters
+     * @param obs_data_ref Const reference to observation data (shared across threads)
+     * @param workspace Pre-allocated workspace for model outputs (thread-local)
+     * @return double Chi-squared value for goodness-of-fit assessment
+     * <!-- ************************************************************************************** -->
+     */
+    double estimate_chi2_with_workspace(Params const& param, MultiBandData const& obs_data_ref,
+                                        BatchWorkspace& workspace);
+
+    /**
+     * <!-- ************************************************************************************** -->
+     * @brief Batch chi-squared computation with OpenMP parallelization.
+     * @details Computes chi-squared values for multiple parameter sets simultaneously using
+     *          OpenMP threads. Parameter transformation (log-scale) is handled in C++ for
+     *          maximum performance. Designed for use with vectorized MCMC samplers like emcee.
+     * @param samples 2D array of shape (nwalkers, ndim) containing sampler coordinates
+     * @param param_indices Array of indices into kParamPtrs for each sampled parameter
+     * @param log_mask Boolean array indicating which parameters need 10^x transformation
+     * @param fixed_indices Array of indices for fixed (non-sampled) parameters
+     * @param fixed_values Array of values for fixed parameters
+     * @return PyArray 1D array of chi-squared values, one per walker
+     * <!-- ************************************************************************************** -->
+     */
+    PyArray batch_estimate_chi2(PyGrid const& samples, std::vector<int> const& param_indices,
+                                std::vector<bool> const& log_mask, std::vector<int> const& fixed_indices,
+                                std::vector<double> const& fixed_values);
 
     /**
      * <!-- ************************************************************************************** -->

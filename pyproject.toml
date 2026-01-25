@@ -34,10 +34,22 @@ license = {text = "BSD-3-Clause"}
 wheel.packages = ["VegasAfterglow"]
 wheel.license-files = ["LICENSE"]
 cmake.version = ">=3.15.0"
-cmake.args = ["-DCMAKE_POSITION_INDEPENDENT_CODE=ON","-DCMAKE_BUILD_PARALLEL_LEVEL=8"]
 cmake.build-type = "Release"
 build.verbose = false
 metadata.version.provider = "scikit_build_core.metadata.setuptools_scm"
+
+# Default cmake args
+cmake.args = ["-DCMAKE_POSITION_INDEPENDENT_CODE=ON", "-DCMAKE_BUILD_PARALLEL_LEVEL=8"]
+
+# macOS: Hint for finding OpenMP from Homebrew (brew install libomp)
+# OpenMP is optional - builds succeed without it (serial fallback)
+[[tool.scikit-build.overrides]]
+if.platform-system = "darwin"
+cmake.args = [
+    "-DCMAKE_POSITION_INDEPENDENT_CODE=ON",
+    "-DCMAKE_BUILD_PARALLEL_LEVEL=8",
+    "-DOpenMP_ROOT=/opt/homebrew/opt/libomp",
+]
 
 [tool.setuptools_scm]
 write_to = "VegasAfterglow/_version.py"

@@ -354,9 +354,32 @@ PYBIND11_MODULE(VegasAfterglowC, m) {
         .def("estimate_chi2", &MultiBandModel::estimate_chi2, py::arg("param"),
              py::call_guard<py::gil_scoped_release>())
 
+        .def("batch_estimate_chi2", &MultiBandModel::batch_estimate_chi2, py::arg("samples"), py::arg("param_indices"),
+             py::arg("log_mask"), py::arg("fixed_indices"), py::arg("fixed_values"),
+             py::call_guard<py::gil_scoped_release>(),
+             "Batch chi-squared computation with OpenMP parallelization.\n\n"
+             "Args:\n"
+             "    samples: 2D array of shape (nwalkers, ndim) with sampler coordinates\n"
+             "    param_indices: List of int indices into kParamPtrs for each parameter\n"
+             "    log_mask: List of bool indicating which params need 10^x transform\n"
+             "    fixed_indices: List of int indices for fixed parameters\n"
+             "    fixed_values: List of float values for fixed parameters\n\n"
+             "Returns:\n"
+             "    1D array of chi-squared values, one per walker")
+
         .def("flux_density_grid", &MultiBandModel::flux_density_grid, py::arg("param"), py::arg("t"), py::arg("nu"),
              py::call_guard<py::gil_scoped_release>())
 
         .def("flux", &MultiBandModel::flux, py::arg("param"), py::arg("t"), py::arg("nu_min"), py::arg("nu_max"),
              py::arg("num_points"), py::call_guard<py::gil_scoped_release>());
+
+    // Utility function for parameter name to index mapping
+    m.def("param_name_to_index", &param_name_to_index, py::arg("name"),
+          "Map parameter name string to index for batch_estimate_chi2.\n\n"
+          "Index mapping:\n"
+          "  theta_v=0, n_ism=1, n0=2, A_star=3, k_m=4, E_iso=5, Gamma0=6,\n"
+          "  theta_c=7, k_e=8, k_g=9, duration/tau=10, E_iso_w=11, Gamma0_w=12,\n"
+          "  theta_w=13, L0=14, t0=15, q=16, p=17, eps_e=18, eps_B=19, xi_e=20,\n"
+          "  p_r=21, eps_e_r=22, eps_B_r=23, xi_e_r=24\n\n"
+          "Returns -1 for invalid parameter names.");
 }
