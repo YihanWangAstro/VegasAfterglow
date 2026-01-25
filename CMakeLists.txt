@@ -6,7 +6,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 
 if(CMAKE_CXX_COMPILER_ID MATCHES "GNU|Clang")
-  add_compile_options(-O3 -flto -DNDEBUG -pipe -w -DXTENSOR_DISABLE_EXCEPTIONS -ffp-contract=fast)
+  add_compile_options(-O3 -flto -DNDEBUG -pipe -w -DXTENSOR_DISABLE_EXCEPTIONS)
 elseif(MSVC)
   add_compile_options(/O2 /DNDEBUG /MP /GL /std:c++20 /DXTENSOR_DISABLE_EXCEPTIONS)
   add_link_options(/LTCG)
@@ -58,8 +58,8 @@ if(BUILD_TESTS)
   set(VEGAS_CORE_SOURCES
           src/radiation/synchrotron.cpp
           src/radiation/power-law-syn.cpp
-          src/radiation/smooth-power-law-syn.cpp
           src/radiation/inverse-compton.cpp
+          src/radiation/smooth-power-law-syn.cpp
           src/radiation/prompt.cpp
           src/dynamics/shock.cpp
           src/core/mesh.cpp

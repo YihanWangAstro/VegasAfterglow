@@ -126,7 +126,7 @@ void Observer::calc_solid_angle(Coord const& coord, Shock const& shock) {
                 } */
                 const Real dOmega = std::fabs(dcos(i_eff, j, k) * dphi(i));
                 lg2_geom_factor(i, j, k) =
-                    std::log2(dOmega * shock.r(i, j, k) * shock.r(i, j, k)) + 3 * lg2_doppler(i, j, k);
+                    fast_log2(dOmega * shock.r(i, j, k) * shock.r(i, j, k)) + 3 * lg2_doppler(i, j, k);
             }
         }
     }

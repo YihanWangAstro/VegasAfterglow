@@ -1,4 +1,3 @@
-# src/vegasglow/runner.py
 """Afterglow model fitting with bilby samplers."""
 
 import logging
@@ -7,18 +6,14 @@ from typing import Callable, List, Sequence, Tuple, Type
 import bilby
 import emcee
 import numpy as np
-from bilby.core.sampler.emcee import Emcee as BilbyEmcee
+from bilby.core.sampler.emcee import Emcee as _BilbyEmcee
 
 from .types import FitResult, ModelParams, ObsData, ParamDef, Scale, Setups, VegasMC
 
-if "moves" not in BilbyEmcee.default_kwargs:
-    BilbyEmcee.default_kwargs = dict(BilbyEmcee.default_kwargs, moves=None)
+# Patch bilby to accept 'moves' kwarg for emcee sampler
+_BilbyEmcee.default_kwargs["moves"] = None
 
 logger = logging.getLogger(__name__)
-
-# =============================================================================
-# Configuration Constants
-# =============================================================================
 
 LATEX_LABELS = {
     "E_iso": r"$E_{\rm iso}$",
@@ -48,7 +43,6 @@ LATEX_LABELS = {
     "q": r"$q$",
 }
 
-# Validation rules: {key: (required_params, incompatible_params)}
 MEDIUM_RULES = {
     "ism": ({"n_ism"}, {"A_star", "n0", "k_m"}),
     "wind": ({"A_star"}, set()),
@@ -72,9 +66,8 @@ JET_RULES = {
     ),
 }
 
-# Toggle rules: {(config_attr, enabled_value): (required, incompatible)}
 TOGGLE_RULES = {
-    "forward_shock": ({"eps_e", "eps_B", "p"}, set()),  # Always required
+    "forward_shock": ({"eps_e", "eps_B", "p"}, set()),
     "rvs_shock": (
         {"p_r", "eps_e_r", "eps_B_r", "tau"},
         {"p_r", "eps_e_r", "eps_B_r", "xi_e_r"},
@@ -96,17 +89,11 @@ SAMPLER_DEFAULTS = {
         "nburn": 1000,
         "thin": 1,
         "moves": [
-            # (emcee.moves.StretchMove(), 0.5),
             (emcee.moves.DEMove(), 0.8),
             (emcee.moves.DESnookerMove(), 0.2),
         ],
     },
 }
-
-
-# =============================================================================
-# Utility Functions
-# =============================================================================
 
 
 def clone_config(base_cfg: Setups, resolution: Tuple[float, float, float]) -> Setups:
@@ -120,11 +107,6 @@ def clone_config(base_cfg: Setups, resolution: Tuple[float, float, float]) -> Se
                 pass
     cfg.phi_resol, cfg.theta_resol, cfg.t_resol = resolution
     return cfg
-
-
-# =============================================================================
-# Core Classes
-# =============================================================================
 
 
 class AfterglowLikelihood(bilby.Likelihood):
@@ -181,21 +163,12 @@ class AfterglowLikelihood(bilby.Likelihood):
 
 
 class ParamTransformer:
-    """
-    Picklable parameter transformer for converting sampler arrays to ModelParams.
-
-    This class replaces a local closure to enable multiprocessing with pickle.
-    Optimized with pre-computed indices and vectorized log10 conversion.
-    """
+    """Picklable parameter transformer for converting sampler arrays to ModelParams."""
 
     __slots__ = ("_names", "_log_mask", "_fixed_names", "_fixed_values")
 
     def __init__(self, param_defs: List[ParamDef]):
-        names = []
-        log_mask = []
-        fixed_names = []
-        fixed_values = []
-
+        names, log_mask, fixed_names, fixed_values = [], [], [], []
         for pd in param_defs:
             if pd.scale is Scale.FIXED:
                 fixed_names.append(pd.name)
@@ -203,7 +176,6 @@ class ParamTransformer:
             else:
                 names.append(pd.name)
                 log_mask.append(pd.scale is Scale.LOG)
-
         self._names = tuple(names)
         self._log_mask = np.array(log_mask, dtype=bool)
         self._fixed_names = tuple(fixed_names)
@@ -221,14 +193,6 @@ class ParamTransformer:
 
 class Fitter:
     def __init__(self, data: ObsData, config: Setups):
-        """
-        Parameters
-        ----------
-        data : ObsData
-            Observed light curves and spectra.
-        config : Setups
-            Model configuration (grids, environment, etc).
-        """
         self.data = data
         self.config = config
         self._param_defs = None
@@ -285,30 +249,11 @@ class Fitter:
         resume: bool = False,
         **sampler_kwargs,
     ) -> FitResult:
-        """
-        Run bilby sampler for parameter estimation.
-
-        Parameters
-        ----------
-        param_defs : Sequence[ParamDef]
-            Parameter definitions for fitting.
-        resolution : Tuple[float, float, float]
-            Grid resolution (phi, theta, t).
-        sampler : str
-            'dynesty' (nested sampling) or 'emcee' (MCMC).
-        npool : int
-            Number of parallel processes.
-        top_k : int
-            Number of top fits to return.
-        **sampler_kwargs
-            Sampler-specific options (nlive, dlogz, nwalkers, iterations, etc.)
-        """
+        """Run bilby sampler for parameter estimation."""
         self.validate_parameters(param_defs)
         defs = list(param_defs)
         self._param_defs = defs
 
-        # Extract labels and bounds (log-transform if needed)
-        # For LOG scale: prepend 'log10_' to name and transform bounds to log10 space
         labels, lowers, uppers = zip(
             *(
                 (
@@ -344,11 +289,11 @@ class Fitter:
                 return rf"$\log_{{10}}({base_latex.strip('$')})$"
             return base_latex
 
-        label_to_def = {}
-        for pd in defs:
-            if pd.scale is not Scale.FIXED:
-                label_name = f"log10_{pd.name}" if pd.scale is Scale.LOG else pd.name
-                label_to_def[label_name] = pd
+        label_to_def = {
+            (f"log10_{pd.name}" if pd.scale is Scale.LOG else pd.name): pd
+            for pd in defs
+            if pd.scale is not Scale.FIXED
+        }
 
         priors = bilby.core.prior.PriorDict(
             {
@@ -367,42 +312,32 @@ class Fitter:
             "label": label,
             "clean": clean,
             "resume": resume,
+            "npool": npool,
         }
 
         defaults = dict(SAMPLER_DEFAULTS.get(sampler.lower(), {}))
-        sampler_lower = sampler.lower()
-        run_kwargs["npool"] = npool
 
-        if sampler_lower == "emcee":
+        if sampler.lower() == "emcee":
             defaults.setdefault("nwalkers", 2 * ndim)
+            nwalkers = sampler_kwargs.get("nwalkers", defaults["nwalkers"])
 
-            # Build initial positions from ParamDef.initial values
-            # Note: pl and pu are already in transformed space (log10 for LOG scale)
             initial_vals = []
             idx = 0
             for pd in defs:
                 if pd.scale is Scale.FIXED:
                     continue
                 if pd.initial is not None:
-                    # User provides initial in linear space, convert to log10 if LOG scale
                     val = np.log10(pd.initial) if pd.scale is Scale.LOG else pd.initial
                 else:
-                    # Default to midpoint of bounds (pl/pu already in transformed space)
                     val = 0.5 * (pl[idx] + pu[idx])
                 initial_vals.append(val)
                 idx += 1
 
             initial_vals = np.array(initial_vals)
-            nwalkers = sampler_kwargs.get(
-                "nwalkers", defaults.get("nwalkers", 2 * ndim)
-            )
-            # Initialize walkers with random scatter around initial values (20% of range)
             spread = 0.2 * (pu - pl)
             pos0 = initial_vals + spread * np.random.randn(nwalkers, ndim)
-            # Clip to prior bounds with small epsilon
             eps = 1e-6 * (pu - pl)
-            pos0 = np.clip(pos0, pl + eps, pu - eps)
-            defaults["pos0"] = pos0
+            defaults["pos0"] = np.clip(pos0, pl + eps, pu - eps)
 
         run_kwargs.update({**defaults, **sampler_kwargs})
 
@@ -414,12 +349,10 @@ class Fitter:
         samples = result.posterior[list(labels)].values
         log_likelihoods = result.posterior["log_likelihood"].values
 
-        # Filter samples within 1-sigma of posterior for each parameter
         medians = np.median(samples, axis=0)
         stds = np.std(samples, axis=0)
         within_1sigma = np.all(np.abs(samples - medians) <= stds, axis=1)
 
-        # If enough samples within 1-sigma, use those; otherwise fall back to all samples
         if np.sum(within_1sigma) >= top_k:
             candidate_samples = samples[within_1sigma]
             candidate_logp = log_likelihoods[within_1sigma]
@@ -431,12 +364,10 @@ class Fitter:
             candidate_samples = samples
             candidate_logp = log_likelihoods
 
-        # Sort by likelihood (highest first) and find unique fits
         sorted_idx = np.argsort(candidate_logp)[::-1]
         sorted_samples = candidate_samples[sorted_idx]
         sorted_logp = candidate_logp[sorted_idx]
 
-        # Find unique samples while preserving likelihood order
         seen = set()
         unique_indices = []
         for i, sample in enumerate(np.round(sorted_samples, 12)):
@@ -457,13 +388,11 @@ class Fitter:
             top_k_log_probs[-1],
         )
 
-        latex_labels = [priors[name].latex_label for name in labels]
-
         return FitResult(
             samples=samples.reshape(-1, 1, ndim),
             log_probs=log_likelihoods.reshape(-1, 1),
             labels=labels,
-            latex_labels=latex_labels,
+            latex_labels=[priors[name].latex_label for name in labels],
             top_k_params=top_k_params,
             top_k_log_probs=top_k_log_probs,
             bilby_result=result,
@@ -486,9 +415,7 @@ class Fitter:
         nu: np.ndarray,
         resolution: Tuple[float, float, float] = (0.3, 1, 10),
     ) -> np.ndarray:
-        """Compute flux density grid at best-fit parameters.
-        Returns shape (len(nu), len(t)).
-        """
+        """Compute flux density grid at best-fit parameters."""
         model, p = self._prepare_model(best_params, resolution)
         return model.flux_density_grid(p, t, nu)
 
@@ -501,6 +428,6 @@ class Fitter:
         num_points: int,
         resolution: Tuple[float, float, float] = (0.3, 1, 10),
     ) -> np.ndarray:
-        """Compute integrated flux at best-fit parameters. Returns shape (len(t),)."""
+        """Compute integrated flux at best-fit parameters."""
         model, p = self._prepare_model(best_params, resolution)
         return model.flux(p, t, nu_min, nu_max, num_points)

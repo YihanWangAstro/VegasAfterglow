@@ -33,7 +33,7 @@ Real SmoothPowerLawSyn::log2_optical_thin(Real log2_nu) const {
 
 Real SmoothPowerLawSyn::log2_optical_thick(Real log2_nu) const {
     const Real log2_x = log2_nu - log2_nu_m;
-    const Real s = -smooth_a_ * std::exp2(2. / 3 * log2_x);
+    const Real s = -smooth_a_ * fast_exp2(2. / 3 * log2_x);
 
     return 2.5 * log2_x + log2_softplus(-0.5 * log2_x + s);
 }

@@ -24,34 +24,18 @@ namespace afterglow {
         explicit LogicError(const char* message) : std::logic_error(message) {}
     };
 
-#ifdef NDEBUG
-    #define AFTERGLOW_REQUIRE(condition, message)                                                                      \
-        do {                                                                                                           \
-            if (!(condition)) [[unlikely]] {                                                                           \
-                throw ::afterglow::ValidationError(message);                                                           \
-            }                                                                                                          \
-        } while (0)
+#define AFTERGLOW_REQUIRE(condition, message)                                                                          \
+    do {                                                                                                               \
+        if (!(condition)) [[unlikely]] {                                                                               \
+            throw ::afterglow::ValidationError(message);                                                               \
+        }                                                                                                              \
+    } while (0)
 
-    #define AFTERGLOW_ENSURE(condition, message)                                                                       \
-        do {                                                                                                           \
-            if (!(condition)) [[unlikely]] {                                                                           \
-                throw ::afterglow::LogicError(message);                                                                \
-            }                                                                                                          \
-        } while (0)
-#else
-    #define AFTERGLOW_REQUIRE(condition, message)                                                                      \
-        do {                                                                                                           \
-            if (!(condition)) [[unlikely]] {                                                                           \
-                throw ::afterglow::ValidationError(message);                                                           \
-            }                                                                                                          \
-        } while (0)
-
-    #define AFTERGLOW_ENSURE(condition, message)                                                                       \
-        do {                                                                                                           \
-            if (!(condition)) [[unlikely]] {                                                                           \
-                throw ::afterglow::LogicError(message);                                                                \
-            }                                                                                                          \
-        } while (0)
-#endif
+#define AFTERGLOW_ENSURE(condition, message)                                                                           \
+    do {                                                                                                               \
+        if (!(condition)) [[unlikely]] {                                                                               \
+            throw ::afterglow::LogicError(message);                                                                    \
+        }                                                                                                              \
+    } while (0)
 
 } // namespace afterglow

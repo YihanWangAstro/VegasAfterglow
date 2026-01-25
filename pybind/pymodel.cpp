@@ -445,27 +445,3 @@ Array PyModel::medium(Real phi, Real theta, Array const& r) const {
     }
     return rho;
 }
-/*
-Array PyModel::medium(Real phi, Real theta, Array const& r) {
-    Array rho = xt::zeros<Real>(r.shape());
-    for (size_t i = 0; i < r.size(); ++i) {
-        rho(i) = medium.rho(phi, theta, r(i) * unit::cm) / (unit::g / unit::cm3);
-    }
-    return rho;
-}
-
-Array PyModel::jet_E_iso(Real phi, Array const& theta) {
-    Array E_iso = xt::zeros<Real>(theta.shape());
-    for (size_t i = 0; i < theta.size(); ++i) {
-        E_iso(i) = jet.eps_k(phi, theta(i)) / (unit::erg / (4 * con::pi));
-    }
-    return E_iso;
-}
-
-Array PyModel::jet_Gamma0(Real phi, Array const& theta) {
-    Array Gamma0 = xt::zeros<Real>(theta.shape());
-    for (size_t i = 0; i < theta.size(); ++i) {
-        Gamma0(i) = jet.Gamma0(phi, theta(i));
-    }
-    return Gamma0;
-}*/
