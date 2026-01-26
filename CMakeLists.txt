@@ -19,15 +19,12 @@ add_compile_definitions(
 find_package(Python COMPONENTS Interpreter Development.Module NumPy REQUIRED)
 find_package(pybind11 CONFIG REQUIRED)
 
-# OpenMP is optional - enables parallel batch processing
-find_package(OpenMP QUIET)
-if(OpenMP_CXX_FOUND)
-    message(STATUS "OpenMP found - enabling parallel batch processing")
-    set(HAVE_OPENMP TRUE)
-else()
-    message(STATUS "OpenMP not found - using serial batch processing")
-    set(HAVE_OPENMP FALSE)
+if(APPLE)
+    list(PREPEND CMAKE_PREFIX_PATH "/opt/homebrew/opt/libomp" "/usr/local/opt/libomp" "/opt/local")
 endif()
+
+find_package(OpenMP REQUIRED)
+message(STATUS "OpenMP found - enabling parallel batch processing")
 
 file(GLOB_RECURSE ALL_SOURCES
   "${CMAKE_CURRENT_SOURCE_DIR}/pybind/*.cpp"
@@ -37,12 +34,9 @@ file(GLOB_RECURSE ALL_SOURCES
 pybind11_add_module(VegasAfterglowC ${ALL_SOURCES})
 
 target_link_libraries(VegasAfterglowC PUBLIC pybind11::module Python::NumPy)
+target_link_libraries(VegasAfterglowC PUBLIC OpenMP::OpenMP_CXX)
+target_compile_definitions(VegasAfterglowC PRIVATE HAVE_OPENMP)
 
-# Conditionally link OpenMP
-if(HAVE_OPENMP)
-    target_link_libraries(VegasAfterglowC PUBLIC OpenMP::OpenMP_CXX)
-    target_compile_definitions(VegasAfterglowC PRIVATE HAVE_OPENMP)
-endif()
 
 target_include_directories(VegasAfterglowC PRIVATE
   "${CMAKE_CURRENT_SOURCE_DIR}/include"

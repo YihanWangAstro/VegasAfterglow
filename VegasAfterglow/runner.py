@@ -3,20 +3,23 @@
 import logging
 import math
 import os
-from typing import Callable, List, Optional, Sequence, Tuple, Type
+from typing import List, Optional, Sequence, Tuple, Type
 
 import bilby
 import emcee
 import numpy as np
+import zeus
 from bilby.core.sampler.emcee import Emcee as _BilbyEmcee
 
 from .types import FitResult, ModelParams, ObsData, ParamDef, Scale, Setups, VegasMC
 
-# Import C++ param_name_to_index for batch processing
+# Import C++ classes for MCMC
 try:
-    from .VegasAfterglowC import param_name_to_index as _param_name_to_index
+    from .VegasAfterglowC import ParamDef as CppParamDef
+    from .VegasAfterglowC import ParamTransformer as CppParamTransformer
 except ImportError:
-    _param_name_to_index = None
+    CppParamDef = None
+    CppParamTransformer = None
 
 # Patch bilby to accept 'moves' kwarg for emcee sampler
 _BilbyEmcee.default_kwargs["moves"] = None
@@ -101,6 +104,11 @@ SAMPLER_DEFAULTS = {
             (emcee.moves.DESnookerMove(), 0.3),
         ],
     },
+    "zeus": {
+        "nsteps": 5000,
+        "nburn": 1000,
+        "thin": 1,
+    },
 }
 
 
@@ -136,7 +144,7 @@ def get_optimal_nwalkers(ndim: int, ncpu: Optional[int] = None) -> int:
         ncpu = os.cpu_count() or 1
 
     math_floor = 4 * ndim
-    align_unit = 4 * ncpu
+    align_unit = 2 * ncpu
     units_needed = math.ceil(math_floor / align_unit)
     units_needed = max(1, units_needed)
 
@@ -144,33 +152,47 @@ def get_optimal_nwalkers(ndim: int, ncpu: Optional[int] = None) -> int:
 
 
 class AfterglowLikelihood(bilby.Likelihood):
-    """Bilby-compatible likelihood with lazy model creation for multiprocessing."""
+    """Bilby-compatible likelihood using C++ ParamTransformer for efficiency."""
 
     __slots__ = (
         "parameters",
-        "to_params",
         "param_keys",
         "_data",
         "_config",
         "_model_cls",
         "_model",
         "_theta",
+        "_transformer",
     )
 
     def __init__(
         self,
         data: ObsData,
         config: Setups,
-        to_params: Callable[[np.ndarray], ModelParams],
-        param_keys: Sequence[str],
+        param_defs: List[ParamDef],
         model_cls: Type[VegasMC],
     ):
+        if CppParamTransformer is None:
+            raise RuntimeError(
+                "VegasAfterglowC extension not loaded. "
+                "AfterglowLikelihood requires the C++ ParamTransformer."
+            )
+
+        # Build parameter keys from defs (only non-fixed params)
+        param_keys = tuple(
+            f"log10_{pd.name}" if pd.scale is Scale.LOG else pd.name
+            for pd in param_defs
+            if pd.scale is not Scale.FIXED
+        )
         super().__init__(parameters={key: None for key in param_keys})
-        self.to_params = to_params
-        self.param_keys = tuple(param_keys)
+        self.param_keys = param_keys
         self._data, self._config, self._model_cls = data, config, model_cls
         self._model = None
         self._theta = np.empty(len(param_keys), dtype=np.float64)
+
+        # Create C++ ParamTransformer (handles all transformation logic in C++)
+        cpp_param_defs = [Fitter._to_cpp_param_def(pd) for pd in param_defs]
+        self._transformer = CppParamTransformer(cpp_param_defs)
 
     def __getstate__(self):
         return {k: getattr(self, k) for k in self.__slots__ if k != "_model"}
@@ -187,51 +209,18 @@ class AfterglowLikelihood(bilby.Likelihood):
         return self._model
 
     def log_likelihood(self) -> float:
+        # Gather parameter values into array
         for i, key in enumerate(self.param_keys):
             self._theta[i] = self.parameters[key]
+
         try:
-            chi2 = self._get_model().estimate_chi2(self.to_params(self._theta))
-            return -0.5 * chi2 if chi2 == chi2 else -np.inf
+            # Use batch interface with single sample - C++ handles all transformations
+            samples = self._theta.reshape(1, -1)
+            chi2_arr = self._get_model().batch_estimate_chi2(samples, self._transformer)
+            chi2 = chi2_arr[0]
+            return -0.5 * chi2 if np.isfinite(chi2) else -np.inf
         except Exception:
             return -np.inf
-
-
-class ParamTransformer:
-    """Picklable parameter transformer for converting sampler arrays to ModelParams.
-
-    Optimized by reducing Python overhead - uses tuple unpacking and
-    minimizes attribute access calls.
-    """
-
-    __slots__ = ("_names", "_log_mask", "_fixed_names", "_fixed_values")
-
-    def __init__(self, param_defs: List[ParamDef]):
-        names, log_mask, fixed_names, fixed_values = [], [], [], []
-        for pd in param_defs:
-            if pd.scale is Scale.FIXED:
-                fixed_names.append(pd.name)
-                fixed_values.append(0.5 * (pd.lower + pd.upper))
-            else:
-                names.append(pd.name)
-                log_mask.append(pd.scale is Scale.LOG)
-        self._names = tuple(names)
-        self._log_mask = np.array(log_mask, dtype=bool)
-        self._fixed_names = tuple(fixed_names)
-        self._fixed_values = tuple(fixed_values)
-
-    def __call__(self, x: np.ndarray) -> ModelParams:
-        p = ModelParams()
-        # Vectorized transformation - this is already fast
-        values = np.where(self._log_mask, 10.0**x, x)
-
-        # Batch setattr using enumerate avoids creating zip iterator
-        # Slightly faster than zip() in CPython
-        for i in range(len(self._names)):
-            setattr(p, self._names[i], float(values[i]))
-        for i in range(len(self._fixed_names)):
-            setattr(p, self._fixed_names[i], self._fixed_values[i])
-
-        return p
 
 
 class Fitter:
@@ -241,43 +230,172 @@ class Fitter:
         self._param_defs = None
         self._to_params = None
 
+    @staticmethod
+    def _to_cpp_param_def(pd: ParamDef):
+        """Convert Python ParamDef to C++ ParamDef.
+
+        Args:
+            pd: Python parameter definition
+
+        Returns:
+            C++ parameter definition with proper scale encoding and initial values
+        """
+        cpp_pd = CppParamDef()
+        cpp_pd.name = pd.name
+        cpp_pd.lower = pd.lower
+        cpp_pd.upper = pd.upper
+        # Convert enum to int: LINEAR=0, LOG=1, FIXED=2
+        if pd.scale == Scale.LINEAR:
+            cpp_pd.scale = 0
+        elif pd.scale == Scale.LOG:
+            cpp_pd.scale = 1
+        elif pd.scale == Scale.FIXED:
+            cpp_pd.scale = 2
+        else:
+            raise ValueError(f"Unknown scale: {pd.scale}")
+
+        # Set initial value (optional for sampled parameters)
+        if pd.initial is not None:
+            cpp_pd.initial = pd.initial
+        else:
+            # Compute sensible default based on scale
+            if pd.scale == Scale.LOG:
+                # Geometric mean for log-scale parameters (centered in log space)
+                cpp_pd.initial = np.sqrt(pd.lower * pd.upper)
+            else:
+                # Arithmetic mean for linear-scale and fixed parameters
+                cpp_pd.initial = 0.5 * (pd.lower + pd.upper)
+        return cpp_pd
+
     def validate_parameters(self, param_defs: Sequence[ParamDef]) -> None:
         """Validate parameter definitions against the current configuration."""
         param_names = {pd.name for pd in param_defs}
         missing, incompatible = [], []
 
-        def check(required: set, incompat: set, context: str):
+        def add_violations(required: set, forbidden: set, context: str):
+            """Add missing and incompatible parameters for given context."""
             missing.extend(f"{p} ({context})" for p in required - param_names)
             incompatible.extend(
-                f"{p} (not used with {context})" for p in incompat & param_names
+                f"{p} (not used with {context})" for p in forbidden & param_names
             )
 
-        def apply_rules(rules: dict, config_value: str, context_name: str):
-            if config_value in rules:
-                req, incom = rules[config_value]
-                check(req, incom, f"{config_value} {context_name}")
+        # Check medium and jet configuration rules
+        for rules, config_attr, label in [
+            (MEDIUM_RULES, self.config.medium, "medium"),
+            (JET_RULES, self.config.jet, "jet"),
+        ]:
+            if config_attr in rules:
+                required, forbidden = rules[config_attr]
+                add_violations(required, forbidden, f"{config_attr} {label}")
 
-        apply_rules(MEDIUM_RULES, self.config.medium, "medium")
-        apply_rules(JET_RULES, self.config.jet, "jet")
-
-        for toggle, (required_on, incompatible_off) in TOGGLE_RULES.items():
+        # Check physics toggle rules (forward_shock, rvs_shock, magnetar)
+        for toggle, (required_on, forbidden_off) in TOGGLE_RULES.items():
             enabled = toggle == "forward_shock" or getattr(self.config, toggle, False)
             if enabled:
-                check(required_on, set(), toggle.replace("_", " "))
+                add_violations(required_on, set(), toggle.replace("_", " "))
             else:
                 incompatible.extend(
-                    f"{p} ({toggle} disabled)" for p in incompatible_off & param_names
+                    f"{p} ({toggle} disabled)" for p in forbidden_off & param_names
                 )
 
+        # Raise error if any violations found
         if missing or incompatible:
-            msg = "Parameter validation failed:\n"
-            if missing:
-                msg += "Missing:\n  - " + "\n  - ".join(missing) + "\n"
-            if incompatible:
-                msg += "Incompatible:\n  - " + "\n  - ".join(incompatible) + "\n"
-            msg += f"\nConfig: medium='{self.config.medium}', jet='{self.config.jet}', "
-            msg += f"rvs_shock={self.config.rvs_shock}, magnetar={self.config.magnetar}"
-            raise ValueError(msg)
+            self._raise_validation_error(missing, incompatible)
+
+    def _raise_validation_error(
+        self, missing: List[str], incompatible: List[str]
+    ) -> None:
+        """Format and raise validation error with diagnostic information."""
+        msg = "Parameter validation failed:\n"
+        if missing:
+            msg += "Missing:\n  - " + "\n  - ".join(missing) + "\n"
+        if incompatible:
+            msg += "Incompatible:\n  - " + "\n  - ".join(incompatible) + "\n"
+        msg += f"\nConfig: medium='{self.config.medium}', jet='{self.config.jet}', "
+        msg += f"rvs_shock={self.config.rvs_shock}, magnetar={self.config.magnetar}"
+        raise ValueError(msg)
+
+    def _build_sampler_params(
+        self, param_defs: List[ParamDef]
+    ) -> Tuple[Tuple[str, ...], np.ndarray, np.ndarray, int]:
+        """Build parameter labels and bounds for sampler from definitions.
+
+        Returns:
+            labels: Parameter names (with log10_ prefix for log-scale params)
+            lower_bounds: Lower bounds array (in log10 space for log-scale params)
+            upper_bounds: Upper bounds array (in log10 space for log-scale params)
+            ndim: Number of free (sampled) parameters
+        """
+        # Validate parameter names exist in ModelParams
+        p_test = ModelParams()
+        for pd in param_defs:
+            if not hasattr(p_test, pd.name):
+                raise AttributeError(f"'{pd.name}' is not a valid MCMC parameter")
+
+        # Extract labels and bounds for non-fixed parameters
+        labels, lowers, uppers = zip(
+            *(
+                (
+                    f"log10_{pd.name}" if pd.scale is Scale.LOG else pd.name,
+                    np.log10(pd.lower) if pd.scale is Scale.LOG else pd.lower,
+                    np.log10(pd.upper) if pd.scale is Scale.LOG else pd.upper,
+                )
+                for pd in param_defs
+                if pd.scale is not Scale.FIXED
+            )
+        )
+        return labels, np.array(lowers), np.array(uppers), len(labels)
+
+    def _generate_initial_positions(
+        self,
+        param_defs: List[ParamDef],
+        lower_bounds: np.ndarray,
+        upper_bounds: np.ndarray,
+        nwalkers: int,
+        ndim: int,
+    ) -> np.ndarray:
+        """Generate initial walker positions centered around parameter initial values.
+
+        Args:
+            param_defs: Parameter definitions with initial values
+            lower_bounds: Lower bounds in sampler space (log10 for log-scale params)
+            upper_bounds: Upper bounds in sampler space
+            nwalkers: Number of walkers
+            ndim: Number of dimensions
+
+        Returns:
+            Initial positions array of shape (nwalkers, ndim)
+        """
+        # Extract initial values for non-fixed parameters
+        initial_vals = []
+        idx = 0
+        for pd in param_defs:
+            if pd.scale is Scale.FIXED:
+                continue
+            if pd.initial is not None:
+                val = np.log10(pd.initial) if pd.scale is Scale.LOG else pd.initial
+            else:
+                val = 0.5 * (lower_bounds[idx] + upper_bounds[idx])
+            initial_vals.append(val)
+            idx += 1
+
+        # Add small random scatter around initial values
+        initial_vals = np.array(initial_vals)
+        spread = 0.1 * (upper_bounds - lower_bounds)
+        pos0 = initial_vals + spread * np.random.randn(nwalkers, ndim)
+
+        # Ensure positions are within bounds
+        eps = 1e-6 * (upper_bounds - lower_bounds)
+        pos0 = np.clip(pos0, lower_bounds + eps, upper_bounds - eps)
+        return pos0
+
+    @staticmethod
+    def _get_latex_label(param_def: ParamDef) -> str:
+        """Generate LaTeX label for parameter (with log10 wrapper if needed)."""
+        base_latex = LATEX_LABELS.get(param_def.name, param_def.name)
+        if param_def.scale is Scale.LOG:
+            return rf"$\log_{{10}}({base_latex.strip('$')})$"
+        return base_latex
 
     def fit(
         self,
@@ -315,37 +433,46 @@ class Fitter:
         defs = list(param_defs)
         self._param_defs = defs
 
-        labels, lowers, uppers = zip(
-            *(
-                (
-                    f"log10_{pd.name}" if pd.scale is Scale.LOG else pd.name,
-                    np.log10(pd.lower) if pd.scale is Scale.LOG else pd.lower,
-                    np.log10(pd.upper) if pd.scale is Scale.LOG else pd.upper,
-                )
-                for pd in defs
-                if pd.scale is not Scale.FIXED
-            )
-        )
-        pl, pu = np.array(lowers), np.array(uppers)
-        ndim = len(labels)
+        # Extract parameter labels and bounds for sampler
+        labels, pl, pu, ndim = self._build_sampler_params(defs)
 
-        p_test = ModelParams()
-        for pd in defs:
-            if not hasattr(p_test, pd.name):
-                raise AttributeError(f"'{pd.name}' is not a valid MCMC parameter")
+        # Create C++ ParamTransformer for flux predictions
+        cpp_param_defs = [self._to_cpp_param_def(pd) for pd in defs]
+        self._to_params = CppParamTransformer(cpp_param_defs)
 
-        self._to_params = ParamTransformer(defs)
-
-        # Use vectorized emcee if available and requested
+        # Use vectorized emcee or zeus if available and requested
+        sampler_lower = sampler.lower()
         use_vectorized = (
-            sampler.lower() == "emcee"
+            sampler_lower in ("emcee", "zeus")
             and vectorize
-            and _param_name_to_index is not None
+            and CppParamTransformer is not None
         )
 
+        # Force npool=None for batch evaluation and warn user
         if use_vectorized:
-            return self._fit_emcee_vectorized(
-                defs, labels, pl, pu, ndim, resolution, top_k, **sampler_kwargs
+            # Always check both positional and keyword npool
+            npool_effective = npool
+            if "npool" in sampler_kwargs:
+                npool_effective = sampler_kwargs["npool"]
+            if npool_effective not in (None, 1):
+                import warnings
+
+                warnings.warn(
+                    f"npool={npool_effective} is ignored: batch likelihood uses multi-threaded parallelism. "
+                    "Set npool=None or 1 for vectorized emcee/zeus."
+                )
+            # Always force npool=None for batch
+            sampler_kwargs["npool"] = None
+            return self._fit_vectorized_sampler(
+                sampler_lower,
+                defs,
+                labels,
+                pl,
+                pu,
+                ndim,
+                resolution,
+                top_k,
+                **sampler_kwargs,
             )
 
         # Fall back to bilby for other samplers or non-vectorized emcee
@@ -366,8 +493,9 @@ class Fitter:
             **sampler_kwargs,
         )
 
-    def _fit_emcee_vectorized(
+    def _fit_vectorized_sampler(
         self,
+        sampler: str,
         defs: List[ParamDef],
         labels: Tuple[str, ...],
         pl: np.ndarray,
@@ -377,82 +505,55 @@ class Fitter:
         top_k: int,
         **sampler_kwargs,
     ) -> FitResult:
-        """Run emcee with OpenMP-vectorized batch chi2 computation."""
-        defaults = dict(SAMPLER_DEFAULTS.get("emcee", {}))
+        """Run emcee or zeus with OpenMP-vectorized batch chi2 computation."""
+        defaults = dict(SAMPLER_DEFAULTS.get(sampler, {}))
 
-        # Build parameter indices and log mask for C++ batch processing
-        param_indices, log_mask = [], []
-        fixed_indices, fixed_values = [], []
-        for pd in defs:
-            idx = _param_name_to_index(pd.name)
-            if pd.scale is Scale.FIXED:
-                fixed_indices.append(idx)
-                fixed_values.append(0.5 * (pd.lower + pd.upper))
-            else:
-                param_indices.append(idx)
-                log_mask.append(pd.scale is Scale.LOG)
+        # Reuse C++ ParamTransformer created in fit()
+        transformer = self._to_params
 
         # Compute optimal nwalkers for CPU utilization
         nwalkers = sampler_kwargs.pop("nwalkers", None)
         if nwalkers is None:
             nwalkers = get_optimal_nwalkers(ndim)
-        logger.info("Using vectorized emcee: nwalkers=%d, ndim=%d", nwalkers, ndim)
+        logger.info(f"Using vectorized {sampler}: nwalkers=%d, ndim=%d", nwalkers, ndim)
 
         # Create model (used by all OpenMP threads internally)
         model = VegasMC(self.data)
         model.set(clone_config(self.config, resolution))
 
-        # Vectorized log-probability function
+        # Vectorized log-probability function (clean and simple!)
         def log_prob_batch(samples: np.ndarray) -> np.ndarray:
-            # Check bounds
             in_bounds = np.all((samples >= pl) & (samples <= pu), axis=1)
             log_probs = np.full(samples.shape[0], -np.inf)
-
             if np.any(in_bounds):
-                chi2_arr = model.batch_estimate_chi2(
-                    samples[in_bounds],
-                    param_indices,
-                    log_mask,
-                    fixed_indices,
-                    fixed_values,
-                )
+                chi2_arr = model.batch_estimate_chi2(samples[in_bounds], transformer)
                 log_likes = -0.5 * chi2_arr
                 log_likes[~np.isfinite(log_likes)] = -np.inf
                 log_probs[in_bounds] = log_likes
-
             return log_probs
 
-        # Initial positions
-        initial_vals = []
-        idx = 0
-        for pd in defs:
-            if pd.scale is Scale.FIXED:
-                continue
-            if pd.initial is not None:
-                val = np.log10(pd.initial) if pd.scale is Scale.LOG else pd.initial
-            else:
-                val = 0.5 * (pl[idx] + pu[idx])
-            initial_vals.append(val)
-            idx += 1
+        # Generate initial walker positions
+        pos0 = self._generate_initial_positions(defs, pl, pu, nwalkers, ndim)
 
-        initial_vals = np.array(initial_vals)
-        spread = 0.1 * (pu - pl)
-        pos0 = initial_vals + spread * np.random.randn(nwalkers, ndim)
-        eps = 1e-6 * (pu - pl)
-        pos0 = np.clip(pos0, pl + eps, pu - eps)
-
-        # Get emcee parameters
+        # Get sampler parameters
         nsteps = sampler_kwargs.pop("nsteps", defaults.get("nsteps", 5000))
         nburn = sampler_kwargs.pop("nburn", defaults.get("nburn", 1000))
         thin = sampler_kwargs.pop("thin", defaults.get("thin", 1))
-        moves = sampler_kwargs.pop("moves", defaults.get("moves"))
+        moves = sampler_kwargs.pop("moves", defaults.get("moves", None))
 
-        # Create emcee sampler with vectorized log_prob
-        sampler_obj = emcee.EnsembleSampler(
-            nwalkers, ndim, log_prob_batch, vectorize=True, moves=moves
-        )
+        # Create sampler with vectorized log_prob
+        if sampler == "emcee":
+            sampler_obj = emcee.EnsembleSampler(
+                nwalkers, ndim, log_prob_batch, vectorize=True, moves=moves
+            )
+        elif sampler == "zeus":
+            sampler_obj = zeus.EnsembleSampler(
+                nwalkers, ndim, log_prob_batch, vectorize=True, light_mode=True
+            )
+        else:
+            raise ValueError(f"Unknown vectorized sampler: {sampler}")
 
-        logger.info("Running emcee: nsteps=%d, nburn=%d", nsteps, nburn)
+        logger.info(f"Running {sampler}: nsteps=%d, nburn=%d", nsteps, nburn)
         sampler_obj.run_mcmc(pos0, nsteps, progress=True)
 
         # Extract samples
@@ -479,13 +580,7 @@ class Fitter:
         **sampler_kwargs,
     ) -> FitResult:
         """Run bilby sampler (non-vectorized path)."""
-
-        def get_latex_label(param_name: str, param_def: ParamDef) -> str:
-            base_latex = LATEX_LABELS.get(param_def.name, param_def.name)
-            if param_def.scale is Scale.LOG:
-                return rf"$\log_{{10}}({base_latex.strip('$')})$"
-            return base_latex
-
+        # Build mapping from label to parameter definition
         label_to_def = {
             (f"log10_{pd.name}" if pd.scale is Scale.LOG else pd.name): pd
             for pd in defs
@@ -495,15 +590,14 @@ class Fitter:
         likelihood = AfterglowLikelihood(
             data=self.data,
             config=clone_config(self.config, resolution),
-            to_params=self._to_params,
-            param_keys=labels,
+            param_defs=defs,
             model_cls=VegasMC,
         )
 
         priors = bilby.core.prior.PriorDict(
             {
                 name: bilby.core.prior.Uniform(
-                    pl[i], pu[i], name, get_latex_label(name, label_to_def[name])
+                    pl[i], pu[i], name, self._get_latex_label(label_to_def[name])
                 )
                 for i, name in enumerate(labels)
             }
@@ -521,28 +615,6 @@ class Fitter:
         }
 
         defaults = dict(SAMPLER_DEFAULTS.get(sampler.lower(), {}))
-
-        if sampler.lower() == "emcee":
-            defaults.setdefault("nwalkers", 2 * ndim)
-            nwalkers = sampler_kwargs.get("nwalkers", defaults["nwalkers"])
-
-            initial_vals = []
-            idx = 0
-            for pd in defs:
-                if pd.scale is Scale.FIXED:
-                    continue
-                if pd.initial is not None:
-                    val = np.log10(pd.initial) if pd.scale is Scale.LOG else pd.initial
-                else:
-                    val = 0.5 * (pl[idx] + pu[idx])
-                initial_vals.append(val)
-                idx += 1
-
-            initial_vals = np.array(initial_vals)
-            spread = 0.2 * (pu - pl)
-            pos0 = initial_vals + spread * np.random.randn(nwalkers, ndim)
-            eps = 1e-6 * (pu - pl)
-            defaults["pos0"] = np.clip(pos0, pl + eps, pu - eps)
 
         run_kwargs.update({**defaults, **sampler_kwargs})
 
@@ -578,15 +650,8 @@ class Fitter:
         top_k: int,
     ) -> FitResult:
         """Process MCMC samples to find top-k fits."""
-
-        def get_latex_label(param_def: ParamDef) -> str:
-            base_latex = LATEX_LABELS.get(param_def.name, param_def.name)
-            if param_def.scale is Scale.LOG:
-                return rf"$\log_{{10}}({base_latex.strip('$')})$"
-            return base_latex
-
         latex_labels = [
-            get_latex_label(pd) for pd in defs if pd.scale is not Scale.FIXED
+            self._get_latex_label(pd) for pd in defs if pd.scale is not Scale.FIXED
         ]
 
         medians = np.median(samples, axis=0)

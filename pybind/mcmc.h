@@ -244,6 +244,87 @@ int param_name_to_index(const std::string& name);
 
 /**
  * <!-- ************************************************************************************** -->
+ * @struct ParamDef
+ * @brief Parameter definition for MCMC sampling.
+ * @details Specifies parameter name, bounds, scale (linear/log), and optional initial value.
+ * <!-- ************************************************************************************** -->
+ */
+struct ParamDef {
+    std::string name;
+    double lower;
+    double upper;
+    int scale; // 0=linear, 1=log, 2=fixed
+    double initial;
+};
+
+/**
+ * <!-- ************************************************************************************** -->
+ * @class ParamTransformer
+ * @brief Transforms MCMC sampler arrays to Params structs with parameter scaling.
+ * @details Handles conversion from sampler coordinates (with log-transformed parameters)
+ *          to physical Params structs. Manages both sampled and fixed parameters efficiently.
+ *          Designed for both single-sample transformations (flux predictions) and batch
+ *          processing (MCMC likelihood evaluations).
+ * <!-- ************************************************************************************** -->
+ */
+class ParamTransformer {
+  public:
+    /**
+     * <!-- ************************************************************************************** -->
+     * @brief Construct transformer from parameter definitions.
+     * @param param_defs Vector of parameter definitions with names, bounds, scales
+     * <!-- ************************************************************************************** -->
+     */
+    explicit ParamTransformer(std::vector<ParamDef> const& param_defs);
+
+    /**
+     * <!-- ************************************************************************************** -->
+     * @brief Construct transformer from internal state (for unpickling).
+     * @param sampled_indices Indices of sampled parameters
+     * @param log_mask Log transformation mask for sampled parameters
+     * @param fixed_indices Indices of fixed parameters
+     * @param fixed_values Values for fixed parameters
+     * <!-- ************************************************************************************** -->
+     */
+    ParamTransformer(std::vector<int> sampled_indices, std::vector<bool> log_mask, std::vector<int> fixed_indices,
+                     std::vector<double> fixed_values);
+
+    /**
+     * <!-- ************************************************************************************** -->
+     * @brief Transform single sampler array to Params struct.
+     * @param x Array of sampler coordinates (ndim elements, in log space where specified)
+     * @return Params Complete parameter struct with all values set
+     * <!-- ************************************************************************************** -->
+     */
+    Params operator()(PyArray const& x) const;
+
+    /**
+     * <!-- ************************************************************************************** -->
+     * @brief Get number of free (sampled) parameters.
+     * @return size_t Number of dimensions in sampler space
+     * <!-- ************************************************************************************** -->
+     */
+    [[nodiscard]] size_t ndim() const { return sampled_indices_.size(); }
+
+    /**
+     * <!-- ************************************************************************************** -->
+     * @brief Transform single sample to Params (internal helper for batch processing).
+     * @param sample Pointer to sampler coordinates
+     * @param out Output Params struct to fill
+     * <!-- ************************************************************************************** -->
+     */
+    void transform_sample(double const* sample, Params& out) const;
+
+  public:
+    // Public state for pickle support and potential direct access
+    std::vector<int> sampled_indices_; ///< Indices of sampled parameters in kParamPtrs
+    std::vector<bool> log_mask_;       ///< Whether each sampled param needs 10^x transform
+    std::vector<int> fixed_indices_;   ///< Indices of fixed parameters in kParamPtrs
+    std::vector<double> fixed_values_; ///< Values for fixed parameters
+};
+
+/**
+ * <!-- ************************************************************************************** -->
  * @struct ConfigParams
  * @brief Configuration parameters for numerical setup and advanced physics in afterglow modeling.
  * @details This structure controls the numerical resolution, cosmological setup, and optional
@@ -344,48 +425,19 @@ struct MultiBandModel {
 
     /**
      * <!-- ************************************************************************************** -->
-     * @brief Calculate chi-squared likelihood for given parameter values.
-     * @details Computes the theoretical afterglow model predictions for the specified parameters
-     *          and evaluates the chi-squared statistic comparing with observational data.
-     *          This method serves as the likelihood function for MCMC parameter estimation.
-     * @param param Complete set of physical model parameters
-     * @return double Chi-squared value for goodness-of-fit assessment
-     * <!-- ************************************************************************************** -->
-     */
-    double estimate_chi2(Params const& param);
-
-    /**
-     * <!-- ************************************************************************************** -->
-     * @brief Chi-squared estimation using pre-allocated workspace (for batch processing).
-     * @details Optimized version that writes model outputs to a pre-allocated workspace,
-     *          avoiding repeated memory allocations in tight loops. Uses const references
-     *          to observation data for thread-safe parallel evaluation.
-     * @param param Complete set of physical model parameters
-     * @param obs_data_ref Const reference to observation data (shared across threads)
-     * @param workspace Pre-allocated workspace for model outputs (thread-local)
-     * @return double Chi-squared value for goodness-of-fit assessment
-     * <!-- ************************************************************************************** -->
-     */
-    double estimate_chi2_with_workspace(Params const& param, MultiBandData const& obs_data_ref,
-                                        BatchWorkspace& workspace);
-
-    /**
-     * <!-- ************************************************************************************** -->
-     * @brief Batch chi-squared computation with OpenMP parallelization.
-     * @details Computes chi-squared values for multiple parameter sets simultaneously using
-     *          OpenMP threads. Parameter transformation (log-scale) is handled in C++ for
-     *          maximum performance. Designed for use with vectorized MCMC samplers like emcee.
+     * @brief Batch chi-squared computation with clean transformer-based interface.
+     * @details Computes chi-squared values for multiple parameter sets simultaneously.
+     *          - Single sample (nwalkers=1): Uses optimized serial execution
+     *          - Small batches (nwalkers<4): Uses serial execution to avoid OpenMP overhead
+     *          - Large batches (nwalkers>=4): Uses OpenMP parallelization for speedup
+     *
+     *          Parameter transformation is handled by the ParamTransformer object.
      * @param samples 2D array of shape (nwalkers, ndim) containing sampler coordinates
-     * @param param_indices Array of indices into kParamPtrs for each sampled parameter
-     * @param log_mask Boolean array indicating which parameters need 10^x transformation
-     * @param fixed_indices Array of indices for fixed (non-sampled) parameters
-     * @param fixed_values Array of values for fixed parameters
+     * @param transformer ParamTransformer to convert sampler coordinates to Params
      * @return PyArray 1D array of chi-squared values, one per walker
      * <!-- ************************************************************************************** -->
      */
-    PyArray batch_estimate_chi2(PyGrid const& samples, std::vector<int> const& param_indices,
-                                std::vector<bool> const& log_mask, std::vector<int> const& fixed_indices,
-                                std::vector<double> const& fixed_values);
+    PyArray batch_estimate_chi2(PyGrid const& samples, ParamTransformer const& transformer);
 
     /**
      * <!-- ************************************************************************************** -->
@@ -460,6 +512,21 @@ struct MultiBandModel {
      * <!-- ************************************************************************************** -->
      */
     [[nodiscard]] Medium select_medium(Params const& param) const;
+
+    /**
+     * <!-- ************************************************************************************** -->
+     * @brief Internal chi-squared estimation using pre-allocated workspace.
+     * @details Helper method for batch processing that writes model outputs to a pre-allocated
+     *          workspace, avoiding repeated memory allocations. Used internally by both
+     *          estimate_chi2() and batch_estimate_chi2().
+     * @param param Complete set of physical model parameters
+     * @param obs_data_ref Const reference to observation data (shared across threads)
+     * @param workspace Pre-allocated workspace for model outputs (thread-local)
+     * @return double Chi-squared value for goodness-of-fit assessment
+     * <!-- ************************************************************************************** -->
+     */
+    double estimate_chi2_with_workspace(Params const& param, MultiBandData const& obs_data_ref,
+                                        BatchWorkspace& workspace);
 
     MultiBandData obs_data; ///< Multi-wavelength observational dataset for fitting
     ConfigParams config;    ///< Numerical and physics configuration parameters

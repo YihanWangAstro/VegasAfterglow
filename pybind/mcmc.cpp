@@ -8,6 +8,8 @@
 #include "mcmc.h"
 
 #include <algorithm>
+#include <atomic>
+#include <chrono>
 #include <cmath>
 #include <limits>
 #include <numeric>
@@ -36,6 +38,71 @@ int param_name_to_index(const std::string& name) {
         return -1; // Invalid parameter name
     }
     return it->second;
+}
+
+ParamTransformer::ParamTransformer(std::vector<ParamDef> const& param_defs) {
+    for (auto const& pd : param_defs) {
+        int idx = param_name_to_index(pd.name);
+        AFTERGLOW_REQUIRE(idx >= 0, "Invalid parameter name: " + pd.name);
+
+        if (pd.scale == 2) { // Fixed parameter
+            fixed_indices_.push_back(idx);
+            // For fixed params, use initial value directly (set by user or helper function)
+            fixed_values_.push_back(pd.initial);
+        } else { // Sampled parameter
+            sampled_indices_.push_back(idx);
+            log_mask_.push_back(pd.scale == 1); // 1 = log scale
+        }
+    }
+}
+
+ParamTransformer::ParamTransformer(std::vector<int> sampled_indices, std::vector<bool> log_mask,
+                                   std::vector<int> fixed_indices, std::vector<double> fixed_values)
+    : sampled_indices_(std::move(sampled_indices)),
+      log_mask_(std::move(log_mask)),
+      fixed_indices_(std::move(fixed_indices)),
+      fixed_values_(std::move(fixed_values)) {
+    // Validate sizes match
+    AFTERGLOW_REQUIRE(sampled_indices_.size() == log_mask_.size(), "Sampled indices and log mask must have same size");
+    AFTERGLOW_REQUIRE(fixed_indices_.size() == fixed_values_.size(), "Fixed indices and values must have same size");
+}
+
+Params ParamTransformer::operator()(PyArray const& x) const {
+    AFTERGLOW_REQUIRE(x.size() == sampled_indices_.size(), "Parameter array size mismatch");
+
+    Params p;
+
+    // Set sampled parameters with optional log transformation
+    for (size_t i = 0; i < sampled_indices_.size(); ++i) {
+        double val = x(i);
+        if (log_mask_[i]) {
+            val = std::pow(10.0, val);
+        }
+        p.*(kParamPtrs[static_cast<size_t>(sampled_indices_[i])]) = val;
+    }
+
+    // Set fixed parameters
+    for (size_t i = 0; i < fixed_indices_.size(); ++i) {
+        p.*(kParamPtrs[static_cast<size_t>(fixed_indices_[i])]) = fixed_values_[i];
+    }
+
+    return p;
+}
+
+void ParamTransformer::transform_sample(double const* sample, Params& p) const {
+    // Set sampled parameters with optional log transformation
+    for (size_t i = 0; i < sampled_indices_.size(); ++i) {
+        double val = sample[i];
+        if (log_mask_[i]) {
+            val = std::pow(10.0, val);
+        }
+        p.*(kParamPtrs[static_cast<size_t>(sampled_indices_[i])]) = val;
+    }
+
+    // Set fixed parameters
+    for (size_t i = 0; i < fixed_indices_.size(); ++i) {
+        p.*(kParamPtrs[static_cast<size_t>(fixed_indices_[i])]) = fixed_values_[i];
+    }
 }
 
 std::vector<size_t> MultiBandData::logscale_screen(PyArray const& data, size_t num_order) {
@@ -309,54 +376,17 @@ MultiBandModel::MultiBandModel(MultiBandData data) : obs_data(std::move(data)) {
 }
 
 MultiBandModel::MultiBandModel(ConfigParams const& cfg) : config(cfg) {
-    // Lightweight constructor for batch processing - obs_data remains empty
-    // Use with estimate_chi2_with_workspace() which takes obs_data as parameter
+    // Lightweight constructor for batch processing (used by OpenMP threads)
+    // obs_data is passed by const reference to estimate_chi2_with_workspace()
 }
 
 void MultiBandModel::configure(ConfigParams const& param) {
     this->config = param;
 }
 
-double MultiBandModel::estimate_chi2(Params const& param) {
-    Observer obs;
-    SynPhotonGrid f_photons;
-    SynPhotonGrid r_photons;
-    ICPhotonGrid<SynElectrons, SynPhotons> f_IC_photons;
-    ICPhotonGrid<SynElectrons, SynPhotons> r_IC_photons;
-
-    generate_photons(param, obs_data.t_min, obs_data.t_max, obs, f_photons, r_photons, f_IC_photons, r_IC_photons);
-
-    obs_data.model_fluxes = obs.specific_flux_series(obs_data.times, obs_data.frequencies, f_photons);
-    for (auto& d : obs_data.flux_data) {
-        d.Fv_model = obs.flux(d.t, d.nu, f_photons);
-    }
-
-    if (r_photons.size() > 0) {
-        obs_data.model_fluxes += obs.specific_flux_series(obs_data.times, obs_data.frequencies, r_photons);
-        for (auto& d : obs_data.flux_data) {
-            d.Fv_model += obs.flux(d.t, d.nu, r_photons);
-        }
-    }
-
-    if (f_IC_photons.size() > 0) {
-        obs_data.model_fluxes += obs.specific_flux_series(obs_data.times, obs_data.frequencies, f_IC_photons);
-        for (auto& d : obs_data.flux_data) {
-            d.Fv_model += obs.flux(d.t, d.nu, f_IC_photons);
-        }
-    }
-
-    if (r_IC_photons.size() > 0) {
-        obs_data.model_fluxes += obs.specific_flux_series(obs_data.times, obs_data.frequencies, r_IC_photons);
-        for (auto& d : obs_data.flux_data) {
-            d.Fv_model += obs.flux(d.t, d.nu, r_IC_photons);
-        }
-    }
-
-    return obs_data.estimate_chi2();
-}
-
 double MultiBandModel::estimate_chi2_with_workspace(Params const& param, MultiBandData const& obs_data_ref,
                                                     BatchWorkspace& workspace) {
+
     Observer obs;
     SynPhotonGrid f_photons;
     SynPhotonGrid r_photons;
@@ -495,21 +525,14 @@ auto MultiBandModel::flux(Params const& param, PyArray const& t, double nu_min, 
     return F_nu / unit::flux_cgs;
 }
 
-PyArray MultiBandModel::batch_estimate_chi2(PyGrid const& samples, std::vector<int> const& param_indices,
-                                            std::vector<bool> const& log_mask, std::vector<int> const& fixed_indices,
-                                            std::vector<double> const& fixed_values) {
+PyArray MultiBandModel::batch_estimate_chi2(PyGrid const& samples, ParamTransformer const& transformer) {
     const size_t nwalkers = samples.shape(0);
     const size_t ndim = samples.shape(1);
 
-    AFTERGLOW_REQUIRE(ndim == param_indices.size(), "param_indices size must match ndim");
-    AFTERGLOW_REQUIRE(ndim == log_mask.size(), "log_mask size must match ndim");
-    AFTERGLOW_REQUIRE(fixed_indices.size() == fixed_values.size(),
-                      "fixed_indices and fixed_values must have same size");
+    AFTERGLOW_REQUIRE(ndim == transformer.ndim(), "Sample dimension must match transformer.ndim()");
 
-    // Output array
     Array chi2_results = Array::from_shape({nwalkers});
 
-    // Shared read-only observation data (no copying needed)
     const MultiBandData& data_ref = obs_data;
     const ConfigParams& config_ref = config;
 
@@ -521,61 +544,61 @@ PyArray MultiBandModel::batch_estimate_chi2(PyGrid const& samples, std::vector<i
         flux_data_sizes.push_back(fd.t.size());
     }
 
-#ifdef HAVE_OPENMP
-    #pragma omp parallel
-    {
-        // Thread-local workspace (only allocates model output arrays, not observation data)
-        BatchWorkspace workspace;
-        workspace.initialize(tuple_size, flux_data_sizes);
+    // Unified chi2 computation - clean and simple
+    auto compute_chi2 = [&](size_t i, MultiBandModel& local_model, BatchWorkspace& workspace) {
+        Params p;
+        transformer.transform_sample(samples.data() + i * ndim, p);
 
-        // Lightweight model - only config, no obs_data copy
-        MultiBandModel local_model(config_ref);
-
-    #pragma omp for schedule(dynamic)
-        for (size_t i = 0; i < nwalkers; ++i) {
-#else
-    {
-        // Serial fallback - single workspace instance
-        BatchWorkspace workspace;
-        workspace.initialize(tuple_size, flux_data_sizes);
-
-        // Lightweight model - only config, no obs_data copy
-        MultiBandModel local_model(config_ref);
-
-        for (size_t i = 0; i < nwalkers; ++i) {
-#endif
-            // Build Params struct using pointer-to-member for O(1) access
-            Params p;
-
-            // Set sampled parameters with optional log transformation
-            for (size_t j = 0; j < ndim; ++j) {
-                const double raw_val = samples(i, j);
-                const double val = log_mask[j] ? std::pow(10.0, raw_val) : raw_val;
-                p.*(kParamPtrs[static_cast<size_t>(param_indices[j])]) = val;
-            }
-
-            // Set fixed parameters
-            for (size_t j = 0; j < fixed_indices.size(); ++j) {
-                p.*(kParamPtrs[static_cast<size_t>(fixed_indices[j])]) = fixed_values[j];
-            }
-
-            // Compute chi2 using workspace (avoids copying obs_data)
-            double chi2;
-            try {
-                chi2 = local_model.estimate_chi2_with_workspace(p, data_ref, workspace);
-                // Check for NaN
-                if (chi2 != chi2) {
-                    chi2 = std::numeric_limits<double>::infinity();
-                }
-            } catch (...) {
+        double chi2;
+        try {
+            chi2 = local_model.estimate_chi2_with_workspace(p, data_ref, workspace);
+            if (chi2 != chi2) { // NaN check
                 chi2 = std::numeric_limits<double>::infinity();
             }
+        } catch (...) {
+            chi2 = std::numeric_limits<double>::infinity();
+        }
+        return chi2;
+    };
 
-            chi2_results(i) = chi2;
+// Smart serial/parallel selection based on batch size
+#ifdef HAVE_OPENMP
+    constexpr size_t OMP_THRESHOLD = 4;
+    const bool use_parallel = nwalkers >= OMP_THRESHOLD;
+
+    if (use_parallel) {
+    #pragma omp parallel
+        {
+            BatchWorkspace workspace;
+            workspace.initialize(tuple_size, flux_data_sizes);
+            MultiBandModel local_model(config_ref);
+
+    #pragma omp for schedule(dynamic)
+            for (size_t i = 0; i < nwalkers; ++i) {
+                chi2_results(i) = compute_chi2(i, local_model, workspace);
+            }
+        }
+    } else {
+        BatchWorkspace workspace;
+        workspace.initialize(tuple_size, flux_data_sizes);
+        MultiBandModel local_model(config_ref);
+
+        for (size_t i = 0; i < nwalkers; ++i) {
+            chi2_results(i) = compute_chi2(i, local_model, workspace);
         }
     }
+#else
+    {
+        BatchWorkspace workspace;
+        workspace.initialize(tuple_size, flux_data_sizes);
+        MultiBandModel local_model(config_ref);
 
-    // Acquire GIL before creating Python object
+        for (size_t i = 0; i < nwalkers; ++i) {
+            chi2_results(i) = compute_chi2(i, local_model, workspace);
+        }
+    }
+#endif
+
     pybind11::gil_scoped_acquire acquire;
     return chi2_results;
 }

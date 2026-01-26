@@ -26,8 +26,8 @@ Real SmoothPowerLawSyn::log2_optical_thin(Real log2_nu) const {
                log2_broken_power_ratio(log2_nu, log2_nu_c, diff_slope_c_slow_, smooth_c_slow_);
     } else {
         return (log2_nu - log2_nu_c) / 3.0 +
-               +log2_broken_power_ratio(log2_nu, log2_nu_c, diff_slope_m_fast_, smooth_m_fast_) +
-               log2_broken_power_ratio(log2_nu, log2_nu_m, diff_slope_c_fast_, smooth_c_fast_);
+               +log2_broken_power_ratio(log2_nu, log2_nu_c, diff_slope_c_fast_, smooth_c_fast_) +
+               log2_broken_power_ratio(log2_nu, log2_nu_m, diff_slope_m_fast_, smooth_m_fast_);
     }
 }
 
@@ -86,8 +86,8 @@ void SmoothPowerLawSyn::update_constant() {
     // Precompute s*(beta_lo - beta_hi) for broken power law transitions
     diff_slope_m_slow_ = smooth_m_slow_ * (0.5 * p - 1.0 / 6.0);
     diff_slope_c_slow_ = smooth_c_slow_ * 0.5;
-    diff_slope_m_fast_ = smooth_m_fast_ * 5.0 / 6.0;
-    diff_slope_c_fast_ = smooth_c_fast_ * 0.5 * (p - 1.0);
+    diff_slope_m_fast_ = smooth_m_fast_ * 0.5 * (p - 1.0);
+    diff_slope_c_fast_ = smooth_c_fast_ * 5.0 / 6.0;
 
     inv_nu_M_ = 1.0 / nu_M;
 
