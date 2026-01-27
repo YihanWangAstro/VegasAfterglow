@@ -17,7 +17,7 @@ ForwardShockEqn<Ejecta, Medium>::ForwardShockEqn(Medium const& medium, Ejecta co
       theta0(theta),
       rad(rad_params),
       dOmega0(1 - std::cos(theta)),
-      theta_s(theta_s){
+      theta_s(theta_s) {
     m_jet0 = ejecta.eps_k(phi, theta0) / ejecta.Gamma0(phi, theta0) / con::c2;
     if constexpr (HasSigma<Ejecta>) {
         m_jet0 /= 1 + ejecta.sigma0(phi, theta0);
@@ -26,7 +26,7 @@ ForwardShockEqn<Ejecta, Medium>::ForwardShockEqn(Medium const& medium, Ejecta co
 
 template <typename Ejecta, typename Medium>
 void ForwardShockEqn<Ejecta, Medium>::operator()(State const& state, State& diff, Real t) const noexcept {
-    const Real beta = gamma_to_beta(state.Gamma);
+    const Real beta = physics::relativistic::gamma_to_beta(state.Gamma);
 
     diff.r = compute_dr_dt(beta);
     diff.t_comv = compute_dt_dt_comv(state.Gamma, beta);
@@ -49,7 +49,7 @@ void ForwardShockEqn<Ejecta, Medium>::operator()(State const& state, State& diff
     diff.m2 = state.r * state.r * rho * diff.r;
     const Real e_th = (state.Gamma - 1) * 4 * state.Gamma * rho * con::c2;
     const Real eps_rad = compute_radiative_efficiency(state.t_comv, state.Gamma, e_th, rad);
-    const Real ad_idx = adiabatic_idx(state.Gamma);
+    const Real ad_idx = physics::thermo::adiabatic_idx(state.Gamma);
     diff.Gamma = compute_dGamma_dt(state, diff, ad_idx);
     diff.U2_th = compute_dU_dt(eps_rad, state, diff, ad_idx);
 }
@@ -115,7 +115,7 @@ template <typename Ejecta, typename Medium>
 void ForwardShockEqn<Ejecta, Medium>::set_init_state(State& state, Real t0) const noexcept {
     Real Gamma4 = ejecta.Gamma0(phi, theta0);
 
-    const Real beta4 = gamma_to_beta(Gamma4);
+    const Real beta4 = physics::relativistic::gamma_to_beta(Gamma4);
     state.r = beta4 * con::c * t0 / (1 - beta4);
 
     state.t_comv = state.r / std::sqrt(Gamma4 * Gamma4 - 1) / con::c;
@@ -134,7 +134,7 @@ void ForwardShockEqn<Ejecta, Medium>::set_init_state(State& state, Real t0) cons
         state.m_jet = m_jet0;
     }
 
-    Real ad_idx = adiabatic_idx(state.Gamma);
+    Real ad_idx = physics::thermo::adiabatic_idx(state.Gamma);
 
     state.U2_th = (state.Gamma - 1) * state.m2 * con::c2 / ad_idx;
 }
@@ -171,7 +171,7 @@ void grid_solve_fwd_shock(size_t i, size_t j, View const& t, Shock& shock, FwdEq
 
     // Get initial time and set up initial conditions
     Real t_dec = compute_dec_time(eqn, t.back());
-    Real t0 = min(t.front(), 1 * unit::sec, t_dec/3);
+    Real t0 = min(t.front(), 1 * unit::sec, t_dec / 3);
     eqn.set_init_state(state, t0);
 
     // Early exit if the initial Lorentz factor is below cutoff

@@ -133,7 +133,7 @@ inline Real compute_4vel_jump(Real gamma_rel, Real sigma_upstr) {
  * <!-- ************************************************************************************** -->
  */
 inline Real compute_sound_speed(Real Gamma_rel) {
-    const Real ad_idx = adiabatic_idx(Gamma_rel);
+    const Real ad_idx = physics::thermo::adiabatic_idx(Gamma_rel);
     return std::sqrt(std::fabs(ad_idx * (ad_idx - 1) * (Gamma_rel - 1) / (1 + (Gamma_rel - 1) * ad_idx))) * con::c;
 }
 
@@ -452,7 +452,7 @@ template <typename Eqn>
 Real compute_dec_time(Eqn const& eqn, Real t_max) {
     Real e_k = eqn.ejecta.eps_k(eqn.phi, eqn.theta0);
     Real gamma = eqn.ejecta.Gamma0(eqn.phi, eqn.theta0);
-    Real beta = gamma_to_beta(gamma);
+    Real beta = physics::relativistic::gamma_to_beta(gamma);
 
     Real m_shell = e_k / (gamma * con::c2);
 

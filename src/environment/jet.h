@@ -260,6 +260,21 @@ class PowerLawJet {
 namespace math {
     /**
      * <!-- ************************************************************************************** -->
+     * @brief Adds a constant offset to a binary function (phi, theta) -> Real
+     * @tparam F Type of the function to wrap
+     * @param func The function to add offset to
+     * @param offset The constant value to add
+     * @return Function that returns func(phi, theta) + offset
+     * @details Useful for creating Lorentz factor profiles where Gamma >= 1
+     * <!-- ************************************************************************************** -->
+     */
+    template <typename F>
+    inline auto plus_offset(F func, Real offset) noexcept {
+        return [=](Real phi, Real theta) noexcept { return func(phi, theta) + offset; };
+    }
+
+    /**
+     * <!-- ************************************************************************************** -->
      * @brief Combines a spatial function and a temporal function into one function of (phi, theta, t)
      * @tparam F1 Type of the spatial function
      * @tparam F2 Type of the temporal function
@@ -310,7 +325,7 @@ namespace math {
     }
 
     inline auto tophat_plus_one(Real theta_c, Real height) noexcept {
-        return [=](Real phi, Real theta) noexcept { return theta < theta_c ? height + 1 : 1; };
+        return plus_offset(tophat(theta_c, height), 1);
     }
 
     /**
@@ -327,8 +342,7 @@ namespace math {
     }
 
     inline auto gaussian_plus_one(Real theta_c, Real height) noexcept {
-        const Real spread = -2 * theta_c * theta_c;
-        return [=](Real phi, Real theta) noexcept { return height * fast_exp(theta * theta / spread) + 1; };
+        return plus_offset(gaussian(theta_c, height), 1);
     }
 
     /**
@@ -345,7 +359,7 @@ namespace math {
     }
 
     inline auto powerlaw_plus_one(Real theta_c, Real height, Real k) noexcept {
-        return [=](Real phi, Real theta) noexcept { return height / (1 + fast_pow(theta / theta_c, k)) + 1; };
+        return plus_offset(powerlaw(theta_c, height, k), 1);
     }
 
     inline auto powerlaw_wing(Real theta_c, Real height, Real k) noexcept {
@@ -359,13 +373,7 @@ namespace math {
     }
 
     inline auto powerlaw_wing_plus_one(Real theta_c, Real height, Real k) noexcept {
-        return [=](Real phi, Real theta) noexcept {
-            if (theta <= theta_c) {
-                return 1.;
-            } else {
-                return height * fast_pow(theta / theta_c, -k) + 1;
-            }
-        };
+        return plus_offset(powerlaw_wing(theta_c, height, k), 1);
     }
 
     inline auto step_powerlaw(Real theta_c, Real height_c, Real height_w, Real k) noexcept {
@@ -379,13 +387,7 @@ namespace math {
     }
 
     inline auto step_powerlaw_plus_one(Real theta_c, Real height_c, Real height_w, Real k) noexcept {
-        return [=](Real phi, Real theta) noexcept {
-            if (theta <= theta_c) {
-                return height_c + 1;
-            } else {
-                return height_w * fast_pow(theta / theta_c, -k) + 1;
-            }
-        };
+        return plus_offset(step_powerlaw(theta_c, height_c, height_w, k), 1);
     }
 
     /**
@@ -411,15 +413,7 @@ namespace math {
     }
 
     inline auto two_component_plus_one(Real theta_c, Real theta_w, Real height_c, Real height_w) noexcept {
-        return [=](Real phi, Real theta) noexcept {
-            if (theta <= theta_c) {
-                return height_c + 1;
-            } else if (theta <= theta_w) {
-                return height_w + 1;
-            } else {
-                return 1.;
-            }
-        };
+        return plus_offset(two_component(theta_c, theta_w, height_c, height_w), 1);
     }
 
     /**

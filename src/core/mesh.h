@@ -78,7 +78,7 @@ class Coord {
  * @return True if the array is linearly scaled, false otherwise
  * <!-- ************************************************************************************** -->
  */
-bool is_linear_scale(Array const& arr, Real tolerance = 1e-6);
+bool is_linear_scale(Array const& arr, Real tolerance = defaults::solver::scale_check_tol);
 
 /**
  * <!-- ************************************************************************************** -->
@@ -88,7 +88,7 @@ bool is_linear_scale(Array const& arr, Real tolerance = 1e-6);
  * @return True if the array is logarithmically scaled, false otherwise
  * <!-- ************************************************************************************** -->
  */
-bool is_log_scale(Array const& arr, Real tolerance = 1e-6);
+bool is_log_scale(Array const& arr, Real tolerance = defaults::solver::scale_check_tol);
 
 /**
  * <!-- ************************************************************************************** -->
@@ -157,9 +157,11 @@ Array boundary_to_center_log(Array const& boundary);
  * <!-- ************************************************************************************** -->
  */
 template <typename Ejecta>
-Coord auto_grid(Ejecta const& jet, Array const& t_obs, Real theta_cut, Real theta_view, Real z, Real phi_resol = 0.3,
-                Real theta_resol = 1, Real t_resol = 5, bool is_axisymmetric = true, Real phi_view = 0,
-                size_t min_theta_num = 56, Real fwd_ratio = 0.3);
+Coord auto_grid(Ejecta const& jet, Array const& t_obs, Real theta_cut, Real theta_view, Real z,
+                Real phi_resol = defaults::grid::phi_resolution, Real theta_resol = defaults::grid::theta_resolution,
+                Real t_resol = defaults::grid::time_resolution, bool is_axisymmetric = true, Real phi_view = 0,
+                size_t min_theta_num = defaults::grid::min_theta_points,
+                Real fwd_ratio = defaults::grid::forward_ratio);
 
 /**
  * <!-- ************************************************************************************** -->
@@ -241,7 +243,7 @@ Real find_jet_edge(Ejecta const& jet, Real gamma_cut, Real phi_resol, Real theta
     }
     Real low = 0;
     Real hi = con::pi / 2;
-    constexpr Real eps = 1e-9;
+    constexpr Real eps = defaults::solver::binary_search_eps;
     while (hi - low > eps) {
         if (Real mid = 0.5 * (low + hi); jet.Gamma0(0, mid) > gamma_cut) {
             low = mid;
@@ -281,7 +283,7 @@ Real jet_spreading_edge(Ejecta const& jet, Medium const& medium, Real phi, Real 
 
     for (Real theta = theta_min; theta <= theta_max; theta += step) {
         // Real G = jet.Gamma0(phi, theta);
-        // Real beta0 = gamma_to_beta(G);
+        // Real beta0 = physics::relativistic::gamma_to_beta(G);
         // Real r0 = beta0 * con::c * t0 / (1 - beta0);
         // Real rho = medium.rho(phi, theta, 0);
         Real th_lo = std::max(theta - step, theta_min);
@@ -305,8 +307,8 @@ Real jet_spreading_edge(Ejecta const& jet, Medium const& medium, Real phi, Real 
 template <typename Func>
 Array inverse_CFD_sampling(Func&& pdf, Real min, Real max, size_t num) {
     using namespace boost::numeric::odeint;
-    constexpr Real rtol = 1e-6;
-    constexpr size_t sample_num = 200;
+    constexpr Real rtol = defaults::solver::ode_rtol;
+    constexpr size_t sample_num = defaults::sampling::theta_samples;
     Array x_i = xt::linspace(min, max, sample_num);
     Array CDF_i = xt::zeros<Real>({sample_num});
 
@@ -412,7 +414,7 @@ Coord auto_grid(Ejecta const& jet, Array const& t_obs, Real theta_cut, Real thet
     coord.theta_view = theta_view;
 
     const Real jet_edge = find_jet_edge(jet, con::Gamma_cut, phi_resol, theta_resol, is_axisymmetric);
-    Real theta_min = 1e-6;
+    Real theta_min = defaults::grid::theta_min;
     Real theta_max = std::min(jet_edge, theta_cut);
 
     size_t theta_num =
@@ -443,7 +445,7 @@ Coord auto_grid(Ejecta const& jet, Array const& t_obs, Real theta_cut, Real thet
     coord.t = xt::zeros<Real>({phi_size_needed, theta_num, t_num});
     for (size_t i = 0; i < phi_size_needed; ++i) {
         for (size_t j = 0; j < theta_num; ++j) {
-            const Real b = gamma_to_beta(jet.Gamma0(coord.phi(i), coord.theta(j)));
+            const Real b = physics::relativistic::gamma_to_beta(jet.Gamma0(coord.phi(i), coord.theta(j)));
             // Real theta_max = coord.theta(j) + theta_view;
             const Real theta_v_max = coord.theta.back() + theta_view;
             const Real t_start =

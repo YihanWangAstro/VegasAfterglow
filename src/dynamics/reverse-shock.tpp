@@ -63,8 +63,8 @@ Real FRShockEqn<Ejecta, Medium>::compute_crossing_weight(State const& state, Sta
 template <typename Ejecta, typename Medium>
 Real FRShockEqn<Ejecta, Medium>::compute_dGamma_dt(State const& state, State const& diff, Real t) const noexcept {
     const Real Gamma34 = compute_rel_Gamma(Gamma4, state.Gamma);
-    const Real ad_idx2 = adiabatic_idx(state.Gamma);
-    const Real ad_idx3 = adiabatic_idx(Gamma34);
+    const Real ad_idx2 = physics::thermo::adiabatic_idx(state.Gamma);
+    const Real ad_idx3 = physics::thermo::adiabatic_idx(Gamma34);
 
     Real Gamma_eff2 = compute_effective_Gamma(ad_idx2, state.Gamma);
     Real Gamma_eff3 = compute_effective_Gamma(ad_idx3, state.Gamma);
@@ -97,7 +97,7 @@ Real FRShockEqn<Ejecta, Medium>::compute_dU2_dt(State const& state, State const&
     // Real e_th = state.U2_th / V_comv;
     const Real eps_rad = compute_radiative_efficiency(state.t_comv, state.Gamma, e_th, rad_fwd);
 
-    const Real ad_idx = adiabatic_idx(state.Gamma);
+    const Real ad_idx = physics::thermo::adiabatic_idx(state.Gamma);
 
     const Real shock_heating = compute_shock_heating_rate(state.Gamma, diff.m2);
 
@@ -110,7 +110,7 @@ Real FRShockEqn<Ejecta, Medium>::compute_dU2_dt(State const& state, State const&
 template <typename Ejecta, typename Medium>
 Real FRShockEqn<Ejecta, Medium>::compute_dU3_dt(State const& state, State const& diff, Real t) const noexcept {
     const Real Gamma34 = compute_rel_Gamma(this->Gamma4, state.Gamma);
-    const Real ad_idx = adiabatic_idx(Gamma34);
+    const Real ad_idx = physics::thermo::adiabatic_idx(Gamma34);
     const Real adiabatic_cooling =
         compute_adiabatic_cooling_rate2(ad_idx, state.r, state.x3, state.U3_th, diff.r, diff.x3);
 
@@ -137,8 +137,8 @@ Real FRShockEqn<Ejecta, Medium>::compute_dx3_dt(State const& state, State const&
     /*if ((state.m3 < state.m4 || diff.m4 > 0) && (state.Gamma != this->Gamma4)) {
         const Real sigma = compute_shell_sigma(state);
         const Real Gamma34 = compute_rel_Gamma(this->Gamma4, state.Gamma);
-        const Real beta3 = gamma_to_beta(state.Gamma);
-        const Real beta4 = gamma_to_beta(this->Gamma4);
+        const Real beta3 = physics::relativistic::gamma_to_beta(state.Gamma);
+        const Real beta4 = physics::relativistic::gamma_to_beta(this->Gamma4);
         Real comp_ratio = compute_4vel_jump(Gamma34, sigma);
         Real dx3dt = (beta4 - beta3) * con::c / ((1 - beta3) * (state.Gamma * comp_ratio / this->Gamma4 - 1));
 
@@ -157,8 +157,8 @@ Real FRShockEqn<Ejecta, Medium>::compute_dx3_dt(State const& state, State const&
     Real rate_crossing = 0.0;
     if (w > 1e-3 && (state.Gamma != this->Gamma4)) {
         const Real sigma = compute_shell_sigma(state);
-        const Real beta3 = gamma_to_beta(state.Gamma);
-        const Real beta4 = gamma_to_beta(this->Gamma4);
+        const Real beta3 = physics::relativistic::gamma_to_beta(state.Gamma);
+        const Real beta4 = physics::relativistic::gamma_to_beta(this->Gamma4);
         Real comp_ratio = compute_4vel_jump(Gamma34, sigma);
         Real dx3dt = (beta4 - beta3) * con::c / ((1 - beta3) * (state.Gamma * comp_ratio / this->Gamma4 - 1));
         rate_crossing = std::fabs(dx3dt * state.Gamma);
@@ -253,7 +253,7 @@ Real FRShockEqn<Ejecta, Medium>::compute_dm4_dt(State const& state, State const&
 
 template <typename Ejecta, typename Medium>
 void FRShockEqn<Ejecta, Medium>::operator()(State const& state, State& diff, Real t) {
-    const Real beta3 = gamma_to_beta(state.Gamma);
+    const Real beta3 = physics::relativistic::gamma_to_beta(state.Gamma);
 
     diff.r = compute_dr_dt(beta3);
     diff.t_comv = compute_dt_dt_comv(state.Gamma, beta3);
@@ -296,8 +296,8 @@ void FRShockEqn<Ejecta, Medium>::save_cross_state(State const& state) {
 
 inline Real calculate_init_m3(Real Gamma4, Real Gamma3, Real m2, Real sigma) {
     const Real Gamma34 = compute_rel_Gamma(Gamma4, Gamma3);
-    const Real ad_idx2 = adiabatic_idx(Gamma3);
-    const Real ad_idx3 = adiabatic_idx(Gamma34);
+    const Real ad_idx2 = physics::thermo::adiabatic_idx(Gamma3);
+    const Real ad_idx3 = physics::thermo::adiabatic_idx(Gamma34);
 
     const Real Gamma_eff2 = compute_effective_Gamma(ad_idx2, Gamma3);
     const Real Gamma_eff3 = compute_effective_Gamma(ad_idx3, Gamma3);
@@ -308,7 +308,7 @@ inline Real calculate_init_m3(Real Gamma4, Real Gamma3, Real m2, Real sigma) {
 
 template <typename Ejecta, typename Medium>
 void FRShockEqn<Ejecta, Medium>::set_init_state(State& state, Real t0) const noexcept {
-    const Real beta4 = gamma_to_beta(Gamma4);
+    const Real beta4 = physics::relativistic::gamma_to_beta(Gamma4);
 
     state.r = beta4 * con::c * t0 / (1 - beta4);
     state.t_comv = state.r / std::sqrt(Gamma4 * Gamma4 - 1) / con::c;
@@ -327,7 +327,7 @@ void FRShockEqn<Ejecta, Medium>::set_init_state(State& state, Real t0) const noe
     //Real sigma4 = compute_shell_sigma(state);
     state.Gamma = Gamma4;
 
-    Real ad_idx = adiabatic_idx(state.Gamma);
+    Real ad_idx = physics::thermo::adiabatic_idx(state.Gamma);
     state.U2_th = (state.Gamma - 1) * state.m2 * con::c2 / ad_idx;
 
     state.m3 = 0;
@@ -378,7 +378,7 @@ Real FRShockEqn<Ejecta, Medium>::compute_shell_sigma(State const& state) const {
  * <!-- ************************************************************************************** -->
  */
 inline Real compute_init_comv_shell_width(Real Gamma4, Real t0, Real T) {
-    const Real beta4 = gamma_to_beta(Gamma4);
+    const Real beta4 = physics::relativistic::gamma_to_beta(Gamma4);
     if (t0 < T) { // pure injection
         return Gamma4 * t0 * beta4 * con::c;
     } else { // injection+shell spreading

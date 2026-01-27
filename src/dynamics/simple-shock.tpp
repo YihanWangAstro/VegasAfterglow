@@ -26,7 +26,7 @@ SimpleShockEqn<Ejecta, Medium>::SimpleShockEqn(Medium const& medium, Ejecta cons
 
 template <typename Ejecta, typename Medium>
 void SimpleShockEqn<Ejecta, Medium>::operator()(State const& state, State& diff, Real t) const noexcept {
-    const Real beta = gamma_to_beta(state.Gamma);
+    const Real beta = physics::relativistic::gamma_to_beta(state.Gamma);
 
     diff.r = compute_dr_dt(beta);
     diff.t_comv = compute_dt_dt_comv(state.Gamma, beta);
@@ -84,7 +84,7 @@ template <typename Ejecta, typename Medium>
 void SimpleShockEqn<Ejecta, Medium>::set_init_state(State& state, Real t0) const noexcept {
     state.Gamma = ejecta.Gamma0(phi, theta0);
 
-    const Real beta0 = gamma_to_beta(state.Gamma);
+    const Real beta0 = physics::relativistic::gamma_to_beta(state.Gamma);
     state.r = beta0 * con::c * t0 / (1 - beta0);
 
     state.t_comv = state.r / std::sqrt(state.Gamma * state.Gamma - 1) / con::c;

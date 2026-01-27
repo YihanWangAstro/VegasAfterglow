@@ -25,10 +25,11 @@ auto test_reverse_shock(double xi, double sigma, bool output = true) {
     jet.Gamma0 = math::tophat(theta_c, Gamma0);
     jet.sigma0 = math::tophat(theta_c, sigma);
 
-    jet.T0 = calc_engine_duration(E_iso, n_ism, Gamma0, xi);
+    jet.T0 = physics::scales::calc_engine_duration(E_iso, n_ism, Gamma0, xi);
 
     std::cout << "T0: " << jet.T0 / unit::sec << ' ' << xi << ' ' << sigma << ' '
-              << thin_shell_dec_radius(E_iso, n_ism, Gamma0) / (2 * Gamma0 * Gamma0) / unit::sec << std::endl;
+              << physics::scales::thin_shell_dec_radius(E_iso, n_ism, Gamma0) / (2 * Gamma0 * Gamma0) / unit::sec
+              << std::endl;
 
     Coord coord = auto_grid(jet, t_obs, 0.6, theta_v, z, 0.5, 10, 50);
 
@@ -45,7 +46,7 @@ auto test_reverse_shock(double xi, double sigma, bool output = true) {
 
     auto t_cross = coord.t(0, 0, r_shock.injection_idx(0, 0)) / unit::sec;
     auto duration = jet.T0 / unit::sec;
-    auto t_dec = sedov_length(E_iso, n_ism) / std::pow(Gamma0, 8. / 3) / 2 / con::c / unit::sec;
+    auto t_dec = physics::scales::sedov_length(E_iso, n_ism) / std::pow(Gamma0, 8. / 3) / 2 / con::c / unit::sec;
 
     return std::make_tuple(t_cross, duration, t_dec);
 }
@@ -156,8 +157,9 @@ void test_FRS() {
     jet.Gamma0 = math::tophat(theta_c, Gamma0);
     jet.T0 = 1 * unit::sec;
 
-    std::cout << "FRS:" << sedov_length(E_iso, n_ism) / (2 * con::c * std::pow(Gamma0, 8. / 3)) / unit::sec << ' '
-              << shell_thickness_param(E_iso, n_ism, Gamma0, jet.T0) << std::endl;
+    std::cout << "FRS:"
+              << physics::scales::sedov_length(E_iso, n_ism) / (2 * con::c * std::pow(Gamma0, 8. / 3)) / unit::sec
+              << ' ' << physics::scales::shell_thickness_param(E_iso, n_ism, Gamma0, jet.T0) << std::endl;
 
     Coord coord = auto_grid(jet, t_obs, con::pi / 2, theta_v, z, 0.5, 100, 20);
     auto [f_shock, r_shock] = generate_shock_pair(coord, medium, jet, rad_fwd, rad_rvs);

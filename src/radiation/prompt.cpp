@@ -22,12 +22,12 @@ PromptPhotonsGrid gen_prompt_photons(CoastingShock const& shock, Real R0, Real n
     PromptPhotonsGrid ph({phi_size, theta_size, t_size});
 
     const Real Gamma_c = shock.Gamma(0, 0, 0);
-    const Real beta_c = gamma_to_beta(Gamma_c);
+    const Real beta_c = physics::relativistic::gamma_to_beta(Gamma_c);
 
     for (size_t i = 0; i < phi_size; ++i) {
         for (size_t j = 0; j < theta_size; ++j) {
             const Real Gamma = shock.Gamma(i, j, 0);
-            const Real beta = gamma_to_beta(Gamma);
+            const Real beta = physics::relativistic::gamma_to_beta(Gamma);
             const Real R = R0 * beta / (1 - beta) * (1 - beta_c) / beta_c;
             const Real Rmin = R * 0;
             const Real Rmax = R * 1.;

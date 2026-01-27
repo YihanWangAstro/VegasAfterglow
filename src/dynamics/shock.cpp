@@ -40,7 +40,7 @@ void Shock::resize(size_t phi_size, size_t theta_size, size_t t_size) {
 }
 
 Real compute_downstr_4vel(Real gamma_rel, Real sigma) {
-    const Real ad_idx = adiabatic_idx(gamma_rel);
+    const Real ad_idx = physics::thermo::adiabatic_idx(gamma_rel);
     const Real gamma_m_1 = gamma_rel - 1; // (gamma_rel - 1)
     const Real ad_idx_m_2 = ad_idx - 2;   // (ad_idx - 2)
     const Real ad_idx_m_1 = ad_idx - 1;   // (ad_idx - 1)
