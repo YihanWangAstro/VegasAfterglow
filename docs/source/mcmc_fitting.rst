@@ -17,6 +17,92 @@ Key Features:
 - **Complete physics**: Forward shock, reverse shock, synchrotron, inverse Compton, magnetar injection
 - **Flexible data handling**: Light curves and spectra with optional weighting
 
+MCMC Best Practices
+-------------------
+
+Start Simple, Add Complexity Gradually
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+The most common mistake in GRB afterglow fitting is starting with an overly complex model. **Always begin with the simplest physically motivated model** and only add complexity when the data clearly demands it.
+
+**Recommended Progression:**
+
+1. **Start with TopHat + ISM + Forward Shock Only**
+
+   .. code-block:: python
+
+       cfg = Setups()
+       cfg.medium = "ism"
+       cfg.jet = "tophat"
+       # All other physics options default to False
+
+   This gives you ~7-8 free parameters. Run MCMC and examine the residuals.
+
+2. **Check if residuals suggest additional physics**
+
+   Examine the fit quality and residual structure. Systematic deviations at specific times or frequencies may indicate missing physics.
+
+3. **Add ONE component at a time**
+
+   Never jump from a simple model to enabling everything. Each addition should be justified by improved fit statistics (e.g., Bayesian evidence comparison).
+
+Why Complex Models Are Problematic
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+**1. Parameter Degeneracies**
+
+More parameters create more degeneracies. For example:
+
+- ``E_iso`` and ``n_ism`` are degenerate in flux normalization
+- ``eps_e`` and ``eps_B`` trade off in spectral shape
+- ``theta_c`` and ``theta_v`` correlate for off-axis observers
+- Reverse shock parameters can mimic forward shock with different microphysics
+
+With a complex model, the MCMC may find multiple solutions that fit equally well but have very different physical interpretations.
+
+**2. Computational Cost**
+
+Each additional physics module increases computation time. A model with all physics enabled can be significantly slower than a basic forward-shock-only model.
+
+**3. Overfitting Risk**
+
+With enough free parameters, you can fit noise. A model that fits your data perfectly but has 15+ parameters may not be physically meaningful. Use Bayesian evidence (from dynesty) to compare models:
+
+.. code-block:: python
+
+    # Compare two models using log evidence
+    result_simple = fitter_simple.fit(params_simple, sampler="dynesty", ...)
+    result_complex = fitter_complex.fit(params_complex, sampler="dynesty", ...)
+
+    # Bayes factor
+    log_BF = result_complex.bilby_result.log_evidence - result_simple.bilby_result.log_evidence
+
+    # Interpretation:
+    # log_BF < 1: No preference (stick with simple model)
+    # 1 < log_BF < 3: Weak preference for complex
+    # 3 < log_BF < 5: Moderate preference
+    # log_BF > 5: Strong preference for complex model
+
+**4. Non-Physical Solutions**
+
+Complex models can converge to non-physical parameter combinations. Always check:
+
+- Is ``eps_e + eps_B < 1``? (energy conservation)
+- Is ``p > 2``? (required for finite electron energy)
+- Are microphysics parameters consistent between forward/reverse shocks?
+- Does the inferred jet energy make sense given the host galaxy and redshift?
+
+When to Use Complex Models
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Complex models are justified when:
+
+- **Clear observational signatures** that simple models cannot explain after careful analysis
+- **Comparison with similar GRBs** where the additional physics was robustly established
+
+.. important::
+    **Golden Rule**: If you cannot clearly explain WHY each physics component is needed based on your data, you probably don't need it.
+
 Basic Setup
 -----------
 
@@ -127,6 +213,62 @@ For large datasets or densely sampled observations, using all available data poi
     - **Single-epoch spectra**: Broadband spectra at one time can dominate multi-epoch light curves in χ² space
 
     **Solution**: Use ``logscale_screen`` for manual temporal reduction of over-sampled bands.
+
+**Handling Measurement Uncertainties**
+
+Error bars strongly influence MCMC fitting. Improperly characterized uncertainties can lead to biased parameter estimates or misleading confidence intervals.
+
+**The Problem with Small Error Bars**
+
+Data points with very small uncertainties dominate the χ² calculation:
+
+.. math::
+
+    \chi^2 = \sum_i \frac{(F_{\rm obs,i} - F_{\rm model,i})^2}{\sigma_i^2}
+
+A single point with σ = 0.01 mJy contributes 100× more to χ² than a point with σ = 0.1 mJy. This causes the MCMC to:
+
+- Heavily weight high-precision data at the expense of other observations
+- Potentially fit noise or systematic effects in the "precise" data
+- Produce artificially tight parameter constraints that don't reflect true uncertainties
+
+**Common Scenarios:**
+
+1. **Heterogeneous data quality**: X-ray data from different telescopes may have vastly different calibration uncertainties
+2. **Underestimated errors**: Published error bars sometimes only include statistical uncertainty, missing systematics
+3. **Calibration offsets**: Different instruments may have 5-20% flux calibration offsets not captured in quoted errors
+
+**Solutions:**
+
+1. **Add systematic error floors**
+
+   For data where quoted errors seem unrealistically small:
+
+   .. code-block:: python
+
+       # Add 10% systematic floor to error bars
+       systematic_floor = 0.1  # 10% of flux
+       err_with_floor = np.sqrt(err**2 + (systematic_floor * flux)**2)
+
+       data.add_flux_density(nu=nu, t=t, f_nu=flux, err=err_with_floor)
+
+2. **Use weights to balance bands**
+
+   Down-weight bands with suspiciously small errors:
+
+   .. code-block:: python
+
+       # Reduce contribution of high-precision optical data
+       optical_weight = 0.5  # Effectively doubles the error contribution
+       data.add_flux_density(nu=5e14, t=t_optical, f_nu=flux_optical,
+                            err=err_optical, weights=optical_weight * np.ones_like(t_optical))
+
+3. **Inspect residuals by band**
+
+   After fitting, check if residuals are consistent across bands. If one band shows systematic deviations while others don't, the errors for that band may be mischaracterized.
+
+.. tip::
+    **Rule of thumb**: If your best-fit χ²/dof >> 1, either the model is inadequate OR the error bars are underestimated. If χ²/dof << 1, the errors may be overestimated.
 
 Global Configuration
 ^^^^^^^^^^^^^^^^^^^^
@@ -658,6 +800,59 @@ Complex Model Combinations
 
 Running MCMC
 ------------
+
+Choosing a Sampler
+^^^^^^^^^^^^^^^^^^
+
+The choice of sampler significantly affects both the quality of results and computational efficiency. Here's guidance on when to use each:
+
+**Emcee (Ensemble MCMC) - Recommended for Most Cases**
+
+.. code-block:: python
+
+    result = fitter.fit(params, sampler="emcee", nsteps=10000, nburn=2000, ...)
+
+Use emcee when:
+
+- You need **fast exploration** of parameter space
+- The posterior is expected to be **unimodal** (single peak)
+- You're doing **quick preliminary fits** or production runs
+
+VegasAfterglow uses an optimized emcee configuration:
+
+- **Custom proposal moves**: DEMove (70%) + DESnookerMove (30%) for better mixing than default stretch move
+- **Vectorized batch processing**: Likelihood evaluations are parallelized via OpenMP internally
+- **Automatic nwalkers**: Optimized based on parameter count and CPU cores
+
+.. note::
+    **Parallelization is automatic**: For emcee, the ``npool`` parameter is ignored. The C++ backend uses OpenMP multi-threading for batch likelihood evaluation, which is faster than Python multiprocessing.
+
+**Dynesty (Nested Sampling) - For Model Comparison**
+
+.. code-block:: python
+
+    result = fitter.fit(params, sampler="dynesty", nlive=1000, dlogz=0.5, ...)
+
+Use dynesty when:
+
+- You need **Bayesian evidence** for model comparison
+- The posterior may be **multimodal** (multiple peaks)
+- You want to compare different physics configurations
+
+VegasAfterglow uses optimized dynesty settings:
+
+- **rslice sampling**: More efficient than random walk for high dimensions
+- **Thread pool**: Uses Python threading (not multiprocessing) for better performance with C++ backend
+- **Optimal queue size**: Automatically calculated based on nlive and npool
+
+.. note::
+    For dynesty, ``npool`` controls the number of parallel threads. If not specified, it defaults to the number of CPU cores on your machine.
+
+**Recommended Workflow**
+
+1. **Quick exploration**: Use emcee with moderate steps (5000-10000) to find approximate parameter region
+2. **Model comparison**: Use dynesty when comparing different physics (forward shock only vs. with reverse shock, etc.)
+3. **Production run**: Use emcee with longer chains (20000-50000 steps) for final parameter constraints
 
 Fitter.fit() Interface
 ^^^^^^^^^^^^^^^^^^^^^^

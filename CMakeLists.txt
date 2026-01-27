@@ -100,8 +100,6 @@ if(BUILD_TESTS)
 
   target_compile_features(demo PRIVATE cxx_std_20)
 
-  # Add your dependencies (find xtensor, boost, etc. if needed)
-  # target_link_libraries(demo PRIVATE xtensor::xtensor ...)
 
   # Benchmark executable
   add_executable(benchmark
@@ -116,9 +114,6 @@ if(BUILD_TESTS)
   )
 
   target_compile_features(benchmark PRIVATE cxx_std_20)
-
-  # Add your dependencies
-  # target_link_libraries(benchmark PRIVATE xtensor::xtensor ...)
 
   # Set output directory for test executables
   set_target_properties(demo benchmark PROPERTIES
@@ -142,5 +137,23 @@ if(BUILD_TESTS)
 
   target_link_options(benchmark PRIVATE
           $<$<CONFIG:Profiling>:-pg>
+  )
+
+  # Profile benchmark executable
+  add_executable(profile_benchmark
+          tests/benchmark/profile_benchmark.cpp
+          ${VEGAS_CORE_SOURCES}
+  )
+
+  target_include_directories(profile_benchmark PRIVATE
+          ${CMAKE_CURRENT_SOURCE_DIR}/include
+          ${CMAKE_CURRENT_SOURCE_DIR}/src
+          ${CMAKE_CURRENT_SOURCE_DIR}/external
+  )
+
+  target_compile_features(profile_benchmark PRIVATE cxx_std_20)
+
+  set_target_properties(profile_benchmark PROPERTIES
+          RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/tests"
   )
 endif()
