@@ -18,7 +18,7 @@ TEST_DIR := tests
 
 # === Compiler & flags ===
 CXX ?= g++
-CXXFLAGS := -std=c++20 -O3 -march=native -flto -Iinclude -Isrc -Iexternal -w -g -DNDEBUG -DXTENSOR_DISABLE_EXCEPTIONS -DXTENSOR_USE_XSIMD -fno-omit-frame-pointer -DEXTREME_SPEED
+CXXFLAGS := -std=c++20 -O3 -march=native -flto -Iinclude -Isrc -Iexternal -w -g -DNDEBUG -DXTENSOR_DISABLE_EXCEPTIONS -DXTENSOR_USE_XSIMD -DEXTREME_SPEED
 LDFLAGS := -lz
 
 # Tests: each tests/foo/bar.cpp → tests/foo/bar(.exe)

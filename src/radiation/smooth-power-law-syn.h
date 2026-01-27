@@ -50,8 +50,7 @@ struct SmoothPowerLawSyn {
      * @return Base-2 logarithm of synchrotron specific intensity
      * <!-- ************************************************************************************** -->
      */
-    [[nodiscard]] Real
-    compute_log2_I_nu(Real log2_nu) const; ///<  Log2 specific intensity (for computational efficiency)
+    [[nodiscard]] Real compute_log2_I_nu(Real log2_nu) const;
 
     /**
      * <!-- ************************************************************************************** -->

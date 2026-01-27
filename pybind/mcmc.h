@@ -556,9 +556,9 @@ void MultiBandModel::generate_photons(Params const& param, double t_min, double 
 
     Array t_eval = xt::linspace<Real>(t_min, t_max, 5);
 
-    auto coord = auto_grid(jet, t_eval, theta_w, theta_v, z, phi_resol, theta_resol, t_resol);
-
     if (config.rvs_shock == false) {
+        auto coord = auto_grid(jet, t_eval, theta_w, theta_v, z, phi_resol, theta_resol, t_resol, true, 0, 48, 0.7);
+
         auto shock = generate_fwd_shock(coord, medium, jet, rad, config.rtol);
 
         obs.observe(coord, shock, lumi_dist, z);
@@ -579,6 +579,8 @@ void MultiBandModel::generate_photons(Params const& param, double t_min, double 
         }
 
     } else {
+        auto coord = auto_grid(jet, t_eval, theta_w, theta_v, z, phi_resol, theta_resol, t_resol, true, 0, 56, 0.3);
+
         RadParams rad_rvs;
 
         rad_rvs.p = param.p_r;

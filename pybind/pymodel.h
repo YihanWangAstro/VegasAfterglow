@@ -627,14 +627,15 @@ void PyModel::single_shock_emission(Shock const& shock, Coord const& coord, Arra
 
 template <typename Func>
 auto PyModel::compute_emission(Array const& t_obs, Array const& nu_obs, Func&& flux_func) -> PyFlux {
-    Coord coord = auto_grid(jet_, t_obs, this->theta_w, obs_setup.theta_obs, obs_setup.z, phi_resol, theta_resol,
-                            t_resol, axisymmetric);
 
     PyFlux flux;
 
     Observer observer;
 
     if (!rvs_rad_opt) {
+        Coord coord = auto_grid(jet_, t_obs, this->theta_w, obs_setup.theta_obs, obs_setup.z, phi_resol, theta_resol,
+                                t_resol, axisymmetric, 0, 48, 0.7);
+
         auto fwd_shock = generate_fwd_shock(coord, medium_, jet_, fwd_rad.rad, rtol);
 
         single_shock_emission(fwd_shock, coord, t_obs, nu_obs, observer, fwd_rad, flux.fwd,
@@ -642,6 +643,8 @@ auto PyModel::compute_emission(Array const& t_obs, Array const& nu_obs, Func&& f
 
         return flux;
     } else {
+        Coord coord = auto_grid(jet_, t_obs, this->theta_w, obs_setup.theta_obs, obs_setup.z, phi_resol, theta_resol,
+                                t_resol, axisymmetric, 0, 56, 0.3);
         auto rvs_rad = *rvs_rad_opt;
         auto [fwd_shock, rvs_shock] = generate_shock_pair(coord, medium_, jet_, fwd_rad.rad, rvs_rad.rad, rtol);
 

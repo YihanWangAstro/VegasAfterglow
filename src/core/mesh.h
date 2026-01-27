@@ -148,6 +148,8 @@ Array boundary_to_center_log(Array const& boundary);
  * @param t_resol
  * @param is_axisymmetric Whether the jet is axisymmetric (default: true)
  * @param phi_view Viewing angle (default: 0)
+ * @param min_theta_num Minimum number of theta grid points (default: 56)
+ * @param fwd_ratio Forward ratio for grid resolution (default: 0.3)
  * @return A Coord object with the constructed grid
  * @details The grid is based on the observation times (t_obs), maximum theta value (theta_cut), and
  *          specified numbers of grid points in phi, theta, and t. The radial grid is logarithmically
@@ -156,7 +158,8 @@ Array boundary_to_center_log(Array const& boundary);
  */
 template <typename Ejecta>
 Coord auto_grid(Ejecta const& jet, Array const& t_obs, Real theta_cut, Real theta_view, Real z, Real phi_resol = 0.3,
-                Real theta_resol = 1, Real t_resol = 5, bool is_axisymmetric = true, Real phi_view = 0);
+                Real theta_resol = 1, Real t_resol = 5, bool is_axisymmetric = true, Real phi_view = 0,
+                size_t min_theta_num = 56, Real fwd_ratio = 0.3);
 
 /**
  * <!-- ************************************************************************************** -->
@@ -403,7 +406,8 @@ Array merge_grids(Arr const& arr1, Arr const& arr2) {
 
 template <typename Ejecta>
 Coord auto_grid(Ejecta const& jet, Array const& t_obs, Real theta_cut, Real theta_view, Real z, Real phi_resol,
-                Real theta_resol, Real t_resol, bool is_axisymmetric, Real phi_view) {
+                Real theta_resol, Real t_resol, bool is_axisymmetric, Real phi_view, size_t min_theta_num,
+                Real fwd_ratio) {
     Coord coord;
     coord.theta_view = theta_view;
 
@@ -411,8 +415,9 @@ Coord auto_grid(Ejecta const& jet, Array const& t_obs, Real theta_cut, Real thet
     Real theta_min = 1e-6;
     Real theta_max = std::min(jet_edge, theta_cut);
 
-    size_t theta_num = std::max<size_t>(static_cast<size_t>((theta_max - theta_min) * 180 / con::pi * theta_resol), 56);
-    const size_t uniform_theta_num = static_cast<size_t>(static_cast<Real>(theta_num) * 0.3);
+    size_t theta_num =
+        std::max<size_t>(static_cast<size_t>((theta_max - theta_min) * 180 / con::pi * theta_resol), min_theta_num);
+    const size_t uniform_theta_num = static_cast<size_t>(static_cast<Real>(theta_num) * fwd_ratio);
     size_t adaptive_theta_num = theta_num - uniform_theta_num;
 
     const Array uniform_theta = xt::linspace(theta_min, theta_max, uniform_theta_num);
@@ -422,7 +427,7 @@ Coord auto_grid(Ejecta const& jet, Array const& t_obs, Real theta_cut, Real thet
     // coord.theta = uniform_theta;
 
     const size_t phi_num = std::max<size_t>(static_cast<size_t>(360 * phi_resol), 1);
-    const size_t uniform_phi_num = static_cast<size_t>(static_cast<Real>(phi_num) * 0.3);
+    const size_t uniform_phi_num = static_cast<size_t>(static_cast<Real>(phi_num) * fwd_ratio);
     const size_t adaptive_phi_num = phi_num - uniform_phi_num;
 
     const Array uniform_phi = xt::linspace(0., 2 * con::pi, uniform_phi_num);

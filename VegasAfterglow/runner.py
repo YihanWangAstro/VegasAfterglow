@@ -3,6 +3,7 @@
 import logging
 import math
 import os
+from concurrent.futures import ThreadPoolExecutor
 from typing import List, Optional, Sequence, Tuple, Type
 
 import bilby
@@ -23,6 +24,15 @@ except ImportError:
 
 # Patch bilby to accept 'moves' kwarg for emcee sampler
 _BilbyEmcee.default_kwargs["moves"] = None
+
+
+class ThreadPoolWithClose(ThreadPoolExecutor):
+    def close(self):
+        self.shutdown(wait=True)
+
+    def join(self):
+        pass
+
 
 logger = logging.getLogger(__name__)
 
@@ -90,9 +100,11 @@ SAMPLER_DEFAULTS = {
     "dynesty": {
         "nlive": 500,
         "dlogz": 0.1,
-        "sample": "rwalk",
-        "walks": 100,
-        "nact": 10,
+        # "sample": "rwalk",
+        # "walks": 25,
+        "sample": "rslice",
+        # "bootstrap": 5,
+        # "slices": 3,
         "maxmcmc": 5000,
     },
     "emcee": {
@@ -149,6 +161,33 @@ def get_optimal_nwalkers(ndim: int, ncpu: Optional[int] = None) -> int:
     units_needed = max(1, units_needed)
 
     return units_needed * align_unit
+
+
+def get_optimal_queue_size(ncpu, nlive):
+    """
+    Calculates the optimal queue_size for dynesty based on hardware and sampling parameters.
+    Parameters:
+    -----------
+    ncpu : int
+        Number of CPUs or Threads available.
+    nlive : int
+        Number of live points used in the Nested Sampler.
+
+    Returns:
+    --------
+    int
+        The recommended queue_size.
+    """
+    target_multiplier = 2
+    target_size = ncpu * target_multiplier
+
+    max_safe_size = int(nlive * 0.15)
+    optimal_size = min(target_size, max_safe_size)
+    aligned_size = (optimal_size // ncpu) * ncpu
+
+    if aligned_size < ncpu:
+        aligned_size = ncpu
+    return aligned_size
 
 
 class AfterglowLikelihood(bilby.Likelihood):
@@ -213,14 +252,19 @@ class AfterglowLikelihood(bilby.Likelihood):
         for i, key in enumerate(self.param_keys):
             self._theta[i] = self.parameters[key]
 
+        BAD_LOGL_FLOOR = -1e100
+
         try:
             # Use batch interface with single sample - C++ handles all transformations
             samples = self._theta.reshape(1, -1)
             chi2_arr = self._get_model().batch_estimate_chi2(samples, self._transformer)
             chi2 = chi2_arr[0]
-            return -0.5 * chi2 if np.isfinite(chi2) else -np.inf
-        except Exception:
-            return -np.inf
+            loglike = -0.5 * chi2 if np.isfinite(chi2) else BAD_LOGL_FLOOR
+            # print(f"[DEBUG] log_likelihood call: params={self._theta}, chi2={chi2}, loglike={loglike}")
+            return loglike
+        except Exception as e:
+            print(f"[DEBUG] log_likelihood exception: params={self._theta}, error={e}")
+            return BAD_LOGL_FLOOR
 
 
 class Fitter:
@@ -611,17 +655,41 @@ class Fitter:
             "label": label,
             "clean": clean,
             "resume": resume,
-            "npool": npool,
         }
 
-        defaults = dict(SAMPLER_DEFAULTS.get(sampler.lower(), {}))
+        # Use ThreadPoolExecutor instead of multiprocessing for better performance
+        # (GIL is released in C++ code via py::gil_scoped_release)
+        pool = None
+        if npool is None:
+            npool = os.cpu_count() or 1
+        else:
+            npool = max(1, npool)
 
+        pool = ThreadPoolWithClose(max_workers=npool)
+        run_kwargs["pool"] = pool
+        logger.info(
+            "Running %s sampler at resolution %s (npool=%d, using threads)",
+            sampler,
+            resolution,
+            npool,
+        )
+
+        defaults = dict(SAMPLER_DEFAULTS.get(sampler.lower(), {}))
         run_kwargs.update({**defaults, **sampler_kwargs})
 
-        logger.info(
-            "Running %s sampler at resolution %s (npool=%d)", sampler, resolution, npool
-        )
-        result = bilby.run_sampler(**run_kwargs)
+        # Explicitly tell dynesty to use pool for likelihood evaluations
+        if sampler.lower() == "dynesty":
+            run_kwargs["use_pool"] = {"loglikelihood": True}
+            run_kwargs["queue_size"] = get_optimal_queue_size(
+                npool, run_kwargs.get("nlive", 500)
+            )
+
+        try:
+            result = bilby.run_sampler(**run_kwargs)
+        finally:
+            # Clean up thread pool
+            if pool is not None:
+                pool.shutdown(wait=True)
 
         samples = result.posterior[list(labels)].values
         log_likelihoods = result.posterior["log_likelihood"].values

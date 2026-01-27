@@ -332,19 +332,33 @@ MeshGrid Observer::specific_flux(Array const& t_obs, Array const& nu_obs, Photon
 
     const Array lg2_t_obs = xt::log2(t_obs);
     const Array lg2_nu_src = xt::log2(nu_obs) + std::log2(one_plus_z);
-    const auto k_indices = compute_k_indices(t_obs);
 
     MeshGrid F_nu({nu_len, t_obs_len}, 0);
 
     for (size_t i = 0; i < eff_phi_grid; i++) {
-        const size_t eff_i = i * jet_3d;
+        size_t eff_i = i * jet_3d;
         for (size_t j = 0; j < theta_grid; j++) {
-            for (size_t l = 0; l < nu_len; l++) {
-                InterpState state;
-                for (size_t idx = 0; idx < t_obs_len; idx++) {
-                    const size_t k = k_indices(i, j, idx);
-                    if (k != SIZE_MAX && set_boundaries(state, eff_i, i, j, k, lg2_nu_src[l], photons)) [[likely]] {
-                        F_nu(l, idx) += loglog_interpolate(state, lg2_t_obs(idx), lg2_t(i, j, k));
+            // Skip observation times that are below the grid's start time
+            size_t t_idx = 0;
+            iterate_to(lg2_t(i, j, 0), lg2_t_obs, t_idx);
+
+            InterpState state;
+            for (size_t k = 0; k < t_grid - 1 && t_idx < t_obs_len; k++) {
+                const Real t_lo = lg2_t(i, j, k);
+                const Real t_hi = lg2_t(i, j, k + 1);
+
+                if (t_hi < lg2_t_obs(t_idx))
+                    continue;
+
+                const size_t idx_start = t_idx;
+                iterate_to(t_hi, lg2_t_obs, t_idx);
+                const size_t idx_end = t_idx;
+
+                for (size_t l = 0; l < nu_len; l++) {
+                    if (set_boundaries(state, eff_i, i, j, k, lg2_nu_src[l], photons)) [[likely]] {
+                        for (size_t idx = idx_start; idx < idx_end; idx++) {
+                            F_nu(l, idx) += loglog_interpolate(state, lg2_t_obs(idx), t_lo);
+                        }
                     }
                 }
             }
@@ -374,11 +388,11 @@ Array Observer::specific_flux_series(Array const& t_obs, Array const& nu_obs, Ph
         for (size_t j = 0; j < theta_grid; j++) {
             // Skip observation times below the grid's start time
             size_t idx = 0;
-            iterate_to(time(i, j, 0), t_obs, idx);
+            iterate_to(lg2_t(i, j, 0), lg2_t_obs, idx);
 
             InterpState state;
             for (size_t k = 0; idx < t_obs_len && k < t_grid - 1;) {
-                if (time(i, j, k + 1) < t_obs(idx)) {
+                if (lg2_t(i, j, k + 1) < lg2_t_obs(idx)) {
                     k++;
                 } else {
                     if (set_boundaries(state, eff_i, i, j, k, lg2_nu_src(idx), photons)) [[likely]] {
