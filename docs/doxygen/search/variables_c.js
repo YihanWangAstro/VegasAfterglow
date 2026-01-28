@@ -10,13 +10,15 @@ var searchData=
   ['mass_5finject_7',['mass_inject',['../structForwardState.html#aa2b63d1b9c3203d9d7893c5985bdb05d',1,'ForwardState::mass_inject'],['../structReverseState.html#ae3b292a9eef86310c4b52b806203ee1d',1,'ReverseState::mass_inject'],['../structSimpleState.html#abab27aff4431a6c6c69ef4b5af7ea6d4',1,'SimpleState::mass_inject']]],
   ['me_8',['me',['../namespacecon.html#a740c8edb3d4f2d904a1c76002f84fb7e',1,'con']]],
   ['mec2_9',['mec2',['../namespacecon.html#ae1b8cddbe12f755f5d01b86b0e2b9e14',1,'con']]],
-  ['medium_10',['medium',['../classFRShockEqn.html#a516430d788da457f99a0a9f913c4555c',1,'FRShockEqn::medium'],['../classSimpleShockEqn.html#a542dc5b45178ca91cf1dabfc4cfa9829',1,'SimpleShockEqn::medium'],['../classForwardShockEqn.html#a0bec65b319edbb6294eee8057370be57',1,'ForwardShockEqn::medium'],['../structConfigParams.html#aac924ce1108981926235f565f75d75fe',1,'ConfigParams::medium']]],
+  ['medium_10',['medium',['../classForwardShockEqn.html#a0bec65b319edbb6294eee8057370be57',1,'ForwardShockEqn::medium'],['../classSimpleShockEqn.html#a542dc5b45178ca91cf1dabfc4cfa9829',1,'SimpleShockEqn::medium'],['../classFRShockEqn.html#a516430d788da457f99a0a9f913c4555c',1,'FRShockEqn::medium'],['../structConfigParams.html#aac924ce1108981926235f565f75d75fe',1,'ConfigParams::medium']]],
   ['mev_11',['MeV',['../namespaceunit.html#a2eb22b37aa30bd73b34bc228f7229115',1,'unit']]],
   ['min_5fobs_5ftime_12',['min_obs_time',['../namespacecon.html#a567e367066c9354a3cb44b696905b2a0',1,'con']]],
-  ['mjy_13',['mJy',['../namespaceunit.html#acb88ce91365dfa4148e22780a7d6a0c0',1,'unit']]],
-  ['model_5ffluxes_14',['model_fluxes',['../structMultiBandData.html#ad4863b68579929814e8e4c8b161a996a',1,'MultiBandData']]],
-  ['mp_15',['mp',['../namespacecon.html#a47a54b8f758d02e6f8b85e41207ae620',1,'con']]],
-  ['mpc_16',['Mpc',['../namespaceunit.html#ae5c0551e07428abae88af1995358af73',1,'unit']]],
-  ['mpc2_17',['mpc2',['../namespacecon.html#a3069b33fec8e9e6ab27263b1bb30ad57',1,'con']]],
-  ['myr_18',['Myr',['../namespaceunit.html#a613decaabb5023d5cadd9ac59f6c1d3e',1,'unit']]]
+  ['min_5fobs_5ftime_5fsec_13',['min_obs_time_sec',['../namespacedefaults_1_1observer.html#aa955f53126bae3c13bf752b75ed32558',1,'defaults::observer']]],
+  ['min_5ftheta_5fpoints_14',['min_theta_points',['../namespacedefaults_1_1grid.html#a17f64e94f8f9cb660a1e9d80a2b1558c',1,'defaults::grid']]],
+  ['mjy_15',['mJy',['../namespaceunit.html#acb88ce91365dfa4148e22780a7d6a0c0',1,'unit']]],
+  ['model_5ffluxes_16',['model_fluxes',['../structMultiBandData.html#ad4863b68579929814e8e4c8b161a996a',1,'MultiBandData::model_fluxes'],['../structBatchWorkspace.html#a6333e5c26a03fe93d9056956732449ad',1,'BatchWorkspace::model_fluxes']]],
+  ['mp_17',['mp',['../namespacecon.html#a47a54b8f758d02e6f8b85e41207ae620',1,'con']]],
+  ['mpc_18',['Mpc',['../namespaceunit.html#ae5c0551e07428abae88af1995358af73',1,'unit']]],
+  ['mpc2_19',['mpc2',['../namespacecon.html#a3069b33fec8e9e6ab27263b1bb30ad57',1,'con']]],
+  ['myr_20',['Myr',['../namespaceunit.html#a613decaabb5023d5cadd9ac59f6c1d3e',1,'unit']]]
 ];

@@ -1,15 +1,19 @@
 <map id="inverse&#45;compton.h" name="inverse&#45;compton.h">
-<area shape="rect" id="Node000001" title=" " alt="" coords="367,5,511,31"/>
+<area shape="rect" id="Node000001" title=" " alt="" coords="345,5,489,31"/>
 <area shape="rect" id="Node000002" href="$afterglow_8h.html" title=" " alt="" coords="165,299,260,324"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="393,38,352,56,309,81,268,113,235,153,219,192,213,233,214,298,208,298,207,233,214,190,230,151,264,110,306,77,350,51,390,33"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="331,30,190,50,126,64,82,81,61,96,47,110,36,128,27,153,24,179,31,203,46,224,68,244,122,275,175,296,174,301,120,280,65,248,42,228,26,205,19,179,22,151,32,126,42,107,57,92,79,76,124,59,189,44,331,25"/>
 <area shape="rect" id="Node000008" href="$synchrotron_8cpp.html" title=" " alt="" coords="328,372,455,397"/>
-<area shape="poly" id="edge20_Node000001_Node000008" title=" " alt="" coords="491,33,534,52,576,80,594,97,609,117,619,139,622,163,622,239,620,287,612,306,596,326,564,350,528,366,491,377,456,383,455,378,490,372,527,361,562,345,592,322,607,303,615,285,617,239,617,164,613,140,604,119,590,101,573,84,531,57,489,38"/>
-<area shape="rect" id="Node000009" href="$inverse-compton_8cpp.html" title=" " alt="" coords="423,299,581,324"/>
-<area shape="poly" id="edge10_Node000001_Node000009" title=" " alt="" coords="474,36,498,54,519,77,530,96,535,113,541,152,541,195,533,237,510,300,505,298,528,236,536,195,535,152,530,114,525,98,515,80,495,58,471,40"/>
-<area shape="rect" id="Node000010" href="$power-law-syn_8h.html" title=" " alt="" coords="374,79,505,104"/>
-<area shape="poly" id="edge11_Node000001_Node000010" title=" " alt="" coords="442,44,442,79,437,79,437,44"/>
-<area shape="rect" id="Node000012" href="$synchrotron_8h.html" title=" " alt="" coords="245,152,356,177"/>
-<area shape="poly" id="edge21_Node000001_Node000012" title=" " alt="" coords="412,41,364,81,332,119,310,153,305,150,328,116,360,77,408,37"/>
+<area shape="poly" id="edge24_Node000001_Node000008" title=" " alt="" coords="482,32,532,50,579,77,599,94,616,114,626,137,630,163,630,240,625,268,612,294,593,315,569,333,513,359,456,375,454,370,511,354,566,328,590,311,608,291,620,267,625,239,625,164,621,139,611,117,596,98,576,81,529,55,481,37"/>
+<area shape="rect" id="Node000009" href="$inverse-compton_8cpp.html" title=" " alt="" coords="427,225,585,251"/>
+<area shape="poly" id="edge10_Node000001_Node000009" title=" " alt="" coords="457,35,488,53,516,77,541,111,554,151,556,165,554,178,539,206,521,227,517,223,535,203,549,176,551,165,549,153,536,113,512,80,485,57,455,39"/>
+<area shape="rect" id="Node000010" href="$power-law-syn_8cpp.html" title=" " alt="" coords="393,152,539,177"/>
+<area shape="poly" id="edge11_Node000001_Node000010" title=" " alt="" coords="455,35,478,53,496,78,501,98,496,119,478,153,473,151,491,118,495,98,492,80,474,57,452,40"/>
+<area shape="rect" id="Node000011" href="$power-law-syn_8h.html" title=" " alt="" coords="351,79,482,104"/>
+<area shape="poly" id="edge12_Node000001_Node000011" title=" " alt="" coords="419,44,419,79,414,79,414,44"/>
+<area shape="rect" id="Node000012" href="$synchrotron_8h.html" title=" " alt="" coords="259,152,369,177"/>
+<area shape="poly" id="edge25_Node000001_Node000012" title=" " alt="" coords="386,40,362,58,342,80,325,118,318,152,313,151,320,117,337,77,358,54,382,36"/>
+<area shape="rect" id="Node000015" href="$smooth-power-law-syn_8h.html" title=" " alt="" coords="93,79,277,104"/>
+<area shape="poly" id="edge21_Node000001_Node000015" title=" " alt="" coords="367,37,223,81,221,76,366,32"/>
 <area shape="rect" id="Node000003" href="$mcmc_8h.html" title=" " alt="" coords="63,372,138,397"/>
 <area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="184,334,120,374,118,370,181,329"/>
 <area shape="rect" id="Node000006" href="$pymodel_8cpp.html" title=" " alt="" coords="237,445,343,471"/>
@@ -23,15 +27,17 @@
 <area shape="poly" id="edge4_Node000003_Node000005" title=" " alt="" coords="123,406,157,443,153,447,119,409"/>
 <area shape="poly" id="edge7_Node000007_Node000005" title=" " alt="" coords="196,411,175,447,170,444,191,408"/>
 <area shape="poly" id="edge8_Node000007_Node000006" title=" " alt="" coords="233,404,278,443,275,447,229,408"/>
-<area shape="rect" id="Node000011" href="$power-law-syn_8cpp.html" title=" " alt="" coords="380,152,525,177"/>
-<area shape="poly" id="edge12_Node000010_Node000011" title=" " alt="" coords="447,117,453,151,448,152,441,118"/>
-<area shape="poly" id="edge13_Node000010_Node000012" title=" " alt="" coords="406,113,325,154,322,149,404,108"/>
-<area shape="poly" id="edge18_Node000012_Node000002" title=" " alt="" coords="289,191,222,300,217,297,284,188"/>
-<area shape="poly" id="edge19_Node000012_Node000008" title=" " alt="" coords="327,185,343,203,358,224,374,265,385,307,393,372,388,372,380,308,369,266,353,227,339,206,323,189"/>
-<area shape="rect" id="Node000013" href="$IO_8h.html" title=" " alt="" coords="295,225,343,251"/>
-<area shape="poly" id="edge14_Node000012_Node000013" title=" " alt="" coords="310,190,319,225,314,226,305,191"/>
-<area shape="poly" id="edge16_Node000013_Node000002" title=" " alt="" coords="292,260,232,301,229,296,290,256"/>
-<area shape="poly" id="edge17_Node000013_Node000009" title=" " alt="" coords="357,251,473,296,471,301,355,256"/>
+<area shape="poly" id="edge13_Node000011_Node000010" title=" " alt="" coords="435,114,460,150,456,153,430,117"/>
+<area shape="poly" id="edge14_Node000011_Node000012" title=" " alt="" coords="390,114,332,154,329,150,387,110"/>
+<area shape="poly" id="edge18_Node000012_Node000002" title=" " alt="" coords="300,190,223,300,219,297,296,187"/>
+<area shape="poly" id="edge20_Node000012_Node000008" title=" " alt="" coords="332,188,352,224,379,308,392,371,387,372,374,309,348,226,328,190"/>
+<area shape="poly" id="edge19_Node000012_Node000009" title=" " alt="" coords="359,180,476,223,474,228,357,185"/>
+<area shape="rect" id="Node000013" href="$IO_8h.html" title=" " alt="" coords="290,225,338,251"/>
+<area shape="poly" id="edge15_Node000012_Node000013" title=" " alt="" coords="317,191,317,225,311,225,311,191"/>
+<area shape="poly" id="edge17_Node000013_Node000002" title=" " alt="" coords="288,261,231,301,228,296,285,256"/>
 <area shape="rect" id="Node000014" href="$IO_8cpp.html" title=" " alt="" coords="284,299,347,324"/>
-<area shape="poly" id="edge15_Node000013_Node000014" title=" " alt="" coords="321,265,319,299,313,298,315,264"/>
+<area shape="poly" id="edge16_Node000013_Node000014" title=" " alt="" coords="317,264,318,298,312,299,312,265"/>
+<area shape="poly" id="edge23_Node000015_Node000012" title=" " alt="" coords="219,108,294,149,292,154,216,113"/>
+<area shape="rect" id="Node000016" href="$smooth-power-law-syn_8cpp.html" title=" " alt="" coords="36,152,235,177"/>
+<area shape="poly" id="edge22_Node000015_Node000016" title=" " alt="" coords="171,117,146,153,141,150,167,114"/>
 </map>

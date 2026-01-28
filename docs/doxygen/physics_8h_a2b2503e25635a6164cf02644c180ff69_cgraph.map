@@ -1,6 +1,0 @@
-<map id="thick_shell_dec_radius" name="thick_shell_dec_radius">
-<area shape="rect" id="Node000001" title="Computes the deceleration radius for the thick shell case." alt="" coords="5,29,175,55"/>
-<area shape="rect" id="Node000002" href="$utilities_8h.html#ab8e81118f023df135835db8cce4f5f42" title="Returns the value of a single parameter." alt="" coords="223,29,273,55"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="175,39,208,39,208,45,175,45"/>
-<area shape="poly" id="edge2_Node000002_Node000002" title=" " alt="" coords="221,31,216,21,219,11,230,5,248,3,270,6,279,15,275,19,267,11,248,8,232,10,223,15,221,20,226,28"/>
-</map>

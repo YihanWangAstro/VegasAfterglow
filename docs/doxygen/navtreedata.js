@@ -30,6 +30,7 @@ var NAVTREE =
       [ "Namespace List", "namespaces.html", "namespaces_dup" ],
       [ "Namespace Members", "namespacemembers.html", [
         [ "All", "namespacemembers.html", null ],
+        [ "Functions", "namespacemembers_func.html", null ],
         [ "Variables", "namespacemembers_vars.html", null ]
       ] ]
     ] ],
@@ -61,9 +62,10 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "IO_8cpp.html",
-"functions_vars_q.html",
-"physics_8cpp.html#a853128cff1cc2dbbc46341d6d1386db2",
-"structPyMagnetar.html#a088ac94a2447c79d31eed3edcf3114d0"
+"functions_vars_d.html",
+"namespacephysics_1_1scales.html#a886ce2e09d9a5b69b14ccff9e9785be2",
+"structMultiBandData.html#a631c6982c88e97795ffef3edb81253d8",
+"utilities_8h.html#aa9e4ad2688dbac62957b8d908a58bff7"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

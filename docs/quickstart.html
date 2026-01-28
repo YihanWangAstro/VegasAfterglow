@@ -83,6 +83,7 @@
 <li class="toctree-l1"><a class="reference internal" href="examples.html">Examples</a></li>
 <li class="toctree-l1"><a class="reference internal" href="mcmc_fitting.html">MCMC Parameter Fitting</a></li>
 <li class="toctree-l1"><a class="reference internal" href="parameter_reference.html">Parameter Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="validation.html">Validation &amp; Testing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="python_api.html">Python API Reference</a></li>
 <li class="toctree-l1"><a class="reference internal" href="cpp_api.html">C++ API Reference</a></li>
 <li class="toctree-l1"><a class="reference internal" href="troubleshooting.html">Troubleshooting</a></li>
@@ -671,10 +672,10 @@ The parameters you include depend on your model configuration:</p>
     <span class="n">top_k</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>                      <span class="c1"># Number of best-fit parameters to return</span>
 <span class="p">)</span>
 
-<span class="c1"># Option 2: MCMC with emcee (faster, recommended for quick fitting, hard to converge for multimodal posteriors)</span>
+<span class="c1"># Option 2: MCMC with emcee (faster, recommended for quick fitting, not optimal for multimodal posteriors)</span>
 <span class="n">result</span> <span class="o">=</span> <span class="n">fitter</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span>
     <span class="n">mc_params</span><span class="p">,</span>
-    <span class="n">resolution</span><span class="o">=</span><span class="p">(</span><span class="mf">0.3</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span>       <span class="c1"># Grid resolution (phi, theta, t)</span>
+    <span class="n">resolution</span><span class="o">=</span><span class="p">(</span><span class="mf">0.3</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span>     <span class="c1"># Grid resolution (phi, theta, t)</span>
     <span class="n">sampler</span><span class="o">=</span><span class="s2">&quot;emcee&quot;</span><span class="p">,</span>               <span class="c1"># MCMC sampler</span>
     <span class="n">nsteps</span><span class="o">=</span><span class="mi">50000</span><span class="p">,</span>                  <span class="c1"># Number of steps per walker</span>
     <span class="n">nburn</span><span class="o">=</span><span class="mi">10000</span><span class="p">,</span>                   <span class="c1"># Burn-in steps to discard</span>

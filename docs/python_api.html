@@ -26,7 +26,7 @@
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="C++ API Reference" href="cpp_api.html" />
-    <link rel="prev" title="Parameter Reference" href="parameter_reference.html" /> 
+    <link rel="prev" title="Validation &amp; Testing" href="validation.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -56,6 +56,7 @@
 <li class="toctree-l1"><a class="reference internal" href="examples.html">Examples</a></li>
 <li class="toctree-l1"><a class="reference internal" href="mcmc_fitting.html">MCMC Parameter Fitting</a></li>
 <li class="toctree-l1"><a class="reference internal" href="parameter_reference.html">Parameter Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="validation.html">Validation &amp; Testing</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Python API Reference</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#overview">Overview</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#key-components">Key Components</a></li>
@@ -301,20 +302,21 @@
 <span class="sd">    Single-parameter definition for MCMC.</span>
 
 <span class="sd">    This class defines a parameter to be used in MCMC fitting, including</span>
-<span class="sd">    its name, initial value, prior range, and sampling scale.</span>
+<span class="sd">    its name, prior range, sampling scale, and optional initial value.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
 <span class="sd">    name : str</span>
 <span class="sd">        The parameter name</span>
-<span class="sd">    init : float</span>
-<span class="sd">        Initial value for the parameter</span>
-<span class="sd">    lower : float, optional</span>
-<span class="sd">        Lower bound for the parameter (not needed for FIXED scale)</span>
-<span class="sd">    upper : float, optional</span>
-<span class="sd">        Upper bound for the parameter (not needed for FIXED scale)</span>
+<span class="sd">    lower : float</span>
+<span class="sd">        Lower bound for the parameter</span>
+<span class="sd">    upper : float</span>
+<span class="sd">        Upper bound for the parameter</span>
 <span class="sd">    scale : Scale, optional</span>
 <span class="sd">        Sampling scale (LINEAR, LOG, or FIXED), default is LINEAR</span>
+<span class="sd">    initial : float, optional</span>
+<span class="sd">        Initial value for the parameter (in linear space, auto-converted</span>
+<span class="sd">        for LOG scale). If not provided, defaults to midpoint of range.</span>
 
 <span class="sd">    Notes</span>
 <span class="sd">    -----</span>
@@ -332,7 +334,7 @@
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="parameter_reference.html" class="btn btn-neutral float-left" title="Parameter Reference" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="validation.html" class="btn btn-neutral float-left" title="Validation &amp; Testing" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
         <a href="cpp_api.html" class="btn btn-neutral float-right" title="C++ API Reference" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 

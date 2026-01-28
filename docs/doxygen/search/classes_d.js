@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['wind_0',['Wind',['../classWind.html',1,'']]]
+  ['validationerror_0',['ValidationError',['../classafterglow_1_1ValidationError.html',1,'afterglow']]]
 ];

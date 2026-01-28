@@ -141,6 +141,8 @@ Typedefs</h2></td></tr>
 <tr class="separator:a06c55931188bd694c6e070a50e95344c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac1d4addade56d129930395ee7527601e" id="r_ac1d4addade56d129930395ee7527601e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">using</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="pybind_8h.html#ac1d4addade56d129930395ee7527601e">PyGrid</a> = <a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">xt::pytensor</a>&lt; <a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">double</a>, 2 &gt;</td></tr>
 <tr class="separator:ac1d4addade56d129930395ee7527601e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aeb2a0715dc62dd310f125ee3e47c7d2b" id="r_aeb2a0715dc62dd310f125ee3e47c7d2b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">using</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="pybind_8h.html#aeb2a0715dc62dd310f125ee3e47c7d2b">PyGrid3d</a> = <a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">xt::pytensor</a>&lt; <a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">double</a>, 3 &gt;</td></tr>
+<tr class="separator:aeb2a0715dc62dd310f125ee3e47c7d2b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
@@ -181,6 +183,22 @@ Functions</h2></td></tr>
 
 </div>
 </div>
+<a id="aeb2a0715dc62dd310f125ee3e47c7d2b" name="aeb2a0715dc62dd310f125ee3e47c7d2b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aeb2a0715dc62dd310f125ee3e47c7d2b">&#9670;&#160;</a></span>PyGrid3d</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">using</a> <a class="el" href="pybind_8h.html#aeb2a0715dc62dd310f125ee3e47c7d2b">PyGrid3d</a> =  <a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">xt::pytensor</a>&lt;<a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">double</a>, 3&gt;</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="pybind_8h_source.html#l00016">16</a> of file <a class="el" href="pybind_8h_source.html">pybind.h</a>.</p>
+
+</div>
+</div>
 <h2 class="groupheader">Function Documentation</h2>
 <a id="a65fbb7ac1dd1f2667e68724a512f691c" name="a65fbb7ac1dd1f2667e68724a512f691c"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a65fbb7ac1dd1f2667e68724a512f691c">&#9670;&#160;</a></span>is_ascending()</h2>
@@ -200,18 +218,18 @@ template&lt;<a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="pybind_8h_source.html#l00018">18</a> of file <a class="el" href="pybind_8h_source.html">pybind.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   18</span>                                    {</div>
-<div class="line"><span class="lineno">   19</span>    <span class="keywordflow">if</span> (<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">arr</a>.size() &lt;= 1)</div>
-<div class="line"><span class="lineno">   20</span>        <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
-<div class="line"><span class="lineno">   21</span>    <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a> = 1; <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a> &lt; <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">arr</a>.size(); ++<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a>) {</div>
-<div class="line"><span class="lineno">   22</span>        <span class="keywordflow">if</span> (<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">arr</a>(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a>) &lt; <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">arr</a>(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a> - 1)) {</div>
-<div class="line"><span class="lineno">   23</span>            <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
-<div class="line"><span class="lineno">   24</span>        }</div>
-<div class="line"><span class="lineno">   25</span>    }</div>
-<div class="line"><span class="lineno">   26</span>    <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
-<div class="line"><span class="lineno">   27</span>}</div>
-<div class="ttc" id="autilities_8h_html_ab8e81118f023df135835db8cce4f5f42"><div class="ttname"><a href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">max</a></div><div class="ttdeci">T max(T value)</div><div class="ttdoc">Returns the value of a single parameter.</div><div class="ttdef"><b>Definition</b> <a href="utilities_8h_source.html#l00307">utilities.h:307</a></div></div>
+<p class="definition">Definition at line <a class="el" href="pybind_8h_source.html#l00019">19</a> of file <a class="el" href="pybind_8h_source.html">pybind.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   19</span>                                    {</div>
+<div class="line"><span class="lineno">   20</span>    <span class="keywordflow">if</span> (<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">arr</a>.size() &lt;= 1)</div>
+<div class="line"><span class="lineno">   21</span>        <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
+<div class="line"><span class="lineno">   22</span>    <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a> = 1; <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a> &lt; <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">arr</a>.size(); ++<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a>) {</div>
+<div class="line"><span class="lineno">   23</span>        <span class="keywordflow">if</span> (<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">arr</a>(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a>) &lt; <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">arr</a>(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a> - 1)) {</div>
+<div class="line"><span class="lineno">   24</span>            <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><span class="lineno">   25</span>        }</div>
+<div class="line"><span class="lineno">   26</span>    }</div>
+<div class="line"><span class="lineno">   27</span>    <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
+<div class="line"><span class="lineno">   28</span>}</div>
+<div class="ttc" id="autilities_8h_html_ab8e81118f023df135835db8cce4f5f42"><div class="ttname"><a href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">max</a></div><div class="ttdeci">T max(T value)</div><div class="ttdoc">Returns the value of a single parameter.</div><div class="ttdef"><b>Definition</b> <a href="utilities_8h_source.html#l00318">utilities.h:318</a></div></div>
 </div><!-- fragment --><div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">

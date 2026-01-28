@@ -1,30 +1,12 @@
 <map id="update_gamma_M" name="update_gamma_M">
-<area shape="rect" id="Node000001" title=" " alt="" coords="5,86,148,111"/>
-<area shape="rect" id="Node000002" href="$synchrotron_8cpp.html#aa9c18694f1776d77f8ff4980157d5f08" title=" " alt="" coords="203,35,389,60"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="132,83,227,61,228,66,133,88"/>
-<area shape="rect" id="Node000003" href="$utilities_8h.html#ab8e81118f023df135835db8cce4f5f42" title="Returns the value of a single parameter." alt="" coords="913,238,964,263"/>
-<area shape="poly" id="edge18_Node000001_Node000003" title=" " alt="" coords="148,96,483,96,618,96,692,99,749,111,803,134,867,172,898,197,923,225,919,229,894,201,864,176,800,139,747,116,691,104,618,101,483,101,148,101"/>
-<area shape="rect" id="Node000004" href="$structInverseComptonY.html#ae318101198df1b792c8451eba352071b" title="Calculates the effective Y parameter for a given Lorentz factor and spectral index." alt="" coords="196,157,396,197"/>
-<area shape="poly" id="edge4_Node000001_Node000004" title=" " alt="" coords="114,109,227,150,226,155,112,114"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="344,32,448,13,513,6,584,3,658,6,732,19,802,42,835,58,867,77,884,92,898,109,918,148,931,189,937,223,932,224,926,190,913,151,893,112,880,96,864,82,833,62,800,47,730,24,657,12,584,8,514,11,448,18,345,38"/>
-<area shape="poly" id="edge3_Node000003_Node000003" title=" " alt="" coords="913,239,908,229,910,220,921,213,939,211,960,214,969,223,965,227,957,219,939,216,923,218,915,223,913,229,918,236"/>
-<area shape="poly" id="edge15_Node000004_Node000003" title=" " alt="" coords="396,166,496,162,615,165,742,178,805,189,866,205,890,215,911,227,908,232,887,220,864,210,804,194,741,183,614,170,496,167,396,171"/>
-<area shape="rect" id="Node000005" href="$utilities_8h.html#a4520a27a10a2aef33c99ad8c679da404" title="Fast approximation of a raised to the power of b." alt="" coords="444,212,525,238"/>
-<area shape="poly" id="edge5_Node000004_Node000005" title=" " alt="" coords="376,194,431,209,430,214,374,200"/>
-<area shape="rect" id="Node000010" href="$utilities_8h.html#ae490b13fdcc1b917ecdd08c0cecf3556" title="Computes a^(4/3)" alt="" coords="452,363,517,388"/>
-<area shape="poly" id="edge16_Node000004_Node000010" title=" " alt="" coords="318,195,464,351,460,354,314,199"/>
-<area shape="poly" id="edge14_Node000005_Node000003" title=" " alt="" coords="526,220,675,216,770,219,866,229,900,236,899,241,865,234,770,225,675,222,526,225"/>
-<area shape="rect" id="Node000006" href="$utilities_8h.html#afc584c30c352192de6847b1f4b8caf0e" title="Fast approximation of 2 raised to a power." alt="" coords="573,238,660,263"/>
-<area shape="poly" id="edge6_Node000005_Node000006" title=" " alt="" coords="526,230,560,237,559,242,525,235"/>
-<area shape="rect" id="Node000007" href="$utilities_8h.html#aa67895957aa831a991982a8268ef8349" title="Fast approximation of the base&#45;2 logarithm." alt="" coords="575,314,658,339"/>
-<area shape="poly" id="edge8_Node000005_Node000007" title=" " alt="" coords="504,236,590,303,587,307,501,240"/>
-<area shape="poly" id="edge7_Node000006_Node000003" title=" " alt="" coords="660,248,900,248,900,253,660,253"/>
-<area shape="poly" id="edge11_Node000007_Node000003" title=" " alt="" coords="658,314,900,256,901,262,659,319"/>
-<area shape="rect" id="Node000008" href="$utilities_8h.html#acd0ec547a29a5a2f768d02b1aef146fa" title=" " alt="" coords="708,339,865,364"/>
-<area shape="poly" id="edge9_Node000007_Node000008" title=" " alt="" coords="658,330,695,335,694,340,658,335"/>
-<area shape="rect" id="Node000009" href="$utilities_8h.html#aeec24af41c09b6f977fbd1b6209e6501" title=" " alt="" coords="755,388,818,414"/>
-<area shape="poly" id="edge12_Node000007_Node000009" title=" " alt="" coords="640,337,709,373,743,386,741,391,707,378,637,341"/>
-<area shape="poly" id="edge10_Node000008_Node000003" title=" " alt="" coords="826,336,864,317,892,295,916,271,919,275,896,299,867,322,828,341"/>
-<area shape="poly" id="edge13_Node000009_Node000003" title=" " alt="" coords="817,394,841,386,864,373,885,351,903,325,927,275,931,277,908,328,890,354,867,378,843,391,819,399"/>
-<area shape="poly" id="edge17_Node000010_Node000003" title=" " alt="" coords="510,386,576,417,620,433,668,446,719,454,770,455,819,446,864,424,881,410,895,393,915,353,927,311,933,276,938,277,932,313,920,355,899,396,885,414,867,428,820,451,770,460,719,460,667,451,618,438,574,422,508,391"/>
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,56,148,81"/>
+<area shape="rect" id="Node000002" href="$synchrotron_8cpp.html#aa9c18694f1776d77f8ff4980157d5f08" title=" " alt="" coords="200,5,385,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="131,53,224,31,225,36,132,58"/>
+<area shape="rect" id="Node000003" href="$utilities_8h.html#ab8e81118f023df135835db8cce4f5f42" title="Returns the value of a single parameter." alt="" coords="437,56,488,81"/>
+<area shape="poly" id="edge6_Node000001_Node000003" title=" " alt="" coords="148,66,423,66,423,71,148,71"/>
+<area shape="rect" id="Node000004" href="$structInverseComptonY.html#a10d6b44bd159fd7fe8e5a3f1d6be453c" title="Calculates the effective Y parameter for a given Lorentz factor and spectral index." alt="" coords="196,106,389,146"/>
+<area shape="poly" id="edge4_Node000001_Node000004" title=" " alt="" coords="126,79,205,100,203,105,125,84"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="337,28,425,55,423,60,335,33"/>
+<area shape="poly" id="edge3_Node000003_Node000003" title=" " alt="" coords="435,58,429,48,432,38,443,32,463,29,486,33,496,42,492,46,484,38,463,35,445,37,436,41,434,47,439,55"/>
+<area shape="poly" id="edge5_Node000004_Node000003" title=" " alt="" coords="352,103,423,79,425,84,353,108"/>
 </map>

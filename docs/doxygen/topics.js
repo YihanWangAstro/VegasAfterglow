@@ -1,7 +1,6 @@
 var topics =
 [
     [ "Array and Grid Utilities", "group__Mesh__Utilities.html", null ],
-    [ "Gamma Conversion and Adiabatic Index Functions", "group__GammaConversions.html", null ],
     [ "Shock Utilities", "group__ShockUtilities.html", null ],
     [ "Synchrotron Grid Type Aliases", "group__SynchrotronGrids.html", null ],
     [ "Synchrotron Grid Creation and Generation", "group__SynchrotronFunctions.html", null ],

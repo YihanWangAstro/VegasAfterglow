@@ -1,5 +1,6 @@
 var searchData=
 [
-  ['ejecta_0',['Ejecta',['../classEjecta.html',1,'']]],
-  ['empty_1',['Empty',['../classEmpty.html',1,'']]]
+  ['coastingshock_0',['CoastingShock',['../classCoastingShock.html',1,'']]],
+  ['configparams_1',['ConfigParams',['../structConfigParams.html',1,'']]],
+  ['coord_2',['Coord',['../classCoord.html',1,'']]]
 ];

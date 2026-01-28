@@ -21,6 +21,7 @@
       <script src="_static/documentation_options.js?v=01f34227"></script>
       <script src="_static/doctools.js?v=9a2dae69"></script>
       <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
       <script src="_static/js/custom.js"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
@@ -56,6 +57,12 @@
 <li class="toctree-l1"><a class="reference internal" href="examples.html">Examples</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">MCMC Parameter Fitting</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#overview">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#mcmc-best-practices">MCMC Best Practices</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#start-simple-add-complexity-gradually">Start Simple, Add Complexity Gradually</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#why-complex-models-are-problematic">Why Complex Models Are Problematic</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#when-to-use-complex-models">When to Use Complex Models</a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="#basic-setup">Basic Setup</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#setting-up-observational-data">Setting up Observational Data</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#data-selection-and-optimization">Data Selection and Optimization</a></li>
@@ -73,6 +80,7 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#running-mcmc">Running MCMC</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#choosing-a-sampler">Choosing a Sampler</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#fitter-fit-interface">Fitter.fit() Interface</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#basic-mcmc-execution">Basic MCMC Execution</a></li>
 </ul>
@@ -87,6 +95,7 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="parameter_reference.html">Parameter Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="validation.html">Validation &amp; Testing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="python_api.html">Python API Reference</a></li>
 <li class="toctree-l1"><a class="reference internal" href="cpp_api.html">C++ API Reference</a></li>
 <li class="toctree-l1"><a class="reference internal" href="troubleshooting.html">Troubleshooting</a></li>
@@ -123,38 +132,46 @@
 <p class="topic-title">Table of Contents</p>
 <ul class="simple">
 <li><p><a class="reference internal" href="#overview" id="id1">Overview</a></p></li>
-<li><p><a class="reference internal" href="#basic-setup" id="id2">Basic Setup</a></p>
+<li><p><a class="reference internal" href="#mcmc-best-practices" id="id2">MCMC Best Practices</a></p>
 <ul>
-<li><p><a class="reference internal" href="#setting-up-observational-data" id="id3">Setting up Observational Data</a></p></li>
-<li><p><a class="reference internal" href="#data-selection-and-optimization" id="id4">Data Selection and Optimization</a></p></li>
-<li><p><a class="reference internal" href="#global-configuration" id="id5">Global Configuration</a></p></li>
+<li><p><a class="reference internal" href="#start-simple-add-complexity-gradually" id="id3">Start Simple, Add Complexity Gradually</a></p></li>
+<li><p><a class="reference internal" href="#why-complex-models-are-problematic" id="id4">Why Complex Models Are Problematic</a></p></li>
+<li><p><a class="reference internal" href="#when-to-use-complex-models" id="id5">When to Use Complex Models</a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#model-configurations" id="id6">Model Configurations</a></p>
+<li><p><a class="reference internal" href="#basic-setup" id="id6">Basic Setup</a></p>
 <ul>
-<li><p><a class="reference internal" href="#basic-setup-default" id="id7">Basic Setup (Default)</a></p></li>
-<li><p><a class="reference internal" href="#jet-structure-variations" id="id8">Jet Structure Variations</a></p></li>
-<li><p><a class="reference internal" href="#medium-type-variations" id="id9">Medium Type Variations</a></p></li>
-<li><p><a class="reference internal" href="#reverse-shock" id="id10">Reverse Shock</a></p></li>
-<li><p><a class="reference internal" href="#inverse-compton-radiation" id="id11">Inverse Compton Radiation</a></p></li>
-<li><p><a class="reference internal" href="#energy-injection" id="id12">Energy Injection</a></p></li>
-<li><p><a class="reference internal" href="#complex-model-combinations" id="id13">Complex Model Combinations</a></p></li>
+<li><p><a class="reference internal" href="#setting-up-observational-data" id="id7">Setting up Observational Data</a></p></li>
+<li><p><a class="reference internal" href="#data-selection-and-optimization" id="id8">Data Selection and Optimization</a></p></li>
+<li><p><a class="reference internal" href="#global-configuration" id="id9">Global Configuration</a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#running-mcmc" id="id14">Running MCMC</a></p>
+<li><p><a class="reference internal" href="#model-configurations" id="id10">Model Configurations</a></p>
 <ul>
-<li><p><a class="reference internal" href="#fitter-fit-interface" id="id15">Fitter.fit() Interface</a></p></li>
-<li><p><a class="reference internal" href="#basic-mcmc-execution" id="id16">Basic MCMC Execution</a></p></li>
+<li><p><a class="reference internal" href="#basic-setup-default" id="id11">Basic Setup (Default)</a></p></li>
+<li><p><a class="reference internal" href="#jet-structure-variations" id="id12">Jet Structure Variations</a></p></li>
+<li><p><a class="reference internal" href="#medium-type-variations" id="id13">Medium Type Variations</a></p></li>
+<li><p><a class="reference internal" href="#reverse-shock" id="id14">Reverse Shock</a></p></li>
+<li><p><a class="reference internal" href="#inverse-compton-radiation" id="id15">Inverse Compton Radiation</a></p></li>
+<li><p><a class="reference internal" href="#energy-injection" id="id16">Energy Injection</a></p></li>
+<li><p><a class="reference internal" href="#complex-model-combinations" id="id17">Complex Model Combinations</a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#analyzing-results" id="id17">Analyzing Results</a></p>
+<li><p><a class="reference internal" href="#running-mcmc" id="id18">Running MCMC</a></p>
 <ul>
-<li><p><a class="reference internal" href="#parameter-constraints" id="id18">Parameter Constraints</a></p></li>
-<li><p><a class="reference internal" href="#model-predictions" id="id19">Model Predictions</a></p></li>
-<li><p><a class="reference internal" href="#visualization" id="id20">Visualization</a></p></li>
+<li><p><a class="reference internal" href="#choosing-a-sampler" id="id19">Choosing a Sampler</a></p></li>
+<li><p><a class="reference internal" href="#fitter-fit-interface" id="id20">Fitter.fit() Interface</a></p></li>
+<li><p><a class="reference internal" href="#basic-mcmc-execution" id="id21">Basic MCMC Execution</a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#troubleshooting" id="id21">Troubleshooting</a></p></li>
+<li><p><a class="reference internal" href="#analyzing-results" id="id22">Analyzing Results</a></p>
+<ul>
+<li><p><a class="reference internal" href="#parameter-constraints" id="id23">Parameter Constraints</a></p></li>
+<li><p><a class="reference internal" href="#model-predictions" id="id24">Model Predictions</a></p></li>
+<li><p><a class="reference internal" href="#visualization" id="id25">Visualization</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#troubleshooting" id="id26">Troubleshooting</a></p></li>
 </ul>
 </nav>
 <section id="overview">
@@ -168,10 +185,85 @@
 <li><p><strong>Flexible data handling</strong>: Light curves and spectra with optional weighting</p></li>
 </ul>
 </section>
+<section id="mcmc-best-practices">
+<h2><a class="toc-backref" href="#id2" role="doc-backlink">MCMC Best Practices</a><a class="headerlink" href="#mcmc-best-practices" title="Link to this heading"></a></h2>
+<section id="start-simple-add-complexity-gradually">
+<h3><a class="toc-backref" href="#id3" role="doc-backlink">Start Simple, Add Complexity Gradually</a><a class="headerlink" href="#start-simple-add-complexity-gradually" title="Link to this heading"></a></h3>
+<p>The most common mistake in GRB afterglow fitting is starting with an overly complex model. <strong>Always begin with the simplest physically motivated model</strong> and only add complexity when the data clearly demands it.</p>
+<p><strong>Recommended Progression:</strong></p>
+<ol class="arabic">
+<li><p><strong>Start with TopHat + ISM + Forward Shock Only</strong></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">cfg</span> <span class="o">=</span> <span class="n">Setups</span><span class="p">()</span>
+<span class="n">cfg</span><span class="o">.</span><span class="n">medium</span> <span class="o">=</span> <span class="s2">&quot;ism&quot;</span>
+<span class="n">cfg</span><span class="o">.</span><span class="n">jet</span> <span class="o">=</span> <span class="s2">&quot;tophat&quot;</span>
+<span class="c1"># All other physics options default to False</span>
+</pre></div>
+</div>
+<p>This gives you ~7-8 free parameters. Run MCMC and examine the residuals.</p>
+</li>
+<li><p><strong>Check if residuals suggest additional physics</strong></p>
+<p>Examine the fit quality and residual structure. Systematic deviations at specific times or frequencies may indicate missing physics.</p>
+</li>
+<li><p><strong>Add ONE component at a time</strong></p>
+<p>Never jump from a simple model to enabling everything. Each addition should be justified by improved fit statistics (e.g., Bayesian evidence comparison).</p>
+</li>
+</ol>
+</section>
+<section id="why-complex-models-are-problematic">
+<h3><a class="toc-backref" href="#id4" role="doc-backlink">Why Complex Models Are Problematic</a><a class="headerlink" href="#why-complex-models-are-problematic" title="Link to this heading"></a></h3>
+<p><strong>1. Parameter Degeneracies</strong></p>
+<p>More parameters create more degeneracies. For example:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">E_iso</span></code> and <code class="docutils literal notranslate"><span class="pre">n_ism</span></code> are degenerate in flux normalization</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">eps_e</span></code> and <code class="docutils literal notranslate"><span class="pre">eps_B</span></code> trade off in spectral shape</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">theta_c</span></code> and <code class="docutils literal notranslate"><span class="pre">theta_v</span></code> correlate for off-axis observers</p></li>
+<li><p>Reverse shock parameters can mimic forward shock with different microphysics</p></li>
+</ul>
+<p>With a complex model, the MCMC may find multiple solutions that fit equally well but have very different physical interpretations.</p>
+<p><strong>2. Computational Cost</strong></p>
+<p>Each additional physics module increases computation time. A model with all physics enabled can be significantly slower than a basic forward-shock-only model.</p>
+<p><strong>3. Overfitting Risk</strong></p>
+<p>With enough free parameters, you can fit noise. A model that fits your data perfectly but has 15+ parameters may not be physically meaningful. Use Bayesian evidence (from dynesty) to compare models:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Compare two models using log evidence</span>
+<span class="n">result_simple</span> <span class="o">=</span> <span class="n">fitter_simple</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">params_simple</span><span class="p">,</span> <span class="n">sampler</span><span class="o">=</span><span class="s2">&quot;dynesty&quot;</span><span class="p">,</span> <span class="o">...</span><span class="p">)</span>
+<span class="n">result_complex</span> <span class="o">=</span> <span class="n">fitter_complex</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">params_complex</span><span class="p">,</span> <span class="n">sampler</span><span class="o">=</span><span class="s2">&quot;dynesty&quot;</span><span class="p">,</span> <span class="o">...</span><span class="p">)</span>
+
+<span class="c1"># Bayes factor</span>
+<span class="n">log_BF</span> <span class="o">=</span> <span class="n">result_complex</span><span class="o">.</span><span class="n">bilby_result</span><span class="o">.</span><span class="n">log_evidence</span> <span class="o">-</span> <span class="n">result_simple</span><span class="o">.</span><span class="n">bilby_result</span><span class="o">.</span><span class="n">log_evidence</span>
+
+<span class="c1"># Interpretation:</span>
+<span class="c1"># log_BF &lt; 1: No preference (stick with simple model)</span>
+<span class="c1"># 1 &lt; log_BF &lt; 3: Weak preference for complex</span>
+<span class="c1"># 3 &lt; log_BF &lt; 5: Moderate preference</span>
+<span class="c1"># log_BF &gt; 5: Strong preference for complex model</span>
+</pre></div>
+</div>
+<p><strong>4. Non-Physical Solutions</strong></p>
+<p>Complex models can converge to non-physical parameter combinations. Always check:</p>
+<ul class="simple">
+<li><p>Is <code class="docutils literal notranslate"><span class="pre">eps_e</span> <span class="pre">+</span> <span class="pre">eps_B</span> <span class="pre">&lt;</span> <span class="pre">1</span></code>? (energy conservation)</p></li>
+<li><p>Is <code class="docutils literal notranslate"><span class="pre">p</span> <span class="pre">&gt;</span> <span class="pre">2</span></code>? (required for finite electron energy)</p></li>
+<li><p>Are microphysics parameters consistent between forward/reverse shocks?</p></li>
+<li><p>Does the inferred jet energy make sense given the host galaxy and redshift?</p></li>
+</ul>
+</section>
+<section id="when-to-use-complex-models">
+<h3><a class="toc-backref" href="#id5" role="doc-backlink">When to Use Complex Models</a><a class="headerlink" href="#when-to-use-complex-models" title="Link to this heading"></a></h3>
+<p>Complex models are justified when:</p>
+<ul class="simple">
+<li><p><strong>Clear observational signatures</strong> that simple models cannot explain after careful analysis</p></li>
+<li><p><strong>Comparison with similar GRBs</strong> where the additional physics was robustly established</p></li>
+</ul>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p><strong>Golden Rule</strong>: If you cannot clearly explain WHY each physics component is needed based on your data, you probably don’t need it.</p>
+</div>
+</section>
+</section>
 <section id="basic-setup">
-<h2><a class="toc-backref" href="#id2" role="doc-backlink">Basic Setup</a><a class="headerlink" href="#basic-setup" title="Link to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id6" role="doc-backlink">Basic Setup</a><a class="headerlink" href="#basic-setup" title="Link to this heading"></a></h2>
 <section id="setting-up-observational-data">
-<h3><a class="toc-backref" href="#id3" role="doc-backlink">Setting up Observational Data</a><a class="headerlink" href="#setting-up-observational-data" title="Link to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id7" role="doc-backlink">Setting up Observational Data</a><a class="headerlink" href="#setting-up-observational-data" title="Link to this heading"></a></h3>
 <p>The <code class="docutils literal notranslate"><span class="pre">ObsData</span></code> class handles multi-wavelength observational data:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
@@ -227,7 +319,7 @@
 </div>
 </section>
 <section id="data-selection-and-optimization">
-<h3><a class="toc-backref" href="#id4" role="doc-backlink">Data Selection and Optimization</a><a class="headerlink" href="#data-selection-and-optimization" title="Link to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id8" role="doc-backlink">Data Selection and Optimization</a><a class="headerlink" href="#data-selection-and-optimization" title="Link to this heading"></a></h3>
 <p><strong>Smart Data Subsampling with logscale_screen</strong></p>
 <p>For large datasets or densely sampled observations, using all available data points can lead to computational inefficiency and biased parameter estimation. The <code class="docutils literal notranslate"><span class="pre">logscale_screen</span></code> method provides intelligent data subsampling that maintains the essential information content while reducing computational overhead.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Example: Large dense dataset</span>
@@ -270,9 +362,56 @@
 </ul>
 <p><strong>Solution</strong>: Use <code class="docutils literal notranslate"><span class="pre">logscale_screen</span></code> for manual temporal reduction of over-sampled bands.</p>
 </div>
+<p><strong>Handling Measurement Uncertainties</strong></p>
+<p>Error bars strongly influence MCMC fitting. Improperly characterized uncertainties can lead to biased parameter estimates or misleading confidence intervals.</p>
+<p><strong>The Problem with Small Error Bars</strong></p>
+<p>Data points with very small uncertainties dominate the χ² calculation:</p>
+<div class="math notranslate nohighlight">
+\[\chi^2 = \sum_i \frac{(F_{\rm obs,i} - F_{\rm model,i})^2}{\sigma_i^2}\]</div>
+<p>A single point with σ = 0.01 mJy contributes 100× more to χ² than a point with σ = 0.1 mJy. This causes the MCMC to:</p>
+<ul class="simple">
+<li><p>Heavily weight high-precision data at the expense of other observations</p></li>
+<li><p>Potentially fit noise or systematic effects in the “precise” data</p></li>
+<li><p>Produce artificially tight parameter constraints that don’t reflect true uncertainties</p></li>
+</ul>
+<p><strong>Common Scenarios:</strong></p>
+<ol class="arabic simple">
+<li><p><strong>Heterogeneous data quality</strong>: X-ray data from different telescopes may have vastly different calibration uncertainties</p></li>
+<li><p><strong>Underestimated errors</strong>: Published error bars sometimes only include statistical uncertainty, missing systematics</p></li>
+<li><p><strong>Calibration offsets</strong>: Different instruments may have 5-20% flux calibration offsets not captured in quoted errors</p></li>
+</ol>
+<p><strong>Solutions:</strong></p>
+<ol class="arabic">
+<li><p><strong>Add systematic error floors</strong></p>
+<p>For data where quoted errors seem unrealistically small:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Add 10% systematic floor to error bars</span>
+<span class="n">systematic_floor</span> <span class="o">=</span> <span class="mf">0.1</span>  <span class="c1"># 10% of flux</span>
+<span class="n">err_with_floor</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">err</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="p">(</span><span class="n">systematic_floor</span> <span class="o">*</span> <span class="n">flux</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+
+<span class="n">data</span><span class="o">.</span><span class="n">add_flux_density</span><span class="p">(</span><span class="n">nu</span><span class="o">=</span><span class="n">nu</span><span class="p">,</span> <span class="n">t</span><span class="o">=</span><span class="n">t</span><span class="p">,</span> <span class="n">f_nu</span><span class="o">=</span><span class="n">flux</span><span class="p">,</span> <span class="n">err</span><span class="o">=</span><span class="n">err_with_floor</span><span class="p">)</span>
+</pre></div>
+</div>
+</li>
+<li><p><strong>Use weights to balance bands</strong></p>
+<p>Down-weight bands with suspiciously small errors:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Reduce contribution of high-precision optical data</span>
+<span class="n">optical_weight</span> <span class="o">=</span> <span class="mf">0.5</span>  <span class="c1"># Effectively doubles the error contribution</span>
+<span class="n">data</span><span class="o">.</span><span class="n">add_flux_density</span><span class="p">(</span><span class="n">nu</span><span class="o">=</span><span class="mf">5e14</span><span class="p">,</span> <span class="n">t</span><span class="o">=</span><span class="n">t_optical</span><span class="p">,</span> <span class="n">f_nu</span><span class="o">=</span><span class="n">flux_optical</span><span class="p">,</span>
+                     <span class="n">err</span><span class="o">=</span><span class="n">err_optical</span><span class="p">,</span> <span class="n">weights</span><span class="o">=</span><span class="n">optical_weight</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">ones_like</span><span class="p">(</span><span class="n">t_optical</span><span class="p">))</span>
+</pre></div>
+</div>
+</li>
+<li><p><strong>Inspect residuals by band</strong></p>
+<p>After fitting, check if residuals are consistent across bands. If one band shows systematic deviations while others don’t, the errors for that band may be mischaracterized.</p>
+</li>
+</ol>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p><strong>Rule of thumb</strong>: If your best-fit χ²/dof &gt;&gt; 1, either the model is inadequate OR the error bars are underestimated. If χ²/dof &lt;&lt; 1, the errors may be overestimated.</p>
+</div>
 </section>
 <section id="global-configuration">
-<h3><a class="toc-backref" href="#id5" role="doc-backlink">Global Configuration</a><a class="headerlink" href="#global-configuration" title="Link to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id9" role="doc-backlink">Global Configuration</a><a class="headerlink" href="#global-configuration" title="Link to this heading"></a></h3>
 <p>The <code class="docutils literal notranslate"><span class="pre">Setups</span></code> class defines fixed model properties:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">cfg</span> <span class="o">=</span> <span class="n">Setups</span><span class="p">()</span>
 
@@ -299,9 +438,9 @@
 </section>
 </section>
 <section id="model-configurations">
-<h2><a class="toc-backref" href="#id6" role="doc-backlink">Model Configurations</a><a class="headerlink" href="#model-configurations" title="Link to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id10" role="doc-backlink">Model Configurations</a><a class="headerlink" href="#model-configurations" title="Link to this heading"></a></h2>
 <section id="basic-setup-default">
-<h3><a class="toc-backref" href="#id7" role="doc-backlink">Basic Setup (Default)</a><a class="headerlink" href="#basic-setup-default" title="Link to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id11" role="doc-backlink">Basic Setup (Default)</a><a class="headerlink" href="#basic-setup-default" title="Link to this heading"></a></h3>
 <p>The default configuration uses a top-hat jet in a uniform ISM environment with forward shock synchrotron emission:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Basic configuration</span>
 <span class="n">cfg</span> <span class="o">=</span> <span class="n">Setups</span><span class="p">()</span>
@@ -324,7 +463,7 @@
 </div>
 </section>
 <section id="jet-structure-variations">
-<h3><a class="toc-backref" href="#id8" role="doc-backlink">Jet Structure Variations</a><a class="headerlink" href="#jet-structure-variations" title="Link to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id12" role="doc-backlink">Jet Structure Variations</a><a class="headerlink" href="#jet-structure-variations" title="Link to this heading"></a></h3>
 <p><strong>Power-law Structured Jet</strong></p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">cfg</span> <span class="o">=</span> <span class="n">Setups</span><span class="p">()</span>
 <span class="n">cfg</span><span class="o">.</span><span class="n">medium</span> <span class="o">=</span> <span class="s2">&quot;ism&quot;</span>        <span class="c1"># Default ISM medium</span>
@@ -424,7 +563,7 @@
 </div>
 </section>
 <section id="medium-type-variations">
-<h3><a class="toc-backref" href="#id9" role="doc-backlink">Medium Type Variations</a><a class="headerlink" href="#medium-type-variations" title="Link to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id13" role="doc-backlink">Medium Type Variations</a><a class="headerlink" href="#medium-type-variations" title="Link to this heading"></a></h3>
 <p><strong>Stellar Wind Medium</strong></p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">cfg</span> <span class="o">=</span> <span class="n">Setups</span><span class="p">()</span>
 <span class="n">cfg</span><span class="o">.</span><span class="n">medium</span> <span class="o">=</span> <span class="s2">&quot;wind&quot;</span>       <span class="c1"># Stellar wind medium</span>
@@ -534,7 +673,7 @@
 </div>
 </section>
 <section id="reverse-shock">
-<h3><a class="toc-backref" href="#id10" role="doc-backlink">Reverse Shock</a><a class="headerlink" href="#reverse-shock" title="Link to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id14" role="doc-backlink">Reverse Shock</a><a class="headerlink" href="#reverse-shock" title="Link to this heading"></a></h3>
 <p><strong>Basic Reverse Shock</strong></p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">cfg</span> <span class="o">=</span> <span class="n">Setups</span><span class="p">()</span>
 <span class="n">cfg</span><span class="o">.</span><span class="n">medium</span> <span class="o">=</span> <span class="s2">&quot;ism&quot;</span>        <span class="c1"># Default medium</span>
@@ -595,7 +734,7 @@
 </div>
 </section>
 <section id="inverse-compton-radiation">
-<h3><a class="toc-backref" href="#id11" role="doc-backlink">Inverse Compton Radiation</a><a class="headerlink" href="#inverse-compton-radiation" title="Link to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id15" role="doc-backlink">Inverse Compton Radiation</a><a class="headerlink" href="#inverse-compton-radiation" title="Link to this heading"></a></h3>
 <p><strong>Forward Shock Inverse Compton</strong></p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">cfg</span> <span class="o">=</span> <span class="n">Setups</span><span class="p">()</span>
 <span class="n">cfg</span><span class="o">.</span><span class="n">medium</span> <span class="o">=</span> <span class="s2">&quot;ism&quot;</span>        <span class="c1"># Default medium</span>
@@ -651,7 +790,7 @@
 </div>
 </section>
 <section id="energy-injection">
-<h3><a class="toc-backref" href="#id12" role="doc-backlink">Energy Injection</a><a class="headerlink" href="#energy-injection" title="Link to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id16" role="doc-backlink">Energy Injection</a><a class="headerlink" href="#energy-injection" title="Link to this heading"></a></h3>
 <p><strong>Magnetar Spin-down Injection</strong></p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">cfg</span> <span class="o">=</span> <span class="n">Setups</span><span class="p">()</span>
 <span class="n">cfg</span><span class="o">.</span><span class="n">medium</span> <span class="o">=</span> <span class="s2">&quot;ism&quot;</span>        <span class="c1"># Default medium</span>
@@ -714,7 +853,7 @@
 </div>
 </section>
 <section id="complex-model-combinations">
-<h3><a class="toc-backref" href="#id13" role="doc-backlink">Complex Model Combinations</a><a class="headerlink" href="#complex-model-combinations" title="Link to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id17" role="doc-backlink">Complex Model Combinations</a><a class="headerlink" href="#complex-model-combinations" title="Link to this heading"></a></h3>
 <p><strong>Full Physics: Structured Jet + Stratified Medium + Reverse Shock + IC + Magnetar</strong></p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">cfg</span> <span class="o">=</span> <span class="n">Setups</span><span class="p">()</span>
 <span class="n">cfg</span><span class="o">.</span><span class="n">medium</span> <span class="o">=</span> <span class="s2">&quot;wind&quot;</span>       <span class="c1"># Stratified medium</span>
@@ -722,9 +861,9 @@
 <span class="n">cfg</span><span class="o">.</span><span class="n">rvs_shock</span> <span class="o">=</span> <span class="kc">True</span>      <span class="c1"># Reverse shock</span>
 <span class="n">cfg</span><span class="o">.</span><span class="n">fwd_ssc</span> <span class="o">=</span> <span class="kc">True</span>        <span class="c1"># Forward SSC</span>
 <span class="n">cfg</span><span class="o">.</span><span class="n">rvs_ssc</span> <span class="o">=</span> <span class="kc">True</span>        <span class="c1"># Reverse SSC</span>
-<span class="n">cfg</span><span class="o">.</span><span class="n">ssc_cooling</span> <span class="o">=</span> <span class="kc">True</span>     <span class="c1"># IC cooling</span>
+<span class="n">cfg</span><span class="o">.</span><span class="n">ssc_cooling</span> <span class="o">=</span> <span class="kc">True</span>    <span class="c1"># IC cooling</span>
 <span class="n">cfg</span><span class="o">.</span><span class="n">kn</span> <span class="o">=</span> <span class="kc">True</span>             <span class="c1"># Klein-Nishina</span>
-<span class="n">cfg</span><span class="o">.</span><span class="n">magnetar</span> <span class="o">=</span> <span class="kc">True</span>       <span class="c1"># Energy injection</span>
+<span class="n">cfg</span><span class="o">.</span><span class="n">magnetar</span> <span class="o">=</span> <span class="kc">True</span>       <span class="c1"># Magnetar energy injection</span>
 
 <span class="n">params</span> <span class="o">=</span> <span class="p">[</span>
     <span class="c1"># Gaussian jet</span>
@@ -769,16 +908,66 @@
 </section>
 </section>
 <section id="running-mcmc">
-<h2><a class="toc-backref" href="#id14" role="doc-backlink">Running MCMC</a><a class="headerlink" href="#running-mcmc" title="Link to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id18" role="doc-backlink">Running MCMC</a><a class="headerlink" href="#running-mcmc" title="Link to this heading"></a></h2>
+<section id="choosing-a-sampler">
+<h3><a class="toc-backref" href="#id19" role="doc-backlink">Choosing a Sampler</a><a class="headerlink" href="#choosing-a-sampler" title="Link to this heading"></a></h3>
+<p>The choice of sampler significantly affects both the quality of results and computational efficiency. Here’s guidance on when to use each:</p>
+<p><strong>Emcee (Ensemble MCMC) - Recommended for Most Cases</strong></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">result</span> <span class="o">=</span> <span class="n">fitter</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">sampler</span><span class="o">=</span><span class="s2">&quot;emcee&quot;</span><span class="p">,</span> <span class="n">nsteps</span><span class="o">=</span><span class="mi">10000</span><span class="p">,</span> <span class="n">nburn</span><span class="o">=</span><span class="mi">2000</span><span class="p">,</span> <span class="o">...</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Use emcee when:</p>
+<ul class="simple">
+<li><p>You need <strong>fast exploration</strong> of parameter space</p></li>
+<li><p>The posterior is expected to be <strong>unimodal</strong> (single peak)</p></li>
+<li><p>You’re doing <strong>quick preliminary fits</strong> or production runs</p></li>
+</ul>
+<p>VegasAfterglow uses an optimized emcee configuration:</p>
+<ul class="simple">
+<li><p><strong>Custom proposal moves</strong>: DEMove (70%) + DESnookerMove (30%) for better mixing than default stretch move</p></li>
+<li><p><strong>Vectorized batch processing</strong>: Likelihood evaluations are parallelized via OpenMP internally</p></li>
+<li><p><strong>Automatic nwalkers</strong>: Optimized based on parameter count and CPU cores</p></li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><strong>Parallelization is automatic</strong>: For emcee, the <code class="docutils literal notranslate"><span class="pre">npool</span></code> parameter is ignored. The C++ backend uses OpenMP multi-threading for batch likelihood evaluation, which is faster than Python multiprocessing.</p>
+</div>
+<p><strong>Dynesty (Nested Sampling) - For Model Comparison</strong></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">result</span> <span class="o">=</span> <span class="n">fitter</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">sampler</span><span class="o">=</span><span class="s2">&quot;dynesty&quot;</span><span class="p">,</span> <span class="n">nlive</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> <span class="n">dlogz</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="o">...</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Use dynesty when:</p>
+<ul class="simple">
+<li><p>You need <strong>Bayesian evidence</strong> for model comparison</p></li>
+<li><p>The posterior may be <strong>multimodal</strong> (multiple peaks)</p></li>
+<li><p>You want to compare different physics configurations</p></li>
+</ul>
+<p>VegasAfterglow uses optimized dynesty settings:</p>
+<ul class="simple">
+<li><p><strong>rslice sampling</strong>: More efficient than random walk for high dimensions</p></li>
+<li><p><strong>Thread pool</strong>: Uses Python threading (not multiprocessing) for better performance with C++ backend</p></li>
+<li><p><strong>Optimal queue size</strong>: Automatically calculated based on nlive and npool</p></li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>For dynesty, <code class="docutils literal notranslate"><span class="pre">npool</span></code> controls the number of parallel threads. If not specified, it defaults to the number of CPU cores on your machine.</p>
+</div>
+<p><strong>Recommended Workflow</strong></p>
+<ol class="arabic simple">
+<li><p><strong>Quick exploration</strong>: Use emcee with moderate steps (5000-10000) to find approximate parameter region</p></li>
+<li><p><strong>Model comparison</strong>: Use dynesty when comparing different physics (forward shock only vs. with reverse shock, etc.)</p></li>
+<li><p><strong>Production run</strong>: Use emcee with longer chains (20000-50000 steps) for final parameter constraints</p></li>
+</ol>
+</section>
 <section id="fitter-fit-interface">
-<h3><a class="toc-backref" href="#id15" role="doc-backlink">Fitter.fit() Interface</a><a class="headerlink" href="#fitter-fit-interface" title="Link to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id20" role="doc-backlink">Fitter.fit() Interface</a><a class="headerlink" href="#fitter-fit-interface" title="Link to this heading"></a></h3>
 <p>The <code class="docutils literal notranslate"><span class="pre">Fitter.fit()</span></code> method provides a unified interface for parameter estimation using different sampling algorithms via bilby.</p>
 <p><strong>Method Signature</strong></p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">fit</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
     <span class="n">param_defs</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="n">ParamDef</span><span class="p">],</span>      <span class="c1"># Parameter definitions</span>
     <span class="n">resolution</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="mf">0.3</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span>  <span class="c1"># Grid resolution</span>
-    <span class="n">sampler</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;dynesty&quot;</span><span class="p">,</span>            <span class="c1"># Sampler algorithm</span>
+    <span class="n">sampler</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;emcee&quot;</span><span class="p">,</span>              <span class="c1"># Sampler algorithm</span>
     <span class="n">npool</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">8</span><span class="p">,</span>                      <span class="c1"># Number of parallel processes</span>
     <span class="n">top_k</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">10</span><span class="p">,</span>                     <span class="c1"># Number of best fits to return</span>
     <span class="n">outdir</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;bilby_output&quot;</span><span class="p">,</span>        <span class="c1"># Output directory</span>
@@ -802,9 +991,9 @@
 <li><dl class="simple">
 <dt><code class="docutils literal notranslate"><span class="pre">resolution</span></code>: Tuple of (phi_res, theta_res, t_res)</dt><dd><ul>
 <li><p>Controls model computation grid spacing</p></li>
-<li><p>Lower values = higher accuracy but slower computation</p></li>
-<li><p>Default: (0.3, 1, 10) provides good balance</p></li>
-<li><p>Example: (0.1, 0.5, 5) for higher accuracy</p></li>
+<li><p>Lower values = lower accuracy but faster computation</p></li>
+<li><p>Default: (0.3, 0.3, 10) provides good balance</p></li>
+<li><p>Example: (0.1, 1, 15) for higher accuracy</p></li>
 </ul>
 </dd>
 </dl>
@@ -1047,7 +1236,7 @@ Pass sampler-specific parameters via <code class="docutils literal notranslate">
 </ul>
 </section>
 <section id="basic-mcmc-execution">
-<h3><a class="toc-backref" href="#id16" role="doc-backlink">Basic MCMC Execution</a><a class="headerlink" href="#basic-mcmc-execution" title="Link to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id21" role="doc-backlink">Basic MCMC Execution</a><a class="headerlink" href="#basic-mcmc-execution" title="Link to this heading"></a></h3>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Check data statistics before MCMC</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Total data points: </span><span class="si">{</span><span class="n">data</span><span class="o">.</span><span class="n">data_points_num</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 
@@ -1093,9 +1282,9 @@ Pass sampler-specific parameters via <code class="docutils literal notranslate">
 </section>
 </section>
 <section id="analyzing-results">
-<h2><a class="toc-backref" href="#id17" role="doc-backlink">Analyzing Results</a><a class="headerlink" href="#analyzing-results" title="Link to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id22" role="doc-backlink">Analyzing Results</a><a class="headerlink" href="#analyzing-results" title="Link to this heading"></a></h2>
 <section id="parameter-constraints">
-<h3><a class="toc-backref" href="#id18" role="doc-backlink">Parameter Constraints</a><a class="headerlink" href="#parameter-constraints" title="Link to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id23" role="doc-backlink">Parameter Constraints</a><a class="headerlink" href="#parameter-constraints" title="Link to this heading"></a></h3>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Print best-fit parameters</span>
 <span class="n">top_k_data</span> <span class="o">=</span> <span class="p">[]</span>
 <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">top_k_params</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
@@ -1111,7 +1300,7 @@ Pass sampler-specific parameters via <code class="docutils literal notranslate">
 </div>
 </section>
 <section id="model-predictions">
-<h3><a class="toc-backref" href="#id19" role="doc-backlink">Model Predictions</a><a class="headerlink" href="#model-predictions" title="Link to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id24" role="doc-backlink">Model Predictions</a><a class="headerlink" href="#model-predictions" title="Link to this heading"></a></h3>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Generate model predictions with best-fit parameters</span>
 <span class="n">t_model</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">logspace</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">200</span><span class="p">)</span>
 <span class="n">nu_model</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">1e9</span><span class="p">,</span> <span class="mf">5e14</span><span class="p">,</span> <span class="mf">2e17</span><span class="p">])</span>  <span class="c1"># Radio, optical, X-ray</span>
@@ -1136,7 +1325,7 @@ Pass sampler-specific parameters via <code class="docutils literal notranslate">
 </div>
 </section>
 <section id="visualization">
-<h3><a class="toc-backref" href="#id20" role="doc-backlink">Visualization</a><a class="headerlink" href="#visualization" title="Link to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id25" role="doc-backlink">Visualization</a><a class="headerlink" href="#visualization" title="Link to this heading"></a></h3>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">corner</span>
 
@@ -1175,7 +1364,7 @@ Pass sampler-specific parameters via <code class="docutils literal notranslate">
 </section>
 </section>
 <section id="troubleshooting">
-<h2><a class="toc-backref" href="#id21" role="doc-backlink">Troubleshooting</a><a class="headerlink" href="#troubleshooting" title="Link to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id26" role="doc-backlink">Troubleshooting</a><a class="headerlink" href="#troubleshooting" title="Link to this heading"></a></h2>
 <p>For comprehensive troubleshooting help including MCMC convergence issues, data selection problems, memory optimization, and performance tuning, see <a class="reference internal" href="troubleshooting.html"><span class="doc">Troubleshooting</span></a>.</p>
 </section>
 </section>

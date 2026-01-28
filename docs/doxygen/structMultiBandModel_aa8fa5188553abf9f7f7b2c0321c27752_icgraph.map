@@ -1,5 +1,0 @@
-<map id="MultiBandModel::estimate_chi2" name="MultiBandModel::estimate_chi2">
-<area shape="rect" id="Node000001" title="Calculate chi&#45;squared likelihood for given parameter values." alt="" coords="204,5,432,31"/>
-<area shape="rect" id="Node000002" href="$pybind_8cpp.html#a8c92987849ad296e28ec6c07c8e7860b" title=" " alt="" coords="5,5,156,31"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="190,21,156,21,156,15,190,15"/>
-</map>

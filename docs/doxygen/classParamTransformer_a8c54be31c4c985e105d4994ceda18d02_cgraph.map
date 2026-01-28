@@ -1,0 +1,5 @@
+<map id="ParamTransformer::ParamTransformer" name="ParamTransformer::ParamTransformer">
+<area shape="rect" id="Node000001" title="Construct transformer from parameter definitions." alt="" coords="5,5,273,31"/>
+<area shape="rect" id="Node000002" href="$mcmc_8cpp.html#a5507f4105b8933fd6af7afc13108c0f2" title="Map parameter name string to index for Python interface setup." alt="" coords="321,5,492,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="273,15,308,15,308,21,273,21"/>
+</map>

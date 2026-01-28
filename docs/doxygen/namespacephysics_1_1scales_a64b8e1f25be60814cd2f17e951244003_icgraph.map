@@ -1,0 +1,5 @@
+<map id="physics::scales::thin_shell_dec_radius" name="physics::scales::thin_shell_dec_radius">
+<area shape="rect" id="Node000001" title="Computes the deceleration radius for the thin shell case." alt="" coords="204,5,357,45"/>
+<area shape="rect" id="Node000002" href="$namespacephysics_1_1scales.html#aa94386ad7c3e3cd47b51b55bd48ed9ee" title="Computes the deceleration radius of the shock." alt="" coords="5,5,156,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="190,28,157,28,157,23,190,23"/>
+</map>

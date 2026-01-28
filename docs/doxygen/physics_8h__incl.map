@@ -4,8 +4,12 @@
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="87,33,57,70,53,66,82,29"/>
 <area shape="rect" id="Node000003" href="$macros_8h.html" title=" " alt="" coords="92,79,211,104"/>
 <area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="106,29,135,66,131,70,101,33"/>
-<area shape="rect" id="Node000004" title=" " alt="" coords="77,152,135,177"/>
-<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="146,106,123,142,118,139,142,103"/>
-<area shape="rect" id="Node000005" title=" " alt="" coords="159,152,234,177"/>
-<area shape="poly" id="edge4_Node000003_Node000005" title=" " alt="" coords="161,103,184,139,180,142,157,106"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="31,159,90,185"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="140,106,86,152,83,148,136,102"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="114,159,189,185"/>
+<area shape="poly" id="edge4_Node000003_Node000005" title=" " alt="" coords="154,104,154,145,149,145,149,104"/>
+<area shape="rect" id="Node000006" href="$simulation-defaults_8h.html" title="Centralized simulation configuration defaults." alt="" coords="213,152,359,192"/>
+<area shape="poly" id="edge5_Node000003_Node000006" title=" " alt="" coords="173,102,243,143,240,147,170,106"/>
+<area shape="rect" id="Node000007" title=" " alt="" coords="251,240,321,265"/>
+<area shape="poly" id="edge6_Node000006_Node000007" title=" " alt="" coords="289,192,289,226,283,226,283,192"/>
 </map>

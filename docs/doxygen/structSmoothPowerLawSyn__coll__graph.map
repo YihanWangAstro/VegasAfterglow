@@ -1,0 +1,5 @@
+<map id="SmoothPowerLawSyn" name="SmoothPowerLawSyn">
+<area shape="rect" id="Node000001" title="Represents synchrotron photons in the comoving frame and provides spectral functions." alt="" coords="5,93,168,119"/>
+<area shape="rect" id="Node000002" href="$structInverseComptonY.html" title="Handles Inverse Compton Y parameter calculations and related threshold values." alt="" coords="18,5,155,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="89,45,89,93,84,93,84,45"/>
+</map>

@@ -1,0 +1,8 @@
+<map id="ParamTransformer::ndim" name="ParamTransformer::ndim">
+<area shape="rect" id="Node000001" title="Get number of free (sampled) parameters." alt="" coords="424,42,607,67"/>
+<area shape="rect" id="Node000002" href="$structMultiBandModel.html#af37da733bf5c3b4d89b7f0688bbc0e94" title="Batch chi&#45;squared computation with clean transformer&#45;based interface." alt="" coords="204,5,376,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="410,44,376,39,376,34,410,38"/>
+<area shape="rect" id="Node000003" href="$pybind_8cpp.html#a8c92987849ad296e28ec6c07c8e7860b" title=" " alt="" coords="5,42,156,67"/>
+<area shape="poly" id="edge3_Node000001_Node000003" title=" " alt="" coords="410,60,376,60,204,60,156,59,156,54,204,55,376,55,410,54"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="191,42,157,47,156,41,190,37"/>
+</map>

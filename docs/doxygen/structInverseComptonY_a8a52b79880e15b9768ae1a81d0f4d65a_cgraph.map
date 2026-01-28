@@ -1,0 +1,11 @@
+<map id="InverseComptonY::nu_spectrum" name="InverseComptonY::nu_spectrum">
+<area shape="rect" id="Node000001" title="Calculates the effective Y parameter for a given synchrotron frequency." alt="" coords="5,55,164,95"/>
+<area shape="rect" id="Node000002" href="$synchrotron_8cpp.html#a85433be4a0da2f510240a603da8f7dff" title=" " alt="" coords="225,5,392,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="163,53,244,32,245,37,164,58"/>
+<area shape="rect" id="Node000003" href="$structInverseComptonY.html#a10d6b44bd159fd7fe8e5a3f1d6be453c" title="Calculates the effective Y parameter for a given Lorentz factor and spectral index." alt="" coords="212,55,405,95"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="164,73,198,73,198,78,164,78"/>
+<area shape="rect" id="Node000004" href="$utilities_8h.html#ab8e81118f023df135835db8cce4f5f42" title="Returns the value of a single parameter." alt="" coords="453,92,504,117"/>
+<area shape="poly" id="edge5_Node000001_Node000004" title=" " alt="" coords="153,93,212,105,266,109,308,109,405,105,439,104,439,109,405,110,308,115,266,115,212,110,152,98"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="406,89,440,95,439,101,405,95"/>
+<area shape="poly" id="edge4_Node000004_Node000004" title=" " alt="" coords="451,94,445,84,448,74,459,68,479,65,502,69,512,78,508,82,500,74,479,71,461,73,452,77,450,83,455,91"/>
+</map>

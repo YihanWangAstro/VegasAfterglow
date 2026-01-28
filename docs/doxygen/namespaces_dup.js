@@ -22,6 +22,7 @@ var namespaces_dup =
       [ "sigma_cut", "namespacecon.html#ae257fca076d03dd535871a9824d2f178", null ],
       [ "sigmaT", "namespacecon.html#ad19e5b64c85c3e709fd0944358be97f6", null ]
     ] ],
+    [ "defaults", "namespacedefaults.html", "namespacedefaults" ],
     [ "evn", "namespaceevn.html", null ],
     [ "func", "namespacefunc.html", [
       [ "one_2d", "namespacefunc.html#a173bd91e86dee357eb55b4758c5cc20d", null ],
@@ -30,6 +31,7 @@ var namespaces_dup =
       [ "zero_3d", "namespacefunc.html#af35a6de707510b3b09306132d94d3b72", null ]
     ] ],
     [ "math", "namespacemath.html", null ],
+    [ "physics", "namespacephysics.html", "namespacephysics" ],
     [ "unit", "namespaceunit.html", [
       [ "au", "namespaceunit.html#a6cc151b26a5507a0e63f9c9f68adf4d2", null ],
       [ "cm", "namespaceunit.html#ab0ce442b00da680dc797592af0b4a2f8", null ],

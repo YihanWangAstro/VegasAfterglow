@@ -1,0 +1,28 @@
+<map id="update_gamma_c_KN" name="update_gamma_c_KN">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,145,169,170"/>
+<area shape="rect" id="Node000002" href="$synchrotron_8cpp.html#abf07388459a8b39d9b4c5028e53a538e" title=" " alt="" coords="453,18,604,44"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="99,143,148,101,180,78,216,60,272,43,331,33,439,25,439,30,331,38,274,48,218,65,183,83,151,105,103,147"/>
+<area shape="rect" id="Node000003" href="$utilities_8h.html#ab8e81118f023df135835db8cce4f5f42" title="Returns the value of a single parameter." alt="" coords="1028,170,1079,196"/>
+<area shape="poly" id="edge15_Node000001_Node000003" title=" " alt="" coords="132,142,206,123,304,102,415,86,527,79,750,79,789,81,828,88,903,109,969,136,1019,161,1017,166,966,141,901,114,827,93,788,86,750,84,527,84,415,91,305,108,207,128,133,147"/>
+<area shape="rect" id="Node000004" href="$inverse-compton_8h.html#a38ea147ad8840b32851c368e51808c84" title=" " alt="" coords="231,145,392,170"/>
+<area shape="poly" id="edge4_Node000001_Node000004" title=" " alt="" coords="170,155,217,155,217,160,170,160"/>
+<area shape="rect" id="Node000009" href="$structInverseComptonY.html#a10d6b44bd159fd7fe8e5a3f1d6be453c" title="Calculates the effective Y parameter for a given Lorentz factor and spectral index." alt="" coords="652,290,845,330"/>
+<area shape="poly" id="edge13_Node000001_Node000009" title=" " alt="" coords="144,168,648,284,646,289,143,173"/>
+<area shape="rect" id="Node000010" href="$structInverseComptonY.html#ab690b3be057dce6c2bc6b86b91447aca" title=" " alt="" coords="217,271,405,311"/>
+<area shape="poly" id="edge16_Node000001_Node000010" title=" " alt="" coords="105,168,154,207,219,250,244,263,242,267,216,254,151,211,102,173"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="593,15,676,6,777,5,830,10,883,20,934,37,981,61,1005,81,1024,106,1047,156,1042,158,1019,109,1001,84,979,65,932,42,881,25,829,15,776,10,676,11,594,21"/>
+<area shape="poly" id="edge3_Node000003_Node000003" title=" " alt="" coords="1033,171,1029,162,1031,152,1040,146,1053,144,1069,147,1076,155,1072,159,1067,152,1053,149,1042,151,1036,155,1035,161,1038,169"/>
+<area shape="poly" id="edge12_Node000004_Node000003" title=" " alt="" coords="392,153,654,153,817,158,980,170,1015,174,1014,179,980,175,816,164,654,158,392,158"/>
+<area shape="rect" id="Node000005" href="$inverse-compton_8h.html#ad7736d3269071d2ceaffcc56fa2fc71c" title=" " alt="" coords="459,170,598,196"/>
+<area shape="poly" id="edge5_Node000004_Node000005" title=" " alt="" coords="393,164,446,171,445,176,392,170"/>
+<area shape="rect" id="Node000006" href="$utilities_8h.html#a4520a27a10a2aef33c99ad8c679da404" title="Fast approximation of a raised to the power of b." alt="" coords="708,193,789,218"/>
+<area shape="poly" id="edge6_Node000005_Node000006" title=" " alt="" coords="598,187,695,197,694,203,598,193"/>
+<area shape="poly" id="edge11_Node000006_Node000003" title=" " alt="" coords="789,200,1014,183,1015,188,790,205"/>
+<area shape="rect" id="Node000007" href="$utilities_8h.html#afc584c30c352192de6847b1f4b8caf0e" title="Fast approximation of 2 raised to a power." alt="" coords="893,221,980,246"/>
+<area shape="poly" id="edge7_Node000006_Node000007" title=" " alt="" coords="790,209,880,222,879,228,789,214"/>
+<area shape="rect" id="Node000008" href="$utilities_8h.html#aa67895957aa831a991982a8268ef8349" title="Fast approximation of the base&#45;2 logarithm." alt="" coords="895,270,978,296"/>
+<area shape="poly" id="edge9_Node000006_Node000008" title=" " alt="" coords="782,216,893,262,891,267,780,221"/>
+<area shape="poly" id="edge8_Node000007_Node000003" title=" " alt="" coords="966,218,1014,197,1016,202,968,223"/>
+<area shape="poly" id="edge10_Node000008_Node000003" title=" " alt="" coords="962,268,978,257,1007,231,1031,205,1035,208,1011,235,982,261,965,272"/>
+<area shape="poly" id="edge14_Node000009_Node000003" title=" " alt="" coords="844,327,878,329,913,327,947,320,979,306,1002,286,1021,260,1043,208,1048,210,1025,263,1006,290,981,310,949,325,914,332,878,334,844,332"/>
+</map>

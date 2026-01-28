@@ -7,13 +7,14 @@ var searchData=
   ['gamma4_4',['Gamma4',['../classFRShockEqn.html#a69ca2d095d52823456e2c9cad98132c2',1,'FRShockEqn']]],
   ['gamma_5fa_5',['gamma_a',['../structPyShock.html#a5597ae87d5318313996b8afc24af5553',1,'PyShock::gamma_a'],['../structSynElectrons.html#aa2e8c9dd55662d992284bd1baf49797c',1,'SynElectrons::gamma_a']]],
   ['gamma_5fc_6',['gamma_c',['../structPyShock.html#aca6cadc2491df53852fd1acc20afebfc',1,'PyShock::gamma_c'],['../structSynElectrons.html#a99879fd40758e9bca125100ffd799fc6',1,'SynElectrons::gamma_c']]],
-  ['gamma_5fc_5fhat_7',['gamma_c_hat',['../structPyShock.html#adf5112cfbebdaf5bf2dae5ab925a4fd2',1,'PyShock::gamma_c_hat'],['../structInverseComptonY.html#ae72722cbf94768206fb546cfaae1e151',1,'InverseComptonY::gamma_c_hat']]],
-  ['gamma_5fcut_8',['Gamma_cut',['../namespacecon.html#a9c6b1c9b349c790392fa370c8d9e13a8',1,'con']]],
+  ['gamma_5fc_5fhat_7',['gamma_c_hat',['../structInverseComptonY.html#ae72722cbf94768206fb546cfaae1e151',1,'InverseComptonY::gamma_c_hat'],['../structPyShock.html#adf5112cfbebdaf5bf2dae5ab925a4fd2',1,'PyShock::gamma_c_hat']]],
+  ['gamma_5fcut_8',['gamma_cut',['../namespacedefaults_1_1cutoffs.html#a6cda2def28c77f63dbee9eb169d9d87a',1,'defaults::cutoffs::gamma_cut'],['../namespacecon.html#a9c6b1c9b349c790392fa370c8d9e13a8',1,'con::Gamma_cut']]],
   ['gamma_5fm_9',['gamma_m',['../structPyShock.html#a53a5fc81875ed6b6ecbc2e25155a1880',1,'PyShock::gamma_m'],['../structSynElectrons.html#a4cfe5375f620c71ed77acdcd743a2639',1,'SynElectrons::gamma_m'],['../structPyShock.html#ab0edf257f016470b8d2f12707eae4ab0',1,'PyShock::gamma_M'],['../structSynElectrons.html#aecf574c857a1b1930faf5ae00c4a9af3',1,'SynElectrons::gamma_M']]],
   ['gamma_5fm_5fhat_10',['gamma_m_hat',['../structPyShock.html#a286774654d696a047dd2430a281ae856',1,'PyShock::gamma_m_hat'],['../structInverseComptonY.html#af6a7be13a431ffc3963d3469e2aa5756',1,'InverseComptonY::gamma_m_hat']]],
-  ['gamma_5fself_11',['gamma_self',['../structInverseComptonY.html#a7b16ff50be7bdedcb6fdf752948ccd5c',1,'InverseComptonY']]],
-  ['gamma_5fth_12',['gamma_th',['../structPyShock.html#aac93a14f3649cdd0177aef46023fe6b2',1,'PyShock::Gamma_th'],['../classShock.html#aff8a2f43d9c47007f042a3ed1a33f98e',1,'Shock::Gamma_th']]],
-  ['gauss_13',['Gauss',['../namespaceunit.html#afe6ab6092d118630921fa2b1ba3c888e',1,'unit']]],
-  ['gev_14',['GeV',['../namespaceunit.html#a72e916028823a9789da7785db1d7c17a',1,'unit']]],
-  ['gyr_15',['Gyr',['../namespaceunit.html#a48f40dde4001ab058bb1b94072ce4470',1,'unit']]]
+  ['gamma_5fmax_11',['gamma_max',['../structSpectralSegment.html#a3d2ff3ae8af0d0091702cae6d6efd6a3',1,'SpectralSegment']]],
+  ['gamma_5fself_12',['gamma_self',['../structInverseComptonY.html#a7b16ff50be7bdedcb6fdf752948ccd5c',1,'InverseComptonY']]],
+  ['gamma_5fth_13',['gamma_th',['../structPyShock.html#aac93a14f3649cdd0177aef46023fe6b2',1,'PyShock::Gamma_th'],['../classShock.html#aff8a2f43d9c47007f042a3ed1a33f98e',1,'Shock::Gamma_th']]],
+  ['gauss_14',['Gauss',['../namespaceunit.html#afe6ab6092d118630921fa2b1ba3c888e',1,'unit']]],
+  ['gev_15',['GeV',['../namespaceunit.html#a72e916028823a9789da7785db1d7c17a',1,'unit']]],
+  ['gyr_16',['Gyr',['../namespaceunit.html#a48f40dde4001ab058bb1b94072ce4470',1,'unit']]]
 ];

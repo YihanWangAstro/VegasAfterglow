@@ -12,14 +12,12 @@ var searchData=
   ['eps4_9',['eps4',['../structReverseState.html#ac4b9d139f2dd46d434f33a15f9b55d78',1,'ReverseState']]],
   ['eps_5fb_10',['eps_b',['../structParams.html#a0ecedb7ded82df330c388c3ef666910b',1,'Params::eps_B'],['../structRadParams.html#a0521194caf6b87cb685fa67fd92204c7',1,'RadParams::eps_B']]],
   ['eps_5fb_5fr_11',['eps_B_r',['../structParams.html#a5f393c97af8a1e00df7a6bd8cfa24ac6',1,'Params']]],
-  ['eps_5fe_12',['eps_e',['../structParams.html#a74ec7b90f09fa91a590f71616bb194a4',1,'Params::eps_e'],['../structRadParams.html#aac4103f83a674a9b9c7cd16e6be1e4a9',1,'RadParams::eps_e']]],
+  ['eps_5fe_12',['eps_e',['../structRadParams.html#aac4103f83a674a9b9c7cd16e6be1e4a9',1,'RadParams::eps_e'],['../structParams.html#a74ec7b90f09fa91a590f71616bb194a4',1,'Params::eps_e']]],
   ['eps_5fe_5fr_13',['eps_e_r',['../structParams.html#a3d27e71adc8b1d6a02d80bc5136dc741',1,'Params']]],
-  ['eps_5fjet_14',['eps_jet',['../structSimpleState.html#a05f3bf8627557a44c61c45c62c6c2500',1,'SimpleState::eps_jet'],['../structForwardState.html#a32da6a2c763df676d12a9a1c1230186e',1,'ForwardState::eps_jet']]],
+  ['eps_5fjet_14',['eps_jet',['../structForwardState.html#a32da6a2c763df676d12a9a1c1230186e',1,'ForwardState::eps_jet'],['../structSimpleState.html#a05f3bf8627557a44c61c45c62c6c2500',1,'SimpleState::eps_jet']]],
   ['eps_5fk_15',['eps_k',['../classEjecta.html#a1952705ec5647300cd09255dcfc786cd',1,'Ejecta']]],
   ['epsilon_16',['epsilon',['../classCoastingShock.html#ab94699fa87c9feb1fa9da4784b7fe771',1,'CoastingShock']]],
   ['erg_17',['erg',['../namespaceunit.html#a255e82bd3b0ebb273d6663111278d624',1,'unit']]],
   ['errors_18',['errors',['../structMultiBandData.html#a8640e475b62bf5f98f8829f583b01475',1,'MultiBandData']]],
-  ['ev_19',['eV',['../namespaceunit.html#a4d688cefb8c96513c3aa8a4f8c83d200',1,'unit']]],
-  ['exp_5fbias_20',['EXP_BIAS',['../utilities_8h.html#ab452f48db34a0f89bc46a267899671b5',1,'utilities.h']]],
-  ['exp_5fmask_21',['EXP_MASK',['../utilities_8h.html#a8fbfdaa7ab83dae20c676188a383f526',1,'utilities.h']]]
+  ['ev_19',['eV',['../namespaceunit.html#a4d688cefb8c96513c3aa8a4f8c83d200',1,'unit']]]
 ];

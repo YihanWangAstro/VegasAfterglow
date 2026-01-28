@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['validationerror_0',['ValidationError',['../classafterglow_1_1ValidationError.html',1,'afterglow']]]
+  ['tophatjet_0',['TophatJet',['../classTophatJet.html',1,'']]]
 ];

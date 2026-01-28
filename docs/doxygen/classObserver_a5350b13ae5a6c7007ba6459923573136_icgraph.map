@@ -1,21 +1,18 @@
 <map id="Observer::specific_flux" name="Observer::specific_flux">
-<area shape="rect" id="Node000001" title="Computes the specific flux at a single observed frequency." alt="" coords="725,105,895,131"/>
-<area shape="poly" id="edge9_Node000001_Node000001" title=" " alt="" coords="851,96,840,87,810,84,785,86,772,91,770,96,777,103,773,107,765,97,769,87,784,81,810,79,842,83,855,92"/>
-<area shape="rect" id="Node000002" href="$classObserver.html#a2588a9ebaec5465d6b5bd08fadadcb99" title="Computes the integrated flux over a frequency band." alt="" coords="522,55,635,80"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="737,105,635,82,636,77,738,100"/>
-<area shape="rect" id="Node000006" href="$classPyModel.html#a7aaf63a15a01165e3c5ad8d935f30414" title="Calculate specific flux at given times and frequencies." alt="" coords="480,105,677,131"/>
-<area shape="poly" id="edge7_Node000001_Node000006" title=" " alt="" coords="711,121,677,121,677,115,711,115"/>
-<area shape="rect" id="Node000007" href="$classObserver.html#a18a5b8ffa6dad54050d7de094c24094b" title="Computes the spectrum at multiple observation times." alt="" coords="510,155,647,180"/>
-<area shape="poly" id="edge10_Node000001_Node000007" title=" " alt="" coords="737,136,640,157,639,152,736,131"/>
-<area shape="poly" id="edge4_Node000002_Node000002" title=" " alt="" coords="620,46,609,37,579,33,554,35,541,40,538,46,545,53,541,56,533,46,537,36,553,30,579,28,611,32,623,41"/>
-<area shape="rect" id="Node000003" href="$structMultiBandModel.html#aa8fa5188553abf9f7f7b2c0321c27752" title="Calculate chi&#45;squared likelihood for given parameter values." alt="" coords="204,5,432,31"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="508,57,386,33,387,28,509,52"/>
-<area shape="rect" id="Node000005" href="$classPyModel.html#a51390496a41c22c7c2dbb8838ac7a2d2" title="Calculate bolometric flux integrated over a frequency range." alt="" coords="263,55,373,80"/>
-<area shape="poly" id="edge5_Node000002_Node000005" title=" " alt="" coords="508,70,374,70,374,65,508,65"/>
-<area shape="rect" id="Node000004" href="$pybind_8cpp.html#a8c92987849ad296e28ec6c07c8e7860b" title=" " alt="" coords="5,55,156,80"/>
-<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="243,36,143,57,142,52,242,31"/>
-<area shape="poly" id="edge6_Node000005_Node000004" title=" " alt="" coords="249,70,156,70,156,65,249,65"/>
-<area shape="poly" id="edge8_Node000006_Node000004" title=" " alt="" coords="466,116,340,108,204,94,138,83,139,77,204,89,340,103,466,111"/>
-<area shape="rect" id="Node000008" href="$classObserver.html#a096a45f3fcc7cd273c2bc89199ed74a2" title="Computes the spectrum at a single observation time." alt="" coords="243,156,393,181"/>
-<area shape="poly" id="edge11_Node000007_Node000008" title=" " alt="" coords="496,170,394,171,394,166,496,165"/>
+<area shape="rect" id="Node000001" title="Computes the specific flux at a single observed frequency." alt="" coords="635,80,804,105"/>
+<area shape="poly" id="edge7_Node000001_Node000001" title=" " alt="" coords="755,70,745,62,719,59,698,61,687,65,685,71,691,78,686,81,679,72,683,62,697,56,719,53,747,57,758,66"/>
+<area shape="rect" id="Node000002" href="$classObserver.html#a2588a9ebaec5465d6b5bd08fadadcb99" title="Computes the integrated flux over a frequency band." alt="" coords="461,29,575,55"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="654,79,568,57,570,52,655,74"/>
+<area shape="rect" id="Node000005" href="$classPyModel.html#a7aaf63a15a01165e3c5ad8d935f30414" title="Calculate specific flux at given times and frequencies." alt="" coords="204,80,401,105"/>
+<area shape="poly" id="edge5_Node000001_Node000005" title=" " alt="" coords="621,95,401,95,401,90,621,90"/>
+<area shape="rect" id="Node000006" href="$classObserver.html#a18a5b8ffa6dad54050d7de094c24094b" title="Computes the spectrum at multiple observation times." alt="" coords="449,131,587,156"/>
+<area shape="poly" id="edge8_Node000001_Node000006" title=" " alt="" coords="655,111,570,133,568,128,654,106"/>
+<area shape="poly" id="edge2_Node000002_Node000002" title=" " alt="" coords="554,20,544,11,518,8,497,10,486,15,483,20,489,28,485,31,478,21,482,11,495,5,518,3,546,6,557,16"/>
+<area shape="rect" id="Node000003" href="$classPyModel.html#a51390496a41c22c7c2dbb8838ac7a2d2" title="Calculate bolometric flux integrated over a frequency range." alt="" coords="247,31,358,56"/>
+<area shape="poly" id="edge3_Node000002_Node000003" title=" " alt="" coords="447,45,358,46,358,40,447,40"/>
+<area shape="rect" id="Node000004" href="$pybind_8cpp.html#a8c92987849ad296e28ec6c07c8e7860b" title=" " alt="" coords="5,56,156,81"/>
+<area shape="poly" id="edge4_Node000003_Node000004" title=" " alt="" coords="234,54,157,63,156,57,234,48"/>
+<area shape="poly" id="edge6_Node000005_Node000004" title=" " alt="" coords="190,83,156,79,156,74,191,78"/>
+<area shape="rect" id="Node000007" href="$classObserver.html#a096a45f3fcc7cd273c2bc89199ed74a2" title="Computes the spectrum at a single observation time." alt="" coords="227,131,378,156"/>
+<area shape="poly" id="edge9_Node000006_Node000007" title=" " alt="" coords="435,146,378,146,378,141,435,141"/>
 </map>

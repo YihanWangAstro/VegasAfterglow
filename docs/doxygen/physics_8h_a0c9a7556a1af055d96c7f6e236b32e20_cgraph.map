@@ -1,8 +1,0 @@
-<map id="shell_thickness_param" name="shell_thickness_param">
-<area shape="rect" id="Node000001" title="Computes the dimensionless parameter (ξ) that characterizes the shell geometry." alt="" coords="5,55,176,80"/>
-<area shape="rect" id="Node000002" href="$utilities_8h.html#ab8e81118f023df135835db8cce4f5f42" title="Returns the value of a single parameter." alt="" coords="253,29,304,55"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="176,53,239,45,240,50,177,58"/>
-<area shape="rect" id="Node000003" href="$physics_8h.html#aacab8c080156fce8cbe11a0899208c2e" title="Computes the Sedov length—a characteristic scale for blast wave deceleration." alt="" coords="224,79,333,104"/>
-<area shape="poly" id="edge3_Node000001_Node000003" title=" " alt="" coords="177,76,211,80,210,85,176,81"/>
-<area shape="poly" id="edge2_Node000002_Node000002" title=" " alt="" coords="251,33,242,23,244,12,256,5,279,3,308,8,315,14,316,21,311,22,310,16,305,12,279,8,258,10,248,15,247,22,255,30"/>
-</map>

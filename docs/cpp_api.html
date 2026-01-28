@@ -56,6 +56,7 @@
 <li class="toctree-l1"><a class="reference internal" href="examples.html">Examples</a></li>
 <li class="toctree-l1"><a class="reference internal" href="mcmc_fitting.html">MCMC Parameter Fitting</a></li>
 <li class="toctree-l1"><a class="reference internal" href="parameter_reference.html">Parameter Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="validation.html">Validation &amp; Testing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="python_api.html">Python API Reference</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">C++ API Reference</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#overview">Overview</a></li>
@@ -141,15 +142,11 @@
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="#_CPPv415InverseComptonY"><code class="docutils literal notranslate"><span class="pre">InverseComptonY</span></code></a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N15InverseComptonY15InverseComptonYE4Real4Real4Real4Real4Real"><code class="docutils literal notranslate"><span class="pre">InverseComptonY()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N15InverseComptonY15InverseComptonYE4Real"><code class="docutils literal notranslate"><span class="pre">InverseComptonY()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N15InverseComptonY15InverseComptonYE4Real4Real4Real4Real4Realb"><code class="docutils literal notranslate"><span class="pre">InverseComptonY()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#_CPPv4N15InverseComptonY15InverseComptonYEv"><code class="docutils literal notranslate"><span class="pre">InverseComptonY()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#_CPPv4NK15InverseComptonY14evaluate_at_nuE4Real4Real"><code class="docutils literal notranslate"><span class="pre">evaluate_at_nu()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#_CPPv4NK15InverseComptonY17evaluate_at_gammaE4Real4Real"><code class="docutils literal notranslate"><span class="pre">evaluate_at_gamma()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N15InverseComptonY8nu_m_hatE"><code class="docutils literal notranslate"><span class="pre">nu_m_hat</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N15InverseComptonY8nu_c_hatE"><code class="docutils literal notranslate"><span class="pre">nu_c_hat</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N15InverseComptonY7nu_selfE"><code class="docutils literal notranslate"><span class="pre">nu_self</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N15InverseComptonY3nu0E"><code class="docutils literal notranslate"><span class="pre">nu0</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#_CPPv4NK15InverseComptonY14gamma_spectrumE4Real"><code class="docutils literal notranslate"><span class="pre">gamma_spectrum()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#_CPPv4NK15InverseComptonY11nu_spectrumE4Real"><code class="docutils literal notranslate"><span class="pre">nu_spectrum()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N15InverseComptonY21update_cooling_breaksE4Real4Real"><code class="docutils literal notranslate"><span class="pre">update_cooling_breaks()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#_CPPv4N15InverseComptonY11gamma_m_hatE"><code class="docutils literal notranslate"><span class="pre">gamma_m_hat</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#_CPPv4N15InverseComptonY11gamma_c_hatE"><code class="docutils literal notranslate"><span class="pre">gamma_c_hat</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#_CPPv4N15InverseComptonY10gamma_selfE"><code class="docutils literal notranslate"><span class="pre">gamma_self</span></code></a></li>
@@ -928,8 +925,8 @@
 <div class="breathe-sectiondef docutils container">
 <p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-functions">Public Functions</p>
 <dl class="cpp function">
-<dt class="sig sig-object cpp" id="_CPPv4N15InverseComptonY15InverseComptonYE4Real4Real4Real4Real4Real">
-<span id="_CPPv3N15InverseComptonY15InverseComptonYE4Real4Real4Real4Real4Real"></span><span id="_CPPv2N15InverseComptonY15InverseComptonYE4Real4Real4Real4Real4Real"></span><span id="InverseComptonY::InverseComptonY__Real.Real.Real.Real.Real"></span><span class="target" id="VegasAfterglowstructInverseComptonY_1a3af801eeada0207a8adedba959e312b8"></span><span class="sig-name descname"><span class="n"><span class="pre">InverseComptonY</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">Real</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">gamma_m</span></span>, <span class="n"><span class="pre">Real</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">gamma_c</span></span>, <span class="n"><span class="pre">Real</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">B</span></span>, <span class="n"><span class="pre">Real</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">Y_T</span></span>, <span class="n"><span class="pre">Real</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">eps_e_on_eps_B</span></span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">noexcept</span></span><a class="headerlink" href="#_CPPv4N15InverseComptonY15InverseComptonYE4Real4Real4Real4Real4Real" title="Link to this definition"></a><br /></dt>
+<dt class="sig sig-object cpp" id="_CPPv4N15InverseComptonY15InverseComptonYE4Real4Real4Real4Real4Realb">
+<span id="_CPPv3N15InverseComptonY15InverseComptonYE4Real4Real4Real4Real4Realb"></span><span id="_CPPv2N15InverseComptonY15InverseComptonYE4Real4Real4Real4Real4Realb"></span><span id="InverseComptonY::InverseComptonY__Real.Real.Real.Real.Real.b"></span><span class="target" id="VegasAfterglowstructInverseComptonY_1a2e2ffd78dd60c7da21a052b443bd51b3"></span><span class="sig-name descname"><span class="n"><span class="pre">InverseComptonY</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">Real</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">gamma_m</span></span>, <span class="n"><span class="pre">Real</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">gamma_c</span></span>, <span class="n"><span class="pre">Real</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">p</span></span>, <span class="n"><span class="pre">Real</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">B</span></span>, <span class="n"><span class="pre">Real</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">Y_T</span></span>, <span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">is_KN</span></span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">noexcept</span></span><a class="headerlink" href="#_CPPv4N15InverseComptonY15InverseComptonYE4Real4Real4Real4Real4Realb" title="Link to this definition"></a><br /></dt>
 <dd><p>Initializes an <a class="reference internal" href="#VegasAfterglowstructInverseComptonY"><span class="std std-ref">InverseComptonY</span></a> object with frequency thresholds, magnetic field and Y parameter. </p>
 <p>Computes characteristic gamma values and corresponding frequencies, then determines cooling regime. </p>
 <dl class="field-list simple">
@@ -937,20 +934,10 @@
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>gamma_m</strong> – Characteristic Lorentz factor for the minimum Lorentz factor </p></li>
 <li><p><strong>gamma_c</strong> – Characteristic Lorentz factor for the cooling Lorentz factor </p></li>
+<li><p><strong>p</strong> – Spectral index of electron distribution </p></li>
 <li><p><strong>B</strong> – Magnetic field strength </p></li>
-<li><p><strong>Y_T</strong> – Thomson Y parameter </p></li>
+<li><p><strong>Y_T</strong> – Thomson scattering Y parameter </p></li>
 </ul>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="cpp function">
-<dt class="sig sig-object cpp" id="_CPPv4N15InverseComptonY15InverseComptonYE4Real">
-<span id="_CPPv3N15InverseComptonY15InverseComptonYE4Real"></span><span id="_CPPv2N15InverseComptonY15InverseComptonYE4Real"></span><span id="InverseComptonY::InverseComptonY__Real"></span><span class="target" id="VegasAfterglowstructInverseComptonY_1a868e013d09d617985b93a16c2674f705"></span><span class="k"><span class="pre">explicit</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">InverseComptonY</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">Real</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">Y_T</span></span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">noexcept</span></span><a class="headerlink" href="#_CPPv4N15InverseComptonY15InverseComptonYE4Real" title="Link to this definition"></a><br /></dt>
-<dd><p>Simple constructor that initializes with only the Thomson Y parameter for special cases. </p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>Y_T</strong> – Thomson Y parameter </p>
 </dd>
 </dl>
 </dd></dl>
@@ -962,16 +949,28 @@
 </dd></dl>
 
 <dl class="cpp function">
-<dt class="sig sig-object cpp" id="_CPPv4NK15InverseComptonY14evaluate_at_nuE4Real4Real">
-<span id="_CPPv3NK15InverseComptonY14evaluate_at_nuE4Real4Real"></span><span id="_CPPv2NK15InverseComptonY14evaluate_at_nuE4Real4Real"></span><span id="InverseComptonY::evaluate_at_nu__Real.RealC"></span><span class="target" id="VegasAfterglowstructInverseComptonY_1ae89da0295219c94b65f81577fa043ae4"></span><span class="n"><span class="pre">Real</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">evaluate_at_nu</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">Real</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">nu</span></span>, <span class="n"><span class="pre">Real</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">p</span></span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK15InverseComptonY14evaluate_at_nuE4Real4Real" title="Link to this definition"></a><br /></dt>
-<dd><p>Calculates the effective Y parameter for a given frequency and spectral index. </p>
-<p>Different scaling relations apply depending on the cooling regime and frequency range. </p>
+<dt class="sig sig-object cpp" id="_CPPv4NK15InverseComptonY14gamma_spectrumE4Real">
+<span id="_CPPv3NK15InverseComptonY14gamma_spectrumE4Real"></span><span id="_CPPv2NK15InverseComptonY14gamma_spectrumE4Real"></span><span id="InverseComptonY::gamma_spectrum__RealC"></span><span class="target" id="VegasAfterglowstructInverseComptonY_1a10d6b44bd159fd7fe8e5a3f1d6be453c"></span><span class="n"><span class="pre">Real</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">gamma_spectrum</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">Real</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">gamma</span></span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK15InverseComptonY14gamma_spectrumE4Real" title="Link to this definition"></a><br /></dt>
+<dd><p>Calculates the effective Y parameter for a given Lorentz factor and spectral index. </p>
+<p>Different scaling relations apply depending on the cooling regime and gamma value. </p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>nu</strong> – Frequency at which to compute the Y parameter </p></li>
-<li><p><strong>p</strong> – Spectral index of electron distribution </p></li>
-</ul>
+<dd class="field-odd"><p><strong>gamma</strong> – Electron Lorentz factor </p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The effective Y parameter at the given gamma </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK15InverseComptonY11nu_spectrumE4Real">
+<span id="_CPPv3NK15InverseComptonY11nu_spectrumE4Real"></span><span id="_CPPv2NK15InverseComptonY11nu_spectrumE4Real"></span><span id="InverseComptonY::nu_spectrum__RealC"></span><span class="target" id="VegasAfterglowstructInverseComptonY_1a8a52b79880e15b9768ae1a81d0f4d65a"></span><span class="n"><span class="pre">Real</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">nu_spectrum</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">Real</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">nu</span></span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK15InverseComptonY11nu_spectrumE4Real" title="Link to this definition"></a><br /></dt>
+<dd><p>Calculates the effective Y parameter for a given synchrotron frequency. </p>
+<p>Different scaling relations apply depending on the cooling regime and frequency value. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>nu</strong> – Synchrotron frequency </p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>The effective Y parameter at the given frequency </p>
@@ -980,71 +979,34 @@
 </dd></dl>
 
 <dl class="cpp function">
-<dt class="sig sig-object cpp" id="_CPPv4NK15InverseComptonY17evaluate_at_gammaE4Real4Real">
-<span id="_CPPv3NK15InverseComptonY17evaluate_at_gammaE4Real4Real"></span><span id="_CPPv2NK15InverseComptonY17evaluate_at_gammaE4Real4Real"></span><span id="InverseComptonY::evaluate_at_gamma__Real.RealC"></span><span class="target" id="VegasAfterglowstructInverseComptonY_1ae318101198df1b792c8451eba352071b"></span><span class="n"><span class="pre">Real</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">evaluate_at_gamma</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">Real</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">gamma</span></span>, <span class="n"><span class="pre">Real</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">p</span></span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK15InverseComptonY17evaluate_at_gammaE4Real4Real" title="Link to this definition"></a><br /></dt>
-<dd><p>Calculates the effective Y parameter for a given Lorentz factor and spectral index. </p>
-<p>Different scaling relations apply depending on the cooling regime and gamma value. </p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>gamma</strong> – Electron Lorentz factor </p></li>
-<li><p><strong>p</strong> – Spectral index of electron distribution </p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>The effective Y parameter at the given gamma </p>
-</dd>
-</dl>
-</dd></dl>
+<dt class="sig sig-object cpp" id="_CPPv4N15InverseComptonY21update_cooling_breaksE4Real4Real">
+<span id="_CPPv3N15InverseComptonY21update_cooling_breaksE4Real4Real"></span><span id="_CPPv2N15InverseComptonY21update_cooling_breaksE4Real4Real"></span><span id="InverseComptonY::update_cooling_breaks__Real.Real"></span><span class="target" id="VegasAfterglowstructInverseComptonY_1ab690b3be057dce6c2bc6b86b91447aca"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">update_cooling_breaks</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">Real</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">gamma_c</span></span>, <span class="n"><span class="pre">Real</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">Y_T</span></span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">noexcept</span></span><a class="headerlink" href="#_CPPv4N15InverseComptonY21update_cooling_breaksE4Real4Real" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
 
 </div>
 <div class="breathe-sectiondef docutils container">
 <p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-members">Public Members</p>
 <dl class="cpp var">
-<dt class="sig sig-object cpp" id="_CPPv4N15InverseComptonY8nu_m_hatE">
-<span id="_CPPv3N15InverseComptonY8nu_m_hatE"></span><span id="_CPPv2N15InverseComptonY8nu_m_hatE"></span><span id="InverseComptonY::nu_m_hat__Real"></span><span class="target" id="VegasAfterglowstructInverseComptonY_1a61f9be458f76f3264a0ce51ff515fc6d"></span><span class="n"><span class="pre">Real</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">nu_m_hat</span></span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="p"><span class="pre">{</span></span><span class="m"><span class="pre">0</span></span><span class="p"><span class="pre">}</span></span><a class="headerlink" href="#_CPPv4N15InverseComptonY8nu_m_hatE" title="Link to this definition"></a><br /></dt>
-<dd><p>Frequency threshold for minimum electrons. </p>
-</dd></dl>
-
-<dl class="cpp var">
-<dt class="sig sig-object cpp" id="_CPPv4N15InverseComptonY8nu_c_hatE">
-<span id="_CPPv3N15InverseComptonY8nu_c_hatE"></span><span id="_CPPv2N15InverseComptonY8nu_c_hatE"></span><span id="InverseComptonY::nu_c_hat__Real"></span><span class="target" id="VegasAfterglowstructInverseComptonY_1aba46902001dcce68e9a800f6546cfb6f"></span><span class="n"><span class="pre">Real</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">nu_c_hat</span></span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="p"><span class="pre">{</span></span><span class="m"><span class="pre">0</span></span><span class="p"><span class="pre">}</span></span><a class="headerlink" href="#_CPPv4N15InverseComptonY8nu_c_hatE" title="Link to this definition"></a><br /></dt>
-<dd><p>Frequency threshold for cooling electrons. </p>
-</dd></dl>
-
-<dl class="cpp var">
-<dt class="sig sig-object cpp" id="_CPPv4N15InverseComptonY7nu_selfE">
-<span id="_CPPv3N15InverseComptonY7nu_selfE"></span><span id="_CPPv2N15InverseComptonY7nu_selfE"></span><span id="InverseComptonY::nu_self__Real"></span><span class="target" id="VegasAfterglowstructInverseComptonY_1af972dfca7ef78bc5cee1b092aca6a877"></span><span class="n"><span class="pre">Real</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">nu_self</span></span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="p"><span class="pre">{</span></span><span class="m"><span class="pre">0</span></span><span class="p"><span class="pre">}</span></span><a class="headerlink" href="#_CPPv4N15InverseComptonY7nu_selfE" title="Link to this definition"></a><br /></dt>
-<dd><p>Frequency threshold for nu_self = nu_self_hat. </p>
-</dd></dl>
-
-<dl class="cpp var">
-<dt class="sig sig-object cpp" id="_CPPv4N15InverseComptonY3nu0E">
-<span id="_CPPv3N15InverseComptonY3nu0E"></span><span id="_CPPv2N15InverseComptonY3nu0E"></span><span id="InverseComptonY::nu0__Real"></span><span class="target" id="VegasAfterglowstructInverseComptonY_1aee671c5e961ee6e79b86f4e7c8045231"></span><span class="n"><span class="pre">Real</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">nu0</span></span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="p"><span class="pre">{</span></span><span class="m"><span class="pre">0</span></span><span class="p"><span class="pre">}</span></span><a class="headerlink" href="#_CPPv4N15InverseComptonY3nu0E" title="Link to this definition"></a><br /></dt>
-<dd><p>Frequency threshold for Y(nu0) = 1. </p>
-</dd></dl>
-
-<dl class="cpp var">
 <dt class="sig sig-object cpp" id="_CPPv4N15InverseComptonY11gamma_m_hatE">
-<span id="_CPPv3N15InverseComptonY11gamma_m_hatE"></span><span id="_CPPv2N15InverseComptonY11gamma_m_hatE"></span><span id="InverseComptonY::gamma_m_hat__Real"></span><span class="target" id="VegasAfterglowstructInverseComptonY_1af6a7be13a431ffc3963d3469e2aa5756"></span><span class="n"><span class="pre">Real</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">gamma_m_hat</span></span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="p"><span class="pre">{</span></span><span class="m"><span class="pre">0</span></span><span class="p"><span class="pre">}</span></span><a class="headerlink" href="#_CPPv4N15InverseComptonY11gamma_m_hatE" title="Link to this definition"></a><br /></dt>
+<span id="_CPPv3N15InverseComptonY11gamma_m_hatE"></span><span id="_CPPv2N15InverseComptonY11gamma_m_hatE"></span><span id="InverseComptonY::gamma_m_hat__Real"></span><span class="target" id="VegasAfterglowstructInverseComptonY_1af6a7be13a431ffc3963d3469e2aa5756"></span><span class="n"><span class="pre">Real</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">gamma_m_hat</span></span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="p"><span class="pre">{</span></span><span class="m"><span class="pre">1</span></span><span class="p"><span class="pre">}</span></span><a class="headerlink" href="#_CPPv4N15InverseComptonY11gamma_m_hatE" title="Link to this definition"></a><br /></dt>
 <dd><p>Lorentz factor threshold for minimum energy electrons. </p>
 </dd></dl>
 
 <dl class="cpp var">
 <dt class="sig sig-object cpp" id="_CPPv4N15InverseComptonY11gamma_c_hatE">
-<span id="_CPPv3N15InverseComptonY11gamma_c_hatE"></span><span id="_CPPv2N15InverseComptonY11gamma_c_hatE"></span><span id="InverseComptonY::gamma_c_hat__Real"></span><span class="target" id="VegasAfterglowstructInverseComptonY_1ae72722cbf94768206fb546cfaae1e151"></span><span class="n"><span class="pre">Real</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">gamma_c_hat</span></span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="p"><span class="pre">{</span></span><span class="m"><span class="pre">0</span></span><span class="p"><span class="pre">}</span></span><a class="headerlink" href="#_CPPv4N15InverseComptonY11gamma_c_hatE" title="Link to this definition"></a><br /></dt>
+<span id="_CPPv3N15InverseComptonY11gamma_c_hatE"></span><span id="_CPPv2N15InverseComptonY11gamma_c_hatE"></span><span id="InverseComptonY::gamma_c_hat__Real"></span><span class="target" id="VegasAfterglowstructInverseComptonY_1ae72722cbf94768206fb546cfaae1e151"></span><span class="n"><span class="pre">Real</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">gamma_c_hat</span></span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="p"><span class="pre">{</span></span><span class="m"><span class="pre">1</span></span><span class="p"><span class="pre">}</span></span><a class="headerlink" href="#_CPPv4N15InverseComptonY11gamma_c_hatE" title="Link to this definition"></a><br /></dt>
 <dd><p>Lorentz factor threshold for cooling electrons. </p>
 </dd></dl>
 
 <dl class="cpp var">
 <dt class="sig sig-object cpp" id="_CPPv4N15InverseComptonY10gamma_selfE">
-<span id="_CPPv3N15InverseComptonY10gamma_selfE"></span><span id="_CPPv2N15InverseComptonY10gamma_selfE"></span><span id="InverseComptonY::gamma_self__Real"></span><span class="target" id="VegasAfterglowstructInverseComptonY_1a7b16ff50be7bdedcb6fdf752948ccd5c"></span><span class="n"><span class="pre">Real</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">gamma_self</span></span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="p"><span class="pre">{</span></span><span class="m"><span class="pre">0</span></span><span class="p"><span class="pre">}</span></span><a class="headerlink" href="#_CPPv4N15InverseComptonY10gamma_selfE" title="Link to this definition"></a><br /></dt>
+<span id="_CPPv3N15InverseComptonY10gamma_selfE"></span><span id="_CPPv2N15InverseComptonY10gamma_selfE"></span><span id="InverseComptonY::gamma_self__Real"></span><span class="target" id="VegasAfterglowstructInverseComptonY_1a7b16ff50be7bdedcb6fdf752948ccd5c"></span><span class="n"><span class="pre">Real</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">gamma_self</span></span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="p"><span class="pre">{</span></span><span class="m"><span class="pre">1</span></span><span class="p"><span class="pre">}</span></span><a class="headerlink" href="#_CPPv4N15InverseComptonY10gamma_selfE" title="Link to this definition"></a><br /></dt>
 <dd><p>Lorentz factor threshold for gamma_self = gamma_self_hat. </p>
 </dd></dl>
 
 <dl class="cpp var">
 <dt class="sig sig-object cpp" id="_CPPv4N15InverseComptonY6gamma0E">
-<span id="_CPPv3N15InverseComptonY6gamma0E"></span><span id="_CPPv2N15InverseComptonY6gamma0E"></span><span id="InverseComptonY::gamma0__Real"></span><span class="target" id="VegasAfterglowstructInverseComptonY_1a91efedc89c793094c335a70df6f8d8bc"></span><span class="n"><span class="pre">Real</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">gamma0</span></span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="p"><span class="pre">{</span></span><span class="m"><span class="pre">0</span></span><span class="p"><span class="pre">}</span></span><a class="headerlink" href="#_CPPv4N15InverseComptonY6gamma0E" title="Link to this definition"></a><br /></dt>
+<span id="_CPPv3N15InverseComptonY6gamma0E"></span><span id="_CPPv2N15InverseComptonY6gamma0E"></span><span id="InverseComptonY::gamma0__Real"></span><span class="target" id="VegasAfterglowstructInverseComptonY_1a91efedc89c793094c335a70df6f8d8bc"></span><span class="n"><span class="pre">Real</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">gamma0</span></span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="p"><span class="pre">{</span></span><span class="m"><span class="pre">1</span></span><span class="p"><span class="pre">}</span></span><a class="headerlink" href="#_CPPv4N15InverseComptonY6gamma0E" title="Link to this definition"></a><br /></dt>
 <dd><p>Lorentz factor threshold for Y(gamma0) = 1. </p>
 </dd></dl>
 

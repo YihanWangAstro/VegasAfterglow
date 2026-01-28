@@ -1,9 +1,9 @@
 <map id="gen_prompt_photons" name="gen_prompt_photons">
-<area shape="rect" id="Node000001" title=" " alt="" coords="5,31,164,56"/>
-<area shape="rect" id="Node000002" href="$physics_8h.html#ab8aa624dd63313487d8f5ecf52170d76" title="Converts Lorentz factor (gamma) to a velocity fraction (beta)" alt="" coords="212,5,340,31"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="164,30,198,26,199,31,165,35"/>
-<area shape="rect" id="Node000003" href="$utilities_8h.html#ab8e81118f023df135835db8cce4f5f42" title="Returns the value of a single parameter." alt="" coords="388,31,439,56"/>
-<area shape="poly" id="edge4_Node000001_Node000003" title=" " alt="" coords="164,41,374,41,374,46,164,46"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="341,27,374,34,373,39,340,32"/>
-<area shape="poly" id="edge3_Node000003_Node000003" title=" " alt="" coords="390,32,385,22,388,13,397,6,413,4,432,7,440,16,436,19,429,12,413,9,399,11,392,16,391,22,395,29"/>
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,42,164,67"/>
+<area shape="rect" id="Node000002" href="$namespacephysics_1_1relativistic.html#ab1c1444afa3c4afd0c57145f932962fa" title="Converts Lorentz factor (gamma) to a velocity fraction (beta)" alt="" coords="212,5,360,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="164,40,198,35,199,41,165,46"/>
+<area shape="rect" id="Node000003" href="$utilities_8h.html#ab8e81118f023df135835db8cce4f5f42" title="Returns the value of a single parameter." alt="" coords="408,42,459,67"/>
+<area shape="poly" id="edge4_Node000001_Node000003" title=" " alt="" coords="165,54,360,55,394,54,394,59,360,60,165,59"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="361,37,395,44,394,50,360,43"/>
+<area shape="poly" id="edge3_Node000003_Node000003" title=" " alt="" coords="408,43,403,34,406,24,416,18,433,15,454,19,462,27,459,31,451,24,433,21,418,23,410,27,409,33,413,41"/>
 </map>

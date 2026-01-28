@@ -1,4 +1,6 @@
 var searchData=
 [
-  ['logicerror_0',['LogicError',['../classafterglow_1_1LogicError.html',1,'afterglow']]]
+  ['icphoton_0',['ICPhoton',['../structICPhoton.html',1,'']]],
+  ['inversecomptony_1',['InverseComptonY',['../structInverseComptonY.html',1,'']]],
+  ['ism_2',['ISM',['../classISM.html',1,'']]]
 ];

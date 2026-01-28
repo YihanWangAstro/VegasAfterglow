@@ -1,5 +1,6 @@
 var hierarchy =
 [
+    [ "BatchWorkspace", "structBatchWorkspace.html", null ],
     [ "CoastingShock", "classCoastingShock.html", null ],
     [ "ConfigParams", "structConfigParams.html", null ],
     [ "Coord", "classCoord.html", null ],
@@ -24,7 +25,9 @@ var hierarchy =
     [ "MultiBandData", "structMultiBandData.html", null ],
     [ "MultiBandModel", "structMultiBandModel.html", null ],
     [ "Observer", "classObserver.html", null ],
+    [ "ParamDef", "structParamDef.html", null ],
     [ "Params", "structParams.html", null ],
+    [ "ParamTransformer", "classParamTransformer.html", null ],
     [ "PowerLawJet", "classPowerLawJet.html", null ],
     [ "PowerLawSyn", "structPowerLawSyn.html", null ],
     [ "PromptPhotons", "structPromptPhotons.html", null ],
@@ -40,8 +43,9 @@ var hierarchy =
     [ "Shock", "classShock.html", null ],
     [ "SimpleShockEqn< Ejecta, Medium >", "classSimpleShockEqn.html", null ],
     [ "SimpleState< Ejecta >", "structSimpleState.html", null ],
+    [ "SmoothPowerLawSyn", "structSmoothPowerLawSyn.html", null ],
+    [ "SpectralSegment", "structSpectralSegment.html", null ],
     [ "SynElectrons", "structSynElectrons.html", null ],
-    [ "Tables", "structTables.html", null ],
     [ "TophatJet", "classTophatJet.html", null ],
     [ "Wind", "classWind.html", null ]
 ];

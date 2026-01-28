@@ -1,6 +1,0 @@
-<map id="gamma_to_beta" name="gamma_to_beta">
-<area shape="rect" id="Node000001" title="Converts Lorentz factor (gamma) to a velocity fraction (beta)" alt="" coords="5,29,133,55"/>
-<area shape="rect" id="Node000002" href="$utilities_8h.html#ab8e81118f023df135835db8cce4f5f42" title="Returns the value of a single parameter." alt="" coords="181,29,232,55"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="134,39,167,39,167,45,134,45"/>
-<area shape="poly" id="edge2_Node000002_Node000002" title=" " alt="" coords="183,30,179,21,181,11,191,5,207,3,225,6,234,14,230,18,223,11,207,8,193,10,185,15,184,20,188,28"/>
-</map>

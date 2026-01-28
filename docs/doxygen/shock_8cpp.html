@@ -129,10 +129,14 @@ Include dependency graph for shock.cpp:</div>
 <area shape="poly" title=" " alt="" coords="606,323,638,367,634,370,602,326"/>
 <area shape="rect" title=" " alt="" coords="751,379,934,405"/>
 <area shape="poly" title=" " alt="" coords="633,321,795,373,793,378,631,327"/>
-<area shape="rect" title=" " alt="" coords="848,533,907,559"/>
-<area shape="poly" title=" " alt="" coords="917,487,894,523,890,520,913,484"/>
-<area shape="rect" title=" " alt="" coords="931,533,1005,559"/>
-<area shape="poly" title=" " alt="" coords="932,484,956,520,951,523,928,487"/>
+<area shape="rect" title=" " alt="" coords="803,541,861,566"/>
+<area shape="poly" title=" " alt="" coords="911,488,857,534,854,530,908,483"/>
+<area shape="rect" title=" " alt="" coords="885,541,960,566"/>
+<area shape="poly" title=" " alt="" coords="925,486,925,527,920,527,920,486"/>
+<area shape="rect" href="simulation-defaults_8h.html" title="Centralized simulation configuration defaults." alt="" coords="984,533,1131,573"/>
+<area shape="poly" title=" " alt="" coords="944,483,1014,524,1012,529,941,488"/>
+<area shape="rect" title=" " alt="" coords="1022,621,1093,647"/>
+<area shape="poly" title=" " alt="" coords="1060,574,1060,607,1055,607,1055,574"/>
 <area shape="poly" title=" " alt="" coords="76,402,101,409,205,428,312,443,523,461,710,469,850,470,850,475,710,474,523,466,311,448,204,433,99,415,74,407"/>
 <area shape="rect" title=" " alt="" coords="15,460,78,485"/>
 <area shape="poly" title=" " alt="" coords="49,405,49,446,44,446,44,405"/>
@@ -194,7 +198,7 @@ Functions</h2></td></tr>
 
 <p class="definition">Definition at line <a class="el" href="shock_8cpp_source.html#l00042">42</a> of file <a class="el" href="shock_8cpp_source.html">shock.cpp</a>.</p>
 <div class="fragment"><div class="line"><span class="lineno">   42</span>                                                      {</div>
-<div class="line"><span class="lineno">   43</span>    <span class="keyword">const</span> <a class="code hl_typedef" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">ad_idx</a> = <a class="code hl_function" href="physics_8h.html#a2a95c6b3f1236d69328af7199a772a23">adiabatic_idx</a>(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">gamma_rel</a>);</div>
+<div class="line"><span class="lineno">   43</span>    <span class="keyword">const</span> <a class="code hl_typedef" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">ad_idx</a> = <a class="code hl_function" href="namespacephysics_1_1thermo.html#a8d90fdf6e3727fb58e7beb1c4f2fd50c">physics::thermo::adiabatic_idx</a>(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">gamma_rel</a>);</div>
 <div class="line"><span class="lineno">   44</span>    <span class="keyword">const</span> <a class="code hl_typedef" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">gamma_m_1</a> = <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">gamma_rel</a> - 1; <span class="comment">// (gamma_rel - 1)</span></div>
 <div class="line"><span class="lineno">   45</span>    <span class="keyword">const</span> <a class="code hl_typedef" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">ad_idx_m_2</a> = <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">ad_idx</a> - 2;   <span class="comment">// (ad_idx - 2)</span></div>
 <div class="line"><span class="lineno">   46</span>    <span class="keyword">const</span> <a class="code hl_typedef" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">ad_idx_m_1</a> = <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">ad_idx</a> - 1;   <span class="comment">// (ad_idx - 1)</span></div>
@@ -228,24 +232,24 @@ Functions</h2></td></tr>
 <div class="line"><span class="lineno">   74</span>        <span class="keywordflow">return</span> std::sqrt(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">uds</a>);</div>
 <div class="line"><span class="lineno">   75</span>    }</div>
 <div class="line"><span class="lineno">   76</span>}</div>
-<div class="ttc" id="amacros_8h_html_a4b04262b81aa7d31eb5d2f607e2a35de"><div class="ttname"><a href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a></div><div class="ttdeci">double Real</div><div class="ttdoc">Type alias for floating-point precision used throughout the code.</div><div class="ttdef"><b>Definition</b> <a href="macros_8h_source.html#l00022">macros.h:22</a></div></div>
-<div class="ttc" id="anamespacecon_html_a2ff3edf57629ccb9a49d5bde7278a7c4"><div class="ttname"><a href="namespacecon.html#a2ff3edf57629ccb9a49d5bde7278a7c4">con::c</a></div><div class="ttdeci">constexpr Real c</div><div class="ttdoc">Speed of light (normalized to 1 in code units)</div><div class="ttdef"><b>Definition</b> <a href="macros_8h_source.html#l00085">macros.h:85</a></div></div>
-<div class="ttc" id="anamespacecon_html_aa0ccd904b754d0f907898a942516d121"><div class="ttname"><a href="namespacecon.html#aa0ccd904b754d0f907898a942516d121">con::pi</a></div><div class="ttdeci">constexpr Real pi</div><div class="ttdoc">Pi.</div><div class="ttdef"><b>Definition</b> <a href="macros_8h_source.html#l00095">macros.h:95</a></div></div>
-<div class="ttc" id="anamespacecon_html_ae257fca076d03dd535871a9824d2f178"><div class="ttname"><a href="namespacecon.html#ae257fca076d03dd535871a9824d2f178">con::sigma_cut</a></div><div class="ttdeci">constexpr Real sigma_cut</div><div class="ttdoc">Cutoff magnetization value.</div><div class="ttdef"><b>Definition</b> <a href="macros_8h_source.html#l00102">macros.h:102</a></div></div>
-<div class="ttc" id="aphysics_8h_html_a2a95c6b3f1236d69328af7199a772a23"><div class="ttname"><a href="physics_8h.html#a2a95c6b3f1236d69328af7199a772a23">adiabatic_idx</a></div><div class="ttdeci">Real adiabatic_idx(Real gamma)</div><div class="ttdoc">Computes adiabatic index as a function of the Lorentz factor.</div><div class="ttdef"><b>Definition</b> <a href="physics_8h_source.html#l00128">physics.h:128</a></div></div>
-<div class="ttc" id="autilities_8h_html_ab8e81118f023df135835db8cce4f5f42"><div class="ttname"><a href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">max</a></div><div class="ttdeci">T max(T value)</div><div class="ttdoc">Returns the value of a single parameter.</div><div class="ttdef"><b>Definition</b> <a href="utilities_8h_source.html#l00307">utilities.h:307</a></div></div>
+<div class="ttc" id="amacros_8h_html_a4b04262b81aa7d31eb5d2f607e2a35de"><div class="ttname"><a href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a></div><div class="ttdeci">double Real</div><div class="ttdoc">Type alias for floating-point precision used throughout the code.</div><div class="ttdef"><b>Definition</b> <a href="macros_8h_source.html#l00024">macros.h:24</a></div></div>
+<div class="ttc" id="anamespacecon_html_a2ff3edf57629ccb9a49d5bde7278a7c4"><div class="ttname"><a href="namespacecon.html#a2ff3edf57629ccb9a49d5bde7278a7c4">con::c</a></div><div class="ttdeci">constexpr Real c</div><div class="ttdoc">Speed of light (normalized to 1 in code units)</div><div class="ttdef"><b>Definition</b> <a href="macros_8h_source.html#l00087">macros.h:87</a></div></div>
+<div class="ttc" id="anamespacecon_html_aa0ccd904b754d0f907898a942516d121"><div class="ttname"><a href="namespacecon.html#aa0ccd904b754d0f907898a942516d121">con::pi</a></div><div class="ttdeci">constexpr Real pi</div><div class="ttdoc">Pi.</div><div class="ttdef"><b>Definition</b> <a href="macros_8h_source.html#l00097">macros.h:97</a></div></div>
+<div class="ttc" id="anamespacecon_html_ae257fca076d03dd535871a9824d2f178"><div class="ttname"><a href="namespacecon.html#ae257fca076d03dd535871a9824d2f178">con::sigma_cut</a></div><div class="ttdeci">constexpr Real sigma_cut</div><div class="ttdoc">Cutoff magnetization value.</div><div class="ttdef"><b>Definition</b> <a href="macros_8h_source.html#l00104">macros.h:104</a></div></div>
+<div class="ttc" id="anamespacephysics_1_1thermo_html_a8d90fdf6e3727fb58e7beb1c4f2fd50c"><div class="ttname"><a href="namespacephysics_1_1thermo.html#a8d90fdf6e3727fb58e7beb1c4f2fd50c">physics::thermo::adiabatic_idx</a></div><div class="ttdeci">Real adiabatic_idx(Real gamma)</div><div class="ttdoc">Computes adiabatic index as a function of the Lorentz factor.</div><div class="ttdef"><b>Definition</b> <a href="physics_8h_source.html#l00057">physics.h:57</a></div></div>
+<div class="ttc" id="autilities_8h_html_ab8e81118f023df135835db8cce4f5f42"><div class="ttname"><a href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">max</a></div><div class="ttdeci">T max(T value)</div><div class="ttdoc">Returns the value of a single parameter.</div><div class="ttdef"><b>Definition</b> <a href="utilities_8h_source.html#l00318">utilities.h:318</a></div></div>
 </div><!-- fragment --><div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="shock_8cpp_a09f75d8bc0c1cd36d03a413edd7283d8_cgraph.png" border="0" usemap="#ashock_8cpp_a09f75d8bc0c1cd36d03a413edd7283d8_cgraph" alt=""/></div>
 <map name="ashock_8cpp_a09f75d8bc0c1cd36d03a413edd7283d8_cgraph" id="ashock_8cpp_a09f75d8bc0c1cd36d03a413edd7283d8_cgraph">
 <area shape="rect" title="Computes the downstream four&#45;velocity for a given relative Lorentz factor and magnetization parameter..." alt="" coords="5,31,179,56"/>
-<area shape="rect" href="physics_8h.html#a2a95c6b3f1236d69328af7199a772a23" title="Computes adiabatic index as a function of the Lorentz factor." alt="" coords="227,5,336,31"/>
-<area shape="poly" title=" " alt="" coords="179,29,212,24,213,30,179,34"/>
-<area shape="rect" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42" title="Returns the value of a single parameter." alt="" coords="384,31,435,56"/>
-<area shape="poly" title=" " alt="" coords="179,41,371,41,371,46,179,46"/>
-<area shape="poly" title=" " alt="" coords="337,26,371,33,370,38,336,31"/>
-<area shape="poly" title=" " alt="" coords="387,32,383,22,385,13,394,6,409,4,427,7,435,16,431,19,424,12,409,9,396,11,390,16,388,22,392,29"/>
+<area shape="rect" href="namespacephysics_1_1thermo.html#a8d90fdf6e3727fb58e7beb1c4f2fd50c" title="Computes adiabatic index as a function of the Lorentz factor." alt="" coords="227,5,448,31"/>
+<area shape="poly" title=" " alt="" coords="179,32,213,28,213,33,179,37"/>
+<area shape="rect" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42" title="Returns the value of a single parameter." alt="" coords="496,31,547,56"/>
+<area shape="poly" title=" " alt="" coords="179,41,482,41,482,46,179,46"/>
+<area shape="poly" title=" " alt="" coords="430,28,482,35,482,41,429,33"/>
+<area shape="poly" title=" " alt="" coords="493,34,485,24,487,13,500,6,521,4,549,9,557,14,558,21,553,22,552,17,547,14,521,9,501,12,491,17,490,23,497,31"/>
 </map>
 </div>
 <div class="dynheader">

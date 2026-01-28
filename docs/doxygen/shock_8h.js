@@ -24,6 +24,7 @@ var shock_8h =
     [ "compute_sound_speed", "shock_8h.html#a55391189d6bdd1e0ddbc2d039424a0cc", null ],
     [ "compute_upstr_4vel", "shock_8h.html#ab0d0c4b81c0c5525c81eb24d70c4b010", null ],
     [ "compute_upstr_B", "shock_8h.html#a236d063c70414f0409427c12b429357e", null ],
+    [ "enclosed_mass", "shock_8h.html#acc6d84207549ad55230c89d5f2492ae0", null ],
     [ "set_stopping_shock", "shock_8h.html#a908d0ea000d53a924575023c0e857060", null ],
     [ "write_shock_state", "shock_8h.html#af85a63428f015989284de82ed97685ee", null ]
 ];

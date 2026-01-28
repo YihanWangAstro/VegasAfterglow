@@ -1,9 +1,0 @@
-<map id="pow23" name="pow23">
-<area shape="rect" id="Node000001" title="Computes a^(2/3)" alt="" coords="512,35,577,60"/>
-<area shape="rect" id="Node000002" href="$structInverseComptonY.html#ae89da0295219c94b65f81577fa043ae4" title="Calculates the effective Y parameter for a given frequency and spectral index." alt="" coords="264,27,464,67"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="498,50,464,50,464,45,498,45"/>
-<area shape="rect" id="Node000003" href="$structPowerLawSyn.html#a0f7662ae47bebb7b79dbabb5fb64c6ab" title="Calculates the comoving synchrotron specific intensity." alt="" coords="5,5,216,31"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="250,37,216,33,217,28,251,32"/>
-<area shape="rect" id="Node000004" href="$structPowerLawSyn.html#ac31ba1f874e1af2b561deefc363e3a7a" title="Calculates the base&#45;2 logarithm of comoving synchrotron specific intensity at a given frequency." alt="" coords="22,55,199,95"/>
-<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="251,63,200,68,199,63,250,57"/>
-</map>

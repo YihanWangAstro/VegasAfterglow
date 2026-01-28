@@ -268,20 +268,21 @@ Here's an example of a well-documented class:
         Single-parameter definition for MCMC.
 
         This class defines a parameter to be used in MCMC fitting, including
-        its name, initial value, prior range, and sampling scale.
+        its name, prior range, sampling scale, and optional initial value.
 
         Parameters
         ----------
         name : str
             The parameter name
-        init : float
-            Initial value for the parameter
-        lower : float, optional
-            Lower bound for the parameter (not needed for FIXED scale)
-        upper : float, optional
-            Upper bound for the parameter (not needed for FIXED scale)
+        lower : float
+            Lower bound for the parameter
+        upper : float
+            Upper bound for the parameter
         scale : Scale, optional
             Sampling scale (LINEAR, LOG, or FIXED), default is LINEAR
+        initial : float, optional
+            Initial value for the parameter (in linear space, auto-converted
+            for LOG scale). If not provided, defaults to midpoint of range.
 
         Notes
         -----

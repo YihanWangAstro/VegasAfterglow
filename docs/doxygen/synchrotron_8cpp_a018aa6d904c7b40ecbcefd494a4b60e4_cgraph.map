@@ -1,21 +1,15 @@
 <map id="cyclotron_correction" name="cyclotron_correction">
-<area shape="rect" id="Node000001" title=" " alt="" coords="5,208,160,233"/>
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,132,160,157"/>
 <area shape="rect" id="Node000002" href="$utilities_8h.html#a4520a27a10a2aef33c99ad8c679da404" title="Fast approximation of a raised to the power of b." alt="" coords="208,81,289,107"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="99,205,219,113,222,117,102,210"/>
-<area shape="rect" id="Node000004" href="$utilities_8h.html#ab8e81118f023df135835db8cce4f5f42" title="Returns the value of a single parameter." alt="" coords="677,132,728,157"/>
-<area shape="poly" id="edge12_Node000001_Node000004" title=" " alt="" coords="120,231,213,258,275,271,343,281,416,286,489,282,561,268,628,242,648,228,665,209,689,169,694,171,670,212,652,232,631,247,562,274,490,287,416,291,343,287,274,277,212,263,118,236"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="124,129,194,108,196,113,126,134"/>
+<area shape="rect" id="Node000004" href="$utilities_8h.html#ab8e81118f023df135835db8cce4f5f42" title="Returns the value of a single parameter." alt="" coords="472,81,523,107"/>
+<area shape="poly" id="edge8_Node000001_Node000004" title=" " alt="" coords="159,155,217,160,285,162,355,157,423,142,449,130,471,114,474,118,451,135,425,147,356,162,285,167,217,166,158,160"/>
 <area shape="rect" id="Node000003" href="$utilities_8h.html#afc584c30c352192de6847b1f4b8caf0e" title="Fast approximation of 2 raised to a power." alt="" coords="337,5,424,31"/>
 <area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="271,79,344,36,347,40,273,83"/>
-<area shape="poly" id="edge11_Node000002_Node000004" title=" " alt="" coords="290,92,440,101,534,110,630,123,664,131,663,136,629,129,534,115,439,106,289,98"/>
-<area shape="rect" id="Node000005" href="$utilities_8h.html#aa67895957aa831a991982a8268ef8349" title="Fast approximation of the base&#45;2 logarithm." alt="" coords="339,132,422,157"/>
-<area shape="poly" id="edge5_Node000002_Node000005" title=" " alt="" coords="284,104,335,125,333,129,282,109"/>
-<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="424,11,469,10,522,14,578,26,631,48,651,63,667,81,692,118,687,121,663,84,647,66,628,52,577,31,522,20,469,16,424,17"/>
-<area shape="poly" id="edge4_Node000004_Node000004" title=" " alt="" coords="677,133,672,124,674,114,685,108,703,105,724,109,733,117,729,121,721,114,703,111,687,113,679,117,677,123,682,131"/>
-<area shape="poly" id="edge8_Node000005_Node000004" title=" " alt="" coords="422,142,664,142,664,147,422,147"/>
-<area shape="rect" id="Node000006" href="$utilities_8h.html#acd0ec547a29a5a2f768d02b1aef146fa" title=" " alt="" coords="472,157,629,183"/>
-<area shape="poly" id="edge6_Node000005_Node000006" title=" " alt="" coords="422,148,459,154,458,159,422,153"/>
-<area shape="rect" id="Node000007" href="$utilities_8h.html#aeec24af41c09b6f977fbd1b6209e6501" title=" " alt="" coords="519,207,582,232"/>
-<area shape="poly" id="edge9_Node000005_Node000007" title=" " alt="" coords="403,155,473,193,507,205,505,210,471,198,400,160"/>
-<area shape="poly" id="edge7_Node000006_Node000004" title=" " alt="" coords="627,155,663,148,664,154,628,160"/>
-<area shape="poly" id="edge10_Node000007_Node000004" title=" " alt="" coords="581,210,628,193,674,163,677,168,631,198,583,215"/>
+<area shape="poly" id="edge7_Node000002_Node000004" title=" " alt="" coords="290,91,458,91,458,97,290,97"/>
+<area shape="rect" id="Node000005" href="$utilities_8h.html#aa67895957aa831a991982a8268ef8349" title="Fast approximation of the base&#45;2 logarithm." alt="" coords="339,107,422,132"/>
+<area shape="poly" id="edge5_Node000002_Node000005" title=" " alt="" coords="290,99,326,106,325,111,289,104"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="403,29,467,72,464,76,400,33"/>
+<area shape="poly" id="edge4_Node000004_Node000004" title=" " alt="" coords="477,82,473,73,475,64,484,57,497,55,513,58,520,66,516,70,511,63,497,60,486,62,480,66,479,72,482,80"/>
+<area shape="poly" id="edge6_Node000005_Node000004" title=" " alt="" coords="422,108,458,100,459,105,423,113"/>
 </map>

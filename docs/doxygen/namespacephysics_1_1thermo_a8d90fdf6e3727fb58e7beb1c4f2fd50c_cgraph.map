@@ -1,0 +1,6 @@
+<map id="physics::thermo::adiabatic_idx" name="physics::thermo::adiabatic_idx">
+<area shape="rect" id="Node000001" title="Computes adiabatic index as a function of the Lorentz factor." alt="" coords="5,29,227,55"/>
+<area shape="rect" id="Node000002" href="$utilities_8h.html#ab8e81118f023df135835db8cce4f5f42" title="Returns the value of a single parameter." alt="" coords="275,29,325,55"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="227,39,261,39,261,45,227,45"/>
+<area shape="poly" id="edge2_Node000002_Node000002" title=" " alt="" coords="272,33,263,23,266,12,278,5,300,3,328,7,335,13,337,20,332,21,331,16,326,12,300,8,280,10,270,15,269,21,276,29"/>
+</map>

@@ -4,6 +4,7 @@ var annotated_dup =
       [ "LogicError", "classafterglow_1_1LogicError.html", "classafterglow_1_1LogicError" ],
       [ "ValidationError", "classafterglow_1_1ValidationError.html", "classafterglow_1_1ValidationError" ]
     ] ],
+    [ "BatchWorkspace", "structBatchWorkspace.html", "structBatchWorkspace" ],
     [ "CoastingShock", "classCoastingShock.html", "classCoastingShock" ],
     [ "ConfigParams", "structConfigParams.html", "structConfigParams" ],
     [ "Coord", "classCoord.html", "classCoord" ],
@@ -22,7 +23,9 @@ var annotated_dup =
     [ "MultiBandData", "structMultiBandData.html", "structMultiBandData" ],
     [ "MultiBandModel", "structMultiBandModel.html", "structMultiBandModel" ],
     [ "Observer", "classObserver.html", "classObserver" ],
+    [ "ParamDef", "structParamDef.html", "structParamDef" ],
     [ "Params", "structParams.html", "structParams" ],
+    [ "ParamTransformer", "classParamTransformer.html", "classParamTransformer" ],
     [ "PowerLawJet", "classPowerLawJet.html", "classPowerLawJet" ],
     [ "PowerLawSyn", "structPowerLawSyn.html", "structPowerLawSyn" ],
     [ "PromptPhotons", "structPromptPhotons.html", "structPromptPhotons" ],
@@ -38,8 +41,9 @@ var annotated_dup =
     [ "Shock", "classShock.html", "classShock" ],
     [ "SimpleShockEqn", "classSimpleShockEqn.html", "classSimpleShockEqn" ],
     [ "SimpleState", "structSimpleState.html", "structSimpleState" ],
+    [ "SmoothPowerLawSyn", "structSmoothPowerLawSyn.html", "structSmoothPowerLawSyn" ],
+    [ "SpectralSegment", "structSpectralSegment.html", "structSpectralSegment" ],
     [ "SynElectrons", "structSynElectrons.html", "structSynElectrons" ],
-    [ "Tables", "structTables.html", "structTables" ],
     [ "TophatJet", "classTophatJet.html", "classTophatJet" ],
     [ "Wind", "classWind.html", "classWind" ]
 ];

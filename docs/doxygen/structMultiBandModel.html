@@ -111,12 +111,15 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a9c912b25bc70381c9b7cfef38a057086" id="r_a9c912b25bc70381c9b7cfef38a057086"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structMultiBandModel.html#a9c912b25bc70381c9b7cfef38a057086">MultiBandModel</a> (<a class="el" href="structMultiBandData.html">MultiBandData</a> data)</td></tr>
 <tr class="memdesc:a9c912b25bc70381c9b7cfef38a057086"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct MCMC model interface with observational dataset.  <br /></td></tr>
 <tr class="separator:a9c912b25bc70381c9b7cfef38a057086"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acb746bdb84d0b85acddf7ce681e35863" id="r_acb746bdb84d0b85acddf7ce681e35863"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structMultiBandModel.html#acb746bdb84d0b85acddf7ce681e35863">MultiBandModel</a> (<a class="el" href="structConfigParams.html">ConfigParams</a> <a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">const</a> &amp;<a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">cfg</a>)</td></tr>
+<tr class="memdesc:acb746bdb84d0b85acddf7ce681e35863"><td class="mdescLeft">&#160;</td><td class="mdescRight">Lightweight constructor for batch processing mode.  <br /></td></tr>
+<tr class="separator:acb746bdb84d0b85acddf7ce681e35863"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aac1b3b59c614be83121a2232dda009d5" id="r_aac1b3b59c614be83121a2232dda009d5"><td class="memItemLeft" align="right" valign="top"><a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">void</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structMultiBandModel.html#aac1b3b59c614be83121a2232dda009d5">configure</a> (<a class="el" href="structConfigParams.html">ConfigParams</a> <a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">const</a> &amp;<a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">param</a>)</td></tr>
 <tr class="memdesc:aac1b3b59c614be83121a2232dda009d5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configure numerical and physics settings for the afterglow model.  <br /></td></tr>
 <tr class="separator:aac1b3b59c614be83121a2232dda009d5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa8fa5188553abf9f7f7b2c0321c27752" id="r_aa8fa5188553abf9f7f7b2c0321c27752"><td class="memItemLeft" align="right" valign="top"><a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">double</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structMultiBandModel.html#aa8fa5188553abf9f7f7b2c0321c27752">estimate_chi2</a> (<a class="el" href="structParams.html">Params</a> <a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">const</a> &amp;<a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">param</a>)</td></tr>
-<tr class="memdesc:aa8fa5188553abf9f7f7b2c0321c27752"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculate chi-squared likelihood for given parameter values.  <br /></td></tr>
-<tr class="separator:aa8fa5188553abf9f7f7b2c0321c27752"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af37da733bf5c3b4d89b7f0688bbc0e94" id="r_af37da733bf5c3b4d89b7f0688bbc0e94"><td class="memItemLeft" align="right" valign="top"><a class="el" href="pybind_8h.html#a06c55931188bd694c6e070a50e95344c">PyArray</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structMultiBandModel.html#af37da733bf5c3b4d89b7f0688bbc0e94">batch_estimate_chi2</a> (<a class="el" href="pybind_8h.html#ac1d4addade56d129930395ee7527601e">PyGrid</a> <a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">const</a> &amp;<a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">samples</a>, <a class="el" href="classParamTransformer.html">ParamTransformer</a> <a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">const</a> &amp;<a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">transformer</a>)</td></tr>
+<tr class="memdesc:af37da733bf5c3b4d89b7f0688bbc0e94"><td class="mdescLeft">&#160;</td><td class="mdescRight">Batch chi-squared computation with clean transformer-based interface.  <br /></td></tr>
+<tr class="separator:af37da733bf5c3b4d89b7f0688bbc0e94"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a722bb96e86f63b1205fd54fdd2e4c323" id="r_a722bb96e86f63b1205fd54fdd2e4c323"><td class="memItemLeft" align="right" valign="top"><a class="el" href="pybind_8h.html#ac1d4addade56d129930395ee7527601e">PyGrid</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structMultiBandModel.html#a722bb96e86f63b1205fd54fdd2e4c323">flux_density_grid</a> (<a class="el" href="structParams.html">Params</a> <a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">const</a> &amp;<a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">param</a>, <a class="el" href="pybind_8h.html#a06c55931188bd694c6e070a50e95344c">PyArray</a> <a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">const</a> &amp;t, <a class="el" href="pybind_8h.html#a06c55931188bd694c6e070a50e95344c">PyArray</a> <a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">const</a> &amp;nu)</td></tr>
 <tr class="memdesc:a722bb96e86f63b1205fd54fdd2e4c323"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculate theoretical flux predictions for given parameters and observation grid.  <br /></td></tr>
 <tr class="separator:a722bb96e86f63b1205fd54fdd2e4c323"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -128,10 +131,10 @@ Public Member Functions</h2></td></tr>
 <div class="textblock"><p>Primary interface for MCMC-based parameter estimation of gamma-ray burst afterglows. </p>
 <p>This class provides a high-level interface for fitting gamma-ray burst afterglow models to multi-wavelength observational data using Markov Chain Monte Carlo methods. It combines theoretical model calculations with observational datasets to enable parameter estimation, uncertainty quantification, and model comparison for afterglow physics studies. </p>
 
-<p class="definition">Definition at line <a class="el" href="mcmc_8h_source.html#l00259">259</a> of file <a class="el" href="mcmc_8h_source.html">mcmc.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="mcmc_8h_source.html#l00391">391</a> of file <a class="el" href="mcmc_8h_source.html">mcmc.h</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="ad16a9990bc00754da43465d5b82ed41f" name="ad16a9990bc00754da43465d5b82ed41f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad16a9990bc00754da43465d5b82ed41f">&#9670;&#160;</a></span>MultiBandModel() <span class="overload">[1/2]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ad16a9990bc00754da43465d5b82ed41f">&#9670;&#160;</a></span>MultiBandModel() <span class="overload">[1/3]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -158,7 +161,7 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <a id="a9c912b25bc70381c9b7cfef38a057086" name="a9c912b25bc70381c9b7cfef38a057086"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a9c912b25bc70381c9b7cfef38a057086">&#9670;&#160;</a></span>MultiBandModel() <span class="overload">[2/2]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a9c912b25bc70381c9b7cfef38a057086">&#9670;&#160;</a></span>MultiBandModel() <span class="overload">[2/3]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -189,16 +192,16 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="mcmc_8cpp_source.html#l00284">284</a> of file <a class="el" href="mcmc_8cpp_source.html">mcmc.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  284</span>                                                 : obs_data(std::move(data)) {</div>
-<div class="line"><span class="lineno">  285</span>    obs_data.<a class="code hl_function" href="structMultiBandData.html#ad2ade97dd269ab683c9fc6716dc0cdea">fill_data_arrays</a>();</div>
-<div class="line"><span class="lineno">  286</span> </div>
-<div class="line"><span class="lineno">  287</span>    <a class="code hl_define" href="error__handling_8h.html#a25363cb5c3a0257b7026be3291271331">AFTERGLOW_REQUIRE</a>((obs_data.<a class="code hl_variable" href="structMultiBandData.html#aca70edfe9b3e6b496739cc8d619ee2c1">times</a>.size() &gt; 0 || !obs_data.<a class="code hl_variable" href="structMultiBandData.html#a0d8b205498be4e9a129395636a665baa">flux_data</a>.empty()), <span class="stringliteral">&quot;No observation time data provided!&quot;</span>);</div>
-<div class="line"><span class="lineno">  288</span>}</div>
-<div class="ttc" id="aerror__handling_8h_html_a25363cb5c3a0257b7026be3291271331"><div class="ttname"><a href="error__handling_8h.html#a25363cb5c3a0257b7026be3291271331">AFTERGLOW_REQUIRE</a></div><div class="ttdeci">#define AFTERGLOW_REQUIRE(condition, message)</div><div class="ttdef"><b>Definition</b> <a href="error__handling_8h_source.html#l00042">error_handling.h:42</a></div></div>
-<div class="ttc" id="astructMultiBandData_html_a0d8b205498be4e9a129395636a665baa"><div class="ttname"><a href="structMultiBandData.html#a0d8b205498be4e9a129395636a665baa">MultiBandData::flux_data</a></div><div class="ttdeci">std::vector&lt; FluxData &gt; flux_data</div><div class="ttdoc">Collection of individual observational datasets.</div><div class="ttdef"><b>Definition</b> <a href="mcmc_8h_source.html#l00164">mcmc.h:164</a></div></div>
-<div class="ttc" id="astructMultiBandData_html_aca70edfe9b3e6b496739cc8d619ee2c1"><div class="ttname"><a href="structMultiBandData.html#aca70edfe9b3e6b496739cc8d619ee2c1">MultiBandData::times</a></div><div class="ttdeci">Array times</div><div class="ttdoc">Consolidated array of all observation times [seconds].</div><div class="ttdef"><b>Definition</b> <a href="mcmc_8h_source.html#l00155">mcmc.h:155</a></div></div>
-<div class="ttc" id="astructMultiBandData_html_ad2ade97dd269ab683c9fc6716dc0cdea"><div class="ttname"><a href="structMultiBandData.html#ad2ade97dd269ab683c9fc6716dc0cdea">MultiBandData::fill_data_arrays</a></div><div class="ttdeci">void fill_data_arrays()</div><div class="ttdoc">Populate consolidated data arrays from individual FluxData objects.</div><div class="ttdef"><b>Definition</b> <a href="mcmc_8cpp_source.html#l00240">mcmc.cpp:240</a></div></div>
+<p class="definition">Definition at line <a class="el" href="mcmc_8cpp_source.html#l00372">372</a> of file <a class="el" href="mcmc_8cpp_source.html">mcmc.cpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  372</span>                                                 : obs_data(std::move(data)) {</div>
+<div class="line"><span class="lineno">  373</span>    obs_data.<a class="code hl_function" href="structMultiBandData.html#ad2ade97dd269ab683c9fc6716dc0cdea">fill_data_arrays</a>();</div>
+<div class="line"><span class="lineno">  374</span> </div>
+<div class="line"><span class="lineno">  375</span>    <a class="code hl_define" href="error__handling_8h.html#a25363cb5c3a0257b7026be3291271331">AFTERGLOW_REQUIRE</a>((obs_data.<a class="code hl_variable" href="structMultiBandData.html#aca70edfe9b3e6b496739cc8d619ee2c1">times</a>.size() &gt; 0 || !obs_data.<a class="code hl_variable" href="structMultiBandData.html#a0d8b205498be4e9a129395636a665baa">flux_data</a>.empty()), <span class="stringliteral">&quot;No observation time data provided!&quot;</span>);</div>
+<div class="line"><span class="lineno">  376</span>}</div>
+<div class="ttc" id="aerror__handling_8h_html_a25363cb5c3a0257b7026be3291271331"><div class="ttname"><a href="error__handling_8h.html#a25363cb5c3a0257b7026be3291271331">AFTERGLOW_REQUIRE</a></div><div class="ttdeci">#define AFTERGLOW_REQUIRE(condition, message)</div><div class="ttdef"><b>Definition</b> <a href="error__handling_8h_source.html#l00027">error_handling.h:27</a></div></div>
+<div class="ttc" id="astructMultiBandData_html_a0d8b205498be4e9a129395636a665baa"><div class="ttname"><a href="structMultiBandData.html#a0d8b205498be4e9a129395636a665baa">MultiBandData::flux_data</a></div><div class="ttdeci">std::vector&lt; FluxData &gt; flux_data</div><div class="ttdoc">Collection of individual observational datasets.</div><div class="ttdef"><b>Definition</b> <a href="mcmc_8h_source.html#l00167">mcmc.h:167</a></div></div>
+<div class="ttc" id="astructMultiBandData_html_aca70edfe9b3e6b496739cc8d619ee2c1"><div class="ttname"><a href="structMultiBandData.html#aca70edfe9b3e6b496739cc8d619ee2c1">MultiBandData::times</a></div><div class="ttdeci">Array times</div><div class="ttdoc">Consolidated array of all observation times [seconds].</div><div class="ttdef"><b>Definition</b> <a href="mcmc_8h_source.html#l00158">mcmc.h:158</a></div></div>
+<div class="ttc" id="astructMultiBandData_html_ad2ade97dd269ab683c9fc6716dc0cdea"><div class="ttname"><a href="structMultiBandData.html#ad2ade97dd269ab683c9fc6716dc0cdea">MultiBandData::fill_data_arrays</a></div><div class="ttdeci">void fill_data_arrays()</div><div class="ttdoc">Populate consolidated data arrays from individual FluxData objects.</div><div class="ttdef"><b>Definition</b> <a href="mcmc_8cpp_source.html#l00328">mcmc.cpp:328</a></div></div>
 </div><!-- fragment --><div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -212,7 +215,201 @@ Here is the call graph for this function:</div>
 
 </div>
 </div>
+<a id="acb746bdb84d0b85acddf7ce681e35863" name="acb746bdb84d0b85acddf7ce681e35863"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acb746bdb84d0b85acddf7ce681e35863">&#9670;&#160;</a></span>MultiBandModel() <span class="overload">[3/3]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">MultiBandModel::MultiBandModel </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structConfigParams.html">ConfigParams</a> <a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">const</a> &amp;&#160;</td>
+          <td class="paramname"><em>cfg</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">explicit</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Lightweight constructor for batch processing mode. </p>
+<p>Creates a model configured for use with estimate_chi2_with_workspace(). Does not copy observation data - only stores configuration. </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">cfg</td><td>Configuration parameters for physics calculations </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="mcmc_8cpp_source.html#l00378">378</a> of file <a class="el" href="mcmc_8cpp_source.html">mcmc.cpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  378</span>                                                      : config(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">cfg</a>) {</div>
+<div class="line"><span class="lineno">  379</span>    <span class="comment">// Lightweight constructor for batch processing (used by OpenMP threads)</span></div>
+<div class="line"><span class="lineno">  380</span>    <span class="comment">// obs_data is passed by const reference to estimate_chi2_with_workspace()</span></div>
+<div class="line"><span class="lineno">  381</span>}</div>
+<div class="ttc" id="autilities_8h_html_ab8e81118f023df135835db8cce4f5f42"><div class="ttname"><a href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">max</a></div><div class="ttdeci">T max(T value)</div><div class="ttdoc">Returns the value of a single parameter.</div><div class="ttdef"><b>Definition</b> <a href="utilities_8h_source.html#l00318">utilities.h:318</a></div></div>
+</div><!-- fragment -->
+</div>
+</div>
 <h2 class="groupheader">Member Function Documentation</h2>
+<a id="af37da733bf5c3b4d89b7f0688bbc0e94" name="af37da733bf5c3b4d89b7f0688bbc0e94"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af37da733bf5c3b4d89b7f0688bbc0e94">&#9670;&#160;</a></span>batch_estimate_chi2()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="pybind_8h.html#a06c55931188bd694c6e070a50e95344c">PyArray</a> MultiBandModel::batch_estimate_chi2 </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="pybind_8h.html#ac1d4addade56d129930395ee7527601e">PyGrid</a> <a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">const</a> &amp;&#160;</td>
+          <td class="paramname"><em>samples</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classParamTransformer.html">ParamTransformer</a> <a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">const</a> &amp;&#160;</td>
+          <td class="paramname"><em>transformer</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Batch chi-squared computation with clean transformer-based interface. </p>
+<p>Computes chi-squared values for multiple parameter sets simultaneously.</p><ul>
+<li>Single sample (nwalkers=1): Uses optimized serial execution</li>
+<li>Small batches (nwalkers&lt;4): Uses serial execution to avoid OpenMP overhead</li>
+<li>Large batches (nwalkers&gt;=4): Uses OpenMP parallelization for speedup</li>
+</ul>
+<p>Parameter transformation is handled by the <a class="el" href="classParamTransformer.html" title="Transforms MCMC sampler arrays to Params structs with parameter scaling.">ParamTransformer</a> object. </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">samples</td><td>2D array of shape (nwalkers, ndim) containing sampler coordinates </td></tr>
+    <tr><td class="paramname">transformer</td><td><a class="el" href="classParamTransformer.html" title="Transforms MCMC sampler arrays to Params structs with parameter scaling.">ParamTransformer</a> to convert sampler coordinates to <a class="el" href="structParams.html" title="Complete parameter set for gamma-ray burst afterglow model configuration.">Params</a> </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>PyArray 1D array of chi-squared values, one per walker </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="mcmc_8cpp_source.html#l00528">528</a> of file <a class="el" href="mcmc_8cpp_source.html">mcmc.cpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  528</span>                                                                                                      {</div>
+<div class="line"><span class="lineno">  529</span>    <span class="keyword">const</span> <span class="keywordtype">size_t</span> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">nwalkers</a> = <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">samples</a>.shape(0);</div>
+<div class="line"><span class="lineno">  530</span>    <span class="keyword">const</span> <span class="keywordtype">size_t</span> ndim = <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">samples</a>.shape(1);</div>
+<div class="line"><span class="lineno">  531</span> </div>
+<div class="line"><span class="lineno">  532</span>    <a class="code hl_define" href="error__handling_8h.html#a25363cb5c3a0257b7026be3291271331">AFTERGLOW_REQUIRE</a>(ndim == <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">transformer</a>.ndim(), <span class="stringliteral">&quot;Sample dimension must match transformer.ndim()&quot;</span>);</div>
+<div class="line"><span class="lineno">  533</span> </div>
+<div class="line"><span class="lineno">  534</span>    <a class="code hl_typedef" href="mesh_8h.html#afd05120c4d579ec7fa4906f677781a83">Array</a> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">chi2_results</a> = Array::from_shape({<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">nwalkers</a>});</div>
+<div class="line"><span class="lineno">  535</span> </div>
+<div class="line"><span class="lineno">  536</span>    <span class="keyword">const</span> <a class="code hl_struct" href="structMultiBandData.html">MultiBandData</a>&amp; <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">data_ref</a> = obs_data;</div>
+<div class="line"><span class="lineno">  537</span>    <span class="keyword">const</span> <a class="code hl_struct" href="structConfigParams.html">ConfigParams</a>&amp; <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">config_ref</a> = config;</div>
+<div class="line"><span class="lineno">  538</span> </div>
+<div class="line"><span class="lineno">  539</span>    <span class="comment">// Pre-compute workspace dimensions (same for all threads)</span></div>
+<div class="line"><span class="lineno">  540</span>    <span class="keyword">const</span> <span class="keywordtype">size_t</span> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">tuple_size</a> = <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">data_ref</a>.times.size();</div>
+<div class="line"><span class="lineno">  541</span>    std::vector&lt;size_t&gt; <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">flux_data_sizes</a>;</div>
+<div class="line"><span class="lineno">  542</span>    <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">flux_data_sizes</a>.reserve(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">data_ref</a>.flux_data.size());</div>
+<div class="line"><span class="lineno">  543</span>    <span class="keywordflow">for</span> (<span class="keyword">const</span> <span class="keyword">auto</span>&amp; <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">fd</a> : <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">data_ref</a>.flux_data) {</div>
+<div class="line"><span class="lineno">  544</span>        <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">flux_data_sizes</a>.push_back(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">fd</a>.t.size());</div>
+<div class="line"><span class="lineno">  545</span>    }</div>
+<div class="line"><span class="lineno">  546</span> </div>
+<div class="line"><span class="lineno">  547</span>    <span class="comment">// Unified chi2 computation - clean and simple</span></div>
+<div class="line"><span class="lineno">  548</span>    <span class="keyword">auto</span> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">compute_chi2</a> = [&amp;](<span class="keywordtype">size_t</span> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a>, <a class="code hl_struct" href="structMultiBandModel.html">MultiBandModel</a>&amp; <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">local_model</a>, <a class="code hl_struct" href="structBatchWorkspace.html">BatchWorkspace</a>&amp; <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">workspace</a>) {</div>
+<div class="line"><span class="lineno">  549</span>        <a class="code hl_struct" href="structParams.html">Params</a> p;</div>
+<div class="line"><span class="lineno">  550</span>        <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">transformer</a>.transform_sample(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">samples</a>.data() + <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a> * ndim, p);</div>
+<div class="line"><span class="lineno">  551</span> </div>
+<div class="line"><span class="lineno">  552</span>        <span class="keywordtype">double</span> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">chi2</a>;</div>
+<div class="line"><span class="lineno">  553</span>        <span class="keywordflow">try</span> {</div>
+<div class="line"><span class="lineno">  554</span>            <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">chi2</a> = <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">local_model</a>.estimate_chi2_with_workspace(p, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">data_ref</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">workspace</a>);</div>
+<div class="line"><span class="lineno">  555</span>            <span class="keywordflow">if</span> (<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">chi2</a> != <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">chi2</a>) { <span class="comment">// NaN check</span></div>
+<div class="line"><span class="lineno">  556</span>                <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">chi2</a> = std::numeric_limits&lt;double&gt;::infinity();</div>
+<div class="line"><span class="lineno">  557</span>            }</div>
+<div class="line"><span class="lineno">  558</span>        } <span class="keywordflow">catch</span> (...) {</div>
+<div class="line"><span class="lineno">  559</span>            <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">chi2</a> = std::numeric_limits&lt;double&gt;::infinity();</div>
+<div class="line"><span class="lineno">  560</span>        }</div>
+<div class="line"><span class="lineno">  561</span>        <span class="keywordflow">return</span> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">chi2</a>;</div>
+<div class="line"><span class="lineno">  562</span>    };</div>
+<div class="line"><span class="lineno">  563</span> </div>
+<div class="line"><span class="lineno">  564</span><span class="comment">// Smart serial/parallel selection based on batch size</span></div>
+<div class="line"><span class="lineno">  565</span><span class="preprocessor">#ifdef HAVE_OPENMP</span></div>
+<div class="line"><span class="lineno">  566</span>    <span class="keyword">constexpr</span> <span class="keywordtype">size_t</span> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">OMP_THRESHOLD</a> = 4;</div>
+<div class="line"><span class="lineno">  567</span>    <span class="keyword">const</span> <span class="keywordtype">bool</span> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">use_parallel</a> = <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">nwalkers</a> &gt;= <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">OMP_THRESHOLD</a>;</div>
+<div class="line"><span class="lineno">  568</span> </div>
+<div class="line"><span class="lineno">  569</span>    <span class="keywordflow">if</span> (<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">use_parallel</a>) {</div>
+<div class="line"><span class="lineno">  570</span><span class="preprocessor">    #pragma omp parallel</span></div>
+<div class="line"><span class="lineno">  571</span>        {</div>
+<div class="line"><span class="lineno">  572</span>            <a class="code hl_struct" href="structBatchWorkspace.html">BatchWorkspace</a> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">workspace</a>;</div>
+<div class="line"><span class="lineno">  573</span>            <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">workspace</a>.<a class="code hl_function" href="structBatchWorkspace.html#a3c6f56eb679103832e4b2199f2c0f56f">initialize</a>(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">tuple_size</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">flux_data_sizes</a>);</div>
+<div class="line"><span class="lineno">  574</span>            <a class="code hl_struct" href="structMultiBandModel.html">MultiBandModel</a> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">local_model</a>(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">config_ref</a>);</div>
+<div class="line"><span class="lineno">  575</span> </div>
+<div class="line"><span class="lineno">  576</span><span class="preprocessor">    #pragma omp for schedule(dynamic)</span></div>
+<div class="line"><span class="lineno">  577</span>            <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a> = 0; <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a> &lt; <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">nwalkers</a>; ++<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a>) {</div>
+<div class="line"><span class="lineno">  578</span>                <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">chi2_results</a>(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a>) = <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">compute_chi2</a>(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">local_model</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">workspace</a>);</div>
+<div class="line"><span class="lineno">  579</span>            }</div>
+<div class="line"><span class="lineno">  580</span>        }</div>
+<div class="line"><span class="lineno">  581</span>    } <span class="keywordflow">else</span> {</div>
+<div class="line"><span class="lineno">  582</span>        <a class="code hl_struct" href="structBatchWorkspace.html">BatchWorkspace</a> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">workspace</a>;</div>
+<div class="line"><span class="lineno">  583</span>        <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">workspace</a>.<a class="code hl_function" href="structBatchWorkspace.html#a3c6f56eb679103832e4b2199f2c0f56f">initialize</a>(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">tuple_size</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">flux_data_sizes</a>);</div>
+<div class="line"><span class="lineno">  584</span>        <a class="code hl_struct" href="structMultiBandModel.html">MultiBandModel</a> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">local_model</a>(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">config_ref</a>);</div>
+<div class="line"><span class="lineno">  585</span> </div>
+<div class="line"><span class="lineno">  586</span>        <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a> = 0; <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a> &lt; <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">nwalkers</a>; ++<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a>) {</div>
+<div class="line"><span class="lineno">  587</span>            <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">chi2_results</a>(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a>) = <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">compute_chi2</a>(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">local_model</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">workspace</a>);</div>
+<div class="line"><span class="lineno">  588</span>        }</div>
+<div class="line"><span class="lineno">  589</span>    }</div>
+<div class="line"><span class="lineno">  590</span><span class="preprocessor">#else</span></div>
+<div class="line"><span class="lineno">  591</span>    {</div>
+<div class="line"><span class="lineno">  592</span>        <a class="code hl_struct" href="structBatchWorkspace.html">BatchWorkspace</a> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">workspace</a>;</div>
+<div class="line"><span class="lineno">  593</span>        <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">workspace</a>.<a class="code hl_function" href="structBatchWorkspace.html#a3c6f56eb679103832e4b2199f2c0f56f">initialize</a>(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">tuple_size</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">flux_data_sizes</a>);</div>
+<div class="line"><span class="lineno">  594</span>        <a class="code hl_struct" href="structMultiBandModel.html">MultiBandModel</a> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">local_model</a>(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">config_ref</a>);</div>
+<div class="line"><span class="lineno">  595</span> </div>
+<div class="line"><span class="lineno">  596</span>        <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a> = 0; <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a> &lt; <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">nwalkers</a>; ++<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a>) {</div>
+<div class="line"><span class="lineno">  597</span>            <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">chi2_results</a>(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a>) = <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">compute_chi2</a>(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">local_model</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">workspace</a>);</div>
+<div class="line"><span class="lineno">  598</span>        }</div>
+<div class="line"><span class="lineno">  599</span>    }</div>
+<div class="line"><span class="lineno">  600</span><span class="preprocessor">#endif</span></div>
+<div class="line"><span class="lineno">  601</span> </div>
+<div class="line"><span class="lineno">  602</span>    pybind11::gil_scoped_acquire <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">acquire</a>;</div>
+<div class="line"><span class="lineno">  603</span>    <span class="keywordflow">return</span> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">chi2_results</a>;</div>
+<div class="line"><span class="lineno">  604</span>}</div>
+<div class="ttc" id="amesh_8h_html_afd05120c4d579ec7fa4906f677781a83"><div class="ttname"><a href="mesh_8h.html#afd05120c4d579ec7fa4906f677781a83">Array</a></div><div class="ttdeci">xt::xtensor&lt; Real, 1 &gt; Array</div><div class="ttdoc">Type alias for 1D arrays (e.g., time points)</div><div class="ttdef"><b>Definition</b> <a href="mesh_8h_source.html#l00034">mesh.h:34</a></div></div>
+<div class="ttc" id="astructBatchWorkspace_html"><div class="ttname"><a href="structBatchWorkspace.html">BatchWorkspace</a></div><div class="ttdoc">Thread-local workspace for batch chi-squared computation.</div><div class="ttdef"><b>Definition</b> <a href="mcmc_8h_source.html#l00362">mcmc.h:362</a></div></div>
+<div class="ttc" id="astructBatchWorkspace_html_a3c6f56eb679103832e4b2199f2c0f56f"><div class="ttname"><a href="structBatchWorkspace.html#a3c6f56eb679103832e4b2199f2c0f56f">BatchWorkspace::initialize</a></div><div class="ttdeci">void initialize(size_t tuple_size, std::vector&lt; size_t &gt; const &amp;flux_data_sizes)</div><div class="ttdoc">Initialize workspace arrays to match observation data dimensions.</div><div class="ttdef"><b>Definition</b> <a href="mcmc_8h_source.html#l00368">mcmc.h:368</a></div></div>
+<div class="ttc" id="astructConfigParams_html"><div class="ttname"><a href="structConfigParams.html">ConfigParams</a></div><div class="ttdoc">Configuration parameters for numerical setup and advanced physics in afterglow modeling.</div><div class="ttdef"><b>Definition</b> <a href="mcmc_8h_source.html#l00336">mcmc.h:336</a></div></div>
+<div class="ttc" id="astructMultiBandData_html"><div class="ttname"><a href="structMultiBandData.html">MultiBandData</a></div><div class="ttdoc">Comprehensive multi-wavelength observational dataset for gamma-ray burst afterglow fitting.</div><div class="ttdef"><b>Definition</b> <a href="mcmc_8h_source.html#l00062">mcmc.h:62</a></div></div>
+<div class="ttc" id="astructMultiBandModel_html"><div class="ttname"><a href="structMultiBandModel.html">MultiBandModel</a></div><div class="ttdoc">Primary interface for MCMC-based parameter estimation of gamma-ray burst afterglows.</div><div class="ttdef"><b>Definition</b> <a href="mcmc_8h_source.html#l00391">mcmc.h:391</a></div></div>
+<div class="ttc" id="astructParams_html"><div class="ttname"><a href="structParams.html">Params</a></div><div class="ttdoc">Complete parameter set for gamma-ray burst afterglow model configuration.</div><div class="ttdef"><b>Definition</b> <a href="mcmc_8h_source.html#l00184">mcmc.h:184</a></div></div>
+</div><!-- fragment --><div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="structMultiBandModel_af37da733bf5c3b4d89b7f0688bbc0e94_cgraph.png" border="0" usemap="#astructMultiBandModel_af37da733bf5c3b4d89b7f0688bbc0e94_cgraph" alt=""/></div>
+<map name="astructMultiBandModel_af37da733bf5c3b4d89b7f0688bbc0e94_cgraph" id="astructMultiBandModel_af37da733bf5c3b4d89b7f0688bbc0e94_cgraph">
+<area shape="rect" title="Batch chi&#45;squared computation with clean transformer&#45;based interface." alt="" coords="5,47,177,87"/>
+<area shape="rect" href="structBatchWorkspace.html#a3c6f56eb679103832e4b2199f2c0f56f" title="Initialize workspace arrays to match observation data dimensions." alt="" coords="235,5,429,31"/>
+<area shape="poly" title=" " alt="" coords="177,47,256,31,257,36,178,52"/>
+<area shape="rect" href="classParamTransformer.html#aab37f13fcd9f1c8373b739ef8ed8aacb" title="Get number of free (sampled) parameters." alt="" coords="241,55,423,80"/>
+<area shape="poly" title=" " alt="" coords="178,65,227,65,227,70,178,70"/>
+<area shape="rect" href="classParamTransformer.html#aa8eb1168daee0bb722eb2e879ac263e8" title="Transform single sample to Params (internal helper for batch processing)." alt="" coords="225,105,439,145"/>
+<area shape="poly" title=" " alt="" coords="177,85,235,99,234,104,175,90"/>
+</map>
+</div>
+<div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="structMultiBandModel_af37da733bf5c3b4d89b7f0688bbc0e94_icgraph.png" border="0" usemap="#astructMultiBandModel_af37da733bf5c3b4d89b7f0688bbc0e94_icgraph" alt=""/></div>
+<map name="astructMultiBandModel_af37da733bf5c3b4d89b7f0688bbc0e94_icgraph" id="astructMultiBandModel_af37da733bf5c3b4d89b7f0688bbc0e94_icgraph">
+<area shape="rect" title="Batch chi&#45;squared computation with clean transformer&#45;based interface." alt="" coords="204,5,376,45"/>
+<area shape="rect" href="pybind_8cpp.html#a8c92987849ad296e28ec6c07c8e7860b" title=" " alt="" coords="5,13,156,38"/>
+<area shape="poly" title=" " alt="" coords="190,28,156,28,156,23,190,23"/>
+</map>
+</div>
+
+</div>
+</div>
 <a id="aac1b3b59c614be83121a2232dda009d5" name="aac1b3b59c614be83121a2232dda009d5"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#aac1b3b59c614be83121a2232dda009d5">&#9670;&#160;</a></span>configure()</h2>
 
@@ -237,11 +434,10 @@ Here is the call graph for this function:</div>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="mcmc_8cpp_source.html#l00290">290</a> of file <a class="el" href="mcmc_8cpp_source.html">mcmc.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  290</span>                                                        {</div>
-<div class="line"><span class="lineno">  291</span>    this-&gt;config = <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">param</a>;</div>
-<div class="line"><span class="lineno">  292</span>}</div>
-<div class="ttc" id="autilities_8h_html_ab8e81118f023df135835db8cce4f5f42"><div class="ttname"><a href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">max</a></div><div class="ttdeci">T max(T value)</div><div class="ttdoc">Returns the value of a single parameter.</div><div class="ttdef"><b>Definition</b> <a href="utilities_8h_source.html#l00307">utilities.h:307</a></div></div>
+<p class="definition">Definition at line <a class="el" href="mcmc_8cpp_source.html#l00383">383</a> of file <a class="el" href="mcmc_8cpp_source.html">mcmc.cpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  383</span>                                                        {</div>
+<div class="line"><span class="lineno">  384</span>    this-&gt;config = <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">param</a>;</div>
+<div class="line"><span class="lineno">  385</span>}</div>
 </div><!-- fragment --><div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
@@ -250,118 +446,6 @@ Here is the caller graph for this function:</div>
 <area shape="rect" title="Configure numerical and physics settings for the afterglow model." alt="" coords="204,5,400,31"/>
 <area shape="rect" href="pybind_8cpp.html#a8c92987849ad296e28ec6c07c8e7860b" title=" " alt="" coords="5,5,156,31"/>
 <area shape="poly" title=" " alt="" coords="190,21,157,21,157,15,190,15"/>
-</map>
-</div>
-
-</div>
-</div>
-<a id="aa8fa5188553abf9f7f7b2c0321c27752" name="aa8fa5188553abf9f7f7b2c0321c27752"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa8fa5188553abf9f7f7b2c0321c27752">&#9670;&#160;</a></span>estimate_chi2()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">double</a> MultiBandModel::estimate_chi2 </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="structParams.html">Params</a> <a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">const</a> &amp;&#160;</td>
-          <td class="paramname"><em>param</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Calculate chi-squared likelihood for given parameter values. </p>
-<p>Computes the theoretical afterglow model predictions for the specified parameters and evaluates the chi-squared statistic comparing with observational data. This method serves as the likelihood function for MCMC parameter estimation. </p><dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">param</td><td>Complete set of physical model parameters </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>double Chi-squared value for goodness-of-fit assessment </dd></dl>
-
-<p class="definition">Definition at line <a class="el" href="mcmc_8cpp_source.html#l00294">294</a> of file <a class="el" href="mcmc_8cpp_source.html">mcmc.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  294</span>                                                        {</div>
-<div class="line"><span class="lineno">  295</span>    <a class="code hl_class" href="classObserver.html">Observer</a> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">obs</a>;</div>
-<div class="line"><span class="lineno">  296</span>    <a class="code hl_typedef" href="synchrotron_8h.html#a0ab8637927d98b2552ae0f5b9eb5e5c2">SynPhotonGrid</a> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">f_photons</a>;</div>
-<div class="line"><span class="lineno">  297</span>    <a class="code hl_typedef" href="synchrotron_8h.html#a0ab8637927d98b2552ae0f5b9eb5e5c2">SynPhotonGrid</a> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">r_photons</a>;</div>
-<div class="line"><span class="lineno">  298</span>    <a class="code hl_typedef" href="inverse-compton_8h.html#a9144380c2a30d12d92e96f5917ca2612">ICPhotonGrid&lt;SynElectrons, SynPhotons&gt;</a> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">f_IC_photons</a>;</div>
-<div class="line"><span class="lineno">  299</span>    <a class="code hl_typedef" href="inverse-compton_8h.html#a9144380c2a30d12d92e96f5917ca2612">ICPhotonGrid&lt;SynElectrons, SynPhotons&gt;</a> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">r_IC_photons</a>;</div>
-<div class="line"><span class="lineno">  300</span> </div>
-<div class="line"><span class="lineno">  301</span>    generate_photons(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">param</a>, obs_data.<a class="code hl_variable" href="structMultiBandData.html#a5314ad90f59d9d214f5afad5c4f20dfb">t_min</a>, obs_data.<a class="code hl_variable" href="structMultiBandData.html#afbffab4bc76c6693f3ac2cabca8db710">t_max</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">obs</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">f_photons</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">r_photons</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">f_IC_photons</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">r_IC_photons</a>);</div>
-<div class="line"><span class="lineno">  302</span> </div>
-<div class="line"><span class="lineno">  303</span>    obs_data.<a class="code hl_variable" href="structMultiBandData.html#ad4863b68579929814e8e4c8b161a996a">model_fluxes</a> = <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">obs</a>.specific_flux_series(obs_data.<a class="code hl_variable" href="structMultiBandData.html#aca70edfe9b3e6b496739cc8d619ee2c1">times</a>, obs_data.<a class="code hl_variable" href="structMultiBandData.html#a641b656c306f7720c84dae33ce0745fc">frequencies</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">f_photons</a>);</div>
-<div class="line"><span class="lineno">  304</span>    <span class="keywordflow">for</span> (<span class="keyword">auto</span>&amp; <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">d</a> : obs_data.flux_data) {</div>
-<div class="line"><span class="lineno">  305</span>        <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">d</a>.Fv_model = <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">obs</a>.flux(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">d</a>.t, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">d</a>.nu, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">f_photons</a>);</div>
-<div class="line"><span class="lineno">  306</span>    }</div>
-<div class="line"><span class="lineno">  307</span> </div>
-<div class="line"><span class="lineno">  308</span>    <span class="keywordflow">if</span> (<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">r_photons</a>.size() &gt; 0) {</div>
-<div class="line"><span class="lineno">  309</span>        obs_data.<a class="code hl_variable" href="structMultiBandData.html#ad4863b68579929814e8e4c8b161a996a">model_fluxes</a> += <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">obs</a>.specific_flux_series(obs_data.<a class="code hl_variable" href="structMultiBandData.html#aca70edfe9b3e6b496739cc8d619ee2c1">times</a>, obs_data.<a class="code hl_variable" href="structMultiBandData.html#a641b656c306f7720c84dae33ce0745fc">frequencies</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">r_photons</a>);</div>
-<div class="line"><span class="lineno">  310</span>        <span class="keywordflow">for</span> (<span class="keyword">auto</span>&amp; <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">d</a> : obs_data.flux_data) {</div>
-<div class="line"><span class="lineno">  311</span>            <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">d</a>.Fv_model += <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">obs</a>.flux(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">d</a>.t, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">d</a>.nu, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">r_photons</a>);</div>
-<div class="line"><span class="lineno">  312</span>        }</div>
-<div class="line"><span class="lineno">  313</span>    }</div>
-<div class="line"><span class="lineno">  314</span> </div>
-<div class="line"><span class="lineno">  315</span>    <span class="keywordflow">if</span> (<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">f_IC_photons</a>.size() &gt; 0) {</div>
-<div class="line"><span class="lineno">  316</span>        obs_data.<a class="code hl_variable" href="structMultiBandData.html#ad4863b68579929814e8e4c8b161a996a">model_fluxes</a> += <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">obs</a>.specific_flux_series(obs_data.<a class="code hl_variable" href="structMultiBandData.html#aca70edfe9b3e6b496739cc8d619ee2c1">times</a>, obs_data.<a class="code hl_variable" href="structMultiBandData.html#a641b656c306f7720c84dae33ce0745fc">frequencies</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">f_IC_photons</a>);</div>
-<div class="line"><span class="lineno">  317</span>        <span class="keywordflow">for</span> (<span class="keyword">auto</span>&amp; <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">d</a> : obs_data.flux_data) {</div>
-<div class="line"><span class="lineno">  318</span>            <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">d</a>.Fv_model += <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">obs</a>.flux(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">d</a>.t, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">d</a>.nu, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">f_IC_photons</a>);</div>
-<div class="line"><span class="lineno">  319</span>        }</div>
-<div class="line"><span class="lineno">  320</span>    }</div>
-<div class="line"><span class="lineno">  321</span> </div>
-<div class="line"><span class="lineno">  322</span>    <span class="keywordflow">if</span> (<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">r_IC_photons</a>.size() &gt; 0) {</div>
-<div class="line"><span class="lineno">  323</span>        obs_data.<a class="code hl_variable" href="structMultiBandData.html#ad4863b68579929814e8e4c8b161a996a">model_fluxes</a> += <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">obs</a>.specific_flux_series(obs_data.<a class="code hl_variable" href="structMultiBandData.html#aca70edfe9b3e6b496739cc8d619ee2c1">times</a>, obs_data.<a class="code hl_variable" href="structMultiBandData.html#a641b656c306f7720c84dae33ce0745fc">frequencies</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">r_IC_photons</a>);</div>
-<div class="line"><span class="lineno">  324</span>        <span class="keywordflow">for</span> (<span class="keyword">auto</span>&amp; <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">d</a> : obs_data.flux_data) {</div>
-<div class="line"><span class="lineno">  325</span>            <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">d</a>.Fv_model += <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">obs</a>.flux(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">d</a>.t, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">d</a>.nu, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">r_IC_photons</a>);</div>
-<div class="line"><span class="lineno">  326</span>        }</div>
-<div class="line"><span class="lineno">  327</span>    }</div>
-<div class="line"><span class="lineno">  328</span> </div>
-<div class="line"><span class="lineno">  329</span>    <span class="keywordflow">return</span> obs_data.<a class="code hl_function" href="structMultiBandData.html#a631c6982c88e97795ffef3edb81253d8">estimate_chi2</a>();</div>
-<div class="line"><span class="lineno">  330</span>}</div>
-<div class="ttc" id="aclassObserver_html"><div class="ttname"><a href="classObserver.html">Observer</a></div><div class="ttdoc">Represents an observer in the GRB afterglow simulation.</div><div class="ttdef"><b>Definition</b> <a href="observer_8h_source.html#l00029">observer.h:29</a></div></div>
-<div class="ttc" id="ainverse-compton_8h_html_a9144380c2a30d12d92e96f5917ca2612"><div class="ttname"><a href="inverse-compton_8h.html#a9144380c2a30d12d92e96f5917ca2612">ICPhotonGrid</a></div><div class="ttdeci">xt::xtensor&lt; ICPhoton&lt; Electrons, Photons &gt;, 3 &gt; ICPhotonGrid</div><div class="ttdoc">Defines a 3D grid (using xt::xtensor) for storing ICPhoton objects.</div><div class="ttdef"><b>Definition</b> <a href="inverse-compton_8h_source.html#l00217">inverse-compton.h:217</a></div></div>
-<div class="ttc" id="astructMultiBandData_html_a5314ad90f59d9d214f5afad5c4f20dfb"><div class="ttname"><a href="structMultiBandData.html#a5314ad90f59d9d214f5afad5c4f20dfb">MultiBandData::t_min</a></div><div class="ttdeci">double t_min</div><div class="ttdoc">Earliest observation time [seconds].</div><div class="ttdef"><b>Definition</b> <a href="mcmc_8h_source.html#l00161">mcmc.h:161</a></div></div>
-<div class="ttc" id="astructMultiBandData_html_a631c6982c88e97795ffef3edb81253d8"><div class="ttname"><a href="structMultiBandData.html#a631c6982c88e97795ffef3edb81253d8">MultiBandData::estimate_chi2</a></div><div class="ttdeci">double estimate_chi2() const</div><div class="ttdoc">Calculate total chi-squared statistic across all observational datasets.</div><div class="ttdef"><b>Definition</b> <a href="mcmc_8cpp_source.html#l00101">mcmc.cpp:101</a></div></div>
-<div class="ttc" id="astructMultiBandData_html_a641b656c306f7720c84dae33ce0745fc"><div class="ttname"><a href="structMultiBandData.html#a641b656c306f7720c84dae33ce0745fc">MultiBandData::frequencies</a></div><div class="ttdeci">Array frequencies</div><div class="ttdoc">Consolidated array of all observation frequencies [Hz].</div><div class="ttdef"><b>Definition</b> <a href="mcmc_8h_source.html#l00156">mcmc.h:156</a></div></div>
-<div class="ttc" id="astructMultiBandData_html_ad4863b68579929814e8e4c8b161a996a"><div class="ttname"><a href="structMultiBandData.html#ad4863b68579929814e8e4c8b161a996a">MultiBandData::model_fluxes</a></div><div class="ttdeci">Array model_fluxes</div><div class="ttdoc">Consolidated array of all model-predicted flux densities [mJy].</div><div class="ttdef"><b>Definition</b> <a href="mcmc_8h_source.html#l00160">mcmc.h:160</a></div></div>
-<div class="ttc" id="astructMultiBandData_html_afbffab4bc76c6693f3ac2cabca8db710"><div class="ttname"><a href="structMultiBandData.html#afbffab4bc76c6693f3ac2cabca8db710">MultiBandData::t_max</a></div><div class="ttdeci">double t_max</div><div class="ttdoc">Latest observation time [seconds].</div><div class="ttdef"><b>Definition</b> <a href="mcmc_8h_source.html#l00162">mcmc.h:162</a></div></div>
-<div class="ttc" id="asynchrotron_8h_html_a0ab8637927d98b2552ae0f5b9eb5e5c2"><div class="ttname"><a href="synchrotron_8h.html#a0ab8637927d98b2552ae0f5b9eb5e5c2">SynPhotonGrid</a></div><div class="ttdeci">xt::xtensor&lt; SynPhotons, 3 &gt; SynPhotonGrid</div><div class="ttdoc">Type alias for 3D grid of synchrotron photons.</div><div class="ttdef"><b>Definition</b> <a href="synchrotron_8h_source.html#l00077">synchrotron.h:77</a></div></div>
-</div><!-- fragment --><div class="dynheader">
-Here is the call graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="structMultiBandModel_aa8fa5188553abf9f7f7b2c0321c27752_cgraph.png" border="0" usemap="#astructMultiBandModel_aa8fa5188553abf9f7f7b2c0321c27752_cgraph" alt=""/></div>
-<map name="astructMultiBandModel_aa8fa5188553abf9f7f7b2c0321c27752_cgraph" id="astructMultiBandModel_aa8fa5188553abf9f7f7b2c0321c27752_cgraph">
-<area shape="rect" title="Calculate chi&#45;squared likelihood for given parameter values." alt="" coords="5,91,233,116"/>
-<area shape="rect" href="structMultiBandData.html#a631c6982c88e97795ffef3edb81253d8" title="Calculate total chi&#45;squared statistic across all observational datasets." alt="" coords="281,17,500,43"/>
-<area shape="poly" title=" " alt="" coords="159,88,281,51,314,43,316,48,282,57,160,93"/>
-<area shape="rect" href="classObserver.html#a2588a9ebaec5465d6b5bd08fadadcb99" title="Computes the integrated flux over a frequency band." alt="" coords="334,91,447,116"/>
-<area shape="poly" title=" " alt="" coords="233,101,321,101,321,106,233,106"/>
-<area shape="rect" href="classObserver.html#a2497e02305dbf755a7d629311f8e772d" title="Computes the specific flux at a single observed frequency for multiple observation times." alt="" coords="321,174,460,214"/>
-<area shape="poly" title=" " alt="" coords="159,114,317,167,316,172,158,119"/>
-<area shape="poly" title=" " alt="" coords="351,92,342,82,347,72,363,66,391,64,425,68,435,73,439,78,434,81,432,77,424,73,391,69,364,71,350,76,348,82,355,89"/>
-<area shape="rect" href="mesh_8cpp.html#ac536f77c32691232cb5e7546595fb3d2" title="Converts boundary values to center values using geometric mean." alt="" coords="548,5,727,31"/>
-<area shape="poly" title=" " alt="" coords="428,88,586,33,587,38,429,93"/>
-<area shape="rect" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42" title="Returns the value of a single parameter." alt="" coords="775,156,825,181"/>
-<area shape="poly" title=" " alt="" coords="437,88,497,76,571,68,651,71,690,79,728,92,761,114,785,143,781,146,757,118,725,96,689,84,650,77,571,74,498,81,438,93"/>
-<area shape="rect" href="classObserver.html#a5350b13ae5a6c7007ba6459923573136" title="Computes the specific flux at a single observed frequency." alt="" coords="553,131,722,156"/>
-<area shape="poly" title=" " alt="" coords="448,110,546,126,545,131,447,115"/>
-<area shape="poly" title=" " alt="" coords="773,157,767,148,770,138,781,132,800,129,822,133,832,141,828,145,820,138,800,135,783,137,774,141,772,147,777,154"/>
-<area shape="poly" title=" " alt="" coords="720,153,762,160,761,165,719,159"/>
-<area shape="poly" title=" " alt="" coords="610,132,604,122,607,113,619,106,637,104,660,107,669,116,666,120,657,112,637,109,620,111,611,116,610,122,615,129"/>
-<area shape="poly" title=" " alt="" coords="460,187,761,168,761,174,460,192"/>
-<area shape="rect" href="observer_8h.html#aa53249b087b9b9d83f4c06e808deeed9" title="Helper function that advances an iterator through an array until the value exceeds the target." alt="" coords="595,232,680,257"/>
-<area shape="poly" title=" " alt="" coords="461,206,582,231,581,236,460,211"/>
-<area shape="poly" title=" " alt="" coords="678,230,726,210,767,187,770,191,728,215,680,234"/>
-</map>
-</div>
-<div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="structMultiBandModel_aa8fa5188553abf9f7f7b2c0321c27752_icgraph.png" border="0" usemap="#astructMultiBandModel_aa8fa5188553abf9f7f7b2c0321c27752_icgraph" alt=""/></div>
-<map name="astructMultiBandModel_aa8fa5188553abf9f7f7b2c0321c27752_icgraph" id="astructMultiBandModel_aa8fa5188553abf9f7f7b2c0321c27752_icgraph">
-<area shape="rect" title="Calculate chi&#45;squared likelihood for given parameter values." alt="" coords="204,5,432,31"/>
-<area shape="rect" href="pybind_8cpp.html#a8c92987849ad296e28ec6c07c8e7860b" title=" " alt="" coords="5,5,156,31"/>
-<area shape="poly" title=" " alt="" coords="190,21,156,21,156,15,190,15"/>
 </map>
 </div>
 
@@ -424,42 +508,44 @@ Here is the caller graph for this function:</div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>PyArray Time series of integrated flux values </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="mcmc_8cpp_source.html#l00364">364</a> of file <a class="el" href="mcmc_8cpp_source.html">mcmc.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  365</span>               {</div>
-<div class="line"><span class="lineno">  366</span>    <a class="code hl_typedef" href="mesh_8h.html#afd05120c4d579ec7fa4906f677781a83">Array</a> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">t_bins</a> = t * <a class="code hl_variable" href="namespaceunit.html#a4e7c438655d3f34c7c30a155ec38f250">unit::sec</a>;</div>
-<div class="line"><span class="lineno">  367</span>    <a class="code hl_typedef" href="mesh_8h.html#afd05120c4d579ec7fa4906f677781a83">Array</a> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">nu_bins</a> = xt::logspace(std::log10(nu_min * <a class="code hl_variable" href="namespaceunit.html#a78d8f4bc3be7867d8171f2759251dad1">unit::Hz</a>), std::log10(nu_max * <a class="code hl_variable" href="namespaceunit.html#a78d8f4bc3be7867d8171f2759251dad1">unit::Hz</a>), <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">num_points</a>);</div>
-<div class="line"><span class="lineno">  368</span>    <a class="code hl_typedef" href="mesh_8h.html#afd05120c4d579ec7fa4906f677781a83">Array</a> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">F_nu</a> = Array::from_shape({t.size()});</div>
-<div class="line"><span class="lineno">  369</span> </div>
-<div class="line"><span class="lineno">  370</span>    <a class="code hl_class" href="classObserver.html">Observer</a> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">obs</a>;</div>
-<div class="line"><span class="lineno">  371</span>    <a class="code hl_typedef" href="synchrotron_8h.html#a0ab8637927d98b2552ae0f5b9eb5e5c2">SynPhotonGrid</a> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">f_photons</a>;</div>
-<div class="line"><span class="lineno">  372</span>    <a class="code hl_typedef" href="synchrotron_8h.html#a0ab8637927d98b2552ae0f5b9eb5e5c2">SynPhotonGrid</a> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">r_photons</a>;</div>
-<div class="line"><span class="lineno">  373</span>    <a class="code hl_typedef" href="inverse-compton_8h.html#a9144380c2a30d12d92e96f5917ca2612">ICPhotonGrid&lt;SynElectrons, SynPhotons&gt;</a> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">f_IC_photons</a>;</div>
-<div class="line"><span class="lineno">  374</span>    <a class="code hl_typedef" href="inverse-compton_8h.html#a9144380c2a30d12d92e96f5917ca2612">ICPhotonGrid&lt;SynElectrons, SynPhotons&gt;</a> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">r_IC_photons</a>;</div>
-<div class="line"><span class="lineno">  375</span> </div>
-<div class="line"><span class="lineno">  376</span>    generate_photons(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">param</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">t_bins</a>.front(), <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">t_bins</a>.back(), <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">obs</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">f_photons</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">r_photons</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">f_IC_photons</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">r_IC_photons</a>);</div>
-<div class="line"><span class="lineno">  377</span> </div>
-<div class="line"><span class="lineno">  378</span>    <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">F_nu</a> = <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">obs</a>.flux(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">t_bins</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">nu_bins</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">f_photons</a>);</div>
-<div class="line"><span class="lineno">  379</span> </div>
-<div class="line"><span class="lineno">  380</span>    <span class="keywordflow">if</span> (<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">r_photons</a>.size() &gt; 0) {</div>
-<div class="line"><span class="lineno">  381</span>        <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">F_nu</a> += <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">obs</a>.flux(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">t_bins</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">nu_bins</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">r_photons</a>);</div>
-<div class="line"><span class="lineno">  382</span>    }</div>
-<div class="line"><span class="lineno">  383</span> </div>
-<div class="line"><span class="lineno">  384</span>    <span class="keywordflow">if</span> (<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">f_IC_photons</a>.size() &gt; 0) {</div>
-<div class="line"><span class="lineno">  385</span>        <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">F_nu</a> += <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">obs</a>.flux(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">t_bins</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">nu_bins</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">f_IC_photons</a>);</div>
-<div class="line"><span class="lineno">  386</span>    }</div>
-<div class="line"><span class="lineno">  387</span> </div>
-<div class="line"><span class="lineno">  388</span>    <span class="keywordflow">if</span> (<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">r_IC_photons</a>.size() &gt; 0) {</div>
-<div class="line"><span class="lineno">  389</span>        <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">F_nu</a> += <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">obs</a>.flux(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">t_bins</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">nu_bins</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">r_IC_photons</a>);</div>
-<div class="line"><span class="lineno">  390</span>    }</div>
-<div class="line"><span class="lineno">  391</span> </div>
-<div class="line"><span class="lineno">  392</span>    <span class="comment">// we bind this function for GIL free. As the return will create a pyobject, we need to get the GIL.</span></div>
-<div class="line"><span class="lineno">  393</span>    pybind11::gil_scoped_acquire <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">acquire</a>;</div>
-<div class="line"><span class="lineno">  394</span>    <span class="keywordflow">return</span> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">F_nu</a> / <a class="code hl_variable" href="namespaceunit.html#ad35a8d191f16b2928b242ef566cca653">unit::flux_cgs</a>;</div>
-<div class="line"><span class="lineno">  395</span>}</div>
-<div class="ttc" id="amesh_8h_html_afd05120c4d579ec7fa4906f677781a83"><div class="ttname"><a href="mesh_8h.html#afd05120c4d579ec7fa4906f677781a83">Array</a></div><div class="ttdeci">xt::xtensor&lt; Real, 1 &gt; Array</div><div class="ttdoc">Type alias for 1D arrays (e.g., time points)</div><div class="ttdef"><b>Definition</b> <a href="mesh_8h_source.html#l00034">mesh.h:34</a></div></div>
-<div class="ttc" id="anamespaceunit_html_a4e7c438655d3f34c7c30a155ec38f250"><div class="ttname"><a href="namespaceunit.html#a4e7c438655d3f34c7c30a155ec38f250">unit::sec</a></div><div class="ttdeci">constexpr Real sec</div><div class="ttdoc">Second in code units.</div><div class="ttdef"><b>Definition</b> <a href="macros_8h_source.html#l00044">macros.h:44</a></div></div>
-<div class="ttc" id="anamespaceunit_html_a78d8f4bc3be7867d8171f2759251dad1"><div class="ttname"><a href="namespaceunit.html#a78d8f4bc3be7867d8171f2759251dad1">unit::Hz</a></div><div class="ttdeci">constexpr Real Hz</div><div class="ttdoc">Hertz (frequency) in code units.</div><div class="ttdef"><b>Definition</b> <a href="macros_8h_source.html#l00050">macros.h:50</a></div></div>
-<div class="ttc" id="anamespaceunit_html_ad35a8d191f16b2928b242ef566cca653"><div class="ttname"><a href="namespaceunit.html#ad35a8d191f16b2928b242ef566cca653">unit::flux_cgs</a></div><div class="ttdeci">constexpr Real flux_cgs</div><div class="ttdoc">Flux in CGS units.</div><div class="ttdef"><b>Definition</b> <a href="macros_8h_source.html#l00059">macros.h:59</a></div></div>
+<p class="definition">Definition at line <a class="el" href="mcmc_8cpp_source.html#l00495">495</a> of file <a class="el" href="mcmc_8cpp_source.html">mcmc.cpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  496</span>               {</div>
+<div class="line"><span class="lineno">  497</span>    <a class="code hl_typedef" href="mesh_8h.html#afd05120c4d579ec7fa4906f677781a83">Array</a> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">t_bins</a> = t * <a class="code hl_variable" href="namespaceunit.html#a4e7c438655d3f34c7c30a155ec38f250">unit::sec</a>;</div>
+<div class="line"><span class="lineno">  498</span>    <a class="code hl_typedef" href="mesh_8h.html#afd05120c4d579ec7fa4906f677781a83">Array</a> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">nu_bins</a> = xt::logspace(std::log10(nu_min * <a class="code hl_variable" href="namespaceunit.html#a78d8f4bc3be7867d8171f2759251dad1">unit::Hz</a>), std::log10(nu_max * <a class="code hl_variable" href="namespaceunit.html#a78d8f4bc3be7867d8171f2759251dad1">unit::Hz</a>), <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">num_points</a>);</div>
+<div class="line"><span class="lineno">  499</span>    <a class="code hl_typedef" href="mesh_8h.html#afd05120c4d579ec7fa4906f677781a83">Array</a> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">F_nu</a> = Array::from_shape({t.size()});</div>
+<div class="line"><span class="lineno">  500</span> </div>
+<div class="line"><span class="lineno">  501</span>    <a class="code hl_class" href="classObserver.html">Observer</a> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">obs</a>;</div>
+<div class="line"><span class="lineno">  502</span>    <a class="code hl_typedef" href="synchrotron_8h.html#a0ab8637927d98b2552ae0f5b9eb5e5c2">SynPhotonGrid</a> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">f_photons</a>;</div>
+<div class="line"><span class="lineno">  503</span>    <a class="code hl_typedef" href="synchrotron_8h.html#a0ab8637927d98b2552ae0f5b9eb5e5c2">SynPhotonGrid</a> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">r_photons</a>;</div>
+<div class="line"><span class="lineno">  504</span>    <a class="code hl_typedef" href="inverse-compton_8h.html#a9144380c2a30d12d92e96f5917ca2612">ICPhotonGrid&lt;SynElectrons, SynPhotons&gt;</a> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">f_IC_photons</a>;</div>
+<div class="line"><span class="lineno">  505</span>    <a class="code hl_typedef" href="inverse-compton_8h.html#a9144380c2a30d12d92e96f5917ca2612">ICPhotonGrid&lt;SynElectrons, SynPhotons&gt;</a> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">r_IC_photons</a>;</div>
+<div class="line"><span class="lineno">  506</span> </div>
+<div class="line"><span class="lineno">  507</span>    generate_photons(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">param</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">t_bins</a>.front(), <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">t_bins</a>.back(), <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">obs</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">f_photons</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">r_photons</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">f_IC_photons</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">r_IC_photons</a>);</div>
+<div class="line"><span class="lineno">  508</span> </div>
+<div class="line"><span class="lineno">  509</span>    <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">F_nu</a> = <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">obs</a>.flux(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">t_bins</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">nu_bins</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">f_photons</a>);</div>
+<div class="line"><span class="lineno">  510</span> </div>
+<div class="line"><span class="lineno">  511</span>    <span class="keywordflow">if</span> (<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">r_photons</a>.size() &gt; 0) {</div>
+<div class="line"><span class="lineno">  512</span>        <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">F_nu</a> += <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">obs</a>.flux(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">t_bins</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">nu_bins</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">r_photons</a>);</div>
+<div class="line"><span class="lineno">  513</span>    }</div>
+<div class="line"><span class="lineno">  514</span> </div>
+<div class="line"><span class="lineno">  515</span>    <span class="keywordflow">if</span> (<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">f_IC_photons</a>.size() &gt; 0) {</div>
+<div class="line"><span class="lineno">  516</span>        <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">F_nu</a> += <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">obs</a>.flux(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">t_bins</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">nu_bins</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">f_IC_photons</a>);</div>
+<div class="line"><span class="lineno">  517</span>    }</div>
+<div class="line"><span class="lineno">  518</span> </div>
+<div class="line"><span class="lineno">  519</span>    <span class="keywordflow">if</span> (<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">r_IC_photons</a>.size() &gt; 0) {</div>
+<div class="line"><span class="lineno">  520</span>        <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">F_nu</a> += <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">obs</a>.flux(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">t_bins</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">nu_bins</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">r_IC_photons</a>);</div>
+<div class="line"><span class="lineno">  521</span>    }</div>
+<div class="line"><span class="lineno">  522</span> </div>
+<div class="line"><span class="lineno">  523</span>    <span class="comment">// we bind this function for GIL free. As the return will create a pyobject, we need to get the GIL.</span></div>
+<div class="line"><span class="lineno">  524</span>    pybind11::gil_scoped_acquire <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">acquire</a>;</div>
+<div class="line"><span class="lineno">  525</span>    <span class="keywordflow">return</span> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">F_nu</a> / <a class="code hl_variable" href="namespaceunit.html#ad35a8d191f16b2928b242ef566cca653">unit::flux_cgs</a>;</div>
+<div class="line"><span class="lineno">  526</span>}</div>
+<div class="ttc" id="aclassObserver_html"><div class="ttname"><a href="classObserver.html">Observer</a></div><div class="ttdoc">Represents an observer in the GRB afterglow simulation.</div><div class="ttdef"><b>Definition</b> <a href="observer_8h_source.html#l00029">observer.h:29</a></div></div>
+<div class="ttc" id="ainverse-compton_8h_html_a9144380c2a30d12d92e96f5917ca2612"><div class="ttname"><a href="inverse-compton_8h.html#a9144380c2a30d12d92e96f5917ca2612">ICPhotonGrid</a></div><div class="ttdeci">xt::xtensor&lt; ICPhoton&lt; Electrons, Photons &gt;, 3 &gt; ICPhotonGrid</div><div class="ttdoc">Defines a 3D grid (using xt::xtensor) for storing ICPhoton objects.</div><div class="ttdef"><b>Definition</b> <a href="inverse-compton_8h_source.html#l00230">inverse-compton.h:230</a></div></div>
+<div class="ttc" id="anamespaceunit_html_a4e7c438655d3f34c7c30a155ec38f250"><div class="ttname"><a href="namespaceunit.html#a4e7c438655d3f34c7c30a155ec38f250">unit::sec</a></div><div class="ttdeci">constexpr Real sec</div><div class="ttdoc">Second in code units.</div><div class="ttdef"><b>Definition</b> <a href="macros_8h_source.html#l00046">macros.h:46</a></div></div>
+<div class="ttc" id="anamespaceunit_html_a78d8f4bc3be7867d8171f2759251dad1"><div class="ttname"><a href="namespaceunit.html#a78d8f4bc3be7867d8171f2759251dad1">unit::Hz</a></div><div class="ttdeci">constexpr Real Hz</div><div class="ttdoc">Hertz (frequency) in code units.</div><div class="ttdef"><b>Definition</b> <a href="macros_8h_source.html#l00052">macros.h:52</a></div></div>
+<div class="ttc" id="anamespaceunit_html_ad35a8d191f16b2928b242ef566cca653"><div class="ttname"><a href="namespaceunit.html#ad35a8d191f16b2928b242ef566cca653">unit::flux_cgs</a></div><div class="ttdeci">constexpr Real flux_cgs</div><div class="ttdoc">Flux in CGS units.</div><div class="ttdef"><b>Definition</b> <a href="macros_8h_source.html#l00061">macros.h:61</a></div></div>
+<div class="ttc" id="asynchrotron_8h_html_a0ab8637927d98b2552ae0f5b9eb5e5c2"><div class="ttname"><a href="synchrotron_8h.html#a0ab8637927d98b2552ae0f5b9eb5e5c2">SynPhotonGrid</a></div><div class="ttdeci">xt::xtensor&lt; SynPhotons, 3 &gt; SynPhotonGrid</div><div class="ttdoc">Type alias for 3D grid of synchrotron photons.</div><div class="ttdef"><b>Definition</b> <a href="synchrotron_8h_source.html#l00078">synchrotron.h:78</a></div></div>
 </div><!-- fragment --><div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
@@ -516,40 +602,40 @@ Here is the caller graph for this function:</div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>PyGrid <a class="el" href="structFlux.html" title="Container for synchrotron and synchrotron self-Compton flux components.">Flux</a> prediction grid with time-frequency dimensions </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="mcmc_8cpp_source.html#l00332">332</a> of file <a class="el" href="mcmc_8cpp_source.html">mcmc.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  332</span>                                                                                                         {</div>
-<div class="line"><span class="lineno">  333</span>    <a class="code hl_typedef" href="mesh_8h.html#afd05120c4d579ec7fa4906f677781a83">Array</a> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">t_bins</a> = t * <a class="code hl_variable" href="namespaceunit.html#a4e7c438655d3f34c7c30a155ec38f250">unit::sec</a>;</div>
-<div class="line"><span class="lineno">  334</span>    <a class="code hl_typedef" href="mesh_8h.html#afd05120c4d579ec7fa4906f677781a83">Array</a> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">nu_bins</a> = nu * <a class="code hl_variable" href="namespaceunit.html#a78d8f4bc3be7867d8171f2759251dad1">unit::Hz</a>;</div>
-<div class="line"><span class="lineno">  335</span>    <a class="code hl_typedef" href="mesh_8h.html#ae7ec6be5d638ad03ae6697ff2b71ef91">MeshGrid</a> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">F_nu</a> = MeshGrid::from_shape({nu.size(), t.size()});</div>
-<div class="line"><span class="lineno">  336</span> </div>
-<div class="line"><span class="lineno">  337</span>    <a class="code hl_class" href="classObserver.html">Observer</a> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">obs</a>;</div>
-<div class="line"><span class="lineno">  338</span>    <a class="code hl_typedef" href="synchrotron_8h.html#a0ab8637927d98b2552ae0f5b9eb5e5c2">SynPhotonGrid</a> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">f_photons</a>;</div>
-<div class="line"><span class="lineno">  339</span>    <a class="code hl_typedef" href="synchrotron_8h.html#a0ab8637927d98b2552ae0f5b9eb5e5c2">SynPhotonGrid</a> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">r_photons</a>;</div>
-<div class="line"><span class="lineno">  340</span>    <a class="code hl_typedef" href="inverse-compton_8h.html#a9144380c2a30d12d92e96f5917ca2612">ICPhotonGrid&lt;SynElectrons, SynPhotons&gt;</a> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">f_IC_photons</a>;</div>
-<div class="line"><span class="lineno">  341</span>    <a class="code hl_typedef" href="inverse-compton_8h.html#a9144380c2a30d12d92e96f5917ca2612">ICPhotonGrid&lt;SynElectrons, SynPhotons&gt;</a> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">r_IC_photons</a>;</div>
-<div class="line"><span class="lineno">  342</span> </div>
-<div class="line"><span class="lineno">  343</span>    generate_photons(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">param</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">t_bins</a>.front(), <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">t_bins</a>.back(), <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">obs</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">f_photons</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">r_photons</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">f_IC_photons</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">r_IC_photons</a>);</div>
-<div class="line"><span class="lineno">  344</span> </div>
-<div class="line"><span class="lineno">  345</span>    <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">F_nu</a> = <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">obs</a>.specific_flux(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">t_bins</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">nu_bins</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">f_photons</a>);</div>
-<div class="line"><span class="lineno">  346</span> </div>
-<div class="line"><span class="lineno">  347</span>    <span class="keywordflow">if</span> (<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">r_photons</a>.size() &gt; 0) {</div>
-<div class="line"><span class="lineno">  348</span>        <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">F_nu</a> += <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">obs</a>.specific_flux(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">t_bins</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">nu_bins</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">r_photons</a>);</div>
-<div class="line"><span class="lineno">  349</span>    }</div>
-<div class="line"><span class="lineno">  350</span> </div>
-<div class="line"><span class="lineno">  351</span>    <span class="keywordflow">if</span> (<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">f_IC_photons</a>.size() &gt; 0) {</div>
-<div class="line"><span class="lineno">  352</span>        <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">F_nu</a> += <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">obs</a>.specific_flux(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">t_bins</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">nu_bins</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">f_IC_photons</a>);</div>
-<div class="line"><span class="lineno">  353</span>    }</div>
-<div class="line"><span class="lineno">  354</span> </div>
-<div class="line"><span class="lineno">  355</span>    <span class="keywordflow">if</span> (<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">r_IC_photons</a>.size() &gt; 0) {</div>
-<div class="line"><span class="lineno">  356</span>        <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">F_nu</a> += <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">obs</a>.specific_flux(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">t_bins</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">nu_bins</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">r_IC_photons</a>);</div>
-<div class="line"><span class="lineno">  357</span>    }</div>
-<div class="line"><span class="lineno">  358</span> </div>
-<div class="line"><span class="lineno">  359</span>    <span class="comment">// we bind this function for GIL free. As the return will create a pyobject, we need to get the GIL.</span></div>
-<div class="line"><span class="lineno">  360</span>    pybind11::gil_scoped_acquire <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">acquire</a>;</div>
-<div class="line"><span class="lineno">  361</span>    <span class="keywordflow">return</span> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">F_nu</a> / <a class="code hl_variable" href="namespaceunit.html#a4808047893e65d1942893de10e0a9c97">unit::flux_den_cgs</a>;</div>
-<div class="line"><span class="lineno">  362</span>}</div>
+<p class="definition">Definition at line <a class="el" href="mcmc_8cpp_source.html#l00463">463</a> of file <a class="el" href="mcmc_8cpp_source.html">mcmc.cpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  463</span>                                                                                                         {</div>
+<div class="line"><span class="lineno">  464</span>    <a class="code hl_typedef" href="mesh_8h.html#afd05120c4d579ec7fa4906f677781a83">Array</a> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">t_bins</a> = t * <a class="code hl_variable" href="namespaceunit.html#a4e7c438655d3f34c7c30a155ec38f250">unit::sec</a>;</div>
+<div class="line"><span class="lineno">  465</span>    <a class="code hl_typedef" href="mesh_8h.html#afd05120c4d579ec7fa4906f677781a83">Array</a> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">nu_bins</a> = nu * <a class="code hl_variable" href="namespaceunit.html#a78d8f4bc3be7867d8171f2759251dad1">unit::Hz</a>;</div>
+<div class="line"><span class="lineno">  466</span>    <a class="code hl_typedef" href="mesh_8h.html#ae7ec6be5d638ad03ae6697ff2b71ef91">MeshGrid</a> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">F_nu</a> = MeshGrid::from_shape({nu.size(), t.size()});</div>
+<div class="line"><span class="lineno">  467</span> </div>
+<div class="line"><span class="lineno">  468</span>    <a class="code hl_class" href="classObserver.html">Observer</a> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">obs</a>;</div>
+<div class="line"><span class="lineno">  469</span>    <a class="code hl_typedef" href="synchrotron_8h.html#a0ab8637927d98b2552ae0f5b9eb5e5c2">SynPhotonGrid</a> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">f_photons</a>;</div>
+<div class="line"><span class="lineno">  470</span>    <a class="code hl_typedef" href="synchrotron_8h.html#a0ab8637927d98b2552ae0f5b9eb5e5c2">SynPhotonGrid</a> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">r_photons</a>;</div>
+<div class="line"><span class="lineno">  471</span>    <a class="code hl_typedef" href="inverse-compton_8h.html#a9144380c2a30d12d92e96f5917ca2612">ICPhotonGrid&lt;SynElectrons, SynPhotons&gt;</a> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">f_IC_photons</a>;</div>
+<div class="line"><span class="lineno">  472</span>    <a class="code hl_typedef" href="inverse-compton_8h.html#a9144380c2a30d12d92e96f5917ca2612">ICPhotonGrid&lt;SynElectrons, SynPhotons&gt;</a> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">r_IC_photons</a>;</div>
+<div class="line"><span class="lineno">  473</span> </div>
+<div class="line"><span class="lineno">  474</span>    generate_photons(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">param</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">t_bins</a>.front(), <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">t_bins</a>.back(), <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">obs</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">f_photons</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">r_photons</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">f_IC_photons</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">r_IC_photons</a>);</div>
+<div class="line"><span class="lineno">  475</span> </div>
+<div class="line"><span class="lineno">  476</span>    <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">F_nu</a> = <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">obs</a>.specific_flux(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">t_bins</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">nu_bins</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">f_photons</a>);</div>
+<div class="line"><span class="lineno">  477</span> </div>
+<div class="line"><span class="lineno">  478</span>    <span class="keywordflow">if</span> (<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">r_photons</a>.size() &gt; 0) {</div>
+<div class="line"><span class="lineno">  479</span>        <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">F_nu</a> += <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">obs</a>.specific_flux(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">t_bins</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">nu_bins</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">r_photons</a>);</div>
+<div class="line"><span class="lineno">  480</span>    }</div>
+<div class="line"><span class="lineno">  481</span> </div>
+<div class="line"><span class="lineno">  482</span>    <span class="keywordflow">if</span> (<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">f_IC_photons</a>.size() &gt; 0) {</div>
+<div class="line"><span class="lineno">  483</span>        <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">F_nu</a> += <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">obs</a>.specific_flux(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">t_bins</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">nu_bins</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">f_IC_photons</a>);</div>
+<div class="line"><span class="lineno">  484</span>    }</div>
+<div class="line"><span class="lineno">  485</span> </div>
+<div class="line"><span class="lineno">  486</span>    <span class="keywordflow">if</span> (<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">r_IC_photons</a>.size() &gt; 0) {</div>
+<div class="line"><span class="lineno">  487</span>        <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">F_nu</a> += <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">obs</a>.specific_flux(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">t_bins</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">nu_bins</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">r_IC_photons</a>);</div>
+<div class="line"><span class="lineno">  488</span>    }</div>
+<div class="line"><span class="lineno">  489</span> </div>
+<div class="line"><span class="lineno">  490</span>    <span class="comment">// we bind this function for GIL free. As the return will create a pyobject, we need to get the GIL.</span></div>
+<div class="line"><span class="lineno">  491</span>    pybind11::gil_scoped_acquire <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">acquire</a>;</div>
+<div class="line"><span class="lineno">  492</span>    <span class="keywordflow">return</span> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">F_nu</a> / <a class="code hl_variable" href="namespaceunit.html#a4808047893e65d1942893de10e0a9c97">unit::flux_den_cgs</a>;</div>
+<div class="line"><span class="lineno">  493</span>}</div>
 <div class="ttc" id="amesh_8h_html_ae7ec6be5d638ad03ae6697ff2b71ef91"><div class="ttname"><a href="mesh_8h.html#ae7ec6be5d638ad03ae6697ff2b71ef91">MeshGrid</a></div><div class="ttdeci">xt::xtensor&lt; Real, 2 &gt; MeshGrid</div><div class="ttdoc">Type alias for 2D grids (e.g., spatial coordinates)</div><div class="ttdef"><b>Definition</b> <a href="mesh_8h_source.html#l00036">mesh.h:36</a></div></div>
-<div class="ttc" id="anamespaceunit_html_a4808047893e65d1942893de10e0a9c97"><div class="ttname"><a href="namespaceunit.html#a4808047893e65d1942893de10e0a9c97">unit::flux_den_cgs</a></div><div class="ttdeci">constexpr Real flux_den_cgs</div><div class="ttdoc">Flux density in CGS units.</div><div class="ttdef"><b>Definition</b> <a href="macros_8h_source.html#l00060">macros.h:60</a></div></div>
+<div class="ttc" id="anamespaceunit_html_a4808047893e65d1942893de10e0a9c97"><div class="ttname"><a href="namespaceunit.html#a4808047893e65d1942893de10e0a9c97">unit::flux_den_cgs</a></div><div class="ttdeci">constexpr Real flux_den_cgs</div><div class="ttdoc">Flux density in CGS units.</div><div class="ttdef"><b>Definition</b> <a href="macros_8h_source.html#l00062">macros.h:62</a></div></div>
 </div><!-- fragment --><div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">

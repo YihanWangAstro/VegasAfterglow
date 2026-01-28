@@ -8,5 +8,6 @@ var searchData=
   ['km_5',['km',['../namespaceunit.html#a24953d730785c93f5e835b7ac5751acc',1,'unit']]],
   ['kn_6',['kn',['../structConfigParams.html#adee8ff17b112827fe4c61161323a2cf5',1,'ConfigParams::kn'],['../classPyRadiation.html#ab5fe05d2f9642ca32b02ce9cf59a4f4e',1,'PyRadiation::kn']]],
   ['kn_5fcooling_7',['KN_cooling',['../inverse-compton_8h.html#ac57614f97ddcaab423a5023a04cdf3a1',1,'inverse-compton.h']]],
-  ['kpc_8',['kpc',['../namespaceunit.html#a59c43317f4556f768eccf9af8f731c24',1,'unit']]]
+  ['kparamptrs_8',['kParamPtrs',['../mcmc_8h.html#a6ec54c5efb9a6f26efe914eccc7bc1d8',1,'mcmc.h']]],
+  ['kpc_9',['kpc',['../namespaceunit.html#a59c43317f4556f768eccf9af8f731c24',1,'unit']]]
 ];

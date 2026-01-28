@@ -1,8 +1,0 @@
-<map id="calc_engine_duration" name="calc_engine_duration">
-<area shape="rect" id="Node000001" title="Calculates the engine duration needed to achieve a specific shell thickness parameter." alt="" coords="5,55,165,80"/>
-<area shape="rect" id="Node000002" href="$utilities_8h.html#ab8e81118f023df135835db8cce4f5f42" title="Returns the value of a single parameter." alt="" coords="243,29,293,55"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="165,54,228,45,229,50,166,59"/>
-<area shape="rect" id="Node000003" href="$physics_8h.html#aacab8c080156fce8cbe11a0899208c2e" title="Computes the Sedov length—a characteristic scale for blast wave deceleration." alt="" coords="213,79,323,104"/>
-<area shape="poly" id="edge3_Node000001_Node000003" title=" " alt="" coords="166,75,200,80,199,85,165,81"/>
-<area shape="poly" id="edge2_Node000002_Node000002" title=" " alt="" coords="240,33,232,23,234,12,246,5,268,3,295,7,303,13,304,20,299,21,298,16,293,12,268,8,248,10,238,15,237,21,245,29"/>
-</map>

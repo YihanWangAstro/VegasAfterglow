@@ -127,7 +127,7 @@ $(document).ready(function(){initNavTree('simple-shock_8tpp_source.html',''); in
 <div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span> </div>
 <div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span>template &lt;typename Ejecta, typename Medium&gt;</div>
 <div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span>void SimpleShockEqn&lt;Ejecta, Medium&gt;::operator()(State const&amp; state, State&amp; diff, Real t) const noexcept {</div>
-<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span>    const Real beta = gamma_to_beta(state.Gamma);</div>
+<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span>    const Real beta = physics::relativistic::gamma_to_beta(state.Gamma);</div>
 <div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span> </div>
 <div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span>    diff.r = compute_dr_dt(beta);</div>
 <div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span>    diff.t_comv = compute_dt_dt_comv(state.Gamma, beta);</div>
@@ -185,12 +185,12 @@ $(document).ready(function(){initNavTree('simple-shock_8tpp_source.html',''); in
 <div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span>void SimpleShockEqn&lt;Ejecta, Medium&gt;::set_init_state(State&amp; state, Real t0) const noexcept {</div>
 <div class="line"><a id="l00085" name="l00085"></a><span class="lineno">   85</span>    state.Gamma = ejecta.Gamma0(phi, theta0);</div>
 <div class="line"><a id="l00086" name="l00086"></a><span class="lineno">   86</span> </div>
-<div class="line"><a id="l00087" name="l00087"></a><span class="lineno">   87</span>    const Real beta0 = gamma_to_beta(state.Gamma);</div>
+<div class="line"><a id="l00087" name="l00087"></a><span class="lineno">   87</span>    const Real beta0 = physics::relativistic::gamma_to_beta(state.Gamma);</div>
 <div class="line"><a id="l00088" name="l00088"></a><span class="lineno">   88</span>    state.r = beta0 * con::c * t0 / (1 - beta0);</div>
 <div class="line"><a id="l00089" name="l00089"></a><span class="lineno">   89</span> </div>
 <div class="line"><a id="l00090" name="l00090"></a><span class="lineno">   90</span>    state.t_comv = state.r / std::sqrt(state.Gamma * state.Gamma - 1) / con::c;</div>
 <div class="line"><a id="l00091" name="l00091"></a><span class="lineno">   91</span> </div>
-<div class="line"><a id="l00092" name="l00092"></a><span class="lineno">   92</span>    state.m2 = medium.rho(phi, theta0, state.r) * state.r * state.r * state.r / 3;</div>
+<div class="line"><a id="l00092" name="l00092"></a><span class="lineno">   92</span>    state.m2 = enclosed_mass([&amp;](Real r_) { return medium.rho(phi, theta0, r_); }, state.r);</div>
 <div class="line"><a id="l00093" name="l00093"></a><span class="lineno">   93</span> </div>
 <div class="line"><a id="l00094" name="l00094"></a><span class="lineno">   94</span>    state.theta = theta0;</div>
 <div class="line"><a id="l00095" name="l00095"></a><span class="lineno">   95</span> </div>

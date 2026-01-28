@@ -1,8 +1,8 @@
 <map id="compute_gamma_c" name="compute_gamma_c">
 <area shape="rect" id="Node000001" title=" " alt="" coords="443,31,593,56"/>
-<area shape="rect" id="Node000002" href="$inverse-compton_8cpp.html#a123b8a046ab05711271a4cf3803e2ec9" title=" " alt="" coords="210,5,374,31"/>
+<area shape="rect" id="Node000002" href="$inverse-compton_8cpp.html#ad06eafa794ead54fd991828713903f5a" title=" " alt="" coords="210,5,374,31"/>
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="428,36,374,30,375,25,429,31"/>
-<area shape="rect" id="Node000004" href="$inverse-compton_8cpp.html#a64fc9fc684b46654d0c18556f19c8b36" title=" " alt="" coords="189,55,395,80"/>
+<area shape="rect" id="Node000004" href="$inverse-compton_8cpp.html#af7515846a834d0a778e26e7aaa36891b" title=" " alt="" coords="189,55,395,80"/>
 <area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="429,55,395,59,395,54,429,50"/>
 <area shape="rect" id="Node000003" href="$inverse-compton_8h.html#ac57614f97ddcaab423a5023a04cdf3a1" title="Applies Klein&#45;Nishina cooling to electrons based on photon distribution." alt="" coords="26,5,121,31"/>
 <area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="196,21,121,21,121,15,196,15"/>
