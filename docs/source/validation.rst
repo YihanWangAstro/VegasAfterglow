@@ -24,9 +24,6 @@ The unified validation runner orchestrates all tests and generates reports:
    # Check existing results without re-running tests
    python validation/run_validation.py --check-only
 
-   # Quick validation (reduced test matrix)
-   python validation/run_validation.py --all --quick
-
    # Control parallelism (default: all CPU cores)
    python validation/run_validation.py --all -j 4
 
@@ -107,7 +104,7 @@ Checks power-law spectral indices beta = d(log F)/d(log nu) across five regimes:
 Validation Reports
 ------------------
 
-The validation runner generates a comprehensive PDF report (``output/comprehensive_report.pdf``) containing:
+The validation runner generates a comprehensive PDF report (``validation/comprehensive_report.pdf``) containing:
 
 1. **Title Page**: Version info, commit hash, platform details
 2. **Table of Contents**: Clickable navigation with page numbers
@@ -130,21 +127,21 @@ Directory Structure
 .. code-block:: text
 
    validation/
-   ├── run_validation.py      # Unified CLI runner
+   ├── run_validation.py          # Unified CLI runner
+   ├── comprehensive_report.pdf   # Generated PDF report
    ├── benchmark/
-   │   ├── benchmark_suite.py # Benchmark test implementation
-   │   ├── configs.py         # Test configurations
-   │   └── results/           # JSON output files
+   │   ├── benchmark_suite.py     # Benchmark test implementation
+   │   ├── configs.py             # Test configurations
+   │   └── results/               # JSON output files
    ├── regression/
-   │   ├── run_regression.py  # Regression test runner
-   │   └── results/           # JSON output files
-   ├── visualization/
-   │   ├── dashboard.py       # PDF report generator
-   │   ├── common.py          # Shared utilities
-   │   ├── benchmark_plots.py # Benchmark visualizations
-   │   ├── regression_plots.py# Regression visualizations
-   │   └── guides/            # Markdown guide documents
-   └── output/                # Generated PDF reports
+   │   ├── run_regression.py      # Regression test runner
+   │   └── results/               # JSON output files
+   └── visualization/
+       ├── dashboard.py           # PDF report generator
+       ├── common.py              # Shared utilities
+       ├── benchmark_plots.py     # Benchmark visualizations
+       ├── regression_plots.py    # Regression visualizations
+       └── guides/                # Markdown guide documents
 
 CI/CD Integration
 -----------------
@@ -161,7 +158,7 @@ The validation framework is designed for CI/CD pipelines:
      uses: actions/upload-artifact@v3
      with:
        name: validation-report
-       path: output/comprehensive_report.pdf
+       path: validation/comprehensive_report.pdf
 
 The validation runner:
 

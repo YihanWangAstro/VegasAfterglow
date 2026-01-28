@@ -921,12 +921,9 @@ python validation/run_validation.py --regression
 
 # Check existing results without re-running tests
 python validation/run_validation.py --check-only
-
-# Quick validation (reduced test matrix)
-python validation/run_validation.py --all --quick
 ```
 
-The validation runner generates a comprehensive PDF report at `output/comprehensive_report.pdf` with convergence plots, summary grids, and detailed diagnostics.
+The validation runner generates a comprehensive PDF report at `validation/comprehensive_report.pdf` with convergence plots, summary grids, and detailed diagnostics.
 
 </details>
 

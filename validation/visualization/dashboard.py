@@ -501,7 +501,7 @@ def main():
                         help=f"Parallel workers (default: {DEFAULT_WORKERS})")
     parser.add_argument("--benchmark-file", type=str, help="Benchmark JSON path")
     parser.add_argument("--regression-file", type=str, help="Regression JSON path")
-    parser.add_argument("--output", type=str, default=str(Path(__file__).parent.parent / "output"), help="Output dir")
+    parser.add_argument("--output", type=str, default=str(Path(__file__).parent.parent), help="Output dir")
     args = parser.parse_args()
     if not any([args.full, args.benchmark, args.regression]):
         args.full = True

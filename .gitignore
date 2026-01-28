@@ -25,3 +25,6 @@ legacy/
 
 docs/build/
 docs/doxygen/
+validation/comprehensive_report.pdf
+validation/benchmark/results/
+validation/regression/results/
