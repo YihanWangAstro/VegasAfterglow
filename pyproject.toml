@@ -27,6 +27,10 @@ dependencies = [
   "dynesty>=2.0",
   "corner>=2.2.1",
   "tqdm>=4.0",
+  "matplotlib>=3.5",
+  "pypdf>=4.0",
+  "reportlab>=4.0",
+  "Pillow>=10.0",
 ]
 license = {text = "BSD-3-Clause"}
 

@@ -1,3 +1,4 @@
+from ._version import __version__, __version_tuple__
 from .runner import AfterglowLikelihood, Fitter
 from .types import (
     ISM,
@@ -24,6 +25,8 @@ from .types import (
 )
 
 __all__ = [
+    "__version__",
+    "__version_tuple__",
     "ModelParams",
     "Setups",
     "ObsData",

@@ -634,7 +634,7 @@ auto PyModel::compute_emission(Array const& t_obs, Array const& nu_obs, Func&& f
 
     if (!rvs_rad_opt) {
         Coord coord = auto_grid(jet_, t_obs, this->theta_w, obs_setup.theta_obs, obs_setup.z, phi_resol, theta_resol,
-                                t_resol, axisymmetric, 0, 48, 0.7);
+                                t_resol, axisymmetric, 0, 56, 0.7);
 
         auto fwd_shock = generate_fwd_shock(coord, medium_, jet_, fwd_rad.rad, rtol);
 

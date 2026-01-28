@@ -89,7 +89,7 @@ void SimpleShockEqn<Ejecta, Medium>::set_init_state(State& state, Real t0) const
 
     state.t_comv = state.r / std::sqrt(state.Gamma * state.Gamma - 1) / con::c;
 
-    state.m2 = medium.rho(phi, theta0, state.r) * state.r * state.r * state.r / 3;
+    state.m2 = enclosed_mass([&](Real r_) { return medium.rho(phi, theta0, r_); }, state.r);
 
     state.theta = theta0;
 

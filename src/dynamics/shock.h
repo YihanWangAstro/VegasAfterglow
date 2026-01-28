@@ -450,7 +450,7 @@ inline void set_stopping_shock(size_t i, size_t j, Shock& shock, State const& st
 
 template <typename Eqn>
 Real compute_dec_time(Eqn const& eqn, Real t_max) {
-    Real e_k = eqn.ejecta.eps_k(eqn.phi, eqn.theta0);
+    /*Real e_k = eqn.ejecta.eps_k(eqn.phi, eqn.theta0);
     Real gamma = eqn.ejecta.Gamma0(eqn.phi, eqn.theta0);
     Real beta = physics::relativistic::gamma_to_beta(gamma);
 
@@ -480,5 +480,59 @@ Real compute_dec_time(Eqn const& eqn, Real t_max) {
         r_dec /= 3;
     }
     Real t_dec = r_dec * (1 - beta) / (beta * con::c);
+    return t_dec;*/
+    using namespace boost::numeric::odeint;
+
+    Real e_k = eqn.ejecta.eps_k(eqn.phi, eqn.theta0);
+    Real gamma = eqn.ejecta.Gamma0(eqn.phi, eqn.theta0);
+    Real beta = physics::relativistic::gamma_to_beta(gamma);
+
+    Real m_shell = e_k / (gamma * con::c2);
+
+    if constexpr (HasSigma<decltype(eqn.ejecta)>) {
+        m_shell /= (1.0 + eqn.ejecta.sigma0(eqn.phi, eqn.theta0));
+    }
+
+    Real target_mass = m_shell / gamma;
+
+    auto mass_ode = [&](const Real& M, Real& dMdr, double current_r) {
+        Real rho_val = eqn.medium.rho(eqn.phi, eqn.theta0, current_r);
+        dMdr = current_r * current_r * rho_val;
+    };
+
+    Real r = 0.0;
+    Real current_mass = 0.0;
+    Real r_current = 0;
+    Real r_max = beta * con::c * t_max / (1.0 - beta);
+
+    auto stepper = make_controlled<runge_kutta_dopri5<Real>>(1e-4, 1e-4);
+    Real dr = 1e5 * unit::cm;
+
+    while (current_mass < target_mass && r_current < r_max) {
+        stepper.try_step(mass_ode, current_mass, r_current, dr);
+    }
+
+    Real r_dec = r_current;
+    Real t_dec = r_dec * (1.0 - beta) / (beta * con::c);
+
     return t_dec;
+}
+
+template <typename Func>
+Real enclosed_mass(Func const& rho, Real r) {
+    using namespace boost::numeric::odeint;
+
+    auto mass_derivative = [&](const Real& M, Real& dMdr, double current_r) {
+        dMdr = current_r * current_r * rho(current_r);
+    };
+
+    Real mass = 0.0;
+    Real r_start = r * 1e-3;
+    Real r_end = r;
+    Real dt_init = r_end * 1e-4;
+
+    size_t steps = integrate_adaptive(make_controlled<runge_kutta_dopri5<Real>>(1e-5, 1e-5), mass_derivative, mass,
+                                      r_start, r_end, dt_init);
+
+    return mass;
 }

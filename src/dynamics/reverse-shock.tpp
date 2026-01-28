@@ -322,7 +322,7 @@ void FRShockEqn<Ejecta, Medium>::set_init_state(State& state, Real t0) const noe
     // constexpr Real Gamma34 = 1;
     // compute_Gamma_from_relative(Gamma4, Gamma34);
 
-    state.m2 = medium.rho(phi, theta0, state.r) * state.r * state.r * state.r / 3;
+    state.m2 = enclosed_mass([&](Real r_) { return medium.rho(phi, theta0, r_); }, state.r);
 
     //Real sigma4 = compute_shell_sigma(state);
     state.Gamma = Gamma4;
@@ -487,7 +487,7 @@ void grid_solve_shock_pair(size_t i, size_t j, View const& t, Shock& shock_fwd, 
 
     typename Eqn::State state;
     Real t_dec = compute_dec_time(eqn, t.back());
-    Real t0 = min(t.front(), 0.01 * unit::sec, t_dec / 3);
+    Real t0 = min(t.front(), 0.01 * unit::sec, 0.1 * t_dec);
     eqn.set_init_state(state, t0);
 
     constexpr Real RS_Gamma_limit = 1.03;

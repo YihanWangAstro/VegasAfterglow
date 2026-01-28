@@ -1,0 +1,635 @@
+"""Benchmark visualization functions for convergence analysis and performance timing."""
+
+import multiprocessing as mp
+import os
+import sys
+import tempfile
+from pathlib import Path
+from typing import Dict, List, Optional, Tuple
+
+import matplotlib
+import matplotlib.pyplot as plt
+import numpy as np
+from matplotlib.gridspec import GridSpec
+
+sys.path.insert(0, str(Path(__file__).parent.parent.parent))
+from validation.visualization.common import (BAND_COLORS, COLORS, FIDUCIAL_VALUES, MAX_ERROR_THRESHOLD, MEAN_ERROR_THRESHOLD, PAGE_PORTRAIT,
+                                        PHASE_NAMES, find_fiducial_index, get_flux_time, get_unique_short_names, setup_plot_style)
+
+
+def plot_benchmark_overview(session: Dict, angle_filter: str = "all") -> plt.Figure:
+    """Create benchmark overview page. angle_filter: 'all', 'on-axis', or 'off-axis'."""
+    fig = plt.figure(figsize=(8.5, 11))
+    gs = GridSpec(2, 2, figure=fig, hspace=0.40, wspace=0.35, top=0.92, bottom=0.08, left=0.10, right=0.95)
+
+    all_configs = session.get("configs", session.get("results", []))
+
+    if angle_filter == "on-axis":
+        configs = [c for c in all_configs if c.get("theta_obs_ratio", 0) <= 1]
+        title_suffix = " (On-axis, \u03b8_v=0)"
+    elif angle_filter == "off-axis":
+        configs = [c for c in all_configs if c.get("theta_obs_ratio", 0) > 1]
+        title_suffix = " (Off-axis, \u03b8_v/\u03b8_c>1)"
+    else:
+        configs = all_configs
+        title_suffix = ""
+
+    if not configs:
+        fig.text(0.5, 0.5, f"No {angle_filter} data available", ha="center", va="center", fontsize=16, color="gray")
+        fig.suptitle(f"Benchmark Overview{title_suffix}", fontsize=14, fontweight="bold", y=0.98)
+        return fig
+
+    jets = sorted(set(c.get("jet_type", "unknown") for c in configs))
+    media = sorted(set(c.get("medium", "unknown") for c in configs))
+    rads = sorted(set(c.get("radiation", "unknown") for c in configs))
+
+    medium_colors = {"ISM": "#3498DB", "wind": "#E74C3C", "unknown": "#95A5A6"}
+    jet_colors = plt.cm.Set2(np.linspace(0, 1, max(len(jets), 1)))
+
+    # Panel 1: Light curve time by jet type, grouped by medium
+    ax1 = fig.add_subplot(gs[0, 0])
+    x = np.arange(len(jets))
+    width = 0.8 / max(len(media), 1)
+
+    for i, medium in enumerate(media):
+        times = []
+        for jet in jets:
+            matching = [c for c in configs if c.get("jet_type") == jet and c.get("medium") == medium]
+            if matching:
+                avg_time = np.mean([get_flux_time(c) for c in matching])
+                times.append(avg_time)
+            else:
+                times.append(0)
+
+        offset = (i - len(media) / 2 + 0.5) * width
+        color = medium_colors.get(medium, f"C{i}")
+        bars = ax1.bar(x + offset, times, width * 0.9, label=medium, color=color, alpha=0.8)
+
+        for bar, t in zip(bars, times):
+            if t > 0:
+                ax1.text(bar.get_x() + bar.get_width() / 2, bar.get_height() + 0.5, f"{t:.0f}",
+                         ha="center", va="bottom", fontsize=7)
+
+    ax1.set_xticks(x)
+    ax1.set_xticklabels(jets, rotation=45, ha="right")
+    ax1.set_ylabel("Time [ms]")
+    ax1.set_title("Single-Freq LC Time by Jet")
+    ax1.legend(title="Medium", fontsize=8, loc="upper right")
+    ax1.grid(axis="y", alpha=0.3)
+
+    # Panel 2: Component breakdown, grouped by jet+medium combinations
+    ax2 = fig.add_subplot(gs[0, 1])
+    components_new = ["model_init_ms", "shock_electron_ms", "flux_single_ms", "flux_grid_ms"]
+    components_old = ["model_creation_ms", "details_ms", "flux_density_ms", "flux_grid_ms"]
+    comp_names = ["Model Init", "Shock+Elec", "Flux Calc", "Grid Calc"]
+    comp_colors = ["#3498DB", "#9B59B6", "#E74C3C", "#2ECC71"]
+
+    combinations = []
+    combo_labels = []
+    jet_short = get_unique_short_names(jets)
+
+    for jet in jets:
+        for medium in media:
+            matching = [c for c in configs if c.get("jet_type") == jet and c.get("medium") == medium]
+            if matching:
+                combinations.append((jet, medium, matching))
+                short_med = medium[0].upper()
+                combo_labels.append(f"{jet_short[jet]}/{short_med}")
+
+    if combinations:
+        x = np.arange(len(combinations))
+        width = 0.7
+        bottom = np.zeros(len(combinations))
+
+        for i, (comp_name, color) in enumerate(zip(comp_names, comp_colors)):
+            values = []
+            for jet, medium, matching in combinations:
+                avg = np.mean([c.get("timing", {}).get(components_new[i], 0) or
+                              c.get("timing", {}).get(components_old[i], 0) for c in matching])
+                values.append(avg)
+            ax2.bar(x, values, width, bottom=bottom, label=comp_name, color=color, alpha=0.8)
+            bottom += np.array(values)
+
+        ax2.set_xticks(x)
+        ax2.set_xticklabels(combo_labels, rotation=45, ha="right")
+        ax2.set_ylabel("Time [ms]")
+        ax2.set_title("Component Breakdown")
+        ax2.legend(fontsize=7, loc="upper right", ncol=2)
+        ax2.grid(axis="y", alpha=0.3)
+    else:
+        ax2.text(0.5, 0.5, "No data", ha="center", va="center", transform=ax2.transAxes)
+        ax2.set_title("Component Breakdown")
+
+    # Panel 3: Medium comparison, grouped by jet type
+    ax3 = fig.add_subplot(gs[1, 0])
+    x = np.arange(len(media))
+    n_jets = len(jets)
+    width = 0.8 / max(n_jets, 1)
+
+    for i, (jet, color) in enumerate(zip(jets, jet_colors)):
+        times = []
+        for medium in media:
+            matching = [c for c in configs if c.get("jet_type") == jet and c.get("medium") == medium]
+            if matching:
+                avg_time = np.mean([get_flux_time(c) for c in matching])
+                times.append(avg_time)
+            else:
+                times.append(0)
+
+        offset = (i - n_jets / 2 + 0.5) * width
+        bars = ax3.bar(x + offset, times, width * 0.9, label=jet_short.get(jet, jet), color=color, alpha=0.8)
+
+        if n_jets <= 4:
+            for bar, t in zip(bars, times):
+                if t > 0:
+                    ax3.text(bar.get_x() + bar.get_width() / 2, bar.get_height() + 0.5, f"{t:.0f}",
+                             ha="center", va="bottom", fontsize=7)
+
+    ax3.set_xticks(x)
+    ax3.set_xticklabels(media)
+    ax3.set_ylabel("Time [ms]")
+    ax3.set_title("Light Curve Time by Medium")
+    ax3.legend(title="Jet", fontsize=6, loc="upper right", ncol=2)
+    ax3.grid(axis="y", alpha=0.3)
+
+    # Panel 4: Radiation config comparison OR viewing angle comparison
+    ax4 = fig.add_subplot(gs[1, 1])
+
+    if len(rads) > 1:
+        rad_short = {r: (r[:10] + "..." if len(r) > 12 else r) for r in rads}
+        x = np.arange(len(rads))
+        n_jets = len(jets)
+        width = 0.8 / max(n_jets, 1)
+
+        for i, (jet, color) in enumerate(zip(jets, jet_colors)):
+            times = []
+            for rad in rads:
+                matching = [c for c in configs if c.get("jet_type") == jet and c.get("radiation") == rad]
+                if matching:
+                    avg_time = np.mean([get_flux_time(c) for c in matching])
+                    times.append(avg_time)
+                else:
+                    times.append(0)
+
+            offset = (i - n_jets / 2 + 0.5) * width
+            ax4.bar(x + offset, times, width * 0.9, label=jet_short.get(jet, jet), color=color, alpha=0.8)
+
+        ax4.set_xticks(x)
+        ax4.set_xticklabels([rad_short[r] for r in rads], rotation=45, ha="right")
+        ax4.set_ylabel("Time [ms]")
+        ax4.set_title("Light Curve Time by Radiation")
+        ax4.legend(title="Jet", fontsize=6, loc="upper right", ncol=2)
+    else:
+        ax4.set_title("ISM vs Wind Speed Ratio")
+        ratios = []
+        jet_names_for_ratio = []
+        for jet in jets:
+            ism_configs = [c for c in configs if c.get("jet_type") == jet and c.get("medium") == "ISM"]
+            wind_configs = [c for c in configs if c.get("jet_type") == jet and c.get("medium") == "wind"]
+
+            if ism_configs and wind_configs:
+                ism_time = np.mean([get_flux_time(c) for c in ism_configs])
+                wind_time = np.mean([get_flux_time(c) for c in wind_configs])
+                if ism_time > 0:
+                    ratios.append(wind_time / ism_time)
+                    jet_names_for_ratio.append(jet_short.get(jet, jet))
+
+        if ratios:
+            x = np.arange(len(ratios))
+            colors = [jet_colors[jets.index(j)] for j in jets if jet_short.get(j, j) in jet_names_for_ratio]
+            bars = ax4.bar(x, ratios, color=colors, alpha=0.8)
+            ax4.axhline(y=1.0, color="gray", linestyle="--", alpha=0.5)
+            ax4.set_xticks(x)
+            ax4.set_xticklabels(jet_names_for_ratio, rotation=45, ha="right")
+            ax4.set_ylabel("Wind / ISM Time Ratio")
+
+            for bar, r in zip(bars, ratios):
+                ax4.text(bar.get_x() + bar.get_width() / 2, bar.get_height() + 0.02, f"{r:.2f}",
+                         ha="center", va="bottom", fontsize=8)
+        else:
+            ax4.text(0.5, 0.5, "Insufficient data", ha="center", va="center", transform=ax4.transAxes)
+
+    ax4.grid(axis="y", alpha=0.3)
+    fig.suptitle(f"Benchmark Overview{title_suffix}", fontsize=12, fontweight="bold", y=0.96)
+    return fig
+
+
+def plot_single_model_convergence_page(config: Dict, model_id: int) -> plt.Figure:
+    """Create convergence page for a single model (4 rows x 3 cols: errors, times, light curves)."""
+    fig = plt.figure(figsize=(8.5, 11))
+    gs = GridSpec(4, 3, figure=fig, hspace=0.40, wspace=0.35, top=0.91, bottom=0.05, left=0.10, right=0.95)
+
+    jet_type = config.get("jet_type", "?")
+    medium = config.get("medium", "?")
+    radiation = config.get("radiation", "?")
+    theta_obs = config.get("theta_obs", 0)
+    theta_obs_ratio = config.get("theta_obs_ratio", theta_obs / 0.1 if theta_obs else 0)
+
+    dimensions = [
+        ("phi_convergence", "\u03c6 Resolution", "\u03c6 [ppd]"),
+        ("theta_convergence", "\u03b8 Resolution", "\u03b8 [ppd]"),
+        ("t_convergence", "t Resolution", "t [ppd]"),
+    ]
+
+    all_fiducial_max_errors = []
+    all_fiducial_mean_errors = []
+
+    def plot_error_row(row_idx, error_key, ylabel, threshold, collected_errors):
+        for col, (dim_key, title, xlabel) in enumerate(dimensions):
+            ax = fig.add_subplot(gs[row_idx, col])
+            has_any_data = False
+            all_valid_errors = []
+            fiducial_errors = []
+
+            conv = config.get(dim_key) or {}
+            vals = conv.get("values", [])
+            errors_by_band = conv.get(error_key, {}) or {}
+
+            dim_name = dim_key.replace("_convergence", "")
+            fiducial_val = FIDUCIAL_VALUES.get(dim_name, 0)
+            fiducial_idx = -1
+            if vals:
+                for i, v in enumerate(vals):
+                    if abs(v - fiducial_val) < 1e-9:
+                        fiducial_idx = i
+                        break
+
+            if vals:
+                for band_name, errors in errors_by_band.items():
+                    if not errors:
+                        continue
+                    color = BAND_COLORS.get(band_name, "gray")
+                    plot_errs = []
+                    for e in errors:
+                        if e is not None and np.isfinite(e):
+                            abs_e = abs(e)
+                            plot_errs.append(max(abs_e, 1e-10))
+                            if abs_e > 0:
+                                all_valid_errors.append(abs_e)
+                        else:
+                            plot_errs.append(np.nan)
+
+                    if fiducial_idx >= 0 and fiducial_idx < len(errors):
+                        fid_err = errors[fiducial_idx]
+                        if fid_err is not None and np.isfinite(fid_err):
+                            fiducial_errors.append(abs(fid_err))
+
+                    if any(np.isfinite(e) for e in plot_errs):
+                        has_any_data = True
+                        ax.semilogy(vals, plot_errs, marker="o", linestyle="-", color=color, markersize=3,
+                                    linewidth=1.0, alpha=0.8, label=band_name)
+                        if fiducial_idx >= 0 and fiducial_idx < len(plot_errs):
+                            fid_err = plot_errs[fiducial_idx]
+                            if np.isfinite(fid_err):
+                                ax.semilogy([fiducial_val], [fid_err], marker="*", color=color, markersize=8, zorder=10)
+
+            ax.set_xlabel(xlabel, fontsize=8)
+            ax.set_ylabel(ylabel, fontsize=8)
+            ax.set_title(title, fontsize=9)
+            ax.tick_params(labelsize=7)
+            ax.grid(True, alpha=0.3)
+            ax.axhline(threshold, color="black", linestyle="--", linewidth=1, alpha=0.7)
+
+            if has_any_data:
+                ax.legend(fontsize=6, loc="upper right")
+                if all_valid_errors:
+                    y_min = min(min(all_valid_errors), threshold * 0.1)
+                    y_max = max(max(all_valid_errors), threshold * 10)
+                    if y_max / max(y_min, 1e-10) < 100:
+                        y_center = np.sqrt(y_min * y_max)
+                        y_min = y_center / 10
+                        y_max = y_center * 10
+                    ax.set_ylim(y_min, y_max)
+
+                if fiducial_errors:
+                    max_fid_err = max(fiducial_errors)
+                    fid_color = "red" if max_fid_err > threshold else "green"
+                    ax.axhline(max_fid_err, color=fid_color, linestyle="-", linewidth=1.0, alpha=0.8)
+            else:
+                ax.set_ylim(threshold * 0.01, threshold * 100)
+                ax.text(0.5, 0.5, "No data", ha="center", va="center", transform=ax.transAxes, fontsize=9, color="gray")
+
+            collected_errors.extend(fiducial_errors)
+
+    plot_error_row(0, "errors_by_band", "Max Rel. Error", MAX_ERROR_THRESHOLD, all_fiducial_max_errors)
+    plot_error_row(1, "mean_errors_by_band", "Mean Rel. Error", MEAN_ERROR_THRESHOLD, all_fiducial_mean_errors)
+
+    # Row 3: CPU time
+    for col, (dim_key, title, xlabel) in enumerate(dimensions):
+        ax = fig.add_subplot(gs[2, col])
+        has_any_data = False
+
+        conv = config.get(dim_key) or {}
+        vals = conv.get("values", [])
+        times_by_band = conv.get("times_by_band", {}) or {}
+
+        dim_name = dim_key.replace("_convergence", "")
+        fiducial_val = FIDUCIAL_VALUES.get(dim_name, 0)
+        fiducial_idx = -1
+        if vals:
+            for i, v in enumerate(vals):
+                if abs(v - fiducial_val) < 1e-9:
+                    fiducial_idx = i
+                    break
+
+        if not times_by_band:
+            times = conv.get("times_ms", [])
+            if vals and times:
+                times_by_band = {"Optical": times}
+
+        if vals:
+            for band_name, times in times_by_band.items():
+                if not times:
+                    continue
+                color = BAND_COLORS.get(band_name, "gray")
+                valid_times = [t if (t is not None and np.isfinite(t)) else np.nan for t in times]
+                if any(np.isfinite(t) for t in valid_times):
+                    has_any_data = True
+                    ax.plot(vals, valid_times, linestyle="-", marker="o", color=color, alpha=0.8, linewidth=1.0,
+                            markersize=4, label=band_name)
+                    if fiducial_idx >= 0 and fiducial_idx < len(valid_times):
+                        fid_time = valid_times[fiducial_idx]
+                        if np.isfinite(fid_time):
+                            ax.plot([fiducial_val], [fid_time], marker="*", color=color, markersize=10, zorder=10)
+
+        ax.set_xlabel(xlabel, fontsize=8)
+        ax.set_ylabel("CPU Time [ms]", fontsize=8)
+        ax.set_title(title, fontsize=9)
+        ax.tick_params(labelsize=7)
+        ax.grid(True, alpha=0.3)
+
+        if has_any_data:
+            ax.legend(fontsize=6, loc="upper left")
+        else:
+            ax.text(0.5, 0.5, "No timing data", ha="center", va="center", transform=ax.transAxes, fontsize=9, color="gray")
+
+    # Row 4: Light curve panels
+    for col, (dim_key, title, xlabel) in enumerate(dimensions):
+        ax = fig.add_subplot(gs[3, col])
+        has_any_data = False
+
+        conv = config.get(dim_key) or {}
+        t_array = conv.get("t_array", [])
+        flux_by_band = conv.get("flux_by_band", {}) or {}
+        res_values = conv.get("values", [])
+        dim_name = dim_key.replace("_convergence", "")
+        fiducial_val = FIDUCIAL_VALUES.get(dim_name, 0)
+
+        if t_array and flux_by_band:
+            for band_name, fluxes_list in flux_by_band.items():
+                if not fluxes_list:
+                    continue
+                color = BAND_COLORS.get(band_name, "gray")
+
+                n_res = len(fluxes_list)
+                for i, flux in enumerate(fluxes_list):
+                    if not flux or len(flux) != len(t_array):
+                        continue
+                    has_any_data = True
+                    res_val = res_values[i] if i < len(res_values) else fiducial_val
+                    ls = ":" if res_val < fiducial_val else "-"
+                    label = band_name if i == n_res - 1 else None
+                    ax.loglog(t_array, flux, linestyle=ls, color=color, alpha=0.8, linewidth=0.8, label=label)
+
+        ax.set_xlabel("Time [s]", fontsize=8)
+        ax.set_ylabel("Flux [erg/cm\u00b2/s/Hz]", fontsize=8)
+        ax.set_title(f"Light Curves ({title.split()[0]})", fontsize=9)
+        ax.tick_params(labelsize=7)
+        ax.grid(True, alpha=0.3)
+
+        if has_any_data:
+            ax.legend(fontsize=6, loc="upper right")
+        else:
+            ax.text(0.5, 0.5, "No light curve data", ha="center", va="center", transform=ax.transAxes,
+                    fontsize=9, color="gray")
+
+    # Determine pass/fail status
+    worst_max_err = max(all_fiducial_max_errors) if all_fiducial_max_errors else 0
+    worst_mean_err = max(all_fiducial_mean_errors) if all_fiducial_mean_errors else 0
+
+    if worst_mean_err < MEAN_ERROR_THRESHOLD and worst_max_err < MAX_ERROR_THRESHOLD:
+        status_text, status_color = "PASS", "green"
+    elif worst_mean_err < MEAN_ERROR_THRESHOLD and worst_max_err >= MAX_ERROR_THRESHOLD:
+        status_text, status_color = "ACCEPTABLE", "blue"
+    else:
+        status_text, status_color = "FAIL", "red"
+
+    model_info = f"#{model_id}: {jet_type} / {medium} / {radiation} / \u03b8_v/\u03b8_c={theta_obs_ratio:.1f}"
+    fig.text(0.08, 0.97, f"[{status_text}]", ha="left", fontsize=11, fontweight="bold", color=status_color)
+    fig.text(0.5, 0.97, model_info, ha="center", fontsize=10, fontweight="bold")
+
+    return fig
+
+
+def plot_convergence_summary(session: Dict) -> Tuple[plt.Figure, Dict[str, int], List[Dict]]:
+    """Create convergence pass/fail grid. Returns (fig, model_id_map, models_list)."""
+    configs = session.get("configs", session.get("results", []))
+
+    if not configs:
+        fig = plt.figure(figsize=(8.5, 11))
+        fig.text(0.5, 0.5, "No convergence data", ha="center", va="center", fontsize=16, color="gray")
+        return fig, {}, []
+
+    models = []
+    for config in configs:
+        jet = config.get("jet_type", "?")
+        medium = config.get("medium", "?")
+        radiation = config.get("radiation", "?")
+        theta_obs = config.get("theta_obs", 0)
+        theta_obs_ratio = config.get("theta_obs_ratio", theta_obs / 0.1 if theta_obs else 0)
+
+        dim_results = {}
+        max_errors = {}
+        mean_errors = {}
+
+        for dim_key in ["phi_convergence", "theta_convergence", "t_convergence"]:
+            conv = config.get(dim_key) or {}
+            errors_by_band = conv.get("errors_by_band", {})
+            mean_errors_by_band = conv.get("mean_errors_by_band", {})
+            tested_values = conv.get("values", [])
+
+            dim_name = dim_key.replace("_convergence", "")
+            fiducial_value = FIDUCIAL_VALUES.get(dim_name, 0)
+            fiducial_idx = find_fiducial_index(tested_values, fiducial_value)
+
+            dim_max_error = 0.0
+            dim_mean_error = 0.0
+            for _, errors in errors_by_band.items():
+                if errors and fiducial_idx >= 0 and fiducial_idx < len(errors):
+                    fiducial_err = errors[fiducial_idx]
+                    if fiducial_err is not None and np.isfinite(fiducial_err):
+                        dim_max_error = max(dim_max_error, abs(fiducial_err))
+            for _, errors in mean_errors_by_band.items():
+                if errors and fiducial_idx >= 0 and fiducial_idx < len(errors):
+                    fiducial_err = errors[fiducial_idx]
+                    if fiducial_err is not None and np.isfinite(fiducial_err):
+                        dim_mean_error = max(dim_mean_error, abs(fiducial_err))
+
+            max_errors[dim_name] = dim_max_error
+            mean_errors[dim_name] = dim_mean_error
+
+        worst_max_err = max(max_errors.values()) if max_errors else 0
+        worst_mean_err = max(mean_errors.values()) if mean_errors else 0
+
+        if worst_mean_err < MEAN_ERROR_THRESHOLD and worst_max_err < MAX_ERROR_THRESHOLD:
+            status = "PASS"
+        elif worst_mean_err < MEAN_ERROR_THRESHOLD and worst_max_err >= MAX_ERROR_THRESHOLD:
+            status = "ACCEPTABLE"
+        else:
+            status = "FAIL"
+
+        has_data = any(config.get(k) for k in ["phi_convergence", "theta_convergence", "t_convergence"])
+
+        models.append({
+            "jet": jet, "medium": medium, "radiation": radiation, "theta_obs": theta_obs,
+            "theta_obs_ratio": theta_obs_ratio, "status": status, "has_data": has_data,
+            "dim_results": dim_results, "max_errors": max_errors, "mean_errors": mean_errors, "config": config,
+        })
+
+    model_id_map = {}
+    for i, model in enumerate(models):
+        model["id"] = i + 1
+        key = f"{model['jet']}_{model['medium']}_{model['radiation']}_{model['theta_obs_ratio']:.1f}"
+        model_id_map[key] = model["id"]
+
+    fig = plt.figure(figsize=(8.5, 11))
+    n_models = len(models)
+
+    if n_models <= 12:
+        n_cols = 4
+    elif n_models <= 24:
+        n_cols = 6
+    elif n_models <= 48:
+        n_cols = 8
+    else:
+        n_cols = 10
+
+    n_rows = (n_models + n_cols - 1) // n_cols
+
+    grid_top = 0.88
+    grid_bottom = 0.08
+    grid_height = grid_top - grid_bottom
+    cell_height = grid_height / max(n_rows, 1)
+    cell_width = 0.90 / n_cols
+    x_start = 0.05
+
+    for i, model in enumerate(models):
+        row = i // n_cols
+        col = i % n_cols
+        x = x_start + col * cell_width
+        y = grid_top - (row + 1) * cell_height
+
+        if not model["has_data"]:
+            color, text_color = "#CCCCCC", "black"
+        elif model["status"] == "PASS":
+            color, text_color = "#90EE90", "darkgreen"
+        elif model["status"] == "ACCEPTABLE":
+            color, text_color = "#ADD8E6", "darkblue"
+        else:
+            color, text_color = "#FFB6C1", "darkred"
+
+        rect = plt.Rectangle((x, y), cell_width * 0.95, cell_height * 0.9, facecolor=color, edgecolor="white",
+                              linewidth=1.5, transform=fig.transFigure, clip_on=False)
+        fig.add_artist(rect)
+
+        fig.text(x + cell_width * 0.475, y + cell_height * 0.70, f"#{model['id']}", ha="center", va="center",
+                 fontsize=9, fontweight="bold", color=text_color)
+
+        theta_ratio = model.get("theta_obs_ratio", 0)
+        fig.text(x + cell_width * 0.475, y + cell_height * 0.45,
+                 f"{model['jet'][:5]}/{model['medium'][:3]}/\u03b8{theta_ratio:.0f}",
+                 ha="center", va="center", fontsize=6, color=text_color)
+
+        max_err = max(model["max_errors"].values()) if model["max_errors"] else 0
+        err_str = f"\u03b5={max_err:.1e}" if max_err > 0 else "no data"
+        fig.text(x + cell_width * 0.475, y + cell_height * 0.22, err_str, ha="center", va="center",
+                 fontsize=6, color=text_color)
+
+    n_pass = sum(1 for m in models if m["status"] == "PASS" and m["has_data"])
+    n_acceptable = sum(1 for m in models if m["status"] == "ACCEPTABLE" and m["has_data"])
+    n_fail = sum(1 for m in models if m["status"] == "FAIL" and m["has_data"])
+    n_no_data = sum(1 for m in models if not m["has_data"])
+
+    summary = f"Pass: {n_pass}  |  Acceptable: {n_acceptable}  |  Fail: {n_fail}  |  No Data: {n_no_data}"
+    fig.text(0.5, 0.93, summary, ha="center", fontsize=10, color="#333333")
+    fig.text(0.5, 0.97, "Resolution Convergence Summary", ha="center", fontsize=12, fontweight="bold")
+
+    return fig, model_id_map, models
+
+
+def _init_plot_worker():
+    matplotlib.use("Agg")
+    setup_plot_style()
+
+
+def _generate_convergence_page_worker(args: Tuple) -> Tuple[int, Optional[str], bool, str]:
+    model_idx, model_info, temp_dir = args
+
+    try:
+        config = model_info["config"]
+        model_id = model_info["id"]
+        jet = config.get("jet_type", "?")
+        medium = config.get("medium", "?")
+        desc = f"#{model_id} {jet}/{medium}"
+
+        has_conv = any(config.get(k) for k in ["phi_convergence", "theta_convergence", "t_convergence"])
+        if not has_conv:
+            return (model_idx, None, True, desc)
+
+        fig = plot_single_model_convergence_page(config, model_id)
+        temp_file = os.path.join(temp_dir, f"conv_page_{model_idx:04d}.pdf")
+        fig.savefig(temp_file, format="pdf")
+        plt.close(fig)
+
+        return (model_idx, temp_file, True, desc)
+
+    except Exception as e:
+        jet = model_info.get("config", {}).get("jet_type", "?")
+        medium = model_info.get("config", {}).get("medium", "?")
+        return (model_idx, None, False, f"#{model_info.get('id', '?')} {jet}/{medium} - Error: {e}")
+
+
+def generate_convergence_pages(pdf, models_list: List[Dict], n_workers: int = 0) -> List[Dict]:
+    pending_pdf_merges = []
+    n_models = len(models_list)
+
+    if n_workers > 0 and n_models > 1:
+        print(f"  - Per-model convergence pages ({n_models} models, {n_workers} workers)")
+
+        with tempfile.TemporaryDirectory() as temp_dir:
+            worker_args = [(i, model_info, temp_dir) for i, model_info in enumerate(models_list)]
+
+            temp_files = {}
+            completed = 0
+            with mp.Pool(n_workers, initializer=_init_plot_worker) as pool:
+                for result in pool.imap_unordered(_generate_convergence_page_worker, worker_args):
+                    completed += 1
+                    model_idx, temp_file, success, desc = result
+                    if success and temp_file:
+                        temp_files[model_idx] = temp_file
+                    print(f"    [{completed}/{n_models}] {desc}" + (" FAILED" if not success else ""))
+
+            import shutil
+            persistent_temp_dir = tempfile.mkdtemp(prefix="convergence_pages_")
+            convergence_pdf_files = []
+            for i in sorted(temp_files.keys()):
+                src = temp_files[i]
+                dst = os.path.join(persistent_temp_dir, f"page_{i:04d}.pdf")
+                shutil.copy2(src, dst)
+                convergence_pdf_files.append(dst)
+            pending_pdf_merges.append({"files": convergence_pdf_files, "temp_dir": persistent_temp_dir})
+    else:
+        print(f"  - Per-model convergence pages ({n_models} models)")
+        for i, model_info in enumerate(models_list):
+            config = model_info["config"]
+            model_id = model_info["id"]
+            has_conv = any(config.get(k) for k in ["phi_convergence", "theta_convergence", "t_convergence"])
+            if has_conv:
+                jet = config.get("jet_type", "?")
+                medium = config.get("medium", "?")
+                print(f"    [{i+1}/{n_models}] #{model_id} {jet}/{medium}")
+                fig = plot_single_model_convergence_page(config, model_id)
+                pdf.savefig(fig)
+                plt.close(fig)
+
+    return pending_pdf_merges

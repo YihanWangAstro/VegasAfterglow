@@ -34,6 +34,7 @@
     - [Light Curve \& Spectrum Calculation](#light-curve--spectrum-calculation)
     - [Internal Quantities Evolution](#internal-quantities-evolution)
     - [MCMC Parameter Fitting](#mcmc-parameter-fitting)
+  - [Validation \& Testing](#validation--testing)
   - [Documentation](#documentation)
   - [Contributing](#contributing)
   - [License](#license)
@@ -873,6 +874,64 @@ plot_corner(flat_chain, result.latex_labels)
 
 ---
 
+## Validation & Testing
+
+VegasAfterglow includes a comprehensive validation framework to ensure numerical accuracy and physical correctness. The validation suite consists of two main components:
+
+<details>
+<summary><b>Benchmark Tests</b> <i>(click to expand/collapse)</i></summary>
+<br>
+
+Benchmark tests measure computational performance and verify numerical convergence across resolution parameters:
+
+- **Performance Timing**: Measures execution time for various jet/medium/radiation configurations
+- **Resolution Convergence**: Tests convergence in phi (azimuthal), theta (polar), and time dimensions
+- **Pass Criteria**: Mean error < 5% and max error < 10% at fiducial resolution
+
+</details>
+
+<details>
+<summary><b>Regression Tests</b> <i>(click to expand/collapse)</i></summary>
+<br>
+
+Regression tests verify that simulation outputs match theoretical predictions from GRB afterglow theory:
+
+- **Shock Dynamics**: Validates power-law scaling of Lorentz factor, radius, magnetic field, and particle number
+- **Characteristic Frequencies**: Verifies evolution of injection (nu_m) and cooling (nu_c) frequencies
+- **Spectral Shapes**: Checks power-law indices across different frequency regimes (I-V)
+- **Evolutionary Phases**: Tests coasting, Blandford-McKee, and Sedov-Taylor phases for ISM and wind media
+
+</details>
+
+<details>
+<summary><b>Running Validation</b> <i>(click to expand/collapse)</i></summary>
+<br>
+
+**Prerequisite:** Install the package first (see [Installation](#installation)).
+
+```bash
+# Run full validation suite (benchmark + regression + PDF report)
+python validation/run_validation.py --all
+
+# Run only benchmark tests
+python validation/run_validation.py --benchmark
+
+# Run only regression tests
+python validation/run_validation.py --regression
+
+# Check existing results without re-running tests
+python validation/run_validation.py --check-only
+
+# Quick validation (reduced test matrix)
+python validation/run_validation.py --all --quick
+```
+
+The validation runner generates a comprehensive PDF report at `output/comprehensive_report.pdf` with convergence plots, summary grids, and detailed diagnostics.
+
+</details>
+
+---
+
 ## Documentation
 
 Comprehensive documentation is available at **[Documentation](https://yihanwangastro.github.io/VegasAfterglow/docs/index.html)** including:
@@ -882,9 +941,9 @@ Comprehensive documentation is available at **[Documentation](https://yihanwanga
 - **Examples**: Practical examples showing common use cases
 - **MCMC Fitting**: Complete guide to Bayesian parameter estimation with bilby integration
 - **Parameter Reference**: Comprehensive reference for all physical and numerical parameters
+- **Validation & Testing**: Benchmark and regression test framework for verifying numerical accuracy
 - **Python API Reference**: Complete documentation of the Python interface
 - **C++ API Reference**: Detailed documentation of C++ classes and functions
-- **Physics Background**: Overview of the underlying physical models
 - **Troubleshooting**: Common issues and solutions
 - **Contributing Guide**: Information for developers who wish to contribute
 
@@ -946,15 +1005,24 @@ If you find VegasAfterglow useful in your research, we would be grateful if you 
 **Wang, Y., Chen, C., & Zhang, B. (2026).** VegasAfterglow: A high-performance framework for gamma-ray burst afterglows. *Journal of High Energy Astrophysics*, 50, 100490. [ADS](https://ui.adsabs.harvard.edu/abs/2026JHEAp..5000490W/abstract)
 
 ```bibtex
-@article{Wang2026,
-  author  = {Wang, Yihan and Chen, Connery and Zhang, Bing},
-  title   = {{VegasAfterglow: A high-performance framework for gamma-ray burst afterglows}},
-  journal = {Journal of High Energy Astrophysics},
-  year    = {2026},
-  volume  = {50},
-  pages   = {100490},
-  doi     = {10.1016/j.jheap.2025.100490}
+@ARTICLE{2026JHEAp..5000490W,
+       author = {{Wang}, Yihan and {Chen}, Connery and {Zhang}, Bing},
+        title = "{VegasAfterglow: A high-performance framework for gamma-ray burst afterglows}",
+      journal = {Journal of High Energy Astrophysics},
+     keywords = {Gamma-ray bursts, Shocks, Relativistic jets, Computational methods, Open source software, High Energy Astrophysical Phenomena},
+         year = 2026,
+        month = feb,
+       volume = {50},
+          eid = {100490},
+        pages = {100490},
+          doi = {10.1016/j.jheap.2025.100490},
+archivePrefix = {arXiv},
+       eprint = {2507.10829},
+ primaryClass = {astro-ph.HE},
+       adsurl = {https://ui.adsabs.harvard.edu/abs/2026JHEAp..5000490W},
+      adsnote = {Provided by the SAO/NASA Astrophysics Data System}
 }
+
 ```
 
 **Zhang, B. (2018).** The Physics of Gamma-Ray Bursts. Cambridge University Press. [ADS](https://ui.adsabs.harvard.edu/abs/2018pgrb.book.....Z/abstract)

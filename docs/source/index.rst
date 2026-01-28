@@ -36,6 +36,7 @@ Key Features
    examples
    mcmc_fitting
    parameter_reference
+   validation
    python_api
    cpp_api
    troubleshooting

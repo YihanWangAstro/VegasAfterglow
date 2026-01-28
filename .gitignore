@@ -17,9 +17,11 @@ projects/
 build/
 .vscode/
 .idea/
+.cache/
 .DS_Store
 vegasglow.so.dSYM/
 !CMakeLists.txt
+legacy/
 
 docs/build/
 docs/doxygen/
