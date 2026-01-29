@@ -14,7 +14,6 @@
 #include "../include/afterglow.h"
 #include "pybind.h"
 #include "util/macros.h"
-#include "util/profiler.h"
 
 /**
  * <!-- ************************************************************************************** -->

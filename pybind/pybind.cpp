@@ -8,7 +8,6 @@
 #define FORCE_IMPORT_ARRAY // numpy C api loading must before any xtensor-python headers
 #include "pybind.h"
 
-#include "mcmc.h"
 #include "pymodel.h"
 
 PYBIND11_MODULE(VegasAfterglowC, m) {
@@ -349,51 +348,4 @@ PYBIND11_MODULE(VegasAfterglowC, m) {
                 }
                 return data;
             }));
-
-    // ParamDef bindings
-    py::class_<ParamDef>(m, "ParamDef")
-        .def(py::init<>())
-        .def_readwrite("name", &ParamDef::name)
-        .def_readwrite("lower", &ParamDef::lower)
-        .def_readwrite("upper", &ParamDef::upper)
-        .def_readwrite("scale", &ParamDef::scale)
-        .def_readwrite("initial", &ParamDef::initial);
-
-    // ParamTransformer bindings
-    py::class_<ParamTransformer>(m, "ParamTransformer")
-        .def(py::init<std::vector<ParamDef> const&>(), py::arg("param_defs"))
-        .def("__call__", &ParamTransformer::operator(), py::arg("x"))
-        .def("ndim", &ParamTransformer::ndim)
-        .def_readwrite("sampled_indices", &ParamTransformer::sampled_indices_)
-        .def_readwrite("log_mask", &ParamTransformer::log_mask_)
-        .def_readwrite("fixed_indices", &ParamTransformer::fixed_indices_)
-        .def_readwrite("fixed_values", &ParamTransformer::fixed_values_)
-        .def(py::pickle(
-            [](ParamTransformer const& t) { // __getstate__
-                return py::make_tuple(t.sampled_indices_, t.log_mask_, t.fixed_indices_, t.fixed_values_);
-            },
-            [](py::tuple t) { // __setstate__
-                if (t.size() != 4)
-                    throw std::runtime_error("Invalid state for ParamTransformer");
-                return ParamTransformer(t[0].cast<std::vector<int>>(), t[1].cast<std::vector<bool>>(),
-                                        t[2].cast<std::vector<int>>(), t[3].cast<std::vector<double>>());
-            }));
-
-    // MultiBandModel bindings
-    py::class_<MultiBandModel>(m, "VegasMC")
-        .def(py::init<MultiBandData const&>(), py::arg("obs_data"))
-
-        .def("set", &MultiBandModel::configure, py::arg("param"))
-
-        .def("batch_estimate_chi2", &MultiBandModel::batch_estimate_chi2, py::arg("samples"), py::arg("transformer"),
-             py::call_guard<py::gil_scoped_release>())
-
-        .def("flux_density_grid", &MultiBandModel::flux_density_grid, py::arg("param"), py::arg("t"), py::arg("nu"),
-             py::call_guard<py::gil_scoped_release>())
-
-        .def("flux", &MultiBandModel::flux, py::arg("param"), py::arg("t"), py::arg("nu_min"), py::arg("nu_max"),
-             py::arg("num_points"), py::call_guard<py::gil_scoped_release>());
-
-    // Utility function for parameter name to index mapping
-    m.def("param_name_to_index", &param_name_to_index, py::arg("name"));
 }
