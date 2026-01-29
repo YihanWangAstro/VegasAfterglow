@@ -118,6 +118,7 @@ The ``ObsData`` class handles multi-wavelength observational data:
 .. code-block:: python
 
     import numpy as np
+    import pandas as pd
     from VegasAfterglow import ObsData, Setups, Fitter, ParamDef, Scale
 
     # Create data container
@@ -133,7 +134,7 @@ The ``ObsData`` class handles multi-wavelength observational data:
                          f_nu=flux_data, err=flux_err)  # All quantities in CGS units
 
     # Optional: Add weights for systematic uncertainties, normalization handled internally
-    weights = np.ones(len(t_data))  # Equal weights
+    weights = np.ones_like(t_data)  # Equal weights
     data.add_flux_density(nu=2.4e17, t=t_data,
                          f_nu=flux_data, err=flux_err,
                          weights=weights)  # All quantities in CGS units
@@ -154,18 +155,18 @@ The ``ObsData`` class handles multi-wavelength observational data:
     lc_files = ["data/xray.csv", "data/optical.csv", "data/nir.csv"]
 
     for nu, fname in zip(bands, lc_files):
-        t_data, Fv_obs, Fv_err = np.loadtxt(fname, delimiter=',', skiprows=1, unpack=True)
-        data.add_flux_density(nu=nu, t=t_data,
-                             f_nu=Fv_obs, err=Fv_err)  # All quantities in CGS units
+        df = pd.read_csv(fname)
+        data.add_flux_density(nu=nu, t=df["t"],
+                             f_nu=df["Fv_obs"], err=df["Fv_err"])  # All quantities in CGS units
 
     # Add spectra at specific times
     spec_times = [1000, 10000]  # seconds
     spec_files = ["data/spec_1000s.csv", "data/spec_10000s.csv"]
 
     for t, fname in zip(spec_times, spec_files):
-        nu_data, Fv_obs, Fv_err = np.loadtxt(fname, delimiter=',', skiprows=1, unpack=True)
-        data.add_spectrum(t=t, nu=nu_data,
-                          f_nu=Fv_obs, err=Fv_err)  # All quantities in CGS units
+        df = pd.read_csv(fname)
+        data.add_spectrum(t=t, nu=df["nu"],
+                          f_nu=df["Fv_obs"], err=df["Fv_err"])  # All quantities in CGS units
 
 Data Selection and Optimization
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^

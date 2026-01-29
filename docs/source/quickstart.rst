@@ -480,6 +480,7 @@ First, let's import the necessary modules:
 .. code-block:: python
 
     import numpy as np
+    import pandas as pd
     import matplotlib.pyplot as plt
     import corner
     from VegasAfterglow import ObsData, Setups, Fitter, ParamDef, Scale
@@ -502,7 +503,7 @@ VegasAfterglow provides flexible options for loading observational data through 
     flux_err = [1e-28, 8e-28, 5e-28, 3e-28, 2e-28]  # Specific flux error in erg/cm²/s/Hz
     data.add_flux_density(nu=4.84e14, t=t_data, f_nu=flux_data, err=flux_err)  # All quantities in CGS units
     # You can also assign weights to each data point to account for systematic uncertainties or correlations. You don't need to worry about the weights' normalization, the code will normalize them automatically.
-    #data.add_flux_density(nu=4.84e14, t=t_data, f_nu=flux_data, err=flux_err, weights=np.ones(len(t_data)))
+    #data.add_flux_density(nu=4.84e14, t=t_data, f_nu=flux_data, err=flux_err, weights=np.ones_like(t_data))
 
     # For spectra
     nu_data = [...]  # Frequencies in Hz
@@ -520,16 +521,16 @@ VegasAfterglow provides flexible options for loading observational data through 
 
     # Load light curves from files
     for nu, fname in zip(bands, lc_files):
-        t_data, Fv_obs, Fv_err = np.loadtxt(fname, delimiter=',', skiprows=1, unpack=True)
-        data.add_flux_density(nu=nu, t=t_data, f_nu=Fv_obs, err=Fv_err)  # All quantities in CGS units
+        df = pd.read_csv(fname)
+        data.add_flux_density(nu=nu, t=df["t"], f_nu=df["Fv_obs"], err=df["Fv_err"])  # All quantities in CGS units
 
     times = [3000] # Example: time in seconds
     spec_files = ["data/ep-spec.csv"]
 
     # Load spectra from files
     for t, fname in zip(times, spec_files):
-        nu_data, Fv_obs, Fv_err = np.loadtxt(fname, delimiter=',', skiprows=1, unpack=True)
-        data.add_spectrum(t=t, nu=nu_data, f_nu=Fv_obs, err=Fv_err)  # All quantities in CGS units
+        df = pd.read_csv(fname)
+        data.add_spectrum(t=t, nu=df["nu"], f_nu=df["Fv_obs"], err=df["Fv_err"])  # All quantities in CGS units
 
 .. note::
    The ``ObsData`` interface is designed to be flexible. You can mix and match different data sources, and add multiple light curves at different frequencies as well as multiple spectra at different times.
@@ -676,15 +677,15 @@ Now you can plot the best-fit model:
         colors = ['blue', 'orange', 'green']
 
         for i in range(len(lc_files)):
-            t_d, Fv_d, Fe_d = np.loadtxt(lc_files[i], delimiter=',', skiprows=1, unpack=True)
-            ax1.errorbar(t_d, Fv_d * shifts[i], Fe_d * shifts[i],
+            df = pd.read_csv(lc_files[i])
+            ax1.errorbar(df["t"], df["Fv_obs"] * shifts[i], df["Fv_err"] * shifts[i],
                         fmt='o', color=colors[i], label=lc_files[i])
             ax1.plot(t, np.array(lc_fit[i]) * shifts[i], color=colors[i], lw=1)
 
         # Plot spectra
         for i in range(len(spec_files)):
-            nu_d, Fv_d, Fe_d = np.loadtxt(spec_files[i], delimiter=',', skiprows=1, unpack=True)
-            ax2.errorbar(nu_d, Fv_d * shifts[i], Fe_d * shifts[i],
+            df = pd.read_csv(spec_files[i])
+            ax2.errorbar(df["nu"], df["Fv_obs"] * shifts[i], df["Fv_err"] * shifts[i],
                         fmt='o', color=colors[i], label=spec_files[i])
             ax2.plot(nu, np.array(spec_fit[0]) * shifts[i], color=colors[i], lw=1)
 
