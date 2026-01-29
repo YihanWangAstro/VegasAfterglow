@@ -207,7 +207,7 @@ Read the detailed sections below for more information.
 
 ---
 
-We provide basic example scripts (`script/quick.ipynb`, `script/details.ipynb` and `script/mcmc.ipynb`) that demonstrate how to set up and run afterglow simulations. This section shows how to calculate light curves and spectra for a simple GRB afterglow model without the need for observational data and perform MCMC parameter fitting with observational data. The notebook can be run using either Jupyter Notebook or VSCode with the Jupyter extension.
+We provide basic example scripts (`script/quick.ipynb`, `script/details.ipynb` and `script/vegas-mcmc.ipynb`) that demonstrate how to set up and run afterglow simulations. This section shows how to calculate light curves and spectra for a simple GRB afterglow model without the need for observational data and perform MCMC parameter fitting with observational data. The notebook can be run using either Jupyter Notebook or VSCode with the Jupyter extension.
 
 To avoid conflicts when updating the repository in the future, make a copy of the example notebook in the same directory and work with the copy instead of the original.
 
