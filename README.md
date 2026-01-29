@@ -30,7 +30,6 @@
 ## Table of Contents
 
 - [VegasAfterglow](#vegasafterglow)
-    - [Ecosystem \& Integration](#ecosystem--integration)
   - [Table of Contents](#table-of-contents)
   - [Features](#features)
   - [Performance Highlights](#performance-highlights)
