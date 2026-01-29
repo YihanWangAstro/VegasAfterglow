@@ -12,7 +12,7 @@ build-backend = "scikit_build_core.build"
 [project]
 name = "VegasAfterglow"
 dynamic = ["version"]
-description = "MCMC tools for astrophysics"
+description = "Fast C++ afterglow physics library with Python bindings"
 readme = "README.md"
 authors = [
   {name = "Yihan Wang", email = "yihan.astro@gmail.com"}
@@ -20,22 +20,12 @@ authors = [
 requires-python = ">=3.8"
 dependencies = [
   "numpy>=1.20",
-  "scipy>=1.6",
-  "pandas>=1.2",
-  "bilby>=2.7",
-  "emcee>=3.0",
-  "dynesty>=2.0",
-  "corner>=2.2.1",
-  "tqdm>=4.0",
-  "matplotlib>=3.5",
 ]
 license = {text = "BSD-3-Clause"}
 
 [project.optional-dependencies]
 test = [
-  "pypdf>=4.0",
-  "reportlab>=4.0",
-  "Pillow>=10.0",
+  "pytest>=7.0",
 ]
 
 [tool.scikit-build]
@@ -66,5 +56,5 @@ include = [
 ]
 
 [tool.cibuildwheel]
-test-command = "python -c \"from VegasAfterglow import ObsData, Setups, Fitter, ParamDef, Scale; print('OK')\""
+test-command = "python -c \"from VegasAfterglow import Model, ISM, TophatJet, Observer, Radiation; print('OK')\""
 build-verbosity = 0
