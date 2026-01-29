@@ -19,7 +19,7 @@
 <b>VegasAfterglow</b> is a high-performance C++ framework with a user-friendly Python interface designed for the comprehensive modeling of Gamma-Ray Burst (GRB) afterglows. It achieves exceptional computational efficiency, enabling the generation of multi-wavelength light curves in milliseconds and facilitating robust Markov Chain Monte Carlo (MCMC) parameter inference. The framework incorporates advanced models for shock dynamics (both forward and reverse shocks), diverse radiation mechanisms (synchrotron with self-absorption, and inverse Compton scattering with Klein-Nishina corrections), and complex structured jet configurations.
 </p>
 
-### Ecosystem & Integration
+<h3 align="center">Ecosystem & Integration</h3>
 
 * **Advanced Inference:** While VegasAfterglow includes a standalone fitter, its models are also integrated into [**Redback**](https://github.com/nikhil-sarin/redback) for more advanced Bayesian inference, model comparison, and multi-messenger analysis.
 * **Community Tools:** We also recommend checking out [**PyFRS**](https://github.com/leiwh/PyFRS), [**Jetsimpy**](https://github.com/haowang-astro/jetsimpy), [**ASGARD**](https://github.com/mikuru1096/ASGARD_GRBAfterglow) as tool for afterglow modeling.
