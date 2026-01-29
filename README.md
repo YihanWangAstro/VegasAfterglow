@@ -15,7 +15,7 @@
 **[Latest Release Notes](CHANGELOG.md#v030---2025-09-06)** | **[Full Changelog](CHANGELOG.md)** | **[Install Now](#installation)**
 </div>
 
-**VegasAfterglow** is a high-performance C++ framework with a user-friendly Python interface designed for the comprehensive modeling of afterglows. It achieves exceptional computational efficiency, enabling the generation of multi-wavelength light curves in milliseconds and facilitating robust Markov Chain Monte Carlo (MCMC) parameter inference in seconds to minutes. The framework incorporates advanced models for shock dynamics (both forward and reverse shocks), diverse radiation mechanisms (synchrotron with self-absorption, and inverse Compton scattering with Klein-Nishina corrections), and complex structured jet configurations. For lightweight afterglow modeling, one can also consider the [PyFRS](https://github.com/leiwh/PyFRS) package.
+**VegasAfterglow** is a high-performance C++ physics library with Python bindings designed for the comprehensive modeling of GRB afterglows. It achieves exceptional computational efficiency, enabling the generation of multi-wavelength light curves in milliseconds. The framework incorporates advanced models for shock dynamics (both forward and reverse shocks), diverse radiation mechanisms (synchrotron with self-absorption, and inverse Compton scattering with Klein-Nishina corrections), and complex structured jet configurations. For parameter estimation and Bayesian inference, VegasAfterglow models are integrated into [**redback**](https://github.com/nikhil-sarin/redback). For lightweight afterglow modeling, one can also consider the [PyFRS](https://github.com/leiwh/PyFRS) package.
 <br clear="left"/>
 
 ---
@@ -33,7 +33,7 @@
     - [Quick Start](#quick-start)
     - [Light Curve \& Spectrum Calculation](#light-curve--spectrum-calculation)
     - [Internal Quantities Evolution](#internal-quantities-evolution)
-    - [MCMC Parameter Fitting](#mcmc-parameter-fitting)
+    - [Parameter Fitting with Redback](#parameter-fitting-with-redback)
   - [Validation \& Testing](#validation--testing)
   - [Documentation](#documentation)
   - [Contributing](#contributing)
@@ -86,7 +86,7 @@
 
 <img align="left" src="https://github.com/YihanWangAstro/VegasAfterglow/raw/main/assets/convergence_plot.png" width="450"/>
 
-VegasAfterglow delivers exceptional computational performance through deep optimization of its core algorithms. A 100-point single-frequency light curve (forward shock and synchrotron emission only) for a structured jet viewed off-axis can be generated in approximately 1 millisecond on a single core of an Apple M2 chip. This performance is achieved through optimized algorithmic design and cache-efficient memory access patterns, enabling comprehensive Bayesian inference on standard laptop hardware in minutes rather than hours or days. The resulting acceleration allows rapid iteration over different physical models and makes VegasAfterglow well suited for both detailed analyses of individual GRB events and large-scale population studies.
+VegasAfterglow delivers exceptional computational performance through deep optimization of its core algorithms. A 100-point single-frequency light curve (forward shock and synchrotron emission only) for a structured jet viewed off-axis can be generated in approximately 1 millisecond on a single core of an Apple M2 chip. This performance is achieved through optimized algorithmic design and cache-efficient memory access patterns, enabling comprehensive Bayesian inference via [redback](https://github.com/nikhil-sarin/redback) on standard laptop hardware in minutes rather than hours or days. The resulting acceleration allows rapid iteration over different physical models and makes VegasAfterglow well suited for both detailed analyses of individual GRB events and large-scale population studies.
 
 <br clear="left"/>
 
@@ -603,274 +603,51 @@ plt.savefig('EAT.png', dpi=300,bbox_inches='tight')
 </details>
 
 
-### MCMC Parameter Fitting
+### Parameter Fitting with Redback
 
-We provide some example data files in the `data` folder. Remember to keep your copy in the same directory as the original to ensure all data paths work correctly.
+VegasAfterglow is a **pure physics library** focused on fast afterglow calculations. For parameter estimation and Bayesian inference, VegasAfterglow models are integrated into [**redback**](https://github.com/nikhil-sarin/redback), which provides a unified interface for fitting all transient types.
 
-<details>
-<summary><b>1. Preparing Data and Configuring the Model</b> <i>(click to expand/collapse)</i></summary>
-<br>
+**Quick Example:**
 
 ```python
-import numpy as np
-import matplotlib.pyplot as plt
-import pandas as pd
-import corner
-from VegasAfterglow import ObsData, Setups, Fitter, ParamDef, Scale
-```
+import redback
 
-VegasAfterglow provides flexible options for loading observational data through the `ObsData` class. You can add light curves (specific flux vs. time) and spectra (specific flux vs. frequency) in multiple ways.
-
-```python
-# Create an instance to store observational data
-data = ObsData()
-
-# Method 1: Add data directly from lists or numpy arrays
-
-# For light curves
-t_data = [1e3, 2e3, 5e3, 1e4, 2e4]  # Time in seconds
-flux_data = [1e-26, 8e-27, 5e-27, 3e-27, 2e-27]  # Specific flux in erg/cm²/s/Hz
-flux_err = [1e-28, 8e-28, 5e-28, 3e-28, 2e-28]  # Specific flux error in erg/cm²/s/Hz
-data.add_flux_density(nu=4.84e14, t=t_data, f_nu=flux_data, err=flux_err)  # All quantities in CGS units
-# You can also assign weights to each data point to account for systematic uncertainties or correlations. You don't need to worry about the weights' normalization, the code will normalize them automatically.
-#data.add_flux_density(nu=4.84e14, t=t_data, f_nu=flux_data, err=flux_err, weights=np.ones(len(t_data)))
-
-# For spectra
-nu_data = [...]  # Frequencies in Hz
-spectrum_data = [...] # Specific flux values in erg/cm²/s/Hz
-spectrum_err = [...]   # Specific flux errors in erg/cm²/s/Hz
-data.add_spectrum(t=3000, nu=nu_data, f_nu=spectrum_data, err=spectrum_err, weights=np.ones(len(nu_data)))  # All quantities in CGS units
-```
-
-```python
-# Method 2: Load from CSV files
-
-data = ObsData()
-# Define your bands and files
-bands = [2.4e17, 4.84e14, 1.4e14]  # Example: X-ray, optical R-band
-lc_files = ["data/ep.csv", "data/r.csv", "data/vt-r.csv"]
-
-# Load light curves from files
-for nu, fname in zip(bands, lc_files):
-    df = pd.read_csv(fname)
-    data.add_flux_density(nu=nu, t=df["t"], f_nu=df["Fv_obs"], err=df["Fv_err"])  # All quantities in CGS units
-
-times = [3000] # Example: time in seconds
-spec_files = ["data/ep-spec.csv"]
-
-# Load spectra from files
-for t, fname in zip(times, spec_files):
-    df = pd.read_csv(fname)
-    data.add_spectrum(t=t, nu=df["nu"], f_nu=df["Fv_obs"], err=df["Fv_err"])  # All quantities in CGS units
-```
-
-> **Note:** The `ObsData` interface is designed to be flexible. You can mix and match different data sources, and add multiple light curves at different frequencies as well as multiple spectra at different times.
-
-The `Setups` class defines the global properties and environment for your model. These settings remain fixed during the MCMC process. Check the [documentation](https://yihanwangastro.github.io/VegasAfterglow/docs/index.html) for all available options.
-
-```python
-cfg = Setups()
-
-# Source properties
-cfg.lumi_dist = 3.364e28    # Luminosity distance [cm]
-cfg.z = 1.58               # Redshift
-
-# Physical model configuration
-cfg.medium = "wind"        # Ambient medium: "wind", "ism", etc. (see documentation)
-cfg.jet = "powerlaw"       # Jet structure: "powerlaw", "gaussian", "tophat", etc. (see documentation)
-```
-
-These settings affect how the model is calculated but are not varied during the MCMC process.
-</details>
-
-<details>
-<summary><b>2. Defining Parameters and Running MCMC</b> <i>(click to expand/collapse)</i></summary>
-<br>
-
-The `ParamDef` class is used to define the parameters for MCMC exploration. Each parameter requires a name, prior range, and sampling scale:
-
-```python
-mc_params = [
-    ParamDef("E_iso",      1e50,  1e54,  Scale.LOG),       # Isotropic energy [erg]
-    ParamDef("Gamma0",        5,  1000,  Scale.LOG),       # Lorentz factor at the core
-    ParamDef("theta_c",     0.0,   0.5,  Scale.LINEAR),    # Core half-opening angle [rad]
-    ParamDef("k_e",           2,     2,  Scale.FIXED),     # Energy power law index
-    ParamDef("k_g",           2,     2,  Scale.FIXED),     # Lorentz factor power law index
-    ParamDef("theta_v",     0.0,   0.0,  Scale.FIXED),     # Viewing angle [rad]
-    ParamDef("p",             2,     3,  Scale.LINEAR),    # Shocked electron power law index
-    ParamDef("eps_e",      1e-2,   0.5,  Scale.LOG),       # Electron energy fraction
-    ParamDef("eps_B",      1e-4,   0.5,  Scale.LOG),       # Magnetic field energy fraction
-    ParamDef("A_star",     1e-3,     1,  Scale.LOG),       # Wind parameter
-    ParamDef("xi_e",       1e-3,     1,  Scale.LOG),       # Electron acceleration fraction
-]
-```
-
-**Scale Types:**
-
-- `Scale.LOG`: Sample in logarithmic space (log10) - ideal for parameters spanning multiple orders of magnitude
-- `Scale.LINEAR`: Sample in linear space - appropriate for parameters with narrower ranges
-- `Scale.FIXED`: Keep parameter fixed at the initial value - use for parameters you don't want to vary
-
-**Parameter Choices:**
-The parameters you include depend on your model configuration (See documentation for all options):
-
-- For "wind" medium: use `A_star` parameter
-- For "ISM" medium: use `n_ism` parameter instead
-- Different jet structures may require different parameters
-
-Initialize the `Fitter` class with your data and configuration, then run the MCMC process:
-
-```python
-# Create the fitter object
-fitter = Fitter(data, cfg)
-
-# Option 1: Nested sampling with dynesty (computes evidence, robust for multimodal posteriors)
-result = fitter.fit(
-    mc_params,
-    resolution=(0.3, 0.3, 10),     # Grid resolution (phi, theta, t)
-    sampler="dynesty",             # Nested sampling algorithm
-    nlive=1000,                    # Number of live points
-    walks=100,                     # Number of random walks per live point
-    dlogz=0.5,                     # Stopping criterion (evidence tolerance)
-    npool=8,                       # Number of parallel processes
-    top_k=10,                      # Number of best-fit parameters to return
-    outdir="bilby_output",         # Output directory (default)
-    label="afterglow_fit",         # Run label (default: "afterglow")
+# Load GRB data from open access catalogs
+afterglow = redback.afterglow.Afterglow.from_open_access_catalogue(
+    'GRB170817A', data_mode='flux_density'
 )
 
-# Option 2: MCMC with emcee (faster, good for unimodal posteriors, not optimal for multimodal posteriors)
-result = fitter.fit(
-    mc_params,
-    resolution=(0.3, 0.3, 10),     # Grid resolution (phi, theta, t)
-    sampler="emcee",               # MCMC sampler
-    nsteps=50000,                  # Number of steps per walker
-    nburn=10000,                   # Burn-in steps to discard
-    thin=1,                        # Save every nth sample
-    npool=8,                       # Number of parallel processes
-    top_k=10,                      # Number of best-fit parameters to return
-    outdir="bilby_output",         # Output directory (default)
-    label="afterglow_fit",         # Run label (default: "afterglow")
+# Fit with VegasAfterglow tophat model
+result = redback.fit_model(
+    transient=afterglow,
+    model='vegas_tophat',  # VegasAfterglow tophat jet model
+    sampler='dynesty',
+    nlive=1000
 )
+
+# Analyze results
+result.plot_corner()
+result.plot_lightcurve()
+result.plot_residuals()
 ```
 
-**Important Notes:**
-- Parameters with `Scale.LOG` are sampled as `log10_<name>` (e.g., `log10_E_iso`)
-- The sampler works in log10 space for LOG-scale parameters, then transforms back
-- Use `npool` to parallelize likelihood evaluations across multiple CPU cores
+**Available VegasAfterglow models in redback:**
+- `vegas_tophat` - Tophat jet + ISM
+- `vegas_gaussian` - Gaussian jet + ISM
+- `vegas_powerlaw` - Power-law jet + ISM
+- `vegas_two_component` - Two-component jet + ISM
+- `vegas_tophat_wind` - Tophat jet + Wind medium
+- ... and more
 
-The `result` object contains:
+**Redback provides:**
+- Unified interface for all transient types (afterglows, kilonovae, supernovae, TDEs, etc.)
+- Multiple sampling algorithms (dynesty, emcee, ultranest, etc.)
+- Data management and open-access catalogs
+- Model comparison and selection
+- Visualization and plotting tools
+- Prior specification
 
-- `samples`: The posterior samples (shape: [n_samples, 1, n_params])
-- `labels`: Parameter names (with `log10_` prefix for LOG-scale params)
-- `latex_labels`: LaTeX-formatted labels for plotting (e.g., `$\log_{10}(E_{\rm iso})$`)
-- `top_k_params`: Top-k maximum likelihood parameter values
-- `top_k_log_probs`: Log probabilities for top-k samples
-- `bilby_result`: Full bilby Result object (for advanced diagnostics)
-
-</details>
-
-<details>
-<summary><b>3. Analyzing Results and Generating Predictions</b> <i>(click to expand/collapse)</i></summary>
-<br>
-
-Check the top-k parameters and their uncertainties:
-
-```python
-# Print top-k parameters (maximum likelihood)
-top_k_data = []
-for i in range(result.top_k_params.shape[0]):
-    row = {'Rank': i+1, 'chi^2': f"{-2*result.top_k_log_probs[i]:.2f}"}
-    for name, val in zip(result.labels, result.top_k_params[i]):
-        row[name] = f"{val:.4f}"
-    top_k_data.append(row)
-
-top_k_df = pd.DataFrame(top_k_data)
-print("Top-k parameters:")
-print(top_k_df.to_string(index=False))
-```
-
-Use the best-fit parameters to generate model predictions
-
-```python
-# Define time and frequency ranges for predictions
-t_out = np.logspace(2, 9, 150)
-
-nu_out = np.logspace(16,20,150)
-
-best_params = result.top_k_params[0]
-
-# Generate model light curves at the specified bands using the best-fit parameters
-lc = fitter.flux_density_grid(best_params, t_out, band)
-
-# Generate model spectra at the specified times using the best-fit parameters
-spec = fitter.flux_density_grid(best_params, times, nu_out)
-```
-
-Now you can plot the best-fit model:
-
-```python
-# Function to plot model light curves along with observed data
-def draw_bestfit(t,lc_fit, nu, spec_fit):
-    fig =plt.figure(figsize=(4.5, 7.5))
-
-    ax1 = fig.add_subplot(211)
-    ax2 = fig.add_subplot(212)
-
-    shift = [1,1,200]
-    colors = ['blue', 'orange', 'green']
-    for i, file, sft, c in zip(range(len(lc_files)), lc_files, shift, colors ):
-        df = pd.read_csv(file)
-        ax1.errorbar(df["t"], df["Fv_obs"]*sft, df["Fv_err"]*sft, fmt='o',markersize=4,label=file, color=c,markeredgecolor='k', markeredgewidth=.4)
-        ax1.plot(t, np.array(lc_fit[i,:])*sft, color=c,lw=1)
-
-    ax1.set_xscale('log')
-    ax1.set_yscale('log')
-    ax1.set_xlabel('t [s]')
-    ax1.set_ylabel(r'$F_\nu$ [erg/cm$^2$/s/Hz]')
-    ax1.legend()
-
-    for i, file, sft, c in zip(range(len(spec_files)), spec_files, shift, colors ):
-        df = pd.read_csv(file)
-        ax2.errorbar(df["nu"], df["Fv_obs"]*sft, df["Fv_err"]*sft, fmt='o',markersize=4,label=file, color=c,markeredgecolor='k', markeredgewidth=.4)
-        ax2.plot(nu, np.array(spec_fit[:,i])*sft, color=c,lw=1)
-
-    ax2.set_xscale('log')
-    ax2.set_yscale('log')
-    ax2.set_xlabel(r'$\nu$ [Hz]')
-    ax2.set_ylabel(r'$F_\nu$ [erg/cm$^2$/s/Hz]')
-    ax2.legend()
-    plt.tight_layout()
-
-draw_bestfit(t_out, lc, nu_out, spec)
-```
-
-Corner plots are essential for visualizing parameter correlations and posterior distributions:
-
-```python
-def plot_corner(flat_chain, labels, filename="corner_plot.png"):
-    fig = corner.corner(
-        flat_chain,
-        labels=labels,
-        quantiles=[0.16, 0.5, 0.84],  # For median and ±1σ
-        show_titles=True,
-        title_kwargs={"fontsize": 14},
-        label_kwargs={"fontsize": 14},
-        truths=np.median(flat_chain, axis=0),  # Show median values
-        truth_color='red',
-        bins=30,
-        smooth=1,
-        fill_contours=True,
-        levels=[0.16, 0.5, 0.68],  # 1σ and 2σ contours
-        color='k'
-    )
-    fig.savefig(filename, dpi=300, bbox_inches='tight')
-
-# Create the corner plot
-flat_chain = result.samples.reshape(-1, result.samples.shape[-1])
-plot_corner(flat_chain, result.latex_labels)
-```
-
-</details>
+See the [redback documentation](https://redback.readthedocs.io/) for complete details on parameter estimation with VegasAfterglow models.
 
 ---
 
@@ -946,13 +723,14 @@ Comprehensive documentation is available at **[Documentation](https://yihanwanga
 - **Installation Guide**: Detailed instructions for setting up VegasAfterglow
 - **Quick Start**: Get up and running with basic examples
 - **Examples**: Practical examples showing common use cases
-- **MCMC Fitting**: Complete guide to Bayesian parameter estimation with bilby integration
 - **Parameter Reference**: Comprehensive reference for all physical and numerical parameters
 - **Validation & Testing**: Benchmark and regression test framework for verifying numerical accuracy
 - **Python API Reference**: Complete documentation of the Python interface
 - **C++ API Reference**: Detailed documentation of C++ classes and functions
 - **Troubleshooting**: Common issues and solutions
 - **Contributing Guide**: Information for developers who wish to contribute
+
+For parameter estimation and MCMC fitting, see the [redback documentation](https://redback.readthedocs.io/).
 
 For a complete history of changes and new features, see our [**Changelog**](CHANGELOG.md).
 
