@@ -12,7 +12,7 @@ build-backend = "scikit_build_core.build"
 [project]
 name = "VegasAfterglow"
 dynamic = ["version"]
-description = "MCMC tools for astrophysics"
+description = "High-performance C++ framework with Python interface for modeling Gamma-Ray Burst (GRB) afterglows."
 readme = "README.md"
 authors = [
   {name = "Yihan Wang", email = "yihan.astro@gmail.com"}
