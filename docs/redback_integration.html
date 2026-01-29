@@ -24,7 +24,9 @@
       <script src="_static/js/custom.js"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
-    <link rel="search" title="Search" href="search.html" /> 
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Parameter Reference" href="parameter_reference.html" />
+    <link rel="prev" title="MCMC Parameter Fitting" href="mcmc_fitting.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -48,11 +50,45 @@
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
-<ul>
+<ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="quickstart.html">Quickstart</a></li>
 <li class="toctree-l1"><a class="reference internal" href="examples.html">Examples</a></li>
 <li class="toctree-l1"><a class="reference internal" href="mcmc_fitting.html">MCMC Parameter Fitting</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Parameter Estimation with Redback</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#overview">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#quick-start">Quick Start</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#loading-data-and-basic-fitting">Loading Data and Basic Fitting</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#available-vegasafterglow-models">Available VegasAfterglow Models</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#jet-models-with-ism-medium">Jet Models with ISM Medium</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#jet-models-with-wind-medium">Jet Models with Wind Medium</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#model-parameters">Model Parameters</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#common-parameters">Common Parameters</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#additional-parameters-via-kwargs">Additional Parameters (via kwargs)</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#example-custom-priors">Example: Custom Priors</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#example-multi-band-fitting">Example: Multi-band Fitting</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#example-model-comparison">Example: Model Comparison</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#advanced-features">Advanced Features</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#reverse-shock-modeling">Reverse Shock Modeling</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#jet-spreading">Jet Spreading</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#best-practices">Best Practices</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#start-simple">Start Simple</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#choose-appropriate-priors">Choose Appropriate Priors</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#sampler-selection">Sampler Selection</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#computational-considerations">Computational Considerations</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#redback-s-full-capabilities">Redback’s Full Capabilities</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="parameter_reference.html">Parameter Reference</a></li>
 <li class="toctree-l1"><a class="reference internal" href="validation.html">Validation &amp; Testing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="python_api.html">Python API Reference</a></li>
@@ -529,7 +565,10 @@
 
            </div>
           </div>
-          <footer>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="mcmc_fitting.html" class="btn btn-neutral float-left" title="MCMC Parameter Fitting" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="parameter_reference.html" class="btn btn-neutral float-right" title="Parameter Reference" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
 
   <hr/>
 
