@@ -6,7 +6,11 @@ VegasAfterglow includes a comprehensive validation framework to ensure numerical
 Running Validation
 ------------------
 
-**Prerequisite:** The VegasAfterglow package must be installed before running validation tests. See :doc:`installation` for instructions.
+**Prerequisite:** Install with validation support, which includes per-stage CPU profiling and PDF report dependencies:
+
+.. code-block:: bash
+
+   pip install -e ".[test]" --config-settings=cmake.define.AFTERGLOW_PROFILE=ON
 
 The unified validation runner orchestrates all tests and generates reports:
 
@@ -23,9 +27,6 @@ The unified validation runner orchestrates all tests and generates reports:
 
    # Check existing results without re-running tests
    python validation/run_validation.py --check-only
-
-   # Quick validation (reduced test matrix)
-   python validation/run_validation.py --all --quick
 
    # Control parallelism (default: all CPU cores)
    python validation/run_validation.py --all -j 4
@@ -107,7 +108,7 @@ Checks power-law spectral indices beta = d(log F)/d(log nu) across five regimes:
 Validation Reports
 ------------------
 
-The validation runner generates a comprehensive PDF report (``output/comprehensive_report.pdf``) containing:
+The validation runner generates a comprehensive PDF report (``validation/comprehensive_report.pdf``) containing:
 
 1. **Title Page**: Version info, commit hash, platform details
 2. **Table of Contents**: Clickable navigation with page numbers
@@ -130,21 +131,68 @@ Directory Structure
 .. code-block:: text
 
    validation/
-   ├── run_validation.py      # Unified CLI runner
+   ├── run_validation.py          # Unified CLI runner
+   ├── comprehensive_report.pdf   # Generated PDF report
    ├── benchmark/
-   │   ├── benchmark_suite.py # Benchmark test implementation
-   │   ├── configs.py         # Test configurations
-   │   └── results/           # JSON output files
+   │   ├── benchmark_suite.py     # Benchmark test implementation
+   │   ├── configs.py             # Test configurations
+   │   └── results/               # JSON output files
    ├── regression/
-   │   ├── run_regression.py  # Regression test runner
-   │   └── results/           # JSON output files
-   ├── visualization/
-   │   ├── dashboard.py       # PDF report generator
-   │   ├── common.py          # Shared utilities
-   │   ├── benchmark_plots.py # Benchmark visualizations
-   │   ├── regression_plots.py# Regression visualizations
-   │   └── guides/            # Markdown guide documents
-   └── output/                # Generated PDF reports
+   │   ├── run_regression.py      # Regression test runner
+   │   └── results/               # JSON output files
+   └── visualization/
+       ├── dashboard.py           # PDF report generator
+       ├── common.py              # Shared utilities
+       ├── benchmark_plots.py     # Benchmark visualizations
+       ├── regression_plots.py    # Regression visualizations
+       └── guides/                # Markdown guide documents
+
+Profiling Per-Stage CPU Cost
+----------------------------
+
+When installed with validation support (see above), per-stage CPU profiling is automatically enabled. The benchmark overview page will show a stacked bar chart breaking down CPU time by internal C++ computation stage:
+
++------------------+------------------------------------------+
+| Stage            | Description                              |
++==================+==========================================+
+| mesh             | Coordinate grid generation               |
++------------------+------------------------------------------+
+| shock_dynamics   | Forward/reverse shock ODE integration    |
++------------------+------------------------------------------+
+| EAT_grid         | Equal arrival time surface grid          |
++------------------+------------------------------------------+
+| syn_electrons    | Synchrotron electron distribution        |
++------------------+------------------------------------------+
+| syn_photons      | Synchrotron photon spectrum              |
++------------------+------------------------------------------+
+| cooling          | SSC/IC cooling corrections               |
++------------------+------------------------------------------+
+| sync_flux        | Synchrotron flux integration             |
++------------------+------------------------------------------+
+| ic_photons       | Inverse Compton photon spectrum           |
++------------------+------------------------------------------+
+| ssc_flux         | SSC flux integration                     |
++------------------+------------------------------------------+
+
+Profiling data is also accessible directly from Python when built with profiling:
+
+.. code-block:: python
+
+   import VegasAfterglow as ag
+
+   model = ag.Model(jet=jet, medium=medium, observer=obs, fwd_rad=rad)
+
+   # Reset, run, and retrieve stage timing
+   ag.Model.profile_reset()
+   result = model.flux_density(t, nu)
+   print(ag.Model.profile_data())
+   # {'total': 6.4, 'shock_dynamics': 5.1, 'syn_photons': 0.4, ...}
+
+To return to the normal (zero-overhead) build:
+
+.. code-block:: bash
+
+   pip install -e .
 
 CI/CD Integration
 -----------------
@@ -161,7 +209,7 @@ The validation framework is designed for CI/CD pipelines:
      uses: actions/upload-artifact@v3
      with:
        name: validation-report
-       path: output/comprehensive_report.pdf
+       path: validation/comprehensive_report.pdf
 
 The validation runner:
 

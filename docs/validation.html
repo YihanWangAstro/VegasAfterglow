@@ -62,6 +62,7 @@
 <li class="toctree-l2"><a class="reference internal" href="#regression-tests">Regression Tests</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#validation-reports">Validation Reports</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#directory-structure">Directory Structure</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#profiling-per-stage-cpu-cost">Profiling Per-Stage CPU Cost</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#ci-cd-integration">CI/CD Integration</a></li>
 </ul>
 </li>
@@ -100,7 +101,10 @@
 <p>VegasAfterglow includes a comprehensive validation framework to ensure numerical accuracy and physical correctness. The validation suite is located in the <code class="docutils literal notranslate"><span class="pre">validation/</span></code> directory.</p>
 <section id="running-validation">
 <h2>Running Validation<a class="headerlink" href="#running-validation" title="Link to this heading"></a></h2>
-<p><strong>Prerequisite:</strong> The VegasAfterglow package must be installed before running validation tests. See <a class="reference internal" href="installation.html"><span class="doc">Installation</span></a> for instructions.</p>
+<p><strong>Prerequisite:</strong> Install with validation support, which includes per-stage CPU profiling and PDF report dependencies:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </span><span class="s2">&quot;.[test]&quot;</span><span class="w"> </span>--config-settings<span class="o">=</span>cmake.define.AFTERGLOW_PROFILE<span class="o">=</span>ON
+</pre></div>
+</div>
 <p>The unified validation runner orchestrates all tests and generates reports:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Run full validation suite (benchmark + regression + PDF report)</span>
 python<span class="w"> </span>validation/run_validation.py<span class="w"> </span>--all
@@ -113,9 +117,6 @@ python<span class="w"> </span>validation/run_validation.py<span class="w"> </spa
 
 <span class="c1"># Check existing results without re-running tests</span>
 python<span class="w"> </span>validation/run_validation.py<span class="w"> </span>--check-only
-
-<span class="c1"># Quick validation (reduced test matrix)</span>
-python<span class="w"> </span>validation/run_validation.py<span class="w"> </span>--all<span class="w"> </span>--quick
 
 <span class="c1"># Control parallelism (default: all CPU cores)</span>
 python<span class="w"> </span>validation/run_validation.py<span class="w"> </span>--all<span class="w"> </span>-j<span class="w"> </span><span class="m">4</span>
@@ -204,7 +205,7 @@ python<span class="w"> </span>validation/run_validation.py<span class="w"> </spa
 </section>
 <section id="validation-reports">
 <h2>Validation Reports<a class="headerlink" href="#validation-reports" title="Link to this heading"></a></h2>
-<p>The validation runner generates a comprehensive PDF report (<code class="docutils literal notranslate"><span class="pre">output/comprehensive_report.pdf</span></code>) containing:</p>
+<p>The validation runner generates a comprehensive PDF report (<code class="docutils literal notranslate"><span class="pre">validation/comprehensive_report.pdf</span></code>) containing:</p>
 <ol class="arabic simple">
 <li><p><strong>Title Page</strong>: Version info, commit hash, platform details</p></li>
 <li><p><strong>Table of Contents</strong>: Clickable navigation with page numbers</p></li>
@@ -228,21 +229,41 @@ python<span class="w"> </span>validation/run_validation.py<span class="w"> </spa
 <section id="directory-structure">
 <h2>Directory Structure<a class="headerlink" href="#directory-structure" title="Link to this heading"></a></h2>
 <div class="highlight-text notranslate"><div class="highlight"><pre><span></span>validation/
-├── run_validation.py      # Unified CLI runner
+├── run_validation.py          # Unified CLI runner
+├── comprehensive_report.pdf   # Generated PDF report
 ├── benchmark/
-│   ├── benchmark_suite.py # Benchmark test implementation
-│   ├── configs.py         # Test configurations
-│   └── results/           # JSON output files
+│   ├── benchmark_suite.py     # Benchmark test implementation
+│   ├── configs.py             # Test configurations
+│   └── results/               # JSON output files
 ├── regression/
-│   ├── run_regression.py  # Regression test runner
-│   └── results/           # JSON output files
-├── visualization/
-│   ├── dashboard.py       # PDF report generator
-│   ├── common.py          # Shared utilities
-│   ├── benchmark_plots.py # Benchmark visualizations
-│   ├── regression_plots.py# Regression visualizations
-│   └── guides/            # Markdown guide documents
-└── output/                # Generated PDF reports
+│   ├── run_regression.py      # Regression test runner
+│   └── results/               # JSON output files
+└── visualization/
+    ├── dashboard.py           # PDF report generator
+    ├── common.py              # Shared utilities
+    ├── benchmark_plots.py     # Benchmark visualizations
+    ├── regression_plots.py    # Regression visualizations
+    └── guides/                # Markdown guide documents
+</pre></div>
+</div>
+</section>
+<section id="profiling-per-stage-cpu-cost">
+<h2>Profiling Per-Stage CPU Cost<a class="headerlink" href="#profiling-per-stage-cpu-cost" title="Link to this heading"></a></h2>
+<p>When installed with validation support (see above), per-stage CPU profiling is automatically enabled. The benchmark overview page will show a stacked bar chart breaking down CPU time by internal C++ computation stage:</p>
+<p>Profiling data is also accessible directly from Python when built with profiling:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">VegasAfterglow</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">ag</span>
+
+<span class="n">model</span> <span class="o">=</span> <span class="n">ag</span><span class="o">.</span><span class="n">Model</span><span class="p">(</span><span class="n">jet</span><span class="o">=</span><span class="n">jet</span><span class="p">,</span> <span class="n">medium</span><span class="o">=</span><span class="n">medium</span><span class="p">,</span> <span class="n">observer</span><span class="o">=</span><span class="n">obs</span><span class="p">,</span> <span class="n">fwd_rad</span><span class="o">=</span><span class="n">rad</span><span class="p">)</span>
+
+<span class="c1"># Reset, run, and retrieve stage timing</span>
+<span class="n">ag</span><span class="o">.</span><span class="n">Model</span><span class="o">.</span><span class="n">profile_reset</span><span class="p">()</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">flux_density</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">nu</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">ag</span><span class="o">.</span><span class="n">Model</span><span class="o">.</span><span class="n">profile_data</span><span class="p">())</span>
+<span class="c1"># {&#39;total&#39;: 6.4, &#39;shock_dynamics&#39;: 5.1, &#39;syn_photons&#39;: 0.4, ...}</span>
+</pre></div>
+</div>
+<p>To return to the normal (zero-overhead) build:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </span>.
 </pre></div>
 </div>
 </section>
@@ -257,7 +278,7 @@ python<span class="w"> </span>validation/run_validation.py<span class="w"> </spa
 <span class="w">  </span><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">actions/upload-artifact@v3</span>
 <span class="w">  </span><span class="nt">with</span><span class="p">:</span>
 <span class="w">    </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">validation-report</span>
-<span class="w">    </span><span class="nt">path</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">output/comprehensive_report.pdf</span>
+<span class="w">    </span><span class="nt">path</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">validation/comprehensive_report.pdf</span>
 </pre></div>
 </div>
 <p>The validation runner:</p>
