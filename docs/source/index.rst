@@ -35,6 +35,7 @@ Key Features
    quickstart
    examples
    mcmc_fitting
+   redback_integration
    parameter_reference
    validation
    python_api
