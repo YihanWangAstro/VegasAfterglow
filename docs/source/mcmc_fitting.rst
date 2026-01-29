@@ -8,6 +8,10 @@ MCMC Parameter Fitting
 Overview
 --------
 
+.. note::
+   MCMC fitting requires additional dependencies. Install them with:
+   ``pip install VegasAfterglow[mcmc]``
+
 VegasAfterglow provides a comprehensive MCMC framework for parameter estimation of gamma-ray burst (GRB) afterglow models. The framework supports all built-in jet models, ambient medium configurations, radiation processes, and complex multi-wavelength datasets.
 
 Key Features:
@@ -114,7 +118,6 @@ The ``ObsData`` class handles multi-wavelength observational data:
 .. code-block:: python
 
     import numpy as np
-    import pandas as pd
     from VegasAfterglow import ObsData, Setups, Fitter, ParamDef, Scale
 
     # Create data container
@@ -151,18 +154,18 @@ The ``ObsData`` class handles multi-wavelength observational data:
     lc_files = ["data/xray.csv", "data/optical.csv", "data/nir.csv"]
 
     for nu, fname in zip(bands, lc_files):
-        df = pd.read_csv(fname)
-        data.add_flux_density(nu=nu, t=df["t"],
-                             f_nu=df["Fv_obs"], err=df["Fv_err"])  # All quantities in CGS units
+        t_data, Fv_obs, Fv_err = np.loadtxt(fname, delimiter=',', skiprows=1, unpack=True)
+        data.add_flux_density(nu=nu, t=t_data,
+                             f_nu=Fv_obs, err=Fv_err)  # All quantities in CGS units
 
     # Add spectra at specific times
     spec_times = [1000, 10000]  # seconds
     spec_files = ["data/spec_1000s.csv", "data/spec_10000s.csv"]
 
     for t, fname in zip(spec_times, spec_files):
-        df = pd.read_csv(fname)
-        data.add_spectrum(t=t, nu=df["nu"],
-                          f_nu=df["Fv_obs"], err=df["Fv_err"])  # All quantities in CGS units
+        nu_data, Fv_obs, Fv_err = np.loadtxt(fname, delimiter=',', skiprows=1, unpack=True)
+        data.add_spectrum(t=t, nu=nu_data,
+                          f_nu=Fv_obs, err=Fv_err)  # All quantities in CGS units
 
 Data Selection and Optimization
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -1087,16 +1090,14 @@ Parameter Constraints
 .. code-block:: python
 
     # Print best-fit parameters
-    top_k_data = []
-    for i in range(result.top_k_params.shape[0]):
-        row = {'Rank': i+1, 'chi^2': f"{-2*result.top_k_log_probs[i]:.2f}"}
-        for name, val in zip(result.labels, result.top_k_params[i]):
-            row[name] = f"{val:.4f}"
-        top_k_data.append(row)
-
-    top_k_df = pd.DataFrame(top_k_data)
     print("Top-k parameters:")
-    print(top_k_df.to_string(index=False))
+    header = f"{'Rank':>4s}  {'chi^2':>10s}  " + "  ".join(f"{name:>10s}" for name in result.labels)
+    print(header)
+    print("-" * len(header))
+    for i in range(result.top_k_params.shape[0]):
+        chi2 = -2 * result.top_k_log_probs[i]
+        vals = "  ".join(f"{val:10.4f}" for val in result.top_k_params[i])
+        print(f"{i+1:4d}  {chi2:10.2f}  {vals}")
 
 Model Predictions
 ^^^^^^^^^^^^^^^^^

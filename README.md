@@ -15,7 +15,14 @@
 **[Latest Release Notes](CHANGELOG.md#v030---2025-09-06)** | **[Full Changelog](CHANGELOG.md)** | **[Install Now](#installation)**
 </div>
 
-**VegasAfterglow** is a high-performance C++ framework with a user-friendly Python interface designed for the comprehensive modeling of afterglows. It achieves exceptional computational efficiency, enabling the generation of multi-wavelength light curves in milliseconds and facilitating robust Markov Chain Monte Carlo (MCMC) parameter inference in seconds to minutes. The framework incorporates advanced models for shock dynamics (both forward and reverse shocks), diverse radiation mechanisms (synchrotron with self-absorption, and inverse Compton scattering with Klein-Nishina corrections), and complex structured jet configurations. For lightweight afterglow modeling, one can also consider the [PyFRS](https://github.com/leiwh/PyFRS) package.
+<p align="justify">
+<b>VegasAfterglow</b> is a high-performance C++ framework with a user-friendly Python interface designed for the comprehensive modeling of Gamma-Ray Burst (GRB) afterglows. It achieves exceptional computational efficiency, enabling the generation of multi-wavelength light curves in milliseconds and facilitating robust Markov Chain Monte Carlo (MCMC) parameter inference. The framework incorporates advanced models for shock dynamics (both forward and reverse shocks), diverse radiation mechanisms (synchrotron with self-absorption, and inverse Compton scattering with Klein-Nishina corrections), and complex structured jet configurations.
+</p>
+
+### Ecosystem & Integration
+
+* **Advanced Inference:** While VegasAfterglow includes a standalone fitter, its models are also integrated into [**Redback**](https://github.com/nikhil-sarin/redback) for more advanced Bayesian inference, model comparison, and multi-messenger analysis.
+* **Community Tools:** We also recommend checking out [**PyFRS**](https://github.com/leiwh/PyFRS), [**Jetsimpy**](https://github.com/haowang-astro/jetsimpy), [**ASGARD**](https://github.com/mikuru1096/ASGARD_GRBAfterglow) as tool for afterglow modeling.
 <br clear="left"/>
 
 ---
@@ -23,6 +30,7 @@
 ## Table of Contents
 
 - [VegasAfterglow](#vegasafterglow)
+    - [Ecosystem \& Integration](#ecosystem--integration)
   - [Table of Contents](#table-of-contents)
   - [Features](#features)
   - [Performance Highlights](#performance-highlights)
@@ -34,6 +42,7 @@
     - [Light Curve \& Spectrum Calculation](#light-curve--spectrum-calculation)
     - [Internal Quantities Evolution](#internal-quantities-evolution)
     - [MCMC Parameter Fitting](#mcmc-parameter-fitting)
+    - [Parameter Fitting with **Redback**](#parameter-fitting-with-redback)
   - [Validation \& Testing](#validation--testing)
   - [Documentation](#documentation)
   - [Contributing](#contributing)
@@ -104,7 +113,13 @@ To install VegasAfterglow using pip:
 pip install VegasAfterglow
 ```
 
-This is the recommended method for most users. VegasAfterglow requires Python 3.8 or higher.
+This installs the core physics engine. To also install MCMC fitting support:
+
+```bash
+pip install VegasAfterglow[mcmc]
+```
+
+VegasAfterglow requires Python 3.8 or higher.
 
 <details>
 <summary><b>Alternative: Install from Source</b> <i>(click to expand/collapse)</i></summary>
@@ -612,9 +627,9 @@ We provide some example data files in the `data` folder. Remember to keep your c
 <br>
 
 ```python
+# Requires: pip install VegasAfterglow[mcmc]
 import numpy as np
 import matplotlib.pyplot as plt
-import pandas as pd
 import corner
 from VegasAfterglow import ObsData, Setups, Fitter, ParamDef, Scale
 ```
@@ -652,16 +667,16 @@ lc_files = ["data/ep.csv", "data/r.csv", "data/vt-r.csv"]
 
 # Load light curves from files
 for nu, fname in zip(bands, lc_files):
-    df = pd.read_csv(fname)
-    data.add_flux_density(nu=nu, t=df["t"], f_nu=df["Fv_obs"], err=df["Fv_err"])  # All quantities in CGS units
+    t_data, Fv_obs, Fv_err = np.loadtxt(fname, delimiter=',', skiprows=1, unpack=True)
+    data.add_flux_density(nu=nu, t=t_data, f_nu=Fv_obs, err=Fv_err)  # All quantities in CGS units
 
 times = [3000] # Example: time in seconds
 spec_files = ["data/ep-spec.csv"]
 
 # Load spectra from files
 for t, fname in zip(times, spec_files):
-    df = pd.read_csv(fname)
-    data.add_spectrum(t=t, nu=df["nu"], f_nu=df["Fv_obs"], err=df["Fv_err"])  # All quantities in CGS units
+    nu_data, Fv_obs, Fv_err = np.loadtxt(fname, delimiter=',', skiprows=1, unpack=True)
+    data.add_spectrum(t=t, nu=nu_data, f_nu=Fv_obs, err=Fv_err)  # All quantities in CGS units
 ```
 
 > **Note:** The `ObsData` interface is designed to be flexible. You can mix and match different data sources, and add multiple light curves at different frequencies as well as multiple spectra at different times.
@@ -777,16 +792,14 @@ Check the top-k parameters and their uncertainties:
 
 ```python
 # Print top-k parameters (maximum likelihood)
-top_k_data = []
-for i in range(result.top_k_params.shape[0]):
-    row = {'Rank': i+1, 'chi^2': f"{-2*result.top_k_log_probs[i]:.2f}"}
-    for name, val in zip(result.labels, result.top_k_params[i]):
-        row[name] = f"{val:.4f}"
-    top_k_data.append(row)
-
-top_k_df = pd.DataFrame(top_k_data)
 print("Top-k parameters:")
-print(top_k_df.to_string(index=False))
+header = f"{'Rank':>4s}  {'chi^2':>10s}  " + "  ".join(f"{name:>10s}" for name in result.labels)
+print(header)
+print("-" * len(header))
+for i in range(result.top_k_params.shape[0]):
+    chi2 = -2 * result.top_k_log_probs[i]
+    vals = "  ".join(f"{val:10.4f}" for val in result.top_k_params[i])
+    print(f"{i+1:4d}  {chi2:10.2f}  {vals}")
 ```
 
 Use the best-fit parameters to generate model predictions
@@ -819,8 +832,8 @@ def draw_bestfit(t,lc_fit, nu, spec_fit):
     shift = [1,1,200]
     colors = ['blue', 'orange', 'green']
     for i, file, sft, c in zip(range(len(lc_files)), lc_files, shift, colors ):
-        df = pd.read_csv(file)
-        ax1.errorbar(df["t"], df["Fv_obs"]*sft, df["Fv_err"]*sft, fmt='o',markersize=4,label=file, color=c,markeredgecolor='k', markeredgewidth=.4)
+        t_d, Fv_d, Fe_d = np.loadtxt(file, delimiter=',', skiprows=1, unpack=True)
+        ax1.errorbar(t_d, Fv_d*sft, Fe_d*sft, fmt='o',markersize=4,label=file, color=c,markeredgecolor='k', markeredgewidth=.4)
         ax1.plot(t, np.array(lc_fit[i,:])*sft, color=c,lw=1)
 
     ax1.set_xscale('log')
@@ -830,8 +843,8 @@ def draw_bestfit(t,lc_fit, nu, spec_fit):
     ax1.legend()
 
     for i, file, sft, c in zip(range(len(spec_files)), spec_files, shift, colors ):
-        df = pd.read_csv(file)
-        ax2.errorbar(df["nu"], df["Fv_obs"]*sft, df["Fv_err"]*sft, fmt='o',markersize=4,label=file, color=c,markeredgecolor='k', markeredgewidth=.4)
+        nu_d, Fv_d, Fe_d = np.loadtxt(file, delimiter=',', skiprows=1, unpack=True)
+        ax2.errorbar(nu_d, Fv_d*sft, Fe_d*sft, fmt='o',markersize=4,label=file, color=c,markeredgecolor='k', markeredgewidth=.4)
         ax2.plot(nu, np.array(spec_fit[:,i])*sft, color=c,lw=1)
 
     ax2.set_xscale('log')
@@ -871,6 +884,73 @@ plot_corner(flat_chain, result.latex_labels)
 ```
 
 </details>
+
+### Parameter Fitting with [**Redback**](https://github.com/nikhil-sarin/redback)
+
+For parameter estimation and Bayesian inference, VegasAfterglow models are integrated into [**redback**](https://github.com/nikhil-sarin/redback), which provides a unified interface for fitting all transient types.
+
+<details>
+<summary><b> Loading Data & Fitting:</b> <i>(click to expand/collapse)</i></summary>
+
+```python
+import redback
+
+# Multiple ways to load data:
+GRB = 'GRB070809'
+
+# Method 1: From Swift BAT+XRT (recommended for Swift GRBs)
+redback.get_data.get_bat_xrt_afterglow_data_from_swift(grb=GRB, data_mode="flux")
+afterglow = redback.afterglow.SGRB.from_swift_grb(name=GRB, data_mode='flux')
+
+# Method 2: From open access catalogs
+afterglow = redback.afterglow.Afterglow.from_open_access_catalogue(
+    GRB, data_mode='flux_density'
+)
+
+# Method 3: From your own data files
+import pandas as pd
+data = pd.read_csv('my_grb_data.csv')
+afterglow = redback.transient.Afterglow(
+    name=GRB,
+    data_mode='flux_density',
+    time=data['time'].values,
+    flux_density=data['flux'].values,
+    flux_density_err=data['flux_err'].values,
+    frequency=data['frequency'].values
+)
+
+# Fit with VegasAfterglow tophat model
+result = redback.fit_model(
+    transient=afterglow,
+    model='vegas_tophat',  # VegasAfterglow tophat jet model
+    sampler='dynesty',
+    nlive=1000
+)
+
+result.plot_corner()
+result.plot_lightcurve()
+result.plot_residuals()
+```
+**Available VegasAfterglow models in redback:**
+- `vegas_tophat` - Tophat jet + ISM
+- `vegas_gaussian` - Gaussian jet + ISM
+- `vegas_powerlaw` - Power-law jet + ISM
+- `vegas_two_component` - Two-component jet + ISM
+- `vegas_tophat_wind` - Tophat jet + Wind medium
+- ... and more
+
+
+</details>
+
+**Why use the Redback interface?**
+
+ - `Data Management`: Seamlessly load data from Swift, Fermi, BATSE, or custom files. Supports flux, flux_density, magnitude, and luminosity.
+ - `Advanced Statistics`: Access multiple samplers (dynesty, emcee, ultranest), parallel sampling, and Bayesian model comparison.
+ - `Visualization`: Generate publication-ready corner plots and multi-band light curves automatically.
+
+For complete documentation on the API, visit the [**redback documentation**](https://redback.readthedocs.io/en/latest/?badge=latest).
+<br>
+
 
 ---
 
@@ -1005,7 +1085,7 @@ For the full license text, see the [LICENSE](LICENSE) file in the repository.
 
 ## Acknowledgments & Citation
 
-We would like to thank the contributors who helped improve VegasAfterglow. **Special thanks to Weihua Lei, Shaoyu Fu, Liang-Jun Chen, Iris Yin, Cuiyuan Dai and Binbin Zhang** for their invaluable work as beta testers, providing feedback and helping with bug fixes during development. We also thank the broader community for their suggestions and support.
+We would like to thank the contributors who helped improve VegasAfterglow. **Special thanks to Weihua Lei, Shaoyu Fu, Liang-Jun Chen, Iris Yin, Cuiyuan Dai, Binbin Zhang and Nikhil Sarin** for their invaluable work as beta testers, providing feedback and helping with bug fixes during development. We also thank the broader community for their suggestions and support.
 
 If you find VegasAfterglow useful in your research, we would be grateful if you could cite:
 

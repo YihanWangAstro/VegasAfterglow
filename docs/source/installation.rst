@@ -35,6 +35,12 @@ The easiest way to install VegasAfterglow is via pip:
 
     pip install VegasAfterglow
 
+This installs the core physics engine (light curves, spectra, jet models). To also install MCMC fitting support:
+
+.. code-block:: bash
+
+    pip install VegasAfterglow[mcmc]
+
 VegasAfterglow requires Python 3.8 or higher.
 
 From Source
@@ -91,4 +97,5 @@ Requirements
 
 * Python 3.8 or higher
 * C++20 compatible compiler (for building from source)
-* NumPy, SciPy, and other dependencies (automatically installed when using pip)
+* NumPy (automatically installed when using pip)
+* For MCMC fitting: ``pip install VegasAfterglow[mcmc]`` (installs bilby, emcee, dynesty)

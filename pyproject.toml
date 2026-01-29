@@ -20,18 +20,15 @@ authors = [
 requires-python = ">=3.8"
 dependencies = [
   "numpy>=1.20",
-  "scipy>=1.6",
-  "pandas>=1.2",
-  "bilby>=2.7",
-  "emcee>=3.0",
-  "dynesty>=2.0",
-  "corner>=2.2.1",
-  "tqdm>=4.0",
-  "matplotlib>=3.5",
 ]
 license = {text = "BSD-3-Clause"}
 
 [project.optional-dependencies]
+mcmc = [
+  "bilby>=2.7",
+  "emcee",
+  "dynesty",
+]
 test = [
   "pypdf>=4.0",
   "reportlab>=4.0",
@@ -66,5 +63,5 @@ include = [
 ]
 
 [tool.cibuildwheel]
-test-command = "python -c \"from VegasAfterglow import ObsData, Setups, Fitter, ParamDef, Scale; print('OK')\""
+test-command = "python -c \"from VegasAfterglow import Model, TophatJet, ISM, Observer, Radiation; print('OK')\""
 build-verbosity = 0

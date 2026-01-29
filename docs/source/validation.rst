@@ -88,6 +88,7 @@ Verifies time evolution of:
 - Injection frequency (nu_m)
 - Cooling frequency (nu_c)
 - Self-absorption frequency (nu_a)
+- Maximum synchrotron frequency (nu_M)
 
 **Spectral Shape Tests:**
 

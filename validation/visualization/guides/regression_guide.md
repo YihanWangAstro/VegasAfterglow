@@ -6,12 +6,11 @@ This document describes the regression validation framework for VegasAfterglow, 
 
 ## 1. Test Categories
 
-The regression suite validates physical quantities against analytical predictions derived from standard synchrotron afterglow theory. Four categories are tested:
+The regression suite validates physical quantities against analytical predictions derived from standard synchrotron afterglow theory. Three categories are tested:
 
 1. **Shock dynamics**: Lorentz factor, radius, magnetic field, particle number
 2. **Characteristic frequencies**: nu_m (injection), nu_c (cooling), nu_a (self-absorption)
 3. **Spectral shapes**: Power-law indices in different frequency regimes
-4. **Flux scaling**: Temporal and spectral indices
 
 ---
 
@@ -55,19 +54,19 @@ The synchrotron spectrum is characterized by break frequencies that evolve with 
 
 **ISM**
 
-| Phase | nu_m | nu_c |
-|-------|------|------|
-| Coasting | 0 | -2 |
-| Blandford-McKee | -3/2 | -1/2 |
-| Sedov-Taylor | -3/5 | -1/5 |
+| Phase | nu_m | nu_c | nu_M |
+|-------|------|------|------|
+| Coasting | 0 | -2 | 0 |
+| Blandford-McKee | -3/2 | -1/2 | -3/8 |
+| Sedov-Taylor | -3/5 | -1/5 | 0 |
 
 **Wind**
 
-| Phase | nu_m | nu_c |
-|-------|------|------|
-| Coasting | -1 | -1 |
-| Blandford-McKee | -3/2 | 1/2 |
-| Sedov-Taylor | -1 | 1 |
+| Phase | nu_m | nu_c | nu_M |
+|-------|------|------|------|
+| Coasting | -1 | -1 | 0 |
+| Blandford-McKee | -3/2 | 1/2 | -1/4 |
+| Sedov-Taylor | -1 | 1 | 0 |
 
 ---
 

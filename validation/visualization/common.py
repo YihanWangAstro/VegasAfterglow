@@ -23,19 +23,14 @@ PAGE_PORTRAIT, PAGE_LANDSCAPE = (8.5, 11), (11, 8.5)
 
 # Color schemes
 COLORS = {"pass": "#2ECC71", "fail": "#E74C3C", "primary": "#3498DB", "secondary": "#9B59B6", "neutral": "#7F8C8D", "background": "#2C3E50"}
-PHASE_COLORS = {"coasting": "#E74C3C", "BM": "#3498DB", "deep_newtonian": "#2ECC71"}
-PHASE_NAMES = {"coasting": "Coasting", "BM": "Blandford-McKee", "deep_newtonian": "Sedov-Taylor"}
+PHASE_COLORS = {"coasting": "#E74C3C", "crossing": "#F39C12", "BM": "#3498DB", "deep_newtonian": "#2ECC71"}
+PHASE_NAMES = {"coasting": "Coasting", "crossing": "Crossing", "BM": "Blandford-McKee", "deep_newtonian": "Sedov-Taylor"}
 BAND_COLORS = {"Radio": "firebrick", "Optical": "yellowgreen", "X-ray": "royalblue"}
 MEDIUM_STYLES, MEDIUM_MARKERS = {"ISM": "-", "wind": "--"}, {"ISM": "o", "wind": "s"}
 
 # Convergence thresholds
 FIDUCIAL_VALUES = {"phi": 0.3, "theta": 0.3, "t": 10}
 MAX_ERROR_THRESHOLD, MEAN_ERROR_THRESHOLD = 0.1, 0.05
-
-# Slope formatting
-SLOPE_FRACTIONS = {-0.375: "-3/8", 0.25: "1/4", 0.75: "3/4", -0.25: "-1/4", 0.5: "1/2", -0.5: "-1/2", -0.75: "-3/4",
-    -0.6: "-3/5", 0.4: "2/5", 1.2: "6/5", -1.5: "-3/2", 0.0: "0", 1.0: "1", -1.0: "-1", 2.0: "2", 3.0: "3", -2.0: "-2",
-    -3.0: "-3", -1/3: "-1/3", 1/3: "1/3", 2/3: "2/3", -2/3: "-2/3"}
 
 QTY_SYMBOLS = {"u": r"$\Gamma\beta$", "Gamma": r"$\Gamma$", "r": r"$r$", "B": r"$B$", "N_p": r"$N_p$",
                "nu_m": r"$\nu_m$", "nu_c": r"$\nu_c$", "nu_a": r"$\nu_a$", "nu_M": r"$\nu_M$"}
@@ -65,10 +60,8 @@ def format_slope(value):
         return value
     if isinstance(value, Fraction):
         return str(value)
-    for known_val, frac_str in SLOPE_FRACTIONS.items():
-        if abs(value - known_val) < 0.001:
-            return frac_str
-    return f"{value:.2f}"
+    frac = Fraction(value).limit_denominator(100)
+    return str(frac)
 
 
 def get_flux_time(config: Dict) -> float:
@@ -102,7 +95,7 @@ def get_unique_short_names(names: List[str], max_len: int = 6) -> Dict[str, str]
 def setup_plot_style():
     plt.rcParams.update({
         "font.size": 10, "axes.labelsize": 11, "axes.titlesize": 12, "legend.fontsize": 9,
-        "xtick.labelsize": 9, "ytick.labelsize": 9, "figure.dpi": 100, "savefig.dpi": 150,
+        "xtick.labelsize": 9, "ytick.labelsize": 9, "figure.dpi": 100, "savefig.dpi": 100,
         "axes.grid": True, "grid.alpha": 0.3, "lines.linewidth": 1.5,
     })
 
@@ -594,47 +587,102 @@ def render_markdown_to_pdf_file(markdown_path: Path) -> Optional[Dict]:
     return None
 
 
-def create_benchmark_guide_pages(pdf: PdfPages) -> tuple:
-    """Create guide pages for benchmark results.
+def create_toc_page_reportlab(toc_nodes: List[Dict], output_path: Path) -> int:
+    """Create hierarchical table of contents using reportlab.
+
+    Args:
+        toc_nodes: List of {"title": str, "page": int, "children": [...]}
+        output_path: Path to save standalone TOC PDF
+
+    Returns:
+        Number of pages generated (0 if reportlab unavailable).
+    """
+    try:
+        from reportlab.lib import colors
+        from reportlab.lib.pagesizes import letter
+        from reportlab.lib.styles import ParagraphStyle
+        from reportlab.lib.units import inch
+        from reportlab.platypus import Paragraph, SimpleDocTemplate, Spacer
+    except ImportError:
+        return 0
+
+    try:
+        styles_by_level = {
+            0: ParagraphStyle("TOC0", fontSize=12, fontName="Helvetica-Bold",
+                              textColor=colors.HexColor("#2C3E50"), spaceBefore=10, spaceAfter=2, leading=16),
+            1: ParagraphStyle("TOC1", fontSize=10, fontName="Helvetica-Bold",
+                              textColor=colors.HexColor("#34495E"), leftIndent=20, spaceBefore=6, spaceAfter=1, leading=14),
+            2: ParagraphStyle("TOC2", fontSize=9, fontName="Helvetica-Bold",
+                              textColor=colors.HexColor("#4A5568"), leftIndent=40, spaceBefore=4, spaceAfter=1, leading=13),
+            3: ParagraphStyle("TOC3", fontSize=9, fontName="Helvetica",
+                              textColor=colors.HexColor("#666666"), leftIndent=60, spaceBefore=1, spaceAfter=1, leading=12),
+        }
+
+        story = []
+        title_style = ParagraphStyle("TOCTitle", fontSize=18, fontName="Helvetica-Bold",
+                                     textColor=colors.HexColor("#2C3E50"), spaceAfter=20, alignment=1)
+        story.append(Paragraph("Table of Contents", title_style))
+        story.append(Spacer(1, 12))
+
+        def _render_node(node, level):
+            style = styles_by_level.get(min(level, 3))
+            title = node["title"]
+            page = node.get("page", "")
+            # Use a table-like approach with dots leader
+            dots = "." * max(1, 80 - len(title) - len(str(page)) - level * 4)
+            text = f'{title} <font color="#CCCCCC">{dots}</font> {page}'
+            story.append(Paragraph(text, style))
+            for child in node.get("children", []):
+                _render_node(child, level + 1)
+
+        for node in toc_nodes:
+            _render_node(node, 0)
+
+        doc = SimpleDocTemplate(str(output_path), pagesize=letter,
+                                rightMargin=0.75 * inch, leftMargin=0.75 * inch,
+                                topMargin=0.75 * inch, bottomMargin=0.75 * inch)
+        doc.build(story)
+
+        from pypdf import PdfReader
+        reader = PdfReader(str(output_path))
+        return len(reader.pages)
+    except Exception as e:
+        print(f"  Warning: reportlab TOC failed ({e})")
+        return 0
+
+
+def _create_guide_pages(pdf: PdfPages, guide_name: str) -> tuple:
+    """Create guide pages from a markdown file.
+
+    Args:
+        pdf: PdfPages object to write fallback page into.
+        guide_name: Base name of the guide file (e.g., "benchmark_guide" or "regression_guide").
 
     Returns (num_pages, pending_merge_info) where pending_merge_info is either
     None (pages added inline) or a dict with PDF to merge later.
     """
-    guide_path = Path(__file__).parent / "guides" / "benchmark_guide.md"
+    guide_path = Path(__file__).parent / "guides" / f"{guide_name}.md"
 
-    # Try pypandoc first
     result = render_markdown_to_pdf_file(guide_path)
     if result:
         return (result["num_pages"], {"files": [result["pdf_path"]], "temp_dir": result["temp_dir"]})
 
     # Fallback: create a simple placeholder page
+    label = guide_name.replace("_", " ").title()
     fig = plt.figure(figsize=PAGE_PORTRAIT)
     fig.patch.set_facecolor("white")
-    fig.text(0.5, 0.5, "Benchmark Guide\n\nSee benchmark_guide.md for details",
+    fig.text(0.5, 0.5, f"{label}\n\nSee {guide_name}.md for details",
              ha="center", va="center", fontsize=14)
     pdf.savefig(fig)
     plt.close(fig)
     return (1, None)
+
+
+def create_benchmark_guide_pages(pdf: PdfPages) -> tuple:
+    """Create guide pages for benchmark results."""
+    return _create_guide_pages(pdf, "benchmark_guide")
 
 
 def create_regression_guide_pages(pdf: PdfPages) -> tuple:
-    """Create guide pages for regression test results.
-
-    Returns (num_pages, pending_merge_info) where pending_merge_info is either
-    None (pages added inline) or a dict with PDF to merge later.
-    """
-    guide_path = Path(__file__).parent / "guides" / "regression_guide.md"
-
-    # Try pypandoc first
-    result = render_markdown_to_pdf_file(guide_path)
-    if result:
-        return (result["num_pages"], {"files": [result["pdf_path"]], "temp_dir": result["temp_dir"]})
-
-    # Fallback: create a simple placeholder page
-    fig = plt.figure(figsize=PAGE_PORTRAIT)
-    fig.patch.set_facecolor("white")
-    fig.text(0.5, 0.5, "Regression Guide\n\nSee regression_guide.md for details",
-             ha="center", va="center", fontsize=14)
-    pdf.savefig(fig)
-    plt.close(fig)
-    return (1, None)
+    """Create guide pages for regression test results."""
+    return _create_guide_pages(pdf, "regression_guide")

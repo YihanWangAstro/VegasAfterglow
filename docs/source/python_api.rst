@@ -23,6 +23,10 @@ The Python API is organized into several core components:
 Core Classes
 ------------
 
+.. note::
+   The classes below (``ObsData``, ``Setups``, ``Fitter``, ``ParamDef``, ``Scale``) require the MCMC extra:
+   ``pip install VegasAfterglow[mcmc]``
+
 .. _api-obsdata:
 
 ObsData

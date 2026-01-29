@@ -190,11 +190,17 @@ A: Common data loading issues:
 
 **Q: Error messages about missing dependencies**
 
-A: Install required packages:
+A: The core package only requires NumPy. For MCMC fitting:
 
 .. code-block:: bash
 
-    pip install numpy scipy matplotlib pandas corner bilby
+    pip install VegasAfterglow[mcmc]
+
+For plotting and MCMC visualization:
+
+.. code-block:: bash
+
+    pip install matplotlib corner tqdm
 
 For specific features:
 

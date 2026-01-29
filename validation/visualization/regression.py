@@ -23,25 +23,75 @@ def _get_cell_style(result: Dict) -> Tuple[str, str, str, str]:
             # Use expected_expr if available (e.g., "-(p-1)/2"), else fall back to format_slope
             exp_str = expected_expr if expected_expr is not None else (format_slope(expected) if expected is not None else "")
             if passed:
-                return "#90EE90", "darkgreen", f"{measured:.2f}", f"({exp_str})"
+                return "#90EE90", "darkgreen", f"{measured:.2f}", exp_str
             else:
-                return "#FFB6C1", "darkred", f"{measured:.2f}", f"({exp_str})"
+                return "#FFB6C1", "darkred", f"{measured:.2f}", exp_str
         else:
             return "#CCCCCC", "black", "N/A", ""
     return "#E8E8E8", "#888888", "\u2014", ""
 
 
-def _draw_cell(fig, x, y, width, height, color, text_color, line1, line2, fontsize=8):
-    """Draw a cell."""
+def _draw_cell(fig, x, y, width, height, color, text_color, line1, line2, fontsize=8,
+               measured=None, expected=None, tolerance=None, passed=None):
+    """Draw a cell with optional deviation indicator bar."""
     rect = plt.Rectangle((x + 0.003, y + 0.003), width * 0.94, height * 0.9, facecolor=color, edgecolor="white",
                           linewidth=1.5, transform=fig.transFigure, clip_on=False)
     fig.add_artist(rect)
 
-    fig.text(x + width / 2, y + height * 0.6, line1, ha="center", va="center", fontsize=fontsize,
-             fontweight="bold", color=text_color)
-    if line2:
-        fig.text(x + width / 2, y + height * 0.28, line2, ha="center", va="center",
-                 fontsize=fontsize - 1, color=text_color)
+    has_bar = (measured is not None and expected is not None and tolerance is not None and tolerance > 0)
+
+    if has_bar:
+        # Deviation bar centered vertically in cell
+        bar_y = y + height * 0.38
+        bar_h = height * 0.14
+        bar_left = x + width * 0.10
+        bar_width = width * 0.74
+        bar_range = 3.0 * tolerance  # full range: expected ± 3*tol
+
+        # Tolerance zone (middle third)
+        tol_frac = tolerance / bar_range
+        tol_rect = plt.Rectangle(
+            (bar_left + bar_width * (0.5 - tol_frac), bar_y),
+            bar_width * 2 * tol_frac, bar_h,
+            facecolor="#B0B0B0", edgecolor="none", alpha=0.35,
+            transform=fig.transFigure, clip_on=False)
+        fig.add_artist(tol_rect)
+
+        # Center tick at expected value
+        cx = bar_left + bar_width * 0.5
+        center_line = plt.Line2D([cx, cx], [bar_y, bar_y + bar_h], color="#999999",
+                                  linewidth=0.7, transform=fig.transFigure, clip_on=False)
+        fig.add_artist(center_line)
+
+        # Measured marker
+        deviation = measured - expected
+        frac = 0.5 + (deviation / bar_range) * 0.5
+        frac = max(0.03, min(0.97, frac))
+        mx = bar_left + bar_width * frac
+        marker_color = "#2E7D32" if passed else "#C62828"
+        marker = plt.Line2D([mx], [bar_y + bar_h / 2], marker='o', color=marker_color,
+                             markersize=3.5, linestyle='None', transform=fig.transFigure,
+                             clip_on=False, zorder=5)
+        fig.add_artist(marker)
+
+        # Measured value text: above bar, anchored at dot x-position, same color as dot
+        text_x_min = x + width * 0.08
+        text_x_max = x + width * 0.86
+        mx_clamped = max(text_x_min, min(text_x_max, mx))
+        fig.text(mx_clamped, y + height * 0.78, line1, ha="center", va="center", fontsize=fontsize,
+                 fontweight="bold", color=marker_color)
+
+        # Expected value text: below bar, anchored at center line x-position, same color as center line
+        if line2:
+            fig.text(cx, y + height * 0.18, line2, ha="center", va="center",
+                     fontsize=fontsize - 1, color="#999999")
+    else:
+        # Original layout without deviation bar
+        fig.text(x + width / 2, y + height * 0.6, line1, ha="center", va="center", fontsize=fontsize,
+                 fontweight="bold", color=text_color)
+        if line2:
+            fig.text(x + width / 2, y + height * 0.28, line2, ha="center", va="center",
+                     fontsize=fontsize - 1, color=text_color)
 
 
 def _count_pass_fail(grid_data: Dict) -> Tuple[int, int]:
@@ -107,7 +157,11 @@ def _draw_grid_section(fig, grid_data, quantities, title, top, bottom, grid_left
                 qty_result = phase_data.get(qty, {})
 
                 color, text_color, line1, line2 = _get_cell_style(qty_result)
-                _draw_cell(fig, x, y, cell_width, cell_height, color, text_color, line1, line2, fontsize=8)
+                _draw_cell(fig, x, y, cell_width, cell_height, color, text_color, line1, line2, fontsize=8,
+                           measured=to_float(qty_result.get("measured")),
+                           expected=to_float(qty_result.get("expected")),
+                           tolerance=to_float(qty_result.get("tolerance")),
+                           passed=qty_result.get("passed"))
 
     return n_pass, n_total
 
@@ -130,7 +184,8 @@ def _format_segment_label(seg_name: str) -> str:
     return seg_name
 
 
-def _draw_spectrum_grid_section(fig, spectrum_grid, top, bottom, grid_left, grid_right):
+def _draw_spectrum_grid_section(fig, spectrum_grid, top, bottom, grid_left, grid_right,
+                                section_title="Spectrum Shapes"):
     """Draw spectrum shapes grid with regimes as rows and segments as columns."""
     regimes = ["I", "II", "III", "IV", "V"]
     n_cols = 4
@@ -145,7 +200,7 @@ def _draw_spectrum_grid_section(fig, spectrum_grid, top, bottom, grid_left, grid
     cell_height = row_height - header_height
     cell_width = (grid_right - grid_left) / n_cols
 
-    fig.text(0.5, top + 0.02, f"Spectrum Shapes ({n_pass}/{n_total})", ha="center", fontsize=11,
+    fig.text(0.5, top + 0.02, f"{section_title} ({n_pass}/{n_total})", ha="center", fontsize=11,
              fontweight="bold", color=title_color)
 
     # Draw each regime row with its own column headers
@@ -179,7 +234,7 @@ def _draw_spectrum_grid_section(fig, spectrum_grid, top, bottom, grid_left, grid
             else:
                 label = ""
             fig.text(x + cell_width / 2, row_top - 0.003, label,
-                     ha="center", va="top", fontsize=7, color="#333333", fontweight="bold")
+                     ha="center", va="top", fontsize=9, color="#333333", fontweight="bold")
 
         # Build lookup from segment name to result
         seg_lookup = {s.get("segment", ""): s for s in segments}
@@ -189,6 +244,7 @@ def _draw_spectrum_grid_section(fig, spectrum_grid, top, bottom, grid_left, grid
             x = grid_left + j * cell_width
             y = row_bottom
 
+            seg_result = None
             if j < len(expected_segments):
                 expected_seg_name = expected_segments[j][0]
                 seg_result = seg_lookup.get(expected_seg_name)
@@ -199,55 +255,115 @@ def _draw_spectrum_grid_section(fig, spectrum_grid, top, bottom, grid_left, grid
             else:
                 color, text_color, line1, line2 = "#E8E8E8", "#888888", "\u2014", ""
 
-            _draw_cell(fig, x, y, cell_width, cell_height, color, text_color, line1, line2, fontsize=7)
+            _draw_cell(fig, x, y, cell_width, cell_height, color, text_color, line1, line2, fontsize=7,
+                       measured=to_float(seg_result.get("measured")) if seg_result else None,
+                       expected=to_float(seg_result.get("expected")) if seg_result else None,
+                       tolerance=to_float(seg_result.get("tolerance")) if seg_result else None,
+                       passed=seg_result.get("passed") if seg_result else None)
 
     return n_pass, n_total
 
 
-def plot_combined_summary_grid(results: Dict) -> plt.Figure:
-    """Plot combined summary grid showing pass/fail for all regression tests."""
+def plot_dynamics_summary_grid(results: Dict) -> plt.Figure:
+    """Plot dynamics summary: FWD + RVS thin + RVS thick shock dynamics grids."""
     fig = plt.figure(figsize=PAGE_PORTRAIT)
 
-    shock_grid = results.get("shock_grid", {})
-    freq_grid = results.get("freq_grid", {})
-    spectrum_grid = results.get("spectrum_grid", {})
-
-    phases = ["coasting", "BM", "deep_newtonian"]
+    fwd_phases = ["coasting", "BM", "deep_newtonian"]
+    rvs_phases = ["crossing", "BM", "deep_newtonian"]
     media = ["ISM", "Wind"]
+    quantities = ["u", "r", "B", "N_p"]
 
-    grid_left, grid_right = 0.18, 0.92
-    cell_width = (grid_right - grid_left) / (len(phases) * len(media))
+    grid_left = 0.18
+    cell_width = (0.92 - grid_left) / (len(fwd_phases) * len(media))
 
-    n_shock_pass, n_shock_total = _draw_grid_section(
-        fig, shock_grid, ["u", "r", "B", "N_p"], "Shock Dynamics", top=0.82, bottom=0.62,
-        grid_left=grid_left, cell_width=cell_width, phases=phases, media=media,
-    )
+    total_pass, total_tests = 0, 0
 
-    n_freq_pass, n_freq_total = _draw_grid_section(
-        fig, freq_grid, ["nu_m", "nu_c"], "Characteristic Frequencies", top=0.54, bottom=0.44,
-        grid_left=grid_left, cell_width=cell_width, phases=phases, media=media,
-    )
+    grids = [
+        (results.get("shock_grid", {}), "Forward Shock", fwd_phases, 0.86, 0.66),
+        (results.get("rvs_shock_grid_thin", {}), "Reverse Shock — Thin Shell", rvs_phases, 0.56, 0.36),
+        (results.get("rvs_shock_grid_thick", {}), "Reverse Shock — Thick Shell", rvs_phases, 0.26, 0.06),
+    ]
 
-    # Spectrum shapes grid
-    n_spec_pass, n_spec_total = 0, 0
-    if spectrum_grid:
-        n_spec_pass, n_spec_total = _draw_spectrum_grid_section(
-            fig, spectrum_grid, top=0.36, bottom=0.11, grid_left=grid_left, grid_right=grid_right,
-        )
+    for grid_data, title, phases, top, bottom in grids:
+        if grid_data:
+            n_p, n_t = _draw_grid_section(
+                fig, grid_data, quantities, title, top=top, bottom=bottom,
+                grid_left=grid_left, cell_width=cell_width, phases=phases, media=media)
+            total_pass += n_p
+            total_tests += n_t
 
-    total_pass = n_shock_pass + n_freq_pass + n_spec_pass
-    total_tests = n_shock_total + n_freq_total + n_spec_total
     total_rate = total_pass / total_tests * 100 if total_tests > 0 else 0
     status_color = COLORS["pass"] if total_rate >= 80 else COLORS["fail"]
-
-    fig.suptitle(f"Regression Summary: {total_pass}/{total_tests} passed ({total_rate:.0f}%)",
-                 fontsize=13, fontweight="bold", y=0.92, color=status_color)
-
+    fig.suptitle(f"Dynamics Summary: {total_pass}/{total_tests} passed ({total_rate:.0f}%)",
+                 fontsize=13, fontweight="bold", y=0.96, color=status_color)
     return fig
 
 
+def plot_spectrum_summary_grid(results: Dict) -> plt.Figure:
+    """Plot standalone spectrum shapes pass/fail grid."""
+    fig = plt.figure(figsize=PAGE_PORTRAIT)
+
+    spectrum_grid = results.get("spectrum_grid", {})
+    grid_left, grid_right = 0.18, 0.92
+
+    n_pass, n_total = 0, 0
+    if spectrum_grid:
+        n_pass, n_total = _draw_spectrum_grid_section(
+            fig, spectrum_grid, top=0.78, bottom=0.40, grid_left=grid_left, grid_right=grid_right,
+            section_title="Synchrotron Spectrum Shapes",
+        )
+
+    total_rate = n_pass / n_total * 100 if n_total > 0 else 0
+    status_color = COLORS["pass"] if total_rate >= 80 else COLORS["fail"]
+    fig.suptitle(f"Synchrotron Spectrum Shapes: {n_pass}/{n_total} passed ({total_rate:.0f}%)",
+                 fontsize=13, fontweight="bold", y=0.92, color=status_color)
+    return fig
+
+
+def plot_frequencies_summary_grid(results: Dict) -> plt.Figure:
+    """Plot frequencies summary: FWD + RVS thin + RVS thick frequency grids."""
+    fig = plt.figure(figsize=PAGE_PORTRAIT)
+
+    fwd_phases = ["coasting", "BM", "deep_newtonian"]
+    rvs_phases = ["crossing", "BM", "deep_newtonian"]
+    media = ["ISM", "Wind"]
+    quantities = ["nu_m", "nu_c", "nu_M"]
+
+    grid_left = 0.18
+    cell_width = (0.92 - grid_left) / (len(fwd_phases) * len(media))
+
+    total_pass, total_tests = 0, 0
+
+    grids = [
+        (results.get("freq_grid", {}), "Forward Shock", fwd_phases, 0.86, 0.70),
+        (results.get("rvs_freq_grid_thin", {}), "Reverse Shock — Thin Shell", rvs_phases, 0.56, 0.40),
+        (results.get("rvs_freq_grid_thick", {}), "Reverse Shock — Thick Shell", rvs_phases, 0.26, 0.10),
+    ]
+
+    for grid_data, title, phases, top, bottom in grids:
+        if grid_data:
+            n_p, n_t = _draw_grid_section(
+                fig, grid_data, quantities, title, top=top, bottom=bottom,
+                grid_left=grid_left, cell_width=cell_width, phases=phases, media=media)
+            total_pass += n_p
+            total_tests += n_t
+
+    total_rate = total_pass / total_tests * 100 if total_tests > 0 else 0
+    status_color = COLORS["pass"] if total_rate >= 80 else COLORS["fail"]
+    fig.suptitle(f"Frequencies Summary: {total_pass}/{total_tests} passed ({total_rate:.0f}%)",
+                 fontsize=13, fontweight="bold", y=0.96, color=status_color)
+    return fig
+
+
+def _smooth_1d(arr, size):
+    """Uniform 1D smoothing with nearest-edge padding (replaces scipy.ndimage.uniform_filter1d)."""
+    pad = size // 2
+    padded = np.pad(arr, pad, mode="edge")
+    kernel = np.ones(size) / size
+    return np.convolve(padded, kernel, mode="valid")
+
+
 def _plot_quantity_panel(ax_qty, ax_deriv, t, y, qty, phases):
-    from scipy.ndimage import uniform_filter1d
 
     if len(y) == 0:
         ax_qty.text(0.5, 0.5, f"No {qty} data", ha="center", va="center", transform=ax_qty.transAxes)
@@ -301,7 +417,7 @@ def _plot_quantity_panel(ax_qty, ax_deriv, t, y, qty, phases):
     deriv = np.gradient(log_y, log_t)
 
     window = min(15, max(3, len(deriv) // 5))
-    deriv_smooth = uniform_filter1d(deriv, size=window, mode="nearest")
+    deriv_smooth = _smooth_1d(deriv, size=window)
 
     ax_deriv.semilogx(t[valid], deriv_smooth, "k-", alpha=0.5, linewidth=1)
 
@@ -375,11 +491,11 @@ def _plot_quantities_combined(viz_data: Dict, medium: str, quantities: List[str]
 
 
 def plot_shock_quantities_combined(viz_data: Dict, medium: str = "ISM") -> plt.Figure:
-    return _plot_quantities_combined(viz_data, medium, ["u", "r", "B", "N_p"], "Shock Dynamics")
+    return _plot_quantities_combined(viz_data, medium, ["u", "r", "B", "N_p"], "Forward Shock Dynamics")
 
 
 def plot_frequency_quantities_combined(viz_data: Dict, medium: str = "ISM") -> plt.Figure:
-    return _plot_quantities_combined(viz_data, medium, ["nu_m", "nu_c", "nu_a"], "Characteristic Frequencies")
+    return _plot_quantities_combined(viz_data, medium, ["nu_m", "nu_c", "nu_a", "nu_M"], "Forward Shock Frequencies")
 
 
 REGIME_TITLES = {
@@ -413,15 +529,15 @@ def _format_beta_expr(expr: str) -> str:
 SEGMENT_COLORS = ["#1f77b4", "#ff7f0e", "#2ca02c", "#d62728"]
 
 
-def _plot_spectrum_panel(ax_spec, ax_slope, nu, flux, nu_a, nu_m, nu_c, segments, regime):
+def _plot_spectrum_panel(ax_spec, ax_slope, nu, flux, nu_a, nu_m, nu_c, segments, regime,
+                         nu_range=(1e6, 1e20)):
     """Plot spectrum panel with slope derivative, similar to shock dynamics panels."""
-    from scipy.ndimage import uniform_filter1d
 
     valid = (flux > 0) & np.isfinite(flux) & (nu > 0)
     if np.sum(valid) < 3:
         ax_spec.text(0.5, 0.5, "No valid data", ha="center", va="center", transform=ax_spec.transAxes)
-        ax_spec.set_xlim(1e6, 1e20)
-        ax_slope.set_xlim(1e6, 1e20)
+        ax_spec.set_xlim(*nu_range)
+        ax_slope.set_xlim(*nu_range)
         return
 
     nu_valid, flux_valid = nu[valid], flux[valid]
@@ -448,7 +564,7 @@ def _plot_spectrum_panel(ax_spec, ax_slope, nu, flux, nu_a, nu_m, nu_c, segments
     deriv = np.gradient(log_flux, log_nu)
 
     window = min(15, max(3, len(deriv) // 5))
-    deriv_smooth = uniform_filter1d(deriv, size=window, mode="nearest")
+    deriv_smooth = _smooth_1d(deriv, size=window)
 
     ax_slope.semilogx(nu_valid, deriv_smooth, "k-", alpha=0.5, linewidth=1)
 
@@ -494,9 +610,9 @@ def _plot_spectrum_panel(ax_spec, ax_slope, nu, flux, nu_a, nu_m, nu_c, segments
     ax_slope.grid(True, alpha=0.3)
     ax_slope.tick_params(labelsize=7)
 
-    # Fix x-axis range to 1e6 to 1e20 Hz
-    ax_spec.set_xlim(1e6, 1e20)
-    ax_slope.set_xlim(1e6, 1e20)
+    # Fix x-axis range
+    ax_spec.set_xlim(*nu_range)
+    ax_slope.set_xlim(*nu_range)
 
     if all_vals:
         margin = max(0.5, (max(all_vals) - min(all_vals)) * 0.4)
@@ -551,5 +667,20 @@ def plot_spectrum_shapes(viz_data: Dict) -> plt.Figure:
         ax_spec.set_title(title, fontsize=9, fontweight="bold")
         ax_spec.text(0.02, 0.95, f"{medium}, t={t:.0e}s", transform=ax_spec.transAxes, fontsize=7, va="top")
 
-    fig.suptitle("Spectrum Shapes: Spectral Index Verification", fontsize=12, fontweight="bold", y=0.97)
+    fig.suptitle("Synchrotron Spectrum Shapes: Spectral Index Verification", fontsize=12, fontweight="bold", y=0.97)
     return fig
+
+
+# --- Reverse Shock Visualization ---
+
+
+def plot_rvs_shock_quantities_combined(viz_data: Dict, medium: str = "ISM", regime: str = "") -> plt.Figure:
+    """Plot reverse shock dynamics (mirrors plot_shock_quantities_combined)."""
+    suffix = f" — {regime.title()} Shell" if regime else ""
+    return _plot_quantities_combined(viz_data, medium, ["u", "r", "B", "N_p"], f"Reverse Shock Dynamics{suffix}")
+
+
+def plot_rvs_frequency_quantities_combined(viz_data: Dict, medium: str = "ISM", regime: str = "") -> plt.Figure:
+    """Plot reverse shock frequencies (mirrors plot_frequency_quantities_combined)."""
+    suffix = f" — {regime.title()} Shell" if regime else ""
+    return _plot_quantities_combined(viz_data, medium, ["nu_m", "nu_c", "nu_a", "nu_M"], f"Reverse Shock Frequencies{suffix}")

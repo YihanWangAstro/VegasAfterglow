@@ -19,6 +19,9 @@ sys.path.insert(0, str(Path(__file__).parent))
 from configs import (create_jet, create_medium, create_observer, create_radiation, get_jet_config, get_medium_config,
                      get_radiation_config, get_all_jet_names, get_radiation_names_no_ssc)
 
+sys.path.insert(0, str(Path(__file__).parent.parent))
+from validation.colors import _bold, _green, _red, _cyan, _dim, _bold_red, _header
+
 # ---------------------------------------------------------------------------
 # Data classes
 # ---------------------------------------------------------------------------
@@ -30,15 +33,8 @@ class ComponentTiming:
     stage_breakdown: Dict[str, float] = field(default_factory=dict)
 
 @dataclass
-class ResolutionPoint:
-    resolution: Tuple[float, float, float]
-    flux_value: float
-    time_ms: float
-
-@dataclass
 class DimensionConvergence:
     dimension: str
-    fiducial_resolution: Tuple[float, float, float]
     values: List[float]
     times_ms: List[float]
     errors_by_band: Dict[str, List[float]] = field(default_factory=dict)
@@ -46,7 +42,6 @@ class DimensionConvergence:
     times_by_band: Dict[str, List[float]] = field(default_factory=dict)
     t_array: List[float] = field(default_factory=list)
     flux_by_band: Dict[str, List[List[float]]] = field(default_factory=dict)
-    relative_errors: List[float] = field(default_factory=list)
 
 @dataclass
 class ConfigResult:
@@ -57,14 +52,9 @@ class ConfigResult:
     theta_obs_ratio: float
     spreading: bool
     timing: ComponentTiming
-    lightcurve_t: List[float] = field(default_factory=list)
-    lightcurve_flux: List[float] = field(default_factory=list)
-    spectrum_nu: List[float] = field(default_factory=list)
-    spectrum_flux: List[float] = field(default_factory=list)
     phi_convergence: Optional[DimensionConvergence] = None
     theta_convergence: Optional[DimensionConvergence] = None
     t_convergence: Optional[DimensionConvergence] = None
-    resolution_costs: List[ResolutionPoint] = field(default_factory=list)
 
 @dataclass
 class BenchmarkSession:
@@ -112,29 +102,9 @@ def get_vegasafterglow_version() -> str:
         return "not installed"
 
 def get_compiler_info() -> Tuple[str, str]:
-    compiler, flags = "unknown", "unknown"
-    cc_path = Path(__file__).parent.parent.parent / "compile_commands.json"
-    if not cc_path.exists():
-        return compiler, flags
-    try:
-        data = json.loads(cc_path.read_text())
-        if data:
-            parts = data[0].get("command", "").split()
-            if parts:
-                compiler = Path(parts[0]).name
-                flag_set = {p for p in parts[1:] if p.startswith(("-O", "-march", "-std"))
-                            or p in ("-fopenmp", "-ffast-math", "-DNDEBUG")}
-                if flag_set:
-                    flags = " ".join(sorted(flag_set))
-    except (json.JSONDecodeError, KeyError, IndexError):
-        pass
-    if compiler != "unknown":
-        try:
-            compiler = subprocess.run([compiler, "--version"], capture_output=True,
-                                      text=True, check=True).stdout.split("\n")[0].strip()
-        except (subprocess.CalledProcessError, FileNotFoundError):
-            pass
-    return compiler, flags
+    from validation.visualization.common import get_runtime_build_info
+    info = get_runtime_build_info()
+    return info.get("Compiler", "unknown"), info.get("Flags", "unknown")
 
 def get_jet_theta_c(jet_name: str) -> float:
     return get_jet_config(jet_name).params.get("theta_c", 0.1)
@@ -152,7 +122,7 @@ def _benchmark_worker(args: Tuple) -> Optional[Dict]:
         b = ComprehensiveBenchmark(iterations=iters, reference_resolution=ref_res)
         return asdict(b.benchmark_config(jet, med, rad, theta, spread, verbose=False))
     except Exception as e:
-        print(f"Worker error for {jet}/{med}: {e}")
+        print(f"Worker {_bold_red('error')} for {jet}/{med}: {e}")
         return None
 
 # ---------------------------------------------------------------------------
@@ -178,29 +148,31 @@ class ComprehensiveBenchmark:
 
     def _compute_timing(self, jet_name, medium_name, radiation_name, theta_obs, resolution, spreading=False):
         import VegasAfterglow as va
-        model = self._create_model(jet_name, medium_name, radiation_name, theta_obs, resolution, spreading)
         t = np.logspace(2, 7, 30)
         nu = np.full_like(t, self.nu_ref)
-        va.Model.profile_reset()
-        model.flux_density(t, nu)
-        stage_breakdown = va.Model.profile_data()
+        all_breakdowns = []
+        for _ in range(self.iterations):
+            model = self._create_model(jet_name, medium_name, radiation_name, theta_obs, resolution, spreading)
+            va.Model.profile_reset()
+            model.flux_density(t, nu)
+            all_breakdowns.append(va.Model.profile_data())
+        # Average stage times across iterations
+        all_stages = set()
+        for bd in all_breakdowns:
+            all_stages.update(bd.keys())
+        stage_breakdown = {}
+        for stage in all_stages:
+            vals = [bd.get(stage, 0.0) for bd in all_breakdowns]
+            stage_breakdown[stage] = np.mean(vals)
         ms = stage_breakdown.get("total", 0.0)
         return ComponentTiming(flux_single_ms=ms, total_ms=ms, stage_breakdown=stage_breakdown)
-
-    def _compute_lightcurve(self, model, n=50):
-        t = np.logspace(2, 7, n)
-        return t.tolist(), model.flux_density(t, np.full_like(t, self.nu_ref)).total.tolist()
-
-    def _compute_spectrum(self, model, n=50):
-        nu = np.logspace(9, 20, n)
-        return nu.tolist(), model.flux_density(np.full_like(nu, self.t_ref), nu).total.tolist()
 
     def _run_dimension_convergence(self, jet_name, medium_name, radiation_name, theta_obs,
                                    dimension, values, spreading=False):
         import VegasAfterglow as va
         fiducial = list(FIDUCIAL_RESOLUTION)
         dim_idx = DIM_INDEX[dimension]
-        t_lc = np.logspace(2, 7, 150)
+        t_lc = np.logspace(2, 7, 50)
         bands = list(CONVERGENCE_BANDS)
         n_vals = len(values)
 
@@ -215,8 +187,7 @@ class ComprehensiveBenchmark:
 
         def _nan_result():
             return DimensionConvergence(
-                dimension=dimension, fiducial_resolution=tuple(fiducial), values=values,
-                times_ms=[np.nan]*n_vals,
+                dimension=dimension, values=values, times_ms=[np.nan]*n_vals,
                 errors_by_band={b: [np.nan]*n_vals for b in bands},
                 mean_errors_by_band={b: [np.nan]*n_vals for b in bands},
                 times_by_band={b: [np.nan]*n_vals for b in bands},
@@ -231,7 +202,7 @@ class ComprehensiveBenchmark:
             ref_lcs = {b: ref_model.flux_density(t_lc, nu_arr).total.copy()
                        for b, nu_arr in nu_arrays.items()}
         except Exception as e:
-            print(f"      Error computing reference: {e}")
+            print(f"      {_bold_red('Error')} computing reference: {e}")
             return _nan_result()
 
         for val in values:
@@ -261,7 +232,7 @@ class ComprehensiveBenchmark:
                         mean_errors_by_band[band_name].append(np.nan)
                 times_ms.append(np.mean(band_times))
             except Exception as e:
-                print(f"      Error at {dimension}={val}: {e}")
+                print(f"      {_bold_red('Error')} at {dimension}={val}: {e}")
                 times_ms.append(np.nan)
                 for b in bands:
                     times_by_band[b].append(np.nan)
@@ -270,51 +241,33 @@ class ComprehensiveBenchmark:
                     flux_by_band[b].append([])
 
         return DimensionConvergence(
-            dimension=dimension, fiducial_resolution=tuple(fiducial), values=values, times_ms=times_ms,
+            dimension=dimension, values=values, times_ms=times_ms,
             errors_by_band=errors_by_band, mean_errors_by_band=mean_errors_by_band, times_by_band=times_by_band,
             t_array=t_lc.tolist(), flux_by_band=flux_by_band,
-            relative_errors=np.nanmean([errors_by_band[b] for b in bands], axis=0).tolist(),
         )
 
     def benchmark_config(self, jet_name, medium_name, radiation_name, theta_obs,
                          spreading=False, verbose=True):
-        import VegasAfterglow as va
         theta_c = get_jet_theta_c(jet_name)
         ratio = theta_obs / theta_c if theta_c > 0 else 0.0
         log = print if verbose else (lambda *_a, **_k: None)
 
-        log(f"\n  Benchmarking: {jet_name}/{medium_name}/{radiation_name}/θ_v/θ_c={ratio:.1f}")
+        log(f"\n  Benchmarking: {_bold(f'{jet_name}/{medium_name}/{radiation_name}')}/θ_v/θ_c={ratio:.1f}")
         timing = self._compute_timing(jet_name, medium_name, radiation_name, theta_obs, self.reference_resolution, spreading)
-
-        model = self._create_model(jet_name, medium_name, radiation_name, theta_obs, self.reference_resolution, spreading)
-        lc_t, lc_flux = self._compute_lightcurve(model)
-        spec_nu, spec_flux = self._compute_spectrum(model)
 
         result = ConfigResult(
             jet_type=jet_name, medium=medium_name, radiation=radiation_name, theta_obs=theta_obs,
             theta_obs_ratio=ratio, spreading=spreading, timing=timing,
-            lightcurve_t=lc_t, lightcurve_flux=lc_flux, spectrum_nu=spec_nu, spectrum_flux=spec_flux,
         )
 
         for dim, vals, attr in [("phi", PHI_VALUES, "phi_convergence"),
                                 ("theta", THETA_VALUES, "theta_convergence"),
                                 ("t", T_VALUES, "t_convergence")]:
-            log(f"    {dim} convergence...")
+            log(f"    {_cyan(dim)} convergence...")
             setattr(result, attr, self._run_dimension_convergence(
                 jet_name, medium_name, radiation_name, theta_obs, dim, vals, spreading))
 
-        for scale in [0.5, 0.75, 1.0, 1.5, 2.0]:
-            res = tuple(r * scale for r in self.reference_resolution)
-            try:
-                m = self._create_model(jet_name, medium_name, radiation_name, theta_obs, res, spreading)
-                va.Model.profile_reset()
-                flux = m.flux_density(np.array([self.t_ref]), np.array([self.nu_ref]))
-                elapsed = va.Model.profile_data().get("total", 0.0)
-                result.resolution_costs.append(ResolutionPoint(res, float(flux.total[0]), elapsed))
-            except Exception as e:
-                print(f"      Error at scale {scale}: {e}")
-
-        log(f"    Done: {timing.flux_single_ms:.2f} ms/LC")
+        log(f"    {_green('Done')}: {_dim(f'{timing.flux_single_ms:.2f} ms/LC')}")
         self.results.append(result)
         return result
 
@@ -323,10 +276,10 @@ class ComprehensiveBenchmark:
     # -----------------------------------------------------------------------
 
     def _run_suite(self, title, configs):
-        print(f"\n{'='*70}\n{title}\n{'='*70}")
-        print(f"Running {len(configs)} configurations...")
+        print(_header(title))
+        print(f"Running {_bold(str(len(configs)))} configurations...")
         for i, (jet, med, rad, theta) in enumerate(configs, 1):
-            print(f"\n[{i}/{len(configs)}]", end="")
+            print(f"\n{_dim(f'[{i}/{len(configs)}]')}", end="")
             self.benchmark_config(jet, med, rad, theta)
         return self.results
 
@@ -343,8 +296,8 @@ class ComprehensiveBenchmark:
             [(j, m, "synchrotron_only", 0.0) for j, m in product(jets, meds)])
 
     def run_parallel(self, jet_types=None, medium_types=None, radiation_types=None,
-                     viewing_ratios=None, n_workers=None):
-        print(f"\n{'='*70}\nPARALLEL BENCHMARK SUITE\n{'='*70}")
+                     viewing_ratios=None, n_workers=None, timeout=600):
+        print(_header("PARALLEL BENCHMARK SUITE"))
         jets = jet_types or get_all_jet_names()
         meds = medium_types or ["ISM", "wind"]
         rads = radiation_types or ["synchrotron_only"]
@@ -354,26 +307,40 @@ class ComprehensiveBenchmark:
         configs = [(j, m, r, get_jet_theta_c(j) * ratio, False, self.iterations, self.reference_resolution)
                    for j, m, r, ratio in product(jets, meds, rads, ratios)]
 
-        print(f"Running {len(configs)} configurations with {n_workers} workers...")
-        completed, results_dicts = 0, []
+        print(f"Running {_bold(str(len(configs)))} configurations with {_bold(str(n_workers))} workers "
+              f"(timeout {timeout}s per config)...")
+        completed, results_dicts, timed_out = 0, [], 0
         with mp.Pool(n_workers, initializer=_init_worker) as pool:
-            for rd in pool.imap_unordered(_benchmark_worker, configs):
+            async_results = [(cfg, pool.apply_async(_benchmark_worker, (cfg,))) for cfg in configs]
+            for cfg, ar in async_results:
                 completed += 1
+                jet, med, rad = cfg[0], cfg[1], cfg[2]
+                try:
+                    rd = ar.get(timeout=timeout)
+                except mp.TimeoutError:
+                    timed_out += 1
+                    print(f"  {_dim(f'[{completed}/{len(configs)}]')} {_bold_red('TIMEOUT')} "
+                          f"{_bold(f'{jet}/{med}/{rad}')}: exceeded {timeout}s")
+                    continue
                 if rd:
                     results_dicts.append(rd)
-                    print(f"  [{completed}/{len(configs)}] {rd.get('jet_type','?')}/{rd.get('medium','?')}: "
-                          f"single-freq LC {rd.get('timing',{}).get('flux_single_ms',0):.1f} ms")
+                    ms = rd.get('timing', {}).get('flux_single_ms', 0)
+                    print(f"  {_dim(f'[{completed}/{len(configs)}]')} {_bold(f'{jet}/{med}')}: "
+                          f"single-freq LC {_dim(f'{ms:.1f} ms')}")
                 else:
-                    print(f"  [{completed}/{len(configs)}] FAILED")
+                    print(f"  {_dim(f'[{completed}/{len(configs)}]')} {_bold_red('FAILED')}")
+            pool.terminate()
 
-        print(f"\nCompleted {len(results_dicts)}/{len(configs)} configurations")
+        status = f"Completed {_bold(f'{len(results_dicts)}/{len(configs)}')} configurations"
+        if timed_out:
+            status += f" ({_bold_red(f'{timed_out} timed out')})"
+        print(f"\n{status}")
         for rd in results_dicts:
             timing = ComponentTiming(**rd.pop("timing"))
             convs = {k: DimensionConvergence(**rd.pop(k)) if rd.get(k) else None
                      for k in ["phi_convergence", "theta_convergence", "t_convergence"]}
             for k in convs: rd.pop(k, None)
-            costs = [ResolutionPoint(**rc) for rc in rd.pop("resolution_costs", [])]
-            self.results.append(ConfigResult(timing=timing, **convs, resolution_costs=costs, **rd))
+            self.results.append(ConfigResult(timing=timing, **convs, **rd))
         return self.results
 
     # -----------------------------------------------------------------------
@@ -387,34 +354,40 @@ class ComprehensiveBenchmark:
             python_version=sys.version.split()[0], vegasafterglow_version=get_vegasafterglow_version(),
             compiler=compiler, compile_flags=compile_flags, configs=self.results,
         )
+        session_dict = asdict(session)
         path = Path(filepath)
-        history = json.loads(path.read_text()) if path.exists() else {"sessions": []}
-        history["sessions"].append(asdict(session))
         path.parent.mkdir(parents=True, exist_ok=True)
-        path.write_text(json.dumps(history, indent=2))
-        print(f"\nResults saved to {filepath}")
+        path.write_text(json.dumps(session_dict))
+        print(f"\nResults saved to {_dim(filepath)}")
 
     def print_summary(self):
         if not self.results:
             print("No results to summarize"); return
-        print(f"\n{'='*70}\nBENCHMARK SUMMARY\n{'='*70}")
+        print(_header("BENCHMARK SUMMARY"))
 
         by_jet = {}
         for r in self.results:
             by_jet.setdefault(r.jet_type, []).append(r)
 
-        print(f"\n{'Jet Type':<20} {'SingleLC (ms)':<15}")
-        print("-" * 35)
+        print(f"\n{_bold('Jet Type'):<28} {_bold('SingleLC (ms)'):<15}")
+        print(_dim("-" * 35))
         for jet, results in by_jet.items():
-            print(f"{jet:<20} {np.mean([r.timing.flux_single_ms for r in results]):<15.2f}")
+            ms = np.mean([r.timing.flux_single_ms for r in results])
+            print(f"{_cyan(jet):<28} {ms:<15.2f}")
 
-        print("\nConvergence (max relative error):")
-        print("-" * 80)
+        print(f"\n{_bold('Convergence')} {_dim('(mean relative error)')}:")
+        print(_dim("-" * 80))
         for r in self.results:
             if r.phi_convergence:
-                get_max = lambda c: max((e for e in c.relative_errors if not np.isnan(e)), default=0)
-                print(f"{r.jet_type}/{r.medium}: phi={get_max(r.phi_convergence):.2e}, "
-                      f"theta={get_max(r.theta_convergence):.2e}, t={get_max(r.t_convergence):.2e}")
+                def _mean_err(c):
+                    vals = [v for band in c.mean_errors_by_band.values() for v in band if not np.isnan(v)]
+                    return np.mean(vals) if vals else 0.0
+                label = _bold(f"{r.jet_type}/{r.medium}")
+                phi_e = _mean_err(r.phi_convergence)
+                theta_e = _mean_err(r.theta_convergence)
+                t_e = _mean_err(r.t_convergence)
+                fmt = lambda v: _green(f"{v:.2e}") if v < 0.05 else (_red(f"{v:.2e}") if v > 0.1 else f"{v:.2e}")
+                print(f"{label}: phi={fmt(phi_e)}, theta={fmt(theta_e)}, t={fmt(t_e)}")
 
 
 def main():
@@ -424,20 +397,21 @@ def main():
     parser.add_argument("-j", "--parallel", type=int, default=0, metavar="N", help="Parallel workers")
     parser.add_argument("--jet", type=str, nargs="+", help="Jet type(s)")
     parser.add_argument("--medium", type=str, nargs="+", help="Medium type(s)")
-    parser.add_argument("--iterations", type=int, default=1, help="Timing iterations")
+    parser.add_argument("--iterations", type=int, default=10, help="Timing iterations for overview stage breakdown")
+    parser.add_argument("--timeout", type=int, default=600, help="Per-config timeout in seconds (default: 600)")
     parser.add_argument("--output", type=str, default="results/benchmark_history.json", help="Output file")
     args = parser.parse_args()
 
-    print(f"{'='*70}\nVegasAfterglow Benchmark Suite\n{'='*70}")
-    print(f"Commit: {get_git_commit()}\nPlatform: {get_platform_info()}\nPython: {sys.version.split()[0]}")
+    print(_header("VegasAfterglow Benchmark Suite"))
+    print(f"Commit: {_bold(get_git_commit())}\nPlatform: {get_platform_info()}\nPython: {sys.version.split()[0]}")
 
     b = ComprehensiveBenchmark(iterations=args.iterations)
     if args.parallel > 0:
-        print(f"Parallel workers: {args.parallel}")
+        print(f"Parallel workers: {_bold(str(args.parallel))}")
         ratios = VIEWING_ANGLE_RATIOS if args.full else [0]
         rads = get_radiation_names_no_ssc() if args.full else ["synchrotron_only"]
         b.run_parallel(jet_types=args.jet, medium_types=args.medium, radiation_types=rads,
-                       viewing_ratios=ratios, n_workers=args.parallel)
+                       viewing_ratios=ratios, n_workers=args.parallel, timeout=args.timeout)
     elif args.full:
         b.run_full_suite()
     elif args.convergence:

@@ -9,6 +9,10 @@ import sys
 from pathlib import Path
 
 DEFAULT_WORKERS = os.cpu_count() or 4
+
+sys.path.insert(0, str(Path(__file__).parent.parent))
+from validation.colors import (_bold, _green, _red, _bold_green, _bold_red,
+                               _header, _bar)
 BENCH_MEAN_THRESH = 0.05   # 5%
 BENCH_MAX_THRESH = 0.10    # 10%
 
@@ -28,10 +32,7 @@ def check_benchmark_results(json_path):
     data, err = _load_json(json_path)
     if err:
         return False, err
-    sessions = data.get("sessions", [])
-    if not sessions:
-        return False, "No benchmark sessions found"
-    configs = sessions[-1].get("configs", sessions[-1].get("results", []))
+    configs = data.get("configs", [])
     if not configs:
         return False, "No benchmark configurations found"
 
@@ -42,12 +43,25 @@ def check_benchmark_results(json_path):
             if not conv:
                 continue
             total += 1
-            mean_errs = conv.get("mean_errors", [])
-            max_errs = conv.get("relative_errors", conv.get("max_errors", []))
-            if not mean_errs or not max_errs:
+            # Collect the highest-resolution error across all bands
+            mean_by_band = conv.get("mean_errors_by_band", {})
+            errs_by_band = conv.get("errors_by_band", {})
+            if not mean_by_band and not errs_by_band:
                 continue
-            mean_err = mean_errs[-1] if mean_errs[-1] == mean_errs[-1] else 1.0  # NaN check
-            max_err = max_errs[-1] if max_errs[-1] == max_errs[-1] else 1.0
+            # Worst-case mean error across bands (last element = highest resolution)
+            mean_err = 0.0
+            for band_errs in mean_by_band.values():
+                if band_errs:
+                    v = band_errs[-1]
+                    if v == v:  # NaN check
+                        mean_err = max(mean_err, v)
+            # Worst-case max error across bands
+            max_err = 0.0
+            for band_errs in errs_by_band.values():
+                if band_errs:
+                    v = band_errs[-1]
+                    if v == v:
+                        max_err = max(max_err, v)
             name = f"{config.get('jet_type', '?')}/{config.get('medium', '?')}"
             if mean_err >= BENCH_MEAN_THRESH:
                 failed.append(f"{name} ({dim}): mean_error={mean_err:.1%} >= {BENCH_MEAN_THRESH:.0%}")
@@ -57,13 +71,13 @@ def check_benchmark_results(json_path):
                 passed += 1
 
     if failed:
-        msg = f"Benchmark FAILED: {len(failed)} configurations failed\n"
+        msg = f"{_bold_red('Benchmark FAILED')}: {len(failed)} configurations failed\n"
         for f in failed[:5]:
-            msg += f"  - {f}\n"
+            msg += f"  - {_red(f)}\n"
         if len(failed) > 5:
             msg += f"  ... and {len(failed) - 5} more\n"
         return False, msg
-    return True, f"Benchmark PASSED: {passed} pass, {acceptable} acceptable out of {total} total"
+    return True, f"{_bold_green('Benchmark PASSED')}: {_green(f'{passed} pass')}, {acceptable} acceptable out of {total} total"
 
 
 def check_regression_results(json_path):
@@ -77,22 +91,25 @@ def check_regression_results(json_path):
     n_fail = len(tests) - n_pass
     if n_fail > 0:
         failed = [t for t in tests if not t.get("passed", False)]
-        msg = f"Regression FAILED: {n_fail}/{len(tests)} tests failed\n"
+        msg = f"{_bold_red('Regression FAILED')}: {n_fail}/{len(tests)} tests failed\n"
         for t in failed[:5]:
-            msg += f"  - {t.get('name', '?')}: {t.get('message', 'no details')}\n"
+            detail = t.get('message', '')
+            if not detail and t.get('measured') is not None:
+                detail = f"measured={t['measured']:.4f}, expected={t.get('expected', '?')}, tol={t.get('tolerance', '?')}"
+            msg += f"  - {_red(t.get('name', '?'))}: {detail or 'no details'}\n"
         if len(failed) > 5:
             msg += f"  ... and {len(failed) - 5} more\n"
         return False, msg
-    return True, f"Regression PASSED: {n_pass}/{len(tests)} tests passed"
+    return True, f"{_bold_green('Regression PASSED')}: {_green(f'{n_pass}/{len(tests)} tests passed')}"
 
 
 def _run_suite(name, script, extra_args=()):
-    print(f"\n{'='*60}\nRunning {name}\n{'='*60}\n")
+    print(_header(f"Running {name}"))
     try:
         result = subprocess.run([sys.executable, str(script), *extra_args], cwd=VALIDATION_DIR)
         return result.returncode == 0
     except Exception as e:
-        print(f"Error running {name}: {e}")
+        print(f"{_bold_red('Error')} running {name}: {e}")
         return False
 
 
@@ -108,10 +125,8 @@ def run_regression():
 
 
 def generate_report(benchmark_path=None, regression_path=None, output_dir=None, parallel=0):
-    print(f"\n{'='*60}\nGenerating Validation Report\n{'='*60}\n")
+    print(_header("Generating Validation Report"))
     try:
-        if str(VALIDATION_DIR.parent) not in sys.path:
-            sys.path.insert(0, str(VALIDATION_DIR.parent))
         from validation.visualization.dashboard import ComprehensiveDashboard
 
         out = Path(output_dir or str(VALIDATION_DIR))
@@ -123,7 +138,7 @@ def generate_report(benchmark_path=None, regression_path=None, output_dir=None, 
             n_workers=parallel if parallel > 0 else DEFAULT_WORKERS)
         return True
     except Exception as e:
-        print(f"Error generating report: {e}")
+        print(f"{_bold_red('Error')} generating report: {e}")
         import traceback
         traceback.print_exc()
         return False
@@ -149,7 +164,7 @@ def main():
     regr_path = VALIDATION_DIR / "regression" / "results" / "regression_results.json"
     all_passed, messages = True, []
 
-    print("=" * 60 + "\nVegasAfterglow Validation Runner\n" + "=" * 60)
+    print(_header("VegasAfterglow Validation Runner"))
 
     # Run tests
     if not args.check_only:
@@ -165,7 +180,7 @@ def main():
                 all_passed = False
 
     # Check results
-    print(f"\n{'='*60}\nChecking Results\n{'='*60}\n")
+    print(_header("Checking Results"))
     for should_run, checker, path, label in [
         (args.all or args.benchmark or args.check_only, check_benchmark_results, bench_path, "Benchmark"),
         (args.all or args.regression or args.check_only, check_regression_results, regr_path, "Regression"),
@@ -187,11 +202,11 @@ def main():
             messages.append("Report generation failed")
 
     # Summary
-    print(f"\n{'='*60}")
-    print("VALIDATION PASSED" if all_passed else "VALIDATION FAILED")
+    print(f"\n{_bar()}")
+    print(_bold_green("VALIDATION PASSED") if all_passed else _bold_red("VALIDATION FAILED"))
     for msg in messages:
-        print(f"  - {msg}")
-    print("=" * 60)
+        print(f"  - {_red(msg)}")
+    print(_bar())
     sys.exit(0 if all_passed else 1)
 
 

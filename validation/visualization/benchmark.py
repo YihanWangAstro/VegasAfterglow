@@ -14,11 +14,100 @@ from matplotlib.gridspec import GridSpec
 
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 from validation.visualization.common import (BAND_COLORS, COLORS, FIDUCIAL_VALUES, MAX_ERROR_THRESHOLD, MEAN_ERROR_THRESHOLD, PAGE_PORTRAIT,
-                                        PHASE_NAMES, find_fiducial_index, get_flux_time, get_unique_short_names, setup_plot_style)
+                                        PHASE_NAMES, find_fiducial_index, get_flux_time, setup_plot_style)
+
+
+def _plot_stage_breakdown_panel(ax, configs, jets, media):
+    """Plot stage breakdown stacked bar chart for a set of configs. Bars = jet × medium."""
+    has_stage_data = any(c.get("timing", {}).get("stage_breakdown") for c in configs)
+
+    combinations = []
+    combo_labels = []
+    for jet in jets:
+        for medium in media:
+            matching = [c for c in configs if c.get("jet_type") == jet and c.get("medium") == medium]
+            if matching:
+                combinations.append((jet, medium, matching))
+                combo_labels.append(f"{jet}/{medium}")
+
+    if not combinations:
+        ax.text(0.5, 0.5, "No data", ha="center", va="center", transform=ax.transAxes, fontsize=10, color="gray")
+        return
+
+    if has_stage_data:
+        # Collect all stage names across configs, ordered by total time
+        stage_totals = {}
+        for _, _, matching in combinations:
+            for c in matching:
+                for stage, ms in c.get("timing", {}).get("stage_breakdown", {}).items():
+                    if stage != "total":
+                        stage_totals[stage] = stage_totals.get(stage, 0) + ms
+        stage_names = sorted(stage_totals, key=lambda s: stage_totals[s], reverse=True)
+
+        stage_labels = {
+            "mesh": "grid generation", "EAT_grid": "EAT grid",
+            "shock_dynamics": "shock dynamics", "observer": "observer",
+            "syn_electrons": "syn electron gen", "syn_photons": "syn photon gen",
+            "cooling": "cooling", "sync_flux": "flux integration",
+            "ic_photons": "IC photon gen", "ssc_flux": "SSC flux",
+        }
+        stage_colors = {
+            "mesh": "#2ECC71", "EAT_grid": "#27AE60",
+            "shock_dynamics": "#3498DB", "observer": "#1ABC9C",
+            "syn_electrons": "#9B59B6", "syn_photons": "#E74C3C", "cooling": "#F39C12",
+            "sync_flux": "#E67E22", "ic_photons": "#8E44AD", "ssc_flux": "#C0392B",
+        }
+        fallback_colors = plt.cm.Set2(np.linspace(0, 1, max(len(stage_names), 1)))
+
+        x = np.arange(len(combinations))
+        width = 0.7
+        bottom = np.zeros(len(combinations))
+
+        for i, stage in enumerate(stage_names):
+            values = []
+            for _, _, matching in combinations:
+                # Average across bands (per-config stage breakdown), not across configs
+                band_times = []
+                for c in matching:
+                    t = c.get("timing", {}).get("stage_breakdown", {}).get(stage, 0)
+                    if t > 0:
+                        band_times.append(t)
+                values.append(np.mean(band_times) if band_times else 0)
+            color = stage_colors.get(stage, fallback_colors[i % len(fallback_colors)])
+            label = stage_labels.get(stage, stage)
+            ax.bar(x, values, width, bottom=bottom, label=label, color=color, alpha=0.8)
+            bottom += np.array(values)
+
+        ax.set_xticks(x)
+        ax.set_xticklabels(combo_labels, rotation=45, ha="right")
+        ax.set_ylabel("Time [ms]")
+        ax.legend(fontsize=6, loc="upper right", ncol=2)
+        ax.grid(axis="y", alpha=0.3)
+    else:
+        # Fallback: total flux time bar chart
+        x = np.arange(len(combinations))
+        width = 0.7
+        values = []
+        for _, _, matching in combinations:
+            band_times = [get_flux_time(c) for c in matching if get_flux_time(c) > 0]
+            values.append(np.mean(band_times) if band_times else 0)
+        ax.bar(x, values, width, color="#3498DB", alpha=0.8)
+        for xi, v in zip(x, values):
+            if v > 0:
+                ax.text(xi, v + 0.5, f"{v:.0f}", ha="center", va="bottom", fontsize=7)
+        ax.set_xticks(x)
+        ax.set_xticklabels(combo_labels, rotation=45, ha="right")
+        ax.set_ylabel("Time [ms]")
+        ax.grid(axis="y", alpha=0.3)
 
 
 def plot_benchmark_overview(session: Dict, angle_filter: str = "all") -> plt.Figure:
-    """Create benchmark overview page. angle_filter: 'all', 'on-axis', or 'off-axis'."""
+    """Create benchmark overview page with 4 panels, one per radiation config.
+
+    Each panel shows a stage breakdown stacked bar chart with bars = jet type × medium.
+    Currently only synchrotron_only is populated; the other 3 panels are placeholders.
+    angle_filter: 'all', 'on-axis', or 'off-axis'.
+    """
     fig = plt.figure(figsize=(8.5, 11))
     gs = GridSpec(2, 2, figure=fig, hspace=0.40, wspace=0.35, top=0.92, bottom=0.08, left=0.10, right=0.95)
 
@@ -41,206 +130,30 @@ def plot_benchmark_overview(session: Dict, angle_filter: str = "all") -> plt.Fig
 
     jets = sorted(set(c.get("jet_type", "unknown") for c in configs))
     media = sorted(set(c.get("medium", "unknown") for c in configs))
-    rads = sorted(set(c.get("radiation", "unknown") for c in configs))
+    # Define the 4 radiation config panels
+    rad_panels = [
+        ("synchrotron_only", "Fwd Synchrotron"),
+        ("rvs_synchrotron_only", "Rvs Synchrotron"),
+        ("fwd_ic", "Fwd IC"),
+        ("rvs_ic", "Rvs IC"),
+    ]
 
-    medium_colors = {"ISM": "#3498DB", "wind": "#E74C3C", "unknown": "#95A5A6"}
-    jet_colors = plt.cm.Set2(np.linspace(0, 1, max(len(jets), 1)))
+    for idx, (rad_key, rad_label) in enumerate(rad_panels):
+        row, col = divmod(idx, 2)
+        ax = fig.add_subplot(gs[row, col])
+        ax.set_title(rad_label, fontsize=10, fontweight="bold")
 
-    # Panel 1: Light curve time by jet type, grouped by medium
-    ax1 = fig.add_subplot(gs[0, 0])
-    x = np.arange(len(jets))
-    width = 0.8 / max(len(media), 1)
-
-    for i, medium in enumerate(media):
-        times = []
-        for jet in jets:
-            matching = [c for c in configs if c.get("jet_type") == jet and c.get("medium") == medium]
-            if matching:
-                avg_time = np.mean([get_flux_time(c) for c in matching])
-                times.append(avg_time)
-            else:
-                times.append(0)
-
-        offset = (i - len(media) / 2 + 0.5) * width
-        color = medium_colors.get(medium, f"C{i}")
-        bars = ax1.bar(x + offset, times, width * 0.9, label=medium, color=color, alpha=0.8)
-
-        for bar, t in zip(bars, times):
-            if t > 0:
-                ax1.text(bar.get_x() + bar.get_width() / 2, bar.get_height() + 0.5, f"{t:.0f}",
-                         ha="center", va="bottom", fontsize=7)
-
-    ax1.set_xticks(x)
-    ax1.set_xticklabels(jets, rotation=45, ha="right")
-    ax1.set_ylabel("Time [ms]")
-    ax1.set_title("Single-Freq LC Time by Jet")
-    ax1.legend(title="Medium", fontsize=8, loc="upper right")
-    ax1.grid(axis="y", alpha=0.3)
-
-    # Panel 2: Stage breakdown (C++ profiling) or resolution cost scaling
-    ax2 = fig.add_subplot(gs[0, 1])
-    jet_short = get_unique_short_names(jets)
-
-    # Check if any config has stage_breakdown data
-    has_stage_data = any(c.get("timing", {}).get("stage_breakdown") for c in configs)
-
-    combinations = []
-    combo_labels = []
-    for jet in jets:
-        for medium in media:
-            matching = [c for c in configs if c.get("jet_type") == jet and c.get("medium") == medium]
-            if matching:
-                combinations.append((jet, medium, matching))
-                short_med = medium[0].upper()
-                combo_labels.append(f"{jet_short[jet]}/{short_med}")
-
-    if has_stage_data and combinations:
-        # Collect all stage names across configs, ordered by total time
-        stage_totals = {}
-        for _, _, matching in combinations:
-            for c in matching:
-                for stage, ms in c.get("timing", {}).get("stage_breakdown", {}).items():
-                    if stage != "total":
-                        stage_totals[stage] = stage_totals.get(stage, 0) + ms
-        stage_names = sorted(stage_totals, key=lambda s: stage_totals[s], reverse=True)
-
-        stage_colors = {
-            "mesh": "#2ECC71", "shock_dynamics": "#3498DB", "observer": "#1ABC9C",
-            "syn_electrons": "#9B59B6", "syn_photons": "#E74C3C", "cooling": "#F39C12",
-            "sync_flux": "#E67E22", "ic_photons": "#8E44AD", "ssc_flux": "#C0392B",
-        }
-        fallback_colors = plt.cm.Set2(np.linspace(0, 1, max(len(stage_names), 1)))
-
-        x = np.arange(len(combinations))
-        width = 0.7
-        bottom = np.zeros(len(combinations))
-
-        for i, stage in enumerate(stage_names):
-            values = []
-            for _, _, matching in combinations:
-                avg = np.mean([c.get("timing", {}).get("stage_breakdown", {}).get(stage, 0) for c in matching])
-                values.append(avg)
-            color = stage_colors.get(stage, fallback_colors[i % len(fallback_colors)])
-            ax2.bar(x, values, width, bottom=bottom, label=stage, color=color, alpha=0.8)
-            bottom += np.array(values)
-
-        ax2.set_xticks(x)
-        ax2.set_xticklabels(combo_labels, rotation=45, ha="right")
-        ax2.set_ylabel("Time [ms]")
-        ax2.set_title("Stage Breakdown")
-        ax2.legend(fontsize=6, loc="upper right", ncol=2)
-        ax2.grid(axis="y", alpha=0.3)
-    elif combinations:
-        # Fallback: resolution cost scaling
-        x = np.arange(len(combinations))
-        width = 0.7
-        values = []
-        for _, _, matching in combinations:
-            avg = np.mean([get_flux_time(c) for c in matching])
-            values.append(avg)
-        ax2.bar(x, values, width, color="#3498DB", alpha=0.8)
-        for xi, v in zip(x, values):
-            if v > 0:
-                ax2.text(xi, v + 0.5, f"{v:.0f}", ha="center", va="bottom", fontsize=7)
-        ax2.set_xticks(x)
-        ax2.set_xticklabels(combo_labels, rotation=45, ha="right")
-        ax2.set_ylabel("Time [ms]")
-        ax2.set_title("Resolution Cost Scaling")
-        ax2.grid(axis="y", alpha=0.3)
-    else:
-        ax2.text(0.5, 0.5, "No data", ha="center", va="center", transform=ax2.transAxes)
-        ax2.set_title("Stage Breakdown")
-
-    # Panel 3: Medium comparison, grouped by jet type
-    ax3 = fig.add_subplot(gs[1, 0])
-    x = np.arange(len(media))
-    n_jets = len(jets)
-    width = 0.8 / max(n_jets, 1)
-
-    for i, (jet, color) in enumerate(zip(jets, jet_colors)):
-        times = []
-        for medium in media:
-            matching = [c for c in configs if c.get("jet_type") == jet and c.get("medium") == medium]
-            if matching:
-                avg_time = np.mean([get_flux_time(c) for c in matching])
-                times.append(avg_time)
-            else:
-                times.append(0)
-
-        offset = (i - n_jets / 2 + 0.5) * width
-        bars = ax3.bar(x + offset, times, width * 0.9, label=jet_short.get(jet, jet), color=color, alpha=0.8)
-
-        if n_jets <= 4:
-            for bar, t in zip(bars, times):
-                if t > 0:
-                    ax3.text(bar.get_x() + bar.get_width() / 2, bar.get_height() + 0.5, f"{t:.0f}",
-                             ha="center", va="bottom", fontsize=7)
-
-    ax3.set_xticks(x)
-    ax3.set_xticklabels(media)
-    ax3.set_ylabel("Time [ms]")
-    ax3.set_title("Light Curve Time by Medium")
-    ax3.legend(title="Jet", fontsize=6, loc="upper right", ncol=2)
-    ax3.grid(axis="y", alpha=0.3)
-
-    # Panel 4: Radiation config comparison OR viewing angle comparison
-    ax4 = fig.add_subplot(gs[1, 1])
-
-    if len(rads) > 1:
-        rad_short = {r: (r[:10] + "..." if len(r) > 12 else r) for r in rads}
-        x = np.arange(len(rads))
-        n_jets = len(jets)
-        width = 0.8 / max(n_jets, 1)
-
-        for i, (jet, color) in enumerate(zip(jets, jet_colors)):
-            times = []
-            for rad in rads:
-                matching = [c for c in configs if c.get("jet_type") == jet and c.get("radiation") == rad]
-                if matching:
-                    avg_time = np.mean([get_flux_time(c) for c in matching])
-                    times.append(avg_time)
-                else:
-                    times.append(0)
-
-            offset = (i - n_jets / 2 + 0.5) * width
-            ax4.bar(x + offset, times, width * 0.9, label=jet_short.get(jet, jet), color=color, alpha=0.8)
-
-        ax4.set_xticks(x)
-        ax4.set_xticklabels([rad_short[r] for r in rads], rotation=45, ha="right")
-        ax4.set_ylabel("Time [ms]")
-        ax4.set_title("Light Curve Time by Radiation")
-        ax4.legend(title="Jet", fontsize=6, loc="upper right", ncol=2)
-    else:
-        ax4.set_title("ISM vs Wind Speed Ratio")
-        ratios = []
-        jet_names_for_ratio = []
-        for jet in jets:
-            ism_configs = [c for c in configs if c.get("jet_type") == jet and c.get("medium") == "ISM"]
-            wind_configs = [c for c in configs if c.get("jet_type") == jet and c.get("medium") == "wind"]
-
-            if ism_configs and wind_configs:
-                ism_time = np.mean([get_flux_time(c) for c in ism_configs])
-                wind_time = np.mean([get_flux_time(c) for c in wind_configs])
-                if ism_time > 0:
-                    ratios.append(wind_time / ism_time)
-                    jet_names_for_ratio.append(jet_short.get(jet, jet))
-
-        if ratios:
-            x = np.arange(len(ratios))
-            colors = [jet_colors[jets.index(j)] for j in jets if jet_short.get(j, j) in jet_names_for_ratio]
-            bars = ax4.bar(x, ratios, color=colors, alpha=0.8)
-            ax4.axhline(y=1.0, color="gray", linestyle="--", alpha=0.5)
-            ax4.set_xticks(x)
-            ax4.set_xticklabels(jet_names_for_ratio, rotation=45, ha="right")
-            ax4.set_ylabel("Wind / ISM Time Ratio")
-
-            for bar, r in zip(bars, ratios):
-                ax4.text(bar.get_x() + bar.get_width() / 2, bar.get_height() + 0.02, f"{r:.2f}",
-                         ha="center", va="bottom", fontsize=8)
+        rad_configs = [c for c in configs if c.get("radiation") == rad_key]
+        if rad_configs:
+            _plot_stage_breakdown_panel(ax, rad_configs, jets, media)
         else:
-            ax4.text(0.5, 0.5, "Insufficient data", ha="center", va="center", transform=ax4.transAxes)
+            ax.text(0.5, 0.5, "TBD", ha="center", va="center", transform=ax.transAxes,
+                    fontsize=14, color="#CCCCCC", fontweight="bold")
+            ax.set_xticks([])
+            ax.set_yticks([])
+            for spine in ax.spines.values():
+                spine.set_color("#EEEEEE")
 
-    ax4.grid(axis="y", alpha=0.3)
     fig.suptitle(f"Benchmark Overview{title_suffix}", fontsize=12, fontweight="bold", y=0.96)
     return fig
 

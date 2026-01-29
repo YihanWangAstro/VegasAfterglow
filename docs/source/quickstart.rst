@@ -12,6 +12,12 @@ The easiest way to install VegasAfterglow is via pip:
 
     pip install VegasAfterglow
 
+For MCMC fitting, install with the ``mcmc`` extra:
+
+.. code-block:: bash
+
+    pip install VegasAfterglow[mcmc]
+
 For more detailed installation instructions, see the :doc:`installation` page.
 
 Basic Usage
@@ -465,13 +471,16 @@ Parameter Estimation with MCMC
 
 For more advanced analysis, VegasAfterglow provides powerful MCMC capabilities to fit model parameters to observational data.
 
+.. note::
+   MCMC fitting requires additional dependencies. Install them with:
+   ``pip install VegasAfterglow[mcmc]``
+
 First, let's import the necessary modules:
 
 .. code-block:: python
 
     import numpy as np
     import matplotlib.pyplot as plt
-    import pandas as pd
     import corner
     from VegasAfterglow import ObsData, Setups, Fitter, ParamDef, Scale
 
@@ -511,16 +520,16 @@ VegasAfterglow provides flexible options for loading observational data through 
 
     # Load light curves from files
     for nu, fname in zip(bands, lc_files):
-        df = pd.read_csv(fname)
-        data.add_flux_density(nu=nu, t=df["t"], f_nu=df["Fv_obs"], err=df["Fv_err"])  # All quantities in CGS units
+        t_data, Fv_obs, Fv_err = np.loadtxt(fname, delimiter=',', skiprows=1, unpack=True)
+        data.add_flux_density(nu=nu, t=t_data, f_nu=Fv_obs, err=Fv_err)  # All quantities in CGS units
 
     times = [3000] # Example: time in seconds
     spec_files = ["data/ep-spec.csv"]
 
     # Load spectra from files
     for t, fname in zip(times, spec_files):
-        df = pd.read_csv(fname)
-        data.add_spectrum(t=t, nu=df["nu"], f_nu=df["Fv_obs"], err=df["Fv_err"])  # All quantities in CGS units
+        nu_data, Fv_obs, Fv_err = np.loadtxt(fname, delimiter=',', skiprows=1, unpack=True)
+        data.add_spectrum(t=t, nu=nu_data, f_nu=Fv_obs, err=Fv_err)  # All quantities in CGS units
 
 .. note::
    The ``ObsData`` interface is designed to be flexible. You can mix and match different data sources, and add multiple light curves at different frequencies as well as multiple spectra at different times.
@@ -629,16 +638,14 @@ Check the best-fit parameters and their uncertainties:
 
 .. code-block:: python
 
-    top_k_data = []
-    for i in range(result.top_k_params.shape[0]):
-        row = {'Rank': i+1, 'chi^2': f"{-2*result.top_k_log_probs[i]:.2f}"}
-        for name, val in zip(result.labels, result.top_k_params[i]):
-            row[name] = f"{val:.4f}"
-        top_k_data.append(row)
-
-    top_k_df = pd.DataFrame(top_k_data)
     print("Top-k parameters:")
-    print(top_k_df.to_string(index=False))
+    header = f"{'Rank':>4s}  {'chi^2':>10s}  " + "  ".join(f"{name:>10s}" for name in result.labels)
+    print(header)
+    print("-" * len(header))
+    for i in range(result.top_k_params.shape[0]):
+        chi2 = -2 * result.top_k_log_probs[i]
+        vals = "  ".join(f"{val:10.4f}" for val in result.top_k_params[i])
+        print(f"{i+1:4d}  {chi2:10.2f}  {vals}")
 
 Use the best-fit parameters to generate model predictions:
 
@@ -669,15 +676,15 @@ Now you can plot the best-fit model:
         colors = ['blue', 'orange', 'green']
 
         for i in range(len(lc_files)):
-            df = pd.read_csv(lc_files[i])
-            ax1.errorbar(df["t"], df["Fv_obs"] * shifts[i], df["Fv_err"] * shifts[i],
+            t_d, Fv_d, Fe_d = np.loadtxt(lc_files[i], delimiter=',', skiprows=1, unpack=True)
+            ax1.errorbar(t_d, Fv_d * shifts[i], Fe_d * shifts[i],
                         fmt='o', color=colors[i], label=lc_files[i])
             ax1.plot(t, np.array(lc_fit[i]) * shifts[i], color=colors[i], lw=1)
 
         # Plot spectra
         for i in range(len(spec_files)):
-            df = pd.read_csv(spec_files[i])
-            ax2.errorbar(df["nu"], df["Fv_obs"] * shifts[i], df["Fv_err"] * shifts[i],
+            nu_d, Fv_d, Fe_d = np.loadtxt(spec_files[i], delimiter=',', skiprows=1, unpack=True)
+            ax2.errorbar(nu_d, Fv_d * shifts[i], Fe_d * shifts[i],
                         fmt='o', color=colors[i], label=spec_files[i])
             ax2.plot(nu, np.array(spec_fit[0]) * shifts[i], color=colors[i], lw=1)
 

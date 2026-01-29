@@ -6,7 +6,7 @@ import os
 import shutil
 from io import BytesIO
 from pathlib import Path
-from typing import Dict, List, Optional, Tuple
+from typing import Dict, List, Optional
 
 # Default to number of CPUs for parallel execution
 DEFAULT_WORKERS = os.cpu_count() or 4
@@ -20,73 +20,58 @@ from pypdf import PdfReader, PdfWriter
 import sys
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-from validation.visualization.common import (create_benchmark_guide_pages, create_regression_guide_pages, create_section_header,
+from validation.visualization.common import (create_benchmark_guide_pages, create_regression_guide_pages,
+                                        create_section_header, create_toc_page_reportlab,
                                         create_title_page, extract_session_metadata, find_benchmark_file,
                                         find_regression_file, get_runtime_build_info, load_json, setup_plot_style)
 from validation.visualization.benchmark import generate_convergence_pages, plot_benchmark_overview, plot_convergence_summary
-from validation.visualization.regression import (plot_combined_summary_grid, plot_frequency_quantities_combined,
-                                            plot_shock_quantities_combined, plot_spectrum_shapes)
+from validation.visualization.regression import (plot_dynamics_summary_grid, plot_spectrum_summary_grid,
+                                            plot_frequencies_summary_grid,
+                                            plot_shock_quantities_combined, plot_frequency_quantities_combined,
+                                            plot_spectrum_shapes,
+                                            plot_rvs_shock_quantities_combined,
+                                            plot_rvs_frequency_quantities_combined)
 
 
-def _create_toc_page(sections: List[Tuple[str, int, List[Tuple[str, int]]]]) -> plt.Figure:
-    """Create a table of contents page.
-
-    Args:
-        sections: List of (section_title, page_num, subsections) where subsections is [(name, page), ...]
-    """
+def _create_toc_page_matplotlib(toc_nodes: List[Dict]) -> plt.Figure:
+    """Fallback: create TOC page using matplotlib when reportlab is unavailable."""
     fig = plt.figure(figsize=(8.5, 11))
     fig.patch.set_facecolor("white")
-
-    # Title
     fig.text(0.5, 0.92, "Table of Contents", ha="center", va="top", fontsize=18, fontweight="bold")
 
     y = 0.85
-    line_height = 0.028
+    line_height = 0.024
 
-    for section_title, section_page, subsections in sections:
-        # Section header
-        fig.text(0.1, y, section_title, ha="left", va="top", fontsize=12, fontweight="bold")
-        fig.text(0.9, y, str(section_page), ha="right", va="top", fontsize=12)
-        # Dotted line
-        fig.text(0.5, y - 0.005, "." * 80, ha="center", va="top", fontsize=8, color="#CCCCCC")
-        y -= line_height * 1.2
+    def _render(node, level):
+        nonlocal y
+        if y < 0.05:
+            return
+        indent = 0.1 + level * 0.05
+        fs = max(8, 12 - level)
+        weight = "bold" if level <= 1 else "normal"
+        color = "#000000" if level == 0 else ("#333333" if level == 1 else "#666666")
+        fig.text(indent, y, node["title"], ha="left", va="top", fontsize=fs, fontweight=weight, color=color)
+        fig.text(0.9, y, str(node.get("page", "")), ha="right", va="top", fontsize=fs, color=color)
+        y -= line_height * (1.3 if level == 0 else 1.0)
+        for child in node.get("children", []):
+            _render(child, level + 1)
+        if level == 0:
+            y -= line_height * 0.3
 
-        # Subsections
-        for sub_name, sub_page in subsections:
-            fig.text(0.15, y, sub_name, ha="left", va="top", fontsize=10, color="#444444")
-            fig.text(0.9, y, str(sub_page), ha="right", va="top", fontsize=10, color="#444444")
-            y -= line_height
-
-        y -= line_height * 0.5  # Extra space between sections
-
+    for node in toc_nodes:
+        _render(node, 0)
     return fig
 
 
-def _add_pdf_outline(output_path: Path, sections: List[Tuple[str, int, List[Tuple[str, int]]]]):
-    """Add PDF bookmarks/outline to an existing PDF.
-
-    Args:
-        output_path: Path to the PDF file
-        sections: List of (section_title, page_num, subsections)
-    """
-    reader = PdfReader(str(output_path))
-    writer = PdfWriter()
-
-    # Copy all pages
-    for page in reader.pages:
-        writer.add_page(page)
-
-    # Add bookmarks (page numbers are 0-indexed for pypdf)
-    for section_title, section_page, subsections in sections:
-        parent = writer.add_outline_item(section_title, section_page - 1)
-        for sub_name, sub_page in subsections:
-            writer.add_outline_item(sub_name, sub_page - 1, parent=parent)
-
-    # Write back
-    temp_output = str(output_path) + ".tmp"
-    with open(temp_output, "wb") as f:
-        writer.write(f)
-    shutil.move(temp_output, str(output_path))
+def _add_hierarchical_bookmarks(writer: PdfWriter, toc_nodes: List[Dict]):
+    """Add hierarchical PDF bookmarks from TOC node structure."""
+    def _add(node, parent=None):
+        page = node.get("page", 1) - 1  # 0-indexed
+        bookmark = writer.add_outline_item(node["title"], max(0, page), parent=parent)
+        for child in node.get("children", []):
+            _add(child, parent=bookmark)
+    for node in toc_nodes:
+        _add(node)
 
 
 def _merge_pending_pdfs(output_path: Path, pending_pdf_merges: List[Dict], insert_at: int = 5):
@@ -182,28 +167,32 @@ class ComprehensiveDashboard:
         else:
             print("No regression data found")
 
-        if benchmark_data and benchmark_data.get("sessions"):
-            metadata = extract_session_metadata(benchmark_data["sessions"][-1])
+        if benchmark_data and benchmark_data.get("configs"):
+            metadata = extract_session_metadata(benchmark_data)
         else:
             metadata = get_runtime_build_info()
 
         section_num = 0
         pending_pdf_merges = []
-        convergence_insert_at = None  # Track where to insert convergence detail pages
-        # Track sections for TOC: [(title, page_num, [(subsection_name, page_num), ...])]
-        sections: List[Tuple[str, int, List[Tuple[str, int]]]] = []
-        # current_page: logical page number for TOC (includes pages that will be merged later)
-        # actual_page: physical page count in PDF (for calculating insert positions)
+        convergence_insert_at = None
+        # Hierarchical TOC structure: [{"title", "page", "children": [...]}]
+        toc_nodes: List[Dict] = []
         current_page = 1
         actual_page = 0  # 0-indexed position in actual PDF
+
+        def _add_page(fig):
+            nonlocal current_page, actual_page
+            pdf.savefig(fig)
+            plt.close(fig)
+            current_page += 1
+            actual_page += 1
 
         with PdfPages(output_path) as pdf:
             create_title_page(pdf, "Comprehensive Test Report", "Regression Tests \u2022 Benchmarks \u2022 Physics Diagnostics", metadata)
             current_page += 1
             actual_page += 1
 
-            # Placeholder for TOC page (will be page 2)
-            toc_page_num = current_page
+            # Placeholder for TOC page (will be replaced)
             fig_toc_placeholder = plt.figure(figsize=(8.5, 11))
             fig_toc_placeholder.patch.set_facecolor("white")
             pdf.savefig(fig_toc_placeholder)
@@ -211,90 +200,130 @@ class ComprehensiveDashboard:
             current_page += 1
             actual_page += 1
 
+            # =============================================================
             # Section 1: Regression Tests
+            # =============================================================
             if regression_data:
                 section_num += 1
-                section_start = current_page
-                subsections = []
+                section_node = {"title": f"{section_num}. Regression Tests", "page": current_page, "children": []}
 
                 create_section_header(pdf, section_num, "Regression Tests", "Power-law scaling verification against theoretical predictions")
                 current_page += 1
                 actual_page += 1
 
-                # Add guide pages explaining how to read regression results
                 print("\nGenerating regression section...")
                 print("  - Adding regression guide pages")
-                subsections.append(("How to Read", current_page))
+                section_node["children"].append({"title": "How to Read", "page": current_page, "children": []})
                 guide_pages, guide_merge_info = create_regression_guide_pages(pdf)
                 if guide_merge_info:
-                    guide_merge_info["insert_at"] = actual_page  # Use actual position
+                    guide_merge_info["insert_at"] = actual_page
                     pending_pdf_merges.append(guide_merge_info)
-                current_page += guide_pages  # Logical page count includes guide pages
+                current_page += guide_pages
 
-                if "shock_grid" in regression_data or "freq_grid" in regression_data:
-                    print("  - Summary grid")
-                    subsections.append(("Summary Grid", current_page))
-                    fig = plot_combined_summary_grid(regression_data)
-                    pdf.savefig(fig)
-                    plt.close(fig)
-                    current_page += 1
-                    actual_page += 1
+                has_rvs = any(k.startswith("rvs_") for k in regression_data)
 
-                for medium in ["ISM", "Wind"]:
-                    if "viz_shock_dynamics" in regression_data:
-                        viz_data = regression_data["viz_shock_dynamics"]
-                        if medium in viz_data:
-                            print(f"  - Shock dynamics ({medium})")
-                            subsections.append((f"Shock Dynamics ({medium})", current_page))
-                            fig = plot_shock_quantities_combined(viz_data, medium)
-                            pdf.savefig(fig)
-                            plt.close(fig)
-                            current_page += 1
-                            actual_page += 1
+                # --- 1.1 Dynamics ---
+                dynamics_node = {"title": "1.1 Dynamics", "page": current_page, "children": []}
 
-                    if "viz_frequencies" in regression_data:
-                        viz_data = regression_data["viz_frequencies"]
-                        if medium in viz_data:
-                            print(f"  - Frequencies ({medium})")
-                            subsections.append((f"Frequencies ({medium})", current_page))
-                            fig = plot_frequency_quantities_combined(viz_data, medium)
-                            pdf.savefig(fig)
-                            plt.close(fig)
-                            current_page += 1
-                            actual_page += 1
+                if "shock_grid" in regression_data or (has_rvs and any(
+                        f"rvs_shock_grid_{r}" in regression_data for r in ["thin", "thick"])):
+                    print("  - Dynamics summary")
+                    dynamics_node["children"].append({"title": "Dynamics Summary", "page": current_page, "children": []})
+                    _add_page(plot_dynamics_summary_grid(regression_data))
+
+                # Forward shock dynamics detail
+                if "viz_shock_dynamics" in regression_data:
+                    for medium in ["ISM", "Wind"]:
+                        if medium in regression_data["viz_shock_dynamics"]:
+                            label = f"Forward Shock ({medium})"
+                            print(f"  - {label}")
+                            dynamics_node["children"].append({"title": label, "page": current_page, "children": []})
+                            _add_page(plot_shock_quantities_combined(regression_data["viz_shock_dynamics"], medium))
+
+                # Reverse shock dynamics detail (thin then thick)
+                if has_rvs:
+                    for regime in ["thin", "thick"]:
+                        for medium in ["ISM", "Wind"]:
+                            viz_key = f"viz_rvs_shock_dynamics_{regime}"
+                            if viz_key in regression_data and medium in regression_data[viz_key]:
+                                label = f"Reverse Shock {regime.title()} ({medium})"
+                                print(f"  - {label}")
+                                dynamics_node["children"].append({"title": label, "page": current_page, "children": []})
+                                _add_page(plot_rvs_shock_quantities_combined(regression_data[viz_key], medium, regime))
+
+                section_node["children"].append(dynamics_node)
+
+                # --- 1.2 Radiation ---
+                radiation_node = {"title": "1.2 Radiation", "page": current_page, "children": []}
+
+                # --- 1.2.1 Synchrotron Spectrum Shapes ---
+                spectrum_node = {"title": "1.2.1 Synchrotron Spectrum Shapes", "page": current_page, "children": []}
+
+                if "spectrum_grid" in regression_data:
+                    print("  - Spectrum summary")
+                    spectrum_node["children"].append({"title": "Spectrum Summary", "page": current_page, "children": []})
+                    _add_page(plot_spectrum_summary_grid(regression_data))
 
                 if "viz_spectrum_shapes" in regression_data:
-                    print("  - Spectrum shapes")
-                    subsections.append(("Spectrum Shapes", current_page))
-                    fig = plot_spectrum_shapes(regression_data["viz_spectrum_shapes"])
-                    pdf.savefig(fig)
-                    plt.close(fig)
-                    current_page += 1
-                    actual_page += 1
+                    print("  - Spectrum detail")
+                    spectrum_node["children"].append({"title": "Spectrum Detail", "page": current_page, "children": []})
+                    _add_page(plot_spectrum_shapes(regression_data["viz_spectrum_shapes"]))
 
-                sections.append((f"{section_num}. Regression Tests", section_start, subsections))
+                radiation_node["children"].append(spectrum_node)
 
+                # --- 1.2.2 Characteristic Frequencies ---
+                freq_node = {"title": "1.2.2 Characteristic Frequencies", "page": current_page, "children": []}
+
+                if "freq_grid" in regression_data or (has_rvs and any(
+                        f"rvs_freq_grid_{r}" in regression_data for r in ["thin", "thick"])):
+                    print("  - Frequencies summary")
+                    freq_node["children"].append({"title": "Frequencies Summary", "page": current_page, "children": []})
+                    _add_page(plot_frequencies_summary_grid(regression_data))
+
+                # Forward shock frequencies detail
+                if "viz_frequencies" in regression_data:
+                    for medium in ["ISM", "Wind"]:
+                        if medium in regression_data["viz_frequencies"]:
+                            label = f"Forward Shock ({medium})"
+                            print(f"  - Freq {label}")
+                            freq_node["children"].append({"title": label, "page": current_page, "children": []})
+                            _add_page(plot_frequency_quantities_combined(regression_data["viz_frequencies"], medium))
+
+                # Reverse shock frequencies detail (thin then thick)
+                if has_rvs:
+                    for regime in ["thin", "thick"]:
+                        for medium in ["ISM", "Wind"]:
+                            freq_key = f"viz_rvs_frequencies_{regime}"
+                            if freq_key in regression_data and medium in regression_data[freq_key]:
+                                label = f"Reverse Shock {regime.title()} ({medium})"
+                                print(f"  - Freq {label}")
+                                freq_node["children"].append({"title": label, "page": current_page, "children": []})
+                                _add_page(plot_rvs_frequency_quantities_combined(regression_data[freq_key], medium, regime))
+
+                radiation_node["children"].append(freq_node)
+                section_node["children"].append(radiation_node)
+                toc_nodes.append(section_node)
+
+            # =============================================================
             # Section 2: Benchmark Results
-            if benchmark_data and benchmark_data.get("sessions"):
+            # =============================================================
+            if benchmark_data and benchmark_data.get("configs"):
                 section_num += 1
-                section_start = current_page
-                subsections = []
+                bench_node = {"title": f"{section_num}. Benchmark Results", "page": current_page, "children": []}
 
                 create_section_header(pdf, section_num, "Benchmark Results", "Performance timing and resolution convergence analysis")
                 current_page += 1
                 actual_page += 1
 
-                # Add guide pages explaining how to read benchmark results
                 print("  - Adding benchmark guide pages")
-                subsections.append(("How to Read", current_page))
+                bench_node["children"].append({"title": "How to Read", "page": current_page, "children": []})
                 guide_pages, guide_merge_info = create_benchmark_guide_pages(pdf)
                 if guide_merge_info:
-                    guide_merge_info["insert_at"] = actual_page  # Use actual position
+                    guide_merge_info["insert_at"] = actual_page
                     pending_pdf_merges.insert(0, guide_merge_info)
-                current_page += guide_pages  # Logical page count includes guide pages
+                current_page += guide_pages
 
-                latest = benchmark_data["sessions"][-1]
-                configs = latest.get("configs", latest.get("results", []))
+                configs = benchmark_data.get("configs", [])
 
                 print(f"\nGenerating benchmark section ({len(configs)} configs)...")
                 print("  - Overview plots")
@@ -304,74 +333,72 @@ class ComprehensiveDashboard:
 
                 if on_axis_configs:
                     print("    - On-axis overview (\u03b8_v/\u03b8_c\u22641)")
-                    subsections.append(("On-axis Overview", current_page))
-                    fig = plot_benchmark_overview(latest, angle_filter="on-axis")
-                    pdf.savefig(fig)
-                    plt.close(fig)
-                    current_page += 1
-                    actual_page += 1
+                    bench_node["children"].append({"title": "On-axis Overview", "page": current_page, "children": []})
+                    _add_page(plot_benchmark_overview(benchmark_data, angle_filter="on-axis"))
 
                 if off_axis_configs:
                     print("    - Off-axis overview (\u03b8_v/\u03b8_c>1)")
-                    subsections.append(("Off-axis Overview", current_page))
-                    fig = plot_benchmark_overview(latest, angle_filter="off-axis")
-                    pdf.savefig(fig)
-                    plt.close(fig)
-                    current_page += 1
-                    actual_page += 1
+                    bench_node["children"].append({"title": "Off-axis Overview", "page": current_page, "children": []})
+                    _add_page(plot_benchmark_overview(benchmark_data, angle_filter="off-axis"))
 
                 has_convergence = any(c.get("phi_convergence") for c in configs)
                 if has_convergence:
                     print("  - Convergence summary")
-                    subsections.append(("Convergence Summary", current_page))
-                    fig, model_id_map, models_list = plot_convergence_summary(latest)
-                    pdf.savefig(fig)
-                    plt.close(fig)
-                    current_page += 1
-                    actual_page += 1
-                    # Remember where to insert convergence detail pages
+                    bench_node["children"].append({"title": "Convergence Summary", "page": current_page, "children": []})
+                    fig, model_id_map, models_list = plot_convergence_summary(benchmark_data)
+                    _add_page(fig)
                     convergence_insert_at = actual_page
-
                     pending_pdf_merges.extend(generate_convergence_pages(pdf, models_list, n_workers))
 
-                sections.append((f"{section_num}. Benchmark Results", section_start, subsections))
+                toc_nodes.append(bench_node)
 
-        # Merge convergence detail pages at the correct position (after summary grid)
+        # Merge convergence detail pages at the correct position
         if pending_pdf_merges and convergence_insert_at is not None:
             _merge_pending_pdfs(output_path, pending_pdf_merges, insert_at=convergence_insert_at)
 
         # Replace TOC placeholder page with actual TOC
-        if sections:
+        if toc_nodes:
             print("  Adding table of contents...")
+            import tempfile
+            toc_temp = Path(tempfile.mkdtemp()) / "toc.pdf"
+            toc_pages = create_toc_page_reportlab(toc_nodes, toc_temp)
+
             reader = PdfReader(str(output_path))
             writer = PdfWriter()
 
             # Page 1: Title
             writer.add_page(reader.pages[0])
 
-            # Page 2: TOC (replace placeholder)
-            toc_fig = _create_toc_page(sections)
-            toc_buffer = BytesIO()
-            toc_fig.savefig(toc_buffer, format="pdf")
-            plt.close(toc_fig)
-            toc_buffer.seek(0)
-            toc_reader = PdfReader(toc_buffer)
-            writer.add_page(toc_reader.pages[0])
+            # Page 2+: TOC (replace placeholder)
+            if toc_pages > 0 and toc_temp.exists():
+                toc_reader = PdfReader(str(toc_temp))
+                for tp in toc_reader.pages:
+                    writer.add_page(tp)
+            else:
+                # Fallback to matplotlib TOC
+                toc_fig = _create_toc_page_matplotlib(toc_nodes)
+                toc_buffer = BytesIO()
+                toc_fig.savefig(toc_buffer, format="pdf")
+                plt.close(toc_fig)
+                toc_buffer.seek(0)
+                toc_reader = PdfReader(toc_buffer)
+                writer.add_page(toc_reader.pages[0])
 
             # Remaining pages (skip placeholder at index 1)
             for i in range(2, len(reader.pages)):
                 writer.add_page(reader.pages[i])
 
-            # Add PDF bookmarks
-            for section_title, section_page, subsections in sections:
-                parent = writer.add_outline_item(section_title, section_page - 1)
-                for sub_name, sub_page in subsections:
-                    writer.add_outline_item(sub_name, sub_page - 1, parent=parent)
+            # Add hierarchical PDF bookmarks
+            _add_hierarchical_bookmarks(writer, toc_nodes)
 
             temp_output = str(output_path) + ".tmp"
             with open(temp_output, "wb") as f:
                 writer.write(f)
             shutil.move(temp_output, str(output_path))
+
+            # Cleanup
+            if toc_temp.exists():
+                shutil.rmtree(toc_temp.parent, ignore_errors=True)
 
         print(f"\n{'='*70}")
         print(f"Comprehensive report saved to: {output_path}")
@@ -388,8 +415,8 @@ class ComprehensiveDashboard:
         pending_pdf_merges = []
 
         with PdfPages(output_path) as pdf:
-            if data.get("sessions"):
-                metadata = extract_session_metadata(data["sessions"][-1])
+            if data.get("configs"):
+                metadata = extract_session_metadata(data)
             else:
                 metadata = get_runtime_build_info()
 
@@ -402,26 +429,25 @@ class ComprehensiveDashboard:
                 guide_merge_info["insert_at"] = 1  # After title page
                 pending_pdf_merges.insert(0, guide_merge_info)
 
-            if data.get("sessions"):
-                latest = data["sessions"][-1]
-                configs = latest.get("configs", latest.get("results", []))
+            if data.get("configs"):
+                configs = data.get("configs", [])
 
                 on_axis_configs = [c for c in configs if c.get("theta_obs_ratio", 0) <= 1]
                 off_axis_configs = [c for c in configs if c.get("theta_obs_ratio", 0) > 1]
 
                 if on_axis_configs:
-                    fig = plot_benchmark_overview(latest, angle_filter="on-axis")
+                    fig = plot_benchmark_overview(data, angle_filter="on-axis")
                     pdf.savefig(fig)
                     plt.close(fig)
 
                 if off_axis_configs:
-                    fig = plot_benchmark_overview(latest, angle_filter="off-axis")
+                    fig = plot_benchmark_overview(data, angle_filter="off-axis")
                     pdf.savefig(fig)
                     plt.close(fig)
 
                 has_convergence = any(c.get("phi_convergence") for c in configs)
                 if has_convergence:
-                    fig, model_id_map, models_list = plot_convergence_summary(latest)
+                    fig, model_id_map, models_list = plot_convergence_summary(data)
                     pdf.savefig(fig)
                     plt.close(fig)
 
@@ -448,6 +474,7 @@ class ComprehensiveDashboard:
         n_pass = sum(by_model.get(m, {}).get("pass", 0) for m in by_model)
 
         pending_pdf_merges = []
+        has_rvs = any(k.startswith("rvs_") for k in data)
 
         with PdfPages(output_path) as pdf:
             subtitle = f"{n_pass}/{n_total} tests passed" if n_total > 0 else ""
@@ -457,38 +484,73 @@ class ComprehensiveDashboard:
             print("  Adding regression guide pages...")
             guide_pages, guide_merge_info = create_regression_guide_pages(pdf)
             if guide_merge_info:
-                guide_merge_info["insert_at"] = 1  # After title page
+                guide_merge_info["insert_at"] = 1
                 pending_pdf_merges.append(guide_merge_info)
 
-            if "shock_grid" in data or "freq_grid" in data:
-                print("  Generating summary grid...")
-                fig = plot_combined_summary_grid(data)
+            # --- Dynamics ---
+            if "shock_grid" in data or (has_rvs and any(
+                    f"rvs_shock_grid_{r}" in data for r in ["thin", "thick"])):
+                print("  Generating dynamics summary...")
+                fig = plot_dynamics_summary_grid(data)
                 pdf.savefig(fig)
                 plt.close(fig)
 
             if "viz_shock_dynamics" in data:
-                viz_data = data["viz_shock_dynamics"]
                 for medium in ["ISM", "Wind"]:
-                    if medium in viz_data:
+                    if medium in data["viz_shock_dynamics"]:
                         print(f"  Generating shock dynamics ({medium})...")
-                        fig = plot_shock_quantities_combined(viz_data, medium)
+                        fig = plot_shock_quantities_combined(data["viz_shock_dynamics"], medium)
                         pdf.savefig(fig)
                         plt.close(fig)
 
-            if "viz_frequencies" in data:
-                viz_data = data["viz_frequencies"]
-                for medium in ["ISM", "Wind"]:
-                    if medium in viz_data:
-                        print(f"  Generating frequencies ({medium})...")
-                        fig = plot_frequency_quantities_combined(viz_data, medium)
-                        pdf.savefig(fig)
-                        plt.close(fig)
+            if has_rvs:
+                for regime in ["thin", "thick"]:
+                    for medium in ["ISM", "Wind"]:
+                        viz_key = f"viz_rvs_shock_dynamics_{regime}"
+                        if viz_key in data and medium in data[viz_key]:
+                            print(f"  Generating reverse shock dynamics {regime} ({medium})...")
+                            fig = plot_rvs_shock_quantities_combined(data[viz_key], medium, regime)
+                            pdf.savefig(fig)
+                            plt.close(fig)
+
+            # --- Spectrum Shapes ---
+            if "spectrum_grid" in data:
+                print("  Generating spectrum summary...")
+                fig = plot_spectrum_summary_grid(data)
+                pdf.savefig(fig)
+                plt.close(fig)
 
             if "viz_spectrum_shapes" in data:
-                print("  Generating spectrum shapes...")
+                print("  Generating spectrum detail...")
                 fig = plot_spectrum_shapes(data["viz_spectrum_shapes"])
                 pdf.savefig(fig)
                 plt.close(fig)
+
+            # --- Frequencies ---
+            if "freq_grid" in data or (has_rvs and any(
+                    f"rvs_freq_grid_{r}" in data for r in ["thin", "thick"])):
+                print("  Generating frequencies summary...")
+                fig = plot_frequencies_summary_grid(data)
+                pdf.savefig(fig)
+                plt.close(fig)
+
+            if "viz_frequencies" in data:
+                for medium in ["ISM", "Wind"]:
+                    if medium in data["viz_frequencies"]:
+                        print(f"  Generating frequencies ({medium})...")
+                        fig = plot_frequency_quantities_combined(data["viz_frequencies"], medium)
+                        pdf.savefig(fig)
+                        plt.close(fig)
+
+            if has_rvs:
+                for regime in ["thin", "thick"]:
+                    for medium in ["ISM", "Wind"]:
+                        freq_key = f"viz_rvs_frequencies_{regime}"
+                        if freq_key in data and medium in data[freq_key]:
+                            print(f"  Generating reverse shock frequencies {regime} ({medium})...")
+                            fig = plot_rvs_frequency_quantities_combined(data[freq_key], medium, regime)
+                            pdf.savefig(fig)
+                            plt.close(fig)
 
         if pending_pdf_merges:
             _merge_pending_pdfs(output_path, pending_pdf_merges, insert_at=pending_pdf_merges[0].get("insert_at", 1))

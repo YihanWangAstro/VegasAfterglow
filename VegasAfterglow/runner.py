@@ -9,7 +9,6 @@ from typing import List, Optional, Sequence, Tuple, Type
 import bilby
 import emcee
 import numpy as np
-import zeus
 from bilby.core.sampler.emcee import Emcee as _BilbyEmcee
 
 from .types import FitResult, ModelParams, ObsData, ParamDef, Scale, Setups, VegasMC
@@ -115,11 +114,6 @@ SAMPLER_DEFAULTS = {
             (emcee.moves.DEMove(), 0.7),
             (emcee.moves.DESnookerMove(), 0.3),
         ],
-    },
-    "zeus": {
-        "nsteps": 5000,
-        "nburn": 1000,
-        "thin": 1,
     },
 }
 
@@ -484,12 +478,10 @@ class Fitter:
         cpp_param_defs = [self._to_cpp_param_def(pd) for pd in defs]
         self._to_params = CppParamTransformer(cpp_param_defs)
 
-        # Use vectorized emcee or zeus if available and requested
+        # Use vectorized emcee if available and requested
         sampler_lower = sampler.lower()
         use_vectorized = (
-            sampler_lower in ("emcee", "zeus")
-            and vectorize
-            and CppParamTransformer is not None
+            sampler_lower in ("emcee") and vectorize and CppParamTransformer is not None
         )
 
         # Force npool=None for batch evaluation and warn user
@@ -503,7 +495,7 @@ class Fitter:
 
                 warnings.warn(
                     f"npool={npool_effective} is ignored: batch likelihood uses multi-threaded parallelism. "
-                    "Set npool=None or 1 for vectorized emcee/zeus."
+                    "Set npool=None or 1 for vectorized emcee"
                 )
             # Always force npool=None for batch
             sampler_kwargs["npool"] = None
@@ -549,7 +541,7 @@ class Fitter:
         top_k: int,
         **sampler_kwargs,
     ) -> FitResult:
-        """Run emcee or zeus with OpenMP-vectorized batch chi2 computation."""
+        """Run emcee with OpenMP-vectorized batch chi2 computation."""
         defaults = dict(SAMPLER_DEFAULTS.get(sampler, {}))
 
         # Reuse C++ ParamTransformer created in fit()
@@ -589,10 +581,6 @@ class Fitter:
         if sampler == "emcee":
             sampler_obj = emcee.EnsembleSampler(
                 nwalkers, ndim, log_prob_batch, vectorize=True, moves=moves
-            )
-        elif sampler == "zeus":
-            sampler_obj = zeus.EnsembleSampler(
-                nwalkers, ndim, log_prob_batch, vectorize=True, light_mode=True
             )
         else:
             raise ValueError(f"Unknown vectorized sampler: {sampler}")

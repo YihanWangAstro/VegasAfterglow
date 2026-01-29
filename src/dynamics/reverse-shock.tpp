@@ -114,27 +114,27 @@ Real FRShockEqn<Ejecta, Medium>::compute_dU3_dt(State const& state, State const&
     const Real adiabatic_cooling =
         compute_adiabatic_cooling_rate2(ad_idx, state.r, state.x3, state.U3_th, diff.r, diff.x3);
 
-    /*if (state.m3 < state.m4 || diff.m4 > 0) { // reverse shock still crossing
+    if (state.m3 < state.m4 || diff.m4 > 0) { // reverse shock still crossing
         const Real shock_heating = compute_shock_heating_rate(Gamma34, diff.m3);
         constexpr Real eps_rad = 0; ////compute_radiative_efficiency(state.t_comv, state.Gamma, e_th, rad_rvs);
         return (1 - eps_rad) * shock_heating + adiabatic_cooling;
     } else {
         return adiabatic_cooling;
-    }*/
+    }
     //smooth transition around the crossing time, the shell end is not a cliff in real world
-    const Real w = compute_crossing_weight(state, diff, t);
+    /*const Real w = compute_crossing_weight(state, diff, t);
     Real shock_heating = 0.0;
     if (w > 1e-3) {
         const Real heating_rate = compute_shock_heating_rate(Gamma34, diff.m3); // diff.m3 is already smoothed!
         constexpr Real eps_rad = 0;
         shock_heating = (1 - eps_rad) * heating_rate;
     }
-    return shock_heating + adiabatic_cooling;
+    return shock_heating + adiabatic_cooling;*/
 }
 
 template <typename Ejecta, typename Medium>
 Real FRShockEqn<Ejecta, Medium>::compute_dx3_dt(State const& state, State const& diff, Real t) const noexcept {
-    /*if ((state.m3 < state.m4 || diff.m4 > 0) && (state.Gamma != this->Gamma4)) {
+    if ((state.m3 < state.m4 || diff.m4 > 0) && (state.Gamma != this->Gamma4)) {
         const Real sigma = compute_shell_sigma(state);
         const Real Gamma34 = compute_rel_Gamma(this->Gamma4, state.Gamma);
         const Real beta3 = physics::relativistic::gamma_to_beta(state.Gamma);
@@ -146,10 +146,10 @@ Real FRShockEqn<Ejecta, Medium>::compute_dx3_dt(State const& state, State const&
     } else {
         const Real Gamma34 = compute_rel_Gamma(this->Gamma4, state.Gamma);
         return compute_shell_spreading_rate(Gamma34, diff.t_comv);
-    }*/
+    }
 
     //smooth transition around the crossing time, the shell end is not a cliff in real world
-    const Real w = compute_crossing_weight(state, diff, t);
+    /*const Real w = compute_crossing_weight(state, diff, t);
 
     const Real Gamma34 = compute_rel_Gamma(this->Gamma4, state.Gamma);
     const Real rate_spreading = compute_shell_spreading_rate(Gamma34, diff.t_comv);
@@ -164,7 +164,7 @@ Real FRShockEqn<Ejecta, Medium>::compute_dx3_dt(State const& state, State const&
         rate_crossing = std::fabs(dx3dt * state.Gamma);
     }
 
-    return w * rate_crossing + (1.0 - w) * rate_spreading;
+    return w * rate_crossing + (1.0 - w) * rate_spreading;*/
 }
 
 template <typename Ejecta, typename Medium>
@@ -183,7 +183,7 @@ Real FRShockEqn<Ejecta, Medium>::compute_dm2_dt(State const& state, State const&
 
 template <typename Ejecta, typename Medium>
 Real FRShockEqn<Ejecta, Medium>::compute_dm3_dt(State const& state, State const& diff, Real t) const noexcept {
-    /*if ((state.m3 < state.m4 || diff.m4 > 0) && (state.Gamma != this->Gamma4)) {
+    if ((state.m3 < state.m4 || diff.m4 > 0) && (state.Gamma != this->Gamma4)) {
         const Real sigma = compute_shell_sigma(state);
         const Real Gamma34 = compute_rel_Gamma(this->Gamma4, state.Gamma);
         Real comp_ratio = compute_4vel_jump(Gamma34, sigma);
@@ -197,9 +197,9 @@ Real FRShockEqn<Ejecta, Medium>::compute_dm3_dt(State const& state, State const&
         }
     } else {
         return 0.;
-    }*/
+    }
     //smooth transition around the crossing time, the shell end is not a cliff in real world
-    const Real w = compute_crossing_weight(state, diff, t);
+    /*const Real w = compute_crossing_weight(state, diff, t);
 
     if (w < 1e-3)
         return 0.0;
@@ -218,7 +218,7 @@ Real FRShockEqn<Ejecta, Medium>::compute_dm3_dt(State const& state, State const&
         return theoretical_rate * w;
     } else {
         return 0.0;
-    }
+    }*/
 }
 
 template <typename Ejecta, typename Medium>
