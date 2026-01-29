@@ -1,0 +1,557 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Parameter Estimation with Redback &mdash; VegasAfterglow 0.1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=20074c1a" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="_static/graphviz.css?v=fd3f3429" />
+      <link rel="stylesheet" type="text/css" href="_static/css/custom.css?v=c0df17a3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/custom.css?v=c0df17a3" />
+
+  
+    <link rel="shortcut icon" href="_static/logo.svg"/>
+    <link rel="canonical" href="https://yihanwangastro.github.io/VegasAfterglow/docs/redback_integration.html" />
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=01f34227"></script>
+      <script src="_static/doctools.js?v=9a2dae69"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="_static/js/custom.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            VegasAfterglow
+              <img src="_static/logo.svg" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="quickstart.html">Quickstart</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="mcmc_fitting.html">MCMC Parameter Fitting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="parameter_reference.html">Parameter Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="validation.html">Validation &amp; Testing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="python_api.html">Python API Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cpp_api.html">C++ API Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="troubleshooting.html">Troubleshooting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contributing.html">Contributing</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">VegasAfterglow</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Parameter Estimation with Redback</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/redback_integration.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="parameter-estimation-with-redback">
+<h1>Parameter Estimation with Redback<a class="headerlink" href="#parameter-estimation-with-redback" title="Link to this heading"></a></h1>
+<nav class="contents local" id="table-of-contents">
+<p class="topic-title">Table of Contents</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#overview" id="id1">Overview</a></p></li>
+<li><p><a class="reference internal" href="#quick-start" id="id2">Quick Start</a></p>
+<ul>
+<li><p><a class="reference internal" href="#loading-data-and-basic-fitting" id="id3">Loading Data and Basic Fitting</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#available-vegasafterglow-models" id="id4">Available VegasAfterglow Models</a></p>
+<ul>
+<li><p><a class="reference internal" href="#jet-models-with-ism-medium" id="id5">Jet Models with ISM Medium</a></p></li>
+<li><p><a class="reference internal" href="#jet-models-with-wind-medium" id="id6">Jet Models with Wind Medium</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#model-parameters" id="id7">Model Parameters</a></p>
+<ul>
+<li><p><a class="reference internal" href="#common-parameters" id="id8">Common Parameters</a></p></li>
+<li><p><a class="reference internal" href="#additional-parameters-via-kwargs" id="id9">Additional Parameters (via kwargs)</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#example-custom-priors" id="id10">Example: Custom Priors</a></p></li>
+<li><p><a class="reference internal" href="#example-multi-band-fitting" id="id11">Example: Multi-band Fitting</a></p></li>
+<li><p><a class="reference internal" href="#example-model-comparison" id="id12">Example: Model Comparison</a></p></li>
+<li><p><a class="reference internal" href="#advanced-features" id="id13">Advanced Features</a></p>
+<ul>
+<li><p><a class="reference internal" href="#reverse-shock-modeling" id="id14">Reverse Shock Modeling</a></p></li>
+<li><p><a class="reference internal" href="#jet-spreading" id="id15">Jet Spreading</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#best-practices" id="id16">Best Practices</a></p>
+<ul>
+<li><p><a class="reference internal" href="#start-simple" id="id17">Start Simple</a></p></li>
+<li><p><a class="reference internal" href="#choose-appropriate-priors" id="id18">Choose Appropriate Priors</a></p></li>
+<li><p><a class="reference internal" href="#sampler-selection" id="id19">Sampler Selection</a></p></li>
+<li><p><a class="reference internal" href="#computational-considerations" id="id20">Computational Considerations</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#redback-s-full-capabilities" id="id21">Redback’s Full Capabilities</a></p></li>
+</ul>
+</nav>
+<section id="overview">
+<h2><a class="toc-backref" href="#id1" role="doc-backlink">Overview</a><a class="headerlink" href="#overview" title="Link to this heading"></a></h2>
+<p>VegasAfterglow is a <strong>pure physics library</strong> focused on fast, accurate afterglow calculations. For parameter estimation, MCMC fitting, and comprehensive transient analysis, VegasAfterglow models are integrated into <a class="reference external" href="https://github.com/nikhil-sarin/redback">redback</a>.</p>
+<p>Redback provides:</p>
+<ul class="simple">
+<li><p><strong>Unified interface</strong> for all transient types (afterglows, kilonovae, supernovae, TDEs, etc.)</p></li>
+<li><p><strong>Multiple sampling algorithms</strong> (dynesty, emcee, ultranest, etc.)</p></li>
+<li><p><strong>Data management</strong> and open-access catalogs</p></li>
+<li><p><strong>Model comparison</strong> and selection</p></li>
+<li><p><strong>Visualization tools</strong> and plotting utilities</p></li>
+<li><p><strong>Prior specification</strong> with bilby integration</p></li>
+</ul>
+</section>
+<section id="quick-start">
+<h2><a class="toc-backref" href="#id2" role="doc-backlink">Quick Start</a><a class="headerlink" href="#quick-start" title="Link to this heading"></a></h2>
+<section id="loading-data-and-basic-fitting">
+<h3><a class="toc-backref" href="#id3" role="doc-backlink">Loading Data and Basic Fitting</a><a class="headerlink" href="#loading-data-and-basic-fitting" title="Link to this heading"></a></h3>
+<p>Redback provides multiple ways to load and work with GRB afterglow data. Here’s a complete example:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">redback</span>
+
+<span class="c1"># Method 1: Load from Swift BAT+XRT catalogs (recommended for Swift GRBs)</span>
+<span class="n">GRB</span> <span class="o">=</span> <span class="s1">&#39;070809&#39;</span>
+
+<span class="c1"># Get flux/flux density data from Swift</span>
+<span class="n">redback</span><span class="o">.</span><span class="n">get_data</span><span class="o">.</span><span class="n">get_bat_xrt_afterglow_data_from_swift</span><span class="p">(</span>
+    <span class="n">grb</span><span class="o">=</span><span class="n">GRB</span><span class="p">,</span>
+    <span class="n">data_mode</span><span class="o">=</span><span class="s2">&quot;flux&quot;</span>  <span class="c1"># or &quot;flux_density&quot;, &quot;magnitude&quot;, &quot;luminosity&quot;</span>
+<span class="p">)</span>
+<span class="c1"># This creates a GRBDir with all available Swift data</span>
+
+<span class="c1"># Create transient object from Swift data</span>
+<span class="n">afterglow</span> <span class="o">=</span> <span class="n">redback</span><span class="o">.</span><span class="n">afterglow</span><span class="o">.</span><span class="n">SGRB</span><span class="o">.</span><span class="n">from_swift_grb</span><span class="p">(</span>
+    <span class="n">name</span><span class="o">=</span><span class="n">GRB</span><span class="p">,</span>
+    <span class="n">data_mode</span><span class="o">=</span><span class="s1">&#39;flux&#39;</span>
+<span class="p">)</span>
+
+<span class="c1"># Method 2: Load from open access catalogs</span>
+<span class="n">afterglow</span> <span class="o">=</span> <span class="n">redback</span><span class="o">.</span><span class="n">afterglow</span><span class="o">.</span><span class="n">Afterglow</span><span class="o">.</span><span class="n">from_open_access_catalogue</span><span class="p">(</span>
+    <span class="n">GRB</span><span class="p">,</span>
+    <span class="n">data_mode</span><span class="o">=</span><span class="s1">&#39;flux_density&#39;</span>
+<span class="p">)</span>
+
+<span class="c1"># Method 3: Load from your own data files</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;path/to/my_grb_data.csv&#39;</span><span class="p">)</span>
+<span class="n">afterglow</span> <span class="o">=</span> <span class="n">redback</span><span class="o">.</span><span class="n">transient</span><span class="o">.</span><span class="n">Afterglow</span><span class="p">(</span>
+    <span class="n">name</span><span class="o">=</span><span class="n">GRB</span><span class="p">,</span>
+    <span class="n">data_mode</span><span class="o">=</span><span class="s1">&#39;flux_density&#39;</span><span class="p">,</span>
+    <span class="n">time</span><span class="o">=</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;time&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">,</span>
+    <span class="n">flux_density</span><span class="o">=</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;flux&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">,</span>
+    <span class="n">flux_density_err</span><span class="o">=</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;flux_err&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">,</span>
+    <span class="n">frequency</span><span class="o">=</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;frequency&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
+<span class="p">)</span>
+
+<span class="c1"># Fit with VegasAfterglow tophat model</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">redback</span><span class="o">.</span><span class="n">fit_model</span><span class="p">(</span>
+    <span class="n">transient</span><span class="o">=</span><span class="n">afterglow</span><span class="p">,</span>
+    <span class="n">model</span><span class="o">=</span><span class="s1">&#39;vegas_tophat&#39;</span><span class="p">,</span>  <span class="c1"># VegasAfterglow tophat jet model</span>
+    <span class="n">sampler</span><span class="o">=</span><span class="s1">&#39;dynesty&#39;</span><span class="p">,</span>
+    <span class="n">nlive</span><span class="o">=</span><span class="mi">1000</span>
+<span class="p">)</span>
+
+<span class="c1"># Analyze results</span>
+<span class="n">result</span><span class="o">.</span><span class="n">plot_corner</span><span class="p">()</span>
+<span class="n">result</span><span class="o">.</span><span class="n">plot_lightcurve</span><span class="p">()</span>
+<span class="n">result</span><span class="o">.</span><span class="n">plot_residuals</span><span class="p">()</span>
+</pre></div>
+</div>
+<p><strong>Data Modes and Formats:</strong></p>
+<p>Redback supports multiple data modes for afterglow analysis:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">flux_density</span></code> - Flux density [erg/cm²/s/Hz] at specific frequencies</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">flux</span></code> - Integrated flux [erg/cm²/s] over energy bands</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">magnitude</span></code> - Optical/NIR magnitudes in various filters</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">luminosity</span></code> - Source-frame luminosity (requires known redshift)</p></li>
+</ul>
+<p><strong>Advanced Data Loading:</strong></p>
+<p>For comprehensive data management capabilities, including:</p>
+<ul class="simple">
+<li><p>Multi-wavelength data from different instruments</p></li>
+<li><p>Custom data formats and preprocessing</p></li>
+<li><p>Data filtering and quality cuts</p></li>
+<li><p>Combining multiple datasets</p></li>
+<li><p>Time-domain sampling strategies</p></li>
+</ul>
+<p>See the complete <a class="reference external" href="https://redback.readthedocs.io/en/latest/data.html">redback data documentation</a>.</p>
+</section>
+</section>
+<section id="available-vegasafterglow-models">
+<h2><a class="toc-backref" href="#id4" role="doc-backlink">Available VegasAfterglow Models</a><a class="headerlink" href="#available-vegasafterglow-models" title="Link to this heading"></a></h2>
+<p>Redback includes multiple VegasAfterglow models for different jet structures and media:</p>
+<section id="jet-models-with-ism-medium">
+<h3><a class="toc-backref" href="#id5" role="doc-backlink">Jet Models with ISM Medium</a><a class="headerlink" href="#jet-models-with-ism-medium" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">vegas_tophat</span></code> - Uniform tophat jet with sharp boundary</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">vegas_gaussian</span></code> - Gaussian energy profile</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">vegas_powerlaw</span></code> - Power-law energy and Lorentz factor structure</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">vegas_powerlaw_wing</span></code> - Power-law wings without discontinuity</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">vegas_step_powerlaw</span></code> - Pencil beam core with power-law wings</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">vegas_two_component</span></code> - Narrow core + wide component</p></li>
+</ul>
+</section>
+<section id="jet-models-with-wind-medium">
+<h3><a class="toc-backref" href="#id6" role="doc-backlink">Jet Models with Wind Medium</a><a class="headerlink" href="#jet-models-with-wind-medium" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">vegas_tophat_wind</span></code> - Tophat jet in stellar wind</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">vegas_gaussian_wind</span></code> - Gaussian jet in stellar wind</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">vegas_powerlaw_wind</span></code> - Power-law jet in stellar wind</p></li>
+</ul>
+</section>
+</section>
+<section id="model-parameters">
+<h2><a class="toc-backref" href="#id7" role="doc-backlink">Model Parameters</a><a class="headerlink" href="#model-parameters" title="Link to this heading"></a></h2>
+<p>Each VegasAfterglow model requires specific parameters. Here are typical parameters for a tophat jet in ISM:</p>
+<section id="common-parameters">
+<h3><a class="toc-backref" href="#id8" role="doc-backlink">Common Parameters</a><a class="headerlink" href="#common-parameters" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">redshift</span></code> - Source redshift</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">thv</span></code> - Viewing angle (radians)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">loge0</span></code> - log10 isotropic equivalent energy (ergs)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">thc</span></code> - Jet core opening angle (radians)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">lognism</span></code> - log10 ISM number density (cm^-3)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">p</span></code> - Electron power-law index</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">logepse</span></code> - log10 electron energy fraction</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">logepsb</span></code> - log10 magnetic field energy fraction</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">g0</span></code> - Initial Lorentz factor</p></li>
+</ul>
+</section>
+<section id="additional-parameters-via-kwargs">
+<h3><a class="toc-backref" href="#id9" role="doc-backlink">Additional Parameters (via kwargs)</a><a class="headerlink" href="#additional-parameters-via-kwargs" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">spread</span></code> - Enable jet spreading (default: False)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">reverse_shock</span></code> - Enable reverse shock (default: False)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">reverse_logepse</span></code> - Reverse shock electron fraction</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">reverse_logepsb</span></code> - Reverse shock magnetic fraction</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">reverse_p</span></code> - Reverse shock electron index</p></li>
+</ul>
+</section>
+</section>
+<section id="example-custom-priors">
+<h2><a class="toc-backref" href="#id10" role="doc-backlink">Example: Custom Priors</a><a class="headerlink" href="#example-custom-priors" title="Link to this heading"></a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">bilby</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">redback</span>
+
+<span class="c1"># Load data</span>
+<span class="n">afterglow</span> <span class="o">=</span> <span class="n">redback</span><span class="o">.</span><span class="n">afterglow</span><span class="o">.</span><span class="n">Afterglow</span><span class="o">.</span><span class="n">from_open_access_catalogue</span><span class="p">(</span>
+    <span class="s1">&#39;GRB070809&#39;</span><span class="p">,</span> <span class="n">data_mode</span><span class="o">=</span><span class="s1">&#39;flux_density&#39;</span>
+<span class="p">)</span>
+
+<span class="c1"># Define custom priors</span>
+<span class="n">priors</span> <span class="o">=</span> <span class="n">bilby</span><span class="o">.</span><span class="n">prior</span><span class="o">.</span><span class="n">PriorDict</span><span class="p">()</span>
+<span class="n">priors</span><span class="p">[</span><span class="s1">&#39;redshift&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">bilby</span><span class="o">.</span><span class="n">prior</span><span class="o">.</span><span class="n">Uniform</span><span class="p">(</span><span class="mf">0.01</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="s1">&#39;redshift&#39;</span><span class="p">)</span>
+<span class="n">priors</span><span class="p">[</span><span class="s1">&#39;thv&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">bilby</span><span class="o">.</span><span class="n">prior</span><span class="o">.</span><span class="n">Sine</span><span class="p">(</span><span class="n">maximum</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;thv&#39;</span><span class="p">)</span>
+<span class="n">priors</span><span class="p">[</span><span class="s1">&#39;loge0&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">bilby</span><span class="o">.</span><span class="n">prior</span><span class="o">.</span><span class="n">Uniform</span><span class="p">(</span><span class="mi">48</span><span class="p">,</span> <span class="mi">54</span><span class="p">,</span> <span class="s1">&#39;loge0&#39;</span><span class="p">)</span>
+<span class="n">priors</span><span class="p">[</span><span class="s1">&#39;thc&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">bilby</span><span class="o">.</span><span class="n">prior</span><span class="o">.</span><span class="n">Uniform</span><span class="p">(</span><span class="mf">0.01</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="s1">&#39;thc&#39;</span><span class="p">)</span>
+<span class="n">priors</span><span class="p">[</span><span class="s1">&#39;lognism&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">bilby</span><span class="o">.</span><span class="n">prior</span><span class="o">.</span><span class="n">Uniform</span><span class="p">(</span><span class="o">-</span><span class="mi">5</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="s1">&#39;lognism&#39;</span><span class="p">)</span>
+<span class="n">priors</span><span class="p">[</span><span class="s1">&#39;p&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">bilby</span><span class="o">.</span><span class="n">prior</span><span class="o">.</span><span class="n">Uniform</span><span class="p">(</span><span class="mf">2.0</span><span class="p">,</span> <span class="mf">3.5</span><span class="p">,</span> <span class="s1">&#39;p&#39;</span><span class="p">)</span>
+<span class="n">priors</span><span class="p">[</span><span class="s1">&#39;logepse&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">bilby</span><span class="o">.</span><span class="n">prior</span><span class="o">.</span><span class="n">Uniform</span><span class="p">(</span><span class="o">-</span><span class="mi">4</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;logepse&#39;</span><span class="p">)</span>
+<span class="n">priors</span><span class="p">[</span><span class="s1">&#39;logepsb&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">bilby</span><span class="o">.</span><span class="n">prior</span><span class="o">.</span><span class="n">Uniform</span><span class="p">(</span><span class="o">-</span><span class="mi">4</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;logepsb&#39;</span><span class="p">)</span>
+<span class="n">priors</span><span class="p">[</span><span class="s1">&#39;g0&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">bilby</span><span class="o">.</span><span class="n">prior</span><span class="o">.</span><span class="n">Uniform</span><span class="p">(</span><span class="mi">50</span><span class="p">,</span> <span class="mi">1000</span><span class="p">,</span> <span class="s1">&#39;g0&#39;</span><span class="p">)</span>
+
+<span class="c1"># Run fit with custom priors</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">redback</span><span class="o">.</span><span class="n">fit_model</span><span class="p">(</span>
+    <span class="n">transient</span><span class="o">=</span><span class="n">afterglow</span><span class="p">,</span>
+    <span class="n">model</span><span class="o">=</span><span class="s1">&#39;vegas_tophat&#39;</span><span class="p">,</span>
+    <span class="n">sampler</span><span class="o">=</span><span class="s1">&#39;dynesty&#39;</span><span class="p">,</span>
+    <span class="n">priors</span><span class="o">=</span><span class="n">priors</span><span class="p">,</span>
+    <span class="n">nlive</span><span class="o">=</span><span class="mi">1000</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="example-multi-band-fitting">
+<h2><a class="toc-backref" href="#id11" role="doc-backlink">Example: Multi-band Fitting</a><a class="headerlink" href="#example-multi-band-fitting" title="Link to this heading"></a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">redback</span>
+
+<span class="c1"># Load multi-band data</span>
+<span class="n">afterglow</span> <span class="o">=</span> <span class="n">redback</span><span class="o">.</span><span class="n">afterglow</span><span class="o">.</span><span class="n">Afterglow</span><span class="o">.</span><span class="n">from_open_access_catalogue</span><span class="p">(</span>
+    <span class="s1">&#39;GRB070809&#39;</span><span class="p">,</span> <span class="n">data_mode</span><span class="o">=</span><span class="s1">&#39;flux_density&#39;</span>
+<span class="p">)</span>
+
+<span class="c1"># Fit with VegasAfterglow model</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">redback</span><span class="o">.</span><span class="n">fit_model</span><span class="p">(</span>
+    <span class="n">transient</span><span class="o">=</span><span class="n">afterglow</span><span class="p">,</span>
+    <span class="n">model</span><span class="o">=</span><span class="s1">&#39;vegas_gaussian&#39;</span><span class="p">,</span>  <span class="c1"># Gaussian jet structure</span>
+    <span class="n">sampler</span><span class="o">=</span><span class="s1">&#39;dynesty&#39;</span><span class="p">,</span>
+    <span class="n">nlive</span><span class="o">=</span><span class="mi">2000</span><span class="p">,</span>  <span class="c1"># More live points for complex posteriors</span>
+    <span class="n">dlogz</span><span class="o">=</span><span class="mf">0.1</span>    <span class="c1"># Tighter evidence tolerance</span>
+<span class="p">)</span>
+
+<span class="c1"># Generate posterior predictions at new frequencies</span>
+<span class="n">result</span><span class="o">.</span><span class="n">plot_multiband</span><span class="p">(</span><span class="n">frequencies</span><span class="o">=</span><span class="p">[</span><span class="mf">1e9</span><span class="p">,</span> <span class="mf">5e14</span><span class="p">,</span> <span class="mf">1e18</span><span class="p">])</span>
+</pre></div>
+</div>
+</section>
+<section id="example-model-comparison">
+<h2><a class="toc-backref" href="#id12" role="doc-backlink">Example: Model Comparison</a><a class="headerlink" href="#example-model-comparison" title="Link to this heading"></a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">redback</span>
+
+<span class="n">afterglow</span> <span class="o">=</span> <span class="n">redback</span><span class="o">.</span><span class="n">afterglow</span><span class="o">.</span><span class="n">Afterglow</span><span class="o">.</span><span class="n">from_open_access_catalogue</span><span class="p">(</span>
+    <span class="s1">&#39;GRB070809&#39;</span><span class="p">,</span> <span class="n">data_mode</span><span class="o">=</span><span class="s1">&#39;flux_density&#39;</span>
+<span class="p">)</span>
+
+<span class="c1"># Fit multiple models</span>
+<span class="n">models</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;vegas_tophat&#39;</span><span class="p">,</span> <span class="s1">&#39;vegas_gaussian&#39;</span><span class="p">,</span> <span class="s1">&#39;vegas_powerlaw&#39;</span><span class="p">]</span>
+<span class="n">results</span> <span class="o">=</span> <span class="p">{}</span>
+
+<span class="k">for</span> <span class="n">model</span> <span class="ow">in</span> <span class="n">models</span><span class="p">:</span>
+    <span class="n">results</span><span class="p">[</span><span class="n">model</span><span class="p">]</span> <span class="o">=</span> <span class="n">redback</span><span class="o">.</span><span class="n">fit_model</span><span class="p">(</span>
+        <span class="n">transient</span><span class="o">=</span><span class="n">afterglow</span><span class="p">,</span>
+        <span class="n">model</span><span class="o">=</span><span class="n">model</span><span class="p">,</span>
+        <span class="n">sampler</span><span class="o">=</span><span class="s1">&#39;dynesty&#39;</span><span class="p">,</span>
+        <span class="n">nlive</span><span class="o">=</span><span class="mi">1000</span>
+    <span class="p">)</span>
+
+<span class="c1"># Compare evidences</span>
+<span class="k">for</span> <span class="n">model</span><span class="p">,</span> <span class="n">result</span> <span class="ow">in</span> <span class="n">results</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">model</span><span class="si">}</span><span class="s2">: log(Z) = </span><span class="si">{</span><span class="n">result</span><span class="o">.</span><span class="n">log_evidence</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="c1"># Plot comparison</span>
+<span class="n">redback</span><span class="o">.</span><span class="n">plot_model_comparison</span><span class="p">(</span><span class="n">results</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="advanced-features">
+<h2><a class="toc-backref" href="#id13" role="doc-backlink">Advanced Features</a><a class="headerlink" href="#advanced-features" title="Link to this heading"></a></h2>
+<section id="reverse-shock-modeling">
+<h3><a class="toc-backref" href="#id14" role="doc-backlink">Reverse Shock Modeling</a><a class="headerlink" href="#reverse-shock-modeling" title="Link to this heading"></a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">redback</span>
+
+<span class="c1"># Enable reverse shock with different microphysics</span>
+<span class="n">kwargs</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;reverse_shock&#39;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+    <span class="s1">&#39;reverse_logepse&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mf">1.5</span><span class="p">,</span>  <span class="c1"># Different from forward shock</span>
+    <span class="s1">&#39;reverse_logepsb&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mf">2.5</span><span class="p">,</span>
+    <span class="s1">&#39;reverse_p&#39;</span><span class="p">:</span> <span class="mf">2.2</span>
+<span class="p">}</span>
+
+<span class="n">result</span> <span class="o">=</span> <span class="n">redback</span><span class="o">.</span><span class="n">fit_model</span><span class="p">(</span>
+    <span class="n">transient</span><span class="o">=</span><span class="n">afterglow</span><span class="p">,</span>
+    <span class="n">model</span><span class="o">=</span><span class="s1">&#39;vegas_tophat&#39;</span><span class="p">,</span>
+    <span class="n">model_kwargs</span><span class="o">=</span><span class="n">kwargs</span><span class="p">,</span>
+    <span class="n">sampler</span><span class="o">=</span><span class="s1">&#39;dynesty&#39;</span><span class="p">,</span>
+    <span class="n">nlive</span><span class="o">=</span><span class="mi">1000</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="jet-spreading">
+<h3><a class="toc-backref" href="#id15" role="doc-backlink">Jet Spreading</a><a class="headerlink" href="#jet-spreading" title="Link to this heading"></a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Enable jet spreading dynamics</span>
+<span class="n">kwargs</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;spread&#39;</span><span class="p">:</span> <span class="kc">True</span><span class="p">}</span>
+
+<span class="n">result</span> <span class="o">=</span> <span class="n">redback</span><span class="o">.</span><span class="n">fit_model</span><span class="p">(</span>
+    <span class="n">transient</span><span class="o">=</span><span class="n">afterglow</span><span class="p">,</span>
+    <span class="n">model</span><span class="o">=</span><span class="s1">&#39;vegas_tophat&#39;</span><span class="p">,</span>
+    <span class="n">model_kwargs</span><span class="o">=</span><span class="n">kwargs</span><span class="p">,</span>
+    <span class="n">sampler</span><span class="o">=</span><span class="s1">&#39;dynesty&#39;</span><span class="p">,</span>
+    <span class="n">nlive</span><span class="o">=</span><span class="mi">1000</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="best-practices">
+<h2><a class="toc-backref" href="#id16" role="doc-backlink">Best Practices</a><a class="headerlink" href="#best-practices" title="Link to this heading"></a></h2>
+<section id="start-simple">
+<h3><a class="toc-backref" href="#id17" role="doc-backlink">Start Simple</a><a class="headerlink" href="#start-simple" title="Link to this heading"></a></h3>
+<p>Always begin with the simplest physically motivated model:</p>
+<ol class="arabic simple">
+<li><p>Start with <code class="docutils literal notranslate"><span class="pre">vegas_tophat</span></code> + ISM + forward shock only</p></li>
+<li><p>Examine residuals and fit quality</p></li>
+<li><p>Add complexity (reverse shock, different jet structure) only if justified</p></li>
+</ol>
+</section>
+<section id="choose-appropriate-priors">
+<h3><a class="toc-backref" href="#id18" role="doc-backlink">Choose Appropriate Priors</a><a class="headerlink" href="#choose-appropriate-priors" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p>Use physical constraints to set prior ranges</p></li>
+<li><p>For viewing angle, use <code class="docutils literal notranslate"><span class="pre">Sine</span></code> prior (uniform in solid angle)</p></li>
+<li><p>For energies/densities, use <code class="docutils literal notranslate"><span class="pre">Uniform</span></code> in log space</p></li>
+<li><p>Check prior predictive distributions before fitting</p></li>
+</ul>
+</section>
+<section id="sampler-selection">
+<h3><a class="toc-backref" href="#id19" role="doc-backlink">Sampler Selection</a><a class="headerlink" href="#sampler-selection" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><strong>dynesty</strong>: Best for evidence calculation and multimodal posteriors</p></li>
+<li><p><strong>emcee</strong>: Faster for unimodal posteriors, good for quick checks</p></li>
+<li><p><strong>ultranest</strong>: Most robust for complex, multimodal posteriors</p></li>
+</ul>
+</section>
+<section id="computational-considerations">
+<h3><a class="toc-backref" href="#id20" role="doc-backlink">Computational Considerations</a><a class="headerlink" href="#computational-considerations" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p>VegasAfterglow is extremely fast (~1ms per light curve)</p></li>
+<li><p>Can fit 1000s of MCMC samples in minutes on laptop</p></li>
+<li><p>Use <code class="docutils literal notranslate"><span class="pre">nlive=1000</span></code> for quick runs, <code class="docutils literal notranslate"><span class="pre">nlive=2000+</span></code> for publication</p></li>
+<li><p>Parallel chains with <code class="docutils literal notranslate"><span class="pre">npool</span></code> parameter for faster sampling</p></li>
+</ul>
+</section>
+</section>
+<section id="redback-s-full-capabilities">
+<h2><a class="toc-backref" href="#id21" role="doc-backlink">Redback’s Full Capabilities</a><a class="headerlink" href="#redback-s-full-capabilities" title="Link to this heading"></a></h2>
+<p>Redback is a comprehensive transient analysis framework that provides everything you need for parameter estimation with VegasAfterglow models. Through the redback interface, you can:</p>
+<p><strong>Data Management:</strong></p>
+<ul class="simple">
+<li><p>Load data from multiple sources: Swift, Fermi, BATSE, open catalogs, private data</p></li>
+<li><p>Support for all data types: flux density, flux, magnitude, luminosity</p></li>
+<li><p>Multi-wavelength data from radio to X-ray</p></li>
+<li><p>Automatic unit conversions and data preprocessing</p></li>
+<li><p>Filter and quality-cut data</p></li>
+<li><p>Combine datasets from multiple instruments</p></li>
+<li><p>Handle upper limits and non-detections</p></li>
+</ul>
+<p><strong>Model Fitting:</strong></p>
+<ul class="simple">
+<li><p>Access all VegasAfterglow models (tophat, gaussian, power-law jets, etc.)</p></li>
+<li><p>Multiple sampling backends: dynesty, emcee, ultranest, nessai</p></li>
+<li><p>Custom prior specification with bilby</p></li>
+<li><p>Parallel sampling for faster computation</p></li>
+<li><p>Model comparison via Bayesian evidence</p></li>
+<li><p>Fit multiple transient types beyond afterglows</p></li>
+</ul>
+<p><strong>Analysis &amp; Visualization:</strong></p>
+<ul class="simple">
+<li><p>Corner plots for posterior distributions</p></li>
+<li><p>Light curve plots with model predictions</p></li>
+<li><p>Residual analysis</p></li>
+<li><p>Multi-band visualization</p></li>
+<li><p>Posterior predictive checks</p></li>
+<li><p>Evidence comparison tables</p></li>
+<li><p>Publication-ready figures</p></li>
+</ul>
+<p><strong>Advanced Features:</strong></p>
+<ul class="simple">
+<li><p>Joint analysis of multiple transients</p></li>
+<li><p>Population inference</p></li>
+<li><p>Model selection and comparison</p></li>
+<li><p>Custom likelihood functions</p></li>
+<li><p>Systematic uncertainty modeling</p></li>
+<li><p>Time-dependent viewing angle effects</p></li>
+<li><p>Energy injection modeling</p></li>
+</ul>
+<p><strong>Example: Complete Workflow</strong></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">redback</span>
+
+<span class="c1"># 1. Get data (multiple methods available)</span>
+<span class="n">GRB</span> <span class="o">=</span> <span class="s1">&#39;GRB070809&#39;</span>
+
+<span class="c1"># From Swift</span>
+<span class="n">redback</span><span class="o">.</span><span class="n">get_data</span><span class="o">.</span><span class="n">get_bat_xrt_afterglow_data_from_swift</span><span class="p">(</span><span class="n">grb</span><span class="o">=</span><span class="n">GRB</span><span class="p">,</span> <span class="n">data_mode</span><span class="o">=</span><span class="s2">&quot;flux&quot;</span><span class="p">)</span>
+<span class="n">afterglow</span> <span class="o">=</span> <span class="n">redback</span><span class="o">.</span><span class="n">afterglow</span><span class="o">.</span><span class="n">SGRB</span><span class="o">.</span><span class="n">from_swift_grb</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">GRB</span><span class="p">,</span> <span class="n">data_mode</span><span class="o">=</span><span class="s1">&#39;flux&#39;</span><span class="p">)</span>
+
+<span class="c1"># Or from your own data</span>
+<span class="c1"># import pandas as pd</span>
+<span class="c1"># data = pd.read_csv(&#39;my_grb_data.csv&#39;)</span>
+<span class="c1"># afterglow = redback.transient.Afterglow(</span>
+<span class="c1">#     name=GRB, data_mode=&#39;flux_density&#39;,</span>
+<span class="c1">#     time=data[&#39;time&#39;].values, flux_density=data[&#39;flux&#39;].values,</span>
+<span class="c1">#     flux_density_err=data[&#39;flux_err&#39;].values, frequency=data[&#39;frequency&#39;].values</span>
+<span class="c1"># )</span>
+
+<span class="c1"># 2. Fit model</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">redback</span><span class="o">.</span><span class="n">fit_model</span><span class="p">(</span>
+    <span class="n">transient</span><span class="o">=</span><span class="n">afterglow</span><span class="p">,</span>
+    <span class="n">model</span><span class="o">=</span><span class="s1">&#39;vegas_tophat&#39;</span><span class="p">,</span>
+    <span class="n">sampler</span><span class="o">=</span><span class="s1">&#39;dynesty&#39;</span><span class="p">,</span>
+    <span class="n">nlive</span><span class="o">=</span><span class="mi">2000</span>
+<span class="p">)</span>
+
+<span class="c1"># 3. Analyze</span>
+<span class="n">result</span><span class="o">.</span><span class="n">plot_corner</span><span class="p">()</span>
+<span class="n">result</span><span class="o">.</span><span class="n">plot_lightcurve</span><span class="p">(</span><span class="n">save</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">result</span><span class="o">.</span><span class="n">print_summary</span><span class="p">()</span>
+
+<span class="c1"># 4. Make predictions</span>
+<span class="n">result</span><span class="o">.</span><span class="n">plot_multiband</span><span class="p">(</span><span class="n">frequencies</span><span class="o">=</span><span class="p">[</span><span class="mf">1e9</span><span class="p">,</span> <span class="mf">1e14</span><span class="p">,</span> <span class="mf">1e18</span><span class="p">])</span>
+</pre></div>
+</div>
+<p>For complete documentation on all these capabilities and more, see the comprehensive <a class="reference external" href="https://redback.readthedocs.io/en/latest/?badge=latest">redback documentation</a>.</p>
+<p><strong>Quick Links:</strong></p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://redback.readthedocs.io/en/latest/installation.html">Redback Installation</a></p></li>
+<li><p><a class="reference external" href="https://redback.readthedocs.io/en/latest/data.html">Data Loading Guide</a></p></li>
+<li><p><a class="reference external" href="https://redback.readthedocs.io/en/latest/examples.html">Fitting Tutorial</a></p></li>
+<li><p><a class="reference external" href="https://redback.readthedocs.io/en/latest/models.html">Model Library</a></p></li>
+<li><p><a class="reference external" href="https://redback.readthedocs.io/en/latest/api.html">API Reference</a></p></li>
+</ul>
+<p>For VegasAfterglow physics details, see:</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="physics.html"><span class="doc">GRB Afterglow Physics</span></a> - Detailed physics description</p></li>
+<li><p><a class="reference internal" href="parameter_reference.html"><span class="doc">Parameter Reference</span></a> - Complete parameter reference</p></li>
+<li><p><a class="reference internal" href="examples.html"><span class="doc">Examples</span></a> - VegasAfterglow usage examples</p></li>
+</ul>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, VegasAfterglow Team.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
