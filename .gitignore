@@ -11,6 +11,7 @@
 **/*.npz
 **/.DS_Store
 **/*.pyc
+**/*.dSYM
 
 external/
 projects/
@@ -23,6 +24,11 @@ vegasglow.so.dSYM/
 !CMakeLists.txt
 legacy/
 
+tests/**/*.png
+tests/**/*.pdf
+script/*.pdf
+script/*.png
+script/bilby_output/
 docs/build/
 docs/doxygen/
 validation/comprehensive_report.pdf
