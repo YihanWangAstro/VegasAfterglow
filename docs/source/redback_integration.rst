@@ -32,7 +32,7 @@ Redback provides multiple ways to load and work with GRB afterglow data. Here's 
     import redback
 
     # Method 1: Load from Swift BAT+XRT catalogs (recommended for Swift GRBs)
-    GRB = '070809'
+    GRB = 'GRB070809'
 
     # Get flux/flux density data from Swift
     redback.get_data.get_bat_xrt_afterglow_data_from_swift(

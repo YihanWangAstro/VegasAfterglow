@@ -104,3 +104,10 @@ namespace con {
     constexpr Real sigma_cut = defaults::cutoffs::sigma_cut;      ///< Cutoff magnetization value
     constexpr Real min_obs_time = defaults::observer::min_obs_time_sec * unit::sec; ///< Minimum observer time
 } // namespace con
+
+// Profiler macros (stub implementations when profiling is disabled)
+#ifndef AFTERGLOW_PROFILE
+    #define AFTERGLOW_PROFILE_SCOPE(name) do {} while(0)
+    #define AFTERGLOW_PROFILE_RESULTS() std::unordered_map<std::string, double>()
+    #define AFTERGLOW_PROFILE_RESET() do {} while(0)
+#endif
