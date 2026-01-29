@@ -115,7 +115,7 @@ $(document).ready(function(){initNavTree('pymodel_8h_source.html',''); initResiz
 <div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span><span class="preprocessor">#include &quot;../include/afterglow.h&quot;</span></div>
 <div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span><span class="preprocessor">#include &quot;<a class="code" href="pybind_8h.html">pybind.h</a>&quot;</span></div>
 <div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span><span class="preprocessor">#include &quot;<a class="code" href="macros_8h.html">util/macros.h</a>&quot;</span></div>
-<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span><span class="preprocessor">#include &quot;util/profiler.h&quot;</span></div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span><span class="preprocessor">#include &quot;<a class="code" href="profiler_8h.html">util/profiler.h</a>&quot;</span></div>
 <div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span><span class="comment"></span> </div>
 <div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span><span class="comment">/**</span></div>
 <div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span><span class="comment"> * &lt;!-- ************************************************************************************** --&gt;</span></div>
@@ -625,8 +625,8 @@ $(document).ready(function(){initNavTree('pymodel_8h_source.html',''); initResiz
 <div class="line"><a id="l00503" name="l00503"></a><span class="lineno">  503</span>    [[nodiscard]] <a class="code hl_typedef" href="mesh_8h.html#afd05120c4d579ec7fa4906f677781a83">Array</a> <a class="code hl_function" href="classPyModel.html#a7389149e6ad32d8189fd1d98682e8abd">jet_Gamma0</a>(<a class="code hl_typedef" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> phi, <a class="code hl_typedef" href="mesh_8h.html#afd05120c4d579ec7fa4906f677781a83">Array</a> <span class="keyword">const</span>&amp; theta) <span class="keyword">const</span>;</div>
 <div class="line"><a id="l00504" name="l00504"></a><span class="lineno">  504</span> </div>
 <div class="line"><a id="l00505" name="l00505"></a><span class="lineno">  505</span><span class="preprocessor">#ifdef AFTERGLOW_PROFILE</span></div>
-<div class="line"><a id="l00506" name="l00506"></a><span class="lineno">  506</span>    <span class="keyword">static</span> <span class="keyword">auto</span> profile_data() -&gt; std::unordered_map&lt;std::string, double&gt; { <span class="keywordflow">return</span> AFTERGLOW_PROFILE_RESULTS(); }</div>
-<div class="line"><a id="l00507" name="l00507"></a><span class="lineno">  507</span>    <span class="keyword">static</span> <span class="keywordtype">void</span> profile_reset() { AFTERGLOW_PROFILE_RESET(); }</div>
+<div class="line"><a id="l00506" name="l00506"></a><span class="lineno">  506</span>    <span class="keyword">static</span> <span class="keyword">auto</span> profile_data() -&gt; std::unordered_map&lt;std::string, double&gt; { <span class="keywordflow">return</span> <a class="code hl_define" href="profiler_8h.html#ae26f0506539ebba40f53d9f68c4aaae7">AFTERGLOW_PROFILE_RESULTS</a>(); }</div>
+<div class="line"><a id="l00507" name="l00507"></a><span class="lineno">  507</span>    <span class="keyword">static</span> <span class="keywordtype">void</span> profile_reset() { <a class="code hl_define" href="profiler_8h.html#a55120105ce221946600b38b63028e3d6">AFTERGLOW_PROFILE_RESET</a>(); }</div>
 <div class="line"><a id="l00508" name="l00508"></a><span class="lineno">  508</span><span class="preprocessor">#endif</span></div>
 <div class="line"><a id="l00509" name="l00509"></a><span class="lineno">  509</span> </div>
 <div class="line"><a id="l00510" name="l00510"></a><span class="lineno">  510</span>  <span class="keyword">private</span>:<span class="comment"></span></div>
@@ -733,22 +733,22 @@ $(document).ready(function(){initNavTree('pymodel_8h_source.html',''); initResiz
 <div class="line"><a id="l00610" name="l00610"></a><span class="lineno">  610</span><span class="keywordtype">void</span> PyModel::single_shock_emission(<a class="code hl_class" href="classShock.html">Shock</a> <span class="keyword">const</span>&amp; shock, <a class="code hl_class" href="classCoord.html">Coord</a> <span class="keyword">const</span>&amp; coord, <a class="code hl_typedef" href="mesh_8h.html#afd05120c4d579ec7fa4906f677781a83">Array</a> <span class="keyword">const</span>&amp; t_obs, <a class="code hl_typedef" href="mesh_8h.html#afd05120c4d579ec7fa4906f677781a83">Array</a> <span class="keyword">const</span>&amp; nu_obs,</div>
 <div class="line"><a id="l00611" name="l00611"></a><span class="lineno">  611</span>                                    <a class="code hl_class" href="classObserver.html">Observer</a>&amp; obs, <a class="code hl_class" href="classPyRadiation.html">PyRadiation</a> rad, <a class="code hl_struct" href="structFlux.html">Flux</a>&amp; emission, Func&amp;&amp; flux_func) {</div>
 <div class="line"><a id="l00612" name="l00612"></a><span class="lineno">  612</span>    {</div>
-<div class="line"><a id="l00613" name="l00613"></a><span class="lineno">  613</span>        AFTERGLOW_PROFILE_SCOPE(EAT_grid);</div>
+<div class="line"><a id="l00613" name="l00613"></a><span class="lineno">  613</span>        <a class="code hl_define" href="profiler_8h.html#a14810f45af18bd657a0c5e0bcbd30573">AFTERGLOW_PROFILE_SCOPE</a>(EAT_grid);</div>
 <div class="line"><a id="l00614" name="l00614"></a><span class="lineno">  614</span>        obs.<a class="code hl_function" href="classObserver.html#a7e6b3154ceb89b3ff90758b874c2016d">observe</a>(coord, shock, obs_setup.<a class="code hl_variable" href="classPyObserver.html#a3767075003ef446259a3f2a1dcaa6c8e">lumi_dist</a>, obs_setup.<a class="code hl_variable" href="classPyObserver.html#a7eff175b5dc92c4b68ba024e940ee86f">z</a>);</div>
 <div class="line"><a id="l00615" name="l00615"></a><span class="lineno">  615</span>    }</div>
 <div class="line"><a id="l00616" name="l00616"></a><span class="lineno">  616</span> </div>
 <div class="line"><a id="l00617" name="l00617"></a><span class="lineno">  617</span>    <span class="keyword">auto</span> syn_e = [&amp;] {</div>
-<div class="line"><a id="l00618" name="l00618"></a><span class="lineno">  618</span>        AFTERGLOW_PROFILE_SCOPE(syn_electrons);</div>
+<div class="line"><a id="l00618" name="l00618"></a><span class="lineno">  618</span>        <a class="code hl_define" href="profiler_8h.html#a14810f45af18bd657a0c5e0bcbd30573">AFTERGLOW_PROFILE_SCOPE</a>(syn_electrons);</div>
 <div class="line"><a id="l00619" name="l00619"></a><span class="lineno">  619</span>        <span class="keywordflow">return</span> <a class="code hl_function" href="synchrotron_8cpp.html#a61b8afa248e61a5726a0e48983f99fdf">generate_syn_electrons</a>(shock);</div>
 <div class="line"><a id="l00620" name="l00620"></a><span class="lineno">  620</span>    }();</div>
 <div class="line"><a id="l00621" name="l00621"></a><span class="lineno">  621</span> </div>
 <div class="line"><a id="l00622" name="l00622"></a><span class="lineno">  622</span>    <span class="keyword">auto</span> syn_ph = [&amp;] {</div>
-<div class="line"><a id="l00623" name="l00623"></a><span class="lineno">  623</span>        AFTERGLOW_PROFILE_SCOPE(syn_photons);</div>
+<div class="line"><a id="l00623" name="l00623"></a><span class="lineno">  623</span>        <a class="code hl_define" href="profiler_8h.html#a14810f45af18bd657a0c5e0bcbd30573">AFTERGLOW_PROFILE_SCOPE</a>(syn_photons);</div>
 <div class="line"><a id="l00624" name="l00624"></a><span class="lineno">  624</span>        <span class="keywordflow">return</span> <a class="code hl_function" href="synchrotron_8cpp.html#a331f545228d2b18e84e0252510e295f8">generate_syn_photons</a>(shock, syn_e);</div>
 <div class="line"><a id="l00625" name="l00625"></a><span class="lineno">  625</span>    }();</div>
 <div class="line"><a id="l00626" name="l00626"></a><span class="lineno">  626</span> </div>
 <div class="line"><a id="l00627" name="l00627"></a><span class="lineno">  627</span>    <span class="keywordflow">if</span> (rad.<a class="code hl_variable" href="classPyRadiation.html#a1d7e7abb6cc072cc9402430f30522aa6">ssc_cooling</a>) {</div>
-<div class="line"><a id="l00628" name="l00628"></a><span class="lineno">  628</span>        AFTERGLOW_PROFILE_SCOPE(cooling);</div>
+<div class="line"><a id="l00628" name="l00628"></a><span class="lineno">  628</span>        <a class="code hl_define" href="profiler_8h.html#a14810f45af18bd657a0c5e0bcbd30573">AFTERGLOW_PROFILE_SCOPE</a>(cooling);</div>
 <div class="line"><a id="l00629" name="l00629"></a><span class="lineno">  629</span>        <span class="keywordflow">if</span> (rad.<a class="code hl_variable" href="classPyRadiation.html#ab5fe05d2f9642ca32b02ce9cf59a4f4e">kn</a>) {</div>
 <div class="line"><a id="l00630" name="l00630"></a><span class="lineno">  630</span>            <a class="code hl_function" href="inverse-compton_8h.html#ac57614f97ddcaab423a5023a04cdf3a1">KN_cooling</a>(syn_e, syn_ph, shock);</div>
 <div class="line"><a id="l00631" name="l00631"></a><span class="lineno">  631</span>        } <span class="keywordflow">else</span> {</div>
@@ -757,17 +757,17 @@ $(document).ready(function(){initNavTree('pymodel_8h_source.html',''); initResiz
 <div class="line"><a id="l00634" name="l00634"></a><span class="lineno">  634</span>    }</div>
 <div class="line"><a id="l00635" name="l00635"></a><span class="lineno">  635</span> </div>
 <div class="line"><a id="l00636" name="l00636"></a><span class="lineno">  636</span>    {</div>
-<div class="line"><a id="l00637" name="l00637"></a><span class="lineno">  637</span>        AFTERGLOW_PROFILE_SCOPE(sync_flux);</div>
+<div class="line"><a id="l00637" name="l00637"></a><span class="lineno">  637</span>        <a class="code hl_define" href="profiler_8h.html#a14810f45af18bd657a0c5e0bcbd30573">AFTERGLOW_PROFILE_SCOPE</a>(sync_flux);</div>
 <div class="line"><a id="l00638" name="l00638"></a><span class="lineno">  638</span>        emission.<a class="code hl_variable" href="structFlux.html#ab874f7e2384fdd13a9393a754515108c">sync</a> = std::invoke(flux_func, obs, t_obs, nu_obs, syn_ph);</div>
 <div class="line"><a id="l00639" name="l00639"></a><span class="lineno">  639</span>    }</div>
 <div class="line"><a id="l00640" name="l00640"></a><span class="lineno">  640</span> </div>
 <div class="line"><a id="l00641" name="l00641"></a><span class="lineno">  641</span>    <span class="keywordflow">if</span> (rad.<a class="code hl_variable" href="classPyRadiation.html#a8e54b2f905a744304b3296a66f4291ba">ssc</a>) {</div>
 <div class="line"><a id="l00642" name="l00642"></a><span class="lineno">  642</span>        <span class="keyword">auto</span> IC_ph = [&amp;] {</div>
-<div class="line"><a id="l00643" name="l00643"></a><span class="lineno">  643</span>            AFTERGLOW_PROFILE_SCOPE(ic_photons);</div>
+<div class="line"><a id="l00643" name="l00643"></a><span class="lineno">  643</span>            <a class="code hl_define" href="profiler_8h.html#a14810f45af18bd657a0c5e0bcbd30573">AFTERGLOW_PROFILE_SCOPE</a>(ic_photons);</div>
 <div class="line"><a id="l00644" name="l00644"></a><span class="lineno">  644</span>            <span class="keywordflow">return</span> <a class="code hl_function" href="inverse-compton_8h.html#a925eead80e053d4694be449a199d8214">generate_IC_photons</a>(syn_e, syn_ph, rad.<a class="code hl_variable" href="classPyRadiation.html#ab5fe05d2f9642ca32b02ce9cf59a4f4e">kn</a>);</div>
 <div class="line"><a id="l00645" name="l00645"></a><span class="lineno">  645</span>        }();</div>
 <div class="line"><a id="l00646" name="l00646"></a><span class="lineno">  646</span>        {</div>
-<div class="line"><a id="l00647" name="l00647"></a><span class="lineno">  647</span>            AFTERGLOW_PROFILE_SCOPE(ssc_flux);</div>
+<div class="line"><a id="l00647" name="l00647"></a><span class="lineno">  647</span>            <a class="code hl_define" href="profiler_8h.html#a14810f45af18bd657a0c5e0bcbd30573">AFTERGLOW_PROFILE_SCOPE</a>(ssc_flux);</div>
 <div class="line"><a id="l00648" name="l00648"></a><span class="lineno">  648</span>            emission.<a class="code hl_variable" href="structFlux.html#a00060eafb1f9c42dc4b2c23d0e8903a0">ssc</a> = std::invoke(flux_func, obs, t_obs, nu_obs, IC_ph);</div>
 <div class="line"><a id="l00649" name="l00649"></a><span class="lineno">  649</span>        }</div>
 <div class="line"><a id="l00650" name="l00650"></a><span class="lineno">  650</span>    }</div>
@@ -776,7 +776,7 @@ $(document).ready(function(){initNavTree('pymodel_8h_source.html',''); initResiz
 <div class="line"><a id="l00653" name="l00653"></a><span class="lineno">  653</span><span class="keyword">template</span> &lt;<span class="keyword">typename</span> Func&gt;</div>
 <div class="foldopen" id="foldopen00654" data-start="{" data-end="}">
 <div class="line"><a id="l00654" name="l00654"></a><span class="lineno"><a class="line" href="classPyModel.html#a3debe3d2ed8ff2a53bec469a6711cfa8">  654</a></span><span class="keyword">auto</span> PyModel::compute_emission(<a class="code hl_typedef" href="mesh_8h.html#afd05120c4d579ec7fa4906f677781a83">Array</a> <span class="keyword">const</span>&amp; t_obs, <a class="code hl_typedef" href="mesh_8h.html#afd05120c4d579ec7fa4906f677781a83">Array</a> <span class="keyword">const</span>&amp; nu_obs, Func&amp;&amp; flux_func) -&gt; <a class="code hl_struct" href="structPyFlux.html">PyFlux</a> {</div>
-<div class="line"><a id="l00655" name="l00655"></a><span class="lineno">  655</span>    AFTERGLOW_PROFILE_SCOPE(total);</div>
+<div class="line"><a id="l00655" name="l00655"></a><span class="lineno">  655</span>    <a class="code hl_define" href="profiler_8h.html#a14810f45af18bd657a0c5e0bcbd30573">AFTERGLOW_PROFILE_SCOPE</a>(total);</div>
 <div class="line"><a id="l00656" name="l00656"></a><span class="lineno">  656</span> </div>
 <div class="line"><a id="l00657" name="l00657"></a><span class="lineno">  657</span>    <a class="code hl_struct" href="structPyFlux.html">PyFlux</a> flux;</div>
 <div class="line"><a id="l00658" name="l00658"></a><span class="lineno">  658</span> </div>
@@ -784,13 +784,13 @@ $(document).ready(function(){initNavTree('pymodel_8h_source.html',''); initResiz
 <div class="line"><a id="l00660" name="l00660"></a><span class="lineno">  660</span> </div>
 <div class="line"><a id="l00661" name="l00661"></a><span class="lineno">  661</span>    <span class="keywordflow">if</span> (!rvs_rad_opt) {</div>
 <div class="line"><a id="l00662" name="l00662"></a><span class="lineno">  662</span>        <span class="keyword">auto</span> coord = [&amp;] {</div>
-<div class="line"><a id="l00663" name="l00663"></a><span class="lineno">  663</span>            AFTERGLOW_PROFILE_SCOPE(mesh);</div>
+<div class="line"><a id="l00663" name="l00663"></a><span class="lineno">  663</span>            <a class="code hl_define" href="profiler_8h.html#a14810f45af18bd657a0c5e0bcbd30573">AFTERGLOW_PROFILE_SCOPE</a>(mesh);</div>
 <div class="line"><a id="l00664" name="l00664"></a><span class="lineno">  664</span>            <span class="keywordflow">return</span> <a class="code hl_function" href="mesh_8h.html#ae9bcfb9812faea0f9d864688c82f0b11">auto_grid</a>(jet_, t_obs, this-&gt;theta_w, obs_setup.theta_obs, obs_setup.z, phi_resol, theta_resol,</div>
 <div class="line"><a id="l00665" name="l00665"></a><span class="lineno">  665</span>                             t_resol, axisymmetric, 0, 56, 0.7);</div>
 <div class="line"><a id="l00666" name="l00666"></a><span class="lineno">  666</span>        }();</div>
 <div class="line"><a id="l00667" name="l00667"></a><span class="lineno">  667</span> </div>
 <div class="line"><a id="l00668" name="l00668"></a><span class="lineno">  668</span>        <span class="keyword">auto</span> fwd_shock = [&amp;] {</div>
-<div class="line"><a id="l00669" name="l00669"></a><span class="lineno">  669</span>            AFTERGLOW_PROFILE_SCOPE(shock_dynamics);</div>
+<div class="line"><a id="l00669" name="l00669"></a><span class="lineno">  669</span>            <a class="code hl_define" href="profiler_8h.html#a14810f45af18bd657a0c5e0bcbd30573">AFTERGLOW_PROFILE_SCOPE</a>(shock_dynamics);</div>
 <div class="line"><a id="l00670" name="l00670"></a><span class="lineno">  670</span>            <span class="keywordflow">return</span> <a class="code hl_function" href="forward-shock_8hpp.html#aa963867f4f98284c627afeff47fc3a18">generate_fwd_shock</a>(coord, medium_, jet_, fwd_rad.rad, rtol);</div>
 <div class="line"><a id="l00671" name="l00671"></a><span class="lineno">  671</span>        }();</div>
 <div class="line"><a id="l00672" name="l00672"></a><span class="lineno">  672</span> </div>
@@ -800,7 +800,7 @@ $(document).ready(function(){initNavTree('pymodel_8h_source.html',''); initResiz
 <div class="line"><a id="l00676" name="l00676"></a><span class="lineno">  676</span>        <span class="keywordflow">return</span> flux;</div>
 <div class="line"><a id="l00677" name="l00677"></a><span class="lineno">  677</span>    } <span class="keywordflow">else</span> {</div>
 <div class="line"><a id="l00678" name="l00678"></a><span class="lineno">  678</span>        <span class="keyword">auto</span> coord = [&amp;] {</div>
-<div class="line"><a id="l00679" name="l00679"></a><span class="lineno">  679</span>            AFTERGLOW_PROFILE_SCOPE(mesh);</div>
+<div class="line"><a id="l00679" name="l00679"></a><span class="lineno">  679</span>            <a class="code hl_define" href="profiler_8h.html#a14810f45af18bd657a0c5e0bcbd30573">AFTERGLOW_PROFILE_SCOPE</a>(mesh);</div>
 <div class="line"><a id="l00680" name="l00680"></a><span class="lineno">  680</span>            <span class="keywordflow">return</span> <a class="code hl_function" href="mesh_8h.html#ae9bcfb9812faea0f9d864688c82f0b11">auto_grid</a>(jet_, t_obs, this-&gt;theta_w, obs_setup.theta_obs, obs_setup.z, phi_resol, theta_resol,</div>
 <div class="line"><a id="l00681" name="l00681"></a><span class="lineno">  681</span>                             t_resol, axisymmetric, 0, 56, 0.3);</div>
 <div class="line"><a id="l00682" name="l00682"></a><span class="lineno">  682</span>        }();</div>
@@ -808,7 +808,7 @@ $(document).ready(function(){initNavTree('pymodel_8h_source.html',''); initResiz
 <div class="line"><a id="l00684" name="l00684"></a><span class="lineno">  684</span>        <span class="keyword">auto</span> rvs_rad = *rvs_rad_opt;</div>
 <div class="line"><a id="l00685" name="l00685"></a><span class="lineno">  685</span> </div>
 <div class="line"><a id="l00686" name="l00686"></a><span class="lineno">  686</span>        <span class="keyword">auto</span> [fwd_shock, rvs_shock] = [&amp;] {</div>
-<div class="line"><a id="l00687" name="l00687"></a><span class="lineno">  687</span>            AFTERGLOW_PROFILE_SCOPE(shock_dynamics);</div>
+<div class="line"><a id="l00687" name="l00687"></a><span class="lineno">  687</span>            <a class="code hl_define" href="profiler_8h.html#a14810f45af18bd657a0c5e0bcbd30573">AFTERGLOW_PROFILE_SCOPE</a>(shock_dynamics);</div>
 <div class="line"><a id="l00688" name="l00688"></a><span class="lineno">  688</span>            <span class="keywordflow">return</span> <a class="code hl_function" href="reverse-shock_8hpp.html#ab50c063a2b81579f107e7e79f12961b0">generate_shock_pair</a>(coord, medium_, jet_, fwd_rad.rad, rvs_rad.rad, rtol);</div>
 <div class="line"><a id="l00689" name="l00689"></a><span class="lineno">  689</span>        }();</div>
 <div class="line"><a id="l00690" name="l00690"></a><span class="lineno">  690</span> </div>
@@ -862,6 +862,10 @@ $(document).ready(function(){initNavTree('pymodel_8h_source.html',''); initResiz
 <div class="ttc" id="anamespacecon_html_ad61313f4a5b7876e54ae46d02d4a04bd"><div class="ttname"><a href="namespacecon.html#ad61313f4a5b7876e54ae46d02d4a04bd">con::inf</a></div><div class="ttdeci">constexpr Real inf</div><div class="ttdoc">Infinity value.</div><div class="ttdef"><b>Definition</b> <a href="macros_8h_source.html#l00103">macros.h:103</a></div></div>
 <div class="ttc" id="anamespacecon_html_af12a6df01bfe61fa034307dfcaa1fe7f"><div class="ttname"><a href="namespacecon.html#af12a6df01bfe61fa034307dfcaa1fe7f">con::e</a></div><div class="ttdeci">constexpr Real e</div><div class="ttdoc">Elementary charge in code units.</div><div class="ttdef"><b>Definition</b> <a href="macros_8h_source.html#l00094">macros.h:94</a></div></div>
 <div class="ttc" id="anamespaceunit_html"><div class="ttname"><a href="namespaceunit.html">unit</a></div><div class="ttdoc">Unit conversion constants.</div></div>
+<div class="ttc" id="aprofiler_8h_html"><div class="ttname"><a href="profiler_8h.html">profiler.h</a></div></div>
+<div class="ttc" id="aprofiler_8h_html_a14810f45af18bd657a0c5e0bcbd30573"><div class="ttname"><a href="profiler_8h.html#a14810f45af18bd657a0c5e0bcbd30573">AFTERGLOW_PROFILE_SCOPE</a></div><div class="ttdeci">#define AFTERGLOW_PROFILE_SCOPE(name)</div><div class="ttdef"><b>Definition</b> <a href="profiler_8h_source.html#l00054">profiler.h:54</a></div></div>
+<div class="ttc" id="aprofiler_8h_html_a55120105ce221946600b38b63028e3d6"><div class="ttname"><a href="profiler_8h.html#a55120105ce221946600b38b63028e3d6">AFTERGLOW_PROFILE_RESET</a></div><div class="ttdeci">#define AFTERGLOW_PROFILE_RESET()</div><div class="ttdef"><b>Definition</b> <a href="profiler_8h_source.html#l00055">profiler.h:55</a></div></div>
+<div class="ttc" id="aprofiler_8h_html_ae26f0506539ebba40f53d9f68c4aaae7"><div class="ttname"><a href="profiler_8h.html#ae26f0506539ebba40f53d9f68c4aaae7">AFTERGLOW_PROFILE_RESULTS</a></div><div class="ttdeci">#define AFTERGLOW_PROFILE_RESULTS()</div><div class="ttdef"><b>Definition</b> <a href="profiler_8h_source.html#l00056">profiler.h:56</a></div></div>
 <div class="ttc" id="apybind_8h_html"><div class="ttname"><a href="pybind_8h.html">pybind.h</a></div></div>
 <div class="ttc" id="apybind_8h_html_a06c55931188bd694c6e070a50e95344c"><div class="ttname"><a href="pybind_8h.html#a06c55931188bd694c6e070a50e95344c">PyArray</a></div><div class="ttdeci">xt::pytensor&lt; double, 1 &gt; PyArray</div><div class="ttdef"><b>Definition</b> <a href="pybind_8h_source.html#l00014">pybind.h:14</a></div></div>
 <div class="ttc" id="apymodel_8h_html_a2e10a24163357e677edd02fb34524a49"><div class="ttname"><a href="pymodel_8h.html#a2e10a24163357e677edd02fb34524a49">PyStepPowerLawJet</a></div><div class="ttdeci">Ejecta PyStepPowerLawJet(Real theta_c, Real E_iso, Real Gamma0, Real E_iso_w, Real Gamma0_w, Real k_e, Real k_g, bool spreading, Real duration, const std::optional&lt; PyMagnetar &gt; &amp;magnetar)</div><div class="ttdoc">Creates a step power-law jet model: a pencil beam core and powerlaw wing with jump at theta_c.</div><div class="ttdef"><b>Definition</b> <a href="pymodel_8cpp_source.html#l00063">pymodel.cpp:63</a></div></div>

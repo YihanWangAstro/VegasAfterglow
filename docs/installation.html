@@ -135,6 +135,10 @@
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span>VegasAfterglow
 </pre></div>
 </div>
+<p>This installs the core physics engine (light curves, spectra, jet models). To also install MCMC fitting support:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span>VegasAfterglow<span class="o">[</span>mcmc<span class="o">]</span>
+</pre></div>
+</div>
 <p>VegasAfterglow requires Python 3.8 or higher.</p>
 </section>
 <section id="from-source">
@@ -183,7 +187,8 @@
 <ul class="simple">
 <li><p>Python 3.8 or higher</p></li>
 <li><p>C++20 compatible compiler (for building from source)</p></li>
-<li><p>NumPy, SciPy, and other dependencies (automatically installed when using pip)</p></li>
+<li><p>NumPy (automatically installed when using pip)</p></li>
+<li><p>For MCMC fitting: <code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">VegasAfterglow[mcmc]</span></code> (installs bilby, emcee, dynesty)</p></li>
 </ul>
 </section>
 </section>

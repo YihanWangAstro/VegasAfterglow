@@ -286,8 +286,12 @@
 <li><p><strong>File paths</strong>: Use absolute paths or ensure files are in the correct directory</p></li>
 </ul>
 <p><strong>Q: Error messages about missing dependencies</strong></p>
-<p>A: Install required packages:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span>numpy<span class="w"> </span>scipy<span class="w"> </span>matplotlib<span class="w"> </span>pandas<span class="w"> </span>corner<span class="w"> </span>bilby
+<p>A: The core package only requires NumPy. For MCMC fitting:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span>VegasAfterglow<span class="o">[</span>mcmc<span class="o">]</span>
+</pre></div>
+</div>
+<p>For plotting and MCMC visualization:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span>matplotlib<span class="w"> </span>corner<span class="w"> </span>tqdm
 </pre></div>
 </div>
 <p>For specific features:</p>

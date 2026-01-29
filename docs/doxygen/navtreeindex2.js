@@ -73,6 +73,11 @@ var NAVTREEINDEX2 =
 "power-law-syn_8cpp_source.html":[4,0,2,4,2],
 "power-law-syn_8h.html":[4,0,2,4,3],
 "power-law-syn_8h_source.html":[4,0,2,4,3],
+"profiler_8h.html":[4,0,2,5,3],
+"profiler_8h.html#a14810f45af18bd657a0c5e0bcbd30573":[4,0,2,5,3,2],
+"profiler_8h.html#a55120105ce221946600b38b63028e3d6":[4,0,2,5,3,0],
+"profiler_8h.html#ae26f0506539ebba40f53d9f68c4aaae7":[4,0,2,5,3,1],
+"profiler_8h_source.html":[4,0,2,5,3],
 "prompt_8cpp.html":[4,0,2,4,4],
 "prompt_8cpp.html#a179563049db5bed00a5663ff3932eed4":[4,0,2,4,4,0],
 "prompt_8cpp_source.html":[4,0,2,4,4],
@@ -244,10 +249,5 @@ var NAVTREEINDEX2 =
 "structInverseComptonY.html#ab895ebc5dcf0238a117c7f55260a50c5":[3,0,14,9],
 "structInverseComptonY.html#ae72722cbf94768206fb546cfaae1e151":[3,0,14,6],
 "structInverseComptonY.html#af6a7be13a431ffc3963d3469e2aa5756":[3,0,14,7],
-"structMultiBandData.html":[3,0,17],
-"structMultiBandData.html#a082a799cc2a578edb86044c486057582":[3,0,17,15],
-"structMultiBandData.html#a0d8b205498be4e9a129395636a665baa":[3,0,17,8],
-"structMultiBandData.html#a231028dd529a2a063833bdb58c3bc47f":[3,0,17,6],
-"structMultiBandData.html#a3d3149e512bdfb7005f019879e293158":[3,0,17,0],
-"structMultiBandData.html#a5314ad90f59d9d214f5afad5c4f20dfb":[3,0,17,13]
+"structMultiBandData.html":[3,0,17]
 };

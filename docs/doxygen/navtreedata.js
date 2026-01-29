@@ -64,8 +64,8 @@ var NAVTREEINDEX =
 "IO_8cpp.html",
 "functions_vars_d.html",
 "namespacephysics_1_1scales.html#a886ce2e09d9a5b69b14ccff9e9785be2",
-"structMultiBandData.html#a631c6982c88e97795ffef3edb81253d8",
-"utilities_8h.html#aa9e4ad2688dbac62957b8d908a58bff7"
+"structMultiBandData.html#a082a799cc2a578edb86044c486057582",
+"utilities_8h.html#a919434df3bde5e6090dbff542b658478"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';
