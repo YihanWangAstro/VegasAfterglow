@@ -11,7 +11,7 @@ VegasAfterglow is a high-performance C++ framework for modeling gamma-ray burst 
 Overview
 --------
 
-VegasAfterglow is a high-performance C++ framework designed for comprehensive modeling of gamma-ray burst (GRB) afterglows. It achieves exceptional computational efficiency, enabling the generation of multi-wavelength light curves in milliseconds and facilitating robust Markov Chain Monte Carlo (MCMC) parameter inference in seconds to minutes. The framework incorporates advanced models for shock dynamics (both forward and reverse shocks), diverse radiation mechanisms (synchrotron with self-absorption, and inverse Compton scattering with Klein-Nishina corrections), and complex structured jet configurations. A user-friendly Python wrapper is provided to streamline integration into scientific data analysis workflows.
+VegasAfterglow is a high-performance C++ physics library with Python bindings designed for comprehensive modeling of gamma-ray burst (GRB) afterglows. It achieves exceptional computational efficiency, enabling the generation of multi-wavelength light curves in milliseconds. The framework incorporates advanced models for shock dynamics (both forward and reverse shocks), diverse radiation mechanisms (synchrotron with self-absorption, and inverse Compton scattering with Klein-Nishina corrections), and complex structured jet configurations. For parameter estimation and Bayesian inference, VegasAfterglow models are integrated into `redback <https://github.com/nikhil-sarin/redback>`_.
 
 Key Features
 ------------
@@ -24,7 +24,7 @@ Key Features
 * **Non-Axisymmetric Jets**: Modeling of complex, non-axisymmetric jet structures.
 * **Radiation Mechanisms**: Synchrotron radiation, Synchrotron Self-Absorption (SSA), and Inverse Compton (IC) including Synchrotron Self-Compton (SSC) with Klein-Nishina corrections.
 * **High Performance**: Ultra-fast model evaluation, with a 30-point single-frequency light curve (forward shock & synchrotron only) generated in ~0.6 milliseconds on an Apple M2 chip.
-* **Rapid MCMC Exploration**: Parameter estimation with 10,000 MCMC steps for 8 parameters on 20 data points across multi-wavelength in ~10-30 seconds on an 8-core Apple M2 chip.
+* **Rapid MCMC Exploration**: When combined with `redback <https://github.com/nikhil-sarin/redback>`_, enables parameter estimation with 10,000 MCMC steps for 8 parameters on 20 data points across multi-wavelength in ~10-30 seconds on an 8-core Apple M2 chip.
 * **Cross-platform**: Works on Linux, macOS, and Windows.
 
 .. toctree::
@@ -34,7 +34,7 @@ Key Features
    installation
    quickstart
    examples
-   mcmc_fitting
+   redback_integration
    parameter_reference
    validation
    python_api
