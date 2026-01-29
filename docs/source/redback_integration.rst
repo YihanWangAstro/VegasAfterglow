@@ -22,16 +22,47 @@ Redback provides:
 Quick Start
 -----------
 
-Basic Parameter Estimation
-^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Loading Data and Basic Fitting
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Redback provides multiple ways to load and work with GRB afterglow data. Here's a complete example:
 
 .. code-block:: python
 
     import redback
 
-    # Load GRB data from open access catalogs
+    # Method 1: Load from Swift BAT+XRT catalogs (recommended for Swift GRBs)
+    GRB = '070809'
+
+    # Get flux/flux density data from Swift
+    redback.get_data.get_bat_xrt_afterglow_data_from_swift(
+        grb=GRB,
+        data_mode="flux"  # or "flux_density", "magnitude", "luminosity"
+    )
+    # This creates a GRBDir with all available Swift data
+
+    # Create transient object from Swift data
+    afterglow = redback.afterglow.SGRB.from_swift_grb(
+        name=GRB,
+        data_mode='flux'
+    )
+
+    # Method 2: Load from open access catalogs
     afterglow = redback.afterglow.Afterglow.from_open_access_catalogue(
-        'GRB170817A', data_mode='flux_density'
+        GRB,
+        data_mode='flux_density'
+    )
+
+    # Method 3: Load from your own data files
+    import pandas as pd
+    data = pd.read_csv('path/to/my_grb_data.csv')
+    afterglow = redback.transient.Afterglow(
+        name=GRB,
+        data_mode='flux_density',
+        time=data['time'].values,
+        flux_density=data['flux'].values,
+        flux_density_err=data['flux_err'].values,
+        frequency=data['frequency'].values
     )
 
     # Fit with VegasAfterglow tophat model
@@ -46,6 +77,27 @@ Basic Parameter Estimation
     result.plot_corner()
     result.plot_lightcurve()
     result.plot_residuals()
+
+**Data Modes and Formats:**
+
+Redback supports multiple data modes for afterglow analysis:
+
+* ``flux_density`` - Flux density [erg/cm²/s/Hz] at specific frequencies
+* ``flux`` - Integrated flux [erg/cm²/s] over energy bands
+* ``magnitude`` - Optical/NIR magnitudes in various filters
+* ``luminosity`` - Source-frame luminosity (requires known redshift)
+
+**Advanced Data Loading:**
+
+For comprehensive data management capabilities, including:
+
+* Multi-wavelength data from different instruments
+* Custom data formats and preprocessing
+* Data filtering and quality cuts
+* Combining multiple datasets
+* Time-domain sampling strategies
+
+See the complete `redback data documentation <https://redback.readthedocs.io/en/latest/data.html>`_.
 
 Available VegasAfterglow Models
 --------------------------------
@@ -106,7 +158,7 @@ Example: Custom Priors
 
     # Load data
     afterglow = redback.afterglow.Afterglow.from_open_access_catalogue(
-        'GRB170817A', data_mode='flux_density'
+        'GRB070809', data_mode='flux_density'
     )
 
     # Define custom priors
@@ -139,7 +191,7 @@ Example: Multi-band Fitting
 
     # Load multi-band data
     afterglow = redback.afterglow.Afterglow.from_open_access_catalogue(
-        'GRB170817A', data_mode='flux_density'
+        'GRB070809', data_mode='flux_density'
     )
 
     # Fit with VegasAfterglow model
@@ -162,7 +214,7 @@ Example: Model Comparison
     import redback
 
     afterglow = redback.afterglow.Afterglow.from_open_access_catalogue(
-        'GRB170817A', data_mode='flux_density'
+        'GRB070809', data_mode='flux_density'
     )
 
     # Fit multiple models
@@ -261,17 +313,97 @@ Computational Considerations
 * Use ``nlive=1000`` for quick runs, ``nlive=2000+`` for publication
 * Parallel chains with ``npool`` parameter for faster sampling
 
-Further Documentation
----------------------
+Redback's Full Capabilities
+----------------------------
 
-For complete redback documentation, including:
+Redback is a comprehensive transient analysis framework that provides everything you need for parameter estimation with VegasAfterglow models. Through the redback interface, you can:
 
-* Data loading and management
-* Custom model creation
-* Result visualization
-* Advanced sampling techniques
+**Data Management:**
 
-See the `redback documentation <https://redback.readthedocs.io/>`_.
+* Load data from multiple sources: Swift, Fermi, BATSE, open catalogs, private data
+* Support for all data types: flux density, flux, magnitude, luminosity
+* Multi-wavelength data from radio to X-ray
+* Automatic unit conversions and data preprocessing
+* Filter and quality-cut data
+* Combine datasets from multiple instruments
+* Handle upper limits and non-detections
+
+**Model Fitting:**
+
+* Access all VegasAfterglow models (tophat, gaussian, power-law jets, etc.)
+* Multiple sampling backends: dynesty, emcee, ultranest, nessai
+* Custom prior specification with bilby
+* Parallel sampling for faster computation
+* Model comparison via Bayesian evidence
+* Fit multiple transient types beyond afterglows
+
+**Analysis & Visualization:**
+
+* Corner plots for posterior distributions
+* Light curve plots with model predictions
+* Residual analysis
+* Multi-band visualization
+* Posterior predictive checks
+* Evidence comparison tables
+* Publication-ready figures
+
+**Advanced Features:**
+
+* Joint analysis of multiple transients
+* Population inference
+* Model selection and comparison
+* Custom likelihood functions
+* Systematic uncertainty modeling
+* Time-dependent viewing angle effects
+* Energy injection modeling
+
+**Example: Complete Workflow**
+
+.. code-block:: python
+
+    import redback
+
+    # 1. Get data (multiple methods available)
+    GRB = 'GRB070809'
+
+    # From Swift
+    redback.get_data.get_bat_xrt_afterglow_data_from_swift(grb=GRB, data_mode="flux")
+    afterglow = redback.afterglow.SGRB.from_swift_grb(name=GRB, data_mode='flux')
+
+    # Or from your own data
+    # import pandas as pd
+    # data = pd.read_csv('my_grb_data.csv')
+    # afterglow = redback.transient.Afterglow(
+    #     name=GRB, data_mode='flux_density',
+    #     time=data['time'].values, flux_density=data['flux'].values,
+    #     flux_density_err=data['flux_err'].values, frequency=data['frequency'].values
+    # )
+
+    # 2. Fit model
+    result = redback.fit_model(
+        transient=afterglow,
+        model='vegas_tophat',
+        sampler='dynesty',
+        nlive=2000
+    )
+
+    # 3. Analyze
+    result.plot_corner()
+    result.plot_lightcurve(save=True)
+    result.print_summary()
+
+    # 4. Make predictions
+    result.plot_multiband(frequencies=[1e9, 1e14, 1e18])
+
+For complete documentation on all these capabilities and more, see the comprehensive `redback documentation <https://redback.readthedocs.io/en/latest/?badge=latest>`_.
+
+**Quick Links:**
+
+* `Redback Installation <https://redback.readthedocs.io/en/latest/installation.html>`_
+* `Data Loading Guide <https://redback.readthedocs.io/en/latest/data.html>`_
+* `Fitting Tutorial <https://redback.readthedocs.io/en/latest/examples.html>`_
+* `Model Library <https://redback.readthedocs.io/en/latest/models.html>`_
+* `API Reference <https://redback.readthedocs.io/en/latest/api.html>`_
 
 For VegasAfterglow physics details, see:
 

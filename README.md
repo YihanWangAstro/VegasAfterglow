@@ -607,14 +607,33 @@ plt.savefig('EAT.png', dpi=300,bbox_inches='tight')
 
 VegasAfterglow is a **pure physics library** focused on fast afterglow calculations. For parameter estimation and Bayesian inference, VegasAfterglow models are integrated into [**redback**](https://github.com/nikhil-sarin/redback), which provides a unified interface for fitting all transient types.
 
-**Quick Example:**
+**Loading Data & Fitting:**
 
 ```python
 import redback
 
-# Load GRB data from open access catalogs
+# Multiple ways to load data:
+GRB = 'GRB070809'
+
+# Method 1: From Swift BAT+XRT (recommended for Swift GRBs)
+redback.get_data.get_bat_xrt_afterglow_data_from_swift(grb=GRB, data_mode="flux")
+afterglow = redback.afterglow.SGRB.from_swift_grb(name=GRB, data_mode='flux')
+
+# Method 2: From open access catalogs
 afterglow = redback.afterglow.Afterglow.from_open_access_catalogue(
-    'GRB170817A', data_mode='flux_density'
+    GRB, data_mode='flux_density'
+)
+
+# Method 3: From your own data files
+import pandas as pd
+data = pd.read_csv('my_grb_data.csv')
+afterglow = redback.transient.Afterglow(
+    name=GRB,
+    data_mode='flux_density',
+    time=data['time'].values,
+    flux_density=data['flux'].values,
+    flux_density_err=data['flux_err'].values,
+    frequency=data['frequency'].values
 )
 
 # Fit with VegasAfterglow tophat model
@@ -639,15 +658,22 @@ result.plot_residuals()
 - `vegas_tophat_wind` - Tophat jet + Wind medium
 - ... and more
 
-**Redback provides:**
-- Unified interface for all transient types (afterglows, kilonovae, supernovae, TDEs, etc.)
-- Multiple sampling algorithms (dynesty, emcee, ultranest, etc.)
-- Data management and open-access catalogs
-- Model comparison and selection
-- Visualization and plotting tools
-- Prior specification
+**Everything you need via redback:**
 
-See the [redback documentation](https://redback.readthedocs.io/) for complete details on parameter estimation with VegasAfterglow models.
+Through the redback interface, you can access comprehensive capabilities for transient analysis:
+
+- **Data Management**: Load from Swift, Fermi, BATSE, catalogs, or custom files; support for flux density, flux, magnitude, luminosity data; multi-wavelength observations; handle upper limits
+- **Model Fitting**: All VegasAfterglow models; multiple samplers (dynesty, emcee, ultranest); custom priors; parallel sampling; model comparison via Bayesian evidence
+- **Analysis & Visualization**: Corner plots; light curve predictions; residual analysis; multi-band visualization; posterior predictive checks; publication-ready figures
+- **Advanced Features**: Joint analysis; population inference; custom likelihoods; systematic uncertainties; energy injection; time-dependent effects
+
+**Data modes supported:**
+- `flux_density` - Spectral flux density [erg/cm²/s/Hz] at specific frequencies
+- `flux` - Integrated flux [erg/cm²/s] over energy bands (e.g., Swift XRT)
+- `magnitude` - Optical/NIR magnitudes in various filters
+- `luminosity` - Source-frame luminosity (requires known redshift)
+
+For complete documentation on data loading, model fitting, advanced analysis, and all capabilities, see the comprehensive [**redback documentation**](https://redback.readthedocs.io/en/latest/?badge=latest).
 
 ---
 
