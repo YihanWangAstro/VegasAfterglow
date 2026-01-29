@@ -6,7 +6,11 @@ VegasAfterglow includes a comprehensive validation framework to ensure numerical
 Running Validation
 ------------------
 
-**Prerequisite:** The VegasAfterglow package must be installed before running validation tests. See :doc:`installation` for instructions.
+**Prerequisite:** Install with validation support, which includes per-stage CPU profiling and PDF report dependencies:
+
+.. code-block:: bash
+
+   pip install -e ".[test]" --config-settings=cmake.define.AFTERGLOW_PROFILE=ON
 
 The unified validation runner orchestrates all tests and generates reports:
 
@@ -142,6 +146,53 @@ Directory Structure
        ├── benchmark_plots.py     # Benchmark visualizations
        ├── regression_plots.py    # Regression visualizations
        └── guides/                # Markdown guide documents
+
+Profiling Per-Stage CPU Cost
+----------------------------
+
+When installed with validation support (see above), per-stage CPU profiling is automatically enabled. The benchmark overview page will show a stacked bar chart breaking down CPU time by internal C++ computation stage:
+
++------------------+------------------------------------------+
+| Stage            | Description                              |
++==================+==========================================+
+| mesh             | Coordinate grid generation               |
++------------------+------------------------------------------+
+| shock_dynamics   | Forward/reverse shock ODE integration    |
++------------------+------------------------------------------+
+| EAT_grid         | Equal arrival time surface grid          |
++------------------+------------------------------------------+
+| syn_electrons    | Synchrotron electron distribution        |
++------------------+------------------------------------------+
+| syn_photons      | Synchrotron photon spectrum              |
++------------------+------------------------------------------+
+| cooling          | SSC/IC cooling corrections               |
++------------------+------------------------------------------+
+| sync_flux        | Synchrotron flux integration             |
++------------------+------------------------------------------+
+| ic_photons       | Inverse Compton photon spectrum           |
++------------------+------------------------------------------+
+| ssc_flux         | SSC flux integration                     |
++------------------+------------------------------------------+
+
+Profiling data is also accessible directly from Python when built with profiling:
+
+.. code-block:: python
+
+   import VegasAfterglow as ag
+
+   model = ag.Model(jet=jet, medium=medium, observer=obs, fwd_rad=rad)
+
+   # Reset, run, and retrieve stage timing
+   ag.Model.profile_reset()
+   result = model.flux_density(t, nu)
+   print(ag.Model.profile_data())
+   # {'total': 6.4, 'shock_dynamics': 5.1, 'syn_photons': 0.4, ...}
+
+To return to the normal (zero-overhead) build:
+
+.. code-block:: bash
+
+   pip install -e .
 
 CI/CD Integration
 -----------------

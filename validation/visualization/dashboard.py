@@ -198,7 +198,7 @@ class ComprehensiveDashboard:
         actual_page = 0  # 0-indexed position in actual PDF
 
         with PdfPages(output_path) as pdf:
-            create_title_page(pdf, "Comprehensive Test Report", "Benchmarks \u2022 Regression Tests \u2022 Physics Diagnostics", metadata)
+            create_title_page(pdf, "Comprehensive Test Report", "Regression Tests \u2022 Benchmarks \u2022 Physics Diagnostics", metadata)
             current_page += 1
             actual_page += 1
 
@@ -211,7 +211,70 @@ class ComprehensiveDashboard:
             current_page += 1
             actual_page += 1
 
-            # Section 1: Benchmark Results
+            # Section 1: Regression Tests
+            if regression_data:
+                section_num += 1
+                section_start = current_page
+                subsections = []
+
+                create_section_header(pdf, section_num, "Regression Tests", "Power-law scaling verification against theoretical predictions")
+                current_page += 1
+                actual_page += 1
+
+                # Add guide pages explaining how to read regression results
+                print("\nGenerating regression section...")
+                print("  - Adding regression guide pages")
+                subsections.append(("How to Read", current_page))
+                guide_pages, guide_merge_info = create_regression_guide_pages(pdf)
+                if guide_merge_info:
+                    guide_merge_info["insert_at"] = actual_page  # Use actual position
+                    pending_pdf_merges.append(guide_merge_info)
+                current_page += guide_pages  # Logical page count includes guide pages
+
+                if "shock_grid" in regression_data or "freq_grid" in regression_data:
+                    print("  - Summary grid")
+                    subsections.append(("Summary Grid", current_page))
+                    fig = plot_combined_summary_grid(regression_data)
+                    pdf.savefig(fig)
+                    plt.close(fig)
+                    current_page += 1
+                    actual_page += 1
+
+                for medium in ["ISM", "Wind"]:
+                    if "viz_shock_dynamics" in regression_data:
+                        viz_data = regression_data["viz_shock_dynamics"]
+                        if medium in viz_data:
+                            print(f"  - Shock dynamics ({medium})")
+                            subsections.append((f"Shock Dynamics ({medium})", current_page))
+                            fig = plot_shock_quantities_combined(viz_data, medium)
+                            pdf.savefig(fig)
+                            plt.close(fig)
+                            current_page += 1
+                            actual_page += 1
+
+                    if "viz_frequencies" in regression_data:
+                        viz_data = regression_data["viz_frequencies"]
+                        if medium in viz_data:
+                            print(f"  - Frequencies ({medium})")
+                            subsections.append((f"Frequencies ({medium})", current_page))
+                            fig = plot_frequency_quantities_combined(viz_data, medium)
+                            pdf.savefig(fig)
+                            plt.close(fig)
+                            current_page += 1
+                            actual_page += 1
+
+                if "viz_spectrum_shapes" in regression_data:
+                    print("  - Spectrum shapes")
+                    subsections.append(("Spectrum Shapes", current_page))
+                    fig = plot_spectrum_shapes(regression_data["viz_spectrum_shapes"])
+                    pdf.savefig(fig)
+                    plt.close(fig)
+                    current_page += 1
+                    actual_page += 1
+
+                sections.append((f"{section_num}. Regression Tests", section_start, subsections))
+
+            # Section 2: Benchmark Results
             if benchmark_data and benchmark_data.get("sessions"):
                 section_num += 1
                 section_start = current_page
@@ -271,66 +334,7 @@ class ComprehensiveDashboard:
 
                     pending_pdf_merges.extend(generate_convergence_pages(pdf, models_list, n_workers))
 
-                sections.append(("1. Benchmark Results", section_start, subsections))
-
-            # Section 2: Regression Tests
-            if regression_data:
-                section_num += 1
-                section_start = current_page
-                subsections = []
-
-                create_section_header(pdf, section_num, "Regression Tests", "Power-law scaling verification against theoretical predictions")
-                current_page += 1
-                actual_page += 1
-
-                # Add guide pages explaining how to read regression results
-                print("\nGenerating regression section...")
-                print("  - Adding regression guide pages")
-                subsections.append(("How to Read", current_page))
-                guide_pages, guide_merge_info = create_regression_guide_pages(pdf)
-                if guide_merge_info:
-                    guide_merge_info["insert_at"] = actual_page  # Use actual position
-                    pending_pdf_merges.append(guide_merge_info)
-                current_page += guide_pages  # Logical page count includes guide pages
-
-                if "shock_grid" in regression_data or "freq_grid" in regression_data:
-                    print("  - Summary grid")
-                    subsections.append(("Summary Grid", current_page))
-                    fig = plot_combined_summary_grid(regression_data)
-                    pdf.savefig(fig)
-                    plt.close(fig)
-                    current_page += 1
-
-                for medium in ["ISM", "Wind"]:
-                    if "viz_shock_dynamics" in regression_data:
-                        viz_data = regression_data["viz_shock_dynamics"]
-                        if medium in viz_data:
-                            print(f"  - Shock dynamics ({medium})")
-                            subsections.append((f"Shock Dynamics ({medium})", current_page))
-                            fig = plot_shock_quantities_combined(viz_data, medium)
-                            pdf.savefig(fig)
-                            plt.close(fig)
-                            current_page += 1
-
-                    if "viz_frequencies" in regression_data:
-                        viz_data = regression_data["viz_frequencies"]
-                        if medium in viz_data:
-                            print(f"  - Frequencies ({medium})")
-                            subsections.append((f"Frequencies ({medium})", current_page))
-                            fig = plot_frequency_quantities_combined(viz_data, medium)
-                            pdf.savefig(fig)
-                            plt.close(fig)
-                            current_page += 1
-
-                if "viz_spectrum_shapes" in regression_data:
-                    print("  - Spectrum shapes")
-                    subsections.append(("Spectrum Shapes", current_page))
-                    fig = plot_spectrum_shapes(regression_data["viz_spectrum_shapes"])
-                    pdf.savefig(fig)
-                    plt.close(fig)
-                    current_page += 1
-
-                sections.append((f"{section_num}. Regression Tests", section_start, subsections))
+                sections.append((f"{section_num}. Benchmark Results", section_start, subsections))
 
         # Merge convergence detail pages at the correct position (after summary grid)
         if pending_pdf_merges and convergence_insert_at is not None:

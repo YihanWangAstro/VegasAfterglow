@@ -14,6 +14,7 @@
 #include "../include/afterglow.h"
 #include "pybind.h"
 #include "util/macros.h"
+#include "util/profiler.h"
 
 /**
  * <!-- ************************************************************************************** -->
@@ -501,6 +502,11 @@ class PyModel {
 
     [[nodiscard]] Array jet_Gamma0(Real phi, Array const& theta) const;
 
+#ifdef AFTERGLOW_PROFILE
+    static auto profile_data() -> std::unordered_map<std::string, double> { return AFTERGLOW_PROFILE_RESULTS(); }
+    static void profile_reset() { AFTERGLOW_PROFILE_RESET(); }
+#endif
+
   private:
     /**
      * <!-- ************************************************************************************** -->
@@ -603,13 +609,23 @@ class PyModel {
 template <typename Func>
 void PyModel::single_shock_emission(Shock const& shock, Coord const& coord, Array const& t_obs, Array const& nu_obs,
                                     Observer& obs, PyRadiation rad, Flux& emission, Func&& flux_func) {
-    obs.observe(coord, shock, obs_setup.lumi_dist, obs_setup.z);
+    {
+        AFTERGLOW_PROFILE_SCOPE(EAT_grid);
+        obs.observe(coord, shock, obs_setup.lumi_dist, obs_setup.z);
+    }
 
-    auto syn_e = generate_syn_electrons(shock);
+    auto syn_e = [&] {
+        AFTERGLOW_PROFILE_SCOPE(syn_electrons);
+        return generate_syn_electrons(shock);
+    }();
 
-    auto syn_ph = generate_syn_photons(shock, syn_e);
+    auto syn_ph = [&] {
+        AFTERGLOW_PROFILE_SCOPE(syn_photons);
+        return generate_syn_photons(shock, syn_e);
+    }();
 
     if (rad.ssc_cooling) {
+        AFTERGLOW_PROFILE_SCOPE(cooling);
         if (rad.kn) {
             KN_cooling(syn_e, syn_ph, shock);
         } else {
@@ -617,36 +633,60 @@ void PyModel::single_shock_emission(Shock const& shock, Coord const& coord, Arra
         }
     }
 
-    emission.sync = std::invoke(flux_func, obs, t_obs, nu_obs, syn_ph);
+    {
+        AFTERGLOW_PROFILE_SCOPE(sync_flux);
+        emission.sync = std::invoke(flux_func, obs, t_obs, nu_obs, syn_ph);
+    }
 
     if (rad.ssc) {
-        auto IC_ph = generate_IC_photons(syn_e, syn_ph, rad.kn);
-        emission.ssc = std::invoke(flux_func, obs, t_obs, nu_obs, IC_ph);
+        auto IC_ph = [&] {
+            AFTERGLOW_PROFILE_SCOPE(ic_photons);
+            return generate_IC_photons(syn_e, syn_ph, rad.kn);
+        }();
+        {
+            AFTERGLOW_PROFILE_SCOPE(ssc_flux);
+            emission.ssc = std::invoke(flux_func, obs, t_obs, nu_obs, IC_ph);
+        }
     }
 }
 
 template <typename Func>
 auto PyModel::compute_emission(Array const& t_obs, Array const& nu_obs, Func&& flux_func) -> PyFlux {
+    AFTERGLOW_PROFILE_SCOPE(total);
 
     PyFlux flux;
 
     Observer observer;
 
     if (!rvs_rad_opt) {
-        Coord coord = auto_grid(jet_, t_obs, this->theta_w, obs_setup.theta_obs, obs_setup.z, phi_resol, theta_resol,
-                                t_resol, axisymmetric, 0, 56, 0.7);
+        auto coord = [&] {
+            AFTERGLOW_PROFILE_SCOPE(mesh);
+            return auto_grid(jet_, t_obs, this->theta_w, obs_setup.theta_obs, obs_setup.z, phi_resol, theta_resol,
+                             t_resol, axisymmetric, 0, 56, 0.7);
+        }();
 
-        auto fwd_shock = generate_fwd_shock(coord, medium_, jet_, fwd_rad.rad, rtol);
+        auto fwd_shock = [&] {
+            AFTERGLOW_PROFILE_SCOPE(shock_dynamics);
+            return generate_fwd_shock(coord, medium_, jet_, fwd_rad.rad, rtol);
+        }();
 
         single_shock_emission(fwd_shock, coord, t_obs, nu_obs, observer, fwd_rad, flux.fwd,
                               std::forward<Func>(flux_func));
 
         return flux;
     } else {
-        Coord coord = auto_grid(jet_, t_obs, this->theta_w, obs_setup.theta_obs, obs_setup.z, phi_resol, theta_resol,
-                                t_resol, axisymmetric, 0, 56, 0.3);
+        auto coord = [&] {
+            AFTERGLOW_PROFILE_SCOPE(mesh);
+            return auto_grid(jet_, t_obs, this->theta_w, obs_setup.theta_obs, obs_setup.z, phi_resol, theta_resol,
+                             t_resol, axisymmetric, 0, 56, 0.3);
+        }();
+
         auto rvs_rad = *rvs_rad_opt;
-        auto [fwd_shock, rvs_shock] = generate_shock_pair(coord, medium_, jet_, fwd_rad.rad, rvs_rad.rad, rtol);
+
+        auto [fwd_shock, rvs_shock] = [&] {
+            AFTERGLOW_PROFILE_SCOPE(shock_dynamics);
+            return generate_shock_pair(coord, medium_, jet_, fwd_rad.rad, rvs_rad.rad, rtol);
+        }();
 
         single_shock_emission(fwd_shock, coord, t_obs, nu_obs, observer, fwd_rad, flux.fwd,
                               std::forward<Func>(flux_func));

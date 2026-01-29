@@ -28,11 +28,15 @@ dependencies = [
   "corner>=2.2.1",
   "tqdm>=4.0",
   "matplotlib>=3.5",
+]
+license = {text = "BSD-3-Clause"}
+
+[project.optional-dependencies]
+test = [
   "pypdf>=4.0",
   "reportlab>=4.0",
   "Pillow>=10.0",
 ]
-license = {text = "BSD-3-Clause"}
 
 [tool.scikit-build]
 wheel.packages = ["VegasAfterglow"]

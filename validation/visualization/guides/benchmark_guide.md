@@ -14,17 +14,18 @@ The benchmark suite systematically tests a grid of physical scenarios and numeri
 |-----------|---------|-------------|
 | Jet Structure | tophat, gaussian, powerlaw, two_component | Angular energy profile |
 | External Medium | ISM, Wind | Density profile: constant (ISM) or r^(-2) (Wind) |
+| Radiation | synchrotron_only, with_ssc_cooling, fast_cooling, steep/flat_spectrum, partial_xi_e | Radiation physics |
 | Viewing Angle | theta_v/theta_c = 0, 2, 4 | On-axis (0) vs off-axis (>1) |
 
 ### 1.2 Numerical Resolution
 
-Resolution controls the discretization density in each computational dimension. The fiducial values represent the recommended default settings.
+Resolution controls the discretization density in each computational dimension. The fiducial values represent the recommended default settings. Note that theta and t grids enforce a minimum total point count regardless of the ppd value, so low ppd settings may not reduce the actual grid size.
 
-| Dimension | Symbol | Unit | Fiducial | Test Range |
-|-----------|--------|------|----------|------------|
-| Azimuthal angle | phi | per degree | 0.3 | 0.1 - 0.5 |
-| Polar angle | theta | per degree | 0.3 | 0.2 - 1.0 |
-| Observer time | t | per decade | 10 | 5 - 25 |
+| Dimension | Symbol | Unit | Fiducial | Test Range | Min Total Points |
+|-----------|--------|------|----------|------------|------------------|
+| Azimuthal angle | phi | per degree | 0.3 | 0.1 - 0.5 | 1 |
+| Polar angle | theta | per degree | 0.3 | 0.2 - 1.0 | 56 |
+| Observer time | t | per decade | 10 | 5 - 25 | 24 |
 
 ### 1.3 Frequency Bands
 
@@ -86,20 +87,31 @@ The overview page provides performance profiling across configurations, helping 
 | Position | Content |
 |----------|---------|
 | Top-left | Light curve computation time by jet type |
-| Top-right | Component timing breakdown |
+| Top-right | Stage breakdown (profiling build) or resolution cost scaling |
 | Bottom-left | Medium comparison (ISM vs Wind) |
 | Bottom-right | Wind/ISM speed ratio |
 
-### 4.2 Component Timing Categories
+### 4.2 Timing Metric
 
-The timing breakdown reveals which computational stages dominate the total execution time.
+Each configuration is timed by computing a 30-point broadband light curve (t = 10^2 to 10^7 s) at the fiducial resolution. The reported time includes dynamics computation and flux evaluation in a single `flux_density` call.
 
-| Component | Description |
-|-----------|-------------|
-| Initialization | Model setup and parameter validation |
-| Shock/Electron | Blast wave dynamics and particle distribution |
-| Flux | Radiation transfer calculation |
-| Multi-frequency | Grid evaluation across frequency bands |
+### 4.3 Stage Breakdown
+
+When built with profiling enabled (`pip install -e ".[test]" --config-settings=cmake.define.AFTERGLOW_PROFILE=ON`), the top-right panel shows a stacked bar chart of per-stage CPU cost for each jet/medium combination. The stages correspond to the internal C++ computation pipeline:
+
+| Stage | Description |
+|-------|-------------|
+| mesh | Coordinate grid generation |
+| shock_dynamics | Forward/reverse shock ODE integration |
+| EAT_grid | Equal arrival time surface grid |
+| syn_electrons | Synchrotron electron distribution |
+| syn_photons | Synchrotron photon spectrum |
+| cooling | SSC/IC cooling corrections |
+| sync_flux | Synchrotron flux integration |
+| ic_photons | Inverse Compton photon spectrum |
+| ssc_flux | SSC flux integration |
+
+Without profiling, the panel falls back to showing total resolution cost scaling.
 
 ---
 

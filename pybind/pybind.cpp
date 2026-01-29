@@ -93,7 +93,12 @@ PYBIND11_MODULE(VegasAfterglowC, m) {
              py::call_guard<py::gil_scoped_release>())
 
         .def("jet_Gamma0", &PyModel::jet_Gamma0, py::arg("phi"), py::arg("theta"),
-             py::call_guard<py::gil_scoped_release>());
+             py::call_guard<py::gil_scoped_release>())
+#ifdef AFTERGLOW_PROFILE
+        .def_static("profile_data", &PyModel::profile_data, "Get per-stage timing from the last computation (ms)")
+        .def_static("profile_reset", &PyModel::profile_reset, "Reset profiling counters")
+#endif
+        ;
 
     py::class_<Flux>(m, "Flux").def(py::init<>()).def_readonly("sync", &Flux::sync).def_readonly("ssc", &Flux::ssc);
 

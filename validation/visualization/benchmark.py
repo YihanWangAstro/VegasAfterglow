@@ -77,17 +77,15 @@ def plot_benchmark_overview(session: Dict, angle_filter: str = "all") -> plt.Fig
     ax1.legend(title="Medium", fontsize=8, loc="upper right")
     ax1.grid(axis="y", alpha=0.3)
 
-    # Panel 2: Component breakdown, grouped by jet+medium combinations
+    # Panel 2: Stage breakdown (C++ profiling) or resolution cost scaling
     ax2 = fig.add_subplot(gs[0, 1])
-    components_new = ["model_init_ms", "shock_electron_ms", "flux_single_ms", "flux_grid_ms"]
-    components_old = ["model_creation_ms", "details_ms", "flux_density_ms", "flux_grid_ms"]
-    comp_names = ["Model Init", "Shock+Elec", "Flux Calc", "Grid Calc"]
-    comp_colors = ["#3498DB", "#9B59B6", "#E74C3C", "#2ECC71"]
+    jet_short = get_unique_short_names(jets)
+
+    # Check if any config has stage_breakdown data
+    has_stage_data = any(c.get("timing", {}).get("stage_breakdown") for c in configs)
 
     combinations = []
     combo_labels = []
-    jet_short = get_unique_short_names(jets)
-
     for jet in jets:
         for medium in media:
             matching = [c for c in configs if c.get("jet_type") == jet and c.get("medium") == medium]
@@ -96,29 +94,62 @@ def plot_benchmark_overview(session: Dict, angle_filter: str = "all") -> plt.Fig
                 short_med = medium[0].upper()
                 combo_labels.append(f"{jet_short[jet]}/{short_med}")
 
-    if combinations:
+    if has_stage_data and combinations:
+        # Collect all stage names across configs, ordered by total time
+        stage_totals = {}
+        for _, _, matching in combinations:
+            for c in matching:
+                for stage, ms in c.get("timing", {}).get("stage_breakdown", {}).items():
+                    if stage != "total":
+                        stage_totals[stage] = stage_totals.get(stage, 0) + ms
+        stage_names = sorted(stage_totals, key=lambda s: stage_totals[s], reverse=True)
+
+        stage_colors = {
+            "mesh": "#2ECC71", "shock_dynamics": "#3498DB", "observer": "#1ABC9C",
+            "syn_electrons": "#9B59B6", "syn_photons": "#E74C3C", "cooling": "#F39C12",
+            "sync_flux": "#E67E22", "ic_photons": "#8E44AD", "ssc_flux": "#C0392B",
+        }
+        fallback_colors = plt.cm.Set2(np.linspace(0, 1, max(len(stage_names), 1)))
+
         x = np.arange(len(combinations))
         width = 0.7
         bottom = np.zeros(len(combinations))
 
-        for i, (comp_name, color) in enumerate(zip(comp_names, comp_colors)):
+        for i, stage in enumerate(stage_names):
             values = []
-            for jet, medium, matching in combinations:
-                avg = np.mean([c.get("timing", {}).get(components_new[i], 0) or
-                              c.get("timing", {}).get(components_old[i], 0) for c in matching])
+            for _, _, matching in combinations:
+                avg = np.mean([c.get("timing", {}).get("stage_breakdown", {}).get(stage, 0) for c in matching])
                 values.append(avg)
-            ax2.bar(x, values, width, bottom=bottom, label=comp_name, color=color, alpha=0.8)
+            color = stage_colors.get(stage, fallback_colors[i % len(fallback_colors)])
+            ax2.bar(x, values, width, bottom=bottom, label=stage, color=color, alpha=0.8)
             bottom += np.array(values)
 
         ax2.set_xticks(x)
         ax2.set_xticklabels(combo_labels, rotation=45, ha="right")
         ax2.set_ylabel("Time [ms]")
-        ax2.set_title("Component Breakdown")
-        ax2.legend(fontsize=7, loc="upper right", ncol=2)
+        ax2.set_title("Stage Breakdown")
+        ax2.legend(fontsize=6, loc="upper right", ncol=2)
+        ax2.grid(axis="y", alpha=0.3)
+    elif combinations:
+        # Fallback: resolution cost scaling
+        x = np.arange(len(combinations))
+        width = 0.7
+        values = []
+        for _, _, matching in combinations:
+            avg = np.mean([get_flux_time(c) for c in matching])
+            values.append(avg)
+        ax2.bar(x, values, width, color="#3498DB", alpha=0.8)
+        for xi, v in zip(x, values):
+            if v > 0:
+                ax2.text(xi, v + 0.5, f"{v:.0f}", ha="center", va="bottom", fontsize=7)
+        ax2.set_xticks(x)
+        ax2.set_xticklabels(combo_labels, rotation=45, ha="right")
+        ax2.set_ylabel("Time [ms]")
+        ax2.set_title("Resolution Cost Scaling")
         ax2.grid(axis="y", alpha=0.3)
     else:
         ax2.text(0.5, 0.5, "No data", ha="center", va="center", transform=ax2.transAxes)
-        ax2.set_title("Component Breakdown")
+        ax2.set_title("Stage Breakdown")
 
     # Panel 3: Medium comparison, grouped by jet type
     ax3 = fig.add_subplot(gs[1, 0])

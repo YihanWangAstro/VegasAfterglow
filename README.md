@@ -907,7 +907,11 @@ Regression tests verify that simulation outputs match theoretical predictions fr
 <summary><b>Running Validation</b> <i>(click to expand/collapse)</i></summary>
 <br>
 
-**Prerequisite:** Install the package first (see [Installation](#installation)).
+**Prerequisite:** Install with validation support, which includes per-stage CPU profiling and PDF report dependencies:
+
+```bash
+pip install -e ".[test]" --config-settings=cmake.define.AFTERGLOW_PROFILE=ON
+```
 
 ```bash
 # Run full validation suite (benchmark + regression + PDF report)
@@ -923,7 +927,13 @@ python validation/run_validation.py --regression
 python validation/run_validation.py --check-only
 ```
 
-The validation runner generates a comprehensive PDF report at `validation/comprehensive_report.pdf` with convergence plots, summary grids, and detailed diagnostics.
+The validation runner generates a comprehensive PDF report at `validation/comprehensive_report.pdf` with convergence plots, summary grids, and detailed diagnostics. The overview page includes a stacked bar chart breaking down CPU time by internal C++ computation stage.
+
+To return to the normal (zero-overhead) build:
+
+```bash
+pip install -e .
+```
 
 </details>
 

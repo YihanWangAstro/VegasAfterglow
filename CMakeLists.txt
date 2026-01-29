@@ -21,8 +21,11 @@ else()
   message(WARNING "LTO/IPO is not supported: ${output}")
 endif()
 
+option(AFTERGLOW_PROFILE "Enable per-stage profiling instrumentation" OFF)
+
 add_compile_definitions(
   NO_XTENSOR_IO
+  $<$<BOOL:${AFTERGLOW_PROFILE}>:AFTERGLOW_PROFILE>
 )
 
 find_package(Python COMPONENTS Interpreter Development.Module NumPy REQUIRED)
@@ -103,7 +106,7 @@ if(BUILD_TESTS)
 
   # Benchmark executable
   add_executable(benchmark
-          tests/benchmark/benchmark.cpp
+          tests/cpp-benchmark/benchmark.cpp
           ${VEGAS_CORE_SOURCES}
   )
 
@@ -141,7 +144,7 @@ if(BUILD_TESTS)
 
   # Profile benchmark executable
   add_executable(profile_benchmark
-          tests/benchmark/profile_benchmark.cpp
+          tests/cpp-benchmark/profile_benchmark.cpp
           ${VEGAS_CORE_SOURCES}
   )
 

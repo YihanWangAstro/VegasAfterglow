@@ -341,80 +341,57 @@ class RegressionRunner:
 
     # --- Visualization data collection ---
 
-    def _get_break_freqs(self, details, idx):
-        D = np.array(details.fwd.Doppler)[0, 0, idx]
-        return {name: np.array(getattr(details.fwd, name))[0, 0, idx] * D for name in ("nu_a", "nu_m", "nu_c")}
+    def _phase_mask(self, t, u, phase, medium):
+        """Get mask for a phase, returns None if insufficient points."""
+        tr = TIME_RANGES[phase][medium]
+        mask = (t >= tr[0]) & (t <= tr[1])
+        if phase == "deep_newtonian":
+            mask &= (u < 0.1)
+        return mask if np.sum(mask) >= 5 else None
 
-    def collect_shock_dynamics_viz(self):
-        print("\n=== Collecting Shock Dynamics Visualization Data ===\n")
-        viz_data = {}
+    def _collect_viz(self):
+        """Collect all visualization data in one pass."""
+        print("\n=== Collecting Visualization Data ===\n")
+        nu_grid = np.logspace(np.log10(VIZ_FREQ_GRID[0]), np.log10(VIZ_FREQ_GRID[1]), VIZ_FREQ_GRID[2])
+        p = self.p
+
         for medium in ["ISM", "wind"]:
-            model, mk = self._get_viz_model(medium), _MEDIUM_KEY[medium]
-            print(f"--- {mk} ---")
+            mk = _MEDIUM_KEY[medium]
+            model = self._get_model(medium)
+            viz_model = self._get_viz_model(medium)
             t_min, t_max, _ = VIZ_TIME_GRID[medium]
+            print(f"--- {mk} ---")
+
+            # Shock dynamics & frequencies from viz_model
             try:
-                details = model.details(t_min, t_max)
-                t, Gamma, r, B, N_p = _fwd(details, "Gamma", "r", "B_comv", "N_p")
+                details = viz_model.details(t_min, t_max)
+                t, Gamma, r, B, N_p, Doppler, nu_m, nu_c, nu_a = _fwd(
+                    details, "Gamma", "r", "B_comv", "N_p", "Doppler", "nu_m", "nu_c", "nu_a")
                 u = Gamma * np.sqrt(1.0 - 1.0 / (Gamma * Gamma))
-                phases = {}
-                for phase, t_ranges in TIME_RANGES.items():
-                    pr = t_ranges[medium]
-                    mask = (t >= pr[0]) & (t <= pr[1])
-                    if phase == "deep_newtonian":
-                        u_mask = u < 0.1
-                        if not np.any(u_mask) or np.sum(mask & u_mask) < 5:
-                            continue
-                        mask &= u_mask
-                    elif np.sum(mask) < 5:
+                nu_m, nu_c, nu_a = nu_m * Doppler, nu_c * Doppler, nu_a * Doppler
+
+                # Shock dynamics
+                shock_phases = {}
+                for phase in TIME_RANGES:
+                    if (mask := self._phase_mask(t, u, phase, medium)) is None:
                         continue
                     tp = t[mask]
                     fits = {}
-                    for name, arr, expected_key in [("r", r, "r"), ("u", u, "u"), ("B", B, "B"), ("N_p", N_p, "N_p")]:
+                    for name, arr, key in [("r", r, "r"), ("u", u, "u"), ("B", B, "B"), ("N_p", N_p, "N_p")]:
                         vals = arr[mask]
                         valid = (vals > 0) & np.isfinite(vals)
                         if np.sum(valid) > 5:
                             fits[name] = {"measured": float(fit_powerlaw(tp[valid], vals[valid])),
-                                          "expected": SHOCK_SCALINGS.get(phase, {}).get(medium, {}).get(expected_key)}
-                    phases[phase] = {"t_range": [float(tp.min()), float(tp.max())], "fits": fits}
-                viz_data[mk] = {"t": t.tolist(), "u": u.tolist(), "Gamma": Gamma.tolist(),
-                                "r": r.tolist(), "B": B.tolist(), "N_p": N_p.tolist(), "phases": phases}
-                print(f"  Collected {len(t)} time points")
-            except Exception as e:
-                print(f"  ERROR: {e}")
-        self.results["viz_shock_dynamics"] = viz_data
-        return viz_data
+                                          "expected": SHOCK_SCALINGS.get(phase, {}).get(medium, {}).get(key)}
+                    shock_phases[phase] = {"t_range": [float(tp.min()), float(tp.max())], "fits": fits}
+                self.results.setdefault("viz_shock_dynamics", {})[mk] = {
+                    "t": t.tolist(), "u": u.tolist(), "Gamma": Gamma.tolist(),
+                    "r": r.tolist(), "B": B.tolist(), "N_p": N_p.tolist(), "phases": shock_phases}
 
-    def collect_frequencies_viz(self):
-        print("\n=== Collecting Characteristic Frequencies Visualization Data ===\n")
-        viz_data = {}
-        for medium in ["ISM", "wind"]:
-            model, mk = self._get_viz_model(medium), _MEDIUM_KEY[medium]
-            print(f"--- {mk} ---")
-            t_min, t_max, _ = VIZ_TIME_GRID[medium]
-            try:
-                details = model.details(t_min, t_max)
-                t, Doppler, Gamma, nu_m, nu_c, nu_a = _fwd(details, "Doppler", "Gamma", "nu_m", "nu_c", "nu_a")
-                u = Gamma * np.sqrt(1.0 - 1.0 / (Gamma * Gamma))
-                nu_m, nu_c, nu_a = nu_m * Doppler, nu_c * Doppler, nu_a * Doppler
-                try:
-                    nu_M = np.array(details.fwd.nu_M)[0, 0, :][np.argsort(np.array(details.fwd.t_obs)[0, 0, :])] * Doppler
-                except (AttributeError, KeyError):
-                    try:
-                        gm = np.array(details.fwd.gamma_max)[0, 0, :][np.argsort(np.array(details.fwd.t_obs)[0, 0, :])]
-                        Bc = np.array(details.fwd.B_comv)[0, 0, :][np.argsort(np.array(details.fwd.t_obs)[0, 0, :])]
-                        nu_M = 4.2e6 * Bc * gm**2 * Doppler
-                    except (AttributeError, KeyError):
-                        nu_M = np.array([])
-                phases = {}
-                for phase, phase_t_range in TIME_RANGES.items():
-                    tr = phase_t_range[medium]
-                    mask = (t >= tr[0]) & (t <= tr[1])
-                    if phase == "deep_newtonian":
-                        u_mask = u < 0.1
-                        if not np.any(u_mask) or np.sum(mask & u_mask) < 5:
-                            continue
-                        mask &= u_mask
-                    elif np.sum(mask) < 5:
+                # Frequencies
+                freq_phases = {}
+                for phase in TIME_RANGES:
+                    if (mask := self._phase_mask(t, u, phase, medium)) is None:
                         continue
                     tp = t[mask]
                     fits = {}
@@ -423,95 +400,69 @@ class RegressionRunner:
                         if np.sum(valid) > 5:
                             fits[fname] = {"measured": float(fit_powerlaw(tp[valid], farr[mask][valid])),
                                            "expected": FREQ_SCALINGS.get(phase, {}).get(medium, {}).get(fname)}
-                    if len(nu_M) > 0:
-                        nm = nu_M[mask]
-                        valid = (nm > 0) & np.isfinite(nm)
-                        if np.sum(valid) > 5:
-                            fits["nu_M"] = {"measured": float(fit_powerlaw(tp[valid], nm[valid])), "expected": None}
-                    phases[phase] = {"t_range": [float(tp.min()), float(tp.max())], "fits": fits}
-                viz_data[mk] = {"t": t.tolist(), "Doppler": Doppler.tolist(), "nu_m": nu_m.tolist(), "nu_c": nu_c.tolist(),
-                                "nu_a": nu_a.tolist(), "nu_M": nu_M.tolist() if len(nu_M) > 0 else [], "phases": phases}
-                print(f"  Collected {len(t)} time points, {len(phases)} phases")
+                    freq_phases[phase] = {"t_range": [float(tp.min()), float(tp.max())], "fits": fits}
+                self.results.setdefault("viz_frequencies", {})[mk] = {
+                    "t": t.tolist(), "Doppler": Doppler.tolist(), "nu_m": nu_m.tolist(),
+                    "nu_c": nu_c.tolist(), "nu_a": nu_a.tolist(), "phases": freq_phases}
+                print(f"  Shock/freq: {len(t)} points")
             except Exception as e:
-                print(f"  ERROR: {e}")
-        self.results["viz_frequencies"] = viz_data
-        return viz_data
+                print(f"  Shock/freq ERROR: {e}")
 
-    def collect_spectrum_viz(self):
-        print("\n=== Collecting Spectrum Visualization Data ===\n")
-        viz_data = {}
-        nu_grid = np.logspace(np.log10(VIZ_FREQ_GRID[0]), np.log10(VIZ_FREQ_GRID[1]), VIZ_FREQ_GRID[2])
-        betas = {"below_nu_a": 2.0, "nu_a_to_nu_m": 1/3, "nu_m_to_nu_c": -(self.p-1)/2, "above_nu_c": -self.p/2}
-        for medium in ["ISM", "wind"]:
-            model, mk = self._get_model(medium), _MEDIUM_KEY[medium]
-            print(f"--- {mk} ---")
+            # Spectra from standard model
             spectra = []
-            for t in [1e2, 1e3, 1e4, 1e5, 1e6]:
+            for t_val in [1e2, 1e3, 1e4, 1e5, 1e6]:
                 try:
-                    flux = model.flux_density(np.full_like(nu_grid, t), nu_grid)
-                    spectra.append({"t": t, "nu": nu_grid.tolist(), "flux": flux.total.tolist()})
-                    print(f"  t = {t:.0e} s: collected")
-                except Exception as e:
-                    print(f"  t = {t:.0e} s: ERROR - {e}")
-            viz_data[mk] = {"spectra": spectra, "expected_betas": betas}
-        self.results["viz_spectra"] = viz_data
-        return viz_data
+                    flux = model.flux_density(np.full_like(nu_grid, t_val), nu_grid)
+                    spectra.append({"t": t_val, "nu": nu_grid.tolist(), "flux": flux.total.tolist()})
+                except Exception:
+                    pass
+            self.results.setdefault("viz_spectra", {})[mk] = {
+                "spectra": spectra, "expected_betas": {"below_nu_a": 2.0, "nu_a_to_nu_m": 1/3,
+                                                       "nu_m_to_nu_c": -(p-1)/2, "above_nu_c": -p/2}}
 
-    def collect_lightcurve_viz(self):
-        print("\n=== Collecting Light Curve Visualization Data ===\n")
-        viz_data = {}
-        p = self.p
-        alpha_expected = {"ISM": {"slow_cooling": -(3*p-3)/4, "above_cooling": -(3*p-2)/4, "post_break": -(3*p-3)/4-0.75},
-                          "wind": {"slow_cooling": -(3*p-1)/4, "above_cooling": -(3*p-2)/4}}
-        for medium in ["ISM", "wind"]:
-            model, mk = self._get_model(medium), _MEDIUM_KEY[medium]
-            print(f"--- {mk} ---")
+            # Lightcurves
+            alpha_expected = {"ISM": {"slow_cooling": -(3*p-3)/4, "above_cooling": -(3*p-2)/4, "post_break": -(3*p-3)/4-0.75},
+                              "wind": {"slow_cooling": -(3*p-1)/4, "above_cooling": -(3*p-2)/4}}
             lightcurves = []
             for nu in [1e10, 1e12, 1e14, 1e15, 1e17]:
                 try:
                     t_pre = np.logspace(2, np.log10(JET_BREAK_TIME * 0.8), 50)
                     flux_pre = model.flux_density(t_pre, np.full_like(t_pre, nu))
-                    alpha_pre = fit_powerlaw(t_pre, flux_pre.total)
-                    lc = {"nu": nu, "pre_break": {"t": t_pre.tolist(), "flux": flux_pre.total.tolist(), "alpha_measured": float(alpha_pre)}}
+                    lc = {"nu": nu, "pre_break": {"t": t_pre.tolist(), "flux": flux_pre.total.tolist(),
+                                                   "alpha_measured": float(fit_powerlaw(t_pre, flux_pre.total))}}
                     if medium == "ISM":
                         t_post = np.logspace(np.log10(JET_BREAK_TIME * 1.5), 7, 30)
                         flux_post = model.flux_density(t_post, np.full_like(t_post, nu))
-                        lc["post_break"] = {"t": t_post.tolist(), "flux": flux_post.total.tolist(), "alpha_measured": float(fit_powerlaw(t_post, flux_post.total))}
+                        lc["post_break"] = {"t": t_post.tolist(), "flux": flux_post.total.tolist(),
+                                            "alpha_measured": float(fit_powerlaw(t_post, flux_post.total))}
                     lightcurves.append(lc)
-                    print(f"  ν = {nu:.0e} Hz: α_pre = {alpha_pre:.2f}")
-                except Exception as e:
-                    print(f"  ν = {nu:.0e} Hz: ERROR - {e}")
-            viz_data[mk] = {"lightcurves": lightcurves, "jet_break_time": JET_BREAK_TIME, "expected_alphas": alpha_expected[medium]}
-        self.results["viz_lightcurves"] = viz_data
-        return viz_data
+                except Exception:
+                    pass
+            self.results.setdefault("viz_lightcurves", {})[mk] = {
+                "lightcurves": lightcurves, "jet_break_time": JET_BREAK_TIME, "expected_alphas": alpha_expected[medium]}
+            print(f"  Spectra: {len(spectra)}, LCs: {len(lightcurves)}")
 
-    def collect_spectrum_shapes_viz(self):
-        print("\n=== Collecting Spectrum Shapes Visualization Data ===\n")
-        viz_data = {}
+        # Spectrum shapes (regime-specific)
+        viz_shapes = {}
         for regime_name, config in REGIME_TEST_CONFIGS.items():
             medium, t_test = config["medium"], config["t"]
-            mk = _MEDIUM_KEY.get(medium, medium)
-            print(f"  Regime {regime_name} ({mk}, t={t_test:.0e}s)")
             model = create_model(medium, **{k: config[k] for k in ("eps_e", "eps_B", "xi_e", "n_ism", "A_star") if k in config})
             try:
                 details = model.details(t_test * 0.9, t_test * 1.1)
                 idx = np.argmin(np.abs(np.array(details.fwd.t_obs)[0, 0, :] - t_test))
                 D = np.array(details.fwd.Doppler)[0, 0, idx]
-                nu_a = np.array(details.fwd.nu_a)[0, 0, idx] * D
-                nu_m = np.array(details.fwd.nu_m)[0, 0, idx] * D
-                nu_c = np.array(details.fwd.nu_c)[0, 0, idx] * D
-                nu_grid = np.logspace(6, 20, 200)
-                flux = model.flux_density(np.full_like(nu_grid, t_test), nu_grid)
+                nu_a, nu_m, nu_c = [np.array(getattr(details.fwd, f))[0, 0, idx] * D for f in ("nu_a", "nu_m", "nu_c")]
+                nu_g = np.logspace(6, 20, 200)
+                flux = model.flux_density(np.full_like(nu_g, t_test), nu_g)
                 actual = _detect_regime(nu_a, nu_m, nu_c) or regime_name
-                seg_results = _measure_segment_slopes(model, t_test, regime_name, nu_a, nu_m, nu_c, self.p)
-                viz_data[f"regime_{regime_name}"] = {
-                    "medium": mk, "t": t_test, "nu_a": nu_a, "nu_m": nu_m, "nu_c": nu_c,
-                    "actual_regime": actual, "nu": nu_grid.tolist(), "flux": flux.total.tolist(), "expected_segments": seg_results}
-                print(f"    Collected (actual regime: {actual})")
+                viz_shapes[f"regime_{regime_name}"] = {
+                    "medium": _MEDIUM_KEY[medium], "t": t_test, "nu_a": nu_a, "nu_m": nu_m, "nu_c": nu_c,
+                    "actual_regime": actual, "nu": nu_g.tolist(), "flux": flux.total.tolist(),
+                    "expected_segments": _measure_segment_slopes(model, t_test, regime_name, nu_a, nu_m, nu_c, p)}
+                print(f"  Regime {regime_name}: collected")
             except Exception as e:
-                print(f"    ERROR: {e}")
-        self.results["viz_spectrum_shapes"] = viz_data
-        return viz_data
+                print(f"  Regime {regime_name}: ERROR - {e}")
+        self.results["viz_spectrum_shapes"] = viz_shapes
 
     # --- Run all + summary ---
 
@@ -523,11 +474,7 @@ class RegressionRunner:
         self.run_closure_relations()
         self.run_spectrum_shapes()
         if viz:
-            self.collect_shock_dynamics_viz()
-            self.collect_frequencies_viz()
-            self.collect_spectrum_viz()
-            self.collect_lightcurve_viz()
-            self.collect_spectrum_shapes_viz()
+            self._collect_viz()
         self._print_summary()
         return self.results
 
