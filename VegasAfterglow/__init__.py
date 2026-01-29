@@ -1,41 +1,37 @@
+"""
+VegasAfterglow: Fast C++ afterglow physics library
+
+A pure physics library for computing GRB afterglow light curves with:
+- Multiple jet structures (tophat, gaussian, power law, etc.)
+- ISM and Wind medium profiles
+- Forward and reverse shock emission
+- Inverse Compton scattering with Klein-Nishina corrections
+
+For parameter estimation and MCMC fitting, use redback:
+https://github.com/nikhil-sarin/redback
+"""
+
 from ._version import __version__, __version_tuple__
-from .runner import AfterglowLikelihood, Fitter
 from .types import (
     ISM,
     Ejecta,
-    FitResult,
     GaussianJet,
     Magnetar,
     Medium,
     Model,
-    ModelParams,
-    ObsData,
     Observer,
-    ParamDef,
     PowerLawJet,
     PowerLawWing,
     Radiation,
-    Scale,
-    Setups,
     StepPowerLawJet,
     TophatJet,
     TwoComponentJet,
-    VegasMC,
     Wind,
 )
 
 __all__ = [
     "__version__",
     "__version_tuple__",
-    "ModelParams",
-    "Setups",
-    "ObsData",
-    "VegasMC",
-    "FitResult",
-    "Fitter",
-    "ParamDef",
-    "Scale",
-    "AfterglowLikelihood",
     "ISM",
     "Wind",
     "Medium",
