@@ -19,12 +19,12 @@ from validation.colors import (_bold, _green, _red, _yellow, _cyan, _dim, _bold_
 
 TIME_RANGES = {
     "coasting":        {"ISM": (1e-1, 1),    "wind": (1e-2, 1e-1)},
-    "BM":              {"ISM": (5e2, 5e3),    "wind": (5e3, 5e4)},
+    "BM":              {"ISM": (5e2, 5e3),    "wind": (1e4, 1e5)},
     "deep_newtonian":  {"ISM": (1e12, 1e13),  "wind": (1e14, 1e15)},
 }
 
 VIZ_TIME_GRID = {"ISM": (1e-2, 1e13, 400), "wind": (1e-3, 1e15, 400)}
-VIZ_PARAMS = {"ISM": {"Gamma0": 300, "n_ism": 0.1}, "wind": {"Gamma0": 50, "A_star": 1e-1}}
+VIZ_PARAMS = {"ISM": {"Gamma0": 300, "n_ism": 0.1}, "wind": {"Gamma0": 70, "A_star": 3e-1}}
 
 SHOCK_SCALINGS = {
     "coasting":       {"ISM": {"u": F(0), "r": F(1), "B": F(0), "N_p": F(3)},
@@ -50,13 +50,13 @@ SPECTRAL_TOLERANCE = 0.15
 # --- Reverse Shock Constants ---
 
 RVS_TIME_RANGES_THIN = {
-    "crossing":        {"ISM": (1e-2, 1e-1),     "wind": (5e-1, 5)},
+    "crossing":        {"ISM": (1e-2, 1e-1),     "wind": (1, 10)},
     "BM":              {"ISM": (1e5, 1e6),      "wind": (1e6, 1e7)},
     "deep_newtonian":  {"ISM": (1e12, 1e13),    "wind": (1e14, 1e15)},
 }
 
 RVS_TIME_RANGES_THICK = {
-    "crossing":        {"ISM": (1e2, 1e3),     "wind": (1e0, 1e1)},
+    "crossing":        {"ISM": (5e3, 5e4),     "wind": (1e2, 1e3)},
     "BM":              {"ISM": (1e7, 1e8),      "wind": (1e7, 1e8)},
     "deep_newtonian":  {"ISM": (1e12, 1e13),    "wind": (1e14, 1e15)},
 }
@@ -82,8 +82,8 @@ RVS_SHOCK_SCALINGS_THICK = {
 }
 
 RVS_FREQ_SCALINGS_THIN = {
-    "crossing":       {"ISM": {"nu_m": None, "nu_c": None, "nu_M": None},
-                       "wind": {"nu_m": None, "nu_c": None, "nu_M": None}},
+    "crossing":       {"ISM": {"nu_m": 0, "nu_c": -2, "nu_M": 0},
+                       "wind": {"nu_m": -1, "nu_c": 1, "nu_M": 0}},
     "BM":             {"ISM": {"nu_m": None, "nu_c": None, "nu_M": None},
                        "wind": {"nu_m": None, "nu_c": None, "nu_M": None}},
     "deep_newtonian": {"ISM": {"nu_m": None, "nu_c": None, "nu_M": None},
@@ -91,8 +91,8 @@ RVS_FREQ_SCALINGS_THIN = {
 }
 
 RVS_FREQ_SCALINGS_THICK = {
-    "crossing":       {"ISM": {"nu_m": None, "nu_c": None, "nu_M": None},
-                       "wind": {"nu_m": None, "nu_c": None, "nu_M": None}},
+    "crossing":       {"ISM": {"nu_m": None, "nu_c": -1, "nu_M": F(-1,4)},
+                       "wind": {"nu_m": -1, "nu_c": 1, "nu_M": 0}},
     "BM":             {"ISM": {"nu_m": None, "nu_c": None, "nu_M": None},
                        "wind": {"nu_m": None, "nu_c": None, "nu_M": None}},
     "deep_newtonian": {"ISM": {"nu_m": None, "nu_c": None, "nu_M": None},
@@ -124,7 +124,7 @@ SPECTRAL_REGIMES = {
 }
 
 REGIME_TEST_CONFIGS = {
-    "I":   {"medium": "ISM", "t": 5e3,  "n_ism": 0.1, "eps_B": 1e-2},
+    "I":   {"medium": "ISM", "t": 5e3,  "n_ism": 0.1, "eps_B": 1e-2, "eps_e": 1e-1},
     "II":  {"medium": "ISM", "t": 5e4,  "n_ism": 1e6, "eps_B": 1e-5, "eps_e": 5e-2},
     "III": {"medium": "ISM", "t": 1e5,  "n_ism": 30,  "eps_B": 1e-1, "eps_e": 1e-1, "xi_e": 5e-3},
     "IV":  {"medium": "ISM", "t": 1e5,  "eps_B": 0.3, "eps_e": 0.3,  "n_ism": 1e6,  "xi_e": 5e-3},
@@ -135,17 +135,17 @@ REGIME_TEST_CONFIGS = {
 
 _MEDIUM_KEY = {"ISM": "ISM", "wind": "Wind"}
 
-def _fwd(details, *keys):
-    """Extract forward-shock arrays sorted by t_obs. Returns [t, key1, key2, ...]."""
-    t = np.array(details.fwd.t_obs)[0, 0, :]
+def _extract(shock, *keys):
+    """Extract shock arrays sorted by t_obs. Returns [t, key1, key2, ...]."""
+    t = np.array(shock.t_obs)[0, 0, :]
     idx = np.argsort(t)
-    return [t[idx]] + [np.array(getattr(details.fwd, k))[0, 0, :][idx] for k in keys]
+    return [t[idx]] + [np.array(getattr(shock, k))[0, 0, :][idx] for k in keys]
+
+def _fwd(details, *keys):
+    return _extract(details.fwd, *keys)
 
 def _rvs(details, *keys):
-    """Extract reverse-shock arrays sorted by t_obs. Returns [t, key1, key2, ...]."""
-    t = np.array(details.rvs.t_obs)[0, 0, :]
-    idx = np.argsort(t)
-    return [t[idx]] + [np.array(getattr(details.rvs, k))[0, 0, :][idx] for k in keys]
+    return _extract(details.rvs, *keys)
 
 def _eval_beta(expr, p):
     if isinstance(expr, str):
@@ -273,7 +273,8 @@ class RegressionRunner:
                 self.results["shock_grid"][mk][phase] = phase_results
 
     def _run_shock_quantity(self, model, t_range, qty, expected, name, phase="BM",
-                            extractor=_fwd, expand_range=False, min_valid=5, type_prefix="shock"):
+                            extractor=_fwd, expand_range=False, min_valid=5, type_prefix="shock",
+                            gamma_key="Gamma"):
         """Run a single shock dynamics test for forward or reverse shock."""
         print(f"    Testing: {_bold(qty)}")
         attr_map = {"u": None, "r": "r", "B": "B_comv", "N_p": "N_p"}
@@ -281,7 +282,7 @@ class RegressionRunner:
             t_lo = t_range[0] / 10 if expand_range else t_range[0]
             t_hi = t_range[1] * 10 if expand_range else t_range[1]
             details = model.details(t_lo, t_hi)
-            arrays = extractor(details, "Gamma_th") if qty == "u" else extractor(details, attr_map[qty])
+            arrays = extractor(details, gamma_key) if qty == "u" else extractor(details, attr_map[qty])
             t = arrays[0]
             mask = (t >= t_range[0]) & (t <= t_range[1])
             t = t[mask]
@@ -400,7 +401,8 @@ class RegressionRunner:
         """Run a single reverse-shock dynamics test."""
         return self._run_shock_quantity(
             model, t_range, qty, expected, name, phase,
-            extractor=_rvs, expand_range=True, min_valid=3, type_prefix="rvs_shock")
+            extractor=_rvs, expand_range=True, min_valid=3, type_prefix="rvs_shock",
+            gamma_key="Gamma_th")
 
     def _run_rvs_nu_scaling(self, model, t_range, freq_name, expected, name, phase="BM"):
         """Run a single reverse-shock frequency scaling test."""
@@ -530,13 +532,45 @@ class RegressionRunner:
         return shock_data, freq_data
 
     @staticmethod
-    def _extract_arrays(details, extractor):
+    def _extract_arrays(details, extractor, gamma_key="Gamma"):
         """Extract and process shock/freq arrays from model details."""
         t, Gamma, r, B, N_p, Doppler, nu_m, nu_c, nu_a, nu_M = extractor(
-            details, "Gamma_th", "r", "B_comv", "N_p", "Doppler", "nu_m", "nu_c", "nu_a", "nu_M")
+            details, gamma_key, "r", "B_comv", "N_p", "Doppler", "nu_m", "nu_c", "nu_a", "nu_M")
         u = Gamma * np.sqrt(1.0 - 1.0 / (Gamma * Gamma))
         nu_m, nu_c, nu_a, nu_M = nu_m * Doppler, nu_c * Doppler, nu_a * Doppler, nu_M * Doppler
         return t, u, Gamma, r, B, N_p, Doppler, nu_m, nu_c, nu_a, nu_M
+
+    def _sync_viz_fits(self, grid_keys, viz_datasets, mk):
+        """Sync measured values from summary results into viz phase data."""
+        for grid_key, viz_data in zip(grid_keys, viz_datasets):
+            summary_grid = self.results.get(grid_key, {}).get(mk, {})
+            for phase, phase_results in summary_grid.items():
+                viz_phase = viz_data.get("phases", {}).get(phase, {})
+                if not viz_phase:
+                    continue
+                for qty, result in phase_results.items():
+                    if qty in viz_phase.get("fits", {}) and result.get("measured") is not None:
+                        viz_phase["fits"][qty]["measured"] = result["measured"]
+
+    def _collect_shock_viz(self, label, model, t_grid, extractor, gamma_key,
+                           time_ranges, medium, shock_scalings, freq_scalings,
+                           grid_keys, result_keys, mk):
+        """Collect shock/freq viz data for a single medium and store results."""
+        t_min, t_max, _ = t_grid
+        print(f"{_bold(f'--- {label} ---')}")
+        try:
+            details = model.details(t_min, t_max)
+            arrays = self._extract_arrays(details, extractor, gamma_key=gamma_key)
+            t, u, Gamma, r, B, N_p, Doppler, nu_m, nu_c, nu_a, nu_M = arrays
+            shock_data, freq_data = self._collect_shock_freq_data(
+                t, u, Gamma, r, B, N_p, Doppler, nu_m, nu_c, nu_a, nu_M,
+                time_ranges, medium, shock_scalings, freq_scalings)
+            self._sync_viz_fits(grid_keys, [shock_data, freq_data], mk)
+            self.results.setdefault(result_keys[0], {})[mk] = shock_data
+            self.results.setdefault(result_keys[1], {})[mk] = freq_data
+            print(f"  Shock/freq: {_dim(f'{len(t)} points')}")
+        except Exception as e:
+            print(f"  Shock/freq {_bold_red('ERROR')}: {e}")
 
     def _collect_viz(self):
         """Collect all visualization data in one pass."""
@@ -546,20 +580,11 @@ class RegressionRunner:
         # Forward shock
         for medium in ["ISM", "wind"]:
             mk = _MEDIUM_KEY[medium]
-            viz_model = self._get_viz_model(medium)
-            t_min, t_max, _ = VIZ_TIME_GRID[medium]
-            print(f"{_bold(f'--- {mk} ---')}")
-            try:
-                details = viz_model.details(t_min, t_max)
-                t, u, Gamma, r, B, N_p, Doppler, nu_m, nu_c, nu_a, nu_M = self._extract_arrays(details, _fwd)
-                shock_data, freq_data = self._collect_shock_freq_data(
-                    t, u, Gamma, r, B, N_p, Doppler, nu_m, nu_c, nu_a, nu_M,
-                    TIME_RANGES, medium, SHOCK_SCALINGS, FREQ_SCALINGS)
-                self.results.setdefault("viz_shock_dynamics", {})[mk] = shock_data
-                self.results.setdefault("viz_frequencies", {})[mk] = freq_data
-                print(f"  Shock/freq: {_dim(f'{len(t)} points')}")
-            except Exception as e:
-                print(f"  Shock/freq {_bold_red('ERROR')}: {e}")
+            self._collect_shock_viz(
+                mk, self._get_viz_model(medium), VIZ_TIME_GRID[medium],
+                _fwd, "Gamma", TIME_RANGES, medium, SHOCK_SCALINGS, FREQ_SCALINGS,
+                ["shock_grid", "freq_grid"],
+                ["viz_shock_dynamics", "viz_frequencies"], mk)
 
         # Spectrum shapes (regime-specific)
         viz_shapes = {}
@@ -591,20 +616,12 @@ class RegressionRunner:
         for regime, (shock_scalings, freq_scalings, time_ranges) in rvs_config.items():
             for medium in ["ISM", "wind"]:
                 mk = _MEDIUM_KEY[medium]
-                rvs_model = self._get_rvs_viz_model(medium, regime)
-                t_min, t_max, _ = RVS_VIZ_TIME_GRID[medium]
-                print(f"{_bold(f'--- Reverse Shock {regime.title()} {mk} ---')}")
-                try:
-                    details = rvs_model.details(t_min, t_max)
-                    t, u, Gamma, r, B, N_p, Doppler, nu_m, nu_c, nu_a, nu_M = self._extract_arrays(details, _rvs)
-                    shock_data, freq_data = self._collect_shock_freq_data(
-                        t, u, Gamma, r, B, N_p, Doppler, nu_m, nu_c, nu_a, nu_M,
-                        time_ranges, medium, shock_scalings, freq_scalings)
-                    self.results.setdefault(f"viz_rvs_shock_dynamics_{regime}", {})[mk] = shock_data
-                    self.results.setdefault(f"viz_rvs_frequencies_{regime}", {})[mk] = freq_data
-                    print(f"  Reverse Shock {regime} shock/freq: {_dim(f'{len(t)} points')}")
-                except Exception as e:
-                    print(f"  Reverse Shock {regime} shock/freq {_bold_red('ERROR')}: {e}")
+                self._collect_shock_viz(
+                    f"Reverse Shock {regime.title()} {mk}",
+                    self._get_rvs_viz_model(medium, regime), RVS_VIZ_TIME_GRID[medium],
+                    _rvs, "Gamma_th", time_ranges, medium, shock_scalings, freq_scalings,
+                    [f"rvs_shock_grid_{regime}", f"rvs_freq_grid_{regime}"],
+                    [f"viz_rvs_shock_dynamics_{regime}", f"viz_rvs_frequencies_{regime}"], mk)
 
     # --- Run all + summary ---
 

@@ -4,12 +4,15 @@ import numpy as np
 
 STANDARD_PARAMS = {
     "E_iso": 1e52, "Gamma0": 300, "theta_c": 0.1, "n_ism": 1.0, "A_star": 0.1,
-    "eps_e": 0.1, "eps_B": 0.01, "p": 2.2, "xi_e": 1.0, "lumi_dist": 1e28, "z": 1.0,
+    "eps_e": 0.01, "eps_B": 0.01, "p": 2.2, "xi_e": 1.0, "lumi_dist": 1e28, "z": 1.0,
 }
 
 
-def fit_powerlaw(t, f):
-    """Compute average power-law slope from local derivatives in log-log space."""
+def fit_powerlaw(t, f, window=5):
+    """Compute average power-law slope from local derivatives in log-log space.
+
+    A narrow moving-average window smooths out local noise before taking the mean.
+    """
     valid = (f > 0) & np.isfinite(f) & (t > 0) & np.isfinite(t)
     if np.sum(valid) < 3:
         return np.nan
@@ -21,4 +24,9 @@ def fit_powerlaw(t, f):
     if np.sum(valid_diff) < 2:
         return np.nan
     local_slopes = d_log_f[valid_diff] / d_log_t[valid_diff]
-    return np.mean(local_slopes[1:]) if len(local_slopes) > 1 else np.mean(local_slopes)
+    if len(local_slopes) > 1:
+        local_slopes = local_slopes[1:]  # skip first point (boundary effect)
+    if len(local_slopes) >= window:
+        kernel = np.ones(window) / window
+        local_slopes = np.convolve(local_slopes, kernel, mode="valid")
+    return np.mean(local_slopes)

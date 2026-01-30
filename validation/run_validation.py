@@ -3,6 +3,7 @@
 
 import argparse
 import json
+import math
 import os
 import subprocess
 import sys
@@ -53,14 +54,14 @@ def check_benchmark_results(json_path):
             for band_errs in mean_by_band.values():
                 if band_errs:
                     v = band_errs[-1]
-                    if v == v:  # NaN check
+                    if not math.isnan(v):
                         mean_err = max(mean_err, v)
             # Worst-case max error across bands
             max_err = 0.0
             for band_errs in errs_by_band.values():
                 if band_errs:
                     v = band_errs[-1]
-                    if v == v:
+                    if not math.isnan(v):
                         max_err = max(max_err, v)
             name = f"{config.get('jet_type', '?')}/{config.get('medium', '?')}"
             if mean_err >= BENCH_MEAN_THRESH:

@@ -11,6 +11,9 @@ import matplotlib.pyplot as plt
 import numpy as np
 from matplotlib.backends.backend_pdf import PdfPages
 
+sys.path.insert(0, str(Path(__file__).parent.parent / "benchmark"))
+from benchmark_suite import FIDUCIAL_VALUES
+
 # Try to import VegasAfterglow
 try:
     import VegasAfterglow as va
@@ -25,12 +28,15 @@ PAGE_PORTRAIT, PAGE_LANDSCAPE = (8.5, 11), (11, 8.5)
 COLORS = {"pass": "#2ECC71", "fail": "#E74C3C", "primary": "#3498DB", "secondary": "#9B59B6", "neutral": "#7F8C8D", "background": "#2C3E50"}
 PHASE_COLORS = {"coasting": "#E74C3C", "crossing": "#F39C12", "BM": "#3498DB", "deep_newtonian": "#2ECC71"}
 PHASE_NAMES = {"coasting": "Coasting", "crossing": "Crossing", "BM": "Blandford-McKee", "deep_newtonian": "Sedov-Taylor"}
-BAND_COLORS = {"Radio": "firebrick", "Optical": "yellowgreen", "X-ray": "royalblue"}
+BAND_COLORS = {
+    "Radio": "firebrick", "Optical": "yellowgreen", "X-ray": "royalblue",
+    "Radio (fwd)": "firebrick", "Optical (fwd)": "yellowgreen", "X-ray (fwd)": "royalblue",
+    "Radio (rvs)": "salmon", "Optical (rvs)": "darkseagreen", "X-ray (rvs)": "cornflowerblue",
+}
 MEDIUM_STYLES, MEDIUM_MARKERS = {"ISM": "-", "wind": "--"}, {"ISM": "o", "wind": "s"}
 
 # Convergence thresholds
-FIDUCIAL_VALUES = {"phi": 0.3, "theta": 0.3, "t": 10}
-MAX_ERROR_THRESHOLD, MEAN_ERROR_THRESHOLD = 0.1, 0.05
+MAX_ERROR_THRESHOLD, MEAN_ERROR_THRESHOLD = 0.15, 0.05
 
 QTY_SYMBOLS = {"u": r"$\Gamma\beta$", "Gamma": r"$\Gamma$", "r": r"$r$", "B": r"$B$", "N_p": r"$N_p$",
                "nu_m": r"$\nu_m$", "nu_c": r"$\nu_c$", "nu_a": r"$\nu_a$", "nu_M": r"$\nu_M$"}

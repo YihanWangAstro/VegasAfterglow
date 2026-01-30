@@ -111,7 +111,7 @@ def plot_benchmark_overview(session: Dict, angle_filter: str = "all") -> plt.Fig
     """Create benchmark overview page with 4 panels, one per radiation config.
 
     Each panel shows a stage breakdown stacked bar chart with bars = jet type × medium.
-    Currently only synchrotron_only is populated; the other 3 panels are placeholders.
+    Currently only synchrotron is populated; the other 3 panels are placeholders.
     angle_filter: 'all', 'on-axis', or 'off-axis'.
     """
     fig = plt.figure(figsize=(8.5, 11))
@@ -138,10 +138,10 @@ def plot_benchmark_overview(session: Dict, angle_filter: str = "all") -> plt.Fig
     media = sorted(set(c.get("medium", "unknown") for c in configs))
     # Define the 4 radiation config panels
     rad_panels = [
-        ("synchrotron_only", "Fwd Synchrotron"),
-        ("rvs_synchrotron_only", "Rvs Synchrotron"),
+        ("synchrotron", "Fwd Synchrotron"),
+        ("rvs_sync_thin", "Rvs Thin Shell"),
+        ("rvs_sync_thick", "Rvs Thick Shell"),
         ("fwd_ic", "Fwd IC"),
-        ("rvs_ic", "Rvs IC"),
     ]
 
     for idx, (rad_key, rad_label) in enumerate(rad_panels):
@@ -325,9 +325,14 @@ def plot_single_model_convergence_page(config: Dict, model_id: int) -> plt.Figur
         dim_name = dim_key.replace("_convergence", "")
         fiducial_val = FIDUCIAL_VALUES.get(dim_name, 0)
 
+        is_rvs = config.get("radiation", "").startswith("rvs_")
+        flux_peak = 0
         if t_array and flux_by_band:
             for band_name, fluxes_list in flux_by_band.items():
                 if not fluxes_list:
+                    continue
+                # For rvs radiation configs, only plot the reverse shock component
+                if is_rvs and "(rvs)" not in band_name:
                     continue
                 color = BAND_COLORS.get(band_name, "gray")
 
@@ -336,6 +341,10 @@ def plot_single_model_convergence_page(config: Dict, model_id: int) -> plt.Figur
                     if not flux or len(flux) != len(t_array):
                         continue
                     has_any_data = True
+                    flux_arr = np.asarray(flux)
+                    pos = flux_arr[flux_arr > 0]
+                    if len(pos) > 0:
+                        flux_peak = max(flux_peak, np.max(pos))
                     res_val = res_values[i] if i < len(res_values) else fiducial_val
                     ls = ":" if res_val < fiducial_val else "-"
                     label = band_name if i == n_res - 1 else None
@@ -349,6 +358,9 @@ def plot_single_model_convergence_page(config: Dict, model_id: int) -> plt.Figur
 
         if has_any_data:
             ax.legend(fontsize=6, loc="upper right")
+            # Clamp y-axis around the actual data peak
+            if flux_peak > 0:
+                ax.set_ylim(flux_peak * 1e-10, flux_peak * 10)
         else:
             ax.text(0.5, 0.5, "No light curve data", ha="center", va="center", transform=ax.transAxes,
                     fontsize=9, color="gray")

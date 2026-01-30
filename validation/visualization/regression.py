@@ -414,12 +414,12 @@ def _plot_quantity_panel(ax_qty, ax_deriv, t, y, qty, phases):
 
     log_t = np.log10(t[valid])
     log_y = np.log10(y[valid])
-    deriv = np.gradient(log_y, log_t)
+    d_log_t = np.diff(log_t)
+    d_log_y = np.diff(log_y)
+    local_slopes = d_log_y / d_log_t
+    t_mid = 10 ** (0.5 * (log_t[:-1] + log_t[1:]))
 
-    window = min(15, max(3, len(deriv) // 5))
-    deriv_smooth = _smooth_1d(deriv, size=window)
-
-    ax_deriv.semilogx(t[valid], deriv_smooth, "k-", alpha=0.5, linewidth=1)
+    ax_deriv.semilogx(t_mid, local_slopes, "k-", alpha=0.5, linewidth=1)
 
     all_vals = []
     for phase, phase_data in phases.items():
@@ -561,12 +561,12 @@ def _plot_spectrum_panel(ax_spec, ax_slope, nu, flux, nu_a, nu_m, nu_c, segments
     # Lower panel: slope (d log F / d log ν)
     log_nu = np.log10(nu_valid)
     log_flux = np.log10(flux_valid)
-    deriv = np.gradient(log_flux, log_nu)
+    d_log_nu = np.diff(log_nu)
+    d_log_flux = np.diff(log_flux)
+    local_slopes = d_log_flux / d_log_nu
+    nu_mid = 10 ** (0.5 * (log_nu[:-1] + log_nu[1:]))
 
-    window = min(15, max(3, len(deriv) // 5))
-    deriv_smooth = _smooth_1d(deriv, size=window)
-
-    ax_slope.semilogx(nu_valid, deriv_smooth, "k-", alpha=0.5, linewidth=1)
+    ax_slope.semilogx(nu_mid, local_slopes, "k-", alpha=0.5, linewidth=1)
 
     # Mark expected slopes for each segment
     all_vals = []

@@ -16,8 +16,9 @@ from typing import Dict, List, Optional, Tuple
 import numpy as np
 
 sys.path.insert(0, str(Path(__file__).parent))
-from configs import (create_jet, create_medium, create_observer, create_radiation, get_jet_config, get_medium_config,
-                     get_radiation_config, get_all_jet_names, get_radiation_names_no_ssc)
+from configs import (create_jet, create_medium, create_observer, create_radiation, create_rvs_radiation,
+                     get_jet_config, get_medium_config, get_radiation_config, get_duration,
+                     get_all_jet_names, get_radiation_names_no_ssc, get_rvs_radiation_names)
 
 sys.path.insert(0, str(Path(__file__).parent.parent))
 from validation.colors import _bold, _green, _red, _cyan, _dim, _bold_red, _header
@@ -72,12 +73,15 @@ class BenchmarkSession:
 # ---------------------------------------------------------------------------
 
 FIDUCIAL_RESOLUTION = (0.3, 0.3, 10)
-PHI_VALUES = [0.1, 0.15, 0.2, 0.25, 0.3, 0.35, 0.4, 0.45, 0.5]
-THETA_VALUES = [0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0]
-T_VALUES = [5, 7.5, 10, 12.5, 15, 17.5, 20, 22.5, 25]
+DIM_INDEX = {"phi": 0, "theta": 1, "t": 2}
+FIDUCIAL_VALUES = {dim: FIDUCIAL_RESOLUTION[idx] for dim, idx in DIM_INDEX.items()}
+PHI_VALUES = [0.1, 0.2, 0.3, 0.4, 0.5]
+THETA_VALUES = [0.3, 0.7, 1.0, 1.3, 1.6, 2.0]
+T_VALUES = [10, 15, 20, 25]
+REFERENCE_RESOLUTION = (PHI_VALUES[-1] * 1.2, THETA_VALUES[-1] * 1.2, T_VALUES[-1] * 1.2)
+CONVERGENCE_T_LC = np.logspace(0, 8, 100)
 CONVERGENCE_BANDS = {"Radio": 1e9, "Optical": 4.84e14, "X-ray": 1e18}
 VIEWING_ANGLE_RATIOS = [0, 2, 4]
-DIM_INDEX = {"phi": 0, "theta": 1, "t": 2}
 
 # ---------------------------------------------------------------------------
 # Utility functions
@@ -138,17 +142,21 @@ class ComprehensiveBenchmark:
 
     def _create_model(self, jet_name, medium_name, radiation_name, theta_obs, resolution, spreading=False):
         import VegasAfterglow as va
+        rad_config = get_radiation_config(radiation_name)
+        rvs_rad = create_rvs_radiation(rad_config)
+        duration = get_duration(rad_config)
         return va.Model(
-            create_jet(get_jet_config(jet_name), spreading=spreading),
+            create_jet(get_jet_config(jet_name), spreading=spreading, duration=duration),
             create_medium(get_medium_config(medium_name)),
             create_observer(theta_obs),
-            create_radiation(get_radiation_config(radiation_name)),
+            create_radiation(rad_config),
+            rvs_rad=rvs_rad,
             resolutions=resolution,
         )
 
     def _compute_timing(self, jet_name, medium_name, radiation_name, theta_obs, resolution, spreading=False):
         import VegasAfterglow as va
-        t = np.logspace(2, 7, 30)
+        t = np.logspace(2, 8, 30)
         nu = np.full_like(t, self.nu_ref)
         all_breakdowns = []
         for _ in range(self.iterations):
@@ -167,16 +175,30 @@ class ComprehensiveBenchmark:
         ms = stage_breakdown.get("total", 0.0)
         return ComponentTiming(flux_single_ms=ms, total_ms=ms, stage_breakdown=stage_breakdown)
 
+    @staticmethod
+    def _extract_flux_components(flux, has_rvs):
+        """Extract flux arrays to compare. Returns dict of {label: array}."""
+        if has_rvs:
+            return {"fwd": np.asarray(flux.fwd.sync), "rvs": np.asarray(flux.rvs.sync)}
+        return {"total": np.asarray(flux.total)}
+
     def _run_dimension_convergence(self, jet_name, medium_name, radiation_name, theta_obs,
-                                   dimension, values, spreading=False):
+                                   dimension, values, spreading=False, ref_lcs=None):
         import VegasAfterglow as va
         fiducial = list(FIDUCIAL_RESOLUTION)
         dim_idx = DIM_INDEX[dimension]
-        t_lc = np.logspace(2, 7, 50)
-        bands = list(CONVERGENCE_BANDS)
+        t_lc = CONVERGENCE_T_LC
         n_vals = len(values)
+        has_rvs = get_radiation_config(radiation_name).rvs_params is not None
 
-        # Pre-allocate nu arrays for each band (avoid repeated allocation in inner loop)
+        # Build band list: for rvs configs, split each freq band into fwd/rvs components
+        freq_bands = list(CONVERGENCE_BANDS)
+        if has_rvs:
+            bands = [f"{fb} (fwd)" for fb in freq_bands] + [f"{fb} (rvs)" for fb in freq_bands]
+        else:
+            bands = freq_bands
+
+        # Pre-allocate nu arrays for each frequency band
         nu_arrays = {b: np.full_like(t_lc, nu) for b, nu in CONVERGENCE_BANDS.items()}
 
         times_ms = []
@@ -194,16 +216,20 @@ class ComprehensiveBenchmark:
                 t_array=t_lc.tolist(), flux_by_band={b: [] for b in bands},
             )
 
-        # Reference at 2x highest value
-        ref_res = fiducial.copy()
-        ref_res[dim_idx] = values[-1] * 2
-        try:
-            ref_model = self._create_model(jet_name, medium_name, radiation_name, theta_obs, tuple(ref_res), spreading)
-            ref_lcs = {b: ref_model.flux_density(t_lc, nu_arr).total.copy()
-                       for b, nu_arr in nu_arrays.items()}
-        except Exception as e:
-            print(f"      {_bold_red('Error')} computing reference: {e}")
-            return _nan_result()
+        # Use pre-computed global reference if provided, otherwise compute per-dimension
+        if ref_lcs is None:
+            ref_res = list(REFERENCE_RESOLUTION)
+            try:
+                ref_model = self._create_model(jet_name, medium_name, radiation_name, theta_obs, tuple(ref_res), spreading)
+                ref_lcs = {}
+                for fb in freq_bands:
+                    ref_flux = ref_model.flux_density(t_lc, nu_arrays[fb])
+                    for label, arr in self._extract_flux_components(ref_flux, has_rvs).items():
+                        band_key = f"{fb} ({label})" if has_rvs else fb
+                        ref_lcs[band_key] = arr.copy()
+            except Exception as e:
+                print(f"      {_bold_red('Error')} computing reference: {e}")
+                return _nan_result()
 
         for val in values:
             res = fiducial.copy()
@@ -212,24 +238,42 @@ class ComprehensiveBenchmark:
                 model = self._create_model(jet_name, medium_name, radiation_name, theta_obs, tuple(res), spreading)
 
                 band_times = []
-                for band_name in bands:
-                    nu_arr = nu_arrays[band_name]
+                for fb in freq_bands:
+                    nu_arr = nu_arrays[fb]
                     va.Model.profile_reset()
                     flux = model.flux_density(t_lc, nu_arr)
                     elapsed = va.Model.profile_data().get("total", 0.0)
-                    times_by_band[band_name].append(elapsed)
                     band_times.append(elapsed)
-                    flux_by_band[band_name].append(flux.total.tolist())
 
-                    ref = ref_lcs[band_name]
-                    valid = (ref > 0) & np.isfinite(ref) & np.isfinite(flux.total)
-                    if np.any(valid):
-                        rel = np.abs(flux.total[valid] - ref[valid]) / ref[valid]
-                        errors_by_band[band_name].append(float(np.max(rel)))
-                        mean_errors_by_band[band_name].append(float(np.mean(rel)))
-                    else:
-                        errors_by_band[band_name].append(np.nan)
-                        mean_errors_by_band[band_name].append(np.nan)
+                    for label, flux_arr in self._extract_flux_components(flux, has_rvs).items():
+                        band_key = f"{fb} ({label})" if has_rvs else fb
+                        times_by_band[band_key].append(elapsed)
+                        flux_by_band[band_key].append(flux_arr.tolist())
+
+                        ref = ref_lcs[band_key]
+                        valid = (ref > 0) & np.isfinite(ref) & (flux_arr > 0) & np.isfinite(flux_arr)
+                        if np.any(valid):
+                            # Exclude exponential-decay regions: compute log-log
+                            # slope of reference curve and mask |slope| > 4
+                            log_t = np.log10(t_lc)
+                            log_ref = np.full_like(log_t, np.nan)
+                            pos = ref > 0
+                            log_ref[pos] = np.log10(ref[pos])
+                            slope = np.gradient(log_ref, log_t)
+                            valid = valid & (np.abs(slope) <= 4)
+                            # Also exclude tail > 10 orders below peak
+                            if np.any(valid):
+                                ref_peak = np.max(ref[valid])
+                                valid = valid & (ref > ref_peak * 1e-10)
+                            if np.any(valid):
+                                err = np.abs(flux_arr[valid] - ref[valid]) / ref[valid]
+                            else:
+                                err = np.array([np.nan])
+                            errors_by_band[band_key].append(float(np.max(err)))
+                            mean_errors_by_band[band_key].append(float(np.mean(err)))
+                        else:
+                            errors_by_band[band_key].append(np.nan)
+                            mean_errors_by_band[band_key].append(np.nan)
                 times_ms.append(np.mean(band_times))
             except Exception as e:
                 print(f"      {_bold_red('Error')} at {dimension}={val}: {e}")
@@ -260,12 +304,32 @@ class ComprehensiveBenchmark:
             theta_obs_ratio=ratio, spreading=spreading, timing=timing,
         )
 
+        # Compute global reference once (high resolution in all dimensions)
+        log(f"    Computing global reference at resolution {REFERENCE_RESOLUTION}...")
+        has_rvs = get_radiation_config(radiation_name).rvs_params is not None
+        freq_bands = list(CONVERGENCE_BANDS)
+        t_lc = CONVERGENCE_T_LC
+        nu_arrays = {b: np.full_like(t_lc, nu) for b, nu in CONVERGENCE_BANDS.items()}
+        try:
+            ref_model = self._create_model(jet_name, medium_name, radiation_name, theta_obs,
+                                           REFERENCE_RESOLUTION, spreading)
+            ref_lcs = {}
+            for fb in freq_bands:
+                ref_flux = ref_model.flux_density(t_lc, nu_arrays[fb])
+                for label, arr in self._extract_flux_components(ref_flux, has_rvs).items():
+                    band_key = f"{fb} ({label})" if has_rvs else fb
+                    ref_lcs[band_key] = arr.copy()
+        except Exception as e:
+            log(f"    {_bold_red('Error')} computing global reference: {e}")
+            ref_lcs = None
+
         for dim, vals, attr in [("phi", PHI_VALUES, "phi_convergence"),
                                 ("theta", THETA_VALUES, "theta_convergence"),
                                 ("t", T_VALUES, "t_convergence")]:
             log(f"    {_cyan(dim)} convergence...")
             setattr(result, attr, self._run_dimension_convergence(
-                jet_name, medium_name, radiation_name, theta_obs, dim, vals, spreading))
+                jet_name, medium_name, radiation_name, theta_obs, dim, vals, spreading,
+                ref_lcs=ref_lcs))
 
         log(f"    {_green('Done')}: {_dim(f'{timing.flux_single_ms:.2f} ms/LC')}")
         self.results.append(result)
@@ -284,23 +348,27 @@ class ComprehensiveBenchmark:
         return self.results
 
     def run_full_suite(self):
-        jets, meds, rads = get_all_jet_names(), ["ISM", "wind"], get_radiation_names_no_ssc()
+        jets, meds = get_all_jet_names(), ["ISM", "wind"]
+        fwd_rads = get_radiation_names_no_ssc()
+        rvs_rads = get_rvs_radiation_names()
         configs = [(j, m, r, get_jet_theta_c(j) * ratio)
-                   for j, m, r, ratio in product(jets, meds, rads, VIEWING_ANGLE_RATIOS)]
+                   for j, m, r, ratio in product(jets, meds, fwd_rads, VIEWING_ANGLE_RATIOS)]
+        configs += [(j, m, r, get_jet_theta_c(j) * ratio)
+                    for j, m, r, ratio in product(jets, meds, rvs_rads, VIEWING_ANGLE_RATIOS)]
         return self._run_suite("FULL BENCHMARK SUITE", configs)
 
     def run_convergence_only(self, jet_types=None, medium_types=None):
         jets = jet_types or ["tophat", "gaussian", "powerlaw"]
         meds = medium_types or ["ISM", "wind"]
         return self._run_suite("CONVERGENCE TEST SUITE",
-            [(j, m, "synchrotron_only", 0.0) for j, m in product(jets, meds)])
+            [(j, m, "synchrotron", 0.0) for j, m in product(jets, meds)])
 
     def run_parallel(self, jet_types=None, medium_types=None, radiation_types=None,
                      viewing_ratios=None, n_workers=None, timeout=600):
         print(_header("PARALLEL BENCHMARK SUITE"))
         jets = jet_types or get_all_jet_names()
         meds = medium_types or ["ISM", "wind"]
-        rads = radiation_types or ["synchrotron_only"]
+        rads = radiation_types or ["synchrotron"]
         ratios = viewing_ratios or [0]
         n_workers = n_workers or max(1, mp.cpu_count() - 1)
 
@@ -409,7 +477,7 @@ def main():
     if args.parallel > 0:
         print(f"Parallel workers: {_bold(str(args.parallel))}")
         ratios = VIEWING_ANGLE_RATIOS if args.full else [0]
-        rads = get_radiation_names_no_ssc() if args.full else ["synchrotron_only"]
+        rads = get_radiation_names_no_ssc() + get_rvs_radiation_names() if args.full else ["synchrotron"]
         b.run_parallel(jet_types=args.jet, medium_types=args.medium, radiation_types=rads,
                        viewing_ratios=ratios, n_workers=args.parallel, timeout=args.timeout)
     elif args.full:

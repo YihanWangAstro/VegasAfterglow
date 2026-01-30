@@ -25,6 +25,8 @@ class MediumConfig:
 class RadiationConfig:
     name: str
     params: Dict[str, Any]
+    rvs_params: Dict[str, Any] = None  # If set, reverse shock radiation is enabled
+                                       # May include "duration" key for jet engine duration
 
 # ---------------------------------------------------------------------------
 # Jet configurations
@@ -60,15 +62,21 @@ MEDIUM_CONFIGS: Dict[str, MediumConfig] = {c.name: c for c in [
 # Radiation configurations
 # ---------------------------------------------------------------------------
 
+_RVS_RAD = {"eps_e": 0.1, "eps_B": 0.01, "p": 2.3, "xi_e": 1.0, "ssc_cooling": False, "ssc": False, "kn": False}
+
 RADIATION_CONFIGS: Dict[str, RadiationConfig] = {c.name: c for c in [
-    RadiationConfig("synchrotron_only", {**_STD_RAD, "ssc_cooling": False, "ssc": False, "kn": False}),
-    RadiationConfig("with_ssc_cooling", {**_STD_RAD, "ssc_cooling": True,  "ssc": False, "kn": False}),
+    # Forward-shock only
+    RadiationConfig("synchrotron",      {**_STD_RAD, "ssc_cooling": False, "ssc": False, "kn": False}),
     RadiationConfig("full_ssc",         {**_STD_RAD, "ssc_cooling": True,  "ssc": True,  "kn": False}),
     RadiationConfig("ssc_kn",           {**_STD_RAD, "ssc_cooling": True,  "ssc": True,  "kn": True}),
     RadiationConfig("fast_cooling",     {"eps_e": 0.1, "eps_B": 0.1,  "p": 2.5, "xi_e": 1e-3, "ssc_cooling": False, "ssc": False, "kn": False}),
     RadiationConfig("steep_spectrum",   {"eps_e": 0.1, "eps_B": 0.01, "p": 2.8, "xi_e": 1.0,  "ssc_cooling": False, "ssc": False, "kn": False}),
     RadiationConfig("flat_spectrum",    {"eps_e": 0.1, "eps_B": 0.01, "p": 2.05,"xi_e": 1.0,  "ssc_cooling": False, "ssc": False, "kn": False}),
-    RadiationConfig("partial_xi_e",     {"eps_e": 0.1, "eps_B": 0.01, "p": 2.3, "xi_e": 0.1,  "ssc_cooling": False, "ssc": False, "kn": False}),
+    # Forward + reverse shock (TODO: enable when reverse shock benchmarks are ready)
+    # RadiationConfig("rvs_sync_thin", {**_STD_RAD, "ssc_cooling": False, "ssc": False, "kn": False},
+    #                 rvs_params={**_RVS_RAD, "duration": 1}),
+    # RadiationConfig("rvs_sync_thick", {**_STD_RAD, "ssc_cooling": False, "ssc": False, "kn": False},
+    #                 rvs_params={**_RVS_RAD, "duration": 1e4}),
 ]}
 
 # ---------------------------------------------------------------------------
@@ -94,19 +102,25 @@ def get_all_jet_names() -> List[str]:       return list(JET_CONFIGS)
 def get_all_medium_names() -> List[str]:    return list(MEDIUM_CONFIGS)
 def get_all_radiation_names() -> List[str]: return list(RADIATION_CONFIGS)
 def get_radiation_names_no_ssc() -> List[str]:
-    return [n for n, c in RADIATION_CONFIGS.items() if not c.params.get("ssc", False)]
+    return [n for n, c in RADIATION_CONFIGS.items() if not c.params.get("ssc", False) and c.rvs_params is None]
+def get_fwd_only_radiation_names() -> List[str]:
+    return [n for n, c in RADIATION_CONFIGS.items() if c.rvs_params is None]
+def get_rvs_radiation_names() -> List[str]:
+    return [n for n, c in RADIATION_CONFIGS.items() if c.rvs_params is not None]
 
 # ---------------------------------------------------------------------------
 # Factory functions
 # ---------------------------------------------------------------------------
 
-def create_jet(config: JetConfig, spreading=False, magnetar=None):
+def create_jet(config: JetConfig, spreading=False, magnetar=None, duration=None):
     import VegasAfterglow as va
     params = config.params.copy()
     if config.supports_spreading:
         params["spreading"] = spreading
     if config.supports_magnetar and magnetar is not None:
         params["magnetar"] = magnetar
+    if duration is not None:
+        params["duration"] = duration
     return getattr(va, config.factory)(**params)
 
 def create_medium(config: MediumConfig):
@@ -116,6 +130,20 @@ def create_medium(config: MediumConfig):
 def create_radiation(config: RadiationConfig):
     import VegasAfterglow as va
     return va.Radiation(**config.params)
+
+def create_rvs_radiation(config: RadiationConfig):
+    """Create reverse shock Radiation object from a config with rvs_params."""
+    import VegasAfterglow as va
+    if config.rvs_params is None:
+        return None
+    params = {k: v for k, v in config.rvs_params.items() if k != "duration"}
+    return va.Radiation(**params)
+
+def get_duration(config: RadiationConfig) -> float:
+    """Extract jet engine duration from rvs_params, default 1."""
+    if config.rvs_params is None:
+        return 1.0
+    return config.rvs_params.get("duration", 1.0)
 
 def create_observer(theta_obs: float = 0.0):
     import VegasAfterglow as va

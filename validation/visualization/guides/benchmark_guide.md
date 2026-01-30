@@ -14,7 +14,7 @@ The benchmark suite systematically tests a grid of physical scenarios and numeri
 |-----------|---------|-------------|
 | Jet Structure | tophat, gaussian, powerlaw, two_component | Angular energy profile |
 | External Medium | ISM, Wind | Density profile: constant (ISM) or r^(-2) (Wind) |
-| Radiation | synchrotron_only, with_ssc_cooling, fast_cooling, steep/flat_spectrum, partial_xi_e | Radiation physics |
+| Radiation | synchrotron, with_ssc_cooling, fast_cooling, steep/flat_spectrum, rvs_sync_thin, rvs_sync_thick | Radiation physics |
 | Viewing Angle | theta_v/theta_c = 0, 2, 4 | On-axis (0) vs off-axis (>1) |
 
 ### 1.2 Numerical Resolution
