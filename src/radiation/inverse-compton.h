@@ -572,8 +572,8 @@ void IC_cooling(ElectronGrid<Electrons>& electrons, PhotonGrid<Photons>& photons
                 update_gamma_M(elec.gamma_M, Ys, p, B);
 
                 if (k >= k_inj) {
-                    const auto& inj = electrons(i, j, k_inj);
-                    elec.gamma_c = inj.gamma_c * elec.gamma_m / inj.gamma_m;
+                    const auto& inj = electrons(i, j, k_inj - 1);
+                    elec.gamma_c = (inj.gamma_c - 1) * (elec.gamma_m - 1) / (inj.gamma_m - 1) + 1;
                     elec.gamma_M = elec.gamma_c;
                 }
 

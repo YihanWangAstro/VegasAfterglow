@@ -438,7 +438,8 @@ void generate_syn_electrons(SynElectronGrid& electrons, Shock const& shock) {
 
                 // no new shocked electrons, the cooling Lorentz factor is the truncation Lorentz factor
                 if (k >= k_inj) {
-                    elec.gamma_c = electrons(i, j, k_inj).gamma_c * elec.gamma_m / electrons(i, j, k_inj).gamma_m;
+                    const auto& inj = electrons(i, j, k_inj - 1);
+                    elec.gamma_c = (inj.gamma_c - 1) * (elec.gamma_m - 1) / (inj.gamma_m - 1) + 1;
                     elec.gamma_M = elec.gamma_c;
                 }
 

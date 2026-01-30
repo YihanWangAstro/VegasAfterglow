@@ -514,7 +514,7 @@ void grid_solve_shock_pair(size_t i, size_t j, View const& t, Shock& shock_fwd, 
         while (k < t.size() && stepper.current_time() > t(k)) {
             stepper.calc_state(t(k), state);
             if (reverse_shock_crossing && !is_crossing(eqn, state, t(k))) {
-                shock_rvs.injection_idx(i, j) = k;
+                shock_rvs.injection_idx(i, j) = k > 0 ? k : 1;
                 reverse_shock_crossing = false;
                 eqn.save_cross_state(state);
             }
