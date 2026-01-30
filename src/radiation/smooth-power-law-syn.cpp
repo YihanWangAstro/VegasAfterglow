@@ -77,10 +77,10 @@ Real SmoothPowerLawSyn::compute_log2_spectrum(Real log2_nu) const {
 }
 
 void SmoothPowerLawSyn::update_constant() {
-    smooth_m_slow_ = 1.8 - 0.4 * p;
-    smooth_c_slow_ = 1 - 0.04 * p;
-    smooth_m_fast_ = 3.5 - 0.85 * p;
-    smooth_c_fast_ = 0.6;
+    smooth_m_slow_ = 1; //1.8 - 0.4 * p;
+    smooth_c_slow_ = 1; //1 - 0.04 * p;
+    smooth_m_fast_ = 1; //3.5 - 0.85 * p;
+    smooth_c_fast_ = 1; //0.6;
     smooth_a_ = 3.5 * p - 1.5;
 
     // Precompute s*(beta_lo - beta_hi) for broken power law transitions

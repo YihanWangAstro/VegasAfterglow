@@ -122,7 +122,9 @@ void ForwardShockEqn<Ejecta, Medium>::set_init_state(State& state, Real t0) cons
 
     state.theta = theta0;
 
-    state.m2 = enclosed_mass([&](Real r_) { return medium.rho(phi, theta0, r_); }, state.r);
+    auto rho_func = [&](Real r_) { return medium.rho(phi, theta0, r_); };
+
+    state.m2 = enclosed_mass(rho_func, state.r);
 
     state.Gamma = Gamma4;
 
@@ -136,7 +138,7 @@ void ForwardShockEqn<Ejecta, Medium>::set_init_state(State& state, Real t0) cons
 
     Real ad_idx = physics::thermo::adiabatic_idx(state.Gamma);
 
-    state.U2_th = (state.Gamma - 1) * state.m2 * con::c2 / ad_idx;
+    state.U2_th = enclosed_thermal_energy(rho_func, state.r, state.Gamma, ad_idx, rad.eps_e);
 }
 
 template <typename Eqn, typename State>
@@ -170,7 +172,7 @@ void grid_solve_fwd_shock(size_t i, size_t j, View const& t, Shock& shock, FwdEq
     typename FwdEqn::State state;
 
     // Get initial time and set up initial conditions
-    Real t_dec = compute_dec_time(eqn, t.back());
+    Real t_dec = compute_dec_time(eqn);
     Real t0 = min(t.front(), 1 * unit::sec, 0.1 * t_dec);
     eqn.set_init_state(state, t0);
 

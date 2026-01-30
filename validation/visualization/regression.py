@@ -12,6 +12,20 @@ from validation.visualization.common import (BAND_COLORS, COLORS, PAGE_PORTRAIT,
 from validation.regression.run_regression import SPECTRAL_REGIMES
 
 
+def _smooth_slopes(log_x, log_y, window=7):
+    """Compute smoothed local power-law slopes from log-spaced data."""
+    d_log_x = np.diff(log_x)
+    d_log_y = np.diff(log_y)
+    slopes = d_log_y / d_log_x
+    x_mid = 10 ** (0.5 * (log_x[:-1] + log_x[1:]))
+    if len(slopes) >= window:
+        kernel = np.ones(window) / window
+        trim = (window - 1) // 2
+        slopes = np.convolve(slopes, kernel, mode="valid")
+        x_mid = x_mid[trim:trim + len(slopes)]
+    return x_mid, slopes
+
+
 def _get_cell_style(result: Dict) -> Tuple[str, str, str, str]:
     if result:
         measured = result.get("measured")
@@ -414,10 +428,7 @@ def _plot_quantity_panel(ax_qty, ax_deriv, t, y, qty, phases):
 
     log_t = np.log10(t[valid])
     log_y = np.log10(y[valid])
-    d_log_t = np.diff(log_t)
-    d_log_y = np.diff(log_y)
-    local_slopes = d_log_y / d_log_t
-    t_mid = 10 ** (0.5 * (log_t[:-1] + log_t[1:]))
+    t_mid, local_slopes = _smooth_slopes(log_t, log_y)
 
     ax_deriv.semilogx(t_mid, local_slopes, "k-", alpha=0.5, linewidth=1)
 
@@ -561,10 +572,7 @@ def _plot_spectrum_panel(ax_spec, ax_slope, nu, flux, nu_a, nu_m, nu_c, segments
     # Lower panel: slope (d log F / d log ν)
     log_nu = np.log10(nu_valid)
     log_flux = np.log10(flux_valid)
-    d_log_nu = np.diff(log_nu)
-    d_log_flux = np.diff(log_flux)
-    local_slopes = d_log_flux / d_log_nu
-    nu_mid = 10 ** (0.5 * (log_nu[:-1] + log_nu[1:]))
+    nu_mid, local_slopes = _smooth_slopes(log_nu, log_flux)
 
     ax_slope.semilogx(nu_mid, local_slopes, "k-", alpha=0.5, linewidth=1)
 

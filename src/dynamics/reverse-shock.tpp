@@ -134,9 +134,10 @@ Real FRShockEqn<Ejecta, Medium>::compute_dU3_dt(State const& state, State const&
 
 template <typename Ejecta, typename Medium>
 Real FRShockEqn<Ejecta, Medium>::compute_dx3_dt(State const& state, State const& diff, Real t) const noexcept {
+    const Real Gamma34 = compute_rel_Gamma(this->Gamma4, state.Gamma);
+
     if ((state.m3 < state.m4 || diff.m4 > 0) && (state.Gamma != this->Gamma4)) {
         const Real sigma = compute_shell_sigma(state);
-        const Real Gamma34 = compute_rel_Gamma(this->Gamma4, state.Gamma);
         const Real beta3 = physics::relativistic::gamma_to_beta(state.Gamma);
         const Real beta4 = physics::relativistic::gamma_to_beta(this->Gamma4);
         Real comp_ratio = compute_4vel_jump(Gamma34, sigma);
@@ -144,27 +145,8 @@ Real FRShockEqn<Ejecta, Medium>::compute_dx3_dt(State const& state, State const&
 
         return std::fabs(dx3dt * state.Gamma);
     } else {
-        const Real Gamma34 = compute_rel_Gamma(this->Gamma4, state.Gamma);
         return compute_shell_spreading_rate(Gamma34, diff.t_comv);
     }
-
-    //smooth transition around the crossing time, the shell end is not a cliff in real world
-    /*const Real w = compute_crossing_weight(state, diff, t);
-
-    const Real Gamma34 = compute_rel_Gamma(this->Gamma4, state.Gamma);
-    const Real rate_spreading = compute_shell_spreading_rate(Gamma34, diff.t_comv);
-
-    Real rate_crossing = 0.0;
-    if (w > 1e-3 && (state.Gamma != this->Gamma4)) {
-        const Real sigma = compute_shell_sigma(state);
-        const Real beta3 = physics::relativistic::gamma_to_beta(state.Gamma);
-        const Real beta4 = physics::relativistic::gamma_to_beta(this->Gamma4);
-        Real comp_ratio = compute_4vel_jump(Gamma34, sigma);
-        Real dx3dt = (beta4 - beta3) * con::c / ((1 - beta3) * (state.Gamma * comp_ratio / this->Gamma4 - 1));
-        rate_crossing = std::fabs(dx3dt * state.Gamma);
-    }
-
-    return w * rate_crossing + (1.0 - w) * rate_spreading;*/
 }
 
 template <typename Ejecta, typename Medium>
@@ -190,35 +172,18 @@ Real FRShockEqn<Ejecta, Medium>::compute_dm3_dt(State const& state, State const&
         Real column_den3 = state.m4 * comp_ratio / state.x4;
         Real dm3dt = column_den3 * diff.x3;
 
-        if (state.m3 >= state.m4) {
-            return std::min(dm3dt, diff.m4);
-        } else {
-            return dm3dt;
+        // Smooth transition from free crossing rate to injection-capped rate
+        // as m3/m4 approaches 1 during active injection (thick shell regime)
+        if (diff.m4 > 0 && state.m4 > 0) {
+            Real ratio = state.m3 / state.m4;
+            Real w = smoothstep(0, 1.0, ratio);
+            Real capped_rate = std::min(dm3dt, diff.m4);
+            return (1.0 - w) * dm3dt + w * capped_rate;
         }
+        return dm3dt;
     } else {
         return 0.;
     }
-    //smooth transition around the crossing time, the shell end is not a cliff in real world
-    /*const Real w = compute_crossing_weight(state, diff, t);
-
-    if (w < 1e-3)
-        return 0.0;
-
-    if (state.Gamma != this->Gamma4) {
-        const Real sigma = compute_shell_sigma(state);
-        const Real Gamma34 = compute_rel_Gamma(this->Gamma4, state.Gamma);
-        Real comp_ratio = compute_4vel_jump(Gamma34, sigma);
-
-        if (state.x4 <= 0)
-            return 0.0;
-
-        Real column_den3 = state.m4 * comp_ratio / state.x4;
-        Real theoretical_rate = column_den3 * diff.x3;
-
-        return theoretical_rate * w;
-    } else {
-        return 0.0;
-    }*/
 }
 
 template <typename Ejecta, typename Medium>
@@ -294,18 +259,6 @@ void FRShockEqn<Ejecta, Medium>::save_cross_state(State const& state) {
     B3_ordered_x = B4 * comp_ratio34;
 }
 
-inline Real calculate_init_m3(Real Gamma4, Real Gamma3, Real m2, Real sigma) {
-    const Real Gamma34 = compute_rel_Gamma(Gamma4, Gamma3);
-    const Real ad_idx2 = physics::thermo::adiabatic_idx(Gamma3);
-    const Real ad_idx3 = physics::thermo::adiabatic_idx(Gamma34);
-
-    const Real Gamma_eff2 = compute_effective_Gamma(ad_idx2, Gamma3);
-    const Real Gamma_eff3 = compute_effective_Gamma(ad_idx3, Gamma3);
-
-    return -m2 * (Gamma3 - 1 + Gamma_eff2 * (Gamma3 - 1)) / (Gamma3 - Gamma4 + Gamma_eff3 * (Gamma34 - 1)) /
-           (1 + sigma);
-}
-
 template <typename Ejecta, typename Medium>
 void FRShockEqn<Ejecta, Medium>::set_init_state(State& state, Real t0) const noexcept {
     const Real beta4 = physics::relativistic::gamma_to_beta(Gamma4);
@@ -322,20 +275,33 @@ void FRShockEqn<Ejecta, Medium>::set_init_state(State& state, Real t0) const noe
     // constexpr Real Gamma34 = 1;
     // compute_Gamma_from_relative(Gamma4, Gamma34);
 
-    state.m2 = enclosed_mass([&](Real r_) { return medium.rho(phi, theta0, r_); }, state.r);
+    auto rho_func = [&](Real r_) { return medium.rho(phi, theta0, r_); };
 
-    //Real sigma4 = compute_shell_sigma(state);
-    state.Gamma = Gamma4;
+    state.m2 = enclosed_mass(rho_func, state.r);
+
+    const Real m_jet_total = dm0_dt * ejecta.T0;
+    if (m_jet_total > 0 && state.m2 > 0) {
+        state.Gamma = Gamma4 / (1 + state.m2 / m_jet_total);
+    } else {
+        state.Gamma = Gamma4;
+    }
 
     Real ad_idx = physics::thermo::adiabatic_idx(state.Gamma);
-    state.U2_th = (state.Gamma - 1) * state.m2 * con::c2 / ad_idx;
+    state.U2_th = enclosed_thermal_energy(rho_func, state.r, state.Gamma, ad_idx, rad_fwd.eps_e);
 
-    state.m3 = 0;
-    //state.m4 * 1e-6;                         // calculate_init_m3(Gamma4, state.Gamma, state.m2, sigma4);
-    state.U3_th = 0;
-    //state.m3* con::c2 * 1e-6; //(Gamma34 - 1) * state.m3* con::c2;
-
-    state.x3 = 0; //state.x4 * 1e-6;
+    const Real Gamma34 = compute_rel_Gamma(Gamma4, state.Gamma);
+    if (Gamma34 > 1 && state.m4 > 0 && state.x4 > 0) {
+        constexpr Real seed_frac = 1e-8;
+        const Real sigma = compute_shell_sigma(state);
+        const Real comp_ratio = compute_4vel_jump(Gamma34, sigma);
+        state.x3 = state.x4 * seed_frac;
+        state.m3 = state.m4 * comp_ratio * state.x3 / state.x4;
+        state.U3_th = (Gamma34 - 1) * state.m3 * con::c2;
+    } else {
+        state.m3 = 0;
+        state.U3_th = 0;
+        state.x3 = 0;
+    }
 }
 
 /**
@@ -486,7 +452,7 @@ void grid_solve_shock_pair(size_t i, size_t j, View const& t, Shock& shock_fwd, 
     using namespace boost::numeric::odeint;
 
     typename Eqn::State state;
-    Real t_dec = compute_dec_time(eqn, t.back());
+    Real t_dec = compute_dec_time(eqn);
     Real t0 = min(t.front(), 0.01 * unit::sec, 0.1 * t_dec);
     eqn.set_init_state(state, t0);
 

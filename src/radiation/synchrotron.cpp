@@ -434,13 +434,13 @@ void generate_syn_electrons(SynElectronGrid& electrons, Shock const& shock) {
                 elec.column_den = elec.N_e / (r * r);
                 const Real I_nu_peak = compute_syn_I_peak(B, rad.p, elec.column_den);
 
-                elec.gamma_c = compute_gamma_c(t_com, B, 0.);
-
                 // no new shocked electrons, the cooling Lorentz factor is the truncation Lorentz factor
                 if (k >= k_inj) {
                     const auto& inj = electrons(i, j, k_inj - 1);
                     elec.gamma_c = (inj.gamma_c - 1) * (elec.gamma_m - 1) / (inj.gamma_m - 1) + 1;
                     elec.gamma_M = elec.gamma_c;
+                } else {
+                    elec.gamma_c = compute_gamma_c(t_com, B, 0.);
                 }
 
                 elec.gamma_a = compute_syn_gamma_a(B, I_nu_peak, elec.gamma_m, elec.gamma_c, elec.gamma_M, rad.p);

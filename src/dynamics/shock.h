@@ -339,11 +339,12 @@ inline Real compute_shell_spreading_rate(Real Gamma_rel, Real dtdt_comv) {
  */
 inline Real compute_radiative_efficiency(Real t_comv, Real Gamma_th, Real u, RadParams const& rad) { //
     const Real gamma_m = (rad.p - 2) / (rad.p - 1) * rad.eps_e * (Gamma_th - 1) * con::mp / con::me / rad.xi_e + 1;
-    const Real gamma_c_bar = (6 * con::pi * con::me * con::c / con::sigmaT) / (rad.eps_B * u * t_comv);
-    const Real gamma_c = 0.5 * (gamma_c_bar + std::sqrt(gamma_c_bar * gamma_c_bar + 4));
+    const Real gamma_c = std::max((6 * con::pi * con::me * con::c / con::sigmaT) / (rad.eps_B * u * t_comv), 1.0);
 
     const Real g_m_g_c = std::fabs(gamma_m / gamma_c); // gamma_m/gamma_c
     if (g_m_g_c < 1 && rad.p > 2) {                    // slow cooling
+        if (g_m_g_c < 1e-2)
+            return 0;
         return rad.eps_e * fast_pow(g_m_g_c, rad.p - 2);
     } else { // fast cooling or p<=2
         return rad.eps_e;
@@ -459,91 +460,85 @@ inline void set_stopping_shock(size_t i, size_t j, Shock& shock, State const& st
     xt::view(shock.N_p, i, j, xt::all()) = 0;
 }
 
-template <typename Eqn>
-Real compute_dec_time(Eqn const& eqn, Real t_max) {
-    /*Real e_k = eqn.ejecta.eps_k(eqn.phi, eqn.theta0);
-    Real gamma = eqn.ejecta.Gamma0(eqn.phi, eqn.theta0);
-    Real beta = physics::relativistic::gamma_to_beta(gamma);
+/// @brief Simpson's rule integration in log-space: ∫ f(r') dr' via u = ln(r').
+/// Integrates from r * e^{-18} to r with N=32 panels.
+template <typename Func>
+Real simpson_logspace(Func const& f, Real r) {
+    constexpr size_t N = 32; // must be even
+    const Real u_max = std::log(r);
+    const Real u_min = u_max - 18; // start from r * e^{-18} ≈ r * 1.5e-8
+    const Real h = (u_max - u_min) / N;
 
-    Real m_shell = e_k / (gamma * con::c2);
+    Real sum = f(u_min) + f(u_max);
+    for (size_t i = 1; i < N; i += 2)
+        sum += 4 * f(u_min + i * h);
+    for (size_t i = 2; i < N; i += 2)
+        sum += 2 * f(u_min + i * h);
 
-    if constexpr (HasSigma<decltype(eqn.ejecta)>) {
-        m_shell /= 1 + eqn.ejecta.sigma0(eqn.phi, eqn.theta0);
-    }
-
-    Real r_dec = beta * con::c * t_max / (1 - beta);
-    for (size_t i = 0; i < 30; i++) {
-        // Compute swept-up mass per solid angle by numerical integration
-        // Use simple trapezoidal rule with logarithmic spacing
-        constexpr size_t n_steps = 50;
-        Real m_swept = 0;
-        Real r_prev = 0;
-        for (size_t k = 1; k <= n_steps; k++) {
-            Real r_k = r_dec * static_cast<Real>(k) / n_steps;
-            Real rho_k = eqn.medium.rho(eqn.phi, eqn.theta0, r_k);
-            Real dr = r_k - r_prev;
-            m_swept += rho_k * r_k * r_k * dr;
-            r_prev = r_k;
-        }
-        if (m_swept < m_shell / gamma) {
-            break;
-        }
-        r_dec /= 3;
-    }
-    Real t_dec = r_dec * (1 - beta) / (beta * con::c);
-    return t_dec;*/
-    using namespace boost::numeric::odeint;
-
-    Real e_k = eqn.ejecta.eps_k(eqn.phi, eqn.theta0);
-    Real gamma = eqn.ejecta.Gamma0(eqn.phi, eqn.theta0);
-    Real beta = physics::relativistic::gamma_to_beta(gamma);
-
-    Real m_shell = e_k / (gamma * con::c2);
-
-    if constexpr (HasSigma<decltype(eqn.ejecta)>) {
-        m_shell /= (1.0 + eqn.ejecta.sigma0(eqn.phi, eqn.theta0));
-    }
-
-    Real target_mass = m_shell / gamma;
-
-    auto mass_ode = [&](const Real& M, Real& dMdr, double current_r) {
-        Real rho_val = eqn.medium.rho(eqn.phi, eqn.theta0, current_r);
-        dMdr = current_r * current_r * rho_val;
-    };
-
-    Real r = 0.0;
-    Real current_mass = 0.0;
-    Real r_current = 0;
-    Real r_max = beta * con::c * t_max / (1.0 - beta);
-
-    auto stepper = make_controlled<runge_kutta_dopri5<Real>>(1e-4, 1e-4);
-    Real dr = 1e5 * unit::cm;
-
-    while (current_mass < target_mass && r_current < r_max) {
-        stepper.try_step(mass_ode, current_mass, r_current, dr);
-    }
-
-    Real r_dec = r_current;
-    Real t_dec = r_dec * (1.0 - beta) / (beta * con::c);
-
-    return t_dec;
+    return sum * h / 3;
 }
 
+/// @brief Computes enclosed mass per solid angle.
 template <typename Func>
 Real enclosed_mass(Func const& rho, Real r) {
-    using namespace boost::numeric::odeint;
+    return simpson_logspace(
+        [&](Real u) {
+            const Real ri = std::exp(u);
+            return rho(ri) * ri * ri * ri; // ρ(r') * r'³ (Jacobian from u = ln r')
+        },
+        r);
+}
 
-    auto mass_derivative = [&](const Real& M, Real& dMdr, double current_r) {
-        dMdr = current_r * current_r * rho(current_r);
-    };
+/// @brief Compute enclosed thermal energy per solid angle,
+/// accounting for adiabatic cooling and radiative losses of material swept at earlier radii.
+template <typename Func>
+Real enclosed_thermal_energy(Func const& rho, Real r, Real Gamma, Real ad_idx, Real eps_e) {
+    const Real cooling_exp = 3 * (ad_idx - 1);
+    return (1 - eps_e) * (Gamma - 1) * con::c2 *
+           simpson_logspace(
+               [&](Real u) {
+                   const Real ri = std::exp(u);
+                   return rho(ri) * ri * ri * ri * std::pow(ri / r, cooling_exp);
+               },
+               r);
+}
 
-    Real mass = 0.0;
-    Real r_start = r * 1e-3;
-    Real r_end = r;
-    Real dt_init = r_end * 1e-4;
+/// @brief Finds the deceleration observer time by integrating swept mass outward until m_swept = m_jet/Gamma0.
+/// Works for any medium density profile. Returns observer time r_dec*(1-beta)/(beta*c).
+template <typename Eqn>
+Real compute_dec_time(Eqn const& eqn) {
+    const Real gamma = eqn.ejecta.Gamma0(eqn.phi, eqn.theta0);
+    const Real beta = physics::relativistic::gamma_to_beta(gamma);
+    Real m_jet = eqn.ejecta.eps_k(eqn.phi, eqn.theta0) / (gamma * con::c2);
+    if constexpr (HasSigma<decltype(eqn.ejecta)>) {
+        m_jet /= (1.0 + eqn.ejecta.sigma0(eqn.phi, eqn.theta0));
+    }
+    const Real target = m_jet / gamma;
 
-    size_t steps = integrate_adaptive(make_controlled<runge_kutta_dopri5<Real>>(1e-5, 1e-5), mass_derivative, mass,
-                                      r_start, r_end, dt_init);
+    auto rho = [&](Real r) { return eqn.medium.rho(eqn.phi, eqn.theta0, r); };
 
-    return mass;
+    // Trapezoidal integration in log-space with early exit at deceleration radius
+    constexpr size_t N = 256;
+    const Real u_min = std::log(1e-3);
+    const Real u_max = u_min + 40 * std::log(10.0);
+    const Real du = (u_max - u_min) / N;
+
+    Real mass = 0;
+    Real r_prev = std::exp(u_min);
+    Real f_prev = rho(r_prev) * r_prev * r_prev;
+
+    for (size_t i = 1; i <= N; ++i) {
+        const Real r_i = std::exp(u_min + i * du);
+        const Real f_i = rho(r_i) * r_i * r_i;
+        const Real dr = r_i - r_prev;
+        mass += 0.5 * (f_prev + f_i) * dr;
+
+        if (mass >= target) {
+            const Real r_dec = r_prev + (target - (mass - 0.5 * (f_prev + f_i) * dr)) / f_i;
+            return r_dec * (1 - beta) / (beta * con::c);
+        }
+        f_prev = f_i;
+        r_prev = r_i;
+    }
+    return std::exp(u_max) * (1 - beta) / (beta * con::c);
 }
