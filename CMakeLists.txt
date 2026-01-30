@@ -103,27 +103,12 @@ if(BUILD_TESTS)
 
   target_compile_features(demo PRIVATE cxx_std_20)
 
-
-  # Benchmark executable
-  add_executable(benchmark
-          tests/cpp-benchmark/benchmark.cpp
-          ${VEGAS_CORE_SOURCES}
-  )
-
-  target_include_directories(benchmark PRIVATE
-          ${CMAKE_CURRENT_SOURCE_DIR}/include
-          ${CMAKE_CURRENT_SOURCE_DIR}/src
-          ${CMAKE_CURRENT_SOURCE_DIR}/external
-  )
-
-  target_compile_features(benchmark PRIVATE cxx_std_20)
-
   # Set output directory for test executables
-  set_target_properties(demo benchmark PROPERTIES
+  set_target_properties(demo PROPERTIES
           RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/tests"
   )
 
-  # Add profiling support for these targets
+  # Add profiling support for demo
   target_compile_options(demo PRIVATE
           $<$<CONFIG:Profiling>:-pg -g -fno-omit-frame-pointer>
           $<$<CONFIG:RelWithDebInfo>:-g -fno-omit-frame-pointer>
@@ -133,30 +118,52 @@ if(BUILD_TESTS)
           $<$<CONFIG:Profiling>:-pg>
   )
 
-  target_compile_options(benchmark PRIVATE
-          $<$<CONFIG:Profiling>:-pg -g -fno-omit-frame-pointer>
-          $<$<CONFIG:RelWithDebInfo>:-g -fno-omit-frame-pointer>
-  )
+  # Benchmark executables (optional - only build if files exist)
+  if(EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/tests/cpp-benchmark/benchmark.cpp")
+    add_executable(benchmark
+            tests/cpp-benchmark/benchmark.cpp
+            ${VEGAS_CORE_SOURCES}
+    )
 
-  target_link_options(benchmark PRIVATE
-          $<$<CONFIG:Profiling>:-pg>
-  )
+    target_include_directories(benchmark PRIVATE
+            ${CMAKE_CURRENT_SOURCE_DIR}/include
+            ${CMAKE_CURRENT_SOURCE_DIR}/src
+            ${CMAKE_CURRENT_SOURCE_DIR}/external
+    )
 
-  # Profile benchmark executable
-  add_executable(profile_benchmark
-          tests/cpp-benchmark/profile_benchmark.cpp
-          ${VEGAS_CORE_SOURCES}
-  )
+    target_compile_features(benchmark PRIVATE cxx_std_20)
 
-  target_include_directories(profile_benchmark PRIVATE
-          ${CMAKE_CURRENT_SOURCE_DIR}/include
-          ${CMAKE_CURRENT_SOURCE_DIR}/src
-          ${CMAKE_CURRENT_SOURCE_DIR}/external
-  )
+    set_target_properties(benchmark PROPERTIES
+            RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/tests"
+    )
 
-  target_compile_features(profile_benchmark PRIVATE cxx_std_20)
+    target_compile_options(benchmark PRIVATE
+            $<$<CONFIG:Profiling>:-pg -g -fno-omit-frame-pointer>
+            $<$<CONFIG:RelWithDebInfo>:-g -fno-omit-frame-pointer>
+    )
 
-  set_target_properties(profile_benchmark PROPERTIES
-          RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/tests"
-  )
+    target_link_options(benchmark PRIVATE
+            $<$<CONFIG:Profiling>:-pg>
+    )
+  endif()
+
+  # Profile benchmark executable (optional)
+  if(EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/tests/cpp-benchmark/profile_benchmark.cpp")
+    add_executable(profile_benchmark
+            tests/cpp-benchmark/profile_benchmark.cpp
+            ${VEGAS_CORE_SOURCES}
+    )
+
+    target_include_directories(profile_benchmark PRIVATE
+            ${CMAKE_CURRENT_SOURCE_DIR}/include
+            ${CMAKE_CURRENT_SOURCE_DIR}/src
+            ${CMAKE_CURRENT_SOURCE_DIR}/external
+    )
+
+    target_compile_features(profile_benchmark PRIVATE cxx_std_20)
+
+    set_target_properties(profile_benchmark PROPERTIES
+            RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/tests"
+    )
+  endif()
 endif()
