@@ -23,15 +23,18 @@ class Medium {
      * <!-- ************************************************************************************** -->
      * @brief Constructor: Initialize with density function
      * @param rho Density function
+     * @param isotropic Flag indicating if the medium is isotropic within computational domain.
      * <!-- ************************************************************************************** -->
      */
-    explicit Medium(TernaryFunc rho) noexcept : rho(std::move(rho)) {}
+    explicit Medium(TernaryFunc rho, bool isotropic = false) noexcept : rho(std::move(rho)), isotropic(isotropic) {}
 
     Medium() = default;
 
     /// Density function that returns the mass density at a given position (phi, theta, r)
     /// The function is initialized to zero by default
     TernaryFunc rho{func::zero_3d};
+
+    bool isotropic{false}; ///< Flag indicating if the medium is isotropic within computational domain.
 };
 
 /**
@@ -62,6 +65,8 @@ class ISM {
      * <!-- ************************************************************************************** -->
      */
     [[nodiscard]] inline Real rho(Real phi, Real theta, Real r) const noexcept { return rho_; }
+
+    bool isotropic{true}; ///< Flag indicating if the medium is isotropic within computational domain.
 
   private:
     Real rho_{0}; ///< Mass density (particle number density × proton mass)
@@ -99,6 +104,8 @@ class Wind {
      */
 
     [[nodiscard]] inline Real rho(Real phi, Real theta, Real r) const noexcept { return A / (r02 + r * r) + rho_ism; }
+
+    bool isotropic{true}; ///< Flag indicating if the medium is isotropic within computational domain.
 
   private:
     Real A{0};       ///< Wind density parameter in physical units

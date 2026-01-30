@@ -409,13 +409,13 @@ void generate_syn_electrons(SynElectronGrid& electrons, Shock const& shock) {
 
     electrons.resize({phi_size, theta_size, t_size});
 
-    for (size_t i = 0; i < phi_size; ++i) {
-        for (size_t j = 0; j < theta_size; ++j) {
+    const size_t phi_compute = shock.conical ? 1 : phi_size;
+    const size_t theta_compute = shock.conical ? 1 : theta_size;
+
+    for (size_t i = 0; i < phi_compute; ++i) {
+        for (size_t j = 0; j < theta_compute; ++j) {
             const size_t k_inj = shock.injection_idx(i, j);
             for (size_t k = 0; k < t_size; ++k) {
-                if (shock.required(i, j, k) == 0) {
-                    continue;
-                }
                 const Real t_com = shock.t_comv(i, j, k);
                 const Real B = shock.B(i, j, k);
                 const Real r = shock.r(i, j, k);
@@ -448,6 +448,13 @@ void generate_syn_electrons(SynElectronGrid& electrons, Shock const& shock) {
             }
         }
     }
+
+    if (shock.conical) {
+        for (size_t i = 0; i < phi_size; ++i)
+            for (size_t j = 0; j < theta_size; ++j)
+                if (i != 0 || j != 0)
+                    xt::view(electrons, i, j, xt::all()) = xt::view(electrons, 0, 0, xt::all());
+    }
 }
 
 //========================================================================================================
@@ -468,8 +475,12 @@ void generate_syn_photons(SynPhotonGrid& photons, Shock const& shock, SynElectro
     auto [phi_size, theta_size, t_size] = shock.shape();
 
     photons.resize({phi_size, theta_size, t_size});
-    for (size_t i = 0; i < phi_size; ++i) {
-        for (size_t j = 0; j < theta_size; ++j) {
+
+    const size_t phi_compute = shock.conical ? 1 : phi_size;
+    const size_t theta_compute = shock.conical ? 1 : theta_size;
+
+    for (size_t i = 0; i < phi_compute; ++i) {
+        for (size_t j = 0; j < theta_compute; ++j) {
             for (size_t k = 0; k < t_size; ++k) {
                 auto& ph = photons(i, j, k);
                 auto& elec = electrons(i, j, k);
@@ -477,10 +488,6 @@ void generate_syn_photons(SynPhotonGrid& photons, Shock const& shock, SynElectro
                 ph.Ys = elec.Ys;
                 ph.Y_c = elec.Y_c;
                 ph.regime = elec.regime;
-
-                if (shock.required(i, j, k) == 0) {
-                    continue;
-                }
 
                 const Real B = shock.B(i, j, k);
 
@@ -498,5 +505,12 @@ void generate_syn_photons(SynPhotonGrid& photons, Shock const& shock, SynElectro
                 ph.update_constant();
             }
         }
+    }
+
+    if (shock.conical) {
+        for (size_t i = 0; i < phi_size; ++i)
+            for (size_t j = 0; j < theta_size; ++j)
+                if (i != 0 || j != 0)
+                    xt::view(photons, i, j, xt::all()) = xt::view(photons, 0, 0, xt::all());
     }
 }

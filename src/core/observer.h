@@ -57,7 +57,7 @@ class Observer {
      * @param redshift Redshift of the source
      * <!-- ************************************************************************************** -->
      */
-    void observe_at(Array const& t_obs, Coord const& coord, Shock& shock, Real luminosity_dist, Real redshift);
+    //void observe_at(Array const& t_obs, Coord const& coord, Shock& shock, Real luminosity_dist, Real redshift);
 
     /**
      * <!-- ************************************************************************************** -->

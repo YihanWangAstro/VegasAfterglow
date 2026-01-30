@@ -206,6 +206,8 @@ Shock generate_fwd_shock(Coord const& coord, Medium const& medium, Ejecta const&
     const size_t phi_size_needed = coord.t.shape()[0];
     Shock shock(phi_size_needed, theta_size, t_size, rad_params);
 
+    shock.conical = jet.conical && medium.isotropic && !jet.spreading;
+
     for (size_t i = 0; i < phi_size_needed; ++i) {
         Real theta_s = 0;
         if (jet.spreading) {
@@ -217,6 +219,11 @@ Shock generate_fwd_shock(Coord const& coord, Medium const& medium, Ejecta const&
             // auto eqn = SimpleShockEqn(medium, jet, coord.phi(i), coord.theta(j), rad_params, theta_s);
             //          Solve the shock shell for this theta slice
             grid_solve_fwd_shock(i, j, xt::view(coord.t, i, j, xt::all()), shock, eqn, rtol);
+
+            if (shock.conical) {
+                shock.broadcast_theta(coord.theta, 0, 0);
+                return shock;
+            }
         }
     }
 

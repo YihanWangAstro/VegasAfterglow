@@ -16,10 +16,10 @@ Shock::Shock(size_t phi_size, size_t theta_size, size_t t_size, RadParams const&
       B({phi_size, theta_size, t_size}, 0),          // Initialize magnetic field grid with 0
       N_p({phi_size, theta_size, t_size}, 0),        // Initialize column density grid with 0
       injection_idx({phi_size, theta_size}, t_size), // Initialize a cross-index grid with t_size
-      required({phi_size, theta_size, t_size}, 1),   // Initialize the required grid with true
-      rad(rad_params),                               // Set radiation parameters
-      phi_size(phi_size),                            // Store phi grid size
-      theta_size(theta_size),                        // Store theta grid size
+      //required({phi_size, theta_size, t_size}, 1),   // Initialize the required grid with true
+      rad(rad_params),        // Set radiation parameters
+      phi_size(phi_size),     // Store phi grid size
+      theta_size(theta_size), // Store theta grid size
       t_size(t_size) {}
 
 void Shock::resize(size_t phi_size, size_t theta_size, size_t t_size) {
@@ -35,8 +35,26 @@ void Shock::resize(size_t phi_size, size_t theta_size, size_t t_size) {
     N_p.resize({phi_size, theta_size, t_size});
     injection_idx.resize({phi_size, theta_size});
     injection_idx.fill(t_size);
-    required.resize({phi_size, theta_size, t_size});
-    required.fill(1);
+    //required.resize({phi_size, theta_size, t_size});
+    //required.fill(1);
+}
+
+void Shock::broadcast_theta(Array const& theta_coords, size_t src_phi_id, size_t src_theta_id) {
+    for (size_t i = 0; i < phi_size; i++) {
+        for (size_t j = 0; j < theta_size; j++) {
+            injection_idx(i, j) = injection_idx(src_phi_id, src_theta_id);
+            for (size_t k = 0; k < t_size; k++) {
+                t_comv(i, j, k) = t_comv(src_phi_id, src_theta_id, k);
+                r(i, j, k) = r(src_phi_id, src_theta_id, k);
+                theta(i, j, k) = theta_coords(j);
+                Gamma(i, j, k) = Gamma(src_phi_id, src_theta_id, k);
+                Gamma_th(i, j, k) = Gamma_th(src_phi_id, src_theta_id, k);
+                B(i, j, k) = B(src_phi_id, src_theta_id, k);
+                N_p(i, j, k) = N_p(src_phi_id, src_theta_id, k);
+                //required(i, j, k) = required(src_phi_id, src_theta_id, k);
+            }
+        }
+    }
 }
 
 Real compute_downstr_4vel(Real gamma_rel, Real sigma) {

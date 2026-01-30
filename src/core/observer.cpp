@@ -61,9 +61,6 @@ void Observer::calc_t_obs(Coord const& coord, Shock const& shock) {
         for (size_t j = 0; j < theta_grid; ++j) {
             // Compute the cosine of the angle between the local velocity vector and the observer's line of sight.
             for (size_t k = 0; k < t_grid; ++k) {
-                if (shock.required(i_eff, j, k) == 0) {
-                    continue;
-                }
                 const Real gamma_ = shock.Gamma(i_eff, j, k);
                 const Real r = shock.r(i_eff, j, k);
                 const Real t_eng_ = coord.t(i_eff, j, k);
@@ -121,9 +118,6 @@ void Observer::calc_solid_angle(Coord const& coord, Shock const& shock) {
 
         for (size_t j = 0; j < theta_grid; ++j) {
             for (size_t k = 0; k < t_grid; ++k) {
-                /*if (shock.required(i_eff, j, k) == 0) {
-                    continue;
-                } */
                 const Real dOmega = std::fabs(dcos(i_eff, j, k) * dphi(i));
                 lg2_geom_factor(i, j, k) =
                     fast_log2(dOmega * shock.r(i, j, k) * shock.r(i, j, k)) + 3 * lg2_doppler(i, j, k);
@@ -226,6 +220,7 @@ void Observer::observe(Coord const& coord, Shock const& shock, Real luminosity_d
     calc_solid_angle(coord, shock);
 }
 
+/*
 void Observer::observe_at(Array const& t_obs, Coord const& coord, Shock& shock, Real luminosity_dist, Real redshift) {
     build_time_grid(coord, shock, luminosity_dist, redshift);
 
@@ -233,4 +228,4 @@ void Observer::observe_at(Array const& t_obs, Coord const& coord, Shock& shock, 
     update_required(shock.required, t_obs);
 
     calc_solid_angle(coord, shock);
-}
+}*/

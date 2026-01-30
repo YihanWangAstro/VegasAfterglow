@@ -30,6 +30,7 @@ Ejecta PyTophatJet(Real theta_c, Real E_iso, Real Gamma0, bool spreading, Real d
     jet.eps_k = math::tophat(theta_c, E_iso);
     jet.Gamma0 = math::tophat_plus_one(theta_c, Gamma0 - 1);
     initialize_ejecta(jet, spreading, duration, magnetar, theta_c);
+    jet.conical = true;
     return jet;
 }
 
@@ -81,6 +82,7 @@ Ejecta PyTwoComponentJet(Real theta_c, Real E_iso, Real Gamma0, Real theta_w, Re
 Medium PyISM(Real n_ism) {
     Medium medium;
     medium.rho = [=](Real phi, Real theta, Real r) { return n_ism * 1.67e-24; };
+    medium.isotropic = true;
 
     return medium;
 }
@@ -100,6 +102,8 @@ Medium PyWind(Real A_star, Real n_ism, Real n0, Real k) {
         const Real r_ism = A / (n_ism * 1.67e-24);
         medium.rho = [=](Real phi, Real theta, Real r) { return A / (r_ism + std::pow(r, k)) + rho0; };
     }
+    medium.isotropic = true;
+
     return medium;
 }
 

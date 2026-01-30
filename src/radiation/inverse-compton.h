@@ -244,12 +244,14 @@ inline constexpr Real IC_x0 = 0.47140452079103166;
  * @param electrons The electron grid
  * @param photons The photon grid
  * @param KN flag for Klein-Nishina
+ * @param conical flag for conical solution
  * @return A 3D grid of IC photons
  * <!-- ************************************************************************************** -->
  */
 template <typename Electrons, typename Photons>
 ICPhotonGrid<Electrons, Photons> generate_IC_photons(ElectronGrid<Electrons> const& electrons,
-                                                     PhotonGrid<Photons> const& photons, bool KN = true) noexcept;
+                                                     PhotonGrid<Photons> const& photons, bool KN = true,
+                                                     bool conical = false) noexcept;
 
 /**
  * <!-- ************************************************************************************** -->
@@ -478,19 +480,31 @@ Real ICPhoton<Electrons, Photons>::compute_log2_I_nu(Real log2_nu) {
 
 template <typename Electrons, typename Photons>
 ICPhotonGrid<Electrons, Photons> generate_IC_photons(ElectronGrid<Electrons> const& electrons,
-                                                     PhotonGrid<Photons> const& photons, bool KN) noexcept {
+                                                     PhotonGrid<Photons> const& photons, bool KN,
+                                                     bool conical) noexcept {
     size_t phi_size = electrons.shape()[0];
     size_t theta_size = electrons.shape()[1];
     size_t t_size = electrons.shape()[2];
     ICPhotonGrid<Electrons, Photons> IC_ph({phi_size, theta_size, t_size});
 
-    for (size_t i = 0; i < phi_size; ++i) {
-        for (size_t j = 0; j < theta_size; ++j) {
+    const size_t phi_compute = conical ? 1 : phi_size;
+    const size_t theta_compute = conical ? 1 : theta_size;
+
+    for (size_t i = 0; i < phi_compute; ++i) {
+        for (size_t j = 0; j < theta_compute; ++j) {
             for (size_t k = 0; k < t_size; ++k) {
                 IC_ph(i, j, k) = ICPhoton(electrons(i, j, k), photons(i, j, k), KN);
             }
         }
     }
+
+    if (conical) {
+        for (size_t i = 0; i < phi_size; ++i)
+            for (size_t j = 0; j < theta_size; ++j)
+                if (i != 0 || j != 0)
+                    xt::view(IC_ph, i, j, xt::all()) = xt::view(IC_ph, 0, 0, xt::all());
+    }
+
     return IC_ph;
 }
 
@@ -537,14 +551,14 @@ void IC_cooling(ElectronGrid<Electrons>& electrons, PhotonGrid<Photons>& photons
     const size_t theta_size = electrons.shape()[1];
     const size_t t_size = electrons.shape()[2];
 
-    for (size_t i = 0; i < phi_size; ++i) {
-        for (size_t j = 0; j < theta_size; ++j) {
+    const size_t phi_compute = shock.conical ? 1 : phi_size;
+    const size_t theta_compute = shock.conical ? 1 : theta_size;
+
+    for (size_t i = 0; i < phi_compute; ++i) {
+        for (size_t j = 0; j < theta_compute; ++j) {
             const size_t k_inj = shock.injection_idx(i, j);
 
             for (size_t k = 0; k < t_size; ++k) {
-                if (shock.required(i, j, k) == 0)
-                    continue;
-
                 const Real t_com = shock.t_comv(i, j, k);
                 const Real B = shock.B(i, j, k);
 
@@ -569,6 +583,12 @@ void IC_cooling(ElectronGrid<Electrons>& electrons, PhotonGrid<Photons>& photons
                 elec.Y_c = Ys.gamma_spectrum(elec.gamma_c);
             }
         }
+    }
+    if (shock.conical) {
+        for (size_t i = 0; i < phi_size; ++i)
+            for (size_t j = 0; j < theta_size; ++j)
+                if (i != 0 || j != 0)
+                    xt::view(electrons, i, j, xt::all()) = xt::view(electrons, 0, 0, xt::all());
     }
     generate_syn_photons(photons, shock, electrons);
 }

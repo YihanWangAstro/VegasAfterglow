@@ -83,6 +83,9 @@ def _plot_stage_breakdown_panel(ax, configs, jets, media):
         ax.set_ylabel("Time [ms]")
         ax.legend(fontsize=6, loc="upper right", ncol=2)
         ax.grid(axis="y", alpha=0.3)
+        ax.minorticks_on()
+        ax.tick_params(axis='x', which='minor', bottom=False)
+        ax.grid(axis="y", which="minor", alpha=0.15, linestyle=":")
     else:
         # Fallback: total flux time bar chart
         x = np.arange(len(combinations))
@@ -99,6 +102,9 @@ def _plot_stage_breakdown_panel(ax, configs, jets, media):
         ax.set_xticklabels(combo_labels, rotation=45, ha="right")
         ax.set_ylabel("Time [ms]")
         ax.grid(axis="y", alpha=0.3)
+        ax.minorticks_on()
+        ax.tick_params(axis='x', which='minor', bottom=False)
+        ax.grid(axis="y", which="minor", alpha=0.15, linestyle=":")
 
 
 def plot_benchmark_overview(session: Dict, angle_filter: str = "all") -> plt.Figure:

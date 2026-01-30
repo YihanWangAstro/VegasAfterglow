@@ -48,8 +48,9 @@ class Shock {
     MeshGrid3d B;            ///< Comoving magnetic field
     MeshGrid3d N_p;          ///< Downstream proton number per solid angle
     IndexGrid injection_idx; ///< Beyond which grid index there is no electron injection
-    MaskGrid required;       ///< Grid points actually required for final flux calculation
-    RadParams rad;           ///< Radiation parameters
+    //MaskGrid required;       ///< Grid points actually required for final flux calculation
+    RadParams rad;       ///< Radiation parameters
+    bool conical{false}; ///< shock dynamics is the same for all theta.
 
     /// Returns grid dimensions as a tuple
     [[nodiscard]] auto shape() const { return std::make_tuple(phi_size, theta_size, t_size); }
@@ -63,6 +64,16 @@ class Shock {
      * <!-- ************************************************************************************** -->
      */
     void resize(size_t phi_size, size_t theta_size, size_t t_size);
+
+    /**
+    * <!-- ************************************************************************************** -->
+    * @brief Broadcasts dynamics from a source (phi, theta) to all grid points, preserving theta coordinates.
+    * @param theta_coords 1D array of theta coordinate values to assign per theta index.
+    * @param src_phi_id The source phi index from which to broadcast values. Default is 0.
+    * @param src_theta_id The source theta index from which to broadcast values. Default is 0.
+    * <!-- ************************************************************************************** -->
+    **/
+    void broadcast_theta(Array const& theta_coords, size_t src_phi_id = 0, size_t src_theta_id = 0);
 
   private:
     size_t phi_size{0};   ///< Number of grid points in phi direction

@@ -114,7 +114,7 @@ void test_ic(Real theta_c_) {
 
     auto photons = generate_syn_photons(shock, elec);
 
-    auto ic = generate_IC_photons(elec, photons, false);
+    auto ic = generate_IC_photons(elec, photons, false, shock.conical);
 
     Observer obs;
 

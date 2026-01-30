@@ -533,6 +533,10 @@ ShockPair generate_shock_pair(Coord const& coord, Medium const& medium, Ejecta c
     const size_t phi_size_needed = coord.t.shape()[0];
     Shock f_shock(phi_size_needed, theta_size, t_size, rad_fwd);
     Shock r_shock(phi_size_needed, theta_size, t_size, rad_rvs);
+
+    f_shock.conical = jet.conical && medium.isotropic && !jet.spreading;
+    r_shock.conical = f_shock.conical;
+
     for (size_t i = 0; i < phi_size_needed; ++i) {
         // Real theta_s =
         //     jet_spreading_edge(jet, medium, coord.phi(i), coord.theta.front(), coord.theta.back(), coord.t.front());
@@ -540,6 +544,12 @@ ShockPair generate_shock_pair(Coord const& coord, Medium const& medium, Ejecta c
             auto eqn_r = FRShockEqn(medium, jet, coord.phi(i), coord.theta(j), rad_fwd, rad_rvs);
             // Solve the forward-reverse shock shell
             grid_solve_shock_pair(i, j, xt::view(coord.t, i, j, xt::all()), f_shock, r_shock, eqn_r, rtol);
+
+            if (f_shock.conical && r_shock.conical) {
+                f_shock.broadcast_theta(coord.theta, 0, 0);
+                r_shock.broadcast_theta(coord.theta, 0, 0);
+                return std::make_pair(std::move(f_shock), std::move(r_shock));
+            }
         }
     }
     return std::make_pair(std::move(f_shock), std::move(r_shock));
