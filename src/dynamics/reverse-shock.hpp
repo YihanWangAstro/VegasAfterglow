@@ -125,9 +125,13 @@ class FRShockEqn {
      */
     void save_cross_state(State const& state);
 
-  private:
-    inline Real compute_crossing_weight(State const& state, State const& diff, Real t, Real width = 0.1) const noexcept;
+    /// Fraction of injection still active: 0 after injection, 1 during full injection
+    inline Real injection_efficiency(State const& diff) const noexcept;
 
+    /// Whether reverse shock has finished crossing the ejecta
+    inline bool crossing_complete(State const& state, Real t) const noexcept;
+
+  private:
     inline Real compute_dGamma_dt(State const& state, State const& diff, Real t) const noexcept;
 
     inline Real compute_dU2_dt(State const& state, State const& diff, Real t) const noexcept;

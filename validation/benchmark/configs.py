@@ -73,10 +73,10 @@ RADIATION_CONFIGS: Dict[str, RadiationConfig] = {c.name: c for c in [
     RadiationConfig("steep_spectrum",   {"eps_e": 0.1, "eps_B": 0.01, "p": 2.8, "xi_e": 1.0,  "ssc_cooling": False, "ssc": False, "kn": False}),
     RadiationConfig("flat_spectrum",    {"eps_e": 0.1, "eps_B": 0.01, "p": 2.05,"xi_e": 1.0,  "ssc_cooling": False, "ssc": False, "kn": False}),
     # Forward + reverse shock (TODO: enable when reverse shock benchmarks are ready)
-    # RadiationConfig("rvs_sync_thin", {**_STD_RAD, "ssc_cooling": False, "ssc": False, "kn": False},
-    #                 rvs_params={**_RVS_RAD, "duration": 1}),
-    # RadiationConfig("rvs_sync_thick", {**_STD_RAD, "ssc_cooling": False, "ssc": False, "kn": False},
-    #                 rvs_params={**_RVS_RAD, "duration": 1e4}),
+    RadiationConfig("rvs_sync_thin", {**_STD_RAD, "ssc_cooling": False, "ssc": False, "kn": False},
+                     rvs_params={**_RVS_RAD, "duration": 1}),
+    RadiationConfig("rvs_sync_thick", {**_STD_RAD, "ssc_cooling": False, "ssc": False, "kn": False},
+                     rvs_params={**_RVS_RAD, "duration": 1e4}),
 ]}
 
 # ---------------------------------------------------------------------------
