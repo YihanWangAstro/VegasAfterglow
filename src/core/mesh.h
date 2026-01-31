@@ -441,10 +441,11 @@ Coord auto_grid(Ejecta const& jet, Array const& t_obs, Real theta_cut, Real thet
     const Real t_min = *std::ranges::min_element(t_obs);
     size_t t_num = std::max<size_t>(static_cast<size_t>(std::log10(t_max / t_min) * t_resol), 24);
 
-    size_t phi_size_needed = is_axisymmetric ? 1 : phi_num;
-    coord.t = xt::zeros<Real>({phi_size_needed, theta_num, t_num});
+    const size_t theta_size = coord.theta.size();
+    const size_t phi_size_needed = is_axisymmetric ? 1 : coord.phi.size();
+    coord.t = xt::zeros<Real>({phi_size_needed, theta_size, t_num});
     for (size_t i = 0; i < phi_size_needed; ++i) {
-        for (size_t j = 0; j < theta_num; ++j) {
+        for (size_t j = 0; j < theta_size; ++j) {
             const Real b = physics::relativistic::gamma_to_beta(jet.Gamma0(coord.phi(i), coord.theta(j)));
             // Real theta_max = coord.theta(j) + theta_view;
             const Real theta_v_max = coord.theta.back() + theta_view;
