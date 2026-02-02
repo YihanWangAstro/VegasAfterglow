@@ -8,9 +8,20 @@
 #pragma once
 
 #include <cmath>
+#include <cstdint>
 #include <utility>
 
 #include "../util/utilities.h"
+
+/**
+ * @brief Symmetry level of a shock, auto-detected from jet initial conditions.
+ */
+enum class Symmetry : uint8_t {
+    structured,    ///< Full (phi, theta) computation needed
+    phi_symmetric, ///< Uniform in phi; compute one phi slice, broadcast across phi
+    piecewise,     ///< phi-symmetric + piecewise-constant in theta; compute K representative thetas
+    isotropic      ///< Uniform in both phi and theta; compute one point, broadcast everywhere
+};
 /**
  * <!-- ************************************************************************************** -->
  * @class Ejecta
@@ -32,20 +43,17 @@ class Ejecta {
      * @param dm_dt Mass injection rate per unit solid angle as a function of (phi, theta, t)
      * @param T0 Duration of the ejecta
      * @param spreading Flag indicating if the ejecta spreads laterally during evolution
-     * @param conical Flag indicating if the ejecta is conical within computational domain. e.g. tophat
      * <!-- ************************************************************************************** -->
      */
     Ejecta(BinaryFunc eps_k, BinaryFunc Gamma0, BinaryFunc sigma0 = func::zero_2d, TernaryFunc deps_dt = func::zero_3d,
-           TernaryFunc dm_dt = func::zero_3d, bool spreading = false, Real T0 = 1 * unit::sec,
-           bool conical = false) noexcept
+           TernaryFunc dm_dt = func::zero_3d, bool spreading = false, Real T0 = 1 * unit::sec) noexcept
         : eps_k(std::move(eps_k)),
           Gamma0(std::move(Gamma0)),
           sigma0(std::move(sigma0)),
           deps_dt(std::move(deps_dt)),
           dm_dt(std::move(dm_dt)),
           T0(T0),
-          spreading(spreading),
-          conical(conical) {}
+          spreading(spreading) {}
 
     Ejecta() = default;
 
@@ -72,9 +80,6 @@ class Ejecta {
 
     /// Flag indicating if the ejecta spreads laterally during evolution
     bool spreading{false};
-
-    /// Flag indicating if the ejecta is isotropic within computational domain. e.g. tophat
-    bool conical{false};
 };
 
 /**
@@ -122,7 +127,6 @@ class TophatJet {
 
     Real T0{1 * unit::sec}; ///< Duration of the ejecta in seconds
     bool spreading{false};  ///< Flag indicating if the ejecta spreads laterally during evolution
-    bool conical{true};     ///< Flag indicating if the ejecta is isotropic within computational domain. e.g. tophat
 
   private:
     Real const theta_c_{0}; ///< Core angle of the jet
@@ -185,8 +189,6 @@ class GaussianJet {
     Real T0{1 * unit::sec};
     /// Flag indicating if the ejecta spreads laterally during evolution
     bool spreading{false};
-    /// Flag indicating if the ejecta is conical within computational domain. e.g. tophat
-    bool conical{false};
 
   private:
     Real const norm_{0};   ///< Normalization factor for Gaussian distribution
@@ -248,9 +250,6 @@ class PowerLawJet {
     Real T0{1 * unit::sec};
     /// Flag indicating if the ejecta spreads laterally during evolution
     bool spreading{false};
-
-    /// Flag indicating if the ejecta is conical within computational domain. e.g. tophat
-    bool conical{false};
 
   private:
     Real const theta_c_{0}; ///< Core angle of the jet

@@ -416,11 +416,17 @@ void generate_syn_electrons(SynElectronGrid& electrons, Shock const& shock) {
 
     electrons.resize({phi_size, theta_size, t_size});
 
-    const size_t phi_compute = shock.conical ? 1 : phi_size;
-    const size_t theta_compute = shock.conical ? 1 : theta_size;
+    const size_t phi_compute = (shock.symmetry != Symmetry::structured) ? 1 : phi_size;
 
     for (size_t i = 0; i < phi_compute; ++i) {
-        for (size_t j = 0; j < theta_compute; ++j) {
+        size_t rep_idx = 0;
+        for (size_t j = 0; j < theta_size; ++j) {
+            if (shock.symmetry >= Symmetry::piecewise) {
+                if (rep_idx < shock.theta_reps.size() && shock.theta_reps[rep_idx] == j)
+                    ++rep_idx;
+                else
+                    continue;
+            }
             const size_t k_inj = shock.injection_idx(i, j);
             for (size_t k = 0; k < t_size; ++k) {
                 const Real t_com = shock.t_comv(i, j, k);
@@ -459,11 +465,25 @@ void generate_syn_electrons(SynElectronGrid& electrons, Shock const& shock) {
         }
     }
 
-    if (shock.conical) {
+    if (shock.symmetry == Symmetry::isotropic) {
         for (size_t i = 0; i < phi_size; ++i)
             for (size_t j = 0; j < theta_size; ++j)
                 if (i != 0 || j != 0)
                     xt::view(electrons, i, j, xt::all()) = xt::view(electrons, 0, 0, xt::all());
+    } else if (shock.symmetry == Symmetry::piecewise) {
+        for (size_t r = 0; r < shock.theta_reps.size(); ++r) {
+            const size_t j_start = shock.theta_reps[r];
+            const size_t j_end = (r + 1 < shock.theta_reps.size()) ? shock.theta_reps[r + 1] : theta_size;
+            for (size_t j = j_start + 1; j < j_end; ++j)
+                xt::view(electrons, 0, j, xt::all()) = xt::view(electrons, 0, j_start, xt::all());
+        }
+        for (size_t i = 1; i < phi_size; ++i)
+            for (size_t j = 0; j < theta_size; ++j)
+                xt::view(electrons, i, j, xt::all()) = xt::view(electrons, 0, j, xt::all());
+    } else if (shock.symmetry == Symmetry::phi_symmetric) {
+        for (size_t i = 1; i < phi_size; ++i)
+            for (size_t j = 0; j < theta_size; ++j)
+                xt::view(electrons, i, j, xt::all()) = xt::view(electrons, 0, j, xt::all());
     }
 }
 
@@ -486,11 +506,17 @@ void generate_syn_photons(SynPhotonGrid& photons, Shock const& shock, SynElectro
 
     photons.resize({phi_size, theta_size, t_size});
 
-    const size_t phi_compute = shock.conical ? 1 : phi_size;
-    const size_t theta_compute = shock.conical ? 1 : theta_size;
+    const size_t phi_compute = (shock.symmetry != Symmetry::structured) ? 1 : phi_size;
 
     for (size_t i = 0; i < phi_compute; ++i) {
-        for (size_t j = 0; j < theta_compute; ++j) {
+        size_t rep_idx = 0;
+        for (size_t j = 0; j < theta_size; ++j) {
+            if (shock.symmetry >= Symmetry::piecewise) {
+                if (rep_idx < shock.theta_reps.size() && shock.theta_reps[rep_idx] == j)
+                    ++rep_idx;
+                else
+                    continue;
+            }
             for (size_t k = 0; k < t_size; ++k) {
                 auto& ph = photons(i, j, k);
                 auto& elec = electrons(i, j, k);
@@ -517,10 +543,24 @@ void generate_syn_photons(SynPhotonGrid& photons, Shock const& shock, SynElectro
         }
     }
 
-    if (shock.conical) {
+    if (shock.symmetry == Symmetry::isotropic) {
         for (size_t i = 0; i < phi_size; ++i)
             for (size_t j = 0; j < theta_size; ++j)
                 if (i != 0 || j != 0)
                     xt::view(photons, i, j, xt::all()) = xt::view(photons, 0, 0, xt::all());
+    } else if (shock.symmetry == Symmetry::piecewise) {
+        for (size_t r = 0; r < shock.theta_reps.size(); ++r) {
+            const size_t j_start = shock.theta_reps[r];
+            const size_t j_end = (r + 1 < shock.theta_reps.size()) ? shock.theta_reps[r + 1] : theta_size;
+            for (size_t j = j_start + 1; j < j_end; ++j)
+                xt::view(photons, 0, j, xt::all()) = xt::view(photons, 0, j_start, xt::all());
+        }
+        for (size_t i = 1; i < phi_size; ++i)
+            for (size_t j = 0; j < theta_size; ++j)
+                xt::view(photons, i, j, xt::all()) = xt::view(photons, 0, j, xt::all());
+    } else if (shock.symmetry == Symmetry::phi_symmetric) {
+        for (size_t i = 1; i < phi_size; ++i)
+            for (size_t j = 0; j < theta_size; ++j)
+                xt::view(photons, i, j, xt::all()) = xt::view(photons, 0, j, xt::all());
     }
 }

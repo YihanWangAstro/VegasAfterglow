@@ -39,18 +39,50 @@ void Shock::resize(size_t phi_size, size_t theta_size, size_t t_size) {
     //required.fill(1);
 }
 
-void Shock::broadcast_theta(Array const& theta_coords, size_t src_phi_id, size_t src_theta_id) {
-    for (size_t i = 0; i < phi_size; i++) {
-        for (size_t j = 0; j < theta_size; j++) {
-            injection_idx(i, j) = injection_idx(src_phi_id, src_theta_id);
-            for (size_t k = 0; k < t_size; k++) {
-                t_comv(i, j, k) = t_comv(src_phi_id, src_theta_id, k);
-                r(i, j, k) = r(src_phi_id, src_theta_id, k);
+void Shock::broadcast_groups(Array const& theta_coords) {
+    if (symmetry == Symmetry::isotropic) {
+        for (size_t j = 1; j < theta_size; ++j) {
+            injection_idx(0, j) = injection_idx(0, 0);
+            for (size_t k = 0; k < t_size; ++k) {
+                t_comv(0, j, k) = t_comv(0, 0, k);
+                this->r(0, j, k) = this->r(0, 0, k);
+                theta(0, j, k) = theta_coords(j);
+                Gamma(0, j, k) = Gamma(0, 0, k);
+                Gamma_th(0, j, k) = Gamma_th(0, 0, k);
+                B(0, j, k) = B(0, 0, k);
+                N_p(0, j, k) = N_p(0, 0, k);
+            }
+        }
+    } else if (symmetry == Symmetry::piecewise) {
+        for (size_t r = 0; r < theta_reps.size(); ++r) {
+            const size_t j_start = theta_reps[r];
+            const size_t j_end = (r + 1 < theta_reps.size()) ? theta_reps[r + 1] : theta_size;
+            for (size_t j = j_start + 1; j < j_end; ++j) {
+                injection_idx(0, j) = injection_idx(0, j_start);
+                for (size_t k = 0; k < t_size; ++k) {
+                    t_comv(0, j, k) = t_comv(0, j_start, k);
+                    this->r(0, j, k) = this->r(0, j_start, k);
+                    theta(0, j, k) = theta_coords(j);
+                    Gamma(0, j, k) = Gamma(0, j_start, k);
+                    Gamma_th(0, j, k) = Gamma_th(0, j_start, k);
+                    B(0, j, k) = B(0, j_start, k);
+                    N_p(0, j, k) = N_p(0, j_start, k);
+                }
+            }
+        }
+    }
+
+    for (size_t i = 1; i < phi_size; ++i) {
+        for (size_t j = 0; j < theta_size; ++j) {
+            injection_idx(i, j) = injection_idx(0, j);
+            for (size_t k = 0; k < t_size; ++k) {
+                t_comv(i, j, k) = t_comv(0, j, k);
+                this->r(i, j, k) = this->r(0, j, k);
                 theta(i, j, k) = theta_coords(j);
-                Gamma(i, j, k) = Gamma(src_phi_id, src_theta_id, k);
-                Gamma_th(i, j, k) = Gamma_th(src_phi_id, src_theta_id, k);
-                B(i, j, k) = B(src_phi_id, src_theta_id, k);
-                N_p(i, j, k) = N_p(src_phi_id, src_theta_id, k);
+                Gamma(i, j, k) = Gamma(0, j, k);
+                Gamma_th(i, j, k) = Gamma_th(0, j, k);
+                B(i, j, k) = B(0, j, k);
+                N_p(i, j, k) = N_p(0, j, k);
             }
         }
     }

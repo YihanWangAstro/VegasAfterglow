@@ -30,7 +30,6 @@ Ejecta PyTophatJet(Real theta_c, Real E_iso, Real Gamma0, bool spreading, Real d
     jet.eps_k = math::tophat(theta_c, E_iso);
     jet.Gamma0 = math::tophat_plus_one(theta_c, Gamma0 - 1);
     initialize_ejecta(jet, spreading, duration, magnetar, theta_c);
-    jet.conical = true;
     return jet;
 }
 

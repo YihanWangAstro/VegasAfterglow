@@ -8,9 +8,11 @@
 #pragma once
 
 #include <tuple>
+#include <vector>
 
 #include "../core/mesh.h"
 #include "../core/physics.h"
+#include "../environment/jet.h"
 #include "../environment/medium.h"
 #include "boost/numeric/odeint.hpp"
 
@@ -49,8 +51,9 @@ class Shock {
     MeshGrid3d N_p;          ///< Downstream proton number per solid angle
     IndexGrid injection_idx; ///< Beyond which grid index there is no electron injection
     //MaskGrid required;       ///< Grid points actually required for final flux calculation
-    RadParams rad;       ///< Radiation parameters
-    bool conical{false}; ///< shock dynamics is the same for all theta.
+    RadParams rad;                           ///< Radiation parameters
+    Symmetry symmetry{Symmetry::structured}; ///< Auto-detected symmetry level
+    std::vector<size_t> theta_reps;          ///< Representative theta indices (contiguous groups)
 
     /// Returns grid dimensions as a tuple
     [[nodiscard]] auto shape() const { return std::make_tuple(phi_size, theta_size, t_size); }
@@ -66,20 +69,85 @@ class Shock {
     void resize(size_t phi_size, size_t theta_size, size_t t_size);
 
     /**
-    * <!-- ************************************************************************************** -->
-    * @brief Broadcasts dynamics from a source (phi, theta) to all grid points, preserving theta coordinates.
-    * @param theta_coords 1D array of theta coordinate values to assign per theta index.
-    * @param src_phi_id The source phi index from which to broadcast values. Default is 0.
-    * @param src_theta_id The source theta index from which to broadcast values. Default is 0.
-    * <!-- ************************************************************************************** -->
+     * @brief Auto-detect symmetry by comparing jet initial conditions at consecutive theta grid points.
+     * @details Sets symmetry and theta_reps. Falls back to structured if jet is spreading or medium is anisotropic.
+     */
+    template <typename Ejecta, typename Medium>
+    void detect_symmetry(Coord const& coord, Ejecta const& jet, Medium const& medium);
+
+    /**
+    * @brief Broadcasts computed dynamics to all grid points based on detected symmetry.
+    * @details For isotropic, copies (0,0) to all (0,j), then phi=0 to all phi.
+    *          For piecewise, copies each representative theta to its group, then phi=0 to all phi.
+    *          For phi_symmetric, only broadcasts phi=0 to all phi (all thetas already computed).
+    * @param theta_coords 1D array of theta coordinate values.
     **/
-    void broadcast_theta(Array const& theta_coords, size_t src_phi_id = 0, size_t src_theta_id = 0);
+    void broadcast_groups(Array const& theta_coords);
 
   private:
     size_t phi_size{0};   ///< Number of grid points in phi direction
     size_t theta_size{0}; ///< Number of grid points in theta direction
     size_t t_size{0};     ///< Number of grid points in time direction
 };
+
+template <typename Ejecta, typename Medium>
+void Shock::detect_symmetry(Coord const& coord, Ejecta const& jet, Medium const& medium) {
+    auto [phi_size_, theta_size_, t_size_] = coord.shape();
+
+    if (jet.spreading || !medium.isotropic) {
+        symmetry = Symmetry::structured;
+        return;
+    }
+
+    const Real phi0 = coord.phi(0);
+    theta_reps.clear();
+    theta_reps.reserve(theta_size_);
+    theta_reps.push_back(0);
+
+    auto jet_ic_differs = [&](size_t ja, size_t jb) {
+        const Real theta_a = coord.theta(ja), theta_b = coord.theta(jb);
+        if (jet.eps_k(phi0, theta_a) != jet.eps_k(phi0, theta_b))
+            return true;
+        if (jet.Gamma0(phi0, theta_a) != jet.Gamma0(phi0, theta_b))
+            return true;
+        if constexpr (HasSigma<Ejecta>) {
+            if (jet.sigma0(phi0, theta_a) != jet.sigma0(phi0, theta_b))
+                return true;
+        }
+        if constexpr (HasDedt<Ejecta>) {
+            for (size_t k = 0; k < t_size_; ++k) {
+                const Real ta = coord.t(0, ja, k), tb = coord.t(0, jb, k);
+                if (jet.deps_dt(phi0, theta_a, ta) != jet.deps_dt(phi0, theta_b, ta))
+                    return true;
+                if (jet.deps_dt(phi0, theta_a, tb) != jet.deps_dt(phi0, theta_b, tb))
+                    return true;
+            }
+        }
+        if constexpr (HasDmdt<Ejecta>) {
+            for (size_t k = 0; k < t_size_; ++k) {
+                const Real ta = coord.t(0, ja, k), tb = coord.t(0, jb, k);
+                if (jet.dm_dt(phi0, theta_a, ta) != jet.dm_dt(phi0, theta_b, ta))
+                    return true;
+                if (jet.dm_dt(phi0, theta_a, tb) != jet.dm_dt(phi0, theta_b, tb))
+                    return true;
+            }
+        }
+        return false;
+    };
+
+    for (size_t j = 1; j < theta_size_; ++j) {
+        if (jet_ic_differs(j - 1, j)) {
+            theta_reps.push_back(j);
+        }
+    }
+
+    if (theta_reps.size() == 1)
+        symmetry = Symmetry::isotropic;
+    else if (theta_reps.size() < theta_size_)
+        symmetry = Symmetry::piecewise;
+    else
+        symmetry = Symmetry::phi_symmetric;
+}
 
 /**
  * <!-- ************************************************************************************** -->

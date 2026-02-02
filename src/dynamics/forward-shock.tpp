@@ -208,7 +208,7 @@ Shock generate_fwd_shock(Coord const& coord, Medium const& medium, Ejecta const&
     const size_t phi_size_needed = coord.t.shape()[0];
     Shock shock(phi_size_needed, theta_size, t_size, rad_params);
 
-    shock.conical = jet.conical && medium.isotropic && !jet.spreading;
+    shock.detect_symmetry(coord, jet, medium);
 
     for (size_t i = 0; i < phi_size_needed; ++i) {
         Real theta_s = 0;
@@ -216,16 +216,26 @@ Shock generate_fwd_shock(Coord const& coord, Medium const& medium, Ejecta const&
             theta_s =
                 jet_spreading_edge(jet, medium, coord.phi(i), coord.theta.front(), coord.theta.back(), coord.t.front());
         }
+        size_t rep_idx = 0;
         for (size_t j = 0; j < theta_size; ++j) {
+            if (shock.symmetry >= Symmetry::piecewise) {
+                if (rep_idx < shock.theta_reps.size() && shock.theta_reps[rep_idx] == j)
+                    ++rep_idx;
+                else
+                    continue;
+            }
+
             auto eqn = ForwardShockEqn(medium, jet, coord.phi(i), coord.theta(j), rad_params, theta_s);
-            // auto eqn = SimpleShockEqn(medium, jet, coord.phi(i), coord.theta(j), rad_params, theta_s);
-            //          Solve the shock shell for this theta slice
             grid_solve_fwd_shock(i, j, xt::view(coord.t, i, j, xt::all()), shock, eqn, rtol);
 
-            if (shock.conical) {
-                shock.broadcast_theta(coord.theta, 0, 0);
-                return shock;
+            if (shock.symmetry == Symmetry::isotropic) {
+                break;
             }
+        }
+
+        if (shock.symmetry >= Symmetry::phi_symmetric) {
+            shock.broadcast_groups(coord.theta);
+            return shock;
         }
     }
 

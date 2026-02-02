@@ -214,7 +214,6 @@ Ejecta MultiBandModel::select_jet(Params const& param) const {
     if (config.jet == "tophat") {
         jet.eps_k = math::tophat(theta_c, eps_iso);
         jet.Gamma0 = math::tophat_plus_one(theta_c, Gamma0 - 1);
-        jet.conical = true;
     } else if (config.jet == "gaussian") {
         jet.eps_k = math::gaussian(theta_c, eps_iso);
         jet.Gamma0 = math::gaussian_plus_one(theta_c, Gamma0 - 1);
@@ -227,7 +226,6 @@ Ejecta MultiBandModel::select_jet(Params const& param) const {
     } else if (config.jet == "uniform") {
         jet.eps_k = math::tophat(con::pi / 2, eps_iso);
         jet.Gamma0 = math::tophat_plus_one(con::pi / 2, Gamma0 - 1);
-        jet.conical = true;
     } else if (config.jet == "two_component") {
         jet.eps_k = math::two_component(theta_c, theta_w, eps_iso, eps_iso_w);
         jet.Gamma0 = math::two_component_plus_one(theta_c, theta_w, Gamma0 - 1, Gamma0_w - 1);
