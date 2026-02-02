@@ -409,7 +409,7 @@ class PyModel {
      */
     PyModel(Ejecta jet, Medium medium, const PyObserver& observer, const PyRadiation& fwd_rad,
             const std::optional<PyRadiation>& rvs_rad = std::nullopt,
-            const std::tuple<Real, Real, Real>& resolutions = std::make_tuple(0.3, 1, 10), Real rtol = 1e-5,
+            const std::tuple<Real, Real, Real>& resolutions = std::make_tuple(0.15, 0.5, 10), Real rtol = 1e-5,
             bool axisymmetric = true)
         : jet_(std::move(jet)),
           medium_(std::move(medium)),

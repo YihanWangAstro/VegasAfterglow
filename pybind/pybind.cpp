@@ -69,7 +69,7 @@ PYBIND11_MODULE(VegasAfterglowC, m) {
         .def(py::init<Ejecta, Medium, PyObserver, PyRadiation, std::optional<PyRadiation>, std::tuple<Real, Real, Real>,
                       Real, bool>(),
              py::arg("jet"), py::arg("medium"), py::arg("observer"), py::arg("fwd_rad"),
-             py::arg("rvs_rad") = py::none(), py::arg("resolutions") = std::make_tuple(0.3, 1, 10),
+             py::arg("rvs_rad") = py::none(), py::arg("resolutions") = std::make_tuple(0.15, 0.5, 10),
              py::arg("rtol") = 1e-6, py::arg("axisymmetric") = true)
 
         .def("flux_density_grid", &PyModel::flux_density_grid, py::arg("t"), py::arg("nu"),

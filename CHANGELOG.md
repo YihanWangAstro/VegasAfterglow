@@ -322,7 +322,7 @@ coordinates = details.theta            # New way
   - Removed `specific_flux_sorted_series()` method
   - Added `specific_flux_series_with_expo(t, nu, expo_time, num_points=10)` for exposure time averaging
   - Changed `details(t_obs)` to `details(t_min, t_max)` interface
-- **Resolution Parameters**: Default resolution changed from `(0.3, 3.0, 5.0)` to `(0.3, 1, 10)` for optimal performance/accuracy balance
+- **Resolution Parameters**: Default resolution changed from `(0.3, 3.0, 5.0)` to `(0.15, 0.5, 10)` for optimal performance/accuracy balance
 - **MCMC Parameters**: Major restructuring with new parameters for all jet types, medium configurations, and reverse shock physics
   - Added: `theta_v, n_ism, n0, A_star, k_e, k_g, duration, E_iso_w, Gamma0_w, theta_w, L0, t0, q`
   - Added reverse shock parameters: `p_r, eps_e_r, eps_B_r, xi_e_r`

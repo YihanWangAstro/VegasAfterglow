@@ -165,7 +165,7 @@ Similar to the light curve generation, let's set up the physical components of o
     rad = Radiation(eps_e=1e-1, eps_B=1e-3, p=2.3)
 
     # Include resolution parameters for detailed internal tracking
-    model = Model(jet=jet, medium=medium, observer=obs, fwd_rad=rad, resolutions=(0.3,1,10))
+    model = Model(jet=jet, medium=medium, observer=obs, fwd_rad=rad, resolutions=(0.15,0.5,10))
 
 Accessing Simulation Quantities
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
