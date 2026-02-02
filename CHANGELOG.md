@@ -5,6 +5,88 @@ All notable changes to VegasAfterglow will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v2.0.0-beta] - 2026-02-02
+
+### Performance
+
+#### **~5x Faster Computation for Top-Hat and Two-Component Jets**
+- Automatic symmetry detection eliminates redundant computation for symmetric jet structures
+- Top-hat jets now compute a single representative grid point and broadcast results across the full angular grid
+- Two-component jets similarly benefit by computing only unique angular groups
+- Applies to all stages: shock dynamics, electron distribution, synchrotron and IC photon generation
+
+#### **Faster MCMC Sampling**
+- Likelihood evaluations are now batch-parallelized in C++ with OpenMP, replacing sequential Python calls
+- Parameter transformations (log-scale, fixed values) moved from Python to C++
+- Walker count automatically aligned to CPU cores for optimal parallel throughput
+
+#### **Reduced Memory Usage in Flux Computation**
+- Eliminated large intermediate arrays during observer flux integration
+- Direct accumulation replaces the previous two-pass (store-then-sum) approach
+
+### Added
+
+#### **Smooth Synchrotron Spectra**
+- New default synchrotron spectral model with smooth transitions at break frequencies (ν_m, ν_c, ν_a)
+- Produces more physical light curves without artificial kinks at spectral breaks
+- The original sharp broken power-law model remains available as `PowerLawSyn`
+
+#### **Smarter Adaptive Grid Generation**
+- Grid generation now accounts for the ambient medium density profile, producing better time sampling near the deceleration time
+- Sharp features in jet angular profiles (e.g., core-wing boundaries) are automatically detected and resolved as grid anchor points
+- Improved phi-direction sampling for off-axis observers
+
+#### **Smoother Reverse Shock Evolution**
+- Engine shutdown transitions smoothly rather than cutting off abruptly, producing more stable ODE integration and smoother light curves
+- More accurate initial conditions with proper swept-mass and thermal energy integration
+
+#### **Lightweight Core Installation**
+- `pip install VegasAfterglow` now requires only `numpy` — no MCMC dependencies
+- MCMC fitting available via `pip install VegasAfterglow[mcmc]` (bilby, emcee, dynesty)
+- Core physics imports always work; MCMC types give a clear error message when extras are missing
+
+#### **Redback Integration**
+- Full documentation and tutorial for using VegasAfterglow models within the Redback transient inference framework
+- New `redback-inference.ipynb` example notebook
+
+#### **Validation and Testing**
+
+- **Benchmark tests**: Verify numerical convergence across resolution parameters and measure computation speed for all jet/medium/radiation configurations. Default resolution `(0.15, 0.5, 10)` validated to converge with mean error < 5%
+- **Regression tests**: Check that simulation outputs match theoretical predictions from GRB afterglow theory — shock dynamics power-law scaling, characteristic frequency evolution, spectral shape indices, and coasting/Blandford-McKee/Sedov-Taylor phases
+- **Python API tests**: Verify model creation, flux calculations, output correctness, and input validation across all jet types and configurations
+- **One-command validation**: Run `python validation/run_validation.py --all` to execute the full suite and generate a PDF report with convergence plots and diagnostics
+- **GitHub Actions CI**: Automated test workflow for Ubuntu and macOS across Python 3.9–3.11 (see `.github/workflows/test.yml`)
+- See the [Validation & Testing](README.md#validation--testing) section in the README for full details
+
+#### **Built-in Profiling**
+
+- See where computation time is spent (dynamics, electrons, photons, flux) via `Model.profile_data()` in Python
+- Useful for identifying bottlenecks when tuning resolution or enabling SSC
+
+### Changed
+
+#### **Default Resolution**
+- Default grid resolution changed from `(0.3, 1, 10)` to `(0.15, 0.5, 10)` for better accuracy out of the box
+- Thanks to the improved adaptive grid algorithm (medium-aware time sampling, jet edge anchoring), the code converges with fewer grid points than before — so the new default is both more accurate and comparably fast
+
+#### **Default MCMC Sampler**
+- Dynesty (nested sampling) is now the recommended default sampler, replacing emcee
+- Emcee move strategy updated to `DEMove + DESnookerMove` for more efficient sampling
+
+#### **Inverse Compton Cooling**
+- Expanded Klein-Nishina regime classification (5 regimes, up from 3) for more accurate IC cooling in the strong-KN limit
+
+#### **Python >= 3.8 Required**
+- Minimum Python version raised from 3.7 to 3.8
+
+### Fixed
+
+- **Reverse shock ν_c continuity**: Eliminated small jump in cooling frequency across the shock crossing boundary
+- **Reverse shock initial conditions**: Smoother transition for thick-shell reverse shock crossing
+- **Grid sizing bug**: Fixed incorrect grid dimensions when using merged grid sizes in auto_grid
+
+---
+
 ## [v1.1.0] - 2025-12-08
 
 ### Added
@@ -581,6 +663,8 @@ coordinates = details.theta            # New way
 
 | Version | Release Date | Key Features |
 |---------|--------------|--------------|
+| v2.0.0-beta | 2026-02-02 | ~5x speedup for symmetric jets, smooth synchrotron spectra, parallel MCMC, lightweight install |
+| v1.1.0  | 2025-12-08   | Bilby MCMC integration, multi-sampler support, flexible parameter interface |
 | v1.0.3  | 2025-09-29   | Self-absorption heating disabled by default, MCMC improvements, flux unit fixes |
 | v1.0.2  | 2025-09-15   | Python interface method name updates, enhanced documentation, API consistency |
 | v1.0.1  | 2025-09-15   | Frequency integrated flux support, return object interface redesign |

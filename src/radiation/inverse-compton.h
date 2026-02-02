@@ -498,6 +498,15 @@ ICPhotonGrid<Electrons, Photons> generate_IC_photons(ElectronGrid<Electrons> con
         }
     }
 
+    // Eagerly generate spectra for representative cells before broadcasting.
+    // Avoids redundant O(gamma_size * nu_size) generation in broadcast copies.
+    if (symmetry != Symmetry::structured) {
+        for (size_t i = 0; i < phi_compute; ++i)
+            for (size_t j = 0; j < theta_compute; ++j)
+                for (size_t k = 0; k < t_size; ++k)
+                    IC_ph(i, j, k).compute_log2_I_nu(0);
+    }
+
     if (symmetry == Symmetry::isotropic) {
         for (size_t i = 0; i < phi_size; ++i)
             for (size_t j = 0; j < theta_size; ++j)
@@ -587,12 +596,9 @@ void IC_cooling(ElectronGrid<Electrons>& electrons, PhotonGrid<Photons>& photons
                 if (k >= k_inj) {
                     const auto& inj = electrons(i, j, k_inj - 1);
                     const Real dt_comv = t_com - shock.t_comv(i, j, k_inj - 1);
-                    elec.gamma_c = cool_after_crossing(inj.gamma_c, inj.gamma_m, elec.gamma_m, dt_comv, B, 0);
-                    // gamma_M: step-by-step synchrotron cooling from previous step (continuous, uses local B)
-                    const auto& prev = electrons(i, j, k - 1);
-                    const Real dt_step = t_com - shock.t_comv(i, j, k - 1);
-                    const Real gamma_c_step = compute_gamma_c(dt_step, B, 0);
-                    elec.gamma_M = prev.gamma_M * gamma_c_step / (prev.gamma_M + gamma_c_step);
+                    elec.gamma_c = cool_after_crossing(inj.gamma_c, inj.gamma_m, elec.gamma_m, t_com, B, 0);
+
+                    elec.gamma_M = cool_after_crossing(inj.gamma_M, inj.gamma_m, elec.gamma_m, dt_comv, B, 0);
                 }
 
                 const Real I_nu_peak = compute_syn_I_peak(B, p, elec.column_den);
