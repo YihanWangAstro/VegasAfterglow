@@ -489,7 +489,10 @@ Real compute_syn_I_peak(Real B, Real p, Real column_den) {
  */
 Real compute_syn_freq(Real gamma, Real B) {
     Real nu = 3 * con::e / (4 * con::pi * con::me * con::c) * B * gamma * gamma;
+    //std::cout << "compute_syn_freq: gamma=" << gamma << " B=" << B << " nu=" << nu << std::endl;
+    //std::cout << "constants:" << con::e << " " << con::me << " " << con::c << " " << con::pi << std::endl;
     return nu;
+    
 }
 
 /**

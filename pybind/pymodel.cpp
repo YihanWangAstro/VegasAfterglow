@@ -44,11 +44,11 @@ Ejecta PyGaussianJet(Real theta_c, Real E_iso, Real Gamma0, bool spreading, Real
     return jet;
 }
 
-Ejecta PyPowerLawJet(Real theta_c, Real E_iso, Real Gamma0, Real k_e, Real k_g, bool spreading, Real duration,
+Ejecta PyPowerLawJet(Real theta_c, Real E_iso, Real Gamma0, Real k_e, Real k_g, Real s, bool spreading, Real duration,
                      std::optional<PyMagnetar> magnetar) {
     Ejecta jet;
-    jet.eps_k = math::powerlaw(theta_c, E_iso, k_e);
-    jet.Gamma0 = math::powerlaw_plus_one(theta_c, Gamma0 - 1, k_g);
+    jet.eps_k = math::powerlaw(theta_c, E_iso, k_e, s);
+    jet.Gamma0 = math::powerlaw_plus_one(theta_c, Gamma0 - 1, k_g, s);
     jet.spreading = spreading;
     jet.T0 = duration;
 
@@ -138,7 +138,7 @@ void convert_unit(Ejecta& jet, Medium& medium) {
     jet.T0 *= unit::sec;
 
     auto rho_cgs = medium.rho; // number density from python side
-    medium.rho = [=](Real phi, Real theta, Real r) {
+    medium.rho = [=](Real phi, Real theta, Real r) { //SUPPOSEDLY WRONG COMMENTING
         return rho_cgs(phi, theta, r / unit::cm) * (unit::g / unit::cm3); // convert to density
     };
 }

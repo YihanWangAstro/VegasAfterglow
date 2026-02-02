@@ -684,6 +684,7 @@ mc_params = [
     ParamDef("theta_c",     0.0,   0.5,  Scale.LINEAR),    # Core half-opening angle [rad]
     ParamDef("k_e",           2,     2,  Scale.FIXED),     # Energy power law index
     ParamDef("k_g",           2,     2,  Scale.FIXED),     # Lorentz factor power law index
+    ParamDef("s",              4,     2, SCale.FIXED),     #smoothing factor for the Energy and Lortnez 
     ParamDef("theta_v",     0.0,   0.0,  Scale.FIXED),     # Viewing angle [rad]
     ParamDef("p",             2,     3,  Scale.LINEAR),    # Shocked electron power law index
     ParamDef("eps_e",      1e-2,   0.5,  Scale.LOG),       # Electron energy fraction

@@ -29,7 +29,7 @@ PYBIND11_MODULE(VegasAfterglowC, m) {
           py::arg("spreading") = false, py::arg("duration") = 1, py::arg("magnetar") = py::none());
 
     m.def("PowerLawJet", &PyPowerLawJet, py::arg("theta_c"), py::arg("E_iso"), py::arg("Gamma0"), py::arg("k_e"),
-          py::arg("k_g"), py::arg("spreading") = false, py::arg("duration") = 1, py::arg("magnetar") = py::none());
+          py::arg("k_g"), py::arg("s") = 4, py::arg("spreading") = false, py::arg("duration") = 1, py::arg("magnetar") = py::none());
 
     m.def("PowerLawWing", &PyPowerLawWing, py::arg("theta_c"), py::arg("E_iso_w"), py::arg("Gamma0_w"), py::arg("k_e"),
           py::arg("k_g"), py::arg("spreading") = false, py::arg("duration") = 1);
@@ -151,6 +151,7 @@ PYBIND11_MODULE(VegasAfterglowC, m) {
         .def_readwrite("theta_c", &Params::theta_c)
         .def_readwrite("k_e", &Params::k_e)
         .def_readwrite("k_g", &Params::k_g)
+        .def_readwrite("s", &Params::s)
         .def_readwrite("tau", &Params::duration)
 
         .def_readwrite("E_iso_w", &Params::E_iso_w)

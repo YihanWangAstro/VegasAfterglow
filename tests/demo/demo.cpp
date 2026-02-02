@@ -198,12 +198,12 @@ int main() {
     /*for (Real i = 1; i < 30;) {
         test_ic(i);
         i += 0.01;
-    }
+    }*/
 
+    test_FRS();
     return 0;
-    test_FRS();*/
 
-    double xi[] = {0.001, 0.01, 0.1, 1, 2, 3, 5, 10, 100};
+    /*double xi[] = {0.001, 0.01, 0.1, 1, 2, 3, 5, 10, 100};
     // double xi[] = {100};
     double sigma[] = {0, 0.01, 0.05, 0.1, 1, 10, 100};
 

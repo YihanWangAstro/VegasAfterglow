@@ -103,7 +103,7 @@ Ejecta PyGaussianJet(Real theta_c, Real E_iso, Real Gamma0, bool spreading = fal
  * @return Ejecta Configured ejecta object representing the power-law jet structure
  * <!-- ************************************************************************************** -->
  */
-Ejecta PyPowerLawJet(Real theta_c, Real E_iso, Real Gamma0, Real k_e, Real k_g, bool spreading = false,
+Ejecta PyPowerLawJet(Real theta_c, Real E_iso, Real Gamma0, Real k_e, Real k_g, Real s, bool spreading = false,
                      Real duration = 1, std::optional<PyMagnetar> magnetar = std::nullopt);
 
 /**

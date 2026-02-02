@@ -34,7 +34,7 @@ void Shock::resize(size_t phi_size, size_t theta_size, size_t t_size) {
     B.resize({phi_size, theta_size, t_size});
     N_p.resize({phi_size, theta_size, t_size});
     injection_idx.resize({phi_size, theta_size});
-    injection_idx.fill(t_size);
+    injection_idx.fill(static_cast<Real>(t_size));
     required.resize({phi_size, theta_size, t_size});
     required.fill(1);
 }

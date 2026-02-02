@@ -198,9 +198,9 @@ class PowerLawJet {
      * @param spreading Flag indicating if the ejecta spreads laterally during evolution
      * <!-- ************************************************************************************** -->
      */
-    PowerLawJet(Real theta_c, Real E_iso, Real Gamma0, Real k_e, Real k_g, bool spreading = false,
+    PowerLawJet(Real theta_c, Real E_iso, Real Gamma0, Real k_e, Real k_g, Real s, bool spreading = false,
                 Real T0 = 1 * unit::sec) noexcept
-        : theta_c_(theta_c), eps_k_(E_iso / (4 * con::pi)), Gamma0_(Gamma0), k_e_(k_e), T0(T0), spreading(spreading) {}
+        : theta_c_(theta_c), eps_k_(E_iso / (4 * con::pi)), Gamma0_(Gamma0), k_e_(k_e), k_g_(k_g), s(s), T0(T0), spreading(spreading) {}
 
     /**
      * <!-- ************************************************************************************** -->
@@ -210,8 +210,7 @@ class PowerLawJet {
      * @return Energy per solid angle with power-law angular dependence
      * <!-- ************************************************************************************** -->
      */
-    inline Real eps_k(Real phi, Real theta) const noexcept { return eps_k_ / (1 + fast_pow(theta / theta_c_, k_e_)); }
-
+    inline Real eps_k(Real phi, Real theta) const noexcept { return eps_k_ / fast_pow(1 + fast_pow(theta / theta_c_, k_e_), -s/2); }
     /**
      * <!-- ************************************************************************************** -->
      * @brief Initial Lorentz factor as a function of phi and theta, with power-law falloff
@@ -221,7 +220,7 @@ class PowerLawJet {
      * <!-- ************************************************************************************** -->
      */
     inline Real Gamma0(Real phi, Real theta) const noexcept {
-        return (Gamma0_ - 1) / (1 + fast_pow(theta / theta_c_, k_g_)) + 1;
+        return (Gamma0_ - 1) / fast_pow((1 + fast_pow(theta / theta_c_, k_g_)), -s/2) + 1;
     }
 
     /// Duration of the ejecta in seconds
@@ -235,6 +234,7 @@ class PowerLawJet {
     Real const Gamma0_{1};  ///< Initial Lorentz factor at the core
     Real const k_e_{2};     ///< Power-law index for energy angular dependence
     Real const k_g_{2};     ///< Power-law index for Lorentz factor angular dependence
+    Real const s{4};        ///< Smoothing parameter
 };
 
 /**
@@ -329,12 +329,12 @@ namespace math {
      * @return Function implementing a power-law profile
      * <!-- ************************************************************************************** -->
      */
-    inline auto powerlaw(Real theta_c, Real height, Real k) noexcept {
-        return [=](Real phi, Real theta) noexcept { return height / (1 + fast_pow(theta / theta_c, k)); };
+    inline auto powerlaw(Real theta_c, Real height, Real k, Real s) noexcept {
+        return [=](Real phi, Real theta) noexcept { return height / fast_pow((1 + fast_pow(theta / theta_c, k)), s/2); };
     }
 
-    inline auto powerlaw_plus_one(Real theta_c, Real height, Real k) noexcept {
-        return [=](Real phi, Real theta) noexcept { return height / (1 + fast_pow(theta / theta_c, k)) + 1; };
+    inline auto powerlaw_plus_one(Real theta_c, Real height, Real k, Real s) noexcept {
+        return [=](Real phi, Real theta) noexcept { return height / fast_pow((1 + fast_pow(theta / theta_c, k)), s/2) + 1; };
     }
 
     inline auto powerlaw_wing(Real theta_c, Real height, Real k) noexcept {

@@ -113,8 +113,8 @@ Ejecta MultiBandModel::select_jet(Params const& param) {
         jet.eps_k = math::gaussian(theta_c, eps_iso);
         jet.Gamma0 = math::gaussian_plus_one(theta_c, Gamma0 - 1);
     } else if (config.jet == "powerlaw") {
-        jet.eps_k = math::powerlaw(theta_c, eps_iso, param.k_e);
-        jet.Gamma0 = math::powerlaw_plus_one(theta_c, Gamma0 - 1, param.k_g);
+        jet.eps_k = math::powerlaw(theta_c, eps_iso, param.k_e, param.s);
+        jet.Gamma0 = math::powerlaw_plus_one(theta_c, Gamma0 - 1, param.k_g, param.s);
     } else if (config.jet == "powerlaw_wing") {
         jet.eps_k = math::powerlaw_wing(theta_c, eps_iso_w, param.k_e);
         jet.Gamma0 = math::powerlaw_wing_plus_one(theta_c, Gamma0_w - 1, param.k_g);

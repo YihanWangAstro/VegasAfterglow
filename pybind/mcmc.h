@@ -193,7 +193,8 @@ struct Params {
     double Gamma0{300};             ///< Initial bulk Lorentz factor
     double theta_c{0.1};            ///< Core opening angle [radians]
     double k_e{2};                  ///< Energy power-law index for structured jets
-    double k_g{2};                  ///< Lorentz factor power-law index for structured jets
+    double k_g{2};
+    double s{4};                  ///< Lorentz factor power-law index for structured jets
     double duration{1 * unit::sec}; ///< Central engine activity duration [seconds]
 
     // Jet wing/wide component parameters
