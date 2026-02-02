@@ -394,7 +394,8 @@ medium = ISM(n_ism=1)
 
 jet = TophatJet(theta_c=0.3, E_iso=1e52, Gamma0=100)
 
-obs = Observer(lumi_dist=1e26, z=0.1, theta_obs=0.)
+z = 0.1
+obs = Observer(lumi_dist=1e26, z=z, theta_obs=0.)
 
 rad = Radiation(eps_e=1e-1, eps_B=1e-3, p=2.3)
 
@@ -543,9 +544,9 @@ for i, frame in enumerate(frames):
     plt.loglog(t[0, 0, :], details.fwd.nu_a[0, 0, :],label=r'$\nu_a^\prime$',c='firebrick')
     plt.loglog(t[0, 0, :], details.fwd.nu_m[0, 0, :],label=r'$\nu_m^\prime$',c='yellowgreen')
     plt.loglog(t[0, 0, :], details.fwd.nu_c[0, 0, :],label=r'$\nu_c^\prime$',c='royalblue')
-    plt.loglog(t[0, 0, :], details.fwd.nu_a[0, 0, :]*details.fwd.Doppler[0,0,:],label=r'$\nu_a$',ls='--',c='firebrick')
-    plt.loglog(t[0, 0, :], details.fwd.nu_m[0, 0, :]*details.fwd.Doppler[0,0,:],label=r'$\nu_m$',ls='--',c='yellowgreen')
-    plt.loglog(t[0, 0, :], details.fwd.nu_c[0, 0, :]*details.fwd.Doppler[0,0,:],label=r'$\nu_c$',ls='--',c='royalblue')
+    plt.loglog(t[0, 0, :], details.fwd.nu_a[0, 0, :]*details.fwd.Doppler[0,0,:]/(1+z),label=r'$\nu_a$',ls='--',c='firebrick')
+    plt.loglog(t[0, 0, :], details.fwd.nu_m[0, 0, :]*details.fwd.Doppler[0,0,:]/(1+z),label=r'$\nu_m$',ls='--',c='yellowgreen')
+    plt.loglog(t[0, 0, :], details.fwd.nu_c[0, 0, :]*details.fwd.Doppler[0,0,:]/(1+z),label=r'$\nu_c$',ls='--',c='royalblue')
     plt.xlabel(xlabels[i])
     plt.ylabel(r'$\nu$ [Hz]')
     plt.legend(ncol=2)

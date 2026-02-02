@@ -22,7 +22,8 @@ DEFAULT_WORKERS = os.cpu_count() or 4
 from validation.visualization.common import (create_benchmark_guide_pages, create_regression_guide_pages,
                                         create_section_header, create_toc_page_reportlab,
                                         create_title_page, extract_session_metadata, find_benchmark_file,
-                                        find_regression_file, get_runtime_build_info, load_json, setup_plot_style)
+                                        find_regression_file, get_runtime_build_info, load_json,
+                                        setup_plot_style)
 from validation.visualization.benchmark import generate_convergence_pages, plot_benchmark_overview, plot_convergence_summary, plot_error_distribution
 from validation.visualization.regression import (plot_dynamics_summary_grid, plot_spectrum_summary_grid,
                                             plot_frequencies_summary_grid,

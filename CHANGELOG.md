@@ -16,7 +16,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Applies to all stages: shock dynamics, electron distribution, synchrotron and IC photon generation
 
 #### **Faster MCMC Sampling**
-- Likelihood evaluations are now batch-parallelized in C++ with OpenMP, replacing sequential Python calls
+
+- For fast models like top-hat jets, the per-sample Python overhead from samplers (bilby/emcee/dynesty) can dominate total runtime. Likelihood evaluations are now batch-parallelized in C++ with OpenMP, bypassing the Python layer entirely
 - Parameter transformations (log-scale, fixed values) moved from Python to C++
 - Walker count automatically aligned to CPU cores for optimal parallel throughput
 

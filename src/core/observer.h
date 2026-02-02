@@ -162,10 +162,9 @@ class Observer {
     MeshGrid3d lg2_t;           ///< Log2 of observation time grid
     MeshGrid3d lg2_doppler;     ///< Log2 of Doppler factor grid
     MeshGrid3d lg2_geom_factor; ///< Log2 of observe frame geometric factor (solid angle * r^2 * D^3)
+    Real one_plus_z{1};         ///< 1 + redshift
   private:
-    Real one_plus_z{1}; ///< 1 + redshift
-    Real lumi_dist{1};  ///< Luminosity distance
-
+    Real lumi_dist{1}; ///< Luminosity distance
     // Grid dimensions
     size_t jet_3d{0};       ///< Flag indicating if the jet is non-axis-symmetric (non-zero if true)
     size_t eff_phi_grid{1}; ///< Effective number of phi grid points
