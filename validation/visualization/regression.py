@@ -27,22 +27,13 @@ def _smooth_slopes(log_x, log_y, window=7):
 
 
 def _get_cell_style(result: Dict) -> Tuple[str, str, str, str]:
-    if result:
-        measured = result.get("measured")
-        expected = result.get("expected")
-        expected_expr = result.get("expected_expr")
-        passed = result.get("passed", False)
-
-        if measured is not None:
-            # Use expected_expr if available (e.g., "-(p-1)/2"), else fall back to format_slope
-            exp_str = expected_expr if expected_expr is not None else (format_slope(expected) if expected is not None else "")
-            if passed:
-                return "#90EE90", "darkgreen", f"{measured:.2f}", exp_str
-            else:
-                return "#FFB6C1", "darkred", f"{measured:.2f}", exp_str
-        else:
-            return "#CCCCCC", "black", "N/A", ""
-    return "#E8E8E8", "#888888", "\u2014", ""
+    if not result:
+        return "#E8E8E8", "#888888", "\u2014", ""
+    if result.get("measured") is None:
+        return "#CCCCCC", "black", "N/A", ""
+    exp_str = result.get("expected_expr") or (format_slope(result.get("expected")) if result.get("expected") is not None else "")
+    color, tc = ("#90EE90", "darkgreen") if result.get("passed", False) else ("#FFB6C1", "darkred")
+    return color, tc, f"{result['measured']:.2f}", exp_str
 
 
 def _draw_cell(fig, x, y, width, height, color, text_color, line1, line2, fontsize=8,
@@ -109,34 +100,14 @@ def _draw_cell(fig, x, y, width, height, color, text_color, line1, line2, fontsi
 
 
 def _count_pass_fail(grid_data: Dict) -> Tuple[int, int]:
-    n_pass = 0
-    n_total = 0
-
-    for medium_data in grid_data.values():
-        for phase_data in medium_data.values():
-            for result in phase_data.values():
-                if result.get("measured") is not None:
-                    n_total += 1
-                    if result.get("passed", False):
-                        n_pass += 1
-
-    return n_pass, n_total
+    results = [r for md in grid_data.values() for pd in md.values() for r in pd.values() if r.get("measured") is not None]
+    return sum(1 for r in results if r.get("passed")), len(results)
 
 
 def _count_spectrum_pass_fail(spectrum_grid: Dict) -> Tuple[int, int]:
     """Count pass/fail for spectrum shape tests."""
-    n_pass = 0
-    n_total = 0
-
-    for medium_data in spectrum_grid.values():
-        for regime_data in medium_data.values():
-            for seg_result in regime_data.get("segments", []):
-                if seg_result.get("measured") is not None:
-                    n_total += 1
-                    if seg_result.get("passed", False):
-                        n_pass += 1
-
-    return n_pass, n_total
+    results = [s for md in spectrum_grid.values() for rd in md.values() for s in rd.get("segments", []) if s.get("measured") is not None]
+    return sum(1 for r in results if r.get("passed")), len(results)
 
 
 def _draw_grid_section(fig, grid_data, quantities, title, top, bottom, grid_left, cell_width, phases, media):
@@ -182,19 +153,13 @@ def _draw_grid_section(fig, grid_data, quantities, title, top, bottom, grid_left
 
 def _format_segment_label(seg_name: str) -> str:
     """Convert segment name to readable label like 'ν < ν_a' or 'ν_a < ν < ν_m'."""
-    freq_symbols = {"nu_a": r"$\nu_a$", "nu_m": r"$\nu_m$", "nu_c": r"$\nu_c$"}
-
-    if seg_name.startswith("below_"):
-        freq = seg_name.replace("below_", "")
-        return r"$\nu<$" + freq_symbols.get(freq, freq)
-    elif seg_name.startswith("above_"):
-        freq = seg_name.replace("above_", "")
-        return r"$\nu>$" + freq_symbols.get(freq, freq)
-    elif "_to_" in seg_name:
-        parts = seg_name.split("_to_")
-        if len(parts) == 2:
-            f1, f2 = parts
-            return freq_symbols.get(f1, f1) + r"$<\nu<$" + freq_symbols.get(f2, f2)
+    _fs = {"nu_a": r"$\nu_a$", "nu_m": r"$\nu_m$", "nu_c": r"$\nu_c$"}
+    for prefix, fmt in [("below_", r"$\nu<${}"), ("above_", r"$\nu>${}")]:
+        if seg_name.startswith(prefix):
+            freq = seg_name[len(prefix):]
+            return fmt.format(_fs.get(freq, freq))
+    if "_to_" in seg_name and len(parts := seg_name.split("_to_")) == 2:
+        return _fs.get(parts[0], parts[0]) + r"$<\nu<$" + _fs.get(parts[1], parts[1])
     return seg_name
 
 
@@ -227,13 +192,7 @@ def _draw_spectrum_grid_section(fig, spectrum_grid, top, bottom, grid_left, grid
         fig.text(grid_left - 0.015, y_center, f"Regime {regime}", ha="right", va="center",
                  fontsize=8, fontweight="bold")
 
-        # Find regime data (could be in ISM or Wind)
-        regime_data = None
-        for medium_data in spectrum_grid.values():
-            if regime in medium_data:
-                regime_data = medium_data[regime]
-                break
-
+        regime_data = next((md[regime] for md in spectrum_grid.values() if regime in md), None)
         segments = regime_data.get("segments", []) if regime_data else []
 
         # Get expected segment names from SPECTRAL_REGIMES (not from actual data)
@@ -255,20 +214,9 @@ def _draw_spectrum_grid_section(fig, spectrum_grid, top, bottom, grid_left, grid
 
         # Draw cells below headers (matching by expected segment name)
         for j in range(n_cols):
-            x = grid_left + j * cell_width
-            y = row_bottom
-
-            seg_result = None
-            if j < len(expected_segments):
-                expected_seg_name = expected_segments[j][0]
-                seg_result = seg_lookup.get(expected_seg_name)
-                if seg_result:
-                    color, text_color, line1, line2 = _get_cell_style(seg_result)
-                else:
-                    color, text_color, line1, line2 = "#E8E8E8", "#888888", "\u2014", ""
-            else:
-                color, text_color, line1, line2 = "#E8E8E8", "#888888", "\u2014", ""
-
+            x, y = grid_left + j * cell_width, row_bottom
+            seg_result = seg_lookup.get(expected_segments[j][0]) if j < len(expected_segments) else None
+            color, text_color, line1, line2 = _get_cell_style(seg_result) if seg_result else ("#E8E8E8", "#888888", "\u2014", "")
             _draw_cell(fig, x, y, cell_width, cell_height, color, text_color, line1, line2, fontsize=7,
                        measured=to_float(seg_result.get("measured")) if seg_result else None,
                        expected=to_float(seg_result.get("expected")) if seg_result else None,
@@ -278,39 +226,49 @@ def _draw_spectrum_grid_section(fig, spectrum_grid, top, bottom, grid_left, grid
     return n_pass, n_total
 
 
-def plot_dynamics_summary_grid(results: Dict) -> plt.Figure:
-    """Plot dynamics summary: FWD + RVS thin + RVS thick shock dynamics grids."""
+_FWD_PHASES = ["coasting", "BM", "deep_newtonian"]
+_RVS_PHASES = ["crossing", "BM", "deep_newtonian"]
+_MEDIA = ["ISM", "Wind"]
+_GRID_LEFT = 0.18
+
+
+def _plot_multi_grid_summary(results, page_title, quantities, grids, suptitle_y=0.96):
+    """Shared layout for dynamics and frequencies summary grids.
+
+    Args:
+        results: Full results dict.
+        page_title: Figure suptitle prefix.
+        quantities: List of quantity names for the grid rows.
+        grids: List of (grid_key, section_title, phases, top, bottom) tuples.
+        suptitle_y: Vertical position of the suptitle.
+    """
     fig = plt.figure(figsize=PAGE_PORTRAIT)
-
-    fwd_phases = ["coasting", "BM", "deep_newtonian"]
-    rvs_phases = ["crossing", "BM", "deep_newtonian"]
-    media = ["ISM", "Wind"]
-    quantities = ["u", "r", "B", "N_p"]
-
-    grid_left = 0.18
-    cell_width = (0.92 - grid_left) / (len(fwd_phases) * len(media))
+    cell_width = (0.92 - _GRID_LEFT) / (len(_FWD_PHASES) * len(_MEDIA))
 
     total_pass, total_tests = 0, 0
-
-    grids = [
-        (results.get("shock_grid", {}), "Forward Shock", fwd_phases, 0.86, 0.66),
-        (results.get("rvs_shock_grid_thin", {}), "Reverse Shock — Thin Shell", rvs_phases, 0.56, 0.36),
-        (results.get("rvs_shock_grid_thick", {}), "Reverse Shock — Thick Shell", rvs_phases, 0.26, 0.06),
-    ]
-
-    for grid_data, title, phases, top, bottom in grids:
+    for grid_key, title, phases, top, bottom in grids:
+        grid_data = results.get(grid_key, {})
         if grid_data:
             n_p, n_t = _draw_grid_section(
                 fig, grid_data, quantities, title, top=top, bottom=bottom,
-                grid_left=grid_left, cell_width=cell_width, phases=phases, media=media)
+                grid_left=_GRID_LEFT, cell_width=cell_width, phases=phases, media=_MEDIA)
             total_pass += n_p
             total_tests += n_t
 
     total_rate = total_pass / total_tests * 100 if total_tests > 0 else 0
     status_color = COLORS["pass"] if total_rate >= 80 else COLORS["fail"]
-    fig.suptitle(f"Dynamics Summary: {total_pass}/{total_tests} passed ({total_rate:.0f}%)",
-                 fontsize=13, fontweight="bold", y=0.96, color=status_color)
+    fig.suptitle(f"{page_title}: {total_pass}/{total_tests} passed ({total_rate:.0f}%)",
+                 fontsize=13, fontweight="bold", y=suptitle_y, color=status_color)
     return fig
+
+
+def plot_dynamics_summary_grid(results: Dict) -> plt.Figure:
+    """Plot dynamics summary: FWD + RVS thin + RVS thick shock dynamics grids."""
+    return _plot_multi_grid_summary(results, "Dynamics Summary", ["u", "r", "B", "N_p"], [
+        ("shock_grid",           "Forward Shock",                _FWD_PHASES, 0.86, 0.66),
+        ("rvs_shock_grid_thin",  "Reverse Shock \u2014 Thin Shell",  _RVS_PHASES, 0.56, 0.36),
+        ("rvs_shock_grid_thick", "Reverse Shock \u2014 Thick Shell", _RVS_PHASES, 0.26, 0.06),
+    ])
 
 
 def plot_spectrum_summary_grid(results: Dict) -> plt.Figure:
@@ -318,12 +276,12 @@ def plot_spectrum_summary_grid(results: Dict) -> plt.Figure:
     fig = plt.figure(figsize=PAGE_PORTRAIT)
 
     spectrum_grid = results.get("spectrum_grid", {})
-    grid_left, grid_right = 0.18, 0.92
+    grid_right = 0.92
 
     n_pass, n_total = 0, 0
     if spectrum_grid:
         n_pass, n_total = _draw_spectrum_grid_section(
-            fig, spectrum_grid, top=0.78, bottom=0.40, grid_left=grid_left, grid_right=grid_right,
+            fig, spectrum_grid, top=0.78, bottom=0.40, grid_left=_GRID_LEFT, grid_right=grid_right,
             section_title="Synchrotron Spectrum Shapes",
         )
 
@@ -336,45 +294,16 @@ def plot_spectrum_summary_grid(results: Dict) -> plt.Figure:
 
 def plot_frequencies_summary_grid(results: Dict) -> plt.Figure:
     """Plot frequencies summary: FWD + RVS thin + RVS thick frequency grids."""
-    fig = plt.figure(figsize=PAGE_PORTRAIT)
-
-    fwd_phases = ["coasting", "BM", "deep_newtonian"]
-    rvs_phases = ["crossing", "BM", "deep_newtonian"]
-    media = ["ISM", "Wind"]
-    quantities = ["nu_m", "nu_c", "nu_M"]
-
-    grid_left = 0.18
-    cell_width = (0.92 - grid_left) / (len(fwd_phases) * len(media))
-
-    total_pass, total_tests = 0, 0
-
-    grids = [
-        (results.get("freq_grid", {}), "Forward Shock", fwd_phases, 0.86, 0.70),
-        (results.get("rvs_freq_grid_thin", {}), "Reverse Shock — Thin Shell", rvs_phases, 0.56, 0.40),
-        (results.get("rvs_freq_grid_thick", {}), "Reverse Shock — Thick Shell", rvs_phases, 0.26, 0.10),
-    ]
-
-    for grid_data, title, phases, top, bottom in grids:
-        if grid_data:
-            n_p, n_t = _draw_grid_section(
-                fig, grid_data, quantities, title, top=top, bottom=bottom,
-                grid_left=grid_left, cell_width=cell_width, phases=phases, media=media)
-            total_pass += n_p
-            total_tests += n_t
-
-    total_rate = total_pass / total_tests * 100 if total_tests > 0 else 0
-    status_color = COLORS["pass"] if total_rate >= 80 else COLORS["fail"]
-    fig.suptitle(f"Frequencies Summary: {total_pass}/{total_tests} passed ({total_rate:.0f}%)",
-                 fontsize=13, fontweight="bold", y=0.96, color=status_color)
-    return fig
+    return _plot_multi_grid_summary(results, "Frequencies Summary", ["nu_m", "nu_c", "nu_M"], [
+        ("freq_grid",           "Forward Shock",                _FWD_PHASES, 0.86, 0.70),
+        ("rvs_freq_grid_thin",  "Reverse Shock \u2014 Thin Shell",  _RVS_PHASES, 0.56, 0.40),
+        ("rvs_freq_grid_thick", "Reverse Shock \u2014 Thick Shell", _RVS_PHASES, 0.26, 0.10),
+    ])
 
 
 def _smooth_1d(arr, size):
-    """Uniform 1D smoothing with nearest-edge padding (replaces scipy.ndimage.uniform_filter1d)."""
-    pad = size // 2
-    padded = np.pad(arr, pad, mode="edge")
-    kernel = np.ones(size) / size
-    return np.convolve(padded, kernel, mode="valid")
+    """Uniform 1D smoothing with nearest-edge padding."""
+    return np.convolve(np.pad(arr, size // 2, mode="edge"), np.ones(size) / size, mode="valid")
 
 
 def _plot_quantity_panel(ax_qty, ax_deriv, t, y, qty, phases):
@@ -396,29 +325,17 @@ def _plot_quantity_panel(ax_qty, ax_deriv, t, y, qty, phases):
     for phase, phase_data in phases.items():
         if qty not in phase_data.get("fits", {}):
             continue
-
-        t_range = phase_data["t_range"]
-        fit_info = phase_data["fits"][qty]
-        alpha_fit = fit_info["measured"]
+        t_range, fit_info = phase_data["t_range"], phase_data["fits"][qty]
         alpha_exp = fit_info.get("expected")
-
         mask = (t >= t_range[0]) & (t <= t_range[1]) & valid
         if np.sum(mask) < 2:
             continue
-
         color = PHASE_COLORS.get(phase, "gray")
         t_center = np.sqrt(t_range[0] * t_range[1])
-        y_center = np.interp(t_center, t[mask], y[mask])
-
-        t_ext_min = max(t_min, t_range[0] / 10)
-        t_ext_max = min(t_max, t_range[1] * 10)
-        t_fit = np.logspace(np.log10(t_ext_min), np.log10(t_ext_max), 80)
-
         if alpha_exp is not None:
-            y_exp = y_center * (t_fit / t_center) ** to_float(alpha_exp)
-            label = f"{PHASE_NAMES[phase]}"
-            ax_qty.loglog(t_fit, y_exp, "--", color=color, linewidth=2, label=label)
-
+            t_fit = np.logspace(np.log10(max(t_min, t_range[0] / 10)), np.log10(min(t_max, t_range[1] * 10)), 80)
+            y_exp = np.interp(t_center, t[mask], y[mask]) * (t_fit / t_center) ** to_float(alpha_exp)
+            ax_qty.loglog(t_fit, y_exp, "--", color=color, linewidth=2, label=PHASE_NAMES[phase])
         ax_qty.axvspan(t_range[0], t_range[1], alpha=0.06, color=color)
 
     ax_qty.set_ylabel(QTY_SYMBOLS.get(qty, qty), fontsize=9)
@@ -426,37 +343,25 @@ def _plot_quantity_panel(ax_qty, ax_deriv, t, y, qty, phases):
     ax_qty.grid(True, alpha=0.3)
     plt.setp(ax_qty.get_xticklabels(), visible=False)
 
-    log_t = np.log10(t[valid])
-    log_y = np.log10(y[valid])
-    t_mid, local_slopes = _smooth_slopes(log_t, log_y)
-
+    t_mid, local_slopes = _smooth_slopes(np.log10(t[valid]), np.log10(y[valid]))
     ax_deriv.semilogx(t_mid, local_slopes, "k-", alpha=0.5, linewidth=1)
 
     all_vals = []
     for phase, phase_data in phases.items():
         if qty not in phase_data.get("fits", {}):
             continue
-
-        t_range = phase_data["t_range"]
-        fit_info = phase_data["fits"][qty]
-        alpha_exp = fit_info.get("expected")
-        alpha_fit = fit_info["measured"]
+        t_range, fit_info = phase_data["t_range"], phase_data["fits"][qty]
+        alpha_exp, alpha_fit = fit_info.get("expected"), fit_info["measured"]
         color = PHASE_COLORS.get(phase, "gray")
-
-        t_ext_min = max(t_min, t_range[0] / 10)
-        t_ext_max = min(t_max, t_range[1] * 10)
-
-        ax_deriv.axvspan(t_range[0], t_range[1], alpha=0.08, color=color)
+        t_ext = (max(t_min, t_range[0] / 10), min(t_max, t_range[1] * 10))
         t_text = np.sqrt(t_range[0] * t_range[1])
-
+        ax_deriv.axvspan(t_range[0], t_range[1], alpha=0.08, color=color)
         if alpha_exp is not None:
             alpha_exp_float = to_float(alpha_exp)
-            ax_deriv.hlines(alpha_exp_float, t_ext_min, t_ext_max, colors=color, linestyles="--", linewidth=2)
-            slope_str = format_slope(alpha_exp)
-            ax_deriv.text(t_text, alpha_exp_float - 0.12, slope_str, color=color, fontsize=7,
-                          fontweight="bold", va="top", ha="center")
+            ax_deriv.hlines(alpha_exp_float, *t_ext, colors=color, linestyles="--", linewidth=2)
+            ax_deriv.text(t_text, alpha_exp_float - 0.12, format_slope(alpha_exp), color=color,
+                          fontsize=7, fontweight="bold", va="top", ha="center")
             all_vals.append(alpha_exp_float)
-
         if not np.isnan(alpha_fit):
             ax_deriv.plot(t_text, alpha_fit, "o", color=color, markersize=5, zorder=5)
         all_vals.append(alpha_fit)
@@ -464,7 +369,6 @@ def _plot_quantity_panel(ax_qty, ax_deriv, t, y, qty, phases):
     ax_deriv.set_ylabel("slope", fontsize=7)
     ax_deriv.set_xlabel("Observer Time [s]", fontsize=7)
     ax_deriv.grid(True, alpha=0.3)
-
     if all_vals:
         margin = max(0.3, (max(all_vals) - min(all_vals)) * 0.3)
         ax_deriv.set_ylim(min(all_vals) - margin, max(all_vals) + margin)
@@ -520,21 +424,13 @@ REGIME_TITLES = {
 
 def _format_beta_expr(expr: str) -> str:
     """Format spectral index expression for display (LaTeX-style)."""
-    if expr is None:
+    if not expr:
         return ""
     expr = str(expr)
-    # Handle p-related expressions
     if "p" in expr:
-        # Convert -(p-1)/2 -> $-(p-1)/2$
-        expr = expr.replace("(p-1)", "(p{-}1)")
-        return f"${expr}$"
-    # Handle fractions like "1/3", "-1/2", "5/2"
-    if "/" in expr:
-        parts = expr.split("/")
-        if len(parts) == 2:
-            num, den = parts
-            return f"${num}/{den}$"
-    # Plain number
+        return f"${expr.replace('(p-1)', '(p{-}1)')}$"
+    if "/" in expr and len(parts := expr.split("/")) == 2:
+        return f"${parts[0]}/{parts[1]}$"
     return expr
 
 SEGMENT_COLORS = ["#1f77b4", "#ff7f0e", "#2ca02c", "#d62728"]
@@ -579,31 +475,20 @@ def _plot_spectrum_panel(ax_spec, ax_slope, nu, flux, nu_a, nu_m, nu_c, segments
     # Mark expected slopes for each segment
     all_vals = []
     for i, seg in enumerate(segments):
-        expected = seg.get("expected")
-        expected_expr = seg.get("expected_expr")  # Original expression (fraction or p-related)
-        measured = seg.get("measured")
-        color = SEGMENT_COLORS[i % len(SEGMENT_COLORS)]
-
-        # Use stored frequency ranges (preferred) or fall back to parsing segment name
-        nu_low = seg.get("nu_low")
-        nu_high = seg.get("nu_high")
+        nu_low, nu_high = seg.get("nu_low"), seg.get("nu_high")
         if nu_low is None or nu_high is None:
             continue
-
-        # Shade segment region
-        ax_spec.axvspan(nu_low, nu_high, alpha=0.08, color=color)
-        ax_slope.axvspan(nu_low, nu_high, alpha=0.08, color=color)
-
+        expected, measured = seg.get("expected"), seg.get("measured")
+        color = SEGMENT_COLORS[i % len(SEGMENT_COLORS)]
         nu_center = np.sqrt(nu_low * nu_high)
-
+        for ax in (ax_spec, ax_slope):
+            ax.axvspan(nu_low, nu_high, alpha=0.08, color=color)
         if expected is not None:
             ax_slope.hlines(expected, nu_low, nu_high, colors=color, linestyles="--", linewidth=2)
-            # Display expression if available, otherwise decimal
-            label = _format_beta_expr(expected_expr) if expected_expr else f"{expected:.2f}"
+            label = _format_beta_expr(seg.get("expected_expr")) if seg.get("expected_expr") else f"{expected:.2f}"
             ax_slope.text(nu_center, expected + 0.15, label, color=color, fontsize=6,
                           fontweight="bold", va="bottom", ha="center")
             all_vals.append(expected)
-
         if measured is not None and not np.isnan(measured):
             ax_slope.plot(nu_center, measured, "o", color=color, markersize=4, zorder=5)
             all_vals.append(measured)
@@ -682,13 +567,10 @@ def plot_spectrum_shapes(viz_data: Dict) -> plt.Figure:
 # --- Reverse Shock Visualization ---
 
 
-def plot_rvs_shock_quantities_combined(viz_data: Dict, medium: str = "ISM", regime: str = "") -> plt.Figure:
-    """Plot reverse shock dynamics (mirrors plot_shock_quantities_combined)."""
-    suffix = f" — {regime.title()} Shell" if regime else ""
-    return _plot_quantities_combined(viz_data, medium, ["u", "r", "B", "N_p"], f"Reverse Shock Dynamics{suffix}")
+def _rvs_suffix(regime): return f" — {regime.title()} Shell" if regime else ""
 
+def plot_rvs_shock_quantities_combined(viz_data: Dict, medium: str = "ISM", regime: str = "") -> plt.Figure:
+    return _plot_quantities_combined(viz_data, medium, ["u", "r", "B", "N_p"], f"Reverse Shock Dynamics{_rvs_suffix(regime)}")
 
 def plot_rvs_frequency_quantities_combined(viz_data: Dict, medium: str = "ISM", regime: str = "") -> plt.Figure:
-    """Plot reverse shock frequencies (mirrors plot_frequency_quantities_combined)."""
-    suffix = f" — {regime.title()} Shell" if regime else ""
-    return _plot_quantities_combined(viz_data, medium, ["nu_m", "nu_c", "nu_a", "nu_M"], f"Reverse Shock Frequencies{suffix}")
+    return _plot_quantities_combined(viz_data, medium, ["nu_m", "nu_c", "nu_a", "nu_M"], f"Reverse Shock Frequencies{_rvs_suffix(regime)}")

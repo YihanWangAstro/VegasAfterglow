@@ -31,7 +31,7 @@ auto test_reverse_shock(double xi, double sigma, bool output = true) {
               << physics::scales::thin_shell_dec_radius(E_iso, n_ism, Gamma0) / (2 * Gamma0 * Gamma0) / unit::sec
               << std::endl;
 
-    Coord coord = auto_grid(jet, t_obs, 0.6, theta_v, z, 0.5, 10, 50);
+    Coord coord = auto_grid(jet, medium, t_obs, 0.6, theta_v, z, 0.5, 10, 50);
 
     auto [f_shock, r_shock] = generate_shock_pair(coord, medium, jet, rad_fwd, rad_rvs);
     // auto f_shock = generate_fwd_shock(coord, medium, jet, eps_e, eps_B);
@@ -76,7 +76,7 @@ void test_spreading() {
 
     jet.spreading = true;
 
-    Coord coord = auto_grid(jet, t_obs, con::pi / 2, theta_v, z);
+    Coord coord = auto_grid(jet, medium, t_obs, con::pi / 2, theta_v, z);
 
     auto shock = generate_fwd_shock(coord, medium, jet, rad_fwd);
 
@@ -106,7 +106,7 @@ void test_ic(Real theta_c_) {
     jet.eps_k = math::tophat(theta_c, E_iso / (4 * con::pi));
     jet.Gamma0 = math::tophat(theta_c, Gamma0);
 
-    Coord coord = auto_grid(jet, t_obs, con::pi / 2, theta_v, z);
+    Coord coord = auto_grid(jet, medium, t_obs, con::pi / 2, theta_v, z);
 
     auto shock = generate_fwd_shock(coord, medium, jet, rad_fwd);
 
@@ -161,7 +161,7 @@ void test_FRS() {
               << physics::scales::sedov_length(E_iso, n_ism) / (2 * con::c * std::pow(Gamma0, 8. / 3)) / unit::sec
               << ' ' << physics::scales::shell_thickness_param(E_iso, n_ism, Gamma0, jet.T0) << std::endl;
 
-    Coord coord = auto_grid(jet, t_obs, con::pi / 2, theta_v, z, 0.5, 100, 20);
+    Coord coord = auto_grid(jet, medium, t_obs, con::pi / 2, theta_v, z, 0.5, 100, 20);
     auto [f_shock, r_shock] = generate_shock_pair(coord, medium, jet, rad_fwd, rad_rvs);
     // auto f_shock = generate_fwd_shock(coord, medium, jet, eps_e, eps_B);
     // auto f_shock = generate_fwd_shock(coord, medium, jet, eps_e_rs, eps_B_rs);

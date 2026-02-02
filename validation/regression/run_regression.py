@@ -154,22 +154,18 @@ def _eval_beta(expr, p):
 
 def _beta_expr(b):
     if isinstance(b, F):
-        return f"{b.numerator}/{b.denominator}" if b.denominator != 1 else str(b.numerator)
-    return str(b) if isinstance(b, str) else (str(int(b)) if b == int(b) else str(b))
+        return str(b.numerator) if b.denominator == 1 else f"{b.numerator}/{b.denominator}"
+    return str(int(b)) if not isinstance(b, str) and b == int(b) else str(b)
 
 def _check(measured, expected, tol):
     return bool(not np.isnan(measured) and abs(measured - expected) < tol)
 
 def _segment_range(seg_name, nu_a, nu_m, nu_c):
-    freq_map = {"nu_a": nu_a, "nu_m": nu_m, "nu_c": nu_c}
-    if seg_name.startswith("below_"):
-        nu = freq_map.get(seg_name[6:])
-        return (nu / 1000, nu / 30) if nu else (None, None)
-    if seg_name.startswith("above_"):
-        nu = freq_map.get(seg_name[6:])
-        return (nu * 10, nu * 100) if nu else (None, None)
-    parts = seg_name.split("_to_")
-    if len(parts) == 2 and (lo := freq_map.get(parts[0])) and (hi := freq_map.get(parts[1])):
+    fm = {"nu_a": nu_a, "nu_m": nu_m, "nu_c": nu_c}
+    for prefix, fn in [("below_", lambda nu: (nu / 1000, nu / 30)), ("above_", lambda nu: (nu * 10, nu * 100))]:
+        if seg_name.startswith(prefix):
+            return fn(fm[seg_name[len(prefix):]]) if fm.get(seg_name[len(prefix):]) else (None, None)
+    if "_to_" in seg_name and len(parts := seg_name.split("_to_")) == 2 and (lo := fm.get(parts[0])) and (hi := fm.get(parts[1])):
         return (lo * 5, hi / 20)
     return None, None
 
@@ -198,30 +194,45 @@ def _measure_segment_slopes(model, t_test, regime_name, nu_a, nu_m, nu_c, p):
     return results
 
 
+_MODEL_PARAM_KEYS = ("Gamma0", "A_star", "eps_e", "eps_B", "xi_e", "n_ism")
+_MODEL_RESOLUTIONS = (0.3, 2, 15)
+
+
+def _resolve_params(**overrides):
+    """Merge standard defaults with non-None overrides."""
+    return {**{k: STANDARD_PARAMS[k] for k in _MODEL_PARAM_KEYS}, **{k: v for k, v in overrides.items() if v is not None}}
+
+
+def _make_medium(medium_type, p):
+    return ISM(n_ism=p["n_ism"]) if medium_type == "ISM" else Wind(A_star=p["A_star"])
+
+
+def _make_observer():
+    return Observer(lumi_dist=STANDARD_PARAMS["lumi_dist"], z=STANDARD_PARAMS["z"], theta_obs=0.0)
+
+
+def _make_radiation(p):
+    return Radiation(eps_e=p["eps_e"], eps_B=p["eps_B"], p=STANDARD_PARAMS["p"], xi_e=p["xi_e"])
+
+
 def create_model(medium_type, **overrides):
-    defaults = {k: STANDARD_PARAMS[k] for k in ("Gamma0", "A_star", "eps_e", "eps_B", "xi_e", "n_ism")}
-    p = {**defaults, **{k: v for k, v in overrides.items() if v is not None}}
+    p = _resolve_params(**overrides)
     jet = TophatJet(theta_c=STANDARD_PARAMS["theta_c"], E_iso=STANDARD_PARAMS["E_iso"], Gamma0=p["Gamma0"])
-    medium = ISM(n_ism=p["n_ism"]) if medium_type == "ISM" else Wind(A_star=p["A_star"])
-    observer = Observer(lumi_dist=STANDARD_PARAMS["lumi_dist"], z=STANDARD_PARAMS["z"], theta_obs=0.0)
-    radiation = Radiation(eps_e=p["eps_e"], eps_B=p["eps_B"], p=STANDARD_PARAMS["p"], xi_e=p["xi_e"])
-    return Model(jet, medium, observer, radiation, resolutions=(0.3, 2, 15))
+    return Model(jet, _make_medium(medium_type, p), _make_observer(), _make_radiation(p),
+                 resolutions=_MODEL_RESOLUTIONS)
 
 
 def create_model_with_rvs(medium_type, duration=1, **overrides):
     """Create a model with both forward and reverse shock radiation."""
-    defaults = {k: STANDARD_PARAMS[k] for k in ("Gamma0", "A_star", "eps_e", "eps_B", "xi_e", "n_ism")}
-    p = {**defaults, **{k: v for k, v in overrides.items() if v is not None}}
+    p = _resolve_params(**overrides)
     jet = TophatJet(theta_c=STANDARD_PARAMS["theta_c"], E_iso=STANDARD_PARAMS["E_iso"],
                     Gamma0=p["Gamma0"], duration=duration)
-    medium = ISM(n_ism=p["n_ism"]) if medium_type == "ISM" else Wind(A_star=p["A_star"])
-    observer = Observer(lumi_dist=STANDARD_PARAMS["lumi_dist"], z=STANDARD_PARAMS["z"], theta_obs=0.0)
-    fwd_rad = Radiation(eps_e=p["eps_e"], eps_B=p["eps_B"], p=STANDARD_PARAMS["p"], xi_e=p["xi_e"])
     rvs_rad = Radiation(eps_e=p.get("eps_e_r", p["eps_e"]),
                         eps_B=p.get("eps_B_r", p["eps_B"]),
                         p=p.get("p_r", STANDARD_PARAMS["p"]),
                         xi_e=p.get("xi_e_r", p["xi_e"]))
-    return Model(jet, medium, observer, fwd_rad, rvs_rad, resolutions=(0.3, 2, 15))
+    return Model(jet, _make_medium(medium_type, p), _make_observer(), _make_radiation(p),
+                 rvs_rad, resolutions=_MODEL_RESOLUTIONS)
 
 
 class RegressionRunner:
@@ -248,9 +259,7 @@ class RegressionRunner:
 
     def _status_line(self, measured, expected, passed):
         tag = _bold_green("PASS") if passed else _bold_red("FAIL")
-        if np.isnan(measured):
-            return f"      {tag}: measurement failed"
-        return f"      {tag}: measured={measured:.3f}, expected={expected:.3f}"
+        return f"      {tag}: " + ("measurement failed" if np.isnan(measured) else f"measured={measured:.3f}, expected={expected:.3f}")
 
     # --- Core test methods ---
 
@@ -410,13 +419,24 @@ class RegressionRunner:
             model, t_range, freq_name, expected, name, phase,
             extractor=_rvs, expand_range=True, min_valid=3, type_name="rvs_frequency")
 
-    def run_rvs_shock_dynamics(self):
-        """Test reverse shock dynamics across thin/thick shell regimes and all phases."""
-        for i_regime, (regime, scalings) in enumerate([("thin", RVS_SHOCK_SCALINGS_THIN),
-                                                        ("thick", RVS_SHOCK_SCALINGS_THICK)]):
-            section_num = 4 + i_regime
-            print(_subheader(f"{section_num}. Reverse Shock Dynamics — {regime.title()} Shell (All Phases)"))
-            grid_key = f"rvs_shock_grid_{regime}"
+    def _run_rvs_tests(self, section_start, label, grid_prefix, category_prefix,
+                        scalings_by_regime, quantities, test_fn):
+        """Shared loop for reverse shock dynamics and frequency tests.
+
+        Args:
+            section_start: Starting section number for headers.
+            label: Display label (e.g. "Dynamics" or "Frequencies").
+            grid_prefix: Prefix for results grid key (e.g. "rvs_shock_grid").
+            category_prefix: Prefix for record category (e.g. "rvs_shock_dynamics").
+            scalings_by_regime: List of (regime, scalings_dict) pairs.
+            quantities: List of quantity names to test (e.g. ["u", "r", "B", "N_p"]).
+            test_fn: Callable(model, t_range, qty, exp_val, name, phase) -> result dict.
+        """
+        rvs_time_ranges_map = {"thin": RVS_TIME_RANGES_THIN, "thick": RVS_TIME_RANGES_THICK}
+        for i_regime, (regime, scalings) in enumerate(scalings_by_regime):
+            section_num = section_start + i_regime
+            print(_subheader(f"{section_num}. Reverse Shock {label} — {regime.title()} Shell (All Phases)"))
+            grid_key = f"{grid_prefix}_{regime}"
             self.results.setdefault(grid_key, {})
             for medium in ["ISM", "wind"]:
                 model, mk = self._get_rvs_viz_model(medium, regime), _MEDIUM_KEY[medium]
@@ -424,56 +444,42 @@ class RegressionRunner:
                 self.results[grid_key].setdefault(mk, {})
                 for phase in ["crossing", "BM", "deep_newtonian"]:
                     expected = scalings[phase][medium]
-                    # Skip phases with no expected values (TBD)
                     if all(v is None for v in expected.values()):
                         print(f"\n  Phase: {_cyan(phase)} {_dim('(skipped — scalings TBD)')}")
                         continue
                     print(f"\n  Phase: {_cyan(phase)}")
-                    rvs_time_ranges = RVS_TIME_RANGES_THIN if regime == "thin" else RVS_TIME_RANGES_THICK
-                    t_range = rvs_time_ranges[phase][medium]
+                    t_range = rvs_time_ranges_map[regime][phase][medium]
                     phase_results = {}
-                    for qty in ["u", "r", "B", "N_p"]:
+                    for qty in quantities:
                         exp_val = expected.get(qty)
                         if exp_val is None:
                             continue
-                        result = self._run_rvs_shock_quantity(
+                        result = test_fn(
                             model, t_range, qty, exp_val,
                             f"Reverse Shock {regime} {mk} {phase}: {qty}", phase)
-                        self._record(result, f"rvs_shock_dynamics_{regime}", mk)
+                        self._record(result, f"{category_prefix}_{regime}", mk)
                         phase_results[qty] = result
                     self.results[grid_key][mk][phase] = phase_results
 
+    def run_rvs_shock_dynamics(self):
+        """Test reverse shock dynamics across thin/thick shell regimes and all phases."""
+        self._run_rvs_tests(
+            section_start=4, label="Dynamics",
+            grid_prefix="rvs_shock_grid", category_prefix="rvs_shock_dynamics",
+            scalings_by_regime=[("thin", RVS_SHOCK_SCALINGS_THIN), ("thick", RVS_SHOCK_SCALINGS_THICK)],
+            quantities=["u", "r", "B", "N_p"],
+            test_fn=self._run_rvs_shock_quantity,
+        )
+
     def run_rvs_characteristic_frequencies(self):
         """Test reverse shock characteristic frequency scalings across thin/thick shell regimes."""
-        for i_regime, (regime, scalings) in enumerate([("thin", RVS_FREQ_SCALINGS_THIN),
-                                                        ("thick", RVS_FREQ_SCALINGS_THICK)]):
-            section_num = 6 + i_regime
-            print(_subheader(f"{section_num}. Reverse Shock Frequencies — {regime.title()} Shell (All Phases)"))
-            grid_key = f"rvs_freq_grid_{regime}"
-            self.results.setdefault(grid_key, {})
-            for medium in ["ISM", "wind"]:
-                model, mk = self._get_rvs_viz_model(medium, regime), _MEDIUM_KEY[medium]
-                print(f"\n{_bold(f'--- {mk} ---')}")
-                self.results[grid_key].setdefault(mk, {})
-                for phase in ["crossing", "BM", "deep_newtonian"]:
-                    expected = scalings[phase][medium]
-                    if all(v is None for v in expected.values()):
-                        print(f"\n  Phase: {_cyan(phase)} {_dim('(skipped — scalings TBD)')}")
-                        continue
-                    print(f"\n  Phase: {_cyan(phase)}")
-                    rvs_time_ranges = RVS_TIME_RANGES_THIN if regime == "thin" else RVS_TIME_RANGES_THICK
-                    t_range = rvs_time_ranges[phase][medium]
-                    phase_results = {}
-                    for freq_name in ["nu_m", "nu_c", "nu_M"]:
-                        exp_val = expected.get(freq_name)
-                        if exp_val is None:
-                            continue
-                        result = self._run_rvs_nu_scaling(
-                            model, t_range, freq_name, exp_val,
-                            f"Reverse Shock {regime} {mk} {phase}: {freq_name}", phase)
-                        self._record(result, f"rvs_frequencies_{regime}", mk)
-                        phase_results[freq_name] = result
-                    self.results[grid_key][mk][phase] = phase_results
+        self._run_rvs_tests(
+            section_start=6, label="Frequencies",
+            grid_prefix="rvs_freq_grid", category_prefix="rvs_frequencies",
+            scalings_by_regime=[("thin", RVS_FREQ_SCALINGS_THIN), ("thick", RVS_FREQ_SCALINGS_THICK)],
+            quantities=["nu_m", "nu_c", "nu_M"],
+            test_fn=self._run_rvs_nu_scaling,
+        )
 
     # --- Visualization data collection ---
 
@@ -639,26 +645,29 @@ class RegressionRunner:
         self._print_summary()
         return self.results
 
+    @staticmethod
+    def _format_stats_line(label, stats, label_width=6):
+        """Format a pass/fail stats line with color coding."""
+        n_pass, n_fail = stats["pass"], stats["fail"]
+        if (total := n_pass + n_fail) == 0:
+            return None
+        pct = n_pass / total * 100
+        color = _bold_green if pct == 100 else (_bold_red if pct < 50 else _yellow)
+        fail_str = (_red if n_fail else _dim)(f"{n_fail:2d} fail")
+        return f"  {label:<{label_width}s}: {_green(f'{n_pass:2d} pass')}, {fail_str} ({color(f'{pct:.0f}%')})"
+
     def _print_summary(self):
         print(_header("SUMMARY"))
         print(f"\n{_bold('By Model:')}")
         for model, stats in self.results["summary"]["by_model"].items():
-            n_pass, n_fail = stats["pass"], stats["fail"]
-            total = n_pass + n_fail
-            if total > 0:
-                pct = n_pass / total * 100
-                color = _bold_green if pct == 100 else (_bold_red if pct < 50 else _yellow)
-                fail_str = _red(f"{n_fail:2d} fail") if n_fail else _dim(f"{n_fail:2d} fail")
-                print(f"  {model:6s}: {_green(f'{n_pass:2d} pass')}, {fail_str} ({color(f'{pct:.0f}%')})")
+            line = self._format_stats_line(model, stats)
+            if line:
+                print(line)
         print(f"\n{_bold('By Category:')}")
         for cat, stats in self.results["summary"]["by_category"].items():
-            n_pass, n_fail = stats["pass"], stats["fail"]
-            total = n_pass + n_fail
-            if total > 0:
-                pct = n_pass / total * 100
-                color = _bold_green if pct == 100 else (_bold_red if pct < 50 else _yellow)
-                fail_str = _red(f"{n_fail:2d} fail") if n_fail else _dim(f"{n_fail:2d} fail")
-                print(f"  {cat:20s}: {_green(f'{n_pass:2d} pass')}, {fail_str} ({color(f'{pct:.0f}%')})")
+            line = self._format_stats_line(cat, stats, label_width=20)
+            if line:
+                print(line)
         n_tests = len(self.results["tests"])
         n_pass = sum(1 for t in self.results["tests"] if t.get("passed", False))
         pct = n_pass / n_tests * 100

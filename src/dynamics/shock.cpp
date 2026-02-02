@@ -51,7 +51,6 @@ void Shock::broadcast_theta(Array const& theta_coords, size_t src_phi_id, size_t
                 Gamma_th(i, j, k) = Gamma_th(src_phi_id, src_theta_id, k);
                 B(i, j, k) = B(src_phi_id, src_theta_id, k);
                 N_p(i, j, k) = N_p(src_phi_id, src_theta_id, k);
-                //required(i, j, k) = required(src_phi_id, src_theta_id, k);
             }
         }
     }

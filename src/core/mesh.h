@@ -156,8 +156,8 @@ Array boundary_to_center_log(Array const& boundary);
  *          spaced between t_min and t_max, and the theta grid is generated linearly.
  * <!-- ************************************************************************************** -->
  */
-template <typename Ejecta>
-Coord auto_grid(Ejecta const& jet, Array const& t_obs, Real theta_cut, Real theta_view, Real z,
+template <typename Ejecta, typename Medium>
+Coord auto_grid(Ejecta const& jet, Medium const& medium, Array const& t_obs, Real theta_cut, Real theta_view, Real z,
                 Real phi_resol = defaults::grid::phi_resolution, Real theta_resol = defaults::grid::theta_resolution,
                 Real t_resol = defaults::grid::time_resolution, bool is_axisymmetric = true, Real phi_view = 0,
                 size_t min_theta_num = defaults::grid::min_theta_points,
@@ -165,18 +165,16 @@ Coord auto_grid(Ejecta const& jet, Array const& t_obs, Real theta_cut, Real thet
 
 /**
  * <!-- ************************************************************************************** -->
- * @brief Determines the edge of the jet based on a given gamma cut-off using binary search
+ * @brief Finds all sharp edges in the jet Gamma0 profile plus the outermost boundary
  * @tparam Ejecta Type of the jet/ejecta class
  * @param jet The jet/ejecta object
  * @param gamma_cut Lorentz factor cutoff value
- * @param phi_resol
- * @param theta_resol
  * @param is_axisymmetric Flag for axisymmetric jets
- * @return Angle (in radians) at which the jet's Lorentz factor drops to gamma_cut
+ * @return Sorted vector of edge theta positions; last element is the outermost jet edge
  * <!-- ************************************************************************************** -->
  */
 template <typename Ejecta>
-Real find_jet_edge(Ejecta const& jet, Real gamma_cut, Real phi_resol, Real theta_resol, bool is_axisymmetric);
+std::vector<Real> find_jet_edges(Ejecta const& jet, Real gamma_cut, bool is_axisymmetric);
 
 /**
  * <!-- ************************************************************************************** -->
@@ -236,43 +234,60 @@ void logspace_boundary_center(Real lg2_min, Real lg2_max, size_t size, Arr& cent
 }
 
 template <typename Ejecta>
-Real find_jet_edge(Ejecta const& jet, Real gamma_cut, Real phi_resol, Real theta_resol, bool is_axisymmetric) {
-    // binary search for the edge of the jet
-    if (jet.Gamma0(0, con::pi / 2) >= gamma_cut) {
-        return con::pi / 2; // If the Lorentz factor at pi/2 is above the cut, the jet extends to pi/2.
-    }
-    Real low = 0;
-    Real hi = con::pi / 2;
+std::vector<Real> find_jet_edges(Ejecta const& jet, Real gamma_cut, [[maybe_unused]] bool is_axisymmetric) {
+    // Find all edges in the active jet region (Gamma0 >= gamma_cut).
+    // Sharp edges: large fractional jumps (> 50%) between adjacent scan points.
+    // Smooth jets: the outermost theta where Gamma0 crosses gamma_cut.
+    constexpr size_t n_scan = 512;
     constexpr Real eps = defaults::solver::binary_search_eps;
-    while (hi - low > eps) {
-        if (Real mid = 0.5 * (low + hi); jet.Gamma0(0, mid) > gamma_cut) {
-            low = mid;
-        } else {
-            hi = mid;
-        }
+    const Real theta_lo = defaults::grid::theta_min;
+    const Real theta_hi = con::pi / 2;
+
+    if (jet.Gamma0(0, theta_hi) >= gamma_cut) {
+        return {theta_hi};
     }
 
-    // grid-based search for the edge of the jet
-    size_t phi_num = std::max<size_t>(static_cast<size_t>(360. * phi_resol), 1);
-    phi_num = is_axisymmetric ? 1 : phi_num;
-    const size_t theta_num = std::max<size_t>(static_cast<size_t>(90. * theta_resol), 32);
-    const auto phi = xt::linspace(0., 2 * con::pi, phi_num);
-    const auto theta = xt::linspace(0., con::pi / 2, theta_num);
+    std::vector<Real> edges;
+    Real prev_th = theta_lo;
+    Real prev_G = jet.Gamma0(0, theta_lo);
 
-    Real theta_edge = con::pi / 2;
+    for (size_t j = 1; j < n_scan; ++j) {
+        const Real cur_th = theta_lo + (theta_hi - theta_lo) * static_cast<Real>(j) / (n_scan - 1);
+        const Real cur_G = jet.Gamma0(0, cur_th);
 
-    for (size_t i = 0; i < phi_num; ++i) {
-        for (int j = theta_num - 1; j >= 0; --j) {
-            if (jet.Gamma0(phi[i], theta[j]) >= gamma_cut) {
-                theta_edge = theta[j];
-                break; // Found the edge for this phi, no need to check lower theta values
-            } else {
-                theta_edge = theta[j];
+        if (prev_G >= gamma_cut || cur_G >= gamma_cut) {
+            const Real dG = std::abs(cur_G - prev_G);
+            const Real scale = std::max(prev_G - 1, cur_G - 1);
+            if (scale > 0 && dG > 0.5 * scale) {
+                Real lo = prev_th, hi = cur_th;
+                while (hi - lo > eps) {
+                    const Real mid = 0.5 * (lo + hi);
+                    const Real G_mid = jet.Gamma0(0, mid);
+                    if (std::abs(G_mid - prev_G) < std::abs(G_mid - cur_G)) {
+                        lo = mid;
+                    } else {
+                        hi = mid;
+                    }
+                }
+                edges.push_back(lo);
+            }
+        }
+        prev_th = cur_th;
+        prev_G = cur_G;
+    }
+
+    // Smooth jet: no sharp edges found — scan downward from pi/2 to find outermost Gamma0 >= gamma_cut
+    if (edges.empty()) {
+        const Real step = (theta_hi - theta_lo) / n_scan;
+        for (Real th = theta_hi; th >= theta_lo; th -= step) {
+            if (jet.Gamma0(0, th) >= gamma_cut) {
+                edges.push_back(th);
+                break;
             }
         }
     }
 
-    return std::max(theta_edge, low);
+    return edges;
 }
 
 template <typename Ejecta, typename Medium>
@@ -361,17 +376,27 @@ Array adaptive_phi_grid(Ejecta const& jet, size_t phi_num, Real theta_v, Real th
     if ((theta_v == 0 && is_axisymmetric) || theta_v > theta_max) {
         return xt::linspace(0., 2 * con::pi, phi_num);
     } else {
-        Real cos2 = std::cos(theta_v);
-        cos2 = cos2 * cos2;
-        const Real sin2 = 1 - cos2;
+        const Real cos_tv = std::cos(theta_v);
+        const Real sin_tv = std::sin(theta_v);
+
+        // Sample a few theta values to find the peak Doppler weight at each phi
+        constexpr size_t n_theta_sample = 8;
+        const Real theta_min = defaults::grid::theta_min;
 
         auto eqn = [=, &jet](Real const& cdf, Real& pdf, Real phi) {
-            const Real Gamma = jet.Gamma0(phi, theta_v);
-            const Real beta = std::sqrt(std::fabs(Gamma * Gamma - 1)) / Gamma;
-            // Real D = 1 / (Gamma * (1 - beta * (std::cos(phi) * sin2 + cos2)));
-            const Real a = (1 - beta) / (1 - beta * (std::cos(phi) * sin2 + cos2));
-            pdf = a * Gamma * std::sqrt((Gamma - 1) * Gamma);
-            // pdf = D * std::sqrt((Gamma - 1) * Gamma);
+            const Real cos_phi = std::cos(phi);
+            Real max_weight = 0;
+            for (size_t it = 0; it < n_theta_sample; ++it) {
+                const Real theta = theta_min + (theta_max - theta_min) * static_cast<Real>(it) / (n_theta_sample - 1);
+                const Real Gamma = jet.Gamma0(phi, theta);
+                const Real beta = std::sqrt(std::fabs(Gamma * Gamma - 1)) / Gamma;
+                // cos(angle to LOS) = cos(theta)cos(theta_v) + sin(theta)sin(theta_v)cos(phi)
+                const Real cos_alpha = std::cos(theta) * cos_tv + std::sin(theta) * sin_tv * cos_phi;
+                const Real a = (1 - beta) / (1 - beta * cos_alpha);
+                const Real weight = a * Gamma * std::sqrt((Gamma - 1) * Gamma) * std::sin(theta);
+                max_weight = std::max(max_weight, weight);
+            }
+            pdf = max_weight;
         };
 
         return inverse_CFD_sampling(eqn, 0, 2 * con::pi, phi_num);
@@ -406,14 +431,54 @@ Array merge_grids(Arr const& arr1, Arr const& arr2) {
     return xt::adapt(result);
 }
 
-template <typename Ejecta>
-Coord auto_grid(Ejecta const& jet, Array const& t_obs, Real theta_cut, Real theta_view, Real z, Real phi_resol,
-                Real theta_resol, Real t_resol, bool is_axisymmetric, Real phi_view, size_t min_theta_num,
-                Real fwd_ratio) {
+/**
+ * @brief Estimates deceleration time for a given angle from ejecta and medium properties.
+ * @details Integrates swept mass outward until m_swept = m_jet/Gamma0. Returns lab-frame time.
+ */
+template <typename Ejecta, typename Medium>
+Real estimate_t_dec(Ejecta const& jet, Medium const& medium, Real phi, Real theta) {
+    const Real gamma = jet.Gamma0(phi, theta);
+    if (gamma <= 1) {
+        return con::inf;
+    }
+    const Real beta = physics::relativistic::gamma_to_beta(gamma);
+    const Real m_jet = jet.eps_k(phi, theta) / (gamma * con::c2);
+    const Real target = m_jet / gamma;
+
+    constexpr size_t N = 256;
+    const Real u_min = std::log(1e-3);
+    const Real u_max = u_min + 40 * std::log(10.0);
+    const Real du = (u_max - u_min) / N;
+
+    Real mass = 0;
+    Real r_prev = std::exp(u_min);
+    Real f_prev = medium.rho(phi, theta, r_prev) * r_prev * r_prev;
+
+    for (size_t i = 1; i <= N; ++i) {
+        const Real r_i = std::exp(u_min + i * du);
+        const Real f_i = medium.rho(phi, theta, r_i) * r_i * r_i;
+        const Real dr = r_i - r_prev;
+        mass += 0.5 * (f_prev + f_i) * dr;
+
+        if (mass >= target) {
+            const Real r_dec = r_prev + (target - (mass - 0.5 * (f_prev + f_i) * dr)) / f_i;
+            return r_dec * (1 - beta) / (beta * con::c);
+        }
+        f_prev = f_i;
+        r_prev = r_i;
+    }
+    return std::exp(u_max) * (1 - beta) / (beta * con::c);
+}
+
+template <typename Ejecta, typename Medium>
+Coord auto_grid(Ejecta const& jet, Medium const& medium, Array const& t_obs, Real theta_cut, Real theta_view, Real z,
+                Real phi_resol, Real theta_resol, Real t_resol, bool is_axisymmetric, Real phi_view,
+                size_t min_theta_num, Real fwd_ratio) {
     Coord coord;
     coord.theta_view = theta_view;
 
-    const Real jet_edge = find_jet_edge(jet, con::Gamma_cut, phi_resol, theta_resol, is_axisymmetric);
+    const auto jet_edges = find_jet_edges(jet, con::Gamma_cut, is_axisymmetric);
+    const Real jet_edge = jet_edges.back(); // outermost edge
     Real theta_min = defaults::grid::theta_min;
     Real theta_max = std::min(jet_edge, theta_cut);
 
@@ -424,22 +489,26 @@ Coord auto_grid(Ejecta const& jet, Array const& t_obs, Real theta_cut, Real thet
 
     const Array uniform_theta = xt::linspace(theta_min, theta_max, uniform_theta_num);
     const Array adaptive_theta = adaptive_theta_grid(jet, theta_min, theta_max, adaptive_theta_num, theta_view);
-    coord.theta = merge_grids(uniform_theta, adaptive_theta);
+    const Array anchor_theta = xt::adapt(jet_edges);
+    coord.theta = merge_grids(merge_grids(uniform_theta, adaptive_theta), anchor_theta);
 
     // coord.theta = uniform_theta;
-
     const size_t phi_num = std::max<size_t>(static_cast<size_t>(360 * phi_resol), 1);
-    const size_t uniform_phi_num = static_cast<size_t>(static_cast<Real>(phi_num) * fwd_ratio);
-    const size_t adaptive_phi_num = phi_num - uniform_phi_num;
 
-    const Array uniform_phi = xt::linspace(0., 2 * con::pi, uniform_phi_num);
-    const Array adaptive_phi = adaptive_phi_grid(jet, adaptive_phi_num, theta_view, theta_max, is_axisymmetric);
-    coord.phi = merge_grids(uniform_phi, adaptive_phi);
-    // coord.phi = uniform_phi;
+    coord.phi = adaptive_phi_grid(jet, phi_num, theta_view, theta_max, is_axisymmetric);
 
     const Real t_max = *std::ranges::max_element(t_obs);
     const Real t_min = *std::ranges::min_element(t_obs);
-    size_t t_num = std::max<size_t>(static_cast<size_t>(std::log10(t_max / t_min) * t_resol), 24);
+    const size_t base_t_num = std::max<size_t>(static_cast<size_t>(std::log10(t_max / t_min) * t_resol), 24);
+
+    // Refinement around t_dec: add extra points without reducing density elsewhere
+    constexpr Real refine_ratio = 2.0;
+    constexpr Real refine_lo_factor = 0.3;
+    constexpr Real refine_hi_factor = 10.0;
+    // Max extra points: full refinement zone = log10(hi/lo) decades at (refine_ratio-1)*base density
+    const size_t refine_extra =
+        static_cast<size_t>((refine_ratio - 1.0) * t_resol * std::log10(refine_hi_factor / refine_lo_factor));
+    const size_t t_num = base_t_num + refine_extra;
 
     const size_t theta_size = coord.theta.size();
     const size_t phi_size_needed = is_axisymmetric ? 1 : coord.phi.size();
@@ -447,14 +516,56 @@ Coord auto_grid(Ejecta const& jet, Array const& t_obs, Real theta_cut, Real thet
     for (size_t i = 0; i < phi_size_needed; ++i) {
         for (size_t j = 0; j < theta_size; ++j) {
             const Real b = physics::relativistic::gamma_to_beta(jet.Gamma0(coord.phi(i), coord.theta(j)));
-            // Real theta_max = coord.theta(j) + theta_view;
             const Real theta_v_max = coord.theta.back() + theta_view;
             const Real t_start =
                 std::max<Real>(0.99 * t_min * (1 - b) / (1 - std::cos(theta_v_max) * b) / (1 + z), 1e-2 * unit::sec);
             const Real t_end = 1.01 * t_max / (1 + z);
-            xt::view(coord.t, i, j, xt::all()) = xt::logspace(std::log10(t_start), std::log10(t_end), t_num);
+
+            const Real t_dec = estimate_t_dec(jet, medium, coord.phi(i), coord.theta(j));
+            const Real t_lo = std::max(refine_lo_factor * t_dec, t_start);
+            const Real t_hi = std::min(refine_hi_factor * t_dec, t_end);
+
+            if (refine_extra > 0 && t_dec > t_start && t_dec < t_end) {
+                const Real log_s = std::log10(t_start);
+                const Real log_e = std::log10(t_end);
+                const Real log_lo = std::log10(t_lo);
+                const Real log_hi = std::log10(t_hi);
+                const Real log_before = log_lo - log_s;
+                const Real log_refine = log_hi - log_lo;
+                const Real log_after = log_e - log_hi;
+
+                // Outer segments: base density (t_resol pts/decade)
+                size_t n1 = (log_before > 0) ? std::max<size_t>(static_cast<size_t>(t_resol * log_before), 2) : 0;
+                size_t n3 = (log_after > 0) ? std::max<size_t>(static_cast<size_t>(t_resol * log_after), 2) : 0;
+                // Shared endpoints at segment junctions
+                size_t shared = (n1 > 0 ? 1 : 0) + (n3 > 0 ? 1 : 0);
+                // Refinement segment gets all remaining points
+                size_t n2 = std::max<size_t>(t_num + shared - n1 - n3, 2);
+
+                auto t_view = xt::view(coord.t, i, j, xt::all());
+                size_t idx = 0;
+
+                if (n1 > 0) {
+                    auto seg1 = xt::logspace(log_s, log_lo, n1);
+                    for (size_t k = 0; k < n1 && idx < t_num; ++k)
+                        t_view(idx++) = seg1(k);
+                }
+                {
+                    auto seg2 = xt::logspace(log_lo, log_hi, n2);
+                    size_t k0 = (n1 > 0) ? 1 : 0;
+                    for (size_t k = k0; k < n2 && idx < t_num; ++k)
+                        t_view(idx++) = seg2(k);
+                }
+                if (n3 > 0) {
+                    auto seg3 = xt::logspace(log_hi, log_e, n3);
+                    for (size_t k = 1; k < n3 && idx < t_num; ++k)
+                        t_view(idx++) = seg3(k);
+                }
+            } else {
+                xt::view(coord.t, i, j, xt::all()) = xt::logspace(std::log10(t_start), std::log10(t_end), t_num);
+            }
         }
     }
 
-    return coord; // Construct coordinate object.
+    return coord;
 }

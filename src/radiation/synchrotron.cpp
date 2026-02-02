@@ -186,6 +186,13 @@ Real compute_gamma_c(Real t_comv, Real B, Real Y) {
     return gamma_c;
 }
 
+Real cool_after_crossing(Real gamma_x, Real gamma_m_x, Real gamma_m, Real dt_comv, Real B, Real Y) {
+    //Real gamma_c_dt = compute_gamma_c(dt_comv, B, Y);
+    Real gamma_syn = gamma_x; //* gamma_c_dt / (gamma_x + gamma_c_dt);
+    Real f_ad = (gamma_m - 1) / (gamma_m_x - 1);
+    return (gamma_syn - 1) * f_ad + 1;
+}
+
 /**
  * <!-- ************************************************************************************** -->
  * @internal
@@ -434,11 +441,13 @@ void generate_syn_electrons(SynElectronGrid& electrons, Shock const& shock) {
                 elec.column_den = elec.N_e / (r * r);
                 const Real I_nu_peak = compute_syn_I_peak(B, rad.p, elec.column_den);
 
-                // no new shocked electrons, the cooling Lorentz factor is the truncation Lorentz factor
+                // no new shocked electrons, cool the relic population from crossing
                 if (k >= k_inj) {
                     const auto& inj = electrons(i, j, k_inj - 1);
-                    elec.gamma_c = (inj.gamma_c - 1) * (elec.gamma_m - 1) / (inj.gamma_m - 1) + 1;
-                    elec.gamma_M = elec.gamma_c;
+                    const Real dt_comv = t_com - shock.t_comv(i, j, k_inj - 1);
+                    elec.gamma_c = cool_after_crossing(inj.gamma_c, inj.gamma_m, elec.gamma_m, t_com, B, 0);
+
+                    elec.gamma_M = cool_after_crossing(inj.gamma_M, inj.gamma_m, elec.gamma_m, dt_comv, B, 0);
                 } else {
                     elec.gamma_c = compute_gamma_c(t_com, B, 0.);
                 }

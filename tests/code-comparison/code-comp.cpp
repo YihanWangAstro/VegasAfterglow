@@ -54,7 +54,7 @@ void lc_gen(std::string folder_name, bool out = false) {
     }
     jet.spreading = false;
 
-    Coord coord = auto_grid(jet, t_bins, theta_w, theta_view, z);
+    Coord coord = auto_grid(jet, medium, t_bins, theta_w, theta_view, z);
 
     // solve dynamics
     Shock f_shock = generate_fwd_shock(coord, medium, jet, rad_fwd);

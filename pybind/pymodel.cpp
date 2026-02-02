@@ -221,8 +221,8 @@ void PyModel::single_evo_details(Shock const& shock, Coord const& coord, Observe
 
 auto PyModel::details(Real t_min, Real t_max) const -> PyDetails {
     const Array t_obs = xt::logspace(std::log10(t_min * unit::sec), std::log10(t_max * unit::sec), 10);
-    Coord coord = auto_grid(jet_, t_obs, this->theta_w, obs_setup.theta_obs, obs_setup.z, phi_resol, theta_resol,
-                            t_resol, axisymmetric);
+    Coord coord = auto_grid(jet_, medium_, t_obs, this->theta_w, obs_setup.theta_obs, obs_setup.z, phi_resol,
+                            theta_resol, t_resol, axisymmetric);
 
     PyDetails details;
 

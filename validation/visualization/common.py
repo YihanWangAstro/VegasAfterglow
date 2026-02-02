@@ -43,13 +43,10 @@ QTY_SYMBOLS = {"u": r"$\Gamma\beta$", "Gamma": r"$\Gamma$", "r": r"$r$", "B": r"
 
 
 def to_float(value):
+    """Convert a value to float, handling Fraction and string representations."""
     from fractions import Fraction
     if value is None:
         return None
-    if isinstance(value, (int, float)):
-        return float(value)
-    if isinstance(value, Fraction):
-        return float(value)
     if isinstance(value, str):
         try:
             return float(Fraction(value))
@@ -62,12 +59,9 @@ def format_slope(value):
     from fractions import Fraction
     if value is None:
         return ""
-    if isinstance(value, str):
-        return value
-    if isinstance(value, Fraction):
+    if isinstance(value, (str, Fraction)):
         return str(value)
-    frac = Fraction(value).limit_denominator(100)
-    return str(frac)
+    return str(Fraction(value).limit_denominator(100))
 
 
 def get_flux_time(config: Dict) -> float:
@@ -167,11 +161,9 @@ def get_runtime_build_info() -> Dict[str, str]:
     compile_commands = Path(__file__).parent.parent.parent / "compile_commands.json"
     if compile_commands.exists():
         try:
-            with open(compile_commands, "r") as f:
-                data = json.load(f)
+            data = json.loads(compile_commands.read_text())
             if data:
-                cmd = data[0].get("command", "")
-                parts = cmd.split()
+                parts = data[0].get("command", "").split()
                 if parts:
                     compiler_name = Path(parts[0]).name
                     try:
@@ -195,34 +187,34 @@ def extract_session_metadata(session: Dict) -> Dict[str, str]:
     metadata = get_runtime_build_info()
     for key, field in [("vegasafterglow_version", "Version"), ("python_version", "Python"), ("commit", "Commit"),
                        ("platform", "Platform"), ("compiler", "Compiler"), ("compile_flags", "Flags")]:
-        session_value = session.get(key)
-        # Only override if session has a valid (non-empty, non-unknown) value
-        if session_value and session_value != "unknown":
-            metadata[field] = session_value
+        if (val := session.get(key)) and val != "unknown":
+            metadata[field] = val
     return metadata
 
 
-def find_benchmark_file() -> Optional[str]:
-    candidates = [Path(__file__).parent.parent / "benchmark" / "results" / "benchmark_history.json",
-                  Path("tests/benchmark/results/benchmark_history.json"), Path("benchmark/results/benchmark_history.json")]
+def _find_result_file(subdir: str, filename: str) -> Optional[str]:
+    """Search common locations for a validation result file."""
+    candidates = [
+        Path(__file__).parent.parent / subdir / "results" / filename,
+        Path(f"tests/{subdir}/results/{filename}"),
+        Path(f"{subdir}/results/{filename}"),
+    ]
     for candidate in candidates:
         if candidate.exists():
             return str(candidate.resolve())
     return None
+
+
+def find_benchmark_file() -> Optional[str]:
+    return _find_result_file("benchmark", "benchmark_history.json")
 
 
 def find_regression_file() -> Optional[str]:
-    candidates = [Path(__file__).parent.parent / "regression" / "results" / "regression_results.json",
-                  Path("tests/regression/results/regression_results.json"), Path("regression/results/regression_results.json")]
-    for candidate in candidates:
-        if candidate.exists():
-            return str(candidate.resolve())
-    return None
+    return _find_result_file("regression", "regression_results.json")
 
 
 def load_json(filepath: str) -> Dict:
-    with open(filepath) as f:
-        return json.load(f)
+    return json.loads(Path(filepath).read_text())
 
 
 def create_title_page(pdf: PdfPages, title: str, subtitle: str = "", metadata: Optional[Dict] = None):
@@ -231,47 +223,35 @@ def create_title_page(pdf: PdfPages, title: str, subtitle: str = "", metadata: O
     # Try to load and display logo (prefer PNG, fall back to SVG conversion)
     logo_displayed = False
     assets_dir = Path(__file__).parent.parent.parent / "assets"
-    logo_png = assets_dir / "logo.png"
-    logo_svg = assets_dir / "logo.svg"
-
     img = None
-    # Try PNG first (no external dependencies)
-    if logo_png.exists():
+    if (logo_png := assets_dir / "logo.png").exists():
         try:
             from PIL import Image
             img = Image.open(logo_png)
         except ImportError:
             pass
-
-    # Try SVG with cairosvg if PNG not available
-    if img is None and logo_svg.exists():
+    if img is None and (logo_svg := assets_dir / "logo.svg").exists():
         try:
             import cairosvg
             from io import BytesIO
             from PIL import Image
-            png_data = cairosvg.svg2png(url=str(logo_svg), output_width=400)
-            img = Image.open(BytesIO(png_data))
+            img = Image.open(BytesIO(cairosvg.svg2png(url=str(logo_svg), output_width=400)))
         except (ImportError, OSError):
             pass
-
     if img is not None:
         try:
-            # Add axes for logo (centered, upper portion of page)
-            ax = fig.add_axes([0.25, 0.62, 0.5, 0.25])  # [left, bottom, width, height]
+            ax = fig.add_axes([0.25, 0.62, 0.5, 0.25])
             ax.imshow(img)
             ax.axis("off")
             logo_displayed = True
         except Exception:
             pass
-
     if not logo_displayed:
         fig.text(0.5, 0.70, "VegasAfterglow", fontsize=36, ha="center", fontweight="bold", color="#2C3E50")
 
-    # Adjust vertical positions based on whether logo is displayed
-    title_y = 0.55 if logo_displayed else 0.62
-    subtitle_y = 0.49 if logo_displayed else 0.56
-    timestamp_y = 0.43 if logo_displayed else 0.48
-    metadata_y = 0.36 if logo_displayed else 0.40
+    # Vertical positions depend on whether logo is displayed
+    dy = -0.07 if logo_displayed else 0
+    title_y, subtitle_y, timestamp_y, metadata_y = 0.62 + dy, 0.56 + dy, 0.48 + dy, 0.40 + dy
 
     fig.text(0.5, title_y, title, fontsize=24, ha="center", color="#34495E")
     if subtitle:
@@ -279,21 +259,13 @@ def create_title_page(pdf: PdfPages, title: str, subtitle: str = "", metadata: O
     fig.text(0.5, timestamp_y, f"Generated: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}", fontsize=11, ha="center", color="#95A5A6")
     if metadata:
         y_start = metadata_y
-        version_info = []
-        if "Version" in metadata:
-            version_info.append(f"VegasAfterglow {metadata['Version']}")
-        if "Python" in metadata:
-            version_info.append(f"Python {metadata['Python']}")
+        version_info = " | ".join(f"{k} {metadata[k]}" for k in ("Version", "Python") if k in metadata)
         if version_info:
-            fig.text(0.5, y_start, " | ".join(version_info), fontsize=10, ha="center", color="#34495E", fontweight="bold")
+            fig.text(0.5, y_start, version_info.replace("Version", "VegasAfterglow"), fontsize=10, ha="center", color="#34495E", fontweight="bold")
             y_start -= 0.04
-        env_info = []
-        if "Commit" in metadata:
-            env_info.append(f"Commit: {metadata['Commit']}")
-        if "Platform" in metadata:
-            env_info.append(f"Platform: {metadata['Platform']}")
+        env_info = " | ".join(f"{k}: {metadata[k]}" for k in ("Commit", "Platform") if k in metadata)
         if env_info:
-            fig.text(0.5, y_start, " | ".join(env_info), fontsize=9, ha="center", color="#7F8C8D")
+            fig.text(0.5, y_start, env_info, fontsize=9, ha="center", color="#7F8C8D")
     fig.text(0.5, 0.08, "Powered by Claude Code", fontsize=9, ha="center", color="#95A5A6", style="italic")
     pdf.savefig(fig)
     plt.close(fig)
@@ -342,17 +314,14 @@ def _parse_markdown_content(markdown_path: Path) -> List[Dict]:
             continue
 
         # Headers
-        if line.startswith('# '):
-            elements.append({'type': 'h1', 'content': line[2:].strip()})
-            i += 1
-            continue
-        if line.startswith('## '):
-            elements.append({'type': 'h2', 'content': line[3:].strip()})
-            i += 1
-            continue
-        if line.startswith('### '):
-            elements.append({'type': 'h3', 'content': line[4:].strip()})
-            i += 1
+        _header_match = None
+        for prefix, htype in [('### ', 'h3'), ('## ', 'h2'), ('# ', 'h1')]:
+            if line.startswith(prefix):
+                elements.append({'type': htype, 'content': line[len(prefix):].strip()})
+                i += 1
+                _header_match = True
+                break
+        if _header_match:
             continue
 
         # Table (starts with |)
@@ -441,54 +410,17 @@ def _render_markdown_with_reportlab(markdown_path: Path, output_path: Path) -> b
 
         # Define styles
         styles = getSampleStyleSheet()
-
-        title_style = ParagraphStyle(
-            'CustomTitle',
-            parent=styles['Heading1'],
-            fontSize=18,
-            spaceAfter=12,
-            textColor=colors.HexColor('#2C3E50'),
-            fontName='Helvetica-Bold'
-        )
-
-        h2_style = ParagraphStyle(
-            'CustomH2',
-            parent=styles['Heading2'],
-            fontSize=14,
-            spaceBefore=16,
-            spaceAfter=8,
-            textColor=colors.HexColor('#34495E'),
-            fontName='Helvetica-Bold'
-        )
-
-        h3_style = ParagraphStyle(
-            'CustomH3',
-            parent=styles['Heading3'],
-            fontSize=12,
-            spaceBefore=12,
-            spaceAfter=6,
-            textColor=colors.HexColor('#4A5568'),
-            fontName='Helvetica-Bold'
-        )
-
-        body_style = ParagraphStyle(
-            'CustomBody',
-            parent=styles['Normal'],
-            fontSize=10,
-            spaceBefore=4,
-            spaceAfter=4,
-            leading=14,
-            fontName='Helvetica'
-        )
-
-        bullet_style = ParagraphStyle(
-            'CustomBullet',
-            parent=body_style,
-            leftIndent=20,
-            bulletIndent=10,
-            spaceBefore=2,
-            spaceAfter=2
-        )
+        _ps = ParagraphStyle
+        title_style = _ps('CustomTitle', parent=styles['Heading1'], fontSize=18, spaceAfter=12,
+                          textColor=colors.HexColor('#2C3E50'), fontName='Helvetica-Bold')
+        h2_style = _ps('CustomH2', parent=styles['Heading2'], fontSize=14, spaceBefore=16, spaceAfter=8,
+                       textColor=colors.HexColor('#34495E'), fontName='Helvetica-Bold')
+        h3_style = _ps('CustomH3', parent=styles['Heading3'], fontSize=12, spaceBefore=12, spaceAfter=6,
+                       textColor=colors.HexColor('#4A5568'), fontName='Helvetica-Bold')
+        body_style = _ps('CustomBody', parent=styles['Normal'], fontSize=10, spaceBefore=4, spaceAfter=4,
+                         leading=14, fontName='Helvetica')
+        bullet_style = _ps('CustomBullet', parent=body_style, leftIndent=20, bulletIndent=10,
+                           spaceBefore=2, spaceAfter=2)
 
         # Build document content
         story = []
@@ -514,45 +446,28 @@ def _render_markdown_with_reportlab(markdown_path: Path, output_path: Path) -> b
                 text = re.sub(r'`([^`]+)`', r'<font face="Courier" size="9">\1</font>', text)
                 return text
 
-            if elem_type == 'h1':
-                story.append(Paragraph(convert_formatting(content), title_style))
-            elif elem_type == 'h2':
-                story.append(Paragraph(convert_formatting(content), h2_style))
-            elif elem_type == 'h3':
-                story.append(Paragraph(convert_formatting(content), h3_style))
-            elif elem_type == 'paragraph':
-                story.append(Paragraph(convert_formatting(content), body_style))
+            _style_map = {'h1': title_style, 'h2': h2_style, 'h3': h3_style, 'paragraph': body_style}
+            if elem_type in _style_map:
+                story.append(Paragraph(convert_formatting(content), _style_map[elem_type]))
             elif elem_type == 'bullet':
                 story.append(Paragraph(f"• {convert_formatting(content)}", bullet_style))
             elif elem_type == 'hr':
                 story.append(Spacer(1, 6))
                 story.append(HRFlowable(width="100%", thickness=1, color=colors.HexColor('#BDC3C7')))
                 story.append(Spacer(1, 6))
-            elif elem_type == 'table':
-                rows = content
-                if rows:
-                    # Convert cell content
-                    table_data = []
-                    for row in rows:
-                        table_data.append([Paragraph(convert_formatting(cell), body_style) for cell in row])
-
-                    # Create table with styling
-                    t = Table(table_data, repeatRows=1)
-                    t.setStyle(TableStyle([
-                        ('BACKGROUND', (0, 0), (-1, 0), colors.HexColor('#ECF0F1')),
-                        ('FONTNAME', (0, 0), (-1, 0), 'Helvetica-Bold'),
-                        ('FONTSIZE', (0, 0), (-1, -1), 9),
-                        ('ALIGN', (0, 0), (-1, -1), 'LEFT'),
-                        ('VALIGN', (0, 0), (-1, -1), 'TOP'),
-                        ('GRID', (0, 0), (-1, -1), 0.5, colors.HexColor('#BDC3C7')),
-                        ('TOPPADDING', (0, 0), (-1, -1), 4),
-                        ('BOTTOMPADDING', (0, 0), (-1, -1), 4),
-                        ('LEFTPADDING', (0, 0), (-1, -1), 6),
-                        ('RIGHTPADDING', (0, 0), (-1, -1), 6),
-                    ]))
-                    story.append(Spacer(1, 6))
-                    story.append(t)
-                    story.append(Spacer(1, 6))
+            elif elem_type == 'table' and content:
+                table_data = [[Paragraph(convert_formatting(cell), body_style) for cell in row] for row in content]
+                t = Table(table_data, repeatRows=1)
+                t.setStyle(TableStyle([
+                    ('BACKGROUND', (0, 0), (-1, 0), colors.HexColor('#ECF0F1')),
+                    ('FONTNAME', (0, 0), (-1, 0), 'Helvetica-Bold'),
+                    ('FONTSIZE', (0, 0), (-1, -1), 9), ('ALIGN', (0, 0), (-1, -1), 'LEFT'),
+                    ('VALIGN', (0, 0), (-1, -1), 'TOP'),
+                    ('GRID', (0, 0), (-1, -1), 0.5, colors.HexColor('#BDC3C7')),
+                    ('TOPPADDING', (0, 0), (-1, -1), 4), ('BOTTOMPADDING', (0, 0), (-1, -1), 4),
+                    ('LEFTPADDING', (0, 0), (-1, -1), 6), ('RIGHTPADDING', (0, 0), (-1, -1), 6),
+                ]))
+                story.extend([Spacer(1, 6), t, Spacer(1, 6)])
 
         doc.build(story)
         return True

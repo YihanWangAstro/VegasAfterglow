@@ -4,27 +4,26 @@
 import argparse
 import os
 import shutil
+import sys
 from io import BytesIO
 from pathlib import Path
 from typing import Dict, List, Optional
 
-# Default to number of CPUs for parallel execution
-DEFAULT_WORKERS = os.cpu_count() or 4
-
 import matplotlib
-matplotlib.use('Agg')  # Use non-interactive backend before importing pyplot
+matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 from matplotlib.backends.backend_pdf import PdfPages
 from pypdf import PdfReader, PdfWriter
 
-import sys
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
+
+DEFAULT_WORKERS = os.cpu_count() or 4
 
 from validation.visualization.common import (create_benchmark_guide_pages, create_regression_guide_pages,
                                         create_section_header, create_toc_page_reportlab,
                                         create_title_page, extract_session_metadata, find_benchmark_file,
                                         find_regression_file, get_runtime_build_info, load_json, setup_plot_style)
-from validation.visualization.benchmark import generate_convergence_pages, plot_benchmark_overview, plot_convergence_summary
+from validation.visualization.benchmark import generate_convergence_pages, plot_benchmark_overview, plot_convergence_summary, plot_error_distribution
 from validation.visualization.regression import (plot_dynamics_summary_grid, plot_spectrum_summary_grid,
                                             plot_frequencies_summary_grid,
                                             plot_shock_quantities_combined, plot_frequency_quantities_combined,
@@ -137,6 +136,12 @@ def _merge_pending_pdfs(output_path: Path, pending_pdf_merges: List[Dict], inser
     print(f"  Total: {total_merged} pages merged")
 
 
+def _save_fig(pdf, fig):
+    """Save a figure to a PdfPages object and close it."""
+    pdf.savefig(fig)
+    plt.close(fig)
+
+
 class ComprehensiveDashboard:
     def __init__(self, output_dir: str = "output"):
         self.output_dir = Path(output_dir)
@@ -182,8 +187,7 @@ class ComprehensiveDashboard:
 
         def _add_page(fig):
             nonlocal current_page, actual_page
-            pdf.savefig(fig)
-            plt.close(fig)
+            _save_fig(pdf, fig)
             current_page += 1
             actual_page += 1
 
@@ -232,24 +236,23 @@ class ComprehensiveDashboard:
                     _add_page(plot_dynamics_summary_grid(regression_data))
 
                 # Forward shock dynamics detail
-                if "viz_shock_dynamics" in regression_data:
-                    for medium in ["ISM", "Wind"]:
-                        if medium in regression_data["viz_shock_dynamics"]:
-                            label = f"Forward Shock ({medium})"
-                            print(f"  - {label}")
-                            dynamics_node["children"].append({"title": label, "page": current_page, "children": []})
-                            _add_page(plot_shock_quantities_combined(regression_data["viz_shock_dynamics"], medium))
+                def _add_medium_pages(viz_key, label_fmt, plot_fn, node, **plot_kw):
+                    if viz_key in regression_data:
+                        for med in ["ISM", "Wind"]:
+                            if med in regression_data[viz_key]:
+                                label = label_fmt.format(medium=med)
+                                print(f"  - {label}")
+                                node["children"].append({"title": label, "page": current_page, "children": []})
+                                _add_page(plot_fn(regression_data[viz_key], med, **plot_kw))
+
+                _add_medium_pages("viz_shock_dynamics", "Forward Shock ({medium})", plot_shock_quantities_combined, dynamics_node)
 
                 # Reverse shock dynamics detail (thin then thick)
                 if has_rvs:
                     for regime in ["thin", "thick"]:
-                        for medium in ["ISM", "Wind"]:
-                            viz_key = f"viz_rvs_shock_dynamics_{regime}"
-                            if viz_key in regression_data and medium in regression_data[viz_key]:
-                                label = f"Reverse Shock {regime.title()} ({medium})"
-                                print(f"  - {label}")
-                                dynamics_node["children"].append({"title": label, "page": current_page, "children": []})
-                                _add_page(plot_rvs_shock_quantities_combined(regression_data[viz_key], medium, regime))
+                        _add_medium_pages(f"viz_rvs_shock_dynamics_{regime}",
+                                          f"Reverse Shock {regime.title()} ({{medium}})",
+                                          plot_rvs_shock_quantities_combined, dynamics_node, regime=regime)
 
                 section_node["children"].append(dynamics_node)
 
@@ -281,24 +284,14 @@ class ComprehensiveDashboard:
                     _add_page(plot_frequencies_summary_grid(regression_data))
 
                 # Forward shock frequencies detail
-                if "viz_frequencies" in regression_data:
-                    for medium in ["ISM", "Wind"]:
-                        if medium in regression_data["viz_frequencies"]:
-                            label = f"Forward Shock ({medium})"
-                            print(f"  - Freq {label}")
-                            freq_node["children"].append({"title": label, "page": current_page, "children": []})
-                            _add_page(plot_frequency_quantities_combined(regression_data["viz_frequencies"], medium))
+                _add_medium_pages("viz_frequencies", "Forward Shock ({medium})", plot_frequency_quantities_combined, freq_node)
 
                 # Reverse shock frequencies detail (thin then thick)
                 if has_rvs:
                     for regime in ["thin", "thick"]:
-                        for medium in ["ISM", "Wind"]:
-                            freq_key = f"viz_rvs_frequencies_{regime}"
-                            if freq_key in regression_data and medium in regression_data[freq_key]:
-                                label = f"Reverse Shock {regime.title()} ({medium})"
-                                print(f"  - Freq {label}")
-                                freq_node["children"].append({"title": label, "page": current_page, "children": []})
-                                _add_page(plot_rvs_frequency_quantities_combined(regression_data[freq_key], medium, regime))
+                        _add_medium_pages(f"viz_rvs_frequencies_{regime}",
+                                          f"Reverse Shock {regime.title()} ({{medium}})",
+                                          plot_rvs_frequency_quantities_combined, freq_node, regime=regime)
 
                 radiation_node["children"].append(freq_node)
                 section_node["children"].append(radiation_node)
@@ -347,6 +340,11 @@ class ComprehensiveDashboard:
                     bench_node["children"].append({"title": "Convergence Summary", "page": current_page, "children": []})
                     fig, model_id_map, models_list = plot_convergence_summary(benchmark_data)
                     _add_page(fig)
+
+                    print("  - Error distribution")
+                    bench_node["children"].append({"title": "Error Distribution", "page": current_page, "children": []})
+                    _add_page(plot_error_distribution(benchmark_data))
+
                     convergence_insert_at = actual_page
                     pending_pdf_merges.extend(generate_convergence_pages(pdf, models_list, n_workers))
 
@@ -436,20 +434,16 @@ class ComprehensiveDashboard:
                 off_axis_configs = [c for c in configs if c.get("theta_obs_ratio", 0) > 1]
 
                 if on_axis_configs:
-                    fig = plot_benchmark_overview(data, angle_filter="on-axis")
-                    pdf.savefig(fig)
-                    plt.close(fig)
+                    _save_fig(pdf, plot_benchmark_overview(data, angle_filter="on-axis"))
 
                 if off_axis_configs:
-                    fig = plot_benchmark_overview(data, angle_filter="off-axis")
-                    pdf.savefig(fig)
-                    plt.close(fig)
+                    _save_fig(pdf, plot_benchmark_overview(data, angle_filter="off-axis"))
 
                 has_convergence = any(c.get("phi_convergence") for c in configs)
                 if has_convergence:
                     fig, model_id_map, models_list = plot_convergence_summary(data)
-                    pdf.savefig(fig)
-                    plt.close(fig)
+                    _save_fig(pdf, fig)
+                    _save_fig(pdf, plot_error_distribution(data))
 
                     pending_pdf_merges.extend(generate_convergence_pages(pdf, models_list, n_workers))
 
@@ -491,66 +485,41 @@ class ComprehensiveDashboard:
             if "shock_grid" in data or (has_rvs and any(
                     f"rvs_shock_grid_{r}" in data for r in ["thin", "thick"])):
                 print("  Generating dynamics summary...")
-                fig = plot_dynamics_summary_grid(data)
-                pdf.savefig(fig)
-                plt.close(fig)
+                _save_fig(pdf, plot_dynamics_summary_grid(data))
 
-            if "viz_shock_dynamics" in data:
-                for medium in ["ISM", "Wind"]:
-                    if medium in data["viz_shock_dynamics"]:
-                        print(f"  Generating shock dynamics ({medium})...")
-                        fig = plot_shock_quantities_combined(data["viz_shock_dynamics"], medium)
-                        pdf.savefig(fig)
-                        plt.close(fig)
+            def _gen_medium(viz_key, label, plot_fn, **kw):
+                if viz_key in data:
+                    for med in ["ISM", "Wind"]:
+                        if med in data[viz_key]:
+                            print(f"  Generating {label} ({med})...")
+                            _save_fig(pdf, plot_fn(data[viz_key], med, **kw))
 
+            _gen_medium("viz_shock_dynamics", "shock dynamics", plot_shock_quantities_combined)
             if has_rvs:
                 for regime in ["thin", "thick"]:
-                    for medium in ["ISM", "Wind"]:
-                        viz_key = f"viz_rvs_shock_dynamics_{regime}"
-                        if viz_key in data and medium in data[viz_key]:
-                            print(f"  Generating reverse shock dynamics {regime} ({medium})...")
-                            fig = plot_rvs_shock_quantities_combined(data[viz_key], medium, regime)
-                            pdf.savefig(fig)
-                            plt.close(fig)
+                    _gen_medium(f"viz_rvs_shock_dynamics_{regime}", f"reverse shock dynamics {regime}",
+                                plot_rvs_shock_quantities_combined, regime=regime)
 
             # --- Spectrum Shapes ---
             if "spectrum_grid" in data:
                 print("  Generating spectrum summary...")
-                fig = plot_spectrum_summary_grid(data)
-                pdf.savefig(fig)
-                plt.close(fig)
+                _save_fig(pdf, plot_spectrum_summary_grid(data))
 
             if "viz_spectrum_shapes" in data:
                 print("  Generating spectrum detail...")
-                fig = plot_spectrum_shapes(data["viz_spectrum_shapes"])
-                pdf.savefig(fig)
-                plt.close(fig)
+                _save_fig(pdf, plot_spectrum_shapes(data["viz_spectrum_shapes"]))
 
             # --- Frequencies ---
             if "freq_grid" in data or (has_rvs and any(
                     f"rvs_freq_grid_{r}" in data for r in ["thin", "thick"])):
                 print("  Generating frequencies summary...")
-                fig = plot_frequencies_summary_grid(data)
-                pdf.savefig(fig)
-                plt.close(fig)
+                _save_fig(pdf, plot_frequencies_summary_grid(data))
 
-            if "viz_frequencies" in data:
-                for medium in ["ISM", "Wind"]:
-                    if medium in data["viz_frequencies"]:
-                        print(f"  Generating frequencies ({medium})...")
-                        fig = plot_frequency_quantities_combined(data["viz_frequencies"], medium)
-                        pdf.savefig(fig)
-                        plt.close(fig)
-
+            _gen_medium("viz_frequencies", "frequencies", plot_frequency_quantities_combined)
             if has_rvs:
                 for regime in ["thin", "thick"]:
-                    for medium in ["ISM", "Wind"]:
-                        freq_key = f"viz_rvs_frequencies_{regime}"
-                        if freq_key in data and medium in data[freq_key]:
-                            print(f"  Generating reverse shock frequencies {regime} ({medium})...")
-                            fig = plot_rvs_frequency_quantities_combined(data[freq_key], medium, regime)
-                            pdf.savefig(fig)
-                            plt.close(fig)
+                    _gen_medium(f"viz_rvs_frequencies_{regime}", f"reverse shock frequencies {regime}",
+                                plot_rvs_frequency_quantities_combined, regime=regime)
 
         if pending_pdf_merges:
             _merge_pending_pdfs(output_path, pending_pdf_merges, insert_at=pending_pdf_merges[0].get("insert_at", 1))

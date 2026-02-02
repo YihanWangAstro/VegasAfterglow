@@ -43,6 +43,7 @@ class DimensionConvergence:
     times_by_band: Dict[str, List[float]] = field(default_factory=dict)
     t_array: List[float] = field(default_factory=list)
     flux_by_band: Dict[str, List[List[float]]] = field(default_factory=dict)
+    ref_flux_by_band: Dict[str, List[float]] = field(default_factory=dict)
 
 @dataclass
 class ConfigResult:
@@ -72,12 +73,12 @@ class BenchmarkSession:
 # Constants
 # ---------------------------------------------------------------------------
 
-FIDUCIAL_RESOLUTION = (0.3, 0.3, 10)
+FIDUCIAL_RESOLUTION = (0.15, 0.5, 10)
 DIM_INDEX = {"phi": 0, "theta": 1, "t": 2}
 FIDUCIAL_VALUES = {dim: FIDUCIAL_RESOLUTION[idx] for dim, idx in DIM_INDEX.items()}
-PHI_VALUES = [0.1, 0.2, 0.3, 0.4, 0.5]
-THETA_VALUES = [0.3, 0.7, 1.0, 1.3, 1.6, 2.0]
-T_VALUES = [10, 15, 20, 25]
+PHI_VALUES = [0.15, 0.3, 0.45, 0.6]
+THETA_VALUES = [0.5, 1.0, 1.5, 2.0]
+T_VALUES = [10, 15, 20, 25, 30]
 REFERENCE_RESOLUTION = (PHI_VALUES[-1] * 1.2, THETA_VALUES[-1] * 1.2, T_VALUES[-1] * 1.2)
 CONVERGENCE_T_LC = np.logspace(0, 8, 100)
 CONVERGENCE_BANDS = {"Radio": 1e9, "Optical": 4.84e14, "X-ray": 1e18}
@@ -183,7 +184,7 @@ class ComprehensiveBenchmark:
         return {"total": np.asarray(flux.total)}
 
     def _run_dimension_convergence(self, jet_name, medium_name, radiation_name, theta_obs,
-                                   dimension, values, spreading=False, ref_lcs=None):
+                                   dimension, values, spreading=False):
         import VegasAfterglow as va
         fiducial = list(FIDUCIAL_RESOLUTION)
         dim_idx = DIM_INDEX[dimension]
@@ -216,20 +217,21 @@ class ComprehensiveBenchmark:
                 t_array=t_lc.tolist(), flux_by_band={b: [] for b in bands},
             )
 
-        # Use pre-computed global reference if provided, otherwise compute per-dimension
-        if ref_lcs is None:
-            ref_res = list(REFERENCE_RESOLUTION)
-            try:
-                ref_model = self._create_model(jet_name, medium_name, radiation_name, theta_obs, tuple(ref_res), spreading)
-                ref_lcs = {}
-                for fb in freq_bands:
-                    ref_flux = ref_model.flux_density(t_lc, nu_arrays[fb])
-                    for label, arr in self._extract_flux_components(ref_flux, has_rvs).items():
-                        band_key = f"{fb} ({label})" if has_rvs else fb
-                        ref_lcs[band_key] = arr.copy()
-            except Exception as e:
-                print(f"      {_bold_red('Error')} computing reference: {e}")
-                return _nan_result()
+        # Compute per-dimension reference: 2x the highest sweep value in this dimension,
+        # fiducial in all other dimensions (isolates convergence in one dimension)
+        ref_res = fiducial.copy()
+        ref_res[dim_idx] = max(values) * 1.2
+        try:
+            ref_model = self._create_model(jet_name, medium_name, radiation_name, theta_obs, tuple(ref_res), spreading)
+            ref_lcs = {}
+            for fb in freq_bands:
+                ref_flux = ref_model.flux_density(t_lc, nu_arrays[fb])
+                for label, arr in self._extract_flux_components(ref_flux, has_rvs).items():
+                    band_key = f"{fb} ({label})" if has_rvs else fb
+                    ref_lcs[band_key] = arr.copy()
+        except Exception as e:
+            print(f"      {_bold_red('Error')} computing reference: {e}")
+            return _nan_result()
 
         for val in values:
             res = fiducial.copy()
@@ -261,10 +263,10 @@ class ComprehensiveBenchmark:
                             log_ref[pos] = np.log10(ref[pos])
                             slope = np.gradient(log_ref, log_t)
                             valid = valid & (np.abs(slope) <= 4)
-                            # Also exclude tail > 10 orders below peak
+                            # Also exclude tail > 6 orders below peak
                             if np.any(valid):
                                 ref_peak = np.max(ref[valid])
-                                valid = valid & (ref > ref_peak * 1e-10)
+                                valid = valid & (ref > ref_peak * 1e-6)
                             if np.any(valid):
                                 err = np.abs(flux_arr[valid] - ref[valid]) / ref[valid]
                             else:
@@ -284,10 +286,12 @@ class ComprehensiveBenchmark:
                     mean_errors_by_band[b].append(np.nan)
                     flux_by_band[b].append([])
 
+        ref_flux_by_band = {b: arr.tolist() for b, arr in ref_lcs.items()}
+
         return DimensionConvergence(
             dimension=dimension, values=values, times_ms=times_ms,
             errors_by_band=errors_by_band, mean_errors_by_band=mean_errors_by_band, times_by_band=times_by_band,
-            t_array=t_lc.tolist(), flux_by_band=flux_by_band,
+            t_array=t_lc.tolist(), flux_by_band=flux_by_band, ref_flux_by_band=ref_flux_by_band,
         )
 
     def benchmark_config(self, jet_name, medium_name, radiation_name, theta_obs,
@@ -304,32 +308,12 @@ class ComprehensiveBenchmark:
             theta_obs_ratio=ratio, spreading=spreading, timing=timing,
         )
 
-        # Compute global reference once (high resolution in all dimensions)
-        log(f"    Computing global reference at resolution {REFERENCE_RESOLUTION}...")
-        has_rvs = get_radiation_config(radiation_name).rvs_params is not None
-        freq_bands = list(CONVERGENCE_BANDS)
-        t_lc = CONVERGENCE_T_LC
-        nu_arrays = {b: np.full_like(t_lc, nu) for b, nu in CONVERGENCE_BANDS.items()}
-        try:
-            ref_model = self._create_model(jet_name, medium_name, radiation_name, theta_obs,
-                                           REFERENCE_RESOLUTION, spreading)
-            ref_lcs = {}
-            for fb in freq_bands:
-                ref_flux = ref_model.flux_density(t_lc, nu_arrays[fb])
-                for label, arr in self._extract_flux_components(ref_flux, has_rvs).items():
-                    band_key = f"{fb} ({label})" if has_rvs else fb
-                    ref_lcs[band_key] = arr.copy()
-        except Exception as e:
-            log(f"    {_bold_red('Error')} computing global reference: {e}")
-            ref_lcs = None
-
         for dim, vals, attr in [("phi", PHI_VALUES, "phi_convergence"),
                                 ("theta", THETA_VALUES, "theta_convergence"),
                                 ("t", T_VALUES, "t_convergence")]:
             log(f"    {_cyan(dim)} convergence...")
             setattr(result, attr, self._run_dimension_convergence(
-                jet_name, medium_name, radiation_name, theta_obs, dim, vals, spreading,
-                ref_lcs=ref_lcs))
+                jet_name, medium_name, radiation_name, theta_obs, dim, vals, spreading))
 
         log(f"    {_green('Done')}: {_dim(f'{timing.flux_single_ms:.2f} ms/LC')}")
         self.results.append(result)
@@ -349,12 +333,9 @@ class ComprehensiveBenchmark:
 
     def run_full_suite(self):
         jets, meds = get_all_jet_names(), ["ISM", "wind"]
-        fwd_rads = get_radiation_names_no_ssc()
-        rvs_rads = get_rvs_radiation_names()
+        all_rads = get_radiation_names_no_ssc() + get_rvs_radiation_names()
         configs = [(j, m, r, get_jet_theta_c(j) * ratio)
-                   for j, m, r, ratio in product(jets, meds, fwd_rads, VIEWING_ANGLE_RATIOS)]
-        configs += [(j, m, r, get_jet_theta_c(j) * ratio)
-                    for j, m, r, ratio in product(jets, meds, rvs_rads, VIEWING_ANGLE_RATIOS)]
+                   for j, m, r, ratio in product(jets, meds, all_rads, VIEWING_ANGLE_RATIOS)]
         return self._run_suite("FULL BENCHMARK SUITE", configs)
 
     def run_convergence_only(self, jet_types=None, medium_types=None):
@@ -403,11 +384,13 @@ class ComprehensiveBenchmark:
         if timed_out:
             status += f" ({_bold_red(f'{timed_out} timed out')})"
         print(f"\n{status}")
+        conv_keys = ["phi_convergence", "theta_convergence", "t_convergence"]
         for rd in results_dicts:
             timing = ComponentTiming(**rd.pop("timing"))
-            convs = {k: DimensionConvergence(**rd.pop(k)) if rd.get(k) else None
-                     for k in ["phi_convergence", "theta_convergence", "t_convergence"]}
-            for k in convs: rd.pop(k, None)
+            convs = {}
+            for k in conv_keys:
+                raw = rd.pop(k, None)
+                convs[k] = DimensionConvergence(**raw) if raw else None
             self.results.append(ConfigResult(timing=timing, **convs, **rd))
         return self.results
 
@@ -428,9 +411,22 @@ class ComprehensiveBenchmark:
         path.write_text(json.dumps(session_dict))
         print(f"\nResults saved to {_dim(filepath)}")
 
+    @staticmethod
+    def _mean_convergence_error(conv):
+        """Compute mean error across all bands for a convergence result."""
+        vals = [v for band in conv.mean_errors_by_band.values() for v in band if not np.isnan(v)]
+        return np.mean(vals) if vals else 0.0
+
+    @staticmethod
+    def _format_error(value):
+        """Color-code an error value: green if <5%, red if >10%, plain otherwise."""
+        color = _green if value < 0.05 else (_red if value > 0.1 else None)
+        return color(f"{value:.2e}") if color else f"{value:.2e}"
+
     def print_summary(self):
         if not self.results:
-            print("No results to summarize"); return
+            print("No results to summarize")
+            return
         print(_header("BENCHMARK SUMMARY"))
 
         by_jet = {}
@@ -447,14 +443,11 @@ class ComprehensiveBenchmark:
         print(_dim("-" * 80))
         for r in self.results:
             if r.phi_convergence:
-                def _mean_err(c):
-                    vals = [v for band in c.mean_errors_by_band.values() for v in band if not np.isnan(v)]
-                    return np.mean(vals) if vals else 0.0
                 label = _bold(f"{r.jet_type}/{r.medium}")
-                phi_e = _mean_err(r.phi_convergence)
-                theta_e = _mean_err(r.theta_convergence)
-                t_e = _mean_err(r.t_convergence)
-                fmt = lambda v: _green(f"{v:.2e}") if v < 0.05 else (_red(f"{v:.2e}") if v > 0.1 else f"{v:.2e}")
+                phi_e = self._mean_convergence_error(r.phi_convergence)
+                theta_e = self._mean_convergence_error(r.theta_convergence)
+                t_e = self._mean_convergence_error(r.t_convergence)
+                fmt = self._format_error
                 print(f"{label}: phi={fmt(phi_e)}, theta={fmt(theta_e)}, t={fmt(t_e)}")
 
 

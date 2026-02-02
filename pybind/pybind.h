@@ -6,6 +6,7 @@
 //                            |___/                                            |___/
 
 #pragma once
+#include <pybind11/functional.h>
 #include <pybind11/stl.h>
 
 #include "xtensor-python/pytensor.hpp"

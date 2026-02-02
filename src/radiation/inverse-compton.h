@@ -524,6 +524,8 @@ inline Real compute_Thomson_Y(RadParams const& rad, Real gamma_m, Real gamma_c) 
 
 Real compute_gamma_c(Real t_comv, Real B, Real Y);
 
+Real cool_after_crossing(Real gamma_x, Real gamma_m_x, Real gamma_m, Real dt_comv, Real B, Real Y);
+
 Real compute_syn_gamma_M(Real B, Real Y, Real p);
 
 Real compute_syn_I_peak(Real B, Real p, Real column_den);
@@ -573,8 +575,13 @@ void IC_cooling(ElectronGrid<Electrons>& electrons, PhotonGrid<Photons>& photons
 
                 if (k >= k_inj) {
                     const auto& inj = electrons(i, j, k_inj - 1);
-                    elec.gamma_c = (inj.gamma_c - 1) * (elec.gamma_m - 1) / (inj.gamma_m - 1) + 1;
-                    elec.gamma_M = elec.gamma_c;
+                    const Real dt_comv = t_com - shock.t_comv(i, j, k_inj - 1);
+                    elec.gamma_c = cool_after_crossing(inj.gamma_c, inj.gamma_m, elec.gamma_m, dt_comv, B, 0);
+                    // gamma_M: step-by-step synchrotron cooling from previous step (continuous, uses local B)
+                    const auto& prev = electrons(i, j, k - 1);
+                    const Real dt_step = t_com - shock.t_comv(i, j, k - 1);
+                    const Real gamma_c_step = compute_gamma_c(dt_step, B, 0);
+                    elec.gamma_M = prev.gamma_M * gamma_c_step / (prev.gamma_M + gamma_c_step);
                 }
 
                 const Real I_nu_peak = compute_syn_I_peak(B, p, elec.column_den);

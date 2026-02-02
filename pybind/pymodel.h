@@ -12,6 +12,7 @@
 #include <vector>
 
 #include "../include/afterglow.h"
+#include "config/simulation-defaults.h"
 #include "pybind.h"
 #include "util/macros.h"
 #include "util/profiler.h"
@@ -661,8 +662,8 @@ auto PyModel::compute_emission(Array const& t_obs, Array const& nu_obs, Func&& f
     if (!rvs_rad_opt) {
         auto coord = [&] {
             AFTERGLOW_PROFILE_SCOPE(mesh);
-            return auto_grid(jet_, t_obs, this->theta_w, obs_setup.theta_obs, obs_setup.z, phi_resol, theta_resol,
-                             t_resol, axisymmetric, 0, 56, 0.7);
+            return auto_grid(jet_, medium_, t_obs, this->theta_w, obs_setup.theta_obs, obs_setup.z, phi_resol,
+                             theta_resol, t_resol, axisymmetric, 0, 45, 0.4);
         }();
 
         auto fwd_shock = [&] {
@@ -677,8 +678,8 @@ auto PyModel::compute_emission(Array const& t_obs, Array const& nu_obs, Func&& f
     } else {
         auto coord = [&] {
             AFTERGLOW_PROFILE_SCOPE(mesh);
-            return auto_grid(jet_, t_obs, this->theta_w, obs_setup.theta_obs, obs_setup.z, phi_resol, theta_resol,
-                             t_resol, axisymmetric, 0, 56, 0.3);
+            return auto_grid(jet_, medium_, t_obs, this->theta_w, obs_setup.theta_obs, obs_setup.z, phi_resol,
+                             theta_resol, t_resol, axisymmetric, 0, 45, 0.4);
         }();
 
         auto rvs_rad = *rvs_rad_opt;

@@ -9,15 +9,17 @@ import subprocess
 import sys
 from pathlib import Path
 
-DEFAULT_WORKERS = os.cpu_count() or 4
-
 sys.path.insert(0, str(Path(__file__).parent.parent))
-from validation.colors import (_bold, _green, _red, _bold_green, _bold_red,
-                               _header, _bar)
+from validation.colors import _bold, _bold_green, _bold_red, _green, _header, _bar, _red
+from validation.visualization.common import FIDUCIAL_VALUES, find_fiducial_index
+
+DEFAULT_WORKERS = os.cpu_count() or 4
 BENCH_MEAN_THRESH = 0.05   # 5%
 BENCH_MAX_THRESH = 0.10    # 10%
 
 VALIDATION_DIR = Path(__file__).parent
+BENCH_RESULTS_PATH = VALIDATION_DIR / "benchmark" / "results" / "benchmark_history.json"
+REGR_RESULTS_PATH = VALIDATION_DIR / "regression" / "results" / "regression_results.json"
 
 
 def _load_json(path):
@@ -29,6 +31,12 @@ def _load_json(path):
         return None, f"Invalid JSON: {e}"
 
 
+def _worst_fiducial_error(errors_by_band, fid_idx):
+    """Return the worst (max) error across all bands at the fiducial index."""
+    return max((v for errs in errors_by_band.values() if errs and fid_idx < len(errs)
+                for v in [errs[fid_idx]] if not math.isnan(v)), default=0.0)
+
+
 def check_benchmark_results(json_path):
     data, err = _load_json(json_path)
     if err:
@@ -38,34 +46,29 @@ def check_benchmark_results(json_path):
         return False, "No benchmark configurations found"
 
     failed, passed, acceptable, total = [], 0, 0, 0
-    for config in configs:
+    for cfg_idx, config in enumerate(configs, 1):
         for dim in ("phi_convergence", "theta_convergence", "t_convergence"):
             conv = config.get(dim)
             if not conv:
                 continue
             total += 1
-            # Collect the highest-resolution error across all bands
             mean_by_band = conv.get("mean_errors_by_band", {})
             errs_by_band = conv.get("errors_by_band", {})
             if not mean_by_band and not errs_by_band:
                 continue
-            # Worst-case mean error across bands (last element = highest resolution)
-            mean_err = 0.0
-            for band_errs in mean_by_band.values():
-                if band_errs:
-                    v = band_errs[-1]
-                    if not math.isnan(v):
-                        mean_err = max(mean_err, v)
-            # Worst-case max error across bands
-            max_err = 0.0
-            for band_errs in errs_by_band.values():
-                if band_errs:
-                    v = band_errs[-1]
-                    if not math.isnan(v):
-                        max_err = max(max_err, v)
-            name = f"{config.get('jet_type', '?')}/{config.get('medium', '?')}"
+
+            dim_name = dim.replace("_convergence", "")
+            fiducial_val = FIDUCIAL_VALUES.get(dim_name, 0)
+            fid_idx = find_fiducial_index(conv.get("values", []), fiducial_val)
+            if fid_idx < 0:
+                fid_idx = len(conv.get("values", [])) - 1
+
+            mean_err = _worst_fiducial_error(mean_by_band, fid_idx)
+            max_err = _worst_fiducial_error(errs_by_band, fid_idx)
+
+            name = f"#{cfg_idx} {config.get('jet_type', '?')}/{config.get('medium', '?')}/{config.get('radiation', '?')}"
             if mean_err >= BENCH_MEAN_THRESH:
-                failed.append(f"{name} ({dim}): mean_error={mean_err:.1%} >= {BENCH_MEAN_THRESH:.0%}")
+                failed.append(f"{name} ({dim_name}): mean_error={mean_err:.1%} >= {BENCH_MEAN_THRESH:.0%}")
             elif max_err >= BENCH_MAX_THRESH:
                 acceptable += 1
             else:
@@ -116,13 +119,13 @@ def _run_suite(name, script, extra_args=()):
 
 def run_benchmark(parallel=0):
     args = ["--full"] + (["-j", str(parallel)] if parallel > 0 else [])
-    path = VALIDATION_DIR / "benchmark" / "results" / "benchmark_history.json"
-    return _run_suite("Benchmark Suite", VALIDATION_DIR / "benchmark" / "benchmark_suite.py", args), path
+    ok = _run_suite("Benchmark Suite", VALIDATION_DIR / "benchmark" / "benchmark_suite.py", args)
+    return ok, BENCH_RESULTS_PATH
 
 
 def run_regression():
-    path = VALIDATION_DIR / "regression" / "results" / "regression_results.json"
-    return _run_suite("Regression Tests", VALIDATION_DIR / "regression" / "run_regression.py"), path
+    ok = _run_suite("Regression Tests", VALIDATION_DIR / "regression" / "run_regression.py")
+    return ok, REGR_RESULTS_PATH
 
 
 def generate_report(benchmark_path=None, regression_path=None, output_dir=None, parallel=0):
@@ -161,8 +164,8 @@ def main():
     if not any([args.all, args.benchmark, args.regression, args.check_only]):
         args.all = True
 
-    bench_path = VALIDATION_DIR / "benchmark" / "results" / "benchmark_history.json"
-    regr_path = VALIDATION_DIR / "regression" / "results" / "regression_results.json"
+    bench_path = BENCH_RESULTS_PATH
+    regr_path = REGR_RESULTS_PATH
     all_passed, messages = True, []
 
     print(_header("VegasAfterglow Validation Runner"))
