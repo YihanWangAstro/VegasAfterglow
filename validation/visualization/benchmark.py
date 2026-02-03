@@ -15,8 +15,8 @@ from matplotlib.gridspec import GridSpec
 
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 from validation.visualization.common import (BAND_COLORS, COLORS, FIDUCIAL_VALUES, MAX_ERROR_THRESHOLD,
-                                             MEAN_ERROR_THRESHOLD, find_fiducial_index, get_flux_time,
-                                             setup_plot_style)
+                                             MEAN_ERROR_THRESHOLD, PAGE_PORTRAIT, find_fiducial_index,
+                                             get_flux_time, setup_plot_style)
 
 
 def _get_fiducial_idx(dim_key, values):
@@ -131,7 +131,7 @@ def plot_benchmark_overview(session: Dict, angle_filter: str = "all") -> plt.Fig
     Currently only synchrotron is populated; the other 3 panels are placeholders.
     angle_filter: 'all', 'on-axis', or 'off-axis'.
     """
-    fig = plt.figure(figsize=(8.5, 11))
+    fig = plt.figure(figsize=PAGE_PORTRAIT)
     gs = GridSpec(2, 2, figure=fig, hspace=0.40, wspace=0.35, top=0.92, bottom=0.08, left=0.10, right=0.95)
 
     all_configs = session.get("configs", session.get("results", []))
@@ -183,7 +183,7 @@ def plot_benchmark_overview(session: Dict, angle_filter: str = "all") -> plt.Fig
 
 def plot_single_model_convergence_page(config: Dict, model_id: int) -> plt.Figure:
     """Create convergence page for a single model (4 rows x 3 cols: errors, times, light curves)."""
-    fig = plt.figure(figsize=(8.5, 11))
+    fig = plt.figure(figsize=PAGE_PORTRAIT)
     gs = GridSpec(4, 3, figure=fig, hspace=0.40, wspace=0.35, top=0.91, bottom=0.05, left=0.10, right=0.95)
 
     jet_type = config.get("jet_type", "?")
@@ -463,7 +463,7 @@ def plot_error_distribution(session: Dict) -> plt.Figure:
     Layout: 4 rows x 3 columns (Radio, Optical, X-ray).
     Rows: Fwd Max Error, Fwd Mean Error, Rvs Max Error, Rvs Mean Error.
     """
-    fig = plt.figure(figsize=(8.5, 11))
+    fig = plt.figure(figsize=PAGE_PORTRAIT)
     gs = GridSpec(4, 3, figure=fig, hspace=0.40, wspace=0.30, top=0.90, bottom=0.05, left=0.12, right=0.95)
 
     configs = session.get("configs", session.get("results", []))
@@ -512,7 +512,7 @@ def plot_convergence_summary(session: Dict) -> Tuple[plt.Figure, Dict[str, int],
     configs = session.get("configs", session.get("results", []))
 
     if not configs:
-        fig = plt.figure(figsize=(8.5, 11))
+        fig = plt.figure(figsize=PAGE_PORTRAIT)
         fig.text(0.5, 0.5, "No convergence data", ha="center", va="center", fontsize=16, color="gray")
         return fig, {}, []
 
@@ -560,7 +560,7 @@ def plot_convergence_summary(session: Dict) -> Tuple[plt.Figure, Dict[str, int],
         key = f"{model['jet']}_{model['medium']}_{model['radiation']}_{model['theta_obs_ratio']:.1f}"
         model_id_map[key] = model["id"]
 
-    fig = plt.figure(figsize=(8.5, 11))
+    fig = plt.figure(figsize=PAGE_PORTRAIT)
     n_models = len(models)
 
     if n_models <= 12:
@@ -581,16 +581,22 @@ def plot_convergence_summary(session: Dict) -> Tuple[plt.Figure, Dict[str, int],
     cell_width = 0.90 / n_cols
     x_start = 0.05
 
+    # cell_rects[i] = (x, y, w, h) in figure coordinates for each model cell
+    cell_rects = {}
+
     for i, model in enumerate(models):
         row = i // n_cols
         col = i % n_cols
         x = x_start + col * cell_width
         y = grid_top - (row + 1) * cell_height
 
+        cw, ch = cell_width * 0.95, cell_height * 0.9
+        cell_rects[i] = (x, y, cw, ch)
+
         _status_colors = {"PASS": ("#90EE90", "darkgreen"), "ACCEPTABLE": ("#ADD8E6", "darkblue"), "FAIL": ("#FFB6C1", "darkred")}
         color, text_color = ("#CCCCCC", "black") if not model["has_data"] else _status_colors.get(model["status"], ("#FFB6C1", "darkred"))
 
-        rect = plt.Rectangle((x, y), cell_width * 0.95, cell_height * 0.9, facecolor=color, edgecolor="white",
+        rect = plt.Rectangle((x, y), cw, ch, facecolor=color, edgecolor="white",
                               linewidth=1.5, transform=fig.transFigure, clip_on=False)
         fig.add_artist(rect)
 
@@ -618,7 +624,7 @@ def plot_convergence_summary(session: Dict) -> Tuple[plt.Figure, Dict[str, int],
     fig.text(0.5, 0.93, summary, ha="center", fontsize=10, color="#333333")
     fig.text(0.5, 0.97, "Resolution Convergence Summary", ha="center", fontsize=12, fontweight="bold")
 
-    return fig, model_id_map, models
+    return fig, model_id_map, models, cell_rects
 
 
 def _init_plot_worker():
@@ -653,9 +659,17 @@ def _generate_convergence_page_worker(args: Tuple) -> Tuple[int, Optional[str], 
         return (model_idx, None, False, f"#{model_info.get('id', '?')} {jet}/{medium} - Error: {e}")
 
 
-def generate_convergence_pages(pdf, models_list: List[Dict], n_workers: int = 0) -> List[Dict]:
-    pending_pdf_merges = []
+def generate_convergence_pages(models_list: List[Dict], n_workers: int = 0) -> List[str]:
+    """Generate per-model convergence pages as individual PDF files.
+
+    Returns list of PDF file paths in model order. Caller is responsible
+    for embedding these into the final report and cleaning up the temp directory.
+    """
+    import shutil
+
     n_models = len(models_list)
+    persistent_temp_dir = tempfile.mkdtemp(prefix="convergence_pages_")
+    pdf_files = []
 
     if n_workers > 0 and n_models > 1:
         print(f"  - Per-model convergence pages ({n_models} models, {n_workers} workers)")
@@ -673,15 +687,10 @@ def generate_convergence_pages(pdf, models_list: List[Dict], n_workers: int = 0)
                         temp_files[model_idx] = temp_file
                     print(f"    [{completed}/{n_models}] {desc}" + (" FAILED" if not success else ""))
 
-            import shutil
-            persistent_temp_dir = tempfile.mkdtemp(prefix="convergence_pages_")
-            convergence_pdf_files = []
             for i in sorted(temp_files.keys()):
-                src = temp_files[i]
                 dst = os.path.join(persistent_temp_dir, f"page_{i:04d}.pdf")
-                shutil.copy2(src, dst)
-                convergence_pdf_files.append(dst)
-            pending_pdf_merges.append({"files": convergence_pdf_files, "temp_dir": persistent_temp_dir})
+                shutil.copy2(temp_files[i], dst)
+                pdf_files.append(dst)
     else:
         print(f"  - Per-model convergence pages ({n_models} models)")
         for i, model_info in enumerate(models_list):
@@ -693,7 +702,9 @@ def generate_convergence_pages(pdf, models_list: List[Dict], n_workers: int = 0)
                 medium = config.get("medium", "?")
                 print(f"    [{i+1}/{n_models}] #{model_id} {jet}/{medium}")
                 fig = plot_single_model_convergence_page(config, model_id)
-                pdf.savefig(fig)
+                dst = os.path.join(persistent_temp_dir, f"page_{i:04d}.pdf")
+                fig.savefig(dst, format="pdf")
                 plt.close(fig)
+                pdf_files.append(dst)
 
-    return pending_pdf_merges
+    return pdf_files

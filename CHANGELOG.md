@@ -58,6 +58,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **One-command validation**: Run `python validation/run_validation.py --all` to execute the full suite and generate a PDF report with convergence plots and diagnostics
 - **GitHub Actions CI**: Automated test workflow for Ubuntu and macOS across Python 3.9–3.11 (see `.github/workflows/test.yml`)
 - See the [Validation & Testing](README.md#validation--testing) section in the README for full details
+- Powered by [Claude Code](https://claude.ai/claude-code)
 
 #### **Built-in Profiling**
 

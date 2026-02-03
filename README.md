@@ -513,9 +513,9 @@ for i, frame in enumerate(frames):
     plt.loglog(t[0, 0, :], details.fwd.gamma_a[0, 0, :],label=r'$\gamma_a^\prime$',c='firebrick')
     plt.loglog(t[0, 0, :], details.fwd.gamma_m[0, 0, :],label=r'$\gamma_m^\prime$',c='yellowgreen')
     plt.loglog(t[0, 0, :], details.fwd.gamma_c[0, 0, :],label=r'$\gamma_c^\prime$',c='royalblue')
-    plt.loglog(t[0, 0, :], details.fwd.gamma_a[0, 0, :]*details.fwd.Doppler[0,0,:],label=r'$\gamma_a$',ls='--',c='firebrick')
-    plt.loglog(t[0, 0, :], details.fwd.gamma_m[0, 0, :]*details.fwd.Doppler[0,0,:],label=r'$\gamma_m$',ls='--',c='yellowgreen')
-    plt.loglog(t[0, 0, :], details.fwd.gamma_c[0, 0, :]*details.fwd.Doppler[0,0,:],label=r'$\gamma_c$',ls='--',c='royalblue')
+    plt.loglog(t[0, 0, :], details.fwd.gamma_a[0, 0, :]*details.fwd.Doppler[0,0,:]/(1+z),label=r'$\gamma_a$',ls='--',c='firebrick')
+    plt.loglog(t[0, 0, :], details.fwd.gamma_m[0, 0, :]*details.fwd.Doppler[0,0,:]/(1+z),label=r'$\gamma_m$',ls='--',c='yellowgreen')
+    plt.loglog(t[0, 0, :], details.fwd.gamma_c[0, 0, :]*details.fwd.Doppler[0,0,:]/(1+z),label=r'$\gamma_c$',ls='--',c='royalblue')
     plt.xlabel(xlabels[i])
     plt.ylabel(r'$\gamma_e^\prime$')
     plt.legend(ncol=2)
@@ -1024,6 +1024,8 @@ pip install -e .
 ```
 
 </details>
+
+Powered by [Claude Code](https://claude.ai/claude-code)
 
 ---
 

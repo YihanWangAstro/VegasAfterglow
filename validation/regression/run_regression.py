@@ -50,7 +50,7 @@ SPECTRAL_TOLERANCE = 0.15
 # --- Reverse Shock Constants ---
 
 RVS_TIME_RANGES_THIN = {
-    "crossing":        {"ISM": (1e-2, 1e-1),     "wind": (1, 10)},
+    "crossing":        {"ISM": (1e-2, 1e-1),     "wind": (5, 50)},
     "BM":              {"ISM": (1e5, 1e6),      "wind": (1e6, 1e7)},
     "deep_newtonian":  {"ISM": (1e12, 1e13),    "wind": (1e14, 1e15)},
 }
@@ -101,7 +101,7 @@ RVS_FREQ_SCALINGS_THICK = {
 
 RVS_VIZ_PARAMS_THIN = {
     "ISM":  {"Gamma0": 300, "n_ism": 1, "duration": .01},
-    "wind": {"Gamma0": 50,  "A_star": 1e-1, "duration": .01},
+    "wind": {"Gamma0": 50,  "A_star": 1e-2, "duration": .01},
 }
 RVS_VIZ_PARAMS_THICK = {
     "ISM":  {"Gamma0": 300, "n_ism": 0.01, "duration": 1e5},

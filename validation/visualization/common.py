@@ -1,11 +1,14 @@
 """Common utilities, constants, and helper functions for visualization."""
 
 import json
+import shutil
 import subprocess
 import sys
+import tempfile
 from datetime import datetime
+from io import BytesIO
 from pathlib import Path
-from typing import Dict, List, Optional
+from typing import Dict, List, Optional, Union
 
 import matplotlib.pyplot as plt
 import numpy as np
@@ -218,7 +221,7 @@ def load_json(filepath: str) -> Dict:
 
 
 def create_title_page(pdf: PdfPages, title: str, subtitle: str = "", metadata: Optional[Dict] = None):
-    fig = plt.figure(figsize=(8.5, 11))
+    fig = plt.figure(figsize=PAGE_PORTRAIT)
 
     # Try to load and display logo (prefer PNG, fall back to SVG conversion)
     logo_displayed = False
@@ -272,7 +275,7 @@ def create_title_page(pdf: PdfPages, title: str, subtitle: str = "", metadata: O
 
 
 def create_section_header(pdf: PdfPages, section_num: int, title: str, description: str = ""):
-    fig = plt.figure(figsize=(8.5, 11))
+    fig = plt.figure(figsize=PAGE_PORTRAIT)
     fig.text(0.5, 0.6, f"Section {section_num}", fontsize=14, ha="center", color="#7F8C8D")
     fig.text(0.5, 0.5, title, fontsize=28, ha="center", fontweight="bold", color="#2C3E50")
     if description:
@@ -607,3 +610,436 @@ def create_benchmark_guide_pages(pdf: PdfPages) -> tuple:
 def create_regression_guide_pages(pdf: PdfPages) -> tuple:
     """Create guide pages for regression test results."""
     return _create_guide_pages(pdf, "regression_guide")
+
+
+# ---------------------------------------------------------------------------
+# ReportBuilder: hybrid PDF assembly (reportlab text + matplotlib figures)
+# ---------------------------------------------------------------------------
+
+def _get_reportlab():
+    """Import reportlab components. Returns dict of classes."""
+    from reportlab.lib import colors
+    from reportlab.lib.pagesizes import letter
+    from reportlab.lib.styles import ParagraphStyle
+    from reportlab.lib.units import inch
+    from reportlab.platypus import (Image, PageBreak, Paragraph,
+                                     SimpleDocTemplate, Spacer)
+    return {
+        "colors": colors, "letter": letter, "inch": inch,
+        "ParagraphStyle": ParagraphStyle,
+        "Image": Image, "PageBreak": PageBreak,
+        "SimpleDocTemplate": SimpleDocTemplate,
+        "Paragraph": Paragraph, "Spacer": Spacer,
+    }
+
+
+class ReportBuilder:
+    """Assembles a PDF report from matplotlib figures and reportlab flowables.
+
+    Uses a hybrid approach for optimal file size:
+    - reportlab for text-heavy pages (title, TOC, section headers, guides)
+    - matplotlib PdfPages for figure pages (shared font resources)
+    - pypdf for final assembly in correct page order
+
+    Usage:
+        builder = ReportBuilder("output.pdf")
+        builder.add_title_page("Report Title", metadata={...})
+        builder.add_section_header(1, "Section 1")
+        builder.add_fig(matplotlib_figure)
+        builder.save()
+    """
+
+    def __init__(self, output_path: Union[str, Path]):
+        self.output_path = Path(output_path)
+        self.output_path.parent.mkdir(parents=True, exist_ok=True)
+        # Each entry: (type, data, page_count)
+        # Types: "reportlab", "fig", "pdf_file", "pdf_files", "ext_pdf", "toc_placeholder"
+        self._entries = []
+        self._toc_insert_idx = None
+        self._current_page = 1  # Track current page number (1-based)
+        # Internal links: list of (source_page_1based, fig_rect, target_page_1based)
+        # fig_rect = (x, y, w, h) in figure coordinates (0-1)
+        self._internal_links = []
+
+    @property
+    def current_page(self) -> int:
+        """Return the current page number (1-based) for the next entry."""
+        return self._current_page
+
+    def add_fig(self, fig: plt.Figure):
+        """Add a matplotlib figure as a full page."""
+        self._entries.append(("fig", fig))
+        self._current_page += 1
+
+    def add_fig_file(self, pdf_path: Union[str, Path]):
+        """Add a pre-rendered single-page PDF file."""
+        self._entries.append(("pdf_file", str(pdf_path)))
+        self._current_page += 1
+
+    def add_fig_files(self, pdf_paths: List[Union[str, Path]]):
+        """Add multiple pre-rendered PDF files as consecutive pages."""
+        self._entries.append(("pdf_files", [str(p) for p in pdf_paths]))
+        self._current_page += len(pdf_paths)
+
+    def add_pdf_pages(self, pdf_path: Union[str, Path], num_pages: int = 1):
+        """Add all pages from an external PDF file."""
+        self._entries.append(("ext_pdf", str(pdf_path)))
+        self._current_page += num_pages
+
+    def add_flowables(self, flowables: list):
+        """Add reportlab flowables as a page (with automatic page break)."""
+        self._entries.append(("reportlab", list(flowables)))
+        self._current_page += 1
+
+    def set_toc_position(self, estimated_pages: int = 1):
+        """Mark where TOC should be inserted during save()."""
+        self._toc_insert_idx = len(self._entries)
+        self._entries.append(("toc_placeholder", None))
+        self._current_page += estimated_pages
+
+    def add_internal_links(self, source_page: int, links: List[tuple]):
+        """Register clickable jump links on a page.
+
+        Args:
+            source_page: 1-based page number of the source page.
+            links: List of (fig_rect, target_page) where fig_rect is
+                   (x, y, w, h) in matplotlib figure coordinates (0-1 range)
+                   and target_page is the 1-based destination page number.
+        """
+        for fig_rect, target_page in links:
+            self._internal_links.append((source_page, fig_rect, target_page))
+
+    def add_title_page(self, title: str, subtitle: str = "", metadata: Optional[Dict] = None):
+        """Add a title page using reportlab flowables."""
+        rl = _get_reportlab()
+        inch = rl["inch"]
+        Paragraph = rl["Paragraph"]
+        Spacer = rl["Spacer"]
+        ParagraphStyle = rl["ParagraphStyle"]
+        colors = rl["colors"]
+
+        story = []
+        story.append(Spacer(1, 2.5 * inch))
+
+        # Logo or title text
+        logo_path = None
+        assets_dir = Path(__file__).parent.parent.parent / "assets"
+        if (assets_dir / "logo.png").exists():
+            logo_path = str(assets_dir / "logo.png")
+
+        if logo_path:
+            try:
+                # Preserve aspect ratio: read actual size, scale to target height
+                from reportlab.lib.utils import ImageReader
+                img_reader = ImageReader(logo_path)
+                iw, ih = img_reader.getSize()
+                target_h = 1.8 * inch
+                scale = target_h / ih
+                img = rl["Image"](logo_path, width=iw * scale, height=target_h)
+                img.hAlign = "CENTER"
+                story.append(img)
+                story.append(Spacer(1, 0.4 * inch))
+            except Exception:
+                logo_path = None
+
+        if not logo_path:
+            style = ParagraphStyle("TitleLogo", fontSize=36, fontName="Helvetica-Bold",
+                                   textColor=colors.HexColor("#2C3E50"), alignment=1)
+            story.append(Paragraph("VegasAfterglow", style))
+            story.append(Spacer(1, 0.3 * inch))
+
+        title_style = ParagraphStyle("ReportTitle", fontSize=24, fontName="Helvetica",
+                                     textColor=colors.HexColor("#34495E"), alignment=1, spaceAfter=16)
+        story.append(Paragraph(title, title_style))
+
+        if subtitle:
+            sub_style = ParagraphStyle("Subtitle", fontSize=14, fontName="Helvetica",
+                                       textColor=colors.HexColor("#7F8C8D"), alignment=1, spaceAfter=20)
+            story.append(Paragraph(subtitle, sub_style))
+
+        story.append(Spacer(1, 0.4 * inch))
+        ts_style = ParagraphStyle("Timestamp", fontSize=11, fontName="Helvetica",
+                                  textColor=colors.HexColor("#95A5A6"), alignment=1, spaceAfter=8)
+        story.append(Paragraph(f"Generated: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}", ts_style))
+
+        if metadata:
+            story.append(Spacer(1, 0.4 * inch))
+            version_info = " | ".join(f"{k} {metadata[k]}" for k in ("Version", "Python") if k in metadata)
+            if version_info:
+                vs = ParagraphStyle("VersionInfo", fontSize=10, fontName="Helvetica-Bold",
+                                    textColor=colors.HexColor("#34495E"), alignment=1, spaceAfter=6)
+                story.append(Paragraph(version_info.replace("Version", "VegasAfterglow"), vs))
+            env_info = " | ".join(f"{k}: {metadata[k]}" for k in ("Commit", "Platform") if k in metadata)
+            if env_info:
+                es = ParagraphStyle("EnvInfo", fontSize=9, fontName="Helvetica",
+                                    textColor=colors.HexColor("#7F8C8D"), alignment=1, spaceAfter=6)
+                story.append(Paragraph(env_info, es))
+
+        story.append(Spacer(1, 2 * inch))
+        ps = ParagraphStyle("Powered", fontSize=9, fontName="Helvetica-Oblique",
+                            textColor=colors.HexColor("#95A5A6"), alignment=1)
+        story.append(Paragraph("Powered by Claude Code", ps))
+
+        self.add_flowables(story)
+
+    def add_section_header(self, section_num: int, title: str, description: str = ""):
+        """Add a section header page using reportlab flowables."""
+        rl = _get_reportlab()
+        inch = rl["inch"]
+        Paragraph = rl["Paragraph"]
+        Spacer = rl["Spacer"]
+        ParagraphStyle = rl["ParagraphStyle"]
+        colors = rl["colors"]
+
+        story = []
+        story.append(Spacer(1, 3.5 * inch))
+
+        sec_style = ParagraphStyle("SectionNum", fontSize=14, fontName="Helvetica",
+                                   textColor=colors.HexColor("#7F8C8D"), alignment=1, spaceAfter=20)
+        story.append(Paragraph(f"Section {section_num}", sec_style))
+
+        title_style = ParagraphStyle("SectionTitle", fontSize=28, fontName="Helvetica-Bold",
+                                     textColor=colors.HexColor("#2C3E50"), alignment=1, spaceAfter=24)
+        story.append(Paragraph(title, title_style))
+
+        if description:
+            desc_style = ParagraphStyle("SectionDesc", fontSize=12, fontName="Helvetica",
+                                        textColor=colors.HexColor("#7F8C8D"), alignment=1, leading=18)
+            story.append(Paragraph(description, desc_style))
+
+        self.add_flowables(story)
+
+    def add_guide_pages(self, guide_name: str):
+        """Add guide pages from a markdown file, rendered via reportlab."""
+        guide_path = Path(__file__).parent / "guides" / f"{guide_name}.md"
+        result = render_markdown_to_pdf_file(guide_path)
+        if result:
+            num_pages = result.get("num_pages", 1)
+            self.add_pdf_pages(result["pdf_path"], num_pages=num_pages)
+            # Don't clean up yet - save() will read the file
+        else:
+            rl = _get_reportlab()
+            label = guide_name.replace("_", " ").title()
+            style = rl["ParagraphStyle"]("GuideNA", fontSize=14, fontName="Helvetica",
+                                         alignment=1, textColor=rl["colors"].HexColor("#666666"))
+            self.add_flowables([
+                rl["Spacer"](1, 4 * rl["inch"]),
+                rl["Paragraph"](f"{label} - See {guide_name}.md for details", style),
+            ])
+
+    def _build_toc_pages(self, toc_nodes: List[Dict], output_path: Path) -> int:
+        """Build TOC as a standalone PDF. Returns number of pages."""
+        return create_toc_page_reportlab(toc_nodes, output_path)
+
+    def save(self, toc_nodes: Optional[List[Dict]] = None):
+        """Build the final PDF by assembling all components.
+
+        Strategy:
+        1. Group consecutive matplotlib figures into shared PdfPages (font dedup)
+        2. Build reportlab text pages into standalone PDFs
+        3. Merge everything in order using pypdf
+        """
+        from pypdf import PdfReader, PdfWriter
+
+        temp_dir = tempfile.mkdtemp(prefix="report_build_")
+        temp_pdfs = []  # List of (pdf_path, page_count) in order
+
+        try:
+            # Resolve TOC if needed
+            entries = list(self._entries)
+            if self._toc_insert_idx is not None and toc_nodes:
+                toc_path = Path(temp_dir) / "toc.pdf"
+                toc_pages = self._build_toc_pages(toc_nodes, toc_path)
+                if toc_pages > 0:
+                    entries[self._toc_insert_idx] = ("ext_pdf", str(toc_path))
+
+            # Process entries into temp PDFs
+            fig_batch = []  # Collect consecutive figures
+
+            def _flush_fig_batch():
+                if not fig_batch:
+                    return
+                pdf_path = Path(temp_dir) / f"figs_{len(temp_pdfs):04d}.pdf"
+                with PdfPages(str(pdf_path)) as pdf:
+                    for fig in fig_batch:
+                        pdf.savefig(fig)
+                        plt.close(fig)
+                reader = PdfReader(str(pdf_path))
+                temp_pdfs.append((str(pdf_path), len(reader.pages)))
+                fig_batch.clear()
+
+            for entry_type, entry_data in entries:
+                if entry_type == "fig":
+                    fig_batch.append(entry_data)
+
+                elif entry_type == "pdf_file":
+                    _flush_fig_batch()
+                    temp_pdfs.append((entry_data, 1))
+
+                elif entry_type == "pdf_files":
+                    _flush_fig_batch()
+                    # Merge batch into single PDF for font dedup
+                    if entry_data:
+                        merged_path = Path(temp_dir) / f"merged_{len(temp_pdfs):04d}.pdf"
+                        writer = PdfWriter()
+                        for path in entry_data:
+                            reader = PdfReader(str(path))
+                            for page in reader.pages:
+                                writer.add_page(page)
+                        with open(merged_path, "wb") as f:
+                            writer.write(f)
+                        reader = PdfReader(str(merged_path))
+                        temp_pdfs.append((str(merged_path), len(reader.pages)))
+
+                elif entry_type == "ext_pdf":
+                    _flush_fig_batch()
+                    reader = PdfReader(str(entry_data))
+                    temp_pdfs.append((str(entry_data), len(reader.pages)))
+
+                elif entry_type == "reportlab":
+                    _flush_fig_batch()
+                    rl = _get_reportlab()
+                    pdf_path = Path(temp_dir) / f"rl_{len(temp_pdfs):04d}.pdf"
+                    doc = rl["SimpleDocTemplate"](
+                        str(pdf_path),
+                        pagesize=rl["letter"],
+                        rightMargin=0.75 * rl["inch"],
+                        leftMargin=0.75 * rl["inch"],
+                        topMargin=0.75 * rl["inch"],
+                        bottomMargin=0.75 * rl["inch"],
+                    )
+                    doc.build(entry_data + [rl["PageBreak"]()])
+                    reader = PdfReader(str(pdf_path))
+                    temp_pdfs.append((str(pdf_path), len(reader.pages)))
+
+                elif entry_type == "toc_placeholder":
+                    _flush_fig_batch()
+                    # No TOC provided, skip
+
+            _flush_fig_batch()
+
+            # Assemble final PDF
+            writer = PdfWriter()
+            for pdf_path, _ in temp_pdfs:
+                reader = PdfReader(pdf_path)
+                for page in reader.pages:
+                    writer.add_page(page)
+
+            # Deduplicate identical objects (fonts, images) across merged pages
+            print("  Compressing and deduplicating PDF objects...")
+            writer.compress_identical_objects(remove_identicals=True, remove_orphans=True)
+
+            with open(self.output_path, "wb") as f:
+                writer.write(f)
+
+            # Post-process: add bookmarks and internal links
+            if toc_nodes or self._internal_links:
+                self._post_process(toc_nodes)
+
+        finally:
+            shutil.rmtree(temp_dir, ignore_errors=True)
+
+        print(f"Report saved to: {self.output_path}")
+
+    def _post_process(self, toc_nodes: Optional[List[Dict]] = None):
+        """Add bookmarks and internal links.
+
+        Uses append() rather than clone_from to avoid shared object references
+        which cause annotations to appear on all pages.
+        """
+        from pypdf import PdfReader, PdfWriter
+        from pypdf.generic import (
+            ArrayObject,
+            DictionaryObject,
+            NameObject,
+            NumberObject,
+        )
+
+        reader = PdfReader(str(self.output_path))
+        writer = PdfWriter()
+
+        # Append pages individually (not clone_from) to avoid shared references
+        for page in reader.pages:
+            writer.add_page(page)
+
+        n_pages = len(writer.pages)
+
+        # --- Bookmarks ---
+        if toc_nodes:
+            def _add_bookmark(node, parent=None):
+                page = node.get("page", 1) - 1
+                bookmark = writer.add_outline_item(node["title"], max(0, page), parent=parent)
+                for child in node.get("children", []):
+                    _add_bookmark(child, parent=bookmark)
+
+            for node in toc_nodes:
+                _add_bookmark(node)
+
+        # --- Internal links ---
+        # Build annotations manually using DictionaryObject to ensure
+        # each annotation is a unique object not shared between pages
+
+        # First, group links by source page to minimize page modifications
+        from collections import defaultdict
+        links_by_page = defaultdict(list)
+        for source_page_1, fig_rect, target_page_1 in self._internal_links:
+            src_idx = source_page_1 - 1
+            tgt_idx = target_page_1 - 1
+            if 0 <= src_idx < n_pages and 0 <= tgt_idx < n_pages:
+                links_by_page[src_idx].append((fig_rect, tgt_idx))
+
+        n_links = 0
+        for src_idx, page_links in links_by_page.items():
+            src_page = writer.pages[src_idx]
+
+            # CRITICAL: Create a new /Annots array for this page to break
+            # shared references with other pages from the same source PDF
+            new_annots = ArrayObject()
+            src_page[NameObject("/Annots")] = new_annots
+
+            # Get page dimensions from MediaBox
+            media_box = src_page.mediabox
+            page_w = float(media_box.width)
+            page_h = float(media_box.height)
+
+            for fig_rect, tgt_idx in page_links:
+                tgt_page = writer.pages[tgt_idx]
+
+                # Convert figure coords (0-1) to PDF points
+                fx, fy, fw, fh = fig_rect
+                x1 = fx * page_w
+                y1 = fy * page_h
+                x2 = (fx + fw) * page_w
+                y2 = (fy + fh) * page_h
+
+                # Build link annotation manually
+                link_annot = DictionaryObject()
+                link_annot[NameObject("/Type")] = NameObject("/Annot")
+                link_annot[NameObject("/Subtype")] = NameObject("/Link")
+                link_annot[NameObject("/Rect")] = ArrayObject([
+                    NumberObject(x1), NumberObject(y1),
+                    NumberObject(x2), NumberObject(y2)
+                ])
+                # Invisible border (set to [0,0,1] for debug)
+                link_annot[NameObject("/Border")] = ArrayObject([
+                    NumberObject(0), NumberObject(0), NumberObject(0)
+                ])
+                # Destination: fit page in window
+                link_annot[NameObject("/Dest")] = ArrayObject([
+                    tgt_page.indirect_reference,
+                    NameObject("/Fit")
+                ])
+
+                # Add as indirect object for proper PDF structure
+                annot_ref = writer._add_object(link_annot)
+                new_annots.append(annot_ref)
+                n_links += 1
+
+        if n_links:
+            print(f"  Added {n_links} internal jump links")
+
+        temp_output = str(self.output_path) + ".tmp"
+        with open(temp_output, "wb") as f:
+            writer.write(f)
+
+        shutil.move(temp_output, str(self.output_path))

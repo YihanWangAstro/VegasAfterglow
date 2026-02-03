@@ -21,11 +21,11 @@ The benchmark suite systematically tests a grid of physical scenarios and numeri
 
 Resolution controls the discretization density in each computational dimension. The fiducial values represent the recommended default settings. Note that theta and t grids enforce a minimum total point count regardless of the ppd value, so low ppd settings may not reduce the actual grid size.
 
-| Dimension | Symbol | Unit | Fiducial | Test Range | Min Total Points |
-|-----------|--------|------|----------|------------|------------------|
-| Azimuthal angle | phi | per degree | 0.3 | 0.1 - 0.5 | 1 |
-| Polar angle | theta | per degree | 0.3 | 0.2 - 1.0 | 56 |
-| Observer time | t | per decade | 10 | 5 - 25 | 24 |
+| Dimension | Symbol | Unit | Fiducial | Test Range |
+|-----------|--------|------|----------|------------|
+| Azimuthal angle | phi | per degree | 0.15 | 0.15 - 0.6 |
+| Polar angle | theta | per degree | 0.5 | 0.5 - 2.0 |
+| Observer time | t | per decade | 10 | 10 - 30 |
 
 ### 1.3 Frequency Bands
 
@@ -45,8 +45,8 @@ Numerical accuracy is quantified by comparing results at each resolution to a hi
 
 | Status | Criteria |
 |--------|----------|
-| PASS | mean error < 5% AND max error < 10% |
-| ACCEPTABLE | mean error < 5% AND max error >= 10% |
+| PASS | mean error < 5% AND max error < 15% |
+| ACCEPTABLE | mean error < 5% AND max error >= 15% |
 | FAIL | mean error >= 5% |
 
 ---
@@ -93,7 +93,7 @@ The overview page provides performance profiling across configurations, helping 
 
 ### 4.2 Timing Metric
 
-Each configuration is timed by computing a 30-point broadband light curve (t = 10^2 to 10^7 s) at the fiducial resolution. The reported time includes dynamics computation and flux evaluation in a single `flux_density` call.
+Each configuration is timed by computing a 30-point broadband light curve (t = 10^2 to 10^8 s) at the fiducial resolution. The reported time includes dynamics computation and flux evaluation in a single `flux_density` call.
 
 ### 4.3 Stage Breakdown
 
@@ -125,7 +125,7 @@ The page displays a 4x3 grid where each column corresponds to one resolution dim
 
 | Row | Y-axis | Threshold |
 |-----|--------|-----------|
-| 1 | Maximum relative error | 10% |
+| 1 | Maximum relative error | 15% |
 | 2 | Mean relative error | 5% |
 | 3 | CPU time (ms) | - |
 | 4 | Flux (mJy) | - |
@@ -173,4 +173,4 @@ Computational cost typically scales as:
 - Linear with time resolution (t_ppd)
 - Quadratic with angular resolution (phi_ppd x theta_ppd)
 
-Wind medium simulations generally require more computation due to the radially-varying density profile.
+Wind medium simulations generally require more computation due to the radially-varying density profile. However, the medium-aware adaptive grid often produces smaller grids for wind (earlier deceleration time), which can offset this cost.

@@ -111,11 +111,22 @@ def _count_spectrum_pass_fail(spectrum_grid: Dict) -> Tuple[int, int]:
 
 
 def _draw_grid_section(fig, grid_data, quantities, title, top, bottom, grid_left, cell_width, phases, media):
-    """Draw a grid section and return pass/fail counts."""
+    """Draw a grid section and return (n_pass, n_total, medium_rects).
+
+    medium_rects is a dict mapping medium name to (x, y, w, h) in figure coordinates.
+    """
     n_pass, n_total = _count_pass_fail(grid_data)
     rate = n_pass / n_total * 100 if n_total > 0 else 0
     title_color = COLORS["pass"] if rate >= 80 else COLORS["fail"]
     cell_height = (top - bottom) / len(quantities)
+
+    # Create separate clickable rectangles for each medium (ISM, Wind)
+    medium_rects = {}
+    n_phase_cols = len(phases)
+    for k, medium in enumerate(media):
+        x_start = grid_left + k * n_phase_cols * cell_width
+        rect_width = n_phase_cols * cell_width
+        medium_rects[medium] = (x_start - 0.01, bottom, rect_width + 0.02, top - bottom + 0.05)
 
     fig.text(0.5, top + 0.03, f"{title} ({n_pass}/{n_total})", ha="center", fontsize=11,
              fontweight="bold", color=title_color)
@@ -148,7 +159,7 @@ def _draw_grid_section(fig, grid_data, quantities, title, top, bottom, grid_left
                            tolerance=to_float(qty_result.get("tolerance")),
                            passed=qty_result.get("passed"))
 
-    return n_pass, n_total
+    return n_pass, n_total, medium_rects
 
 
 def _format_segment_label(seg_name: str) -> str:
@@ -241,29 +252,39 @@ def _plot_multi_grid_summary(results, page_title, quantities, grids, suptitle_y=
         quantities: List of quantity names for the grid rows.
         grids: List of (grid_key, section_title, phases, top, bottom) tuples.
         suptitle_y: Vertical position of the suptitle.
+
+    Returns:
+        (fig, section_rects) where section_rects is a dict mapping grid_key to
+        a dict of {medium: (x, y, w, h)} for clickable regions per medium.
     """
     fig = plt.figure(figsize=PAGE_PORTRAIT)
     cell_width = (0.92 - _GRID_LEFT) / (len(_FWD_PHASES) * len(_MEDIA))
 
     total_pass, total_tests = 0, 0
+    section_rects = {}
     for grid_key, title, phases, top, bottom in grids:
         grid_data = results.get(grid_key, {})
         if grid_data:
-            n_p, n_t = _draw_grid_section(
+            n_p, n_t, medium_rects = _draw_grid_section(
                 fig, grid_data, quantities, title, top=top, bottom=bottom,
                 grid_left=_GRID_LEFT, cell_width=cell_width, phases=phases, media=_MEDIA)
             total_pass += n_p
             total_tests += n_t
+            section_rects[grid_key] = medium_rects
 
     total_rate = total_pass / total_tests * 100 if total_tests > 0 else 0
     status_color = COLORS["pass"] if total_rate >= 80 else COLORS["fail"]
     fig.suptitle(f"{page_title}: {total_pass}/{total_tests} passed ({total_rate:.0f}%)",
                  fontsize=13, fontweight="bold", y=suptitle_y, color=status_color)
-    return fig
+    return fig, section_rects
 
 
-def plot_dynamics_summary_grid(results: Dict) -> plt.Figure:
-    """Plot dynamics summary: FWD + RVS thin + RVS thick shock dynamics grids."""
+def plot_dynamics_summary_grid(results: Dict) -> Tuple[plt.Figure, Dict[str, Tuple]]:
+    """Plot dynamics summary: FWD + RVS thin + RVS thick shock dynamics grids.
+
+    Returns:
+        (fig, section_rects) where section_rects maps grid_key to (x, y, w, h).
+    """
     return _plot_multi_grid_summary(results, "Dynamics Summary", ["u", "r", "B", "N_p"], [
         ("shock_grid",           "Forward Shock",                _FWD_PHASES, 0.86, 0.66),
         ("rvs_shock_grid_thin",  "Reverse Shock \u2014 Thin Shell",  _RVS_PHASES, 0.56, 0.36),
@@ -271,29 +292,43 @@ def plot_dynamics_summary_grid(results: Dict) -> plt.Figure:
     ])
 
 
-def plot_spectrum_summary_grid(results: Dict) -> plt.Figure:
-    """Plot standalone spectrum shapes pass/fail grid."""
+def plot_spectrum_summary_grid(results: Dict) -> Tuple[plt.Figure, Dict[str, Dict]]:
+    """Plot standalone spectrum shapes pass/fail grid.
+
+    Returns:
+        (fig, section_rects) where section_rects["spectrum_grid"] is a single rect
+        (spectrum has no ISM/Wind split).
+    """
     fig = plt.figure(figsize=PAGE_PORTRAIT)
 
     spectrum_grid = results.get("spectrum_grid", {})
     grid_right = 0.92
+    top, bottom = 0.78, 0.40
 
     n_pass, n_total = 0, 0
+    section_rects = {}
     if spectrum_grid:
         n_pass, n_total = _draw_spectrum_grid_section(
-            fig, spectrum_grid, top=0.78, bottom=0.40, grid_left=_GRID_LEFT, grid_right=grid_right,
+            fig, spectrum_grid, top=top, bottom=bottom, grid_left=_GRID_LEFT, grid_right=grid_right,
             section_title="Synchrotron Spectrum Shapes",
         )
+        # Clickable region covers the entire grid (no ISM/Wind split for spectrum)
+        full_rect = (_GRID_LEFT - 0.02, bottom, grid_right - _GRID_LEFT + 0.04, top - bottom + 0.05)
+        section_rects["spectrum_grid"] = {"_all": full_rect}
 
     total_rate = n_pass / n_total * 100 if n_total > 0 else 0
     status_color = COLORS["pass"] if total_rate >= 80 else COLORS["fail"]
     fig.suptitle(f"Synchrotron Spectrum Shapes: {n_pass}/{n_total} passed ({total_rate:.0f}%)",
                  fontsize=13, fontweight="bold", y=0.92, color=status_color)
-    return fig
+    return fig, section_rects
 
 
-def plot_frequencies_summary_grid(results: Dict) -> plt.Figure:
-    """Plot frequencies summary: FWD + RVS thin + RVS thick frequency grids."""
+def plot_frequencies_summary_grid(results: Dict) -> Tuple[plt.Figure, Dict[str, Tuple]]:
+    """Plot frequencies summary: FWD + RVS thin + RVS thick frequency grids.
+
+    Returns:
+        (fig, section_rects) where section_rects maps grid_key to (x, y, w, h).
+    """
     return _plot_multi_grid_summary(results, "Frequencies Summary", ["nu_m", "nu_c", "nu_M"], [
         ("freq_grid",           "Forward Shock",                _FWD_PHASES, 0.86, 0.70),
         ("rvs_freq_grid_thin",  "Reverse Shock \u2014 Thin Shell",  _RVS_PHASES, 0.56, 0.40),
