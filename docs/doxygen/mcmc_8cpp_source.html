@@ -714,7 +714,7 @@ $(document).ready(function(){initNavTree('mcmc_8cpp_source.html',''); initResiza
 <div class="line"><a id="l00576" name="l00576"></a><span class="lineno">  576</span>            <a class="code hl_struct" href="structMultiBandModel.html">MultiBandModel</a> local_model(config_ref);</div>
 <div class="line"><a id="l00577" name="l00577"></a><span class="lineno">  577</span> </div>
 <div class="line"><a id="l00578" name="l00578"></a><span class="lineno">  578</span><span class="preprocessor">    #pragma omp for schedule(dynamic)</span></div>
-<div class="line"><a id="l00579" name="l00579"></a><span class="lineno">  579</span>            <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> i = 0; i &lt; nwalkers; ++i) {</div>
+<div class="line"><a id="l00579" name="l00579"></a><span class="lineno">  579</span>            <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; static_cast&lt;int&gt;(nwalkers); ++i) {</div>
 <div class="line"><a id="l00580" name="l00580"></a><span class="lineno">  580</span>                chi2_results(i) = compute_chi2(i, local_model, workspace);</div>
 <div class="line"><a id="l00581" name="l00581"></a><span class="lineno">  581</span>            }</div>
 <div class="line"><a id="l00582" name="l00582"></a><span class="lineno">  582</span>        }</div>
