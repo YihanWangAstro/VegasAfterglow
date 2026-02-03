@@ -56,6 +56,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Regression tests**: Check that simulation outputs match theoretical predictions from GRB afterglow theory — shock dynamics power-law scaling, characteristic frequency evolution, spectral shape indices, and coasting/Blandford-McKee/Sedov-Taylor phases
 - **Python API tests**: Verify model creation, flux calculations, output correctness, and input validation across all jet types and configurations
 - **One-command validation**: Run `python validation/run_validation.py --all` to execute the full suite and generate a PDF report with convergence plots and diagnostics
+- **Interactive PDF reports**: Clickable navigation links in validation reports — summary grids link to detail pages, detail pages link back to summaries. Separate clickable regions for ISM and Wind medium columns in regression test summaries
 - **GitHub Actions CI**: Automated test workflow for Ubuntu and macOS across Python 3.9–3.11 (see `.github/workflows/test.yml`)
 - See the [Validation & Testing](README.md#validation--testing) section in the README for full details
 - Powered by [Claude Code](https://claude.ai/claude-code)
@@ -665,7 +666,7 @@ coordinates = details.theta            # New way
 
 | Version | Release Date | Key Features |
 |---------|--------------|--------------|
-| v2.0.0-beta | 2026-02-02 | ~5x speedup for symmetric jets, smooth synchrotron spectra, parallel MCMC, lightweight install |
+| v2.0.0-beta | 2026-02-02 | ~5x speedup for symmetric jets, smooth synchrotron spectra, parallel MCMC, lightweight install, interactive PDF reports |
 | v1.1.0  | 2025-12-08   | Bilby MCMC integration, multi-sampler support, flexible parameter interface |
 | v1.0.3  | 2025-09-29   | Self-absorption heating disabled by default, MCMC improvements, flux unit fixes |
 | v1.0.2  | 2025-09-15   | Python interface method name updates, enhanced documentation, API consistency |

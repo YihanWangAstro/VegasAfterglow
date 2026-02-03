@@ -32,6 +32,7 @@ mcmc = [
 test = [
   "pypdf>=4.0",
   "reportlab>=4.0",
+  "pdfrw>=0.4",
   "Pillow>=10.0",
 ]
 
