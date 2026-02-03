@@ -52,24 +52,34 @@ jobs:
           CIBW_BEFORE_ALL_LINUX: >
             yum install -y libgomp ccache || (apt-get update && apt-get install -y libomp-dev ccache)
           CIBW_BEFORE_ALL_MACOS: >
-            brew install libomp ccache
+            brew install libomp ccache &&
+            arch -x86_64 brew install libomp
           # Use ccache and parallel builds for faster compilation
           CIBW_ENVIRONMENT_LINUX: >
             PATH="/usr/lib/ccache:$PATH"
             CCACHE_DIR="/host${{ github.workspace }}/.ccache"
             CMAKE_BUILD_PARALLEL_LEVEL="$(nproc)"
-          # Set OpenMP, ccache, and parallel build paths for macOS compilation
-          CIBW_ENVIRONMENT_MACOS: >
-            OpenMP_ROOT="$(brew --prefix libomp)"
-            LDFLAGS="-L$(brew --prefix libomp)/lib -Wl,-rpath,$(brew --prefix libomp)/lib"
-            CPPFLAGS="-I$(brew --prefix libomp)/include"
-            DYLD_FALLBACK_LIBRARY_PATH="$(brew --prefix libomp)/lib"
-            PATH="$(brew --prefix ccache)/libexec:$PATH"
+          # Set OpenMP paths for arm64 macOS builds
+          CIBW_ENVIRONMENT_MACOS_ARM64: >
+            OpenMP_ROOT="/opt/homebrew/opt/libomp"
+            LDFLAGS="-L/opt/homebrew/opt/libomp/lib"
+            CPPFLAGS="-I/opt/homebrew/opt/libomp/include"
+            PATH="/opt/homebrew/opt/ccache/libexec:$PATH"
             CCACHE_DIR="${{ github.workspace }}/.ccache"
             CMAKE_BUILD_PARALLEL_LEVEL="$(sysctl -n hw.ncpu)"
-          # Ensure delocate bundles libomp into the wheel
-          CIBW_REPAIR_WHEEL_COMMAND_MACOS: >
-            delocate-wheel -w {dest_dir} -v {wheel}
+          # Set OpenMP paths for x86_64 macOS builds
+          CIBW_ENVIRONMENT_MACOS_X86_64: >
+            OpenMP_ROOT="/usr/local/opt/libomp"
+            LDFLAGS="-L/usr/local/opt/libomp/lib"
+            CPPFLAGS="-I/usr/local/opt/libomp/include"
+            PATH="/usr/local/opt/ccache/libexec:$PATH"
+            CCACHE_DIR="${{ github.workspace }}/.ccache"
+            CMAKE_BUILD_PARALLEL_LEVEL="$(sysctl -n hw.ncpu)"
+          # Ensure delocate bundles libomp into the wheel (architecture-specific)
+          CIBW_REPAIR_WHEEL_COMMAND_MACOS_ARM64: >
+            DYLD_LIBRARY_PATH=/opt/homebrew/opt/libomp/lib delocate-wheel -w {dest_dir} -v {wheel}
+          CIBW_REPAIR_WHEEL_COMMAND_MACOS_X86_64: >
+            DYLD_LIBRARY_PATH=/usr/local/opt/libomp/lib delocate-wheel -w {dest_dir} -v {wheel}
           CIBW_BEFORE_BUILD: >
             python -m pip install wheel scikit-build-core>=0.4.3 pybind11>=2.6.0 numpy>=1.20
           CIBW_TEST_COMMAND: python -c "from VegasAfterglow import ObsData, Setups, Fitter, ParamDef, Scale; print('OK')"
