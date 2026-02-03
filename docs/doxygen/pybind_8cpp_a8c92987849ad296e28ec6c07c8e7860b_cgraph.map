@@ -1,126 +1,129 @@
 <map id="PYBIND11_MODULE" name="PYBIND11_MODULE">
-<area shape="rect" id="Node000001" title=" " alt="" coords="5,792,156,817"/>
-<area shape="rect" id="Node000002" href="$structMultiBandData.html#a3d3149e512bdfb7005f019879e293158" title="Add frequency&#45;integrated flux measurements over a specified frequency band." alt="" coords="211,113,394,139"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="80,791,88,670,107,476,123,373,144,279,170,201,185,171,202,148,205,145,209,149,206,152,190,174,175,203,149,280,129,374,113,476,93,670,85,792"/>
-<area shape="rect" id="Node000004" href="$structMultiBandData.html#a95b867e09e94169a3a07daeb0598a040" title="Add a single&#45;frequency light curve to the observational dataset." alt="" coords="227,377,378,417"/>
-<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="80,792,84,728,101,630,116,576,138,522,166,472,202,427,213,418,217,422,206,431,170,475,142,525,121,578,106,631,89,728,85,792"/>
-<area shape="rect" id="Node000005" href="$structMultiBandData.html#a836cbe84f113e680f8d6291663112c0f" title="Add a broadband spectrum at a specific observation time." alt="" coords="227,441,378,481"/>
-<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="81,791,89,737,108,657,124,612,145,568,170,527,202,491,214,482,217,486,206,495,175,530,149,571,129,614,113,658,94,738,86,792"/>
-<area shape="rect" id="Node000006" href="$structMultiBandModel.html#af37da733bf5c3b4d89b7f0688bbc0e94" title="Batch chi&#45;squared computation with clean transformer&#45;based interface." alt="" coords="217,505,389,545"/>
-<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="83,791,95,748,118,687,154,620,176,589,202,561,218,549,222,554,206,565,180,592,158,623,123,689,100,750,88,792"/>
-<area shape="rect" id="Node000008" href="$classParamTransformer.html#aab37f13fcd9f1c8373b739ef8ed8aacb" title="Get number of free (sampled) parameters." alt="" coords="465,605,647,631"/>
-<area shape="poly" id="edge59_Node000001_Node000008" title=" " alt="" coords="83,791,95,752,118,700,154,647,176,624,203,605,222,598,248,593,311,590,384,594,454,601,454,606,383,599,311,596,248,598,224,603,205,610,180,628,158,650,123,702,100,754,88,793"/>
-<area shape="rect" id="Node000010" href="$structMultiBandModel.html#aac1b3b59c614be83121a2232dda009d5" title="Configure numerical and physics settings for the afterglow model." alt="" coords="205,620,401,645"/>
-<area shape="poly" id="edge9_Node000001_Node000010" title=" " alt="" coords="87,790,129,726,163,688,203,656,217,648,219,653,205,660,167,692,134,729,91,793"/>
-<area shape="rect" id="Node000011" href="$structMultiBandData.html#aa76ea4485894fd0eb67def9a0cc93045" title="Get the total number of individual data points across all datasets." alt="" coords="225,670,381,710"/>
-<area shape="poly" id="edge10_Node000001_Node000011" title=" " alt="" coords="96,790,142,756,203,720,219,713,221,717,205,724,145,760,99,794"/>
-<area shape="rect" id="Node000012" href="$classPyModel.html#ac47bbdbe6025c4def5d4a65f3ed6be34" title="Get comprehensive details of the shock evolution and model configuration." alt="" coords="237,327,368,352"/>
-<area shape="poly" id="edge11_Node000001_Node000012" title=" " alt="" coords="79,792,79,718,83,664,92,603,106,539,129,475,160,415,202,363,223,349,226,353,206,367,164,418,133,477,111,540,97,604,88,664,84,718,84,792"/>
-<area shape="rect" id="Node000026" href="$structMultiBandModel.html#a2e5994a6b6d0b467438fe899a2cf0114" title="Calculate frequency&#45;integrated flux over specified bands and times." alt="" coords="223,735,383,760"/>
-<area shape="poly" id="edge31_Node000001_Node000026" title=" " alt="" coords="130,789,203,770,239,761,240,766,205,775,131,794"/>
-<area shape="rect" id="Node000027" href="$classPyModel.html#a51390496a41c22c7c2dbb8838ac7a2d2" title="Calculate bolometric flux integrated over a frequency range." alt="" coords="247,64,358,89"/>
-<area shape="poly" id="edge32_Node000001_Node000027" title=" " alt="" coords="80,792,86,662,105,453,120,343,141,240,168,156,184,124,202,99,216,87,233,80,235,85,219,92,206,103,189,126,173,158,146,242,125,343,110,454,91,662,85,792"/>
-<area shape="rect" id="Node000031" href="$classPyModel.html#abf7e6762cb8ca1c8ff429e0a8a7592ad" title="Calculate specific flux at given time and frequency (t_i,nu_i) series." alt="" coords="220,163,385,188"/>
-<area shape="poly" id="edge41_Node000001_Node000031" title=" " alt="" coords="80,791,89,678,110,499,127,404,147,318,172,246,186,218,202,198,207,193,210,197,206,201,191,221,177,248,152,319,132,406,116,499,94,678,85,792"/>
-<area shape="rect" id="Node000034" href="$classPyModel.html#a4337b83ce5738c04db9a8dc1b97ba868" title="Calculate specific flux with finite exposure time averaging." alt="" coords="220,262,385,302"/>
-<area shape="poly" id="edge47_Node000001_Node000034" title=" " alt="" coords="81,792,94,698,119,554,135,479,155,409,177,352,202,312,207,307,211,311,206,316,182,354,160,411,141,480,124,555,99,699,86,792"/>
-<area shape="rect" id="Node000036" href="$structMultiBandModel.html#a722bb96e86f63b1205fd54fdd2e4c323" title="Calculate theoretical flux predictions for given parameters and observation grid." alt="" coords="223,785,383,825"/>
-<area shape="poly" id="edge50_Node000001_Node000036" title=" " alt="" coords="156,802,209,802,209,807,156,807"/>
-<area shape="rect" id="Node000037" href="$classPyModel.html#a7aaf63a15a01165e3c5ad8d935f30414" title="Calculate specific flux at given times and frequencies." alt="" coords="204,212,401,237"/>
-<area shape="poly" id="edge51_Node000001_Node000037" title=" " alt="" coords="80,791,91,686,114,523,130,437,150,358,174,293,187,267,202,248,208,243,212,247,206,252,192,270,179,295,155,359,135,438,119,524,96,687,86,792"/>
-<area shape="rect" id="Node000038" href="$classPyModel.html#a3f0a0a9887885a5052291118ed7ffcaf" title=" " alt="" coords="231,849,375,875"/>
-<area shape="poly" id="edge55_Node000001_Node000038" title=" " alt="" coords="131,815,205,834,240,843,239,848,203,839,130,820"/>
-<area shape="rect" id="Node000039" href="$classPyModel.html#a7389149e6ad32d8189fd1d98682e8abd" title=" " alt="" coords="217,899,388,924"/>
-<area shape="poly" id="edge56_Node000001_Node000039" title=" " alt="" coords="99,815,145,849,205,884,227,892,226,897,203,888,142,854,96,820"/>
-<area shape="rect" id="Node000040" href="$structMultiBandData.html#a231028dd529a2a063833bdb58c3bc47f" title="Logarithmically subsample data to reduce computational cost while preserving information." alt="" coords="212,949,393,989"/>
-<area shape="poly" id="edge57_Node000001_Node000040" title=" " alt="" coords="93,816,137,872,169,905,205,933,218,941,216,945,203,938,165,909,133,875,88,819"/>
-<area shape="rect" id="Node000041" href="$classPyModel.html#ae1049fe592b9616356f666bcab2a92d3" title=" " alt="" coords="233,1013,373,1039"/>
-<area shape="poly" id="edge58_Node000001_Node000041" title=" " alt="" coords="89,817,103,853,127,902,161,955,182,978,206,999,221,1008,218,1012,202,1003,178,982,157,958,122,905,98,855,84,819"/>
-<area shape="rect" id="Node000042" href="$mcmc_8cpp.html#a5507f4105b8933fd6af7afc13108c0f2" title="Map parameter name string to index for Python interface setup." alt="" coords="217,1063,388,1088"/>
-<area shape="poly" id="edge60_Node000001_Node000042" title=" " alt="" coords="87,817,98,862,120,924,156,991,179,1022,206,1048,214,1054,211,1058,202,1052,175,1025,151,994,116,926,93,863,82,818"/>
-<area shape="rect" id="Node000043" href="$pymodel_8cpp.html#aeb4fc9d5286c8464177e8e5ab220c0f4" title="Creates a Gaussian jet model with smooth energy and Lorentz factor profiles." alt="" coords="245,1161,360,1187"/>
-<area shape="poly" id="edge61_Node000001_Node000043" title=" " alt="" coords="85,817,91,877,108,966,124,1015,144,1063,172,1108,206,1147,234,1163,231,1167,202,1151,167,1111,140,1066,119,1017,103,967,85,878,80,818"/>
-<area shape="rect" id="Node000045" href="$pymodel_8cpp.html#a43af01d16838e6513792deaeb727fbe5" title="Creates a constant density ISM (Interstellar Medium) environment." alt="" coords="271,1359,334,1384"/>
-<area shape="poly" id="edge63_Node000001_Node000045" title=" " alt="" coords="86,817,96,920,119,1080,136,1164,156,1241,179,1304,192,1328,206,1345,230,1361,258,1368,256,1373,228,1366,202,1349,188,1331,174,1306,151,1242,131,1165,114,1081,91,921,80,818"/>
-<area shape="rect" id="Node000046" href="$pymodel_8cpp.html#aa8d07eaa61289babf3e94aa7ff5fb985" title="Creates a power&#45;law structured jet with customizable angular energy distribution." alt="" coords="242,1211,363,1236"/>
-<area shape="poly" id="edge64_Node000001_Node000046" title=" " alt="" coords="84,817,87,885,102,987,117,1044,138,1100,168,1152,206,1197,230,1212,228,1217,202,1201,163,1155,133,1102,112,1046,97,989,82,885,79,818"/>
-<area shape="rect" id="Node000047" href="$pymodel_8cpp.html#a2af9f10fdd9d51225b34cced6f8c4d7d" title="Creates a power&#45;law wing jet model with continuous transition from core to wing." alt="" coords="234,1408,371,1433"/>
-<area shape="poly" id="edge66_Node000001_Node000047" title=" " alt="" coords="85,817,95,928,116,1103,133,1195,153,1280,177,1349,191,1375,206,1395,223,1407,220,1411,202,1399,187,1378,172,1351,148,1281,127,1196,111,1104,89,929,80,818"/>
-<area shape="rect" id="Node000048" href="$pymodel_8cpp.html#a2e10a24163357e677edd02fb34524a49" title="Creates a step power&#45;law jet model: a pencil beam core and powerlaw wing with jump at theta_c." alt="" coords="227,1260,378,1285"/>
-<area shape="poly" id="edge67_Node000001_Node000048" title=" " alt="" coords="86,817,100,904,126,1034,142,1101,162,1163,183,1213,206,1247,217,1255,214,1259,202,1251,178,1216,157,1165,137,1103,120,1035,95,904,81,818"/>
-<area shape="rect" id="Node000049" href="$pymodel_8cpp.html#a85752a7e8c1e573475b915b56f62a80c" title="Creates a top&#45;hat jet model with uniform energy and Lorentz factor distributions." alt="" coords="253,1309,352,1335"/>
-<area shape="poly" id="edge69_Node000001_Node000049" title=" " alt="" coords="86,817,98,912,122,1057,139,1133,159,1202,181,1259,206,1296,222,1308,241,1315,239,1320,219,1312,202,1300,176,1261,154,1204,134,1134,117,1058,93,913,81,818"/>
-<area shape="rect" id="Node000050" href="$pymodel_8cpp.html#ade65717b9f7afbe356206b4e069e160f" title="Creates a two&#45;component jet model with different properties for narrow and wide components." alt="" coords="225,1112,380,1137"/>
-<area shape="poly" id="edge71_Node000001_Node000050" title=" " alt="" coords="86,817,94,869,114,945,130,987,150,1027,175,1065,206,1097,214,1104,211,1108,202,1101,171,1068,145,1030,125,989,109,947,89,870,81,818"/>
-<area shape="rect" id="Node000051" href="$pymodel_8cpp.html#a6712fc3bcfbca1e296a29773aa708fbf" title="Creates a stellar wind environment with r^(&#45;2) density profile." alt="" coords="267,1457,338,1483"/>
-<area shape="poly" id="edge73_Node000001_Node000051" title=" " alt="" coords="85,817,93,937,114,1126,129,1226,150,1318,175,1394,190,1423,206,1444,228,1459,254,1466,253,1471,226,1464,202,1448,185,1425,170,1396,145,1320,124,1227,108,1127,88,937,80,818"/>
-<area shape="rect" id="Node000003" href="$pybind_8h.html#a65fbb7ac1dd1f2667e68724a512f691c" title=" " alt="" coords="503,79,609,104"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="394,111,489,98,489,103,395,116"/>
-<area shape="rect" id="Node000007" href="$structBatchWorkspace.html#a3c6f56eb679103832e4b2199f2c0f56f" title="Initialize workspace arrays to match observation data dimensions." alt="" coords="459,556,653,581"/>
-<area shape="poly" id="edge6_Node000006_Node000007" title=" " alt="" coords="389,537,470,551,469,556,388,542"/>
-<area shape="poly" id="edge7_Node000006_Node000008" title=" " alt="" coords="360,542,403,561,426,576,450,590,476,599,474,604,448,595,424,581,400,566,358,547"/>
-<area shape="rect" id="Node000009" href="$classParamTransformer.html#aa8eb1168daee0bb722eb2e879ac263e8" title="Transform single sample to Params (internal helper for batch processing)." alt="" coords="449,491,663,531"/>
-<area shape="poly" id="edge8_Node000006_Node000009" title=" " alt="" coords="389,517,435,515,435,520,389,523"/>
-<area shape="rect" id="Node000013" href="$mesh_8h.html#a96aa0a78a0de13a52955de3c2ce29ddd" title="Constructs a coordinate grid (Coord) for shock evolution." alt="" coords="515,392,597,417"/>
-<area shape="poly" id="edge12_Node000012_Node000013" title=" " alt="" coords="355,350,402,362,450,377,502,390,501,395,449,382,401,367,354,355"/>
-<area shape="rect" id="Node000023" href="$forward-shock_8hpp.html#aa963867f4f98284c627afeff47fc3a18" title="Generates a forward shock model for given coordinates, medium, and jet parameters." alt="" coords="479,343,633,368"/>
-<area shape="poly" id="edge28_Node000012_Node000023" title=" " alt="" coords="369,341,465,347,465,352,368,346"/>
-<area shape="rect" id="Node000024" href="$reverse-shock_8hpp.html#ab50c063a2b81579f107e7e79f12961b0" title="Generates a pair of forward and reverse shocks." alt="" coords="477,441,635,467"/>
-<area shape="poly" id="edge29_Node000012_Node000024" title=" " alt="" coords="370,347,403,362,419,379,428,396,436,412,451,427,466,435,463,439,448,431,431,415,423,398,415,382,400,367,367,352"/>
-<area shape="rect" id="Node000025" href="$pymodel_8cpp.html#a8ffef75ec4ca3ef0464331eb194de1e5" title=" " alt="" coords="481,293,631,319"/>
-<area shape="poly" id="edge30_Node000012_Node000025" title=" " alt="" coords="368,328,467,315,468,320,369,333"/>
-<area shape="rect" id="Node000014" href="$mesh_8h.html#a83ae490737edde6ad03ede25e371a071" title=" " alt="" coords="731,403,869,428"/>
-<area shape="poly" id="edge13_Node000013_Node000014" title=" " alt="" coords="598,404,717,409,717,414,598,409"/>
-<area shape="rect" id="Node000016" href="$utilities_8h.html#ab8e81118f023df135835db8cce4f5f42" title="Returns the value of a single parameter." alt="" coords="1289,229,1340,255"/>
-<area shape="poly" id="edge26_Node000013_Node000016" title=" " alt="" coords="598,411,711,437,800,445,839,444,889,437,993,416,1073,393,1148,359,1240,306,1268,286,1291,263,1295,267,1271,290,1243,311,1151,364,1075,398,994,421,890,442,840,449,800,451,710,442,597,416"/>
-<area shape="rect" id="Node000018" href="$mesh_8h.html#a3dc6828dd13a70c0c203dba03e765cea" title=" " alt="" coords="724,255,876,280"/>
-<area shape="poly" id="edge19_Node000013_Node000018" title=" " alt="" coords="597,400,630,393,661,377,678,357,684,335,691,312,709,289,716,284,719,289,712,293,696,314,689,336,683,359,664,381,632,398,598,405"/>
-<area shape="rect" id="Node000019" href="$mesh_8h.html#aa7505ad2e84c2a29610c1a13cd3b25e3" title="Estimates deceleration time for a given angle from ejecta and medium properties." alt="" coords="739,555,861,580"/>
-<area shape="poly" id="edge21_Node000013_Node000019" title=" " alt="" coords="598,403,632,410,664,427,677,440,684,453,690,481,695,508,702,520,712,533,732,547,729,551,709,537,697,523,690,509,685,482,679,455,673,443,661,431,630,415,597,408"/>
-<area shape="rect" id="Node000020" href="$namespacephysics_1_1relativistic.html#ab1c1444afa3c4afd0c57145f932962fa" title="Converts Lorentz factor (gamma) to a velocity fraction (beta)" alt="" coords="949,503,1097,543"/>
-<area shape="poly" id="edge25_Node000013_Node000020" title=" " alt="" coords="598,405,631,412,664,426,680,441,689,456,697,470,712,482,766,505,825,518,882,525,935,526,935,532,882,530,824,523,765,510,709,487,693,473,684,459,676,444,661,431,630,417,597,410"/>
-<area shape="rect" id="Node000021" href="$mesh_8h.html#a28ba8f4400237a97c0d2fac934fb44cf" title="Finds all sharp edges in the jet Gamma0 profile plus the outermost boundary." alt="" coords="742,304,858,329"/>
-<area shape="poly" id="edge24_Node000013_Node000021" title=" " alt="" coords="597,397,629,389,661,377,675,368,685,358,695,348,709,338,728,330,730,335,712,343,698,352,689,362,679,372,664,382,631,394,598,402"/>
-<area shape="rect" id="Node000022" href="$mesh_8h.html#a3c066f2c8e6d102d7a56de8cb42cf5a8" title=" " alt="" coords="749,353,851,379"/>
-<area shape="poly" id="edge27_Node000013_Node000022" title=" " alt="" coords="597,396,734,374,735,379,598,401"/>
-<area shape="rect" id="Node000015" href="$mesh_8h.html#a49c59d8da915e118c4e550cc9bd4d3d9" title=" " alt="" coords="937,280,1108,305"/>
-<area shape="poly" id="edge14_Node000014_Node000015" title=" " alt="" coords="856,400,888,388,948,351,996,312,999,317,951,355,891,392,858,405"/>
-<area shape="poly" id="edge15_Node000015_Node000016" title=" " alt="" coords="1108,300,1174,299,1208,295,1240,287,1265,276,1287,261,1290,266,1268,281,1242,293,1209,300,1174,305,1108,305"/>
-<area shape="rect" id="Node000017" href="$utilities_8h.html#ac47d1412f3f1791737d0f963267096f1" title="Returns the value of a single parameter." alt="" coords="1175,253,1222,279"/>
-<area shape="poly" id="edge17_Node000015_Node000017" title=" " alt="" coords="1106,277,1161,269,1162,274,1107,283"/>
-<area shape="poly" id="edge16_Node000016_Node000016" title=" " alt="" coords="1295,230,1291,221,1293,212,1301,205,1315,203,1331,206,1338,214,1334,218,1328,211,1315,208,1303,210,1297,214,1296,220,1299,228"/>
-<area shape="poly" id="edge18_Node000017_Node000016" title=" " alt="" coords="1222,259,1275,247,1276,253,1223,264"/>
-<area shape="poly" id="edge20_Node000018_Node000015" title=" " alt="" coords="877,273,924,279,924,284,876,279"/>
-<area shape="poly" id="edge22_Node000019_Node000020" title=" " alt="" coords="861,553,935,538,936,543,862,558"/>
-<area shape="poly" id="edge23_Node000020_Node000016" title=" " alt="" coords="1097,526,1133,524,1171,517,1208,504,1240,483,1260,460,1277,433,1299,374,1309,315,1311,268,1317,269,1314,316,1304,375,1282,435,1265,463,1243,487,1210,509,1173,522,1134,529,1097,531"/>
-<area shape="poly" id="edge40_Node000027_Node000003" title=" " alt="" coords="359,77,489,85,489,90,358,83"/>
-<area shape="rect" id="Node000028" href="$classObserver.html#a2588a9ebaec5465d6b5bd08fadadcb99" title="Computes the integrated flux over a frequency band." alt="" coords="499,29,613,55"/>
-<area shape="poly" id="edge33_Node000027_Node000028" title=" " alt="" coords="358,67,486,49,486,54,359,72"/>
-<area shape="poly" id="edge36_Node000028_Node000016" title=" " alt="" coords="612,28,710,14,800,8,890,14,994,24,1078,33,1117,42,1156,57,1198,80,1243,112,1266,135,1285,163,1308,215,1303,217,1280,165,1262,139,1240,116,1195,84,1154,62,1115,48,1077,39,994,30,889,19,800,13,711,19,613,33"/>
-<area shape="poly" id="edge35_Node000028_Node000028" title=" " alt="" coords="517,31,508,21,513,11,529,5,556,3,590,7,600,11,604,17,599,20,596,15,589,12,556,8,530,10,516,15,513,20,521,27"/>
-<area shape="rect" id="Node000029" href="$mesh_8cpp.html#ac536f77c32691232cb5e7546595fb3d2" title="Converts boundary values to center values using geometric mean." alt="" coords="711,29,889,55"/>
-<area shape="poly" id="edge34_Node000028_Node000029" title=" " alt="" coords="613,39,697,39,697,45,613,45"/>
-<area shape="rect" id="Node000030" href="$classObserver.html#a5350b13ae5a6c7007ba6459923573136" title="Sets up the Observer for flux calculation at specific observation times." alt="" coords="715,103,885,128"/>
-<area shape="poly" id="edge37_Node000028_Node000030" title=" " alt="" coords="614,51,663,63,755,95,754,100,662,69,612,56"/>
-<area shape="poly" id="edge38_Node000030_Node000016" title=" " alt="" coords="879,100,958,94,1052,95,1101,100,1150,110,1198,125,1243,145,1263,159,1280,178,1304,215,1299,218,1276,181,1259,163,1240,150,1196,130,1149,115,1100,106,1052,100,959,99,879,105"/>
-<area shape="poly" id="edge39_Node000030_Node000030" title=" " alt="" coords="764,104,756,94,760,84,775,78,800,76,831,80,843,89,840,93,829,85,800,81,776,83,764,88,761,94,768,101"/>
-<area shape="poly" id="edge42_Node000031_Node000003" title=" " alt="" coords="362,160,400,148,424,135,448,121,491,105,493,110,450,126,427,139,402,152,364,165"/>
-<area shape="rect" id="Node000032" href="$classObserver.html#a2497e02305dbf755a7d629311f8e772d" title="Computes the specific flux at a single observed frequency for multiple observation times." alt="" coords="487,179,625,219"/>
-<area shape="poly" id="edge43_Node000031_Node000032" title=" " alt="" coords="386,180,473,189,473,194,385,186"/>
-<area shape="poly" id="edge46_Node000032_Node000016" title=" " alt="" coords="625,190,711,185,1015,184,1242,189,1269,202,1292,218,1288,222,1266,206,1241,194,1015,189,711,190,626,196"/>
-<area shape="rect" id="Node000033" href="$observer_8h.html#aa53249b087b9b9d83f4c06e808deeed9" title="Helper function that advances an iterator through an array until the value exceeds the target." alt="" coords="1156,204,1241,229"/>
-<area shape="poly" id="edge44_Node000032_Node000033" title=" " alt="" coords="626,199,1142,213,1142,218,626,204"/>
-<area shape="poly" id="edge45_Node000033_Node000016" title=" " alt="" coords="1242,223,1276,231,1275,236,1241,229"/>
-<area shape="poly" id="edge49_Node000034_Node000032" title=" " alt="" coords="362,259,400,246,448,229,473,221,474,226,450,234,402,251,364,264"/>
-<area shape="rect" id="Node000035" href="$structPyFlux.html#a68faa22da5d5b169a0d461c56b4b3e21" title=" " alt="" coords="487,244,625,269"/>
-<area shape="poly" id="edge48_Node000034_Node000035" title=" " alt="" coords="385,271,473,262,474,268,386,276"/>
-<area shape="poly" id="edge53_Node000037_Node000003" title=" " alt="" coords="377,210,400,197,416,180,423,161,431,141,448,121,467,109,489,101,491,106,470,114,451,125,435,143,428,163,420,182,403,201,379,214"/>
-<area shape="poly" id="edge54_Node000037_Node000030" title=" " alt="" coords="365,209,400,197,424,181,448,165,512,145,579,130,701,116,702,121,580,136,514,150,450,170,427,185,403,202,367,214"/>
-<area shape="poly" id="edge52_Node000037_Node000035" title=" " alt="" coords="402,234,474,244,474,249,401,240"/>
-<area shape="rect" id="Node000044" href="$pymodel_8cpp.html#a3bcda2969ffdd282d6f17c834790f7da" title=" " alt="" coords="493,1211,619,1236"/>
-<area shape="poly" id="edge62_Node000043_Node000044" title=" " alt="" coords="361,1182,480,1206,479,1211,360,1188"/>
-<area shape="poly" id="edge65_Node000046_Node000044" title=" " alt="" coords="363,1221,480,1221,480,1226,363,1226"/>
-<area shape="poly" id="edge68_Node000048_Node000044" title=" " alt="" coords="368,1257,479,1235,480,1241,369,1263"/>
-<area shape="poly" id="edge70_Node000049_Node000044" title=" " alt="" coords="351,1310,400,1295,464,1268,519,1240,522,1245,466,1273,402,1301,353,1315"/>
-<area shape="poly" id="edge72_Node000050_Node000044" title=" " alt="" coords="365,1135,402,1146,466,1173,522,1202,519,1206,464,1178,400,1151,364,1140"/>
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,829,156,855"/>
+<area shape="rect" id="Node000002" href="$structMultiBandData.html#a3d3149e512bdfb7005f019879e293158" title="Add frequency&#45;integrated flux measurements over a specified frequency band." alt="" coords="211,151,394,176"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="80,829,88,707,107,513,123,411,144,316,170,239,185,208,202,186,205,182,209,186,206,189,190,211,175,241,149,318,129,412,113,514,93,707,85,829"/>
+<area shape="rect" id="Node000004" href="$structMultiBandData.html#a95b867e09e94169a3a07daeb0598a040" title="Add a single&#45;frequency light curve to the observational dataset." alt="" coords="227,414,378,454"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="80,829,84,765,101,668,116,614,138,560,166,509,202,464,213,455,217,459,206,468,170,512,142,562,121,615,106,669,89,766,85,829"/>
+<area shape="rect" id="Node000005" href="$structMultiBandData.html#a836cbe84f113e680f8d6291663112c0f" title="Add a broadband spectrum at a specific observation time." alt="" coords="227,478,378,518"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="81,829,89,774,108,694,124,650,145,606,170,564,202,528,214,519,217,523,206,532,175,568,149,608,129,652,113,695,94,775,86,830"/>
+<area shape="rect" id="Node000006" href="$structMultiBandModel.html#af37da733bf5c3b4d89b7f0688bbc0e94" title="Batch chi&#45;squared computation with clean transformer&#45;based interface." alt="" coords="217,542,389,582"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="83,828,95,785,118,724,154,658,176,626,202,599,218,587,222,591,206,603,180,630,158,660,123,726,100,787,88,830"/>
+<area shape="rect" id="Node000008" href="$classParamTransformer.html#aab37f13fcd9f1c8373b739ef8ed8aacb" title="Get number of free (sampled) parameters." alt="" coords="465,643,647,668"/>
+<area shape="poly" id="edge61_Node000001_Node000008" title=" " alt="" coords="83,828,95,790,118,737,154,684,176,661,203,642,222,635,248,630,311,628,384,631,454,638,454,644,383,637,311,633,248,636,224,640,205,647,180,665,158,687,123,740,100,792,88,830"/>
+<area shape="rect" id="Node000010" href="$structMultiBandModel.html#aac1b3b59c614be83121a2232dda009d5" title="Configure numerical and physics settings for the afterglow model." alt="" coords="205,657,401,683"/>
+<area shape="poly" id="edge9_Node000001_Node000010" title=" " alt="" coords="87,828,129,763,163,725,203,693,217,685,219,690,205,698,167,729,134,766,91,831"/>
+<area shape="rect" id="Node000011" href="$structMultiBandData.html#aa76ea4485894fd0eb67def9a0cc93045" title="Get the total number of individual data points across all datasets." alt="" coords="225,707,381,747"/>
+<area shape="poly" id="edge10_Node000001_Node000011" title=" " alt="" coords="96,827,142,793,203,757,219,750,221,755,205,762,145,797,99,831"/>
+<area shape="rect" id="Node000012" href="$classPyModel.html#ac47bbdbe6025c4def5d4a65f3ed6be34" title="Get comprehensive details of the shock evolution and model configuration." alt="" coords="237,364,368,389"/>
+<area shape="poly" id="edge11_Node000001_Node000012" title=" " alt="" coords="79,829,79,755,83,701,92,640,106,576,129,512,160,452,202,400,223,386,226,391,206,404,164,455,133,514,111,577,97,641,88,702,84,756,84,829"/>
+<area shape="rect" id="Node000027" href="$structMultiBandModel.html#a2e5994a6b6d0b467438fe899a2cf0114" title="Calculate frequency&#45;integrated flux over specified bands and times." alt="" coords="223,772,383,797"/>
+<area shape="poly" id="edge33_Node000001_Node000027" title=" " alt="" coords="130,827,203,807,239,798,240,803,205,813,131,832"/>
+<area shape="rect" id="Node000028" href="$classPyModel.html#a51390496a41c22c7c2dbb8838ac7a2d2" title="Calculate bolometric flux integrated over a frequency range." alt="" coords="247,101,358,127"/>
+<area shape="poly" id="edge34_Node000001_Node000028" title=" " alt="" coords="80,829,86,699,105,490,120,380,141,278,168,194,184,161,202,136,216,125,233,117,235,122,219,129,206,140,189,164,173,196,146,279,125,381,110,491,91,700,85,829"/>
+<area shape="rect" id="Node000032" href="$classPyModel.html#abf7e6762cb8ca1c8ff429e0a8a7592ad" title="Calculate specific flux at given time and frequency (t_i,nu_i) series." alt="" coords="220,200,385,225"/>
+<area shape="poly" id="edge43_Node000001_Node000032" title=" " alt="" coords="80,829,89,715,110,536,127,442,147,355,172,284,186,256,202,235,207,230,210,234,206,238,191,259,177,286,152,356,132,443,116,537,94,715,85,829"/>
+<area shape="rect" id="Node000035" href="$classPyModel.html#a4337b83ce5738c04db9a8dc1b97ba868" title="Calculate specific flux with finite exposure time averaging." alt="" coords="220,299,385,339"/>
+<area shape="poly" id="edge49_Node000001_Node000035" title=" " alt="" coords="81,829,94,735,119,591,135,516,155,446,177,389,202,350,207,345,211,348,206,353,182,391,160,448,141,517,124,592,99,736,86,830"/>
+<area shape="rect" id="Node000037" href="$structMultiBandModel.html#a722bb96e86f63b1205fd54fdd2e4c323" title="Calculate theoretical flux predictions for given parameters and observation grid." alt="" coords="223,822,383,862"/>
+<area shape="poly" id="edge52_Node000001_Node000037" title=" " alt="" coords="156,839,209,839,209,845,156,845"/>
+<area shape="rect" id="Node000038" href="$classPyModel.html#a7aaf63a15a01165e3c5ad8d935f30414" title="Calculate specific flux at given times and frequencies." alt="" coords="204,249,401,275"/>
+<area shape="poly" id="edge53_Node000001_Node000038" title=" " alt="" coords="80,829,91,724,114,560,130,474,150,395,174,330,187,305,202,286,208,280,212,284,206,289,192,308,179,332,155,397,135,475,119,561,96,724,86,829"/>
+<area shape="rect" id="Node000039" href="$classPyModel.html#a3f0a0a9887885a5052291118ed7ffcaf" title=" " alt="" coords="231,887,375,912"/>
+<area shape="poly" id="edge57_Node000001_Node000039" title=" " alt="" coords="131,852,205,871,240,881,239,886,203,877,130,857"/>
+<area shape="rect" id="Node000040" href="$classPyModel.html#a7389149e6ad32d8189fd1d98682e8abd" title=" " alt="" coords="217,936,388,961"/>
+<area shape="poly" id="edge58_Node000001_Node000040" title=" " alt="" coords="99,853,145,887,205,921,227,929,226,934,203,926,142,891,96,857"/>
+<area shape="rect" id="Node000041" href="$structMultiBandData.html#a231028dd529a2a063833bdb58c3bc47f" title="Logarithmically subsample data to reduce computational cost while preserving information." alt="" coords="212,986,393,1026"/>
+<area shape="poly" id="edge59_Node000001_Node000041" title=" " alt="" coords="93,853,137,909,169,942,205,970,218,978,216,982,203,975,165,946,133,913,88,856"/>
+<area shape="rect" id="Node000042" href="$classPyModel.html#ae1049fe592b9616356f666bcab2a92d3" title=" " alt="" coords="233,1051,373,1076"/>
+<area shape="poly" id="edge60_Node000001_Node000042" title=" " alt="" coords="89,854,103,890,127,940,161,992,182,1015,206,1036,221,1045,218,1050,202,1040,178,1019,157,995,122,942,98,892,84,856"/>
+<area shape="rect" id="Node000043" href="$mcmc_8cpp.html#a5507f4105b8933fd6af7afc13108c0f2" title="Map parameter name string to index for Python interface setup." alt="" coords="217,1100,388,1125"/>
+<area shape="poly" id="edge62_Node000001_Node000043" title=" " alt="" coords="87,854,98,899,120,962,156,1028,179,1059,206,1085,214,1091,211,1096,202,1089,175,1062,151,1031,116,964,93,900,82,856"/>
+<area shape="rect" id="Node000044" href="$pymodel_8cpp.html#aeb4fc9d5286c8464177e8e5ab220c0f4" title="Creates a Gaussian jet model with smooth energy and Lorentz factor profiles." alt="" coords="245,1199,360,1224"/>
+<area shape="poly" id="edge63_Node000001_Node000044" title=" " alt="" coords="85,855,91,914,108,1003,124,1052,144,1100,172,1145,206,1184,234,1200,231,1205,202,1188,167,1148,140,1103,119,1054,103,1005,85,915,80,855"/>
+<area shape="rect" id="Node000046" href="$pymodel_8cpp.html#a43af01d16838e6513792deaeb727fbe5" title="Creates a constant density ISM (Interstellar Medium) environment." alt="" coords="271,1396,334,1421"/>
+<area shape="poly" id="edge65_Node000001_Node000046" title=" " alt="" coords="86,854,96,957,119,1117,136,1201,156,1278,179,1341,192,1365,206,1383,230,1398,258,1405,256,1410,228,1403,202,1387,188,1368,174,1343,151,1280,131,1202,114,1118,91,958,80,855"/>
+<area shape="rect" id="Node000047" href="$pymodel_8cpp.html#aa8d07eaa61289babf3e94aa7ff5fb985" title="Creates a power&#45;law structured jet with customizable angular energy distribution." alt="" coords="242,1248,363,1273"/>
+<area shape="poly" id="edge66_Node000001_Node000047" title=" " alt="" coords="84,855,87,922,102,1025,117,1081,138,1137,168,1190,206,1235,230,1250,228,1254,202,1239,163,1193,133,1140,112,1083,97,1026,82,923,79,855"/>
+<area shape="rect" id="Node000048" href="$pymodel_8cpp.html#a2af9f10fdd9d51225b34cced6f8c4d7d" title="Creates a power&#45;law wing jet model with continuous transition from core to wing." alt="" coords="234,1445,371,1471"/>
+<area shape="poly" id="edge68_Node000001_Node000048" title=" " alt="" coords="85,855,95,966,116,1141,133,1232,153,1317,177,1386,191,1413,206,1432,223,1444,220,1449,202,1436,187,1415,172,1388,148,1318,127,1233,111,1141,89,966,80,855"/>
+<area shape="rect" id="Node000049" href="$pymodel_8cpp.html#a2e10a24163357e677edd02fb34524a49" title="Creates a step power&#45;law jet model: a pencil beam core and powerlaw wing with jump at theta_c." alt="" coords="227,1297,378,1323"/>
+<area shape="poly" id="edge69_Node000001_Node000049" title=" " alt="" coords="86,855,100,941,126,1071,142,1138,162,1200,183,1251,206,1284,217,1293,214,1297,202,1288,178,1253,157,1202,137,1140,120,1072,95,942,81,855"/>
+<area shape="rect" id="Node000050" href="$pymodel_8cpp.html#a85752a7e8c1e573475b915b56f62a80c" title="Creates a top&#45;hat jet model with uniform energy and Lorentz factor distributions." alt="" coords="253,1347,352,1372"/>
+<area shape="poly" id="edge71_Node000001_Node000050" title=" " alt="" coords="86,855,98,949,122,1094,139,1170,159,1239,181,1296,206,1333,222,1345,241,1352,239,1357,219,1350,202,1337,176,1298,154,1241,134,1171,117,1095,93,950,81,855"/>
+<area shape="rect" id="Node000051" href="$pymodel_8cpp.html#ade65717b9f7afbe356206b4e069e160f" title="Creates a two&#45;component jet model with different properties for narrow and wide components." alt="" coords="225,1149,380,1175"/>
+<area shape="poly" id="edge73_Node000001_Node000051" title=" " alt="" coords="86,855,94,907,114,983,130,1024,150,1064,175,1102,206,1135,214,1141,211,1145,202,1139,171,1105,145,1067,125,1026,109,984,89,908,81,855"/>
+<area shape="rect" id="Node000052" href="$pymodel_8cpp.html#a6712fc3bcfbca1e296a29773aa708fbf" title="Creates a stellar wind environment with r^(&#45;2) density profile." alt="" coords="267,1495,338,1520"/>
+<area shape="poly" id="edge75_Node000001_Node000052" title=" " alt="" coords="85,855,93,974,114,1164,129,1264,150,1356,175,1431,190,1460,206,1481,228,1496,254,1504,253,1509,226,1501,202,1485,185,1463,170,1433,145,1357,124,1265,108,1164,88,974,80,855"/>
+<area shape="rect" id="Node000003" href="$pybind_8h.html#a65fbb7ac1dd1f2667e68724a512f691c" title=" " alt="" coords="503,116,609,141"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="394,148,489,135,489,140,395,154"/>
+<area shape="rect" id="Node000007" href="$structBatchWorkspace.html#a3c6f56eb679103832e4b2199f2c0f56f" title="Initialize workspace arrays to match observation data dimensions." alt="" coords="459,593,653,619"/>
+<area shape="poly" id="edge6_Node000006_Node000007" title=" " alt="" coords="389,574,470,588,469,594,388,580"/>
+<area shape="poly" id="edge7_Node000006_Node000008" title=" " alt="" coords="360,580,403,598,426,614,450,628,476,636,474,642,448,632,424,618,400,603,358,585"/>
+<area shape="rect" id="Node000009" href="$classParamTransformer.html#aa8eb1168daee0bb722eb2e879ac263e8" title="Transform single sample to Params (internal helper for batch processing)." alt="" coords="449,529,663,569"/>
+<area shape="poly" id="edge8_Node000006_Node000009" title=" " alt="" coords="389,555,435,552,435,558,389,560"/>
+<area shape="rect" id="Node000013" href="$mesh_8h.html#a96aa0a78a0de13a52955de3c2ce29ddd" title="Constructs a coordinate grid (Coord) for shock evolution." alt="" coords="515,429,597,455"/>
+<area shape="poly" id="edge12_Node000012_Node000013" title=" " alt="" coords="355,387,402,399,450,414,502,427,501,432,449,419,401,405,354,392"/>
+<area shape="rect" id="Node000024" href="$forward-shock_8hpp.html#aa963867f4f98284c627afeff47fc3a18" title="Generates a forward shock model for given coordinates, medium, and jet parameters." alt="" coords="479,380,633,405"/>
+<area shape="poly" id="edge30_Node000012_Node000024" title=" " alt="" coords="369,378,465,384,465,390,368,383"/>
+<area shape="rect" id="Node000025" href="$reverse-shock_8hpp.html#ab50c063a2b81579f107e7e79f12961b0" title="Generates a pair of forward and reverse shocks." alt="" coords="477,479,635,504"/>
+<area shape="poly" id="edge31_Node000012_Node000025" title=" " alt="" coords="370,384,403,400,419,416,428,433,436,449,451,464,466,472,463,477,448,468,431,452,423,435,415,419,400,404,367,389"/>
+<area shape="rect" id="Node000026" href="$pymodel_8cpp.html#a8ffef75ec4ca3ef0464331eb194de1e5" title=" " alt="" coords="481,331,631,356"/>
+<area shape="poly" id="edge32_Node000012_Node000026" title=" " alt="" coords="368,365,467,352,468,358,369,371"/>
+<area shape="rect" id="Node000014" href="$mesh_8h.html#a83ae490737edde6ad03ede25e371a071" title=" " alt="" coords="731,483,869,508"/>
+<area shape="poly" id="edge13_Node000013_Node000014" title=" " alt="" coords="598,448,728,477,727,482,597,454"/>
+<area shape="rect" id="Node000016" href="$utilities_8h.html#ab8e81118f023df135835db8cce4f5f42" title="Returns the value of a single parameter." alt="" coords="1340,383,1391,408"/>
+<area shape="poly" id="edge26_Node000013_Node000016" title=" " alt="" coords="597,433,710,418,891,405,1068,398,1326,393,1326,398,1068,403,891,411,711,423,598,438"/>
+<area shape="rect" id="Node000018" href="$mesh_8h.html#a3dc6828dd13a70c0c203dba03e765cea" title=" " alt="" coords="724,433,876,459"/>
+<area shape="poly" id="edge19_Node000013_Node000018" title=" " alt="" coords="598,440,711,442,710,447,598,445"/>
+<area shape="rect" id="Node000019" href="$mesh_8h.html#aa7505ad2e84c2a29610c1a13cd3b25e3" title="Estimates deceleration time for a given angle from ejecta and medium properties." alt="" coords="739,532,861,557"/>
+<area shape="poly" id="edge21_Node000013_Node000019" title=" " alt="" coords="598,443,631,450,664,464,680,477,689,491,698,504,712,517,727,525,725,530,709,522,694,508,685,494,676,481,661,468,630,455,597,448"/>
+<area shape="rect" id="Node000020" href="$namespacephysics_1_1relativistic.html#ab1c1444afa3c4afd0c57145f932962fa" title="Converts Lorentz factor (gamma) to a velocity fraction (beta)" alt="" coords="949,527,1097,567"/>
+<area shape="poly" id="edge25_Node000013_Node000020" title=" " alt="" coords="598,440,632,447,664,464,676,477,683,491,688,519,693,545,700,556,712,566,741,581,772,590,805,594,838,594,902,585,959,569,960,574,903,590,838,599,805,599,771,595,739,586,709,571,696,560,688,547,683,520,678,492,672,480,661,468,630,452,597,445"/>
+<area shape="rect" id="Node000021" href="$mesh_8h.html#a28ba8f4400237a97c0d2fac934fb44cf" title="Finds all sharp edges in the jet Gamma0 profile plus the outermost boundary." alt="" coords="742,283,858,308"/>
+<area shape="poly" id="edge24_Node000013_Node000021" title=" " alt="" coords="597,438,630,431,661,415,672,403,678,392,684,368,690,342,697,330,709,317,727,306,730,311,712,321,702,333,695,344,689,369,683,394,676,407,664,419,632,436,598,443"/>
+<area shape="rect" id="Node000022" href="$mesh_8h.html#a3c066f2c8e6d102d7a56de8cb42cf5a8" title=" " alt="" coords="749,332,851,357"/>
+<area shape="poly" id="edge27_Node000013_Node000022" title=" " alt="" coords="597,434,629,427,661,414,676,405,685,395,709,374,740,360,743,365,712,379,689,399,679,409,664,419,631,432,598,439"/>
+<area shape="rect" id="Node000023" href="$mesh_8h.html#ab2b9eccaf75f7a9fe6bafd8696049bd2" title="Create a refined logarithmic time grid with higher density around a specified time." alt="" coords="1156,609,1292,635"/>
+<area shape="poly" id="edge28_Node000013_Node000023" title=" " alt="" coords="598,439,633,446,664,464,679,481,686,500,688,536,691,571,698,587,712,601,767,633,827,653,889,663,953,666,1015,663,1073,655,1168,636,1169,641,1074,661,1015,668,953,671,889,668,825,658,765,637,709,605,693,590,685,572,683,537,681,501,674,484,661,468,631,451,597,445"/>
+<area shape="rect" id="Node000015" href="$mesh_8h.html#a49c59d8da915e118c4e550cc9bd4d3d9" title=" " alt="" coords="937,456,1108,481"/>
+<area shape="poly" id="edge14_Node000014_Node000015" title=" " alt="" coords="869,484,923,478,924,483,870,490"/>
+<area shape="poly" id="edge15_Node000015_Node000016" title=" " alt="" coords="1080,479,1127,485,1181,488,1237,483,1291,468,1323,446,1347,418,1351,421,1326,450,1293,472,1238,488,1181,493,1127,491,1080,484"/>
+<area shape="rect" id="Node000017" href="$utilities_8h.html#ac47d1412f3f1791737d0f963267096f1" title="Returns the value of a single parameter." alt="" coords="1201,433,1247,459"/>
+<area shape="poly" id="edge17_Node000015_Node000017" title=" " alt="" coords="1108,456,1187,447,1187,453,1109,462"/>
+<area shape="poly" id="edge16_Node000016_Node000016" title=" " alt="" coords="1341,384,1336,374,1339,365,1349,358,1365,356,1385,360,1393,368,1390,372,1382,364,1365,361,1351,363,1343,368,1342,374,1346,381"/>
+<area shape="poly" id="edge18_Node000017_Node000016" title=" " alt="" coords="1247,435,1326,406,1328,411,1249,440"/>
+<area shape="poly" id="edge20_Node000018_Node000015" title=" " alt="" coords="877,451,924,456,923,461,876,456"/>
+<area shape="poly" id="edge22_Node000019_Node000020" title=" " alt="" coords="861,543,935,544,935,549,861,548"/>
+<area shape="poly" id="edge23_Node000020_Node000016" title=" " alt="" coords="1097,545,1143,541,1193,533,1244,518,1291,494,1310,478,1327,459,1351,419,1355,422,1331,462,1314,482,1293,499,1246,523,1195,538,1144,547,1097,551"/>
+<area shape="poly" id="edge29_Node000023_Node000016" title=" " alt="" coords="1243,607,1267,588,1290,564,1313,528,1331,489,1355,421,1360,423,1336,491,1317,530,1294,568,1271,592,1247,611"/>
+<area shape="poly" id="edge42_Node000028_Node000003" title=" " alt="" coords="359,115,489,122,489,127,358,120"/>
+<area shape="rect" id="Node000029" href="$classObserver.html#a2588a9ebaec5465d6b5bd08fadadcb99" title="Computes the integrated flux over a frequency band." alt="" coords="499,60,613,85"/>
+<area shape="poly" id="edge35_Node000028_Node000029" title=" " alt="" coords="358,102,485,81,486,87,359,108"/>
+<area shape="poly" id="edge38_Node000029_Node000016" title=" " alt="" coords="613,67,770,61,974,64,1075,72,1167,86,1242,107,1271,121,1294,137,1316,163,1333,193,1346,225,1356,257,1365,320,1367,369,1362,369,1360,320,1350,258,1341,226,1329,195,1312,166,1290,141,1269,126,1240,112,1166,91,1075,77,974,69,770,66,613,72"/>
+<area shape="poly" id="edge37_Node000029_Node000029" title=" " alt="" coords="517,62,508,52,513,42,529,36,556,33,590,37,600,42,604,48,599,51,596,46,589,42,556,39,530,41,516,46,513,51,521,58"/>
+<area shape="rect" id="Node000030" href="$mesh_8cpp.html#ac536f77c32691232cb5e7546595fb3d2" title="Converts boundary values to center values using geometric mean." alt="" coords="711,5,889,31"/>
+<area shape="poly" id="edge36_Node000029_Node000030" title=" " alt="" coords="612,58,729,31,730,36,613,63"/>
+<area shape="rect" id="Node000031" href="$classObserver.html#a5350b13ae5a6c7007ba6459923573136" title="Sets up the Observer for flux calculation at specific observation times." alt="" coords="715,131,885,156"/>
+<area shape="poly" id="edge39_Node000029_Node000031" title=" " alt="" coords="602,83,663,101,743,124,741,129,662,106,601,88"/>
+<area shape="poly" id="edge40_Node000031_Node000016" title=" " alt="" coords="856,128,948,114,1004,111,1063,111,1124,117,1185,131,1242,153,1294,185,1313,204,1329,227,1350,277,1362,327,1366,369,1361,369,1356,328,1345,279,1324,230,1309,208,1290,189,1239,157,1183,136,1124,122,1063,116,1004,116,948,120,857,133"/>
+<area shape="poly" id="edge41_Node000031_Node000031" title=" " alt="" coords="764,132,756,122,760,112,775,106,800,104,831,108,843,117,840,121,829,113,800,109,776,111,764,116,761,122,768,129"/>
+<area shape="poly" id="edge44_Node000032_Node000003" title=" " alt="" coords="362,197,400,185,424,172,448,158,491,143,493,148,450,163,427,177,402,190,364,202"/>
+<area shape="rect" id="Node000033" href="$classObserver.html#a2497e02305dbf755a7d629311f8e772d" title="Computes the specific flux at a single observed frequency for multiple observation times." alt="" coords="487,217,625,257"/>
+<area shape="poly" id="edge45_Node000032_Node000033" title=" " alt="" coords="386,218,473,226,473,231,385,223"/>
+<area shape="poly" id="edge48_Node000033_Node000016" title=" " alt="" coords="626,238,749,248,890,267,1017,294,1141,326,1327,381,1326,386,1139,331,1016,299,889,273,749,253,626,243"/>
+<area shape="rect" id="Node000034" href="$observer_8h.html#aa53249b087b9b9d83f4c06e808deeed9" title="Helper function that advances an iterator through an array until the value exceeds the target." alt="" coords="980,181,1065,207"/>
+<area shape="poly" id="edge46_Node000033_Node000034" title=" " alt="" coords="626,228,966,196,966,202,626,233"/>
+<area shape="poly" id="edge47_Node000034_Node000016" title=" " alt="" coords="1065,184,1115,180,1175,183,1237,195,1267,207,1294,224,1324,256,1344,295,1357,335,1364,369,1358,370,1352,336,1339,297,1319,259,1290,228,1264,212,1236,200,1175,188,1116,186,1066,190"/>
+<area shape="poly" id="edge51_Node000035_Node000033" title=" " alt="" coords="362,297,400,283,448,266,473,258,474,263,450,271,402,289,364,302"/>
+<area shape="rect" id="Node000036" href="$structPyFlux.html#a68faa22da5d5b169a0d461c56b4b3e21" title=" " alt="" coords="487,281,625,307"/>
+<area shape="poly" id="edge50_Node000035_Node000036" title=" " alt="" coords="385,308,473,300,474,305,386,314"/>
+<area shape="poly" id="edge55_Node000038_Node000003" title=" " alt="" coords="377,247,400,235,416,217,423,198,431,178,448,159,467,147,489,138,491,143,470,151,451,163,435,181,428,200,420,220,403,239,379,252"/>
+<area shape="poly" id="edge56_Node000038_Node000031" title=" " alt="" coords="365,247,400,234,424,218,448,202,512,181,579,165,701,147,702,152,580,170,514,186,450,207,427,223,403,239,367,252"/>
+<area shape="poly" id="edge54_Node000038_Node000036" title=" " alt="" coords="402,272,474,281,474,286,401,277"/>
+<area shape="rect" id="Node000045" href="$pymodel_8cpp.html#a3bcda2969ffdd282d6f17c834790f7da" title=" " alt="" coords="493,1248,619,1273"/>
+<area shape="poly" id="edge64_Node000044_Node000045" title=" " alt="" coords="361,1220,480,1243,479,1249,360,1225"/>
+<area shape="poly" id="edge67_Node000047_Node000045" title=" " alt="" coords="363,1258,480,1258,480,1263,363,1263"/>
+<area shape="poly" id="edge70_Node000049_Node000045" title=" " alt="" coords="368,1295,479,1273,480,1278,369,1300"/>
+<area shape="poly" id="edge72_Node000050_Node000045" title=" " alt="" coords="351,1347,400,1333,464,1306,519,1278,522,1282,466,1311,402,1338,353,1352"/>
+<area shape="poly" id="edge74_Node000051_Node000045" title=" " alt="" coords="365,1172,402,1183,466,1211,522,1239,519,1244,464,1216,400,1189,364,1177"/>
 </map>

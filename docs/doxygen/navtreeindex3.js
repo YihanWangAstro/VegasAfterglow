@@ -1,5 +1,6 @@
 var NAVTREEINDEX3 =
 {
+"structICPhoton.html":[3,0,13],
 "structICPhoton.html#a83c634a93def6d25badc888ca57f3bca":[3,0,13,0],
 "structICPhoton.html#a8721a351afe42b1e5fdf3075bffc89f7":[3,0,13,5],
 "structICPhoton.html#aa943b8dc162f2f7224a8ecb485caeb3e":[3,0,13,1],
@@ -248,6 +249,5 @@ var NAVTREEINDEX3 =
 "utilities_8cpp.html#a367745c657e66d712ce7c153b1d065b7":[4,0,2,5,4,5],
 "utilities_8cpp.html#a655bf7e9ee550858e65af14c66fb4aec":[4,0,2,5,4,3],
 "utilities_8cpp.html#acb740a339330c846392175405656e8d8":[4,0,2,5,4,2],
-"utilities_8cpp.html#ad3bc8b592ec28b18768172f7a21bd8c2":[4,0,2,5,4,1],
-"utilities_8cpp.html#ad5718128d0cae5d9ae7eeea90f411cde":[4,0,2,5,4,4]
+"utilities_8cpp.html#ad3bc8b592ec28b18768172f7a21bd8c2":[4,0,2,5,4,1]
 };

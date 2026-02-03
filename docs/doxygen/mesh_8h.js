@@ -20,5 +20,6 @@ var mesh_8h =
     [ "is_log_scale", "mesh_8h.html#ac0e56adbbf18a0c9a5c04a8d4de268d9", null ],
     [ "jet_spreading_edge", "mesh_8h.html#a7cb4a7162e9b5a1e2ed39f7d9e94b53f", null ],
     [ "logspace_boundary_center", "mesh_8h.html#ad7703ab8b66bb86ed857746606fac9a2", null ],
-    [ "merge_grids", "mesh_8h.html#a3c066f2c8e6d102d7a56de8cb42cf5a8", null ]
+    [ "merge_grids", "mesh_8h.html#a3c066f2c8e6d102d7a56de8cb42cf5a8", null ],
+    [ "refined_time_grid", "mesh_8h.html#ab2b9eccaf75f7a9fe6bafd8696049bd2", null ]
 ];

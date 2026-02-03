@@ -1,5 +1,6 @@
 var NAVTREEINDEX2 =
 {
+"namespacefunc.html":[1,0,4],
 "namespacefunc.html#a173bd91e86dee357eb55b4758c5cc20d":[1,0,4,0],
 "namespacefunc.html#aa8d78887fec25d1452c0dd3e83fe792f":[1,0,4,2],
 "namespacefunc.html#af35a6de707510b3b09306132d94d3b72":[1,0,4,3],
@@ -248,6 +249,5 @@ var NAVTREEINDEX2 =
 "structForwardState.html#aae1f8811dc2dadabf53a6e2a285a7ce8":[3,0,10,2],
 "structForwardState.html#ad012f58f88a9e4f7cb5c99839fe87bce":[3,0,10,1],
 "structForwardState.html#ad2a43af97eb49e8694c45fd8fc50f889":[3,0,10,0],
-"structForwardState.html#af0343da0ae76b3d4f4dc280ac133c681":[3,0,10,6],
-"structICPhoton.html":[3,0,13]
+"structForwardState.html#af0343da0ae76b3d4f4dc280ac133c681":[3,0,10,6]
 };
