@@ -93,8 +93,7 @@ jobs:
 
       - name: Install package and run validation
         run: |
-          pip install dist/*.whl
-          pip install matplotlib numpy scipy
+          pip install -e ".[test]" --config-settings=cmake.define.AFTERGLOW_PROFILE=ON
           python validation/run_validation.py --all --output validation/
 
       - name: Create and push tag

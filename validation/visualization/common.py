@@ -6,7 +6,6 @@ import subprocess
 import sys
 import tempfile
 from datetime import datetime
-from io import BytesIO
 from pathlib import Path
 from typing import Dict, List, Optional, Union
 
@@ -98,8 +97,9 @@ def get_unique_short_names(names: List[str], max_len: int = 6) -> Dict[str, str]
 def setup_plot_style():
     plt.rcParams.update({
         "font.size": 10, "axes.labelsize": 11, "axes.titlesize": 12, "legend.fontsize": 9,
-        "xtick.labelsize": 9, "ytick.labelsize": 9, "figure.dpi": 100, "savefig.dpi": 100,
+        "xtick.labelsize": 9, "ytick.labelsize": 9, "figure.dpi": 72, "savefig.dpi": 72,
         "axes.grid": True, "grid.alpha": 0.3, "lines.linewidth": 1.5,
+        "pdf.use14corefonts": True, "pdf.compression": 9,
     })
 
 
@@ -551,11 +551,7 @@ def create_toc_page_reportlab(toc_nodes: List[Dict], output_path: Path) -> int:
         def _render_node(node, level):
             style = styles_by_level.get(min(level, 3))
             title = node["title"]
-            page = node.get("page", "")
-            # Use a table-like approach with dots leader
-            dots = "." * max(1, 80 - len(title) - len(str(page)) - level * 4)
-            text = f'{title} <font color="#CCCCCC">{dots}</font> {page}'
-            story.append(Paragraph(text, style))
+            story.append(Paragraph(title, style))
             for child in node.get("children", []):
                 _render_node(child, level + 1)
 
@@ -932,9 +928,8 @@ class ReportBuilder:
             with open(self.output_path, "wb") as f:
                 writer.write(f)
 
-            # Post-process: add bookmarks and internal links
-            if toc_nodes or self._internal_links:
-                self._post_process(toc_nodes)
+            # Post-process: add page numbers, bookmarks, and internal links
+            self._post_process(toc_nodes)
 
         finally:
             shutil.rmtree(temp_dir, ignore_errors=True)
@@ -957,12 +952,11 @@ class ReportBuilder:
 
         reader = PdfReader(str(self.output_path))
         writer = PdfWriter()
+        n_pages = len(reader.pages)
 
-        # Append pages individually (not clone_from) to avoid shared references
+        # Add pages without modification
         for page in reader.pages:
             writer.add_page(page)
-
-        n_pages = len(writer.pages)
 
         # --- Bookmarks ---
         if toc_nodes:
@@ -1037,6 +1031,9 @@ class ReportBuilder:
 
         if n_links:
             print(f"  Added {n_links} internal jump links")
+
+        # Deduplicate fonts from page number overlays
+        writer.compress_identical_objects(remove_identicals=True, remove_orphans=True)
 
         temp_output = str(self.output_path) + ".tmp"
         with open(temp_output, "wb") as f:
