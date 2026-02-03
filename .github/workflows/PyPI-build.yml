@@ -36,17 +36,21 @@ jobs:
           CIBW_ARCHS_MACOS: "x86_64 arm64"
           # Install OpenMP for each platform
           CIBW_BEFORE_ALL_LINUX: >
-            yum install -y libgomp || apt-get update && apt-get install -y libomp-dev
+            yum install -y libgomp || (apt-get update && apt-get install -y libomp-dev)
           CIBW_BEFORE_ALL_MACOS: >
             brew install libomp
           CIBW_BEFORE_BUILD: >
             python -m pip install wheel scikit-build-core>=0.4.3 pybind11>=2.6.0 numpy>=1.20
           CIBW_TEST_COMMAND: python -c "from VegasAfterglow import ObsData, Setups, Fitter, ParamDef, Scale; print('OK')"
           MACOSX_DEPLOYMENT_TARGET: "13.3"
-          # Pass OpenMP paths to CMake for macOS (handles both Intel and Apple Silicon paths)
+          # Configure OpenMP for AppleClang (requires explicit flags)
+          CIBW_ENVIRONMENT_MACOS: >
+            OpenMP_ROOT="$(brew --prefix libomp)"
           CIBW_CMAKE_ARGS_MACOS: >
             -DCMAKE_OSX_DEPLOYMENT_TARGET=13.3
-            -DCMAKE_PREFIX_PATH="/opt/homebrew/opt/libomp;/usr/local/opt/libomp"
+            -DOpenMP_CXX_FLAGS="-Xpreprocessor -fopenmp -I$(brew --prefix libomp)/include"
+            -DOpenMP_CXX_LIB_NAMES="omp"
+            -DOpenMP_omp_LIBRARY="$(brew --prefix libomp)/lib/libomp.dylib"
 
       - name: Upload wheels
         uses: actions/upload-artifact@v4

@@ -576,7 +576,7 @@ PyArray MultiBandModel::batch_estimate_chi2(PyGrid const& samples, ParamTransfor
             MultiBandModel local_model(config_ref);
 
     #pragma omp for schedule(dynamic)
-            for (size_t i = 0; i < nwalkers; ++i) {
+            for (int i = 0; i < static_cast<int>(nwalkers); ++i) {
                 chi2_results(i) = compute_chi2(i, local_model, workspace);
             }
         }
