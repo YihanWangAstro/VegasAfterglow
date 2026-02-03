@@ -31,8 +31,17 @@ add_compile_definitions(
 find_package(Python COMPONENTS Interpreter Development.Module NumPy REQUIRED)
 find_package(pybind11 CONFIG REQUIRED)
 
-if(APPLE)
-    list(PREPEND CMAKE_PREFIX_PATH "/opt/homebrew/opt/libomp" "/usr/local/opt/libomp" "/opt/local")
+if(APPLE AND CMAKE_CXX_COMPILER_ID MATCHES "Clang")
+    # AppleClang doesn't have built-in OpenMP; use Homebrew's libomp
+    foreach(_omp_root IN ITEMS "/opt/homebrew/opt/libomp" "/usr/local/opt/libomp")
+        if(EXISTS "${_omp_root}/lib/libomp.dylib")
+            set(OpenMP_CXX_FLAGS "-Xpreprocessor -fopenmp" CACHE STRING "" FORCE)
+            set(OpenMP_CXX_LIB_NAMES "omp" CACHE STRING "" FORCE)
+            set(OpenMP_omp_LIBRARY "${_omp_root}/lib/libomp.dylib" CACHE FILEPATH "" FORCE)
+            include_directories("${_omp_root}/include")
+            break()
+        endif()
+    endforeach()
 endif()
 
 find_package(OpenMP REQUIRED)
