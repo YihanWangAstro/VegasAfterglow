@@ -30,6 +30,7 @@ mcmc = [
   "dynesty",
 ]
 test = [
+  "matplotlib>=3.5",
   "pypdf>=4.0",
   "reportlab>=4.0",
   "pdfrw>=0.4",
