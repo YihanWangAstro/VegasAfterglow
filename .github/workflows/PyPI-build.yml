@@ -47,29 +47,22 @@ jobs:
           CIBW_BUILD: "cp38-* cp39-* cp310-* cp311-* cp312-* cp313-*"
           CIBW_SKIP: "*-win32* *_i686* *musllinux*"
           CIBW_ARCHS_WINDOWS: "AMD64 ARM64"
-          CIBW_ARCHS_MACOS: "x86_64 arm64"
+          CIBW_ARCHS_MACOS: "arm64"
           # Install OpenMP and ccache for each platform
           CIBW_BEFORE_ALL_LINUX: >
             yum install -y libgomp ccache || (apt-get update && apt-get install -y libomp-dev ccache)
           CIBW_BEFORE_ALL_MACOS: >
-            brew install libomp ccache &&
-            arch -x86_64 /usr/local/bin/brew install libomp || true
+            brew install libomp ccache
           # Use ccache and parallel builds for faster compilation
           CIBW_ENVIRONMENT_LINUX: >
             PATH="/usr/lib/ccache:$PATH"
             CCACHE_DIR="/host${{ github.workspace }}/.ccache"
             CMAKE_BUILD_PARALLEL_LEVEL="$(nproc)"
           # Set OpenMP paths for macOS builds (static linking handled in CMakeLists.txt)
-          CIBW_ENVIRONMENT_MACOS_ARM64: >
+          CIBW_ENVIRONMENT_MACOS: >
             OpenMP_ROOT="/opt/homebrew/opt/libomp"
             CPPFLAGS="-I/opt/homebrew/opt/libomp/include"
             PATH="/opt/homebrew/opt/ccache/libexec:$PATH"
-            CCACHE_DIR="${{ github.workspace }}/.ccache"
-            CMAKE_BUILD_PARALLEL_LEVEL="$(sysctl -n hw.ncpu)"
-          CIBW_ENVIRONMENT_MACOS_X86_64: >
-            OpenMP_ROOT="/usr/local/opt/libomp"
-            CPPFLAGS="-I/usr/local/opt/libomp/include"
-            PATH="/usr/local/opt/ccache/libexec:$PATH"
             CCACHE_DIR="${{ github.workspace }}/.ccache"
             CMAKE_BUILD_PARALLEL_LEVEL="$(sysctl -n hw.ncpu)"
           CIBW_BEFORE_BUILD: >
