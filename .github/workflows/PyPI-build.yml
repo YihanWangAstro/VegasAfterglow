@@ -69,9 +69,7 @@ jobs:
             CMAKE_BUILD_PARALLEL_LEVEL="$(sysctl -n hw.ncpu)"
           # Ensure delocate bundles libomp into the wheel
           CIBW_REPAIR_WHEEL_COMMAND_MACOS: >
-            LIBOMP_PATH=$(brew --prefix libomp)/lib &&
-            cp -f "$LIBOMP_PATH"/libomp.dylib /usr/local/lib/ &&
-            delocate-wheel --require-archs {delocate_archs} -w {dest_dir} -v {wheel}
+            delocate-wheel -w {dest_dir} -v {wheel}
           CIBW_BEFORE_BUILD: >
             python -m pip install wheel scikit-build-core>=0.4.3 pybind11>=2.6.0 numpy>=1.20
           CIBW_TEST_COMMAND: python -c "from VegasAfterglow import ObsData, Setups, Fitter, ParamDef, Scale; print('OK')"
