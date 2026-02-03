@@ -53,11 +53,12 @@ jobs:
             yum install -y libgomp ccache || (apt-get update && apt-get install -y libomp-dev ccache)
           CIBW_BEFORE_ALL_MACOS: >
             brew install libomp ccache
-          # Use ccache for faster builds
+          # Use ccache and parallel builds for faster compilation
           CIBW_ENVIRONMENT_LINUX: >
             PATH="/usr/lib/ccache:$PATH"
             CCACHE_DIR="/host${{ github.workspace }}/.ccache"
-          # Set OpenMP and ccache paths for macOS compilation
+            CMAKE_BUILD_PARALLEL_LEVEL="$(nproc)"
+          # Set OpenMP, ccache, and parallel build paths for macOS compilation
           CIBW_ENVIRONMENT_MACOS: >
             OpenMP_ROOT="$(brew --prefix libomp)"
             LDFLAGS="-L$(brew --prefix libomp)/lib"
@@ -65,6 +66,7 @@ jobs:
             DYLD_LIBRARY_PATH="$(brew --prefix libomp)/lib"
             PATH="$(brew --prefix ccache)/libexec:$PATH"
             CCACHE_DIR="${{ github.workspace }}/.ccache"
+            CMAKE_BUILD_PARALLEL_LEVEL="$(sysctl -n hw.ncpu)"
           # Ensure delocate bundles libomp into the wheel
           CIBW_REPAIR_WHEEL_COMMAND_MACOS: >
             DYLD_LIBRARY_PATH="$(brew --prefix libomp)/lib" delocate-wheel --require-archs {delocate_archs} -w {dest_dir} -v {wheel}
