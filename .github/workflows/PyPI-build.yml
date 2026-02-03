@@ -82,6 +82,8 @@ jobs:
     needs: build_wheels
     runs-on: ubuntu-latest
     if: ${{ !inputs.dry_run }}
+    permissions:
+      contents: write
 
     steps:
       - uses: actions/checkout@v4
