@@ -44,6 +44,7 @@ jobs:
           python -m pip install cibuildwheel
           python -m cibuildwheel --output-dir wheelhouse
         env:
+          SETUPTOOLS_SCM_PRETEND_VERSION: ${{ inputs.version }}
           CIBW_BUILD: "cp38-* cp39-* cp310-* cp311-* cp312-* cp313-*"
           CIBW_SKIP: "*-win32* *_i686* *musllinux*"
           CIBW_ARCHS_WINDOWS: "AMD64 ARM64"
@@ -55,11 +56,15 @@ jobs:
             brew install libomp ccache
           # Use ccache and parallel builds for faster compilation
           CIBW_ENVIRONMENT_LINUX: >
+            SETUPTOOLS_SCM_PRETEND_VERSION="${{ inputs.version }}"
             PATH="/usr/lib/ccache:$PATH"
             CCACHE_DIR="/host${{ github.workspace }}/.ccache"
             CMAKE_BUILD_PARALLEL_LEVEL="$(nproc)"
+          CIBW_ENVIRONMENT_WINDOWS: >
+            SETUPTOOLS_SCM_PRETEND_VERSION="${{ inputs.version }}"
           # Set OpenMP paths for macOS builds (static linking handled in CMakeLists.txt)
           CIBW_ENVIRONMENT_MACOS: >
+            SETUPTOOLS_SCM_PRETEND_VERSION="${{ inputs.version }}"
             OpenMP_ROOT="/opt/homebrew/opt/libomp"
             CPPFLAGS="-I/opt/homebrew/opt/libomp/include"
             PATH="/opt/homebrew/opt/ccache/libexec:$PATH"
@@ -110,6 +115,8 @@ jobs:
         run: |
           python -m pip install --upgrade build scikit-build-core>=0.4.3 pybind11>=2.6.0
           python -m build --sdist --outdir dist/
+        env:
+          SETUPTOOLS_SCM_PRETEND_VERSION: ${{ inputs.version }}
 
       - name: Install package and run validation
         run: |
