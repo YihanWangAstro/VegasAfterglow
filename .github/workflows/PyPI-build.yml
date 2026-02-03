@@ -33,6 +33,12 @@ jobs:
         with:
           python-version: "3.x"
 
+      # Setup ccache for faster C++ compilation
+      - name: Setup ccache
+        uses: hendrikmuhs/ccache-action@v1.2
+        with:
+          key: ${{ matrix.os }}-ccache
+
       - name: Build wheels
         run: |
           python -m pip install cibuildwheel
@@ -42,11 +48,26 @@ jobs:
           CIBW_SKIP: "*-win32* *_i686* *musllinux*"
           CIBW_ARCHS_WINDOWS: "AMD64 ARM64"
           CIBW_ARCHS_MACOS: "x86_64 arm64"
-          # Install OpenMP for each platform
+          # Install OpenMP and ccache for each platform
           CIBW_BEFORE_ALL_LINUX: >
-            yum install -y libgomp || (apt-get update && apt-get install -y libomp-dev)
+            yum install -y libgomp ccache || (apt-get update && apt-get install -y libomp-dev ccache)
           CIBW_BEFORE_ALL_MACOS: >
-            brew install libomp
+            brew install libomp ccache
+          # Use ccache for faster builds
+          CIBW_ENVIRONMENT_LINUX: >
+            PATH="/usr/lib/ccache:$PATH"
+            CCACHE_DIR="/host${{ github.workspace }}/.ccache"
+          # Set OpenMP and ccache paths for macOS compilation
+          CIBW_ENVIRONMENT_MACOS: >
+            OpenMP_ROOT="$(brew --prefix libomp)"
+            LDFLAGS="-L$(brew --prefix libomp)/lib"
+            CPPFLAGS="-I$(brew --prefix libomp)/include"
+            DYLD_LIBRARY_PATH="$(brew --prefix libomp)/lib"
+            PATH="$(brew --prefix ccache)/libexec:$PATH"
+            CCACHE_DIR="${{ github.workspace }}/.ccache"
+          # Ensure delocate bundles libomp into the wheel
+          CIBW_REPAIR_WHEEL_COMMAND_MACOS: >
+            DYLD_LIBRARY_PATH="$(brew --prefix libomp)/lib" delocate-wheel --require-archs {delocate_archs} -w {dest_dir} -v {wheel}
           CIBW_BEFORE_BUILD: >
             python -m pip install wheel scikit-build-core>=0.4.3 pybind11>=2.6.0 numpy>=1.20
           CIBW_TEST_COMMAND: python -c "from VegasAfterglow import ObsData, Setups, Fitter, ParamDef, Scale; print('OK')"
