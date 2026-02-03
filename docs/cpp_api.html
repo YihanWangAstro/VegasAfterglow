@@ -111,17 +111,20 @@
 <li class="toctree-l3"><a class="reference internal" href="#_CPPv43ISM"><code class="docutils literal notranslate"><span class="pre">ISM</span></code></a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#_CPPv4N3ISM3ISME4Real"><code class="docutils literal notranslate"><span class="pre">ISM()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#_CPPv4NK3ISM3rhoE4Real4Real4Real"><code class="docutils literal notranslate"><span class="pre">rho()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N3ISM9isotropicE"><code class="docutils literal notranslate"><span class="pre">isotropic</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="#_CPPv44Wind"><code class="docutils literal notranslate"><span class="pre">Wind</span></code></a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#_CPPv4N4Wind4WindE4Real4Real4Real"><code class="docutils literal notranslate"><span class="pre">Wind()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#_CPPv4NK4Wind3rhoE4Real4Real4Real"><code class="docutils literal notranslate"><span class="pre">rho()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N4Wind9isotropicE"><code class="docutils literal notranslate"><span class="pre">isotropic</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="#_CPPv46Medium"><code class="docutils literal notranslate"><span class="pre">Medium</span></code></a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N6Medium6MediumE11TernaryFunc"><code class="docutils literal notranslate"><span class="pre">Medium()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N6Medium6MediumE11TernaryFuncb"><code class="docutils literal notranslate"><span class="pre">Medium()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#_CPPv4N6Medium6MediumEv"><code class="docutils literal notranslate"><span class="pre">Medium()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#_CPPv4N6Medium3rhoE"><code class="docutils literal notranslate"><span class="pre">rho</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N6Medium9isotropicE"><code class="docutils literal notranslate"><span class="pre">isotropic</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -164,6 +167,8 @@
 <li class="toctree-l4"><a class="reference internal" href="#_CPPv4N5Shock5ShockEv"><code class="docutils literal notranslate"><span class="pre">Shock()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#_CPPv4NK5Shock5shapeEv"><code class="docutils literal notranslate"><span class="pre">shape()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#_CPPv4N5Shock6resizeE6size_t6size_t6size_t"><code class="docutils literal notranslate"><span class="pre">resize()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#_CPPv4I00EN5Shock15detect_symmetryEvRK5CoordRK6EjectaRK6Medium"><code class="docutils literal notranslate"><span class="pre">detect_symmetry()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N5Shock16broadcast_groupsERK5Array"><code class="docutils literal notranslate"><span class="pre">broadcast_groups()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#_CPPv4N5Shock6t_comvE"><code class="docutils literal notranslate"><span class="pre">t_comv</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#_CPPv4N5Shock1rE"><code class="docutils literal notranslate"><span class="pre">r</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#_CPPv4N5Shock5thetaE"><code class="docutils literal notranslate"><span class="pre">theta</span></code></a></li>
@@ -172,8 +177,9 @@
 <li class="toctree-l4"><a class="reference internal" href="#_CPPv4N5Shock1BE"><code class="docutils literal notranslate"><span class="pre">B</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#_CPPv4N5Shock3N_pE"><code class="docutils literal notranslate"><span class="pre">N_p</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#_CPPv4N5Shock13injection_idxE"><code class="docutils literal notranslate"><span class="pre">injection_idx</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N5Shock8requiredE"><code class="docutils literal notranslate"><span class="pre">required</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#_CPPv4N5Shock3radE"><code class="docutils literal notranslate"><span class="pre">rad</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N5Shock8symmetryE"><code class="docutils literal notranslate"><span class="pre">symmetry</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N5Shock10theta_repsE"><code class="docutils literal notranslate"><span class="pre">theta_reps</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="#_CPPv4I00E14SimpleShockEqn"><code class="docutils literal notranslate"><span class="pre">SimpleShockEqn</span></code></a><ul>
@@ -207,6 +213,8 @@
 <li class="toctree-l4"><a class="reference internal" href="#_CPPv4NK10FRShockEqn14set_init_stateER5State4Real"><code class="docutils literal notranslate"><span class="pre">set_init_state()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#_CPPv4NK10FRShockEqn19compute_shell_sigmaERK5State"><code class="docutils literal notranslate"><span class="pre">compute_shell_sigma()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#_CPPv4N10FRShockEqn16save_cross_stateERK5State"><code class="docutils literal notranslate"><span class="pre">save_cross_state()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#_CPPv4NK10FRShockEqn20injection_efficiencyERK5State"><code class="docutils literal notranslate"><span class="pre">injection_efficiency()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#_CPPv4NK10FRShockEqn17crossing_completeERK5State4Real"><code class="docutils literal notranslate"><span class="pre">crossing_complete()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#_CPPv4N10FRShockEqn6mediumE"><code class="docutils literal notranslate"><span class="pre">medium</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#_CPPv4N10FRShockEqn6ejectaE"><code class="docutils literal notranslate"><span class="pre">ejecta</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#_CPPv4N10FRShockEqn7rad_fwdE"><code class="docutils literal notranslate"><span class="pre">rad_fwd</span></code></a></li>
@@ -227,7 +235,6 @@
 <li class="toctree-l3"><a class="reference internal" href="#_CPPv48Observer"><code class="docutils literal notranslate"><span class="pre">Observer</span></code></a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#_CPPv4N8Observer8ObserverEv"><code class="docutils literal notranslate"><span class="pre">Observer()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#_CPPv4N8Observer7observeERK5CoordRK5Shock4Real4Real"><code class="docutils literal notranslate"><span class="pre">observe()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N8Observer10observe_atERK5ArrayRK5CoordR5Shock4Real4Real"><code class="docutils literal notranslate"><span class="pre">observe_at()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#_CPPv4I0EN8Observer13specific_fluxE5ArrayRK5Array4RealR10PhotonGrid"><code class="docutils literal notranslate"><span class="pre">specific_flux()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#_CPPv4I0EN8Observer13specific_fluxE8MeshGridRK5ArrayRK5ArrayR10PhotonGrid"><code class="docutils literal notranslate"><span class="pre">specific_flux()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#_CPPv4I0EN8Observer20specific_flux_seriesE5ArrayRK5ArrayRK5ArrayR10PhotonGrid"><code class="docutils literal notranslate"><span class="pre">specific_flux_series()</span></code></a></li>
@@ -239,6 +246,7 @@
 <li class="toctree-l4"><a class="reference internal" href="#_CPPv4N8Observer5lg2_tE"><code class="docutils literal notranslate"><span class="pre">lg2_t</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#_CPPv4N8Observer11lg2_dopplerE"><code class="docutils literal notranslate"><span class="pre">lg2_doppler</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#_CPPv4N8Observer15lg2_geom_factorE"><code class="docutils literal notranslate"><span class="pre">lg2_geom_factor</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N8Observer10one_plus_zE"><code class="docutils literal notranslate"><span class="pre">one_plus_z</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="#_CPPv45Coord"><code class="docutils literal notranslate"><span class="pre">Coord</span></code></a><ul>
@@ -721,6 +729,15 @@
 </dd></dl>
 
 </div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-members">Public Members</p>
+<dl class="cpp var">
+<dt class="sig sig-object cpp" id="_CPPv4N3ISM9isotropicE">
+<span id="_CPPv3N3ISM9isotropicE"></span><span id="_CPPv2N3ISM9isotropicE"></span><span id="ISM::isotropic__b"></span><span class="target" id="VegasAfterglowclassISM_1a267b49a9932ce2570973700acc69fed1"></span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">isotropic</span></span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="p"><span class="pre">{</span></span><span class="k"><span class="pre">true</span></span><span class="p"><span class="pre">}</span></span><a class="headerlink" href="#_CPPv4N3ISM9isotropicE" title="Link to this definition"></a><br /></dt>
+<dd><p>Flag indicating if the medium is isotropic within computational domain. </p>
+</dd></dl>
+
+</div>
 </dd></dl>
 
 <dl class="cpp class">
@@ -764,6 +781,15 @@
 </dd></dl>
 
 </div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-members">Public Members</p>
+<dl class="cpp var">
+<dt class="sig sig-object cpp" id="_CPPv4N4Wind9isotropicE">
+<span id="_CPPv3N4Wind9isotropicE"></span><span id="_CPPv2N4Wind9isotropicE"></span><span id="Wind::isotropic__b"></span><span class="target" id="VegasAfterglowclassWind_1a0a5c1450e106c8fa6b926f185f6eb905"></span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">isotropic</span></span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="p"><span class="pre">{</span></span><span class="k"><span class="pre">true</span></span><span class="p"><span class="pre">}</span></span><a class="headerlink" href="#_CPPv4N4Wind9isotropicE" title="Link to this definition"></a><br /></dt>
+<dd><p>Flag indicating if the medium is isotropic within computational domain. </p>
+</dd></dl>
+
+</div>
 </dd></dl>
 
 <dl class="cpp class">
@@ -774,12 +800,15 @@
 <div class="breathe-sectiondef docutils container">
 <p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-functions">Public Functions</p>
 <dl class="cpp function">
-<dt class="sig sig-object cpp" id="_CPPv4N6Medium6MediumE11TernaryFunc">
-<span id="_CPPv3N6Medium6MediumE11TernaryFunc"></span><span id="_CPPv2N6Medium6MediumE11TernaryFunc"></span><span id="Medium::Medium__TernaryFunc"></span><span class="target" id="VegasAfterglowclassMedium_1aacd7cf0b6fb4dee7adf3a5f2d32356e7"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="k"><span class="pre">explicit</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">Medium</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">TernaryFunc</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">rho</span></span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">noexcept</span></span><a class="headerlink" href="#_CPPv4N6Medium6MediumE11TernaryFunc" title="Link to this definition"></a><br /></dt>
+<dt class="sig sig-object cpp" id="_CPPv4N6Medium6MediumE11TernaryFuncb">
+<span id="_CPPv3N6Medium6MediumE11TernaryFuncb"></span><span id="_CPPv2N6Medium6MediumE11TernaryFuncb"></span><span id="Medium::Medium__TernaryFunc.b"></span><span class="target" id="VegasAfterglowclassMedium_1aae76f473a83084bd5fd468106b23b8e3"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="k"><span class="pre">explicit</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">Medium</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">TernaryFunc</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">rho</span></span>, <span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">isotropic</span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="k"><span class="pre">false</span></span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">noexcept</span></span><a class="headerlink" href="#_CPPv4N6Medium6MediumE11TernaryFuncb" title="Link to this definition"></a><br /></dt>
 <dd><p>Constructor: Initialize with density function. </p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>rho</strong> – Density function </p>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>rho</strong> – Density function </p></li>
+<li><p><strong>isotropic</strong> – Flag indicating if the medium is isotropic within computational domain. </p></li>
+</ul>
 </dd>
 </dl>
 </dd></dl>
@@ -796,6 +825,12 @@
 <dt class="sig sig-object cpp" id="_CPPv4N6Medium3rhoE">
 <span id="_CPPv3N6Medium3rhoE"></span><span id="_CPPv2N6Medium3rhoE"></span><span id="Medium::rho__TernaryFunc"></span><span class="target" id="VegasAfterglowclassMedium_1a419de8e407c9c9f75d1b76fdedf5d3eb"></span><span class="n"><span class="pre">TernaryFunc</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">rho</span></span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="p"><span class="pre">{</span></span><span class="n"><span class="pre">func</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">zero_3d</span></span><span class="p"><span class="pre">}</span></span><a class="headerlink" href="#_CPPv4N6Medium3rhoE" title="Link to this definition"></a><br /></dt>
 <dd><p>Density function that returns the mass density at a given position (phi, theta, r) The function is initialized to zero by default. </p>
+</dd></dl>
+
+<dl class="cpp var">
+<dt class="sig sig-object cpp" id="_CPPv4N6Medium9isotropicE">
+<span id="_CPPv3N6Medium9isotropicE"></span><span id="_CPPv2N6Medium9isotropicE"></span><span id="Medium::isotropic__b"></span><span class="target" id="VegasAfterglowclassMedium_1a47df3f80b9a5c6e3a2c459b00d4faaa1"></span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">isotropic</span></span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="p"><span class="pre">{</span></span><span class="k"><span class="pre">false</span></span><span class="p"><span class="pre">}</span></span><a class="headerlink" href="#_CPPv4N6Medium9isotropicE" title="Link to this definition"></a><br /></dt>
+<dd><p>Flag indicating if the medium is isotropic within computational domain. </p>
 </dd></dl>
 
 </div>
@@ -1091,6 +1126,25 @@
 </dl>
 </dd></dl>
 
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4I00EN5Shock15detect_symmetryEvRK5CoordRK6EjectaRK6Medium">
+<span id="_CPPv3I00EN5Shock15detect_symmetryERK5CoordRK6EjectaRK6Medium"></span><span id="_CPPv2I00EN5Shock15detect_symmetryERK5CoordRK6EjectaRK6Medium"></span><span class="k"><span class="pre">template</span></span><span class="p"><span class="pre">&lt;</span></span><span class="k"><span class="pre">typename</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">Ejecta</span></span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="k"><span class="pre">typename</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">Medium</span></span></span><span class="p"><span class="pre">&gt;</span></span><br /><span class="target" id="VegasAfterglowclassShock_1a2847e025181ab708c820a67258b9c4c3"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">detect_symmetry</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv45Coord" title="Coord"><span class="n"><span class="pre">Coord</span></span></a><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">coord</span></span>, <a class="reference internal" href="#_CPPv4I00EN5Shock15detect_symmetryEvRK5CoordRK6EjectaRK6Medium" title="Shock::detect_symmetry::Ejecta"><span class="n"><span class="pre">Ejecta</span></span></a><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">jet</span></span>, <a class="reference internal" href="#_CPPv4I00EN5Shock15detect_symmetryEvRK5CoordRK6EjectaRK6Medium" title="Shock::detect_symmetry::Medium"><span class="n"><span class="pre">Medium</span></span></a><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">medium</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4I00EN5Shock15detect_symmetryEvRK5CoordRK6EjectaRK6Medium" title="Link to this definition"></a><br /></dt>
+<dd><p>Auto-detect symmetry by comparing jet initial conditions at consecutive theta grid points. </p>
+<p>Sets symmetry and theta_reps. Falls back to structured if jet is spreading or medium is anisotropic. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N5Shock16broadcast_groupsERK5Array">
+<span id="_CPPv3N5Shock16broadcast_groupsERK5Array"></span><span id="_CPPv2N5Shock16broadcast_groupsERK5Array"></span><span id="Shock::broadcast_groups__ArrayCR"></span><span class="target" id="VegasAfterglowclassShock_1ae152bec8a9248d39aa1642b650791476"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">broadcast_groups</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">Array</span></span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">theta_coords</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N5Shock16broadcast_groupsERK5Array" title="Link to this definition"></a><br /></dt>
+<dd><p>Broadcasts computed dynamics to all grid points based on detected symmetry. </p>
+<p>For isotropic, copies (0,0) to all (0,j), then phi=0 to all phi. For piecewise, copies each representative theta to its group, then phi=0 to all phi. For phi_symmetric, only broadcasts phi=0 to all phi (all thetas already computed). </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>theta_coords</strong> – 1D array of theta coordinate values. </p>
+</dd>
+</dl>
+</dd></dl>
+
 </div>
 <div class="breathe-sectiondef docutils container">
 <p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-members">Public Members</p>
@@ -1143,15 +1197,21 @@
 </dd></dl>
 
 <dl class="cpp var">
-<dt class="sig sig-object cpp" id="_CPPv4N5Shock8requiredE">
-<span id="_CPPv3N5Shock8requiredE"></span><span id="_CPPv2N5Shock8requiredE"></span><span id="Shock::required__MaskGrid"></span><span class="target" id="VegasAfterglowclassShock_1a936f940f338d2661a8f85e36fcd8f01d"></span><span class="n"><span class="pre">MaskGrid</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">required</span></span></span><a class="headerlink" href="#_CPPv4N5Shock8requiredE" title="Link to this definition"></a><br /></dt>
-<dd><p>Grid points actually required for final flux calculation. </p>
-</dd></dl>
-
-<dl class="cpp var">
 <dt class="sig sig-object cpp" id="_CPPv4N5Shock3radE">
 <span id="_CPPv3N5Shock3radE"></span><span id="_CPPv2N5Shock3radE"></span><span id="Shock::rad__RadParams"></span><span class="target" id="VegasAfterglowclassShock_1acc651304bf82aa85e52210074dee3673"></span><span class="n"><span class="pre">RadParams</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">rad</span></span></span><a class="headerlink" href="#_CPPv4N5Shock3radE" title="Link to this definition"></a><br /></dt>
 <dd><p>Radiation parameters. </p>
+</dd></dl>
+
+<dl class="cpp var">
+<dt class="sig sig-object cpp" id="_CPPv4N5Shock8symmetryE">
+<span id="_CPPv3N5Shock8symmetryE"></span><span id="_CPPv2N5Shock8symmetryE"></span><span id="Shock::symmetry__Symmetry"></span><span class="target" id="VegasAfterglowclassShock_1a1ac94c10777cd8af8a4dd62611eabc44"></span><span class="n"><span class="pre">Symmetry</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">symmetry</span></span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="p"><span class="pre">{</span></span><span class="n"><span class="pre">Symmetry</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">structured</span></span><span class="p"><span class="pre">}</span></span><a class="headerlink" href="#_CPPv4N5Shock8symmetryE" title="Link to this definition"></a><br /></dt>
+<dd><p>Auto-detected symmetry level. </p>
+</dd></dl>
+
+<dl class="cpp var">
+<dt class="sig sig-object cpp" id="_CPPv4N5Shock10theta_repsE">
+<span id="_CPPv3N5Shock10theta_repsE"></span><span id="_CPPv2N5Shock10theta_repsE"></span><span id="Shock::theta_reps__std::vector:s:"></span><span class="target" id="VegasAfterglowclassShock_1ab02b946caaaff18a4396581efabc28d2"></span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">vector</span></span><span class="p"><span class="pre">&lt;</span></span><span class="n"><span class="pre">size_t</span></span><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">theta_reps</span></span></span><a class="headerlink" href="#_CPPv4N5Shock10theta_repsE" title="Link to this definition"></a><br /></dt>
+<dd><p>Representative theta indices (contiguous groups) </p>
 </dd></dl>
 
 </div>
@@ -1506,6 +1566,18 @@
 </dl>
 </dd></dl>
 
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK10FRShockEqn20injection_efficiencyERK5State">
+<span id="_CPPv3NK10FRShockEqn20injection_efficiencyERK5State"></span><span id="_CPPv2NK10FRShockEqn20injection_efficiencyERK5State"></span><span id="FRShockEqn::injection_efficiency__StateCRC"></span><span class="target" id="VegasAfterglowclassFRShockEqn_1a38222d0f19dc59063d236319bdb72eb1"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="n"><span class="pre">Real</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">injection_efficiency</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4N10FRShockEqn5StateE" title="FRShockEqn::State"><span class="n"><span class="pre">State</span></span></a><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">diff</span></span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="k"><span class="pre">noexcept</span></span><a class="headerlink" href="#_CPPv4NK10FRShockEqn20injection_efficiencyERK5State" title="Link to this definition"></a><br /></dt>
+<dd><p>Fraction of injection still active: 0 after injection, 1 during full injection. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK10FRShockEqn17crossing_completeERK5State4Real">
+<span id="_CPPv3NK10FRShockEqn17crossing_completeERK5State4Real"></span><span id="_CPPv2NK10FRShockEqn17crossing_completeERK5State4Real"></span><span id="FRShockEqn::crossing_complete__StateCR.RealC"></span><span class="target" id="VegasAfterglowclassFRShockEqn_1a9b680a05c923e467949f0fcbcec9caf3"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">crossing_complete</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4N10FRShockEqn5StateE" title="FRShockEqn::State"><span class="n"><span class="pre">State</span></span></a><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">state</span></span>, <span class="n"><span class="pre">Real</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">t</span></span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="k"><span class="pre">noexcept</span></span><a class="headerlink" href="#_CPPv4NK10FRShockEqn17crossing_completeERK5State4Real" title="Link to this definition"></a><br /></dt>
+<dd><p>Whether reverse shock has finished crossing the ejecta. </p>
+</dd></dl>
+
 </div>
 <div class="breathe-sectiondef docutils container">
 <p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-members">Public Members</p>
@@ -1618,10 +1690,13 @@
 </dd></dl>
 
 <dl class="cpp function">
-<dt class="sig sig-object cpp" id="_CPPv4N8Observer10observe_atERK5ArrayRK5CoordR5Shock4Real4Real">
-<span id="_CPPv3N8Observer10observe_atERK5ArrayRK5CoordR5Shock4Real4Real"></span><span id="_CPPv2N8Observer10observe_atERK5ArrayRK5CoordR5Shock4Real4Real"></span><span id="Observer::observe_at__ArrayCR.CoordCR.ShockR.Real.Real"></span><span class="target" id="VegasAfterglowclassObserver_1a20935ae9f08821dd146a71d1c6a3175d"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">observe_at</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">Array</span></span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">t_obs</span></span>, <a class="reference internal" href="#_CPPv45Coord" title="Coord"><span class="n"><span class="pre">Coord</span></span></a><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">coord</span></span>, <a class="reference internal" href="#_CPPv45Shock" title="Shock"><span class="n"><span class="pre">Shock</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">shock</span></span>, <span class="n"><span class="pre">Real</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">luminosity_dist</span></span>, <span class="n"><span class="pre">Real</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">redshift</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N8Observer10observe_atERK5ArrayRK5CoordR5Shock4Real4Real" title="Link to this definition"></a><br /></dt>
+<dt class="sig sig-object cpp" id="_CPPv4I0EN8Observer13specific_fluxE5ArrayRK5Array4RealR10PhotonGrid">
+<span id="_CPPv3I0EN8Observer13specific_fluxERK5Array4RealR10PhotonGrid"></span><span id="_CPPv2I0EN8Observer13specific_fluxERK5Array4RealR10PhotonGrid"></span><span class="k"><span class="pre">template</span></span><span class="p"><span class="pre">&lt;</span></span><span class="k"><span class="pre">typename</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">PhotonGrid</span></span></span><span class="p"><span class="pre">&gt;</span></span><br /><span class="target" id="VegasAfterglowclassObserver_1a5350b13ae5a6c7007ba6459923573136"></span><span class="n"><span class="pre">Array</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">specific_flux</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">Array</span></span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">t_obs</span></span>, <span class="n"><span class="pre">Real</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">nu_obs</span></span>, <a class="reference internal" href="#_CPPv4I0EN8Observer13specific_fluxE5ArrayRK5Array4RealR10PhotonGrid" title="Observer::specific_flux::PhotonGrid"><span class="n"><span class="pre">PhotonGrid</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">photons</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4I0EN8Observer13specific_fluxE5ArrayRK5Array4RealR10PhotonGrid" title="Link to this definition"></a><br /></dt>
 <dd><p>Sets up the <a class="reference internal" href="#VegasAfterglowclassObserver"><span class="std std-ref">Observer</span></a> for flux calculation at specific observation times. </p>
-<p>Similar to <a class="reference internal" href="#VegasAfterglowclassObserver_1a7e6b3154ceb89b3ff90758b874c2016d"><span class="std std-ref">observe()</span></a>, but also marks required grid points for the given observation times. </p>
+<p>Similar to <a class="reference internal" href="#VegasAfterglowclassObserver_1a7e6b3154ceb89b3ff90758b874c2016d"><span class="std std-ref">observe()</span></a><p>, but also marks required grid points for the given observation times.</p>
+<p>Computes the specific flux at a single observed frequency</p>
+
+Returns the specific flux (as an Array) for a single observed frequency (nu_obs) by computing the specific flux over the observation times. </p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -1629,28 +1704,14 @@
 <li><p><strong>coord</strong> – Coordinate grid containing angular information </p></li>
 <li><p><strong>shock</strong> – <a class="reference internal" href="#VegasAfterglowclassShock"><span class="std std-ref">Shock</span></a> object containing the evolution data (modified to mark required points) </p></li>
 <li><p><strong>luminosity_dist</strong> – Luminosity distance to the source </p></li>
-<li><p><strong>redshift</strong> – Redshift of the source </p></li>
-</ul>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="cpp function">
-<dt class="sig sig-object cpp" id="_CPPv4I0EN8Observer13specific_fluxE5ArrayRK5Array4RealR10PhotonGrid">
-<span id="_CPPv3I0EN8Observer13specific_fluxERK5Array4RealR10PhotonGrid"></span><span id="_CPPv2I0EN8Observer13specific_fluxERK5Array4RealR10PhotonGrid"></span><span class="k"><span class="pre">template</span></span><span class="p"><span class="pre">&lt;</span></span><span class="k"><span class="pre">typename</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">PhotonGrid</span></span></span><span class="p"><span class="pre">&gt;</span></span><br /><span class="target" id="VegasAfterglowclassObserver_1a5350b13ae5a6c7007ba6459923573136"></span><span class="n"><span class="pre">Array</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">specific_flux</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">Array</span></span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">t_obs</span></span>, <span class="n"><span class="pre">Real</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">nu_obs</span></span>, <a class="reference internal" href="#_CPPv4I0EN8Observer13specific_fluxE5ArrayRK5Array4RealR10PhotonGrid" title="Observer::specific_flux::PhotonGrid"><span class="n"><span class="pre">PhotonGrid</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">photons</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4I0EN8Observer13specific_fluxE5ArrayRK5Array4RealR10PhotonGrid" title="Link to this definition"></a><br /></dt>
-<dd><p>Computes the specific flux at a single observed frequency. </p>
-<p>
-Returns the specific flux (as an Array) for a single observed frequency (nu_obs) by computing the specific flux over the observation times. </p>
-<dl class="field-list simple">
-<dt class="field-odd">Template Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>PhotonGrid</strong> – Types of photon grid objects </p>
-</dd>
-<dt class="field-even">Parameters<span class="colon">:</span></dt>
-<dd class="field-even"><ul class="simple">
+<li><p><strong>redshift</strong> – Redshift of the source</p></li>
 <li><p><strong>t_obs</strong> – Array of observation times </p></li>
 <li><p><strong>nu_obs</strong> – Observed frequency </p></li>
 <li><p><strong>photons</strong> – Parameter pack of photon grid objects</p></li>
 </ul>
+</dd>
+<dt class="field-even">Template Parameters<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>PhotonGrid</strong> – Types of photon grid objects </p>
 </dd>
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
 <dd class="field-odd"><p>Array of specific flux values at each observation time </p>
@@ -1811,6 +1872,12 @@ Returns the spectrum (as an Array) at a single observation time by computing the
 <dt class="sig sig-object cpp" id="_CPPv4N8Observer15lg2_geom_factorE">
 <span id="_CPPv3N8Observer15lg2_geom_factorE"></span><span id="_CPPv2N8Observer15lg2_geom_factorE"></span><span id="Observer::lg2_geom_factor__MeshGrid3d"></span><span class="target" id="VegasAfterglowclassObserver_1ac88ad26be273453fc4accf474b7d481c"></span><span class="n"><span class="pre">MeshGrid3d</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">lg2_geom_factor</span></span></span><a class="headerlink" href="#_CPPv4N8Observer15lg2_geom_factorE" title="Link to this definition"></a><br /></dt>
 <dd><p>Log2 of observe frame geometric factor (solid angle * r^2 * D^3) </p>
+</dd></dl>
+
+<dl class="cpp var">
+<dt class="sig sig-object cpp" id="_CPPv4N8Observer10one_plus_zE">
+<span id="_CPPv3N8Observer10one_plus_zE"></span><span id="_CPPv2N8Observer10one_plus_zE"></span><span id="Observer::one_plus_z__Real"></span><span class="target" id="VegasAfterglowclassObserver_1ada924f16ced53ca200a9f34222c5362d"></span><span class="n"><span class="pre">Real</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">one_plus_z</span></span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="p"><span class="pre">{</span></span><span class="m"><span class="pre">1</span></span><span class="p"><span class="pre">}</span></span><a class="headerlink" href="#_CPPv4N8Observer10one_plus_zE" title="Link to this definition"></a><br /></dt>
+<dd><p>1 + redshift </p>
 </dd></dl>
 
 </div>

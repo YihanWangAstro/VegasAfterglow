@@ -97,18 +97,21 @@ $(document).ready(function(){initNavTree('pybind_8h.html',''); initResizable(); 
   <div class="headertitle"><div class="title">pybind.h File Reference</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><code>#include &lt;pybind11/stl.h&gt;</code><br />
+<div class="textblock"><code>#include &lt;pybind11/functional.h&gt;</code><br />
+<code>#include &lt;pybind11/stl.h&gt;</code><br />
 <code>#include &quot;xtensor-python/pytensor.hpp&quot;</code><br />
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for pybind.h:</div>
 <div class="dyncontent">
 <div class="center"><img src="pybind_8h__incl.png" border="0" usemap="#apybind_8h" alt=""/></div>
 <map name="apybind_8h" id="apybind_8h">
-<area shape="rect" title=" " alt="" coords="117,5,195,31"/>
-<area shape="rect" title=" " alt="" coords="5,79,120,104"/>
-<area shape="poly" title=" " alt="" coords="143,33,90,72,87,68,139,29"/>
-<area shape="rect" title=" " alt="" coords="145,79,354,104"/>
-<area shape="poly" title=" " alt="" coords="173,29,225,68,222,72,169,33"/>
+<area shape="rect" title=" " alt="" coords="210,5,289,31"/>
+<area shape="rect" title=" " alt="" coords="5,79,168,104"/>
+<area shape="poly" title=" " alt="" coords="224,33,127,75,125,71,222,28"/>
+<area shape="rect" title=" " alt="" coords="192,79,307,104"/>
+<area shape="poly" title=" " alt="" coords="252,31,252,65,247,65,247,31"/>
+<area shape="rect" title=" " alt="" coords="331,79,541,104"/>
+<area shape="poly" title=" " alt="" coords="280,28,394,71,392,76,278,33"/>
 </map>
 </div>
 </div><div class="textblock"><div class="dynheader">
@@ -163,7 +166,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="pybind_8h_source.html#l00014">14</a> of file <a class="el" href="pybind_8h_source.html">pybind.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="pybind_8h_source.html#l00015">15</a> of file <a class="el" href="pybind_8h_source.html">pybind.h</a>.</p>
 
 </div>
 </div>
@@ -179,7 +182,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="pybind_8h_source.html#l00015">15</a> of file <a class="el" href="pybind_8h_source.html">pybind.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="pybind_8h_source.html#l00016">16</a> of file <a class="el" href="pybind_8h_source.html">pybind.h</a>.</p>
 
 </div>
 </div>
@@ -195,7 +198,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="pybind_8h_source.html#l00016">16</a> of file <a class="el" href="pybind_8h_source.html">pybind.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="pybind_8h_source.html#l00017">17</a> of file <a class="el" href="pybind_8h_source.html">pybind.h</a>.</p>
 
 </div>
 </div>
@@ -218,17 +221,17 @@ template&lt;<a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="pybind_8h_source.html#l00019">19</a> of file <a class="el" href="pybind_8h_source.html">pybind.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   19</span>                                    {</div>
-<div class="line"><span class="lineno">   20</span>    <span class="keywordflow">if</span> (<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">arr</a>.size() &lt;= 1)</div>
-<div class="line"><span class="lineno">   21</span>        <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
-<div class="line"><span class="lineno">   22</span>    <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a> = 1; <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a> &lt; <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">arr</a>.size(); ++<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a>) {</div>
-<div class="line"><span class="lineno">   23</span>        <span class="keywordflow">if</span> (<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">arr</a>(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a>) &lt; <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">arr</a>(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a> - 1)) {</div>
-<div class="line"><span class="lineno">   24</span>            <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
-<div class="line"><span class="lineno">   25</span>        }</div>
-<div class="line"><span class="lineno">   26</span>    }</div>
-<div class="line"><span class="lineno">   27</span>    <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
-<div class="line"><span class="lineno">   28</span>}</div>
+<p class="definition">Definition at line <a class="el" href="pybind_8h_source.html#l00020">20</a> of file <a class="el" href="pybind_8h_source.html">pybind.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   20</span>                                    {</div>
+<div class="line"><span class="lineno">   21</span>    <span class="keywordflow">if</span> (<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">arr</a>.size() &lt;= 1)</div>
+<div class="line"><span class="lineno">   22</span>        <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
+<div class="line"><span class="lineno">   23</span>    <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a> = 1; <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a> &lt; <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">arr</a>.size(); ++<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a>) {</div>
+<div class="line"><span class="lineno">   24</span>        <span class="keywordflow">if</span> (<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">arr</a>(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a>) &lt; <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">arr</a>(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a> - 1)) {</div>
+<div class="line"><span class="lineno">   25</span>            <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><span class="lineno">   26</span>        }</div>
+<div class="line"><span class="lineno">   27</span>    }</div>
+<div class="line"><span class="lineno">   28</span>    <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
+<div class="line"><span class="lineno">   29</span>}</div>
 <div class="ttc" id="autilities_8h_html_ab8e81118f023df135835db8cce4f5f42"><div class="ttname"><a href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">max</a></div><div class="ttdeci">T max(T value)</div><div class="ttdoc">Returns the value of a single parameter.</div><div class="ttdef"><b>Definition</b> <a href="utilities_8h_source.html#l00318">utilities.h:318</a></div></div>
 </div><!-- fragment --><div class="dynheader">
 Here is the caller graph for this function:</div>

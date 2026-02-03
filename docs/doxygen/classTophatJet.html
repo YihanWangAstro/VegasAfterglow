@@ -129,7 +129,7 @@ Public Attributes</h2></td></tr>
 <div class="textblock"><p>Implements a tophat jet profile where properties are uniform within a core angle theta_c and zero outside. </p>
 <p>This class provides a simple model for GRB jets with sharp edges, characterized by isotropic equivalent energy E_iso and initial Lorentz factor Gamma0 within the core angle. </p>
 
-<p class="definition">Definition at line <a class="el" href="jet_8h_source.html#l00082">82</a> of file <a class="el" href="jet_8h_source.html">jet.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="jet_8h_source.html#l00093">93</a> of file <a class="el" href="jet_8h_source.html">jet.h</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="abe166f2a89874e03542d6e2d042826d2" name="abe166f2a89874e03542d6e2d042826d2"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#abe166f2a89874e03542d6e2d042826d2">&#9670;&#160;</a></span>TophatJet()</h2>
@@ -195,11 +195,11 @@ Public Attributes</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="jet_8h_source.html#l00094">94</a> of file <a class="el" href="jet_8h_source.html">jet.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   95</span>        : <a class="code hl_variable" href="classTophatJet.html#a8646027b99fed9bb2e206956ff284c84">T0</a>(<a class="code hl_variable" href="classTophatJet.html#a8646027b99fed9bb2e206956ff284c84">T0</a>), <a class="code hl_variable" href="classTophatJet.html#aff514e356b2b7c08acaf3608baa261d0">spreading</a>(<a class="code hl_variable" href="classTophatJet.html#aff514e356b2b7c08acaf3608baa261d0">spreading</a>), theta_c_(theta_c), eps_k_(E_iso / (4 * <a class="code hl_variable" href="namespacecon.html#aa0ccd904b754d0f907898a942516d121">con::pi</a>)), Gamma0_(<a class="code hl_function" href="classTophatJet.html#a89374a73ef8bbaec174846b778ccfb6f">Gamma0</a>) {}</div>
-<div class="ttc" id="aclassTophatJet_html_a8646027b99fed9bb2e206956ff284c84"><div class="ttname"><a href="classTophatJet.html#a8646027b99fed9bb2e206956ff284c84">TophatJet::T0</a></div><div class="ttdeci">Real T0</div><div class="ttdoc">Duration of the ejecta in seconds.</div><div class="ttdef"><b>Definition</b> <a href="jet_8h_source.html#l00117">jet.h:117</a></div></div>
-<div class="ttc" id="aclassTophatJet_html_a89374a73ef8bbaec174846b778ccfb6f"><div class="ttname"><a href="classTophatJet.html#a89374a73ef8bbaec174846b778ccfb6f">TophatJet::Gamma0</a></div><div class="ttdeci">Real Gamma0(Real phi, Real theta) const noexcept</div><div class="ttdoc">Initial Lorentz factor as a function of phi and theta.</div><div class="ttdef"><b>Definition</b> <a href="jet_8h_source.html#l00115">jet.h:115</a></div></div>
-<div class="ttc" id="aclassTophatJet_html_aff514e356b2b7c08acaf3608baa261d0"><div class="ttname"><a href="classTophatJet.html#aff514e356b2b7c08acaf3608baa261d0">TophatJet::spreading</a></div><div class="ttdeci">bool spreading</div><div class="ttdoc">Flag indicating if the ejecta spreads laterally during evolution.</div><div class="ttdef"><b>Definition</b> <a href="jet_8h_source.html#l00118">jet.h:118</a></div></div>
+<p class="definition">Definition at line <a class="el" href="jet_8h_source.html#l00105">105</a> of file <a class="el" href="jet_8h_source.html">jet.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  106</span>        : <a class="code hl_variable" href="classTophatJet.html#a8646027b99fed9bb2e206956ff284c84">T0</a>(<a class="code hl_variable" href="classTophatJet.html#a8646027b99fed9bb2e206956ff284c84">T0</a>), <a class="code hl_variable" href="classTophatJet.html#aff514e356b2b7c08acaf3608baa261d0">spreading</a>(<a class="code hl_variable" href="classTophatJet.html#aff514e356b2b7c08acaf3608baa261d0">spreading</a>), theta_c_(theta_c), eps_k_(E_iso / (4 * <a class="code hl_variable" href="namespacecon.html#aa0ccd904b754d0f907898a942516d121">con::pi</a>)), Gamma0_(<a class="code hl_function" href="classTophatJet.html#a89374a73ef8bbaec174846b778ccfb6f">Gamma0</a>) {}</div>
+<div class="ttc" id="aclassTophatJet_html_a8646027b99fed9bb2e206956ff284c84"><div class="ttname"><a href="classTophatJet.html#a8646027b99fed9bb2e206956ff284c84">TophatJet::T0</a></div><div class="ttdeci">Real T0</div><div class="ttdoc">Duration of the ejecta in seconds.</div><div class="ttdef"><b>Definition</b> <a href="jet_8h_source.html#l00128">jet.h:128</a></div></div>
+<div class="ttc" id="aclassTophatJet_html_a89374a73ef8bbaec174846b778ccfb6f"><div class="ttname"><a href="classTophatJet.html#a89374a73ef8bbaec174846b778ccfb6f">TophatJet::Gamma0</a></div><div class="ttdeci">Real Gamma0(Real phi, Real theta) const noexcept</div><div class="ttdoc">Initial Lorentz factor as a function of phi and theta.</div><div class="ttdef"><b>Definition</b> <a href="jet_8h_source.html#l00126">jet.h:126</a></div></div>
+<div class="ttc" id="aclassTophatJet_html_aff514e356b2b7c08acaf3608baa261d0"><div class="ttname"><a href="classTophatJet.html#aff514e356b2b7c08acaf3608baa261d0">TophatJet::spreading</a></div><div class="ttdeci">bool spreading</div><div class="ttdoc">Flag indicating if the ejecta spreads laterally during evolution.</div><div class="ttdef"><b>Definition</b> <a href="jet_8h_source.html#l00129">jet.h:129</a></div></div>
 <div class="ttc" id="anamespacecon_html_aa0ccd904b754d0f907898a942516d121"><div class="ttname"><a href="namespacecon.html#aa0ccd904b754d0f907898a942516d121">con::pi</a></div><div class="ttdeci">constexpr Real pi</div><div class="ttdoc">Pi.</div><div class="ttdef"><b>Definition</b> <a href="macros_8h_source.html#l00097">macros.h:97</a></div></div>
 </div><!-- fragment -->
 </div>
@@ -249,8 +249,8 @@ Public Attributes</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Energy per solid angle (eps_k_ if theta &lt; theta_c_, 0 otherwise) </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="jet_8h_source.html#l00105">105</a> of file <a class="el" href="jet_8h_source.html">jet.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  105</span>{ <span class="keywordflow">return</span> theta &lt; theta_c_ ? eps_k_ : 0; }</div>
+<p class="definition">Definition at line <a class="el" href="jet_8h_source.html#l00116">116</a> of file <a class="el" href="jet_8h_source.html">jet.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  116</span>{ <span class="keywordflow">return</span> theta &lt; theta_c_ ? eps_k_ : 0; }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -298,8 +298,8 @@ Public Attributes</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Lorentz factor (Gamma0_ if theta &lt; theta_c_, 1 otherwise) </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="jet_8h_source.html#l00115">115</a> of file <a class="el" href="jet_8h_source.html">jet.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  115</span>{ <span class="keywordflow">return</span> theta &lt; theta_c_ ? Gamma0_ : 1; }</div>
+<p class="definition">Definition at line <a class="el" href="jet_8h_source.html#l00126">126</a> of file <a class="el" href="jet_8h_source.html">jet.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  126</span>{ <span class="keywordflow">return</span> theta &lt; theta_c_ ? Gamma0_ : 1; }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -318,8 +318,8 @@ Public Attributes</h2></td></tr>
 
 <p>Flag indicating if the ejecta spreads laterally during evolution. </p>
 
-<p class="definition">Definition at line <a class="el" href="jet_8h_source.html#l00118">118</a> of file <a class="el" href="jet_8h_source.html">jet.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  118</span>{<span class="keyword">false</span>};  <span class="comment">///&lt; Flag indicating if the ejecta spreads laterally during evolution</span></div>
+<p class="definition">Definition at line <a class="el" href="jet_8h_source.html#l00129">129</a> of file <a class="el" href="jet_8h_source.html">jet.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  129</span>{<span class="keyword">false</span>};  <span class="comment">///&lt; Flag indicating if the ejecta spreads laterally during evolution</span></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -337,8 +337,8 @@ Public Attributes</h2></td></tr>
 
 <p>Duration of the ejecta in seconds. </p>
 
-<p class="definition">Definition at line <a class="el" href="jet_8h_source.html#l00117">117</a> of file <a class="el" href="jet_8h_source.html">jet.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  117</span>{1 * <a class="code hl_variable" href="namespaceunit.html#a4e7c438655d3f34c7c30a155ec38f250">unit::sec</a>}; <span class="comment">///&lt; Duration of the ejecta in seconds</span></div>
+<p class="definition">Definition at line <a class="el" href="jet_8h_source.html#l00128">128</a> of file <a class="el" href="jet_8h_source.html">jet.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  128</span>{1 * <a class="code hl_variable" href="namespaceunit.html#a4e7c438655d3f34c7c30a155ec38f250">unit::sec</a>}; <span class="comment">///&lt; Duration of the ejecta in seconds</span></div>
 <div class="ttc" id="anamespaceunit_html_a4e7c438655d3f34c7c30a155ec38f250"><div class="ttname"><a href="namespaceunit.html#a4e7c438655d3f34c7c30a155ec38f250">unit::sec</a></div><div class="ttdeci">constexpr Real sec</div><div class="ttdoc">Second in code units.</div><div class="ttdef"><b>Definition</b> <a href="macros_8h_source.html#l00046">macros.h:46</a></div></div>
 </div><!-- fragment -->
 </div>

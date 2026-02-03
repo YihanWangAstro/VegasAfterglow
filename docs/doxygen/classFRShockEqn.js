@@ -3,6 +3,8 @@ var classFRShockEqn =
     [ "State", "classFRShockEqn.html#ac165008b8d8b1fa8da4700d0b24a50a2", null ],
     [ "FRShockEqn", "classFRShockEqn.html#a1c64443c6de177c68f47a6efc4c83d8c", null ],
     [ "compute_shell_sigma", "classFRShockEqn.html#a6b9e03ae15cc1510b5e4ae7f8f8adcf9", null ],
+    [ "crossing_complete", "classFRShockEqn.html#a9b680a05c923e467949f0fcbcec9caf3", null ],
+    [ "injection_efficiency", "classFRShockEqn.html#a38222d0f19dc59063d236319bdb72eb1", null ],
     [ "operator()", "classFRShockEqn.html#a577bc5832d62ea1810248846ace3e4d4", null ],
     [ "save_cross_state", "classFRShockEqn.html#abf5cbd36f3e3491a01a3c5ae4f4ca5d2", null ],
     [ "set_init_state", "classFRShockEqn.html#ae6a26a35708e078859bbe3eee5b3fa1f", null ],

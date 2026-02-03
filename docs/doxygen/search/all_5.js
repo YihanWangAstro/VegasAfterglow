@@ -7,7 +7,7 @@ var searchData=
   ['fast_5flog2_4',['fast_log2',['../utilities_8h.html#aa67895957aa831a991982a8268ef8349',1,'utilities.h']]],
   ['fast_5fpow_5',['fast_pow',['../utilities_8h.html#a4520a27a10a2aef33c99ad8c679da404',1,'utilities.h']]],
   ['fill_5fdata_5farrays_6',['fill_data_arrays',['../structMultiBandData.html#ad2ade97dd269ab683c9fc6716dc0cdea',1,'MultiBandData']]],
-  ['find_5fjet_5fedge_7',['find_jet_edge',['../mesh_8h.html#a71b7cc9ed9e5943e9cafb837e06f427d',1,'mesh.h']]],
+  ['find_5fjet_5fedges_7',['find_jet_edges',['../mesh_8h.html#a28ba8f4400237a97c0d2fac934fb44cf',1,'mesh.h']]],
   ['finding_20methods_8',['Root Finding Methods',['../group__RootFinding.html',1,'']]],
   ['fixed_5findices_5f_9',['fixed_indices_',['../classParamTransformer.html#a0dab6bed7b2fff3064d5ce91cfbb5d66',1,'ParamTransformer']]],
   ['fixed_5fvalues_5f_10',['fixed_values_',['../classParamTransformer.html#a47d415eb7cd94f870280505937ce7fb2',1,'ParamTransformer']]],

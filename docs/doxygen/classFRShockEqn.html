@@ -141,6 +141,12 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:abf5cbd36f3e3491a01a3c5ae4f4ca5d2" id="r_abf5cbd36f3e3491a01a3c5ae4f4ca5d2"><td class="memItemLeft" align="right" valign="top"><a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">void</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFRShockEqn.html#abf5cbd36f3e3491a01a3c5ae4f4ca5d2">save_cross_state</a> (<a class="el" href="classFRShockEqn.html#ac165008b8d8b1fa8da4700d0b24a50a2">State</a> <a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">const</a> &amp;<a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">state</a>)</td></tr>
 <tr class="memdesc:abf5cbd36f3e3491a01a3c5ae4f4ca5d2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Saves the state of the system at the crossing point.  <br /></td></tr>
 <tr class="separator:abf5cbd36f3e3491a01a3c5ae4f4ca5d2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a38222d0f19dc59063d236319bdb72eb1" id="r_a38222d0f19dc59063d236319bdb72eb1"><td class="memItemLeft" align="right" valign="top"><a class="el" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFRShockEqn.html#a38222d0f19dc59063d236319bdb72eb1">injection_efficiency</a> (<a class="el" href="classFRShockEqn.html#ac165008b8d8b1fa8da4700d0b24a50a2">State</a> <a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">const</a> &amp;<a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">diff</a>) <a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">const</a> <a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">noexcept</a></td></tr>
+<tr class="memdesc:a38222d0f19dc59063d236319bdb72eb1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Fraction of injection still active: 0 after injection, 1 during full injection.  <br /></td></tr>
+<tr class="separator:a38222d0f19dc59063d236319bdb72eb1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9b680a05c923e467949f0fcbcec9caf3" id="r_a9b680a05c923e467949f0fcbcec9caf3"><td class="memItemLeft" align="right" valign="top"><a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">bool</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFRShockEqn.html#a9b680a05c923e467949f0fcbcec9caf3">crossing_complete</a> (<a class="el" href="classFRShockEqn.html#ac165008b8d8b1fa8da4700d0b24a50a2">State</a> <a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">const</a> &amp;<a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">state</a>, <a class="el" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> t) <a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">const</a> <a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">noexcept</a></td></tr>
+<tr class="memdesc:a9b680a05c923e467949f0fcbcec9caf3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Whether reverse shock has finished crossing the ejecta.  <br /></td></tr>
+<tr class="separator:a9b680a05c923e467949f0fcbcec9caf3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
@@ -301,6 +307,76 @@ template&lt;<a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>The magnetization parameter of the shell </dd></dl>
+
+</div>
+</div>
+<a id="a9b680a05c923e467949f0fcbcec9caf3" name="a9b680a05c923e467949f0fcbcec9caf3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9b680a05c923e467949f0fcbcec9caf3">&#9670;&#160;</a></span>crossing_complete()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;<a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">typename</a> <a class="el" href="classEjecta.html">Ejecta</a> , <a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">typename</a> <a class="el" href="classMedium.html">Medium</a> &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">bool</a> <a class="el" href="classFRShockEqn.html">FRShockEqn</a>&lt; <a class="el" href="classEjecta.html">Ejecta</a>, <a class="el" href="classMedium.html">Medium</a> &gt;::crossing_complete </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classFRShockEqn.html#ac165008b8d8b1fa8da4700d0b24a50a2">State</a> <a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">const</a> &amp;&#160;</td>
+          <td class="paramname"><em>state</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a>&#160;</td>
+          <td class="paramname"><em>t</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Whether reverse shock has finished crossing the ejecta. </p>
+
+</div>
+</div>
+<a id="a38222d0f19dc59063d236319bdb72eb1" name="a38222d0f19dc59063d236319bdb72eb1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a38222d0f19dc59063d236319bdb72eb1">&#9670;&#160;</a></span>injection_efficiency()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;<a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">typename</a> <a class="el" href="classEjecta.html">Ejecta</a> , <a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">typename</a> <a class="el" href="classMedium.html">Medium</a> &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> <a class="el" href="classFRShockEqn.html">FRShockEqn</a>&lt; <a class="el" href="classEjecta.html">Ejecta</a>, <a class="el" href="classMedium.html">Medium</a> &gt;::injection_efficiency </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classFRShockEqn.html#ac165008b8d8b1fa8da4700d0b24a50a2">State</a> <a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">const</a> &amp;&#160;</td>
+          <td class="paramname"><em>diff</em></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Fraction of injection still active: 0 after injection, 1 during full injection. </p>
 
 </div>
 </div>

@@ -5,5 +5,6 @@ var searchData=
   ['inf_2',['inf',['../namespacecon.html#ad61313f4a5b7876e54ae46d02d4a04bd',1,'con']]],
   ['initial_3',['initial',['../structParamDef.html#a68d77519a37a7b1d967a553dec09601b',1,'ParamDef']]],
   ['initialized_4',['initialized',['../structBatchWorkspace.html#ae31088ed8a05212f460bb1c16b7edd81',1,'BatchWorkspace']]],
-  ['injection_5fidx_5',['injection_idx',['../classShock.html#a5ffabf6d9963528567fa8d398c806a57',1,'Shock']]]
+  ['injection_5fidx_5',['injection_idx',['../classShock.html#a5ffabf6d9963528567fa8d398c806a57',1,'Shock']]],
+  ['isotropic_6',['isotropic',['../classMedium.html#a47df3f80b9a5c6e3a2c459b00d4faaa1',1,'Medium::isotropic'],['../classISM.html#a267b49a9932ce2570973700acc69fed1',1,'ISM::isotropic'],['../classWind.html#a0a5c1450e106c8fa6b926f185f6eb905',1,'Wind::isotropic']]]
 ];

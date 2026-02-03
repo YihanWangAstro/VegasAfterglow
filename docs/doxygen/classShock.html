@@ -127,6 +127,13 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a21251939d5191865d40e31bd3155ec3a" id="r_a21251939d5191865d40e31bd3155ec3a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">void</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classShock.html#a21251939d5191865d40e31bd3155ec3a">resize</a> (<a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">size_t</a> phi_size, <a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">size_t</a> theta_size, <a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">size_t</a> t_size)</td></tr>
 <tr class="memdesc:a21251939d5191865d40e31bd3155ec3a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Resizes all grid components of the <a class="el" href="classShock.html" title="Represents a shock wave in an astrophysical environment.">Shock</a> object to new dimensions.  <br /></td></tr>
 <tr class="separator:a21251939d5191865d40e31bd3155ec3a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2847e025181ab708c820a67258b9c4c3" id="r_a2847e025181ab708c820a67258b9c4c3"><td class="memTemplParams" colspan="2">template&lt;<a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">typename</a> <a class="el" href="classEjecta.html">Ejecta</a> , <a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">typename</a> <a class="el" href="classMedium.html">Medium</a> &gt; </td></tr>
+<tr class="memitem:a2847e025181ab708c820a67258b9c4c3"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">void</a>&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classShock.html#a2847e025181ab708c820a67258b9c4c3">detect_symmetry</a> (<a class="el" href="classCoord.html">Coord</a> <a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">const</a> &amp;<a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">coord</a>, <a class="el" href="classEjecta.html">Ejecta</a> <a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">const</a> &amp;jet, <a class="el" href="classMedium.html">Medium</a> <a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">const</a> &amp;medium)</td></tr>
+<tr class="memdesc:a2847e025181ab708c820a67258b9c4c3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Auto-detect symmetry by comparing jet initial conditions at consecutive theta grid points.  <br /></td></tr>
+<tr class="separator:a2847e025181ab708c820a67258b9c4c3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae152bec8a9248d39aa1642b650791476" id="r_ae152bec8a9248d39aa1642b650791476"><td class="memItemLeft" align="right" valign="top"><a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">void</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classShock.html#ae152bec8a9248d39aa1642b650791476">broadcast_groups</a> (<a class="el" href="mesh_8h.html#afd05120c4d579ec7fa4906f677781a83">Array</a> <a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">const</a> &amp;<a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">theta_coords</a>)</td></tr>
+<tr class="memdesc:ae152bec8a9248d39aa1642b650791476"><td class="mdescLeft">&#160;</td><td class="mdescRight">Broadcasts computed dynamics to all grid points based on detected symmetry.  <br /></td></tr>
+<tr class="separator:ae152bec8a9248d39aa1642b650791476"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
@@ -154,18 +161,21 @@ Public Attributes</h2></td></tr>
 <tr class="memitem:a5ffabf6d9963528567fa8d398c806a57" id="r_a5ffabf6d9963528567fa8d398c806a57"><td class="memItemLeft" align="right" valign="top"><a class="el" href="mesh_8h.html#a27e3f4efb19b3f2b0694e0bee5fb25ae">IndexGrid</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classShock.html#a5ffabf6d9963528567fa8d398c806a57">injection_idx</a></td></tr>
 <tr class="memdesc:a5ffabf6d9963528567fa8d398c806a57"><td class="mdescLeft">&#160;</td><td class="mdescRight">Beyond which grid index there is no electron injection.  <br /></td></tr>
 <tr class="separator:a5ffabf6d9963528567fa8d398c806a57"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a936f940f338d2661a8f85e36fcd8f01d" id="r_a936f940f338d2661a8f85e36fcd8f01d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="mesh_8h.html#afb738e18bf395ef0903c8c5d6f37c47f">MaskGrid</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classShock.html#a936f940f338d2661a8f85e36fcd8f01d">required</a></td></tr>
-<tr class="memdesc:a936f940f338d2661a8f85e36fcd8f01d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Grid points actually required for final flux calculation.  <br /></td></tr>
-<tr class="separator:a936f940f338d2661a8f85e36fcd8f01d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:acc651304bf82aa85e52210074dee3673" id="r_acc651304bf82aa85e52210074dee3673"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structRadParams.html">RadParams</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classShock.html#acc651304bf82aa85e52210074dee3673">rad</a></td></tr>
 <tr class="memdesc:acc651304bf82aa85e52210074dee3673"><td class="mdescLeft">&#160;</td><td class="mdescRight">Radiation parameters.  <br /></td></tr>
 <tr class="separator:acc651304bf82aa85e52210074dee3673"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1ac94c10777cd8af8a4dd62611eabc44" id="r_a1ac94c10777cd8af8a4dd62611eabc44"><td class="memItemLeft" align="right" valign="top"><a class="el" href="jet_8h.html#a4c9eca1a51662c0a447221f4d3940caa">Symmetry</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classShock.html#a1ac94c10777cd8af8a4dd62611eabc44">symmetry</a> {<a class="el" href="jet_8h.html#a4c9eca1a51662c0a447221f4d3940caaa32234519c88d862c5df3934bd134aa9c">Symmetry::structured</a>}</td></tr>
+<tr class="memdesc:a1ac94c10777cd8af8a4dd62611eabc44"><td class="mdescLeft">&#160;</td><td class="mdescRight">Auto-detected symmetry level.  <br /></td></tr>
+<tr class="separator:a1ac94c10777cd8af8a4dd62611eabc44"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab02b946caaaff18a4396581efabc28d2" id="r_ab02b946caaaff18a4396581efabc28d2"><td class="memItemLeft" align="right" valign="top">std::vector&lt; <a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">size_t</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classShock.html#ab02b946caaaff18a4396581efabc28d2">theta_reps</a></td></tr>
+<tr class="memdesc:ab02b946caaaff18a4396581efabc28d2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Representative theta indices (contiguous groups)  <br /></td></tr>
+<tr class="separator:ab02b946caaaff18a4396581efabc28d2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Represents a shock wave in an astrophysical environment. </p>
 <p>The class stores physical properties of the shock across a 3D grid defined by azimuthal angle (phi), polar angle (theta), and time bins. Provides methods for shock calculations, including relativistic jump conditions, magnetic field calculations, and energy density computations. </p>
 
-<p class="definition">Definition at line <a class="el" href="shock_8h_source.html#l00026">26</a> of file <a class="el" href="shock_8h_source.html">shock.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="shock_8h_source.html#l00028">28</a> of file <a class="el" href="shock_8h_source.html">shock.h</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="ac4cbdd70892414adbdb7fc01071e49e0" name="ac4cbdd70892414adbdb7fc01071e49e0"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ac4cbdd70892414adbdb7fc01071e49e0">&#9670;&#160;</a></span>Shock() <span class="overload">[1/2]</span></h2>
@@ -225,21 +235,20 @@ Public Attributes</h2></td></tr>
 <div class="line"><span class="lineno">   16</span>      <a class="code hl_variable" href="classShock.html#a48c444d1bd42f1b933aa4282b5634bf2">B</a>({phi_size, theta_size, t_size}, 0),          <span class="comment">// Initialize magnetic field grid with 0</span></div>
 <div class="line"><span class="lineno">   17</span>      <a class="code hl_variable" href="classShock.html#a935ec9fad9c096394707e59f81d0425d">N_p</a>({phi_size, theta_size, t_size}, 0),        <span class="comment">// Initialize column density grid with 0</span></div>
 <div class="line"><span class="lineno">   18</span>      <a class="code hl_variable" href="classShock.html#a5ffabf6d9963528567fa8d398c806a57">injection_idx</a>({phi_size, theta_size}, t_size), <span class="comment">// Initialize a cross-index grid with t_size</span></div>
-<div class="line"><span class="lineno">   19</span>      <a class="code hl_variable" href="classShock.html#a936f940f338d2661a8f85e36fcd8f01d">required</a>({phi_size, theta_size, t_size}, 1),   <span class="comment">// Initialize the required grid with true</span></div>
-<div class="line"><span class="lineno">   20</span>      <a class="code hl_variable" href="classShock.html#acc651304bf82aa85e52210074dee3673">rad</a>(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">rad_params</a>),                               <span class="comment">// Set radiation parameters</span></div>
-<div class="line"><span class="lineno">   21</span>      phi_size(phi_size),                            <span class="comment">// Store phi grid size</span></div>
-<div class="line"><span class="lineno">   22</span>      theta_size(theta_size),                        <span class="comment">// Store theta grid size</span></div>
+<div class="line"><span class="lineno">   19</span>      <span class="comment">//required({phi_size, theta_size, t_size}, 1),   // Initialize the required grid with true</span></div>
+<div class="line"><span class="lineno">   20</span>      <a class="code hl_variable" href="classShock.html#acc651304bf82aa85e52210074dee3673">rad</a>(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">rad_params</a>),        <span class="comment">// Set radiation parameters</span></div>
+<div class="line"><span class="lineno">   21</span>      phi_size(phi_size),     <span class="comment">// Store phi grid size</span></div>
+<div class="line"><span class="lineno">   22</span>      theta_size(theta_size), <span class="comment">// Store theta grid size</span></div>
 <div class="line"><span class="lineno">   23</span>      t_size(t_size) {}</div>
-<div class="ttc" id="aclassShock_html_a144dc338f3f004d48e5b629479e782be"><div class="ttname"><a href="classShock.html#a144dc338f3f004d48e5b629479e782be">Shock::theta</a></div><div class="ttdeci">MeshGrid3d theta</div><div class="ttdoc">Theta for jet spreading.</div><div class="ttdef"><b>Definition</b> <a href="shock_8h_source.html#l00045">shock.h:45</a></div></div>
-<div class="ttc" id="aclassShock_html_a2f750335b1c4474905426fd1a78b006a"><div class="ttname"><a href="classShock.html#a2f750335b1c4474905426fd1a78b006a">Shock::t_comv</a></div><div class="ttdeci">MeshGrid3d t_comv</div><div class="ttdoc">Comoving time.</div><div class="ttdef"><b>Definition</b> <a href="shock_8h_source.html#l00043">shock.h:43</a></div></div>
-<div class="ttc" id="aclassShock_html_a48c444d1bd42f1b933aa4282b5634bf2"><div class="ttname"><a href="classShock.html#a48c444d1bd42f1b933aa4282b5634bf2">Shock::B</a></div><div class="ttdeci">MeshGrid3d B</div><div class="ttdoc">Comoving magnetic field.</div><div class="ttdef"><b>Definition</b> <a href="shock_8h_source.html#l00048">shock.h:48</a></div></div>
-<div class="ttc" id="aclassShock_html_a5ffabf6d9963528567fa8d398c806a57"><div class="ttname"><a href="classShock.html#a5ffabf6d9963528567fa8d398c806a57">Shock::injection_idx</a></div><div class="ttdeci">IndexGrid injection_idx</div><div class="ttdoc">Beyond which grid index there is no electron injection.</div><div class="ttdef"><b>Definition</b> <a href="shock_8h_source.html#l00050">shock.h:50</a></div></div>
-<div class="ttc" id="aclassShock_html_a935ec9fad9c096394707e59f81d0425d"><div class="ttname"><a href="classShock.html#a935ec9fad9c096394707e59f81d0425d">Shock::N_p</a></div><div class="ttdeci">MeshGrid3d N_p</div><div class="ttdoc">Downstream proton number per solid angle.</div><div class="ttdef"><b>Definition</b> <a href="shock_8h_source.html#l00049">shock.h:49</a></div></div>
-<div class="ttc" id="aclassShock_html_a936f940f338d2661a8f85e36fcd8f01d"><div class="ttname"><a href="classShock.html#a936f940f338d2661a8f85e36fcd8f01d">Shock::required</a></div><div class="ttdeci">MaskGrid required</div><div class="ttdoc">Grid points actually required for final flux calculation.</div><div class="ttdef"><b>Definition</b> <a href="shock_8h_source.html#l00051">shock.h:51</a></div></div>
-<div class="ttc" id="aclassShock_html_acc651304bf82aa85e52210074dee3673"><div class="ttname"><a href="classShock.html#acc651304bf82aa85e52210074dee3673">Shock::rad</a></div><div class="ttdeci">RadParams rad</div><div class="ttdoc">Radiation parameters.</div><div class="ttdef"><b>Definition</b> <a href="shock_8h_source.html#l00052">shock.h:52</a></div></div>
-<div class="ttc" id="aclassShock_html_ad2c035218f2e59c0e84c40fa96ff5497"><div class="ttname"><a href="classShock.html#ad2c035218f2e59c0e84c40fa96ff5497">Shock::r</a></div><div class="ttdeci">MeshGrid3d r</div><div class="ttdoc">Radius.</div><div class="ttdef"><b>Definition</b> <a href="shock_8h_source.html#l00044">shock.h:44</a></div></div>
-<div class="ttc" id="aclassShock_html_af26b390f5806dc838dd5a2f63c1b0bd9"><div class="ttname"><a href="classShock.html#af26b390f5806dc838dd5a2f63c1b0bd9">Shock::Gamma</a></div><div class="ttdeci">MeshGrid3d Gamma</div><div class="ttdoc">Bulk Lorentz factor.</div><div class="ttdef"><b>Definition</b> <a href="shock_8h_source.html#l00046">shock.h:46</a></div></div>
-<div class="ttc" id="aclassShock_html_aff8a2f43d9c47007f042a3ed1a33f98e"><div class="ttname"><a href="classShock.html#aff8a2f43d9c47007f042a3ed1a33f98e">Shock::Gamma_th</a></div><div class="ttdeci">MeshGrid3d Gamma_th</div><div class="ttdoc">Downstream internal Lorentz factor.</div><div class="ttdef"><b>Definition</b> <a href="shock_8h_source.html#l00047">shock.h:47</a></div></div>
+<div class="ttc" id="aclassShock_html_a144dc338f3f004d48e5b629479e782be"><div class="ttname"><a href="classShock.html#a144dc338f3f004d48e5b629479e782be">Shock::theta</a></div><div class="ttdeci">MeshGrid3d theta</div><div class="ttdoc">Theta for jet spreading.</div><div class="ttdef"><b>Definition</b> <a href="shock_8h_source.html#l00047">shock.h:47</a></div></div>
+<div class="ttc" id="aclassShock_html_a2f750335b1c4474905426fd1a78b006a"><div class="ttname"><a href="classShock.html#a2f750335b1c4474905426fd1a78b006a">Shock::t_comv</a></div><div class="ttdeci">MeshGrid3d t_comv</div><div class="ttdoc">Comoving time.</div><div class="ttdef"><b>Definition</b> <a href="shock_8h_source.html#l00045">shock.h:45</a></div></div>
+<div class="ttc" id="aclassShock_html_a48c444d1bd42f1b933aa4282b5634bf2"><div class="ttname"><a href="classShock.html#a48c444d1bd42f1b933aa4282b5634bf2">Shock::B</a></div><div class="ttdeci">MeshGrid3d B</div><div class="ttdoc">Comoving magnetic field.</div><div class="ttdef"><b>Definition</b> <a href="shock_8h_source.html#l00050">shock.h:50</a></div></div>
+<div class="ttc" id="aclassShock_html_a5ffabf6d9963528567fa8d398c806a57"><div class="ttname"><a href="classShock.html#a5ffabf6d9963528567fa8d398c806a57">Shock::injection_idx</a></div><div class="ttdeci">IndexGrid injection_idx</div><div class="ttdoc">Beyond which grid index there is no electron injection.</div><div class="ttdef"><b>Definition</b> <a href="shock_8h_source.html#l00052">shock.h:52</a></div></div>
+<div class="ttc" id="aclassShock_html_a935ec9fad9c096394707e59f81d0425d"><div class="ttname"><a href="classShock.html#a935ec9fad9c096394707e59f81d0425d">Shock::N_p</a></div><div class="ttdeci">MeshGrid3d N_p</div><div class="ttdoc">Downstream proton number per solid angle.</div><div class="ttdef"><b>Definition</b> <a href="shock_8h_source.html#l00051">shock.h:51</a></div></div>
+<div class="ttc" id="aclassShock_html_acc651304bf82aa85e52210074dee3673"><div class="ttname"><a href="classShock.html#acc651304bf82aa85e52210074dee3673">Shock::rad</a></div><div class="ttdeci">RadParams rad</div><div class="ttdoc">Radiation parameters.</div><div class="ttdef"><b>Definition</b> <a href="shock_8h_source.html#l00054">shock.h:54</a></div></div>
+<div class="ttc" id="aclassShock_html_ad2c035218f2e59c0e84c40fa96ff5497"><div class="ttname"><a href="classShock.html#ad2c035218f2e59c0e84c40fa96ff5497">Shock::r</a></div><div class="ttdeci">MeshGrid3d r</div><div class="ttdoc">Radius.</div><div class="ttdef"><b>Definition</b> <a href="shock_8h_source.html#l00046">shock.h:46</a></div></div>
+<div class="ttc" id="aclassShock_html_af26b390f5806dc838dd5a2f63c1b0bd9"><div class="ttname"><a href="classShock.html#af26b390f5806dc838dd5a2f63c1b0bd9">Shock::Gamma</a></div><div class="ttdeci">MeshGrid3d Gamma</div><div class="ttdoc">Bulk Lorentz factor.</div><div class="ttdef"><b>Definition</b> <a href="shock_8h_source.html#l00048">shock.h:48</a></div></div>
+<div class="ttc" id="aclassShock_html_aff8a2f43d9c47007f042a3ed1a33f98e"><div class="ttname"><a href="classShock.html#aff8a2f43d9c47007f042a3ed1a33f98e">Shock::Gamma_th</a></div><div class="ttdeci">MeshGrid3d Gamma_th</div><div class="ttdoc">Downstream internal Lorentz factor.</div><div class="ttdef"><b>Definition</b> <a href="shock_8h_source.html#l00049">shock.h:49</a></div></div>
 <div class="ttc" id="autilities_8h_html_ab8e81118f023df135835db8cce4f5f42"><div class="ttname"><a href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">max</a></div><div class="ttdeci">T max(T value)</div><div class="ttdoc">Returns the value of a single parameter.</div><div class="ttdef"><b>Definition</b> <a href="utilities_8h_source.html#l00318">utilities.h:318</a></div></div>
 </div><!-- fragment -->
 </div>
@@ -270,6 +279,212 @@ Public Attributes</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
+<a id="ae152bec8a9248d39aa1642b650791476" name="ae152bec8a9248d39aa1642b650791476"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae152bec8a9248d39aa1642b650791476">&#9670;&#160;</a></span>broadcast_groups()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">void</a> Shock::broadcast_groups </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="mesh_8h.html#afd05120c4d579ec7fa4906f677781a83">Array</a> <a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">const</a> &amp;&#160;</td>
+          <td class="paramname"><em>theta_coords</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Broadcasts computed dynamics to all grid points based on detected symmetry. </p>
+<p>For isotropic, copies (0,0) to all (0,j), then phi=0 to all phi. For piecewise, copies each representative theta to its group, then phi=0 to all phi. For phi_symmetric, only broadcasts phi=0 to all phi (all thetas already computed). </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">theta_coords</td><td>1D array of theta coordinate values. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="shock_8cpp_source.html#l00042">42</a> of file <a class="el" href="shock_8cpp_source.html">shock.cpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   42</span>                                                      {</div>
+<div class="line"><span class="lineno">   43</span>    <span class="keywordflow">if</span> (<a class="code hl_variable" href="classShock.html#a1ac94c10777cd8af8a4dd62611eabc44">symmetry</a> == <a class="code hl_enumvalue" href="jet_8h.html#a4c9eca1a51662c0a447221f4d3940caaa92fd05a96e739c61bbbd8b81d35ec741">Symmetry::isotropic</a>) {</div>
+<div class="line"><span class="lineno">   44</span>        <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">j</a> = 1; <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">j</a> &lt; theta_size; ++<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">j</a>) {</div>
+<div class="line"><span class="lineno">   45</span>            <a class="code hl_variable" href="classShock.html#a5ffabf6d9963528567fa8d398c806a57">injection_idx</a>(0, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">j</a>) = <a class="code hl_variable" href="classShock.html#a5ffabf6d9963528567fa8d398c806a57">injection_idx</a>(0, 0);</div>
+<div class="line"><span class="lineno">   46</span>            <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">k</a> = 0; <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">k</a> &lt; t_size; ++<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">k</a>) {</div>
+<div class="line"><span class="lineno">   47</span>                <a class="code hl_variable" href="classShock.html#a2f750335b1c4474905426fd1a78b006a">t_comv</a>(0, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">j</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">k</a>) = <a class="code hl_variable" href="classShock.html#a2f750335b1c4474905426fd1a78b006a">t_comv</a>(0, 0, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">k</a>);</div>
+<div class="line"><span class="lineno">   48</span>                this-&gt;<a class="code hl_variable" href="classShock.html#ad2c035218f2e59c0e84c40fa96ff5497">r</a>(0, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">j</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">k</a>) = this-&gt;<a class="code hl_variable" href="classShock.html#ad2c035218f2e59c0e84c40fa96ff5497">r</a>(0, 0, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">k</a>);</div>
+<div class="line"><span class="lineno">   49</span>                <a class="code hl_variable" href="classShock.html#a144dc338f3f004d48e5b629479e782be">theta</a>(0, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">j</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">k</a>) = <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">theta_coords</a>(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">j</a>);</div>
+<div class="line"><span class="lineno">   50</span>                <a class="code hl_variable" href="classShock.html#af26b390f5806dc838dd5a2f63c1b0bd9">Gamma</a>(0, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">j</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">k</a>) = <a class="code hl_variable" href="classShock.html#af26b390f5806dc838dd5a2f63c1b0bd9">Gamma</a>(0, 0, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">k</a>);</div>
+<div class="line"><span class="lineno">   51</span>                <a class="code hl_variable" href="classShock.html#aff8a2f43d9c47007f042a3ed1a33f98e">Gamma_th</a>(0, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">j</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">k</a>) = <a class="code hl_variable" href="classShock.html#aff8a2f43d9c47007f042a3ed1a33f98e">Gamma_th</a>(0, 0, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">k</a>);</div>
+<div class="line"><span class="lineno">   52</span>                <a class="code hl_variable" href="classShock.html#a48c444d1bd42f1b933aa4282b5634bf2">B</a>(0, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">j</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">k</a>) = <a class="code hl_variable" href="classShock.html#a48c444d1bd42f1b933aa4282b5634bf2">B</a>(0, 0, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">k</a>);</div>
+<div class="line"><span class="lineno">   53</span>                <a class="code hl_variable" href="classShock.html#a935ec9fad9c096394707e59f81d0425d">N_p</a>(0, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">j</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">k</a>) = <a class="code hl_variable" href="classShock.html#a935ec9fad9c096394707e59f81d0425d">N_p</a>(0, 0, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">k</a>);</div>
+<div class="line"><span class="lineno">   54</span>            }</div>
+<div class="line"><span class="lineno">   55</span>        }</div>
+<div class="line"><span class="lineno">   56</span>    } <span class="keywordflow">else</span> <span class="keywordflow">if</span> (<a class="code hl_variable" href="classShock.html#a1ac94c10777cd8af8a4dd62611eabc44">symmetry</a> == <a class="code hl_enumvalue" href="jet_8h.html#a4c9eca1a51662c0a447221f4d3940caaa3e58619a3450b6f761468f6283dc8573">Symmetry::piecewise</a>) {</div>
+<div class="line"><span class="lineno">   57</span>        <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> <a class="code hl_variable" href="classShock.html#ad2c035218f2e59c0e84c40fa96ff5497">r</a> = 0; <a class="code hl_variable" href="classShock.html#ad2c035218f2e59c0e84c40fa96ff5497">r</a> &lt; <a class="code hl_variable" href="classShock.html#ab02b946caaaff18a4396581efabc28d2">theta_reps</a>.size(); ++<a class="code hl_variable" href="classShock.html#ad2c035218f2e59c0e84c40fa96ff5497">r</a>) {</div>
+<div class="line"><span class="lineno">   58</span>            <span class="keyword">const</span> <span class="keywordtype">size_t</span> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">j_start</a> = <a class="code hl_variable" href="classShock.html#ab02b946caaaff18a4396581efabc28d2">theta_reps</a>[<a class="code hl_variable" href="classShock.html#ad2c035218f2e59c0e84c40fa96ff5497">r</a>];</div>
+<div class="line"><span class="lineno">   59</span>            <span class="keyword">const</span> <span class="keywordtype">size_t</span> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">j_end</a> = (<a class="code hl_variable" href="classShock.html#ad2c035218f2e59c0e84c40fa96ff5497">r</a> + 1 &lt; <a class="code hl_variable" href="classShock.html#ab02b946caaaff18a4396581efabc28d2">theta_reps</a>.size()) ? <a class="code hl_variable" href="classShock.html#ab02b946caaaff18a4396581efabc28d2">theta_reps</a>[<a class="code hl_variable" href="classShock.html#ad2c035218f2e59c0e84c40fa96ff5497">r</a> + 1] : theta_size;</div>
+<div class="line"><span class="lineno">   60</span>            <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">j</a> = <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">j_start</a> + 1; <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">j</a> &lt; <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">j_end</a>; ++<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">j</a>) {</div>
+<div class="line"><span class="lineno">   61</span>                <a class="code hl_variable" href="classShock.html#a5ffabf6d9963528567fa8d398c806a57">injection_idx</a>(0, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">j</a>) = <a class="code hl_variable" href="classShock.html#a5ffabf6d9963528567fa8d398c806a57">injection_idx</a>(0, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">j_start</a>);</div>
+<div class="line"><span class="lineno">   62</span>                <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">k</a> = 0; <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">k</a> &lt; t_size; ++<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">k</a>) {</div>
+<div class="line"><span class="lineno">   63</span>                    <a class="code hl_variable" href="classShock.html#a2f750335b1c4474905426fd1a78b006a">t_comv</a>(0, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">j</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">k</a>) = <a class="code hl_variable" href="classShock.html#a2f750335b1c4474905426fd1a78b006a">t_comv</a>(0, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">j_start</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">k</a>);</div>
+<div class="line"><span class="lineno">   64</span>                    this-&gt;<a class="code hl_variable" href="classShock.html#ad2c035218f2e59c0e84c40fa96ff5497">r</a>(0, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">j</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">k</a>) = this-&gt;<a class="code hl_variable" href="classShock.html#ad2c035218f2e59c0e84c40fa96ff5497">r</a>(0, j_start, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">k</a>);</div>
+<div class="line"><span class="lineno">   65</span>                    <a class="code hl_variable" href="classShock.html#a144dc338f3f004d48e5b629479e782be">theta</a>(0, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">j</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">k</a>) = <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">theta_coords</a>(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">j</a>);</div>
+<div class="line"><span class="lineno">   66</span>                    <a class="code hl_variable" href="classShock.html#af26b390f5806dc838dd5a2f63c1b0bd9">Gamma</a>(0, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">j</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">k</a>) = <a class="code hl_variable" href="classShock.html#af26b390f5806dc838dd5a2f63c1b0bd9">Gamma</a>(0, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">j_start</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">k</a>);</div>
+<div class="line"><span class="lineno">   67</span>                    <a class="code hl_variable" href="classShock.html#aff8a2f43d9c47007f042a3ed1a33f98e">Gamma_th</a>(0, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">j</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">k</a>) = <a class="code hl_variable" href="classShock.html#aff8a2f43d9c47007f042a3ed1a33f98e">Gamma_th</a>(0, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">j_start</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">k</a>);</div>
+<div class="line"><span class="lineno">   68</span>                    <a class="code hl_variable" href="classShock.html#a48c444d1bd42f1b933aa4282b5634bf2">B</a>(0, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">j</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">k</a>) = <a class="code hl_variable" href="classShock.html#a48c444d1bd42f1b933aa4282b5634bf2">B</a>(0, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">j_start</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">k</a>);</div>
+<div class="line"><span class="lineno">   69</span>                    <a class="code hl_variable" href="classShock.html#a935ec9fad9c096394707e59f81d0425d">N_p</a>(0, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">j</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">k</a>) = <a class="code hl_variable" href="classShock.html#a935ec9fad9c096394707e59f81d0425d">N_p</a>(0, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">j_start</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">k</a>);</div>
+<div class="line"><span class="lineno">   70</span>                }</div>
+<div class="line"><span class="lineno">   71</span>            }</div>
+<div class="line"><span class="lineno">   72</span>        }</div>
+<div class="line"><span class="lineno">   73</span>    }</div>
+<div class="line"><span class="lineno">   74</span> </div>
+<div class="line"><span class="lineno">   75</span>    <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a> = 1; <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a> &lt; phi_size; ++<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a>) {</div>
+<div class="line"><span class="lineno">   76</span>        <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">j</a> = 0; <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">j</a> &lt; theta_size; ++<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">j</a>) {</div>
+<div class="line"><span class="lineno">   77</span>            <a class="code hl_variable" href="classShock.html#a5ffabf6d9963528567fa8d398c806a57">injection_idx</a>(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">j</a>) = <a class="code hl_variable" href="classShock.html#a5ffabf6d9963528567fa8d398c806a57">injection_idx</a>(0, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">j</a>);</div>
+<div class="line"><span class="lineno">   78</span>            <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">k</a> = 0; <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">k</a> &lt; t_size; ++<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">k</a>) {</div>
+<div class="line"><span class="lineno">   79</span>                <a class="code hl_variable" href="classShock.html#a2f750335b1c4474905426fd1a78b006a">t_comv</a>(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">j</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">k</a>) = <a class="code hl_variable" href="classShock.html#a2f750335b1c4474905426fd1a78b006a">t_comv</a>(0, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">j</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">k</a>);</div>
+<div class="line"><span class="lineno">   80</span>                this-&gt;<a class="code hl_variable" href="classShock.html#ad2c035218f2e59c0e84c40fa96ff5497">r</a>(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">j</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">k</a>) = this-&gt;<a class="code hl_variable" href="classShock.html#ad2c035218f2e59c0e84c40fa96ff5497">r</a>(0, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">j</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">k</a>);</div>
+<div class="line"><span class="lineno">   81</span>                <a class="code hl_variable" href="classShock.html#a144dc338f3f004d48e5b629479e782be">theta</a>(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">j</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">k</a>) = <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">theta_coords</a>(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">j</a>);</div>
+<div class="line"><span class="lineno">   82</span>                <a class="code hl_variable" href="classShock.html#af26b390f5806dc838dd5a2f63c1b0bd9">Gamma</a>(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">j</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">k</a>) = <a class="code hl_variable" href="classShock.html#af26b390f5806dc838dd5a2f63c1b0bd9">Gamma</a>(0, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">j</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">k</a>);</div>
+<div class="line"><span class="lineno">   83</span>                <a class="code hl_variable" href="classShock.html#aff8a2f43d9c47007f042a3ed1a33f98e">Gamma_th</a>(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">j</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">k</a>) = <a class="code hl_variable" href="classShock.html#aff8a2f43d9c47007f042a3ed1a33f98e">Gamma_th</a>(0, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">j</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">k</a>);</div>
+<div class="line"><span class="lineno">   84</span>                <a class="code hl_variable" href="classShock.html#a48c444d1bd42f1b933aa4282b5634bf2">B</a>(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">j</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">k</a>) = <a class="code hl_variable" href="classShock.html#a48c444d1bd42f1b933aa4282b5634bf2">B</a>(0, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">j</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">k</a>);</div>
+<div class="line"><span class="lineno">   85</span>                <a class="code hl_variable" href="classShock.html#a935ec9fad9c096394707e59f81d0425d">N_p</a>(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">j</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">k</a>) = <a class="code hl_variable" href="classShock.html#a935ec9fad9c096394707e59f81d0425d">N_p</a>(0, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">j</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">k</a>);</div>
+<div class="line"><span class="lineno">   86</span>            }</div>
+<div class="line"><span class="lineno">   87</span>        }</div>
+<div class="line"><span class="lineno">   88</span>    }</div>
+<div class="line"><span class="lineno">   89</span>}</div>
+<div class="ttc" id="aclassShock_html_a1ac94c10777cd8af8a4dd62611eabc44"><div class="ttname"><a href="classShock.html#a1ac94c10777cd8af8a4dd62611eabc44">Shock::symmetry</a></div><div class="ttdeci">Symmetry symmetry</div><div class="ttdoc">Auto-detected symmetry level.</div><div class="ttdef"><b>Definition</b> <a href="shock_8h_source.html#l00055">shock.h:55</a></div></div>
+<div class="ttc" id="aclassShock_html_ab02b946caaaff18a4396581efabc28d2"><div class="ttname"><a href="classShock.html#ab02b946caaaff18a4396581efabc28d2">Shock::theta_reps</a></div><div class="ttdeci">std::vector&lt; size_t &gt; theta_reps</div><div class="ttdoc">Representative theta indices (contiguous groups)</div><div class="ttdef"><b>Definition</b> <a href="shock_8h_source.html#l00056">shock.h:56</a></div></div>
+<div class="ttc" id="ajet_8h_html_a4c9eca1a51662c0a447221f4d3940caaa3e58619a3450b6f761468f6283dc8573"><div class="ttname"><a href="jet_8h.html#a4c9eca1a51662c0a447221f4d3940caaa3e58619a3450b6f761468f6283dc8573">Symmetry::piecewise</a></div><div class="ttdeci">@ piecewise</div><div class="ttdoc">phi-symmetric + piecewise-constant in theta; compute K representative thetas</div></div>
+<div class="ttc" id="ajet_8h_html_a4c9eca1a51662c0a447221f4d3940caaa92fd05a96e739c61bbbd8b81d35ec741"><div class="ttname"><a href="jet_8h.html#a4c9eca1a51662c0a447221f4d3940caaa92fd05a96e739c61bbbd8b81d35ec741">Symmetry::isotropic</a></div><div class="ttdeci">@ isotropic</div><div class="ttdoc">Uniform in both phi and theta; compute one point, broadcast everywhere.</div></div>
+</div><!-- fragment --><div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="classShock_ae152bec8a9248d39aa1642b650791476_cgraph.png" border="0" usemap="#aclassShock_ae152bec8a9248d39aa1642b650791476_cgraph" alt=""/></div>
+<map name="aclassShock_ae152bec8a9248d39aa1642b650791476_cgraph" id="aclassShock_ae152bec8a9248d39aa1642b650791476_cgraph">
+<area shape="rect" title="Broadcasts computed dynamics to all grid points based on detected symmetry." alt="" coords="5,29,189,55"/>
+<area shape="rect" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42" title="Returns the value of a single parameter." alt="" coords="237,29,288,55"/>
+<area shape="poly" title=" " alt="" coords="190,39,223,39,223,45,190,45"/>
+<area shape="poly" title=" " alt="" coords="235,31,229,21,232,11,244,5,263,3,285,6,295,15,292,19,283,11,263,8,245,10,236,15,234,20,239,28"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="a2847e025181ab708c820a67258b9c4c3" name="a2847e025181ab708c820a67258b9c4c3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2847e025181ab708c820a67258b9c4c3">&#9670;&#160;</a></span>detect_symmetry()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;<a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">typename</a> <a class="el" href="classEjecta.html">Ejecta</a> , <a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">typename</a> <a class="el" href="classMedium.html">Medium</a> &gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">void</a> Shock::detect_symmetry </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classCoord.html">Coord</a> <a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">const</a> &amp;&#160;</td>
+          <td class="paramname"><em>coord</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classEjecta.html">Ejecta</a> <a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">const</a> &amp;&#160;</td>
+          <td class="paramname"><em>jet</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classMedium.html">Medium</a> <a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">const</a> &amp;&#160;</td>
+          <td class="paramname"><em>medium</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Auto-detect symmetry by comparing jet initial conditions at consecutive theta grid points. </p>
+<p>Sets symmetry and theta_reps. Falls back to structured if jet is spreading or medium is anisotropic. </p>
+
+<p class="definition">Definition at line <a class="el" href="shock_8h_source.html#l00094">94</a> of file <a class="el" href="shock_8h_source.html">shock.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   94</span>                                                                                       {</div>
+<div class="line"><span class="lineno">   95</span>    <span class="keyword">auto</span> [<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">phi_size_</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">theta_size_</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">t_size_</a>] = <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">coord</a>.shape();</div>
+<div class="line"><span class="lineno">   96</span> </div>
+<div class="line"><span class="lineno">   97</span>    <span class="keywordflow">if</span> (jet.spreading || !medium.isotropic) {</div>
+<div class="line"><span class="lineno">   98</span>        <a class="code hl_variable" href="classShock.html#a1ac94c10777cd8af8a4dd62611eabc44">symmetry</a> = <a class="code hl_enumvalue" href="jet_8h.html#a4c9eca1a51662c0a447221f4d3940caaa32234519c88d862c5df3934bd134aa9c">Symmetry::structured</a>;</div>
+<div class="line"><span class="lineno">   99</span>        <span class="keywordflow">return</span>;</div>
+<div class="line"><span class="lineno">  100</span>    }</div>
+<div class="line"><span class="lineno">  101</span> </div>
+<div class="line"><span class="lineno">  102</span>    <span class="keyword">const</span> <a class="code hl_typedef" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">phi0</a> = <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">coord</a>.phi(0);</div>
+<div class="line"><span class="lineno">  103</span>    <a class="code hl_variable" href="classShock.html#ab02b946caaaff18a4396581efabc28d2">theta_reps</a>.clear();</div>
+<div class="line"><span class="lineno">  104</span>    <a class="code hl_variable" href="classShock.html#ab02b946caaaff18a4396581efabc28d2">theta_reps</a>.reserve(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">theta_size_</a>);</div>
+<div class="line"><span class="lineno">  105</span>    <a class="code hl_variable" href="classShock.html#ab02b946caaaff18a4396581efabc28d2">theta_reps</a>.push_back(0);</div>
+<div class="line"><span class="lineno">  106</span> </div>
+<div class="line"><span class="lineno">  107</span>    <span class="keyword">auto</span> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">jet_ic_differs</a> = [&amp;](<span class="keywordtype">size_t</span> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">ja</a>, <span class="keywordtype">size_t</span> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">jb</a>) {</div>
+<div class="line"><span class="lineno">  108</span>        <span class="keyword">const</span> <a class="code hl_typedef" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">theta_a</a> = <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">coord</a>.theta(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">ja</a>), <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">theta_b</a> = <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">coord</a>.theta(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">jb</a>);</div>
+<div class="line"><span class="lineno">  109</span>        <span class="keywordflow">if</span> (jet.eps_k(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">phi0</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">theta_a</a>) != jet.eps_k(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">phi0</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">theta_b</a>))</div>
+<div class="line"><span class="lineno">  110</span>            <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
+<div class="line"><span class="lineno">  111</span>        <span class="keywordflow">if</span> (jet.Gamma0(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">phi0</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">theta_a</a>) != jet.Gamma0(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">phi0</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">theta_b</a>))</div>
+<div class="line"><span class="lineno">  112</span>            <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
+<div class="line"><span class="lineno">  113</span>        <span class="keywordflow">if</span> <span class="keyword">constexpr</span> (<a class="code hl_concept" href="conceptHasSigma.html">HasSigma&lt;Ejecta&gt;</a>) {</div>
+<div class="line"><span class="lineno">  114</span>            <span class="keywordflow">if</span> (jet.sigma0(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">phi0</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">theta_a</a>) != jet.sigma0(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">phi0</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">theta_b</a>))</div>
+<div class="line"><span class="lineno">  115</span>                <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
+<div class="line"><span class="lineno">  116</span>        }</div>
+<div class="line"><span class="lineno">  117</span>        <span class="keywordflow">if</span> <span class="keyword">constexpr</span> (<a class="code hl_concept" href="conceptHasDedt.html">HasDedt&lt;Ejecta&gt;</a>) {</div>
+<div class="line"><span class="lineno">  118</span>            <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">k</a> = 0; <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">k</a> &lt; <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">t_size_</a>; ++<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">k</a>) {</div>
+<div class="line"><span class="lineno">  119</span>                <span class="keyword">const</span> <a class="code hl_typedef" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">ta</a> = <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">coord</a>.t(0, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">ja</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">k</a>), <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">tb</a> = <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">coord</a>.t(0, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">jb</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">k</a>);</div>
+<div class="line"><span class="lineno">  120</span>                <span class="keywordflow">if</span> (jet.deps_dt(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">phi0</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">theta_a</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">ta</a>) != jet.deps_dt(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">phi0</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">theta_b</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">ta</a>))</div>
+<div class="line"><span class="lineno">  121</span>                    <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
+<div class="line"><span class="lineno">  122</span>                <span class="keywordflow">if</span> (jet.deps_dt(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">phi0</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">theta_a</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">tb</a>) != jet.deps_dt(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">phi0</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">theta_b</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">tb</a>))</div>
+<div class="line"><span class="lineno">  123</span>                    <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
+<div class="line"><span class="lineno">  124</span>            }</div>
+<div class="line"><span class="lineno">  125</span>        }</div>
+<div class="line"><span class="lineno">  126</span>        <span class="keywordflow">if</span> <span class="keyword">constexpr</span> (<a class="code hl_concept" href="conceptHasDmdt.html">HasDmdt&lt;Ejecta&gt;</a>) {</div>
+<div class="line"><span class="lineno">  127</span>            <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">k</a> = 0; <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">k</a> &lt; <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">t_size_</a>; ++<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">k</a>) {</div>
+<div class="line"><span class="lineno">  128</span>                <span class="keyword">const</span> <a class="code hl_typedef" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">ta</a> = <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">coord</a>.t(0, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">ja</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">k</a>), <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">tb</a> = <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">coord</a>.t(0, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">jb</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">k</a>);</div>
+<div class="line"><span class="lineno">  129</span>                <span class="keywordflow">if</span> (jet.dm_dt(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">phi0</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">theta_a</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">ta</a>) != jet.dm_dt(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">phi0</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">theta_b</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">ta</a>))</div>
+<div class="line"><span class="lineno">  130</span>                    <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
+<div class="line"><span class="lineno">  131</span>                <span class="keywordflow">if</span> (jet.dm_dt(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">phi0</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">theta_a</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">tb</a>) != jet.dm_dt(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">phi0</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">theta_b</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">tb</a>))</div>
+<div class="line"><span class="lineno">  132</span>                    <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
+<div class="line"><span class="lineno">  133</span>            }</div>
+<div class="line"><span class="lineno">  134</span>        }</div>
+<div class="line"><span class="lineno">  135</span>        <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><span class="lineno">  136</span>    };</div>
+<div class="line"><span class="lineno">  137</span> </div>
+<div class="line"><span class="lineno">  138</span>    <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">j</a> = 1; <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">j</a> &lt; <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">theta_size_</a>; ++<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">j</a>) {</div>
+<div class="line"><span class="lineno">  139</span>        <span class="keywordflow">if</span> (<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">jet_ic_differs</a>(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">j</a> - 1, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">j</a>)) {</div>
+<div class="line"><span class="lineno">  140</span>            <a class="code hl_variable" href="classShock.html#ab02b946caaaff18a4396581efabc28d2">theta_reps</a>.push_back(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">j</a>);</div>
+<div class="line"><span class="lineno">  141</span>        }</div>
+<div class="line"><span class="lineno">  142</span>    }</div>
+<div class="line"><span class="lineno">  143</span> </div>
+<div class="line"><span class="lineno">  144</span>    <span class="keywordflow">if</span> (<a class="code hl_variable" href="classShock.html#ab02b946caaaff18a4396581efabc28d2">theta_reps</a>.size() == 1)</div>
+<div class="line"><span class="lineno">  145</span>        <a class="code hl_variable" href="classShock.html#a1ac94c10777cd8af8a4dd62611eabc44">symmetry</a> = <a class="code hl_enumvalue" href="jet_8h.html#a4c9eca1a51662c0a447221f4d3940caaa92fd05a96e739c61bbbd8b81d35ec741">Symmetry::isotropic</a>;</div>
+<div class="line"><span class="lineno">  146</span>    <span class="keywordflow">else</span> <span class="keywordflow">if</span> (<a class="code hl_variable" href="classShock.html#ab02b946caaaff18a4396581efabc28d2">theta_reps</a>.size() &lt; <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">theta_size_</a>)</div>
+<div class="line"><span class="lineno">  147</span>        <a class="code hl_variable" href="classShock.html#a1ac94c10777cd8af8a4dd62611eabc44">symmetry</a> = <a class="code hl_enumvalue" href="jet_8h.html#a4c9eca1a51662c0a447221f4d3940caaa3e58619a3450b6f761468f6283dc8573">Symmetry::piecewise</a>;</div>
+<div class="line"><span class="lineno">  148</span>    <span class="keywordflow">else</span></div>
+<div class="line"><span class="lineno">  149</span>        <a class="code hl_variable" href="classShock.html#a1ac94c10777cd8af8a4dd62611eabc44">symmetry</a> = <a class="code hl_enumvalue" href="jet_8h.html#a4c9eca1a51662c0a447221f4d3940caaa2fbec3f317107be74b3eb9a4a224a059">Symmetry::phi_symmetric</a>;</div>
+<div class="line"><span class="lineno">  150</span>}</div>
+<div class="ttc" id="aconceptHasDedt_html"><div class="ttname"><a href="conceptHasDedt.html">HasDedt</a></div><div class="ttdef"><b>Definition</b> <a href="utilities_8h_source.html#l00021">utilities.h:21</a></div></div>
+<div class="ttc" id="aconceptHasDmdt_html"><div class="ttname"><a href="conceptHasDmdt.html">HasDmdt</a></div><div class="ttdef"><b>Definition</b> <a href="utilities_8h_source.html#l00016">utilities.h:16</a></div></div>
+<div class="ttc" id="aconceptHasSigma_html"><div class="ttname"><a href="conceptHasSigma.html">HasSigma</a></div><div class="ttdef"><b>Definition</b> <a href="utilities_8h_source.html#l00026">utilities.h:26</a></div></div>
+<div class="ttc" id="ajet_8h_html_a4c9eca1a51662c0a447221f4d3940caaa2fbec3f317107be74b3eb9a4a224a059"><div class="ttname"><a href="jet_8h.html#a4c9eca1a51662c0a447221f4d3940caaa2fbec3f317107be74b3eb9a4a224a059">Symmetry::phi_symmetric</a></div><div class="ttdeci">@ phi_symmetric</div><div class="ttdoc">Uniform in phi; compute one phi slice, broadcast across phi.</div></div>
+<div class="ttc" id="ajet_8h_html_a4c9eca1a51662c0a447221f4d3940caaa32234519c88d862c5df3934bd134aa9c"><div class="ttname"><a href="jet_8h.html#a4c9eca1a51662c0a447221f4d3940caaa32234519c88d862c5df3934bd134aa9c">Symmetry::structured</a></div><div class="ttdeci">@ structured</div><div class="ttdoc">Full (phi, theta) computation needed.</div></div>
+<div class="ttc" id="amacros_8h_html_a4b04262b81aa7d31eb5d2f607e2a35de"><div class="ttname"><a href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a></div><div class="ttdeci">double Real</div><div class="ttdoc">Type alias for floating-point precision used throughout the code.</div><div class="ttdef"><b>Definition</b> <a href="macros_8h_source.html#l00024">macros.h:24</a></div></div>
+</div><!-- fragment --><div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="classShock_a2847e025181ab708c820a67258b9c4c3_cgraph.png" border="0" usemap="#aclassShock_a2847e025181ab708c820a67258b9c4c3_cgraph" alt=""/></div>
+<map name="aclassShock_a2847e025181ab708c820a67258b9c4c3_cgraph" id="aclassShock_a2847e025181ab708c820a67258b9c4c3_cgraph">
+<area shape="rect" title="Auto&#45;detect symmetry by comparing jet initial conditions at consecutive theta grid points." alt="" coords="5,29,189,55"/>
+<area shape="rect" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42" title="Returns the value of a single parameter." alt="" coords="237,29,288,55"/>
+<area shape="poly" title=" " alt="" coords="190,39,223,39,223,45,190,45"/>
+<area shape="poly" title=" " alt="" coords="235,31,229,21,232,11,244,5,263,3,285,6,295,15,292,19,283,11,263,8,245,10,236,15,234,20,239,28"/>
+</map>
+</div>
+
+</div>
+</div>
 <a id="a21251939d5191865d40e31bd3155ec3a" name="a21251939d5191865d40e31bd3155ec3a"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a21251939d5191865d40e31bd3155ec3a">&#9670;&#160;</a></span>resize()</h2>
 
@@ -326,8 +541,8 @@ Public Attributes</h2></td></tr>
 <div class="line"><span class="lineno">   35</span>    <a class="code hl_variable" href="classShock.html#a935ec9fad9c096394707e59f81d0425d">N_p</a>.resize({phi_size, theta_size, t_size});</div>
 <div class="line"><span class="lineno">   36</span>    <a class="code hl_variable" href="classShock.html#a5ffabf6d9963528567fa8d398c806a57">injection_idx</a>.resize({phi_size, theta_size});</div>
 <div class="line"><span class="lineno">   37</span>    <a class="code hl_variable" href="classShock.html#a5ffabf6d9963528567fa8d398c806a57">injection_idx</a>.fill(t_size);</div>
-<div class="line"><span class="lineno">   38</span>    <a class="code hl_variable" href="classShock.html#a936f940f338d2661a8f85e36fcd8f01d">required</a>.resize({phi_size, theta_size, t_size});</div>
-<div class="line"><span class="lineno">   39</span>    <a class="code hl_variable" href="classShock.html#a936f940f338d2661a8f85e36fcd8f01d">required</a>.fill(1);</div>
+<div class="line"><span class="lineno">   38</span>    <span class="comment">//required.resize({phi_size, theta_size, t_size});</span></div>
+<div class="line"><span class="lineno">   39</span>    <span class="comment">//required.fill(1);</span></div>
 <div class="line"><span class="lineno">   40</span>}</div>
 </div><!-- fragment -->
 </div>
@@ -357,8 +572,8 @@ Public Attributes</h2></td></tr>
 
 <p>Returns grid dimensions as a tuple. </p>
 
-<p class="definition">Definition at line <a class="el" href="shock_8h_source.html#l00055">55</a> of file <a class="el" href="shock_8h_source.html">shock.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   55</span>{ <span class="keywordflow">return</span> std::make_tuple(phi_size, theta_size, t_size); }</div>
+<p class="definition">Definition at line <a class="el" href="shock_8h_source.html#l00059">59</a> of file <a class="el" href="shock_8h_source.html">shock.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   59</span>{ <span class="keywordflow">return</span> std::make_tuple(phi_size, theta_size, t_size); }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -377,7 +592,7 @@ Public Attributes</h2></td></tr>
 
 <p>Comoving magnetic field. </p>
 
-<p class="definition">Definition at line <a class="el" href="shock_8h_source.html#l00048">48</a> of file <a class="el" href="shock_8h_source.html">shock.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="shock_8h_source.html#l00050">50</a> of file <a class="el" href="shock_8h_source.html">shock.h</a>.</p>
 
 </div>
 </div>
@@ -395,7 +610,7 @@ Public Attributes</h2></td></tr>
 
 <p>Bulk Lorentz factor. </p>
 
-<p class="definition">Definition at line <a class="el" href="shock_8h_source.html#l00046">46</a> of file <a class="el" href="shock_8h_source.html">shock.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="shock_8h_source.html#l00048">48</a> of file <a class="el" href="shock_8h_source.html">shock.h</a>.</p>
 
 </div>
 </div>
@@ -413,7 +628,7 @@ Public Attributes</h2></td></tr>
 
 <p>Downstream internal Lorentz factor. </p>
 
-<p class="definition">Definition at line <a class="el" href="shock_8h_source.html#l00047">47</a> of file <a class="el" href="shock_8h_source.html">shock.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="shock_8h_source.html#l00049">49</a> of file <a class="el" href="shock_8h_source.html">shock.h</a>.</p>
 
 </div>
 </div>
@@ -431,7 +646,7 @@ Public Attributes</h2></td></tr>
 
 <p>Beyond which grid index there is no electron injection. </p>
 
-<p class="definition">Definition at line <a class="el" href="shock_8h_source.html#l00050">50</a> of file <a class="el" href="shock_8h_source.html">shock.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="shock_8h_source.html#l00052">52</a> of file <a class="el" href="shock_8h_source.html">shock.h</a>.</p>
 
 </div>
 </div>
@@ -449,7 +664,7 @@ Public Attributes</h2></td></tr>
 
 <p>Downstream proton number per solid angle. </p>
 
-<p class="definition">Definition at line <a class="el" href="shock_8h_source.html#l00049">49</a> of file <a class="el" href="shock_8h_source.html">shock.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="shock_8h_source.html#l00051">51</a> of file <a class="el" href="shock_8h_source.html">shock.h</a>.</p>
 
 </div>
 </div>
@@ -467,7 +682,7 @@ Public Attributes</h2></td></tr>
 
 <p>Radius. </p>
 
-<p class="definition">Definition at line <a class="el" href="shock_8h_source.html#l00044">44</a> of file <a class="el" href="shock_8h_source.html">shock.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="shock_8h_source.html#l00046">46</a> of file <a class="el" href="shock_8h_source.html">shock.h</a>.</p>
 
 </div>
 </div>
@@ -485,26 +700,27 @@ Public Attributes</h2></td></tr>
 
 <p>Radiation parameters. </p>
 
-<p class="definition">Definition at line <a class="el" href="shock_8h_source.html#l00052">52</a> of file <a class="el" href="shock_8h_source.html">shock.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="shock_8h_source.html#l00054">54</a> of file <a class="el" href="shock_8h_source.html">shock.h</a>.</p>
 
 </div>
 </div>
-<a id="a936f940f338d2661a8f85e36fcd8f01d" name="a936f940f338d2661a8f85e36fcd8f01d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a936f940f338d2661a8f85e36fcd8f01d">&#9670;&#160;</a></span>required</h2>
+<a id="a1ac94c10777cd8af8a4dd62611eabc44" name="a1ac94c10777cd8af8a4dd62611eabc44"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1ac94c10777cd8af8a4dd62611eabc44">&#9670;&#160;</a></span>symmetry</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="mesh_8h.html#afb738e18bf395ef0903c8c5d6f37c47f">MaskGrid</a> Shock::required</td>
+          <td class="memname"><a class="el" href="jet_8h.html#a4c9eca1a51662c0a447221f4d3940caa">Symmetry</a> Shock::symmetry {<a class="el" href="jet_8h.html#a4c9eca1a51662c0a447221f4d3940caaa32234519c88d862c5df3934bd134aa9c">Symmetry::structured</a>}</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Grid points actually required for final flux calculation. </p>
+<p>Auto-detected symmetry level. </p>
 
-<p class="definition">Definition at line <a class="el" href="shock_8h_source.html#l00051">51</a> of file <a class="el" href="shock_8h_source.html">shock.h</a>.</p>
-
+<p class="definition">Definition at line <a class="el" href="shock_8h_source.html#l00055">55</a> of file <a class="el" href="shock_8h_source.html">shock.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   55</span>{<a class="code hl_enumvalue" href="jet_8h.html#a4c9eca1a51662c0a447221f4d3940caaa32234519c88d862c5df3934bd134aa9c">Symmetry::structured</a>}; <span class="comment">///&lt; Auto-detected symmetry level</span></div>
+</div><!-- fragment -->
 </div>
 </div>
 <a id="a2f750335b1c4474905426fd1a78b006a" name="a2f750335b1c4474905426fd1a78b006a"></a>
@@ -521,7 +737,7 @@ Public Attributes</h2></td></tr>
 
 <p>Comoving time. </p>
 
-<p class="definition">Definition at line <a class="el" href="shock_8h_source.html#l00043">43</a> of file <a class="el" href="shock_8h_source.html">shock.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="shock_8h_source.html#l00045">45</a> of file <a class="el" href="shock_8h_source.html">shock.h</a>.</p>
 
 </div>
 </div>
@@ -539,7 +755,25 @@ Public Attributes</h2></td></tr>
 
 <p>Theta for jet spreading. </p>
 
-<p class="definition">Definition at line <a class="el" href="shock_8h_source.html#l00045">45</a> of file <a class="el" href="shock_8h_source.html">shock.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="shock_8h_source.html#l00047">47</a> of file <a class="el" href="shock_8h_source.html">shock.h</a>.</p>
+
+</div>
+</div>
+<a id="ab02b946caaaff18a4396581efabc28d2" name="ab02b946caaaff18a4396581efabc28d2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab02b946caaaff18a4396581efabc28d2">&#9670;&#160;</a></span>theta_reps</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::vector&lt;<a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">size_t</a>&gt; Shock::theta_reps</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Representative theta indices (contiguous groups) </p>
+
+<p class="definition">Definition at line <a class="el" href="shock_8h_source.html#l00056">56</a> of file <a class="el" href="shock_8h_source.html">shock.h</a>.</p>
 
 </div>
 </div>

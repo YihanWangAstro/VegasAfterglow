@@ -106,9 +106,9 @@ $(document).ready(function(){initNavTree('classMedium.html',''); initResizable()
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:aacd7cf0b6fb4dee7adf3a5f2d32356e7" id="r_aacd7cf0b6fb4dee7adf3a5f2d32356e7"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMedium.html#aacd7cf0b6fb4dee7adf3a5f2d32356e7">Medium</a> (<a class="el" href="utilities_8h.html#a919434df3bde5e6090dbff542b658478">TernaryFunc</a> <a class="el" href="classMedium.html#a419de8e407c9c9f75d1b76fdedf5d3eb">rho</a>) <a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">noexcept</a></td></tr>
-<tr class="memdesc:aacd7cf0b6fb4dee7adf3a5f2d32356e7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor: Initialize with density function.  <br /></td></tr>
-<tr class="separator:aacd7cf0b6fb4dee7adf3a5f2d32356e7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aae76f473a83084bd5fd468106b23b8e3" id="r_aae76f473a83084bd5fd468106b23b8e3"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMedium.html#aae76f473a83084bd5fd468106b23b8e3">Medium</a> (<a class="el" href="utilities_8h.html#a919434df3bde5e6090dbff542b658478">TernaryFunc</a> <a class="el" href="classMedium.html#a419de8e407c9c9f75d1b76fdedf5d3eb">rho</a>, <a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">bool</a> <a class="el" href="classMedium.html#a47df3f80b9a5c6e3a2c459b00d4faaa1">isotropic</a>=<a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">false</a>) <a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">noexcept</a></td></tr>
+<tr class="memdesc:aae76f473a83084bd5fd468106b23b8e3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor: Initialize with density function.  <br /></td></tr>
+<tr class="separator:aae76f473a83084bd5fd468106b23b8e3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab077493d8330ddd77c1ef434908adf73" id="r_ab077493d8330ddd77c1ef434908adf73"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMedium.html#ab077493d8330ddd77c1ef434908adf73">Medium</a> ()=<a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">default</a></td></tr>
 <tr class="separator:ab077493d8330ddd77c1ef434908adf73"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
@@ -117,6 +117,9 @@ Public Attributes</h2></td></tr>
 <tr class="memitem:a419de8e407c9c9f75d1b76fdedf5d3eb" id="r_a419de8e407c9c9f75d1b76fdedf5d3eb"><td class="memItemLeft" align="right" valign="top"><a class="el" href="utilities_8h.html#a919434df3bde5e6090dbff542b658478">TernaryFunc</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMedium.html#a419de8e407c9c9f75d1b76fdedf5d3eb">rho</a> {<a class="el" href="namespacefunc.html#af35a6de707510b3b09306132d94d3b72">func::zero_3d</a>}</td></tr>
 <tr class="memdesc:a419de8e407c9c9f75d1b76fdedf5d3eb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Density function that returns the mass density at a given position (phi, theta, r) The function is initialized to zero by default.  <br /></td></tr>
 <tr class="separator:a419de8e407c9c9f75d1b76fdedf5d3eb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a47df3f80b9a5c6e3a2c459b00d4faaa1" id="r_a47df3f80b9a5c6e3a2c459b00d4faaa1"><td class="memItemLeft" align="right" valign="top"><a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">bool</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMedium.html#a47df3f80b9a5c6e3a2c459b00d4faaa1">isotropic</a> {<a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">false</a>}</td></tr>
+<tr class="memdesc:a47df3f80b9a5c6e3a2c459b00d4faaa1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Flag indicating if the medium is isotropic within computational domain.  <br /></td></tr>
+<tr class="separator:a47df3f80b9a5c6e3a2c459b00d4faaa1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Represents the generic medium or any user-defined surrounding medium that the GRB jet interacts with. </p>
@@ -124,8 +127,8 @@ Public Attributes</h2></td></tr>
 
 <p class="definition">Definition at line <a class="el" href="medium_8h_source.html#l00020">20</a> of file <a class="el" href="medium_8h_source.html">medium.h</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="aacd7cf0b6fb4dee7adf3a5f2d32356e7" name="aacd7cf0b6fb4dee7adf3a5f2d32356e7"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aacd7cf0b6fb4dee7adf3a5f2d32356e7">&#9670;&#160;</a></span>Medium() <span class="overload">[1/2]</span></h2>
+<a id="aae76f473a83084bd5fd468106b23b8e3" name="aae76f473a83084bd5fd468106b23b8e3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aae76f473a83084bd5fd468106b23b8e3">&#9670;&#160;</a></span>Medium() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -137,8 +140,18 @@ Public Attributes</h2></td></tr>
           <td class="memname">Medium::Medium </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="utilities_8h.html#a919434df3bde5e6090dbff542b658478">TernaryFunc</a>&#160;</td>
-          <td class="paramname"><em>rho</em></td><td>)</td>
+          <td class="paramname"><em>rho</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype"><a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">bool</a>&#160;</td>
+          <td class="paramname"><em>isotropic</em> = <code><a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">false</a></code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
   </td>
@@ -152,13 +165,15 @@ Public Attributes</h2></td></tr>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">rho</td><td>Density function </td></tr>
+    <tr><td class="paramname">isotropic</td><td>Flag indicating if the medium is isotropic within computational domain. </td></tr>
   </table>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="medium_8h_source.html#l00028">28</a> of file <a class="el" href="medium_8h_source.html">medium.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   28</span>: <a class="code hl_variable" href="classMedium.html#a419de8e407c9c9f75d1b76fdedf5d3eb">rho</a>(std::move(<a class="code hl_variable" href="classMedium.html#a419de8e407c9c9f75d1b76fdedf5d3eb">rho</a>)) {}</div>
-<div class="ttc" id="aclassMedium_html_a419de8e407c9c9f75d1b76fdedf5d3eb"><div class="ttname"><a href="classMedium.html#a419de8e407c9c9f75d1b76fdedf5d3eb">Medium::rho</a></div><div class="ttdeci">TernaryFunc rho</div><div class="ttdoc">Density function that returns the mass density at a given position (phi, theta, r) The function is in...</div><div class="ttdef"><b>Definition</b> <a href="medium_8h_source.html#l00034">medium.h:34</a></div></div>
+<p class="definition">Definition at line <a class="el" href="medium_8h_source.html#l00029">29</a> of file <a class="el" href="medium_8h_source.html">medium.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   29</span>: <a class="code hl_variable" href="classMedium.html#a419de8e407c9c9f75d1b76fdedf5d3eb">rho</a>(std::move(<a class="code hl_variable" href="classMedium.html#a419de8e407c9c9f75d1b76fdedf5d3eb">rho</a>)), <a class="code hl_variable" href="classMedium.html#a47df3f80b9a5c6e3a2c459b00d4faaa1">isotropic</a>(<a class="code hl_variable" href="classMedium.html#a47df3f80b9a5c6e3a2c459b00d4faaa1">isotropic</a>) {}</div>
+<div class="ttc" id="aclassMedium_html_a419de8e407c9c9f75d1b76fdedf5d3eb"><div class="ttname"><a href="classMedium.html#a419de8e407c9c9f75d1b76fdedf5d3eb">Medium::rho</a></div><div class="ttdeci">TernaryFunc rho</div><div class="ttdoc">Density function that returns the mass density at a given position (phi, theta, r) The function is in...</div><div class="ttdef"><b>Definition</b> <a href="medium_8h_source.html#l00035">medium.h:35</a></div></div>
+<div class="ttc" id="aclassMedium_html_a47df3f80b9a5c6e3a2c459b00d4faaa1"><div class="ttname"><a href="classMedium.html#a47df3f80b9a5c6e3a2c459b00d4faaa1">Medium::isotropic</a></div><div class="ttdeci">bool isotropic</div><div class="ttdoc">Flag indicating if the medium is isotropic within computational domain.</div><div class="ttdef"><b>Definition</b> <a href="medium_8h_source.html#l00037">medium.h:37</a></div></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -188,6 +203,25 @@ Public Attributes</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Member Data Documentation</h2>
+<a id="a47df3f80b9a5c6e3a2c459b00d4faaa1" name="a47df3f80b9a5c6e3a2c459b00d4faaa1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a47df3f80b9a5c6e3a2c459b00d4faaa1">&#9670;&#160;</a></span>isotropic</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">bool</a> Medium::isotropic {<a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">false</a>}</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Flag indicating if the medium is isotropic within computational domain. </p>
+
+<p class="definition">Definition at line <a class="el" href="medium_8h_source.html#l00037">37</a> of file <a class="el" href="medium_8h_source.html">medium.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   37</span>{<span class="keyword">false</span>}; <span class="comment">///&lt; Flag indicating if the medium is isotropic within computational domain.</span></div>
+</div><!-- fragment -->
+</div>
+</div>
 <a id="a419de8e407c9c9f75d1b76fdedf5d3eb" name="a419de8e407c9c9f75d1b76fdedf5d3eb"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a419de8e407c9c9f75d1b76fdedf5d3eb">&#9670;&#160;</a></span>rho</h2>
 
@@ -202,8 +236,8 @@ Public Attributes</h2></td></tr>
 
 <p>Density function that returns the mass density at a given position (phi, theta, r) The function is initialized to zero by default. </p>
 
-<p class="definition">Definition at line <a class="el" href="medium_8h_source.html#l00034">34</a> of file <a class="el" href="medium_8h_source.html">medium.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   34</span>{<a class="code hl_variable" href="namespacefunc.html#af35a6de707510b3b09306132d94d3b72">func::zero_3d</a>};</div>
+<p class="definition">Definition at line <a class="el" href="medium_8h_source.html#l00035">35</a> of file <a class="el" href="medium_8h_source.html">medium.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   35</span>{<a class="code hl_variable" href="namespacefunc.html#af35a6de707510b3b09306132d94d3b72">func::zero_3d</a>};</div>
 <div class="ttc" id="anamespacefunc_html_af35a6de707510b3b09306132d94d3b72"><div class="ttname"><a href="namespacefunc.html#af35a6de707510b3b09306132d94d3b72">func::zero_3d</a></div><div class="ttdeci">constexpr auto zero_3d</div><div class="ttdef"><b>Definition</b> <a href="utilities_8h_source.html#l00096">utilities.h:96</a></div></div>
 </div><!-- fragment -->
 </div>

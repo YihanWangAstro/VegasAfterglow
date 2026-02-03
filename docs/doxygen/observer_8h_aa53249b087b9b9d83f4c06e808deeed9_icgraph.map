@@ -6,13 +6,11 @@
 <area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="646,78,584,78,584,73,646,73"/>
 <area shape="rect" id="Node000007" href="$classObserver.html#a90f4a0a86f9e4a702cfc3a13e7c9c153" title="Updates the required grid points for observation." alt="" coords="417,120,612,145"/>
 <area shape="poly" id="edge7_Node000001_Node000007" title=" " alt="" coords="656,95,613,110,568,123,567,117,611,105,654,90"/>
-<area shape="rect" id="Node000004" href="$classPyModel.html#abf7e6762cb8ca1c8ff429e0a8a7592ad" title="Calculate specific flux at given time and frequency (t_i,nu_i) series." alt="" coords="204,5,369,31"/>
-<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="431,57,337,33,339,28,433,52"/>
-<area shape="rect" id="Node000006" href="$classPyModel.html#a4337b83ce5738c04db9a8dc1b97ba868" title="Calculate specific flux with finite exposure time averaging." alt="" coords="204,55,369,95"/>
-<area shape="poly" id="edge5_Node000003_Node000006" title=" " alt="" coords="431,78,369,78,369,73,431,73"/>
-<area shape="rect" id="Node000005" href="$pybind_8cpp.html#a8c92987849ad296e28ec6c07c8e7860b" title=" " alt="" coords="5,35,156,60"/>
-<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="191,34,157,39,156,34,190,29"/>
-<area shape="poly" id="edge6_Node000006_Node000005" title=" " alt="" coords="190,65,156,60,157,55,191,60"/>
-<area shape="rect" id="Node000008" href="$classObserver.html#a20935ae9f08821dd146a71d1c6a3175d" title="Sets up the Observer for flux calculation at specific observation times." alt="" coords="206,120,367,145"/>
-<area shape="poly" id="edge8_Node000007_Node000008" title=" " alt="" coords="403,135,368,135,368,130,403,130"/>
+<area shape="rect" id="Node000004" href="$classPyModel.html#abf7e6762cb8ca1c8ff429e0a8a7592ad" title="Calculate specific flux at given time and frequency (t_i,nu_i) series." alt="" coords="204,35,369,60"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="431,68,369,60,370,55,432,63"/>
+<area shape="rect" id="Node000006" href="$classPyModel.html#a4337b83ce5738c04db9a8dc1b97ba868" title="Calculate specific flux with finite exposure time averaging." alt="" coords="204,85,369,125"/>
+<area shape="poly" id="edge5_Node000003_Node000006" title=" " alt="" coords="432,89,370,97,369,91,431,83"/>
+<area shape="rect" id="Node000005" href="$pybind_8cpp.html#a8c92987849ad296e28ec6c07c8e7860b" title=" " alt="" coords="5,64,156,89"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="191,64,157,69,156,63,190,58"/>
+<area shape="poly" id="edge6_Node000006_Node000005" title=" " alt="" coords="190,94,156,90,157,84,191,89"/>
 </map>

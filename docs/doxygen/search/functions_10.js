@@ -8,14 +8,15 @@ var searchData=
   ['sedov_5flength_5',['sedov_length',['../namespacephysics_1_1scales.html#a13b03e1ea24e11d2ac9e23973b92cbdb',1,'physics::scales']]],
   ['set_5finit_5fstate_6',['set_init_state',['../classForwardShockEqn.html#a23e4c14098140dc9baa8590007e7c752',1,'ForwardShockEqn::set_init_state()'],['../classFRShockEqn.html#ae6a26a35708e078859bbe3eee5b3fa1f',1,'FRShockEqn::set_init_state()'],['../classSimpleShockEqn.html#a8ba76df69c46f5d81f512a95fa9f59d4',1,'SimpleShockEqn::set_init_state()']]],
   ['set_5fstopping_5fshock_7',['set_stopping_shock',['../shock_8h.html#a908d0ea000d53a924575023c0e857060',1,'shock.h']]],
-  ['shape_8',['shape',['../classCoastingShock.html#a3889eabf2ec357c18766f4a10f2ca56d',1,'CoastingShock::shape()'],['../classShock.html#a182095c7ca3cfd83d9d22d2627c10466',1,'Shock::shape()'],['../classCoord.html#aa6d43ba2bc7c11b17e3de19da26e4507',1,'Coord::shape()']]],
+  ['shape_8',['shape',['../classCoord.html#aa6d43ba2bc7c11b17e3de19da26e4507',1,'Coord::shape()'],['../classShock.html#a182095c7ca3cfd83d9d22d2627c10466',1,'Shock::shape()'],['../classCoastingShock.html#a3889eabf2ec357c18766f4a10f2ca56d',1,'CoastingShock::shape()']]],
   ['shell_5fspreading_5fradius_9',['shell_spreading_radius',['../namespacephysics_1_1scales.html#a3ceab4aa1e9d8bbd79774fa055a203ed',1,'physics::scales']]],
   ['shell_5fthickness_5fparam_10',['shell_thickness_param',['../namespacephysics_1_1scales.html#a1bd3cf5d4dd47b9b62a10eca56da52f0',1,'physics::scales']]],
   ['shock_11',['shock',['../classShock.html#a0bdc1bfb873fe39ba4d4fcbded4666f2',1,'Shock::Shock() noexcept=default'],['../classShock.html#ac4cbdd70892414adbdb7fc01071e49e0',1,'Shock::Shock(size_t phi_size, size_t theta_size, size_t t_size, RadParams const &amp;rad_params)']]],
   ['simpleshockeqn_12',['SimpleShockEqn',['../classSimpleShockEqn.html#a2ad30f482d445461e6d230c052205763',1,'SimpleShockEqn']]],
-  ['specific_5fflux_13',['specific_flux',['../classObserver.html#a5350b13ae5a6c7007ba6459923573136',1,'Observer::specific_flux(Array const &amp;t_obs, Real nu_obs, PhotonGrid &amp;photons)'],['../classObserver.html#a5fe3b5d16f7cf532e20a6f600485a6b6',1,'Observer::specific_flux(Array const &amp;t_obs, Array const &amp;nu_obs, PhotonGrid &amp;photons)']]],
-  ['specific_5fflux_5fseries_14',['specific_flux_series',['../classObserver.html#a2497e02305dbf755a7d629311f8e772d',1,'Observer']]],
-  ['spectra_15',['spectra',['../classObserver.html#a18a5b8ffa6dad54050d7de094c24094b',1,'Observer']]],
-  ['spectrum_16',['spectrum',['../classObserver.html#a096a45f3fcc7cd273c2bc89199ed74a2',1,'Observer']]],
-  ['stepfunc_17',['stepFunc',['../utilities_8h.html#ae8a530e53b68fc1f195dcc370652e17c',1,'utilities.h']]]
+  ['simpson_5flogspace_13',['simpson_logspace',['../shock_8h.html#a4eecaf485f5ac3854b4fceab00516fd4',1,'shock.h']]],
+  ['specific_5fflux_14',['specific_flux',['../classObserver.html#a5fe3b5d16f7cf532e20a6f600485a6b6',1,'Observer::specific_flux(Array const &amp;t_obs, Array const &amp;nu_obs, PhotonGrid &amp;photons)'],['../classObserver.html#a5350b13ae5a6c7007ba6459923573136',1,'Observer::specific_flux(Array const &amp;t_obs, Real nu_obs, PhotonGrid &amp;photons)']]],
+  ['specific_5fflux_5fseries_15',['specific_flux_series',['../classObserver.html#a2497e02305dbf755a7d629311f8e772d',1,'Observer']]],
+  ['spectra_16',['spectra',['../classObserver.html#a18a5b8ffa6dad54050d7de094c24094b',1,'Observer']]],
+  ['spectrum_17',['spectrum',['../classObserver.html#a096a45f3fcc7cd273c2bc89199ed74a2',1,'Observer']]],
+  ['stepfunc_18',['stepFunc',['../utilities_8h.html#ae8a530e53b68fc1f195dcc370652e17c',1,'utilities.h']]]
 ];

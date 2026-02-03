@@ -1,7 +1,9 @@
 <map id="pybind.h" name="pybind.h">
-<area shape="rect" id="Node000001" title=" " alt="" coords="117,5,195,31"/>
-<area shape="rect" id="Node000002" title=" " alt="" coords="5,79,120,104"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="143,33,90,72,87,68,139,29"/>
-<area shape="rect" id="Node000003" title=" " alt="" coords="145,79,354,104"/>
-<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="173,29,225,68,222,72,169,33"/>
+<area shape="rect" id="Node000001" title=" " alt="" coords="210,5,289,31"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="5,79,168,104"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="224,33,127,75,125,71,222,28"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="192,79,307,104"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="252,31,252,65,247,65,247,31"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="331,79,541,104"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="280,28,394,71,392,76,278,33"/>
 </map>

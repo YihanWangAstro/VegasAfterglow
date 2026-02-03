@@ -6,5 +6,5 @@ var searchData=
   ['add_5fflux_5fdensity_3',['add_flux_density',['../structMultiBandData.html#a95b867e09e94169a3a07daeb0598a040',1,'MultiBandData']]],
   ['add_5fspectrum_4',['add_spectrum',['../structMultiBandData.html#a836cbe84f113e680f8d6291663112c0f',1,'MultiBandData']]],
   ['adiabatic_5fidx_5',['adiabatic_idx',['../namespacephysics_1_1thermo.html#a8d90fdf6e3727fb58e7beb1c4f2fd50c',1,'physics::thermo']]],
-  ['auto_5fgrid_6',['auto_grid',['../mesh_8h.html#ae9bcfb9812faea0f9d864688c82f0b11',1,'mesh.h']]]
+  ['auto_5fgrid_6',['auto_grid',['../mesh_8h.html#a96aa0a78a0de13a52955de3c2ce29ddd',1,'mesh.h']]]
 ];

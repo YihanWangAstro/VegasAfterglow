@@ -1,0 +1,7 @@
+<map id="simpson_logspace" name="simpson_logspace">
+<area shape="rect" id="Node000001" title="Simpson&#39;s rule integration in log&#45;space: ∫ f(r&#39;) dr&#39; via u = ln(r&#39;)." alt="" coords="244,31,387,56"/>
+<area shape="rect" id="Node000002" href="$shock_8h.html#acc6d84207549ad55230c89d5f2492ae0" title="Computes enclosed mass per solid angle." alt="" coords="39,5,162,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="230,36,162,28,163,23,231,31"/>
+<area shape="rect" id="Node000003" href="$shock_8h.html#acb7f53705e758d8e4bf774602de2d03e" title="Compute enclosed thermal energy per solid angle, accounting for adiabatic cooling and radiative losse..." alt="" coords="5,55,196,80"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="231,55,196,59,196,54,230,50"/>
+</map>

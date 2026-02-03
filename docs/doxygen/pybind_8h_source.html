@@ -107,33 +107,34 @@ $(document).ready(function(){initNavTree('pybind_8h_source.html',''); initResiza
 <div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="comment">//                            |___/                                            |___/</span></div>
 <div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span> </div>
 <div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span><span class="preprocessor">#pragma once</span></div>
-<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span><span class="preprocessor">#include &lt;pybind11/stl.h&gt;</span></div>
-<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span> </div>
-<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span><span class="preprocessor">#include &quot;xtensor-python/pytensor.hpp&quot;</span></div>
-<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span> </div>
-<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span><span class="keyword">namespace </span>py = pybind11;</div>
-<div class="line"><a id="l00014" name="l00014"></a><span class="lineno"><a class="line" href="pybind_8h.html#a06c55931188bd694c6e070a50e95344c">   14</a></span><span class="keyword">using </span><a class="code hl_typedef" href="pybind_8h.html#a06c55931188bd694c6e070a50e95344c">PyArray</a> = xt::pytensor&lt;double, 1&gt;;</div>
-<div class="line"><a id="l00015" name="l00015"></a><span class="lineno"><a class="line" href="pybind_8h.html#ac1d4addade56d129930395ee7527601e">   15</a></span><span class="keyword">using </span><a class="code hl_typedef" href="pybind_8h.html#ac1d4addade56d129930395ee7527601e">PyGrid</a> = xt::pytensor&lt;double, 2&gt;;</div>
-<div class="line"><a id="l00016" name="l00016"></a><span class="lineno"><a class="line" href="pybind_8h.html#aeb2a0715dc62dd310f125ee3e47c7d2b">   16</a></span><span class="keyword">using </span><a class="code hl_typedef" href="pybind_8h.html#aeb2a0715dc62dd310f125ee3e47c7d2b">PyGrid3d</a> = xt::pytensor&lt;double, 3&gt;;</div>
-<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span> </div>
-<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span><span class="keyword">template</span> &lt;<span class="keyword">typename</span> Array&gt;</div>
-<div class="foldopen" id="foldopen00019" data-start="{" data-end="}">
-<div class="line"><a id="l00019" name="l00019"></a><span class="lineno"><a class="line" href="pybind_8h.html#a65fbb7ac1dd1f2667e68724a512f691c">   19</a></span><span class="keywordtype">bool</span> <a class="code hl_function" href="pybind_8h.html#a65fbb7ac1dd1f2667e68724a512f691c">is_ascending</a>(<a class="code hl_typedef" href="mesh_8h.html#afd05120c4d579ec7fa4906f677781a83">Array</a> <span class="keyword">const</span>&amp; arr) {</div>
-<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span>    <span class="keywordflow">if</span> (arr.size() &lt;= 1)</div>
-<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span>        <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
-<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span>    <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> i = 1; i &lt; arr.size(); ++i) {</div>
-<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span>        <span class="keywordflow">if</span> (arr(i) &lt; arr(i - 1)) {</div>
-<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span>            <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
-<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span>        }</div>
-<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span>    }</div>
-<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span>    <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
-<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span>}</div>
+<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span><span class="preprocessor">#include &lt;pybind11/functional.h&gt;</span></div>
+<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span><span class="preprocessor">#include &lt;pybind11/stl.h&gt;</span></div>
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span> </div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span><span class="preprocessor">#include &quot;xtensor-python/pytensor.hpp&quot;</span></div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span> </div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span><span class="keyword">namespace </span>py = pybind11;</div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno"><a class="line" href="pybind_8h.html#a06c55931188bd694c6e070a50e95344c">   15</a></span><span class="keyword">using </span><a class="code hl_typedef" href="pybind_8h.html#a06c55931188bd694c6e070a50e95344c">PyArray</a> = xt::pytensor&lt;double, 1&gt;;</div>
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno"><a class="line" href="pybind_8h.html#ac1d4addade56d129930395ee7527601e">   16</a></span><span class="keyword">using </span><a class="code hl_typedef" href="pybind_8h.html#ac1d4addade56d129930395ee7527601e">PyGrid</a> = xt::pytensor&lt;double, 2&gt;;</div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno"><a class="line" href="pybind_8h.html#aeb2a0715dc62dd310f125ee3e47c7d2b">   17</a></span><span class="keyword">using </span><a class="code hl_typedef" href="pybind_8h.html#aeb2a0715dc62dd310f125ee3e47c7d2b">PyGrid3d</a> = xt::pytensor&lt;double, 3&gt;;</div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span> </div>
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span><span class="keyword">template</span> &lt;<span class="keyword">typename</span> Array&gt;</div>
+<div class="foldopen" id="foldopen00020" data-start="{" data-end="}">
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno"><a class="line" href="pybind_8h.html#a65fbb7ac1dd1f2667e68724a512f691c">   20</a></span><span class="keywordtype">bool</span> <a class="code hl_function" href="pybind_8h.html#a65fbb7ac1dd1f2667e68724a512f691c">is_ascending</a>(<a class="code hl_typedef" href="mesh_8h.html#afd05120c4d579ec7fa4906f677781a83">Array</a> <span class="keyword">const</span>&amp; arr) {</div>
+<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span>    <span class="keywordflow">if</span> (arr.size() &lt;= 1)</div>
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span>        <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span>    <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> i = 1; i &lt; arr.size(); ++i) {</div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span>        <span class="keywordflow">if</span> (arr(i) &lt; arr(i - 1)) {</div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span>            <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span>        }</div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span>    }</div>
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span>    <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
+<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span>}</div>
 </div>
 <div class="ttc" id="amesh_8h_html_afd05120c4d579ec7fa4906f677781a83"><div class="ttname"><a href="mesh_8h.html#afd05120c4d579ec7fa4906f677781a83">Array</a></div><div class="ttdeci">xt::xtensor&lt; Real, 1 &gt; Array</div><div class="ttdoc">Type alias for 1D arrays (e.g., time points)</div><div class="ttdef"><b>Definition</b> <a href="mesh_8h_source.html#l00034">mesh.h:34</a></div></div>
-<div class="ttc" id="apybind_8h_html_a06c55931188bd694c6e070a50e95344c"><div class="ttname"><a href="pybind_8h.html#a06c55931188bd694c6e070a50e95344c">PyArray</a></div><div class="ttdeci">xt::pytensor&lt; double, 1 &gt; PyArray</div><div class="ttdef"><b>Definition</b> <a href="pybind_8h_source.html#l00014">pybind.h:14</a></div></div>
-<div class="ttc" id="apybind_8h_html_a65fbb7ac1dd1f2667e68724a512f691c"><div class="ttname"><a href="pybind_8h.html#a65fbb7ac1dd1f2667e68724a512f691c">is_ascending</a></div><div class="ttdeci">bool is_ascending(Array const &amp;arr)</div><div class="ttdef"><b>Definition</b> <a href="pybind_8h_source.html#l00019">pybind.h:19</a></div></div>
-<div class="ttc" id="apybind_8h_html_ac1d4addade56d129930395ee7527601e"><div class="ttname"><a href="pybind_8h.html#ac1d4addade56d129930395ee7527601e">PyGrid</a></div><div class="ttdeci">xt::pytensor&lt; double, 2 &gt; PyGrid</div><div class="ttdef"><b>Definition</b> <a href="pybind_8h_source.html#l00015">pybind.h:15</a></div></div>
-<div class="ttc" id="apybind_8h_html_aeb2a0715dc62dd310f125ee3e47c7d2b"><div class="ttname"><a href="pybind_8h.html#aeb2a0715dc62dd310f125ee3e47c7d2b">PyGrid3d</a></div><div class="ttdeci">xt::pytensor&lt; double, 3 &gt; PyGrid3d</div><div class="ttdef"><b>Definition</b> <a href="pybind_8h_source.html#l00016">pybind.h:16</a></div></div>
+<div class="ttc" id="apybind_8h_html_a06c55931188bd694c6e070a50e95344c"><div class="ttname"><a href="pybind_8h.html#a06c55931188bd694c6e070a50e95344c">PyArray</a></div><div class="ttdeci">xt::pytensor&lt; double, 1 &gt; PyArray</div><div class="ttdef"><b>Definition</b> <a href="pybind_8h_source.html#l00015">pybind.h:15</a></div></div>
+<div class="ttc" id="apybind_8h_html_a65fbb7ac1dd1f2667e68724a512f691c"><div class="ttname"><a href="pybind_8h.html#a65fbb7ac1dd1f2667e68724a512f691c">is_ascending</a></div><div class="ttdeci">bool is_ascending(Array const &amp;arr)</div><div class="ttdef"><b>Definition</b> <a href="pybind_8h_source.html#l00020">pybind.h:20</a></div></div>
+<div class="ttc" id="apybind_8h_html_ac1d4addade56d129930395ee7527601e"><div class="ttname"><a href="pybind_8h.html#ac1d4addade56d129930395ee7527601e">PyGrid</a></div><div class="ttdeci">xt::pytensor&lt; double, 2 &gt; PyGrid</div><div class="ttdef"><b>Definition</b> <a href="pybind_8h_source.html#l00016">pybind.h:16</a></div></div>
+<div class="ttc" id="apybind_8h_html_aeb2a0715dc62dd310f125ee3e47c7d2b"><div class="ttname"><a href="pybind_8h.html#aeb2a0715dc62dd310f125ee3e47c7d2b">PyGrid3d</a></div><div class="ttdeci">xt::pytensor&lt; double, 3 &gt; PyGrid3d</div><div class="ttdef"><b>Definition</b> <a href="pybind_8h_source.html#l00017">pybind.h:17</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->

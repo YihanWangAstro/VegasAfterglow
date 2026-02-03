@@ -4,7 +4,7 @@
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="164,52,261,31,262,36,165,57"/>
 <area shape="rect" id="Node000003" href="$pybind_8h.html#a65fbb7ac1dd1f2667e68724a512f691c" title=" " alt="" coords="282,55,389,80"/>
 <area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="203,65,268,65,268,70,203,70"/>
-<area shape="rect" id="Node000004" href="$classObserver.html#a5350b13ae5a6c7007ba6459923573136" title="Computes the specific flux at a single observed frequency." alt="" coords="251,128,420,153"/>
+<area shape="rect" id="Node000004" href="$classObserver.html#a5350b13ae5a6c7007ba6459923573136" title="Sets up the Observer for flux calculation at specific observation times." alt="" coords="251,128,420,153"/>
 <area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="146,78,282,121,281,126,144,83"/>
 <area shape="poly" id="edge6_Node000004_Node000004" title=" " alt="" coords="309,129,303,120,306,110,317,104,335,101,357,105,366,113,363,117,355,110,335,107,319,109,310,113,309,119,313,127"/>
 <area shape="rect" id="Node000005" href="$utilities_8h.html#ab8e81118f023df135835db8cce4f5f42" title="Returns the value of a single parameter." alt="" coords="468,128,519,153"/>

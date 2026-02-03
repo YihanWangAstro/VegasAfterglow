@@ -1,6 +1,6 @@
 var classPyModel =
 [
-    [ "PyModel", "classPyModel.html#a32cd29b07bdc0216ee13b9a42b2f325d", null ],
+    [ "PyModel", "classPyModel.html#a59233adc68e8bf4fb5addfd473a9bed5", null ],
     [ "compute_emission", "classPyModel.html#a3debe3d2ed8ff2a53bec469a6711cfa8", null ],
     [ "details", "classPyModel.html#ac47bbdbe6025c4def5d4a65f3ed6be34", null ],
     [ "flux", "classPyModel.html#a51390496a41c22c7c2dbb8838ac7a2d2", null ],

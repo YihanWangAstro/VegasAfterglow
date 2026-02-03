@@ -98,8 +98,10 @@ $(document).ready(function(){initNavTree('shock_8h.html',''); initResizable(); }
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><code>#include &lt;tuple&gt;</code><br />
+<code>#include &lt;vector&gt;</code><br />
 <code>#include &quot;<a class="el" href="mesh_8h_source.html">../core/mesh.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="physics_8h_source.html">../core/physics.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="jet_8h_source.html">../environment/jet.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="medium_8h_source.html">../environment/medium.h</a>&quot;</code><br />
 <code>#include &quot;boost/numeric/odeint.hpp&quot;</code><br />
 </div><div class="textblock"><div class="dynheader">
@@ -107,49 +109,58 @@ Include dependency graph for shock.h:</div>
 <div class="dyncontent">
 <div class="center"><img src="shock_8h__incl.png" border="0" usemap="#ashock_8h" alt=""/></div>
 <map name="ashock_8h" id="ashock_8h">
-<area shape="rect" title=" " alt="" coords="289,5,361,31"/>
-<area shape="rect" title=" " alt="" coords="182,79,237,104"/>
-<area shape="poly" title=" " alt="" coords="308,33,241,74,239,69,305,28"/>
-<area shape="rect" href="mesh_8h.html" title=" " alt="" coords="539,225,653,251"/>
-<area shape="poly" title=" " alt="" coords="341,29,572,214,569,218,338,33"/>
-<area shape="rect" title=" " alt="" coords="113,306,301,331"/>
-<area shape="poly" title=" " alt="" coords="329,31,332,70,330,126,320,191,310,222,296,252,272,280,244,301,240,297,268,276,291,249,305,220,315,189,325,126,326,70,324,31"/>
-<area shape="rect" href="physics_8h.html" title=" " alt="" coords="5,306,88,331"/>
-<area shape="poly" title=" " alt="" coords="317,33,250,106,69,298,65,294,246,102,313,29"/>
-<area shape="rect" href="medium_8h.html" title=" " alt="" coords="617,79,804,104"/>
-<area shape="poly" title=" " alt="" coords="362,23,636,74,635,79,361,29"/>
-<area shape="rect" href="macros_8h.html" title=" " alt="" coords="863,387,982,412"/>
-<area shape="poly" title=" " alt="" coords="588,253,575,271,564,294,560,317,562,327,567,337,585,351,612,362,686,379,771,389,850,394,849,399,770,395,685,385,611,368,583,355,563,340,557,329,554,317,559,292,571,268,584,250"/>
-<area shape="poly" title=" " alt="" coords="540,253,277,306,276,301,539,248"/>
-<area shape="poly" title=" " alt="" coords="539,245,343,262,222,278,101,301,89,304,88,299,99,296,221,273,342,256,538,239"/>
-<area shape="rect" title=" " alt="" coords="958,299,1101,339"/>
-<area shape="poly" title=" " alt="" coords="654,246,945,296,944,301,653,251"/>
-<area shape="rect" title=" " alt="" coords="1125,299,1267,339"/>
-<area shape="poly" title=" " alt="" coords="654,241,853,261,1111,296,1111,301,852,266,653,247"/>
-<area shape="rect" title=" " alt="" coords="325,306,502,331"/>
-<area shape="poly" title=" " alt="" coords="570,253,454,303,452,298,568,248"/>
-<area shape="rect" title=" " alt="" coords="577,306,727,331"/>
-<area shape="poly" title=" " alt="" coords="606,249,638,293,634,296,602,252"/>
-<area shape="rect" title=" " alt="" coords="751,306,934,331"/>
-<area shape="poly" title=" " alt="" coords="633,248,795,299,793,304,631,253"/>
-<area shape="rect" title=" " alt="" coords="803,467,861,493"/>
-<area shape="poly" title=" " alt="" coords="911,414,857,460,854,456,908,410"/>
-<area shape="rect" title=" " alt="" coords="885,467,960,493"/>
-<area shape="poly" title=" " alt="" coords="925,412,925,453,920,453,920,412"/>
-<area shape="rect" href="simulation-defaults_8h.html" title="Centralized simulation configuration defaults." alt="" coords="984,460,1131,500"/>
-<area shape="poly" title=" " alt="" coords="944,410,1014,451,1012,455,941,414"/>
-<area shape="rect" title=" " alt="" coords="1022,548,1093,573"/>
-<area shape="poly" title=" " alt="" coords="1060,500,1060,534,1055,534,1055,500"/>
-<area shape="poly" title=" " alt="" coords="76,329,101,336,205,355,312,369,523,388,710,395,850,396,850,402,710,401,523,393,311,375,204,360,99,341,74,334"/>
-<area shape="rect" title=" " alt="" coords="15,387,78,412"/>
-<area shape="poly" title=" " alt="" coords="49,332,49,373,44,373,44,332"/>
-<area shape="poly" title=" " alt="" coords="804,91,924,103,993,116,1064,135,1133,162,1198,197,1257,241,1282,268,1305,297,1313,319,1311,330,1305,340,1284,356,1253,369,1172,387,1080,396,996,400,996,395,1080,391,1171,381,1251,364,1281,352,1301,337,1306,328,1308,319,1300,300,1278,271,1253,245,1196,201,1131,166,1062,140,992,121,924,108,804,96"/>
-<area shape="rect" title=" " alt="" coords="779,152,839,177"/>
-<area shape="poly" title=" " alt="" coords="728,102,784,142,781,146,725,106"/>
-<area shape="rect" href="utilities_8h.html" title=" " alt="" coords="635,152,755,177"/>
-<area shape="poly" title=" " alt="" coords="711,105,703,139,698,138,705,104"/>
-<area shape="poly" title=" " alt="" coords="680,180,625,219,622,215,677,175"/>
-<area shape="poly" title=" " alt="" coords="755,173,893,196,1059,227,1205,263,1255,280,1282,297,1291,319,1282,340,1263,355,1235,368,1160,385,1075,395,996,399,996,394,1074,389,1159,379,1233,362,1260,351,1278,337,1286,319,1278,300,1253,285,1203,268,1058,233,892,201,754,178"/>
+<area shape="rect" title=" " alt="" coords="199,5,271,31"/>
+<area shape="rect" title=" " alt="" coords="5,79,60,104"/>
+<area shape="poly" title=" " alt="" coords="204,33,74,78,72,73,202,28"/>
+<area shape="rect" title=" " alt="" coords="84,79,147,104"/>
+<area shape="poly" title=" " alt="" coords="217,33,148,74,146,69,215,28"/>
+<area shape="rect" href="mesh_8h.html" title=" " alt="" coords="551,225,666,251"/>
+<area shape="poly" title=" " alt="" coords="243,30,260,60,287,99,321,140,363,175,406,197,451,212,538,229,537,235,450,217,403,202,361,180,318,144,282,102,256,62,239,32"/>
+<area shape="rect" title=" " alt="" coords="93,306,281,331"/>
+<area shape="poly" title=" " alt="" coords="234,32,219,79,200,198,192,292,186,292,195,197,214,78,228,30"/>
+<area shape="rect" href="physics_8h.html" title=" " alt="" coords="358,306,441,331"/>
+<area shape="poly" title=" " alt="" coords="241,30,251,64,267,103,296,158,329,211,385,293,380,296,324,214,292,161,262,105,246,65,236,32"/>
+<area shape="rect" href="jet_8h.html" title=" " alt="" coords="332,79,483,104"/>
+<area shape="poly" title=" " alt="" coords="264,28,368,71,366,76,262,33"/>
+<area shape="rect" href="medium_8h.html" title=" " alt="" coords="511,79,698,104"/>
+<area shape="poly" title=" " alt="" coords="272,24,532,73,531,79,271,29"/>
+<area shape="rect" href="macros_8h.html" title=" " alt="" coords="447,387,565,412"/>
+<area shape="poly" title=" " alt="" coords="571,253,535,271,519,284,507,300,500,318,498,337,502,373,496,374,493,337,495,316,502,297,515,280,532,267,568,248"/>
+<area shape="poly" title=" " alt="" coords="551,253,263,306,262,301,550,247"/>
+<area shape="poly" title=" " alt="" coords="579,253,444,304,442,299,577,248"/>
+<area shape="rect" title=" " alt="" coords="723,299,865,339"/>
+<area shape="poly" title=" " alt="" coords="637,248,738,291,736,296,635,253"/>
+<area shape="rect" title=" " alt="" coords="889,299,1032,339"/>
+<area shape="poly" title=" " alt="" coords="661,248,876,296,875,301,660,253"/>
+<area shape="rect" title=" " alt="" coords="1056,306,1233,331"/>
+<area shape="poly" title=" " alt="" coords="667,244,836,265,1045,296,1073,301,1072,306,1044,301,836,271,666,249"/>
+<area shape="rect" title=" " alt="" coords="1258,306,1407,331"/>
+<area shape="poly" title=" " alt="" coords="666,240,919,258,1082,274,1246,296,1272,301,1271,306,1246,301,1081,280,918,263,666,245"/>
+<area shape="rect" title=" " alt="" coords="516,306,699,331"/>
+<area shape="poly" title=" " alt="" coords="611,251,610,292,605,292,606,251"/>
+<area shape="rect" title=" " alt="" coords="386,467,445,493"/>
+<area shape="poly" title=" " alt="" coords="494,414,441,460,437,456,491,410"/>
+<area shape="rect" title=" " alt="" coords="469,467,543,493"/>
+<area shape="poly" title=" " alt="" coords="509,412,509,453,503,453,503,412"/>
+<area shape="rect" href="simulation-defaults_8h.html" title="Centralized simulation configuration defaults." alt="" coords="567,460,714,500"/>
+<area shape="poly" title=" " alt="" coords="527,410,598,451,595,455,525,414"/>
+<area shape="rect" title=" " alt="" coords="605,548,676,573"/>
+<area shape="poly" title=" " alt="" coords="643,500,643,534,638,534,638,500"/>
+<area shape="poly" title=" " alt="" coords="417,329,481,376,478,381,413,334"/>
+<area shape="rect" title=" " alt="" coords="339,387,401,412"/>
+<area shape="poly" title=" " alt="" coords="398,332,382,375,377,373,393,331"/>
+<area shape="poly" title=" " alt="" coords="397,106,380,127,364,153,347,203,339,244,340,286,349,338,361,374,356,375,343,339,335,286,334,243,342,202,360,151,375,124,393,102"/>
+<area shape="rect" title=" " alt="" coords="374,152,441,177"/>
+<area shape="poly" title=" " alt="" coords="410,104,410,138,405,138,405,104"/>
+<area shape="rect" title=" " alt="" coords="465,152,525,177"/>
+<area shape="poly" title=" " alt="" coords="423,102,472,141,469,145,420,106"/>
+<area shape="rect" href="utilities_8h.html" title=" " alt="" coords="550,152,670,177"/>
+<area shape="poly" title=" " alt="" coords="441,102,565,145,564,150,439,107"/>
+<area shape="poly" title=" " alt="" coords="612,178,612,212,606,212,607,178"/>
+<area shape="poly" title=" " alt="" coords="670,166,889,182,1025,195,1162,213,1284,236,1335,249,1377,263,1409,280,1428,298,1433,319,1421,340,1404,352,1376,361,1293,377,1183,388,1056,395,790,401,579,402,579,396,790,396,1055,389,1183,382,1293,371,1375,356,1402,347,1417,337,1428,318,1424,301,1406,284,1375,268,1333,254,1282,241,1161,218,1025,200,888,187,670,172"/>
+<area shape="poly" title=" " alt="" coords="699,101,931,135,1068,159,1202,187,1319,220,1367,237,1407,256,1437,275,1454,296,1458,318,1445,341,1432,347,1407,353,1326,363,1081,380,579,399,579,393,1081,374,1326,357,1406,347,1430,342,1442,337,1453,317,1450,298,1433,279,1405,260,1365,242,1317,225,1200,192,1067,164,931,140,698,106"/>
+<area shape="poly" title=" " alt="" coords="589,106,526,147,523,142,586,102"/>
+<area shape="poly" title=" " alt="" coords="608,104,611,138,605,139,603,105"/>
 </map>
 </div>
 </div><div class="textblock"><div class="dynheader">
@@ -300,12 +311,22 @@ Functions</h2></td></tr>
 <tr class="memitem:a908d0ea000d53a924575023c0e857060"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">void</a>&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="shock_8h.html#a908d0ea000d53a924575023c0e857060">set_stopping_shock</a> (<a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">size_t</a> <a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a>, <a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">size_t</a> <a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">j</a>, <a class="el" href="classShock.html">Shock</a> &amp;<a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">shock</a>, State <a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">const</a> &amp;<a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">state0</a>)</td></tr>
 <tr class="memdesc:a908d0ea000d53a924575023c0e857060"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets a stopping shock state when the Lorentz factor drops below a threshold.  <br /></td></tr>
 <tr class="separator:a908d0ea000d53a924575023c0e857060"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a332a992c621eaae912c73f8089d52323" id="r_a332a992c621eaae912c73f8089d52323"><td class="memTemplParams" colspan="2">template&lt;<a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">typename</a> <a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">Eqn</a> &gt; </td></tr>
-<tr class="memitem:a332a992c621eaae912c73f8089d52323"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a>&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="shock_8h.html#a332a992c621eaae912c73f8089d52323">compute_dec_time</a> (<a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">Eqn</a> <a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">const</a> &amp;<a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">eqn</a>, <a class="el" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> t_max)</td></tr>
-<tr class="separator:a332a992c621eaae912c73f8089d52323"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4eecaf485f5ac3854b4fceab00516fd4" id="r_a4eecaf485f5ac3854b4fceab00516fd4"><td class="memTemplParams" colspan="2">template&lt;<a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">typename</a> <a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">Func</a> &gt; </td></tr>
+<tr class="memitem:a4eecaf485f5ac3854b4fceab00516fd4"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a>&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="shock_8h.html#a4eecaf485f5ac3854b4fceab00516fd4">simpson_logspace</a> (<a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">Func</a> <a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">const</a> &amp;<a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">f</a>, <a class="el" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> r)</td></tr>
+<tr class="memdesc:a4eecaf485f5ac3854b4fceab00516fd4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Simpson's rule integration in log-space: ∫ f(r') dr' via u = ln(r').  <br /></td></tr>
+<tr class="separator:a4eecaf485f5ac3854b4fceab00516fd4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:acc6d84207549ad55230c89d5f2492ae0" id="r_acc6d84207549ad55230c89d5f2492ae0"><td class="memTemplParams" colspan="2">template&lt;<a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">typename</a> <a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">Func</a> &gt; </td></tr>
 <tr class="memitem:acc6d84207549ad55230c89d5f2492ae0"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a>&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="shock_8h.html#acc6d84207549ad55230c89d5f2492ae0">enclosed_mass</a> (<a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">Func</a> <a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">const</a> &amp;rho, <a class="el" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> r)</td></tr>
+<tr class="memdesc:acc6d84207549ad55230c89d5f2492ae0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Computes enclosed mass per solid angle.  <br /></td></tr>
 <tr class="separator:acc6d84207549ad55230c89d5f2492ae0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acb7f53705e758d8e4bf774602de2d03e" id="r_acb7f53705e758d8e4bf774602de2d03e"><td class="memTemplParams" colspan="2">template&lt;<a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">typename</a> <a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">Func</a> &gt; </td></tr>
+<tr class="memitem:acb7f53705e758d8e4bf774602de2d03e"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a>&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="shock_8h.html#acb7f53705e758d8e4bf774602de2d03e">enclosed_thermal_energy</a> (<a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">Func</a> <a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">const</a> &amp;rho, <a class="el" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> r, <a class="el" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> Gamma, <a class="el" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> <a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">ad_idx</a>, <a class="el" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> eps_e)</td></tr>
+<tr class="memdesc:acb7f53705e758d8e4bf774602de2d03e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute enclosed thermal energy per solid angle, accounting for adiabatic cooling and radiative losses of material swept at earlier radii.  <br /></td></tr>
+<tr class="separator:acb7f53705e758d8e4bf774602de2d03e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:accf50b75e283806f3cd95d4e2ef93771" id="r_accf50b75e283806f3cd95d4e2ef93771"><td class="memTemplParams" colspan="2">template&lt;<a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">typename</a> <a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">Eqn</a> &gt; </td></tr>
+<tr class="memitem:accf50b75e283806f3cd95d4e2ef93771"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a>&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="shock_8h.html#accf50b75e283806f3cd95d4e2ef93771">compute_dec_time</a> (<a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">Eqn</a> <a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">const</a> &amp;<a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">eqn</a>)</td></tr>
+<tr class="memdesc:accf50b75e283806f3cd95d4e2ef93771"><td class="mdescLeft">&#160;</td><td class="mdescRight">Finds the deceleration observer time by integrating swept mass outward until m_swept = m_jet/Gamma0.  <br /></td></tr>
+<tr class="separator:accf50b75e283806f3cd95d4e2ef93771"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Function Documentation</h2>
 <a id="a4bdfde6dc952db299a39011d15d27413" name="a4bdfde6dc952db299a39011d15d27413"></a>
@@ -353,19 +374,19 @@ Functions</h2></td></tr>
 <dl class="section return"><dt>Returns</dt><dd>The ratio of upstream to downstream four-velocity</dd></dl>
 <p>This ratio is a key parameter in determining various shock properties, such as compression ratio and jump conditions for density, pressure, and magnetic field. </p>
 
-<p class="definition">Definition at line <a class="el" href="shock_8h_source.html#l00118">118</a> of file <a class="el" href="shock_8h_source.html">shock.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  118</span>                                                                {</div>
-<div class="line"><span class="lineno">  119</span>    <span class="keyword">const</span> <a class="code hl_typedef" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">u_down_s_</a> = <a class="code hl_function" href="shock_8h.html#a09f75d8bc0c1cd36d03a413edd7283d8">compute_downstr_4vel</a>(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">gamma_rel</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">sigma_upstr</a>);</div>
-<div class="line"><span class="lineno">  120</span>    <span class="keyword">const</span> <a class="code hl_typedef" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">u_up_s_</a> = <a class="code hl_function" href="shock_8h.html#ab0d0c4b81c0c5525c81eb24d70c4b010">compute_upstr_4vel</a>(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">u_down_s_</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">gamma_rel</a>);</div>
-<div class="line"><span class="lineno">  121</span>    <a class="code hl_typedef" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">ratio_u</a> = <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">u_up_s_</a> / <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">u_down_s_</a>;</div>
-<div class="line"><span class="lineno">  122</span>    <span class="keywordflow">if</span> (<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">u_down_s_</a> == 0.) {</div>
-<div class="line"><span class="lineno">  123</span>        <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">ratio_u</a> = 4 * <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">gamma_rel</a>; <span class="comment">// (g_hat*gamma_rel+1)/(g_hat-1)</span></div>
-<div class="line"><span class="lineno">  124</span>    }</div>
-<div class="line"><span class="lineno">  125</span>    <span class="keywordflow">return</span> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">ratio_u</a>;</div>
-<div class="line"><span class="lineno">  126</span>}</div>
+<p class="definition">Definition at line <a class="el" href="shock_8h_source.html#l00197">197</a> of file <a class="el" href="shock_8h_source.html">shock.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  197</span>                                                                {</div>
+<div class="line"><span class="lineno">  198</span>    <span class="keyword">const</span> <a class="code hl_typedef" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">u_down_s_</a> = <a class="code hl_function" href="shock_8h.html#a09f75d8bc0c1cd36d03a413edd7283d8">compute_downstr_4vel</a>(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">gamma_rel</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">sigma_upstr</a>);</div>
+<div class="line"><span class="lineno">  199</span>    <span class="keyword">const</span> <a class="code hl_typedef" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">u_up_s_</a> = <a class="code hl_function" href="shock_8h.html#ab0d0c4b81c0c5525c81eb24d70c4b010">compute_upstr_4vel</a>(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">u_down_s_</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">gamma_rel</a>);</div>
+<div class="line"><span class="lineno">  200</span>    <a class="code hl_typedef" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">ratio_u</a> = <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">u_up_s_</a> / <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">u_down_s_</a>;</div>
+<div class="line"><span class="lineno">  201</span>    <span class="keywordflow">if</span> (<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">u_down_s_</a> == 0.) {</div>
+<div class="line"><span class="lineno">  202</span>        <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">ratio_u</a> = 4 * <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">gamma_rel</a>; <span class="comment">// (g_hat*gamma_rel+1)/(g_hat-1)</span></div>
+<div class="line"><span class="lineno">  203</span>    }</div>
+<div class="line"><span class="lineno">  204</span>    <span class="keywordflow">return</span> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">ratio_u</a>;</div>
+<div class="line"><span class="lineno">  205</span>}</div>
 <div class="ttc" id="amacros_8h_html_a4b04262b81aa7d31eb5d2f607e2a35de"><div class="ttname"><a href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a></div><div class="ttdeci">double Real</div><div class="ttdoc">Type alias for floating-point precision used throughout the code.</div><div class="ttdef"><b>Definition</b> <a href="macros_8h_source.html#l00024">macros.h:24</a></div></div>
-<div class="ttc" id="ashock_8h_html_a09f75d8bc0c1cd36d03a413edd7283d8"><div class="ttname"><a href="shock_8h.html#a09f75d8bc0c1cd36d03a413edd7283d8">compute_downstr_4vel</a></div><div class="ttdeci">Real compute_downstr_4vel(Real gamma_rel, Real sigma)</div><div class="ttdoc">Computes the downstream four-velocity for a given relative Lorentz factor and magnetization parameter...</div><div class="ttdef"><b>Definition</b> <a href="shock_8cpp_source.html#l00042">shock.cpp:42</a></div></div>
-<div class="ttc" id="ashock_8h_html_ab0d0c4b81c0c5525c81eb24d70c4b010"><div class="ttname"><a href="shock_8h.html#ab0d0c4b81c0c5525c81eb24d70c4b010">compute_upstr_4vel</a></div><div class="ttdeci">Real compute_upstr_4vel(Real u_down, Real gamma_rel)</div><div class="ttdoc">Computes the upstream four-velocity from downstream four-velocity and relative Lorentz factor.</div><div class="ttdef"><b>Definition</b> <a href="shock_8h_source.html#l00104">shock.h:104</a></div></div>
+<div class="ttc" id="ashock_8h_html_a09f75d8bc0c1cd36d03a413edd7283d8"><div class="ttname"><a href="shock_8h.html#a09f75d8bc0c1cd36d03a413edd7283d8">compute_downstr_4vel</a></div><div class="ttdeci">Real compute_downstr_4vel(Real gamma_rel, Real sigma)</div><div class="ttdoc">Computes the downstream four-velocity for a given relative Lorentz factor and magnetization parameter...</div><div class="ttdef"><b>Definition</b> <a href="shock_8cpp_source.html#l00091">shock.cpp:91</a></div></div>
+<div class="ttc" id="ashock_8h_html_ab0d0c4b81c0c5525c81eb24d70c4b010"><div class="ttname"><a href="shock_8h.html#ab0d0c4b81c0c5525c81eb24d70c4b010">compute_upstr_4vel</a></div><div class="ttdeci">Real compute_upstr_4vel(Real u_down, Real gamma_rel)</div><div class="ttdoc">Computes the upstream four-velocity from downstream four-velocity and relative Lorentz factor.</div><div class="ttdef"><b>Definition</b> <a href="shock_8h_source.html#l00183">shock.h:183</a></div></div>
 <div class="ttc" id="autilities_8h_html_ab8e81118f023df135835db8cce4f5f42"><div class="ttname"><a href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">max</a></div><div class="ttdeci">T max(T value)</div><div class="ttdoc">Returns the value of a single parameter.</div><div class="ttdef"><b>Definition</b> <a href="utilities_8h_source.html#l00318">utilities.h:318</a></div></div>
 </div><!-- fragment --><div class="dynheader">
 Here is the call graph for this function:</div>
@@ -472,10 +493,10 @@ Here is the caller graph for this function:</div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>The adiabatic cooling rate </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="shock_8h_source.html#l00295">295</a> of file <a class="el" href="shock_8h_source.html">shock.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  295</span>                                                                                                              {</div>
-<div class="line"><span class="lineno">  296</span>    <span class="keywordflow">return</span> -(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">ad_idx</a> - 1) * (3 * <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">drdt</a> / r - <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">dGammadt</a> / Gamma) * <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">u</a>;</div>
-<div class="line"><span class="lineno">  297</span>}</div>
+<p class="definition">Definition at line <a class="el" href="shock_8h_source.html#l00374">374</a> of file <a class="el" href="shock_8h_source.html">shock.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  374</span>                                                                                                              {</div>
+<div class="line"><span class="lineno">  375</span>    <span class="keywordflow">return</span> -(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">ad_idx</a> - 1) * (3 * <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">drdt</a> / r - <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">dGammadt</a> / Gamma) * <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">u</a>;</div>
+<div class="line"><span class="lineno">  376</span>}</div>
 </div><!-- fragment --><div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -548,14 +569,14 @@ Here is the call graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="shock_8h_source.html#l00299">299</a> of file <a class="el" href="shock_8h_source.html">shock.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  299</span>                                                                                                       {</div>
-<div class="line"><span class="lineno">  300</span>    <a class="code hl_typedef" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">dlnvdt</a> = 2 * <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">drdt</a> / r;</div>
-<div class="line"><span class="lineno">  301</span>    <span class="keywordflow">if</span> (<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">x</a> &gt; 0) {</div>
-<div class="line"><span class="lineno">  302</span>        <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">dlnvdt</a> += <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">dxdt</a> / <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">x</a>;</div>
-<div class="line"><span class="lineno">  303</span>    }</div>
-<div class="line"><span class="lineno">  304</span>    <span class="keywordflow">return</span> -(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">ad_idx</a> - 1) * <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">dlnvdt</a> * <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">u</a>;</div>
-<div class="line"><span class="lineno">  305</span>}</div>
+<p class="definition">Definition at line <a class="el" href="shock_8h_source.html#l00378">378</a> of file <a class="el" href="shock_8h_source.html">shock.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  378</span>                                                                                                       {</div>
+<div class="line"><span class="lineno">  379</span>    <a class="code hl_typedef" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">dlnvdt</a> = 2 * <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">drdt</a> / r;</div>
+<div class="line"><span class="lineno">  380</span>    <span class="keywordflow">if</span> (<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">x</a> &gt; 0) {</div>
+<div class="line"><span class="lineno">  381</span>        <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">dlnvdt</a> += <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">dxdt</a> / <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">x</a>;</div>
+<div class="line"><span class="lineno">  382</span>    }</div>
+<div class="line"><span class="lineno">  383</span>    <span class="keywordflow">return</span> -(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">ad_idx</a> - 1) * <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">dlnvdt</a> * <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">u</a>;</div>
+<div class="line"><span class="lineno">  384</span>}</div>
 </div><!-- fragment --><div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -621,13 +642,13 @@ Here is the call graph for this function:</div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>The compression ratio </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="shock_8h_source.html#l00401">401</a> of file <a class="el" href="shock_8h_source.html">shock.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  401</span>                                                                                        {</div>
-<div class="line"><span class="lineno">  402</span>    <span class="keyword">const</span> <a class="code hl_typedef" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">Gamma_rel</a> = <a class="code hl_function" href="shock_8h.html#a7b72b7c46b478ce3d1a15677c5046dcb">compute_rel_Gamma</a>(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">Gamma_upstr</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">Gamma_downstr</a>);</div>
-<div class="line"><span class="lineno">  403</span>    <span class="keywordflow">return</span> <a class="code hl_function" href="shock_8h.html#a4bdfde6dc952db299a39011d15d27413">compute_4vel_jump</a>(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">Gamma_rel</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">sigma_upstr</a>);</div>
-<div class="line"><span class="lineno">  404</span>}</div>
-<div class="ttc" id="ashock_8h_html_a4bdfde6dc952db299a39011d15d27413"><div class="ttname"><a href="shock_8h.html#a4bdfde6dc952db299a39011d15d27413">compute_4vel_jump</a></div><div class="ttdeci">Real compute_4vel_jump(Real gamma_rel, Real sigma_upstr)</div><div class="ttdoc">Computes the ratio of upstream to downstream four-velocity across the shock front.</div><div class="ttdef"><b>Definition</b> <a href="shock_8h_source.html#l00118">shock.h:118</a></div></div>
-<div class="ttc" id="ashock_8h_html_a7b72b7c46b478ce3d1a15677c5046dcb"><div class="ttname"><a href="shock_8h.html#a7b72b7c46b478ce3d1a15677c5046dcb">compute_rel_Gamma</a></div><div class="ttdeci">Real compute_rel_Gamma(Real gamma1, Real gamma2)</div><div class="ttdoc">Computes the relative Lorentz factor between two frames with given Lorentz factors.</div><div class="ttdef"><b>Definition</b> <a href="shock_8h_source.html#l00239">shock.h:239</a></div></div>
+<p class="definition">Definition at line <a class="el" href="shock_8h_source.html#l00481">481</a> of file <a class="el" href="shock_8h_source.html">shock.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  481</span>                                                                                        {</div>
+<div class="line"><span class="lineno">  482</span>    <span class="keyword">const</span> <a class="code hl_typedef" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">Gamma_rel</a> = <a class="code hl_function" href="shock_8h.html#a7b72b7c46b478ce3d1a15677c5046dcb">compute_rel_Gamma</a>(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">Gamma_upstr</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">Gamma_downstr</a>);</div>
+<div class="line"><span class="lineno">  483</span>    <span class="keywordflow">return</span> <a class="code hl_function" href="shock_8h.html#a4bdfde6dc952db299a39011d15d27413">compute_4vel_jump</a>(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">Gamma_rel</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">sigma_upstr</a>);</div>
+<div class="line"><span class="lineno">  484</span>}</div>
+<div class="ttc" id="ashock_8h_html_a4bdfde6dc952db299a39011d15d27413"><div class="ttname"><a href="shock_8h.html#a4bdfde6dc952db299a39011d15d27413">compute_4vel_jump</a></div><div class="ttdeci">Real compute_4vel_jump(Real gamma_rel, Real sigma_upstr)</div><div class="ttdoc">Computes the ratio of upstream to downstream four-velocity across the shock front.</div><div class="ttdef"><b>Definition</b> <a href="shock_8h_source.html#l00197">shock.h:197</a></div></div>
+<div class="ttc" id="ashock_8h_html_a7b72b7c46b478ce3d1a15677c5046dcb"><div class="ttname"><a href="shock_8h.html#a7b72b7c46b478ce3d1a15677c5046dcb">compute_rel_Gamma</a></div><div class="ttdeci">Real compute_rel_Gamma(Real gamma1, Real gamma2)</div><div class="ttdoc">Computes the relative Lorentz factor between two frames with given Lorentz factors.</div><div class="ttdef"><b>Definition</b> <a href="shock_8h_source.html#l00318">shock.h:318</a></div></div>
 </div><!-- fragment --><div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -701,10 +722,10 @@ Here is the call graph for this function:</div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>The comoving magnetic field strength </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="shock_8h_source.html#l00173">173</a> of file <a class="el" href="shock_8h_source.html">shock.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  173</span>                                                              {</div>
-<div class="line"><span class="lineno">  174</span>    <span class="keywordflow">return</span> std::sqrt(8 * <a class="code hl_variable" href="namespacecon.html#aa0ccd904b754d0f907898a942516d121">con::pi</a> * eps_B * <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">e_thermal</a>);</div>
-<div class="line"><span class="lineno">  175</span>}</div>
+<p class="definition">Definition at line <a class="el" href="shock_8h_source.html#l00252">252</a> of file <a class="el" href="shock_8h_source.html">shock.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  252</span>                                                              {</div>
+<div class="line"><span class="lineno">  253</span>    <span class="keywordflow">return</span> std::sqrt(8 * <a class="code hl_variable" href="namespacecon.html#aa0ccd904b754d0f907898a942516d121">con::pi</a> * eps_B * <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">e_thermal</a>);</div>
+<div class="line"><span class="lineno">  254</span>}</div>
 <div class="ttc" id="anamespacecon_html_aa0ccd904b754d0f907898a942516d121"><div class="ttname"><a href="namespacecon.html#aa0ccd904b754d0f907898a942516d121">con::pi</a></div><div class="ttdeci">constexpr Real pi</div><div class="ttdoc">Pi.</div><div class="ttdef"><b>Definition</b> <a href="macros_8h_source.html#l00097">macros.h:97</a></div></div>
 </div><!-- fragment --><div class="dynheader">
 Here is the call graph for this function:</div>
@@ -730,8 +751,8 @@ Here is the caller graph for this function:</div>
 
 </div>
 </div>
-<a id="a332a992c621eaae912c73f8089d52323" name="a332a992c621eaae912c73f8089d52323"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a332a992c621eaae912c73f8089d52323">&#9670;&#160;</a></span>compute_dec_time()</h2>
+<a id="accf50b75e283806f3cd95d4e2ef93771" name="accf50b75e283806f3cd95d4e2ef93771"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#accf50b75e283806f3cd95d4e2ef93771">&#9670;&#160;</a></span>compute_dec_time()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -742,103 +763,62 @@ template&lt;<a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5
           <td class="memname"><a class="el" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> compute_dec_time </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">Eqn</a> <a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">const</a> &amp;&#160;</td>
-          <td class="paramname"><em>eqn</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
+          <td class="paramname"><em>eqn</em></td><td>)</td>
           <td></td>
-          <td class="paramtype"><a class="el" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a>&#160;</td>
-          <td class="paramname"><em>t_max</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="shock_8h_source.html#l00452">452</a> of file <a class="el" href="shock_8h_source.html">shock.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  452</span>                                                  {</div>
-<div class="line"><span class="lineno">  453</span>    <span class="comment">/*Real e_k = eqn.ejecta.eps_k(eqn.phi, eqn.theta0);</span></div>
-<div class="line"><span class="lineno">  454</span><span class="comment">    Real gamma = eqn.ejecta.Gamma0(eqn.phi, eqn.theta0);</span></div>
-<div class="line"><span class="lineno">  455</span><span class="comment">    Real beta = physics::relativistic::gamma_to_beta(gamma);</span></div>
-<div class="line"><span class="lineno">  456</span><span class="comment"></span> </div>
-<div class="line"><span class="lineno">  457</span><span class="comment">    Real m_shell = e_k / (gamma * con::c2);</span></div>
-<div class="line"><span class="lineno">  458</span><span class="comment"></span> </div>
-<div class="line"><span class="lineno">  459</span><span class="comment">    if constexpr (HasSigma&lt;decltype(eqn.ejecta)&gt;) {</span></div>
-<div class="line"><span class="lineno">  460</span><span class="comment">        m_shell /= 1 + eqn.ejecta.sigma0(eqn.phi, eqn.theta0);</span></div>
-<div class="line"><span class="lineno">  461</span><span class="comment">    }</span></div>
-<div class="line"><span class="lineno">  462</span><span class="comment"></span> </div>
-<div class="line"><span class="lineno">  463</span><span class="comment">    Real r_dec = beta * con::c * t_max / (1 - beta);</span></div>
-<div class="line"><span class="lineno">  464</span><span class="comment">    for (size_t i = 0; i &lt; 30; i++) {</span></div>
-<div class="line"><span class="lineno">  465</span><span class="comment">        // Compute swept-up mass per solid angle by numerical integration</span></div>
-<div class="line"><span class="lineno">  466</span><span class="comment">        // Use simple trapezoidal rule with logarithmic spacing</span></div>
-<div class="line"><span class="lineno">  467</span><span class="comment">        constexpr size_t n_steps = 50;</span></div>
-<div class="line"><span class="lineno">  468</span><span class="comment">        Real m_swept = 0;</span></div>
-<div class="line"><span class="lineno">  469</span><span class="comment">        Real r_prev = 0;</span></div>
-<div class="line"><span class="lineno">  470</span><span class="comment">        for (size_t k = 1; k &lt;= n_steps; k++) {</span></div>
-<div class="line"><span class="lineno">  471</span><span class="comment">            Real r_k = r_dec * static_cast&lt;Real&gt;(k) / n_steps;</span></div>
-<div class="line"><span class="lineno">  472</span><span class="comment">            Real rho_k = eqn.medium.rho(eqn.phi, eqn.theta0, r_k);</span></div>
-<div class="line"><span class="lineno">  473</span><span class="comment">            Real dr = r_k - r_prev;</span></div>
-<div class="line"><span class="lineno">  474</span><span class="comment">            m_swept += rho_k * r_k * r_k * dr;</span></div>
-<div class="line"><span class="lineno">  475</span><span class="comment">            r_prev = r_k;</span></div>
-<div class="line"><span class="lineno">  476</span><span class="comment">        }</span></div>
-<div class="line"><span class="lineno">  477</span><span class="comment">        if (m_swept &lt; m_shell / gamma) {</span></div>
-<div class="line"><span class="lineno">  478</span><span class="comment">            break;</span></div>
-<div class="line"><span class="lineno">  479</span><span class="comment">        }</span></div>
-<div class="line"><span class="lineno">  480</span><span class="comment">        r_dec /= 3;</span></div>
-<div class="line"><span class="lineno">  481</span><span class="comment">    }</span></div>
-<div class="line"><span class="lineno">  482</span><span class="comment">    Real t_dec = r_dec * (1 - beta) / (beta * con::c);</span></div>
-<div class="line"><span class="lineno">  483</span><span class="comment">    return t_dec;*/</span></div>
-<div class="line"><span class="lineno">  484</span>    <span class="keyword">using namespace </span>boost::numeric::odeint;</div>
-<div class="line"><span class="lineno">  485</span> </div>
-<div class="line"><span class="lineno">  486</span>    <a class="code hl_typedef" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">e_k</a> = <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">eqn</a>.ejecta.eps_k(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">eqn</a>.phi, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">eqn</a>.theta0);</div>
-<div class="line"><span class="lineno">  487</span>    <a class="code hl_typedef" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">gamma</a> = <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">eqn</a>.ejecta.Gamma0(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">eqn</a>.phi, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">eqn</a>.theta0);</div>
-<div class="line"><span class="lineno">  488</span>    <a class="code hl_typedef" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">beta</a> = <a class="code hl_function" href="namespacephysics_1_1relativistic.html#ab1c1444afa3c4afd0c57145f932962fa">physics::relativistic::gamma_to_beta</a>(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">gamma</a>);</div>
-<div class="line"><span class="lineno">  489</span> </div>
-<div class="line"><span class="lineno">  490</span>    <a class="code hl_typedef" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">m_shell</a> = <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">e_k</a> / (<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">gamma</a> * <a class="code hl_variable" href="namespacecon.html#a26ef2b83dd09c356e324bd243b498764">con::c2</a>);</div>
-<div class="line"><span class="lineno">  491</span> </div>
-<div class="line"><span class="lineno">  492</span>    <span class="keywordflow">if</span> <span class="keyword">constexpr</span> (<a class="code hl_concept" href="conceptHasSigma.html">HasSigma</a>&lt;<span class="keyword">decltype</span>(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">eqn</a>.ejecta)&gt;) {</div>
-<div class="line"><span class="lineno">  493</span>        <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">m_shell</a> /= (1.0 + <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">eqn</a>.ejecta.sigma0(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">eqn</a>.phi, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">eqn</a>.theta0));</div>
-<div class="line"><span class="lineno">  494</span>    }</div>
-<div class="line"><span class="lineno">  495</span> </div>
-<div class="line"><span class="lineno">  496</span>    <a class="code hl_typedef" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">target_mass</a> = <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">m_shell</a> / <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">gamma</a>;</div>
-<div class="line"><span class="lineno">  497</span> </div>
-<div class="line"><span class="lineno">  498</span>    <span class="keyword">auto</span> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">mass_ode</a> = [&amp;](<span class="keyword">const</span> <a class="code hl_typedef" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a>&amp; <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">M</a>, <a class="code hl_typedef" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a>&amp; <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">dMdr</a>, <span class="keywordtype">double</span> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">current_r</a>) {</div>
-<div class="line"><span class="lineno">  499</span>        <a class="code hl_typedef" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">rho_val</a> = <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">eqn</a>.medium.rho(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">eqn</a>.phi, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">eqn</a>.theta0, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">current_r</a>);</div>
-<div class="line"><span class="lineno">  500</span>        <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">dMdr</a> = <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">current_r</a> * <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">current_r</a> * <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">rho_val</a>;</div>
-<div class="line"><span class="lineno">  501</span>    };</div>
-<div class="line"><span class="lineno">  502</span> </div>
-<div class="line"><span class="lineno">  503</span>    <a class="code hl_typedef" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> r = 0.0;</div>
-<div class="line"><span class="lineno">  504</span>    <a class="code hl_typedef" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">current_mass</a> = 0.0;</div>
-<div class="line"><span class="lineno">  505</span>    <a class="code hl_typedef" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">r_current</a> = 0;</div>
-<div class="line"><span class="lineno">  506</span>    <a class="code hl_typedef" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">r_max</a> = <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">beta</a> * <a class="code hl_variable" href="namespacecon.html#a2ff3edf57629ccb9a49d5bde7278a7c4">con::c</a> * t_max / (1.0 - <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">beta</a>);</div>
-<div class="line"><span class="lineno">  507</span> </div>
-<div class="line"><span class="lineno">  508</span>    <span class="keyword">auto</span> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">stepper</a> = <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">make_controlled&lt;runge_kutta_dopri5&lt;Real&gt;</a>&gt;(1<a class="code hl_variable" href="namespacecon.html#af12a6df01bfe61fa034307dfcaa1fe7f">e</a>-4, 1<a class="code hl_variable" href="namespacecon.html#af12a6df01bfe61fa034307dfcaa1fe7f">e</a>-4);</div>
-<div class="line"><span class="lineno">  509</span>    <a class="code hl_typedef" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">dr</a> = 1<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">e5</a> * <a class="code hl_variable" href="namespaceunit.html#ab0ce442b00da680dc797592af0b4a2f8">unit::cm</a>;</div>
-<div class="line"><span class="lineno">  510</span> </div>
-<div class="line"><span class="lineno">  511</span>    <span class="keywordflow">while</span> (<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">current_mass</a> &lt; <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">target_mass</a> &amp;&amp; <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">r_current</a> &lt; <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">r_max</a>) {</div>
-<div class="line"><span class="lineno">  512</span>        <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">stepper</a>.try_step(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">mass_ode</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">current_mass</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">r_current</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">dr</a>);</div>
-<div class="line"><span class="lineno">  513</span>    }</div>
-<div class="line"><span class="lineno">  514</span> </div>
-<div class="line"><span class="lineno">  515</span>    <a class="code hl_typedef" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">r_dec</a> = <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">r_current</a>;</div>
-<div class="line"><span class="lineno">  516</span>    <a class="code hl_typedef" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">t_dec</a> = <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">r_dec</a> * (1.0 - <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">beta</a>) / (<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">beta</a> * <a class="code hl_variable" href="namespacecon.html#a2ff3edf57629ccb9a49d5bde7278a7c4">con::c</a>);</div>
-<div class="line"><span class="lineno">  517</span> </div>
-<div class="line"><span class="lineno">  518</span>    <span class="keywordflow">return</span> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">t_dec</a>;</div>
-<div class="line"><span class="lineno">  519</span>}</div>
+<p>Finds the deceleration observer time by integrating swept mass outward until m_swept = m_jet/Gamma0. </p>
+<p>Works for any medium density profile. Returns observer time r_dec*(1-beta)/(beta*c). </p>
+
+<p class="definition">Definition at line <a class="el" href="shock_8h_source.html#l00577">577</a> of file <a class="el" href="shock_8h_source.html">shock.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  577</span>                                      {</div>
+<div class="line"><span class="lineno">  578</span>    <span class="keyword">const</span> <a class="code hl_typedef" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">gamma</a> = <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">eqn</a>.ejecta.Gamma0(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">eqn</a>.phi, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">eqn</a>.theta0);</div>
+<div class="line"><span class="lineno">  579</span>    <span class="keyword">const</span> <a class="code hl_typedef" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">beta</a> = <a class="code hl_function" href="namespacephysics_1_1relativistic.html#ab1c1444afa3c4afd0c57145f932962fa">physics::relativistic::gamma_to_beta</a>(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">gamma</a>);</div>
+<div class="line"><span class="lineno">  580</span>    <a class="code hl_typedef" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> m_jet = <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">eqn</a>.ejecta.eps_k(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">eqn</a>.phi, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">eqn</a>.theta0) / (<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">gamma</a> * <a class="code hl_variable" href="namespacecon.html#a26ef2b83dd09c356e324bd243b498764">con::c2</a>);</div>
+<div class="line"><span class="lineno">  581</span>    <span class="keywordflow">if</span> <span class="keyword">constexpr</span> (<a class="code hl_concept" href="conceptHasSigma.html">HasSigma</a>&lt;<span class="keyword">decltype</span>(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">eqn</a>.ejecta)&gt;) {</div>
+<div class="line"><span class="lineno">  582</span>        m_jet /= (1.0 + <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">eqn</a>.ejecta.sigma0(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">eqn</a>.phi, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">eqn</a>.theta0));</div>
+<div class="line"><span class="lineno">  583</span>    }</div>
+<div class="line"><span class="lineno">  584</span>    <span class="keyword">const</span> <a class="code hl_typedef" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">target</a> = m_jet / <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">gamma</a>;</div>
+<div class="line"><span class="lineno">  585</span> </div>
+<div class="line"><span class="lineno">  586</span>    <span class="keyword">auto</span> rho = [&amp;](<a class="code hl_typedef" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> r) { <span class="keywordflow">return</span> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">eqn</a>.medium.rho(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">eqn</a>.phi, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">eqn</a>.theta0, r); };</div>
+<div class="line"><span class="lineno">  587</span> </div>
+<div class="line"><span class="lineno">  588</span>    <span class="comment">// Trapezoidal integration in log-space with early exit at deceleration radius</span></div>
+<div class="line"><span class="lineno">  589</span>    <span class="keyword">constexpr</span> <span class="keywordtype">size_t</span> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">N</a> = 256;</div>
+<div class="line"><span class="lineno">  590</span>    <span class="keyword">const</span> <a class="code hl_typedef" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">u_min</a> = std::log(1e-3);</div>
+<div class="line"><span class="lineno">  591</span>    <span class="keyword">const</span> <a class="code hl_typedef" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">u_max</a> = <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">u_min</a> + 40 * std::log(10.0);</div>
+<div class="line"><span class="lineno">  592</span>    <span class="keyword">const</span> <a class="code hl_typedef" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">du</a> = (<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">u_max</a> - <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">u_min</a>) / <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">N</a>;</div>
+<div class="line"><span class="lineno">  593</span> </div>
+<div class="line"><span class="lineno">  594</span>    <a class="code hl_typedef" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">mass</a> = 0;</div>
+<div class="line"><span class="lineno">  595</span>    <a class="code hl_typedef" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">r_prev</a> = std::exp(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">u_min</a>);</div>
+<div class="line"><span class="lineno">  596</span>    <a class="code hl_typedef" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">f_prev</a> = rho(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">r_prev</a>) * <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">r_prev</a> * <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">r_prev</a>;</div>
+<div class="line"><span class="lineno">  597</span> </div>
+<div class="line"><span class="lineno">  598</span>    <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a> = 1; <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a> &lt;= <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">N</a>; ++<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a>) {</div>
+<div class="line"><span class="lineno">  599</span>        <span class="keyword">const</span> <a class="code hl_typedef" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">r_i</a> = std::exp(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">u_min</a> + <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a> * <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">du</a>);</div>
+<div class="line"><span class="lineno">  600</span>        <span class="keyword">const</span> <a class="code hl_typedef" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">f_i</a> = rho(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">r_i</a>) * <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">r_i</a> * <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">r_i</a>;</div>
+<div class="line"><span class="lineno">  601</span>        <span class="keyword">const</span> <a class="code hl_typedef" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">dr</a> = <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">r_i</a> - <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">r_prev</a>;</div>
+<div class="line"><span class="lineno">  602</span>        <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">mass</a> += 0.5 * (<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">f_prev</a> + <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">f_i</a>) * <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">dr</a>;</div>
+<div class="line"><span class="lineno">  603</span> </div>
+<div class="line"><span class="lineno">  604</span>        <span class="keywordflow">if</span> (<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">mass</a> &gt;= <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">target</a>) {</div>
+<div class="line"><span class="lineno">  605</span>            <span class="keyword">const</span> <a class="code hl_typedef" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">r_dec</a> = <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">r_prev</a> + (<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">target</a> - (<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">mass</a> - 0.5 * (<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">f_prev</a> + <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">f_i</a>) * <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">dr</a>)) / <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">f_i</a>;</div>
+<div class="line"><span class="lineno">  606</span>            <span class="keywordflow">return</span> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">r_dec</a> * (1 - <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">beta</a>) / (<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">beta</a> * <a class="code hl_variable" href="namespacecon.html#a2ff3edf57629ccb9a49d5bde7278a7c4">con::c</a>);</div>
+<div class="line"><span class="lineno">  607</span>        }</div>
+<div class="line"><span class="lineno">  608</span>        <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">f_prev</a> = <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">f_i</a>;</div>
+<div class="line"><span class="lineno">  609</span>        <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">r_prev</a> = <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">r_i</a>;</div>
+<div class="line"><span class="lineno">  610</span>    }</div>
+<div class="line"><span class="lineno">  611</span>    <span class="keywordflow">return</span> std::exp(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">u_max</a>) * (1 - <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">beta</a>) / (<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">beta</a> * <a class="code hl_variable" href="namespacecon.html#a2ff3edf57629ccb9a49d5bde7278a7c4">con::c</a>);</div>
+<div class="line"><span class="lineno">  612</span>}</div>
 <div class="ttc" id="aconceptHasSigma_html"><div class="ttname"><a href="conceptHasSigma.html">HasSigma</a></div><div class="ttdef"><b>Definition</b> <a href="utilities_8h_source.html#l00026">utilities.h:26</a></div></div>
 <div class="ttc" id="anamespacecon_html_a26ef2b83dd09c356e324bd243b498764"><div class="ttname"><a href="namespacecon.html#a26ef2b83dd09c356e324bd243b498764">con::c2</a></div><div class="ttdeci">constexpr Real c2</div><div class="ttdoc">Speed of light squared.</div><div class="ttdef"><b>Definition</b> <a href="macros_8h_source.html#l00088">macros.h:88</a></div></div>
 <div class="ttc" id="anamespacecon_html_a2ff3edf57629ccb9a49d5bde7278a7c4"><div class="ttname"><a href="namespacecon.html#a2ff3edf57629ccb9a49d5bde7278a7c4">con::c</a></div><div class="ttdeci">constexpr Real c</div><div class="ttdoc">Speed of light (normalized to 1 in code units)</div><div class="ttdef"><b>Definition</b> <a href="macros_8h_source.html#l00087">macros.h:87</a></div></div>
-<div class="ttc" id="anamespacecon_html_af12a6df01bfe61fa034307dfcaa1fe7f"><div class="ttname"><a href="namespacecon.html#af12a6df01bfe61fa034307dfcaa1fe7f">con::e</a></div><div class="ttdeci">constexpr Real e</div><div class="ttdoc">Elementary charge in code units.</div><div class="ttdef"><b>Definition</b> <a href="macros_8h_source.html#l00094">macros.h:94</a></div></div>
 <div class="ttc" id="anamespacephysics_1_1relativistic_html_ab1c1444afa3c4afd0c57145f932962fa"><div class="ttname"><a href="namespacephysics_1_1relativistic.html#ab1c1444afa3c4afd0c57145f932962fa">physics::relativistic::gamma_to_beta</a></div><div class="ttdeci">Real gamma_to_beta(Real gamma)</div><div class="ttdoc">Converts Lorentz factor (gamma) to a velocity fraction (beta)</div><div class="ttdef"><b>Definition</b> <a href="physics_8h_source.html#l00036">physics.h:36</a></div></div>
-<div class="ttc" id="anamespaceunit_html_ab0ce442b00da680dc797592af0b4a2f8"><div class="ttname"><a href="namespaceunit.html#ab0ce442b00da680dc797592af0b4a2f8">unit::cm</a></div><div class="ttdeci">constexpr Real cm</div><div class="ttdoc">Centimeter in code units.</div><div class="ttdef"><b>Definition</b> <a href="macros_8h_source.html#l00045">macros.h:45</a></div></div>
 </div><!-- fragment --><div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
-<div class="center"><img src="shock_8h_a332a992c621eaae912c73f8089d52323_cgraph.png" border="0" usemap="#ashock_8h_a332a992c621eaae912c73f8089d52323_cgraph" alt=""/></div>
-<map name="ashock_8h_a332a992c621eaae912c73f8089d52323_cgraph" id="ashock_8h_a332a992c621eaae912c73f8089d52323_cgraph">
-<area shape="rect" title=" " alt="" coords="5,42,152,67"/>
+<div class="center"><img src="shock_8h_accf50b75e283806f3cd95d4e2ef93771_cgraph.png" border="0" usemap="#ashock_8h_accf50b75e283806f3cd95d4e2ef93771_cgraph" alt=""/></div>
+<map name="ashock_8h_accf50b75e283806f3cd95d4e2ef93771_cgraph" id="ashock_8h_accf50b75e283806f3cd95d4e2ef93771_cgraph">
+<area shape="rect" title="Finds the deceleration observer time by integrating swept mass outward until m_swept = m_jet/Gamma0." alt="" coords="5,42,152,67"/>
 <area shape="rect" href="namespacephysics_1_1relativistic.html#ab1c1444afa3c4afd0c57145f932962fa" title="Converts Lorentz factor (gamma) to a velocity fraction (beta)" alt="" coords="200,5,348,45"/>
 <area shape="poly" title=" " alt="" coords="152,41,186,36,187,41,153,46"/>
 <area shape="rect" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42" title="Returns the value of a single parameter." alt="" coords="396,42,447,67"/>
@@ -887,42 +867,42 @@ Here is the call graph for this function:</div>
 <dl class="section return"><dt>Returns</dt><dd>The downstream four-velocity in the shock frame</dd></dl>
 <p>The calculation handles both magnetized (sigma &gt; 0) and non-magnetized (sigma = 0) cases using different equations based on jump conditions across the shock front. </p>
 
-<p class="definition">Definition at line <a class="el" href="shock_8cpp_source.html#l00042">42</a> of file <a class="el" href="shock_8cpp_source.html">shock.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   42</span>                                                      {</div>
-<div class="line"><span class="lineno">   43</span>    <span class="keyword">const</span> <a class="code hl_typedef" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">ad_idx</a> = <a class="code hl_function" href="namespacephysics_1_1thermo.html#a8d90fdf6e3727fb58e7beb1c4f2fd50c">physics::thermo::adiabatic_idx</a>(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">gamma_rel</a>);</div>
-<div class="line"><span class="lineno">   44</span>    <span class="keyword">const</span> <a class="code hl_typedef" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">gamma_m_1</a> = <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">gamma_rel</a> - 1; <span class="comment">// (gamma_rel - 1)</span></div>
-<div class="line"><span class="lineno">   45</span>    <span class="keyword">const</span> <a class="code hl_typedef" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">ad_idx_m_2</a> = <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">ad_idx</a> - 2;   <span class="comment">// (ad_idx - 2)</span></div>
-<div class="line"><span class="lineno">   46</span>    <span class="keyword">const</span> <a class="code hl_typedef" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">ad_idx_m_1</a> = <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">ad_idx</a> - 1;   <span class="comment">// (ad_idx - 1)</span></div>
-<div class="line"><span class="lineno">   47</span>    <span class="keywordflow">if</span> (<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">sigma</a> &lt;= <a class="code hl_variable" href="namespacecon.html#ae257fca076d03dd535871a9824d2f178">con::sigma_cut</a>) {</div>
-<div class="line"><span class="lineno">   48</span>        <span class="keywordflow">return</span> std::sqrt(std::fabs(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">gamma_m_1</a> * <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">ad_idx_m_1</a> * <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">ad_idx_m_1</a> / (-<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">ad_idx</a> * <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">ad_idx_m_2</a> * <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">gamma_m_1</a> + 2)));</div>
-<div class="line"><span class="lineno">   49</span>    } <span class="keywordflow">else</span> {</div>
-<div class="line"><span class="lineno">   50</span>        <span class="keyword">const</span> <a class="code hl_typedef" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">gamma_sq</a> = <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">gamma_rel</a> * <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">gamma_rel</a>; <span class="comment">// gamma_rel^2</span></div>
-<div class="line"><span class="lineno">   51</span>        <span class="keyword">const</span> <a class="code hl_typedef" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">gamma_p_1</a> = <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">gamma_rel</a> + 1;        <span class="comment">// (gamma_rel + 1)</span></div>
-<div class="line"><span class="lineno">   52</span> </div>
-<div class="line"><span class="lineno">   53</span>        <span class="comment">// Precompute common terms</span></div>
-<div class="line"><span class="lineno">   54</span>        <span class="keyword">const</span> <a class="code hl_typedef" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">term1</a> = -<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">ad_idx</a> * <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">ad_idx_m_2</a>;</div>
-<div class="line"><span class="lineno">   55</span>        <span class="keyword">const</span> <a class="code hl_typedef" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">term2</a> = <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">gamma_sq</a> - 1;</div>
-<div class="line"><span class="lineno">   56</span> </div>
-<div class="line"><span class="lineno">   57</span>        <span class="comment">// Compute coefficients</span></div>
-<div class="line"><span class="lineno">   58</span>        <span class="keyword">const</span> <a class="code hl_typedef" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> A = <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">term1</a> * <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">gamma_m_1</a> + 2;</div>
-<div class="line"><span class="lineno">   59</span>        <span class="keyword">const</span> <a class="code hl_typedef" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> B = -<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">gamma_p_1</a> * (-<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">ad_idx_m_2</a> * (<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">ad_idx</a> * <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">gamma_sq</a> + 1) + <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">ad_idx</a> * <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">ad_idx_m_1</a> * <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">gamma_rel</a>) * <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">sigma</a> -</div>
-<div class="line"><span class="lineno">   60</span>                       <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">gamma_m_1</a> * (<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">term1</a> * (<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">gamma_sq</a> - 2) + 2 * <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">gamma_rel</a> + 3);</div>
-<div class="line"><span class="lineno">   61</span>        <span class="keyword">const</span> <a class="code hl_typedef" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">C</a> = <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">gamma_p_1</a> * (<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">ad_idx</a> * (1 - <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">ad_idx</a> / 4) * <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">term2</a> + 1) * <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">sigma</a> * <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">sigma</a> +</div>
-<div class="line"><span class="lineno">   62</span>                       <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">term2</a> * (2 * <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">gamma_rel</a> + <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">ad_idx_m_2</a> * (<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">ad_idx</a> * <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">gamma_rel</a> - 1)) * <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">sigma</a> +</div>
-<div class="line"><span class="lineno">   63</span>                       <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">gamma_p_1</a> * <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">gamma_m_1</a> * <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">gamma_m_1</a> * <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">ad_idx_m_1</a> * <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">ad_idx_m_1</a>;</div>
-<div class="line"><span class="lineno">   64</span>        <span class="keyword">const</span> <a class="code hl_typedef" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">D</a> = -<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">gamma_m_1</a> * <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">gamma_p_1</a> * <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">gamma_p_1</a> * <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">ad_idx_m_2</a> * <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">ad_idx_m_2</a> * <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">sigma</a> * <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">sigma</a> / 4;</div>
-<div class="line"><span class="lineno">   65</span> </div>
-<div class="line"><span class="lineno">   66</span>        <span class="keyword">const</span> <a class="code hl_typedef" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">b</a> = B / A;</div>
-<div class="line"><span class="lineno">   67</span>        <span class="keyword">const</span> <a class="code hl_typedef" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> <a class="code hl_variable" href="namespacecon.html#a2ff3edf57629ccb9a49d5bde7278a7c4">c</a> = <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">C</a> / A;</div>
-<div class="line"><span class="lineno">   68</span>        <span class="keyword">const</span> <a class="code hl_typedef" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">d</a> = <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">D</a> / A;</div>
-<div class="line"><span class="lineno">   69</span>        <span class="keyword">const</span> <a class="code hl_typedef" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">P</a> = <a class="code hl_variable" href="namespacecon.html#a2ff3edf57629ccb9a49d5bde7278a7c4">c</a> - <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">b</a> * <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">b</a> / 3;</div>
-<div class="line"><span class="lineno">   70</span>        <span class="keyword">const</span> <a class="code hl_typedef" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">Q</a> = 2 * <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">b</a> * <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">b</a> * <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">b</a> / 27 - <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">b</a> * <a class="code hl_variable" href="namespacecon.html#a2ff3edf57629ccb9a49d5bde7278a7c4">c</a> / 3 + <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">d</a>;</div>
-<div class="line"><span class="lineno">   71</span>        <span class="keyword">const</span> <a class="code hl_typedef" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">u</a> = std::sqrt(-<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">P</a> / 3);</div>
-<div class="line"><span class="lineno">   72</span>        <span class="keyword">const</span> <a class="code hl_typedef" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">v</a> = std::clamp(3 * <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">Q</a> / (2 * <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">P</a> * <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">u</a>), -1.0, 1.0);</div>
-<div class="line"><span class="lineno">   73</span>        <span class="keyword">const</span> <a class="code hl_typedef" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">uds</a> = 2 * <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">u</a> * std::cos((std::acos(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">v</a>) - 2 * <a class="code hl_variable" href="namespacecon.html#aa0ccd904b754d0f907898a942516d121">con::pi</a>) / 3) - <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">b</a> / 3;</div>
-<div class="line"><span class="lineno">   74</span>        <span class="keywordflow">return</span> std::sqrt(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">uds</a>);</div>
-<div class="line"><span class="lineno">   75</span>    }</div>
-<div class="line"><span class="lineno">   76</span>}</div>
+<p class="definition">Definition at line <a class="el" href="shock_8cpp_source.html#l00091">91</a> of file <a class="el" href="shock_8cpp_source.html">shock.cpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   91</span>                                                      {</div>
+<div class="line"><span class="lineno">   92</span>    <span class="keyword">const</span> <a class="code hl_typedef" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">ad_idx</a> = <a class="code hl_function" href="namespacephysics_1_1thermo.html#a8d90fdf6e3727fb58e7beb1c4f2fd50c">physics::thermo::adiabatic_idx</a>(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">gamma_rel</a>);</div>
+<div class="line"><span class="lineno">   93</span>    <span class="keyword">const</span> <a class="code hl_typedef" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">gamma_m_1</a> = <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">gamma_rel</a> - 1; <span class="comment">// (gamma_rel - 1)</span></div>
+<div class="line"><span class="lineno">   94</span>    <span class="keyword">const</span> <a class="code hl_typedef" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">ad_idx_m_2</a> = <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">ad_idx</a> - 2;   <span class="comment">// (ad_idx - 2)</span></div>
+<div class="line"><span class="lineno">   95</span>    <span class="keyword">const</span> <a class="code hl_typedef" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">ad_idx_m_1</a> = <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">ad_idx</a> - 1;   <span class="comment">// (ad_idx - 1)</span></div>
+<div class="line"><span class="lineno">   96</span>    <span class="keywordflow">if</span> (<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">sigma</a> &lt;= <a class="code hl_variable" href="namespacecon.html#ae257fca076d03dd535871a9824d2f178">con::sigma_cut</a>) {</div>
+<div class="line"><span class="lineno">   97</span>        <span class="keywordflow">return</span> std::sqrt(std::fabs(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">gamma_m_1</a> * <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">ad_idx_m_1</a> * <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">ad_idx_m_1</a> / (-<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">ad_idx</a> * <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">ad_idx_m_2</a> * <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">gamma_m_1</a> + 2)));</div>
+<div class="line"><span class="lineno">   98</span>    } <span class="keywordflow">else</span> {</div>
+<div class="line"><span class="lineno">   99</span>        <span class="keyword">const</span> <a class="code hl_typedef" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">gamma_sq</a> = <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">gamma_rel</a> * <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">gamma_rel</a>; <span class="comment">// gamma_rel^2</span></div>
+<div class="line"><span class="lineno">  100</span>        <span class="keyword">const</span> <a class="code hl_typedef" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">gamma_p_1</a> = <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">gamma_rel</a> + 1;        <span class="comment">// (gamma_rel + 1)</span></div>
+<div class="line"><span class="lineno">  101</span> </div>
+<div class="line"><span class="lineno">  102</span>        <span class="comment">// Precompute common terms</span></div>
+<div class="line"><span class="lineno">  103</span>        <span class="keyword">const</span> <a class="code hl_typedef" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">term1</a> = -<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">ad_idx</a> * <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">ad_idx_m_2</a>;</div>
+<div class="line"><span class="lineno">  104</span>        <span class="keyword">const</span> <a class="code hl_typedef" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">term2</a> = <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">gamma_sq</a> - 1;</div>
+<div class="line"><span class="lineno">  105</span> </div>
+<div class="line"><span class="lineno">  106</span>        <span class="comment">// Compute coefficients</span></div>
+<div class="line"><span class="lineno">  107</span>        <span class="keyword">const</span> <a class="code hl_typedef" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> A = <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">term1</a> * <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">gamma_m_1</a> + 2;</div>
+<div class="line"><span class="lineno">  108</span>        <span class="keyword">const</span> <a class="code hl_typedef" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> B = -<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">gamma_p_1</a> * (-<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">ad_idx_m_2</a> * (<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">ad_idx</a> * <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">gamma_sq</a> + 1) + <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">ad_idx</a> * <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">ad_idx_m_1</a> * <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">gamma_rel</a>) * <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">sigma</a> -</div>
+<div class="line"><span class="lineno">  109</span>                       <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">gamma_m_1</a> * (<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">term1</a> * (<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">gamma_sq</a> - 2) + 2 * <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">gamma_rel</a> + 3);</div>
+<div class="line"><span class="lineno">  110</span>        <span class="keyword">const</span> <a class="code hl_typedef" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">C</a> = <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">gamma_p_1</a> * (<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">ad_idx</a> * (1 - <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">ad_idx</a> / 4) * <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">term2</a> + 1) * <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">sigma</a> * <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">sigma</a> +</div>
+<div class="line"><span class="lineno">  111</span>                       <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">term2</a> * (2 * <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">gamma_rel</a> + <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">ad_idx_m_2</a> * (<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">ad_idx</a> * <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">gamma_rel</a> - 1)) * <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">sigma</a> +</div>
+<div class="line"><span class="lineno">  112</span>                       <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">gamma_p_1</a> * <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">gamma_m_1</a> * <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">gamma_m_1</a> * <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">ad_idx_m_1</a> * <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">ad_idx_m_1</a>;</div>
+<div class="line"><span class="lineno">  113</span>        <span class="keyword">const</span> <a class="code hl_typedef" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">D</a> = -<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">gamma_m_1</a> * <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">gamma_p_1</a> * <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">gamma_p_1</a> * <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">ad_idx_m_2</a> * <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">ad_idx_m_2</a> * <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">sigma</a> * <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">sigma</a> / 4;</div>
+<div class="line"><span class="lineno">  114</span> </div>
+<div class="line"><span class="lineno">  115</span>        <span class="keyword">const</span> <a class="code hl_typedef" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">b</a> = B / A;</div>
+<div class="line"><span class="lineno">  116</span>        <span class="keyword">const</span> <a class="code hl_typedef" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> <a class="code hl_variable" href="namespacecon.html#a2ff3edf57629ccb9a49d5bde7278a7c4">c</a> = <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">C</a> / A;</div>
+<div class="line"><span class="lineno">  117</span>        <span class="keyword">const</span> <a class="code hl_typedef" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">d</a> = <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">D</a> / A;</div>
+<div class="line"><span class="lineno">  118</span>        <span class="keyword">const</span> <a class="code hl_typedef" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">P</a> = <a class="code hl_variable" href="namespacecon.html#a2ff3edf57629ccb9a49d5bde7278a7c4">c</a> - <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">b</a> * <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">b</a> / 3;</div>
+<div class="line"><span class="lineno">  119</span>        <span class="keyword">const</span> <a class="code hl_typedef" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">Q</a> = 2 * <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">b</a> * <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">b</a> * <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">b</a> / 27 - <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">b</a> * <a class="code hl_variable" href="namespacecon.html#a2ff3edf57629ccb9a49d5bde7278a7c4">c</a> / 3 + <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">d</a>;</div>
+<div class="line"><span class="lineno">  120</span>        <span class="keyword">const</span> <a class="code hl_typedef" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">u</a> = std::sqrt(-<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">P</a> / 3);</div>
+<div class="line"><span class="lineno">  121</span>        <span class="keyword">const</span> <a class="code hl_typedef" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">v</a> = std::clamp(3 * <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">Q</a> / (2 * <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">P</a> * <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">u</a>), -1.0, 1.0);</div>
+<div class="line"><span class="lineno">  122</span>        <span class="keyword">const</span> <a class="code hl_typedef" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">uds</a> = 2 * <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">u</a> * std::cos((std::acos(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">v</a>) - 2 * <a class="code hl_variable" href="namespacecon.html#aa0ccd904b754d0f907898a942516d121">con::pi</a>) / 3) - <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">b</a> / 3;</div>
+<div class="line"><span class="lineno">  123</span>        <span class="keywordflow">return</span> std::sqrt(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">uds</a>);</div>
+<div class="line"><span class="lineno">  124</span>    }</div>
+<div class="line"><span class="lineno">  125</span>}</div>
 <div class="ttc" id="anamespacecon_html_ae257fca076d03dd535871a9824d2f178"><div class="ttname"><a href="namespacecon.html#ae257fca076d03dd535871a9824d2f178">con::sigma_cut</a></div><div class="ttdeci">constexpr Real sigma_cut</div><div class="ttdoc">Cutoff magnetization value.</div><div class="ttdef"><b>Definition</b> <a href="macros_8h_source.html#l00104">macros.h:104</a></div></div>
 <div class="ttc" id="anamespacephysics_1_1thermo_html_a8d90fdf6e3727fb58e7beb1c4f2fd50c"><div class="ttname"><a href="namespacephysics_1_1thermo.html#a8d90fdf6e3727fb58e7beb1c4f2fd50c">physics::thermo::adiabatic_idx</a></div><div class="ttdeci">Real adiabatic_idx(Real gamma)</div><div class="ttdoc">Computes adiabatic index as a function of the Lorentz factor.</div><div class="ttdef"><b>Definition</b> <a href="physics_8h_source.html#l00057">physics.h:57</a></div></div>
 </div><!-- fragment --><div class="dynheader">
@@ -1019,15 +999,15 @@ Here is the caller graph for this function:</div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>The downstream magnetic field strength </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="shock_8h_source.html#l00417">417</a> of file <a class="el" href="shock_8h_source.html">shock.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  417</span>                                                                                                        {</div>
-<div class="line"><span class="lineno">  418</span>    <span class="keyword">const</span> <a class="code hl_typedef" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">rho_downstr</a> = <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">rho_upstr</a> * <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">comp_ratio</a>;</div>
-<div class="line"><span class="lineno">  419</span> </div>
-<div class="line"><span class="lineno">  420</span>    <span class="keyword">const</span> <a class="code hl_typedef" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">e_th</a> = (Gamma_th - 1) * <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">rho_downstr</a> * <a class="code hl_variable" href="namespacecon.html#a26ef2b83dd09c356e324bd243b498764">con::c2</a>;</div>
-<div class="line"><span class="lineno">  421</span> </div>
-<div class="line"><span class="lineno">  422</span>    <span class="keywordflow">return</span> <a class="code hl_function" href="shock_8h.html#ac9f33883cbf8961d948ef62692866a2b">compute_comv_weibel_B</a>(eps_B, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">e_th</a>) + <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">B_upstr</a> * <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">comp_ratio</a>;</div>
-<div class="line"><span class="lineno">  423</span>}</div>
-<div class="ttc" id="ashock_8h_html_ac9f33883cbf8961d948ef62692866a2b"><div class="ttname"><a href="shock_8h.html#ac9f33883cbf8961d948ef62692866a2b">compute_comv_weibel_B</a></div><div class="ttdeci">Real compute_comv_weibel_B(Real eps_B, Real e_thermal)</div><div class="ttdoc">Computes the comoving magnetic field using the Weibel instability mechanism.</div><div class="ttdef"><b>Definition</b> <a href="shock_8h_source.html#l00173">shock.h:173</a></div></div>
+<p class="definition">Definition at line <a class="el" href="shock_8h_source.html#l00497">497</a> of file <a class="el" href="shock_8h_source.html">shock.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  497</span>                                                                                                        {</div>
+<div class="line"><span class="lineno">  498</span>    <span class="keyword">const</span> <a class="code hl_typedef" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">rho_downstr</a> = <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">rho_upstr</a> * <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">comp_ratio</a>;</div>
+<div class="line"><span class="lineno">  499</span> </div>
+<div class="line"><span class="lineno">  500</span>    <span class="keyword">const</span> <a class="code hl_typedef" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">e_th</a> = (Gamma_th - 1) * <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">rho_downstr</a> * <a class="code hl_variable" href="namespacecon.html#a26ef2b83dd09c356e324bd243b498764">con::c2</a>;</div>
+<div class="line"><span class="lineno">  501</span> </div>
+<div class="line"><span class="lineno">  502</span>    <span class="keywordflow">return</span> <a class="code hl_function" href="shock_8h.html#ac9f33883cbf8961d948ef62692866a2b">compute_comv_weibel_B</a>(eps_B, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">e_th</a>) + <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">B_upstr</a> * <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">comp_ratio</a>;</div>
+<div class="line"><span class="lineno">  503</span>}</div>
+<div class="ttc" id="ashock_8h_html_ac9f33883cbf8961d948ef62692866a2b"><div class="ttname"><a href="shock_8h.html#ac9f33883cbf8961d948ef62692866a2b">compute_comv_weibel_B</a></div><div class="ttdeci">Real compute_comv_weibel_B(Real eps_B, Real e_thermal)</div><div class="ttdoc">Computes the comoving magnetic field using the Weibel instability mechanism.</div><div class="ttdef"><b>Definition</b> <a href="shock_8h_source.html#l00252">shock.h:252</a></div></div>
 </div><!-- fragment --><div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -1078,10 +1058,10 @@ Here is the call graph for this function:</div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>The rate of change of radius with respect to observer time </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="shock_8h_source.html#l00184">184</a> of file <a class="el" href="shock_8h_source.html">shock.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  184</span>                                     {</div>
-<div class="line"><span class="lineno">  185</span>    <span class="keywordflow">return</span> (<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">beta</a> * <a class="code hl_variable" href="namespacecon.html#a2ff3edf57629ccb9a49d5bde7278a7c4">con::c</a>) / (1 - <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">beta</a>);</div>
-<div class="line"><span class="lineno">  186</span>}</div>
+<p class="definition">Definition at line <a class="el" href="shock_8h_source.html#l00263">263</a> of file <a class="el" href="shock_8h_source.html">shock.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  263</span>                                     {</div>
+<div class="line"><span class="lineno">  264</span>    <span class="keywordflow">return</span> (<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">beta</a> * <a class="code hl_variable" href="namespacecon.html#a2ff3edf57629ccb9a49d5bde7278a7c4">con::c</a>) / (1 - <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">beta</a>);</div>
+<div class="line"><span class="lineno">  265</span>}</div>
 </div><!-- fragment --><div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -1140,10 +1120,10 @@ Here is the call graph for this function:</div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>The rate of change of comoving time with respect to observer time </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="shock_8h_source.html#l00215">215</a> of file <a class="el" href="shock_8h_source.html">shock.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  215</span>                                                      {</div>
-<div class="line"><span class="lineno">  216</span>    <span class="keywordflow">return</span> 1 / (Gamma * (1 - <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">beta</a>));</div>
-<div class="line"><span class="lineno">  217</span>};</div>
+<p class="definition">Definition at line <a class="el" href="shock_8h_source.html#l00294">294</a> of file <a class="el" href="shock_8h_source.html">shock.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  294</span>                                                      {</div>
+<div class="line"><span class="lineno">  295</span>    <span class="keywordflow">return</span> 1 / (Gamma * (1 - <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">beta</a>));</div>
+<div class="line"><span class="lineno">  296</span>};</div>
 </div><!-- fragment --><div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -1223,14 +1203,14 @@ Here is the call graph for this function:</div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>The rate of change of the half-opening angle </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="shock_8h_source.html#l00199">199</a> of file <a class="el" href="shock_8h_source.html">shock.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  199</span>                                                                                       {</div>
-<div class="line"><span class="lineno">  200</span>    <span class="keyword">constexpr</span> <a class="code hl_typedef" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">Q</a> = 7;</div>
-<div class="line"><span class="lineno">  201</span>    <span class="keyword">const</span> <a class="code hl_typedef" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">u2</a> = Gamma * Gamma - 1;</div>
-<div class="line"><span class="lineno">  202</span>    <span class="keyword">const</span> <a class="code hl_typedef" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">u</a> = std::sqrt(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">u2</a>);</div>
-<div class="line"><span class="lineno">  203</span>    <span class="keyword">const</span> <a class="code hl_typedef" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">f</a> = 1 / (1 + <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">u</a> * theta_s * <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">Q</a>);</div>
-<div class="line"><span class="lineno">  204</span>    <span class="keywordflow">return</span> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">drdt</a> / (2 * Gamma * r) * std::sqrt((2 * <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">u2</a> + 3) / (4 * <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">u2</a> + 3)) * <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">f</a>;</div>
-<div class="line"><span class="lineno">  205</span>}</div>
+<p class="definition">Definition at line <a class="el" href="shock_8h_source.html#l00278">278</a> of file <a class="el" href="shock_8h_source.html">shock.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  278</span>                                                                                       {</div>
+<div class="line"><span class="lineno">  279</span>    <span class="keyword">constexpr</span> <a class="code hl_typedef" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">Q</a> = 7;</div>
+<div class="line"><span class="lineno">  280</span>    <span class="keyword">const</span> <a class="code hl_typedef" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">u2</a> = Gamma * Gamma - 1;</div>
+<div class="line"><span class="lineno">  281</span>    <span class="keyword">const</span> <a class="code hl_typedef" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">u</a> = std::sqrt(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">u2</a>);</div>
+<div class="line"><span class="lineno">  282</span>    <span class="keyword">const</span> <a class="code hl_typedef" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">f</a> = 1 / (1 + <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">u</a> * theta_s * <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">Q</a>);</div>
+<div class="line"><span class="lineno">  283</span>    <span class="keywordflow">return</span> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">drdt</a> / (2 * Gamma * r) * std::sqrt((2 * <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">u2</a> + 3) / (4 * <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">u2</a> + 3)) * <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">f</a>;</div>
+<div class="line"><span class="lineno">  284</span>}</div>
 </div><!-- fragment --><div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -1289,10 +1269,10 @@ Here is the call graph for this function:</div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>The effective Lorentz factor </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="shock_8h_source.html#l00148">148</a> of file <a class="el" href="shock_8h_source.html">shock.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  148</span>                                                          {</div>
-<div class="line"><span class="lineno">  149</span>    <span class="keywordflow">return</span> (<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">adx</a> * Gamma * Gamma - <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">adx</a> + 1) / Gamma;</div>
-<div class="line"><span class="lineno">  150</span>}</div>
+<p class="definition">Definition at line <a class="el" href="shock_8h_source.html#l00227">227</a> of file <a class="el" href="shock_8h_source.html">shock.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  227</span>                                                          {</div>
+<div class="line"><span class="lineno">  228</span>    <span class="keywordflow">return</span> (<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">adx</a> * Gamma * Gamma - <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">adx</a> + 1) / Gamma;</div>
+<div class="line"><span class="lineno">  229</span>}</div>
 </div><!-- fragment --><div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -1351,11 +1331,11 @@ Here is the call graph for this function:</div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>The derivative of the effective Lorentz factor </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="shock_8h_source.html#l00160">160</a> of file <a class="el" href="shock_8h_source.html">shock.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  160</span>                                                                 {</div>
-<div class="line"><span class="lineno">  161</span>    <span class="keyword">const</span> <a class="code hl_typedef" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">Gamma2</a> = Gamma * Gamma;</div>
-<div class="line"><span class="lineno">  162</span>    <span class="keywordflow">return</span> (<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">adx</a> * <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">Gamma2</a> + <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">adx</a> - 1) / <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">Gamma2</a>;</div>
-<div class="line"><span class="lineno">  163</span>}</div>
+<p class="definition">Definition at line <a class="el" href="shock_8h_source.html#l00239">239</a> of file <a class="el" href="shock_8h_source.html">shock.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  239</span>                                                                 {</div>
+<div class="line"><span class="lineno">  240</span>    <span class="keyword">const</span> <a class="code hl_typedef" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">Gamma2</a> = Gamma * Gamma;</div>
+<div class="line"><span class="lineno">  241</span>    <span class="keywordflow">return</span> (<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">adx</a> * <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">Gamma2</a> + <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">adx</a> - 1) / <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">Gamma2</a>;</div>
+<div class="line"><span class="lineno">  242</span>}</div>
 </div><!-- fragment --><div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -1414,12 +1394,12 @@ Here is the call graph for this function:</div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>The derived Lorentz factor </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="shock_8h_source.html#l00265">265</a> of file <a class="el" href="shock_8h_source.html">shock.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  265</span>                                                                     {</div>
-<div class="line"><span class="lineno">  266</span>    <span class="keyword">const</span> <a class="code hl_typedef" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">b</a> = -2 * <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">gamma4</a> * <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">gamma_rel</a>;</div>
-<div class="line"><span class="lineno">  267</span>    <span class="keyword">const</span> <a class="code hl_typedef" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> <a class="code hl_variable" href="namespacecon.html#a2ff3edf57629ccb9a49d5bde7278a7c4">c</a> = <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">gamma4</a> * <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">gamma4</a> + <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">gamma_rel</a> * <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">gamma_rel</a> - 1;</div>
-<div class="line"><span class="lineno">  268</span>    <span class="keywordflow">return</span> (-<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">b</a> - std::sqrt(std::fabs(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">b</a> * <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">b</a> - 4 * c))) / 2;</div>
-<div class="line"><span class="lineno">  269</span>}</div>
+<p class="definition">Definition at line <a class="el" href="shock_8h_source.html#l00344">344</a> of file <a class="el" href="shock_8h_source.html">shock.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  344</span>                                                                     {</div>
+<div class="line"><span class="lineno">  345</span>    <span class="keyword">const</span> <a class="code hl_typedef" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">b</a> = -2 * <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">gamma4</a> * <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">gamma_rel</a>;</div>
+<div class="line"><span class="lineno">  346</span>    <span class="keyword">const</span> <a class="code hl_typedef" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> <a class="code hl_variable" href="namespacecon.html#a2ff3edf57629ccb9a49d5bde7278a7c4">c</a> = <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">gamma4</a> * <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">gamma4</a> + <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">gamma_rel</a> * <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">gamma_rel</a> - 1;</div>
+<div class="line"><span class="lineno">  347</span>    <span class="keywordflow">return</span> (-<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">b</a> - std::sqrt(std::fabs(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">b</a> * <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">b</a> - 4 * c))) / 2;</div>
+<div class="line"><span class="lineno">  348</span>}</div>
 </div><!-- fragment --><div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -1485,19 +1465,19 @@ Here is the call graph for this function:</div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>The thermal Lorentz factor </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="shock_8h_source.html#l00351">351</a> of file <a class="el" href="shock_8h_source.html">shock.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  351</span>                                                                            {</div>
-<div class="line"><span class="lineno">  352</span>    <span class="keywordflow">if</span> (<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">mass</a> == 0) [[<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">unlikely</a>]] {</div>
-<div class="line"><span class="lineno">  353</span>        <span class="keywordflow">return</span> 1;</div>
-<div class="line"><span class="lineno">  354</span>    } <span class="keywordflow">else</span> [[<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">likely</a>]] {</div>
-<div class="line"><span class="lineno">  355</span>        <span class="keyword">const</span> <a class="code hl_typedef" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> Gamma_th = <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">U_th</a> / (<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">mass</a> * <a class="code hl_variable" href="namespacecon.html#a26ef2b83dd09c356e324bd243b498764">con::c2</a>) + 1;</div>
-<div class="line"><span class="lineno">  356</span>        <span class="keywordflow">if</span> (<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">limiter</a> &amp;&amp; Gamma_th &lt; <a class="code hl_variable" href="namespacecon.html#a9c6b1c9b349c790392fa370c8d9e13a8">con::Gamma_cut</a>) {</div>
-<div class="line"><span class="lineno">  357</span>            <span class="keywordflow">return</span> 1;</div>
-<div class="line"><span class="lineno">  358</span>        } <span class="keywordflow">else</span> {</div>
-<div class="line"><span class="lineno">  359</span>            <span class="keywordflow">return</span> Gamma_th;</div>
-<div class="line"><span class="lineno">  360</span>        }</div>
-<div class="line"><span class="lineno">  361</span>    }</div>
-<div class="line"><span class="lineno">  362</span>}</div>
+<p class="definition">Definition at line <a class="el" href="shock_8h_source.html#l00431">431</a> of file <a class="el" href="shock_8h_source.html">shock.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  431</span>                                                                            {</div>
+<div class="line"><span class="lineno">  432</span>    <span class="keywordflow">if</span> (<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">mass</a> == 0) [[<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">unlikely</a>]] {</div>
+<div class="line"><span class="lineno">  433</span>        <span class="keywordflow">return</span> 1;</div>
+<div class="line"><span class="lineno">  434</span>    } <span class="keywordflow">else</span> [[<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">likely</a>]] {</div>
+<div class="line"><span class="lineno">  435</span>        <span class="keyword">const</span> <a class="code hl_typedef" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> Gamma_th = <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">U_th</a> / (<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">mass</a> * <a class="code hl_variable" href="namespacecon.html#a26ef2b83dd09c356e324bd243b498764">con::c2</a>) + 1;</div>
+<div class="line"><span class="lineno">  436</span>        <span class="keywordflow">if</span> (<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">limiter</a> &amp;&amp; Gamma_th &lt; <a class="code hl_variable" href="namespacecon.html#a9c6b1c9b349c790392fa370c8d9e13a8">con::Gamma_cut</a>) {</div>
+<div class="line"><span class="lineno">  437</span>            <span class="keywordflow">return</span> 1;</div>
+<div class="line"><span class="lineno">  438</span>        } <span class="keywordflow">else</span> {</div>
+<div class="line"><span class="lineno">  439</span>            <span class="keywordflow">return</span> Gamma_th;</div>
+<div class="line"><span class="lineno">  440</span>        }</div>
+<div class="line"><span class="lineno">  441</span>    }</div>
+<div class="line"><span class="lineno">  442</span>}</div>
 <div class="ttc" id="anamespacecon_html_a9c6b1c9b349c790392fa370c8d9e13a8"><div class="ttname"><a href="namespacecon.html#a9c6b1c9b349c790392fa370c8d9e13a8">con::Gamma_cut</a></div><div class="ttdeci">constexpr Real Gamma_cut</div><div class="ttdoc">Cutoff Lorentz factor value.</div><div class="ttdef"><b>Definition</b> <a href="macros_8h_source.html#l00102">macros.h:102</a></div></div>
 </div><!-- fragment --><div class="dynheader">
 Here is the call graph for this function:</div>
@@ -1571,19 +1551,20 @@ Here is the call graph for this function:</div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>The radiative efficiency </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="shock_8h_source.html#l00329">329</a> of file <a class="el" href="shock_8h_source.html">shock.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  329</span>                                                                                                   { <span class="comment">//</span></div>
-<div class="line"><span class="lineno">  330</span>    <span class="keyword">const</span> <a class="code hl_typedef" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> gamma_m = (rad.p - 2) / (rad.p - 1) * rad.eps_e * (Gamma_th - 1) * <a class="code hl_variable" href="namespacecon.html#a47a54b8f758d02e6f8b85e41207ae620">con::mp</a> / <a class="code hl_variable" href="namespacecon.html#a740c8edb3d4f2d904a1c76002f84fb7e">con::me</a> / rad.xi_e + 1;</div>
-<div class="line"><span class="lineno">  331</span>    <span class="keyword">const</span> <a class="code hl_typedef" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">gamma_c_bar</a> = (6 * <a class="code hl_variable" href="namespacecon.html#aa0ccd904b754d0f907898a942516d121">con::pi</a> * <a class="code hl_variable" href="namespacecon.html#a740c8edb3d4f2d904a1c76002f84fb7e">con::me</a> * <a class="code hl_variable" href="namespacecon.html#a2ff3edf57629ccb9a49d5bde7278a7c4">con::c</a> / <a class="code hl_variable" href="namespacecon.html#ad19e5b64c85c3e709fd0944358be97f6">con::sigmaT</a>) / (rad.eps_B * <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">u</a> * t_comv);</div>
-<div class="line"><span class="lineno">  332</span>    <span class="keyword">const</span> <a class="code hl_typedef" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> gamma_c = 0.5 * (<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">gamma_c_bar</a> + std::sqrt(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">gamma_c_bar</a> * <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">gamma_c_bar</a> + 4));</div>
-<div class="line"><span class="lineno">  333</span> </div>
-<div class="line"><span class="lineno">  334</span>    <span class="keyword">const</span> <a class="code hl_typedef" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">g_m_g_c</a> = std::fabs(gamma_m / gamma_c); <span class="comment">// gamma_m/gamma_c</span></div>
-<div class="line"><span class="lineno">  335</span>    <span class="keywordflow">if</span> (<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">g_m_g_c &lt; 1 &amp;&amp; rad.p &gt;</a> 2) {                    <span class="comment">// slow cooling</span></div>
-<div class="line"><span class="lineno">  336</span>        <span class="keywordflow">return</span> rad.eps_e * <a class="code hl_function" href="utilities_8h.html#a4520a27a10a2aef33c99ad8c679da404">fast_pow</a>(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">g_m_g_c</a>, rad.p - 2);</div>
-<div class="line"><span class="lineno">  337</span>    } <span class="keywordflow">else</span> { <span class="comment">// fast cooling or p&lt;=2</span></div>
-<div class="line"><span class="lineno">  338</span>        <span class="keywordflow">return</span> rad.eps_e;</div>
-<div class="line"><span class="lineno">  339</span>    }</div>
-<div class="line"><span class="lineno">  340</span>}</div>
+<p class="definition">Definition at line <a class="el" href="shock_8h_source.html#l00408">408</a> of file <a class="el" href="shock_8h_source.html">shock.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  408</span>                                                                                                   { <span class="comment">//</span></div>
+<div class="line"><span class="lineno">  409</span>    <span class="keyword">const</span> <a class="code hl_typedef" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> gamma_m = (rad.p - 2) / (rad.p - 1) * rad.eps_e * (Gamma_th - 1) * <a class="code hl_variable" href="namespacecon.html#a47a54b8f758d02e6f8b85e41207ae620">con::mp</a> / <a class="code hl_variable" href="namespacecon.html#a740c8edb3d4f2d904a1c76002f84fb7e">con::me</a> / rad.xi_e + 1;</div>
+<div class="line"><span class="lineno">  410</span>    <span class="keyword">const</span> <a class="code hl_typedef" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> gamma_c = std::max((6 * <a class="code hl_variable" href="namespacecon.html#aa0ccd904b754d0f907898a942516d121">con::pi</a> * <a class="code hl_variable" href="namespacecon.html#a740c8edb3d4f2d904a1c76002f84fb7e">con::me</a> * <a class="code hl_variable" href="namespacecon.html#a2ff3edf57629ccb9a49d5bde7278a7c4">con::c</a> / <a class="code hl_variable" href="namespacecon.html#ad19e5b64c85c3e709fd0944358be97f6">con::sigmaT</a>) / (rad.eps_B * <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">u</a> * t_comv), 1.0);</div>
+<div class="line"><span class="lineno">  411</span> </div>
+<div class="line"><span class="lineno">  412</span>    <span class="keyword">const</span> <a class="code hl_typedef" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">g_m_g_c</a> = std::fabs(gamma_m / gamma_c); <span class="comment">// gamma_m/gamma_c</span></div>
+<div class="line"><span class="lineno">  413</span>    <span class="keywordflow">if</span> (<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">g_m_g_c &lt; 1 &amp;&amp; rad.p &gt;</a> 2) {                    <span class="comment">// slow cooling</span></div>
+<div class="line"><span class="lineno">  414</span>        <span class="keywordflow">if</span> (<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">g_m_g_c</a> &lt; 1e-2)</div>
+<div class="line"><span class="lineno">  415</span>            <span class="keywordflow">return</span> 0;</div>
+<div class="line"><span class="lineno">  416</span>        <span class="keywordflow">return</span> rad.eps_e * <a class="code hl_function" href="utilities_8h.html#a4520a27a10a2aef33c99ad8c679da404">fast_pow</a>(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">g_m_g_c</a>, rad.p - 2);</div>
+<div class="line"><span class="lineno">  417</span>    } <span class="keywordflow">else</span> { <span class="comment">// fast cooling or p&lt;=2</span></div>
+<div class="line"><span class="lineno">  418</span>        <span class="keywordflow">return</span> rad.eps_e;</div>
+<div class="line"><span class="lineno">  419</span>    }</div>
+<div class="line"><span class="lineno">  420</span>}</div>
 <div class="ttc" id="anamespacecon_html_a47a54b8f758d02e6f8b85e41207ae620"><div class="ttname"><a href="namespacecon.html#a47a54b8f758d02e6f8b85e41207ae620">con::mp</a></div><div class="ttdeci">constexpr Real mp</div><div class="ttdoc">Proton mass in code units.</div><div class="ttdef"><b>Definition</b> <a href="macros_8h_source.html#l00089">macros.h:89</a></div></div>
 <div class="ttc" id="anamespacecon_html_a740c8edb3d4f2d904a1c76002f84fb7e"><div class="ttname"><a href="namespacecon.html#a740c8edb3d4f2d904a1c76002f84fb7e">con::me</a></div><div class="ttdeci">constexpr Real me</div><div class="ttdoc">Electron mass in code units.</div><div class="ttdef"><b>Definition</b> <a href="macros_8h_source.html#l00090">macros.h:90</a></div></div>
 <div class="ttc" id="anamespacecon_html_ad19e5b64c85c3e709fd0944358be97f6"><div class="ttname"><a href="namespacecon.html#ad19e5b64c85c3e709fd0944358be97f6">con::sigmaT</a></div><div class="ttdeci">constexpr Real sigmaT</div><div class="ttdoc">Thomson cross-section in code units.</div><div class="ttdef"><b>Definition</b> <a href="macros_8h_source.html#l00098">macros.h:98</a></div></div>
@@ -1655,10 +1636,10 @@ Here is the call graph for this function:</div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>The relative Lorentz factor between the two frames </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="shock_8h_source.html#l00239">239</a> of file <a class="el" href="shock_8h_source.html">shock.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  239</span>                                                        {</div>
-<div class="line"><span class="lineno">  240</span>    <span class="keywordflow">return</span> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">gamma1</a> * <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">gamma2</a> - std::sqrt(std::fabs((<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">gamma1</a> * <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">gamma1</a> - 1) * (<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">gamma2</a> * <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">gamma2</a> - 1)));</div>
-<div class="line"><span class="lineno">  241</span>}</div>
+<p class="definition">Definition at line <a class="el" href="shock_8h_source.html#l00318">318</a> of file <a class="el" href="shock_8h_source.html">shock.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  318</span>                                                        {</div>
+<div class="line"><span class="lineno">  319</span>    <span class="keywordflow">return</span> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">gamma1</a> * <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">gamma2</a> - std::sqrt(std::fabs((<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">gamma1</a> * <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">gamma1</a> - 1) * (<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">gamma2</a> * <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">gamma2</a> - 1)));</div>
+<div class="line"><span class="lineno">  320</span>}</div>
 </div><!-- fragment --><div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -1741,10 +1722,10 @@ Here is the caller graph for this function:</div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>The relative Lorentz factor between the two frames </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="shock_8h_source.html#l00253">253</a> of file <a class="el" href="shock_8h_source.html">shock.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  253</span>                                                                                {</div>
-<div class="line"><span class="lineno">  254</span>    <span class="keywordflow">return</span> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">gamma1</a> * <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">gamma2</a> * (1 - <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">beta1</a> * <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">beta2</a>);</div>
-<div class="line"><span class="lineno">  255</span>}</div>
+<p class="definition">Definition at line <a class="el" href="shock_8h_source.html#l00332">332</a> of file <a class="el" href="shock_8h_source.html">shock.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  332</span>                                                                                {</div>
+<div class="line"><span class="lineno">  333</span>    <span class="keywordflow">return</span> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">gamma1</a> * <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">gamma2</a> * (1 - <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">beta1</a> * <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">beta2</a>);</div>
+<div class="line"><span class="lineno">  334</span>}</div>
 </div><!-- fragment --><div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -1803,12 +1784,12 @@ Here is the call graph for this function:</div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>The shell spreading rate in the comoving frame </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="shock_8h_source.html#l00314">314</a> of file <a class="el" href="shock_8h_source.html">shock.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  314</span>                                                                         {</div>
-<div class="line"><span class="lineno">  315</span>    <span class="keyword">const</span> <a class="code hl_typedef" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">cs</a> = <a class="code hl_function" href="shock_8h.html#a55391189d6bdd1e0ddbc2d039424a0cc">compute_sound_speed</a>(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">Gamma_rel</a>);</div>
-<div class="line"><span class="lineno">  316</span>    <span class="keywordflow">return</span> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">cs</a> * <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">dtdt_comv</a>;</div>
-<div class="line"><span class="lineno">  317</span>}</div>
-<div class="ttc" id="ashock_8h_html_a55391189d6bdd1e0ddbc2d039424a0cc"><div class="ttname"><a href="shock_8h.html#a55391189d6bdd1e0ddbc2d039424a0cc">compute_sound_speed</a></div><div class="ttdeci">Real compute_sound_speed(Real Gamma_rel)</div><div class="ttdoc">Computes the sound speed in the shocked medium based on the relative Lorentz factor.</div><div class="ttdef"><b>Definition</b> <a href="shock_8h_source.html#l00135">shock.h:135</a></div></div>
+<p class="definition">Definition at line <a class="el" href="shock_8h_source.html#l00393">393</a> of file <a class="el" href="shock_8h_source.html">shock.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  393</span>                                                                         {</div>
+<div class="line"><span class="lineno">  394</span>    <span class="keyword">const</span> <a class="code hl_typedef" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">cs</a> = <a class="code hl_function" href="shock_8h.html#a55391189d6bdd1e0ddbc2d039424a0cc">compute_sound_speed</a>(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">Gamma_rel</a>);</div>
+<div class="line"><span class="lineno">  395</span>    <span class="keywordflow">return</span> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">cs</a> * <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">dtdt_comv</a>;</div>
+<div class="line"><span class="lineno">  396</span>}</div>
+<div class="ttc" id="ashock_8h_html_a55391189d6bdd1e0ddbc2d039424a0cc"><div class="ttname"><a href="shock_8h.html#a55391189d6bdd1e0ddbc2d039424a0cc">compute_sound_speed</a></div><div class="ttdeci">Real compute_sound_speed(Real Gamma_rel)</div><div class="ttdoc">Computes the sound speed in the shocked medium based on the relative Lorentz factor.</div><div class="ttdef"><b>Definition</b> <a href="shock_8h_source.html#l00214">shock.h:214</a></div></div>
 </div><!-- fragment --><div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -1873,10 +1854,10 @@ Here is the call graph for this function:</div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>The shock heating rate </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="shock_8h_source.html#l00279">279</a> of file <a class="el" href="shock_8h_source.html">shock.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  279</span>                                                                  {</div>
-<div class="line"><span class="lineno">  280</span>    <span class="keywordflow">return</span> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">mdot</a> * (<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">Gamma_rel</a> - 1) * <a class="code hl_variable" href="namespacecon.html#a26ef2b83dd09c356e324bd243b498764">con::c2</a>;</div>
-<div class="line"><span class="lineno">  281</span>}</div>
+<p class="definition">Definition at line <a class="el" href="shock_8h_source.html#l00358">358</a> of file <a class="el" href="shock_8h_source.html">shock.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  358</span>                                                                  {</div>
+<div class="line"><span class="lineno">  359</span>    <span class="keywordflow">return</span> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">mdot</a> * (<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">Gamma_rel</a> - 1) * <a class="code hl_variable" href="namespacecon.html#a26ef2b83dd09c356e324bd243b498764">con::c2</a>;</div>
+<div class="line"><span class="lineno">  360</span>}</div>
 </div><!-- fragment --><div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -1924,11 +1905,11 @@ Here is the call graph for this function:</div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>The sound speed as a fraction of light speed </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="shock_8h_source.html#l00135">135</a> of file <a class="el" href="shock_8h_source.html">shock.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  135</span>                                                {</div>
-<div class="line"><span class="lineno">  136</span>    <span class="keyword">const</span> <a class="code hl_typedef" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">ad_idx</a> = <a class="code hl_function" href="namespacephysics_1_1thermo.html#a8d90fdf6e3727fb58e7beb1c4f2fd50c">physics::thermo::adiabatic_idx</a>(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">Gamma_rel</a>);</div>
-<div class="line"><span class="lineno">  137</span>    <span class="keywordflow">return</span> std::sqrt(std::fabs(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">ad_idx</a> * (<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">ad_idx</a> - 1) * (<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">Gamma_rel</a> - 1) / (1 + (<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">Gamma_rel</a> - 1) * <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">ad_idx</a>))) * <a class="code hl_variable" href="namespacecon.html#a2ff3edf57629ccb9a49d5bde7278a7c4">con::c</a>;</div>
-<div class="line"><span class="lineno">  138</span>}</div>
+<p class="definition">Definition at line <a class="el" href="shock_8h_source.html#l00214">214</a> of file <a class="el" href="shock_8h_source.html">shock.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  214</span>                                                {</div>
+<div class="line"><span class="lineno">  215</span>    <span class="keyword">const</span> <a class="code hl_typedef" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">ad_idx</a> = <a class="code hl_function" href="namespacephysics_1_1thermo.html#a8d90fdf6e3727fb58e7beb1c4f2fd50c">physics::thermo::adiabatic_idx</a>(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">Gamma_rel</a>);</div>
+<div class="line"><span class="lineno">  216</span>    <span class="keywordflow">return</span> std::sqrt(std::fabs(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">ad_idx</a> * (<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">ad_idx</a> - 1) * (<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">Gamma_rel</a> - 1) / (1 + (<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">Gamma_rel</a> - 1) * <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">ad_idx</a>))) * <a class="code hl_variable" href="namespacecon.html#a2ff3edf57629ccb9a49d5bde7278a7c4">con::c</a>;</div>
+<div class="line"><span class="lineno">  217</span>}</div>
 </div><!-- fragment --><div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -2000,10 +1981,10 @@ Here is the caller graph for this function:</div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>The upstream four-velocity in the shock frame </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="shock_8h_source.html#l00104">104</a> of file <a class="el" href="shock_8h_source.html">shock.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  104</span>                                                            {</div>
-<div class="line"><span class="lineno">  105</span>    <span class="keywordflow">return</span> std::sqrt((1 + <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">u_down</a> * <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">u_down</a>) * std::fabs(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">gamma_rel</a> * <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">gamma_rel</a> - 1)) + <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">u_down</a> * <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">gamma_rel</a>;</div>
-<div class="line"><span class="lineno">  106</span>}</div>
+<p class="definition">Definition at line <a class="el" href="shock_8h_source.html#l00183">183</a> of file <a class="el" href="shock_8h_source.html">shock.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  183</span>                                                            {</div>
+<div class="line"><span class="lineno">  184</span>    <span class="keywordflow">return</span> std::sqrt((1 + <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">u_down</a> * <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">u_down</a>) * std::fabs(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">gamma_rel</a> * <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">gamma_rel</a> - 1)) + <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">u_down</a> * <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">gamma_rel</a>;</div>
+<div class="line"><span class="lineno">  185</span>}</div>
 </div><!-- fragment --><div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -2074,10 +2055,10 @@ Here is the caller graph for this function:</div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>The upstream magnetic field </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="shock_8h_source.html#l00227">227</a> of file <a class="el" href="shock_8h_source.html">shock.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  227</span>                                                     {</div>
-<div class="line"><span class="lineno">  228</span>    <span class="keywordflow">return</span> std::sqrt((4 * <a class="code hl_variable" href="namespacecon.html#aa0ccd904b754d0f907898a942516d121">con::pi</a> * <a class="code hl_variable" href="namespacecon.html#a26ef2b83dd09c356e324bd243b498764">con::c2</a>) * <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">sigma</a> * <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">rho_up</a>);</div>
-<div class="line"><span class="lineno">  229</span>}</div>
+<p class="definition">Definition at line <a class="el" href="shock_8h_source.html#l00306">306</a> of file <a class="el" href="shock_8h_source.html">shock.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  306</span>                                                     {</div>
+<div class="line"><span class="lineno">  307</span>    <span class="keywordflow">return</span> std::sqrt((4 * <a class="code hl_variable" href="namespacecon.html#aa0ccd904b754d0f907898a942516d121">con::pi</a> * <a class="code hl_variable" href="namespacecon.html#a26ef2b83dd09c356e324bd243b498764">con::c2</a>) * <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">sigma</a> * <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">rho_up</a>);</div>
+<div class="line"><span class="lineno">  308</span>}</div>
 </div><!-- fragment --><div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -2120,33 +2101,106 @@ template&lt;<a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="shock_8h_source.html#l00522">522</a> of file <a class="el" href="shock_8h_source.html">shock.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  522</span>                                            {</div>
-<div class="line"><span class="lineno">  523</span>    <span class="keyword">using namespace </span>boost::numeric::odeint;</div>
-<div class="line"><span class="lineno">  524</span> </div>
-<div class="line"><span class="lineno">  525</span>    <span class="keyword">auto</span> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">mass_derivative</a> = [&amp;](<span class="keyword">const</span> <a class="code hl_typedef" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a>&amp; <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">M</a>, <a class="code hl_typedef" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a>&amp; <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">dMdr</a>, <span class="keywordtype">double</span> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">current_r</a>) {</div>
-<div class="line"><span class="lineno">  526</span>        <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">dMdr</a> = <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">current_r</a> * <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">current_r</a> * rho(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">current_r</a>);</div>
-<div class="line"><span class="lineno">  527</span>    };</div>
-<div class="line"><span class="lineno">  528</span> </div>
-<div class="line"><span class="lineno">  529</span>    <a class="code hl_typedef" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">mass</a> = 0.0;</div>
-<div class="line"><span class="lineno">  530</span>    <a class="code hl_typedef" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">r_start</a> = r * 1<a class="code hl_variable" href="namespacecon.html#af12a6df01bfe61fa034307dfcaa1fe7f">e</a>-3;</div>
-<div class="line"><span class="lineno">  531</span>    <a class="code hl_typedef" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">r_end</a> = r;</div>
-<div class="line"><span class="lineno">  532</span>    <a class="code hl_typedef" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">dt_init</a> = <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">r_end</a> * 1<a class="code hl_variable" href="namespacecon.html#af12a6df01bfe61fa034307dfcaa1fe7f">e</a>-4;</div>
-<div class="line"><span class="lineno">  533</span> </div>
-<div class="line"><span class="lineno">  534</span>    <span class="keywordtype">size_t</span> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">steps</a> = <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">integrate_adaptive</a>(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">make_controlled</a>&lt;<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">runge_kutta_dopri5&lt;Real&gt;</a>&gt;(1e-5, 1e-5), <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">mass_derivative</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">mass</a>,</div>
-<div class="line"><span class="lineno">  535</span>                                      <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">r_start</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">r_end</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">dt_init</a>);</div>
-<div class="line"><span class="lineno">  536</span> </div>
-<div class="line"><span class="lineno">  537</span>    <span class="keywordflow">return</span> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">mass</a>;</div>
-<div class="line"><span class="lineno">  538</span>}</div>
+<p>Computes enclosed mass per solid angle. </p>
+
+<p class="definition">Definition at line <a class="el" href="shock_8h_source.html#l00551">551</a> of file <a class="el" href="shock_8h_source.html">shock.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  551</span>                                            {</div>
+<div class="line"><span class="lineno">  552</span>    <span class="keywordflow">return</span> <a class="code hl_function" href="shock_8h.html#a4eecaf485f5ac3854b4fceab00516fd4">simpson_logspace</a>(</div>
+<div class="line"><span class="lineno">  553</span>        [&amp;](<a class="code hl_typedef" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">u</a>) {</div>
+<div class="line"><span class="lineno">  554</span>            <span class="keyword">const</span> <a class="code hl_typedef" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">ri</a> = std::exp(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">u</a>);</div>
+<div class="line"><span class="lineno">  555</span>            <span class="keywordflow">return</span> rho(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">ri</a>) * <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">ri</a> * <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">ri</a> * <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">ri</a>; <span class="comment">// ρ(r&#39;) * r&#39;³ (Jacobian from u = ln r&#39;)</span></div>
+<div class="line"><span class="lineno">  556</span>        },</div>
+<div class="line"><span class="lineno">  557</span>        r);</div>
+<div class="line"><span class="lineno">  558</span>}</div>
+<div class="ttc" id="ashock_8h_html_a4eecaf485f5ac3854b4fceab00516fd4"><div class="ttname"><a href="shock_8h.html#a4eecaf485f5ac3854b4fceab00516fd4">simpson_logspace</a></div><div class="ttdeci">Real simpson_logspace(Func const &amp;f, Real r)</div><div class="ttdoc">Simpson's rule integration in log-space: ∫ f(r') dr' via u = ln(r').</div><div class="ttdef"><b>Definition</b> <a href="shock_8h_source.html#l00534">shock.h:534</a></div></div>
 </div><!-- fragment --><div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="shock_8h_acc6d84207549ad55230c89d5f2492ae0_cgraph.png" border="0" usemap="#ashock_8h_acc6d84207549ad55230c89d5f2492ae0_cgraph" alt=""/></div>
 <map name="ashock_8h_acc6d84207549ad55230c89d5f2492ae0_cgraph" id="ashock_8h_acc6d84207549ad55230c89d5f2492ae0_cgraph">
-<area shape="rect" title=" " alt="" coords="5,29,128,55"/>
-<area shape="rect" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42" title="Returns the value of a single parameter." alt="" coords="176,29,227,55"/>
-<area shape="poly" title=" " alt="" coords="128,39,162,39,162,45,128,45"/>
-<area shape="poly" title=" " alt="" coords="178,30,174,21,176,11,186,5,201,3,220,6,228,14,224,18,217,11,201,8,188,10,181,14,179,20,183,28"/>
+<area shape="rect" title="Computes enclosed mass per solid angle." alt="" coords="5,29,128,55"/>
+<area shape="rect" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42" title="Returns the value of a single parameter." alt="" coords="367,29,417,55"/>
+<area shape="poly" title=" " alt="" coords="128,39,353,39,353,45,128,45"/>
+<area shape="rect" href="shock_8h.html#a4eecaf485f5ac3854b4fceab00516fd4" title="Simpson&#39;s rule integration in log&#45;space: ∫ f(r&#39;) dr&#39; via u = ln(r&#39;)." alt="" coords="176,55,319,80"/>
+<area shape="poly" title=" " alt="" coords="129,48,163,53,162,58,128,53"/>
+<area shape="poly" title=" " alt="" coords="367,30,362,21,365,11,375,5,392,3,412,6,421,15,417,18,409,11,392,8,377,10,369,15,368,20,372,28"/>
+<area shape="poly" title=" " alt="" coords="318,52,352,46,353,51,319,57"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="acb7f53705e758d8e4bf774602de2d03e" name="acb7f53705e758d8e4bf774602de2d03e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acb7f53705e758d8e4bf774602de2d03e">&#9670;&#160;</a></span>enclosed_thermal_energy()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;<a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">typename</a> <a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">Func</a> &gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> enclosed_thermal_energy </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">Func</a> <a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">const</a> &amp;&#160;</td>
+          <td class="paramname"><em>rho</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a>&#160;</td>
+          <td class="paramname"><em>r</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a>&#160;</td>
+          <td class="paramname"><em>Gamma</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a>&#160;</td>
+          <td class="paramname"><em>ad_idx</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a>&#160;</td>
+          <td class="paramname"><em>eps_e</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Compute enclosed thermal energy per solid angle, accounting for adiabatic cooling and radiative losses of material swept at earlier radii. </p>
+
+<p class="definition">Definition at line <a class="el" href="shock_8h_source.html#l00563">563</a> of file <a class="el" href="shock_8h_source.html">shock.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  563</span>                                                                                           {</div>
+<div class="line"><span class="lineno">  564</span>    <span class="keyword">const</span> <a class="code hl_typedef" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">cooling_exp</a> = 3 * (<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">ad_idx</a> - 1);</div>
+<div class="line"><span class="lineno">  565</span>    <span class="keywordflow">return</span> (1 - eps_e) * (Gamma - 1) * <a class="code hl_variable" href="namespacecon.html#a26ef2b83dd09c356e324bd243b498764">con::c2</a> *</div>
+<div class="line"><span class="lineno">  566</span>           <a class="code hl_function" href="shock_8h.html#a4eecaf485f5ac3854b4fceab00516fd4">simpson_logspace</a>(</div>
+<div class="line"><span class="lineno">  567</span>               [&amp;](<a class="code hl_typedef" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">u</a>) {</div>
+<div class="line"><span class="lineno">  568</span>                   <span class="keyword">const</span> <a class="code hl_typedef" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">ri</a> = std::exp(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">u</a>);</div>
+<div class="line"><span class="lineno">  569</span>                   <span class="keywordflow">return</span> rho(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">ri</a>) * <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">ri</a> * <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">ri</a> * <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">ri</a> * std::pow(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">ri</a> / r, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">cooling_exp</a>);</div>
+<div class="line"><span class="lineno">  570</span>               },</div>
+<div class="line"><span class="lineno">  571</span>               r);</div>
+<div class="line"><span class="lineno">  572</span>}</div>
+</div><!-- fragment --><div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="shock_8h_acb7f53705e758d8e4bf774602de2d03e_cgraph.png" border="0" usemap="#ashock_8h_acb7f53705e758d8e4bf774602de2d03e_cgraph" alt=""/></div>
+<map name="ashock_8h_acb7f53705e758d8e4bf774602de2d03e_cgraph" id="ashock_8h_acb7f53705e758d8e4bf774602de2d03e_cgraph">
+<area shape="rect" title="Compute enclosed thermal energy per solid angle, accounting for adiabatic cooling and radiative losse..." alt="" coords="5,29,196,55"/>
+<area shape="rect" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42" title="Returns the value of a single parameter." alt="" coords="435,29,485,55"/>
+<area shape="poly" title=" " alt="" coords="196,39,421,39,421,45,196,45"/>
+<area shape="rect" href="shock_8h.html#a4eecaf485f5ac3854b4fceab00516fd4" title="Simpson&#39;s rule integration in log&#45;space: ∫ f(r&#39;) dr&#39; via u = ln(r&#39;)." alt="" coords="244,55,387,80"/>
+<area shape="poly" title=" " alt="" coords="197,51,231,55,230,60,196,56"/>
+<area shape="poly" title=" " alt="" coords="435,30,430,21,433,11,443,5,460,3,480,6,489,15,485,18,477,11,460,8,445,10,437,15,436,20,440,28"/>
+<area shape="poly" title=" " alt="" coords="386,52,420,46,421,51,387,57"/>
 </map>
 </div>
 
@@ -2211,16 +2265,16 @@ template&lt;<a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="shock_8h_source.html#l00441">441</a> of file <a class="el" href="shock_8h_source.html">shock.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  441</span>                                                                                      {</div>
-<div class="line"><span class="lineno">  442</span>    xt::view(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">shock</a>.t_comv, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">j</a>, xt::all()) = <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">state0</a>.t_comv;</div>
-<div class="line"><span class="lineno">  443</span>    xt::view(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">shock</a>.r, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">j</a>, xt::all()) = <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">state0</a>.r;</div>
-<div class="line"><span class="lineno">  444</span>    xt::view(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">shock</a>.theta, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">j</a>, xt::all()) = <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">state0</a>.theta;</div>
-<div class="line"><span class="lineno">  445</span>    xt::view(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">shock</a>.Gamma, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">j</a>, xt::all()) = 1;</div>
-<div class="line"><span class="lineno">  446</span>    xt::view(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">shock</a>.Gamma_th, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">j</a>, xt::all()) = 1;</div>
-<div class="line"><span class="lineno">  447</span>    xt::view(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">shock</a>.B, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">j</a>, xt::all()) = 0;</div>
-<div class="line"><span class="lineno">  448</span>    xt::view(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">shock</a>.N_p, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">j</a>, xt::all()) = 0;</div>
-<div class="line"><span class="lineno">  449</span>}</div>
+<p class="definition">Definition at line <a class="el" href="shock_8h_source.html#l00521">521</a> of file <a class="el" href="shock_8h_source.html">shock.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  521</span>                                                                                      {</div>
+<div class="line"><span class="lineno">  522</span>    xt::view(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">shock</a>.t_comv, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">j</a>, xt::all()) = <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">state0</a>.t_comv;</div>
+<div class="line"><span class="lineno">  523</span>    xt::view(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">shock</a>.r, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">j</a>, xt::all()) = <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">state0</a>.r;</div>
+<div class="line"><span class="lineno">  524</span>    xt::view(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">shock</a>.theta, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">j</a>, xt::all()) = <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">state0</a>.theta;</div>
+<div class="line"><span class="lineno">  525</span>    xt::view(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">shock</a>.Gamma, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">j</a>, xt::all()) = 1;</div>
+<div class="line"><span class="lineno">  526</span>    xt::view(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">shock</a>.Gamma_th, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">j</a>, xt::all()) = 1;</div>
+<div class="line"><span class="lineno">  527</span>    xt::view(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">shock</a>.B, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">j</a>, xt::all()) = 0;</div>
+<div class="line"><span class="lineno">  528</span>    xt::view(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">shock</a>.N_p, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">j</a>, xt::all()) = 0;</div>
+<div class="line"><span class="lineno">  529</span>}</div>
 </div><!-- fragment --><div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -2230,6 +2284,79 @@ Here is the call graph for this function:</div>
 <area shape="rect" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42" title="Returns the value of a single parameter." alt="" coords="204,29,255,55"/>
 <area shape="poly" title=" " alt="" coords="156,39,190,39,190,45,156,45"/>
 <area shape="poly" title=" " alt="" coords="204,31,199,21,202,11,212,5,229,3,250,6,258,15,255,18,247,11,229,8,214,10,206,15,205,20,209,28"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="a4eecaf485f5ac3854b4fceab00516fd4" name="a4eecaf485f5ac3854b4fceab00516fd4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4eecaf485f5ac3854b4fceab00516fd4">&#9670;&#160;</a></span>simpson_logspace()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;<a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">typename</a> <a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">Func</a> &gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> simpson_logspace </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">Func</a> <a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">const</a> &amp;&#160;</td>
+          <td class="paramname"><em>f</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a>&#160;</td>
+          <td class="paramname"><em>r</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Simpson's rule integration in log-space: ∫ f(r') dr' via u = ln(r'). </p>
+<p>Integrates from r * e^{-18} to r with N=32 panels. </p>
+
+<p class="definition">Definition at line <a class="el" href="shock_8h_source.html#l00534">534</a> of file <a class="el" href="shock_8h_source.html">shock.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  534</span>                                             {</div>
+<div class="line"><span class="lineno">  535</span>    <span class="keyword">constexpr</span> <span class="keywordtype">size_t</span> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">N</a> = 32; <span class="comment">// must be even</span></div>
+<div class="line"><span class="lineno">  536</span>    <span class="keyword">const</span> <a class="code hl_typedef" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">u_max</a> = std::log(r);</div>
+<div class="line"><span class="lineno">  537</span>    <span class="keyword">const</span> <a class="code hl_typedef" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">u_min</a> = <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">u_max</a> - 18; <span class="comment">// start from r * e^{-18} ≈ r * 1.5e-8</span></div>
+<div class="line"><span class="lineno">  538</span>    <span class="keyword">const</span> <a class="code hl_typedef" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> <a class="code hl_variable" href="namespacecon.html#a07ddec20ab09a3078fce714358b65b4b">h</a> = (<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">u_max</a> - <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">u_min</a>) / <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">N</a>;</div>
+<div class="line"><span class="lineno">  539</span> </div>
+<div class="line"><span class="lineno">  540</span>    <a class="code hl_typedef" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">sum</a> = <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">f</a>(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">u_min</a>) + <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">f</a>(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">u_max</a>);</div>
+<div class="line"><span class="lineno">  541</span>    <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a> = 1; <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a> &lt; <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">N</a>; <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a> += 2)</div>
+<div class="line"><span class="lineno">  542</span>        <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">sum</a> += 4 * <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">f</a>(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">u_min</a> + <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a> * h);</div>
+<div class="line"><span class="lineno">  543</span>    <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a> = 2; <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a> &lt; <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">N</a>; <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a> += 2)</div>
+<div class="line"><span class="lineno">  544</span>        <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">sum</a> += 2 * <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">f</a>(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">u_min</a> + <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a> * h);</div>
+<div class="line"><span class="lineno">  545</span> </div>
+<div class="line"><span class="lineno">  546</span>    <span class="keywordflow">return</span> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">sum</a> * <a class="code hl_variable" href="namespacecon.html#a07ddec20ab09a3078fce714358b65b4b">h</a> / 3;</div>
+<div class="line"><span class="lineno">  547</span>}</div>
+<div class="ttc" id="anamespacecon_html_a07ddec20ab09a3078fce714358b65b4b"><div class="ttname"><a href="namespacecon.html#a07ddec20ab09a3078fce714358b65b4b">con::h</a></div><div class="ttdeci">constexpr Real h</div><div class="ttdoc">Planck constant in code units.</div><div class="ttdef"><b>Definition</b> <a href="macros_8h_source.html#l00093">macros.h:93</a></div></div>
+</div><!-- fragment --><div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="shock_8h_a4eecaf485f5ac3854b4fceab00516fd4_cgraph.png" border="0" usemap="#ashock_8h_a4eecaf485f5ac3854b4fceab00516fd4_cgraph" alt=""/></div>
+<map name="ashock_8h_a4eecaf485f5ac3854b4fceab00516fd4_cgraph" id="ashock_8h_a4eecaf485f5ac3854b4fceab00516fd4_cgraph">
+<area shape="rect" title="Simpson&#39;s rule integration in log&#45;space: ∫ f(r&#39;) dr&#39; via u = ln(r&#39;)." alt="" coords="5,29,148,55"/>
+<area shape="rect" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42" title="Returns the value of a single parameter." alt="" coords="196,29,247,55"/>
+<area shape="poly" title=" " alt="" coords="148,39,182,39,182,45,148,45"/>
+<area shape="poly" title=" " alt="" coords="197,30,192,21,194,11,205,5,221,3,241,6,250,15,246,18,239,11,221,8,206,10,199,15,197,20,201,28"/>
+</map>
+</div>
+<div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="shock_8h_a4eecaf485f5ac3854b4fceab00516fd4_icgraph.png" border="0" usemap="#ashock_8h_a4eecaf485f5ac3854b4fceab00516fd4_icgraph" alt=""/></div>
+<map name="ashock_8h_a4eecaf485f5ac3854b4fceab00516fd4_icgraph" id="ashock_8h_a4eecaf485f5ac3854b4fceab00516fd4_icgraph">
+<area shape="rect" title="Simpson&#39;s rule integration in log&#45;space: ∫ f(r&#39;) dr&#39; via u = ln(r&#39;)." alt="" coords="244,31,387,56"/>
+<area shape="rect" href="shock_8h.html#acc6d84207549ad55230c89d5f2492ae0" title="Computes enclosed mass per solid angle." alt="" coords="39,5,162,31"/>
+<area shape="poly" title=" " alt="" coords="230,36,162,28,163,23,231,31"/>
+<area shape="rect" href="shock_8h.html#acb7f53705e758d8e4bf774602de2d03e" title="Compute enclosed thermal energy per solid angle, accounting for adiabatic cooling and radiative losse..." alt="" coords="5,55,196,80"/>
+<area shape="poly" title=" " alt="" coords="231,55,196,59,196,54,230,50"/>
 </map>
 </div>
 
@@ -2341,16 +2468,16 @@ Here is the call graph for this function:</div>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="shock_8h_source.html#l00381">381</a> of file <a class="el" href="shock_8h_source.html">shock.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  382</span>                                                                {</div>
-<div class="line"><span class="lineno">  383</span>    <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">shock</a>.t_comv(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">j</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">k</a>) = t_comv;</div>
-<div class="line"><span class="lineno">  384</span>    <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">shock</a>.r(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">j</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">k</a>) = r;</div>
-<div class="line"><span class="lineno">  385</span>    <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">shock</a>.theta(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">j</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">k</a>) = theta;</div>
-<div class="line"><span class="lineno">  386</span>    <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">shock</a>.Gamma(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">j</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">k</a>) = Gamma;</div>
-<div class="line"><span class="lineno">  387</span>    <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">shock</a>.Gamma_th(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">j</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">k</a>) = Gamma_th;</div>
-<div class="line"><span class="lineno">  388</span>    <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">shock</a>.B(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">j</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">k</a>) = B;</div>
-<div class="line"><span class="lineno">  389</span>    <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">shock</a>.N_p(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">j</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">k</a>) = <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">mass</a> / <a class="code hl_variable" href="namespacecon.html#a47a54b8f758d02e6f8b85e41207ae620">con::mp</a>;</div>
-<div class="line"><span class="lineno">  390</span>}</div>
+<p class="definition">Definition at line <a class="el" href="shock_8h_source.html#l00461">461</a> of file <a class="el" href="shock_8h_source.html">shock.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  462</span>                                                                {</div>
+<div class="line"><span class="lineno">  463</span>    <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">shock</a>.t_comv(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">j</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">k</a>) = t_comv;</div>
+<div class="line"><span class="lineno">  464</span>    <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">shock</a>.r(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">j</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">k</a>) = r;</div>
+<div class="line"><span class="lineno">  465</span>    <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">shock</a>.theta(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">j</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">k</a>) = theta;</div>
+<div class="line"><span class="lineno">  466</span>    <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">shock</a>.Gamma(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">j</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">k</a>) = Gamma;</div>
+<div class="line"><span class="lineno">  467</span>    <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">shock</a>.Gamma_th(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">j</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">k</a>) = Gamma_th;</div>
+<div class="line"><span class="lineno">  468</span>    <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">shock</a>.B(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">j</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">k</a>) = B;</div>
+<div class="line"><span class="lineno">  469</span>    <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">shock</a>.N_p(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">j</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">k</a>) = <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">mass</a> / <a class="code hl_variable" href="namespacecon.html#a47a54b8f758d02e6f8b85e41207ae620">con::mp</a>;</div>
+<div class="line"><span class="lineno">  470</span>}</div>
 </div><!-- fragment --><div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">

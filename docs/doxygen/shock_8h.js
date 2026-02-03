@@ -6,7 +6,7 @@ var shock_8h =
     [ "compute_adiabatic_cooling_rate2", "shock_8h.html#aacf4d177a18217eecb97eed0a94df70b", null ],
     [ "compute_compression", "shock_8h.html#a56526dae2aafc8713048d8f3297afa78", null ],
     [ "compute_comv_weibel_B", "shock_8h.html#ac9f33883cbf8961d948ef62692866a2b", null ],
-    [ "compute_dec_time", "shock_8h.html#a332a992c621eaae912c73f8089d52323", null ],
+    [ "compute_dec_time", "shock_8h.html#accf50b75e283806f3cd95d4e2ef93771", null ],
     [ "compute_downstr_4vel", "shock_8h.html#a09f75d8bc0c1cd36d03a413edd7283d8", null ],
     [ "compute_downstr_B", "shock_8h.html#ac49ae4ef06c1e8ef80f3e15997c34a6a", null ],
     [ "compute_dr_dt", "shock_8h.html#a49b14420b5231323cb4940496ddc0956", null ],
@@ -25,6 +25,8 @@ var shock_8h =
     [ "compute_upstr_4vel", "shock_8h.html#ab0d0c4b81c0c5525c81eb24d70c4b010", null ],
     [ "compute_upstr_B", "shock_8h.html#a236d063c70414f0409427c12b429357e", null ],
     [ "enclosed_mass", "shock_8h.html#acc6d84207549ad55230c89d5f2492ae0", null ],
+    [ "enclosed_thermal_energy", "shock_8h.html#acb7f53705e758d8e4bf774602de2d03e", null ],
     [ "set_stopping_shock", "shock_8h.html#a908d0ea000d53a924575023c0e857060", null ],
+    [ "simpson_logspace", "shock_8h.html#a4eecaf485f5ac3854b4fceab00516fd4", null ],
     [ "write_shock_state", "shock_8h.html#af85a63428f015989284de82ed97685ee", null ]
 ];

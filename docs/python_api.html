@@ -231,7 +231,7 @@
 <span class="c1"># Option 1: MCMC with emcee (faster, recommended for quick fitting)</span>
 <span class="n">result</span> <span class="o">=</span> <span class="n">fitter</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span>
     <span class="n">mc_params</span><span class="p">,</span>
-    <span class="n">resolution</span><span class="o">=</span><span class="p">(</span><span class="mf">0.3</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span>       <span class="c1"># Grid resolution (phi, theta, t)</span>
+    <span class="n">resolution</span><span class="o">=</span><span class="p">(</span><span class="mf">0.15</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span>    <span class="c1"># Grid resolution (phi, theta, t)</span>
     <span class="n">sampler</span><span class="o">=</span><span class="s2">&quot;emcee&quot;</span><span class="p">,</span>               <span class="c1"># MCMC sampler</span>
     <span class="n">nsteps</span><span class="o">=</span><span class="mi">10000</span><span class="p">,</span>                  <span class="c1"># Number of steps per walker</span>
     <span class="n">nburn</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span>                    <span class="c1"># Burn-in steps to discard</span>

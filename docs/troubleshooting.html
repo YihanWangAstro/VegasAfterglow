@@ -125,7 +125,7 @@
 <p><strong>Q: My calculation is extremely slow</strong></p>
 <p>A: Performance can be improved by:</p>
 <ul class="simple">
-<li><p><strong>Reducing resolution</strong>: Use <code class="docutils literal notranslate"><span class="pre">resolutions=(0.1,</span> <span class="pre">1,</span> <span class="pre">10)</span></code> for speed, <code class="docutils literal notranslate"><span class="pre">(0.3,</span> <span class="pre">5,</span> <span class="pre">20)</span></code> for accuracy</p></li>
+<li><p><strong>Reducing resolution</strong>: Use <code class="docutils literal notranslate"><span class="pre">resolutions=(0.1,</span> <span class="pre">0.3,</span> <span class="pre">5)</span></code> for speed, <code class="docutils literal notranslate"><span class="pre">(0.15,</span> <span class="pre">1,</span> <span class="pre">20)</span></code> for accuracy</p></li>
 <li><p><strong>Limiting frequency/time ranges</strong>: Calculate only the bands and times you need</p></li>
 <li><p><strong>Using built-in profiles</strong>: Built-in jet structures are faster than user-defined Python functions</p></li>
 <li><p><strong>For MCMC</strong>: Consider using fewer parameters or coarser resolution</p></li>
@@ -348,17 +348,17 @@ pip<span class="w"> </span>install<span class="w"> </span>h5py<span class="w">  
 <td><p>Low</p></td>
 </tr>
 <tr class="row-odd"><td><p>Standard calculations</p></td>
-<td><p><code class="docutils literal notranslate"><span class="pre">(0.3,</span> <span class="pre">1,</span> <span class="pre">10)</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">(0.15,</span> <span class="pre">0.5,</span> <span class="pre">10)</span></code></p></td>
 <td><p>Fast</p></td>
 <td><p>Good</p></td>
 </tr>
 <tr class="row-even"><td><p>MCMC fitting</p></td>
-<td><p><code class="docutils literal notranslate"><span class="pre">(0.3,</span> <span class="pre">2,</span> <span class="pre">10)</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">(0.15,</span> <span class="pre">1,</span> <span class="pre">10)</span></code></p></td>
 <td><p>Moderate</p></td>
 <td><p>Good</p></td>
 </tr>
 <tr class="row-odd"><td><p>Publication quality</p></td>
-<td><p><code class="docutils literal notranslate"><span class="pre">(0.3,</span> <span class="pre">5,</span> <span class="pre">20)</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">(0.15,</span> <span class="pre">2,</span> <span class="pre">20)</span></code></p></td>
 <td><p>Slow</p></td>
 <td><p>Very High</p></td>
 </tr>

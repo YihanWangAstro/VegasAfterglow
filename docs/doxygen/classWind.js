@@ -1,5 +1,6 @@
 var classWind =
 [
     [ "Wind", "classWind.html#ad1862471c40385dd0e8a7469dabcdc8e", null ],
-    [ "rho", "classWind.html#ab5224ceb8e690e272e1fa39c598b1999", null ]
+    [ "rho", "classWind.html#ab5224ceb8e690e272e1fa39c598b1999", null ],
+    [ "isotropic", "classWind.html#a0a5c1450e106c8fa6b926f185f6eb905", null ]
 ];

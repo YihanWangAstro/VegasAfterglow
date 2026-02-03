@@ -5,7 +5,7 @@
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="111,53,193,32,194,37,112,58"/>
 <area shape="rect" id="Node000003" href="$utilities_8h.html#ab8e81118f023df135835db8cce4f5f42" title="Returns the value of a single parameter." alt="" coords="393,93,444,119"/>
 <area shape="poly" id="edge3_Node000001_Node000003" title=" " alt="" coords="119,70,346,91,380,97,379,102,345,97,119,75"/>
-<area shape="rect" id="Node000004" href="$classObserver.html#a5350b13ae5a6c7007ba6459923573136" title="Computes the specific flux at a single observed frequency." alt="" coords="171,131,341,156"/>
+<area shape="rect" id="Node000004" href="$classObserver.html#a5350b13ae5a6c7007ba6459923573136" title="Sets up the Observer for flux calculation at specific observation times." alt="" coords="171,131,341,156"/>
 <area shape="poly" id="edge5_Node000001_Node000004" title=" " alt="" coords="97,79,211,123,209,128,95,84"/>
 <area shape="poly" id="edge4_Node000003_Node000003" title=" " alt="" coords="391,95,386,85,389,75,400,69,419,67,441,70,451,79,447,83,439,75,419,72,402,74,393,79,391,84,396,92"/>
 <area shape="poly" id="edge6_Node000004_Node000003" title=" " alt="" coords="311,128,379,112,380,117,313,133"/>

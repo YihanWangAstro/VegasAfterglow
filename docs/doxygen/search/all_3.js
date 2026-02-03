@@ -14,8 +14,9 @@ var searchData=
   ['deg_11',['deg',['../namespaceunit.html#a65622c562478c2a005e36f63b02df162',1,'unit']]],
   ['deps_5fdt_12',['deps_dt',['../classEjecta.html#a1cd7491361913dd37cf4efe8e3a0376a',1,'Ejecta']]],
   ['details_13',['details',['../classPyModel.html#ac47bbdbe6025c4def5d4a65f3ed6be34',1,'PyModel']]],
-  ['determine_5fregime_14',['determine_regime',['../inverse-compton_8h.html#a7bbe690804f96e37adf7662c95cff6c1',1,'determine_regime(Real gamma_a, Real gamma_c, Real gamma_m):&#160;synchrotron.cpp'],['../synchrotron_8cpp.html#a5813eed02877ed5f35a34e929a68d263',1,'determine_regime(Real a, Real c, Real m):&#160;synchrotron.cpp']]],
-  ['dm_5fdt_15',['dm_dt',['../classEjecta.html#a74ab20785693d39f5ec9a13edf2c0cd7',1,'Ejecta']]],
-  ['doppler_16',['Doppler',['../structPyShock.html#a9a0399e15499a9a099665b65700f728a',1,'PyShock']]],
-  ['duration_17',['duration',['../structParams.html#a7b507398142947cd5da78229b35548ab',1,'Params']]]
+  ['detect_5fsymmetry_14',['detect_symmetry',['../classShock.html#a2847e025181ab708c820a67258b9c4c3',1,'Shock']]],
+  ['determine_5fregime_15',['determine_regime',['../inverse-compton_8h.html#a7bbe690804f96e37adf7662c95cff6c1',1,'determine_regime(Real gamma_a, Real gamma_c, Real gamma_m):&#160;synchrotron.cpp'],['../synchrotron_8cpp.html#a5813eed02877ed5f35a34e929a68d263',1,'determine_regime(Real a, Real c, Real m):&#160;synchrotron.cpp']]],
+  ['dm_5fdt_16',['dm_dt',['../classEjecta.html#a74ab20785693d39f5ec9a13edf2c0cd7',1,'Ejecta']]],
+  ['doppler_17',['Doppler',['../structPyShock.html#a9a0399e15499a9a099665b65700f728a',1,'PyShock']]],
+  ['duration_18',['duration',['../structParams.html#a7b507398142947cd5da78229b35548ab',1,'Params']]]
 ];

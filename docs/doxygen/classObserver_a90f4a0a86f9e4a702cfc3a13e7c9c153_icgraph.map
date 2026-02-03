@@ -1,5 +1,0 @@
-<map id="Observer::update_required" name="Observer::update_required">
-<area shape="rect" id="Node000001" title="Updates the required grid points for observation." alt="" coords="215,5,409,31"/>
-<area shape="rect" id="Node000002" href="$classObserver.html#a20935ae9f08821dd146a71d1c6a3175d" title="Sets up the Observer for flux calculation at specific observation times." alt="" coords="5,5,167,31"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="201,21,167,21,167,15,201,15"/>
-</map>

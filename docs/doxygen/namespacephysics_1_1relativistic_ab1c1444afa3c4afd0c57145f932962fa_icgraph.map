@@ -1,17 +1,20 @@
 <map id="physics::relativistic::gamma_to_beta" name="physics::relativistic::gamma_to_beta">
-<area shape="rect" id="Node000001" title="Converts Lorentz factor (gamma) to a velocity fraction (beta)" alt="" coords="668,97,816,137"/>
-<area shape="rect" id="Node000002" href="$mesh_8h.html#ae9bcfb9812faea0f9d864688c82f0b11" title="Constructs a coordinate grid (Coord) for shock evolution." alt="" coords="499,29,582,55"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="682,94,619,69,581,56,583,51,621,63,684,89"/>
-<area shape="rect" id="Node000006" href="$shock_8h.html#a332a992c621eaae912c73f8089d52323" title=" " alt="" coords="467,79,614,104"/>
-<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="654,108,614,103,615,98,655,103"/>
-<area shape="rect" id="Node000007" href="$prompt_8h.html#a66fb48188341c585a06119c04800c823" title=" " alt="" coords="464,128,617,153"/>
-<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="655,130,618,134,617,129,654,124"/>
-<area shape="rect" id="Node000008" href="$prompt_8cpp.html#a179563049db5bed00a5663ff3932eed4" title=" " alt="" coords="461,177,620,203"/>
-<area shape="poly" id="edge7_Node000001_Node000008" title=" " alt="" coords="680,144,621,167,584,180,582,175,619,162,679,139"/>
+<area shape="rect" id="Node000001" title="Converts Lorentz factor (gamma) to a velocity fraction (beta)" alt="" coords="799,73,947,113"/>
+<area shape="rect" id="Node000002" href="$mesh_8h.html#a96aa0a78a0de13a52955de3c2ce29ddd" title="Constructs a coordinate grid (Coord) for shock evolution." alt="" coords="461,31,544,56"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="835,66,796,40,750,21,707,11,672,10,592,21,540,33,539,28,592,15,672,4,707,6,751,15,798,36,838,62"/>
+<area shape="rect" id="Node000006" href="$shock_8h.html#accf50b75e283806f3cd95d4e2ef93771" title="Finds the deceleration observer time by integrating swept mass outward until m_swept = m_jet/Gamma0." alt="" coords="598,31,745,56"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="785,74,723,59,724,53,786,69"/>
+<area shape="rect" id="Node000007" href="$mesh_8h.html#aa7505ad2e84c2a29610c1a13cd3b25e3" title="Estimates deceleration time for a given angle from ejecta and medium properties." alt="" coords="610,80,733,105"/>
+<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="785,95,733,95,733,90,785,90"/>
+<area shape="rect" id="Node000008" href="$prompt_8h.html#a66fb48188341c585a06119c04800c823" title=" " alt="" coords="595,129,748,155"/>
+<area shape="poly" id="edge8_Node000001_Node000008" title=" " alt="" coords="786,117,724,132,723,127,785,111"/>
+<area shape="rect" id="Node000009" href="$prompt_8cpp.html#a179563049db5bed00a5663ff3932eed4" title=" " alt="" coords="592,179,751,204"/>
+<area shape="poly" id="edge9_Node000001_Node000009" title=" " alt="" coords="833,123,752,168,719,181,717,176,750,164,830,118"/>
 <area shape="rect" id="Node000003" href="$classPyModel.html#a3debe3d2ed8ff2a53bec469a6711cfa8" title=" " alt="" coords="204,5,413,31"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="485,39,413,31,414,26,486,34"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="447,39,406,33,406,28,448,34"/>
 <area shape="rect" id="Node000004" href="$classPyModel.html#ac47bbdbe6025c4def5d4a65f3ed6be34" title="Get comprehensive details of the shock evolution and model configuration." alt="" coords="243,55,374,80"/>
-<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="486,51,375,63,374,58,485,45"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="448,53,374,62,374,57,447,47"/>
 <area shape="rect" id="Node000005" href="$pybind_8cpp.html#a8c92987849ad296e28ec6c07c8e7860b" title=" " alt="" coords="5,55,156,80"/>
 <area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="229,70,156,70,156,65,229,65"/>
+<area shape="poly" id="edge7_Node000007_Node000002" title=" " alt="" coords="613,79,544,58,545,53,615,74"/>
 </map>

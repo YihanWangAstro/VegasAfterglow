@@ -21,7 +21,7 @@ A: This is usually caused by one of the following:
 
 A: Performance can be improved by:
 
-- **Reducing resolution**: Use ``resolutions=(0.1, 1, 10)`` for speed, ``(0.3, 5, 20)`` for accuracy
+- **Reducing resolution**: Use ``resolutions=(0.1, 0.3, 5)`` for speed, ``(0.15, 1, 20)`` for accuracy
 - **Limiting frequency/time ranges**: Calculate only the bands and times you need
 - **Using built-in profiles**: Built-in jet structures are faster than user-defined Python functions
 - **For MCMC**: Consider using fewer parameters or coarser resolution
@@ -251,15 +251,15 @@ The ``resolutions`` parameter in ``Model()`` controls computational accuracy vs 
      - Very Fast
      - Low
    * - Standard calculations
-     - ``(0.3, 1, 10)``
+     - ``(0.15, 0.5, 10)``
      - Fast
      - Good
    * - MCMC fitting
-     - ``(0.3, 2, 10)``
+     - ``(0.15, 1, 10)``
      - Moderate
      - Good
    * - Publication quality
-     - ``(0.3, 5, 20)``
+     - ``(0.15, 2, 20)``
      - Slow
      - Very High
 
