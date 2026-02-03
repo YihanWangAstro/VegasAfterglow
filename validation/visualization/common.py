@@ -99,7 +99,7 @@ def setup_plot_style():
         "font.size": 10, "axes.labelsize": 11, "axes.titlesize": 12, "legend.fontsize": 9,
         "xtick.labelsize": 9, "ytick.labelsize": 9, "figure.dpi": 72, "savefig.dpi": 72,
         "axes.grid": True, "grid.alpha": 0.3, "lines.linewidth": 1.5,
-        "pdf.use14corefonts": True, "pdf.compression": 9,
+        "pdf.compression": 9, "mathtext.fontset": "dejavusans",
     })
 
 
