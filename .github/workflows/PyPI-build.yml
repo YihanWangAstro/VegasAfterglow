@@ -43,14 +43,15 @@ jobs:
             python -m pip install wheel scikit-build-core>=0.4.3 pybind11>=2.6.0 numpy>=1.20
           CIBW_TEST_COMMAND: python -c "from VegasAfterglow import ObsData, Setups, Fitter, ParamDef, Scale; print('OK')"
           MACOSX_DEPLOYMENT_TARGET: "13.3"
-          # Configure OpenMP for AppleClang (requires explicit flags)
+          # Configure OpenMP for AppleClang (macos-latest uses ARM64 runners with /opt/homebrew)
           CIBW_ENVIRONMENT_MACOS: >
-            OpenMP_ROOT="$(brew --prefix libomp)"
+            OpenMP_ROOT=/opt/homebrew/opt/libomp
           CIBW_CMAKE_ARGS_MACOS: >
             -DCMAKE_OSX_DEPLOYMENT_TARGET=13.3
-            -DOpenMP_CXX_FLAGS="-Xpreprocessor -fopenmp -I$(brew --prefix libomp)/include"
-            -DOpenMP_CXX_LIB_NAMES="omp"
-            -DOpenMP_omp_LIBRARY="$(brew --prefix libomp)/lib/libomp.dylib"
+            -DOpenMP_CXX_FLAGS="-Xpreprocessor;-fopenmp"
+            -DOpenMP_CXX_LIB_NAMES=omp
+            -DOpenMP_omp_LIBRARY=/opt/homebrew/opt/libomp/lib/libomp.dylib
+            -DCMAKE_CXX_FLAGS="-I/opt/homebrew/opt/libomp/include"
 
       - name: Upload wheels
         uses: actions/upload-artifact@v4
