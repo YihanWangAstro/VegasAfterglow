@@ -9,10 +9,11 @@
 [![Platform](https://img.shields.io/badge/Platform-Linux%20|%20macOS%20|%20Windows-lightgrey.svg)]()
 [![Python Version](https://img.shields.io/badge/Python-3.8%2B-blue.svg)](https://www.python.org/)
 [![Documentation](https://img.shields.io/badge/Documentation-Online-brightgreen.svg)](https://yihanwangastro.github.io/VegasAfterglow/docs/index.html)
+[![Validation Report](https://img.shields.io/badge/Validation-Report-blue.svg)](https://github.com/YihanWangAstro/VegasAfterglow/releases/latest/download/comprehensive_report.pdf)
 
 <div align="left">
 
-**[Latest Release Notes](CHANGELOG.md#v030---2025-09-06)** | **[Full Changelog](CHANGELOG.md)** | **[Install Now](#installation)**
+**[Latest Release Notes](CHANGELOG.md#v200-beta---2026-02-02)** | **[Validation Report (PDF)](https://github.com/YihanWangAstro/VegasAfterglow/releases/latest/download/comprehensive_report.pdf)** | **[Install Now](#installation)**
 </div>
 
 <p align="justify">

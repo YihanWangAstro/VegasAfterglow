@@ -111,13 +111,9 @@ jobs:
           user: __token__
           password: ${{ secrets.PYPI_API_TOKEN }}
 
-      - name: Prepare release assets
-        run: |
-          cp validation/comprehensive_report.pdf "VegasAfterglow_v${{ inputs.version }}_report.pdf"
-
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
         with:
           tag_name: v${{ inputs.version }}
-          files: VegasAfterglow_v${{ inputs.version }}_report.pdf
+          files: validation/comprehensive_report.pdf
           generate_release_notes: true
