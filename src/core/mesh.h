@@ -470,6 +470,80 @@ Real estimate_t_dec(Ejecta const& jet, Medium const& medium, Real phi, Real thet
     return std::exp(u_max) * (1 - beta) / (beta * con::c);
 }
 
+/**
+ * @brief Create a refined logarithmic time grid with higher density around a specified time.
+ *
+ * Constructs a three-segment logspace grid:
+ * - Segment 1: [t_start, t_lo] with base resolution
+ * - Segment 2: [t_lo, t_hi] with higher resolution (around t_refine)
+ * - Segment 3: [t_hi, t_end] with base resolution
+ *
+ * Falls back to simple logspace if refinement is not applicable.
+ *
+ * @param t_start Start time of the grid
+ * @param t_end End time of the grid
+ * @param t_refine Time around which to refine (e.g., deceleration time)
+ * @param t_num Total number of grid points
+ * @param t_resol Resolution parameter (points per decade)
+ * @param refine_lo_factor Lower bound factor for refinement region (t_lo = refine_lo_factor * t_refine)
+ * @param refine_hi_factor Upper bound factor for refinement region (t_hi = refine_hi_factor * t_refine)
+ * @return Array of time grid points
+ */
+inline Array refined_time_grid(Real t_start, Real t_end, Real t_refine, size_t t_num, Real t_resol,
+                               Real refine_lo_factor = 0.3, Real refine_hi_factor = 10.0) {
+    Array result = xt::zeros<Real>({t_num});
+
+    const Real log_s = std::log10(t_start);
+    const Real log_e = std::log10(t_end);
+
+    if (t_refine <= t_start || t_refine >= t_end) {
+        return xt::logspace(log_s, log_e, t_num);
+    }
+
+    const Real t_lo = std::max(refine_lo_factor * t_refine, t_start);
+    const Real t_hi = std::min(refine_hi_factor * t_refine, t_end);
+    const Real log_lo = std::log10(t_lo);
+    const Real log_hi = std::log10(t_hi);
+    const Real log_before = log_lo - log_s;
+    const Real log_after = log_e - log_hi;
+
+    size_t n1 = (log_before > 0) ? std::max<size_t>(static_cast<size_t>(t_resol * log_before), 2) : 0;
+    size_t n3 = (log_after > 0) ? std::max<size_t>(static_cast<size_t>(t_resol * log_after), 2) : 0;
+    size_t shared = (n1 > 0 ? 1 : 0) + (n3 > 0 ? 1 : 0);
+    size_t n2_raw = (n1 + n3 + 2 <= t_num + shared) ? (t_num + shared - n1 - n3) : 0;
+
+    if (n2_raw < 2) {
+        return xt::logspace(log_s, log_e, t_num);
+    }
+
+    size_t n2 = n2_raw;
+    size_t idx = 0;
+
+    // Segment 1: [t_start, t_lo]
+    if (n1 > 0) {
+        auto seg1 = xt::logspace(log_s, log_lo, n1);
+        for (size_t k = 0; k < n1; ++k)
+            result(idx++) = seg1(k);
+    }
+
+    // Segment 2: [t_lo, t_hi] - skip first point if it overlaps with seg1
+    {
+        auto seg2 = xt::logspace(log_lo, log_hi, n2);
+        size_t k0 = (n1 > 0) ? 1 : 0;
+        for (size_t k = k0; k < n2; ++k)
+            result(idx++) = seg2(k);
+    }
+
+    // Segment 3: [t_hi, t_end] - skip first point (overlaps with seg2)
+    if (n3 > 0) {
+        auto seg3 = xt::logspace(log_hi, log_e, n3);
+        for (size_t k = 1; k < n3; ++k)
+            result(idx++) = seg3(k);
+    }
+
+    return result;
+}
+
 template <typename Ejecta, typename Medium>
 Coord auto_grid(Ejecta const& jet, Medium const& medium, Array const& t_obs, Real theta_cut, Real theta_view, Real z,
                 Real phi_resol, Real theta_resol, Real t_resol, bool is_axisymmetric, Real phi_view,
@@ -499,71 +573,31 @@ Coord auto_grid(Ejecta const& jet, Medium const& medium, Array const& t_obs, Rea
 
     const Real t_max = *std::ranges::max_element(t_obs);
     const Real t_min = *std::ranges::min_element(t_obs);
-    const size_t base_t_num = std::max<size_t>(static_cast<size_t>(std::log10(t_max / t_min) * t_resol), 24);
 
-    // Refinement around t_dec: add extra points without reducing density elsewhere
+    // Compute base time grid size + extra points for refinement around t_dec
+    const size_t base_t_num = std::max<size_t>(static_cast<size_t>(std::log10(t_max / t_min) * t_resol), 24);
     constexpr Real refine_ratio = 2.0;
     constexpr Real refine_lo_factor = 0.3;
     constexpr Real refine_hi_factor = 10.0;
-    // Max extra points: full refinement zone = log10(hi/lo) decades at (refine_ratio-1)*base density
     const size_t refine_extra =
         static_cast<size_t>((refine_ratio - 1.0) * t_resol * std::log10(refine_hi_factor / refine_lo_factor));
     const size_t t_num = base_t_num + refine_extra;
 
     const size_t theta_size = coord.theta.size();
     const size_t phi_size_needed = is_axisymmetric ? 1 : coord.phi.size();
+    const Real theta_v_max = coord.theta.back() + theta_view;
+
     coord.t = xt::zeros<Real>({phi_size_needed, theta_size, t_num});
     for (size_t i = 0; i < phi_size_needed; ++i) {
         for (size_t j = 0; j < theta_size; ++j) {
             const Real b = physics::relativistic::gamma_to_beta(jet.Gamma0(coord.phi(i), coord.theta(j)));
-            const Real theta_v_max = coord.theta.back() + theta_view;
             const Real t_start =
                 std::max<Real>(0.99 * t_min * (1 - b) / (1 - std::cos(theta_v_max) * b) / (1 + z), 1e-2 * unit::sec);
             const Real t_end = 1.01 * t_max / (1 + z);
-
             const Real t_dec = estimate_t_dec(jet, medium, coord.phi(i), coord.theta(j));
-            const Real t_lo = std::max(refine_lo_factor * t_dec, t_start);
-            const Real t_hi = std::min(refine_hi_factor * t_dec, t_end);
 
-            if (refine_extra > 0 && t_dec > t_start && t_dec < t_end) {
-                const Real log_s = std::log10(t_start);
-                const Real log_e = std::log10(t_end);
-                const Real log_lo = std::log10(t_lo);
-                const Real log_hi = std::log10(t_hi);
-                const Real log_before = log_lo - log_s;
-                const Real log_refine = log_hi - log_lo;
-                const Real log_after = log_e - log_hi;
-
-                // Outer segments: base density (t_resol pts/decade)
-                size_t n1 = (log_before > 0) ? std::max<size_t>(static_cast<size_t>(t_resol * log_before), 2) : 0;
-                size_t n3 = (log_after > 0) ? std::max<size_t>(static_cast<size_t>(t_resol * log_after), 2) : 0;
-                // Shared endpoints at segment junctions
-                size_t shared = (n1 > 0 ? 1 : 0) + (n3 > 0 ? 1 : 0);
-                // Refinement segment gets all remaining points
-                size_t n2 = std::max<size_t>(t_num + shared - n1 - n3, 2);
-
-                auto t_view = xt::view(coord.t, i, j, xt::all());
-                size_t idx = 0;
-
-                if (n1 > 0) {
-                    auto seg1 = xt::logspace(log_s, log_lo, n1);
-                    for (size_t k = 0; k < n1 && idx < t_num; ++k)
-                        t_view(idx++) = seg1(k);
-                }
-                {
-                    auto seg2 = xt::logspace(log_lo, log_hi, n2);
-                    size_t k0 = (n1 > 0) ? 1 : 0;
-                    for (size_t k = k0; k < n2 && idx < t_num; ++k)
-                        t_view(idx++) = seg2(k);
-                }
-                if (n3 > 0) {
-                    auto seg3 = xt::logspace(log_hi, log_e, n3);
-                    for (size_t k = 1; k < n3 && idx < t_num; ++k)
-                        t_view(idx++) = seg3(k);
-                }
-            } else {
-                xt::view(coord.t, i, j, xt::all()) = xt::logspace(std::log10(t_start), std::log10(t_end), t_num);
-            }
+            xt::view(coord.t, i, j, xt::all()) =
+                refined_time_grid(t_start, t_end, t_dec, t_num, t_resol, refine_lo_factor, refine_hi_factor);
         }
     }
 

@@ -50,23 +50,23 @@ namespace defaults {
     namespace grid {
         /// Azimuthal (phi) angular resolution factor
         /// Higher values = more phi grid points near the viewing direction
-        inline constexpr double phi_resolution = 0.3;
+        inline constexpr double phi_resolution = 0.15;
 
         /// Polar (theta) angular resolution factor
         /// Higher values = more theta grid points
-        inline constexpr double theta_resolution = 1.0;
+        inline constexpr double theta_resolution = 0.5;
 
         /// Temporal resolution factor
         /// Higher values = more time grid points (logarithmically spaced)
-        inline constexpr double time_resolution = 5.0;
+        inline constexpr double time_resolution = 10.0;
 
         /// Minimum number of theta grid points
         /// Ensures adequate angular coverage even for narrow jets
-        inline constexpr std::size_t min_theta_points = 56;
+        inline constexpr std::size_t min_theta_points = 48;
 
         /// Forward ratio for adaptive grid refinement
         /// Controls distribution of grid points relative to jet edge
-        inline constexpr double forward_ratio = 0.3;
+        inline constexpr double forward_ratio = 0.4;
 
         /// Minimum polar angle (avoids singularity at theta=0)
         inline constexpr double theta_min = 1e-6;

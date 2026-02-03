@@ -54,14 +54,14 @@ void lc_gen(std::string folder_name, bool out = false) {
     }
     jet.spreading = false;
 
-    Coord coord = auto_grid(jet, medium, t_bins, theta_w, theta_view, z);
+    Coord coord = auto_grid(jet, medium, t_bins, theta_w, theta_view, z, 0.5, 0.5, 20, true, 0, 48, 0.4);
 
     // solve dynamics
     Shock f_shock = generate_fwd_shock(coord, medium, jet, rad_fwd);
 
     Observer obs;
 
-    obs.observe_at(t_bins, coord, f_shock, lumi_dist, z);
+    obs.observe(coord, f_shock, lumi_dist, z);
 
     auto syn_e = generate_syn_electrons(f_shock);
 

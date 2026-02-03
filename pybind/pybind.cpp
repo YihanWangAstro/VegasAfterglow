@@ -13,6 +13,7 @@
 
 PYBIND11_MODULE(VegasAfterglowC, m) {
     xt::import_numpy();
+
     // Jet bindings
     py::object zero2d_fn = py::cpp_function(func::zero_2d);
     py::object zero3d_fn = py::cpp_function(func::zero_3d);

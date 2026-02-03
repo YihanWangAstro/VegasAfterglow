@@ -34,10 +34,8 @@ def _classify_convergence(worst_mean_err, worst_max_err):
     return "FAIL", "red"
 
 
-def _plot_stage_breakdown_panel(ax, configs, jets, media):
-    """Plot stage breakdown stacked bar chart for a set of configs. Bars = jet × medium."""
-    has_stage_data = any(c.get("timing", {}).get("stage_breakdown") for c in configs)
-
+def _get_combinations(configs, jets, media):
+    """Get jet/medium combinations for a set of configs."""
     combinations = []
     combo_labels = []
     for jet in jets:
@@ -46,6 +44,14 @@ def _plot_stage_breakdown_panel(ax, configs, jets, media):
             if matching:
                 combinations.append((jet, medium, matching))
                 combo_labels.append(f"{jet}/{medium}")
+    return combinations, combo_labels
+
+
+def _plot_stage_breakdown_panel(ax, configs, jets, media):
+    """Plot stage breakdown stacked bar chart for a set of configs. Bars = jet × medium."""
+    has_stage_data = any(c.get("timing", {}).get("stage_breakdown") for c in configs)
+
+    combinations, combo_labels = _get_combinations(configs, jets, media)
 
     if not combinations:
         ax.text(0.5, 0.5, "No data", ha="center", va="center", transform=ax.transAxes, fontsize=10, color="gray")
@@ -138,10 +144,10 @@ def plot_benchmark_overview(session: Dict, angle_filter: str = "all") -> plt.Fig
 
     if angle_filter == "on-axis":
         configs = [c for c in all_configs if c.get("theta_obs_ratio", 0) <= 1]
-        title_suffix = " (On-axis, \u03b8_v=0)"
+        title_suffix = " (On-axis, θ_v=0)"
     elif angle_filter == "off-axis":
         configs = [c for c in all_configs if c.get("theta_obs_ratio", 0) > 1]
-        title_suffix = " (Off-axis, \u03b8_v/\u03b8_c>1)"
+        title_suffix = " (Off-axis, θ_v/θ_c>1)"
     else:
         configs = all_configs
         title_suffix = ""

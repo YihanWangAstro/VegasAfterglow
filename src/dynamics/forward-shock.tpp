@@ -226,6 +226,7 @@ Shock generate_fwd_shock(Coord const& coord, Medium const& medium, Ejecta const&
             }
 
             auto eqn = ForwardShockEqn(medium, jet, coord.phi(i), coord.theta(j), rad_params, theta_s);
+            //auto eqn = SimpleShockEqn(medium, jet, coord.phi(i), coord.theta(j), rad_params, theta_s);
             grid_solve_fwd_shock(i, j, xt::view(coord.t, i, j, xt::all()), shock, eqn, rtol);
 
             if (shock.symmetry == Symmetry::isotropic) {
