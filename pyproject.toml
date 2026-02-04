@@ -42,6 +42,7 @@ wheel.packages = ["VegasAfterglow"]
 wheel.license-files = ["LICENSE"]
 cmake.version = ">=3.15.0"
 cmake.build-type = "Release"
+ninja.make-fallback = true
 build.verbose = false
 metadata.version.provider = "scikit_build_core.metadata.setuptools_scm"
 

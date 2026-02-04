@@ -66,7 +66,6 @@ target_include_directories(VegasAfterglowC PRIVATE
   "${CMAKE_CURRENT_SOURCE_DIR}/external"
 )
 
-
 set_target_properties(VegasAfterglowC PROPERTIES
   LIBRARY_OUTPUT_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/VegasAfterglow"
 )

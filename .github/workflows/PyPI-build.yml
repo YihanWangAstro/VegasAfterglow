@@ -19,7 +19,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [ubuntu-latest, windows-latest, macos-latest]
+        os: [ubuntu-latest-16-core, windows-latest-8-core, macos-latest-xlarge]
       fail-fast: false
 
     steps:
@@ -82,11 +82,10 @@ jobs:
           path: wheelhouse/
           if-no-files-found: error
 
-  publish:
-    name: Tag and Publish
+  validate_and_report:
+    name: Validate and Deploy Report
     needs: build_wheels
     runs-on: ubuntu-latest
-    if: ${{ !inputs.dry_run }}
     permissions:
       contents: write
 
@@ -123,6 +122,41 @@ jobs:
           pip install -e ".[test]" --config-settings=cmake.define.AFTERGLOW_PROFILE=ON
           python validation/run_validation.py --all --output validation/
 
+      - name: Deploy report to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: validation/
+          destination_dir: reports/v${{ inputs.version }}
+          keep_files: true
+
+      - name: Upload dist for publish job
+        if: ${{ !inputs.dry_run }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: dist
+          path: dist/
+
+  publish:
+    name: Tag and Publish to PyPI
+    needs: validate_and_report
+    runs-on: ubuntu-latest
+    if: ${{ !inputs.dry_run }}
+    permissions:
+      contents: write
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          fetch-tags: true
+
+      - name: Download dist
+        uses: actions/download-artifact@v4
+        with:
+          name: dist
+          path: dist/
+
       - name: Create and push tag
         run: |
           git config user.name "github-actions[bot]"
@@ -136,10 +170,3 @@ jobs:
           package_dir: dist
           user: __token__
           password: ${{ secrets.PYPI_API_TOKEN }}
-
-      - name: Create GitHub Release
-        uses: softprops/action-gh-release@v2
-        with:
-          tag_name: v${{ inputs.version }}
-          files: validation/comprehensive_report.pdf
-          generate_release_notes: true
