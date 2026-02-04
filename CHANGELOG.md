@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [v2.0.0-beta] - 2026-02-02
 
-**[Download Validation Report (PDF)](https://github.com/YihanWangAstro/VegasAfterglow/releases/latest/download/comprehensive_report.pdf)**
+**[Download Validation Report (PDF)](https://yihanwangastro.github.io/VegasAfterglow/reports/latest/comprehensive_report.pdf)**
 
 ### Performance
 
