@@ -122,12 +122,20 @@ jobs:
           pip install -e ".[test]" --config-settings=cmake.define.AFTERGLOW_PROFILE=ON
           python validation/run_validation.py --all --output validation/
 
-      - name: Deploy report to GitHub Pages
+      - name: Deploy report to GitHub Pages (versioned)
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: validation/
           destination_dir: reports/v${{ inputs.version }}
+          keep_files: true
+
+      - name: Deploy report to GitHub Pages (latest)
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: validation/
+          destination_dir: reports/latest
           keep_files: true
 
       - name: Upload dist for publish job
