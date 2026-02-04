@@ -164,7 +164,7 @@ def plot_benchmark_overview(session: Dict, angle_filter: str = "all") -> plt.Fig
         ("synchrotron", "Fwd Synchrotron"),
         ("rvs_sync_thin", "Rvs Thin Shell"),
         ("rvs_sync_thick", "Rvs Thick Shell"),
-        ("fwd_ic", "Fwd IC"),
+        ("full_ssc", "Fwd SSC"),
     ]
 
     for idx, (rad_key, rad_label) in enumerate(rad_panels):
@@ -347,7 +347,7 @@ def plot_single_model_convergence_page(config: Dict, model_id: int) -> plt.Figur
                     continue
                 color = BAND_COLORS.get(band_name, "gray")
 
-                # Plot reference resolution curve first (dashed, behind sweep curves)
+                # Plot reference resolution curve first (behind sweep curves)
                 ref_flux = ref_flux_by_band.get(band_name)
                 if ref_flux and len(ref_flux) == len(t_array):
                     ref_arr = np.asarray(ref_flux)
@@ -355,7 +355,7 @@ def plot_single_model_convergence_page(config: Dict, model_id: int) -> plt.Figur
                     if len(pos) > 0:
                         flux_peak = max(flux_peak, np.max(pos))
                         flux_floor = min(flux_floor, np.min(pos))
-                    ax.loglog(t_array, ref_flux, linestyle="--", color=color, alpha=0.4, linewidth=0.8,
+                    ax.loglog(t_array, ref_flux, linestyle="-", color=color, alpha=0.4, linewidth=0.8,
                               zorder=1)
 
                 n_res = len(fluxes_list)

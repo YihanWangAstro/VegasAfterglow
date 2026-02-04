@@ -18,7 +18,7 @@ import numpy as np
 sys.path.insert(0, str(Path(__file__).parent))
 from configs import (create_jet, create_medium, create_observer, create_radiation, create_rvs_radiation,
                      get_jet_config, get_medium_config, get_radiation_config, get_duration,
-                     get_all_jet_names, get_radiation_names_no_ssc, get_rvs_radiation_names)
+                     get_all_jet_names, get_fwd_only_radiation_names, get_rvs_radiation_names)
 
 sys.path.insert(0, str(Path(__file__).parent.parent))
 from validation.colors import _bold, _green, _red, _cyan, _dim, _bold_red, _header
@@ -67,6 +67,7 @@ class BenchmarkSession:
     vegasafterglow_version: str = "unknown"
     compiler: str = "unknown"
     compile_flags: str = "unknown"
+    cpu: str = "unknown"
     configs: List[ConfigResult] = field(default_factory=list)
 
 # ---------------------------------------------------------------------------
@@ -82,6 +83,7 @@ T_VALUES = [10, 15, 20, 25, 30]
 REFERENCE_RESOLUTION = (PHI_VALUES[-1] * 1.2, THETA_VALUES[-1] * 1.2, T_VALUES[-1] * 1.2)
 CONVERGENCE_T_LC = np.logspace(0, 8, 100)
 CONVERGENCE_BANDS = {"Radio": 1e9, "Optical": 4.84e14, "X-ray": 1e18}
+SSC_BANDS = {"Radio": 1e9, "Optical": 4.84e14, "X-ray": 1e18, "TeV": 2.4e26}  # TeV ~ 1 TeV
 VIEWING_ANGLE_RATIOS = [0, 2, 4]
 
 # ---------------------------------------------------------------------------
@@ -110,6 +112,11 @@ def get_compiler_info() -> Tuple[str, str]:
     from validation.visualization.common import get_runtime_build_info
     info = get_runtime_build_info()
     return info.get("Compiler", "unknown"), info.get("Flags", "unknown")
+
+def get_cpu_info() -> str:
+    from validation.visualization.common import get_runtime_build_info
+    info = get_runtime_build_info()
+    return info.get("CPU", "unknown")
 
 def get_jet_theta_c(jet_name: str) -> float:
     return get_jet_config(jet_name).params.get("theta_c", 0.1)
@@ -177,10 +184,13 @@ class ComprehensiveBenchmark:
         return ComponentTiming(flux_single_ms=ms, total_ms=ms, stage_breakdown=stage_breakdown)
 
     @staticmethod
-    def _extract_flux_components(flux, has_rvs):
+    def _extract_flux_components(flux, has_rvs, has_ssc=False):
         """Extract flux arrays to compare. Returns dict of {label: array}."""
         if has_rvs:
             return {"fwd": np.asarray(flux.fwd.sync), "rvs": np.asarray(flux.rvs.sync)}
+        if has_ssc:
+            # For SSC models, track SSC component separately for convergence
+            return {"ssc": np.asarray(flux.fwd.ssc)}
         return {"total": np.asarray(flux.total)}
 
     def _run_dimension_convergence(self, jet_name, medium_name, radiation_name, theta_obs,
@@ -190,17 +200,23 @@ class ComprehensiveBenchmark:
         dim_idx = DIM_INDEX[dimension]
         t_lc = CONVERGENCE_T_LC
         n_vals = len(values)
-        has_rvs = get_radiation_config(radiation_name).rvs_params is not None
+        rad_config = get_radiation_config(radiation_name)
+        has_rvs = rad_config.rvs_params is not None
+        has_ssc = rad_config.params.get("ssc", False)
 
         # Build band list: for rvs configs, split each freq band into fwd/rvs components
-        freq_bands = list(CONVERGENCE_BANDS)
+        # For SSC configs, use extended bands including TeV
+        bands_dict = SSC_BANDS if has_ssc else CONVERGENCE_BANDS
+        freq_bands = list(bands_dict)
         if has_rvs:
             bands = [f"{fb} (fwd)" for fb in freq_bands] + [f"{fb} (rvs)" for fb in freq_bands]
+        elif has_ssc:
+            bands = [f"{fb} (ssc)" for fb in freq_bands]
         else:
             bands = freq_bands
 
         # Pre-allocate nu arrays for each frequency band
-        nu_arrays = {b: np.full_like(t_lc, nu) for b, nu in CONVERGENCE_BANDS.items()}
+        nu_arrays = {b: np.full_like(t_lc, nu) for b, nu in bands_dict.items()}
 
         times_ms = []
         times_by_band = {b: [] for b in bands}
@@ -226,8 +242,8 @@ class ComprehensiveBenchmark:
             ref_lcs = {}
             for fb in freq_bands:
                 ref_flux = ref_model.flux_density(t_lc, nu_arrays[fb])
-                for label, arr in self._extract_flux_components(ref_flux, has_rvs).items():
-                    band_key = f"{fb} ({label})" if has_rvs else fb
+                for label, arr in self._extract_flux_components(ref_flux, has_rvs, has_ssc).items():
+                    band_key = f"{fb} ({label})" if (has_rvs or has_ssc) else fb
                     ref_lcs[band_key] = arr.copy()
         except Exception as e:
             print(f"      {_bold_red('Error')} computing reference: {e}")
@@ -247,8 +263,8 @@ class ComprehensiveBenchmark:
                     elapsed = va.Model.profile_data().get("total", 0.0)
                     band_times.append(elapsed)
 
-                    for label, flux_arr in self._extract_flux_components(flux, has_rvs).items():
-                        band_key = f"{fb} ({label})" if has_rvs else fb
+                    for label, flux_arr in self._extract_flux_components(flux, has_rvs, has_ssc).items():
+                        band_key = f"{fb} ({label})" if (has_rvs or has_ssc) else fb
                         times_by_band[band_key].append(elapsed)
                         flux_by_band[band_key].append(flux_arr.tolist())
 
@@ -333,7 +349,7 @@ class ComprehensiveBenchmark:
 
     def run_full_suite(self):
         jets, meds = get_all_jet_names(), ["ISM", "wind"]
-        all_rads = get_radiation_names_no_ssc() + get_rvs_radiation_names()
+        all_rads = get_fwd_only_radiation_names() + get_rvs_radiation_names()
         configs = [(j, m, r, get_jet_theta_c(j) * ratio)
                    for j, m, r, ratio in product(jets, meds, all_rads, VIEWING_ANGLE_RATIOS)]
         return self._run_suite("FULL BENCHMARK SUITE", configs)
@@ -403,7 +419,7 @@ class ComprehensiveBenchmark:
         session = BenchmarkSession(
             timestamp=datetime.now().isoformat(), commit=get_git_commit(), platform=get_platform_info(),
             python_version=sys.version.split()[0], vegasafterglow_version=get_vegasafterglow_version(),
-            compiler=compiler, compile_flags=compile_flags, configs=self.results,
+            compiler=compiler, compile_flags=compile_flags, cpu=get_cpu_info(), configs=self.results,
         )
         session_dict = asdict(session)
         path = Path(filepath)
@@ -470,7 +486,7 @@ def main():
     if args.parallel > 0:
         print(f"Parallel workers: {_bold(str(args.parallel))}")
         ratios = VIEWING_ANGLE_RATIOS if args.full else [0]
-        rads = get_radiation_names_no_ssc() + get_rvs_radiation_names() if args.full else ["synchrotron"]
+        rads = get_fwd_only_radiation_names() + get_rvs_radiation_names() if args.full else ["synchrotron"]
         b.run_parallel(jet_types=args.jet, medium_types=args.medium, radiation_types=rads,
                        viewing_ratios=ratios, n_workers=args.parallel, timeout=args.timeout)
     elif args.full:

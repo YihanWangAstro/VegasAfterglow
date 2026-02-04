@@ -34,7 +34,7 @@ class ComprehensiveDashboard:
         setup_plot_style()
 
     def generate_full_report(self, benchmark_file: Optional[str] = None, regression_file: Optional[str] = None,
-                             n_workers: int = 0):
+                             n_workers: int = 0, version_override: Optional[str] = None):
         output_path = self.output_dir / "comprehensive_report.pdf"
 
         if benchmark_file is None:
@@ -61,6 +61,10 @@ class ComprehensiveDashboard:
             metadata = extract_session_metadata(benchmark_data)
         else:
             metadata = get_runtime_build_info()
+
+        # Override version if specified (useful for local reports deployed with specific version)
+        if version_override:
+            metadata["Version"] = version_override
 
         builder = ReportBuilder(output_path)
         section_num = 0

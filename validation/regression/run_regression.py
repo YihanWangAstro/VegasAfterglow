@@ -51,13 +51,13 @@ SPECTRAL_TOLERANCE = 0.15
 
 RVS_TIME_RANGES_THIN = {
     "crossing":        {"ISM": (1e-2, 1e-1),     "wind": (5, 50)},
-    "BM":              {"ISM": (1e5, 1e6),      "wind": (1e6, 1e7)},
+    "post_crossing":   {"ISM": (1e5, 1e6),      "wind": (1e6, 1e7)},
     "deep_newtonian":  {"ISM": (1e12, 1e13),    "wind": (1e14, 1e15)},
 }
 
 RVS_TIME_RANGES_THICK = {
     "crossing":        {"ISM": (5e3, 5e4),     "wind": (1e2, 1e3)},
-    "BM":              {"ISM": (1e7, 1e8),      "wind": (1e7, 1e8)},
+    "post_crossing":   {"ISM": (1e7, 1e8),      "wind": (1e7, 1e8)},
     "deep_newtonian":  {"ISM": (1e12, 1e13),    "wind": (1e14, 1e15)},
 }
 
@@ -65,7 +65,7 @@ RVS_TIME_RANGES_THICK = {
 RVS_SHOCK_SCALINGS_THIN = {
     "crossing":       {"ISM": {"u": F(3, 2), "r": 1, "B": 0, "N_p": F(3, 2)},
                        "wind": {"u": F(1, 2), "r": 1, "B": -1, "N_p": F(1, 2)}},
-    "BM":             {"ISM": {"u": F(-1, 4), "r": F(1, 4), "B": None, "N_p": 0},
+    "post_crossing":  {"ISM": {"u": F(-1, 4), "r": F(1, 4), "B": None, "N_p": 0},
                        "wind": {"u": None, "r": F(1, 2), "B": None, "N_p": 0}},
     "deep_newtonian": {"ISM": {"u": F(-2, 5), "r": F(2, 5), "B": None, "N_p": 0},
                        "wind": {"u": None, "r": F(2, 3), "B": None, "N_p": 0}},
@@ -75,7 +75,7 @@ RVS_SHOCK_SCALINGS_THIN = {
 RVS_SHOCK_SCALINGS_THICK = {
     "crossing":       {"ISM": {"u": F(1, 4), "r": F(1, 2), "B": F(-1, 4), "N_p": 1},
                        "wind": {"u": 0, "r": 1, "B": -1, "N_p": 1}},
-    "BM":             {"ISM": {"u": F(-1, 4), "r": F(1, 4), "B": None, "N_p": 0},
+    "post_crossing":  {"ISM": {"u": F(-1, 4), "r": F(1, 4), "B": None, "N_p": 0},
                        "wind": {"u": None, "r": F(1, 2), "B": None, "N_p": 0}},
     "deep_newtonian": {"ISM": {"u": F(-2, 5), "r": F(2, 5), "B": None, "N_p": 0},
                        "wind": {"u": None, "r": F(2, 3), "B": None, "N_p": 0}},
@@ -84,7 +84,7 @@ RVS_SHOCK_SCALINGS_THICK = {
 RVS_FREQ_SCALINGS_THIN = {
     "crossing":       {"ISM": {"nu_m": 0, "nu_c": -2, "nu_M": 0},
                        "wind": {"nu_m": -1, "nu_c": 1, "nu_M": 0}},
-    "BM":             {"ISM": {"nu_m": None, "nu_c": None, "nu_M": None},
+    "post_crossing":  {"ISM": {"nu_m": None, "nu_c": None, "nu_M": None},
                        "wind": {"nu_m": None, "nu_c": None, "nu_M": None}},
     "deep_newtonian": {"ISM": {"nu_m": None, "nu_c": None, "nu_M": None},
                        "wind": {"nu_m": None, "nu_c": None, "nu_M": None}},
@@ -93,7 +93,7 @@ RVS_FREQ_SCALINGS_THIN = {
 RVS_FREQ_SCALINGS_THICK = {
     "crossing":       {"ISM": {"nu_m": None, "nu_c": -1, "nu_M": F(-1,4)},
                        "wind": {"nu_m": -1, "nu_c": 1, "nu_M": 0}},
-    "BM":             {"ISM": {"nu_m": None, "nu_c": None, "nu_M": None},
+    "post_crossing":  {"ISM": {"nu_m": None, "nu_c": None, "nu_M": None},
                        "wind": {"nu_m": None, "nu_c": None, "nu_M": None}},
     "deep_newtonian": {"ISM": {"nu_m": None, "nu_c": None, "nu_M": None},
                        "wind": {"nu_m": None, "nu_c": None, "nu_M": None}},
@@ -406,14 +406,14 @@ class RegressionRunner:
             self._models[key] = create_model_with_rvs(medium_type, **params.get(medium_type, {}))
         return self._models[key]
 
-    def _run_rvs_shock_quantity(self, model, t_range, qty, expected, name, phase="BM"):
+    def _run_rvs_shock_quantity(self, model, t_range, qty, expected, name, phase="post_crossing"):
         """Run a single reverse-shock dynamics test."""
         return self._run_shock_quantity(
             model, t_range, qty, expected, name, phase,
             extractor=_rvs, expand_range=True, min_valid=3, type_prefix="rvs_shock",
             gamma_key="Gamma_th")
 
-    def _run_rvs_nu_scaling(self, model, t_range, freq_name, expected, name, phase="BM"):
+    def _run_rvs_nu_scaling(self, model, t_range, freq_name, expected, name, phase="post_crossing"):
         """Run a single reverse-shock frequency scaling test."""
         return self._run_nu_scaling(
             model, t_range, freq_name, expected, name, phase,
@@ -442,7 +442,7 @@ class RegressionRunner:
                 model, mk = self._get_rvs_viz_model(medium, regime), _MEDIUM_KEY[medium]
                 print(f"\n{_bold(f'--- {mk} ---')}")
                 self.results[grid_key].setdefault(mk, {})
-                for phase in ["crossing", "BM", "deep_newtonian"]:
+                for phase in ["crossing", "post_crossing", "deep_newtonian"]:
                     expected = scalings[phase][medium]
                     if all(v is None for v in expected.values()):
                         print(f"\n  Phase: {_cyan(phase)} {_dim('(skipped — scalings TBD)')}")

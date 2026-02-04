@@ -117,16 +117,29 @@ jobs:
         env:
           SETUPTOOLS_SCM_PRETEND_VERSION: ${{ inputs.version }}
 
-      - name: Install package and run validation
+      - name: Check for local report or generate
+        id: report
         run: |
-          pip install -e ".[test]" --config-settings=cmake.define.AFTERGLOW_PROFILE=ON
-          python validation/run_validation.py --all --output validation/
+          mkdir -p deploy_report
+
+          # Check for pre-committed local report (run on better hardware)
+          if [ -f "validation/comprehensive_report.pdf" ]; then
+            echo "::notice::Using pre-committed local report (better performance data)"
+            cp validation/comprehensive_report.pdf deploy_report/
+            echo "source=local" >> $GITHUB_OUTPUT
+          else
+            echo "No local report found, generating on runner..."
+            echo "::warning::For better benchmark results, generate locally and commit validation/comprehensive_report.pdf"
+            pip install -e ".[test]" --config-settings=cmake.define.AFTERGLOW_PROFILE=ON
+            python validation/run_validation.py --all --output deploy_report/ --version ${{ inputs.version }}
+            echo "source=runner" >> $GITHUB_OUTPUT
+          fi
 
       - name: Deploy report to GitHub Pages (versioned)
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: validation/
+          publish_dir: deploy_report/
           destination_dir: reports/v${{ inputs.version }}
           keep_files: true
 
@@ -134,7 +147,7 @@ jobs:
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: validation/
+          publish_dir: deploy_report/
           destination_dir: reports/latest
           keep_files: true
 

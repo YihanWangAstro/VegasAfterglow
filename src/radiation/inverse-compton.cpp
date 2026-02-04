@@ -239,6 +239,7 @@ void update_gamma_c_KN(Real& gamma_c, InverseComptonY& Ys, RadParams const& rad,
         //if (gamma_m < gamma_c_sync) {
         gamma_c_new = 1;
     }
+
     gamma_c_new = gamma_c_last; //initial guess
 
     Real Y_T = compute_Thomson_Y(rad, gamma_m, gamma_c_new);

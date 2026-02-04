@@ -216,9 +216,9 @@ struct ICPhoton {
 
     Real inv_dlog2_nu{0};
 
-    static constexpr size_t gamma_grid_per_order{7}; // Number of frequency bins
+    static constexpr size_t gamma_grid_per_order{7};
 
-    static constexpr size_t nu_grid_per_order{5}; // Number of gamma bins
+    static constexpr size_t nu_grid_per_order{5};
 
     bool KN{false}; // Klein-Nishina flag
 
@@ -250,8 +250,8 @@ inline constexpr Real IC_x0 = 0.47140452079103166;
  */
 template <typename Electrons, typename Photons>
 ICPhotonGrid<Electrons, Photons> generate_IC_photons(ElectronGrid<Electrons> const& electrons,
-                                                     PhotonGrid<Photons> const& photons, bool KN = true,
-                                                     Symmetry symmetry = Symmetry::structured) noexcept;
+                                                     PhotonGrid<Photons> const& photons, bool KN,
+                                                     Shock const& shock) noexcept;
 
 /**
  * <!-- ************************************************************************************** -->
@@ -481,17 +481,29 @@ Real ICPhoton<Electrons, Photons>::compute_log2_I_nu(Real log2_nu) {
 template <typename Electrons, typename Photons>
 ICPhotonGrid<Electrons, Photons> generate_IC_photons(ElectronGrid<Electrons> const& electrons,
                                                      PhotonGrid<Photons> const& photons, bool KN,
-                                                     Symmetry symmetry) noexcept {
+                                                     Shock const& shock) noexcept {
     size_t phi_size = electrons.shape()[0];
     size_t theta_size = electrons.shape()[1];
     size_t t_size = electrons.shape()[2];
     ICPhotonGrid<Electrons, Photons> IC_ph({phi_size, theta_size, t_size});
 
-    const size_t phi_compute = (symmetry != Symmetry::structured) ? 1 : phi_size;
-    const size_t theta_compute = (symmetry == Symmetry::isotropic) ? 1 : theta_size;
+    const size_t phi_compute = (shock.symmetry != Symmetry::structured) ? 1 : phi_size;
 
+    // Compute only representative cells based on symmetry
     for (size_t i = 0; i < phi_compute; ++i) {
-        for (size_t j = 0; j < theta_compute; ++j) {
+        size_t rep_idx = 0;
+        for (size_t j = 0; j < theta_size; ++j) {
+            // For piecewise symmetry, only compute at representative thetas
+            if (shock.symmetry >= Symmetry::piecewise) {
+                if (rep_idx < shock.theta_reps.size() && shock.theta_reps[rep_idx] == j)
+                    ++rep_idx;
+                else
+                    continue;
+            }
+            // For isotropic, only compute j=0
+            if (shock.symmetry == Symmetry::isotropic && j > 0)
+                break;
+
             for (size_t k = 0; k < t_size; ++k) {
                 IC_ph(i, j, k) = ICPhoton(electrons(i, j, k), photons(i, j, k), KN);
             }
@@ -500,24 +512,27 @@ ICPhotonGrid<Electrons, Photons> generate_IC_photons(ElectronGrid<Electrons> con
 
     // Eagerly generate spectra for representative cells before broadcasting.
     // Avoids redundant O(gamma_size * nu_size) generation in broadcast copies.
-    if (symmetry != Symmetry::structured) {
-        for (size_t i = 0; i < phi_compute; ++i)
-            for (size_t j = 0; j < theta_compute; ++j)
+    if (shock.symmetry != Symmetry::structured) {
+        for (size_t i = 0; i < phi_compute; ++i) {
+            size_t rep_idx = 0;
+            for (size_t j = 0; j < theta_size; ++j) {
+                if (shock.symmetry >= Symmetry::piecewise) {
+                    if (rep_idx < shock.theta_reps.size() && shock.theta_reps[rep_idx] == j)
+                        ++rep_idx;
+                    else
+                        continue;
+                }
+                if (shock.symmetry == Symmetry::isotropic && j > 0)
+                    break;
+
                 for (size_t k = 0; k < t_size; ++k)
                     IC_ph(i, j, k).compute_log2_I_nu(0);
+            }
+        }
     }
 
-    if (symmetry == Symmetry::isotropic) {
-        for (size_t i = 0; i < phi_size; ++i)
-            for (size_t j = 0; j < theta_size; ++j)
-                if (i != 0 || j != 0)
-                    xt::view(IC_ph, i, j, xt::all()) = xt::view(IC_ph, 0, 0, xt::all());
-    } else if (symmetry >= Symmetry::phi_symmetric) {
-        // piecewise: input data already group-identical from synchrotron broadcast, just broadcast phi
-        for (size_t i = 1; i < phi_size; ++i)
-            for (size_t j = 0; j < theta_size; ++j)
-                xt::view(IC_ph, i, j, xt::all()) = xt::view(IC_ph, 0, j, xt::all());
-    }
+    // Broadcast based on symmetry
+    broadcast_symmetry(IC_ph, shock);
 
     return IC_ph;
 }
@@ -608,26 +623,7 @@ void IC_cooling(ElectronGrid<Electrons>& electrons, PhotonGrid<Photons>& photons
             }
         }
     }
-    if (shock.symmetry == Symmetry::isotropic) {
-        for (size_t i = 0; i < phi_size; ++i)
-            for (size_t j = 0; j < theta_size; ++j)
-                if (i != 0 || j != 0)
-                    xt::view(electrons, i, j, xt::all()) = xt::view(electrons, 0, 0, xt::all());
-    } else if (shock.symmetry == Symmetry::piecewise) {
-        for (size_t r = 0; r < shock.theta_reps.size(); ++r) {
-            const size_t j_start = shock.theta_reps[r];
-            const size_t j_end = (r + 1 < shock.theta_reps.size()) ? shock.theta_reps[r + 1] : theta_size;
-            for (size_t j = j_start + 1; j < j_end; ++j)
-                xt::view(electrons, 0, j, xt::all()) = xt::view(electrons, 0, j_start, xt::all());
-        }
-        for (size_t i = 1; i < phi_size; ++i)
-            for (size_t j = 0; j < theta_size; ++j)
-                xt::view(electrons, i, j, xt::all()) = xt::view(electrons, 0, j, xt::all());
-    } else if (shock.symmetry == Symmetry::phi_symmetric) {
-        for (size_t i = 1; i < phi_size; ++i)
-            for (size_t j = 0; j < theta_size; ++j)
-                xt::view(electrons, i, j, xt::all()) = xt::view(electrons, 0, j, xt::all());
-    }
+    broadcast_symmetry(electrons, shock);
     generate_syn_photons(photons, shock, electrons);
 }
 

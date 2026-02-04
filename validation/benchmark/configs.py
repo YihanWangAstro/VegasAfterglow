@@ -68,7 +68,7 @@ RADIATION_CONFIGS: Dict[str, RadiationConfig] = {c.name: c for c in [
     # Forward-shock only
     RadiationConfig("synchrotron",      {**_STANDARD_RADIATION, "ssc_cooling": False, "ssc": False, "kn": False}),
     RadiationConfig("full_ssc",         {**_STANDARD_RADIATION, "ssc_cooling": True,  "ssc": True,  "kn": False}),
-    RadiationConfig("ssc_kn",           {**_STANDARD_RADIATION, "ssc_cooling": True,  "ssc": True,  "kn": True}),
+    RadiationConfig("ssc_kn",           {**_STANDARD_RADIATION, "ssc_cooling": False,  "ssc": True,  "kn": True}),
     RadiationConfig("fast_cooling",     {"eps_e": 0.1, "eps_B": 0.1,  "p": 2.5, "xi_e": 1e-3, "ssc_cooling": False, "ssc": False, "kn": False}),
     RadiationConfig("steep_spectrum",   {"eps_e": 0.1, "eps_B": 0.01, "p": 2.8, "xi_e": 1.0,  "ssc_cooling": False, "ssc": False, "kn": False}),
     RadiationConfig("flat_spectrum",    {"eps_e": 0.1, "eps_B": 0.01, "p": 2.05,"xi_e": 1.0,  "ssc_cooling": False, "ssc": False, "kn": False}),

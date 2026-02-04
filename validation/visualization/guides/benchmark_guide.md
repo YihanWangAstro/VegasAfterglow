@@ -13,19 +13,19 @@ The benchmark suite systematically tests a grid of physical scenarios and numeri
 | Parameter | Options | Description |
 |-----------|---------|-------------|
 | Jet Structure | tophat, gaussian, powerlaw, two_component | Angular energy profile |
-| External Medium | ISM, Wind | Density profile: constant (ISM) or r^(-2) (Wind) |
+| External Medium | ISM, Wind | Density profile: constant (ISM) or $\propto r^{-2}$ (Wind) |
 | Radiation | synchrotron, with_ssc_cooling, fast_cooling, steep/flat_spectrum, rvs_sync_thin, rvs_sync_thick | Radiation physics |
-| Viewing Angle | theta_v/theta_c = 0, 2, 4 | On-axis (0) vs off-axis (>1) |
+| Viewing Angle | $\theta_v/\theta_c$ = 0, 2, 4 | On-axis (0) vs off-axis (>1) |
 
 ### 1.2 Numerical Resolution
 
-Resolution controls the discretization density in each computational dimension. The fiducial values represent the recommended default settings. Note that theta and t grids enforce a minimum total point count regardless of the ppd value, so low ppd settings may not reduce the actual grid size.
+Resolution controls the discretization density in each computational dimension. The fiducial values represent the recommended default settings. Note that $\theta$ and $t$ grids enforce a minimum total point count regardless of the ppd value, so low ppd settings may not reduce the actual grid size.
 
 | Dimension | Symbol | Unit | Fiducial | Test Range |
 |-----------|--------|------|----------|------------|
-| Azimuthal angle | phi | per degree | 0.15 | 0.15 - 0.6 |
-| Polar angle | theta | per degree | 0.5 | 0.5 - 2.0 |
-| Observer time | t | per decade | 10 | 10 - 30 |
+| Azimuthal angle | $\phi$ | per degree | 0.15 | 0.15 - 0.6 |
+| Polar angle | $\theta$ | per degree | 0.5 | 0.5 - 2.0 |
+| Observer time | $t$ | per decade | 10 | 10 - 30 |
 
 ### 1.3 Frequency Bands
 
@@ -33,9 +33,9 @@ Convergence is evaluated independently at three representative frequencies spann
 
 | Band | Frequency (Hz) |
 |------|----------------|
-| Radio | 10^(9) |
-| Optical | 4.84 x 10^(14) |
-| X-ray | 10^(18) |
+| Radio | 10^9 |
+| Optical | 4.84 $\times$ 10^14 |
+| X-ray | 10^18 |
 
 ---
 
@@ -93,7 +93,7 @@ The overview page provides performance profiling across configurations, helping 
 
 ### 4.2 Timing Metric
 
-Each configuration is timed by computing a 30-point broadband light curve (t = 10^2 to 10^8 s) at the fiducial resolution. The reported time includes dynamics computation and flux evaluation in a single `flux_density` call.
+Each configuration is timed by computing a 30-point broadband light curve ($t$ = 10^2 to 10^8 s) at the fiducial resolution. The reported time includes dynamics computation and flux evaluation in a single `flux_density` call.
 
 ### 4.3 Stage Breakdown
 
@@ -121,7 +121,7 @@ Each configuration receives a detailed convergence analysis page showing how acc
 
 ### 5.1 Row Contents
 
-The page displays a 4x3 grid where each column corresponds to one resolution dimension (phi, theta, t) and each row shows a different metric.
+The page displays a 4x3 grid where each column corresponds to one resolution dimension ($\phi$, $\theta$, $t$) and each row shows a different metric.
 
 | Row | Y-axis | Threshold |
 |-----|--------|-----------|
@@ -170,7 +170,7 @@ The top two rows show how errors decrease as resolution increases. The shape of 
 ### 6.3 Performance Scaling
 
 Computational cost typically scales as:
-- Linear with time resolution (t_ppd)
-- Quadratic with angular resolution (phi_ppd x theta_ppd)
+- Linear with time resolution ($t_{\rm ppd}$)
+- Quadratic with angular resolution ($\phi_{\rm ppd} \times \theta_{\rm ppd}$)
 
 Wind medium simulations generally require more computation due to the radially-varying density profile. However, the medium-aware adaptive grid often produces smaller grids for wind (earlier deceleration time), which can offset this cost.

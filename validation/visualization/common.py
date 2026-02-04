@@ -28,12 +28,13 @@ PAGE_PORTRAIT, PAGE_LANDSCAPE = (8.5, 11), (11, 8.5)
 
 # Color schemes
 COLORS = {"pass": "#2ECC71", "fail": "#E74C3C", "primary": "#3498DB", "secondary": "#9B59B6", "neutral": "#7F8C8D", "background": "#2C3E50"}
-PHASE_COLORS = {"coasting": "#E74C3C", "crossing": "#F39C12", "BM": "#3498DB", "deep_newtonian": "#2ECC71"}
-PHASE_NAMES = {"coasting": "Coasting", "crossing": "Crossing", "BM": "Blandford-McKee", "deep_newtonian": "Sedov-Taylor"}
+PHASE_COLORS = {"coasting": "#E74C3C", "crossing": "#F39C12", "BM": "#3498DB", "post_crossing": "#3498DB", "deep_newtonian": "#2ECC71"}
+PHASE_NAMES = {"coasting": "Coasting", "crossing": "Crossing", "BM": "Blandford-McKee", "post_crossing": "Post-crossing", "deep_newtonian": "Sedov-Taylor"}
 BAND_COLORS = {
-    "Radio": "firebrick", "Optical": "yellowgreen", "X-ray": "royalblue",
+    "Radio": "firebrick", "Optical": "yellowgreen", "X-ray": "royalblue", "TeV": "purple",
     "Radio (fwd)": "firebrick", "Optical (fwd)": "yellowgreen", "X-ray (fwd)": "royalblue",
     "Radio (rvs)": "salmon", "Optical (rvs)": "darkseagreen", "X-ray (rvs)": "cornflowerblue",
+    "Radio (ssc)": "firebrick", "Optical (ssc)": "yellowgreen", "X-ray (ssc)": "royalblue", "TeV (ssc)": "purple",
 }
 MEDIUM_STYLES, MEDIUM_MARKERS = {"ISM": "-", "wind": "--"}, {"ISM": "o", "wind": "s"}
 
@@ -146,12 +147,44 @@ def _parse_cmake_flags(cmake_path: Path) -> str:
 def get_runtime_build_info() -> Dict[str, str]:
     """Get build/system information at runtime."""
     import platform
+    import subprocess
     info = {"Version": "unknown", "Python": sys.version.split()[0], "Platform": f"{platform.system()} {platform.machine()}",
-            "Commit": "unknown", "Compiler": "unknown", "Flags": "unknown"}
+            "Commit": "unknown", "Compiler": "unknown", "Flags": "unknown", "CPU": "unknown"}
 
-    # Get version from VegasAfterglow package
+    # Get version from VegasAfterglow package (trim commit suffix like +gb28e78a26.d20260204)
     if HAS_VA:
-        info["Version"] = getattr(va, "__version__", "unknown")
+        full_version = getattr(va, "__version__", "unknown")
+        # Remove the +commit.date suffix for cleaner display
+        info["Version"] = full_version.split("+")[0] if "+" in full_version else full_version
+
+    # Get CPU info
+    try:
+        cpu_brand = None
+        # On macOS, use sysctl for detailed CPU info (platform.processor() only returns "arm" or "i386")
+        if platform.system() == "Darwin":
+            result = subprocess.run(["sysctl", "-n", "machdep.cpu.brand_string"], capture_output=True, text=True)
+            if result.returncode == 0 and result.stdout.strip():
+                cpu_brand = result.stdout.strip()
+        # On Linux, parse /proc/cpuinfo
+        elif platform.system() == "Linux":
+            try:
+                with open("/proc/cpuinfo") as f:
+                    for line in f:
+                        if line.startswith("model name"):
+                            cpu_brand = line.split(":")[1].strip()
+                            break
+            except (IOError, OSError):
+                pass
+        # Fallback to platform.processor()
+        if not cpu_brand:
+            cpu_brand = platform.processor()
+        if cpu_brand and cpu_brand not in ("", "arm", "i386", "x86_64", "aarch64"):
+            info["CPU"] = cpu_brand
+        elif cpu_brand:
+            # Use machine type as fallback with arch
+            info["CPU"] = f"{platform.machine()} ({cpu_brand})"
+    except Exception:
+        pass
 
     # Get git commit
     try:
@@ -189,8 +222,11 @@ def get_runtime_build_info() -> Dict[str, str]:
 def extract_session_metadata(session: Dict) -> Dict[str, str]:
     metadata = get_runtime_build_info()
     for key, field in [("vegasafterglow_version", "Version"), ("python_version", "Python"), ("commit", "Commit"),
-                       ("platform", "Platform"), ("compiler", "Compiler"), ("compile_flags", "Flags")]:
+                       ("platform", "Platform"), ("compiler", "Compiler"), ("compile_flags", "Flags"), ("cpu", "CPU")]:
         if (val := session.get(key)) and val != "unknown":
+            # Trim version string if it has commit suffix
+            if field == "Version" and "+" in val:
+                val = val.split("+")[0]
             metadata[field] = val
     return metadata
 
@@ -269,6 +305,9 @@ def create_title_page(pdf: PdfPages, title: str, subtitle: str = "", metadata: O
         env_info = " | ".join(f"{k}: {metadata[k]}" for k in ("Commit", "Platform") if k in metadata)
         if env_info:
             fig.text(0.5, y_start, env_info, fontsize=9, ha="center", color="#7F8C8D")
+            y_start -= 0.03
+        if "CPU" in metadata and metadata["CPU"] != "unknown":
+            fig.text(0.5, y_start, f"CPU: {metadata['CPU']}", fontsize=8, ha="center", color="#95A5A6")
     fig.text(0.5, 0.08, "Powered by Claude Code", fontsize=9, ha="center", color="#95A5A6", style="italic")
     pdf.savefig(fig)
     plt.close(fig)
@@ -435,6 +474,40 @@ def _render_markdown_with_reportlab(markdown_path: Path, output_path: Path) -> b
             # Convert markdown formatting to reportlab tags
             def convert_formatting(text):
                 import re
+
+                # LaTeX math: $...$ - convert to Unicode using pylatexenc if available
+                def latex_to_unicode(match):
+                    latex = match.group(1)
+                    try:
+                        from pylatexenc.latex2text import LatexNodes2Text
+                        # Convert LaTeX to Unicode text
+                        unicode_text = LatexNodes2Text().latex_to_text(latex)
+                        # Handle subscripts and superscripts for reportlab
+                        unicode_text = re.sub(r'_\{([^}]+)\}', r'<sub>\1</sub>', unicode_text)
+                        unicode_text = re.sub(r'_([a-zA-Z0-9])', r'<sub>\1</sub>', unicode_text)
+                        unicode_text = re.sub(r'\^\{([^}]+)\}', r'<super>\1</super>', unicode_text)
+                        unicode_text = re.sub(r'\^([a-zA-Z0-9\-]+)', r'<super>\1</super>', unicode_text)
+                        return unicode_text
+                    except ImportError:
+                        # Fallback: basic substitutions if pylatexenc not available
+                        greek = {
+                            r'\\nu': 'ν', r'\\alpha': 'α', r'\\beta': 'β', r'\\gamma': 'γ',
+                            r'\\Gamma': 'Γ', r'\\theta': 'θ', r'\\phi': 'φ', r'\\tau': 'τ',
+                            r'\\sigma': 'σ', r'\\pi': 'π', r'\\rho': 'ρ', r'\\lambda': 'λ',
+                            r'\\approx': '≈', r'\\propto': '∝', r'\\sim': '~',
+                            r'\\leq': '≤', r'\\geq': '≥', r'\\times': '×', r'\\pm': '±',
+                        }
+                        for pattern, replacement in greek.items():
+                            latex = re.sub(pattern, replacement, latex)
+                        latex = re.sub(r'_\{([^}]+)\}', r'<sub>\1</sub>', latex)
+                        latex = re.sub(r'_([a-zA-Z0-9])', r'<sub>\1</sub>', latex)
+                        latex = re.sub(r'\^\{([^}]+)\}', r'<super>\1</super>', latex)
+                        latex = re.sub(r'\^([a-zA-Z0-9\-]+)', r'<super>\1</super>', latex)
+                        latex = re.sub(r'\\([a-zA-Z]+)', r'\1', latex)
+                        return latex
+
+                text = re.sub(r'\$([^$]+)\$', latex_to_unicode, text)
+
                 # Superscript: ^(...) or ^X for single char - process BEFORE other formatting
                 text = re.sub(r'\^[\(\[]([^\)\]]+)[\)\]]', r'<super>\1</super>', text)
                 text = re.sub(r'\^(\d+)', r'<super>\1</super>', text)
@@ -715,7 +788,7 @@ class ReportBuilder:
         colors = rl["colors"]
 
         story = []
-        story.append(Spacer(1, 2.5 * inch))
+        story.append(Spacer(1, 2 * inch))
 
         # Logo or title text
         logo_path = None
@@ -770,8 +843,12 @@ class ReportBuilder:
                 es = ParagraphStyle("EnvInfo", fontSize=9, fontName="Helvetica",
                                     textColor=colors.HexColor("#7F8C8D"), alignment=1, spaceAfter=6)
                 story.append(Paragraph(env_info, es))
+            if "CPU" in metadata and metadata["CPU"] != "unknown":
+                cpu_style = ParagraphStyle("CPUInfo", fontSize=8, fontName="Helvetica",
+                                           textColor=colors.HexColor("#95A5A6"), alignment=1, spaceAfter=6)
+                story.append(Paragraph(f"CPU: {metadata['CPU']}", cpu_style))
 
-        story.append(Spacer(1, 2 * inch))
+        story.append(Spacer(1, 1 * inch))
         ps = ParagraphStyle("Powered", fontSize=9, fontName="Helvetica-Oblique",
                             textColor=colors.HexColor("#95A5A6"), alignment=1)
         story.append(Paragraph("Powered by Claude Code", ps))
@@ -969,6 +1046,10 @@ class ReportBuilder:
             for node in toc_nodes:
                 _add_bookmark(node)
 
+        # Deduplicate fonts from page number overlays BEFORE adding links
+        # (doing it after would invalidate link references)
+        writer.compress_identical_objects(remove_identicals=True, remove_orphans=False)
+
         # --- Internal links ---
         # Build annotations manually using DictionaryObject to ensure
         # each annotation is a unique object not shared between pages
@@ -1031,9 +1112,6 @@ class ReportBuilder:
 
         if n_links:
             print(f"  Added {n_links} internal jump links")
-
-        # Deduplicate fonts from page number overlays
-        writer.compress_identical_objects(remove_identicals=True, remove_orphans=True)
 
         temp_output = str(self.output_path) + ".tmp"
         with open(temp_output, "wb") as f:

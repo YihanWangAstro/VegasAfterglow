@@ -128,7 +128,7 @@ def run_regression():
     return ok, REGR_RESULTS_PATH
 
 
-def generate_report(benchmark_path=None, regression_path=None, output_dir=None, parallel=0):
+def generate_report(benchmark_path=None, regression_path=None, output_dir=None, parallel=0, version_override=None):
     print(_header("Generating Validation Report"))
     try:
         from validation.visualization.dashboard import ComprehensiveDashboard
@@ -139,7 +139,8 @@ def generate_report(benchmark_path=None, regression_path=None, output_dir=None, 
         dashboard.generate_full_report(
             benchmark_file=str(benchmark_path) if benchmark_path and benchmark_path.exists() else None,
             regression_file=str(regression_path) if regression_path and regression_path.exists() else None,
-            n_workers=parallel if parallel > 0 else DEFAULT_WORKERS)
+            n_workers=parallel if parallel > 0 else DEFAULT_WORKERS,
+            version_override=version_override)
         return True
     except Exception as e:
         print(f"{_bold_red('Error')} generating report: {e}")
@@ -158,6 +159,8 @@ def main():
     parser.add_argument("-j", "--parallel", type=int, default=DEFAULT_WORKERS,
                         help=f"Number of parallel workers (default: {DEFAULT_WORKERS})")
     parser.add_argument("--output", type=str, default=None, help="Output directory for reports")
+    parser.add_argument("--version", type=str, default=None,
+                        help="Version to display in report (overrides detected version)")
     parser.add_argument("--strict", action="store_true", help="Fail on ACCEPTABLE status")
     args = parser.parse_args()
 
@@ -201,7 +204,8 @@ def main():
         ok = generate_report(
             benchmark_path=bench_path if (args.all or args.benchmark) else None,
             regression_path=regr_path if (args.all or args.regression) else None,
-            output_dir=args.output, parallel=args.parallel)
+            output_dir=args.output, parallel=args.parallel,
+            version_override=args.version)
         if not ok:
             messages.append("Report generation failed")
 

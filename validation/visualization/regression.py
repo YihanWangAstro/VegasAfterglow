@@ -238,7 +238,7 @@ def _draw_spectrum_grid_section(fig, spectrum_grid, top, bottom, grid_left, grid
 
 
 _FWD_PHASES = ["coasting", "BM", "deep_newtonian"]
-_RVS_PHASES = ["crossing", "BM", "deep_newtonian"]
+_RVS_PHASES = ["crossing", "post_crossing", "deep_newtonian"]
 _MEDIA = ["ISM", "Wind"]
 _GRID_LEFT = 0.18
 

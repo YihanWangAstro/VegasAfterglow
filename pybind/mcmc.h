@@ -576,7 +576,7 @@ void MultiBandModel::generate_photons(Params const& param, double t_min, double 
         }
 
         if (config.fwd_ssc) {
-            fwd_IC_photons = generate_IC_photons(electrons, fwd_photons, config.kn, shock.symmetry);
+            fwd_IC_photons = generate_IC_photons(electrons, fwd_photons, config.kn, shock);
         }
 
     } else {
@@ -611,11 +611,11 @@ void MultiBandModel::generate_photons(Params const& param, double t_min, double 
         }
 
         if (config.fwd_ssc) {
-            fwd_IC_photons = generate_IC_photons(f_electrons, fwd_photons, config.kn, f_shock.symmetry);
+            fwd_IC_photons = generate_IC_photons(f_electrons, fwd_photons, config.kn, f_shock);
         }
 
         if (config.rvs_ssc) {
-            rvs_IC_photons = generate_IC_photons(r_electrons, rvs_photons, config.kn, r_shock.symmetry);
+            rvs_IC_photons = generate_IC_photons(r_electrons, rvs_photons, config.kn, r_shock);
         }
     }
 }

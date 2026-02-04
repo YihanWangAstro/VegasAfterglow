@@ -642,7 +642,7 @@ void PyModel::single_shock_emission(Shock const& shock, Coord const& coord, Arra
     if (rad.ssc) {
         auto IC_ph = [&] {
             AFTERGLOW_PROFILE_SCOPE(ic_photons);
-            return generate_IC_photons(syn_e, syn_ph, rad.kn, shock.symmetry);
+            return generate_IC_photons(syn_e, syn_ph, rad.kn, shock);
         }();
         {
             AFTERGLOW_PROFILE_SCOPE(ssc_flux);
