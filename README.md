@@ -400,7 +400,7 @@ obs = Observer(lumi_dist=1e26, z=z, theta_obs=0.)
 
 rad = Radiation(eps_e=1e-1, eps_B=1e-3, p=2.3)
 
-model = Model(jet=jet, medium=medium, observer=obs, fwd_rad=rad, resolutions=(0.1,5,10))
+model = Model(jet=jet, medium=medium, observer=obs, fwd_rad=rad, resolutions=(0.15,0.5,10))
 ```
 
 </details>
@@ -820,7 +820,7 @@ nu_out = np.logspace(16,20,150)
 best_params = result.top_k_params[0]
 
 # Generate model light curves at the specified bands using the best-fit parameters
-lc = fitter.flux_density_grid(best_params, t_out, band)
+lc = fitter.flux_density_grid(best_params, t_out, bands)
 
 # Generate model spectra at the specified times using the best-fit parameters
 spec = fitter.flux_density_grid(best_params, times, nu_out)
