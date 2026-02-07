@@ -216,22 +216,10 @@ Shock generate_fwd_shock(Coord const& coord, Medium const& medium, Ejecta const&
             theta_s =
                 jet_spreading_edge(jet, medium, coord.phi(i), coord.theta.front(), coord.theta.back(), coord.t.front());
         }
-        size_t rep_idx = 0;
-        for (size_t j = 0; j < theta_size; ++j) {
-            if (shock.symmetry >= Symmetry::piecewise) {
-                if (rep_idx < shock.theta_reps.size() && shock.theta_reps[rep_idx] == j)
-                    ++rep_idx;
-                else
-                    continue;
-            }
-
+        for (size_t j : shock.theta_reps) {
             auto eqn = ForwardShockEqn(medium, jet, coord.phi(i), coord.theta(j), rad_params, theta_s);
             //auto eqn = SimpleShockEqn(medium, jet, coord.phi(i), coord.theta(j), rad_params, theta_s);
             grid_solve_fwd_shock(i, j, xt::view(coord.t, i, j, xt::all()), shock, eqn, rtol);
-
-            if (shock.symmetry == Symmetry::isotropic) {
-                break;
-            }
         }
 
         if (shock.symmetry >= Symmetry::phi_symmetric) {

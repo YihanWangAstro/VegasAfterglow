@@ -56,30 +56,6 @@ Real PowerLawSyn::compute_spectrum(Real nu) const {
             return C2_ * fast_pow(nu / nu_m, -p / 2);
 
             break;
-#ifdef SELF_ABSORPTION_HEATING
-        case 4:
-            if (nu <= nu_a) {
-                return (nu / nu_a) * (nu / nu_a);
-            }
-            if (nu <= nu_m) {
-                return C2_ * std::sqrt(nu_a / nu);
-            }
-            return C2_ * C1_ * fast_pow(nu / nu_m, -p / 2);
-
-            break;
-        case 5:
-        case 6:
-            if (nu < nu_m) {
-                return C1_ * (nu / nu_a) * (nu / nu_a);
-            }
-            if (nu <= nu_a) {
-                return pow52(nu / nu_a);
-            }
-            return C2_ * fast_pow(nu / nu_a, -p / 2);
-
-            break;
-
-#else
         case 4:
             if (nu <= nu_a) {
                 return 3 * C2_ * (nu / nu_a) * (nu / nu_a);
@@ -102,7 +78,6 @@ Real PowerLawSyn::compute_spectrum(Real nu) const {
 
             break;
 
-#endif
         default:
             return 0;
             break;
@@ -153,32 +128,6 @@ Real PowerLawSyn::compute_log2_spectrum(Real log2_nu) const {
             return log2_C4_ - p / 2. * log2_nu;
 
             break;
-#ifdef SELF_ABSORPTION_HEATING
-        case 4:
-            if (log2_nu <= log2_nu_a) {
-                return log2_C1_ + 2. * log2_nu;
-            }
-            if (log2_nu <= log2_nu_m) {
-                return log2_C2_ - log2_nu / 2.;
-            }
-
-            return log2_C3_ - p / 2. * log2_nu;
-
-            break;
-        case 5:
-        case 6:
-            if (log2_nu <= log2_nu_m) {
-                return 0.5 * log2_nu_m + log2_C1_ + 2. * log2_nu;
-            }
-
-            if (log2_nu <= log2_nu_a) {
-                return log2_C1_ + 2.5 * log2_nu;
-            }
-
-            return log2_C2_ - p / 2. * log2_nu;
-
-            break;
-#else
         case 4:
 
             if (log2_nu <= log2_nu_a) {
@@ -203,7 +152,6 @@ Real PowerLawSyn::compute_log2_spectrum(Real log2_nu) const {
             return log2_C3_ + log2_C2_ - p / 2. * log2_nu;
 
             break;
-#endif
         default:
             return -con::inf;
             break;

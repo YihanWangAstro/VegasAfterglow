@@ -402,7 +402,9 @@ class PyModel {
      * @param observer Observer configuration including distance, redshift, and viewing angles
      * @param fwd_rad Radiation parameters for forward shock microphysics
      * @param rvs_rad Optional radiation parameters for reverse shock (default: none)
-     * @param resolutions Grid resolution tuple (phi_res, theta_res, time_res) in (deg⁻¹, deg⁻¹, decade⁻¹)
+     * @param resolutions Grid resolution tuple (phi_res, theta_res, time_res) in (deg⁻¹, deg⁻¹, decade⁻¹).
+     *        The total grid points in each dimension are computed from these resolutions, but
+     *        each has a minimum that cannot be reduced further: phi (min 1), theta (min 48), time (min 24).
      * @param rtol Relative tolerance for numerical integration (default: 1×10⁻⁵)
      * @param axisymmetric Whether to assume axisymmetric jet structure (default: true)
      * <!-- ************************************************************************************** -->
@@ -596,8 +598,8 @@ class PyModel {
     PyRadiation fwd_rad;                    ///< Forward shock radiation parameters
     std::optional<PyRadiation> rvs_rad_opt; ///< Optional reverse shock radiation parameters
     Real theta_w{con::pi / 2};              ///< Maximum polar angle to calculate
-    Real phi_resol{0.3};                    ///< Azimuthal resolution: number of points per degree
-    Real theta_resol{1};                    ///< Polar resolution: number of points per degree
+    Real phi_resol{0.15};                   ///< Azimuthal resolution: number of points per degree
+    Real theta_resol{0.5};                  ///< Polar resolution: number of points per degree
     Real t_resol{10};                       ///< Time resolution: number of points per decade
     Real rtol{1e-5};                        ///< Relative tolerance
     bool axisymmetric{true};                ///< Whether to assume axisymmetric jet

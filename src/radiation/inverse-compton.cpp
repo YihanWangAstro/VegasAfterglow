@@ -98,8 +98,8 @@ void InverseComptonY::update_cooling_breaks(Real gamma_c, Real Y_T) noexcept {
         regime = 1;
     } else {
         regime = 2;
-        return;
-        if (gamma_m_ < gamma_m_hat) { //weak KN regime (gamma_m < gamma_m_hat)
+
+        /*if (gamma_m_ < gamma_m_hat) { //weak KN regime (gamma_m < gamma_m_hat)
             regime = 2;
         } else {                 //strong KN regime (gamma_m_hat < gamma_self < gamma_m)
             if (gamma0 == 0.0) { // No gamma_0 because Y(gamma)<1 everywhere
@@ -111,7 +111,7 @@ void InverseComptonY::update_cooling_breaks(Real gamma_c, Real Y_T) noexcept {
             } else { // (gamma_m < gamma0)
                 regime = 5;
             }
-        }
+        }*/
     }
     build_segments();
 }
@@ -235,10 +235,9 @@ void update_gamma_c_KN(Real& gamma_c, InverseComptonY& Ys, RadParams const& rad,
     Real gamma_c_trans = std::max(gamma_c_sync * 0.5, 1.0); // where Y(gamma_c) = 1
     Real gamma_c_new = 2 * gamma_c_sync;
 
-    if (gamma_m < gamma_c_trans) {
-        //if (gamma_m < gamma_c_sync) {
+    /*if (gamma_m < gamma_c_trans) {
         gamma_c_new = 1;
-    }
+    }*/
 
     gamma_c_new = gamma_c_last; //initial guess
 

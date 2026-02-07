@@ -7,6 +7,7 @@
 
 #pragma once
 
+#include <numeric>
 #include <tuple>
 #include <vector>
 
@@ -96,6 +97,8 @@ void Shock::detect_symmetry(Coord const& coord, Ejecta const& jet, Medium const&
 
     if (jet.spreading || !medium.isotropic) {
         symmetry = Symmetry::structured;
+        theta_reps.resize(theta_size_);
+        std::iota(theta_reps.begin(), theta_reps.end(), size_t(0));
         return;
     }
 

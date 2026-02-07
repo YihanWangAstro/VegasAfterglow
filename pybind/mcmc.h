@@ -338,8 +338,8 @@ struct ConfigParams {
     double z{0};               ///< Cosmological redshift
     std::string medium{"ism"}; ///< External medium type: "ism" or "wind"
     std::string jet{"tophat"}; ///< Jet structure type: "tophat", "gaussian", "powerlaw", etc.
-    Real phi_resol{0.3};       ///< Azimuthal resolution: points per degree
-    Real theta_resol{1};       ///< Polar resolution: points per degree
+    Real phi_resol{0.15};      ///< Azimuthal resolution: points per degree
+    Real theta_resol{0.5};     ///< Polar resolution: points per degree
     Real t_resol{10};          ///< Temporal resolution: points per decade
     double rtol{1e-6};         ///< Relative tolerance for numerical integration
     bool rvs_shock{false};     ///< Whether to include reverse shock emission

@@ -509,21 +509,9 @@ ShockPair generate_shock_pair(Coord const& coord, Medium const& medium, Ejecta c
     for (size_t i = 0; i < phi_size_needed; ++i) {
         // Real theta_s =
         //     jet_spreading_edge(jet, medium, coord.phi(i), coord.theta.front(), coord.theta.back(), coord.t.front());
-        size_t rep_idx = 0;
-        for (size_t j = 0; j < theta_size; ++j) {
-            if (f_shock.symmetry >= Symmetry::piecewise) {
-                if (rep_idx < f_shock.theta_reps.size() && f_shock.theta_reps[rep_idx] == j)
-                    ++rep_idx;
-                else
-                    continue;
-            }
-
+        for (size_t j : f_shock.theta_reps) {
             auto eqn_r = FRShockEqn(medium, jet, coord.phi(i), coord.theta(j), rad_fwd, rad_rvs);
             grid_solve_shock_pair(i, j, xt::view(coord.t, i, j, xt::all()), f_shock, r_shock, eqn_r, rtol);
-
-            if (f_shock.symmetry == Symmetry::isotropic) {
-                break;
-            }
         }
 
         if (f_shock.symmetry >= Symmetry::phi_symmetric) {

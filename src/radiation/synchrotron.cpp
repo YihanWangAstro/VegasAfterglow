@@ -216,27 +216,6 @@ Real compute_syn_gamma_a(Real B, Real I_syn_peak, Real gamma_m, Real gamma_c, Re
     // 2kT(nu_a/c)^2 = I_peak*(nu_a/nu_peak)^(1/3) // first assume nu_a is in the 1/3 segment
     Real nu_a = fast_pow(I_syn_peak * con::c2 / (std::cbrt(nu_peak) * 2 * kT), 0.6);
 
-#ifdef SELF_ABSORPTION_HEATING
-    if (nu_a > nu_peak) { // nu_a is not in the 1/3 segment
-        constexpr Real coef = 3 * con::e / (4 * con::pi * con::me * con::c);
-        if (gamma_c > gamma_m) { // first assume nu_a is in the -(p-1)/2 segment, 2kT(nu_a/nu_m)^2.5 nu_m^2/c^2
-            Real nu_m = compute_syn_freq(gamma_m, B);
-            nu_a = fast_pow(I_syn_peak * con::c2 / (2 * kT) * fast_pow(nu_m, p / 2), 2 / (p + 4));
-            Real nu_c = compute_syn_freq(gamma_c, B);
-            if (nu_a > nu_c) { // nu_a is not in the -(p-1)/2 segment, strong absorption
-                Real C = 1.5 * I_syn_peak / (con::me * pow52(coef * B) * std::sqrt(nu_m));
-                Real gamma_a =
-                    root_bisect([C](Real x) -> Real { return x * x * x * x * x * x - x - C; }, gamma_c, gamma_M);
-                return gamma_a;
-            }
-        } else { // strong absorption
-            Real nu_m = compute_syn_freq(gamma_m, B);
-            Real C = 1.5 * I_syn_peak / (con::me * pow52(coef * B) * std::sqrt(nu_m));
-            Real gamma_a = root_bisect([C](Real x) -> Real { return x * x * x * x * x * x - x - C; }, gamma_c, gamma_M);
-            return gamma_a;
-        }
-    }
-#else
     if (nu_a > nu_peak) {        // nu_a is not in the 1/3 segment
         if (gamma_c > gamma_m) { // first assume nu_a is in the -(p-1)/2 segment
             const Real nu_m = compute_syn_freq(gamma_m, B);
@@ -254,8 +233,6 @@ Real compute_syn_gamma_a(Real B, Real I_syn_peak, Real gamma_m, Real gamma_c, Re
             }
         }
     }
-
-#endif
     return compute_syn_gamma(nu_a, B) + 1;
 }
 
@@ -419,14 +396,7 @@ void generate_syn_electrons(SynElectronGrid& electrons, Shock const& shock) {
     const size_t phi_compute = (shock.symmetry != Symmetry::structured) ? 1 : phi_size;
 
     for (size_t i = 0; i < phi_compute; ++i) {
-        size_t rep_idx = 0;
-        for (size_t j = 0; j < theta_size; ++j) {
-            if (shock.symmetry >= Symmetry::piecewise) {
-                if (rep_idx < shock.theta_reps.size() && shock.theta_reps[rep_idx] == j)
-                    ++rep_idx;
-                else
-                    continue;
-            }
+        for (size_t j : shock.theta_reps) {
             const size_t k_inj = shock.injection_idx(i, j);
             for (size_t k = 0; k < t_size; ++k) {
                 const Real t_com = shock.t_comv(i, j, k);
@@ -490,14 +460,7 @@ void generate_syn_photons(SynPhotonGrid& photons, Shock const& shock, SynElectro
     const size_t phi_compute = (shock.symmetry != Symmetry::structured) ? 1 : phi_size;
 
     for (size_t i = 0; i < phi_compute; ++i) {
-        size_t rep_idx = 0;
-        for (size_t j = 0; j < theta_size; ++j) {
-            if (shock.symmetry >= Symmetry::piecewise) {
-                if (rep_idx < shock.theta_reps.size() && shock.theta_reps[rep_idx] == j)
-                    ++rep_idx;
-                else
-                    continue;
-            }
+        for (size_t j : shock.theta_reps) {
             for (size_t k = 0; k < t_size; ++k) {
                 auto& ph = photons(i, j, k);
                 auto& elec = electrons(i, j, k);
