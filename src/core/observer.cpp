@@ -45,11 +45,25 @@ void Observer::calc_t_obs(Coord const& coord, Shock const& shock) {
     const size_t shock_phi_size = shock.theta.shape(0);
     const size_t block_size = theta_grid * t_grid;
 
-    for (size_t i = 0; i < shock_phi_size; ++i) {
-        for (size_t j = 0; j < theta_grid; ++j) {
-            for (size_t k = 0; k < t_grid; ++k) {
-                cos_theta(i, j, k) = std::cos(shock.theta(i, j, k));
-                sin_theta(i, j, k) = std::sin(shock.theta(i, j, k));
+    if (jet_spreading_) {
+        for (size_t i = 0; i < shock_phi_size; ++i) {
+            for (size_t j = 0; j < theta_grid; ++j) {
+                for (size_t k = 0; k < t_grid; ++k) {
+                    cos_theta(i, j, k) = std::cos(shock.theta(i, j, k));
+                    sin_theta(i, j, k) = std::sin(shock.theta(i, j, k));
+                }
+            }
+        }
+    } else {
+        // theta is constant along k for non-spreading jets, compute once per (i,j)
+        for (size_t i = 0; i < shock_phi_size; ++i) {
+            for (size_t j = 0; j < theta_grid; ++j) {
+                const Real ct = std::cos(shock.theta(i, j, 0));
+                const Real st = std::sin(shock.theta(i, j, 0));
+                for (size_t k = 0; k < t_grid; ++k) {
+                    cos_theta(i, j, k) = ct;
+                    sin_theta(i, j, k) = st;
+                }
             }
         }
     }
@@ -101,14 +115,40 @@ void Observer::calc_solid_angle(Coord const& coord, Shock const& shock) {
 
     const int last = theta_grid - 1;
     const size_t shock_phi_size = shock.theta.shape(0);
+
+    // Interpolate theta of neighbor cell (i, j_nb) at engine time t_target
+    auto interp_theta = [&](size_t i, size_t j_nb, Real t_target, size_t& k_hint) -> Real {
+        while (k_hint + 1 < t_grid && coord.t(i, j_nb, k_hint + 1) < t_target)
+            k_hint++;
+        if (k_hint + 1 >= t_grid)
+            return shock.theta(i, j_nb, t_grid - 1);
+        const Real w =
+            (t_target - coord.t(i, j_nb, k_hint)) / (coord.t(i, j_nb, k_hint + 1) - coord.t(i, j_nb, k_hint));
+        return shock.theta(i, j_nb, k_hint) + w * (shock.theta(i, j_nb, k_hint + 1) - shock.theta(i, j_nb, k_hint));
+    };
+
     for (size_t i = 0; i < shock_phi_size; ++i) {
         for (size_t j = 0; j < theta_grid; ++j) {
             const size_t j_p1 = (j == last) ? last : (j + 1);
 
-            for (size_t k = 0; k < t_grid; ++k) {
-                const Real theta_lo = (j == 0) ? 0.0 : 0.5 * (shock.theta(i, j, k) + shock.theta(i, j - 1, k));
-                const Real theta_hi = 0.5 * (shock.theta(i, j, k) + shock.theta(i, j_p1, k));
-                dcos(i, j, k) = std::cos(theta_hi) - std::cos(theta_lo);
+            if (jet_spreading_) {
+                size_t k_hint_lo = 0, k_hint_hi = 0;
+                for (size_t k = 0; k < t_grid; ++k) {
+                    const Real t_target = coord.t(i, j, k);
+                    const Real th_lo =
+                        (j == 0) ? 0.0 : 0.5 * (shock.theta(i, j, k) + interp_theta(i, j - 1, t_target, k_hint_lo));
+                    const Real th_hi = (j == last)
+                                           ? shock.theta(i, j, k)
+                                           : 0.5 * (shock.theta(i, j, k) + interp_theta(i, j_p1, t_target, k_hint_hi));
+                    dcos(i, j, k) = std::cos(th_hi) - std::cos(th_lo);
+                }
+            } else {
+                const Real th_lo = (j == 0) ? 0.0 : 0.5 * (shock.theta(i, j, 0) + shock.theta(i, j - 1, 0));
+                const Real th_hi = 0.5 * (shock.theta(i, j, 0) + shock.theta(i, j_p1, 0));
+                const Real val = std::cos(th_hi) - std::cos(th_lo);
+                for (size_t k = 0; k < t_grid; ++k) {
+                    dcos(i, j, k) = val;
+                }
             }
         }
     }
@@ -156,7 +196,7 @@ void Observer::update_required(MaskGrid& required, Array const& t_obs) {
 }
 
 //========================================================================================================
-//                                  Private Methods - Orchestration
+//                                  Private Methods
 //========================================================================================================
 
 void Observer::build_time_grid(Coord const& coord, Shock const& shock, Real luminosity_dist, Real redshift) {
@@ -176,6 +216,18 @@ void Observer::build_time_grid(Coord const& coord, Shock const& shock, Real lumi
     this->t_grid = t_size;
     this->lumi_dist = luminosity_dist;
     this->one_plus_z = 1 + redshift;
+
+    // Detect jet spreading: theta varies along the k (time) axis
+    this->jet_spreading_ = false;
+    if (t_size > 1) {
+        for (size_t i = 0; i < phi_size && !jet_spreading_; ++i) {
+            for (size_t j = 0; j < theta_size && !jet_spreading_; ++j) {
+                if (shock.theta(i, j, 0) != shock.theta(i, j, t_size - 1)) {
+                    jet_spreading_ = true;
+                }
+            }
+        }
+    }
 
     time = MeshGrid3d::from_shape({eff_phi_grid, theta_size, t_size});
     lg2_t = MeshGrid3d::from_shape({eff_phi_grid, theta_size, t_size});

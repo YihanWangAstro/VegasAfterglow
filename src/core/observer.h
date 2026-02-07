@@ -166,10 +166,11 @@ class Observer {
   private:
     Real lumi_dist{1}; ///< Luminosity distance
     // Grid dimensions
-    size_t jet_3d{0};       ///< Flag indicating if the jet is non-axis-symmetric (non-zero if true)
-    size_t eff_phi_grid{1}; ///< Effective number of phi grid points
-    size_t theta_grid{0};   ///< Number of theta grid points
-    size_t t_grid{0};       ///< Number of time grid points
+    size_t jet_3d{0};           ///< Flag indicating if the jet is non-axis-symmetric (non-zero if true)
+    size_t eff_phi_grid{1};     ///< Effective number of phi grid points
+    size_t theta_grid{0};       ///< Number of theta grid points
+    size_t t_grid{0};           ///< Number of time grid points
+    bool jet_spreading_{false}; ///< Whether the jet has lateral spreading (theta varies along k)
 
     /**
      * <!-- ************************************************************************************** -->
