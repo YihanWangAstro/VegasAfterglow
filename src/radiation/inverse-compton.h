@@ -370,21 +370,36 @@ void ICPhoton<Electrons, Photons>::compute_IC_spectrum(GridParams const& params,
     const Real log2_nu_sync_max = fast_log2(nu_sync(nu_last));
     const int spec_last = static_cast<int>(params.spectrum_resol) - 1;
 
-    if (KN) {
-        // Klein-Nishina: CDF depends on gamma, rebuild per electron bin
-        Array cdf = Array::from_shape({params.nu_size});
-        Array cdf_slope = Array::from_shape({params.nu_size});
+    Array cdf = Array::from_shape({params.nu_size});
+    Array cdf_slope = Array::from_shape({params.nu_size});
 
-        for (size_t i = 0; i < params.gamma_size; ++i) {
-            const Real gamma_i = gamma(i);
-            const Real Ndgamma = dN_e(i);
-            const Real down_scatter = 1.0 / (4 * IC_x0 * gamma_i * gamma_i);
-            const Real log2_down = fast_log2(down_scatter);
+    // Thomson: build CDF once (cross section is constant, factored out)
+    if (!KN) {
+        for (int j = nu_last; j >= 0; --j) {
+            cdf_slope(j) = I_nu_sync(j) / (nu_sync(j) * nu_sync(j));
+            cdf(j) = cdf_slope(j) * dnu_sync(j) + ((j < nu_last) ? cdf(j + 1) : Real(0));
+        }
+    }
 
-            // Precompute max k where seed freq is still in grid
-            const int k_max = std::clamp(static_cast<int>((log2_nu_sync_max - log2_down - log2_nu_IC_0) * inv_dlog2_nu),
-                                         0, spec_last);
+    // log2_down = -log2(4*IC_x0) - 2*log2(gamma(i)) is linear in i (gamma grid is log-spaced)
+    const Real dlog2_gamma =
+        (fast_log2(params.gamma_max) - fast_log2(params.gamma_min)) / static_cast<Real>(params.gamma_size);
+    const Real log2_down_0 = -fast_log2(Real(4 * IC_x0)) - 2 * fast_log2(params.gamma_min) - dlog2_gamma;
+    const Real log2_down_di = -2 * dlog2_gamma;
 
+    for (size_t i = 0; i < params.gamma_size; ++i) {
+        const Real gamma_i = gamma(i);
+        const Real gamma_i2 = gamma_i * gamma_i;
+        const Real down_scatter = 1.0 / (4 * IC_x0 * gamma_i2);
+        const Real log2_down = log2_down_0 + static_cast<Real>(i) * log2_down_di;
+        const Real weight = KN ? dN_e(i) : dN_e(i) / gamma_i2;
+
+        // Precompute max k where seed freq is still in grid
+        const int k_max =
+            std::clamp(static_cast<int>((log2_nu_sync_max - log2_down - log2_nu_IC_0) * inv_dlog2_nu), 0, spec_last);
+
+        // KN: rebuild CDF per gamma bin (cross section depends on gamma*nu)
+        if (KN) {
             {
                 const Real nu_comv = gamma_i * nu_sync(nu_last);
                 const Real inv_nc = 1.0 / nu_comv;
@@ -397,47 +412,18 @@ void ICPhoton<Electrons, Photons>::compute_IC_spectrum(GridParams const& params,
                 cdf_slope(j) = I_nu_sync(j) * compton_cross_section(nu_comv) * inv_nc * inv_nc;
                 cdf(j) = cdf(j + 1) + cdf_slope(j) * dnu_sync(j);
             }
-
-            for (int k = 0; k <= k_max; ++k) {
-                const Real log2_seed = log2_nu_IC(k) + log2_down;
-                const int idx = std::clamp(static_cast<int>((log2_seed - log2_nu_base) * inv_dlog2_ns), 0, nu_last);
-                const Real nu_seed = nu_IC(k) * down_scatter;
-                Real F = cdf(idx) + cdf_slope(idx) * (nu_sync(idx) - nu_seed);
-                F = std::max(F, Real(0));
-                I_nu_IC(k) += Ndgamma * F;
-            }
-        }
-        log2_I_nu_IC = xt::log2(I_nu_IC * nu_IC * 0.25);
-    } else {
-        Array factor = I_nu_sync / (nu_sync * nu_sync);
-        Array cdf = Array::from_shape({params.nu_size});
-
-        cdf(nu_last) = factor(nu_last) * dnu_sync(nu_last);
-        for (int j = nu_last - 1; j >= 0; --j) {
-            cdf(j) = cdf(j + 1) + factor(j) * dnu_sync(j);
         }
 
-        for (size_t i = 0; i < params.gamma_size; ++i) {
-            const Real gamma_i2 = gamma(i) * gamma(i);
-            const Real weight = dN_e(i) / gamma_i2;
-            const Real down_scatter = 1.0 / (4 * IC_x0 * gamma_i2);
-            const Real log2_down = fast_log2(down_scatter);
-
-            // Precompute max k where seed freq is still in grid
-            const int k_max = std::clamp(static_cast<int>((log2_nu_sync_max - log2_down - log2_nu_IC_0) * inv_dlog2_nu),
-                                         0, spec_last);
-
-            for (int k = 0; k <= k_max; ++k) {
-                const Real log2_seed = log2_nu_IC(k) + log2_down;
-                const int idx = std::clamp(static_cast<int>((log2_seed - log2_nu_base) * inv_dlog2_ns), 0, nu_last);
-                const Real nu_seed = nu_IC(k) * down_scatter;
-                Real F = cdf(idx) + factor(idx) * (nu_sync(idx) - nu_seed);
-                F = std::max(F, Real(0));
-                I_nu_IC(k) += weight * F;
-            }
+        for (int k = 0; k <= k_max; ++k) {
+            const Real log2_seed = log2_nu_IC(k) + log2_down;
+            const int idx = std::clamp(static_cast<int>((log2_seed - log2_nu_base) * inv_dlog2_ns), 0, nu_last);
+            const Real nu_seed = nu_IC(k) * down_scatter;
+            Real F = cdf(idx) + cdf_slope(idx) * (nu_sync(idx) - nu_seed);
+            F = std::max(F, Real(0));
+            I_nu_IC(k) += weight * F;
         }
-        log2_I_nu_IC = xt::log2(I_nu_IC * nu_IC * 0.25 * con::sigmaT);
     }
+    log2_I_nu_IC = xt::log2(I_nu_IC * nu_IC * 0.25 * (KN ? Real(1) : con::sigmaT));
 
     for (size_t i = 0; i < params.spectrum_resol - 1; ++i) {
         interp_slope(i) = (log2_I_nu_IC(i + 1) - log2_I_nu_IC(i)) * inv_dlog2_nu;

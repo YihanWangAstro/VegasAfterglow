@@ -2,9 +2,7 @@
 
 import multiprocessing as mp
 import os
-import sys
 import tempfile
-from pathlib import Path
 from typing import Dict, List, Optional, Tuple
 
 import matplotlib
@@ -13,16 +11,9 @@ import matplotlib.pyplot as plt
 import numpy as np
 from matplotlib.gridspec import GridSpec
 
-sys.path.insert(0, str(Path(__file__).parent.parent.parent))
-from validation.visualization.common import (BAND_COLORS, COLORS, FIDUCIAL_VALUES, MAX_ERROR_THRESHOLD,
-                                             MEAN_ERROR_THRESHOLD, PAGE_PORTRAIT, find_fiducial_index,
-                                             get_flux_time, setup_plot_style)
-
-
-def _get_fiducial_idx(dim_key, values):
-    """Look up the fiducial index for a convergence dimension."""
-    fid = FIDUCIAL_VALUES.get(dim_key.replace("_convergence", ""), 0)
-    return next(((i, fid) for i, v in enumerate(values) if abs(v - fid) < 1e-9), (-1, fid))
+from .common import (BAND_COLORS, COLORS, FIDUCIAL_VALUES, MAX_ERROR_THRESHOLD,
+                     MEAN_ERROR_THRESHOLD, PAGE_PORTRAIT, find_fiducial_index,
+                     get_flux_time, setup_plot_style, worst_fiducial_error)
 
 
 def _classify_convergence(worst_mean_err, worst_max_err):
@@ -187,101 +178,89 @@ def plot_benchmark_overview(session: Dict, angle_filter: str = "all") -> plt.Fig
     return fig
 
 
-def plot_single_model_convergence_page(config: Dict, model_id: int) -> plt.Figure:
-    """Create convergence page for a single model (4 rows x 3 cols: errors, times, light curves)."""
-    fig = plt.figure(figsize=PAGE_PORTRAIT)
-    gs = GridSpec(4, 3, figure=fig, hspace=0.40, wspace=0.35, top=0.91, bottom=0.05, left=0.10, right=0.95)
+_DIMENSIONS = [
+    ("phi_convergence", "\u03c6 Resolution", "\u03c6 [ppd]"),
+    ("theta_convergence", "\u03b8 Resolution", "\u03b8 [ppd]"),
+    ("t_convergence", "t Resolution", "t [ppd]"),
+]
 
-    jet_type = config.get("jet_type", "?")
-    medium = config.get("medium", "?")
-    radiation = config.get("radiation", "?")
-    theta_obs = config.get("theta_obs", 0)
-    theta_obs_ratio = config.get("theta_obs_ratio", theta_obs / 0.1 if theta_obs else 0)
 
-    dimensions = [
-        ("phi_convergence", "\u03c6 Resolution", "\u03c6 [ppd]"),
-        ("theta_convergence", "\u03b8 Resolution", "\u03b8 [ppd]"),
-        ("t_convergence", "t Resolution", "t [ppd]"),
-    ]
+def _plot_error_row(fig, gs, row_idx, config, error_key, ylabel, threshold):
+    """Plot one error row (max or mean) across 3 convergence dimensions. Returns fiducial errors."""
+    fiducial_errors = []
+    for col, (dim_key, title, xlabel) in enumerate(_DIMENSIONS):
+        ax = fig.add_subplot(gs[row_idx, col])
+        has_any_data = False
+        all_valid_errors = []
+        col_fid_errors = []
 
-    all_fiducial_max_errors = []
-    all_fiducial_mean_errors = []
+        conv = config.get(dim_key) or {}
+        vals = conv.get("values", [])
+        errors_by_band = conv.get(error_key, {}) or {}
 
-    def plot_error_row(row_idx, error_key, ylabel, threshold, collected_errors):
-        for col, (dim_key, title, xlabel) in enumerate(dimensions):
-            ax = fig.add_subplot(gs[row_idx, col])
-            has_any_data = False
-            all_valid_errors = []
-            fiducial_errors = []
+        dim_name = dim_key.replace("_convergence", "")
+        fiducial_val = FIDUCIAL_VALUES.get(dim_name, 0)
+        fiducial_idx = find_fiducial_index(vals, fiducial_val)
 
-            conv = config.get(dim_key) or {}
-            vals = conv.get("values", [])
-            errors_by_band = conv.get(error_key, {}) or {}
+        if vals:
+            for band_name, errors in errors_by_band.items():
+                if not errors:
+                    continue
+                color = BAND_COLORS.get(band_name, "gray")
+                plot_errs = []
+                for e in errors:
+                    if e is not None and np.isfinite(e):
+                        abs_e = abs(e)
+                        plot_errs.append(max(abs_e, 1e-10))
+                        if abs_e > 0:
+                            all_valid_errors.append(abs_e)
+                    else:
+                        plot_errs.append(np.nan)
 
-            fiducial_idx, fiducial_val = _get_fiducial_idx(dim_key, vals)
+                if 0 <= fiducial_idx < len(errors):
+                    fid_err = errors[fiducial_idx]
+                    if fid_err is not None and np.isfinite(fid_err):
+                        col_fid_errors.append(abs(fid_err))
 
-            if vals:
-                for band_name, errors in errors_by_band.items():
-                    if not errors:
-                        continue
-                    color = BAND_COLORS.get(band_name, "gray")
-                    plot_errs = []
-                    for e in errors:
-                        if e is not None and np.isfinite(e):
-                            abs_e = abs(e)
-                            plot_errs.append(max(abs_e, 1e-10))
-                            if abs_e > 0:
-                                all_valid_errors.append(abs_e)
-                        else:
-                            plot_errs.append(np.nan)
+                if any(np.isfinite(e) for e in plot_errs):
+                    has_any_data = True
+                    ax.semilogy(vals, plot_errs, marker="o", linestyle="-", color=color, markersize=3,
+                                linewidth=1.0, alpha=0.8, label=band_name)
+                    if 0 <= fiducial_idx < len(plot_errs) and np.isfinite(plot_errs[fiducial_idx]):
+                        ax.semilogy([fiducial_val], [plot_errs[fiducial_idx]], marker="*", color=color,
+                                    markersize=8, zorder=10)
 
-                    if fiducial_idx >= 0 and fiducial_idx < len(errors):
-                        fid_err = errors[fiducial_idx]
-                        if fid_err is not None and np.isfinite(fid_err):
-                            fiducial_errors.append(abs(fid_err))
+        ax.set_xlabel(xlabel, fontsize=8)
+        ax.set_ylabel(ylabel, fontsize=8)
+        ax.set_title(title, fontsize=9)
+        ax.tick_params(labelsize=7)
+        ax.grid(True, alpha=0.3)
+        ax.axhline(threshold, color="black", linestyle="--", linewidth=1, alpha=0.7)
 
-                    if any(np.isfinite(e) for e in plot_errs):
-                        has_any_data = True
-                        ax.semilogy(vals, plot_errs, marker="o", linestyle="-", color=color, markersize=3,
-                                    linewidth=1.0, alpha=0.8, label=band_name)
-                        if fiducial_idx >= 0 and fiducial_idx < len(plot_errs):
-                            fid_err = plot_errs[fiducial_idx]
-                            if np.isfinite(fid_err):
-                                ax.semilogy([fiducial_val], [fid_err], marker="*", color=color, markersize=8, zorder=10)
+        if has_any_data:
+            ax.legend(fontsize=6, loc="upper right")
+            if all_valid_errors:
+                y_min = min(min(all_valid_errors), threshold * 0.1)
+                y_max = max(max(all_valid_errors), threshold * 10)
+                if y_max / max(y_min, 1e-10) < 100:
+                    y_center = np.sqrt(y_min * y_max)
+                    y_min, y_max = y_center / 10, y_center * 10
+                ax.set_ylim(y_min, y_max)
+            if col_fid_errors:
+                max_fid_err = max(col_fid_errors)
+                fid_color = "red" if max_fid_err > threshold else "green"
+                ax.axhline(max_fid_err, color=fid_color, linestyle="-", linewidth=1.0, alpha=0.8)
+        else:
+            ax.set_ylim(threshold * 0.01, threshold * 100)
+            ax.text(0.5, 0.5, "No data", ha="center", va="center", transform=ax.transAxes, fontsize=9, color="gray")
 
-            ax.set_xlabel(xlabel, fontsize=8)
-            ax.set_ylabel(ylabel, fontsize=8)
-            ax.set_title(title, fontsize=9)
-            ax.tick_params(labelsize=7)
-            ax.grid(True, alpha=0.3)
-            ax.axhline(threshold, color="black", linestyle="--", linewidth=1, alpha=0.7)
+        fiducial_errors.extend(col_fid_errors)
+    return fiducial_errors
 
-            if has_any_data:
-                ax.legend(fontsize=6, loc="upper right")
-                if all_valid_errors:
-                    y_min = min(min(all_valid_errors), threshold * 0.1)
-                    y_max = max(max(all_valid_errors), threshold * 10)
-                    if y_max / max(y_min, 1e-10) < 100:
-                        y_center = np.sqrt(y_min * y_max)
-                        y_min = y_center / 10
-                        y_max = y_center * 10
-                    ax.set_ylim(y_min, y_max)
 
-                if fiducial_errors:
-                    max_fid_err = max(fiducial_errors)
-                    fid_color = "red" if max_fid_err > threshold else "green"
-                    ax.axhline(max_fid_err, color=fid_color, linestyle="-", linewidth=1.0, alpha=0.8)
-            else:
-                ax.set_ylim(threshold * 0.01, threshold * 100)
-                ax.text(0.5, 0.5, "No data", ha="center", va="center", transform=ax.transAxes, fontsize=9, color="gray")
-
-            collected_errors.extend(fiducial_errors)
-
-    plot_error_row(0, "errors_by_band", "Max Rel. Error", MAX_ERROR_THRESHOLD, all_fiducial_max_errors)
-    plot_error_row(1, "mean_errors_by_band", "Mean Rel. Error", MEAN_ERROR_THRESHOLD, all_fiducial_mean_errors)
-
-    # Row 3: CPU time
-    for col, (dim_key, title, xlabel) in enumerate(dimensions):
+def _plot_timing_row(fig, gs, config):
+    """Plot CPU timing row across 3 convergence dimensions."""
+    for col, (dim_key, title, xlabel) in enumerate(_DIMENSIONS):
         ax = fig.add_subplot(gs[2, col])
         has_any_data = False
 
@@ -289,7 +268,9 @@ def plot_single_model_convergence_page(config: Dict, model_id: int) -> plt.Figur
         vals = conv.get("values", [])
         times_by_band = conv.get("times_by_band", {}) or {}
 
-        fiducial_idx, fiducial_val = _get_fiducial_idx(dim_key, vals)
+        dim_name = dim_key.replace("_convergence", "")
+        fiducial_val = FIDUCIAL_VALUES.get(dim_name, 0)
+        fiducial_idx = find_fiducial_index(vals, fiducial_val)
 
         if not times_by_band:
             times = conv.get("times_ms", [])
@@ -306,10 +287,9 @@ def plot_single_model_convergence_page(config: Dict, model_id: int) -> plt.Figur
                     has_any_data = True
                     ax.plot(vals, valid_times, linestyle="-", marker="o", color=color, alpha=0.8, linewidth=1.0,
                             markersize=4, label=band_name)
-                    if fiducial_idx >= 0 and fiducial_idx < len(valid_times):
-                        fid_time = valid_times[fiducial_idx]
-                        if np.isfinite(fid_time):
-                            ax.plot([fiducial_val], [fid_time], marker="*", color=color, markersize=10, zorder=10)
+                    if 0 <= fiducial_idx < len(valid_times) and np.isfinite(valid_times[fiducial_idx]):
+                        ax.plot([fiducial_val], [valid_times[fiducial_idx]], marker="*", color=color,
+                                markersize=10, zorder=10)
 
         ax.set_xlabel(xlabel, fontsize=8)
         ax.set_ylabel("CPU Time [ms]", fontsize=8)
@@ -320,10 +300,13 @@ def plot_single_model_convergence_page(config: Dict, model_id: int) -> plt.Figur
         if has_any_data:
             ax.legend(fontsize=6, loc="upper left")
         else:
-            ax.text(0.5, 0.5, "No timing data", ha="center", va="center", transform=ax.transAxes, fontsize=9, color="gray")
+            ax.text(0.5, 0.5, "No timing data", ha="center", va="center", transform=ax.transAxes,
+                    fontsize=9, color="gray")
 
-    # Row 4: Light curve panels
-    for col, (dim_key, title, xlabel) in enumerate(dimensions):
+
+def _plot_lightcurve_row(fig, gs, config):
+    """Plot light curve row across 3 convergence dimensions."""
+    for col, (dim_key, title, xlabel) in enumerate(_DIMENSIONS):
         ax = fig.add_subplot(gs[3, col])
         has_any_data = False
 
@@ -334,7 +317,6 @@ def plot_single_model_convergence_page(config: Dict, model_id: int) -> plt.Figur
         dim_name = dim_key.replace("_convergence", "")
         fiducial_val = FIDUCIAL_VALUES.get(dim_name, 0)
 
-        is_rvs = config.get("radiation", "").startswith("rvs_")
         ref_flux_by_band = conv.get("ref_flux_by_band", {}) or {}
         flux_peak = 0
         flux_floor = np.inf
@@ -342,12 +324,8 @@ def plot_single_model_convergence_page(config: Dict, model_id: int) -> plt.Figur
             for band_name, fluxes_list in flux_by_band.items():
                 if not fluxes_list:
                     continue
-                # For rvs radiation configs, only plot the reverse shock component
-                if is_rvs and "(rvs)" not in band_name:
-                    continue
                 color = BAND_COLORS.get(band_name, "gray")
 
-                # Plot reference resolution curve first (behind sweep curves)
                 ref_flux = ref_flux_by_band.get(band_name)
                 if ref_flux and len(ref_flux) == len(t_array):
                     ref_arr = np.asarray(ref_flux)
@@ -355,8 +333,7 @@ def plot_single_model_convergence_page(config: Dict, model_id: int) -> plt.Figur
                     if len(pos) > 0:
                         flux_peak = max(flux_peak, np.max(pos))
                         flux_floor = min(flux_floor, np.min(pos))
-                    ax.loglog(t_array, ref_flux, linestyle="-", color=color, alpha=0.4, linewidth=0.8,
-                              zorder=1)
+                    ax.loglog(t_array, ref_flux, linestyle="-", color=color, alpha=0.4, linewidth=0.8, zorder=1)
 
                 n_res = len(fluxes_list)
                 for i, flux in enumerate(fluxes_list):
@@ -368,10 +345,8 @@ def plot_single_model_convergence_page(config: Dict, model_id: int) -> plt.Figur
                     if len(pos) > 0:
                         flux_peak = max(flux_peak, np.max(pos))
                         flux_floor = min(flux_floor, np.min(pos))
-                    res_val = res_values[i] if i < len(res_values) else fiducial_val
-                    ls = "-"
                     label = band_name if i == n_res - 1 else None
-                    ax.loglog(t_array, flux, linestyle=ls, color=color, alpha=1, linewidth=0.5, label=label)
+                    ax.loglog(t_array, flux, linestyle="-", color=color, alpha=1, linewidth=0.5, label=label)
 
         ax.set_xlabel("Time [s]", fontsize=8)
         ax.set_ylabel("Flux [erg/cm\u00b2/s/Hz]", fontsize=8)
@@ -380,32 +355,44 @@ def plot_single_model_convergence_page(config: Dict, model_id: int) -> plt.Figur
         ax.grid(True, alpha=0.3)
 
         if has_any_data:
-            # Clamp y-axis: use data range if tighter than 1e-15 * peak
             if flux_peak > 0:
                 y_lo = flux_floor * 0.1 if np.isfinite(flux_floor) else flux_peak * 1e-15
                 ax.set_ylim(max(y_lo, flux_peak * 1e-15), flux_peak * 10)
-
             ax.legend(fontsize=6, loc=0)
         else:
             ax.text(0.5, 0.5, "No light curve data", ha="center", va="center", transform=ax.transAxes,
                     fontsize=9, color="gray")
 
-    # Determine pass/fail status
-    worst_max_err = max(all_fiducial_max_errors) if all_fiducial_max_errors else 0
-    worst_mean_err = max(all_fiducial_mean_errors) if all_fiducial_mean_errors else 0
-    status_text, status_color = _classify_convergence(worst_mean_err, worst_max_err)
 
-    model_info = f"#{model_id}: {jet_type} / {medium} / {radiation} / \u03b8_v/\u03b8_c={theta_obs_ratio:.1f}"
+def plot_single_model_convergence_page(config: Dict, model_id: int) -> plt.Figure:
+    """Create convergence page for a single model (4 rows x 3 cols: errors, times, light curves)."""
+    fig = plt.figure(figsize=PAGE_PORTRAIT)
+    gs = GridSpec(4, 3, figure=fig, hspace=0.40, wspace=0.35, top=0.91, bottom=0.05, left=0.10, right=0.95)
+
+    fid_max_errors = _plot_error_row(fig, gs, 0, config, "errors_by_band", "Max Rel. Error", MAX_ERROR_THRESHOLD)
+    fid_mean_errors = _plot_error_row(fig, gs, 1, config, "mean_errors_by_band", "Mean Rel. Error", MEAN_ERROR_THRESHOLD)
+    _plot_timing_row(fig, gs, config)
+    _plot_lightcurve_row(fig, gs, config)
+
+    worst_max = max(fid_max_errors) if fid_max_errors else 0
+    worst_mean = max(fid_mean_errors) if fid_mean_errors else 0
+    status_text, status_color = _classify_convergence(worst_mean, worst_max)
+
+    jet = config.get("jet_type", "?")
+    medium = config.get("medium", "?")
+    radiation = config.get("radiation", "?")
+    theta_obs = config.get("theta_obs", 0)
+    theta_obs_ratio = config.get("theta_obs_ratio", theta_obs / 0.1 if theta_obs else 0)
+    model_info = f"#{model_id}: {jet} / {medium} / {radiation} / \u03b8_v/\u03b8_c={theta_obs_ratio:.1f}"
     fig.text(0.08, 0.97, f"[{status_text}]", ha="left", fontsize=11, fontweight="bold", color=status_color)
     fig.text(0.5, 0.97, model_info, ha="center", fontsize=10, fontweight="bold")
 
     return fig
 
 
-def _collect_fiducial_errors(configs, error_key, base_band, shock_filter):
-    """Collect fiducial errors for a given band and shock type across all configs/dimensions.
+def _collect_fiducial_errors(configs, error_key, base_band):
+    """Collect fiducial errors for a given band across all configs/dimensions.
 
-    shock_filter: "fwd" collects plain + (fwd) bands, "rvs" collects (rvs) bands.
     Returns list of absolute error values.
     """
     errors = []
@@ -419,20 +406,11 @@ def _collect_fiducial_errors(configs, error_key, base_band, shock_filter):
             fiducial_value = FIDUCIAL_VALUES.get(dim_name, 0)
             fiducial_idx = find_fiducial_index(tested_values, fiducial_value)
 
-            for band_name, errs in errors_by_band.items():
-                if not (band_name == base_band or band_name.startswith(base_band + " (")):
-                    continue
-                is_rvs = "(rvs)" in band_name
-                is_fwd = "(fwd)" in band_name
-                is_plain = not is_rvs and not is_fwd
-                if shock_filter == "fwd" and not (is_fwd or is_plain):
-                    continue
-                if shock_filter == "rvs" and not is_rvs:
-                    continue
-                if errs and 0 <= fiducial_idx < len(errs):
-                    err = errs[fiducial_idx]
-                    if err is not None and np.isfinite(err) and abs(err) > 0:
-                        errors.append(abs(err))
+            errs = errors_by_band.get(base_band, [])
+            if errs and 0 <= fiducial_idx < len(errs):
+                err = errs[fiducial_idx]
+                if err is not None and np.isfinite(err) and abs(err) > 0:
+                    errors.append(abs(err))
     return errors
 
 
@@ -466,11 +444,11 @@ def _plot_error_hist_panel(ax, errors, threshold, color, label):
 def plot_error_distribution(session: Dict) -> plt.Figure:
     """Create error distribution page: histograms of max/mean relative errors by band.
 
-    Layout: 4 rows x 3 columns (Radio, Optical, X-ray).
-    Rows: Fwd Max Error, Fwd Mean Error, Rvs Max Error, Rvs Mean Error.
+    Layout: 2 rows x 3 columns (Radio, Optical, X-ray).
+    Rows: Max Error, Mean Error.
     """
     fig = plt.figure(figsize=PAGE_PORTRAIT)
-    gs = GridSpec(4, 3, figure=fig, hspace=0.40, wspace=0.30, top=0.90, bottom=0.05, left=0.12, right=0.95)
+    gs = GridSpec(2, 3, figure=fig, hspace=0.40, wspace=0.30, top=0.90, bottom=0.05, left=0.12, right=0.95)
 
     configs = session.get("configs", session.get("results", []))
     if not configs:
@@ -480,24 +458,20 @@ def plot_error_distribution(session: Dict) -> plt.Figure:
 
     base_bands = ["Radio", "Optical", "X-ray"]
 
-    # 4 rows: (error_key, row_label, shock_filter, threshold)
     rows = [
-        ("errors_by_band", "Fwd Max Error", "fwd", MAX_ERROR_THRESHOLD),
-        ("mean_errors_by_band", "Fwd Mean Error", "fwd", MEAN_ERROR_THRESHOLD),
-        ("errors_by_band", "Rvs Max Error", "rvs", MAX_ERROR_THRESHOLD),
-        ("mean_errors_by_band", "Rvs Mean Error", "rvs", MEAN_ERROR_THRESHOLD),
+        ("errors_by_band", "Max Error", MAX_ERROR_THRESHOLD),
+        ("mean_errors_by_band", "Mean Error", MEAN_ERROR_THRESHOLD),
     ]
 
-    for row, (error_key, row_label, shock_filter, threshold) in enumerate(rows):
+    for row, (error_key, row_label, threshold) in enumerate(rows):
         for col, base_band in enumerate(base_bands):
             ax = fig.add_subplot(gs[row, col])
 
-            errors = _collect_fiducial_errors(configs, error_key, base_band, shock_filter)
-            color_key = f"{base_band} ({shock_filter})" if shock_filter == "rvs" else base_band
-            color = BAND_COLORS.get(color_key, BAND_COLORS.get(base_band, "gray"))
-            _plot_error_hist_panel(ax, errors, threshold, color, shock_filter)
+            errors = _collect_fiducial_errors(configs, error_key, base_band)
+            color = BAND_COLORS.get(base_band, "gray")
+            _plot_error_hist_panel(ax, errors, threshold, color, row_label)
 
-            ax.set_xlabel("Relative Error" if row == 3 else "", fontsize=8)
+            ax.set_xlabel("Relative Error" if row == 1 else "", fontsize=8)
             ax.set_ylabel("Count", fontsize=8)
             ax.tick_params(labelsize=7)
             ax.grid(True, alpha=0.3)
@@ -505,8 +479,7 @@ def plot_error_distribution(session: Dict) -> plt.Figure:
             if row == 0:
                 ax.set_title(base_band, fontsize=10, fontweight="bold", color=BAND_COLORS.get(base_band, "gray"))
 
-        # Row label on the left
-        row_y = 0.90 - (row + 0.5) * (0.85 / 4)
+        row_y = 0.90 - (row + 0.5) * (0.85 / 2)
         fig.text(0.02, row_y, row_label, fontsize=8, fontweight="bold", rotation=90, va="center", ha="center")
 
     fig.suptitle("Error Distribution Across All Configurations", fontsize=12, fontweight="bold", y=0.96)
@@ -534,19 +507,12 @@ def plot_convergence_summary(session: Dict) -> Tuple[plt.Figure, Dict[str, int],
         max_errors = {}
         mean_errors = {}
 
-        def _worst_at_fid(errors_by_band, fid_idx):
-            worst = 0.0
-            for errs in errors_by_band.values():
-                if errs and 0 <= fid_idx < len(errs) and errs[fid_idx] is not None and np.isfinite(errs[fid_idx]):
-                    worst = max(worst, abs(errs[fid_idx]))
-            return worst
-
         for dim_key in ["phi_convergence", "theta_convergence", "t_convergence"]:
             conv = config.get(dim_key) or {}
             dim_name = dim_key.replace("_convergence", "")
             fid_idx = find_fiducial_index(conv.get("values", []), FIDUCIAL_VALUES.get(dim_name, 0))
-            max_errors[dim_name] = _worst_at_fid(conv.get("errors_by_band", {}), fid_idx)
-            mean_errors[dim_name] = _worst_at_fid(conv.get("mean_errors_by_band", {}), fid_idx)
+            max_errors[dim_name] = worst_fiducial_error(conv.get("errors_by_band", {}), fid_idx)
+            mean_errors[dim_name] = worst_fiducial_error(conv.get("mean_errors_by_band", {}), fid_idx)
 
         worst_max_err = max(max_errors.values()) if max_errors else 0
         worst_mean_err = max(mean_errors.values()) if mean_errors else 0

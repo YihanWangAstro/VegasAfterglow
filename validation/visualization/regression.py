@@ -1,15 +1,12 @@
 """Regression test visualization functions for power-law scaling verification."""
 
-import sys
-from pathlib import Path
 from typing import Dict, List, Tuple
 
 import matplotlib.pyplot as plt
 import numpy as np
 
-sys.path.insert(0, str(Path(__file__).parent.parent.parent))
-from validation.visualization.common import (BAND_COLORS, COLORS, PAGE_PORTRAIT, PHASE_COLORS, PHASE_NAMES, QTY_SYMBOLS, format_slope, to_float)
-from validation.regression.run_regression import SPECTRAL_REGIMES
+from .common import (BAND_COLORS, COLORS, PAGE_PORTRAIT, PHASE_COLORS, PHASE_NAMES, QTY_SYMBOLS, format_slope, to_float)
+from ..regression.run_regression import SPECTRAL_REGIMES
 
 
 def _smooth_slopes(log_x, log_y, window=7):

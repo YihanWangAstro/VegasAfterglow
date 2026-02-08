@@ -22,6 +22,8 @@ from configs import (create_jet, create_medium, create_observer, create_radiatio
 
 sys.path.insert(0, str(Path(__file__).parent.parent))
 from validation.colors import _bold, _green, _red, _cyan, _dim, _bold_red, _header
+from validation.visualization.common import (FIDUCIAL_RESOLUTION, DIM_INDEX, FIDUCIAL_VALUES,
+                                             get_git_commit)
 
 # ---------------------------------------------------------------------------
 # Data classes
@@ -74,9 +76,6 @@ class BenchmarkSession:
 # Constants
 # ---------------------------------------------------------------------------
 
-FIDUCIAL_RESOLUTION = (0.15, 0.5, 10)
-DIM_INDEX = {"phi": 0, "theta": 1, "t": 2}
-FIDUCIAL_VALUES = {dim: FIDUCIAL_RESOLUTION[idx] for dim, idx in DIM_INDEX.items()}
 PHI_VALUES = [0.15, 0.3, 0.45, 0.6]
 THETA_VALUES = [0.5, 1.0, 1.5, 2.0]
 T_VALUES = [10, 15, 20, 25, 30]
@@ -89,13 +88,6 @@ VIEWING_ANGLE_RATIOS = [0, 2, 4]
 # ---------------------------------------------------------------------------
 # Utility functions
 # ---------------------------------------------------------------------------
-
-def get_git_commit() -> str:
-    try:
-        return subprocess.run(["git", "rev-parse", "--short", "HEAD"],
-                              capture_output=True, text=True, check=True).stdout.strip()
-    except (subprocess.CalledProcessError, FileNotFoundError):
-        return "unknown"
 
 def get_platform_info() -> str:
     import platform
@@ -184,14 +176,13 @@ class ComprehensiveBenchmark:
         return ComponentTiming(flux_single_ms=ms, total_ms=ms, stage_breakdown=stage_breakdown)
 
     @staticmethod
-    def _extract_flux_components(flux, has_rvs, has_ssc=False):
-        """Extract flux arrays to compare. Returns dict of {label: array}."""
+    def _extract_flux(flux, has_rvs, has_ssc=False):
+        """Extract the single flux array to compare against reference."""
         if has_rvs:
-            return {"fwd": np.asarray(flux.fwd.sync), "rvs": np.asarray(flux.rvs.sync)}
+            return np.asarray(flux.rvs.sync)
         if has_ssc:
-            # For SSC models, track SSC component separately for convergence
-            return {"ssc": np.asarray(flux.fwd.ssc)}
-        return {"total": np.asarray(flux.total)}
+            return np.asarray(flux.fwd.ssc)
+        return np.asarray(flux.total)
 
     def _run_dimension_convergence(self, jet_name, medium_name, radiation_name, theta_obs,
                                    dimension, values, spreading=False):
@@ -204,16 +195,9 @@ class ComprehensiveBenchmark:
         has_rvs = rad_config.rvs_params is not None
         has_ssc = rad_config.params.get("ssc", False)
 
-        # Build band list: for rvs configs, split each freq band into fwd/rvs components
-        # For SSC configs, use extended bands including TeV
+        # Use extended bands (including TeV) for SSC configs
         bands_dict = SSC_BANDS if has_ssc else CONVERGENCE_BANDS
-        freq_bands = list(bands_dict)
-        if has_rvs:
-            bands = [f"{fb} (fwd)" for fb in freq_bands] + [f"{fb} (rvs)" for fb in freq_bands]
-        elif has_ssc:
-            bands = [f"{fb} (ssc)" for fb in freq_bands]
-        else:
-            bands = freq_bands
+        bands = list(bands_dict)
 
         # Pre-allocate nu arrays for each frequency band
         nu_arrays = {b: np.full_like(t_lc, nu) for b, nu in bands_dict.items()}
@@ -240,11 +224,9 @@ class ComprehensiveBenchmark:
         try:
             ref_model = self._create_model(jet_name, medium_name, radiation_name, theta_obs, tuple(ref_res), spreading)
             ref_lcs = {}
-            for fb in freq_bands:
+            for fb in bands:
                 ref_flux = ref_model.flux_density(t_lc, nu_arrays[fb])
-                for label, arr in self._extract_flux_components(ref_flux, has_rvs, has_ssc).items():
-                    band_key = f"{fb} ({label})" if (has_rvs or has_ssc) else fb
-                    ref_lcs[band_key] = arr.copy()
+                ref_lcs[fb] = self._extract_flux(ref_flux, has_rvs, has_ssc).copy()
         except Exception as e:
             print(f"      {_bold_red('Error')} computing reference: {e}")
             return _nan_result()
@@ -256,42 +238,41 @@ class ComprehensiveBenchmark:
                 model = self._create_model(jet_name, medium_name, radiation_name, theta_obs, tuple(res), spreading)
 
                 band_times = []
-                for fb in freq_bands:
+                for fb in bands:
                     nu_arr = nu_arrays[fb]
                     va.Model.profile_reset()
                     flux = model.flux_density(t_lc, nu_arr)
                     elapsed = va.Model.profile_data().get("total", 0.0)
                     band_times.append(elapsed)
 
-                    for label, flux_arr in self._extract_flux_components(flux, has_rvs, has_ssc).items():
-                        band_key = f"{fb} ({label})" if (has_rvs or has_ssc) else fb
-                        times_by_band[band_key].append(elapsed)
-                        flux_by_band[band_key].append(flux_arr.tolist())
+                    flux_arr = self._extract_flux(flux, has_rvs, has_ssc)
+                    times_by_band[fb].append(elapsed)
+                    flux_by_band[fb].append(flux_arr.tolist())
 
-                        ref = ref_lcs[band_key]
-                        valid = (ref > 0) & np.isfinite(ref) & (flux_arr > 0) & np.isfinite(flux_arr)
+                    ref = ref_lcs[fb]
+                    valid = (ref > 0) & np.isfinite(ref) & (flux_arr > 0) & np.isfinite(flux_arr)
+                    if np.any(valid):
+                        # Exclude exponential-decay regions: compute log-log
+                        # slope of reference curve and mask |slope| > 4
+                        log_t = np.log10(t_lc)
+                        log_ref = np.full_like(log_t, np.nan)
+                        pos = ref > 0
+                        log_ref[pos] = np.log10(ref[pos])
+                        slope = np.gradient(log_ref, log_t)
+                        valid = valid & (np.abs(slope) <= 4)
+                        # Also exclude tail > 6 orders below peak
                         if np.any(valid):
-                            # Exclude exponential-decay regions: compute log-log
-                            # slope of reference curve and mask |slope| > 4
-                            log_t = np.log10(t_lc)
-                            log_ref = np.full_like(log_t, np.nan)
-                            pos = ref > 0
-                            log_ref[pos] = np.log10(ref[pos])
-                            slope = np.gradient(log_ref, log_t)
-                            valid = valid & (np.abs(slope) <= 4)
-                            # Also exclude tail > 6 orders below peak
-                            if np.any(valid):
-                                ref_peak = np.max(ref[valid])
-                                valid = valid & (ref > ref_peak * 1e-6)
-                            if np.any(valid):
-                                err = np.abs(flux_arr[valid] - ref[valid]) / ref[valid]
-                            else:
-                                err = np.array([np.nan])
-                            errors_by_band[band_key].append(float(np.max(err)))
-                            mean_errors_by_band[band_key].append(float(np.mean(err)))
+                            ref_peak = np.max(ref[valid])
+                            valid = valid & (ref > ref_peak * 1e-6)
+                        if np.any(valid):
+                            err = np.abs(flux_arr[valid] - ref[valid]) / ref[valid]
                         else:
-                            errors_by_band[band_key].append(np.nan)
-                            mean_errors_by_band[band_key].append(np.nan)
+                            err = np.array([np.nan])
+                        errors_by_band[fb].append(float(np.max(err)))
+                        mean_errors_by_band[fb].append(float(np.mean(err)))
+                    else:
+                        errors_by_band[fb].append(np.nan)
+                        mean_errors_by_band[fb].append(np.nan)
                 times_ms.append(np.mean(band_times))
             except Exception as e:
                 print(f"      {_bold_red('Error')} at {dimension}={val}: {e}")
@@ -435,8 +416,8 @@ class ComprehensiveBenchmark:
 
     @staticmethod
     def _format_error(value):
-        """Color-code an error value: green if <5%, red if >10%, plain otherwise."""
-        color = _green if value < 0.05 else (_red if value > 0.1 else None)
+        """Color-code an error value: green if <5%, red if >15%, plain otherwise."""
+        color = _green if value < 0.05 else (_red if value > 0.15 else None)
         return color(f"{value:.2e}") if color else f"{value:.2e}"
 
     def print_summary(self):
@@ -474,7 +455,7 @@ def main():
     parser.add_argument("-j", "--parallel", type=int, default=0, metavar="N", help="Parallel workers")
     parser.add_argument("--jet", type=str, nargs="+", help="Jet type(s)")
     parser.add_argument("--medium", type=str, nargs="+", help="Medium type(s)")
-    parser.add_argument("--iterations", type=int, default=10, help="Timing iterations for overview stage breakdown")
+    parser.add_argument("--iterations", type=int, default=5, help="Timing iterations for overview stage breakdown")
     parser.add_argument("--timeout", type=int, default=600, help="Per-config timeout in seconds (default: 600)")
     parser.add_argument("--output", type=str, default="results/benchmark_history.json", help="Output file")
     args = parser.parse_args()

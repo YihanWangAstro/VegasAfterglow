@@ -328,14 +328,11 @@ class ComprehensiveDashboard:
             metadata = get_runtime_build_info()
 
         builder = ReportBuilder(output_path)
-        current_page = 1
 
         builder.add_title_page("Benchmark Report", metadata=metadata)
-        current_page += 1
 
         print("  Adding benchmark guide pages...")
         builder.add_guide_pages("benchmark_guide")
-        current_page += 3  # Approximate guide page count
 
         if data.get("configs"):
             configs = data.get("configs", [])
@@ -345,25 +342,20 @@ class ComprehensiveDashboard:
 
             if on_axis_configs:
                 builder.add_fig(plot_benchmark_overview(data, angle_filter="on-axis"))
-                current_page += 1
             if off_axis_configs:
                 builder.add_fig(plot_benchmark_overview(data, angle_filter="off-axis"))
-                current_page += 1
 
             has_convergence = any(c.get("phi_convergence") for c in configs)
             if has_convergence:
-                summary_page = current_page
+                summary_page = builder.current_page
                 fig, model_id_map, models_list, cell_rects = plot_convergence_summary(data)
                 builder.add_fig(fig)
-                current_page += 1
 
                 builder.add_fig(plot_error_distribution(data))
-                current_page += 1
 
-                detail_start_page = current_page
+                detail_start_page = builder.current_page
                 convergence_pdf_files = generate_convergence_pages(models_list, n_workers)
                 builder.add_fig_files(convergence_pdf_files)
-                current_page += len(convergence_pdf_files)
 
                 links = []
                 for i in range(len(models_list)):

@@ -1,20 +1,18 @@
 """Common utilities, constants, and helper functions for visualization."""
 
 import json
+import math
 import shutil
 import subprocess
 import sys
 import tempfile
 from datetime import datetime
 from pathlib import Path
-from typing import Dict, List, Optional, Union
+from typing import Dict, List, Optional, Tuple, Union
 
 import matplotlib.pyplot as plt
 import numpy as np
 from matplotlib.backends.backend_pdf import PdfPages
-
-sys.path.insert(0, str(Path(__file__).parent.parent / "benchmark"))
-from benchmark_suite import FIDUCIAL_VALUES
 
 # Try to import VegasAfterglow
 try:
@@ -30,16 +28,16 @@ PAGE_PORTRAIT, PAGE_LANDSCAPE = (8.5, 11), (11, 8.5)
 COLORS = {"pass": "#2ECC71", "fail": "#E74C3C", "primary": "#3498DB", "secondary": "#9B59B6", "neutral": "#7F8C8D", "background": "#2C3E50"}
 PHASE_COLORS = {"coasting": "#E74C3C", "crossing": "#F39C12", "BM": "#3498DB", "post_crossing": "#3498DB", "deep_newtonian": "#2ECC71"}
 PHASE_NAMES = {"coasting": "Coasting", "crossing": "Crossing", "BM": "Blandford-McKee", "post_crossing": "Post-crossing", "deep_newtonian": "Sedov-Taylor"}
-BAND_COLORS = {
-    "Radio": "firebrick", "Optical": "yellowgreen", "X-ray": "royalblue", "TeV": "purple",
-    "Radio (fwd)": "firebrick", "Optical (fwd)": "yellowgreen", "X-ray (fwd)": "royalblue",
-    "Radio (rvs)": "salmon", "Optical (rvs)": "darkseagreen", "X-ray (rvs)": "cornflowerblue",
-    "Radio (ssc)": "firebrick", "Optical (ssc)": "yellowgreen", "X-ray (ssc)": "royalblue", "TeV (ssc)": "purple",
-}
+BAND_COLORS = {"Radio": "firebrick", "Optical": "yellowgreen", "X-ray": "royalblue", "TeV": "purple"}
 MEDIUM_STYLES, MEDIUM_MARKERS = {"ISM": "-", "wind": "--"}, {"ISM": "o", "wind": "s"}
 
 # Convergence thresholds
 MAX_ERROR_THRESHOLD, MEAN_ERROR_THRESHOLD = 0.15, 0.05
+
+# Fiducial resolution settings (single source of truth, used by benchmark and visualization)
+FIDUCIAL_RESOLUTION = (0.15, 0.5, 10)
+DIM_INDEX = {"phi": 0, "theta": 1, "t": 2}
+FIDUCIAL_VALUES = {dim: FIDUCIAL_RESOLUTION[idx] for dim, idx in DIM_INDEX.items()}
 
 QTY_SYMBOLS = {"u": r"$\Gamma\beta$", "Gamma": r"$\Gamma$", "r": r"$r$", "B": r"$B$", "N_p": r"$N_p$",
                "nu_m": r"$\nu_m$", "nu_c": r"$\nu_c$", "nu_a": r"$\nu_a$", "nu_M": r"$\nu_M$"}
@@ -93,6 +91,36 @@ def get_unique_short_names(names: List[str], max_len: int = 6) -> Dict[str, str]
         else:
             short[name] = name[:max_len]
     return short
+
+
+def worst_fiducial_error(errors_by_band: Dict, fid_idx: int) -> float:
+    """Return the worst (max absolute) error across all bands at the fiducial index."""
+    worst = 0.0
+    for errs in errors_by_band.values():
+        if errs and 0 <= fid_idx < len(errs):
+            v = errs[fid_idx]
+            if v is not None and not math.isnan(v):
+                worst = max(worst, abs(v))
+    return worst
+
+
+def get_git_commit() -> str:
+    """Get the short git commit hash of HEAD."""
+    try:
+        return subprocess.run(["git", "rev-parse", "--short", "HEAD"],
+                              capture_output=True, text=True, check=True).stdout.strip()
+    except (subprocess.CalledProcessError, FileNotFoundError):
+        return "unknown"
+
+
+def load_json_safe(path: Path) -> Tuple[Optional[Dict], Optional[str]]:
+    """Load JSON with error handling. Returns (data, None) on success or (None, error_msg) on failure."""
+    if not path.exists():
+        return None, f"Results not found: {path}"
+    try:
+        return json.loads(path.read_text()), None
+    except json.JSONDecodeError as e:
+        return None, f"Invalid JSON: {e}"
 
 
 def setup_plot_style():

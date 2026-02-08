@@ -438,7 +438,7 @@ class Fitter:
     def fit(
         self,
         param_defs: Sequence[ParamDef],
-        resolution: Tuple[float, float, float] = (0.3, 1, 10),
+        resolution: Tuple[float, float, float] = (0.15, 0.5, 10),
         sampler: str = "dynesty",
         npool: int = 1,
         top_k: int = 10,
@@ -774,7 +774,7 @@ class Fitter:
         best_params: np.ndarray,
         t: np.ndarray,
         nu: np.ndarray,
-        resolution: Tuple[float, float, float] = (0.3, 1, 10),
+        resolution: Tuple[float, float, float] = (0.15, 0.5, 10),
     ) -> np.ndarray:
         """Compute flux density grid at best-fit parameters."""
         model, p = self._prepare_model(best_params, resolution)
@@ -787,7 +787,7 @@ class Fitter:
         nu_min: float,
         nu_max: float,
         num_points: int,
-        resolution: Tuple[float, float, float] = (0.3, 1, 10),
+        resolution: Tuple[float, float, float] = (0.15, 0.5, 10),
     ) -> np.ndarray:
         """Compute integrated flux at best-fit parameters."""
         model, p = self._prepare_model(best_params, resolution)

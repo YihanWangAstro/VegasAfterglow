@@ -2,8 +2,6 @@
 """Unified validation runner for VegasAfterglow CI/CD pipelines."""
 
 import argparse
-import json
-import math
 import os
 import subprocess
 import sys
@@ -11,34 +9,18 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).parent.parent))
 from validation.colors import _bold, _bold_green, _bold_red, _green, _header, _bar, _red
-from validation.visualization.common import FIDUCIAL_VALUES, find_fiducial_index
+from validation.visualization.common import (FIDUCIAL_VALUES, MAX_ERROR_THRESHOLD, MEAN_ERROR_THRESHOLD,
+                                             find_fiducial_index, load_json_safe, worst_fiducial_error)
 
 DEFAULT_WORKERS = os.cpu_count() or 4
-BENCH_MEAN_THRESH = 0.05   # 5%
-BENCH_MAX_THRESH = 0.10    # 10%
 
 VALIDATION_DIR = Path(__file__).parent
 BENCH_RESULTS_PATH = VALIDATION_DIR / "benchmark" / "results" / "benchmark_history.json"
 REGR_RESULTS_PATH = VALIDATION_DIR / "regression" / "results" / "regression_results.json"
 
 
-def _load_json(path):
-    if not path.exists():
-        return None, f"Results not found: {path}"
-    try:
-        return json.loads(path.read_text()), None
-    except json.JSONDecodeError as e:
-        return None, f"Invalid JSON: {e}"
-
-
-def _worst_fiducial_error(errors_by_band, fid_idx):
-    """Return the worst (max) error across all bands at the fiducial index."""
-    return max((v for errs in errors_by_band.values() if errs and fid_idx < len(errs)
-                for v in [errs[fid_idx]] if not math.isnan(v)), default=0.0)
-
-
 def check_benchmark_results(json_path):
-    data, err = _load_json(json_path)
+    data, err = load_json_safe(json_path)
     if err:
         return False, err
     configs = data.get("configs", [])
@@ -63,13 +45,13 @@ def check_benchmark_results(json_path):
             if fid_idx < 0:
                 fid_idx = len(conv.get("values", [])) - 1
 
-            mean_err = _worst_fiducial_error(mean_by_band, fid_idx)
-            max_err = _worst_fiducial_error(errs_by_band, fid_idx)
+            mean_err = worst_fiducial_error(mean_by_band, fid_idx)
+            max_err = worst_fiducial_error(errs_by_band, fid_idx)
 
             name = f"#{cfg_idx} {config.get('jet_type', '?')}/{config.get('medium', '?')}/{config.get('radiation', '?')}"
-            if mean_err >= BENCH_MEAN_THRESH:
-                failed.append(f"{name} ({dim_name}): mean_error={mean_err:.1%} >= {BENCH_MEAN_THRESH:.0%}")
-            elif max_err >= BENCH_MAX_THRESH:
+            if mean_err >= MEAN_ERROR_THRESHOLD:
+                failed.append(f"{name} ({dim_name}): mean_error={mean_err:.1%} >= {MEAN_ERROR_THRESHOLD:.0%}")
+            elif max_err >= MAX_ERROR_THRESHOLD:
                 acceptable += 1
             else:
                 passed += 1
@@ -85,7 +67,7 @@ def check_benchmark_results(json_path):
 
 
 def check_regression_results(json_path):
-    data, err = _load_json(json_path)
+    data, err = load_json_safe(json_path)
     if err:
         return False, err
     tests = data.get("tests", [])
