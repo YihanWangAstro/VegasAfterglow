@@ -217,9 +217,9 @@ struct ICPhoton {
 
     Real inv_dlog2_nu{0};
 
-    static constexpr size_t gamma_grid_per_order{7};
+    static constexpr size_t gamma_grid_per_order{5};
 
-    static constexpr size_t nu_grid_per_order{5};
+    static constexpr size_t nu_grid_per_order{4};
 
     bool KN{false}; // Klein-Nishina flag
 
@@ -360,9 +360,6 @@ void ICPhoton<Electrons, Photons>::compute_IC_spectrum(GridParams const& params,
     Array nu_IC = xt::exp2(log2_nu_IC);
     Array I_nu_IC = xt::zeros<Real>({params.spectrum_resol});
 
-    // Log-space lookup parameters for O(1) index into the nu_sync grid
-    const Real log2_nu_base = fast_log2(nu_sync(0));
-    const Real inv_dlog2_ns = (params.nu_size > 1) ? 1.0 / (fast_log2(nu_sync(1)) - log2_nu_base) : 0.0;
     const int nu_last = static_cast<int>(params.nu_size) - 1;
 
     // IC grid spacing for precomputing k_max (skip zero-contribution bins)
@@ -370,57 +367,106 @@ void ICPhoton<Electrons, Photons>::compute_IC_spectrum(GridParams const& params,
     const Real log2_nu_sync_max = fast_log2(nu_sync(nu_last));
     const int spec_last = static_cast<int>(params.spectrum_resol) - 1;
 
-    Array cdf = Array::from_shape({params.nu_size});
-    Array cdf_slope = Array::from_shape({params.nu_size});
-
-    // Thomson: build CDF once (cross section is constant, factored out)
-    if (!KN) {
-        for (int j = nu_last; j >= 0; --j) {
-            cdf_slope(j) = I_nu_sync(j) / (nu_sync(j) * nu_sync(j));
-            cdf(j) = cdf_slope(j) * dnu_sync(j) + ((j < nu_last) ? cdf(j + 1) : Real(0));
-        }
+    // Precompute inter-center spacing and CDF integrand arrays
+    Array dnu = Array::from_shape({static_cast<size_t>(nu_last)});
+    Array inv_dnu = Array::from_shape({static_cast<size_t>(nu_last)});
+    for (int j = 0; j < nu_last; ++j) {
+        dnu(j) = nu_sync(j + 1) - nu_sync(j);
+        inv_dnu(j) = 1.0 / dnu(j);
     }
 
-    // log2_down = -log2(4*IC_x0) - 2*log2(gamma(i)) is linear in i (gamma grid is log-spaced)
-    const Real dlog2_gamma =
-        (fast_log2(params.gamma_max) - fast_log2(params.gamma_min)) / static_cast<Real>(params.gamma_size);
-    const Real log2_down_0 = -fast_log2(Real(4 * IC_x0)) - 2 * fast_log2(params.gamma_min) - dlog2_gamma;
-    const Real log2_down_di = -2 * dlog2_gamma;
+    // Log2 positions for seed frequency lookup
+    Array log2_nu_s = Array::from_shape({params.nu_size});
+    for (size_t j = 0; j < params.nu_size; ++j) {
+        log2_nu_s(j) = fast_log2(nu_sync(j));
+    }
 
-    for (size_t i = 0; i < params.gamma_size; ++i) {
-        const Real gamma_i = gamma(i);
-        const Real gamma_i2 = gamma_i * gamma_i;
-        const Real down_scatter = 1.0 / (4 * IC_x0 * gamma_i2);
-        const Real log2_down = log2_down_0 + static_cast<Real>(i) * log2_down_di;
-        const Real weight = KN ? dN_e(i) : dN_e(i) / gamma_i2;
+    Array cdf = Array::from_shape({params.nu_size});
+    Array cdf_f = Array::from_shape({params.nu_size});
 
-        // Precompute max k where seed freq is still in grid
-        const int k_max =
-            std::clamp(static_cast<int>((log2_nu_sync_max - log2_down - log2_nu_IC_0) * inv_dlog2_nu), 0, spec_last);
-
-        // KN: rebuild CDF per gamma bin (cross section depends on gamma*nu)
-        if (KN) {
-            {
-                const Real nu_comv = gamma_i * nu_sync(nu_last);
-                const Real inv_nc = 1.0 / nu_comv;
-                cdf_slope(nu_last) = I_nu_sync(nu_last) * compton_cross_section(nu_comv) * inv_nc * inv_nc;
-                cdf(nu_last) = cdf_slope(nu_last) * dnu_sync(nu_last);
-            }
-            for (int j = nu_last - 1; j >= 0; --j) {
-                const Real nu_comv = gamma_i * nu_sync(j);
-                const Real inv_nc = 1.0 / nu_comv;
-                cdf_slope(j) = I_nu_sync(j) * compton_cross_section(nu_comv) * inv_nc * inv_nc;
-                cdf(j) = cdf(j + 1) + cdf_slope(j) * dnu_sync(j);
-            }
+    if (!KN) {
+        // Thomson: build trapezoidal CDF once (cross section is constant, factored out)
+        for (size_t j = 0; j < params.nu_size; ++j) {
+            cdf_f(j) = I_nu_sync(j) / (nu_sync(j) * nu_sync(j));
+        }
+        cdf(nu_last) = 0;
+        for (int j = nu_last - 1; j >= 0; --j) {
+            cdf(j) = cdf(j + 1) + 0.5 * (cdf_f(j) + cdf_f(j + 1)) * dnu(j);
         }
 
-        for (int k = 0; k <= k_max; ++k) {
-            const Real log2_seed = log2_nu_IC(k) + log2_down;
-            const int idx = std::clamp(static_cast<int>((log2_seed - log2_nu_base) * inv_dlog2_ns), 0, nu_last);
-            const Real nu_seed = nu_IC(k) * down_scatter;
-            Real F = cdf(idx) + cdf_slope(idx) * (nu_sync(idx) - nu_seed);
-            F = std::max(F, Real(0));
-            I_nu_IC(k) += weight * F;
+        // Thomson inner loop with linear scan
+        for (size_t i = 0; i < params.gamma_size; ++i) {
+            if (dN_e(i) <= 0)
+                continue;
+            const Real gamma_i2 = gamma(i) * gamma(i);
+            const Real down_scatter = 1.0 / (4 * IC_x0 * gamma_i2);
+            const Real log2_down = -fast_log2(4 * IC_x0 * gamma_i2);
+            const Real weight = dN_e(i) / gamma_i2;
+
+            const int k_max = std::clamp(static_cast<int>((log2_nu_sync_max - log2_down - log2_nu_IC_0) * inv_dlog2_nu),
+                                         0, spec_last);
+
+            int scan_idx = 0;
+            for (int k = 0; k <= k_max; ++k) {
+                const Real log2_seed = log2_nu_IC(k) + log2_down;
+                while (scan_idx < nu_last && log2_nu_s(scan_idx + 1) <= log2_seed)
+                    ++scan_idx;
+                Real F;
+                if (scan_idx >= nu_last) {
+                    F = 0;
+                } else {
+                    const Real nu_seed = nu_IC(k) * down_scatter;
+                    const Real frac = std::clamp((nu_seed - nu_sync(scan_idx)) * inv_dnu(scan_idx), Real(0), Real(1));
+                    const Real one_m_frac = 1.0 - frac;
+                    F = cdf(scan_idx + 1) + one_m_frac * dnu(scan_idx) * 0.5 *
+                                                (cdf_f(scan_idx + 1) * (1.0 + frac) + cdf_f(scan_idx) * one_m_frac);
+                }
+                F = std::max(F, Real(0));
+                I_nu_IC(k) += weight * F;
+            }
+        }
+    } else {
+        // KN: rebuild trapezoidal CDF per gamma bin
+        for (size_t i = 0; i < params.gamma_size; ++i) {
+            if (dN_e(i) <= 0)
+                continue;
+            const Real gamma_i = gamma(i);
+            const Real gamma_i2 = gamma_i * gamma_i;
+            const Real down_scatter = 1.0 / (4 * IC_x0 * gamma_i2);
+            const Real log2_down = -fast_log2(4 * IC_x0 * gamma_i2);
+            const Real weight = dN_e(i);
+
+            const int k_max = std::clamp(static_cast<int>((log2_nu_sync_max - log2_down - log2_nu_IC_0) * inv_dlog2_nu),
+                                         0, spec_last);
+
+            for (size_t j = 0; j < params.nu_size; ++j) {
+                const Real nu_comv = gamma_i * nu_sync(j);
+                const Real inv_nc = 1.0 / nu_comv;
+                cdf_f(j) = I_nu_sync(j) * compton_cross_section(nu_comv) * inv_nc * inv_nc;
+            }
+            cdf(nu_last) = 0;
+            for (int j = nu_last - 1; j >= 0; --j) {
+                cdf(j) = cdf(j + 1) + 0.5 * (cdf_f(j) + cdf_f(j + 1)) * dnu(j);
+            }
+
+            int scan_idx = 0;
+            for (int k = 0; k <= k_max; ++k) {
+                const Real log2_seed = log2_nu_IC(k) + log2_down;
+                while (scan_idx < nu_last && log2_nu_s(scan_idx + 1) <= log2_seed)
+                    ++scan_idx;
+                Real F;
+                if (scan_idx >= nu_last) {
+                    F = 0;
+                } else {
+                    const Real nu_seed = nu_IC(k) * down_scatter;
+                    const Real frac = std::clamp((nu_seed - nu_sync(scan_idx)) * inv_dnu(scan_idx), Real(0), Real(1));
+                    const Real one_m_frac = 1.0 - frac;
+                    F = cdf(scan_idx + 1) + one_m_frac * dnu(scan_idx) * 0.5 *
+                                                (cdf_f(scan_idx + 1) * (1.0 + frac) + cdf_f(scan_idx) * one_m_frac);
+                }
+                F = std::max(F, Real(0));
+                I_nu_IC(k) += weight * F;
+            }
         }
     }
     log2_I_nu_IC = xt::log2(I_nu_IC * nu_IC * 0.25 * (KN ? Real(1) : con::sigmaT));
@@ -584,9 +630,5 @@ void KN_cooling(ElectronGrid<Electrons>& electrons, PhotonGrid<Photons>& photons
 
 template <typename Photon>
 Real inverse_compton_correction(Photon const& ph, Real nu) {
-    if (ph.Y_c < 1e-3) {
-        return 1.;
-    } else {
-        return (1. + ph.Y_c) / (1 + ph.Ys.nu_spectrum(nu));
-    }
+    return (1. + ph.Y_c) / (1 + ph.Ys.nu_spectrum(nu));
 }

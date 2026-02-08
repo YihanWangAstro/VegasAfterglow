@@ -233,6 +233,110 @@ void logspace_boundary_center(Real lg2_min, Real lg2_max, size_t size, Arr& cent
     }
 }
 
+/**
+ * @brief Builds an adaptive log-spaced grid with explicit break points.
+ *
+ * Places grid points at endpoints and break frequencies, then fills segments
+ * between with approximately `pts_per_decade` log-spaced points. Points closer
+ * than `min_sep` decades (log10) are merged.
+ *
+ * @param lg2_min  Log2 of minimum grid value
+ * @param lg2_max  Log2 of maximum grid value
+ * @param breaks   Array of break frequencies (linear scale) to include
+ * @param n_breaks Number of break frequencies
+ * @param pts_per_decade  Base density of fill points per decade
+ * @param grid     Output array of grid point values (resized internally)
+ * @return         Number of grid points
+ */
+template <size_t MaxBreaks>
+size_t build_adaptive_grid(Real lg2_min, Real lg2_max, std::array<Real, MaxBreaks> const& breaks, size_t n_breaks,
+                           size_t pts_per_decade, Array& grid) {
+    constexpr size_t MAX_PTS = 256;
+    constexpr Real min_sep_lg2 = 0.1; // ~0.03 decades in log10
+
+    std::array<Real, MAX_PTS> buf;
+    size_t n = 0;
+
+    const Real v_min = std::exp2(lg2_min);
+    const Real v_max = std::exp2(lg2_max);
+
+    // Add endpoints
+    buf[n++] = v_min;
+    buf[n++] = v_max;
+
+    // Precompute break positions in log2 for proximity checks
+    constexpr Real refine_radius_lg2 = 1.66; // ~0.5 decade
+    std::array<Real, MaxBreaks> lg2_breaks;
+    for (size_t i = 0; i < n_breaks; ++i) {
+        lg2_breaks[i] = std::log2(breaks[i]);
+    }
+
+    // Add breaks and refinement boundary anchors
+    for (size_t i = 0; i < n_breaks; ++i) {
+        if (breaks[i] > v_min && breaks[i] < v_max && n < MAX_PTS) {
+            buf[n++] = breaks[i];
+        }
+        // Add anchors at break ± refine_radius to split segments at refinement boundary
+        const Real lg2_lo = lg2_breaks[i] - refine_radius_lg2;
+        const Real lg2_hi = lg2_breaks[i] + refine_radius_lg2;
+        if (lg2_lo > lg2_min && lg2_lo < lg2_max && n < MAX_PTS)
+            buf[n++] = std::exp2(lg2_lo);
+        if (lg2_hi > lg2_min && lg2_hi < lg2_max && n < MAX_PTS)
+            buf[n++] = std::exp2(lg2_hi);
+    }
+
+    // Sort the anchor points
+    std::sort(buf.begin(), buf.begin() + n);
+
+    // Fill segments between consecutive anchor points
+    // Use 2x density within refine_radius of any break
+    const size_t n_anchors = n;
+    for (size_t s = 0; s + 1 < n_anchors && n < MAX_PTS; ++s) {
+        const Real seg_lo = std::log2(buf[s]);
+        const Real seg_hi = std::log2(buf[s + 1]);
+
+        // Check if either endpoint is within refine_radius of any break
+        bool near_break = false;
+        for (size_t i = 0; i < n_breaks; ++i) {
+            if (std::abs(seg_lo - lg2_breaks[i]) < refine_radius_lg2 ||
+                std::abs(seg_hi - lg2_breaks[i]) < refine_radius_lg2) {
+                near_break = true;
+                break;
+            }
+        }
+
+        const size_t density = near_break ? 2 * pts_per_decade : pts_per_decade;
+        const Real seg_decades = (seg_hi - seg_lo) / std::log2(10.0);
+        const size_t n_fill = static_cast<size_t>(seg_decades * density);
+        if (n_fill > 1) {
+            const Real dlg2 = (seg_hi - seg_lo) / static_cast<Real>(n_fill);
+            for (size_t f = 1; f < n_fill && n < MAX_PTS; ++f) {
+                buf[n++] = std::exp2(seg_lo + f * dlg2);
+            }
+        }
+    }
+
+    // Sort all points
+    std::sort(buf.begin(), buf.begin() + n);
+
+    // Merge points closer than min_sep_lg2
+    std::array<Real, MAX_PTS> merged;
+    size_t m = 0;
+    merged[m++] = buf[0];
+    for (size_t i = 1; i < n; ++i) {
+        if (std::log2(buf[i]) - std::log2(merged[m - 1]) >= min_sep_lg2) {
+            merged[m++] = buf[i];
+        }
+    }
+
+    // Copy to output Array
+    grid = Array::from_shape({m});
+    for (size_t i = 0; i < m; ++i) {
+        grid(i) = merged[i];
+    }
+    return m;
+}
+
 template <typename Ejecta>
 std::vector<Real> find_jet_edges(Ejecta const& jet, Real gamma_cut, [[maybe_unused]] bool is_axisymmetric) {
     // Find all edges in the active jet region (Gamma0 >= gamma_cut).
