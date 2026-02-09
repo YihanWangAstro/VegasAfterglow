@@ -68,6 +68,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - See where computation time is spent (dynamics, electrons, photons, flux) via `Model.profile_data()` in Python
 - Useful for identifying bottlenecks when tuning resolution or enabling SSC
 
+#### **Python Object Introspection**
+
+- All key Python objects now have informative `__repr__` output: `Observer`, `Radiation`, `Magnetar`, `Model`, `FluxDict`, `Flux`, `ShockDetails`, `SimulationDetails`
+- Read-only properties on `Model` for inspecting state after construction: `model.observer`, `model.fwd_rad`, `model.rvs_rad`, `model.resolutions`, `model.rtol`, `model.axisymmetric`
+- Read-only properties on `Observer` (`lumi_dist`, `z`, `theta_obs`, `phi_obs`) and `Radiation` (`eps_e`, `eps_B`, `p`, `xi_e`, `ssc_cooling`, `ssc`, `kn`)
+
+#### **Improved Inverse Compton Spectrum Computation**
+
+- Adaptive frequency grid concentrates resolution near synchrotron break frequencies (ν_a, ν_m, ν_c, ν_M), improving accuracy of the seed photon spectrum
+- Redesigned electron energy integration produces smoother SSC light curves and spectra
+
+#### **Smooth Electron Distribution for IC Integration**
+
+- Electron energy distribution now uses smooth broken power-law transitions at cooling and injection breaks, consistent with the synchrotron photon spectrum
+
 ### Changed
 
 #### **Default Resolution**
@@ -81,11 +96,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 #### **Inverse Compton Cooling**
 - Expanded Klein-Nishina regime classification (5 regimes, up from 3) for more accurate IC cooling in the strong-KN limit
 
+#### **Wind Medium Defaults**
+- `Wind(A_star, n_ism=None, n0=None, k=2)`: `n_ism` and `n0` now default to `None` instead of `0` and `inf`, handled internally — clearer intent for the common pure-wind case
+
 #### **Python >= 3.8 Required**
 - Minimum Python version raised from 3.7 to 3.8
 
 ### Fixed
-
 - **Reverse shock ν_c continuity**: Eliminated small jump in cooling frequency across the shock crossing boundary
 - **Reverse shock initial conditions**: Smoother transition for thick-shell reverse shock crossing
 - **Grid sizing bug**: Fixed incorrect grid dimensions when using merged grid sizes in auto_grid

@@ -270,29 +270,26 @@ Real cyclotron_correction(Real gamma_m, Real p) {
 //========================================================================================================
 
 Real SynElectrons::compute_spectrum(Real gamma) const {
+    constexpr Real s = 1.0; // smoothing sharpness (larger = sharper transition)
+
     switch (regime) {
-        case 1: // slow cooling: cases 1, 2, 5
+        case 1: // slow cooling: gamma_m < gamma_c
         case 2:
         case 5:
-            if (gamma <= gamma_m) {
+            if (gamma <= gamma_m)
                 return 0;
-            } else if (gamma <= gamma_c) {
-                return (p - 1) * fast_pow(gamma / gamma_m, -p) / gamma_m;
-            } else
-                return (p - 1) * fast_pow(gamma / gamma_m, -p) * gamma_c / (gamma * gamma_m);
+            // (p-1)/gamma_m * (gamma/gamma_m)^-p * smooth_break_at_gamma_c
+            return (p - 1) * fast_pow(gamma / gamma_m, -p) / gamma_m *
+                   fast_pow(1.0 + fast_pow(gamma / gamma_c, s), -1.0 / s);
 
-            break;
-        case 3: // fast cooling: cases 3, 4, 6
+        case 3: // fast cooling: gamma_c < gamma_m
         case 4:
         case 6:
-            if (gamma <= gamma_c) {
+            if (gamma <= gamma_c)
                 return 0;
-            } else if (gamma <= gamma_m) {
-                return gamma_c / (gamma * gamma);
-            } else
-                return gamma_c / (gamma * gamma_m) * fast_pow(gamma / gamma_m, -p);
+            // gamma_c/gamma^2 * smooth_break_at_gamma_m
+            return gamma_c / (gamma * gamma) * fast_pow(1.0 + fast_pow(gamma / gamma_m, s * (p - 1)), -1.0 / s);
 
-            break;
         default:
             return 0;
     }

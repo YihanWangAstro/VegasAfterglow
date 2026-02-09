@@ -504,6 +504,23 @@ inline Real log2_softplus(Real x) {
 
 /**
  * <!-- ************************************************************************************** -->
+ * @brief Smooth broken power-law transition in log2 space.
+ * @details Returns a correction term that smoothly changes the slope by delta_beta at the break.
+ *          Far below break: correction -> 0 (original slope preserved).
+ *          Far above break: correction -> -delta_beta * (log2_x - log2_x_break) / s (slope shifted).
+ * @param log2_x        Log2 of the evaluation point
+ * @param log2_x_break  Log2 of the break point
+ * @param s_delta_beta  s * (slope_below - slope_above), where s controls transition sharpness
+ * @param s             Smoothing sharpness parameter (larger = sharper transition)
+ * @return Log2-space correction to add to the base power law
+ * <!-- ************************************************************************************** -->
+ */
+inline Real log2_broken_power_ratio(Real log2_x, Real log2_x_break, Real s_delta_beta, Real s) {
+    return -log2_softplus(s_delta_beta * (log2_x - log2_x_break)) / s;
+}
+
+/**
+ * <!-- ************************************************************************************** -->
  * @brief Broadcasts computed values across grid based on shock symmetry.
  * @tparam Array 3D array type (e.g., ICPhotonGrid or ElectronGrid)
  * @tparam Shock Shock type containing symmetry information

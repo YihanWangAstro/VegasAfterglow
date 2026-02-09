@@ -7,7 +7,9 @@
 
 #pragma once
 
+#include <cstdio>
 #include <optional>
+#include <string>
 #include <utility>
 #include <vector>
 
@@ -44,6 +46,12 @@ struct PyMagnetar {
     Real L0; ///< Characteristic luminosity [erg/s]
     Real t0; ///< Spin-down time scale [s]
     Real q;  ///< Power-law index for spin-down
+
+    [[nodiscard]] std::string repr() const {
+        char buf[128];
+        snprintf(buf, sizeof(buf), "Magnetar(L0=%.6g, t0=%.6g, q=%.6g)", L0, t0, q);
+        return buf;
+    }
 };
 
 /**
@@ -202,7 +210,7 @@ Medium PyISM(Real n_ism);
  * @return Medium Configured medium object representing stellar wind properties
  * <!-- ************************************************************************************** -->
  */
-Medium PyWind(Real A_star, Real n_ism = 0, Real n0 = con::inf, Real k = 2);
+Medium PyWind(Real A_star, std::optional<Real> n_ism = std::nullopt, std::optional<Real> n0 = std::nullopt, Real k = 2);
 
 /**
  * <!-- ************************************************************************************** -->
@@ -235,6 +243,20 @@ class PyObserver {
     Real z{0};            ///< Redshift
     Real theta_obs{0};    ///< Viewing angle [radians]
     Real phi_obs{0};      ///< Azimuthal angle [radians]
+
+    [[nodiscard]] Real lumi_dist_cgs() const { return lumi_dist / unit::cm; }
+
+    [[nodiscard]] std::string repr() const {
+        char buf[256];
+        if (phi_obs != 0) {
+            snprintf(buf, sizeof(buf), "Observer(lumi_dist=%.6g, z=%.6g, theta_obs=%.6g, phi_obs=%.6g)",
+                     lumi_dist / unit::cm, z, theta_obs, phi_obs);
+        } else {
+            snprintf(buf, sizeof(buf), "Observer(lumi_dist=%.6g, z=%.6g, theta_obs=%.6g)", lumi_dist / unit::cm, z,
+                     theta_obs);
+        }
+        return buf;
+    }
 };
 
 /**
@@ -273,6 +295,24 @@ class PyRadiation {
     bool ssc_cooling{false}; ///< Whether to include IC cooling
     bool ssc{false};         ///< Whether to include SSC
     bool kn{false};          ///< Whether to include KN
+
+    [[nodiscard]] std::string repr() const {
+        char buf[128];
+        snprintf(buf, sizeof(buf), "Radiation(eps_e=%.6g, eps_B=%.6g, p=%.6g", rad.eps_e, rad.eps_B, rad.p);
+        std::string s = buf;
+        if (rad.xi_e != 1) {
+            snprintf(buf, sizeof(buf), ", xi_e=%.6g", rad.xi_e);
+            s += buf;
+        }
+        if (ssc_cooling)
+            s += ", ssc_cooling=True";
+        if (ssc)
+            s += ", ssc=True";
+        if (kn)
+            s += ", kn=True";
+        s += ")";
+        return s;
+    }
 };
 
 /**
@@ -302,6 +342,23 @@ using XTArray = xt::xarray<Real>;
 struct Flux {
     XTArray sync; ///< Synchrotron emission flux [mJy]
     XTArray ssc;  ///< Synchrotron self-Compton flux [mJy]
+
+    [[nodiscard]] std::string repr() const {
+        std::string s = "Flux(sync";
+        if (ssc.dimension() > 0)
+            s += " + ssc";
+        if (sync.dimension() > 0) {
+            s += ", shape=(";
+            for (size_t i = 0; i < sync.dimension(); ++i) {
+                if (i > 0)
+                    s += ", ";
+                s += std::to_string(sync.shape()[i]);
+            }
+            s += ")";
+        }
+        s += ")";
+        return s;
+    }
 };
 
 /**
@@ -320,6 +377,26 @@ struct PyFlux {
 
     ///< Calculate total flux by summing all components
     void calc_total();
+
+    [[nodiscard]] std::string repr() const {
+        if (total.size() == 0)
+            return "FluxDict(empty)";
+        std::string s = "FluxDict(shape=(";
+        for (size_t i = 0; i < total.dimension(); ++i) {
+            if (i > 0)
+                s += ", ";
+            s += std::to_string(total.shape()[i]);
+        }
+        s += "), components=[fwd.sync";
+        if (fwd.ssc.dimension() > 0)
+            s += ", fwd.ssc";
+        if (rvs.sync.dimension() > 0)
+            s += ", rvs.sync";
+        if (rvs.ssc.dimension() > 0)
+            s += ", rvs.ssc";
+        s += "])";
+        return s;
+    }
 };
 
 /**
@@ -357,6 +434,19 @@ struct PyShock {
     XTArray Y_T;
     XTArray I_nu_max; ///< Maximum specific intensity [erg/s/Hz]
     XTArray Doppler;  ///< Doppler factor for beaming
+
+    [[nodiscard]] std::string repr() const {
+        if (Gamma.size() == 0)
+            return "ShockDetails(empty)";
+        std::string s = "ShockDetails(shape=(";
+        for (size_t i = 0; i < Gamma.dimension(); ++i) {
+            if (i > 0)
+                s += ", ";
+            s += std::to_string(Gamma.shape()[i]);
+        }
+        s += "))";
+        return s;
+    }
 };
 
 /**
@@ -375,6 +465,13 @@ struct PyDetails {
 
     PyShock fwd; ///< Forward shock evolution details
     PyShock rvs; ///< Reverse shock evolution details
+
+    [[nodiscard]] std::string repr() const {
+        char buf[128];
+        snprintf(buf, sizeof(buf), "SimulationDetails(phi=%zu, theta=%zu, t_src=%zu)", phi.size(), theta.size(),
+                 t_src.size());
+        return buf;
+    }
 };
 
 /**
@@ -509,6 +606,35 @@ class PyModel {
     static auto profile_data() -> std::unordered_map<std::string, double> { return AFTERGLOW_PROFILE_RESULTS(); }
     static void profile_reset() { AFTERGLOW_PROFILE_RESET(); }
 #endif
+
+    // Read-only accessors for Python properties
+    [[nodiscard]] const PyObserver& get_observer() const { return obs_setup; }
+    [[nodiscard]] const PyRadiation& get_fwd_rad() const { return fwd_rad; }
+    [[nodiscard]] const std::optional<PyRadiation>& get_rvs_rad() const { return rvs_rad_opt; }
+    [[nodiscard]] std::tuple<Real, Real, Real> get_resolutions() const { return {phi_resol, theta_resol, t_resol}; }
+    [[nodiscard]] Real get_rtol() const { return rtol; }
+    [[nodiscard]] bool get_axisymmetric() const { return axisymmetric; }
+
+    [[nodiscard]] std::string repr() const {
+        char buf[256];
+        Real d = obs_setup.lumi_dist / unit::cm;
+        snprintf(buf, sizeof(buf),
+                 "Model(observer=Observer(lumi_dist=%.6g, z=%.6g, theta_obs=%.6g),\n"
+                 "      fwd_rad=Radiation(eps_e=%.6g, eps_B=%.6g, p=%.6g%s%s%s)",
+                 d, obs_setup.z, obs_setup.theta_obs, fwd_rad.rad.eps_e, fwd_rad.rad.eps_B, fwd_rad.rad.p,
+                 fwd_rad.ssc_cooling ? ", ssc_cooling=True" : "", fwd_rad.ssc ? ", ssc=True" : "",
+                 fwd_rad.kn ? ", kn=True" : "");
+        std::string s = buf;
+        if (rvs_rad_opt) {
+            snprintf(buf, sizeof(buf), ",\n      rvs_rad=Radiation(eps_e=%.6g, eps_B=%.6g, p=%.6g)",
+                     rvs_rad_opt->rad.eps_e, rvs_rad_opt->rad.eps_B, rvs_rad_opt->rad.p);
+            s += buf;
+        }
+        snprintf(buf, sizeof(buf), ",\n      resolutions=(%.6g, %.6g, %.6g), rtol=%.6g)", phi_resol, theta_resol,
+                 t_resol, rtol);
+        s += buf;
+        return s;
+    }
 
   private:
     /**
@@ -665,7 +791,7 @@ auto PyModel::compute_emission(Array const& t_obs, Array const& nu_obs, Func&& f
         auto coord = [&] {
             AFTERGLOW_PROFILE_SCOPE(mesh);
             return auto_grid(jet_, medium_, t_obs, this->theta_w, obs_setup.theta_obs, obs_setup.z, phi_resol,
-                             theta_resol, t_resol, axisymmetric, 0, 45, 0.4);
+                             theta_resol, t_resol, axisymmetric, 0, 32, 0.4);
         }();
 
         auto fwd_shock = [&] {
@@ -681,7 +807,7 @@ auto PyModel::compute_emission(Array const& t_obs, Array const& nu_obs, Func&& f
         auto coord = [&] {
             AFTERGLOW_PROFILE_SCOPE(mesh);
             return auto_grid(jet_, medium_, t_obs, this->theta_w, obs_setup.theta_obs, obs_setup.z, phi_resol,
-                             theta_resol, t_resol, axisymmetric, 0, 45, 0.4);
+                             theta_resol, t_resol, axisymmetric, 0, 36, 0.5);
         }();
 
         auto rvs_rad = *rvs_rad_opt;

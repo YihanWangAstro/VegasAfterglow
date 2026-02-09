@@ -211,7 +211,7 @@ struct ICPhoton {
 
     Real inv_dlog2_nu{0};
 
-    static constexpr size_t gamma_grid_per_order{5};
+    static constexpr size_t gamma_grid_per_order{4};
 
     static constexpr size_t nu_grid_per_order{3};
 
@@ -435,15 +435,15 @@ void ICPhoton<Electrons, Photons>::compute_IC_spectrum(GridParams const& params,
                 continue;
             }
 
-            // Build CDF with KN cross section
+            // Build CDF with KN cross section: σ_KN replaces σ_T, divide by ν² (not (γν)²)
             {
-                const Real x = gi * nu_p[nu_last];
-                fv_p[nu_last] = Is_p[nu_last] * compton_cross_section(x) / (x * x);
+                const Real nu = nu_p[nu_last];
+                fv_p[nu_last] = Is_p[nu_last] * compton_cross_section(gi * nu) / (nu * nu);
             }
             cdf_p[nu_last] = 0;
             for (int j = nu_last - 1; j >= 0; --j) {
-                const Real x = gi * nu_p[j];
-                fv_p[j] = Is_p[j] * compton_cross_section(x) / (x * x);
+                const Real nu = nu_p[j];
+                fv_p[j] = Is_p[j] * compton_cross_section(gi * nu) / (nu * nu);
                 cdf_p[j] = cdf_p[j + 1] + 0.5 * (fv_p[j] + fv_p[j + 1]) * dnu_p[j];
             }
 

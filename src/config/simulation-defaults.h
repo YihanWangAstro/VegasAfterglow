@@ -62,7 +62,7 @@ namespace defaults {
 
         /// Minimum number of theta grid points
         /// Ensures adequate angular coverage even for narrow jets
-        inline constexpr std::size_t min_theta_points = 48;
+        inline constexpr std::size_t min_theta_points = 32;
 
         /// Forward ratio for adaptive grid refinement
         /// Controls distribution of grid points relative to jet edge

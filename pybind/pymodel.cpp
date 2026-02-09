@@ -86,8 +86,11 @@ Medium PyISM(Real n_ism) {
     return medium;
 }
 
-Medium PyWind(Real A_star, Real n_ism, Real n0, Real k) {
+Medium PyWind(Real A_star, std::optional<Real> n_ism_opt, std::optional<Real> n0_opt, Real k) {
     Medium medium;
+
+    const Real n_ism = n_ism_opt.value_or(0);
+    const Real n0 = n0_opt.value_or(con::inf);
 
     constexpr Real r0 = 1e17; // reference radius
     const Real A = A_star * 5e11 * std::pow(r0, k - 2);

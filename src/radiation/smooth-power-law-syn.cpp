@@ -11,10 +11,6 @@
 //========================================================================================================
 //                                  SmoothPowerLawSyn Class Methods
 //========================================================================================================
-inline Real log2_broken_power_ratio(Real log2_nu, Real log2_nu_b, Real s_delta_beta, Real s) {
-    return -log2_softplus(s_delta_beta * (log2_nu - log2_nu_b)) / s;
-}
-
 inline Real log2_smooth_one(Real log2_a, Real log2_b) {
     return log2_a - log2_softplus(log2_a - log2_b);
 }

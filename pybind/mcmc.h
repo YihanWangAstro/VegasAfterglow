@@ -558,7 +558,7 @@ void MultiBandModel::generate_photons(Params const& param, double t_min, double 
 
     if (config.rvs_shock == false) {
         auto coord =
-            auto_grid(jet, medium, t_eval, theta_w, theta_v, z, phi_resol, theta_resol, t_resol, true, 0, 45, 0.4);
+            auto_grid(jet, medium, t_eval, theta_w, theta_v, z, phi_resol, theta_resol, t_resol, true, 0, 32, 0.4);
 
         auto shock = generate_fwd_shock(coord, medium, jet, rad, config.rtol);
 
@@ -581,7 +581,7 @@ void MultiBandModel::generate_photons(Params const& param, double t_min, double 
 
     } else {
         auto coord =
-            auto_grid(jet, medium, t_eval, theta_w, theta_v, z, phi_resol, theta_resol, t_resol, true, 0, 45, 0.4);
+            auto_grid(jet, medium, t_eval, theta_w, theta_v, z, phi_resol, theta_resol, t_resol, true, 0, 36, 0.5);
 
         RadParams rad_rvs;
 

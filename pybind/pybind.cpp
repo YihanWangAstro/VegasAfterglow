@@ -21,7 +21,12 @@ PYBIND11_MODULE(VegasAfterglowC, m) {
     //========================================================================================================
     //                                 Model bindings
     //========================================================================================================
-    py::class_<PyMagnetar>(m, "Magnetar").def(py::init<Real, Real, Real>(), py::arg("L0"), py::arg("t0"), py::arg("q"));
+    py::class_<PyMagnetar>(m, "Magnetar")
+        .def(py::init<Real, Real, Real>(), py::arg("L0"), py::arg("t0"), py::arg("q"))
+        .def_readonly("L0", &PyMagnetar::L0)
+        .def_readonly("t0", &PyMagnetar::t0)
+        .def_readonly("q", &PyMagnetar::q)
+        .def("__repr__", &PyMagnetar::repr);
 
     m.def("TophatJet", &PyTophatJet, py::arg("theta_c"), py::arg("E_iso"), py::arg("Gamma0"),
           py::arg("spreading") = false, py::arg("duration") = 1, py::arg("magnetar") = py::none());
@@ -51,19 +56,33 @@ PYBIND11_MODULE(VegasAfterglowC, m) {
     // Medium bindings
     m.def("ISM", &PyISM, py::arg("n_ism"));
 
-    m.def("Wind", &PyWind, py::arg("A_star"), py::arg("n_ism") = 0, py::arg("n0") = con::inf, py::arg("k") = 2);
+    m.def("Wind", &PyWind, py::arg("A_star"), py::arg("n_ism") = py::none(), py::arg("n0") = py::none(),
+          py::arg("k") = 2);
 
     py::class_<Medium>(m, "Medium").def(py::init<TernaryFunc>(), py::arg("rho"));
 
     // Observer bindings
     py::class_<PyObserver>(m, "Observer")
         .def(py::init<Real, Real, Real, Real>(), py::arg("lumi_dist"), py::arg("z"), py::arg("theta_obs"),
-             py::arg("phi_obs") = 0);
+             py::arg("phi_obs") = 0)
+        .def_property_readonly("lumi_dist", &PyObserver::lumi_dist_cgs)
+        .def_readonly("z", &PyObserver::z)
+        .def_readonly("theta_obs", &PyObserver::theta_obs)
+        .def_readonly("phi_obs", &PyObserver::phi_obs)
+        .def("__repr__", &PyObserver::repr);
 
     // Radiation bindings
     py::class_<PyRadiation>(m, "Radiation")
         .def(py::init<Real, Real, Real, Real, bool, bool, bool>(), py::arg("eps_e"), py::arg("eps_B"), py::arg("p"),
-             py::arg("xi_e") = 1, py::arg("ssc_cooling") = false, py::arg("ssc") = false, py::arg("kn") = false);
+             py::arg("xi_e") = 1, py::arg("ssc_cooling") = false, py::arg("ssc") = false, py::arg("kn") = false)
+        .def_property_readonly("eps_e", [](const PyRadiation& r) { return r.rad.eps_e; })
+        .def_property_readonly("eps_B", [](const PyRadiation& r) { return r.rad.eps_B; })
+        .def_property_readonly("p", [](const PyRadiation& r) { return r.rad.p; })
+        .def_property_readonly("xi_e", [](const PyRadiation& r) { return r.rad.xi_e; })
+        .def_readonly("ssc_cooling", &PyRadiation::ssc_cooling)
+        .def_readonly("ssc", &PyRadiation::ssc)
+        .def_readonly("kn", &PyRadiation::kn)
+        .def("__repr__", &PyRadiation::repr);
 
     // Model bindings
     py::class_<PyModel>(m, "Model")
@@ -95,19 +114,31 @@ PYBIND11_MODULE(VegasAfterglowC, m) {
 
         .def("jet_Gamma0", &PyModel::jet_Gamma0, py::arg("phi"), py::arg("theta"),
              py::call_guard<py::gil_scoped_release>())
+        .def_property_readonly("observer", &PyModel::get_observer)
+        .def_property_readonly("fwd_rad", &PyModel::get_fwd_rad)
+        .def_property_readonly("rvs_rad", &PyModel::get_rvs_rad)
+        .def_property_readonly("resolutions", &PyModel::get_resolutions)
+        .def_property_readonly("rtol", &PyModel::get_rtol)
+        .def_property_readonly("axisymmetric", &PyModel::get_axisymmetric)
+        .def("__repr__", &PyModel::repr)
 #ifdef AFTERGLOW_PROFILE
         .def_static("profile_data", &PyModel::profile_data, "Get per-stage timing from the last computation (ms)")
         .def_static("profile_reset", &PyModel::profile_reset, "Reset profiling counters")
 #endif
         ;
 
-    py::class_<Flux>(m, "Flux").def(py::init<>()).def_readonly("sync", &Flux::sync).def_readonly("ssc", &Flux::ssc);
+    py::class_<Flux>(m, "Flux")
+        .def(py::init<>())
+        .def_readonly("sync", &Flux::sync)
+        .def_readonly("ssc", &Flux::ssc)
+        .def("__repr__", &Flux::repr);
 
     py::class_<PyFlux>(m, "FluxDict")
         .def(py::init<>())
         .def_readonly("fwd", &PyFlux::fwd)
         .def_readonly("rvs", &PyFlux::rvs)
-        .def_readonly("total", &PyFlux::total);
+        .def_readonly("total", &PyFlux::total)
+        .def("__repr__", &PyFlux::repr);
 
     py::class_<PyShock>(m, "ShockDetails")
         .def(py::init<>())
@@ -134,7 +165,8 @@ PYBIND11_MODULE(VegasAfterglowC, m) {
         .def_readonly("nu_c_hat", &PyShock::nu_c_hat)
         .def_readonly("Y_T", &PyShock::Y_T)
         .def_readonly("I_nu_max", &PyShock::I_nu_max)
-        .def_readonly("Doppler", &PyShock::Doppler);
+        .def_readonly("Doppler", &PyShock::Doppler)
+        .def("__repr__", &PyShock::repr);
 
     py::class_<PyDetails>(m, "SimulationDetails")
         .def(py::init<>())
@@ -142,7 +174,8 @@ PYBIND11_MODULE(VegasAfterglowC, m) {
         .def_readonly("theta", &PyDetails::theta)
         .def_readonly("t_src", &PyDetails::t_src)
         .def_readonly("fwd", &PyDetails::fwd)
-        .def_readonly("rvs", &PyDetails::rvs);
+        .def_readonly("rvs", &PyDetails::rvs)
+        .def("__repr__", &PyDetails::repr);
 
     //========================================================================================================
     //                                 MCMC bindings

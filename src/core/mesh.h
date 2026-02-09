@@ -467,6 +467,34 @@ Array adaptive_theta_grid(Ejecta const& jet, Real theta_min, Real theta_max, siz
     return inverse_CFD_sampling(eqn, theta_min, theta_max, theta_num);
 }
 
+inline Array edge_refinement_grid(std::vector<Real> const& jet_edges, Real theta_min, Real theta_max, Real avg_spacing,
+                                  Real theta_resol) {
+    std::vector<Real> points;
+    points.reserve(150);
+    for (auto& edge : jet_edges) {
+        if (edge >= con::pi / 2 - 0.01)
+            continue;
+        const Real half = 3 * avg_spacing;
+        const size_t n = std::max<size_t>(static_cast<size_t>(10 * theta_resol), 2);
+        for (size_t i = 1; i <= n; ++i) {
+            // Log-spaced offsets: denser near the edge
+            const Real frac = static_cast<Real>(i) / static_cast<Real>(n);
+            const Real offset = half * frac * frac;
+            const Real below = edge - offset;
+            const Real above = edge + offset;
+            if (below >= theta_min)
+                points.push_back(below);
+            if (above <= theta_max)
+                points.push_back(above);
+        }
+        if (edge >= theta_min && edge <= theta_max)
+            points.push_back(edge);
+    }
+    std::sort(points.begin(), points.end());
+    points.erase(std::unique(points.begin(), points.end()), points.end());
+    return xt::adapt(points, {points.size()});
+}
+
 template <typename Ejecta>
 Array adaptive_phi_grid(Ejecta const& jet, size_t phi_num, Real theta_v, Real theta_max, bool is_axisymmetric) {
     if ((theta_v == 0 && is_axisymmetric) || theta_v > theta_max) {
@@ -652,15 +680,16 @@ Coord auto_grid(Ejecta const& jet, Medium const& medium, Array const& t_obs, Rea
     Real theta_min = defaults::grid::theta_min;
     Real theta_max = std::min(jet_edge, theta_cut);
 
-    size_t theta_num =
-        std::max<size_t>(static_cast<size_t>((theta_max - theta_min) * 180 / con::pi * theta_resol), min_theta_num);
+    size_t theta_num = min_theta_num + static_cast<size_t>((theta_max - theta_min) * 180 / con::pi * theta_resol);
     const size_t uniform_theta_num = static_cast<size_t>(static_cast<Real>(theta_num) * fwd_ratio);
     size_t adaptive_theta_num = theta_num - uniform_theta_num;
 
     const Array uniform_theta = xt::linspace(theta_min, theta_max, uniform_theta_num);
     const Array adaptive_theta = adaptive_theta_grid(jet, theta_min, theta_max, adaptive_theta_num, theta_view);
-    const Array anchor_theta = xt::adapt(jet_edges);
-    coord.theta = merge_grids(merge_grids(uniform_theta, adaptive_theta), anchor_theta);
+
+    const Real avg_spacing = (theta_max - theta_min) / theta_num;
+    const Array edge_theta = edge_refinement_grid(jet_edges, theta_min, theta_max, avg_spacing, theta_resol);
+    coord.theta = merge_grids(merge_grids(uniform_theta, adaptive_theta), edge_theta);
 
     // coord.theta = uniform_theta;
     const size_t phi_num = std::max<size_t>(static_cast<size_t>(360 * phi_resol), 1);
