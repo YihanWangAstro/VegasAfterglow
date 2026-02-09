@@ -12,6 +12,7 @@ var hierarchy =
     [ "ForwardState< Ejecta >", "structForwardState.html", null ],
     [ "FRShockEqn< Ejecta, Medium >", "classFRShockEqn.html", null ],
     [ "GaussianJet", "classGaussianJet.html", null ],
+    [ "GridConfig", "structGridConfig.html", null ],
     [ "ICPhoton< Electrons, Photons >", "structICPhoton.html", null ],
     [ "std::invalid_argument", null, [
       [ "afterglow::ValidationError", "classafterglow_1_1ValidationError.html", null ]

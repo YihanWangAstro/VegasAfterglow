@@ -5,7 +5,7 @@ var searchData=
   ['pc_2',['pc',['../namespaceunit.html#aacd7ada710cff28abfeca33c4ae45c10',1,'unit']]],
   ['phi_3',['phi',['../classFRShockEqn.html#a5046454a1ca5c2bd7dcd0e22e92e48b5',1,'FRShockEqn::phi'],['../classSimpleShockEqn.html#a3c67dad16fec24a07f41fc6476c761e5',1,'SimpleShockEqn::phi'],['../classForwardShockEqn.html#a12c45569bcf4bf5b83e26bd33f36abb3',1,'ForwardShockEqn::phi'],['../classCoord.html#a69275c3a00649aafae77cffc3711d57f',1,'Coord::phi'],['../structPyDetails.html#a82763145522b56940d0c651cf1a23d6a',1,'PyDetails::phi']]],
   ['phi_5fobs_4',['phi_obs',['../classPyObserver.html#a8933acaf2c464fe23a10dc4909e961dd',1,'PyObserver']]],
-  ['phi_5fresol_5',['phi_resol',['../structConfigParams.html#af9c18782e48378b0ea78fc46b00500c7',1,'ConfigParams']]],
+  ['phi_5fresol_5',['phi_resol',['../structConfigParams.html#af9c18782e48378b0ea78fc46b00500c7',1,'ConfigParams::phi_resol'],['../structGridConfig.html#a94377e09436ba60be3ebdf4a3b9eb837',1,'GridConfig::phi_resol']]],
   ['phi_5fresolution_6',['phi_resolution',['../namespacedefaults_1_1grid.html#a81845ddcce8fb560efb401cdde437a16',1,'defaults::grid']]],
   ['phi_5fview_7',['phi_view',['../classCoord.html#a0fc5253eabbb58010bc9ef9c9c48cc4d',1,'Coord']]],
   ['photons_8',['photons',['../structICPhoton.html#a8721a351afe42b1e5fdf3075bffc89f7',1,'ICPhoton']]],

@@ -14,11 +14,13 @@ var searchData=
   ['mev_11',['MeV',['../namespaceunit.html#a2eb22b37aa30bd73b34bc228f7229115',1,'unit']]],
   ['min_5fobs_5ftime_12',['min_obs_time',['../namespacecon.html#a567e367066c9354a3cb44b696905b2a0',1,'con']]],
   ['min_5fobs_5ftime_5fsec_13',['min_obs_time_sec',['../namespacedefaults_1_1observer.html#aa955f53126bae3c13bf752b75ed32558',1,'defaults::observer']]],
-  ['min_5ftheta_5fpoints_14',['min_theta_points',['../namespacedefaults_1_1grid.html#a17f64e94f8f9cb660a1e9d80a2b1558c',1,'defaults::grid']]],
-  ['mjy_15',['mJy',['../namespaceunit.html#acb88ce91365dfa4148e22780a7d6a0c0',1,'unit']]],
-  ['model_5ffluxes_16',['model_fluxes',['../structMultiBandData.html#ad4863b68579929814e8e4c8b161a996a',1,'MultiBandData::model_fluxes'],['../structBatchWorkspace.html#a6333e5c26a03fe93d9056956732449ad',1,'BatchWorkspace::model_fluxes']]],
-  ['mp_17',['mp',['../namespacecon.html#a47a54b8f758d02e6f8b85e41207ae620',1,'con']]],
-  ['mpc_18',['Mpc',['../namespaceunit.html#ae5c0551e07428abae88af1995358af73',1,'unit']]],
-  ['mpc2_19',['mpc2',['../namespacecon.html#a3069b33fec8e9e6ab27263b1bb30ad57',1,'con']]],
-  ['myr_20',['Myr',['../namespaceunit.html#a613decaabb5023d5cadd9ac59f6c1d3e',1,'unit']]]
+  ['min_5ft_5ffrac_14',['min_t_frac',['../structGridConfig.html#a8220c2a3a56237a8e2a565c0f566aded',1,'GridConfig']]],
+  ['min_5ft_5fpts_15',['min_t_pts',['../structGridConfig.html#acf1a3df209318cdb5c8a05c20a9c6ad1',1,'GridConfig']]],
+  ['min_5ftheta_5fpoints_16',['min_theta_points',['../namespacedefaults_1_1grid.html#a17f64e94f8f9cb660a1e9d80a2b1558c',1,'defaults::grid']]],
+  ['mjy_17',['mJy',['../namespaceunit.html#acb88ce91365dfa4148e22780a7d6a0c0',1,'unit']]],
+  ['model_5ffluxes_18',['model_fluxes',['../structBatchWorkspace.html#a6333e5c26a03fe93d9056956732449ad',1,'BatchWorkspace::model_fluxes'],['../structMultiBandData.html#ad4863b68579929814e8e4c8b161a996a',1,'MultiBandData::model_fluxes']]],
+  ['mp_19',['mp',['../namespacecon.html#a47a54b8f758d02e6f8b85e41207ae620',1,'con']]],
+  ['mpc_20',['Mpc',['../namespaceunit.html#ae5c0551e07428abae88af1995358af73',1,'unit']]],
+  ['mpc2_21',['mpc2',['../namespacecon.html#a3069b33fec8e9e6ab27263b1bb30ad57',1,'con']]],
+  ['myr_22',['Myr',['../namespaceunit.html#a613decaabb5023d5cadd9ac59f6c1d3e',1,'unit']]]
 ];

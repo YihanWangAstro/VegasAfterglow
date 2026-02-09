@@ -16,6 +16,7 @@ var annotated_dup =
     [ "ForwardState", "structForwardState.html", "structForwardState" ],
     [ "FRShockEqn", "classFRShockEqn.html", "classFRShockEqn" ],
     [ "GaussianJet", "classGaussianJet.html", "classGaussianJet" ],
+    [ "GridConfig", "structGridConfig.html", "structGridConfig" ],
     [ "ICPhoton", "structICPhoton.html", "structICPhoton" ],
     [ "InverseComptonY", "structInverseComptonY.html", "structInverseComptonY" ],
     [ "ISM", "classISM.html", "classISM" ],

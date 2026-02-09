@@ -1,5 +1,17 @@
 <map id="refined_time_grid" name="refined_time_grid">
-<area shape="rect" id="Node000001" title="Create a refined logarithmic time grid with higher density around a specified time." alt="" coords="136,5,272,31"/>
-<area shape="rect" id="Node000002" href="$mesh_8h.html#a96aa0a78a0de13a52955de3c2ce29ddd" title="Constructs a coordinate grid (Coord) for shock evolution." alt="" coords="5,5,88,31"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="122,21,88,21,88,15,122,15"/>
+<area shape="rect" id="Node000001" title="Create a refined logarithmic time grid with higher density around a specified time." alt="" coords="775,31,911,56"/>
+<area shape="rect" id="Node000002" href="$mesh_8h.html#a96aa0a78a0de13a52955de3c2ce29ddd" title="Constructs a coordinate grid (Coord) for shock evolution." alt="" coords="644,31,727,56"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="761,46,727,46,727,41,761,41"/>
+<area shape="rect" id="Node000003" href="$shock__dispatch_8h.html#af0bfd363789cd64adc2bb8fa697f96ae" title="Solve forward shock dynamics with variant dispatch." alt="" coords="463,5,595,31"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="630,37,594,31,595,26,631,32"/>
+<area shape="rect" id="Node000007" href="$shock__dispatch_8h.html#a943fd075e455647c377f134a2bd02f5d" title="Solve forward + reverse shock pair with variant dispatch." alt="" coords="461,55,596,80"/>
+<area shape="poly" id="edge6_Node000002_Node000007" title=" " alt="" coords="631,54,597,60,596,54,630,49"/>
+<area shape="rect" id="Node000004" href="$classPyModel.html#a3debe3d2ed8ff2a53bec469a6711cfa8" title=" " alt="" coords="204,5,413,31"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="448,21,413,21,413,15,448,15"/>
+<area shape="rect" id="Node000005" href="$classPyModel.html#ac47bbdbe6025c4def5d4a65f3ed6be34" title="Get comprehensive details of the shock evolution and model configuration." alt="" coords="243,55,374,80"/>
+<area shape="poly" id="edge4_Node000003_Node000005" title=" " alt="" coords="459,36,367,57,366,52,457,31"/>
+<area shape="rect" id="Node000006" href="$pybind_8cpp.html#a8c92987849ad296e28ec6c07c8e7860b" title=" " alt="" coords="5,55,156,80"/>
+<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="229,70,156,70,156,65,229,65"/>
+<area shape="poly" id="edge7_Node000007_Node000004" title=" " alt="" coords="457,54,366,33,367,28,459,49"/>
+<area shape="poly" id="edge8_Node000007_Node000005" title=" " alt="" coords="447,70,374,70,374,65,447,65"/>
 </map>

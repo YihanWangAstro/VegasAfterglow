@@ -317,14 +317,14 @@ template&lt;<a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5
 <div class="line"><span class="lineno">  799</span>    <span class="keywordflow">if</span> (!rvs_rad_opt) {</div>
 <div class="line"><span class="lineno">  800</span>        <span class="keyword">auto</span> [<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">coord</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">fwd_shock</a>] = [&amp;] {</div>
 <div class="line"><span class="lineno">  801</span>            <a class="code hl_define" href="profiler_8h.html#a14810f45af18bd657a0c5e0bcbd30573">AFTERGLOW_PROFILE_SCOPE</a>(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">dynamics</a>);</div>
-<div class="line"><span class="lineno">  802</span>            <span class="keywordflow">return</span> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">solve_fwd_shock</a>(jet_, medium_, t_obs, grid_config(32, 0.4), fwd_rad.<a class="code hl_variable" href="classPyRadiation.html#ac19d3052d34fc8c82280ec02a392edcb">rad</a>, rtol);</div>
+<div class="line"><span class="lineno">  802</span>            <span class="keywordflow">return</span> <a class="code hl_function" href="shock__dispatch_8h.html#af0bfd363789cd64adc2bb8fa697f96ae">solve_fwd_shock</a>(jet_, medium_, t_obs, grid_config(32, 0.4), fwd_rad.<a class="code hl_variable" href="classPyRadiation.html#ac19d3052d34fc8c82280ec02a392edcb">rad</a>, rtol);</div>
 <div class="line"><span class="lineno">  803</span>        }();</div>
 <div class="line"><span class="lineno">  804</span>        single_shock_emission(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">fwd_shock</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">coord</a>, t_obs, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">nu_obs</a>, observer, fwd_rad, <a class="code hl_function" href="classPyModel.html#a51390496a41c22c7c2dbb8838ac7a2d2">flux</a>.<a class="code hl_variable" href="structPyFlux.html#adde189e058cf4485bebf835f2d1ce9f0">fwd</a>,</div>
 <div class="line"><span class="lineno">  805</span>                              std::forward&lt;Func&gt;(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">flux_func</a>));</div>
 <div class="line"><span class="lineno">  806</span>    } <span class="keywordflow">else</span> {</div>
 <div class="line"><span class="lineno">  807</span>        <span class="keyword">auto</span> [<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">coord</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">fwd_shock</a>, rvs_shock] = [&amp;] {</div>
 <div class="line"><span class="lineno">  808</span>            <a class="code hl_define" href="profiler_8h.html#a14810f45af18bd657a0c5e0bcbd30573">AFTERGLOW_PROFILE_SCOPE</a>(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">dynamics</a>);</div>
-<div class="line"><span class="lineno">  809</span>            <span class="keywordflow">return</span> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">solve_shock_pair</a>(jet_, medium_, t_obs, grid_config(36, 0.5), fwd_rad.<a class="code hl_variable" href="classPyRadiation.html#ac19d3052d34fc8c82280ec02a392edcb">rad</a>, rvs_rad_opt-&gt;rad, rtol);</div>
+<div class="line"><span class="lineno">  809</span>            <span class="keywordflow">return</span> <a class="code hl_function" href="shock__dispatch_8h.html#a943fd075e455647c377f134a2bd02f5d">solve_shock_pair</a>(jet_, medium_, t_obs, grid_config(36, 0.5), fwd_rad.<a class="code hl_variable" href="classPyRadiation.html#ac19d3052d34fc8c82280ec02a392edcb">rad</a>, rvs_rad_opt-&gt;rad, rtol);</div>
 <div class="line"><span class="lineno">  810</span>        }();</div>
 <div class="line"><span class="lineno">  811</span>        single_shock_emission(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">fwd_shock</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">coord</a>, t_obs, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">nu_obs</a>, observer, fwd_rad, <a class="code hl_function" href="classPyModel.html#a51390496a41c22c7c2dbb8838ac7a2d2">flux</a>.<a class="code hl_variable" href="structPyFlux.html#adde189e058cf4485bebf835f2d1ce9f0">fwd</a>,</div>
 <div class="line"><span class="lineno">  812</span>                              std::forward&lt;Func&gt;(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">flux_func</a>));</div>
@@ -337,10 +337,64 @@ template&lt;<a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5
 <div class="ttc" id="aclassPyModel_html_a51390496a41c22c7c2dbb8838ac7a2d2"><div class="ttname"><a href="classPyModel.html#a51390496a41c22c7c2dbb8838ac7a2d2">PyModel::flux</a></div><div class="ttdeci">PyFlux flux(PyArray const &amp;t, double nu_min, double nu_max, size_t num_nu)</div><div class="ttdoc">Calculate bolometric flux integrated over a frequency range.</div><div class="ttdef"><b>Definition</b> <a href="pymodel_8cpp_source.html#l00301">pymodel.cpp:301</a></div></div>
 <div class="ttc" id="aclassPyRadiation_html_ac19d3052d34fc8c82280ec02a392edcb"><div class="ttname"><a href="classPyRadiation.html#ac19d3052d34fc8c82280ec02a392edcb">PyRadiation::rad</a></div><div class="ttdeci">RadParams rad</div><div class="ttdef"><b>Definition</b> <a href="pymodel_8h_source.html#l00296">pymodel.h:296</a></div></div>
 <div class="ttc" id="aprofiler_8h_html_a14810f45af18bd657a0c5e0bcbd30573"><div class="ttname"><a href="profiler_8h.html#a14810f45af18bd657a0c5e0bcbd30573">AFTERGLOW_PROFILE_SCOPE</a></div><div class="ttdeci">#define AFTERGLOW_PROFILE_SCOPE(name)</div><div class="ttdef"><b>Definition</b> <a href="profiler_8h_source.html#l00065">profiler.h:65</a></div></div>
+<div class="ttc" id="ashock__dispatch_8h_html_a943fd075e455647c377f134a2bd02f5d"><div class="ttname"><a href="shock__dispatch_8h.html#a943fd075e455647c377f134a2bd02f5d">solve_shock_pair</a></div><div class="ttdeci">auto solve_shock_pair(JetVariant const &amp;jet, MediumVariant const &amp;medium, Array const &amp;t_obs, GridConfig const &amp;g, RadParams const &amp;fwd_rad, RadParams const &amp;rvs_rad, Real rtol) -&gt; std::tuple&lt; Coord, Shock, Shock &gt;</div><div class="ttdoc">Solve forward + reverse shock pair with variant dispatch.</div><div class="ttdef"><b>Definition</b> <a href="shock__dispatch_8h_source.html#l00041">shock_dispatch.h:41</a></div></div>
+<div class="ttc" id="ashock__dispatch_8h_html_af0bfd363789cd64adc2bb8fa697f96ae"><div class="ttname"><a href="shock__dispatch_8h.html#af0bfd363789cd64adc2bb8fa697f96ae">solve_fwd_shock</a></div><div class="ttdeci">auto solve_fwd_shock(JetVariant const &amp;jet, MediumVariant const &amp;medium, Array const &amp;t_obs, GridConfig const &amp;g, RadParams const &amp;rad, Real rtol) -&gt; std::pair&lt; Coord, Shock &gt;</div><div class="ttdoc">Solve forward shock dynamics with variant dispatch.</div><div class="ttdef"><b>Definition</b> <a href="shock__dispatch_8h_source.html#l00028">shock_dispatch.h:28</a></div></div>
 <div class="ttc" id="astructPyFlux_html"><div class="ttname"><a href="structPyFlux.html">PyFlux</a></div><div class="ttdoc">Complete flux structure combining forward and reverse shock contributions.</div><div class="ttdef"><b>Definition</b> <a href="pymodel_8h_source.html#l00376">pymodel.h:376</a></div></div>
 <div class="ttc" id="astructPyFlux_html_adde189e058cf4485bebf835f2d1ce9f0"><div class="ttname"><a href="structPyFlux.html#adde189e058cf4485bebf835f2d1ce9f0">PyFlux::fwd</a></div><div class="ttdeci">Flux fwd</div><div class="ttdoc">Forward shock emission components.</div><div class="ttdef"><b>Definition</b> <a href="pymodel_8h_source.html#l00378">pymodel.h:378</a></div></div>
 <div class="ttc" id="astructPyFlux_html_adf8746d12353d9fa116cdff7356687a9"><div class="ttname"><a href="structPyFlux.html#adf8746d12353d9fa116cdff7356687a9">PyFlux::rvs</a></div><div class="ttdeci">Flux rvs</div><div class="ttdoc">Reverse shock emission components.</div><div class="ttdef"><b>Definition</b> <a href="pymodel_8h_source.html#l00379">pymodel.h:379</a></div></div>
-</div><!-- fragment -->
+</div><!-- fragment --><div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="classPyModel_a3debe3d2ed8ff2a53bec469a6711cfa8_cgraph.png" border="0" usemap="#aclassPyModel_a3debe3d2ed8ff2a53bec469a6711cfa8_cgraph" alt=""/></div>
+<map name="aclassPyModel_a3debe3d2ed8ff2a53bec469a6711cfa8_cgraph" id="aclassPyModel_a3debe3d2ed8ff2a53bec469a6711cfa8_cgraph">
+<area shape="rect" title=" " alt="" coords="5,248,215,274"/>
+<area shape="rect" href="shock__dispatch_8h.html#af0bfd363789cd64adc2bb8fa697f96ae" title="Solve forward shock dynamics with variant dispatch." alt="" coords="264,223,396,248"/>
+<area shape="poly" title=" " alt="" coords="215,246,250,242,251,247,215,252"/>
+<area shape="rect" href="shock__dispatch_8h.html#a943fd075e455647c377f134a2bd02f5d" title="Solve forward + reverse shock pair with variant dispatch." alt="" coords="263,272,397,298"/>
+<area shape="poly" title=" " alt="" coords="215,270,249,274,249,279,215,275"/>
+<area shape="rect" href="mesh_8h.html#a96aa0a78a0de13a52955de3c2ce29ddd" title="Constructs a coordinate grid (Coord) for shock evolution." alt="" coords="483,247,565,272"/>
+<area shape="poly" title=" " alt="" coords="396,241,469,250,469,256,396,246"/>
+<area shape="rect" href="forward-shock_8hpp.html#aa963867f4f98284c627afeff47fc3a18" title="Generates a forward shock model for given coordinates, medium, and jet parameters." alt="" coords="447,198,601,223"/>
+<area shape="poly" title=" " alt="" coords="396,224,433,220,433,225,396,230"/>
+<area shape="rect" href="mesh_8h.html#a83ae490737edde6ad03ede25e371a071" title=" " alt="" coords="657,95,796,120"/>
+<area shape="poly" title=" " alt="" coords="564,251,584,244,601,234,618,211,625,188,631,163,649,138,668,124,671,129,653,142,636,165,630,189,623,213,604,238,586,249,566,256"/>
+<area shape="rect" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42" title="Returns the value of a single parameter." alt="" coords="1281,196,1332,222"/>
+<area shape="poly" title=" " alt="" coords="565,246,602,233,625,219,650,206,712,190,765,181,857,176,951,181,1069,182,1152,177,1188,177,1234,182,1269,192,1268,197,1233,188,1187,182,1152,183,1069,188,950,186,857,182,766,186,713,196,652,211,628,224,604,238,567,251"/>
+<area shape="rect" href="mesh_8h.html#a3dc6828dd13a70c0c203dba03e765cea" title=" " alt="" coords="651,44,803,70"/>
+<area shape="poly" title=" " alt="" coords="564,252,584,245,601,234,615,216,622,197,624,160,627,121,634,102,649,82,657,75,661,79,653,85,639,104,632,122,630,160,627,199,619,218,605,238,587,250,566,257"/>
+<area shape="rect" href="mesh_8h.html#a9cba2da30fd9821858dc89b5caea3443" title=" " alt="" coords="1069,196,1233,222"/>
+<area shape="poly" title=" " alt="" coords="565,248,650,233,868,215,1055,208,1056,213,868,220,651,238,566,253"/>
+<area shape="rect" href="mesh_8h.html#aa7505ad2e84c2a29610c1a13cd3b25e3" title="Estimates deceleration time for a given angle from ejecta and medium properties." alt="" coords="665,247,788,272"/>
+<area shape="poly" title=" " alt="" coords="566,257,652,257,652,262,566,262"/>
+<area shape="rect" href="namespacephysics_1_1relativistic.html#ab1c1444afa3c4afd0c57145f932962fa" title="Converts Lorentz factor (gamma) to a velocity fraction (beta)" alt="" coords="862,297,1010,337"/>
+<area shape="poly" title=" " alt="" coords="566,266,651,282,848,307,848,312,650,288,565,271"/>
+<area shape="rect" href="mesh_8h.html#a28ba8f4400237a97c0d2fac934fb44cf" title="Finds all sharp edges in the jet Gamma0 profile plus the outermost boundary." alt="" coords="669,348,785,374"/>
+<area shape="poly" title=" " alt="" coords="567,267,604,283,619,294,629,305,652,327,677,340,675,345,649,331,625,308,615,298,601,287,565,272"/>
+<area shape="rect" href="mesh_8h.html#a3c066f2c8e6d102d7a56de8cb42cf5a8" title=" " alt="" coords="885,380,987,406"/>
+<area shape="poly" title=" " alt="" coords="566,264,586,271,604,283,616,296,623,310,628,337,633,363,640,374,652,384,678,398,706,407,765,416,823,414,874,406,875,411,823,419,765,421,705,412,676,403,649,389,636,377,628,365,622,338,618,312,612,299,601,287,584,276,565,269"/>
+<area shape="rect" href="mesh_8h.html#ab2b9eccaf75f7a9fe6bafd8696049bd2" title="Create a refined logarithmic time grid with higher density around a specified time." alt="" coords="1083,434,1219,459"/>
+<area shape="poly" title=" " alt="" coords="567,263,587,271,605,283,618,301,625,320,627,357,630,391,638,407,652,422,705,452,762,472,822,483,884,487,944,484,1000,478,1093,460,1094,465,1001,483,944,490,884,492,822,488,761,477,702,457,649,426,633,410,625,393,622,357,620,321,614,304,601,287,584,275,565,268"/>
+<area shape="rect" href="mesh_8h.html#a49c59d8da915e118c4e550cc9bd4d3d9" title=" " alt="" coords="851,44,1021,70"/>
+<area shape="poly" title=" " alt="" coords="780,92,869,70,870,76,781,97"/>
+<area shape="poly" title=" " alt="" coords="796,95,886,88,998,88,1058,93,1118,102,1178,116,1235,137,1266,158,1290,183,1286,187,1262,162,1232,142,1176,122,1117,107,1057,98,998,93,886,93,796,100"/>
+<area shape="poly" title=" " alt="" coords="964,42,1018,22,1088,6,1126,3,1164,5,1201,14,1235,31,1253,46,1267,64,1288,104,1300,147,1306,182,1301,183,1295,148,1283,106,1263,66,1249,49,1232,35,1199,19,1164,10,1126,8,1089,11,1020,27,966,47"/>
+<area shape="rect" href="utilities_8h.html#ac47d1412f3f1791737d0f963267096f1" title="Returns the value of a single parameter." alt="" coords="1128,44,1175,70"/>
+<area shape="poly" title=" " alt="" coords="1021,54,1114,54,1114,60,1021,60"/>
+<area shape="poly" title=" " alt="" coords="1281,198,1275,188,1278,178,1289,172,1307,170,1328,173,1337,182,1333,186,1326,178,1307,175,1291,177,1282,182,1280,187,1285,195"/>
+<area shape="poly" title=" " alt="" coords="1176,59,1205,69,1235,87,1256,109,1274,135,1298,183,1294,185,1270,137,1252,113,1232,91,1203,74,1174,64"/>
+<area shape="poly" title=" " alt="" coords="803,54,837,54,837,60,803,60"/>
+<area shape="poly" title=" " alt="" coords="1233,206,1268,206,1268,212,1233,212"/>
+<area shape="poly" title=" " alt="" coords="788,260,876,261,987,258,1110,250,1233,232,1268,222,1269,227,1234,237,1111,255,987,264,876,266,788,265"/>
+<area shape="poly" title=" " alt="" coords="775,270,850,291,849,296,773,275"/>
+<area shape="poly" title=" " alt="" coords="1010,317,1061,315,1118,309,1177,297,1232,276,1262,255,1286,230,1290,234,1266,259,1235,281,1178,302,1119,314,1062,321,1010,323"/>
+<area shape="poly" title=" " alt="" coords="987,390,1042,385,1106,373,1172,353,1203,338,1232,320,1253,301,1270,278,1294,233,1298,236,1274,281,1257,305,1235,324,1205,343,1173,358,1107,378,1042,390,988,395"/>
+<area shape="poly" title=" " alt="" coords="1176,431,1205,413,1231,387,1256,349,1275,307,1297,234,1302,236,1280,309,1261,351,1235,391,1208,417,1179,436"/>
+<area shape="poly" title=" " alt="" coords="397,274,469,264,470,269,398,279"/>
+<area shape="rect" href="reverse-shock_8hpp.html#ab50c063a2b81579f107e7e79f12961b0" title="Generates a pair of forward and reverse shocks." alt="" coords="445,296,603,322"/>
+<area shape="poly" title=" " alt="" coords="398,291,432,295,431,300,397,296"/>
+</map>
+</div>
+
 </div>
 </div>
 <a id="ac47bbdbe6025c4def5d4a65f3ed6be34" name="ac47bbdbe6025c4def5d4a65f3ed6be34"></a>
@@ -387,7 +441,7 @@ template&lt;<a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5
 <div class="line"><span class="lineno">  241</span>    <a class="code hl_class" href="classObserver.html">Observer</a> observer;</div>
 <div class="line"><span class="lineno">  242</span> </div>
 <div class="line"><span class="lineno">  243</span>    <span class="keywordflow">if</span> (!rvs_rad_opt) {</div>
-<div class="line"><span class="lineno">  244</span>        <span class="keyword">auto</span> [<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">coord</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">fwd_shock</a>] = <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">solve_fwd_shock</a>(jet_, medium_, t_obs, grid_config(32, 0.4), fwd_rad.<a class="code hl_variable" href="classPyRadiation.html#ac19d3052d34fc8c82280ec02a392edcb">rad</a>, rtol);</div>
+<div class="line"><span class="lineno">  244</span>        <span class="keyword">auto</span> [<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">coord</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">fwd_shock</a>] = <a class="code hl_function" href="shock__dispatch_8h.html#af0bfd363789cd64adc2bb8fa697f96ae">solve_fwd_shock</a>(jet_, medium_, t_obs, grid_config(32, 0.4), fwd_rad.<a class="code hl_variable" href="classPyRadiation.html#ac19d3052d34fc8c82280ec02a392edcb">rad</a>, rtol);</div>
 <div class="line"><span class="lineno">  245</span> </div>
 <div class="line"><span class="lineno">  246</span>        <a class="code hl_function" href="classPyModel.html#ac47bbdbe6025c4def5d4a65f3ed6be34">details</a>.<a class="code hl_variable" href="structPyDetails.html#a82763145522b56940d0c651cf1a23d6a">phi</a> = <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">coord</a>.phi;</div>
 <div class="line"><span class="lineno">  247</span>        <a class="code hl_function" href="classPyModel.html#ac47bbdbe6025c4def5d4a65f3ed6be34">details</a>.<a class="code hl_variable" href="structPyDetails.html#af69daff65e4fd6872b82763ede45b687">theta</a> = <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">coord</a>.theta;</div>
@@ -396,7 +450,7 @@ template&lt;<a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5
 <div class="line"><span class="lineno">  250</span>        single_evo_details(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">fwd_shock</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">coord</a>, observer, fwd_rad, <a class="code hl_function" href="classPyModel.html#ac47bbdbe6025c4def5d4a65f3ed6be34">details</a>.<a class="code hl_variable" href="structPyDetails.html#a790135e030da64decb6a2c29c64683fb">fwd</a>);</div>
 <div class="line"><span class="lineno">  251</span>    } <span class="keywordflow">else</span> {</div>
 <div class="line"><span class="lineno">  252</span>        <span class="keyword">auto</span> [<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">coord</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">fwd_shock</a>, rvs_shock] =</div>
-<div class="line"><span class="lineno">  253</span>            <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">solve_shock_pair</a>(jet_, medium_, t_obs, grid_config(36, 0.5), fwd_rad.<a class="code hl_variable" href="classPyRadiation.html#ac19d3052d34fc8c82280ec02a392edcb">rad</a>, rvs_rad_opt-&gt;rad, rtol);</div>
+<div class="line"><span class="lineno">  253</span>            <a class="code hl_function" href="shock__dispatch_8h.html#a943fd075e455647c377f134a2bd02f5d">solve_shock_pair</a>(jet_, medium_, t_obs, grid_config(36, 0.5), fwd_rad.<a class="code hl_variable" href="classPyRadiation.html#ac19d3052d34fc8c82280ec02a392edcb">rad</a>, rvs_rad_opt-&gt;rad, rtol);</div>
 <div class="line"><span class="lineno">  254</span> </div>
 <div class="line"><span class="lineno">  255</span>        <a class="code hl_function" href="classPyModel.html#ac47bbdbe6025c4def5d4a65f3ed6be34">details</a>.<a class="code hl_variable" href="structPyDetails.html#a82763145522b56940d0c651cf1a23d6a">phi</a> = <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">coord</a>.phi;</div>
 <div class="line"><span class="lineno">  256</span>        <a class="code hl_function" href="classPyModel.html#ac47bbdbe6025c4def5d4a65f3ed6be34">details</a>.<a class="code hl_variable" href="structPyDetails.html#af69daff65e4fd6872b82763ede45b687">theta</a> = <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">coord</a>.theta;</div>
@@ -423,9 +477,53 @@ Here is the call graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="classPyModel_ac47bbdbe6025c4def5d4a65f3ed6be34_cgraph.png" border="0" usemap="#aclassPyModel_ac47bbdbe6025c4def5d4a65f3ed6be34_cgraph" alt=""/></div>
 <map name="aclassPyModel_ac47bbdbe6025c4def5d4a65f3ed6be34_cgraph" id="aclassPyModel_ac47bbdbe6025c4def5d4a65f3ed6be34_cgraph">
-<area shape="rect" title="Get comprehensive details of the shock evolution and model configuration." alt="" coords="5,5,136,31"/>
-<area shape="rect" href="pymodel_8cpp.html#a8ffef75ec4ca3ef0464331eb194de1e5" title=" " alt="" coords="184,5,333,31"/>
-<area shape="poly" title=" " alt="" coords="136,15,170,15,170,21,136,21"/>
+<area shape="rect" title="Get comprehensive details of the shock evolution and model configuration." alt="" coords="5,223,136,248"/>
+<area shape="rect" href="pymodel_8cpp.html#a8ffef75ec4ca3ef0464331eb194de1e5" title=" " alt="" coords="184,174,333,199"/>
+<area shape="poly" title=" " alt="" coords="119,220,195,200,197,205,120,226"/>
+<area shape="rect" href="shock__dispatch_8h.html#af0bfd363789cd64adc2bb8fa697f96ae" title="Solve forward shock dynamics with variant dispatch." alt="" coords="193,223,325,248"/>
+<area shape="poly" title=" " alt="" coords="136,233,179,233,179,238,136,238"/>
+<area shape="rect" href="shock__dispatch_8h.html#a943fd075e455647c377f134a2bd02f5d" title="Solve forward + reverse shock pair with variant dispatch." alt="" coords="191,272,326,298"/>
+<area shape="poly" title=" " alt="" coords="120,246,197,266,195,271,119,251"/>
+<area shape="rect" href="mesh_8h.html#a96aa0a78a0de13a52955de3c2ce29ddd" title="Constructs a coordinate grid (Coord) for shock evolution." alt="" coords="419,247,501,272"/>
+<area shape="poly" title=" " alt="" coords="325,241,405,250,405,256,325,246"/>
+<area shape="rect" href="forward-shock_8hpp.html#aa963867f4f98284c627afeff47fc3a18" title="Generates a forward shock model for given coordinates, medium, and jet parameters." alt="" coords="383,198,537,223"/>
+<area shape="poly" title=" " alt="" coords="325,225,369,219,369,224,325,230"/>
+<area shape="rect" href="mesh_8h.html#a83ae490737edde6ad03ede25e371a071" title=" " alt="" coords="593,95,732,120"/>
+<area shape="poly" title=" " alt="" coords="500,251,520,244,537,234,554,211,561,188,567,163,585,138,604,124,607,129,589,142,572,165,566,189,559,213,540,238,522,249,502,256"/>
+<area shape="rect" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42" title="Returns the value of a single parameter." alt="" coords="1217,196,1268,222"/>
+<area shape="poly" title=" " alt="" coords="501,246,538,233,561,219,586,206,648,190,701,181,793,176,887,181,1005,182,1088,177,1124,177,1170,182,1205,192,1204,197,1169,188,1123,182,1088,183,1005,188,886,186,793,182,702,186,649,196,588,211,564,224,540,238,503,251"/>
+<area shape="rect" href="mesh_8h.html#a3dc6828dd13a70c0c203dba03e765cea" title=" " alt="" coords="587,44,739,70"/>
+<area shape="poly" title=" " alt="" coords="500,252,520,245,537,234,551,216,558,197,560,160,563,121,570,102,585,82,593,75,597,79,589,85,575,104,568,122,566,160,563,199,555,218,541,238,523,250,502,257"/>
+<area shape="rect" href="mesh_8h.html#a9cba2da30fd9821858dc89b5caea3443" title=" " alt="" coords="1005,196,1169,222"/>
+<area shape="poly" title=" " alt="" coords="501,248,586,233,804,215,991,208,992,213,804,220,587,238,502,253"/>
+<area shape="rect" href="mesh_8h.html#aa7505ad2e84c2a29610c1a13cd3b25e3" title="Estimates deceleration time for a given angle from ejecta and medium properties." alt="" coords="601,247,724,272"/>
+<area shape="poly" title=" " alt="" coords="502,257,588,257,588,262,502,262"/>
+<area shape="rect" href="namespacephysics_1_1relativistic.html#ab1c1444afa3c4afd0c57145f932962fa" title="Converts Lorentz factor (gamma) to a velocity fraction (beta)" alt="" coords="798,297,946,337"/>
+<area shape="poly" title=" " alt="" coords="502,266,587,282,784,307,784,312,586,288,501,271"/>
+<area shape="rect" href="mesh_8h.html#a28ba8f4400237a97c0d2fac934fb44cf" title="Finds all sharp edges in the jet Gamma0 profile plus the outermost boundary." alt="" coords="605,348,721,374"/>
+<area shape="poly" title=" " alt="" coords="503,267,540,283,555,294,565,305,588,327,613,340,611,345,585,331,561,308,551,298,537,287,501,272"/>
+<area shape="rect" href="mesh_8h.html#a3c066f2c8e6d102d7a56de8cb42cf5a8" title=" " alt="" coords="821,380,923,406"/>
+<area shape="poly" title=" " alt="" coords="502,264,522,271,540,283,552,296,559,310,564,337,569,363,576,374,588,384,614,398,642,407,701,416,759,414,810,406,811,411,759,419,701,421,641,412,612,403,585,389,572,377,564,365,558,338,554,312,548,299,537,287,520,276,501,269"/>
+<area shape="rect" href="mesh_8h.html#ab2b9eccaf75f7a9fe6bafd8696049bd2" title="Create a refined logarithmic time grid with higher density around a specified time." alt="" coords="1019,434,1155,459"/>
+<area shape="poly" title=" " alt="" coords="503,263,523,271,541,283,554,301,561,320,563,357,566,391,574,407,588,422,641,452,698,472,758,483,820,487,880,484,936,478,1029,460,1030,465,937,483,880,490,820,492,758,488,697,477,638,457,585,426,569,410,561,393,558,357,556,321,550,304,537,287,520,275,501,268"/>
+<area shape="rect" href="mesh_8h.html#a49c59d8da915e118c4e550cc9bd4d3d9" title=" " alt="" coords="787,44,957,70"/>
+<area shape="poly" title=" " alt="" coords="716,92,805,70,806,76,717,97"/>
+<area shape="poly" title=" " alt="" coords="732,95,822,88,934,88,994,93,1054,102,1114,116,1171,137,1202,158,1226,183,1222,187,1198,162,1168,142,1112,122,1053,107,993,98,934,93,822,93,732,100"/>
+<area shape="poly" title=" " alt="" coords="900,42,954,22,1024,6,1062,3,1100,5,1137,14,1171,31,1189,46,1203,64,1224,104,1236,147,1242,182,1237,183,1231,148,1219,106,1199,66,1185,49,1168,35,1135,19,1100,10,1062,8,1025,11,956,27,902,47"/>
+<area shape="rect" href="utilities_8h.html#ac47d1412f3f1791737d0f963267096f1" title="Returns the value of a single parameter." alt="" coords="1064,44,1111,70"/>
+<area shape="poly" title=" " alt="" coords="957,54,1050,54,1050,60,957,60"/>
+<area shape="poly" title=" " alt="" coords="1217,198,1211,188,1214,178,1225,172,1243,170,1264,173,1273,182,1269,186,1262,178,1243,175,1227,177,1218,182,1216,187,1221,195"/>
+<area shape="poly" title=" " alt="" coords="1112,59,1141,69,1171,87,1192,109,1210,135,1234,183,1230,185,1206,137,1188,113,1168,91,1139,74,1110,64"/>
+<area shape="poly" title=" " alt="" coords="739,54,773,54,773,60,739,60"/>
+<area shape="poly" title=" " alt="" coords="1169,206,1204,206,1204,212,1169,212"/>
+<area shape="poly" title=" " alt="" coords="724,260,812,261,923,258,1046,250,1169,232,1204,222,1205,227,1170,237,1047,255,923,264,812,266,724,265"/>
+<area shape="poly" title=" " alt="" coords="711,270,786,291,785,296,709,275"/>
+<area shape="poly" title=" " alt="" coords="946,317,997,315,1054,309,1113,297,1168,276,1198,255,1222,230,1226,234,1202,259,1171,281,1114,302,1055,314,998,321,946,323"/>
+<area shape="poly" title=" " alt="" coords="923,390,978,385,1042,373,1108,353,1139,338,1168,320,1189,301,1206,278,1230,233,1234,236,1210,281,1193,305,1171,324,1141,343,1109,358,1043,378,978,390,924,395"/>
+<area shape="poly" title=" " alt="" coords="1112,431,1141,413,1167,387,1192,349,1211,307,1233,234,1238,236,1216,309,1197,351,1171,391,1144,417,1115,436"/>
+<area shape="poly" title=" " alt="" coords="326,274,405,264,405,269,326,279"/>
+<area shape="rect" href="reverse-shock_8hpp.html#ab50c063a2b81579f107e7e79f12961b0" title="Generates a pair of forward and reverse shocks." alt="" coords="381,296,539,322"/>
+<area shape="poly" title=" " alt="" coords="326,290,368,295,367,301,326,296"/>
 </map>
 </div>
 <div class="dynheader">
