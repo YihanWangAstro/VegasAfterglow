@@ -252,87 +252,59 @@ template <size_t MaxBreaks>
 size_t build_adaptive_grid(Real lg2_min, Real lg2_max, std::array<Real, MaxBreaks> const& breaks, size_t n_breaks,
                            size_t pts_per_decade, Array& grid) {
     constexpr size_t MAX_PTS = 256;
-    constexpr Real min_sep_lg2 = 0.1; // ~0.03 decades in log10
+    constexpr Real refine_radius_lg2 = 1.66; // ~0.5 decade
+
+    // Precompute break positions in log2
+    std::array<Real, MaxBreaks> lg2_breaks;
+    for (size_t i = 0; i < n_breaks; ++i)
+        lg2_breaks[i] = std::log2(breaks[i]);
+
+    auto near_any_break = [&](Real lg2_pos) {
+        for (size_t i = 0; i < n_breaks; ++i)
+            if (std::abs(lg2_pos - lg2_breaks[i]) < refine_radius_lg2)
+                return true;
+        return false;
+    };
+
+    // Single sweep from min to max with variable step size (2x density near breaks)
+    const Real coarse_step = std::log2(10.0) / pts_per_decade;
+    const Real fine_step = coarse_step / 2.0;
 
     std::array<Real, MAX_PTS> buf;
     size_t n = 0;
+    buf[n++] = std::exp2(lg2_min);
 
-    const Real v_min = std::exp2(lg2_min);
-    const Real v_max = std::exp2(lg2_max);
-
-    // Add endpoints
-    buf[n++] = v_min;
-    buf[n++] = v_max;
-
-    // Precompute break positions in log2 for proximity checks
-    constexpr Real refine_radius_lg2 = 1.66; // ~0.5 decade
-    std::array<Real, MaxBreaks> lg2_breaks;
-    for (size_t i = 0; i < n_breaks; ++i) {
-        lg2_breaks[i] = std::log2(breaks[i]);
+    Real pos = lg2_min;
+    while (n < MAX_PTS - 1) {
+        pos += near_any_break(pos) ? fine_step : coarse_step;
+        if (pos >= lg2_max)
+            break;
+        buf[n++] = std::exp2(pos);
     }
+    buf[n++] = std::exp2(lg2_max);
 
-    // Add breaks and refinement boundary anchors
-    for (size_t i = 0; i < n_breaks; ++i) {
-        if (breaks[i] > v_min && breaks[i] < v_max && n < MAX_PTS) {
-            buf[n++] = breaks[i];
-        }
-        // Add anchors at break ± refine_radius to split segments at refinement boundary
-        const Real lg2_lo = lg2_breaks[i] - refine_radius_lg2;
-        const Real lg2_hi = lg2_breaks[i] + refine_radius_lg2;
-        if (lg2_lo > lg2_min && lg2_lo < lg2_max && n < MAX_PTS)
-            buf[n++] = std::exp2(lg2_lo);
-        if (lg2_hi > lg2_min && lg2_hi < lg2_max && n < MAX_PTS)
-            buf[n++] = std::exp2(lg2_hi);
-    }
+    grid = Array::from_shape({n});
+    for (size_t i = 0; i < n; ++i)
+        grid(i) = buf[i];
+    return n;
+}
 
-    // Sort the anchor points
-    std::sort(buf.begin(), buf.begin() + n);
-
-    // Fill segments between consecutive anchor points
-    // Use 2x density within refine_radius of any break
-    const size_t n_anchors = n;
-    for (size_t s = 0; s + 1 < n_anchors && n < MAX_PTS; ++s) {
-        const Real seg_lo = std::log2(buf[s]);
-        const Real seg_hi = std::log2(buf[s + 1]);
-
-        // Check if either endpoint is within refine_radius of any break
-        bool near_break = false;
-        for (size_t i = 0; i < n_breaks; ++i) {
-            if (std::abs(seg_lo - lg2_breaks[i]) < refine_radius_lg2 ||
-                std::abs(seg_hi - lg2_breaks[i]) < refine_radius_lg2) {
-                near_break = true;
-                break;
-            }
-        }
-
-        const size_t density = near_break ? 2 * pts_per_decade : pts_per_decade;
-        const Real seg_decades = (seg_hi - seg_lo) / std::log2(10.0);
-        const size_t n_fill = static_cast<size_t>(seg_decades * density);
-        if (n_fill > 1) {
-            const Real dlg2 = (seg_hi - seg_lo) / static_cast<Real>(n_fill);
-            for (size_t f = 1; f < n_fill && n < MAX_PTS; ++f) {
-                buf[n++] = std::exp2(seg_lo + f * dlg2);
-            }
-        }
-    }
-
-    // Sort all points
-    std::sort(buf.begin(), buf.begin() + n);
-
-    // Merge points closer than min_sep_lg2
-    std::array<Real, MAX_PTS> merged;
-    size_t m = 0;
-    merged[m++] = buf[0];
-    for (size_t i = 1; i < n; ++i) {
-        if (std::log2(buf[i]) - std::log2(merged[m - 1]) >= min_sep_lg2) {
-            merged[m++] = buf[i];
-        }
-    }
-
-    // Copy to output Array
-    grid = Array::from_shape({m});
-    for (size_t i = 0; i < m; ++i) {
-        grid(i) = merged[i];
+/**
+ * @brief Overload that also computes interval widths between consecutive grid points.
+ *
+ * Returns m grid points and m-1 interval widths: dg(j) = grid(j+1) - grid(j).
+ * Consistent with trapezoidal integration: Σ 0.5*(f_j + f_{j+1}) * dg(j).
+ */
+template <size_t MaxBreaks>
+size_t build_adaptive_grid(Real lg2_min, Real lg2_max, std::array<Real, MaxBreaks> const& breaks, size_t n_breaks,
+                           size_t pts_per_decade, Array& grid, Array& dg) {
+    const size_t m = build_adaptive_grid(lg2_min, lg2_max, breaks, n_breaks, pts_per_decade, grid);
+    if (m >= 2) {
+        dg = Array::from_shape({m - 1});
+        for (size_t j = 0; j + 1 < m; ++j)
+            dg(j) = grid(j + 1) - grid(j);
+    } else {
+        dg = Array::from_shape({0});
     }
     return m;
 }
