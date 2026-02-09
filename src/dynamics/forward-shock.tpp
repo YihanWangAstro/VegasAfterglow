@@ -120,7 +120,8 @@ Real ForwardShockEqn<Ejecta, Medium>::compute_eps_rad(Real t_comv, Real Gamma, R
     const Real gamma_c = std::max(gamma_c_coeff_ / (e_th * t_comv), 1.0);
     const Real ratio = gamma_m / gamma_c;
     if (ratio < 1 && rad.p > 2) {
-        if (ratio < 1e-2) return 0;
+        if (ratio < 1e-2)
+            return 0;
         return rad.eps_e * fast_pow(ratio, rad.p - 2);
     }
     return rad.eps_e;
