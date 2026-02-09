@@ -123,7 +123,7 @@ Public Attributes</h2></td></tr>
 <div class="textblock"><p>Implements a stellar wind medium with density proportional to 1/r². </p>
 <p>Provides methods to compute density at any position. The wind is characterized by the wind parameter A_star. </p>
 
-<p class="definition">Definition at line <a class="el" href="medium_8h_source.html#l00083">83</a> of file <a class="el" href="medium_8h_source.html">medium.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="medium_8h_source.html#l00084">84</a> of file <a class="el" href="medium_8h_source.html">medium.h</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="ad1862471c40385dd0e8a7469dabcdc8e" name="ad1862471c40385dd0e8a7469dabcdc8e"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ad1862471c40385dd0e8a7469dabcdc8e">&#9670;&#160;</a></span>Wind()</h2>
@@ -175,8 +175,8 @@ Public Attributes</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="medium_8h_source.html#l00093">93</a> of file <a class="el" href="medium_8h_source.html">medium.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   94</span>        : A(A_star * 5<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">e11</a> * <a class="code hl_variable" href="namespaceunit.html#af4ac5b90426ecc30143a4e0f495978b6">unit::g</a> / <a class="code hl_variable" href="namespaceunit.html#ab0ce442b00da680dc797592af0b4a2f8">unit::cm</a>), rho_ism(n_ism * <a class="code hl_variable" href="namespacecon.html#a47a54b8f758d02e6f8b85e41207ae620">con::mp</a>), r02(A / (n0 * <a class="code hl_variable" href="namespacecon.html#a47a54b8f758d02e6f8b85e41207ae620">con::mp</a>)) {}</div>
+<p class="definition">Definition at line <a class="el" href="medium_8h_source.html#l00094">94</a> of file <a class="el" href="medium_8h_source.html">medium.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   95</span>        : A(A_star * 5<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">e11</a> * <a class="code hl_variable" href="namespaceunit.html#af4ac5b90426ecc30143a4e0f495978b6">unit::g</a> / <a class="code hl_variable" href="namespaceunit.html#ab0ce442b00da680dc797592af0b4a2f8">unit::cm</a>), rho_ism(n_ism * <a class="code hl_variable" href="namespacecon.html#a47a54b8f758d02e6f8b85e41207ae620">con::mp</a>), r02(A / (n0 * <a class="code hl_variable" href="namespacecon.html#a47a54b8f758d02e6f8b85e41207ae620">con::mp</a>)) {}</div>
 <div class="ttc" id="anamespacecon_html_a47a54b8f758d02e6f8b85e41207ae620"><div class="ttname"><a href="namespacecon.html#a47a54b8f758d02e6f8b85e41207ae620">con::mp</a></div><div class="ttdeci">constexpr Real mp</div><div class="ttdoc">Proton mass in code units.</div><div class="ttdef"><b>Definition</b> <a href="macros_8h_source.html#l00089">macros.h:89</a></div></div>
 <div class="ttc" id="anamespaceunit_html_ab0ce442b00da680dc797592af0b4a2f8"><div class="ttname"><a href="namespaceunit.html#ab0ce442b00da680dc797592af0b4a2f8">unit::cm</a></div><div class="ttdeci">constexpr Real cm</div><div class="ttdoc">Centimeter in code units.</div><div class="ttdef"><b>Definition</b> <a href="macros_8h_source.html#l00045">macros.h:45</a></div></div>
 <div class="ttc" id="anamespaceunit_html_af4ac5b90426ecc30143a4e0f495978b6"><div class="ttname"><a href="namespaceunit.html#af4ac5b90426ecc30143a4e0f495978b6">unit::g</a></div><div class="ttdeci">constexpr Real g</div><div class="ttdoc">Gram in code units.</div><div class="ttdef"><b>Definition</b> <a href="macros_8h_source.html#l00049">macros.h:49</a></div></div>
@@ -236,8 +236,8 @@ Public Attributes</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Density value at radius r (= A/r²) </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="medium_8h_source.html#l00106">106</a> of file <a class="el" href="medium_8h_source.html">medium.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  106</span>{ <span class="keywordflow">return</span> A / (r02 + r * r) + rho_ism; }</div>
+<p class="definition">Definition at line <a class="el" href="medium_8h_source.html#l00107">107</a> of file <a class="el" href="medium_8h_source.html">medium.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  107</span>{ <span class="keywordflow">return</span> A / (r02 + r * r) + rho_ism; }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -256,8 +256,8 @@ Public Attributes</h2></td></tr>
 
 <p>Flag indicating if the medium is isotropic within computational domain. </p>
 
-<p class="definition">Definition at line <a class="el" href="medium_8h_source.html#l00108">108</a> of file <a class="el" href="medium_8h_source.html">medium.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  108</span>{<span class="keyword">true</span>}; <span class="comment">///&lt; Flag indicating if the medium is isotropic within computational domain.</span></div>
+<p class="definition">Definition at line <a class="el" href="medium_8h_source.html#l00109">109</a> of file <a class="el" href="medium_8h_source.html">medium.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  109</span>{<span class="keyword">true</span>}; <span class="comment">///&lt; Flag indicating if the medium is isotropic within computational domain.</span></div>
 </div><!-- fragment -->
 </div>
 </div>

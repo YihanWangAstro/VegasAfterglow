@@ -1,5 +1,6 @@
 var structPyShock =
 [
+    [ "repr", "structPyShock.html#a9b4eeafbb83d9492336fa59d58802cba", null ],
     [ "B_comv", "structPyShock.html#a63c2f215789053ab3e69d5227b0335f1", null ],
     [ "Doppler", "structPyShock.html#a9a0399e15499a9a099665b65700f728a", null ],
     [ "Gamma", "structPyShock.html#a91fcd07f840919a38d4171925e9a4ba0", null ],

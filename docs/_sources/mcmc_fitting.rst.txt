@@ -870,9 +870,9 @@ The ``Fitter.fit()`` method provides a unified interface for parameter estimatio
     def fit(
         self,
         param_defs: Sequence[ParamDef],      # Parameter definitions
-        resolution: Tuple[float, float, float] = (0.3, 0.3, 10),  # Grid resolution
-        sampler: str = "emcee",              # Sampler algorithm
-        npool: int = 8,                      # Number of parallel processes
+        resolution: Tuple[float, float, float] = (0.15, 0.5, 10),  # Grid resolution
+        sampler: str = "dynesty",             # Sampler algorithm
+        npool: int = 1,                      # Number of parallel processes
         top_k: int = 10,                     # Number of best fits to return
         outdir: str = "bilby_output",        # Output directory
         label: str = "afterglow",            # Run label
@@ -890,7 +890,7 @@ The ``Fitter.fit()`` method provides a unified interface for parameter estimatio
 - ``resolution``: Tuple of (phi_res, theta_res, t_res)
     - Controls model computation grid spacing
     - Lower values = lower accuracy but faster computation
-    - Default: (0.3, 0.3, 10) provides good balance
+    - Default: (0.15, 0.5, 10) provides good balance
     - Example: (0.1, 1, 15) for higher accuracy
 
 - ``sampler``: Sampling algorithm to use
@@ -997,7 +997,7 @@ Pass sampler-specific parameters via ``**sampler_kwargs`` in the ``fit()`` metho
     # Using nestle sampler
     result = fitter.fit(
         params,
-        resolution=(0.3, 0.3, 10),
+        resolution=(0.15, 0.5, 10),
         sampler="nestle",
         nlive=1000,           # nestle-specific parameter
         method='multi',       # nestle-specific: 'classic', 'single', or 'multi'
@@ -1052,7 +1052,7 @@ Basic MCMC Execution
     # Option 1 (Recommended): Nested sampling with dynesty (computes Bayesian evidence, robust for multimodal posteriors)
     result = fitter.fit(
         params,
-        resolution=(0.3, 0.3, 10),     # Grid resolution (phi, theta, t)
+        resolution=(0.15, 0.5, 10),     # Grid resolution (phi, theta, t)
         sampler="dynesty",             # Nested sampling algorithm
         nlive=1000,                    # Number of live points
         walks=100,                     # Number of random walks per live point
@@ -1064,7 +1064,7 @@ Basic MCMC Execution
     # Option 2: MCMC with emcee (faster, good for unimodal posteriors, hard to converge for multimodal posteriors)
     result = fitter.fit(
         params,
-        resolution=(0.3, 0.3, 10),     # Grid resolution (phi, theta, t)
+        resolution=(0.15, 0.5, 10),     # Grid resolution (phi, theta, t)
         sampler="emcee",               # MCMC sampler
         nsteps=50000,                  # Number of steps per walker
         nburn=10000,                   # Burn-in steps to discard

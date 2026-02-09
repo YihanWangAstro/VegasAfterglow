@@ -13,6 +13,9 @@ var mesh_8h =
     [ "boundary_to_center", "mesh_8h.html#ae1622b29b5488dbee3ef9068b9f8c7d4", null ],
     [ "boundary_to_center_log", "mesh_8h.html#aba66986baad5475a202c20a92bda036e", null ],
     [ "boundary_to_center_log", "mesh_8h.html#ac536f77c32691232cb5e7546595fb3d2", null ],
+    [ "build_adaptive_grid", "mesh_8h.html#a28817f0fe9bf26c719676a09878f6b37", null ],
+    [ "build_adaptive_grid", "mesh_8h.html#a85e8e44c7e31c4bbf60093add6da97bf", null ],
+    [ "edge_refinement_grid", "mesh_8h.html#a9cba2da30fd9821858dc89b5caea3443", null ],
     [ "estimate_t_dec", "mesh_8h.html#aa7505ad2e84c2a29610c1a13cd3b25e3", null ],
     [ "find_jet_edges", "mesh_8h.html#a28ba8f4400237a97c0d2fac934fb44cf", null ],
     [ "inverse_CFD_sampling", "mesh_8h.html#a49c59d8da915e118c4e550cc9bd4d3d9", null ],
@@ -20,6 +23,7 @@ var mesh_8h =
     [ "is_log_scale", "mesh_8h.html#ac0e56adbbf18a0c9a5c04a8d4de268d9", null ],
     [ "jet_spreading_edge", "mesh_8h.html#a7cb4a7162e9b5a1e2ed39f7d9e94b53f", null ],
     [ "logspace_boundary_center", "mesh_8h.html#ad7703ab8b66bb86ed857746606fac9a2", null ],
+    [ "logspace_center", "mesh_8h.html#afadc5019976c36be16277dc4dc178a7f", null ],
     [ "merge_grids", "mesh_8h.html#a3c066f2c8e6d102d7a56de8cb42cf5a8", null ],
     [ "refined_time_grid", "mesh_8h.html#ab2b9eccaf75f7a9fe6bafd8696049bd2", null ]
 ];

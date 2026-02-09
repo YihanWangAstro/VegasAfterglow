@@ -94,6 +94,7 @@ $(document).ready(function(){initNavTree('jet_8h.html',''); initResizable(); });
   <div class="summary">
 <a href="#nested-classes">Classes</a> &#124;
 <a href="#namespaces">Namespaces</a> &#124;
+<a href="#typedef-members">Typedefs</a> &#124;
 <a href="#enum-members">Enumerations</a> &#124;
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle"><div class="title">jet.h File Reference</div></div>
@@ -102,50 +103,55 @@ $(document).ready(function(){initNavTree('jet_8h.html',''); initResizable(); });
 <div class="textblock"><code>#include &lt;cmath&gt;</code><br />
 <code>#include &lt;cstdint&gt;</code><br />
 <code>#include &lt;utility&gt;</code><br />
+<code>#include &lt;variant&gt;</code><br />
 <code>#include &quot;<a class="el" href="utilities_8h_source.html">../util/utilities.h</a>&quot;</code><br />
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for jet.h:</div>
 <div class="dyncontent">
 <div class="center"><img src="jet_8h__incl.png" border="0" usemap="#ajet_8h" alt=""/></div>
 <map name="ajet_8h" id="ajet_8h">
-<area shape="rect" title=" " alt="" coords="717,5,767,31"/>
+<area shape="rect" title=" " alt="" coords="270,5,321,31"/>
 <area shape="rect" title=" " alt="" coords="5,313,68,339"/>
-<area shape="poly" title=" " alt="" coords="717,25,571,47,359,89,250,117,152,149,74,186,45,206,24,227,17,244,16,263,27,300,22,302,11,263,12,243,20,224,41,202,71,181,150,144,249,111,357,83,570,42,716,20"/>
-<area shape="rect" title=" " alt="" coords="767,79,834,104"/>
-<area shape="poly" title=" " alt="" coords="754,29,785,67,781,70,750,33"/>
-<area shape="rect" title=" " alt="" coords="859,79,919,104"/>
-<area shape="poly" title=" " alt="" coords="767,28,854,70,851,75,764,33"/>
-<area shape="rect" href="utilities_8h.html" title=" " alt="" coords="623,79,743,104"/>
-<area shape="poly" title=" " alt="" coords="734,33,703,70,699,67,730,29"/>
-<area shape="rect" href="mesh_8h.html" title=" " alt="" coords="626,152,741,177"/>
-<area shape="poly" title=" " alt="" coords="686,104,686,138,681,138,681,104"/>
-<area shape="rect" href="macros_8h.html" title=" " alt="" coords="1224,313,1343,339"/>
-<area shape="poly" title=" " alt="" coords="744,101,1065,164,1216,199,1265,213,1288,223,1297,242,1300,262,1295,300,1290,299,1295,262,1292,243,1284,227,1263,218,1214,204,1064,170,743,106"/>
-<area shape="poly" title=" " alt="" coords="741,166,874,172,1036,184,1180,201,1230,211,1258,223,1272,240,1281,260,1287,300,1281,300,1276,262,1268,243,1255,227,1228,216,1179,206,1036,189,874,178,741,171"/>
+<area shape="poly" title=" " alt="" coords="271,30,219,50,163,81,115,114,79,142,50,176,25,226,20,245,20,264,29,300,24,301,15,265,15,244,19,224,45,173,75,138,112,110,161,76,217,45,269,25"/>
+<area shape="rect" title=" " alt="" coords="174,79,241,104"/>
+<area shape="poly" title=" " alt="" coords="283,33,234,72,231,68,280,29"/>
+<area shape="rect" title=" " alt="" coords="265,79,325,104"/>
+<area shape="poly" title=" " alt="" coords="298,31,298,65,293,65,293,31"/>
+<area shape="rect" title=" " alt="" coords="349,79,417,104"/>
+<area shape="poly" title=" " alt="" coords="311,29,360,68,357,72,308,33"/>
+<area shape="rect" href="utilities_8h.html" title=" " alt="" coords="583,79,703,104"/>
+<area shape="poly" title=" " alt="" coords="321,22,574,73,573,78,320,27"/>
+<area shape="rect" href="mesh_8h.html" title=" " alt="" coords="586,152,701,177"/>
+<area shape="poly" title=" " alt="" coords="646,104,646,138,641,138,641,104"/>
+<area shape="rect" href="macros_8h.html" title=" " alt="" coords="308,313,427,339"/>
+<area shape="poly" title=" " alt="" coords="704,94,910,111,1038,125,1165,144,1278,166,1365,194,1394,209,1412,227,1417,247,1405,267,1390,274,1362,280,1272,291,996,308,684,320,440,326,440,321,683,314,996,303,1271,286,1361,275,1389,269,1402,263,1411,246,1408,230,1391,214,1363,199,1277,172,1164,149,1037,130,910,116,703,99"/>
+<area shape="rect" title=" " alt="" coords="1322,233,1391,258"/>
+<area shape="poly" title=" " alt="" coords="701,163,814,165,967,173,1138,191,1226,205,1311,223,1320,225,1319,231,1309,228,1225,210,1138,196,966,178,814,170,701,168"/>
+<area shape="poly" title=" " alt="" coords="586,175,476,195,427,210,396,227,384,243,376,262,370,300,365,299,371,260,379,240,392,223,425,205,475,190,585,170"/>
 <area shape="rect" title=" " alt="" coords="141,233,329,258"/>
-<area shape="poly" title=" " alt="" coords="626,179,341,228,313,233,312,228,340,223,625,173"/>
+<area shape="poly" title=" " alt="" coords="586,180,308,233,307,228,585,174"/>
 <area shape="rect" href="physics_8h.html" title=" " alt="" coords="34,233,117,258"/>
-<area shape="poly" title=" " alt="" coords="626,170,406,186,268,203,129,228,118,231,116,226,128,223,267,197,406,180,626,165"/>
-<area shape="rect" title=" " alt="" coords="353,225,496,265"/>
-<area shape="poly" title=" " alt="" coords="646,180,501,224,499,219,645,175"/>
-<area shape="rect" title=" " alt="" coords="520,225,663,265"/>
-<area shape="poly" title=" " alt="" coords="671,180,626,218,622,214,668,175"/>
-<area shape="rect" title=" " alt="" coords="687,233,864,258"/>
-<area shape="poly" title=" " alt="" coords="699,175,753,222,750,226,695,180"/>
-<area shape="rect" title=" " alt="" coords="889,233,1038,258"/>
-<area shape="poly" title=" " alt="" coords="725,175,910,226,909,232,723,180"/>
-<area shape="rect" title=" " alt="" coords="1063,233,1245,258"/>
-<area shape="poly" title=" " alt="" coords="742,172,1050,223,1078,228,1077,233,1050,228,741,178"/>
-<area shape="rect" title=" " alt="" coords="1163,394,1222,419"/>
-<area shape="poly" title=" " alt="" coords="1272,341,1218,387,1215,383,1268,337"/>
-<area shape="rect" title=" " alt="" coords="1246,394,1321,419"/>
-<area shape="poly" title=" " alt="" coords="1286,339,1286,380,1281,380,1281,339"/>
-<area shape="rect" href="simulation-defaults_8h.html" title="Centralized simulation configuration defaults." alt="" coords="1345,387,1491,427"/>
-<area shape="poly" title=" " alt="" coords="1305,337,1375,377,1372,382,1302,341"/>
-<area shape="rect" title=" " alt="" coords="1383,475,1453,500"/>
-<area shape="poly" title=" " alt="" coords="1421,427,1421,461,1415,461,1415,427"/>
+<area shape="poly" title=" " alt="" coords="586,171,383,187,256,204,129,228,118,231,116,226,128,223,255,199,382,182,586,166"/>
+<area shape="rect" title=" " alt="" coords="405,225,548,265"/>
+<area shape="poly" title=" " alt="" coords="620,180,531,222,528,217,618,175"/>
+<area shape="rect" title=" " alt="" coords="572,225,715,265"/>
+<area shape="poly" title=" " alt="" coords="646,178,646,212,641,212,641,178"/>
+<area shape="rect" title=" " alt="" coords="739,233,916,258"/>
+<area shape="poly" title=" " alt="" coords="671,175,789,225,787,230,669,180"/>
+<area shape="rect" title=" " alt="" coords="941,233,1090,258"/>
+<area shape="poly" title=" " alt="" coords="699,175,929,223,950,227,949,232,928,228,698,180"/>
+<area shape="rect" title=" " alt="" coords="1115,233,1297,258"/>
+<area shape="poly" title=" " alt="" coords="701,170,881,192,1102,223,1133,228,1132,233,1102,228,880,197,701,175"/>
+<area shape="rect" title=" " alt="" coords="247,394,306,419"/>
+<area shape="poly" title=" " alt="" coords="356,341,302,387,299,383,352,337"/>
+<area shape="rect" title=" " alt="" coords="330,394,405,419"/>
+<area shape="poly" title=" " alt="" coords="370,339,370,380,365,380,365,339"/>
+<area shape="rect" href="simulation-defaults_8h.html" title="Centralized simulation configuration defaults." alt="" coords="429,387,575,427"/>
+<area shape="poly" title=" " alt="" coords="389,337,459,377,456,382,386,341"/>
+<area shape="rect" title=" " alt="" coords="467,475,537,500"/>
+<area shape="poly" title=" " alt="" coords="505,427,505,461,499,461,499,427"/>
 <area shape="poly" title=" " alt="" coords="72,259,51,302,46,300,67,257"/>
-<area shape="poly" title=" " alt="" coords="104,256,129,263,226,277,355,289,665,306,978,316,1210,321,1210,326,977,321,665,311,354,294,226,282,128,268,102,261"/>
+<area shape="poly" title=" " alt="" coords="107,255,129,263,303,308,302,313,128,268,105,261"/>
 </map>
 </div>
 </div><div class="textblock"><div class="dynheader">
@@ -240,6 +246,12 @@ Namespaces</h2></td></tr>
 <tr class="memdesc:namespacemath"><td class="mdescLeft">&#160;</td><td class="mdescRight">Mathematical helper functions for constructing jet profiles. <br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="typedef-members" name="typedef-members"></a>
+Typedefs</h2></td></tr>
+<tr class="memitem:ab7e148139946995ff92512d0566af2ca" id="r_ab7e148139946995ff92512d0566af2ca"><td class="memItemLeft" align="right" valign="top"><a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">using</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="jet_8h.html#ab7e148139946995ff92512d0566af2ca">JetVariant</a> = <a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">std::variant</a>&lt; <a class="el" href="classTophatJet.html">TophatJet</a>, <a class="el" href="classGaussianJet.html">GaussianJet</a>, <a class="el" href="classPowerLawJet.html">PowerLawJet</a>, <a class="el" href="classEjecta.html">Ejecta</a> &gt;</td></tr>
+<tr class="memdesc:ab7e148139946995ff92512d0566af2ca"><td class="mdescLeft">&#160;</td><td class="mdescRight">Type-erased jet variant for optimized dispatch in the ODE hot loop.  <br /></td></tr>
+<tr class="separator:ab7e148139946995ff92512d0566af2ca"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="enum-members" name="enum-members"></a>
 Enumerations</h2></td></tr>
 <tr class="memitem:a4c9eca1a51662c0a447221f4d3940caa" id="r_a4c9eca1a51662c0a447221f4d3940caa"><td class="memItemLeft" align="right" valign="top">enum class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="jet_8h.html#a4c9eca1a51662c0a447221f4d3940caa">Symmetry</a> : uint8_t { <a class="el" href="jet_8h.html#a4c9eca1a51662c0a447221f4d3940caaa32234519c88d862c5df3934bd134aa9c">structured</a>
@@ -252,11 +264,40 @@ Enumerations</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
+<tr class="memitem:a72b4ff8405eeab1f6bbcddd66c03fd73" id="r_a72b4ff8405eeab1f6bbcddd66c03fd73"><td class="memItemLeft" align="right" valign="top"><a class="el" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="jet_8h.html#a72b4ff8405eeab1f6bbcddd66c03fd73">jet_eps_k</a> (<a class="el" href="jet_8h.html#ab7e148139946995ff92512d0566af2ca">JetVariant</a> <a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">const</a> &amp;<a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">jv</a>, <a class="el" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> phi, <a class="el" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> theta)</td></tr>
+<tr class="memdesc:a72b4ff8405eeab1f6bbcddd66c03fd73"><td class="mdescLeft">&#160;</td><td class="mdescRight">Helper: evaluate eps_k on a JetVariant (for non-hot-path code)  <br /></td></tr>
+<tr class="separator:a72b4ff8405eeab1f6bbcddd66c03fd73"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9cf45c77d192f53f650073aee1fd0cd1" id="r_a9cf45c77d192f53f650073aee1fd0cd1"><td class="memItemLeft" align="right" valign="top"><a class="el" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="jet_8h.html#a9cf45c77d192f53f650073aee1fd0cd1">jet_Gamma0</a> (<a class="el" href="jet_8h.html#ab7e148139946995ff92512d0566af2ca">JetVariant</a> <a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">const</a> &amp;<a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">jv</a>, <a class="el" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> phi, <a class="el" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> theta)</td></tr>
+<tr class="memdesc:a9cf45c77d192f53f650073aee1fd0cd1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Helper: evaluate Gamma0 on a JetVariant (for non-hot-path code)  <br /></td></tr>
+<tr class="separator:a9cf45c77d192f53f650073aee1fd0cd1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a28398e9e43157f507aa537c8a5e9196e" id="r_a28398e9e43157f507aa537c8a5e9196e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">bool</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="jet_8h.html#a28398e9e43157f507aa537c8a5e9196e">jet_spreading</a> (<a class="el" href="jet_8h.html#ab7e148139946995ff92512d0566af2ca">JetVariant</a> <a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">const</a> &amp;<a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">jv</a>)</td></tr>
+<tr class="memdesc:a28398e9e43157f507aa537c8a5e9196e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Helper: read spreading flag on a JetVariant.  <br /></td></tr>
+<tr class="separator:a28398e9e43157f507aa537c8a5e9196e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6fac8621479aea05abf6fef54a4df256" id="r_a6fac8621479aea05abf6fef54a4df256"><td class="memTemplParams" colspan="2">template&lt;<a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">typename</a> <a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">F</a> &gt; </td></tr>
 <tr class="memitem:a6fac8621479aea05abf6fef54a4df256"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">auto</a>&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="jet_8h.html#a6fac8621479aea05abf6fef54a4df256">LiangGhirlanda2010</a> (<a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">F</a> <a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">energy_func</a>, <a class="el" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> <a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">e_max</a>, <a class="el" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> gamma_max, <a class="el" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> <a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">idx</a>)</td></tr>
 <tr class="memdesc:a6fac8621479aea05abf6fef54a4df256"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a Lorentz factor distribution using the Liang &amp; Ghirlanda (2010) prescription.  <br /></td></tr>
 <tr class="separator:a6fac8621479aea05abf6fef54a4df256"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
+<h2 class="groupheader">Typedef Documentation</h2>
+<a id="ab7e148139946995ff92512d0566af2ca" name="ab7e148139946995ff92512d0566af2ca"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab7e148139946995ff92512d0566af2ca">&#9670;&#160;</a></span>JetVariant</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">using</a> <a class="el" href="jet_8h.html#ab7e148139946995ff92512d0566af2ca">JetVariant</a> =  <a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">std::variant</a>&lt;<a class="el" href="classTophatJet.html">TophatJet</a>, <a class="el" href="classGaussianJet.html">GaussianJet</a>, <a class="el" href="classPowerLawJet.html">PowerLawJet</a>, <a class="el" href="classEjecta.html">Ejecta</a>&gt;</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Type-erased jet variant for optimized dispatch in the ODE hot loop. </p>
+<p>Concrete jet types have inline eps_k()/Gamma0() and no injection members, enabling smaller state vectors and eliminated code paths via if constexpr. <a class="el" href="classEjecta.html" title="Represents generic ejecta properties for a simulation.">Ejecta</a> uses std::function as fallback for custom jets and magnetar injection. </p>
+
+<p class="definition">Definition at line <a class="el" href="jet_8h_source.html#l00273">273</a> of file <a class="el" href="jet_8h_source.html">jet.h</a>.</p>
+
+</div>
+</div>
 <h2 class="groupheader">Enumeration Type Documentation</h2>
 <a id="a4c9eca1a51662c0a447221f4d3940caa" name="a4c9eca1a51662c0a447221f4d3940caa"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a4c9eca1a51662c0a447221f4d3940caa">&#9670;&#160;</a></span>Symmetry</h2>
@@ -290,13 +331,13 @@ Functions</h2></td></tr>
 </td></tr>
 </table>
 
-<p class="definition">Definition at line <a class="el" href="jet_8h_source.html#l00019">19</a> of file <a class="el" href="jet_8h_source.html">jet.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   19</span>                    : <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">uint8_t</a> {</div>
-<div class="line"><span class="lineno">   20</span>    <a class="code hl_enumvalue" href="jet_8h.html#a4c9eca1a51662c0a447221f4d3940caaa32234519c88d862c5df3934bd134aa9c">structured</a>,    <span class="comment">///&lt; Full (phi, theta) computation needed</span></div>
-<div class="line"><span class="lineno">   21</span>    <a class="code hl_enumvalue" href="jet_8h.html#a4c9eca1a51662c0a447221f4d3940caaa2fbec3f317107be74b3eb9a4a224a059">phi_symmetric</a>, <span class="comment">///&lt; Uniform in phi; compute one phi slice, broadcast across phi</span></div>
-<div class="line"><span class="lineno">   22</span>    <a class="code hl_enumvalue" href="jet_8h.html#a4c9eca1a51662c0a447221f4d3940caaa3e58619a3450b6f761468f6283dc8573">piecewise</a>,     <span class="comment">///&lt; phi-symmetric + piecewise-constant in theta; compute K representative thetas</span></div>
-<div class="line"><span class="lineno">   23</span>    <a class="code hl_enumvalue" href="jet_8h.html#a4c9eca1a51662c0a447221f4d3940caaa92fd05a96e739c61bbbd8b81d35ec741">isotropic</a>      <span class="comment">///&lt; Uniform in both phi and theta; compute one point, broadcast everywhere</span></div>
-<div class="line"><span class="lineno">   24</span>};</div>
+<p class="definition">Definition at line <a class="el" href="jet_8h_source.html#l00020">20</a> of file <a class="el" href="jet_8h_source.html">jet.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   20</span>                    : <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">uint8_t</a> {</div>
+<div class="line"><span class="lineno">   21</span>    <a class="code hl_enumvalue" href="jet_8h.html#a4c9eca1a51662c0a447221f4d3940caaa32234519c88d862c5df3934bd134aa9c">structured</a>,    <span class="comment">///&lt; Full (phi, theta) computation needed</span></div>
+<div class="line"><span class="lineno">   22</span>    <a class="code hl_enumvalue" href="jet_8h.html#a4c9eca1a51662c0a447221f4d3940caaa2fbec3f317107be74b3eb9a4a224a059">phi_symmetric</a>, <span class="comment">///&lt; Uniform in phi; compute one phi slice, broadcast across phi</span></div>
+<div class="line"><span class="lineno">   23</span>    <a class="code hl_enumvalue" href="jet_8h.html#a4c9eca1a51662c0a447221f4d3940caaa3e58619a3450b6f761468f6283dc8573">piecewise</a>,     <span class="comment">///&lt; phi-symmetric + piecewise-constant in theta; compute K representative thetas</span></div>
+<div class="line"><span class="lineno">   24</span>    <a class="code hl_enumvalue" href="jet_8h.html#a4c9eca1a51662c0a447221f4d3940caaa92fd05a96e739c61bbbd8b81d35ec741">isotropic</a>      <span class="comment">///&lt; Uniform in both phi and theta; compute one point, broadcast everywhere</span></div>
+<div class="line"><span class="lineno">   25</span>};</div>
 <div class="ttc" id="ajet_8h_html_a4c9eca1a51662c0a447221f4d3940caaa2fbec3f317107be74b3eb9a4a224a059"><div class="ttname"><a href="jet_8h.html#a4c9eca1a51662c0a447221f4d3940caaa2fbec3f317107be74b3eb9a4a224a059">Symmetry::phi_symmetric</a></div><div class="ttdeci">@ phi_symmetric</div><div class="ttdoc">Uniform in phi; compute one phi slice, broadcast across phi.</div></div>
 <div class="ttc" id="ajet_8h_html_a4c9eca1a51662c0a447221f4d3940caaa32234519c88d862c5df3934bd134aa9c"><div class="ttname"><a href="jet_8h.html#a4c9eca1a51662c0a447221f4d3940caaa32234519c88d862c5df3934bd134aa9c">Symmetry::structured</a></div><div class="ttdeci">@ structured</div><div class="ttdoc">Full (phi, theta) computation needed.</div></div>
 <div class="ttc" id="ajet_8h_html_a4c9eca1a51662c0a447221f4d3940caaa3e58619a3450b6f761468f6283dc8573"><div class="ttname"><a href="jet_8h.html#a4c9eca1a51662c0a447221f4d3940caaa3e58619a3450b6f761468f6283dc8573">Symmetry::piecewise</a></div><div class="ttdeci">@ piecewise</div><div class="ttdoc">phi-symmetric + piecewise-constant in theta; compute K representative thetas</div></div>
@@ -306,6 +347,182 @@ Functions</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Function Documentation</h2>
+<a id="a72b4ff8405eeab1f6bbcddd66c03fd73" name="a72b4ff8405eeab1f6bbcddd66c03fd73"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a72b4ff8405eeab1f6bbcddd66c03fd73">&#9670;&#160;</a></span>jet_eps_k()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> jet_eps_k </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="jet_8h.html#ab7e148139946995ff92512d0566af2ca">JetVariant</a> <a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">const</a> &amp;&#160;</td>
+          <td class="paramname"><em>jv</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a>&#160;</td>
+          <td class="paramname"><em>phi</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a>&#160;</td>
+          <td class="paramname"><em>theta</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Helper: evaluate eps_k on a JetVariant (for non-hot-path code) </p>
+
+<p class="definition">Definition at line <a class="el" href="jet_8h_source.html#l00276">276</a> of file <a class="el" href="jet_8h_source.html">jet.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  276</span>                                                                  {</div>
+<div class="line"><span class="lineno">  277</span>    <span class="keywordflow">return</span> std::visit([&amp;](<span class="keyword">auto</span> <span class="keyword">const</span>&amp; <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">j</a>) { <span class="keywordflow">return</span> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">j</a>.eps_k(phi, theta); }, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">jv</a>);</div>
+<div class="line"><span class="lineno">  278</span>}</div>
+</div><!-- fragment --><div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="jet_8h_a72b4ff8405eeab1f6bbcddd66c03fd73_cgraph.png" border="0" usemap="#ajet_8h_a72b4ff8405eeab1f6bbcddd66c03fd73_cgraph" alt=""/></div>
+<map name="ajet_8h_a72b4ff8405eeab1f6bbcddd66c03fd73_cgraph" id="ajet_8h_a72b4ff8405eeab1f6bbcddd66c03fd73_cgraph">
+<area shape="rect" title="Helper: evaluate eps_k on a JetVariant (for non&#45;hot&#45;path code)" alt="" coords="5,29,89,55"/>
+<area shape="rect" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42" title="Returns the value of a single parameter." alt="" coords="137,29,188,55"/>
+<area shape="poly" title=" " alt="" coords="89,39,123,39,123,45,89,45"/>
+<area shape="poly" title=" " alt="" coords="143,30,139,21,141,12,149,5,163,3,179,6,186,14,182,18,176,11,163,8,151,10,145,14,144,20,147,28"/>
+</map>
+</div>
+<div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="jet_8h_a72b4ff8405eeab1f6bbcddd66c03fd73_icgraph.png" border="0" usemap="#ajet_8h_a72b4ff8405eeab1f6bbcddd66c03fd73_icgraph" alt=""/></div>
+<map name="ajet_8h_a72b4ff8405eeab1f6bbcddd66c03fd73_icgraph" id="ajet_8h_a72b4ff8405eeab1f6bbcddd66c03fd73_icgraph">
+<area shape="rect" title="Helper: evaluate eps_k on a JetVariant (for non&#45;hot&#45;path code)" alt="" coords="396,5,480,31"/>
+<area shape="rect" href="classPyModel.html#a3f0a0a9887885a5052291118ed7ffcaf" title=" " alt="" coords="204,5,348,31"/>
+<area shape="poly" title=" " alt="" coords="382,21,349,21,349,15,382,15"/>
+<area shape="rect" href="pybind_8cpp.html#a8c92987849ad296e28ec6c07c8e7860b" title=" " alt="" coords="5,5,156,31"/>
+<area shape="poly" title=" " alt="" coords="190,21,156,21,156,15,190,15"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="a9cf45c77d192f53f650073aee1fd0cd1" name="a9cf45c77d192f53f650073aee1fd0cd1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9cf45c77d192f53f650073aee1fd0cd1">&#9670;&#160;</a></span>jet_Gamma0()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> jet_Gamma0 </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="jet_8h.html#ab7e148139946995ff92512d0566af2ca">JetVariant</a> <a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">const</a> &amp;&#160;</td>
+          <td class="paramname"><em>jv</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a>&#160;</td>
+          <td class="paramname"><em>phi</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a>&#160;</td>
+          <td class="paramname"><em>theta</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Helper: evaluate Gamma0 on a JetVariant (for non-hot-path code) </p>
+
+<p class="definition">Definition at line <a class="el" href="jet_8h_source.html#l00281">281</a> of file <a class="el" href="jet_8h_source.html">jet.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  281</span>                                                                   {</div>
+<div class="line"><span class="lineno">  282</span>    <span class="keywordflow">return</span> std::visit([&amp;](<span class="keyword">auto</span> <span class="keyword">const</span>&amp; <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">j</a>) { <span class="keywordflow">return</span> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">j</a>.Gamma0(phi, theta); }, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">jv</a>);</div>
+<div class="line"><span class="lineno">  283</span>}</div>
+</div><!-- fragment --><div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="jet_8h_a9cf45c77d192f53f650073aee1fd0cd1_cgraph.png" border="0" usemap="#ajet_8h_a9cf45c77d192f53f650073aee1fd0cd1_cgraph" alt=""/></div>
+<map name="ajet_8h_a9cf45c77d192f53f650073aee1fd0cd1_cgraph" id="ajet_8h_a9cf45c77d192f53f650073aee1fd0cd1_cgraph">
+<area shape="rect" title="Helper: evaluate Gamma0 on a JetVariant (for non&#45;hot&#45;path code)" alt="" coords="5,29,112,55"/>
+<area shape="rect" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42" title="Returns the value of a single parameter." alt="" coords="160,29,211,55"/>
+<area shape="poly" title=" " alt="" coords="112,39,146,39,146,45,112,45"/>
+<area shape="poly" title=" " alt="" coords="164,30,159,21,162,11,171,5,185,3,203,6,210,14,206,18,200,11,185,8,173,10,166,14,165,20,168,28"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="a28398e9e43157f507aa537c8a5e9196e" name="a28398e9e43157f507aa537c8a5e9196e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a28398e9e43157f507aa537c8a5e9196e">&#9670;&#160;</a></span>jet_spreading()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">bool</a> jet_spreading </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="jet_8h.html#ab7e148139946995ff92512d0566af2ca">JetVariant</a> <a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">const</a> &amp;&#160;</td>
+          <td class="paramname"><em>jv</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Helper: read spreading flag on a JetVariant. </p>
+
+<p class="definition">Definition at line <a class="el" href="jet_8h_source.html#l00286">286</a> of file <a class="el" href="jet_8h_source.html">jet.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  286</span>                                                {</div>
+<div class="line"><span class="lineno">  287</span>    <span class="keywordflow">return</span> std::visit([](<span class="keyword">auto</span> <span class="keyword">const</span>&amp; <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">j</a>) { <span class="keywordflow">return</span> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">j</a>.spreading; }, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">jv</a>);</div>
+<div class="line"><span class="lineno">  288</span>}</div>
+</div><!-- fragment --><div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="jet_8h_a28398e9e43157f507aa537c8a5e9196e_cgraph.png" border="0" usemap="#ajet_8h_a28398e9e43157f507aa537c8a5e9196e_cgraph" alt=""/></div>
+<map name="ajet_8h_a28398e9e43157f507aa537c8a5e9196e_cgraph" id="ajet_8h_a28398e9e43157f507aa537c8a5e9196e_cgraph">
+<area shape="rect" title="Helper: read spreading flag on a JetVariant." alt="" coords="5,29,116,55"/>
+<area shape="rect" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42" title="Returns the value of a single parameter." alt="" coords="164,29,215,55"/>
+<area shape="poly" title=" " alt="" coords="116,39,150,39,150,45,116,45"/>
+<area shape="poly" title=" " alt="" coords="167,30,163,21,165,11,174,5,189,3,207,6,215,14,211,18,204,11,189,8,176,10,170,14,168,20,172,28"/>
+</map>
+</div>
+
+</div>
+</div>
 <a id="a6fac8621479aea05abf6fef54a4df256" name="a6fac8621479aea05abf6fef54a4df256"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a6fac8621479aea05abf6fef54a4df256">&#9670;&#160;</a></span>LiangGhirlanda2010()</h2>
 
@@ -365,19 +582,19 @@ template&lt;<a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5
 <dl class="section return"><dt>Returns</dt><dd>Function that calculates the Lorentz factor based on energy</dd></dl>
 <p>Returns a lambda function that computes a Lorentz factor using the Liang &amp; Ghirlanda (2010) prescription. This is a commonly used model for the Lorentz factor distribution in GRB jets. The returned function calculates: e = energy_func(phi, theta, 0) u = (e / e_max)^idx * gamma_max return sqrt(1 + u^2) This creates a power-law relationship between the energy and Lorentz factor of the jet. </p>
 
-<p class="definition">Definition at line <a class="el" href="jet_8h_source.html#l00521">521</a> of file <a class="el" href="jet_8h_source.html">jet.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  521</span>                                                                             {</div>
-<div class="line"><span class="lineno">  522</span>    <span class="keywordflow">return</span> [=](<a class="code hl_typedef" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> phi, <a class="code hl_typedef" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> theta) <span class="keyword">noexcept</span> {</div>
-<div class="line"><span class="lineno">  523</span>        <span class="comment">// Get the energy at the given angle</span></div>
-<div class="line"><span class="lineno">  524</span>        <span class="keyword">const</span> <a class="code hl_typedef" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> <a class="code hl_variable" href="namespacecon.html#af12a6df01bfe61fa034307dfcaa1fe7f">e</a> = <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">energy_func</a>(phi, theta);</div>
-<div class="line"><span class="lineno">  525</span> </div>
-<div class="line"><span class="lineno">  526</span>        <span class="comment">// Calculate the velocity parameter u using power-law scaling</span></div>
-<div class="line"><span class="lineno">  527</span>        <span class="keyword">const</span> <a class="code hl_typedef" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">u</a> = <a class="code hl_function" href="utilities_8h.html#a4520a27a10a2aef33c99ad8c679da404">fast_pow</a>(e / <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">e_max</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">idx</a>) * gamma_max;</div>
-<div class="line"><span class="lineno">  528</span> </div>
-<div class="line"><span class="lineno">  529</span>        <span class="comment">// Convert to the Lorentz factor</span></div>
-<div class="line"><span class="lineno">  530</span>        <span class="keywordflow">return</span> std::sqrt(1 + <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">u</a> * <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">u</a>);</div>
-<div class="line"><span class="lineno">  531</span>    };</div>
-<div class="line"><span class="lineno">  532</span>}</div>
+<p class="definition">Definition at line <a class="el" href="jet_8h_source.html#l00549">549</a> of file <a class="el" href="jet_8h_source.html">jet.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  549</span>                                                                             {</div>
+<div class="line"><span class="lineno">  550</span>    <span class="keywordflow">return</span> [=](<a class="code hl_typedef" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> phi, <a class="code hl_typedef" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> theta) <span class="keyword">noexcept</span> {</div>
+<div class="line"><span class="lineno">  551</span>        <span class="comment">// Get the energy at the given angle</span></div>
+<div class="line"><span class="lineno">  552</span>        <span class="keyword">const</span> <a class="code hl_typedef" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> <a class="code hl_variable" href="namespacecon.html#af12a6df01bfe61fa034307dfcaa1fe7f">e</a> = <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">energy_func</a>(phi, theta);</div>
+<div class="line"><span class="lineno">  553</span> </div>
+<div class="line"><span class="lineno">  554</span>        <span class="comment">// Calculate the velocity parameter u using power-law scaling</span></div>
+<div class="line"><span class="lineno">  555</span>        <span class="keyword">const</span> <a class="code hl_typedef" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">u</a> = <a class="code hl_function" href="utilities_8h.html#a4520a27a10a2aef33c99ad8c679da404">fast_pow</a>(e / <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">e_max</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">idx</a>) * gamma_max;</div>
+<div class="line"><span class="lineno">  556</span> </div>
+<div class="line"><span class="lineno">  557</span>        <span class="comment">// Convert to the Lorentz factor</span></div>
+<div class="line"><span class="lineno">  558</span>        <span class="keywordflow">return</span> std::sqrt(1 + <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">u</a> * <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">u</a>);</div>
+<div class="line"><span class="lineno">  559</span>    };</div>
+<div class="line"><span class="lineno">  560</span>}</div>
 <div class="ttc" id="amacros_8h_html_a4b04262b81aa7d31eb5d2f607e2a35de"><div class="ttname"><a href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a></div><div class="ttdeci">double Real</div><div class="ttdoc">Type alias for floating-point precision used throughout the code.</div><div class="ttdef"><b>Definition</b> <a href="macros_8h_source.html#l00024">macros.h:24</a></div></div>
 <div class="ttc" id="anamespacecon_html_af12a6df01bfe61fa034307dfcaa1fe7f"><div class="ttname"><a href="namespacecon.html#af12a6df01bfe61fa034307dfcaa1fe7f">con::e</a></div><div class="ttdeci">constexpr Real e</div><div class="ttdoc">Elementary charge in code units.</div><div class="ttdef"><b>Definition</b> <a href="macros_8h_source.html#l00094">macros.h:94</a></div></div>
 <div class="ttc" id="autilities_8h_html_a4520a27a10a2aef33c99ad8c679da404"><div class="ttname"><a href="utilities_8h.html#a4520a27a10a2aef33c99ad8c679da404">fast_pow</a></div><div class="ttdeci">Real fast_pow(Real a, Real b)</div><div class="ttdoc">Fast approximation of a raised to the power of b.</div><div class="ttdef"><b>Definition</b> <a href="utilities_8h_source.html#l00456">utilities.h:456</a></div></div>

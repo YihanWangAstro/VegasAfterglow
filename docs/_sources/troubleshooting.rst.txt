@@ -60,7 +60,7 @@ A: Try the following:
 
 A: Optimization strategies:
 
-- **Reduce resolution**: Use ``resolution=(0.3, 0.3, 10)`` for initial exploration
+- **Reduce resolution**: Use ``resolution=(0.15, 0.5, 10)`` for initial exploration
 - **Fewer parameters**: Fix some parameters with ``Scale.FIXED``
 - **Coarser time/frequency grids**: Use fewer data points for initial fits
 - **Parallel processing**: Ensure you're using multiple cores
@@ -247,7 +247,7 @@ The ``resolutions`` parameter in ``Model()`` controls computational accuracy vs 
      - Speed
      - Accuracy
    * - Initial exploration
-     - ``(0.2, 1, 5)``
+     - ``(0.1, 0.3, 5)``
      - Very Fast
      - Low
    * - Standard calculations
@@ -259,15 +259,15 @@ The ``resolutions`` parameter in ``Model()`` controls computational accuracy vs 
      - Moderate
      - Good
    * - Publication quality
-     - ``(0.15, 2, 20)``
+     - ``(0.3, 2, 20)``
      - Slow
      - Very High
 
 Where ``resolutions=(phi_ppd, theta_ppd, t_ppd)``:
 
-- ``phi_ppd``: Points per degree in azimuthal direction
-- ``theta_ppd``: Points per degree in polar direction. The code sets a minimum of 56 points across the jet profile.
-- ``t_ppd``: Points per decade in time direction. The code sets a minimum of 24 time points.
+- ``phi_ppd``: Azimuthal resolution in points per degree. The total number of phi grid points is ``360 × phi_ppd``, with a minimum of 1 total point.
+- ``theta_ppd``: Polar resolution in points per degree. The total number of theta grid points is ``(theta_max − theta_min) × theta_ppd``, with a minimum of 48 total points. Setting a lower resolution cannot reduce the grid below this minimum.
+- ``t_ppd``: Temporal resolution in points per decade. The total number of time grid points is ``log10(t_max / t_min) × t_ppd``, with a minimum of 24 total points. Setting a lower resolution cannot reduce the grid below this minimum.
 
 Memory Usage
 ^^^^^^^^^^^^

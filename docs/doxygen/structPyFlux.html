@@ -118,6 +118,8 @@ Collaboration diagram for PyFlux:</div>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a68faa22da5d5b169a0d461c56b4b3e21" id="r_a68faa22da5d5b169a0d461c56b4b3e21"><td class="memItemLeft" align="right" valign="top"><a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">void</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structPyFlux.html#a68faa22da5d5b169a0d461c56b4b3e21">calc_total</a> ()</td></tr>
 <tr class="separator:a68faa22da5d5b169a0d461c56b4b3e21"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad19b4fbfe9936c5c9d12de89b128d89d" id="r_ad19b4fbfe9936c5c9d12de89b128d89d"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structPyFlux.html#ad19b4fbfe9936c5c9d12de89b128d89d">repr</a> () <a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">const</a></td></tr>
+<tr class="separator:ad19b4fbfe9936c5c9d12de89b128d89d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
@@ -135,7 +137,7 @@ Public Attributes</h2></td></tr>
 <div class="textblock"><p>Complete flux structure combining forward and reverse shock contributions. </p>
 <p>This structure aggregates flux from all emission processes and shock regions, providing both the total observed flux and the individual components for detailed analysis of the afterglow emission mechanisms. </p>
 
-<p class="definition">Definition at line <a class="el" href="pymodel_8h_source.html#l00316">316</a> of file <a class="el" href="pymodel_8h_source.html">pymodel.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="pymodel_8h_source.html#l00376">376</a> of file <a class="el" href="pymodel_8h_source.html">pymodel.h</a>.</p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
 <a id="a68faa22da5d5b169a0d461c56b4b3e21" name="a68faa22da5d5b169a0d461c56b4b3e21"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a68faa22da5d5b169a0d461c56b4b3e21">&#9670;&#160;</a></span>calc_total()</h2>
@@ -152,27 +154,27 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="pymodel_8cpp_source.html#l00258">258</a> of file <a class="el" href="pymodel_8cpp_source.html">pymodel.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  258</span>                        {</div>
-<div class="line"><span class="lineno">  259</span>    <a class="code hl_variable" href="structPyFlux.html#aff6027b30948c3cfad478657a520b9ae">total</a> = xt::zeros&lt;Real&gt;(<a class="code hl_variable" href="structPyFlux.html#adde189e058cf4485bebf835f2d1ce9f0">fwd</a>.<a class="code hl_variable" href="structFlux.html#ab874f7e2384fdd13a9393a754515108c">sync</a>.shape());</div>
-<div class="line"><span class="lineno">  260</span>    <span class="keywordflow">if</span> (<a class="code hl_variable" href="structPyFlux.html#adde189e058cf4485bebf835f2d1ce9f0">fwd</a>.<a class="code hl_variable" href="structFlux.html#ab874f7e2384fdd13a9393a754515108c">sync</a>.size() &gt; 0) {</div>
-<div class="line"><span class="lineno">  261</span>        <a class="code hl_variable" href="structPyFlux.html#aff6027b30948c3cfad478657a520b9ae">total</a> += <a class="code hl_variable" href="structPyFlux.html#adde189e058cf4485bebf835f2d1ce9f0">fwd</a>.<a class="code hl_variable" href="structFlux.html#ab874f7e2384fdd13a9393a754515108c">sync</a>;</div>
-<div class="line"><span class="lineno">  262</span>    }</div>
-<div class="line"><span class="lineno">  263</span>    <span class="keywordflow">if</span> (<a class="code hl_variable" href="structPyFlux.html#adde189e058cf4485bebf835f2d1ce9f0">fwd</a>.<a class="code hl_variable" href="structFlux.html#a00060eafb1f9c42dc4b2c23d0e8903a0">ssc</a>.size() &gt; 0) {</div>
-<div class="line"><span class="lineno">  264</span>        <a class="code hl_variable" href="structPyFlux.html#aff6027b30948c3cfad478657a520b9ae">total</a> += <a class="code hl_variable" href="structPyFlux.html#adde189e058cf4485bebf835f2d1ce9f0">fwd</a>.<a class="code hl_variable" href="structFlux.html#a00060eafb1f9c42dc4b2c23d0e8903a0">ssc</a>;</div>
-<div class="line"><span class="lineno">  265</span>    }</div>
-<div class="line"><span class="lineno">  266</span>    <span class="keywordflow">if</span> (<a class="code hl_variable" href="structPyFlux.html#adf8746d12353d9fa116cdff7356687a9">rvs</a>.<a class="code hl_variable" href="structFlux.html#ab874f7e2384fdd13a9393a754515108c">sync</a>.size() &gt; 0) {</div>
-<div class="line"><span class="lineno">  267</span>        <a class="code hl_variable" href="structPyFlux.html#aff6027b30948c3cfad478657a520b9ae">total</a> += <a class="code hl_variable" href="structPyFlux.html#adf8746d12353d9fa116cdff7356687a9">rvs</a>.<a class="code hl_variable" href="structFlux.html#ab874f7e2384fdd13a9393a754515108c">sync</a>;</div>
-<div class="line"><span class="lineno">  268</span>    }</div>
-<div class="line"><span class="lineno">  269</span>    <span class="keywordflow">if</span> (<a class="code hl_variable" href="structPyFlux.html#adf8746d12353d9fa116cdff7356687a9">rvs</a>.<a class="code hl_variable" href="structFlux.html#a00060eafb1f9c42dc4b2c23d0e8903a0">ssc</a>.size() &gt; 0) {</div>
-<div class="line"><span class="lineno">  270</span>        <a class="code hl_variable" href="structPyFlux.html#aff6027b30948c3cfad478657a520b9ae">total</a> += <a class="code hl_variable" href="structPyFlux.html#adf8746d12353d9fa116cdff7356687a9">rvs</a>.<a class="code hl_variable" href="structFlux.html#a00060eafb1f9c42dc4b2c23d0e8903a0">ssc</a>;</div>
-<div class="line"><span class="lineno">  271</span>    }</div>
-<div class="line"><span class="lineno">  272</span>}</div>
-<div class="ttc" id="astructFlux_html_a00060eafb1f9c42dc4b2c23d0e8903a0"><div class="ttname"><a href="structFlux.html#a00060eafb1f9c42dc4b2c23d0e8903a0">Flux::ssc</a></div><div class="ttdeci">XTArray ssc</div><div class="ttdoc">Synchrotron self-Compton flux [mJy].</div><div class="ttdef"><b>Definition</b> <a href="pymodel_8h_source.html#l00304">pymodel.h:304</a></div></div>
-<div class="ttc" id="astructFlux_html_ab874f7e2384fdd13a9393a754515108c"><div class="ttname"><a href="structFlux.html#ab874f7e2384fdd13a9393a754515108c">Flux::sync</a></div><div class="ttdeci">XTArray sync</div><div class="ttdoc">Synchrotron emission flux [mJy].</div><div class="ttdef"><b>Definition</b> <a href="pymodel_8h_source.html#l00303">pymodel.h:303</a></div></div>
-<div class="ttc" id="astructPyFlux_html_adde189e058cf4485bebf835f2d1ce9f0"><div class="ttname"><a href="structPyFlux.html#adde189e058cf4485bebf835f2d1ce9f0">PyFlux::fwd</a></div><div class="ttdeci">Flux fwd</div><div class="ttdoc">Forward shock emission components.</div><div class="ttdef"><b>Definition</b> <a href="pymodel_8h_source.html#l00318">pymodel.h:318</a></div></div>
-<div class="ttc" id="astructPyFlux_html_adf8746d12353d9fa116cdff7356687a9"><div class="ttname"><a href="structPyFlux.html#adf8746d12353d9fa116cdff7356687a9">PyFlux::rvs</a></div><div class="ttdeci">Flux rvs</div><div class="ttdoc">Reverse shock emission components.</div><div class="ttdef"><b>Definition</b> <a href="pymodel_8h_source.html#l00319">pymodel.h:319</a></div></div>
-<div class="ttc" id="astructPyFlux_html_aff6027b30948c3cfad478657a520b9ae"><div class="ttname"><a href="structPyFlux.html#aff6027b30948c3cfad478657a520b9ae">PyFlux::total</a></div><div class="ttdeci">XTArray total</div><div class="ttdoc">Total flux from all components [mJy].</div><div class="ttdef"><b>Definition</b> <a href="pymodel_8h_source.html#l00317">pymodel.h:317</a></div></div>
+<p class="definition">Definition at line <a class="el" href="pymodel_8cpp_source.html#l00266">266</a> of file <a class="el" href="pymodel_8cpp_source.html">pymodel.cpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  266</span>                        {</div>
+<div class="line"><span class="lineno">  267</span>    <a class="code hl_variable" href="structPyFlux.html#aff6027b30948c3cfad478657a520b9ae">total</a> = xt::zeros&lt;Real&gt;(<a class="code hl_variable" href="structPyFlux.html#adde189e058cf4485bebf835f2d1ce9f0">fwd</a>.<a class="code hl_variable" href="structFlux.html#ab874f7e2384fdd13a9393a754515108c">sync</a>.shape());</div>
+<div class="line"><span class="lineno">  268</span>    <span class="keywordflow">if</span> (<a class="code hl_variable" href="structPyFlux.html#adde189e058cf4485bebf835f2d1ce9f0">fwd</a>.<a class="code hl_variable" href="structFlux.html#ab874f7e2384fdd13a9393a754515108c">sync</a>.size() &gt; 0) {</div>
+<div class="line"><span class="lineno">  269</span>        <a class="code hl_variable" href="structPyFlux.html#aff6027b30948c3cfad478657a520b9ae">total</a> += <a class="code hl_variable" href="structPyFlux.html#adde189e058cf4485bebf835f2d1ce9f0">fwd</a>.<a class="code hl_variable" href="structFlux.html#ab874f7e2384fdd13a9393a754515108c">sync</a>;</div>
+<div class="line"><span class="lineno">  270</span>    }</div>
+<div class="line"><span class="lineno">  271</span>    <span class="keywordflow">if</span> (<a class="code hl_variable" href="structPyFlux.html#adde189e058cf4485bebf835f2d1ce9f0">fwd</a>.<a class="code hl_variable" href="structFlux.html#a00060eafb1f9c42dc4b2c23d0e8903a0">ssc</a>.size() &gt; 0) {</div>
+<div class="line"><span class="lineno">  272</span>        <a class="code hl_variable" href="structPyFlux.html#aff6027b30948c3cfad478657a520b9ae">total</a> += <a class="code hl_variable" href="structPyFlux.html#adde189e058cf4485bebf835f2d1ce9f0">fwd</a>.<a class="code hl_variable" href="structFlux.html#a00060eafb1f9c42dc4b2c23d0e8903a0">ssc</a>;</div>
+<div class="line"><span class="lineno">  273</span>    }</div>
+<div class="line"><span class="lineno">  274</span>    <span class="keywordflow">if</span> (<a class="code hl_variable" href="structPyFlux.html#adf8746d12353d9fa116cdff7356687a9">rvs</a>.<a class="code hl_variable" href="structFlux.html#ab874f7e2384fdd13a9393a754515108c">sync</a>.size() &gt; 0) {</div>
+<div class="line"><span class="lineno">  275</span>        <a class="code hl_variable" href="structPyFlux.html#aff6027b30948c3cfad478657a520b9ae">total</a> += <a class="code hl_variable" href="structPyFlux.html#adf8746d12353d9fa116cdff7356687a9">rvs</a>.<a class="code hl_variable" href="structFlux.html#ab874f7e2384fdd13a9393a754515108c">sync</a>;</div>
+<div class="line"><span class="lineno">  276</span>    }</div>
+<div class="line"><span class="lineno">  277</span>    <span class="keywordflow">if</span> (<a class="code hl_variable" href="structPyFlux.html#adf8746d12353d9fa116cdff7356687a9">rvs</a>.<a class="code hl_variable" href="structFlux.html#a00060eafb1f9c42dc4b2c23d0e8903a0">ssc</a>.size() &gt; 0) {</div>
+<div class="line"><span class="lineno">  278</span>        <a class="code hl_variable" href="structPyFlux.html#aff6027b30948c3cfad478657a520b9ae">total</a> += <a class="code hl_variable" href="structPyFlux.html#adf8746d12353d9fa116cdff7356687a9">rvs</a>.<a class="code hl_variable" href="structFlux.html#a00060eafb1f9c42dc4b2c23d0e8903a0">ssc</a>;</div>
+<div class="line"><span class="lineno">  279</span>    }</div>
+<div class="line"><span class="lineno">  280</span>}</div>
+<div class="ttc" id="astructFlux_html_a00060eafb1f9c42dc4b2c23d0e8903a0"><div class="ttname"><a href="structFlux.html#a00060eafb1f9c42dc4b2c23d0e8903a0">Flux::ssc</a></div><div class="ttdeci">XTArray ssc</div><div class="ttdoc">Synchrotron self-Compton flux [mJy].</div><div class="ttdef"><b>Definition</b> <a href="pymodel_8h_source.html#l00347">pymodel.h:347</a></div></div>
+<div class="ttc" id="astructFlux_html_ab874f7e2384fdd13a9393a754515108c"><div class="ttname"><a href="structFlux.html#ab874f7e2384fdd13a9393a754515108c">Flux::sync</a></div><div class="ttdeci">XTArray sync</div><div class="ttdoc">Synchrotron emission flux [mJy].</div><div class="ttdef"><b>Definition</b> <a href="pymodel_8h_source.html#l00346">pymodel.h:346</a></div></div>
+<div class="ttc" id="astructPyFlux_html_adde189e058cf4485bebf835f2d1ce9f0"><div class="ttname"><a href="structPyFlux.html#adde189e058cf4485bebf835f2d1ce9f0">PyFlux::fwd</a></div><div class="ttdeci">Flux fwd</div><div class="ttdoc">Forward shock emission components.</div><div class="ttdef"><b>Definition</b> <a href="pymodel_8h_source.html#l00378">pymodel.h:378</a></div></div>
+<div class="ttc" id="astructPyFlux_html_adf8746d12353d9fa116cdff7356687a9"><div class="ttname"><a href="structPyFlux.html#adf8746d12353d9fa116cdff7356687a9">PyFlux::rvs</a></div><div class="ttdeci">Flux rvs</div><div class="ttdoc">Reverse shock emission components.</div><div class="ttdef"><b>Definition</b> <a href="pymodel_8h_source.html#l00379">pymodel.h:379</a></div></div>
+<div class="ttc" id="astructPyFlux_html_aff6027b30948c3cfad478657a520b9ae"><div class="ttname"><a href="structPyFlux.html#aff6027b30948c3cfad478657a520b9ae">PyFlux::total</a></div><div class="ttdeci">XTArray total</div><div class="ttdoc">Total flux from all components [mJy].</div><div class="ttdef"><b>Definition</b> <a href="pymodel_8h_source.html#l00377">pymodel.h:377</a></div></div>
 </div><!-- fragment --><div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
@@ -186,6 +188,63 @@ Here is the caller graph for this function:</div>
 <area shape="rect" href="pybind_8cpp.html#a8c92987849ad296e28ec6c07c8e7860b" title=" " alt="" coords="5,42,156,67"/>
 <area shape="poly" title=" " alt="" coords="207,41,156,47,156,42,206,35"/>
 <area shape="poly" title=" " alt="" coords="190,71,156,67,156,61,191,66"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="ad19b4fbfe9936c5c9d12de89b128d89d" name="ad19b4fbfe9936c5c9d12de89b128d89d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad19b4fbfe9936c5c9d12de89b128d89d">&#9670;&#160;</a></span>repr()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::string PyFlux::repr </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="pymodel_8h_source.html#l00384">384</a> of file <a class="el" href="pymodel_8h_source.html">pymodel.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  384</span>                                         {</div>
+<div class="line"><span class="lineno">  385</span>        <span class="keywordflow">if</span> (<a class="code hl_variable" href="structPyFlux.html#aff6027b30948c3cfad478657a520b9ae">total</a>.size() == 0)</div>
+<div class="line"><span class="lineno">  386</span>            <span class="keywordflow">return</span> <span class="stringliteral">&quot;FluxDict(empty)&quot;</span>;</div>
+<div class="line"><span class="lineno">  387</span>        std::string <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">s</a> = <span class="stringliteral">&quot;FluxDict(shape=(&quot;</span>;</div>
+<div class="line"><span class="lineno">  388</span>        <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a> = 0; <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a> &lt; <a class="code hl_variable" href="structPyFlux.html#aff6027b30948c3cfad478657a520b9ae">total</a>.dimension(); ++<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a>) {</div>
+<div class="line"><span class="lineno">  389</span>            <span class="keywordflow">if</span> (<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a> &gt; 0)</div>
+<div class="line"><span class="lineno">  390</span>                <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">s</a> += <span class="stringliteral">&quot;, &quot;</span>;</div>
+<div class="line"><span class="lineno">  391</span>            <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">s</a> += std::to_string(<a class="code hl_variable" href="structPyFlux.html#aff6027b30948c3cfad478657a520b9ae">total</a>.shape()[<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a>]);</div>
+<div class="line"><span class="lineno">  392</span>        }</div>
+<div class="line"><span class="lineno">  393</span>        <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">s</a> += <span class="stringliteral">&quot;), components=[fwd.sync&quot;</span>;</div>
+<div class="line"><span class="lineno">  394</span>        <span class="keywordflow">if</span> (<a class="code hl_variable" href="structPyFlux.html#adde189e058cf4485bebf835f2d1ce9f0">fwd</a>.<a class="code hl_variable" href="structFlux.html#a00060eafb1f9c42dc4b2c23d0e8903a0">ssc</a>.dimension() &gt; 0)</div>
+<div class="line"><span class="lineno">  395</span>            <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">s</a> += <span class="stringliteral">&quot;, fwd.ssc&quot;</span>;</div>
+<div class="line"><span class="lineno">  396</span>        <span class="keywordflow">if</span> (<a class="code hl_variable" href="structPyFlux.html#adf8746d12353d9fa116cdff7356687a9">rvs</a>.<a class="code hl_variable" href="structFlux.html#ab874f7e2384fdd13a9393a754515108c">sync</a>.dimension() &gt; 0)</div>
+<div class="line"><span class="lineno">  397</span>            <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">s</a> += <span class="stringliteral">&quot;, rvs.sync&quot;</span>;</div>
+<div class="line"><span class="lineno">  398</span>        <span class="keywordflow">if</span> (<a class="code hl_variable" href="structPyFlux.html#adf8746d12353d9fa116cdff7356687a9">rvs</a>.<a class="code hl_variable" href="structFlux.html#a00060eafb1f9c42dc4b2c23d0e8903a0">ssc</a>.dimension() &gt; 0)</div>
+<div class="line"><span class="lineno">  399</span>            <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">s</a> += <span class="stringliteral">&quot;, rvs.ssc&quot;</span>;</div>
+<div class="line"><span class="lineno">  400</span>        <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">s</a> += <span class="stringliteral">&quot;])&quot;</span>;</div>
+<div class="line"><span class="lineno">  401</span>        <span class="keywordflow">return</span> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">s</a>;</div>
+<div class="line"><span class="lineno">  402</span>    }</div>
+<div class="ttc" id="autilities_8h_html_ab8e81118f023df135835db8cce4f5f42"><div class="ttname"><a href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">max</a></div><div class="ttdeci">T max(T value)</div><div class="ttdoc">Returns the value of a single parameter.</div><div class="ttdef"><b>Definition</b> <a href="utilities_8h_source.html#l00318">utilities.h:318</a></div></div>
+</div><!-- fragment --><div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="structPyFlux_ad19b4fbfe9936c5c9d12de89b128d89d_icgraph.png" border="0" usemap="#astructPyFlux_ad19b4fbfe9936c5c9d12de89b128d89d_icgraph" alt=""/></div>
+<map name="astructPyFlux_ad19b4fbfe9936c5c9d12de89b128d89d_icgraph" id="astructPyFlux_ad19b4fbfe9936c5c9d12de89b128d89d_icgraph">
+<area shape="rect" title=" " alt="" coords="204,5,304,31"/>
+<area shape="rect" href="pybind_8cpp.html#a8c92987849ad296e28ec6c07c8e7860b" title=" " alt="" coords="5,5,156,31"/>
+<area shape="poly" title=" " alt="" coords="190,21,156,21,156,15,190,15"/>
 </map>
 </div>
 
@@ -206,7 +265,7 @@ Here is the caller graph for this function:</div>
 
 <p>Forward shock emission components. </p>
 
-<p class="definition">Definition at line <a class="el" href="pymodel_8h_source.html#l00318">318</a> of file <a class="el" href="pymodel_8h_source.html">pymodel.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="pymodel_8h_source.html#l00378">378</a> of file <a class="el" href="pymodel_8h_source.html">pymodel.h</a>.</p>
 
 </div>
 </div>
@@ -225,7 +284,7 @@ Here is the caller graph for this function:</div>
 <p>Reverse shock emission components. </p>
 <p>Calculate total flux by summing all components </p>
 
-<p class="definition">Definition at line <a class="el" href="pymodel_8h_source.html#l00319">319</a> of file <a class="el" href="pymodel_8h_source.html">pymodel.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="pymodel_8h_source.html#l00379">379</a> of file <a class="el" href="pymodel_8h_source.html">pymodel.h</a>.</p>
 
 </div>
 </div>
@@ -243,7 +302,7 @@ Here is the caller graph for this function:</div>
 
 <p>Total flux from all components [mJy]. </p>
 
-<p class="definition">Definition at line <a class="el" href="pymodel_8h_source.html#l00317">317</a> of file <a class="el" href="pymodel_8h_source.html">pymodel.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="pymodel_8h_source.html#l00377">377</a> of file <a class="el" href="pymodel_8h_source.html">pymodel.h</a>.</p>
 
 </div>
 </div>

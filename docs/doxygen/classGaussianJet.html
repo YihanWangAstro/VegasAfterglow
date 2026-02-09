@@ -129,7 +129,7 @@ Public Attributes</h2></td></tr>
 <div class="textblock"><p>Implements a Gaussian jet profile where properties follow a Gaussian distribution with angles. </p>
 <p>This class provides a smooth model for GRB jets, characterized by core angle theta_c, isotropic equivalent energy E_iso, and initial Lorentz factor Gamma0 at the center. </p>
 
-<p class="definition">Definition at line <a class="el" href="jet_8h_source.html#l00145">145</a> of file <a class="el" href="jet_8h_source.html">jet.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="jet_8h_source.html#l00146">146</a> of file <a class="el" href="jet_8h_source.html">jet.h</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="adbfec46147c6fd9f22258acade623122" name="adbfec46147c6fd9f22258acade623122"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#adbfec46147c6fd9f22258acade623122">&#9670;&#160;</a></span>GaussianJet()</h2>
@@ -195,15 +195,15 @@ Public Attributes</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="jet_8h_source.html#l00157">157</a> of file <a class="el" href="jet_8h_source.html">jet.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  158</span>        : <a class="code hl_variable" href="classGaussianJet.html#ac044ed063b0720f124551a728ce1ac67">T0</a>(<a class="code hl_variable" href="classGaussianJet.html#ac044ed063b0720f124551a728ce1ac67">T0</a>),</div>
-<div class="line"><span class="lineno">  159</span>          <a class="code hl_variable" href="classGaussianJet.html#a9ee23bc79cff844132e7eeb55e174d49">spreading</a>(<a class="code hl_variable" href="classGaussianJet.html#a9ee23bc79cff844132e7eeb55e174d49">spreading</a>),</div>
-<div class="line"><span class="lineno">  160</span>          norm_(-1 / (2 * theta_c * theta_c)),</div>
-<div class="line"><span class="lineno">  161</span>          eps_k_(E_iso / (4 * <a class="code hl_variable" href="namespacecon.html#aa0ccd904b754d0f907898a942516d121">con::pi</a>)),</div>
-<div class="line"><span class="lineno">  162</span>          Gamma0_(<a class="code hl_function" href="classGaussianJet.html#a9c76f0d0e02fd686f7b081962275d49b">Gamma0</a>) {}</div>
-<div class="ttc" id="aclassGaussianJet_html_a9c76f0d0e02fd686f7b081962275d49b"><div class="ttname"><a href="classGaussianJet.html#a9c76f0d0e02fd686f7b081962275d49b">GaussianJet::Gamma0</a></div><div class="ttdeci">Real Gamma0(Real phi, Real theta) const noexcept</div><div class="ttdoc">Initial Lorentz factor as a function of phi and theta, with Gaussian falloff.</div><div class="ttdef"><b>Definition</b> <a href="jet_8h_source.html#l00184">jet.h:184</a></div></div>
-<div class="ttc" id="aclassGaussianJet_html_a9ee23bc79cff844132e7eeb55e174d49"><div class="ttname"><a href="classGaussianJet.html#a9ee23bc79cff844132e7eeb55e174d49">GaussianJet::spreading</a></div><div class="ttdeci">bool spreading</div><div class="ttdoc">Flag indicating if the ejecta spreads laterally during evolution.</div><div class="ttdef"><b>Definition</b> <a href="jet_8h_source.html#l00191">jet.h:191</a></div></div>
-<div class="ttc" id="aclassGaussianJet_html_ac044ed063b0720f124551a728ce1ac67"><div class="ttname"><a href="classGaussianJet.html#ac044ed063b0720f124551a728ce1ac67">GaussianJet::T0</a></div><div class="ttdeci">Real T0</div><div class="ttdoc">Duration of the ejecta in seconds.</div><div class="ttdef"><b>Definition</b> <a href="jet_8h_source.html#l00189">jet.h:189</a></div></div>
+<p class="definition">Definition at line <a class="el" href="jet_8h_source.html#l00158">158</a> of file <a class="el" href="jet_8h_source.html">jet.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  159</span>        : <a class="code hl_variable" href="classGaussianJet.html#ac044ed063b0720f124551a728ce1ac67">T0</a>(<a class="code hl_variable" href="classGaussianJet.html#ac044ed063b0720f124551a728ce1ac67">T0</a>),</div>
+<div class="line"><span class="lineno">  160</span>          <a class="code hl_variable" href="classGaussianJet.html#a9ee23bc79cff844132e7eeb55e174d49">spreading</a>(<a class="code hl_variable" href="classGaussianJet.html#a9ee23bc79cff844132e7eeb55e174d49">spreading</a>),</div>
+<div class="line"><span class="lineno">  161</span>          norm_(-1 / (2 * theta_c * theta_c)),</div>
+<div class="line"><span class="lineno">  162</span>          eps_k_(E_iso / (4 * <a class="code hl_variable" href="namespacecon.html#aa0ccd904b754d0f907898a942516d121">con::pi</a>)),</div>
+<div class="line"><span class="lineno">  163</span>          Gamma0_(<a class="code hl_function" href="classGaussianJet.html#a9c76f0d0e02fd686f7b081962275d49b">Gamma0</a>) {}</div>
+<div class="ttc" id="aclassGaussianJet_html_a9c76f0d0e02fd686f7b081962275d49b"><div class="ttname"><a href="classGaussianJet.html#a9c76f0d0e02fd686f7b081962275d49b">GaussianJet::Gamma0</a></div><div class="ttdeci">Real Gamma0(Real phi, Real theta) const noexcept</div><div class="ttdoc">Initial Lorentz factor as a function of phi and theta, with Gaussian falloff.</div><div class="ttdef"><b>Definition</b> <a href="jet_8h_source.html#l00185">jet.h:185</a></div></div>
+<div class="ttc" id="aclassGaussianJet_html_a9ee23bc79cff844132e7eeb55e174d49"><div class="ttname"><a href="classGaussianJet.html#a9ee23bc79cff844132e7eeb55e174d49">GaussianJet::spreading</a></div><div class="ttdeci">bool spreading</div><div class="ttdoc">Flag indicating if the ejecta spreads laterally during evolution.</div><div class="ttdef"><b>Definition</b> <a href="jet_8h_source.html#l00192">jet.h:192</a></div></div>
+<div class="ttc" id="aclassGaussianJet_html_ac044ed063b0720f124551a728ce1ac67"><div class="ttname"><a href="classGaussianJet.html#ac044ed063b0720f124551a728ce1ac67">GaussianJet::T0</a></div><div class="ttdeci">Real T0</div><div class="ttdoc">Duration of the ejecta in seconds.</div><div class="ttdef"><b>Definition</b> <a href="jet_8h_source.html#l00190">jet.h:190</a></div></div>
 <div class="ttc" id="anamespacecon_html_aa0ccd904b754d0f907898a942516d121"><div class="ttname"><a href="namespacecon.html#aa0ccd904b754d0f907898a942516d121">con::pi</a></div><div class="ttdeci">constexpr Real pi</div><div class="ttdoc">Pi.</div><div class="ttdef"><b>Definition</b> <a href="macros_8h_source.html#l00097">macros.h:97</a></div></div>
 </div><!-- fragment -->
 </div>
@@ -253,10 +253,10 @@ Public Attributes</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Energy per solid angle with Gaussian angular dependence </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="jet_8h_source.html#l00172">172</a> of file <a class="el" href="jet_8h_source.html">jet.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  172</span>                                                                         {</div>
-<div class="line"><span class="lineno">  173</span>        <span class="keywordflow">return</span> eps_k_ * <a class="code hl_function" href="utilities_8h.html#a19a0be066f6b80639b5863a493990601">fast_exp</a>(theta * theta * norm_);</div>
-<div class="line"><span class="lineno">  174</span>    }</div>
+<p class="definition">Definition at line <a class="el" href="jet_8h_source.html#l00173">173</a> of file <a class="el" href="jet_8h_source.html">jet.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  173</span>                                                                         {</div>
+<div class="line"><span class="lineno">  174</span>        <span class="keywordflow">return</span> eps_k_ * <a class="code hl_function" href="utilities_8h.html#a19a0be066f6b80639b5863a493990601">fast_exp</a>(theta * theta * norm_);</div>
+<div class="line"><span class="lineno">  175</span>    }</div>
 <div class="ttc" id="autilities_8h_html_a19a0be066f6b80639b5863a493990601"><div class="ttname"><a href="utilities_8h.html#a19a0be066f6b80639b5863a493990601">fast_exp</a></div><div class="ttdeci">Real fast_exp(Real x)</div><div class="ttdoc">Fast approximation of the exponential function.</div><div class="ttdef"><b>Definition</b> <a href="utilities_8h_source.html#l00467">utilities.h:467</a></div></div>
 </div><!-- fragment --><div class="dynheader">
 Here is the call graph for this function:</div>
@@ -321,10 +321,10 @@ Here is the call graph for this function:</div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Lorentz factor with Gaussian angular dependence </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="jet_8h_source.html#l00184">184</a> of file <a class="el" href="jet_8h_source.html">jet.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  184</span>                                                                          {</div>
-<div class="line"><span class="lineno">  185</span>        <span class="keywordflow">return</span> (Gamma0_ - 1) * <a class="code hl_function" href="utilities_8h.html#a19a0be066f6b80639b5863a493990601">fast_exp</a>(theta * theta * norm_) + 1;</div>
-<div class="line"><span class="lineno">  186</span>    }</div>
+<p class="definition">Definition at line <a class="el" href="jet_8h_source.html#l00185">185</a> of file <a class="el" href="jet_8h_source.html">jet.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  185</span>                                                                          {</div>
+<div class="line"><span class="lineno">  186</span>        <span class="keywordflow">return</span> (Gamma0_ - 1) * <a class="code hl_function" href="utilities_8h.html#a19a0be066f6b80639b5863a493990601">fast_exp</a>(theta * theta * norm_) + 1;</div>
+<div class="line"><span class="lineno">  187</span>    }</div>
 </div><!-- fragment --><div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -359,8 +359,8 @@ Here is the call graph for this function:</div>
 
 <p>Flag indicating if the ejecta spreads laterally during evolution. </p>
 
-<p class="definition">Definition at line <a class="el" href="jet_8h_source.html#l00191">191</a> of file <a class="el" href="jet_8h_source.html">jet.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  191</span>{<span class="keyword">false</span>};</div>
+<p class="definition">Definition at line <a class="el" href="jet_8h_source.html#l00192">192</a> of file <a class="el" href="jet_8h_source.html">jet.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  192</span>{<span class="keyword">false</span>};</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -378,8 +378,8 @@ Here is the call graph for this function:</div>
 
 <p>Duration of the ejecta in seconds. </p>
 
-<p class="definition">Definition at line <a class="el" href="jet_8h_source.html#l00189">189</a> of file <a class="el" href="jet_8h_source.html">jet.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  189</span>{1 * <a class="code hl_variable" href="namespaceunit.html#a4e7c438655d3f34c7c30a155ec38f250">unit::sec</a>};</div>
+<p class="definition">Definition at line <a class="el" href="jet_8h_source.html#l00190">190</a> of file <a class="el" href="jet_8h_source.html">jet.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  190</span>{1 * <a class="code hl_variable" href="namespaceunit.html#a4e7c438655d3f34c7c30a155ec38f250">unit::sec</a>};</div>
 <div class="ttc" id="anamespaceunit_html_a4e7c438655d3f34c7c30a155ec38f250"><div class="ttname"><a href="namespaceunit.html#a4e7c438655d3f34c7c30a155ec38f250">unit::sec</a></div><div class="ttdeci">constexpr Real sec</div><div class="ttdoc">Second in code units.</div><div class="ttdef"><b>Definition</b> <a href="macros_8h_source.html#l00046">macros.h:46</a></div></div>
 </div><!-- fragment -->
 </div>

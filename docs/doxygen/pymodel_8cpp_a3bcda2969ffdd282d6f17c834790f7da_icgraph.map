@@ -1,14 +1,14 @@
 <map id="initialize_ejecta" name="initialize_ejecta">
 <area shape="rect" id="Node000001" title=" " alt="" coords="407,104,532,129"/>
-<area shape="rect" id="Node000002" href="$pymodel_8cpp.html#aeb4fc9d5286c8464177e8e5ab220c0f4" title="Creates a Gaussian jet model with smooth energy and Lorentz factor profiles." alt="" coords="224,5,339,31"/>
+<area shape="rect" id="Node000002" href="$pymodel_8cpp.html#ad8fad7eed8191d9e7f8cb37112d9b483" title="Creates a Gaussian jet model with smooth energy and Lorentz factor profiles." alt="" coords="224,5,339,31"/>
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="440,98,402,70,357,44,330,33,332,28,360,40,405,66,443,93"/>
-<area shape="rect" id="Node000004" href="$pymodel_8cpp.html#aa8d07eaa61289babf3e94aa7ff5fb985" title="Creates a power&#45;law structured jet with customizable angular energy distribution." alt="" coords="221,55,342,80"/>
+<area shape="rect" id="Node000004" href="$pymodel_8cpp.html#a3c06cdbadc8c7895472011d87c291aab" title="Creates a power&#45;law structured jet with customizable angular energy distribution." alt="" coords="221,55,342,80"/>
 <area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="407,103,330,83,332,78,408,98"/>
-<area shape="rect" id="Node000005" href="$pymodel_8cpp.html#a2e10a24163357e677edd02fb34524a49" title="Creates a step power&#45;law jet model: a pencil beam core and powerlaw wing with jump at theta_c." alt="" coords="206,104,357,129"/>
+<area shape="rect" id="Node000005" href="$pymodel_8cpp.html#aa8d7bbf643eb1153876adc4594958828" title="Creates a step power&#45;law jet model: a pencil beam core and powerlaw wing with jump at theta_c." alt="" coords="206,104,357,129"/>
 <area shape="poly" id="edge5_Node000001_Node000005" title=" " alt="" coords="393,119,357,119,357,114,393,114"/>
-<area shape="rect" id="Node000006" href="$pymodel_8cpp.html#a85752a7e8c1e573475b915b56f62a80c" title="Creates a top&#45;hat jet model with uniform energy and Lorentz factor distributions." alt="" coords="232,153,331,179"/>
+<area shape="rect" id="Node000006" href="$pymodel_8cpp.html#abbf6310b56feef0ac517332b24a34278" title="Creates a top&#45;hat jet model with uniform energy and Lorentz factor distributions." alt="" coords="232,153,331,179"/>
 <area shape="poly" id="edge7_Node000001_Node000006" title=" " alt="" coords="408,135,332,156,330,151,407,130"/>
-<area shape="rect" id="Node000007" href="$pymodel_8cpp.html#ade65717b9f7afbe356206b4e069e160f" title="Creates a two&#45;component jet model with different properties for narrow and wide components." alt="" coords="204,203,359,228"/>
+<area shape="rect" id="Node000007" href="$pymodel_8cpp.html#a86b0335634f0142653428320e114cb7c" title="Creates a two&#45;component jet model with different properties for narrow and wide components." alt="" coords="204,203,359,228"/>
 <area shape="poly" id="edge9_Node000001_Node000007" title=" " alt="" coords="443,140,404,167,360,192,329,205,327,200,357,188,402,162,439,136"/>
 <area shape="rect" id="Node000003" href="$pybind_8cpp.html#a8c92987849ad296e28ec6c07c8e7860b" title=" " alt="" coords="5,104,156,129"/>
 <area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="222,38,205,44,147,76,101,106,98,102,145,71,203,40,220,33"/>

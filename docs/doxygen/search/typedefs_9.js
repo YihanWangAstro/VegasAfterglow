@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['unaryfunc_0',['UnaryFunc',['../utilities_8h.html#a0427d0ebbf7fe79ded8fe1b24c7cc931',1,'utilities.h']]]
+  ['ternaryfunc_0',['TernaryFunc',['../utilities_8h.html#a919434df3bde5e6090dbff542b658478',1,'utilities.h']]]
 ];

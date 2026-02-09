@@ -595,7 +595,7 @@ Initialize the ``Fitter`` class with your data and configuration, then run the M
     # Option 1: Nested sampling with dynesty (slower but computes Bayesian evidence, robust for multimodal posteriors)
     result = fitter.fit(
         mc_params,
-        resolution=(0.3, 0.3, 10),     # Grid resolution (phi, theta, t)
+        resolution=(0.15, 0.5, 10),     # Grid resolution (phi, theta, t)
         sampler="dynesty",             # Nested sampling algorithm
         nlive=1000,                    # Number of live points
         walks=100,                     # Number of random walks per live point
@@ -607,7 +607,7 @@ Initialize the ``Fitter`` class with your data and configuration, then run the M
     # Option 2: MCMC with emcee (faster, recommended for quick fitting, not optimal for multimodal posteriors)
     result = fitter.fit(
         mc_params,
-        resolution=(0.3, 0.3, 10),     # Grid resolution (phi, theta, t)
+        resolution=(0.15, 0.5, 10),     # Grid resolution (phi, theta, t)
         sampler="emcee",               # MCMC sampler
         nsteps=50000,                  # Number of steps per walker
         nburn=10000,                   # Burn-in steps to discard
@@ -688,7 +688,7 @@ Now you can plot the best-fit model:
             df = pd.read_csv(spec_files[i])
             ax2.errorbar(df["nu"], df["Fv_obs"] * shifts[i], df["Fv_err"] * shifts[i],
                         fmt='o', color=colors[i], label=spec_files[i])
-            ax2.plot(nu, np.array(spec_fit[0]) * shifts[i], color=colors[i], lw=1)
+            ax2.plot(nu, np.array(spec_fit[:, i]) * shifts[i], color=colors[i], lw=1)
 
         # Configure axes
         for ax, xlabel, ylabel in [(ax1, 't [s]', r'$F_\nu$ [erg/cm$^2$/s/Hz]'),

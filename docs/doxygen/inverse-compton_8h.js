@@ -17,7 +17,7 @@ var inverse_compton_8h =
     [ "cool_after_crossing", "inverse-compton_8h.html#a4944ba801a2b9c1980f03d42f3a7e725", null ],
     [ "determine_regime", "inverse-compton_8h.html#a7bbe690804f96e37adf7662c95cff6c1", null ],
     [ "eta_rad_Thomson", "inverse-compton_8h.html#ad7736d3269071d2ceaffcc56fa2fc71c", null ],
-    [ "generate_IC_photons", "inverse-compton_8h.html#af7cb4abf69a69fd66fe5b15d73f2df40", null ],
+    [ "generate_IC_photons", "inverse-compton_8h.html#aa01e3eec4b618b16a669350f951d0654", null ],
     [ "IC_cooling", "inverse-compton_8h.html#a296938a441652163ddc6bee2faa9299e", null ],
     [ "inverse_compton_correction", "inverse-compton_8h.html#a90de46adbdc9f7f4c2bed7b5ab79c494", null ],
     [ "KN_cooling", "inverse-compton_8h.html#ac57614f97ddcaab423a5023a04cdf3a1", null ],

@@ -1,8 +1,9 @@
 <map id="estimate_t_dec" name="estimate_t_dec">
-<area shape="rect" id="Node000001" title="Estimates deceleration time for a given angle from ejecta and medium properties." alt="" coords="5,29,128,55"/>
-<area shape="rect" id="Node000002" href="$namespacephysics_1_1relativistic.html#ab1c1444afa3c4afd0c57145f932962fa" title="Converts Lorentz factor (gamma) to a velocity fraction (beta)" alt="" coords="176,22,324,62"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="128,39,162,39,162,45,128,45"/>
-<area shape="rect" id="Node000003" href="$utilities_8h.html#ab8e81118f023df135835db8cce4f5f42" title="Returns the value of a single parameter." alt="" coords="372,29,423,55"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="324,39,358,39,358,45,324,45"/>
-<area shape="poly" id="edge3_Node000003_Node000003" title=" " alt="" coords="372,31,367,21,370,11,380,5,397,3,418,6,426,15,423,18,415,11,397,8,382,10,374,15,373,20,377,28"/>
+<area shape="rect" id="Node000001" title="Estimates deceleration time for a given angle from ejecta and medium properties." alt="" coords="5,42,128,67"/>
+<area shape="rect" id="Node000002" href="$namespacephysics_1_1relativistic.html#ab1c1444afa3c4afd0c57145f932962fa" title="Converts Lorentz factor (gamma) to a velocity fraction (beta)" alt="" coords="176,5,324,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="128,42,162,37,163,42,129,48"/>
+<area shape="rect" id="Node000003" href="$utilities_8h.html#ab8e81118f023df135835db8cce4f5f42" title="Returns the value of a single parameter." alt="" coords="372,42,423,67"/>
+<area shape="poly" id="edge4_Node000001_Node000003" title=" " alt="" coords="129,54,176,55,324,55,358,54,358,59,324,60,176,60,128,59"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="325,37,359,44,358,50,324,43"/>
+<area shape="poly" id="edge3_Node000003_Node000003" title=" " alt="" coords="372,43,367,34,370,24,380,18,397,15,418,19,426,27,423,31,415,24,397,21,382,23,374,27,373,33,377,41"/>
 </map>

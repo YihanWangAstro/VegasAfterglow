@@ -119,6 +119,8 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:ae8188b13afab5d391f29a143885ed606" id="r_ae8188b13afab5d391f29a143885ed606"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classPyRadiation.html#ae8188b13afab5d391f29a143885ed606">PyRadiation</a> (<a class="el" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> eps_e, <a class="el" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> eps_B, <a class="el" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> p, <a class="el" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> xi_e=1, <a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">bool</a> <a class="el" href="classPyRadiation.html#a1d7e7abb6cc072cc9402430f30522aa6">ssc_cooling</a>=<a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">false</a>, <a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">bool</a> <a class="el" href="classPyRadiation.html#a8e54b2f905a744304b3296a66f4291ba">ssc</a>=<a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">false</a>, <a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">bool</a> <a class="el" href="classPyRadiation.html#ab5fe05d2f9642ca32b02ce9cf59a4f4e">kn</a>=<a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">false</a>)</td></tr>
 <tr class="memdesc:ae8188b13afab5d391f29a143885ed606"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct radiation model with given microphysical parameters.  <br /></td></tr>
 <tr class="separator:ae8188b13afab5d391f29a143885ed606"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac1d2c06b7fd135fa31026fa4e4781da9" id="r_ac1d2c06b7fd135fa31026fa4e4781da9"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classPyRadiation.html#ac1d2c06b7fd135fa31026fa4e4781da9">repr</a> () <a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">const</a></td></tr>
+<tr class="separator:ac1d2c06b7fd135fa31026fa4e4781da9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
@@ -138,7 +140,7 @@ Public Attributes</h2></td></tr>
 <div class="textblock"><p>Radiation parameters for synchrotron and inverse Compton emission processes. </p>
 <p>This class encapsulates the microphysical parameters that govern particle acceleration and radiation processes in relativistic shocks. It controls the efficiency of converting shock energy into accelerated electrons and magnetic fields, as well as enabling advanced radiation processes. </p>
 
-<p class="definition">Definition at line <a class="el" href="pymodel_8h_source.html#l00250">250</a> of file <a class="el" href="pymodel_8h_source.html">pymodel.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="pymodel_8h_source.html#l00274">274</a> of file <a class="el" href="pymodel_8h_source.html">pymodel.h</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="ae8188b13afab5d391f29a143885ed606" name="ae8188b13afab5d391f29a143885ed606"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ae8188b13afab5d391f29a143885ed606">&#9670;&#160;</a></span>PyRadiation()</h2>
@@ -218,14 +220,74 @@ Public Attributes</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="pymodel_8h_source.html#l00268">268</a> of file <a class="el" href="pymodel_8h_source.html">pymodel.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  270</span>        : <a class="code hl_variable" href="classPyRadiation.html#ac19d3052d34fc8c82280ec02a392edcb">rad</a>(<a class="code hl_struct" href="structRadParams.html">RadParams</a>{eps_e, eps_B, p, xi_e}), <a class="code hl_variable" href="classPyRadiation.html#a1d7e7abb6cc072cc9402430f30522aa6">ssc_cooling</a>(<a class="code hl_variable" href="classPyRadiation.html#a1d7e7abb6cc072cc9402430f30522aa6">ssc_cooling</a>), <a class="code hl_variable" href="classPyRadiation.html#a8e54b2f905a744304b3296a66f4291ba">ssc</a>(<a class="code hl_variable" href="classPyRadiation.html#a8e54b2f905a744304b3296a66f4291ba">ssc</a>), <a class="code hl_variable" href="classPyRadiation.html#ab5fe05d2f9642ca32b02ce9cf59a4f4e">kn</a>(<a class="code hl_variable" href="classPyRadiation.html#ab5fe05d2f9642ca32b02ce9cf59a4f4e">kn</a>) {}</div>
-<div class="ttc" id="aclassPyRadiation_html_a1d7e7abb6cc072cc9402430f30522aa6"><div class="ttname"><a href="classPyRadiation.html#a1d7e7abb6cc072cc9402430f30522aa6">PyRadiation::ssc_cooling</a></div><div class="ttdeci">bool ssc_cooling</div><div class="ttdoc">Whether to include IC cooling.</div><div class="ttdef"><b>Definition</b> <a href="pymodel_8h_source.html#l00273">pymodel.h:273</a></div></div>
-<div class="ttc" id="aclassPyRadiation_html_a8e54b2f905a744304b3296a66f4291ba"><div class="ttname"><a href="classPyRadiation.html#a8e54b2f905a744304b3296a66f4291ba">PyRadiation::ssc</a></div><div class="ttdeci">bool ssc</div><div class="ttdoc">Whether to include SSC.</div><div class="ttdef"><b>Definition</b> <a href="pymodel_8h_source.html#l00274">pymodel.h:274</a></div></div>
-<div class="ttc" id="aclassPyRadiation_html_ab5fe05d2f9642ca32b02ce9cf59a4f4e"><div class="ttname"><a href="classPyRadiation.html#ab5fe05d2f9642ca32b02ce9cf59a4f4e">PyRadiation::kn</a></div><div class="ttdeci">bool kn</div><div class="ttdoc">Whether to include KN.</div><div class="ttdef"><b>Definition</b> <a href="pymodel_8h_source.html#l00275">pymodel.h:275</a></div></div>
-<div class="ttc" id="aclassPyRadiation_html_ac19d3052d34fc8c82280ec02a392edcb"><div class="ttname"><a href="classPyRadiation.html#ac19d3052d34fc8c82280ec02a392edcb">PyRadiation::rad</a></div><div class="ttdeci">RadParams rad</div><div class="ttdef"><b>Definition</b> <a href="pymodel_8h_source.html#l00272">pymodel.h:272</a></div></div>
+<p class="definition">Definition at line <a class="el" href="pymodel_8h_source.html#l00292">292</a> of file <a class="el" href="pymodel_8h_source.html">pymodel.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  294</span>        : <a class="code hl_variable" href="classPyRadiation.html#ac19d3052d34fc8c82280ec02a392edcb">rad</a>(<a class="code hl_struct" href="structRadParams.html">RadParams</a>{eps_e, eps_B, p, xi_e}), <a class="code hl_variable" href="classPyRadiation.html#a1d7e7abb6cc072cc9402430f30522aa6">ssc_cooling</a>(<a class="code hl_variable" href="classPyRadiation.html#a1d7e7abb6cc072cc9402430f30522aa6">ssc_cooling</a>), <a class="code hl_variable" href="classPyRadiation.html#a8e54b2f905a744304b3296a66f4291ba">ssc</a>(<a class="code hl_variable" href="classPyRadiation.html#a8e54b2f905a744304b3296a66f4291ba">ssc</a>), <a class="code hl_variable" href="classPyRadiation.html#ab5fe05d2f9642ca32b02ce9cf59a4f4e">kn</a>(<a class="code hl_variable" href="classPyRadiation.html#ab5fe05d2f9642ca32b02ce9cf59a4f4e">kn</a>) {}</div>
+<div class="ttc" id="aclassPyRadiation_html_a1d7e7abb6cc072cc9402430f30522aa6"><div class="ttname"><a href="classPyRadiation.html#a1d7e7abb6cc072cc9402430f30522aa6">PyRadiation::ssc_cooling</a></div><div class="ttdeci">bool ssc_cooling</div><div class="ttdoc">Whether to include IC cooling.</div><div class="ttdef"><b>Definition</b> <a href="pymodel_8h_source.html#l00297">pymodel.h:297</a></div></div>
+<div class="ttc" id="aclassPyRadiation_html_a8e54b2f905a744304b3296a66f4291ba"><div class="ttname"><a href="classPyRadiation.html#a8e54b2f905a744304b3296a66f4291ba">PyRadiation::ssc</a></div><div class="ttdeci">bool ssc</div><div class="ttdoc">Whether to include SSC.</div><div class="ttdef"><b>Definition</b> <a href="pymodel_8h_source.html#l00298">pymodel.h:298</a></div></div>
+<div class="ttc" id="aclassPyRadiation_html_ab5fe05d2f9642ca32b02ce9cf59a4f4e"><div class="ttname"><a href="classPyRadiation.html#ab5fe05d2f9642ca32b02ce9cf59a4f4e">PyRadiation::kn</a></div><div class="ttdeci">bool kn</div><div class="ttdoc">Whether to include KN.</div><div class="ttdef"><b>Definition</b> <a href="pymodel_8h_source.html#l00299">pymodel.h:299</a></div></div>
+<div class="ttc" id="aclassPyRadiation_html_ac19d3052d34fc8c82280ec02a392edcb"><div class="ttname"><a href="classPyRadiation.html#ac19d3052d34fc8c82280ec02a392edcb">PyRadiation::rad</a></div><div class="ttdeci">RadParams rad</div><div class="ttdef"><b>Definition</b> <a href="pymodel_8h_source.html#l00296">pymodel.h:296</a></div></div>
 <div class="ttc" id="astructRadParams_html"><div class="ttname"><a href="structRadParams.html">RadParams</a></div><div class="ttdoc">Parameters for radiation transport.</div><div class="ttdef"><b>Definition</b> <a href="physics_8h_source.html#l00204">physics.h:204</a></div></div>
 </div><!-- fragment -->
+</div>
+</div>
+<h2 class="groupheader">Member Function Documentation</h2>
+<a id="ac1d2c06b7fd135fa31026fa4e4781da9" name="ac1d2c06b7fd135fa31026fa4e4781da9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac1d2c06b7fd135fa31026fa4e4781da9">&#9670;&#160;</a></span>repr()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::string PyRadiation::repr </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="pymodel_8h_source.html#l00301">301</a> of file <a class="el" href="pymodel_8h_source.html">pymodel.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  301</span>                                         {</div>
+<div class="line"><span class="lineno">  302</span>        <span class="keywordtype">char</span> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">buf</a>[128];</div>
+<div class="line"><span class="lineno">  303</span>        <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">snprintf</a>(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">buf</a>, <span class="keyword">sizeof</span>(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">buf</a>), <span class="stringliteral">&quot;Radiation(eps_e=%.6g, eps_B=%.6g, p=%.6g&quot;</span>, <a class="code hl_variable" href="classPyRadiation.html#ac19d3052d34fc8c82280ec02a392edcb">rad</a>.<a class="code hl_variable" href="structRadParams.html#aac4103f83a674a9b9c7cd16e6be1e4a9">eps_e</a>, <a class="code hl_variable" href="classPyRadiation.html#ac19d3052d34fc8c82280ec02a392edcb">rad</a>.<a class="code hl_variable" href="structRadParams.html#a0521194caf6b87cb685fa67fd92204c7">eps_B</a>, <a class="code hl_variable" href="classPyRadiation.html#ac19d3052d34fc8c82280ec02a392edcb">rad</a>.<a class="code hl_variable" href="structRadParams.html#a2cc7b716052dd86936f3684bd8ec0853">p</a>);</div>
+<div class="line"><span class="lineno">  304</span>        std::string <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">s</a> = <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">buf</a>;</div>
+<div class="line"><span class="lineno">  305</span>        <span class="keywordflow">if</span> (<a class="code hl_variable" href="classPyRadiation.html#ac19d3052d34fc8c82280ec02a392edcb">rad</a>.<a class="code hl_variable" href="structRadParams.html#a762cf0c07a2dc70ef2e3472a517fff7e">xi_e</a> != 1) {</div>
+<div class="line"><span class="lineno">  306</span>            <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">snprintf</a>(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">buf</a>, <span class="keyword">sizeof</span>(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">buf</a>), <span class="stringliteral">&quot;, xi_e=%.6g&quot;</span>, <a class="code hl_variable" href="classPyRadiation.html#ac19d3052d34fc8c82280ec02a392edcb">rad</a>.<a class="code hl_variable" href="structRadParams.html#a762cf0c07a2dc70ef2e3472a517fff7e">xi_e</a>);</div>
+<div class="line"><span class="lineno">  307</span>            <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">s</a> += <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">buf</a>;</div>
+<div class="line"><span class="lineno">  308</span>        }</div>
+<div class="line"><span class="lineno">  309</span>        <span class="keywordflow">if</span> (<a class="code hl_variable" href="classPyRadiation.html#a1d7e7abb6cc072cc9402430f30522aa6">ssc_cooling</a>)</div>
+<div class="line"><span class="lineno">  310</span>            <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">s</a> += <span class="stringliteral">&quot;, ssc_cooling=True&quot;</span>;</div>
+<div class="line"><span class="lineno">  311</span>        <span class="keywordflow">if</span> (<a class="code hl_variable" href="classPyRadiation.html#a8e54b2f905a744304b3296a66f4291ba">ssc</a>)</div>
+<div class="line"><span class="lineno">  312</span>            <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">s</a> += <span class="stringliteral">&quot;, ssc=True&quot;</span>;</div>
+<div class="line"><span class="lineno">  313</span>        <span class="keywordflow">if</span> (<a class="code hl_variable" href="classPyRadiation.html#ab5fe05d2f9642ca32b02ce9cf59a4f4e">kn</a>)</div>
+<div class="line"><span class="lineno">  314</span>            <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">s</a> += <span class="stringliteral">&quot;, kn=True&quot;</span>;</div>
+<div class="line"><span class="lineno">  315</span>        <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">s</a> += <span class="stringliteral">&quot;)&quot;</span>;</div>
+<div class="line"><span class="lineno">  316</span>        <span class="keywordflow">return</span> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">s</a>;</div>
+<div class="line"><span class="lineno">  317</span>    }</div>
+<div class="ttc" id="astructRadParams_html_a0521194caf6b87cb685fa67fd92204c7"><div class="ttname"><a href="structRadParams.html#a0521194caf6b87cb685fa67fd92204c7">RadParams::eps_B</a></div><div class="ttdeci">Real eps_B</div><div class="ttdoc">Magnetic field energy fraction.</div><div class="ttdef"><b>Definition</b> <a href="physics_8h_source.html#l00206">physics.h:206</a></div></div>
+<div class="ttc" id="astructRadParams_html_a2cc7b716052dd86936f3684bd8ec0853"><div class="ttname"><a href="structRadParams.html#a2cc7b716052dd86936f3684bd8ec0853">RadParams::p</a></div><div class="ttdeci">Real p</div><div class="ttdoc">Electron energy distribution index.</div><div class="ttdef"><b>Definition</b> <a href="physics_8h_source.html#l00207">physics.h:207</a></div></div>
+<div class="ttc" id="astructRadParams_html_a762cf0c07a2dc70ef2e3472a517fff7e"><div class="ttname"><a href="structRadParams.html#a762cf0c07a2dc70ef2e3472a517fff7e">RadParams::xi_e</a></div><div class="ttdeci">Real xi_e</div><div class="ttdoc">Electron self-absorption parameter.</div><div class="ttdef"><b>Definition</b> <a href="physics_8h_source.html#l00208">physics.h:208</a></div></div>
+<div class="ttc" id="astructRadParams_html_aac4103f83a674a9b9c7cd16e6be1e4a9"><div class="ttname"><a href="structRadParams.html#aac4103f83a674a9b9c7cd16e6be1e4a9">RadParams::eps_e</a></div><div class="ttdeci">Real eps_e</div><div class="ttdoc">Electron energy fraction.</div><div class="ttdef"><b>Definition</b> <a href="physics_8h_source.html#l00205">physics.h:205</a></div></div>
+<div class="ttc" id="autilities_8h_html_ab8e81118f023df135835db8cce4f5f42"><div class="ttname"><a href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">max</a></div><div class="ttdeci">T max(T value)</div><div class="ttdoc">Returns the value of a single parameter.</div><div class="ttdef"><b>Definition</b> <a href="utilities_8h_source.html#l00318">utilities.h:318</a></div></div>
+</div><!-- fragment --><div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="classPyRadiation_ac1d2c06b7fd135fa31026fa4e4781da9_icgraph.png" border="0" usemap="#aclassPyRadiation_ac1d2c06b7fd135fa31026fa4e4781da9_icgraph" alt=""/></div>
+<map name="aclassPyRadiation_ac1d2c06b7fd135fa31026fa4e4781da9_icgraph" id="aclassPyRadiation_ac1d2c06b7fd135fa31026fa4e4781da9_icgraph">
+<area shape="rect" title=" " alt="" coords="204,5,339,31"/>
+<area shape="rect" href="pybind_8cpp.html#a8c92987849ad296e28ec6c07c8e7860b" title=" " alt="" coords="5,5,156,31"/>
+<area shape="poly" title=" " alt="" coords="190,21,156,21,156,15,190,15"/>
+</map>
+</div>
+
 </div>
 </div>
 <h2 class="groupheader">Member Data Documentation</h2>
@@ -243,8 +305,8 @@ Public Attributes</h2></td></tr>
 
 <p>Whether to include KN. </p>
 
-<p class="definition">Definition at line <a class="el" href="pymodel_8h_source.html#l00275">275</a> of file <a class="el" href="pymodel_8h_source.html">pymodel.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  275</span>{<span class="keyword">false</span>};          <span class="comment">///&lt; Whether to include KN</span></div>
+<p class="definition">Definition at line <a class="el" href="pymodel_8h_source.html#l00299">299</a> of file <a class="el" href="pymodel_8h_source.html">pymodel.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  299</span>{<span class="keyword">false</span>};          <span class="comment">///&lt; Whether to include KN</span></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -260,7 +322,7 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="pymodel_8h_source.html#l00272">272</a> of file <a class="el" href="pymodel_8h_source.html">pymodel.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="pymodel_8h_source.html#l00296">296</a> of file <a class="el" href="pymodel_8h_source.html">pymodel.h</a>.</p>
 
 </div>
 </div>
@@ -278,8 +340,8 @@ Public Attributes</h2></td></tr>
 
 <p>Whether to include SSC. </p>
 
-<p class="definition">Definition at line <a class="el" href="pymodel_8h_source.html#l00274">274</a> of file <a class="el" href="pymodel_8h_source.html">pymodel.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  274</span>{<span class="keyword">false</span>};         <span class="comment">///&lt; Whether to include SSC</span></div>
+<p class="definition">Definition at line <a class="el" href="pymodel_8h_source.html#l00298">298</a> of file <a class="el" href="pymodel_8h_source.html">pymodel.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  298</span>{<span class="keyword">false</span>};         <span class="comment">///&lt; Whether to include SSC</span></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -297,8 +359,8 @@ Public Attributes</h2></td></tr>
 
 <p>Whether to include IC cooling. </p>
 
-<p class="definition">Definition at line <a class="el" href="pymodel_8h_source.html#l00273">273</a> of file <a class="el" href="pymodel_8h_source.html">pymodel.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  273</span>{<span class="keyword">false</span>}; <span class="comment">///&lt; Whether to include IC cooling</span></div>
+<p class="definition">Definition at line <a class="el" href="pymodel_8h_source.html#l00297">297</a> of file <a class="el" href="pymodel_8h_source.html">pymodel.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  297</span>{<span class="keyword">false</span>}; <span class="comment">///&lt; Whether to include IC cooling</span></div>
 </div><!-- fragment -->
 </div>
 </div>

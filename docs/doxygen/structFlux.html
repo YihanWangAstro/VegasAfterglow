@@ -92,6 +92,7 @@ $(document).ready(function(){initNavTree('structFlux.html',''); initResizable();
 
 <div class="header">
   <div class="summary">
+<a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pub-attribs">Public Attributes</a> &#124;
 <a href="structFlux-members.html">List of all members</a>  </div>
   <div class="headertitle"><div class="title">Flux Struct Reference</div></div>
@@ -103,6 +104,11 @@ $(document).ready(function(){initNavTree('structFlux.html',''); initResizable();
 
 <p><code>#include &lt;<a class="el" href="pymodel_8h_source.html">pymodel.h</a>&gt;</code></p>
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
+Public Member Functions</h2></td></tr>
+<tr class="memitem:ae0d2a08d9d932eea58c666d90034b8af" id="r_ae0d2a08d9d932eea58c666d90034b8af"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structFlux.html#ae0d2a08d9d932eea58c666d90034b8af">repr</a> () <a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">const</a></td></tr>
+<tr class="separator:ae0d2a08d9d932eea58c666d90034b8af"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
 <tr class="memitem:ab874f7e2384fdd13a9393a754515108c" id="r_ab874f7e2384fdd13a9393a754515108c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="pymodel_8h.html#a8e0af37a4c52f45f722b280057db88a8">XTArray</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structFlux.html#ab874f7e2384fdd13a9393a754515108c">sync</a></td></tr>
@@ -116,8 +122,65 @@ Public Attributes</h2></td></tr>
 <div class="textblock"><p>Container for synchrotron and synchrotron self-Compton flux components. </p>
 <p>This structure organizes the different radiation components calculated for each shock region, allowing separate tracking of synchrotron emission and inverse Compton scattering contributions to the total observed flux. </p>
 
-<p class="definition">Definition at line <a class="el" href="pymodel_8h_source.html#l00302">302</a> of file <a class="el" href="pymodel_8h_source.html">pymodel.h</a>.</p>
-</div><h2 class="groupheader">Member Data Documentation</h2>
+<p class="definition">Definition at line <a class="el" href="pymodel_8h_source.html#l00345">345</a> of file <a class="el" href="pymodel_8h_source.html">pymodel.h</a>.</p>
+</div><h2 class="groupheader">Member Function Documentation</h2>
+<a id="ae0d2a08d9d932eea58c666d90034b8af" name="ae0d2a08d9d932eea58c666d90034b8af"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae0d2a08d9d932eea58c666d90034b8af">&#9670;&#160;</a></span>repr()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::string Flux::repr </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="pymodel_8h_source.html#l00349">349</a> of file <a class="el" href="pymodel_8h_source.html">pymodel.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  349</span>                                         {</div>
+<div class="line"><span class="lineno">  350</span>        std::string <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">s</a> = <span class="stringliteral">&quot;Flux(sync&quot;</span>;</div>
+<div class="line"><span class="lineno">  351</span>        <span class="keywordflow">if</span> (<a class="code hl_variable" href="structFlux.html#a00060eafb1f9c42dc4b2c23d0e8903a0">ssc</a>.dimension() &gt; 0)</div>
+<div class="line"><span class="lineno">  352</span>            <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">s</a> += <span class="stringliteral">&quot; + ssc&quot;</span>;</div>
+<div class="line"><span class="lineno">  353</span>        <span class="keywordflow">if</span> (<a class="code hl_variable" href="structFlux.html#ab874f7e2384fdd13a9393a754515108c">sync</a>.dimension() &gt; 0) {</div>
+<div class="line"><span class="lineno">  354</span>            <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">s</a> += <span class="stringliteral">&quot;, shape=(&quot;</span>;</div>
+<div class="line"><span class="lineno">  355</span>            <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a> = 0; <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a> &lt; <a class="code hl_variable" href="structFlux.html#ab874f7e2384fdd13a9393a754515108c">sync</a>.dimension(); ++<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a>) {</div>
+<div class="line"><span class="lineno">  356</span>                <span class="keywordflow">if</span> (<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a> &gt; 0)</div>
+<div class="line"><span class="lineno">  357</span>                    <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">s</a> += <span class="stringliteral">&quot;, &quot;</span>;</div>
+<div class="line"><span class="lineno">  358</span>                <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">s</a> += std::to_string(<a class="code hl_variable" href="structFlux.html#ab874f7e2384fdd13a9393a754515108c">sync</a>.shape()[<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a>]);</div>
+<div class="line"><span class="lineno">  359</span>            }</div>
+<div class="line"><span class="lineno">  360</span>            <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">s</a> += <span class="stringliteral">&quot;)&quot;</span>;</div>
+<div class="line"><span class="lineno">  361</span>        }</div>
+<div class="line"><span class="lineno">  362</span>        <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">s</a> += <span class="stringliteral">&quot;)&quot;</span>;</div>
+<div class="line"><span class="lineno">  363</span>        <span class="keywordflow">return</span> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">s</a>;</div>
+<div class="line"><span class="lineno">  364</span>    }</div>
+<div class="ttc" id="astructFlux_html_a00060eafb1f9c42dc4b2c23d0e8903a0"><div class="ttname"><a href="structFlux.html#a00060eafb1f9c42dc4b2c23d0e8903a0">Flux::ssc</a></div><div class="ttdeci">XTArray ssc</div><div class="ttdoc">Synchrotron self-Compton flux [mJy].</div><div class="ttdef"><b>Definition</b> <a href="pymodel_8h_source.html#l00347">pymodel.h:347</a></div></div>
+<div class="ttc" id="astructFlux_html_ab874f7e2384fdd13a9393a754515108c"><div class="ttname"><a href="structFlux.html#ab874f7e2384fdd13a9393a754515108c">Flux::sync</a></div><div class="ttdeci">XTArray sync</div><div class="ttdoc">Synchrotron emission flux [mJy].</div><div class="ttdef"><b>Definition</b> <a href="pymodel_8h_source.html#l00346">pymodel.h:346</a></div></div>
+<div class="ttc" id="autilities_8h_html_ab8e81118f023df135835db8cce4f5f42"><div class="ttname"><a href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">max</a></div><div class="ttdeci">T max(T value)</div><div class="ttdoc">Returns the value of a single parameter.</div><div class="ttdef"><b>Definition</b> <a href="utilities_8h_source.html#l00318">utilities.h:318</a></div></div>
+</div><!-- fragment --><div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="structFlux_ae0d2a08d9d932eea58c666d90034b8af_icgraph.png" border="0" usemap="#astructFlux_ae0d2a08d9d932eea58c666d90034b8af_icgraph" alt=""/></div>
+<map name="astructFlux_ae0d2a08d9d932eea58c666d90034b8af_icgraph" id="astructFlux_ae0d2a08d9d932eea58c666d90034b8af_icgraph">
+<area shape="rect" title=" " alt="" coords="204,5,288,31"/>
+<area shape="rect" href="pybind_8cpp.html#a8c92987849ad296e28ec6c07c8e7860b" title=" " alt="" coords="5,5,156,31"/>
+<area shape="poly" title=" " alt="" coords="190,21,157,21,157,15,190,15"/>
+</map>
+</div>
+
+</div>
+</div>
+<h2 class="groupheader">Member Data Documentation</h2>
 <a id="a00060eafb1f9c42dc4b2c23d0e8903a0" name="a00060eafb1f9c42dc4b2c23d0e8903a0"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a00060eafb1f9c42dc4b2c23d0e8903a0">&#9670;&#160;</a></span>ssc</h2>
 
@@ -132,7 +195,7 @@ Public Attributes</h2></td></tr>
 
 <p>Synchrotron self-Compton flux [mJy]. </p>
 
-<p class="definition">Definition at line <a class="el" href="pymodel_8h_source.html#l00304">304</a> of file <a class="el" href="pymodel_8h_source.html">pymodel.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="pymodel_8h_source.html#l00347">347</a> of file <a class="el" href="pymodel_8h_source.html">pymodel.h</a>.</p>
 
 </div>
 </div>
@@ -150,7 +213,7 @@ Public Attributes</h2></td></tr>
 
 <p>Synchrotron emission flux [mJy]. </p>
 
-<p class="definition">Definition at line <a class="el" href="pymodel_8h_source.html#l00303">303</a> of file <a class="el" href="pymodel_8h_source.html">pymodel.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="pymodel_8h_source.html#l00346">346</a> of file <a class="el" href="pymodel_8h_source.html">pymodel.h</a>.</p>
 
 </div>
 </div>

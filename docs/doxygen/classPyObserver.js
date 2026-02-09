@@ -1,6 +1,8 @@
 var classPyObserver =
 [
     [ "PyObserver", "classPyObserver.html#a81483263bfdc173c4ca6287add88ad9a", null ],
+    [ "lumi_dist_cgs", "classPyObserver.html#ab42810f147ee7f7bf629534c1f832574", null ],
+    [ "repr", "classPyObserver.html#af3aabbe90fab4bd77576e7836db33351", null ],
     [ "lumi_dist", "classPyObserver.html#a3767075003ef446259a3f2a1dcaa6c8e", null ],
     [ "phi_obs", "classPyObserver.html#a8933acaf2c464fe23a10dc4909e961dd", null ],
     [ "theta_obs", "classPyObserver.html#a44289f4d1236019685063b1ce914154d", null ],

@@ -92,6 +92,7 @@ $(document).ready(function(){initNavTree('structPyDetails.html',''); initResizab
 
 <div class="header">
   <div class="summary">
+<a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pub-attribs">Public Attributes</a> &#124;
 <a href="structPyDetails-members.html">List of all members</a>  </div>
   <div class="headertitle"><div class="title">PyDetails Struct Reference</div></div>
@@ -113,6 +114,11 @@ Collaboration diagram for PyDetails:</div>
 </map>
 <center><span class="legend">[<a target="top" href="graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
+Public Member Functions</h2></td></tr>
+<tr class="memitem:a729609dba0668f7a02cbb3ef4b452411" id="r_a729609dba0668f7a02cbb3ef4b452411"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structPyDetails.html#a729609dba0668f7a02cbb3ef4b452411">repr</a> () <a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">const</a></td></tr>
+<tr class="separator:a729609dba0668f7a02cbb3ef4b452411"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
 <tr class="memitem:a82763145522b56940d0c651cf1a23d6a" id="r_a82763145522b56940d0c651cf1a23d6a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="pymodel_8h.html#a8e0af37a4c52f45f722b280057db88a8">XTArray</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structPyDetails.html#a82763145522b56940d0c651cf1a23d6a">phi</a></td></tr>
@@ -135,8 +141,56 @@ Public Attributes</h2></td></tr>
 <div class="textblock"><p>Complete simulation details including coordinate system and shock evolution. </p>
 <p>This structure provides comprehensive information about the simulation grid and the evolution of both forward and reverse shocks. It enables detailed analysis of the physical processes and validation of the numerical results. </p>
 
-<p class="definition">Definition at line <a class="el" href="pymodel_8h_source.html#l00371">371</a> of file <a class="el" href="pymodel_8h_source.html">pymodel.h</a>.</p>
-</div><h2 class="groupheader">Member Data Documentation</h2>
+<p class="definition">Definition at line <a class="el" href="pymodel_8h_source.html#l00464">464</a> of file <a class="el" href="pymodel_8h_source.html">pymodel.h</a>.</p>
+</div><h2 class="groupheader">Member Function Documentation</h2>
+<a id="a729609dba0668f7a02cbb3ef4b452411" name="a729609dba0668f7a02cbb3ef4b452411"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a729609dba0668f7a02cbb3ef4b452411">&#9670;&#160;</a></span>repr()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::string PyDetails::repr </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="pymodel_8h_source.html#l00472">472</a> of file <a class="el" href="pymodel_8h_source.html">pymodel.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  472</span>                                         {</div>
+<div class="line"><span class="lineno">  473</span>        <span class="keywordtype">char</span> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">buf</a>[128];</div>
+<div class="line"><span class="lineno">  474</span>        <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">snprintf</a>(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">buf</a>, <span class="keyword">sizeof</span>(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">buf</a>), <span class="stringliteral">&quot;SimulationDetails(phi=%zu, theta=%zu, t_src=%zu)&quot;</span>, <a class="code hl_variable" href="structPyDetails.html#a82763145522b56940d0c651cf1a23d6a">phi</a>.size(), <a class="code hl_variable" href="structPyDetails.html#af69daff65e4fd6872b82763ede45b687">theta</a>.size(),</div>
+<div class="line"><span class="lineno">  475</span>                 <a class="code hl_variable" href="structPyDetails.html#aa1225d4ad9d93e413ee20044fd180d64">t_src</a>.size());</div>
+<div class="line"><span class="lineno">  476</span>        <span class="keywordflow">return</span> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">buf</a>;</div>
+<div class="line"><span class="lineno">  477</span>    }</div>
+<div class="ttc" id="astructPyDetails_html_a82763145522b56940d0c651cf1a23d6a"><div class="ttname"><a href="structPyDetails.html#a82763145522b56940d0c651cf1a23d6a">PyDetails::phi</a></div><div class="ttdeci">XTArray phi</div><div class="ttdoc">Azimuthal coordinate array [rad].</div><div class="ttdef"><b>Definition</b> <a href="pymodel_8h_source.html#l00465">pymodel.h:465</a></div></div>
+<div class="ttc" id="astructPyDetails_html_aa1225d4ad9d93e413ee20044fd180d64"><div class="ttname"><a href="structPyDetails.html#aa1225d4ad9d93e413ee20044fd180d64">PyDetails::t_src</a></div><div class="ttdeci">XTArray t_src</div><div class="ttdoc">Source frame time array [s].</div><div class="ttdef"><b>Definition</b> <a href="pymodel_8h_source.html#l00467">pymodel.h:467</a></div></div>
+<div class="ttc" id="astructPyDetails_html_af69daff65e4fd6872b82763ede45b687"><div class="ttname"><a href="structPyDetails.html#af69daff65e4fd6872b82763ede45b687">PyDetails::theta</a></div><div class="ttdeci">XTArray theta</div><div class="ttdoc">Polar coordinate array [rad].</div><div class="ttdef"><b>Definition</b> <a href="pymodel_8h_source.html#l00466">pymodel.h:466</a></div></div>
+<div class="ttc" id="autilities_8h_html_ab8e81118f023df135835db8cce4f5f42"><div class="ttname"><a href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">max</a></div><div class="ttdeci">T max(T value)</div><div class="ttdoc">Returns the value of a single parameter.</div><div class="ttdef"><b>Definition</b> <a href="utilities_8h_source.html#l00318">utilities.h:318</a></div></div>
+</div><!-- fragment --><div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="structPyDetails_a729609dba0668f7a02cbb3ef4b452411_icgraph.png" border="0" usemap="#astructPyDetails_a729609dba0668f7a02cbb3ef4b452411_icgraph" alt=""/></div>
+<map name="astructPyDetails_a729609dba0668f7a02cbb3ef4b452411_icgraph" id="astructPyDetails_a729609dba0668f7a02cbb3ef4b452411_icgraph">
+<area shape="rect" title=" " alt="" coords="204,5,323,31"/>
+<area shape="rect" href="pybind_8cpp.html#a8c92987849ad296e28ec6c07c8e7860b" title=" " alt="" coords="5,5,156,31"/>
+<area shape="poly" title=" " alt="" coords="190,21,157,21,157,15,190,15"/>
+</map>
+</div>
+
+</div>
+</div>
+<h2 class="groupheader">Member Data Documentation</h2>
 <a id="a790135e030da64decb6a2c29c64683fb" name="a790135e030da64decb6a2c29c64683fb"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a790135e030da64decb6a2c29c64683fb">&#9670;&#160;</a></span>fwd</h2>
 
@@ -151,7 +205,7 @@ Public Attributes</h2></td></tr>
 
 <p>Forward shock evolution details. </p>
 
-<p class="definition">Definition at line <a class="el" href="pymodel_8h_source.html#l00376">376</a> of file <a class="el" href="pymodel_8h_source.html">pymodel.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="pymodel_8h_source.html#l00469">469</a> of file <a class="el" href="pymodel_8h_source.html">pymodel.h</a>.</p>
 
 </div>
 </div>
@@ -169,7 +223,7 @@ Public Attributes</h2></td></tr>
 
 <p>Azimuthal coordinate array [rad]. </p>
 
-<p class="definition">Definition at line <a class="el" href="pymodel_8h_source.html#l00372">372</a> of file <a class="el" href="pymodel_8h_source.html">pymodel.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="pymodel_8h_source.html#l00465">465</a> of file <a class="el" href="pymodel_8h_source.html">pymodel.h</a>.</p>
 
 </div>
 </div>
@@ -187,7 +241,7 @@ Public Attributes</h2></td></tr>
 
 <p>Reverse shock evolution details. </p>
 
-<p class="definition">Definition at line <a class="el" href="pymodel_8h_source.html#l00377">377</a> of file <a class="el" href="pymodel_8h_source.html">pymodel.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="pymodel_8h_source.html#l00470">470</a> of file <a class="el" href="pymodel_8h_source.html">pymodel.h</a>.</p>
 
 </div>
 </div>
@@ -205,7 +259,7 @@ Public Attributes</h2></td></tr>
 
 <p>Source frame time array [s]. </p>
 
-<p class="definition">Definition at line <a class="el" href="pymodel_8h_source.html#l00374">374</a> of file <a class="el" href="pymodel_8h_source.html">pymodel.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="pymodel_8h_source.html#l00467">467</a> of file <a class="el" href="pymodel_8h_source.html">pymodel.h</a>.</p>
 
 </div>
 </div>
@@ -223,7 +277,7 @@ Public Attributes</h2></td></tr>
 
 <p>Polar coordinate array [rad]. </p>
 
-<p class="definition">Definition at line <a class="el" href="pymodel_8h_source.html#l00373">373</a> of file <a class="el" href="pymodel_8h_source.html">pymodel.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="pymodel_8h_source.html#l00466">466</a> of file <a class="el" href="pymodel_8h_source.html">pymodel.h</a>.</p>
 
 </div>
 </div>

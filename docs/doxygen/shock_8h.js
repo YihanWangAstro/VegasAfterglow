@@ -10,6 +10,7 @@ var shock_8h =
     [ "compute_downstr_4vel", "shock_8h.html#a09f75d8bc0c1cd36d03a413edd7283d8", null ],
     [ "compute_downstr_B", "shock_8h.html#ac49ae4ef06c1e8ef80f3e15997c34a6a", null ],
     [ "compute_dr_dt", "shock_8h.html#a49b14420b5231323cb4940496ddc0956", null ],
+    [ "compute_dr_dt", "shock_8h.html#aa8e416f4f1550b24a341245296a4d171", null ],
     [ "compute_dt_dt_comv", "shock_8h.html#aeaa7a2d945a00f2c7f24d39c499b1df0", null ],
     [ "compute_dtheta_dt", "shock_8h.html#ac667cca4e484b343ff3988383a75cd55", null ],
     [ "compute_effective_Gamma", "shock_8h.html#a1daab7936c7a7201b192aaec9bd0a8a7", null ],
