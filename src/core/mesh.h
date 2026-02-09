@@ -7,6 +7,8 @@
 
 #pragma once
 
+#include <cassert>
+
 #include "../util/macros.h"
 #include "boost/numeric/odeint.hpp"
 #include "physics.h"
@@ -211,6 +213,23 @@ void boundary_to_center_log(Arr1 const& boundary, Arr2& center) {
     }
 }
 
+template <typename Arr = Array>
+void logspace_center(Real lg2_min, Real lg2_max, size_t size, Arr& center) {
+    center = Arr::from_shape({size});
+    if (size == 0)
+        return;
+
+    const Real dlg2 = (lg2_max - lg2_min) / static_cast<Real>(size);
+    const Real r = std::exp2(dlg2);
+    const Real s = std::sqrt(r);
+    Real left = std::exp2(lg2_min);
+
+    for (std::size_t i = 0; i < size; ++i) {
+        center(i) = left * s;
+        left *= r;
+    }
+}
+
 template <typename Arr>
 void logspace_boundary_center(Real lg2_min, Real lg2_max, size_t size, Arr& center, Array& bin_width) {
     center = Arr::from_shape({size});
@@ -281,6 +300,7 @@ size_t build_adaptive_grid(Real lg2_min, Real lg2_max, std::array<Real, MaxBreak
             break;
         buf[n++] = std::exp2(pos);
     }
+    assert(pos >= lg2_max && "build_adaptive_grid: MAX_PTS exceeded, grid truncated");
     buf[n++] = std::exp2(lg2_max);
 
     grid = Array::from_shape({n});

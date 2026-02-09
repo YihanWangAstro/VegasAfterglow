@@ -271,84 +271,28 @@ Real cyclotron_correction(Real gamma_m, Real p) {
 
 Real SynElectrons::compute_spectrum(Real gamma) const {
     switch (regime) {
-        case 1: // same as case 2
+        case 1: // slow cooling: cases 1, 2, 5
         case 2:
-            if (gamma <= gamma_m) {
-                return 0; // Below minimum Lorentz factor, spectrum is zero
-            } else if (gamma <= gamma_c) {
-                return (p - 1) * fast_pow(gamma / gamma_m, -p) /
-                       gamma_m; // Power-law spectrum between gamma_m and gamma_c
-            } else
-                return (p - 1) * fast_pow(gamma / gamma_m, -p) * gamma_c / (gamma * gamma_m);
-            // Above the cooling Lorentz factor: exponential cutoff applied
-
-            break;
-        case 3:
-            if (gamma <= gamma_c) {
-                return 0; // Below cooling Lorentz factor, the spectrum is zero
-            } else if (gamma <= gamma_m) {
-                return gamma_c / (gamma * gamma); // Intermediate regime scaling
-            } else
-                return gamma_c / (gamma * gamma_m) * fast_pow(gamma / gamma_m, -p);
-            // Above minimum Lorentz factor: power-law with exponential cutoff
-
-            break;
-
-#ifdef SELF_ABSORPTION_HEATING
-        case 4: // Gao, Lei, Wu and Zhang 2013 Eq 18
-            if (gamma <= gamma_a) {
-                return 3 * gamma * gamma / (gamma_a * gamma_a * gamma_a); // thermal part
-            } else if (gamma <= gamma_m) {
-                return gamma_c / (gamma * gamma); // Transition region
-            } else
-                return gamma_c / (gamma * gamma_m) * fast_pow(gamma / gamma_m, -p);
-            // High-energy tail with exponential cutoff
-
-            break;
-        case 5: // Gao, Lei, Wu and Zhang 2013 Eq 19
-            if (gamma <= gamma_a) {
-                return 3 * gamma * gamma / (gamma_a * gamma_a * gamma_a); // thermal part
-            } else
-                return (p - 1) * gamma_c / (gamma * gamma_m) * fast_pow(gamma / gamma_m, -p);
-
-            break;
-        case 6: // Gao, Lei, Wu and Zhang 2013 Eq 20
-            if (gamma <= gamma_a) {
-                return 3 * gamma * gamma / (gamma_a * gamma_a * gamma_a); // thermal part
-            } else
-                return fast_pow(gamma_m, p - 1) * gamma_c * fast_pow(gamma, -(p + 1));
-
-            break;
-#else
-        case 4:
-            if (gamma <= gamma_c) {
-                return 0; // Below cooling Lorentz factor, the spectrum is zero
-            } else if (gamma <= gamma_m) {
-                return gamma_c / (gamma * gamma); // Intermediate regime scaling
-            } else
-                return gamma_c / (gamma * gamma_m) * fast_pow(gamma / gamma_m, -p);
-            // High-energy tail with exponential cutoff
-
-            break;
         case 5:
             if (gamma <= gamma_m) {
-                return 0; // Below minimum Lorentz factor, spectrum is zero
+                return 0;
             } else if (gamma <= gamma_c) {
-                return (p - 1) * fast_pow(gamma / gamma_m, -p) /
-                       gamma_m; // Power-law spectrum between gamma_m and gamma_c
+                return (p - 1) * fast_pow(gamma / gamma_m, -p) / gamma_m;
             } else
                 return (p - 1) * fast_pow(gamma / gamma_m, -p) * gamma_c / (gamma * gamma_m);
+
             break;
+        case 3: // fast cooling: cases 3, 4, 6
+        case 4:
         case 6:
             if (gamma <= gamma_c) {
-                return 0; // Below cooling Lorentz factor, the spectrum is zero
+                return 0;
             } else if (gamma <= gamma_m) {
-                return gamma_c / (gamma * gamma); // Intermediate regime scaling
+                return gamma_c / (gamma * gamma);
             } else
                 return gamma_c / (gamma * gamma_m) * fast_pow(gamma / gamma_m, -p);
 
             break;
-#endif
         default:
             return 0;
     }
@@ -356,18 +300,17 @@ Real SynElectrons::compute_spectrum(Real gamma) const {
 
 Real SynElectrons::compute_N_gamma(Real gamma) const {
     if (gamma <= gamma_c) { // Below the cooling Lorentz factor: direct scaling
-        return N_e * compute_spectrum(gamma);
+        return fast_exp(-gamma / gamma_M) * N_e * compute_spectrum(gamma);
     } else {
-        return fast_exp2((gamma_c - gamma) / gamma_M) * N_e * compute_spectrum(gamma) * (1 + Y_c) /
-               (1 + Ys.gamma_spectrum(gamma));
+        return fast_exp(-gamma / gamma_M) * N_e * compute_spectrum(gamma) * (1 + Y_c) / (1 + Ys.gamma_spectrum(gamma));
     }
 }
 
 Real SynElectrons::compute_column_den(Real gamma) const {
     if (gamma <= gamma_c) { // Below the cooling Lorentz factor: direct scaling
-        return column_den * compute_spectrum(gamma);
+        return fast_exp(-gamma / gamma_M) * column_den * compute_spectrum(gamma);
     } else {
-        return fast_exp2((gamma_c - gamma) / gamma_M) * column_den * compute_spectrum(gamma) * (1 + Y_c) /
+        return fast_exp(-gamma / gamma_M) * column_den * compute_spectrum(gamma) * (1 + Y_c) /
                (1 + Ys.gamma_spectrum(gamma));
     }
 }

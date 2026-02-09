@@ -186,15 +186,11 @@ struct ICPhoton {
      * @brief Preprocesses electron and photon data into arrays for integration
      * @param params Grid parameters
      * @param gamma Output array for gamma values
-     * @param dgamma Output array for gamma bin widths
      * @param nu_sync Output array for synchrotron frequencies
      * @param dnu_sync Output array for synchrotron frequency bin widths
-     * @param dN_e Output array for electron column densities
-     * @param I_nu_sync Output array for photon intensities
      * <!-- ************************************************************************************** -->
      */
-    void preprocess_distributions(GridParams const& params, Array& gamma, Array& dgamma, Array& nu_sync,
-                                  Array& dnu_sync, Array& dN_e, Array& I_nu_sync) const;
+    void preprocess_distributions(GridParams const& params, Array& gamma, Array& nu_sync, Array& dnu_sync) const;
 
     /**
      * <!-- ************************************************************************************** -->
@@ -202,13 +198,10 @@ struct ICPhoton {
      * @param params Grid parameters
      * @param gamma Array of gamma values
      * @param nu_sync Array of synchrotron frequencies
-     * @param dN_e Array of electron column densities
-     * @param I_nu_sync Array of photon intensities
      * @param dnu_sync Array of synchrotron frequency bin widths
      * <!-- ************************************************************************************** -->
      */
-    void compute_IC_spectrum(GridParams const& params, Array const& gamma, Array const& nu_sync, Array const& dN_e,
-                             Array const& I_nu_sync, Array const& dnu_sync);
+    void compute_IC_spectrum(GridParams const& params, Array const& gamma, Array const& nu_sync, Array const& dnu_sync);
 
     Array log2_nu_IC;
 
@@ -294,9 +287,9 @@ void ICPhoton<Electrons, Photons>::generate_spectrum() {
     const auto params = compute_grid_params();
     initialize_grids(params);
 
-    Array gamma, dgamma, nu_sync, dnu_sync, dN_e, I_nu_sync;
-    preprocess_distributions(params, gamma, dgamma, nu_sync, dnu_sync, dN_e, I_nu_sync);
-    compute_IC_spectrum(params, gamma, nu_sync, dN_e, I_nu_sync, dnu_sync);
+    Array gamma, nu_sync, dnu_sync;
+    preprocess_distributions(params, gamma, nu_sync, dnu_sync);
+    compute_IC_spectrum(params, gamma, nu_sync, dnu_sync);
 
     generated = true;
 }
@@ -329,7 +322,7 @@ void ICPhoton<Electrons, Photons>::initialize_grids(GridParams const& params) {
     const size_t safe_resol = std::max(params.spectrum_resol, static_cast<size_t>(2));
 
     log2_nu_IC = xt::linspace(std::log2(params.nu_IC_min), std::log2(params.nu_IC_max), safe_resol);
-
+    log2_I_nu_IC = Array::from_shape({safe_resol});
     interp_slope = Array::from_shape({safe_resol - 1});
 
     const Real dlog2 = log2_nu_IC(1) - log2_nu_IC(0);
@@ -337,149 +330,114 @@ void ICPhoton<Electrons, Photons>::initialize_grids(GridParams const& params) {
 }
 
 template <typename Electrons, typename Photons>
-void ICPhoton<Electrons, Photons>::preprocess_distributions(GridParams const& params, Array& gamma, Array& dgamma,
-                                                            Array& nu_sync, Array& dnu_sync, Array& dN_e,
-                                                            Array& I_nu_sync) const {
-
+void ICPhoton<Electrons, Photons>::preprocess_distributions(GridParams const& params, Array& gamma, Array& nu_sync,
+                                                            Array& dnu_sync) const {
     // Adaptive grid for nu_sync (CDF + interpolation absorbs grid rearrangement)
-    const size_t nu_N = build_adaptive_grid(std::log2(params.nu_min), std::log2(params.nu_max), params.nu_breaks,
-                                            params.n_nu_breaks, nu_grid_per_order, nu_sync, dnu_sync);
+    build_adaptive_grid(std::log2(params.nu_min), std::log2(params.nu_max), params.nu_breaks, params.n_nu_breaks,
+                        nu_grid_per_order, nu_sync, dnu_sync);
 
-    // Uniform log grid for gamma (midpoint rule: cell centers + bin widths)
-    logspace_boundary_center(std::log2(params.gamma_min), std::log2(params.gamma_max), params.gamma_size, gamma,
-                             dgamma);
-
-    // Column density with bin_width baked in (midpoint rule)
-    dN_e = Array::from_shape({params.gamma_size});
-    for (size_t i = 0; i < params.gamma_size; ++i) {
-        dN_e(i) = electrons.compute_column_den(gamma(i)) * dgamma(i);
-    }
-
-    I_nu_sync = Array::from_shape({nu_N});
-    for (size_t j = 0; j < nu_N; ++j) {
-        I_nu_sync(j) = photons.compute_I_nu(nu_sync(j));
-    }
+    // Uniform log grid for gamma (centers only; bin widths = gamma * width_factor, computed in compute_IC_spectrum)
+    logspace_center(std::log2(params.gamma_min), std::log2(params.gamma_max), params.gamma_size, gamma);
 }
 
 template <typename Electrons, typename Photons>
 void ICPhoton<Electrons, Photons>::compute_IC_spectrum(GridParams const& params, Array const& gamma,
-                                                       Array const& nu_sync, Array const& dN_e, Array const& I_nu_sync,
-                                                       Array const& dnu_sync) {
-    Array nu_IC = xt::exp2(log2_nu_IC);
+                                                       Array const& nu_sync, Array const& dnu_sync) {
     Array I_nu_IC = xt::zeros<Real>({params.spectrum_resol});
 
-    const size_t nu_N = nu_sync.size();
-    const int nu_last = static_cast<int>(nu_N) - 1;
-    const size_t gamma_N = gamma.size();
-
+    const int nu_last = static_cast<int>(nu_sync.size()) - 1;
     const Real log2_nu_IC_0 = log2_nu_IC(0);
+    const Real ratio = std::exp2(log2_nu_IC(1) - log2_nu_IC_0);
     const Real log2_nu_sync_max = fast_log2(nu_sync(nu_last));
     const int spec_last = static_cast<int>(params.spectrum_resol) - 1;
+    const Real nu_seed_coeff = std::exp2(log2_nu_IC_0) / (4 * IC_x0); // nu_seed = nu_seed_coeff / gi^2
 
-    // dnu_sync contains N-1 interval widths from build_adaptive_grid
-    Array inv_dnu = Array::from_shape({static_cast<size_t>(nu_last)});
-    for (int j = 0; j < nu_last; ++j) {
-        inv_dnu(j) = 1.0 / dnu_sync(j);
-    }
+    // Uniform log gamma grid: dgamma(i) = gamma(i) * width_factor (constant ratio)
+    const Real r_gamma =
+        std::exp2((std::log2(params.gamma_max) - std::log2(params.gamma_min)) / static_cast<Real>(params.gamma_size));
+    const Real width_factor = (r_gamma - 1.0) / std::sqrt(r_gamma);
 
-    // Log2 positions for seed frequency lookup
-    Array log2_nu_s = Array::from_shape({nu_N});
-    for (size_t j = 0; j < nu_N; ++j) {
-        log2_nu_s(j) = fast_log2(nu_sync(j));
-    }
+    Array cdf = Array::from_shape({nu_sync.size()});
+    Array f_vals = Array::from_shape({nu_sync.size()});
 
-    Array cdf = Array::from_shape({nu_N});
-
-    // Quadratic CDF lookup: recomputes integrand at scan_idx, scan_idx+1 inline
-    auto cdf_partial_bin = [&](int idx, Real frac, Real f_lo, Real f_hi) {
-        const Real one_m_frac = 1.0 - frac;
-        return std::max(cdf(idx + 1) + one_m_frac * dnu_sync(idx) * 0.5 * (f_hi * (1.0 + frac) + f_lo * one_m_frac),
+    // Partial-bin CDF interpolation (consistent with trapezoidal rule)
+    auto cdf_lookup = [&](int idx, Real frac) {
+        const Real t = 1.0 - frac;
+        return std::max(cdf(idx + 1) + t * dnu_sync(idx) * 0.5 * (f_vals(idx + 1) * (1.0 + frac) + f_vals(idx) * t),
                         Real(0));
     };
 
+    // Scan CDF and accumulate I_nu_IC for one electron energy bin
+    auto accumulate = [&](Real weight, Real log2_down, Real nu_seed_0) {
+        const int k_max =
+            std::clamp(static_cast<int>((log2_nu_sync_max - log2_down - log2_nu_IC_0) * inv_dlog2_nu), 0, spec_last);
+        Real nu_seed = nu_seed_0;
+        int scan_idx = 0;
+        for (int k = 0; k <= k_max; ++k) {
+            while (scan_idx < nu_last && nu_sync(scan_idx + 1) <= nu_seed) {
+                ++scan_idx;
+            }
+            if (scan_idx < nu_last) {
+                const Real frac = std::clamp((nu_seed - nu_sync(scan_idx)) / dnu_sync(scan_idx), Real(0), Real(1));
+                I_nu_IC(k) += weight * cdf_lookup(scan_idx, frac);
+            }
+            nu_seed *= ratio;
+        }
+    };
+
     if (!KN) {
-        // Thomson: build trapezoidal CDF in one backward pass
+        // Thomson: f_vals = I_nu / nu^2, built once from photon spectrum
+        f_vals(nu_last) = photons.compute_I_nu(nu_sync(nu_last)) / (nu_sync(nu_last) * nu_sync(nu_last));
         cdf(nu_last) = 0;
-        Real prev_f = I_nu_sync(nu_last) / (nu_sync(nu_last) * nu_sync(nu_last));
         for (int j = nu_last - 1; j >= 0; --j) {
-            const Real cur_f = I_nu_sync(j) / (nu_sync(j) * nu_sync(j));
-            cdf(j) = cdf(j + 1) + 0.5 * (cur_f + prev_f) * dnu_sync(j);
-            prev_f = cur_f;
+            f_vals(j) = photons.compute_I_nu(nu_sync(j)) / (nu_sync(j) * nu_sync(j));
+            cdf(j) = cdf(j + 1) + 0.5 * (f_vals(j) + f_vals(j + 1)) * dnu_sync(j);
         }
 
-        // Precompute inv_nu2 for inline integrand recomputation in lookup
-        Array inv_nu2 = Array::from_shape({nu_N});
-        for (size_t j = 0; j < nu_N; ++j)
-            inv_nu2(j) = 1.0 / (nu_sync(j) * nu_sync(j));
-
-        for (size_t i = 0; i < gamma_N; ++i) {
-            if (dN_e(i) <= 0)
+        for (Real gi : gamma) {
+            const Real dN_e = electrons.compute_column_den(gi) * width_factor;
+            if (dN_e <= 0) {
                 continue;
-            const Real gamma_i2 = gamma(i) * gamma(i);
-            const Real down_scatter = 1.0 / (4 * IC_x0 * gamma_i2);
-            const Real log2_down = -fast_log2(4 * IC_x0 * gamma_i2);
-            const Real weight = dN_e(i) / gamma_i2;
-            const int k_max = std::clamp(static_cast<int>((log2_nu_sync_max - log2_down - log2_nu_IC_0) * inv_dlog2_nu),
-                                         0, spec_last);
-            int scan_idx = 0;
-            for (int k = 0; k <= k_max; ++k) {
-                while (scan_idx < nu_last && log2_nu_s(scan_idx + 1) <= log2_nu_IC(k) + log2_down)
-                    ++scan_idx;
-                Real F = 0;
-                if (scan_idx < nu_last) {
-                    const Real frac =
-                        std::clamp((nu_IC(k) * down_scatter - nu_sync(scan_idx)) * inv_dnu(scan_idx), Real(0), Real(1));
-                    F = cdf_partial_bin(scan_idx, frac, I_nu_sync(scan_idx) * inv_nu2(scan_idx),
-                                        I_nu_sync(scan_idx + 1) * inv_nu2(scan_idx + 1));
-                }
-                I_nu_IC(k) += weight * F;
             }
+            const Real gi2 = gi * gi;
+            accumulate(dN_e / gi, -fast_log2(4 * IC_x0 * gi2), nu_seed_coeff / gi2);
         }
     } else {
-        // KN: rebuild trapezoidal CDF per gamma bin
-        for (size_t i = 0; i < gamma_N; ++i) {
-            if (dN_e(i) <= 0)
+        // KN: precompute I_nu once, rebuild f_vals per gamma bin with KN cross section
+        Array I_nu_sync = Array::from_shape({nu_sync.size()});
+        for (int j = 0; j <= nu_last; ++j)
+            I_nu_sync(j) = photons.compute_I_nu(nu_sync(j));
+
+        for (Real gi : gamma) {
+            const Real dN_e = electrons.compute_column_den(gi) * width_factor;
+            if (dN_e <= 0) {
                 continue;
-            const Real gamma_i = gamma(i);
-            const Real gamma_i2 = gamma_i * gamma_i;
-            const Real down_scatter = 1.0 / (4 * IC_x0 * gamma_i2);
-            const Real log2_down = -fast_log2(4 * IC_x0 * gamma_i2);
-            const Real weight = dN_e(i);
-            const int k_max = std::clamp(static_cast<int>((log2_nu_sync_max - log2_down - log2_nu_IC_0) * inv_dlog2_nu),
-                                         0, spec_last);
+            }
 
-            // One-pass CDF with KN cross section
-            auto kn_integrand = [&](size_t j) {
-                const Real nc = gamma_i * nu_sync(j);
-                return I_nu_sync(j) * compton_cross_section(nc) / (nc * nc);
-            };
+            // Build CDF and store integrand in f_vals
+            f_vals(nu_last) = [&] {
+                const Real x = gi * nu_sync(nu_last);
+                return I_nu_sync(nu_last) * compton_cross_section(x) / (x * x);
+            }();
             cdf(nu_last) = 0;
-            Real prev_f = kn_integrand(nu_last);
             for (int j = nu_last - 1; j >= 0; --j) {
-                const Real cur_f = kn_integrand(j);
-                cdf(j) = cdf(j + 1) + 0.5 * (cur_f + prev_f) * dnu_sync(j);
-                prev_f = cur_f;
+                const Real x = gi * nu_sync(j);
+                f_vals(j) = I_nu_sync(j) * compton_cross_section(x) / (x * x);
+                cdf(j) = cdf(j + 1) + 0.5 * (f_vals(j) + f_vals(j + 1)) * dnu_sync(j);
             }
 
-            int scan_idx = 0;
-            for (int k = 0; k <= k_max; ++k) {
-                while (scan_idx < nu_last && log2_nu_s(scan_idx + 1) <= log2_nu_IC(k) + log2_down)
-                    ++scan_idx;
-                Real F = 0;
-                if (scan_idx < nu_last) {
-                    const Real frac =
-                        std::clamp((nu_IC(k) * down_scatter - nu_sync(scan_idx)) * inv_dnu(scan_idx), Real(0), Real(1));
-                    F = cdf_partial_bin(scan_idx, frac, kn_integrand(scan_idx), kn_integrand(scan_idx + 1));
-                }
-                I_nu_IC(k) += weight * F;
-            }
+            const Real gi2 = gi * gi;
+            accumulate(dN_e / gi, -fast_log2(4 * IC_x0 * gi2), nu_seed_coeff / gi2);
         }
     }
-    log2_I_nu_IC = xt::log2(I_nu_IC * nu_IC * 0.25 * (KN ? Real(1) : con::sigmaT));
 
-    for (size_t i = 0; i < params.spectrum_resol - 1; ++i) {
+    // Convert to log2 intensity and compute interpolation slopes
+    const Real log2_scale = fast_log2(0.25 * (KN ? Real(1) : con::sigmaT));
+    for (size_t i = 0; i < params.spectrum_resol; ++i)
+        log2_I_nu_IC(i) = fast_log2(I_nu_IC(i)) + log2_nu_IC(i) + log2_scale;
+
+    for (size_t i = 0; i + 1 < params.spectrum_resol; ++i)
         interp_slope(i) = (log2_I_nu_IC(i + 1) - log2_I_nu_IC(i)) * inv_dlog2_nu;
-    }
 }
 
 template <typename Electrons, typename Photons>
