@@ -10,14 +10,22 @@ namespace afterglow {
 
     class ProfileData {
       public:
-        void reset() { timings_.clear(); }
+        void reset() {
+            timings_.clear();
+            counters_.clear();
+        }
 
         void add(const std::string& name, double ms) { timings_[name] += ms; }
 
+        void increment(const std::string& name, size_t count = 1) { counters_[name] += count; }
+
         auto results() const -> std::unordered_map<std::string, double> { return timings_; }
+
+        auto counter_results() const -> std::unordered_map<std::string, size_t> { return counters_; }
 
       private:
         std::unordered_map<std::string, double> timings_;
+        std::unordered_map<std::string, size_t> counters_;
     };
 
     inline auto profiler() -> ProfileData& {
@@ -48,6 +56,9 @@ namespace afterglow {
     #define AFTERGLOW_PROFILE_SCOPE(name) afterglow::ScopedTimer _profiler_timer_##name(#name)
     #define AFTERGLOW_PROFILE_RESET() afterglow::profiler().reset()
     #define AFTERGLOW_PROFILE_RESULTS() afterglow::profiler().results()
+    #define AFTERGLOW_PROFILE_COUNT(name) afterglow::profiler().increment(#name)
+    #define AFTERGLOW_PROFILE_COUNT_N(name, n) afterglow::profiler().increment(#name, n)
+    #define AFTERGLOW_PROFILE_COUNTERS() afterglow::profiler().counter_results()
 
 #else
 
@@ -55,5 +66,9 @@ namespace afterglow {
     #define AFTERGLOW_PROFILE_RESET()
     #define AFTERGLOW_PROFILE_RESULTS()                                                                                \
         std::unordered_map<std::string, double> {}
+    #define AFTERGLOW_PROFILE_COUNT(name)
+    #define AFTERGLOW_PROFILE_COUNT_N(name, n)
+    #define AFTERGLOW_PROFILE_COUNTERS()                                                                               \
+        std::unordered_map<std::string, size_t> {}
 
 #endif

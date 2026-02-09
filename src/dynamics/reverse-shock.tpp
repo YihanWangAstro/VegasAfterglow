@@ -35,6 +35,8 @@ FRShockEqn<Ejecta, Medium>::FRShockEqn(Medium const& medium, Ejecta const& eject
     if constexpr (HasSigma<Ejecta>) {
         dm0_dt /= 1 + ejecta.sigma0(phi, theta);
     }
+    gamma_m_coeff_fwd_ = (rad_fwd.p - 2) / (rad_fwd.p - 1) * rad_fwd.eps_e * con::mp / con::me / rad_fwd.xi_e;
+    gamma_c_coeff_fwd_ = 6 * con::pi * con::me * con::c / con::sigmaT / rad_fwd.eps_B;
 }
 
 template <typename Ejecta, typename Medium>
@@ -91,9 +93,7 @@ Real FRShockEqn<Ejecta, Medium>::compute_dGamma_dt(State const& state, State con
 template <typename Ejecta, typename Medium>
 Real FRShockEqn<Ejecta, Medium>::compute_dU2_dt(State const& state, State const& diff, Real t) const noexcept {
     const Real e_th = (state.Gamma - 1) * 4 * state.Gamma * medium.rho(phi, state.theta, state.r) * con::c2;
-    // Real V_comv = state.r * state.r * state.r / (12 * state.Gamma * state.Gamma);
-    // Real e_th = state.U2_th / V_comv;
-    const Real eps_rad = compute_radiative_efficiency(state.t_comv, state.Gamma, e_th, rad_fwd);
+    const Real eps_rad = compute_eps_rad_fwd(state.t_comv, state.Gamma, e_th);
 
     const Real ad_idx = physics::thermo::adiabatic_idx(state.Gamma);
 
@@ -221,11 +221,24 @@ Real FRShockEqn<Ejecta, Medium>::compute_dm4_dt(State const& state, State const&
 }
 
 template <typename Ejecta, typename Medium>
-void FRShockEqn<Ejecta, Medium>::operator()(State const& state, State& diff, Real t) {
-    const Real beta3 = physics::relativistic::gamma_to_beta(state.Gamma);
+Real FRShockEqn<Ejecta, Medium>::compute_eps_rad_fwd(Real t_comv, Real Gamma, Real e_th) const noexcept {
+    const Real gamma_m = gamma_m_coeff_fwd_ * (Gamma - 1) + 1;
+    const Real gamma_c = std::max(gamma_c_coeff_fwd_ / (e_th * t_comv), 1.0);
+    const Real ratio = gamma_m / gamma_c;
+    if (ratio < 1 && rad_fwd.p > 2) {
+        if (ratio < 1e-2) return 0;
+        return rad_fwd.eps_e * fast_pow(ratio, rad_fwd.p - 2);
+    }
+    return rad_fwd.eps_e;
+}
 
-    diff.r = compute_dr_dt(beta3);
-    diff.t_comv = compute_dt_dt_comv(state.Gamma, beta3);
+template <typename Ejecta, typename Medium>
+void FRShockEqn<Ejecta, Medium>::operator()(State const& state, State& diff, Real t) {
+    const Real Gamma = state.Gamma;
+    const Real u3 = std::sqrt(Gamma * Gamma - 1);
+
+    diff.r = compute_dr_dt(Gamma, u3);
+    diff.t_comv = Gamma + u3;
 
     diff.m2 = compute_dm2_dt(state, diff, t);
 

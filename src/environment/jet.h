@@ -10,6 +10,7 @@
 #include <cmath>
 #include <cstdint>
 #include <utility>
+#include <variant>
 
 #include "../util/utilities.h"
 
@@ -220,7 +221,13 @@ class PowerLawJet {
      */
     PowerLawJet(Real theta_c, Real E_iso, Real Gamma0, Real k_e, Real k_g, bool spreading = false,
                 Real T0 = 1 * unit::sec) noexcept
-        : T0(T0), spreading(spreading), theta_c_(theta_c), eps_k_(E_iso / (4 * con::pi)), Gamma0_(Gamma0), k_e_(k_e) {}
+        : T0(T0),
+          spreading(spreading),
+          theta_c_(theta_c),
+          eps_k_(E_iso / (4 * con::pi)),
+          Gamma0_(Gamma0),
+          k_e_(k_e),
+          k_g_(k_g) {}
 
     /**
      * <!-- ************************************************************************************** -->
@@ -258,6 +265,27 @@ class PowerLawJet {
     Real const k_e_{2};     ///< Power-law index for energy angular dependence
     Real const k_g_{2};     ///< Power-law index for Lorentz factor angular dependence
 };
+
+/// Type-erased jet variant for optimized dispatch in the ODE hot loop.
+/// Concrete jet types have inline eps_k()/Gamma0() and no injection members,
+/// enabling smaller state vectors and eliminated code paths via if constexpr.
+/// Ejecta uses std::function as fallback for custom jets and magnetar injection.
+using JetVariant = std::variant<TophatJet, GaussianJet, PowerLawJet, Ejecta>;
+
+/// Helper: evaluate eps_k on a JetVariant (for non-hot-path code)
+inline Real jet_eps_k(JetVariant const& jv, Real phi, Real theta) {
+    return std::visit([&](auto const& j) { return j.eps_k(phi, theta); }, jv);
+}
+
+/// Helper: evaluate Gamma0 on a JetVariant (for non-hot-path code)
+inline Real jet_Gamma0(JetVariant const& jv, Real phi, Real theta) {
+    return std::visit([&](auto const& j) { return j.Gamma0(phi, theta); }, jv);
+}
+
+/// Helper: read spreading flag on a JetVariant
+inline bool jet_spreading(JetVariant const& jv) {
+    return std::visit([](auto const& j) { return j.spreading; }, jv);
+}
 
 /**
  * <!-- ************************************************************************************** -->

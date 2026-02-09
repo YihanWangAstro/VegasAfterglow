@@ -16,6 +16,7 @@
 #include "../include/afterglow.h"
 #include "config/simulation-defaults.h"
 #include "pybind.h"
+#include "shock_dispatch.h"
 #include "util/macros.h"
 #include "util/profiler.h"
 
@@ -71,8 +72,8 @@ struct PyMagnetar {
  * @return Ejecta Configured ejecta object representing the top-hat jet structure
  * <!-- ************************************************************************************** -->
  */
-Ejecta PyTophatJet(Real theta_c, Real E_iso, Real Gamma0, bool spreading = false, Real duration = 1,
-                   const std::optional<PyMagnetar>& magnetar = std::nullopt);
+JetVariant PyTophatJet(Real theta_c, Real E_iso, Real Gamma0, bool spreading = false, Real duration = 1,
+                       const std::optional<PyMagnetar>& magnetar = std::nullopt);
 
 /**
  * <!-- ************************************************************************************** -->
@@ -91,8 +92,8 @@ Ejecta PyTophatJet(Real theta_c, Real E_iso, Real Gamma0, bool spreading = false
  * @return Ejecta Configured ejecta object representing the Gaussian jet structure
  * <!-- ************************************************************************************** -->
  */
-Ejecta PyGaussianJet(Real theta_c, Real E_iso, Real Gamma0, bool spreading = false, Real duration = 1,
-                     const std::optional<PyMagnetar>& magnetar = std::nullopt);
+JetVariant PyGaussianJet(Real theta_c, Real E_iso, Real Gamma0, bool spreading = false, Real duration = 1,
+                         const std::optional<PyMagnetar>& magnetar = std::nullopt);
 
 /**
  * <!-- ************************************************************************************** -->
@@ -113,8 +114,8 @@ Ejecta PyGaussianJet(Real theta_c, Real E_iso, Real Gamma0, bool spreading = fal
  * @return Ejecta Configured ejecta object representing the power-law jet structure
  * <!-- ************************************************************************************** -->
  */
-Ejecta PyPowerLawJet(Real theta_c, Real E_iso, Real Gamma0, Real k_e, Real k_g, bool spreading = false,
-                     Real duration = 1, const std::optional<PyMagnetar>& magnetar = std::nullopt);
+JetVariant PyPowerLawJet(Real theta_c, Real E_iso, Real Gamma0, Real k_e, Real k_g, bool spreading = false,
+                         Real duration = 1, const std::optional<PyMagnetar>& magnetar = std::nullopt);
 
 /**
  * <!-- ************************************************************************************** -->
@@ -134,8 +135,8 @@ Ejecta PyPowerLawJet(Real theta_c, Real E_iso, Real Gamma0, Real k_e, Real k_g, 
  * @return Ejecta Configured ejecta object representing the power-law wing jet structure
  * <!-- ************************************************************************************** -->
  */
-Ejecta PyPowerLawWing(Real theta_c, Real E_iso_w, Real Gamma0_w, Real k_e, Real k_g, bool spreading = false,
-                      Real duration = 1);
+JetVariant PyPowerLawWing(Real theta_c, Real E_iso_w, Real Gamma0_w, Real k_e, Real k_g, bool spreading = false,
+                          Real duration = 1);
 /**
  * <!-- ************************************************************************************** -->
  * @brief Creates a step power-law jet model: a pencil beam core and powerlaw wing with jump at theta_c.
@@ -156,8 +157,8 @@ Ejecta PyPowerLawWing(Real theta_c, Real E_iso_w, Real Gamma0_w, Real k_e, Real 
  * @return Ejecta Configured jet with step power-law profile
  * <!-- ************************************************************************************** -->
  */
-Ejecta PyStepPowerLawJet(Real theta_c, Real E_iso, Real Gamma0, Real E_iso_w, Real Gamma0_w, Real k_e, Real k_g,
-                         bool spreading, Real duration, const std::optional<PyMagnetar>& magnetar);
+JetVariant PyStepPowerLawJet(Real theta_c, Real E_iso, Real Gamma0, Real E_iso_w, Real Gamma0_w, Real k_e, Real k_g,
+                             bool spreading, Real duration, const std::optional<PyMagnetar>& magnetar);
 
 /**
  * <!-- ************************************************************************************** -->
@@ -178,9 +179,9 @@ Ejecta PyStepPowerLawJet(Real theta_c, Real E_iso, Real Gamma0, Real E_iso_w, Re
  * @return Ejecta Configured two-component jet with specified properties
  * <!-- ************************************************************************************** -->
  */
-Ejecta PyTwoComponentJet(Real theta_c, Real E_iso, Real Gamma0, Real theta_w, Real E_iso_w, Real Gamma0_w,
-                         bool spreading = false, Real duration = 1,
-                         const std::optional<PyMagnetar>& magnetar = std::nullopt);
+JetVariant PyTwoComponentJet(Real theta_c, Real E_iso, Real Gamma0, Real theta_w, Real E_iso_w, Real Gamma0_w,
+                             bool spreading = false, Real duration = 1,
+                             const std::optional<PyMagnetar>& magnetar = std::nullopt);
 
 /**
  * <!-- ************************************************************************************** -->
@@ -193,7 +194,7 @@ Ejecta PyTwoComponentJet(Real theta_c, Real E_iso, Real Gamma0, Real theta_w, Re
  * @return Medium Configured medium with constant ISM density properties
  * <!-- ************************************************************************************** -->
  */
-Medium PyISM(Real n_ism);
+ISM PyISM(Real n_ism);
 
 /**
  * <!-- ************************************************************************************** -->
@@ -210,7 +211,8 @@ Medium PyISM(Real n_ism);
  * @return Medium Configured medium object representing stellar wind properties
  * <!-- ************************************************************************************** -->
  */
-Medium PyWind(Real A_star, std::optional<Real> n_ism = std::nullopt, std::optional<Real> n0 = std::nullopt, Real k = 2);
+MediumVariant PyWind(Real A_star, std::optional<Real> n_ism = std::nullopt, std::optional<Real> n0 = std::nullopt,
+                     Real k = 2);
 
 /**
  * <!-- ************************************************************************************** -->
@@ -326,7 +328,8 @@ class PyRadiation {
  * @param medium Medium object representing circumburst environment density profile
  * <!-- ************************************************************************************** -->
  */
-void convert_unit(Ejecta& jet, Medium& medium);
+void convert_unit_jet(JetVariant& jet);
+void convert_unit_medium(MediumVariant& medium);
 
 using XTArray = xt::xarray<Real>;
 
@@ -506,7 +509,7 @@ class PyModel {
      * @param axisymmetric Whether to assume axisymmetric jet structure (default: true)
      * <!-- ************************************************************************************** -->
      */
-    PyModel(Ejecta jet, Medium medium, const PyObserver& observer, const PyRadiation& fwd_rad,
+    PyModel(JetVariant jet, MediumVariant medium, const PyObserver& observer, const PyRadiation& fwd_rad,
             const std::optional<PyRadiation>& rvs_rad = std::nullopt,
             const std::tuple<Real, Real, Real>& resolutions = std::make_tuple(0.15, 0.5, 10), Real rtol = 1e-5,
             bool axisymmetric = true)
@@ -520,7 +523,8 @@ class PyModel {
           t_resol(std::get<2>(resolutions)),
           rtol(rtol),
           axisymmetric(axisymmetric) {
-        convert_unit(this->jet_, this->medium_);
+        convert_unit_jet(this->jet_);
+        convert_unit_medium(this->medium_);
     }
 
     /**
@@ -604,6 +608,7 @@ class PyModel {
 
 #ifdef AFTERGLOW_PROFILE
     static auto profile_data() -> std::unordered_map<std::string, double> { return AFTERGLOW_PROFILE_RESULTS(); }
+    static auto profile_counters() -> std::unordered_map<std::string, size_t> { return AFTERGLOW_PROFILE_COUNTERS(); }
     static void profile_reset() { AFTERGLOW_PROFILE_RESET(); }
 #endif
 
@@ -718,8 +723,13 @@ class PyModel {
     static void average_exposure_flux(PyFlux& result, std::vector<size_t> const& idx_sorted, size_t original_size,
                                       size_t num_points);
 
-    Ejecta jet_;                            ///< Jet model
-    Medium medium_;                         ///< Circumburst medium
+    GridConfig grid_config(size_t min_t_pts, Real min_t_frac) const {
+        return {theta_w, obs_setup.theta_obs, obs_setup.z, phi_resol, theta_resol,
+                t_resol, axisymmetric,        min_t_pts,   min_t_frac};
+    }
+
+    JetVariant jet_;                        ///< Jet model (TophatJet, GaussianJet, PowerLawJet, or Ejecta)
+    MediumVariant medium_;                  ///< Circumburst medium (ISM, Wind, or generic Medium)
     PyObserver obs_setup;                   ///< Observer configuration
     PyRadiation fwd_rad;                    ///< Forward shock radiation parameters
     std::optional<PyRadiation> rvs_rad_opt; ///< Optional reverse shock radiation parameters
@@ -784,45 +794,24 @@ auto PyModel::compute_emission(Array const& t_obs, Array const& nu_obs, Func&& f
     AFTERGLOW_PROFILE_SCOPE(total);
 
     PyFlux flux;
-
     Observer observer;
 
     if (!rvs_rad_opt) {
-        auto coord = [&] {
-            AFTERGLOW_PROFILE_SCOPE(mesh);
-            return auto_grid(jet_, medium_, t_obs, this->theta_w, obs_setup.theta_obs, obs_setup.z, phi_resol,
-                             theta_resol, t_resol, axisymmetric, 0, 32, 0.4);
+        auto [coord, fwd_shock] = [&] {
+            AFTERGLOW_PROFILE_SCOPE(dynamics);
+            return solve_fwd_shock(jet_, medium_, t_obs, grid_config(32, 0.4), fwd_rad.rad, rtol);
         }();
-
-        auto fwd_shock = [&] {
-            AFTERGLOW_PROFILE_SCOPE(shock_dynamics);
-            return generate_fwd_shock(coord, medium_, jet_, fwd_rad.rad, rtol);
-        }();
-
         single_shock_emission(fwd_shock, coord, t_obs, nu_obs, observer, fwd_rad, flux.fwd,
                               std::forward<Func>(flux_func));
-
-        return flux;
     } else {
-        auto coord = [&] {
-            AFTERGLOW_PROFILE_SCOPE(mesh);
-            return auto_grid(jet_, medium_, t_obs, this->theta_w, obs_setup.theta_obs, obs_setup.z, phi_resol,
-                             theta_resol, t_resol, axisymmetric, 0, 36, 0.5);
+        auto [coord, fwd_shock, rvs_shock] = [&] {
+            AFTERGLOW_PROFILE_SCOPE(dynamics);
+            return solve_shock_pair(jet_, medium_, t_obs, grid_config(36, 0.5), fwd_rad.rad, rvs_rad_opt->rad, rtol);
         }();
-
-        auto rvs_rad = *rvs_rad_opt;
-
-        auto [fwd_shock, rvs_shock] = [&] {
-            AFTERGLOW_PROFILE_SCOPE(shock_dynamics);
-            return generate_shock_pair(coord, medium_, jet_, fwd_rad.rad, rvs_rad.rad, rtol);
-        }();
-
         single_shock_emission(fwd_shock, coord, t_obs, nu_obs, observer, fwd_rad, flux.fwd,
                               std::forward<Func>(flux_func));
-
-        single_shock_emission(rvs_shock, coord, t_obs, nu_obs, observer, rvs_rad, flux.rvs,
+        single_shock_emission(rvs_shock, coord, t_obs, nu_obs, observer, *rvs_rad_opt, flux.rvs,
                               std::forward<Func>(flux_func));
-
-        return flux;
     }
+    return flux;
 }

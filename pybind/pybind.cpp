@@ -8,6 +8,8 @@
 #define FORCE_IMPORT_ARRAY // numpy C api loading must before any xtensor-python headers
 #include "pybind.h"
 
+#include <pybind11/stl.h>
+
 #include "mcmc.h"
 #include "pymodel.h"
 
@@ -53,13 +55,26 @@ PYBIND11_MODULE(VegasAfterglowC, m) {
              py::arg("Gamma0"), py::arg("sigma0") = zero2d_fn, py::arg("E_dot") = zero3d_fn,
              py::arg("M_dot") = zero3d_fn, py::arg("spreading") = false, py::arg("duration") = 1);
 
-    // Medium bindings
-    m.def("ISM", &PyISM, py::arg("n_ism"));
+    // Jet bindings — register concrete types for std::variant support
+    auto tophat_type [[maybe_unused]] = py::class_<TophatJet>(m, "_TophatJet");
+    auto gaussian_type [[maybe_unused]] = py::class_<GaussianJet>(m, "_GaussianJet");
+    auto powerlaw_type [[maybe_unused]] = py::class_<PowerLawJet>(m, "_PowerLawJet");
 
-    m.def("Wind", &PyWind, py::arg("A_star"), py::arg("n_ism") = py::none(), py::arg("n0") = py::none(),
-          py::arg("k") = 2);
-
+    // Medium bindings — register concrete types for std::variant support
+    auto ism_type [[maybe_unused]] = py::class_<ISM>(m, "_ISM");
+    auto wind_type [[maybe_unused]] = py::class_<Wind>(m, "_Wind");
     py::class_<Medium>(m, "Medium").def(py::init<TernaryFunc>(), py::arg("rho"));
+
+    // Factory functions return MediumVariant (ISM/Wind for optimized path, Medium for fallback)
+    m.def(
+        "ISM", [](Real n_ism) -> MediumVariant { return PyISM(n_ism); }, py::arg("n_ism"));
+
+    m.def(
+        "Wind",
+        [](Real A_star, std::optional<Real> n_ism, std::optional<Real> n0, Real k) -> MediumVariant {
+            return PyWind(A_star, n_ism, n0, k);
+        },
+        py::arg("A_star"), py::arg("n_ism") = py::none(), py::arg("n0") = py::none(), py::arg("k") = 2);
 
     // Observer bindings
     py::class_<PyObserver>(m, "Observer")
@@ -86,8 +101,36 @@ PYBIND11_MODULE(VegasAfterglowC, m) {
 
     // Model bindings
     py::class_<PyModel>(m, "Model")
-        .def(py::init<Ejecta, Medium, PyObserver, PyRadiation, std::optional<PyRadiation>, std::tuple<Real, Real, Real>,
-                      Real, bool>(),
+        .def(py::init([](py::object jet_obj, py::object medium_obj, PyObserver observer, PyRadiation fwd_rad,
+                         std::optional<PyRadiation> rvs_rad, std::tuple<Real, Real, Real> resolutions, Real rtol,
+                         bool axisymmetric) -> PyModel {
+                 // Build JetVariant from Python object (IIFE avoids default construction)
+                 auto jet = [&]() -> JetVariant {
+                     if (py::isinstance<TophatJet>(jet_obj))
+                         return jet_obj.cast<TophatJet>();
+                     if (py::isinstance<GaussianJet>(jet_obj))
+                         return jet_obj.cast<GaussianJet>();
+                     if (py::isinstance<PowerLawJet>(jet_obj))
+                         return jet_obj.cast<PowerLawJet>();
+                     if (py::isinstance<Ejecta>(jet_obj))
+                         return jet_obj.cast<Ejecta>();
+                     throw py::type_error("jet must be TophatJet, GaussianJet, PowerLawJet, or Ejecta");
+                 }();
+
+                 // Build MediumVariant from Python object
+                 auto medium = [&]() -> MediumVariant {
+                     if (py::isinstance<ISM>(medium_obj))
+                         return medium_obj.cast<ISM>();
+                     if (py::isinstance<Wind>(medium_obj))
+                         return medium_obj.cast<Wind>();
+                     if (py::isinstance<Medium>(medium_obj))
+                         return medium_obj.cast<Medium>();
+                     throw py::type_error("medium must be ISM, Wind, or Medium");
+                 }();
+
+                 return PyModel(std::move(jet), std::move(medium), observer, fwd_rad, rvs_rad, resolutions, rtol,
+                                axisymmetric);
+             }),
              py::arg("jet"), py::arg("medium"), py::arg("observer"), py::arg("fwd_rad"),
              py::arg("rvs_rad") = py::none(), py::arg("resolutions") = std::make_tuple(0.15, 0.5, 10),
              py::arg("rtol") = 1e-6, py::arg("axisymmetric") = true)
@@ -123,6 +166,8 @@ PYBIND11_MODULE(VegasAfterglowC, m) {
         .def("__repr__", &PyModel::repr)
 #ifdef AFTERGLOW_PROFILE
         .def_static("profile_data", &PyModel::profile_data, "Get per-stage timing from the last computation (ms)")
+        .def_static("profile_counters", &PyModel::profile_counters,
+                    "Get profiling counters (rays, ODE steps, RHS evals)")
         .def_static("profile_reset", &PyModel::profile_reset, "Reset profiling counters")
 #endif
         ;

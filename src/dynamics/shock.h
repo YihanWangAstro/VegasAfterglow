@@ -267,6 +267,12 @@ inline Real compute_dr_dt(Real beta) {
     return (beta * con::c) / (1 - beta);
 }
 
+/// Overload using four-velocity u and Lorentz factor Gamma directly.
+/// dr/dt = βc/(1-β) = uc(Γ+u), exploiting Γ²-u²=1 to avoid divisions and 1-β cancellation.
+inline Real compute_dr_dt(Real Gamma, Real u) {
+    return u * (Gamma + u) * con::c;
+}
+
 /**
  * <!-- ************************************************************************************** -->
  * @brief Computes the time derivative of theta (dθ/dt) for jet spreading.
@@ -296,7 +302,7 @@ inline Real compute_dtheta_dt(Real theta_s, Real theta, Real drdt, Real r, Real 
  */
 inline Real compute_dt_dt_comv(Real Gamma, Real beta) {
     return 1 / (Gamma * (1 - beta));
-};
+}
 
 /**
  * <!-- ************************************************************************************** -->

@@ -24,34 +24,44 @@ void initialize_ejecta(Ejecta& jet, bool spreading, Real duration, const std::op
     }
 }
 
-Ejecta PyTophatJet(Real theta_c, Real E_iso, Real Gamma0, bool spreading, Real duration,
-                   const std::optional<PyMagnetar>& magnetar) {
-    Ejecta jet;
-    jet.eps_k = math::tophat(theta_c, E_iso);
-    jet.Gamma0 = math::tophat_plus_one(theta_c, Gamma0 - 1);
-    initialize_ejecta(jet, spreading, duration, magnetar, theta_c);
-    return jet;
+JetVariant PyTophatJet(Real theta_c, Real E_iso, Real Gamma0, bool spreading, Real duration,
+                       const std::optional<PyMagnetar>& magnetar) {
+    if (magnetar) {
+        Ejecta jet;
+        jet.eps_k = math::tophat(theta_c, E_iso);
+        jet.Gamma0 = math::tophat_plus_one(theta_c, Gamma0 - 1);
+        initialize_ejecta(jet, spreading, duration, magnetar, theta_c);
+        return jet;
+    }
+    return TophatJet(theta_c, E_iso * unit::erg, Gamma0, spreading, duration * unit::sec);
 }
 
-Ejecta PyGaussianJet(Real theta_c, Real E_iso, Real Gamma0, bool spreading, Real duration,
-                     const std::optional<PyMagnetar>& magnetar) {
-    Ejecta jet;
-    jet.eps_k = math::gaussian(theta_c, E_iso);
-    jet.Gamma0 = math::gaussian_plus_one(theta_c, Gamma0 - 1);
-    initialize_ejecta(jet, spreading, duration, magnetar, theta_c);
-    return jet;
+JetVariant PyGaussianJet(Real theta_c, Real E_iso, Real Gamma0, bool spreading, Real duration,
+                         const std::optional<PyMagnetar>& magnetar) {
+    if (magnetar) {
+        Ejecta jet;
+        jet.eps_k = math::gaussian(theta_c, E_iso);
+        jet.Gamma0 = math::gaussian_plus_one(theta_c, Gamma0 - 1);
+        initialize_ejecta(jet, spreading, duration, magnetar, theta_c);
+        return jet;
+    }
+    return GaussianJet(theta_c, E_iso * unit::erg, Gamma0, spreading, duration * unit::sec);
 }
 
-Ejecta PyPowerLawJet(Real theta_c, Real E_iso, Real Gamma0, Real k_e, Real k_g, bool spreading, Real duration,
-                     const std::optional<PyMagnetar>& magnetar) {
-    Ejecta jet;
-    jet.eps_k = math::powerlaw(theta_c, E_iso, k_e);
-    jet.Gamma0 = math::powerlaw_plus_one(theta_c, Gamma0 - 1, k_g);
-    initialize_ejecta(jet, spreading, duration, magnetar, theta_c);
-    return jet;
+JetVariant PyPowerLawJet(Real theta_c, Real E_iso, Real Gamma0, Real k_e, Real k_g, bool spreading, Real duration,
+                         const std::optional<PyMagnetar>& magnetar) {
+    if (magnetar) {
+        Ejecta jet;
+        jet.eps_k = math::powerlaw(theta_c, E_iso, k_e);
+        jet.Gamma0 = math::powerlaw_plus_one(theta_c, Gamma0 - 1, k_g);
+        initialize_ejecta(jet, spreading, duration, magnetar, theta_c);
+        return jet;
+    }
+    return PowerLawJet(theta_c, E_iso * unit::erg, Gamma0, k_e, k_g, spreading, duration * unit::sec);
 }
 
-Ejecta PyPowerLawWing(Real theta_c, Real E_iso_w, Real Gamma0_w, Real k_e, Real k_g, bool spreading, Real duration) {
+JetVariant PyPowerLawWing(Real theta_c, Real E_iso_w, Real Gamma0_w, Real k_e, Real k_g, bool spreading,
+                          Real duration) {
     Ejecta jet;
     jet.eps_k = math::powerlaw_wing(theta_c, E_iso_w, k_e);
     jet.Gamma0 = math::powerlaw_wing_plus_one(theta_c, Gamma0_w - 1, k_g);
@@ -60,8 +70,8 @@ Ejecta PyPowerLawWing(Real theta_c, Real E_iso_w, Real Gamma0_w, Real k_e, Real 
     return jet;
 }
 
-Ejecta PyStepPowerLawJet(Real theta_c, Real E_iso, Real Gamma0, Real E_iso_w, Real Gamma0_w, Real k_e, Real k_g,
-                         bool spreading, Real duration, const std::optional<PyMagnetar>& magnetar) {
+JetVariant PyStepPowerLawJet(Real theta_c, Real E_iso, Real Gamma0, Real E_iso_w, Real Gamma0_w, Real k_e, Real k_g,
+                             bool spreading, Real duration, const std::optional<PyMagnetar>& magnetar) {
     Ejecta jet;
     jet.eps_k = math::step_powerlaw(theta_c, E_iso, E_iso_w, k_e);
     jet.Gamma0 = math::step_powerlaw_plus_one(theta_c, Gamma0 - 1, Gamma0_w - 1, k_g);
@@ -69,8 +79,8 @@ Ejecta PyStepPowerLawJet(Real theta_c, Real E_iso, Real Gamma0, Real E_iso_w, Re
     return jet;
 }
 
-Ejecta PyTwoComponentJet(Real theta_c, Real E_iso, Real Gamma0, Real theta_w, Real E_iso_w, Real Gamma0_w,
-                         bool spreading, Real duration, const std::optional<PyMagnetar>& magnetar) {
+JetVariant PyTwoComponentJet(Real theta_c, Real E_iso, Real Gamma0, Real theta_w, Real E_iso_w, Real Gamma0_w,
+                             bool spreading, Real duration, const std::optional<PyMagnetar>& magnetar) {
     Ejecta jet;
     jet.eps_k = math::two_component(theta_c, theta_w, E_iso, E_iso_w);
     jet.Gamma0 = math::two_component_plus_one(theta_c, theta_w, Gamma0 - 1, Gamma0_w - 1);
@@ -78,57 +88,60 @@ Ejecta PyTwoComponentJet(Real theta_c, Real E_iso, Real Gamma0, Real theta_w, Re
     return jet;
 }
 
-Medium PyISM(Real n_ism) {
-    Medium medium;
-    medium.rho = [=](Real phi, Real theta, Real r) { return n_ism * 1.67e-24; };
-    medium.isotropic = true;
-
-    return medium;
+ISM PyISM(Real n_ism) {
+    return ISM(n_ism / unit::cm3);
 }
 
-Medium PyWind(Real A_star, std::optional<Real> n_ism_opt, std::optional<Real> n0_opt, Real k) {
-    Medium medium;
-
+MediumVariant PyWind(Real A_star, std::optional<Real> n_ism_opt, std::optional<Real> n0_opt, Real k) {
     const Real n_ism = n_ism_opt.value_or(0);
     const Real n0 = n0_opt.value_or(con::inf);
 
-    constexpr Real r0 = 1e17; // reference radius
-    const Real A = A_star * 5e11 * std::pow(r0, k - 2);
-
-    if (k >= 0) {
-        const Real rho_ism = n_ism * 1.67e-24;
-        const Real r0k = A / (n0 * 1.67e-24);
-        medium.rho = [=](Real phi, Real theta, Real r) { return A / (r0k + std::pow(r, k)) + rho_ism; };
-    } else {
-        const Real rho0 = n0 * 1.67e-24;
-        const Real r_ism = A / (n_ism * 1.67e-24);
-        medium.rho = [=](Real phi, Real theta, Real r) { return A / (r_ism + std::pow(r, k)) + rho0; };
+    if (k == 2) {
+        return Wind(A_star, n_ism / unit::cm3, n0 / unit::cm3);
     }
+    // General k: fall back to Medium with std::function (evn::wind handles unit conversion)
+    Medium medium;
+    medium.rho = evn::wind(A_star, n_ism / unit::cm3, n0 / unit::cm3, k);
     medium.isotropic = true;
-
     return medium;
 }
 
-void convert_unit(Ejecta& jet, Medium& medium) {
-    const auto eps_k_cgs = jet.eps_k;
-    jet.eps_k = [=](Real phi, Real theta) { return eps_k_cgs(phi, theta) * (unit::erg / (4 * con::pi)); };
+void convert_unit_jet(JetVariant& jet) {
+    std::visit(
+        [](auto& j) {
+            if constexpr (std::is_same_v<std::decay_t<decltype(j)>, Ejecta>) {
+                const auto eps_k_cgs = j.eps_k;
+                j.eps_k = [=](Real phi, Real theta) { return eps_k_cgs(phi, theta) * (unit::erg / (4 * con::pi)); };
 
-    const auto deps_dt_cgs = jet.deps_dt;
-    jet.deps_dt = [=](Real phi, Real theta, Real t) {
-        return deps_dt_cgs(phi, theta, t / unit::sec) * (unit::erg / (4 * con::pi * unit::sec));
-    };
+                const auto deps_dt_cgs = j.deps_dt;
+                j.deps_dt = [=](Real phi, Real theta, Real t) {
+                    return deps_dt_cgs(phi, theta, t / unit::sec) * (unit::erg / (4 * con::pi * unit::sec));
+                };
 
-    const auto dm_dt_cgs = jet.dm_dt;
-    jet.dm_dt = [=](Real phi, Real theta, Real t) {
-        return dm_dt_cgs(phi, theta, t / unit::sec) * (unit::g / (4 * con::pi * unit::sec));
-    };
+                const auto dm_dt_cgs = j.dm_dt;
+                j.dm_dt = [=](Real phi, Real theta, Real t) {
+                    return dm_dt_cgs(phi, theta, t / unit::sec) * (unit::g / (4 * con::pi * unit::sec));
+                };
 
-    jet.T0 *= unit::sec;
+                j.T0 *= unit::sec;
+            }
+            // TophatJet, GaussianJet, PowerLawJet are already constructed in internal units
+        },
+        jet);
+}
 
-    const auto rho_cgs = medium.rho; // number density from python side
-    medium.rho = [=](Real phi, Real theta, Real r) {
-        return rho_cgs(phi, theta, r / unit::cm) * (unit::g / unit::cm3); // convert to density
-    };
+void convert_unit_medium(MediumVariant& medium) {
+    std::visit(
+        [](auto& m) {
+            if constexpr (std::is_same_v<std::decay_t<decltype(m)>, Medium>) {
+                const auto rho_cgs = m.rho;
+                m.rho = [=](Real phi, Real theta, Real r) {
+                    return rho_cgs(phi, theta, r / unit::cm) * (unit::g / unit::cm3);
+                };
+            }
+            // ISM and Wind are already constructed in internal units — no conversion needed
+        },
+        medium);
 }
 
 void save_shock_details(Shock const& shock, PyShock& details) {
@@ -223,39 +236,31 @@ void PyModel::single_evo_details(Shock const& shock, Coord const& coord, Observe
 
 auto PyModel::details(Real t_min, Real t_max) const -> PyDetails {
     const Array t_obs = xt::logspace(std::log10(t_min * unit::sec), std::log10(t_max * unit::sec), 10);
-    Coord coord = auto_grid(jet_, medium_, t_obs, this->theta_w, obs_setup.theta_obs, obs_setup.z, phi_resol,
-                            theta_resol, t_resol, axisymmetric);
 
     PyDetails details;
-
-    details.phi = coord.phi;
-    details.theta = coord.theta;
-    details.t_src = coord.t / unit::sec;
-
     Observer observer;
 
     if (!rvs_rad_opt) {
-        const auto fwd_shock = generate_fwd_shock(coord, medium_, jet_, fwd_rad.rad, rtol);
+        auto [coord, fwd_shock] = solve_fwd_shock(jet_, medium_, t_obs, grid_config(32, 0.4), fwd_rad.rad, rtol);
 
+        details.phi = coord.phi;
+        details.theta = coord.theta;
+        details.t_src = coord.t / unit::sec;
         save_shock_details(fwd_shock, details.fwd);
-
         single_evo_details(fwd_shock, coord, observer, fwd_rad, details.fwd);
-
-        return details;
     } else {
-        const auto rvs_rad = *rvs_rad_opt;
-        auto [fwd_shock, rvs_shock] = generate_shock_pair(coord, medium_, jet_, fwd_rad.rad, rvs_rad.rad, rtol);
+        auto [coord, fwd_shock, rvs_shock] =
+            solve_shock_pair(jet_, medium_, t_obs, grid_config(36, 0.5), fwd_rad.rad, rvs_rad_opt->rad, rtol);
 
+        details.phi = coord.phi;
+        details.theta = coord.theta;
+        details.t_src = coord.t / unit::sec;
         save_shock_details(fwd_shock, details.fwd);
-
         save_shock_details(rvs_shock, details.rvs);
-
         single_evo_details(fwd_shock, coord, observer, fwd_rad, details.fwd);
-
-        single_evo_details(rvs_shock, coord, observer, rvs_rad, details.rvs);
-
-        return details;
+        single_evo_details(rvs_shock, coord, observer, *rvs_rad_opt, details.rvs);
     }
+    return details;
 }
 
 void PyFlux::calc_total() {
@@ -407,7 +412,7 @@ auto PyModel::flux_density_grid(PyArray const& t, PyArray const& nu) -> PyFlux {
 Array PyModel::jet_E_iso(Real phi, Array const& theta) const {
     Array E_iso = xt::zeros<Real>(theta.shape());
     for (size_t i = 0; i < theta.size(); ++i) {
-        E_iso(i) = jet_.eps_k(phi, theta(i)) / (unit::erg / (4 * con::pi));
+        E_iso(i) = jet_eps_k(jet_, phi, theta(i)) / (unit::erg / (4 * con::pi));
     }
     return E_iso;
 }
@@ -415,7 +420,7 @@ Array PyModel::jet_E_iso(Real phi, Array const& theta) const {
 Array PyModel::jet_Gamma0(Real phi, Array const& theta) const {
     Array Gamma0 = xt::zeros<Real>(theta.shape());
     for (size_t i = 0; i < theta.size(); ++i) {
-        Gamma0(i) = jet_.Gamma0(phi, theta(i));
+        Gamma0(i) = ::jet_Gamma0(jet_, phi, theta(i));
     }
     return Gamma0;
 }
@@ -423,7 +428,7 @@ Array PyModel::jet_Gamma0(Real phi, Array const& theta) const {
 Array PyModel::medium(Real phi, Real theta, Array const& r) const {
     Array rho = xt::zeros<Real>(r.shape());
     for (size_t i = 0; i < r.size(); ++i) {
-        rho(i) = medium_.rho(phi, theta, r(i) * unit::cm) / (unit::g / unit::cm3);
+        rho(i) = medium_rho(medium_, phi, theta, r(i) * unit::cm) / (unit::g / unit::cm3);
     }
     return rho;
 }

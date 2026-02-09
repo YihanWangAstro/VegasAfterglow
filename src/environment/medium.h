@@ -7,6 +7,7 @@
 
 #pragma once
 #include <utility>
+#include <variant>
 
 #include "../util/macros.h"
 #include "../util/utilities.h"
@@ -112,6 +113,15 @@ class Wind {
     Real rho_ism{0}; ///< ISM density floor
     Real r02{0};     ///< Radius where ISM transitions to
 };
+
+/// Type-erased medium variant for optimized dispatch in the ODE hot loop.
+/// ISM and Wind have inline rho() methods; Medium uses std::function as fallback.
+using MediumVariant = std::variant<ISM, Wind, Medium>;
+
+/// Helper: evaluate rho on a MediumVariant (for non-hot-path code)
+inline Real medium_rho(MediumVariant const& mv, Real phi, Real theta, Real r) {
+    return std::visit([&](auto const& m) { return m.rho(phi, theta, r); }, mv);
+}
 
 /**
  * <!-- ************************************************************************************** -->

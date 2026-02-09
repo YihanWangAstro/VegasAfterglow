@@ -22,17 +22,20 @@ ForwardShockEqn<Ejecta, Medium>::ForwardShockEqn(Medium const& medium, Ejecta co
     if constexpr (HasSigma<Ejecta>) {
         m_jet0 /= 1 + ejecta.sigma0(phi, theta0);
     }
+    gamma_m_coeff_ = (rad.p - 2) / (rad.p - 1) * rad.eps_e * con::mp / con::me / rad.xi_e;
+    gamma_c_coeff_ = 6 * con::pi * con::me * con::c / con::sigmaT / rad.eps_B;
 }
 
 template <typename Ejecta, typename Medium>
 void ForwardShockEqn<Ejecta, Medium>::operator()(State const& state, State& diff, Real t) const noexcept {
-    const Real beta = physics::relativistic::gamma_to_beta(state.Gamma);
+    const Real Gamma = state.Gamma;
+    const Real u = std::sqrt(Gamma * Gamma - 1);
 
-    diff.r = compute_dr_dt(beta);
-    diff.t_comv = compute_dt_dt_comv(state.Gamma, beta);
+    diff.r = compute_dr_dt(Gamma, u);
+    diff.t_comv = Gamma + u;
 
     if (ejecta.spreading && state.theta < 0.5 * con::pi) {
-        diff.theta = compute_dtheta_dt(theta_s, state.theta, diff.r, state.r, state.Gamma);
+        diff.theta = compute_dtheta_dt(theta_s, state.theta, diff.r, state.r, Gamma);
     } else {
         diff.theta = 0;
     }
@@ -47,9 +50,9 @@ void ForwardShockEqn<Ejecta, Medium>::operator()(State const& state, State& diff
 
     Real rho = medium.rho(phi, state.theta, state.r);
     diff.m2 = state.r * state.r * rho * diff.r;
-    const Real e_th = (state.Gamma - 1) * 4 * state.Gamma * rho * con::c2;
-    const Real eps_rad = compute_radiative_efficiency(state.t_comv, state.Gamma, e_th, rad);
-    const Real ad_idx = physics::thermo::adiabatic_idx(state.Gamma);
+    const Real e_th = (Gamma - 1) * 4 * Gamma * rho * con::c2;
+    const Real eps_rad = compute_eps_rad(state.t_comv, Gamma, e_th);
+    const Real ad_idx = physics::thermo::adiabatic_idx(Gamma);
     diff.Gamma = compute_dGamma_dt(state, diff, ad_idx);
     diff.U2_th = compute_dU_dt(eps_rad, state, diff, ad_idx);
 }
@@ -112,6 +115,18 @@ Real ForwardShockEqn<Ejecta, Medium>::compute_dU_dt(Real eps_rad, State const& s
 }
 
 template <typename Ejecta, typename Medium>
+Real ForwardShockEqn<Ejecta, Medium>::compute_eps_rad(Real t_comv, Real Gamma, Real e_th) const noexcept {
+    const Real gamma_m = gamma_m_coeff_ * (Gamma - 1) + 1;
+    const Real gamma_c = std::max(gamma_c_coeff_ / (e_th * t_comv), 1.0);
+    const Real ratio = gamma_m / gamma_c;
+    if (ratio < 1 && rad.p > 2) {
+        if (ratio < 1e-2) return 0;
+        return rad.eps_e * fast_pow(ratio, rad.p - 2);
+    }
+    return rad.eps_e;
+}
+
+template <typename Ejecta, typename Medium>
 void ForwardShockEqn<Ejecta, Medium>::set_init_state(State& state, Real t0) const noexcept {
     Real Gamma4 = ejecta.Gamma0(phi, theta0);
 
@@ -170,29 +185,23 @@ void grid_solve_fwd_shock(size_t i, size_t j, View const& t, Shock& shock, FwdEq
     using namespace boost::numeric::odeint;
 
     typename FwdEqn::State state;
+    Real t0;
 
-    // Get initial time and set up initial conditions
     Real t_dec = compute_dec_time(eqn);
-    Real t0 = min(t.front(), 1 * unit::sec, 0.1 * t_dec);
+    t0 = min(t.front(), 1 * unit::sec, 0.1 * t_dec);
     eqn.set_init_state(state, t0);
 
-    // Early exit if the initial Lorentz factor is below cutoff
     if (state.Gamma <= con::Gamma_cut) {
         set_stopping_shock(i, j, shock, state);
         return;
     }
 
-    // Set up the ODE solver with adaptive step size control
     auto stepper = make_dense_output(rtol, rtol, runge_kutta_dopri5<typename FwdEqn::State>());
-
     stepper.initialize(state, t0, 0.01 * t0);
 
-    // Solve ODE and update the shock state at each requested time point
     for (size_t k = 0; stepper.current_time() <= t.back();) {
-        // Advance solution by one adaptive step
         stepper.do_step(eqn);
 
-        // Update shock state for all-time points that have been passed in this step
         while (k < t.size() && stepper.current_time() > t(k)) {
             stepper.calc_state(t(k), state);
             save_fwd_shock_state(i, j, k, eqn, state, shock);

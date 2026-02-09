@@ -133,9 +133,13 @@ class ForwardShockEqn {
      */
     inline Real compute_dU_dt(Real eps_rad, State const& state, State const& diff, Real ad_idx) const noexcept;
 
-    Real const dOmega0{0}; ///< Initial solid angle element
-    Real const theta_s{0}; ///< Critical angle for jet spreading
-    Real m_jet0{0};        ///< Ejecta mass per solid angle
+    inline Real compute_eps_rad(Real t_comv, Real Gamma, Real e_th) const noexcept;
+
+    Real const dOmega0{0};  ///< Initial solid angle element
+    Real const theta_s{0};  ///< Critical angle for jet spreading
+    Real m_jet0{0};         ///< Ejecta mass per solid angle
+    Real gamma_m_coeff_{0}; ///< Precomputed: (p-2)/(p-1) * eps_e * mp/me / xi_e
+    Real gamma_c_coeff_{0}; ///< Precomputed: 6π me c / (σ_T * eps_B)
 };
 
 /**

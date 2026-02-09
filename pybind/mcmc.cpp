@@ -202,15 +202,31 @@ double MultiBandData::estimate_chi2() const {
     return chi_square;
 }
 
-Ejecta MultiBandModel::select_jet(Params const& param) const {
-    const Real eps_iso = param.E_iso * unit::erg / (4 * con::pi);
+JetVariant MultiBandModel::select_jet(Params const& param) const {
     const Real Gamma0 = param.Gamma0;
     const Real theta_c = param.theta_c;
+    const Real T0 = param.duration * unit::sec;
+
+    // Common jet types without magnetar: return concrete types for optimized ODE dispatch
+    if (!config.magnetar) {
+        if (config.jet == "tophat") {
+            return TophatJet(theta_c, param.E_iso * unit::erg, Gamma0, false, T0);
+        } else if (config.jet == "gaussian") {
+            return GaussianJet(theta_c, param.E_iso * unit::erg, Gamma0, false, T0);
+        } else if (config.jet == "powerlaw") {
+            return PowerLawJet(theta_c, param.E_iso * unit::erg, Gamma0, param.k_e, param.k_g, false, T0);
+        } else if (config.jet == "uniform") {
+            return TophatJet(con::pi / 2, param.E_iso * unit::erg, Gamma0, false, T0);
+        }
+    }
+
+    // Magnetar jets, powerlaw_wing, two_component, step_powerlaw: fall back to Ejecta
+    const Real eps_iso = param.E_iso * unit::erg / (4 * con::pi);
     const Real theta_w = param.theta_w;
     const Real eps_iso_w = param.E_iso_w * unit::erg / (4 * con::pi);
     const Real Gamma0_w = param.Gamma0_w;
     Ejecta jet;
-    jet.T0 = param.duration * unit::sec;
+    jet.T0 = T0;
     if (config.jet == "tophat") {
         jet.eps_k = math::tophat(theta_c, eps_iso);
         jet.Gamma0 = math::tophat_plus_one(theta_c, Gamma0 - 1);
@@ -236,25 +252,28 @@ Ejecta MultiBandModel::select_jet(Params const& param) const {
         AFTERGLOW_ENSURE(false, "Unknown jet type");
     }
 
-    if (config.magnetar == true) {
+    if (config.magnetar) {
         jet.deps_dt =
             math::magnetar_injection(param.t0 * unit::sec, param.q, param.L0 * unit::erg / unit::sec, theta_c);
     }
     return jet;
 }
 
-Medium MultiBandModel::select_medium(Params const& param) const {
-    Medium medium;
+MediumVariant MultiBandModel::select_medium(Params const& param) const {
     if (config.medium == "ism") {
-        medium.rho = evn::ISM(param.n_ism / unit::cm3);
-        medium.isotropic = true;
+        return ISM(param.n_ism / unit::cm3);
     } else if (config.medium == "wind") {
+        if (param.k_m == 2) {
+            return Wind(param.A_star, param.n_ism / unit::cm3, param.n0 / unit::cm3);
+        }
+        // General k: fall back to Medium with std::function
+        Medium medium;
         medium.rho = evn::wind(param.A_star, param.n_ism / unit::cm3, param.n0 / unit::cm3, param.k_m);
         medium.isotropic = true;
-    } else {
-        AFTERGLOW_ENSURE(false, "Unknown medium type");
+        return medium;
     }
-    return medium;
+    AFTERGLOW_ENSURE(false, "Unknown medium type");
+    return ISM(0); // unreachable
 }
 
 void MultiBandData::add_flux_density(double nu, PyArray const& t, PyArray const& Fv_obs, PyArray const& Fv_err,

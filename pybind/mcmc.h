@@ -15,6 +15,7 @@
 #include "../include/afterglow.h"
 #include "core/mesh.h"
 #include "pybind.h"
+#include "shock_dispatch.h"
 #include "util/macros.h"
 #include "util/utilities.h"
 
@@ -500,7 +501,7 @@ struct MultiBandModel {
      * @return Ejecta Configured jet structure for afterglow calculations
      * <!-- ************************************************************************************** -->
      */
-    [[nodiscard]] Ejecta select_jet(Params const& param) const;
+    [[nodiscard]] JetVariant select_jet(Params const& param) const;
 
     /**
      * <!-- ************************************************************************************** -->
@@ -508,10 +509,10 @@ struct MultiBandModel {
      * @details Creates the appropriate circumburst medium (ISM or wind) using the specified
      *          parameters, enabling flexible environmental modeling within the MCMC framework.
      * @param param Complete set of physical model parameters
-     * @return Medium Configured external medium for afterglow calculations
+     * @return MediumVariant Configured external medium for afterglow calculations
      * <!-- ************************************************************************************** -->
      */
-    [[nodiscard]] Medium select_medium(Params const& param) const;
+    [[nodiscard]] MediumVariant select_medium(Params const& param) const;
 
     /**
      * <!-- ************************************************************************************** -->
@@ -536,31 +537,20 @@ template <typename ICPhotonGrid>
 void MultiBandModel::generate_photons(Params const& param, double t_min, double t_max, Observer& obs,
                                       SynPhotonGrid& fwd_photons, SynPhotonGrid& rvs_photons,
                                       ICPhotonGrid& fwd_IC_photons, ICPhotonGrid& rvs_IC_photons) {
-    Real theta_v = param.theta_v;
-    Real theta_w = param.theta_w;
-    RadParams rad;
-    rad.p = param.p;
-    rad.eps_e = param.eps_e;
-    rad.eps_B = param.eps_B;
-    rad.xi_e = param.xi_e;
+    RadParams rad{param.eps_e, param.eps_B, param.p, param.xi_e};
 
     Real lumi_dist = config.lumi_dist * unit::cm;
     Real z = config.z;
 
-    Medium medium = select_medium(param);
-    Ejecta jet = select_jet(param);
-
-    Real t_resol = config.t_resol;
-    Real theta_resol = config.theta_resol;
-    Real phi_resol = config.phi_resol;
+    auto jet = select_jet(param);
+    auto medium = select_medium(param);
 
     Array t_eval = xt::linspace<Real>(t_min, t_max, 5);
+    GridConfig gcfg{
+        param.theta_w, param.theta_v, z, config.phi_resol, config.theta_resol, config.t_resol, true, 32, 0.4};
 
-    if (config.rvs_shock == false) {
-        auto coord =
-            auto_grid(jet, medium, t_eval, theta_w, theta_v, z, phi_resol, theta_resol, t_resol, true, 0, 32, 0.4);
-
-        auto shock = generate_fwd_shock(coord, medium, jet, rad, config.rtol);
+    if (!config.rvs_shock) {
+        auto [coord, shock] = solve_fwd_shock(jet, medium, t_eval, gcfg, rad, config.rtol);
 
         obs.observe(coord, shock, lumi_dist, z);
 
@@ -580,17 +570,11 @@ void MultiBandModel::generate_photons(Params const& param, double t_min, double 
         }
 
     } else {
-        auto coord =
-            auto_grid(jet, medium, t_eval, theta_w, theta_v, z, phi_resol, theta_resol, t_resol, true, 0, 36, 0.5);
+        RadParams rad_rvs{param.eps_e_r, param.eps_B_r, param.p_r, param.xi_e_r};
 
-        RadParams rad_rvs;
-
-        rad_rvs.p = param.p_r;
-        rad_rvs.eps_e = param.eps_e_r;
-        rad_rvs.eps_B = param.eps_B_r;
-        rad_rvs.xi_e = param.xi_e_r;
-
-        auto [f_shock, r_shock] = generate_shock_pair(coord, medium, jet, rad, rad_rvs, config.rtol);
+        gcfg.min_t_pts = 36;
+        gcfg.min_t_frac = 0.5;
+        auto [coord, f_shock, r_shock] = solve_shock_pair(jet, medium, t_eval, gcfg, rad, rad_rvs, config.rtol);
 
         obs.observe(coord, f_shock, lumi_dist, z);
 
