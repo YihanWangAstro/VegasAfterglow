@@ -95,7 +95,7 @@ class FRShockEqn {
      * @param t Current time
      * <!-- ************************************************************************************** -->
      */
-    void operator()(State const& state, State& diff, Real t);
+    void operator()(State const& state, State& diff, Real t) noexcept;
 
     /**
      * <!-- ************************************************************************************** -->
@@ -115,7 +115,7 @@ class FRShockEqn {
      * @return The magnetization parameter of the shell
      * <!-- ************************************************************************************** -->
      */
-    Real compute_shell_sigma(State const& state) const;
+    Real compute_shell_sigma(State const& state) const noexcept;
 
     /**
      * <!-- ************************************************************************************** -->
@@ -132,19 +132,21 @@ class FRShockEqn {
     inline bool crossing_complete(State const& state, Real t) const noexcept;
 
   private:
-    inline Real compute_dGamma_dt(State const& state, State const& diff, Real t) const noexcept;
+    inline Real compute_dGamma_dt(State const& state, State const& diff, Real t, Real Gamma34) const noexcept;
 
     inline Real compute_dU2_dt(State const& state, State const& diff, Real t) const noexcept;
 
-    inline Real compute_dU3_dt(State const& state, State const& diff, Real t) const noexcept;
+    inline Real compute_dU3_dt(State const& state, State const& diff, Real t, Real Gamma34) const noexcept;
 
-    inline Real compute_dx3_dt(State const& state, State const& diff, Real t) const noexcept;
+    inline Real compute_dx3_dt(State const& state, State const& diff, Real t, Real Gamma34, Real sigma,
+                               Real comp_ratio) const noexcept;
 
     inline Real compute_dx4_dt(State const& state, State const& diff, Real t) const noexcept;
 
     inline Real compute_dm2_dt(State const& state, State const& diff, Real t) const noexcept;
 
-    inline Real compute_dm3_dt(State const& state, State const& diff, Real t) const noexcept;
+    inline Real compute_dm3_dt(State const& state, State const& diff, Real t, Real Gamma34, Real sigma,
+                               Real comp_ratio) const noexcept;
 
     inline Real compute_deps4_dt(State const& state, State const& diff, Real t) const noexcept;
 

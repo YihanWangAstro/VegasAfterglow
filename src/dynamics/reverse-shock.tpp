@@ -61,8 +61,8 @@ bool FRShockEqn<Ejecta, Medium>::crossing_complete(State const& state, Real t) c
 }
 
 template <typename Ejecta, typename Medium>
-Real FRShockEqn<Ejecta, Medium>::compute_dGamma_dt(State const& state, State const& diff, Real t) const noexcept {
-    const Real Gamma34 = compute_rel_Gamma(Gamma4, state.Gamma);
+Real FRShockEqn<Ejecta, Medium>::compute_dGamma_dt(State const& state, State const& diff, Real t,
+                                                   Real Gamma34) const noexcept {
     const Real ad_idx2 = physics::thermo::adiabatic_idx(state.Gamma);
     const Real ad_idx3 = physics::thermo::adiabatic_idx(Gamma34);
 
@@ -106,8 +106,8 @@ Real FRShockEqn<Ejecta, Medium>::compute_dU2_dt(State const& state, State const&
 }
 
 template <typename Ejecta, typename Medium>
-Real FRShockEqn<Ejecta, Medium>::compute_dU3_dt(State const& state, State const& diff, Real t) const noexcept {
-    const Real Gamma34 = compute_rel_Gamma(this->Gamma4, state.Gamma);
+Real FRShockEqn<Ejecta, Medium>::compute_dU3_dt(State const& state, State const& diff, Real t,
+                                                Real Gamma34) const noexcept {
     const Real ad_idx = physics::thermo::adiabatic_idx(Gamma34);
     const Real adiabatic_cooling =
         compute_adiabatic_cooling_rate2(ad_idx, state.r, state.x3, state.U3_th, diff.r, diff.x3);
@@ -117,8 +117,8 @@ Real FRShockEqn<Ejecta, Medium>::compute_dU3_dt(State const& state, State const&
 }
 
 template <typename Ejecta, typename Medium>
-Real FRShockEqn<Ejecta, Medium>::compute_dx3_dt(State const& state, State const& diff, Real t) const noexcept {
-    const Real Gamma34 = compute_rel_Gamma(this->Gamma4, state.Gamma);
+Real FRShockEqn<Ejecta, Medium>::compute_dx3_dt(State const& state, State const& diff, Real t, Real Gamma34, Real sigma,
+                                                Real comp_ratio) const noexcept {
     const Real spreading = compute_shell_spreading_rate(Gamma34, diff.t_comv);
 
     if (state.m4 <= 0)
@@ -132,10 +132,8 @@ Real FRShockEqn<Ejecta, Medium>::compute_dx3_dt(State const& state, State const&
     if (crossing_w < 1e-6)
         return spreading;
 
-    const Real sigma = compute_shell_sigma(state);
     const Real beta3 = physics::relativistic::gamma_to_beta(state.Gamma);
     const Real beta4 = physics::relativistic::gamma_to_beta(this->Gamma4);
-    Real comp_ratio = compute_4vel_jump(Gamma34, sigma);
     Real dx3dt = (beta4 - beta3) * con::c / ((1 - beta3) * (state.Gamma * comp_ratio / this->Gamma4 - 1));
     const Real crossing = std::fabs(dx3dt * state.Gamma);
 
@@ -143,7 +141,8 @@ Real FRShockEqn<Ejecta, Medium>::compute_dx3_dt(State const& state, State const&
 }
 
 template <typename Ejecta, typename Medium>
-Real FRShockEqn<Ejecta, Medium>::compute_dm3_dt(State const& state, State const& diff, Real t) const noexcept {
+Real FRShockEqn<Ejecta, Medium>::compute_dm3_dt(State const& state, State const& diff, Real t, Real Gamma34, Real sigma,
+                                                Real comp_ratio) const noexcept {
     if (state.m4 <= 0)
         return 0.;
 
@@ -156,9 +155,6 @@ Real FRShockEqn<Ejecta, Medium>::compute_dm3_dt(State const& state, State const&
     // Blend column density: m4 during injection, (m4-m3) after injection
     const Real eff_mass = f * state.m4 + (1.0 - f) * remaining;
 
-    const Real sigma = compute_shell_sigma(state);
-    const Real Gamma34 = compute_rel_Gamma(this->Gamma4, state.Gamma);
-    Real comp_ratio = compute_4vel_jump(Gamma34, sigma);
     Real column_den3 = eff_mass * comp_ratio / state.x4;
     Real dm3dt = column_den3 * diff.x3;
 
@@ -226,14 +222,15 @@ Real FRShockEqn<Ejecta, Medium>::compute_eps_rad_fwd(Real t_comv, Real Gamma, Re
     const Real gamma_c = std::max(gamma_c_coeff_fwd_ / (e_th * t_comv), 1.0);
     const Real ratio = gamma_m / gamma_c;
     if (ratio < 1 && rad_fwd.p > 2) {
-        if (ratio < 1e-2) return 0;
+        if (ratio < 1e-2)
+            return 0;
         return rad_fwd.eps_e * fast_pow(ratio, rad_fwd.p - 2);
     }
     return rad_fwd.eps_e;
 }
 
 template <typename Ejecta, typename Medium>
-void FRShockEqn<Ejecta, Medium>::operator()(State const& state, State& diff, Real t) {
+void FRShockEqn<Ejecta, Medium>::operator()(State const& state, State& diff, Real t) noexcept {
     const Real Gamma = state.Gamma;
     const Real u3 = std::sqrt(Gamma * Gamma - 1);
 
@@ -245,15 +242,19 @@ void FRShockEqn<Ejecta, Medium>::operator()(State const& state, State& diff, Rea
     diff.eps4 = compute_deps4_dt(state, diff, t);
     diff.m4 = compute_dm4_dt(state, diff, t);
 
-    diff.x4 = compute_dx4_dt(state, diff, t);
-    diff.x3 = compute_dx3_dt(state, diff, t);
+    const Real Gamma34 = compute_rel_Gamma(Gamma4, state.Gamma);
+    const Real sigma = compute_shell_sigma(state);
+    const Real comp_ratio = compute_4vel_jump(Gamma34, sigma);
 
-    diff.m3 = compute_dm3_dt(state, diff, t);
+    diff.x4 = compute_dx4_dt(state, diff, t);
+    diff.x3 = compute_dx3_dt(state, diff, t, Gamma34, sigma, comp_ratio);
+
+    diff.m3 = compute_dm3_dt(state, diff, t, Gamma34, sigma, comp_ratio);
 
     diff.U2_th = compute_dU2_dt(state, diff, t);
-    diff.U3_th = compute_dU3_dt(state, diff, t);
+    diff.U3_th = compute_dU3_dt(state, diff, t, Gamma34);
 
-    diff.Gamma = compute_dGamma_dt(state, diff, t);
+    diff.Gamma = compute_dGamma_dt(state, diff, t, Gamma34);
 
     diff.theta = 0;
 }
@@ -337,7 +338,7 @@ inline Real get_post_cross_g(Real gamma_rel, Real k = 0) {
 }
 
 template <typename Ejecta, typename Medium>
-Real FRShockEqn<Ejecta, Medium>::compute_shell_sigma(State const& state) const {
+Real FRShockEqn<Ejecta, Medium>::compute_shell_sigma(State const& state) const noexcept {
     const Real sigma = state.eps4 / (Gamma4 * state.m4 * con::c2) - 1;
     return (sigma > con::sigma_cut) ? sigma : 0;
 }
