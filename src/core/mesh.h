@@ -9,6 +9,9 @@
 
 #include <algorithm>
 #include <cassert>
+#include <cstdint>
+#include <span>
+#include <vector>
 
 #include "../util/macros.h"
 #include "boost/numeric/odeint.hpp"
@@ -268,41 +271,140 @@ void logspace_boundary_center(Real lg2_min, Real lg2_max, size_t size, Arr& cent
  *
  * @param lg2_min  Log2 of minimum grid value
  * @param lg2_max  Log2 of maximum grid value
- * @param breaks   Array of break frequencies (linear scale) to include
- * @param n_breaks Number of break frequencies
+ * @param breaks   Break frequencies (linear scale) to include
  * @param pts_per_decade  Base density of fill points per decade
  * @param grid     Output array of grid point values (resized internally)
  * @return         Number of grid points
  */
-template <size_t MaxBreaks>
-size_t build_adaptive_grid(Real lg2_min, Real lg2_max, std::array<Real, MaxBreaks> const& breaks, size_t n_breaks,
-                           size_t pts_per_decade, Array& grid) {
+inline size_t build_adaptive_grid(Real lg2_min, Real lg2_max, std::span<const Real> breaks,
+                                  std::span<const Real> break_weights, Real pts_per_decade, Array& grid);
+
+inline size_t build_adaptive_grid(Real lg2_min, Real lg2_max, std::span<const Real> breaks, Real pts_per_decade,
+                                  Array& grid) {
+    return build_adaptive_grid(lg2_min, lg2_max, breaks, std::span<const Real>{}, pts_per_decade, grid);
+}
+
+inline size_t build_adaptive_grid(Real lg2_min, Real lg2_max, std::span<const Real> breaks,
+                                  std::span<const Real> break_weights, Real pts_per_decade, Array& grid) {
     constexpr size_t MAX_PTS = 256;
     constexpr Real refine_radius_lg2 = 1.66; // ~0.5 decade
-
-    // Precompute break positions in log2
-    std::array<Real, MaxBreaks> lg2_breaks;
-    for (size_t i = 0; i < n_breaks; ++i)
-        lg2_breaks[i] = std::log2(breaks[i]);
-
-    auto near_any_break = [&](Real lg2_pos) {
-        return std::any_of(lg2_breaks.begin(), lg2_breaks.begin() + n_breaks,
-                           [lg2_pos, refine_radius_lg2](Real b) { return std::abs(lg2_pos - b) < refine_radius_lg2; });
-    };
-
-    // Single sweep from min to max with variable step size (2x density near breaks)
+    constexpr size_t max_refined_breaks = 3; // peak + strongest secondary breaks
+    // Single sweep from min to max with variable step size (2x density near breaks).
     const Real coarse_step = std::log2(10.0) / pts_per_decade;
     const Real fine_step = coarse_step / 2.0;
+    const Real peak_step = coarse_step / 4.0;
+    const Real break_merge_eps_lg2 = 0.5 * peak_step;
+
+    struct WeightedBreak {
+        Real lg2{0};
+        Real weight{1};
+        uint8_t tier{1}; // 0: coarse-only, 1: fine, 2: peak
+    };
+
+    // Precompute valid break positions in log2 and sort/unique, carrying optional weights.
+    std::vector<WeightedBreak> valid_breaks;
+    valid_breaks.reserve(breaks.size());
+    for (size_t i = 0; i < breaks.size(); ++i) {
+        const Real b = breaks[i];
+        if (!(b > 0) || !std::isfinite(b)) {
+            continue;
+        }
+        const Real lg2_b = std::log2(b);
+        if (lg2_b > lg2_min && lg2_b < lg2_max) {
+            Real w = 1;
+            if (i < break_weights.size()) {
+                const Real wi = break_weights[i];
+                if (std::isfinite(wi) && wi >= 0) {
+                    w = wi;
+                }
+            }
+            valid_breaks.push_back({lg2_b, w, 1});
+        }
+    }
+
+    std::sort(valid_breaks.begin(), valid_breaks.end(),
+              [](WeightedBreak const& a, WeightedBreak const& b) { return a.lg2 < b.lg2; });
+
+    std::vector<WeightedBreak> breaks_merged;
+    breaks_merged.reserve(valid_breaks.size());
+    for (auto const& br : valid_breaks) {
+        if (breaks_merged.empty() || std::abs(br.lg2 - breaks_merged.back().lg2) >= break_merge_eps_lg2) {
+            breaks_merged.push_back(br);
+        } else {
+            breaks_merged.back().weight = std::max(breaks_merged.back().weight, br.weight);
+        }
+    }
+
+    // Importance-aware tiering: always refine the peak, then strongest secondary breaks.
+    if (!break_weights.empty() && !breaks_merged.empty()) {
+        std::vector<size_t> order(breaks_merged.size());
+        for (size_t i = 0; i < order.size(); ++i) {
+            order[i] = i;
+        }
+        std::sort(order.begin(), order.end(),
+                  [&](size_t i, size_t j) { return breaks_merged[i].weight > breaks_merged[j].weight; });
+
+        for (auto& br : breaks_merged) {
+            br.tier = 0;
+        }
+
+        breaks_merged[order[0]].tier = 2; // peak-lock: strongest break gets max refinement
+        const size_t n_secondary = std::min(max_refined_breaks, order.size()) - 1;
+        for (size_t r = 0; r < n_secondary; ++r) {
+            breaks_merged[order[r + 1]].tier = 1;
+        }
+    }
+
+    auto step_at = [&](Real lg2_pos) {
+        if (breaks_merged.empty()) {
+            return coarse_step;
+        }
+        Real min_dist = std::abs(lg2_pos - breaks_merged.front().lg2);
+        uint8_t tier = breaks_merged.front().tier;
+        for (size_t i = 1; i < breaks_merged.size(); ++i) {
+            const Real dist = std::abs(lg2_pos - breaks_merged[i].lg2);
+            if (dist < min_dist) {
+                min_dist = dist;
+                tier = breaks_merged[i].tier;
+            }
+        }
+        if (min_dist >= refine_radius_lg2) {
+            return coarse_step;
+        }
+        if (tier == 2) {
+            return peak_step;
+        }
+        if (tier == 1) {
+            return fine_step;
+        }
+        return coarse_step;
+    };
 
     std::array<Real, MAX_PTS> buf;
     size_t n = 0;
     buf[n++] = std::exp2(lg2_min);
 
     Real pos = lg2_min;
+    size_t break_idx = 0;
     while (n < MAX_PTS - 1) {
-        pos += near_any_break(pos) ? fine_step : coarse_step;
-        if (pos >= lg2_max)
+        const Real step = step_at(pos);
+        Real next_pos = pos + step;
+
+        // Always include the exact break if we would step across it.
+        if (break_idx < breaks_merged.size() && breaks_merged[break_idx].lg2 <= pos) {
+            ++break_idx;
+            continue;
+        }
+        if (break_idx < breaks_merged.size() && breaks_merged[break_idx].lg2 < next_pos) {
+            next_pos = breaks_merged[break_idx].lg2;
+            ++break_idx;
+        }
+
+        if (next_pos >= lg2_max) {
+            pos = lg2_max;
             break;
+        }
+        pos = next_pos;
         buf[n++] = std::exp2(pos);
     }
     assert(pos >= lg2_max && "build_adaptive_grid: MAX_PTS exceeded, grid truncated");
@@ -319,10 +421,9 @@ size_t build_adaptive_grid(Real lg2_min, Real lg2_max, std::array<Real, MaxBreak
  * Returns m grid points and m-1 interval widths: dg(j) = grid(j+1) - grid(j).
  * Consistent with trapezoidal integration: Σ 0.5*(f_j + f_{j+1}) * dg(j).
  */
-template <size_t MaxBreaks>
-size_t build_adaptive_grid(Real lg2_min, Real lg2_max, std::array<Real, MaxBreaks> const& breaks, size_t n_breaks,
-                           size_t pts_per_decade, Array& grid, Array& dg) {
-    const size_t m = build_adaptive_grid(lg2_min, lg2_max, breaks, n_breaks, pts_per_decade, grid);
+inline size_t build_adaptive_grid(Real lg2_min, Real lg2_max, std::span<const Real> breaks, Real pts_per_decade,
+                                  Array& grid, Array& dg) {
+    const size_t m = build_adaptive_grid(lg2_min, lg2_max, breaks, pts_per_decade, grid);
     if (m >= 2) {
         dg = Array::from_shape({m - 1});
         for (size_t j = 0; j + 1 < m; ++j)

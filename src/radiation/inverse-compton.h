@@ -13,6 +13,7 @@
 #include "../core/physics.h"
 #include "../dynamics/shock.h"
 #include "../util/macros.h"
+#include "../util/profiler.h"
 #include "../util/utilities.h"
 
 struct SpectralSegment {
@@ -97,20 +98,11 @@ struct InverseComptonY {
 };
 
 /**
- * <!-- ************************************************************************************** -->
- * @brief Computes the Compton scattering cross-section as a function of frequency (nu).
- * @param nu The frequency at which to compute the cross-section
- * @return Compton cross-section
- * <!-- ************************************************************************************** -->
+ * @brief Fast KN correction lookup: returns sigma_KN/sigmaT at frequency nu.
+ * @param nu Photon frequency.
+ * @return Dimensionless correction factor to Thomson cross-section.
  */
-Real compton_cross_section(Real nu);
-
-/**
- * @brief Fast lookup approximation of Compton cross-section using log-space interpolation.
- * @param nu Photon frequency in the same unit as compton_cross_section input.
- * @return Approximated Compton cross-section.
- */
-Real compton_cross_section_lut(Real nu);
+Real compton_correction(Real nu);
 
 /**
  * <!-- ************************************************************************************** -->
@@ -169,7 +161,8 @@ struct ICPhoton {
         Real nu_IC_max;
         size_t spectrum_resol;
         std::array<Real, 4> nu_breaks;
-        size_t n_nu_breaks;
+        std::array<Real, 12> nu_IC_breaks{};
+        std::array<Real, 12> nu_IC_break_scores{};
     };
 
     /**
@@ -216,11 +209,11 @@ struct ICPhoton {
 
     Array interp_slope;
 
-    Real inv_dlog2_nu{0};
-
     static constexpr size_t gamma_grid_per_order{4};
 
-    static constexpr size_t nu_grid_per_order{3};
+    static constexpr Real nu_grid_per_order{3};
+
+    static constexpr Real ic_grid_per_order{3};
 
     bool KN{false}; // Klein-Nishina flag
 
@@ -305,19 +298,53 @@ template <typename Electrons, typename Photons>
 typename ICPhoton<Electrons, Photons>::GridParams ICPhoton<Electrons, Photons>::compute_grid_params() const {
     GridParams params;
 
+    constexpr Real eps_tail = 1e-2;     // target suppression level for single-cutoff tail
+    constexpr Real safety_margin = 2.0; // retain headroom beyond estimated tail
+    constexpr Real min_tail_factor = 5.0;
+
+    const Real tail_factor = std::max(-std::log(eps_tail), min_tail_factor);
+
     params.gamma_min = std::min(electrons.gamma_m, electrons.gamma_c);
-    params.gamma_max = electrons.gamma_M * 30;
+    params.gamma_max = std::max(electrons.gamma_M * tail_factor, params.gamma_min * 1.01);
     params.gamma_size =
         static_cast<size_t>(std::max(std::log10(params.gamma_max / params.gamma_min), 3.) * gamma_grid_per_order);
 
     params.nu_min = std::min(photons.nu_a, photons.nu_m) / 10;
-    params.nu_max = photons.nu_M * 30;
+    params.nu_max = std::max(photons.nu_M * tail_factor, params.nu_min * 1.01);
 
     params.nu_breaks = {photons.nu_a, photons.nu_m, photons.nu_c, photons.nu_M};
-    params.n_nu_breaks = 4;
 
     params.nu_IC_min = 4 * IC_x0 * params.nu_min * params.gamma_min * params.gamma_min;
-    params.nu_IC_max = 4 * IC_x0 * params.nu_max * params.gamma_max * params.gamma_max;
+
+    const Real nu_ic_base = 4 * IC_x0 * photons.nu_M * electrons.gamma_M * electrons.gamma_M;
+    const Real nu_ic_single_cut = std::max(nu_ic_base * tail_factor * tail_factor, nu_ic_base * tail_factor);
+    params.nu_IC_max = nu_ic_single_cut * safety_margin;
+
+    // Candidate IC breaks from synchrotron/electron break combinations.
+    const std::array<Real, 4> nu_seed_breaks = {photons.nu_a, photons.nu_m, photons.nu_c, photons.nu_M};
+    const std::array<Real, 3> gamma_breaks = {electrons.gamma_m, electrons.gamma_c, electrons.gamma_M};
+
+    static_assert(std::tuple_size_v<decltype(params.nu_IC_breaks)> == nu_seed_breaks.size() * gamma_breaks.size());
+
+    size_t k = 0;
+    for (Real nu_seed : nu_seed_breaks) {
+        for (Real gb : gamma_breaks) {
+            const Real nu_ic = 4 * IC_x0 * nu_seed * gb * gb;
+            params.nu_IC_breaks[k] = nu_ic;
+
+            Real score = 0;
+            if ((nu_seed > 0) && std::isfinite(nu_seed) && (gb > 0) && std::isfinite(gb)) {
+                const Real ne = std::max(std::abs(electrons.compute_column_den(gb)), Real(0));
+                const Real i_seed = std::max(photons.compute_I_nu(nu_seed), Real(0));
+                const Real inv_nu2 = 1.0 / (nu_seed * nu_seed);
+                const Real kn_weight = KN ? std::max(compton_correction(gb * nu_seed), Real(0)) : 1;
+                score = ne * i_seed * inv_nu2 * kn_weight;
+            }
+            params.nu_IC_break_scores[k] = (std::isfinite(score) && score >= 0) ? score : 0;
+            ++k;
+        }
+    }
+
     params.spectrum_resol = static_cast<size_t>(std::max(5 * std::log10(params.nu_IC_max / (params.nu_IC_min)), 5.));
 
     return params;
@@ -325,22 +352,26 @@ typename ICPhoton<Electrons, Photons>::GridParams ICPhoton<Electrons, Photons>::
 
 template <typename Electrons, typename Photons>
 void ICPhoton<Electrons, Photons>::initialize_grids(GridParams const& params) {
-    // Ensure minimum spectrum resolution to avoid division by zero and out-of-bounds access
     const size_t safe_resol = std::max(params.spectrum_resol, static_cast<size_t>(2));
 
-    log2_nu_IC = xt::linspace(std::log2(params.nu_IC_min), std::log2(params.nu_IC_max), safe_resol);
-    log2_I_nu_IC = Array::from_shape({safe_resol});
-    interp_slope = Array::from_shape({safe_resol - 1});
+    Array nu_ic;
+    build_adaptive_grid(std::log2(params.nu_IC_min), std::log2(params.nu_IC_max),
+                        std::span<const Real>(params.nu_IC_breaks), std::span<const Real>(params.nu_IC_break_scores),
+                        ic_grid_per_order, nu_ic);
 
-    const Real dlog2 = log2_nu_IC(1) - log2_nu_IC(0);
-    inv_dlog2_nu = (dlog2 != 0) ? (1 / dlog2) : 0;
+    // Ensure minimum spectrum resolution to avoid out-of-bounds access.
+    if (nu_ic.size() < 2) {
+        log2_nu_IC = xt::linspace(std::log2(params.nu_IC_min), std::log2(params.nu_IC_max), safe_resol);
+    } else {
+        log2_nu_IC = xt::log2(nu_ic);
+    }
 }
 
 template <typename Electrons, typename Photons>
 void ICPhoton<Electrons, Photons>::preprocess_distributions(GridParams const& params, Array& gamma, Array& nu_sync,
                                                             Array& dnu_sync) const {
     // Adaptive grid for nu_sync (CDF + interpolation absorbs grid rearrangement)
-    build_adaptive_grid(std::log2(params.nu_min), std::log2(params.nu_max), params.nu_breaks, params.n_nu_breaks,
+    build_adaptive_grid(std::log2(params.nu_min), std::log2(params.nu_max), std::span<const Real>(params.nu_breaks),
                         nu_grid_per_order, nu_sync, dnu_sync);
 
     // Uniform log grid for gamma (centers only; bin widths = gamma * width_factor, computed in compute_IC_spectrum)
@@ -350,18 +381,18 @@ void ICPhoton<Electrons, Photons>::preprocess_distributions(GridParams const& pa
 template <typename Electrons, typename Photons>
 void ICPhoton<Electrons, Photons>::compute_IC_spectrum(GridParams const& params, Array const& gamma,
                                                        Array const& nu_sync, Array const& dnu_sync) {
-    Array I_nu_IC = xt::zeros<Real>({params.spectrum_resol});
+    const size_t spec_size = log2_nu_IC.size();
+    log2_I_nu_IC = Array::from_shape({spec_size});
+
+    Array I_nu_IC = xt::zeros<Real>({spec_size});
     Array cdf = Array::from_shape({nu_sync.size()});
     Array f_vals = Array::from_shape({nu_sync.size()});
     Array inv_dnu = Array::from_shape({nu_sync.size() - 1});
     Array inv_nu2 = Array::from_shape({nu_sync.size()});
+    Array nu_IC = xt::exp2(log2_nu_IC);
 
     const int nu_last = static_cast<int>(nu_sync.size()) - 1;
-    const Real log2_nu_IC_0 = log2_nu_IC(0);
-    const Real ratio = std::exp2(log2_nu_IC(1) - log2_nu_IC_0);
-    const Real log2_nu_sync_max = fast_log2(nu_sync(nu_last));
-    const int spec_last = static_cast<int>(params.spectrum_resol) - 1;
-    const Real nu_seed_coeff = std::exp2(log2_nu_IC_0) / (4 * IC_x0);
+    const int spec_last = static_cast<int>(spec_size) - 1;
 
     // Uniform log gamma grid: dgamma(i) = gamma(i) * width_factor (constant ratio)
     const Real r_gamma =
@@ -378,6 +409,7 @@ void ICPhoton<Electrons, Photons>::compute_IC_spectrum(GridParams const& params,
     Real* I_p = I_nu_IC.data();
     Real* inv_dnu_p = inv_dnu.data();
     Real* inv_nu2_p = inv_nu2.data();
+    const Real* nu_ic_p = nu_IC.data();
 
     // Precompute reciprocal interval widths (avoids division in hot loop)
     for (size_t j = 0; j + 1 < nu_size; ++j)
@@ -393,13 +425,23 @@ void ICPhoton<Electrons, Photons>::compute_IC_spectrum(GridParams const& params,
         return std::max(cdf_p[idx + 1] + 0.5 * (f_seed + fv_p[idx + 1]) * rem * dnu_p[idx], Real(0));
     };
 
-    // Scan CDF and accumulate I_nu_IC for one electron energy bin
-    auto accumulate = [&](Real weight, Real log2_down, Real nu_seed_0) {
-        const int k_max =
-            std::clamp(static_cast<int>((log2_nu_sync_max - log2_down - log2_nu_IC_0) * inv_dlog2_nu), 0, spec_last);
-        Real nu_seed = nu_seed_0;
+    const Real nu_sync_max = nu_p[nu_last];
+
+    // Per-gamma upper nu_IC bound from nu_seed <= nu_sync_max.
+    // gamma is monotonic, so k_max is monotonic too; a rolling cursor beats per-gamma binary search.
+    auto advance_k_max = [&](Real gi2, int& k_max_cursor) {
+        const Real nu_ic_limit = 4 * IC_x0 * gi2 * nu_sync_max;
+        while (k_max_cursor + 1 <= spec_last && nu_ic_p[k_max_cursor + 1] <= nu_ic_limit) {
+            ++k_max_cursor;
+        }
+        return k_max_cursor;
+    };
+
+    // Scan CDF and accumulate I_nu_IC for one electron energy bin.
+    auto accumulate = [&](Real weight, Real inv_4x0_gi2, int k_max) {
         int scan_idx = 0;
         for (int k = 0; k <= k_max; ++k) {
+            const Real nu_seed = nu_ic_p[k] * inv_4x0_gi2;
             while (scan_idx < nu_last && nu_p[scan_idx + 1] <= nu_seed) {
                 ++scan_idx;
             }
@@ -407,16 +449,15 @@ void ICPhoton<Electrons, Photons>::compute_IC_spectrum(GridParams const& params,
                 break; // CDF is zero beyond the grid
             }
             I_p[k] += weight * cdf_at(scan_idx, nu_seed);
-            nu_seed *= ratio;
         }
     };
 
     if (!KN) {
-        // Thomson: f_vals = I_nu / nu^2, built once from photon spectrum
-        fv_p[nu_last] = photons.compute_I_nu(nu_p[nu_last]) / (nu_p[nu_last] * nu_p[nu_last]);
+        int k_max_cursor = -1;
+        fv_p[nu_last] = photons.compute_I_nu(nu_p[nu_last]) * inv_nu2_p[nu_last];
         cdf_p[nu_last] = 0;
         for (int j = nu_last - 1; j >= 0; --j) {
-            fv_p[j] = photons.compute_I_nu(nu_p[j]) / (nu_p[j] * nu_p[j]);
+            fv_p[j] = photons.compute_I_nu(nu_p[j]) * inv_nu2_p[j];
             cdf_p[j] = cdf_p[j + 1] + 0.5 * (fv_p[j] + fv_p[j + 1]) * dnu_p[j];
         }
 
@@ -427,9 +468,14 @@ void ICPhoton<Electrons, Photons>::compute_IC_spectrum(GridParams const& params,
                 continue;
             }
             const Real gi2 = gi * gi;
-            accumulate(dN_e / gi, -fast_log2(4 * IC_x0 * gi2), nu_seed_coeff / gi2);
+            const int k_max = advance_k_max(gi2, k_max_cursor);
+            if (k_max < 0) {
+                continue;
+            }
+            accumulate(dN_e / gi, 1 / (4 * IC_x0 * gi2), k_max);
         }
     } else {
+        int k_max_cursor = -1;
         Array I_nu_sync = Array::from_shape({nu_sync.size()});
         Real* Is_p = I_nu_sync.data();
         for (int j = 0; j <= nu_last; ++j)
@@ -444,28 +490,40 @@ void ICPhoton<Electrons, Photons>::compute_IC_spectrum(GridParams const& params,
 
             {
                 const Real nu = nu_p[nu_last];
-                fv_p[nu_last] = Is_p[nu_last] * compton_cross_section_lut(gi * nu) * inv_nu2_p[nu_last];
+                fv_p[nu_last] = Is_p[nu_last] * compton_correction(gi * nu) * inv_nu2_p[nu_last];
             }
             cdf_p[nu_last] = 0;
             for (int j = nu_last - 1; j >= 0; --j) {
                 const Real nu = nu_p[j];
-                fv_p[j] = Is_p[j] * compton_cross_section_lut(gi * nu) * inv_nu2_p[j];
+                fv_p[j] = Is_p[j] * compton_correction(gi * nu) * inv_nu2_p[j];
                 cdf_p[j] = cdf_p[j + 1] + 0.5 * (fv_p[j] + fv_p[j + 1]) * dnu_p[j];
             }
 
             const Real gi2 = gi * gi;
-            accumulate(dN_e / gi, -fast_log2(4 * IC_x0 * gi2), nu_seed_coeff / gi2);
+            const int k_max = advance_k_max(gi2, k_max_cursor);
+            if (k_max < 0) {
+                continue;
+            }
+            accumulate(dN_e / gi, 1 / (4 * IC_x0 * gi2), k_max);
         }
     }
 
-    const Real log2_scale = fast_log2(0.25 * (KN ? Real(1) : con::sigmaT));
-    for (size_t i = 0; i < params.spectrum_resol; ++i) {
-        log2_I_nu_IC(i) = fast_log2(I_p[i]) + log2_nu_IC(i) + log2_scale;
+    const Real log2_scale = fast_log2(0.25 * con::sigmaT);
+    for (size_t i = 0; i < spec_size; ++i) {
+        log2_I_nu_IC(i) = fast_log2(I_nu_IC(i)) + log2_nu_IC(i) + log2_scale;
     }
 
-    for (size_t i = 0; i + 1 < params.spectrum_resol; ++i) {
-        interp_slope(i) = (log2_I_nu_IC(i + 1) - log2_I_nu_IC(i)) * inv_dlog2_nu;
+    interp_slope = Array::from_shape({spec_size - 1});
+    for (size_t i = 0; i + 1 < spec_size; ++i) {
+        const Real dlog2 = log2_nu_IC(i + 1) - log2_nu_IC(i);
+        interp_slope(i) = (dlog2 != 0) ? (log2_I_nu_IC(i + 1) - log2_I_nu_IC(i)) / dlog2 : 0;
     }
+
+    /*AFTERGLOW_PROFILE_COUNT(ic_spectra_generated);
+    AFTERGLOW_PROFILE_COUNT_N(ic_nu_ic_bins_total, spec_size);
+    AFTERGLOW_PROFILE_MAX(ic_nu_ic_bins_max, spec_size);
+    AFTERGLOW_PROFILE_COUNT_N(ic_nu_ic_bins_uniform_total, params.spectrum_resol);
+    AFTERGLOW_PROFILE_MAX(ic_nu_ic_bins_uniform_max, params.spectrum_resol);*/
 }
 
 template <typename Electrons, typename Photons>
@@ -479,9 +537,15 @@ Real ICPhoton<Electrons, Photons>::compute_log2_I_nu(Real log2_nu) {
         generate_spectrum();
     }
 
+    const size_t n = log2_nu_IC.size();
+    if (n < 2) {
+        return -con::inf;
+    }
+
+    // Short tables are common here; linear scan is usually faster than binary search.
     size_t idx = 0;
-    if (const Real off_set = (log2_nu - log2_nu_IC(0)); off_set >= 0) {
-        idx = static_cast<size_t>(std::floor(off_set * inv_dlog2_nu));
+    while (idx + 1 < n && log2_nu_IC(idx + 1) <= log2_nu) {
+        ++idx;
     }
 
     if (idx >= interp_slope.size()) {

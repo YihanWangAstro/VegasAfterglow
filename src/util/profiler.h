@@ -19,6 +19,13 @@ namespace afterglow {
 
         void increment(const std::string& name, size_t count = 1) { counters_[name] += count; }
 
+        void set_max(const std::string& name, size_t value) {
+            auto it = counters_.find(name);
+            if (it == counters_.end() || value > it->second) {
+                counters_[name] = value;
+            }
+        }
+
         auto results() const -> std::unordered_map<std::string, double> { return timings_; }
 
         auto counter_results() const -> std::unordered_map<std::string, size_t> { return counters_; }
@@ -58,6 +65,7 @@ namespace afterglow {
     #define AFTERGLOW_PROFILE_RESULTS() afterglow::profiler().results()
     #define AFTERGLOW_PROFILE_COUNT(name) afterglow::profiler().increment(#name)
     #define AFTERGLOW_PROFILE_COUNT_N(name, n) afterglow::profiler().increment(#name, n)
+    #define AFTERGLOW_PROFILE_MAX(name, n) afterglow::profiler().set_max(#name, n)
     #define AFTERGLOW_PROFILE_COUNTERS() afterglow::profiler().counter_results()
 
 #else
@@ -68,6 +76,7 @@ namespace afterglow {
         std::unordered_map<std::string, double> {}
     #define AFTERGLOW_PROFILE_COUNT(name)
     #define AFTERGLOW_PROFILE_COUNT_N(name, n)
+    #define AFTERGLOW_PROFILE_MAX(name, n)
     #define AFTERGLOW_PROFILE_COUNTERS()                                                                               \
         std::unordered_map<std::string, size_t> {}
 

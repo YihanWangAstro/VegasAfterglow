@@ -230,16 +230,15 @@ void update_gamma_c_KN(Real& gamma_c, InverseComptonY& Ys, RadParams const& rad,
     // 1. gamma_c_min (IC cooling dominant, Y(gamma_c) > 1). solution for gamma_m < gamma_c_trans
     // 2. gamma_c_trans (unstable state),
     // 3. gamma_c_max (synchrotron cooling dominant, Y(gamma_c) < 1). solution for gamma_m > gamma_c_trans
-
-    Real gamma_c_sync = compute_gamma_c(t_com, B, 0);
+    /*Real gamma_c_sync = compute_gamma_c(t_com, B, 0);
     Real gamma_c_trans = std::max(gamma_c_sync * 0.5, 1.0); // where Y(gamma_c) = 1
     Real gamma_c_new = 2 * gamma_c_sync;
 
-    /*if (gamma_m < gamma_c_trans) {
+    if (gamma_m < gamma_c_trans) {
         gamma_c_new = 1;
     }*/
 
-    gamma_c_new = gamma_c_last; //initial guess
+    Real gamma_c_new = gamma_c_last; // initial guess
 
     Real Y_T = compute_Thomson_Y(rad, gamma_m, gamma_c_new);
     Ys = InverseComptonY(gamma_m, gamma_c_new, rad.p, B, Y_T, true);
@@ -277,7 +276,8 @@ void update_gamma_M(Real& gamma_M, InverseComptonY const& Ys, Real p, Real B) {
 //========================================================================================================
 
 namespace {
-    inline Real compton_cross_section_from_x(Real x) {
+    // Returns dimensionless KN cross-section ratio: sigma/sigmaT.
+    inline Real compton_cross_section_ratio_from_x(Real x) {
         /*if (x <= 1) {
         return con::sigmaT;
     } else {
@@ -285,9 +285,9 @@ namespace {
     }*/
 
         if (x < 1e-2) {
-            return con::sigmaT * (1 - 2 * x);
+            return 1 - 2 * x;
         } else if (x > 1e2) {
-            return 3. / 8 * con::sigmaT * (log(2 * x) + 0.5) / x;
+            return 3. / 8 * (log(2 * x) + 0.5) / x;
         } else {
             const Real l = std::log1p(2.0 * x); // log(1+2x)
             const Real invx = 1.0 / x;
@@ -302,7 +302,7 @@ namespace {
             const Real c = 0.5 * l * invx;                  // log_term/(2x)
             const Real d = (1.0 + 3.0 * x) * invt1_2;       // (1+3x)/(1+2x)^2
 
-            return 0.75 * con::sigmaT * (a * b + c - d);
+            return 0.75 * (a * b + c - d);
         }
     }
 
@@ -313,7 +313,7 @@ namespace {
         static constexpr Real lg2_x_min = -6.6438561897747247;
         static constexpr Real lg2_x_max = 6.6438561897747247;
 
-        std::array<Real, n> sigma{};
+        std::array<Real, n> ratio{};
         Real inv_step{0};
 
         ComptonSigmaLUT() {
@@ -321,7 +321,7 @@ namespace {
             inv_step = 1.0 / step;
             for (size_t i = 0; i < n; ++i) {
                 const Real lg2_x = lg2_x_min + step * static_cast<Real>(i);
-                sigma[i] = compton_cross_section_from_x(std::exp2(lg2_x));
+                ratio[i] = compton_cross_section_ratio_from_x(std::exp2(lg2_x));
             }
         }
 
@@ -329,30 +329,25 @@ namespace {
             const Real lg2_x = fast_log2(x);
             const Real pos = (lg2_x - lg2_x_min) * inv_step;
             if (pos <= 0) {
-                return sigma.front();
+                return ratio.front();
             }
             if (pos >= static_cast<Real>(n - 1)) {
-                return sigma.back();
+                return ratio.back();
             }
             const size_t idx = static_cast<size_t>(pos);
             const Real frac = pos - static_cast<Real>(idx);
-            return sigma[idx] + (sigma[idx + 1] - sigma[idx]) * frac;
+            return ratio[idx] + (ratio[idx + 1] - ratio[idx]) * frac;
         }
     };
 } // namespace
 
-Real compton_cross_section(Real nu) {
-    const Real x = con::h / (con::me * con::c2) * nu;
-    return compton_cross_section_from_x(x);
-}
-
-Real compton_cross_section_lut(Real nu) {
+Real compton_correction(Real nu) {
     const Real x = con::h / (con::me * con::c2) * nu;
     if (!(x > 0)) {
         return 0;
     }
     if (x <= ComptonSigmaLUT::x_min || x >= ComptonSigmaLUT::x_max) {
-        return compton_cross_section_from_x(x);
+        return compton_cross_section_ratio_from_x(x);
     }
     static const ComptonSigmaLUT lut;
     return lut.eval_mid_x(x);
