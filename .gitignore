@@ -11,7 +11,9 @@
 **/*.npz
 **/.DS_Store
 **/*.pyc
+**/__pycache__/
 **/*.dSYM
+**/.ipynb_checkpoints/
 
 external/
 projects/
@@ -34,3 +36,10 @@ docs/doxygen/
 validation/comprehensive_report.pdf
 validation/benchmark/results/
 validation/regression/results/
+
+# Local compiled test binaries (source .cpp files remain tracked)
+tests/**/benchmark
+tests/**/demo
+tests/**/x-ray
+tests/**/code-comp
+tests/**/fast_math_bench

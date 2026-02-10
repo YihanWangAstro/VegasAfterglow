@@ -6,6 +6,7 @@
 //                            |___/                                            |___/
 
 #pragma once
+#include <cmath>
 #include <utility>
 #include <variant>
 
@@ -67,6 +68,9 @@ class ISM {
      */
     [[nodiscard]] inline Real rho(Real phi, Real theta, Real r) const noexcept { return rho_; }
 
+    /// Enclosed mass per solid angle up to radius r.
+    [[nodiscard]] inline Real mass(Real r) const noexcept { return rho_ * r * r * r / 3.0; }
+
     bool isotropic{true}; ///< Flag indicating if the medium is isotropic within computational domain.
 
   private:
@@ -105,6 +109,25 @@ class Wind {
      */
 
     [[nodiscard]] inline Real rho(Real phi, Real theta, Real r) const noexcept { return A / (r02 + r * r) + rho_ism; }
+
+    /// Enclosed mass per solid angle up to radius r.
+    [[nodiscard]] inline Real mass(Real r) const noexcept {
+        Real m = rho_ism * r * r * r / 3.0;
+        if (A != 0) {
+            if (r02 > 0) {
+                const Real a = std::sqrt(r02);
+                m += A * (r - a * std::atan(r / a));
+            } else {
+                m += A * r;
+            }
+        }
+        return m;
+    }
+
+    /// Expose parameters for analytic integrals in hot dynamics setup paths.
+    [[nodiscard]] inline Real A_param() const noexcept { return A; }
+    [[nodiscard]] inline Real rho_ism_param() const noexcept { return rho_ism; }
+    [[nodiscard]] inline Real r02_param() const noexcept { return r02; }
 
     bool isotropic{true}; ///< Flag indicating if the medium is isotropic within computational domain.
 

@@ -43,7 +43,6 @@ void Observer::calc_t_obs(Coord const& coord, Shock const& shock) {
     }
 
     const size_t shock_phi_size = shock.theta.shape(0);
-    const size_t block_size = theta_grid * t_grid;
 
     if (jet_spreading_) {
         for (size_t i = 0; i < shock_phi_size; ++i) {

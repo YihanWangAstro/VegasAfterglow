@@ -36,6 +36,9 @@ bool is_log_scale(Array const& arr, Real tolerance) {
 }
 
 Array boundary_to_center(Array const& boundary) {
+    if (boundary.size() < 2) {
+        return Array::from_shape({0});
+    }
     Array center({boundary.size() - 1}, 0);
     for (size_t i = 0; i < center.size(); ++i) {
         center[i] = 0.5 * (boundary[i] + boundary[i + 1]);
@@ -44,6 +47,9 @@ Array boundary_to_center(Array const& boundary) {
 }
 
 Array boundary_to_center_log(Array const& boundary) {
+    if (boundary.size() < 2) {
+        return Array::from_shape({0});
+    }
     Array center({boundary.size() - 1}, 0);
     for (size_t i = 0; i < center.size(); ++i) {
         center[i] = std::sqrt(boundary[i] * boundary[i + 1]);

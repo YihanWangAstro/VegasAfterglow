@@ -6,7 +6,6 @@
 //                            |___/                                            |___/
 #pragma once
 
-#include <iostream>
 #include <stdexcept>
 #include <thread>
 
@@ -375,7 +374,7 @@ Array Observer::specific_flux_series(Array const& t_obs, Array const& nu_obs, Ph
     const size_t t_obs_len = t_obs.size();
 
     if (nu_obs.size() != t_obs_len) {
-        std::cout << "nu_obs and t_obs must have the same length" << std::endl;
+        throw std::invalid_argument("specific_flux_series requires nu_obs and t_obs to have the same length");
     }
 
     const Array lg2_t_obs = xt::log2(t_obs);

@@ -106,6 +106,13 @@ struct InverseComptonY {
 Real compton_cross_section(Real nu);
 
 /**
+ * @brief Fast lookup approximation of Compton cross-section using log-space interpolation.
+ * @param nu Photon frequency in the same unit as compton_cross_section input.
+ * @return Approximated Compton cross-section.
+ */
+Real compton_cross_section_lut(Real nu);
+
+/**
  * <!-- ************************************************************************************** -->
  * @struct ICPhoton
  * @tparam Electrons Type of the electron distribution
@@ -344,6 +351,10 @@ template <typename Electrons, typename Photons>
 void ICPhoton<Electrons, Photons>::compute_IC_spectrum(GridParams const& params, Array const& gamma,
                                                        Array const& nu_sync, Array const& dnu_sync) {
     Array I_nu_IC = xt::zeros<Real>({params.spectrum_resol});
+    Array cdf = Array::from_shape({nu_sync.size()});
+    Array f_vals = Array::from_shape({nu_sync.size()});
+    Array inv_dnu = Array::from_shape({nu_sync.size() - 1});
+    Array inv_nu2 = Array::from_shape({nu_sync.size()});
 
     const int nu_last = static_cast<int>(nu_sync.size()) - 1;
     const Real log2_nu_IC_0 = log2_nu_IC(0);
@@ -358,21 +369,21 @@ void ICPhoton<Electrons, Photons>::compute_IC_spectrum(GridParams const& params,
     const Real width_factor = (r_gamma - 1.0) / std::sqrt(r_gamma);
 
     const size_t nu_size = nu_sync.size();
-    Array cdf = Array::from_shape({nu_size});
-    Array f_vals = Array::from_shape({nu_size});
-    Array inv_dnu = Array::from_shape({dnu_sync.size()});
 
-    // Raw pointers for hot-path array access
+    // Raw pointers for hot-path array access (xtensor operator() has stride overhead)
     const Real* nu_p = nu_sync.data();
     const Real* dnu_p = dnu_sync.data();
     Real* cdf_p = cdf.data();
     Real* fv_p = f_vals.data();
     Real* I_p = I_nu_IC.data();
+    Real* inv_dnu_p = inv_dnu.data();
+    Real* inv_nu2_p = inv_nu2.data();
 
     // Precompute reciprocal interval widths (avoids division in hot loop)
-    Real* inv_dnu_p = inv_dnu.data();
     for (size_t j = 0; j + 1 < nu_size; ++j)
         inv_dnu_p[j] = 1.0 / dnu_p[j];
+    for (size_t j = 0; j < nu_size; ++j)
+        inv_nu2_p[j] = 1.0 / (nu_p[j] * nu_p[j]);
 
     // CDF lookup at arbitrary nu_seed: partial-bin trapezoidal interpolation
     auto cdf_at = [&](int idx, Real nu_seed) {
@@ -409,10 +420,8 @@ void ICPhoton<Electrons, Photons>::compute_IC_spectrum(GridParams const& params,
             cdf_p[j] = cdf_p[j + 1] + 0.5 * (fv_p[j] + fv_p[j + 1]) * dnu_p[j];
         }
 
-        const Real* g_p = gamma.data();
-        const int g_size = static_cast<int>(gamma.size());
-        for (int i = 0; i < g_size; ++i) {
-            const Real gi = g_p[i];
+        for (size_t i = 0; i < gamma.size(); ++i) {
+            const Real gi = gamma(i);
             const Real dN_e = electrons.compute_column_den(gi) * width_factor;
             if (dN_e <= 0) {
                 continue;
@@ -426,24 +435,21 @@ void ICPhoton<Electrons, Photons>::compute_IC_spectrum(GridParams const& params,
         for (int j = 0; j <= nu_last; ++j)
             Is_p[j] = photons.compute_I_nu(nu_p[j]);
 
-        const Real* g_p = gamma.data();
-        const int g_size = static_cast<int>(gamma.size());
-        for (int i = 0; i < g_size; ++i) {
-            const Real gi = g_p[i];
+        for (size_t i = 0; i < gamma.size(); ++i) {
+            const Real gi = gamma(i);
             const Real dN_e = electrons.compute_column_den(gi) * width_factor;
             if (dN_e <= 0) {
                 continue;
             }
 
-            // Build CDF with KN cross section: σ_KN replaces σ_T, divide by ν² (not (γν)²)
             {
                 const Real nu = nu_p[nu_last];
-                fv_p[nu_last] = Is_p[nu_last] * compton_cross_section(gi * nu) / (nu * nu);
+                fv_p[nu_last] = Is_p[nu_last] * compton_cross_section_lut(gi * nu) * inv_nu2_p[nu_last];
             }
             cdf_p[nu_last] = 0;
             for (int j = nu_last - 1; j >= 0; --j) {
                 const Real nu = nu_p[j];
-                fv_p[j] = Is_p[j] * compton_cross_section(gi * nu) / (nu * nu);
+                fv_p[j] = Is_p[j] * compton_cross_section_lut(gi * nu) * inv_nu2_p[j];
                 cdf_p[j] = cdf_p[j + 1] + 0.5 * (fv_p[j] + fv_p[j + 1]) * dnu_p[j];
             }
 

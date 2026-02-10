@@ -177,67 +177,6 @@ inline Real eVtoHz(Real eV) {
 
 /**
  * <!-- ************************************************************************************** -->
- * @defgroup Interpolation Interpolation Functions
- * @brief Functions for interpolating values between points in arrays.
- * @details These functions are used throughout the codebase for various mathematical operations
- *          and physical calculations.
- * <!-- ************************************************************************************** -->
- */
-
-/**
- * <!-- ************************************************************************************** -->
- * @brief General interpolation function
- * @param x0 X-value at which to interpolate
- * @param x Array of x-coordinates
- * @param y Array of y-coordinates
- * @param lo_extrap Whether to extrapolate for x0 < min(x)
- * @param hi_extrap Whether to extrapolate for x0 > max(x)
- * @return Interpolated y-value at x0
- * <!-- ************************************************************************************** -->
- */
-Real interp(Real x0, Array const& x, Array const& y, bool lo_extrap = false, bool hi_extrap = false);
-
-/**
- * <!-- ************************************************************************************** -->
- * @brief Interpolation for equally spaced x-values
- * @param x0 X-value at which to interpolate
- * @param x Array of equally spaced x-coordinates
- * @param y Array of y-coordinates
- * @param lo_extrap Whether to extrapolate for x0 < min(x)
- * @param hi_extrap Whether to extrapolate for x0 > max(x)
- * @return Interpolated y-value at x0
- * <!-- ************************************************************************************** -->
- */
-Real eq_space_interp(Real x0, Array const& x, Array const& y, bool lo_extrap = false, bool hi_extrap = false);
-
-/**
- * <!-- ************************************************************************************** -->
- * @brief Log-log interpolation (both x and y are in log space)
- * @param x0 X-value at which to interpolate
- * @param x Array of x-coordinates
- * @param y Array of y-coordinates
- * @param lo_extrap Whether to extrapolate for x0 < min(x)
- * @param hi_extrap Whether to extrapolate for x0 > max(x)
- * @return Interpolated y-value at x0
- * <!-- ************************************************************************************** -->
- */
-Real loglog_interp(Real x0, Array const& x, Array const& y, bool lo_extrap = false, bool hi_extrap = false);
-
-/**
- * <!-- ************************************************************************************** -->
- * @brief Log-log interpolation for equally spaced x-values in log space
- * @param x0 X-value at which to interpolate
- * @param x Array of equally spaced x-coordinates in log space
- * @param y Array of y-coordinates
- * @param lo_extrap Whether to extrapolate for x0 < min(x)
- * @param hi_extrap Whether to extrapolate for x0 > max(x)
- * @return Interpolated y-value at x0
- * <!-- ************************************************************************************** -->
- */
-Real eq_space_loglog_interp(Real x0, Array const& x, Array const& y, bool lo_extrap = false, bool hi_extrap = false);
-
-/**
- * <!-- ************************************************************************************** -->
  * @defgroup RootFinding Root Finding Methods
  * @brief Functions for finding roots of equations.
  * @details These functions are used throughout the codebase for various mathematical operations

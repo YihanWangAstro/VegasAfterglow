@@ -117,7 +117,8 @@ class ForwardShockEqn {
      * @return The time derivative of Gamma
      * <!-- ************************************************************************************** -->
      */
-    inline Real compute_dGamma_dt(State const& state, State const& diff, Real ad_idx) const noexcept;
+    inline Real compute_dGamma_dt(State const& state, State const& diff, Real ad_idx, Real sin_theta,
+                                  Real cos_theta) const noexcept;
 
     /**
      * <!-- ************************************************************************************** -->
@@ -131,7 +132,8 @@ class ForwardShockEqn {
      * @return The time derivative of internal energy
      * <!-- ************************************************************************************** -->
      */
-    inline Real compute_dU_dt(Real eps_rad, State const& state, State const& diff, Real ad_idx) const noexcept;
+    inline Real compute_dU_dt(Real eps_rad, State const& state, State const& diff, Real ad_idx, Real sin_theta,
+                              Real cos_theta) const noexcept;
 
     inline Real compute_eps_rad(Real t_comv, Real Gamma, Real e_th) const noexcept;
 

@@ -7,6 +7,7 @@
 
 #pragma once
 
+#include <algorithm>
 #include <cassert>
 
 #include "../util/macros.h"
@@ -201,6 +202,9 @@ Real jet_spreading_edge(Ejecta const& jet, Medium const& medium, Real phi, Real 
 //========================================================================================================
 template <typename Arr1, typename Arr2>
 void boundary_to_center(Arr1 const& boundary, Arr2& center) {
+    if (boundary.size() < 2 || center.size() + 1 != boundary.size()) {
+        return;
+    }
     for (size_t i = 0; i < center.size(); ++i) {
         center[i] = 0.5 * (boundary[i] + boundary[i + 1]);
     }
@@ -208,6 +212,9 @@ void boundary_to_center(Arr1 const& boundary, Arr2& center) {
 
 template <typename Arr1, typename Arr2>
 void boundary_to_center_log(Arr1 const& boundary, Arr2& center) {
+    if (boundary.size() < 2 || center.size() + 1 != boundary.size()) {
+        return;
+    }
     for (size_t i = 0; i < center.size(); ++i) {
         center[i] = std::sqrt(boundary[i] * boundary[i + 1]);
     }
@@ -279,10 +286,8 @@ size_t build_adaptive_grid(Real lg2_min, Real lg2_max, std::array<Real, MaxBreak
         lg2_breaks[i] = std::log2(breaks[i]);
 
     auto near_any_break = [&](Real lg2_pos) {
-        for (size_t i = 0; i < n_breaks; ++i)
-            if (std::abs(lg2_pos - lg2_breaks[i]) < refine_radius_lg2)
-                return true;
-        return false;
+        return std::any_of(lg2_breaks.begin(), lg2_breaks.begin() + n_breaks,
+                           [lg2_pos, refine_radius_lg2](Real b) { return std::abs(lg2_pos - b) < refine_radius_lg2; });
     };
 
     // Single sweep from min to max with variable step size (2x density near breaks)
@@ -304,8 +309,7 @@ size_t build_adaptive_grid(Real lg2_min, Real lg2_max, std::array<Real, MaxBreak
     buf[n++] = std::exp2(lg2_max);
 
     grid = Array::from_shape({n});
-    for (size_t i = 0; i < n; ++i)
-        grid(i) = buf[i];
+    std::copy_n(buf.begin(), n, grid.begin());
     return n;
 }
 
@@ -676,7 +680,7 @@ Coord auto_grid(Ejecta const& jet, Medium const& medium, Array const& t_obs, Rea
     coord.theta_view = theta_view;
 
     const auto jet_edges = find_jet_edges(jet, con::Gamma_cut, is_axisymmetric);
-    const Real jet_edge = jet_edges.back(); // outermost edge
+    const Real jet_edge = jet_edges.empty() ? theta_cut : jet_edges.back(); // outermost edge (fallback if no edges)
     Real theta_min = defaults::grid::theta_min;
     Real theta_max = std::min(jet_edge, theta_cut);
 
@@ -695,6 +699,11 @@ Coord auto_grid(Ejecta const& jet, Medium const& medium, Array const& t_obs, Rea
     const size_t phi_num = std::max<size_t>(static_cast<size_t>(360 * phi_resol), 1);
 
     coord.phi = adaptive_phi_grid(jet, phi_num, theta_view, theta_max, is_axisymmetric);
+
+    if (t_obs.size() == 0) {
+        assert(false && "auto_grid: t_obs is empty");
+        return coord;
+    }
 
     const Real t_max = *std::ranges::max_element(t_obs);
     const Real t_min = *std::ranges::min_element(t_obs);

@@ -4,12 +4,21 @@ project(VegasAfterglow LANGUAGES CXX)
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_POSITION_INDEPENDENT_CODE ON)
+option(AFTERGLOW_ENABLE_WARNINGS "Enable compiler warnings" ON)
 
 if(CMAKE_CXX_COMPILER_ID MATCHES "GNU|Clang")
-  add_compile_options(-O3 -DNDEBUG -pipe -w -DXTENSOR_DISABLE_EXCEPTIONS)
+  add_compile_options(-O3 -DNDEBUG -pipe -DXTENSOR_DISABLE_EXCEPTIONS)
   add_compile_options(-fno-math-errno -fno-trapping-math -fno-signed-zeros -ffp-contract=fast)
 elseif(MSVC)
   add_compile_options(/O2 /DNDEBUG /MP /GL /std:c++20 /DXTENSOR_DISABLE_EXCEPTIONS)
+endif()
+
+if(AFTERGLOW_ENABLE_WARNINGS)
+  if(CMAKE_CXX_COMPILER_ID MATCHES "GNU|Clang")
+    add_compile_options(-Wall -Wextra -Wpedantic)
+  elseif(MSVC)
+    add_compile_options(/W4)
+  endif()
 endif()
 
 include(CheckIPOSupported)
@@ -48,12 +57,24 @@ endif()
 find_package(OpenMP REQUIRED)
 message(STATUS "OpenMP found - enabling parallel batch processing")
 
-file(GLOB_RECURSE ALL_SOURCES
-  "${CMAKE_CURRENT_SOURCE_DIR}/pybind/*.cpp"
-  "${CMAKE_CURRENT_SOURCE_DIR}/src/*.cpp"
+set(AFTERGLOW_SOURCES
+  pybind/mcmc.cpp
+  pybind/pybind.cpp
+  pybind/pymodel.cpp
+  src/core/mesh.cpp
+  src/core/observer.cpp
+  src/core/physics.cpp
+  src/dynamics/shock.cpp
+  src/radiation/inverse-compton.cpp
+  src/radiation/power-law-syn.cpp
+  src/radiation/prompt.cpp
+  src/radiation/smooth-power-law-syn.cpp
+  src/radiation/synchrotron.cpp
+  src/util/IO.cpp
+  src/util/utilities.cpp
 )
 
-pybind11_add_module(VegasAfterglowC ${ALL_SOURCES})
+pybind11_add_module(VegasAfterglowC ${AFTERGLOW_SOURCES})
 
 target_link_libraries(VegasAfterglowC PUBLIC pybind11::module Python::NumPy)
 target_link_libraries(VegasAfterglowC PUBLIC OpenMP::OpenMP_CXX)

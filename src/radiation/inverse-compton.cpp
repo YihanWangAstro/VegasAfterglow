@@ -276,32 +276,84 @@ void update_gamma_M(Real& gamma_M, InverseComptonY const& Ys, Real p, Real B) {
 //                                  Standalone Physics Functions
 //========================================================================================================
 
-Real compton_cross_section(Real nu) {
-    const Real x = con::h / (con::me * con::c2) * nu;
-    /*if (x <= 1) {
+namespace {
+    inline Real compton_cross_section_from_x(Real x) {
+        /*if (x <= 1) {
         return con::sigmaT;
     } else {
         return 0;
     }*/
 
-    if (x < 1e-2) {
-        return con::sigmaT * (1 - 2 * x);
-    } else if (x > 1e2) {
-        return 3. / 8 * con::sigmaT * (log(2 * x) + 0.5) / x;
-    } else {
-        const Real l = std::log1p(2.0 * x); // log(1+2x)
-        const Real invx = 1.0 / x;
-        const Real invx2 = invx * invx;
-        const Real term1 = 1.0 + 2.0 * x;
-        const Real invt1 = 1.0 / term1;
-        const Real invt1_2 = invt1 * invt1;
+        if (x < 1e-2) {
+            return con::sigmaT * (1 - 2 * x);
+        } else if (x > 1e2) {
+            return 3. / 8 * con::sigmaT * (log(2 * x) + 0.5) / x;
+        } else {
+            const Real l = std::log1p(2.0 * x); // log(1+2x)
+            const Real invx = 1.0 / x;
+            const Real invx2 = invx * invx;
+            const Real term1 = 1.0 + 2.0 * x;
+            const Real invt1 = 1.0 / term1;
+            const Real invt1_2 = invt1 * invt1;
 
-        // ((1+x)/x^3) * (2x(1+x)/(1+2x) - log(1+2x)) + log(1+2x)/(2x) - (1+3x)/(1+2x)^2
-        const Real a = (1.0 + x) * invx2 * invx;        // (1+x)/x^3
-        const Real b = 2.0 * x * (1.0 + x) * invt1 - l; // bracket
-        const Real c = 0.5 * l * invx;                  // log_term/(2x)
-        const Real d = (1.0 + 3.0 * x) * invt1_2;       // (1+3x)/(1+2x)^2
+            // ((1+x)/x^3) * (2x(1+x)/(1+2x) - log(1+2x)) + log(1+2x)/(2x) - (1+3x)/(1+2x)^2
+            const Real a = (1.0 + x) * invx2 * invx;        // (1+x)/x^3
+            const Real b = 2.0 * x * (1.0 + x) * invt1 - l; // bracket
+            const Real c = 0.5 * l * invx;                  // log_term/(2x)
+            const Real d = (1.0 + 3.0 * x) * invt1_2;       // (1+3x)/(1+2x)^2
 
-        return 0.75 * con::sigmaT * (a * b + c - d);
+            return 0.75 * con::sigmaT * (a * b + c - d);
+        }
     }
+
+    struct ComptonSigmaLUT {
+        static constexpr size_t n = 128;
+        static constexpr Real x_min = 1e-2;
+        static constexpr Real x_max = 1e2;
+        static constexpr Real lg2_x_min = -6.6438561897747247;
+        static constexpr Real lg2_x_max = 6.6438561897747247;
+
+        std::array<Real, n> sigma{};
+        Real inv_step{0};
+
+        ComptonSigmaLUT() {
+            const Real step = (lg2_x_max - lg2_x_min) / static_cast<Real>(n - 1);
+            inv_step = 1.0 / step;
+            for (size_t i = 0; i < n; ++i) {
+                const Real lg2_x = lg2_x_min + step * static_cast<Real>(i);
+                sigma[i] = compton_cross_section_from_x(std::exp2(lg2_x));
+            }
+        }
+
+        [[nodiscard]] inline Real eval_mid_x(Real x) const noexcept {
+            const Real lg2_x = fast_log2(x);
+            const Real pos = (lg2_x - lg2_x_min) * inv_step;
+            if (pos <= 0) {
+                return sigma.front();
+            }
+            if (pos >= static_cast<Real>(n - 1)) {
+                return sigma.back();
+            }
+            const size_t idx = static_cast<size_t>(pos);
+            const Real frac = pos - static_cast<Real>(idx);
+            return sigma[idx] + (sigma[idx + 1] - sigma[idx]) * frac;
+        }
+    };
+} // namespace
+
+Real compton_cross_section(Real nu) {
+    const Real x = con::h / (con::me * con::c2) * nu;
+    return compton_cross_section_from_x(x);
+}
+
+Real compton_cross_section_lut(Real nu) {
+    const Real x = con::h / (con::me * con::c2) * nu;
+    if (!(x > 0)) {
+        return 0;
+    }
+    if (x <= ComptonSigmaLUT::x_min || x >= ComptonSigmaLUT::x_max) {
+        return compton_cross_section_from_x(x);
+    }
+    static const ComptonSigmaLUT lut;
+    return lut.eval_mid_x(x);
 }

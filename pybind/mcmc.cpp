@@ -482,6 +482,8 @@ double MultiBandModel::estimate_chi2_with_workspace(Params const& param, MultiBa
 }
 
 auto MultiBandModel::flux_density_grid(Params const& param, PyArray const& t, PyArray const& nu) -> PyGrid {
+    AFTERGLOW_REQUIRE(t.size() > 0, "time array must be non-empty");
+    AFTERGLOW_REQUIRE(nu.size() > 0, "frequency array must be non-empty");
     Array t_bins = t * unit::sec;
     Array nu_bins = nu * unit::Hz;
     MeshGrid F_nu = MeshGrid::from_shape({nu.size(), t.size()});
@@ -515,6 +517,7 @@ auto MultiBandModel::flux_density_grid(Params const& param, PyArray const& t, Py
 
 auto MultiBandModel::flux(Params const& param, PyArray const& t, double nu_min, double nu_max, size_t num_points)
     -> PyArray {
+    AFTERGLOW_REQUIRE(t.size() > 0, "time array must be non-empty");
     Array t_bins = t * unit::sec;
     Array nu_bins = xt::logspace(std::log10(nu_min * unit::Hz), std::log10(nu_max * unit::Hz), num_points);
     Array F_nu = Array::from_shape({t.size()});

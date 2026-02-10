@@ -29,13 +29,15 @@ ForwardShockEqn<Ejecta, Medium>::ForwardShockEqn(Medium const& medium, Ejecta co
 template <typename Ejecta, typename Medium>
 void ForwardShockEqn<Ejecta, Medium>::operator()(State const& state, State& diff, Real t) const noexcept {
     const Real Gamma = state.Gamma;
-    const Real u = std::sqrt(Gamma * Gamma - 1);
+    const Real Gamma2 = Gamma * Gamma;
+    const Real u2 = Gamma2 - 1;
+    const Real u = std::sqrt(u2);
 
     diff.r = compute_dr_dt(Gamma, u);
     diff.t_comv = Gamma + u;
 
     if (ejecta.spreading && state.theta < 0.5 * con::pi) {
-        diff.theta = compute_dtheta_dt(theta_s, state.theta, diff.r, state.r, Gamma);
+        diff.theta = compute_dtheta_dt(theta_s, state.theta, diff.r, state.r, Gamma, u, u2);
     } else {
         diff.theta = 0;
     }
@@ -48,18 +50,24 @@ void ForwardShockEqn<Ejecta, Medium>::operator()(State const& state, State& diff
         diff.eps_jet = ejecta.deps_dt(phi, theta0, t);
     }
 
-    Real rho = medium.rho(phi, state.theta, state.r);
+    const Real rho = medium.rho(phi, state.theta, state.r);
     diff.m2 = state.r * state.r * rho * diff.r;
     const Real e_th = (Gamma - 1) * 4 * Gamma * rho * con::c2;
     const Real eps_rad = compute_eps_rad(state.t_comv, Gamma, e_th);
     const Real ad_idx = physics::thermo::adiabatic_idx(Gamma);
-    diff.Gamma = compute_dGamma_dt(state, diff, ad_idx);
-    diff.U2_th = compute_dU_dt(eps_rad, state, diff, ad_idx);
+    Real sin_theta = 0;
+    Real cos_theta = 1;
+    if (ejecta.spreading) {
+        sin_theta = std::sin(state.theta);
+        cos_theta = std::cos(state.theta);
+    }
+    diff.Gamma = compute_dGamma_dt(state, diff, ad_idx, sin_theta, cos_theta);
+    diff.U2_th = compute_dU_dt(eps_rad, state, diff, ad_idx, sin_theta, cos_theta);
 }
 
 template <typename Ejecta, typename Medium>
 Real ForwardShockEqn<Ejecta, Medium>::compute_dGamma_dt(State const& state, State const& diff,
-                                                        Real ad_idx) const noexcept {
+                                                        Real ad_idx, Real sin_theta, Real cos_theta) const noexcept {
     Real dm_dt_swept = diff.m2;
     Real m_swept = state.m2;
     const Real Gamma2 = state.Gamma * state.Gamma;
@@ -71,8 +79,6 @@ Real ForwardShockEqn<Ejecta, Medium>::compute_dGamma_dt(State const& state, Stat
     Real U = state.U2_th; // Internal energy per unit solid angle
 
     if (ejecta.spreading) {
-        const Real cos_theta = std::cos(state.theta);
-        const Real sin_theta = std::sin(state.theta);
         const Real f_spread = (1 - cos_theta) / dOmega0;
         dm_dt_swept = dm_dt_swept * f_spread + m_swept / dOmega0 * sin_theta * diff.theta;
         m_swept *= f_spread;
@@ -100,12 +106,12 @@ Real ForwardShockEqn<Ejecta, Medium>::compute_dGamma_dt(State const& state, Stat
 
 template <typename Ejecta, typename Medium>
 Real ForwardShockEqn<Ejecta, Medium>::compute_dU_dt(Real eps_rad, State const& state, State const& diff,
-                                                    Real ad_idx) const noexcept {
+                                                    Real ad_idx, Real sin_theta, Real cos_theta) const noexcept {
     Real dm_dt_swept = diff.m2;
     const Real m_swept = state.m2;
     Real dlnVdt = 3 / state.r * diff.r - diff.Gamma / state.Gamma;
     if (ejecta.spreading) {
-        const Real factor = std::sin(state.theta) / (1 - std::cos(state.theta)) * diff.theta;
+        const Real factor = sin_theta / (1 - cos_theta) * diff.theta;
         dm_dt_swept = dm_dt_swept + m_swept * factor;
         dlnVdt += factor;
         dlnVdt += factor / (ad_idx - 1);
@@ -138,9 +144,7 @@ void ForwardShockEqn<Ejecta, Medium>::set_init_state(State& state, Real t0) cons
 
     state.theta = theta0;
 
-    auto rho_func = [&](Real r_) { return medium.rho(phi, theta0, r_); };
-
-    state.m2 = enclosed_mass(rho_func, state.r);
+    state.m2 = enclosed_mass_medium(medium, phi, theta0, state.r);
 
     state.Gamma = Gamma4;
 
@@ -154,7 +158,7 @@ void ForwardShockEqn<Ejecta, Medium>::set_init_state(State& state, Real t0) cons
 
     Real ad_idx = physics::thermo::adiabatic_idx(state.Gamma);
 
-    state.U2_th = enclosed_thermal_energy(rho_func, state.r, state.Gamma, ad_idx, rad.eps_e);
+    state.U2_th = enclosed_thermal_energy_medium(medium, phi, theta0, state.r, state.Gamma, ad_idx, rad.eps_e);
 }
 
 template <typename Eqn, typename State>

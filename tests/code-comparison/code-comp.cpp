@@ -34,6 +34,9 @@ void lc_gen(std::string folder_name, bool out = false) {
     Real theta_view = data["theta_view"];
 
     std::vector<Real> t_obs = data["t_obs"];
+    if (t_obs.size() < 2) {
+        throw std::runtime_error("t_obs must contain at least two entries");
+    }
 
     std::vector<Real> band_pass_ = data["band pass (kev)"];
 

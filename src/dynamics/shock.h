@@ -9,6 +9,7 @@
 
 #include <numeric>
 #include <tuple>
+#include <type_traits>
 #include <vector>
 
 #include "../core/mesh.h"
@@ -288,6 +289,13 @@ inline Real compute_dtheta_dt(Real theta_s, Real theta, Real drdt, Real r, Real 
     constexpr Real Q = 7;
     const Real u2 = Gamma * Gamma - 1;
     const Real u = std::sqrt(u2);
+    const Real f = 1 / (1 + u * theta_s * Q);
+    return drdt / (2 * Gamma * r) * std::sqrt((2 * u2 + 3) / (4 * u2 + 3)) * f;
+}
+
+/// Overload using precomputed four-velocity terms to avoid redundant sqrt in hot loops.
+inline Real compute_dtheta_dt(Real theta_s, Real theta, Real drdt, Real r, Real Gamma, Real u, Real u2) {
+    constexpr Real Q = 7;
     const Real f = 1 / (1 + u * theta_s * Q);
     return drdt / (2 * Gamma * r) * std::sqrt((2 * u2 + 3) / (4 * u2 + 3)) * f;
 }
@@ -580,10 +588,44 @@ Real enclosed_thermal_energy(Func const& rho, Real r, Real Gamma, Real ad_idx, R
                r);
 }
 
+/// @brief Fast path for enclosed mass with compile-time medium detection.
+template <typename Medium>
+Real enclosed_mass_medium(Medium const& medium, Real phi, Real theta, Real r) {
+    using MediumT = std::remove_cvref_t<Medium>;
+
+    if constexpr (std::is_same_v<MediumT, ISM>) {
+        return medium.mass(r);
+    } else if constexpr (std::is_same_v<MediumT, Wind>) {
+        return medium.mass(r);
+    } else {
+        return enclosed_mass([&](Real r_) { return medium.rho(phi, theta, r_); }, r);
+    }
+}
+
+/// @brief Fast path for enclosed thermal energy with compile-time medium detection.
+template <typename Medium>
+Real enclosed_thermal_energy_medium(Medium const& medium, Real phi, Real theta, Real r, Real Gamma, Real ad_idx,
+                                    Real eps_e) {
+    using MediumT = std::remove_cvref_t<Medium>;
+
+    if constexpr (std::is_same_v<MediumT, ISM>) {
+        const Real rho = medium.rho(phi, theta, r);
+        const Real cooling_exp = 3 * (ad_idx - 1);
+        const Real pow_exp = 3 + cooling_exp;
+        const Real x0 = std::exp(-18.0);
+        const Real attenuation = 1 - std::pow(x0, pow_exp);
+        const Real integral = rho * r * r * r * attenuation / pow_exp;
+        return (1 - eps_e) * (Gamma - 1) * con::c2 * integral;
+    } else {
+        return enclosed_thermal_energy([&](Real r_) { return medium.rho(phi, theta, r_); }, r, Gamma, ad_idx, eps_e);
+    }
+}
+
 /// @brief Finds the deceleration observer time by integrating swept mass outward until m_swept = m_jet/Gamma0.
 /// Works for any medium density profile. Returns observer time r_dec*(1-beta)/(beta*c).
 template <typename Eqn>
 Real compute_dec_time(Eqn const& eqn) {
+    using MediumT = std::remove_cvref_t<decltype(eqn.medium)>;
     const Real gamma = eqn.ejecta.Gamma0(eqn.phi, eqn.theta0);
     const Real beta = physics::relativistic::gamma_to_beta(gamma);
     Real m_jet = eqn.ejecta.eps_k(eqn.phi, eqn.theta0) / (gamma * con::c2);
@@ -591,6 +633,22 @@ Real compute_dec_time(Eqn const& eqn) {
         m_jet /= (1.0 + eqn.ejecta.sigma0(eqn.phi, eqn.theta0));
     }
     const Real target = m_jet / gamma;
+
+    const Real r_min = 1e-3;
+    const Real r_max = r_min * std::pow(10.0, 40.0);
+    if (target <= 0) {
+        return r_min * (1 - beta) / (beta * con::c);
+    }
+
+    if constexpr (std::is_same_v<MediumT, ISM>) {
+        const Real rho = eqn.medium.rho(eqn.phi, eqn.theta0, r_min);
+        if (rho > 0) {
+            const Real r3_dec = r_min * r_min * r_min + 3 * target / rho;
+            const Real r_dec = std::cbrt(std::max(r3_dec, 0.0));
+            return std::min(r_dec, r_max) * (1 - beta) / (beta * con::c);
+        }
+        return r_max * (1 - beta) / (beta * con::c);
+    }
 
     auto rho = [&](Real r) { return eqn.medium.rho(eqn.phi, eqn.theta0, r); };
 
