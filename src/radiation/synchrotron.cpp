@@ -276,19 +276,17 @@ Real SynElectrons::compute_spectrum(Real gamma) const {
         case 1: // slow cooling: gamma_m < gamma_c
         case 2:
         case 5:
-            if (gamma < gamma_m)
-                return 0;
+
             // (p-1)/gamma_m * (gamma/gamma_m)^-p * smooth_break_at_gamma_c
-            return (p - 1) * fast_pow(gamma / gamma_m, -p) / gamma_m *
+            return (p - 1) * fast_exp(-gamma / gamma_M - gamma_m / gamma) * fast_pow(gamma / gamma_m, -p) / gamma_m *
                    fast_pow(1.0 + fast_pow(gamma / gamma_c, s), -1.0 / s);
 
         case 3: // fast cooling: gamma_c < gamma_m
         case 4:
         case 6:
-            if (gamma < gamma_c)
-                return 0;
             // gamma_c/gamma^2 * smooth_break_at_gamma_m
-            return gamma_c / (gamma * gamma) * fast_pow(1.0 + fast_pow(gamma / gamma_m, s * (p - 1)), -1.0 / s);
+            return fast_exp(-gamma / gamma_M - gamma_c / gamma) * gamma_c / (gamma * gamma) *
+                   fast_pow(1.0 + fast_pow(gamma / gamma_m, s * (p - 1)), -1.0 / s);
 
         default:
             return 0;
@@ -297,18 +295,17 @@ Real SynElectrons::compute_spectrum(Real gamma) const {
 
 Real SynElectrons::compute_N_gamma(Real gamma) const {
     if (gamma <= gamma_c) { // Below the cooling Lorentz factor: direct scaling
-        return fast_exp(-gamma / gamma_M) * N_e * compute_spectrum(gamma);
+        return N_e * compute_spectrum(gamma);
     } else {
-        return fast_exp(-gamma / gamma_M) * N_e * compute_spectrum(gamma) * (1 + Y_c) / (1 + Ys.gamma_spectrum(gamma));
+        return N_e * compute_spectrum(gamma) * (1 + Y_c) / (1 + Ys.gamma_spectrum(gamma));
     }
 }
 
 Real SynElectrons::compute_column_den(Real gamma) const {
     if (gamma <= gamma_c) { // Below the cooling Lorentz factor: direct scaling
-        return fast_exp(-gamma / gamma_M) * column_den * compute_spectrum(gamma);
+        return column_den * compute_spectrum(gamma);
     } else {
-        return fast_exp(-gamma / gamma_M) * column_den * compute_spectrum(gamma) * (1 + Y_c) /
-               (1 + Ys.gamma_spectrum(gamma));
+        return column_den * compute_spectrum(gamma) * (1 + Y_c) / (1 + Ys.gamma_spectrum(gamma));
     }
 }
 
