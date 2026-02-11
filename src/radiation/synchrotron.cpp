@@ -276,7 +276,7 @@ Real SynElectrons::compute_spectrum(Real gamma) const {
         case 1: // slow cooling: gamma_m < gamma_c
         case 2:
         case 5:
-            if (gamma <= gamma_m)
+            if (gamma < gamma_m)
                 return 0;
             // (p-1)/gamma_m * (gamma/gamma_m)^-p * smooth_break_at_gamma_c
             return (p - 1) * fast_pow(gamma / gamma_m, -p) / gamma_m *
@@ -285,7 +285,7 @@ Real SynElectrons::compute_spectrum(Real gamma) const {
         case 3: // fast cooling: gamma_c < gamma_m
         case 4:
         case 6:
-            if (gamma <= gamma_c)
+            if (gamma < gamma_c)
                 return 0;
             // gamma_c/gamma^2 * smooth_break_at_gamma_m
             return gamma_c / (gamma * gamma) * fast_pow(1.0 + fast_pow(gamma / gamma_m, s * (p - 1)), -1.0 / s);
