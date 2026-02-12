@@ -7,7 +7,7 @@
 
 #include "power-law-syn.h"
 
-#include "radiation/inverse-compton.h"
+#include "inverse-compton.h"
 
 //========================================================================================================
 //                                  PowerLawSyn Class Methods
@@ -129,7 +129,6 @@ Real PowerLawSyn::compute_log2_spectrum(Real log2_nu) const {
 
             break;
         case 4:
-
             if (log2_nu <= log2_nu_a) {
                 return log2_3 + log2_C4_ + log2_C1_ + 2. * log2_nu;
             }

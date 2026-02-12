@@ -356,7 +356,7 @@ void generate_syn_electrons(SynElectronGrid& electrons, Shock const& shock) {
 
                 // no new shocked electrons, cool the relic population from crossing
                 if (k >= k_inj) {
-                    const auto& inj = electrons(i, j, k_inj - 1);
+                    auto const& inj = electrons(i, j, k_inj - 1);
                     const Real dt_comv = t_com - shock.t_comv(i, j, k_inj - 1);
                     elec.gamma_c = cool_after_crossing(inj.gamma_c, inj.gamma_m, elec.gamma_m, t_com, B, 0);
 

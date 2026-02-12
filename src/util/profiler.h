@@ -15,11 +15,11 @@ namespace afterglow {
             counters_.clear();
         }
 
-        void add(const std::string& name, double ms) { timings_[name] += ms; }
+        void add(std::string const& name, double ms) { timings_[name] += ms; }
 
-        void increment(const std::string& name, size_t count = 1) { counters_[name] += count; }
+        void increment(std::string const& name, size_t count = 1) { counters_[name] += count; }
 
-        void set_max(const std::string& name, size_t value) {
+        void set_max(std::string const& name, size_t value) {
             auto it = counters_.find(name);
             if (it == counters_.end() || value > it->second) {
                 counters_[name] = value;
@@ -42,7 +42,7 @@ namespace afterglow {
 
     class ScopedTimer {
       public:
-        explicit ScopedTimer(const char* name) : name_(name), start_(std::chrono::high_resolution_clock::now()) {}
+        explicit ScopedTimer(char const* name) : name_(name), start_(std::chrono::high_resolution_clock::now()) {}
 
         ~ScopedTimer() {
             auto end = std::chrono::high_resolution_clock::now();
@@ -50,11 +50,11 @@ namespace afterglow {
             profiler().add(name_, ms);
         }
 
-        ScopedTimer(const ScopedTimer&) = delete;
-        ScopedTimer& operator=(const ScopedTimer&) = delete;
+        ScopedTimer(ScopedTimer const&) = delete;
+        ScopedTimer& operator=(ScopedTimer const&) = delete;
 
       private:
-        const char* name_;
+        char const* name_;
         std::chrono::high_resolution_clock::time_point start_;
     };
 

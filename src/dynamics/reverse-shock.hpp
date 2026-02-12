@@ -9,6 +9,7 @@
 #include <array>
 
 #include "../util/macros.h"
+#include "shock-physics.h"
 /**
  * <!-- ************************************************************************************** -->
  * @struct ReverseState

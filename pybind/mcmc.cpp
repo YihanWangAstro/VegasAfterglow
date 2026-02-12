@@ -8,8 +8,6 @@
 #include "mcmc.h"
 
 #include <algorithm>
-#include <atomic>
-#include <chrono>
 #include <cmath>
 #include <limits>
 #include <numeric>
@@ -25,7 +23,7 @@
 #include "pybind.h"
 
 // Parameter name to index mapping (computed once, used for Python interface setup)
-int param_name_to_index(const std::string& name) {
+int param_name_to_index(std::string const& name) {
     static const std::unordered_map<std::string, int> name_map = {
         {"theta_v", 0},  {"n_ism", 1},     {"n0", 2},       {"A_star", 3}, {"k_m", 4},       {"E_iso", 5},
         {"Gamma0", 6},   {"theta_c", 7},   {"k_e", 8},      {"k_g", 9},    {"duration", 10}, {"tau", 10},
@@ -294,7 +292,7 @@ void MultiBandData::add_flux_density(double nu, PyArray const& t, PyArray const&
 }
 
 void MultiBandData::add_flux(double nu_min, double nu_max, size_t num_points, PyArray const& t, PyArray const& Fv_obs,
-                             PyArray const& Fv_err, const std::optional<PyArray>& weights) {
+                             PyArray const& Fv_err, std::optional<PyArray> const& weights) {
     AFTERGLOW_REQUIRE(t.size() == Fv_obs.size() && t.size() == Fv_err.size(), "light curve array inconsistent length!");
     AFTERGLOW_REQUIRE(is_ascending(t), "Time array must be in ascending order!");
     AFTERGLOW_REQUIRE(nu_min < nu_max, "nu_min must be less than nu_max!");
@@ -322,7 +320,7 @@ void MultiBandData::add_flux(double nu_min, double nu_max, size_t num_points, Py
 }
 
 void MultiBandData::add_spectrum(double t, PyArray const& nu, PyArray const& Fv_obs, PyArray const& Fv_err,
-                                 const std::optional<PyArray>& weights) {
+                                 std::optional<PyArray> const& weights) {
     AFTERGLOW_REQUIRE(nu.size() == Fv_obs.size() && nu.size() == Fv_err.size(), "spectrum array inconsistent length!");
 
     Array w = xt::ones<Real>({nu.size()});
@@ -469,8 +467,8 @@ double MultiBandModel::estimate_chi2_with_workspace(Params const& param, MultiBa
 
     // Chi2 from flux_data entries
     for (size_t d = 0; d < obs_data_ref.flux_data.size(); ++d) {
-        const auto& fd = obs_data_ref.flux_data[d];
-        const auto& model = workspace.flux_data_models[d];
+        auto const& fd = obs_data_ref.flux_data[d];
+        auto const& model = workspace.flux_data_models[d];
         for (size_t i = 0; i < fd.t.size(); ++i) {
             const double error = fd.Fv_err(i);
             const double diff = fd.Fv_obs(i) - model(i);
@@ -557,14 +555,14 @@ PyArray MultiBandModel::batch_estimate_chi2(PyGrid const& samples, ParamTransfor
 
     Array chi2_results = Array::from_shape({nwalkers});
 
-    const MultiBandData& data_ref = obs_data;
-    const ConfigParams& config_ref = config;
+    MultiBandData const& data_ref = obs_data;
+    ConfigParams const& config_ref = config;
 
     // Pre-compute workspace dimensions (same for all threads)
     const size_t tuple_size = data_ref.times.size();
     std::vector<size_t> flux_data_sizes;
     flux_data_sizes.reserve(data_ref.flux_data.size());
-    for (const auto& fd : data_ref.flux_data) {
+    for (auto const& fd : data_ref.flux_data) {
         flux_data_sizes.push_back(fd.t.size());
     }
 

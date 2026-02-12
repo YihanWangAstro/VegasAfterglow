@@ -73,7 +73,7 @@ struct PyMagnetar {
  * <!-- ************************************************************************************** -->
  */
 JetVariant PyTophatJet(Real theta_c, Real E_iso, Real Gamma0, bool spreading = false, Real duration = 1,
-                       const std::optional<PyMagnetar>& magnetar = std::nullopt);
+                       std::optional<PyMagnetar> const& magnetar = std::nullopt);
 
 /**
  * <!-- ************************************************************************************** -->
@@ -93,7 +93,7 @@ JetVariant PyTophatJet(Real theta_c, Real E_iso, Real Gamma0, bool spreading = f
  * <!-- ************************************************************************************** -->
  */
 JetVariant PyGaussianJet(Real theta_c, Real E_iso, Real Gamma0, bool spreading = false, Real duration = 1,
-                         const std::optional<PyMagnetar>& magnetar = std::nullopt);
+                         std::optional<PyMagnetar> const& magnetar = std::nullopt);
 
 /**
  * <!-- ************************************************************************************** -->
@@ -115,7 +115,7 @@ JetVariant PyGaussianJet(Real theta_c, Real E_iso, Real Gamma0, bool spreading =
  * <!-- ************************************************************************************** -->
  */
 JetVariant PyPowerLawJet(Real theta_c, Real E_iso, Real Gamma0, Real k_e, Real k_g, bool spreading = false,
-                         Real duration = 1, const std::optional<PyMagnetar>& magnetar = std::nullopt);
+                         Real duration = 1, std::optional<PyMagnetar> const& magnetar = std::nullopt);
 
 /**
  * <!-- ************************************************************************************** -->
@@ -158,7 +158,7 @@ JetVariant PyPowerLawWing(Real theta_c, Real E_iso_w, Real Gamma0_w, Real k_e, R
  * <!-- ************************************************************************************** -->
  */
 JetVariant PyStepPowerLawJet(Real theta_c, Real E_iso, Real Gamma0, Real E_iso_w, Real Gamma0_w, Real k_e, Real k_g,
-                             bool spreading, Real duration, const std::optional<PyMagnetar>& magnetar);
+                             bool spreading, Real duration, std::optional<PyMagnetar> const& magnetar);
 
 /**
  * <!-- ************************************************************************************** -->
@@ -181,7 +181,7 @@ JetVariant PyStepPowerLawJet(Real theta_c, Real E_iso, Real Gamma0, Real E_iso_w
  */
 JetVariant PyTwoComponentJet(Real theta_c, Real E_iso, Real Gamma0, Real theta_w, Real E_iso_w, Real Gamma0_w,
                              bool spreading = false, Real duration = 1,
-                             const std::optional<PyMagnetar>& magnetar = std::nullopt);
+                             std::optional<PyMagnetar> const& magnetar = std::nullopt);
 
 /**
  * <!-- ************************************************************************************** -->
@@ -509,9 +509,9 @@ class PyModel {
      * @param axisymmetric Whether to assume axisymmetric jet structure (default: true)
      * <!-- ************************************************************************************** -->
      */
-    PyModel(JetVariant jet, MediumVariant medium, const PyObserver& observer, const PyRadiation& fwd_rad,
-            const std::optional<PyRadiation>& rvs_rad = std::nullopt,
-            const std::tuple<Real, Real, Real>& resolutions = std::make_tuple(0.15, 0.5, 10), Real rtol = 1e-5,
+    PyModel(JetVariant jet, MediumVariant medium, PyObserver const& observer, PyRadiation const& fwd_rad,
+            std::optional<PyRadiation> const& rvs_rad = std::nullopt,
+            std::tuple<Real, Real, Real> const& resolutions = std::make_tuple(0.15, 0.5, 10), Real rtol = 1e-5,
             bool axisymmetric = true)
         : jet_(std::move(jet)),
           medium_(std::move(medium)),
@@ -613,9 +613,9 @@ class PyModel {
 #endif
 
     // Read-only accessors for Python properties
-    [[nodiscard]] const PyObserver& get_observer() const { return obs_setup; }
-    [[nodiscard]] const PyRadiation& get_fwd_rad() const { return fwd_rad; }
-    [[nodiscard]] const std::optional<PyRadiation>& get_rvs_rad() const { return rvs_rad_opt; }
+    [[nodiscard]] PyObserver const& get_observer() const { return obs_setup; }
+    [[nodiscard]] PyRadiation const& get_fwd_rad() const { return fwd_rad; }
+    [[nodiscard]] std::optional<PyRadiation> const& get_rvs_rad() const { return rvs_rad_opt; }
     [[nodiscard]] std::tuple<Real, Real, Real> get_resolutions() const { return {phi_resol, theta_resol, t_resol}; }
     [[nodiscard]] Real get_rtol() const { return rtol; }
     [[nodiscard]] bool get_axisymmetric() const { return axisymmetric; }

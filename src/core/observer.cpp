@@ -7,8 +7,6 @@
 
 #include "observer.h"
 
-#include <cstddef>
-
 #include "../util/macros.h"
 #include "../util/utilities.h"
 
@@ -180,8 +178,8 @@ void Observer::update_required(MaskGrid& required, Array const& t_obs) {
 
             // find the grid points that are required for the interpolation.
             for (size_t k = 0; k < t_grid - 1 && t_idx < t_obs_size; k++) {
-                Real const t_lo = time(i, j, k);
-                Real const t_hi = time(i, j, k + 1);
+                const Real t_lo = time(i, j, k);
+                const Real t_hi = time(i, j, k + 1);
 
                 if (t_lo < t_obs(t_idx) && t_obs(t_idx) <= t_hi) {
                     required(i_eff, j, k) = 1;

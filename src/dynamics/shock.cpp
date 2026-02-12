@@ -7,6 +7,8 @@
 
 #include "shock.h"
 
+#include "shock-physics.h"
+
 Shock::Shock(size_t phi_size, size_t theta_size, size_t t_size, RadParams const& rad_params)
     : t_comv({phi_size, theta_size, t_size}, 0),     // Initialize comoving time grid with 0
       r({phi_size, theta_size, t_size}, 0),          // Initialize radius grid with 0

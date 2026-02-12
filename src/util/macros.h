@@ -7,7 +7,6 @@
 
 #pragma once
 #include <limits>
-#include <numeric>
 
 #include "../config/simulation-defaults.h"
 /**

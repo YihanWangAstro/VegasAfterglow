@@ -90,10 +90,10 @@ PYBIND11_MODULE(VegasAfterglowC, m) {
     py::class_<PyRadiation>(m, "Radiation")
         .def(py::init<Real, Real, Real, Real, bool, bool, bool>(), py::arg("eps_e"), py::arg("eps_B"), py::arg("p"),
              py::arg("xi_e") = 1, py::arg("ssc_cooling") = false, py::arg("ssc") = false, py::arg("kn") = false)
-        .def_property_readonly("eps_e", [](const PyRadiation& r) { return r.rad.eps_e; })
-        .def_property_readonly("eps_B", [](const PyRadiation& r) { return r.rad.eps_B; })
-        .def_property_readonly("p", [](const PyRadiation& r) { return r.rad.p; })
-        .def_property_readonly("xi_e", [](const PyRadiation& r) { return r.rad.xi_e; })
+        .def_property_readonly("eps_e", [](PyRadiation const& r) { return r.rad.eps_e; })
+        .def_property_readonly("eps_B", [](PyRadiation const& r) { return r.rad.eps_B; })
+        .def_property_readonly("p", [](PyRadiation const& r) { return r.rad.p; })
+        .def_property_readonly("xi_e", [](PyRadiation const& r) { return r.rad.xi_e; })
         .def_readonly("ssc_cooling", &PyRadiation::ssc_cooling)
         .def_readonly("ssc", &PyRadiation::ssc)
         .def_readonly("kn", &PyRadiation::kn)
@@ -278,7 +278,7 @@ PYBIND11_MODULE(VegasAfterglowC, m) {
         .def_readwrite("kn", &ConfigParams::kn)
         .def_readwrite("magnetar", &ConfigParams::magnetar)
         .def(py::pickle(
-            [](const ConfigParams& self) {
+            [](ConfigParams const& self) {
                 return py::make_tuple(self.lumi_dist, self.z, self.medium, self.jet, self.t_resol, self.phi_resol,
                                       self.theta_resol, self.rtol, self.rvs_shock, self.fwd_ssc, self.rvs_ssc,
                                       self.ssc_cooling, self.kn, self.magnetar);
@@ -308,13 +308,13 @@ PYBIND11_MODULE(VegasAfterglowC, m) {
     // FluxData bindings (for integrated flux bands)
     py::class_<FluxData>(m, "FluxData")
         .def(py::init<>())
-        .def_property_readonly("t", [](const FluxData& self) { return PyArray(self.t); })
-        .def_property_readonly("nu", [](const FluxData& self) { return PyArray(self.nu); })
-        .def_property_readonly("Fv_obs", [](const FluxData& self) { return PyArray(self.Fv_obs); })
-        .def_property_readonly("Fv_err", [](const FluxData& self) { return PyArray(self.Fv_err); })
-        .def_property_readonly("weights", [](const FluxData& self) { return PyArray(self.weights); })
+        .def_property_readonly("t", [](FluxData const& self) { return PyArray(self.t); })
+        .def_property_readonly("nu", [](FluxData const& self) { return PyArray(self.nu); })
+        .def_property_readonly("Fv_obs", [](FluxData const& self) { return PyArray(self.Fv_obs); })
+        .def_property_readonly("Fv_err", [](FluxData const& self) { return PyArray(self.Fv_err); })
+        .def_property_readonly("weights", [](FluxData const& self) { return PyArray(self.weights); })
         .def(py::pickle(
-            [](const FluxData& self) {
+            [](FluxData const& self) {
                 return py::make_tuple(PyArray(self.t), PyArray(self.nu), PyArray(self.Fv_obs), PyArray(self.Fv_err),
                                       PyArray(self.weights));
             },
@@ -359,11 +359,11 @@ PYBIND11_MODULE(VegasAfterglowC, m) {
         .def("data_points_num", &MultiBandData::data_points_num)
 
         // Expose internal data as numpy arrays (read-only)
-        .def_property_readonly("times", [](const MultiBandData& self) { return PyArray(self.times); })
-        .def_property_readonly("frequencies", [](const MultiBandData& self) { return PyArray(self.frequencies); })
-        .def_property_readonly("fluxes", [](const MultiBandData& self) { return PyArray(self.fluxes); })
-        .def_property_readonly("errors", [](const MultiBandData& self) { return PyArray(self.errors); })
-        .def_property_readonly("weights", [](const MultiBandData& self) { return PyArray(self.weights); })
+        .def_property_readonly("times", [](MultiBandData const& self) { return PyArray(self.times); })
+        .def_property_readonly("frequencies", [](MultiBandData const& self) { return PyArray(self.frequencies); })
+        .def_property_readonly("fluxes", [](MultiBandData const& self) { return PyArray(self.fluxes); })
+        .def_property_readonly("errors", [](MultiBandData const& self) { return PyArray(self.errors); })
+        .def_property_readonly("weights", [](MultiBandData const& self) { return PyArray(self.weights); })
         .def_readonly("t_min", &MultiBandData::t_min)
         .def_readonly("t_max", &MultiBandData::t_max)
         .def_readonly("flux_data", &MultiBandData::flux_data)
@@ -376,7 +376,7 @@ PYBIND11_MODULE(VegasAfterglowC, m) {
 
                 // Serialize consolidated arrays and flux_data
                 py::list flux_data_list;
-                for (const auto& fd : self.flux_data) {
+                for (auto const& fd : self.flux_data) {
                     flux_data_list.append(py::make_tuple(PyArray(fd.t), PyArray(fd.nu), PyArray(fd.Fv_obs),
                                                          PyArray(fd.Fv_err), PyArray(fd.weights)));
                 }

@@ -67,7 +67,7 @@ void write_csv(std::string const& filename, MeshGrid3d const& grid3d, Real unit 
  * <!-- ************************************************************************************** -->
  */
 template <typename T>
-void write_npy(std::string const& filename, const T& array, Real unit = 1.0);
+void write_npy(std::string const& filename, T const& array, Real unit = 1.0);
 
 #ifndef NO_XTENSOR_IO
 /**
@@ -119,8 +119,8 @@ void write_npz(std::string const& filename, Coord const& coord);
  * <!-- ************************************************************************************** -->
  */
 template <typename T, typename... Rest>
-void write_npz_recursive(std::string const& filename, bool first, std::string const& name, const T& array,
-                         const Rest&... rest);
+void write_npz_recursive(std::string const& filename, bool first, std::string const& name, T const& array,
+                         Rest const&... rest);
 
 /**
  * <!-- ************************************************************************************** -->
@@ -132,7 +132,7 @@ void write_npz_recursive(std::string const& filename, bool first, std::string co
  * <!-- ************************************************************************************** -->
  */
 template <typename T>
-void write_npz(std::string const& filename, const T& array, Real unit = 1.0) {
+void write_npz(std::string const& filename, T const& array, Real unit = 1.0) {
     xt::dump_npz(filename + ".npz", "array", xt::eval(array / unit), false, false);
 }
 
@@ -153,8 +153,8 @@ void write_npz(std::string const& filename, Args const&... args);
 //========================================================================================================
 
 template <typename T, typename... Rest>
-void write_npz_recursive(std::string const& filename, bool first, std::string const& name, const T& array,
-                         const Rest&... rest) {
+void write_npz_recursive(std::string const& filename, bool first, std::string const& name, T const& array,
+                         Rest const&... rest) {
     auto arr = xt::eval(array);                                // ensure evaluated
     xt::dump_npz(filename + ".npz", name, arr, false, !first); // append after first write
 
@@ -172,6 +172,6 @@ void write_npz(std::string const& filename, Args const&... args) {
 #endif
 
 template <typename T>
-void write_npy(std::string const& filename, const T& array, Real unit) {
+void write_npy(std::string const& filename, T const& array, Real unit) {
     xt::dump_npy(filename + ".npy", xt::eval(array / unit));
 }

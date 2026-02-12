@@ -9,6 +9,7 @@
 
 #include <array>
 
+#include "shock-physics.h"
 #include "shock.h"
 
 /**

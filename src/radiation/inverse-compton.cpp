@@ -230,9 +230,9 @@ void update_gamma_c_KN(Real& gamma_c, InverseComptonY& Ys, RadParams const& rad,
     // 1. gamma_c_min (IC cooling dominant, Y(gamma_c) > 1). solution for gamma_m < gamma_c_trans
     // 2. gamma_c_trans (unstable state),
     // 3. gamma_c_max (synchrotron cooling dominant, Y(gamma_c) < 1). solution for gamma_m > gamma_c_trans
-    /*Real gamma_c_sync = compute_gamma_c(t_com, B, 0);
-    Real gamma_c_trans = std::max(gamma_c_sync * 0.5, 1.0); // where Y(gamma_c) = 1
-    Real gamma_c_new = 2 * gamma_c_sync;
+    /*Real gamma_c_seed = compute_gamma_c(t_com, B, 0);
+    Real gamma_c_trans = std::max(gamma_c_seed * 0.5, 1.0); // where Y(gamma_c) = 1
+    Real gamma_c_new = 2 * gamma_c_seed;
 
     if (gamma_m < gamma_c_trans) {
         gamma_c_new = 1;

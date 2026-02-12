@@ -14,14 +14,14 @@ namespace afterglow {
 
     class ValidationError final : public std::invalid_argument {
       public:
-        explicit ValidationError(const std::string& message) : std::invalid_argument(message) {}
-        explicit ValidationError(const char* message) : std::invalid_argument(message) {}
+        explicit ValidationError(std::string const& message) : std::invalid_argument(message) {}
+        explicit ValidationError(char const* message) : std::invalid_argument(message) {}
     };
 
     class LogicError final : public std::logic_error {
       public:
-        explicit LogicError(const std::string& message) : std::logic_error(message) {}
-        explicit LogicError(const char* message) : std::logic_error(message) {}
+        explicit LogicError(std::string const& message) : std::logic_error(message) {}
+        explicit LogicError(char const* message) : std::logic_error(message) {}
     };
 
 #define AFTERGLOW_REQUIRE(condition, message)                                                                          \

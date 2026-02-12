@@ -12,10 +12,9 @@
 
 #include "../include/afterglow.h"
 #include "error_handling.h"
-#include "xtensor/misc/xsort.hpp"
 
 // Overload for magnetar
-void initialize_ejecta(Ejecta& jet, bool spreading, Real duration, const std::optional<PyMagnetar>& magnetar,
+void initialize_ejecta(Ejecta& jet, bool spreading, Real duration, std::optional<PyMagnetar> const& magnetar,
                        Real theta_c) {
     jet.spreading = spreading;
     jet.T0 = duration;
@@ -25,7 +24,7 @@ void initialize_ejecta(Ejecta& jet, bool spreading, Real duration, const std::op
 }
 
 JetVariant PyTophatJet(Real theta_c, Real E_iso, Real Gamma0, bool spreading, Real duration,
-                       const std::optional<PyMagnetar>& magnetar) {
+                       std::optional<PyMagnetar> const& magnetar) {
     if (magnetar) {
         Ejecta jet;
         jet.eps_k = math::tophat(theta_c, E_iso);
@@ -37,7 +36,7 @@ JetVariant PyTophatJet(Real theta_c, Real E_iso, Real Gamma0, bool spreading, Re
 }
 
 JetVariant PyGaussianJet(Real theta_c, Real E_iso, Real Gamma0, bool spreading, Real duration,
-                         const std::optional<PyMagnetar>& magnetar) {
+                         std::optional<PyMagnetar> const& magnetar) {
     if (magnetar) {
         Ejecta jet;
         jet.eps_k = math::gaussian(theta_c, E_iso);
@@ -49,7 +48,7 @@ JetVariant PyGaussianJet(Real theta_c, Real E_iso, Real Gamma0, bool spreading, 
 }
 
 JetVariant PyPowerLawJet(Real theta_c, Real E_iso, Real Gamma0, Real k_e, Real k_g, bool spreading, Real duration,
-                         const std::optional<PyMagnetar>& magnetar) {
+                         std::optional<PyMagnetar> const& magnetar) {
     if (magnetar) {
         Ejecta jet;
         jet.eps_k = math::powerlaw(theta_c, E_iso, k_e);
@@ -71,7 +70,7 @@ JetVariant PyPowerLawWing(Real theta_c, Real E_iso_w, Real Gamma0_w, Real k_e, R
 }
 
 JetVariant PyStepPowerLawJet(Real theta_c, Real E_iso, Real Gamma0, Real E_iso_w, Real Gamma0_w, Real k_e, Real k_g,
-                             bool spreading, Real duration, const std::optional<PyMagnetar>& magnetar) {
+                             bool spreading, Real duration, std::optional<PyMagnetar> const& magnetar) {
     Ejecta jet;
     jet.eps_k = math::step_powerlaw(theta_c, E_iso, E_iso_w, k_e);
     jet.Gamma0 = math::step_powerlaw_plus_one(theta_c, Gamma0 - 1, Gamma0_w - 1, k_g);
@@ -80,7 +79,7 @@ JetVariant PyStepPowerLawJet(Real theta_c, Real E_iso, Real Gamma0, Real E_iso_w
 }
 
 JetVariant PyTwoComponentJet(Real theta_c, Real E_iso, Real Gamma0, Real theta_w, Real E_iso_w, Real Gamma0_w,
-                             bool spreading, Real duration, const std::optional<PyMagnetar>& magnetar) {
+                             bool spreading, Real duration, std::optional<PyMagnetar> const& magnetar) {
     Ejecta jet;
     jet.eps_k = math::two_component(theta_c, theta_w, E_iso, E_iso_w);
     jet.Gamma0 = math::two_component_plus_one(theta_c, theta_w, Gamma0 - 1, Gamma0_w - 1);

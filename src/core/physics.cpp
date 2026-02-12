@@ -7,6 +7,8 @@
 
 #include "physics.h"
 
+#include <algorithm>
+
 namespace physics::scales {
 
     Real dec_radius(Real E_iso, Real n_ism, Real Gamma0, Real engine_dura) {

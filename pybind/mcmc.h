@@ -104,7 +104,7 @@ struct MultiBandData {
      * <!-- ************************************************************************************** -->
      */
     void add_flux(double nu_min, double nu_max, size_t num_points, PyArray const& t, PyArray const& Fv_obs,
-                  PyArray const& Fv_err, const std::optional<PyArray>& weights = std::nullopt);
+                  PyArray const& Fv_err, std::optional<PyArray> const& weights = std::nullopt);
 
     /**
      * <!-- ************************************************************************************** -->
@@ -120,7 +120,7 @@ struct MultiBandData {
      * <!-- ************************************************************************************** -->
      */
     void add_spectrum(double t, PyArray const& nu, PyArray const& Fv_obs, PyArray const& Fv_err,
-                      const std::optional<PyArray>& weights = std::nullopt);
+                      std::optional<PyArray> const& weights = std::nullopt);
 
     /**
      * <!-- ************************************************************************************** -->
@@ -241,7 +241,7 @@ inline constexpr std::array<double Params::*, 25> kParamPtrs = {
 };
 
 /// Map parameter name string to index for Python interface setup
-int param_name_to_index(const std::string& name);
+int param_name_to_index(std::string const& name);
 
 /**
  * <!-- ************************************************************************************** -->

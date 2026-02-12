@@ -15,7 +15,9 @@
 #include "../util/utilities.h"
 
 /**
+ * <!-- ************************************************************************************** -->
  * @brief Symmetry level of a shock, auto-detected from jet initial conditions.
+ * <!-- ************************************************************************************** -->
  */
 enum class Symmetry : uint8_t {
     structured,    ///< Full (phi, theta) computation needed
@@ -130,9 +132,9 @@ class TophatJet {
     bool spreading{false};  ///< Flag indicating if the ejecta spreads laterally during evolution
 
   private:
-    Real const theta_c_{0}; ///< Core angle of the jet
-    Real const eps_k_{0};   ///< Energy per solid angle within the core
-    Real const Gamma0_{1};  ///< Initial Lorentz factor within the core
+    const Real theta_c_{0}; ///< Core angle of the jet
+    const Real eps_k_{0};   ///< Energy per solid angle within the core
+    const Real Gamma0_{1};  ///< Initial Lorentz factor within the core
 };
 
 /**
@@ -192,9 +194,9 @@ class GaussianJet {
     bool spreading{false};
 
   private:
-    Real const norm_{0};   ///< Normalization factor for Gaussian distribution
-    Real const eps_k_{0};  ///< Peak energy per solid angle at center
-    Real const Gamma0_{1}; ///< Peak Lorentz factor at the center
+    const Real norm_{0};   ///< Normalization factor for Gaussian distribution
+    const Real eps_k_{0};  ///< Peak energy per solid angle at center
+    const Real Gamma0_{1}; ///< Peak Lorentz factor at the center
 };
 
 /**
@@ -259,11 +261,11 @@ class PowerLawJet {
     bool spreading{false};
 
   private:
-    Real const theta_c_{0}; ///< Core angle of the jet
-    Real const eps_k_{0};   ///< Energy per solid angle at the core
-    Real const Gamma0_{1};  ///< Initial Lorentz factor at the core
-    Real const k_e_{2};     ///< Power-law index for energy angular dependence
-    Real const k_g_{2};     ///< Power-law index for Lorentz factor angular dependence
+    const Real theta_c_{0}; ///< Core angle of the jet
+    const Real eps_k_{0};   ///< Energy per solid angle at the core
+    const Real Gamma0_{1};  ///< Initial Lorentz factor at the core
+    const Real k_e_{2};     ///< Power-law index for energy angular dependence
+    const Real k_g_{2};     ///< Power-law index for Lorentz factor angular dependence
 };
 
 /// Type-erased jet variant for optimized dispatch in the ODE hot loop.

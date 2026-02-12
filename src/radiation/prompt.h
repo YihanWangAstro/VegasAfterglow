@@ -35,9 +35,9 @@ class CoastingShock {
     } // Returns grid dimensions
 
   private:
-    size_t const phi_size{0};   // Number of grid points in the phi direction
-    size_t const theta_size{0}; // Number of grid points in the theta direction
-    size_t const t_size{0};     // Number of grid points in the time direction
+    const size_t phi_size{0};   // Number of grid points in the phi direction
+    const size_t theta_size{0}; // Number of grid points in the theta direction
+    const size_t t_size{0};     // Number of grid points in the time direction
 };
 
 template <typename Ejecta>

@@ -10,6 +10,7 @@
 #include <cstddef>
 
 /**
+ * <!-- ************************************************************************************** -->
  * @file simulation-defaults.h
  * @brief Centralized simulation configuration defaults
  *
@@ -21,16 +22,19 @@
  * - Easy to create different presets (fast vs. accurate)
  * - Clear documentation of what each parameter does
  * - No magic numbers scattered across the codebase
+ * <!-- ************************************************************************************** -->
  */
 
 namespace defaults {
 
     /**
- * @brief Physics cutoff thresholds
- *
- * These values determine when certain physical effects are negligible
- * and can be safely ignored for numerical efficiency.
- */
+     * <!-- ************************************************************************************** -->
+     * @brief Physics cutoff thresholds
+     *
+     * These values determine when certain physical effects are negligible
+     * and can be safely ignored for numerical efficiency.
+     * <!-- ************************************************************************************** -->
+     */
     namespace cutoffs {
         /// Lorentz factor below which the flow is considered non-relativistic
         /// Used to terminate shock evolution when Gamma approaches 1
@@ -42,11 +46,13 @@ namespace defaults {
     } // namespace cutoffs
 
     /**
- * @brief Grid generation parameters
- *
- * These control the adaptive mesh refinement and resolution
- * for the (phi, theta, t) computational grid.
- */
+     * <!-- ************************************************************************************** -->
+     * @brief Grid generation parameters
+     *
+     * These control the adaptive mesh refinement and resolution
+     * for the (phi, theta, t) computational grid.
+     * <!-- ************************************************************************************** -->
+     */
     namespace grid {
         /// Azimuthal (phi) angular resolution factor
         /// Higher values = more phi grid points near the viewing direction
@@ -73,10 +79,12 @@ namespace defaults {
     } // namespace grid
 
     /**
- * @brief Numerical solver tolerances
- *
- * These control the accuracy of ODE integration and root-finding.
- */
+     * <!-- ************************************************************************************** -->
+     * @brief Numerical solver tolerances
+     *
+     * These control the accuracy of ODE integration and root-finding.
+     * <!-- ************************************************************************************** -->
+     */
     namespace solver {
         /// Relative tolerance for ODE integration (Runge-Kutta)
         inline constexpr double ode_rtol = 1e-6;
@@ -92,8 +100,10 @@ namespace defaults {
     } // namespace solver
 
     /**
- * @brief Observer frame parameters
- */
+     * <!-- ************************************************************************************** -->
+     * @brief Observer frame parameters
+     * <!-- ************************************************************************************** -->
+     */
     namespace observer {
         /// Minimum observer time to avoid numerical issues at t=0
         /// Value in seconds (will be converted to code units)
@@ -101,8 +111,10 @@ namespace defaults {
     } // namespace observer
 
     /**
- * @brief Sampling parameters for integration
- */
+     * <!-- ************************************************************************************** -->
+     * @brief Sampling parameters for integration
+     * <!-- ************************************************************************************** -->
+     */
     namespace sampling {
         /// Number of sample points for theta integration
         inline constexpr std::size_t theta_samples = 200;
