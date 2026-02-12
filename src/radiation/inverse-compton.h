@@ -16,7 +16,6 @@
 #include "../core/quadrature.h"
 #include "../dynamics/shock.h"
 #include "../util/macros.h"
-#include "../util/profiler.h"
 #include "../util/utilities.h"
 
 /**
@@ -316,22 +315,21 @@ void ICPhoton<Electrons, Photons>::compute_break_weight(GridParams& params) cons
     static_assert(std::tuple_size_v<decltype(GridParams::nu_IC_breaks)> == nu_seed_breaks.size() * gamma_breaks.size());
 
     std::array<Real, 4> dN_e_break{};
-    for (size_t j_gamma_idx = 0; j_gamma_idx < gamma_breaks.size(); ++j_gamma_idx) {
-        dN_e_break[j_gamma_idx] = electrons.compute_column_den(gamma_breaks[j_gamma_idx]);
-        params.gamma_break_weight[j_gamma_idx] =
-            dN_e_break[j_gamma_idx] / (gamma_breaks[j_gamma_idx] * gamma_breaks[j_gamma_idx]);
+    for (size_t j = 0; j < gamma_breaks.size(); ++j) {
+        dN_e_break[j] = electrons.compute_column_den(gamma_breaks[j]);
+        params.gamma_break_weight[j] = dN_e_break[j] / (gamma_breaks[j] * gamma_breaks[j]);
     }
 
     size_t k = 0;
-    for (size_t i_seed_idx = 0; i_seed_idx < nu_seed_breaks.size(); ++i_seed_idx) {
-        const Real nu_seed = nu_seed_breaks[i_seed_idx];
+    for (size_t i = 0; i < nu_seed_breaks.size(); ++i) {
+        const Real nu_seed = nu_seed_breaks[i];
         const Real I_seed = photons.compute_I_nu(nu_seed);
-        params.nu_break_weight[i_seed_idx] = I_seed / (nu_seed * nu_seed);
+        params.nu_break_weight[i] = I_seed / (nu_seed * nu_seed);
 
-        for (size_t j_gamma_idx = 0; j_gamma_idx < gamma_breaks.size(); ++j_gamma_idx) {
-            const Real gamma_b = gamma_breaks[j_gamma_idx];
+        for (size_t j = 0; j < gamma_breaks.size(); ++j) {
+            const Real gamma_b = gamma_breaks[j];
             const Real nu_IC = 2 * IC_x0 * nu_seed * gamma_b * gamma_b;
-            const Real dN_e = dN_e_break[j_gamma_idx];
+            const Real dN_e = dN_e_break[j];
             const Real KN_correction = KN ? compton_correction(gamma_b * nu_seed) : Real(1);
 
             params.nu_IC_break_weight[k] = dN_e * I_seed * KN_correction;
@@ -367,20 +365,20 @@ void ICPhoton<Electrons, Photons>::sample_distributions(Array const& gamma, Arra
                                                         Array& dN_e_boost, Array& I_nu_seed) {
     dN_e_boost = Array::from_shape({gamma.size()});
     const size_t g_size = gamma.size();
-    Real const* g_p = gamma.data();
-    Real const* dg_p = dgamma.data();
-    Real* dNe_p = dN_e_boost.data();
+    Real const* gamma_ptr = gamma.data();
+    Real const* dgamma_ptr = dgamma.data();
+    Real* dN_e_boost_ptr = dN_e_boost.data();
     for (size_t i = 0; i < g_size; ++i) {
-        const Real g = g_p[i];
-        dNe_p[i] = electrons.compute_column_den(g) * dg_p[i] / (g * g);
+        const Real g = gamma_ptr[i];
+        dN_e_boost_ptr[i] = electrons.compute_column_den(g) * dgamma_ptr[i] / (g * g);
     }
 
     I_nu_seed = Array::from_shape({nu_seed.size()});
     const size_t nu_size = nu_seed.size();
-    Real const* nu_p = nu_seed.data();
-    Real* Is_p = I_nu_seed.data();
+    Real const* nu_seed_ptr = nu_seed.data();
+    Real* I_nu_seed_ptr = I_nu_seed.data();
     for (size_t j = 0; j < nu_size; ++j) {
-        Is_p[j] = photons.compute_I_nu(nu_p[j]);
+        I_nu_seed_ptr[j] = photons.compute_I_nu(nu_seed_ptr[j]);
     }
 }
 

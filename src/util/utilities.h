@@ -27,22 +27,21 @@ struct BrokenPowerLaw {
     void first_segment(Real norm, Real lower, Real slope) {
         size_ = 0;
         const Real log2_lower = fast_log2(lower);
-        log2_val_ = fast_log2(norm);
+        const Real log2_val = fast_log2(norm);
         auto& s = data_[size_++];
         s.slope = slope;
         s.log2_lower = log2_lower;
-        s.log2_const = log2_val_ - slope * log2_lower;
+        s.log2_const = log2_val - slope * log2_lower;
     }
 
     void add_segment(Real lower, Real slope) {
         const Real log2_lower = fast_log2(lower);
-        if (size_ > 0 && log2_lower > data_[size_ - 1].log2_lower) {
-            log2_val_ = data_[size_ - 1].log2_const + data_[size_ - 1].slope * log2_lower;
-        }
+        const int prev = size_ - 1;
+        const Real log2_val = data_[prev].log2_const + data_[prev].slope * log2_lower;
         auto& s = data_[size_++];
         s.slope = slope;
         s.log2_lower = log2_lower;
-        s.log2_const = log2_val_ - slope * log2_lower;
+        s.log2_const = log2_val - slope * log2_lower;
     }
 
     [[nodiscard]] Real eval(Real x) const {
@@ -66,7 +65,6 @@ struct BrokenPowerLaw {
 
   private:
     int size_{0};
-    Real log2_val_{0};
     std::array<SpectralSegment, N> data_{};
 };
 
