@@ -8,6 +8,7 @@ var annotated_dup =
       [ "ComptonSigmaLUT", "structanonymous__namespace_02inverse-compton_8cpp_03_1_1ComptonSigmaLUT.html", "structanonymous__namespace_02inverse-compton_8cpp_03_1_1ComptonSigmaLUT" ]
     ] ],
     [ "BatchWorkspace", "structBatchWorkspace.html", "structBatchWorkspace" ],
+    [ "BrokenPowerLaw", "structBrokenPowerLaw.html", "structBrokenPowerLaw" ],
     [ "CoastingShock", "classCoastingShock.html", "classCoastingShock" ],
     [ "ConfigParams", "structConfigParams.html", "structConfigParams" ],
     [ "Coord", "classCoord.html", "classCoord" ],

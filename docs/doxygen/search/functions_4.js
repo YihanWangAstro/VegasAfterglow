@@ -10,7 +10,7 @@ var searchData=
   ['estimate_5fchi2_7',['estimate_chi2',['../structFluxData.html#a8a66a7f3f7a50a2dcdf5b52b064b0348',1,'FluxData::estimate_chi2()'],['../structMultiBandData.html#a631c6982c88e97795ffef3edb81253d8',1,'MultiBandData::estimate_chi2()']]],
   ['estimate_5ft_5fdec_8',['estimate_t_dec',['../mesh_8h.html#aa7505ad2e84c2a29610c1a13cd3b25e3',1,'mesh.h']]],
   ['eta_5frad_5fthomson_9',['eta_rad_Thomson',['../inverse-compton_8h.html#ad7736d3269071d2ceaffcc56fa2fc71c',1,'inverse-compton.h']]],
-  ['eval_10',['eval',['../structSpectralSegment.html#ab073562d6e2934271ed96227ca16c279',1,'SpectralSegment']]],
+  ['eval_10',['eval',['../structBrokenPowerLaw.html#a49edae4ccefeb4c24304e6e849068048',1,'BrokenPowerLaw']]],
   ['eval_5fmid_5fx_11',['eval_mid_x',['../structanonymous__namespace_02inverse-compton_8cpp_03_1_1ComptonSigmaLUT.html#a813560b9f8a1e4bec1b5dadd5f5f3138',1,'anonymous_namespace{inverse-compton.cpp}::ComptonSigmaLUT']]],
   ['evtohz_12',['eVtoHz',['../utilities_8h.html#a986f3ca11aa28f9416cf7eb003f6dd38',1,'utilities.h']]]
 ];

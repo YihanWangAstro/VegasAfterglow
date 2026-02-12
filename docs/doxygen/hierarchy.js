@@ -1,6 +1,9 @@
 var hierarchy =
 [
     [ "BatchWorkspace", "structBatchWorkspace.html", null ],
+    [ "BrokenPowerLaw< N >", "structBrokenPowerLaw.html", null ],
+    [ "BrokenPowerLaw< 4 >", "structBrokenPowerLaw.html", null ],
+    [ "BrokenPowerLaw< 5 >", "structBrokenPowerLaw.html", null ],
     [ "CoastingShock", "classCoastingShock.html", null ],
     [ "anonymous_namespace{inverse-compton.cpp}::ComptonSigmaLUT", "structanonymous__namespace_02inverse-compton_8cpp_03_1_1ComptonSigmaLUT.html", null ],
     [ "ConfigParams", "structConfigParams.html", null ],

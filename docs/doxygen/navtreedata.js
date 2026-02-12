@@ -65,8 +65,8 @@ var NAVTREEINDEX =
 "IO_8cpp.html",
 "forward-shock_8hpp.html#aa963867f4f98284c627afeff47fc3a18",
 "namespacecon.html#a2ff3edf57629ccb9a49d5bde7278a7c4",
-"simulation-defaults_8h.html#a29443c4987378f49066f9b406c391afc",
-"structSimpleState.html#aeb18cb0bcd228b587e183a2631da6279"
+"simulation-defaults_8h.html#a6cda2def28c77f63dbee9eb169d9d87a",
+"structSmoothPowerLawSyn.html"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

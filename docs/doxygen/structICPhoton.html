@@ -138,7 +138,7 @@ struct ICPhoton&lt; Electrons, Photons &gt;</div><p>Represents a single inverse 
 </dl>
 <p>Contains methods to compute the photon intensity I_nu and to generate an IC photon spectrum based on electron and seed photon properties. </p>
 
-<p class="definition">Definition at line <a class="el" href="inverse-compton_8h_source.html#l00123">123</a> of file <a class="el" href="inverse-compton_8h_source.html">inverse-compton.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="inverse-compton_8h_source.html#l00112">112</a> of file <a class="el" href="inverse-compton_8h_source.html">inverse-compton.h</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a83c634a93def6d25badc888ca57f3bca" name="a83c634a93def6d25badc888ca57f3bca"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a83c634a93def6d25badc888ca57f3bca">&#9670;&#160;</a></span>ICPhoton() <span class="overload">[1/2]</span></h2>
@@ -211,10 +211,10 @@ template&lt;<a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="inverse-compton_8h_source.html#l00270">270</a> of file <a class="el" href="inverse-compton_8h_source.html">inverse-compton.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  271</span>    : <a class="code hl_variable" href="structICPhoton.html#a8721a351afe42b1e5fdf3075bffc89f7">photons</a>(<a class="code hl_variable" href="structICPhoton.html#a8721a351afe42b1e5fdf3075bffc89f7">photons</a>), <a class="code hl_variable" href="structICPhoton.html#aea5718d82370d9ae7fcaf2e70654bcf2">electrons</a>(<a class="code hl_variable" href="structICPhoton.html#aea5718d82370d9ae7fcaf2e70654bcf2">electrons</a>), KN(KN) {}</div>
-<div class="ttc" id="astructICPhoton_html_a8721a351afe42b1e5fdf3075bffc89f7"><div class="ttname"><a href="structICPhoton.html#a8721a351afe42b1e5fdf3075bffc89f7">ICPhoton::photons</a></div><div class="ttdeci">Photons photons</div><div class="ttdef"><b>Definition</b> <a href="inverse-compton_8h_source.html#l00147">inverse-compton.h:147</a></div></div>
-<div class="ttc" id="astructICPhoton_html_aea5718d82370d9ae7fcaf2e70654bcf2"><div class="ttname"><a href="structICPhoton.html#aea5718d82370d9ae7fcaf2e70654bcf2">ICPhoton::electrons</a></div><div class="ttdeci">Electrons electrons</div><div class="ttdef"><b>Definition</b> <a href="inverse-compton_8h_source.html#l00149">inverse-compton.h:149</a></div></div>
+<p class="definition">Definition at line <a class="el" href="inverse-compton_8h_source.html#l00259">259</a> of file <a class="el" href="inverse-compton_8h_source.html">inverse-compton.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  260</span>    : <a class="code hl_variable" href="structICPhoton.html#a8721a351afe42b1e5fdf3075bffc89f7">photons</a>(<a class="code hl_variable" href="structICPhoton.html#a8721a351afe42b1e5fdf3075bffc89f7">photons</a>), <a class="code hl_variable" href="structICPhoton.html#aea5718d82370d9ae7fcaf2e70654bcf2">electrons</a>(<a class="code hl_variable" href="structICPhoton.html#aea5718d82370d9ae7fcaf2e70654bcf2">electrons</a>), KN(KN) {}</div>
+<div class="ttc" id="astructICPhoton_html_a8721a351afe42b1e5fdf3075bffc89f7"><div class="ttname"><a href="structICPhoton.html#a8721a351afe42b1e5fdf3075bffc89f7">ICPhoton::photons</a></div><div class="ttdeci">Photons photons</div><div class="ttdef"><b>Definition</b> <a href="inverse-compton_8h_source.html#l00136">inverse-compton.h:136</a></div></div>
+<div class="ttc" id="astructICPhoton_html_aea5718d82370d9ae7fcaf2e70654bcf2"><div class="ttname"><a href="structICPhoton.html#aea5718d82370d9ae7fcaf2e70654bcf2">ICPhoton::electrons</a></div><div class="ttdeci">Electrons electrons</div><div class="ttdef"><b>Definition</b> <a href="inverse-compton_8h_source.html#l00138">inverse-compton.h:138</a></div></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -246,11 +246,11 @@ template&lt;<a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>The specific intensity at the given frequency </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="inverse-compton_8h_source.html#l00518">518</a> of file <a class="el" href="inverse-compton_8h_source.html">inverse-compton.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  518</span>                                                       {</div>
-<div class="line"><span class="lineno">  519</span>    <span class="keywordflow">return</span> std::exp2(<a class="code hl_function" href="structICPhoton.html#ab6745228ffcefa9cb561c963a59859d1">compute_log2_I_nu</a>(std::log2(nu)));</div>
-<div class="line"><span class="lineno">  520</span>}</div>
-<div class="ttc" id="astructICPhoton_html_ab6745228ffcefa9cb561c963a59859d1"><div class="ttname"><a href="structICPhoton.html#ab6745228ffcefa9cb561c963a59859d1">ICPhoton::compute_log2_I_nu</a></div><div class="ttdeci">Real compute_log2_I_nu(Real log2_nu)</div><div class="ttdoc">Computes the base-2 logarithm of the photon-specific intensity at a given frequency.</div><div class="ttdef"><b>Definition</b> <a href="inverse-compton_8h_source.html#l00523">inverse-compton.h:523</a></div></div>
+<p class="definition">Definition at line <a class="el" href="inverse-compton_8h_source.html#l00506">506</a> of file <a class="el" href="inverse-compton_8h_source.html">inverse-compton.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  506</span>                                                       {</div>
+<div class="line"><span class="lineno">  507</span>    <span class="keywordflow">return</span> std::exp2(<a class="code hl_function" href="structICPhoton.html#ab6745228ffcefa9cb561c963a59859d1">compute_log2_I_nu</a>(std::log2(nu)));</div>
+<div class="line"><span class="lineno">  508</span>}</div>
+<div class="ttc" id="astructICPhoton_html_ab6745228ffcefa9cb561c963a59859d1"><div class="ttname"><a href="structICPhoton.html#ab6745228ffcefa9cb561c963a59859d1">ICPhoton::compute_log2_I_nu</a></div><div class="ttdeci">Real compute_log2_I_nu(Real log2_nu)</div><div class="ttdoc">Computes the base-2 logarithm of the photon-specific intensity at a given frequency.</div><div class="ttdef"><b>Definition</b> <a href="inverse-compton_8h_source.html#l00511">inverse-compton.h:511</a></div></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -281,26 +281,26 @@ template&lt;<a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>The base-2 logarithm of the photon specific intensity at the given frequency </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="inverse-compton_8h_source.html#l00523">523</a> of file <a class="el" href="inverse-compton_8h_source.html">inverse-compton.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  523</span>                                                                 {</div>
-<div class="line"><span class="lineno">  524</span>    <span class="keywordflow">if</span> (!generated) {</div>
-<div class="line"><span class="lineno">  525</span>        generate_spectrum();</div>
-<div class="line"><span class="lineno">  526</span>    }</div>
-<div class="line"><span class="lineno">  527</span> </div>
-<div class="line"><span class="lineno">  528</span>    <span class="keyword">const</span> <span class="keywordtype">size_t</span> n = log2_nu_IC.size();</div>
-<div class="line"><span class="lineno">  529</span>    <span class="keywordflow">if</span> (<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">n &lt; 2 || log2_nu &gt;</a> log2_nu_IC(n - 1)) {</div>
-<div class="line"><span class="lineno">  530</span>        <span class="keywordflow">return</span> -<a class="code hl_variable" href="namespacecon.html#ad61313f4a5b7876e54ae46d02d4a04bd">con::inf</a>;</div>
-<div class="line"><span class="lineno">  531</span>    }</div>
-<div class="line"><span class="lineno">  532</span> </div>
-<div class="line"><span class="lineno">  533</span>    <span class="keywordtype">size_t</span> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">idx</a> = 0;</div>
-<div class="line"><span class="lineno">  534</span>    <span class="keywordflow">while</span> (<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">idx</a> + 2 &lt; n &amp;&amp; log2_nu_IC(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">idx</a> + 1) &lt;= <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">log2_nu</a>) {</div>
-<div class="line"><span class="lineno">  535</span>        ++<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">idx</a>;</div>
-<div class="line"><span class="lineno">  536</span>    }</div>
-<div class="line"><span class="lineno">  537</span> </div>
-<div class="line"><span class="lineno">  538</span>    <span class="keywordflow">return</span> log2_I_nu_IC(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">idx</a>) + (<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">log2_nu</a> - log2_nu_IC(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">idx</a>)) * interp_slope(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">idx</a>);</div>
-<div class="line"><span class="lineno">  539</span>}</div>
+<p class="definition">Definition at line <a class="el" href="inverse-compton_8h_source.html#l00511">511</a> of file <a class="el" href="inverse-compton_8h_source.html">inverse-compton.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  511</span>                                                                 {</div>
+<div class="line"><span class="lineno">  512</span>    <span class="keywordflow">if</span> (!generated) {</div>
+<div class="line"><span class="lineno">  513</span>        generate_spectrum();</div>
+<div class="line"><span class="lineno">  514</span>    }</div>
+<div class="line"><span class="lineno">  515</span> </div>
+<div class="line"><span class="lineno">  516</span>    <span class="keyword">const</span> <span class="keywordtype">size_t</span> n = log2_nu_IC.size();</div>
+<div class="line"><span class="lineno">  517</span>    <span class="keywordflow">if</span> (<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">n &lt; 2 || log2_nu &gt;</a> log2_nu_IC(n - 1)) {</div>
+<div class="line"><span class="lineno">  518</span>        <span class="keywordflow">return</span> -<a class="code hl_variable" href="namespacecon.html#ad61313f4a5b7876e54ae46d02d4a04bd">con::inf</a>;</div>
+<div class="line"><span class="lineno">  519</span>    }</div>
+<div class="line"><span class="lineno">  520</span> </div>
+<div class="line"><span class="lineno">  521</span>    <span class="keywordtype">size_t</span> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">idx</a> = 0;</div>
+<div class="line"><span class="lineno">  522</span>    <span class="keywordflow">while</span> (<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">idx</a> + 2 &lt; n &amp;&amp; log2_nu_IC(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">idx</a> + 1) &lt;= <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">log2_nu</a>) {</div>
+<div class="line"><span class="lineno">  523</span>        ++<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">idx</a>;</div>
+<div class="line"><span class="lineno">  524</span>    }</div>
+<div class="line"><span class="lineno">  525</span> </div>
+<div class="line"><span class="lineno">  526</span>    <span class="keywordflow">return</span> log2_I_nu_IC(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">idx</a>) + (<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">log2_nu</a> - log2_nu_IC(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">idx</a>)) * interp_slope(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">idx</a>);</div>
+<div class="line"><span class="lineno">  527</span>}</div>
 <div class="ttc" id="anamespacecon_html_ad61313f4a5b7876e54ae46d02d4a04bd"><div class="ttname"><a href="namespacecon.html#ad61313f4a5b7876e54ae46d02d4a04bd">con::inf</a></div><div class="ttdeci">constexpr Real inf</div><div class="ttdoc">Infinity value.</div><div class="ttdef"><b>Definition</b> <a href="macros_8h_source.html#l00102">macros.h:102</a></div></div>
-<div class="ttc" id="autilities_8h_html_ab8e81118f023df135835db8cce4f5f42"><div class="ttname"><a href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">max</a></div><div class="ttdeci">T max(T value)</div><div class="ttdoc">Returns the value of a single parameter.</div><div class="ttdef"><b>Definition</b> <a href="utilities_8h_source.html#l00206">utilities.h:206</a></div></div>
+<div class="ttc" id="autilities_8h_html_ab8e81118f023df135835db8cce4f5f42"><div class="ttname"><a href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">max</a></div><div class="ttdeci">T max(T value)</div><div class="ttdoc">Returns the value of a single parameter.</div><div class="ttdef"><b>Definition</b> <a href="utilities_8h_source.html#l00260">utilities.h:260</a></div></div>
 </div><!-- fragment --><div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -330,7 +330,7 @@ template&lt;<a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="inverse-compton_8h_source.html#l00149">149</a> of file <a class="el" href="inverse-compton_8h_source.html">inverse-compton.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="inverse-compton_8h_source.html#l00138">138</a> of file <a class="el" href="inverse-compton_8h_source.html">inverse-compton.h</a>.</p>
 
 </div>
 </div>
@@ -348,7 +348,7 @@ template&lt;<a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="inverse-compton_8h_source.html#l00147">147</a> of file <a class="el" href="inverse-compton_8h_source.html">inverse-compton.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="inverse-compton_8h_source.html#l00136">136</a> of file <a class="el" href="inverse-compton_8h_source.html">inverse-compton.h</a>.</p>
 
 </div>
 </div>

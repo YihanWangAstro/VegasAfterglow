@@ -1,11 +1,20 @@
 <map id="InverseComptonY::nu_spectrum" name="InverseComptonY::nu_spectrum">
-<area shape="rect" id="Node000001" title="Calculates the effective Y parameter for a given seed photon frequency." alt="" coords="5,55,164,95"/>
-<area shape="rect" id="Node000002" href="$synchrotron_8cpp.html#a85433be4a0da2f510240a603da8f7dff" title=" " alt="" coords="225,5,392,31"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="163,53,244,32,245,37,164,58"/>
-<area shape="rect" id="Node000003" href="$structInverseComptonY.html#a10d6b44bd159fd7fe8e5a3f1d6be453c" title="Calculates the effective Y parameter for a given Lorentz factor and spectral index." alt="" coords="212,55,405,95"/>
-<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="164,73,198,73,198,78,164,78"/>
-<area shape="rect" id="Node000004" href="$utilities_8h.html#ab8e81118f023df135835db8cce4f5f42" title="Returns the value of a single parameter." alt="" coords="453,92,504,117"/>
-<area shape="poly" id="edge5_Node000001_Node000004" title=" " alt="" coords="153,93,212,105,266,109,308,109,405,105,439,104,439,109,405,110,308,115,266,115,212,110,152,98"/>
-<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="406,89,440,95,439,101,405,95"/>
-<area shape="poly" id="edge4_Node000004_Node000004" title=" " alt="" coords="451,94,445,84,448,74,459,68,479,65,502,69,512,78,508,82,500,74,479,71,461,73,452,77,450,83,455,91"/>
+<area shape="rect" id="Node000001" title="Calculates the effective Y parameter for a given seed photon frequency." alt="" coords="5,143,164,183"/>
+<area shape="rect" id="Node000002" href="$synchrotron_8cpp.html#a85433be4a0da2f510240a603da8f7dff" title=" " alt="" coords="225,93,392,119"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="163,141,244,120,245,125,164,146"/>
+<area shape="rect" id="Node000003" href="$structInverseComptonY.html#a10d6b44bd159fd7fe8e5a3f1d6be453c" title="Calculates the effective Y parameter for a given Lorentz factor and spectral index." alt="" coords="212,143,405,183"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="164,161,198,161,198,166,164,166"/>
+<area shape="rect" id="Node000006" href="$utilities_8h.html#ab8e81118f023df135835db8cce4f5f42" title="Returns the value of a single parameter." alt="" coords="804,107,855,132"/>
+<area shape="poly" id="edge11_Node000001_Node000006" title=" " alt="" coords="153,181,212,193,366,211,429,215,488,215,546,211,607,200,676,184,755,160,799,137,801,142,757,164,677,189,608,206,546,216,488,221,429,220,366,216,212,198,152,186"/>
+<area shape="rect" id="Node000004" href="$structBrokenPowerLaw.html#a49edae4ccefeb4c24304e6e849068048" title=" " alt="" coords="453,81,621,107"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="375,141,481,108,482,113,376,146"/>
+<area shape="poly" id="edge10_Node000003_Node000006" title=" " alt="" coords="405,165,570,163,663,156,755,142,790,132,792,137,757,147,664,161,570,168,405,170"/>
+<area shape="rect" id="Node000005" href="$fast-math_8h.html#afc584c30c352192de6847b1f4b8caf0e" title="Fast approximation of 2 raised to a power." alt="" coords="669,5,756,31"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="566,79,669,34,671,39,569,84"/>
+<area shape="poly" id="edge9_Node000004_Node000006" title=" " alt="" coords="622,86,688,86,756,93,792,102,790,107,756,98,688,91,622,91"/>
+<area shape="rect" id="Node000007" href="$fast-math_8h.html#aa67895957aa831a991982a8268ef8349" title="Fast approximation of the base&#45;2 logarithm." alt="" coords="671,107,754,132"/>
+<area shape="poly" id="edge7_Node000004_Node000007" title=" " alt="" coords="622,104,658,109,657,114,621,109"/>
+<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="734,29,758,48,808,95,804,99,754,52,730,33"/>
+<area shape="poly" id="edge6_Node000006_Node000006" title=" " alt="" coords="809,108,805,98,807,89,816,82,829,80,845,83,852,92,848,95,843,88,829,85,818,87,812,92,811,98,814,105"/>
+<area shape="poly" id="edge8_Node000007_Node000006" title=" " alt="" coords="755,117,790,117,790,122,755,122"/>
 </map>

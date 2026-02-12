@@ -6,7 +6,8 @@ var searchData=
   ['adaptive_5ftheta_5fgrid_3',['adaptive_theta_grid',['../mesh_8h.html#a3dc6828dd13a70c0c203dba03e765cea',1,'mesh.h']]],
   ['add_5fflux_4',['add_flux',['../structMultiBandData.html#a07ceaa100ffac6e91e0f5abadaa4e854',1,'MultiBandData']]],
   ['add_5fflux_5fdensity_5',['add_flux_density',['../structMultiBandData.html#a95b867e09e94169a3a07daeb0598a040',1,'MultiBandData']]],
-  ['add_5fspectrum_6',['add_spectrum',['../structMultiBandData.html#af2ab28bd8d2219f73201418a3aa5cf0e',1,'MultiBandData']]],
-  ['adiabatic_5fidx_7',['adiabatic_idx',['../namespacephysics_1_1thermo.html#a8d90fdf6e3727fb58e7beb1c4f2fd50c',1,'physics::thermo']]],
-  ['auto_5fgrid_8',['auto_grid',['../mesh_8h.html#a96aa0a78a0de13a52955de3c2ce29ddd',1,'mesh.h']]]
+  ['add_5fsegment_6',['add_segment',['../structBrokenPowerLaw.html#a66b7bd352329cce7a3cc98bab9e68954',1,'BrokenPowerLaw']]],
+  ['add_5fspectrum_7',['add_spectrum',['../structMultiBandData.html#af2ab28bd8d2219f73201418a3aa5cf0e',1,'MultiBandData']]],
+  ['adiabatic_5fidx_8',['adiabatic_idx',['../namespacephysics_1_1thermo.html#a8d90fdf6e3727fb58e7beb1c4f2fd50c',1,'physics::thermo']]],
+  ['auto_5fgrid_9',['auto_grid',['../mesh_8h.html#a96aa0a78a0de13a52955de3c2ce29ddd',1,'mesh.h']]]
 ];

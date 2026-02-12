@@ -1,6 +1,5 @@
 var inverse_compton_8h =
 [
-    [ "SpectralSegment", "structSpectralSegment.html", "structSpectralSegment" ],
     [ "InverseComptonY", "structInverseComptonY.html", "structInverseComptonY" ],
     [ "ICPhoton< Electrons, Photons >", "structICPhoton.html", "structICPhoton" ],
     [ "ElectronGrid", "inverse-compton_8h.html#aaaf75fefdf774abf61fcab7b65b90bcd", null ],

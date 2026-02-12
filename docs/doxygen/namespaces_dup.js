@@ -25,12 +25,7 @@ var namespaces_dup =
     ] ],
     [ "defaults", "namespacedefaults.html", "namespacedefaults" ],
     [ "evn", "namespaceevn.html", null ],
-    [ "func", "namespacefunc.html", [
-      [ "one_2d", "namespacefunc.html#a173bd91e86dee357eb55b4758c5cc20d", null ],
-      [ "one_3d", "namespacefunc.html#afe466d81b0fea186b71ca401b6b3613b", null ],
-      [ "zero_2d", "namespacefunc.html#aa8d78887fec25d1452c0dd3e83fe792f", null ],
-      [ "zero_3d", "namespacefunc.html#af35a6de707510b3b09306132d94d3b72", null ]
-    ] ],
+    [ "func", "namespacefunc.html", null ],
     [ "math", "namespacemath.html", null ],
     [ "physics", "namespacephysics.html", "namespacephysics" ],
     [ "unit", "namespaceunit.html", [

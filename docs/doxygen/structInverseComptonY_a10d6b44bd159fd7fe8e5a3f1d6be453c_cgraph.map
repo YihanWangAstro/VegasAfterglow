@@ -1,6 +1,15 @@
 <map id="InverseComptonY::gamma_spectrum" name="InverseComptonY::gamma_spectrum">
-<area shape="rect" id="Node000001" title="Calculates the effective Y parameter for a given Lorentz factor and spectral index." alt="" coords="5,22,199,62"/>
-<area shape="rect" id="Node000002" href="$utilities_8h.html#ab8e81118f023df135835db8cce4f5f42" title="Returns the value of a single parameter." alt="" coords="247,29,297,55"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="199,39,233,39,233,45,199,45"/>
-<area shape="poly" id="edge2_Node000002_Node000002" title=" " alt="" coords="244,31,238,21,241,11,253,5,272,3,296,6,305,15,301,19,293,11,272,8,254,10,245,15,243,20,249,28"/>
+<area shape="rect" id="Node000001" title="Calculates the effective Y parameter for a given Lorentz factor and spectral index." alt="" coords="5,125,199,165"/>
+<area shape="rect" id="Node000002" href="$structBrokenPowerLaw.html#a49edae4ccefeb4c24304e6e849068048" title=" " alt="" coords="247,81,415,107"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="192,122,258,107,260,112,193,127"/>
+<area shape="rect" id="Node000004" href="$utilities_8h.html#ab8e81118f023df135835db8cce4f5f42" title="Returns the value of a single parameter." alt="" coords="597,81,648,107"/>
+<area shape="poly" id="edge8_Node000001_Node000004" title=" " alt="" coords="199,158,276,166,365,168,458,162,504,154,548,142,574,130,596,114,600,118,577,135,550,147,505,159,459,167,365,174,276,171,199,164"/>
+<area shape="rect" id="Node000003" href="$fast-math_8h.html#afc584c30c352192de6847b1f4b8caf0e" title="Fast approximation of 2 raised to a power." alt="" coords="463,5,549,31"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="360,79,462,34,464,39,362,84"/>
+<area shape="poly" id="edge7_Node000002_Node000004" title=" " alt="" coords="415,91,583,91,583,97,415,97"/>
+<area shape="rect" id="Node000005" href="$fast-math_8h.html#aa67895957aa831a991982a8268ef8349" title="Fast approximation of the base&#45;2 logarithm." alt="" coords="465,107,547,132"/>
+<area shape="poly" id="edge5_Node000002_Node000005" title=" " alt="" coords="415,104,451,109,451,114,414,109"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="528,29,593,72,590,76,525,33"/>
+<area shape="poly" id="edge4_Node000004_Node000004" title=" " alt="" coords="603,82,599,73,601,64,609,57,623,55,639,58,646,66,642,70,636,63,623,60,611,62,605,66,604,72,607,80"/>
+<area shape="poly" id="edge6_Node000005_Node000004" title=" " alt="" coords="547,108,583,100,584,105,548,113"/>
 </map>

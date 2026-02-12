@@ -7,7 +7,7 @@ var searchData=
   ['e_5fiso_5fw_4',['E_iso_w',['../structParams.html#af99a1e55da593f8c28ed74d56ecf8580',1,'Params']]],
   ['e_5fnu_5fpeak_5',['E_nu_peak',['../structPromptPhotons.html#ab54b4857265596371c0945944d82f735',1,'PromptPhotons']]],
   ['edge_5frefinement_5fgrid_6',['edge_refinement_grid',['../mesh_8h.html#a9cba2da30fd9821858dc89b5caea3443',1,'mesh.h']]],
-  ['ejecta_7',['ejecta',['../classForwardShockEqn.html#a352d442954d91c77ea11d72f9a567179',1,'ForwardShockEqn::ejecta'],['../classFRShockEqn.html#a8b35d4a390124d2227998eb712a098d6',1,'FRShockEqn::ejecta'],['../classSimpleShockEqn.html#aa19b1598eb4774da08366de794457a0c',1,'SimpleShockEqn::ejecta'],['../classEjecta.html#a3ba7d93839cd4a8a3b3f4c5ec5e66efa',1,'Ejecta::Ejecta(BinaryFunc eps_k, BinaryFunc Gamma0, BinaryFunc sigma0=func::zero_2d, TernaryFunc deps_dt=func::zero_3d, TernaryFunc dm_dt=func::zero_3d, bool spreading=false, Real T0=1 *unit::sec) noexcept'],['../classEjecta.html#a240a0ed7fbc307a27d92ffa3d8057107',1,'Ejecta::Ejecta()=default'],['../classEjecta.html',1,'Ejecta']]],
+  ['ejecta_7',['ejecta',['../classEjecta.html#a3ba7d93839cd4a8a3b3f4c5ec5e66efa',1,'Ejecta::Ejecta(BinaryFunc eps_k, BinaryFunc Gamma0, BinaryFunc sigma0=func::zero_2d, TernaryFunc deps_dt=func::zero_3d, TernaryFunc dm_dt=func::zero_3d, bool spreading=false, Real T0=1 *unit::sec) noexcept'],['../classEjecta.html#a240a0ed7fbc307a27d92ffa3d8057107',1,'Ejecta::Ejecta()=default'],['../classForwardShockEqn.html#a352d442954d91c77ea11d72f9a567179',1,'ForwardShockEqn::ejecta'],['../classFRShockEqn.html#a8b35d4a390124d2227998eb712a098d6',1,'FRShockEqn::ejecta'],['../classSimpleShockEqn.html#aa19b1598eb4774da08366de794457a0c',1,'SimpleShockEqn::ejecta'],['../classEjecta.html',1,'Ejecta']]],
   ['electrongrid_8',['ElectronGrid',['../inverse-compton_8h.html#aaaf75fefdf774abf61fcab7b65b90bcd',1,'inverse-compton.h']]],
   ['electrons_9',['electrons',['../structICPhoton.html#aea5718d82370d9ae7fcaf2e70654bcf2',1,'ICPhoton']]],
   ['empty_10',['Empty',['../classEmpty.html',1,'']]],
@@ -31,7 +31,7 @@ var searchData=
   ['estimate_5ft_5fdec_28',['estimate_t_dec',['../mesh_8h.html#aa7505ad2e84c2a29610c1a13cd3b25e3',1,'mesh.h']]],
   ['eta_5frad_5fthomson_29',['eta_rad_Thomson',['../inverse-compton_8h.html#ad7736d3269071d2ceaffcc56fa2fc71c',1,'inverse-compton.h']]],
   ['ev_30',['eV',['../namespaceunit.html#a4d688cefb8c96513c3aa8a4f8c83d200',1,'unit']]],
-  ['eval_31',['eval',['../structSpectralSegment.html#ab073562d6e2934271ed96227ca16c279',1,'SpectralSegment']]],
+  ['eval_31',['eval',['../structBrokenPowerLaw.html#a49edae4ccefeb4c24304e6e849068048',1,'BrokenPowerLaw']]],
   ['eval_5fmid_5fx_32',['eval_mid_x',['../structanonymous__namespace_02inverse-compton_8cpp_03_1_1ComptonSigmaLUT.html#a813560b9f8a1e4bec1b5dadd5f5f3138',1,'anonymous_namespace{inverse-compton.cpp}::ComptonSigmaLUT']]],
   ['evn_33',['evn',['../namespaceevn.html',1,'']]],
   ['evtohz_34',['eVtoHz',['../utilities_8h.html#a986f3ca11aa28f9416cf7eb003f6dd38',1,'utilities.h']]]

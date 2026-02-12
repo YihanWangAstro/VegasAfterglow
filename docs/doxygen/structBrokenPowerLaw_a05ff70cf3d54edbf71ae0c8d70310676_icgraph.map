@@ -1,0 +1,7 @@
+<map id="BrokenPowerLaw::clear" name="BrokenPowerLaw::clear">
+<area shape="rect" id="Node000001" title=" " alt="" coords="244,35,416,60"/>
+<area shape="rect" id="Node000002" href="$structPowerLawSyn.html#a79458bc4bd066014305a2a08d8554bd9" title="Updates cached calculation constants used for efficiently computing synchrotron spectra." alt="" coords="25,5,177,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="230,37,176,30,177,25,230,32"/>
+<area shape="rect" id="Node000003" href="$structInverseComptonY.html#a8ddd88e2b0ae996e2bf8a79630653392" title="Default constructor that initializes all member variables to zero." alt="" coords="5,55,196,95"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="230,62,197,66,196,61,230,57"/>
+</map>
