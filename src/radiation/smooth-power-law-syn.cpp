@@ -72,7 +72,13 @@ Real SmoothPowerLawSyn::compute_log2_spectrum(Real log2_nu) const {
     return log2_norm_ + log2_smooth_one(log2_f_thin, log2_f_thick + log2_thick_norm_);
 }
 
-void SmoothPowerLawSyn::update_constant() {
+void SmoothPowerLawSyn::build() {
+    log2_I_nu_max = fast_log2(I_nu_max);
+    log2_nu_m = fast_log2(nu_m);
+    log2_nu_c = fast_log2(nu_c);
+    log2_nu_a = fast_log2(nu_a);
+    log2_nu_M = fast_log2(nu_M);
+
     smooth_m_slow_ = 1; //1.8 - 0.4 * p;
     smooth_c_slow_ = 1; //1 - 0.04 * p;
     smooth_m_fast_ = 1; //3.5 - 0.85 * p;

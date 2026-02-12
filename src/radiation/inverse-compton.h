@@ -19,15 +19,6 @@
 #include "../util/profiler.h"
 #include "../util/utilities.h"
 
-struct SpectralSegment {
-    Real gamma_max; // Upper energy bound of this segment
-    Real norm;      // Normalization (A) at the reference energy
-    Real slope;     // Power law index (s)
-    Real ref;       // Reference energy (gamma_ref)
-
-    inline Real eval(Real gamma) const { return norm * fast_pow(gamma / ref, slope); }
-};
-
 /**
  * <!-- ************************************************************************************** -->
  * @struct InverseComptonY
@@ -94,8 +85,7 @@ struct InverseComptonY {
 
     Real compute_gamma_hat(Real gamma) const noexcept;
 
-    int active_segment_count = 0;
-    std::array<SpectralSegment, 5> segments; // Max 5 segments needed for complex regimes
+    BrokenPowerLaw<5> segments_;
 
     void build_segments() noexcept;
 };

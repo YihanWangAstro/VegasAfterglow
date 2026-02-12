@@ -41,7 +41,7 @@ InverseComptonY::InverseComptonY() noexcept {
     gamma_c_hat = 1.0;
     Y_T = 0.0;
     regime = 0;
-    active_segment_count = 0;
+    segments_.clear();
 }
 
 //========================================================================================================
@@ -117,37 +117,21 @@ void InverseComptonY::update_cooling_breaks(Real gamma_c, Real Y_T) noexcept {
 }
 
 void InverseComptonY::build_segments() noexcept {
-    active_segment_count = 0;
-
-    Real current_val = Y_T;
-    Real current_gamma = 1.0;
-
-    auto chain = [&](Real target_gamma, Real slope) {
-        segments[active_segment_count++] = {target_gamma, current_val, slope, current_gamma};
-
-        if (target_gamma > current_gamma) {
-            current_val *= fast_pow(target_gamma / current_gamma, slope);
-            current_gamma = target_gamma;
-        }
-    };
-
-    constexpr Real INF_GAMMA = 1.0e100;
-
     switch (regime) {
         case 0: // Thomson
-            chain(INF_GAMMA, 0.0);
+            segments_.first_segment(Y_T, 1.0, 0.0);
             break;
 
         case 1: // Slow Cooling
-            chain(gamma_c_hat, 0.0);
-            chain(gamma_m_hat, 0.5 * (p_ - 3.0));
-            chain(INF_GAMMA, -4.0 / 3.0);
+            segments_.first_segment(Y_T, 1.0, 0.0);
+            segments_.add_segment(gamma_c_hat, 0.5 * (p_ - 3.0));
+            segments_.add_segment(gamma_m_hat, -4.0 / 3.0);
             break;
 
         case 2: // Fast Cooling, Weak KN
-            chain(gamma_m_hat, 0.0);
-            chain(gamma_c_hat, -0.5);
-            chain(INF_GAMMA, -4.0 / 3.0);
+            segments_.first_segment(Y_T, 1.0, 0.0);
+            segments_.add_segment(gamma_m_hat, -0.5);
+            segments_.add_segment(gamma_c_hat, -4.0 / 3.0);
             break;
 
         case 3: // Fast Cooling, Strong KN (gamma_m_hat <= gamma0 < gamma_self)
@@ -155,10 +139,10 @@ void InverseComptonY::build_segments() noexcept {
             Real gamma0_hat = compute_gamma_hat(gamma0);
             Real gamma_m_hat_hat = compute_gamma_hat(gamma_m_hat);
 
-            chain(gamma_m_hat, 0.0);
-            chain(gamma0_hat, -0.5);
-            chain(gamma_m_hat_hat, -0.75);
-            chain(INF_GAMMA, -0.5);
+            segments_.first_segment(Y_T, 1.0, 0.0);
+            segments_.add_segment(gamma_m_hat, -0.5);
+            segments_.add_segment(gamma0_hat, -0.75);
+            segments_.add_segment(gamma_m_hat_hat, -0.5);
             break;
         }
         case 4: // Fast Cooling, Strong KN (gamma_self <= gamma0 < gamma_m)
@@ -167,11 +151,11 @@ void InverseComptonY::build_segments() noexcept {
             Real gamma0_hat_hat = compute_gamma_hat(gamma0_hat);
             Real gamma_m_hat_hat = compute_gamma_hat(gamma_m_hat);
 
-            chain(gamma_m_hat, 0.0);
-            chain(gamma0_hat, -0.5);
-            chain(gamma0_hat_hat, -1.0);
-            chain(gamma_m_hat_hat, -0.75);
-            chain(INF_GAMMA, -0.5);
+            segments_.first_segment(Y_T, 1.0, 0.0);
+            segments_.add_segment(gamma_m_hat, -0.5);
+            segments_.add_segment(gamma0_hat, -1.0);
+            segments_.add_segment(gamma0_hat_hat, -0.75);
+            segments_.add_segment(gamma_m_hat_hat, -0.5);
             break;
         }
         case 5: // Fast Cooling, Strong KN (gamma_m < gamma0)
@@ -180,23 +164,18 @@ void InverseComptonY::build_segments() noexcept {
             Real gamma_m_hat_hat = compute_gamma_hat(gamma_m_hat);
             Real gamma0_hat_hat = compute_gamma_hat(gamma0_hat);
 
-            chain(gamma0_hat, 0.0);
-            chain(gamma_m_hat, 0.5 * (p_ - 3.0));
-            chain(gamma_m_hat_hat, -1.0);
-            chain(gamma0_hat_hat, 0.25 * (p_ - 5.0));
-            chain(INF_GAMMA, -0.5);
+            segments_.first_segment(Y_T, 1.0, 0.0);
+            segments_.add_segment(gamma0_hat, 0.5 * (p_ - 3.0));
+            segments_.add_segment(gamma_m_hat, -1.0);
+            segments_.add_segment(gamma_m_hat_hat, 0.25 * (p_ - 5.0));
+            segments_.add_segment(gamma0_hat_hat, -0.5);
             break;
         }
     }
 }
 
 Real InverseComptonY::gamma_spectrum(Real gamma) const {
-    for (int i = 0; i < active_segment_count; ++i) {
-        if (gamma <= segments[i].gamma_max) {
-            return segments[i].eval(gamma);
-        }
-    }
-    return 0.0;
+    return segments_.eval(gamma);
 }
 
 Real InverseComptonY::nu_spectrum(Real nu) const {

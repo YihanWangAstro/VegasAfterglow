@@ -414,12 +414,7 @@ void generate_syn_photons(SynPhotonGrid& photons, Shock const& shock, SynElectro
                 ph.nu_a = compute_syn_freq(elec.gamma_a, B);
                 ph.I_nu_max = compute_syn_I_peak(B, elec.p, elec.column_den);
 
-                ph.log2_I_nu_max = fast_log2(ph.I_nu_max);
-                ph.log2_nu_m = fast_log2(ph.nu_m);
-                ph.log2_nu_c = fast_log2(ph.nu_c);
-                ph.log2_nu_a = fast_log2(ph.nu_a);
-                ph.log2_nu_M = fast_log2(ph.nu_M);
-                ph.update_constant();
+                ph.build();
             }
         }
     }

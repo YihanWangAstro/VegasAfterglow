@@ -23,10 +23,7 @@ struct PowerLawSyn {
     Real p{2.3};      ///< Power-law index for the electron energy distribution
 
     Real log2_I_nu_max{0}; ///< Log2 of I_nu_max (for computational efficiency)
-    Real log2_nu_m{0};     ///< Log2 of nu_m
     Real log2_nu_c{0};     ///< Log2 of nu_c
-    Real log2_nu_a{0};     ///< Log2 of nu_a
-    Real log2_nu_M{0};     ///< Log2 of nu_M
     Real Y_c{0};           ///< Inverse Compton Y parameter at cooling frequency
     size_t regime{0};      ///< Regime indicator (1-6, determines spectral shape)
     InverseComptonY Ys;    ///< InverseComptonY parameters for this electron population
@@ -58,38 +55,12 @@ struct PowerLawSyn {
      * @details Constants vary based on the electron regime (1-6) and involve different power laws.
      * <!-- ************************************************************************************** -->
      */
-    void update_constant();
+    void build();
 
   private:
-    // Cached calculation constants for spectral computations
-    // Optimized calculation constants
-    Real C1_{0}; ///< Cached spectral coefficient 1
-    Real C2_{0}; ///< Cached spectral coefficient 2
-    Real C3_{0}; ///< Cached spectral coefficient 3
+    BrokenPowerLaw<4> segments_;
+    Real inv_nu_M_{0};
 
-    // Log2 of calculation constants for faster computation
-    Real log2_C1_{0};
-    Real log2_C2_{0};
-    Real log2_C3_{0};
-    Real log2_C4_{0};
-
-    /**
-     * <!-- ************************************************************************************** -->
-     * @brief Calculates the synchrotron spectrum at a given frequency based on the electron regime.
-     * @details Implements the broken power-law with exponential cutoff formulae for different regimes.
-     * @param nu The frequency at which to compute the spectrum
-     * @return The normalized synchrotron spectrum value
-     * <!-- ************************************************************************************** -->
-     */
     [[nodiscard]] inline Real compute_spectrum(Real nu) const;
-
-    /**
-     * <!-- ************************************************************************************** -->
-     * @brief Calculates the base-2 logarithm of synchrotron spectrum at a given frequency.
-     * @details Uses logarithmic arithmetic for numerical stability in different spectral regimes.
-     * @param log2_nu Base-2 logarithm of the frequency
-     * @return Base-2 logarithm of the synchrotron spectrum
-     * <!-- ************************************************************************************** -->
-     */
     [[nodiscard]] inline Real compute_log2_spectrum(Real log2_nu) const;
 };

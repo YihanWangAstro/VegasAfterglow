@@ -58,7 +58,7 @@ struct SmoothPowerLawSyn {
      * @details Constants vary based on the electron regime (1-6) and involve different power laws.
      * <!-- ************************************************************************************** -->
      */
-    void update_constant();
+    void build();
 
   private:
     Real log2_norm_{0};       ///< Cached spectral coefficient 0 in log2

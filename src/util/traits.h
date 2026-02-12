@@ -10,8 +10,6 @@
 #include <array>
 
 #include "macros.h"
-
-// c++20 concept
 template <typename T>
 concept HasDmdt = requires(T t) {
     { t.dm_dt(0.0, 0.0, 0.0) };

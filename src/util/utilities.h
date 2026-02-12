@@ -14,6 +14,62 @@
 
 class Empty {};
 
+struct SpectralSegment {
+    Real slope;      // Power law index
+    Real log2_lower; // log2(lower bound)
+    Real log2_const; // log2(norm) - slope * log2(lower)
+};
+
+template <int N>
+struct BrokenPowerLaw {
+    void clear() { size_ = 0; }
+
+    void first_segment(Real norm, Real lower, Real slope) {
+        size_ = 0;
+        const Real log2_lower = fast_log2(lower);
+        log2_val_ = fast_log2(norm);
+        auto& s = data_[size_++];
+        s.slope = slope;
+        s.log2_lower = log2_lower;
+        s.log2_const = log2_val_ - slope * log2_lower;
+    }
+
+    void add_segment(Real lower, Real slope) {
+        const Real log2_lower = fast_log2(lower);
+        if (size_ > 0 && log2_lower > data_[size_ - 1].log2_lower) {
+            log2_val_ = data_[size_ - 1].log2_const + data_[size_ - 1].slope * log2_lower;
+        }
+        auto& s = data_[size_++];
+        s.slope = slope;
+        s.log2_lower = log2_lower;
+        s.log2_const = log2_val_ - slope * log2_lower;
+    }
+
+    [[nodiscard]] Real eval(Real x) const {
+        const Real log2_x = fast_log2(x);
+        for (int i = size_ - 1; i > 0; --i) {
+            if (log2_x >= data_[i].log2_lower) {
+                return fast_exp2(data_[i].log2_const + data_[i].slope * log2_x);
+            }
+        }
+        return (size_ > 0) ? fast_exp2(data_[0].log2_const + data_[0].slope * log2_x) : 0.0;
+    }
+
+    [[nodiscard]] Real log2_eval(Real log2_x) const {
+        for (int i = size_ - 1; i > 0; --i) {
+            if (log2_x >= data_[i].log2_lower) {
+                return data_[i].log2_const + data_[i].slope * log2_x;
+            }
+        }
+        return data_[0].log2_const + data_[0].slope * log2_x;
+    }
+
+  private:
+    int size_{0};
+    Real log2_val_{0};
+    std::array<SpectralSegment, N> data_{};
+};
+
 void print_array(Array const& arr);
 
 /**
