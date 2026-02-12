@@ -111,12 +111,17 @@
 <li class="toctree-l3"><a class="reference internal" href="#_CPPv43ISM"><code class="docutils literal notranslate"><span class="pre">ISM</span></code></a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#_CPPv4N3ISM3ISME4Real"><code class="docutils literal notranslate"><span class="pre">ISM()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#_CPPv4NK3ISM3rhoE4Real4Real4Real"><code class="docutils literal notranslate"><span class="pre">rho()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#_CPPv4NK3ISM4massE4Real"><code class="docutils literal notranslate"><span class="pre">mass()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#_CPPv4N3ISM9isotropicE"><code class="docutils literal notranslate"><span class="pre">isotropic</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="#_CPPv44Wind"><code class="docutils literal notranslate"><span class="pre">Wind</span></code></a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#_CPPv4N4Wind4WindE4Real4Real4Real"><code class="docutils literal notranslate"><span class="pre">Wind()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#_CPPv4NK4Wind3rhoE4Real4Real4Real"><code class="docutils literal notranslate"><span class="pre">rho()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#_CPPv4NK4Wind4massE4Real"><code class="docutils literal notranslate"><span class="pre">mass()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#_CPPv4NK4Wind7A_paramEv"><code class="docutils literal notranslate"><span class="pre">A_param()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#_CPPv4NK4Wind13rho_ism_paramEv"><code class="docutils literal notranslate"><span class="pre">rho_ism_param()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#_CPPv4NK4Wind9r02_paramEv"><code class="docutils literal notranslate"><span class="pre">r02_param()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#_CPPv4N4Wind9isotropicE"><code class="docutils literal notranslate"><span class="pre">isotropic</span></code></a></li>
 </ul>
 </li>
@@ -728,6 +733,12 @@
 </dl>
 </dd></dl>
 
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK3ISM4massE4Real">
+<span id="_CPPv3NK3ISM4massE4Real"></span><span id="_CPPv2NK3ISM4massE4Real"></span><span id="ISM::mass__RealC"></span><span class="target" id="VegasAfterglowclassISM_1a073486fd1d4e698830831821a986de53"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="n"><span class="pre">Real</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">mass</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">Real</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">r</span></span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="k"><span class="pre">noexcept</span></span><a class="headerlink" href="#_CPPv4NK3ISM4massE4Real" title="Link to this definition"></a><br /></dt>
+<dd><p>Enclosed mass per solid angle up to radius r. </p>
+</dd></dl>
+
 </div>
 <div class="breathe-sectiondef docutils container">
 <p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-members">Public Members</p>
@@ -779,6 +790,28 @@
 </dd>
 </dl>
 </dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK4Wind4massE4Real">
+<span id="_CPPv3NK4Wind4massE4Real"></span><span id="_CPPv2NK4Wind4massE4Real"></span><span id="Wind::mass__RealC"></span><span class="target" id="VegasAfterglowclassWind_1a5669005931a6dcfdbf12e695144a17de"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="n"><span class="pre">Real</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">mass</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">Real</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">r</span></span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="k"><span class="pre">noexcept</span></span><a class="headerlink" href="#_CPPv4NK4Wind4massE4Real" title="Link to this definition"></a><br /></dt>
+<dd><p>Enclosed mass per solid angle up to radius r. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK4Wind7A_paramEv">
+<span id="_CPPv3NK4Wind7A_paramEv"></span><span id="_CPPv2NK4Wind7A_paramEv"></span><span id="Wind::A_paramC"></span><span class="target" id="VegasAfterglowclassWind_1aea4c33b54df3d7473cb8f4c6635ef1b6"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="n"><span class="pre">Real</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">A_param</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="k"><span class="pre">noexcept</span></span><a class="headerlink" href="#_CPPv4NK4Wind7A_paramEv" title="Link to this definition"></a><br /></dt>
+<dd><p>Expose parameters for analytic integrals in hot dynamics setup paths. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK4Wind13rho_ism_paramEv">
+<span id="_CPPv3NK4Wind13rho_ism_paramEv"></span><span id="_CPPv2NK4Wind13rho_ism_paramEv"></span><span id="Wind::rho_ism_paramC"></span><span class="target" id="VegasAfterglowclassWind_1a709121a77f23659a33c90310438ea2fc"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="n"><span class="pre">Real</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">rho_ism_param</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="k"><span class="pre">noexcept</span></span><a class="headerlink" href="#_CPPv4NK4Wind13rho_ism_paramEv" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK4Wind9r02_paramEv">
+<span id="_CPPv3NK4Wind9r02_paramEv"></span><span id="_CPPv2NK4Wind9r02_paramEv"></span><span id="Wind::r02_paramC"></span><span class="target" id="VegasAfterglowclassWind_1a5e2e45b34d5135e2b245d093ea618297"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="n"><span class="pre">Real</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">r02_param</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="k"><span class="pre">noexcept</span></span><a class="headerlink" href="#_CPPv4NK4Wind9r02_paramEv" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
 
 </div>
 <div class="breathe-sectiondef docutils container">
@@ -1002,11 +1035,11 @@
 <dl class="cpp function">
 <dt class="sig sig-object cpp" id="_CPPv4NK15InverseComptonY11nu_spectrumE4Real">
 <span id="_CPPv3NK15InverseComptonY11nu_spectrumE4Real"></span><span id="_CPPv2NK15InverseComptonY11nu_spectrumE4Real"></span><span id="InverseComptonY::nu_spectrum__RealC"></span><span class="target" id="VegasAfterglowstructInverseComptonY_1a8a52b79880e15b9768ae1a81d0f4d65a"></span><span class="n"><span class="pre">Real</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">nu_spectrum</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">Real</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">nu</span></span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK15InverseComptonY11nu_spectrumE4Real" title="Link to this definition"></a><br /></dt>
-<dd><p>Calculates the effective Y parameter for a given synchrotron frequency. </p>
+<dd><p>Calculates the effective Y parameter for a given seed photon frequency. </p>
 <p>Different scaling relations apply depending on the cooling regime and frequency value. </p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>nu</strong> – Synchrotron frequency </p>
+<dd class="field-odd"><p><strong>nu</strong> – Seed photon frequency </p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>The effective Y parameter at the given frequency </p>
@@ -1511,7 +1544,7 @@
 
 <dl class="cpp function">
 <dt class="sig sig-object cpp" id="_CPPv4N10FRShockEqnclERK5StateR5State4Real">
-<span id="_CPPv3N10FRShockEqnclERK5StateR5State4Real"></span><span id="_CPPv2N10FRShockEqnclERK5StateR5State4Real"></span><span id="FRShockEqn::call-operator__StateCR.StateR.Real"></span><span class="target" id="VegasAfterglowclassFRShockEqn_1a577bc5832d62ea1810248846ace3e4d4"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="k"><span class="pre">operator</span></span><span class="o"><span class="pre">()</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4N10FRShockEqn5StateE" title="FRShockEqn::State"><span class="n"><span class="pre">State</span></span></a><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">state</span></span>, <a class="reference internal" href="#_CPPv4N10FRShockEqn5StateE" title="FRShockEqn::State"><span class="n"><span class="pre">State</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">diff</span></span>, <span class="n"><span class="pre">Real</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">t</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N10FRShockEqnclERK5StateR5State4Real" title="Link to this definition"></a><br /></dt>
+<span id="_CPPv3N10FRShockEqnclERK5StateR5State4Real"></span><span id="_CPPv2N10FRShockEqnclERK5StateR5State4Real"></span><span id="FRShockEqn::call-operator__StateCR.StateR.Real"></span><span class="target" id="VegasAfterglowclassFRShockEqn_1a7d760924670c822878e3364890be480f"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="k"><span class="pre">operator</span></span><span class="o"><span class="pre">()</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4N10FRShockEqn5StateE" title="FRShockEqn::State"><span class="n"><span class="pre">State</span></span></a><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">state</span></span>, <a class="reference internal" href="#_CPPv4N10FRShockEqn5StateE" title="FRShockEqn::State"><span class="n"><span class="pre">State</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">diff</span></span>, <span class="n"><span class="pre">Real</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">t</span></span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">noexcept</span></span><a class="headerlink" href="#_CPPv4N10FRShockEqnclERK5StateR5State4Real" title="Link to this definition"></a><br /></dt>
 <dd><p>Implements the reverse shock ODE system. </p>
 <p>Computes the derivatives of state variables with respect to time. </p>
 <dl class="field-list simple">
@@ -1542,7 +1575,7 @@
 
 <dl class="cpp function">
 <dt class="sig sig-object cpp" id="_CPPv4NK10FRShockEqn19compute_shell_sigmaERK5State">
-<span id="_CPPv3NK10FRShockEqn19compute_shell_sigmaERK5State"></span><span id="_CPPv2NK10FRShockEqn19compute_shell_sigmaERK5State"></span><span id="FRShockEqn::compute_shell_sigma__StateCRC"></span><span class="target" id="VegasAfterglowclassFRShockEqn_1a6b9e03ae15cc1510b5e4ae7f8f8adcf9"></span><span class="n"><span class="pre">Real</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">compute_shell_sigma</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4N10FRShockEqn5StateE" title="FRShockEqn::State"><span class="n"><span class="pre">State</span></span></a><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">state</span></span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK10FRShockEqn19compute_shell_sigmaERK5State" title="Link to this definition"></a><br /></dt>
+<span id="_CPPv3NK10FRShockEqn19compute_shell_sigmaERK5State"></span><span id="_CPPv2NK10FRShockEqn19compute_shell_sigmaERK5State"></span><span id="FRShockEqn::compute_shell_sigma__StateCRC"></span><span class="target" id="VegasAfterglowclassFRShockEqn_1ac20986a5424abfef13928bd527d2639e"></span><span class="n"><span class="pre">Real</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">compute_shell_sigma</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4N10FRShockEqn5StateE" title="FRShockEqn::State"><span class="n"><span class="pre">State</span></span></a><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">state</span></span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="k"><span class="pre">noexcept</span></span><a class="headerlink" href="#_CPPv4NK10FRShockEqn19compute_shell_sigmaERK5State" title="Link to this definition"></a><br /></dt>
 <dd><p>Calculates the magnetization parameter of the shell. </p>
 <p>Sigma is defined as (ε/Γmc²) - 1, where ε is the energy per solid angle. </p>
 <dl class="field-list simple">

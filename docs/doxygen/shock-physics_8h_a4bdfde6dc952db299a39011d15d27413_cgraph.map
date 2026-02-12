@@ -1,0 +1,15 @@
+<map id="compute_4vel_jump" name="compute_4vel_jump">
+<area shape="rect" id="Node000001" title="Computes the ratio of upstream to downstream four&#45;velocity across the shock front." alt="" coords="5,107,160,132"/>
+<area shape="rect" id="Node000002" href="$shock_8cpp.html#a09f75d8bc0c1cd36d03a413edd7283d8" title="Computes the downstream four&#45;velocity for a given relative Lorentz factor and magnetization parameter..." alt="" coords="208,56,381,81"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="136,104,227,82,228,87,137,109"/>
+<area shape="rect" id="Node000004" href="$utilities_8h.html#ab8e81118f023df135835db8cce4f5f42" title="Returns the value of a single parameter." alt="" coords="699,81,749,107"/>
+<area shape="poly" id="edge8_Node000001_Node000004" title=" " alt="" coords="160,114,684,93,684,98,161,119"/>
+<area shape="rect" id="Node000005" href="$shock-physics_8h.html#ab0d0c4b81c0c5525c81eb24d70c4b010" title="Computes the upstream four&#45;velocity from downstream four&#45;velocity and relative Lorentz factor." alt="" coords="463,157,617,183"/>
+<area shape="poly" id="edge6_Node000001_Node000005" title=" " alt="" coords="161,129,208,135,449,160,449,165,208,141,160,134"/>
+<area shape="rect" id="Node000003" href="$namespacephysics_1_1thermo.html#a8d90fdf6e3727fb58e7beb1c4f2fd50c" title="Computes adiabatic index as a function of the Lorentz factor." alt="" coords="429,5,651,31"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="357,53,464,31,465,36,358,58"/>
+<area shape="poly" id="edge5_Node000002_Node000004" title=" " alt="" coords="382,71,685,89,685,94,382,76"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="596,28,652,48,694,71,692,76,650,52,594,33"/>
+<area shape="poly" id="edge4_Node000004_Node000004" title=" " alt="" coords="696,85,687,75,690,64,702,57,724,55,752,59,759,65,761,72,756,73,755,68,750,64,724,60,704,62,694,67,693,73,700,81"/>
+<area shape="poly" id="edge7_Node000005_Node000004" title=" " alt="" coords="594,155,650,136,692,112,694,117,652,140,596,160"/>
+</map>

@@ -23,13 +23,13 @@
 <area shape="poly" id="edge5_Node000004_Node000005" title=" " alt="" coords="296,240,372,227,490,215,598,207,598,212,491,220,372,233,296,245"/>
 <area shape="rect" id="Node000006" href="$synchrotron_8cpp.html#a85433be4a0da2f510240a603da8f7dff" title="Calculates electron Lorentz factor corresponding to a given synchrotron frequency." alt="" coords="372,243,539,268"/>
 <area shape="poly" id="edge7_Node000004_Node000006" title=" " alt="" coords="325,253,358,253,358,258,325,258"/>
-<area shape="rect" id="Node000007" href="$utilities_8h.html#a4520a27a10a2aef33c99ad8c679da404" title="Fast approximation of a raised to the power of b." alt="" coords="415,292,496,317"/>
+<area shape="rect" id="Node000007" href="$fast-math_8h.html#a4520a27a10a2aef33c99ad8c679da404" title="Fast approximation of a raised to the power of b." alt="" coords="415,292,496,317"/>
 <area shape="poly" id="edge8_Node000004_Node000007" title=" " alt="" coords="292,266,402,290,401,296,291,271"/>
 <area shape="poly" id="edge6_Node000005_Node000003" title=" " alt="" coords="749,215,782,235,809,269,829,308,842,346,850,379,845,380,837,348,824,310,805,272,778,239,746,220"/>
 <area shape="poly" id="edge13_Node000007_Node000003" title=" " alt="" coords="496,294,565,281,648,270,726,267,758,270,781,278,806,299,825,326,848,379,843,381,821,328,803,303,779,283,757,276,726,272,649,275,566,286,497,299"/>
-<area shape="rect" id="Node000008" href="$utilities_8h.html#afc584c30c352192de6847b1f4b8caf0e" title="Fast approximation of 2 raised to a power." alt="" coords="640,293,727,319"/>
+<area shape="rect" id="Node000008" href="$fast-math_8h.html#afc584c30c352192de6847b1f4b8caf0e" title="Fast approximation of 2 raised to a power." alt="" coords="640,293,727,319"/>
 <area shape="poly" id="edge9_Node000007_Node000008" title=" " alt="" coords="496,302,626,303,626,308,496,308"/>
-<area shape="rect" id="Node000009" href="$utilities_8h.html#aa67895957aa831a991982a8268ef8349" title="Fast approximation of the base&#45;2 logarithm." alt="" coords="642,343,725,368"/>
+<area shape="rect" id="Node000009" href="$fast-math_8h.html#aa67895957aa831a991982a8268ef8349" title="Fast approximation of the base&#45;2 logarithm." alt="" coords="642,343,725,368"/>
 <area shape="poly" id="edge11_Node000007_Node000009" title=" " alt="" coords="497,311,629,341,628,346,496,316"/>
 <area shape="poly" id="edge10_Node000008_Node000003" title=" " alt="" coords="728,309,755,316,781,328,813,353,837,381,833,384,809,357,779,332,753,321,726,314"/>
 <area shape="poly" id="edge12_Node000009_Node000003" title=" " alt="" coords="726,365,816,392,814,397,724,370"/>

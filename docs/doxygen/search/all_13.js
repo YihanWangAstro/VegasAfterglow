@@ -2,7 +2,7 @@ var searchData=
 [
   ['t_0',['t',['../structFluxData.html#a0afc30aeb2e7370203951a2a3807761f',1,'FluxData::t'],['../classCoord.html#a1be0d478cc7dc556eb9db65cf851da5c',1,'Coord::t']]],
   ['t0_1',['t0',['../structParams.html#a9f280b0b92834d894efdb38e573ab79d',1,'Params::t0'],['../structPyMagnetar.html#aac488f2dea4704845b1b2c9c4664cde8',1,'PyMagnetar::t0'],['../classEjecta.html#a4317c1c49676662f347708942bc61bdf',1,'Ejecta::T0'],['../classTophatJet.html#a8646027b99fed9bb2e206956ff284c84',1,'TophatJet::T0'],['../classGaussianJet.html#ac044ed063b0720f124551a728ce1ac67',1,'GaussianJet::T0'],['../classPowerLawJet.html#aefe6b9e991605a6b451090adad143e39',1,'PowerLawJet::T0']]],
-  ['t_5fcomv_2',['t_comv',['../structForwardState.html#a5c68a522be4913771d213fc734564cc7',1,'ForwardState::t_comv'],['../structSimpleState.html#a98332d35342f9f2779dd10281d30768a',1,'SimpleState::t_comv'],['../classShock.html#a2f750335b1c4474905426fd1a78b006a',1,'Shock::t_comv'],['../structReverseState.html#a32a4fc6a76c28ed2056d1ad01790f08b',1,'ReverseState::t_comv'],['../structPyShock.html#a3538d2218dd586d492a93f4eaaac2879',1,'PyShock::t_comv']]],
+  ['t_5fcomv_2',['t_comv',['../structPyShock.html#a3538d2218dd586d492a93f4eaaac2879',1,'PyShock::t_comv'],['../structForwardState.html#a5c68a522be4913771d213fc734564cc7',1,'ForwardState::t_comv'],['../structReverseState.html#a32a4fc6a76c28ed2056d1ad01790f08b',1,'ReverseState::t_comv'],['../classShock.html#a2f750335b1c4474905426fd1a78b006a',1,'Shock::t_comv'],['../structSimpleState.html#a98332d35342f9f2779dd10281d30768a',1,'SimpleState::t_comv']]],
   ['t_5fmax_3',['t_max',['../structMultiBandData.html#afbffab4bc76c6693f3ac2cabca8db710',1,'MultiBandData']]],
   ['t_5fmin_4',['t_min',['../structMultiBandData.html#a5314ad90f59d9d214f5afad5c4f20dfb',1,'MultiBandData']]],
   ['t_5fobs_5',['t_obs',['../structPyShock.html#af8c393182ea18f6033ba7bc400db2949',1,'PyShock']]],
@@ -11,11 +11,11 @@ var searchData=
   ['templates_8',['Utility Templates',['../group__UtilityTemplates.html',1,'']]],
   ['ternaryfunc_9',['TernaryFunc',['../utilities_8h.html#a919434df3bde5e6090dbff542b658478',1,'utilities.h']]],
   ['tev_10',['TeV',['../namespaceunit.html#a73146c1c9173fda7b02d434d813aa825',1,'unit']]],
-  ['theta_11',['theta',['../structPyDetails.html#af69daff65e4fd6872b82763ede45b687',1,'PyDetails::theta'],['../structPyShock.html#afce3c5903b3f175398cb70940f9c2677',1,'PyShock::theta'],['../classCoastingShock.html#a2f12306e68678543e9dae0d92dcca21b',1,'CoastingShock::theta'],['../structSimpleState.html#a4f373d23ddac6248a5faf50ae749f233',1,'SimpleState::theta'],['../structReverseState.html#a8b76b74cb46e974d441f72f9e75c9607',1,'ReverseState::theta'],['../classShock.html#a144dc338f3f004d48e5b629479e782be',1,'Shock::theta'],['../classCoord.html#a0a98db1c9721e63afcfd888d78f4f5b9',1,'Coord::theta'],['../structForwardState.html#a3234708f4428d7d5c7afa491968a9545',1,'ForwardState::theta']]],
+  ['theta_11',['theta',['../structPyShock.html#afce3c5903b3f175398cb70940f9c2677',1,'PyShock::theta'],['../structPyDetails.html#af69daff65e4fd6872b82763ede45b687',1,'PyDetails::theta'],['../classCoord.html#a0a98db1c9721e63afcfd888d78f4f5b9',1,'Coord::theta'],['../structForwardState.html#a3234708f4428d7d5c7afa491968a9545',1,'ForwardState::theta'],['../structReverseState.html#a8b76b74cb46e974d441f72f9e75c9607',1,'ReverseState::theta'],['../classShock.html#a144dc338f3f004d48e5b629479e782be',1,'Shock::theta'],['../structSimpleState.html#a4f373d23ddac6248a5faf50ae749f233',1,'SimpleState::theta'],['../classCoastingShock.html#a2f12306e68678543e9dae0d92dcca21b',1,'CoastingShock::theta']]],
   ['theta0_12',['theta0',['../classForwardShockEqn.html#a5dc2e510565b607caa4eee42e053c8d3',1,'ForwardShockEqn::theta0'],['../classFRShockEqn.html#a54ea36bb3fddcc4ccab1708c752e3092',1,'FRShockEqn::theta0'],['../classSimpleShockEqn.html#ad193653f550dbdcec374e78e6aad0282',1,'SimpleShockEqn::theta0']]],
   ['theta_5fc_13',['theta_c',['../structParams.html#a0a6c4ac1f5f7f81dd2e13c107e085252',1,'Params']]],
   ['theta_5fmin_14',['theta_min',['../namespacedefaults_1_1grid.html#af2b7c5de15cb9c537f0de0e0e56148b1',1,'defaults::grid']]],
-  ['theta_5fobs_15',['theta_obs',['../classPyObserver.html#a44289f4d1236019685063b1ce914154d',1,'PyObserver::theta_obs'],['../structGridConfig.html#ad02e36bdc2a7c1a5607c9d1cf162cc12',1,'GridConfig::theta_obs']]],
+  ['theta_5fobs_15',['theta_obs',['../structGridConfig.html#ad02e36bdc2a7c1a5607c9d1cf162cc12',1,'GridConfig::theta_obs'],['../classPyObserver.html#a44289f4d1236019685063b1ce914154d',1,'PyObserver::theta_obs']]],
   ['theta_5freps_16',['theta_reps',['../classShock.html#ab02b946caaaff18a4396581efabc28d2',1,'Shock']]],
   ['theta_5fresol_17',['theta_resol',['../structConfigParams.html#adaf4fc73aa4f1efa9de4435fc6a65027',1,'ConfigParams::theta_resol'],['../structGridConfig.html#aa4e5bc7fee5c0f1dc7f9b5ca8a74c514',1,'GridConfig::theta_resol']]],
   ['theta_5fresolution_18',['theta_resolution',['../namespacedefaults_1_1grid.html#a372994c537be68d80989655f9b43c672',1,'defaults::grid']]],
@@ -29,9 +29,10 @@ var searchData=
   ['time_26',['time',['../classObserver.html#a7b83dbbff538d3f079f8e662d3686ada',1,'Observer']]],
   ['time_5fresolution_27',['time_resolution',['../namespacedefaults_1_1grid.html#aa203749fa338e32e6c7a711c82846582',1,'defaults::grid']]],
   ['times_28',['times',['../structMultiBandData.html#aca70edfe9b3e6b496739cc8d619ee2c1',1,'MultiBandData']]],
-  ['tophatjet_29',['tophatjet',['../classTophatJet.html#abe166f2a89874e03542d6e2d042826d2',1,'TophatJet::TophatJet()'],['../classTophatJet.html',1,'TophatJet']]],
+  ['tophatjet_29',['tophatjet',['../classTophatJet.html',1,'TophatJet'],['../classTophatJet.html#abe166f2a89874e03542d6e2d042826d2',1,'TophatJet::TophatJet()']]],
   ['total_30',['total',['../structPyFlux.html#aff6027b30948c3cfad478657a520b9ae',1,'PyFlux']]],
-  ['transform_5fsample_31',['transform_sample',['../classParamTransformer.html#aa8eb1168daee0bb722eb2e879ac263e8',1,'ParamTransformer']]],
-  ['type_20aliases_32',['Synchrotron Grid Type Aliases',['../group__SynchrotronGrids.html',1,'']]],
-  ['type_20definitions_33',['Function Type Definitions',['../group__FunctionTypes.html',1,'']]]
+  ['traits_2eh_31',['traits.h',['../traits_8h.html',1,'']]],
+  ['transform_5fsample_32',['transform_sample',['../classParamTransformer.html#aa8eb1168daee0bb722eb2e879ac263e8',1,'ParamTransformer']]],
+  ['type_20aliases_33',['Synchrotron Grid Type Aliases',['../group__SynchrotronGrids.html',1,'']]],
+  ['type_20definitions_34',['Function Type Definitions',['../group__FunctionTypes.html',1,'']]]
 ];

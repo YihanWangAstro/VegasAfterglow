@@ -4,6 +4,9 @@ var annotated_dup =
       [ "LogicError", "classafterglow_1_1LogicError.html", "classafterglow_1_1LogicError" ],
       [ "ValidationError", "classafterglow_1_1ValidationError.html", "classafterglow_1_1ValidationError" ]
     ] ],
+    [ "anonymous_namespace{inverse-compton.cpp}", "namespaceanonymous__namespace_02inverse-compton_8cpp_03.html", [
+      [ "ComptonSigmaLUT", "structanonymous__namespace_02inverse-compton_8cpp_03_1_1ComptonSigmaLUT.html", "structanonymous__namespace_02inverse-compton_8cpp_03_1_1ComptonSigmaLUT" ]
+    ] ],
     [ "BatchWorkspace", "structBatchWorkspace.html", "structBatchWorkspace" ],
     [ "CoastingShock", "classCoastingShock.html", "classCoastingShock" ],
     [ "ConfigParams", "structConfigParams.html", "structConfigParams" ],

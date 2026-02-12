@@ -1,0 +1,12 @@
+<map id="enclosed_mass_medium" name="enclosed_mass_medium">
+<area shape="rect" id="Node000001" title="Fast path for enclosed mass with compile&#45;time medium detection." alt="" coords="5,55,188,80"/>
+<area shape="rect" id="Node000002" href="$shock-physics_8h.html#acc6d84207549ad55230c89d5f2492ae0" title="Computes enclosed mass per solid angle." alt="" coords="236,29,359,55"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="188,53,222,49,223,54,189,58"/>
+<area shape="rect" id="Node000003" href="$utilities_8h.html#ab8e81118f023df135835db8cce4f5f42" title="Returns the value of a single parameter." alt="" coords="597,29,648,55"/>
+<area shape="poly" id="edge6_Node000001_Node000003" title=" " alt="" coords="188,74,266,78,357,80,453,76,549,65,584,55,585,60,550,70,454,81,357,85,266,83,188,79"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="345,27,406,15,478,9,550,15,585,25,584,30,549,21,478,14,407,21,346,32"/>
+<area shape="rect" id="Node000004" href="$shock-physics_8h.html#a4eecaf485f5ac3854b4fceab00516fd4" title="Simpson&#39;s rule integration in log&#45;space: ∫ f(r&#39;) dr&#39; via u = ln(r&#39;)." alt="" coords="407,29,549,55"/>
+<area shape="poly" id="edge4_Node000002_Node000004" title=" " alt="" coords="359,39,393,39,393,45,359,45"/>
+<area shape="poly" id="edge3_Node000003_Node000003" title=" " alt="" coords="598,30,593,21,596,11,606,5,623,3,643,6,651,15,647,18,640,11,623,8,608,10,600,15,598,20,603,28"/>
+<area shape="poly" id="edge5_Node000004_Node000003" title=" " alt="" coords="550,39,583,39,583,45,550,45"/>
+</map>

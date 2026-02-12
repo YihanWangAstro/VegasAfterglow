@@ -1,0 +1,6 @@
+<map id="compute_simpson_weights" name="compute_simpson_weights">
+<area shape="rect" id="Node000001" title="Computes composite Simpson&#39;s quadrature weights for a non&#45;uniform grid." alt="" coords="5,29,204,55"/>
+<area shape="rect" id="Node000002" href="$utilities_8h.html#ab8e81118f023df135835db8cce4f5f42" title="Returns the value of a single parameter." alt="" coords="252,29,303,55"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="204,39,238,39,238,45,204,45"/>
+<area shape="poly" id="edge2_Node000002_Node000002" title=" " alt="" coords="250,32,243,22,246,12,258,5,277,3,302,7,311,16,307,20,299,11,277,8,259,10,250,15,248,21,254,28"/>
+</map>

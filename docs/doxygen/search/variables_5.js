@@ -8,7 +8,7 @@ var searchData=
   ['flux_5fden_5fcgs_5',['flux_den_cgs',['../namespaceunit.html#a4808047893e65d1942893de10e0a9c97',1,'unit']]],
   ['fluxes_6',['fluxes',['../structMultiBandData.html#ab1938ad09632e63a73de79affb826115',1,'MultiBandData']]],
   ['forward_5fratio_7',['forward_ratio',['../namespacedefaults_1_1grid.html#ae654c737813ff06431141238b26e0a67',1,'defaults::grid']]],
-  ['frac_5fmask_8',['FRAC_MASK',['../utilities_8h.html#a79744253cc2d27cf5da3cf406a77eb8c',1,'utilities.h']]],
+  ['frac_5fmask_8',['FRAC_MASK',['../fast-math_8h.html#a79744253cc2d27cf5da3cf406a77eb8c',1,'fast-math.h']]],
   ['frequencies_9',['frequencies',['../structMultiBandData.html#a641b656c306f7720c84dae33ce0745fc',1,'MultiBandData']]],
   ['fv_5ferr_10',['Fv_err',['../structFluxData.html#a5c6b0ad9ba7dffc87376cbca7fa7cd0c',1,'FluxData']]],
   ['fv_5fmodel_11',['Fv_model',['../structFluxData.html#a5c10f6f3d6f4c9d3c07528ae41bd16a9',1,'FluxData']]],

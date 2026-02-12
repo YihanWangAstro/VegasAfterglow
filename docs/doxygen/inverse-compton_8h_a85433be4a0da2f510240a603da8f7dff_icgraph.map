@@ -1,5 +1,5 @@
 <map id="compute_syn_gamma" name="compute_syn_gamma">
 <area shape="rect" id="Node000001" title=" " alt="" coords="212,13,379,38"/>
-<area shape="rect" id="Node000002" href="$structInverseComptonY.html#a8a52b79880e15b9768ae1a81d0f4d65a" title="Calculates the effective Y parameter for a given synchrotron frequency." alt="" coords="5,5,164,45"/>
+<area shape="rect" id="Node000002" href="$structInverseComptonY.html#a8a52b79880e15b9768ae1a81d0f4d65a" title="Calculates the effective Y parameter for a given seed photon frequency." alt="" coords="5,5,164,45"/>
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="198,28,164,28,164,23,198,23"/>
 </map>

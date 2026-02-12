@@ -1,0 +1,9 @@
+<map id="enclosed_mass" name="enclosed_mass">
+<area shape="rect" id="Node000001" title="Computes enclosed mass per solid angle." alt="" coords="5,29,128,55"/>
+<area shape="rect" id="Node000002" href="$utilities_8h.html#ab8e81118f023df135835db8cce4f5f42" title="Returns the value of a single parameter." alt="" coords="367,29,417,55"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="128,39,353,39,353,45,128,45"/>
+<area shape="rect" id="Node000003" href="$shock-physics_8h.html#a4eecaf485f5ac3854b4fceab00516fd4" title="Simpson&#39;s rule integration in log&#45;space: ∫ f(r&#39;) dr&#39; via u = ln(r&#39;)." alt="" coords="176,55,319,80"/>
+<area shape="poly" id="edge3_Node000001_Node000003" title=" " alt="" coords="129,48,163,53,162,58,128,53"/>
+<area shape="poly" id="edge2_Node000002_Node000002" title=" " alt="" coords="367,30,362,21,365,11,375,5,392,3,412,6,421,15,417,18,409,11,392,8,377,10,369,15,368,20,372,28"/>
+<area shape="poly" id="edge4_Node000003_Node000002" title=" " alt="" coords="318,52,352,46,353,51,319,57"/>
+</map>

@@ -11,12 +11,12 @@
 <area shape="poly" id="edge12_Node000004_Node000003" title=" " alt="" coords="420,120,917,140,917,146,420,125"/>
 <area shape="rect" id="Node000005" href="$inverse-compton_8h.html#ad7736d3269071d2ceaffcc56fa2fc71c" title=" " alt="" coords="474,157,613,183"/>
 <area shape="poly" id="edge5_Node000004_Node000005" title=" " alt="" coords="392,130,479,151,478,157,391,135"/>
-<area shape="rect" id="Node000006" href="$utilities_8h.html#a4520a27a10a2aef33c99ad8c679da404" title="Fast approximation of a raised to the power of b." alt="" coords="667,183,748,208"/>
+<area shape="rect" id="Node000006" href="$fast-math_8h.html#a4520a27a10a2aef33c99ad8c679da404" title="Fast approximation of a raised to the power of b." alt="" coords="667,183,748,208"/>
 <area shape="poly" id="edge6_Node000005_Node000006" title=" " alt="" coords="614,178,653,184,653,190,613,183"/>
 <area shape="poly" id="edge11_Node000006_Node000003" title=" " alt="" coords="748,185,917,150,918,155,749,190"/>
-<area shape="rect" id="Node000007" href="$utilities_8h.html#afc584c30c352192de6847b1f4b8caf0e" title="Fast approximation of 2 raised to a power." alt="" coords="796,208,883,233"/>
+<area shape="rect" id="Node000007" href="$fast-math_8h.html#afc584c30c352192de6847b1f4b8caf0e" title="Fast approximation of 2 raised to a power." alt="" coords="796,208,883,233"/>
 <area shape="poly" id="edge7_Node000006_Node000007" title=" " alt="" coords="749,200,783,207,782,212,748,206"/>
-<area shape="rect" id="Node000008" href="$utilities_8h.html#aa67895957aa831a991982a8268ef8349" title="Fast approximation of the base&#45;2 logarithm." alt="" coords="798,257,881,283"/>
+<area shape="rect" id="Node000008" href="$fast-math_8h.html#aa67895957aa831a991982a8268ef8349" title="Fast approximation of the base&#45;2 logarithm." alt="" coords="798,257,881,283"/>
 <area shape="poly" id="edge9_Node000006_Node000008" title=" " alt="" coords="732,206,797,244,805,248,803,253,795,248,729,210"/>
 <area shape="poly" id="edge8_Node000007_Node000003" title=" " alt="" coords="859,206,923,163,926,167,861,210"/>
 <area shape="poly" id="edge10_Node000008_Node000003" title=" " alt="" coords="866,255,881,244,914,206,939,168,943,171,918,209,884,248,869,259"/>

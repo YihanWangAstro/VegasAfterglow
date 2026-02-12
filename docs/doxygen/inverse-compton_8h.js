@@ -6,7 +6,7 @@ var inverse_compton_8h =
     [ "ElectronGrid", "inverse-compton_8h.html#aaaf75fefdf774abf61fcab7b65b90bcd", null ],
     [ "ICPhotonGrid", "inverse-compton_8h.html#a9144380c2a30d12d92e96f5917ca2612", null ],
     [ "PhotonGrid", "inverse-compton_8h.html#a51afe1e3d9c293fd37d0862139cda1cf", null ],
-    [ "compton_cross_section", "inverse-compton_8h.html#a689ca8481a7d3e7e760a3300503f2781", null ],
+    [ "compton_correction", "inverse-compton_8h.html#a7c43d0a88ee4930601ed431d757e6015", null ],
     [ "compute_gamma_0", "inverse-compton_8h.html#ab1338fd3d8ab0ac7f687cc6e84e24fb1", null ],
     [ "compute_gamma_c", "inverse-compton_8h.html#abf07388459a8b39d9b4c5028e53a538e", null ],
     [ "compute_syn_gamma", "inverse-compton_8h.html#a85433be4a0da2f510240a603da8f7dff", null ],
@@ -25,5 +25,6 @@ var inverse_compton_8h =
     [ "update_gamma_c_KN", "inverse-compton_8h.html#ad06eafa794ead54fd991828713903f5a", null ],
     [ "update_gamma_c_Thomson", "inverse-compton_8h.html#af7515846a834d0a778e26e7aaa36891b", null ],
     [ "update_gamma_M", "inverse-compton_8h.html#a1595a8694782ca55acc136e79089e784", null ],
-    [ "IC_x0", "inverse-compton_8h.html#af77ecb3b882119e9d24786b64815975f", null ]
+    [ "IC_x0", "inverse-compton_8h.html#af77ecb3b882119e9d24786b64815975f", null ],
+    [ "inv_4x0", "inverse-compton_8h.html#a94bc6ab043a2a9201941bbcaaf7fec81", null ]
 ];

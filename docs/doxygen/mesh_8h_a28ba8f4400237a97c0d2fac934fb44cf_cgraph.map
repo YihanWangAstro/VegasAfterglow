@@ -1,0 +1,6 @@
+<map id="find_jet_edges" name="find_jet_edges">
+<area shape="rect" id="Node000001" title="Finds all sharp edges in the jet Gamma0 profile plus the outermost boundary." alt="" coords="5,29,121,55"/>
+<area shape="rect" id="Node000002" href="$utilities_8h.html#ab8e81118f023df135835db8cce4f5f42" title="Returns the value of a single parameter." alt="" coords="169,29,220,55"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="121,39,155,39,155,45,121,45"/>
+<area shape="poly" id="edge2_Node000002_Node000002" title=" " alt="" coords="172,30,168,21,170,11,179,5,195,3,213,6,221,14,217,18,210,11,195,8,181,10,174,14,173,20,177,28"/>
+</map>

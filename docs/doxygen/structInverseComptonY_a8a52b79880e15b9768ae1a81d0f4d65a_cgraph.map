@@ -1,5 +1,5 @@
 <map id="InverseComptonY::nu_spectrum" name="InverseComptonY::nu_spectrum">
-<area shape="rect" id="Node000001" title="Calculates the effective Y parameter for a given synchrotron frequency." alt="" coords="5,55,164,95"/>
+<area shape="rect" id="Node000001" title="Calculates the effective Y parameter for a given seed photon frequency." alt="" coords="5,55,164,95"/>
 <area shape="rect" id="Node000002" href="$synchrotron_8cpp.html#a85433be4a0da2f510240a603da8f7dff" title=" " alt="" coords="225,5,392,31"/>
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="163,53,244,32,245,37,164,58"/>
 <area shape="rect" id="Node000003" href="$structInverseComptonY.html#a10d6b44bd159fd7fe8e5a3f1d6be453c" title="Calculates the effective Y parameter for a given Lorentz factor and spectral index." alt="" coords="212,55,405,95"/>

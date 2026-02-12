@@ -1,0 +1,12 @@
+<map id="enclosed_thermal_energy_medium" name="enclosed_thermal_energy_medium">
+<area shape="rect" id="Node000001" title="Fast path for enclosed thermal energy with compile&#45;time medium detection." alt="" coords="5,47,196,87"/>
+<area shape="rect" id="Node000002" href="$shock-physics_8h.html#acb7f53705e758d8e4bf774602de2d03e" title="Compute enclosed thermal energy per solid angle, accounting for adiabatic cooling and radiative losse..." alt="" coords="244,29,435,55"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="196,55,230,51,231,56,197,60"/>
+<area shape="rect" id="Node000003" href="$utilities_8h.html#ab8e81118f023df135835db8cce4f5f42" title="Returns the value of a single parameter." alt="" coords="673,29,724,55"/>
+<area shape="poly" id="edge6_Node000001_Node000003" title=" " alt="" coords="197,74,287,80,395,82,510,78,625,65,660,55,661,60,626,70,511,83,395,87,287,85,196,79"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="396,27,503,12,565,10,626,15,661,25,660,30,625,21,564,15,503,17,397,32"/>
+<area shape="rect" id="Node000004" href="$shock-physics_8h.html#a4eecaf485f5ac3854b4fceab00516fd4" title="Simpson&#39;s rule integration in log&#45;space: ∫ f(r&#39;) dr&#39; via u = ln(r&#39;)." alt="" coords="483,29,625,55"/>
+<area shape="poly" id="edge4_Node000002_Node000004" title=" " alt="" coords="435,39,469,39,469,45,435,45"/>
+<area shape="poly" id="edge3_Node000003_Node000003" title=" " alt="" coords="674,30,669,21,672,11,682,5,699,3,719,6,727,15,723,18,716,11,699,8,684,10,676,15,674,20,679,28"/>
+<area shape="poly" id="edge5_Node000004_Node000003" title=" " alt="" coords="626,39,659,39,659,45,626,45"/>
+</map>

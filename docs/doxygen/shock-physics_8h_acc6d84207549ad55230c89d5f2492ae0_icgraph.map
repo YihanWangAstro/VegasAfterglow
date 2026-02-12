@@ -1,0 +1,5 @@
+<map id="enclosed_mass" name="enclosed_mass">
+<area shape="rect" id="Node000001" title="Computes enclosed mass per solid angle." alt="" coords="236,5,359,31"/>
+<area shape="rect" id="Node000002" href="$shock-physics_8h.html#a0d7b8e5c73c9b1439295a332f7626139" title="Fast path for enclosed mass with compile&#45;time medium detection." alt="" coords="5,5,188,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="222,21,188,21,188,15,222,15"/>
+</map>

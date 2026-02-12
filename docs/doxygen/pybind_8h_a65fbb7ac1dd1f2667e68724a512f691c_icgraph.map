@@ -1,6 +1,6 @@
 <map id="is_ascending" name="is_ascending">
 <area shape="rect" id="Node000001" title=" " alt="" coords="449,80,556,105"/>
-<area shape="rect" id="Node000002" href="$structMultiBandData.html#a3d3149e512bdfb7005f019879e293158" title="Add frequency&#45;integrated flux measurements over a specified frequency band." alt="" coords="211,5,394,31"/>
+<area shape="rect" id="Node000002" href="$structMultiBandData.html#a07ceaa100ffac6e91e0f5abadaa4e854" title="Add frequency&#45;integrated flux measurements over a specified frequency band." alt="" coords="211,5,394,31"/>
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="466,76,400,44,364,33,366,28,402,40,469,71"/>
 <area shape="rect" id="Node000004" href="$classPyModel.html#a51390496a41c22c7c2dbb8838ac7a2d2" title="Calculate bolometric flux integrated over a frequency range." alt="" coords="247,55,358,80"/>
 <area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="435,87,358,77,359,72,436,82"/>

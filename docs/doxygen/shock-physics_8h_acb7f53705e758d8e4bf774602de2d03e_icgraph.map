@@ -1,0 +1,5 @@
+<map id="enclosed_thermal_energy" name="enclosed_thermal_energy">
+<area shape="rect" id="Node000001" title="Compute enclosed thermal energy per solid angle, accounting for adiabatic cooling and radiative losse..." alt="" coords="244,13,435,38"/>
+<area shape="rect" id="Node000002" href="$shock-physics_8h.html#a4ece71b398c4245a13b19d68a892b0b2" title="Fast path for enclosed thermal energy with compile&#45;time medium detection." alt="" coords="5,5,196,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="230,28,196,28,196,23,230,23"/>
+</map>

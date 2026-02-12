@@ -1,0 +1,11 @@
+<map id="simpson_logspace" name="simpson_logspace">
+<area shape="rect" id="Node000001" title="Simpson&#39;s rule integration in log&#45;space: ∫ f(r&#39;) dr&#39; via u = ln(r&#39;)." alt="" coords="483,35,625,60"/>
+<area shape="rect" id="Node000002" href="$shock-physics_8h.html#acc6d84207549ad55230c89d5f2492ae0" title="Computes enclosed mass per solid angle." alt="" coords="278,8,401,33"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="469,40,401,31,401,26,470,34"/>
+<area shape="rect" id="Node000004" href="$shock-physics_8h.html#acb7f53705e758d8e4bf774602de2d03e" title="Compute enclosed thermal energy per solid angle, accounting for adiabatic cooling and radiative losse..." alt="" coords="244,59,435,84"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="469,59,435,63,435,58,469,54"/>
+<area shape="rect" id="Node000003" href="$shock-physics_8h.html#a0d7b8e5c73c9b1439295a332f7626139" title="Fast path for enclosed mass with compile&#45;time medium detection." alt="" coords="9,5,192,31"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="264,22,192,22,192,16,264,17"/>
+<area shape="rect" id="Node000005" href="$shock-physics_8h.html#a4ece71b398c4245a13b19d68a892b0b2" title="Fast path for enclosed thermal energy with compile&#45;time medium detection." alt="" coords="5,55,196,95"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="230,76,196,76,196,71,230,70"/>
+</map>

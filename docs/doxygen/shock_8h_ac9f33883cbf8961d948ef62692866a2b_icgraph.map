@@ -1,5 +1,0 @@
-<map id="compute_comv_weibel_B" name="compute_comv_weibel_B">
-<area shape="rect" id="Node000001" title="Computes the comoving magnetic field using the Weibel instability mechanism." alt="" coords="208,5,396,31"/>
-<area shape="rect" id="Node000002" href="$shock_8h.html#ac49ae4ef06c1e8ef80f3e15997c34a6a" title="Computes the downstream magnetic field strength." alt="" coords="5,5,160,31"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="194,21,160,21,160,15,194,15"/>
-</map>

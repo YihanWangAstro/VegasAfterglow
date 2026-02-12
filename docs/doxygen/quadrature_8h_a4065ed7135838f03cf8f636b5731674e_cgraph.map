@@ -1,0 +1,6 @@
+<map id="compute_rectangle_weights" name="compute_rectangle_weights">
+<area shape="rect" id="Node000001" title="Computes left&#45;rectangle quadrature weights (O(h))." alt="" coords="5,29,211,55"/>
+<area shape="rect" id="Node000002" href="$utilities_8h.html#ab8e81118f023df135835db8cce4f5f42" title="Returns the value of a single parameter." alt="" coords="259,29,309,55"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="211,39,245,39,245,45,211,45"/>
+<area shape="poly" id="edge2_Node000002_Node000002" title=" " alt="" coords="256,32,249,22,251,12,263,5,284,3,310,7,319,17,315,21,307,12,284,8,265,10,255,15,254,21,260,29"/>
+</map>

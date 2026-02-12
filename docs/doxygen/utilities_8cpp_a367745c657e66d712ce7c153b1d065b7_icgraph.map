@@ -1,7 +1,0 @@
-<map id="point_loglog_interp" name="point_loglog_interp">
-<area shape="rect" id="Node000001" title="Point&#45;wise logarithmic interpolation between two points." alt="" coords="228,31,375,56"/>
-<area shape="rect" id="Node000002" href="$utilities_8cpp.html#ad3bc8b592ec28b18768172f7a21bd8c2" title="Logarithmic interpolation for equally spaced x&#45;values in log space." alt="" coords="5,5,180,31"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="214,35,180,31,180,26,215,30"/>
-<area shape="rect" id="Node000003" href="$utilities_8cpp.html#a655bf7e9ee550858e65af14c66fb4aec" title="Logarithmic interpolation for arbitrary x&#45;values." alt="" coords="39,55,146,80"/>
-<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="215,56,147,64,146,59,214,51"/>
-</map>

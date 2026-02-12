@@ -1,7 +1,0 @@
-<map id="point_interp" name="point_interp">
-<area shape="rect" id="Node000001" title="Point&#45;wise linear interpolation between two points." alt="" coords="181,31,281,56"/>
-<area shape="rect" id="Node000002" href="$utilities_8cpp.html#adca7a16fe50d3a0ffc72c9ddd1900ea5" title="Linear interpolation for equally spaced x&#45;values." alt="" coords="5,5,133,31"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="168,36,133,31,134,25,168,31"/>
-<area shape="rect" id="Node000003" href="$utilities_8cpp.html#acb740a339330c846392175405656e8d8" title="Linear interpolation for arbitrary x&#45;values." alt="" coords="39,55,99,80"/>
-<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="168,55,100,66,99,60,167,50"/>
-</map>

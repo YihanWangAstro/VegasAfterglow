@@ -142,30 +142,36 @@ $(document).ready(function(){initNavTree('mesh_8cpp_source.html',''); initResiza
 <div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span> </div>
 <div class="foldopen" id="foldopen00038" data-start="{" data-end="}">
 <div class="line"><a id="l00038" name="l00038"></a><span class="lineno"><a class="line" href="mesh_8cpp.html#ae1622b29b5488dbee3ef9068b9f8c7d4">   38</a></span><a class="code hl_typedef" href="mesh_8h.html#afd05120c4d579ec7fa4906f677781a83">Array</a> <a class="code hl_function" href="mesh_8cpp.html#ae1622b29b5488dbee3ef9068b9f8c7d4">boundary_to_center</a>(<a class="code hl_typedef" href="mesh_8h.html#afd05120c4d579ec7fa4906f677781a83">Array</a> <span class="keyword">const</span>&amp; boundary) {</div>
-<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span>    <a class="code hl_typedef" href="mesh_8h.html#afd05120c4d579ec7fa4906f677781a83">Array</a> center({boundary.size() - 1}, 0);</div>
-<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span>    <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> i = 0; i &lt; center.size(); ++i) {</div>
-<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span>        center[i] = 0.5 * (boundary[i] + boundary[i + 1]);</div>
-<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span>    }</div>
-<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span>    <span class="keywordflow">return</span> center;</div>
-<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span>}</div>
+<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span>    <span class="keywordflow">if</span> (boundary.size() &lt; 2) {</div>
+<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span>        <span class="keywordflow">return</span> Array::from_shape({0});</div>
+<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span>    }</div>
+<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span>    <a class="code hl_typedef" href="mesh_8h.html#afd05120c4d579ec7fa4906f677781a83">Array</a> center({boundary.size() - 1}, 0);</div>
+<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span>    <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> i = 0; i &lt; center.size(); ++i) {</div>
+<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span>        center[i] = 0.5 * (boundary[i] + boundary[i + 1]);</div>
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span>    }</div>
+<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span>    <span class="keywordflow">return</span> center;</div>
+<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>}</div>
 </div>
-<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span> </div>
-<div class="foldopen" id="foldopen00046" data-start="{" data-end="}">
-<div class="line"><a id="l00046" name="l00046"></a><span class="lineno"><a class="line" href="mesh_8cpp.html#ac536f77c32691232cb5e7546595fb3d2">   46</a></span><a class="code hl_typedef" href="mesh_8h.html#afd05120c4d579ec7fa4906f677781a83">Array</a> <a class="code hl_function" href="mesh_8cpp.html#ac536f77c32691232cb5e7546595fb3d2">boundary_to_center_log</a>(<a class="code hl_typedef" href="mesh_8h.html#afd05120c4d579ec7fa4906f677781a83">Array</a> <span class="keyword">const</span>&amp; boundary) {</div>
-<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>    <a class="code hl_typedef" href="mesh_8h.html#afd05120c4d579ec7fa4906f677781a83">Array</a> center({boundary.size() - 1}, 0);</div>
-<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>    <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> i = 0; i &lt; center.size(); ++i) {</div>
-<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>        center[i] = std::sqrt(boundary[i] * boundary[i + 1]);</div>
-<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span>    }</div>
-<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span>    <span class="keywordflow">return</span> center;</div>
-<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span>}</div>
+<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span> </div>
+<div class="foldopen" id="foldopen00049" data-start="{" data-end="}">
+<div class="line"><a id="l00049" name="l00049"></a><span class="lineno"><a class="line" href="mesh_8cpp.html#ac536f77c32691232cb5e7546595fb3d2">   49</a></span><a class="code hl_typedef" href="mesh_8h.html#afd05120c4d579ec7fa4906f677781a83">Array</a> <a class="code hl_function" href="mesh_8cpp.html#ac536f77c32691232cb5e7546595fb3d2">boundary_to_center_log</a>(<a class="code hl_typedef" href="mesh_8h.html#afd05120c4d579ec7fa4906f677781a83">Array</a> <span class="keyword">const</span>&amp; boundary) {</div>
+<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span>    <span class="keywordflow">if</span> (boundary.size() &lt; 2) {</div>
+<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span>        <span class="keywordflow">return</span> Array::from_shape({0});</div>
+<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span>    }</div>
+<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span>    <a class="code hl_typedef" href="mesh_8h.html#afd05120c4d579ec7fa4906f677781a83">Array</a> center({boundary.size() - 1}, 0);</div>
+<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span>    <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> i = 0; i &lt; center.size(); ++i) {</div>
+<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span>        center[i] = std::sqrt(boundary[i] * boundary[i + 1]);</div>
+<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span>    }</div>
+<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span>    <span class="keywordflow">return</span> center;</div>
+<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span>}</div>
 </div>
-<div class="ttc" id="amacros_8h_html_a4b04262b81aa7d31eb5d2f607e2a35de"><div class="ttname"><a href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a></div><div class="ttdeci">double Real</div><div class="ttdoc">Type alias for floating-point precision used throughout the code.</div><div class="ttdef"><b>Definition</b> <a href="macros_8h_source.html#l00024">macros.h:24</a></div></div>
+<div class="ttc" id="amacros_8h_html_a4b04262b81aa7d31eb5d2f607e2a35de"><div class="ttname"><a href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a></div><div class="ttdeci">double Real</div><div class="ttdoc">Type alias for floating-point precision used throughout the code.</div><div class="ttdef"><b>Definition</b> <a href="macros_8h_source.html#l00023">macros.h:23</a></div></div>
 <div class="ttc" id="amesh_8cpp_html_a1bd8e2ab0390290ac1b6f0182f676135"><div class="ttname"><a href="mesh_8cpp.html#a1bd8e2ab0390290ac1b6f0182f676135">is_linear_scale</a></div><div class="ttdeci">bool is_linear_scale(Array const &amp;arr, Real tolerance)</div><div class="ttdoc">Checks if an array is linearly scaled within a given tolerance.</div><div class="ttdef"><b>Definition</b> <a href="mesh_8cpp_source.html#l00012">mesh.cpp:12</a></div></div>
 <div class="ttc" id="amesh_8cpp_html_a713edabb87bc52e8dadec89988ab68cd"><div class="ttname"><a href="mesh_8cpp.html#a713edabb87bc52e8dadec89988ab68cd">is_log_scale</a></div><div class="ttdeci">bool is_log_scale(Array const &amp;arr, Real tolerance)</div><div class="ttdoc">Checks if an array is logarithmically scaled within a given tolerance.</div><div class="ttdef"><b>Definition</b> <a href="mesh_8cpp_source.html#l00025">mesh.cpp:25</a></div></div>
-<div class="ttc" id="amesh_8cpp_html_ac536f77c32691232cb5e7546595fb3d2"><div class="ttname"><a href="mesh_8cpp.html#ac536f77c32691232cb5e7546595fb3d2">boundary_to_center_log</a></div><div class="ttdeci">Array boundary_to_center_log(Array const &amp;boundary)</div><div class="ttdoc">Converts boundary values to center values using geometric mean.</div><div class="ttdef"><b>Definition</b> <a href="mesh_8cpp_source.html#l00046">mesh.cpp:46</a></div></div>
+<div class="ttc" id="amesh_8cpp_html_ac536f77c32691232cb5e7546595fb3d2"><div class="ttname"><a href="mesh_8cpp.html#ac536f77c32691232cb5e7546595fb3d2">boundary_to_center_log</a></div><div class="ttdeci">Array boundary_to_center_log(Array const &amp;boundary)</div><div class="ttdoc">Converts boundary values to center values using geometric mean.</div><div class="ttdef"><b>Definition</b> <a href="mesh_8cpp_source.html#l00049">mesh.cpp:49</a></div></div>
 <div class="ttc" id="amesh_8cpp_html_ae1622b29b5488dbee3ef9068b9f8c7d4"><div class="ttname"><a href="mesh_8cpp.html#ae1622b29b5488dbee3ef9068b9f8c7d4">boundary_to_center</a></div><div class="ttdeci">Array boundary_to_center(Array const &amp;boundary)</div><div class="ttdoc">Converts boundary values to center values using linear interpolation.</div><div class="ttdef"><b>Definition</b> <a href="mesh_8cpp_source.html#l00038">mesh.cpp:38</a></div></div>
 <div class="ttc" id="amesh_8h_html"><div class="ttname"><a href="mesh_8h.html">mesh.h</a></div></div>
-<div class="ttc" id="amesh_8h_html_afd05120c4d579ec7fa4906f677781a83"><div class="ttname"><a href="mesh_8h.html#afd05120c4d579ec7fa4906f677781a83">Array</a></div><div class="ttdeci">xt::xtensor&lt; Real, 1 &gt; Array</div><div class="ttdoc">Type alias for 1D arrays (e.g., time points)</div><div class="ttdef"><b>Definition</b> <a href="mesh_8h_source.html#l00036">mesh.h:36</a></div></div>
+<div class="ttc" id="amesh_8h_html_afd05120c4d579ec7fa4906f677781a83"><div class="ttname"><a href="mesh_8h.html#afd05120c4d579ec7fa4906f677781a83">Array</a></div><div class="ttdeci">xt::xtensor&lt; Real, 1 &gt; Array</div><div class="ttdoc">Type alias for 1D arrays (e.g., time points)</div><div class="ttdef"><b>Definition</b> <a href="mesh_8h_source.html#l00039">mesh.h:39</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->

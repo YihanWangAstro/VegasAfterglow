@@ -1,8 +1,8 @@
 <map id="GaussianJet::eps_k" name="GaussianJet::eps_k">
 <area shape="rect" id="Node000001" title="Energy per solid angle as a function of phi and theta, with Gaussian falloff." alt="" coords="5,31,151,56"/>
-<area shape="rect" id="Node000002" href="$utilities_8h.html#a19a0be066f6b80639b5863a493990601" title="Fast approximation of the exponential function." alt="" coords="199,31,277,56"/>
+<area shape="rect" id="Node000002" href="$fast-math_8h.html#a19a0be066f6b80639b5863a493990601" title="Fast approximation of the exponential function." alt="" coords="199,31,277,56"/>
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="151,41,185,41,185,46,151,46"/>
-<area shape="rect" id="Node000003" href="$utilities_8h.html#afc584c30c352192de6847b1f4b8caf0e" title="Fast approximation of 2 raised to a power." alt="" coords="325,5,412,31"/>
+<area shape="rect" id="Node000003" href="$fast-math_8h.html#afc584c30c352192de6847b1f4b8caf0e" title="Fast approximation of 2 raised to a power." alt="" coords="325,5,412,31"/>
 <area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="277,33,311,26,312,32,278,38"/>
 <area shape="rect" id="Node000004" href="$utilities_8h.html#ab8e81118f023df135835db8cce4f5f42" title="Returns the value of a single parameter." alt="" coords="460,31,511,56"/>
 <area shape="poly" id="edge5_Node000002_Node000004" title=" " alt="" coords="278,41,446,41,446,46,278,46"/>

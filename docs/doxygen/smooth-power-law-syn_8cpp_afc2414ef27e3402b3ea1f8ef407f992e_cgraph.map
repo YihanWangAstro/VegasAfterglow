@@ -1,13 +1,13 @@
 <map id="log2_smooth_one" name="log2_smooth_one">
 <area shape="rect" id="Node000001" title=" " alt="" coords="5,132,143,157"/>
-<area shape="rect" id="Node000002" href="$utilities_8h.html#a1228dad8e5957975fc02a01a15bed243" title="Computes log2(1+2^x)" alt="" coords="191,81,299,107"/>
+<area shape="rect" id="Node000002" href="$fast-math_8h.html#a1228dad8e5957975fc02a01a15bed243" title="Computes log2(1+2^x)" alt="" coords="191,81,299,107"/>
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="117,129,187,108,189,113,118,134"/>
 <area shape="rect" id="Node000004" href="$utilities_8h.html#ab8e81118f023df135835db8cce4f5f42" title="Returns the value of a single parameter." alt="" coords="481,81,532,107"/>
 <area shape="poly" id="edge8_Node000001_Node000004" title=" " alt="" coords="143,154,206,161,279,163,357,158,432,142,458,130,480,114,484,118,461,135,434,147,358,164,279,169,205,166,143,159"/>
-<area shape="rect" id="Node000003" href="$utilities_8h.html#afc584c30c352192de6847b1f4b8caf0e" title="Fast approximation of 2 raised to a power." alt="" coords="347,5,433,31"/>
+<area shape="rect" id="Node000003" href="$fast-math_8h.html#afc584c30c352192de6847b1f4b8caf0e" title="Fast approximation of 2 raised to a power." alt="" coords="347,5,433,31"/>
 <area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="269,79,352,35,354,39,271,83"/>
 <area shape="poly" id="edge7_Node000002_Node000004" title=" " alt="" coords="299,91,467,91,467,97,299,97"/>
-<area shape="rect" id="Node000005" href="$utilities_8h.html#aa67895957aa831a991982a8268ef8349" title="Fast approximation of the base&#45;2 logarithm." alt="" coords="349,107,431,132"/>
+<area shape="rect" id="Node000005" href="$fast-math_8h.html#aa67895957aa831a991982a8268ef8349" title="Fast approximation of the base&#45;2 logarithm." alt="" coords="349,107,431,132"/>
 <area shape="poly" id="edge5_Node000002_Node000005" title=" " alt="" coords="299,101,336,107,335,113,298,106"/>
 <area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="412,29,477,72,474,76,409,33"/>
 <area shape="poly" id="edge4_Node000004_Node000004" title=" " alt="" coords="487,82,483,73,485,64,493,57,507,55,523,58,530,66,526,70,520,63,507,60,495,62,489,66,488,72,491,80"/>

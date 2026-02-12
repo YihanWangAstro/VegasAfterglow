@@ -1,8 +1,8 @@
 <map id="GaussianJet::Gamma0" name="GaussianJet::Gamma0">
 <area shape="rect" id="Node000001" title="Initial Lorentz factor as a function of phi and theta, with Gaussian falloff." alt="" coords="5,31,172,56"/>
-<area shape="rect" id="Node000002" href="$utilities_8h.html#a19a0be066f6b80639b5863a493990601" title="Fast approximation of the exponential function." alt="" coords="220,31,299,56"/>
+<area shape="rect" id="Node000002" href="$fast-math_8h.html#a19a0be066f6b80639b5863a493990601" title="Fast approximation of the exponential function." alt="" coords="220,31,299,56"/>
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="172,41,206,41,206,46,172,46"/>
-<area shape="rect" id="Node000003" href="$utilities_8h.html#afc584c30c352192de6847b1f4b8caf0e" title="Fast approximation of 2 raised to a power." alt="" coords="347,5,433,31"/>
+<area shape="rect" id="Node000003" href="$fast-math_8h.html#afc584c30c352192de6847b1f4b8caf0e" title="Fast approximation of 2 raised to a power." alt="" coords="347,5,433,31"/>
 <area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="298,33,333,26,334,32,299,38"/>
 <area shape="rect" id="Node000004" href="$utilities_8h.html#ab8e81118f023df135835db8cce4f5f42" title="Returns the value of a single parameter." alt="" coords="481,31,532,56"/>
 <area shape="poly" id="edge5_Node000002_Node000004" title=" " alt="" coords="299,41,467,41,467,46,299,46"/>

@@ -97,55 +97,66 @@ $(document).ready(function(){initNavTree('utilities_8cpp.html',''); initResizabl
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><code>#include &quot;<a class="el" href="utilities_8h_source.html">utilities.h</a>&quot;</code><br />
-<code>#include &lt;cmath&gt;</code><br />
 <code>#include &lt;iostream&gt;</code><br />
-<code>#include &lt;numeric&gt;</code><br />
-<code>#include &quot;<a class="el" href="macros_8h_source.html">macros.h</a>&quot;</code><br />
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for utilities.cpp:</div>
 <div class="dyncontent">
 <div class="center"><img src="utilities_8cpp__incl.png" border="0" usemap="#autilities_8cpp" alt=""/></div>
 <map name="autilities_8cpp" id="autilities_8cpp">
-<area shape="rect" title=" " alt="" coords="1472,5,1571,31"/>
-<area shape="rect" href="utilities_8h.html" title=" " alt="" coords="772,79,855,104"/>
-<area shape="poly" title=" " alt="" coords="1472,27,869,87,868,82,1471,22"/>
-<area shape="rect" href="macros_8h.html" title=" " alt="" coords="82,313,201,339"/>
-<area shape="poly" title=" " alt="" coords="1472,23,1219,31,851,53,658,70,478,92,325,120,263,136,213,154,182,168,160,181,141,199,125,226,120,245,121,264,132,300,126,302,116,265,115,244,120,224,137,196,156,177,180,163,211,150,261,131,324,115,477,87,657,64,850,47,1219,26,1472,18"/>
-<area shape="rect" title=" " alt="" coords="897,394,972,419"/>
-<area shape="poly" title=" " alt="" coords="1531,30,1558,86,1570,123,1575,163,1575,247,1571,278,1561,303,1543,322,1516,341,1473,360,1413,375,1342,386,1264,395,1109,404,986,408,986,402,1109,399,1264,389,1341,381,1412,370,1471,355,1513,336,1539,318,1556,300,1566,277,1569,247,1569,163,1565,125,1553,87,1526,32"/>
-<area shape="rect" title=" " alt="" coords="1441,313,1503,339"/>
-<area shape="poly" title=" " alt="" coords="1524,31,1519,128,1512,197,1499,266,1486,302,1481,300,1493,265,1507,196,1514,128,1519,31"/>
-<area shape="rect" title=" " alt="" coords="1609,79,1689,104"/>
-<area shape="poly" title=" " alt="" coords="1543,28,1617,69,1615,74,1541,33"/>
-<area shape="rect" href="mesh_8h.html" title=" " alt="" coords="756,152,871,177"/>
-<area shape="poly" title=" " alt="" coords="816,104,816,138,811,138,811,104"/>
-<area shape="poly" title=" " alt="" coords="772,97,628,106,437,128,341,145,255,167,186,194,161,210,142,227,133,244,131,262,136,300,130,301,125,262,128,242,138,224,157,206,184,189,253,162,340,140,436,122,628,101,772,92"/>
-<area shape="rect" title=" " alt="" coords="1308,233,1377,258"/>
-<area shape="poly" title=" " alt="" coords="871,166,1061,182,1178,199,1295,223,1305,225,1303,231,1294,228,1178,204,1060,187,871,171"/>
-<area shape="poly" title=" " alt="" coords="756,170,607,176,422,187,257,204,199,215,168,227,156,243,148,262,143,300,138,300,143,260,151,240,165,223,198,210,256,198,421,181,606,171,756,165"/>
-<area shape="rect" title=" " alt="" coords="179,233,367,258"/>
-<area shape="poly" title=" " alt="" coords="756,176,379,228,349,233,348,228,378,223,756,170"/>
-<area shape="rect" href="physics_8h.html" title=" " alt="" coords="1401,233,1484,258"/>
-<area shape="poly" title=" " alt="" coords="871,165,970,170,1100,180,1245,197,1390,223,1402,226,1400,231,1389,228,1244,202,1099,185,970,175,871,170"/>
-<area shape="rect" title=" " alt="" coords="391,225,534,265"/>
-<area shape="poly" title=" " alt="" coords="762,180,548,227,547,222,761,175"/>
-<area shape="rect" title=" " alt="" coords="558,225,701,265"/>
-<area shape="poly" title=" " alt="" coords="788,180,687,222,685,218,786,175"/>
-<area shape="rect" title=" " alt="" coords="725,233,902,258"/>
-<area shape="poly" title=" " alt="" coords="816,178,816,219,811,219,811,178"/>
-<area shape="rect" title=" " alt="" coords="927,233,1076,258"/>
-<area shape="poly" title=" " alt="" coords="842,175,962,225,960,230,840,180"/>
-<area shape="rect" title=" " alt="" coords="1101,233,1283,258"/>
-<area shape="poly" title=" " alt="" coords="869,175,1124,227,1123,233,868,180"/>
-<area shape="rect" title=" " alt="" coords="176,394,235,419"/>
-<area shape="poly" title=" " alt="" coords="153,337,189,382,185,385,149,341"/>
-<area shape="poly" title=" " alt="" coords="201,331,884,398,883,403,201,336"/>
-<area shape="rect" href="simulation-defaults_8h.html" title="Centralized simulation configuration defaults." alt="" coords="5,387,152,427"/>
-<area shape="poly" title=" " alt="" coords="134,341,105,377,100,374,130,337"/>
-<area shape="rect" title=" " alt="" coords="43,475,114,500"/>
-<area shape="poly" title=" " alt="" coords="81,427,81,461,76,461,76,427"/>
-<area shape="poly" title=" " alt="" coords="1416,261,1390,268,1283,283,1143,295,803,313,464,323,214,327,214,321,464,317,803,308,1142,290,1283,278,1389,263,1414,256"/>
-<area shape="poly" title=" " alt="" coords="1449,257,1465,299,1460,301,1444,259"/>
+<area shape="rect" title=" " alt="" coords="1312,5,1410,31"/>
+<area shape="rect" href="utilities_8h.html" title=" " alt="" coords="1268,79,1350,104"/>
+<area shape="poly" title=" " alt="" coords="1355,33,1328,69,1324,66,1350,29"/>
+<area shape="rect" title=" " alt="" coords="1374,79,1454,104"/>
+<area shape="poly" title=" " alt="" coords="1372,29,1400,66,1396,69,1368,33"/>
+<area shape="rect" href="mesh_8h.html" title=" " alt="" coords="865,152,980,177"/>
+<area shape="poly" title=" " alt="" coords="1268,103,994,153,993,148,1267,98"/>
+<area shape="rect" href="macros_8h.html" title=" " alt="" coords="1011,313,1130,339"/>
+<area shape="poly" title=" " alt="" coords="1268,96,995,106,594,129,393,146,217,168,144,181,85,195,42,211,16,227,10,236,8,245,10,254,16,263,29,269,57,275,150,286,431,303,750,315,998,321,997,326,750,320,431,309,149,291,56,281,28,274,13,267,5,257,3,245,5,234,13,223,39,206,84,190,143,176,216,163,393,141,594,123,995,101,1268,91"/>
+<area shape="rect" href="fast-math_8h.html" title=" " alt="" coords="1813,233,1912,258"/>
+<area shape="poly" title=" " alt="" coords="1351,99,1363,101,1421,109,1471,112,1556,112,1597,113,1641,119,1689,130,1743,150,1773,165,1800,183,1844,221,1840,225,1797,188,1770,169,1741,154,1687,135,1640,124,1597,119,1556,117,1470,117,1420,114,1362,107,1350,105"/>
+<area shape="rect" href="traits_8h.html" title=" " alt="" coords="1662,152,1730,177"/>
+<area shape="poly" title=" " alt="" coords="1351,99,1363,101,1649,153,1648,158,1362,107,1350,104"/>
+<area shape="rect" title=" " alt="" coords="610,233,696,258"/>
+<area shape="poly" title=" " alt="" coords="879,180,708,228,699,231,698,226,707,223,877,175"/>
+<area shape="rect" title=" " alt="" coords="720,233,789,258"/>
+<area shape="poly" title=" " alt="" coords="899,180,792,229,790,225,897,175"/>
+<area shape="rect" title=" " alt="" coords="813,233,866,258"/>
+<area shape="poly" title=" " alt="" coords="912,179,864,225,860,221,908,176"/>
+<area shape="rect" title=" " alt="" coords="891,233,954,258"/>
+<area shape="poly" title=" " alt="" coords="925,178,925,219,920,219,920,178"/>
+<area shape="poly" title=" " alt="" coords="935,176,1052,301,1048,305,931,179"/>
+<area shape="rect" title=" " alt="" coords="1136,233,1324,258"/>
+<area shape="poly" title=" " alt="" coords="968,175,1173,227,1172,232,967,180"/>
+<area shape="rect" href="physics_8h.html" title=" " alt="" coords="1029,233,1112,258"/>
+<area shape="poly" title=" " alt="" coords="945,175,1038,224,1035,228,943,180"/>
+<area shape="rect" title=" " alt="" coords="1348,225,1491,265"/>
+<area shape="poly" title=" " alt="" coords="980,170,1136,191,1335,223,1334,228,1135,196,979,175"/>
+<area shape="rect" title=" " alt="" coords="1515,225,1658,265"/>
+<area shape="poly" title=" " alt="" coords="980,167,1204,186,1351,202,1502,223,1501,228,1350,207,1204,191,980,172"/>
+<area shape="rect" title=" " alt="" coords="27,233,204,258"/>
+<area shape="poly" title=" " alt="" coords="865,172,586,190,403,207,217,228,186,233,185,228,217,223,402,201,586,185,865,166"/>
+<area shape="rect" title=" " alt="" coords="229,233,378,258"/>
+<area shape="poly" title=" " alt="" coords="865,173,656,193,524,209,391,228,366,233,365,227,390,223,523,203,655,188,865,168"/>
+<area shape="rect" title=" " alt="" coords="403,233,586,258"/>
+<area shape="poly" title=" " alt="" coords="865,179,571,233,570,228,864,174"/>
+<area shape="rect" title=" " alt="" coords="978,394,1037,419"/>
+<area shape="poly" title=" " alt="" coords="1063,341,1028,385,1023,382,1059,337"/>
+<area shape="rect" href="simulation-defaults_8h.html" title="Centralized simulation configuration defaults." alt="" coords="1061,387,1208,427"/>
+<area shape="poly" title=" " alt="" coords="1082,337,1112,374,1108,378,1078,341"/>
+<area shape="rect" title=" " alt="" coords="1099,475,1170,500"/>
+<area shape="poly" title=" " alt="" coords="1137,427,1137,461,1132,461,1132,427"/>
+<area shape="poly" title=" " alt="" coords="1073,258,1073,299,1068,299,1068,258"/>
+<area shape="rect" title=" " alt="" coords="1455,313,1518,339"/>
+<area shape="poly" title=" " alt="" coords="1101,256,1124,263,1212,282,1300,298,1442,317,1441,323,1299,303,1211,287,1123,268,1099,261"/>
+<area shape="poly" title=" " alt="" coords="1830,261,1802,268,1617,296,1433,313,1269,323,1144,327,1144,321,1269,317,1433,308,1616,291,1801,263,1829,255"/>
+<area shape="poly" title=" " alt="" coords="1828,261,1802,268,1654,299,1532,320,1531,315,1653,294,1800,263,1826,256"/>
+<area shape="rect" title=" " alt="" coords="1804,313,1843,339"/>
+<area shape="poly" title=" " alt="" coords="1859,259,1838,302,1833,300,1854,257"/>
+<area shape="rect" title=" " alt="" coords="1868,313,1934,339"/>
+<area shape="poly" title=" " alt="" coords="1870,257,1892,300,1887,302,1866,259"/>
+<area shape="poly" title=" " alt="" coords="1699,178,1695,221,1687,246,1671,267,1642,280,1592,290,1448,307,1284,318,1144,325,1143,319,1284,313,1448,301,1591,285,1641,275,1667,263,1682,244,1690,220,1694,177"/>
+<area shape="rect" title=" " alt="" coords="1733,233,1789,258"/>
+<area shape="poly" title=" " alt="" coords="1707,176,1745,220,1740,224,1703,179"/>
 </map>
 </div>
 </div>
@@ -154,610 +165,9 @@ Include dependency graph for utilities.cpp:</div>
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
 <tr class="memitem:adf1fcdf083723d530f051255c2e395d9" id="r_adf1fcdf083723d530f051255c2e395d9"><td class="memItemLeft" align="right" valign="top"><a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">void</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="utilities_8cpp.html#adf1fcdf083723d530f051255c2e395d9">print_array</a> (<a class="el" href="mesh_8h.html#afd05120c4d579ec7fa4906f677781a83">Array</a> <a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">const</a> &amp;<a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">arr</a>)</td></tr>
-<tr class="memdesc:adf1fcdf083723d530f051255c2e395d9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Prints the elements of an array to standard output.  <br /></td></tr>
 <tr class="separator:adf1fcdf083723d530f051255c2e395d9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad5718128d0cae5d9ae7eeea90f411cde" id="r_ad5718128d0cae5d9ae7eeea90f411cde"><td class="memItemLeft" align="right" valign="top"><a class="el" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="utilities_8cpp.html#ad5718128d0cae5d9ae7eeea90f411cde">point_interp</a> (<a class="el" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> <a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">x0</a>, <a class="el" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> <a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">x1</a>, <a class="el" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> <a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">y0</a>, <a class="el" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> <a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">y1</a>, <a class="el" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> <a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">xi</a>)</td></tr>
-<tr class="memdesc:ad5718128d0cae5d9ae7eeea90f411cde"><td class="mdescLeft">&#160;</td><td class="mdescRight">Point-wise linear interpolation between two points.  <br /></td></tr>
-<tr class="separator:ad5718128d0cae5d9ae7eeea90f411cde"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a367745c657e66d712ce7c153b1d065b7" id="r_a367745c657e66d712ce7c153b1d065b7"><td class="memItemLeft" align="right" valign="top"><a class="el" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="utilities_8cpp.html#a367745c657e66d712ce7c153b1d065b7">point_loglog_interp</a> (<a class="el" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> <a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">x0</a>, <a class="el" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> <a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">x1</a>, <a class="el" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> <a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">y0</a>, <a class="el" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> <a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">y1</a>, <a class="el" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> <a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">xi</a>)</td></tr>
-<tr class="memdesc:a367745c657e66d712ce7c153b1d065b7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Point-wise logarithmic interpolation between two points.  <br /></td></tr>
-<tr class="separator:a367745c657e66d712ce7c153b1d065b7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:acb740a339330c846392175405656e8d8" id="r_acb740a339330c846392175405656e8d8"><td class="memItemLeft" align="right" valign="top"><a class="el" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="utilities_8cpp.html#acb740a339330c846392175405656e8d8">interp</a> (<a class="el" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> <a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">x0</a>, <a class="el" href="mesh_8h.html#afd05120c4d579ec7fa4906f677781a83">Array</a> <a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">const</a> &amp;<a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">x</a>, <a class="el" href="mesh_8h.html#afd05120c4d579ec7fa4906f677781a83">Array</a> <a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">const</a> &amp;<a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">y</a>, <a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">bool</a> <a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">lo_extrap</a>, <a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">bool</a> <a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">hi_extrap</a>)</td></tr>
-<tr class="memdesc:acb740a339330c846392175405656e8d8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Linear interpolation for arbitrary x-values.  <br /></td></tr>
-<tr class="separator:acb740a339330c846392175405656e8d8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:adca7a16fe50d3a0ffc72c9ddd1900ea5" id="r_adca7a16fe50d3a0ffc72c9ddd1900ea5"><td class="memItemLeft" align="right" valign="top"><a class="el" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="utilities_8cpp.html#adca7a16fe50d3a0ffc72c9ddd1900ea5">eq_space_interp</a> (<a class="el" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> <a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">xi</a>, <a class="el" href="mesh_8h.html#afd05120c4d579ec7fa4906f677781a83">Array</a> <a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">const</a> &amp;<a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">x</a>, <a class="el" href="mesh_8h.html#afd05120c4d579ec7fa4906f677781a83">Array</a> <a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">const</a> &amp;<a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">y</a>, <a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">bool</a> <a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">lo_extrap</a>, <a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">bool</a> <a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">hi_extrap</a>)</td></tr>
-<tr class="memdesc:adca7a16fe50d3a0ffc72c9ddd1900ea5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Linear interpolation for equally spaced x-values.  <br /></td></tr>
-<tr class="separator:adca7a16fe50d3a0ffc72c9ddd1900ea5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a655bf7e9ee550858e65af14c66fb4aec" id="r_a655bf7e9ee550858e65af14c66fb4aec"><td class="memItemLeft" align="right" valign="top"><a class="el" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="utilities_8cpp.html#a655bf7e9ee550858e65af14c66fb4aec">loglog_interp</a> (<a class="el" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> <a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">xi</a>, <a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">const</a> <a class="el" href="mesh_8h.html#afd05120c4d579ec7fa4906f677781a83">Array</a> &amp;<a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">x</a>, <a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">const</a> <a class="el" href="mesh_8h.html#afd05120c4d579ec7fa4906f677781a83">Array</a> &amp;<a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">y</a>, <a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">bool</a> <a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">lo_extrap</a>, <a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">bool</a> <a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">hi_extrap</a>)</td></tr>
-<tr class="memdesc:a655bf7e9ee550858e65af14c66fb4aec"><td class="mdescLeft">&#160;</td><td class="mdescRight">Logarithmic interpolation for arbitrary x-values.  <br /></td></tr>
-<tr class="separator:a655bf7e9ee550858e65af14c66fb4aec"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad3bc8b592ec28b18768172f7a21bd8c2" id="r_ad3bc8b592ec28b18768172f7a21bd8c2"><td class="memItemLeft" align="right" valign="top"><a class="el" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="utilities_8cpp.html#ad3bc8b592ec28b18768172f7a21bd8c2">eq_space_loglog_interp</a> (<a class="el" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> <a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">xi</a>, <a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">const</a> <a class="el" href="mesh_8h.html#afd05120c4d579ec7fa4906f677781a83">Array</a> &amp;<a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">x</a>, <a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">const</a> <a class="el" href="mesh_8h.html#afd05120c4d579ec7fa4906f677781a83">Array</a> &amp;<a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">y</a>, <a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">bool</a> <a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">lo_extrap</a>, <a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">bool</a> <a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">hi_extrap</a>)</td></tr>
-<tr class="memdesc:ad3bc8b592ec28b18768172f7a21bd8c2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Logarithmic interpolation for equally spaced x-values in log space.  <br /></td></tr>
-<tr class="separator:ad3bc8b592ec28b18768172f7a21bd8c2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Function Documentation</h2>
-<a id="adca7a16fe50d3a0ffc72c9ddd1900ea5" name="adca7a16fe50d3a0ffc72c9ddd1900ea5"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#adca7a16fe50d3a0ffc72c9ddd1900ea5">&#9670;&#160;</a></span>eq_space_interp()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> eq_space_interp </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a>&#160;</td>
-          <td class="paramname"><em>xi</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="mesh_8h.html#afd05120c4d579ec7fa4906f677781a83">Array</a> <a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">const</a> &amp;&#160;</td>
-          <td class="paramname"><em>x</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="mesh_8h.html#afd05120c4d579ec7fa4906f677781a83">Array</a> <a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">const</a> &amp;&#160;</td>
-          <td class="paramname"><em>y</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">bool</a>&#160;</td>
-          <td class="paramname"><em>lo_extrap</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">bool</a>&#160;</td>
-          <td class="paramname"><em>hi_extrap</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Linear interpolation for equally spaced x-values. </p>
-<p>Interpolation for equally spaced x-values.</p>
-<p>Optimized version that avoids search when x-values are equally spaced. </p><dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">xi</td><td>The x-value at which to interpolate </td></tr>
-    <tr><td class="paramname">x</td><td>Array of x-coordinates (must be equally spaced) </td></tr>
-    <tr><td class="paramname">y</td><td>Array of y-coordinates </td></tr>
-    <tr><td class="paramname">lo_extrap</td><td>Whether to extrapolate below the minimum x-value </td></tr>
-    <tr><td class="paramname">hi_extrap</td><td>Whether to extrapolate above the maximum x-value </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>The interpolated y-value </dd></dl>
-
-<p class="definition">Definition at line <a class="el" href="utilities_8cpp_source.html#l00130">130</a> of file <a class="el" href="utilities_8cpp_source.html">utilities.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  130</span>                                                                                              {</div>
-<div class="line"><span class="lineno">  131</span>    <span class="keywordflow">if</span> (<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">x</a>.size() &lt; 2 || <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">y</a>.size() &lt; 2 || <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">x</a>.size() != <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">y</a>.size()) {</div>
-<div class="line"><span class="lineno">  132</span>        std::cout &lt;&lt; <span class="stringliteral">&quot;incorrect array size for interpolation!\n&quot;</span>;</div>
-<div class="line"><span class="lineno">  133</span>        <span class="keywordflow">return</span> 0;</div>
-<div class="line"><span class="lineno">  134</span>    }</div>
-<div class="line"><span class="lineno">  135</span> </div>
-<div class="line"><span class="lineno">  136</span>    <span class="keyword">const</span> <span class="keyword">auto</span> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">x_back</a> = <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">x</a>[<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">x</a>.size() - 1];</div>
-<div class="line"><span class="lineno">  137</span>    <span class="keyword">const</span> <span class="keyword">auto</span> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">y_back</a> = <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">y</a>[<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">y</a>.size() - 1];</div>
-<div class="line"><span class="lineno">  138</span> </div>
-<div class="line"><span class="lineno">  139</span>    <span class="keywordflow">if</span> (<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">xi</a> &lt;= <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">x</a>[0])</div>
-<div class="line"><span class="lineno">  140</span>        <span class="keywordflow">return</span> (!<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">lo_extrap</a> || <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">x</a>[0] == <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">xi</a>) ? <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">y</a>[0] : <a class="code hl_function" href="utilities_8cpp.html#ad5718128d0cae5d9ae7eeea90f411cde">point_interp</a>(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">x</a>[0], <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">x</a>[1], <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">y</a>[0], <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">y</a>[1], <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">xi</a>);</div>
-<div class="line"><span class="lineno">  141</span>    <span class="keywordflow">else</span> <span class="keywordflow">if</span> (<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">xi</a> &gt;= <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">x_back</a>)</div>
-<div class="line"><span class="lineno">  142</span>        <span class="keywordflow">return</span> (!<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">hi_extrap</a> || <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">x_back</a> == <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">xi</a>) ? <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">y_back</a></div>
-<div class="line"><span class="lineno">  143</span>                                            : <a class="code hl_function" href="utilities_8cpp.html#ad5718128d0cae5d9ae7eeea90f411cde">point_interp</a>(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">x</a>[<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">x</a>.size() - 2], <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">x_back</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">y</a>[<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">y</a>.size() - 2], <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">y_back</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">xi</a>);</div>
-<div class="line"><span class="lineno">  144</span>    <span class="keywordflow">else</span> {</div>
-<div class="line"><span class="lineno">  145</span>        <span class="keyword">const</span> <a class="code hl_typedef" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">dx</a> = <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">x</a>[1] - <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">x</a>[0];</div>
-<div class="line"><span class="lineno">  146</span>        <span class="keyword">const</span> <span class="keywordtype">size_t</span> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">idx</a> = <span class="keyword">static_cast&lt;</span><span class="keywordtype">size_t</span><span class="keyword">&gt;</span>((<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">xi</a> - <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">x</a>[0]) / <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">dx</a> + 1);</div>
-<div class="line"><span class="lineno">  147</span>        <span class="keywordflow">if</span> (<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">xi</a> == <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">x</a>[<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">idx</a>])</div>
-<div class="line"><span class="lineno">  148</span>            <span class="keywordflow">return</span> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">y</a>[<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">idx</a>];</div>
-<div class="line"><span class="lineno">  149</span>        <span class="keywordflow">return</span> <a class="code hl_function" href="utilities_8cpp.html#ad5718128d0cae5d9ae7eeea90f411cde">point_interp</a>(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">x</a>[<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">idx</a> - 1], <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">x</a>[<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">idx</a>], <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">y</a>[<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">idx</a> - 1], <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">y</a>[<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">idx</a>], <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">xi</a>);</div>
-<div class="line"><span class="lineno">  150</span>    }</div>
-<div class="line"><span class="lineno">  151</span>}</div>
-<div class="ttc" id="amacros_8h_html_a4b04262b81aa7d31eb5d2f607e2a35de"><div class="ttname"><a href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a></div><div class="ttdeci">double Real</div><div class="ttdoc">Type alias for floating-point precision used throughout the code.</div><div class="ttdef"><b>Definition</b> <a href="macros_8h_source.html#l00024">macros.h:24</a></div></div>
-<div class="ttc" id="autilities_8cpp_html_ad5718128d0cae5d9ae7eeea90f411cde"><div class="ttname"><a href="utilities_8cpp.html#ad5718128d0cae5d9ae7eeea90f411cde">point_interp</a></div><div class="ttdeci">Real point_interp(Real x0, Real x1, Real y0, Real y1, Real xi)</div><div class="ttdoc">Point-wise linear interpolation between two points.</div><div class="ttdef"><b>Definition</b> <a href="utilities_8cpp_source.html#l00048">utilities.cpp:48</a></div></div>
-<div class="ttc" id="autilities_8h_html_ab8e81118f023df135835db8cce4f5f42"><div class="ttname"><a href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">max</a></div><div class="ttdeci">T max(T value)</div><div class="ttdoc">Returns the value of a single parameter.</div><div class="ttdef"><b>Definition</b> <a href="utilities_8h_source.html#l00318">utilities.h:318</a></div></div>
-</div><!-- fragment --><div class="dynheader">
-Here is the call graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="utilities_8cpp_adca7a16fe50d3a0ffc72c9ddd1900ea5_cgraph.png" border="0" usemap="#autilities_8cpp_adca7a16fe50d3a0ffc72c9ddd1900ea5_cgraph" alt=""/></div>
-<map name="autilities_8cpp_adca7a16fe50d3a0ffc72c9ddd1900ea5_cgraph" id="autilities_8cpp_adca7a16fe50d3a0ffc72c9ddd1900ea5_cgraph">
-<area shape="rect" title="Linear interpolation for equally spaced x&#45;values." alt="" coords="5,29,133,55"/>
-<area shape="rect" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42" title="Returns the value of a single parameter." alt="" coords="329,29,380,55"/>
-<area shape="poly" title=" " alt="" coords="133,39,315,39,315,45,133,45"/>
-<area shape="rect" href="utilities_8cpp.html#ad5718128d0cae5d9ae7eeea90f411cde" title="Point&#45;wise linear interpolation between two points." alt="" coords="181,55,281,80"/>
-<area shape="poly" title=" " alt="" coords="134,49,168,55,167,60,133,55"/>
-<area shape="poly" title=" " alt="" coords="333,30,329,21,331,11,340,5,355,3,372,6,379,14,375,18,369,11,355,8,342,10,336,14,334,20,338,28"/>
-<area shape="poly" title=" " alt="" coords="281,54,316,47,317,52,282,60"/>
-</map>
-</div>
-
-</div>
-</div>
-<a id="ad3bc8b592ec28b18768172f7a21bd8c2" name="ad3bc8b592ec28b18768172f7a21bd8c2"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad3bc8b592ec28b18768172f7a21bd8c2">&#9670;&#160;</a></span>eq_space_loglog_interp()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> eq_space_loglog_interp </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a>&#160;</td>
-          <td class="paramname"><em>xi</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">const</a> <a class="el" href="mesh_8h.html#afd05120c4d579ec7fa4906f677781a83">Array</a> &amp;&#160;</td>
-          <td class="paramname"><em>x</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">const</a> <a class="el" href="mesh_8h.html#afd05120c4d579ec7fa4906f677781a83">Array</a> &amp;&#160;</td>
-          <td class="paramname"><em>y</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">bool</a>&#160;</td>
-          <td class="paramname"><em>lo_extrap</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">bool</a>&#160;</td>
-          <td class="paramname"><em>hi_extrap</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Logarithmic interpolation for equally spaced x-values in log space. </p>
-<p>Log-log interpolation for equally spaced x-values in log space.</p>
-<p>Optimized version that avoids search when x-values are equally spaced in log space. </p><dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">xi</td><td>The x-value at which to interpolate </td></tr>
-    <tr><td class="paramname">x</td><td>Array of x-coordinates (must be equally spaced in log space) </td></tr>
-    <tr><td class="paramname">y</td><td>Array of y-coordinates </td></tr>
-    <tr><td class="paramname">lo_extrap</td><td>Whether to extrapolate below the minimum x-value </td></tr>
-    <tr><td class="paramname">hi_extrap</td><td>Whether to extrapolate above the maximum x-value </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>The interpolated y-value </dd></dl>
-
-<p class="definition">Definition at line <a class="el" href="utilities_8cpp_source.html#l00203">203</a> of file <a class="el" href="utilities_8cpp_source.html">utilities.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  203</span>                                                                                                     {</div>
-<div class="line"><span class="lineno">  204</span>    <span class="keywordflow">if</span> (<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">x</a>.size() &lt; 2 || <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">y</a>.size() &lt; 2 || <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">x</a>.size() != <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">y</a>.size()) {</div>
-<div class="line"><span class="lineno">  205</span>        std::cout &lt;&lt; <span class="stringliteral">&quot;incorrect array size for interpolation!\n&quot;</span>;</div>
-<div class="line"><span class="lineno">  206</span>        <span class="keywordflow">return</span> 0;</div>
-<div class="line"><span class="lineno">  207</span>    }</div>
-<div class="line"><span class="lineno">  208</span>    <span class="keyword">const</span> <span class="keyword">auto</span> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">x_back</a> = <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">x</a>[<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">x</a>.size() - 1];</div>
-<div class="line"><span class="lineno">  209</span>    <span class="keyword">const</span> <span class="keyword">auto</span> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">y_back</a> = <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">y</a>[<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">y</a>.size() - 1];</div>
-<div class="line"><span class="lineno">  210</span> </div>
-<div class="line"><span class="lineno">  211</span>    <span class="keywordflow">if</span> (<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">xi</a> &lt;= <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">x</a>[0]) {</div>
-<div class="line"><span class="lineno">  212</span>        <span class="comment">// std::cout &lt;&lt; &quot;here!&quot; &lt;&lt; (!lo_extrap || x[0] == xi) ? y[0] : point_loglog_interp(x[0], x[1], y[0], y[1], xi);</span></div>
-<div class="line"><span class="lineno">  213</span>        <span class="keywordflow">return</span> (!<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">lo_extrap</a> || <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">x</a>[0] == <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">xi</a>) ? <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">y</a>[0] : <a class="code hl_function" href="utilities_8cpp.html#a367745c657e66d712ce7c153b1d065b7">point_loglog_interp</a>(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">x</a>[0], <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">x</a>[1], <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">y</a>[0], <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">y</a>[1], <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">xi</a>);</div>
-<div class="line"><span class="lineno">  214</span>    } <span class="keywordflow">else</span> <span class="keywordflow">if</span> (<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">xi</a> &gt;= <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">x_back</a>) {</div>
-<div class="line"><span class="lineno">  215</span>        <span class="keywordflow">return</span> (!<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">hi_extrap</a> || <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">x_back</a> == <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">xi</a>) ? <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">y_back</a></div>
-<div class="line"><span class="lineno">  216</span>                                            : <a class="code hl_function" href="utilities_8cpp.html#a367745c657e66d712ce7c153b1d065b7">point_loglog_interp</a>(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">x</a>[<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">x</a>.size() - 2], <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">x_back</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">y</a>[<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">y</a>.size() - 2], <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">y_back</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">xi</a>);</div>
-<div class="line"><span class="lineno">  217</span>    } <span class="keywordflow">else</span> {</div>
-<div class="line"><span class="lineno">  218</span>        <span class="keyword">const</span> <a class="code hl_typedef" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">log_x0</a> = std::log(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">x</a>[0]);</div>
-<div class="line"><span class="lineno">  219</span>        <span class="keyword">const</span> <a class="code hl_typedef" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">dx</a> = std::log(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">x</a>[1]) - <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">log_x0</a>;</div>
-<div class="line"><span class="lineno">  220</span>        <span class="keyword">const</span> <span class="keywordtype">size_t</span> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">idx</a> = <span class="keyword">static_cast&lt;</span><span class="keywordtype">size_t</span><span class="keyword">&gt;</span>((std::log(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">xi</a>) - <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">log_x0</a>) / <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">dx</a> + 1);</div>
-<div class="line"><span class="lineno">  221</span> </div>
-<div class="line"><span class="lineno">  222</span>        <span class="keywordflow">if</span> (<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">xi</a> == <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">x</a>[<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">idx</a>])</div>
-<div class="line"><span class="lineno">  223</span>            <span class="keywordflow">return</span> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">y</a>[<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">idx</a>]; <span class="comment">// Exact match</span></div>
-<div class="line"><span class="lineno">  224</span>        <span class="keywordflow">return</span> <a class="code hl_function" href="utilities_8cpp.html#a367745c657e66d712ce7c153b1d065b7">point_loglog_interp</a>(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">x</a>[<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">idx</a> - 1], <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">x</a>[<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">idx</a>], <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">y</a>[<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">idx</a> - 1], <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">y</a>[<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">idx</a>], <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">xi</a>);</div>
-<div class="line"><span class="lineno">  225</span>    }</div>
-<div class="line"><span class="lineno">  226</span>}</div>
-<div class="ttc" id="autilities_8cpp_html_a367745c657e66d712ce7c153b1d065b7"><div class="ttname"><a href="utilities_8cpp.html#a367745c657e66d712ce7c153b1d065b7">point_loglog_interp</a></div><div class="ttdeci">Real point_loglog_interp(Real x0, Real x1, Real y0, Real y1, Real xi)</div><div class="ttdoc">Point-wise logarithmic interpolation between two points.</div><div class="ttdef"><b>Definition</b> <a href="utilities_8cpp_source.html#l00067">utilities.cpp:67</a></div></div>
-</div><!-- fragment --><div class="dynheader">
-Here is the call graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="utilities_8cpp_ad3bc8b592ec28b18768172f7a21bd8c2_cgraph.png" border="0" usemap="#autilities_8cpp_ad3bc8b592ec28b18768172f7a21bd8c2_cgraph" alt=""/></div>
-<map name="autilities_8cpp_ad3bc8b592ec28b18768172f7a21bd8c2_cgraph" id="autilities_8cpp_ad3bc8b592ec28b18768172f7a21bd8c2_cgraph">
-<area shape="rect" title="Logarithmic interpolation for equally spaced x&#45;values in log space." alt="" coords="5,29,180,55"/>
-<area shape="rect" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42" title="Returns the value of a single parameter." alt="" coords="423,29,473,55"/>
-<area shape="poly" title=" " alt="" coords="180,39,409,39,409,45,180,45"/>
-<area shape="rect" href="utilities_8cpp.html#a367745c657e66d712ce7c153b1d065b7" title="Point&#45;wise logarithmic interpolation between two points." alt="" coords="228,55,375,80"/>
-<area shape="poly" title=" " alt="" coords="180,50,215,54,214,59,180,55"/>
-<area shape="poly" title=" " alt="" coords="423,31,418,21,421,11,431,5,448,3,468,6,477,15,473,18,466,11,448,8,433,10,425,15,423,20,428,28"/>
-<area shape="poly" title=" " alt="" coords="375,52,409,46,410,51,376,57"/>
-</map>
-</div>
-
-</div>
-</div>
-<a id="acb740a339330c846392175405656e8d8" name="acb740a339330c846392175405656e8d8"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#acb740a339330c846392175405656e8d8">&#9670;&#160;</a></span>interp()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> interp </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a>&#160;</td>
-          <td class="paramname"><em>x0</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="mesh_8h.html#afd05120c4d579ec7fa4906f677781a83">Array</a> <a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">const</a> &amp;&#160;</td>
-          <td class="paramname"><em>x</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="mesh_8h.html#afd05120c4d579ec7fa4906f677781a83">Array</a> <a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">const</a> &amp;&#160;</td>
-          <td class="paramname"><em>y</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">bool</a>&#160;</td>
-          <td class="paramname"><em>lo_extrap</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">bool</a>&#160;</td>
-          <td class="paramname"><em>hi_extrap</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Linear interpolation for arbitrary x-values. </p>
-<p>General interpolation function.</p>
-<p>Finds the appropriate interval for interpolation and uses point_interp. </p><dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">x0</td><td>The x-value at which to interpolate </td></tr>
-    <tr><td class="paramname">x</td><td>Array of x-coordinates (must be monotonically increasing) </td></tr>
-    <tr><td class="paramname">y</td><td>Array of y-coordinates </td></tr>
-    <tr><td class="paramname">lo_extrap</td><td>Whether to extrapolate below the minimum x-value </td></tr>
-    <tr><td class="paramname">hi_extrap</td><td>Whether to extrapolate above the maximum x-value </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>The interpolated y-value </dd></dl>
-
-<p class="definition">Definition at line <a class="el" href="utilities_8cpp_source.html#l00096">96</a> of file <a class="el" href="utilities_8cpp_source.html">utilities.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   96</span>                                                                                     {</div>
-<div class="line"><span class="lineno">   97</span>    <span class="keywordflow">if</span> (<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">x</a>.size() &lt; 2 || <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">y</a>.size() &lt; 2 || <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">x</a>.size() != <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">y</a>.size()) {</div>
-<div class="line"><span class="lineno">   98</span>        std::cout &lt;&lt; <span class="stringliteral">&quot;incorrect array size for interpolation!\n&quot;</span>;</div>
-<div class="line"><span class="lineno">   99</span>        <span class="keywordflow">return</span> 0;</div>
-<div class="line"><span class="lineno">  100</span>    }</div>
-<div class="line"><span class="lineno">  101</span>    <span class="keyword">const</span> <span class="keyword">auto</span> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">x_back</a> = <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">x</a>(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">x</a>.size() - 1);</div>
-<div class="line"><span class="lineno">  102</span>    <span class="keyword">const</span> <span class="keyword">auto</span> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">y_back</a> = <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">y</a>(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">y</a>.size() - 1);</div>
-<div class="line"><span class="lineno">  103</span> </div>
-<div class="line"><span class="lineno">  104</span>    <span class="keywordflow">if</span> (<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">x0</a> &lt; <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">x</a>(0)) {</div>
-<div class="line"><span class="lineno">  105</span>        <span class="keywordflow">return</span> (!<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">lo_extrap</a> || <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">x</a>(0) == <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">x0</a>) ? <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">y</a>(0) : <a class="code hl_function" href="utilities_8cpp.html#ad5718128d0cae5d9ae7eeea90f411cde">point_interp</a>(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">x</a>(0), <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">x</a>(1), <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">y</a>(0), <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">y</a>(1), <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">x0</a>);</div>
-<div class="line"><span class="lineno">  106</span>    } <span class="keywordflow">else</span> <span class="keywordflow">if</span> (<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">x0</a> &gt; <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">x_back</a>) {</div>
-<div class="line"><span class="lineno">  107</span>        <span class="keywordflow">return</span> (!<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">hi_extrap</a> || <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">x_back</a> == <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">x0</a>) ? <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">y_back</a></div>
-<div class="line"><span class="lineno">  108</span>                                            : <a class="code hl_function" href="utilities_8cpp.html#ad5718128d0cae5d9ae7eeea90f411cde">point_interp</a>(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">x</a>(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">x</a>.size() - 2), <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">x_back</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">y</a>(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">y</a>.size() - 2), <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">y_back</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">x0</a>);</div>
-<div class="line"><span class="lineno">  109</span>    } <span class="keywordflow">else</span> {</div>
-<div class="line"><span class="lineno">  110</span>        <span class="keyword">const</span> <span class="keyword">auto</span> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">it</a> = std::ranges::lower_bound(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">x</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">x0</a>);</div>
-<div class="line"><span class="lineno">  111</span>        <span class="keyword">const</span> <span class="keywordtype">size_t</span> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">idx</a> = <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">it</a> - <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">x</a>.begin();</div>
-<div class="line"><span class="lineno">  112</span>        <span class="keywordflow">if</span> (*<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">it</a> == <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">x0</a>)</div>
-<div class="line"><span class="lineno">  113</span>            <span class="keywordflow">return</span> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">y</a>(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">idx</a>); <span class="comment">// Exact match</span></div>
-<div class="line"><span class="lineno">  114</span>        <span class="keywordflow">return</span> <a class="code hl_function" href="utilities_8cpp.html#ad5718128d0cae5d9ae7eeea90f411cde">point_interp</a>(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">x</a>(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">idx</a> - 1), <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">x</a>(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">idx</a>), <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">y</a>(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">idx</a> - 1), <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">y</a>(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">idx</a>), <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">x0</a>);</div>
-<div class="line"><span class="lineno">  115</span>    }</div>
-<div class="line"><span class="lineno">  116</span>}</div>
-</div><!-- fragment --><div class="dynheader">
-Here is the call graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="utilities_8cpp_acb740a339330c846392175405656e8d8_cgraph.png" border="0" usemap="#autilities_8cpp_acb740a339330c846392175405656e8d8_cgraph" alt=""/></div>
-<map name="autilities_8cpp_acb740a339330c846392175405656e8d8_cgraph" id="autilities_8cpp_acb740a339330c846392175405656e8d8_cgraph">
-<area shape="rect" title="Linear interpolation for arbitrary x&#45;values." alt="" coords="5,29,65,55"/>
-<area shape="rect" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42" title="Returns the value of a single parameter." alt="" coords="261,29,312,55"/>
-<area shape="poly" title=" " alt="" coords="66,39,248,39,248,45,66,45"/>
-<area shape="rect" href="utilities_8cpp.html#ad5718128d0cae5d9ae7eeea90f411cde" title="Point&#45;wise linear interpolation between two points." alt="" coords="113,55,213,80"/>
-<area shape="poly" title=" " alt="" coords="66,45,100,52,99,57,65,50"/>
-<area shape="poly" title=" " alt="" coords="265,30,261,21,263,11,272,5,287,3,304,6,311,14,307,18,301,11,287,8,274,10,268,14,266,20,270,28"/>
-<area shape="poly" title=" " alt="" coords="213,54,248,47,249,52,214,60"/>
-</map>
-</div>
-
-</div>
-</div>
-<a id="a655bf7e9ee550858e65af14c66fb4aec" name="a655bf7e9ee550858e65af14c66fb4aec"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a655bf7e9ee550858e65af14c66fb4aec">&#9670;&#160;</a></span>loglog_interp()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> loglog_interp </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a>&#160;</td>
-          <td class="paramname"><em>xi</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">const</a> <a class="el" href="mesh_8h.html#afd05120c4d579ec7fa4906f677781a83">Array</a> &amp;&#160;</td>
-          <td class="paramname"><em>x</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">const</a> <a class="el" href="mesh_8h.html#afd05120c4d579ec7fa4906f677781a83">Array</a> &amp;&#160;</td>
-          <td class="paramname"><em>y</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">bool</a>&#160;</td>
-          <td class="paramname"><em>lo_extrap</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">bool</a>&#160;</td>
-          <td class="paramname"><em>hi_extrap</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Logarithmic interpolation for arbitrary x-values. </p>
-<p>Log-log interpolation (both x and y are in log space)</p>
-<p>Performs interpolation in log-log space for arbitrary x-values. </p><dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">xi</td><td>The x-value at which to interpolate </td></tr>
-    <tr><td class="paramname">x</td><td>Array of x-coordinates (must be monotonically increasing) </td></tr>
-    <tr><td class="paramname">y</td><td>Array of y-coordinates </td></tr>
-    <tr><td class="paramname">lo_extrap</td><td>Whether to extrapolate below the minimum x-value </td></tr>
-    <tr><td class="paramname">hi_extrap</td><td>Whether to extrapolate above the maximum x-value </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>The interpolated y-value </dd></dl>
-
-<p class="definition">Definition at line <a class="el" href="utilities_8cpp_source.html#l00169">169</a> of file <a class="el" href="utilities_8cpp_source.html">utilities.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  169</span>                                                                                            {</div>
-<div class="line"><span class="lineno">  170</span>    <span class="keywordflow">if</span> (<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">x</a>.size() &lt; 2 || <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">y</a>.size() &lt; 2 || <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">x</a>.size() != <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">y</a>.size()) {</div>
-<div class="line"><span class="lineno">  171</span>        std::cout &lt;&lt; <span class="stringliteral">&quot;incorrect array size for interpolation!\n&quot;</span>;</div>
-<div class="line"><span class="lineno">  172</span>        <span class="keywordflow">return</span> 0;</div>
-<div class="line"><span class="lineno">  173</span>    }</div>
-<div class="line"><span class="lineno">  174</span>    <span class="keyword">const</span> <span class="keyword">auto</span> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">x_back</a> = <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">x</a>[<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">x</a>.size() - 1];</div>
-<div class="line"><span class="lineno">  175</span>    <span class="keyword">const</span> <span class="keyword">auto</span> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">y_back</a> = <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">y</a>[<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">y</a>.size() - 1];</div>
-<div class="line"><span class="lineno">  176</span> </div>
-<div class="line"><span class="lineno">  177</span>    <span class="keywordflow">if</span> (<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">xi</a> &lt;= <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">x</a>[0]) {</div>
-<div class="line"><span class="lineno">  178</span>        <span class="keywordflow">return</span> (!<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">lo_extrap</a> || <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">x</a>[0] == <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">xi</a>) ? <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">y</a>[0] : <a class="code hl_function" href="utilities_8cpp.html#a367745c657e66d712ce7c153b1d065b7">point_loglog_interp</a>(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">x</a>[0], <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">x</a>[1], <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">y</a>[0], <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">y</a>[1], <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">xi</a>);</div>
-<div class="line"><span class="lineno">  179</span>    } <span class="keywordflow">else</span> <span class="keywordflow">if</span> (<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">xi</a> &gt;= <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">x_back</a>) {</div>
-<div class="line"><span class="lineno">  180</span>        <span class="keywordflow">return</span> (!<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">hi_extrap</a> || <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">x_back</a> == <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">xi</a>) ? <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">y_back</a></div>
-<div class="line"><span class="lineno">  181</span>                                            : <a class="code hl_function" href="utilities_8cpp.html#a367745c657e66d712ce7c153b1d065b7">point_loglog_interp</a>(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">x</a>[<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">x</a>.size() - 2], <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">x_back</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">y</a>[<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">y</a>.size() - 2], <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">y_back</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">xi</a>);</div>
-<div class="line"><span class="lineno">  182</span>    } <span class="keywordflow">else</span> {</div>
-<div class="line"><span class="lineno">  183</span>        <span class="keyword">const</span> <span class="keyword">auto</span> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">it</a> = std::ranges::lower_bound(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">x</a>, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">xi</a>);</div>
-<div class="line"><span class="lineno">  184</span>        <span class="keyword">const</span> <span class="keywordtype">size_t</span> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">idx</a> = <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">it</a> - <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">x</a>.begin();</div>
-<div class="line"><span class="lineno">  185</span>        <span class="keywordflow">if</span> (*<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">it</a> == <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">xi</a>)</div>
-<div class="line"><span class="lineno">  186</span>            <span class="keywordflow">return</span> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">y</a>[<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">idx</a>]; <span class="comment">// Exact match</span></div>
-<div class="line"><span class="lineno">  187</span>        <span class="keywordflow">return</span> <a class="code hl_function" href="utilities_8cpp.html#a367745c657e66d712ce7c153b1d065b7">point_loglog_interp</a>(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">x</a>[<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">idx</a> - 1], <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">x</a>[<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">idx</a>], <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">y</a>[<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">idx</a> - 1], <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">y</a>[<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">idx</a>], <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">xi</a>);</div>
-<div class="line"><span class="lineno">  188</span>    }</div>
-<div class="line"><span class="lineno">  189</span>}</div>
-</div><!-- fragment --><div class="dynheader">
-Here is the call graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="utilities_8cpp_a655bf7e9ee550858e65af14c66fb4aec_cgraph.png" border="0" usemap="#autilities_8cpp_a655bf7e9ee550858e65af14c66fb4aec_cgraph" alt=""/></div>
-<map name="autilities_8cpp_a655bf7e9ee550858e65af14c66fb4aec_cgraph" id="autilities_8cpp_a655bf7e9ee550858e65af14c66fb4aec_cgraph">
-<area shape="rect" title="Logarithmic interpolation for arbitrary x&#45;values." alt="" coords="5,29,112,55"/>
-<area shape="rect" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42" title="Returns the value of a single parameter." alt="" coords="355,29,405,55"/>
-<area shape="poly" title=" " alt="" coords="112,39,341,39,341,45,112,45"/>
-<area shape="rect" href="utilities_8cpp.html#a367745c657e66d712ce7c153b1d065b7" title="Point&#45;wise logarithmic interpolation between two points." alt="" coords="160,55,307,80"/>
-<area shape="poly" title=" " alt="" coords="112,47,147,52,146,57,112,52"/>
-<area shape="poly" title=" " alt="" coords="355,31,350,21,353,11,363,5,380,3,400,6,409,15,405,18,398,11,380,8,365,10,357,15,355,20,360,28"/>
-<area shape="poly" title=" " alt="" coords="307,52,341,46,342,51,308,57"/>
-</map>
-</div>
-
-</div>
-</div>
-<a id="ad5718128d0cae5d9ae7eeea90f411cde" name="ad5718128d0cae5d9ae7eeea90f411cde"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad5718128d0cae5d9ae7eeea90f411cde">&#9670;&#160;</a></span>point_interp()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> point_interp </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a>&#160;</td>
-          <td class="paramname"><em>x0</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a>&#160;</td>
-          <td class="paramname"><em>x1</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a>&#160;</td>
-          <td class="paramname"><em>y0</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a>&#160;</td>
-          <td class="paramname"><em>y1</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a>&#160;</td>
-          <td class="paramname"><em>xi</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Point-wise linear interpolation between two points. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">x0</td><td>First x-coordinate </td></tr>
-    <tr><td class="paramname">x1</td><td>Second x-coordinate </td></tr>
-    <tr><td class="paramname">y0</td><td>First y-coordinate </td></tr>
-    <tr><td class="paramname">y1</td><td>Second y-coordinate </td></tr>
-    <tr><td class="paramname">xi</td><td>The x-value at which to interpolate </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>The interpolated y-value </dd></dl>
-
-<p class="definition">Definition at line <a class="el" href="utilities_8cpp_source.html#l00048">48</a> of file <a class="el" href="utilities_8cpp_source.html">utilities.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   48</span>                                                               {</div>
-<div class="line"><span class="lineno">   49</span>    <span class="keywordflow">if</span> (<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">x0</a> == <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">x1</a>)</div>
-<div class="line"><span class="lineno">   50</span>        <span class="keywordflow">return</span> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">y0</a>;</div>
-<div class="line"><span class="lineno">   51</span>    <span class="keyword">const</span> <a class="code hl_typedef" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> slope = (<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">y1</a> - <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">y0</a>) / (<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">x1</a> - <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">x0</a>);</div>
-<div class="line"><span class="lineno">   52</span>    <span class="keywordflow">return</span> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">y0</a> + slope * (<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">xi</a> - <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">x0</a>);</div>
-<div class="line"><span class="lineno">   53</span>}</div>
-</div><!-- fragment --><div class="dynheader">
-Here is the call graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="utilities_8cpp_ad5718128d0cae5d9ae7eeea90f411cde_cgraph.png" border="0" usemap="#autilities_8cpp_ad5718128d0cae5d9ae7eeea90f411cde_cgraph" alt=""/></div>
-<map name="autilities_8cpp_ad5718128d0cae5d9ae7eeea90f411cde_cgraph" id="autilities_8cpp_ad5718128d0cae5d9ae7eeea90f411cde_cgraph">
-<area shape="rect" title="Point&#45;wise linear interpolation between two points." alt="" coords="5,29,105,55"/>
-<area shape="rect" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42" title="Returns the value of a single parameter." alt="" coords="153,29,204,55"/>
-<area shape="poly" title=" " alt="" coords="105,39,140,39,140,45,105,45"/>
-<area shape="poly" title=" " alt="" coords="157,30,153,21,155,11,164,5,179,3,196,6,203,14,199,18,193,11,179,8,166,10,160,14,158,20,162,28"/>
-</map>
-</div>
-<div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="utilities_8cpp_ad5718128d0cae5d9ae7eeea90f411cde_icgraph.png" border="0" usemap="#autilities_8cpp_ad5718128d0cae5d9ae7eeea90f411cde_icgraph" alt=""/></div>
-<map name="autilities_8cpp_ad5718128d0cae5d9ae7eeea90f411cde_icgraph" id="autilities_8cpp_ad5718128d0cae5d9ae7eeea90f411cde_icgraph">
-<area shape="rect" title="Point&#45;wise linear interpolation between two points." alt="" coords="181,31,281,56"/>
-<area shape="rect" href="utilities_8cpp.html#adca7a16fe50d3a0ffc72c9ddd1900ea5" title="Linear interpolation for equally spaced x&#45;values." alt="" coords="5,5,133,31"/>
-<area shape="poly" title=" " alt="" coords="168,36,133,31,134,25,168,31"/>
-<area shape="rect" href="utilities_8cpp.html#acb740a339330c846392175405656e8d8" title="Linear interpolation for arbitrary x&#45;values." alt="" coords="39,55,99,80"/>
-<area shape="poly" title=" " alt="" coords="168,55,100,66,99,60,167,50"/>
-</map>
-</div>
-
-</div>
-</div>
-<a id="a367745c657e66d712ce7c153b1d065b7" name="a367745c657e66d712ce7c153b1d065b7"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a367745c657e66d712ce7c153b1d065b7">&#9670;&#160;</a></span>point_loglog_interp()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> point_loglog_interp </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a>&#160;</td>
-          <td class="paramname"><em>x0</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a>&#160;</td>
-          <td class="paramname"><em>x1</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a>&#160;</td>
-          <td class="paramname"><em>y0</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a>&#160;</td>
-          <td class="paramname"><em>y1</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a>&#160;</td>
-          <td class="paramname"><em>xi</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Point-wise logarithmic interpolation between two points. </p>
-<p>Performs linear interpolation in log-log space. </p><dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">x0</td><td>First x-coordinate </td></tr>
-    <tr><td class="paramname">x1</td><td>Second x-coordinate </td></tr>
-    <tr><td class="paramname">y0</td><td>First y-coordinate </td></tr>
-    <tr><td class="paramname">y1</td><td>Second y-coordinate </td></tr>
-    <tr><td class="paramname">xi</td><td>The x-value at which to interpolate </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>The interpolated y-value </dd></dl>
-
-<p class="definition">Definition at line <a class="el" href="utilities_8cpp_source.html#l00067">67</a> of file <a class="el" href="utilities_8cpp_source.html">utilities.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   67</span>                                                                      {</div>
-<div class="line"><span class="lineno">   68</span>    <span class="keywordflow">if</span> (<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">y0</a> == 0 || <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">y1</a> == 0)</div>
-<div class="line"><span class="lineno">   69</span>        <span class="keywordflow">return</span> 0;</div>
-<div class="line"><span class="lineno">   70</span>    <span class="keywordflow">if</span> (<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">x0</a> == <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">x1</a>)</div>
-<div class="line"><span class="lineno">   71</span>        <span class="keywordflow">return</span> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">y0</a>;</div>
-<div class="line"><span class="lineno">   72</span>    <span class="keyword">const</span> <a class="code hl_typedef" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">log_x0</a> = std::log(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">x0</a>);</div>
-<div class="line"><span class="lineno">   73</span>    <span class="keyword">const</span> <a class="code hl_typedef" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">log_x1</a> = std::log(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">x1</a>);</div>
-<div class="line"><span class="lineno">   74</span>    <span class="keyword">const</span> <a class="code hl_typedef" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">log_y0</a> = std::log(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">y0</a>);</div>
-<div class="line"><span class="lineno">   75</span>    <span class="keyword">const</span> <a class="code hl_typedef" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">log_y1</a> = std::log(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">y1</a>);</div>
-<div class="line"><span class="lineno">   76</span>    <span class="keyword">const</span> <a class="code hl_typedef" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> slope = (<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">log_y1</a> - <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">log_y0</a>) / (<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">log_x1</a> - <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">log_x0</a>);</div>
-<div class="line"><span class="lineno">   77</span>    <span class="keywordflow">return</span> std::exp(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">log_y0</a> + slope * (std::log(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">xi</a>) - <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">log_x0</a>));</div>
-<div class="line"><span class="lineno">   78</span>}</div>
-</div><!-- fragment --><div class="dynheader">
-Here is the call graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="utilities_8cpp_a367745c657e66d712ce7c153b1d065b7_cgraph.png" border="0" usemap="#autilities_8cpp_a367745c657e66d712ce7c153b1d065b7_cgraph" alt=""/></div>
-<map name="autilities_8cpp_a367745c657e66d712ce7c153b1d065b7_cgraph" id="autilities_8cpp_a367745c657e66d712ce7c153b1d065b7_cgraph">
-<area shape="rect" title="Point&#45;wise logarithmic interpolation between two points." alt="" coords="5,29,152,55"/>
-<area shape="rect" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42" title="Returns the value of a single parameter." alt="" coords="200,29,251,55"/>
-<area shape="poly" title=" " alt="" coords="152,39,186,39,186,45,152,45"/>
-<area shape="poly" title=" " alt="" coords="200,31,195,21,198,11,208,5,225,3,246,6,254,15,251,18,243,11,225,8,210,10,202,15,201,20,205,28"/>
-</map>
-</div>
-<div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="utilities_8cpp_a367745c657e66d712ce7c153b1d065b7_icgraph.png" border="0" usemap="#autilities_8cpp_a367745c657e66d712ce7c153b1d065b7_icgraph" alt=""/></div>
-<map name="autilities_8cpp_a367745c657e66d712ce7c153b1d065b7_icgraph" id="autilities_8cpp_a367745c657e66d712ce7c153b1d065b7_icgraph">
-<area shape="rect" title="Point&#45;wise logarithmic interpolation between two points." alt="" coords="228,31,375,56"/>
-<area shape="rect" href="utilities_8cpp.html#ad3bc8b592ec28b18768172f7a21bd8c2" title="Logarithmic interpolation for equally spaced x&#45;values in log space." alt="" coords="5,5,180,31"/>
-<area shape="poly" title=" " alt="" coords="214,35,180,31,180,26,215,30"/>
-<area shape="rect" href="utilities_8cpp.html#a655bf7e9ee550858e65af14c66fb4aec" title="Logarithmic interpolation for arbitrary x&#45;values." alt="" coords="39,55,146,80"/>
-<area shape="poly" title=" " alt="" coords="215,56,147,64,146,59,214,51"/>
-</map>
-</div>
-
-</div>
-</div>
 <a id="adf1fcdf083723d530f051255c2e395d9" name="adf1fcdf083723d530f051255c2e395d9"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#adf1fcdf083723d530f051255c2e395d9">&#9670;&#160;</a></span>print_array()</h2>
 
@@ -774,27 +184,20 @@ Here is the caller graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p>Prints the elements of an array to standard output. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">arr</td><td>The array to print --&gt; </td></tr>
-  </table>
-  </dd>
-</dl>
-
-<p class="definition">Definition at line <a class="el" href="utilities_8cpp_source.html#l00026">26</a> of file <a class="el" href="utilities_8cpp_source.html">utilities.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   26</span>                                   {</div>
-<div class="line"><span class="lineno">   27</span>    <span class="keywordflow">for</span> (<span class="keyword">auto</span> <span class="keyword">const</span>&amp; <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">a</a> : <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">arr</a>) {</div>
-<div class="line"><span class="lineno">   28</span>        std::cout &lt;&lt; <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">a</a> &lt;&lt; <span class="stringliteral">&quot; &quot;</span>;</div>
-<div class="line"><span class="lineno">   29</span>    }</div>
-<div class="line"><span class="lineno">   30</span>    std::cout &lt;&lt; std::endl;</div>
-<div class="line"><span class="lineno">   31</span>}</div>
+<p class="definition">Definition at line <a class="el" href="utilities_8cpp_source.html#l00012">12</a> of file <a class="el" href="utilities_8cpp_source.html">utilities.cpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   12</span>                                   {</div>
+<div class="line"><span class="lineno">   13</span>    <span class="keywordflow">for</span> (<span class="keyword">auto</span> <span class="keyword">const</span>&amp; <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">a</a> : <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">arr</a>) {</div>
+<div class="line"><span class="lineno">   14</span>        std::cout &lt;&lt; <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">a</a> &lt;&lt; <span class="stringliteral">&quot; &quot;</span>;</div>
+<div class="line"><span class="lineno">   15</span>    }</div>
+<div class="line"><span class="lineno">   16</span>    std::cout &lt;&lt; std::endl;</div>
+<div class="line"><span class="lineno">   17</span>}</div>
+<div class="ttc" id="autilities_8h_html_ab8e81118f023df135835db8cce4f5f42"><div class="ttname"><a href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">max</a></div><div class="ttdeci">T max(T value)</div><div class="ttdoc">Returns the value of a single parameter.</div><div class="ttdef"><b>Definition</b> <a href="utilities_8h_source.html#l00206">utilities.h:206</a></div></div>
 </div><!-- fragment --><div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="utilities_8cpp_adf1fcdf083723d530f051255c2e395d9_cgraph.png" border="0" usemap="#autilities_8cpp_adf1fcdf083723d530f051255c2e395d9_cgraph" alt=""/></div>
 <map name="autilities_8cpp_adf1fcdf083723d530f051255c2e395d9_cgraph" id="autilities_8cpp_adf1fcdf083723d530f051255c2e395d9_cgraph">
-<area shape="rect" title="Prints the elements of an array to standard output." alt="" coords="5,29,99,55"/>
+<area shape="rect" title=" " alt="" coords="5,29,99,55"/>
 <area shape="rect" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42" title="Returns the value of a single parameter." alt="" coords="147,29,197,55"/>
 <area shape="poly" title=" " alt="" coords="99,39,133,39,133,45,99,45"/>
 <area shape="poly" title=" " alt="" coords="151,30,147,21,149,11,158,5,172,3,189,6,196,14,192,18,186,11,172,8,160,10,154,14,152,20,156,28"/>

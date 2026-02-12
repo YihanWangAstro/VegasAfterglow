@@ -12,10 +12,10 @@ var searchData=
   ['generate_5fsyn_5felectrons_9',['generate_syn_electrons',['../synchrotron_8h.html#aad9e6e41fee6cbff0952e1d343b890f5',1,'generate_syn_electrons(SynElectronGrid &amp;electrons, Shock const &amp;shock):&#160;synchrotron.cpp'],['../synchrotron_8h.html#a61b8afa248e61a5726a0e48983f99fdf',1,'generate_syn_electrons(Shock const &amp;shock):&#160;synchrotron.cpp'],['../synchrotron_8cpp.html#a61b8afa248e61a5726a0e48983f99fdf',1,'generate_syn_electrons(Shock const &amp;shock):&#160;synchrotron.cpp'],['../synchrotron_8cpp.html#aad9e6e41fee6cbff0952e1d343b890f5',1,'generate_syn_electrons(SynElectronGrid &amp;electrons, Shock const &amp;shock):&#160;synchrotron.cpp']]],
   ['generate_5fsyn_5fphotons_10',['generate_syn_photons',['../synchrotron_8h.html#a0f78089bdc9e329056d89812794298b9',1,'generate_syn_photons(SynPhotonGrid &amp;photons, Shock const &amp;shock, SynElectronGrid const &amp;electrons):&#160;synchrotron.cpp'],['../synchrotron_8h.html#a331f545228d2b18e84e0252510e295f8',1,'generate_syn_photons(Shock const &amp;shock, SynElectronGrid const &amp;electrons):&#160;synchrotron.cpp'],['../synchrotron_8cpp.html#a0f78089bdc9e329056d89812794298b9',1,'generate_syn_photons(SynPhotonGrid &amp;photons, Shock const &amp;shock, SynElectronGrid const &amp;electrons):&#160;synchrotron.cpp'],['../synchrotron_8cpp.html#a331f545228d2b18e84e0252510e295f8',1,'generate_syn_photons(Shock const &amp;shock, SynElectronGrid const &amp;electrons):&#160;synchrotron.cpp']]],
   ['get_5faxisymmetric_11',['get_axisymmetric',['../classPyModel.html#ae2ee3e08672942767abd330afbf49a4a',1,'PyModel']]],
-  ['get_5ffwd_5frad_12',['get_fwd_rad',['../classPyModel.html#aaf04649cfdfb01b33b472a1fcf03a829',1,'PyModel']]],
-  ['get_5fobserver_13',['get_observer',['../classPyModel.html#affdd094a85f5f797d61000527ef37fe8',1,'PyModel']]],
+  ['get_5ffwd_5frad_12',['get_fwd_rad',['../classPyModel.html#abe2773ce26be39e45ad2ab92778d759b',1,'PyModel']]],
+  ['get_5fobserver_13',['get_observer',['../classPyModel.html#a541cbc4ffac08464eaccd03419929f2f',1,'PyModel']]],
   ['get_5fresolutions_14',['get_resolutions',['../classPyModel.html#a93d998ee29d0b6da25948a72a7947791',1,'PyModel']]],
   ['get_5frtol_15',['get_rtol',['../classPyModel.html#ae183040b54a9871ae75350fe9ac5099c',1,'PyModel']]],
-  ['get_5frvs_5frad_16',['get_rvs_rad',['../classPyModel.html#a42777e0d042d70fe9ea257c5390a6ad7',1,'PyModel']]],
+  ['get_5frvs_5frad_16',['get_rvs_rad',['../classPyModel.html#a09673a07fa4f3f44ae8913dcdaf6cce7',1,'PyModel']]],
   ['grid_5fsolve_5ffwd_5fshock_17',['grid_solve_fwd_shock',['../forward-shock_8hpp.html#aeb0464558019c35b5108e98042360fdc',1,'forward-shock.hpp']]]
 ];

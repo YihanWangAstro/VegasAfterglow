@@ -1,0 +1,38 @@
+<map id="quadrature.h" name="quadrature.h">
+<area shape="rect" id="Node000001" title=" " alt="" coords="546,5,651,31"/>
+<area shape="rect" id="Node000002" href="$mesh_8h.html" title=" " alt="" coords="563,79,634,104"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="601,31,601,65,596,65,596,31"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="5,159,91,185"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="563,97,366,113,235,130,103,155,91,158,90,153,102,149,234,125,365,108,563,92"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="115,159,184,185"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="563,98,403,115,300,131,197,155,188,157,186,152,195,149,299,126,402,110,563,92"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="208,159,261,185"/>
+<area shape="poly" id="edge4_Node000002_Node000005" title=" " alt="" coords="564,99,434,116,354,133,274,155,269,156,267,151,273,149,353,127,433,111,563,93"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="286,159,349,185"/>
+<area shape="poly" id="edge5_Node000002_Node000006" title=" " alt="" coords="564,103,475,125,369,155,360,157,359,152,367,149,473,120,563,98"/>
+<area shape="rect" id="Node000007" href="$macros_8h.html" title=" " alt="" coords="417,240,535,265"/>
+<area shape="poly" id="edge6_Node000002_Node000007" title=" " alt="" coords="563,95,526,98,485,108,445,125,428,138,414,153,408,171,414,191,429,212,448,230,444,234,425,216,410,193,403,171,410,151,425,134,443,121,483,103,525,93,563,90"/>
+<area shape="rect" id="Node000011" title=" " alt="" coords="425,159,613,185"/>
+<area shape="poly" id="edge10_Node000002_Node000011" title=" " alt="" coords="589,106,542,151,539,147,585,102"/>
+<area shape="rect" id="Node000012" href="$physics_8h.html" title=" " alt="" coords="637,159,720,185"/>
+<area shape="poly" id="edge11_Node000002_Node000012" title=" " alt="" coords="612,102,659,147,655,151,609,106"/>
+<area shape="rect" id="Node000014" title=" " alt="" coords="745,152,887,192"/>
+<area shape="poly" id="edge14_Node000002_Node000014" title=" " alt="" coords="631,101,752,145,750,150,629,107"/>
+<area shape="rect" id="Node000015" title=" " alt="" coords="911,152,1054,192"/>
+<area shape="poly" id="edge15_Node000002_Node000015" title=" " alt="" coords="635,97,898,149,897,154,634,102"/>
+<area shape="rect" id="Node000016" title=" " alt="" coords="1078,159,1255,185"/>
+<area shape="poly" id="edge16_Node000002_Node000016" title=" " alt="" coords="635,94,820,115,1067,149,1096,154,1095,160,1066,155,820,121,634,99"/>
+<area shape="rect" id="Node000017" title=" " alt="" coords="1280,159,1429,185"/>
+<area shape="poly" id="edge17_Node000002_Node000017" title=" " alt="" coords="634,92,898,109,1082,126,1268,149,1294,154,1293,159,1268,155,1081,131,898,114,634,97"/>
+<area shape="rect" id="Node000018" title=" " alt="" coords="1454,159,1637,185"/>
+<area shape="poly" id="edge18_Node000002_Node000018" title=" " alt="" coords="634,91,965,107,1200,124,1442,149,1475,154,1474,160,1441,155,1200,130,964,113,634,96"/>
+<area shape="rect" id="Node000008" title=" " alt="" coords="384,321,443,346"/>
+<area shape="poly" id="edge7_Node000007_Node000008" title=" " alt="" coords="469,267,433,312,429,308,465,264"/>
+<area shape="rect" id="Node000009" href="$simulation-defaults_8h.html" title="Centralized simulation configuration defaults." alt="" coords="467,313,613,353"/>
+<area shape="poly" id="edge8_Node000007_Node000009" title=" " alt="" coords="488,264,518,301,514,304,483,267"/>
+<area shape="rect" id="Node000010" title=" " alt="" coords="505,401,575,427"/>
+<area shape="poly" id="edge9_Node000009_Node000010" title=" " alt="" coords="543,354,543,387,537,387,537,354"/>
+<area shape="poly" id="edge13_Node000012_Node000007" title=" " alt="" coords="650,187,519,238,517,233,648,182"/>
+<area shape="rect" id="Node000013" title=" " alt="" coords="647,240,710,265"/>
+<area shape="poly" id="edge12_Node000012_Node000013" title=" " alt="" coords="681,185,681,226,676,226,676,185"/>
+</map>

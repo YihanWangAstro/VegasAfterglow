@@ -1,12 +1,12 @@
 <map id="eta_rad_Thomson" name="eta_rad_Thomson">
 <area shape="rect" id="Node000001" title=" " alt="" coords="5,56,144,81"/>
-<area shape="rect" id="Node000002" href="$utilities_8h.html#a4520a27a10a2aef33c99ad8c679da404" title="Fast approximation of a raised to the power of b." alt="" coords="192,56,273,81"/>
+<area shape="rect" id="Node000002" href="$fast-math_8h.html#a4520a27a10a2aef33c99ad8c679da404" title="Fast approximation of a raised to the power of b." alt="" coords="192,56,273,81"/>
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="144,66,178,66,178,71,144,71"/>
-<area shape="rect" id="Node000003" href="$utilities_8h.html#afc584c30c352192de6847b1f4b8caf0e" title="Fast approximation of 2 raised to a power." alt="" coords="321,5,408,31"/>
+<area shape="rect" id="Node000003" href="$fast-math_8h.html#afc584c30c352192de6847b1f4b8caf0e" title="Fast approximation of 2 raised to a power." alt="" coords="321,5,408,31"/>
 <area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="266,53,317,33,319,38,268,58"/>
 <area shape="rect" id="Node000004" href="$utilities_8h.html#ab8e81118f023df135835db8cce4f5f42" title="Returns the value of a single parameter." alt="" coords="456,56,507,81"/>
 <area shape="poly" id="edge7_Node000002_Node000004" title=" " alt="" coords="274,66,442,66,442,71,274,71"/>
-<area shape="rect" id="Node000005" href="$utilities_8h.html#aa67895957aa831a991982a8268ef8349" title="Fast approximation of the base&#45;2 logarithm." alt="" coords="323,107,406,132"/>
+<area shape="rect" id="Node000005" href="$fast-math_8h.html#aa67895957aa831a991982a8268ef8349" title="Fast approximation of the base&#45;2 logarithm." alt="" coords="323,107,406,132"/>
 <area shape="poly" id="edge5_Node000002_Node000005" title=" " alt="" coords="268,79,319,99,317,104,266,84"/>
 <area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="396,28,444,50,442,55,394,33"/>
 <area shape="poly" id="edge4_Node000004_Node000004" title=" " alt="" coords="461,57,457,48,459,38,468,32,481,29,497,33,504,41,500,45,495,37,481,35,470,37,464,41,463,47,466,55"/>

@@ -1,9 +1,0 @@
-<map id="compute_downstr_B" name="compute_downstr_B">
-<area shape="rect" id="Node000001" title="Computes the downstream magnetic field strength." alt="" coords="5,31,160,56"/>
-<area shape="rect" id="Node000002" href="$shock_8h.html#ac9f33883cbf8961d948ef62692866a2b" title="Computes the comoving magnetic field using the Weibel instability mechanism." alt="" coords="208,5,396,31"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="160,32,194,28,195,33,161,37"/>
-<area shape="rect" id="Node000003" href="$utilities_8h.html#ab8e81118f023df135835db8cce4f5f42" title="Returns the value of a single parameter." alt="" coords="444,31,495,56"/>
-<area shape="poly" id="edge4_Node000001_Node000003" title=" " alt="" coords="160,41,430,41,430,46,160,46"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="387,28,431,35,430,40,386,33"/>
-<area shape="poly" id="edge3_Node000003_Node000003" title=" " alt="" coords="442,32,436,22,439,13,450,6,469,4,492,7,502,16,498,20,490,12,469,9,452,11,443,16,441,22,446,29"/>
-</map>

@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['math_20functions_0',['math functions',['../group__BasicMath.html',1,'Basic Math Functions'],['../group__FastMath.html',1,'Fast Math Functions']]],
-  ['methods_1',['Root Finding Methods',['../group__RootFinding.html',1,'']]]
+  ['output_20and_20printing_20functions_0',['Output and Printing Functions',['../group__IO__Functions.html',1,'']]]
 ];

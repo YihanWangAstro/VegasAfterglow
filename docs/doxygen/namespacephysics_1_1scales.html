@@ -183,15 +183,15 @@ Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>The required engine duration </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="physics_8cpp_source.html#l00038">38</a> of file <a class="el" href="physics_8cpp_source.html">physics.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   38</span>                                                                            {</div>
-<div class="line"><span class="lineno">   39</span>        <span class="keyword">const</span> <a class="code hl_typedef" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">Sedov_l</a> = <a class="code hl_function" href="namespacephysics_1_1scales.html#a13b03e1ea24e11d2ac9e23973b92cbdb">sedov_length</a>(E_iso, n_ism);</div>
-<div class="line"><span class="lineno">   40</span>        <span class="keywordflow">return</span> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">Sedov_l</a> / (<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">xi</a> * <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">xi</a> * std::pow(Gamma0, 8. / 3) * <a class="code hl_variable" href="namespacecon.html#a2ff3edf57629ccb9a49d5bde7278a7c4">con::c</a>);</div>
-<div class="line"><span class="lineno">   41</span>    }</div>
-<div class="ttc" id="amacros_8h_html_a4b04262b81aa7d31eb5d2f607e2a35de"><div class="ttname"><a href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a></div><div class="ttdeci">double Real</div><div class="ttdoc">Type alias for floating-point precision used throughout the code.</div><div class="ttdef"><b>Definition</b> <a href="macros_8h_source.html#l00024">macros.h:24</a></div></div>
-<div class="ttc" id="anamespacecon_html_a2ff3edf57629ccb9a49d5bde7278a7c4"><div class="ttname"><a href="namespacecon.html#a2ff3edf57629ccb9a49d5bde7278a7c4">con::c</a></div><div class="ttdeci">constexpr Real c</div><div class="ttdoc">Speed of light (normalized to 1 in code units)</div><div class="ttdef"><b>Definition</b> <a href="macros_8h_source.html#l00087">macros.h:87</a></div></div>
+<p class="definition">Definition at line <a class="el" href="physics_8cpp_source.html#l00040">40</a> of file <a class="el" href="physics_8cpp_source.html">physics.cpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   40</span>                                                                            {</div>
+<div class="line"><span class="lineno">   41</span>        <span class="keyword">const</span> <a class="code hl_typedef" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">Sedov_l</a> = <a class="code hl_function" href="namespacephysics_1_1scales.html#a13b03e1ea24e11d2ac9e23973b92cbdb">sedov_length</a>(E_iso, n_ism);</div>
+<div class="line"><span class="lineno">   42</span>        <span class="keywordflow">return</span> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">Sedov_l</a> / (<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">xi</a> * <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">xi</a> * std::pow(Gamma0, 8. / 3) * <a class="code hl_variable" href="namespacecon.html#a2ff3edf57629ccb9a49d5bde7278a7c4">con::c</a>);</div>
+<div class="line"><span class="lineno">   43</span>    }</div>
+<div class="ttc" id="amacros_8h_html_a4b04262b81aa7d31eb5d2f607e2a35de"><div class="ttname"><a href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a></div><div class="ttdeci">double Real</div><div class="ttdoc">Type alias for floating-point precision used throughout the code.</div><div class="ttdef"><b>Definition</b> <a href="macros_8h_source.html#l00023">macros.h:23</a></div></div>
+<div class="ttc" id="anamespacecon_html_a2ff3edf57629ccb9a49d5bde7278a7c4"><div class="ttname"><a href="namespacecon.html#a2ff3edf57629ccb9a49d5bde7278a7c4">con::c</a></div><div class="ttdeci">constexpr Real c</div><div class="ttdoc">Speed of light (normalized to 1 in code units)</div><div class="ttdef"><b>Definition</b> <a href="macros_8h_source.html#l00086">macros.h:86</a></div></div>
 <div class="ttc" id="anamespacephysics_1_1scales_html_a13b03e1ea24e11d2ac9e23973b92cbdb"><div class="ttname"><a href="namespacephysics_1_1scales.html#a13b03e1ea24e11d2ac9e23973b92cbdb">physics::scales::sedov_length</a></div><div class="ttdeci">Real sedov_length(Real E_iso, Real n_ism)</div><div class="ttdoc">Computes the Sedov length—a characteristic scale for blast wave deceleration.</div><div class="ttdef"><b>Definition</b> <a href="physics_8h_source.html#l00081">physics.h:81</a></div></div>
-<div class="ttc" id="autilities_8h_html_ab8e81118f023df135835db8cce4f5f42"><div class="ttname"><a href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">max</a></div><div class="ttdeci">T max(T value)</div><div class="ttdoc">Returns the value of a single parameter.</div><div class="ttdef"><b>Definition</b> <a href="utilities_8h_source.html#l00318">utilities.h:318</a></div></div>
+<div class="ttc" id="autilities_8h_html_ab8e81118f023df135835db8cce4f5f42"><div class="ttname"><a href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">max</a></div><div class="ttdeci">T max(T value)</div><div class="ttdoc">Returns the value of a single parameter.</div><div class="ttdef"><b>Definition</b> <a href="utilities_8h_source.html#l00206">utilities.h:206</a></div></div>
 </div><!-- fragment --><div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -258,12 +258,12 @@ Here is the call graph for this function:</div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>The deceleration radius </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="physics_8cpp_source.html#l00012">12</a> of file <a class="el" href="physics_8cpp_source.html">physics.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   12</span>                                                                           {</div>
-<div class="line"><span class="lineno">   13</span>        <span class="keywordflow">return</span> std::max(<a class="code hl_function" href="namespacephysics_1_1scales.html#a64b8e1f25be60814cd2f17e951244003">thin_shell_dec_radius</a>(E_iso, n_ism, Gamma0), <a class="code hl_function" href="namespacephysics_1_1scales.html#a886ce2e09d9a5b69b14ccff9e9785be2">thick_shell_dec_radius</a>(E_iso, n_ism, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">engine_dura</a>));</div>
-<div class="line"><span class="lineno">   14</span>    }</div>
-<div class="ttc" id="anamespacephysics_1_1scales_html_a64b8e1f25be60814cd2f17e951244003"><div class="ttname"><a href="namespacephysics_1_1scales.html#a64b8e1f25be60814cd2f17e951244003">physics::scales::thin_shell_dec_radius</a></div><div class="ttdeci">Real thin_shell_dec_radius(Real E_iso, Real n_ism, Real Gamma0)</div><div class="ttdoc">Computes the deceleration radius for the thin shell case.</div><div class="ttdef"><b>Definition</b> <a href="physics_8cpp_source.html#l00016">physics.cpp:16</a></div></div>
-<div class="ttc" id="anamespacephysics_1_1scales_html_a886ce2e09d9a5b69b14ccff9e9785be2"><div class="ttname"><a href="namespacephysics_1_1scales.html#a886ce2e09d9a5b69b14ccff9e9785be2">physics::scales::thick_shell_dec_radius</a></div><div class="ttdeci">Real thick_shell_dec_radius(Real E_iso, Real n_ism, Real engine_dura)</div><div class="ttdoc">Computes the deceleration radius for the thick shell case.</div><div class="ttdef"><b>Definition</b> <a href="physics_8cpp_source.html#l00020">physics.cpp:20</a></div></div>
+<p class="definition">Definition at line <a class="el" href="physics_8cpp_source.html#l00014">14</a> of file <a class="el" href="physics_8cpp_source.html">physics.cpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   14</span>                                                                           {</div>
+<div class="line"><span class="lineno">   15</span>        <span class="keywordflow">return</span> std::max(<a class="code hl_function" href="namespacephysics_1_1scales.html#a64b8e1f25be60814cd2f17e951244003">thin_shell_dec_radius</a>(E_iso, n_ism, Gamma0), <a class="code hl_function" href="namespacephysics_1_1scales.html#a886ce2e09d9a5b69b14ccff9e9785be2">thick_shell_dec_radius</a>(E_iso, n_ism, <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">engine_dura</a>));</div>
+<div class="line"><span class="lineno">   16</span>    }</div>
+<div class="ttc" id="anamespacephysics_1_1scales_html_a64b8e1f25be60814cd2f17e951244003"><div class="ttname"><a href="namespacephysics_1_1scales.html#a64b8e1f25be60814cd2f17e951244003">physics::scales::thin_shell_dec_radius</a></div><div class="ttdeci">Real thin_shell_dec_radius(Real E_iso, Real n_ism, Real Gamma0)</div><div class="ttdoc">Computes the deceleration radius for the thin shell case.</div><div class="ttdef"><b>Definition</b> <a href="physics_8cpp_source.html#l00018">physics.cpp:18</a></div></div>
+<div class="ttc" id="anamespacephysics_1_1scales_html_a886ce2e09d9a5b69b14ccff9e9785be2"><div class="ttname"><a href="namespacephysics_1_1scales.html#a886ce2e09d9a5b69b14ccff9e9785be2">physics::scales::thick_shell_dec_radius</a></div><div class="ttdeci">Real thick_shell_dec_radius(Real E_iso, Real n_ism, Real engine_dura)</div><div class="ttdoc">Computes the deceleration radius for the thick shell case.</div><div class="ttdef"><b>Definition</b> <a href="physics_8cpp_source.html#l00022">physics.cpp:22</a></div></div>
 </div><!-- fragment --><div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -405,10 +405,10 @@ Here is the call graph for this function:</div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>The reverse shock transition radius </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="physics_8cpp_source.html#l00028">28</a> of file <a class="el" href="physics_8cpp_source.html">physics.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   28</span>                                                                                     {</div>
-<div class="line"><span class="lineno">   29</span>        <span class="keywordflow">return</span> std::pow(<a class="code hl_function" href="namespacephysics_1_1scales.html#a13b03e1ea24e11d2ac9e23973b92cbdb">sedov_length</a>(E_iso, n_ism), 1.5) / std::sqrt(<a class="code hl_variable" href="namespacecon.html#a2ff3edf57629ccb9a49d5bde7278a7c4">con::c</a> * <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">engine_dura</a>) / Gamma0 / Gamma0;</div>
-<div class="line"><span class="lineno">   30</span>    }</div>
+<p class="definition">Definition at line <a class="el" href="physics_8cpp_source.html#l00030">30</a> of file <a class="el" href="physics_8cpp_source.html">physics.cpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   30</span>                                                                                     {</div>
+<div class="line"><span class="lineno">   31</span>        <span class="keywordflow">return</span> std::pow(<a class="code hl_function" href="namespacephysics_1_1scales.html#a13b03e1ea24e11d2ac9e23973b92cbdb">sedov_length</a>(E_iso, n_ism), 1.5) / std::sqrt(<a class="code hl_variable" href="namespacecon.html#a2ff3edf57629ccb9a49d5bde7278a7c4">con::c</a> * <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">engine_dura</a>) / Gamma0 / Gamma0;</div>
+<div class="line"><span class="lineno">   32</span>    }</div>
 </div><!-- fragment --><div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -474,9 +474,9 @@ Here is the call graph for this function:</div>
 <div class="fragment"><div class="line"><span class="lineno">   81</span>                                                         {</div>
 <div class="line"><span class="lineno">   82</span>            <span class="keywordflow">return</span> std::cbrt(E_iso / (4 * <a class="code hl_variable" href="namespacecon.html#aa0ccd904b754d0f907898a942516d121">con::pi</a> / 3 * n_ism * <a class="code hl_variable" href="namespacecon.html#a47a54b8f758d02e6f8b85e41207ae620">con::mp</a> * <a class="code hl_variable" href="namespacecon.html#a26ef2b83dd09c356e324bd243b498764">con::c2</a>));</div>
 <div class="line"><span class="lineno">   83</span>        }</div>
-<div class="ttc" id="anamespacecon_html_a26ef2b83dd09c356e324bd243b498764"><div class="ttname"><a href="namespacecon.html#a26ef2b83dd09c356e324bd243b498764">con::c2</a></div><div class="ttdeci">constexpr Real c2</div><div class="ttdoc">Speed of light squared.</div><div class="ttdef"><b>Definition</b> <a href="macros_8h_source.html#l00088">macros.h:88</a></div></div>
-<div class="ttc" id="anamespacecon_html_a47a54b8f758d02e6f8b85e41207ae620"><div class="ttname"><a href="namespacecon.html#a47a54b8f758d02e6f8b85e41207ae620">con::mp</a></div><div class="ttdeci">constexpr Real mp</div><div class="ttdoc">Proton mass in code units.</div><div class="ttdef"><b>Definition</b> <a href="macros_8h_source.html#l00089">macros.h:89</a></div></div>
-<div class="ttc" id="anamespacecon_html_aa0ccd904b754d0f907898a942516d121"><div class="ttname"><a href="namespacecon.html#aa0ccd904b754d0f907898a942516d121">con::pi</a></div><div class="ttdeci">constexpr Real pi</div><div class="ttdoc">Pi.</div><div class="ttdef"><b>Definition</b> <a href="macros_8h_source.html#l00097">macros.h:97</a></div></div>
+<div class="ttc" id="anamespacecon_html_a26ef2b83dd09c356e324bd243b498764"><div class="ttname"><a href="namespacecon.html#a26ef2b83dd09c356e324bd243b498764">con::c2</a></div><div class="ttdeci">constexpr Real c2</div><div class="ttdoc">Speed of light squared.</div><div class="ttdef"><b>Definition</b> <a href="macros_8h_source.html#l00087">macros.h:87</a></div></div>
+<div class="ttc" id="anamespacecon_html_a47a54b8f758d02e6f8b85e41207ae620"><div class="ttname"><a href="namespacecon.html#a47a54b8f758d02e6f8b85e41207ae620">con::mp</a></div><div class="ttdeci">constexpr Real mp</div><div class="ttdoc">Proton mass in code units.</div><div class="ttdef"><b>Definition</b> <a href="macros_8h_source.html#l00088">macros.h:88</a></div></div>
+<div class="ttc" id="anamespacecon_html_aa0ccd904b754d0f907898a942516d121"><div class="ttname"><a href="namespacecon.html#aa0ccd904b754d0f907898a942516d121">con::pi</a></div><div class="ttdeci">constexpr Real pi</div><div class="ttdoc">Pi.</div><div class="ttdef"><b>Definition</b> <a href="macros_8h_source.html#l00096">macros.h:96</a></div></div>
 </div><!-- fragment --><div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
@@ -532,10 +532,10 @@ Here is the caller graph for this function:</div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>The shell spreading radius </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="physics_8cpp_source.html#l00024">24</a> of file <a class="el" href="physics_8cpp_source.html">physics.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   24</span>                                                               {</div>
-<div class="line"><span class="lineno">   25</span>        <span class="keywordflow">return</span> Gamma0 * Gamma0 * <a class="code hl_variable" href="namespacecon.html#a2ff3edf57629ccb9a49d5bde7278a7c4">con::c</a> * <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">engine_dura</a>;</div>
-<div class="line"><span class="lineno">   26</span>    }</div>
+<p class="definition">Definition at line <a class="el" href="physics_8cpp_source.html#l00026">26</a> of file <a class="el" href="physics_8cpp_source.html">physics.cpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   26</span>                                                               {</div>
+<div class="line"><span class="lineno">   27</span>        <span class="keywordflow">return</span> Gamma0 * Gamma0 * <a class="code hl_variable" href="namespacecon.html#a2ff3edf57629ccb9a49d5bde7278a7c4">con::c</a> * <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">engine_dura</a>;</div>
+<div class="line"><span class="lineno">   28</span>    }</div>
 </div><!-- fragment --><div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -600,12 +600,12 @@ Here is the call graph for this function:</div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>The shell thickness parameter ξ </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="physics_8cpp_source.html#l00032">32</a> of file <a class="el" href="physics_8cpp_source.html">physics.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   32</span>                                                                                      {</div>
-<div class="line"><span class="lineno">   33</span>        <span class="keyword">const</span> <a class="code hl_typedef" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">Sedov_l</a> = <a class="code hl_function" href="namespacephysics_1_1scales.html#a13b03e1ea24e11d2ac9e23973b92cbdb">sedov_length</a>(E_iso, n_ism);</div>
-<div class="line"><span class="lineno">   34</span>        <span class="keyword">const</span> <a class="code hl_typedef" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">shell_width</a> = <a class="code hl_variable" href="namespacecon.html#a2ff3edf57629ccb9a49d5bde7278a7c4">con::c</a> * <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">engine_dura</a>;</div>
-<div class="line"><span class="lineno">   35</span>        <span class="keywordflow">return</span> std::sqrt(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">Sedov_l</a> / <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">shell_width</a>) * std::pow(Gamma0, -4. / 3);</div>
-<div class="line"><span class="lineno">   36</span>    }</div>
+<p class="definition">Definition at line <a class="el" href="physics_8cpp_source.html#l00034">34</a> of file <a class="el" href="physics_8cpp_source.html">physics.cpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   34</span>                                                                                      {</div>
+<div class="line"><span class="lineno">   35</span>        <span class="keyword">const</span> <a class="code hl_typedef" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">Sedov_l</a> = <a class="code hl_function" href="namespacephysics_1_1scales.html#a13b03e1ea24e11d2ac9e23973b92cbdb">sedov_length</a>(E_iso, n_ism);</div>
+<div class="line"><span class="lineno">   36</span>        <span class="keyword">const</span> <a class="code hl_typedef" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">shell_width</a> = <a class="code hl_variable" href="namespacecon.html#a2ff3edf57629ccb9a49d5bde7278a7c4">con::c</a> * <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">engine_dura</a>;</div>
+<div class="line"><span class="lineno">   37</span>        <span class="keywordflow">return</span> std::sqrt(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">Sedov_l</a> / <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">shell_width</a>) * std::pow(Gamma0, -4. / 3);</div>
+<div class="line"><span class="lineno">   38</span>    }</div>
 </div><!-- fragment --><div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -665,10 +665,10 @@ Here is the call graph for this function:</div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>The thick shell deceleration radius </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="physics_8cpp_source.html#l00020">20</a> of file <a class="el" href="physics_8cpp_source.html">physics.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   20</span>                                                                          {</div>
-<div class="line"><span class="lineno">   21</span>        <span class="keywordflow">return</span> std::sqrt(std::sqrt(3 * E_iso * <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">engine_dura</a> / n_ism * <a class="code hl_variable" href="namespacecon.html#a2ff3edf57629ccb9a49d5bde7278a7c4">con::c</a> / (4 * <a class="code hl_variable" href="namespacecon.html#aa0ccd904b754d0f907898a942516d121">con::pi</a> * <a class="code hl_variable" href="namespacecon.html#a47a54b8f758d02e6f8b85e41207ae620">con::mp</a> * <a class="code hl_variable" href="namespacecon.html#a26ef2b83dd09c356e324bd243b498764">con::c2</a>)));</div>
-<div class="line"><span class="lineno">   22</span>    }</div>
+<p class="definition">Definition at line <a class="el" href="physics_8cpp_source.html#l00022">22</a> of file <a class="el" href="physics_8cpp_source.html">physics.cpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   22</span>                                                                          {</div>
+<div class="line"><span class="lineno">   23</span>        <span class="keywordflow">return</span> std::sqrt(std::sqrt(3 * E_iso * <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">engine_dura</a> / n_ism * <a class="code hl_variable" href="namespacecon.html#a2ff3edf57629ccb9a49d5bde7278a7c4">con::c</a> / (4 * <a class="code hl_variable" href="namespacecon.html#aa0ccd904b754d0f907898a942516d121">con::pi</a> * <a class="code hl_variable" href="namespacecon.html#a47a54b8f758d02e6f8b85e41207ae620">con::mp</a> * <a class="code hl_variable" href="namespacecon.html#a26ef2b83dd09c356e324bd243b498764">con::c2</a>)));</div>
+<div class="line"><span class="lineno">   24</span>    }</div>
 </div><!-- fragment --><div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -736,10 +736,10 @@ Here is the caller graph for this function:</div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>The thin shell deceleration radius </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="physics_8cpp_source.html#l00016">16</a> of file <a class="el" href="physics_8cpp_source.html">physics.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   16</span>                                                                    {</div>
-<div class="line"><span class="lineno">   17</span>        <span class="keywordflow">return</span> std::cbrt(3 * E_iso / (4 * <a class="code hl_variable" href="namespacecon.html#aa0ccd904b754d0f907898a942516d121">con::pi</a> * <a class="code hl_variable" href="namespacecon.html#a47a54b8f758d02e6f8b85e41207ae620">con::mp</a> * <a class="code hl_variable" href="namespacecon.html#a26ef2b83dd09c356e324bd243b498764">con::c2</a> * n_ism * Gamma0 * Gamma0));</div>
-<div class="line"><span class="lineno">   18</span>    }</div>
+<p class="definition">Definition at line <a class="el" href="physics_8cpp_source.html#l00018">18</a> of file <a class="el" href="physics_8cpp_source.html">physics.cpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   18</span>                                                                    {</div>
+<div class="line"><span class="lineno">   19</span>        <span class="keywordflow">return</span> std::cbrt(3 * E_iso / (4 * <a class="code hl_variable" href="namespacecon.html#aa0ccd904b754d0f907898a942516d121">con::pi</a> * <a class="code hl_variable" href="namespacecon.html#a47a54b8f758d02e6f8b85e41207ae620">con::mp</a> * <a class="code hl_variable" href="namespacecon.html#a26ef2b83dd09c356e324bd243b498764">con::c2</a> * n_ism * Gamma0 * Gamma0));</div>
+<div class="line"><span class="lineno">   20</span>    }</div>
 </div><!-- fragment --><div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">

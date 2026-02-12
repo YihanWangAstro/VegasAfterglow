@@ -1,0 +1,6 @@
+<map id="compute_boole_weights" name="compute_boole_weights">
+<area shape="rect" id="Node000001" title="Computes Boole&#39;s rule (Newton&#45;Cotes 4th order, O(h^6)) weights for a uniform log&#45;spaced grid." alt="" coords="5,29,185,55"/>
+<area shape="rect" id="Node000002" href="$utilities_8h.html#ab8e81118f023df135835db8cce4f5f42" title="Returns the value of a single parameter." alt="" coords="233,29,284,55"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="185,39,219,39,219,45,185,45"/>
+<area shape="poly" id="edge2_Node000002_Node000002" title=" " alt="" coords="231,31,226,21,229,11,240,5,259,3,281,6,291,15,287,19,279,11,259,8,242,10,233,15,231,20,236,28"/>
+</map>

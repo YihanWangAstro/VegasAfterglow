@@ -1,6 +1,0 @@
-<map id="point_interp" name="point_interp">
-<area shape="rect" id="Node000001" title="Point&#45;wise linear interpolation between two points." alt="" coords="5,29,105,55"/>
-<area shape="rect" id="Node000002" href="$utilities_8h.html#ab8e81118f023df135835db8cce4f5f42" title="Returns the value of a single parameter." alt="" coords="153,29,204,55"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="105,39,140,39,140,45,105,45"/>
-<area shape="poly" id="edge2_Node000002_Node000002" title=" " alt="" coords="157,30,153,21,155,11,164,5,179,3,196,6,203,14,199,18,193,11,179,8,166,10,160,14,158,20,162,28"/>
-</map>

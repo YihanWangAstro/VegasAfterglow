@@ -1,6 +1,7 @@
 var namespaces_dup =
 [
     [ "afterglow", "namespaceafterglow.html", "namespaceafterglow" ],
+    [ "anonymous_namespace{inverse-compton.cpp}", "namespaceanonymous__namespace_02inverse-compton_8cpp_03.html", "namespaceanonymous__namespace_02inverse-compton_8cpp_03" ],
     [ "con", "namespacecon.html", [
       [ "c", "namespacecon.html#a2ff3edf57629ccb9a49d5bde7278a7c4", null ],
       [ "c2", "namespacecon.html#a26ef2b83dd09c356e324bd243b498764", null ],

@@ -1,0 +1,13 @@
+<map id="traits.h" name="traits.h">
+<area shape="rect" id="Node000001" title=" " alt="" coords="46,5,114,31"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="5,79,61,104"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="75,32,51,69,46,66,70,30"/>
+<area shape="rect" id="Node000003" href="$macros_8h.html" title=" " alt="" coords="85,79,168,104"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="90,30,114,66,109,69,85,32"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="33,159,92,185"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="119,106,83,150,79,147,115,102"/>
+<area shape="rect" id="Node000005" href="$simulation-defaults_8h.html" title="Centralized simulation configuration defaults." alt="" coords="116,152,263,192"/>
+<area shape="poly" id="edge4_Node000003_Node000005" title=" " alt="" coords="138,103,168,139,163,143,134,106"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="154,240,225,265"/>
+<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="192,192,192,226,187,226,187,192"/>
+</map>

@@ -1,10 +1,10 @@
 <map id="SmoothPowerLawSyn::compute_I_nu" name="SmoothPowerLawSyn::compute_I_nu">
 <area shape="rect" id="Node000001" title="Calculates the comoving synchrotron specific intensity." alt="" coords="5,74,176,114"/>
-<area shape="rect" id="Node000002" href="$utilities_8h.html#a19a0be066f6b80639b5863a493990601" title="Fast approximation of the exponential function." alt="" coords="224,56,303,81"/>
+<area shape="rect" id="Node000002" href="$fast-math_8h.html#a19a0be066f6b80639b5863a493990601" title="Fast approximation of the exponential function." alt="" coords="224,56,303,81"/>
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="176,79,210,74,211,79,176,84"/>
 <area shape="rect" id="Node000005" href="$inverse-compton_8h.html#a90de46adbdc9f7f4c2bed7b5ab79c494" title=" " alt="" coords="351,107,557,132"/>
 <area shape="poly" id="edge6_Node000001_Node000005" title=" " alt="" coords="176,97,337,109,337,114,176,103"/>
-<area shape="rect" id="Node000003" href="$utilities_8h.html#afc584c30c352192de6847b1f4b8caf0e" title="Fast approximation of 2 raised to a power." alt="" coords="411,5,497,31"/>
+<area shape="rect" id="Node000003" href="$fast-math_8h.html#afc584c30c352192de6847b1f4b8caf0e" title="Fast approximation of 2 raised to a power." alt="" coords="411,5,497,31"/>
 <area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="302,56,396,30,398,36,303,61"/>
 <area shape="rect" id="Node000004" href="$utilities_8h.html#ab8e81118f023df135835db8cce4f5f42" title="Returns the value of a single parameter." alt="" coords="605,56,656,81"/>
 <area shape="poly" id="edge5_Node000002_Node000004" title=" " alt="" coords="303,66,591,66,591,71,303,71"/>
