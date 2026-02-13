@@ -33,7 +33,6 @@ script/*.png
 script/bilby_output/
 docs/build/
 docs/doxygen/
-validation/comprehensive_report.pdf
 validation/benchmark/results/
 validation/regression/results/
 

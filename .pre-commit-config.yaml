@@ -44,6 +44,7 @@ repos:
       - id: check-merge-conflict
       - id: check-added-large-files
         args: ['--maxkb=1000']
+        exclude: ^validation/comprehensive_report\.pdf$
 
   # Strip notebook outputs
   - repo: https://github.com/kynan/nbstripout
