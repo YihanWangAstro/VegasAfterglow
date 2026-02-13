@@ -1,9 +1,8 @@
 <map id="enclosed_thermal_energy" name="enclosed_thermal_energy">
-<area shape="rect" id="Node000001" title="Compute enclosed thermal energy per solid angle, accounting for adiabatic cooling and radiative losse..." alt="" coords="5,29,196,55"/>
-<area shape="rect" id="Node000002" href="$utilities_8h.html#ab8e81118f023df135835db8cce4f5f42" title="Returns the value of a single parameter." alt="" coords="435,29,485,55"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="196,39,421,39,421,45,196,45"/>
-<area shape="rect" id="Node000003" href="$shock-physics_8h.html#a4eecaf485f5ac3854b4fceab00516fd4" title="Simpson&#39;s rule integration in log&#45;space: ∫ f(r&#39;) dr&#39; via u = ln(r&#39;)." alt="" coords="244,55,387,80"/>
-<area shape="poly" id="edge3_Node000001_Node000003" title=" " alt="" coords="197,51,231,55,230,60,196,56"/>
-<area shape="poly" id="edge2_Node000002_Node000002" title=" " alt="" coords="435,30,430,21,433,11,443,5,460,3,480,6,489,15,485,18,477,11,460,8,445,10,437,15,436,20,440,28"/>
-<area shape="poly" id="edge4_Node000003_Node000002" title=" " alt="" coords="386,52,420,46,421,51,387,57"/>
+<area shape="rect" id="Node000001" title="Compute enclosed thermal energy per solid angle, accounting for adiabatic cooling and radiative losse..." alt="" coords="5,5,196,31"/>
+<area shape="rect" id="Node000002" href="$pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89" title=" " alt="" coords="435,5,589,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="196,15,421,15,421,21,196,21"/>
+<area shape="rect" id="Node000003" href="$shock-physics_8h.html#a4eecaf485f5ac3854b4fceab00516fd4" title="Simpson&#39;s rule integration in log&#45;space: ∫ f(r&#39;) dr&#39; via u = ln(r&#39;)." alt="" coords="244,31,387,56"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="197,27,231,31,230,36,196,32"/>
+<area shape="poly" id="edge3_Node000003_Node000002" title=" " alt="" coords="386,32,420,27,421,32,387,37"/>
 </map>

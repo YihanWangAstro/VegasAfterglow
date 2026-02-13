@@ -1,4 +1,8 @@
 var searchData=
 [
-  ['weights_0',['weights',['../structFluxData.html#a54a1c372a26eaa134f7bbabf1d27dbc0',1,'FluxData::weights'],['../structMultiBandData.html#a082a799cc2a578edb86044c486057582',1,'MultiBandData::weights']]]
+  ['x3_0',['x3',['../structReverseState.html#a93f903047d33a1db6a9dd34285cc10ff',1,'ReverseState']]],
+  ['x4_1',['x4',['../structReverseState.html#ab6f73020301e351719e48a0d033ffeff',1,'ReverseState']]],
+  ['x_5fmax_2',['x_max',['../structanonymous__namespace_02inverse-compton_8cpp_03_1_1ComptonSigmaLUT.html#ac0c79990ec1fb99ee736dc43845c0fd8',1,'anonymous_namespace{inverse-compton.cpp}::ComptonSigmaLUT']]],
+  ['x_5fmin_3',['x_min',['../structanonymous__namespace_02inverse-compton_8cpp_03_1_1ComptonSigmaLUT.html#a383a13b5685793290351e89fde1c3871',1,'anonymous_namespace{inverse-compton.cpp}::ComptonSigmaLUT']]],
+  ['xi_5fe_4',['xi_e',['../structRadParams.html#a762cf0c07a2dc70ef2e3472a517fff7e',1,'RadParams']]]
 ];

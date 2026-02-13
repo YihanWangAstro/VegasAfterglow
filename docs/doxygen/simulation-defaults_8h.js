@@ -3,6 +3,7 @@ var simulation_defaults_8h =
     [ "binary_search_eps", "simulation-defaults_8h.html#a29443c4987378f49066f9b406c391afc", null ],
     [ "forward_ratio", "simulation-defaults_8h.html#ae654c737813ff06431141238b26e0a67", null ],
     [ "gamma_cut", "simulation-defaults_8h.html#a6cda2def28c77f63dbee9eb169d9d87a", null ],
+    [ "gamma_therm_cut", "simulation-defaults_8h.html#ab39d9933981c5b821ab8938ba331050d", null ],
     [ "min_obs_time_sec", "simulation-defaults_8h.html#aa955f53126bae3c13bf752b75ed32558", null ],
     [ "min_theta_points", "simulation-defaults_8h.html#a17f64e94f8f9cb660a1e9d80a2b1558c", null ],
     [ "ode_atol", "simulation-defaults_8h.html#af7b124ea80319659cfba4833beded247", null ],

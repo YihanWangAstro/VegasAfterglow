@@ -1,6 +1,5 @@
 <map id="compute_dr_dt" name="compute_dr_dt">
-<area shape="rect" id="Node000001" title="Computes the time derivative of radius (dr/dt) based on the shock velocity." alt="" coords="5,29,124,55"/>
-<area shape="rect" id="Node000002" href="$utilities_8h.html#ab8e81118f023df135835db8cce4f5f42" title="Returns the value of a single parameter." alt="" coords="172,29,223,55"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="124,39,158,39,158,45,124,45"/>
-<area shape="poly" id="edge2_Node000002_Node000002" title=" " alt="" coords="175,30,170,21,173,11,182,5,197,3,215,6,223,14,219,18,213,11,197,8,184,10,177,14,176,20,180,28"/>
+<area shape="rect" id="Node000001" title="Computes the time derivative of radius (dr/dt) based on the shock velocity." alt="" coords="5,5,124,31"/>
+<area shape="rect" id="Node000002" href="$pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89" title=" " alt="" coords="172,5,327,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="124,15,158,15,158,21,124,21"/>
 </map>

@@ -24,64 +24,8 @@ Core Classes
 ------------
 
 .. note::
-   The classes below (``ObsData``, ``Setups``, ``Fitter``, ``ParamDef``, ``Scale``) require the MCMC extra:
+   The classes below (``Fitter``, ``ParamDef``, ``Scale``) require the MCMC extra:
    ``pip install VegasAfterglow[mcmc]``
-
-.. _api-obsdata:
-
-ObsData
-^^^^^^^
-
-.. autoclass:: VegasAfterglow.ObsData
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
-The `ObsData` class is used to store and manage observational data, including light curves and spectra. It provides methods to add observational data from various sources.
-
-Example:
-
-.. code-block:: python
-
-    from VegasAfterglow import ObsData
-
-    # Create an instance to store observational data
-    data = ObsData()
-
-    # Add light curve data
-    data.add_flux_density(nu=4.84e14, t=time_data, f_nu=flux_data, err=flux_error)  # All quantities in CGS units
-
-    # Add spectrum data
-    data.add_spectrum(t=3000, nu=nu_data, f_nu=spectrum_data, err=spectrum_error)  # All quantities in CGS units
-
-.. _api-setups:
-
-Setups
-^^^^^^
-
-.. autoclass:: VegasAfterglow.Setups
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
-The `Setups` class defines global properties and environment settings for the model. These settings remain fixed during the MCMC process.
-
-Example:
-
-.. code-block:: python
-
-    from VegasAfterglow import Setups
-
-    # Create configuration
-    cfg = Setups()
-
-    # Source properties
-    cfg.lumi_dist = 3.364e28    # Luminosity distance [cm]
-    cfg.z = 1.58               # Redshift
-
-    # Physical model configuration
-    cfg.medium = "wind"        # Ambient medium: "wind", "ISM", or "user"
-    cfg.jet = "powerlaw"       # Jet structure: "powerlaw", "gaussian", "tophat", or "user"
 
 .. _api-modelparams:
 
@@ -160,37 +104,28 @@ Fitter
    :undoc-members:
    :show-inheritance:
 
-The `Fitter` class provides a high-level interface for MCMC fitting of GRB afterglow models to observational data.
+The `Fitter` class provides a high-level interface for MCMC fitting of GRB afterglow models to observational data. All model configuration is passed as keyword arguments to the constructor. Data is added directly to the fitter via ``add_flux_density()``, ``add_spectrum()``, and ``add_flux()`` methods.
 
 Example:
 
 .. code-block:: python
 
-    from VegasAfterglow import Fitter
+    from VegasAfterglow import Fitter, ParamDef, Scale
 
-    # Create the fitter object
-    fitter = Fitter(data, cfg)
+    # Create the fitter with model configuration and add data
+    fitter = Fitter(z=1.58, lumi_dist=3.364e28, jet="tophat", medium="ism")
+    fitter.add_flux_density(nu=4.84e14, t=t_data, f_nu=flux_data, err=flux_err)
+    fitter.add_spectrum(t=3000, nu=nu_data, f_nu=spectrum_data, err=spectrum_err)
 
-    # Option 1: MCMC with emcee (faster, recommended for quick fitting)
+    # Run MCMC with emcee
     result = fitter.fit(
         mc_params,
         resolution=(0.15, 0.5, 10),    # Grid resolution (phi, theta, t)
         sampler="emcee",               # MCMC sampler
         nsteps=10000,                  # Number of steps per walker
         nburn=1000,                    # Burn-in steps to discard
-        npool=8,                       # Number of parallel processes
+        npool=8,                       # Number of parallel threads
         top_k=10,                      # Number of best-fit parameters to return
-    )
-
-    # Option 2: Nested sampling with dynesty (slower but computes Bayesian evidence)
-    result = fitter.fit(
-        mc_params,
-        resolution=(0.3, 0.3, 10),     # Grid resolution (phi, theta, t)
-        sampler="dynesty",             # Nested sampling algorithm
-        nlive=1000,                    # Number of live points
-        walks=100,                     # Number of random walks per live point
-        dlogz=0.5,                     # Stopping criterion (evidence tolerance)
-        npool=8,                       # Number of parallel processes
     )
 
     # Generate light curves with best-fit parameters
@@ -210,18 +145,6 @@ FitResult
    :show-inheritance:
 
 The `FitResult` class stores the results of an MCMC fit, including the posterior samples, log probabilities, top-k best-fit parameters, and the full bilby Result object for diagnostics.
-
-.. _api-vegasmc:
-
-VegasMC
-^^^^^^^
-
-.. autoclass:: VegasAfterglow.VegasMC
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
-The `VegasMC` class is the core calculator for MCMC sampling, providing efficient computation of model likelihood based on the specified parameters.
 
 Documenting Python Code
 -----------------------

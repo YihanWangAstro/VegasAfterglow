@@ -2,6 +2,7 @@ var namespacedefaults =
 [
     [ "cutoffs", "namespacedefaults_1_1cutoffs.html", [
       [ "gamma_cut", "namespacedefaults_1_1cutoffs.html#a6cda2def28c77f63dbee9eb169d9d87a", null ],
+      [ "gamma_therm_cut", "namespacedefaults_1_1cutoffs.html#ab39d9933981c5b821ab8938ba331050d", null ],
       [ "sigma_cut", "namespacedefaults_1_1cutoffs.html#a0ddde26f6745ea360b0887b2b95f2ac3", null ]
     ] ],
     [ "grid", "namespacedefaults_1_1grid.html", [

@@ -1,5 +1,8 @@
 <map id="PyTwoComponentJet" name="PyTwoComponentJet">
-<area shape="rect" id="Node000001" title="Creates a two&#45;component jet model with different properties for narrow and wide components." alt="" coords="5,5,160,31"/>
+<area shape="rect" id="Node000001" title="Creates a two&#45;component jet model with different properties for narrow and wide components." alt="" coords="5,31,160,56"/>
 <area shape="rect" id="Node000002" href="$pymodel_8cpp.html#a9ff88a7dd74b672cbd0df6adcb982a41" title=" " alt="" coords="208,5,333,31"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="160,15,194,15,194,21,160,21"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="160,30,194,26,195,31,161,36"/>
+<area shape="rect" id="Node000003" href="$pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89" title=" " alt="" coords="381,31,536,56"/>
+<area shape="poly" id="edge3_Node000001_Node000003" title=" " alt="" coords="160,41,367,41,367,46,160,46"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="334,24,368,28,367,34,333,29"/>
 </map>

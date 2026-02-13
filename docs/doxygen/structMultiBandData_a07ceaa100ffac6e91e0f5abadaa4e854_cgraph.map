@@ -1,5 +1,0 @@
-<map id="MultiBandData::add_flux" name="MultiBandData::add_flux">
-<area shape="rect" id="Node000001" title="Add frequency&#45;integrated flux measurements over a specified frequency band." alt="" coords="5,5,188,31"/>
-<area shape="rect" id="Node000002" href="$pybind_8h.html#a65fbb7ac1dd1f2667e68724a512f691c" title=" " alt="" coords="236,5,343,31"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="189,15,222,15,222,21,189,21"/>
-</map>

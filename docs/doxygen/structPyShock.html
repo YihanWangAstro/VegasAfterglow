@@ -106,7 +106,7 @@ $(document).ready(function(){initNavTree('structPyShock.html',''); initResizable
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a9b4eeafbb83d9492336fa59d58802cba" id="r_a9b4eeafbb83d9492336fa59d58802cba"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structPyShock.html#a9b4eeafbb83d9492336fa59d58802cba">repr</a> () <a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">const</a></td></tr>
+<tr class="memitem:a9b4eeafbb83d9492336fa59d58802cba" id="r_a9b4eeafbb83d9492336fa59d58802cba"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structPyShock.html#a9b4eeafbb83d9492336fa59d58802cba">repr</a> () <a class="el" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">const</a></td></tr>
 <tr class="separator:a9b4eeafbb83d9492336fa59d58802cba"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
@@ -212,18 +212,28 @@ Public Attributes</h2></td></tr>
 <div class="fragment"><div class="line"><span class="lineno">  441</span>                                         {</div>
 <div class="line"><span class="lineno">  442</span>        <span class="keywordflow">if</span> (<a class="code hl_variable" href="structPyShock.html#a91fcd07f840919a38d4171925e9a4ba0">Gamma</a>.size() == 0)</div>
 <div class="line"><span class="lineno">  443</span>            <span class="keywordflow">return</span> <span class="stringliteral">&quot;ShockDetails(empty)&quot;</span>;</div>
-<div class="line"><span class="lineno">  444</span>        std::string <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">s</a> = <span class="stringliteral">&quot;ShockDetails(shape=(&quot;</span>;</div>
-<div class="line"><span class="lineno">  445</span>        <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a> = 0; <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a> &lt; <a class="code hl_variable" href="structPyShock.html#a91fcd07f840919a38d4171925e9a4ba0">Gamma</a>.dimension(); ++<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a>) {</div>
-<div class="line"><span class="lineno">  446</span>            <span class="keywordflow">if</span> (<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a> &gt; 0)</div>
-<div class="line"><span class="lineno">  447</span>                <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">s</a> += <span class="stringliteral">&quot;, &quot;</span>;</div>
-<div class="line"><span class="lineno">  448</span>            <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">s</a> += std::to_string(<a class="code hl_variable" href="structPyShock.html#a91fcd07f840919a38d4171925e9a4ba0">Gamma</a>.shape()[<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">i</a>]);</div>
+<div class="line"><span class="lineno">  444</span>        std::string <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">s</a> = <span class="stringliteral">&quot;ShockDetails(shape=(&quot;</span>;</div>
+<div class="line"><span class="lineno">  445</span>        <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">i</a> = 0; <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">i</a> &lt; <a class="code hl_variable" href="structPyShock.html#a91fcd07f840919a38d4171925e9a4ba0">Gamma</a>.dimension(); ++<a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">i</a>) {</div>
+<div class="line"><span class="lineno">  446</span>            <span class="keywordflow">if</span> (<a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">i</a> &gt; 0)</div>
+<div class="line"><span class="lineno">  447</span>                <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">s</a> += <span class="stringliteral">&quot;, &quot;</span>;</div>
+<div class="line"><span class="lineno">  448</span>            <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">s</a> += std::to_string(<a class="code hl_variable" href="structPyShock.html#a91fcd07f840919a38d4171925e9a4ba0">Gamma</a>.shape()[<a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">i</a>]);</div>
 <div class="line"><span class="lineno">  449</span>        }</div>
-<div class="line"><span class="lineno">  450</span>        <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">s</a> += <span class="stringliteral">&quot;))&quot;</span>;</div>
-<div class="line"><span class="lineno">  451</span>        <span class="keywordflow">return</span> <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">s</a>;</div>
+<div class="line"><span class="lineno">  450</span>        <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">s</a> += <span class="stringliteral">&quot;))&quot;</span>;</div>
+<div class="line"><span class="lineno">  451</span>        <span class="keywordflow">return</span> <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">s</a>;</div>
 <div class="line"><span class="lineno">  452</span>    }</div>
+<div class="ttc" id="apybind_8cpp_html_ad93eae6422741850877b46bd61f08c89"><div class="ttname"><a href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">make_native_binary</a></div><div class="ttdeci">BinaryFunc make_native_binary(uintptr_t addr, std::vector&lt; Real &gt; const &amp;p)</div><div class="ttdef"><b>Definition</b> <a href="pybind_8cpp_source.html#l00027">pybind.cpp:27</a></div></div>
 <div class="ttc" id="astructPyShock_html_a91fcd07f840919a38d4171925e9a4ba0"><div class="ttname"><a href="structPyShock.html#a91fcd07f840919a38d4171925e9a4ba0">PyShock::Gamma</a></div><div class="ttdeci">XTArray Gamma</div><div class="ttdoc">Bulk Lorentz factor.</div><div class="ttdef"><b>Definition</b> <a href="pymodel_8h_source.html#l00418">pymodel.h:418</a></div></div>
-<div class="ttc" id="autilities_8h_html_ab8e81118f023df135835db8cce4f5f42"><div class="ttname"><a href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">max</a></div><div class="ttdeci">T max(T value)</div><div class="ttdoc">Returns the value of a single parameter.</div><div class="ttdef"><b>Definition</b> <a href="utilities_8h_source.html#l00260">utilities.h:260</a></div></div>
 </div><!-- fragment --><div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="structPyShock_a9b4eeafbb83d9492336fa59d58802cba_cgraph.png" border="0" usemap="#astructPyShock_a9b4eeafbb83d9492336fa59d58802cba_cgraph" alt=""/></div>
+<map name="astructPyShock_a9b4eeafbb83d9492336fa59d58802cba_cgraph" id="astructPyShock_a9b4eeafbb83d9492336fa59d58802cba_cgraph">
+<area shape="rect" title=" " alt="" coords="5,5,116,31"/>
+<area shape="rect" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89" title=" " alt="" coords="164,5,319,31"/>
+<area shape="poly" title=" " alt="" coords="116,15,150,15,150,21,116,21"/>
+</map>
+</div>
+<div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="structPyShock_a9b4eeafbb83d9492336fa59d58802cba_icgraph.png" border="0" usemap="#astructPyShock_a9b4eeafbb83d9492336fa59d58802cba_icgraph" alt=""/></div>

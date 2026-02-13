@@ -1,6 +1,5 @@
 <map id="Shock::broadcast_groups" name="Shock::broadcast_groups">
-<area shape="rect" id="Node000001" title="Broadcasts computed dynamics to all grid points based on detected symmetry." alt="" coords="5,29,189,55"/>
-<area shape="rect" id="Node000002" href="$utilities_8h.html#ab8e81118f023df135835db8cce4f5f42" title="Returns the value of a single parameter." alt="" coords="237,29,288,55"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="190,39,223,39,223,45,190,45"/>
-<area shape="poly" id="edge2_Node000002_Node000002" title=" " alt="" coords="235,31,229,21,232,11,244,5,263,3,285,6,295,15,292,19,283,11,263,8,245,10,236,15,234,20,239,28"/>
+<area shape="rect" id="Node000001" title="Broadcasts computed dynamics to all grid points based on detected symmetry." alt="" coords="5,5,189,31"/>
+<area shape="rect" id="Node000002" href="$pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89" title=" " alt="" coords="237,5,392,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="190,15,224,15,224,21,190,21"/>
 </map>

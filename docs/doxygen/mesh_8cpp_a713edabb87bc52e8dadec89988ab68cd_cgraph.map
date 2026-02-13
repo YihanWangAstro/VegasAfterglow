@@ -1,0 +1,5 @@
+<map id="is_log_scale" name="is_log_scale">
+<area shape="rect" id="Node000001" title="Checks if an array is logarithmically scaled within a given tolerance." alt="" coords="5,5,107,31"/>
+<area shape="rect" id="Node000002" href="$pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89" title=" " alt="" coords="155,5,309,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="107,15,141,15,141,21,107,21"/>
+</map>

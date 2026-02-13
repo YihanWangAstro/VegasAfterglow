@@ -1,6 +1,5 @@
 <map id="min" name="min">
-<area shape="rect" id="Node000001" title="Returns the minimum of multiple values." alt="" coords="5,29,52,55"/>
-<area shape="rect" id="Node000002" href="$utilities_8h.html#ab8e81118f023df135835db8cce4f5f42" title="Returns the value of a single parameter." alt="" coords="100,29,151,55"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="52,39,86,39,86,45,52,45"/>
-<area shape="poly" id="edge2_Node000002_Node000002" title=" " alt="" coords="108,30,105,21,107,12,114,5,125,3,139,6,145,15,141,18,136,11,125,8,116,10,111,14,110,20,113,28"/>
+<area shape="rect" id="Node000001" title="Returns the minimum of multiple values." alt="" coords="5,5,52,31"/>
+<area shape="rect" id="Node000002" href="$pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89" title=" " alt="" coords="100,5,255,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="52,15,86,15,86,21,52,21"/>
 </map>

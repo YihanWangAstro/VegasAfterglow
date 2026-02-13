@@ -9,8 +9,5 @@ var searchData=
   ['regime_6',['regime',['../structInverseComptonY.html#ab895ebc5dcf0238a117c7f55260a50c5',1,'InverseComptonY::regime'],['../structPowerLawSyn.html#a4aec6370d98865a8a6d8921f07c92a17',1,'PowerLawSyn::regime'],['../structSmoothPowerLawSyn.html#a1605946ee6393ff44c10d947e2b5fc89',1,'SmoothPowerLawSyn::regime'],['../structSynElectrons.html#a921f1ee7f5bf087c1bd255da68091460',1,'SynElectrons::regime']]],
   ['rho_7',['rho',['../classMedium.html#a419de8e407c9c9f75d1b76fdedf5d3eb',1,'Medium']]],
   ['rho3_5fx_8',['rho3_x',['../classFRShockEqn.html#abc84a8237f304b7b8dd366f7027bcf49',1,'FRShockEqn']]],
-  ['rtol_9',['rtol',['../structConfigParams.html#a1a1cd801dbf1871cff2cec2f868d3e87',1,'ConfigParams']]],
-  ['rvs_10',['rvs',['../structPyFlux.html#adf8746d12353d9fa116cdff7356687a9',1,'PyFlux::rvs'],['../structPyDetails.html#ac996eb361b1a82e930e32cf38416b5fe',1,'PyDetails::rvs']]],
-  ['rvs_5fshock_11',['rvs_shock',['../structConfigParams.html#af41f0f487535bb1e038351fb0e55f0a4',1,'ConfigParams']]],
-  ['rvs_5fssc_12',['rvs_ssc',['../structConfigParams.html#a0a2a1915b70aaba33eef55e5d6aa3560',1,'ConfigParams']]]
+  ['rvs_9',['rvs',['../structPyFlux.html#adf8746d12353d9fa116cdff7356687a9',1,'PyFlux::rvs'],['../structPyDetails.html#ac996eb361b1a82e930e32cf38416b5fe',1,'PyDetails::rvs']]]
 ];

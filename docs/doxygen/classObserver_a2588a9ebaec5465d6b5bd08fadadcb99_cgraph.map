@@ -1,13 +1,13 @@
 <map id="Observer::flux" name="Observer::flux">
 <area shape="rect" id="Node000001" title="Computes the integrated flux over a frequency band." alt="" coords="5,56,119,81"/>
-<area shape="poly" id="edge2_Node000001_Node000001" title=" " alt="" coords="30,57,24,48,27,38,40,32,62,29,88,33,99,42,96,46,86,38,62,35,42,37,31,41,29,47,35,54"/>
+<area shape="poly" id="edge3_Node000001_Node000001" title=" " alt="" coords="30,57,24,48,27,38,40,32,62,29,88,33,99,42,96,46,86,38,62,35,42,37,31,41,29,47,35,54"/>
 <area shape="rect" id="Node000002" href="$mesh_8cpp.html#ac536f77c32691232cb5e7546595fb3d2" title="Converts boundary values to center values using geometric mean." alt="" coords="167,5,345,31"/>
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="111,53,193,32,194,37,112,58"/>
-<area shape="rect" id="Node000003" href="$utilities_8h.html#ab8e81118f023df135835db8cce4f5f42" title="Returns the value of a single parameter." alt="" coords="393,93,444,119"/>
-<area shape="poly" id="edge3_Node000001_Node000003" title=" " alt="" coords="119,70,346,91,380,97,379,102,345,97,119,75"/>
+<area shape="rect" id="Node000003" href="$pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89" title=" " alt="" coords="393,56,548,81"/>
+<area shape="poly" id="edge4_Node000001_Node000003" title=" " alt="" coords="119,66,380,66,380,71,119,71"/>
 <area shape="rect" id="Node000004" href="$classObserver.html#a5350b13ae5a6c7007ba6459923573136" title="Sets up the Observer for flux calculation at specific observation times." alt="" coords="171,131,341,156"/>
 <area shape="poly" id="edge5_Node000001_Node000004" title=" " alt="" coords="97,79,211,123,209,128,95,84"/>
-<area shape="poly" id="edge4_Node000003_Node000003" title=" " alt="" coords="391,95,386,85,389,75,400,69,419,67,441,70,451,79,447,83,439,75,419,72,402,74,393,79,391,84,396,92"/>
-<area shape="poly" id="edge6_Node000004_Node000003" title=" " alt="" coords="311,128,379,112,380,117,313,133"/>
-<area shape="poly" id="edge7_Node000004_Node000004" title=" " alt="" coords="229,132,223,122,226,113,237,106,256,104,278,107,288,116,284,120,276,112,256,109,239,111,230,116,228,122,233,129"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="311,28,404,50,402,55,310,33"/>
+<area shape="poly" id="edge6_Node000004_Node000003" title=" " alt="" coords="293,128,419,83,421,88,295,133"/>
+<area shape="poly" id="edge7_Node000004_Node000004" title=" " alt="" coords="224,132,218,122,221,112,234,106,256,104,282,108,293,116,290,120,280,112,256,109,236,111,225,116,223,122,229,129"/>
 </map>

@@ -1,6 +1,5 @@
 <map id="ICPhoton::compute_log2_I_nu" name="ICPhoton::compute_log2_I_nu">
-<area shape="rect" id="Node000001" title="Computes the base&#45;2 logarithm of the photon&#45;specific intensity at a given frequency." alt="" coords="5,29,220,55"/>
-<area shape="rect" id="Node000002" href="$utilities_8h.html#ab8e81118f023df135835db8cce4f5f42" title="Returns the value of a single parameter." alt="" coords="268,29,319,55"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="220,39,254,39,254,45,220,45"/>
-<area shape="poly" id="edge2_Node000002_Node000002" title=" " alt="" coords="266,32,258,22,260,12,272,5,293,3,320,7,327,12,329,19,324,20,323,16,318,12,293,8,274,10,264,15,263,21,270,29"/>
+<area shape="rect" id="Node000001" title="Computes the base&#45;2 logarithm of the photon&#45;specific intensity at a given frequency." alt="" coords="5,5,220,31"/>
+<area shape="rect" id="Node000002" href="$pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89" title=" " alt="" coords="268,5,423,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="220,15,254,15,254,21,220,21"/>
 </map>

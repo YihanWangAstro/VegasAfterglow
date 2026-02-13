@@ -23,8 +23,5 @@ var searchData=
   ['root_5fbisect_20',['root_bisect',['../utilities_8h.html#a29a716285d00743072d357c4a64a7f85',1,'utilities.h']]],
   ['rs_5fcrossing_5fradius_21',['RS_crossing_radius',['../namespacephysics_1_1scales.html#a98f637f6b484f1cadc984d91ad5385b0',1,'physics::scales']]],
   ['rs_5ftransition_5fradius_22',['RS_transition_radius',['../namespacephysics_1_1scales.html#aabd57011030fde81cae3c5b2f66de5cb',1,'physics::scales']]],
-  ['rtol_23',['rtol',['../structConfigParams.html#a1a1cd801dbf1871cff2cec2f868d3e87',1,'ConfigParams']]],
-  ['rvs_24',['rvs',['../structPyFlux.html#adf8746d12353d9fa116cdff7356687a9',1,'PyFlux::rvs'],['../structPyDetails.html#ac996eb361b1a82e930e32cf38416b5fe',1,'PyDetails::rvs']]],
-  ['rvs_5fshock_25',['rvs_shock',['../structConfigParams.html#af41f0f487535bb1e038351fb0e55f0a4',1,'ConfigParams']]],
-  ['rvs_5fssc_26',['rvs_ssc',['../structConfigParams.html#a0a2a1915b70aaba33eef55e5d6aa3560',1,'ConfigParams']]]
+  ['rvs_23',['rvs',['../structPyFlux.html#adf8746d12353d9fa116cdff7356687a9',1,'PyFlux::rvs'],['../structPyDetails.html#ac996eb361b1a82e930e32cf38416b5fe',1,'PyDetails::rvs']]]
 ];

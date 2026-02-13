@@ -1,6 +1,5 @@
 <map id="compute_bin_widths" name="compute_bin_widths">
-<area shape="rect" id="Node000001" title="Computes interval widths dg(j) = grid(j+1) &#45; grid(j) from a grid of boundaries." alt="" coords="5,29,161,55"/>
-<area shape="rect" id="Node000002" href="$utilities_8h.html#ab8e81118f023df135835db8cce4f5f42" title="Returns the value of a single parameter." alt="" coords="209,29,260,55"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="162,39,196,39,196,45,162,45"/>
-<area shape="poly" id="edge2_Node000002_Node000002" title=" " alt="" coords="209,31,204,21,207,11,217,5,235,3,255,6,264,15,260,19,253,11,235,8,219,10,211,15,209,20,214,28"/>
+<area shape="rect" id="Node000001" title="Computes interval widths dg(j) = grid(j+1) &#45; grid(j) from a grid of boundaries." alt="" coords="5,5,161,31"/>
+<area shape="rect" id="Node000002" href="$pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89" title=" " alt="" coords="209,5,364,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="162,15,195,15,195,21,162,21"/>
 </map>

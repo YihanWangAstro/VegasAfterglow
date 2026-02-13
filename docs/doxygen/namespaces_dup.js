@@ -9,6 +9,7 @@ var namespaces_dup =
       [ "e2", "namespacecon.html#a81c8cc92a6dc246461e02ea5bedc92d3", null ],
       [ "e3", "namespacecon.html#a92791fe4a29975daa56e4277cc0f83ac", null ],
       [ "Gamma_cut", "namespacecon.html#a9c6b1c9b349c790392fa370c8d9e13a8", null ],
+      [ "gamma_therm_cut", "namespacecon.html#a8b44f0aa07b737da6969c68bf5b67200", null ],
       [ "h", "namespacecon.html#a07ddec20ab09a3078fce714358b65b4b", null ],
       [ "H0", "namespacecon.html#a7d02c13c0078e3c832425dd7ac844d7e", null ],
       [ "inf", "namespacecon.html#ad61313f4a5b7876e54ae46d02d4a04bd", null ],

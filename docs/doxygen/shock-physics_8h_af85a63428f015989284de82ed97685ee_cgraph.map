@@ -1,6 +1,5 @@
 <map id="write_shock_state" name="write_shock_state">
-<area shape="rect" id="Node000001" title="Saves the current state of the shock." alt="" coords="5,29,145,55"/>
-<area shape="rect" id="Node000002" href="$utilities_8h.html#ab8e81118f023df135835db8cce4f5f42" title="Returns the value of a single parameter." alt="" coords="193,29,244,55"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="145,39,179,39,179,45,145,45"/>
-<area shape="poly" id="edge2_Node000002_Node000002" title=" " alt="" coords="195,30,190,21,192,11,202,5,219,3,238,6,247,15,243,18,236,11,219,8,204,10,197,15,195,20,199,28"/>
+<area shape="rect" id="Node000001" title="Saves the current state of the shock." alt="" coords="5,5,145,31"/>
+<area shape="rect" id="Node000002" href="$pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89" title=" " alt="" coords="193,5,348,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="146,15,179,15,179,21,146,21"/>
 </map>

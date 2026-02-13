@@ -1,6 +1,5 @@
 <map id="root_bisect" name="root_bisect">
-<area shape="rect" id="Node000001" title="Finds the root of a function using the bisection method." alt="" coords="5,29,100,55"/>
-<area shape="rect" id="Node000002" href="$utilities_8h.html#ab8e81118f023df135835db8cce4f5f42" title="Returns the value of a single parameter." alt="" coords="148,29,199,55"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="100,39,134,39,134,45,100,45"/>
-<area shape="poly" id="edge2_Node000002_Node000002" title=" " alt="" coords="152,30,148,21,150,11,159,5,173,3,190,6,197,14,193,18,187,11,173,8,161,10,155,14,154,20,157,28"/>
+<area shape="rect" id="Node000001" title="Finds the root of a function using the bisection method." alt="" coords="5,5,100,31"/>
+<area shape="rect" id="Node000002" href="$pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89" title=" " alt="" coords="148,5,303,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="100,15,134,15,134,21,100,21"/>
 </map>

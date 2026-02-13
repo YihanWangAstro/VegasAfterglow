@@ -1,7 +1,6 @@
 <map id="generate_syn_electrons" name="generate_syn_electrons">
 <area shape="rect" id="Node000001" title="Creates and returns a new electron grid based on shock parameters." alt="" coords="5,29,183,55"/>
-<area shape="poly" id="edge1_Node000001_Node000001" title=" " alt="" coords="67,31,61,21,64,11,76,5,94,3,116,6,125,15,122,19,114,11,94,8,77,10,69,15,67,20,72,28"/>
-<area shape="rect" id="Node000002" href="$utilities_8h.html#ab8e81118f023df135835db8cce4f5f42" title="Returns the value of a single parameter." alt="" coords="231,29,281,55"/>
+<area shape="poly" id="edge1_Node000001_Node000001" title=" " alt="" coords="59,31,52,21,55,11,70,5,94,3,124,6,135,15,132,20,122,11,94,8,71,10,59,15,57,20,63,28"/>
+<area shape="rect" id="Node000002" href="$pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89" title=" " alt="" coords="231,29,385,55"/>
 <area shape="poly" id="edge2_Node000001_Node000002" title=" " alt="" coords="183,39,217,39,217,45,183,45"/>
-<area shape="poly" id="edge3_Node000002_Node000002" title=" " alt="" coords="229,31,223,21,226,11,238,5,256,3,278,6,287,15,284,19,276,11,256,8,239,10,231,15,229,20,234,28"/>
 </map>

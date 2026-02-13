@@ -1,6 +1,5 @@
 <map id="simpson_logspace" name="simpson_logspace">
-<area shape="rect" id="Node000001" title="Simpson&#39;s rule integration in log&#45;space: ∫ f(r&#39;) dr&#39; via u = ln(r&#39;)." alt="" coords="5,29,148,55"/>
-<area shape="rect" id="Node000002" href="$utilities_8h.html#ab8e81118f023df135835db8cce4f5f42" title="Returns the value of a single parameter." alt="" coords="196,29,247,55"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="148,39,182,39,182,45,148,45"/>
-<area shape="poly" id="edge2_Node000002_Node000002" title=" " alt="" coords="197,30,192,21,194,11,205,5,221,3,241,6,250,15,246,18,239,11,221,8,206,10,199,15,197,20,201,28"/>
+<area shape="rect" id="Node000001" title="Simpson&#39;s rule integration in log&#45;space: ∫ f(r&#39;) dr&#39; via u = ln(r&#39;)." alt="" coords="5,5,148,31"/>
+<area shape="rect" id="Node000002" href="$pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89" title=" " alt="" coords="196,5,351,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="148,15,182,15,182,21,148,21"/>
 </map>

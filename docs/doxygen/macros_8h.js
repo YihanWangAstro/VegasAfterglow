@@ -20,6 +20,7 @@ var macros_8h =
     [ "flux_den_cgs", "macros_8h.html#a4808047893e65d1942893de10e0a9c97", null ],
     [ "g", "macros_8h.html#af4ac5b90426ecc30143a4e0f495978b6", null ],
     [ "Gamma_cut", "macros_8h.html#a9c6b1c9b349c790392fa370c8d9e13a8", null ],
+    [ "gamma_therm_cut", "macros_8h.html#a8b44f0aa07b737da6969c68bf5b67200", null ],
     [ "Gauss", "macros_8h.html#afe6ab6092d118630921fa2b1ba3c888e", null ],
     [ "GeV", "macros_8h.html#a72e916028823a9789da7785db1d7c17a", null ],
     [ "Gyr", "macros_8h.html#a48f40dde4001ab058bb1b94072ce4470", null ],

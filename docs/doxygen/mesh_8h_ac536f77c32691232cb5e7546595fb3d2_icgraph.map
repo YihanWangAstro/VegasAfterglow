@@ -1,10 +1,6 @@
 <map id="boundary_to_center_log" name="boundary_to_center_log">
-<area shape="rect" id="Node000001" title="Converts boundary values to center values using geometric mean." alt="" coords="524,29,703,55"/>
-<area shape="rect" id="Node000002" href="$classObserver.html#a2588a9ebaec5465d6b5bd08fadadcb99" title="Computes the integrated flux over a frequency band." alt="" coords="363,29,476,55"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="510,45,476,45,476,39,510,39"/>
-<area shape="poly" id="edge2_Node000002_Node000002" title=" " alt="" coords="447,19,439,11,419,8,403,10,394,15,392,20,397,28,392,31,387,21,390,11,401,5,419,3,441,6,451,15"/>
-<area shape="rect" id="Node000003" href="$classPyModel.html#a51390496a41c22c7c2dbb8838ac7a2d2" title="Calculate bolometric flux integrated over a frequency range." alt="" coords="204,29,315,55"/>
-<area shape="poly" id="edge3_Node000002_Node000003" title=" " alt="" coords="349,45,315,45,315,39,349,39"/>
-<area shape="rect" id="Node000004" href="$pybind_8cpp.html#a8c92987849ad296e28ec6c07c8e7860b" title=" " alt="" coords="5,29,156,55"/>
-<area shape="poly" id="edge4_Node000003_Node000004" title=" " alt="" coords="190,45,156,45,156,39,190,39"/>
+<area shape="rect" id="Node000001" title="Converts boundary values to center values using geometric mean." alt="" coords="167,29,345,55"/>
+<area shape="rect" id="Node000002" href="$classObserver.html#a2588a9ebaec5465d6b5bd08fadadcb99" title="Computes the integrated flux over a frequency band." alt="" coords="5,29,119,55"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="153,45,119,45,119,39,153,39"/>
+<area shape="poly" id="edge2_Node000002_Node000002" title=" " alt="" coords="96,19,86,11,62,8,42,10,31,15,29,20,35,28,30,31,24,21,27,11,40,5,62,3,88,6,99,15"/>
 </map>

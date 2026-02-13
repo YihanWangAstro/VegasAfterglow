@@ -164,7 +164,7 @@ Include dependency graph for utilities.cpp:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:adf1fcdf083723d530f051255c2e395d9" id="r_adf1fcdf083723d530f051255c2e395d9"><td class="memItemLeft" align="right" valign="top"><a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">void</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="utilities_8cpp.html#adf1fcdf083723d530f051255c2e395d9">print_array</a> (<a class="el" href="mesh_8h.html#afd05120c4d579ec7fa4906f677781a83">Array</a> <a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">const</a> &amp;<a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">arr</a>)</td></tr>
+<tr class="memitem:adf1fcdf083723d530f051255c2e395d9" id="r_adf1fcdf083723d530f051255c2e395d9"><td class="memItemLeft" align="right" valign="top"><a class="el" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">void</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="utilities_8cpp.html#adf1fcdf083723d530f051255c2e395d9">print_array</a> (<a class="el" href="mesh_8h.html#afd05120c4d579ec7fa4906f677781a83">Array</a> <a class="el" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">const</a> &amp;<a class="el" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">arr</a>)</td></tr>
 <tr class="separator:adf1fcdf083723d530f051255c2e395d9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Function Documentation</h2>
@@ -175,9 +175,9 @@ Functions</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">void</a> print_array </td>
+          <td class="memname"><a class="el" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">void</a> print_array </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="mesh_8h.html#afd05120c4d579ec7fa4906f677781a83">Array</a> <a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">const</a> &amp;&#160;</td>
+          <td class="paramtype"><a class="el" href="mesh_8h.html#afd05120c4d579ec7fa4906f677781a83">Array</a> <a class="el" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">const</a> &amp;&#160;</td>
           <td class="paramname"><em>arr</em></td><td>)</td>
           <td></td>
         </tr>
@@ -186,21 +186,20 @@ Functions</h2></td></tr>
 
 <p class="definition">Definition at line <a class="el" href="utilities_8cpp_source.html#l00012">12</a> of file <a class="el" href="utilities_8cpp_source.html">utilities.cpp</a>.</p>
 <div class="fragment"><div class="line"><span class="lineno">   12</span>                                   {</div>
-<div class="line"><span class="lineno">   13</span>    <span class="keywordflow">for</span> (<span class="keyword">auto</span> <span class="keyword">const</span>&amp; <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">a</a> : <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">arr</a>) {</div>
-<div class="line"><span class="lineno">   14</span>        std::cout &lt;&lt; <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">a</a> &lt;&lt; <span class="stringliteral">&quot; &quot;</span>;</div>
+<div class="line"><span class="lineno">   13</span>    <span class="keywordflow">for</span> (<span class="keyword">auto</span> <span class="keyword">const</span>&amp; <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">a</a> : <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">arr</a>) {</div>
+<div class="line"><span class="lineno">   14</span>        std::cout &lt;&lt; <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">a</a> &lt;&lt; <span class="stringliteral">&quot; &quot;</span>;</div>
 <div class="line"><span class="lineno">   15</span>    }</div>
 <div class="line"><span class="lineno">   16</span>    std::cout &lt;&lt; std::endl;</div>
 <div class="line"><span class="lineno">   17</span>}</div>
-<div class="ttc" id="autilities_8h_html_ab8e81118f023df135835db8cce4f5f42"><div class="ttname"><a href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">max</a></div><div class="ttdeci">T max(T value)</div><div class="ttdoc">Returns the value of a single parameter.</div><div class="ttdef"><b>Definition</b> <a href="utilities_8h_source.html#l00260">utilities.h:260</a></div></div>
+<div class="ttc" id="apybind_8cpp_html_ad93eae6422741850877b46bd61f08c89"><div class="ttname"><a href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">make_native_binary</a></div><div class="ttdeci">BinaryFunc make_native_binary(uintptr_t addr, std::vector&lt; Real &gt; const &amp;p)</div><div class="ttdef"><b>Definition</b> <a href="pybind_8cpp_source.html#l00027">pybind.cpp:27</a></div></div>
 </div><!-- fragment --><div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="utilities_8cpp_adf1fcdf083723d530f051255c2e395d9_cgraph.png" border="0" usemap="#autilities_8cpp_adf1fcdf083723d530f051255c2e395d9_cgraph" alt=""/></div>
 <map name="autilities_8cpp_adf1fcdf083723d530f051255c2e395d9_cgraph" id="autilities_8cpp_adf1fcdf083723d530f051255c2e395d9_cgraph">
-<area shape="rect" title=" " alt="" coords="5,29,99,55"/>
-<area shape="rect" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42" title="Returns the value of a single parameter." alt="" coords="147,29,197,55"/>
-<area shape="poly" title=" " alt="" coords="99,39,133,39,133,45,99,45"/>
-<area shape="poly" title=" " alt="" coords="151,30,147,21,149,11,158,5,172,3,189,6,196,14,192,18,186,11,172,8,160,10,154,14,152,20,156,28"/>
+<area shape="rect" title=" " alt="" coords="5,5,99,31"/>
+<area shape="rect" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89" title=" " alt="" coords="147,5,301,31"/>
+<area shape="poly" title=" " alt="" coords="99,15,133,15,133,21,99,21"/>
 </map>
 </div>
 

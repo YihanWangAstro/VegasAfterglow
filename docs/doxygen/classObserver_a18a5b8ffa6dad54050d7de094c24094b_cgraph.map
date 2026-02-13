@@ -1,10 +1,9 @@
 <map id="Observer::spectra" name="Observer::spectra">
-<area shape="rect" id="Node000001" title="Computes the spectrum at multiple observation times." alt="" coords="5,29,143,55"/>
-<area shape="rect" id="Node000002" href="$utilities_8h.html#ab8e81118f023df135835db8cce4f5f42" title="Returns the value of a single parameter." alt="" coords="408,29,459,55"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="143,31,191,27,275,24,360,27,395,32,394,37,360,33,275,29,191,33,143,36"/>
-<area shape="rect" id="Node000003" href="$classObserver.html#a5350b13ae5a6c7007ba6459923573136" title="Sets up the Observer for flux calculation at specific observation times." alt="" coords="191,67,360,92"/>
-<area shape="poly" id="edge3_Node000001_Node000003" title=" " alt="" coords="144,52,194,62,193,67,143,57"/>
-<area shape="poly" id="edge2_Node000002_Node000002" title=" " alt="" coords="407,31,401,21,404,11,415,5,433,3,455,6,464,15,461,19,453,11,433,8,417,10,408,15,407,20,411,28"/>
-<area shape="poly" id="edge4_Node000003_Node000002" title=" " alt="" coords="329,64,394,48,395,54,330,69"/>
-<area shape="poly" id="edge5_Node000003_Node000003" title=" " alt="" coords="249,68,243,58,246,49,257,42,275,40,297,43,306,52,303,56,295,48,275,45,259,47,250,52,249,58,253,65"/>
+<area shape="rect" id="Node000001" title="Computes the spectrum at multiple observation times." alt="" coords="5,8,143,33"/>
+<area shape="rect" id="Node000002" href="$pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89" title=" " alt="" coords="408,8,563,33"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="143,9,191,6,275,3,360,6,394,8,394,13,360,11,275,8,191,11,143,15"/>
+<area shape="rect" id="Node000003" href="$classObserver.html#a5350b13ae5a6c7007ba6459923573136" title="Sets up the Observer for flux calculation at specific observation times." alt="" coords="191,45,360,70"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="144,30,194,40,193,45,143,36"/>
+<area shape="poly" id="edge3_Node000003_Node000002" title=" " alt="" coords="347,42,400,33,401,38,348,47"/>
+<area shape="poly" id="edge4_Node000003_Node000003" title=" " alt="" coords="242,46,235,37,239,27,253,20,275,18,303,22,314,31,311,35,301,27,275,24,254,26,243,30,241,36,247,43"/>
 </map>

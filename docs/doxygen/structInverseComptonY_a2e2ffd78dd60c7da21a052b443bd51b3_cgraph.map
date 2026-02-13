@@ -2,17 +2,16 @@
 <area shape="rect" id="Node000001" title="Initializes an InverseComptonY object with frequency thresholds, magnetic field and Y parameter." alt="" coords="5,49,196,89"/>
 <area shape="rect" id="Node000002" href="$synchrotron_8cpp.html#a936bfaa522ec8295a21d253e5453188d" title="Calculates synchrotron frequency for a given Lorentz factor and magnetic field." alt="" coords="244,5,387,31"/>
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="185,46,247,31,248,36,186,51"/>
-<area shape="rect" id="Node000003" href="$utilities_8h.html#ab8e81118f023df135835db8cce4f5f42" title="Returns the value of a single parameter." alt="" coords="569,107,620,132"/>
-<area shape="poly" id="edge10_Node000001_Node000003" title=" " alt="" coords="196,75,522,109,555,112,555,118,521,114,196,81"/>
+<area shape="rect" id="Node000003" href="$pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89" title=" " alt="" coords="569,107,724,132"/>
+<area shape="poly" id="edge9_Node000001_Node000003" title=" " alt="" coords="196,75,556,108,555,114,196,80"/>
 <area shape="rect" id="Node000004" href="$fast-math_8h.html#a4520a27a10a2aef33c99ad8c679da404" title="Fast approximation of a raised to the power of b." alt="" coords="275,132,356,157"/>
-<area shape="poly" id="edge4_Node000001_Node000004" title=" " alt="" coords="159,86,266,125,265,130,157,91"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="387,16,455,25,489,34,523,48,553,69,577,94,573,98,550,73,520,52,488,39,454,30,387,21"/>
-<area shape="poly" id="edge3_Node000003_Node000003" title=" " alt="" coords="575,108,571,98,573,89,581,82,595,80,611,83,618,92,614,95,608,88,595,85,583,87,577,92,576,98,579,105"/>
-<area shape="poly" id="edge9_Node000004_Node000003" title=" " alt="" coords="356,138,556,120,556,125,357,144"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="159,86,266,125,265,130,157,91"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="387,20,453,30,522,47,574,71,617,97,614,101,571,75,520,53,452,35,386,25"/>
+<area shape="poly" id="edge8_Node000004_Node000003" title=" " alt="" coords="356,139,555,124,556,129,357,144"/>
 <area shape="rect" id="Node000005" href="$fast-math_8h.html#afc584c30c352192de6847b1f4b8caf0e" title="Fast approximation of 2 raised to a power." alt="" coords="435,157,521,183"/>
-<area shape="poly" id="edge5_Node000004_Node000005" title=" " alt="" coords="357,148,421,158,420,164,356,154"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="357,148,421,158,420,164,356,154"/>
 <area shape="rect" id="Node000006" href="$fast-math_8h.html#aa67895957aa831a991982a8268ef8349" title="Fast approximation of the base&#45;2 logarithm." alt="" coords="437,207,519,232"/>
-<area shape="poly" id="edge7_Node000004_Node000006" title=" " alt="" coords="345,155,439,199,436,203,343,160"/>
-<area shape="poly" id="edge6_Node000005_Node000003" title=" " alt="" coords="507,155,556,133,558,138,509,160"/>
-<area shape="poly" id="edge8_Node000006_Node000003" title=" " alt="" coords="503,204,520,193,548,167,572,141,576,145,552,171,523,197,506,209"/>
+<area shape="poly" id="edge6_Node000004_Node000006" title=" " alt="" coords="345,155,439,199,436,203,343,160"/>
+<area shape="poly" id="edge5_Node000005_Node000003" title=" " alt="" coords="520,155,590,133,591,139,522,160"/>
+<area shape="poly" id="edge7_Node000006_Node000003" title=" " alt="" coords="501,204,520,193,612,137,615,141,523,198,503,209"/>
 </map>

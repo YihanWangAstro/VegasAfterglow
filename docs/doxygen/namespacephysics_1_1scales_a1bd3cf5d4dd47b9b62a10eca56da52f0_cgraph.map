@@ -1,8 +1,8 @@
 <map id="physics::scales::shell_thickness_param" name="physics::scales::shell_thickness_param">
-<area shape="rect" id="Node000001" title="Computes the dimensionless parameter (ξ) that characterizes the shell geometry." alt="" coords="5,51,164,91"/>
-<area shape="rect" id="Node000002" href="$utilities_8h.html#ab8e81118f023df135835db8cce4f5f42" title="Returns the value of a single parameter." alt="" coords="270,29,321,55"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="164,58,256,45,257,50,164,63"/>
-<area shape="rect" id="Node000003" href="$namespacephysics_1_1scales.html#a13b03e1ea24e11d2ac9e23973b92cbdb" title="Computes the Sedov length—a characteristic scale for blast wave deceleration." alt="" coords="212,79,379,119"/>
-<area shape="poly" id="edge3_Node000001_Node000003" title=" " alt="" coords="164,79,199,84,198,89,164,84"/>
-<area shape="poly" id="edge2_Node000002_Node000002" title=" " alt="" coords="268,35,255,25,255,13,269,5,295,3,317,4,331,9,337,18,334,26,329,25,332,18,328,14,316,10,295,8,271,11,260,16,260,23,271,31"/>
+<area shape="rect" id="Node000001" title="Computes the dimensionless parameter (ξ) that characterizes the shell geometry." alt="" coords="5,5,164,45"/>
+<area shape="rect" id="Node000002" href="$pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89" title=" " alt="" coords="427,13,581,38"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="164,20,212,19,379,19,413,19,413,25,379,24,212,24,164,25"/>
+<area shape="rect" id="Node000003" href="$namespacephysics_1_1scales.html#a13b03e1ea24e11d2ac9e23973b92cbdb" title="Computes the Sedov length—a characteristic scale for blast wave deceleration." alt="" coords="212,33,379,73"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="164,33,199,38,198,43,164,38"/>
+<area shape="poly" id="edge3_Node000003_Node000002" title=" " alt="" coords="378,40,413,35,413,40,379,45"/>
 </map>

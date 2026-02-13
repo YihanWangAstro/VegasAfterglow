@@ -102,7 +102,7 @@ $(document).ready(function(){initNavTree('namespacephysics_1_1relativistic.html'
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:ab1c1444afa3c4afd0c57145f932962fa" id="r_ab1c1444afa3c4afd0c57145f932962fa"><td class="memItemLeft" align="right" valign="top"><a class="el" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacephysics_1_1relativistic.html#ab1c1444afa3c4afd0c57145f932962fa">gamma_to_beta</a> (<a class="el" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> <a class="el" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">gamma</a>)</td></tr>
+<tr class="memitem:ab1c1444afa3c4afd0c57145f932962fa" id="r_ab1c1444afa3c4afd0c57145f932962fa"><td class="memItemLeft" align="right" valign="top"><a class="el" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacephysics_1_1relativistic.html#ab1c1444afa3c4afd0c57145f932962fa">gamma_to_beta</a> (<a class="el" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> <a class="el" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">gamma</a>)</td></tr>
 <tr class="memdesc:ab1c1444afa3c4afd0c57145f932962fa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Converts Lorentz factor (gamma) to a velocity fraction (beta)  <br /></td></tr>
 <tr class="separator:ab1c1444afa3c4afd0c57145f932962fa"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
@@ -144,18 +144,17 @@ Functions</h2></td></tr>
 
 <p class="definition">Definition at line <a class="el" href="physics_8h_source.html#l00036">36</a> of file <a class="el" href="physics_8h_source.html">physics.h</a>.</p>
 <div class="fragment"><div class="line"><span class="lineno">   36</span>                                              {</div>
-<div class="line"><span class="lineno">   37</span>            <span class="keywordflow">return</span> std::sqrt(<a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">gamma</a> * <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">gamma</a> - 1) / <a class="code hl_function" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">gamma</a>;</div>
+<div class="line"><span class="lineno">   37</span>            <span class="keywordflow">return</span> std::sqrt(<a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">gamma</a> * <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">gamma</a> - 1) / <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">gamma</a>;</div>
 <div class="line"><span class="lineno">   38</span>        }</div>
-<div class="ttc" id="autilities_8h_html_ab8e81118f023df135835db8cce4f5f42"><div class="ttname"><a href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42">max</a></div><div class="ttdeci">T max(T value)</div><div class="ttdoc">Returns the value of a single parameter.</div><div class="ttdef"><b>Definition</b> <a href="utilities_8h_source.html#l00260">utilities.h:260</a></div></div>
+<div class="ttc" id="apybind_8cpp_html_ad93eae6422741850877b46bd61f08c89"><div class="ttname"><a href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">make_native_binary</a></div><div class="ttdeci">BinaryFunc make_native_binary(uintptr_t addr, std::vector&lt; Real &gt; const &amp;p)</div><div class="ttdef"><b>Definition</b> <a href="pybind_8cpp_source.html#l00027">pybind.cpp:27</a></div></div>
 </div><!-- fragment --><div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="namespacephysics_1_1relativistic_ab1c1444afa3c4afd0c57145f932962fa_cgraph.png" border="0" usemap="#anamespacephysics_1_1relativistic_ab1c1444afa3c4afd0c57145f932962fa_cgraph" alt=""/></div>
 <map name="anamespacephysics_1_1relativistic_ab1c1444afa3c4afd0c57145f932962fa_cgraph" id="anamespacephysics_1_1relativistic_ab1c1444afa3c4afd0c57145f932962fa_cgraph">
-<area shape="rect" title="Converts Lorentz factor (gamma) to a velocity fraction (beta)" alt="" coords="5,22,153,62"/>
-<area shape="rect" href="utilities_8h.html#ab8e81118f023df135835db8cce4f5f42" title="Returns the value of a single parameter." alt="" coords="201,29,252,55"/>
-<area shape="poly" title=" " alt="" coords="153,39,188,39,188,45,153,45"/>
-<area shape="poly" title=" " alt="" coords="202,31,197,21,199,11,210,5,227,3,247,6,256,15,252,18,244,11,227,8,211,10,204,15,202,20,206,28"/>
+<area shape="rect" title="Converts Lorentz factor (gamma) to a velocity fraction (beta)" alt="" coords="5,5,153,45"/>
+<area shape="rect" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89" title=" " alt="" coords="201,13,356,38"/>
+<area shape="poly" title=" " alt="" coords="153,23,188,23,188,28,153,28"/>
 </map>
 </div>
 <div class="dynheader">

@@ -1,13 +1,5 @@
 <map id="PyModel::flux_density_exposures" name="PyModel::flux_density_exposures">
-<area shape="rect" id="Node000001" title="Calculate specific flux with finite exposure time averaging." alt="" coords="5,27,171,67"/>
-<area shape="rect" id="Node000002" href="$structPyFlux.html#a68faa22da5d5b169a0d461c56b4b3e21" title=" " alt="" coords="219,5,357,31"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="170,33,205,27,206,33,171,38"/>
-<area shape="rect" id="Node000003" href="$classObserver.html#a2497e02305dbf755a7d629311f8e772d" title="Computes the specific flux at a single observed frequency for multiple observation times." alt="" coords="219,55,357,95"/>
-<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="171,56,206,61,205,66,170,62"/>
-<area shape="rect" id="Node000004" href="$observer_8h.html#aa53249b087b9b9d83f4c06e808deeed9" title="Helper function that advances an iterator through an array until the value exceeds the target." alt="" coords="405,37,491,63"/>
-<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="357,62,392,56,392,61,358,67"/>
-<area shape="rect" id="Node000005" href="$utilities_8h.html#ab8e81118f023df135835db8cce4f5f42" title="Returns the value of a single parameter." alt="" coords="539,63,589,88"/>
-<area shape="poly" id="edge6_Node000003_Node000005" title=" " alt="" coords="358,73,525,73,525,78,358,78"/>
-<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="491,57,526,64,525,70,490,62"/>
-<area shape="poly" id="edge5_Node000005_Node000005" title=" " alt="" coords="544,64,540,54,542,45,550,38,564,36,580,39,587,48,583,51,577,44,564,41,552,43,547,48,545,54,549,61"/>
+<area shape="rect" id="Node000001" title="Calculate specific flux with finite exposure time averaging." alt="" coords="5,5,171,45"/>
+<area shape="rect" id="Node000002" href="$pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89" title=" " alt="" coords="219,13,373,38"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="171,23,205,23,205,28,171,28"/>
 </map>

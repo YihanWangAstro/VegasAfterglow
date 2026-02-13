@@ -2,8 +2,7 @@
 <area shape="rect" id="Node000001" title="Computes the specific flux at multiple observed frequencies." alt="" coords="5,31,175,56"/>
 <area shape="rect" id="Node000002" href="$observer_8h.html#aa53249b087b9b9d83f4c06e808deeed9" title="Helper function that advances an iterator through an array until the value exceeds the target." alt="" coords="223,5,308,31"/>
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="175,28,209,23,210,29,176,34"/>
-<area shape="rect" id="Node000003" href="$utilities_8h.html#ab8e81118f023df135835db8cce4f5f42" title="Returns the value of a single parameter." alt="" coords="356,31,407,56"/>
-<area shape="poly" id="edge4_Node000001_Node000003" title=" " alt="" coords="175,41,342,41,342,46,175,46"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="309,25,343,32,342,38,308,30"/>
-<area shape="poly" id="edge3_Node000003_Node000003" title=" " alt="" coords="361,32,357,22,359,13,368,6,381,4,397,7,404,16,400,19,395,12,381,9,370,11,364,16,363,22,366,29"/>
+<area shape="rect" id="Node000003" href="$pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89" title=" " alt="" coords="356,31,511,56"/>
+<area shape="poly" id="edge3_Node000001_Node000003" title=" " alt="" coords="175,41,342,41,342,46,175,46"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="309,22,343,27,342,32,308,27"/>
 </map>

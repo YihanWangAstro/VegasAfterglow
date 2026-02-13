@@ -64,13 +64,13 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#basic-setup">Basic Setup</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#setting-up-observational-data">Setting up Observational Data</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#fitter-constructor">Fitter Constructor</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#setting-up-data-and-the-fitter">Setting up Data and the Fitter</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#data-selection-and-optimization">Data Selection and Optimization</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#global-configuration">Global Configuration</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#model-configurations">Model Configurations</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#basic-setup-default">Basic Setup (Default)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#tophat-ism-default">TopHat + ISM (Default)</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#jet-structure-variations">Jet Structure Variations</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#medium-type-variations">Medium Type Variations</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#reverse-shock">Reverse Shock</a></li>
@@ -89,6 +89,15 @@
 <li class="toctree-l3"><a class="reference internal" href="#parameter-constraints">Parameter Constraints</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#model-predictions">Model Predictions</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#visualization">Visualization</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#advanced-fitting">Advanced Fitting</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#custom-priors">Custom Priors</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#custom-likelihood">Custom Likelihood</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#custom-jet-profiles">Custom Jet Profiles</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#custom-medium-profiles">Custom Medium Profiles</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#speeding-up-custom-profiles-with-gil-free">Speeding Up Custom Profiles with <code class="docutils literal notranslate"><span class="pre">&#64;gil_free</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#performance-notes">Performance Notes</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#troubleshooting">Troubleshooting</a></li>
@@ -142,14 +151,14 @@
 </li>
 <li><p><a class="reference internal" href="#basic-setup" id="id6">Basic Setup</a></p>
 <ul>
-<li><p><a class="reference internal" href="#setting-up-observational-data" id="id7">Setting up Observational Data</a></p></li>
-<li><p><a class="reference internal" href="#data-selection-and-optimization" id="id8">Data Selection and Optimization</a></p></li>
-<li><p><a class="reference internal" href="#global-configuration" id="id9">Global Configuration</a></p></li>
+<li><p><a class="reference internal" href="#fitter-constructor" id="id7">Fitter Constructor</a></p></li>
+<li><p><a class="reference internal" href="#setting-up-data-and-the-fitter" id="id8">Setting up Data and the Fitter</a></p></li>
+<li><p><a class="reference internal" href="#data-selection-and-optimization" id="id9">Data Selection and Optimization</a></p></li>
 </ul>
 </li>
 <li><p><a class="reference internal" href="#model-configurations" id="id10">Model Configurations</a></p>
 <ul>
-<li><p><a class="reference internal" href="#basic-setup-default" id="id11">Basic Setup (Default)</a></p></li>
+<li><p><a class="reference internal" href="#tophat-ism-default" id="id11">TopHat + ISM (Default)</a></p></li>
 <li><p><a class="reference internal" href="#jet-structure-variations" id="id12">Jet Structure Variations</a></p></li>
 <li><p><a class="reference internal" href="#medium-type-variations" id="id13">Medium Type Variations</a></p></li>
 <li><p><a class="reference internal" href="#reverse-shock" id="id14">Reverse Shock</a></p></li>
@@ -172,7 +181,17 @@
 <li><p><a class="reference internal" href="#visualization" id="id25">Visualization</a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#troubleshooting" id="id26">Troubleshooting</a></p></li>
+<li><p><a class="reference internal" href="#advanced-fitting" id="id26">Advanced Fitting</a></p>
+<ul>
+<li><p><a class="reference internal" href="#custom-priors" id="id27">Custom Priors</a></p></li>
+<li><p><a class="reference internal" href="#custom-likelihood" id="id28">Custom Likelihood</a></p></li>
+<li><p><a class="reference internal" href="#custom-jet-profiles" id="id29">Custom Jet Profiles</a></p></li>
+<li><p><a class="reference internal" href="#custom-medium-profiles" id="id30">Custom Medium Profiles</a></p></li>
+<li><p><a class="reference internal" href="#speeding-up-custom-profiles-with-gil-free" id="id31">Speeding Up Custom Profiles with <code class="docutils literal notranslate"><span class="pre">&#64;gil_free</span></code></a></p></li>
+<li><p><a class="reference internal" href="#performance-notes" id="id32">Performance Notes</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#troubleshooting" id="id33">Troubleshooting</a></p></li>
 </ul>
 </nav>
 <section id="overview">
@@ -190,6 +209,10 @@
 <li><p><strong>Complete physics</strong>: Forward shock, reverse shock, synchrotron, inverse Compton, magnetar injection</p></li>
 <li><p><strong>Flexible data handling</strong>: Light curves and spectra with optional weighting</p></li>
 </ul>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="parameter_reference.html"><span class="doc">Parameter Reference</span></a> for parameter details and typical ranges. <a class="reference internal" href="physics.html"><span class="doc">GRB Afterglow Physics</span></a> for the underlying physical models.</p>
+</div>
 </section>
 <section id="mcmc-best-practices">
 <h2><a class="toc-backref" href="#id2" role="doc-backlink">MCMC Best Practices</a><a class="headerlink" href="#mcmc-best-practices" title="Link to this heading"></a></h2>
@@ -199,9 +222,7 @@
 <p><strong>Recommended Progression:</strong></p>
 <ol class="arabic">
 <li><p><strong>Start with TopHat + ISM + Forward Shock Only</strong></p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">cfg</span> <span class="o">=</span> <span class="n">Setups</span><span class="p">()</span>
-<span class="n">cfg</span><span class="o">.</span><span class="n">medium</span> <span class="o">=</span> <span class="s2">&quot;ism&quot;</span>
-<span class="n">cfg</span><span class="o">.</span><span class="n">jet</span> <span class="o">=</span> <span class="s2">&quot;tophat&quot;</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">fitter</span> <span class="o">=</span> <span class="n">Fitter</span><span class="p">(</span><span class="n">z</span><span class="o">=</span><span class="mf">1.58</span><span class="p">,</span> <span class="n">lumi_dist</span><span class="o">=</span><span class="mf">3.364e28</span><span class="p">,</span> <span class="n">jet</span><span class="o">=</span><span class="s2">&quot;tophat&quot;</span><span class="p">,</span> <span class="n">medium</span><span class="o">=</span><span class="s2">&quot;ism&quot;</span><span class="p">)</span>
 <span class="c1"># All other physics options default to False</span>
 </pre></div>
 </div>
@@ -268,15 +289,47 @@
 </section>
 <section id="basic-setup">
 <h2><a class="toc-backref" href="#id6" role="doc-backlink">Basic Setup</a><a class="headerlink" href="#basic-setup" title="Link to this heading"></a></h2>
-<section id="setting-up-observational-data">
-<h3><a class="toc-backref" href="#id7" role="doc-backlink">Setting up Observational Data</a><a class="headerlink" href="#setting-up-observational-data" title="Link to this heading"></a></h3>
-<p>The <code class="docutils literal notranslate"><span class="pre">ObsData</span></code> class handles multi-wavelength observational data:</p>
+<section id="fitter-constructor">
+<h3><a class="toc-backref" href="#id7" role="doc-backlink">Fitter Constructor</a><a class="headerlink" href="#fitter-constructor" title="Link to this heading"></a></h3>
+<p>The <code class="docutils literal notranslate"><span class="pre">Fitter</span></code> constructor accepts keyword arguments for source properties, model selection, physics options, and numerical parameters:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">fitter</span> <span class="o">=</span> <span class="n">Fitter</span><span class="p">(</span>
+    <span class="c1"># Source properties</span>
+    <span class="n">z</span><span class="o">=</span><span class="mf">1.58</span><span class="p">,</span>                   <span class="c1"># Redshift</span>
+    <span class="n">lumi_dist</span><span class="o">=</span><span class="mf">3.364e28</span><span class="p">,</span>       <span class="c1"># Luminosity distance [cm]</span>
+
+    <span class="c1"># Model selection (see sections below for all options)</span>
+    <span class="n">jet</span><span class="o">=</span><span class="s2">&quot;powerlaw&quot;</span><span class="p">,</span>           <span class="c1"># Jet structure type</span>
+    <span class="n">medium</span><span class="o">=</span><span class="s2">&quot;wind&quot;</span><span class="p">,</span>            <span class="c1"># Ambient medium type</span>
+
+    <span class="c1"># Physics options</span>
+    <span class="n">rvs_shock</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>           <span class="c1"># Include reverse shock</span>
+    <span class="n">fwd_ssc</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>             <span class="c1"># Forward shock inverse Compton</span>
+    <span class="n">rvs_ssc</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>            <span class="c1"># Reverse shock inverse Compton</span>
+    <span class="n">ssc_cooling</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>         <span class="c1"># IC cooling effects</span>
+    <span class="n">kn</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>                  <span class="c1"># Klein-Nishina corrections</span>
+    <span class="n">magnetar</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>            <span class="c1"># Magnetar energy injection</span>
+
+    <span class="c1"># Numerical parameters</span>
+    <span class="n">rtol</span><span class="o">=</span><span class="mf">1e-5</span><span class="p">,</span>                <span class="c1"># Numerical tolerance</span>
+    <span class="n">resolution</span><span class="o">=</span><span class="p">(</span><span class="mf">0.15</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span>  <span class="c1"># Grid resolution (phi, theta, t)</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="setting-up-data-and-the-fitter">
+<h3><a class="toc-backref" href="#id8" role="doc-backlink">Setting up Data and the Fitter</a><a class="headerlink" href="#setting-up-data-and-the-fitter" title="Link to this heading"></a></h3>
+<p>The <code class="docutils literal notranslate"><span class="pre">Fitter</span></code> class handles both model configuration and observational data. Add light curves, spectra, and broadband flux directly to the fitter:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">VegasAfterglow</span><span class="w"> </span><span class="kn">import</span> <span class="n">ObsData</span><span class="p">,</span> <span class="n">Setups</span><span class="p">,</span> <span class="n">Fitter</span><span class="p">,</span> <span class="n">ParamDef</span><span class="p">,</span> <span class="n">Scale</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">VegasAfterglow</span><span class="w"> </span><span class="kn">import</span> <span class="n">Fitter</span><span class="p">,</span> <span class="n">ParamDef</span><span class="p">,</span> <span class="n">Scale</span>
 
-<span class="c1"># Create data container</span>
-<span class="n">data</span> <span class="o">=</span> <span class="n">ObsData</span><span class="p">()</span>
+<span class="c1"># Create the fitter with model configuration</span>
+<span class="n">fitter</span> <span class="o">=</span> <span class="n">Fitter</span><span class="p">(</span>
+    <span class="n">z</span><span class="o">=</span><span class="mf">1.58</span><span class="p">,</span>
+    <span class="n">lumi_dist</span><span class="o">=</span><span class="mf">3.364e28</span><span class="p">,</span>
+    <span class="n">jet</span><span class="o">=</span><span class="s2">&quot;tophat&quot;</span><span class="p">,</span>
+    <span class="n">medium</span><span class="o">=</span><span class="s2">&quot;ism&quot;</span><span class="p">,</span>
+<span class="p">)</span>
 
 <span class="c1"># Method 1: Add data directly</span>
 <span class="n">t_data</span> <span class="o">=</span> <span class="p">[</span><span class="mf">1e3</span><span class="p">,</span> <span class="mf">2e3</span><span class="p">,</span> <span class="mf">5e3</span><span class="p">,</span> <span class="mf">1e4</span><span class="p">,</span> <span class="mf">2e4</span><span class="p">]</span>  <span class="c1"># Time in seconds</span>
@@ -284,14 +337,14 @@
 <span class="n">flux_err</span> <span class="o">=</span> <span class="p">[</span><span class="mf">1e-28</span><span class="p">,</span> <span class="mf">8e-28</span><span class="p">,</span> <span class="mf">5e-28</span><span class="p">,</span> <span class="mf">3e-28</span><span class="p">,</span> <span class="mf">2e-28</span><span class="p">]</span>   <span class="c1"># Error bars</span>
 
 <span class="c1"># Add light curve at R-band frequency</span>
-<span class="n">data</span><span class="o">.</span><span class="n">add_flux_density</span><span class="p">(</span><span class="n">nu</span><span class="o">=</span><span class="mf">4.84e14</span><span class="p">,</span> <span class="n">t</span><span class="o">=</span><span class="n">t_data</span><span class="p">,</span>
-                     <span class="n">f_nu</span><span class="o">=</span><span class="n">flux_data</span><span class="p">,</span> <span class="n">err</span><span class="o">=</span><span class="n">flux_err</span><span class="p">)</span>  <span class="c1"># All quantities in CGS units</span>
+<span class="n">fitter</span><span class="o">.</span><span class="n">add_flux_density</span><span class="p">(</span><span class="n">nu</span><span class="o">=</span><span class="mf">4.84e14</span><span class="p">,</span> <span class="n">t</span><span class="o">=</span><span class="n">t_data</span><span class="p">,</span>
+                        <span class="n">f_nu</span><span class="o">=</span><span class="n">flux_data</span><span class="p">,</span> <span class="n">err</span><span class="o">=</span><span class="n">flux_err</span><span class="p">)</span>  <span class="c1"># All quantities in CGS units</span>
 
 <span class="c1"># Optional: Add weights for systematic uncertainties, normalization handled internally</span>
 <span class="n">weights</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones_like</span><span class="p">(</span><span class="n">t_data</span><span class="p">)</span>  <span class="c1"># Equal weights</span>
-<span class="n">data</span><span class="o">.</span><span class="n">add_flux_density</span><span class="p">(</span><span class="n">nu</span><span class="o">=</span><span class="mf">2.4e17</span><span class="p">,</span> <span class="n">t</span><span class="o">=</span><span class="n">t_data</span><span class="p">,</span>
-                     <span class="n">f_nu</span><span class="o">=</span><span class="n">flux_data</span><span class="p">,</span> <span class="n">err</span><span class="o">=</span><span class="n">flux_err</span><span class="p">,</span>
-                     <span class="n">weights</span><span class="o">=</span><span class="n">weights</span><span class="p">)</span>  <span class="c1"># All quantities in CGS units</span>
+<span class="n">fitter</span><span class="o">.</span><span class="n">add_flux_density</span><span class="p">(</span><span class="n">nu</span><span class="o">=</span><span class="mf">2.4e17</span><span class="p">,</span> <span class="n">t</span><span class="o">=</span><span class="n">t_data</span><span class="p">,</span>
+                        <span class="n">f_nu</span><span class="o">=</span><span class="n">flux_data</span><span class="p">,</span> <span class="n">err</span><span class="o">=</span><span class="n">flux_err</span><span class="p">,</span>
+                        <span class="n">weights</span><span class="o">=</span><span class="n">weights</span><span class="p">)</span>  <span class="c1"># All quantities in CGS units</span>
 
 <span class="c1"># Method 2: Add frequency-integrated light curve (broadband flux)</span>
 <span class="c1"># For instruments with wide frequency coverage (e.g., BAT, LAT, Fermi)</span>
@@ -299,10 +352,10 @@
 <span class="n">nu_max</span> <span class="o">=</span> <span class="mf">1e19</span>  <span class="c1"># Upper frequency bound [Hz]</span>
 <span class="n">num_points</span> <span class="o">=</span> <span class="mi">5</span>  <span class="c1"># Number of frequency points for integration</span>
 
-<span class="n">data</span><span class="o">.</span><span class="n">add_flux</span><span class="p">(</span><span class="n">nu_min</span><span class="o">=</span><span class="n">nu_min</span><span class="p">,</span> <span class="n">nu_max</span><span class="o">=</span><span class="n">nu_max</span><span class="p">,</span>
-                     <span class="n">num_points</span><span class="o">=</span><span class="n">num_points</span><span class="p">,</span> <span class="n">t</span><span class="o">=</span><span class="n">t_data</span><span class="p">,</span>
-                     <span class="n">flux</span><span class="o">=</span><span class="n">flux_data</span><span class="p">,</span> <span class="n">err</span><span class="o">=</span><span class="n">flux_err</span><span class="p">,</span>
-                     <span class="n">weights</span><span class="o">=</span><span class="n">weights</span><span class="p">)</span>  <span class="c1"># All quantities in CGS units</span>
+<span class="n">fitter</span><span class="o">.</span><span class="n">add_flux</span><span class="p">(</span><span class="n">nu_min</span><span class="o">=</span><span class="n">nu_min</span><span class="p">,</span> <span class="n">nu_max</span><span class="o">=</span><span class="n">nu_max</span><span class="p">,</span>
+                <span class="n">num_points</span><span class="o">=</span><span class="n">num_points</span><span class="p">,</span> <span class="n">t</span><span class="o">=</span><span class="n">t_data</span><span class="p">,</span>
+                <span class="n">flux</span><span class="o">=</span><span class="n">flux_data</span><span class="p">,</span> <span class="n">err</span><span class="o">=</span><span class="n">flux_err</span><span class="p">,</span>
+                <span class="n">weights</span><span class="o">=</span><span class="n">weights</span><span class="p">)</span>  <span class="c1"># All quantities in CGS units</span>
 
 <span class="c1"># Method 3: Load from CSV files</span>
 <span class="n">bands</span> <span class="o">=</span> <span class="p">[</span><span class="mf">2.4e17</span><span class="p">,</span> <span class="mf">4.84e14</span><span class="p">,</span> <span class="mf">1.4e14</span><span class="p">]</span>  <span class="c1"># X-ray, optical, near-IR</span>
@@ -310,8 +363,8 @@
 
 <span class="k">for</span> <span class="n">nu</span><span class="p">,</span> <span class="n">fname</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">bands</span><span class="p">,</span> <span class="n">lc_files</span><span class="p">):</span>
     <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">fname</span><span class="p">)</span>
-    <span class="n">data</span><span class="o">.</span><span class="n">add_flux_density</span><span class="p">(</span><span class="n">nu</span><span class="o">=</span><span class="n">nu</span><span class="p">,</span> <span class="n">t</span><span class="o">=</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;t&quot;</span><span class="p">],</span>
-                         <span class="n">f_nu</span><span class="o">=</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;Fv_obs&quot;</span><span class="p">],</span> <span class="n">err</span><span class="o">=</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;Fv_err&quot;</span><span class="p">])</span>  <span class="c1"># All quantities in CGS units</span>
+    <span class="n">fitter</span><span class="o">.</span><span class="n">add_flux_density</span><span class="p">(</span><span class="n">nu</span><span class="o">=</span><span class="n">nu</span><span class="p">,</span> <span class="n">t</span><span class="o">=</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;t&quot;</span><span class="p">],</span>
+                            <span class="n">f_nu</span><span class="o">=</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;Fv_obs&quot;</span><span class="p">],</span> <span class="n">err</span><span class="o">=</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;Fv_err&quot;</span><span class="p">])</span>  <span class="c1"># All quantities in CGS units</span>
 
 <span class="c1"># Add spectra at specific times</span>
 <span class="n">spec_times</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1000</span><span class="p">,</span> <span class="mi">10000</span><span class="p">]</span>  <span class="c1"># seconds</span>
@@ -319,34 +372,36 @@
 
 <span class="k">for</span> <span class="n">t</span><span class="p">,</span> <span class="n">fname</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">spec_times</span><span class="p">,</span> <span class="n">spec_files</span><span class="p">):</span>
     <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">fname</span><span class="p">)</span>
-    <span class="n">data</span><span class="o">.</span><span class="n">add_spectrum</span><span class="p">(</span><span class="n">t</span><span class="o">=</span><span class="n">t</span><span class="p">,</span> <span class="n">nu</span><span class="o">=</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;nu&quot;</span><span class="p">],</span>
-                      <span class="n">f_nu</span><span class="o">=</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;Fv_obs&quot;</span><span class="p">],</span> <span class="n">err</span><span class="o">=</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;Fv_err&quot;</span><span class="p">])</span>  <span class="c1"># All quantities in CGS units</span>
+    <span class="n">fitter</span><span class="o">.</span><span class="n">add_spectrum</span><span class="p">(</span><span class="n">t</span><span class="o">=</span><span class="n">t</span><span class="p">,</span> <span class="n">nu</span><span class="o">=</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;nu&quot;</span><span class="p">],</span>
+                        <span class="n">f_nu</span><span class="o">=</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;Fv_obs&quot;</span><span class="p">],</span> <span class="n">err</span><span class="o">=</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;Fv_err&quot;</span><span class="p">])</span>  <span class="c1"># All quantities in CGS units</span>
 </pre></div>
 </div>
 </section>
 <section id="data-selection-and-optimization">
-<h3><a class="toc-backref" href="#id8" role="doc-backlink">Data Selection and Optimization</a><a class="headerlink" href="#data-selection-and-optimization" title="Link to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id9" role="doc-backlink">Data Selection and Optimization</a><a class="headerlink" href="#data-selection-and-optimization" title="Link to this heading"></a></h3>
 <p><strong>Smart Data Subsampling with logscale_screen</strong></p>
-<p>For large datasets or densely sampled observations, using all available data points can lead to computational inefficiency and biased parameter estimation. The <code class="docutils literal notranslate"><span class="pre">logscale_screen</span></code> method provides intelligent data subsampling that maintains the essential information content while reducing computational overhead.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Example: Large dense dataset</span>
+<p>For large datasets or densely sampled observations, using all available data points can lead to computational inefficiency and biased parameter estimation. The <code class="docutils literal notranslate"><span class="pre">logscale_screen</span></code> utility provides intelligent data subsampling that maintains the essential information content while reducing computational overhead.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">VegasAfterglow</span><span class="w"> </span><span class="kn">import</span> <span class="n">logscale_screen</span>
+
+<span class="c1"># Example: Large dense dataset</span>
 <span class="n">t_dense</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">logspace</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">1000</span><span class="p">)</span>  <span class="c1"># 1000 time points</span>
 <span class="n">flux_dense</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">lognormal</span><span class="p">(</span><span class="o">-</span><span class="mi">60</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mi">1000</span><span class="p">)</span>  <span class="c1"># Dense flux measurements</span>
 <span class="n">flux_err_dense</span> <span class="o">=</span> <span class="mf">0.1</span> <span class="o">*</span> <span class="n">flux_dense</span>
 
 <span class="c1"># Subsample using logarithmic screening</span>
 <span class="c1"># This selects ~5*5=25 representative points across 5 decades in time</span>
-<span class="n">indices</span> <span class="o">=</span> <span class="n">ObsData</span><span class="o">.</span><span class="n">logscale_screen</span><span class="p">(</span><span class="n">t_dense</span><span class="p">,</span> <span class="n">data_density</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+<span class="n">indices</span> <span class="o">=</span> <span class="n">logscale_screen</span><span class="p">(</span><span class="n">t_dense</span><span class="p">,</span> <span class="n">data_density</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
 
 <span class="c1"># Add only the selected subset</span>
-<span class="n">data</span><span class="o">.</span><span class="n">add_flux_density</span><span class="p">(</span><span class="n">nu</span><span class="o">=</span><span class="mf">5e14</span><span class="p">,</span>
-                     <span class="n">t</span><span class="o">=</span><span class="n">t_dense</span><span class="p">[</span><span class="n">indices</span><span class="p">],</span>
-                     <span class="n">f_nu</span><span class="o">=</span><span class="n">flux_dense</span><span class="p">[</span><span class="n">indices</span><span class="p">],</span>
-                     <span class="n">err</span><span class="o">=</span><span class="n">flux_err_dense</span><span class="p">[</span><span class="n">indices</span><span class="p">])</span>
+<span class="n">fitter</span><span class="o">.</span><span class="n">add_flux_density</span><span class="p">(</span><span class="n">nu</span><span class="o">=</span><span class="mf">5e14</span><span class="p">,</span>
+                        <span class="n">t</span><span class="o">=</span><span class="n">t_dense</span><span class="p">[</span><span class="n">indices</span><span class="p">],</span>
+                        <span class="n">f_nu</span><span class="o">=</span><span class="n">flux_dense</span><span class="p">[</span><span class="n">indices</span><span class="p">],</span>
+                        <span class="n">err</span><span class="o">=</span><span class="n">flux_err_dense</span><span class="p">[</span><span class="n">indices</span><span class="p">])</span>
 </pre></div>
 </div>
 <p><strong>Why logscale_screen is Important:</strong></p>
 <ol class="arabic simple">
-<li><p><strong>Prevents Oversampling Bias</strong>: Dense data clusters can dominate the χ² calculation, causing the MCMC to over-fit specific frequency bands or time periods.</p></li>
+<li><p><strong>Prevents Oversampling Bias</strong>: Dense data clusters can dominate the chi-squared calculation, causing the MCMC to over-fit specific frequency bands or time periods.</p></li>
 <li><p><strong>Computational Efficiency</strong>: Reduces the number of model evaluations needed during MCMC sampling, significantly improving performance.</p></li>
 <li><p><strong>Preserves Information</strong>: Unlike uniform thinning, logarithmic sampling maintains representation across all temporal/spectral scales.</p></li>
 <li><p><strong>Balanced Multi-band Fitting</strong>: Ensures each frequency band contributes proportionally to the parameter constraints.</p></li>
@@ -364,17 +419,17 @@
 <ul class="simple">
 <li><p><strong>Optical-heavy datasets</strong>: Dense optical coverage can bias parameters toward optical-dominant solutions</p></li>
 <li><p><strong>Late-time clustering</strong>: Too many late-time points can over-constrain decay slopes at the expense of early physics</p></li>
-<li><p><strong>Single-epoch spectra</strong>: Broadband spectra at one time can dominate multi-epoch light curves in χ² space</p></li>
+<li><p><strong>Single-epoch spectra</strong>: Broadband spectra at one time can dominate multi-epoch light curves in chi-squared space</p></li>
 </ul>
-<p><strong>Solution</strong>: Use <code class="docutils literal notranslate"><span class="pre">logscale_screen</span></code> for manual temporal reduction of over-sampled bands.</p>
+<p><strong>Solution</strong>: Use <code class="docutils literal notranslate"><span class="pre">logscale_screen()</span></code> for manual temporal reduction of over-sampled bands.</p>
 </div>
 <p><strong>Handling Measurement Uncertainties</strong></p>
 <p>Error bars strongly influence MCMC fitting. Improperly characterized uncertainties can lead to biased parameter estimates or misleading confidence intervals.</p>
 <p><strong>The Problem with Small Error Bars</strong></p>
-<p>Data points with very small uncertainties dominate the χ² calculation:</p>
+<p>Data points with very small uncertainties dominate the chi-squared calculation:</p>
 <div class="math notranslate nohighlight">
 \[\chi^2 = \sum_i \frac{(F_{\rm obs,i} - F_{\rm model,i})^2}{\sigma_i^2}\]</div>
-<p>A single point with σ = 0.01 mJy contributes 100× more to χ² than a point with σ = 0.1 mJy. This causes the MCMC to:</p>
+<p>A single point with sigma = 0.01 mJy contributes 100x more to chi-squared than a point with sigma = 0.1 mJy. This causes the MCMC to:</p>
 <ul class="simple">
 <li><p>Heavily weight high-precision data at the expense of other observations</p></li>
 <li><p>Potentially fit noise or systematic effects in the “precise” data</p></li>
@@ -394,7 +449,7 @@
 <span class="n">systematic_floor</span> <span class="o">=</span> <span class="mf">0.1</span>  <span class="c1"># 10% of flux</span>
 <span class="n">err_with_floor</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">err</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="p">(</span><span class="n">systematic_floor</span> <span class="o">*</span> <span class="n">flux</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
 
-<span class="n">data</span><span class="o">.</span><span class="n">add_flux_density</span><span class="p">(</span><span class="n">nu</span><span class="o">=</span><span class="n">nu</span><span class="p">,</span> <span class="n">t</span><span class="o">=</span><span class="n">t</span><span class="p">,</span> <span class="n">f_nu</span><span class="o">=</span><span class="n">flux</span><span class="p">,</span> <span class="n">err</span><span class="o">=</span><span class="n">err_with_floor</span><span class="p">)</span>
+<span class="n">fitter</span><span class="o">.</span><span class="n">add_flux_density</span><span class="p">(</span><span class="n">nu</span><span class="o">=</span><span class="n">nu</span><span class="p">,</span> <span class="n">t</span><span class="o">=</span><span class="n">t</span><span class="p">,</span> <span class="n">f_nu</span><span class="o">=</span><span class="n">flux</span><span class="p">,</span> <span class="n">err</span><span class="o">=</span><span class="n">err_with_floor</span><span class="p">)</span>
 </pre></div>
 </div>
 </li>
@@ -402,8 +457,8 @@
 <p>Down-weight bands with suspiciously small errors:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Reduce contribution of high-precision optical data</span>
 <span class="n">optical_weight</span> <span class="o">=</span> <span class="mf">0.5</span>  <span class="c1"># Effectively doubles the error contribution</span>
-<span class="n">data</span><span class="o">.</span><span class="n">add_flux_density</span><span class="p">(</span><span class="n">nu</span><span class="o">=</span><span class="mf">5e14</span><span class="p">,</span> <span class="n">t</span><span class="o">=</span><span class="n">t_optical</span><span class="p">,</span> <span class="n">f_nu</span><span class="o">=</span><span class="n">flux_optical</span><span class="p">,</span>
-                     <span class="n">err</span><span class="o">=</span><span class="n">err_optical</span><span class="p">,</span> <span class="n">weights</span><span class="o">=</span><span class="n">optical_weight</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">ones_like</span><span class="p">(</span><span class="n">t_optical</span><span class="p">))</span>
+<span class="n">fitter</span><span class="o">.</span><span class="n">add_flux_density</span><span class="p">(</span><span class="n">nu</span><span class="o">=</span><span class="mf">5e14</span><span class="p">,</span> <span class="n">t</span><span class="o">=</span><span class="n">t_optical</span><span class="p">,</span> <span class="n">f_nu</span><span class="o">=</span><span class="n">flux_optical</span><span class="p">,</span>
+                       <span class="n">err</span><span class="o">=</span><span class="n">err_optical</span><span class="p">,</span> <span class="n">weights</span><span class="o">=</span><span class="n">optical_weight</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">ones_like</span><span class="p">(</span><span class="n">t_optical</span><span class="p">))</span>
 </pre></div>
 </div>
 </li>
@@ -413,45 +468,21 @@
 </ol>
 <div class="admonition tip">
 <p class="admonition-title">Tip</p>
-<p><strong>Rule of thumb</strong>: If your best-fit χ²/dof &gt;&gt; 1, either the model is inadequate OR the error bars are underestimated. If χ²/dof &lt;&lt; 1, the errors may be overestimated.</p>
-</div>
-</section>
-<section id="global-configuration">
-<h3><a class="toc-backref" href="#id9" role="doc-backlink">Global Configuration</a><a class="headerlink" href="#global-configuration" title="Link to this heading"></a></h3>
-<p>The <code class="docutils literal notranslate"><span class="pre">Setups</span></code> class defines fixed model properties:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">cfg</span> <span class="o">=</span> <span class="n">Setups</span><span class="p">()</span>
-
-<span class="c1"># Source properties</span>
-<span class="n">cfg</span><span class="o">.</span><span class="n">lumi_dist</span> <span class="o">=</span> <span class="mf">3.364e28</span>  <span class="c1"># Luminosity distance [cm]</span>
-<span class="n">cfg</span><span class="o">.</span><span class="n">z</span> <span class="o">=</span> <span class="mf">1.58</span>              <span class="c1"># Redshift</span>
-
-<span class="c1"># Model selection (see sections below for all options)</span>
-<span class="n">cfg</span><span class="o">.</span><span class="n">medium</span> <span class="o">=</span> <span class="s2">&quot;wind&quot;</span>       <span class="c1"># Ambient medium type</span>
-<span class="n">cfg</span><span class="o">.</span><span class="n">jet</span> <span class="o">=</span> <span class="s2">&quot;powerlaw&quot;</span>      <span class="c1"># Jet structure type</span>
-
-<span class="c1"># Physics options</span>
-<span class="n">cfg</span><span class="o">.</span><span class="n">rvs_shock</span> <span class="o">=</span> <span class="kc">True</span>      <span class="c1"># Include reverse shock</span>
-<span class="n">cfg</span><span class="o">.</span><span class="n">fwd_ssc</span> <span class="o">=</span> <span class="kc">True</span>        <span class="c1"># Forward shock inverse Compton</span>
-<span class="n">cfg</span><span class="o">.</span><span class="n">rvs_ssc</span> <span class="o">=</span> <span class="kc">False</span>       <span class="c1"># Reverse shock inverse Compton</span>
-<span class="n">cfg</span><span class="o">.</span><span class="n">ssc_cooling</span> <span class="o">=</span> <span class="kc">True</span>     <span class="c1"># IC cooling effects</span>
-<span class="n">cfg</span><span class="o">.</span><span class="n">kn</span> <span class="o">=</span> <span class="kc">True</span>             <span class="c1"># Klein-Nishina corrections</span>
-<span class="n">cfg</span><span class="o">.</span><span class="n">magnetar</span> <span class="o">=</span> <span class="kc">True</span>       <span class="c1"># Magnetar energy injection</span>
-
-<span class="c1"># Numerical parameters</span>
-<span class="n">cfg</span><span class="o">.</span><span class="n">rtol</span> <span class="o">=</span> <span class="mf">1e-5</span>           <span class="c1"># Numerical tolerance</span>
-</pre></div>
+<p><strong>Rule of thumb</strong>: If your best-fit chi-squared/dof &gt;&gt; 1, either the model is inadequate OR the error bars are underestimated. If chi-squared/dof &lt;&lt; 1, the errors may be overestimated.</p>
 </div>
 </section>
 </section>
 <section id="model-configurations">
 <h2><a class="toc-backref" href="#id10" role="doc-backlink">Model Configurations</a><a class="headerlink" href="#model-configurations" title="Link to this heading"></a></h2>
-<section id="basic-setup-default">
-<h3><a class="toc-backref" href="#id11" role="doc-backlink">Basic Setup (Default)</a><a class="headerlink" href="#basic-setup-default" title="Link to this heading"></a></h3>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="parameter_reference.html"><span class="doc">Parameter Reference</span></a> for all available parameters. <a class="reference internal" href="examples.html"><span class="doc">Examples</span></a> for direct model calculation examples.</p>
+</div>
+<section id="tophat-ism-default">
+<h3><a class="toc-backref" href="#id11" role="doc-backlink">TopHat + ISM (Default)</a><a class="headerlink" href="#tophat-ism-default" title="Link to this heading"></a></h3>
 <p>The default configuration uses a top-hat jet in a uniform ISM environment with forward shock synchrotron emission:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Basic configuration</span>
-<span class="n">cfg</span> <span class="o">=</span> <span class="n">Setups</span><span class="p">()</span>
-<span class="n">cfg</span><span class="o">.</span><span class="n">medium</span> <span class="o">=</span> <span class="s2">&quot;ism&quot;</span>        <span class="c1"># Uniform ISM density</span>
-<span class="n">cfg</span><span class="o">.</span><span class="n">jet</span> <span class="o">=</span> <span class="s2">&quot;tophat&quot;</span>        <span class="c1"># Top-hat jet structure</span>
+<span class="n">fitter</span> <span class="o">=</span> <span class="n">Fitter</span><span class="p">(</span><span class="n">z</span><span class="o">=</span><span class="mf">1.58</span><span class="p">,</span> <span class="n">lumi_dist</span><span class="o">=</span><span class="mf">3.364e28</span><span class="p">,</span> <span class="n">jet</span><span class="o">=</span><span class="s2">&quot;tophat&quot;</span><span class="p">,</span> <span class="n">medium</span><span class="o">=</span><span class="s2">&quot;ism&quot;</span><span class="p">)</span>
 
 <span class="c1"># Basic parameter set</span>
 <span class="n">params</span> <span class="o">=</span> <span class="p">[</span>
@@ -471,9 +502,7 @@
 <section id="jet-structure-variations">
 <h3><a class="toc-backref" href="#id12" role="doc-backlink">Jet Structure Variations</a><a class="headerlink" href="#jet-structure-variations" title="Link to this heading"></a></h3>
 <p><strong>Power-law Structured Jet</strong></p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">cfg</span> <span class="o">=</span> <span class="n">Setups</span><span class="p">()</span>
-<span class="n">cfg</span><span class="o">.</span><span class="n">medium</span> <span class="o">=</span> <span class="s2">&quot;ism&quot;</span>        <span class="c1"># Default ISM medium</span>
-<span class="n">cfg</span><span class="o">.</span><span class="n">jet</span> <span class="o">=</span> <span class="s2">&quot;powerlaw&quot;</span>      <span class="c1"># Power-law structured jet</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">fitter</span> <span class="o">=</span> <span class="n">Fitter</span><span class="p">(</span><span class="n">z</span><span class="o">=</span><span class="mf">1.58</span><span class="p">,</span> <span class="n">lumi_dist</span><span class="o">=</span><span class="mf">3.364e28</span><span class="p">,</span> <span class="n">jet</span><span class="o">=</span><span class="s2">&quot;powerlaw&quot;</span><span class="p">,</span> <span class="n">medium</span><span class="o">=</span><span class="s2">&quot;ism&quot;</span><span class="p">)</span>
 
 <span class="n">params</span> <span class="o">=</span> <span class="p">[</span>
     <span class="c1"># Basic jet parameters (same as default)</span>
@@ -496,9 +525,7 @@
 </pre></div>
 </div>
 <p><strong>Gaussian Structured Jet</strong></p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">cfg</span> <span class="o">=</span> <span class="n">Setups</span><span class="p">()</span>
-<span class="n">cfg</span><span class="o">.</span><span class="n">medium</span> <span class="o">=</span> <span class="s2">&quot;ism&quot;</span>
-<span class="n">cfg</span><span class="o">.</span><span class="n">jet</span> <span class="o">=</span> <span class="s2">&quot;gaussian&quot;</span>      <span class="c1"># Gaussian structured jet</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">fitter</span> <span class="o">=</span> <span class="n">Fitter</span><span class="p">(</span><span class="n">z</span><span class="o">=</span><span class="mf">1.58</span><span class="p">,</span> <span class="n">lumi_dist</span><span class="o">=</span><span class="mf">3.364e28</span><span class="p">,</span> <span class="n">jet</span><span class="o">=</span><span class="s2">&quot;gaussian&quot;</span><span class="p">,</span> <span class="n">medium</span><span class="o">=</span><span class="s2">&quot;ism&quot;</span><span class="p">)</span>
 
 <span class="n">params</span> <span class="o">=</span> <span class="p">[</span>
     <span class="c1"># Basic parameters (same as default)</span>
@@ -515,9 +542,7 @@
 </pre></div>
 </div>
 <p><strong>Two-Component Jet</strong></p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">cfg</span> <span class="o">=</span> <span class="n">Setups</span><span class="p">()</span>
-<span class="n">cfg</span><span class="o">.</span><span class="n">medium</span> <span class="o">=</span> <span class="s2">&quot;ism&quot;</span>
-<span class="n">cfg</span><span class="o">.</span><span class="n">jet</span> <span class="o">=</span> <span class="s2">&quot;two_component&quot;</span>  <span class="c1"># Two-component jet</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">fitter</span> <span class="o">=</span> <span class="n">Fitter</span><span class="p">(</span><span class="n">z</span><span class="o">=</span><span class="mf">1.58</span><span class="p">,</span> <span class="n">lumi_dist</span><span class="o">=</span><span class="mf">3.364e28</span><span class="p">,</span> <span class="n">jet</span><span class="o">=</span><span class="s2">&quot;two_component&quot;</span><span class="p">,</span> <span class="n">medium</span><span class="o">=</span><span class="s2">&quot;ism&quot;</span><span class="p">)</span>
 
 <span class="n">params</span> <span class="o">=</span> <span class="p">[</span>
     <span class="c1"># Narrow component</span>
@@ -541,9 +566,7 @@
 </pre></div>
 </div>
 <p><strong>Step Power-law Jet</strong></p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">cfg</span> <span class="o">=</span> <span class="n">Setups</span><span class="p">()</span>
-<span class="n">cfg</span><span class="o">.</span><span class="n">medium</span> <span class="o">=</span> <span class="s2">&quot;ism&quot;</span>
-<span class="n">cfg</span><span class="o">.</span><span class="n">jet</span> <span class="o">=</span> <span class="s2">&quot;step_powerlaw&quot;</span>  <span class="c1"># Step power-law jet</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">fitter</span> <span class="o">=</span> <span class="n">Fitter</span><span class="p">(</span><span class="n">z</span><span class="o">=</span><span class="mf">1.58</span><span class="p">,</span> <span class="n">lumi_dist</span><span class="o">=</span><span class="mf">3.364e28</span><span class="p">,</span> <span class="n">jet</span><span class="o">=</span><span class="s2">&quot;step_powerlaw&quot;</span><span class="p">,</span> <span class="n">medium</span><span class="o">=</span><span class="s2">&quot;ism&quot;</span><span class="p">)</span>
 
 <span class="n">params</span> <span class="o">=</span> <span class="p">[</span>
     <span class="c1"># Core component (uniform)</span>
@@ -571,9 +594,7 @@
 <section id="medium-type-variations">
 <h3><a class="toc-backref" href="#id13" role="doc-backlink">Medium Type Variations</a><a class="headerlink" href="#medium-type-variations" title="Link to this heading"></a></h3>
 <p><strong>Stellar Wind Medium</strong></p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">cfg</span> <span class="o">=</span> <span class="n">Setups</span><span class="p">()</span>
-<span class="n">cfg</span><span class="o">.</span><span class="n">medium</span> <span class="o">=</span> <span class="s2">&quot;wind&quot;</span>       <span class="c1"># Stellar wind medium</span>
-<span class="n">cfg</span><span class="o">.</span><span class="n">jet</span> <span class="o">=</span> <span class="s2">&quot;tophat&quot;</span>        <span class="c1"># Default jet structure</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">fitter</span> <span class="o">=</span> <span class="n">Fitter</span><span class="p">(</span><span class="n">z</span><span class="o">=</span><span class="mf">1.58</span><span class="p">,</span> <span class="n">lumi_dist</span><span class="o">=</span><span class="mf">3.364e28</span><span class="p">,</span> <span class="n">jet</span><span class="o">=</span><span class="s2">&quot;tophat&quot;</span><span class="p">,</span> <span class="n">medium</span><span class="o">=</span><span class="s2">&quot;wind&quot;</span><span class="p">)</span>
 
 <span class="n">params</span> <span class="o">=</span> <span class="p">[</span>
     <span class="c1"># Standard jet parameters (same as default)</span>
@@ -594,9 +615,7 @@
 </pre></div>
 </div>
 <p><strong>Stratified Medium: ISM-to-Wind</strong></p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">cfg</span> <span class="o">=</span> <span class="n">Setups</span><span class="p">()</span>
-<span class="n">cfg</span><span class="o">.</span><span class="n">medium</span> <span class="o">=</span> <span class="s2">&quot;wind&quot;</span>       <span class="c1"># Use wind for stratified models</span>
-<span class="n">cfg</span><span class="o">.</span><span class="n">jet</span> <span class="o">=</span> <span class="s2">&quot;tophat&quot;</span>        <span class="c1"># Default jet structure</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">fitter</span> <span class="o">=</span> <span class="n">Fitter</span><span class="p">(</span><span class="n">z</span><span class="o">=</span><span class="mf">1.58</span><span class="p">,</span> <span class="n">lumi_dist</span><span class="o">=</span><span class="mf">3.364e28</span><span class="p">,</span> <span class="n">jet</span><span class="o">=</span><span class="s2">&quot;tophat&quot;</span><span class="p">,</span> <span class="n">medium</span><span class="o">=</span><span class="s2">&quot;wind&quot;</span><span class="p">)</span>
 
 <span class="n">params</span> <span class="o">=</span> <span class="p">[</span>
     <span class="c1"># Standard jet parameters (same as default)</span>
@@ -618,9 +637,7 @@
 </pre></div>
 </div>
 <p><strong>Stratified Medium: Wind-to-ISM</strong></p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">cfg</span> <span class="o">=</span> <span class="n">Setups</span><span class="p">()</span>
-<span class="n">cfg</span><span class="o">.</span><span class="n">medium</span> <span class="o">=</span> <span class="s2">&quot;wind&quot;</span>
-<span class="n">cfg</span><span class="o">.</span><span class="n">jet</span> <span class="o">=</span> <span class="s2">&quot;tophat&quot;</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">fitter</span> <span class="o">=</span> <span class="n">Fitter</span><span class="p">(</span><span class="n">z</span><span class="o">=</span><span class="mf">1.58</span><span class="p">,</span> <span class="n">lumi_dist</span><span class="o">=</span><span class="mf">3.364e28</span><span class="p">,</span> <span class="n">jet</span><span class="o">=</span><span class="s2">&quot;tophat&quot;</span><span class="p">,</span> <span class="n">medium</span><span class="o">=</span><span class="s2">&quot;wind&quot;</span><span class="p">)</span>
 
 <span class="n">params</span> <span class="o">=</span> <span class="p">[</span>
     <span class="c1"># Standard jet parameters (same as default)</span>
@@ -629,7 +646,7 @@
     <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;theta_c&quot;</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">,</span>   <span class="mf">0.5</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">LINEAR</span><span class="p">),</span>
     <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;theta_v&quot;</span><span class="p">,</span>    <span class="mi">0</span><span class="p">,</span>     <span class="mi">0</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">FIXED</span><span class="p">),</span>
 
-    <span class="c1"># Stratified medium (wind → ISM)</span>
+    <span class="c1"># Stratified medium (wind -&gt; ISM)</span>
     <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;A_star&quot;</span><span class="p">,</span>  <span class="mf">1e-3</span><span class="p">,</span>   <span class="mf">1.0</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">LOG</span><span class="p">),</span>     <span class="c1"># Inner wind strength</span>
     <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;n_ism&quot;</span><span class="p">,</span>   <span class="mf">1e-3</span><span class="p">,</span>   <span class="mi">100</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">LOG</span><span class="p">),</span>     <span class="c1"># Outer ISM density</span>
 
@@ -642,9 +659,7 @@
 </pre></div>
 </div>
 <p><strong>Stratified Medium: ISM-Wind-ISM</strong></p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">cfg</span> <span class="o">=</span> <span class="n">Setups</span><span class="p">()</span>
-<span class="n">cfg</span><span class="o">.</span><span class="n">medium</span> <span class="o">=</span> <span class="s2">&quot;wind&quot;</span>
-<span class="n">cfg</span><span class="o">.</span><span class="n">jet</span> <span class="o">=</span> <span class="s2">&quot;tophat&quot;</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">fitter</span> <span class="o">=</span> <span class="n">Fitter</span><span class="p">(</span><span class="n">z</span><span class="o">=</span><span class="mf">1.58</span><span class="p">,</span> <span class="n">lumi_dist</span><span class="o">=</span><span class="mf">3.364e28</span><span class="p">,</span> <span class="n">jet</span><span class="o">=</span><span class="s2">&quot;tophat&quot;</span><span class="p">,</span> <span class="n">medium</span><span class="o">=</span><span class="s2">&quot;wind&quot;</span><span class="p">)</span>
 
 <span class="n">params</span> <span class="o">=</span> <span class="p">[</span>
     <span class="c1"># Standard jet parameters (same as default)</span>
@@ -671,20 +686,21 @@
 <p><strong>Stratified Medium Physics:</strong></p>
 <ul class="simple">
 <li><p><strong>A_star = 0</strong>: Pure ISM with density n_ism</p></li>
-<li><p><strong>n0 = ∞</strong>: Pure wind profile from center</p></li>
-<li><p><strong>A_star &gt; 0, n0 &lt; ∞</strong>: ISM-wind-ISM stratification</p></li>
-<li><p><strong>A_star &gt; 0, n0 = ∞</strong>: Wind-ISM stratification</p></li>
+<li><p><strong>n0 = infinity</strong>: Pure wind profile from center</p></li>
+<li><p><strong>A_star &gt; 0, n0 &lt; infinity</strong>: ISM-wind-ISM stratification</p></li>
+<li><p><strong>A_star &gt; 0, n0 = infinity</strong>: Wind-ISM stratification</p></li>
 </ul>
-<p><strong>Density Profile:</strong> Inner (r &lt; r₁): n = n0, Middle (r₁ &lt; r &lt; r₂): n ∝ A_star/r², Outer (r &gt; r₂): n = n_ism</p>
+<p><strong>Density Profile:</strong> Inner (r &lt; r1): n = n0, Middle (r1 &lt; r &lt; r2): n proportional to A_star/r^2, Outer (r &gt; r2): n = n_ism</p>
 </div>
 </section>
 <section id="reverse-shock">
 <h3><a class="toc-backref" href="#id14" role="doc-backlink">Reverse Shock</a><a class="headerlink" href="#reverse-shock" title="Link to this heading"></a></h3>
 <p><strong>Basic Reverse Shock</strong></p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">cfg</span> <span class="o">=</span> <span class="n">Setups</span><span class="p">()</span>
-<span class="n">cfg</span><span class="o">.</span><span class="n">medium</span> <span class="o">=</span> <span class="s2">&quot;ism&quot;</span>        <span class="c1"># Default medium</span>
-<span class="n">cfg</span><span class="o">.</span><span class="n">jet</span> <span class="o">=</span> <span class="s2">&quot;tophat&quot;</span>        <span class="c1"># Default jet</span>
-<span class="n">cfg</span><span class="o">.</span><span class="n">rvs_shock</span> <span class="o">=</span> <span class="kc">True</span>      <span class="c1"># Enable reverse shock</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">fitter</span> <span class="o">=</span> <span class="n">Fitter</span><span class="p">(</span>
+    <span class="n">z</span><span class="o">=</span><span class="mf">1.58</span><span class="p">,</span> <span class="n">lumi_dist</span><span class="o">=</span><span class="mf">3.364e28</span><span class="p">,</span>
+    <span class="n">jet</span><span class="o">=</span><span class="s2">&quot;tophat&quot;</span><span class="p">,</span> <span class="n">medium</span><span class="o">=</span><span class="s2">&quot;ism&quot;</span><span class="p">,</span>
+    <span class="n">rvs_shock</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+<span class="p">)</span>
 
 <span class="n">params</span> <span class="o">=</span> <span class="p">[</span>
     <span class="c1"># Standard jet and medium parameters (same as default)</span>
@@ -712,10 +728,11 @@
 </pre></div>
 </div>
 <p><strong>Reverse Shock with Structured Jet</strong></p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">cfg</span> <span class="o">=</span> <span class="n">Setups</span><span class="p">()</span>
-<span class="n">cfg</span><span class="o">.</span><span class="n">medium</span> <span class="o">=</span> <span class="s2">&quot;ism&quot;</span>
-<span class="n">cfg</span><span class="o">.</span><span class="n">jet</span> <span class="o">=</span> <span class="s2">&quot;gaussian&quot;</span>      <span class="c1"># Structured jet example</span>
-<span class="n">cfg</span><span class="o">.</span><span class="n">rvs_shock</span> <span class="o">=</span> <span class="kc">True</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">fitter</span> <span class="o">=</span> <span class="n">Fitter</span><span class="p">(</span>
+    <span class="n">z</span><span class="o">=</span><span class="mf">1.58</span><span class="p">,</span> <span class="n">lumi_dist</span><span class="o">=</span><span class="mf">3.364e28</span><span class="p">,</span>
+    <span class="n">jet</span><span class="o">=</span><span class="s2">&quot;gaussian&quot;</span><span class="p">,</span> <span class="n">medium</span><span class="o">=</span><span class="s2">&quot;ism&quot;</span><span class="p">,</span>
+    <span class="n">rvs_shock</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+<span class="p">)</span>
 
 <span class="n">params</span> <span class="o">=</span> <span class="p">[</span>
     <span class="c1"># Gaussian jet parameters</span>
@@ -741,13 +758,15 @@
 </section>
 <section id="inverse-compton-radiation">
 <h3><a class="toc-backref" href="#id15" role="doc-backlink">Inverse Compton Radiation</a><a class="headerlink" href="#inverse-compton-radiation" title="Link to this heading"></a></h3>
+<p>For the physical details of inverse Compton and Klein-Nishina corrections, see <a class="reference internal" href="physics.html"><span class="doc">GRB Afterglow Physics</span></a>.</p>
 <p><strong>Forward Shock Inverse Compton</strong></p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">cfg</span> <span class="o">=</span> <span class="n">Setups</span><span class="p">()</span>
-<span class="n">cfg</span><span class="o">.</span><span class="n">medium</span> <span class="o">=</span> <span class="s2">&quot;ism&quot;</span>        <span class="c1"># Default medium</span>
-<span class="n">cfg</span><span class="o">.</span><span class="n">jet</span> <span class="o">=</span> <span class="s2">&quot;tophat&quot;</span>        <span class="c1"># Default jet</span>
-<span class="n">cfg</span><span class="o">.</span><span class="n">fwd_ssc</span> <span class="o">=</span> <span class="kc">True</span>        <span class="c1"># Forward shock SSC</span>
-<span class="n">cfg</span><span class="o">.</span><span class="n">ssc_cooling</span> <span class="o">=</span> <span class="kc">True</span>     <span class="c1"># IC cooling effects</span>
-<span class="n">cfg</span><span class="o">.</span><span class="n">kn</span> <span class="o">=</span> <span class="kc">True</span>             <span class="c1"># Klein-Nishina corrections</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">fitter</span> <span class="o">=</span> <span class="n">Fitter</span><span class="p">(</span>
+    <span class="n">z</span><span class="o">=</span><span class="mf">1.58</span><span class="p">,</span> <span class="n">lumi_dist</span><span class="o">=</span><span class="mf">3.364e28</span><span class="p">,</span>
+    <span class="n">jet</span><span class="o">=</span><span class="s2">&quot;tophat&quot;</span><span class="p">,</span> <span class="n">medium</span><span class="o">=</span><span class="s2">&quot;ism&quot;</span><span class="p">,</span>
+    <span class="n">fwd_ssc</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">ssc_cooling</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">kn</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+<span class="p">)</span>
 
 <span class="n">params</span> <span class="o">=</span> <span class="p">[</span>
     <span class="c1"># Standard parameters (same as default)</span>
@@ -764,14 +783,15 @@
 </pre></div>
 </div>
 <p><strong>Reverse Shock Inverse Compton</strong></p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">cfg</span> <span class="o">=</span> <span class="n">Setups</span><span class="p">()</span>
-<span class="n">cfg</span><span class="o">.</span><span class="n">medium</span> <span class="o">=</span> <span class="s2">&quot;ism&quot;</span>
-<span class="n">cfg</span><span class="o">.</span><span class="n">jet</span> <span class="o">=</span> <span class="s2">&quot;tophat&quot;</span>
-<span class="n">cfg</span><span class="o">.</span><span class="n">rvs_shock</span> <span class="o">=</span> <span class="kc">True</span>      <span class="c1"># Enable reverse shock</span>
-<span class="n">cfg</span><span class="o">.</span><span class="n">fwd_ssc</span> <span class="o">=</span> <span class="kc">True</span>        <span class="c1"># Forward shock SSC</span>
-<span class="n">cfg</span><span class="o">.</span><span class="n">rvs_ssc</span> <span class="o">=</span> <span class="kc">True</span>        <span class="c1"># Reverse shock SSC</span>
-<span class="n">cfg</span><span class="o">.</span><span class="n">ssc_cooling</span> <span class="o">=</span> <span class="kc">True</span>
-<span class="n">cfg</span><span class="o">.</span><span class="n">kn</span> <span class="o">=</span> <span class="kc">True</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">fitter</span> <span class="o">=</span> <span class="n">Fitter</span><span class="p">(</span>
+    <span class="n">z</span><span class="o">=</span><span class="mf">1.58</span><span class="p">,</span> <span class="n">lumi_dist</span><span class="o">=</span><span class="mf">3.364e28</span><span class="p">,</span>
+    <span class="n">jet</span><span class="o">=</span><span class="s2">&quot;tophat&quot;</span><span class="p">,</span> <span class="n">medium</span><span class="o">=</span><span class="s2">&quot;ism&quot;</span><span class="p">,</span>
+    <span class="n">rvs_shock</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">fwd_ssc</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">rvs_ssc</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">ssc_cooling</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">kn</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+<span class="p">)</span>
 
 <span class="n">params</span> <span class="o">=</span> <span class="p">[</span>
     <span class="c1"># Standard parameters with reverse shock</span>
@@ -798,10 +818,11 @@
 <section id="energy-injection">
 <h3><a class="toc-backref" href="#id16" role="doc-backlink">Energy Injection</a><a class="headerlink" href="#energy-injection" title="Link to this heading"></a></h3>
 <p><strong>Magnetar Spin-down Injection</strong></p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">cfg</span> <span class="o">=</span> <span class="n">Setups</span><span class="p">()</span>
-<span class="n">cfg</span><span class="o">.</span><span class="n">medium</span> <span class="o">=</span> <span class="s2">&quot;ism&quot;</span>        <span class="c1"># Default medium</span>
-<span class="n">cfg</span><span class="o">.</span><span class="n">jet</span> <span class="o">=</span> <span class="s2">&quot;tophat&quot;</span>        <span class="c1"># Default jet</span>
-<span class="n">cfg</span><span class="o">.</span><span class="n">magnetar</span> <span class="o">=</span> <span class="kc">True</span>       <span class="c1"># Enable magnetar injection</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">fitter</span> <span class="o">=</span> <span class="n">Fitter</span><span class="p">(</span>
+    <span class="n">z</span><span class="o">=</span><span class="mf">1.58</span><span class="p">,</span> <span class="n">lumi_dist</span><span class="o">=</span><span class="mf">3.364e28</span><span class="p">,</span>
+    <span class="n">jet</span><span class="o">=</span><span class="s2">&quot;tophat&quot;</span><span class="p">,</span> <span class="n">medium</span><span class="o">=</span><span class="s2">&quot;ism&quot;</span><span class="p">,</span>
+    <span class="n">magnetar</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+<span class="p">)</span>
 
 <span class="n">params</span> <span class="o">=</span> <span class="p">[</span>
     <span class="c1"># Standard jet and medium parameters (same as default)</span>
@@ -826,13 +847,14 @@
 </div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p><strong>Magnetar Injection Profile:</strong> L(t) = L0 × (1 + t/t0)^(-q) for θ &lt; θc</p>
+<p><strong>Magnetar Injection Profile:</strong> L(t) = L0 x (1 + t/t0)^(-q) for theta &lt; theta_c</p>
 </div>
 <p><strong>Magnetar with Structured Jet</strong></p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">cfg</span> <span class="o">=</span> <span class="n">Setups</span><span class="p">()</span>
-<span class="n">cfg</span><span class="o">.</span><span class="n">medium</span> <span class="o">=</span> <span class="s2">&quot;ism&quot;</span>
-<span class="n">cfg</span><span class="o">.</span><span class="n">jet</span> <span class="o">=</span> <span class="s2">&quot;powerlaw&quot;</span>      <span class="c1"># Structured jet</span>
-<span class="n">cfg</span><span class="o">.</span><span class="n">magnetar</span> <span class="o">=</span> <span class="kc">True</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">fitter</span> <span class="o">=</span> <span class="n">Fitter</span><span class="p">(</span>
+    <span class="n">z</span><span class="o">=</span><span class="mf">1.58</span><span class="p">,</span> <span class="n">lumi_dist</span><span class="o">=</span><span class="mf">3.364e28</span><span class="p">,</span>
+    <span class="n">jet</span><span class="o">=</span><span class="s2">&quot;powerlaw&quot;</span><span class="p">,</span> <span class="n">medium</span><span class="o">=</span><span class="s2">&quot;ism&quot;</span><span class="p">,</span>
+    <span class="n">magnetar</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+<span class="p">)</span>
 
 <span class="n">params</span> <span class="o">=</span> <span class="p">[</span>
     <span class="c1"># Power-law jet with magnetar</span>
@@ -861,15 +883,16 @@
 <section id="complex-model-combinations">
 <h3><a class="toc-backref" href="#id17" role="doc-backlink">Complex Model Combinations</a><a class="headerlink" href="#complex-model-combinations" title="Link to this heading"></a></h3>
 <p><strong>Full Physics: Structured Jet + Stratified Medium + Reverse Shock + IC + Magnetar</strong></p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">cfg</span> <span class="o">=</span> <span class="n">Setups</span><span class="p">()</span>
-<span class="n">cfg</span><span class="o">.</span><span class="n">medium</span> <span class="o">=</span> <span class="s2">&quot;wind&quot;</span>       <span class="c1"># Stratified medium</span>
-<span class="n">cfg</span><span class="o">.</span><span class="n">jet</span> <span class="o">=</span> <span class="s2">&quot;gaussian&quot;</span>      <span class="c1"># Structured jet</span>
-<span class="n">cfg</span><span class="o">.</span><span class="n">rvs_shock</span> <span class="o">=</span> <span class="kc">True</span>      <span class="c1"># Reverse shock</span>
-<span class="n">cfg</span><span class="o">.</span><span class="n">fwd_ssc</span> <span class="o">=</span> <span class="kc">True</span>        <span class="c1"># Forward SSC</span>
-<span class="n">cfg</span><span class="o">.</span><span class="n">rvs_ssc</span> <span class="o">=</span> <span class="kc">True</span>        <span class="c1"># Reverse SSC</span>
-<span class="n">cfg</span><span class="o">.</span><span class="n">ssc_cooling</span> <span class="o">=</span> <span class="kc">True</span>    <span class="c1"># IC cooling</span>
-<span class="n">cfg</span><span class="o">.</span><span class="n">kn</span> <span class="o">=</span> <span class="kc">True</span>             <span class="c1"># Klein-Nishina</span>
-<span class="n">cfg</span><span class="o">.</span><span class="n">magnetar</span> <span class="o">=</span> <span class="kc">True</span>       <span class="c1"># Magnetar energy injection</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">fitter</span> <span class="o">=</span> <span class="n">Fitter</span><span class="p">(</span>
+    <span class="n">z</span><span class="o">=</span><span class="mf">1.58</span><span class="p">,</span> <span class="n">lumi_dist</span><span class="o">=</span><span class="mf">3.364e28</span><span class="p">,</span>
+    <span class="n">jet</span><span class="o">=</span><span class="s2">&quot;gaussian&quot;</span><span class="p">,</span> <span class="n">medium</span><span class="o">=</span><span class="s2">&quot;wind&quot;</span><span class="p">,</span>
+    <span class="n">rvs_shock</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">fwd_ssc</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">rvs_ssc</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">ssc_cooling</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">kn</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">magnetar</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+<span class="p">)</span>
 
 <span class="n">params</span> <span class="o">=</span> <span class="p">[</span>
     <span class="c1"># Gaussian jet</span>
@@ -931,12 +954,12 @@
 <p>VegasAfterglow uses an optimized emcee configuration:</p>
 <ul class="simple">
 <li><p><strong>Custom proposal moves</strong>: DEMove (70%) + DESnookerMove (30%) for better mixing than default stretch move</p></li>
-<li><p><strong>Vectorized batch processing</strong>: Likelihood evaluations are parallelized via OpenMP internally</p></li>
+<li><p><strong>Thread-based parallelism</strong>: Likelihood evaluations are parallelized via <code class="docutils literal notranslate"><span class="pre">ThreadPoolExecutor</span></code> with the GIL released during C++ computation</p></li>
 <li><p><strong>Automatic nwalkers</strong>: Optimized based on parameter count and CPU cores</p></li>
 </ul>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p><strong>Parallelization is automatic</strong>: For emcee, the <code class="docutils literal notranslate"><span class="pre">npool</span></code> parameter is ignored. The C++ backend uses OpenMP multi-threading for batch likelihood evaluation, which is faster than Python multiprocessing.</p>
+<p><strong>Parallelization</strong>: For emcee, set <code class="docutils literal notranslate"><span class="pre">npool</span></code> to the number of CPU cores. Each thread creates a <code class="docutils literal notranslate"><span class="pre">Model</span></code> and calls <code class="docutils literal notranslate"><span class="pre">flux_density()</span></code> with the GIL released during C++ computation, achieving near-native parallelism.</p>
 </div>
 <p><strong>Dynesty (Nested Sampling) - For Model Comparison</strong></p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">result</span> <span class="o">=</span> <span class="n">fitter</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">sampler</span><span class="o">=</span><span class="s2">&quot;dynesty&quot;</span><span class="p">,</span> <span class="n">nlive</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> <span class="n">dlogz</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="o">...</span><span class="p">)</span>
@@ -972,14 +995,17 @@
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">fit</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
     <span class="n">param_defs</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="n">ParamDef</span><span class="p">],</span>      <span class="c1"># Parameter definitions</span>
-    <span class="n">resolution</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="mf">0.15</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span>  <span class="c1"># Grid resolution</span>
-    <span class="n">sampler</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;dynesty&quot;</span><span class="p">,</span>             <span class="c1"># Sampler algorithm</span>
-    <span class="n">npool</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>                      <span class="c1"># Number of parallel processes</span>
+    <span class="n">sampler</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;emcee&quot;</span><span class="p">,</span>              <span class="c1"># Sampler algorithm</span>
+    <span class="n">resolution</span><span class="p">:</span> <span class="n">Tuple</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>            <span class="c1"># Override constructor resolution</span>
+    <span class="n">npool</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>                   <span class="c1"># Number of parallel threads (default: all cores)</span>
     <span class="n">top_k</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">10</span><span class="p">,</span>                     <span class="c1"># Number of best fits to return</span>
     <span class="n">outdir</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;bilby_output&quot;</span><span class="p">,</span>        <span class="c1"># Output directory</span>
     <span class="n">label</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;afterglow&quot;</span><span class="p">,</span>            <span class="c1"># Run label</span>
     <span class="n">clean</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>                  <span class="c1"># Clean up intermediate files</span>
     <span class="n">resume</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>                <span class="c1"># Resume previous run</span>
+    <span class="n">log_prior_fn</span><span class="p">:</span> <span class="n">Callable</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>       <span class="c1"># Custom log-prior (emcee only)</span>
+    <span class="n">log_likelihood_fn</span><span class="p">:</span> <span class="n">Callable</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>  <span class="c1"># Custom log-likelihood</span>
+    <span class="n">priors</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>                 <span class="c1"># Custom bilby priors (dynesty only)</span>
     <span class="o">**</span><span class="n">sampler_kwargs</span>                     <span class="c1"># Sampler-specific parameters</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">FitResult</span>
 </pre></div>
@@ -995,11 +1021,10 @@
 </dl>
 </li>
 <li><dl class="simple">
-<dt><code class="docutils literal notranslate"><span class="pre">resolution</span></code>: Tuple of (phi_res, theta_res, t_res)</dt><dd><ul>
-<li><p>Controls model computation grid spacing</p></li>
-<li><p>Lower values = lower accuracy but faster computation</p></li>
-<li><p>Default: (0.15, 0.5, 10) provides good balance</p></li>
-<li><p>Example: (0.1, 1, 15) for higher accuracy</p></li>
+<dt><code class="docutils literal notranslate"><span class="pre">resolution</span></code>: Optional tuple of (phi_res, theta_res, t_res)</dt><dd><ul>
+<li><p>Overrides the resolution set in the <code class="docutils literal notranslate"><span class="pre">Fitter</span></code> constructor for this run</p></li>
+<li><p>If <code class="docutils literal notranslate"><span class="pre">None</span></code>, uses the constructor value (default: <code class="docutils literal notranslate"><span class="pre">(0.15,</span> <span class="pre">0.5,</span> <span class="pre">10)</span></code>)</p></li>
+<li><p>Example: <code class="docutils literal notranslate"><span class="pre">(0.1,</span> <span class="pre">1,</span> <span class="pre">15)</span></code> for higher accuracy</p></li>
 </ul>
 </dd>
 </dl>
@@ -1018,9 +1043,9 @@
 </dl>
 </li>
 <li><dl class="simple">
-<dt><code class="docutils literal notranslate"><span class="pre">npool</span></code>: Number of parallel worker processes</dt><dd><ul>
+<dt><code class="docutils literal notranslate"><span class="pre">npool</span></code>: Number of parallel threads</dt><dd><ul>
 <li><p>Set to number of CPU cores for best performance</p></li>
-<li><p>Default: 1 (no parallelization)</p></li>
+<li><p>Default: number of CPU cores</p></li>
 <li><p>Example: <code class="docutils literal notranslate"><span class="pre">npool=8</span></code> on an 8-core machine</p></li>
 </ul>
 </dd>
@@ -1218,7 +1243,7 @@ Pass sampler-specific parameters via <code class="docutils literal notranslate">
 <li><dl class="simple">
 <dt><code class="docutils literal notranslate"><span class="pre">top_k_log_probs</span></code>: Log probabilities for top-k fits</dt><dd><ul>
 <li><p>Shape: <code class="docutils literal notranslate"><span class="pre">[top_k]</span></code></p></li>
-<li><p>Can convert to χ² via: <code class="docutils literal notranslate"><span class="pre">chi2</span> <span class="pre">=</span> <span class="pre">-2</span> <span class="pre">*</span> <span class="pre">log_prob</span></code></p></li>
+<li><p>Can convert to chi-squared via: <code class="docutils literal notranslate"><span class="pre">chi2</span> <span class="pre">=</span> <span class="pre">-2</span> <span class="pre">*</span> <span class="pre">log_prob</span></code></p></li>
 </ul>
 </dd>
 </dl>
@@ -1243,11 +1268,9 @@ Pass sampler-specific parameters via <code class="docutils literal notranslate">
 </section>
 <section id="basic-mcmc-execution">
 <h3><a class="toc-backref" href="#id21" role="doc-backlink">Basic MCMC Execution</a><a class="headerlink" href="#basic-mcmc-execution" title="Link to this heading"></a></h3>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Check data statistics before MCMC</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Total data points: </span><span class="si">{</span><span class="n">data</span><span class="o">.</span><span class="n">data_points_num</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-
-<span class="c1"># Create fitter object</span>
-<span class="n">fitter</span> <span class="o">=</span> <span class="n">Fitter</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">cfg</span><span class="p">)</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Create fitter object and add data (see above for data loading examples)</span>
+<span class="n">fitter</span> <span class="o">=</span> <span class="n">Fitter</span><span class="p">(</span><span class="n">z</span><span class="o">=</span><span class="mf">1.58</span><span class="p">,</span> <span class="n">lumi_dist</span><span class="o">=</span><span class="mf">3.364e28</span><span class="p">,</span> <span class="n">jet</span><span class="o">=</span><span class="s2">&quot;tophat&quot;</span><span class="p">,</span> <span class="n">medium</span><span class="o">=</span><span class="s2">&quot;ism&quot;</span><span class="p">)</span>
+<span class="c1"># ... add data via fitter.add_flux_density(), fitter.add_spectrum(), etc.</span>
 
 <span class="c1"># Option 1 (Recommended): Nested sampling with dynesty (computes Bayesian evidence, robust for multimodal posteriors)</span>
 <span class="n">result</span> <span class="o">=</span> <span class="n">fitter</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span>
@@ -1257,7 +1280,7 @@ Pass sampler-specific parameters via <code class="docutils literal notranslate">
     <span class="n">nlive</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span>                    <span class="c1"># Number of live points</span>
     <span class="n">walks</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span>                     <span class="c1"># Number of random walks per live point</span>
     <span class="n">dlogz</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span>                     <span class="c1"># Stopping criterion (evidence tolerance)</span>
-    <span class="n">npool</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span>                       <span class="c1"># Number of parallel processes</span>
+    <span class="n">npool</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span>                       <span class="c1"># Number of parallel threads</span>
     <span class="n">top_k</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>                      <span class="c1"># Number of best-fit parameters to return</span>
 <span class="p">)</span>
 
@@ -1269,7 +1292,7 @@ Pass sampler-specific parameters via <code class="docutils literal notranslate">
     <span class="n">nsteps</span><span class="o">=</span><span class="mi">50000</span><span class="p">,</span>                  <span class="c1"># Number of steps per walker</span>
     <span class="n">nburn</span><span class="o">=</span><span class="mi">10000</span><span class="p">,</span>                   <span class="c1"># Burn-in steps to discard</span>
     <span class="n">thin</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>                        <span class="c1"># Save every nth sample</span>
-    <span class="n">npool</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span>                       <span class="c1"># Number of parallel processes</span>
+    <span class="n">npool</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span>                       <span class="c1"># Number of parallel threads</span>
     <span class="n">top_k</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>                      <span class="c1"># Number of best-fit parameters to return</span>
 <span class="p">)</span>
 </pre></div>
@@ -1358,8 +1381,8 @@ Pass sampler-specific parameters via <code class="docutils literal notranslate">
     <span class="c1"># Plot model</span>
     <span class="n">ax</span><span class="o">.</span><span class="n">loglog</span><span class="p">(</span><span class="n">t_model</span><span class="p">,</span> <span class="n">lc_model</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="s1">&#39;-&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">color</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
     <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Time [s]&#39;</span><span class="p">)</span>
-    <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Flux Density [erg/cm²/s/Hz]&#39;</span><span class="p">)</span>
-    <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;ν = </span><span class="si">{</span><span class="n">nu</span><span class="si">:</span><span class="s1">.1e</span><span class="si">}</span><span class="s1"> Hz&#39;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Flux Density [erg/cm^2/s/Hz]&#39;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;nu = </span><span class="si">{</span><span class="n">nu</span><span class="si">:</span><span class="s1">.1e</span><span class="si">}</span><span class="s1"> Hz&#39;</span><span class="p">)</span>
 
 <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s2">&quot;lightcurve_fit.png&quot;</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">300</span><span class="p">,</span> <span class="n">bbox_inches</span><span class="o">=</span><span class="s1">&#39;tight&#39;</span><span class="p">)</span>
@@ -1367,9 +1390,412 @@ Pass sampler-specific parameters via <code class="docutils literal notranslate">
 </div>
 </section>
 </section>
+<section id="advanced-fitting">
+<h2><a class="toc-backref" href="#id26" role="doc-backlink">Advanced Fitting</a><a class="headerlink" href="#advanced-fitting" title="Link to this heading"></a></h2>
+<p>VegasAfterglow’s <code class="docutils literal notranslate"><span class="pre">Fitter</span></code> is built directly on the <code class="docutils literal notranslate"><span class="pre">Model</span></code> class, giving you full control over the fitting process. You can customize:</p>
+<ul class="simple">
+<li><p><strong>Priors</strong>: Use informative or custom prior distributions</p></li>
+<li><p><strong>Likelihood</strong>: Implement non-standard likelihood functions (e.g., upper limits, systematic uncertainties)</p></li>
+<li><p><strong>Jet profiles</strong>: Define arbitrary angular energy and Lorentz factor distributions</p></li>
+<li><p><strong>Medium profiles</strong>: Define custom circumburst density structures</p></li>
+</ul>
+<p>The <code class="docutils literal notranslate"><span class="pre">Fitter</span></code> evaluates models using Python’s <code class="docutils literal notranslate"><span class="pre">ThreadPoolExecutor</span></code>, where each thread constructs a <code class="docutils literal notranslate"><span class="pre">Model</span></code> and calls <code class="docutils literal notranslate"><span class="pre">flux_density()</span></code> with the GIL released during C++ computation. This provides near-native parallelism with full Python flexibility.</p>
+<section id="custom-priors">
+<h3><a class="toc-backref" href="#id27" role="doc-backlink">Custom Priors</a><a class="headerlink" href="#custom-priors" title="Link to this heading"></a></h3>
+<p><strong>Emcee: Log-Prior Function</strong></p>
+<p>For emcee, pass a <code class="docutils literal notranslate"><span class="pre">log_prior_fn</span></code> that takes an array of walker positions and returns log-prior values:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">VegasAfterglow</span><span class="w"> </span><span class="kn">import</span> <span class="n">Fitter</span><span class="p">,</span> <span class="n">ParamDef</span><span class="p">,</span> <span class="n">Scale</span>
+
+<span class="n">fitter</span> <span class="o">=</span> <span class="n">Fitter</span><span class="p">(</span>
+    <span class="n">z</span><span class="o">=</span><span class="mf">1.58</span><span class="p">,</span> <span class="n">lumi_dist</span><span class="o">=</span><span class="mf">3.364e28</span><span class="p">,</span>
+    <span class="n">jet</span><span class="o">=</span><span class="s2">&quot;tophat&quot;</span><span class="p">,</span> <span class="n">medium</span><span class="o">=</span><span class="s2">&quot;ism&quot;</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="n">params</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;E_iso&quot;</span><span class="p">,</span>   <span class="mf">1e50</span><span class="p">,</span>  <span class="mf">1e54</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">LOG</span><span class="p">),</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;Gamma0&quot;</span><span class="p">,</span>    <span class="mi">10</span><span class="p">,</span>   <span class="mi">500</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">LOG</span><span class="p">),</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;theta_c&quot;</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">,</span>   <span class="mf">0.5</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">LINEAR</span><span class="p">),</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;theta_v&quot;</span><span class="p">,</span>    <span class="mi">0</span><span class="p">,</span>     <span class="mi">0</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">FIXED</span><span class="p">),</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;n_ism&quot;</span><span class="p">,</span>   <span class="mf">1e-3</span><span class="p">,</span>   <span class="mi">100</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">LOG</span><span class="p">),</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;p&quot;</span><span class="p">,</span>        <span class="mf">2.1</span><span class="p">,</span>   <span class="mf">2.8</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">LINEAR</span><span class="p">),</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;eps_e&quot;</span><span class="p">,</span>   <span class="mf">1e-3</span><span class="p">,</span>   <span class="mf">0.5</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">LOG</span><span class="p">),</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;eps_B&quot;</span><span class="p">,</span>   <span class="mf">1e-5</span><span class="p">,</span>   <span class="mf">0.1</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">LOG</span><span class="p">),</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;xi_e&quot;</span><span class="p">,</span>     <span class="mf">0.1</span><span class="p">,</span>   <span class="mf">1.0</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">LINEAR</span><span class="p">),</span>
+<span class="p">]</span>
+
+<span class="n">fitter</span><span class="o">.</span><span class="n">add_flux_density</span><span class="p">(</span><span class="n">nu</span><span class="o">=</span><span class="mf">4.84e14</span><span class="p">,</span> <span class="n">t</span><span class="o">=</span><span class="n">t_data</span><span class="p">,</span> <span class="n">f_nu</span><span class="o">=</span><span class="n">flux_data</span><span class="p">,</span> <span class="n">err</span><span class="o">=</span><span class="n">flux_err</span><span class="p">)</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">log_prior</span><span class="p">(</span><span class="n">samples</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Gaussian prior on p centered at 2.3 with sigma=0.1.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        samples: Array of shape (nwalkers, ndim)</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        Array of shape (nwalkers,) with log-prior values</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">log_p</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">samples</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+
+    <span class="c1"># p is the 6th free parameter (index 5 in sampler space)</span>
+    <span class="n">p_values</span> <span class="o">=</span> <span class="n">samples</span><span class="p">[:,</span> <span class="mi">5</span><span class="p">]</span>
+    <span class="n">log_p</span> <span class="o">+=</span> <span class="o">-</span><span class="mf">0.5</span> <span class="o">*</span> <span class="p">((</span><span class="n">p_values</span> <span class="o">-</span> <span class="mf">2.3</span><span class="p">)</span> <span class="o">/</span> <span class="mf">0.1</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span>
+
+    <span class="k">return</span> <span class="n">log_p</span>
+
+<span class="n">result</span> <span class="o">=</span> <span class="n">fitter</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span>
+    <span class="n">params</span><span class="p">,</span>
+    <span class="n">sampler</span><span class="o">=</span><span class="s2">&quot;emcee&quot;</span><span class="p">,</span>
+    <span class="n">nsteps</span><span class="o">=</span><span class="mi">10000</span><span class="p">,</span>
+    <span class="n">nburn</span><span class="o">=</span><span class="mi">2000</span><span class="p">,</span>
+    <span class="n">log_prior_fn</span><span class="o">=</span><span class="n">log_prior</span><span class="p">,</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">log_prior_fn</span></code> receives parameters in <strong>sampler space</strong>: <code class="docutils literal notranslate"><span class="pre">LOG</span></code>-scale parameters are passed as <code class="docutils literal notranslate"><span class="pre">log10(value)</span></code>. The prior is added to the log-likelihood, so returning <code class="docutils literal notranslate"><span class="pre">-np.inf</span></code> rejects the sample.</p>
+</div>
+<p><strong>Bilby/Dynesty: Prior Distributions</strong></p>
+<p>For bilby-based samplers (dynesty, nestle, etc.), pass a <code class="docutils literal notranslate"><span class="pre">priors</span></code> dictionary mapping parameter labels to <code class="docutils literal notranslate"><span class="pre">bilby.core.prior.Prior</span></code> objects:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">bilby</span>
+
+<span class="n">custom_priors</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;p&quot;</span><span class="p">:</span> <span class="n">bilby</span><span class="o">.</span><span class="n">core</span><span class="o">.</span><span class="n">prior</span><span class="o">.</span><span class="n">Gaussian</span><span class="p">(</span>
+        <span class="n">mu</span><span class="o">=</span><span class="mf">2.3</span><span class="p">,</span> <span class="n">sigma</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span>
+        <span class="n">minimum</span><span class="o">=</span><span class="mf">2.1</span><span class="p">,</span> <span class="n">maximum</span><span class="o">=</span><span class="mf">2.8</span><span class="p">,</span>
+        <span class="n">name</span><span class="o">=</span><span class="s2">&quot;p&quot;</span><span class="p">,</span> <span class="n">latex_label</span><span class="o">=</span><span class="sa">r</span><span class="s2">&quot;$p$&quot;</span><span class="p">,</span>
+    <span class="p">),</span>
+    <span class="s2">&quot;log10_eps_e&quot;</span><span class="p">:</span> <span class="n">bilby</span><span class="o">.</span><span class="n">core</span><span class="o">.</span><span class="n">prior</span><span class="o">.</span><span class="n">Gaussian</span><span class="p">(</span>
+        <span class="n">mu</span><span class="o">=-</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">sigma</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span>
+        <span class="n">minimum</span><span class="o">=-</span><span class="mi">3</span><span class="p">,</span> <span class="n">maximum</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="mf">0.5</span><span class="p">),</span>
+        <span class="n">name</span><span class="o">=</span><span class="s2">&quot;log10_eps_e&quot;</span><span class="p">,</span>
+        <span class="n">latex_label</span><span class="o">=</span><span class="sa">r</span><span class="s2">&quot;$\log_</span><span class="si">{10}</span><span class="s2">(\epsilon_e)$&quot;</span><span class="p">,</span>
+    <span class="p">),</span>
+<span class="p">}</span>
+
+<span class="n">result</span> <span class="o">=</span> <span class="n">fitter</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span>
+    <span class="n">params</span><span class="p">,</span>
+    <span class="n">sampler</span><span class="o">=</span><span class="s2">&quot;dynesty&quot;</span><span class="p">,</span>
+    <span class="n">nlive</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span>
+    <span class="n">priors</span><span class="o">=</span><span class="n">custom_priors</span><span class="p">,</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>Parameters not included in the <code class="docutils literal notranslate"><span class="pre">priors</span></code> dictionary automatically get uniform priors based on the bounds in <code class="docutils literal notranslate"><span class="pre">ParamDef</span></code>.</p>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>When using <code class="docutils literal notranslate"><span class="pre">LOG</span></code>-scale parameters, the prior keys must use the <code class="docutils literal notranslate"><span class="pre">log10_</span></code> prefix (e.g., <code class="docutils literal notranslate"><span class="pre">log10_eps_e</span></code>, not <code class="docutils literal notranslate"><span class="pre">eps_e</span></code>), since the sampler operates in log-space.</p>
+</div>
+</section>
+<section id="custom-likelihood">
+<h3><a class="toc-backref" href="#id28" role="doc-backlink">Custom Likelihood</a><a class="headerlink" href="#custom-likelihood" title="Link to this heading"></a></h3>
+<p>The default likelihood is Gaussian: <span class="math notranslate nohighlight">\(\ln\mathcal{L} = -\chi^2/2\)</span>. Override this with a <code class="docutils literal notranslate"><span class="pre">log_likelihood_fn</span></code> that maps <span class="math notranslate nohighlight">\(\chi^2\)</span> to log-likelihood:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">student_t_likelihood</span><span class="p">(</span><span class="n">chi2</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Student-t likelihood with nu=5 degrees of freedom.</span>
+
+<span class="sd">    More robust to outliers than Gaussian.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">nu</span> <span class="o">=</span> <span class="mi">5</span>
+    <span class="n">n_data</span> <span class="o">=</span> <span class="mi">50</span>  <span class="c1"># number of data points</span>
+    <span class="k">return</span> <span class="o">-</span><span class="mf">0.5</span> <span class="o">*</span> <span class="p">(</span><span class="n">nu</span> <span class="o">+</span> <span class="n">n_data</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">chi2</span> <span class="o">/</span> <span class="n">nu</span><span class="p">)</span>
+
+<span class="n">result</span> <span class="o">=</span> <span class="n">fitter</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span>
+    <span class="n">params</span><span class="p">,</span>
+    <span class="n">sampler</span><span class="o">=</span><span class="s2">&quot;emcee&quot;</span><span class="p">,</span>
+    <span class="n">log_likelihood_fn</span><span class="o">=</span><span class="n">student_t_likelihood</span><span class="p">,</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p><strong>Upper Limits</strong></p>
+<p>For non-detections, a common approach is to weight the likelihood so data points
+above the upper limit are penalized:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">likelihood_with_upper_limits</span><span class="p">(</span><span class="n">chi2</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Standard Gaussian likelihood; upper limits encoded in data weights.&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="o">-</span><span class="mf">0.5</span> <span class="o">*</span> <span class="n">chi2</span>
+
+<span class="c1"># Upper limits: set flux to 0 and error to the upper limit value,</span>
+<span class="c1"># so chi2 = (0 - model)^2 / upper_limit^2, which penalizes models above the limit</span>
+<span class="n">fitter</span><span class="o">.</span><span class="n">add_flux_density</span><span class="p">(</span>
+    <span class="n">nu</span><span class="o">=</span><span class="mf">1e10</span><span class="p">,</span> <span class="n">t</span><span class="o">=</span><span class="p">[</span><span class="mf">1e5</span><span class="p">],</span> <span class="n">f_nu</span><span class="o">=</span><span class="p">[</span><span class="mf">0.0</span><span class="p">],</span> <span class="n">err</span><span class="o">=</span><span class="p">[</span><span class="mf">3e-29</span><span class="p">],</span>
+    <span class="n">weights</span><span class="o">=</span><span class="p">[</span><span class="mf">1.0</span><span class="p">],</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="custom-jet-profiles">
+<h3><a class="toc-backref" href="#id29" role="doc-backlink">Custom Jet Profiles</a><a class="headerlink" href="#custom-jet-profiles" title="Link to this heading"></a></h3>
+<p>The <code class="docutils literal notranslate"><span class="pre">Fitter</span></code> accepts a custom jet factory function via the <code class="docutils literal notranslate"><span class="pre">jet</span></code> keyword argument.
+This lets you define arbitrary angular profiles using the same <code class="docutils literal notranslate"><span class="pre">Ejecta</span></code> class used for
+direct model calculations (see <a class="reference internal" href="examples.html"><span class="doc">Examples</span></a>).</p>
+<p><strong>How it works:</strong></p>
+<ol class="arabic simple">
+<li><p>Define functions for the energy and Lorentz factor angular profiles</p></li>
+<li><p>Wrap them in a <em>factory function</em> that takes <code class="docutils literal notranslate"><span class="pre">params</span></code> (the current MCMC sample) and returns an <code class="docutils literal notranslate"><span class="pre">Ejecta</span></code></p></li>
+<li><p>Pass the factory to <code class="docutils literal notranslate"><span class="pre">Fitter(jet=...)</span></code></p></li>
+</ol>
+<p>The fitter calls your factory on every MCMC step with fresh parameter values.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">VegasAfterglow</span><span class="w"> </span><span class="kn">import</span> <span class="n">Ejecta</span><span class="p">,</span> <span class="n">Fitter</span><span class="p">,</span> <span class="n">ParamDef</span><span class="p">,</span> <span class="n">Scale</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">double_gaussian_jet</span><span class="p">(</span><span class="n">params</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Double-Gaussian jet: narrow core + wide wing.&quot;&quot;&quot;</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">E_iso_func</span><span class="p">(</span><span class="n">phi</span><span class="p">,</span> <span class="n">theta</span><span class="p">):</span>
+        <span class="n">core</span> <span class="o">=</span> <span class="n">params</span><span class="o">.</span><span class="n">E_iso</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="p">(</span><span class="n">theta</span> <span class="o">/</span> <span class="n">params</span><span class="o">.</span><span class="n">theta_c</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span>
+        <span class="n">wing</span> <span class="o">=</span> <span class="n">params</span><span class="o">.</span><span class="n">E_iso_w</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="p">(</span><span class="n">theta</span> <span class="o">/</span> <span class="n">params</span><span class="o">.</span><span class="n">theta_w</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">core</span> <span class="o">+</span> <span class="n">wing</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">Gamma_func</span><span class="p">(</span><span class="n">phi</span><span class="p">,</span> <span class="n">theta</span><span class="p">):</span>
+        <span class="k">return</span> <span class="mi">1</span> <span class="o">+</span> <span class="p">(</span><span class="n">params</span><span class="o">.</span><span class="n">Gamma0</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="p">(</span><span class="n">theta</span> <span class="o">/</span> <span class="n">params</span><span class="o">.</span><span class="n">theta_c</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">Ejecta</span><span class="p">(</span><span class="n">E_iso</span><span class="o">=</span><span class="n">E_iso_func</span><span class="p">,</span> <span class="n">Gamma0</span><span class="o">=</span><span class="n">Gamma_func</span><span class="p">,</span> <span class="n">duration</span><span class="o">=</span><span class="n">params</span><span class="o">.</span><span class="n">tau</span><span class="p">)</span>
+
+<span class="n">mc_params</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;E_iso&quot;</span><span class="p">,</span>   <span class="mf">1e50</span><span class="p">,</span>  <span class="mf">1e54</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">LOG</span><span class="p">),</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;Gamma0&quot;</span><span class="p">,</span>    <span class="mi">50</span><span class="p">,</span>   <span class="mi">500</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">LOG</span><span class="p">),</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;theta_c&quot;</span><span class="p">,</span> <span class="mf">0.02</span><span class="p">,</span>   <span class="mf">0.15</span><span class="p">,</span> <span class="n">Scale</span><span class="o">.</span><span class="n">LINEAR</span><span class="p">),</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;theta_v&quot;</span><span class="p">,</span>    <span class="mi">0</span><span class="p">,</span>   <span class="mf">0.5</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">LINEAR</span><span class="p">),</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;E_iso_w&quot;</span><span class="p">,</span> <span class="mf">1e48</span><span class="p">,</span>  <span class="mf">1e52</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">LOG</span><span class="p">),</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;theta_w&quot;</span><span class="p">,</span>  <span class="mf">0.1</span><span class="p">,</span>   <span class="mf">0.5</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">LINEAR</span><span class="p">),</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;tau&quot;</span><span class="p">,</span>        <span class="mi">1</span><span class="p">,</span>   <span class="mf">1e3</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">LOG</span><span class="p">),</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;n_ism&quot;</span><span class="p">,</span>   <span class="mf">1e-3</span><span class="p">,</span>   <span class="mi">100</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">LOG</span><span class="p">),</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;p&quot;</span><span class="p">,</span>        <span class="mf">2.1</span><span class="p">,</span>   <span class="mf">2.8</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">LINEAR</span><span class="p">),</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;eps_e&quot;</span><span class="p">,</span>   <span class="mf">1e-3</span><span class="p">,</span>   <span class="mf">0.5</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">LOG</span><span class="p">),</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;eps_B&quot;</span><span class="p">,</span>   <span class="mf">1e-5</span><span class="p">,</span>   <span class="mf">0.1</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">LOG</span><span class="p">),</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;xi_e&quot;</span><span class="p">,</span>     <span class="mf">0.1</span><span class="p">,</span>   <span class="mf">1.0</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">LINEAR</span><span class="p">),</span>
+<span class="p">]</span>
+
+<span class="n">fitter</span> <span class="o">=</span> <span class="n">Fitter</span><span class="p">(</span><span class="n">z</span><span class="o">=</span><span class="mf">1.58</span><span class="p">,</span> <span class="n">lumi_dist</span><span class="o">=</span><span class="mf">3.364e28</span><span class="p">,</span> <span class="n">jet</span><span class="o">=</span><span class="n">double_gaussian_jet</span><span class="p">)</span>
+<span class="n">fitter</span><span class="o">.</span><span class="n">add_flux_density</span><span class="p">(</span><span class="n">nu</span><span class="o">=</span><span class="mf">4.84e14</span><span class="p">,</span> <span class="n">t</span><span class="o">=</span><span class="n">t_data</span><span class="p">,</span> <span class="n">f_nu</span><span class="o">=</span><span class="n">flux_data</span><span class="p">,</span> <span class="n">err</span><span class="o">=</span><span class="n">flux_err</span><span class="p">)</span>
+
+<span class="n">result</span> <span class="o">=</span> <span class="n">fitter</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">mc_params</span><span class="p">,</span> <span class="n">sampler</span><span class="o">=</span><span class="s2">&quot;emcee&quot;</span><span class="p">,</span> <span class="n">nsteps</span><span class="o">=</span><span class="mi">10000</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">Ejecta</span></code> constructor supports these optional keyword arguments:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">sigma0</span></code>: Magnetization profile <code class="docutils literal notranslate"><span class="pre">sigma0(phi,</span> <span class="pre">theta)</span></code> (default: 0)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">E_dot</span></code>: Energy injection rate <code class="docutils literal notranslate"><span class="pre">E_dot(phi,</span> <span class="pre">theta,</span> <span class="pre">t)</span></code> in erg/s (default: 0)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">M_dot</span></code>: Mass injection rate <code class="docutils literal notranslate"><span class="pre">M_dot(phi,</span> <span class="pre">theta,</span> <span class="pre">t)</span></code> in g/s (default: 0)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">spreading</span></code>: Enable lateral spreading (default: False)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">duration</span></code>: Jet duration in seconds, for reverse shock (default: 1)</p></li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>When using a custom <code class="docutils literal notranslate"><span class="pre">jet</span></code>, parameter validation is automatically skipped since the fitter cannot know which parameters your factory requires. Ensure your factory function handles all necessary parameters.</p>
+</div>
+<p><strong>Energy and Mass Injection</strong></p>
+<p>The <code class="docutils literal notranslate"><span class="pre">Ejecta</span></code> class also supports time-dependent energy and mass injection via <code class="docutils literal notranslate"><span class="pre">E_dot</span></code> and <code class="docutils literal notranslate"><span class="pre">M_dot</span></code>.
+These are functions of <code class="docutils literal notranslate"><span class="pre">(phi,</span> <span class="pre">theta,</span> <span class="pre">t)</span></code> returning injection rates in erg/s and g/s respectively:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">jet_with_injection</span><span class="p">(</span><span class="n">params</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Custom jet with energy injection (spin-down luminosity).&quot;&quot;&quot;</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">E_iso_func</span><span class="p">(</span><span class="n">phi</span><span class="p">,</span> <span class="n">theta</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">params</span><span class="o">.</span><span class="n">E_iso</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="p">(</span><span class="n">theta</span> <span class="o">/</span> <span class="n">params</span><span class="o">.</span><span class="n">theta_c</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">Gamma_func</span><span class="p">(</span><span class="n">phi</span><span class="p">,</span> <span class="n">theta</span><span class="p">):</span>
+        <span class="k">return</span> <span class="mi">1</span> <span class="o">+</span> <span class="p">(</span><span class="n">params</span><span class="o">.</span><span class="n">Gamma0</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="p">(</span><span class="n">theta</span> <span class="o">/</span> <span class="n">params</span><span class="o">.</span><span class="n">theta_c</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">E_dot_func</span><span class="p">(</span><span class="n">phi</span><span class="p">,</span> <span class="n">theta</span><span class="p">,</span> <span class="n">t</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Spin-down energy injection: L(t) = L0 / (1 + t/t_sd)^2.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">params</span><span class="o">.</span><span class="n">L0</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">t</span> <span class="o">/</span> <span class="n">params</span><span class="o">.</span><span class="n">t_sd</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">M_dot_func</span><span class="p">(</span><span class="n">phi</span><span class="p">,</span> <span class="n">theta</span><span class="p">,</span> <span class="n">t</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Mass injection: decaying mass loading.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">params</span><span class="o">.</span><span class="n">M_dot0</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">t</span> <span class="o">/</span> <span class="n">params</span><span class="o">.</span><span class="n">t_sd</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">Ejecta</span><span class="p">(</span>
+        <span class="n">E_iso</span><span class="o">=</span><span class="n">E_iso_func</span><span class="p">,</span> <span class="n">Gamma0</span><span class="o">=</span><span class="n">Gamma_func</span><span class="p">,</span>
+        <span class="n">E_dot</span><span class="o">=</span><span class="n">E_dot_func</span><span class="p">,</span> <span class="n">M_dot</span><span class="o">=</span><span class="n">M_dot_func</span><span class="p">,</span>
+        <span class="n">duration</span><span class="o">=</span><span class="n">params</span><span class="o">.</span><span class="n">tau</span><span class="p">,</span>
+    <span class="p">)</span>
+
+<span class="n">mc_params</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;E_iso&quot;</span><span class="p">,</span>   <span class="mf">1e50</span><span class="p">,</span>  <span class="mf">1e54</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">LOG</span><span class="p">),</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;Gamma0&quot;</span><span class="p">,</span>    <span class="mi">50</span><span class="p">,</span>   <span class="mi">500</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">LOG</span><span class="p">),</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;theta_c&quot;</span><span class="p">,</span> <span class="mf">0.02</span><span class="p">,</span>   <span class="mf">0.15</span><span class="p">,</span> <span class="n">Scale</span><span class="o">.</span><span class="n">LINEAR</span><span class="p">),</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;theta_v&quot;</span><span class="p">,</span>    <span class="mi">0</span><span class="p">,</span>   <span class="mf">0.5</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">LINEAR</span><span class="p">),</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;L0&quot;</span><span class="p">,</span>      <span class="mf">1e44</span><span class="p">,</span>  <span class="mf">1e48</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">LOG</span><span class="p">),</span>       <span class="c1"># Injection luminosity [erg/s]</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;t_sd&quot;</span><span class="p">,</span>      <span class="mi">10</span><span class="p">,</span>  <span class="mf">1e4</span><span class="p">,</span>   <span class="n">Scale</span><span class="o">.</span><span class="n">LOG</span><span class="p">),</span>       <span class="c1"># Spin-down timescale [s]</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;M_dot0&quot;</span><span class="p">,</span>  <span class="mf">1e20</span><span class="p">,</span>  <span class="mf">1e26</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">LOG</span><span class="p">),</span>       <span class="c1"># Mass injection rate [g/s]</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;tau&quot;</span><span class="p">,</span>        <span class="mi">1</span><span class="p">,</span>   <span class="mf">1e3</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">LOG</span><span class="p">),</span>
+    <span class="c1"># ... other standard params (n_ism, p, eps_e, eps_B, xi_e)</span>
+<span class="p">]</span>
+
+<span class="n">fitter</span> <span class="o">=</span> <span class="n">Fitter</span><span class="p">(</span><span class="n">z</span><span class="o">=</span><span class="mf">1.58</span><span class="p">,</span> <span class="n">lumi_dist</span><span class="o">=</span><span class="mf">3.364e28</span><span class="p">,</span> <span class="n">jet</span><span class="o">=</span><span class="n">jet_with_injection</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>See <a class="reference internal" href="examples.html"><span class="doc">Examples</span></a> for more user-defined jet examples.</p>
+</section>
+<section id="custom-medium-profiles">
+<h3><a class="toc-backref" href="#id30" role="doc-backlink">Custom Medium Profiles</a><a class="headerlink" href="#custom-medium-profiles" title="Link to this heading"></a></h3>
+<p>Similarly, pass a custom medium factory via the <code class="docutils literal notranslate"><span class="pre">medium</span></code> keyword argument to define custom density profiles using the <code class="docutils literal notranslate"><span class="pre">Medium</span></code> class:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">VegasAfterglow</span><span class="w"> </span><span class="kn">import</span> <span class="n">Medium</span><span class="p">,</span> <span class="n">Fitter</span><span class="p">,</span> <span class="n">ParamDef</span><span class="p">,</span> <span class="n">Scale</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">exponential_medium</span><span class="p">(</span><span class="n">params</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Exponential density profile: rho = mp * n_ism * exp(-r / r_scale).&quot;&quot;&quot;</span>
+    <span class="n">mp</span> <span class="o">=</span> <span class="mf">1.67e-24</span>  <span class="c1"># proton mass [g]</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">density_func</span><span class="p">(</span><span class="n">phi</span><span class="p">,</span> <span class="n">theta</span><span class="p">,</span> <span class="n">r</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">mp</span> <span class="o">*</span> <span class="n">params</span><span class="o">.</span><span class="n">n_ism</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">r</span> <span class="o">/</span> <span class="n">params</span><span class="o">.</span><span class="n">r_scale</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">Medium</span><span class="p">(</span><span class="n">rho</span><span class="o">=</span><span class="n">density_func</span><span class="p">)</span>
+
+<span class="n">fitter</span> <span class="o">=</span> <span class="n">Fitter</span><span class="p">(</span><span class="n">z</span><span class="o">=</span><span class="mf">1.58</span><span class="p">,</span> <span class="n">lumi_dist</span><span class="o">=</span><span class="mf">3.364e28</span><span class="p">,</span> <span class="n">medium</span><span class="o">=</span><span class="n">exponential_medium</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">Medium</span></code> class takes a callable <code class="docutils literal notranslate"><span class="pre">rho(phi,</span> <span class="pre">theta,</span> <span class="pre">r)</span></code> that returns the mass density [g/cm³] at position (phi, theta, r). See <a class="reference internal" href="examples.html"><span class="doc">Examples</span></a> for more user-defined medium examples.</p>
+<p><strong>Custom MCMC Parameters</strong></p>
+<p>When using custom jet or medium functions, you can define arbitrary MCMC parameters beyond the standard set. Simply include them in the <code class="docutils literal notranslate"><span class="pre">ParamDef</span></code> list – the fitter automatically uses a Python-based parameter transformer when it detects non-standard parameter names:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">mc_params</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;E_iso&quot;</span><span class="p">,</span>   <span class="mf">1e50</span><span class="p">,</span>  <span class="mf">1e54</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">LOG</span><span class="p">),</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;Gamma0&quot;</span><span class="p">,</span>    <span class="mi">50</span><span class="p">,</span>   <span class="mi">500</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">LOG</span><span class="p">),</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;theta_c&quot;</span><span class="p">,</span> <span class="mf">0.02</span><span class="p">,</span>   <span class="mf">0.15</span><span class="p">,</span> <span class="n">Scale</span><span class="o">.</span><span class="n">LINEAR</span><span class="p">),</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;theta_v&quot;</span><span class="p">,</span>    <span class="mi">0</span><span class="p">,</span>     <span class="mi">0</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">FIXED</span><span class="p">),</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;n_ism&quot;</span><span class="p">,</span>   <span class="mf">1e-3</span><span class="p">,</span>   <span class="mi">100</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">LOG</span><span class="p">),</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;r_scale&quot;</span><span class="p">,</span> <span class="mf">1e16</span><span class="p">,</span>  <span class="mf">1e20</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">LOG</span><span class="p">),</span>     <span class="c1"># custom parameter</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;p&quot;</span><span class="p">,</span>        <span class="mf">2.1</span><span class="p">,</span>   <span class="mf">2.8</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">LINEAR</span><span class="p">),</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;eps_e&quot;</span><span class="p">,</span>   <span class="mf">1e-3</span><span class="p">,</span>   <span class="mf">0.5</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">LOG</span><span class="p">),</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;eps_B&quot;</span><span class="p">,</span>   <span class="mf">1e-5</span><span class="p">,</span>   <span class="mf">0.1</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">LOG</span><span class="p">),</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;xi_e&quot;</span><span class="p">,</span>     <span class="mf">0.1</span><span class="p">,</span>   <span class="mf">1.0</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">LINEAR</span><span class="p">),</span>
+<span class="p">]</span>
+
+<span class="n">fitter</span> <span class="o">=</span> <span class="n">Fitter</span><span class="p">(</span><span class="n">z</span><span class="o">=</span><span class="mf">1.58</span><span class="p">,</span> <span class="n">lumi_dist</span><span class="o">=</span><span class="mf">3.364e28</span><span class="p">,</span> <span class="n">medium</span><span class="o">=</span><span class="n">exponential_medium</span><span class="p">)</span>
+<span class="n">fitter</span><span class="o">.</span><span class="n">add_flux_density</span><span class="p">(</span><span class="n">nu</span><span class="o">=</span><span class="mf">4.84e14</span><span class="p">,</span> <span class="n">t</span><span class="o">=</span><span class="n">t_data</span><span class="p">,</span> <span class="n">f_nu</span><span class="o">=</span><span class="n">flux_data</span><span class="p">,</span> <span class="n">err</span><span class="o">=</span><span class="n">flux_err</span><span class="p">)</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">fitter</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">mc_params</span><span class="p">,</span> <span class="n">sampler</span><span class="o">=</span><span class="s2">&quot;emcee&quot;</span><span class="p">,</span> <span class="n">nsteps</span><span class="o">=</span><span class="mi">10000</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The custom parameter <code class="docutils literal notranslate"><span class="pre">r_scale</span></code> is accessible inside the factory via <code class="docutils literal notranslate"><span class="pre">params.r_scale</span></code>, and it is sampled by the MCMC just like any standard parameter. Standard parameters (<code class="docutils literal notranslate"><span class="pre">theta_v</span></code>, <code class="docutils literal notranslate"><span class="pre">eps_e</span></code>, etc.) retain their defaults and are still used internally for observer geometry and radiation physics.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Standard <code class="docutils literal notranslate"><span class="pre">ModelParams</span></code> fields (like <code class="docutils literal notranslate"><span class="pre">theta_v</span></code>, <code class="docutils literal notranslate"><span class="pre">eps_e</span></code>, <code class="docutils literal notranslate"><span class="pre">eps_B</span></code>, <code class="docutils literal notranslate"><span class="pre">p</span></code>, <code class="docutils literal notranslate"><span class="pre">xi_e</span></code>) must still be included in the <code class="docutils literal notranslate"><span class="pre">ParamDef</span></code> list – they are needed by the <code class="docutils literal notranslate"><span class="pre">Observer</span></code> and <code class="docutils literal notranslate"><span class="pre">Radiation</span></code> objects that the fitter constructs internally.</p>
+</div>
+<p><strong>Combining Custom Jet and Medium</strong></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">fitter</span> <span class="o">=</span> <span class="n">Fitter</span><span class="p">(</span>
+    <span class="n">z</span><span class="o">=</span><span class="mf">1.58</span><span class="p">,</span> <span class="n">lumi_dist</span><span class="o">=</span><span class="mf">3.364e28</span><span class="p">,</span>
+    <span class="n">jet</span><span class="o">=</span><span class="n">double_gaussian_jet</span><span class="p">,</span>
+    <span class="n">medium</span><span class="o">=</span><span class="n">exponential_medium</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="n">fitter</span><span class="o">.</span><span class="n">add_flux_density</span><span class="p">(</span><span class="n">nu</span><span class="o">=</span><span class="mf">4.84e14</span><span class="p">,</span> <span class="n">t</span><span class="o">=</span><span class="n">t_data</span><span class="p">,</span> <span class="n">f_nu</span><span class="o">=</span><span class="n">flux_data</span><span class="p">,</span> <span class="n">err</span><span class="o">=</span><span class="n">flux_err</span><span class="p">)</span>
+<span class="n">fitter</span><span class="o">.</span><span class="n">add_flux_density</span><span class="p">(</span><span class="n">nu</span><span class="o">=</span><span class="mf">2.4e17</span><span class="p">,</span> <span class="n">t</span><span class="o">=</span><span class="n">t_xray</span><span class="p">,</span> <span class="n">f_nu</span><span class="o">=</span><span class="n">flux_xray</span><span class="p">,</span> <span class="n">err</span><span class="o">=</span><span class="n">err_xray</span><span class="p">)</span>
+
+<span class="n">result</span> <span class="o">=</span> <span class="n">fitter</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span>
+    <span class="n">mc_params</span><span class="p">,</span>
+    <span class="n">sampler</span><span class="o">=</span><span class="s2">&quot;emcee&quot;</span><span class="p">,</span>
+    <span class="n">nsteps</span><span class="o">=</span><span class="mi">20000</span><span class="p">,</span>
+    <span class="n">nburn</span><span class="o">=</span><span class="mi">5000</span><span class="p">,</span>
+    <span class="n">log_prior_fn</span><span class="o">=</span><span class="n">log_prior</span><span class="p">,</span>
+    <span class="n">log_likelihood_fn</span><span class="o">=</span><span class="n">student_t_likelihood</span><span class="p">,</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="speeding-up-custom-profiles-with-gil-free">
+<h3><a class="toc-backref" href="#id31" role="doc-backlink">Speeding Up Custom Profiles with <code class="docutils literal notranslate"><span class="pre">&#64;gil_free</span></code></a><a class="headerlink" href="#speeding-up-custom-profiles-with-gil-free" title="Link to this heading"></a></h3>
+<p>The custom jet and medium examples above use plain Python callbacks. These work correctly
+for single-threaded fitting, but become slow in multi-threaded MCMC because Python’s
+Global Interpreter Lock prevents true parallel execution of Python callbacks.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">&#64;gil_free</span></code> decorator compiles your profile function to native code
+using <a class="reference external" href="https://numba.pydata.org/">numba</a>, enabling full thread parallelism:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span>numba
+</pre></div>
+</div>
+<p>The two differences from plain Python callbacks are:</p>
+<ol class="arabic simple">
+<li><p>Add the <code class="docutils literal notranslate"><span class="pre">&#64;gil_free</span></code> decorator</p></li>
+<li><p>Pass MCMC parameters as explicit function arguments (after the spatial coordinates)
+instead of capturing them from the enclosing scope</p></li>
+</ol>
+<p>Here is a complete example — a tophat jet with <code class="docutils literal notranslate"><span class="pre">&#64;gil_free</span></code>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">math</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">VegasAfterglow</span><span class="w"> </span><span class="kn">import</span> <span class="n">Fitter</span><span class="p">,</span> <span class="n">Ejecta</span><span class="p">,</span> <span class="n">ParamDef</span><span class="p">,</span> <span class="n">Scale</span><span class="p">,</span> <span class="n">gil_free</span>
+
+<span class="c1"># Decorate profile functions with @gil_free.</span>
+<span class="c1"># First 2 args (phi, theta) are spatial coordinates from C++.</span>
+<span class="c1"># Additional args are MCMC parameters, bound by keyword below.</span>
+<span class="nd">@gil_free</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">tophat_energy</span><span class="p">(</span><span class="n">phi</span><span class="p">,</span> <span class="n">theta</span><span class="p">,</span> <span class="n">E_iso</span><span class="p">,</span> <span class="n">theta_c</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">E_iso</span> <span class="k">if</span> <span class="n">theta</span> <span class="o">&lt;=</span> <span class="n">theta_c</span> <span class="k">else</span> <span class="mf">0.0</span>
+
+<span class="nd">@gil_free</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">tophat_gamma</span><span class="p">(</span><span class="n">phi</span><span class="p">,</span> <span class="n">theta</span><span class="p">,</span> <span class="n">Gamma0</span><span class="p">,</span> <span class="n">theta_c</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">Gamma0</span> <span class="k">if</span> <span class="n">theta</span> <span class="o">&lt;=</span> <span class="n">theta_c</span> <span class="k">else</span> <span class="mf">1.0</span>
+
+<span class="c1"># Factory: bind MCMC parameters by keyword each step</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">jet_factory</span><span class="p">(</span><span class="n">mc_params</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">Ejecta</span><span class="p">(</span>
+        <span class="n">E_iso</span><span class="o">=</span><span class="n">tophat_energy</span><span class="p">(</span><span class="n">E_iso</span><span class="o">=</span><span class="n">mc_params</span><span class="o">.</span><span class="n">E_iso</span><span class="p">,</span> <span class="n">theta_c</span><span class="o">=</span><span class="n">mc_params</span><span class="o">.</span><span class="n">theta_c</span><span class="p">),</span>
+        <span class="n">Gamma0</span><span class="o">=</span><span class="n">tophat_gamma</span><span class="p">(</span><span class="n">Gamma0</span><span class="o">=</span><span class="n">mc_params</span><span class="o">.</span><span class="n">Gamma0</span><span class="p">,</span> <span class="n">theta_c</span><span class="o">=</span><span class="n">mc_params</span><span class="o">.</span><span class="n">theta_c</span><span class="p">),</span>
+    <span class="p">)</span>
+
+<span class="n">fitter</span> <span class="o">=</span> <span class="n">Fitter</span><span class="p">(</span><span class="n">z</span><span class="o">=</span><span class="mf">1.58</span><span class="p">,</span> <span class="n">lumi_dist</span><span class="o">=</span><span class="mf">3.364e28</span><span class="p">,</span> <span class="n">jet</span><span class="o">=</span><span class="n">jet_factory</span><span class="p">,</span> <span class="n">medium</span><span class="o">=</span><span class="s2">&quot;wind&quot;</span><span class="p">)</span>
+<span class="n">fitter</span><span class="o">.</span><span class="n">add_flux_density</span><span class="p">(</span><span class="n">nu</span><span class="o">=</span><span class="mf">4.84e14</span><span class="p">,</span> <span class="n">t</span><span class="o">=</span><span class="n">t_data</span><span class="p">,</span> <span class="n">f_nu</span><span class="o">=</span><span class="n">flux_data</span><span class="p">,</span> <span class="n">err</span><span class="o">=</span><span class="n">flux_err</span><span class="p">)</span>
+
+<span class="n">mc_params</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;E_iso&quot;</span><span class="p">,</span>    <span class="mf">1e51</span><span class="p">,</span>  <span class="mf">1e54</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">LOG</span><span class="p">,</span>    <span class="mf">1e53</span><span class="p">),</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;Gamma0&quot;</span><span class="p">,</span>      <span class="mi">5</span><span class="p">,</span>  <span class="mi">1000</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">LOG</span><span class="p">,</span>      <span class="mi">20</span><span class="p">),</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;theta_c&quot;</span><span class="p">,</span>  <span class="mf">0.01</span><span class="p">,</span>   <span class="mf">0.5</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">LINEAR</span><span class="p">,</span>  <span class="mf">0.1</span><span class="p">),</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;p&quot;</span><span class="p">,</span>           <span class="mi">2</span><span class="p">,</span>     <span class="mi">3</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">LINEAR</span><span class="p">,</span>  <span class="mf">2.3</span><span class="p">),</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;eps_e&quot;</span><span class="p">,</span>    <span class="mf">1e-2</span><span class="p">,</span>   <span class="mf">0.3</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">LOG</span><span class="p">,</span>    <span class="mf">0.05</span><span class="p">),</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;eps_B&quot;</span><span class="p">,</span>    <span class="mf">1e-4</span><span class="p">,</span>   <span class="mf">0.3</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">LOG</span><span class="p">,</span>    <span class="mf">0.03</span><span class="p">),</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;xi_e&quot;</span><span class="p">,</span>     <span class="mf">1e-3</span><span class="p">,</span>   <span class="mf">0.1</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">LOG</span><span class="p">,</span>    <span class="mf">0.01</span><span class="p">),</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;A_star&quot;</span><span class="p">,</span>   <span class="mf">1e-3</span><span class="p">,</span>    <span class="mi">10</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">LOG</span><span class="p">,</span>    <span class="mf">0.05</span><span class="p">),</span>
+<span class="p">]</span>
+
+<span class="n">result</span> <span class="o">=</span> <span class="n">fitter</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">mc_params</span><span class="p">,</span> <span class="n">sampler</span><span class="o">=</span><span class="s2">&quot;emcee&quot;</span><span class="p">,</span> <span class="n">nsteps</span><span class="o">=</span><span class="mi">10000</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The same decorator works for custom medium density functions (3 spatial coordinates
+<code class="docutils literal notranslate"><span class="pre">phi,</span> <span class="pre">theta,</span> <span class="pre">r</span></code>) and for energy/mass injection functions (<code class="docutils literal notranslate"><span class="pre">phi,</span> <span class="pre">theta,</span> <span class="pre">t</span></code>):</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nd">@gil_free</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">custom_wind</span><span class="p">(</span><span class="n">phi</span><span class="p">,</span> <span class="n">theta</span><span class="p">,</span> <span class="n">r</span><span class="p">,</span> <span class="n">A_star</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">A_star</span> <span class="o">*</span> <span class="mf">5e11</span> <span class="o">*</span> <span class="mf">1.67e-24</span> <span class="o">/</span> <span class="p">(</span><span class="n">r</span> <span class="o">*</span> <span class="n">r</span><span class="p">)</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">medium_factory</span><span class="p">(</span><span class="n">mc_params</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">Medium</span><span class="p">(</span><span class="n">rho</span><span class="o">=</span><span class="n">custom_wind</span><span class="p">(</span><span class="n">A_star</span><span class="o">=</span><span class="n">mc_params</span><span class="o">.</span><span class="n">A_star</span><span class="p">))</span>
+
+<span class="nd">@gil_free</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">spindown_injection</span><span class="p">(</span><span class="n">phi</span><span class="p">,</span> <span class="n">theta</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">L0</span><span class="p">,</span> <span class="n">t_sd</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">L0</span> <span class="o">/</span> <span class="p">(</span><span class="mf">1.0</span> <span class="o">+</span> <span class="n">t</span> <span class="o">/</span> <span class="n">t_sd</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span>
+</pre></div>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>Functions decorated with <code class="docutils literal notranslate"><span class="pre">&#64;gil_free</span></code> must use the <code class="docutils literal notranslate"><span class="pre">math</span></code> module
+(not <code class="docutils literal notranslate"><span class="pre">numpy</span></code>) and only simple arithmetic — no Python objects, arrays, or closures.
+If you need more complex logic, use the plain Python callback approach instead.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Built-in jet types (<code class="docutils literal notranslate"><span class="pre">&quot;tophat&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;gaussian&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;powerlaw&quot;</span></code>, etc.) are already
+implemented in C++ and do not need this decorator.</p>
+</div>
+</section>
+<section id="performance-notes">
+<h3><a class="toc-backref" href="#id32" role="doc-backlink">Performance Notes</a><a class="headerlink" href="#performance-notes" title="Link to this heading"></a></h3>
+<p><strong>Threading vs. Multiprocessing</strong></p>
+<p>The <code class="docutils literal notranslate"><span class="pre">Fitter</span></code> uses <code class="docutils literal notranslate"><span class="pre">ThreadPoolExecutor</span></code> (threads, not processes) because:</p>
+<ol class="arabic simple">
+<li><p><strong>GIL is released</strong> during the C++ <code class="docutils literal notranslate"><span class="pre">flux_density()</span></code> computation, so threads run truly in parallel</p></li>
+<li><p><strong>No pickling overhead</strong>: Model objects stay in the same process</p></li>
+<li><p><strong>Shared memory</strong>: All threads share observation data without copying</p></li>
+</ol>
+<p>For typical afterglow models, the Python overhead (object creation, GIL acquisition) is &lt;5% of total time for synchrotron-only models and &lt;0.1% for SSC models.</p>
+<p><strong>Parallelism Tips</strong></p>
+<ul class="simple">
+<li><p><strong>Emcee</strong>: <code class="docutils literal notranslate"><span class="pre">npool</span></code> defaults to the number of CPU cores.</p></li>
+<li><p><strong>Dynesty</strong>: <code class="docutils literal notranslate"><span class="pre">npool</span></code> controls thread count. The <code class="docutils literal notranslate"><span class="pre">queue_size</span></code> is automatically optimized.</p></li>
+<li><p><strong>Custom jet/medium with ``&#64;gil_free``</strong>: Full thread parallelism is preserved. All profile evaluations run as native C function calls without the GIL.</p></li>
+<li><p><strong>Custom jet/medium with plain Python callbacks</strong>: Python callbacks require the GIL, which serializes the angular profile evaluation across threads. The blast wave evolution and radiation computation still run without the GIL, but the profile evaluation becomes a bottleneck. Use <code class="docutils literal notranslate"><span class="pre">&#64;gil_free</span></code> to eliminate this overhead.</p></li>
+</ul>
+</section>
+</section>
 <section id="troubleshooting">
-<h2><a class="toc-backref" href="#id26" role="doc-backlink">Troubleshooting</a><a class="headerlink" href="#troubleshooting" title="Link to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id33" role="doc-backlink">Troubleshooting</a><a class="headerlink" href="#troubleshooting" title="Link to this heading"></a></h2>
 <p>For comprehensive troubleshooting help including MCMC convergence issues, data selection problems, memory optimization, and performance tuning, see <a class="reference internal" href="troubleshooting.html"><span class="doc">Troubleshooting</span></a>.</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="validation.html"><span class="doc">Validation &amp; Testing</span></a> for code validation and comparison with other afterglow codes. <a class="reference internal" href="parameter_reference.html"><span class="doc">Parameter Reference</span></a> for the complete parameter reference.</p>
+</div>
 </section>
 </section>
 

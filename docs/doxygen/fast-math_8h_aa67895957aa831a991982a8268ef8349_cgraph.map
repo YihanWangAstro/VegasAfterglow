@@ -1,6 +1,5 @@
 <map id="fast_log2" name="fast_log2">
-<area shape="rect" id="Node000001" title="Fast approximation of the base&#45;2 logarithm." alt="" coords="5,29,88,55"/>
-<area shape="rect" id="Node000002" href="$utilities_8h.html#ab8e81118f023df135835db8cce4f5f42" title="Returns the value of a single parameter." alt="" coords="136,29,187,55"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="88,39,122,39,122,45,88,45"/>
-<area shape="poly" id="edge2_Node000002_Node000002" title=" " alt="" coords="141,30,137,21,139,12,148,5,161,3,177,6,184,14,180,18,175,11,161,8,150,10,144,14,143,20,146,28"/>
+<area shape="rect" id="Node000001" title="Fast approximation of the base&#45;2 logarithm." alt="" coords="5,5,88,31"/>
+<area shape="rect" id="Node000002" href="$pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89" title=" " alt="" coords="136,5,291,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="88,15,122,15,122,21,88,21"/>
 </map>

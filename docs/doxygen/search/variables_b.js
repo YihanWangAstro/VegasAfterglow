@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['l0_0',['l0',['../structPyMagnetar.html#a5e9de2fdf00ab4a29a1988c1e09d02b6',1,'PyMagnetar::L0'],['../structParams.html#a134c673110781587acce1747b730dc30',1,'Params::L0']]],
+  ['l0_0',['L0',['../structPyMagnetar.html#a5e9de2fdf00ab4a29a1988c1e09d02b6',1,'PyMagnetar']]],
   ['len_1',['len',['../namespaceunit.html#a2aaf4e2317308b8d95e76ef6eaa64256',1,'unit']]],
   ['lg2_5fdoppler_2',['lg2_doppler',['../classObserver.html#a19627eca15595c8eb01d1e1ace2ffb2a',1,'Observer']]],
   ['lg2_5fgeom_5ffactor_3',['lg2_geom_factor',['../classObserver.html#ac88ad26be273453fc4accf474b7d481c',1,'Observer']]],
@@ -13,7 +13,5 @@ var searchData=
   ['log2_5fnu_5fa_10',['log2_nu_a',['../structSmoothPowerLawSyn.html#a2ab39f4195f68303f734228349ed80c6',1,'SmoothPowerLawSyn']]],
   ['log2_5fnu_5fc_11',['log2_nu_c',['../structPowerLawSyn.html#aff7b8c9528c965f1b4a90c007f0c7181',1,'PowerLawSyn::log2_nu_c'],['../structSmoothPowerLawSyn.html#a36ca3ac0773fe7422a57e7211c50bdf2',1,'SmoothPowerLawSyn::log2_nu_c']]],
   ['log2_5fnu_5fm_12',['log2_nu_m',['../structSmoothPowerLawSyn.html#afeb5eabd4ad90fff43dda1427bcb841e',1,'SmoothPowerLawSyn::log2_nu_m'],['../structSmoothPowerLawSyn.html#a5f130ae27746e96b4956443d9b0e808e',1,'SmoothPowerLawSyn::log2_nu_M']]],
-  ['log_5fmask_5f_13',['log_mask_',['../classParamTransformer.html#a75348cd482022fb69afd85e34e89a66b',1,'ParamTransformer']]],
-  ['lower_14',['lower',['../structParamDef.html#a7ac3948c5433e4a4511f205f6d64f72d',1,'ParamDef']]],
-  ['lumi_5fdist_15',['lumi_dist',['../structConfigParams.html#aa12041fb340e17dbfdbd8bbe6c533542',1,'ConfigParams::lumi_dist'],['../classPyObserver.html#a3767075003ef446259a3f2a1dcaa6c8e',1,'PyObserver::lumi_dist']]]
+  ['lumi_5fdist_13',['lumi_dist',['../classPyObserver.html#a3767075003ef446259a3f2a1dcaa6c8e',1,'PyObserver']]]
 ];

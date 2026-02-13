@@ -12,9 +12,8 @@ var searchData=
   ['update_5fgamma_5fc_5fthomson_9',['update_gamma_c_thomson',['../inverse-compton_8cpp.html#af7515846a834d0a778e26e7aaa36891b',1,'update_gamma_c_Thomson(Real &amp;gamma_c, InverseComptonY &amp;Ys, RadParams const &amp;rad, Real B, Real t_com, Real gamma_m, Real gamma_c_last):&#160;inverse-compton.cpp'],['../inverse-compton_8h.html#af7515846a834d0a778e26e7aaa36891b',1,'update_gamma_c_Thomson(Real &amp;gamma_c, InverseComptonY &amp;Ys, RadParams const &amp;rad, Real B, Real t_com, Real gamma_m, Real gamma_c_last):&#160;inverse-compton.cpp']]],
   ['update_5fgamma_5fm_10',['update_gamma_m',['../inverse-compton_8cpp.html#a1595a8694782ca55acc136e79089e784',1,'update_gamma_M(Real &amp;gamma_M, InverseComptonY const &amp;Ys, Real p, Real B):&#160;inverse-compton.cpp'],['../inverse-compton_8h.html#a1595a8694782ca55acc136e79089e784',1,'update_gamma_M(Real &amp;gamma_M, InverseComptonY const &amp;Ys, Real p, Real B):&#160;inverse-compton.cpp']]],
   ['update_5frequired_11',['update_required',['../classObserver.html#a90f4a0a86f9e4a702cfc3a13e7c9c153',1,'Observer']]],
-  ['upper_12',['upper',['../structParamDef.html#a3ab30b3f12dbf17e8507958b85331397',1,'ParamDef']]],
-  ['utilities_13',['utilities',['../group__Mesh__Utilities.html',1,'Array and Grid Utilities'],['../group__ShockUtilities.html',1,'Shock Utilities']]],
-  ['utilities_2ecpp_14',['utilities.cpp',['../utilities_8cpp.html',1,'']]],
-  ['utilities_2eh_15',['utilities.h',['../utilities_8h.html',1,'']]],
-  ['utility_20templates_16',['Utility Templates',['../group__UtilityTemplates.html',1,'']]]
+  ['utilities_12',['utilities',['../group__Mesh__Utilities.html',1,'Array and Grid Utilities'],['../group__ShockUtilities.html',1,'Shock Utilities']]],
+  ['utilities_2ecpp_13',['utilities.cpp',['../utilities_8cpp.html',1,'']]],
+  ['utilities_2eh_14',['utilities.h',['../utilities_8h.html',1,'']]],
+  ['utility_20templates_15',['Utility Templates',['../group__UtilityTemplates.html',1,'']]]
 ];

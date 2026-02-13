@@ -1,14 +1,14 @@
 <map id="PowerLawSyn::compute_I_nu" name="PowerLawSyn::compute_I_nu">
-<area shape="rect" id="Node000001" title="Calculates the comoving synchrotron specific intensity." alt="" coords="5,81,216,107"/>
+<area shape="rect" id="Node000001" title="Calculates the comoving synchrotron specific intensity." alt="" coords="5,107,216,132"/>
 <area shape="rect" id="Node000002" href="$fast-math_8h.html#a19a0be066f6b80639b5863a493990601" title="Fast approximation of the exponential function." alt="" coords="264,56,343,81"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="207,79,250,73,251,78,208,84"/>
-<area shape="rect" id="Node000005" href="$inverse-compton_8h.html#a90de46adbdc9f7f4c2bed7b5ab79c494" title=" " alt="" coords="391,107,597,132"/>
-<area shape="poly" id="edge6_Node000001_Node000005" title=" " alt="" coords="216,98,377,109,376,114,216,104"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="159,104,250,80,251,85,161,109"/>
+<area shape="rect" id="Node000004" href="$pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89" title=" " alt="" coords="645,81,800,107"/>
+<area shape="poly" id="edge7_Node000001_Node000004" title=" " alt="" coords="216,112,632,95,632,100,216,118"/>
+<area shape="rect" id="Node000005" href="$inverse-compton_8h.html#a90de46adbdc9f7f4c2bed7b5ab79c494" title=" " alt="" coords="391,157,597,183"/>
+<area shape="poly" id="edge5_Node000001_Node000005" title=" " alt="" coords="208,129,384,153,383,158,207,135"/>
 <area shape="rect" id="Node000003" href="$fast-math_8h.html#afc584c30c352192de6847b1f4b8caf0e" title="Fast approximation of 2 raised to a power." alt="" coords="451,5,537,31"/>
 <area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="342,56,436,30,438,36,343,61"/>
-<area shape="rect" id="Node000004" href="$utilities_8h.html#ab8e81118f023df135835db8cce4f5f42" title="Returns the value of a single parameter." alt="" coords="645,56,696,81"/>
-<area shape="poly" id="edge5_Node000002_Node000004" title=" " alt="" coords="343,66,631,66,631,71,343,71"/>
-<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="538,28,633,55,631,60,537,33"/>
-<area shape="poly" id="edge4_Node000004_Node000004" title=" " alt="" coords="643,59,635,49,638,38,650,32,671,29,696,34,706,44,702,47,694,38,671,35,652,37,642,42,641,48,647,55"/>
-<area shape="poly" id="edge7_Node000005_Node000004" title=" " alt="" coords="538,104,632,77,633,82,540,109"/>
+<area shape="poly" id="edge4_Node000002_Node000004" title=" " alt="" coords="343,68,632,86,631,91,343,74"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="538,28,598,47,675,74,673,79,596,53,536,33"/>
+<area shape="poly" id="edge6_Node000005_Node000004" title=" " alt="" coords="536,155,596,135,673,109,675,114,598,141,538,160"/>
 </map>

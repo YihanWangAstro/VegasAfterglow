@@ -1,31 +1,25 @@
 <map id="synchrotron.h" name="synchrotron.h">
-<area shape="rect" id="Node000001" title=" " alt="" coords="285,5,395,31"/>
-<area shape="rect" id="Node000002" href="$IO_8h.html" title=" " alt="" coords="229,79,277,104"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="317,41,269,81,266,76,314,37"/>
-<area shape="rect" id="Node000004" href="$afterglow_8h.html" title=" " alt="" coords="219,152,314,177"/>
-<area shape="poly" id="edge15_Node000001_Node000004" title=" " alt="" coords="330,45,275,153,270,151,325,42"/>
-<area shape="rect" id="Node000011" href="$synchrotron_8cpp.html" title=" " alt="" coords="358,225,485,251"/>
-<area shape="poly" id="edge17_Node000001_Node000011" title=" " alt="" coords="352,43,419,224,414,226,347,45"/>
-<area shape="rect" id="Node000012" href="$inverse-compton_8cpp.html" title=" " alt="" coords="403,79,562,104"/>
-<area shape="poly" id="edge16_Node000001_Node000012" title=" " alt="" coords="376,34,461,76,458,81,374,39"/>
-<area shape="rect" id="Node000003" href="$IO_8cpp.html" title=" " alt="" coords="133,152,195,177"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="230,115,180,154,177,150,227,110"/>
-<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="261,117,267,151,262,152,255,118"/>
-<area shape="rect" id="Node000005" href="$mcmc_8h.html" title=" " alt="" coords="245,299,320,324"/>
-<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="283,189,296,225,297,266,289,299,284,298,291,265,291,226,278,191"/>
-<area shape="rect" id="Node000008" href="$pymodel_8cpp.html" title=" " alt="" coords="5,372,112,397"/>
-<area shape="poly" id="edge7_Node000004_Node000008" title=" " alt="" coords="207,182,164,200,126,227,99,264,80,305,69,343,63,372,58,371,64,342,75,303,94,261,122,223,162,195,205,177"/>
-<area shape="rect" id="Node000009" href="$pymodel_8h.html" title=" " alt="" coords="116,299,207,324"/>
-<area shape="poly" id="edge8_Node000004_Node000009" title=" " alt="" coords="207,180,168,198,151,211,137,227,132,244,135,263,154,297,149,299,130,265,127,244,132,224,147,207,165,193,205,175"/>
-<area shape="rect" id="Node000010" href="$shock__dispatch_8h.html" title=" " alt="" coords="147,225,282,251"/>
-<area shape="poly" id="edge11_Node000004_Node000010" title=" " alt="" coords="252,190,225,227,221,224,248,187"/>
-<area shape="poly" id="edge14_Node000004_Node000011" title=" " alt="" coords="305,181,397,223,395,228,303,185"/>
-<area shape="rect" id="Node000006" href="$mcmc_8cpp.html" title=" " alt="" coords="254,372,343,397"/>
-<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="291,337,299,371,293,372,286,338"/>
+<area shape="rect" id="Node000001" title=" " alt="" coords="233,5,343,31"/>
+<area shape="rect" id="Node000002" href="$IO_8h.html" title=" " alt="" coords="177,79,225,104"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="265,41,217,81,214,76,262,37"/>
+<area shape="rect" id="Node000004" href="$afterglow_8h.html" title=" " alt="" coords="167,152,262,177"/>
+<area shape="poly" id="edge11_Node000001_Node000004" title=" " alt="" coords="278,45,223,153,218,151,273,42"/>
+<area shape="rect" id="Node000009" href="$synchrotron_8cpp.html" title=" " alt="" coords="306,225,433,251"/>
+<area shape="poly" id="edge13_Node000001_Node000009" title=" " alt="" coords="300,43,367,224,362,226,295,45"/>
+<area shape="rect" id="Node000010" href="$inverse-compton_8cpp.html" title=" " alt="" coords="351,79,510,104"/>
+<area shape="poly" id="edge12_Node000001_Node000010" title=" " alt="" coords="324,34,409,76,406,81,322,39"/>
+<area shape="rect" id="Node000003" href="$IO_8cpp.html" title=" " alt="" coords="81,152,143,177"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="178,115,128,154,125,150,175,110"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="209,117,215,151,210,152,203,118"/>
+<area shape="rect" id="Node000005" href="$pymodel_8cpp.html" title=" " alt="" coords="5,372,112,397"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="179,186,152,204,127,227,102,265,84,307,64,373,59,371,79,305,98,263,123,224,149,200,177,182"/>
+<area shape="rect" id="Node000006" href="$pymodel_8h.html" title=" " alt="" coords="116,299,207,324"/>
+<area shape="poly" id="edge5_Node000004_Node000006" title=" " alt="" coords="178,186,155,204,137,226,133,245,137,264,155,297,150,300,132,266,128,245,132,224,151,200,175,182"/>
+<area shape="rect" id="Node000008" href="$shock__dispatch_8h.html" title=" " alt="" coords="147,225,282,251"/>
+<area shape="poly" id="edge8_Node000004_Node000008" title=" " alt="" coords="217,191,217,225,212,225,212,191"/>
+<area shape="poly" id="edge10_Node000004_Node000009" title=" " alt="" coords="253,181,345,223,343,228,251,185"/>
+<area shape="poly" id="edge7_Node000006_Node000005" title=" " alt="" coords="135,334,77,374,74,370,132,330"/>
 <area shape="rect" id="Node000007" href="$pybind_8cpp.html" title=" " alt="" coords="136,372,229,397"/>
-<area shape="poly" id="edge6_Node000005_Node000007" title=" " alt="" coords="257,334,201,374,197,370,254,330"/>
-<area shape="poly" id="edge9_Node000009_Node000007" title=" " alt="" coords="171,337,182,371,177,373,166,338"/>
-<area shape="poly" id="edge10_Node000009_Node000008" title=" " alt="" coords="135,334,77,374,74,370,132,330"/>
-<area shape="poly" id="edge12_Node000010_Node000005" title=" " alt="" coords="237,259,274,297,270,300,233,262"/>
-<area shape="poly" id="edge13_Node000010_Node000009" title=" " alt="" coords="200,263,172,300,168,297,196,260"/>
+<area shape="poly" id="edge6_Node000006_Node000007" title=" " alt="" coords="171,337,182,371,177,373,166,338"/>
+<area shape="poly" id="edge9_Node000008_Node000006" title=" " alt="" coords="200,263,172,300,168,297,196,260"/>
 </map>

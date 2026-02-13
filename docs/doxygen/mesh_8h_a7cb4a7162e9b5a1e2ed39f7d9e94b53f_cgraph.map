@@ -1,6 +1,5 @@
 <map id="jet_spreading_edge" name="jet_spreading_edge">
-<area shape="rect" id="Node000001" title="Determines the edge of the jet where the spreading is strongest." alt="" coords="5,29,155,55"/>
-<area shape="rect" id="Node000002" href="$utilities_8h.html#ab8e81118f023df135835db8cce4f5f42" title="Returns the value of a single parameter." alt="" coords="203,29,253,55"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="155,39,189,39,189,45,155,45"/>
-<area shape="poly" id="edge2_Node000002_Node000002" title=" " alt="" coords="203,31,198,21,201,11,211,5,228,3,248,6,257,15,253,18,246,11,228,8,213,10,205,15,203,20,208,28"/>
+<area shape="rect" id="Node000001" title="Determines the edge of the jet where the spreading is strongest." alt="" coords="5,5,155,31"/>
+<area shape="rect" id="Node000002" href="$pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89" title=" " alt="" coords="203,5,357,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="155,15,189,15,189,21,155,21"/>
 </map>

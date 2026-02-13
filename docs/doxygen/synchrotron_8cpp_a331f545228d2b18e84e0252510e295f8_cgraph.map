@@ -1,7 +1,6 @@
 <map id="generate_syn_photons" name="generate_syn_photons">
 <area shape="rect" id="Node000001" title="Creates and returns a new photon grid based on shock and electron grid." alt="" coords="5,29,175,55"/>
-<area shape="poly" id="edge1_Node000001_Node000001" title=" " alt="" coords="63,31,58,21,61,11,72,5,90,3,112,6,121,15,117,19,109,11,90,8,74,10,65,15,63,20,68,28"/>
-<area shape="rect" id="Node000002" href="$utilities_8h.html#ab8e81118f023df135835db8cce4f5f42" title="Returns the value of a single parameter." alt="" coords="223,29,273,55"/>
-<area shape="poly" id="edge2_Node000001_Node000002" title=" " alt="" coords="175,39,208,39,208,45,175,45"/>
-<area shape="poly" id="edge3_Node000002_Node000002" title=" " alt="" coords="221,31,216,21,219,11,230,5,248,3,270,6,279,15,275,19,267,11,248,8,232,10,223,15,221,20,226,28"/>
+<area shape="poly" id="edge1_Node000001_Node000001" title=" " alt="" coords="56,31,49,21,52,11,67,5,90,3,119,6,130,15,127,20,117,11,90,8,68,10,56,15,54,20,60,28"/>
+<area shape="rect" id="Node000002" href="$pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89" title=" " alt="" coords="223,29,377,55"/>
+<area shape="poly" id="edge2_Node000001_Node000002" title=" " alt="" coords="175,39,209,39,209,45,175,45"/>
 </map>

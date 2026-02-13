@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['l0_0',['l0',['../structParams.html#a134c673110781587acce1747b730dc30',1,'Params::L0'],['../structPyMagnetar.html#a5e9de2fdf00ab4a29a1988c1e09d02b6',1,'PyMagnetar::L0']]],
+  ['l0_0',['L0',['../structPyMagnetar.html#a5e9de2fdf00ab4a29a1988c1e09d02b6',1,'PyMagnetar']]],
   ['len_1',['len',['../namespaceunit.html#a2aaf4e2317308b8d95e76ef6eaa64256',1,'unit']]],
   ['lg2_5fdoppler_2',['lg2_doppler',['../classObserver.html#a19627eca15595c8eb01d1e1ace2ffb2a',1,'Observer']]],
   ['lg2_5fgeom_5ffactor_3',['lg2_geom_factor',['../classObserver.html#ac88ad26be273453fc4accf474b7d481c',1,'Observer']]],
@@ -15,16 +15,14 @@ var searchData=
   ['log2_5flower_12',['log2_lower',['../structSpectralSegment.html#a676d43ff8be2feab8369a2a8ae19d16c',1,'SpectralSegment']]],
   ['log2_5fnu_5fa_13',['log2_nu_a',['../structSmoothPowerLawSyn.html#a2ab39f4195f68303f734228349ed80c6',1,'SmoothPowerLawSyn']]],
   ['log2_5fnu_5fc_14',['log2_nu_c',['../structPowerLawSyn.html#aff7b8c9528c965f1b4a90c007f0c7181',1,'PowerLawSyn::log2_nu_c'],['../structSmoothPowerLawSyn.html#a36ca3ac0773fe7422a57e7211c50bdf2',1,'SmoothPowerLawSyn::log2_nu_c']]],
-  ['log2_5fnu_5fm_15',['log2_nu_m',['../structSmoothPowerLawSyn.html#a5f130ae27746e96b4956443d9b0e808e',1,'SmoothPowerLawSyn::log2_nu_M'],['../structSmoothPowerLawSyn.html#afeb5eabd4ad90fff43dda1427bcb841e',1,'SmoothPowerLawSyn::log2_nu_m']]],
+  ['log2_5fnu_5fm_15',['log2_nu_m',['../structSmoothPowerLawSyn.html#afeb5eabd4ad90fff43dda1427bcb841e',1,'SmoothPowerLawSyn::log2_nu_m'],['../structSmoothPowerLawSyn.html#a5f130ae27746e96b4956443d9b0e808e',1,'SmoothPowerLawSyn::log2_nu_M']]],
   ['log2_5fsmooth_5fone_16',['log2_smooth_one',['../smooth-power-law-syn_8cpp.html#afc2414ef27e3402b3ea1f8ef407f992e',1,'smooth-power-law-syn.cpp']]],
   ['log2_5fsoftplus_17',['log2_softplus',['../fast-math_8h.html#a1228dad8e5957975fc02a01a15bed243',1,'fast-math.h']]],
   ['log2space_18',['log2space',['../mesh_8h.html#a76f104cdad403ea346ff1a6603c78ad6',1,'mesh.h']]],
-  ['log_5fmask_5f_19',['log_mask_',['../classParamTransformer.html#a75348cd482022fb69afd85e34e89a66b',1,'ParamTransformer']]],
-  ['logicerror_20',['logicerror',['../classafterglow_1_1LogicError.html#aa369358c8562ffbd48d85a4678a21ce1',1,'afterglow::LogicError::LogicError(std::string const &amp;message)'],['../classafterglow_1_1LogicError.html#a2c10c2c8579b71211ae9086cf29c665c',1,'afterglow::LogicError::LogicError(char const *message)'],['../classafterglow_1_1LogicError.html',1,'afterglow::LogicError']]],
-  ['logscale_5fscreen_21',['logscale_screen',['../structMultiBandData.html#a231028dd529a2a063833bdb58c3bc47f',1,'MultiBandData']]],
-  ['logspace_5fboundary_5fcenter_22',['logspace_boundary_center',['../mesh_8h.html#ad7703ab8b66bb86ed857746606fac9a2',1,'mesh.h']]],
-  ['logspace_5fcenter_23',['logspace_center',['../mesh_8h.html#afadc5019976c36be16277dc4dc178a7f',1,'mesh.h']]],
-  ['lower_24',['lower',['../structParamDef.html#a7ac3948c5433e4a4511f205f6d64f72d',1,'ParamDef']]],
-  ['lumi_5fdist_25',['lumi_dist',['../structConfigParams.html#aa12041fb340e17dbfdbd8bbe6c533542',1,'ConfigParams::lumi_dist'],['../classPyObserver.html#a3767075003ef446259a3f2a1dcaa6c8e',1,'PyObserver::lumi_dist']]],
-  ['lumi_5fdist_5fcgs_26',['lumi_dist_cgs',['../classPyObserver.html#ab42810f147ee7f7bf629534c1f832574',1,'PyObserver']]]
+  ['logicerror_19',['logicerror',['../classafterglow_1_1LogicError.html#a2c10c2c8579b71211ae9086cf29c665c',1,'afterglow::LogicError::LogicError(char const *message)'],['../classafterglow_1_1LogicError.html#aa369358c8562ffbd48d85a4678a21ce1',1,'afterglow::LogicError::LogicError(std::string const &amp;message)'],['../classafterglow_1_1LogicError.html',1,'afterglow::LogicError']]],
+  ['logscale_5fscreen_20',['logscale_screen',['../pybind_8h.html#a3b6b5a8315c0dca0d19f474914b9d903',1,'pybind.h']]],
+  ['logspace_5fboundary_5fcenter_21',['logspace_boundary_center',['../mesh_8h.html#ad7703ab8b66bb86ed857746606fac9a2',1,'mesh.h']]],
+  ['logspace_5fcenter_22',['logspace_center',['../mesh_8h.html#afadc5019976c36be16277dc4dc178a7f',1,'mesh.h']]],
+  ['lumi_5fdist_23',['lumi_dist',['../classPyObserver.html#a3767075003ef446259a3f2a1dcaa6c8e',1,'PyObserver']]],
+  ['lumi_5fdist_5fcgs_24',['lumi_dist_cgs',['../classPyObserver.html#ab42810f147ee7f7bf629534c1f832574',1,'PyObserver']]]
 ];

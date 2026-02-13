@@ -1,6 +1,5 @@
 <map id="compute_midpoint_grid" name="compute_midpoint_grid">
-<area shape="rect" id="Node000001" title="Converts a boundary grid to a midpoint grid with bin widths (midpoint rule, O(h^2))." alt="" coords="5,29,181,55"/>
-<area shape="rect" id="Node000002" href="$utilities_8h.html#ab8e81118f023df135835db8cce4f5f42" title="Returns the value of a single parameter." alt="" coords="229,29,280,55"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="181,39,215,39,215,45,181,45"/>
-<area shape="poly" id="edge2_Node000002_Node000002" title=" " alt="" coords="228,31,222,21,225,11,236,5,255,3,277,6,286,15,283,19,274,11,255,8,238,10,229,15,227,20,232,28"/>
+<area shape="rect" id="Node000001" title="Converts a boundary grid to a midpoint grid with bin widths (midpoint rule, O(h^2))." alt="" coords="5,5,181,31"/>
+<area shape="rect" id="Node000002" href="$pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89" title=" " alt="" coords="229,5,384,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="182,15,215,15,215,21,182,21"/>
 </map>

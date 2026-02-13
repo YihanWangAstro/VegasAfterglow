@@ -1,0 +1,5 @@
+<map id="physics::scales::sedov_length" name="physics::scales::sedov_length">
+<area shape="rect" id="Node000001" title="Computes the Sedov length—a characteristic scale for blast wave deceleration." alt="" coords="5,5,172,45"/>
+<area shape="rect" id="Node000002" href="$pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89" title=" " alt="" coords="220,13,375,38"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="172,23,206,23,206,28,172,28"/>
+</map>

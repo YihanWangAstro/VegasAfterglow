@@ -1,6 +1,5 @@
 <map id="physics::relativistic::gamma_to_beta" name="physics::relativistic::gamma_to_beta">
-<area shape="rect" id="Node000001" title="Converts Lorentz factor (gamma) to a velocity fraction (beta)" alt="" coords="5,22,153,62"/>
-<area shape="rect" id="Node000002" href="$utilities_8h.html#ab8e81118f023df135835db8cce4f5f42" title="Returns the value of a single parameter." alt="" coords="201,29,252,55"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="153,39,188,39,188,45,153,45"/>
-<area shape="poly" id="edge2_Node000002_Node000002" title=" " alt="" coords="202,31,197,21,199,11,210,5,227,3,247,6,256,15,252,18,244,11,227,8,211,10,204,15,202,20,206,28"/>
+<area shape="rect" id="Node000001" title="Converts Lorentz factor (gamma) to a velocity fraction (beta)" alt="" coords="5,5,153,45"/>
+<area shape="rect" id="Node000002" href="$pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89" title=" " alt="" coords="201,13,356,38"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="153,23,188,23,188,28,153,28"/>
 </map>

@@ -1,6 +1,5 @@
 <map id="compute_comv_weibel_B" name="compute_comv_weibel_B">
-<area shape="rect" id="Node000001" title="Computes the comoving magnetic field using the Weibel instability mechanism." alt="" coords="5,29,193,55"/>
-<area shape="rect" id="Node000002" href="$utilities_8h.html#ab8e81118f023df135835db8cce4f5f42" title="Returns the value of a single parameter." alt="" coords="241,29,292,55"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="194,39,227,39,227,45,194,45"/>
-<area shape="poly" id="edge2_Node000002_Node000002" title=" " alt="" coords="239,31,233,21,236,11,248,5,267,3,289,6,299,15,296,19,287,11,267,8,249,10,240,15,238,20,243,28"/>
+<area shape="rect" id="Node000001" title="Computes the comoving magnetic field using the Weibel instability mechanism." alt="" coords="5,5,193,31"/>
+<area shape="rect" id="Node000002" href="$pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89" title=" " alt="" coords="241,5,396,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="194,15,228,15,228,21,194,21"/>
 </map>

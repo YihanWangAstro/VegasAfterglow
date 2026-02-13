@@ -1,6 +1,5 @@
 <map id="compute_adiabatic_cooling_rate" name="compute_adiabatic_cooling_rate">
-<area shape="rect" id="Node000001" title="Computes the adiabatic cooling rate." alt="" coords="5,29,239,55"/>
-<area shape="rect" id="Node000002" href="$utilities_8h.html#ab8e81118f023df135835db8cce4f5f42" title="Returns the value of a single parameter." alt="" coords="287,29,337,55"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="239,39,273,39,273,45,239,45"/>
-<area shape="poly" id="edge2_Node000002_Node000002" title=" " alt="" coords="285,34,275,23,276,13,289,5,312,3,342,8,349,14,350,22,344,22,344,17,340,13,312,8,291,10,281,16,280,22,288,30"/>
+<area shape="rect" id="Node000001" title="Computes the adiabatic cooling rate." alt="" coords="5,5,239,31"/>
+<area shape="rect" id="Node000002" href="$pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89" title=" " alt="" coords="287,5,441,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="239,15,273,15,273,21,239,21"/>
 </map>

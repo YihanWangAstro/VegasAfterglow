@@ -1,23 +1,17 @@
 <map id="simple&#45;shock.hpp" name="simple&#45;shock.hpp">
-<area shape="rect" id="Node000001" title=" " alt="" coords="171,5,308,31"/>
-<area shape="rect" id="Node000002" href="$afterglow_8h.html" title=" " alt="" coords="192,79,287,104"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="242,44,242,79,237,79,237,44"/>
-<area shape="rect" id="Node000003" href="$mcmc_8h.html" title=" " alt="" coords="17,225,91,251"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="178,97,146,103,113,114,82,130,58,154,50,171,48,190,53,225,48,225,42,190,45,169,53,150,79,126,110,109,144,98,178,92"/>
-<area shape="rect" id="Node000006" href="$pymodel_8cpp.html" title=" " alt="" coords="237,299,343,324"/>
-<area shape="poly" id="edge5_Node000002_Node000006" title=" " alt="" coords="248,117,290,298,285,299,243,118"/>
-<area shape="rect" id="Node000007" href="$pymodel_8h.html" title=" " alt="" coords="141,225,231,251"/>
-<area shape="poly" id="edge6_Node000002_Node000007" title=" " alt="" coords="235,118,216,178,195,226,190,224,212,176,230,117"/>
-<area shape="rect" id="Node000008" href="$shock__dispatch_8h.html" title=" " alt="" coords="67,152,201,177"/>
-<area shape="poly" id="edge9_Node000002_Node000008" title=" " alt="" coords="212,114,153,154,150,150,209,110"/>
-<area shape="rect" id="Node000009" href="$synchrotron_8cpp.html" title=" " alt="" coords="328,152,455,177"/>
-<area shape="poly" id="edge12_Node000002_Node000009" title=" " alt="" coords="277,107,368,149,365,154,275,112"/>
-<area shape="rect" id="Node000004" href="$mcmc_8cpp.html" title=" " alt="" coords="5,299,95,324"/>
-<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="55,265,53,299,48,298,50,264"/>
-<area shape="rect" id="Node000005" href="$pybind_8cpp.html" title=" " alt="" coords="119,299,213,324"/>
-<area shape="poly" id="edge4_Node000003_Node000005" title=" " alt="" coords="85,256,149,296,146,301,82,260"/>
-<area shape="poly" id="edge7_Node000007_Node000005" title=" " alt="" coords="182,265,172,299,167,298,176,263"/>
-<area shape="poly" id="edge8_Node000007_Node000006" title=" " alt="" coords="216,256,274,296,271,301,213,261"/>
-<area shape="poly" id="edge10_Node000008_Node000003" title=" " alt="" coords="113,188,69,227,65,223,109,184"/>
-<area shape="poly" id="edge11_Node000008_Node000007" title=" " alt="" coords="153,187,180,224,175,227,148,190"/>
+<area shape="rect" id="Node000001" title=" " alt="" coords="93,5,230,31"/>
+<area shape="rect" id="Node000002" href="$afterglow_8h.html" title=" " alt="" coords="114,79,209,104"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="164,44,164,79,159,79,159,44"/>
+<area shape="rect" id="Node000003" href="$pymodel_8cpp.html" title=" " alt="" coords="5,299,112,324"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="150,117,132,153,66,299,61,297,127,151,146,115"/>
+<area shape="rect" id="Node000004" href="$pymodel_8h.html" title=" " alt="" coords="116,225,207,251"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="151,117,139,153,138,172,142,192,157,224,152,226,137,193,133,173,133,151,146,115"/>
+<area shape="rect" id="Node000006" href="$shock__dispatch_8h.html" title=" " alt="" coords="147,152,282,177"/>
+<area shape="poly" id="edge6_Node000002_Node000006" title=" " alt="" coords="180,113,208,150,204,153,176,117"/>
+<area shape="rect" id="Node000007" href="$synchrotron_8cpp.html" title=" " alt="" coords="306,152,433,177"/>
+<area shape="poly" id="edge8_Node000002_Node000007" title=" " alt="" coords="209,106,337,149,335,154,207,111"/>
+<area shape="poly" id="edge5_Node000004_Node000003" title=" " alt="" coords="135,261,77,301,74,296,132,256"/>
+<area shape="rect" id="Node000005" href="$pybind_8cpp.html" title=" " alt="" coords="136,299,229,324"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="171,263,182,298,177,299,166,265"/>
+<area shape="poly" id="edge7_Node000006_Node000004" title=" " alt="" coords="200,190,172,227,168,224,196,187"/>
 </map>
