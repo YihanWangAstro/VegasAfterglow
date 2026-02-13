@@ -10,28 +10,18 @@ from unittest.mock import MagicMock
 
 # Mock C++ extension modules for documentation building
 class BetterMock(MagicMock):
-    # Add a proper __all__ attribute
-    __all__ = ['ModelParams', 'Setups', 'ObsData', 'VegasMC']
+    __all__ = []
 
-    # Add documentation strings
     @classmethod
     def __getattr__(cls, name):
         mock = MagicMock()
-        # Add docstrings to make autodoc happy
         mock.__doc__ = f"Mocked {name} class for documentation."
-        # Make the signature inspection work better
         if name == '__init__':
             mock.__signature__ = None
         return mock
 
 # Create fake module structure
-systems_mock = type('VegasAfterglowC', (), {
-    '__all__': ['ModelParams', 'Setups', 'ObsData', 'VegasMC'],
-    'ModelParams': type('ModelParams', (), {'__doc__': 'ModelParams class documentation.'}),
-    'Setups': type('Setups', (), {'__doc__': 'Setups class documentation.'}),
-    'ObsData': type('ObsData', (), {'__doc__': 'ObsData class documentation.'}),
-    'VegasMC': type('VegasMC', (), {'__doc__': 'VegasMC class documentation.'})
-})
+systems_mock = type('VegasAfterglowC', (), {'__all__': []})
 
 sys.modules['VegasAfterglow.VegasAfterglowC'] = systems_mock
 sys.path.insert(0, os.path.abspath('../../'))

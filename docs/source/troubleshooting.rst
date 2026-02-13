@@ -107,7 +107,7 @@ A: This often indicates data selection problems:
   - Calculate points per band: some bands may dominate χ²
 
 **Solutions:**
-  - **Apply logscale_screen**: Use ``ObsData.logscale_screen(times, data_density)`` for manual screening
+  - **Apply logscale_screen**: Use ``logscale_screen(times, data_density)`` for manual screening
   - **Balance frequency bands**: Target 10-30 points per band, avoid >100 points in any single band
   - **Use weights**: De-emphasize over-sampled regions with the ``weights`` parameter
   - **Consider systematic floors**: Add systematic uncertainty floors for highly precise data
@@ -118,17 +118,18 @@ A: This often indicates data selection problems:
     # Problem: 500 optical points, 20 X-ray points, 10 radio points
 
     # Solution: Manual reduction using logscale_screen
-    data = ObsData()
-    # Add all data normally, but use screening for over-sampled bands
-    optical_indices = ObsData.logscale_screen(optical_times, data_density=4)
-    data.add_flux_density(nu=5e14,
-                         t=optical_times[optical_indices],  # ~40 points
-                         f_nu=optical_flux[optical_indices],
-                         err=optical_err[optical_indices])
+    from VegasAfterglow import logscale_screen
+
+    # Use screening for over-sampled bands
+    optical_indices = logscale_screen(optical_times, data_density=4)
+    fitter.add_flux_density(nu=5e14,
+                            t=optical_times[optical_indices],  # ~40 points
+                            f_nu=optical_flux[optical_indices],
+                            err=optical_err[optical_indices])
 
     # Add other bands normally
-    data.add_flux_density(nu=2e17, t=xray_times, f_nu=xray_flux, err=xray_err)
-    data.add_flux_density(nu=1e9, t=radio_times, f_nu=radio_flux, err=radio_err)
+    fitter.add_flux_density(nu=2e17, t=xray_times, f_nu=xray_flux, err=xray_err)
+    fitter.add_flux_density(nu=1e9, t=radio_times, f_nu=radio_flux, err=radio_err)
 
     # Alternative: Weight by band density to balance contributions
     optical_weight = 1.0 / len(optical_times)  # Down-weight dense band

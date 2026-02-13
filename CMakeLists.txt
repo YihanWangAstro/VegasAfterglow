@@ -4,11 +4,16 @@ project(VegasAfterglow LANGUAGES CXX)
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_POSITION_INDEPENDENT_CODE ON)
-option(AFTERGLOW_ENABLE_WARNINGS "Enable compiler warnings" OFF)
+option(AFTERGLOW_ENABLE_WARNINGS "Enable compiler warnings" ON)
 
 if(CMAKE_CXX_COMPILER_ID MATCHES "GNU|Clang")
   add_compile_options(-O3 -pipe -DNDEBUG -DXTENSOR_DISABLE_EXCEPTIONS -DXTENSOR_USE_XSIMD)
-  add_compile_options(-fno-math-errno -fno-trapping-math -fno-signed-zeros -ffp-contract=fast -w)
+  add_compile_options(-fno-math-errno -fno-trapping-math -fno-signed-zeros -ffp-contract=fast
+                       -freciprocal-math -w)
+  add_compile_options(-fvisibility=hidden)
+  if(APPLE)
+    add_compile_options(-fveclib=Accelerate)
+  endif()
 elseif(MSVC)
   add_compile_options(/O2 /DNDEBUG /MP /GL /std:c++20 /DXTENSOR_DISABLE_EXCEPTIONS /DXTENSOR_USE_XSIMD)
 endif()
@@ -25,7 +30,11 @@ include(CheckIPOSupported)
 check_ipo_supported(RESULT result OUTPUT output)
 if(result)
   set(CMAKE_INTERPROCEDURAL_OPTIMIZATION TRUE)
-  message(STATUS "LTO/IPO enabled")
+  if(CMAKE_CXX_COMPILER_ID MATCHES "Clang")
+    add_compile_options(-flto=full)
+    add_link_options(-flto=full)
+  endif()
+  message(STATUS "LTO/IPO enabled (full)")
 else()
   message(WARNING "LTO/IPO is not supported: ${output}")
 endif()
@@ -58,7 +67,6 @@ find_package(OpenMP REQUIRED)
 message(STATUS "OpenMP found - enabling parallel batch processing")
 
 set(AFTERGLOW_SOURCES
-  pybind/mcmc.cpp
   pybind/pybind.cpp
   pybind/pymodel.cpp
   src/core/mesh.cpp

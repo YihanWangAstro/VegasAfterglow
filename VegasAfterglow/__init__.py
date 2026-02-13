@@ -4,24 +4,28 @@ from ._version import __version__, __version_tuple__
 from .types import (
     ISM,
     Ejecta,
+    FitResult,
     GaussianJet,
     Magnetar,
     Medium,
     Model,
+    ModelParams,
     Observer,
+    ParamDef,
     PowerLawJet,
     PowerLawWing,
     Radiation,
+    Scale,
     StepPowerLawJet,
     TophatJet,
     TwoComponentJet,
     Wind,
+    logscale_screen,
 )
 
-# MCMC types (require: pip install VegasAfterglow[mcmc])
+# MCMC fitting (requires: pip install VegasAfterglow[mcmc])
 try:
     from .runner import AfterglowLikelihood, Fitter
-    from .types import FitResult, ModelParams, ObsData, ParamDef, Scale, Setups, VegasMC
 except ImportError:
     _MCMC_MISSING_MSG = (
         "MCMC fitting requires additional dependencies. "
@@ -38,13 +42,6 @@ except ImportError:
 
     Fitter = _mcmc_stub("Fitter")
     AfterglowLikelihood = _mcmc_stub("AfterglowLikelihood")
-    ObsData = _mcmc_stub("ObsData")
-    Setups = _mcmc_stub("Setups")
-    VegasMC = _mcmc_stub("VegasMC")
-    ModelParams = _mcmc_stub("ModelParams")
-    FitResult = _mcmc_stub("FitResult")
-    ParamDef = _mcmc_stub("ParamDef")
-    Scale = _mcmc_stub("Scale")
 
 __all__ = [
     "__version__",
@@ -64,14 +61,14 @@ __all__ = [
     "Radiation",
     "Observer",
     "Magnetar",
-    # MCMC (requires VegasAfterglow[mcmc])
+    # Utilities
+    "logscale_screen",
+    # Parameter types
     "ModelParams",
-    "Setups",
-    "ObsData",
-    "VegasMC",
     "FitResult",
-    "Fitter",
     "ParamDef",
     "Scale",
+    # MCMC fitting (requires VegasAfterglow[mcmc])
+    "Fitter",
     "AfterglowLikelihood",
 ]

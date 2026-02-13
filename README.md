@@ -629,7 +629,7 @@ plt.savefig('EAT.png', dpi=300,bbox_inches='tight')
 We provide some example data files in the `data` folder. Remember to keep your copy in the same directory as the original to ensure all data paths work correctly.
 
 <details>
-<summary><b>1. Preparing Data and Configuring the Model</b> <i>(click to expand/collapse)</i></summary>
+<summary><b>1. Configuring the Model</b> <i>(click to expand/collapse)</i></summary>
 <br>
 
 ```python
@@ -638,71 +638,18 @@ import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 import corner
-from VegasAfterglow import ObsData, Setups, Fitter, ParamDef, Scale
+from VegasAfterglow import Fitter, ParamDef, Scale
+
+# Create the fitter with model configuration and add data
+fitter = Fitter(
+    z=1.58,
+    lumi_dist=3.364e28,
+    jet="powerlaw",
+    medium="wind",
+)
 ```
 
-VegasAfterglow provides flexible options for loading observational data through the `ObsData` class. You can add light curves (specific flux vs. time) and spectra (specific flux vs. frequency) in multiple ways.
-
-```python
-# Create an instance to store observational data
-data = ObsData()
-
-# Method 1: Add data directly from lists or numpy arrays
-
-# For light curves
-t_data = [1e3, 2e3, 5e3, 1e4, 2e4]  # Time in seconds
-flux_data = [1e-26, 8e-27, 5e-27, 3e-27, 2e-27]  # Specific flux in erg/cm²/s/Hz
-flux_err = [1e-28, 8e-28, 5e-28, 3e-28, 2e-28]  # Specific flux error in erg/cm²/s/Hz
-data.add_flux_density(nu=4.84e14, t=t_data, f_nu=flux_data, err=flux_err)  # All quantities in CGS units
-# You can also assign weights to each data point to account for systematic uncertainties or correlations. You don't need to worry about the weights' normalization, the code will normalize them automatically.
-#data.add_flux_density(nu=4.84e14, t=t_data, f_nu=flux_data, err=flux_err, weights=np.ones_like(t_data))
-
-# For spectra
-nu_data = [...]  # Frequencies in Hz
-spectrum_data = [...] # Specific flux values in erg/cm²/s/Hz
-spectrum_err = [...]   # Specific flux errors in erg/cm²/s/Hz
-data.add_spectrum(t=3000, nu=nu_data, f_nu=spectrum_data, err=spectrum_err, weights=np.ones_like(nu_data))  # All quantities in CGS units
-```
-
-```python
-# Method 2: Load from CSV files
-
-data = ObsData()
-# Define your bands and files
-bands = [2.4e17, 4.84e14, 1.4e14]  # Example: X-ray, optical R-band
-lc_files = ["data/ep.csv", "data/r.csv", "data/vt-r.csv"]
-
-# Load light curves from files
-for nu, fname in zip(bands, lc_files):
-    df = pd.read_csv(fname)
-    data.add_flux_density(nu=nu, t=df["t"], f_nu=df["Fv_obs"], err=df["Fv_err"])  # All quantities in CGS units
-
-times = [3000] # Example: time in seconds
-spec_files = ["data/ep-spec.csv"]
-
-# Load spectra from files
-for t, fname in zip(times, spec_files):
-    df = pd.read_csv(fname)
-    data.add_spectrum(t=t, nu=df["nu"], f_nu=df["Fv_obs"], err=df["Fv_err"])  # All quantities in CGS units
-```
-
-> **Note:** The `ObsData` interface is designed to be flexible. You can mix and match different data sources, and add multiple light curves at different frequencies as well as multiple spectra at different times.
-
-The `Setups` class defines the global properties and environment for your model. These settings remain fixed during the MCMC process. Check the [documentation](https://yihanwangastro.github.io/VegasAfterglow/docs/index.html) for all available options.
-
-```python
-cfg = Setups()
-
-# Source properties
-cfg.lumi_dist = 3.364e28    # Luminosity distance [cm]
-cfg.z = 1.58               # Redshift
-
-# Physical model configuration
-cfg.medium = "wind"        # Ambient medium: "wind", "ism", etc. (see documentation)
-cfg.jet = "powerlaw"       # Jet structure: "powerlaw", "gaussian", "tophat", etc. (see documentation)
-```
-
-These settings affect how the model is calculated but are not varied during the MCMC process.
+All model configuration is passed directly to the `Fitter` constructor as keyword arguments. Check the [documentation](https://yihanwangastro.github.io/VegasAfterglow/docs/index.html) for all available options.
 </details>
 
 <details>
@@ -740,11 +687,25 @@ The parameters you include depend on your model configuration (See documentation
 - For "ISM" medium: use `n_ism` parameter instead
 - Different jet structures may require different parameters
 
-Initialize the `Fitter` class with your data and configuration, then run the MCMC process:
+Initialize the `Fitter` class with your configuration and add data directly:
 
 ```python
-# Create the fitter object
-fitter = Fitter(data, cfg)
+# Add light curves at specific frequencies (all quantities in CGS units)
+t_data = [1e3, 2e3, 5e3, 1e4, 2e4]  # Time in seconds
+flux_data = [1e-26, 8e-27, 5e-27, 3e-27, 2e-27]  # erg/cm²/s/Hz
+flux_err = [1e-28, 8e-28, 5e-28, 3e-28, 2e-28]    # erg/cm²/s/Hz
+fitter.add_flux_density(nu=4.84e14, t=t_data, f_nu=flux_data, err=flux_err)
+
+# Load from CSV files
+import pandas as pd
+bands = [2.4e17, 4.84e14, 1.4e14]
+lc_files = ["data/ep.csv", "data/r.csv", "data/vt-r.csv"]
+for nu, fname in zip(bands, lc_files):
+    df = pd.read_csv(fname)
+    fitter.add_flux_density(nu=nu, t=df["t"], f_nu=df["Fv_obs"], err=df["Fv_err"])
+
+# Add spectra at specific times
+fitter.add_spectrum(t=3000, nu=nu_data, f_nu=spectrum_data, err=spectrum_err)
 
 # Option 1: Nested sampling with dynesty (computes evidence, robust for multimodal posteriors)
 result = fitter.fit(
@@ -754,10 +715,8 @@ result = fitter.fit(
     nlive=1000,                    # Number of live points
     walks=100,                     # Number of random walks per live point
     dlogz=0.5,                     # Stopping criterion (evidence tolerance)
-    npool=8,                       # Number of parallel processes
+    npool=8,                       # Number of parallel threads
     top_k=10,                      # Number of best-fit parameters to return
-    outdir="bilby_output",         # Output directory (default)
-    label="afterglow_fit",         # Run label (default: "afterglow")
 )
 
 # Option 2: MCMC with emcee (faster, good for unimodal posteriors, not optimal for multimodal posteriors)
@@ -768,10 +727,8 @@ result = fitter.fit(
     nsteps=50000,                  # Number of steps per walker
     nburn=10000,                   # Burn-in steps to discard
     thin=1,                        # Save every nth sample
-    npool=8,                       # Number of parallel processes
+    npool=8,                       # Number of parallel threads
     top_k=10,                      # Number of best-fit parameters to return
-    outdir="bilby_output",         # Output directory (default)
-    label="afterglow_fit",         # Run label (default: "afterglow")
 )
 ```
 

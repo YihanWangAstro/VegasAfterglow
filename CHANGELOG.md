@@ -17,17 +17,24 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Two-component jets similarly benefit by computing only unique angular groups
 - Applies to all stages: shock dynamics, electron distribution, synchrotron and IC photon generation
 
-#### **Faster MCMC Sampling**
-
-- For fast models like top-hat jets, the per-sample Python overhead from samplers (bilby/emcee/dynesty) can dominate total runtime. Likelihood evaluations are now batch-parallelized in C++ with OpenMP, bypassing the Python layer entirely
-- Parameter transformations (log-scale, fixed values) moved from Python to C++
-- Walker count automatically aligned to CPU cores for optimal parallel throughput
-
 #### **Reduced Memory Usage in Flux Computation**
 - Eliminated large intermediate arrays during observer flux integration
 - Direct accumulation replaces the previous two-pass (store-then-sum) approach
 
 ### Added
+
+#### **Redesigned MCMC Fitting Module**
+
+The `Fitter` class has been rebuilt on top of the `Model` API, replacing the internal `VegasMC` batch evaluator. This brings full Python-level flexibility while retaining C++ performance.
+
+- **Simplified data workflow**: Add observations directly to the fitter with `fitter.add_flux_density()`, `fitter.add_spectrum()`, and `fitter.add_flux()`
+- **Custom jet and medium profiles**: Pass `jet` or `medium` factory functions to `Fitter` to use arbitrary angular energy/Lorentz factor profiles or density structures in MCMC fitting (see [Advanced Fitting](https://vegasafterglow.readthedocs.io/en/latest/mcmc_fitting.html#advanced-fitting))
+- **Custom priors**: Supply bilby `Prior` objects for nested sampling, or a `log_prior_fn` for emcee, to go beyond uniform priors (see [Custom Priors](https://vegasafterglow.readthedocs.io/en/latest/mcmc_fitting.html#custom-priors))
+- **Custom likelihood functions**: Override the default Gaussian log-likelihood with `log_likelihood_fn` for non-standard noise models or upper limits (see [Custom Likelihood](https://vegasafterglow.readthedocs.io/en/latest/mcmc_fitting.html#custom-likelihood))
+- **`logscale_screen` standalone utility**: Logarithmic data subsampling now available as a module-level function
+- **Thread-based parallelism**: Likelihood evaluations parallelized via `ThreadPoolExecutor` with the GIL released during C++ computation, providing near-native throughput
+
+For the full MCMC fitting guide, including advanced customization examples, see the [MCMC Parameter Fitting](https://vegasafterglow.readthedocs.io/en/latest/mcmc_fitting.html) documentation.
 
 #### **Smooth Synchrotron Spectra**
 - New default synchrotron spectral model with smooth transitions at break frequencies (ν_m, ν_c, ν_a)
@@ -98,6 +105,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 #### **Wind Medium Defaults**
 - `Wind(A_star, n_ism=None, n0=None, k=2)`: `n_ism` and `n0` now default to `None` instead of `0` and `inf`, handled internally — clearer intent for the common pure-wind case
+
+#### **`VegasMC` Removed**
+- The C++ batch evaluator has been removed. All MCMC evaluation now goes through the Python `Model` API, which provides equivalent performance with greater flexibility
+
+#### **`ObsData` Removed**
+- The `ObsData` class has been removed. Use `Fitter.add_flux_density()`, `Fitter.add_spectrum()`, and `Fitter.add_flux()` to add observational data directly
+
+#### **`Setups` Removed**
+- The separate `Setups` configuration class has been removed. All model configuration is now passed directly to the `Fitter` constructor as keyword arguments: `Fitter(z=1.58, lumi_dist=3.364e28, jet="tophat", medium="ism", rvs_shock=True, ...)`
+- The `jet` and `medium` parameters accept either a string (built-in type) or a callable (custom factory function)
 
 #### **Python >= 3.8 Required**
 - Minimum Python version raised from 3.7 to 3.8
@@ -685,7 +702,7 @@ coordinates = details.theta            # New way
 
 | Version | Release Date | Key Features |
 |---------|--------------|--------------|
-| v2.0.0-beta | 2026-02-02 | ~5x speedup for symmetric jets, smooth synchrotron spectra, parallel MCMC, lightweight install, interactive PDF reports |
+| v2.0.0-beta | 2026-02-02 | Redesigned MCMC module, ~5x speedup for symmetric jets, smooth synchrotron spectra, custom jet/medium/prior/likelihood, lightweight install |
 | v1.1.0  | 2025-12-08   | Bilby MCMC integration, multi-sampler support, flexible parameter interface |
 | v1.0.3  | 2025-09-29   | Self-absorption heating disabled by default, MCMC improvements, flux unit fixes |
 | v1.0.2  | 2025-09-15   | Python interface method name updates, enhanced documentation, API consistency |

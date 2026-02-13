@@ -21,6 +21,9 @@ Key Features:
 - **Complete physics**: Forward shock, reverse shock, synchrotron, inverse Compton, magnetar injection
 - **Flexible data handling**: Light curves and spectra with optional weighting
 
+.. seealso::
+   :doc:`parameter_reference` for parameter details and typical ranges. :doc:`physics` for the underlying physical models.
+
 MCMC Best Practices
 -------------------
 
@@ -35,9 +38,7 @@ The most common mistake in GRB afterglow fitting is starting with an overly comp
 
    .. code-block:: python
 
-       cfg = Setups()
-       cfg.medium = "ism"
-       cfg.jet = "tophat"
+       fitter = Fitter(z=1.58, lumi_dist=3.364e28, jet="tophat", medium="ism")
        # All other physics options default to False
 
    This gives you ~7-8 free parameters. Run MCMC and examine the residuals.
@@ -110,19 +111,53 @@ Complex models are justified when:
 Basic Setup
 -----------
 
-Setting up Observational Data
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Fitter Constructor
+^^^^^^^^^^^^^^^^^^
 
-The ``ObsData`` class handles multi-wavelength observational data:
+The ``Fitter`` constructor accepts keyword arguments for source properties, model selection, physics options, and numerical parameters:
+
+.. code-block:: python
+
+    fitter = Fitter(
+        # Source properties
+        z=1.58,                   # Redshift
+        lumi_dist=3.364e28,       # Luminosity distance [cm]
+
+        # Model selection (see sections below for all options)
+        jet="powerlaw",           # Jet structure type
+        medium="wind",            # Ambient medium type
+
+        # Physics options
+        rvs_shock=True,           # Include reverse shock
+        fwd_ssc=True,             # Forward shock inverse Compton
+        rvs_ssc=False,            # Reverse shock inverse Compton
+        ssc_cooling=True,         # IC cooling effects
+        kn=True,                  # Klein-Nishina corrections
+        magnetar=True,            # Magnetar energy injection
+
+        # Numerical parameters
+        rtol=1e-5,                # Numerical tolerance
+        resolution=(0.15, 0.5, 10),  # Grid resolution (phi, theta, t)
+    )
+
+Setting up Data and the Fitter
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+The ``Fitter`` class handles both model configuration and observational data. Add light curves, spectra, and broadband flux directly to the fitter:
 
 .. code-block:: python
 
     import numpy as np
     import pandas as pd
-    from VegasAfterglow import ObsData, Setups, Fitter, ParamDef, Scale
+    from VegasAfterglow import Fitter, ParamDef, Scale
 
-    # Create data container
-    data = ObsData()
+    # Create the fitter with model configuration
+    fitter = Fitter(
+        z=1.58,
+        lumi_dist=3.364e28,
+        jet="tophat",
+        medium="ism",
+    )
 
     # Method 1: Add data directly
     t_data = [1e3, 2e3, 5e3, 1e4, 2e4]  # Time in seconds
@@ -130,14 +165,14 @@ The ``ObsData`` class handles multi-wavelength observational data:
     flux_err = [1e-28, 8e-28, 5e-28, 3e-28, 2e-28]   # Error bars
 
     # Add light curve at R-band frequency
-    data.add_flux_density(nu=4.84e14, t=t_data,
-                         f_nu=flux_data, err=flux_err)  # All quantities in CGS units
+    fitter.add_flux_density(nu=4.84e14, t=t_data,
+                            f_nu=flux_data, err=flux_err)  # All quantities in CGS units
 
     # Optional: Add weights for systematic uncertainties, normalization handled internally
     weights = np.ones_like(t_data)  # Equal weights
-    data.add_flux_density(nu=2.4e17, t=t_data,
-                         f_nu=flux_data, err=flux_err,
-                         weights=weights)  # All quantities in CGS units
+    fitter.add_flux_density(nu=2.4e17, t=t_data,
+                            f_nu=flux_data, err=flux_err,
+                            weights=weights)  # All quantities in CGS units
 
     # Method 2: Add frequency-integrated light curve (broadband flux)
     # For instruments with wide frequency coverage (e.g., BAT, LAT, Fermi)
@@ -145,10 +180,10 @@ The ``ObsData`` class handles multi-wavelength observational data:
     nu_max = 1e19  # Upper frequency bound [Hz]
     num_points = 5  # Number of frequency points for integration
 
-    data.add_flux(nu_min=nu_min, nu_max=nu_max,
-                         num_points=num_points, t=t_data,
-                         flux=flux_data, err=flux_err,
-                         weights=weights)  # All quantities in CGS units
+    fitter.add_flux(nu_min=nu_min, nu_max=nu_max,
+                    num_points=num_points, t=t_data,
+                    flux=flux_data, err=flux_err,
+                    weights=weights)  # All quantities in CGS units
 
     # Method 3: Load from CSV files
     bands = [2.4e17, 4.84e14, 1.4e14]  # X-ray, optical, near-IR
@@ -156,8 +191,8 @@ The ``ObsData`` class handles multi-wavelength observational data:
 
     for nu, fname in zip(bands, lc_files):
         df = pd.read_csv(fname)
-        data.add_flux_density(nu=nu, t=df["t"],
-                             f_nu=df["Fv_obs"], err=df["Fv_err"])  # All quantities in CGS units
+        fitter.add_flux_density(nu=nu, t=df["t"],
+                                f_nu=df["Fv_obs"], err=df["Fv_err"])  # All quantities in CGS units
 
     # Add spectra at specific times
     spec_times = [1000, 10000]  # seconds
@@ -165,17 +200,19 @@ The ``ObsData`` class handles multi-wavelength observational data:
 
     for t, fname in zip(spec_times, spec_files):
         df = pd.read_csv(fname)
-        data.add_spectrum(t=t, nu=df["nu"],
-                          f_nu=df["Fv_obs"], err=df["Fv_err"])  # All quantities in CGS units
+        fitter.add_spectrum(t=t, nu=df["nu"],
+                            f_nu=df["Fv_obs"], err=df["Fv_err"])  # All quantities in CGS units
 
 Data Selection and Optimization
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 **Smart Data Subsampling with logscale_screen**
 
-For large datasets or densely sampled observations, using all available data points can lead to computational inefficiency and biased parameter estimation. The ``logscale_screen`` method provides intelligent data subsampling that maintains the essential information content while reducing computational overhead.
+For large datasets or densely sampled observations, using all available data points can lead to computational inefficiency and biased parameter estimation. The ``logscale_screen`` utility provides intelligent data subsampling that maintains the essential information content while reducing computational overhead.
 
 .. code-block:: python
+
+    from VegasAfterglow import logscale_screen
 
     # Example: Large dense dataset
     t_dense = np.logspace(2, 7, 1000)  # 1000 time points
@@ -184,17 +221,17 @@ For large datasets or densely sampled observations, using all available data poi
 
     # Subsample using logarithmic screening
     # This selects ~5*5=25 representative points across 5 decades in time
-    indices = ObsData.logscale_screen(t_dense, data_density=5)
+    indices = logscale_screen(t_dense, data_density=5)
 
     # Add only the selected subset
-    data.add_flux_density(nu=5e14,
-                         t=t_dense[indices],
-                         f_nu=flux_dense[indices],
-                         err=flux_err_dense[indices])
+    fitter.add_flux_density(nu=5e14,
+                            t=t_dense[indices],
+                            f_nu=flux_dense[indices],
+                            err=flux_err_dense[indices])
 
 **Why logscale_screen is Important:**
 
-1. **Prevents Oversampling Bias**: Dense data clusters can dominate the χ² calculation, causing the MCMC to over-fit specific frequency bands or time periods.
+1. **Prevents Oversampling Bias**: Dense data clusters can dominate the chi-squared calculation, causing the MCMC to over-fit specific frequency bands or time periods.
 
 2. **Computational Efficiency**: Reduces the number of model evaluations needed during MCMC sampling, significantly improving performance.
 
@@ -214,9 +251,9 @@ For large datasets or densely sampled observations, using all available data poi
 
     - **Optical-heavy datasets**: Dense optical coverage can bias parameters toward optical-dominant solutions
     - **Late-time clustering**: Too many late-time points can over-constrain decay slopes at the expense of early physics
-    - **Single-epoch spectra**: Broadband spectra at one time can dominate multi-epoch light curves in χ² space
+    - **Single-epoch spectra**: Broadband spectra at one time can dominate multi-epoch light curves in chi-squared space
 
-    **Solution**: Use ``logscale_screen`` for manual temporal reduction of over-sampled bands.
+    **Solution**: Use ``logscale_screen()`` for manual temporal reduction of over-sampled bands.
 
 **Handling Measurement Uncertainties**
 
@@ -224,13 +261,13 @@ Error bars strongly influence MCMC fitting. Improperly characterized uncertainti
 
 **The Problem with Small Error Bars**
 
-Data points with very small uncertainties dominate the χ² calculation:
+Data points with very small uncertainties dominate the chi-squared calculation:
 
 .. math::
 
     \chi^2 = \sum_i \frac{(F_{\rm obs,i} - F_{\rm model,i})^2}{\sigma_i^2}
 
-A single point with σ = 0.01 mJy contributes 100× more to χ² than a point with σ = 0.1 mJy. This causes the MCMC to:
+A single point with sigma = 0.01 mJy contributes 100x more to chi-squared than a point with sigma = 0.1 mJy. This causes the MCMC to:
 
 - Heavily weight high-precision data at the expense of other observations
 - Potentially fit noise or systematic effects in the "precise" data
@@ -254,7 +291,7 @@ A single point with σ = 0.01 mJy contributes 100× more to χ² than a point wi
        systematic_floor = 0.1  # 10% of flux
        err_with_floor = np.sqrt(err**2 + (systematic_floor * flux)**2)
 
-       data.add_flux_density(nu=nu, t=t, f_nu=flux, err=err_with_floor)
+       fitter.add_flux_density(nu=nu, t=t, f_nu=flux, err=err_with_floor)
 
 2. **Use weights to balance bands**
 
@@ -264,58 +301,31 @@ A single point with σ = 0.01 mJy contributes 100× more to χ² than a point wi
 
        # Reduce contribution of high-precision optical data
        optical_weight = 0.5  # Effectively doubles the error contribution
-       data.add_flux_density(nu=5e14, t=t_optical, f_nu=flux_optical,
-                            err=err_optical, weights=optical_weight * np.ones_like(t_optical))
+       fitter.add_flux_density(nu=5e14, t=t_optical, f_nu=flux_optical,
+                              err=err_optical, weights=optical_weight * np.ones_like(t_optical))
 
 3. **Inspect residuals by band**
 
    After fitting, check if residuals are consistent across bands. If one band shows systematic deviations while others don't, the errors for that band may be mischaracterized.
 
 .. tip::
-    **Rule of thumb**: If your best-fit χ²/dof >> 1, either the model is inadequate OR the error bars are underestimated. If χ²/dof << 1, the errors may be overestimated.
-
-Global Configuration
-^^^^^^^^^^^^^^^^^^^^
-
-The ``Setups`` class defines fixed model properties:
-
-.. code-block:: python
-
-    cfg = Setups()
-
-    # Source properties
-    cfg.lumi_dist = 3.364e28  # Luminosity distance [cm]
-    cfg.z = 1.58              # Redshift
-
-    # Model selection (see sections below for all options)
-    cfg.medium = "wind"       # Ambient medium type
-    cfg.jet = "powerlaw"      # Jet structure type
-
-    # Physics options
-    cfg.rvs_shock = True      # Include reverse shock
-    cfg.fwd_ssc = True        # Forward shock inverse Compton
-    cfg.rvs_ssc = False       # Reverse shock inverse Compton
-    cfg.ssc_cooling = True     # IC cooling effects
-    cfg.kn = True             # Klein-Nishina corrections
-    cfg.magnetar = True       # Magnetar energy injection
-
-    # Numerical parameters
-    cfg.rtol = 1e-5           # Numerical tolerance
+    **Rule of thumb**: If your best-fit chi-squared/dof >> 1, either the model is inadequate OR the error bars are underestimated. If chi-squared/dof << 1, the errors may be overestimated.
 
 Model Configurations
 --------------------
 
-Basic Setup (Default)
-^^^^^^^^^^^^^^^^^^^^^
+.. seealso::
+   :doc:`parameter_reference` for all available parameters. :doc:`examples` for direct model calculation examples.
+
+TopHat + ISM (Default)
+^^^^^^^^^^^^^^^^^^^^^^
 
 The default configuration uses a top-hat jet in a uniform ISM environment with forward shock synchrotron emission:
 
 .. code-block:: python
 
     # Basic configuration
-    cfg = Setups()
-    cfg.medium = "ism"        # Uniform ISM density
-    cfg.jet = "tophat"        # Top-hat jet structure
+    fitter = Fitter(z=1.58, lumi_dist=3.364e28, jet="tophat", medium="ism")
 
     # Basic parameter set
     params = [
@@ -337,9 +347,7 @@ Jet Structure Variations
 
 .. code-block:: python
 
-    cfg = Setups()
-    cfg.medium = "ism"        # Default ISM medium
-    cfg.jet = "powerlaw"      # Power-law structured jet
+    fitter = Fitter(z=1.58, lumi_dist=3.364e28, jet="powerlaw", medium="ism")
 
     params = [
         # Basic jet parameters (same as default)
@@ -364,9 +372,7 @@ Jet Structure Variations
 
 .. code-block:: python
 
-    cfg = Setups()
-    cfg.medium = "ism"
-    cfg.jet = "gaussian"      # Gaussian structured jet
+    fitter = Fitter(z=1.58, lumi_dist=3.364e28, jet="gaussian", medium="ism")
 
     params = [
         # Basic parameters (same as default)
@@ -385,9 +391,7 @@ Jet Structure Variations
 
 .. code-block:: python
 
-    cfg = Setups()
-    cfg.medium = "ism"
-    cfg.jet = "two_component"  # Two-component jet
+    fitter = Fitter(z=1.58, lumi_dist=3.364e28, jet="two_component", medium="ism")
 
     params = [
         # Narrow component
@@ -413,9 +417,7 @@ Jet Structure Variations
 
 .. code-block:: python
 
-    cfg = Setups()
-    cfg.medium = "ism"
-    cfg.jet = "step_powerlaw"  # Step power-law jet
+    fitter = Fitter(z=1.58, lumi_dist=3.364e28, jet="step_powerlaw", medium="ism")
 
     params = [
         # Core component (uniform)
@@ -445,9 +447,7 @@ Medium Type Variations
 
 .. code-block:: python
 
-    cfg = Setups()
-    cfg.medium = "wind"       # Stellar wind medium
-    cfg.jet = "tophat"        # Default jet structure
+    fitter = Fitter(z=1.58, lumi_dist=3.364e28, jet="tophat", medium="wind")
 
     params = [
         # Standard jet parameters (same as default)
@@ -470,9 +470,7 @@ Medium Type Variations
 
 .. code-block:: python
 
-    cfg = Setups()
-    cfg.medium = "wind"       # Use wind for stratified models
-    cfg.jet = "tophat"        # Default jet structure
+    fitter = Fitter(z=1.58, lumi_dist=3.364e28, jet="tophat", medium="wind")
 
     params = [
         # Standard jet parameters (same as default)
@@ -496,9 +494,7 @@ Medium Type Variations
 
 .. code-block:: python
 
-    cfg = Setups()
-    cfg.medium = "wind"
-    cfg.jet = "tophat"
+    fitter = Fitter(z=1.58, lumi_dist=3.364e28, jet="tophat", medium="wind")
 
     params = [
         # Standard jet parameters (same as default)
@@ -507,7 +503,7 @@ Medium Type Variations
         ParamDef("theta_c", 0.01,   0.5,  Scale.LINEAR),
         ParamDef("theta_v",    0,     0,  Scale.FIXED),
 
-        # Stratified medium (wind → ISM)
+        # Stratified medium (wind -> ISM)
         ParamDef("A_star",  1e-3,   1.0,  Scale.LOG),     # Inner wind strength
         ParamDef("n_ism",   1e-3,   100,  Scale.LOG),     # Outer ISM density
 
@@ -522,9 +518,7 @@ Medium Type Variations
 
 .. code-block:: python
 
-    cfg = Setups()
-    cfg.medium = "wind"
-    cfg.jet = "tophat"
+    fitter = Fitter(z=1.58, lumi_dist=3.364e28, jet="tophat", medium="wind")
 
     params = [
         # Standard jet parameters (same as default)
@@ -549,11 +543,11 @@ Medium Type Variations
     **Stratified Medium Physics:**
 
     - **A_star = 0**: Pure ISM with density n_ism
-    - **n0 = ∞**: Pure wind profile from center
-    - **A_star > 0, n0 < ∞**: ISM-wind-ISM stratification
-    - **A_star > 0, n0 = ∞**: Wind-ISM stratification
+    - **n0 = infinity**: Pure wind profile from center
+    - **A_star > 0, n0 < infinity**: ISM-wind-ISM stratification
+    - **A_star > 0, n0 = infinity**: Wind-ISM stratification
 
-    **Density Profile:** Inner (r < r₁): n = n0, Middle (r₁ < r < r₂): n ∝ A_star/r², Outer (r > r₂): n = n_ism
+    **Density Profile:** Inner (r < r1): n = n0, Middle (r1 < r < r2): n proportional to A_star/r^2, Outer (r > r2): n = n_ism
 
 Reverse Shock
 ^^^^^^^^^^^^^
@@ -562,10 +556,11 @@ Reverse Shock
 
 .. code-block:: python
 
-    cfg = Setups()
-    cfg.medium = "ism"        # Default medium
-    cfg.jet = "tophat"        # Default jet
-    cfg.rvs_shock = True      # Enable reverse shock
+    fitter = Fitter(
+        z=1.58, lumi_dist=3.364e28,
+        jet="tophat", medium="ism",
+        rvs_shock=True,
+    )
 
     params = [
         # Standard jet and medium parameters (same as default)
@@ -595,10 +590,11 @@ Reverse Shock
 
 .. code-block:: python
 
-    cfg = Setups()
-    cfg.medium = "ism"
-    cfg.jet = "gaussian"      # Structured jet example
-    cfg.rvs_shock = True
+    fitter = Fitter(
+        z=1.58, lumi_dist=3.364e28,
+        jet="gaussian", medium="ism",
+        rvs_shock=True,
+    )
 
     params = [
         # Gaussian jet parameters
@@ -623,16 +619,19 @@ Reverse Shock
 Inverse Compton Radiation
 ^^^^^^^^^^^^^^^^^^^^^^^^^
 
+For the physical details of inverse Compton and Klein-Nishina corrections, see :doc:`physics`.
+
 **Forward Shock Inverse Compton**
 
 .. code-block:: python
 
-    cfg = Setups()
-    cfg.medium = "ism"        # Default medium
-    cfg.jet = "tophat"        # Default jet
-    cfg.fwd_ssc = True        # Forward shock SSC
-    cfg.ssc_cooling = True     # IC cooling effects
-    cfg.kn = True             # Klein-Nishina corrections
+    fitter = Fitter(
+        z=1.58, lumi_dist=3.364e28,
+        jet="tophat", medium="ism",
+        fwd_ssc=True,
+        ssc_cooling=True,
+        kn=True,
+    )
 
     params = [
         # Standard parameters (same as default)
@@ -651,14 +650,15 @@ Inverse Compton Radiation
 
 .. code-block:: python
 
-    cfg = Setups()
-    cfg.medium = "ism"
-    cfg.jet = "tophat"
-    cfg.rvs_shock = True      # Enable reverse shock
-    cfg.fwd_ssc = True        # Forward shock SSC
-    cfg.rvs_ssc = True        # Reverse shock SSC
-    cfg.ssc_cooling = True
-    cfg.kn = True
+    fitter = Fitter(
+        z=1.58, lumi_dist=3.364e28,
+        jet="tophat", medium="ism",
+        rvs_shock=True,
+        fwd_ssc=True,
+        rvs_ssc=True,
+        ssc_cooling=True,
+        kn=True,
+    )
 
     params = [
         # Standard parameters with reverse shock
@@ -687,10 +687,11 @@ Energy Injection
 
 .. code-block:: python
 
-    cfg = Setups()
-    cfg.medium = "ism"        # Default medium
-    cfg.jet = "tophat"        # Default jet
-    cfg.magnetar = True       # Enable magnetar injection
+    fitter = Fitter(
+        z=1.58, lumi_dist=3.364e28,
+        jet="tophat", medium="ism",
+        magnetar=True,
+    )
 
     params = [
         # Standard jet and medium parameters (same as default)
@@ -713,17 +714,18 @@ Energy Injection
     ]
 
 .. note::
-    **Magnetar Injection Profile:** L(t) = L0 × (1 + t/t0)^(-q) for θ < θc
+    **Magnetar Injection Profile:** L(t) = L0 x (1 + t/t0)^(-q) for theta < theta_c
 
 
 **Magnetar with Structured Jet**
 
 .. code-block:: python
 
-    cfg = Setups()
-    cfg.medium = "ism"
-    cfg.jet = "powerlaw"      # Structured jet
-    cfg.magnetar = True
+    fitter = Fitter(
+        z=1.58, lumi_dist=3.364e28,
+        jet="powerlaw", medium="ism",
+        magnetar=True,
+    )
 
     params = [
         # Power-law jet with magnetar
@@ -754,15 +756,16 @@ Complex Model Combinations
 
 .. code-block:: python
 
-    cfg = Setups()
-    cfg.medium = "wind"       # Stratified medium
-    cfg.jet = "gaussian"      # Structured jet
-    cfg.rvs_shock = True      # Reverse shock
-    cfg.fwd_ssc = True        # Forward SSC
-    cfg.rvs_ssc = True        # Reverse SSC
-    cfg.ssc_cooling = True    # IC cooling
-    cfg.kn = True             # Klein-Nishina
-    cfg.magnetar = True       # Magnetar energy injection
+    fitter = Fitter(
+        z=1.58, lumi_dist=3.364e28,
+        jet="gaussian", medium="wind",
+        rvs_shock=True,
+        fwd_ssc=True,
+        rvs_ssc=True,
+        ssc_cooling=True,
+        kn=True,
+        magnetar=True,
+    )
 
     params = [
         # Gaussian jet
@@ -825,11 +828,11 @@ Use emcee when:
 VegasAfterglow uses an optimized emcee configuration:
 
 - **Custom proposal moves**: DEMove (70%) + DESnookerMove (30%) for better mixing than default stretch move
-- **Vectorized batch processing**: Likelihood evaluations are parallelized via OpenMP internally
+- **Thread-based parallelism**: Likelihood evaluations are parallelized via ``ThreadPoolExecutor`` with the GIL released during C++ computation
 - **Automatic nwalkers**: Optimized based on parameter count and CPU cores
 
 .. note::
-    **Parallelization is automatic**: For emcee, the ``npool`` parameter is ignored. The C++ backend uses OpenMP multi-threading for batch likelihood evaluation, which is faster than Python multiprocessing.
+    **Parallelization**: For emcee, set ``npool`` to the number of CPU cores. Each thread creates a ``Model`` and calls ``flux_density()`` with the GIL released during C++ computation, achieving near-native parallelism.
 
 **Dynesty (Nested Sampling) - For Model Comparison**
 
@@ -870,14 +873,17 @@ The ``Fitter.fit()`` method provides a unified interface for parameter estimatio
     def fit(
         self,
         param_defs: Sequence[ParamDef],      # Parameter definitions
-        resolution: Tuple[float, float, float] = (0.15, 0.5, 10),  # Grid resolution
-        sampler: str = "dynesty",             # Sampler algorithm
-        npool: int = 1,                      # Number of parallel processes
+        sampler: str = "emcee",              # Sampler algorithm
+        resolution: Tuple = None,            # Override constructor resolution
+        npool: int = None,                   # Number of parallel threads (default: all cores)
         top_k: int = 10,                     # Number of best fits to return
         outdir: str = "bilby_output",        # Output directory
         label: str = "afterglow",            # Run label
         clean: bool = True,                  # Clean up intermediate files
         resume: bool = False,                # Resume previous run
+        log_prior_fn: Callable = None,       # Custom log-prior (emcee only)
+        log_likelihood_fn: Callable = None,  # Custom log-likelihood
+        priors: dict = None,                 # Custom bilby priors (dynesty only)
         **sampler_kwargs                     # Sampler-specific parameters
     ) -> FitResult
 
@@ -887,11 +893,10 @@ The ``Fitter.fit()`` method provides a unified interface for parameter estimatio
     - Required parameter for all samplers
     - See "Parameter Definition" section for details
 
-- ``resolution``: Tuple of (phi_res, theta_res, t_res)
-    - Controls model computation grid spacing
-    - Lower values = lower accuracy but faster computation
-    - Default: (0.15, 0.5, 10) provides good balance
-    - Example: (0.1, 1, 15) for higher accuracy
+- ``resolution``: Optional tuple of (phi_res, theta_res, t_res)
+    - Overrides the resolution set in the ``Fitter`` constructor for this run
+    - If ``None``, uses the constructor value (default: ``(0.15, 0.5, 10)``)
+    - Example: ``(0.1, 1, 15)`` for higher accuracy
 
 - ``sampler``: Sampling algorithm to use
     - ``"emcee"``: Affine-invariant MCMC ensemble sampler (recommended for speed)
@@ -902,9 +907,9 @@ The ``Fitter.fit()`` method provides a unified interface for parameter estimatio
     - ``"ultranest"``: Nested sampling with slice sampling
     - Other samplers supported by bilby - see `bilby documentation <https://lscsoft.docs.ligo.org/bilby/samplers.html>`_ for details
 
-- ``npool``: Number of parallel worker processes
+- ``npool``: Number of parallel threads
     - Set to number of CPU cores for best performance
-    - Default: 1 (no parallelization)
+    - Default: number of CPU cores
     - Example: ``npool=8`` on an 8-core machine
 
 - ``top_k``: Number of best-fit parameter sets to extract
@@ -1028,7 +1033,7 @@ The method returns a ``FitResult`` object with the following attributes:
 
 - ``top_k_log_probs``: Log probabilities for top-k fits
     - Shape: ``[top_k]``
-    - Can convert to χ² via: ``chi2 = -2 * log_prob``
+    - Can convert to chi-squared via: ``chi2 = -2 * log_prob``
 
 - ``log_probs``: Log probabilities for all samples
     - Shape: ``[n_samples, 1]``
@@ -1043,11 +1048,9 @@ Basic MCMC Execution
 
 .. code-block:: python
 
-    # Check data statistics before MCMC
-    print(f"Total data points: {data.data_points_num()}")
-
-    # Create fitter object
-    fitter = Fitter(data, cfg)
+    # Create fitter object and add data (see above for data loading examples)
+    fitter = Fitter(z=1.58, lumi_dist=3.364e28, jet="tophat", medium="ism")
+    # ... add data via fitter.add_flux_density(), fitter.add_spectrum(), etc.
 
     # Option 1 (Recommended): Nested sampling with dynesty (computes Bayesian evidence, robust for multimodal posteriors)
     result = fitter.fit(
@@ -1057,7 +1060,7 @@ Basic MCMC Execution
         nlive=1000,                    # Number of live points
         walks=100,                     # Number of random walks per live point
         dlogz=0.5,                     # Stopping criterion (evidence tolerance)
-        npool=8,                       # Number of parallel processes
+        npool=8,                       # Number of parallel threads
         top_k=10,                      # Number of best-fit parameters to return
     )
 
@@ -1069,7 +1072,7 @@ Basic MCMC Execution
         nsteps=50000,                  # Number of steps per walker
         nburn=10000,                   # Burn-in steps to discard
         thin=1,                        # Save every nth sample
-        npool=8,                       # Number of parallel processes
+        npool=8,                       # Number of parallel threads
         top_k=10,                      # Number of best-fit parameters to return
     )
 
@@ -1159,14 +1162,354 @@ Visualization
         # Plot model
         ax.loglog(t_model, lc_model[i], '-', color=color, linewidth=2)
         ax.set_xlabel('Time [s]')
-        ax.set_ylabel('Flux Density [erg/cm²/s/Hz]')
-        ax.set_title(f'ν = {nu:.1e} Hz')
+        ax.set_ylabel('Flux Density [erg/cm^2/s/Hz]')
+        ax.set_title(f'nu = {nu:.1e} Hz')
 
     plt.tight_layout()
     plt.savefig("lightcurve_fit.png", dpi=300, bbox_inches='tight')
 
 
+Advanced Fitting
+----------------
+
+VegasAfterglow's ``Fitter`` is built directly on the ``Model`` class, giving you full control over the fitting process. You can customize:
+
+- **Priors**: Use informative or custom prior distributions
+- **Likelihood**: Implement non-standard likelihood functions (e.g., upper limits, systematic uncertainties)
+- **Jet profiles**: Define arbitrary angular energy and Lorentz factor distributions
+- **Medium profiles**: Define custom circumburst density structures
+
+The ``Fitter`` evaluates models using Python's ``ThreadPoolExecutor``, where each thread constructs a ``Model`` and calls ``flux_density()`` with the GIL released during C++ computation. This provides near-native parallelism with full Python flexibility.
+
+Custom Priors
+^^^^^^^^^^^^^
+
+**Emcee: Log-Prior Function**
+
+For emcee, pass a ``log_prior_fn`` that takes an array of walker positions and returns log-prior values:
+
+.. code-block:: python
+
+    import numpy as np
+    from VegasAfterglow import Fitter, ParamDef, Scale
+
+    fitter = Fitter(
+        z=1.58, lumi_dist=3.364e28,
+        jet="tophat", medium="ism",
+    )
+
+    params = [
+        ParamDef("E_iso",   1e50,  1e54,  Scale.LOG),
+        ParamDef("Gamma0",    10,   500,  Scale.LOG),
+        ParamDef("theta_c", 0.01,   0.5,  Scale.LINEAR),
+        ParamDef("theta_v",    0,     0,  Scale.FIXED),
+        ParamDef("n_ism",   1e-3,   100,  Scale.LOG),
+        ParamDef("p",        2.1,   2.8,  Scale.LINEAR),
+        ParamDef("eps_e",   1e-3,   0.5,  Scale.LOG),
+        ParamDef("eps_B",   1e-5,   0.1,  Scale.LOG),
+        ParamDef("xi_e",     0.1,   1.0,  Scale.LINEAR),
+    ]
+
+    fitter.add_flux_density(nu=4.84e14, t=t_data, f_nu=flux_data, err=flux_err)
+
+    def log_prior(samples):
+        """Gaussian prior on p centered at 2.3 with sigma=0.1.
+
+        Args:
+            samples: Array of shape (nwalkers, ndim)
+
+        Returns:
+            Array of shape (nwalkers,) with log-prior values
+        """
+        log_p = np.zeros(samples.shape[0])
+
+        # p is the 6th free parameter (index 5 in sampler space)
+        p_values = samples[:, 5]
+        log_p += -0.5 * ((p_values - 2.3) / 0.1) ** 2
+
+        return log_p
+
+    result = fitter.fit(
+        params,
+        sampler="emcee",
+        nsteps=10000,
+        nburn=2000,
+        log_prior_fn=log_prior,
+    )
+
+.. note::
+    The ``log_prior_fn`` receives parameters in **sampler space**: ``LOG``-scale parameters are passed as ``log10(value)``. The prior is added to the log-likelihood, so returning ``-np.inf`` rejects the sample.
+
+**Bilby/Dynesty: Prior Distributions**
+
+For bilby-based samplers (dynesty, nestle, etc.), pass a ``priors`` dictionary mapping parameter labels to ``bilby.core.prior.Prior`` objects:
+
+.. code-block:: python
+
+    import bilby
+
+    custom_priors = {
+        "p": bilby.core.prior.Gaussian(
+            mu=2.3, sigma=0.1,
+            minimum=2.1, maximum=2.8,
+            name="p", latex_label=r"$p$",
+        ),
+        "log10_eps_e": bilby.core.prior.Gaussian(
+            mu=-1.0, sigma=0.5,
+            minimum=-3, maximum=np.log10(0.5),
+            name="log10_eps_e",
+            latex_label=r"$\log_{10}(\epsilon_e)$",
+        ),
+    }
+
+    result = fitter.fit(
+        params,
+        sampler="dynesty",
+        nlive=1000,
+        priors=custom_priors,
+    )
+
+Parameters not included in the ``priors`` dictionary automatically get uniform priors based on the bounds in ``ParamDef``.
+
+.. important::
+    When using ``LOG``-scale parameters, the prior keys must use the ``log10_`` prefix (e.g., ``log10_eps_e``, not ``eps_e``), since the sampler operates in log-space.
+
+Custom Likelihood
+^^^^^^^^^^^^^^^^^
+
+The default likelihood is Gaussian: :math:`\ln\mathcal{L} = -\chi^2/2`. Override this with a ``log_likelihood_fn`` that maps :math:`\chi^2` to log-likelihood:
+
+.. code-block:: python
+
+    def student_t_likelihood(chi2):
+        """Student-t likelihood with nu=5 degrees of freedom.
+
+        More robust to outliers than Gaussian.
+        """
+        nu = 5
+        n_data = 50  # number of data points
+        return -0.5 * (nu + n_data) * np.log(1 + chi2 / nu)
+
+    result = fitter.fit(
+        params,
+        sampler="emcee",
+        log_likelihood_fn=student_t_likelihood,
+    )
+
+**Upper Limits**
+
+For non-detections, a common approach is to weight the likelihood so data points
+above the upper limit are penalized:
+
+.. code-block:: python
+
+    def likelihood_with_upper_limits(chi2):
+        """Standard Gaussian likelihood; upper limits encoded in data weights."""
+        return -0.5 * chi2
+
+    # Upper limits: set flux to 0 and error to the upper limit value,
+    # so chi2 = (0 - model)^2 / upper_limit^2, which penalizes models above the limit
+    fitter.add_flux_density(
+        nu=1e10, t=[1e5], f_nu=[0.0], err=[3e-29],
+        weights=[1.0],
+    )
+
+Custom Jet Profiles
+^^^^^^^^^^^^^^^^^^^
+
+The ``Fitter`` accepts a custom jet factory function via the ``jet`` keyword argument. This lets you define arbitrary angular profiles using the ``Ejecta`` class.
+
+The ``Ejecta`` class takes two Python callables that define the energy and Lorentz factor as functions of angle:
+
+.. code-block:: python
+
+    from VegasAfterglow import Ejecta, Fitter, ParamDef, Scale, Magnetar
+
+    def double_gaussian_jet(params):
+        """Double-Gaussian jet: narrow core + wide wing."""
+
+        def E_iso_func(phi, theta):
+            core = params.E_iso * np.exp(-(theta / params.theta_c) ** 2)
+            wing = params.E_iso_w * np.exp(-(theta / params.theta_w) ** 2)
+            return core + wing
+
+        def Gamma_func(phi, theta):
+            return 1 + (params.Gamma0 - 1) * np.exp(-(theta / params.theta_c) ** 2)
+
+        return Ejecta(E_iso=E_iso_func, Gamma0=Gamma_func, duration=params.tau)
+
+    params = [
+        ParamDef("E_iso",   1e50,  1e54,  Scale.LOG),
+        ParamDef("Gamma0",    50,   500,  Scale.LOG),
+        ParamDef("theta_c", 0.02,   0.15, Scale.LINEAR),
+        ParamDef("theta_v",    0,   0.5,  Scale.LINEAR),
+        ParamDef("E_iso_w", 1e48,  1e52,  Scale.LOG),
+        ParamDef("theta_w",  0.1,   0.5,  Scale.LINEAR),
+        ParamDef("tau",        1,   1e3,  Scale.LOG),
+        ParamDef("n_ism",   1e-3,   100,  Scale.LOG),
+        ParamDef("p",        2.1,   2.8,  Scale.LINEAR),
+        ParamDef("eps_e",   1e-3,   0.5,  Scale.LOG),
+        ParamDef("eps_B",   1e-5,   0.1,  Scale.LOG),
+        ParamDef("xi_e",     0.1,   1.0,  Scale.LINEAR),
+    ]
+
+    fitter = Fitter(z=1.58, lumi_dist=3.364e28, jet=double_gaussian_jet)
+    fitter.add_flux_density(nu=4.84e14, t=t_data, f_nu=flux_data, err=flux_err)
+
+    result = fitter.fit(params, sampler="emcee", nsteps=10000)
+
+The ``Ejecta`` constructor supports these optional keyword arguments:
+
+- ``sigma0``: Magnetization profile ``sigma0(phi, theta)`` (default: 0)
+- ``E_dot``: Energy injection rate ``E_dot(phi, theta, t)`` in erg/s (default: 0)
+- ``M_dot``: Mass injection rate ``M_dot(phi, theta, t)`` in g/s (default: 0)
+- ``spreading``: Enable lateral spreading (default: False)
+- ``duration``: Jet duration in seconds, for reverse shock (default: 1)
+
+.. note::
+    When using a custom ``jet``, parameter validation is automatically skipped since the fitter cannot know which parameters your factory requires. Ensure your factory function handles all necessary parameters.
+
+**Energy and Mass Injection**
+
+The ``Ejecta`` class also supports time-dependent energy and mass injection via ``E_dot`` and ``M_dot``.
+These are functions of ``(phi, theta, t)`` returning injection rates in erg/s and g/s respectively:
+
+.. code-block:: python
+
+    def jet_with_injection(params):
+        """Custom jet with energy injection (spin-down luminosity)."""
+
+        def E_iso_func(phi, theta):
+            return params.E_iso * np.exp(-(theta / params.theta_c) ** 2)
+
+        def Gamma_func(phi, theta):
+            return 1 + (params.Gamma0 - 1) * np.exp(-(theta / params.theta_c) ** 2)
+
+        def E_dot_func(phi, theta, t):
+            """Spin-down energy injection: L(t) = L0 / (1 + t/t_sd)^2."""
+            return params.L0 / (1 + t / params.t_sd) ** 2
+
+        def M_dot_func(phi, theta, t):
+            """Mass injection: decaying mass loading."""
+            return params.M_dot0 * np.exp(-t / params.t_sd)
+
+        return Ejecta(
+            E_iso=E_iso_func, Gamma0=Gamma_func,
+            E_dot=E_dot_func, M_dot=M_dot_func,
+            duration=params.tau,
+        )
+
+    params = [
+        ParamDef("E_iso",   1e50,  1e54,  Scale.LOG),
+        ParamDef("Gamma0",    50,   500,  Scale.LOG),
+        ParamDef("theta_c", 0.02,   0.15, Scale.LINEAR),
+        ParamDef("theta_v",    0,   0.5,  Scale.LINEAR),
+        ParamDef("L0",      1e44,  1e48,  Scale.LOG),       # Injection luminosity [erg/s]
+        ParamDef("t_sd",      10,  1e4,   Scale.LOG),       # Spin-down timescale [s]
+        ParamDef("M_dot0",  1e20,  1e26,  Scale.LOG),       # Mass injection rate [g/s]
+        ParamDef("tau",        1,   1e3,  Scale.LOG),
+        # ... other standard params (n_ism, p, eps_e, eps_B, xi_e)
+    ]
+
+    fitter = Fitter(z=1.58, lumi_dist=3.364e28, jet=jet_with_injection)
+
+See :doc:`examples` for more user-defined jet examples.
+
+Custom Medium Profiles
+^^^^^^^^^^^^^^^^^^^^^^
+
+Similarly, pass a custom medium factory via the ``medium`` keyword argument to define custom density profiles using the ``Medium`` class:
+
+.. code-block:: python
+
+    from VegasAfterglow import Medium, Fitter, ParamDef, Scale
+
+    def exponential_medium(params):
+        """Exponential density profile: rho = mp * n_ism * exp(-r / r_scale)."""
+        mp = 1.67e-24  # proton mass [g]
+
+        def density_func(phi, theta, r):
+            return mp * params.n_ism * np.exp(-r / params.r_scale)
+
+        return Medium(rho=density_func)
+
+    fitter = Fitter(z=1.58, lumi_dist=3.364e28, medium=exponential_medium)
+
+The ``Medium`` class takes a callable ``rho(phi, theta, r)`` that returns the mass density [g/cm³] at position (phi, theta, r). See :doc:`examples` for more user-defined medium examples.
+
+**Custom MCMC Parameters**
+
+When using custom jet or medium functions, you can define arbitrary MCMC parameters beyond the standard set. Simply include them in the ``ParamDef`` list -- the fitter automatically uses a Python-based parameter transformer when it detects non-standard parameter names:
+
+.. code-block:: python
+
+    params = [
+        ParamDef("E_iso",   1e50,  1e54,  Scale.LOG),
+        ParamDef("Gamma0",    50,   500,  Scale.LOG),
+        ParamDef("theta_c", 0.02,   0.15, Scale.LINEAR),
+        ParamDef("theta_v",    0,     0,  Scale.FIXED),
+        ParamDef("n_ism",   1e-3,   100,  Scale.LOG),
+        ParamDef("r_scale", 1e16,  1e20,  Scale.LOG),     # custom parameter
+        ParamDef("p",        2.1,   2.8,  Scale.LINEAR),
+        ParamDef("eps_e",   1e-3,   0.5,  Scale.LOG),
+        ParamDef("eps_B",   1e-5,   0.1,  Scale.LOG),
+        ParamDef("xi_e",     0.1,   1.0,  Scale.LINEAR),
+    ]
+
+    fitter = Fitter(z=1.58, lumi_dist=3.364e28, medium=exponential_medium)
+    fitter.add_flux_density(nu=4.84e14, t=t_data, f_nu=flux_data, err=flux_err)
+    result = fitter.fit(params, sampler="emcee", nsteps=10000)
+
+The custom parameter ``r_scale`` is accessible inside the factory via ``params.r_scale``, and it is sampled by the MCMC just like any standard parameter. Standard parameters (``theta_v``, ``eps_e``, etc.) retain their defaults and are still used internally for observer geometry and radiation physics.
+
+.. note::
+    Standard ``ModelParams`` fields (like ``theta_v``, ``eps_e``, ``eps_B``, ``p``, ``xi_e``) must still be included in the ``ParamDef`` list -- they are needed by the ``Observer`` and ``Radiation`` objects that the fitter constructs internally.
+
+**Combining Custom Jet and Medium**
+
+.. code-block:: python
+
+    fitter = Fitter(
+        z=1.58, lumi_dist=3.364e28,
+        jet=double_gaussian_jet,
+        medium=exponential_medium,
+    )
+    fitter.add_flux_density(nu=4.84e14, t=t_data, f_nu=flux_data, err=flux_err)
+    fitter.add_flux_density(nu=2.4e17, t=t_xray, f_nu=flux_xray, err=err_xray)
+
+    result = fitter.fit(
+        params,
+        sampler="emcee",
+        nsteps=20000,
+        nburn=5000,
+        log_prior_fn=log_prior,
+        log_likelihood_fn=student_t_likelihood,
+    )
+
+
+Performance Notes
+^^^^^^^^^^^^^^^^^
+
+**Threading vs. Multiprocessing**
+
+The ``Fitter`` uses ``ThreadPoolExecutor`` (threads, not processes) because:
+
+1. **GIL is released** during the C++ ``flux_density()`` computation, so threads run truly in parallel
+2. **No pickling overhead**: Model objects stay in the same process
+3. **Shared memory**: All threads share observation data without copying
+
+For typical afterglow models, the Python overhead (object creation, GIL acquisition) is <5% of total time for synchrotron-only models and <0.1% for SSC models.
+
+**Parallelism Tips**
+
+- **Emcee**: ``npool`` defaults to the number of CPU cores.
+- **Dynesty**: ``npool`` controls thread count. The ``queue_size`` is automatically optimized.
+- **Custom jet/medium**: Python callbacks in ``Ejecta`` and ``Medium`` require the GIL, which serializes the angular profile evaluation. The blast wave evolution and radiation computation still run without the GIL. For compute-heavy profiles, consider caching or vectorizing your callbacks.
+
 Troubleshooting
 ---------------
 
 For comprehensive troubleshooting help including MCMC convergence issues, data selection problems, memory optimization, and performance tuning, see :doc:`troubleshooting`.
+
+.. seealso::
+   :doc:`validation` for code validation and comparison with other afterglow codes. :doc:`parameter_reference` for the complete parameter reference.
