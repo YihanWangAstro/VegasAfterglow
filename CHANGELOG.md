@@ -28,14 +28,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 The `Fitter` class has been rebuilt on top of the `Model` API, replacing the internal `VegasMC` batch evaluator. This brings full Python-level flexibility while retaining C++ performance.
 
 - **Simplified data workflow**: Add observations directly to the fitter with `fitter.add_flux_density()`, `fitter.add_spectrum()`, and `fitter.add_flux()`
-- **Custom jet and medium profiles**: Pass `jet` or `medium` factory functions to `Fitter` to use arbitrary angular energy/Lorentz factor profiles or density structures in MCMC fitting (see [Advanced Fitting](https://vegasafterglow.readthedocs.io/en/latest/mcmc_fitting.html#advanced-fitting))
+- **Custom jet and medium profiles**: Pass `jet` or `medium` factory functions to `Fitter` to use arbitrary angular energy/Lorentz factor profiles or density structures in MCMC fitting (see [Advanced Fitting](https://yihanwangastro.github.io/VegasAfterglow/docs/mcmc_fitting.html#advanced-fitting))
 - **`@gil_free` decorator**: Compile custom jet/medium profile functions to native code for full multi-threaded performance, eliminating the GIL bottleneck that slows Python callbacks during parallel MCMC evaluation (requires `numba`)
-- **Custom priors**: Supply bilby `Prior` objects for nested sampling, or a `log_prior_fn` for emcee, to go beyond uniform priors (see [Custom Priors](https://vegasafterglow.readthedocs.io/en/latest/mcmc_fitting.html#custom-priors))
-- **Custom likelihood functions**: Override the default Gaussian log-likelihood with `log_likelihood_fn` for non-standard noise models or upper limits (see [Custom Likelihood](https://vegasafterglow.readthedocs.io/en/latest/mcmc_fitting.html#custom-likelihood))
+- **Custom priors**: Supply bilby `Prior` objects for nested sampling, or a `log_prior_fn` for emcee, to go beyond uniform priors (see [Custom Priors](https://yihanwangastro.github.io/VegasAfterglow/docs/mcmc_fitting.html#custom-priors))
+- **Custom likelihood functions**: Override the default Gaussian log-likelihood with `log_likelihood_fn` for non-standard noise models or upper limits (see [Custom Likelihood](https://yihanwangastro.github.io/VegasAfterglow/docs/mcmc_fitting.html#custom-likelihood))
 - **`logscale_screen` standalone utility**: Logarithmic data subsampling now available as a module-level function
 - **Thread-based parallelism**: Likelihood evaluations parallelized via `ThreadPoolExecutor` with the GIL released during C++ computation, providing near-native throughput
 
-For the full MCMC fitting guide, including advanced customization examples, see the [MCMC Parameter Fitting](https://vegasafterglow.readthedocs.io/en/latest/mcmc_fitting.html) documentation.
+For the full MCMC fitting guide, including advanced customization examples, see the [MCMC Parameter Fitting](https://yihanwangastro.github.io/VegasAfterglow/docs/mcmc_fitting.html) documentation.
 
 #### **Smooth Synchrotron Spectra**
 - New default synchrotron spectral model with smooth transitions at break frequencies (ν_m, ν_c, ν_a)
@@ -102,7 +102,7 @@ The MCMC fitting module has been completely redesigned. Existing fitting scripts
 - **`Setups` removed**: All model configuration is now passed directly to the `Fitter` constructor as keyword arguments: `Fitter(z=1.58, lumi_dist=3.364e28, jet="tophat", medium="ism", rvs_shock=True, ...)`
 - **`jet` and `medium` accept callables**: In addition to built-in type strings, you can now pass factory functions that return custom `Ejecta` or `Medium` objects
 
-See the [MCMC Parameter Fitting](https://vegasafterglow.readthedocs.io/en/latest/mcmc_fitting.html) documentation for migration examples.
+See the [MCMC Parameter Fitting](https://yihanwangastro.github.io/VegasAfterglow/docs/mcmc_fitting.html) documentation for migration examples.
 
 #### **Default Resolution**
 - Default grid resolution changed from `(0.3, 1, 10)` to `(0.15, 0.5, 10)` for better accuracy out of the box
