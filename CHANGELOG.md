@@ -29,6 +29,7 @@ The `Fitter` class has been rebuilt on top of the `Model` API, replacing the int
 
 - **Simplified data workflow**: Add observations directly to the fitter with `fitter.add_flux_density()`, `fitter.add_spectrum()`, and `fitter.add_flux()`
 - **Custom jet and medium profiles**: Pass `jet` or `medium` factory functions to `Fitter` to use arbitrary angular energy/Lorentz factor profiles or density structures in MCMC fitting (see [Advanced Fitting](https://vegasafterglow.readthedocs.io/en/latest/mcmc_fitting.html#advanced-fitting))
+- **`@gil_free` decorator**: Compile custom jet/medium profile functions to native code for full multi-threaded performance, eliminating the GIL bottleneck that slows Python callbacks during parallel MCMC evaluation (requires `numba`)
 - **Custom priors**: Supply bilby `Prior` objects for nested sampling, or a `log_prior_fn` for emcee, to go beyond uniform priors (see [Custom Priors](https://vegasafterglow.readthedocs.io/en/latest/mcmc_fitting.html#custom-priors))
 - **Custom likelihood functions**: Override the default Gaussian log-likelihood with `log_likelihood_fn` for non-standard noise models or upper limits (see [Custom Likelihood](https://vegasafterglow.readthedocs.io/en/latest/mcmc_fitting.html#custom-likelihood))
 - **`logscale_screen` standalone utility**: Logarithmic data subsampling now available as a module-level function
@@ -92,6 +93,17 @@ For the full MCMC fitting guide, including advanced customization examples, see 
 
 ### Changed
 
+#### **⚠️ BREAKING: MCMC Fitting Interface Redesigned**
+
+The MCMC fitting module has been completely redesigned. Existing fitting scripts will need to be updated.
+
+- **`VegasMC` removed**: The C++ batch evaluator has been replaced by the new `Fitter` class, which uses the Python `Model` API internally with equivalent performance
+- **`ObsData` removed**: Use `fitter.add_flux_density()`, `fitter.add_spectrum()`, and `fitter.add_flux()` to add observational data directly to the `Fitter`
+- **`Setups` removed**: All model configuration is now passed directly to the `Fitter` constructor as keyword arguments: `Fitter(z=1.58, lumi_dist=3.364e28, jet="tophat", medium="ism", rvs_shock=True, ...)`
+- **`jet` and `medium` accept callables**: In addition to built-in type strings, you can now pass factory functions that return custom `Ejecta` or `Medium` objects
+
+See the [MCMC Parameter Fitting](https://vegasafterglow.readthedocs.io/en/latest/mcmc_fitting.html) documentation for migration examples.
+
 #### **Default Resolution**
 - Default grid resolution changed from `(0.3, 1, 10)` to `(0.15, 0.5, 10)` for better accuracy out of the box
 - Thanks to the improved adaptive grid algorithm (medium-aware time sampling, jet edge anchoring), the code converges with fewer grid points than before — so the new default is both more accurate and comparably fast
@@ -105,16 +117,6 @@ For the full MCMC fitting guide, including advanced customization examples, see 
 
 #### **Wind Medium Defaults**
 - `Wind(A_star, n_ism=None, n0=None, k=2)`: `n_ism` and `n0` now default to `None` instead of `0` and `inf`, handled internally — clearer intent for the common pure-wind case
-
-#### **`VegasMC` Removed**
-- The C++ batch evaluator has been removed. All MCMC evaluation now goes through the Python `Model` API, which provides equivalent performance with greater flexibility
-
-#### **`ObsData` Removed**
-- The `ObsData` class has been removed. Use `Fitter.add_flux_density()`, `Fitter.add_spectrum()`, and `Fitter.add_flux()` to add observational data directly
-
-#### **`Setups` Removed**
-- The separate `Setups` configuration class has been removed. All model configuration is now passed directly to the `Fitter` constructor as keyword arguments: `Fitter(z=1.58, lumi_dist=3.364e28, jet="tophat", medium="ism", rvs_shock=True, ...)`
-- The `jet` and `medium` parameters accept either a string (built-in type) or a callable (custom factory function)
 
 #### **Python >= 3.8 Required**
 - Minimum Python version raised from 3.7 to 3.8

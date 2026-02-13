@@ -10,7 +10,77 @@
 
 #include <pybind11/stl.h>
 
+#include <array>
+#include <cstdint>
+
 #include "pymodel.h"
+
+// ---------------------------------------------------------------------------
+// NativeFunc support: GIL-free callables from numba @cfunc + bound params
+// ---------------------------------------------------------------------------
+// Uses C++20 template lambdas to build tight (fn + params) lambdas.
+// The index pack simultaneously deduces the function pointer type via
+// decltype((void)I, Real{})..., initializes params, and unpacks the call.
+constexpr size_t MAX_NATIVE_PARAMS = 4;
+
+template <size_t N>
+BinaryFunc make_native_binary(uintptr_t addr, std::vector<Real> const& p) {
+    return [&]<size_t... I>(std::index_sequence<I...>) -> BinaryFunc {
+        auto fn = reinterpret_cast<Real (*)(Real, Real, decltype((void)I, Real{})...)>(addr);
+        std::array<Real, N> params = {p[I]...};
+        return [fn, params](Real phi, Real theta) noexcept -> Real { return fn(phi, theta, params[I]...); };
+    }(std::make_index_sequence<N>{});
+}
+
+template <size_t... Ns>
+BinaryFunc dispatch_binary(uintptr_t addr, std::vector<Real> const& p, std::index_sequence<Ns...>) {
+    using maker_t = BinaryFunc (*)(uintptr_t, std::vector<Real> const&);
+    static constexpr maker_t table[] = {make_native_binary<Ns>...};
+    if (p.size() >= sizeof...(Ns)) {
+        throw std::runtime_error("NativeFunc: too many bound parameters (max " + std::to_string(sizeof...(Ns) - 1) +
+                                 ")");
+    }
+    return table[p.size()](addr, p);
+}
+
+template <size_t N>
+TernaryFunc make_native_ternary(uintptr_t addr, std::vector<Real> const& p) {
+    return [&]<size_t... I>(std::index_sequence<I...>) -> TernaryFunc {
+        auto fn = reinterpret_cast<Real (*)(Real, Real, Real, decltype((void)I, Real{})...)>(addr);
+        std::array<Real, N> params = {p[I]...};
+        return [fn, params](Real phi, Real theta, Real r) noexcept -> Real { return fn(phi, theta, r, params[I]...); };
+    }(std::make_index_sequence<N>{});
+}
+
+template <size_t... Ns>
+TernaryFunc dispatch_ternary(uintptr_t addr, std::vector<Real> const& p, std::index_sequence<Ns...>) {
+    using maker_t = TernaryFunc (*)(uintptr_t, std::vector<Real> const&);
+    static constexpr maker_t table[] = {make_native_ternary<Ns>...};
+    if (p.size() >= sizeof...(Ns)) {
+        throw std::runtime_error("NativeFunc: too many bound parameters (max " + std::to_string(sizeof...(Ns) - 1) +
+                                 ")");
+    }
+    return table[p.size()](addr, p);
+}
+
+// --- Converters: detect NativeFunc and dispatch to GIL-free path ---
+BinaryFunc to_binary_func(py::object const& obj, py::object const& native_type) {
+    if (!native_type.is_none() && py::isinstance(obj, native_type)) {
+        auto addr = obj.attr("address").cast<uintptr_t>();
+        auto params = obj.attr("params").cast<std::vector<Real>>();
+        return dispatch_binary(addr, params, std::make_index_sequence<MAX_NATIVE_PARAMS + 1>{});
+    }
+    return obj.cast<BinaryFunc>();
+}
+
+TernaryFunc to_ternary_func(py::object const& obj, py::object const& native_type) {
+    if (!native_type.is_none() && py::isinstance(obj, native_type)) {
+        auto addr = obj.attr("address").cast<uintptr_t>();
+        auto params = obj.attr("params").cast<std::vector<Real>>();
+        return dispatch_ternary(addr, params, std::make_index_sequence<MAX_NATIVE_PARAMS + 1>{});
+    }
+    return obj.cast<TernaryFunc>();
+}
 
 PYBIND11_MODULE(VegasAfterglowC, m) {
     xt::import_numpy();
@@ -50,9 +120,29 @@ PYBIND11_MODULE(VegasAfterglowC, m) {
           py::arg("duration") = 1, py::arg("magnetar") = py::none());
 
     py::class_<Ejecta>(m, "Ejecta")
-        .def(py::init<BinaryFunc, BinaryFunc, BinaryFunc, TernaryFunc, TernaryFunc, bool, Real>(), py::arg("E_iso"),
-             py::arg("Gamma0"), py::arg("sigma0") = zero2d_fn, py::arg("E_dot") = zero3d_fn,
-             py::arg("M_dot") = zero3d_fn, py::arg("spreading") = false, py::arg("duration") = 1);
+        .def(py::init([](py::object E_iso_obj, py::object Gamma0_obj, py::object sigma0_obj, py::object E_dot_obj,
+                         py::object M_dot_obj, bool spreading, Real duration) {
+                 // Import NativeFunc type once (cached by pybind11); falls back to py::none()
+                 py::object native_type = py::none();
+                 try {
+                     native_type = py::module_::import("VegasAfterglow.native").attr("NativeFunc");
+                 } catch (...) {}
+
+                 auto eps_k = to_binary_func(E_iso_obj, native_type);
+                 auto Gamma0 = to_binary_func(Gamma0_obj, native_type);
+                 // Default sigma0/E_dot/M_dot to C++ zero functions (GIL-free)
+                 auto sigma0 =
+                     sigma0_obj.is_none() ? BinaryFunc(func::zero_2d) : to_binary_func(sigma0_obj, native_type);
+                 auto E_dot =
+                     E_dot_obj.is_none() ? TernaryFunc(func::zero_3d) : to_ternary_func(E_dot_obj, native_type);
+                 auto M_dot =
+                     M_dot_obj.is_none() ? TernaryFunc(func::zero_3d) : to_ternary_func(M_dot_obj, native_type);
+
+                 return Ejecta(std::move(eps_k), std::move(Gamma0), std::move(sigma0), std::move(E_dot),
+                               std::move(M_dot), spreading, duration);
+             }),
+             py::arg("E_iso"), py::arg("Gamma0"), py::arg("sigma0") = py::none(), py::arg("E_dot") = py::none(),
+             py::arg("M_dot") = py::none(), py::arg("spreading") = false, py::arg("duration") = 1);
 
     // Jet bindings — register concrete types for std::variant support
     auto tophat_type [[maybe_unused]] = py::class_<TophatJet>(m, "_TophatJet");
@@ -62,7 +152,16 @@ PYBIND11_MODULE(VegasAfterglowC, m) {
     // Medium bindings — register concrete types for std::variant support
     auto ism_type [[maybe_unused]] = py::class_<ISM>(m, "_ISM");
     auto wind_type [[maybe_unused]] = py::class_<Wind>(m, "_Wind");
-    py::class_<Medium>(m, "Medium").def(py::init<TernaryFunc>(), py::arg("rho"));
+    py::class_<Medium>(m, "Medium")
+        .def(py::init([](py::object rho_obj) {
+                 py::object native_type = py::none();
+                 try {
+                     native_type = py::module_::import("VegasAfterglow.native").attr("NativeFunc");
+                 } catch (...) {}
+                 auto rho = to_ternary_func(rho_obj, native_type);
+                 return Medium(std::move(rho));
+             }),
+             py::arg("rho"));
 
     // Factory functions return MediumVariant (ISM/Wind for optimized path, Medium for fallback)
     m.def(

@@ -1,4 +1,5 @@
 from ._version import __version__, __version_tuple__
+from .native import NativeFunc, gil_free
 
 # Core physics types (always available)
 from .types import (
@@ -62,6 +63,8 @@ __all__ = [
     "Observer",
     "Magnetar",
     # Utilities
+    "NativeFunc",
+    "gil_free",
     "logscale_screen",
     # Parameter types
     "ModelParams",

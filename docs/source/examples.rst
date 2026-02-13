@@ -396,9 +396,10 @@ Those profiles are optional and will be set to zero function if not provided.
     # where phi_ppd is the number of points per degree in the phi direction, theta_ppd is the number of points per degree in the theta direction, and t_ppd is the number of points per decade in the time direction    .
 
 .. note::
-    Setting user-defined structured jet in the Python level is OK for light curve and spectrum calculation. However, it is not recommended for MCMC parameter fitting if you do care about the performance.
-    The reason is that setting user-defined profiles in the Python level leads to a large overhead due to the Python-C++ inter-process communication.
-    Users are recommended to set up the user-defined jet structure in the C++ level for MCMC parameter fitting for better performance, if you want the best performance.
+    Plain Python callbacks work well for single model evaluations (light curves, spectra).
+    For multi-threaded MCMC fitting, use the ``@gil_free`` decorator to compile
+    your profile functions to native code, eliminating GIL contention across threads.
+    See :doc:`mcmc_fitting` for details.
 
 
 Radiation Processes

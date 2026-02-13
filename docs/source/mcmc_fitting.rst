@@ -1317,13 +1317,21 @@ above the upper limit are penalized:
 Custom Jet Profiles
 ^^^^^^^^^^^^^^^^^^^
 
-The ``Fitter`` accepts a custom jet factory function via the ``jet`` keyword argument. This lets you define arbitrary angular profiles using the ``Ejecta`` class.
+The ``Fitter`` accepts a custom jet factory function via the ``jet`` keyword argument.
+This lets you define arbitrary angular profiles using the same ``Ejecta`` class used for
+direct model calculations (see :doc:`examples`).
 
-The ``Ejecta`` class takes two Python callables that define the energy and Lorentz factor as functions of angle:
+**How it works:**
+
+1. Define functions for the energy and Lorentz factor angular profiles
+2. Wrap them in a *factory function* that takes ``params`` (the current MCMC sample) and returns an ``Ejecta``
+3. Pass the factory to ``Fitter(jet=...)``
+
+The fitter calls your factory on every MCMC step with fresh parameter values.
 
 .. code-block:: python
 
-    from VegasAfterglow import Ejecta, Fitter, ParamDef, Scale, Magnetar
+    from VegasAfterglow import Ejecta, Fitter, ParamDef, Scale
 
     def double_gaussian_jet(params):
         """Double-Gaussian jet: narrow core + wide wing."""
@@ -1338,7 +1346,7 @@ The ``Ejecta`` class takes two Python callables that define the energy and Loren
 
         return Ejecta(E_iso=E_iso_func, Gamma0=Gamma_func, duration=params.tau)
 
-    params = [
+    mc_params = [
         ParamDef("E_iso",   1e50,  1e54,  Scale.LOG),
         ParamDef("Gamma0",    50,   500,  Scale.LOG),
         ParamDef("theta_c", 0.02,   0.15, Scale.LINEAR),
@@ -1356,7 +1364,7 @@ The ``Ejecta`` class takes two Python callables that define the energy and Loren
     fitter = Fitter(z=1.58, lumi_dist=3.364e28, jet=double_gaussian_jet)
     fitter.add_flux_density(nu=4.84e14, t=t_data, f_nu=flux_data, err=flux_err)
 
-    result = fitter.fit(params, sampler="emcee", nsteps=10000)
+    result = fitter.fit(mc_params, sampler="emcee", nsteps=10000)
 
 The ``Ejecta`` constructor supports these optional keyword arguments:
 
@@ -1399,7 +1407,7 @@ These are functions of ``(phi, theta, t)`` returning injection rates in erg/s an
             duration=params.tau,
         )
 
-    params = [
+    mc_params = [
         ParamDef("E_iso",   1e50,  1e54,  Scale.LOG),
         ParamDef("Gamma0",    50,   500,  Scale.LOG),
         ParamDef("theta_c", 0.02,   0.15, Scale.LINEAR),
@@ -1443,7 +1451,7 @@ When using custom jet or medium functions, you can define arbitrary MCMC paramet
 
 .. code-block:: python
 
-    params = [
+    mc_params = [
         ParamDef("E_iso",   1e50,  1e54,  Scale.LOG),
         ParamDef("Gamma0",    50,   500,  Scale.LOG),
         ParamDef("theta_c", 0.02,   0.15, Scale.LINEAR),
@@ -1458,7 +1466,7 @@ When using custom jet or medium functions, you can define arbitrary MCMC paramet
 
     fitter = Fitter(z=1.58, lumi_dist=3.364e28, medium=exponential_medium)
     fitter.add_flux_density(nu=4.84e14, t=t_data, f_nu=flux_data, err=flux_err)
-    result = fitter.fit(params, sampler="emcee", nsteps=10000)
+    result = fitter.fit(mc_params, sampler="emcee", nsteps=10000)
 
 The custom parameter ``r_scale`` is accessible inside the factory via ``params.r_scale``, and it is sampled by the MCMC just like any standard parameter. Standard parameters (``theta_v``, ``eps_e``, etc.) retain their defaults and are still used internally for observer geometry and radiation physics.
 
@@ -1478,13 +1486,100 @@ The custom parameter ``r_scale`` is accessible inside the factory via ``params.r
     fitter.add_flux_density(nu=2.4e17, t=t_xray, f_nu=flux_xray, err=err_xray)
 
     result = fitter.fit(
-        params,
+        mc_params,
         sampler="emcee",
         nsteps=20000,
         nburn=5000,
         log_prior_fn=log_prior,
         log_likelihood_fn=student_t_likelihood,
     )
+
+
+Speeding Up Custom Profiles with ``@gil_free``
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+The custom jet and medium examples above use plain Python callbacks. These work correctly
+for single-threaded fitting, but become slow in multi-threaded MCMC because Python's
+Global Interpreter Lock prevents true parallel execution of Python callbacks.
+
+The ``@gil_free`` decorator compiles your profile function to native code
+using `numba <https://numba.pydata.org/>`_, enabling full thread parallelism:
+
+.. code-block:: bash
+
+    pip install numba
+
+The two differences from plain Python callbacks are:
+
+1. Add the ``@gil_free`` decorator
+2. Pass MCMC parameters as explicit function arguments (after the spatial coordinates)
+   instead of capturing them from the enclosing scope
+
+Here is a complete example — a tophat jet with ``@gil_free``:
+
+.. code-block:: python
+
+    import math
+    from VegasAfterglow import Fitter, Ejecta, ParamDef, Scale, gil_free
+
+    # Decorate profile functions with @gil_free.
+    # First 2 args (phi, theta) are spatial coordinates from C++.
+    # Additional args are MCMC parameters, bound by keyword below.
+    @gil_free
+    def tophat_energy(phi, theta, E_iso, theta_c):
+        return E_iso if theta <= theta_c else 0.0
+
+    @gil_free
+    def tophat_gamma(phi, theta, Gamma0, theta_c):
+        return Gamma0 if theta <= theta_c else 1.0
+
+    # Factory: bind MCMC parameters by keyword each step
+    def jet_factory(mc_params):
+        return Ejecta(
+            E_iso=tophat_energy(E_iso=mc_params.E_iso, theta_c=mc_params.theta_c),
+            Gamma0=tophat_gamma(Gamma0=mc_params.Gamma0, theta_c=mc_params.theta_c),
+        )
+
+    fitter = Fitter(z=1.58, lumi_dist=3.364e28, jet=jet_factory, medium="wind")
+    fitter.add_flux_density(nu=4.84e14, t=t_data, f_nu=flux_data, err=flux_err)
+
+    mc_params = [
+        ParamDef("E_iso",    1e51,  1e54,  Scale.LOG,    1e53),
+        ParamDef("Gamma0",      5,  1000,  Scale.LOG,      20),
+        ParamDef("theta_c",  0.01,   0.5,  Scale.LINEAR,  0.1),
+        ParamDef("p",           2,     3,  Scale.LINEAR,  2.3),
+        ParamDef("eps_e",    1e-2,   0.3,  Scale.LOG,    0.05),
+        ParamDef("eps_B",    1e-4,   0.3,  Scale.LOG,    0.03),
+        ParamDef("xi_e",     1e-3,   0.1,  Scale.LOG,    0.01),
+        ParamDef("A_star",   1e-3,    10,  Scale.LOG,    0.05),
+    ]
+
+    result = fitter.fit(mc_params, sampler="emcee", nsteps=10000)
+
+The same decorator works for custom medium density functions (3 spatial coordinates
+``phi, theta, r``) and for energy/mass injection functions (``phi, theta, t``):
+
+.. code-block:: python
+
+    @gil_free
+    def custom_wind(phi, theta, r, A_star):
+        return A_star * 5e11 * 1.67e-24 / (r * r)
+
+    def medium_factory(mc_params):
+        return Medium(rho=custom_wind(A_star=mc_params.A_star))
+
+    @gil_free
+    def spindown_injection(phi, theta, t, L0, t_sd):
+        return L0 / (1.0 + t / t_sd) ** 2
+
+.. tip::
+    Functions decorated with ``@gil_free`` must use the ``math`` module
+    (not ``numpy``) and only simple arithmetic — no Python objects, arrays, or closures.
+    If you need more complex logic, use the plain Python callback approach instead.
+
+.. note::
+    Built-in jet types (``"tophat"``, ``"gaussian"``, ``"powerlaw"``, etc.) are already
+    implemented in C++ and do not need this decorator.
 
 
 Performance Notes
@@ -1504,7 +1599,8 @@ For typical afterglow models, the Python overhead (object creation, GIL acquisit
 
 - **Emcee**: ``npool`` defaults to the number of CPU cores.
 - **Dynesty**: ``npool`` controls thread count. The ``queue_size`` is automatically optimized.
-- **Custom jet/medium**: Python callbacks in ``Ejecta`` and ``Medium`` require the GIL, which serializes the angular profile evaluation. The blast wave evolution and radiation computation still run without the GIL. For compute-heavy profiles, consider caching or vectorizing your callbacks.
+- **Custom jet/medium with ``@gil_free``**: Full thread parallelism is preserved. All profile evaluations run as native C function calls without the GIL.
+- **Custom jet/medium with plain Python callbacks**: Python callbacks require the GIL, which serializes the angular profile evaluation across threads. The blast wave evolution and radiation computation still run without the GIL, but the profile evaluation becomes a bottleneck. Use ``@gil_free`` to eliminate this overhead.
 
 Troubleshooting
 ---------------
