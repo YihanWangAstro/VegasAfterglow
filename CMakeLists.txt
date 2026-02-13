@@ -7,10 +7,10 @@ set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 option(AFTERGLOW_ENABLE_WARNINGS "Enable compiler warnings" OFF)
 
 if(CMAKE_CXX_COMPILER_ID MATCHES "GNU|Clang")
-  add_compile_options(-O3 -DNDEBUG -pipe -DXTENSOR_DISABLE_EXCEPTIONS)
+  add_compile_options(-O3 -pipe -DNDEBUG -DXTENSOR_DISABLE_EXCEPTIONS -DXTENSOR_USE_XSIMD)
   add_compile_options(-fno-math-errno -fno-trapping-math -fno-signed-zeros -ffp-contract=fast -w)
 elseif(MSVC)
-  add_compile_options(/O2 /DNDEBUG /MP /GL /std:c++20 /DXTENSOR_DISABLE_EXCEPTIONS)
+  add_compile_options(/O2 /DNDEBUG /MP /GL /std:c++20 /DXTENSOR_DISABLE_EXCEPTIONS /DXTENSOR_USE_XSIMD)
 endif()
 
 if(AFTERGLOW_ENABLE_WARNINGS)

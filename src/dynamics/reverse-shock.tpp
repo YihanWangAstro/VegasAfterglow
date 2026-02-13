@@ -411,7 +411,7 @@ inline void reverse_shock_early_extrap(size_t i, size_t j, Shock& shock) {
 
     size_t idx_cut = 0;
     for (; idx_cut < t_size; ++idx_cut) {
-        if (shock.Gamma_th(i, j, idx_cut) > con::Gamma_cut) {
+        if (shock.Gamma_th(i, j, idx_cut) > con::gamma_therm_cut) {
             break;
         }
     }

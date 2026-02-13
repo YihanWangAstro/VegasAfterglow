@@ -99,7 +99,8 @@ namespace con {
     constexpr Real Omega_L = 0.73;                                ///< Dark energy density parameter in ΛCDM cosmology
     constexpr Real H0 = 67.66 * unit::km / unit::sec / unit::Mpc; ///< Hubble constant in code units
     constexpr Real Gamma_cut = defaults::cutoffs::gamma_cut;      ///< Cutoff Lorentz factor value
-    constexpr Real inf = std::numeric_limits<Real>::infinity();   ///< Infinity value
-    constexpr Real sigma_cut = defaults::cutoffs::sigma_cut;      ///< Cutoff magnetization value
+    constexpr Real gamma_therm_cut = defaults::cutoffs::gamma_therm_cut; ///< Cutoff thermal Lorentz factor value
+    constexpr Real inf = std::numeric_limits<Real>::infinity();          ///< Infinity value
+    constexpr Real sigma_cut = defaults::cutoffs::sigma_cut;             ///< Cutoff magnetization value
     constexpr Real min_obs_time = defaults::observer::min_obs_time_sec * unit::sec; ///< Minimum observer time
 } // namespace con

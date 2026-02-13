@@ -43,6 +43,8 @@ namespace defaults {
         /// Magnetization parameter below which magnetic effects are ignored
         /// sigma = B^2 / (4*pi*rho*c^2) - ratio of magnetic to rest-mass energy
         inline constexpr double sigma_cut = 1e-6;
+
+        inline constexpr double gamma_therm_cut = 1.0 + 1e-6;
     } // namespace cutoffs
 
     /**

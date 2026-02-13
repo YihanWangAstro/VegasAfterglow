@@ -374,20 +374,15 @@ void ICPhoton<Electrons, Photons>::sample_distributions(Array const& gamma, Arra
                                                         Array& dN_e_boost, Array& I_nu_seed) {
     dN_e_boost = Array::from_shape({gamma.size()});
     const size_t g_size = gamma.size();
-    Real const* gamma_ptr = gamma.data();
-    Real const* dgamma_ptr = dgamma.data();
-    Real* dN_e_boost_ptr = dN_e_boost.data();
     for (size_t i = 0; i < g_size; ++i) {
-        const Real gamma_i = gamma_ptr[i];
-        dN_e_boost_ptr[i] = electrons.compute_column_den(gamma_i) * dgamma_ptr[i] / (gamma_i * gamma_i);
+        const Real gamma_i = gamma(i);
+        dN_e_boost(i) = electrons.compute_column_den(gamma_i) * dgamma(i) / (gamma_i * gamma_i);
     }
 
     I_nu_seed = Array::from_shape({nu_seed.size()});
     const size_t nu_size = nu_seed.size();
-    Real const* nu_seed_ptr = nu_seed.data();
-    Real* I_nu_seed_ptr = I_nu_seed.data();
     for (size_t j = 0; j < nu_size; ++j) {
-        I_nu_seed_ptr[j] = photons.compute_I_nu(nu_seed_ptr[j]);
+        I_nu_seed(j) = photons.compute_I_nu(nu_seed(j));
     }
 }
 
@@ -446,8 +441,6 @@ void ICPhoton<Electrons, Photons>::accumulate_IC(Real dN_e_boost, Real gamma_i2,
         I_p[k++] += plateau;
     }
 
-    // Iterate over seed bins: for each bin j, accumulate all nu_IC bins whose
-    // mapped nu_seed falls in [nu_seed[j], nu_seed[j+1])
     for (int j = 0; j < nu_last && k < spec_size; ++j) {
         const Real f_lo = fv_p[j];
         const Real f_hi = fv_p[j + 1];
@@ -456,13 +449,11 @@ void ICPhoton<Electrons, Photons>::accumulate_IC(Real dN_e_boost, Real gamma_i2,
         const Real nu_lo = nu_ptr[j];
         const Real inv_dnu = 1.0 / dnu;
 
-        // Find upper k boundary for this seed bin
         size_t k_hi = k;
         while (k_hi < spec_size && nu_IC_ptr[k_hi] * inv_gi2 < nu_ptr[j + 1]) {
             ++k_hi;
         }
 
-        // Inner loop: all seed-bin constants are loop-invariant
         for (size_t kk = k; kk < k_hi; ++kk) {
             const Real frac = (nu_IC_ptr[kk] * inv_gi2 - nu_lo) * inv_dnu;
             const Real rem = 1.0 - frac;
@@ -486,9 +477,9 @@ void ICPhoton<Electrons, Photons>::compute_IC_spectrum(Array const& gamma, Array
 
     static thread_local Array I_buf, cdf_buf, fv_buf;
     I_buf.resize({spec_size});
-    I_buf.fill(0);
     cdf_buf.resize({nu_size});
     fv_buf.resize({nu_size});
+    I_buf.fill(0);
 
     if (KN) {
         for (int i = 0; i < gamma_size; ++i) {

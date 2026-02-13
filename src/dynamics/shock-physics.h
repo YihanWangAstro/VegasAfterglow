@@ -8,6 +8,7 @@
 #pragma once
 
 #include "shock.h"
+#include "util/macros.h"
 
 /**
  * <!-- ************************************************************************************** -->
@@ -306,7 +307,7 @@ inline Real compute_Gamma_therm(Real U_th, Real mass, bool limiter = false) {
         return 1;
     } else [[likely]] {
         const Real Gamma_th = U_th / (mass * con::c2) + 1;
-        if (limiter && Gamma_th < con::Gamma_cut) {
+        if (limiter && Gamma_th < con::gamma_therm_cut) {
             return 1;
         } else {
             return Gamma_th;

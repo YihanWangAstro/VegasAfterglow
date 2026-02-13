@@ -70,7 +70,6 @@ void Observer::calc_t_obs(Coord const& coord, Shock const& shock) {
         const size_t i_eff = i * jet_3d;
 
         for (size_t j = 0; j < theta_grid; ++j) {
-            // Compute the cosine of the angle between the local velocity vector and the observer's line of sight.
             for (size_t k = 0; k < t_grid; ++k) {
                 const Real gamma_ = shock.Gamma(i_eff, j, k);
                 const Real r = shock.r(i_eff, j, k);
@@ -78,13 +77,8 @@ void Observer::calc_t_obs(Coord const& coord, Shock const& shock) {
                 const Real cos_v = sin_theta(i_eff, j, k) * cos_phi * sin_obs + cos_theta(i_eff, j, k) * cos_obs;
                 const Real t_val = (t_eng_ + (1 - cos_v) * r / con::c) * one_plus_z;
 
-                // Compute the Doppler factor: D = 1 / [Gamma * (1 - beta * cos_v)]
-                //lg2_doppler(i, j, k) = -std::log2((gamma_ - std::sqrt(gamma_ * gamma_ - 1) * cos_v));
                 lg2_doppler(i, j, k) = -fast_log2(gamma_ - std::sqrt(gamma_ * gamma_ - 1) * cos_v);
-
-                // Compute the observed time: t_obs = [t_eng + (1 - cos_v) * r / c] * (1 + z)
                 time(i, j, k) = t_val;
-
                 lg2_t(i, j, k) = std::log2(t_val);
             }
         }
@@ -128,7 +122,7 @@ void Observer::calc_solid_angle(Coord const& coord, Shock const& shock) {
         for (size_t j = 0; j < theta_grid; ++j) {
             const size_t j_p1 = (j == last) ? last : (j + 1);
 
-            if (jet_spreading_) {
+            if (jet_spreading_) [[unlikely]] {
                 size_t k_hint_lo = 0, k_hint_hi = 0;
                 for (size_t k = 0; k < t_grid; ++k) {
                     const Real t_target = coord.t(i, j, k);
@@ -152,12 +146,11 @@ void Observer::calc_solid_angle(Coord const& coord, Shock const& shock) {
 
     for (size_t i = 0; i < eff_phi_grid; ++i) {
         const size_t i_eff = i * jet_3d;
-
         for (size_t j = 0; j < theta_grid; ++j) {
             for (size_t k = 0; k < t_grid; ++k) {
                 const Real dOmega = std::fabs(dcos(i_eff, j, k) * dphi(i));
-                lg2_geom_factor(i, j, k) =
-                    fast_log2(dOmega * shock.r(i, j, k) * shock.r(i, j, k)) + 3 * lg2_doppler(i, j, k);
+                const Real r = shock.r(i_eff, j, k);
+                lg2_geom_factor(i, j, k) = fast_log2(dOmega * r * r) + 3 * lg2_doppler(i, j, k);
             }
         }
     }
