@@ -1498,12 +1498,15 @@ The custom parameter ``r_scale`` is accessible inside the factory via ``params.r
 Speeding Up Custom Profiles with ``@gil_free``
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-The custom jet and medium examples above use plain Python callbacks. These work correctly
-for single-threaded fitting, but become slow in multi-threaded MCMC because Python's
-Global Interpreter Lock prevents true parallel execution of Python callbacks.
+The custom jet and medium examples above use plain Python callbacks. Each time C++
+evaluates your profile function, it must cross the Python↔C++ boundary — acquiring the
+GIL, calling into the interpreter, and returning. During blast wave evolution, this
+happens hundreds of times per model evaluation, adding overhead even in single-threaded
+mode and preventing true parallelism in multi-threaded MCMC.
 
-The ``@gil_free`` decorator compiles your profile function to native code
-using `numba <https://numba.pydata.org/>`_, enabling full thread parallelism:
+The ``@gil_free`` decorator compiles your profile function to native machine code
+using `numba <https://numba.pydata.org/>`_, so C++ calls it directly as a C function
+pointer — no Python interpreter, no GIL, no boundary crossing:
 
 .. code-block:: bash
 
@@ -1513,7 +1516,8 @@ The two differences from plain Python callbacks are:
 
 1. Add the ``@gil_free`` decorator
 2. Pass MCMC parameters as explicit function arguments (after the spatial coordinates)
-   instead of capturing them from the enclosing scope
+   instead of capturing them from the enclosing scope — you can add as many parameters
+   as you need
 
 Here is a complete example — a tophat jet with ``@gil_free``:
 

@@ -1691,11 +1691,14 @@ These are functions of <code class="docutils literal notranslate"><span class="p
 </section>
 <section id="speeding-up-custom-profiles-with-gil-free">
 <h3><a class="toc-backref" href="#id31" role="doc-backlink">Speeding Up Custom Profiles with <code class="docutils literal notranslate"><span class="pre">&#64;gil_free</span></code></a><a class="headerlink" href="#speeding-up-custom-profiles-with-gil-free" title="Link to this heading"></a></h3>
-<p>The custom jet and medium examples above use plain Python callbacks. These work correctly
-for single-threaded fitting, but become slow in multi-threaded MCMC because Python’s
-Global Interpreter Lock prevents true parallel execution of Python callbacks.</p>
-<p>The <code class="docutils literal notranslate"><span class="pre">&#64;gil_free</span></code> decorator compiles your profile function to native code
-using <a class="reference external" href="https://numba.pydata.org/">numba</a>, enabling full thread parallelism:</p>
+<p>The custom jet and medium examples above use plain Python callbacks. Each time C++
+evaluates your profile function, it must cross the Python↔C++ boundary — acquiring the
+GIL, calling into the interpreter, and returning. During blast wave evolution, this
+happens hundreds of times per model evaluation, adding overhead even in single-threaded
+mode and preventing true parallelism in multi-threaded MCMC.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">&#64;gil_free</span></code> decorator compiles your profile function to native machine code
+using <a class="reference external" href="https://numba.pydata.org/">numba</a>, so C++ calls it directly as a C function
+pointer — no Python interpreter, no GIL, no boundary crossing:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span>numba
 </pre></div>
 </div>
@@ -1703,7 +1706,8 @@ using <a class="reference external" href="https://numba.pydata.org/">numba</a>, 
 <ol class="arabic simple">
 <li><p>Add the <code class="docutils literal notranslate"><span class="pre">&#64;gil_free</span></code> decorator</p></li>
 <li><p>Pass MCMC parameters as explicit function arguments (after the spatial coordinates)
-instead of capturing them from the enclosing scope</p></li>
+instead of capturing them from the enclosing scope — you can add as many parameters
+as you need</p></li>
 </ol>
 <p>Here is a complete example — a tophat jet with <code class="docutils literal notranslate"><span class="pre">&#64;gil_free</span></code>:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">math</span>
