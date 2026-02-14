@@ -881,9 +881,8 @@ The ``Fitter.fit()`` method provides a unified interface for parameter estimatio
         label: str = "afterglow",            # Run label
         clean: bool = True,                  # Clean up intermediate files
         resume: bool = False,                # Resume previous run
-        log_prior_fn: Callable = None,       # Custom log-prior (emcee only)
         log_likelihood_fn: Callable = None,  # Custom log-likelihood
-        priors: dict = None,                 # Custom bilby priors (dynesty only)
+        priors: dict = None,                 # Custom bilby priors (all samplers)
         **sampler_kwargs                     # Sampler-specific parameters
     ) -> FitResult
 
@@ -1184,65 +1183,9 @@ The ``Fitter`` evaluates models using Python's ``ThreadPoolExecutor``, where eac
 Custom Priors
 ^^^^^^^^^^^^^
 
-**Emcee: Log-Prior Function**
+Pass a ``priors`` dictionary to ``fit()`` to apply custom prior distributions. The same interface works for all samplers (emcee, dynesty, etc.).
 
-For emcee, pass a ``log_prior_fn`` that takes an array of walker positions and returns log-prior values:
-
-.. code-block:: python
-
-    import numpy as np
-    from VegasAfterglow import Fitter, ParamDef, Scale
-
-    fitter = Fitter(
-        z=1.58, lumi_dist=3.364e28,
-        jet="tophat", medium="ism",
-    )
-
-    params = [
-        ParamDef("E_iso",   1e50,  1e54,  Scale.LOG),
-        ParamDef("Gamma0",    10,   500,  Scale.LOG),
-        ParamDef("theta_c", 0.01,   0.5,  Scale.LINEAR),
-        ParamDef("theta_v",    0,     0,  Scale.FIXED),
-        ParamDef("n_ism",   1e-3,   100,  Scale.LOG),
-        ParamDef("p",        2.1,   2.8,  Scale.LINEAR),
-        ParamDef("eps_e",   1e-3,   0.5,  Scale.LOG),
-        ParamDef("eps_B",   1e-5,   0.1,  Scale.LOG),
-        ParamDef("xi_e",     0.1,   1.0,  Scale.LINEAR),
-    ]
-
-    fitter.add_flux_density(nu=4.84e14, t=t_data, f_nu=flux_data, err=flux_err)
-
-    def log_prior(samples):
-        """Gaussian prior on p centered at 2.3 with sigma=0.1.
-
-        Args:
-            samples: Array of shape (nwalkers, ndim)
-
-        Returns:
-            Array of shape (nwalkers,) with log-prior values
-        """
-        log_p = np.zeros(samples.shape[0])
-
-        # p is the 6th free parameter (index 5 in sampler space)
-        p_values = samples[:, 5]
-        log_p += -0.5 * ((p_values - 2.3) / 0.1) ** 2
-
-        return log_p
-
-    result = fitter.fit(
-        params,
-        sampler="emcee",
-        nsteps=10000,
-        nburn=2000,
-        log_prior_fn=log_prior,
-    )
-
-.. note::
-    The ``log_prior_fn`` receives parameters in **sampler space**: ``LOG``-scale parameters are passed as ``log10(value)``. The prior is added to the log-likelihood, so returning ``-np.inf`` rejects the sample.
-
-**Bilby/Dynesty: Prior Distributions**
-
-For bilby-based samplers (dynesty, nestle, etc.), pass a ``priors`` dictionary mapping parameter labels to ``bilby.core.prior.Prior`` objects:
+Keys are parameter labels (using the ``log10_`` prefix for ``LOG``-scale parameters), and values are ``bilby.core.prior.Prior`` objects. Parameters not in the dict automatically get uniform priors based on the ``ParamDef`` bounds.
 
 .. code-block:: python
 
@@ -1262,14 +1205,21 @@ For bilby-based samplers (dynesty, nestle, etc.), pass a ``priors`` dictionary m
         ),
     }
 
+    # Works with emcee
+    result = fitter.fit(
+        params,
+        sampler="emcee",
+        nsteps=10000,
+        priors=custom_priors,
+    )
+
+    # Same priors work with dynesty
     result = fitter.fit(
         params,
         sampler="dynesty",
         nlive=1000,
         priors=custom_priors,
     )
-
-Parameters not included in the ``priors`` dictionary automatically get uniform priors based on the bounds in ``ParamDef``.
 
 .. important::
     When using ``LOG``-scale parameters, the prior keys must use the ``log10_`` prefix (e.g., ``log10_eps_e``, not ``eps_e``), since the sampler operates in log-space.
@@ -1490,7 +1440,6 @@ The custom parameter ``r_scale`` is accessible inside the factory via ``params.r
         sampler="emcee",
         nsteps=20000,
         nburn=5000,
-        log_prior_fn=log_prior,
         log_likelihood_fn=student_t_likelihood,
     )
 

@@ -754,6 +754,31 @@ class Fitter:
         )
         return labels, np.array(lowers), np.array(uppers), len(labels)
 
+    def _build_prior_dict(
+        self,
+        labels: Tuple[str, ...],
+        pl: np.ndarray,
+        pu: np.ndarray,
+        defs: List[ParamDef],
+        user_priors: Optional[dict],
+    ):
+        """Build bilby PriorDict: user priors where provided, Uniform for the rest."""
+        label_to_def = {
+            (f"log10_{pd.name}" if pd.scale is Scale.LOG else pd.name): pd
+            for pd in defs
+            if pd.scale is not Scale.FIXED
+        }
+
+        priors_dict = {}
+        for i, name in enumerate(labels):
+            if user_priors and name in user_priors:
+                priors_dict[name] = user_priors[name]
+            else:
+                priors_dict[name] = bilby.core.prior.Uniform(
+                    pl[i], pu[i], name, _get_latex_label(label_to_def[name])
+                )
+        return bilby.core.prior.PriorDict(priors_dict)
+
     def _generate_initial_positions(
         self,
         param_defs: List[ParamDef],
@@ -796,7 +821,6 @@ class Fitter:
         label: str = "afterglow",
         clean: bool = True,
         resume: bool = False,
-        log_prior_fn: Optional[Callable] = None,
         log_likelihood_fn: Optional[Callable] = None,
         priors: Optional[dict] = None,
         **sampler_kwargs,
@@ -814,12 +838,13 @@ class Fitter:
             label: Run label for bilby
             clean: Clean previous runs (bilby)
             resume: Resume from previous run (bilby)
-            log_prior_fn: Custom prior function for emcee.
-                Signature: (samples: ndarray[nwalkers, ndim]) -> ndarray[nwalkers]
             log_likelihood_fn: Custom likelihood transform.
                 Signature: (chi2: float) -> float. Default: lambda chi2: -0.5 * chi2
-            priors: Custom bilby priors dict (for dynesty/bilby samplers).
-                Keys are parameter labels, values are bilby.core.prior.Prior objects.
+            priors: Custom prior distributions dict. Keys are parameter labels
+                (using ``log10_`` prefix for LOG-scale params), values are
+                ``bilby.core.prior.Prior`` objects. Parameters not in this dict
+                automatically get Uniform priors from ParamDef bounds.
+                Works with all samplers (emcee, dynesty, etc.).
             **sampler_kwargs: Additional sampler arguments
         """
         self.validate_parameters(param_defs)
@@ -848,6 +873,9 @@ class Fitter:
 
         self._to_params = _build_transformer(defs)
 
+        # Build unified prior dict (used by both emcee and bilby)
+        prior_dict = self._build_prior_dict(labels, pl, pu, defs, priors)
+
         if sampler.lower() == "emcee":
             return self._fit_emcee(
                 defs,
@@ -856,7 +884,7 @@ class Fitter:
                 pu,
                 ndim,
                 top_k,
-                log_prior_fn,
+                prior_dict,
                 log_likelihood_fn,
                 npool,
                 **sampler_kwargs,
@@ -865,8 +893,6 @@ class Fitter:
             return self._fit_bilby(
                 defs,
                 labels,
-                pl,
-                pu,
                 ndim,
                 sampler,
                 npool,
@@ -876,7 +902,7 @@ class Fitter:
                 clean,
                 resume,
                 log_likelihood_fn,
-                priors,
+                prior_dict,
                 **sampler_kwargs,
             )
 
@@ -890,7 +916,7 @@ class Fitter:
         pu: np.ndarray,
         ndim: int,
         top_k: int,
-        log_prior_fn: Optional[Callable],
+        prior_dict,
         log_likelihood_fn: Callable,
         npool: Optional[int],
         **sampler_kwargs,
@@ -931,9 +957,11 @@ class Fitter:
                 log_likes = np.array(results)
                 log_likes[~np.isfinite(log_likes)] = -np.inf
 
-                if log_prior_fn is not None:
-                    log_prior = log_prior_fn(np.array(valid_samples))
-                    log_likes += log_prior
+                valid_array = np.array(valid_samples)
+                log_prior = np.zeros(len(valid_samples))
+                for i, name in enumerate(labels):
+                    log_prior += prior_dict[name].ln_prob(valid_array[:, i])
+                log_likes += log_prior
 
                 log_probs[valid_indices] = log_likes
 
@@ -972,8 +1000,6 @@ class Fitter:
         self,
         defs: List[ParamDef],
         labels: Tuple[str, ...],
-        pl: np.ndarray,
-        pu: np.ndarray,
         ndim: int,
         sampler: str,
         npool: Optional[int],
@@ -983,33 +1009,16 @@ class Fitter:
         clean: bool,
         resume: bool,
         log_likelihood_fn: Callable,
-        user_priors: Optional[dict],
+        prior_dict,
         **sampler_kwargs,
     ) -> FitResult:
         """Run bilby sampler (dynesty, etc.)."""
-        label_to_def = {
-            (f"log10_{pd.name}" if pd.scale is Scale.LOG else pd.name): pd
-            for pd in defs
-            if pd.scale is not Scale.FIXED
-        }
-
         likelihood = AfterglowLikelihood(
             fitter=self,
             param_defs=defs,
             log_likelihood_fn=log_likelihood_fn,
             transformer=self._to_params,
         )
-
-        # Build priors: use user-provided priors where available, Uniform for the rest
-        priors_dict = {}
-        for i, name in enumerate(labels):
-            if user_priors and name in user_priors:
-                priors_dict[name] = user_priors[name]
-            else:
-                priors_dict[name] = bilby.core.prior.Uniform(
-                    pl[i], pu[i], name, _get_latex_label(label_to_def[name])
-                )
-        priors = bilby.core.prior.PriorDict(priors_dict)
 
         if npool is None:
             npool = os.cpu_count() or 1
@@ -1020,7 +1029,7 @@ class Fitter:
 
         run_kwargs = {
             "likelihood": likelihood,
-            "priors": priors,
+            "priors": prior_dict,
             "sampler": sampler,
             "outdir": outdir,
             "label": label,

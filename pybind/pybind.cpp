@@ -21,7 +21,7 @@
 // Uses C++20 template lambdas to build tight (fn + params) lambdas.
 // The index pack simultaneously deduces the function pointer type via
 // decltype((void)I, Real{})..., initializes params, and unpacks the call.
-constexpr size_t MAX_NATIVE_PARAMS = 4;
+constexpr size_t MAX_NATIVE_PARAMS = 10;
 
 template <size_t N>
 BinaryFunc make_native_binary(uintptr_t addr, std::vector<Real> const& p) {
