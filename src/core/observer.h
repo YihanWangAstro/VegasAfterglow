@@ -222,11 +222,11 @@ class Observer {
 
     /**
      * <!-- ************************************************************************************** -->
-     * @brief Interpolates the luminosity using the observation time (t_obs) in logarithmic space
+     * @brief Interpolates the specific luminosity in log-log space, returning the result in linear scale.
      * @param state The interpolation state
      * @param lg2_t_obs Observation time (in log2 scale)
      * @param lg2_t_lo Lower boundary of observation time (in log2 scale)
-     * @return The interpolated luminosity value
+     * @return The interpolated specific luminosity (linear scale)
      * <!-- ************************************************************************************** -->
      */
     [[nodiscard]] static Real loglog_interpolate(InterpState const& state, Real lg2_t_obs, Real lg2_t_lo) noexcept;

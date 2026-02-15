@@ -413,7 +413,6 @@ class Fitter:
         fwd_ssc: Enable forward shock inverse Compton
         rvs_ssc: Enable reverse shock inverse Compton
         rvs_shock: Enable reverse shock
-        ssc_cooling: Enable IC cooling effects
         kn: Enable Klein-Nishina corrections
         magnetar: Enable magnetar energy injection
         rtol: Numerical tolerance
@@ -430,7 +429,6 @@ class Fitter:
         fwd_ssc: bool = False,
         rvs_ssc: bool = False,
         rvs_shock: bool = False,
-        ssc_cooling: bool = False,
         kn: bool = False,
         magnetar: bool = False,
         rtol: float = 1e-6,
@@ -441,7 +439,6 @@ class Fitter:
         self.fwd_ssc = fwd_ssc
         self.rvs_ssc = rvs_ssc
         self.rvs_shock = rvs_shock
-        self.ssc_cooling = ssc_cooling
         self.kn = kn
         self.magnetar = magnetar
         self.rtol = rtol
@@ -634,7 +631,6 @@ class Fitter:
             eps_B=params.eps_B,
             p=params.p,
             xi_e=params.xi_e,
-            ssc_cooling=self.ssc_cooling,
             ssc=self.fwd_ssc,
             kn=self.kn,
         )
@@ -646,7 +642,6 @@ class Fitter:
                 eps_B=params.eps_B_r,
                 p=params.p_r,
                 xi_e=params.xi_e_r,
-                ssc_cooling=self.ssc_cooling,
                 ssc=self.rvs_ssc,
                 kn=self.kn,
             )

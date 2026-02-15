@@ -13,6 +13,28 @@
 #include "../include/afterglow.h"
 #include "error_handling.h"
 
+//========================================================================================================
+//                                  SpectrumEvaluator / YEvaluator
+//========================================================================================================
+
+XTArray SpectrumEvaluator::operator()(PyArray const& nu_comv) const {
+    const size_t n = nu_comv.size();
+    XTArray result = xt::zeros<Real>({n});
+    for (size_t i = 0; i < n; ++i) {
+        result(i) = eval_(nu_comv(i));
+    }
+    return result;
+}
+
+XTArray YEvaluator::operator()(PyArray const& gamma) const {
+    const size_t n = gamma.size();
+    XTArray result = xt::zeros<Real>({n});
+    for (size_t i = 0; i < n; ++i) {
+        result(i) = eval_(gamma(i));
+    }
+    return result;
+}
+
 // Overload for magnetar
 void initialize_ejecta(Ejecta& jet, bool spreading, Real duration, std::optional<PyMagnetar> const& magnetar,
                        Real theta_c) {
@@ -222,7 +244,7 @@ void PyModel::single_evo_details(Shock const& shock, Coord const& coord, Observe
 
     auto syn_ph = generate_syn_photons(shock, syn_e);
 
-    if (rad.ssc_cooling) {
+    if (rad.ssc) {
         if (rad.kn) {
             KN_cooling(syn_e, syn_ph, shock);
         } else {
@@ -231,6 +253,15 @@ void PyModel::single_evo_details(Shock const& shock, Coord const& coord, Observe
     }
     save_electron_details(syn_e, details);
     save_photon_details(syn_ph, details, shock);
+
+    // Store photon grids for per-cell spectrum evaluation
+    details.syn_photons_ = syn_ph;
+    details.has_syn_spectrum_ = true;
+
+    if (rad.ssc) {
+        details.ic_photons_ = generate_IC_photons(syn_e, syn_ph, rad.kn, shock);
+        details.has_ssc_spectrum_ = true;
+    }
 }
 
 auto PyModel::details(Real t_min, Real t_max) const -> PyDetails {

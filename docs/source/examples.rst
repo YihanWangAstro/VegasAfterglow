@@ -399,7 +399,100 @@ Those profiles are optional and will be set to zero function if not provided.
     Plain Python callbacks work well for single model evaluations (light curves, spectra).
     For multi-threaded MCMC fitting, use the ``@gil_free`` decorator to compile
     your profile functions to native code, eliminating GIL contention across threads.
-    See :doc:`mcmc_fitting` for details.
+    See the `GIL-Free Native Callbacks`_ section below and :doc:`mcmc_fitting` for details.
+
+.. _GIL-Free Native Callbacks:
+
+GIL-Free Native Callbacks (``@gil_free``)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+When C++ evaluates a plain Python callback (e.g., a custom jet or medium profile),
+it must acquire the Global Interpreter Lock (GIL) for every call. During blast wave
+evolution this happens hundreds of times per model evaluation, which serializes the
+angular-profile loop across threads.
+
+The ``@gil_free`` decorator compiles a Python function to native machine code via
+`numba <https://numba.pydata.org/>`_, so C++ calls it directly as a C function pointer
+— no GIL, no interpreter overhead:
+
+.. code-block:: bash
+
+    pip install numba
+
+**Key differences from plain Python callbacks:**
+
+1. Decorate with ``@gil_free``
+2. Physical parameters come as extra function arguments (after the spatial
+   coordinates) instead of being captured from the enclosing scope
+3. Call the decorated function with keyword arguments to bind parameters — this
+   returns a ``NativeFunc`` object that C++ can call at full speed
+4. Only ``math`` module functions and simple arithmetic are allowed (no ``numpy``
+   arrays, no Python objects)
+
+**Working example — Gaussian jet + wind medium:**
+
+.. code-block:: python
+
+    import math
+    import numpy as np
+    import matplotlib.pyplot as plt
+    from VegasAfterglow import Ejecta, Medium, Observer, Radiation, Model, gil_free
+
+    @gil_free
+    def gaussian_energy(phi, theta, E_iso, theta_c):
+        return E_iso * math.exp(-0.5 * (theta / theta_c) ** 2)
+
+    @gil_free
+    def gaussian_gamma(phi, theta, Gamma0, theta_c):
+        return 1.0 + (Gamma0 - 1.0) * math.exp(-0.5 * (theta / theta_c) ** 2)
+
+
+    @gil_free
+    def wind_density(phi, theta, r, A_star):
+        mp = 1.67e-24
+        return A_star * 5e11 * mp / (r * r)
+
+    # --- Build the model ---
+    # Calling the decorated function with keyword arguments binds those parameters
+    # and returns a NativeFunc. You can bind as many parameters as you need —
+    # they just need to appear after the spatial coordinates in the function signature.
+    # This is especially useful for MCMC, where you rebind parameters each step.
+
+    E_iso = 1e52      # these could come from MCMC sampler
+    Gamma0 = 300
+    theta_c = 0.1
+    A_star = 0.1
+
+    jet = Ejecta(
+        E_iso=gaussian_energy(E_iso=E_iso, theta_c=theta_c),
+        Gamma0=gaussian_gamma(Gamma0=Gamma0, theta_c=theta_c),
+    )
+
+    medium = Medium(rho=wind_density(A_star=A_star))
+    obs = Observer(lumi_dist=1e26, z=0.1, theta_obs=0.3)
+    rad = Radiation(eps_e=0.1, eps_B=1e-3, p=2.3)
+
+    model = Model(jet=jet, medium=medium, observer=obs, fwd_rad=rad)
+
+    times = np.logspace(2, 8, 100)
+    bands = np.array([1e9, 1e14, 1e17])
+    results = model.flux_density_grid(times, bands)
+
+    for i, nu in enumerate(bands):
+        plt.loglog(times, results.total[i, :])
+    plt.xlabel('Time (s)')
+    plt.ylabel('Flux Density (erg/cm²/s/Hz)')
+    plt.show()
+
+.. tip::
+    Functions decorated with ``@gil_free`` must only use the ``math`` module
+    (not ``numpy``) and simple arithmetic — no Python objects, arrays, or closures.
+    If you need more complex logic, use the plain Python callback approach instead.
+
+.. note::
+    Built-in jet types (``TophatJet``, ``GaussianJet``, ``PowerLawJet``, etc.) are
+    already implemented in C++ and do not need this decorator. Use ``@gil_free``
+    only for custom profiles passed via ``Ejecta`` or ``Medium``.
 
 
 Radiation Processes
@@ -448,8 +541,8 @@ Inverse Compton Cooling
 
     from VegasAfterglow import Radiation
 
-    # Create a radiation model with inverse Compton cooling (without Klein-Nishina correction) on synchrotron radiation
-    rad = Radiation(eps_e=1e-1, eps_B=1e-3, p=2.3, ssc_cooling=True, kn=False)
+    # Create a radiation model with SSC and IC cooling (without Klein-Nishina correction)
+    rad = Radiation(eps_e=1e-1, eps_B=1e-3, p=2.3, ssc=True, kn=False)
 
     #..other settings
     model = Model(fwd_rad=rad, ...)
@@ -461,8 +554,8 @@ Self-Synchrotron Compton Radiation
 
     from VegasAfterglow import Radiation
 
-    # Create a radiation model with self-Compton radiation
-    rad = Radiation(eps_e=1e-1, eps_B=1e-3, p=2.3, ssc=True, kn=True, ssc_cooling=True)
+    # Create a radiation model with self-Compton radiation and Klein-Nishina corrections
+    rad = Radiation(eps_e=1e-1, eps_B=1e-3, p=2.3, ssc=True, kn=True)
 
     #..other settings
     model = Model(fwd_rad=rad, ...)
@@ -483,11 +576,11 @@ Self-Synchrotron Compton Radiation
         plt.loglog(times, results.fwd.ssc[i,:], label=fr'${base:.1f} \times 10^{{{exp}}}$ Hz (SSC)')#SSC
 
 .. note::
-    (ssc_cooling = False, kn = False, ssc = True): The IC radiation is calculated based on synchrotron spectrum without IC cooling.
+    When ``ssc=True``, IC cooling of electrons is automatically included. The ``kn`` flag controls whether Klein-Nishina corrections are applied:
 
-    (ssc_cooling = True, kn = False, ssc = True): The IC radiation is calculated based on synchrotron spectrum with IC cooling, but without Klein-Nishina correction.
+    (ssc = True, kn = False): SSC emission with IC cooling using the Thomson cross-section.
 
-    (ssc_cooling = True, kn = True, ssc = True): The IC radiation is calculated based on synchrotron spectrum with both IC cooling and Klein-Nishina correction.
+    (ssc = True, kn = True): SSC emission with IC cooling and Klein-Nishina corrections.
 
 For details on the underlying radiation physics, see :doc:`physics`.
 
@@ -562,6 +655,9 @@ You will get a ``SimulationDetails`` object with the following structure:
 - ``details.fwd.nu_M``: 3D numpy array of comoving frame maximum frequencies for the forward shock in Hz
 - ``details.fwd.I_nu_max``: 3D numpy array of comoving frame synchrotron maximum specific intensities for the forward shock in erg/cm²/s/Hz
 - ``details.fwd.Doppler``: 3D numpy array of Doppler factors for the forward shock
+- ``details.fwd.sync_spectrum``: Per-cell callable synchrotron spectrum (see `Per-Cell Spectrum Evaluation`_)
+- ``details.fwd.ssc_spectrum``: Per-cell callable SSC spectrum (``None`` if ``ssc=False``)
+- ``details.fwd.Y_spectrum``: Per-cell callable Compton-Y parameter
 
 **Reverse shock details (accessed via ``details.rvs``, if reverse shock is enabled):**
 
@@ -749,6 +845,37 @@ This final visualization maps the equal arrival time surfaces in polar coordinat
    :align: center
 
    Equal arrival time surfaces showing how light travel time effects determine light curve morphology.
+
+Per-Cell Spectrum Evaluation
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+In addition to scalar quantities, ``details()`` provides callable spectrum accessors that let you evaluate the comoving-frame synchrotron, SSC, and Compton-Y spectra at arbitrary frequencies for each grid cell. To use SSC and Y spectrum, enable SSC in the radiation model:
+
+.. code-block:: python
+
+    rad = Radiation(eps_e=1e-1, eps_B=1e-3, p=2.3, ssc=True)
+    model = Model(jet=jet, medium=medium, observer=obs, fwd_rad=rad, resolutions=(0.15,0.5,10))
+    details = model.details(t_min=1e0, t_max=1e8)
+
+    nu_comv = np.logspace(8, 20, 200)  # comoving frame frequency [Hz]
+
+    # Synchrotron spectrum at cell (phi=0, theta=0, t=5)
+    I_syn = details.fwd.sync_spectrum[0, 0, 5](nu_comv)   # erg/s/Hz/cm²/sr
+
+    # SSC spectrum at the same cell (requires ssc=True)
+    I_ssc = details.fwd.ssc_spectrum[0, 0, 5](nu_comv)    # erg/s/Hz/cm²/sr
+
+    # Compton-Y parameter as a function of electron Lorentz factor
+    gamma = np.logspace(1, 8, 200)
+    Y = details.fwd.Y_spectrum[0, 0, 5](gamma)            # dimensionless
+
+These callable accessors are also available on ``details.rvs`` when a reverse shock is configured. The ``sync_spectrum`` and ``Y_spectrum`` are always available; ``ssc_spectrum`` is ``None`` unless ``ssc=True``.
+
+**Callable spectrum properties:**
+
+- ``details.fwd.sync_spectrum[i, j, k](nu_comv)``: Comoving synchrotron specific intensity at given frequencies. Input: comoving frequency in Hz. Output: :math:`I_\nu` in erg/s/Hz/cm²/sr.
+- ``details.fwd.ssc_spectrum[i, j, k](nu_comv)``: Comoving SSC specific intensity. Same units as synchrotron. Only available when ``ssc=True``.
+- ``details.fwd.Y_spectrum[i, j, k](gamma)``: Compton-Y parameter as a function of electron Lorentz factor. Input: dimensionless :math:`\gamma`. Output: dimensionless :math:`Y(\gamma)`.
 
 Model Configuration Introspection
 ----------------------------------

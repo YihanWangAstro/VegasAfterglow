@@ -8,6 +8,7 @@
 #pragma once
 
 #include <cstdio>
+#include <functional>
 #include <optional>
 #include <string>
 #include <utility>
@@ -284,19 +285,16 @@ class PyRadiation {
      * @param eps_B Fraction of shock energy stored in magnetic field
      * @param p Electron energy spectral index (typically 2.2-2.8)
      * @param xi_e Fraction of shock-heated electrons that are accelerated to relativistic energies
-     * @param ssc_cooling Whether to include inverse Compton cooling of electrons
-     * @param ssc Whether to include synchrotron self-Compton emission (default: false)
+     * @param ssc Whether to include synchrotron self-Compton emission and IC cooling (default: false)
      * @param kn Whether to include Klein-Nishina corrections for IC processes (default: false)
      * <!-- ************************************************************************************** -->
      */
-    PyRadiation(Real eps_e, Real eps_B, Real p, Real xi_e = 1, bool ssc_cooling = false, bool ssc = false,
-                bool kn = false)
-        : rad(RadParams{eps_e, eps_B, p, xi_e}), ssc_cooling(ssc_cooling), ssc(ssc), kn(kn) {}
+    PyRadiation(Real eps_e, Real eps_B, Real p, Real xi_e = 1, bool ssc = false, bool kn = false)
+        : rad(RadParams{eps_e, eps_B, p, xi_e}), ssc(ssc), kn(kn) {}
 
     RadParams rad;
-    bool ssc_cooling{false}; ///< Whether to include IC cooling
-    bool ssc{false};         ///< Whether to include SSC
-    bool kn{false};          ///< Whether to include KN
+    bool ssc{false}; ///< Whether to include SSC emission and IC cooling
+    bool kn{false};  ///< Whether to include KN
 
     [[nodiscard]] std::string repr() const {
         char buf[128];
@@ -306,8 +304,6 @@ class PyRadiation {
             snprintf(buf, sizeof(buf), ", xi_e=%.6g", rad.xi_e);
             s += buf;
         }
-        if (ssc_cooling)
-            s += ", ssc_cooling=True";
         if (ssc)
             s += ", ssc=True";
         if (kn)
@@ -402,6 +398,37 @@ struct PyFlux {
     }
 };
 
+// Type aliases for IC photon grid
+using SynICPhoton = ICPhoton<SynElectrons, SmoothPowerLawSyn>;
+using SynICPhotonGrid = xt::xtensor<SynICPhoton, 3>;
+
+/// Callable evaluator for per-cell spectrum queries (takes comoving frequency in Hz)
+struct SpectrumEvaluator {
+    std::function<Real(Real)> eval_;
+    XTArray operator()(PyArray const& nu_comv) const;
+};
+
+/// Callable evaluator for per-cell Y(gamma) queries
+struct YEvaluator {
+    std::function<Real(Real)> eval_;
+    XTArray operator()(PyArray const& gamma) const;
+};
+
+/// Grid accessor for synchrotron spectrum: sync_spectrum[i,j,k] → SpectrumEvaluator
+struct SynSpectrumGrid {
+    SynPhotonGrid const* grid_;
+};
+
+/// Grid accessor for IC spectrum: ssc_spectrum[i,j,k] → SpectrumEvaluator
+struct ICSpectrumGrid {
+    SynICPhotonGrid* grid_; // non-const: ICPhoton::compute_I_nu lazily generates spectrum
+};
+
+/// Grid accessor for Y(gamma): Y_spectrum[i,j,k] → YEvaluator
+struct YSpectrumGrid {
+    SynPhotonGrid const* grid_;
+};
+
 /**
  * <!-- ************************************************************************************** -->
  * @struct PyShock
@@ -437,6 +464,12 @@ struct PyShock {
     XTArray Y_T;
     XTArray I_nu_max; ///< Maximum specific intensity [erg/s/Hz]
     XTArray Doppler;  ///< Doppler factor for beaming
+
+    // Stored photon grids for per-cell spectrum evaluation
+    SynPhotonGrid syn_photons_;
+    SynICPhotonGrid ic_photons_;
+    bool has_syn_spectrum_{false};
+    bool has_ssc_spectrum_{false};
 
     [[nodiscard]] std::string repr() const {
         if (Gamma.size() == 0)
@@ -625,10 +658,9 @@ class PyModel {
         Real d = obs_setup.lumi_dist / unit::cm;
         snprintf(buf, sizeof(buf),
                  "Model(observer=Observer(lumi_dist=%.6g, z=%.6g, theta_obs=%.6g),\n"
-                 "      fwd_rad=Radiation(eps_e=%.6g, eps_B=%.6g, p=%.6g%s%s%s)",
+                 "      fwd_rad=Radiation(eps_e=%.6g, eps_B=%.6g, p=%.6g%s%s)",
                  d, obs_setup.z, obs_setup.theta_obs, fwd_rad.rad.eps_e, fwd_rad.rad.eps_B, fwd_rad.rad.p,
-                 fwd_rad.ssc_cooling ? ", ssc_cooling=True" : "", fwd_rad.ssc ? ", ssc=True" : "",
-                 fwd_rad.kn ? ", kn=True" : "");
+                 fwd_rad.ssc ? ", ssc=True" : "", fwd_rad.kn ? ", kn=True" : "");
         std::string s = buf;
         if (rvs_rad_opt) {
             snprintf(buf, sizeof(buf), ",\n      rvs_rad=Radiation(eps_e=%.6g, eps_B=%.6g, p=%.6g)",
@@ -763,7 +795,7 @@ void PyModel::single_shock_emission(Shock const& shock, Coord const& coord, Arra
         return generate_syn_photons(shock, syn_e);
     }();
 
-    if (rad.ssc_cooling) {
+    if (rad.ssc) {
         AFTERGLOW_PROFILE_SCOPE(cooling);
         if (rad.kn) {
             KN_cooling(syn_e, syn_ph, shock);

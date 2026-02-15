@@ -80,7 +80,7 @@ For the full MCMC fitting guide, including advanced customization examples, see 
 
 - All key Python objects now have informative `__repr__` output: `Observer`, `Radiation`, `Magnetar`, `Model`, `FluxDict`, `Flux`, `ShockDetails`, `SimulationDetails`
 - Read-only properties on `Model` for inspecting state after construction: `model.observer`, `model.fwd_rad`, `model.rvs_rad`, `model.resolutions`, `model.rtol`, `model.axisymmetric`
-- Read-only properties on `Observer` (`lumi_dist`, `z`, `theta_obs`, `phi_obs`) and `Radiation` (`eps_e`, `eps_B`, `p`, `xi_e`, `ssc_cooling`, `ssc`, `kn`)
+- Read-only properties on `Observer` (`lumi_dist`, `z`, `theta_obs`, `phi_obs`) and `Radiation` (`eps_e`, `eps_B`, `p`, `xi_e`, `ssc`, `kn`)
 
 #### **Improved Inverse Compton Spectrum Computation**
 
@@ -103,6 +103,11 @@ The MCMC fitting module has been completely redesigned. Existing fitting scripts
 - **`jet` and `medium` accept callables**: In addition to built-in type strings, you can now pass factory functions that return custom `Ejecta` or `Medium` objects
 
 See the [MCMC Parameter Fitting](https://yihanwangastro.github.io/VegasAfterglow/docs/mcmc_fitting.html) documentation for migration examples.
+
+#### **⚠️ BREAKING: `ssc_cooling` Parameter Removed**
+- The `ssc_cooling` parameter has been removed from `Radiation` and `Fitter`
+- IC cooling is now automatically enabled when `ssc=True`
+- Update calls: `Radiation(..., ssc_cooling=True, ssc=True)` → `Radiation(..., ssc=True)`
 
 #### **Default Resolution**
 - Default grid resolution changed from `(0.3, 1, 10)` to `(0.15, 0.5, 10)` for better accuracy out of the box
@@ -318,8 +323,8 @@ data.add_flux(nu_min=1e14, nu_max=1e15, num_points=5, t=times, flux=flux, err=er
 
 #### **API Consistency Improvements**
 - **Parameter Naming Standardization**: Major cleanup of parameter names across all interfaces for consistency
-  - **ConfigParams**: `fwd_SSC` → `fwd_ssc`, `rvs_SSC` → `rvs_ssc`, `IC_cooling` → `ssc_cooling`, `KN` → `kn`
-  - **PyRadiation**: `IC_cooling` → `ssc_cooling`, `SSC` → `ssc`, `KN` → `kn`
+  - **ConfigParams**: `fwd_SSC` → `fwd_ssc`, `rvs_SSC` → `rvs_ssc`, `KN` → `kn`
+  - **PyRadiation**: `SSC` → `ssc`, `KN` → `kn` (IC cooling is now automatically enabled when `ssc=True`)
   - **Model Constructor**: `forward_rad` → `fwd_rad`, `reverse_rad` → `rvs_rad`
   - All parameter names now follow the consistent snake_case convention
 
@@ -346,16 +351,15 @@ data.add_flux(nu_min=1e14, nu_max=1e15, num_points=5, t=times, flux=flux, err=er
 # Old names → New names
 cfg.fwd_SSC = True    → cfg.fwd_ssc = True
 cfg.rvs_SSC = True    → cfg.rvs_ssc = True
-cfg.IC_cooling = True → cfg.ssc_cooling = True
 cfg.KN = True         → cfg.kn = True
 ```
 
 **For Radiation Physics (PyRadiation/Radiation):**
 ```python
 # Old names → New names
-Radiation(eps_e=0.1, eps_B=0.01, p=2.3, IC_cooling=True, SSC=True, KN=True)
+Radiation(eps_e=0.1, eps_B=0.01, p=2.3, SSC=True, KN=True)
 # becomes:
-Radiation(eps_e=0.1, eps_B=0.01, p=2.3, ssc_cooling=True, ssc=True, kn=True)
+Radiation(eps_e=0.1, eps_B=0.01, p=2.3, ssc=True, kn=True)
 ```
 
 **For Model Constructor:**

@@ -54,7 +54,7 @@ struct InverseComptonY {
 
     /**
      * <!-- ************************************************************************************** -->
-     * @brief Calculates the effective Y parameter for a given Lorentz factor and spectral index.
+     * @brief Calculates the effective Y parameter for a given electron Lorentz factor.
      * @details Different scaling relations apply depending on the cooling regime and gamma value.
      * @param gamma Electron Lorentz factor
      * @return The effective Y parameter at the given gamma
@@ -64,10 +64,10 @@ struct InverseComptonY {
 
     /**
      * <!-- ************************************************************************************** -->
-     * @brief Calculates the effective Y parameter for a given seed photon frequency.
-     * @details Different scaling relations apply depending on the cooling regime and frequency value.
-     * @param nu Seed photon frequency
-     * @return The effective Y parameter at the given frequency
+     * @brief Calculates the effective Y parameter at the electron Lorentz factor corresponding to a given synchrotron frequency.
+     * @details Converts frequency to electron Lorentz factor via the synchrotron relation, then evaluates Y(gamma).
+     * @param nu Synchrotron frequency
+     * @return The effective Y parameter at the corresponding electron Lorentz factor
      * <!-- ************************************************************************************** -->
      */
     [[nodiscard]] Real nu_spectrum(Real nu) const;

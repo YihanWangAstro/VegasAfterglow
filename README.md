@@ -447,6 +447,9 @@ You will get a `SimulationDetails` object with the following structure:
 - `details.fwd.nu_M`: 3D numpy array of comoving frame maximum frequencies for the forward shock in `Hz`
 - `details.fwd.I_nu_max`: 3D numpy array of comoving frame synchrotron maximum specific intensities for the forward shock in `erg/cm²/s/Hz`
 - `details.fwd.Doppler`: 3D numpy array of Doppler factors for the forward shock
+- `details.fwd.sync_spectrum`: Per-cell callable synchrotron spectrum (see Per-Cell Spectrum Evaluation below)
+- `details.fwd.ssc_spectrum`: Per-cell callable SSC spectrum (`None` if `ssc=False`)
+- `details.fwd.Y_spectrum`: Per-cell callable Compton-Y parameter
 
 **Reverse shock details (accessed via `details.rvs`, if reverse shock is enabled):**
 - Similar attributes as forward shock but for the reverse shock component
@@ -621,6 +624,34 @@ plt.savefig('EAT.png', dpi=300,bbox_inches='tight')
 <img src="assets/EAT.png" alt="Shock evolution" width="600"/>
 
 </div>
+</details>
+
+<details>
+<summary><b>Per-Cell Spectrum Evaluation</b> <i>(click to expand/collapse)</i></summary>
+<br>
+
+In addition to scalar quantities, `details()` provides callable spectrum accessors that let you evaluate the comoving-frame synchrotron, SSC, and Compton-Y spectra at arbitrary frequencies for each grid cell. To use SSC and Y spectrum, enable SSC in the radiation model:
+
+```python
+rad = Radiation(eps_e=1e-1, eps_B=1e-3, p=2.3, ssc=True)
+model = Model(jet=jet, medium=medium, observer=obs, fwd_rad=rad, resolutions=(0.15,0.5,10))
+details = model.details(t_min=1e0, t_max=1e8)
+
+nu_comv = np.logspace(8, 20, 200)  # comoving frame frequency [Hz]
+
+# Synchrotron spectrum at cell (phi=0, theta=0, t=5)
+I_syn = details.fwd.sync_spectrum[0, 0, 5](nu_comv)   # erg/s/Hz/cm²/sr
+
+# SSC spectrum at the same cell (requires ssc=True)
+I_ssc = details.fwd.ssc_spectrum[0, 0, 5](nu_comv)    # erg/s/Hz/cm²/sr
+
+# Compton-Y parameter as a function of electron Lorentz factor
+gamma = np.logspace(1, 8, 200)
+Y = details.fwd.Y_spectrum[0, 0, 5](gamma)            # dimensionless
+```
+
+These callable accessors are also available on `details.rvs` when a reverse shock is configured. The `sync_spectrum` and `Y_spectrum` are always available; `ssc_spectrum` is `None` unless `ssc=True`.
+
 </details>
 
 

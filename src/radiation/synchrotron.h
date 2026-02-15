@@ -37,16 +37,17 @@ struct SynElectrons {
      * @brief Calculates the comoving electron number (PER SOLID ANGLE) spectrum at a specific Lorentz factor.
      * @details Includes corrections for inverse Compton cooling effects above the cooling Lorentz factor.
      * @param gamma Electron Lorentz factor
-     * @return Column number density at the specified Lorentz factor
+     * @return Electron number per solid angle at the specified Lorentz factor
      * <!-- ************************************************************************************** -->
      */
     [[nodiscard]] Real compute_N_gamma(Real gamma) const;
 
     /**
      * <!-- ************************************************************************************** -->
-     * @brief Calculates the column number density of the electron distribution.
-     * @details Uses the electron energy spectrum to compute the column number density.
-     * @return Column number density of the electron distribution
+     * @brief Calculates the column number density of the electron distribution at a specific Lorentz factor.
+     * @details Includes corrections for inverse Compton cooling effects above the cooling Lorentz factor.
+     * @param gamma Electron Lorentz factor
+     * @return Column number density at the specified Lorentz factor
      * <!-- ************************************************************************************** -->
      */
     [[nodiscard]] Real compute_column_den(Real gamma) const;
@@ -71,7 +72,6 @@ struct SynElectrons {
  * <!-- ************************************************************************************** -->
  */
 
-///< Type alias for Synchrotron Photons
 using SynPhotons = SmoothPowerLawSyn;
 
 /// Type alias for 3D grid of synchrotron photons

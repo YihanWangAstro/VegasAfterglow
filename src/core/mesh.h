@@ -274,14 +274,18 @@ void logspace_boundary_center(Real lg2_min, Real lg2_max, size_t size, Arr& cent
  * @brief Builds an adaptive log-spaced grid with explicit break points.
  *
  * Places grid points at endpoints and break frequencies, then fills segments
- * between with approximately `pts_per_decade` log-spaced points. Points closer
- * than `min_sep` decades (log10) are merged.
+ * between with approximately `pts_per_decade` log-spaced points. Nearby points
+ * are merged automatically based on the local step size.
  *
  * @param lg2_min  Log2 of minimum grid value
  * @param lg2_max  Log2 of maximum grid value
  * @param breaks   Break frequencies (linear scale) to include
+ * @param break_weights  Importance weights for each break (top values get refined regions)
  * @param pts_per_decade  Base density of fill points per decade
  * @param grid     Output array of grid point values (resized internally)
+ * @param max_refined_breaks  Maximum number of breaks to refine (sorted by weight)
+ * @param refine_radius_decades  Half-width of the refined region around each break (in decades)
+ * @param refine_factor  Grid density multiplier inside refined regions
  * @return         Number of grid points
  * <!-- ************************************************************************************** -->
  */
@@ -634,7 +638,7 @@ Array merge_grids(Arr const& arr1, Arr const& arr2) {
 /**
  * <!-- ************************************************************************************** -->
  * @brief Estimates deceleration time for a given angle from ejecta and medium properties.
- * @details Integrates swept mass outward until m_swept = m_jet/Gamma0. Returns lab-frame time.
+ * @details Integrates swept mass outward until m_swept = m_jet/Gamma0(phi,theta). Returns lab-frame time.
  * <!-- ************************************************************************************** -->
  */
 template <typename Ejecta, typename Medium>

@@ -186,13 +186,12 @@ PYBIND11_MODULE(VegasAfterglowC, m) {
 
     // Radiation bindings
     py::class_<PyRadiation>(m, "Radiation")
-        .def(py::init<Real, Real, Real, Real, bool, bool, bool>(), py::arg("eps_e"), py::arg("eps_B"), py::arg("p"),
-             py::arg("xi_e") = 1, py::arg("ssc_cooling") = false, py::arg("ssc") = false, py::arg("kn") = false)
+        .def(py::init<Real, Real, Real, Real, bool, bool>(), py::arg("eps_e"), py::arg("eps_B"), py::arg("p"),
+             py::arg("xi_e") = 1, py::arg("ssc") = false, py::arg("kn") = false)
         .def_property_readonly("eps_e", [](PyRadiation const& r) { return r.rad.eps_e; })
         .def_property_readonly("eps_B", [](PyRadiation const& r) { return r.rad.eps_B; })
         .def_property_readonly("p", [](PyRadiation const& r) { return r.rad.p; })
         .def_property_readonly("xi_e", [](PyRadiation const& r) { return r.rad.xi_e; })
-        .def_readonly("ssc_cooling", &PyRadiation::ssc_cooling)
         .def_readonly("ssc", &PyRadiation::ssc)
         .def_readonly("kn", &PyRadiation::kn)
         .def("__repr__", &PyRadiation::repr);
@@ -283,6 +282,43 @@ PYBIND11_MODULE(VegasAfterglowC, m) {
         .def_readonly("total", &PyFlux::total)
         .def("__repr__", &PyFlux::repr);
 
+    // Spectrum evaluators and grid accessors for details() callable interface
+    py::class_<SpectrumEvaluator>(m, "_SpectrumEvaluator")
+        .def("__call__", &SpectrumEvaluator::operator(), py::arg("nu_comv"));
+
+    py::class_<YEvaluator>(m, "_YEvaluator").def("__call__", &YEvaluator::operator(), py::arg("gamma"));
+
+    py::class_<SynSpectrumGrid>(m, "_SynSpectrumGrid")
+        .def(
+            "__getitem__",
+            [](SynSpectrumGrid const& g, py::tuple idx) {
+                auto& ph = (*g.grid_)(idx[0].cast<size_t>(), idx[1].cast<size_t>(), idx[2].cast<size_t>());
+                const Real I_unit = unit::erg / (unit::Hz * unit::sec * unit::cm2);
+                return SpectrumEvaluator{
+                    [&ph, I_unit](Real nu_comv) { return ph.compute_I_nu(nu_comv * unit::Hz) / I_unit; }};
+            },
+            py::keep_alive<0, 1>());
+
+    py::class_<ICSpectrumGrid>(m, "_ICSpectrumGrid")
+        .def(
+            "__getitem__",
+            [](ICSpectrumGrid& g, py::tuple idx) {
+                auto& ph = (*g.grid_)(idx[0].cast<size_t>(), idx[1].cast<size_t>(), idx[2].cast<size_t>());
+                const Real I_unit = unit::erg / (unit::Hz * unit::sec * unit::cm2);
+                return SpectrumEvaluator{
+                    [&ph, I_unit](Real nu_comv) { return ph.compute_I_nu(nu_comv * unit::Hz) / I_unit; }};
+            },
+            py::keep_alive<0, 1>());
+
+    py::class_<YSpectrumGrid>(m, "_YSpectrumGrid")
+        .def(
+            "__getitem__",
+            [](YSpectrumGrid const& g, py::tuple idx) {
+                auto& ph = (*g.grid_)(idx[0].cast<size_t>(), idx[1].cast<size_t>(), idx[2].cast<size_t>());
+                return YEvaluator{[&ph](Real gamma) { return ph.Ys.gamma_spectrum(gamma); }};
+            },
+            py::keep_alive<0, 1>());
+
     py::class_<PyShock>(m, "ShockDetails")
         .def(py::init<>())
         .def_readonly("t_comv", &PyShock::t_comv)
@@ -309,6 +345,30 @@ PYBIND11_MODULE(VegasAfterglowC, m) {
         .def_readonly("Y_T", &PyShock::Y_T)
         .def_readonly("I_nu_max", &PyShock::I_nu_max)
         .def_readonly("Doppler", &PyShock::Doppler)
+        .def_property_readonly(
+            "sync_spectrum",
+            [](PyShock& self) -> py::object {
+                if (!self.has_syn_spectrum_)
+                    return py::none();
+                return py::cast(SynSpectrumGrid{&self.syn_photons_});
+            },
+            py::keep_alive<0, 1>())
+        .def_property_readonly(
+            "ssc_spectrum",
+            [](PyShock& self) -> py::object {
+                if (!self.has_ssc_spectrum_)
+                    return py::none();
+                return py::cast(ICSpectrumGrid{&self.ic_photons_}, py::return_value_policy::reference_internal);
+            },
+            py::keep_alive<0, 1>())
+        .def_property_readonly(
+            "Y_spectrum",
+            [](PyShock& self) -> py::object {
+                if (!self.has_syn_spectrum_)
+                    return py::none();
+                return py::cast(YSpectrumGrid{&self.syn_photons_});
+            },
+            py::keep_alive<0, 1>())
         .def("__repr__", &PyShock::repr);
 
     py::class_<PyDetails>(m, "SimulationDetails")

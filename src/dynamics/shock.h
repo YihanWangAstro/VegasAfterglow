@@ -61,6 +61,7 @@ class Shock {
     /**
      * <!-- ************************************************************************************** -->
      * @brief Resizes all grid components of the Shock object to new dimensions.
+     * @details Also resets injection_idx to t_size for all grid points.
      * @param phi_size New number of grid points in the phi direction
      * @param theta_size New number of grid points in theta direction
      * @param t_size New number of grid points in time direction

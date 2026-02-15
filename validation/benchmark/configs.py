@@ -62,20 +62,20 @@ MEDIUM_CONFIGS: Dict[str, MediumConfig] = {c.name: c for c in [
 # Radiation configurations
 # ---------------------------------------------------------------------------
 
-_STANDARD_RVS_RADIATION = {"eps_e": 0.1, "eps_B": 0.01, "p": 2.3, "xi_e": 1.0, "ssc_cooling": False, "ssc": False, "kn": False}
+_STANDARD_RVS_RADIATION = {"eps_e": 0.1, "eps_B": 0.01, "p": 2.3, "xi_e": 1.0, "ssc": False, "kn": False}
 
 RADIATION_CONFIGS: Dict[str, RadiationConfig] = {c.name: c for c in [
     # Forward-shock only
-    RadiationConfig("synchrotron",      {**_STANDARD_RADIATION, "ssc_cooling": False, "ssc": False, "kn": False}),
-    RadiationConfig("full_ssc",         {**_STANDARD_RADIATION, "ssc_cooling": True,  "ssc": True,  "kn": False}),
-    RadiationConfig("ssc_kn",           {**_STANDARD_RADIATION, "ssc_cooling": True,  "ssc": True,  "kn": True}),
-    RadiationConfig("fast_cooling",     {"eps_e": 0.1, "eps_B": 0.1,  "p": 2.5, "xi_e": 1e-3, "ssc_cooling": False, "ssc": False, "kn": False}),
-    RadiationConfig("steep_spectrum",   {"eps_e": 0.1, "eps_B": 0.01, "p": 2.8, "xi_e": 1.0,  "ssc_cooling": False, "ssc": False, "kn": False}),
-    RadiationConfig("flat_spectrum",    {"eps_e": 0.1, "eps_B": 0.01, "p": 2.05,"xi_e": 1.0,  "ssc_cooling": False, "ssc": False, "kn": False}),
+    RadiationConfig("synchrotron",      {**_STANDARD_RADIATION, "ssc": False, "kn": False}),
+    RadiationConfig("full_ssc",         {**_STANDARD_RADIATION, "ssc": True,  "kn": False}),
+    RadiationConfig("ssc_kn",           {**_STANDARD_RADIATION, "ssc": True,  "kn": True}),
+    RadiationConfig("fast_cooling",     {"eps_e": 0.1, "eps_B": 0.1,  "p": 2.5, "xi_e": 1e-3, "ssc": False, "kn": False}),
+    RadiationConfig("steep_spectrum",   {"eps_e": 0.1, "eps_B": 0.01, "p": 2.8, "xi_e": 1.0,  "ssc": False, "kn": False}),
+    RadiationConfig("flat_spectrum",    {"eps_e": 0.1, "eps_B": 0.01, "p": 2.05,"xi_e": 1.0,  "ssc": False, "kn": False}),
     # Forward + reverse shock (TODO: enable when reverse shock benchmarks are ready)
-    RadiationConfig("rvs_sync_thin", {**_STANDARD_RADIATION, "ssc_cooling": False, "ssc": False, "kn": False},
+    RadiationConfig("rvs_sync_thin", {**_STANDARD_RADIATION, "ssc": False, "kn": False},
                      rvs_params={**_STANDARD_RVS_RADIATION, "duration": 1}),
-    RadiationConfig("rvs_sync_thick", {**_STANDARD_RADIATION, "ssc_cooling": False, "ssc": False, "kn": False},
+    RadiationConfig("rvs_sync_thick", {**_STANDARD_RADIATION, "ssc": False, "kn": False},
                      rvs_params={**_STANDARD_RVS_RADIATION, "duration": 1e4}),
 ]}
 
