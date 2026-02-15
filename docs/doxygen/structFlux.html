@@ -122,7 +122,7 @@ Public Attributes</h2></td></tr>
 <div class="textblock"><p>Container for synchrotron and synchrotron self-Compton flux components. </p>
 <p>This structure organizes the different radiation components calculated for each shock region, allowing separate tracking of synchrotron emission and inverse Compton scattering contributions to the total observed flux. </p>
 
-<p class="definition">Definition at line <a class="el" href="pymodel_8h_source.html#l00345">345</a> of file <a class="el" href="pymodel_8h_source.html">pymodel.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="pymodel_8h_source.html#l00341">341</a> of file <a class="el" href="pymodel_8h_source.html">pymodel.h</a>.</p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
 <a id="ae0d2a08d9d932eea58c666d90034b8af" name="ae0d2a08d9d932eea58c666d90034b8af"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ae0d2a08d9d932eea58c666d90034b8af">&#9670;&#160;</a></span>repr()</h2>
@@ -147,26 +147,26 @@ Public Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="pymodel_8h_source.html#l00349">349</a> of file <a class="el" href="pymodel_8h_source.html">pymodel.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  349</span>                                         {</div>
-<div class="line"><span class="lineno">  350</span>        std::string <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">s</a> = <span class="stringliteral">&quot;Flux(sync&quot;</span>;</div>
-<div class="line"><span class="lineno">  351</span>        <span class="keywordflow">if</span> (<a class="code hl_variable" href="structFlux.html#a00060eafb1f9c42dc4b2c23d0e8903a0">ssc</a>.dimension() &gt; 0)</div>
-<div class="line"><span class="lineno">  352</span>            <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">s</a> += <span class="stringliteral">&quot; + ssc&quot;</span>;</div>
-<div class="line"><span class="lineno">  353</span>        <span class="keywordflow">if</span> (<a class="code hl_variable" href="structFlux.html#ab874f7e2384fdd13a9393a754515108c">sync</a>.dimension() &gt; 0) {</div>
-<div class="line"><span class="lineno">  354</span>            <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">s</a> += <span class="stringliteral">&quot;, shape=(&quot;</span>;</div>
-<div class="line"><span class="lineno">  355</span>            <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">i</a> = 0; <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">i</a> &lt; <a class="code hl_variable" href="structFlux.html#ab874f7e2384fdd13a9393a754515108c">sync</a>.dimension(); ++<a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">i</a>) {</div>
-<div class="line"><span class="lineno">  356</span>                <span class="keywordflow">if</span> (<a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">i</a> &gt; 0)</div>
-<div class="line"><span class="lineno">  357</span>                    <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">s</a> += <span class="stringliteral">&quot;, &quot;</span>;</div>
-<div class="line"><span class="lineno">  358</span>                <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">s</a> += std::to_string(<a class="code hl_variable" href="structFlux.html#ab874f7e2384fdd13a9393a754515108c">sync</a>.shape()[<a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">i</a>]);</div>
-<div class="line"><span class="lineno">  359</span>            }</div>
-<div class="line"><span class="lineno">  360</span>            <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">s</a> += <span class="stringliteral">&quot;)&quot;</span>;</div>
-<div class="line"><span class="lineno">  361</span>        }</div>
-<div class="line"><span class="lineno">  362</span>        <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">s</a> += <span class="stringliteral">&quot;)&quot;</span>;</div>
-<div class="line"><span class="lineno">  363</span>        <span class="keywordflow">return</span> <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">s</a>;</div>
-<div class="line"><span class="lineno">  364</span>    }</div>
+<p class="definition">Definition at line <a class="el" href="pymodel_8h_source.html#l00345">345</a> of file <a class="el" href="pymodel_8h_source.html">pymodel.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  345</span>                                         {</div>
+<div class="line"><span class="lineno">  346</span>        std::string <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">s</a> = <span class="stringliteral">&quot;Flux(sync&quot;</span>;</div>
+<div class="line"><span class="lineno">  347</span>        <span class="keywordflow">if</span> (<a class="code hl_variable" href="structFlux.html#a00060eafb1f9c42dc4b2c23d0e8903a0">ssc</a>.dimension() &gt; 0)</div>
+<div class="line"><span class="lineno">  348</span>            <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">s</a> += <span class="stringliteral">&quot; + ssc&quot;</span>;</div>
+<div class="line"><span class="lineno">  349</span>        <span class="keywordflow">if</span> (<a class="code hl_variable" href="structFlux.html#ab874f7e2384fdd13a9393a754515108c">sync</a>.dimension() &gt; 0) {</div>
+<div class="line"><span class="lineno">  350</span>            <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">s</a> += <span class="stringliteral">&quot;, shape=(&quot;</span>;</div>
+<div class="line"><span class="lineno">  351</span>            <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">i</a> = 0; <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">i</a> &lt; <a class="code hl_variable" href="structFlux.html#ab874f7e2384fdd13a9393a754515108c">sync</a>.dimension(); ++<a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">i</a>) {</div>
+<div class="line"><span class="lineno">  352</span>                <span class="keywordflow">if</span> (<a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">i</a> &gt; 0)</div>
+<div class="line"><span class="lineno">  353</span>                    <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">s</a> += <span class="stringliteral">&quot;, &quot;</span>;</div>
+<div class="line"><span class="lineno">  354</span>                <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">s</a> += std::to_string(<a class="code hl_variable" href="structFlux.html#ab874f7e2384fdd13a9393a754515108c">sync</a>.shape()[<a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">i</a>]);</div>
+<div class="line"><span class="lineno">  355</span>            }</div>
+<div class="line"><span class="lineno">  356</span>            <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">s</a> += <span class="stringliteral">&quot;)&quot;</span>;</div>
+<div class="line"><span class="lineno">  357</span>        }</div>
+<div class="line"><span class="lineno">  358</span>        <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">s</a> += <span class="stringliteral">&quot;)&quot;</span>;</div>
+<div class="line"><span class="lineno">  359</span>        <span class="keywordflow">return</span> <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">s</a>;</div>
+<div class="line"><span class="lineno">  360</span>    }</div>
 <div class="ttc" id="apybind_8cpp_html_ad93eae6422741850877b46bd61f08c89"><div class="ttname"><a href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">make_native_binary</a></div><div class="ttdeci">BinaryFunc make_native_binary(uintptr_t addr, std::vector&lt; Real &gt; const &amp;p)</div><div class="ttdef"><b>Definition</b> <a href="pybind_8cpp_source.html#l00027">pybind.cpp:27</a></div></div>
-<div class="ttc" id="astructFlux_html_a00060eafb1f9c42dc4b2c23d0e8903a0"><div class="ttname"><a href="structFlux.html#a00060eafb1f9c42dc4b2c23d0e8903a0">Flux::ssc</a></div><div class="ttdeci">XTArray ssc</div><div class="ttdoc">Synchrotron self-Compton flux [mJy].</div><div class="ttdef"><b>Definition</b> <a href="pymodel_8h_source.html#l00347">pymodel.h:347</a></div></div>
-<div class="ttc" id="astructFlux_html_ab874f7e2384fdd13a9393a754515108c"><div class="ttname"><a href="structFlux.html#ab874f7e2384fdd13a9393a754515108c">Flux::sync</a></div><div class="ttdeci">XTArray sync</div><div class="ttdoc">Synchrotron emission flux [mJy].</div><div class="ttdef"><b>Definition</b> <a href="pymodel_8h_source.html#l00346">pymodel.h:346</a></div></div>
+<div class="ttc" id="astructFlux_html_a00060eafb1f9c42dc4b2c23d0e8903a0"><div class="ttname"><a href="structFlux.html#a00060eafb1f9c42dc4b2c23d0e8903a0">Flux::ssc</a></div><div class="ttdeci">XTArray ssc</div><div class="ttdoc">Synchrotron self-Compton flux [mJy].</div><div class="ttdef"><b>Definition</b> <a href="pymodel_8h_source.html#l00343">pymodel.h:343</a></div></div>
+<div class="ttc" id="astructFlux_html_ab874f7e2384fdd13a9393a754515108c"><div class="ttname"><a href="structFlux.html#ab874f7e2384fdd13a9393a754515108c">Flux::sync</a></div><div class="ttdeci">XTArray sync</div><div class="ttdoc">Synchrotron emission flux [mJy].</div><div class="ttdef"><b>Definition</b> <a href="pymodel_8h_source.html#l00342">pymodel.h:342</a></div></div>
 </div><!-- fragment --><div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -205,7 +205,7 @@ Here is the caller graph for this function:</div>
 
 <p>Synchrotron self-Compton flux [mJy]. </p>
 
-<p class="definition">Definition at line <a class="el" href="pymodel_8h_source.html#l00347">347</a> of file <a class="el" href="pymodel_8h_source.html">pymodel.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="pymodel_8h_source.html#l00343">343</a> of file <a class="el" href="pymodel_8h_source.html">pymodel.h</a>.</p>
 
 </div>
 </div>
@@ -223,7 +223,7 @@ Here is the caller graph for this function:</div>
 
 <p>Synchrotron emission flux [mJy]. </p>
 
-<p class="definition">Definition at line <a class="el" href="pymodel_8h_source.html#l00346">346</a> of file <a class="el" href="pymodel_8h_source.html">pymodel.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="pymodel_8h_source.html#l00342">342</a> of file <a class="el" href="pymodel_8h_source.html">pymodel.h</a>.</p>
 
 </div>
 </div>

@@ -19,6 +19,7 @@ var annotated_dup =
     [ "GaussianJet", "classGaussianJet.html", "classGaussianJet" ],
     [ "GridConfig", "structGridConfig.html", "structGridConfig" ],
     [ "ICPhoton", "structICPhoton.html", "structICPhoton" ],
+    [ "ICSpectrumGrid", "structICSpectrumGrid.html", "structICSpectrumGrid" ],
     [ "InverseComptonY", "structInverseComptonY.html", "structInverseComptonY" ],
     [ "ISM", "classISM.html", "classISM" ],
     [ "Medium", "classMedium.html", "classMedium" ],
@@ -40,7 +41,11 @@ var annotated_dup =
     [ "SimpleState", "structSimpleState.html", "structSimpleState" ],
     [ "SmoothPowerLawSyn", "structSmoothPowerLawSyn.html", "structSmoothPowerLawSyn" ],
     [ "SpectralSegment", "structSpectralSegment.html", "structSpectralSegment" ],
+    [ "SpectrumEvaluator", "structSpectrumEvaluator.html", "structSpectrumEvaluator" ],
     [ "SynElectrons", "structSynElectrons.html", "structSynElectrons" ],
+    [ "SynSpectrumGrid", "structSynSpectrumGrid.html", "structSynSpectrumGrid" ],
     [ "TophatJet", "classTophatJet.html", "classTophatJet" ],
-    [ "Wind", "classWind.html", "classWind" ]
+    [ "Wind", "classWind.html", "classWind" ],
+    [ "YEvaluator", "structYEvaluator.html", "structYEvaluator" ],
+    [ "YSpectrumGrid", "structYSpectrumGrid.html", "structYSpectrumGrid" ]
 ];

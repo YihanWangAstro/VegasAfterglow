@@ -904,7 +904,7 @@
 <dd class="field-odd"><p><strong>gamma</strong> – Electron Lorentz factor </p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>Column number density at the specified Lorentz factor </p>
+<dd class="field-even"><p>Electron number per solid angle at the specified Lorentz factor </p>
 </dd>
 </dl>
 </dd></dl>
@@ -912,11 +912,14 @@
 <dl class="cpp function">
 <dt class="sig sig-object cpp" id="_CPPv4NK12SynElectrons18compute_column_denE4Real">
 <span id="_CPPv3NK12SynElectrons18compute_column_denE4Real"></span><span id="_CPPv2NK12SynElectrons18compute_column_denE4Real"></span><span id="SynElectrons::compute_column_den__RealC"></span><span class="target" id="VegasAfterglowstructSynElectrons_1a9c0f1754d804880a70f31945eb03cf00"></span><span class="n"><span class="pre">Real</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">compute_column_den</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">Real</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">gamma</span></span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK12SynElectrons18compute_column_denE4Real" title="Link to this definition"></a><br /></dt>
-<dd><p>Calculates the column number density of the electron distribution. </p>
-<p>Uses the electron energy spectrum to compute the column number density. </p>
+<dd><p>Calculates the column number density of the electron distribution at a specific Lorentz factor. </p>
+<p>Includes corrections for inverse Compton cooling effects above the cooling Lorentz factor. </p>
 <dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>Column number density of the electron distribution </p>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>gamma</strong> – Electron Lorentz factor </p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Column number density at the specified Lorentz factor </p>
 </dd>
 </dl>
 </dd></dl>
@@ -1020,7 +1023,7 @@
 <dl class="cpp function">
 <dt class="sig sig-object cpp" id="_CPPv4NK15InverseComptonY14gamma_spectrumE4Real">
 <span id="_CPPv3NK15InverseComptonY14gamma_spectrumE4Real"></span><span id="_CPPv2NK15InverseComptonY14gamma_spectrumE4Real"></span><span id="InverseComptonY::gamma_spectrum__RealC"></span><span class="target" id="VegasAfterglowstructInverseComptonY_1a10d6b44bd159fd7fe8e5a3f1d6be453c"></span><span class="n"><span class="pre">Real</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">gamma_spectrum</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">Real</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">gamma</span></span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK15InverseComptonY14gamma_spectrumE4Real" title="Link to this definition"></a><br /></dt>
-<dd><p>Calculates the effective Y parameter for a given Lorentz factor and spectral index. </p>
+<dd><p>Calculates the effective Y parameter for a given electron Lorentz factor. </p>
 <p>Different scaling relations apply depending on the cooling regime and gamma value. </p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -1035,14 +1038,14 @@
 <dl class="cpp function">
 <dt class="sig sig-object cpp" id="_CPPv4NK15InverseComptonY11nu_spectrumE4Real">
 <span id="_CPPv3NK15InverseComptonY11nu_spectrumE4Real"></span><span id="_CPPv2NK15InverseComptonY11nu_spectrumE4Real"></span><span id="InverseComptonY::nu_spectrum__RealC"></span><span class="target" id="VegasAfterglowstructInverseComptonY_1a8a52b79880e15b9768ae1a81d0f4d65a"></span><span class="n"><span class="pre">Real</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">nu_spectrum</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">Real</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">nu</span></span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK15InverseComptonY11nu_spectrumE4Real" title="Link to this definition"></a><br /></dt>
-<dd><p>Calculates the effective Y parameter for a given seed photon frequency. </p>
-<p>Different scaling relations apply depending on the cooling regime and frequency value. </p>
+<dd><p>Calculates the effective Y parameter at the electron Lorentz factor corresponding to a given synchrotron frequency. </p>
+<p>Converts frequency to electron Lorentz factor via the synchrotron relation, then evaluates Y(gamma). </p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>nu</strong> – Seed photon frequency </p>
+<dd class="field-odd"><p><strong>nu</strong> – Synchrotron frequency </p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>The effective Y parameter at the given frequency </p>
+<dd class="field-even"><p>The effective Y parameter at the corresponding electron Lorentz factor </p>
 </dd>
 </dl>
 </dd></dl>
@@ -1148,6 +1151,7 @@
 <dt class="sig sig-object cpp" id="_CPPv4N5Shock6resizeE6size_t6size_t6size_t">
 <span id="_CPPv3N5Shock6resizeE6size_t6size_t6size_t"></span><span id="_CPPv2N5Shock6resizeE6size_t6size_t6size_t"></span><span id="Shock::resize__s.s.s"></span><span class="target" id="VegasAfterglowclassShock_1a21251939d5191865d40e31bd3155ec3a"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">resize</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">size_t</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">phi_size</span></span>, <span class="n"><span class="pre">size_t</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">theta_size</span></span>, <span class="n"><span class="pre">size_t</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">t_size</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N5Shock6resizeE6size_t6size_t6size_t" title="Link to this definition"></a><br /></dt>
 <dd><p>Resizes all grid components of the <a class="reference internal" href="#VegasAfterglowclassShock"><span class="std std-ref">Shock</span></a> object to new dimensions. </p>
+<p>Also resets injection_idx to t_size for all grid points. </p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">

@@ -1,12 +1,12 @@
 <map id="BrokenPowerLaw::eval" name="BrokenPowerLaw::eval">
 <area shape="rect" id="Node000001" title=" " alt="" coords="861,141,1029,166"/>
-<area shape="rect" id="Node000002" href="$structInverseComptonY.html#a10d6b44bd159fd7fe8e5a3f1d6be453c" title="Calculates the effective Y parameter for a given Lorentz factor and spectral index." alt="" coords="620,133,813,173"/>
+<area shape="rect" id="Node000002" href="$structInverseComptonY.html#a10d6b44bd159fd7fe8e5a3f1d6be453c" title="Calculates the effective Y parameter for a given electron Lorentz factor." alt="" coords="620,133,813,173"/>
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="848,156,813,156,813,151,848,151"/>
-<area shape="rect" id="Node000003" href="$structSynElectrons.html#a9c0f1754d804880a70f31945eb03cf00" title="Calculates the column number density of the electron distribution." alt="" coords="401,5,572,45"/>
+<area shape="rect" id="Node000003" href="$structSynElectrons.html#a9c0f1754d804880a70f31945eb03cf00" title="Calculates the column number density of the electron distribution at a specific Lorentz factor." alt="" coords="401,5,572,45"/>
 <area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="677,127,627,93,571,60,545,48,547,43,573,55,630,89,680,123"/>
 <area shape="rect" id="Node000004" href="$structSynElectrons.html#ad16be18e12bddcebbcf69f16b0de4483" title="Calculates the comoving electron number (PER SOLID ANGLE) spectrum at a specific Lorentz factor." alt="" coords="401,69,572,109"/>
 <area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="630,132,558,112,560,107,632,127"/>
-<area shape="rect" id="Node000005" href="$structInverseComptonY.html#a8a52b79880e15b9768ae1a81d0f4d65a" title="Calculates the effective Y parameter for a given seed photon frequency." alt="" coords="407,133,566,173"/>
+<area shape="rect" id="Node000005" href="$structInverseComptonY.html#a8a52b79880e15b9768ae1a81d0f4d65a" title="Calculates the effective Y parameter at the electron Lorentz factor corresponding to a given synchrot..." alt="" coords="407,133,566,173"/>
 <area shape="poly" id="edge4_Node000002_Node000005" title=" " alt="" coords="606,156,566,156,566,151,606,151"/>
 <area shape="rect" id="Node000006" href="$inverse-compton_8cpp.html#ad06eafa794ead54fd991828713903f5a" title=" " alt="" coords="189,199,353,225"/>
 <area shape="poly" id="edge5_Node000002_Node000006" title=" " alt="" coords="621,179,572,188,458,202,354,210,353,205,458,197,572,183,620,174"/>

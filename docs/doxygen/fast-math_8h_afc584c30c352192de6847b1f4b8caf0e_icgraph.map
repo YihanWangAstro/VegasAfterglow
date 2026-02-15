@@ -12,13 +12,13 @@
 <area shape="poly" id="edge19_Node000001_Node000019" title=" " alt="" coords="1143,354,1061,365,1060,360,1142,349"/>
 <area shape="rect" id="Node000032" href="$fast-math_8h.html#a1228dad8e5957975fc02a01a15bed243" title="Computes log2(1+2^x)" alt="" coords="965,790,1073,815"/>
 <area shape="poly" id="edge36_Node000001_Node000032" title=" " alt="" coords="1196,371,1168,503,1143,588,1110,672,1070,741,1033,792,1029,789,1066,738,1106,670,1138,586,1163,501,1191,370"/>
-<area shape="rect" id="Node000005" href="$structInverseComptonY.html#a10d6b44bd159fd7fe8e5a3f1d6be453c" title="Calculates the effective Y parameter for a given Lorentz factor and spectral index." alt="" coords="679,52,872,92"/>
+<area shape="rect" id="Node000005" href="$structInverseComptonY.html#a10d6b44bd159fd7fe8e5a3f1d6be453c" title="Calculates the effective Y parameter for a given electron Lorentz factor." alt="" coords="679,52,872,92"/>
 <area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="935,301,929,295,911,271,904,247,902,223,904,199,906,175,904,152,897,129,881,106,866,94,870,90,885,102,902,126,910,151,911,175,909,199,907,223,909,246,916,269,933,292,938,297"/>
-<area shape="rect" id="Node000006" href="$structSynElectrons.html#a9c0f1754d804880a70f31945eb03cf00" title="Calculates the column number density of the electron distribution." alt="" coords="446,100,617,140"/>
+<area shape="rect" id="Node000006" href="$structSynElectrons.html#a9c0f1754d804880a70f31945eb03cf00" title="Calculates the column number density of the electron distribution at a specific Lorentz factor." alt="" coords="446,100,617,140"/>
 <area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="666,96,617,106,616,101,665,91"/>
 <area shape="rect" id="Node000007" href="$structSynElectrons.html#ad16be18e12bddcebbcf69f16b0de4483" title="Calculates the comoving electron number (PER SOLID ANGLE) spectrum at a specific Lorentz factor." alt="" coords="446,164,617,204"/>
 <area shape="poly" id="edge6_Node000005_Node000007" title=" " alt="" coords="681,100,669,106,655,118,646,129,637,142,621,154,599,166,596,162,619,150,633,138,642,126,651,114,667,102,679,95"/>
-<area shape="rect" id="Node000008" href="$structInverseComptonY.html#a8a52b79880e15b9768ae1a81d0f4d65a" title="Calculates the effective Y parameter for a given seed photon frequency." alt="" coords="452,36,611,76"/>
+<area shape="rect" id="Node000008" href="$structInverseComptonY.html#a8a52b79880e15b9768ae1a81d0f4d65a" title="Calculates the effective Y parameter at the electron Lorentz factor corresponding to a given synchrot..." alt="" coords="452,36,611,76"/>
 <area shape="poly" id="edge7_Node000005_Node000008" title=" " alt="" coords="665,68,610,64,611,59,665,62"/>
 <area shape="rect" id="Node000009" href="$inverse-compton_8cpp.html#ad06eafa794ead54fd991828713903f5a" title=" " alt="" coords="210,179,374,205"/>
 <area shape="poly" id="edge8_Node000005_Node000009" title=" " alt="" coords="719,49,660,28,590,12,552,9,515,9,479,15,444,27,418,41,394,59,352,103,321,147,302,180,297,178,317,144,348,100,390,56,415,37,442,22,477,10,515,4,553,3,590,7,661,23,721,44"/>

@@ -8,7 +8,7 @@ var searchData=
   ['slope_5',['slope',['../structSpectralSegment.html#ab776facaf264af011a8b55e8e6e9ecbf',1,'SpectralSegment']]],
   ['spreading_6',['spreading',['../classEjecta.html#a8de0be09be7bd262e246c756699addd0',1,'Ejecta::spreading'],['../classTophatJet.html#aff514e356b2b7c08acaf3608baa261d0',1,'TophatJet::spreading'],['../classGaussianJet.html#a9ee23bc79cff844132e7eeb55e174d49',1,'GaussianJet::spreading'],['../classPowerLawJet.html#a783b242334d9723f19a3f724b65629b5',1,'PowerLawJet::spreading']]],
   ['ssc_7',['ssc',['../classPyRadiation.html#a8e54b2f905a744304b3296a66f4291ba',1,'PyRadiation::ssc'],['../structFlux.html#a00060eafb1f9c42dc4b2c23d0e8903a0',1,'Flux::ssc']]],
-  ['ssc_5fcooling_8',['ssc_cooling',['../classPyRadiation.html#a1d7e7abb6cc072cc9402430f30522aa6',1,'PyRadiation']]],
-  ['symmetry_9',['symmetry',['../classShock.html#a1ac94c10777cd8af8a4dd62611eabc44',1,'Shock']]],
+  ['symmetry_8',['symmetry',['../classShock.html#a1ac94c10777cd8af8a4dd62611eabc44',1,'Shock']]],
+  ['syn_5fphotons_5f_9',['syn_photons_',['../structPyShock.html#a9f7bacf9366cc0f5cf128562b17ebb55',1,'PyShock']]],
   ['sync_10',['sync',['../structFlux.html#ab874f7e2384fdd13a9393a754515108c',1,'Flux']]]
 ];

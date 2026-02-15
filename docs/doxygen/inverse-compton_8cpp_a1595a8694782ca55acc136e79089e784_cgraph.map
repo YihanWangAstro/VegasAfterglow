@@ -4,7 +4,7 @@
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="148,54,196,47,423,24,424,29,196,53,149,59"/>
 <area shape="rect" id="Node000003" href="$pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89" title=" " alt="" coords="805,132,960,157"/>
 <area shape="poly" id="edge11_Node000001_Node000003" title=" " alt="" coords="148,69,416,86,586,100,758,119,806,127,805,132,757,125,586,105,416,91,148,74"/>
-<area shape="rect" id="Node000004" href="$structInverseComptonY.html#a10d6b44bd159fd7fe8e5a3f1d6be453c" title="Calculates the effective Y parameter for a given Lorentz factor and spectral index." alt="" coords="196,106,389,146"/>
+<area shape="rect" id="Node000004" href="$structInverseComptonY.html#a10d6b44bd159fd7fe8e5a3f1d6be453c" title="Calculates the effective Y parameter for a given electron Lorentz factor." alt="" coords="196,106,389,146"/>
 <area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="126,79,205,100,203,105,125,84"/>
 <area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="623,18,691,27,758,48,788,63,816,82,861,120,857,124,813,86,785,67,756,52,689,33,622,23"/>
 <area shape="poly" id="edge10_Node000004_Node000003" title=" " alt="" coords="390,126,791,139,791,144,390,132"/>

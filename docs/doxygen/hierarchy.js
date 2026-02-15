@@ -15,6 +15,7 @@ var hierarchy =
     [ "GaussianJet", "classGaussianJet.html", null ],
     [ "GridConfig", "structGridConfig.html", null ],
     [ "ICPhoton< Electrons, Photons >", "structICPhoton.html", null ],
+    [ "ICSpectrumGrid", "structICSpectrumGrid.html", null ],
     [ "std::invalid_argument", null, [
       [ "afterglow::ValidationError", "classafterglow_1_1ValidationError.html", null ]
     ] ],
@@ -42,7 +43,11 @@ var hierarchy =
     [ "SimpleState< Ejecta >", "structSimpleState.html", null ],
     [ "SmoothPowerLawSyn", "structSmoothPowerLawSyn.html", null ],
     [ "SpectralSegment", "structSpectralSegment.html", null ],
+    [ "SpectrumEvaluator", "structSpectrumEvaluator.html", null ],
     [ "SynElectrons", "structSynElectrons.html", null ],
+    [ "SynSpectrumGrid", "structSynSpectrumGrid.html", null ],
     [ "TophatJet", "classTophatJet.html", null ],
-    [ "Wind", "classWind.html", null ]
+    [ "Wind", "classWind.html", null ],
+    [ "YEvaluator", "structYEvaluator.html", null ],
+    [ "YSpectrumGrid", "structYSpectrumGrid.html", null ]
 ];

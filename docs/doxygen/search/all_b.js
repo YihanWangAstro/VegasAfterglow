@@ -15,7 +15,7 @@ var searchData=
   ['log2_5flower_12',['log2_lower',['../structSpectralSegment.html#a676d43ff8be2feab8369a2a8ae19d16c',1,'SpectralSegment']]],
   ['log2_5fnu_5fa_13',['log2_nu_a',['../structSmoothPowerLawSyn.html#a2ab39f4195f68303f734228349ed80c6',1,'SmoothPowerLawSyn']]],
   ['log2_5fnu_5fc_14',['log2_nu_c',['../structPowerLawSyn.html#aff7b8c9528c965f1b4a90c007f0c7181',1,'PowerLawSyn::log2_nu_c'],['../structSmoothPowerLawSyn.html#a36ca3ac0773fe7422a57e7211c50bdf2',1,'SmoothPowerLawSyn::log2_nu_c']]],
-  ['log2_5fnu_5fm_15',['log2_nu_m',['../structSmoothPowerLawSyn.html#afeb5eabd4ad90fff43dda1427bcb841e',1,'SmoothPowerLawSyn::log2_nu_m'],['../structSmoothPowerLawSyn.html#a5f130ae27746e96b4956443d9b0e808e',1,'SmoothPowerLawSyn::log2_nu_M']]],
+  ['log2_5fnu_5fm_15',['log2_nu_m',['../structSmoothPowerLawSyn.html#a5f130ae27746e96b4956443d9b0e808e',1,'SmoothPowerLawSyn::log2_nu_M'],['../structSmoothPowerLawSyn.html#afeb5eabd4ad90fff43dda1427bcb841e',1,'SmoothPowerLawSyn::log2_nu_m']]],
   ['log2_5fsmooth_5fone_16',['log2_smooth_one',['../smooth-power-law-syn_8cpp.html#afc2414ef27e3402b3ea1f8ef407f992e',1,'smooth-power-law-syn.cpp']]],
   ['log2_5fsoftplus_17',['log2_softplus',['../fast-math_8h.html#a1228dad8e5957975fc02a01a15bed243',1,'fast-math.h']]],
   ['log2space_18',['log2space',['../mesh_8h.html#a76f104cdad403ea346ff1a6603c78ad6',1,'mesh.h']]],

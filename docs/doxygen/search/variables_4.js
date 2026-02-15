@@ -10,9 +10,10 @@ var searchData=
   ['eps4_7',['eps4',['../structReverseState.html#ac4b9d139f2dd46d434f33a15f9b55d78',1,'ReverseState']]],
   ['eps_5fb_8',['eps_B',['../structRadParams.html#a0521194caf6b87cb685fa67fd92204c7',1,'RadParams']]],
   ['eps_5fe_9',['eps_e',['../structRadParams.html#aac4103f83a674a9b9c7cd16e6be1e4a9',1,'RadParams']]],
-  ['eps_5fjet_10',['eps_jet',['../structSimpleState.html#a05f3bf8627557a44c61c45c62c6c2500',1,'SimpleState::eps_jet'],['../structForwardState.html#a32da6a2c763df676d12a9a1c1230186e',1,'ForwardState::eps_jet']]],
+  ['eps_5fjet_10',['eps_jet',['../structForwardState.html#a32da6a2c763df676d12a9a1c1230186e',1,'ForwardState::eps_jet'],['../structSimpleState.html#a05f3bf8627557a44c61c45c62c6c2500',1,'SimpleState::eps_jet']]],
   ['eps_5fk_11',['eps_k',['../classEjecta.html#a1952705ec5647300cd09255dcfc786cd',1,'Ejecta']]],
   ['epsilon_12',['epsilon',['../classCoastingShock.html#ab94699fa87c9feb1fa9da4784b7fe771',1,'CoastingShock']]],
   ['erg_13',['erg',['../namespaceunit.html#a255e82bd3b0ebb273d6663111278d624',1,'unit']]],
-  ['ev_14',['eV',['../namespaceunit.html#a4d688cefb8c96513c3aa8a4f8c83d200',1,'unit']]]
+  ['ev_14',['eV',['../namespaceunit.html#a4d688cefb8c96513c3aa8a4f8c83d200',1,'unit']]],
+  ['eval_5f_15',['eval_',['../structSpectrumEvaluator.html#aa76b2826609e6476572a75e18c82806b',1,'SpectrumEvaluator::eval_'],['../structYEvaluator.html#a571deb0c4011ddaa5108e51454d4ea52',1,'YEvaluator::eval_']]]
 ];

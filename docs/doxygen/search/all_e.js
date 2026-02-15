@@ -10,7 +10,7 @@ var searchData=
   ['omega_5fm_7',['Omega_m',['../namespacecon.html#af7e2aaa6311d30f35a07dc75fa9c4516',1,'con']]],
   ['one_5fplus_5fz_8',['one_plus_z',['../classObserver.html#ada924f16ced53ca200a9f34222c5362d',1,'Observer']]],
   ['operator_22_22_5fr_9',['operator&quot;&quot;_r',['../macros_8h.html#aa64d4a5a9597d27900cfaaf8d70b8520',1,'operator&quot;&quot;_r(unsigned long long x):&#160;macros.h'],['../macros_8h.html#a995e5aefe53e2cfabdf65b276e0c40c6',1,'operator&quot;&quot;_r(long double x):&#160;macros.h']]],
-  ['operator_28_29_10',['operator()',['../classSimpleShockEqn.html#aee403b3fa4ba1baf1ae64e2d008aa80f',1,'SimpleShockEqn::operator()()'],['../classFRShockEqn.html#a7d760924670c822878e3364890be480f',1,'FRShockEqn::operator()()'],['../classForwardShockEqn.html#ad28b4b673744d7fbb42b21f5bc31f103',1,'ForwardShockEqn::operator()()']]],
+  ['operator_28_29_10',['operator()',['../classFRShockEqn.html#a7d760924670c822878e3364890be480f',1,'FRShockEqn::operator()()'],['../classSimpleShockEqn.html#aee403b3fa4ba1baf1ae64e2d008aa80f',1,'SimpleShockEqn::operator()()'],['../classForwardShockEqn.html#ad28b4b673744d7fbb42b21f5bc31f103',1,'ForwardShockEqn::operator()()'],['../structYEvaluator.html#a038cbcaa3d1d274c7b498ed1b7bd2946',1,'YEvaluator::operator()()'],['../structSpectrumEvaluator.html#a98e80692750927a5d4359ee9dc4fb384',1,'SpectrumEvaluator::operator()()']]],
   ['order_11',['order',['../synchrotron_8cpp.html#a59b47fc71384572d072692740171988e',1,'synchrotron.cpp']]],
   ['output_20and_20printing_20functions_12',['Output and Printing Functions',['../group__IO__Functions.html',1,'']]]
 ];

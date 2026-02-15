@@ -131,7 +131,6 @@ The ``Fitter`` constructor accepts keyword arguments for source properties, mode
         rvs_shock=True,           # Include reverse shock
         fwd_ssc=True,             # Forward shock inverse Compton
         rvs_ssc=False,            # Reverse shock inverse Compton
-        ssc_cooling=True,         # IC cooling effects
         kn=True,                  # Klein-Nishina corrections
         magnetar=True,            # Magnetar energy injection
 
@@ -629,7 +628,6 @@ For the physical details of inverse Compton and Klein-Nishina corrections, see :
         z=1.58, lumi_dist=3.364e28,
         jet="tophat", medium="ism",
         fwd_ssc=True,
-        ssc_cooling=True,
         kn=True,
     )
 
@@ -656,7 +654,6 @@ For the physical details of inverse Compton and Klein-Nishina corrections, see :
         rvs_shock=True,
         fwd_ssc=True,
         rvs_ssc=True,
-        ssc_cooling=True,
         kn=True,
     )
 
@@ -762,7 +759,6 @@ Complex Model Combinations
         rvs_shock=True,
         fwd_ssc=True,
         rvs_ssc=True,
-        ssc_cooling=True,
         kn=True,
         magnetar=True,
     )

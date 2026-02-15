@@ -6,7 +6,7 @@
 <area shape="poly" id="edge18_Node000001_Node000003" title=" " alt="" coords="114,91,161,71,217,52,308,28,381,13,454,5,549,3,780,3,844,4,894,11,942,27,999,56,1032,79,1062,106,1106,157,1102,161,1058,110,1028,83,996,61,940,32,893,16,844,9,780,8,549,8,454,10,381,18,309,33,218,57,163,76,116,96"/>
 <area shape="rect" id="Node000004" href="$inverse-compton_8h.html#a38ea147ad8840b32851c368e51808c84" title=" " alt="" coords="231,94,392,119"/>
 <area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="170,104,217,104,217,109,170,109"/>
-<area shape="rect" id="Node000009" href="$structInverseComptonY.html#a10d6b44bd159fd7fe8e5a3f1d6be453c" title="Calculates the effective Y parameter for a given Lorentz factor and spectral index." alt="" coords="453,237,647,277"/>
+<area shape="rect" id="Node000009" href="$structInverseComptonY.html#a10d6b44bd159fd7fe8e5a3f1d6be453c" title="Calculates the effective Y parameter for a given electron Lorentz factor." alt="" coords="453,237,647,277"/>
 <area shape="poly" id="edge12_Node000001_Node000009" title=" " alt="" coords="150,117,290,148,406,180,458,203,505,228,503,233,456,208,404,185,289,153,149,122"/>
 <area shape="rect" id="Node000011" href="$structInverseComptonY.html#ab690b3be057dce6c2bc6b86b91447aca" title=" " alt="" coords="217,195,405,235"/>
 <area shape="poly" id="edge19_Node000001_Node000011" title=" " alt="" coords="112,117,219,174,248,187,246,192,216,178,109,122"/>

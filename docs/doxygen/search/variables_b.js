@@ -12,6 +12,6 @@ var searchData=
   ['log2_5flower_9',['log2_lower',['../structSpectralSegment.html#a676d43ff8be2feab8369a2a8ae19d16c',1,'SpectralSegment']]],
   ['log2_5fnu_5fa_10',['log2_nu_a',['../structSmoothPowerLawSyn.html#a2ab39f4195f68303f734228349ed80c6',1,'SmoothPowerLawSyn']]],
   ['log2_5fnu_5fc_11',['log2_nu_c',['../structPowerLawSyn.html#aff7b8c9528c965f1b4a90c007f0c7181',1,'PowerLawSyn::log2_nu_c'],['../structSmoothPowerLawSyn.html#a36ca3ac0773fe7422a57e7211c50bdf2',1,'SmoothPowerLawSyn::log2_nu_c']]],
-  ['log2_5fnu_5fm_12',['log2_nu_m',['../structSmoothPowerLawSyn.html#afeb5eabd4ad90fff43dda1427bcb841e',1,'SmoothPowerLawSyn::log2_nu_m'],['../structSmoothPowerLawSyn.html#a5f130ae27746e96b4956443d9b0e808e',1,'SmoothPowerLawSyn::log2_nu_M']]],
+  ['log2_5fnu_5fm_12',['log2_nu_m',['../structSmoothPowerLawSyn.html#a5f130ae27746e96b4956443d9b0e808e',1,'SmoothPowerLawSyn::log2_nu_M'],['../structSmoothPowerLawSyn.html#afeb5eabd4ad90fff43dda1427bcb841e',1,'SmoothPowerLawSyn::log2_nu_m']]],
   ['lumi_5fdist_13',['lumi_dist',['../classPyObserver.html#a3767075003ef446259a3f2a1dcaa6c8e',1,'PyObserver']]]
 ];
