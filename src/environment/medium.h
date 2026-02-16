@@ -96,7 +96,7 @@ class Wind {
      * <!-- ************************************************************************************** -->
      */
     explicit Wind(Real A_star, Real n_ism = 0, Real n0 = con::inf) noexcept
-        : A(A_star * 5e11 * unit::g / unit::cm), rho_ism(n_ism * con::mp), r02(A / (n0 * con::mp)) {}
+        : A(A_star * 5e11 * unit::g / unit::cm), rho_ism(n_ism * con::mp), r02(A / (n0 * 1.3 * con::mp)) {}
 
     /**
      * <!-- ************************************************************************************** -->
@@ -185,7 +185,7 @@ namespace evn {
         constexpr Real r0 = 1e17 * unit::cm; // reference radius
         const Real A = A_star * 5e11 * unit::g / unit::cm * std::pow(r0, k - 2);
         const Real rho_ism = n_ism * con::mp;
-        const Real r0k = A / (n0 * con::mp);
+        const Real r0k = A / (n0 * 1.3 * con::mp);
 
         // Return a function that computes density = A/r^k
         // This represents a steady-state stellar wind where density falls off as 1/r^k

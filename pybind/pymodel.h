@@ -399,7 +399,7 @@ struct PyFlux {
 };
 
 // Type aliases for IC photon grid
-using SynICPhoton = ICPhoton<SynElectrons, SmoothPowerLawSyn>;
+using SynICPhoton = ICPhoton<SynElectrons, SynPhotons>;
 using SynICPhotonGrid = xt::xtensor<SynICPhoton, 3>;
 
 /// Callable evaluator for per-cell spectrum queries (takes comoving frequency in Hz)
