@@ -9,18 +9,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 **[Download Validation Report (PDF)](https://yihanwangastro.github.io/VegasAfterglow/reports/latest/comprehensive_report.pdf)**
 
-### Performance
-
-#### **~5x Faster Computation for Top-Hat and Two-Component Jets**
-- Automatic symmetry detection eliminates redundant computation for symmetric jet structures
-- Top-hat jets now compute a single representative grid point and broadcast results across the full angular grid
-- Two-component jets similarly benefit by computing only unique angular groups
-- Applies to all stages: shock dynamics, electron distribution, synchrotron and IC photon generation
-
-#### **Reduced Memory Usage in Flux Computation**
-- Eliminated large intermediate arrays during observer flux integration
-- Direct accumulation replaces the previous two-pass (store-then-sum) approach
-
 ### Added
 
 #### **Redesigned MCMC Fitting Module**
@@ -90,6 +78,18 @@ For the full MCMC fitting guide, including advanced customization examples, see 
 #### **Smooth Electron Distribution for IC Integration**
 
 - Electron energy distribution now uses smooth broken power-law transitions at cooling and injection breaks, consistent with the synchrotron photon spectrum
+
+### Performance
+
+#### **~5x Faster Computation for Top-Hat and Two-Component Jets**
+- Automatic symmetry detection eliminates redundant computation for symmetric jet structures
+- Top-hat jets now compute a single representative grid point and broadcast results across the full angular grid
+- Two-component jets similarly benefit by computing only unique angular groups
+- Applies to all stages: shock dynamics, electron distribution, synchrotron and IC photon generation
+
+#### **Reduced Memory Usage in Flux Computation**
+- Eliminated large intermediate arrays during observer flux integration
+- Direct accumulation replaces the previous two-pass (store-then-sum) approach
 
 ### Changed
 
