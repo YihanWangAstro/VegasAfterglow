@@ -449,11 +449,7 @@ Real enclosed_thermal_energy(Func const& rho, Real r, Real Gamma, Real ad_idx, R
 /// @brief Fast path for enclosed mass with compile-time medium detection.
 template <typename Medium>
 Real enclosed_mass_medium(Medium const& medium, Real phi, Real theta, Real r) {
-    using MediumT = std::remove_cvref_t<Medium>;
-
-    if constexpr (std::is_same_v<MediumT, ISM>) {
-        return medium.mass(r);
-    } else if constexpr (std::is_same_v<MediumT, Wind>) {
+    if constexpr (HasMass<Medium>) {
         return medium.mass(r);
     } else {
         return enclosed_mass([&](Real r_) { return medium.rho(phi, theta, r_); }, r);

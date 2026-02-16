@@ -32,7 +32,7 @@ concept HasU = requires(T t) {
 
 template <typename T>
 concept HasMass = requires(T t) {
-    { t.mass(0.0, 0.0, 0.0) };
+    { t.mass(0.0) };
 };
 
 #define MAKE_THIS_ODEINT_STATE(classname, data, array_size)                                                            \
