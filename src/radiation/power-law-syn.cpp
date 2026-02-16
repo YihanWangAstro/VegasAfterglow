@@ -76,12 +76,12 @@ Real PowerLawSyn::compute_I_nu(Real nu) const {
 }
 
 Real PowerLawSyn::compute_log2_I_nu(Real log2_nu) const {
-    constexpr Real ln2 = 1.442695040888963407359924681001892137;
+    constexpr Real log2e = 1.442695040888963407359924681001892137;
     if (log2_nu <= log2_nu_c) { // Below cooling frequency, simple scaling
-        return log2_I_nu_max + compute_log2_spectrum(log2_nu) - ln2 * fast_exp2(log2_nu) * inv_nu_M_;
+        return log2_I_nu_max + compute_log2_spectrum(log2_nu) - log2e * fast_exp2(log2_nu) * inv_nu_M_;
     } else {
         const Real nu = fast_exp2(log2_nu);
         return log2_I_nu_max + compute_log2_spectrum(log2_nu) + fast_log2(inverse_compton_correction(*this, nu)) -
-               ln2 * nu * inv_nu_M_;
+               log2e * nu * inv_nu_M_;
     }
 }

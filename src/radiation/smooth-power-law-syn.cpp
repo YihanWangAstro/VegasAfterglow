@@ -83,7 +83,8 @@ void SmoothPowerLawSyn::build() {
     smooth_c_slow_ = 1; //1 - 0.04 * p;
     smooth_m_fast_ = 1; //3.5 - 0.85 * p;
     smooth_c_fast_ = 1; //0.6;
-    smooth_a_ = 3.5 * p - 1.5;
+    constexpr Real ln2 = 0.6931471805599453;
+    smooth_a_ = (3.5 * p - 1.5) / ln2;
 
     // Precompute s*(beta_lo - beta_hi) for broken power law transitions
     diff_slope_m_slow_ = smooth_m_slow_ * (0.5 * p - 1.0 / 6.0);
@@ -111,12 +112,12 @@ Real SmoothPowerLawSyn::compute_I_nu(Real nu) const {
 }
 
 Real SmoothPowerLawSyn::compute_log2_I_nu(Real log2_nu) const {
-    constexpr Real ln2 = 1.442695040888963407359924681001892137;
+    constexpr Real log2e = 1.442695040888963407359924681001892137;
     if (log2_nu <= log2_nu_c) { // Below cooling frequency, simple scaling
-        return log2_I_nu_max + compute_log2_spectrum(log2_nu) - ln2 * inv_nu_M_ * fast_exp2(log2_nu);
+        return log2_I_nu_max + compute_log2_spectrum(log2_nu) - log2e * inv_nu_M_ * fast_exp2(log2_nu);
     } else {
         const Real nu = fast_exp2(log2_nu);
-        return log2_I_nu_max + compute_log2_spectrum(log2_nu) - ln2 * inv_nu_M_ * nu +
+        return log2_I_nu_max + compute_log2_spectrum(log2_nu) - log2e * inv_nu_M_ * nu +
                fast_log2(inverse_compton_correction(*this, nu));
     }
 }
