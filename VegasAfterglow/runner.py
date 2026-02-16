@@ -1,398 +1,36 @@
 """Afterglow model fitting with custom priors, likelihoods, and jet/medium profiles."""
 
 import logging
-import math
 import os
-import types
 from concurrent.futures import ThreadPoolExecutor
 from contextlib import contextmanager
-from dataclasses import dataclass
 from typing import Callable, List, Optional, Sequence, Tuple
 
 import bilby
 import emcee
 import numpy as np
-from bilby.core.sampler.emcee import Emcee as _BilbyEmcee
 
-from .types import FitResult, ModelParams, ParamDef, Scale
-from .VegasAfterglowC import (
-    ISM,
-    GaussianJet,
-    Magnetar,
-    Model,
-    Observer,
-    PowerLawJet,
-    PowerLawWing,
-    Radiation,
-    StepPowerLawJet,
-    TophatJet,
-    TwoComponentJet,
-    Wind,
+from ._fitting_config import (
+    JET_RULES,
+    MEDIUM_RULES,
+    SAMPLER_DEFAULTS,
+    TOGGLE_RULES,
+    _BandObs,
 )
-
-# Patch bilby to accept 'moves' kwarg for emcee sampler
-_BilbyEmcee.default_kwargs["moves"] = None
-
-
-class ThreadPoolWithClose(ThreadPoolExecutor):
-    def close(self):
-        self.shutdown(wait=True)
-
-    def join(self):
-        pass
-
+from ._fitting_utils import (
+    AfterglowLikelihood,
+    ThreadPoolWithClose,
+    _build_transformer,
+    _default_jet_factory,
+    _default_medium_factory,
+    _get_latex_label,
+    get_optimal_nwalkers,
+    get_optimal_queue_size,
+)
+from .types import FitResult, ModelParams, ParamDef, Scale
+from .VegasAfterglowC import Model, Observer, Radiation
 
 logger = logging.getLogger(__name__)
-
-LATEX_LABELS = {
-    "E_iso": r"$E_{\rm iso}$",
-    "Gamma0": r"$\Gamma_0$",
-    "theta_c": r"$\theta_c$",
-    "theta_v": r"$\theta_v$",
-    "theta_w": r"$\theta_w$",
-    "k_e": r"$k_E$",
-    "k_g": r"$k_\Gamma$",
-    "E_iso_w": r"$E_{\rm iso,w}$",
-    "Gamma0_w": r"$\Gamma_{0,w}$",
-    "n_ism": r"$n_{\rm ISM}$",
-    "A_star": r"$A_*$",
-    "n0": r"$n_0$",
-    "k_m": r"$k_m$",
-    "p": r"$p$",
-    "eps_e": r"$\epsilon_e$",
-    "eps_B": r"$\epsilon_B$",
-    "xi_e": r"$\xi_e$",
-    "p_r": r"$p_r$",
-    "eps_e_r": r"$\epsilon_{e,r}$",
-    "eps_B_r": r"$\epsilon_{B,r}$",
-    "xi_e_r": r"$\xi_{e,r}$",
-    "tau": r"$\tau$",
-    "L0": r"$L_0$",
-    "t0": r"$t_0$",
-    "q": r"$q$",
-}
-
-MEDIUM_RULES = {
-    "ism": ({"n_ism"}, {"A_star", "n0", "k_m"}),
-    "wind": ({"A_star"}, set()),
-}
-
-JET_RULES = {
-    "tophat": ({"theta_c", "E_iso", "Gamma0"}, {"k_e", "k_g", "E_iso_w", "Gamma0_w"}),
-    "gaussian": ({"theta_c", "E_iso", "Gamma0"}, {"k_e", "k_g", "E_iso_w", "Gamma0_w"}),
-    "powerlaw": ({"theta_c", "E_iso", "Gamma0", "k_e", "k_g"}, {"E_iso_w", "Gamma0_w"}),
-    "two_component": (
-        {"theta_c", "E_iso", "Gamma0", "theta_w", "E_iso_w", "Gamma0_w"},
-        {"k_e", "k_g"},
-    ),
-    "step_powerlaw": (
-        {"theta_c", "E_iso", "Gamma0", "E_iso_w", "Gamma0_w", "k_e", "k_g"},
-        set(),
-    ),
-    "powerlaw_wing": (
-        {"theta_c", "E_iso_w", "Gamma0_w", "k_e", "k_g"},
-        {"E_iso", "Gamma0"},
-    ),
-}
-
-TOGGLE_RULES = {
-    "forward_shock": ({"eps_e", "eps_B", "p"}, set()),
-    "rvs_shock": (
-        {"p_r", "eps_e_r", "eps_B_r", "tau"},
-        {"p_r", "eps_e_r", "eps_B_r", "xi_e_r"},
-    ),
-    "magnetar": ({"L0", "t0", "q"}, {"L0", "t0", "q"}),
-}
-
-SAMPLER_DEFAULTS = {
-    "dynesty": {
-        "nlive": 500,
-        "dlogz": 0.1,
-        "sample": "rslice",
-        "maxmcmc": 5000,
-    },
-    "emcee": {
-        "nsteps": 5000,
-        "nburn": 1000,
-        "thin": 1,
-        "moves": [
-            (emcee.moves.DEMove(), 0.7),
-            (emcee.moves.DESnookerMove(), 0.3),
-        ],
-    },
-}
-
-
-# --- Default Jet/Medium Factories ---
-
-
-def _default_jet_factory(fitter: "Fitter"):
-    """Build a jet factory from fitter's jet type string."""
-
-    def factory(params: ModelParams):
-        jet_type = fitter.jet
-        spreading = False
-        duration = params.tau if hasattr(params, "tau") else 1.0
-
-        if fitter.magnetar:
-            magnetar = Magnetar(L0=params.L0, t0=params.t0, q=params.q)
-        else:
-            magnetar = None
-
-        if jet_type == "tophat":
-            return TophatJet(
-                theta_c=params.theta_c,
-                E_iso=params.E_iso,
-                Gamma0=params.Gamma0,
-                spreading=spreading,
-                duration=duration,
-                magnetar=magnetar,
-            )
-        elif jet_type == "gaussian":
-            return GaussianJet(
-                theta_c=params.theta_c,
-                E_iso=params.E_iso,
-                Gamma0=params.Gamma0,
-                spreading=spreading,
-                duration=duration,
-                magnetar=magnetar,
-            )
-        elif jet_type == "powerlaw":
-            return PowerLawJet(
-                theta_c=params.theta_c,
-                E_iso=params.E_iso,
-                Gamma0=params.Gamma0,
-                k_e=params.k_e,
-                k_g=params.k_g,
-                spreading=spreading,
-                duration=duration,
-                magnetar=magnetar,
-            )
-        elif jet_type == "two_component":
-            return TwoComponentJet(
-                theta_c=params.theta_c,
-                E_iso=params.E_iso,
-                Gamma0=params.Gamma0,
-                theta_w=params.theta_w,
-                E_iso_w=params.E_iso_w,
-                Gamma0_w=params.Gamma0_w,
-                spreading=spreading,
-                duration=duration,
-                magnetar=magnetar,
-            )
-        elif jet_type == "step_powerlaw":
-            return StepPowerLawJet(
-                theta_c=params.theta_c,
-                E_iso=params.E_iso,
-                Gamma0=params.Gamma0,
-                E_iso_w=params.E_iso_w,
-                Gamma0_w=params.Gamma0_w,
-                k_e=params.k_e,
-                k_g=params.k_g,
-                spreading=spreading,
-                duration=duration,
-                magnetar=magnetar,
-            )
-        elif jet_type == "powerlaw_wing":
-            return PowerLawWing(
-                theta_c=params.theta_c,
-                E_iso_w=params.E_iso_w,
-                Gamma0_w=params.Gamma0_w,
-                k_e=params.k_e,
-                k_g=params.k_g,
-                spreading=spreading,
-                duration=duration,
-            )
-        elif jet_type == "uniform":
-            return TophatJet(
-                theta_c=np.pi / 2,
-                E_iso=params.E_iso,
-                Gamma0=params.Gamma0,
-                spreading=spreading,
-                duration=duration,
-                magnetar=magnetar,
-            )
-        else:
-            raise ValueError(f"Unknown jet type: {jet_type}")
-
-    return factory
-
-
-def _default_medium_factory(fitter: "Fitter"):
-    """Build a medium factory from fitter's medium type string."""
-
-    def factory(params: ModelParams):
-        if fitter.medium == "ism":
-            return ISM(n_ism=params.n_ism)
-        elif fitter.medium == "wind":
-            return Wind(
-                A_star=params.A_star, n_ism=params.n_ism, n0=params.n0, k=params.k_m
-            )
-        else:
-            raise ValueError(f"Unknown medium type: {fitter.medium}")
-
-    return factory
-
-
-@dataclass
-class _BandObs:
-    """Band-integrated flux observation group."""
-
-    nu_min: float
-    nu_max: float
-    num_points: int
-    t: np.ndarray
-    flux: np.ndarray
-    err: np.ndarray
-    weights: np.ndarray
-
-
-# --- Helper Functions ---
-
-
-def get_optimal_nwalkers(ndim: int, ncpu: Optional[int] = None) -> int:
-    """Compute optimal nwalkers for emcee.
-
-    Ensures nwalkers >= 4 * ndim and is a multiple of 2 * ncpu
-    (emcee splits walkers in half, so each half should fill CPUs evenly).
-    """
-    if ncpu is None:
-        ncpu = os.cpu_count() or 1
-
-    math_floor = 4 * ndim
-    align_unit = 2 * ncpu
-    units_needed = math.ceil(math_floor / align_unit)
-    units_needed = max(1, units_needed)
-
-    return units_needed * align_unit
-
-
-def get_optimal_queue_size(ncpu, nlive):
-    """Compute optimal queue_size for dynesty based on hardware and sampling parameters."""
-    target_size = ncpu * 2
-    max_safe_size = int(nlive * 0.15)
-    optimal_size = min(target_size, max_safe_size)
-    aligned_size = (optimal_size // ncpu) * ncpu
-
-    if aligned_size < ncpu:
-        aligned_size = ncpu
-    return aligned_size
-
-
-def _get_latex_label(param_def: ParamDef) -> str:
-    """Generate LaTeX label for parameter (with log10 wrapper if needed)."""
-    base_latex = LATEX_LABELS.get(param_def.name, param_def.name)
-    if param_def.scale is Scale.LOG:
-        return rf"$\log_{{10}}({base_latex.strip('$')})$"
-    return base_latex
-
-
-def _get_model_params_defaults() -> dict:
-    """Get default values for all ModelParams fields."""
-    mp = ModelParams()
-    defaults = {}
-    for attr in dir(mp):
-        if not attr.startswith("_"):
-            try:
-                defaults[attr] = getattr(mp, attr)
-            except Exception:
-                pass
-    return defaults
-
-
-_MODEL_PARAMS_DEFAULTS = None
-
-
-def _build_transformer(param_defs: List[ParamDef]):
-    """Build a parameter transformer from sampler array to parameter namespace.
-
-    Standard ModelParams fields get their defaults; ParamDef values override them.
-    Custom parameters (e.g., r_scale) are also supported.
-    """
-    global _MODEL_PARAMS_DEFAULTS
-    if _MODEL_PARAMS_DEFAULTS is None:
-        _MODEL_PARAMS_DEFAULTS = _get_model_params_defaults()
-
-    free_mappings = []  # (name, is_log)
-    fixed_values = []  # (name, value)
-    for pd in param_defs:
-        if pd.scale is Scale.FIXED:
-            val = pd.initial if pd.initial is not None else pd.lower
-            fixed_values.append((pd.name, val))
-        else:
-            free_mappings.append((pd.name, pd.scale is Scale.LOG))
-
-    defaults = dict(_MODEL_PARAMS_DEFAULTS)
-
-    def transformer(theta):
-        params = types.SimpleNamespace(**defaults)
-        for name, val in fixed_values:
-            setattr(params, name, val)
-        for i, (name, is_log) in enumerate(free_mappings):
-            setattr(params, name, 10 ** theta[i] if is_log else theta[i])
-        return params
-
-    return transformer
-
-
-# --- Bilby Likelihood ---
-
-
-class AfterglowLikelihood(bilby.Likelihood):
-    """Bilby-compatible likelihood using Model directly."""
-
-    __slots__ = (
-        "parameters",
-        "param_keys",
-        "_fitter",
-        "_theta",
-        "_transformer",
-        "_log_likelihood_fn",
-    )
-
-    def __init__(
-        self,
-        fitter: "Fitter",
-        param_defs: List[ParamDef],
-        log_likelihood_fn,
-        transformer,
-    ):
-        param_keys = tuple(
-            f"log10_{pd.name}" if pd.scale is Scale.LOG else pd.name
-            for pd in param_defs
-            if pd.scale is not Scale.FIXED
-        )
-        super().__init__(parameters={key: None for key in param_keys})
-        self.param_keys = param_keys
-        self._fitter = fitter
-        self._theta = np.empty(len(param_keys), dtype=np.float64)
-        self._log_likelihood_fn = log_likelihood_fn
-        self._transformer = transformer
-
-    def __getstate__(self):
-        return {k: getattr(self, k) for k in self.__slots__}
-
-    def __setstate__(self, state):
-        for k, v in state.items():
-            setattr(self, k, v)
-
-    def log_likelihood(self, parameters=None) -> float:
-        if parameters is not None:
-            self.parameters.update(parameters)
-        for i, key in enumerate(self.param_keys):
-            self._theta[i] = self.parameters[key]
-
-        try:
-            params = self._transformer(self._theta)
-            chi2 = self._fitter._evaluate(params)
-            if not np.isfinite(chi2):
-                return -np.inf
-            return self._log_likelihood_fn(chi2)
-        except Exception:
-            return -np.inf
-
-
-# --- Fitter ---
 
 
 class Fitter:
@@ -479,6 +117,22 @@ class Fitter:
         self._all_err = None
         self._all_weights = None
 
+    def _add_point_data(self, t, nu, f_nu, err, weights):
+        """Append point observation arrays to internal lists."""
+        f_nu = np.asarray(f_nu, dtype=np.float64)
+        err = np.asarray(err, dtype=np.float64)
+        w = (
+            np.asarray(weights, dtype=np.float64)
+            if weights is not None
+            else np.ones_like(f_nu)
+        )
+        self._point_t.append(t)
+        self._point_nu.append(nu)
+        self._point_flux.append(f_nu)
+        self._point_err.append(err)
+        self._point_weights.append(w)
+        self._all_t = None
+
     def add_flux_density(
         self,
         nu: float,
@@ -497,20 +151,7 @@ class Fitter:
             weights: Optional statistical weights
         """
         t = np.asarray(t, dtype=np.float64)
-        f_nu = np.asarray(f_nu, dtype=np.float64)
-        err = np.asarray(err, dtype=np.float64)
-        w = (
-            np.asarray(weights, dtype=np.float64)
-            if weights is not None
-            else np.ones_like(t)
-        )
-
-        self._point_t.append(t)
-        self._point_nu.append(np.full_like(t, nu))
-        self._point_flux.append(f_nu)
-        self._point_err.append(err)
-        self._point_weights.append(w)
-        self._all_t = None  # Invalidate cache
+        self._add_point_data(t, np.full_like(t, nu), f_nu, err, weights)
 
     def add_spectrum(
         self,
@@ -530,20 +171,7 @@ class Fitter:
             weights: Optional statistical weights
         """
         nu = np.asarray(nu, dtype=np.float64)
-        f_nu = np.asarray(f_nu, dtype=np.float64)
-        err = np.asarray(err, dtype=np.float64)
-        w = (
-            np.asarray(weights, dtype=np.float64)
-            if weights is not None
-            else np.ones_like(nu)
-        )
-
-        self._point_t.append(np.full_like(nu, t))
-        self._point_nu.append(nu)
-        self._point_flux.append(f_nu)
-        self._point_err.append(err)
-        self._point_weights.append(w)
-        self._all_t = None
+        self._add_point_data(np.full_like(nu, t), nu, f_nu, err, weights)
 
     def add_flux(
         self,
