@@ -13,7 +13,7 @@ var pymodel_8h =
     [ "PyShock", "structPyShock.html", "structPyShock" ],
     [ "PyDetails", "structPyDetails.html", "structPyDetails" ],
     [ "PyModel", "classPyModel.html", "classPyModel" ],
-    [ "SynICPhoton", "pymodel_8h.html#ae383c75c97560b9b78f65eee3424a3a6", null ],
+    [ "SynICPhoton", "pymodel_8h.html#a1d170cd46da584fbc1ed99b992b5eae1", null ],
     [ "SynICPhotonGrid", "pymodel_8h.html#a04ab0f488de3a628c566ef546be7f994", null ],
     [ "XTArray", "pymodel_8h.html#a8e0af37a4c52f45f722b280057db88a8", null ],
     [ "convert_unit_jet", "pymodel_8h.html#a3a71bf9dc752bf8b3a6afa668c0fffcd", null ],

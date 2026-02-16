@@ -56,7 +56,7 @@ var searchData=
   ['synchrotron_2eh_53',['synchrotron.h',['../synchrotron_8h.html',1,'']]],
   ['synelectrongrid_54',['SynElectronGrid',['../synchrotron_8h.html#a1ed93cca9de717545d10f8619effaf3a',1,'synchrotron.h']]],
   ['synelectrons_55',['SynElectrons',['../structSynElectrons.html',1,'']]],
-  ['synicphoton_56',['SynICPhoton',['../pymodel_8h.html#ae383c75c97560b9b78f65eee3424a3a6',1,'pymodel.h']]],
+  ['synicphoton_56',['SynICPhoton',['../pymodel_8h.html#a1d170cd46da584fbc1ed99b992b5eae1',1,'pymodel.h']]],
   ['synicphotongrid_57',['SynICPhotonGrid',['../pymodel_8h.html#a04ab0f488de3a628c566ef546be7f994',1,'pymodel.h']]],
   ['synphotongrid_58',['SynPhotonGrid',['../synchrotron_8h.html#a0ab8637927d98b2552ae0f5b9eb5e5c2',1,'synchrotron.h']]],
   ['synphotons_59',['SynPhotons',['../synchrotron_8h.html#ac5199b47cecb5bf801bb7b7f4b2b514b',1,'synchrotron.h']]],
