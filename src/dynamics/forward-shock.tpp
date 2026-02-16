@@ -6,7 +6,6 @@
 //                            |___/                                            |___/
 #pragma once
 #include "forward-shock.hpp"
-#include "simple-shock.hpp"
 
 template <typename Ejecta, typename Medium>
 ForwardShockEqn<Ejecta, Medium>::ForwardShockEqn(Medium const& medium, Ejecta const& ejecta, Real phi, Real theta,
@@ -230,6 +229,7 @@ Shock generate_fwd_shock(Coord const& coord, Medium const& medium, Ejecta const&
             theta_s =
                 jet_spreading_edge(jet, medium, coord.phi(i), coord.theta.front(), coord.theta.back(), coord.t.front());
         }
+
         for (size_t j : shock.theta_reps) {
             auto eqn = ForwardShockEqn(medium, jet, coord.phi(i), coord.theta(j), rad_params, theta_s);
             //auto eqn = SimpleShockEqn(medium, jet, coord.phi(i), coord.theta(j), rad_params, theta_s);

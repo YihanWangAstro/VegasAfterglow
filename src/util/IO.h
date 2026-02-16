@@ -10,11 +10,11 @@
 #include <string>
 
 #include "../core/mesh.h"
-#include "../dynamics/shock.h"
-#include "../radiation/prompt.h"
-#include "../radiation/synchrotron.h"
+#include "xtensor/io/xnpy.hpp"
 
 #ifndef NO_XTENSOR_IO
+    #include "../dynamics/shock.h"
+    #include "../radiation/synchrotron.h"
     #include "xtensor-io/xnpz.hpp"
 #endif
 

@@ -116,7 +116,7 @@ class TophatJet {
      * @return Energy per solid angle (eps_k_ if theta < theta_c_, 0 otherwise)
      * <!-- ************************************************************************************** -->
      */
-    [[nodiscard]] inline Real eps_k(Real phi, Real theta) const noexcept { return theta < theta_c_ ? eps_k_ : 0; }
+    [[nodiscard]] inline Real eps_k(Real /*phi*/, Real theta) const noexcept { return theta < theta_c_ ? eps_k_ : 0; }
 
     /**
      * <!-- ************************************************************************************** -->
@@ -126,7 +126,7 @@ class TophatJet {
      * @return Lorentz factor (Gamma0_ if theta < theta_c_, 1 otherwise)
      * <!-- ************************************************************************************** -->
      */
-    [[nodiscard]] inline Real Gamma0(Real phi, Real theta) const noexcept { return theta < theta_c_ ? Gamma0_ : 1; }
+    [[nodiscard]] inline Real Gamma0(Real /*phi*/, Real theta) const noexcept { return theta < theta_c_ ? Gamma0_ : 1; }
 
     Real T0{1 * unit::sec}; ///< Duration of the ejecta in seconds
     bool spreading{false};  ///< Flag indicating if the ejecta spreads laterally during evolution
@@ -172,7 +172,7 @@ class GaussianJet {
      * @return Energy per solid angle with Gaussian angular dependence
      * <!-- ************************************************************************************** -->
      */
-    [[nodiscard]] inline Real eps_k(Real phi, Real theta) const noexcept {
+    [[nodiscard]] inline Real eps_k(Real /*phi*/, Real theta) const noexcept {
         return eps_k_ * fast_exp(theta * theta * norm_);
     }
 
@@ -184,7 +184,7 @@ class GaussianJet {
      * @return Lorentz factor with Gaussian angular dependence
      * <!-- ************************************************************************************** -->
      */
-    [[nodiscard]] inline Real Gamma0(Real phi, Real theta) const noexcept {
+    [[nodiscard]] inline Real Gamma0(Real /*phi*/, Real theta) const noexcept {
         return (Gamma0_ - 1) * fast_exp(theta * theta * norm_) + 1;
     }
 
@@ -239,7 +239,7 @@ class PowerLawJet {
      * @return Energy per solid angle with power-law angular dependence
      * <!-- ************************************************************************************** -->
      */
-    [[nodiscard]] inline Real eps_k(Real phi, Real theta) const noexcept {
+    [[nodiscard]] inline Real eps_k(Real /*phi*/, Real theta) const noexcept {
         return eps_k_ / (1 + fast_pow(theta / theta_c_, k_e_));
     }
 
@@ -251,7 +251,7 @@ class PowerLawJet {
      * @return Lorentz factor with power-law angular dependence
      * <!-- ************************************************************************************** -->
      */
-    [[nodiscard]] inline Real Gamma0(Real phi, Real theta) const noexcept {
+    [[nodiscard]] inline Real Gamma0(Real /*phi*/, Real theta) const noexcept {
         return (Gamma0_ - 1) / (1 + fast_pow(theta / theta_c_, k_g_)) + 1;
     }
 
@@ -339,7 +339,7 @@ namespace math {
      */
     template <typename F1>
     inline auto t_indep(F1 f_spatial) noexcept {
-        return [=](Real phi, Real theta, Real t) noexcept { return f_spatial(phi, theta); };
+        return [=](Real phi, Real theta, Real /*t*/) noexcept { return f_spatial(phi, theta); };
     }
 
     /**
@@ -350,7 +350,7 @@ namespace math {
      * <!-- ************************************************************************************** -->
      */
     inline auto isotropic(Real height) noexcept {
-        return [=](Real phi, Real theta) noexcept { return height; };
+        return [=](Real /*phi*/, Real /*theta*/) noexcept { return height; };
     }
 
     /**
@@ -362,7 +362,7 @@ namespace math {
      * <!-- ************************************************************************************** -->
      */
     inline auto tophat(Real theta_c, Real height) noexcept {
-        return [=](Real phi, Real theta) noexcept { return theta < theta_c ? height : 0; };
+        return [=](Real /*phi*/, Real theta) noexcept { return theta < theta_c ? height : 0; };
     }
 
     inline auto tophat_plus_one(Real theta_c, Real height) noexcept {
@@ -379,7 +379,7 @@ namespace math {
      */
     inline auto gaussian(Real theta_c, Real height) noexcept {
         const Real spread = -2 * theta_c * theta_c;
-        return [=](Real phi, Real theta) noexcept { return height * fast_exp(theta * theta / spread); };
+        return [=](Real /*phi*/, Real theta) noexcept { return height * fast_exp(theta * theta / spread); };
     }
 
     inline auto gaussian_plus_one(Real theta_c, Real height) noexcept {
@@ -396,7 +396,7 @@ namespace math {
      * <!-- ************************************************************************************** -->
      */
     inline auto powerlaw(Real theta_c, Real height, Real k) noexcept {
-        return [=](Real phi, Real theta) noexcept { return height / (1 + fast_pow(theta / theta_c, k)); };
+        return [=](Real /*phi*/, Real theta) noexcept { return height / (1 + fast_pow(theta / theta_c, k)); };
     }
 
     inline auto powerlaw_plus_one(Real theta_c, Real height, Real k) noexcept {
@@ -404,7 +404,7 @@ namespace math {
     }
 
     inline auto powerlaw_wing(Real theta_c, Real height, Real k) noexcept {
-        return [=](Real phi, Real theta) noexcept {
+        return [=](Real /*phi*/, Real theta) noexcept {
             if (theta <= theta_c) {
                 return 0.;
             } else {
@@ -418,7 +418,7 @@ namespace math {
     }
 
     inline auto step_powerlaw(Real theta_c, Real height_c, Real height_w, Real k) noexcept {
-        return [=](Real phi, Real theta) noexcept {
+        return [=](Real /*phi*/, Real theta) noexcept {
             if (theta <= theta_c) {
                 return height_c;
             } else {
@@ -442,7 +442,7 @@ namespace math {
      * <!-- ************************************************************************************** -->
      */
     inline auto two_component(Real theta_c, Real theta_w, Real height_c, Real height_w) noexcept {
-        return [=](Real phi, Real theta) noexcept {
+        return [=](Real /*phi*/, Real theta) noexcept {
             if (theta <= theta_c) {
                 return height_c;
             } else if (theta <= theta_w) {
@@ -464,7 +464,7 @@ namespace math {
      * <!-- ************************************************************************************** -->
      */
     inline auto const_injection(Real height) noexcept {
-        return [=](Real phi, Real theta, Real t) noexcept { return height; };
+        return [=](Real /*phi*/, Real /*theta*/, Real /*t*/) noexcept { return height; };
     }
 
     /**
@@ -491,7 +491,8 @@ namespace math {
      * <!-- ************************************************************************************** -->
      */
     inline auto square_injection(Real t0, Real t1, Real height_high, Real height_low) noexcept {
-        return [=](Real phi, Real theta, Real t) noexcept { return t > t0 && t < t1 ? height_high : height_low; };
+        return
+            [=](Real /*phi*/, Real /*theta*/, Real t) noexcept { return t > t0 && t < t1 ? height_high : height_low; };
     }
 
     /**
@@ -504,7 +505,7 @@ namespace math {
      * <!-- ************************************************************************************** -->
      */
     inline auto powerlaw_injection(Real t0, Real q, Real height) noexcept {
-        return [=](Real phi, Real theta, Real t) noexcept { return height * fast_pow(1 + t / t0, -q); };
+        return [=](Real /*phi*/, Real /*theta*/, Real t) noexcept { return height * fast_pow(1 + t / t0, -q); };
     }
 
     /**
@@ -518,7 +519,7 @@ namespace math {
      * <!-- ************************************************************************************** -->
      */
     inline auto magnetar_injection(Real t0, Real q, Real L0, Real theta_c) {
-        return [=](Real phi, Real theta, Real t) noexcept {
+        return [=](Real /*phi*/, Real theta, Real t) noexcept {
             if (theta <= theta_c) {
                 const Real tt = 1 + t / t0;
                 return L0 * fast_pow(tt, -q);

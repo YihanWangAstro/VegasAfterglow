@@ -6,11 +6,8 @@
 //                            |___/                                            |___/
 #pragma once
 
-#include "../core/mesh.h"
-#include "../core/physics.h"
 #include "../dynamics/shock.h"
 #include "inverse-compton.h"
-#include "power-law-syn.h"
 #include "smooth-power-law-syn.h"
 /**
  * <!-- ************************************************************************************** -->

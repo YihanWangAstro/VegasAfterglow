@@ -142,7 +142,7 @@ inline Real compute_dr_dt(Real Gamma, Real u) {
  * @return The rate of change of the half-opening angle
  * <!-- ************************************************************************************** -->
  */
-inline Real compute_dtheta_dt(Real theta_s, Real theta, Real drdt, Real r, Real Gamma) {
+inline Real compute_dtheta_dt(Real theta_s, Real /*theta*/, Real drdt, Real r, Real Gamma) {
     constexpr Real Q = 7;
     const Real u2 = Gamma * Gamma - 1;
     const Real u = std::sqrt(u2);
@@ -151,7 +151,7 @@ inline Real compute_dtheta_dt(Real theta_s, Real theta, Real drdt, Real r, Real 
 }
 
 /// Overload using precomputed four-velocity terms to avoid redundant sqrt in hot loops.
-inline Real compute_dtheta_dt(Real theta_s, Real theta, Real drdt, Real r, Real Gamma, Real u, Real u2) {
+inline Real compute_dtheta_dt(Real theta_s, Real /*theta*/, Real drdt, Real r, Real Gamma, Real u, Real u2) {
     constexpr Real Q = 7;
     const Real f = 1 / (1 + u * theta_s * Q);
     return drdt / (2 * Gamma * r) * std::sqrt((2 * u2 + 3) / (4 * u2 + 3)) * f;

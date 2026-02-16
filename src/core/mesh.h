@@ -16,9 +16,6 @@
 #include "boost/numeric/odeint.hpp"
 #include "physics.h"
 #include "xtensor/containers/xadapt.hpp"
-#include "xtensor/containers/xtensor.hpp"
-#include "xtensor/core/xmath.hpp"
-#include "xtensor/io/xnpy.hpp"
 #include "xtensor/views/xview.hpp"
 /**
  * <!-- ************************************************************************************** -->
@@ -467,7 +464,8 @@ std::vector<Real> find_jet_edges(Ejecta const& jet, Real gamma_cut, [[maybe_unus
 }
 
 template <typename Ejecta, typename Medium>
-Real jet_spreading_edge(Ejecta const& jet, Medium const& medium, Real phi, Real theta_min, Real theta_max, Real t0) {
+Real jet_spreading_edge(Ejecta const& jet, Medium const& /*medium*/, Real phi, Real theta_min, Real theta_max,
+                        Real /*t0*/) {
     const Real step = (theta_max - theta_min) / 256;
     Real theta_s = theta_min;
     Real dp_min = 0;
@@ -535,7 +533,7 @@ Array inverse_CFD_sampling(Func&& pdf, Real min, Real max, size_t num) {
 
 template <typename Ejecta>
 Array adaptive_theta_grid(Ejecta const& jet, Real theta_min, Real theta_max, size_t theta_num, Real theta_v) {
-    auto eqn = [=, &jet](Real const& cdf, Real& pdf, Real theta) {
+    auto eqn = [=, &jet](Real const& /*cdf*/, Real& pdf, Real theta) {
         const Real Gamma = jet.Gamma0(0, theta);
         const Real beta = std::sqrt(std::fabs(Gamma * Gamma - 1)) / Gamma;
         // Real D = 1 / (Gamma * (1 - beta * std::cos(theta - theta_v)));
@@ -587,7 +585,7 @@ Array adaptive_phi_grid(Ejecta const& jet, size_t phi_num, Real theta_v, Real th
         constexpr size_t n_theta_sample = 8;
         const Real theta_min = defaults::grid::theta_min;
 
-        auto eqn = [=, &jet](Real const& cdf, Real& pdf, Real phi) {
+        auto eqn = [=, &jet](Real const& /*cdf*/, Real& pdf, Real phi) {
             const Real cos_phi = std::cos(phi);
             Real max_weight = 0;
             for (size_t it = 0; it < n_theta_sample; ++it) {
@@ -754,7 +752,7 @@ inline Array refined_time_grid(Real t_start, Real t_end, Real t_refine, size_t t
 
 template <typename Ejecta, typename Medium>
 Coord auto_grid(Ejecta const& jet, Medium const& medium, Array const& t_obs, Real theta_cut, Real theta_view, Real z,
-                Real phi_resol, Real theta_resol, Real t_resol, bool is_axisymmetric, Real phi_view,
+                Real phi_resol, Real theta_resol, Real t_resol, bool is_axisymmetric, Real /*phi_view*/,
                 size_t min_theta_num, Real fwd_ratio) {
     Coord coord;
     coord.theta_view = theta_view;

@@ -8,7 +8,7 @@
 #include "observer.h"
 
 #include "../util/macros.h"
-#include "../util/utilities.h"
+#include "xtensor/core/xnoalias.hpp"
 
 //========================================================================================================
 //                                  Static Helper Functions
@@ -91,9 +91,9 @@ void Observer::calc_solid_angle(Coord const& coord, Shock const& shock) {
     if (eff_phi_grid == 1) {
         dphi(0) = 2 * con::pi;
     } else {
-        const int last = eff_phi_grid - 1;
-        for (int i = 0; i < eff_phi_grid; ++i) {
-            dphi(i) = 0.5 * (coord.phi(std::min(i + 1, last)) - coord.phi(std::max(i - 1, 0)));
+        const size_t last = eff_phi_grid - 1;
+        for (size_t i = 0; i < eff_phi_grid; ++i) {
+            dphi(i) = 0.5 * (coord.phi(std::min(i + 1, last)) - coord.phi(i > 0 ? i - 1 : size_t(0)));
         }
     }
 
@@ -104,7 +104,7 @@ void Observer::calc_solid_angle(Coord const& coord, Shock const& shock) {
         dcos = MeshGrid3d::from_shape(shock.theta.shape());
     }
 
-    const int last = theta_grid - 1;
+    const size_t last = theta_grid - 1;
     const size_t shock_phi_size = shock.theta.shape(0);
 
     // Interpolate theta of neighbor cell (i, j_nb) at engine time t_target

@@ -7,13 +7,10 @@
 #pragma once
 
 #include <stdexcept>
-#include <thread>
 
 #include "../dynamics/shock.h"
 #include "../util/macros.h"
-#include "../util/utilities.h"
 #include "mesh.h"
-#include "xtensor/core/xnoalias.hpp"
 
 /**
  * <!-- ************************************************************************************** -->

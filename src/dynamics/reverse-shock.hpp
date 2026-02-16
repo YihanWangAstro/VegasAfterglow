@@ -6,7 +6,6 @@
 //                            |___/                                            |___/
 
 #pragma once
-#include <array>
 
 #include "../util/macros.h"
 #include "shock-physics.h"

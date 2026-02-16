@@ -66,7 +66,7 @@ class ISM {
      * @return Constant density value
      * <!-- ************************************************************************************** -->
      */
-    [[nodiscard]] inline Real rho(Real phi, Real theta, Real r) const noexcept { return rho_; }
+    [[nodiscard]] inline Real rho(Real /*phi*/, Real /*theta*/, Real /*r*/) const noexcept { return rho_; }
 
     /// Enclosed mass per solid angle up to radius r.
     [[nodiscard]] inline Real mass(Real r) const noexcept { return rho_ * r * r * r / 3.0; }
@@ -108,7 +108,9 @@ class Wind {
      * <!-- ************************************************************************************** -->
      */
 
-    [[nodiscard]] inline Real rho(Real phi, Real theta, Real r) const noexcept { return A / (r02 + r * r) + rho_ism; }
+    [[nodiscard]] inline Real rho(Real /*phi*/, Real /*theta*/, Real r) const noexcept {
+        return A / (r02 + r * r) + rho_ism;
+    }
 
     /// Enclosed mass per solid angle up to radius r.
     [[nodiscard]] inline Real mass(Real r) const noexcept {
@@ -164,7 +166,7 @@ namespace evn {
     inline auto ISM(Real n_ism) {
         const Real rho = n_ism * con::mp;
 
-        return [=](Real phi, Real theta, Real r) noexcept { return rho; };
+        return [=](Real /*phi*/, Real /*theta*/, Real /*r*/) noexcept { return rho; };
     };
 
     /**
@@ -189,6 +191,6 @@ namespace evn {
 
         // Return a function that computes density = A/r^k
         // This represents a steady-state stellar wind where density falls off as 1/r^k
-        return [=](Real phi, Real theta, Real r) noexcept { return A / (r0k + std::pow(r, k)) + rho_ism; };
+        return [=](Real /*phi*/, Real /*theta*/, Real r) noexcept { return A / (r0k + std::pow(r, k)) + rho_ism; };
     }
 } // namespace evn

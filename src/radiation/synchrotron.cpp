@@ -7,7 +7,6 @@
 
 #include "synchrotron.h"
 
-#include "../../include/afterglow.h"
 #include "../core/physics.h"
 #include "../util/macros.h"
 #include "../util/utilities.h"
@@ -74,7 +73,7 @@ size_t determine_regime(Real a, Real c, Real m) {
  * @return Peak synchrotron power per electron
  * <!-- ************************************************************************************** -->
  */
-Real compute_single_elec_P_nu_max(Real B, Real p) {
+Real compute_single_elec_P_nu_max(Real B, Real /*p*/) {
     constexpr Real sin_angle_ave = con::pi / 4;
     constexpr Real Fx_max = 0.92; // Bing's book 5.5
     return B * (sin_angle_ave * Fx_max * 1.73205080757 * con::e3 / (con::me * con::c2));
@@ -138,7 +137,7 @@ Real compute_syn_gamma(Real nu, Real B) {
  * @return Maximum electron Lorentz factor
  * <!-- ************************************************************************************** -->
  */
-Real compute_syn_gamma_M(Real B, Real Y, Real p) {
+Real compute_syn_gamma_M(Real B, Real Y, Real /*p*/) {
     if (B == 0) {
         return std::numeric_limits<Real>::infinity();
     }
@@ -186,7 +185,7 @@ Real compute_gamma_c(Real t_comv, Real B, Real Y) {
     return gamma_c;
 }
 
-Real cool_after_crossing(Real gamma_x, Real gamma_m_x, Real gamma_m, Real dt_comv, Real B, Real Y) {
+Real cool_after_crossing(Real gamma_x, Real gamma_m_x, Real gamma_m, Real /*dt_comv*/, Real /*B*/, Real /*Y*/) {
     //Real gamma_c_dt = compute_gamma_c(dt_comv, B, Y);
     Real gamma_syn = gamma_x; //* gamma_c_dt / (gamma_x + gamma_c_dt);
     Real f_ad = (gamma_m - 1) / (gamma_m_x - 1);
@@ -208,7 +207,7 @@ Real cool_after_crossing(Real gamma_x, Real gamma_m_x, Real gamma_m, Real dt_com
  * @return Self-absorption Lorentz factor
  * <!-- ************************************************************************************** -->
  */
-Real compute_syn_gamma_a(Real B, Real I_syn_peak, Real gamma_m, Real gamma_c, Real gamma_M, Real p) {
+Real compute_syn_gamma_a(Real B, Real I_syn_peak, Real gamma_m, Real gamma_c, Real /*gamma_M*/, Real p) {
     const Real gamma_peak = std::min(gamma_m, gamma_c);
     const Real nu_peak = compute_syn_freq(gamma_peak, B);
 

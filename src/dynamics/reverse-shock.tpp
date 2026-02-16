@@ -91,7 +91,7 @@ Real FRShockEqn<Ejecta, Medium>::compute_dGamma_dt(State const& state, State con
 }
 
 template <typename Ejecta, typename Medium>
-Real FRShockEqn<Ejecta, Medium>::compute_dU2_dt(State const& state, State const& diff, Real t) const noexcept {
+Real FRShockEqn<Ejecta, Medium>::compute_dU2_dt(State const& state, State const& diff, Real /*t*/) const noexcept {
     const Real e_th = (state.Gamma - 1) * 4 * state.Gamma * medium.rho(phi, state.theta, state.r) * con::c2;
     const Real eps_rad = compute_eps_rad_fwd(state.t_comv, state.Gamma, e_th);
 
@@ -106,7 +106,7 @@ Real FRShockEqn<Ejecta, Medium>::compute_dU2_dt(State const& state, State const&
 }
 
 template <typename Ejecta, typename Medium>
-Real FRShockEqn<Ejecta, Medium>::compute_dU3_dt(State const& state, State const& diff, Real t,
+Real FRShockEqn<Ejecta, Medium>::compute_dU3_dt(State const& state, State const& diff, Real /*t*/,
                                                 Real Gamma34) const noexcept {
     const Real ad_idx = physics::thermo::adiabatic_idx(Gamma34);
     const Real adiabatic_cooling =
@@ -117,7 +117,7 @@ Real FRShockEqn<Ejecta, Medium>::compute_dU3_dt(State const& state, State const&
 }
 
 template <typename Ejecta, typename Medium>
-Real FRShockEqn<Ejecta, Medium>::compute_dx3_dt(State const& state, State const& diff, Real t, Real Gamma34, Real sigma,
+Real FRShockEqn<Ejecta, Medium>::compute_dx3_dt(State const& state, State const& diff, Real /*t*/, Real Gamma34, Real /*sigma*/,
                                                 Real comp_ratio) const noexcept {
     const Real spreading = compute_shell_spreading_rate(Gamma34, diff.t_comv);
 
@@ -141,7 +141,7 @@ Real FRShockEqn<Ejecta, Medium>::compute_dx3_dt(State const& state, State const&
 }
 
 template <typename Ejecta, typename Medium>
-Real FRShockEqn<Ejecta, Medium>::compute_dm3_dt(State const& state, State const& diff, Real t, Real Gamma34, Real sigma,
+Real FRShockEqn<Ejecta, Medium>::compute_dm3_dt(State const& state, State const& diff, Real /*t*/, Real /*Gamma34*/, Real /*sigma*/,
                                                 Real comp_ratio) const noexcept {
     if (state.m4 <= 0)
         return 0.;
@@ -169,7 +169,7 @@ Real FRShockEqn<Ejecta, Medium>::compute_dm3_dt(State const& state, State const&
 }
 
 template <typename Ejecta, typename Medium>
-Real FRShockEqn<Ejecta, Medium>::compute_dx4_dt(State const& state, State const& diff, Real t) const noexcept {
+Real FRShockEqn<Ejecta, Medium>::compute_dx4_dt(State const& /*state*/, State const& diff, Real /*t*/) const noexcept {
     const Real spreading = compute_shell_spreading_rate(this->Gamma4, diff.t_comv);
     const Real f = injection_efficiency(diff);
     if (f > 1e-6)
@@ -178,12 +178,12 @@ Real FRShockEqn<Ejecta, Medium>::compute_dx4_dt(State const& state, State const&
 }
 
 template <typename Ejecta, typename Medium>
-Real FRShockEqn<Ejecta, Medium>::compute_dm2_dt(State const& state, State const& diff, Real t) const noexcept {
+Real FRShockEqn<Ejecta, Medium>::compute_dm2_dt(State const& state, State const& diff, Real /*t*/) const noexcept {
     return state.r * state.r * medium.rho(phi, state.theta, state.r) * diff.r;
 }
 
 template <typename Ejecta, typename Medium>
-Real FRShockEqn<Ejecta, Medium>::compute_deps4_dt(State const& state, State const& diff, Real t) const noexcept {
+Real FRShockEqn<Ejecta, Medium>::compute_deps4_dt(State const& /*state*/, State const& /*diff*/, Real t) const noexcept {
     Real deps4_dt = 0;
 
     // Smooth injection shutdown over 50% of T0
@@ -200,7 +200,7 @@ Real FRShockEqn<Ejecta, Medium>::compute_deps4_dt(State const& state, State cons
 }
 
 template <typename Ejecta, typename Medium>
-Real FRShockEqn<Ejecta, Medium>::compute_dm4_dt(State const& state, State const& diff, Real t) const noexcept {
+Real FRShockEqn<Ejecta, Medium>::compute_dm4_dt(State const& /*state*/, State const& /*diff*/, Real t) const noexcept {
     Real dm4_dt = 0;
 
     // Smooth injection shutdown over 50% of T0
@@ -330,7 +330,7 @@ void FRShockEqn<Ejecta, Medium>::set_init_state(State& state, Real t0) const noe
  * @return The power-law index for velocity evolution
  * <!-- ************************************************************************************** -->
  */
-inline Real get_post_cross_g(Real gamma_rel, Real k = 0) {
+inline Real get_post_cross_g(Real gamma_rel, Real /*k*/ = 0) {
     constexpr Real g_low = 1.5;  // k is the medium power law index
     constexpr Real g_high = 3.5; // Blandford-McKee limit// TODO: need to be modified for non ISM medium
     const Real p = std::sqrt(std::sqrt(std::fabs(gamma_rel - 1)));
@@ -382,7 +382,7 @@ inline Real compute_init_comv_shell_width(Real Gamma4, Real t0, Real T) {
  * <!-- ************************************************************************************** -->
  */
 template <typename Eqn, typename State>
-void save_rvs_shock_state(size_t i, size_t j, int k, Eqn const& eqn, State const& state, Shock& shock) {
+void save_rvs_shock_state(size_t i, size_t j, size_t k, Eqn const& eqn, State const& state, Shock& shock) {
     if (k <= shock.injection_idx(i, j)) {
         const Real Gamma4 = eqn.Gamma4;
         const Real sigma4 = eqn.compute_shell_sigma(state);

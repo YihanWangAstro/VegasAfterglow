@@ -14,8 +14,6 @@
 #include <utility>
 #include <vector>
 
-#include "../include/afterglow.h"
-#include "config/simulation-defaults.h"
 #include "pybind.h"
 #include "shock_dispatch.h"
 #include "util/macros.h"

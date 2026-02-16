@@ -28,7 +28,10 @@ BinaryFunc make_native_binary(uintptr_t addr, std::vector<Real> const& p) {
     return [&]<size_t... I>(std::index_sequence<I...>) -> BinaryFunc {
         auto fn = reinterpret_cast<Real (*)(Real, Real, decltype((void)I, Real{})...)>(addr);
         std::array<Real, N> params = {p[I]...};
-        return [fn, params](Real phi, Real theta) noexcept -> Real { return fn(phi, theta, params[I]...); };
+        return [fn, params](Real phi, Real theta) noexcept -> Real {
+            (void)params;
+            return fn(phi, theta, params[I]...);
+        };
     }(std::make_index_sequence<N>{});
 }
 
@@ -48,7 +51,10 @@ TernaryFunc make_native_ternary(uintptr_t addr, std::vector<Real> const& p) {
     return [&]<size_t... I>(std::index_sequence<I...>) -> TernaryFunc {
         auto fn = reinterpret_cast<Real (*)(Real, Real, Real, decltype((void)I, Real{})...)>(addr);
         std::array<Real, N> params = {p[I]...};
-        return [fn, params](Real phi, Real theta, Real r) noexcept -> Real { return fn(phi, theta, r, params[I]...); };
+        return [fn, params](Real phi, Real theta, Real r) noexcept -> Real {
+            (void)params;
+            return fn(phi, theta, r, params[I]...);
+        };
     }(std::make_index_sequence<N>{});
 }
 

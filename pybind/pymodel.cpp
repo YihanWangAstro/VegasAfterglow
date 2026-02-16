@@ -10,7 +10,6 @@
 #include <algorithm>
 #include <numeric>
 
-#include "../include/afterglow.h"
 #include "error_handling.h"
 
 //========================================================================================================
