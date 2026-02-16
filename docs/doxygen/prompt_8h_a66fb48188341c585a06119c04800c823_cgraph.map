@@ -1,6 +1,6 @@
 <map id="gen_coasting_shock" name="gen_coasting_shock">
 <area shape="rect" id="Node000001" title=" " alt="" coords="5,70,159,95"/>
-<area shape="rect" id="Node000002" href="$namespacephysics_1_1relativistic.html#ab1c1444afa3c4afd0c57145f932962fa" title="Converts Lorentz factor (gamma) to a velocity fraction (beta)" alt="" coords="215,5,363,45"/>
+<area shape="rect" id="Node000002" href="$namespacephysics_1_1relativistic.html#aed1c46f33c9d25ffa27131014b190090" title="Converts Lorentz factor (gamma) to a velocity fraction (beta)" alt="" coords="215,5,363,45"/>
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="128,67,203,46,204,52,129,73"/>
 <area shape="rect" id="Node000003" href="$pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89" title=" " alt="" coords="420,42,575,67"/>
 <area shape="poly" id="edge3_Node000001_Node000003" title=" " alt="" coords="159,75,406,58,406,63,159,80"/>

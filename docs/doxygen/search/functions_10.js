@@ -20,5 +20,5 @@ var searchData=
   ['specific_5fflux_5fseries_17',['specific_flux_series',['../classObserver.html#a2497e02305dbf755a7d629311f8e772d',1,'Observer']]],
   ['spectra_18',['spectra',['../classObserver.html#a18a5b8ffa6dad54050d7de094c24094b',1,'Observer']]],
   ['spectrum_19',['spectrum',['../classObserver.html#a096a45f3fcc7cd273c2bc89199ed74a2',1,'Observer']]],
-  ['stepfunc_20',['stepFunc',['../utilities_8h.html#ae8a530e53b68fc1f195dcc370652e17c',1,'utilities.h']]]
+  ['stepfunc_20',['stepFunc',['../utilities_8h.html#a2a73f81f3c396f91aa3ca99956a5e480',1,'utilities.h']]]
 ];

@@ -1,8 +1,8 @@
 var searchData=
 [
-  ['gamma0_0',['gamma0',['../classGaussianJet.html#a9c76f0d0e02fd686f7b081962275d49b',1,'GaussianJet::Gamma0()'],['../classPowerLawJet.html#a476eed410b28500b7209768b81434502',1,'PowerLawJet::Gamma0()'],['../classTophatJet.html#a89374a73ef8bbaec174846b778ccfb6f',1,'TophatJet::Gamma0()']]],
-  ['gamma_5fspectrum_1',['gamma_spectrum',['../structInverseComptonY.html#a10d6b44bd159fd7fe8e5a3f1d6be453c',1,'InverseComptonY']]],
-  ['gamma_5fto_5fbeta_2',['gamma_to_beta',['../namespacephysics_1_1relativistic.html#ab1c1444afa3c4afd0c57145f932962fa',1,'physics::relativistic']]],
+  ['gamma0_0',['gamma0',['../classGaussianJet.html#a4dce46077ab96f068b9d72c34a7f6743',1,'GaussianJet::Gamma0()'],['../classPowerLawJet.html#a4f9900bbeabe5fc504e34d88941e525e',1,'PowerLawJet::Gamma0()'],['../classTophatJet.html#a8f634874564acaae3be35d9581f60a6e',1,'TophatJet::Gamma0()']]],
+  ['gamma_5fspectrum_1',['gamma_spectrum',['../structInverseComptonY.html#a11aeeecac6119830444a244a99fab8d3',1,'InverseComptonY']]],
+  ['gamma_5fto_5fbeta_2',['gamma_to_beta',['../namespacephysics_1_1relativistic.html#aed1c46f33c9d25ffa27131014b190090',1,'physics::relativistic']]],
   ['gaussianjet_3',['GaussianJet',['../classGaussianJet.html#adbfec46147c6fd9f22258acade623122',1,'GaussianJet']]],
   ['gen_5fcoasting_5fshock_4',['gen_coasting_shock',['../prompt_8h.html#a66fb48188341c585a06119c04800c823',1,'prompt.h']]],
   ['gen_5fprompt_5fphotons_5',['gen_prompt_photons',['../prompt_8cpp.html#a179563049db5bed00a5663ff3932eed4',1,'gen_prompt_photons(CoastingShock const &amp;shock, Real R0, Real nu_0, Real alpha):&#160;prompt.cpp'],['../prompt_8h.html#a179563049db5bed00a5663ff3932eed4',1,'gen_prompt_photons(CoastingShock const &amp;shock, Real R0, Real nu_0, Real alpha):&#160;prompt.cpp']]],

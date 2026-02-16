@@ -1,0 +1,8 @@
+<map id="fast_exp" name="fast_exp">
+<area shape="rect" id="Node000001" title="Fast approximation of the exponential function." alt="" coords="5,31,84,56"/>
+<area shape="rect" id="Node000002" href="$fast-math_8h.html#a97f986159608011ca67d0d8fc3d09926" title="Fast approximation of 2 raised to a power." alt="" coords="132,5,219,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="84,33,118,26,119,32,85,38"/>
+<area shape="rect" id="Node000003" href="$pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89" title=" " alt="" coords="267,31,421,56"/>
+<area shape="poly" id="edge3_Node000001_Node000003" title=" " alt="" coords="84,41,253,41,253,46,84,46"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="219,22,253,27,252,32,219,27"/>
+</map>

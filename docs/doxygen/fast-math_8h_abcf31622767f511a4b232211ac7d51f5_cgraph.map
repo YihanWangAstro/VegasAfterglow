@@ -1,0 +1,11 @@
+<map id="log2_softplus" name="log2_softplus">
+<area shape="rect" id="Node000001" title="Computes log2(1+2^x)" alt="" coords="5,56,113,81"/>
+<area shape="rect" id="Node000002" href="$fast-math_8h.html#a97f986159608011ca67d0d8fc3d09926" title="Fast approximation of 2 raised to a power." alt="" coords="161,5,248,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="96,53,154,33,156,38,98,58"/>
+<area shape="rect" id="Node000003" href="$pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89" title=" " alt="" coords="296,56,451,81"/>
+<area shape="poly" id="edge5_Node000001_Node000003" title=" " alt="" coords="113,66,282,66,282,71,113,71"/>
+<area shape="rect" id="Node000004" href="$fast-math_8h.html#a3af6287ba5abccde52dfb33e06fb8430" title="Fast approximation of the base&#45;2 logarithm." alt="" coords="163,107,246,132"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="98,79,156,100,154,105,96,84"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="249,28,318,49,316,55,247,33"/>
+<area shape="poly" id="edge4_Node000004_Node000003" title=" " alt="" coords="245,105,316,83,318,88,247,110"/>
+</map>

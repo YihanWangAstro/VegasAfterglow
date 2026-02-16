@@ -1,6 +1,6 @@
 <map id="compute_syn_gamma" name="compute_syn_gamma">
 <area shape="rect" id="Node000001" title="Calculates electron Lorentz factor corresponding to a given synchrotron frequency." alt="" coords="644,31,811,56"/>
-<area shape="rect" id="Node000002" href="$synchrotron_8cpp.html#ab03558b02ba5a002aec91d7f02e35cb9" title=" " alt="" coords="415,31,596,56"/>
+<area shape="rect" id="Node000002" href="$synchrotron_8cpp.html#a0dd9222be02ad23c2ec055432df37eb4" title=" " alt="" coords="415,31,596,56"/>
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="630,46,596,46,596,41,630,41"/>
 <area shape="rect" id="Node000003" href="$synchrotron_8cpp.html#aad9e6e41fee6cbff0952e1d343b890f5" title="Populates an existing electron grid with values based on shock parameters." alt="" coords="189,5,367,31"/>
 <area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="401,34,367,31,367,25,402,29"/>

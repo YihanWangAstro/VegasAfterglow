@@ -1,9 +1,9 @@
 var searchData=
 [
-  ['pow23_0',['pow23',['../utilities_8h.html#a5069f3665d3ad6f8eced520eae62e400',1,'utilities.h']]],
-  ['pow32_1',['pow32',['../utilities_8h.html#a648a46bf8f70128d2ddeba37dd74d49f',1,'utilities.h']]],
-  ['pow43_2',['pow43',['../utilities_8h.html#ae490b13fdcc1b917ecdd08c0cecf3556',1,'utilities.h']]],
-  ['pow52_3',['pow52',['../utilities_8h.html#a0becc9a5c35cc2648c3d65c88790caf8',1,'utilities.h']]],
+  ['pow23_0',['pow23',['../utilities_8h.html#a4d8f3d0fc48cccbaee1be3c257664571',1,'utilities.h']]],
+  ['pow32_1',['pow32',['../utilities_8h.html#ad60d8b11b367a3e3c2866bdd0c4e7f11',1,'utilities.h']]],
+  ['pow43_2',['pow43',['../utilities_8h.html#a2e5fe32a0271081e94938e5af1d679bd',1,'utilities.h']]],
+  ['pow52_3',['pow52',['../utilities_8h.html#ae9ef2b01259ff47216a1868d3401031b',1,'utilities.h']]],
   ['powerlawjet_4',['PowerLawJet',['../classPowerLawJet.html#aa990b4da203279631440b271b0338257',1,'PowerLawJet']]],
   ['print_5farray_5',['print_array',['../utilities_8cpp.html#adf1fcdf083723d530f051255c2e395d9',1,'print_array(Array const &amp;arr):&#160;utilities.cpp'],['../utilities_8h.html#adf1fcdf083723d530f051255c2e395d9',1,'print_array(Array const &amp;arr):&#160;utilities.cpp']]],
   ['pybind11_5fmodule_6',['PYBIND11_MODULE',['../pybind_8cpp.html#a8c92987849ad296e28ec6c07c8e7860b',1,'pybind.cpp']]],

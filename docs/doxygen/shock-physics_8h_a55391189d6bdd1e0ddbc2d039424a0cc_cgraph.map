@@ -1,8 +1,0 @@
-<map id="compute_sound_speed" name="compute_sound_speed">
-<area shape="rect" id="Node000001" title="Computes the sound speed in the shocked medium based on the relative Lorentz factor." alt="" coords="5,31,176,56"/>
-<area shape="rect" id="Node000002" href="$namespacephysics_1_1thermo.html#a8d90fdf6e3727fb58e7beb1c4f2fd50c" title="Computes adiabatic index as a function of the Lorentz factor." alt="" coords="224,5,445,31"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="176,32,210,28,210,34,176,37"/>
-<area shape="rect" id="Node000003" href="$pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89" title=" " alt="" coords="493,31,648,56"/>
-<area shape="poly" id="edge3_Node000001_Node000003" title=" " alt="" coords="176,41,479,41,479,46,176,46"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="446,27,480,31,479,36,445,33"/>
-</map>

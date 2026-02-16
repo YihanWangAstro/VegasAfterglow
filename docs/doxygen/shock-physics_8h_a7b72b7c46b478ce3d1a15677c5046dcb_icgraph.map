@@ -1,5 +1,0 @@
-<map id="compute_rel_Gamma" name="compute_rel_Gamma">
-<area shape="rect" id="Node000001" title="Computes the relative Lorentz factor between two frames with given Lorentz factors." alt="" coords="223,5,385,31"/>
-<area shape="rect" id="Node000002" href="$shock-physics_8h.html#a56526dae2aafc8713048d8f3297afa78" title="Computes the compression ratio across the shock." alt="" coords="5,5,175,31"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="209,21,175,21,175,15,209,15"/>
-</map>

@@ -1,7 +1,7 @@
 var structSynElectrons =
 [
-    [ "compute_column_den", "structSynElectrons.html#a9c0f1754d804880a70f31945eb03cf00", null ],
-    [ "compute_N_gamma", "structSynElectrons.html#ad16be18e12bddcebbcf69f16b0de4483", null ],
+    [ "compute_column_den", "structSynElectrons.html#a054faccd017e01aa6930919e4e308669", null ],
+    [ "compute_N_gamma", "structSynElectrons.html#a20ed3ab51d7537e926435ad829a88d3c", null ],
     [ "column_den", "structSynElectrons.html#aa5320cc5590c4ce7f3e58356fa653486", null ],
     [ "gamma_a", "structSynElectrons.html#aa2e8c9dd55662d992284bd1baf49797c", null ],
     [ "gamma_c", "structSynElectrons.html#a99879fd40758e9bca125100ffd799fc6", null ],

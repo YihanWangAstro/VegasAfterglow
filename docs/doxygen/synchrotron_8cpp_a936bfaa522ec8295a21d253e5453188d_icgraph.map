@@ -1,6 +1,6 @@
 <map id="compute_syn_freq" name="compute_syn_freq">
 <area shape="rect" id="Node000001" title="Calculates synchrotron frequency for a given Lorentz factor and magnetic field." alt="" coords="653,108,796,133"/>
-<area shape="rect" id="Node000002" href="$synchrotron_8cpp.html#ab03558b02ba5a002aec91d7f02e35cb9" title=" " alt="" coords="419,29,601,55"/>
+<area shape="rect" id="Node000002" href="$synchrotron_8cpp.html#a0dd9222be02ad23c2ec055432df37eb4" title=" " alt="" coords="419,29,601,55"/>
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="684,104,604,70,564,57,565,52,606,65,687,99"/>
 <area shape="rect" id="Node000007" href="$synchrotron_8cpp.html#a0f78089bdc9e329056d89812794298b9" title="Populates an existing photon grid with values based on shock and electron grid." alt="" coords="425,79,595,104"/>
 <area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="640,112,595,106,595,100,640,106"/>

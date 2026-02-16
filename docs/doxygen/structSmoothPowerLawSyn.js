@@ -1,8 +1,8 @@
 var structSmoothPowerLawSyn =
 [
-    [ "build", "structSmoothPowerLawSyn.html#a29172134c16106032d50fca58a7c2f09", null ],
-    [ "compute_I_nu", "structSmoothPowerLawSyn.html#a1e92a98e72f0e1b23c785274950e4d57", null ],
-    [ "compute_log2_I_nu", "structSmoothPowerLawSyn.html#ad9230c554fd78a010774828a7cdf5bfb", null ],
+    [ "build", "structSmoothPowerLawSyn.html#a73f2f4825bc28a61f521e99408348d75", null ],
+    [ "compute_I_nu", "structSmoothPowerLawSyn.html#a09d61f198470b87157b8c1e3a83e32b9", null ],
+    [ "compute_log2_I_nu", "structSmoothPowerLawSyn.html#a470ae9ff819bdda137ad80d21abb9cf8", null ],
     [ "I_nu_max", "structSmoothPowerLawSyn.html#a558d8cafe92766c7a9e55c9d6c108b28", null ],
     [ "log2_I_nu_max", "structSmoothPowerLawSyn.html#a796d6d5c1b72928ba1b423aba13d536a", null ],
     [ "log2_nu_a", "structSmoothPowerLawSyn.html#a2ab39f4195f68303f734228349ed80c6", null ],

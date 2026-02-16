@@ -1,10 +1,10 @@
 var searchData=
 [
-  ['fast_5fexp_0',['fast_exp',['../fast-math_8h.html#a19a0be066f6b80639b5863a493990601',1,'fast-math.h']]],
-  ['fast_5fexp2_1',['fast_exp2',['../fast-math_8h.html#afc584c30c352192de6847b1f4b8caf0e',1,'fast-math.h']]],
-  ['fast_5flog_2',['fast_log',['../fast-math_8h.html#aa9e4ad2688dbac62957b8d908a58bff7',1,'fast-math.h']]],
-  ['fast_5flog2_3',['fast_log2',['../fast-math_8h.html#aa67895957aa831a991982a8268ef8349',1,'fast-math.h']]],
-  ['fast_5fpow_4',['fast_pow',['../fast-math_8h.html#a4520a27a10a2aef33c99ad8c679da404',1,'fast-math.h']]],
+  ['fast_5fexp_0',['fast_exp',['../fast-math_8h.html#aa2db237794b0c1f7b8f8f0b10dfcb727',1,'fast-math.h']]],
+  ['fast_5fexp2_1',['fast_exp2',['../fast-math_8h.html#a97f986159608011ca67d0d8fc3d09926',1,'fast-math.h']]],
+  ['fast_5flog_2',['fast_log',['../fast-math_8h.html#a15db3978741a5dc40e64dbb2155314ed',1,'fast-math.h']]],
+  ['fast_5flog2_3',['fast_log2',['../fast-math_8h.html#a3af6287ba5abccde52dfb33e06fb8430',1,'fast-math.h']]],
+  ['fast_5fpow_4',['fast_pow',['../fast-math_8h.html#ade5247172c3a02cc1ba5c43976ab76d2',1,'fast-math.h']]],
   ['find_5fjet_5fedges_5',['find_jet_edges',['../mesh_8h.html#a28ba8f4400237a97c0d2fac934fb44cf',1,'mesh.h']]],
   ['first_5fsegment_6',['first_segment',['../structBrokenPowerLaw.html#a024a5c963631cbdab6253f6f7bc5f35f',1,'BrokenPowerLaw']]],
   ['flux_7',['flux',['../classPyModel.html#a51390496a41c22c7c2dbb8838ac7a2d2',1,'PyModel::flux()'],['../classObserver.html#a2588a9ebaec5465d6b5bd08fadadcb99',1,'Observer::flux()']]],

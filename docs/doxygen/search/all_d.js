@@ -9,5 +9,5 @@ var searchData=
   ['nu_5fc_5fhat_6',['nu_c_hat',['../structPyShock.html#a2bdec231180b5cba273178653a8b5627',1,'PyShock']]],
   ['nu_5fm_7',['nu_m',['../structPyShock.html#aa5598e189d0f2d11ef7b0bb15f03da4f',1,'PyShock::nu_M'],['../structPowerLawSyn.html#a26e22b2c12e0eae886766da3ffcc732f',1,'PowerLawSyn::nu_M'],['../structSmoothPowerLawSyn.html#aab9ceea7470c20d870222eee4c33b3cc',1,'SmoothPowerLawSyn::nu_M'],['../structPyShock.html#a9d61259f3d3c4c23464ec748b3bb9315',1,'PyShock::nu_m'],['../structPowerLawSyn.html#a217491ac8c39bcb5c9c9247204653ac8',1,'PowerLawSyn::nu_m'],['../structSmoothPowerLawSyn.html#a7f2554d248094b98a51d54013c0945d8',1,'SmoothPowerLawSyn::nu_m']]],
   ['nu_5fm_5fhat_8',['nu_m_hat',['../structPyShock.html#a6d6ca5ca3880d31ab37fdc67b6345bb7',1,'PyShock']]],
-  ['nu_5fspectrum_9',['nu_spectrum',['../structInverseComptonY.html#a8a52b79880e15b9768ae1a81d0f4d65a',1,'InverseComptonY']]]
+  ['nu_5fspectrum_9',['nu_spectrum',['../structInverseComptonY.html#a8d2d46b7a11f4a549c1332c077786bd1',1,'InverseComptonY']]]
 ];

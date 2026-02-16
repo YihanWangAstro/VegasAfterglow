@@ -1,0 +1,13 @@
+<map id="PowerLawJet::Gamma0" name="PowerLawJet::Gamma0">
+<area shape="rect" id="Node000001" title="Initial Lorentz factor as a function of phi and theta, with power&#45;law falloff." alt="" coords="5,56,179,81"/>
+<area shape="rect" id="Node000002" href="$fast-math_8h.html#ade5247172c3a02cc1ba5c43976ab76d2" title="Fast approximation of a raised to the power of b." alt="" coords="227,56,308,81"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="179,66,213,66,213,71,179,71"/>
+<area shape="rect" id="Node000003" href="$fast-math_8h.html#a97f986159608011ca67d0d8fc3d09926" title="Fast approximation of 2 raised to a power." alt="" coords="356,5,443,31"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="300,53,352,33,354,38,302,58"/>
+<area shape="rect" id="Node000004" href="$pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89" title=" " alt="" coords="491,56,645,81"/>
+<area shape="poly" id="edge6_Node000002_Node000004" title=" " alt="" coords="308,66,477,66,477,71,308,71"/>
+<area shape="rect" id="Node000005" href="$fast-math_8h.html#a3af6287ba5abccde52dfb33e06fb8430" title="Fast approximation of the base&#45;2 logarithm." alt="" coords="358,107,441,132"/>
+<area shape="poly" id="edge4_Node000002_Node000005" title=" " alt="" coords="302,79,354,99,352,104,300,84"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="443,28,513,49,511,55,442,33"/>
+<area shape="poly" id="edge5_Node000005_Node000004" title=" " alt="" coords="440,105,511,83,513,88,442,110"/>
+</map>

@@ -1,0 +1,7 @@
+<map id="compute_upstr_4vel" name="compute_upstr_4vel">
+<area shape="rect" id="Node000001" title="Computes the upstream four&#45;velocity from downstream four&#45;velocity and relative Lorentz factor." alt="" coords="425,5,580,31"/>
+<area shape="rect" id="Node000002" href="$shock-physics_8h.html#aa4c4c5cf51768d23dab747a262266b64" title="Computes the ratio of upstream to downstream four&#45;velocity across the shock front." alt="" coords="223,5,377,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="412,21,378,21,378,15,412,15"/>
+<area shape="rect" id="Node000003" href="$shock-physics_8h.html#ab7566b34dfe520dbb93104f33d97471a" title="Computes the compression ratio across the shock." alt="" coords="5,5,175,31"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="209,21,175,21,175,15,209,15"/>
+</map>

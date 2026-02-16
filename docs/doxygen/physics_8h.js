@@ -1,10 +1,10 @@
 var physics_8h =
 [
     [ "RadParams", "structRadParams.html", "structRadParams" ],
-    [ "adiabatic_idx", "physics_8h.html#a8d90fdf6e3727fb58e7beb1c4f2fd50c", null ],
+    [ "adiabatic_idx", "physics_8h.html#a0e4362f3caba6d9e8472e027cc341820", null ],
     [ "calc_engine_duration", "physics_8h.html#a490ebc11f54417388f6e195671619d42", null ],
     [ "dec_radius", "physics_8h.html#aa94386ad7c3e3cd47b51b55bd48ed9ee", null ],
-    [ "gamma_to_beta", "physics_8h.html#ab1c1444afa3c4afd0c57145f932962fa", null ],
+    [ "gamma_to_beta", "physics_8h.html#aed1c46f33c9d25ffa27131014b190090", null ],
     [ "RS_crossing_radius", "physics_8h.html#a98f637f6b484f1cadc984d91ad5385b0", null ],
     [ "RS_transition_radius", "physics_8h.html#aabd57011030fde81cae3c5b2f66de5cb", null ],
     [ "sedov_length", "physics_8h.html#a13b03e1ea24e11d2ac9e23973b92cbdb", null ],

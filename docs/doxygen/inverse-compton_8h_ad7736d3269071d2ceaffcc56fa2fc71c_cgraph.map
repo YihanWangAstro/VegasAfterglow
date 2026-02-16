@@ -1,12 +1,12 @@
 <map id="eta_rad_Thomson" name="eta_rad_Thomson">
 <area shape="rect" id="Node000001" title=" " alt="" coords="5,56,144,81"/>
-<area shape="rect" id="Node000002" href="$fast-math_8h.html#a4520a27a10a2aef33c99ad8c679da404" title="Fast approximation of a raised to the power of b." alt="" coords="192,56,273,81"/>
+<area shape="rect" id="Node000002" href="$fast-math_8h.html#ade5247172c3a02cc1ba5c43976ab76d2" title="Fast approximation of a raised to the power of b." alt="" coords="192,56,273,81"/>
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="144,66,178,66,178,71,144,71"/>
-<area shape="rect" id="Node000003" href="$fast-math_8h.html#afc584c30c352192de6847b1f4b8caf0e" title="Fast approximation of 2 raised to a power." alt="" coords="321,5,408,31"/>
+<area shape="rect" id="Node000003" href="$fast-math_8h.html#a97f986159608011ca67d0d8fc3d09926" title="Fast approximation of 2 raised to a power." alt="" coords="321,5,408,31"/>
 <area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="266,53,317,33,319,38,268,58"/>
 <area shape="rect" id="Node000004" href="$pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89" title=" " alt="" coords="456,56,611,81"/>
 <area shape="poly" id="edge6_Node000002_Node000004" title=" " alt="" coords="274,66,442,66,442,71,274,71"/>
-<area shape="rect" id="Node000005" href="$fast-math_8h.html#aa67895957aa831a991982a8268ef8349" title="Fast approximation of the base&#45;2 logarithm." alt="" coords="323,107,406,132"/>
+<area shape="rect" id="Node000005" href="$fast-math_8h.html#a3af6287ba5abccde52dfb33e06fb8430" title="Fast approximation of the base&#45;2 logarithm." alt="" coords="323,107,406,132"/>
 <area shape="poly" id="edge4_Node000002_Node000005" title=" " alt="" coords="268,79,319,99,317,104,266,84"/>
 <area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="409,28,478,49,476,55,407,33"/>
 <area shape="poly" id="edge5_Node000005_Node000004" title=" " alt="" coords="405,105,476,83,478,88,407,110"/>

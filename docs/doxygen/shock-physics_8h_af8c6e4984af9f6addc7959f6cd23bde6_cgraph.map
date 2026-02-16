@@ -1,0 +1,14 @@
+<map id="compute_radiative_efficiency" name="compute_radiative_efficiency">
+<area shape="rect" id="Node000001" title="Computes the radiative efficiency based on the radiative constant, comoving time, Lorentz factor,..." alt="" coords="5,132,220,157"/>
+<area shape="rect" id="Node000002" href="$fast-math_8h.html#ade5247172c3a02cc1ba5c43976ab76d2" title="Fast approximation of a raised to the power of b." alt="" coords="268,81,349,107"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="162,129,254,105,255,110,163,134"/>
+<area shape="rect" id="Node000004" href="$pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89" title=" " alt="" coords="532,81,687,107"/>
+<area shape="poly" id="edge7_Node000001_Node000004" title=" " alt="" coords="220,153,347,156,416,152,483,142,530,128,571,111,573,115,532,133,485,147,417,157,347,161,220,158"/>
+<area shape="rect" id="Node000003" href="$fast-math_8h.html#a97f986159608011ca67d0d8fc3d09926" title="Fast approximation of 2 raised to a power." alt="" coords="397,5,484,31"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="331,79,404,36,407,40,333,83"/>
+<area shape="poly" id="edge6_Node000002_Node000004" title=" " alt="" coords="350,91,518,91,518,97,350,97"/>
+<area shape="rect" id="Node000005" href="$fast-math_8h.html#a3af6287ba5abccde52dfb33e06fb8430" title="Fast approximation of the base&#45;2 logarithm." alt="" coords="399,107,482,132"/>
+<area shape="poly" id="edge4_Node000002_Node000005" title=" " alt="" coords="350,99,386,106,385,111,349,104"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="471,28,569,73,567,78,469,33"/>
+<area shape="poly" id="edge5_Node000005_Node000004" title=" " alt="" coords="482,111,518,105,519,110,483,116"/>
+</map>

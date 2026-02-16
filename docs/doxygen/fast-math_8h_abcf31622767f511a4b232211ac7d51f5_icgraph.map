@@ -1,0 +1,7 @@
+<map id="log2_softplus" name="log2_softplus">
+<area shape="rect" id="Node000001" title="Computes log2(1+2^x)" alt="" coords="239,31,347,56"/>
+<area shape="rect" id="Node000002" href="$fast-math_8h.html#ac1ddb9381fb58d1252263e82e11225d8" title="Smooth broken power&#45;law transition in log2 space." alt="" coords="5,5,191,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="224,37,190,33,191,27,225,32"/>
+<area shape="rect" id="Node000003" href="$smooth-power-law-syn_8cpp.html#a4c114da5a52b2034dddfca4646cc1c02" title=" " alt="" coords="29,55,167,80"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="225,54,167,62,167,56,225,49"/>
+</map>

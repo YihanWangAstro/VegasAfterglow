@@ -5,7 +5,7 @@ var searchData=
   ['adaptive_5fphi_5fgrid_2',['adaptive_phi_grid',['../mesh_8h.html#a83ae490737edde6ad03ede25e371a071',1,'mesh.h']]],
   ['adaptive_5ftheta_5fgrid_3',['adaptive_theta_grid',['../mesh_8h.html#a3dc6828dd13a70c0c203dba03e765cea',1,'mesh.h']]],
   ['add_5fsegment_4',['add_segment',['../structBrokenPowerLaw.html#a66b7bd352329cce7a3cc98bab9e68954',1,'BrokenPowerLaw']]],
-  ['adiabatic_5fidx_5',['adiabatic_idx',['../namespacephysics_1_1thermo.html#a8d90fdf6e3727fb58e7beb1c4f2fd50c',1,'physics::thermo']]],
+  ['adiabatic_5fidx_5',['adiabatic_idx',['../namespacephysics_1_1thermo.html#a0e4362f3caba6d9e8472e027cc341820',1,'physics::thermo']]],
   ['afterglow_6',['afterglow',['../namespaceafterglow.html',1,'']]],
   ['afterglow_2eh_7',['afterglow.h',['../afterglow_8h.html',1,'']]],
   ['afterglow_5fensure_8',['AFTERGLOW_ENSURE',['../error__handling_8h.html#a5452770c80e1ecdb1c90e0d195225de4',1,'error_handling.h']]],

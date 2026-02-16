@@ -1,20 +1,11 @@
 <map id="update_gamma_M" name="update_gamma_M">
 <area shape="rect" id="Node000001" title=" " alt="" coords="5,56,148,81"/>
-<area shape="rect" id="Node000002" href="$synchrotron_8cpp.html#aa9c18694f1776d77f8ff4980157d5f08" title=" " alt="" coords="437,5,623,31"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="148,54,196,47,423,24,424,29,196,53,149,59"/>
-<area shape="rect" id="Node000003" href="$pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89" title=" " alt="" coords="805,132,960,157"/>
-<area shape="poly" id="edge11_Node000001_Node000003" title=" " alt="" coords="148,69,416,86,586,100,758,119,806,127,805,132,757,125,586,105,416,91,148,74"/>
-<area shape="rect" id="Node000004" href="$structInverseComptonY.html#a10d6b44bd159fd7fe8e5a3f1d6be453c" title="Calculates the effective Y parameter for a given electron Lorentz factor." alt="" coords="196,106,389,146"/>
+<area shape="rect" id="Node000002" href="$synchrotron_8cpp.html#abc31be905f6d568390b09581368a8766" title=" " alt="" coords="200,5,385,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="131,53,224,31,225,36,132,58"/>
+<area shape="rect" id="Node000003" href="$pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89" title=" " alt="" coords="437,56,592,81"/>
+<area shape="poly" id="edge5_Node000001_Node000003" title=" " alt="" coords="148,66,423,66,423,71,148,71"/>
+<area shape="rect" id="Node000004" href="$structInverseComptonY.html#a11aeeecac6119830444a244a99fab8d3" title="Calculates the effective Y parameter for a given electron Lorentz factor." alt="" coords="196,106,389,146"/>
 <area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="126,79,205,100,203,105,125,84"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="623,18,691,27,758,48,788,63,816,82,861,120,857,124,813,86,785,67,756,52,689,33,622,23"/>
-<area shape="poly" id="edge10_Node000004_Node000003" title=" " alt="" coords="390,126,791,139,791,144,390,132"/>
-<area shape="rect" id="Node000005" href="$structBrokenPowerLaw.html#a49edae4ccefeb4c24304e6e849068048" title=" " alt="" coords="446,183,614,208"/>
-<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="363,143,473,176,472,181,361,149"/>
-<area shape="poly" id="edge9_Node000005_Node000003" title=" " alt="" coords="614,181,791,155,792,160,615,186"/>
-<area shape="rect" id="Node000006" href="$fast-math_8h.html#afc584c30c352192de6847b1f4b8caf0e" title="Fast approximation of 2 raised to a power." alt="" coords="671,208,757,233"/>
-<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="614,204,657,210,656,215,614,210"/>
-<area shape="rect" id="Node000007" href="$fast-math_8h.html#aa67895957aa831a991982a8268ef8349" title="Fast approximation of the base&#45;2 logarithm." alt="" coords="673,257,755,283"/>
-<area shape="poly" id="edge7_Node000005_Node000007" title=" " alt="" coords="564,206,670,250,668,255,561,211"/>
-<area shape="poly" id="edge6_Node000006_Node000003" title=" " alt="" coords="742,206,840,161,842,165,744,210"/>
-<area shape="poly" id="edge8_Node000007_Node000003" title=" " alt="" coords="738,255,756,244,810,203,855,165,859,169,813,207,759,248,741,259"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="350,28,446,50,444,56,349,33"/>
+<area shape="poly" id="edge4_Node000004_Node000003" title=" " alt="" coords="370,103,451,82,452,87,371,109"/>
 </map>

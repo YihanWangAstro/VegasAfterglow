@@ -1,12 +1,12 @@
 <map id="PowerLawSyn::compute_I_nu" name="PowerLawSyn::compute_I_nu">
 <area shape="rect" id="Node000001" title="Calculates the comoving synchrotron specific intensity." alt="" coords="5,107,216,132"/>
-<area shape="rect" id="Node000002" href="$fast-math_8h.html#a19a0be066f6b80639b5863a493990601" title="Fast approximation of the exponential function." alt="" coords="264,56,343,81"/>
+<area shape="rect" id="Node000002" href="$fast-math_8h.html#aa2db237794b0c1f7b8f8f0b10dfcb727" title="Fast approximation of the exponential function." alt="" coords="264,56,343,81"/>
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="159,104,250,80,251,85,161,109"/>
 <area shape="rect" id="Node000004" href="$pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89" title=" " alt="" coords="645,81,800,107"/>
 <area shape="poly" id="edge7_Node000001_Node000004" title=" " alt="" coords="216,112,632,95,632,100,216,118"/>
 <area shape="rect" id="Node000005" href="$inverse-compton_8h.html#a90de46adbdc9f7f4c2bed7b5ab79c494" title=" " alt="" coords="391,157,597,183"/>
 <area shape="poly" id="edge5_Node000001_Node000005" title=" " alt="" coords="208,129,384,153,383,158,207,135"/>
-<area shape="rect" id="Node000003" href="$fast-math_8h.html#afc584c30c352192de6847b1f4b8caf0e" title="Fast approximation of 2 raised to a power." alt="" coords="451,5,537,31"/>
+<area shape="rect" id="Node000003" href="$fast-math_8h.html#a97f986159608011ca67d0d8fc3d09926" title="Fast approximation of 2 raised to a power." alt="" coords="451,5,537,31"/>
 <area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="342,56,436,30,438,36,343,61"/>
 <area shape="poly" id="edge4_Node000002_Node000004" title=" " alt="" coords="343,68,632,86,631,91,343,74"/>
 <area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="538,28,598,47,675,74,673,79,596,53,536,33"/>

@@ -1,7 +1,7 @@
 var namespacephysics =
 [
     [ "relativistic", "namespacephysics_1_1relativistic.html", [
-      [ "gamma_to_beta", "namespacephysics_1_1relativistic.html#ab1c1444afa3c4afd0c57145f932962fa", null ]
+      [ "gamma_to_beta", "namespacephysics_1_1relativistic.html#aed1c46f33c9d25ffa27131014b190090", null ]
     ] ],
     [ "scales", "namespacephysics_1_1scales.html", [
       [ "calc_engine_duration", "namespacephysics_1_1scales.html#a490ebc11f54417388f6e195671619d42", null ],
@@ -15,6 +15,6 @@ var namespacephysics =
       [ "thin_shell_dec_radius", "namespacephysics_1_1scales.html#a64b8e1f25be60814cd2f17e951244003", null ]
     ] ],
     [ "thermo", "namespacephysics_1_1thermo.html", [
-      [ "adiabatic_idx", "namespacephysics_1_1thermo.html#a8d90fdf6e3727fb58e7beb1c4f2fd50c", null ]
+      [ "adiabatic_idx", "namespacephysics_1_1thermo.html#a0e4362f3caba6d9e8472e027cc341820", null ]
     ] ]
 ];

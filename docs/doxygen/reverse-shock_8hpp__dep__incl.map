@@ -1,17 +1,13 @@
 <map id="reverse&#45;shock.hpp" name="reverse&#45;shock.hpp">
-<area shape="rect" id="Node000001" title=" " alt="" coords="90,5,233,31"/>
-<area shape="rect" id="Node000002" href="$afterglow_8h.html" title=" " alt="" coords="114,79,209,104"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="164,44,164,79,159,79,159,44"/>
-<area shape="rect" id="Node000003" href="$pymodel_8cpp.html" title=" " alt="" coords="5,299,112,324"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="150,117,132,153,66,299,61,297,127,151,146,115"/>
-<area shape="rect" id="Node000004" href="$pymodel_8h.html" title=" " alt="" coords="116,225,207,251"/>
-<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="151,117,139,153,138,172,142,192,157,224,152,226,137,193,133,173,133,151,146,115"/>
-<area shape="rect" id="Node000006" href="$shock__dispatch_8h.html" title=" " alt="" coords="147,152,282,177"/>
-<area shape="poly" id="edge6_Node000002_Node000006" title=" " alt="" coords="180,113,208,150,204,153,176,117"/>
-<area shape="rect" id="Node000007" href="$synchrotron_8cpp.html" title=" " alt="" coords="306,152,433,177"/>
-<area shape="poly" id="edge8_Node000002_Node000007" title=" " alt="" coords="209,106,337,149,335,154,207,111"/>
-<area shape="poly" id="edge5_Node000004_Node000003" title=" " alt="" coords="135,261,77,301,74,296,132,256"/>
-<area shape="rect" id="Node000005" href="$pybind_8cpp.html" title=" " alt="" coords="136,299,229,324"/>
-<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="171,263,182,298,177,299,166,265"/>
-<area shape="poly" id="edge7_Node000006_Node000004" title=" " alt="" coords="200,190,172,227,168,224,196,187"/>
+<area shape="rect" id="Node000001" title=" " alt="" coords="42,5,185,31"/>
+<area shape="rect" id="Node000002" href="$afterglow_8h.html" title=" " alt="" coords="66,79,161,104"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="116,44,116,79,111,79,111,44"/>
+<area shape="rect" id="Node000003" href="$shock__dispatch_8h.html" title=" " alt="" coords="46,152,181,177"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="116,118,116,152,111,152,111,118"/>
+<area shape="rect" id="Node000004" href="$pymodel_8h.html" title=" " alt="" coords="68,225,159,251"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="116,191,116,225,111,225,111,191"/>
+<area shape="rect" id="Node000005" href="$pybind_8cpp.html" title=" " alt="" coords="5,299,99,324"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="96,263,64,300,60,297,92,260"/>
+<area shape="rect" id="Node000006" href="$pymodel_8cpp.html" title=" " alt="" coords="123,299,229,324"/>
+<area shape="poly" id="edge5_Node000004_Node000006" title=" " alt="" coords="135,259,168,297,164,300,131,263"/>
 </map>

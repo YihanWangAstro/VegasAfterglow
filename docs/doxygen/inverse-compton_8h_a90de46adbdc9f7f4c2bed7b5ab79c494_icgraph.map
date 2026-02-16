@@ -2,10 +2,10 @@
 <area shape="rect" id="Node000001" title=" " alt="" coords="264,95,471,120"/>
 <area shape="rect" id="Node000002" href="$structPowerLawSyn.html#a0f7662ae47bebb7b79dbabb5fb64c6ab" title="Calculates the comoving synchrotron specific intensity." alt="" coords="5,5,216,31"/>
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="327,91,274,68,215,46,171,33,172,28,217,41,276,63,329,86"/>
-<area shape="rect" id="Node000003" href="$structSmoothPowerLawSyn.html#a1e92a98e72f0e1b23c785274950e4d57" title="Calculates the comoving synchrotron specific intensity." alt="" coords="25,55,196,95"/>
+<area shape="rect" id="Node000003" href="$structSmoothPowerLawSyn.html#a09d61f198470b87157b8c1e3a83e32b9" title="Calculates the comoving synchrotron specific intensity." alt="" coords="25,55,196,95"/>
 <area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="251,96,196,89,197,83,252,90"/>
 <area shape="rect" id="Node000004" href="$structPowerLawSyn.html#ac31ba1f874e1af2b561deefc363e3a7a" title="Calculates the base&#45;2 logarithm of comoving synchrotron specific intensity at a given frequency." alt="" coords="22,119,199,159"/>
 <area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="252,124,200,131,199,126,252,119"/>
-<area shape="rect" id="Node000005" href="$structSmoothPowerLawSyn.html#ad9230c554fd78a010774828a7cdf5bfb" title="Calculates the base&#45;2 logarithm of comoving synchrotron specific intensity at a given frequency." alt="" coords="25,183,196,223"/>
+<area shape="rect" id="Node000005" href="$structSmoothPowerLawSyn.html#a470ae9ff819bdda137ad80d21abb9cf8" title="Calculates the base&#45;2 logarithm of comoving synchrotron specific intensity at a given frequency." alt="" coords="25,183,196,223"/>
 <area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="327,128,217,174,182,186,180,181,215,169,325,123"/>
 </map>

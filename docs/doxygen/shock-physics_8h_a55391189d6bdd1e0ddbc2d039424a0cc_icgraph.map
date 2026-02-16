@@ -1,5 +1,0 @@
-<map id="compute_sound_speed" name="compute_sound_speed">
-<area shape="rect" id="Node000001" title="Computes the sound speed in the shocked medium based on the relative Lorentz factor." alt="" coords="275,5,445,31"/>
-<area shape="rect" id="Node000002" href="$shock-physics_8h.html#a17e2ac26fbfde30e15374d8aed124d7c" title="Computes the rate at which the shock shell spreads in the comoving frame." alt="" coords="5,5,227,31"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="261,21,227,21,227,15,261,15"/>
-</map>

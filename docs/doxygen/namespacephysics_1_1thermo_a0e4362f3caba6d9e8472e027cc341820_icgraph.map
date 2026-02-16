@@ -1,0 +1,13 @@
+<map id="physics::thermo::adiabatic_idx" name="physics::thermo::adiabatic_idx">
+<area shape="rect" id="Node000001" title="Computes adiabatic index as a function of the Lorentz factor." alt="" coords="713,31,935,56"/>
+<area shape="rect" id="Node000002" href="$shock_8cpp.html#a2c45eca687a7ff6c0a5adfec28c78eef" title="Computes the downstream four&#45;velocity for a given relative Lorentz factor and magnetization parameter..." alt="" coords="492,5,665,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="699,33,665,30,666,24,700,28"/>
+<area shape="rect" id="Node000005" href="$shock-physics_8h.html#a9e2f7451f9e3a546ff98444a4e77faef" title="Computes the sound speed in the shocked medium based on the relative Lorentz factor." alt="" coords="493,55,664,80"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="700,58,664,62,664,56,699,53"/>
+<area shape="rect" id="Node000003" href="$shock-physics_8h.html#aa4c4c5cf51768d23dab747a262266b64" title="Computes the ratio of upstream to downstream four&#45;velocity across the shock front." alt="" coords="256,5,411,31"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="478,21,411,21,411,15,478,15"/>
+<area shape="rect" id="Node000004" href="$shock-physics_8h.html#ab7566b34dfe520dbb93104f33d97471a" title="Computes the compression ratio across the shock." alt="" coords="5,5,175,31"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="242,21,175,21,175,15,242,15"/>
+<area shape="rect" id="Node000006" href="$shock-physics_8h.html#a394a9e4dc647d8f2b74b5f107b0bc92e" title="Computes the rate at which the shock shell spreads in the comoving frame." alt="" coords="223,55,444,80"/>
+<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="480,70,444,70,444,65,480,65"/>
+</map>

@@ -15,7 +15,7 @@
 <area shape="poly" id="edge13_Node000002_Node000009" title=" " alt="" coords="308,416,583,399,583,404,309,421"/>
 <area shape="rect" id="Node000010" href="$mesh_8h.html#aa7505ad2e84c2a29610c1a13cd3b25e3" title="Estimates deceleration time for a given angle from ejecta and medium properties." alt="" coords="408,434,531,459"/>
 <area shape="poly" id="edge15_Node000002_Node000010" title=" " alt="" coords="309,424,395,434,394,440,308,429"/>
-<area shape="rect" id="Node000011" href="$namespacephysics_1_1relativistic.html#ab1c1444afa3c4afd0c57145f932962fa" title="Converts Lorentz factor (gamma) to a velocity fraction (beta)" alt="" coords="605,484,753,524"/>
+<area shape="rect" id="Node000011" href="$namespacephysics_1_1relativistic.html#aed1c46f33c9d25ffa27131014b190090" title="Converts Lorentz factor (gamma) to a velocity fraction (beta)" alt="" coords="605,484,753,524"/>
 <area shape="poly" id="edge21_Node000002_Node000011" title=" " alt="" coords="295,431,340,451,394,469,496,488,591,497,591,503,495,493,393,474,338,456,293,436"/>
 <area shape="rect" id="Node000012" href="$mesh_8h.html#a28ba8f4400237a97c0d2fac934fb44cf" title="Finds all sharp edges in the jet Gamma0 profile plus the outermost boundary." alt="" coords="822,540,938,566"/>
 <area shape="poly" id="edge19_Node000002_Node000012" title=" " alt="" coords="285,432,332,466,362,484,394,499,448,517,504,530,617,548,722,554,808,554,808,559,722,559,617,553,503,536,447,522,392,504,360,488,329,470,282,436"/>
@@ -27,9 +27,9 @@
 <area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="539,266,580,266,580,272,539,272"/>
 <area shape="poly" id="edge9_Node000003_Node000005" title=" " alt="" coords="489,254,566,211,621,185,683,163,749,146,817,139,885,144,918,153,949,167,972,181,992,198,1025,239,1049,282,1065,318,1060,320,1044,284,1020,242,988,202,968,185,947,171,916,158,884,150,817,144,750,151,684,168,623,190,568,215,491,259"/>
 <area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="764,255,854,254,902,258,949,268,977,278,1004,292,1048,322,1045,326,1001,297,975,283,947,273,901,263,854,259,764,261"/>
-<area shape="rect" id="Node000006" href="$utilities_8h.html#ab8e81118f023df135835db8cce4f5f42" title="Returns the value of a single parameter." alt="" coords="855,282,905,307"/>
+<area shape="rect" id="Node000006" href="$utilities_8h.html#ab0cbe75cc4de84810290ad6f3075e491" title="Returns the value of a single parameter." alt="" coords="855,282,905,307"/>
 <area shape="poly" id="edge5_Node000004_Node000006" title=" " alt="" coords="765,277,842,287,841,292,764,282"/>
-<area shape="rect" id="Node000007" href="$utilities_8h.html#ac47d1412f3f1791737d0f963267096f1" title="Returns the value of a single parameter." alt="" coords="857,180,903,206"/>
+<area shape="rect" id="Node000007" href="$utilities_8h.html#a87dde689be8887c64263f13adace7ae1" title="Returns the value of a single parameter." alt="" coords="857,180,903,206"/>
 <area shape="poly" id="edge7_Node000004_Node000007" title=" " alt="" coords="712,254,843,204,845,209,714,259"/>
 <area shape="poly" id="edge6_Node000006_Node000005" title=" " alt="" coords="906,298,1012,326,1010,331,905,303"/>
 <area shape="poly" id="edge8_Node000007_Node000005" title=" " alt="" coords="905,199,949,223,1009,272,1054,320,1050,324,1005,276,947,227,903,204"/>

@@ -1,0 +1,20 @@
+<map id="compute_compression" name="compute_compression">
+<area shape="rect" id="Node000001" title="Computes the compression ratio across the shock." alt="" coords="5,208,175,233"/>
+<area shape="rect" id="Node000002" href="$shock-physics_8h.html#aa4c4c5cf51768d23dab747a262266b64" title="Computes the ratio of upstream to downstream four&#45;velocity across the shock front." alt="" coords="223,132,377,157"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="125,205,250,160,252,165,127,210"/>
+<area shape="rect" id="Node000005" href="$pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89" title=" " alt="" coords="916,132,1071,157"/>
+<area shape="poly" id="edge11_Node000001_Node000005" title=" " alt="" coords="175,217,481,204,674,189,868,166,919,157,920,163,868,171,674,194,481,209,175,222"/>
+<area shape="rect" id="Node000007" href="$shock-physics_8h.html#a6f07d6e1008186f46dc28eab93460086" title="Computes the relative Lorentz factor between two frames with given Lorentz factors." alt="" coords="676,259,839,284"/>
+<area shape="poly" id="edge9_Node000001_Node000007" title=" " alt="" coords="173,231,223,237,460,255,662,265,662,271,460,261,222,242,173,236"/>
+<area shape="rect" id="Node000003" href="$shock_8cpp.html#a2c45eca687a7ff6c0a5adfec28c78eef" title="Computes the downstream four&#45;velocity for a given relative Lorentz factor and magnetization parameter..." alt="" coords="425,56,599,81"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="335,129,462,84,463,89,337,134"/>
+<area shape="poly" id="edge8_Node000002_Node000005" title=" " alt="" coords="377,140,598,136,868,137,903,138,902,143,868,142,598,141,377,145"/>
+<area shape="rect" id="Node000006" href="$shock-physics_8h.html#a000226d558b2393ab0c26d331d451524" title="Computes the upstream four&#45;velocity from downstream four&#45;velocity and relative Lorentz factor." alt="" coords="435,157,589,183"/>
+<area shape="poly" id="edge6_Node000002_Node000006" title=" " alt="" coords="378,151,422,157,421,162,377,157"/>
+<area shape="rect" id="Node000004" href="$namespacephysics_1_1thermo.html#a0e4362f3caba6d9e8472e027cc341820" title="Computes adiabatic index as a function of the Lorentz factor." alt="" coords="647,5,868,31"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="574,53,681,31,682,36,575,58"/>
+<area shape="poly" id="edge5_Node000003_Node000005" title=" " alt="" coords="599,68,727,77,798,85,869,98,912,110,951,124,949,129,910,115,867,103,798,91,726,82,599,73"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="818,28,869,48,925,83,970,120,967,124,922,88,867,52,816,33"/>
+<area shape="poly" id="edge7_Node000006_Node000005" title=" " alt="" coords="590,163,902,147,903,152,590,169"/>
+<area shape="poly" id="edge10_Node000007_Node000005" title=" " alt="" coords="816,256,867,237,922,202,967,165,970,169,925,206,869,242,818,261"/>
+</map>

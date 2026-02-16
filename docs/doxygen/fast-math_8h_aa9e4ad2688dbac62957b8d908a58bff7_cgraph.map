@@ -1,8 +1,0 @@
-<map id="fast_log" name="fast_log">
-<area shape="rect" id="Node000001" title="Fast approximation of the natural logarithm." alt="" coords="5,31,80,56"/>
-<area shape="rect" id="Node000002" href="$fast-math_8h.html#aa67895957aa831a991982a8268ef8349" title="Fast approximation of the base&#45;2 logarithm." alt="" coords="128,5,211,31"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="80,33,114,26,115,32,81,38"/>
-<area shape="rect" id="Node000003" href="$pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89" title=" " alt="" coords="259,31,413,56"/>
-<area shape="poly" id="edge3_Node000001_Node000003" title=" " alt="" coords="80,41,245,41,245,46,80,46"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="211,22,245,27,245,32,210,27"/>
-</map>

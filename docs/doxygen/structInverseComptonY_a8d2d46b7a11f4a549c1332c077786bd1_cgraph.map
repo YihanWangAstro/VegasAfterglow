@@ -1,0 +1,8 @@
+<map id="InverseComptonY::nu_spectrum" name="InverseComptonY::nu_spectrum">
+<area shape="rect" id="Node000001" title="Calculates the effective Y parameter at the electron Lorentz factor corresponding to a given synchrot..." alt="" coords="5,23,164,63"/>
+<area shape="rect" id="Node000002" href="$synchrotron_8cpp.html#a85433be4a0da2f510240a603da8f7dff" title=" " alt="" coords="212,5,379,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="164,31,198,27,199,32,164,36"/>
+<area shape="rect" id="Node000003" href="$pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89" title=" " alt="" coords="427,31,581,56"/>
+<area shape="poly" id="edge3_Node000001_Node000003" title=" " alt="" coords="164,41,413,41,413,46,164,46"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="379,25,413,30,413,35,378,31"/>
+</map>

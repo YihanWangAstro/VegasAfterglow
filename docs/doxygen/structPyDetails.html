@@ -141,7 +141,7 @@ Public Attributes</h2></td></tr>
 <div class="textblock"><p>Complete simulation details including coordinate system and shock evolution. </p>
 <p>This structure provides comprehensive information about the simulation grid and the evolution of both forward and reverse shocks. It enables detailed analysis of the physical processes and validation of the numerical results. </p>
 
-<p class="definition">Definition at line <a class="el" href="pymodel_8h_source.html#l00497">497</a> of file <a class="el" href="pymodel_8h_source.html">pymodel.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="pymodel_8h_source.html#l00495">495</a> of file <a class="el" href="pymodel_8h_source.html">pymodel.h</a>.</p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
 <a id="a729609dba0668f7a02cbb3ef4b452411" name="a729609dba0668f7a02cbb3ef4b452411"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a729609dba0668f7a02cbb3ef4b452411">&#9670;&#160;</a></span>repr()</h2>
@@ -166,17 +166,17 @@ Public Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="pymodel_8h_source.html#l00505">505</a> of file <a class="el" href="pymodel_8h_source.html">pymodel.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  505</span>                                         {</div>
-<div class="line"><span class="lineno">  506</span>        <span class="keywordtype">char</span> <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">buf</a>[128];</div>
-<div class="line"><span class="lineno">  507</span>        <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">snprintf</a>(<a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">buf</a>, <span class="keyword">sizeof</span>(<a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">buf</a>), <span class="stringliteral">&quot;SimulationDetails(phi=%zu, theta=%zu, t_src=%zu)&quot;</span>, <a class="code hl_variable" href="structPyDetails.html#a82763145522b56940d0c651cf1a23d6a">phi</a>.size(), <a class="code hl_variable" href="structPyDetails.html#af69daff65e4fd6872b82763ede45b687">theta</a>.size(),</div>
-<div class="line"><span class="lineno">  508</span>                 <a class="code hl_variable" href="structPyDetails.html#aa1225d4ad9d93e413ee20044fd180d64">t_src</a>.size());</div>
-<div class="line"><span class="lineno">  509</span>        <span class="keywordflow">return</span> <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">buf</a>;</div>
-<div class="line"><span class="lineno">  510</span>    }</div>
+<p class="definition">Definition at line <a class="el" href="pymodel_8h_source.html#l00503">503</a> of file <a class="el" href="pymodel_8h_source.html">pymodel.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  503</span>                                         {</div>
+<div class="line"><span class="lineno">  504</span>        <span class="keywordtype">char</span> <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">buf</a>[128];</div>
+<div class="line"><span class="lineno">  505</span>        <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">snprintf</a>(<a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">buf</a>, <span class="keyword">sizeof</span>(<a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">buf</a>), <span class="stringliteral">&quot;SimulationDetails(phi=%zu, theta=%zu, t_src=%zu)&quot;</span>, <a class="code hl_variable" href="structPyDetails.html#a82763145522b56940d0c651cf1a23d6a">phi</a>.size(), <a class="code hl_variable" href="structPyDetails.html#af69daff65e4fd6872b82763ede45b687">theta</a>.size(),</div>
+<div class="line"><span class="lineno">  506</span>                 <a class="code hl_variable" href="structPyDetails.html#aa1225d4ad9d93e413ee20044fd180d64">t_src</a>.size());</div>
+<div class="line"><span class="lineno">  507</span>        <span class="keywordflow">return</span> <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">buf</a>;</div>
+<div class="line"><span class="lineno">  508</span>    }</div>
 <div class="ttc" id="apybind_8cpp_html_ad93eae6422741850877b46bd61f08c89"><div class="ttname"><a href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">make_native_binary</a></div><div class="ttdeci">BinaryFunc make_native_binary(uintptr_t addr, std::vector&lt; Real &gt; const &amp;p)</div><div class="ttdef"><b>Definition</b> <a href="pybind_8cpp_source.html#l00027">pybind.cpp:27</a></div></div>
-<div class="ttc" id="astructPyDetails_html_a82763145522b56940d0c651cf1a23d6a"><div class="ttname"><a href="structPyDetails.html#a82763145522b56940d0c651cf1a23d6a">PyDetails::phi</a></div><div class="ttdeci">XTArray phi</div><div class="ttdoc">Azimuthal coordinate array [rad].</div><div class="ttdef"><b>Definition</b> <a href="pymodel_8h_source.html#l00498">pymodel.h:498</a></div></div>
-<div class="ttc" id="astructPyDetails_html_aa1225d4ad9d93e413ee20044fd180d64"><div class="ttname"><a href="structPyDetails.html#aa1225d4ad9d93e413ee20044fd180d64">PyDetails::t_src</a></div><div class="ttdeci">XTArray t_src</div><div class="ttdoc">Source frame time array [s].</div><div class="ttdef"><b>Definition</b> <a href="pymodel_8h_source.html#l00500">pymodel.h:500</a></div></div>
-<div class="ttc" id="astructPyDetails_html_af69daff65e4fd6872b82763ede45b687"><div class="ttname"><a href="structPyDetails.html#af69daff65e4fd6872b82763ede45b687">PyDetails::theta</a></div><div class="ttdeci">XTArray theta</div><div class="ttdoc">Polar coordinate array [rad].</div><div class="ttdef"><b>Definition</b> <a href="pymodel_8h_source.html#l00499">pymodel.h:499</a></div></div>
+<div class="ttc" id="astructPyDetails_html_a82763145522b56940d0c651cf1a23d6a"><div class="ttname"><a href="structPyDetails.html#a82763145522b56940d0c651cf1a23d6a">PyDetails::phi</a></div><div class="ttdeci">XTArray phi</div><div class="ttdoc">Azimuthal coordinate array [rad].</div><div class="ttdef"><b>Definition</b> <a href="pymodel_8h_source.html#l00496">pymodel.h:496</a></div></div>
+<div class="ttc" id="astructPyDetails_html_aa1225d4ad9d93e413ee20044fd180d64"><div class="ttname"><a href="structPyDetails.html#aa1225d4ad9d93e413ee20044fd180d64">PyDetails::t_src</a></div><div class="ttdeci">XTArray t_src</div><div class="ttdoc">Source frame time array [s].</div><div class="ttdef"><b>Definition</b> <a href="pymodel_8h_source.html#l00498">pymodel.h:498</a></div></div>
+<div class="ttc" id="astructPyDetails_html_af69daff65e4fd6872b82763ede45b687"><div class="ttname"><a href="structPyDetails.html#af69daff65e4fd6872b82763ede45b687">PyDetails::theta</a></div><div class="ttdeci">XTArray theta</div><div class="ttdoc">Polar coordinate array [rad].</div><div class="ttdef"><b>Definition</b> <a href="pymodel_8h_source.html#l00497">pymodel.h:497</a></div></div>
 </div><!-- fragment --><div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -215,7 +215,7 @@ Here is the caller graph for this function:</div>
 
 <p>Forward shock evolution details. </p>
 
-<p class="definition">Definition at line <a class="el" href="pymodel_8h_source.html#l00502">502</a> of file <a class="el" href="pymodel_8h_source.html">pymodel.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="pymodel_8h_source.html#l00500">500</a> of file <a class="el" href="pymodel_8h_source.html">pymodel.h</a>.</p>
 
 </div>
 </div>
@@ -233,7 +233,7 @@ Here is the caller graph for this function:</div>
 
 <p>Azimuthal coordinate array [rad]. </p>
 
-<p class="definition">Definition at line <a class="el" href="pymodel_8h_source.html#l00498">498</a> of file <a class="el" href="pymodel_8h_source.html">pymodel.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="pymodel_8h_source.html#l00496">496</a> of file <a class="el" href="pymodel_8h_source.html">pymodel.h</a>.</p>
 
 </div>
 </div>
@@ -251,7 +251,7 @@ Here is the caller graph for this function:</div>
 
 <p>Reverse shock evolution details. </p>
 
-<p class="definition">Definition at line <a class="el" href="pymodel_8h_source.html#l00503">503</a> of file <a class="el" href="pymodel_8h_source.html">pymodel.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="pymodel_8h_source.html#l00501">501</a> of file <a class="el" href="pymodel_8h_source.html">pymodel.h</a>.</p>
 
 </div>
 </div>
@@ -269,7 +269,7 @@ Here is the caller graph for this function:</div>
 
 <p>Source frame time array [s]. </p>
 
-<p class="definition">Definition at line <a class="el" href="pymodel_8h_source.html#l00500">500</a> of file <a class="el" href="pymodel_8h_source.html">pymodel.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="pymodel_8h_source.html#l00498">498</a> of file <a class="el" href="pymodel_8h_source.html">pymodel.h</a>.</p>
 
 </div>
 </div>
@@ -287,7 +287,7 @@ Here is the caller graph for this function:</div>
 
 <p>Polar coordinate array [rad]. </p>
 
-<p class="definition">Definition at line <a class="el" href="pymodel_8h_source.html#l00499">499</a> of file <a class="el" href="pymodel_8h_source.html">pymodel.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="pymodel_8h_source.html#l00497">497</a> of file <a class="el" href="pymodel_8h_source.html">pymodel.h</a>.</p>
 
 </div>
 </div>

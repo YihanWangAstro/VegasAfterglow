@@ -1,0 +1,8 @@
+<map id="SmoothPowerLawSyn::build" name="SmoothPowerLawSyn::build">
+<area shape="rect" id="Node000001" title="Updates cached calculation constants used for efficiently computing synchrotron spectra." alt="" coords="5,23,176,63"/>
+<area shape="rect" id="Node000002" href="$fast-math_8h.html#a3af6287ba5abccde52dfb33e06fb8430" title="Fast approximation of the base&#45;2 logarithm." alt="" coords="224,5,307,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="176,28,210,23,211,29,177,34"/>
+<area shape="rect" id="Node000003" href="$pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89" title=" " alt="" coords="355,31,509,56"/>
+<area shape="poly" id="edge3_Node000001_Node000003" title=" " alt="" coords="176,41,341,41,341,46,176,46"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="307,22,341,27,341,32,306,27"/>
+</map>
