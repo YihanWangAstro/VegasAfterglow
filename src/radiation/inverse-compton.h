@@ -403,18 +403,13 @@ template <typename Electrons, typename Photons>
 void ICPhoton<Electrons, Photons>::build_cdf_KN(Real gamma_i, Array const& I_nu_seed, Array const& nu_seed,
                                                 Array const& dnu_seed, Array& fv_buf, Array& cdf_buf) {
     const int nu_last = static_cast<int>(nu_seed.size()) - 1;
-    Real const* I_nu_ptr = I_nu_seed.data();
-    Real const* nu_ptr = nu_seed.data();
-    Real const* dnu_ptr = dnu_seed.data();
-    Real* fv_p = fv_buf.data();
-    Real* cdf_p = cdf_buf.data();
 
-    fv_p[nu_last] =
-        I_nu_ptr[nu_last] / (nu_ptr[nu_last] * nu_ptr[nu_last]) * compton_correction(gamma_i * nu_ptr[nu_last]);
-    cdf_p[nu_last] = 0;
+    fv_buf(nu_last) =
+        I_nu_seed(nu_last) / (nu_seed(nu_last) * nu_seed(nu_last)) * compton_correction(gamma_i * nu_seed(nu_last));
+    cdf_buf(nu_last) = 0;
     for (int j = nu_last - 1; j >= 0; --j) {
-        fv_p[j] = I_nu_ptr[j] / (nu_ptr[j] * nu_ptr[j]) * compton_correction(gamma_i * nu_ptr[j]);
-        cdf_p[j] = cdf_p[j + 1] + 0.5 * (fv_p[j] + fv_p[j + 1]) * dnu_ptr[j];
+        fv_buf(j) = I_nu_seed(j) / (nu_seed(j) * nu_seed(j)) * compton_correction(gamma_i * nu_seed(j));
+        cdf_buf(j) = cdf_buf(j + 1) + 0.5 * (fv_buf(j) + fv_buf(j + 1)) * dnu_seed(j);
     }
 }
 
@@ -422,43 +417,37 @@ template <typename Electrons, typename Photons>
 void ICPhoton<Electrons, Photons>::accumulate_IC(Real dN_e_boost, Real gamma_i2, Array const& nu_IC,
                                                  Array const& nu_seed, Array const& dnu_seed, Array const& fv_buf,
                                                  Array const& cdf_buf, Array& I_buf, size_t spec_size) {
-    Real const* nu_IC_ptr = nu_IC.data();
-    Real const* nu_ptr = nu_seed.data();
-    Real const* dnu_ptr = dnu_seed.data();
-    Real const* fv_p = fv_buf.data();
-    Real const* cdf_p = cdf_buf.data();
-    Real* I_p = I_buf.data();
     const int nu_last = static_cast<int>(nu_seed.size()) - 1;
     const Real inv_gi2 = inv_4x0 / gamma_i2;
 
-    if (cdf_p[0] <= 0)
+    if (cdf_buf(0) <= 0)
         return;
 
-    // Plateau: nu_seed < nu_seed_min, all seed photons overshoot, CDF = cdf_p[0]
-    const Real plateau = dN_e_boost * cdf_p[0];
+    // Plateau: nu_seed < nu_seed_min, all seed photons overshoot, CDF = cdf_buf[0]
+    const Real plateau = dN_e_boost * cdf_buf(0);
     size_t k = 0;
-    while (k < spec_size && nu_IC_ptr[k] * inv_gi2 < nu_ptr[0]) {
-        I_p[k++] += plateau;
+    while (k < spec_size && nu_IC(k) * inv_gi2 < nu_seed(0)) {
+        I_buf(k++) += plateau;
     }
 
     for (int j = 0; j < nu_last && k < spec_size; ++j) {
-        const Real f_lo = fv_p[j];
-        const Real f_hi = fv_p[j + 1];
-        const Real cdf_hi = cdf_p[j + 1];
-        const Real dnu = dnu_ptr[j];
-        const Real nu_lo = nu_ptr[j];
+        const Real f_lo = fv_buf(j);
+        const Real f_hi = fv_buf(j + 1);
+        const Real cdf_hi = cdf_buf(j + 1);
+        const Real dnu = dnu_seed(j);
+        const Real nu_lo = nu_seed(j);
         const Real inv_dnu = 1.0 / dnu;
 
         size_t k_hi = k;
-        while (k_hi < spec_size && nu_IC_ptr[k_hi] * inv_gi2 < nu_ptr[j + 1]) {
+        while (k_hi < spec_size && nu_IC(k_hi) * inv_gi2 < nu_seed(j + 1)) {
             ++k_hi;
         }
 
         for (size_t kk = k; kk < k_hi; ++kk) {
-            const Real frac = (nu_IC_ptr[kk] * inv_gi2 - nu_lo) * inv_dnu;
+            const Real frac = (nu_IC(kk) * inv_gi2 - nu_lo) * inv_dnu;
             const Real rem = 1.0 - frac;
             const Real f_seed = f_lo * rem + f_hi * frac;
-            I_p[kk] += dN_e_boost * (cdf_hi + 0.5 * (f_seed + f_hi) * rem * dnu);
+            I_buf(kk) += dN_e_boost * (cdf_hi + 0.5 * (f_seed + f_hi) * rem * dnu);
         }
 
         k = k_hi;

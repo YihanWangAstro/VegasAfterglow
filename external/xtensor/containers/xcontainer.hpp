@@ -444,7 +444,12 @@ namespace xt
     {
         XTENSOR_TRY(check_index(shape(), args...));
         XTENSOR_CHECK_DIMENSION(shape(), args...);
+#ifdef XTENSOR_FAST_INDEXING
+        size_type index = xt::unchecked_data_offset<size_type, static_layout>(
+            strides(), static_cast<std::ptrdiff_t>(args)...);
+#else
         size_type index = xt::data_offset<size_type>(strides(), args...);
+#endif
         return storage()[index];
     }
 
@@ -460,7 +465,12 @@ namespace xt
     {
         XTENSOR_TRY(check_index(shape(), args...));
         XTENSOR_CHECK_DIMENSION(shape(), args...);
+#ifdef XTENSOR_FAST_INDEXING
+        size_type index = xt::unchecked_data_offset<size_type, static_layout>(
+            strides(), static_cast<std::ptrdiff_t>(args)...);
+#else
         size_type index = xt::data_offset<size_type>(strides(), args...);
+#endif
         return storage()[index];
     }
 
