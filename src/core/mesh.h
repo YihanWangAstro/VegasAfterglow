@@ -291,7 +291,7 @@ inline size_t adaptive_grid_with_breaks(Real lg2_min, Real lg2_max, std::span<co
                                         size_t max_refined_breaks = 3, Real refine_radius_decades = 0.5,
                                         Real refine_factor = 3.0) {
     constexpr size_t MAX_PTS = 256;
-    const Real lg2_per_decade = 3.321928094887362; // log2(10)
+    constexpr Real lg2_per_decade = 3.321928094887362; // log2(10)
     const Real refine_radius = refine_radius_decades * lg2_per_decade;
     const Real coarse_step = lg2_per_decade / std::max(pts_per_decade, Real(1e-6));
     const Real fine_step = coarse_step / refine_factor;
@@ -323,7 +323,7 @@ inline size_t adaptive_grid_with_breaks(Real lg2_min, Real lg2_max, std::span<co
     }
 
     // Sort by weight descending; top N get refinement
-    std::ranges::sort(valid_breaks, [](auto& a, auto& b) { return a.weight > b.weight; });
+    std::ranges::sort(valid_breaks, [](const auto& a, const auto& b) { return a.weight > b.weight; });
     const size_t n_refine = std::min(max_refined_breaks, valid_breaks.size());
 
     // Build grid points with break tracking for merge protection
@@ -344,7 +344,7 @@ inline size_t adaptive_grid_with_breaks(Real lg2_min, Real lg2_max, std::span<co
     }
 
     // Break anchors
-    for (auto& br : valid_breaks) {
+    for (const auto& br : valid_breaks) {
         pts.push_back({br.lg2, true});
     }
 
@@ -359,11 +359,11 @@ inline size_t adaptive_grid_with_breaks(Real lg2_min, Real lg2_max, std::span<co
     }
 
     // Sort and merge close points, protecting break positions
-    std::ranges::sort(pts, [](auto& a, auto& b) { return a.lg2 < b.lg2; });
+    std::ranges::sort(pts, [](const auto& a, const auto& b) { return a.lg2 < b.lg2; });
 
     std::vector<Pt> merged;
     merged.reserve(pts.size());
-    for (auto& p : pts) {
+    for (const auto& p : pts) {
         if (!merged.empty() && p.lg2 - merged.back().lg2 < merge_eps) {
             if (p.is_break && !merged.back().is_break) {
                 merged.back() = p;

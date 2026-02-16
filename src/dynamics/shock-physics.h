@@ -31,7 +31,7 @@
  *          different equations based on jump conditions across the shock front.
  * <!-- ************************************************************************************** -->
  */
-Real compute_downstr_4vel(Real gamma_rel, Real sigma);
+Real compute_downstr_4vel(Real gamma_rel, Real sigma) noexcept;
 
 /**
  * <!-- ************************************************************************************** -->
@@ -41,7 +41,7 @@ Real compute_downstr_4vel(Real gamma_rel, Real sigma);
  * @return The upstream four-velocity in the shock frame
  * <!-- ************************************************************************************** -->
  */
-inline Real compute_upstr_4vel(Real u_down, Real gamma_rel) {
+inline Real compute_upstr_4vel(Real u_down, Real gamma_rel) noexcept {
     return std::sqrt((1 + u_down * u_down) * std::fabs(gamma_rel * gamma_rel - 1)) + u_down * gamma_rel;
 }
 
@@ -55,7 +55,7 @@ inline Real compute_upstr_4vel(Real u_down, Real gamma_rel) {
  *          and jump conditions for density, pressure, and magnetic field.
  * <!-- ************************************************************************************** -->
  */
-inline Real compute_4vel_jump(Real gamma_rel, Real sigma_upstr) {
+inline Real compute_4vel_jump(Real gamma_rel, Real sigma_upstr) noexcept {
     const Real u_down_s_ = compute_downstr_4vel(gamma_rel, sigma_upstr);
     const Real u_up_s_ = compute_upstr_4vel(u_down_s_, gamma_rel);
     Real ratio_u = u_up_s_ / u_down_s_;
@@ -72,7 +72,7 @@ inline Real compute_4vel_jump(Real gamma_rel, Real sigma_upstr) {
  * @return The sound speed as a fraction of light speed
  * <!-- ************************************************************************************** -->
  */
-inline Real compute_sound_speed(Real Gamma_rel) {
+inline Real compute_sound_speed(Real Gamma_rel) noexcept {
     const Real ad_idx = physics::thermo::adiabatic_idx(Gamma_rel);
     return std::sqrt(std::fabs(ad_idx * (ad_idx - 1) * (Gamma_rel - 1) / (1 + (Gamma_rel - 1) * ad_idx))) * con::c;
 }
@@ -85,7 +85,7 @@ inline Real compute_sound_speed(Real Gamma_rel) {
  * @return The effective Lorentz factor
  * <!-- ************************************************************************************** -->
  */
-inline Real compute_effective_Gamma(Real adx, Real Gamma) {
+inline constexpr Real compute_effective_Gamma(Real adx, Real Gamma) noexcept {
     return (adx * Gamma * Gamma - adx + 1) / Gamma;
 }
 
@@ -97,7 +97,7 @@ inline Real compute_effective_Gamma(Real adx, Real Gamma) {
  * @return The derivative of the effective Lorentz factor
  * <!-- ************************************************************************************** -->
  */
-inline Real compute_effective_Gamma_dGamma(Real adx, Real Gamma) {
+inline constexpr Real compute_effective_Gamma_dGamma(Real adx, Real Gamma) noexcept {
     const Real Gamma2 = Gamma * Gamma;
     return (adx * Gamma2 + adx - 1) / Gamma2;
 }
@@ -110,7 +110,7 @@ inline Real compute_effective_Gamma_dGamma(Real adx, Real Gamma) {
  * @return The comoving magnetic field strength
  * <!-- ************************************************************************************** -->
  */
-inline Real compute_comv_weibel_B(Real eps_B, Real e_thermal) {
+inline Real compute_comv_weibel_B(Real eps_B, Real e_thermal) noexcept {
     return std::sqrt(8 * con::pi * eps_B * e_thermal);
 }
 
@@ -121,13 +121,13 @@ inline Real compute_comv_weibel_B(Real eps_B, Real e_thermal) {
  * @return The rate of change of radius with respect to observer time
  * <!-- ************************************************************************************** -->
  */
-inline Real compute_dr_dt(Real beta) {
+inline constexpr Real compute_dr_dt(Real beta) noexcept {
     return (beta * con::c) / (1 - beta);
 }
 
 /// Overload using four-velocity u and Lorentz factor Gamma directly.
 /// dr/dt = βc/(1-β) = uc(Γ+u), exploiting Γ²-u²=1 to avoid divisions and 1-β cancellation.
-inline Real compute_dr_dt(Real Gamma, Real u) {
+inline constexpr Real compute_dr_dt(Real Gamma, Real u) noexcept {
     return u * (Gamma + u) * con::c;
 }
 
@@ -142,7 +142,7 @@ inline Real compute_dr_dt(Real Gamma, Real u) {
  * @return The rate of change of the half-opening angle
  * <!-- ************************************************************************************** -->
  */
-inline Real compute_dtheta_dt(Real theta_s, Real /*theta*/, Real drdt, Real r, Real Gamma) {
+inline Real compute_dtheta_dt(Real theta_s, Real /*theta*/, Real drdt, Real r, Real Gamma) noexcept {
     constexpr Real Q = 7;
     const Real u2 = Gamma * Gamma - 1;
     const Real u = std::sqrt(u2);
@@ -151,7 +151,7 @@ inline Real compute_dtheta_dt(Real theta_s, Real /*theta*/, Real drdt, Real r, R
 }
 
 /// Overload using precomputed four-velocity terms to avoid redundant sqrt in hot loops.
-inline Real compute_dtheta_dt(Real theta_s, Real /*theta*/, Real drdt, Real r, Real Gamma, Real u, Real u2) {
+inline Real compute_dtheta_dt(Real theta_s, Real /*theta*/, Real drdt, Real r, Real Gamma, Real u, Real u2) noexcept {
     constexpr Real Q = 7;
     const Real f = 1 / (1 + u * theta_s * Q);
     return drdt / (2 * Gamma * r) * std::sqrt((2 * u2 + 3) / (4 * u2 + 3)) * f;
@@ -165,7 +165,7 @@ inline Real compute_dtheta_dt(Real theta_s, Real /*theta*/, Real drdt, Real r, R
  * @return The rate of change of comoving time with respect to observer time
  * <!-- ************************************************************************************** -->
  */
-inline Real compute_dt_dt_comv(Real Gamma, Real beta) {
+inline constexpr Real compute_dt_dt_comv(Real Gamma, Real beta) noexcept {
     return 1 / (Gamma * (1 - beta));
 }
 
@@ -177,7 +177,7 @@ inline Real compute_dt_dt_comv(Real Gamma, Real beta) {
  * @return The upstream magnetic field
  * <!-- ************************************************************************************** -->
  */
-inline Real compute_upstr_B(Real rho_up, Real sigma) {
+inline Real compute_upstr_B(Real rho_up, Real sigma) noexcept {
     return std::sqrt((4 * con::pi * con::c2) * sigma * rho_up);
 }
 
@@ -189,7 +189,7 @@ inline Real compute_upstr_B(Real rho_up, Real sigma) {
  * @return The relative Lorentz factor between the two frames
  * <!-- ************************************************************************************** -->
  */
-inline Real compute_rel_Gamma(Real gamma1, Real gamma2) {
+inline Real compute_rel_Gamma(Real gamma1, Real gamma2) noexcept {
     return gamma1 * gamma2 - std::sqrt(std::fabs((gamma1 * gamma1 - 1) * (gamma2 * gamma2 - 1)));
 }
 
@@ -203,7 +203,7 @@ inline Real compute_rel_Gamma(Real gamma1, Real gamma2) {
  * @return The relative Lorentz factor between the two frames
  * <!-- ************************************************************************************** -->
  */
-inline Real compute_rel_Gamma(Real gamma1, Real gamma2, Real beta1, Real beta2) {
+inline constexpr Real compute_rel_Gamma(Real gamma1, Real gamma2, Real beta1, Real beta2) noexcept {
     return gamma1 * gamma2 * (1 - beta1 * beta2);
 }
 
@@ -215,7 +215,7 @@ inline Real compute_rel_Gamma(Real gamma1, Real gamma2, Real beta1, Real beta2) 
  * @return The derived Lorentz factor
  * <!-- ************************************************************************************** -->
  */
-inline Real compute_Gamma_from_relative(Real gamma4, Real gamma_rel) {
+inline Real compute_Gamma_from_relative(Real gamma4, Real gamma_rel) noexcept {
     const Real b = -2 * gamma4 * gamma_rel;
     const Real c = gamma4 * gamma4 + gamma_rel * gamma_rel - 1;
     return (-b - std::sqrt(std::fabs(b * b - 4 * c))) / 2;
@@ -229,7 +229,7 @@ inline Real compute_Gamma_from_relative(Real gamma4, Real gamma_rel) {
  * @return The shock heating rate
  * <!-- ************************************************************************************** -->
  */
-inline Real compute_shock_heating_rate(Real Gamma_rel, Real mdot) {
+inline constexpr Real compute_shock_heating_rate(Real Gamma_rel, Real mdot) noexcept {
     return mdot * (Gamma_rel - 1) * con::c2;
 }
 
@@ -245,11 +245,12 @@ inline Real compute_shock_heating_rate(Real Gamma_rel, Real mdot) {
  * @return The adiabatic cooling rate
  * <!-- ************************************************************************************** -->
  */
-inline Real compute_adiabatic_cooling_rate(Real ad_idx, Real r, Real Gamma, Real u, Real drdt, Real dGammadt) {
+inline constexpr Real compute_adiabatic_cooling_rate(Real ad_idx, Real r, Real Gamma, Real u, Real drdt,
+                                                     Real dGammadt) noexcept {
     return -(ad_idx - 1) * (3 * drdt / r - dGammadt / Gamma) * u;
 }
 
-inline Real compute_adiabatic_cooling_rate2(Real ad_idx, Real r, Real x, Real u, Real drdt, Real dxdt) {
+inline Real compute_adiabatic_cooling_rate2(Real ad_idx, Real r, Real x, Real u, Real drdt, Real dxdt) noexcept {
     Real dlnvdt = 2 * drdt / r;
     if (x > 0) {
         dlnvdt += dxdt / x;
@@ -264,7 +265,7 @@ inline Real compute_adiabatic_cooling_rate2(Real ad_idx, Real r, Real x, Real u,
  * @return The shell spreading rate in the comoving frame
  * <!-- ************************************************************************************** -->
  */
-inline Real compute_shell_spreading_rate(Real Gamma_rel, Real dtdt_comv) {
+inline Real compute_shell_spreading_rate(Real Gamma_rel, Real dtdt_comv) noexcept {
     const Real cs = compute_sound_speed(Gamma_rel);
     return cs * dtdt_comv;
 }
@@ -279,7 +280,7 @@ inline Real compute_shell_spreading_rate(Real Gamma_rel, Real dtdt_comv) {
  * @return The radiative efficiency
  * <!-- ************************************************************************************** -->
  */
-inline Real compute_radiative_efficiency(Real t_comv, Real Gamma_th, Real u, RadParams const& rad) { //
+inline Real compute_radiative_efficiency(Real t_comv, Real Gamma_th, Real u, RadParams const& rad) noexcept { //
     const Real gamma_m = (rad.p - 2) / (rad.p - 1) * rad.eps_e * (Gamma_th - 1) * con::mp / con::me / rad.xi_e + 1;
     const Real gamma_c = std::max((6 * con::pi * con::me * con::c / con::sigmaT) / (rad.eps_B * u * t_comv), 1.0);
 
@@ -302,7 +303,7 @@ inline Real compute_radiative_efficiency(Real t_comv, Real Gamma_th, Real u, Rad
  * @return The thermal Lorentz factor
  * <!-- ************************************************************************************** -->
  */
-inline Real compute_Gamma_therm(Real U_th, Real mass, bool limiter = false) {
+inline Real compute_Gamma_therm(Real U_th, Real mass, bool limiter = false) noexcept {
     if (mass == 0) [[unlikely]] {
         return 1;
     } else [[likely]] {
@@ -352,7 +353,7 @@ inline void write_shock_state(Shock& shock, size_t i, size_t j, size_t k, Real t
  * @return The compression ratio
  * <!-- ************************************************************************************** -->
  */
-inline Real compute_compression(Real Gamma_upstr, Real Gamma_downstr, Real sigma_upstr) {
+inline Real compute_compression(Real Gamma_upstr, Real Gamma_downstr, Real sigma_upstr) noexcept {
     const Real Gamma_rel = compute_rel_Gamma(Gamma_upstr, Gamma_downstr);
     return compute_4vel_jump(Gamma_rel, sigma_upstr);
 }
@@ -368,7 +369,7 @@ inline Real compute_compression(Real Gamma_upstr, Real Gamma_downstr, Real sigma
  * @return The downstream magnetic field strength
  * <!-- ************************************************************************************** -->
  */
-inline Real compute_downstr_B(Real eps_B, Real rho_upstr, Real B_upstr, Real Gamma_th, Real comp_ratio) {
+inline Real compute_downstr_B(Real eps_B, Real rho_upstr, Real B_upstr, Real Gamma_th, Real comp_ratio) noexcept {
     const Real rho_downstr = rho_upstr * comp_ratio;
 
     const Real e_th = (Gamma_th - 1) * rho_downstr * con::c2;
@@ -491,7 +492,7 @@ Real compute_dec_time(Eqn const& eqn) {
     }
     const Real target = m_jet / gamma;
 
-    const Real r_min = 1e-3;
+    constexpr Real r_min = 1e-3;
     const Real r_max = r_min * std::pow(10.0, 40.0);
     if (target <= 0) {
         return r_min * (1 - beta) / (beta * con::c);

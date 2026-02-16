@@ -10,11 +10,11 @@
 //========================================================================================================
 //                                  SmoothPowerLawSyn Class Methods
 //========================================================================================================
-inline Real log2_smooth_one(Real log2_a, Real log2_b) {
+inline Real log2_smooth_one(Real log2_a, Real log2_b) noexcept {
     return log2_a - log2_softplus(log2_a - log2_b);
 }
 
-Real SmoothPowerLawSyn::log2_optical_thin(Real log2_nu) const {
+Real SmoothPowerLawSyn::log2_optical_thin(Real log2_nu) const noexcept {
     if (log2_nu_m < log2_nu_c) {
         return (log2_nu - log2_nu_m) / 3.0 +
                log2_broken_power_ratio(log2_nu, log2_nu_m, diff_slope_m_slow_, smooth_m_slow_) +
@@ -26,14 +26,14 @@ Real SmoothPowerLawSyn::log2_optical_thin(Real log2_nu) const {
     }
 }
 
-Real SmoothPowerLawSyn::log2_optical_thick(Real log2_nu) const {
+Real SmoothPowerLawSyn::log2_optical_thick(Real log2_nu) const noexcept {
     const Real log2_x = log2_nu - log2_nu_m;
     const Real s = -smooth_a_ * fast_exp2(2. / 3 * log2_x);
 
     return 2.5 * log2_x + log2_softplus(-0.5 * log2_x + s);
 }
 
-Real SmoothPowerLawSyn::log2_optical_thick_sharp(Real log2_nu) const {
+Real SmoothPowerLawSyn::log2_optical_thick_sharp(Real log2_nu) const noexcept {
     if (log2_nu < log2_nu_m) {
         return 2. * (log2_nu - log2_nu_m);
     } else {
@@ -41,7 +41,7 @@ Real SmoothPowerLawSyn::log2_optical_thick_sharp(Real log2_nu) const {
     }
 }
 
-Real SmoothPowerLawSyn::log2_optical_thin_sharp(Real log2_nu) const {
+Real SmoothPowerLawSyn::log2_optical_thin_sharp(Real log2_nu) const noexcept {
     if (log2_nu_m < log2_nu_c) {
         if (log2_nu < log2_nu_m) {
             return (log2_nu - log2_nu_m) / 3.0;
@@ -61,17 +61,17 @@ Real SmoothPowerLawSyn::log2_optical_thin_sharp(Real log2_nu) const {
     }
 }
 
-Real SmoothPowerLawSyn::compute_spectrum(Real nu) const {
+Real SmoothPowerLawSyn::compute_spectrum(Real nu) const noexcept {
     return fast_exp2(compute_log2_spectrum(fast_log2(nu)));
 }
 
-Real SmoothPowerLawSyn::compute_log2_spectrum(Real log2_nu) const {
+Real SmoothPowerLawSyn::compute_log2_spectrum(Real log2_nu) const noexcept {
     Real log2_f_thin = log2_optical_thin(log2_nu);
     Real log2_f_thick = log2_optical_thick(log2_nu);
     return log2_norm_ + log2_smooth_one(log2_f_thin, log2_f_thick + log2_thick_norm_);
 }
 
-void SmoothPowerLawSyn::build() {
+void SmoothPowerLawSyn::build() noexcept {
     log2_I_nu_max = fast_log2(I_nu_max);
     log2_nu_m = fast_log2(nu_m);
     log2_nu_c = fast_log2(nu_c);
@@ -102,7 +102,7 @@ void SmoothPowerLawSyn::build() {
     log2_thick_norm_ = log2_optical_thin_sharp(log2_nu_a) - log2_optical_thick_sharp(log2_nu_a);
 }
 
-Real SmoothPowerLawSyn::compute_I_nu(Real nu) const {
+Real SmoothPowerLawSyn::compute_I_nu(Real nu) const noexcept {
     if (nu <= nu_c) { // Below cooling frequency, simple scaling
         return fast_exp(-nu * inv_nu_M_) * I_nu_max * compute_spectrum(nu);
     } else {
@@ -110,7 +110,7 @@ Real SmoothPowerLawSyn::compute_I_nu(Real nu) const {
     }
 }
 
-Real SmoothPowerLawSyn::compute_log2_I_nu(Real log2_nu) const {
+Real SmoothPowerLawSyn::compute_log2_I_nu(Real log2_nu) const noexcept {
     constexpr Real log2e = 1.442695040888963407359924681001892137;
     if (log2_nu <= log2_nu_c) { // Below cooling frequency, simple scaling
         return log2_I_nu_max + compute_log2_spectrum(log2_nu) - log2e * inv_nu_M_ * fast_exp2(log2_nu);

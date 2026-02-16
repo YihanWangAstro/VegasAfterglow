@@ -60,7 +60,7 @@ struct InverseComptonY {
      * @return The effective Y parameter at the given gamma
      * <!-- ************************************************************************************** -->
      */
-    [[nodiscard]] Real gamma_spectrum(Real gamma) const;
+    [[nodiscard]] Real gamma_spectrum(Real gamma) const noexcept;
 
     /**
      * <!-- ************************************************************************************** -->
@@ -70,7 +70,7 @@ struct InverseComptonY {
      * @return The effective Y parameter at the corresponding electron Lorentz factor
      * <!-- ************************************************************************************** -->
      */
-    [[nodiscard]] Real nu_spectrum(Real nu) const;
+    [[nodiscard]] Real nu_spectrum(Real nu) const noexcept;
 
     void update_cooling_breaks(Real gamma_c, Real Y_T) noexcept;
 

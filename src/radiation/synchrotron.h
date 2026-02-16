@@ -37,7 +37,7 @@ struct SynElectrons {
      * @return Electron number per solid angle at the specified Lorentz factor
      * <!-- ************************************************************************************** -->
      */
-    [[nodiscard]] Real compute_N_gamma(Real gamma) const;
+    [[nodiscard]] Real compute_N_gamma(Real gamma) const noexcept;
 
     /**
      * <!-- ************************************************************************************** -->
@@ -47,7 +47,7 @@ struct SynElectrons {
      * @return Column number density at the specified Lorentz factor
      * <!-- ************************************************************************************** -->
      */
-    [[nodiscard]] Real compute_column_den(Real gamma) const;
+    [[nodiscard]] Real compute_column_den(Real gamma) const noexcept;
 
   private:
     /**
@@ -59,7 +59,7 @@ struct SynElectrons {
      * @return The normalized electron energy spectrum value
      * <!-- ************************************************************************************** -->
      */
-    [[nodiscard]] inline Real compute_spectrum(Real gamma) const;
+    [[nodiscard]] inline Real compute_spectrum(Real gamma) const noexcept;
 };
 
 /**

@@ -33,7 +33,7 @@ constexpr uint64_t FRAC_MASK = (1ull << 52) - 1;
  *          Error < 1e-10, ~3.5x faster than std::log2
  * <!-- ************************************************************************************** -->
  */
-inline double fast_log2(double x) {
+inline double fast_log2(double x) noexcept {
 #ifdef EXTREME_SPEED
     uint64_t bits = std::bit_cast<uint64_t>(x);
 
@@ -81,7 +81,7 @@ inline double fast_log2(double x) {
  *          Error < 2e-7, ~1.5x faster than std::exp2
  * <!-- ************************************************************************************** -->
  */
-inline double fast_exp2(double x) {
+inline double fast_exp2(double x) noexcept {
 #ifdef EXTREME_SPEED
     // Handle overflow/underflow
     if (x >= 1024.0)
@@ -132,7 +132,7 @@ inline double fast_exp2(double x) {
  * @return a^b
  * <!-- ************************************************************************************** -->
  */
-inline Real fast_pow(Real a, Real b) {
+inline Real fast_pow(Real a, Real b) noexcept {
     return fast_exp2(b * fast_log2(a));
 }
 
@@ -143,7 +143,7 @@ inline Real fast_pow(Real a, Real b) {
  * @return e^x
  * <!-- ************************************************************************************** -->
  */
-inline Real fast_exp(Real x) {
+inline Real fast_exp(Real x) noexcept {
 #ifdef EXTREME_SPEED
     return fast_exp2(x * 1.4426950408889634); // x / ln(2)
 #else
@@ -158,7 +158,7 @@ inline Real fast_exp(Real x) {
  * @return ln(x)
  * <!-- ************************************************************************************** -->
  */
-inline double fast_log(double x) {
+inline double fast_log(double x) noexcept {
 #ifdef EXTREME_SPEED
     return fast_log2(x) * 0.6931471805599453;
 #else
@@ -173,7 +173,7 @@ inline double fast_log(double x) {
  * @return log2(1+2^x)
  * <!-- ************************************************************************************** -->
  */
-inline Real log2_softplus(Real x) {
+inline Real log2_softplus(Real x) noexcept {
     if (x > 20.0)
         return x;
     if (x < -20.0)
@@ -194,6 +194,6 @@ inline Real log2_softplus(Real x) {
  * @return Log2-space correction to add to the base power law
  * <!-- ************************************************************************************** -->
  */
-inline Real log2_broken_power_ratio(Real log2_x, Real log2_x_break, Real s_delta_beta, Real s) {
+inline Real log2_broken_power_ratio(Real log2_x, Real log2_x_break, Real s_delta_beta, Real s) noexcept {
     return -log2_softplus(s_delta_beta * (log2_x - log2_x_break)) / s;
 }

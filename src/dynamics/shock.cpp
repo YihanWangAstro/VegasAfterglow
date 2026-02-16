@@ -90,7 +90,7 @@ void Shock::broadcast_groups(Array const& theta_coords) {
     }
 }
 
-Real compute_downstr_4vel(Real gamma_rel, Real sigma) {
+Real compute_downstr_4vel(Real gamma_rel, Real sigma) noexcept {
     const Real ad_idx = physics::thermo::adiabatic_idx(gamma_rel);
     const Real gamma_m_1 = gamma_rel - 1; // (gamma_rel - 1)
     const Real ad_idx_m_2 = ad_idx - 2;   // (ad_idx - 2)

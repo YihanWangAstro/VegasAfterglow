@@ -268,7 +268,7 @@ Real cyclotron_correction(Real gamma_m, Real p) {
 //                                  SynElectrons Class Methods
 //========================================================================================================
 
-Real SynElectrons::compute_spectrum(Real gamma) const {
+Real SynElectrons::compute_spectrum(Real gamma) const noexcept {
     // Smooth broken power law with sharpness s=1
     // General s: fast_pow(1 + fast_pow(gamma/gamma_break, s*delta), -1/s)
     // With s=1:  1 / (1 + fast_pow(gamma/gamma_break, delta))
@@ -293,7 +293,7 @@ Real SynElectrons::compute_spectrum(Real gamma) const {
     }
 }
 
-Real SynElectrons::compute_N_gamma(Real gamma) const {
+Real SynElectrons::compute_N_gamma(Real gamma) const noexcept {
     if (gamma <= gamma_c) { // Below the cooling Lorentz factor: direct scaling
         return N_e * compute_spectrum(gamma);
     } else {
@@ -301,7 +301,7 @@ Real SynElectrons::compute_N_gamma(Real gamma) const {
     }
 }
 
-Real SynElectrons::compute_column_den(Real gamma) const {
+Real SynElectrons::compute_column_den(Real gamma) const noexcept {
     if (gamma <= gamma_c) { // Below the cooling Lorentz factor: direct scaling
         return column_den * compute_spectrum(gamma);
     } else {

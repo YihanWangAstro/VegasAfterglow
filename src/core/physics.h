@@ -33,7 +33,7 @@ namespace physics {
  * @return Velocity fraction (beta = v/c)
  * <!-- ************************************************************************************** -->
  */
-        inline Real gamma_to_beta(Real gamma) {
+        inline Real gamma_to_beta(Real gamma) noexcept {
             return std::sqrt(gamma * gamma - 1) / gamma;
         }
 
@@ -54,7 +54,7 @@ namespace physics {
  * @return Adiabatic index
  * <!-- ************************************************************************************** -->
  */
-        inline Real adiabatic_idx(Real gamma) {
+        inline constexpr Real adiabatic_idx(Real gamma) noexcept {
             return 4.0 / 3.0 + 1 / (3 * gamma);
         }
 

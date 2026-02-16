@@ -119,7 +119,7 @@ namespace func {
  * @return a^(5/2)
  * <!-- ************************************************************************************** -->
  */
-inline Real pow52(Real a) {
+inline Real pow52(Real a) noexcept {
     return std::sqrt(a * a * a * a * a);
 }
 
@@ -130,7 +130,7 @@ inline Real pow52(Real a) {
  * @return a^(3/2)
  * <!-- ************************************************************************************** -->
  */
-inline Real pow32(Real a) {
+inline Real pow32(Real a) noexcept {
     return std::sqrt(a * a * a);
 }
 
@@ -141,7 +141,7 @@ inline Real pow32(Real a) {
  * @return a^(4/3)
  * <!-- ************************************************************************************** -->
  */
-inline Real pow43(Real a) {
+inline Real pow43(Real a) noexcept {
     return std::cbrt(a * a * a * a);
 }
 
@@ -152,7 +152,7 @@ inline Real pow43(Real a) {
  * @return a^(2/3)
  * <!-- ************************************************************************************** -->
  */
-inline Real pow23(Real a) {
+inline Real pow23(Real a) noexcept {
     return std::cbrt(a * a);
 }
 
@@ -163,7 +163,7 @@ inline Real pow23(Real a) {
  * @return 1 if x > 0, otherwise 0
  * <!-- ************************************************************************************** -->
  */
-inline Real stepFunc(Real x) {
+inline constexpr Real stepFunc(Real x) noexcept {
     return x > 0 ? 1 : 0;
 }
 
@@ -174,7 +174,7 @@ inline Real stepFunc(Real x) {
  * @return Frequency in Hertz
  * <!-- ************************************************************************************** -->
  */
-inline Real eVtoHz(Real eV) {
+inline constexpr Real eVtoHz(Real eV) noexcept {
     return eV / con::h;
 }
 
@@ -229,7 +229,7 @@ auto root_bisect(Fun f, decltype(f(0)) low, decltype(f(0)) high, decltype(f(0)) 
  * <!-- ************************************************************************************** -->
  */
 template <typename T>
-T min(T value) {
+constexpr T min(T value) {
     return value;
 }
 
@@ -244,7 +244,7 @@ T min(T value) {
  * <!-- ************************************************************************************** -->
  */
 template <typename T, typename... Args>
-T min(T first, Args... args) {
+constexpr T min(T first, Args... args) {
     return std::min(first, std::min(args...));
 }
 
@@ -257,7 +257,7 @@ T min(T first, Args... args) {
  * <!-- ************************************************************************************** -->
  */
 template <typename T>
-T max(T value) {
+constexpr T max(T value) {
     return value;
 }
 
@@ -272,7 +272,7 @@ T max(T value) {
  * <!-- ************************************************************************************** -->
  */
 template <typename T, typename... Args>
-T max(T first, Args... args) {
+constexpr T max(T first, Args... args) {
     return std::max(first, std::max(args...));
 }
 

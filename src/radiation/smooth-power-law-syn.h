@@ -40,7 +40,7 @@ struct SmoothPowerLawSyn {
      * @return The synchrotron specific intensity at the specified frequency
      * <!-- ************************************************************************************** -->
      */
-    [[nodiscard]] Real compute_I_nu(Real nu) const; ///< Linear power PER SOLID ANGLE
+    [[nodiscard]] Real compute_I_nu(Real nu) const noexcept; ///< Linear power PER SOLID ANGLE
 
     /**
      * <!-- ************************************************************************************** -->
@@ -50,7 +50,7 @@ struct SmoothPowerLawSyn {
      * @return Base-2 logarithm of synchrotron specific intensity
      * <!-- ************************************************************************************** -->
      */
-    [[nodiscard]] Real compute_log2_I_nu(Real log2_nu) const;
+    [[nodiscard]] Real compute_log2_I_nu(Real log2_nu) const noexcept;
 
     /**
      * <!-- ************************************************************************************** -->
@@ -58,7 +58,7 @@ struct SmoothPowerLawSyn {
      * @details Constants vary based on the electron regime (1-6) and involve different power laws.
      * <!-- ************************************************************************************** -->
      */
-    void build();
+    void build() noexcept;
 
   private:
     Real log2_norm_{0};       ///< Cached spectral coefficient 0 in log2
@@ -84,7 +84,7 @@ struct SmoothPowerLawSyn {
      * @return The normalized synchrotron spectrum value
      * <!-- ************************************************************************************** -->
      */
-    [[nodiscard]] inline Real compute_spectrum(Real nu) const;
+    [[nodiscard]] inline Real compute_spectrum(Real nu) const noexcept;
 
     /**
      * <!-- ************************************************************************************** -->
@@ -94,11 +94,11 @@ struct SmoothPowerLawSyn {
      * @return Base-2 logarithm of the synchrotron spectrum
      * <!-- ************************************************************************************** -->
      */
-    [[nodiscard]] inline Real compute_log2_spectrum(Real log2_nu) const;
+    [[nodiscard]] inline Real compute_log2_spectrum(Real log2_nu) const noexcept;
 
-    [[nodiscard]] inline Real log2_optical_thin_sharp(Real log2_nu) const;
-    [[nodiscard]] inline Real log2_optical_thick_sharp(Real log2_nu) const;
+    [[nodiscard]] inline Real log2_optical_thin_sharp(Real log2_nu) const noexcept;
+    [[nodiscard]] inline Real log2_optical_thick_sharp(Real log2_nu) const noexcept;
 
-    [[nodiscard]] inline Real log2_optical_thin(Real log2_nu) const;
-    [[nodiscard]] inline Real log2_optical_thick(Real log2_nu) const;
+    [[nodiscard]] inline Real log2_optical_thin(Real log2_nu) const noexcept;
+    [[nodiscard]] inline Real log2_optical_thick(Real log2_nu) const noexcept;
 };

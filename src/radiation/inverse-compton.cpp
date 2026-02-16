@@ -174,11 +174,11 @@ void InverseComptonY::build_segments() noexcept {
     }
 }
 
-Real InverseComptonY::gamma_spectrum(Real gamma) const {
+Real InverseComptonY::gamma_spectrum(Real gamma) const noexcept {
     return segments_.eval(gamma);
 }
 
-Real InverseComptonY::nu_spectrum(Real nu) const {
+Real InverseComptonY::nu_spectrum(Real nu) const noexcept {
     const Real gamma = compute_syn_gamma(nu, B_);
     return gamma_spectrum(gamma);
 }
