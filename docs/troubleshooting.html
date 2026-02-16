@@ -161,7 +161,7 @@
 <p>A: Optimization strategies:</p>
 <ul class="simple">
 <li><p><strong>Reduce resolution</strong>: Use <code class="docutils literal notranslate"><span class="pre">resolution=(0.15,</span> <span class="pre">0.5,</span> <span class="pre">10)</span></code> for initial exploration</p></li>
-<li><p><strong>Fewer parameters</strong>: Fix some parameters with <code class="docutils literal notranslate"><span class="pre">Scale.FIXED</span></code></p></li>
+<li><p><strong>Fewer parameters</strong>: Fix some parameters with <code class="docutils literal notranslate"><span class="pre">Scale.fixed</span></code></p></li>
 <li><p><strong>Coarser time/frequency grids</strong>: Use fewer data points for initial fits</p></li>
 <li><p><strong>Parallel processing</strong>: Ensure you’re using multiple cores</p></li>
 <li><p><strong>Data screening</strong>: Apply <code class="docutils literal notranslate"><span class="pre">logscale_screen</span></code> to reduce dataset size (see Data Selection section)</p></li>
@@ -169,7 +169,7 @@
 <p><strong>Q: Parameter constraints seem unrealistic</strong></p>
 <p>A: Check:</p>
 <ul class="simple">
-<li><p><strong>Parameter scaling</strong>: Use <code class="docutils literal notranslate"><span class="pre">Scale.LOG</span></code> for parameters spanning orders of magnitude</p></li>
+<li><p><strong>Parameter scaling</strong>: Use <code class="docutils literal notranslate"><span class="pre">Scale.log</span></code> for parameters spanning orders of magnitude</p></li>
 <li><p><strong>Prior ranges</strong>: Ensure they’re physically motivated and not too restrictive</p></li>
 <li><p><strong>Model degeneracies</strong>: Some parameters may be strongly correlated</p></li>
 <li><p><strong>Data coverage</strong>: Limited frequency/time coverage can lead to poor constraints</p></li>

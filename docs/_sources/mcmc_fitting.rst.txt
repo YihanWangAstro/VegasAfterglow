@@ -328,15 +328,15 @@ The default configuration uses a top-hat jet in a uniform ISM environment with f
 
     # Basic parameter set
     params = [
-        ParamDef("E_iso",   1e50,  1e54,  Scale.LOG),     # Isotropic energy in erg
-        ParamDef("Gamma0",    10,   500,  Scale.LOG),     # Lorentz factor
-        ParamDef("theta_c", 0.01,   0.5,  Scale.LINEAR),  # Opening angle in radians
-        ParamDef("theta_v",    0,     0,  Scale.FIXED),   # Viewing angle (on-axis) in radians
-        ParamDef("n_ism",   1e-3,   100,  Scale.LOG),     # Number density in cm^-3
-        ParamDef("p",        2.1,   2.8,  Scale.LINEAR),  # Electron spectral index
-        ParamDef("eps_e",   1e-3,   0.5,  Scale.LOG),     # Electron energy fraction
-        ParamDef("eps_B",   1e-5,   0.1,  Scale.LOG),     # Magnetic energy fraction
-        ParamDef("xi_e",     0.1,   1.0,  Scale.LINEAR),  # Fraction of accelerated electrons
+        ParamDef("E_iso",   1e50,  1e54,  Scale.log),     # Isotropic energy in erg
+        ParamDef("Gamma0",    10,   500,  Scale.log),     # Lorentz factor
+        ParamDef("theta_c", 0.01,   0.5,  Scale.linear),  # Opening angle in radians
+        ParamDef("theta_v",    0,     0,  Scale.fixed),   # Viewing angle (on-axis) in radians
+        ParamDef("n_ism",   1e-3,   100,  Scale.log),     # Number density in cm^-3
+        ParamDef("p",        2.1,   2.8,  Scale.linear),  # Electron spectral index
+        ParamDef("eps_e",   1e-3,   0.5,  Scale.log),     # Electron energy fraction
+        ParamDef("eps_B",   1e-5,   0.1,  Scale.log),     # Magnetic energy fraction
+        ParamDef("xi_e",     0.1,   1.0,  Scale.linear),  # Fraction of accelerated electrons
     ]
 
 Jet Structure Variations
@@ -350,21 +350,21 @@ Jet Structure Variations
 
     params = [
         # Basic jet parameters (same as default)
-        ParamDef("E_iso",   1e50,  1e54,  Scale.LOG),
-        ParamDef("Gamma0",    10,   500,  Scale.LOG),
-        ParamDef("theta_c", 0.01,   0.3,  Scale.LINEAR),
-        ParamDef("theta_v",    0,   0.5,  Scale.LINEAR),  # Allow off-axis viewing
+        ParamDef("E_iso",   1e50,  1e54,  Scale.log),
+        ParamDef("Gamma0",    10,   500,  Scale.log),
+        ParamDef("theta_c", 0.01,   0.3,  Scale.linear),
+        ParamDef("theta_v",    0,   0.5,  Scale.linear),  # Allow off-axis viewing
 
         # Power-law structure parameters
-        ParamDef("k_e",      1.5,   3.0,  Scale.LINEAR),  # Energy power-law index, default 2.0 if not specified
-        ParamDef("k_g",      1.5,   3.0,  Scale.LINEAR),  # Lorentz factor power-law, default 2.0 if not specified
+        ParamDef("k_e",      1.5,   3.0,  Scale.linear),  # Energy power-law index, default 2.0 if not specified
+        ParamDef("k_g",      1.5,   3.0,  Scale.linear),  # Lorentz factor power-law, default 2.0 if not specified
 
         # Medium and microphysics (same as default)
-        ParamDef("n_ism",   1e-3,   100,  Scale.LOG),
-        ParamDef("p",        2.1,   2.8,  Scale.LINEAR),
-        ParamDef("eps_e",   1e-3,   0.5,  Scale.LOG),
-        ParamDef("eps_B",   1e-5,   0.1,  Scale.LOG),
-        ParamDef("xi_e",     0.1,   1.0,  Scale.LINEAR),
+        ParamDef("n_ism",   1e-3,   100,  Scale.log),
+        ParamDef("p",        2.1,   2.8,  Scale.linear),
+        ParamDef("eps_e",   1e-3,   0.5,  Scale.log),
+        ParamDef("eps_B",   1e-5,   0.1,  Scale.log),
+        ParamDef("xi_e",     0.1,   1.0,  Scale.linear),
     ]
 
 **Gaussian Structured Jet**
@@ -375,15 +375,15 @@ Jet Structure Variations
 
     params = [
         # Basic parameters (same as default)
-        ParamDef("E_iso",   1e50,  1e54,  Scale.LOG),
-        ParamDef("Gamma0",    10,   500,  Scale.LOG),
-        ParamDef("theta_c", 0.02,   0.2,  Scale.LINEAR),  # Gaussian width parameter
-        ParamDef("theta_v",    0,   0.5,  Scale.LINEAR),
-        ParamDef("n_ism",   1e-3,   100,  Scale.LOG),
-        ParamDef("p",        2.1,   2.8,  Scale.LINEAR),
-        ParamDef("eps_e",   1e-3,   0.5,  Scale.LOG),
-        ParamDef("eps_B",   1e-5,   0.1,  Scale.LOG),
-        ParamDef("xi_e",     0.1,   1.0,  Scale.LINEAR),
+        ParamDef("E_iso",   1e50,  1e54,  Scale.log),
+        ParamDef("Gamma0",    10,   500,  Scale.log),
+        ParamDef("theta_c", 0.02,   0.2,  Scale.linear),  # Gaussian width parameter
+        ParamDef("theta_v",    0,   0.5,  Scale.linear),
+        ParamDef("n_ism",   1e-3,   100,  Scale.log),
+        ParamDef("p",        2.1,   2.8,  Scale.linear),
+        ParamDef("eps_e",   1e-3,   0.5,  Scale.log),
+        ParamDef("eps_B",   1e-5,   0.1,  Scale.log),
+        ParamDef("xi_e",     0.1,   1.0,  Scale.linear),
     ]
 
 **Two-Component Jet**
@@ -394,22 +394,22 @@ Jet Structure Variations
 
     params = [
         # Narrow component
-        ParamDef("E_iso",   1e50,  1e53,  Scale.LOG),     # Core energy
-        ParamDef("Gamma0",   100,   500,  Scale.LOG),     # Core Lorentz factor
-        ParamDef("theta_c", 0.01,   0.1,  Scale.LINEAR),  # Core angle
+        ParamDef("E_iso",   1e50,  1e53,  Scale.log),     # Core energy
+        ParamDef("Gamma0",   100,   500,  Scale.log),     # Core Lorentz factor
+        ParamDef("theta_c", 0.01,   0.1,  Scale.linear),  # Core angle
 
         # Wide component
-        ParamDef("E_iso_w", 1e49,  1e52,  Scale.LOG),     # Wide energy in erg
-        ParamDef("Gamma0_w",  10,   100,  Scale.LOG),     # Wide Lorentz factor
-        ParamDef("theta_w",  0.1,   0.5,  Scale.LINEAR),  # Wide angle in radians
+        ParamDef("E_iso_w", 1e49,  1e52,  Scale.log),     # Wide energy in erg
+        ParamDef("Gamma0_w",  10,   100,  Scale.log),     # Wide Lorentz factor
+        ParamDef("theta_w",  0.1,   0.5,  Scale.linear),  # Wide angle in radians
 
         # Observation and medium (same as default)
-        ParamDef("theta_v",    0,   0.3,  Scale.LINEAR),
-        ParamDef("n_ism",   1e-3,   100,  Scale.LOG),
-        ParamDef("p",        2.1,   2.8,  Scale.LINEAR),
-        ParamDef("eps_e",   1e-3,   0.5,  Scale.LOG),
-        ParamDef("eps_B",   1e-5,   0.1,  Scale.LOG),
-        ParamDef("xi_e",     0.1,   1.0,  Scale.LINEAR),
+        ParamDef("theta_v",    0,   0.3,  Scale.linear),
+        ParamDef("n_ism",   1e-3,   100,  Scale.log),
+        ParamDef("p",        2.1,   2.8,  Scale.linear),
+        ParamDef("eps_e",   1e-3,   0.5,  Scale.log),
+        ParamDef("eps_B",   1e-5,   0.1,  Scale.log),
+        ParamDef("xi_e",     0.1,   1.0,  Scale.linear),
     ]
 
 **Step Power-law Jet**
@@ -420,23 +420,23 @@ Jet Structure Variations
 
     params = [
         # Core component (uniform)
-        ParamDef("E_iso",   1e51,  1e54,  Scale.LOG),     # Core energy
-        ParamDef("Gamma0",    50,   500,  Scale.LOG),     # Core Lorentz factor
-        ParamDef("theta_c", 0.01,   0.1,  Scale.LINEAR),  # Core boundary
+        ParamDef("E_iso",   1e51,  1e54,  Scale.log),     # Core energy
+        ParamDef("Gamma0",    50,   500,  Scale.log),     # Core Lorentz factor
+        ParamDef("theta_c", 0.01,   0.1,  Scale.linear),  # Core boundary
 
         # Wing component (power-law)
-        ParamDef("E_iso_w", 1e49,  1e52,  Scale.LOG),     # Wing energy scale
-        ParamDef("Gamma0_w",  10,   100,  Scale.LOG),     # Wing Lorentz factor
-        ParamDef("k_e",      1.5,   3.0,  Scale.LINEAR),  # Energy power-law
-        ParamDef("k_g",      1.5,   3.0,  Scale.LINEAR),  # Lorentz factor power-law
+        ParamDef("E_iso_w", 1e49,  1e52,  Scale.log),     # Wing energy scale
+        ParamDef("Gamma0_w",  10,   100,  Scale.log),     # Wing Lorentz factor
+        ParamDef("k_e",      1.5,   3.0,  Scale.linear),  # Energy power-law
+        ParamDef("k_g",      1.5,   3.0,  Scale.linear),  # Lorentz factor power-law
 
         # Standard parameters (same as default)
-        ParamDef("theta_v",    0,   0.3,  Scale.LINEAR),
-        ParamDef("n_ism",   1e-3,   100,  Scale.LOG),
-        ParamDef("p",        2.1,   2.8,  Scale.LINEAR),
-        ParamDef("eps_e",   1e-3,   0.5,  Scale.LOG),
-        ParamDef("eps_B",   1e-5,   0.1,  Scale.LOG),
-        ParamDef("xi_e",     0.1,   1.0,  Scale.LINEAR),
+        ParamDef("theta_v",    0,   0.3,  Scale.linear),
+        ParamDef("n_ism",   1e-3,   100,  Scale.log),
+        ParamDef("p",        2.1,   2.8,  Scale.linear),
+        ParamDef("eps_e",   1e-3,   0.5,  Scale.log),
+        ParamDef("eps_B",   1e-5,   0.1,  Scale.log),
+        ParamDef("xi_e",     0.1,   1.0,  Scale.linear),
     ]
 
 Medium Type Variations
@@ -450,19 +450,19 @@ Medium Type Variations
 
     params = [
         # Standard jet parameters (same as default)
-        ParamDef("E_iso",   1e50,  1e54,  Scale.LOG),
-        ParamDef("Gamma0",    10,   500,  Scale.LOG),
-        ParamDef("theta_c", 0.01,   0.5,  Scale.LINEAR),
-        ParamDef("theta_v",    0,     0,  Scale.FIXED),
+        ParamDef("E_iso",   1e50,  1e54,  Scale.log),
+        ParamDef("Gamma0",    10,   500,  Scale.log),
+        ParamDef("theta_c", 0.01,   0.5,  Scale.linear),
+        ParamDef("theta_v",    0,     0,  Scale.fixed),
 
         # Wind medium parameter (replaces n_ism)
-        ParamDef("A_star",  1e-3,   1.0,  Scale.LOG),     # Wind parameter
+        ParamDef("A_star",  1e-3,   1.0,  Scale.log),     # Wind parameter
 
         # Standard microphysics (same as default)
-        ParamDef("p",        2.1,   2.8,  Scale.LINEAR),
-        ParamDef("eps_e",   1e-3,   0.5,  Scale.LOG),
-        ParamDef("eps_B",   1e-5,   0.1,  Scale.LOG),
-        ParamDef("xi_e",     0.1,   1.0,  Scale.LINEAR),
+        ParamDef("p",        2.1,   2.8,  Scale.linear),
+        ParamDef("eps_e",   1e-3,   0.5,  Scale.log),
+        ParamDef("eps_B",   1e-5,   0.1,  Scale.log),
+        ParamDef("xi_e",     0.1,   1.0,  Scale.linear),
     ]
 
 **Stratified Medium: ISM-to-Wind**
@@ -473,20 +473,20 @@ Medium Type Variations
 
     params = [
         # Standard jet parameters (same as default)
-        ParamDef("E_iso",   1e50,  1e54,  Scale.LOG),
-        ParamDef("Gamma0",    10,   500,  Scale.LOG),
-        ParamDef("theta_c", 0.01,   0.5,  Scale.LINEAR),
-        ParamDef("theta_v",    0,     0,  Scale.FIXED),
+        ParamDef("E_iso",   1e50,  1e54,  Scale.log),
+        ParamDef("Gamma0",    10,   500,  Scale.log),
+        ParamDef("theta_c", 0.01,   0.5,  Scale.linear),
+        ParamDef("theta_v",    0,     0,  Scale.fixed),
 
         # Stratified medium parameters
-        ParamDef("A_star",  1e-5,   0.1,  Scale.LOG),     # Wind strength (outer)
-        ParamDef("n0",      1e-3,    10,  Scale.LOG),     # ISM density (inner) in cm^-3
+        ParamDef("A_star",  1e-5,   0.1,  Scale.log),     # Wind strength (outer)
+        ParamDef("n0",      1e-3,    10,  Scale.log),     # ISM density (inner) in cm^-3
 
         # Standard microphysics (same as default)
-        ParamDef("p",        2.1,   2.8,  Scale.LINEAR),
-        ParamDef("eps_e",   1e-3,   0.5,  Scale.LOG),
-        ParamDef("eps_B",   1e-5,   0.1,  Scale.LOG),
-        ParamDef("xi_e",     0.1,   1.0,  Scale.LINEAR),
+        ParamDef("p",        2.1,   2.8,  Scale.linear),
+        ParamDef("eps_e",   1e-3,   0.5,  Scale.log),
+        ParamDef("eps_B",   1e-5,   0.1,  Scale.log),
+        ParamDef("xi_e",     0.1,   1.0,  Scale.linear),
     ]
 
 **Stratified Medium: Wind-to-ISM**
@@ -497,20 +497,20 @@ Medium Type Variations
 
     params = [
         # Standard jet parameters (same as default)
-        ParamDef("E_iso",   1e50,  1e54,  Scale.LOG),
-        ParamDef("Gamma0",    10,   500,  Scale.LOG),
-        ParamDef("theta_c", 0.01,   0.5,  Scale.LINEAR),
-        ParamDef("theta_v",    0,     0,  Scale.FIXED),
+        ParamDef("E_iso",   1e50,  1e54,  Scale.log),
+        ParamDef("Gamma0",    10,   500,  Scale.log),
+        ParamDef("theta_c", 0.01,   0.5,  Scale.linear),
+        ParamDef("theta_v",    0,     0,  Scale.fixed),
 
         # Stratified medium (wind -> ISM)
-        ParamDef("A_star",  1e-3,   1.0,  Scale.LOG),     # Inner wind strength
-        ParamDef("n_ism",   1e-3,   100,  Scale.LOG),     # Outer ISM density
+        ParamDef("A_star",  1e-3,   1.0,  Scale.log),     # Inner wind strength
+        ParamDef("n_ism",   1e-3,   100,  Scale.log),     # Outer ISM density
 
         # Standard microphysics (same as default)
-        ParamDef("p",        2.1,   2.8,  Scale.LINEAR),
-        ParamDef("eps_e",   1e-3,   0.5,  Scale.LOG),
-        ParamDef("eps_B",   1e-5,   0.1,  Scale.LOG),
-        ParamDef("xi_e",     0.1,   1.0,  Scale.LINEAR),
+        ParamDef("p",        2.1,   2.8,  Scale.linear),
+        ParamDef("eps_e",   1e-3,   0.5,  Scale.log),
+        ParamDef("eps_B",   1e-5,   0.1,  Scale.log),
+        ParamDef("xi_e",     0.1,   1.0,  Scale.linear),
     ]
 
 **Stratified Medium: ISM-Wind-ISM**
@@ -521,21 +521,21 @@ Medium Type Variations
 
     params = [
         # Standard jet parameters (same as default)
-        ParamDef("E_iso",   1e50,  1e54,  Scale.LOG),
-        ParamDef("Gamma0",    10,   500,  Scale.LOG),
-        ParamDef("theta_c", 0.01,   0.5,  Scale.LINEAR),
-        ParamDef("theta_v",    0,     0,  Scale.FIXED),
+        ParamDef("E_iso",   1e50,  1e54,  Scale.log),
+        ParamDef("Gamma0",    10,   500,  Scale.log),
+        ParamDef("theta_c", 0.01,   0.5,  Scale.linear),
+        ParamDef("theta_v",    0,     0,  Scale.fixed),
 
         # Three-zone stratified medium
-        ParamDef("A_star",  1e-4,   0.1,  Scale.LOG),     # Wind parameter (middle)
-        ParamDef("n_ism",   1e-3,   100,  Scale.LOG),     # Outer ISM density
-        ParamDef("n0",      1e-2,    20,  Scale.LOG),     # Inner ISM density
+        ParamDef("A_star",  1e-4,   0.1,  Scale.log),     # Wind parameter (middle)
+        ParamDef("n_ism",   1e-3,   100,  Scale.log),     # Outer ISM density
+        ParamDef("n0",      1e-2,    20,  Scale.log),     # Inner ISM density
 
         # Standard microphysics (same as default)
-        ParamDef("p",        2.1,   2.8,  Scale.LINEAR),
-        ParamDef("eps_e",   1e-3,   0.5,  Scale.LOG),
-        ParamDef("eps_B",   1e-5,   0.1,  Scale.LOG),
-        ParamDef("xi_e",     0.1,   1.0,  Scale.LINEAR),
+        ParamDef("p",        2.1,   2.8,  Scale.linear),
+        ParamDef("eps_e",   1e-3,   0.5,  Scale.log),
+        ParamDef("eps_B",   1e-5,   0.1,  Scale.log),
+        ParamDef("xi_e",     0.1,   1.0,  Scale.linear),
     ]
 
 .. important::
@@ -563,26 +563,26 @@ Reverse Shock
 
     params = [
         # Standard jet and medium parameters (same as default)
-        ParamDef("E_iso",   1e50,  1e54,  Scale.LOG),
-        ParamDef("Gamma0",    10,   500,  Scale.LOG),
-        ParamDef("theta_c", 0.01,   0.5,  Scale.LINEAR),
-        ParamDef("theta_v",    0,     0,  Scale.FIXED),
-        ParamDef("n_ism",   1e-3,   100,  Scale.LOG),
+        ParamDef("E_iso",   1e50,  1e54,  Scale.log),
+        ParamDef("Gamma0",    10,   500,  Scale.log),
+        ParamDef("theta_c", 0.01,   0.5,  Scale.linear),
+        ParamDef("theta_v",    0,     0,  Scale.fixed),
+        ParamDef("n_ism",   1e-3,   100,  Scale.log),
 
         # Jet duration (important for reverse shock)
-        ParamDef("tau",        1,   1e6,  Scale.LOG),     # Jet duration in seconds
+        ParamDef("tau",        1,   1e6,  Scale.log),     # Jet duration in seconds
 
         # Forward shock microphysics (same as default)
-        ParamDef("p",        2.1,   2.8,  Scale.LINEAR),
-        ParamDef("eps_e",   1e-3,   0.5,  Scale.LOG),
-        ParamDef("eps_B",   1e-5,   0.1,  Scale.LOG),
-        ParamDef("xi_e",     0.1,   1.0,  Scale.LINEAR),
+        ParamDef("p",        2.1,   2.8,  Scale.linear),
+        ParamDef("eps_e",   1e-3,   0.5,  Scale.log),
+        ParamDef("eps_B",   1e-5,   0.1,  Scale.log),
+        ParamDef("xi_e",     0.1,   1.0,  Scale.linear),
 
         # Reverse shock microphysics (can be different)
-        ParamDef("p_r",      2.1,   2.8,  Scale.LINEAR),
-        ParamDef("eps_e_r", 1e-3,   0.5,  Scale.LOG),
-        ParamDef("eps_B_r", 1e-5,   0.1,  Scale.LOG),
-        ParamDef("xi_e_r",   0.1,   1.0,  Scale.LINEAR),
+        ParamDef("p_r",      2.1,   2.8,  Scale.linear),
+        ParamDef("eps_e_r", 1e-3,   0.5,  Scale.log),
+        ParamDef("eps_B_r", 1e-5,   0.1,  Scale.log),
+        ParamDef("xi_e_r",   0.1,   1.0,  Scale.linear),
     ]
 
 **Reverse Shock with Structured Jet**
@@ -597,22 +597,22 @@ Reverse Shock
 
     params = [
         # Gaussian jet parameters
-        ParamDef("E_iso",   1e50,  1e54,  Scale.LOG),
-        ParamDef("Gamma0",    50,   500,  Scale.LOG),
-        ParamDef("theta_c", 0.02,   0.2,  Scale.LINEAR),
-        ParamDef("theta_v",    0,   0.5,  Scale.LINEAR),
-        ParamDef("n_ism",   1e-3,   100,  Scale.LOG),
-        ParamDef("tau",        1,   1e6,  Scale.LOG),
+        ParamDef("E_iso",   1e50,  1e54,  Scale.log),
+        ParamDef("Gamma0",    50,   500,  Scale.log),
+        ParamDef("theta_c", 0.02,   0.2,  Scale.linear),
+        ParamDef("theta_v",    0,   0.5,  Scale.linear),
+        ParamDef("n_ism",   1e-3,   100,  Scale.log),
+        ParamDef("tau",        1,   1e6,  Scale.log),
 
         # Forward + reverse shock microphysics
-        ParamDef("p",        2.1,   2.8,  Scale.LINEAR),
-        ParamDef("eps_e",   1e-3,   0.5,  Scale.LOG),
-        ParamDef("eps_B",   1e-5,   0.1,  Scale.LOG),
-        ParamDef("xi_e",     0.1,   1.0,  Scale.LINEAR),
-        ParamDef("p_r",      2.1,   2.8,  Scale.LINEAR),
-        ParamDef("eps_e_r", 1e-3,   0.5,  Scale.LOG),
-        ParamDef("eps_B_r", 1e-5,   0.1,  Scale.LOG),
-        ParamDef("xi_e_r",   0.1,   1.0,  Scale.LINEAR),
+        ParamDef("p",        2.1,   2.8,  Scale.linear),
+        ParamDef("eps_e",   1e-3,   0.5,  Scale.log),
+        ParamDef("eps_B",   1e-5,   0.1,  Scale.log),
+        ParamDef("xi_e",     0.1,   1.0,  Scale.linear),
+        ParamDef("p_r",      2.1,   2.8,  Scale.linear),
+        ParamDef("eps_e_r", 1e-3,   0.5,  Scale.log),
+        ParamDef("eps_B_r", 1e-5,   0.1,  Scale.log),
+        ParamDef("xi_e_r",   0.1,   1.0,  Scale.linear),
     ]
 
 Inverse Compton Radiation
@@ -633,15 +633,15 @@ For the physical details of inverse Compton and Klein-Nishina corrections, see :
 
     params = [
         # Standard parameters (same as default)
-        ParamDef("E_iso",   1e50,  1e54,  Scale.LOG),
-        ParamDef("Gamma0",    10,   500,  Scale.LOG),
-        ParamDef("theta_c", 0.01,   0.5,  Scale.LINEAR),
-        ParamDef("theta_v",    0,     0,  Scale.FIXED),
-        ParamDef("n_ism",   1e-3,   100,  Scale.LOG),
-        ParamDef("p",        2.1,   2.8,  Scale.LINEAR),
-        ParamDef("eps_e",   1e-3,   0.5,  Scale.LOG),
-        ParamDef("eps_B",   1e-5,   0.1,  Scale.LOG),
-        ParamDef("xi_e",     0.1,   1.0,  Scale.LINEAR),
+        ParamDef("E_iso",   1e50,  1e54,  Scale.log),
+        ParamDef("Gamma0",    10,   500,  Scale.log),
+        ParamDef("theta_c", 0.01,   0.5,  Scale.linear),
+        ParamDef("theta_v",    0,     0,  Scale.fixed),
+        ParamDef("n_ism",   1e-3,   100,  Scale.log),
+        ParamDef("p",        2.1,   2.8,  Scale.linear),
+        ParamDef("eps_e",   1e-3,   0.5,  Scale.log),
+        ParamDef("eps_B",   1e-5,   0.1,  Scale.log),
+        ParamDef("xi_e",     0.1,   1.0,  Scale.linear),
     ]
 
 **Reverse Shock Inverse Compton**
@@ -659,22 +659,22 @@ For the physical details of inverse Compton and Klein-Nishina corrections, see :
 
     params = [
         # Standard parameters with reverse shock
-        ParamDef("E_iso",   1e50,  1e54,  Scale.LOG),
-        ParamDef("Gamma0",    10,   500,  Scale.LOG),
-        ParamDef("theta_c", 0.01,   0.5,  Scale.LINEAR),
-        ParamDef("theta_v",    0,     0,  Scale.FIXED),
-        ParamDef("n_ism",   1e-3,   100,  Scale.LOG),
-        ParamDef("tau",        1,   100,  Scale.LOG),
+        ParamDef("E_iso",   1e50,  1e54,  Scale.log),
+        ParamDef("Gamma0",    10,   500,  Scale.log),
+        ParamDef("theta_c", 0.01,   0.5,  Scale.linear),
+        ParamDef("theta_v",    0,     0,  Scale.fixed),
+        ParamDef("n_ism",   1e-3,   100,  Scale.log),
+        ParamDef("tau",        1,   100,  Scale.log),
 
         # Forward + reverse microphysics
-        ParamDef("p",        2.1,   2.8,  Scale.LINEAR),
-        ParamDef("eps_e",   1e-3,   0.5,  Scale.LOG),
-        ParamDef("eps_B",   1e-5,   0.1,  Scale.LOG),
-        ParamDef("xi_e",     0.1,   1.0,  Scale.LINEAR),
-        ParamDef("p_r",      2.1,   2.8,  Scale.LINEAR),
-        ParamDef("eps_e_r", 1e-3,   0.5,  Scale.LOG),
-        ParamDef("eps_B_r", 1e-5,   0.1,  Scale.LOG),
-        ParamDef("xi_e_r",   0.1,   1.0,  Scale.LINEAR),
+        ParamDef("p",        2.1,   2.8,  Scale.linear),
+        ParamDef("eps_e",   1e-3,   0.5,  Scale.log),
+        ParamDef("eps_B",   1e-5,   0.1,  Scale.log),
+        ParamDef("xi_e",     0.1,   1.0,  Scale.linear),
+        ParamDef("p_r",      2.1,   2.8,  Scale.linear),
+        ParamDef("eps_e_r", 1e-3,   0.5,  Scale.log),
+        ParamDef("eps_B_r", 1e-5,   0.1,  Scale.log),
+        ParamDef("xi_e_r",   0.1,   1.0,  Scale.linear),
     ]
 
 Energy Injection
@@ -692,22 +692,22 @@ Energy Injection
 
     params = [
         # Standard jet and medium parameters (same as default)
-        ParamDef("E_iso",   1e50,  1e54,  Scale.LOG),
-        ParamDef("Gamma0",    10,   500,  Scale.LOG),
-        ParamDef("theta_c", 0.01,   0.5,  Scale.LINEAR),
-        ParamDef("theta_v",    0,     0,  Scale.FIXED),
-        ParamDef("n_ism",   1e-3,   100,  Scale.LOG),
+        ParamDef("E_iso",   1e50,  1e54,  Scale.log),
+        ParamDef("Gamma0",    10,   500,  Scale.log),
+        ParamDef("theta_c", 0.01,   0.5,  Scale.linear),
+        ParamDef("theta_v",    0,     0,  Scale.fixed),
+        ParamDef("n_ism",   1e-3,   100,  Scale.log),
 
         # Magnetar injection parameters
-        ParamDef("L0",      1e42,  1e48,  Scale.LOG),     # Initial luminosity [erg/s]
-        ParamDef("t0",        10,  1000,  Scale.LOG),     # Spin-down timescale [s]
-        ParamDef("q",        1.5,   3.0,  Scale.LINEAR),  # Power-law index
+        ParamDef("L0",      1e42,  1e48,  Scale.log),     # Initial luminosity [erg/s]
+        ParamDef("t0",        10,  1000,  Scale.log),     # Spin-down timescale [s]
+        ParamDef("q",        1.5,   3.0,  Scale.linear),  # Power-law index
 
         # Standard microphysics (same as default)
-        ParamDef("p",        2.1,   2.8,  Scale.LINEAR),
-        ParamDef("eps_e",   1e-3,   0.5,  Scale.LOG),
-        ParamDef("eps_B",   1e-5,   0.1,  Scale.LOG),
-        ParamDef("xi_e",     0.1,   1.0,  Scale.LINEAR),
+        ParamDef("p",        2.1,   2.8,  Scale.linear),
+        ParamDef("eps_e",   1e-3,   0.5,  Scale.log),
+        ParamDef("eps_B",   1e-5,   0.1,  Scale.log),
+        ParamDef("xi_e",     0.1,   1.0,  Scale.linear),
     ]
 
 .. note::
@@ -726,24 +726,24 @@ Energy Injection
 
     params = [
         # Power-law jet with magnetar
-        ParamDef("E_iso",   1e50,  1e54,  Scale.LOG),
-        ParamDef("Gamma0",    10,   500,  Scale.LOG),
-        ParamDef("theta_c", 0.01,   0.3,  Scale.LINEAR),
-        ParamDef("k_e",      1.5,   3.0,  Scale.LINEAR),
-        ParamDef("k_g",      1.5,   3.0,  Scale.LINEAR),
-        ParamDef("theta_v",    0,   0.5,  Scale.LINEAR),
-        ParamDef("n_ism",   1e-3,   100,  Scale.LOG),
+        ParamDef("E_iso",   1e50,  1e54,  Scale.log),
+        ParamDef("Gamma0",    10,   500,  Scale.log),
+        ParamDef("theta_c", 0.01,   0.3,  Scale.linear),
+        ParamDef("k_e",      1.5,   3.0,  Scale.linear),
+        ParamDef("k_g",      1.5,   3.0,  Scale.linear),
+        ParamDef("theta_v",    0,   0.5,  Scale.linear),
+        ParamDef("n_ism",   1e-3,   100,  Scale.log),
 
         # Magnetar parameters
-        ParamDef("L0",      1e42,  1e48,  Scale.LOG),
-        ParamDef("t0",        10,  1000,  Scale.LOG),
-        ParamDef("q",        1.5,   3.0,  Scale.LINEAR),
+        ParamDef("L0",      1e42,  1e48,  Scale.log),
+        ParamDef("t0",        10,  1000,  Scale.log),
+        ParamDef("q",        1.5,   3.0,  Scale.linear),
 
         # Standard microphysics
-        ParamDef("p",        2.1,   2.8,  Scale.LINEAR),
-        ParamDef("eps_e",   1e-3,   0.5,  Scale.LOG),
-        ParamDef("eps_B",   1e-5,   0.1,  Scale.LOG),
-        ParamDef("xi_e",     0.1,   1.0,  Scale.LINEAR),
+        ParamDef("p",        2.1,   2.8,  Scale.linear),
+        ParamDef("eps_e",   1e-3,   0.5,  Scale.log),
+        ParamDef("eps_B",   1e-5,   0.1,  Scale.log),
+        ParamDef("xi_e",     0.1,   1.0,  Scale.linear),
     ]
 
 Complex Model Combinations
@@ -765,33 +765,33 @@ Complex Model Combinations
 
     params = [
         # Gaussian jet
-        ParamDef("E_iso",   1e50,  1e54,  Scale.LOG),
-        ParamDef("Gamma0",    50,   500,  Scale.LOG),
-        ParamDef("theta_c", 0.02,   0.2,  Scale.LINEAR),
-        ParamDef("theta_v",    0,   0.5,  Scale.LINEAR),
-        ParamDef("tau",        1,   100,  Scale.LOG),
+        ParamDef("E_iso",   1e50,  1e54,  Scale.log),
+        ParamDef("Gamma0",    50,   500,  Scale.log),
+        ParamDef("theta_c", 0.02,   0.2,  Scale.linear),
+        ParamDef("theta_v",    0,   0.5,  Scale.linear),
+        ParamDef("tau",        1,   100,  Scale.log),
 
         # Stratified medium
-        ParamDef("A_star",  1e-4,   1.0,  Scale.LOG),
-        ParamDef("n_ism",   1e-3,   100,  Scale.LOG),
-        ParamDef("n0",      1e-2,    50,  Scale.LOG),
+        ParamDef("A_star",  1e-4,   1.0,  Scale.log),
+        ParamDef("n_ism",   1e-3,   100,  Scale.log),
+        ParamDef("n0",      1e-2,    50,  Scale.log),
 
         # Magnetar injection
-        ParamDef("L0",      1e42,  1e48,  Scale.LOG),
-        ParamDef("t0",        10,  1000,  Scale.LOG),
-        ParamDef("q",        1.5,   3.0,  Scale.LINEAR),
+        ParamDef("L0",      1e42,  1e48,  Scale.log),
+        ParamDef("t0",        10,  1000,  Scale.log),
+        ParamDef("q",        1.5,   3.0,  Scale.linear),
 
         # Forward shock microphysics
-        ParamDef("p",        2.1,   2.8,  Scale.LINEAR),
-        ParamDef("eps_e",   1e-3,   0.5,  Scale.LOG),
-        ParamDef("eps_B",   1e-5,   0.1,  Scale.LOG),
-        ParamDef("xi_e",     0.1,   1.0,  Scale.LINEAR),
+        ParamDef("p",        2.1,   2.8,  Scale.linear),
+        ParamDef("eps_e",   1e-3,   0.5,  Scale.log),
+        ParamDef("eps_B",   1e-5,   0.1,  Scale.log),
+        ParamDef("xi_e",     0.1,   1.0,  Scale.linear),
 
         # Reverse shock microphysics
-        ParamDef("p_r",      2.1,   2.8,  Scale.LINEAR),
-        ParamDef("eps_e_r", 1e-3,   0.5,  Scale.LOG),
-        ParamDef("eps_B_r", 1e-5,   0.1,  Scale.LOG),
-        ParamDef("xi_e_r",   0.1,   1.0,  Scale.LINEAR),
+        ParamDef("p_r",      2.1,   2.8,  Scale.linear),
+        ParamDef("eps_e_r", 1e-3,   0.5,  Scale.log),
+        ParamDef("eps_B_r", 1e-5,   0.1,  Scale.log),
+        ParamDef("xi_e_r",   0.1,   1.0,  Scale.linear),
     ]
 
 .. warning::
@@ -1072,7 +1072,7 @@ Basic MCMC Execution
     )
 
 **Important Notes:**
-    - Parameters with ``Scale.LOG`` are sampled as ``log10_<name>`` (e.g., ``log10_E_iso``)
+    - Parameters with ``Scale.log`` are sampled as ``log10_<name>`` (e.g., ``log10_E_iso``)
     - The sampler works in log10 space for LOG-scale parameters, then transforms back to physical values
     - Use ``npool`` to parallelize likelihood evaluations across multiple CPU cores
     - ``result.latex_labels`` provides properly formatted labels for corner plots
@@ -1293,18 +1293,18 @@ The fitter calls your factory on every MCMC step with fresh parameter values.
         return Ejecta(E_iso=E_iso_func, Gamma0=Gamma_func, duration=params.tau)
 
     mc_params = [
-        ParamDef("E_iso",   1e50,  1e54,  Scale.LOG),
-        ParamDef("Gamma0",    50,   500,  Scale.LOG),
-        ParamDef("theta_c", 0.02,   0.15, Scale.LINEAR),
-        ParamDef("theta_v",    0,   0.5,  Scale.LINEAR),
-        ParamDef("E_iso_w", 1e48,  1e52,  Scale.LOG),
-        ParamDef("theta_w",  0.1,   0.5,  Scale.LINEAR),
-        ParamDef("tau",        1,   1e3,  Scale.LOG),
-        ParamDef("n_ism",   1e-3,   100,  Scale.LOG),
-        ParamDef("p",        2.1,   2.8,  Scale.LINEAR),
-        ParamDef("eps_e",   1e-3,   0.5,  Scale.LOG),
-        ParamDef("eps_B",   1e-5,   0.1,  Scale.LOG),
-        ParamDef("xi_e",     0.1,   1.0,  Scale.LINEAR),
+        ParamDef("E_iso",   1e50,  1e54,  Scale.log),
+        ParamDef("Gamma0",    50,   500,  Scale.log),
+        ParamDef("theta_c", 0.02,   0.15, Scale.linear),
+        ParamDef("theta_v",    0,   0.5,  Scale.linear),
+        ParamDef("E_iso_w", 1e48,  1e52,  Scale.log),
+        ParamDef("theta_w",  0.1,   0.5,  Scale.linear),
+        ParamDef("tau",        1,   1e3,  Scale.log),
+        ParamDef("n_ism",   1e-3,   100,  Scale.log),
+        ParamDef("p",        2.1,   2.8,  Scale.linear),
+        ParamDef("eps_e",   1e-3,   0.5,  Scale.log),
+        ParamDef("eps_B",   1e-5,   0.1,  Scale.log),
+        ParamDef("xi_e",     0.1,   1.0,  Scale.linear),
     ]
 
     fitter = Fitter(z=1.58, lumi_dist=3.364e28, jet=double_gaussian_jet)
@@ -1354,14 +1354,14 @@ These are functions of ``(phi, theta, t)`` returning injection rates in erg/s an
         )
 
     mc_params = [
-        ParamDef("E_iso",   1e50,  1e54,  Scale.LOG),
-        ParamDef("Gamma0",    50,   500,  Scale.LOG),
-        ParamDef("theta_c", 0.02,   0.15, Scale.LINEAR),
-        ParamDef("theta_v",    0,   0.5,  Scale.LINEAR),
-        ParamDef("L0",      1e44,  1e48,  Scale.LOG),       # Injection luminosity [erg/s]
-        ParamDef("t_sd",      10,  1e4,   Scale.LOG),       # Spin-down timescale [s]
-        ParamDef("M_dot0",  1e20,  1e26,  Scale.LOG),       # Mass injection rate [g/s]
-        ParamDef("tau",        1,   1e3,  Scale.LOG),
+        ParamDef("E_iso",   1e50,  1e54,  Scale.log),
+        ParamDef("Gamma0",    50,   500,  Scale.log),
+        ParamDef("theta_c", 0.02,   0.15, Scale.linear),
+        ParamDef("theta_v",    0,   0.5,  Scale.linear),
+        ParamDef("L0",      1e44,  1e48,  Scale.log),       # Injection luminosity [erg/s]
+        ParamDef("t_sd",      10,  1e4,   Scale.log),       # Spin-down timescale [s]
+        ParamDef("M_dot0",  1e20,  1e26,  Scale.log),       # Mass injection rate [g/s]
+        ParamDef("tau",        1,   1e3,  Scale.log),
         # ... other standard params (n_ism, p, eps_e, eps_B, xi_e)
     ]
 
@@ -1398,16 +1398,16 @@ When using custom jet or medium functions, you can define arbitrary MCMC paramet
 .. code-block:: python
 
     mc_params = [
-        ParamDef("E_iso",   1e50,  1e54,  Scale.LOG),
-        ParamDef("Gamma0",    50,   500,  Scale.LOG),
-        ParamDef("theta_c", 0.02,   0.15, Scale.LINEAR),
-        ParamDef("theta_v",    0,     0,  Scale.FIXED),
-        ParamDef("n_ism",   1e-3,   100,  Scale.LOG),
-        ParamDef("r_scale", 1e16,  1e20,  Scale.LOG),     # custom parameter
-        ParamDef("p",        2.1,   2.8,  Scale.LINEAR),
-        ParamDef("eps_e",   1e-3,   0.5,  Scale.LOG),
-        ParamDef("eps_B",   1e-5,   0.1,  Scale.LOG),
-        ParamDef("xi_e",     0.1,   1.0,  Scale.LINEAR),
+        ParamDef("E_iso",   1e50,  1e54,  Scale.log),
+        ParamDef("Gamma0",    50,   500,  Scale.log),
+        ParamDef("theta_c", 0.02,   0.15, Scale.linear),
+        ParamDef("theta_v",    0,     0,  Scale.fixed),
+        ParamDef("n_ism",   1e-3,   100,  Scale.log),
+        ParamDef("r_scale", 1e16,  1e20,  Scale.log),     # custom parameter
+        ParamDef("p",        2.1,   2.8,  Scale.linear),
+        ParamDef("eps_e",   1e-3,   0.5,  Scale.log),
+        ParamDef("eps_B",   1e-5,   0.1,  Scale.log),
+        ParamDef("xi_e",     0.1,   1.0,  Scale.linear),
     ]
 
     fitter = Fitter(z=1.58, lumi_dist=3.364e28, medium=exponential_medium)
@@ -1493,14 +1493,14 @@ Here is a complete example — a tophat jet with ``@gil_free``:
     fitter.add_flux_density(nu=4.84e14, t=t_data, f_nu=flux_data, err=flux_err)
 
     mc_params = [
-        ParamDef("E_iso",    1e51,  1e54,  Scale.LOG,    1e53),
-        ParamDef("Gamma0",      5,  1000,  Scale.LOG,      20),
-        ParamDef("theta_c",  0.01,   0.5,  Scale.LINEAR,  0.1),
-        ParamDef("p",           2,     3,  Scale.LINEAR,  2.3),
-        ParamDef("eps_e",    1e-2,   0.3,  Scale.LOG,    0.05),
-        ParamDef("eps_B",    1e-4,   0.3,  Scale.LOG,    0.03),
-        ParamDef("xi_e",     1e-3,   0.1,  Scale.LOG,    0.01),
-        ParamDef("A_star",   1e-3,    10,  Scale.LOG,    0.05),
+        ParamDef("E_iso",    1e51,  1e54,  Scale.log,    1e53),
+        ParamDef("Gamma0",      5,  1000,  Scale.log,      20),
+        ParamDef("theta_c",  0.01,   0.5,  Scale.linear,  0.1),
+        ParamDef("p",           2,     3,  Scale.linear,  2.3),
+        ParamDef("eps_e",    1e-2,   0.3,  Scale.log,    0.05),
+        ParamDef("eps_B",    1e-4,   0.3,  Scale.log,    0.03),
+        ParamDef("xi_e",     1e-3,   0.1,  Scale.log,    0.01),
+        ParamDef("A_star",   1e-3,    10,  Scale.log,    0.05),
     ]
 
     result = fitter.fit(mc_params, sampler="emcee", nsteps=10000)
