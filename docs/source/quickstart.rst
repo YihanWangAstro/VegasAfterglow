@@ -168,14 +168,14 @@ Here is a minimal example showing the complete workflow:
 
     # 3. Define MCMC parameters
     mc_params = [
-        ParamDef("E_iso",    1e50,  1e54,  Scale.LOG),
-        ParamDef("Gamma0",      5,  1000,  Scale.LOG),
-        ParamDef("theta_c",   0.0,   0.5,  Scale.LINEAR),
-        ParamDef("theta_v",   0.0,   0.0,  Scale.FIXED),
-        ParamDef("n_ism",    1e-3,    10,  Scale.LOG),
-        ParamDef("p",           2,     3,  Scale.LINEAR),
-        ParamDef("eps_e",    1e-2,   0.5,  Scale.LOG),
-        ParamDef("eps_B",    1e-4,   0.5,  Scale.LOG),
+        ParamDef("E_iso",    1e50,  1e54,  Scale.log),
+        ParamDef("Gamma0",      5,  1000,  Scale.log),
+        ParamDef("theta_c",   0.0,   0.5,  Scale.linear),
+        ParamDef("theta_v",   0.0,   0.0,  Scale.fixed),
+        ParamDef("n_ism",    1e-3,    10,  Scale.log),
+        ParamDef("p",           2,     3,  Scale.linear),
+        ParamDef("eps_e",    1e-2,   0.5,  Scale.log),
+        ParamDef("eps_B",    1e-4,   0.5,  Scale.log),
     ]
 
     # 4. Run MCMC

@@ -150,8 +150,8 @@ See the [MCMC Parameter Fitting](https://yihanwangastro.github.io/VegasAfterglow
   - Works with both emcee and dynesty samplers
 
 #### **Flexible Parameter Interface**
-- **LOG-Scale Parameter Naming**: Parameters with `Scale.LOG` automatically prefixed with `log10_`
-  - Example: `E_iso` with `Scale.LOG` becomes `log10_E_iso` in sampler space
+- **LOG-Scale Parameter Naming**: Parameters with `Scale.log` automatically prefixed with `log10_`
+  - Example: `E_iso` with `Scale.log` becomes `log10_E_iso` in sampler space
   - Automatic transformation between log10 and physical values
 - **Generic Sampler Configuration**: Pass sampler-specific parameters via `**sampler_kwargs`
   - Emcee defaults: `nsteps=5000`, `nburn=1000`, `thin=1`, `nwalkers=2*ndim`

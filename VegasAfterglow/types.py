@@ -90,9 +90,22 @@ class FitResult:
 
 
 class Scale(Enum):
+    linear = "linear"
+    log = "log"
+    fixed = "fixed"
+
+    # Uppercase aliases for backward compatibility
     LINEAR = "linear"
     LOG = "log"
     FIXED = "fixed"
+
+    @classmethod
+    def _missing_(cls, value):
+        if isinstance(value, str):
+            for member in cls:
+                if member.value == value.lower():
+                    return member
+        return None
 
 
 @dataclass

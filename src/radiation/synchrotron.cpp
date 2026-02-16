@@ -270,23 +270,24 @@ Real cyclotron_correction(Real gamma_m, Real p) {
 //========================================================================================================
 
 Real SynElectrons::compute_spectrum(Real gamma) const {
-    constexpr Real s = 1.0; // smoothing sharpness (larger = sharper transition)
+    // Smooth broken power law with sharpness s=1
+    // General s: fast_pow(1 + fast_pow(gamma/gamma_break, s*delta), -1/s)
+    // With s=1:  1 / (1 + fast_pow(gamma/gamma_break, delta))
 
     switch (regime) {
         case 1: // slow cooling: gamma_m < gamma_c
         case 2:
         case 5:
-
-            // (p-1)/gamma_m * (gamma/gamma_m)^-p * smooth_break_at_gamma_c
-            return (p - 1) * fast_exp(-gamma / gamma_M - gamma_m / gamma) * fast_pow(gamma / gamma_m, -p) / gamma_m *
-                   fast_pow(1.0 + fast_pow(gamma / gamma_c, s), -1.0 / s);
+            // (p-1)/gamma_m * (gamma/gamma_m)^-p * gamma_c/(gamma + gamma_c) * exp cutoffs
+            return (p - 1) / gamma_m * fast_exp(-gamma / gamma_M - gamma_m / gamma) * fast_pow(gamma / gamma_m, -p) *
+                   gamma_c / (gamma + gamma_c);
 
         case 3: // fast cooling: gamma_c < gamma_m
         case 4:
         case 6:
-            // gamma_c/gamma^2 * smooth_break_at_gamma_m
-            return fast_exp(-gamma / gamma_M - gamma_c / gamma) * gamma_c / (gamma * gamma) *
-                   fast_pow(1.0 + fast_pow(gamma / gamma_m, s * (p - 1)), -1.0 / s);
+            // gamma_c/gamma^2 / (1 + (gamma/gamma_m)^(p-1)) * exp cutoffs
+            return fast_exp(-gamma / gamma_M - gamma_c / gamma) * gamma_c / (gamma * gamma) /
+                   (1.0 + fast_pow(gamma / gamma_m, p - 1));
 
         default:
             return 0;

@@ -365,11 +365,11 @@ Parameter Scaling Types
 
    * - Scale Type
      - Description and Usage
-   * - ``Scale.LOG``
+   * - ``Scale.log``
      - Sample in log₁₀ space. Use for parameters spanning multiple orders of magnitude (energies, densities, microphysics parameters)
-   * - ``Scale.LINEAR``
+   * - ``Scale.linear``
      - Sample in linear space. Use for parameters with limited ranges (angles, power-law indices)
-   * - ``Scale.FIXED``
+   * - ``Scale.fixed``
      - Keep parameter fixed at initial value. Use when you don't want to vary a parameter
 
 Parameter Relationships and Constraints

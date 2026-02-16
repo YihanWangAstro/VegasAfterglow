@@ -70,14 +70,14 @@ Example:
     from VegasAfterglow import ParamDef, Scale
 
     mc_params = [
-        ParamDef("E_iso",   1e50,  1e54,  Scale.LOG),       # Isotropic energy [erg]
-        ParamDef("Gamma0",     5,  1000,  Scale.LOG),       # Lorentz factor at the core
-        ParamDef("theta_c",  0.0,   0.5,  Scale.LINEAR),    # Core half-opening angle [rad]
-        ParamDef("theta_v",  0.0,   0.0,  Scale.FIXED),     # Viewing angle [rad]
-        ParamDef("p",          2,     3,  Scale.LINEAR),    # Shocked electron power law index
-        ParamDef("eps_e",   1e-2,   0.5,  Scale.LOG),       # Electron energy fraction
-        ParamDef("eps_B",   1e-4,   0.5,  Scale.LOG),       # Magnetic field energy fraction
-        ParamDef("A_star",  1e-3,     1,  Scale.LOG),       # Wind parameter
+        ParamDef("E_iso",   1e50,  1e54,  Scale.log),       # Isotropic energy [erg]
+        ParamDef("Gamma0",     5,  1000,  Scale.log),       # Lorentz factor at the core
+        ParamDef("theta_c",  0.0,   0.5,  Scale.linear),    # Core half-opening angle [rad]
+        ParamDef("theta_v",  0.0,   0.0,  Scale.fixed),     # Viewing angle [rad]
+        ParamDef("p",          2,     3,  Scale.linear),    # Shocked electron power law index
+        ParamDef("eps_e",   1e-2,   0.5,  Scale.log),       # Electron energy fraction
+        ParamDef("eps_B",   1e-4,   0.5,  Scale.log),       # Magnetic field energy fraction
+        ParamDef("A_star",  1e-3,     1,  Scale.log),       # Wind parameter
     ]
 
 .. _A_star:
@@ -90,7 +90,7 @@ For ISM medium models, you would use the density parameter instead:
 
 .. code-block:: python
 
-    ParamDef("n_ism",   1e-3,    10,  Scale.LOG),       # ISM density [cm^-3]
+    ParamDef("n_ism",   1e-3,    10,  Scale.log),       # ISM density [cm^-3]
 
 For a comprehensive list of all available parameters, their physical meanings, typical ranges, and usage guidelines, see the :doc:`parameter_reference` page.
 

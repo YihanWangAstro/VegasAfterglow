@@ -691,25 +691,25 @@ The `ParamDef` class is used to define the parameters for MCMC exploration. Each
 
 ```python
 mc_params = [
-    ParamDef("E_iso",      1e50,  1e54,  Scale.LOG),       # Isotropic energy [erg]
-    ParamDef("Gamma0",        5,  1000,  Scale.LOG),       # Lorentz factor at the core
-    ParamDef("theta_c",     0.0,   0.5,  Scale.LINEAR),    # Core half-opening angle [rad]
-    ParamDef("k_e",           2,     2,  Scale.FIXED),     # Energy power law index
-    ParamDef("k_g",           2,     2,  Scale.FIXED),     # Lorentz factor power law index
-    ParamDef("theta_v",     0.0,   0.0,  Scale.FIXED),     # Viewing angle [rad]
-    ParamDef("p",             2,     3,  Scale.LINEAR),    # Shocked electron power law index
-    ParamDef("eps_e",      1e-2,   0.5,  Scale.LOG),       # Electron energy fraction
-    ParamDef("eps_B",      1e-4,   0.5,  Scale.LOG),       # Magnetic field energy fraction
-    ParamDef("A_star",     1e-3,     1,  Scale.LOG),       # Wind parameter
-    ParamDef("xi_e",       1e-3,     1,  Scale.LOG),       # Electron acceleration fraction
+    ParamDef("E_iso",      1e50,  1e54,  Scale.log),       # Isotropic energy [erg]
+    ParamDef("Gamma0",        5,  1000,  Scale.log),       # Lorentz factor at the core
+    ParamDef("theta_c",     0.0,   0.5,  Scale.linear),    # Core half-opening angle [rad]
+    ParamDef("k_e",           2,     2,  Scale.fixed),     # Energy power law index
+    ParamDef("k_g",           2,     2,  Scale.fixed),     # Lorentz factor power law index
+    ParamDef("theta_v",     0.0,   0.0,  Scale.fixed),     # Viewing angle [rad]
+    ParamDef("p",             2,     3,  Scale.linear),    # Shocked electron power law index
+    ParamDef("eps_e",      1e-2,   0.5,  Scale.log),       # Electron energy fraction
+    ParamDef("eps_B",      1e-4,   0.5,  Scale.log),       # Magnetic field energy fraction
+    ParamDef("A_star",     1e-3,     1,  Scale.log),       # Wind parameter
+    ParamDef("xi_e",       1e-3,     1,  Scale.log),       # Electron acceleration fraction
 ]
 ```
 
 **Scale Types:**
 
-- `Scale.LOG`: Sample in logarithmic space (log10) - ideal for parameters spanning multiple orders of magnitude
-- `Scale.LINEAR`: Sample in linear space - appropriate for parameters with narrower ranges
-- `Scale.FIXED`: Keep parameter fixed at the initial value - use for parameters you don't want to vary
+- `Scale.log`: Sample in logarithmic space (log10) - ideal for parameters spanning multiple orders of magnitude
+- `Scale.linear`: Sample in linear space - appropriate for parameters with narrower ranges
+- `Scale.fixed`: Keep parameter fixed at the initial value - use for parameters you don't want to vary
 
 **Parameter Choices:**
 The parameters you include depend on your model configuration (See documentation for all options):
@@ -764,7 +764,7 @@ result = fitter.fit(
 ```
 
 **Important Notes:**
-- Parameters with `Scale.LOG` are sampled as `log10_<name>` (e.g., `log10_E_iso`)
+- Parameters with `Scale.log` are sampled as `log10_<name>` (e.g., `log10_E_iso`)
 - The sampler works in log10 space for LOG-scale parameters, then transforms back
 - Use `npool` to parallelize likelihood evaluations across multiple CPU cores
 

@@ -61,7 +61,7 @@ A: Try the following:
 A: Optimization strategies:
 
 - **Reduce resolution**: Use ``resolution=(0.15, 0.5, 10)`` for initial exploration
-- **Fewer parameters**: Fix some parameters with ``Scale.FIXED``
+- **Fewer parameters**: Fix some parameters with ``Scale.fixed``
 - **Coarser time/frequency grids**: Use fewer data points for initial fits
 - **Parallel processing**: Ensure you're using multiple cores
 - **Data screening**: Apply ``logscale_screen`` to reduce dataset size (see Data Selection section)
@@ -70,7 +70,7 @@ A: Optimization strategies:
 
 A: Check:
 
-- **Parameter scaling**: Use ``Scale.LOG`` for parameters spanning orders of magnitude
+- **Parameter scaling**: Use ``Scale.log`` for parameters spanning orders of magnitude
 - **Prior ranges**: Ensure they're physically motivated and not too restrictive
 - **Model degeneracies**: Some parameters may be strongly correlated
 - **Data coverage**: Limited frequency/time coverage can lead to poor constraints
