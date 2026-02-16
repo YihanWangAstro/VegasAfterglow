@@ -64,6 +64,13 @@ For the full MCMC fitting guide, including advanced customization examples, see 
 - See where computation time is spent (dynamics, electrons, photons, flux) via `Model.profile_data()` in Python
 - Useful for identifying bottlenecks when tuning resolution or enabling SSC
 
+#### **Per-Cell Spectrum Access in Simulation Details**
+
+- `details.fwd.sync_spectrum[i,j,k](nu_comv)` returns the comoving synchrotron specific intensity at any frequency for a given grid cell
+- `details.fwd.ssc_spectrum[i,j,k](nu_comv)` returns the comoving SSC specific intensity (when SSC is enabled)
+- `details.fwd.Y_spectrum[i,j,k](gamma)` returns the Compton Y parameter as a function of electron Lorentz factor
+- All evaluators accept NumPy arrays for vectorized queries
+
 #### **Python Object Introspection**
 
 - All key Python objects now have informative `__repr__` output: `Observer`, `Radiation`, `Magnetar`, `Model`, `FluxDict`, `Flux`, `ShockDetails`, `SimulationDetails`
