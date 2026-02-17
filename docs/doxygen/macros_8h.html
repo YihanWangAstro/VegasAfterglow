@@ -100,19 +100,22 @@ $(document).ready(function(){initNavTree('macros_8h.html',''); initResizable(); 
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><code>#include &lt;limits&gt;</code><br />
+<code>#include &lt;numbers&gt;</code><br />
 <code>#include &quot;<a class="el" href="simulation-defaults_8h_source.html">../config/simulation-defaults.h</a>&quot;</code><br />
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for macros.h:</div>
 <div class="dyncontent">
 <div class="center"><img src="macros_8h__incl.png" border="0" usemap="#amacros_8h" alt=""/></div>
 <map name="amacros_8h" id="amacros_8h">
-<area shape="rect" title=" " alt="" coords="56,5,139,31"/>
+<area shape="rect" title=" " alt="" coords="87,5,169,31"/>
 <area shape="rect" title=" " alt="" coords="5,86,64,111"/>
-<area shape="poly" title=" " alt="" coords="90,33,55,77,50,74,86,29"/>
-<area shape="rect" href="simulation-defaults_8h.html" title="Centralized simulation configuration defaults." alt="" coords="88,79,235,119"/>
-<area shape="poly" title=" " alt="" coords="109,29,139,66,135,70,105,33"/>
-<area shape="rect" title=" " alt="" coords="126,167,197,192"/>
-<area shape="poly" title=" " alt="" coords="164,119,164,153,159,153,159,119"/>
+<area shape="poly" title=" " alt="" coords="116,33,61,79,57,75,113,29"/>
+<area shape="rect" title=" " alt="" coords="89,86,167,111"/>
+<area shape="poly" title=" " alt="" coords="131,31,131,72,125,72,125,31"/>
+<area shape="rect" href="simulation-defaults_8h.html" title="Centralized simulation configuration defaults." alt="" coords="192,79,339,119"/>
+<area shape="poly" title=" " alt="" coords="150,29,221,69,219,74,147,33"/>
+<area shape="rect" title=" " alt="" coords="230,167,301,192"/>
+<area shape="poly" title=" " alt="" coords="268,119,268,153,263,153,263,119"/>
 </map>
 </div>
 </div><div class="textblock"><div class="dynheader">
@@ -322,7 +325,7 @@ Variables</h2></td></tr>
 <tr class="memitem:a73146c1c9173fda7b02d434d813aa825" id="r_a73146c1c9173fda7b02d434d813aa825"><td class="memItemLeft" align="right" valign="top"><a class="el" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">constexpr</a> <a class="el" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceunit.html#a73146c1c9173fda7b02d434d813aa825">unit::TeV</a> = 1<a class="el" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">e12</a> * <a class="el" href="namespaceunit.html#a4d688cefb8c96513c3aa8a4f8c83d200">eV</a></td></tr>
 <tr class="memdesc:a73146c1c9173fda7b02d434d813aa825"><td class="mdescLeft">&#160;</td><td class="mdescRight">Tera-electron volt in code units.  <br /></td></tr>
 <tr class="separator:a73146c1c9173fda7b02d434d813aa825"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a65622c562478c2a005e36f63b02df162" id="r_a65622c562478c2a005e36f63b02df162"><td class="memItemLeft" align="right" valign="top"><a class="el" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">constexpr</a> <a class="el" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceunit.html#a65622c562478c2a005e36f63b02df162">unit::deg</a> = 3.14159265358979323846 / 180</td></tr>
+<tr class="memitem:a65622c562478c2a005e36f63b02df162" id="r_a65622c562478c2a005e36f63b02df162"><td class="memItemLeft" align="right" valign="top"><a class="el" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">constexpr</a> <a class="el" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceunit.html#a65622c562478c2a005e36f63b02df162">unit::deg</a> = std::numbers::pi / 180</td></tr>
 <tr class="memdesc:a65622c562478c2a005e36f63b02df162"><td class="mdescLeft">&#160;</td><td class="mdescRight">Degree in radians.  <br /></td></tr>
 <tr class="separator:a65622c562478c2a005e36f63b02df162"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad35a8d191f16b2928b242ef566cca653" id="r_ad35a8d191f16b2928b242ef566cca653"><td class="memItemLeft" align="right" valign="top"><a class="el" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">constexpr</a> <a class="el" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceunit.html#ad35a8d191f16b2928b242ef566cca653">unit::flux_cgs</a> = <a class="el" href="namespaceunit.html#a255e82bd3b0ebb273d6663111278d624">erg</a> / <a class="el" href="namespaceunit.html#ad762a0ede549f5e21607910dc248c850">cm2</a> / <a class="el" href="namespaceunit.html#a4e7c438655d3f34c7c30a155ec38f250">sec</a></td></tr>
@@ -449,7 +452,7 @@ Variables</h2></td></tr>
 
 <p>Type alias for floating-point precision used throughout the code. </p>
 
-<p class="definition">Definition at line <a class="el" href="macros_8h_source.html#l00023">23</a> of file <a class="el" href="macros_8h_source.html">macros.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="macros_8h_source.html#l00024">24</a> of file <a class="el" href="macros_8h_source.html">macros.h</a>.</p>
 
 </div>
 </div>
@@ -480,11 +483,11 @@ Variables</h2></td></tr>
 
 <p>Literal operator for converting long double literals to Real. </p>
 
-<p class="definition">Definition at line <a class="el" href="macros_8h_source.html#l00026">26</a> of file <a class="el" href="macros_8h_source.html">macros.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   26</span>                                            {</div>
-<div class="line"><span class="lineno">   27</span>    <span class="keywordflow">return</span> <span class="keyword">static_cast&lt;</span><a class="code hl_typedef" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a><span class="keyword">&gt;</span>(<a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">x</a>);</div>
-<div class="line"><span class="lineno">   28</span>}</div>
-<div class="ttc" id="amacros_8h_html_a4b04262b81aa7d31eb5d2f607e2a35de"><div class="ttname"><a href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a></div><div class="ttdeci">double Real</div><div class="ttdoc">Type alias for floating-point precision used throughout the code.</div><div class="ttdef"><b>Definition</b> <a href="macros_8h_source.html#l00023">macros.h:23</a></div></div>
+<p class="definition">Definition at line <a class="el" href="macros_8h_source.html#l00027">27</a> of file <a class="el" href="macros_8h_source.html">macros.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   27</span>                                            {</div>
+<div class="line"><span class="lineno">   28</span>    <span class="keywordflow">return</span> <span class="keyword">static_cast&lt;</span><a class="code hl_typedef" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a><span class="keyword">&gt;</span>(<a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">x</a>);</div>
+<div class="line"><span class="lineno">   29</span>}</div>
+<div class="ttc" id="amacros_8h_html_a4b04262b81aa7d31eb5d2f607e2a35de"><div class="ttname"><a href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a></div><div class="ttdeci">double Real</div><div class="ttdoc">Type alias for floating-point precision used throughout the code.</div><div class="ttdef"><b>Definition</b> <a href="macros_8h_source.html#l00024">macros.h:24</a></div></div>
 <div class="ttc" id="apybind_8cpp_html_ad93eae6422741850877b46bd61f08c89"><div class="ttname"><a href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">make_native_binary</a></div><div class="ttdeci">BinaryFunc make_native_binary(uintptr_t addr, std::vector&lt; Real &gt; const &amp;p)</div><div class="ttdef"><b>Definition</b> <a href="pybind_8cpp_source.html#l00027">pybind.cpp:27</a></div></div>
 </div><!-- fragment --><div class="dynheader">
 Here is the call graph for this function:</div>
@@ -525,10 +528,10 @@ Here is the call graph for this function:</div>
 
 <p>Literal operator for converting integer literals to Real. </p>
 
-<p class="definition">Definition at line <a class="el" href="macros_8h_source.html#l00031">31</a> of file <a class="el" href="macros_8h_source.html">macros.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   31</span>                                                   {</div>
-<div class="line"><span class="lineno">   32</span>    <span class="keywordflow">return</span> <span class="keyword">static_cast&lt;</span><a class="code hl_typedef" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a><span class="keyword">&gt;</span>(<a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">x</a>);</div>
-<div class="line"><span class="lineno">   33</span>}</div>
+<p class="definition">Definition at line <a class="el" href="macros_8h_source.html#l00032">32</a> of file <a class="el" href="macros_8h_source.html">macros.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   32</span>                                                   {</div>
+<div class="line"><span class="lineno">   33</span>    <span class="keywordflow">return</span> <span class="keyword">static_cast&lt;</span><a class="code hl_typedef" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a><span class="keyword">&gt;</span>(<a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">x</a>);</div>
+<div class="line"><span class="lineno">   34</span>}</div>
 </div><!-- fragment --><div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">

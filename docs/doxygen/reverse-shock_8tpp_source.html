@@ -520,31 +520,31 @@ $(document).ready(function(){initNavTree('reverse-shock_8tpp_source.html',''); i
 <div class="line"><a id="l00419" name="l00419"></a><span class="lineno">  419</span>    Real gamma_slope = 0;</div>
 <div class="line"><a id="l00420" name="l00420"></a><span class="lineno">  420</span>    Real B_slope = 0;</div>
 <div class="line"><a id="l00421" name="l00421"></a><span class="lineno">  421</span>    Real N_p_slope = 0;</div>
-<div class="line"><a id="l00422" name="l00422"></a><span class="lineno">  422</span>    const Real r_lg2 = fast_log2(shock.r(i, j, idx_cut));</div>
-<div class="line"><a id="l00423" name="l00423"></a><span class="lineno">  423</span>    const Real Gamma_th_lg2 = fast_log2(shock.Gamma_th(i, j, idx_cut) - 1);</div>
-<div class="line"><a id="l00424" name="l00424"></a><span class="lineno">  424</span>    const Real B_lg2 = fast_log2(shock.B(i, j, idx_cut));</div>
-<div class="line"><a id="l00425" name="l00425"></a><span class="lineno">  425</span>    const Real N_p_lg2 = fast_log2(shock.N_p(i, j, idx_cut));</div>
+<div class="line"><a id="l00422" name="l00422"></a><span class="lineno">  422</span>    const Real log2_r = fast_log2(shock.r(i, j, idx_cut));</div>
+<div class="line"><a id="l00423" name="l00423"></a><span class="lineno">  423</span>    const Real log2_Gamma_th = fast_log2(shock.Gamma_th(i, j, idx_cut) - 1);</div>
+<div class="line"><a id="l00424" name="l00424"></a><span class="lineno">  424</span>    const Real log2_B = fast_log2(shock.B(i, j, idx_cut));</div>
+<div class="line"><a id="l00425" name="l00425"></a><span class="lineno">  425</span>    const Real log2_N_p = fast_log2(shock.N_p(i, j, idx_cut));</div>
 <div class="line"><a id="l00426" name="l00426"></a><span class="lineno">  426</span> </div>
-<div class="line"><a id="l00427" name="l00427"></a><span class="lineno">  427</span>    constexpr size_t off_set = 2;</div>
+<div class="line"><a id="l00427" name="l00427"></a><span class="lineno">  427</span>    constexpr size_t offset = 2;</div>
 <div class="line"><a id="l00428" name="l00428"></a><span class="lineno">  428</span> </div>
-<div class="line"><a id="l00429" name="l00429"></a><span class="lineno">  429</span>    if (idx_cut == 0 || idx_cut &gt;= t_size - off_set || idx_cut &gt;= shock.injection_idx(i, j)) {</div>
+<div class="line"><a id="l00429" name="l00429"></a><span class="lineno">  429</span>    if (idx_cut == 0 || idx_cut &gt;= t_size - offset || idx_cut &gt;= shock.injection_idx(i, j)) {</div>
 <div class="line"><a id="l00430" name="l00430"></a><span class="lineno">  430</span>        return;</div>
 <div class="line"><a id="l00431" name="l00431"></a><span class="lineno">  431</span>    } else {</div>
-<div class="line"><a id="l00432" name="l00432"></a><span class="lineno">  432</span>        gamma_slope = (fast_log2(shock.Gamma_th(i, j, idx_cut + off_set) - 1) - Gamma_th_lg2) /</div>
-<div class="line"><a id="l00433" name="l00433"></a><span class="lineno">  433</span>                      (fast_log2(shock.r(i, j, idx_cut + off_set)) - r_lg2);</div>
+<div class="line"><a id="l00432" name="l00432"></a><span class="lineno">  432</span>        gamma_slope = (fast_log2(shock.Gamma_th(i, j, idx_cut + offset) - 1) - log2_Gamma_th) /</div>
+<div class="line"><a id="l00433" name="l00433"></a><span class="lineno">  433</span>                      (fast_log2(shock.r(i, j, idx_cut + offset)) - log2_r);</div>
 <div class="line"><a id="l00434" name="l00434"></a><span class="lineno">  434</span> </div>
-<div class="line"><a id="l00435" name="l00435"></a><span class="lineno">  435</span>        B_slope = (fast_log2(shock.B(i, j, idx_cut + off_set)) - B_lg2) /</div>
-<div class="line"><a id="l00436" name="l00436"></a><span class="lineno">  436</span>                  (fast_log2(shock.r(i, j, idx_cut + off_set)) - r_lg2);</div>
+<div class="line"><a id="l00435" name="l00435"></a><span class="lineno">  435</span>        B_slope = (fast_log2(shock.B(i, j, idx_cut + offset)) - log2_B) /</div>
+<div class="line"><a id="l00436" name="l00436"></a><span class="lineno">  436</span>                  (fast_log2(shock.r(i, j, idx_cut + offset)) - log2_r);</div>
 <div class="line"><a id="l00437" name="l00437"></a><span class="lineno">  437</span> </div>
-<div class="line"><a id="l00438" name="l00438"></a><span class="lineno">  438</span>        N_p_slope = (fast_log2(shock.N_p(i, j, idx_cut + off_set)) - N_p_lg2) /</div>
-<div class="line"><a id="l00439" name="l00439"></a><span class="lineno">  439</span>                    (fast_log2(shock.r(i, j, idx_cut + off_set)) - r_lg2);</div>
+<div class="line"><a id="l00438" name="l00438"></a><span class="lineno">  438</span>        N_p_slope = (fast_log2(shock.N_p(i, j, idx_cut + offset)) - log2_N_p) /</div>
+<div class="line"><a id="l00439" name="l00439"></a><span class="lineno">  439</span>                    (fast_log2(shock.r(i, j, idx_cut + offset)) - log2_r);</div>
 <div class="line"><a id="l00440" name="l00440"></a><span class="lineno">  440</span>    }</div>
 <div class="line"><a id="l00441" name="l00441"></a><span class="lineno">  441</span> </div>
 <div class="line"><a id="l00442" name="l00442"></a><span class="lineno">  442</span>    for (size_t k = 0; k &lt; idx_cut; k++) {</div>
-<div class="line"><a id="l00443" name="l00443"></a><span class="lineno">  443</span>        const Real dr_lg2 = fast_log2(shock.r(i, j, k)) - r_lg2;</div>
-<div class="line"><a id="l00444" name="l00444"></a><span class="lineno">  444</span>        shock.Gamma_th(i, j, k) = 1 + fast_exp2(Gamma_th_lg2 + gamma_slope * dr_lg2);</div>
-<div class="line"><a id="l00445" name="l00445"></a><span class="lineno">  445</span>        shock.B(i, j, k) = fast_exp2(B_lg2 + B_slope * dr_lg2);</div>
-<div class="line"><a id="l00446" name="l00446"></a><span class="lineno">  446</span>        shock.N_p(i, j, k) = fast_exp2(N_p_lg2 + N_p_slope * dr_lg2);</div>
+<div class="line"><a id="l00443" name="l00443"></a><span class="lineno">  443</span>        const Real dlog2_r = fast_log2(shock.r(i, j, k)) - log2_r;</div>
+<div class="line"><a id="l00444" name="l00444"></a><span class="lineno">  444</span>        shock.Gamma_th(i, j, k) = 1 + fast_exp2(log2_Gamma_th + gamma_slope * dlog2_r);</div>
+<div class="line"><a id="l00445" name="l00445"></a><span class="lineno">  445</span>        shock.B(i, j, k) = fast_exp2(log2_B + B_slope * dlog2_r);</div>
+<div class="line"><a id="l00446" name="l00446"></a><span class="lineno">  446</span>        shock.N_p(i, j, k) = fast_exp2(log2_N_p + N_p_slope * dlog2_r);</div>
 <div class="line"><a id="l00447" name="l00447"></a><span class="lineno">  447</span>    }</div>
 <div class="line"><a id="l00448" name="l00448"></a><span class="lineno">  448</span>}</div>
 <div class="line"><a id="l00449" name="l00449"></a><span class="lineno">  449</span>/**</div>

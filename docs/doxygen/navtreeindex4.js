@@ -1,5 +1,6 @@
 var NAVTREEINDEX4 =
 {
+"structanonymous__namespace_02inverse-compton_8cpp_03_1_1ComptonSigmaLUT.html#ac0c79990ec1fb99ee736dc43845c0fd8":[1,0,1,0,7],
 "structanonymous__namespace_02inverse-compton_8cpp_03_1_1ComptonSigmaLUT.html#ac0c79990ec1fb99ee736dc43845c0fd8":[3,0,1,0,7],
 "synchrotron_8cpp.html":[4,0,2,4,8],
 "synchrotron_8cpp.html#a018aa6d904c7b40ecbcefd494a4b60e4":[4,0,2,4,8,11],

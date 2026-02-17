@@ -25,5 +25,6 @@ var mesh_8h =
     [ "logspace_boundary_center", "mesh_8h.html#ad7703ab8b66bb86ed857746606fac9a2", null ],
     [ "logspace_center", "mesh_8h.html#afadc5019976c36be16277dc4dc178a7f", null ],
     [ "merge_grids", "mesh_8h.html#a3c066f2c8e6d102d7a56de8cb42cf5a8", null ],
-    [ "refined_time_grid", "mesh_8h.html#ab2b9eccaf75f7a9fe6bafd8696049bd2", null ]
+    [ "refined_time_grid", "mesh_8h.html#ab2b9eccaf75f7a9fe6bafd8696049bd2", null ],
+    [ "log2_10", "mesh_8h.html#aba685e866cceb5c13d7e357fcaa69529", null ]
 ];
