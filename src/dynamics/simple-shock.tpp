@@ -66,7 +66,7 @@ Real SimpleShockEqn<Ejecta, Medium>::dGamma_dt(Real eps_rad, State const& state,
         m_swept *= f_spread;
     }
 
-    double a1 = (1 - state.Gamma * state.Gamma) * dm_dt_swept;
+    Real a1 = (1 - state.Gamma * state.Gamma) * dm_dt_swept;
 
     if constexpr (State::energy_inject) {
         a1 += diff.eps_jet / con::c2;

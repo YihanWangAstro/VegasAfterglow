@@ -10,6 +10,7 @@
 #include <bit>
 #include <cmath>
 #include <cstdint>
+#include <numbers>
 
 #include "macros.h"
 
@@ -46,7 +47,7 @@ inline double fast_log2(double x) noexcept {
 
     // For better polynomial convergence, center around sqrt(2)
     // If m > sqrt(2), divide by 2 and increment exponent
-    if (m > 1.4142135623730951) {
+    if (m > std::numbers::sqrt2) {
         m *= 0.5;
         e++;
     }
@@ -97,7 +98,7 @@ inline double fast_exp2(double x) noexcept {
     // Polynomial for 2^f, f in [-0.5, 0.5]
     // Taylor series: 2^f = sum_{k=0}^{n} (f*ln2)^k / k!
     constexpr double c0 = 1.0;
-    constexpr double c1 = 0.6931471805599453; // ln(2)
+    constexpr double c1 = std::numbers::ln2;
     constexpr double c2 = 0.2402265069591007; // ln(2)^2 / 2!
     constexpr double c3 = 0.0555041086648216; // ln(2)^3 / 3!
     constexpr double c4 = 0.0096181291076285; // ln(2)^4 / 4!
@@ -145,7 +146,7 @@ inline Real fast_pow(Real a, Real b) noexcept {
  */
 inline Real fast_exp(Real x) noexcept {
 #ifdef EXTREME_SPEED
-    return fast_exp2(x * 1.4426950408889634); // x / ln(2)
+    return fast_exp2(x * std::numbers::log2e);
 #else
     return std::exp(x);
 #endif
@@ -160,7 +161,7 @@ inline Real fast_exp(Real x) noexcept {
  */
 inline double fast_log(double x) noexcept {
 #ifdef EXTREME_SPEED
-    return fast_log2(x) * 0.6931471805599453;
+    return fast_log2(x) * std::numbers::ln2;
 #else
     return std::log(x);
 #endif

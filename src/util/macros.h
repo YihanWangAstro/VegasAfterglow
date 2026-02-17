@@ -7,6 +7,7 @@
 
 #pragma once
 #include <limits>
+#include <numbers>
 
 #include "../config/simulation-defaults.h"
 /**
@@ -56,7 +57,7 @@ namespace unit {
     constexpr Real MeV = 1e6 * eV;                      ///< Mega-electron volt in code units
     constexpr Real GeV = 1e9 * eV;                      ///< Giga-electron volt in code units
     constexpr Real TeV = 1e12 * eV;                     ///< Tera-electron volt in code units
-    constexpr Real deg = 3.14159265358979323846 / 180;  ///< Degree in radians
+    constexpr Real deg = std::numbers::pi / 180;        ///< Degree in radians
     constexpr Real flux_cgs = erg / cm2 / sec;          ///< Flux in CGS units
     constexpr Real flux_den_cgs = erg / cm2 / sec / Hz; ///< Flux density in CGS units
     constexpr Real Jy = 1e-23 * erg / cm2 / sec / Hz;   ///< Jansky (radio flux density) in code units

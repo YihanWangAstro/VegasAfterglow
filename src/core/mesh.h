@@ -14,6 +14,8 @@
 
 #include "../util/macros.h"
 #include "boost/numeric/odeint.hpp"
+
+constexpr Real log2_10 = std::numbers::ln10 / std::numbers::ln2;
 #include "physics.h"
 #include "xtensor/containers/xadapt.hpp"
 #include "xtensor/views/xview.hpp"
@@ -238,7 +240,7 @@ void logspace_center(Real lg2_min, Real lg2_max, size_t size, Arr& center) {
 
 template <typename Arr = Array>
 void log2space(Real lg2_min, Real lg2_max, Real grid_per_order, Arr& array) {
-    const Real decades = (lg2_max - lg2_min) / 3.321928094887362;
+    const Real decades = (lg2_max - lg2_min) / log2_10;
     const size_t n = std::max<size_t>(2, static_cast<size_t>(std::ceil(decades * grid_per_order)));
 
     array = xt::logspace<Real>(lg2_min, lg2_max, n + 1, 2.0);
@@ -291,7 +293,7 @@ inline size_t adaptive_grid_with_breaks(Real lg2_min, Real lg2_max, std::span<co
                                         size_t max_refined_breaks = 3, Real refine_radius_decades = 0.5,
                                         Real refine_factor = 3.0) {
     constexpr size_t MAX_PTS = 256;
-    constexpr Real lg2_per_decade = 3.321928094887362; // log2(10)
+    const Real lg2_per_decade = log2_10;
     const Real refine_radius = refine_radius_decades * lg2_per_decade;
     const Real coarse_step = lg2_per_decade / std::max(pts_per_decade, Real(1e-6));
     const Real fine_step = coarse_step / refine_factor;

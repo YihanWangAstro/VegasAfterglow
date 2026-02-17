@@ -76,7 +76,7 @@ Real PowerLawSyn::compute_I_nu(Real nu) const {
 }
 
 Real PowerLawSyn::compute_log2_I_nu(Real log2_nu) const {
-    constexpr Real log2e = 1.442695040888963407359924681001892137;
+    constexpr Real log2e = std::numbers::log2e;
     if (log2_nu <= log2_nu_c) { // Below cooling frequency, simple scaling
         return log2_I_nu_max + compute_log2_spectrum(log2_nu) - log2e * fast_exp2(log2_nu) * inv_nu_M_;
     } else {

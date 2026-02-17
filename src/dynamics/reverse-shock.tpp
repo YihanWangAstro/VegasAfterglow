@@ -419,31 +419,31 @@ inline void reverse_shock_early_extrap(size_t i, size_t j, Shock& shock) {
     Real gamma_slope = 0;
     Real B_slope = 0;
     Real N_p_slope = 0;
-    const Real r_lg2 = fast_log2(shock.r(i, j, idx_cut));
-    const Real Gamma_th_lg2 = fast_log2(shock.Gamma_th(i, j, idx_cut) - 1);
-    const Real B_lg2 = fast_log2(shock.B(i, j, idx_cut));
-    const Real N_p_lg2 = fast_log2(shock.N_p(i, j, idx_cut));
+    const Real log2_r = fast_log2(shock.r(i, j, idx_cut));
+    const Real log2_Gamma_th = fast_log2(shock.Gamma_th(i, j, idx_cut) - 1);
+    const Real log2_B = fast_log2(shock.B(i, j, idx_cut));
+    const Real log2_N_p = fast_log2(shock.N_p(i, j, idx_cut));
 
-    constexpr size_t off_set = 2;
+    constexpr size_t offset = 2;
 
-    if (idx_cut == 0 || idx_cut >= t_size - off_set || idx_cut >= shock.injection_idx(i, j)) {
+    if (idx_cut == 0 || idx_cut >= t_size - offset || idx_cut >= shock.injection_idx(i, j)) {
         return;
     } else {
-        gamma_slope = (fast_log2(shock.Gamma_th(i, j, idx_cut + off_set) - 1) - Gamma_th_lg2) /
-                      (fast_log2(shock.r(i, j, idx_cut + off_set)) - r_lg2);
+        gamma_slope = (fast_log2(shock.Gamma_th(i, j, idx_cut + offset) - 1) - log2_Gamma_th) /
+                      (fast_log2(shock.r(i, j, idx_cut + offset)) - log2_r);
 
-        B_slope = (fast_log2(shock.B(i, j, idx_cut + off_set)) - B_lg2) /
-                  (fast_log2(shock.r(i, j, idx_cut + off_set)) - r_lg2);
+        B_slope = (fast_log2(shock.B(i, j, idx_cut + offset)) - log2_B) /
+                  (fast_log2(shock.r(i, j, idx_cut + offset)) - log2_r);
 
-        N_p_slope = (fast_log2(shock.N_p(i, j, idx_cut + off_set)) - N_p_lg2) /
-                    (fast_log2(shock.r(i, j, idx_cut + off_set)) - r_lg2);
+        N_p_slope = (fast_log2(shock.N_p(i, j, idx_cut + offset)) - log2_N_p) /
+                    (fast_log2(shock.r(i, j, idx_cut + offset)) - log2_r);
     }
 
     for (size_t k = 0; k < idx_cut; k++) {
-        const Real dr_lg2 = fast_log2(shock.r(i, j, k)) - r_lg2;
-        shock.Gamma_th(i, j, k) = 1 + fast_exp2(Gamma_th_lg2 + gamma_slope * dr_lg2);
-        shock.B(i, j, k) = fast_exp2(B_lg2 + B_slope * dr_lg2);
-        shock.N_p(i, j, k) = fast_exp2(N_p_lg2 + N_p_slope * dr_lg2);
+        const Real dlog2_r = fast_log2(shock.r(i, j, k)) - log2_r;
+        shock.Gamma_th(i, j, k) = 1 + fast_exp2(log2_Gamma_th + gamma_slope * dlog2_r);
+        shock.B(i, j, k) = fast_exp2(log2_B + B_slope * dlog2_r);
+        shock.N_p(i, j, k) = fast_exp2(log2_N_p + N_p_slope * dlog2_r);
     }
 }
 /**

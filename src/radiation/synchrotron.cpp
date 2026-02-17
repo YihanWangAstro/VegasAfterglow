@@ -76,7 +76,7 @@ size_t determine_regime(Real a, Real c, Real m) {
 Real compute_single_elec_P_nu_max(Real B, Real /*p*/) {
     constexpr Real sin_angle_ave = con::pi / 4;
     constexpr Real Fx_max = 0.92; // Bing's book 5.5
-    return B * (sin_angle_ave * Fx_max * 1.73205080757 * con::e3 / (con::me * con::c2));
+    return B * (sin_angle_ave * Fx_max * std::numbers::sqrt3 * con::e3 / (con::me * con::c2));
 }
 
 /**
@@ -176,8 +176,7 @@ Real compute_syn_gamma_m(Real Gamma_th, Real gamma_M, Real eps_e, Real p, Real x
 }
 
 Real compute_gamma_c(Real t_comv, Real B, Real Y) {
-    constexpr Real ad_cooling = 1;
-    //-sqrt(Gamma * Gamma - 1) * con::c* t_comv / r;  // adiabatic cooling
+    constexpr Real ad_cooling = 1; // adiabatic cooling disabled (factor=1)
 
     const Real gamma_bar = (6 * con::pi * con::me * con::c / con::sigmaT) / (B * B * (1 + Y) * t_comv) * ad_cooling;
     const Real gamma_c = (gamma_bar + std::sqrt(gamma_bar * gamma_bar + 4)) / 2; // correction on newtonian regime

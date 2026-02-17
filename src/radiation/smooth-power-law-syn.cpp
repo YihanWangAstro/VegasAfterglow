@@ -78,11 +78,12 @@ void SmoothPowerLawSyn::build() noexcept {
     log2_nu_a = fast_log2(nu_a);
     log2_nu_M = fast_log2(nu_M);
 
-    smooth_m_slow_ = 1; //1.8 - 0.4 * p;
-    smooth_c_slow_ = 1; //1 - 0.04 * p;
-    smooth_m_fast_ = 1; //3.5 - 0.85 * p;
-    smooth_c_fast_ = 1; //0.6;
-    constexpr Real ln2 = 0.6931471805599453;
+    // Uniform smoothing (spectral-index-dependent tuning disabled)
+    smooth_m_slow_ = 1;
+    smooth_c_slow_ = 1;
+    smooth_m_fast_ = 1;
+    smooth_c_fast_ = 1;
+    constexpr Real ln2 = std::numbers::ln2;
     smooth_a_ = (3.5 * p - 1.5) / ln2;
 
     // Precompute s*(beta_lo - beta_hi) for broken power law transitions
@@ -111,7 +112,7 @@ Real SmoothPowerLawSyn::compute_I_nu(Real nu) const noexcept {
 }
 
 Real SmoothPowerLawSyn::compute_log2_I_nu(Real log2_nu) const noexcept {
-    constexpr Real log2e = 1.442695040888963407359924681001892137;
+    constexpr Real log2e = std::numbers::log2e;
     if (log2_nu <= log2_nu_c) { // Below cooling frequency, simple scaling
         return log2_I_nu_max + compute_log2_spectrum(log2_nu) - log2e * inv_nu_M_ * fast_exp2(log2_nu);
     } else {
