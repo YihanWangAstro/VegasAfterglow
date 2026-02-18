@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 420"
+     font-family="-apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif">
+
+  <rect width="900" height="420" fill="#111827" rx="12"/>
+
+  <text x="450" y="24" text-anchor="middle" font-size="15" font-weight="700" fill="#E6EDF3"
+        letter-spacing="0.3">Parameter Reference Map</text>
+
+  <!-- ──── Column 1: Observer ──── -->
+  <g>
+    <rect x="15" y="40" width="130" height="340" rx="6" fill="#1A2540" stroke="#2A3A5C" stroke-width="0.5"/>
+    <rect x="15" y="40" width="130" height="24" rx="6" fill="#5B8ADB"/>
+    <rect x="15" y="54" width="130" height="10" fill="#5B8ADB"/>
+    <text x="80" y="57" text-anchor="middle" font-size="11" font-weight="700" fill="white">Observer</text>
+
+    <rect x="23" y="72" width="114" height="20" rx="3" fill="#5B8ADB" opacity="0.12"/>
+    <text x="35" y="86" font-size="9" fill="#A8C4E8" font-family="'SF Mono', Menlo, monospace">lumi_dist</text>
+    <text x="128" y="86" text-anchor="end" font-size="8" fill="#7BA0D8" font-style="italic">d_L</text>
+
+    <rect x="23" y="96" width="114" height="20" rx="3" fill="#5B8ADB" opacity="0.12"/>
+    <text x="35" y="110" font-size="9" fill="#A8C4E8" font-family="'SF Mono', Menlo, monospace">z</text>
+    <text x="128" y="110" text-anchor="end" font-size="8" fill="#7BA0D8" font-style="italic">redshift</text>
+
+    <rect x="23" y="120" width="114" height="20" rx="3" fill="#5B8ADB" opacity="0.12"/>
+    <text x="35" y="134" font-size="9" fill="#A8C4E8" font-family="'SF Mono', Menlo, monospace">theta_obs</text>
+    <text x="128" y="134" text-anchor="end" font-size="8" fill="#7BA0D8" font-style="italic">θ_v</text>
+  </g>
+
+  <!-- ──── Column 2: Jet Structure ──── -->
+  <g>
+    <rect x="155" y="40" width="150" height="340" rx="6" fill="#132A22" stroke="#1E4035" stroke-width="0.5"/>
+    <rect x="155" y="40" width="150" height="24" rx="6" fill="#45AB8A"/>
+    <rect x="155" y="54" width="150" height="10" fill="#45AB8A"/>
+    <text x="230" y="57" text-anchor="middle" font-size="11" font-weight="700" fill="white">Jet Structure</text>
+
+    <rect x="163" y="72" width="134" height="20" rx="3" fill="#45AB8A" opacity="0.15"/>
+    <text x="175" y="86" font-size="9" fill="#A8D5C2" font-family="'SF Mono', Menlo, monospace">E_iso</text>
+    <text x="288" y="86" text-anchor="end" font-size="8" fill="#60BB9A" font-style="italic">E_iso</text>
+
+    <rect x="163" y="96" width="134" height="20" rx="3" fill="#45AB8A" opacity="0.15"/>
+    <text x="175" y="110" font-size="9" fill="#A8D5C2" font-family="'SF Mono', Menlo, monospace">Gamma0</text>
+    <text x="288" y="110" text-anchor="end" font-size="8" fill="#60BB9A" font-style="italic">Γ₀</text>
+
+    <rect x="163" y="120" width="134" height="20" rx="3" fill="#45AB8A" opacity="0.15"/>
+    <text x="175" y="134" font-size="9" fill="#A8D5C2" font-family="'SF Mono', Menlo, monospace">theta_c</text>
+    <text x="288" y="134" text-anchor="end" font-size="8" fill="#60BB9A" font-style="italic">θ_c</text>
+
+    <rect x="163" y="144" width="134" height="20" rx="3" fill="#45AB8A" opacity="0.15"/>
+    <text x="175" y="158" font-size="9" fill="#A8D5C2" font-family="'SF Mono', Menlo, monospace">tau</text>
+    <text x="288" y="158" text-anchor="end" font-size="8" fill="#60BB9A" font-style="italic">τ (RS)</text>
+
+    <rect x="163" y="168" width="134" height="20" rx="3" fill="#45AB8A" opacity="0.15"/>
+    <text x="175" y="182" font-size="9" fill="#A8D5C2" font-family="'SF Mono', Menlo, monospace">k_e</text>
+    <text x="288" y="182" text-anchor="end" font-size="8" fill="#60BB9A" font-style="italic">E index</text>
+
+    <rect x="163" y="192" width="134" height="20" rx="3" fill="#45AB8A" opacity="0.15"/>
+    <text x="175" y="206" font-size="9" fill="#A8D5C2" font-family="'SF Mono', Menlo, monospace">k_g</text>
+    <text x="288" y="206" text-anchor="end" font-size="8" fill="#60BB9A" font-style="italic">Γ index</text>
+
+    <text x="230" y="232" text-anchor="middle" font-size="8" font-weight="600" fill="#60BB9A">Two-Component</text>
+    <rect x="163" y="238" width="134" height="20" rx="3" fill="#45AB8A" opacity="0.10"/>
+    <text x="175" y="252" font-size="9" fill="#A8D5C2" font-family="'SF Mono', Menlo, monospace">theta_w</text>
+    <text x="288" y="252" text-anchor="end" font-size="8" fill="#60BB9A" font-style="italic">θ_w</text>
+    <rect x="163" y="262" width="134" height="20" rx="3" fill="#45AB8A" opacity="0.10"/>
+    <text x="175" y="276" font-size="9" fill="#A8D5C2" font-family="'SF Mono', Menlo, monospace">E_iso_w</text>
+    <text x="288" y="276" text-anchor="end" font-size="8" fill="#60BB9A" font-style="italic">E_iso,w</text>
+    <rect x="163" y="286" width="134" height="20" rx="3" fill="#45AB8A" opacity="0.10"/>
+    <text x="175" y="300" font-size="9" fill="#A8D5C2" font-family="'SF Mono', Menlo, monospace">Gamma0_w</text>
+    <text x="288" y="300" text-anchor="end" font-size="8" fill="#60BB9A" font-style="italic">Γ₀,w</text>
+  </g>
+
+  <!-- ──── Column 3: Medium ──── -->
+  <g>
+    <rect x="315" y="40" width="130" height="340" rx="6" fill="#132A22" stroke="#1E4035" stroke-width="0.5"/>
+    <rect x="315" y="40" width="130" height="24" rx="6" fill="#3A8E6E"/>
+    <rect x="315" y="54" width="130" height="10" fill="#3A8E6E"/>
+    <text x="380" y="57" text-anchor="middle" font-size="11" font-weight="700" fill="white">Medium</text>
+
+    <rect x="323" y="72" width="114" height="20" rx="3" fill="#3A8E6E" opacity="0.15"/>
+    <text x="335" y="86" font-size="9" fill="#A8D5C2" font-family="'SF Mono', Menlo, monospace">n_ism</text>
+    <text x="428" y="86" text-anchor="end" font-size="8" fill="#60BB9A" font-style="italic">n_ISM</text>
+
+    <rect x="323" y="96" width="114" height="20" rx="3" fill="#3A8E6E" opacity="0.15"/>
+    <text x="335" y="110" font-size="9" fill="#A8D5C2" font-family="'SF Mono', Menlo, monospace">A_star</text>
+    <text x="428" y="110" text-anchor="end" font-size="8" fill="#60BB9A" font-style="italic">A*</text>
+
+    <rect x="323" y="120" width="114" height="20" rx="3" fill="#3A8E6E" opacity="0.15"/>
+    <text x="335" y="134" font-size="9" fill="#A8D5C2" font-family="'SF Mono', Menlo, monospace">n0</text>
+    <text x="428" y="134" text-anchor="end" font-size="8" fill="#60BB9A" font-style="italic">inner n</text>
+
+    <text x="380" y="166" text-anchor="middle" font-size="8" font-weight="600" fill="#60BB9A">Injection</text>
+    <rect x="323" y="172" width="114" height="20" rx="3" fill="#3A8E6E" opacity="0.10"/>
+    <text x="335" y="186" font-size="9" fill="#A8D5C2" font-family="'SF Mono', Menlo, monospace">L0</text>
+    <text x="428" y="186" text-anchor="end" font-size="8" fill="#60BB9A" font-style="italic">L₀</text>
+    <rect x="323" y="196" width="114" height="20" rx="3" fill="#3A8E6E" opacity="0.10"/>
+    <text x="335" y="210" font-size="9" fill="#A8D5C2" font-family="'SF Mono', Menlo, monospace">t0</text>
+    <text x="428" y="210" text-anchor="end" font-size="8" fill="#60BB9A" font-style="italic">t₀</text>
+    <rect x="323" y="220" width="114" height="20" rx="3" fill="#3A8E6E" opacity="0.10"/>
+    <text x="335" y="234" font-size="9" fill="#A8D5C2" font-family="'SF Mono', Menlo, monospace">q</text>
+    <text x="428" y="234" text-anchor="end" font-size="8" fill="#60BB9A" font-style="italic">spin-down</text>
+  </g>
+
+  <!-- ──── Column 4: Forward Shock Radiation ──── -->
+  <g>
+    <rect x="455" y="40" width="135" height="340" rx="6" fill="#251818" stroke="#3D2528" stroke-width="0.5"/>
+    <rect x="455" y="40" width="135" height="24" rx="6" fill="#D46565"/>
+    <rect x="455" y="54" width="135" height="10" fill="#D46565"/>
+    <text x="522" y="57" text-anchor="middle" font-size="11" font-weight="700" fill="white">Fwd Radiation</text>
+
+    <rect x="463" y="72" width="119" height="20" rx="3" fill="#D46565" opacity="0.12"/>
+    <text x="475" y="86" font-size="9" fill="#DCA5A5" font-family="'SF Mono', Menlo, monospace">eps_e</text>
+    <text x="573" y="86" text-anchor="end" font-size="8" fill="#D47878" font-style="italic">ε_e</text>
+
+    <rect x="463" y="96" width="119" height="20" rx="3" fill="#D46565" opacity="0.12"/>
+    <text x="475" y="110" font-size="9" fill="#DCA5A5" font-family="'SF Mono', Menlo, monospace">eps_B</text>
+    <text x="573" y="110" text-anchor="end" font-size="8" fill="#D47878" font-style="italic">ε_B</text>
+
+    <rect x="463" y="120" width="119" height="20" rx="3" fill="#D46565" opacity="0.12"/>
+    <text x="475" y="134" font-size="9" fill="#DCA5A5" font-family="'SF Mono', Menlo, monospace">p</text>
+    <text x="573" y="134" text-anchor="end" font-size="8" fill="#D47878" font-style="italic">e⁻ index</text>
+
+    <rect x="463" y="144" width="119" height="20" rx="3" fill="#D46565" opacity="0.12"/>
+    <text x="475" y="158" font-size="9" fill="#DCA5A5" font-family="'SF Mono', Menlo, monospace">xi_e</text>
+    <text x="573" y="158" text-anchor="end" font-size="8" fill="#D47878" font-style="italic">ξ_e</text>
+  </g>
+
+  <!-- ──── Column 5: Reverse Shock Radiation ──── -->
+  <g>
+    <rect x="600" y="40" width="135" height="340" rx="6" fill="#251818" stroke="#3D2528" stroke-width="0.5"/>
+    <rect x="600" y="40" width="135" height="24" rx="6" fill="#B85555"/>
+    <rect x="600" y="54" width="135" height="10" fill="#B85555"/>
+    <text x="667" y="57" text-anchor="middle" font-size="11" font-weight="700" fill="white">Rvs Radiation</text>
+
+    <rect x="608" y="72" width="119" height="20" rx="3" fill="#B85555" opacity="0.12"/>
+    <text x="620" y="86" font-size="9" fill="#DCA5A5" font-family="'SF Mono', Menlo, monospace">eps_e_r</text>
+    <text x="718" y="86" text-anchor="end" font-size="8" fill="#D47878" font-style="italic">ε_e,r</text>
+
+    <rect x="608" y="96" width="119" height="20" rx="3" fill="#B85555" opacity="0.12"/>
+    <text x="620" y="110" font-size="9" fill="#DCA5A5" font-family="'SF Mono', Menlo, monospace">eps_B_r</text>
+    <text x="718" y="110" text-anchor="end" font-size="8" fill="#D47878" font-style="italic">ε_B,r</text>
+
+    <rect x="608" y="120" width="119" height="20" rx="3" fill="#B85555" opacity="0.12"/>
+    <text x="620" y="134" font-size="9" fill="#DCA5A5" font-family="'SF Mono', Menlo, monospace">p_r</text>
+    <text x="718" y="134" text-anchor="end" font-size="8" fill="#D47878" font-style="italic">e⁻ index</text>
+
+    <rect x="608" y="144" width="119" height="20" rx="3" fill="#B85555" opacity="0.12"/>
+    <text x="620" y="158" font-size="9" fill="#DCA5A5" font-family="'SF Mono', Menlo, monospace">xi_e_r</text>
+    <text x="718" y="158" text-anchor="end" font-size="8" fill="#D47878" font-style="italic">ξ_e,r</text>
+
+    <text x="667" y="190" text-anchor="middle" font-size="8" font-weight="600" fill="#D47878">Physics Switches</text>
+    <rect x="608" y="196" width="119" height="20" rx="3" fill="#B85555" opacity="0.08"/>
+    <text x="620" y="210" font-size="9" fill="#DCA5A5" font-family="'SF Mono', Menlo, monospace">ssc</text>
+    <text x="718" y="210" text-anchor="end" font-size="8" fill="#D47878" font-style="italic">SSC on/off</text>
+    <rect x="608" y="220" width="119" height="20" rx="3" fill="#B85555" opacity="0.08"/>
+    <text x="620" y="234" font-size="9" fill="#DCA5A5" font-family="'SF Mono', Menlo, monospace">kn</text>
+    <text x="718" y="234" text-anchor="end" font-size="8" fill="#D47878" font-style="italic">Klein-Nishina</text>
+    <rect x="608" y="244" width="119" height="20" rx="3" fill="#B85555" opacity="0.08"/>
+    <text x="620" y="258" font-size="9" fill="#DCA5A5" font-family="'SF Mono', Menlo, monospace">rvs_shock</text>
+    <text x="718" y="258" text-anchor="end" font-size="8" fill="#D47878" font-style="italic">RS on/off</text>
+  </g>
+
+  <!-- ──── Column 6: Resolution ──── -->
+  <g>
+    <rect x="745" y="40" width="140" height="340" rx="6" fill="#1E2025" stroke="#2D3038" stroke-width="0.5"/>
+    <rect x="745" y="40" width="140" height="24" rx="6" fill="#7D8595"/>
+    <rect x="745" y="54" width="140" height="10" fill="#7D8595"/>
+    <text x="815" y="57" text-anchor="middle" font-size="11" font-weight="700" fill="white">Resolution</text>
+
+    <rect x="753" y="72" width="124" height="20" rx="3" fill="#7D8595" opacity="0.12"/>
+    <text x="765" y="86" font-size="9" fill="#B5BAC5" font-family="'SF Mono', Menlo, monospace">theta_resol</text>
+    <text x="868" y="86" text-anchor="end" font-size="8" fill="#8D95A5" font-style="italic">Δθ</text>
+
+    <rect x="753" y="96" width="124" height="20" rx="3" fill="#7D8595" opacity="0.12"/>
+    <text x="765" y="110" font-size="9" fill="#B5BAC5" font-family="'SF Mono', Menlo, monospace">phi_resol</text>
+    <text x="868" y="110" text-anchor="end" font-size="8" fill="#8D95A5" font-style="italic">Δφ</text>
+
+    <rect x="753" y="120" width="124" height="20" rx="3" fill="#7D8595" opacity="0.12"/>
+    <text x="765" y="134" font-size="9" fill="#B5BAC5" font-family="'SF Mono', Menlo, monospace">t_resol</text>
+    <text x="868" y="134" text-anchor="end" font-size="8" fill="#8D95A5" font-style="italic">Δt</text>
+
+    <rect x="753" y="144" width="124" height="20" rx="3" fill="#7D8595" opacity="0.12"/>
+    <text x="765" y="158" font-size="9" fill="#B5BAC5" font-family="'SF Mono', Menlo, monospace">rtol</text>
+    <text x="868" y="158" text-anchor="end" font-size="8" fill="#8D95A5" font-style="italic">ODE tol</text>
+
+    <text x="815" y="190" text-anchor="middle" font-size="8" font-weight="600" fill="#8D95A5">MCMC</text>
+    <rect x="753" y="196" width="124" height="20" rx="3" fill="#7D8595" opacity="0.08"/>
+    <text x="765" y="210" font-size="9" fill="#B5BAC5" font-family="'SF Mono', Menlo, monospace">nsteps</text>
+    <text x="868" y="210" text-anchor="end" font-size="8" fill="#8D95A5" font-style="italic">steps</text>
+    <rect x="753" y="220" width="124" height="20" rx="3" fill="#7D8595" opacity="0.08"/>
+    <text x="765" y="234" font-size="9" fill="#B5BAC5" font-family="'SF Mono', Menlo, monospace">nburn</text>
+    <text x="868" y="234" text-anchor="end" font-size="8" fill="#8D95A5" font-style="italic">burn-in</text>
+    <rect x="753" y="244" width="124" height="20" rx="3" fill="#7D8595" opacity="0.08"/>
+    <text x="765" y="258" font-size="9" fill="#B5BAC5" font-family="'SF Mono', Menlo, monospace">npool</text>
+    <text x="868" y="258" text-anchor="end" font-size="8" fill="#8D95A5" font-style="italic">cores</text>
+  </g>
+
+  <!-- Bottom legend -->
+  <g>
+    <rect x="15" y="390" width="870" height="22" rx="5" fill="#1A1E28"/>
+    <text x="450" y="405" text-anchor="middle" font-size="9" fill="#8090A5">
+      <tspan font-family="'SF Mono', Menlo, monospace">code_name</tspan>
+      <tspan dx="6">= Python API parameter</tspan>
+      <tspan dx="12" font-style="italic">symbol</tspan>
+      <tspan dx="6">= physics notation</tspan>
+      <tspan dx="12">·</tspan>
+      <tspan dx="6">See parameter_reference for units and ranges</tspan>
+    </text>
+  </g>
+
+</svg>

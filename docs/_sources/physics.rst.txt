@@ -2,6 +2,11 @@
 GRB Afterglow Physics
 ===========================
 
+.. image:: ../../assets/physics-pipeline.svg
+   :width: 100%
+   :alt: Physics Pipeline
+   :align: center
+
 Introduction
 ------------
 

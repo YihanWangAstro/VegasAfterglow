@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 340"
+     font-family="-apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif">
+
+  <rect width="900" height="340" fill="#111827" rx="12"/>
+
+  <text x="450" y="24" text-anchor="middle" font-size="15" font-weight="700" fill="#E6EDF3"
+        letter-spacing="0.3">Physics Pipeline</text>
+
+  <!-- ──── Stage 1: Jet & Medium ──── -->
+  <g>
+    <rect x="20" y="42" width="200" height="250" rx="8" fill="#132A22" stroke="#1E4035" stroke-width="1"/>
+    <rect x="20" y="42" width="200" height="28" rx="8" fill="#45AB8A"/>
+    <rect x="20" y="58" width="200" height="12" fill="#45AB8A"/>
+    <text x="120" y="62" text-anchor="middle" font-size="12" font-weight="700" fill="white">Jet &amp; Medium</text>
+
+    <text x="120" y="88" text-anchor="middle" font-size="9" font-weight="600" fill="#60BB9A">Jet Profiles</text>
+    <rect x="30" y="94" width="180" height="18" rx="3" fill="#45AB8A" opacity="0.15"/>
+    <text x="120" y="107" text-anchor="middle" font-size="9" fill="#A8D5C2">Top-hat / Gaussian / Power-law</text>
+    <rect x="30" y="116" width="180" height="18" rx="3" fill="#45AB8A" opacity="0.15"/>
+    <text x="120" y="129" text-anchor="middle" font-size="9" fill="#A8D5C2">E(θ,φ), Γ₀(θ,φ), σ(θ,φ)</text>
+
+    <text x="120" y="153" text-anchor="middle" font-size="9" font-weight="600" fill="#60BB9A">Ambient Medium</text>
+    <rect x="30" y="159" width="180" height="18" rx="3" fill="#45AB8A" opacity="0.15"/>
+    <text x="120" y="172" text-anchor="middle" font-size="9" fill="#A8D5C2">ISM (constant n) / Wind (r⁻²)</text>
+
+    <text x="120" y="196" text-anchor="middle" font-size="9" font-weight="600" fill="#60BB9A">Energy Injection</text>
+    <rect x="30" y="202" width="180" height="18" rx="3" fill="#45AB8A" opacity="0.15"/>
+    <text x="120" y="215" text-anchor="middle" font-size="9" fill="#A8D5C2">Magnetar spin-down L(t)</text>
+
+    <text x="120" y="239" text-anchor="middle" font-size="9" font-weight="600" fill="#60BB9A">3D Grid</text>
+    <rect x="30" y="245" width="84" height="18" rx="3" fill="#45AB8A" opacity="0.15"/>
+    <text x="72" y="258" text-anchor="middle" font-size="8.5" fill="#A8D5C2">θ × φ cells</text>
+    <rect x="118" y="245" width="92" height="18" rx="3" fill="#45AB8A" opacity="0.15"/>
+    <text x="164" y="258" text-anchor="middle" font-size="8.5" fill="#A8D5C2">t evolution</text>
+  </g>
+
+  <!-- Arrow 1 -->
+  <text x="232" y="170" text-anchor="middle" font-size="18" fill="#5A6580">→</text>
+
+  <!-- ──── Stage 2: Shock Dynamics ──── -->
+  <g>
+    <rect x="244" y="42" width="200" height="250" rx="8" fill="#252015" stroke="#3D3420" stroke-width="1"/>
+    <rect x="244" y="42" width="200" height="28" rx="8" fill="#D49B40"/>
+    <rect x="244" y="58" width="200" height="12" fill="#D49B40"/>
+    <text x="344" y="62" text-anchor="middle" font-size="12" font-weight="700" fill="white">Shock Dynamics</text>
+
+    <text x="344" y="88" text-anchor="middle" font-size="9" font-weight="600" fill="#D4A855">Forward Shock</text>
+    <rect x="254" y="94" width="180" height="18" rx="3" fill="#D49B40" opacity="0.15"/>
+    <text x="344" y="107" text-anchor="middle" font-size="9" fill="#D8C090">Blast wave deceleration</text>
+    <rect x="254" y="116" width="180" height="18" rx="3" fill="#D49B40" opacity="0.15"/>
+    <text x="344" y="129" text-anchor="middle" font-size="9" fill="#D8C090">Shock jump conditions</text>
+
+    <text x="344" y="153" text-anchor="middle" font-size="9" font-weight="600" fill="#D4A855">Reverse Shock</text>
+    <rect x="254" y="159" width="180" height="18" rx="3" fill="#D49B40" opacity="0.15"/>
+    <text x="344" y="172" text-anchor="middle" font-size="9" fill="#D8C090">Crossing + post-crossing</text>
+    <rect x="254" y="181" width="180" height="18" rx="3" fill="#D49B40" opacity="0.15"/>
+    <text x="344" y="194" text-anchor="middle" font-size="9" fill="#D8C090">Magnetized ejecta (σ)</text>
+
+    <text x="344" y="218" text-anchor="middle" font-size="9" font-weight="600" fill="#D4A855">Evolution</text>
+    <rect x="254" y="224" width="84" height="18" rx="3" fill="#D49B40" opacity="0.15"/>
+    <text x="296" y="237" text-anchor="middle" font-size="8.5" fill="#D8C090">Relativistic</text>
+    <rect x="342" y="224" width="92" height="18" rx="3" fill="#D49B40" opacity="0.15"/>
+    <text x="388" y="237" text-anchor="middle" font-size="8.5" fill="#D8C090">Newtonian</text>
+    <rect x="254" y="246" width="180" height="18" rx="3" fill="#D49B40" opacity="0.15"/>
+    <text x="344" y="259" text-anchor="middle" font-size="9" fill="#D8C090">Lateral spreading</text>
+  </g>
+
+  <!-- Arrow 2 -->
+  <text x="456" y="170" text-anchor="middle" font-size="18" fill="#5A6580">→</text>
+
+  <!-- ──── Stage 3: Radiation ──── -->
+  <g>
+    <rect x="468" y="42" width="200" height="250" rx="8" fill="#251818" stroke="#3D2528" stroke-width="1"/>
+    <rect x="468" y="42" width="200" height="28" rx="8" fill="#D46565"/>
+    <rect x="468" y="58" width="200" height="12" fill="#D46565"/>
+    <text x="568" y="62" text-anchor="middle" font-size="12" font-weight="700" fill="white">Radiation</text>
+
+    <text x="568" y="88" text-anchor="middle" font-size="9" font-weight="600" fill="#D47878">Electron Population</text>
+    <rect x="478" y="94" width="180" height="18" rx="3" fill="#D46565" opacity="0.12"/>
+    <text x="568" y="107" text-anchor="middle" font-size="9" fill="#DCA5A5">γ_m, γ_c, γ_a distribution</text>
+    <rect x="478" y="116" width="180" height="18" rx="3" fill="#D46565" opacity="0.12"/>
+    <text x="568" y="129" text-anchor="middle" font-size="9" fill="#DCA5A5">Slow / fast cooling regimes</text>
+
+    <text x="568" y="153" text-anchor="middle" font-size="9" font-weight="600" fill="#D47878">Emission Mechanisms</text>
+    <rect x="478" y="159" width="180" height="18" rx="3" fill="#D46565" opacity="0.12"/>
+    <text x="568" y="172" text-anchor="middle" font-size="9" fill="#DCA5A5">Synchrotron (ν_m, ν_c, ν_a)</text>
+    <rect x="478" y="181" width="180" height="18" rx="3" fill="#D46565" opacity="0.12"/>
+    <text x="568" y="194" text-anchor="middle" font-size="9" fill="#DCA5A5">Inverse Compton / SSC</text>
+    <rect x="478" y="203" width="180" height="18" rx="3" fill="#D46565" opacity="0.12"/>
+    <text x="568" y="216" text-anchor="middle" font-size="9" fill="#DCA5A5">Self-Absorption (SSA)</text>
+
+    <text x="568" y="240" text-anchor="middle" font-size="9" font-weight="600" fill="#D47878">Corrections</text>
+    <rect x="478" y="246" width="84" height="18" rx="3" fill="#D46565" opacity="0.12"/>
+    <text x="520" y="259" text-anchor="middle" font-size="8.5" fill="#DCA5A5">Klein-Nishina</text>
+    <rect x="566" y="246" width="92" height="18" rx="3" fill="#D46565" opacity="0.12"/>
+    <text x="612" y="259" text-anchor="middle" font-size="8.5" fill="#DCA5A5">Compton-Y</text>
+  </g>
+
+  <!-- Arrow 3 -->
+  <text x="680" y="170" text-anchor="middle" font-size="18" fill="#5A6580">→</text>
+
+  <!-- ──── Stage 4: Observer ──── -->
+  <g>
+    <rect x="692" y="42" width="190" height="250" rx="8" fill="#142528" stroke="#204048" stroke-width="1"/>
+    <rect x="692" y="42" width="190" height="28" rx="8" fill="#4DA5BB"/>
+    <rect x="692" y="58" width="190" height="12" fill="#4DA5BB"/>
+    <text x="787" y="62" text-anchor="middle" font-size="12" font-weight="700" fill="white">Observed Emission</text>
+
+    <text x="787" y="88" text-anchor="middle" font-size="9" font-weight="600" fill="#60B8CC">Relativistic Effects</text>
+    <rect x="702" y="94" width="170" height="18" rx="3" fill="#4DA5BB" opacity="0.12"/>
+    <text x="787" y="107" text-anchor="middle" font-size="9" fill="#A0D0DD">Doppler boosting D</text>
+    <rect x="702" y="116" width="170" height="18" rx="3" fill="#4DA5BB" opacity="0.12"/>
+    <text x="787" y="129" text-anchor="middle" font-size="9" fill="#A0D0DD">Equal arrival time surface</text>
+
+    <text x="787" y="153" text-anchor="middle" font-size="9" font-weight="600" fill="#60B8CC">Integration</text>
+    <rect x="702" y="159" width="170" height="18" rx="3" fill="#4DA5BB" opacity="0.12"/>
+    <text x="787" y="172" text-anchor="middle" font-size="9" fill="#A0D0DD">Flux over (θ, φ) surface</text>
+    <rect x="702" y="181" width="170" height="18" rx="3" fill="#4DA5BB" opacity="0.12"/>
+    <text x="787" y="194" text-anchor="middle" font-size="9" fill="#A0D0DD">Redshift correction</text>
+
+    <text x="787" y="218" text-anchor="middle" font-size="9" font-weight="600" fill="#60B8CC">Output</text>
+    <rect x="702" y="224" width="80" height="18" rx="3" fill="#4DA5BB" opacity="0.12"/>
+    <text x="742" y="237" text-anchor="middle" font-size="8.5" fill="#A0D0DD">Light curves</text>
+    <rect x="786" y="224" width="86" height="18" rx="3" fill="#4DA5BB" opacity="0.12"/>
+    <text x="829" y="237" text-anchor="middle" font-size="8.5" fill="#A0D0DD">Spectra</text>
+  </g>
+
+  <!-- Bottom summary bar -->
+  <g>
+    <rect x="20" y="302" width="862" height="26" rx="6" fill="#1A1E28"/>
+    <text x="450" y="319" text-anchor="middle" font-size="10" fill="#8090A5">
+      <tspan font-weight="600">Per-cell computation:</tspan>
+      <tspan dx="8">each (θ, φ) cell evolves independently</tspan>
+      <tspan dx="8">·</tspan>
+      <tspan dx="8">results summed over the jet surface</tspan>
+    </text>
+  </g>
+
+</svg>

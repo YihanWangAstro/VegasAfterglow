@@ -3,6 +3,11 @@ Parameter Reference
 
 This page provides a comprehensive reference for all parameters used in VegasAfterglow, including their physical meanings, typical ranges, and units. All parameters listed here are available in the code and can be set via Python interfaces.
 
+.. image:: ../../assets/parameter-map.svg
+   :width: 100%
+   :alt: Parameter Reference Map
+   :align: center
+
 Physical Parameters
 -------------------
 

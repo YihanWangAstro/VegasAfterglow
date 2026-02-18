@@ -20,6 +20,11 @@ For MCMC fitting, install with the ``mcmc`` extra:
 
 For more detailed installation instructions, see the :doc:`installation` page.
 
+.. image:: ../../assets/quickstart-workflow.svg
+   :width: 100%
+   :alt: Setup Workflow
+   :align: center
+
 Basic Usage
 -----------
 

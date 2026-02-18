@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 150"
+     font-family="-apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif">
+
+  <rect width="900" height="150" fill="#111827" rx="12"/>
+
+  <text x="450" y="22" text-anchor="middle" font-size="14" font-weight="700" fill="#E6EDF3"
+        letter-spacing="0.3">Setup Workflow</text>
+
+  <!-- Step 1: Medium -->
+  <g>
+    <rect x="15" y="38" width="120" height="62" rx="6" fill="#132A22" stroke="#1E4035" stroke-width="1"/>
+    <rect x="15" y="38" width="120" height="20" rx="6" fill="#45AB8A"/>
+    <rect x="15" y="50" width="120" height="8" fill="#45AB8A"/>
+    <text x="75" y="53" text-anchor="middle" font-size="10" font-weight="700" fill="white">Medium</text>
+    <text x="75" y="72" text-anchor="middle" font-size="8.5" fill="#A8D5C2" font-family="'SF Mono', Menlo, monospace">ISM(n_ism=...)</text>
+    <text x="75" y="86" text-anchor="middle" font-size="8.5" fill="#A8D5C2" font-family="'SF Mono', Menlo, monospace">Wind(A_star=...)</text>
+  </g>
+  <text x="143" y="72" text-anchor="middle" font-size="14" fill="#5A6580">→</text>
+
+  <!-- Step 2: Jet -->
+  <g>
+    <rect x="152" y="38" width="140" height="62" rx="6" fill="#132A22" stroke="#1E4035" stroke-width="1"/>
+    <rect x="152" y="38" width="140" height="20" rx="6" fill="#45AB8A"/>
+    <rect x="152" y="50" width="140" height="8" fill="#45AB8A"/>
+    <text x="222" y="53" text-anchor="middle" font-size="10" font-weight="700" fill="white">Jet Structure</text>
+    <text x="222" y="72" text-anchor="middle" font-size="8.5" fill="#A8D5C2" font-family="'SF Mono', Menlo, monospace">TophatJet(...)</text>
+    <text x="222" y="86" text-anchor="middle" font-size="8.5" fill="#A8D5C2" font-family="'SF Mono', Menlo, monospace">GaussianJet(...)</text>
+  </g>
+  <text x="300" y="72" text-anchor="middle" font-size="14" fill="#5A6580">→</text>
+
+  <!-- Step 3: Observer -->
+  <g>
+    <rect x="309" y="38" width="130" height="62" rx="6" fill="#1A2540" stroke="#2A3A5C" stroke-width="1"/>
+    <rect x="309" y="38" width="130" height="20" rx="6" fill="#5B8ADB"/>
+    <rect x="309" y="50" width="130" height="8" fill="#5B8ADB"/>
+    <text x="374" y="53" text-anchor="middle" font-size="10" font-weight="700" fill="white">Observer</text>
+    <text x="374" y="72" text-anchor="middle" font-size="8.5" fill="#A8C4E8" font-family="'SF Mono', Menlo, monospace">Observer(</text>
+    <text x="374" y="86" text-anchor="middle" font-size="8.5" fill="#A8C4E8" font-family="'SF Mono', Menlo, monospace">  z, d_L, θ_obs)</text>
+  </g>
+  <text x="447" y="72" text-anchor="middle" font-size="14" fill="#5A6580">→</text>
+
+  <!-- Step 4: Radiation -->
+  <g>
+    <rect x="456" y="38" width="130" height="62" rx="6" fill="#251818" stroke="#3D2528" stroke-width="1"/>
+    <rect x="456" y="38" width="130" height="20" rx="6" fill="#D46565"/>
+    <rect x="456" y="50" width="130" height="8" fill="#D46565"/>
+    <text x="521" y="53" text-anchor="middle" font-size="10" font-weight="700" fill="white">Radiation</text>
+    <text x="521" y="72" text-anchor="middle" font-size="8.5" fill="#DCA5A5" font-family="'SF Mono', Menlo, monospace">Radiation(</text>
+    <text x="521" y="86" text-anchor="middle" font-size="8.5" fill="#DCA5A5" font-family="'SF Mono', Menlo, monospace">  ε_e, ε_B, p)</text>
+  </g>
+  <text x="594" y="72" text-anchor="middle" font-size="14" fill="#5A6580">→</text>
+
+  <!-- Step 5: Model -->
+  <g>
+    <rect x="603" y="38" width="130" height="62" rx="6" fill="#151A28" stroke="#2D3345" stroke-width="1"/>
+    <rect x="603" y="38" width="130" height="20" rx="6" fill="#2D3650"/>
+    <rect x="603" y="50" width="130" height="8" fill="#2D3650"/>
+    <text x="668" y="53" text-anchor="middle" font-size="10" font-weight="700" fill="white">Model</text>
+    <text x="668" y="72" text-anchor="middle" font-size="8.5" fill="#B5BAC5" font-family="'SF Mono', Menlo, monospace">Model(jet,</text>
+    <text x="668" y="86" text-anchor="middle" font-size="8.5" fill="#B5BAC5" font-family="'SF Mono', Menlo, monospace">  medium, obs)</text>
+  </g>
+  <text x="741" y="72" text-anchor="middle" font-size="14" fill="#5A6580">→</text>
+
+  <!-- Step 6: Output -->
+  <g>
+    <rect x="750" y="38" width="135" height="62" rx="6" fill="#142528" stroke="#204048" stroke-width="1"/>
+    <rect x="750" y="38" width="135" height="20" rx="6" fill="#4DA5BB"/>
+    <rect x="750" y="50" width="135" height="8" fill="#4DA5BB"/>
+    <text x="817" y="53" text-anchor="middle" font-size="10" font-weight="700" fill="white">Results</text>
+    <text x="817" y="72" text-anchor="middle" font-size="8.5" fill="#A0D0DD" font-family="'SF Mono', Menlo, monospace">flux_density(</text>
+    <text x="817" y="86" text-anchor="middle" font-size="8.5" fill="#A0D0DD" font-family="'SF Mono', Menlo, monospace">  times, nus)</text>
+  </g>
+
+  <!-- Bottom note -->
+  <g>
+    <rect x="15" y="112" width="870" height="26" rx="6" fill="#1A1E28"/>
+    <text x="450" y="129" text-anchor="middle" font-size="10" fill="#8090A5">
+      <tspan font-weight="600">Returns:</tspan>
+      <tspan dx="6" font-family="'SF Mono', Menlo, monospace">FluxDict</tspan>
+      <tspan dx="4">with</tspan>
+      <tspan dx="4" font-family="'SF Mono', Menlo, monospace">.total</tspan>
+      <tspan dx="3">·</tspan>
+      <tspan dx="3" font-family="'SF Mono', Menlo, monospace">.fwd</tspan>
+      <tspan dx="3">·</tspan>
+      <tspan dx="3" font-family="'SF Mono', Menlo, monospace">.rvs</tspan>
+      <tspan dx="6">arrays (light curves &amp; spectra)</tspan>
+    </text>
+  </g>
+
+</svg>
