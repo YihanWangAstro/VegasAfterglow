@@ -50,7 +50,7 @@ class Shock {
     MeshGrid3d B;            ///< Comoving magnetic field
     MeshGrid3d N_p;          ///< Downstream proton number per solid angle
     IndexGrid injection_idx; ///< Beyond which grid index there is no electron injection
-    //MaskGrid required;       ///< Grid points actually required for final flux calculation
+    // MaskGrid required;        ///< Grid points actually required for final flux calculation
     RadParams rad;                           ///< Radiation parameters
     Symmetry symmetry{Symmetry::structured}; ///< Auto-detected symmetry level
     std::vector<size_t> theta_reps;          ///< Representative theta indices (contiguous groups)

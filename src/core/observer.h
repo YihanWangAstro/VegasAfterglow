@@ -42,18 +42,11 @@ class Observer {
      */
     void observe(Coord const& coord, Shock const& shock, Real luminosity_dist, Real redshift);
 
-    /**
-     * <!-- ************************************************************************************** -->
-     * @brief Sets up the Observer for flux calculation at specific observation times.
-     * @details Similar to observe(), but also marks required grid points for the given observation times.
-     * @param t_obs Array of observation times
-     * @param coord Coordinate grid containing angular information
-     * @param shock Shock object containing the evolution data (modified to mark required points)
-     * @param luminosity_dist Luminosity distance to the source
-     * @param redshift Redshift of the source
-     * <!-- ************************************************************************************** -->
-     */
-    //void observe_at(Array const& t_obs, Coord const& coord, Shock& shock, Real luminosity_dist, Real redshift);
+    // /**
+    //  * @brief Sets up the Observer for flux calculation at specific observation times.
+    //  * @details Similar to observe(), but also marks required grid points for the given observation times.
+    //  */
+    // void observe_at(Array const& t_obs, Coord const& coord, Shock& shock, Real luminosity_dist, Real redshift);
 
     /**
      * <!-- ************************************************************************************** -->
@@ -145,15 +138,11 @@ class Observer {
     template <typename PhotonGrid>
     Array spectrum(Array const& freqs, Real t_obs, PhotonGrid& photons);
 
-    /**
-     * <!-- ************************************************************************************** -->
-     * @brief Updates the required grid points for observation.
-     * @details Identifies grid points needed for interpolation at requested observation times.
-     * @param required Mask grid to mark required points (modified in-place)
-     * @param t_obs Array of observation times
-     * <!-- ************************************************************************************** -->
-     */
-    void update_required(MaskGrid& required, Array const& t_obs);
+    // /**
+    //  * @brief Updates the required grid points for observation.
+    //  * @details Identifies grid points needed for interpolation at requested observation times.
+    //  */
+    // void update_required(MaskGrid& required, Array const& t_obs);
 
     MeshGrid3d lg2_t;           ///< Log2 of observation time grid
     MeshGrid3d lg2_doppler;     ///< Log2 of Doppler factor grid

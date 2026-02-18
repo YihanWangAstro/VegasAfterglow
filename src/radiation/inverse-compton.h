@@ -539,6 +539,7 @@ ICPhotonGrid<Electrons, Photons> generate_IC_photons(ElectronGrid<Electrons> con
     for (size_t i = 0; i < phi_compute; ++i) {
         for (size_t j : shock.theta_reps) {
             for (size_t k = 0; k < t_size; ++k) {
+                // if (!shock.required(i, j, k)) continue;
                 IC_ph(i, j, k) = ICPhoton(electrons(i, j, k), photons(i, j, k), KN);
             }
         }
@@ -547,8 +548,10 @@ ICPhotonGrid<Electrons, Photons> generate_IC_photons(ElectronGrid<Electrons> con
     if (shock.symmetry != Symmetry::structured) {
         for (size_t i = 0; i < phi_compute; ++i) {
             for (size_t j : shock.theta_reps) {
-                for (size_t k = 0; k < t_size; ++k)
+                for (size_t k = 0; k < t_size; ++k) {
+                    // if (!shock.required(i, j, k)) continue;
                     IC_ph(i, j, k).compute_log2_I_nu(0);
+                }
             }
         }
     }

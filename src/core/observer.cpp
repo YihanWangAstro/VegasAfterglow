@@ -156,34 +156,27 @@ void Observer::calc_solid_angle(Coord const& coord, Shock const& shock) {
     }
 }
 
-void Observer::update_required(MaskGrid& required, Array const& t_obs) {
-    xt::noalias(required) = 0;
-    const size_t t_obs_size = t_obs.size();
-
-    // Loop over effective phi and theta grid points.
-    for (size_t i = 0; i < eff_phi_grid; i++) {
-        const size_t i_eff = i * jet_3d;
-
-        for (size_t j = 0; j < theta_grid; j++) {
-            // Skip observation times that are below the grid's start time
-            size_t t_idx = 0;
-            iterate_to(time(i, j, 0), t_obs, t_idx);
-
-            // find the grid points that are required for the interpolation.
-            for (size_t k = 0; k < t_grid - 1 && t_idx < t_obs_size; k++) {
-                const Real t_lo = time(i, j, k);
-                const Real t_hi = time(i, j, k + 1);
-
-                if (t_lo < t_obs(t_idx) && t_obs(t_idx) <= t_hi) {
-                    required(i_eff, j, k) = 1;
-                    required(i_eff, j, k + 1) = 1;
-                }
-
-                iterate_to(t_hi, t_obs, t_idx);
-            }
-        }
-    }
-}
+// void Observer::update_required(MaskGrid& required, Array const& t_obs) {
+//     xt::noalias(required) = 0;
+//     const size_t t_obs_size = t_obs.size();
+//
+//     for (size_t i = 0; i < eff_phi_grid; i++) {
+//         const size_t i_eff = i * jet_3d;
+//         for (size_t j = 0; j < theta_grid; j++) {
+//             size_t t_idx = 0;
+//             iterate_to(time(i, j, 0), t_obs, t_idx);
+//             for (size_t k = 0; k < t_grid - 1 && t_idx < t_obs_size; k++) {
+//                 const Real t_lo = time(i, j, k);
+//                 const Real t_hi = time(i, j, k + 1);
+//                 if (t_lo < t_obs(t_idx) && t_obs(t_idx) <= t_hi) {
+//                     required(i_eff, j, k) = 1;
+//                     required(i_eff, j, k + 1) = 1;
+//                 }
+//                 iterate_to(t_hi, t_obs, t_idx);
+//             }
+//         }
+//     }
+// }
 
 //========================================================================================================
 //                                  Private Methods
@@ -262,12 +255,9 @@ void Observer::observe(Coord const& coord, Shock const& shock, Real luminosity_d
     calc_solid_angle(coord, shock);
 }
 
-/*
-void Observer::observe_at(Array const& t_obs, Coord const& coord, Shock& shock, Real luminosity_dist, Real redshift) {
-    build_time_grid(coord, shock, luminosity_dist, redshift);
-
-    xt::view(shock.required, xt::all(), xt::all(), xt::all()) = 0;
-    update_required(shock.required, t_obs);
-
-    calc_solid_angle(coord, shock);
-}*/
+// void Observer::observe_at(Array const& t_obs, Coord const& coord, Shock& shock, Real luminosity_dist, Real redshift) {
+//     build_time_grid(coord, shock, luminosity_dist, redshift);
+//     xt::noalias(shock.required) = 0;
+//     update_required(shock.required, t_obs);
+//     calc_solid_angle(coord, shock);
+// }

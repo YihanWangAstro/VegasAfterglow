@@ -178,7 +178,7 @@ Coord auto_grid(Ejecta const& jet, Medium const& medium, Array const& t_obs, Rea
  * <!-- ************************************************************************************** -->
  */
 template <typename Ejecta>
-std::vector<Real> find_jet_edges(Ejecta const& jet, Real gamma_cut, bool is_axisymmetric);
+std::vector<Real> find_jet_jumps(Ejecta const& jet, Real gamma_cut, bool is_axisymmetric);
 
 /**
  * <!-- ************************************************************************************** -->
@@ -408,7 +408,7 @@ inline size_t adaptive_grid_with_breaks(Real lg2_min, Real lg2_max, std::span<co
 }
 
 template <typename Ejecta>
-std::vector<Real> find_jet_edges(Ejecta const& jet, Real gamma_cut, [[maybe_unused]] bool is_axisymmetric) {
+std::vector<Real> find_jet_jumps(Ejecta const& jet, Real gamma_cut, [[maybe_unused]] bool is_axisymmetric) {
     // Find all edges in the active jet region (Gamma0 >= gamma_cut).
     // Sharp edges: large fractional jumps (> 50%) between adjacent scan points.
     // Smooth jets: the outermost theta where Gamma0 crosses gamma_cut.
@@ -450,19 +450,22 @@ std::vector<Real> find_jet_edges(Ejecta const& jet, Real gamma_cut, [[maybe_unus
         prev_th = cur_th;
         prev_G = cur_G;
     }
+    return edges;
+}
 
-    // Smooth jet: no sharp edges found — scan downward from pi/2 to find outermost Gamma0 >= gamma_cut
-    if (edges.empty()) {
-        const Real step = (theta_hi - theta_lo) / n_scan;
-        for (Real th = theta_hi; th >= theta_lo; th -= step) {
-            if (jet.Gamma0(0, th) >= gamma_cut) {
-                edges.push_back(th);
-                break;
-            }
+template <typename Ejecta>
+Real find_theta_max(Ejecta const& jet, Real gamma_cut) {
+    constexpr size_t n_scan = 512;
+    const Real theta_lo = defaults::grid::theta_min;
+    const Real theta_hi = con::pi / 2;
+
+    const Real step = (theta_hi - theta_lo) / n_scan;
+    for (Real th = theta_hi; th >= theta_lo; th -= step) {
+        if (jet.Gamma0(0, th) >= gamma_cut) {
+            return th;
         }
     }
-
-    return edges;
+    return theta_lo;
 }
 
 template <typename Ejecta, typename Medium>
@@ -547,12 +550,12 @@ Array adaptive_theta_grid(Ejecta const& jet, Real theta_min, Real theta_max, siz
     return inverse_CFD_sampling(eqn, theta_min, theta_max, theta_num);
 }
 
-inline Array edge_refinement_grid(std::vector<Real> const& jet_edges, Real theta_min, Real theta_max, Real avg_spacing,
+inline Array jump_refinement_grid(std::vector<Real> const& jet_jumps, Real theta_min, Real theta_max, Real avg_spacing,
                                   Real theta_resol) {
     std::vector<Real> points;
     points.reserve(150);
-    for (auto& edge : jet_edges) {
-        if (edge >= con::pi / 2 - 0.01)
+    for (auto& jump : jet_jumps) {
+        if (jump >= con::pi / 2 - 0.01)
             continue;
         const Real half = 3 * avg_spacing;
         const size_t n = std::max<size_t>(static_cast<size_t>(10 * theta_resol), 2);
@@ -560,15 +563,15 @@ inline Array edge_refinement_grid(std::vector<Real> const& jet_edges, Real theta
             // Log-spaced offsets: denser near the edge
             const Real frac = static_cast<Real>(i) / static_cast<Real>(n);
             const Real offset = half * frac * frac;
-            const Real below = edge - offset;
-            const Real above = edge + offset;
+            const Real below = jump - offset;
+            const Real above = jump + offset;
             if (below >= theta_min)
                 points.push_back(below);
             if (above <= theta_max)
                 points.push_back(above);
         }
-        if (edge >= theta_min && edge <= theta_max)
-            points.push_back(edge);
+        if (jump >= theta_min && jump <= theta_max)
+            points.push_back(jump);
     }
     std::ranges::sort(points);
     points.erase(std::ranges::unique(points).begin(), points.end());
@@ -759,8 +762,11 @@ Coord auto_grid(Ejecta const& jet, Medium const& medium, Array const& t_obs, Rea
     Coord coord;
     coord.theta_view = theta_view;
 
-    const auto jet_edges = find_jet_edges(jet, con::Gamma_cut, is_axisymmetric);
-    const Real jet_edge = jet_edges.empty() ? theta_cut : jet_edges.back(); // outermost edge (fallback if no edges)
+    const auto jet_jumps = find_jet_jumps(jet, con::Gamma_cut, is_axisymmetric);
+    const Real jet_edge = find_theta_max(jet, con::Gamma_cut);
+    if (!jet_jumps.empty()) {
+        jet_edge = std::max(jet_edge, jet_jumps.back());
+    }
     Real theta_min = defaults::grid::theta_min;
     Real theta_max = std::min(jet_edge, theta_cut);
 
@@ -772,8 +778,8 @@ Coord auto_grid(Ejecta const& jet, Medium const& medium, Array const& t_obs, Rea
     const Array adaptive_theta = adaptive_theta_grid(jet, theta_min, theta_max, adaptive_theta_num, theta_view);
 
     const Real avg_spacing = (theta_max - theta_min) / theta_num;
-    const Array edge_theta = edge_refinement_grid(jet_edges, theta_min, theta_max, avg_spacing, theta_resol);
-    coord.theta = merge_grids(merge_grids(uniform_theta, adaptive_theta), edge_theta);
+    const Array jump_theta = jump_refinement_grid(jet_jumps, theta_min, theta_max, avg_spacing, theta_resol);
+    coord.theta = merge_grids(merge_grids(uniform_theta, adaptive_theta), jump_theta);
 
     // coord.theta = uniform_theta;
     const size_t phi_num = std::max<size_t>(static_cast<size_t>(360 * phi_resol), 1);
