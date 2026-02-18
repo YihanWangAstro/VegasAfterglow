@@ -89,8 +89,6 @@
 
 <br clear="right"/>
 
-<h3 align="center">Software Architecture</h3>
-
 <div align="center">
 <img src="assets/architecture.svg" alt="VegasAfterglow Architecture" width="900"/>
 </div>
