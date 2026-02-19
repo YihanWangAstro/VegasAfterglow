@@ -221,8 +221,6 @@ Shock generate_fwd_shock(Coord const& coord, Medium const& medium, Ejecta const&
     const size_t phi_size_needed = coord.t.shape()[0];
     Shock shock(phi_size_needed, theta_size, t_size, rad_params);
 
-    shock.detect_symmetry(coord, jet, medium);
-
     for (size_t i = 0; i < phi_size_needed; ++i) {
         Real theta_s = 0;
         if (jet.spreading) {
@@ -230,14 +228,14 @@ Shock generate_fwd_shock(Coord const& coord, Medium const& medium, Ejecta const&
                 jet_spreading_edge(jet, medium, coord.phi(i), coord.theta.front(), coord.theta.back(), coord.t.front());
         }
 
-        for (size_t j : shock.theta_reps) {
+        for (size_t j : coord.theta_reps) {
             auto eqn = ForwardShockEqn(medium, jet, coord.phi(i), coord.theta(j), rad_params, theta_s);
             //auto eqn = SimpleShockEqn(medium, jet, coord.phi(i), coord.theta(j), rad_params, theta_s);
             grid_solve_fwd_shock(i, j, xt::view(coord.t, i, j, xt::all()), shock, eqn, rtol);
         }
 
-        if (shock.symmetry >= Symmetry::phi_symmetric) {
-            shock.broadcast_groups(coord.theta);
+        if (coord.symmetry >= Symmetry::phi_symmetric) {
+            shock.broadcast_groups(coord);
             return shock;
         }
     }

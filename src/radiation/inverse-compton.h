@@ -527,36 +527,34 @@ Real ICPhoton<Electrons, Photons>::compute_log2_I_nu(Real log2_nu) {
 template <typename Electrons, typename Photons>
 ICPhotonGrid<Electrons, Photons> generate_IC_photons(ElectronGrid<Electrons> const& electrons,
                                                      PhotonGrid<Photons> const& photons, bool KN,
-                                                     Shock const& shock) noexcept {
+                                                     Coord const& coord) noexcept {
     size_t phi_size = electrons.shape()[0];
     size_t theta_size = electrons.shape()[1];
     size_t t_size = electrons.shape()[2];
 
     ICPhotonGrid<Electrons, Photons> IC_ph({phi_size, theta_size, t_size});
 
-    const size_t phi_compute = (shock.symmetry != Symmetry::structured) ? 1 : phi_size;
+    const size_t phi_compute = (coord.symmetry != Symmetry::structured) ? 1 : phi_size;
 
     for (size_t i = 0; i < phi_compute; ++i) {
-        for (size_t j : shock.theta_reps) {
+        for (size_t j : coord.theta_reps) {
             for (size_t k = 0; k < t_size; ++k) {
-                // if (!shock.required(i, j, k)) continue;
                 IC_ph(i, j, k) = ICPhoton(electrons(i, j, k), photons(i, j, k), KN);
             }
         }
     }
 
-    if (shock.symmetry != Symmetry::structured) {
+    if (coord.symmetry != Symmetry::structured) {
         for (size_t i = 0; i < phi_compute; ++i) {
-            for (size_t j : shock.theta_reps) {
+            for (size_t j : coord.theta_reps) {
                 for (size_t k = 0; k < t_size; ++k) {
-                    // if (!shock.required(i, j, k)) continue;
                     IC_ph(i, j, k).compute_log2_I_nu(0);
                 }
             }
         }
     }
 
-    broadcast_symmetry(IC_ph, shock);
+    broadcast_symmetry(IC_ph, coord);
 
     return IC_ph;
 }
@@ -601,14 +599,14 @@ Real compute_syn_gamma(Real nu, Real B);
 
 template <typename Electrons, typename Photons, typename Updater>
 void IC_cooling(ElectronGrid<Electrons>& electrons, PhotonGrid<Photons>& photons, Shock const& shock,
-                Updater&& update_gamma_c) {
+                Coord const& coord, Updater&& update_gamma_c) {
     const size_t phi_size = electrons.shape()[0];
     const size_t t_size = electrons.shape()[2];
 
-    const size_t phi_compute = (shock.symmetry != Symmetry::structured) ? 1 : phi_size;
+    const size_t phi_compute = (coord.symmetry != Symmetry::structured) ? 1 : phi_size;
 
     for (size_t i = 0; i < phi_compute; ++i) {
-        for (size_t j : shock.theta_reps) {
+        for (size_t j : coord.theta_reps) {
             const size_t k_inj = shock.injection_idx(i, j);
 
             for (size_t k = 0; k < t_size; ++k) {
@@ -639,18 +637,20 @@ void IC_cooling(ElectronGrid<Electrons>& electrons, PhotonGrid<Photons>& photons
             }
         }
     }
-    broadcast_symmetry(electrons, shock);
-    generate_syn_photons(photons, shock, electrons);
+    broadcast_symmetry(electrons, coord);
+    generate_syn_photons(photons, shock, electrons, coord);
 }
 
 template <typename Electrons, typename Photons>
-void Thomson_cooling(ElectronGrid<Electrons>& electrons, PhotonGrid<Photons>& photons, Shock const& shock) {
-    IC_cooling(electrons, photons, shock, update_gamma_c_Thomson);
+void Thomson_cooling(ElectronGrid<Electrons>& electrons, PhotonGrid<Photons>& photons, Shock const& shock,
+                     Coord const& coord) {
+    IC_cooling(electrons, photons, shock, coord, update_gamma_c_Thomson);
 }
 
 template <typename Electrons, typename Photons>
-void KN_cooling(ElectronGrid<Electrons>& electrons, PhotonGrid<Photons>& photons, Shock const& shock) {
-    IC_cooling(electrons, photons, shock, update_gamma_c_KN);
+void KN_cooling(ElectronGrid<Electrons>& electrons, PhotonGrid<Photons>& photons, Shock const& shock,
+                Coord const& coord) {
+    IC_cooling(electrons, photons, shock, coord, update_gamma_c_KN);
 }
 
 template <typename Photon>

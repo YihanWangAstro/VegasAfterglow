@@ -9,10 +9,13 @@
 
 #include <algorithm>
 #include <cassert>
+#include <cstdint>
+#include <numeric>
 #include <span>
 #include <vector>
 
 #include "../util/macros.h"
+#include "../util/traits.h"
 #include "boost/numeric/odeint.hpp"
 
 constexpr Real log2_10 = std::numbers::ln10 / std::numbers::ln2;
@@ -47,6 +50,18 @@ using IndexGrid = xt::xtensor<size_t, 2>;
 
 /**
  * <!-- ************************************************************************************** -->
+ * @brief Symmetry level of the computational grid, auto-detected from jet initial conditions.
+ * <!-- ************************************************************************************** -->
+ */
+enum class Symmetry : uint8_t {
+    structured,    ///< Full (phi, theta) computation needed
+    phi_symmetric, ///< Uniform in phi; compute one phi slice, broadcast across phi
+    piecewise,     ///< phi-symmetric + piecewise-constant in theta; compute K representative thetas
+    isotropic      ///< Uniform in both phi and theta; compute one point, broadcast everywhere
+};
+
+/**
+ * <!-- ************************************************************************************** -->
  * @class Coord
  * @brief Represents a coordinate system with arrays for phi, theta, and t.
  * @details This class is used to define the computational grid for GRB simulations.
@@ -65,6 +80,9 @@ class Coord {
     Real theta_view{0}; ///< Viewing angle
     Real phi_view{0};   ///< Viewing angle
 
+    Symmetry symmetry{Symmetry::structured}; ///< Auto-detected symmetry level
+    std::vector<size_t> theta_reps;          ///< Representative theta indices (contiguous groups)
+
     /**
      * <!-- ************************************************************************************** -->
      * @brief Returns the dimensions of the coordinate arrays
@@ -72,6 +90,22 @@ class Coord {
      * <!-- ************************************************************************************** -->
      */
     [[nodiscard]] auto shape() const { return std::make_tuple(phi.size(), theta.size(), t.shape()[2]); }
+
+    /**
+     * <!-- ************************************************************************************** -->
+     * @brief Detects the symmetry level of the grid based on jet and medium properties.
+     * @details Compares adjacent theta cells on initial conditions (Gamma0, eps_k, sigma0,
+     *          and time-dependent injection). Sets symmetry and theta_reps accordingly.
+     * @param jet The jet/ejecta object
+     * @param medium The medium object
+     * @param t_min Minimum observer time
+     * @param t_max Maximum observer time
+     * @param z Redshift
+     * @param t_resol Time resolution for sampling injection checks
+     * <!-- ************************************************************************************** -->
+     */
+    template <typename Ejecta, typename Medium>
+    void detect_symmetry(Ejecta const& jet, Medium const& medium, Real t_min, Real t_max, Real z, Real t_resol);
 };
 
 /**
@@ -137,6 +171,25 @@ Array boundary_to_center(Array const& boundary);
  * <!-- ************************************************************************************** -->
  */
 Array boundary_to_center_log(Array const& boundary);
+
+/**
+ * <!-- ************************************************************************************** -->
+ * @brief Builds the engine-time grid for each (phi, theta) cell in the coordinate system.
+ * @details Uses the detected symmetry to determine whether to build per-group (broadcast)
+ *          or per-cell grids. For broadcast cases, uses worst-case cos_v within each group.
+ * @param coord The coordinate object (must have phi, theta, symmetry, theta_reps set)
+ * @param jet The jet/ejecta object
+ * @param medium The medium object
+ * @param t_min Minimum observer time
+ * @param t_max Maximum observer time
+ * @param z Redshift
+ * @param t_resol Time resolution
+ * @param is_axisymmetric Whether the jet is axisymmetric
+ * <!-- ************************************************************************************** -->
+ */
+template <typename Ejecta, typename Medium>
+void build_time_grid(Coord& coord, Ejecta const& jet, Medium const& medium, Real t_min, Real t_max, Real z,
+                     Real t_resol, bool is_axisymmetric);
 
 /**
  * <!-- ************************************************************************************** -->
@@ -756,6 +809,97 @@ inline Array refined_time_grid(Real t_start, Real t_end, Real t_refine, size_t t
 }
 
 template <typename Ejecta, typename Medium>
+void Coord::detect_symmetry(Ejecta const& jet, Medium const& medium, Real t_min, Real t_max, Real z, Real t_resol) {
+    const size_t theta_size = theta.size();
+
+    if (jet.spreading || !medium.isotropic) {
+        symmetry = Symmetry::structured;
+        theta_reps.resize(theta_size);
+        std::iota(theta_reps.begin(), theta_reps.end(), size_t(0));
+        return;
+    }
+
+    const Real phi0 = phi(0);
+    theta_reps.clear();
+    theta_reps.reserve(theta_size);
+    theta_reps.push_back(0);
+
+    // Logspaced engine time for time-dependent injection checks
+    const size_t t_check = std::max<size_t>(static_cast<size_t>(std::log10(t_max / t_min) * t_resol), 24);
+    const Array temp_t = xt::logspace(std::log10(t_min / (1 + z)), std::log10(t_max / (1 + z)), t_check);
+
+    auto jet_ic_differs = [&](size_t ja, size_t jb) {
+        const Real theta_a = theta(ja);
+        const Real theta_b = theta(jb);
+        if (jet.eps_k(phi0, theta_a) != jet.eps_k(phi0, theta_b))
+            return true;
+        if (jet.Gamma0(phi0, theta_a) != jet.Gamma0(phi0, theta_b))
+            return true;
+        if constexpr (HasSigma<Ejecta>) {
+            if (jet.sigma0(phi0, theta_a) != jet.sigma0(phi0, theta_b))
+                return true;
+        }
+        if constexpr (HasDedt<Ejecta>) {
+            for (size_t k = 0; k < t_check; ++k) {
+                if (jet.deps_dt(phi0, theta_a, temp_t(k)) != jet.deps_dt(phi0, theta_b, temp_t(k)))
+                    return true;
+            }
+        }
+        if constexpr (HasDmdt<Ejecta>) {
+            for (size_t k = 0; k < t_check; ++k) {
+                if (jet.dm_dt(phi0, theta_a, temp_t(k)) != jet.dm_dt(phi0, theta_b, temp_t(k)))
+                    return true;
+            }
+        }
+        return false;
+    };
+
+    for (size_t j = 1; j < theta_size; ++j) {
+        if (jet_ic_differs(j - 1, j)) {
+            theta_reps.push_back(j);
+        }
+    }
+
+    if (theta_reps.size() == 1)
+        symmetry = Symmetry::isotropic;
+    else if (theta_reps.size() < theta_size)
+        symmetry = Symmetry::piecewise;
+    else
+        symmetry = Symmetry::phi_symmetric;
+}
+
+template <typename Ejecta, typename Medium>
+void build_time_grid(Coord& coord, Ejecta const& jet, Medium const& medium, Real t_min, Real t_max, Real z,
+                     Real t_resol, bool is_axisymmetric) {
+    const size_t theta_size = coord.theta.size();
+    const size_t phi_size_needed = is_axisymmetric ? 1 : coord.phi.size();
+    const Real theta_v_max = coord.theta.back() + coord.theta_view;
+
+    const size_t base_t_num = std::max<size_t>(static_cast<size_t>(std::log10(t_max / t_min) * t_resol), 24);
+    constexpr Real refine_ratio = 2.0;
+    constexpr Real refine_lo_factor = 0.3;
+    constexpr Real refine_hi_factor = 10.0;
+    const size_t refine_extra =
+        static_cast<size_t>((refine_ratio - 1.0) * t_resol * std::log10(refine_hi_factor / refine_lo_factor));
+    const size_t t_num = base_t_num + refine_extra;
+
+    coord.t = xt::zeros<Real>({phi_size_needed, theta_size, t_num});
+
+    for (size_t i = 0; i < phi_size_needed; ++i) {
+        for (size_t j = 0; j < theta_size; ++j) {
+            const Real b = physics::relativistic::gamma_to_beta(jet.Gamma0(coord.phi(i), coord.theta(j)));
+            const Real t_start =
+                std::max<Real>(0.99 * t_min * (1 - b) / (1 - std::cos(theta_v_max) * b) / (1 + z), 1e-2 * unit::sec);
+            const Real t_end = 1.01 * t_max / (1 + z);
+            const Real t_dec = estimate_t_dec(jet, medium, coord.phi(i), coord.theta(j));
+
+            xt::view(coord.t, i, j, xt::all()) =
+                refined_time_grid(t_start, t_end, t_dec, t_num, t_resol, refine_lo_factor, refine_hi_factor);
+        }
+    }
+}
+
+template <typename Ejecta, typename Medium>
 Coord auto_grid(Ejecta const& jet, Medium const& medium, Array const& t_obs, Real theta_cut, Real theta_view, Real z,
                 Real phi_resol, Real theta_resol, Real t_resol, bool is_axisymmetric, Real /*phi_view*/,
                 size_t min_theta_num, Real fwd_ratio) {
@@ -763,7 +907,7 @@ Coord auto_grid(Ejecta const& jet, Medium const& medium, Array const& t_obs, Rea
     coord.theta_view = theta_view;
 
     const auto jet_jumps = find_jet_jumps(jet, con::Gamma_cut, is_axisymmetric);
-    const Real jet_edge = find_theta_max(jet, con::Gamma_cut);
+    Real jet_edge = find_theta_max(jet, con::Gamma_cut);
     if (!jet_jumps.empty()) {
         jet_edge = std::max(jet_edge, jet_jumps.back());
     }
@@ -781,7 +925,6 @@ Coord auto_grid(Ejecta const& jet, Medium const& medium, Array const& t_obs, Rea
     const Array jump_theta = jump_refinement_grid(jet_jumps, theta_min, theta_max, avg_spacing, theta_resol);
     coord.theta = merge_grids(merge_grids(uniform_theta, adaptive_theta), jump_theta);
 
-    // coord.theta = uniform_theta;
     const size_t phi_num = std::max<size_t>(static_cast<size_t>(360 * phi_resol), 1);
 
     coord.phi = adaptive_phi_grid(jet, phi_num, theta_view, theta_max, is_axisymmetric);
@@ -794,32 +937,8 @@ Coord auto_grid(Ejecta const& jet, Medium const& medium, Array const& t_obs, Rea
     const Real t_max = *std::ranges::max_element(t_obs);
     const Real t_min = *std::ranges::min_element(t_obs);
 
-    // Compute base time grid size + extra points for refinement around t_dec
-    const size_t base_t_num = std::max<size_t>(static_cast<size_t>(std::log10(t_max / t_min) * t_resol), 24);
-    constexpr Real refine_ratio = 2.0;
-    constexpr Real refine_lo_factor = 0.3;
-    constexpr Real refine_hi_factor = 10.0;
-    const size_t refine_extra =
-        static_cast<size_t>((refine_ratio - 1.0) * t_resol * std::log10(refine_hi_factor / refine_lo_factor));
-    const size_t t_num = base_t_num + refine_extra;
-
-    const size_t theta_size = coord.theta.size();
-    const size_t phi_size_needed = is_axisymmetric ? 1 : coord.phi.size();
-    const Real theta_v_max = coord.theta.back() + theta_view;
-
-    coord.t = xt::zeros<Real>({phi_size_needed, theta_size, t_num});
-    for (size_t i = 0; i < phi_size_needed; ++i) {
-        for (size_t j = 0; j < theta_size; ++j) {
-            const Real b = physics::relativistic::gamma_to_beta(jet.Gamma0(coord.phi(i), coord.theta(j)));
-            const Real t_start =
-                std::max<Real>(0.99 * t_min * (1 - b) / (1 - std::cos(theta_v_max) * b) / (1 + z), 1e-2 * unit::sec);
-            const Real t_end = 1.01 * t_max / (1 + z);
-            const Real t_dec = estimate_t_dec(jet, medium, coord.phi(i), coord.theta(j));
-
-            xt::view(coord.t, i, j, xt::all()) =
-                refined_time_grid(t_start, t_end, t_dec, t_num, t_resol, refine_lo_factor, refine_hi_factor);
-        }
-    }
+    coord.detect_symmetry(jet, medium, t_min, t_max, z, t_resol);
+    build_time_grid(coord, jet, medium, t_min, t_max, z, t_resol, is_axisymmetric);
 
     return coord;
 }

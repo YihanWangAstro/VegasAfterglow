@@ -239,15 +239,15 @@ void PyModel::single_evo_details(Shock const& shock, Coord const& coord, Observe
     details.t_obs = obs.time / unit::sec;
     details.Doppler = xt::exp2(obs.lg2_doppler);
 
-    auto syn_e = generate_syn_electrons(shock);
+    auto syn_e = generate_syn_electrons(shock, coord);
 
-    auto syn_ph = generate_syn_photons(shock, syn_e);
+    auto syn_ph = generate_syn_photons(shock, syn_e, coord);
 
     if (rad.ssc) {
         if (rad.kn) {
-            KN_cooling(syn_e, syn_ph, shock);
+            KN_cooling(syn_e, syn_ph, shock, coord);
         } else {
-            Thomson_cooling(syn_e, syn_ph, shock);
+            Thomson_cooling(syn_e, syn_ph, shock, coord);
         }
     }
     save_electron_details(syn_e, details);
@@ -258,7 +258,7 @@ void PyModel::single_evo_details(Shock const& shock, Coord const& coord, Observe
     details.has_syn_spectrum_ = true;
 
     if (rad.ssc) {
-        details.ic_photons_ = generate_IC_photons(syn_e, syn_ph, rad.kn, shock);
+        details.ic_photons_ = generate_IC_photons(syn_e, syn_ph, rad.kn, coord);
         details.has_ssc_spectrum_ = true;
     }
 }

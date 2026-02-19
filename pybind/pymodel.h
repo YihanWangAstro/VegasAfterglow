@@ -785,20 +785,20 @@ void PyModel::single_shock_emission(Shock const& shock, Coord const& coord, Arra
 
     auto syn_e = [&] {
         AFTERGLOW_PROFILE_SCOPE(syn_electrons);
-        return generate_syn_electrons(shock);
+        return generate_syn_electrons(shock, coord);
     }();
 
     auto syn_ph = [&] {
         AFTERGLOW_PROFILE_SCOPE(syn_photons);
-        return generate_syn_photons(shock, syn_e);
+        return generate_syn_photons(shock, syn_e, coord);
     }();
 
     if (rad.ssc) {
         AFTERGLOW_PROFILE_SCOPE(cooling);
         if (rad.kn) {
-            KN_cooling(syn_e, syn_ph, shock);
+            KN_cooling(syn_e, syn_ph, shock, coord);
         } else {
-            Thomson_cooling(syn_e, syn_ph, shock);
+            Thomson_cooling(syn_e, syn_ph, shock, coord);
         }
     }
 
@@ -810,7 +810,7 @@ void PyModel::single_shock_emission(Shock const& shock, Coord const& coord, Arra
     if (rad.ssc) {
         auto IC_ph = [&] {
             AFTERGLOW_PROFILE_SCOPE(ic_photons);
-            return generate_IC_photons(syn_e, syn_ph, rad.kn, shock);
+            return generate_IC_photons(syn_e, syn_ph, rad.kn, coord);
         }();
         {
             AFTERGLOW_PROFILE_SCOPE(ssc_flux);

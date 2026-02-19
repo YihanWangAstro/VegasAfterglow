@@ -278,11 +278,10 @@ constexpr T max(T first, Args... args) {
 
 /**
  * <!-- ************************************************************************************** -->
- * @brief Broadcasts computed values across grid based on shock symmetry.
+ * @brief Broadcasts computed values across grid based on coord symmetry.
  * @tparam Array 3D array type (e.g., ICPhotonGrid or ElectronGrid)
- * @tparam Shock Shock type containing symmetry information
  * @param arr The 3D array to broadcast
- * @param shock Shock object containing symmetry information and theta representatives
+ * @param coord Coordinate object containing symmetry information and theta representatives
  * @details This function handles the broadcasting of computed values from representative
  *          grid points to all grid points based on the detected symmetry level:
  *          - isotropic: Broadcasts from (0,0) to all (phi, theta)
@@ -290,23 +289,21 @@ constexpr T max(T first, Args... args) {
  *          - phi_symmetric: Broadcasts only across phi direction
  * <!-- ************************************************************************************** -->
  */
-template <typename Array, typename Shock>
-void broadcast_symmetry(Array& arr, Shock const& shock) {
+template <typename Array>
+void broadcast_symmetry(Array& arr, Coord const& coord) {
     const size_t phi_size = arr.shape()[0];
     const size_t theta_size = arr.shape()[1];
 
-    using SymmetryType = decltype(shock.symmetry);
-
-    if (shock.symmetry == SymmetryType::isotropic) {
+    if (coord.symmetry == Symmetry::isotropic) {
         for (size_t i = 0; i < phi_size; ++i)
             for (size_t j = 0; j < theta_size; ++j)
                 if (i != 0 || j != 0)
                     xt::view(arr, i, j, xt::all()) = xt::view(arr, 0, 0, xt::all());
-    } else if (shock.symmetry == SymmetryType::piecewise) {
+    } else if (coord.symmetry == Symmetry::piecewise) {
         // Broadcast representative thetas to their groups
-        for (size_t r = 0; r < shock.theta_reps.size(); ++r) {
-            const size_t j_start = shock.theta_reps[r];
-            const size_t j_end = (r + 1 < shock.theta_reps.size()) ? shock.theta_reps[r + 1] : theta_size;
+        for (size_t r = 0; r < coord.theta_reps.size(); ++r) {
+            const size_t j_start = coord.theta_reps[r];
+            const size_t j_end = (r + 1 < coord.theta_reps.size()) ? coord.theta_reps[r + 1] : theta_size;
             for (size_t j = j_start + 1; j < j_end; ++j)
                 xt::view(arr, 0, j, xt::all()) = xt::view(arr, 0, j_start, xt::all());
         }
@@ -314,7 +311,7 @@ void broadcast_symmetry(Array& arr, Shock const& shock) {
         for (size_t i = 1; i < phi_size; ++i)
             for (size_t j = 0; j < theta_size; ++j)
                 xt::view(arr, i, j, xt::all()) = xt::view(arr, 0, j, xt::all());
-    } else if (shock.symmetry == SymmetryType::phi_symmetric) {
+    } else if (coord.symmetry == Symmetry::phi_symmetric) {
         // Only broadcast phi direction
         for (size_t i = 1; i < phi_size; ++i)
             for (size_t j = 0; j < theta_size; ++j)

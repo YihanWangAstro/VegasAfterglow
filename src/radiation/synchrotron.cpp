@@ -312,27 +312,27 @@ Real SynElectrons::compute_column_den(Real gamma) const noexcept {
 //                                  Factory Functions - Synchrotron Electrons
 //========================================================================================================
 
-SynElectronGrid generate_syn_electrons(Shock const& shock) {
+SynElectronGrid generate_syn_electrons(Shock const& shock, Coord const& coord) {
     auto [phi_size, theta_size, t_size] = shock.shape();
 
     SynElectronGrid electrons({phi_size, theta_size, t_size});
 
-    generate_syn_electrons(electrons, shock);
+    generate_syn_electrons(electrons, shock, coord);
 
     return electrons;
 }
 
-void generate_syn_electrons(SynElectronGrid& electrons, Shock const& shock) {
+void generate_syn_electrons(SynElectronGrid& electrons, Shock const& shock, Coord const& coord) {
     auto [phi_size, theta_size, t_size] = shock.shape();
 
     const RadParams rad = shock.rad;
 
     electrons.resize({phi_size, theta_size, t_size});
 
-    const size_t phi_compute = (shock.symmetry != Symmetry::structured) ? 1 : phi_size;
+    const size_t phi_compute = (coord.symmetry != Symmetry::structured) ? 1 : phi_size;
 
     for (size_t i = 0; i < phi_compute; ++i) {
-        for (size_t j : shock.theta_reps) {
+        for (size_t j : coord.theta_reps) {
             const size_t k_inj = shock.injection_idx(i, j);
             for (size_t k = 0; k < t_size; ++k) {
                 const Real t_com = shock.t_comv(i, j, k);
@@ -371,32 +371,33 @@ void generate_syn_electrons(SynElectronGrid& electrons, Shock const& shock) {
         }
     }
 
-    broadcast_symmetry(electrons, shock);
+    broadcast_symmetry(electrons, coord);
 }
 
 //========================================================================================================
 //                                  Factory Functions - Synchrotron Photons
 //========================================================================================================
 
-SynPhotonGrid generate_syn_photons(Shock const& shock, SynElectronGrid const& electrons) {
+SynPhotonGrid generate_syn_photons(Shock const& shock, SynElectronGrid const& electrons, Coord const& coord) {
     auto [phi_size, theta_size, t_size] = shock.shape();
 
     SynPhotonGrid photons({phi_size, theta_size, t_size});
 
-    generate_syn_photons(photons, shock, electrons);
+    generate_syn_photons(photons, shock, electrons, coord);
 
     return photons;
 }
 
-void generate_syn_photons(SynPhotonGrid& photons, Shock const& shock, SynElectronGrid const& electrons) {
+void generate_syn_photons(SynPhotonGrid& photons, Shock const& shock, SynElectronGrid const& electrons,
+                          Coord const& coord) {
     auto [phi_size, theta_size, t_size] = shock.shape();
 
     photons.resize({phi_size, theta_size, t_size});
 
-    const size_t phi_compute = (shock.symmetry != Symmetry::structured) ? 1 : phi_size;
+    const size_t phi_compute = (coord.symmetry != Symmetry::structured) ? 1 : phi_size;
 
     for (size_t i = 0; i < phi_compute; ++i) {
-        for (size_t j : shock.theta_reps) {
+        for (size_t j : coord.theta_reps) {
             for (size_t k = 0; k < t_size; ++k) {
                 auto& ph = photons(i, j, k);
                 auto& elec = electrons(i, j, k);
@@ -418,5 +419,5 @@ void generate_syn_photons(SynPhotonGrid& photons, Shock const& shock, SynElectro
         }
     }
 
-    broadcast_symmetry(photons, shock);
+    broadcast_symmetry(photons, coord);
 }

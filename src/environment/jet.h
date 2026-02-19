@@ -8,23 +8,11 @@
 #pragma once
 
 #include <cmath>
-#include <cstdint>
 #include <utility>
 #include <variant>
 
 #include "../util/utilities.h"
 
-/**
- * <!-- ************************************************************************************** -->
- * @brief Symmetry level of a shock, auto-detected from jet initial conditions.
- * <!-- ************************************************************************************** -->
- */
-enum class Symmetry : uint8_t {
-    structured,    ///< Full (phi, theta) computation needed
-    phi_symmetric, ///< Uniform in phi; compute one phi slice, broadcast across phi
-    piecewise,     ///< phi-symmetric + piecewise-constant in theta; compute K representative thetas
-    isotropic      ///< Uniform in both phi and theta; compute one point, broadcast everywhere
-};
 /**
  * <!-- ************************************************************************************** -->
  * @class Ejecta

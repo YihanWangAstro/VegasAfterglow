@@ -92,7 +92,7 @@ using SynElectronGrid = xt::xtensor<SynElectrons, 3>;
  * @return A new grid of synchrotron electrons
  * <!-- ************************************************************************************** -->
  */
-SynElectronGrid generate_syn_electrons(Shock const& shock);
+SynElectronGrid generate_syn_electrons(Shock const& shock, Coord const& coord);
 
 /**
  * <!-- ************************************************************************************** -->
@@ -100,9 +100,10 @@ SynElectronGrid generate_syn_electrons(Shock const& shock);
  * @details Modifies a grid supplied by the caller rather than creating a new one.
  * @param electrons The electron grid to populate
  * @param shock The shock object containing physical properties
+ * @param coord The coordinate object containing symmetry information
  * <!-- ************************************************************************************** -->
  */
-void generate_syn_electrons(SynElectronGrid& electrons, Shock const& shock);
+void generate_syn_electrons(SynElectronGrid& electrons, Shock const& shock, Coord const& coord);
 
 /**
  * <!-- ************************************************************************************** -->
@@ -111,10 +112,11 @@ void generate_syn_electrons(SynElectronGrid& electrons, Shock const& shock);
  *          Returns the populated photon grid.
  * @param shock The shock object containing physical properties
  * @param electrons The electron grid providing energy distribution information
+ * @param coord The coordinate object containing symmetry information
  * @return A new grid of synchrotron photons
  * <!-- ************************************************************************************** -->
  */
-SynPhotonGrid generate_syn_photons(Shock const& shock, SynElectronGrid const& electrons);
+SynPhotonGrid generate_syn_photons(Shock const& shock, SynElectronGrid const& electrons, Coord const& coord);
 
 /**
  * <!-- ************************************************************************************** -->
@@ -122,9 +124,11 @@ SynPhotonGrid generate_syn_photons(Shock const& shock, SynElectronGrid const& el
  * @param photons The photon grid to populate
  * @param shock The shock object containing physical properties
  * @param electrons The electron grid providing energy distribution information
+ * @param coord The coordinate object containing symmetry information
  * <!-- ************************************************************************************** -->
  */
-void generate_syn_photons(SynPhotonGrid& photons, Shock const& shock, SynElectronGrid const& electrons);
+void generate_syn_photons(SynPhotonGrid& photons, Shock const& shock, SynElectronGrid const& electrons,
+                          Coord const& coord);
 
 /**
  * <!-- ************************************************************************************** -->

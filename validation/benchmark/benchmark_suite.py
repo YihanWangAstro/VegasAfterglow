@@ -76,9 +76,9 @@ class BenchmarkSession:
 # Constants
 # ---------------------------------------------------------------------------
 
-PHI_VALUES = [0.15, 0.3, 0.45, 0.6]
-THETA_VALUES = [0.5, 1.0, 1.5, 2.0]
-T_VALUES = [10, 15, 20, 25, 30]
+PHI_VALUES = [0.15, 0.2, 0.25, 0.3]
+THETA_VALUES = [0.5, 0.75, 1.0, 1.25]
+T_VALUES = [10, 15, 20, 25]
 REFERENCE_RESOLUTION = (PHI_VALUES[-1] * 1.2, THETA_VALUES[-1] * 1.2, T_VALUES[-1] * 1.2)
 CONVERGENCE_T_LC = np.logspace(0, 8, 100)
 CONVERGENCE_BANDS = {"Radio": 1e9, "Optical": 4.84e14, "X-ray": 1e18}
