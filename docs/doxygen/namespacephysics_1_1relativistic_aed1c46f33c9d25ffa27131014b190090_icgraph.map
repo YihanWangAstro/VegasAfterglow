@@ -1,26 +1,28 @@
 <map id="physics::relativistic::gamma_to_beta" name="physics::relativistic::gamma_to_beta">
-<area shape="rect" id="Node000001" title="Converts Lorentz factor (gamma) to a velocity fraction (beta)" alt="" coords="981,99,1129,139"/>
-<area shape="rect" id="Node000002" href="$mesh_8h.html#a96aa0a78a0de13a52955de3c2ce29ddd" title="Constructs a coordinate grid (Coord) for shock evolution." alt="" coords="644,31,727,56"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="967,104,727,54,728,49,968,99"/>
-<area shape="rect" id="Node000008" href="$shock-physics_8h.html#accf50b75e283806f3cd95d4e2ef93771" title="Finds the deceleration observer time by integrating swept mass outward until m_swept = m_jet/Gamma0." alt="" coords="781,107,927,132"/>
-<area shape="poly" id="edge9_Node000001_Node000008" title=" " alt="" coords="967,122,928,122,928,117,967,117"/>
-<area shape="rect" id="Node000009" href="$mesh_8h.html#aa7505ad2e84c2a29610c1a13cd3b25e3" title="Estimates deceleration time for a given angle from ejecta and medium properties." alt="" coords="793,5,915,31"/>
-<area shape="poly" id="edge10_Node000001_Node000009" title=" " alt="" coords="1009,94,932,52,888,33,890,28,935,48,1011,90"/>
-<area shape="rect" id="Node000010" href="$prompt_8h.html#a66fb48188341c585a06119c04800c823" title=" " alt="" coords="777,156,931,181"/>
-<area shape="poly" id="edge12_Node000001_Node000010" title=" " alt="" coords="969,143,907,159,906,153,968,138"/>
-<area shape="rect" id="Node000011" href="$prompt_8cpp.html#a179563049db5bed00a5663ff3932eed4" title=" " alt="" coords="775,205,933,231"/>
-<area shape="poly" id="edge13_Node000001_Node000011" title=" " alt="" coords="1016,150,977,174,934,196,904,208,903,203,932,192,975,169,1013,145"/>
-<area shape="rect" id="Node000003" href="$shock__dispatch_8h.html#af0bfd363789cd64adc2bb8fa697f96ae" title="Solve forward shock dynamics with variant dispatch." alt="" coords="463,5,595,31"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="630,37,594,31,595,26,631,32"/>
-<area shape="rect" id="Node000007" href="$shock__dispatch_8h.html#a943fd075e455647c377f134a2bd02f5d" title="Solve forward + reverse shock pair with variant dispatch." alt="" coords="461,55,596,80"/>
-<area shape="poly" id="edge6_Node000002_Node000007" title=" " alt="" coords="631,54,597,60,596,54,630,49"/>
-<area shape="rect" id="Node000004" href="$classPyModel.html#a3debe3d2ed8ff2a53bec469a6711cfa8" title=" " alt="" coords="204,5,413,31"/>
-<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="448,21,413,21,413,15,448,15"/>
-<area shape="rect" id="Node000005" href="$classPyModel.html#ac47bbdbe6025c4def5d4a65f3ed6be34" title="Get comprehensive details of the shock evolution and model configuration." alt="" coords="243,55,374,80"/>
-<area shape="poly" id="edge4_Node000003_Node000005" title=" " alt="" coords="459,36,367,57,366,52,457,31"/>
-<area shape="rect" id="Node000006" href="$pybind_8cpp.html#a8c92987849ad296e28ec6c07c8e7860b" title=" " alt="" coords="5,55,156,80"/>
-<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="229,70,156,70,156,65,229,65"/>
-<area shape="poly" id="edge7_Node000007_Node000004" title=" " alt="" coords="457,54,366,33,367,28,459,49"/>
-<area shape="poly" id="edge8_Node000007_Node000005" title=" " alt="" coords="447,70,374,70,374,65,447,65"/>
-<area shape="poly" id="edge11_Node000009_Node000002" title=" " alt="" coords="779,32,727,40,727,35,778,27"/>
+<area shape="rect" id="Node000001" title="Converts Lorentz factor (gamma) to a velocity fraction (beta)" alt="" coords="1152,99,1300,139"/>
+<area shape="rect" id="Node000002" href="$mesh_8h.html#a6130a6c9bb4bbe255dd8852fd154791d" title="Builds the engine&#45;time grid for each (phi, theta) cell in the coordinate system." alt="" coords="775,31,897,56"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="1138,105,1103,98,897,58,898,52,1105,93,1139,100"/>
+<area shape="rect" id="Node000009" href="$shock-physics_8h.html#accf50b75e283806f3cd95d4e2ef93771" title="Finds the deceleration observer time by integrating swept mass outward until m_swept = m_jet/Gamma0." alt="" coords="951,107,1098,132"/>
+<area shape="poly" id="edge10_Node000001_Node000009" title=" " alt="" coords="1138,122,1098,122,1098,117,1138,117"/>
+<area shape="rect" id="Node000010" href="$mesh_8h.html#aa7505ad2e84c2a29610c1a13cd3b25e3" title="Estimates deceleration time for a given angle from ejecta and medium properties." alt="" coords="963,5,1086,31"/>
+<area shape="poly" id="edge11_Node000001_Node000010" title=" " alt="" coords="1179,94,1103,52,1059,33,1061,28,1105,48,1182,90"/>
+<area shape="rect" id="Node000011" href="$prompt_8h.html#a66fb48188341c585a06119c04800c823" title=" " alt="" coords="948,156,1101,181"/>
+<area shape="poly" id="edge13_Node000001_Node000011" title=" " alt="" coords="1139,143,1078,159,1076,153,1138,138"/>
+<area shape="rect" id="Node000012" href="$prompt_8cpp.html#a179563049db5bed00a5663ff3932eed4" title=" " alt="" coords="945,205,1104,231"/>
+<area shape="poly" id="edge14_Node000001_Node000012" title=" " alt="" coords="1187,150,1148,174,1105,196,1075,208,1073,203,1103,192,1145,169,1184,145"/>
+<area shape="rect" id="Node000003" href="$mesh_8h.html#a96aa0a78a0de13a52955de3c2ce29ddd" title="Constructs a coordinate grid (Coord) for shock evolution." alt="" coords="644,31,727,56"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="761,46,727,46,727,41,761,41"/>
+<area shape="rect" id="Node000004" href="$shock__dispatch_8h.html#af0bfd363789cd64adc2bb8fa697f96ae" title="Solve forward shock dynamics with variant dispatch." alt="" coords="463,5,595,31"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="630,37,594,31,595,26,631,32"/>
+<area shape="rect" id="Node000008" href="$shock__dispatch_8h.html#a943fd075e455647c377f134a2bd02f5d" title="Solve forward + reverse shock pair with variant dispatch." alt="" coords="461,55,596,80"/>
+<area shape="poly" id="edge7_Node000003_Node000008" title=" " alt="" coords="631,54,597,60,596,54,630,49"/>
+<area shape="rect" id="Node000005" href="$classPyModel.html#a3debe3d2ed8ff2a53bec469a6711cfa8" title=" " alt="" coords="204,5,413,31"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="448,21,413,21,413,15,448,15"/>
+<area shape="rect" id="Node000006" href="$classPyModel.html#ac47bbdbe6025c4def5d4a65f3ed6be34" title="Get comprehensive details of the shock evolution and model configuration." alt="" coords="243,55,374,80"/>
+<area shape="poly" id="edge5_Node000004_Node000006" title=" " alt="" coords="459,36,367,57,366,52,457,31"/>
+<area shape="rect" id="Node000007" href="$pybind_8cpp.html#a8c92987849ad296e28ec6c07c8e7860b" title=" " alt="" coords="5,55,156,80"/>
+<area shape="poly" id="edge6_Node000006_Node000007" title=" " alt="" coords="229,70,156,70,156,65,229,65"/>
+<area shape="poly" id="edge8_Node000008_Node000005" title=" " alt="" coords="457,54,366,33,367,28,459,49"/>
+<area shape="poly" id="edge9_Node000008_Node000006" title=" " alt="" coords="447,70,374,70,374,65,447,65"/>
+<area shape="poly" id="edge12_Node000010_Node000002" title=" " alt="" coords="950,31,898,38,897,33,949,25"/>
 </map>

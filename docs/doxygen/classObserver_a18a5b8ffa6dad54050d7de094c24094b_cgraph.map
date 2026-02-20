@@ -2,7 +2,7 @@
 <area shape="rect" id="Node000001" title="Computes the spectrum at multiple observation times." alt="" coords="5,8,143,33"/>
 <area shape="rect" id="Node000002" href="$pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89" title=" " alt="" coords="408,8,563,33"/>
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="143,9,191,6,275,3,360,6,394,8,394,13,360,11,275,8,191,11,143,15"/>
-<area shape="rect" id="Node000003" href="$classObserver.html#a5350b13ae5a6c7007ba6459923573136" title="Sets up the Observer for flux calculation at specific observation times." alt="" coords="191,45,360,70"/>
+<area shape="rect" id="Node000003" href="$classObserver.html#a5350b13ae5a6c7007ba6459923573136" title="Computes the specific flux at a single observed frequency." alt="" coords="191,45,360,70"/>
 <area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="144,30,194,40,193,45,143,36"/>
 <area shape="poly" id="edge3_Node000003_Node000002" title=" " alt="" coords="347,42,400,33,401,38,348,47"/>
 <area shape="poly" id="edge4_Node000003_Node000003" title=" " alt="" coords="242,46,235,37,239,27,253,20,275,18,303,22,314,31,311,35,301,27,275,24,254,26,243,30,241,36,247,43"/>

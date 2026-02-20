@@ -1,0 +1,15 @@
+<map id="broadcast_symmetry" name="broadcast_symmetry">
+<area shape="rect" id="Node000001" title="Broadcasts computed values across grid based on coord symmetry." alt="" coords="415,80,575,105"/>
+<area shape="rect" id="Node000002" href="$inverse-compton_8h.html#a035e33e0d45b7bdb483b9293d915b41d" title=" " alt="" coords="199,5,357,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="451,77,366,45,329,33,330,28,368,39,453,72"/>
+<area shape="rect" id="Node000003" href="$synchrotron_8cpp.html#a61ca4dde8d2466a6c4bbeb3ec4911141" title="Populates an existing electron grid with values based on shock parameters." alt="" coords="189,55,367,80"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="400,84,366,80,367,75,401,79"/>
+<area shape="rect" id="Node000004" href="$synchrotron_8cpp.html#a1ae959e558985198d460b76ec3a4f1ef" title="Populates an existing photon grid with values based on shock and electron grid." alt="" coords="193,104,363,129"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="401,106,363,110,362,105,400,100"/>
+<area shape="rect" id="Node000005" href="$inverse-compton_8h.html#a84b2fce848f1b0e707c3345139978d79" title=" " alt="" coords="233,153,323,179"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="450,113,368,143,324,157,322,152,366,138,448,108"/>
+<area shape="rect" id="Node000006" href="$inverse-compton_8h.html#a583bd933279ebdb89aaa790ee16bc67a" title=" " alt="" coords="26,128,121,153"/>
+<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="220,162,120,149,121,144,220,156"/>
+<area shape="rect" id="Node000007" href="$inverse-compton_8h.html#a03706f33ca5b6d5b0925a2636f60b6cc" title=" " alt="" coords="5,177,141,203"/>
+<area shape="poly" id="edge6_Node000005_Node000007" title=" " alt="" coords="220,175,142,185,141,179,220,170"/>
+</map>

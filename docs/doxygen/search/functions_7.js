@@ -1,7 +1,7 @@
 var searchData=
 [
   ['i_5fnu_0',['I_nu',['../structPromptPhotons.html#a6b69b9bf72058f1469cfa2141f79e853',1,'PromptPhotons']]],
-  ['ic_5fcooling_1',['IC_cooling',['../inverse-compton_8h.html#a296938a441652163ddc6bee2faa9299e',1,'inverse-compton.h']]],
+  ['ic_5fcooling_1',['IC_cooling',['../inverse-compton_8h.html#a84b2fce848f1b0e707c3345139978d79',1,'inverse-compton.h']]],
   ['icphoton_2',['icphoton',['../structICPhoton.html#a83c634a93def6d25badc888ca57f3bca',1,'ICPhoton::ICPhoton()=default'],['../structICPhoton.html#aa943b8dc162f2f7224a8ecb485caeb3e',1,'ICPhoton::ICPhoton(Electrons const &amp;electrons, Photons const &amp;photons, bool KN) noexcept']]],
   ['initialize_5fejecta_3',['initialize_ejecta',['../pymodel_8cpp.html#a9ff88a7dd74b672cbd0df6adcb982a41',1,'pymodel.cpp']]],
   ['injection_5fefficiency_4',['injection_efficiency',['../classFRShockEqn.html#a38222d0f19dc59063d236319bdb72eb1',1,'FRShockEqn']]],

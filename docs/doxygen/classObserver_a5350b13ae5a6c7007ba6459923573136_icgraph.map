@@ -1,5 +1,5 @@
 <map id="Observer::specific_flux" name="Observer::specific_flux">
-<area shape="rect" id="Node000001" title="Sets up the Observer for flux calculation at specific observation times." alt="" coords="389,55,559,80"/>
+<area shape="rect" id="Node000001" title="Computes the specific flux at a single observed frequency." alt="" coords="389,55,559,80"/>
 <area shape="poly" id="edge3_Node000001_Node000001" title=" " alt="" coords="510,45,500,37,474,33,453,35,442,40,439,46,445,53,441,56,434,46,438,36,451,30,474,28,502,32,513,41"/>
 <area shape="rect" id="Node000002" href="$classObserver.html#a2588a9ebaec5465d6b5bd08fadadcb99" title="Computes the integrated flux over a frequency band." alt="" coords="216,29,329,55"/>
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="375,58,330,52,330,46,376,52"/>

@@ -1,5 +1,9 @@
 var NAVTREEINDEX2 =
 {
+"mesh_8h_source.html":[4,0,2,1,1],
+"namespaceafterglow.html":[1,0,0],
+"namespaceanonymous__namespace_02inverse-compton_8cpp_03.html":[1,0,1],
+"namespaceanonymous__namespace_02inverse-compton_8cpp_03.html#a772b174002f6c7db7aab8a1e25cf4e67":[1,0,1,1],
 "namespacecon.html":[1,0,2],
 "namespacecon.html#a07ddec20ab09a3078fce714358b65b4b":[1,0,2,7],
 "namespacecon.html#a26ef2b83dd09c356e324bd243b498764":[1,0,2,1],
@@ -245,9 +249,5 @@ var NAVTREEINDEX2 =
 "shock-physics_8h.html#af8c6e4984af9f6addc7959f6cd23bde6":[4,0,2,2,4,17],
 "shock-physics_8h.html#af93a08a32c8dbe2d27c1d71813221121":[4,0,2,2,4,10],
 "shock-physics_8h_source.html":[4,0,2,2,4],
-"shock_8cpp.html":[4,0,2,2,5],
-"shock_8cpp.html#a2c45eca687a7ff6c0a5adfec28c78eef":[4,0,2,2,5,0],
-"shock_8cpp_source.html":[4,0,2,2,5],
-"shock_8h.html":[4,0,2,2,6],
-"shock_8h_source.html":[4,0,2,2,6]
+"shock_8cpp.html":[4,0,2,2,5]
 };

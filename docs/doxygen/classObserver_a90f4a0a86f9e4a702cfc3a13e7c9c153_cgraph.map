@@ -1,8 +1,0 @@
-<map id="Observer::update_required" name="Observer::update_required">
-<area shape="rect" id="Node000001" title="Updates the required grid points for observation." alt="" coords="5,31,200,56"/>
-<area shape="rect" id="Node000002" href="$observer_8h.html#aa53249b087b9b9d83f4c06e808deeed9" title="Helper function that advances an iterator through an array until the value exceeds the target." alt="" coords="248,5,333,31"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="197,28,234,23,235,28,198,33"/>
-<area shape="rect" id="Node000003" href="$pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89" title=" " alt="" coords="381,31,536,56"/>
-<area shape="poly" id="edge3_Node000001_Node000003" title=" " alt="" coords="200,41,367,41,367,46,200,46"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="334,22,368,27,367,32,333,27"/>
-</map>

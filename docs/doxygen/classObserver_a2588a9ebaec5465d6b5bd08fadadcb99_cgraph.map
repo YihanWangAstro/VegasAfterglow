@@ -5,7 +5,7 @@
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="111,53,193,32,194,37,112,58"/>
 <area shape="rect" id="Node000003" href="$pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89" title=" " alt="" coords="393,56,548,81"/>
 <area shape="poly" id="edge4_Node000001_Node000003" title=" " alt="" coords="119,66,380,66,380,71,119,71"/>
-<area shape="rect" id="Node000004" href="$classObserver.html#a5350b13ae5a6c7007ba6459923573136" title="Sets up the Observer for flux calculation at specific observation times." alt="" coords="171,131,341,156"/>
+<area shape="rect" id="Node000004" href="$classObserver.html#a5350b13ae5a6c7007ba6459923573136" title="Computes the specific flux at a single observed frequency." alt="" coords="171,131,341,156"/>
 <area shape="poly" id="edge5_Node000001_Node000004" title=" " alt="" coords="97,79,211,123,209,128,95,84"/>
 <area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="311,28,404,50,402,55,310,33"/>
 <area shape="poly" id="edge6_Node000004_Node000003" title=" " alt="" coords="293,128,419,83,421,88,295,133"/>

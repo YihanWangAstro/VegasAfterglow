@@ -2,8 +2,7 @@ var classShock =
 [
     [ "Shock", "classShock.html#ac4cbdd70892414adbdb7fc01071e49e0", null ],
     [ "Shock", "classShock.html#a0bdc1bfb873fe39ba4d4fcbded4666f2", null ],
-    [ "broadcast_groups", "classShock.html#ae152bec8a9248d39aa1642b650791476", null ],
-    [ "detect_symmetry", "classShock.html#a2847e025181ab708c820a67258b9c4c3", null ],
+    [ "broadcast_groups", "classShock.html#ae96d00beb8a203ddd8928888a624941e", null ],
     [ "resize", "classShock.html#a21251939d5191865d40e31bd3155ec3a", null ],
     [ "shape", "classShock.html#a182095c7ca3cfd83d9d22d2627c10466", null ],
     [ "B", "classShock.html#a48c444d1bd42f1b933aa4282b5634bf2", null ],
@@ -13,8 +12,6 @@ var classShock =
     [ "N_p", "classShock.html#a935ec9fad9c096394707e59f81d0425d", null ],
     [ "r", "classShock.html#ad2c035218f2e59c0e84c40fa96ff5497", null ],
     [ "rad", "classShock.html#acc651304bf82aa85e52210074dee3673", null ],
-    [ "symmetry", "classShock.html#a1ac94c10777cd8af8a4dd62611eabc44", null ],
     [ "t_comv", "classShock.html#a2f750335b1c4474905426fd1a78b006a", null ],
-    [ "theta", "classShock.html#a144dc338f3f004d48e5b629479e782be", null ],
-    [ "theta_reps", "classShock.html#ab02b946caaaff18a4396581efabc28d2", null ]
+    [ "theta", "classShock.html#a144dc338f3f004d48e5b629479e782be", null ]
 ];

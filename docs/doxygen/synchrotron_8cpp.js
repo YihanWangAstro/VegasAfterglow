@@ -13,9 +13,9 @@ var synchrotron_8cpp =
     [ "cool_after_crossing", "synchrotron_8cpp.html#acf950e56a1a38919decfb97ba6bf6d63", null ],
     [ "cyclotron_correction", "synchrotron_8cpp.html#a018aa6d904c7b40ecbcefd494a4b60e4", null ],
     [ "determine_regime", "synchrotron_8cpp.html#a5813eed02877ed5f35a34e929a68d263", null ],
-    [ "generate_syn_electrons", "synchrotron_8cpp.html#a61b8afa248e61a5726a0e48983f99fdf", null ],
-    [ "generate_syn_electrons", "synchrotron_8cpp.html#aad9e6e41fee6cbff0952e1d343b890f5", null ],
-    [ "generate_syn_photons", "synchrotron_8cpp.html#a331f545228d2b18e84e0252510e295f8", null ],
-    [ "generate_syn_photons", "synchrotron_8cpp.html#a0f78089bdc9e329056d89812794298b9", null ],
+    [ "generate_syn_electrons", "synchrotron_8cpp.html#ac075b1d286dd790fa5c489690d65d1be", null ],
+    [ "generate_syn_electrons", "synchrotron_8cpp.html#a61ca4dde8d2466a6c4bbeb3ec4911141", null ],
+    [ "generate_syn_photons", "synchrotron_8cpp.html#a05ed2d5329ad70595404b5a922be79cb", null ],
+    [ "generate_syn_photons", "synchrotron_8cpp.html#a1ae959e558985198d460b76ec3a4f1ef", null ],
     [ "order", "synchrotron_8cpp.html#a59b47fc71384572d072692740171988e", null ]
 ];

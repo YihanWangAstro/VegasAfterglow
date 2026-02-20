@@ -1,7 +1,7 @@
 var searchData=
 [
   ['t_0',['t',['../classCoord.html#a1be0d478cc7dc556eb9db65cf851da5c',1,'Coord']]],
-  ['t0_1',['t0',['../classEjecta.html#a4317c1c49676662f347708942bc61bdf',1,'Ejecta::T0'],['../structPyMagnetar.html#aac488f2dea4704845b1b2c9c4664cde8',1,'PyMagnetar::t0'],['../classPowerLawJet.html#aefe6b9e991605a6b451090adad143e39',1,'PowerLawJet::T0'],['../classGaussianJet.html#ac044ed063b0720f124551a728ce1ac67',1,'GaussianJet::T0'],['../classTophatJet.html#a8646027b99fed9bb2e206956ff284c84',1,'TophatJet::T0']]],
+  ['t0_1',['t0',['../structPyMagnetar.html#aac488f2dea4704845b1b2c9c4664cde8',1,'PyMagnetar::t0'],['../classPowerLawJet.html#aefe6b9e991605a6b451090adad143e39',1,'PowerLawJet::T0'],['../classGaussianJet.html#ac044ed063b0720f124551a728ce1ac67',1,'GaussianJet::T0'],['../classTophatJet.html#a8646027b99fed9bb2e206956ff284c84',1,'TophatJet::T0'],['../classEjecta.html#a4317c1c49676662f347708942bc61bdf',1,'Ejecta::T0']]],
   ['t_5fcomv_2',['t_comv',['../structPyShock.html#a3538d2218dd586d492a93f4eaaac2879',1,'PyShock::t_comv'],['../structForwardState.html#a5c68a522be4913771d213fc734564cc7',1,'ForwardState::t_comv'],['../structReverseState.html#a32a4fc6a76c28ed2056d1ad01790f08b',1,'ReverseState::t_comv'],['../classShock.html#a2f750335b1c4474905426fd1a78b006a',1,'Shock::t_comv'],['../structSimpleState.html#a98332d35342f9f2779dd10281d30768a',1,'SimpleState::t_comv']]],
   ['t_5fobs_3',['t_obs',['../structPyShock.html#af8c393182ea18f6033ba7bc400db2949',1,'PyShock']]],
   ['t_5fresol_4',['t_resol',['../structGridConfig.html#a2097db24b5f4e7f078f4ab77d712899e',1,'GridConfig']]],
@@ -11,7 +11,7 @@ var searchData=
   ['theta0_8',['theta0',['../classForwardShockEqn.html#a5dc2e510565b607caa4eee42e053c8d3',1,'ForwardShockEqn::theta0'],['../classFRShockEqn.html#a54ea36bb3fddcc4ccab1708c752e3092',1,'FRShockEqn::theta0'],['../classSimpleShockEqn.html#ad193653f550dbdcec374e78e6aad0282',1,'SimpleShockEqn::theta0']]],
   ['theta_5fmin_9',['theta_min',['../namespacedefaults_1_1grid.html#af2b7c5de15cb9c537f0de0e0e56148b1',1,'defaults::grid']]],
   ['theta_5fobs_10',['theta_obs',['../classPyObserver.html#a44289f4d1236019685063b1ce914154d',1,'PyObserver::theta_obs'],['../structGridConfig.html#ad02e36bdc2a7c1a5607c9d1cf162cc12',1,'GridConfig::theta_obs']]],
-  ['theta_5freps_11',['theta_reps',['../classShock.html#ab02b946caaaff18a4396581efabc28d2',1,'Shock']]],
+  ['theta_5freps_11',['theta_reps',['../classCoord.html#af671de8fc7a60d2913bd6279d2e403ac',1,'Coord']]],
   ['theta_5fresol_12',['theta_resol',['../structGridConfig.html#aa4e5bc7fee5c0f1dc7f9b5ca8a74c514',1,'GridConfig']]],
   ['theta_5fresolution_13',['theta_resolution',['../namespacedefaults_1_1grid.html#a372994c537be68d80989655f9b43c672',1,'defaults::grid']]],
   ['theta_5fsamples_14',['theta_samples',['../namespacedefaults_1_1sampling.html#afb3d6cb58a2dc84e4f0a2ed64d7e1609',1,'defaults::sampling']]],

@@ -1,5 +1,0 @@
-<map id="Shock::detect_symmetry" name="Shock::detect_symmetry">
-<area shape="rect" id="Node000001" title="Auto&#45;detect symmetry by comparing jet initial conditions at consecutive theta grid points." alt="" coords="5,5,189,31"/>
-<area shape="rect" id="Node000002" href="$pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89" title=" " alt="" coords="237,5,392,31"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="190,15,224,15,224,21,190,21"/>
-</map>

@@ -1,0 +1,5 @@
+<map id="Coord::detect_symmetry" name="Coord::detect_symmetry">
+<area shape="rect" id="Node000001" title="Detects the symmetry level of the grid based on jet and medium properties." alt="" coords="5,5,188,31"/>
+<area shape="rect" id="Node000002" href="$pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89" title=" " alt="" coords="236,5,391,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="188,15,222,15,222,21,188,21"/>
+</map>

@@ -145,6 +145,17 @@
 <span class="n">model</span> <span class="o">=</span> <span class="n">Model</span><span class="p">(</span><span class="n">jet</span><span class="o">=</span><span class="n">jet</span><span class="p">,</span> <span class="n">medium</span><span class="o">=</span><span class="n">medium</span><span class="p">,</span> <span class="n">observer</span><span class="o">=</span><span class="n">obs</span><span class="p">,</span> <span class="n">fwd_rad</span><span class="o">=</span><span class="n">rad</span><span class="p">)</span>
 </pre></div>
 </div>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>The API expects CGS base units (seconds, Hz, cm, radians). Use the <code class="docutils literal notranslate"><span class="pre">VegasAfterglow.units</span></code> module for convenient conversion:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">VegasAfterglow.units</span><span class="w"> </span><span class="kn">import</span> <span class="n">Mpc</span><span class="p">,</span> <span class="n">deg</span><span class="p">,</span> <span class="n">GHz</span><span class="p">,</span> <span class="n">day</span><span class="p">,</span> <span class="n">mJy</span>
+
+<span class="n">obs</span> <span class="o">=</span> <span class="n">Observer</span><span class="p">(</span><span class="n">lumi_dist</span><span class="o">=</span><span class="mi">100</span><span class="o">*</span><span class="n">Mpc</span><span class="p">,</span> <span class="n">z</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">theta_obs</span><span class="o">=</span><span class="mi">5</span><span class="o">*</span><span class="n">deg</span><span class="p">)</span>
+<span class="n">flux</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">flux_density_grid</span><span class="p">(</span><span class="n">times</span> <span class="o">*</span> <span class="n">day</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">5</span><span class="o">*</span><span class="n">GHz</span><span class="p">]))</span>
+<span class="n">flux_mJy</span> <span class="o">=</span> <span class="n">flux</span><span class="o">.</span><span class="n">total</span> <span class="o">/</span> <span class="n">mJy</span>  <span class="c1"># convert output to mJy</span>
+</pre></div>
+</div>
+</div>
 <section id="light-curve-calculation">
 <h3>Light Curve Calculation<a class="headerlink" href="#light-curve-calculation" title="Link to this heading"></a></h3>
 <p>Now, let’s compute and plot multi-wavelength light curves to see how the afterglow evolves over time:</p>

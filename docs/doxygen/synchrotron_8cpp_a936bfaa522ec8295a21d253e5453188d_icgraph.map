@@ -2,18 +2,18 @@
 <area shape="rect" id="Node000001" title="Calculates synchrotron frequency for a given Lorentz factor and magnetic field." alt="" coords="653,108,796,133"/>
 <area shape="rect" id="Node000002" href="$synchrotron_8cpp.html#a0dd9222be02ad23c2ec055432df37eb4" title=" " alt="" coords="419,29,601,55"/>
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="684,104,604,70,564,57,565,52,606,65,687,99"/>
-<area shape="rect" id="Node000007" href="$synchrotron_8cpp.html#a0f78089bdc9e329056d89812794298b9" title="Populates an existing photon grid with values based on shock and electron grid." alt="" coords="425,79,595,104"/>
+<area shape="rect" id="Node000007" href="$synchrotron_8cpp.html#a1ae959e558985198d460b76ec3a4f1ef" title="Populates an existing photon grid with values based on shock and electron grid." alt="" coords="425,79,595,104"/>
 <area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="640,112,595,106,595,100,640,106"/>
 <area shape="rect" id="Node000008" href="$structInverseComptonY.html#a2e2ffd78dd60c7da21a052b443bd51b3" title="Initializes an InverseComptonY object with frequency thresholds, magnetic field and Y parameter." alt="" coords="415,129,605,169"/>
 <area shape="poly" id="edge7_Node000001_Node000008" title=" " alt="" coords="640,134,606,139,605,134,639,129"/>
 <area shape="rect" id="Node000009" href="$pymodel_8cpp.html#abd6c66c47199807e6dfbd00ce56ff8bc" title=" " alt="" coords="432,193,588,219"/>
 <area shape="poly" id="edge8_Node000001_Node000009" title=" " alt="" coords="691,142,606,183,567,196,565,191,604,178,689,138"/>
-<area shape="rect" id="Node000003" href="$synchrotron_8cpp.html#aad9e6e41fee6cbff0952e1d343b890f5" title="Populates an existing electron grid with values based on shock parameters." alt="" coords="189,5,367,31"/>
+<area shape="rect" id="Node000003" href="$synchrotron_8cpp.html#a61ca4dde8d2466a6c4bbeb3ec4911141" title="Populates an existing electron grid with values based on shock parameters." alt="" coords="189,5,367,31"/>
 <area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="405,34,367,30,367,25,406,29"/>
-<area shape="rect" id="Node000004" href="$inverse-compton_8h.html#a296938a441652163ddc6bee2faa9299e" title=" " alt="" coords="233,55,323,80"/>
+<area shape="rect" id="Node000004" href="$inverse-compton_8h.html#a84b2fce848f1b0e707c3345139978d79" title=" " alt="" coords="233,55,323,80"/>
 <area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="405,56,323,65,323,60,405,51"/>
-<area shape="rect" id="Node000005" href="$inverse-compton_8h.html#ac57614f97ddcaab423a5023a04cdf3a1" title="Applies Klein&#45;Nishina cooling to electrons based on photon distribution." alt="" coords="26,29,121,55"/>
+<area shape="rect" id="Node000005" href="$inverse-compton_8h.html#a583bd933279ebdb89aaa790ee16bc67a" title=" " alt="" coords="26,29,121,55"/>
 <area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="220,63,120,50,121,45,220,58"/>
-<area shape="rect" id="Node000006" href="$inverse-compton_8h.html#a976c0ea39114e8fb7e8508f6ce6218d8" title="Applies Thomson cooling to electrons based on photon distribution." alt="" coords="5,79,141,104"/>
+<area shape="rect" id="Node000006" href="$inverse-compton_8h.html#a03706f33ca5b6d5b0925a2636f60b6cc" title=" " alt="" coords="5,79,141,104"/>
 <area shape="poly" id="edge5_Node000004_Node000006" title=" " alt="" coords="220,77,142,86,141,81,220,71"/>
 </map>

@@ -1,0 +1,10 @@
+<map id="generate_syn_photons" name="generate_syn_photons">
+<area shape="rect" id="Node000001" title="Creates and returns a new photon grid based on shock and electron grid." alt="" coords="327,31,496,56"/>
+<area shape="poly" id="edge1_Node000001_Node000001" title=" " alt="" coords="442,20,433,12,411,9,393,11,383,16,381,22,386,29,382,32,376,22,379,13,391,6,411,4,436,8,446,16"/>
+<area shape="rect" id="Node000002" href="$inverse-compton_8h.html#a84b2fce848f1b0e707c3345139978d79" title=" " alt="" coords="189,31,279,56"/>
+<area shape="poly" id="edge2_Node000001_Node000002" title=" " alt="" coords="313,46,279,46,279,41,313,41"/>
+<area shape="rect" id="Node000003" href="$inverse-compton_8h.html#a583bd933279ebdb89aaa790ee16bc67a" title=" " alt="" coords="26,5,121,31"/>
+<area shape="poly" id="edge3_Node000002_Node000003" title=" " alt="" coords="175,37,120,28,121,23,176,32"/>
+<area shape="rect" id="Node000004" href="$inverse-compton_8h.html#a03706f33ca5b6d5b0925a2636f60b6cc" title=" " alt="" coords="5,55,141,80"/>
+<area shape="poly" id="edge4_Node000002_Node000004" title=" " alt="" coords="176,55,142,60,141,54,175,49"/>
+</map>

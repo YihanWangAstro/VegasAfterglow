@@ -1,0 +1,15 @@
+<map id="build_time_grid" name="build_time_grid">
+<area shape="rect" id="Node000001" title="Builds the engine&#45;time grid for each (phi, theta) cell in the coordinate system." alt="" coords="5,95,128,121"/>
+<area shape="rect" id="Node000002" href="$mesh_8h.html#aa7505ad2e84c2a29610c1a13cd3b25e3" title="Estimates deceleration time for a given angle from ejecta and medium properties." alt="" coords="176,70,299,95"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="128,96,162,91,163,96,129,102"/>
+<area shape="rect" id="Node000003" href="$namespacephysics_1_1relativistic.html#aed1c46f33c9d25ffa27131014b190090" title="Converts Lorentz factor (gamma) to a velocity fraction (beta)" alt="" coords="347,5,495,45"/>
+<area shape="poly" id="edge5_Node000001_Node000003" title=" " alt="" coords="89,93,128,73,175,55,255,37,332,28,333,33,256,42,177,60,130,78,91,98"/>
+<area shape="rect" id="Node000004" href="$pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89" title=" " alt="" coords="543,95,697,121"/>
+<area shape="poly" id="edge6_Node000001_Node000004" title=" " alt="" coords="129,105,529,105,529,111,129,111"/>
+<area shape="rect" id="Node000005" href="$mesh_8h.html#ab2b9eccaf75f7a9fe6bafd8696049bd2" title="Create a refined logarithmic time grid with higher density around a specified time." alt="" coords="353,171,489,197"/>
+<area shape="poly" id="edge7_Node000001_Node000005" title=" " alt="" coords="95,118,133,135,177,149,260,166,339,176,338,181,259,172,175,155,131,140,93,123"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="278,67,343,47,344,52,280,72"/>
+<area shape="poly" id="edge4_Node000002_Node000004" title=" " alt="" coords="299,84,529,99,529,105,299,89"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="471,43,576,87,574,92,469,48"/>
+<area shape="poly" id="edge8_Node000005_Node000004" title=" " alt="" coords="454,169,572,123,574,128,456,174"/>
+</map>

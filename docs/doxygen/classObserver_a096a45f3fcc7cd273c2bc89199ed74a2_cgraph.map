@@ -5,7 +5,7 @@
 <area shape="rect" id="Node000003" href="$classObserver.html#a18a5b8ffa6dad54050d7de094c24094b" title="Computes the spectrum at multiple observation times." alt="" coords="204,31,341,56"/>
 <area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="157,25,190,30,190,35,156,31"/>
 <area shape="poly" id="edge3_Node000003_Node000002" title=" " alt="" coords="341,41,593,41,593,46,341,46"/>
-<area shape="rect" id="Node000004" href="$classObserver.html#a5350b13ae5a6c7007ba6459923573136" title="Sets up the Observer for flux calculation at specific observation times." alt="" coords="389,105,559,131"/>
+<area shape="rect" id="Node000004" href="$classObserver.html#a5350b13ae5a6c7007ba6459923573136" title="Computes the specific flux at a single observed frequency." alt="" coords="389,105,559,131"/>
 <area shape="poly" id="edge4_Node000003_Node000004" title=" " alt="" coords="309,54,427,98,425,103,307,59"/>
 <area shape="poly" id="edge5_Node000004_Node000002" title=" " alt="" coords="510,103,634,58,636,63,512,108"/>
 <area shape="poly" id="edge6_Node000004_Node000004" title=" " alt="" coords="441,107,434,97,438,87,451,81,474,79,502,82,513,92,510,96,500,87,474,84,453,86,442,91,439,96,445,104"/>

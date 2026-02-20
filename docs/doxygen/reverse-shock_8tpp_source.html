@@ -617,26 +617,22 @@ $(document).ready(function(){initNavTree('reverse-shock_8tpp_source.html',''); i
 <div class="line"><a id="l00516" name="l00516"></a><span class="lineno">  516</span>    Shock f_shock(phi_size_needed, theta_size, t_size, rad_fwd);</div>
 <div class="line"><a id="l00517" name="l00517"></a><span class="lineno">  517</span>    Shock r_shock(phi_size_needed, theta_size, t_size, rad_rvs);</div>
 <div class="line"><a id="l00518" name="l00518"></a><span class="lineno">  518</span> </div>
-<div class="line"><a id="l00519" name="l00519"></a><span class="lineno">  519</span>    f_shock.detect_symmetry(coord, jet, medium);</div>
-<div class="line"><a id="l00520" name="l00520"></a><span class="lineno">  520</span>    r_shock.symmetry = f_shock.symmetry;</div>
-<div class="line"><a id="l00521" name="l00521"></a><span class="lineno">  521</span>    r_shock.theta_reps = f_shock.theta_reps;</div>
-<div class="line"><a id="l00522" name="l00522"></a><span class="lineno">  522</span> </div>
-<div class="line"><a id="l00523" name="l00523"></a><span class="lineno">  523</span>    for (size_t i = 0; i &lt; phi_size_needed; ++i) {</div>
-<div class="line"><a id="l00524" name="l00524"></a><span class="lineno">  524</span>        // Real theta_s =</div>
-<div class="line"><a id="l00525" name="l00525"></a><span class="lineno">  525</span>        //     jet_spreading_edge(jet, medium, coord.phi(i), coord.theta.front(), coord.theta.back(), coord.t.front());</div>
-<div class="line"><a id="l00526" name="l00526"></a><span class="lineno">  526</span>        for (size_t j : f_shock.theta_reps) {</div>
-<div class="line"><a id="l00527" name="l00527"></a><span class="lineno">  527</span>            auto eqn_r = FRShockEqn(medium, jet, coord.phi(i), coord.theta(j), rad_fwd, rad_rvs);</div>
-<div class="line"><a id="l00528" name="l00528"></a><span class="lineno">  528</span>            grid_solve_shock_pair(i, j, xt::view(coord.t, i, j, xt::all()), f_shock, r_shock, eqn_r, rtol);</div>
-<div class="line"><a id="l00529" name="l00529"></a><span class="lineno">  529</span>        }</div>
-<div class="line"><a id="l00530" name="l00530"></a><span class="lineno">  530</span> </div>
-<div class="line"><a id="l00531" name="l00531"></a><span class="lineno">  531</span>        if (f_shock.symmetry &gt;= Symmetry::phi_symmetric) {</div>
-<div class="line"><a id="l00532" name="l00532"></a><span class="lineno">  532</span>            f_shock.broadcast_groups(coord.theta);</div>
-<div class="line"><a id="l00533" name="l00533"></a><span class="lineno">  533</span>            r_shock.broadcast_groups(coord.theta);</div>
-<div class="line"><a id="l00534" name="l00534"></a><span class="lineno">  534</span>            return std::make_pair(std::move(f_shock), std::move(r_shock));</div>
-<div class="line"><a id="l00535" name="l00535"></a><span class="lineno">  535</span>        }</div>
-<div class="line"><a id="l00536" name="l00536"></a><span class="lineno">  536</span>    }</div>
-<div class="line"><a id="l00537" name="l00537"></a><span class="lineno">  537</span>    return std::make_pair(std::move(f_shock), std::move(r_shock));</div>
-<div class="line"><a id="l00538" name="l00538"></a><span class="lineno">  538</span>}</div>
+<div class="line"><a id="l00519" name="l00519"></a><span class="lineno">  519</span>    for (size_t i = 0; i &lt; phi_size_needed; ++i) {</div>
+<div class="line"><a id="l00520" name="l00520"></a><span class="lineno">  520</span>        // Real theta_s =</div>
+<div class="line"><a id="l00521" name="l00521"></a><span class="lineno">  521</span>        //     jet_spreading_edge(jet, medium, coord.phi(i), coord.theta.front(), coord.theta.back(), coord.t.front());</div>
+<div class="line"><a id="l00522" name="l00522"></a><span class="lineno">  522</span>        for (size_t j : coord.theta_reps) {</div>
+<div class="line"><a id="l00523" name="l00523"></a><span class="lineno">  523</span>            auto eqn_r = FRShockEqn(medium, jet, coord.phi(i), coord.theta(j), rad_fwd, rad_rvs);</div>
+<div class="line"><a id="l00524" name="l00524"></a><span class="lineno">  524</span>            grid_solve_shock_pair(i, j, xt::view(coord.t, i, j, xt::all()), f_shock, r_shock, eqn_r, rtol);</div>
+<div class="line"><a id="l00525" name="l00525"></a><span class="lineno">  525</span>        }</div>
+<div class="line"><a id="l00526" name="l00526"></a><span class="lineno">  526</span> </div>
+<div class="line"><a id="l00527" name="l00527"></a><span class="lineno">  527</span>        if (coord.symmetry &gt;= Symmetry::phi_symmetric) {</div>
+<div class="line"><a id="l00528" name="l00528"></a><span class="lineno">  528</span>            f_shock.broadcast_groups(coord);</div>
+<div class="line"><a id="l00529" name="l00529"></a><span class="lineno">  529</span>            r_shock.broadcast_groups(coord);</div>
+<div class="line"><a id="l00530" name="l00530"></a><span class="lineno">  530</span>            return std::make_pair(std::move(f_shock), std::move(r_shock));</div>
+<div class="line"><a id="l00531" name="l00531"></a><span class="lineno">  531</span>        }</div>
+<div class="line"><a id="l00532" name="l00532"></a><span class="lineno">  532</span>    }</div>
+<div class="line"><a id="l00533" name="l00533"></a><span class="lineno">  533</span>    return std::make_pair(std::move(f_shock), std::move(r_shock));</div>
+<div class="line"><a id="l00534" name="l00534"></a><span class="lineno">  534</span>}</div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
