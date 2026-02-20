@@ -60,6 +60,17 @@ Then, let's set up the physical components of our afterglow model, including the
     # 5. Combine all components into a complete afterglow model
     model = Model(jet=jet, medium=medium, observer=obs, fwd_rad=rad)
 
+.. tip::
+   The API expects CGS base units (seconds, Hz, cm, radians). Use the ``VegasAfterglow.units`` module for convenient conversion:
+
+   .. code-block:: python
+
+       from VegasAfterglow.units import Mpc, deg, GHz, day, mJy
+
+       obs = Observer(lumi_dist=100*Mpc, z=0.1, theta_obs=5*deg)
+       flux = model.flux_density_grid(times * day, np.array([5*GHz]))
+       flux_mJy = flux.total / mJy  # convert output to mJy
+
 Light Curve Calculation
 ^^^^^^^^^^^^^^^^^^^^^^^
 

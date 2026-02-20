@@ -25,6 +25,11 @@ The `Fitter` class has been rebuilt on top of the `Model` API, replacing the int
 
 For the full MCMC fitting guide, including advanced customization examples, see the [MCMC Parameter Fitting](https://yihanwangastro.github.io/VegasAfterglow/docs/mcmc_fitting.html) documentation.
 
+#### **Unit Conversion Constants**
+- New `VegasAfterglow.units` module with multiplicative constants for common astronomical units (days, GHz, keV, mJy, Mpc, degrees, etc.)
+- Multiply to convert inputs: `5*GHz`, `t_data*day`, `f_data*mJy`; divide to convert outputs: `flux.total / mJy`
+- Magnitude converters for AB, Vega, and ST (HST STMAG) systems with built-in filter data for Johnson-Cousins (UBVRI), 2MASS (JHKs), Swift UVOT, and HST WFC3/ACS filters
+
 #### **Smooth Synchrotron Spectra**
 - New default synchrotron spectral model with smooth transitions at break frequencies (ν_m, ν_c, ν_a)
 - Produces more physical light curves without artificial kinks at spectral breaks

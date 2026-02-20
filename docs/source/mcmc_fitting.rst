@@ -202,6 +202,62 @@ The ``Fitter`` class handles both model configuration and observational data. Ad
         fitter.add_spectrum(t=t, nu=df["nu"],
                             f_nu=df["Fv_obs"], err=df["Fv_err"])  # All quantities in CGS units
 
+Unit Conversion
+^^^^^^^^^^^^^^^
+
+All API inputs use CGS base units (seconds, Hz, erg/cm²/s/Hz, cm, radians). The ``VegasAfterglow.units`` module provides multiplicative constants for convenient conversion from common astronomical units:
+
+.. code-block:: python
+
+    from VegasAfterglow.units import day, GHz, keV, mJy, Mpc, deg
+
+    # Fitter setup with natural units
+    fitter = Fitter(z=1.58, lumi_dist=100*Mpc, jet="tophat", medium="ism")
+
+    # Load data in astronomer-friendly units
+    df = pd.read_csv("data/radio.csv")
+    fitter.add_flux_density(
+        nu=5*GHz,
+        t=df["t_days"] * day,
+        f_nu=df["flux_mJy"] * mJy,
+        err=df["err_mJy"] * mJy,
+    )
+
+    # X-ray band specified in keV (converted to Hz via E=hν)
+    fitter.add_flux_density(
+        nu=1*keV,
+        t=df_xray["t_days"] * day,
+        f_nu=df_xray["flux"] * mJy,
+        err=df_xray["err"] * mJy,
+    )
+
+    # Convert model output back to convenient units
+    result_flux = model.flux_density_grid(times, nus)
+    flux_in_mJy = result_flux.total / mJy
+
+Available constants: ``sec``, ``ms``, ``minute``, ``hr``, ``day``, ``yr`` (time); ``Hz``, ``kHz``, ``MHz``, ``GHz`` (frequency); ``eV``, ``keV``, ``MeV``, ``GeV`` (photon energy → frequency); ``Jy``, ``mJy``, ``uJy`` (flux density); ``cm``, ``m``, ``km``, ``pc``, ``kpc``, ``Mpc``, ``Gpc`` (distance); ``rad``, ``deg``, ``arcmin``, ``arcsec`` (angle).
+
+Magnitude Conversion
+""""""""""""""""""""
+
+If your data is in magnitudes rather than flux density, use the built-in magnitude converters:
+
+.. code-block:: python
+
+    from VegasAfterglow.units import ABmag_to_cgs, Vegamag_to_cgs, filter
+
+    # AB magnitudes (e.g., SDSS photometry)
+    f_nu = ABmag_to_cgs(df["mag_AB"])
+    f_nu_err = ABmag_to_cgs(df["mag_AB"] - df["mag_err"]) - f_nu  # asymmetric!
+
+    # Vega magnitudes with filter name (e.g., Johnson R band)
+    f_nu = Vegamag_to_cgs(df["mag_R"], "R")
+
+    # Get the effective frequency for a filter (for the fitter)
+    fitter.add_flux_density(nu=filter("R"), t=t_data, f_nu=f_nu, err=f_nu_err)
+
+Supported Vega filters: Johnson-Cousins (``U``, ``B``, ``V``, ``R``, ``I``), 2MASS (``J``, ``H``, ``Ks``), Swift UVOT (``v``, ``b``, ``u``, ``uvw1``, ``uvm2``, ``uvw2``). ST (HST STMAG) filters also available via ``STmag_to_cgs(mag, "F606W")``.
+
 Data Selection and Optimization
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 

@@ -1,3 +1,4 @@
+from . import units
 from ._version import __version__, __version_tuple__
 from .native import NativeFunc, gil_free
 
@@ -71,6 +72,8 @@ __all__ = [
     "FitResult",
     "ParamDef",
     "Scale",
+    # Units
+    "units",
     # MCMC fitting (requires VegasAfterglow[mcmc])
     "Fitter",
     "AfterglowLikelihood",

@@ -292,7 +292,7 @@ bool Observer::set_boundaries(InterpState& state, size_t eff_i, size_t i, size_t
     if (state.last_hi != 0 && k == state.last_hi && lg2_nu_src == state.last_lg2_nu) {
         state.lg2_L_nu_lo = state.lg2_L_nu_hi;
     } else {
-        Real lg2_nu_lo = lg2_nu_src - lg2_doppler(i, j, k);
+        Real lg2_nu_lo = -lg2_doppler(i, j, k);
         state.lg2_L_nu_lo = photons(eff_i, j, k).compute_log2_I_nu(lg2_nu_lo) + lg2_geom_factor(i, j, k);
     }
 
@@ -320,29 +320,36 @@ MeshGrid Observer::specific_flux(Array const& t_obs, Array const& nu_obs, Photon
 
     MeshGrid F_nu({nu_len, t_obs_len}, 0);
 
+    struct Bracket {
+        size_t k;
+        size_t start;
+        size_t end;
+        Real t_lo;
+    };
+    std::vector<Bracket> brackets;
+    brackets.reserve(t_grid);
+
     for (size_t i = 0; i < eff_phi_grid; i++) {
-        size_t eff_i = i * jet_3d;
+        const size_t eff_i = i * jet_3d;
         for (size_t j = 0; j < theta_grid; j++) {
-            // Skip observation times that are below the grid's start time
+            brackets.clear();
             size_t t_idx = 0;
             iterate_to(lg2_t(i, j, 0), lg2_t_obs, t_idx);
 
-            InterpState state;
             for (size_t k = 0; k < t_grid - 1 && t_idx < t_obs_len; k++) {
-                const Real t_lo = lg2_t(i, j, k);
-                const Real t_hi = lg2_t(i, j, k + 1);
-
-                if (t_hi < lg2_t_obs(t_idx))
+                if (lg2_t(i, j, k + 1) < lg2_t_obs(t_idx))
                     continue;
-
                 const size_t idx_start = t_idx;
-                iterate_to(t_hi, lg2_t_obs, t_idx);
-                const size_t idx_end = t_idx;
+                iterate_to(lg2_t(i, j, k + 1), lg2_t_obs, t_idx);
+                brackets.emplace_back(k, idx_start, t_idx, lg2_t(i, j, k));
+            }
 
-                for (size_t l = 0; l < nu_len; l++) {
-                    if (set_boundaries(state, eff_i, i, j, k, lg2_nu_src(l), photons)) [[likely]] {
-                        for (size_t idx = idx_start; idx < idx_end; idx++) {
-                            F_nu(l, idx) += loglog_interpolate(state, lg2_t_obs(idx), t_lo);
+            for (size_t l = 0; l < nu_len; l++) {
+                InterpState state;
+                for (auto const& br : brackets) {
+                    if (set_boundaries(state, eff_i, i, j, br.k, lg2_nu_src(l), photons)) [[likely]] {
+                        for (size_t idx = br.start; idx < br.end; idx++) {
+                            F_nu(l, idx) += loglog_interpolate(state, lg2_t_obs(idx), br.t_lo);
                         }
                     }
                 }
