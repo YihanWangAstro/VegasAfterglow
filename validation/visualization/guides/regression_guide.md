@@ -31,31 +31,31 @@ All regression tests use a model resolution of `(0.3, 2, 15)` to ensure well-res
 
 The blast wave passes through distinct dynamical phases as it decelerates. Each phase exhibits characteristic power-law behavior that serves as a validation target.
 
-| Phase | ISM Time Range | Wind Time Range | Physics |
-|-------|----------------|-----------------|---------|
-| Coasting | 0.1 - 1 s | 0.01 - 0.1 s | Free expansion, $\Gamma \approx$ const |
-| Blandford-McKee | 500 - 5000 s | 10^4 - 10^5 s | Self-similar deceleration |
-| Deep Newtonian | 10^12 - 10^13 s | 10^14 - 10^15 s | Non-relativistic, $u < 0.1$ |
+| Phase | Physics |
+|-------|---------|
+| Coasting | Free expansion, $\Gamma \approx$ const |
+| Blandford-McKee | Self-similar deceleration |
+| Sedov-Taylor | Non-relativistic, $u < 0.1$ |
 
 ### 2.2 Reverse Shock (Thin Shell)
 
-Short engine duration ($\tau \sim 0.01$ s). The reverse shock crosses the ejecta quickly, then evolves as a decaying blast wave.
+Short engine duration. The reverse shock crosses the ejecta quickly, then evolves as a decaying blast wave.
 
-| Phase | ISM Time Range | Wind Time Range | Physics |
-|-------|----------------|-----------------|---------|
-| Crossing | 0.01 - 0.1 s | 5 - 50 s | Reverse shock traversing ejecta |
-| Post-crossing | 10^5 - 10^6 s | 10^6 - 10^7 s | Post-crossing deceleration |
-| Deep Newtonian | 10^12 - 10^13 s | 10^14 - 10^15 s | Non-relativistic |
+| Phase | Physics |
+|-------|---------|
+| Crossing | Reverse shock traversing ejecta |
+| Post-crossing | Post-crossing deceleration |
+| Sedov-Taylor | Non-relativistic |
 
 ### 2.3 Reverse Shock (Thick Shell)
 
-Long engine duration ($\tau \sim 10^4 - 10^5$ s). The reverse shock crosses while the engine is still active, producing different scaling.
+Long engine duration. The reverse shock crosses while the engine is still active, producing different scaling.
 
-| Phase | ISM Time Range | Wind Time Range | Physics |
-|-------|----------------|-----------------|---------|
-| Crossing | 5000 - 50000 s | 100 - 1000 s | Reverse shock traversing during engine activity |
-| Post-crossing | 10^7 - 10^8 s | 10^7 - 10^8 s | Post-crossing deceleration |
-| Deep Newtonian | 10^12 - 10^13 s | 10^14 - 10^15 s | Non-relativistic |
+| Phase | Physics |
+|-------|---------|
+| Crossing | Reverse shock traversing during engine activity |
+| Post-crossing | Post-crossing deceleration |
+| Sedov-Taylor | Non-relativistic |
 
 ---
 
@@ -71,7 +71,7 @@ Physical quantities at the shock front scale as power laws with observer time: $
 |-------|-----|-----|-----|-------|
 | Coasting | 0 | 1 | 0 | 3 |
 | Blandford-McKee | -3/8 | 1/4 | -3/8 | 3/4 |
-| Deep Newtonian | -3/5 | 2/5 | -3/5 | 6/5 |
+| Sedov-Taylor | -3/5 | 2/5 | -3/5 | 6/5 |
 
 **Wind (density $\propto r^{-2}$)**
 
@@ -79,7 +79,7 @@ Physical quantities at the shock front scale as power laws with observer time: $
 |-------|-----|-----|-----|-------|
 | Coasting | 0 | 1 | -1 | 1 |
 | Blandford-McKee | -1/4 | 1/2 | -3/4 | 1/2 |
-| Deep Newtonian | -1/3 | 2/3 | -1 | 2/3 |
+| Sedov-Taylor | -1/3 | 2/3 | -1 | 2/3 |
 
 ### 3.2 Forward Characteristic Frequencies
 
@@ -91,7 +91,7 @@ The synchrotron spectrum is characterized by break frequencies that evolve with 
 |-------|---------|---------|---------|
 | Coasting | 0 | -2 | 0 |
 | Blandford-McKee | -3/2 | -1/2 | -3/8 |
-| Deep Newtonian | -3/5 | -1/5 | 0 |
+| Sedov-Taylor | -3/5 | -1/5 | 0 |
 
 **Wind**
 
@@ -99,7 +99,7 @@ The synchrotron spectrum is characterized by break frequencies that evolve with 
 |-------|---------|---------|---------|
 | Coasting | -1 | -1 | 0 |
 | Blandford-McKee | -3/2 | 1/2 | -1/4 |
-| Deep Newtonian | -1 | 1 | 0 |
+| Sedov-Taylor | -1 | 1 | 0 |
 
 ### 3.3 Reverse Shock Dynamics (Thin Shell)
 
@@ -108,16 +108,16 @@ The synchrotron spectrum is characterized by break frequencies that evolve with 
 | Phase | $u$ | $r$ | $B$ | $N_p$ |
 |-------|-----|-----|-----|-------|
 | Crossing | 3/2 | 1 | 0 | 3/2 |
-| Blandford-McKee | -1/4 | 1/4 | — | 0 |
-| Deep Newtonian | -2/5 | 2/5 | — | 0 |
+| Post-crossing | -1/4 | 1/4 | — | 0 |
+| Sedov-Taylor | -2/5 | 2/5 | — | 0 |
 
 **Wind**
 
 | Phase | $u$ | $r$ | $B$ | $N_p$ |
 |-------|-----|-----|-----|-------|
 | Crossing | 1/2 | 1 | -1 | 1/2 |
-| Blandford-McKee | — | 1/2 | — | 0 |
-| Deep Newtonian | — | 2/3 | — | 0 |
+| Post-crossing | — | 1/2 | — | 0 |
+| Sedov-Taylor | — | 2/3 | — | 0 |
 
 "—" indicates quantities not tested (insufficiently clean power-law for reliable fitting).
 
@@ -128,8 +128,8 @@ The synchrotron spectrum is characterized by break frequencies that evolve with 
 | Phase | $u$ | $r$ | $B$ | $N_p$ |
 |-------|-----|-----|-----|-------|
 | Crossing | 1/4 | 1/2 | -1/4 | 1 |
-| Blandford-McKee | -1/4 | 1/4 | — | 0 |
-| Deep Newtonian | -2/5 | 2/5 | — | 0 |
+| Post-crossing | -1/4 | 1/4 | — | 0 |
+| Sedov-Taylor | -2/5 | 2/5 | — | 0 |
 
 **Wind**
 
@@ -137,11 +137,11 @@ The synchrotron spectrum is characterized by break frequencies that evolve with 
 |-------|-----|-----|-----|-------|
 | Crossing | 0 | 1 | -1 | 1 |
 | Post-crossing | — | 1/2 | — | 0 |
-| Deep Newtonian | — | 2/3 | — | 0 |
+| Sedov-Taylor | — | 2/3 | — | 0 |
 
 ### 3.5 Reverse Shock Characteristic Frequencies
 
-Frequency scaling is validated during the crossing phase. Post-crossing and deep Newtonian frequency tests are not performed for reverse shocks since the reverse shock material is no longer freshly shocked.
+Frequency scaling is validated during the crossing phase. Post-crossing and Sedov-Taylor frequency tests are not performed for reverse shocks since the reverse shock material is no longer freshly shocked.
 
 **Thin Shell — Crossing Phase**
 
@@ -228,8 +228,8 @@ The summary page provides a compact view of all regression tests, allowing rapid
 
 **Grid Layout**
 
-- Rows: Physical quantities ($u$, $r$, $B$, $N_p$ for shock; $\nu_m$, $\nu_c$ for frequencies; regimes I-V for spectra)
-- Columns: Medium (ISM/Wind) subdivided by phase (Coasting, BM, Deep Newtonian)
+- Rows: Physical quantities ($u$, $r$, $B$, $N_p$ for shock; $\nu_m$, $\nu_c$, $\nu_M$ for frequencies; regimes I-V for spectra)
+- Columns: Medium (ISM/Wind) subdivided by phase (Coasting, Blandford-McKee, Sedov-Taylor)
 
 **Cell Contents**
 

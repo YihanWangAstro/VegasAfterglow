@@ -23,9 +23,9 @@ Resolution controls the discretization density in each computational dimension. 
 
 | Dimension | Symbol | Unit | Fiducial | Test Range |
 |-----------|--------|------|----------|------------|
-| Azimuthal angle | $\phi$ | per degree | 0.15 | 0.15 - 0.6 |
-| Polar angle | $\theta$ | per degree | 0.5 | 0.5 - 2.0 |
-| Observer time | $t$ | per decade | 10 | 10 - 30 |
+| Azimuthal angle | $\phi$ | per degree | 0.15 | 0.15 - 0.3 |
+| Polar angle | $\theta$ | per degree | 0.5 | 0.5 - 1.25 |
+| Observer time | $t$ | per decade | 10 | 10 - 25 |
 
 ### 1.3 Frequency Bands
 
