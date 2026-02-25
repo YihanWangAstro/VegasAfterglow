@@ -1,302 +1,317 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 950 670"
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 950 706"
      font-family="-apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif">
 
   <!-- Background -->
-  <rect width="950" height="670" fill="#111827" rx="12"/>
+  <rect width="950" height="706" fill="#111827" rx="12"/>
 
   <!-- ════════════════════ TITLE ════════════════════ -->
   <text x="475" y="24" text-anchor="middle" font-size="17" font-weight="700" fill="#E6EDF3"
         letter-spacing="0.3">VegasAfterglow — Software Architecture</text>
 
+  <!-- ════════════════════ CLI LAYER ════════════════════ -->
+  <g id="cli-layer">
+    <rect x="25" y="38" width="900" height="30" rx="8" fill="#1A2025" stroke="#3D5040" stroke-width="1"/>
+    <rect x="25" y="38" width="900" height="26" rx="8" fill="#2D8060"/>
+    <rect x="25" y="52" width="900" height="8" fill="#2D8060"/>
+    <text x="475" y="56" text-anchor="middle" font-size="12" font-weight="700" fill="white">Command-Line Interface</text>
+    <text x="475" y="63" text-anchor="middle" font-size="7.5" fill="#B0C8E8">vegasgen — light curves, spectra, plots from the terminal</text>
+  </g>
+
+  <!-- ════════════════════ ARROW CLI→API ════════════════════ -->
+  <g fill="#5A6580">
+    <polygon points="475,70 470,78 480,78"/>
+    <rect x="474" y="68" width="2" height="4"/>
+  </g>
+
   <!-- ════════════════════ PYTHON API LAYER ════════════════════ -->
   <g id="python-api">
     <!-- Outer box -->
-    <rect x="25" y="38" width="900" height="90" rx="8" fill="#1A2540" stroke="#2A3A5C" stroke-width="1"/>
+    <rect x="25" y="80" width="900" height="90" rx="8" fill="#1A2540" stroke="#2A3A5C" stroke-width="1"/>
     <!-- Header bar -->
-    <rect x="25" y="38" width="900" height="26" rx="8" fill="#5B8ADB"/>
-    <rect x="25" y="52" width="900" height="12" fill="#5B8ADB"/>
-    <text x="475" y="56" text-anchor="middle" font-size="12" font-weight="700" fill="white">Python API</text>
+    <rect x="25" y="80" width="900" height="26" rx="8" fill="#5B8ADB"/>
+    <rect x="25" y="94" width="900" height="12" fill="#5B8ADB"/>
+    <text x="475" y="98" text-anchor="middle" font-size="12" font-weight="700" fill="white">Python API</text>
 
     <!-- Group: Model & Fitting -->
-    <rect x="40" y="74" width="195" height="44" rx="5" fill="#1A2545" stroke="#2D4068" stroke-width="0.5"/>
-    <text x="137" y="86" text-anchor="middle" font-size="8.5" font-weight="600" fill="#7BA0D8">Model &amp; Fitting</text>
-    <rect x="48" y="92" width="55" height="19" rx="3" fill="#5B8ADB" opacity="0.85"/>
-    <text x="75" y="105" text-anchor="middle" font-size="9" fill="white" font-weight="500">Model</text>
-    <rect x="108" y="92" width="50" height="19" rx="3" fill="#5B8ADB" opacity="0.85"/>
-    <text x="133" y="105" text-anchor="middle" font-size="9" fill="white" font-weight="500">Fitter</text>
-    <rect x="163" y="92" width="64" height="19" rx="3" fill="#5B8ADB" opacity="0.85"/>
-    <text x="195" y="105" text-anchor="middle" font-size="9" fill="white" font-weight="500">ParamDef</text>
+    <rect x="40" y="116" width="195" height="44" rx="5" fill="#1A2545" stroke="#2D4068" stroke-width="0.5"/>
+    <text x="137" y="128" text-anchor="middle" font-size="8.5" font-weight="600" fill="#7BA0D8">Model &amp; Fitting</text>
+    <rect x="48" y="134" width="55" height="19" rx="3" fill="#5B8ADB" opacity="0.85"/>
+    <text x="75" y="147" text-anchor="middle" font-size="9" fill="white" font-weight="500">Model</text>
+    <rect x="108" y="134" width="50" height="19" rx="3" fill="#5B8ADB" opacity="0.85"/>
+    <text x="133" y="147" text-anchor="middle" font-size="9" fill="white" font-weight="500">Fitter</text>
+    <rect x="163" y="134" width="64" height="19" rx="3" fill="#5B8ADB" opacity="0.85"/>
+    <text x="195" y="147" text-anchor="middle" font-size="9" fill="white" font-weight="500">ParamDef</text>
 
     <!-- Group: Jet Structures -->
-    <rect x="245" y="74" width="280" height="44" rx="5" fill="#1A2545" stroke="#2D4068" stroke-width="0.5"/>
-    <text x="385" y="86" text-anchor="middle" font-size="8.5" font-weight="600" fill="#7BA0D8">Jet Structures</text>
-    <rect x="253" y="92" width="62" height="19" rx="3" fill="#5B8ADB" opacity="0.85"/>
-    <text x="284" y="105" text-anchor="middle" font-size="9" fill="white" font-weight="500">TophatJet</text>
-    <rect x="320" y="92" width="72" height="19" rx="3" fill="#5B8ADB" opacity="0.85"/>
-    <text x="356" y="105" text-anchor="middle" font-size="9" fill="white" font-weight="500">GaussianJet</text>
-    <rect x="397" y="92" width="72" height="19" rx="3" fill="#5B8ADB" opacity="0.85"/>
-    <text x="433" y="105" text-anchor="middle" font-size="9" fill="white" font-weight="500">PowerLawJet</text>
-    <rect x="474" y="92" width="43" height="19" rx="3" fill="#5B8ADB" opacity="0.65"/>
-    <text x="496" y="105" text-anchor="middle" font-size="9" fill="white" font-weight="500">...</text>
+    <rect x="245" y="116" width="280" height="44" rx="5" fill="#1A2545" stroke="#2D4068" stroke-width="0.5"/>
+    <text x="385" y="128" text-anchor="middle" font-size="8.5" font-weight="600" fill="#7BA0D8">Jet Structures</text>
+    <rect x="253" y="134" width="62" height="19" rx="3" fill="#5B8ADB" opacity="0.85"/>
+    <text x="284" y="147" text-anchor="middle" font-size="9" fill="white" font-weight="500">TophatJet</text>
+    <rect x="320" y="134" width="72" height="19" rx="3" fill="#5B8ADB" opacity="0.85"/>
+    <text x="356" y="147" text-anchor="middle" font-size="9" fill="white" font-weight="500">GaussianJet</text>
+    <rect x="397" y="134" width="72" height="19" rx="3" fill="#5B8ADB" opacity="0.85"/>
+    <text x="433" y="147" text-anchor="middle" font-size="9" fill="white" font-weight="500">PowerLawJet</text>
+    <rect x="474" y="134" width="43" height="19" rx="3" fill="#5B8ADB" opacity="0.65"/>
+    <text x="496" y="147" text-anchor="middle" font-size="9" fill="white" font-weight="500">...</text>
 
     <!-- Group: Physics Setup -->
-    <rect x="535" y="74" width="230" height="44" rx="5" fill="#1A2545" stroke="#2D4068" stroke-width="0.5"/>
-    <text x="650" y="86" text-anchor="middle" font-size="8.5" font-weight="600" fill="#7BA0D8">Physics Setup</text>
-    <rect x="543" y="92" width="36" height="19" rx="3" fill="#5B8ADB" opacity="0.85"/>
-    <text x="561" y="105" text-anchor="middle" font-size="9" fill="white" font-weight="500">ISM</text>
-    <rect x="584" y="92" width="40" height="19" rx="3" fill="#5B8ADB" opacity="0.85"/>
-    <text x="604" y="105" text-anchor="middle" font-size="9" fill="white" font-weight="500">Wind</text>
-    <rect x="629" y="92" width="58" height="19" rx="3" fill="#5B8ADB" opacity="0.85"/>
-    <text x="658" y="105" text-anchor="middle" font-size="9" fill="white" font-weight="500">Observer</text>
-    <rect x="692" y="92" width="64" height="19" rx="3" fill="#5B8ADB" opacity="0.85"/>
-    <text x="724" y="105" text-anchor="middle" font-size="9" fill="white" font-weight="500">Radiation</text>
+    <rect x="535" y="116" width="230" height="44" rx="5" fill="#1A2545" stroke="#2D4068" stroke-width="0.5"/>
+    <text x="650" y="128" text-anchor="middle" font-size="8.5" font-weight="600" fill="#7BA0D8">Physics Setup</text>
+    <rect x="543" y="134" width="36" height="19" rx="3" fill="#5B8ADB" opacity="0.85"/>
+    <text x="561" y="147" text-anchor="middle" font-size="9" fill="white" font-weight="500">ISM</text>
+    <rect x="584" y="134" width="40" height="19" rx="3" fill="#5B8ADB" opacity="0.85"/>
+    <text x="604" y="147" text-anchor="middle" font-size="9" fill="white" font-weight="500">Wind</text>
+    <rect x="629" y="134" width="58" height="19" rx="3" fill="#5B8ADB" opacity="0.85"/>
+    <text x="658" y="147" text-anchor="middle" font-size="9" fill="white" font-weight="500">Observer</text>
+    <rect x="692" y="134" width="64" height="19" rx="3" fill="#5B8ADB" opacity="0.85"/>
+    <text x="724" y="147" text-anchor="middle" font-size="9" fill="white" font-weight="500">Radiation</text>
 
     <!-- Group: Results -->
-    <rect x="775" y="74" width="140" height="44" rx="5" fill="#1A2545" stroke="#2D4068" stroke-width="0.5"/>
-    <text x="845" y="86" text-anchor="middle" font-size="8.5" font-weight="600" fill="#7BA0D8">Results</text>
-    <rect x="783" y="92" width="56" height="19" rx="3" fill="#5B8ADB" opacity="0.85"/>
-    <text x="811" y="105" text-anchor="middle" font-size="9" fill="white" font-weight="500">FluxDict</text>
-    <rect x="844" y="92" width="63" height="19" rx="3" fill="#5B8ADB" opacity="0.85"/>
-    <text x="876" y="105" text-anchor="middle" font-size="9" fill="white" font-weight="500">Details</text>
+    <rect x="775" y="116" width="140" height="44" rx="5" fill="#1A2545" stroke="#2D4068" stroke-width="0.5"/>
+    <text x="845" y="128" text-anchor="middle" font-size="8.5" font-weight="600" fill="#7BA0D8">Results</text>
+    <rect x="783" y="134" width="56" height="19" rx="3" fill="#5B8ADB" opacity="0.85"/>
+    <text x="811" y="147" text-anchor="middle" font-size="9" fill="white" font-weight="500">FluxDict</text>
+    <rect x="844" y="134" width="63" height="19" rx="3" fill="#5B8ADB" opacity="0.85"/>
+    <text x="876" y="147" text-anchor="middle" font-size="9" fill="white" font-weight="500">Details</text>
   </g>
 
   <!-- ════════════════════ ARROWS 1 ════════════════════ -->
   <g fill="#5A6580">
-    <polygon points="475,130 470,138 480,138"/>
-    <rect x="474" y="128" width="2" height="4"/>
+    <polygon points="475,172 470,180 480,180"/>
+    <rect x="474" y="170" width="2" height="4"/>
   </g>
 
   <!-- ════════════════════ PYBIND11 BRIDGE ════════════════════ -->
   <g id="pybind-bridge">
-    <rect x="25" y="140" width="900" height="52" rx="8" fill="#1E1A38" stroke="#352D55" stroke-width="1"/>
-    <rect x="25" y="140" width="900" height="26" rx="8" fill="#9B7DD0"/>
-    <rect x="25" y="154" width="900" height="12" fill="#9B7DD0"/>
-    <text x="475" y="158" text-anchor="middle" font-size="12" font-weight="700" fill="white">pybind11 Binding Layer</text>
+    <rect x="25" y="182" width="900" height="52" rx="8" fill="#1E1A38" stroke="#352D55" stroke-width="1"/>
+    <rect x="25" y="182" width="900" height="26" rx="8" fill="#9B7DD0"/>
+    <rect x="25" y="196" width="900" height="12" fill="#9B7DD0"/>
+    <text x="475" y="200" text-anchor="middle" font-size="12" font-weight="700" fill="white">pybind11 Binding Layer</text>
 
-    <rect x="185" y="172" width="80" height="15" rx="3" fill="#9B7DD0" opacity="0.75"/>
-    <text x="225" y="183" text-anchor="middle" font-size="8.5" fill="white" font-weight="500">pymodel.h</text>
-    <rect x="275" y="172" width="80" height="15" rx="3" fill="#9B7DD0" opacity="0.75"/>
-    <text x="315" y="183" text-anchor="middle" font-size="8.5" fill="white" font-weight="500">pybind.cpp</text>
-    <rect x="365" y="172" width="105" height="15" rx="3" fill="#9B7DD0" opacity="0.75"/>
-    <text x="417" y="183" text-anchor="middle" font-size="8.5" fill="white" font-weight="500">shock_dispatch.h</text>
-    <rect x="480" y="172" width="105" height="15" rx="3" fill="#9B7DD0" opacity="0.75"/>
-    <text x="532" y="183" text-anchor="middle" font-size="8.5" fill="white" font-weight="500">error_handling.h</text>
-    <rect x="595" y="172" width="80" height="15" rx="3" fill="#9B7DD0" opacity="0.75"/>
-    <text x="635" y="183" text-anchor="middle" font-size="8.5" fill="white" font-weight="500">pybind.h</text>
+    <rect x="185" y="214" width="80" height="15" rx="3" fill="#9B7DD0" opacity="0.75"/>
+    <text x="225" y="225" text-anchor="middle" font-size="8.5" fill="white" font-weight="500">pymodel.h</text>
+    <rect x="275" y="214" width="80" height="15" rx="3" fill="#9B7DD0" opacity="0.75"/>
+    <text x="315" y="225" text-anchor="middle" font-size="8.5" fill="white" font-weight="500">pybind.cpp</text>
+    <rect x="365" y="214" width="105" height="15" rx="3" fill="#9B7DD0" opacity="0.75"/>
+    <text x="417" y="225" text-anchor="middle" font-size="8.5" fill="white" font-weight="500">shock_dispatch.h</text>
+    <rect x="480" y="214" width="105" height="15" rx="3" fill="#9B7DD0" opacity="0.75"/>
+    <text x="532" y="225" text-anchor="middle" font-size="8.5" fill="white" font-weight="500">error_handling.h</text>
+    <rect x="595" y="214" width="80" height="15" rx="3" fill="#9B7DD0" opacity="0.75"/>
+    <text x="635" y="225" text-anchor="middle" font-size="8.5" fill="white" font-weight="500">pybind.h</text>
   </g>
 
   <!-- ════════════════════ ARROWS 2 ════════════════════ -->
   <g fill="#5A6580">
-    <polygon points="475,194 470,202 480,202"/>
-    <rect x="474" y="192" width="2" height="4"/>
+    <polygon points="475,236 470,244 480,244"/>
+    <rect x="474" y="234" width="2" height="4"/>
   </g>
 
   <!-- ════════════════════ C++ ENGINE OUTER ════════════════════ -->
   <g id="cpp-engine">
-    <rect x="25" y="204" width="900" height="345" rx="8" fill="#151A28" stroke="#2D3345" stroke-width="1"/>
-    <rect x="25" y="204" width="900" height="26" rx="8" fill="#2D3650"/>
-    <rect x="25" y="218" width="900" height="12" fill="#2D3650"/>
-    <text x="475" y="222" text-anchor="middle" font-size="12" font-weight="700" fill="white">C++ Computation Engine</text>
+    <rect x="25" y="246" width="900" height="345" rx="8" fill="#151A28" stroke="#2D3345" stroke-width="1"/>
+    <rect x="25" y="246" width="900" height="26" rx="8" fill="#2D3650"/>
+    <rect x="25" y="260" width="900" height="12" fill="#2D3650"/>
+    <text x="475" y="264" text-anchor="middle" font-size="12" font-weight="700" fill="white">C++ Computation Engine</text>
 
     <!-- ──── Column 1: Environment ──── -->
     <g id="col-environment">
-      <rect x="35" y="240" width="168" height="298" rx="6" fill="#132A22" stroke="#1E4035" stroke-width="0.5"/>
-      <rect x="35" y="240" width="168" height="24" rx="6" fill="#45AB8A"/>
-      <rect x="35" y="254" width="168" height="10" fill="#45AB8A"/>
-      <text x="119" y="257" text-anchor="middle" font-size="11" font-weight="700" fill="white">Environment</text>
+      <rect x="35" y="282" width="168" height="298" rx="6" fill="#132A22" stroke="#1E4035" stroke-width="0.5"/>
+      <rect x="35" y="282" width="168" height="24" rx="6" fill="#45AB8A"/>
+      <rect x="35" y="296" width="168" height="10" fill="#45AB8A"/>
+      <text x="119" y="299" text-anchor="middle" font-size="11" font-weight="700" fill="white">Environment</text>
 
       <!-- Sub: Jet Structures -->
-      <text x="119" y="280" text-anchor="middle" font-size="9" font-weight="600" fill="#60BB9A">Jet Structures</text>
-      <rect x="43" y="288" width="152" height="20" rx="3" fill="#45AB8A" opacity="0.15"/>
-      <text x="119" y="302" text-anchor="middle" font-size="9.5" fill="#A8D5C2">Tophat</text>
-      <rect x="43" y="312" width="152" height="20" rx="3" fill="#45AB8A" opacity="0.15"/>
-      <text x="119" y="326" text-anchor="middle" font-size="9.5" fill="#A8D5C2">Gaussian</text>
-      <rect x="43" y="336" width="152" height="20" rx="3" fill="#45AB8A" opacity="0.15"/>
-      <text x="119" y="350" text-anchor="middle" font-size="9.5" fill="#A8D5C2">PowerLaw</text>
-      <rect x="43" y="360" width="152" height="20" rx="3" fill="#45AB8A" opacity="0.15"/>
-      <text x="119" y="374" text-anchor="middle" font-size="9.5" fill="#A8D5C2">TwoComponent</text>
-      <rect x="43" y="384" width="152" height="20" rx="3" fill="#45AB8A" opacity="0.15"/>
-      <text x="119" y="398" text-anchor="middle" font-size="9.5" fill="#A8D5C2" font-style="italic">Custom (user-defined)</text>
+      <text x="119" y="322" text-anchor="middle" font-size="9" font-weight="600" fill="#60BB9A">Jet Structures</text>
+      <rect x="43" y="330" width="152" height="20" rx="3" fill="#45AB8A" opacity="0.15"/>
+      <text x="119" y="344" text-anchor="middle" font-size="9.5" fill="#A8D5C2">Tophat</text>
+      <rect x="43" y="354" width="152" height="20" rx="3" fill="#45AB8A" opacity="0.15"/>
+      <text x="119" y="368" text-anchor="middle" font-size="9.5" fill="#A8D5C2">Gaussian</text>
+      <rect x="43" y="378" width="152" height="20" rx="3" fill="#45AB8A" opacity="0.15"/>
+      <text x="119" y="392" text-anchor="middle" font-size="9.5" fill="#A8D5C2">PowerLaw</text>
+      <rect x="43" y="402" width="152" height="20" rx="3" fill="#45AB8A" opacity="0.15"/>
+      <text x="119" y="416" text-anchor="middle" font-size="9.5" fill="#A8D5C2">TwoComponent</text>
+      <rect x="43" y="426" width="152" height="20" rx="3" fill="#45AB8A" opacity="0.15"/>
+      <text x="119" y="440" text-anchor="middle" font-size="9.5" fill="#A8D5C2" font-style="italic">Custom (user-defined)</text>
 
       <!-- Sub: Medium -->
-      <text x="119" y="424" text-anchor="middle" font-size="9" font-weight="600" fill="#60BB9A">Medium</text>
-      <rect x="43" y="432" width="152" height="20" rx="3" fill="#45AB8A" opacity="0.15"/>
-      <text x="119" y="446" text-anchor="middle" font-size="9.5" fill="#A8D5C2">ISM (constant density)</text>
-      <rect x="43" y="456" width="152" height="20" rx="3" fill="#45AB8A" opacity="0.15"/>
-      <text x="119" y="470" text-anchor="middle" font-size="9.5" fill="#A8D5C2">Wind (r⁻² profile)</text>
-      <rect x="43" y="480" width="152" height="20" rx="3" fill="#45AB8A" opacity="0.15"/>
-      <text x="119" y="494" text-anchor="middle" font-size="9.5" fill="#A8D5C2" font-style="italic">Custom (user-defined)</text>
+      <text x="119" y="466" text-anchor="middle" font-size="9" font-weight="600" fill="#60BB9A">Medium</text>
+      <rect x="43" y="474" width="152" height="20" rx="3" fill="#45AB8A" opacity="0.15"/>
+      <text x="119" y="488" text-anchor="middle" font-size="9.5" fill="#A8D5C2">ISM (constant density)</text>
+      <rect x="43" y="498" width="152" height="20" rx="3" fill="#45AB8A" opacity="0.15"/>
+      <text x="119" y="512" text-anchor="middle" font-size="9.5" fill="#A8D5C2">Wind (r⁻² profile)</text>
+      <rect x="43" y="522" width="152" height="20" rx="3" fill="#45AB8A" opacity="0.15"/>
+      <text x="119" y="536" text-anchor="middle" font-size="9.5" fill="#A8D5C2" font-style="italic">Custom (user-defined)</text>
 
       <!-- Sub: Injection -->
-      <text x="119" y="520" text-anchor="middle" font-size="9" font-weight="600" fill="#60BB9A">Injection</text>
-      <rect x="43" y="526" width="74" height="7" rx="2" fill="#45AB8A" opacity="0.3"/>
-      <rect x="121" y="526" width="74" height="7" rx="2" fill="#45AB8A" opacity="0.3"/>
+      <text x="119" y="562" text-anchor="middle" font-size="9" font-weight="600" fill="#60BB9A">Injection</text>
+      <rect x="43" y="568" width="74" height="7" rx="2" fill="#45AB8A" opacity="0.3"/>
+      <rect x="121" y="568" width="74" height="7" rx="2" fill="#45AB8A" opacity="0.3"/>
     </g>
 
     <!-- ──── Column 2: Dynamics ──── -->
     <g id="col-dynamics">
-      <rect x="213" y="240" width="168" height="298" rx="6" fill="#252015" stroke="#3D3420" stroke-width="0.5"/>
-      <rect x="213" y="240" width="168" height="24" rx="6" fill="#D49B40"/>
-      <rect x="213" y="254" width="168" height="10" fill="#D49B40"/>
-      <text x="297" y="257" text-anchor="middle" font-size="11" font-weight="700" fill="white">Dynamics</text>
+      <rect x="213" y="282" width="168" height="298" rx="6" fill="#252015" stroke="#3D3420" stroke-width="0.5"/>
+      <rect x="213" y="282" width="168" height="24" rx="6" fill="#D49B40"/>
+      <rect x="213" y="296" width="168" height="10" fill="#D49B40"/>
+      <text x="297" y="299" text-anchor="middle" font-size="11" font-weight="700" fill="white">Dynamics</text>
 
-      <text x="297" y="280" text-anchor="middle" font-size="9" font-weight="600" fill="#D4A855">Shock Models</text>
-      <rect x="221" y="288" width="152" height="20" rx="3" fill="#D49B40" opacity="0.15"/>
-      <text x="297" y="302" text-anchor="middle" font-size="9.5" fill="#D8C090">Forward Shock</text>
-      <rect x="221" y="312" width="152" height="20" rx="3" fill="#D49B40" opacity="0.15"/>
-      <text x="297" y="326" text-anchor="middle" font-size="9.5" fill="#D8C090">Reverse Shock</text>
-      <rect x="221" y="336" width="152" height="20" rx="3" fill="#D49B40" opacity="0.15"/>
-      <text x="297" y="350" text-anchor="middle" font-size="9.5" fill="#D8C090">Simple Shock</text>
+      <text x="297" y="322" text-anchor="middle" font-size="9" font-weight="600" fill="#D4A855">Shock Models</text>
+      <rect x="221" y="330" width="152" height="20" rx="3" fill="#D49B40" opacity="0.15"/>
+      <text x="297" y="344" text-anchor="middle" font-size="9.5" fill="#D8C090">Forward Shock</text>
+      <rect x="221" y="354" width="152" height="20" rx="3" fill="#D49B40" opacity="0.15"/>
+      <text x="297" y="368" text-anchor="middle" font-size="9.5" fill="#D8C090">Reverse Shock</text>
+      <rect x="221" y="378" width="152" height="20" rx="3" fill="#D49B40" opacity="0.15"/>
+      <text x="297" y="392" text-anchor="middle" font-size="9.5" fill="#D8C090">Simple Shock</text>
 
-      <text x="297" y="380" text-anchor="middle" font-size="9" font-weight="600" fill="#D4A855">Physics</text>
-      <rect x="221" y="388" width="152" height="20" rx="3" fill="#D49B40" opacity="0.15"/>
-      <text x="297" y="402" text-anchor="middle" font-size="9.5" fill="#D8C090">Shock Jump Conditions</text>
-      <rect x="221" y="412" width="152" height="20" rx="3" fill="#D49B40" opacity="0.15"/>
-      <text x="297" y="426" text-anchor="middle" font-size="9.5" fill="#D8C090">Lateral Spreading</text>
-      <rect x="221" y="436" width="152" height="20" rx="3" fill="#D49B40" opacity="0.15"/>
-      <text x="297" y="450" text-anchor="middle" font-size="9.5" fill="#D8C090">Energy / Mass Injection</text>
+      <text x="297" y="422" text-anchor="middle" font-size="9" font-weight="600" fill="#D4A855">Physics</text>
+      <rect x="221" y="430" width="152" height="20" rx="3" fill="#D49B40" opacity="0.15"/>
+      <text x="297" y="444" text-anchor="middle" font-size="9.5" fill="#D8C090">Shock Jump Conditions</text>
+      <rect x="221" y="454" width="152" height="20" rx="3" fill="#D49B40" opacity="0.15"/>
+      <text x="297" y="468" text-anchor="middle" font-size="9.5" fill="#D8C090">Lateral Spreading</text>
+      <rect x="221" y="478" width="152" height="20" rx="3" fill="#D49B40" opacity="0.15"/>
+      <text x="297" y="492" text-anchor="middle" font-size="9.5" fill="#D8C090">Energy / Mass Injection</text>
 
-      <text x="297" y="480" text-anchor="middle" font-size="9" font-weight="600" fill="#D4A855">Regimes</text>
-      <rect x="221" y="488" width="74" height="18" rx="3" fill="#D49B40" opacity="0.15"/>
-      <text x="258" y="501" text-anchor="middle" font-size="8.5" fill="#D8C090">Relativistic</text>
-      <rect x="299" y="488" width="74" height="18" rx="3" fill="#D49B40" opacity="0.15"/>
-      <text x="336" y="501" text-anchor="middle" font-size="8.5" fill="#D8C090">Newtonian</text>
-      <rect x="221" y="510" width="74" height="18" rx="3" fill="#D49B40" opacity="0.15"/>
-      <text x="258" y="523" text-anchor="middle" font-size="8.5" fill="#D8C090">Adiabatic</text>
-      <rect x="299" y="510" width="74" height="18" rx="3" fill="#D49B40" opacity="0.15"/>
-      <text x="336" y="523" text-anchor="middle" font-size="8.5" fill="#D8C090">Radiative</text>
+      <text x="297" y="522" text-anchor="middle" font-size="9" font-weight="600" fill="#D4A855">Regimes</text>
+      <rect x="221" y="530" width="74" height="18" rx="3" fill="#D49B40" opacity="0.15"/>
+      <text x="258" y="543" text-anchor="middle" font-size="8.5" fill="#D8C090">Relativistic</text>
+      <rect x="299" y="530" width="74" height="18" rx="3" fill="#D49B40" opacity="0.15"/>
+      <text x="336" y="543" text-anchor="middle" font-size="8.5" fill="#D8C090">Newtonian</text>
+      <rect x="221" y="552" width="74" height="18" rx="3" fill="#D49B40" opacity="0.15"/>
+      <text x="258" y="565" text-anchor="middle" font-size="8.5" fill="#D8C090">Adiabatic</text>
+      <rect x="299" y="552" width="74" height="18" rx="3" fill="#D49B40" opacity="0.15"/>
+      <text x="336" y="565" text-anchor="middle" font-size="8.5" fill="#D8C090">Radiative</text>
     </g>
 
     <!-- ──── Column 3: Radiation ──── -->
     <g id="col-radiation">
-      <rect x="391" y="240" width="168" height="298" rx="6" fill="#251818" stroke="#3D2528" stroke-width="0.5"/>
-      <rect x="391" y="240" width="168" height="24" rx="6" fill="#D46565"/>
-      <rect x="391" y="254" width="168" height="10" fill="#D46565"/>
-      <text x="475" y="257" text-anchor="middle" font-size="11" font-weight="700" fill="white">Radiation</text>
+      <rect x="391" y="282" width="168" height="298" rx="6" fill="#251818" stroke="#3D2528" stroke-width="0.5"/>
+      <rect x="391" y="282" width="168" height="24" rx="6" fill="#D46565"/>
+      <rect x="391" y="296" width="168" height="10" fill="#D46565"/>
+      <text x="475" y="299" text-anchor="middle" font-size="11" font-weight="700" fill="white">Radiation</text>
 
-      <text x="475" y="280" text-anchor="middle" font-size="9" font-weight="600" fill="#D47878">Emission Mechanisms</text>
-      <rect x="399" y="288" width="152" height="20" rx="3" fill="#D46565" opacity="0.12"/>
-      <text x="475" y="302" text-anchor="middle" font-size="9.5" fill="#DCA5A5">Synchrotron</text>
-      <rect x="399" y="312" width="152" height="20" rx="3" fill="#D46565" opacity="0.12"/>
-      <text x="475" y="326" text-anchor="middle" font-size="9.5" fill="#DCA5A5">Smooth Power-Law</text>
-      <rect x="399" y="336" width="152" height="20" rx="3" fill="#D46565" opacity="0.12"/>
-      <text x="475" y="350" text-anchor="middle" font-size="9.5" fill="#DCA5A5">Inverse Compton / SSC</text>
-      <rect x="399" y="360" width="152" height="20" rx="3" fill="#D46565" opacity="0.12"/>
-      <text x="475" y="374" text-anchor="middle" font-size="9.5" fill="#DCA5A5">Self-Absorption (SSA)</text>
-      <rect x="399" y="384" width="152" height="20" rx="3" fill="#D46565" opacity="0.12"/>
-      <text x="475" y="398" text-anchor="middle" font-size="9.5" fill="#DCA5A5">Prompt Emission</text>
+      <text x="475" y="322" text-anchor="middle" font-size="9" font-weight="600" fill="#D47878">Emission Mechanisms</text>
+      <rect x="399" y="330" width="152" height="20" rx="3" fill="#D46565" opacity="0.12"/>
+      <text x="475" y="344" text-anchor="middle" font-size="9.5" fill="#DCA5A5">Synchrotron</text>
+      <rect x="399" y="354" width="152" height="20" rx="3" fill="#D46565" opacity="0.12"/>
+      <text x="475" y="368" text-anchor="middle" font-size="9.5" fill="#DCA5A5">Smooth Power-Law</text>
+      <rect x="399" y="378" width="152" height="20" rx="3" fill="#D46565" opacity="0.12"/>
+      <text x="475" y="392" text-anchor="middle" font-size="9.5" fill="#DCA5A5">Inverse Compton / SSC</text>
+      <rect x="399" y="402" width="152" height="20" rx="3" fill="#D46565" opacity="0.12"/>
+      <text x="475" y="416" text-anchor="middle" font-size="9.5" fill="#DCA5A5">Self-Absorption (SSA)</text>
+      <rect x="399" y="426" width="152" height="20" rx="3" fill="#D46565" opacity="0.12"/>
+      <text x="475" y="440" text-anchor="middle" font-size="9.5" fill="#DCA5A5">Prompt Emission</text>
 
-      <text x="475" y="424" text-anchor="middle" font-size="9" font-weight="600" fill="#D47878">Corrections</text>
-      <rect x="399" y="432" width="152" height="20" rx="3" fill="#D46565" opacity="0.12"/>
-      <text x="475" y="446" text-anchor="middle" font-size="9.5" fill="#DCA5A5">Klein-Nishina</text>
-      <rect x="399" y="456" width="152" height="20" rx="3" fill="#D46565" opacity="0.12"/>
-      <text x="475" y="470" text-anchor="middle" font-size="9.5" fill="#DCA5A5">Compton-Y Cooling</text>
+      <text x="475" y="466" text-anchor="middle" font-size="9" font-weight="600" fill="#D47878">Corrections</text>
+      <rect x="399" y="474" width="152" height="20" rx="3" fill="#D46565" opacity="0.12"/>
+      <text x="475" y="488" text-anchor="middle" font-size="9.5" fill="#DCA5A5">Klein-Nishina</text>
+      <rect x="399" y="498" width="152" height="20" rx="3" fill="#D46565" opacity="0.12"/>
+      <text x="475" y="512" text-anchor="middle" font-size="9.5" fill="#DCA5A5">Compton-Y Cooling</text>
 
-      <text x="475" y="496" text-anchor="middle" font-size="9" font-weight="600" fill="#D47878">Electron Distribution</text>
-      <rect x="399" y="504" width="74" height="18" rx="3" fill="#D46565" opacity="0.12"/>
-      <text x="436" y="517" text-anchor="middle" font-size="8.5" fill="#DCA5A5">Slow cooling</text>
-      <rect x="477" y="504" width="74" height="18" rx="3" fill="#D46565" opacity="0.12"/>
-      <text x="514" y="517" text-anchor="middle" font-size="8.5" fill="#DCA5A5">Fast cooling</text>
+      <text x="475" y="538" text-anchor="middle" font-size="9" font-weight="600" fill="#D47878">Electron Distribution</text>
+      <rect x="399" y="546" width="74" height="18" rx="3" fill="#D46565" opacity="0.12"/>
+      <text x="436" y="559" text-anchor="middle" font-size="8.5" fill="#DCA5A5">Slow cooling</text>
+      <rect x="477" y="546" width="74" height="18" rx="3" fill="#D46565" opacity="0.12"/>
+      <text x="514" y="559" text-anchor="middle" font-size="8.5" fill="#DCA5A5">Fast cooling</text>
     </g>
 
     <!-- ──── Column 4: Core ──── -->
     <g id="col-core">
-      <rect x="569" y="240" width="168" height="298" rx="6" fill="#142528" stroke="#204048" stroke-width="0.5"/>
-      <rect x="569" y="240" width="168" height="24" rx="6" fill="#4DA5BB"/>
-      <rect x="569" y="254" width="168" height="10" fill="#4DA5BB"/>
-      <text x="653" y="257" text-anchor="middle" font-size="11" font-weight="700" fill="white">Core</text>
+      <rect x="569" y="282" width="168" height="298" rx="6" fill="#142528" stroke="#204048" stroke-width="0.5"/>
+      <rect x="569" y="282" width="168" height="24" rx="6" fill="#4DA5BB"/>
+      <rect x="569" y="296" width="168" height="10" fill="#4DA5BB"/>
+      <text x="653" y="299" text-anchor="middle" font-size="11" font-weight="700" fill="white">Core</text>
 
-      <text x="653" y="280" text-anchor="middle" font-size="9" font-weight="600" fill="#60B8CC">Computational Grid</text>
-      <rect x="577" y="288" width="152" height="20" rx="3" fill="#4DA5BB" opacity="0.12"/>
-      <text x="653" y="302" text-anchor="middle" font-size="9.5" fill="#A0D0DD">3D Mesh (t, θ, φ)</text>
-      <rect x="577" y="312" width="152" height="20" rx="3" fill="#4DA5BB" opacity="0.12"/>
-      <text x="653" y="326" text-anchor="middle" font-size="9.5" fill="#A0D0DD">Adaptive Grid</text>
-      <rect x="577" y="336" width="152" height="20" rx="3" fill="#4DA5BB" opacity="0.12"/>
-      <text x="653" y="350" text-anchor="middle" font-size="9.5" fill="#A0D0DD">Log-Space Grid</text>
+      <text x="653" y="322" text-anchor="middle" font-size="9" font-weight="600" fill="#60B8CC">Computational Grid</text>
+      <rect x="577" y="330" width="152" height="20" rx="3" fill="#4DA5BB" opacity="0.12"/>
+      <text x="653" y="344" text-anchor="middle" font-size="9.5" fill="#A0D0DD">3D Mesh (t, θ, φ)</text>
+      <rect x="577" y="354" width="152" height="20" rx="3" fill="#4DA5BB" opacity="0.12"/>
+      <text x="653" y="368" text-anchor="middle" font-size="9.5" fill="#A0D0DD">Adaptive Grid</text>
+      <rect x="577" y="378" width="152" height="20" rx="3" fill="#4DA5BB" opacity="0.12"/>
+      <text x="653" y="392" text-anchor="middle" font-size="9.5" fill="#A0D0DD">Log-Space Grid</text>
 
-      <text x="653" y="380" text-anchor="middle" font-size="9" font-weight="600" fill="#60B8CC">Observer</text>
-      <rect x="577" y="388" width="152" height="20" rx="3" fill="#4DA5BB" opacity="0.12"/>
-      <text x="653" y="402" text-anchor="middle" font-size="9.5" fill="#A0D0DD">Equal Arrival Time</text>
-      <rect x="577" y="412" width="152" height="20" rx="3" fill="#4DA5BB" opacity="0.12"/>
-      <text x="653" y="426" text-anchor="middle" font-size="9.5" fill="#A0D0DD">Doppler Boosting</text>
-      <rect x="577" y="436" width="152" height="20" rx="3" fill="#4DA5BB" opacity="0.12"/>
-      <text x="653" y="450" text-anchor="middle" font-size="9.5" fill="#A0D0DD">Flux Integration</text>
+      <text x="653" y="422" text-anchor="middle" font-size="9" font-weight="600" fill="#60B8CC">Observer</text>
+      <rect x="577" y="430" width="152" height="20" rx="3" fill="#4DA5BB" opacity="0.12"/>
+      <text x="653" y="444" text-anchor="middle" font-size="9.5" fill="#A0D0DD">Equal Arrival Time</text>
+      <rect x="577" y="454" width="152" height="20" rx="3" fill="#4DA5BB" opacity="0.12"/>
+      <text x="653" y="468" text-anchor="middle" font-size="9.5" fill="#A0D0DD">Doppler Boosting</text>
+      <rect x="577" y="478" width="152" height="20" rx="3" fill="#4DA5BB" opacity="0.12"/>
+      <text x="653" y="492" text-anchor="middle" font-size="9.5" fill="#A0D0DD">Flux Integration</text>
 
-      <text x="653" y="480" text-anchor="middle" font-size="9" font-weight="600" fill="#60B8CC">Numerics</text>
-      <rect x="577" y="488" width="152" height="20" rx="3" fill="#4DA5BB" opacity="0.12"/>
-      <text x="653" y="502" text-anchor="middle" font-size="9.5" fill="#A0D0DD">Quadrature</text>
-      <rect x="577" y="512" width="152" height="20" rx="3" fill="#4DA5BB" opacity="0.12"/>
-      <text x="653" y="526" text-anchor="middle" font-size="9.5" fill="#A0D0DD">Physics Constants</text>
+      <text x="653" y="522" text-anchor="middle" font-size="9" font-weight="600" fill="#60B8CC">Numerics</text>
+      <rect x="577" y="530" width="152" height="20" rx="3" fill="#4DA5BB" opacity="0.12"/>
+      <text x="653" y="544" text-anchor="middle" font-size="9.5" fill="#A0D0DD">Quadrature</text>
+      <rect x="577" y="554" width="152" height="20" rx="3" fill="#4DA5BB" opacity="0.12"/>
+      <text x="653" y="568" text-anchor="middle" font-size="9.5" fill="#A0D0DD">Physics Constants</text>
     </g>
 
     <!-- ──── Column 5: Utilities ──── -->
     <g id="col-utilities">
-      <rect x="747" y="240" width="168" height="298" rx="6" fill="#1E2025" stroke="#2D3038" stroke-width="0.5"/>
-      <rect x="747" y="240" width="168" height="24" rx="6" fill="#7D8595"/>
-      <rect x="747" y="254" width="168" height="10" fill="#7D8595"/>
-      <text x="831" y="257" text-anchor="middle" font-size="11" font-weight="700" fill="white">Utilities</text>
+      <rect x="747" y="282" width="168" height="298" rx="6" fill="#1E2025" stroke="#2D3038" stroke-width="0.5"/>
+      <rect x="747" y="282" width="168" height="24" rx="6" fill="#7D8595"/>
+      <rect x="747" y="296" width="168" height="10" fill="#7D8595"/>
+      <text x="831" y="299" text-anchor="middle" font-size="11" font-weight="700" fill="white">Utilities</text>
 
-      <text x="831" y="280" text-anchor="middle" font-size="9" font-weight="600" fill="#8D95A5">Performance</text>
-      <rect x="755" y="288" width="152" height="20" rx="3" fill="#7D8595" opacity="0.12"/>
-      <text x="831" y="302" text-anchor="middle" font-size="9.5" fill="#B5BAC5">Fast Math (log₂, exp)</text>
-      <rect x="755" y="312" width="152" height="20" rx="3" fill="#7D8595" opacity="0.12"/>
-      <text x="831" y="326" text-anchor="middle" font-size="9.5" fill="#B5BAC5">SIMD Intrinsics</text>
-      <rect x="755" y="336" width="152" height="20" rx="3" fill="#7D8595" opacity="0.12"/>
-      <text x="831" y="350" text-anchor="middle" font-size="9.5" fill="#B5BAC5">Profiler</text>
+      <text x="831" y="322" text-anchor="middle" font-size="9" font-weight="600" fill="#8D95A5">Performance</text>
+      <rect x="755" y="330" width="152" height="20" rx="3" fill="#7D8595" opacity="0.12"/>
+      <text x="831" y="344" text-anchor="middle" font-size="9.5" fill="#B5BAC5">Fast Math (log₂, exp)</text>
+      <rect x="755" y="354" width="152" height="20" rx="3" fill="#7D8595" opacity="0.12"/>
+      <text x="831" y="368" text-anchor="middle" font-size="9.5" fill="#B5BAC5">SIMD Intrinsics</text>
+      <rect x="755" y="378" width="152" height="20" rx="3" fill="#7D8595" opacity="0.12"/>
+      <text x="831" y="392" text-anchor="middle" font-size="9.5" fill="#B5BAC5">Profiler</text>
 
-      <text x="831" y="380" text-anchor="middle" font-size="9" font-weight="600" fill="#8D95A5">Infrastructure</text>
-      <rect x="755" y="388" width="152" height="20" rx="3" fill="#7D8595" opacity="0.12"/>
-      <text x="831" y="402" text-anchor="middle" font-size="9.5" fill="#B5BAC5">I/O Utilities</text>
-      <rect x="755" y="412" width="152" height="20" rx="3" fill="#7D8595" opacity="0.12"/>
-      <text x="831" y="426" text-anchor="middle" font-size="9.5" fill="#B5BAC5">Type Traits</text>
-      <rect x="755" y="436" width="152" height="20" rx="3" fill="#7D8595" opacity="0.12"/>
-      <text x="831" y="450" text-anchor="middle" font-size="9.5" fill="#B5BAC5">Macros &amp; Config</text>
+      <text x="831" y="422" text-anchor="middle" font-size="9" font-weight="600" fill="#8D95A5">Infrastructure</text>
+      <rect x="755" y="430" width="152" height="20" rx="3" fill="#7D8595" opacity="0.12"/>
+      <text x="831" y="444" text-anchor="middle" font-size="9.5" fill="#B5BAC5">I/O Utilities</text>
+      <rect x="755" y="454" width="152" height="20" rx="3" fill="#7D8595" opacity="0.12"/>
+      <text x="831" y="468" text-anchor="middle" font-size="9.5" fill="#B5BAC5">Type Traits</text>
+      <rect x="755" y="478" width="152" height="20" rx="3" fill="#7D8595" opacity="0.12"/>
+      <text x="831" y="492" text-anchor="middle" font-size="9.5" fill="#B5BAC5">Macros &amp; Config</text>
 
-      <text x="831" y="480" text-anchor="middle" font-size="9" font-weight="600" fill="#8D95A5">Defaults</text>
-      <rect x="755" y="488" width="152" height="20" rx="3" fill="#7D8595" opacity="0.12"/>
-      <text x="831" y="502" text-anchor="middle" font-size="9.5" fill="#B5BAC5">Simulation Defaults</text>
+      <text x="831" y="522" text-anchor="middle" font-size="9" font-weight="600" fill="#8D95A5">Defaults</text>
+      <rect x="755" y="530" width="152" height="20" rx="3" fill="#7D8595" opacity="0.12"/>
+      <text x="831" y="544" text-anchor="middle" font-size="9.5" fill="#B5BAC5">Simulation Defaults</text>
     </g>
   </g>
 
   <!-- ════════════════════ COMPUTATION PIPELINE ════════════════════ -->
   <g id="pipeline">
-    <rect x="25" y="562" width="900" height="58" rx="8" fill="#151A25" stroke="#2D3345" stroke-width="1"/>
-    <text x="475" y="578" text-anchor="middle" font-size="10" font-weight="600" fill="#94A3B8">Computation Pipeline</text>
+    <rect x="25" y="604" width="900" height="58" rx="8" fill="#151A25" stroke="#2D3345" stroke-width="1"/>
+    <text x="475" y="620" text-anchor="middle" font-size="10" font-weight="600" fill="#94A3B8">Computation Pipeline</text>
 
     <!-- Flow boxes -->
-    <rect x="42" y="586" width="90" height="24" rx="4" fill="#2D3850"/>
-    <text x="87" y="602" text-anchor="middle" font-size="8.5" fill="white" font-weight="500">User Input</text>
-    <text x="140" y="600" text-anchor="middle" font-size="11" fill="#5A6580">→</text>
+    <rect x="42" y="628" width="90" height="24" rx="4" fill="#2D3850"/>
+    <text x="87" y="644" text-anchor="middle" font-size="8.5" fill="white" font-weight="500">User Input</text>
+    <text x="140" y="642" text-anchor="middle" font-size="11" fill="#5A6580">→</text>
 
-    <rect x="150" y="586" width="110" height="24" rx="4" fill="#45AB8A"/>
-    <text x="205" y="602" text-anchor="middle" font-size="8.5" fill="white" font-weight="500">Jet + Medium</text>
-    <text x="268" y="600" text-anchor="middle" font-size="11" fill="#5A6580">→</text>
+    <rect x="150" y="628" width="110" height="24" rx="4" fill="#45AB8A"/>
+    <text x="205" y="644" text-anchor="middle" font-size="8.5" fill="white" font-weight="500">Jet + Medium</text>
+    <text x="268" y="642" text-anchor="middle" font-size="11" fill="#5A6580">→</text>
 
-    <rect x="278" y="586" width="90" height="24" rx="4" fill="#4DA5BB"/>
-    <text x="323" y="602" text-anchor="middle" font-size="8.5" fill="white" font-weight="500">3D Mesh</text>
-    <text x="376" y="600" text-anchor="middle" font-size="11" fill="#5A6580">→</text>
+    <rect x="278" y="628" width="90" height="24" rx="4" fill="#4DA5BB"/>
+    <text x="323" y="644" text-anchor="middle" font-size="8.5" fill="white" font-weight="500">3D Mesh</text>
+    <text x="376" y="642" text-anchor="middle" font-size="11" fill="#5A6580">→</text>
 
-    <rect x="386" y="586" width="120" height="24" rx="4" fill="#D49B40"/>
-    <text x="446" y="602" text-anchor="middle" font-size="8.5" fill="white" font-weight="500">Shock Evolution</text>
-    <text x="514" y="600" text-anchor="middle" font-size="11" fill="#5A6580">→</text>
+    <rect x="386" y="628" width="120" height="24" rx="4" fill="#D49B40"/>
+    <text x="446" y="644" text-anchor="middle" font-size="8.5" fill="white" font-weight="500">Shock Evolution</text>
+    <text x="514" y="642" text-anchor="middle" font-size="11" fill="#5A6580">→</text>
 
-    <rect x="524" y="586" width="120" height="24" rx="4" fill="#D46565"/>
-    <text x="584" y="602" text-anchor="middle" font-size="8.5" fill="white" font-weight="500">Radiation Calc</text>
-    <text x="652" y="600" text-anchor="middle" font-size="11" fill="#5A6580">→</text>
+    <rect x="524" y="628" width="120" height="24" rx="4" fill="#D46565"/>
+    <text x="584" y="644" text-anchor="middle" font-size="8.5" fill="white" font-weight="500">Radiation Calc</text>
+    <text x="652" y="642" text-anchor="middle" font-size="11" fill="#5A6580">→</text>
 
-    <rect x="662" y="586" width="110" height="24" rx="4" fill="#4DA5BB"/>
-    <text x="717" y="602" text-anchor="middle" font-size="8.5" fill="white" font-weight="500">Flux Integration</text>
-    <text x="780" y="600" text-anchor="middle" font-size="11" fill="#5A6580">→</text>
+    <rect x="662" y="628" width="110" height="24" rx="4" fill="#4DA5BB"/>
+    <text x="717" y="644" text-anchor="middle" font-size="8.5" fill="white" font-weight="500">Flux Integration</text>
+    <text x="780" y="642" text-anchor="middle" font-size="11" fill="#5A6580">→</text>
 
-    <rect x="790" y="586" width="120" height="24" rx="4" fill="#2D3850"/>
-    <text x="850" y="602" text-anchor="middle" font-size="8.5" fill="white" font-weight="500">Light Curves / Spectra</text>
+    <rect x="790" y="628" width="120" height="24" rx="4" fill="#2D3850"/>
+    <text x="850" y="644" text-anchor="middle" font-size="8.5" fill="white" font-weight="500">Light Curves / Spectra</text>
   </g>
 
   <!-- ════════════════════ EXTERNAL DEPENDENCIES ════════════════════ -->
   <g id="external">
-    <rect x="25" y="635" width="900" height="26" rx="6" fill="#1A1E28"/>
-    <text x="475" y="652" text-anchor="middle" font-size="10" fill="#8090A5">
+    <rect x="25" y="675" width="900" height="26" rx="6" fill="#1A1E28"/>
+    <text x="475" y="692" text-anchor="middle" font-size="10" fill="#8090A5">
       <tspan font-weight="600">External:</tspan>
       <tspan dx="8">xtensor</tspan>
       <tspan dx="8">·</tspan>
