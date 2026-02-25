@@ -746,9 +746,10 @@ only for custom profiles passed via <code class="docutils literal notranslate"><
 </div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>When <code class="docutils literal notranslate"><span class="pre">ssc=True</span></code>, IC cooling of electrons is automatically included. The <code class="docutils literal notranslate"><span class="pre">kn</span></code> flag controls whether Klein-Nishina corrections are applied:</p>
+<p>When <code class="docutils literal notranslate"><span class="pre">ssc=True</span></code>, SSC cooling of electrons is automatically included. The <code class="docutils literal notranslate"><span class="pre">kn</span></code> flag controls whether Klein-Nishina corrections are applied:</p>
 <p>(ssc = True, kn = False): SSC emission with IC cooling using the Thomson cross-section.</p>
 <p>(ssc = True, kn = True): SSC emission with IC cooling and Klein-Nishina corrections.</p>
+<p>CMB inverse Compton cooling can be enabled independently via <code class="docutils literal notranslate"><span class="pre">cmb_cooling=True</span></code>, which is useful for high-redshift sources where the CMB energy density is significant. When both <code class="docutils literal notranslate"><span class="pre">ssc</span></code> and <code class="docutils literal notranslate"><span class="pre">cmb_cooling</span></code> are active, the total Compton-Y includes both contributions.</p>
 </div>
 <p>For details on the underlying radiation physics, see <a class="reference internal" href="physics.html"><span class="doc">GRB Afterglow Physics</span></a>.</p>
 </section>

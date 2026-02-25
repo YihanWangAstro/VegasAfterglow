@@ -1,9 +1,11 @@
 <map id="update_gamma_M" name="update_gamma_M">
-<area shape="rect" id="Node000001" title=" " alt="" coords="327,31,469,56"/>
-<area shape="rect" id="Node000002" href="$inverse-compton_8h.html#ac8f967d0ccd3b5b84d387756e0d5d463" title=" " alt="" coords="189,31,279,56"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="313,46,279,46,279,41,313,41"/>
-<area shape="rect" id="Node000003" href="$inverse-compton_8h.html#a583bd933279ebdb89aaa790ee16bc67a" title=" " alt="" coords="26,5,121,31"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="175,37,120,28,121,23,176,32"/>
-<area shape="rect" id="Node000004" href="$inverse-compton_8h.html#a8f645350e4623d03b237428488a88491" title="Applies Thomson cooling to electrons based on photon distribution." alt="" coords="5,55,141,80"/>
-<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="176,55,142,60,141,54,175,49"/>
+<area shape="rect" id="Node000001" title=" " alt="" coords="327,55,469,80"/>
+<area shape="rect" id="Node000002" href="$inverse-compton_8h.html#ac8f967d0ccd3b5b84d387756e0d5d463" title=" " alt="" coords="189,55,279,80"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="313,70,279,70,279,65,313,65"/>
+<area shape="rect" id="Node000003" href="$inverse-compton_8h.html#a16fe11ca8fa61082a835d779419f6439" title=" " alt="" coords="20,5,127,31"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="178,53,115,33,117,28,180,48"/>
+<area shape="rect" id="Node000004" href="$inverse-compton_8h.html#ac15130b99da7ae7363596cbf6b944efe" title=" " alt="" coords="26,55,121,80"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="176,70,121,70,121,65,176,65"/>
+<area shape="rect" id="Node000005" href="$inverse-compton_8h.html#a8f645350e4623d03b237428488a88491" title="Applies Thomson cooling to electrons based on photon distribution." alt="" coords="5,104,141,129"/>
+<area shape="poly" id="edge4_Node000002_Node000005" title=" " alt="" coords="180,87,117,106,115,101,178,82"/>
 </map>

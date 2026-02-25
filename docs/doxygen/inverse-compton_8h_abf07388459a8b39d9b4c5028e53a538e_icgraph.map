@@ -1,11 +1,15 @@
 <map id="compute_gamma_c" name="compute_gamma_c">
-<area shape="rect" id="Node000001" title=" " alt="" coords="443,31,593,56"/>
-<area shape="rect" id="Node000002" href="$inverse-compton_8cpp.html#afe30262ca73705fdc9456009f6066fa8" title=" " alt="" coords="210,5,374,31"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="428,36,374,30,375,25,429,31"/>
-<area shape="rect" id="Node000004" href="$inverse-compton_8cpp.html#ab7063c938c6e524260876e8ec068ba1b" title=" " alt="" coords="189,55,395,80"/>
-<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="429,55,395,59,395,54,429,50"/>
-<area shape="rect" id="Node000003" href="$inverse-compton_8h.html#a583bd933279ebdb89aaa790ee16bc67a" title=" " alt="" coords="26,5,121,31"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="196,21,121,21,121,15,196,15"/>
-<area shape="rect" id="Node000005" href="$inverse-compton_8h.html#a8f645350e4623d03b237428488a88491" title="Applies Thomson cooling to electrons based on photon distribution." alt="" coords="5,55,141,80"/>
-<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="175,70,142,70,142,65,175,65"/>
+<area shape="rect" id="Node000001" title=" " alt="" coords="443,55,593,80"/>
+<area shape="rect" id="Node000002" href="$inverse-compton_8cpp.html#a0374292aa56339034e7b891099f29e38" title=" " alt="" coords="205,5,379,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="445,54,350,33,352,28,446,49"/>
+<area shape="rect" id="Node000004" href="$inverse-compton_8cpp.html#afe30262ca73705fdc9456009f6066fa8" title=" " alt="" coords="210,55,374,80"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="429,70,374,70,374,65,429,65"/>
+<area shape="rect" id="Node000006" href="$inverse-compton_8cpp.html#ab7063c938c6e524260876e8ec068ba1b" title=" " alt="" coords="189,104,395,129"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="446,86,352,107,350,101,445,80"/>
+<area shape="rect" id="Node000003" href="$inverse-compton_8h.html#a16fe11ca8fa61082a835d779419f6439" title=" " alt="" coords="20,5,127,31"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="190,21,127,21,127,15,190,15"/>
+<area shape="rect" id="Node000005" href="$inverse-compton_8h.html#ac15130b99da7ae7363596cbf6b944efe" title=" " alt="" coords="26,55,121,80"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="196,70,121,70,121,65,196,65"/>
+<area shape="rect" id="Node000007" href="$inverse-compton_8h.html#a8f645350e4623d03b237428488a88491" title="Applies Thomson cooling to electrons based on photon distribution." alt="" coords="5,104,141,129"/>
+<area shape="poly" id="edge6_Node000006_Node000007" title=" " alt="" coords="175,119,142,119,142,114,175,114"/>
 </map>

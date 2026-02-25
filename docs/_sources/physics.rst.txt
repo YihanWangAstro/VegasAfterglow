@@ -567,7 +567,25 @@ The cooling of electrons due to synchrotron radiation and inverse Compton scatte
 
     \frac{d\gamma}{dt^\prime}m_ec^2 = -P_{\rm syn} = -\frac{4}{3}\sigma_Tc\gamma^2\beta^2\frac{B^{\prime2}}{8\pi}(1+\tilde{Y})
 
-where :math:`\tilde{Y}` is the Compton Y-parameter that accounts for the inverse Compton cooling.
+where :math:`\tilde{Y}` is the Compton Y-parameter that accounts for the inverse Compton cooling. The total Y-parameter includes contributions from both synchrotron self-Compton (SSC) and inverse Compton scattering off the cosmic microwave background (CMB):
+
+.. math::
+
+    \tilde{Y} = Y_{\rm SSC} + Y_{\rm CMB}
+
+The SSC contribution is:
+
+.. math::
+
+    Y_{\rm SSC} = \frac{1}{2}\left(\sqrt{1 + 4\eta_e\frac{\epsilon_e}{\epsilon_B}} - 1\right)
+
+where :math:`\eta_e` is the radiative efficiency of the electrons. The CMB contribution is the ratio of CMB to magnetic energy density:
+
+.. math::
+
+    Y_{\rm CMB} = \frac{u_{\rm CMB}}{u_B} = \frac{a_{\rm rad}\,T_{\rm CMB}^4(z)}{B^{\prime 2}/8\pi}
+
+where :math:`T_{\rm CMB}(z) = T_0(1+z)` with :math:`T_0 = 2.725\,\text{K}`. The CMB energy density scales as :math:`(1+z)^4`, making this term increasingly important at high redshifts. CMB cooling is disabled by default and can be enabled via the ``cmb_cooling`` flag in the ``Radiation`` class.
 
 The cooling time is:
 

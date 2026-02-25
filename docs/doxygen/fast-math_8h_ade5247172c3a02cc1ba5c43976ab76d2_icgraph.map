@@ -6,33 +6,35 @@
 <area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="957,191,927,141,906,115,881,94,859,83,862,78,884,89,910,111,932,138,961,189"/>
 <area shape="rect" id="Node000004" href="$synchrotron_8cpp.html#a0dd9222be02ad23c2ec055432df37eb4" title=" " alt="" coords="685,153,866,179"/>
 <area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="917,203,882,194,831,181,832,176,883,189,918,198"/>
-<area shape="rect" id="Node000009" href="$synchrotron_8cpp.html#a018aa6d904c7b40ecbcefd494a4b60e4" title=" " alt="" coords="698,104,853,129"/>
-<area shape="poly" id="edge8_Node000001_Node000009" title=" " alt="" coords="948,194,918,167,881,143,852,132,854,127,884,138,921,163,951,191"/>
-<area shape="rect" id="Node000010" href="$classPowerLawJet.html#ac70c7a3bc6047b714918544cbb521eea" title="Energy per solid angle as a function of phi and theta, with power&#45;law falloff." alt="" coords="700,252,851,277"/>
-<area shape="poly" id="edge10_Node000001_Node000010" title=" " alt="" coords="918,234,883,243,836,255,835,249,882,238,917,229"/>
-<area shape="rect" id="Node000011" href="$inverse-compton_8h.html#ad7736d3269071d2ceaffcc56fa2fc71c" title=" " alt="" coords="706,203,845,228"/>
-<area shape="poly" id="edge11_Node000001_Node000011" title=" " alt="" coords="916,218,845,218,845,213,916,213"/>
-<area shape="rect" id="Node000015" href="$classPowerLawJet.html#a4f9900bbeabe5fc504e34d88941e525e" title="Initial Lorentz factor as a function of phi and theta, with power&#45;law falloff." alt="" coords="689,301,862,327"/>
-<area shape="poly" id="edge17_Node000001_Node000015" title=" " alt="" coords="951,240,921,268,884,292,854,304,853,299,881,288,918,263,948,236"/>
-<area shape="rect" id="Node000016" href="$structInverseComptonY.html#a2e2ffd78dd60c7da21a052b443bd51b3" title="Initializes an InverseComptonY object with frequency thresholds, magnetic field and Y parameter." alt="" coords="680,351,871,391"/>
-<area shape="poly" id="edge18_Node000001_Node000016" title=" " alt="" coords="961,242,931,292,910,319,884,341,863,354,861,349,881,337,906,315,927,289,956,239"/>
-<area shape="rect" id="Node000017" href="$jet_8h.html#a6fac8621479aea05abf6fef54a4df256" title="Creates a Lorentz factor distribution using the Liang &amp; Ghirlanda (2010) prescription." alt="" coords="699,416,851,441"/>
-<area shape="poly" id="edge19_Node000001_Node000017" title=" " alt="" coords="968,242,959,279,942,323,918,368,884,405,853,422,850,418,881,401,914,365,938,321,953,277,963,241"/>
+<area shape="rect" id="Node000010" href="$synchrotron_8cpp.html#a018aa6d904c7b40ecbcefd494a4b60e4" title=" " alt="" coords="698,104,853,129"/>
+<area shape="poly" id="edge9_Node000001_Node000010" title=" " alt="" coords="948,194,918,167,881,143,852,132,854,127,884,138,921,163,951,191"/>
+<area shape="rect" id="Node000011" href="$classPowerLawJet.html#ac70c7a3bc6047b714918544cbb521eea" title="Energy per solid angle as a function of phi and theta, with power&#45;law falloff." alt="" coords="700,252,851,277"/>
+<area shape="poly" id="edge11_Node000001_Node000011" title=" " alt="" coords="918,234,883,243,836,255,835,249,882,238,917,229"/>
+<area shape="rect" id="Node000012" href="$inverse-compton_8h.html#ad7736d3269071d2ceaffcc56fa2fc71c" title=" " alt="" coords="706,203,845,228"/>
+<area shape="poly" id="edge12_Node000001_Node000012" title=" " alt="" coords="916,218,845,218,845,213,916,213"/>
+<area shape="rect" id="Node000016" href="$classPowerLawJet.html#a4f9900bbeabe5fc504e34d88941e525e" title="Initial Lorentz factor as a function of phi and theta, with power&#45;law falloff." alt="" coords="689,301,862,327"/>
+<area shape="poly" id="edge18_Node000001_Node000016" title=" " alt="" coords="951,240,921,268,884,292,854,304,853,299,881,288,918,263,948,236"/>
+<area shape="rect" id="Node000017" href="$structInverseComptonY.html#a2e2ffd78dd60c7da21a052b443bd51b3" title="Initializes an InverseComptonY object with frequency thresholds, magnetic field and Y parameter." alt="" coords="680,351,871,391"/>
+<area shape="poly" id="edge19_Node000001_Node000017" title=" " alt="" coords="961,242,931,292,910,319,884,341,863,354,861,349,881,337,906,315,927,289,956,239"/>
+<area shape="rect" id="Node000018" href="$jet_8h.html#a6fac8621479aea05abf6fef54a4df256" title="Creates a Lorentz factor distribution using the Liang &amp; Ghirlanda (2010) prescription." alt="" coords="699,416,851,441"/>
+<area shape="poly" id="edge20_Node000001_Node000018" title=" " alt="" coords="968,242,959,279,942,323,918,368,884,405,853,422,850,418,881,401,914,365,938,321,953,277,963,241"/>
 <area shape="rect" id="Node000005" href="$synchrotron_8cpp.html#a61ca4dde8d2466a6c4bbeb3ec4911141" title="Populates an existing electron grid with values based on shock parameters." alt="" coords="443,103,620,128"/>
 <area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="699,153,593,131,594,125,700,148"/>
 <area shape="rect" id="Node000006" href="$inverse-compton_8h.html#ac8f967d0ccd3b5b84d387756e0d5d463" title=" " alt="" coords="247,153,337,179"/>
 <area shape="poly" id="edge5_Node000004_Node000006" title=" " alt="" coords="671,169,337,169,337,163,671,163"/>
-<area shape="rect" id="Node000007" href="$inverse-compton_8h.html#a583bd933279ebdb89aaa790ee16bc67a" title=" " alt="" coords="26,228,121,253"/>
-<area shape="poly" id="edge6_Node000006_Node000007" title=" " alt="" coords="235,181,190,194,102,230,100,225,188,189,233,176"/>
-<area shape="rect" id="Node000008" href="$inverse-compton_8h.html#a8f645350e4623d03b237428488a88491" title="Applies Thomson cooling to electrons based on photon distribution." alt="" coords="5,167,141,192"/>
-<area shape="poly" id="edge7_Node000006_Node000008" title=" " alt="" coords="234,172,142,178,142,173,233,167"/>
-<area shape="poly" id="edge9_Node000009_Node000005" title=" " alt="" coords="684,119,620,118,620,113,684,114"/>
-<area shape="rect" id="Node000012" href="$inverse-compton_8h.html#ac0230d2cf3ab151b3107eaf020bd07be" title=" " alt="" coords="451,204,612,229"/>
-<area shape="poly" id="edge12_Node000011_Node000012" title=" " alt="" coords="692,218,612,219,612,214,692,213"/>
-<area shape="rect" id="Node000013" href="$inverse-compton_8cpp.html#afe30262ca73705fdc9456009f6066fa8" title=" " alt="" coords="210,252,374,277"/>
-<area shape="poly" id="edge13_Node000012_Node000013" title=" " alt="" coords="454,235,357,255,355,249,453,229"/>
-<area shape="rect" id="Node000014" href="$inverse-compton_8cpp.html#ab7063c938c6e524260876e8ec068ba1b" title=" " alt="" coords="189,203,395,228"/>
-<area shape="poly" id="edge15_Node000012_Node000014" title=" " alt="" coords="437,219,395,219,395,213,437,213"/>
-<area shape="poly" id="edge14_Node000013_Node000007" title=" " alt="" coords="196,257,121,248,121,243,196,252"/>
-<area shape="poly" id="edge16_Node000014_Node000008" title=" " alt="" coords="200,203,141,193,142,188,201,198"/>
+<area shape="rect" id="Node000007" href="$inverse-compton_8h.html#a16fe11ca8fa61082a835d779419f6439" title=" " alt="" coords="20,153,127,179"/>
+<area shape="poly" id="edge6_Node000006_Node000007" title=" " alt="" coords="233,169,127,169,127,163,233,163"/>
+<area shape="rect" id="Node000008" href="$inverse-compton_8h.html#ac15130b99da7ae7363596cbf6b944efe" title=" " alt="" coords="26,252,121,277"/>
+<area shape="poly" id="edge7_Node000006_Node000008" title=" " alt="" coords="235,177,191,194,176,205,167,217,158,230,143,243,120,254,118,250,140,238,154,226,163,214,172,201,188,189,233,172"/>
+<area shape="rect" id="Node000009" href="$inverse-compton_8h.html#a8f645350e4623d03b237428488a88491" title="Applies Thomson cooling to electrons based on photon distribution." alt="" coords="5,203,141,228"/>
+<area shape="poly" id="edge8_Node000006_Node000009" title=" " alt="" coords="234,182,131,205,130,200,233,176"/>
+<area shape="poly" id="edge10_Node000010_Node000005" title=" " alt="" coords="684,119,620,118,620,113,684,114"/>
+<area shape="rect" id="Node000013" href="$inverse-compton_8h.html#ac0230d2cf3ab151b3107eaf020bd07be" title=" " alt="" coords="451,204,612,229"/>
+<area shape="poly" id="edge13_Node000012_Node000013" title=" " alt="" coords="692,218,612,219,612,214,692,213"/>
+<area shape="rect" id="Node000014" href="$inverse-compton_8cpp.html#afe30262ca73705fdc9456009f6066fa8" title=" " alt="" coords="210,252,374,277"/>
+<area shape="poly" id="edge14_Node000013_Node000014" title=" " alt="" coords="454,235,357,255,355,249,453,229"/>
+<area shape="rect" id="Node000015" href="$inverse-compton_8cpp.html#ab7063c938c6e524260876e8ec068ba1b" title=" " alt="" coords="189,203,395,228"/>
+<area shape="poly" id="edge16_Node000013_Node000015" title=" " alt="" coords="437,219,395,219,395,213,437,213"/>
+<area shape="poly" id="edge15_Node000014_Node000008" title=" " alt="" coords="196,267,121,267,121,262,196,262"/>
+<area shape="poly" id="edge17_Node000015_Node000009" title=" " alt="" coords="175,218,142,218,142,213,175,213"/>
 </map>

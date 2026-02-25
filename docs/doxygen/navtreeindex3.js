@@ -1,5 +1,8 @@
 var NAVTREEINDEX3 =
 {
+"shock-physics_8h.html#ae6e8e8dc604693f1e05b35c8590312a9":[4,0,2,2,4,21],
+"shock-physics_8h.html#aea01401141a45dba7c4cf45190428c86":[4,0,2,2,4,12],
+"shock-physics_8h.html#aed59bb7f40db395eee32105a82e245f4":[4,0,2,2,4,24],
 "shock-physics_8h.html#aedc1c5385b14986b267d8e27eec05cf7":[4,0,2,2,4,16],
 "shock-physics_8h.html#af85a63428f015989284de82ed97685ee":[4,0,2,2,4,31],
 "shock-physics_8h.html#af8c6e4984af9f6addc7959f6cd23bde6":[4,0,2,2,4,17],
@@ -245,9 +248,6 @@ var NAVTREEINDEX3 =
 "structYSpectrumGrid.html#a33070195f22240e9c122551de53de436":[3,0,42,0],
 "structanonymous__namespace_02inverse-compton_8cpp_03_1_1ComptonSigmaLUT.html":[3,0,1,0],
 "structanonymous__namespace_02inverse-compton_8cpp_03_1_1ComptonSigmaLUT.html":[1,0,1,0],
-"structanonymous__namespace_02inverse-compton_8cpp_03_1_1ComptonSigmaLUT.html#a383a13b5685793290351e89fde1c3871":[3,0,1,0,8],
 "structanonymous__namespace_02inverse-compton_8cpp_03_1_1ComptonSigmaLUT.html#a383a13b5685793290351e89fde1c3871":[1,0,1,0,8],
-"structanonymous__namespace_02inverse-compton_8cpp_03_1_1ComptonSigmaLUT.html#a40469345df5f27ac99d46c38900772b3":[1,0,1,0,3],
-"structanonymous__namespace_02inverse-compton_8cpp_03_1_1ComptonSigmaLUT.html#a40469345df5f27ac99d46c38900772b3":[3,0,1,0,3],
-"structanonymous__namespace_02inverse-compton_8cpp_03_1_1ComptonSigmaLUT.html#a55381a3a60d8d0184ebb6c68a76dcb20":[1,0,1,0,5]
+"structanonymous__namespace_02inverse-compton_8cpp_03_1_1ComptonSigmaLUT.html#a383a13b5685793290351e89fde1c3871":[3,0,1,0,8]
 };

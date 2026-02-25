@@ -1,0 +1,11 @@
+<map id="update_gamma_c_CMB" name="update_gamma_c_CMB">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,56,180,81"/>
+<area shape="rect" id="Node000002" href="$inverse-compton_8h.html#a38bdc122c39966b17d4cf12634d61f5f" title="Compute CMB IC Y parameter: Y_CMB = u_CMB(z) / u_B, where u_B = B^2 / (8*pi)" alt="" coords="238,5,369,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="146,53,236,31,238,36,147,58"/>
+<area shape="rect" id="Node000003" href="$pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89" title=" " alt="" coords="427,56,581,81"/>
+<area shape="poly" id="edge5_Node000001_Node000003" title=" " alt="" coords="180,66,413,66,413,71,180,71"/>
+<area shape="rect" id="Node000004" href="$synchrotron_8cpp.html#abf07388459a8b39d9b4c5028e53a538e" title=" " alt="" coords="228,107,379,132"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="147,79,238,101,236,106,146,84"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="355,28,441,50,439,55,354,33"/>
+<area shape="poly" id="edge4_Node000004_Node000003" title=" " alt="" coords="354,104,439,82,441,87,355,109"/>
+</map>
