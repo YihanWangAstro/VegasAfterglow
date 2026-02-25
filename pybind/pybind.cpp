@@ -192,14 +192,15 @@ PYBIND11_MODULE(VegasAfterglowC, m) {
 
     // Radiation bindings
     py::class_<PyRadiation>(m, "Radiation")
-        .def(py::init<Real, Real, Real, Real, bool, bool>(), py::arg("eps_e"), py::arg("eps_B"), py::arg("p"),
-             py::arg("xi_e") = 1, py::arg("ssc") = false, py::arg("kn") = false)
+        .def(py::init<Real, Real, Real, Real, bool, bool, bool>(), py::arg("eps_e"), py::arg("eps_B"), py::arg("p"),
+             py::arg("xi_e") = 1, py::arg("ssc") = false, py::arg("kn") = false, py::arg("cmb_cooling") = false)
         .def_property_readonly("eps_e", [](PyRadiation const& r) { return r.rad.eps_e; })
         .def_property_readonly("eps_B", [](PyRadiation const& r) { return r.rad.eps_B; })
         .def_property_readonly("p", [](PyRadiation const& r) { return r.rad.p; })
         .def_property_readonly("xi_e", [](PyRadiation const& r) { return r.rad.xi_e; })
         .def_readonly("ssc", &PyRadiation::ssc)
         .def_readonly("kn", &PyRadiation::kn)
+        .def_property_readonly("cmb_cooling", [](PyRadiation const& r) { return r.rad.cmb_cooling; })
         .def("__repr__", &PyRadiation::repr);
 
     // Model bindings

@@ -190,13 +190,13 @@ Real InverseComptonY::compute_gamma_hat(Real gamma) const noexcept {
 //                                  Helper Functions for Update Functions
 //========================================================================================================
 void update_gamma_c_Thomson(Real& gamma_c, InverseComptonY& Ys, RadParams const& rad, Real B, Real t_com, Real gamma_m,
-                            Real gamma_c_last) {
-    Real Y_T = compute_Thomson_Y(rad, gamma_m, gamma_c);
+                            Real gamma_c_last, Real redshift) {
+    Real Y_T = compute_Thomson_Y(rad, gamma_m, gamma_c, B, redshift);
     Real gamma_c_new = gamma_c_last; //compute_gamma_c(t_com, B, Y_T);
 
     while (std::fabs((gamma_c_new - gamma_c) / gamma_c) > 1e-3) {
         gamma_c = gamma_c_new;
-        Y_T = compute_Thomson_Y(rad, gamma_m, gamma_c);
+        Y_T = compute_Thomson_Y(rad, gamma_m, gamma_c, B, redshift);
         gamma_c_new = compute_gamma_c(t_com, B, Y_T);
     }
     gamma_c = gamma_c_new;
@@ -204,7 +204,7 @@ void update_gamma_c_Thomson(Real& gamma_c, InverseComptonY& Ys, RadParams const&
 }
 
 void update_gamma_c_KN(Real& gamma_c, InverseComptonY& Ys, RadParams const& rad, Real B, Real t_com, Real gamma_m,
-                       Real gamma_c_last) {
+                       Real gamma_c_last, Real redshift) {
     // the iteration may converge to just one solution or three solutions, when there are three solutions:
     // 1. gamma_c_min (IC cooling dominant, Y(gamma_c) > 1). solution for gamma_m < gamma_c_trans
     // 2. gamma_c_trans (unstable state),
@@ -219,13 +219,13 @@ void update_gamma_c_KN(Real& gamma_c, InverseComptonY& Ys, RadParams const& rad,
 
     Real gamma_c_new = gamma_c_last; // initial guess
 
-    Real Y_T = compute_Thomson_Y(rad, gamma_m, gamma_c_new);
+    Real Y_T = compute_Thomson_Y(rad, gamma_m, gamma_c_new, B, redshift);
     Ys = InverseComptonY(gamma_m, gamma_c_new, rad.p, B, Y_T, true);
     size_t max_iter = 100;
     size_t iter = 0;
     do {
         gamma_c = gamma_c_new;
-        Y_T = compute_Thomson_Y(rad, gamma_m, gamma_c);
+        Y_T = compute_Thomson_Y(rad, gamma_m, gamma_c, B, redshift);
         Ys.update_cooling_breaks(gamma_c, Y_T);
         Real Y_c = Ys.gamma_spectrum(gamma_c);
         gamma_c_new = compute_gamma_c(t_com, B, Y_c);
