@@ -576,11 +576,13 @@ Self-Synchrotron Compton Radiation
         plt.loglog(times, results.fwd.ssc[i,:], label=fr'${base:.1f} \times 10^{{{exp}}}$ Hz (SSC)')#SSC
 
 .. note::
-    When ``ssc=True``, IC cooling of electrons is automatically included. The ``kn`` flag controls whether Klein-Nishina corrections are applied:
+    When ``ssc=True``, SSC cooling of electrons is automatically included. The ``kn`` flag controls whether Klein-Nishina corrections are applied:
 
     (ssc = True, kn = False): SSC emission with IC cooling using the Thomson cross-section.
 
     (ssc = True, kn = True): SSC emission with IC cooling and Klein-Nishina corrections.
+
+    CMB inverse Compton cooling can be enabled independently via ``cmb_cooling=True``, which is useful for high-redshift sources where the CMB energy density is significant. When both ``ssc`` and ``cmb_cooling`` are active, the total Compton-Y includes both contributions.
 
 For details on the underlying radiation physics, see :doc:`physics`.
 

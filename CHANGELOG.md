@@ -35,6 +35,11 @@ For the full MCMC fitting guide, including advanced customization examples, see 
 - Produces more physical light curves without artificial kinks at spectral breaks
 - The original sharp broken power-law model remains available as `PowerLawSyn`
 
+#### **CMB Inverse Compton Cooling**
+- Electron cooling now includes inverse Compton scattering off the cosmic microwave background (CMB), which contributes to the Compton-Y parameter alongside synchrotron self-Compton
+- Can be enabled independently of SSC via the ``cmb_cooling`` flag, or combined with SSC for full IC cooling
+- Particularly relevant for high-redshift afterglows where the CMB energy density is enhanced by (1+z)⁴
+
 #### **Smarter Adaptive Grid Generation**
 - Grid generation now accounts for the ambient medium density profile, producing better time sampling near the deceleration time
 - Sharp features in jet angular profiles (e.g., core-wing boundaries) are automatically detected and resolved as grid anchor points

@@ -234,6 +234,13 @@ void update_gamma_c_KN(Real& gamma_c, InverseComptonY& Ys, RadParams const& rad,
     gamma_c = gamma_c_new;
 }
 
+void update_gamma_c_CMB(Real& gamma_c, InverseComptonY& Ys, RadParams const& rad, Real B, Real t_com, Real gamma_m,
+                        Real /*gamma_c_last*/, Real redshift) {
+    Real Y_CMB = compute_CMB_Y(B, redshift);
+    gamma_c = compute_gamma_c(t_com, B, Y_CMB);
+    Ys = InverseComptonY(gamma_m, gamma_c, rad.p, B, Y_CMB, false);
+}
+
 void update_gamma_M(Real& gamma_M, InverseComptonY const& Ys, Real p, Real B) {
     if (B == 0) {
         gamma_M = std::numeric_limits<Real>::infinity();

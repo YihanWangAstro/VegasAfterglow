@@ -293,6 +293,9 @@ Physics Switches
    * - ``kn``
      - false
      - Use Klein-Nishina cross-section for IC scattering
+   * - ``cmb_cooling``
+     - false
+     - Include inverse Compton cooling off the CMB. Can be enabled independently of ``ssc``; when both are active, the total Compton-Y includes both SSC and CMB contributions. Important at high redshifts where CMB energy density scales as :math:`(1+z)^4`
    * - ``magnetar``
      - false
      - Include magnetar energy injection

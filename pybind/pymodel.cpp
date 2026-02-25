@@ -245,10 +245,12 @@ void PyModel::single_evo_details(Shock const& shock, Coord const& coord, Observe
 
     if (rad.ssc) {
         if (rad.kn) {
-            KN_cooling(syn_e, syn_ph, shock, coord);
+            KN_cooling(syn_e, syn_ph, shock, coord, obs_setup.z);
         } else {
-            Thomson_cooling(syn_e, syn_ph, shock, coord);
+            Thomson_cooling(syn_e, syn_ph, shock, coord, obs_setup.z);
         }
+    } else if (rad.rad.cmb_cooling) {
+        CMB_cooling(syn_e, syn_ph, shock, coord, obs_setup.z);
     }
     save_electron_details(syn_e, details);
     save_photon_details(syn_ph, details, shock);

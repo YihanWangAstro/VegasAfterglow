@@ -799,10 +799,13 @@ void PyModel::single_shock_emission(Shock const& shock, Coord const& coord, Arra
     if (rad.ssc) {
         AFTERGLOW_PROFILE_SCOPE(cooling);
         if (rad.kn) {
-            KN_cooling(syn_e, syn_ph, shock, coord);
+            KN_cooling(syn_e, syn_ph, shock, coord, obs_setup.z);
         } else {
             Thomson_cooling(syn_e, syn_ph, shock, coord, obs_setup.z);
         }
+    } else if (rad.rad.cmb_cooling) {
+        AFTERGLOW_PROFILE_SCOPE(cooling);
+        CMB_cooling(syn_e, syn_ph, shock, coord, obs_setup.z);
     }
 
     {

@@ -52,6 +52,7 @@ class Fitter:
         rvs_ssc: Enable reverse shock inverse Compton
         rvs_shock: Enable reverse shock
         kn: Enable Klein-Nishina corrections
+        cmb_cooling: Enable inverse Compton cooling off the CMB
         magnetar: Enable magnetar energy injection
         rtol: Numerical tolerance
         resolution: Grid resolution tuple (phi, theta, t). Can be overridden per-fit.
@@ -68,6 +69,7 @@ class Fitter:
         rvs_ssc: bool = False,
         rvs_shock: bool = False,
         kn: bool = False,
+        cmb_cooling: bool = False,
         magnetar: bool = False,
         rtol: float = 1e-6,
         resolution: Tuple[float, float, float] = (0.15, 0.5, 10),
@@ -78,6 +80,7 @@ class Fitter:
         self.rvs_ssc = rvs_ssc
         self.rvs_shock = rvs_shock
         self.kn = kn
+        self.cmb_cooling = cmb_cooling
         self.magnetar = magnetar
         self.rtol = rtol
 
@@ -261,6 +264,7 @@ class Fitter:
             xi_e=params.xi_e,
             ssc=self.fwd_ssc,
             kn=self.kn,
+            cmb_cooling=self.cmb_cooling,
         )
 
         rvs_rad = None
@@ -272,6 +276,7 @@ class Fitter:
                 xi_e=params.xi_e_r,
                 ssc=self.rvs_ssc,
                 kn=self.kn,
+                cmb_cooling=self.cmb_cooling,
             )
 
         return Model(
