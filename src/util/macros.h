@@ -99,6 +99,9 @@ namespace con {
     constexpr Real Omega_m = 0.27;                                      ///< Matter density parameter in ΛCDM cosmology
     constexpr Real Omega_L = 0.73;                                ///< Dark energy density parameter in ΛCDM cosmology
     constexpr Real H0 = 67.66 * unit::km / unit::sec / unit::Mpc; ///< Hubble constant in code units
+    constexpr Real kB = 1.38e-16 * unit::erg;                     ///< Boltzmann constant in code units
+    constexpr Real a_rad = 7.565e-15 * unit::erg / (unit::cm * unit::cm * unit::cm); ///< Radiation constant in code units
+    constexpr Real T_CMB0 = 2.725;                                ///< CMB temperature today in Kelvin
     constexpr Real Gamma_cut = defaults::cutoffs::gamma_cut;      ///< Cutoff Lorentz factor value
     constexpr Real gamma_therm_cut = defaults::cutoffs::gamma_therm_cut; ///< Cutoff thermal Lorentz factor value
     constexpr Real inf = std::numeric_limits<Real>::infinity();          ///< Infinity value

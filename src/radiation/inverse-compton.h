@@ -245,7 +245,8 @@ ICPhotonGrid<Electrons, Photons> generate_IC_photons(ElectronGrid<Electrons> con
  * <!-- ************************************************************************************** -->
  */
 template <typename Electrons, typename Photons>
-void Thomson_cooling(ElectronGrid<Electrons>& electrons, PhotonGrid<Photons>& photons, Shock const& shock);
+void Thomson_cooling(ElectronGrid<Electrons>& electrons, PhotonGrid<Photons>& photons, Shock const& shock,
+                     Coord const& coord, Real redshift = 0.0);
 
 /**
  * <!-- ************************************************************************************** -->
@@ -567,10 +568,21 @@ inline Real eta_rad_Thomson(Real gamma_m, Real gamma_c, Real p) {
     }
 }
 
-inline Real compute_Thomson_Y(RadParams const& rad, Real gamma_m, Real gamma_c) {
+/// Compute CMB IC Y parameter: Y_CMB = u_CMB(z) / u_B, where u_B = B^2 / (8*pi)
+inline Real compute_CMB_Y(Real B, Real redshift) {
+    if (B <= 0 || redshift <= 0) return 0.0;
+    const Real T_CMB = con::T_CMB0 * (1.0 + redshift);
+    const Real u_CMB = con::a_rad * T_CMB * T_CMB * T_CMB * T_CMB;  // erg/cm^3 in code units
+    const Real u_B = B * B / (8.0 * con::pi);
+    return u_CMB / u_B;
+}
+
+inline Real compute_Thomson_Y(RadParams const& rad, Real gamma_m, Real gamma_c, Real B = 0.0, Real redshift = 0.0) {
     Real eta_e = eta_rad_Thomson(gamma_m, gamma_c, rad.p);
     Real b = eta_e * rad.eps_e / rad.eps_B;
-    return 0.5 * (std::sqrt(1. + 4. * b) - 1.);
+    Real Y_SSC = 0.5 * (std::sqrt(1. + 4. * b) - 1.);
+    Real Y_CMB = rad.cmb_cooling ? compute_CMB_Y(B, redshift) : 0.0;
+    return Y_SSC + Y_CMB;
 }
 
 Real compute_gamma_c(Real t_comv, Real B, Real Y);
@@ -588,10 +600,10 @@ size_t determine_regime(Real gamma_a, Real gamma_c, Real gamma_m);
 Real compute_gamma_0(Real Y0, Real gamma_m, Real gamma_m_hat);
 
 void update_gamma_c_Thomson(Real& gamma_c, InverseComptonY& Ys, RadParams const& rad, Real B, Real t_com, Real gamma_m,
-                            Real gamma_c_last);
+                            Real gamma_c_last, Real redshift = 0.0);
 
 void update_gamma_c_KN(Real& gamma_c, InverseComptonY& Ys, RadParams const& rad, Real B, Real t_com, Real gamma_m,
-                       Real gamma_c_last);
+                       Real gamma_c_last, Real redshift = 0.0);
 
 void update_gamma_M(Real& gamma_M, InverseComptonY const& Ys, Real p, Real B);
 
@@ -599,7 +611,7 @@ Real compute_syn_gamma(Real nu, Real B);
 
 template <typename Electrons, typename Photons, typename Updater>
 void IC_cooling(ElectronGrid<Electrons>& electrons, PhotonGrid<Photons>& photons, Shock const& shock,
-                Coord const& coord, Updater&& update_gamma_c) {
+                Coord const& coord, Updater&& update_gamma_c, Real redshift = 0.0) {
     const size_t phi_size = electrons.shape()[0];
     const size_t t_size = electrons.shape()[2];
 
@@ -618,7 +630,7 @@ void IC_cooling(ElectronGrid<Electrons>& electrons, PhotonGrid<Photons>& photons
                 const Real p = elec.p;
                 const Real gamma_c_last = electrons(i, j, k > 0 ? k - 1 : 0).gamma_c;
 
-                update_gamma_c(elec.gamma_c, Ys, shock.rad, B, t_com, elec.gamma_m, gamma_c_last);
+                update_gamma_c(elec.gamma_c, Ys, shock.rad, B, t_com, elec.gamma_m, gamma_c_last, redshift);
 
                 update_gamma_M(elec.gamma_M, Ys, p, B);
 
@@ -643,8 +655,8 @@ void IC_cooling(ElectronGrid<Electrons>& electrons, PhotonGrid<Photons>& photons
 
 template <typename Electrons, typename Photons>
 void Thomson_cooling(ElectronGrid<Electrons>& electrons, PhotonGrid<Photons>& photons, Shock const& shock,
-                     Coord const& coord) {
-    IC_cooling(electrons, photons, shock, coord, update_gamma_c_Thomson);
+                     Coord const& coord, Real redshift) {
+    IC_cooling(electrons, photons, shock, coord, update_gamma_c_Thomson, redshift);
 }
 
 template <typename Electrons, typename Photons>

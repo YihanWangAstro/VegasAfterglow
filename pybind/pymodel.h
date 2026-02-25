@@ -287,8 +287,9 @@ class PyRadiation {
      * @param kn Whether to include Klein-Nishina corrections for IC processes (default: false)
      * <!-- ************************************************************************************** -->
      */
-    PyRadiation(Real eps_e, Real eps_B, Real p, Real xi_e = 1, bool ssc = false, bool kn = false)
-        : rad(RadParams{eps_e, eps_B, p, xi_e}), ssc(ssc), kn(kn) {}
+    PyRadiation(Real eps_e, Real eps_B, Real p, Real xi_e = 1, bool ssc = false, bool kn = false,
+                bool cmb_cooling = false)
+        : rad(RadParams{eps_e, eps_B, p, xi_e, cmb_cooling}), ssc(ssc), kn(kn) {}
 
     RadParams rad;
     bool ssc{false}; ///< Whether to include SSC emission and IC cooling
@@ -306,6 +307,8 @@ class PyRadiation {
             s += ", ssc=True";
         if (kn)
             s += ", kn=True";
+        if (rad.cmb_cooling)
+            s += ", cmb_cooling=True";
         s += ")";
         return s;
     }
@@ -798,7 +801,7 @@ void PyModel::single_shock_emission(Shock const& shock, Coord const& coord, Arra
         if (rad.kn) {
             KN_cooling(syn_e, syn_ph, shock, coord);
         } else {
-            Thomson_cooling(syn_e, syn_ph, shock, coord);
+            Thomson_cooling(syn_e, syn_ph, shock, coord, obs_setup.z);
         }
     }
 
