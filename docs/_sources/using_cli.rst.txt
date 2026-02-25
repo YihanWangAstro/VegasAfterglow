@@ -23,6 +23,7 @@ Verify the installation:
 .. code-block:: bash
 
     vegasgen --help
+    vegasgen --version
 
 
 Basic Usage
@@ -182,6 +183,48 @@ Radiation Parameters
      - off
      - Enable CMB inverse Compton cooling
 
+Reverse Shock Parameters
+^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. list-table::
+   :header-rows: 1
+   :widths: 20 15 15 50
+
+   * - Argument
+     - Type
+     - Default
+     - Description
+   * - ``--rvs``
+     - flag
+     - off
+     - Enable reverse shock
+   * - ``--rvs_eps_e``
+     - float
+     - same as ``--eps_e``
+     - RS fraction of shock energy in electrons
+   * - ``--rvs_eps_B``
+     - float
+     - same as ``--eps_B``
+     - RS fraction of shock energy in magnetic field
+   * - ``--rvs_p``
+     - float
+     - same as ``--p``
+     - RS electron spectral index
+   * - ``--rvs_xi_e``
+     - float
+     - same as ``--xi_e``
+     - RS fraction of electrons accelerated
+   * - ``--rvs_ssc``
+     - flag
+     - off
+     - Enable RS synchrotron self-Compton
+   * - ``--rvs_kn``
+     - flag
+     - off
+     - Enable RS Klein-Nishina corrections (requires ``--rvs_ssc``)
+
+When ``--rvs`` is used without specifying individual RS parameters, they default to the forward shock values.
+
 Frequency Specification
 ^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -219,7 +262,7 @@ Time Grid
      - End time [s]
    * - ``--num_t``
      - int
-     - ``200``
+     - ``100``
      - Number of time points (logarithmically spaced)
 
 Resolution
@@ -273,6 +316,10 @@ Output Options
      - string
      - Times New Roman
      - Plot font family (e.g. ``Helvetica``, ``Palatino``). Sans-serif fonts are auto-detected
+   * - ``-v``, ``--version``
+     - flag
+     - \-
+     - Print version and exit
 
 
 .. _filter-names:
@@ -345,6 +392,12 @@ Produces:
     1.000000e+02,1.234567e-02,4.567890e+00,7.890123e-01
     ...
 
+When SSC or reverse shock is enabled, individual component columns are added per frequency:
+
+.. code-block:: text
+
+    t(s),F_total(radio),F_fwd_sync(radio),F_fwd_ssc(radio),F_total(optical),...
+
 JSON
 ^^^^
 
@@ -352,7 +405,7 @@ JSON
 
     vegasgen --format json -o lightcurve.json
 
-Produces a structured JSON object:
+Produces a structured JSON object with per-frequency component breakdown:
 
 .. code-block:: json
 
@@ -373,9 +426,24 @@ Produces a structured JSON object:
       "frequencies_Hz": [1e9, 5e14, 1e18],
       "times": [100.0, "..."],
       "flux": {
-        "radio": ["..."],
-        "optical": ["..."],
-        "xray": ["..."]
+        "radio": {"total": ["..."]},
+        "optical": {"total": ["..."]},
+        "xray": {"total": ["..."]}
+      }
+    }
+
+When SSC or reverse shock is enabled, each frequency entry includes the individual components:
+
+.. code-block:: json
+
+    {
+      "flux": {
+        "radio": {
+          "total": ["..."],
+          "fwd_sync": ["..."],
+          "fwd_ssc": ["..."],
+          "rvs_sync": ["..."]
+        }
       }
     }
 
@@ -410,6 +478,7 @@ Plot features:
 - **Context-aware frequency labels**: GHz for radio, nm for optical/IR, keV for X-ray, filter band names when applicable
 - **Parameter summary** displayed above the plot
 - **Single-column journal size** (3.5 in wide) suitable for direct inclusion in publications
+- **Component decomposition**: when SSC or reverse shock is enabled, individual components (FS sync, FS SSC, RS sync, RS SSC) are plotted as dashed/dotted lines alongside the total
 
 Supported output formats: ``.png``, ``.pdf``, ``.jpg``, ``.svg``. If ``-o`` is not specified or does not end in a recognized image extension, an interactive matplotlib window is shown.
 
@@ -464,6 +533,24 @@ Synchrotron self-Compton with Klein-Nishina
 
     vegasgen --ssc --kn --plot
 
+Output includes individual components (``fwd_sync``, ``fwd_ssc``) alongside the total flux. On plots, components are shown as dashed/dotted lines.
+
+Reverse shock
+^^^^^^^^^^^^^
+
+.. code-block:: bash
+
+    # RS with same microphysics as forward shock
+    vegasgen --rvs --plot
+
+    # RS with different microphysics
+    vegasgen --rvs --rvs_eps_B 0.1 --rvs_p 2.5 --plot
+
+    # SSC on both shocks
+    vegasgen --ssc --rvs --rvs_ssc --plot
+
+When ``--rvs`` is set, forward and reverse shock components (``fwd_sync``, ``rvs_sync``, etc.) are included in the output.
+
 Custom frequency bands
 ^^^^^^^^^^^^^^^^^^^^^^
 
@@ -494,9 +581,9 @@ Higher resolution
 
 .. code-block:: bash
 
-    vegasgen --res 0.1 0.3 20
+    vegasgen --res 0.3 1.0 20
 
-Sets finer angular (phi=0.1, theta=0.3 points per degree) and temporal (20 points per decade) resolution.
+Sets finer angular (phi=0.3, theta=1.0 points per degree) and temporal (20 points per decade) resolution compared to the defaults (0.15, 0.5, 10). Larger values mean more grid points and higher accuracy.
 
 Output in different formats and units
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^

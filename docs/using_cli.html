@@ -61,6 +61,7 @@
 <li class="toctree-l3"><a class="reference internal" href="#medium-parameters">Medium Parameters</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#observer-parameters">Observer Parameters</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#radiation-parameters">Radiation Parameters</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#reverse-shock-parameters">Reverse Shock Parameters</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#frequency-specification">Frequency Specification</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#time-grid">Time Grid</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#resolution">Resolution</a></li>
@@ -80,6 +81,7 @@
 <li class="toctree-l3"><a class="reference internal" href="#different-jet-structures">Different jet structures</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#wind-medium">Wind medium</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#synchrotron-self-compton-with-klein-nishina">Synchrotron self-Compton with Klein-Nishina</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#reverse-shock">Reverse shock</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#custom-frequency-bands">Custom frequency bands</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#custom-time-range-and-units">Custom time range and units</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#higher-resolution">Higher resolution</a></li>
@@ -139,6 +141,7 @@
 </div>
 <p>Verify the installation:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>vegasgen<span class="w"> </span>--help
+vegasgen<span class="w"> </span>--version
 </pre></div>
 </div>
 </section>
@@ -342,6 +345,62 @@ vegasgen<span class="w"> </span>--plot<span class="w"> </span>-o<span class="w">
 </tbody>
 </table>
 </section>
+<section id="reverse-shock-parameters">
+<h3>Reverse Shock Parameters<a class="headerlink" href="#reverse-shock-parameters" title="Link to this heading"></a></h3>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 20.0%" />
+<col style="width: 15.0%" />
+<col style="width: 15.0%" />
+<col style="width: 50.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Argument</p></th>
+<th class="head"><p>Type</p></th>
+<th class="head"><p>Default</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">--rvs</span></code></p></td>
+<td><p>flag</p></td>
+<td><p>off</p></td>
+<td><p>Enable reverse shock</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">--rvs_eps_e</span></code></p></td>
+<td><p>float</p></td>
+<td><p>same as <code class="docutils literal notranslate"><span class="pre">--eps_e</span></code></p></td>
+<td><p>RS fraction of shock energy in electrons</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">--rvs_eps_B</span></code></p></td>
+<td><p>float</p></td>
+<td><p>same as <code class="docutils literal notranslate"><span class="pre">--eps_B</span></code></p></td>
+<td><p>RS fraction of shock energy in magnetic field</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">--rvs_p</span></code></p></td>
+<td><p>float</p></td>
+<td><p>same as <code class="docutils literal notranslate"><span class="pre">--p</span></code></p></td>
+<td><p>RS electron spectral index</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">--rvs_xi_e</span></code></p></td>
+<td><p>float</p></td>
+<td><p>same as <code class="docutils literal notranslate"><span class="pre">--xi_e</span></code></p></td>
+<td><p>RS fraction of electrons accelerated</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">--rvs_ssc</span></code></p></td>
+<td><p>flag</p></td>
+<td><p>off</p></td>
+<td><p>Enable RS synchrotron self-Compton</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">--rvs_kn</span></code></p></td>
+<td><p>flag</p></td>
+<td><p>off</p></td>
+<td><p>Enable RS Klein-Nishina corrections (requires <code class="docutils literal notranslate"><span class="pre">--rvs_ssc</span></code>)</p></td>
+</tr>
+</tbody>
+</table>
+<p>When <code class="docutils literal notranslate"><span class="pre">--rvs</span></code> is used without specifying individual RS parameters, they default to the forward shock values.</p>
+</section>
 <section id="frequency-specification">
 <h3>Frequency Specification<a class="headerlink" href="#frequency-specification" title="Link to this heading"></a></h3>
 <table class="docutils align-default">
@@ -396,7 +455,7 @@ vegasgen<span class="w"> </span>--plot<span class="w"> </span>-o<span class="w">
 </tr>
 <tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">--num_t</span></code></p></td>
 <td><p>int</p></td>
-<td><p><code class="docutils literal notranslate"><span class="pre">200</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">100</span></code></p></td>
 <td><p>Number of time points (logarithmically spaced)</p></td>
 </tr>
 </tbody>
@@ -473,6 +532,11 @@ vegasgen<span class="w"> </span>--plot<span class="w"> </span>-o<span class="w">
 <td><p>string</p></td>
 <td><p>Times New Roman</p></td>
 <td><p>Plot font family (e.g. <code class="docutils literal notranslate"><span class="pre">Helvetica</span></code>, <code class="docutils literal notranslate"><span class="pre">Palatino</span></code>). Sans-serif fonts are auto-detected</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">-v</span></code>, <code class="docutils literal notranslate"><span class="pre">--version</span></code></p></td>
+<td><p>flag</p></td>
+<td><p>-</p></td>
+<td><p>Print version and exit</p></td>
 </tr>
 </tbody>
 </table>
@@ -552,13 +616,17 @@ t(s),F_total(radio),F_total(optical),F_total(xray)
 ...
 </pre></div>
 </div>
+<p>When SSC or reverse shock is enabled, individual component columns are added per frequency:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>t(s),F_total(radio),F_fwd_sync(radio),F_fwd_ssc(radio),F_total(optical),...
+</pre></div>
+</div>
 </section>
 <section id="json">
 <h3>JSON<a class="headerlink" href="#json" title="Link to this heading"></a></h3>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>vegasgen<span class="w"> </span>--format<span class="w"> </span>json<span class="w"> </span>-o<span class="w"> </span>lightcurve.json
 </pre></div>
 </div>
-<p>Produces a structured JSON object:</p>
+<p>Produces a structured JSON object with per-frequency component breakdown:</p>
 <div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
 <span class="w">  </span><span class="nt">&quot;parameters&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
 <span class="w">    </span><span class="nt">&quot;jet&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;tophat&quot;</span><span class="p">,</span>
@@ -576,9 +644,22 @@ t(s),F_total(radio),F_total(optical),F_total(xray)
 <span class="w">  </span><span class="nt">&quot;frequencies_Hz&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mf">1e9</span><span class="p">,</span><span class="w"> </span><span class="mf">5e14</span><span class="p">,</span><span class="w"> </span><span class="mf">1e18</span><span class="p">],</span>
 <span class="w">  </span><span class="nt">&quot;times&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mf">100.0</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;...&quot;</span><span class="p">],</span>
 <span class="w">  </span><span class="nt">&quot;flux&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nt">&quot;radio&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;...&quot;</span><span class="p">],</span>
-<span class="w">    </span><span class="nt">&quot;optical&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;...&quot;</span><span class="p">],</span>
-<span class="w">    </span><span class="nt">&quot;xray&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;...&quot;</span><span class="p">]</span>
+<span class="w">    </span><span class="nt">&quot;radio&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;total&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;...&quot;</span><span class="p">]},</span>
+<span class="w">    </span><span class="nt">&quot;optical&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;total&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;...&quot;</span><span class="p">]},</span>
+<span class="w">    </span><span class="nt">&quot;xray&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;total&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;...&quot;</span><span class="p">]}</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>When SSC or reverse shock is enabled, each frequency entry includes the individual components:</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;flux&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;radio&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">&quot;total&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;...&quot;</span><span class="p">],</span>
+<span class="w">      </span><span class="nt">&quot;fwd_sync&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;...&quot;</span><span class="p">],</span>
+<span class="w">      </span><span class="nt">&quot;fwd_ssc&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;...&quot;</span><span class="p">],</span>
+<span class="w">      </span><span class="nt">&quot;rvs_sync&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;...&quot;</span><span class="p">]</span>
+<span class="w">    </span><span class="p">}</span>
 <span class="w">  </span><span class="p">}</span>
 <span class="p">}</span>
 </pre></div>
@@ -610,6 +691,7 @@ vegasgen<span class="w"> </span>--plot<span class="w"> </span>--font<span class=
 <li><p><strong>Context-aware frequency labels</strong>: GHz for radio, nm for optical/IR, keV for X-ray, filter band names when applicable</p></li>
 <li><p><strong>Parameter summary</strong> displayed above the plot</p></li>
 <li><p><strong>Single-column journal size</strong> (3.5 in wide) suitable for direct inclusion in publications</p></li>
+<li><p><strong>Component decomposition</strong>: when SSC or reverse shock is enabled, individual components (FS sync, FS SSC, RS sync, RS SSC) are plotted as dashed/dotted lines alongside the total</p></li>
 </ul>
 <p>Supported output formats: <code class="docutils literal notranslate"><span class="pre">.png</span></code>, <code class="docutils literal notranslate"><span class="pre">.pdf</span></code>, <code class="docutils literal notranslate"><span class="pre">.jpg</span></code>, <code class="docutils literal notranslate"><span class="pre">.svg</span></code>. If <code class="docutils literal notranslate"><span class="pre">-o</span></code> is not specified or does not end in a recognized image extension, an interactive matplotlib window is shown.</p>
 <div class="admonition note">
@@ -654,6 +736,21 @@ vegasgen<span class="w"> </span>--jet<span class="w"> </span>powerlaw<span class
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>vegasgen<span class="w"> </span>--ssc<span class="w"> </span>--kn<span class="w"> </span>--plot
 </pre></div>
 </div>
+<p>Output includes individual components (<code class="docutils literal notranslate"><span class="pre">fwd_sync</span></code>, <code class="docutils literal notranslate"><span class="pre">fwd_ssc</span></code>) alongside the total flux. On plots, components are shown as dashed/dotted lines.</p>
+</section>
+<section id="reverse-shock">
+<h3>Reverse shock<a class="headerlink" href="#reverse-shock" title="Link to this heading"></a></h3>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># RS with same microphysics as forward shock</span>
+vegasgen<span class="w"> </span>--rvs<span class="w"> </span>--plot
+
+<span class="c1"># RS with different microphysics</span>
+vegasgen<span class="w"> </span>--rvs<span class="w"> </span>--rvs_eps_B<span class="w"> </span><span class="m">0</span>.1<span class="w"> </span>--rvs_p<span class="w"> </span><span class="m">2</span>.5<span class="w"> </span>--plot
+
+<span class="c1"># SSC on both shocks</span>
+vegasgen<span class="w"> </span>--ssc<span class="w"> </span>--rvs<span class="w"> </span>--rvs_ssc<span class="w"> </span>--plot
+</pre></div>
+</div>
+<p>When <code class="docutils literal notranslate"><span class="pre">--rvs</span></code> is set, forward and reverse shock components (<code class="docutils literal notranslate"><span class="pre">fwd_sync</span></code>, <code class="docutils literal notranslate"><span class="pre">rvs_sync</span></code>, etc.) are included in the output.</p>
 </section>
 <section id="custom-frequency-bands">
 <h3>Custom frequency bands<a class="headerlink" href="#custom-frequency-bands" title="Link to this heading"></a></h3>
@@ -680,10 +777,10 @@ vegasgen<span class="w"> </span>--t_min<span class="w"> </span><span class="m">8
 </section>
 <section id="higher-resolution">
 <h3>Higher resolution<a class="headerlink" href="#higher-resolution" title="Link to this heading"></a></h3>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>vegasgen<span class="w"> </span>--res<span class="w"> </span><span class="m">0</span>.1<span class="w"> </span><span class="m">0</span>.3<span class="w"> </span><span class="m">20</span>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>vegasgen<span class="w"> </span>--res<span class="w"> </span><span class="m">0</span>.3<span class="w"> </span><span class="m">1</span>.0<span class="w"> </span><span class="m">20</span>
 </pre></div>
 </div>
-<p>Sets finer angular (phi=0.1, theta=0.3 points per degree) and temporal (20 points per decade) resolution.</p>
+<p>Sets finer angular (phi=0.3, theta=1.0 points per degree) and temporal (20 points per decade) resolution compared to the defaults (0.15, 0.5, 10). Larger values mean more grid points and higher accuracy.</p>
 </section>
 <section id="output-in-different-formats-and-units">
 <h3>Output in different formats and units<a class="headerlink" href="#output-in-different-formats-and-units" title="Link to this heading"></a></h3>
