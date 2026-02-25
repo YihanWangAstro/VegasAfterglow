@@ -292,7 +292,7 @@ bool Observer::set_boundaries(InterpState& state, size_t eff_i, size_t i, size_t
     if (state.last_hi != 0 && k == state.last_hi && lg2_nu_src == state.last_lg2_nu) {
         state.lg2_L_nu_lo = state.lg2_L_nu_hi;
     } else {
-        Real lg2_nu_lo = -lg2_doppler(i, j, k);
+        Real lg2_nu_lo = lg2_nu_src - lg2_doppler(i, j, k);
         state.lg2_L_nu_lo = photons(eff_i, j, k).compute_log2_I_nu(lg2_nu_lo) + lg2_geom_factor(i, j, k);
     }
 
