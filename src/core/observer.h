@@ -419,13 +419,12 @@ MeshGrid Observer::spectra(Array const& freqs, Array const& t_obs, PhotonGrid& p
 
 template <typename PhotonGrid>
 Array Observer::flux(Array const& t_obs, Array const& band_freq, PhotonGrid& photons) {
-    Array nu_obs = boundary_to_center_log(band_freq);
-    MeshGrid F_nu = specific_flux(t_obs, nu_obs, photons);
+    MeshGrid F_nu = specific_flux(t_obs, band_freq, photons);
     Array flux({t_obs.size()}, 0);
-    for (size_t i = 0; i < nu_obs.size(); ++i) {
+    for (size_t i = 0; i < band_freq.size() - 1; ++i) {
         const Real dnu = band_freq(i + 1) - band_freq(i);
         for (size_t j = 0; j < flux.size(); ++j) {
-            flux(j) += dnu * F_nu(i, j);
+            flux(j) += 0.5 * (F_nu(i, j) + F_nu(i + 1, j)) * dnu;
         }
     }
     return flux;
