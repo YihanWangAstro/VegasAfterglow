@@ -53,6 +53,7 @@
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="quickstart.html">Quickstart</a></li>
+<li class="toctree-l1"><a class="reference internal" href="using_cli.html">Command-Line Interface (<code class="docutils literal notranslate"><span class="pre">vegasgen</span></code>)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="examples.html">Examples</a></li>
 <li class="toctree-l1"><a class="reference internal" href="mcmc_fitting.html">MCMC Parameter Fitting</a></li>
 <li class="toctree-l1"><a class="reference internal" href="redback_integration.html">Parameter Estimation with Redback</a></li>
@@ -133,9 +134,9 @@ python<span class="w"> </span>validation/run_validation.py<span class="w"> </spa
 <li><p><strong>Performance Timing</strong>: Execution time for various jet/medium/radiation configurations</p></li>
 <li><p><strong>Resolution Convergence</strong>: Convergence analysis in three dimensions:</p>
 <ul>
-<li><p><strong>Phi (azimuthal)</strong>: Tests values from 0.1 to 0.5 radians</p></li>
-<li><p><strong>Theta (polar)</strong>: Tests values from 0.2 to 1.0 radians</p></li>
-<li><p><strong>Time</strong>: Tests values from 5 to 25 points per decade</p></li>
+<li><p><strong>Phi (azimuthal)</strong>: Tests values from 0.15 to 0.3 radians</p></li>
+<li><p><strong>Theta (polar)</strong>: Tests values from 0.5 to 1.25 radians</p></li>
+<li><p><strong>Time</strong>: Tests values from 10 to 25 points per decade</p></li>
 </ul>
 </li>
 <li><p><strong>Configuration Matrix</strong>: All combinations of jet types (tophat, gaussian, powerlaw), media (ISM, wind), and viewing angles</p></li>
@@ -151,11 +152,11 @@ python<span class="w"> </span>validation/run_validation.py<span class="w"> </spa
 <tbody>
 <tr class="row-even"><td><p>PASS</p></td>
 <td><p>&lt; 5%</p></td>
-<td><p>&lt; 10%</p></td>
+<td><p>&lt; 15%</p></td>
 </tr>
 <tr class="row-odd"><td><p>ACCEPTABLE</p></td>
 <td><p>&lt; 5%</p></td>
-<td><p>&gt;= 10%</p></td>
+<td><p>&gt;= 15%</p></td>
 </tr>
 <tr class="row-even"><td><p>FAIL</p></td>
 <td><p>&gt;= 5%</p></td>

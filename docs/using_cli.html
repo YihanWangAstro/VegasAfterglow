@@ -1,0 +1,732 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Command-Line Interface (vegasgen) &mdash; VegasAfterglow 0.1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=20074c1a" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="_static/graphviz.css?v=fd3f3429" />
+      <link rel="stylesheet" type="text/css" href="_static/css/custom.css?v=c0df17a3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/custom.css?v=c0df17a3" />
+
+  
+    <link rel="shortcut icon" href="_static/logo.svg"/>
+    <link rel="canonical" href="https://yihanwangastro.github.io/VegasAfterglow/docs/using_cli.html" />
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=01f34227"></script>
+      <script src="_static/doctools.js?v=9a2dae69"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="_static/js/custom.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Examples" href="examples.html" />
+    <link rel="prev" title="Quickstart" href="quickstart.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            VegasAfterglow
+              <img src="_static/logo.svg" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="quickstart.html">Quickstart</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Command-Line Interface (<code class="docutils literal notranslate"><span class="pre">vegasgen</span></code>)</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#installation">Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#basic-usage">Basic Usage</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#parameter-reference">Parameter Reference</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#jet-parameters">Jet Parameters</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#medium-parameters">Medium Parameters</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#observer-parameters">Observer Parameters</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#radiation-parameters">Radiation Parameters</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#frequency-specification">Frequency Specification</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#time-grid">Time Grid</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#resolution">Resolution</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#output-options">Output Options</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#frequency-filters">Frequency Filters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#output-formats">Output Formats</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#csv-default">CSV (default)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#json">JSON</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#plotting">Plotting</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#examples">Examples</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#default-on-axis-light-curve">Default on-axis light curve</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#off-axis-observer">Off-axis observer</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#different-jet-structures">Different jet structures</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#wind-medium">Wind medium</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#synchrotron-self-compton-with-klein-nishina">Synchrotron self-Compton with Klein-Nishina</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#custom-frequency-bands">Custom frequency bands</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#custom-time-range-and-units">Custom time range and units</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#higher-resolution">Higher resolution</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#output-in-different-formats-and-units">Output in different formats and units</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="examples.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="mcmc_fitting.html">MCMC Parameter Fitting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="redback_integration.html">Parameter Estimation with Redback</a></li>
+<li class="toctree-l1"><a class="reference internal" href="parameter_reference.html">Parameter Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="validation.html">Validation &amp; Testing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="python_api.html">Python API Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cpp_api.html">C++ API Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="troubleshooting.html">Troubleshooting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contributing.html">Contributing</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">VegasAfterglow</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Command-Line Interface (<code class="docutils literal notranslate"><span class="pre">vegasgen</span></code>)</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/using_cli.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="command-line-interface-vegasgen">
+<h1>Command-Line Interface (<code class="docutils literal notranslate"><span class="pre">vegasgen</span></code>)<a class="headerlink" href="#command-line-interface-vegasgen" title="Link to this heading"></a></h1>
+<p>VegasAfterglow includes a command-line tool, <code class="docutils literal notranslate"><span class="pre">vegasgen</span></code>, that generates multi-band afterglow light curves directly from the terminal. It provides quick access to the full physics engine without writing any Python code.</p>
+<p>When to use the CLI vs the Python API:</p>
+<ul class="simple">
+<li><p><strong>CLI</strong> — Quick exploration, parameter sweeps from shell scripts, generating CSV/JSON data or publication-quality plots with a single command.</p></li>
+<li><p><strong>Python API</strong> — Custom analysis pipelines, MCMC fitting, accessing internal quantities (shock dynamics, spectra), or integrating with other Python libraries.</p></li>
+</ul>
+<section id="installation">
+<h2>Installation<a class="headerlink" href="#installation" title="Link to this heading"></a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">vegasgen</span></code> is installed automatically with the package:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span>VegasAfterglow
+</pre></div>
+</div>
+<p>Verify the installation:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>vegasgen<span class="w"> </span>--help
+</pre></div>
+</div>
+</section>
+<section id="basic-usage">
+<h2>Basic Usage<a class="headerlink" href="#basic-usage" title="Link to this heading"></a></h2>
+<p>With no arguments, <code class="docutils literal notranslate"><span class="pre">vegasgen</span></code> computes a light curve using sensible defaults (top-hat jet, ISM medium, on-axis observer) and prints CSV data to stdout:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>vegasgen
+</pre></div>
+</div>
+<p>Pipe to a file or redirect output:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>vegasgen<span class="w"> </span>&gt;<span class="w"> </span>lightcurve.csv
+vegasgen<span class="w"> </span>-o<span class="w"> </span>lightcurve.csv
+</pre></div>
+</div>
+<p>Generate a plot instead of data:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>vegasgen<span class="w"> </span>--plot<span class="w">                    </span><span class="c1"># interactive window</span>
+vegasgen<span class="w"> </span>--plot<span class="w"> </span>-o<span class="w"> </span>lightcurve.png<span class="w">  </span><span class="c1"># save to file</span>
+</pre></div>
+</div>
+</section>
+<section id="parameter-reference">
+<h2>Parameter Reference<a class="headerlink" href="#parameter-reference" title="Link to this heading"></a></h2>
+<p>All parameters have defaults, so you only need to specify what you want to change.</p>
+<section id="jet-parameters">
+<h3>Jet Parameters<a class="headerlink" href="#jet-parameters" title="Link to this heading"></a></h3>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 20.0%" />
+<col style="width: 15.0%" />
+<col style="width: 15.0%" />
+<col style="width: 50.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Argument</p></th>
+<th class="head"><p>Type</p></th>
+<th class="head"><p>Default</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">--jet</span></code></p></td>
+<td><p>choice</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">tophat</span></code></p></td>
+<td><p>Jet structure: <code class="docutils literal notranslate"><span class="pre">tophat</span></code>, <code class="docutils literal notranslate"><span class="pre">gaussian</span></code>, or <code class="docutils literal notranslate"><span class="pre">powerlaw</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">--theta_c</span></code></p></td>
+<td><p>float</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">0.1</span></code></p></td>
+<td><p>Half-opening angle [rad]</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">--E_iso</span></code></p></td>
+<td><p>float</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">1e52</span></code></p></td>
+<td><p>Isotropic-equivalent energy [erg]</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">--Gamma0</span></code></p></td>
+<td><p>float</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">300</span></code></p></td>
+<td><p>Initial Lorentz factor</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">--k_e</span></code></p></td>
+<td><p>float</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">2</span></code></p></td>
+<td><p>Energy power-law index (<code class="docutils literal notranslate"><span class="pre">powerlaw</span></code> jet only)</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">--k_g</span></code></p></td>
+<td><p>float</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">2</span></code></p></td>
+<td><p>Lorentz factor power-law index (<code class="docutils literal notranslate"><span class="pre">powerlaw</span></code> jet only)</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">--spreading</span></code></p></td>
+<td><p>flag</p></td>
+<td><p>off</p></td>
+<td><p>Enable lateral spreading</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="medium-parameters">
+<h3>Medium Parameters<a class="headerlink" href="#medium-parameters" title="Link to this heading"></a></h3>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 20.0%" />
+<col style="width: 15.0%" />
+<col style="width: 15.0%" />
+<col style="width: 50.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Argument</p></th>
+<th class="head"><p>Type</p></th>
+<th class="head"><p>Default</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">--medium</span></code></p></td>
+<td><p>choice</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">ism</span></code></p></td>
+<td><p>Circumburst medium: <code class="docutils literal notranslate"><span class="pre">ism</span></code> or <code class="docutils literal notranslate"><span class="pre">wind</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">--n_ism</span></code></p></td>
+<td><p>float</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">1.0</span></code></p></td>
+<td><p>ISM number density [cm<sup>-3</sup>]</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">--A_star</span></code></p></td>
+<td><p>float</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">0.1</span></code></p></td>
+<td><p>Wind parameter A<sub>*</sub></p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="observer-parameters">
+<h3>Observer Parameters<a class="headerlink" href="#observer-parameters" title="Link to this heading"></a></h3>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 20.0%" />
+<col style="width: 15.0%" />
+<col style="width: 15.0%" />
+<col style="width: 50.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Argument</p></th>
+<th class="head"><p>Type</p></th>
+<th class="head"><p>Default</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">--z</span></code></p></td>
+<td><p>float</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">0.01</span></code></p></td>
+<td><p>Redshift</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">--lumi_dist</span></code></p></td>
+<td><p>float</p></td>
+<td><p>auto</p></td>
+<td><p>Luminosity distance [cm]. If omitted, estimated from redshift using a Hubble-law approximation</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">--theta_obs</span></code></p></td>
+<td><p>float</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">0</span></code></p></td>
+<td><p>Observer viewing angle [rad]</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="radiation-parameters">
+<h3>Radiation Parameters<a class="headerlink" href="#radiation-parameters" title="Link to this heading"></a></h3>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 20.0%" />
+<col style="width: 15.0%" />
+<col style="width: 15.0%" />
+<col style="width: 50.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Argument</p></th>
+<th class="head"><p>Type</p></th>
+<th class="head"><p>Default</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">--eps_e</span></code></p></td>
+<td><p>float</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">0.1</span></code></p></td>
+<td><p>Fraction of shock energy in electrons</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">--eps_B</span></code></p></td>
+<td><p>float</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">1e-3</span></code></p></td>
+<td><p>Fraction of shock energy in magnetic field</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">--p</span></code></p></td>
+<td><p>float</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">2.3</span></code></p></td>
+<td><p>Electron spectral index</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">--xi_e</span></code></p></td>
+<td><p>float</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">1</span></code></p></td>
+<td><p>Fraction of electrons accelerated</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">--ssc</span></code></p></td>
+<td><p>flag</p></td>
+<td><p>off</p></td>
+<td><p>Enable synchrotron self-Compton</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">--kn</span></code></p></td>
+<td><p>flag</p></td>
+<td><p>off</p></td>
+<td><p>Enable Klein-Nishina corrections (requires <code class="docutils literal notranslate"><span class="pre">--ssc</span></code>)</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">--cmb_cooling</span></code></p></td>
+<td><p>flag</p></td>
+<td><p>off</p></td>
+<td><p>Enable CMB inverse Compton cooling</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="frequency-specification">
+<h3>Frequency Specification<a class="headerlink" href="#frequency-specification" title="Link to this heading"></a></h3>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 20.0%" />
+<col style="width: 15.0%" />
+<col style="width: 15.0%" />
+<col style="width: 50.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Argument</p></th>
+<th class="head"><p>Type</p></th>
+<th class="head"><p>Default</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">--nu</span></code></p></td>
+<td><p>list</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">1e9</span> <span class="pre">5e14</span> <span class="pre">1e18</span></code></p></td>
+<td><p>One or more frequencies. Accepts numeric Hz values or filter names (see <a class="reference internal" href="#filter-names"><span class="std std-ref">Frequency Filters</span></a>)</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="time-grid">
+<h3>Time Grid<a class="headerlink" href="#time-grid" title="Link to this heading"></a></h3>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 20.0%" />
+<col style="width: 15.0%" />
+<col style="width: 15.0%" />
+<col style="width: 50.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Argument</p></th>
+<th class="head"><p>Type</p></th>
+<th class="head"><p>Default</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">--t_min</span></code></p></td>
+<td><p>float</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">100</span></code></p></td>
+<td><p>Start time [s]</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">--t_max</span></code></p></td>
+<td><p>float</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">1e8</span></code></p></td>
+<td><p>End time [s]</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">--num_t</span></code></p></td>
+<td><p>int</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">200</span></code></p></td>
+<td><p>Number of time points (logarithmically spaced)</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="resolution">
+<h3>Resolution<a class="headerlink" href="#resolution" title="Link to this heading"></a></h3>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 20.0%" />
+<col style="width: 15.0%" />
+<col style="width: 15.0%" />
+<col style="width: 50.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Argument</p></th>
+<th class="head"><p>Type</p></th>
+<th class="head"><p>Default</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">--res</span> <span class="pre">PHI</span> <span class="pre">THETA</span> <span class="pre">T</span></code></p></td>
+<td><p>3 floats</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">0.15</span> <span class="pre">0.5</span> <span class="pre">10</span></code></p></td>
+<td><p>Grid resolution: phi points per degree, theta points per degree, time points per decade</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="output-options">
+<h3>Output Options<a class="headerlink" href="#output-options" title="Link to this heading"></a></h3>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 20.0%" />
+<col style="width: 15.0%" />
+<col style="width: 15.0%" />
+<col style="width: 50.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Argument</p></th>
+<th class="head"><p>Type</p></th>
+<th class="head"><p>Default</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">-o</span></code>, <code class="docutils literal notranslate"><span class="pre">--output</span></code></p></td>
+<td><p>path</p></td>
+<td><p>stdout</p></td>
+<td><p>Output file path</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">--format</span></code></p></td>
+<td><p>choice</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">csv</span></code></p></td>
+<td><p>Data format: <code class="docutils literal notranslate"><span class="pre">csv</span></code> or <code class="docutils literal notranslate"><span class="pre">json</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">--flux_unit</span></code></p></td>
+<td><p>choice</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">mJy</span></code></p></td>
+<td><p>Flux unit: <code class="docutils literal notranslate"><span class="pre">mJy</span></code>, <code class="docutils literal notranslate"><span class="pre">Jy</span></code>, <code class="docutils literal notranslate"><span class="pre">uJy</span></code>, or <code class="docutils literal notranslate"><span class="pre">cgs</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">--time_unit</span></code></p></td>
+<td><p>choice</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">s</span></code></p></td>
+<td><p>Time unit: <code class="docutils literal notranslate"><span class="pre">s</span></code>, <code class="docutils literal notranslate"><span class="pre">day</span></code>, <code class="docutils literal notranslate"><span class="pre">hr</span></code>, or <code class="docutils literal notranslate"><span class="pre">min</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">--plot</span></code></p></td>
+<td><p>flag</p></td>
+<td><p>off</p></td>
+<td><p>Generate a plot instead of data output</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">--font</span></code></p></td>
+<td><p>string</p></td>
+<td><p>Times New Roman</p></td>
+<td><p>Plot font family (e.g. <code class="docutils literal notranslate"><span class="pre">Helvetica</span></code>, <code class="docutils literal notranslate"><span class="pre">Palatino</span></code>). Sans-serif fonts are auto-detected</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="frequency-filters">
+<span id="filter-names"></span><h2>Frequency Filters<a class="headerlink" href="#frequency-filters" title="Link to this heading"></a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">--nu</span></code> argument accepts both numeric Hz values and standard photometric filter names. You can freely mix them:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>vegasgen<span class="w"> </span>--nu<span class="w"> </span>1e9<span class="w"> </span>R<span class="w"> </span>F606W
+</pre></div>
+</div>
+<p>Available filter names:</p>
+<p><strong>Vega system (Johnson-Cousins, 2MASS, Swift UVOT)</strong></p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 30.0%" />
+<col style="width: 35.0%" />
+<col style="width: 35.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>System</p></th>
+<th class="head"><p>Filters</p></th>
+<th class="head"><p>Reference</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Johnson-Cousins</p></td>
+<td><p>U, B, V, R, I</p></td>
+<td><p>Bessell &amp; Murphy (2012)</p></td>
+</tr>
+<tr class="row-odd"><td><p>2MASS</p></td>
+<td><p>J, H, Ks</p></td>
+<td><p>Cohen et al. (2003)</p></td>
+</tr>
+<tr class="row-even"><td><p>Swift UVOT</p></td>
+<td><p>v, b, u, uvw1, uvm2, uvw2</p></td>
+<td><p>Breeveld et al. (2011)</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>ST system (HST WFC3)</strong></p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 30.0%" />
+<col style="width: 70.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Instrument</p></th>
+<th class="head"><p>Filters</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>WFC3/UVIS</p></td>
+<td><p>F225W, F275W, F336W, F438W, F475W, F555W, F606W, F625W, F775W, F814W, F850LP</p></td>
+</tr>
+<tr class="row-odd"><td><p>WFC3/IR</p></td>
+<td><p>F105W, F110W, F125W, F140W, F160W</p></td>
+</tr>
+</tbody>
+</table>
+<p>Each filter name is converted to an effective frequency using its tabulated wavelength.</p>
+</section>
+<section id="output-formats">
+<h2>Output Formats<a class="headerlink" href="#output-formats" title="Link to this heading"></a></h2>
+<section id="csv-default">
+<h3>CSV (default)<a class="headerlink" href="#csv-default" title="Link to this heading"></a></h3>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>vegasgen<span class="w"> </span>-o<span class="w"> </span>lightcurve.csv
+</pre></div>
+</div>
+<p>Produces:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span># VegasAfterglow light curve
+# jet=tophat theta_c=0.1 E_iso=1.0e+52 Gamma0=300.0 medium=ism z=0.01 theta_obs=0
+# eps_e=0.1 eps_B=0.001 p=2.3
+# t_unit=s flux_unit=mJy
+t(s),F_total(radio),F_total(optical),F_total(xray)
+1.000000e+02,1.234567e-02,4.567890e+00,7.890123e-01
+...
+</pre></div>
+</div>
+</section>
+<section id="json">
+<h3>JSON<a class="headerlink" href="#json" title="Link to this heading"></a></h3>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>vegasgen<span class="w"> </span>--format<span class="w"> </span>json<span class="w"> </span>-o<span class="w"> </span>lightcurve.json
+</pre></div>
+</div>
+<p>Produces a structured JSON object:</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;parameters&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;jet&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;tophat&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;theta_c&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">0.1</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;E_iso&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">1e52</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;Gamma0&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">300.0</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;medium&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;ism&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;z&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">0.01</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;theta_obs&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;eps_e&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">0.1</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;eps_B&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">0.001</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;p&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">2.3</span>
+<span class="w">  </span><span class="p">},</span>
+<span class="w">  </span><span class="nt">&quot;units&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;time&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;s&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;flux&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;mJy&quot;</span><span class="p">},</span>
+<span class="w">  </span><span class="nt">&quot;frequencies_Hz&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mf">1e9</span><span class="p">,</span><span class="w"> </span><span class="mf">5e14</span><span class="p">,</span><span class="w"> </span><span class="mf">1e18</span><span class="p">],</span>
+<span class="w">  </span><span class="nt">&quot;times&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mf">100.0</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;...&quot;</span><span class="p">],</span>
+<span class="w">  </span><span class="nt">&quot;flux&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;radio&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;...&quot;</span><span class="p">],</span>
+<span class="w">    </span><span class="nt">&quot;optical&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;...&quot;</span><span class="p">],</span>
+<span class="w">    </span><span class="nt">&quot;xray&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;...&quot;</span><span class="p">]</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="plotting">
+<h2>Plotting<a class="headerlink" href="#plotting" title="Link to this heading"></a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">--plot</span></code> flag generates publication-quality figures using matplotlib.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Interactive display</span>
+vegasgen<span class="w"> </span>--plot
+
+<span class="c1"># Save to file (PNG at 300 DPI, or PDF/SVG as vector)</span>
+vegasgen<span class="w"> </span>--plot<span class="w"> </span>-o<span class="w"> </span>lightcurve.png
+vegasgen<span class="w"> </span>--plot<span class="w"> </span>-o<span class="w"> </span>lightcurve.pdf
+</pre></div>
+</div>
+<p>Plot features:</p>
+<ul>
+<li><p><strong>VegasAfterglow signature palette</strong> — a vibrant, high-contrast color scheme designed for multi-band light curves</p></li>
+<li><p><strong>Times New Roman</strong> font by default, with LaTeX rendering. Change with <code class="docutils literal notranslate"><span class="pre">--font</span></code>:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>vegasgen<span class="w"> </span>--plot<span class="w"> </span>--font<span class="w"> </span><span class="s2">&quot;Helvetica&quot;</span>
+vegasgen<span class="w"> </span>--plot<span class="w"> </span>--font<span class="w"> </span><span class="s2">&quot;Palatino&quot;</span>
+</pre></div>
+</div>
+<p>Sans-serif fonts (Helvetica, Arial, etc.) are auto-detected.</p>
+</li>
+<li><p><strong>Log-log</strong> axes with inward-facing ticks</p></li>
+<li><p><strong>Context-aware frequency labels</strong>: GHz for radio, nm for optical/IR, keV for X-ray, filter band names when applicable</p></li>
+<li><p><strong>Parameter summary</strong> displayed above the plot</p></li>
+<li><p><strong>Single-column journal size</strong> (3.5 in wide) suitable for direct inclusion in publications</p></li>
+</ul>
+<p>Supported output formats: <code class="docutils literal notranslate"><span class="pre">.png</span></code>, <code class="docutils literal notranslate"><span class="pre">.pdf</span></code>, <code class="docutils literal notranslate"><span class="pre">.jpg</span></code>, <code class="docutils literal notranslate"><span class="pre">.svg</span></code>. If <code class="docutils literal notranslate"><span class="pre">-o</span></code> is not specified or does not end in a recognized image extension, an interactive matplotlib window is shown.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Plotting requires matplotlib. Install with <code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">matplotlib</span></code> or <code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">VegasAfterglow[test]</span></code>.</p>
+</div>
+</section>
+<section id="examples">
+<h2>Examples<a class="headerlink" href="#examples" title="Link to this heading"></a></h2>
+<section id="default-on-axis-light-curve">
+<h3>Default on-axis light curve<a class="headerlink" href="#default-on-axis-light-curve" title="Link to this heading"></a></h3>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>vegasgen
+</pre></div>
+</div>
+<p>Computes a top-hat jet in ISM with default parameters at radio (1 GHz), optical (5×10<sup>14</sup> Hz), and X-ray (10<sup>18</sup> Hz).</p>
+</section>
+<section id="off-axis-observer">
+<h3>Off-axis observer<a class="headerlink" href="#off-axis-observer" title="Link to this heading"></a></h3>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>vegasgen<span class="w"> </span>--theta_obs<span class="w"> </span><span class="m">0</span>.4<span class="w"> </span>--plot
+</pre></div>
+</div>
+<p>Sets the viewing angle to 0.4 rad (about 23°), well outside the default jet core of 0.1 rad.</p>
+</section>
+<section id="different-jet-structures">
+<h3>Different jet structures<a class="headerlink" href="#different-jet-structures" title="Link to this heading"></a></h3>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Gaussian jet</span>
+vegasgen<span class="w"> </span>--jet<span class="w"> </span>gaussian<span class="w"> </span>--theta_c<span class="w"> </span><span class="m">0</span>.05<span class="w"> </span>--E_iso<span class="w"> </span>1e53
+
+<span class="c1"># Power-law jet</span>
+vegasgen<span class="w"> </span>--jet<span class="w"> </span>powerlaw<span class="w"> </span>--k_e<span class="w"> </span><span class="m">4</span><span class="w"> </span>--k_g<span class="w"> </span><span class="m">2</span>
+</pre></div>
+</div>
+</section>
+<section id="wind-medium">
+<h3>Wind medium<a class="headerlink" href="#wind-medium" title="Link to this heading"></a></h3>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>vegasgen<span class="w"> </span>--medium<span class="w"> </span>wind<span class="w"> </span>--A_star<span class="w"> </span><span class="m">0</span>.01<span class="w"> </span>--plot
+</pre></div>
+</div>
+</section>
+<section id="synchrotron-self-compton-with-klein-nishina">
+<h3>Synchrotron self-Compton with Klein-Nishina<a class="headerlink" href="#synchrotron-self-compton-with-klein-nishina" title="Link to this heading"></a></h3>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>vegasgen<span class="w"> </span>--ssc<span class="w"> </span>--kn<span class="w"> </span>--plot
+</pre></div>
+</div>
+</section>
+<section id="custom-frequency-bands">
+<h3>Custom frequency bands<a class="headerlink" href="#custom-frequency-bands" title="Link to this heading"></a></h3>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Named filters</span>
+vegasgen<span class="w"> </span>--nu<span class="w"> </span>R<span class="w"> </span>J<span class="w"> </span>Ks<span class="w"> </span>--plot
+
+<span class="c1"># Mixed numeric and filter names</span>
+vegasgen<span class="w"> </span>--nu<span class="w"> </span>5e9<span class="w"> </span>R<span class="w"> </span>1e18<span class="w"> </span>-o<span class="w"> </span>multiband.csv
+
+<span class="c1"># HST filters</span>
+vegasgen<span class="w"> </span>--nu<span class="w"> </span>F606W<span class="w"> </span>F160W<span class="w"> </span>--flux_unit<span class="w"> </span>uJy<span class="w"> </span>--plot
+</pre></div>
+</div>
+</section>
+<section id="custom-time-range-and-units">
+<h3>Custom time range and units<a class="headerlink" href="#custom-time-range-and-units" title="Link to this heading"></a></h3>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Early afterglow in seconds</span>
+vegasgen<span class="w"> </span>--t_min<span class="w"> </span><span class="m">1</span><span class="w"> </span>--t_max<span class="w"> </span>1e4<span class="w"> </span>--num_t<span class="w"> </span><span class="m">100</span>
+
+<span class="c1"># Late afterglow in days</span>
+vegasgen<span class="w"> </span>--t_min<span class="w"> </span><span class="m">86400</span><span class="w"> </span>--t_max<span class="w"> </span>1e8<span class="w"> </span>--time_unit<span class="w"> </span>day<span class="w"> </span>-o<span class="w"> </span>late.csv
+</pre></div>
+</div>
+</section>
+<section id="higher-resolution">
+<h3>Higher resolution<a class="headerlink" href="#higher-resolution" title="Link to this heading"></a></h3>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>vegasgen<span class="w"> </span>--res<span class="w"> </span><span class="m">0</span>.1<span class="w"> </span><span class="m">0</span>.3<span class="w"> </span><span class="m">20</span>
+</pre></div>
+</div>
+<p>Sets finer angular (phi=0.1, theta=0.3 points per degree) and temporal (20 points per decade) resolution.</p>
+</section>
+<section id="output-in-different-formats-and-units">
+<h3>Output in different formats and units<a class="headerlink" href="#output-in-different-formats-and-units" title="Link to this heading"></a></h3>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># JSON format in Jansky</span>
+vegasgen<span class="w"> </span>--format<span class="w"> </span>json<span class="w"> </span>--flux_unit<span class="w"> </span>Jy<span class="w"> </span>-o<span class="w"> </span>lightcurve.json
+
+<span class="c1"># CSV in microjansky and days</span>
+vegasgen<span class="w"> </span>--flux_unit<span class="w"> </span>uJy<span class="w"> </span>--time_unit<span class="w"> </span>day<span class="w"> </span>-o<span class="w"> </span>lightcurve.csv
+</pre></div>
+</div>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="quickstart.html" class="btn btn-neutral float-left" title="Quickstart" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="examples.html" class="btn btn-neutral float-right" title="Examples" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, VegasAfterglow Team.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -43,9 +43,9 @@ Benchmark tests measure computational performance and verify numerical convergen
 - **Performance Timing**: Execution time for various jet/medium/radiation configurations
 - **Resolution Convergence**: Convergence analysis in three dimensions:
 
-  - **Phi (azimuthal)**: Tests values from 0.1 to 0.5 radians
-  - **Theta (polar)**: Tests values from 0.2 to 1.0 radians
-  - **Time**: Tests values from 5 to 25 points per decade
+  - **Phi (azimuthal)**: Tests values from 0.15 to 0.3 radians
+  - **Theta (polar)**: Tests values from 0.5 to 1.25 radians
+  - **Time**: Tests values from 10 to 25 points per decade
 
 - **Configuration Matrix**: All combinations of jet types (tophat, gaussian, powerlaw), media (ISM, wind), and viewing angles
 
@@ -54,9 +54,9 @@ Benchmark tests measure computational performance and verify numerical convergen
 +------------+------------------+-------------------+
 | Status     | Mean Error       | Max Error         |
 +============+==================+===================+
-| PASS       | < 5%             | < 10%             |
+| PASS       | < 5%             | < 15%             |
 +------------+------------------+-------------------+
-| ACCEPTABLE | < 5%             | >= 10%            |
+| ACCEPTABLE | < 5%             | >= 15%            |
 +------------+------------------+-------------------+
 | FAIL       | >= 5%            | any               |
 +------------+------------------+-------------------+
