@@ -402,6 +402,13 @@ _COLORS = [
 ]
 
 
+def _latex_available():
+    """Check if a LaTeX installation is available for matplotlib."""
+    import shutil
+
+    return shutil.which("latex") is not None
+
+
 def _setup_plot_style(font=None):
     """Configure matplotlib for publication-quality output."""
     import matplotlib as mpl
@@ -418,6 +425,8 @@ def _setup_plot_style(font=None):
         "tahoma",
     }
 
+    use_tex = _latex_available()
+
     if font is None:
         family = "serif"
         font_list = ["Times New Roman"]
@@ -428,33 +437,37 @@ def _setup_plot_style(font=None):
         family = "serif"
         font_list = [font]
 
-    mpl.rcParams.update(
-        {
-            "text.usetex": True,
-            "font.family": family,
-            f"font.{family}": font_list,
-            "font.size": 10,
-            "axes.labelsize": 11,
-            "axes.titlesize": 11,
-            "legend.fontsize": 9,
-            "xtick.labelsize": 9,
-            "ytick.labelsize": 9,
-            "xtick.direction": "in",
-            "ytick.direction": "in",
-            "xtick.top": True,
-            "ytick.right": True,
-            "xtick.minor.visible": True,
-            "ytick.minor.visible": True,
-            "xtick.major.size": 5,
-            "ytick.major.size": 5,
-            "xtick.minor.size": 3,
-            "ytick.minor.size": 3,
-            "axes.linewidth": 0.8,
-            "lines.linewidth": 1.5,
-            "savefig.bbox": "tight",
-            "savefig.pad_inches": 0.03,
-        }
-    )
+    style = {
+        "text.usetex": use_tex,
+        "font.family": family,
+        f"font.{family}": font_list,
+        "font.size": 10,
+        "axes.labelsize": 11,
+        "axes.titlesize": 11,
+        "legend.fontsize": 9,
+        "xtick.labelsize": 9,
+        "ytick.labelsize": 9,
+        "xtick.direction": "in",
+        "ytick.direction": "in",
+        "xtick.top": True,
+        "ytick.right": True,
+        "xtick.minor.visible": True,
+        "ytick.minor.visible": True,
+        "xtick.major.size": 5,
+        "ytick.major.size": 5,
+        "xtick.minor.size": 3,
+        "ytick.minor.size": 3,
+        "axes.linewidth": 0.8,
+        "lines.linewidth": 1.5,
+        "savefig.bbox": "tight",
+        "savefig.pad_inches": 0.03,
+    }
+
+    if not use_tex:
+        # Fallback: use mathtext with STIX fonts for LaTeX-like rendering
+        style["mathtext.fontset"] = "stix"
+
+    mpl.rcParams.update(style)
 
 
 def _sci_tex(val):
@@ -473,13 +486,13 @@ def _build_param_text(args):
     jet_names = {"tophat": "Top-hat", "gaussian": "Gaussian", "powerlaw": "Power-law"}
     line1 = (
         rf"{jet_names.get(args.jet, args.jet)}, {args.medium.upper()}, "
-        rf"$E_{{\rm iso}}={_sci_tex(args.E_iso)}$ erg, "
+        rf"$E_{{\mathrm{{iso}}}}={_sci_tex(args.E_iso)}$ erg, "
         rf"$\Gamma_0={args.Gamma0:g}$, "
         rf"$z={args.z:g}$"
     )
     line2 = (
         rf"$\theta_c={args.theta_c:g}$, "
-        rf"$\theta_{{\rm obs}}={args.theta_obs:g}$ rad, "
+        rf"$\theta_{{\mathrm{{obs}}}}={args.theta_obs:g}$ rad, "
         rf"$\epsilon_e={args.eps_e:g}$, "
         rf"$\epsilon_B={_sci_tex(args.eps_B)}$, "
         rf"$p={args.p:g}$"
