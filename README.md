@@ -39,7 +39,6 @@
     - [C++ Installation](#c-installation)
   - [Usage](#usage)
     - [Quick Start](#quick-start)
-    - [Command-Line Tool](#command-line-tool)
     - [Light Curve \& Spectrum Calculation](#light-curve--spectrum-calculation)
     - [Internal Quantities Evolution](#internal-quantities-evolution)
     - [MCMC Parameter Fitting](#mcmc-parameter-fitting)
@@ -199,25 +198,12 @@ The following development tools are required:
 
 ### Quick Start
 
-**Get your first light curve in under 10 lines:**
+VegasAfterglow can be used in two ways:
 
-```python
-from VegasAfterglow import ISM, TophatJet, Observer, Radiation, Model
-import numpy as np
-import matplotlib.pyplot as plt
+* **Command line** — generate light curves instantly with the `vegasgen` command, no code needed.
+* **Python API** — full programmatic control for custom analysis, MCMC fitting, and access to internal quantities.
 
-model = Model(TophatJet(0.1, 1e52, 300), ISM(1), Observer(1e26, 0.1, 0), Radiation(0.1, 1e-3, 2.3))
-times, bands = np.logspace(2, 8, 100), [1e9, 1e14, 1e17]
-results = model.flux_density_grid(times, bands)
-[plt.loglog(times, results.total[i,:]) for i in range(len(bands))]
-plt.xlabel('Time (s)'); plt.ylabel('Flux (erg/cm²/s/Hz)'); plt.show()
-```
-
-Read the detailed sections below for more information.
-
-### Command-Line Tool
-
-Generate light curves directly from the terminal with `vegasgen` — no Python scripting required:
+#### Command-Line Tool (`vegasgen`)
 
 ```bash
 # Default tophat jet, ISM, on-axis — just run it
@@ -235,11 +221,17 @@ vegasgen --medium wind --ssc --plot -o lightcurve.png
 
 All parameters have sensible defaults. Run `vegasgen --help` for the full option list, or see the [CLI documentation](https://yihanwangastro.github.io/VegasAfterglow/docs/using_cli.html) for detailed usage.
 
----
+#### Python API
 
-We provide basic example scripts (`script/quick.ipynb`, `script/details.ipynb` and `script/vegas-mcmc.ipynb`) that demonstrate how to set up and run afterglow simulations. This section shows how to calculate light curves and spectra for a simple GRB afterglow model without the need for observational data and perform MCMC parameter fitting with observational data. The notebook can be run using either Jupyter Notebook or VSCode with the Jupyter extension.
+```python
+from VegasAfterglow import ISM, TophatJet, Observer, Radiation, Model
+import numpy as np
 
-To avoid conflicts when updating the repository in the future, make a copy of the example notebook in the same directory and work with the copy instead of the original.
+model = Model(TophatJet(0.1, 1e52, 300), ISM(1), Observer(1e26, 0.1, 0), Radiation(0.1, 1e-3, 2.3))
+result = model.flux_density_grid(np.logspace(2, 8, 100), [1e9, 1e14, 1e17])
+```
+
+See the detailed sections below and the example notebooks (`script/quick.ipynb`, `script/details.ipynb`, `script/vegas-mcmc.ipynb`) for Python usage including light curves, spectra, internal quantities, and MCMC fitting.
 
 ### Light Curve & Spectrum Calculation
 
