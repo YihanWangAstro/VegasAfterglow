@@ -3,6 +3,7 @@ var namespaces_dup =
     [ "afterglow", "namespaceafterglow.html", "namespaceafterglow" ],
     [ "anonymous_namespace{inverse-compton.cpp}", "namespaceanonymous__namespace_02inverse-compton_8cpp_03.html", "namespaceanonymous__namespace_02inverse-compton_8cpp_03" ],
     [ "con", "namespacecon.html", [
+      [ "a_rad", "namespacecon.html#ab37b7833834c14d05e3439326b611702", null ],
       [ "c", "namespacecon.html#a2ff3edf57629ccb9a49d5bde7278a7c4", null ],
       [ "c2", "namespacecon.html#a26ef2b83dd09c356e324bd243b498764", null ],
       [ "e", "namespacecon.html#af12a6df01bfe61fa034307dfcaa1fe7f", null ],
@@ -13,6 +14,7 @@ var namespaces_dup =
       [ "h", "namespacecon.html#a07ddec20ab09a3078fce714358b65b4b", null ],
       [ "H0", "namespacecon.html#a7d02c13c0078e3c832425dd7ac844d7e", null ],
       [ "inf", "namespacecon.html#ad61313f4a5b7876e54ae46d02d4a04bd", null ],
+      [ "kB", "namespacecon.html#a86dbb8b01b3ccdf55dd3ae5b99a4b913", null ],
       [ "me", "namespacecon.html#a740c8edb3d4f2d904a1c76002f84fb7e", null ],
       [ "mec2", "namespacecon.html#ae1b8cddbe12f755f5d01b86b0e2b9e14", null ],
       [ "min_obs_time", "namespacecon.html#a567e367066c9354a3cb44b696905b2a0", null ],
@@ -22,7 +24,8 @@ var namespaces_dup =
       [ "Omega_m", "namespacecon.html#af7e2aaa6311d30f35a07dc75fa9c4516", null ],
       [ "pi", "namespacecon.html#aa0ccd904b754d0f907898a942516d121", null ],
       [ "sigma_cut", "namespacecon.html#ae257fca076d03dd535871a9824d2f178", null ],
-      [ "sigmaT", "namespacecon.html#ad19e5b64c85c3e709fd0944358be97f6", null ]
+      [ "sigmaT", "namespacecon.html#ad19e5b64c85c3e709fd0944358be97f6", null ],
+      [ "T_CMB0", "namespacecon.html#a5ebffb74c6352a45bf585d8e9d3acfb9", null ]
     ] ],
     [ "defaults", "namespacedefaults.html", "namespacedefaults" ],
     [ "evn", "namespaceevn.html", null ],

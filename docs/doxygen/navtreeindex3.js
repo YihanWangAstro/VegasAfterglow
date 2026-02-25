@@ -1,5 +1,11 @@
 var NAVTREEINDEX3 =
 {
+"shock-physics_8h.html#aedc1c5385b14986b267d8e27eec05cf7":[4,0,2,2,4,16],
+"shock-physics_8h.html#af85a63428f015989284de82ed97685ee":[4,0,2,2,4,31],
+"shock-physics_8h.html#af8c6e4984af9f6addc7959f6cd23bde6":[4,0,2,2,4,17],
+"shock-physics_8h.html#af93a08a32c8dbe2d27c1d71813221121":[4,0,2,2,4,10],
+"shock-physics_8h_source.html":[4,0,2,2,4],
+"shock_8cpp.html":[4,0,2,2,5],
 "shock_8cpp.html#a2c45eca687a7ff6c0a5adfec28c78eef":[4,0,2,2,5,0],
 "shock_8cpp_source.html":[4,0,2,2,5],
 "shock_8h.html":[4,0,2,2,6],
@@ -158,10 +164,11 @@ var NAVTREEINDEX3 =
 "structPyShock.html#af8c393182ea18f6033ba7bc400db2949":[3,0,28,26],
 "structPyShock.html#afce3c5903b3f175398cb70940f9c2677":[3,0,28,27],
 "structRadParams.html":[3,0,29],
-"structRadParams.html#a0521194caf6b87cb685fa67fd92204c7":[3,0,29,0],
-"structRadParams.html#a2cc7b716052dd86936f3684bd8ec0853":[3,0,29,2],
-"structRadParams.html#a762cf0c07a2dc70ef2e3472a517fff7e":[3,0,29,3],
-"structRadParams.html#aac4103f83a674a9b9c7cd16e6be1e4a9":[3,0,29,1],
+"structRadParams.html#a0521194caf6b87cb685fa67fd92204c7":[3,0,29,1],
+"structRadParams.html#a22f5bebb90f80bb770ffe6f80f70ea75":[3,0,29,0],
+"structRadParams.html#a2cc7b716052dd86936f3684bd8ec0853":[3,0,29,3],
+"structRadParams.html#a762cf0c07a2dc70ef2e3472a517fff7e":[3,0,29,4],
+"structRadParams.html#aac4103f83a674a9b9c7cd16e6be1e4a9":[3,0,29,2],
 "structReverseState.html":[3,0,30],
 "structReverseState.html#a12846369a48d749b176cf1cf032f372e":[3,0,30,1],
 "structReverseState.html#a32a4fc6a76c28ed2056d1ad01790f08b":[3,0,30,10],
@@ -242,12 +249,5 @@ var NAVTREEINDEX3 =
 "structanonymous__namespace_02inverse-compton_8cpp_03_1_1ComptonSigmaLUT.html#a383a13b5685793290351e89fde1c3871":[1,0,1,0,8],
 "structanonymous__namespace_02inverse-compton_8cpp_03_1_1ComptonSigmaLUT.html#a40469345df5f27ac99d46c38900772b3":[1,0,1,0,3],
 "structanonymous__namespace_02inverse-compton_8cpp_03_1_1ComptonSigmaLUT.html#a40469345df5f27ac99d46c38900772b3":[3,0,1,0,3],
-"structanonymous__namespace_02inverse-compton_8cpp_03_1_1ComptonSigmaLUT.html#a55381a3a60d8d0184ebb6c68a76dcb20":[1,0,1,0,5],
-"structanonymous__namespace_02inverse-compton_8cpp_03_1_1ComptonSigmaLUT.html#a55381a3a60d8d0184ebb6c68a76dcb20":[3,0,1,0,5],
-"structanonymous__namespace_02inverse-compton_8cpp_03_1_1ComptonSigmaLUT.html#a64727b53a1c51bd1c2b1e9821dd16d3a":[1,0,1,0,2],
-"structanonymous__namespace_02inverse-compton_8cpp_03_1_1ComptonSigmaLUT.html#a64727b53a1c51bd1c2b1e9821dd16d3a":[3,0,1,0,2],
-"structanonymous__namespace_02inverse-compton_8cpp_03_1_1ComptonSigmaLUT.html#a762badc8f706a1027cf9e2bf0ab40573":[3,0,1,0,6],
-"structanonymous__namespace_02inverse-compton_8cpp_03_1_1ComptonSigmaLUT.html#a762badc8f706a1027cf9e2bf0ab40573":[1,0,1,0,6],
-"structanonymous__namespace_02inverse-compton_8cpp_03_1_1ComptonSigmaLUT.html#a813560b9f8a1e4bec1b5dadd5f5f3138":[3,0,1,0,1],
-"structanonymous__namespace_02inverse-compton_8cpp_03_1_1ComptonSigmaLUT.html#a813560b9f8a1e4bec1b5dadd5f5f3138":[1,0,1,0,1]
+"structanonymous__namespace_02inverse-compton_8cpp_03_1_1ComptonSigmaLUT.html#a55381a3a60d8d0184ebb6c68a76dcb20":[1,0,1,0,5]
 };

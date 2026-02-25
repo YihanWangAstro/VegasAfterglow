@@ -1,0 +1,25 @@
+<map id="update_gamma_c_Thomson" name="update_gamma_c_Thomson">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,56,211,81"/>
+<area shape="rect" id="Node000002" href="$synchrotron_8cpp.html#abf07388459a8b39d9b4c5028e53a538e" title=" " alt="" coords="655,5,805,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="204,53,258,47,464,31,641,20,641,25,464,36,259,53,205,59"/>
+<area shape="rect" id="Node000003" href="$pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89" title=" " alt="" coords="988,157,1143,183"/>
+<area shape="poly" id="edge14_Node000001_Node000003" title=" " alt="" coords="211,66,536,66,731,66,774,68,817,75,900,96,973,123,1029,149,1026,154,971,128,898,101,816,80,773,74,731,71,536,71,211,71"/>
+<area shape="rect" id="Node000004" href="$inverse-compton_8h.html#ac0230d2cf3ab151b3107eaf020bd07be" title=" " alt="" coords="259,132,420,157"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="148,79,287,125,286,130,147,84"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="806,16,873,25,908,34,941,48,975,69,1005,94,1049,145,1045,148,1001,98,971,73,939,52,906,39,872,30,805,21"/>
+<area shape="poly" id="edge13_Node000004_Node000003" title=" " alt="" coords="420,139,654,137,797,140,940,149,977,153,977,158,940,154,797,145,654,142,420,145"/>
+<area shape="rect" id="Node000005" href="$inverse-compton_8h.html#a38bdc122c39966b17d4cf12634d61f5f" title="Compute CMB IC Y parameter: Y_CMB = u_CMB(z) / u_B, where u_B = B^2 / (8*pi)" alt="" coords="472,157,603,183"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="420,152,459,157,458,163,420,158"/>
+<area shape="rect" id="Node000006" href="$inverse-compton_8h.html#ad7736d3269071d2ceaffcc56fa2fc71c" title=" " alt="" coords="468,207,607,232"/>
+<area shape="poly" id="edge6_Node000004_Node000006" title=" " alt="" coords="374,155,469,192,490,199,488,204,467,196,372,160"/>
+<area shape="poly" id="edge5_Node000005_Node000003" title=" " alt="" coords="603,167,974,167,974,173,603,173"/>
+<area shape="rect" id="Node000007" href="$fast-math_8h.html#ade5247172c3a02cc1ba5c43976ab76d2" title="Fast approximation of a raised to the power of b." alt="" coords="689,233,771,259"/>
+<area shape="poly" id="edge7_Node000006_Node000007" title=" " alt="" coords="607,226,676,236,675,241,606,232"/>
+<area shape="poly" id="edge12_Node000007_Node000003" title=" " alt="" coords="770,234,995,183,996,188,771,240"/>
+<area shape="rect" id="Node000008" href="$fast-math_8h.html#a97f986159608011ca67d0d8fc3d09926" title="Fast approximation of 2 raised to a power." alt="" coords="853,259,940,284"/>
+<area shape="poly" id="edge8_Node000007_Node000008" title=" " alt="" coords="771,249,840,260,839,265,771,255"/>
+<area shape="rect" id="Node000009" href="$fast-math_8h.html#a3af6287ba5abccde52dfb33e06fb8430" title="Fast approximation of the base&#45;2 logarithm." alt="" coords="855,308,938,333"/>
+<area shape="poly" id="edge10_Node000007_Node000009" title=" " alt="" coords="761,256,856,300,854,305,758,261"/>
+<area shape="poly" id="edge9_Node000008_Node000003" title=" " alt="" coords="918,256,1030,187,1033,192,920,261"/>
+<area shape="poly" id="edge11_Node000009_Node000003" title=" " alt="" coords="922,306,938,295,997,241,1043,192,1047,195,1001,245,942,299,925,310"/>
+</map>

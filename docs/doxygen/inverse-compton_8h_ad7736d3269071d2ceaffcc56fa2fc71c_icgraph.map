@@ -1,13 +1,13 @@
 <map id="eta_rad_Thomson" name="eta_rad_Thomson">
 <area shape="rect" id="Node000001" title=" " alt="" coords="652,31,791,56"/>
-<area shape="rect" id="Node000002" href="$inverse-compton_8h.html#a38ea147ad8840b32851c368e51808c84" title=" " alt="" coords="443,31,604,56"/>
+<area shape="rect" id="Node000002" href="$inverse-compton_8h.html#ac0230d2cf3ab151b3107eaf020bd07be" title=" " alt="" coords="443,31,604,56"/>
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="638,46,604,46,604,41,638,41"/>
-<area shape="rect" id="Node000003" href="$inverse-compton_8cpp.html#ad06eafa794ead54fd991828713903f5a" title=" " alt="" coords="210,5,374,31"/>
+<area shape="rect" id="Node000003" href="$inverse-compton_8cpp.html#afe30262ca73705fdc9456009f6066fa8" title=" " alt="" coords="210,5,374,31"/>
 <area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="429,36,374,30,374,24,429,30"/>
-<area shape="rect" id="Node000005" href="$inverse-compton_8cpp.html#af7515846a834d0a778e26e7aaa36891b" title=" " alt="" coords="189,55,395,80"/>
+<area shape="rect" id="Node000005" href="$inverse-compton_8cpp.html#ab7063c938c6e524260876e8ec068ba1b" title=" " alt="" coords="189,55,395,80"/>
 <area shape="poly" id="edge4_Node000002_Node000005" title=" " alt="" coords="429,56,395,59,394,54,429,50"/>
 <area shape="rect" id="Node000004" href="$inverse-compton_8h.html#a583bd933279ebdb89aaa790ee16bc67a" title=" " alt="" coords="26,5,121,31"/>
 <area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="196,21,121,21,121,15,196,15"/>
-<area shape="rect" id="Node000006" href="$inverse-compton_8h.html#a03706f33ca5b6d5b0925a2636f60b6cc" title=" " alt="" coords="5,55,141,80"/>
+<area shape="rect" id="Node000006" href="$inverse-compton_8h.html#a8f645350e4623d03b237428488a88491" title="Applies Thomson cooling to electrons based on photon distribution." alt="" coords="5,55,141,80"/>
 <area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="175,70,142,70,142,65,175,65"/>
 </map>

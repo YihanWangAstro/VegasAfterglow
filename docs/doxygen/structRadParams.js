@@ -1,5 +1,6 @@
 var structRadParams =
 [
+    [ "cmb_cooling", "structRadParams.html#a22f5bebb90f80bb770ffe6f80f70ea75", null ],
     [ "eps_B", "structRadParams.html#a0521194caf6b87cb685fa67fd92204c7", null ],
     [ "eps_e", "structRadParams.html#aac4103f83a674a9b9c7cd16e6be1e4a9", null ],
     [ "p", "structRadParams.html#a2cc7b716052dd86936f3684bd8ec0853", null ],

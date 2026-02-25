@@ -191,7 +191,7 @@ Public Attributes</h2></td></tr>
 <div class="textblock"><p>Comprehensive shock evolution data for detailed afterglow analysis. </p>
 <p>This structure contains all the physical quantities that evolve during shock propagation, including dynamics, magnetic fields, particle distributions, and characteristic frequencies. It provides complete information for understanding the physical processes driving the afterglow emission. </p>
 
-<p class="definition">Definition at line <a class="el" href="pymodel_8h_source.html#l00440">440</a> of file <a class="el" href="pymodel_8h_source.html">pymodel.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="pymodel_8h_source.html#l00443">443</a> of file <a class="el" href="pymodel_8h_source.html">pymodel.h</a>.</p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
 <a id="a9b4eeafbb83d9492336fa59d58802cba" name="a9b4eeafbb83d9492336fa59d58802cba"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a9b4eeafbb83d9492336fa59d58802cba">&#9670;&#160;</a></span>repr()</h2>
@@ -216,21 +216,21 @@ Public Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="pymodel_8h_source.html#l00472">472</a> of file <a class="el" href="pymodel_8h_source.html">pymodel.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  472</span>                                         {</div>
-<div class="line"><span class="lineno">  473</span>        <span class="keywordflow">if</span> (<a class="code hl_variable" href="structPyShock.html#a91fcd07f840919a38d4171925e9a4ba0">Gamma</a>.size() == 0)</div>
-<div class="line"><span class="lineno">  474</span>            <span class="keywordflow">return</span> <span class="stringliteral">&quot;ShockDetails(empty)&quot;</span>;</div>
-<div class="line"><span class="lineno">  475</span>        std::string <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">s</a> = <span class="stringliteral">&quot;ShockDetails(shape=(&quot;</span>;</div>
-<div class="line"><span class="lineno">  476</span>        <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">i</a> = 0; <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">i</a> &lt; <a class="code hl_variable" href="structPyShock.html#a91fcd07f840919a38d4171925e9a4ba0">Gamma</a>.dimension(); ++<a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">i</a>) {</div>
-<div class="line"><span class="lineno">  477</span>            <span class="keywordflow">if</span> (<a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">i</a> &gt; 0)</div>
-<div class="line"><span class="lineno">  478</span>                <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">s</a> += <span class="stringliteral">&quot;, &quot;</span>;</div>
-<div class="line"><span class="lineno">  479</span>            <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">s</a> += std::to_string(<a class="code hl_variable" href="structPyShock.html#a91fcd07f840919a38d4171925e9a4ba0">Gamma</a>.shape()[<a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">i</a>]);</div>
-<div class="line"><span class="lineno">  480</span>        }</div>
-<div class="line"><span class="lineno">  481</span>        <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">s</a> += <span class="stringliteral">&quot;))&quot;</span>;</div>
-<div class="line"><span class="lineno">  482</span>        <span class="keywordflow">return</span> <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">s</a>;</div>
-<div class="line"><span class="lineno">  483</span>    }</div>
+<p class="definition">Definition at line <a class="el" href="pymodel_8h_source.html#l00475">475</a> of file <a class="el" href="pymodel_8h_source.html">pymodel.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  475</span>                                         {</div>
+<div class="line"><span class="lineno">  476</span>        <span class="keywordflow">if</span> (<a class="code hl_variable" href="structPyShock.html#a91fcd07f840919a38d4171925e9a4ba0">Gamma</a>.size() == 0)</div>
+<div class="line"><span class="lineno">  477</span>            <span class="keywordflow">return</span> <span class="stringliteral">&quot;ShockDetails(empty)&quot;</span>;</div>
+<div class="line"><span class="lineno">  478</span>        std::string <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">s</a> = <span class="stringliteral">&quot;ShockDetails(shape=(&quot;</span>;</div>
+<div class="line"><span class="lineno">  479</span>        <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">i</a> = 0; <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">i</a> &lt; <a class="code hl_variable" href="structPyShock.html#a91fcd07f840919a38d4171925e9a4ba0">Gamma</a>.dimension(); ++<a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">i</a>) {</div>
+<div class="line"><span class="lineno">  480</span>            <span class="keywordflow">if</span> (<a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">i</a> &gt; 0)</div>
+<div class="line"><span class="lineno">  481</span>                <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">s</a> += <span class="stringliteral">&quot;, &quot;</span>;</div>
+<div class="line"><span class="lineno">  482</span>            <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">s</a> += std::to_string(<a class="code hl_variable" href="structPyShock.html#a91fcd07f840919a38d4171925e9a4ba0">Gamma</a>.shape()[<a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">i</a>]);</div>
+<div class="line"><span class="lineno">  483</span>        }</div>
+<div class="line"><span class="lineno">  484</span>        <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">s</a> += <span class="stringliteral">&quot;))&quot;</span>;</div>
+<div class="line"><span class="lineno">  485</span>        <span class="keywordflow">return</span> <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">s</a>;</div>
+<div class="line"><span class="lineno">  486</span>    }</div>
 <div class="ttc" id="apybind_8cpp_html_ad93eae6422741850877b46bd61f08c89"><div class="ttname"><a href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">make_native_binary</a></div><div class="ttdeci">BinaryFunc make_native_binary(uintptr_t addr, std::vector&lt; Real &gt; const &amp;p)</div><div class="ttdef"><b>Definition</b> <a href="pybind_8cpp_source.html#l00027">pybind.cpp:27</a></div></div>
-<div class="ttc" id="astructPyShock_html_a91fcd07f840919a38d4171925e9a4ba0"><div class="ttname"><a href="structPyShock.html#a91fcd07f840919a38d4171925e9a4ba0">PyShock::Gamma</a></div><div class="ttdeci">XTArray Gamma</div><div class="ttdoc">Bulk Lorentz factor.</div><div class="ttdef"><b>Definition</b> <a href="pymodel_8h_source.html#l00443">pymodel.h:443</a></div></div>
+<div class="ttc" id="astructPyShock_html_a91fcd07f840919a38d4171925e9a4ba0"><div class="ttname"><a href="structPyShock.html#a91fcd07f840919a38d4171925e9a4ba0">PyShock::Gamma</a></div><div class="ttdeci">XTArray Gamma</div><div class="ttdoc">Bulk Lorentz factor.</div><div class="ttdef"><b>Definition</b> <a href="pymodel_8h_source.html#l00446">pymodel.h:446</a></div></div>
 </div><!-- fragment --><div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -269,7 +269,7 @@ Here is the caller graph for this function:</div>
 
 <p>Comoving magnetic field [G]. </p>
 
-<p class="definition">Definition at line <a class="el" href="pymodel_8h_source.html#l00445">445</a> of file <a class="el" href="pymodel_8h_source.html">pymodel.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="pymodel_8h_source.html#l00448">448</a> of file <a class="el" href="pymodel_8h_source.html">pymodel.h</a>.</p>
 
 </div>
 </div>
@@ -287,7 +287,7 @@ Here is the caller graph for this function:</div>
 
 <p>Doppler factor for beaming. </p>
 
-<p class="definition">Definition at line <a class="el" href="pymodel_8h_source.html#l00464">464</a> of file <a class="el" href="pymodel_8h_source.html">pymodel.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="pymodel_8h_source.html#l00467">467</a> of file <a class="el" href="pymodel_8h_source.html">pymodel.h</a>.</p>
 
 </div>
 </div>
@@ -305,7 +305,7 @@ Here is the caller graph for this function:</div>
 
 <p>Bulk Lorentz factor. </p>
 
-<p class="definition">Definition at line <a class="el" href="pymodel_8h_source.html#l00443">443</a> of file <a class="el" href="pymodel_8h_source.html">pymodel.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="pymodel_8h_source.html#l00446">446</a> of file <a class="el" href="pymodel_8h_source.html">pymodel.h</a>.</p>
 
 </div>
 </div>
@@ -323,7 +323,7 @@ Here is the caller graph for this function:</div>
 
 <p>Absorption electron Lorentz factor. </p>
 
-<p class="definition">Definition at line <a class="el" href="pymodel_8h_source.html#l00453">453</a> of file <a class="el" href="pymodel_8h_source.html">pymodel.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="pymodel_8h_source.html#l00456">456</a> of file <a class="el" href="pymodel_8h_source.html">pymodel.h</a>.</p>
 
 </div>
 </div>
@@ -341,7 +341,7 @@ Here is the caller graph for this function:</div>
 
 <p>Cooling electron Lorentz factor. </p>
 
-<p class="definition">Definition at line <a class="el" href="pymodel_8h_source.html#l00451">451</a> of file <a class="el" href="pymodel_8h_source.html">pymodel.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="pymodel_8h_source.html#l00454">454</a> of file <a class="el" href="pymodel_8h_source.html">pymodel.h</a>.</p>
 
 </div>
 </div>
@@ -357,7 +357,7 @@ Here is the caller graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="pymodel_8h_source.html#l00455">455</a> of file <a class="el" href="pymodel_8h_source.html">pymodel.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="pymodel_8h_source.html#l00458">458</a> of file <a class="el" href="pymodel_8h_source.html">pymodel.h</a>.</p>
 
 </div>
 </div>
@@ -375,7 +375,7 @@ Here is the caller graph for this function:</div>
 
 <p>Minimum electron Lorentz factor. </p>
 
-<p class="definition">Definition at line <a class="el" href="pymodel_8h_source.html#l00450">450</a> of file <a class="el" href="pymodel_8h_source.html">pymodel.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="pymodel_8h_source.html#l00453">453</a> of file <a class="el" href="pymodel_8h_source.html">pymodel.h</a>.</p>
 
 </div>
 </div>
@@ -393,7 +393,7 @@ Here is the caller graph for this function:</div>
 
 <p>Maximum electron Lorentz factor. </p>
 
-<p class="definition">Definition at line <a class="el" href="pymodel_8h_source.html#l00452">452</a> of file <a class="el" href="pymodel_8h_source.html">pymodel.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="pymodel_8h_source.html#l00455">455</a> of file <a class="el" href="pymodel_8h_source.html">pymodel.h</a>.</p>
 
 </div>
 </div>
@@ -409,7 +409,7 @@ Here is the caller graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="pymodel_8h_source.html#l00454">454</a> of file <a class="el" href="pymodel_8h_source.html">pymodel.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="pymodel_8h_source.html#l00457">457</a> of file <a class="el" href="pymodel_8h_source.html">pymodel.h</a>.</p>
 
 </div>
 </div>
@@ -427,7 +427,7 @@ Here is the caller graph for this function:</div>
 
 <p>Thermal Lorentz factor. </p>
 
-<p class="definition">Definition at line <a class="el" href="pymodel_8h_source.html#l00444">444</a> of file <a class="el" href="pymodel_8h_source.html">pymodel.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="pymodel_8h_source.html#l00447">447</a> of file <a class="el" href="pymodel_8h_source.html">pymodel.h</a>.</p>
 
 </div>
 </div>
@@ -443,8 +443,8 @@ Here is the caller graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="pymodel_8h_source.html#l00470">470</a> of file <a class="el" href="pymodel_8h_source.html">pymodel.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  470</span>{<span class="keyword">false</span>};</div>
+<p class="definition">Definition at line <a class="el" href="pymodel_8h_source.html#l00473">473</a> of file <a class="el" href="pymodel_8h_source.html">pymodel.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  473</span>{<span class="keyword">false</span>};</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -460,8 +460,8 @@ Here is the caller graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="pymodel_8h_source.html#l00469">469</a> of file <a class="el" href="pymodel_8h_source.html">pymodel.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  469</span>{<span class="keyword">false</span>};</div>
+<p class="definition">Definition at line <a class="el" href="pymodel_8h_source.html#l00472">472</a> of file <a class="el" href="pymodel_8h_source.html">pymodel.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  472</span>{<span class="keyword">false</span>};</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -479,7 +479,7 @@ Here is the caller graph for this function:</div>
 
 <p>Maximum specific intensity [erg/s/Hz]. </p>
 
-<p class="definition">Definition at line <a class="el" href="pymodel_8h_source.html#l00463">463</a> of file <a class="el" href="pymodel_8h_source.html">pymodel.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="pymodel_8h_source.html#l00466">466</a> of file <a class="el" href="pymodel_8h_source.html">pymodel.h</a>.</p>
 
 </div>
 </div>
@@ -495,7 +495,7 @@ Here is the caller graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="pymodel_8h_source.html#l00468">468</a> of file <a class="el" href="pymodel_8h_source.html">pymodel.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="pymodel_8h_source.html#l00471">471</a> of file <a class="el" href="pymodel_8h_source.html">pymodel.h</a>.</p>
 
 </div>
 </div>
@@ -513,7 +513,7 @@ Here is the caller graph for this function:</div>
 
 <p>Total electron number in shock. </p>
 
-<p class="definition">Definition at line <a class="el" href="pymodel_8h_source.html#l00449">449</a> of file <a class="el" href="pymodel_8h_source.html">pymodel.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="pymodel_8h_source.html#l00452">452</a> of file <a class="el" href="pymodel_8h_source.html">pymodel.h</a>.</p>
 
 </div>
 </div>
@@ -531,7 +531,7 @@ Here is the caller graph for this function:</div>
 
 <p>Total proton number in shock. </p>
 
-<p class="definition">Definition at line <a class="el" href="pymodel_8h_source.html#l00448">448</a> of file <a class="el" href="pymodel_8h_source.html">pymodel.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="pymodel_8h_source.html#l00451">451</a> of file <a class="el" href="pymodel_8h_source.html">pymodel.h</a>.</p>
 
 </div>
 </div>
@@ -549,7 +549,7 @@ Here is the caller graph for this function:</div>
 
 <p>Synchrotron frequency for γ_a [Hz]. </p>
 
-<p class="definition">Definition at line <a class="el" href="pymodel_8h_source.html#l00459">459</a> of file <a class="el" href="pymodel_8h_source.html">pymodel.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="pymodel_8h_source.html#l00462">462</a> of file <a class="el" href="pymodel_8h_source.html">pymodel.h</a>.</p>
 
 </div>
 </div>
@@ -567,7 +567,7 @@ Here is the caller graph for this function:</div>
 
 <p>Synchrotron frequency for γ_c [Hz]. </p>
 
-<p class="definition">Definition at line <a class="el" href="pymodel_8h_source.html#l00457">457</a> of file <a class="el" href="pymodel_8h_source.html">pymodel.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="pymodel_8h_source.html#l00460">460</a> of file <a class="el" href="pymodel_8h_source.html">pymodel.h</a>.</p>
 
 </div>
 </div>
@@ -583,7 +583,7 @@ Here is the caller graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="pymodel_8h_source.html#l00461">461</a> of file <a class="el" href="pymodel_8h_source.html">pymodel.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="pymodel_8h_source.html#l00464">464</a> of file <a class="el" href="pymodel_8h_source.html">pymodel.h</a>.</p>
 
 </div>
 </div>
@@ -601,7 +601,7 @@ Here is the caller graph for this function:</div>
 
 <p>Synchrotron frequency for γ_m [Hz]. </p>
 
-<p class="definition">Definition at line <a class="el" href="pymodel_8h_source.html#l00456">456</a> of file <a class="el" href="pymodel_8h_source.html">pymodel.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="pymodel_8h_source.html#l00459">459</a> of file <a class="el" href="pymodel_8h_source.html">pymodel.h</a>.</p>
 
 </div>
 </div>
@@ -619,7 +619,7 @@ Here is the caller graph for this function:</div>
 
 <p>Synchrotron frequency for γ_M [Hz]. </p>
 
-<p class="definition">Definition at line <a class="el" href="pymodel_8h_source.html#l00458">458</a> of file <a class="el" href="pymodel_8h_source.html">pymodel.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="pymodel_8h_source.html#l00461">461</a> of file <a class="el" href="pymodel_8h_source.html">pymodel.h</a>.</p>
 
 </div>
 </div>
@@ -635,7 +635,7 @@ Here is the caller graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="pymodel_8h_source.html#l00460">460</a> of file <a class="el" href="pymodel_8h_source.html">pymodel.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="pymodel_8h_source.html#l00463">463</a> of file <a class="el" href="pymodel_8h_source.html">pymodel.h</a>.</p>
 
 </div>
 </div>
@@ -653,7 +653,7 @@ Here is the caller graph for this function:</div>
 
 <p><a class="el" href="classShock.html" title="Represents a shock wave in an astrophysical environment.">Shock</a> radius [cm]. </p>
 
-<p class="definition">Definition at line <a class="el" href="pymodel_8h_source.html#l00446">446</a> of file <a class="el" href="pymodel_8h_source.html">pymodel.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="pymodel_8h_source.html#l00449">449</a> of file <a class="el" href="pymodel_8h_source.html">pymodel.h</a>.</p>
 
 </div>
 </div>
@@ -669,7 +669,7 @@ Here is the caller graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="pymodel_8h_source.html#l00467">467</a> of file <a class="el" href="pymodel_8h_source.html">pymodel.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="pymodel_8h_source.html#l00470">470</a> of file <a class="el" href="pymodel_8h_source.html">pymodel.h</a>.</p>
 
 </div>
 </div>
@@ -687,7 +687,7 @@ Here is the caller graph for this function:</div>
 
 <p>Comoving time [s]. </p>
 
-<p class="definition">Definition at line <a class="el" href="pymodel_8h_source.html#l00441">441</a> of file <a class="el" href="pymodel_8h_source.html">pymodel.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="pymodel_8h_source.html#l00444">444</a> of file <a class="el" href="pymodel_8h_source.html">pymodel.h</a>.</p>
 
 </div>
 </div>
@@ -705,7 +705,7 @@ Here is the caller graph for this function:</div>
 
 <p><a class="el" href="classObserver.html" title="Represents an observer in the GRB afterglow simulation.">Observer</a> time [s]. </p>
 
-<p class="definition">Definition at line <a class="el" href="pymodel_8h_source.html#l00442">442</a> of file <a class="el" href="pymodel_8h_source.html">pymodel.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="pymodel_8h_source.html#l00445">445</a> of file <a class="el" href="pymodel_8h_source.html">pymodel.h</a>.</p>
 
 </div>
 </div>
@@ -723,7 +723,7 @@ Here is the caller graph for this function:</div>
 
 <p>Polar angle [rad]. </p>
 
-<p class="definition">Definition at line <a class="el" href="pymodel_8h_source.html#l00447">447</a> of file <a class="el" href="pymodel_8h_source.html">pymodel.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="pymodel_8h_source.html#l00450">450</a> of file <a class="el" href="pymodel_8h_source.html">pymodel.h</a>.</p>
 
 </div>
 </div>
@@ -739,7 +739,7 @@ Here is the caller graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="pymodel_8h_source.html#l00462">462</a> of file <a class="el" href="pymodel_8h_source.html">pymodel.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="pymodel_8h_source.html#l00465">465</a> of file <a class="el" href="pymodel_8h_source.html">pymodel.h</a>.</p>
 
 </div>
 </div>

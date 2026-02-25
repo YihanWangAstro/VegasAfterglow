@@ -117,6 +117,9 @@ Public Attributes</h2></td></tr>
 <tr class="memitem:a762cf0c07a2dc70ef2e3472a517fff7e" id="r_a762cf0c07a2dc70ef2e3472a517fff7e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structRadParams.html#a762cf0c07a2dc70ef2e3472a517fff7e">xi_e</a> {1}</td></tr>
 <tr class="memdesc:a762cf0c07a2dc70ef2e3472a517fff7e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Electron self-absorption parameter.  <br /></td></tr>
 <tr class="separator:a762cf0c07a2dc70ef2e3472a517fff7e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a22f5bebb90f80bb770ffe6f80f70ea75" id="r_a22f5bebb90f80bb770ffe6f80f70ea75"><td class="memItemLeft" align="right" valign="top"><a class="el" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">bool</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structRadParams.html#a22f5bebb90f80bb770ffe6f80f70ea75">cmb_cooling</a> {<a class="el" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">false</a>}</td></tr>
+<tr class="memdesc:a22f5bebb90f80bb770ffe6f80f70ea75"><td class="mdescLeft">&#160;</td><td class="mdescRight">Whether to include CMB IC cooling (redshift passed separately)  <br /></td></tr>
+<tr class="separator:a22f5bebb90f80bb770ffe6f80f70ea75"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Parameters for radiation transport. </p>
@@ -124,6 +127,25 @@ Public Attributes</h2></td></tr>
 
 <p class="definition">Definition at line <a class="el" href="physics_8h_source.html#l00204">204</a> of file <a class="el" href="physics_8h_source.html">physics.h</a>.</p>
 </div><h2 class="groupheader">Member Data Documentation</h2>
+<a id="a22f5bebb90f80bb770ffe6f80f70ea75" name="a22f5bebb90f80bb770ffe6f80f70ea75"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a22f5bebb90f80bb770ffe6f80f70ea75">&#9670;&#160;</a></span>cmb_cooling</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">bool</a> RadParams::cmb_cooling {<a class="el" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">false</a>}</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Whether to include CMB IC cooling (redshift passed separately) </p>
+
+<p class="definition">Definition at line <a class="el" href="physics_8h_source.html#l00209">209</a> of file <a class="el" href="physics_8h_source.html">physics.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  209</span>{<span class="keyword">false</span>}; <span class="comment">///&lt; Whether to include CMB IC cooling (redshift passed separately)</span></div>
+</div><!-- fragment -->
+</div>
+</div>
 <a id="a0521194caf6b87cb685fa67fd92204c7" name="a0521194caf6b87cb685fa67fd92204c7"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a0521194caf6b87cb685fa67fd92204c7">&#9670;&#160;</a></span>eps_B</h2>
 
@@ -139,7 +161,7 @@ Public Attributes</h2></td></tr>
 <p>Magnetic field energy fraction. </p>
 
 <p class="definition">Definition at line <a class="el" href="physics_8h_source.html#l00206">206</a> of file <a class="el" href="physics_8h_source.html">physics.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  206</span>{0.01}; <span class="comment">///&lt; Magnetic field energy fraction</span></div>
+<div class="fragment"><div class="line"><span class="lineno">  206</span>{0.01};        <span class="comment">///&lt; Magnetic field energy fraction</span></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -158,7 +180,7 @@ Public Attributes</h2></td></tr>
 <p>Electron energy fraction. </p>
 
 <p class="definition">Definition at line <a class="el" href="physics_8h_source.html#l00205">205</a> of file <a class="el" href="physics_8h_source.html">physics.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  205</span>{0.1};  <span class="comment">///&lt; Electron energy fraction</span></div>
+<div class="fragment"><div class="line"><span class="lineno">  205</span>{0.1};         <span class="comment">///&lt; Electron energy fraction</span></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -177,7 +199,7 @@ Public Attributes</h2></td></tr>
 <p>Electron energy distribution index. </p>
 
 <p class="definition">Definition at line <a class="el" href="physics_8h_source.html#l00207">207</a> of file <a class="el" href="physics_8h_source.html">physics.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  207</span>{2.3};      <span class="comment">///&lt; Electron energy distribution index</span></div>
+<div class="fragment"><div class="line"><span class="lineno">  207</span>{2.3};             <span class="comment">///&lt; Electron energy distribution index</span></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -196,7 +218,7 @@ Public Attributes</h2></td></tr>
 <p>Electron self-absorption parameter. </p>
 
 <p class="definition">Definition at line <a class="el" href="physics_8h_source.html#l00208">208</a> of file <a class="el" href="physics_8h_source.html">physics.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  208</span>{1};     <span class="comment">///&lt; Electron self-absorption parameter</span></div>
+<div class="fragment"><div class="line"><span class="lineno">  208</span>{1};            <span class="comment">///&lt; Electron self-absorption parameter</span></div>
 </div><!-- fragment -->
 </div>
 </div>

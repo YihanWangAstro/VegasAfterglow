@@ -42,18 +42,18 @@
 <area shape="poly" id="edge29_Node000010_Node000025" title=" " alt="" coords="994,196,961,189,929,174,913,159,904,143,896,128,881,114,851,100,853,96,884,110,900,125,909,141,917,156,932,170,963,183,996,191"/>
 <area shape="rect" id="Node000013" href="$synchrotron_8cpp.html#a61ca4dde8d2466a6c4bbeb3ec4911141" title="Populates an existing electron grid with values based on shock parameters." alt="" coords="443,171,620,197"/>
 <area shape="poly" id="edge14_Node000012_Node000013" title=" " alt="" coords="699,222,593,199,594,194,700,216"/>
-<area shape="rect" id="Node000014" href="$inverse-compton_8h.html#a84b2fce848f1b0e707c3345139978d79" title=" " alt="" coords="247,222,337,247"/>
+<area shape="rect" id="Node000014" href="$inverse-compton_8h.html#ac8f967d0ccd3b5b84d387756e0d5d463" title=" " alt="" coords="247,222,337,247"/>
 <area shape="poly" id="edge15_Node000012_Node000014" title=" " alt="" coords="671,237,337,237,337,232,671,232"/>
 <area shape="rect" id="Node000015" href="$inverse-compton_8h.html#a583bd933279ebdb89aaa790ee16bc67a" title=" " alt="" coords="26,297,121,322"/>
 <area shape="poly" id="edge16_Node000014_Node000015" title=" " alt="" coords="235,250,190,263,102,299,100,294,188,257,233,245"/>
-<area shape="rect" id="Node000016" href="$inverse-compton_8h.html#a03706f33ca5b6d5b0925a2636f60b6cc" title=" " alt="" coords="5,235,141,261"/>
+<area shape="rect" id="Node000016" href="$inverse-compton_8h.html#a8f645350e4623d03b237428488a88491" title="Applies Thomson cooling to electrons based on photon distribution." alt="" coords="5,235,141,261"/>
 <area shape="poly" id="edge17_Node000014_Node000016" title=" " alt="" coords="234,241,142,247,142,241,233,236"/>
 <area shape="poly" id="edge19_Node000017_Node000013" title=" " alt="" coords="684,188,620,187,620,182,684,182"/>
-<area shape="rect" id="Node000020" href="$inverse-compton_8h.html#a38ea147ad8840b32851c368e51808c84" title=" " alt="" coords="451,273,612,298"/>
+<area shape="rect" id="Node000020" href="$inverse-compton_8h.html#ac0230d2cf3ab151b3107eaf020bd07be" title=" " alt="" coords="451,273,612,298"/>
 <area shape="poly" id="edge22_Node000019_Node000020" title=" " alt="" coords="692,287,612,288,612,282,692,282"/>
-<area shape="rect" id="Node000021" href="$inverse-compton_8cpp.html#ad06eafa794ead54fd991828713903f5a" title=" " alt="" coords="210,321,374,346"/>
+<area shape="rect" id="Node000021" href="$inverse-compton_8cpp.html#afe30262ca73705fdc9456009f6066fa8" title=" " alt="" coords="210,321,374,346"/>
 <area shape="poly" id="edge23_Node000020_Node000021" title=" " alt="" coords="454,303,357,323,355,318,453,298"/>
-<area shape="rect" id="Node000022" href="$inverse-compton_8cpp.html#af7515846a834d0a778e26e7aaa36891b" title=" " alt="" coords="189,271,395,297"/>
+<area shape="rect" id="Node000022" href="$inverse-compton_8cpp.html#ab7063c938c6e524260876e8ec068ba1b" title=" " alt="" coords="189,271,395,297"/>
 <area shape="poly" id="edge25_Node000020_Node000022" title=" " alt="" coords="437,287,395,287,395,282,437,282"/>
 <area shape="poly" id="edge24_Node000021_Node000015" title=" " alt="" coords="196,325,121,317,121,312,196,320"/>
 <area shape="poly" id="edge26_Node000022_Node000016" title=" " alt="" coords="200,272,141,262,142,257,201,266"/>

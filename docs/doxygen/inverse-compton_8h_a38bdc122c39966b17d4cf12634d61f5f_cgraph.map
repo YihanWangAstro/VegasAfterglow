@@ -1,0 +1,5 @@
+<map id="compute_CMB_Y" name="compute_CMB_Y">
+<area shape="rect" id="Node000001" title="Compute CMB IC Y parameter: Y_CMB = u_CMB(z) / u_B, where u_B = B^2 / (8*pi)" alt="" coords="5,5,136,31"/>
+<area shape="rect" id="Node000002" href="$pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89" title=" " alt="" coords="184,5,339,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="136,15,170,15,170,21,136,21"/>
+</map>

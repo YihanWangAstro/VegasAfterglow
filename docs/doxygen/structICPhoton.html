@@ -211,8 +211,8 @@ template&lt;<a class="el" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="inverse-compton_8h_source.html#l00268">268</a> of file <a class="el" href="inverse-compton_8h_source.html">inverse-compton.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  269</span>    : <a class="code hl_variable" href="structICPhoton.html#a8721a351afe42b1e5fdf3075bffc89f7">photons</a>(<a class="code hl_variable" href="structICPhoton.html#a8721a351afe42b1e5fdf3075bffc89f7">photons</a>), <a class="code hl_variable" href="structICPhoton.html#aea5718d82370d9ae7fcaf2e70654bcf2">electrons</a>(<a class="code hl_variable" href="structICPhoton.html#aea5718d82370d9ae7fcaf2e70654bcf2">electrons</a>), KN(KN) {}</div>
+<p class="definition">Definition at line <a class="el" href="inverse-compton_8h_source.html#l00269">269</a> of file <a class="el" href="inverse-compton_8h_source.html">inverse-compton.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  270</span>    : <a class="code hl_variable" href="structICPhoton.html#a8721a351afe42b1e5fdf3075bffc89f7">photons</a>(<a class="code hl_variable" href="structICPhoton.html#a8721a351afe42b1e5fdf3075bffc89f7">photons</a>), <a class="code hl_variable" href="structICPhoton.html#aea5718d82370d9ae7fcaf2e70654bcf2">electrons</a>(<a class="code hl_variable" href="structICPhoton.html#aea5718d82370d9ae7fcaf2e70654bcf2">electrons</a>), KN(KN) {}</div>
 <div class="ttc" id="astructICPhoton_html_a8721a351afe42b1e5fdf3075bffc89f7"><div class="ttname"><a href="structICPhoton.html#a8721a351afe42b1e5fdf3075bffc89f7">ICPhoton::photons</a></div><div class="ttdeci">Photons photons</div><div class="ttdef"><b>Definition</b> <a href="inverse-compton_8h_source.html#l00135">inverse-compton.h:135</a></div></div>
 <div class="ttc" id="astructICPhoton_html_aea5718d82370d9ae7fcaf2e70654bcf2"><div class="ttname"><a href="structICPhoton.html#aea5718d82370d9ae7fcaf2e70654bcf2">ICPhoton::electrons</a></div><div class="ttdeci">Electrons electrons</div><div class="ttdef"><b>Definition</b> <a href="inverse-compton_8h_source.html#l00137">inverse-compton.h:137</a></div></div>
 </div><!-- fragment -->
@@ -246,12 +246,12 @@ template&lt;<a class="el" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>The specific intensity at the given frequency </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="inverse-compton_8h_source.html#l00504">504</a> of file <a class="el" href="inverse-compton_8h_source.html">inverse-compton.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  504</span>                                                       {</div>
-<div class="line"><span class="lineno">  505</span>    <span class="keywordflow">return</span> std::exp2(<a class="code hl_function" href="structICPhoton.html#ab6745228ffcefa9cb561c963a59859d1">compute_log2_I_nu</a>(std::log2(<a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">nu</a>)));</div>
-<div class="line"><span class="lineno">  506</span>}</div>
+<p class="definition">Definition at line <a class="el" href="inverse-compton_8h_source.html#l00505">505</a> of file <a class="el" href="inverse-compton_8h_source.html">inverse-compton.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  505</span>                                                       {</div>
+<div class="line"><span class="lineno">  506</span>    <span class="keywordflow">return</span> std::exp2(<a class="code hl_function" href="structICPhoton.html#ab6745228ffcefa9cb561c963a59859d1">compute_log2_I_nu</a>(std::log2(<a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">nu</a>)));</div>
+<div class="line"><span class="lineno">  507</span>}</div>
 <div class="ttc" id="apybind_8cpp_html_ad93eae6422741850877b46bd61f08c89"><div class="ttname"><a href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">make_native_binary</a></div><div class="ttdeci">BinaryFunc make_native_binary(uintptr_t addr, std::vector&lt; Real &gt; const &amp;p)</div><div class="ttdef"><b>Definition</b> <a href="pybind_8cpp_source.html#l00027">pybind.cpp:27</a></div></div>
-<div class="ttc" id="astructICPhoton_html_ab6745228ffcefa9cb561c963a59859d1"><div class="ttname"><a href="structICPhoton.html#ab6745228ffcefa9cb561c963a59859d1">ICPhoton::compute_log2_I_nu</a></div><div class="ttdeci">Real compute_log2_I_nu(Real log2_nu)</div><div class="ttdoc">Computes the base-2 logarithm of the photon-specific intensity at a given frequency.</div><div class="ttdef"><b>Definition</b> <a href="inverse-compton_8h_source.html#l00509">inverse-compton.h:509</a></div></div>
+<div class="ttc" id="astructICPhoton_html_ab6745228ffcefa9cb561c963a59859d1"><div class="ttname"><a href="structICPhoton.html#ab6745228ffcefa9cb561c963a59859d1">ICPhoton::compute_log2_I_nu</a></div><div class="ttdeci">Real compute_log2_I_nu(Real log2_nu)</div><div class="ttdoc">Computes the base-2 logarithm of the photon-specific intensity at a given frequency.</div><div class="ttdef"><b>Definition</b> <a href="inverse-compton_8h_source.html#l00510">inverse-compton.h:510</a></div></div>
 </div><!-- fragment --><div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -292,25 +292,25 @@ template&lt;<a class="el" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>The base-2 logarithm of the photon specific intensity at the given frequency </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="inverse-compton_8h_source.html#l00509">509</a> of file <a class="el" href="inverse-compton_8h_source.html">inverse-compton.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  509</span>                                                                 {</div>
-<div class="line"><span class="lineno">  510</span>    <span class="keywordflow">if</span> (!generated) {</div>
-<div class="line"><span class="lineno">  511</span>        generate_spectrum();</div>
-<div class="line"><span class="lineno">  512</span>    }</div>
-<div class="line"><span class="lineno">  513</span> </div>
-<div class="line"><span class="lineno">  514</span>    <span class="keyword">const</span> <span class="keywordtype">size_t</span> n = log2_nu_IC.size();</div>
-<div class="line"><span class="lineno">  515</span>    <span class="keywordflow">if</span> (<a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">n &lt; 2 || log2_nu &gt;</a> log2_nu_IC(n - 1)) {</div>
-<div class="line"><span class="lineno">  516</span>        <span class="keywordflow">return</span> -<a class="code hl_variable" href="namespacecon.html#ad61313f4a5b7876e54ae46d02d4a04bd">con::inf</a>;</div>
-<div class="line"><span class="lineno">  517</span>    }</div>
-<div class="line"><span class="lineno">  518</span> </div>
-<div class="line"><span class="lineno">  519</span>    <span class="keywordtype">size_t</span> <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">idx</a> = 0;</div>
-<div class="line"><span class="lineno">  520</span>    <span class="keywordflow">while</span> (<a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">idx</a> + 2 &lt; n &amp;&amp; log2_nu_IC(<a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">idx</a> + 1) &lt;= <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">log2_nu</a>) {</div>
-<div class="line"><span class="lineno">  521</span>        ++<a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">idx</a>;</div>
-<div class="line"><span class="lineno">  522</span>    }</div>
-<div class="line"><span class="lineno">  523</span> </div>
-<div class="line"><span class="lineno">  524</span>    <span class="keywordflow">return</span> log2_I_nu_IC(<a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">idx</a>) + (<a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">log2_nu</a> - log2_nu_IC(<a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">idx</a>)) * interp_slope(<a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">idx</a>);</div>
-<div class="line"><span class="lineno">  525</span>}</div>
-<div class="ttc" id="anamespacecon_html_ad61313f4a5b7876e54ae46d02d4a04bd"><div class="ttname"><a href="namespacecon.html#ad61313f4a5b7876e54ae46d02d4a04bd">con::inf</a></div><div class="ttdeci">constexpr Real inf</div><div class="ttdoc">Infinity value.</div><div class="ttdef"><b>Definition</b> <a href="macros_8h_source.html#l00104">macros.h:104</a></div></div>
+<p class="definition">Definition at line <a class="el" href="inverse-compton_8h_source.html#l00510">510</a> of file <a class="el" href="inverse-compton_8h_source.html">inverse-compton.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  510</span>                                                                 {</div>
+<div class="line"><span class="lineno">  511</span>    <span class="keywordflow">if</span> (!generated) {</div>
+<div class="line"><span class="lineno">  512</span>        generate_spectrum();</div>
+<div class="line"><span class="lineno">  513</span>    }</div>
+<div class="line"><span class="lineno">  514</span> </div>
+<div class="line"><span class="lineno">  515</span>    <span class="keyword">const</span> <span class="keywordtype">size_t</span> n = log2_nu_IC.size();</div>
+<div class="line"><span class="lineno">  516</span>    <span class="keywordflow">if</span> (<a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">n &lt; 2 || log2_nu &gt;</a> log2_nu_IC(n - 1)) {</div>
+<div class="line"><span class="lineno">  517</span>        <span class="keywordflow">return</span> -<a class="code hl_variable" href="namespacecon.html#ad61313f4a5b7876e54ae46d02d4a04bd">con::inf</a>;</div>
+<div class="line"><span class="lineno">  518</span>    }</div>
+<div class="line"><span class="lineno">  519</span> </div>
+<div class="line"><span class="lineno">  520</span>    <span class="keywordtype">size_t</span> <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">idx</a> = 0;</div>
+<div class="line"><span class="lineno">  521</span>    <span class="keywordflow">while</span> (<a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">idx</a> + 2 &lt; n &amp;&amp; log2_nu_IC(<a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">idx</a> + 1) &lt;= <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">log2_nu</a>) {</div>
+<div class="line"><span class="lineno">  522</span>        ++<a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">idx</a>;</div>
+<div class="line"><span class="lineno">  523</span>    }</div>
+<div class="line"><span class="lineno">  524</span> </div>
+<div class="line"><span class="lineno">  525</span>    <span class="keywordflow">return</span> log2_I_nu_IC(<a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">idx</a>) + (<a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">log2_nu</a> - log2_nu_IC(<a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">idx</a>)) * interp_slope(<a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">idx</a>);</div>
+<div class="line"><span class="lineno">  526</span>}</div>
+<div class="ttc" id="anamespacecon_html_ad61313f4a5b7876e54ae46d02d4a04bd"><div class="ttname"><a href="namespacecon.html#ad61313f4a5b7876e54ae46d02d4a04bd">con::inf</a></div><div class="ttdeci">constexpr Real inf</div><div class="ttdoc">Infinity value.</div><div class="ttdef"><b>Definition</b> <a href="macros_8h_source.html#l00107">macros.h:107</a></div></div>
 </div><!-- fragment --><div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">

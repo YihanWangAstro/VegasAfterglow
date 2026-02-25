@@ -1,0 +1,19 @@
+<map id="compute_Thomson_Y" name="compute_Thomson_Y">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,56,167,81"/>
+<area shape="rect" id="Node000002" href="$inverse-compton_8h.html#a38bdc122c39966b17d4cf12634d61f5f" title="Compute CMB IC Y parameter: Y_CMB = u_CMB(z) / u_B, where u_B = B^2 / (8*pi)" alt="" coords="401,5,532,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="166,54,214,47,387,25,388,30,215,53,167,59"/>
+<area shape="rect" id="Node000003" href="$pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89" title=" " alt="" coords="715,107,869,132"/>
+<area shape="poly" id="edge10_Node000001_Node000003" title=" " alt="" coords="167,72,701,110,701,116,167,77"/>
+<area shape="rect" id="Node000004" href="$inverse-compton_8h.html#ad7736d3269071d2ceaffcc56fa2fc71c" title=" " alt="" coords="215,107,353,132"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="137,79,221,101,220,106,136,84"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="532,20,598,30,668,47,719,71,763,97,760,101,716,75,666,53,597,35,532,25"/>
+<area shape="rect" id="Node000005" href="$fast-math_8h.html#ade5247172c3a02cc1ba5c43976ab76d2" title="Fast approximation of a raised to the power of b." alt="" coords="426,132,507,157"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="354,126,413,135,412,140,353,132"/>
+<area shape="poly" id="edge9_Node000005_Node000003" title=" " alt="" coords="507,139,701,124,701,129,508,144"/>
+<area shape="rect" id="Node000006" href="$fast-math_8h.html#a97f986159608011ca67d0d8fc3d09926" title="Fast approximation of 2 raised to a power." alt="" coords="580,157,667,183"/>
+<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="508,149,567,158,566,163,507,154"/>
+<area shape="rect" id="Node000007" href="$fast-math_8h.html#a3af6287ba5abccde52dfb33e06fb8430" title="Fast approximation of the base&#45;2 logarithm." alt="" coords="582,207,665,232"/>
+<area shape="poly" id="edge7_Node000005_Node000007" title=" " alt="" coords="496,155,585,198,583,203,493,160"/>
+<area shape="poly" id="edge6_Node000006_Node000003" title=" " alt="" coords="666,155,735,133,737,139,667,160"/>
+<area shape="poly" id="edge8_Node000007_Node000003" title=" " alt="" coords="646,204,665,193,757,137,760,141,668,198,649,209"/>
+</map>

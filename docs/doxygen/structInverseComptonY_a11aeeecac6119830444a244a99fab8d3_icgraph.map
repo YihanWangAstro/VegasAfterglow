@@ -1,14 +1,14 @@
 <map id="InverseComptonY::gamma_spectrum" name="InverseComptonY::gamma_spectrum">
 <area shape="rect" id="Node000001" title="Calculates the effective Y parameter for a given electron Lorentz factor." alt="" coords="592,22,785,62"/>
-<area shape="rect" id="Node000002" href="$inverse-compton_8cpp.html#ad06eafa794ead54fd991828713903f5a" title=" " alt="" coords="189,5,353,31"/>
+<area shape="rect" id="Node000002" href="$inverse-compton_8cpp.html#afe30262ca73705fdc9456009f6066fa8" title=" " alt="" coords="189,5,353,31"/>
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="578,38,353,25,354,20,578,33"/>
 <area shape="rect" id="Node000004" href="$inverse-compton_8cpp.html#a1595a8694782ca55acc136e79089e784" title=" " alt="" coords="401,55,544,80"/>
 <area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="579,58,545,62,544,56,578,52"/>
 <area shape="rect" id="Node000003" href="$inverse-compton_8h.html#a583bd933279ebdb89aaa790ee16bc67a" title=" " alt="" coords="26,5,121,31"/>
 <area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="175,21,121,21,121,15,175,15"/>
-<area shape="rect" id="Node000005" href="$inverse-compton_8h.html#a84b2fce848f1b0e707c3345139978d79" title=" " alt="" coords="227,55,316,80"/>
+<area shape="rect" id="Node000005" href="$inverse-compton_8h.html#ac8f967d0ccd3b5b84d387756e0d5d463" title=" " alt="" coords="227,55,316,80"/>
 <area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="388,70,316,70,316,65,388,65"/>
 <area shape="poly" id="edge5_Node000005_Node000003" title=" " alt="" coords="213,56,120,32,122,27,214,51"/>
-<area shape="rect" id="Node000006" href="$inverse-compton_8h.html#a03706f33ca5b6d5b0925a2636f60b6cc" title=" " alt="" coords="5,55,141,80"/>
+<area shape="rect" id="Node000006" href="$inverse-compton_8h.html#a8f645350e4623d03b237428488a88491" title="Applies Thomson cooling to electrons based on photon distribution." alt="" coords="5,55,141,80"/>
 <area shape="poly" id="edge6_Node000005_Node000006" title=" " alt="" coords="213,70,142,70,142,65,213,65"/>
 </map>

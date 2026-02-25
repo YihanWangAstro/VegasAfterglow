@@ -3,6 +3,7 @@ var macros_8h =
     [ "Real", "macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de", null ],
     [ "operator\"\"_r", "macros_8h.html#a995e5aefe53e2cfabdf65b276e0c40c6", null ],
     [ "operator\"\"_r", "macros_8h.html#aa64d4a5a9597d27900cfaaf8d70b8520", null ],
+    [ "a_rad", "macros_8h.html#ab37b7833834c14d05e3439326b611702", null ],
     [ "au", "macros_8h.html#a6cc151b26a5507a0e63f9c9f68adf4d2", null ],
     [ "c", "macros_8h.html#a2ff3edf57629ccb9a49d5bde7278a7c4", null ],
     [ "c2", "macros_8h.html#a26ef2b83dd09c356e324bd243b498764", null ],
@@ -30,6 +31,7 @@ var macros_8h =
     [ "Hz", "macros_8h.html#a78d8f4bc3be7867d8171f2759251dad1", null ],
     [ "inf", "macros_8h.html#ad61313f4a5b7876e54ae46d02d4a04bd", null ],
     [ "Jy", "macros_8h.html#abaee748048f9a3eaa1b58071c3758009", null ],
+    [ "kB", "macros_8h.html#a86dbb8b01b3ccdf55dd3ae5b99a4b913", null ],
     [ "keV", "macros_8h.html#a0f6a9104ac1f80da64cf8a3745ef91dc", null ],
     [ "kg", "macros_8h.html#ade1c58fbd41c73c2639ae6b43ed69b05", null ],
     [ "km", "macros_8h.html#a24953d730785c93f5e835b7ac5751acc", null ],
@@ -53,6 +55,7 @@ var macros_8h =
     [ "sec", "macros_8h.html#a4e7c438655d3f34c7c30a155ec38f250", null ],
     [ "sigma_cut", "macros_8h.html#ae257fca076d03dd535871a9824d2f178", null ],
     [ "sigmaT", "macros_8h.html#ad19e5b64c85c3e709fd0944358be97f6", null ],
+    [ "T_CMB0", "macros_8h.html#a5ebffb74c6352a45bf585d8e9d3acfb9", null ],
     [ "TeV", "macros_8h.html#a73146c1c9173fda7b02d434d813aa825", null ],
     [ "uJy", "macros_8h.html#a738b134e141d6acdbb335374689e6825", null ],
     [ "yr", "macros_8h.html#a28b5c14bd65aeeebf1db1d974bc266e6", null ]
