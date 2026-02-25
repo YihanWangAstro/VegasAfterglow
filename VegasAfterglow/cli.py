@@ -142,6 +142,8 @@ _TIME_SCALES = {"s": 1.0, "day": 86400.0, "hr": 3600.0, "min": 60.0}
 
 
 def parse_args(argv=None):
+    from . import __version__
+
     p = argparse.ArgumentParser(
         prog="vegasgen",
         description="Quick GRB afterglow light curve generator (VegasAfterglow).",
@@ -152,7 +154,16 @@ def parse_args(argv=None):
             "  vegasgen --jet gaussian --z 0.5           # Gaussian jet at z=0.5\n"
             "  vegasgen --nu R J F606W --plot            # filter-name frequencies + plot\n"
             "  vegasgen --medium wind --A_star 0.1 -o lc.csv\n"
+            "  vegasgen --rvs --plot                     # forward + reverse shock\n"
+            "  vegasgen --rvs --rvs_eps_B 0.1 --plot     # RS with different microphysics\n"
+            "  vegasgen --ssc --rvs --rvs_ssc --plot     # SSC on both shocks\n"
         ),
+    )
+    p.add_argument(
+        "-v",
+        "--version",
+        action="version",
+        version=f"%(prog)s (VegasAfterglow {__version__})",
     )
 
     # -- Jet ----------------------------------------------------------------
@@ -216,6 +227,40 @@ def parse_args(argv=None):
     )
     rad.add_argument("--cmb_cooling", action="store_true", help="enable CMB IC cooling")
 
+    # -- Reverse shock ------------------------------------------------------
+    rvs = p.add_argument_group("reverse shock")
+    rvs.add_argument("--rvs", action="store_true", help="enable reverse shock")
+    rvs.add_argument(
+        "--rvs_eps_e",
+        type=float,
+        default=None,
+        help="RS electron energy fraction (default: same as --eps_e)",
+    )
+    rvs.add_argument(
+        "--rvs_eps_B",
+        type=float,
+        default=None,
+        help="RS magnetic energy fraction (default: same as --eps_B)",
+    )
+    rvs.add_argument(
+        "--rvs_p",
+        type=float,
+        default=None,
+        help="RS electron spectral index (default: same as --p)",
+    )
+    rvs.add_argument(
+        "--rvs_xi_e",
+        type=float,
+        default=None,
+        help="RS electron acceleration fraction (default: same as --xi_e)",
+    )
+    rvs.add_argument(
+        "--rvs_ssc", action="store_true", help="RS synchrotron self-Compton"
+    )
+    rvs.add_argument(
+        "--rvs_kn", action="store_true", help="RS Klein-Nishina corrections"
+    )
+
     # -- Frequencies --------------------------------------------------------
     freq = p.add_argument_group("frequencies")
     freq.add_argument(
@@ -229,7 +274,7 @@ def parse_args(argv=None):
     tg = p.add_argument_group("time grid")
     tg.add_argument("--t_min", type=float, default=100, help="start time [s]")
     tg.add_argument("--t_max", type=float, default=1e8, help="end time [s]")
-    tg.add_argument("--num_t", type=int, default=200, help="number of time points")
+    tg.add_argument("--num_t", type=int, default=100, help="number of time points")
 
     # -- Resolution ---------------------------------------------------------
     res = p.add_argument_group("resolution")
@@ -293,7 +338,7 @@ def build_observer(args):
 def build_radiation(args):
     from . import Radiation
 
-    return Radiation(
+    fwd_rad = Radiation(
         eps_e=args.eps_e,
         eps_B=args.eps_B,
         p=args.p,
@@ -302,6 +347,17 @@ def build_radiation(args):
         kn=args.kn,
         cmb_cooling=args.cmb_cooling,
     )
+    rvs_rad = None
+    if args.rvs:
+        rvs_rad = Radiation(
+            eps_e=args.rvs_eps_e if args.rvs_eps_e is not None else args.eps_e,
+            eps_B=args.rvs_eps_B if args.rvs_eps_B is not None else args.eps_B,
+            p=args.rvs_p if args.rvs_p is not None else args.p,
+            xi_e=args.rvs_xi_e if args.rvs_xi_e is not None else args.xi_e,
+            ssc=args.rvs_ssc,
+            kn=args.rvs_kn,
+        )
+    return fwd_rad, rvs_rad
 
 
 def parse_frequencies(nu_args):
@@ -310,9 +366,29 @@ def parse_frequencies(nu_args):
     return nus, list(nu_args)
 
 
+def _has_data(arr):
+    """Check if a flux array has actual data (not 0-d or empty)."""
+    return arr.ndim >= 2 and arr.size > 0
+
+
+def _get_components(result):
+    """Return list of (name, flux_array) for all active flux components."""
+    components = [("total", result.total)]
+    if _has_data(result.fwd.sync):
+        components.append(("fwd_sync", result.fwd.sync))
+    if _has_data(result.fwd.ssc):
+        components.append(("fwd_ssc", result.fwd.ssc))
+    if _has_data(result.rvs.sync):
+        components.append(("rvs_sync", result.rvs.sync))
+    if _has_data(result.rvs.ssc):
+        components.append(("rvs_ssc", result.rvs.ssc))
+    return components
+
+
 def write_csv(times, nus, result, args, file):
     t_scale = _TIME_SCALES[args.time_unit]
     f_scale = _FLUX_SCALES[args.flux_unit]
+    components = _get_components(result)
 
     # Header
     file.write("# VegasAfterglow light curve\n")
@@ -324,18 +400,20 @@ def write_csv(times, nus, result, args, file):
     file.write(f"# eps_e={args.eps_e} eps_B={args.eps_B} p={args.p}\n")
     file.write(f"# t_unit={args.time_unit} flux_unit={args.flux_unit}\n")
 
-    # Column headers
+    # Column headers — grouped by frequency, one column per component
     cols = [f"t({args.time_unit})"]
     for nu in nus:
-        cols.append(f"F_total({_format_nu_label(nu)})")
+        nu_label = _format_nu_label(nu)
+        for comp_name, _ in components:
+            cols.append(f"F_{comp_name}({nu_label})")
     file.write(",".join(cols) + "\n")
 
-    # Data — result.total shape is (n_nu, n_t) from flux_density_grid
-    flux = result.total
+    # Data — each component array has shape (n_nu, n_t)
     for j in range(len(times)):
         row = [f"{times[j] / t_scale:.6e}"]
         for i in range(len(nus)):
-            row.append(f"{flux[i, j] / f_scale:.6e}")
+            for _, comp_flux in components:
+                row.append(f"{comp_flux[i, j] / f_scale:.6e}")
         file.write(",".join(row) + "\n")
 
 
@@ -344,7 +422,7 @@ def write_json(times, nus, result, args, file):
 
     t_scale = _TIME_SCALES[args.time_unit]
     f_scale = _FLUX_SCALES[args.flux_unit]
-    flux = result.total
+    components = _get_components(result)
 
     data = {
         "parameters": {
@@ -363,7 +441,10 @@ def write_json(times, nus, result, args, file):
         "frequencies_Hz": nus.tolist(),
         "times": (times / t_scale).tolist(),
         "flux": {
-            _format_nu_label(nus[i]): (flux[i] / f_scale).tolist()
+            _format_nu_label(nus[i]): {
+                comp_name: (comp_flux[i] / f_scale).tolist()
+                for comp_name, comp_flux in components
+            }
             for i in range(len(nus))
         },
     }
@@ -444,7 +525,7 @@ def _setup_plot_style(font=None):
         "font.size": 10,
         "axes.labelsize": 11,
         "axes.titlesize": 11,
-        "legend.fontsize": 9,
+        "legend.fontsize": 7,
         "xtick.labelsize": 9,
         "ytick.labelsize": 9,
         "xtick.direction": "in",
@@ -497,12 +578,40 @@ def _build_param_text(args):
         rf"$\epsilon_B={_sci_tex(args.eps_B)}$, "
         rf"$p={args.p:g}$"
     )
-    return line1 + "\n" + line2
+    text = line1 + "\n" + line2
+    if args.rvs:
+        rvs_eps_e = args.rvs_eps_e if args.rvs_eps_e is not None else args.eps_e
+        rvs_eps_B = args.rvs_eps_B if args.rvs_eps_B is not None else args.eps_B
+        rvs_p = args.rvs_p if args.rvs_p is not None else args.p
+        text += (
+            "\n"
+            rf"$\epsilon_{{e,r}}={rvs_eps_e:g}$, "
+            rf"$\epsilon_{{B,r}}={_sci_tex(rvs_eps_B)}$, "
+            rf"$p_r={rvs_p:g}$"
+        )
+    return text
+
+
+_COMP_STYLES = {
+    "total": "-",
+    "fwd_sync": "--",
+    "fwd_ssc": ":",
+    "rvs_sync": "-.",
+    "rvs_ssc": (0, (1, 2)),  # loosely dotted
+}
+
+_COMP_LABELS = {
+    "fwd_sync": "FS sync",
+    "fwd_ssc": "FS SSC",
+    "rvs_sync": "RS sync",
+    "rvs_ssc": "RS SSC",
+}
 
 
 def plot_lightcurve(times, nus, nu_labels, result, args):
     try:
         import matplotlib.pyplot as plt
+        from matplotlib.lines import Line2D
     except ImportError:
         print(
             "Error: --plot requires matplotlib. Install with: pip install matplotlib",
@@ -514,29 +623,78 @@ def plot_lightcurve(times, nus, nu_labels, result, args):
 
     t_scale = _TIME_SCALES[args.time_unit]
     f_scale = _FLUX_SCALES[args.flux_unit]
-    flux = result.total
+    components = _get_components(result)
 
     # Single-column journal figure: 3.5 in wide, golden ratio height
     fig, ax = plt.subplots(figsize=(3.5, 2.6))
 
+    plotted_comps = set()
     for i, nu in enumerate(nus):
         color = _COLORS[i % len(_COLORS)]
-        f = flux[i] / f_scale
-        mask = f > 0
-        ax.plot(
-            (times / t_scale)[mask],
-            f[mask],
-            color=color,
-            label=_format_nu_latex(nu, nu_labels[i]),
-            zorder=2,
-        )
+        band_label = _format_nu_latex(nu, nu_labels[i])
+        for comp_name, comp_flux in components:
+            f = comp_flux[i] / f_scale
+            mask = f > 0
+            if not np.any(mask):
+                continue
+            is_total = comp_name == "total"
+            # Only total lines get band labels; components are unlabeled
+            label = band_label if is_total else None
+            ax.plot(
+                (times / t_scale)[mask],
+                f[mask],
+                color=color,
+                linestyle=_COMP_STYLES[comp_name],
+                linewidth=1.5 if is_total else 0.9,
+                alpha=1.0 if is_total else 0.7,
+                label=label,
+                zorder=2 if is_total else 1,
+            )
+            if not is_total:
+                plotted_comps.add(comp_name)
 
     ax.set_xscale("log")
     ax.set_yscale("log")
+
+    # Smart y-axis range: consider all components, cap at 15 decades
+    all_pos = []
+    for _, comp_flux in components:
+        scaled = comp_flux / f_scale
+        pos = scaled[scaled > 0]
+        if pos.size > 0:
+            all_pos.append(pos)
+    if all_pos:
+        combined = np.concatenate(all_pos)
+        f_max, f_min = np.max(combined), np.min(combined)
+        y_top = f_max * 10
+        y_bot = f_min / 10
+        # Cap at 12 decades
+        if y_top / y_bot > 1e12:
+            y_bot = y_top * 1e-12
+        ax.set_ylim(bottom=y_bot, top=y_top)
+
     ax.set_xlabel(rf"$t_\mathrm{{obs}}$ ({_TIME_LABELS[args.time_unit]})")
     ax.set_ylabel(rf"$F_\nu$ ({_FLUX_LABELS[args.flux_unit]})")
 
+    # Build legend: band entries (colored solid) + linestyle key (gray)
+    handles, labels = ax.get_legend_handles_labels()
+    if plotted_comps:
+        for comp_name in ["fwd_sync", "fwd_ssc", "rvs_sync", "rvs_ssc"]:
+            if comp_name in plotted_comps:
+                handles.append(
+                    Line2D(
+                        [0],
+                        [0],
+                        color="0.4",
+                        linestyle=_COMP_STYLES[comp_name],
+                        linewidth=0.9,
+                    )
+                )
+                labels.append(_COMP_LABELS[comp_name])
+
     ax.legend(
+        handles,
+        labels,
         loc="best",
         frameon=True,
         fancybox=False,
@@ -570,17 +728,20 @@ def main():
     jet = build_jet(args)
     medium = build_medium(args)
     observer = build_observer(args)
-    radiation = build_radiation(args)
+    fwd_rad, rvs_rad = build_radiation(args)
 
     from . import Model
 
-    model = Model(jet, medium, observer, radiation, resolutions=tuple(args.res))
+    model = Model(
+        jet, medium, observer, fwd_rad, rvs_rad=rvs_rad, resolutions=tuple(args.res)
+    )
 
     times = np.logspace(np.log10(args.t_min), np.log10(args.t_max), args.num_t)
     nus, nu_labels = parse_frequencies(args.nu)
 
+    shock_desc = "FS+RS" if args.rvs else "FS"
     print(
-        f"Computing {args.jet}/{args.medium} light curve "
+        f"Computing {args.jet}/{args.medium} ({shock_desc}) light curve "
         f"({len(nus)} bands, {args.num_t} time points)...",
         file=sys.stderr,
     )
