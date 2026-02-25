@@ -655,7 +655,7 @@ void IC_cooling(ElectronGrid<Electrons>& electrons, PhotonGrid<Photons>& photons
 
 template <typename Electrons, typename Photons>
 void Thomson_cooling(ElectronGrid<Electrons>& electrons, PhotonGrid<Photons>& photons, Shock const& shock,
-                     Coord const& coord, Real redshift = 0.0) {
+                     Coord const& coord, Real redshift) {
     IC_cooling(electrons, photons, shock, coord, update_gamma_c_Thomson, redshift);
 }
 
