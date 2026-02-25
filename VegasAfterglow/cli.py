@@ -471,16 +471,17 @@ _FLUX_LABELS = {
 
 _TIME_LABELS = {"s": "s", "day": "days", "hr": "hr", "min": "min"}
 
-# VegasAfterglow signature palette — vibrant, high-contrast, colorblind-friendly
-_COLORS = [
-    "#E63946",  # vivid red
-    "#1D3557",  # deep navy
-    "#2A9D8F",  # teal green
-    "#E9C46A",  # warm gold
-    "#F77F00",  # bright orange
-    "#7209B7",  # deep violet
-    "#4CC9F0",  # sky blue
-]
+
+def _freq_color(nu):
+    """Map frequency to color: warm (red) for radio, cool (blue) for X-ray."""
+    from matplotlib.colors import LinearSegmentedColormap
+
+    colors = ["#E03530", "#E8872E", "#D4C43A", "#2AB07E", "#2878B5", "#7B3FA0"]
+    cmap = LinearSegmentedColormap.from_list("freq", colors)
+    log_nu = np.log10(nu)
+    t = np.clip((log_nu - 7) / (22 - 7), 0, 1)
+    rgba = cmap(t)
+    return f"#{int(rgba[0]*255):02x}{int(rgba[1]*255):02x}{int(rgba[2]*255):02x}"
 
 
 def _latex_available():
@@ -630,7 +631,7 @@ def plot_lightcurve(times, nus, nu_labels, result, args):
 
     plotted_comps = set()
     for i, nu in enumerate(nus):
-        color = _COLORS[i % len(_COLORS)]
+        color = _freq_color(nu)
         band_label = _format_nu_latex(nu, nu_labels[i])
         for comp_name, comp_flux in components:
             f = comp_flux[i] / f_scale
@@ -645,7 +646,7 @@ def plot_lightcurve(times, nus, nu_labels, result, args):
                 f[mask],
                 color=color,
                 linestyle=_COMP_STYLES[comp_name],
-                linewidth=1.5 if is_total else 0.9,
+                linewidth=1.2 if is_total else 0.9,
                 alpha=1.0 if is_total else 0.7,
                 label=label,
                 zorder=2 if is_total else 1,
