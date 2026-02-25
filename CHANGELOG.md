@@ -40,6 +40,14 @@ For the full MCMC fitting guide, including advanced customization examples, see 
 - Can be enabled independently of SSC via the ``cmb_cooling`` flag, or combined with SSC for full IC cooling
 - Particularly relevant for high-redshift afterglows where the CMB energy density is enhanced by (1+z)⁴
 
+#### **Command-Line Interface (`vegasgen`)**
+
+- New `vegasgen` command generates multi-band light curves directly from the terminal — no Python scripting required
+- All physical parameters (jet type, medium, observer, radiation) configurable via command-line arguments with sensible defaults
+- Frequencies can be specified as Hz values or standard filter names (e.g., `--nu R J F606W 1e18`), with support for Johnson-Cousins, 2MASS, Swift UVOT, and HST filters
+- Output to CSV or JSON, or generate publication-quality plots with `--plot` (Times New Roman, LaTeX labels, colorblind-friendly palette)
+- See the [CLI documentation](https://yihanwangastro.github.io/VegasAfterglow/docs/using_cli.html) for the full argument reference
+
 #### **Smarter Adaptive Grid Generation**
 - Grid generation now accounts for the ambient medium density profile, producing better time sampling near the deceleration time
 - Sharp features in jet angular profiles (e.g., core-wing boundaries) are automatically detected and resolved as grid anchor points

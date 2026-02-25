@@ -39,6 +39,7 @@
     - [C++ Installation](#c-installation)
   - [Usage](#usage)
     - [Quick Start](#quick-start)
+    - [Command-Line Tool](#command-line-tool)
     - [Light Curve \& Spectrum Calculation](#light-curve--spectrum-calculation)
     - [Internal Quantities Evolution](#internal-quantities-evolution)
     - [MCMC Parameter Fitting](#mcmc-parameter-fitting)
@@ -213,6 +214,26 @@ plt.xlabel('Time (s)'); plt.ylabel('Flux (erg/cm²/s/Hz)'); plt.show()
 ```
 
 Read the detailed sections below for more information.
+
+### Command-Line Tool
+
+Generate light curves directly from the terminal with `vegasgen` — no Python scripting required:
+
+```bash
+# Default tophat jet, ISM, on-axis — just run it
+vegasgen
+
+# Gaussian jet at z=0.5 with plot output
+vegasgen --jet gaussian --z 0.5 --plot
+
+# Use filter names for frequencies, save to file
+vegasgen --nu R J 1e18 -o lightcurve.csv
+
+# Wind medium with SSC, save plot as PNG
+vegasgen --medium wind --ssc --plot -o lightcurve.png
+```
+
+All parameters have sensible defaults. Run `vegasgen --help` for the full option list, or see the [CLI documentation](https://yihanwangastro.github.io/VegasAfterglow/docs/using_cli.html) for detailed usage.
 
 ---
 

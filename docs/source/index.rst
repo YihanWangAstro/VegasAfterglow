@@ -33,6 +33,7 @@ Key Features
 
    installation
    quickstart
+   using_cli
    examples
    mcmc_fitting
    redback_integration
