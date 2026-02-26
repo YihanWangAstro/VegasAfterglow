@@ -38,7 +38,7 @@ For the full MCMC fitting guide, including advanced customization examples, see 
 #### **CMB Inverse Compton Cooling**
 - Electron cooling now includes inverse Compton scattering off the cosmic microwave background (CMB), which contributes to the Compton-Y parameter alongside synchrotron self-Compton
 - Can be enabled independently of SSC via the ``cmb_cooling`` flag, or combined with SSC for full IC cooling
-- Particularly relevant for high-redshift afterglows where the CMB energy density is enhanced by (1+z)⁴
+- More relevant for blazar jets than GRB afterglows, but included for completeness as the CMB energy density scales as (1+z)⁴
 
 #### **Command-Line Interface (`vegasgen`)**
 

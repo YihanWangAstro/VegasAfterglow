@@ -65,8 +65,8 @@ void ForwardShockEqn<Ejecta, Medium>::operator()(State const& state, State& diff
 }
 
 template <typename Ejecta, typename Medium>
-Real ForwardShockEqn<Ejecta, Medium>::compute_dGamma_dt(State const& state, State const& diff,
-                                                        Real ad_idx, Real sin_theta, Real cos_theta) const noexcept {
+Real ForwardShockEqn<Ejecta, Medium>::compute_dGamma_dt(State const& state, State const& diff, Real ad_idx,
+                                                        Real sin_theta, Real cos_theta) const noexcept {
     Real dm_dt_swept = diff.m2;
     Real m_swept = state.m2;
     const Real Gamma2 = state.Gamma * state.Gamma;
@@ -104,8 +104,8 @@ Real ForwardShockEqn<Ejecta, Medium>::compute_dGamma_dt(State const& state, Stat
 }
 
 template <typename Ejecta, typename Medium>
-Real ForwardShockEqn<Ejecta, Medium>::compute_dU_dt(Real eps_rad, State const& state, State const& diff,
-                                                    Real ad_idx, Real sin_theta, Real cos_theta) const noexcept {
+Real ForwardShockEqn<Ejecta, Medium>::compute_dU_dt(Real eps_rad, State const& state, State const& diff, Real ad_idx,
+                                                    Real sin_theta, Real cos_theta) const noexcept {
     Real dm_dt_swept = diff.m2;
     const Real m_swept = state.m2;
     Real dlnVdt = 3 / state.r * diff.r - diff.Gamma / state.Gamma;
@@ -192,7 +192,7 @@ void grid_solve_fwd_shock(size_t i, size_t j, View const& t, Shock& shock, FwdEq
     Real t0;
 
     Real t_dec = compute_dec_time(eqn);
-    t0 = min(t.front(), 1 * unit::sec, 0.1 * t_dec);
+    t0 = min(t.front(), 0.01 * unit::sec, 0.1 * t_dec);
     eqn.set_init_state(state, t0);
 
     if (state.Gamma <= con::Gamma_cut) {
