@@ -142,6 +142,8 @@ Medium MultiBandModel::select_medium(Params const& param) {
     Medium medium;
     if (config.medium == "ism") {
         medium.rho = evn::ISM(param.n_ism / unit::cm3);
+    } else if (config.medium == "powerLaw") {
+        medium.rho = evn::powerLaw(param.n0 / unit::cm3, param.k_m, param.r0 * unit::cm, param.X);
     } else if (config.medium == "wind") {
         medium.rho = evn::wind(param.A_star, param.n_ism / unit::cm3, param.n0 / unit::cm3, param.k_m);
     } else {

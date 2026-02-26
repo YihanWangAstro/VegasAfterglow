@@ -52,6 +52,8 @@ PYBIND11_MODULE(VegasAfterglowC, m) {
 
     m.def("Wind", &PyWind, py::arg("A_star"), py::arg("n_ism") = 0, py::arg("n0") = con::inf, py::arg("k") = 2);
 
+    m.def("powerLaw", &PyPowerLaw, py::arg("n0"), py::arg("k"), py::arg("r0") = 1e17, py::arg("X") = 0.7);
+
     py::class_<Medium>(m, "Medium").def(py::init<TernaryFunc>(), py::arg("rho"));
 
     // Observer bindings

@@ -187,6 +187,8 @@ struct Params {
     double n0{con::inf}; ///< Inner boundary density for stratified wind [cm^-3]
     double A_star{0};    ///< Wind parameter A* in units of 5×10^11 g/cm [dimensionless]
     double k_m{2};       ///< Wind density power-law index (ρ ∝ r^-k_m)
+    double X{0.7};       ///< Hydrogen mass fraction for power-law medium
+    double r0{1e17};     ///< Reference radius for power-law medium [cm]
 
     // Jet core parameters
     double E_iso{1e52};             ///< Isotropic-equivalent energy [erg]

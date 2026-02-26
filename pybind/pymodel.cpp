@@ -121,6 +121,16 @@ Medium PyWind(Real A_star, Real n_ism, Real n0, Real k) {
     return medium;
 }
 
+Medium PyPowerLaw(Real n0, Real k, Real r0, Real X) {
+    Medium medium;
+
+    medium.rho = [=](Real phi, Real theta, Real r) {
+        Real n = n0 * std::pow((r / r0),(-k)); 
+        return n * X * 1.67e-24; // convert to density
+    };
+    return medium;
+}
+
 void convert_unit(Ejecta& jet, Medium& medium) {
     auto eps_k_cgs = jet.eps_k;
     jet.eps_k = [=](Real phi, Real theta) { return eps_k_cgs(phi, theta) * (unit::erg / (4 * con::pi)); };

@@ -201,6 +201,9 @@ Medium PyISM(Real n_ism);
  */
 Medium PyWind(Real A_star, Real n_ism = 0, Real n0 = con::inf, Real k = 2);
 
+Medium PyPowerLaw(Real n0, Real k, Real r0 = 1e17, Real X = 0.7);
+
+
 /**
  * <!-- ************************************************************************************** -->
  * @class PyObserver
@@ -211,6 +214,8 @@ Medium PyWind(Real A_star, Real n_ism = 0, Real n0 = con::inf, Real k = 2);
  *          the intrinsic emission appears to the observer.
  * <!-- ************************************************************************************** -->
  */
+
+
 class PyObserver {
   public:
     /**

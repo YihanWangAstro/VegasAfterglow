@@ -21,6 +21,7 @@ from .types import (
     TwoComponentJet,
     VegasMC,
     Wind,
+    powerLaw,
 )
 
 __all__ = [
@@ -34,6 +35,7 @@ __all__ = [
     "Scale",
     "ISM",
     "Wind",
+    "powerLaw",
     "Medium",
     "TophatJet",
     "GaussianJet",

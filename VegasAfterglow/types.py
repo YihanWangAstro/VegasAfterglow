@@ -23,6 +23,7 @@ from .VegasAfterglowC import (  # noqa: F401
     TwoComponentJet,
     VegasMC,
     Wind,
+    powerLaw,
 )
 
 

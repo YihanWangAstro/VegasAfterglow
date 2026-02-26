@@ -102,6 +102,40 @@ class Wind {
     Real r02{0};     ///< Radius where ISM transitions to
 };
 
+class powerLaw {
+  public:
+    /**
+     * <!-- ************************************************************************************** -->
+     * @brief Constructor: Initialize with wind parameter A_star (in standard units)
+     * @param A_star Wind density parameter in standard units
+     * <!-- ************************************************************************************** -->
+     */
+    powerLaw(Real n0, Real k, Real r0 = 1e17, Real X = 0.7) noexcept
+      : n0(n0), k(k), r0(r0), X(X) {}
+        
+
+    /**
+     * <!-- ************************************************************************************** -->
+     * @brief Return density at given position (proportional to 1/r²)
+     * @param phi Azimuthal angle (unused)
+     * @param theta Polar angle (unused)
+     * @param r Radial distance
+     * @return Density value at radius r (= A/r²)
+     * <!-- ************************************************************************************** -->
+     */
+
+   inline Real rho(Real phi, Real theta, Real r) const noexcept {
+       Real n = n0 * std::pow((r / r0),(-k)); 
+       return n * X *con::mp;
+      }
+
+  private:
+    Real n0{1};       ///< Wind density parameter in physical units
+    Real k{2}; ///< ISM density floor
+    Real r0{1e17};
+    Real X{0.7};     ///< Radius where ISM transitions to
+};
+
 /**
  * <!-- ************************************************************************************** -->
  * @namespace evn
@@ -145,5 +179,12 @@ namespace evn {
         // Return a function that computes density = A/r^k
         // This represents a steady-state stellar wind where density falls off as 1/r^k
         return [=](Real phi, Real theta, Real r) noexcept { return A / (r0k + std::pow(r, k)) + rho_ism; };
+    }
+
+    inline auto powerLaw(Real n0, Real k, Real r0 = 1e17, Real X = 0.7) {
+        return [=](Real phi, Real theta, Real r) noexcept {
+            Real n = n0 * std::pow((r / r0),(-k)); 
+            return n * X * con::mp;
+        };
     }
 } // namespace evn
