@@ -48,7 +48,7 @@
 <area shape="poly" id="edge89_Node000001_Node000047" title=" " alt="" coords="88,1947,131,1889,164,1856,203,1828,289,1785,327,1772,363,1764,440,1757,537,1757,756,1757,1137,1757,1137,1762,756,1762,537,1762,440,1762,364,1769,328,1777,291,1790,205,1832,168,1860,135,1893,92,1951"/>
 <area shape="rect" id="Node000048" href="$pymodel_8cpp.html#a9ea9c0ab80dd706c7852a593900665ec" title="Creates a two&#45;component jet model with different properties for narrow and wide components." alt="" coords="1123,1797,1277,1823"/>
 <area shape="poly" id="edge92_Node000001_Node000048" title=" " alt="" coords="95,1947,141,1912,203,1877,293,1841,366,1820,441,1810,537,1807,756,1807,1109,1807,1109,1813,756,1813,537,1813,441,1815,367,1825,294,1846,205,1882,144,1916,98,1951"/>
-<area shape="rect" id="Node000049" href="$pymodel_8cpp.html#addf49a7e537859bcfe1424052754c6a9" title="Creates a stellar wind environment with r^(&#45;2) density profile." alt="" coords="719,1949,790,1975"/>
+<area shape="rect" id="Node000049" href="$pymodel_8cpp.html#aebfa03cfb71b20974f032ff1c801c59b" title="Creates a stellar wind environment with r^(&#45;2) density profile." alt="" coords="719,1949,790,1975"/>
 <area shape="poly" id="edge95_Node000001_Node000049" title=" " alt="" coords="156,1959,706,1959,706,1965,156,1965"/>
 <area shape="rect" id="Node000050" href="$structPyMagnetar.html#a1c4edb2c2823ff7546e998bfd60db66e" title=" " alt="" coords="471,2000,606,2025"/>
 <area shape="poly" id="edge97_Node000001_Node000050" title=" " alt="" coords="156,1971,204,1978,458,2004,457,2009,204,1983,156,1977"/>

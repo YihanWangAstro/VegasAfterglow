@@ -390,11 +390,14 @@
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">VegasAfterglow</span><span class="w"> </span><span class="kn">import</span> <span class="n">Wind</span>
 
 <span class="c1"># Create a stratified stellar wind medium;</span>
-<span class="c1"># smooth transited stratified medium. Inner region, n(r) = n0, middle region n(r) \propto 1/r^2, outer region n(r)=n_ism</span>
+<span class="c1"># smooth transited stratified medium. Inner region, n(r) = n0, middle region n(r) \propto 1/r^k_m, outer region n(r)=n_ism</span>
 <span class="c1"># A = 0 (default): fallback to n = n_ism</span>
 <span class="c1"># n0 = inf (default): wind bubble, from wind profile to ism profile</span>
 <span class="c1"># A = 0 &amp; n0 = inf: pure wind;</span>
 <span class="n">wind</span> <span class="o">=</span> <span class="n">Wind</span><span class="p">(</span><span class="n">A_star</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">n_ism</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">n0</span> <span class="o">=</span> <span class="mf">1e3</span><span class="p">)</span>
+
+<span class="c1"># Use k_m to change the wind density power-law index (default k_m=2, i.e. n ∝ r^{-2})</span>
+<span class="n">wind</span> <span class="o">=</span> <span class="n">Wind</span><span class="p">(</span><span class="n">A_star</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">k_m</span><span class="o">=</span><span class="mf">1.5</span><span class="p">)</span>  <span class="c1"># n ∝ r^{-1.5}</span>
 
 <span class="c1">#..other settings</span>
 <span class="n">model</span> <span class="o">=</span> <span class="n">Model</span><span class="p">(</span><span class="n">medium</span><span class="o">=</span><span class="n">wind</span><span class="p">,</span> <span class="o">...</span><span class="p">)</span>
@@ -1085,7 +1088,7 @@ only for custom profiles passed via <code class="docutils literal notranslate"><
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">VegasAfterglow</span><span class="w"> </span><span class="kn">import</span> <span class="n">Wind</span>
 
 <span class="c1"># Create a wind medium for demonstration</span>
-<span class="n">wind</span> <span class="o">=</span> <span class="n">Wind</span><span class="p">(</span><span class="n">A_star</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">n_ism</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">n0</span><span class="o">=</span><span class="mf">1e3</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">wind</span> <span class="o">=</span> <span class="n">Wind</span><span class="p">(</span><span class="n">A_star</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">n_ism</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">n0</span><span class="o">=</span><span class="mf">1e3</span><span class="p">,</span> <span class="n">k_m</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
 <span class="c1"># Note: This creates a stratified wind: inner constant density n0,</span>
 <span class="c1"># middle r^-2 profile, outer constant density n_ism</span>
 

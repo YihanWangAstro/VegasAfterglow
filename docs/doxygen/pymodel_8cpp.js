@@ -10,7 +10,7 @@ var pymodel_8cpp =
     [ "PyStepPowerLawJet", "pymodel_8cpp.html#a129d5ac7471649a22f68a3f64786f85c", null ],
     [ "PyTophatJet", "pymodel_8cpp.html#ad5e78b5863f7d34d20d7e104fcd68e53", null ],
     [ "PyTwoComponentJet", "pymodel_8cpp.html#a9ea9c0ab80dd706c7852a593900665ec", null ],
-    [ "PyWind", "pymodel_8cpp.html#addf49a7e537859bcfe1424052754c6a9", null ],
+    [ "PyWind", "pymodel_8cpp.html#aebfa03cfb71b20974f032ff1c801c59b", null ],
     [ "save_electron_details", "pymodel_8cpp.html#ab8c583a7d71f7058861240394ee4395b", null ],
     [ "save_photon_details", "pymodel_8cpp.html#abd6c66c47199807e6dfbd00ce56ff8bc", null ],
     [ "save_shock_details", "pymodel_8cpp.html#a8ffef75ec4ca3ef0464331eb194de1e5", null ]
