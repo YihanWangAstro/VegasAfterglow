@@ -62,7 +62,7 @@ namespace defaults {
 
         /// Polar (theta) angular resolution factor
         /// Higher values = more theta grid points
-        inline constexpr double theta_resolution = 0.5;
+        inline constexpr double theta_resolution = 1.0;
 
         /// Temporal resolution factor
         /// Higher values = more time grid points (logarithmically spaced)

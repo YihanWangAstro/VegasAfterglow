@@ -278,7 +278,7 @@ Resolution
      - Description
    * - ``--res PHI THETA T``
      - 3 floats
-     - ``0.15 0.5 10``
+     - ``0.15 1.0 10``
      - Grid resolution: phi points per degree, theta points per degree, time points per decade
 
 Output Options
@@ -583,7 +583,7 @@ Higher resolution
 
     vegasgen --res 0.3 1.0 20
 
-Sets finer angular (phi=0.3, theta=1.0 points per degree) and temporal (20 points per decade) resolution compared to the defaults (0.15, 0.5, 10). Larger values mean more grid points and higher accuracy.
+Sets finer angular (phi=0.3, theta=1.0 points per degree) and temporal (20 points per decade) resolution compared to the defaults (0.15, 1.0, 10). Larger values mean more grid points and higher accuracy.
 
 Output in different formats and units
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^

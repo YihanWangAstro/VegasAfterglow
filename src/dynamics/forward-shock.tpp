@@ -192,7 +192,7 @@ void grid_solve_fwd_shock(size_t i, size_t j, View const& t, Shock& shock, FwdEq
     Real t0;
 
     Real t_dec = compute_dec_time(eqn);
-    t0 = min(t.front(), 0.01 * unit::sec, 0.1 * t_dec);
+    t0 = min(t.front(), 0.1 * unit::sec, 0.1 * t_dec);
     eqn.set_init_state(state, t0);
 
     if (state.Gamma <= con::Gamma_cut) {

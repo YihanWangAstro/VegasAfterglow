@@ -319,7 +319,7 @@ Grid Resolution
      - points/degree
      - Angular resolution in azimuthal direction
    * - ``theta_resol``
-     - 0.5
+     - 1.0
      - points/degree
      - Angular resolution in polar direction
    * - ``t_resol``

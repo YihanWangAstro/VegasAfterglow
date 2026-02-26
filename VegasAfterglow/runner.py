@@ -72,7 +72,7 @@ class Fitter:
         cmb_cooling: bool = False,
         magnetar: bool = False,
         rtol: float = 1e-6,
-        resolution: Tuple[float, float, float] = (0.15, 0.5, 10),
+        resolution: Tuple[float, float, float] = (0.15, 1.0, 10),
     ):
         self.z = z
         self.lumi_dist = lumi_dist

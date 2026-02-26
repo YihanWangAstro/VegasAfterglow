@@ -60,7 +60,7 @@ A: Try the following:
 
 A: Optimization strategies:
 
-- **Reduce resolution**: Use ``resolution=(0.15, 0.5, 10)`` for initial exploration
+- **Reduce resolution**: Use ``resolution=(0.15, 1.0, 10)`` for initial exploration
 - **Fewer parameters**: Fix some parameters with ``Scale.fixed``
 - **Coarser time/frequency grids**: Use fewer data points for initial fits
 - **Parallel processing**: Ensure you're using multiple cores
@@ -252,11 +252,11 @@ The ``resolutions`` parameter in ``Model()`` controls computational accuracy vs 
      - Very Fast
      - Low
    * - Standard calculations
-     - ``(0.15, 0.5, 10)``
+     - ``(0.15, 1.0, 10)``
      - Fast
      - Good
    * - MCMC fitting
-     - ``(0.15, 1, 10)``
+     - ``(0.15, 1.0, 10)``
      - Moderate
      - Good
    * - Publication quality
@@ -267,7 +267,7 @@ The ``resolutions`` parameter in ``Model()`` controls computational accuracy vs 
 Where ``resolutions=(phi_ppd, theta_ppd, t_ppd)``:
 
 - ``phi_ppd``: Azimuthal resolution in points per degree. The total number of phi grid points is ``360 × phi_ppd``, with a minimum of 1 total point.
-- ``theta_ppd``: Polar resolution in points per degree. The total number of theta grid points is ``(theta_max − theta_min) × theta_ppd``, with a minimum of 48 total points. Setting a lower resolution cannot reduce the grid below this minimum.
+- ``theta_ppd``: Polar resolution in points per degree. The total number of theta grid points is ``(theta_max − theta_min) × theta_ppd``, with a minimum of 32 total points. Setting a lower resolution cannot reduce the grid below this minimum.
 - ``t_ppd``: Temporal resolution in points per decade. The total number of time grid points is ``log10(t_max / t_min) × t_ppd``, with a minimum of 24 total points. Setting a lower resolution cannot reduce the grid below this minimum.
 
 Memory Usage
