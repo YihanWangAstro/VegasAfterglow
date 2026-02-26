@@ -13,7 +13,7 @@ var mesh_8h =
       [ "isotropic", "mesh_8h.html#a4c9eca1a51662c0a447221f4d3940caaa92fd05a96e739c61bbbd8b81d35ec741", null ]
     ] ],
     [ "adaptive_grid_with_breaks", "mesh_8h.html#ae2e78f3cf4aabf7985519d581ce43182", null ],
-    [ "adaptive_phi_grid", "mesh_8h.html#a83ae490737edde6ad03ede25e371a071", null ],
+    [ "adaptive_phi_grid", "mesh_8h.html#a360e0d18f141d6cd50b062a901338575", null ],
     [ "adaptive_theta_grid", "mesh_8h.html#a3dc6828dd13a70c0c203dba03e765cea", null ],
     [ "auto_grid", "mesh_8h.html#a96aa0a78a0de13a52955de3c2ce29ddd", null ],
     [ "boundary_to_center", "mesh_8h.html#a885b165e8d9c9d20f27ec99329a0c3cb", null ],
@@ -24,7 +24,7 @@ var mesh_8h =
     [ "estimate_t_dec", "mesh_8h.html#aa7505ad2e84c2a29610c1a13cd3b25e3", null ],
     [ "find_jet_jumps", "mesh_8h.html#a0cb4f8dcb245bdf3dba21d11f42d07e0", null ],
     [ "find_theta_max", "mesh_8h.html#aa4bf3bc5ca82cf7ac350fab9eff68452", null ],
-    [ "inverse_CFD_sampling", "mesh_8h.html#a49c59d8da915e118c4e550cc9bd4d3d9", null ],
+    [ "inverse_CFD_sampling", "mesh_8h.html#a6f8fa2784bc01569368e72d4020bb9b0", null ],
     [ "is_linear_scale", "mesh_8h.html#aa5d127d3ecb19584c7f27ee212d49605", null ],
     [ "is_log_scale", "mesh_8h.html#ac0e56adbbf18a0c9a5c04a8d4de268d9", null ],
     [ "jet_spreading_edge", "mesh_8h.html#a7cb4a7162e9b5a1e2ed39f7d9e94b53f", null ],
@@ -33,6 +33,6 @@ var mesh_8h =
     [ "logspace_boundary_center", "mesh_8h.html#ad7703ab8b66bb86ed857746606fac9a2", null ],
     [ "logspace_center", "mesh_8h.html#afadc5019976c36be16277dc4dc178a7f", null ],
     [ "merge_grids", "mesh_8h.html#a3c066f2c8e6d102d7a56de8cb42cf5a8", null ],
-    [ "refined_time_grid", "mesh_8h.html#ab2b9eccaf75f7a9fe6bafd8696049bd2", null ],
+    [ "refined_time_grid", "mesh_8h.html#a0aaa6d60a9852531ccfc1d290284c611", null ],
     [ "log2_10", "mesh_8h.html#aba685e866cceb5c13d7e357fcaa69529", null ]
 ];

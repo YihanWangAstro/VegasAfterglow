@@ -1,6 +1,6 @@
 <map id="auto_grid" name="auto_grid">
 <area shape="rect" id="Node000001" title="Constructs a coordinate grid (Coord) for shock evolution." alt="" coords="5,434,88,460"/>
-<area shape="rect" id="Node000002" href="$mesh_8h.html#a83ae490737edde6ad03ede25e371a071" title=" " alt="" coords="143,149,281,174"/>
+<area shape="rect" id="Node000002" href="$mesh_8h.html#a360e0d18f141d6cd50b062a901338575" title=" " alt="" coords="143,149,281,174"/>
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="47,433,56,393,72,335,97,271,114,239,134,211,151,193,171,179,174,183,155,197,138,214,119,242,102,273,77,337,61,394,53,434"/>
 <area shape="rect" id="Node000004" href="$pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89" title=" " alt="" coords="751,301,905,326"/>
 <area shape="poly" id="edge27_Node000001_Node000004" title=" " alt="" coords="45,434,47,380,59,301,70,257,85,213,106,172,134,135,157,111,180,95,224,76,274,67,335,56,441,29,527,6,568,3,610,7,655,21,704,47,734,71,758,100,778,132,794,167,816,234,826,287,821,288,810,235,789,169,774,135,754,103,730,75,701,52,653,26,609,12,568,8,528,12,442,34,337,62,275,72,226,81,183,100,161,116,138,138,111,174,90,215,75,258,64,302,53,380,50,434"/>
@@ -16,7 +16,7 @@
 <area shape="poly" id="edge25_Node000001_Node000014" title=" " alt="" coords="55,459,84,515,108,545,137,570,182,590,230,603,279,609,325,610,325,615,279,614,229,608,180,595,135,575,104,549,79,517,50,461"/>
 <area shape="rect" id="Node000015" href="$mesh_8h.html#a3c066f2c8e6d102d7a56de8cb42cf5a8" title=" " alt="" coords="161,642,263,668"/>
 <area shape="poly" id="edge28_Node000001_Node000015" title=" " alt="" coords="54,459,63,491,80,534,105,580,138,621,156,634,153,638,134,625,100,583,75,537,58,493,49,461"/>
-<area shape="rect" id="Node000003" href="$mesh_8h.html#a49c59d8da915e118c4e550cc9bd4d3d9" title=" " alt="" coords="336,149,507,174"/>
+<area shape="rect" id="Node000003" href="$mesh_8h.html#a6f8fa2784bc01569368e72d4020bb9b0" title=" " alt="" coords="336,149,507,174"/>
 <area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="282,159,322,159,322,164,282,164"/>
 <area shape="poly" id="edge8_Node000002_Node000004" title=" " alt="" coords="234,146,315,106,372,84,436,64,504,51,573,47,641,57,673,68,704,83,731,103,753,127,788,183,811,240,824,286,819,288,806,242,783,185,749,130,727,107,701,88,671,73,639,62,573,53,505,56,437,69,374,89,318,111,236,151"/>
 <area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="443,146,492,122,559,100,596,93,633,91,669,96,704,110,728,127,750,148,784,196,808,245,822,287,817,288,803,247,779,199,746,151,725,131,701,115,668,101,633,96,596,98,560,105,494,127,445,151"/>
@@ -33,7 +33,7 @@
 <area shape="poly" id="edge13_Node000008_Node000009" title=" " alt="" coords="265,382,354,360,356,365,266,387"/>
 <area shape="rect" id="Node000010" href="$namespacephysics_1_1relativistic.html#aed1c46f33c9d25ffa27131014b190090" title="Converts Lorentz factor (gamma) to a velocity fraction (beta)" alt="" coords="555,376,703,416"/>
 <area shape="poly" id="edge17_Node000008_Node000010" title=" " alt="" coords="274,395,541,394,541,399,274,400"/>
-<area shape="rect" id="Node000011" href="$mesh_8h.html#ab2b9eccaf75f7a9fe6bafd8696049bd2" title="Create a refined logarithmic time grid with higher density around a specified time." alt="" coords="561,441,697,466"/>
+<area shape="rect" id="Node000011" href="$mesh_8h.html#a0aaa6d60a9852531ccfc1d290284c611" title="Create a refined logarithmic time grid with higher density around a specified time." alt="" coords="561,441,697,466"/>
 <area shape="poly" id="edge19_Node000008_Node000011" title=" " alt="" coords="274,403,547,440,547,445,273,408"/>
 <area shape="poly" id="edge16_Node000009_Node000004" title=" " alt="" coords="482,339,737,318,737,324,483,345"/>
 <area shape="poly" id="edge14_Node000009_Node000010" title=" " alt="" coords="476,357,542,373,541,378,475,362"/>

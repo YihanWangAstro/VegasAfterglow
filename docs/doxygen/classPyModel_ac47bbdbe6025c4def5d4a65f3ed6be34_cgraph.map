@@ -15,7 +15,7 @@
 <area shape="rect" id="Node000019" href="$forward-shock_8hpp.html#aa963867f4f98284c627afeff47fc3a18" title="Generates a forward shock model for given coordinates, medium, and jet parameters." alt="" coords="383,146,537,171"/>
 <area shape="poly" id="edge35_Node000004_Node000019" title=" " alt="" coords="325,148,369,150,369,156,325,153"/>
 <area shape="poly" id="edge32_Node000005_Node000002" title=" " alt="" coords="460,594,470,542,492,466,508,423,529,382,554,342,585,307,632,270,677,252,786,233,891,207,976,186,1017,183,1059,187,1104,200,1155,224,1180,242,1201,263,1236,314,1259,366,1273,409,1268,410,1254,368,1231,317,1197,267,1176,246,1152,229,1103,205,1058,192,1017,188,977,191,892,212,787,238,678,257,635,275,588,311,558,345,533,384,513,426,497,467,475,543,466,595"/>
-<area shape="rect" id="Node000006" href="$mesh_8h.html#a83ae490737edde6ad03ede25e371a071" title=" " alt="" coords="593,322,732,347"/>
+<area shape="rect" id="Node000006" href="$mesh_8h.html#a360e0d18f141d6cd50b062a901338575" title=" " alt="" coords="593,322,732,347"/>
 <area shape="poly" id="edge6_Node000005_Node000006" title=" " alt="" coords="464,594,506,501,541,440,585,383,623,352,627,356,589,387,546,443,510,503,469,596"/>
 <area shape="rect" id="Node000010" href="$mesh_8h.html#a3dc6828dd13a70c0c203dba03e765cea" title=" " alt="" coords="587,398,739,423"/>
 <area shape="poly" id="edge14_Node000005_Node000010" title=" " alt="" coords="473,593,637,431,641,434,476,597"/>
@@ -30,7 +30,7 @@
 <area shape="rect" id="Node000018" href="$mesh_8h.html#a3c066f2c8e6d102d7a56de8cb42cf5a8" title=" " alt="" coords="611,815,714,840"/>
 <area shape="poly" id="edge33_Node000005_Node000018" title=" " alt="" coords="469,619,512,698,547,747,588,791,613,807,610,811,585,795,542,751,508,701,465,622"/>
 <area shape="poly" id="edge13_Node000006_Node000002" title=" " alt="" coords="686,319,767,281,823,260,886,242,953,229,1022,226,1090,234,1123,244,1155,257,1177,272,1197,289,1230,330,1255,373,1271,409,1266,411,1250,375,1226,333,1193,293,1174,276,1152,262,1121,249,1089,239,1022,231,954,235,887,247,825,265,769,286,688,324"/>
-<area shape="rect" id="Node000007" href="$mesh_8h.html#a49c59d8da915e118c4e550cc9bd4d3d9" title=" " alt="" coords="787,322,957,347"/>
+<area shape="rect" id="Node000007" href="$mesh_8h.html#a6f8fa2784bc01569368e72d4020bb9b0" title=" " alt="" coords="787,322,957,347"/>
 <area shape="poly" id="edge7_Node000006_Node000007" title=" " alt="" coords="732,332,773,332,773,337,732,337"/>
 <area shape="poly" id="edge8_Node000007_Node000002" title=" " alt="" coords="895,319,944,297,1009,275,1046,269,1083,267,1119,271,1155,283,1193,309,1225,343,1250,378,1268,409,1263,412,1246,381,1221,346,1190,313,1152,287,1118,276,1083,272,1046,274,1011,281,945,302,897,324"/>
 <area shape="rect" id="Node000008" href="$utilities_8h.html#ab0cbe75cc4de84810290ad6f3075e491" title="Returns the value of a single parameter." alt="" coords="1054,298,1105,323"/>
@@ -46,7 +46,7 @@
 <area shape="poly" id="edge18_Node000011_Node000012" title=" " alt="" coords="716,554,805,532,806,537,717,559"/>
 <area shape="rect" id="Node000013" href="$namespacephysics_1_1relativistic.html#aed1c46f33c9d25ffa27131014b190090" title="Converts Lorentz factor (gamma) to a velocity fraction (beta)" alt="" coords="1005,549,1153,589"/>
 <area shape="poly" id="edge22_Node000011_Node000013" title=" " alt="" coords="724,566,992,566,992,572,724,572"/>
-<area shape="rect" id="Node000014" href="$mesh_8h.html#ab2b9eccaf75f7a9fe6bafd8696049bd2" title="Create a refined logarithmic time grid with higher density around a specified time." alt="" coords="1011,614,1147,639"/>
+<area shape="rect" id="Node000014" href="$mesh_8h.html#a0aaa6d60a9852531ccfc1d290284c611" title="Create a refined logarithmic time grid with higher density around a specified time." alt="" coords="1011,614,1147,639"/>
 <area shape="poly" id="edge24_Node000011_Node000014" title=" " alt="" coords="725,575,998,613,997,618,724,580"/>
 <area shape="poly" id="edge21_Node000012_Node000002" title=" " alt="" coords="933,511,1036,499,1153,477,1233,451,1235,456,1154,482,1037,504,934,516"/>
 <area shape="poly" id="edge19_Node000012_Node000013" title=" " alt="" coords="926,529,993,545,991,550,924,534"/>

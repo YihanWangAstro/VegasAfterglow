@@ -5,7 +5,7 @@ var searchData=
   ['icphoton_2',['icphoton',['../structICPhoton.html#a83c634a93def6d25badc888ca57f3bca',1,'ICPhoton::ICPhoton()=default'],['../structICPhoton.html#aa943b8dc162f2f7224a8ecb485caeb3e',1,'ICPhoton::ICPhoton(Electrons const &amp;electrons, Photons const &amp;photons, bool KN) noexcept']]],
   ['initialize_5fejecta_3',['initialize_ejecta',['../pymodel_8cpp.html#a9ff88a7dd74b672cbd0df6adcb982a41',1,'pymodel.cpp']]],
   ['injection_5fefficiency_4',['injection_efficiency',['../classFRShockEqn.html#a38222d0f19dc59063d236319bdb72eb1',1,'FRShockEqn']]],
-  ['inverse_5fcfd_5fsampling_5',['inverse_CFD_sampling',['../mesh_8h.html#a49c59d8da915e118c4e550cc9bd4d3d9',1,'mesh.h']]],
+  ['inverse_5fcfd_5fsampling_5',['inverse_CFD_sampling',['../mesh_8h.html#a6f8fa2784bc01569368e72d4020bb9b0',1,'mesh.h']]],
   ['inverse_5fcompton_5fcorrection_6',['inverse_compton_correction',['../inverse-compton_8h.html#a90de46adbdc9f7f4c2bed7b5ab79c494',1,'inverse-compton.h']]],
   ['inversecomptony_7',['inversecomptony',['../structInverseComptonY.html#a8ddd88e2b0ae996e2bf8a79630653392',1,'InverseComptonY::InverseComptonY() noexcept'],['../structInverseComptonY.html#a2e2ffd78dd60c7da21a052b443bd51b3',1,'InverseComptonY::InverseComptonY(Real gamma_m, Real gamma_c, Real p, Real B, Real Y_T, bool is_KN) noexcept']]],
   ['is_5fascending_8',['is_ascending',['../pybind_8h.html#a65fbb7ac1dd1f2667e68724a512f691c',1,'pybind.h']]],
