@@ -146,7 +146,8 @@ See the [MCMC Parameter Fitting](https://yihanwangastro.github.io/VegasAfterglow
 - Expanded Klein-Nishina regime classification (5 regimes, up from 3) for more accurate IC cooling in the strong-KN limit
 
 #### **Wind Medium Defaults**
-- `Wind(A_star, n_ism=None, n0=None, k=2)`: `n_ism` and `n0` now default to `None` instead of `0` and `inf`, handled internally — clearer intent for the common pure-wind case
+- `Wind(A_star, n_ism=None, n0=None, k_m=2)`: `n_ism` and `n0` now default to `None` instead of `0` and `inf`, handled internally — cleaner intent for the common pure-wind case
+- Wind density power-law index renamed from `k` to `k_m` to match the MCMC fitting parameter name
 
 #### **Python >= 3.8 Required**
 - Minimum Python version raised from 3.7 to 3.8

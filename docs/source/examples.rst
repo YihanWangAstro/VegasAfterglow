@@ -203,11 +203,14 @@ Stratified Medium
     from VegasAfterglow import Wind
 
     # Create a stratified stellar wind medium;
-    # smooth transited stratified medium. Inner region, n(r) = n0, middle region n(r) \propto 1/r^2, outer region n(r)=n_ism
+    # smooth transited stratified medium. Inner region, n(r) = n0, middle region n(r) \propto 1/r^k_m, outer region n(r)=n_ism
     # A = 0 (default): fallback to n = n_ism
     # n0 = inf (default): wind bubble, from wind profile to ism profile
     # A = 0 & n0 = inf: pure wind;
     wind = Wind(A_star=0.1, n_ism = 1, n0 = 1e3)
+
+    # Use k_m to change the wind density power-law index (default k_m=2, i.e. n ∝ r^{-2})
+    wind = Wind(A_star=0.1, k_m=1.5)  # n ∝ r^{-1.5}
 
     #..other settings
     model = Model(medium=wind, ...)
@@ -940,7 +943,7 @@ You can examine the radial dependence of medium density using the ``medium`` met
     from VegasAfterglow import Wind
 
     # Create a wind medium for demonstration
-    wind = Wind(A_star=1.0, n_ism=0.1, n0=1e3, k=2)
+    wind = Wind(A_star=1.0, n_ism=0.1, n0=1e3, k_m=2)
     # Note: This creates a stratified wind: inner constant density n0,
     # middle r^-2 profile, outer constant density n_ism
 

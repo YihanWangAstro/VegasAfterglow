@@ -112,16 +112,16 @@ ISM PyISM(Real n_ism) {
     return ISM(n_ism / unit::cm3);
 }
 
-MediumVariant PyWind(Real A_star, std::optional<Real> n_ism_opt, std::optional<Real> n0_opt, Real k) {
+MediumVariant PyWind(Real A_star, std::optional<Real> n_ism_opt, std::optional<Real> n0_opt, Real k_m) {
     const Real n_ism = n_ism_opt.value_or(0);
     const Real n0 = n0_opt.value_or(con::inf);
 
-    if (k == 2) {
+    if (k_m == 2) {
         return Wind(A_star, n_ism / unit::cm3, n0 / unit::cm3);
     }
-    // General k: fall back to Medium with std::function (evn::wind handles unit conversion)
+    // General k_m: fall back to Medium with std::function (evn::wind handles unit conversion)
     Medium medium;
-    medium.rho = evn::wind(A_star, n_ism / unit::cm3, n0 / unit::cm3, k);
+    medium.rho = evn::wind(A_star, n_ism / unit::cm3, n0 / unit::cm3, k_m);
     medium.isotropic = true;
     return medium;
 }

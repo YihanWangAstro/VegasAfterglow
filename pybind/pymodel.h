@@ -211,7 +211,7 @@ ISM PyISM(Real n_ism);
  * <!-- ************************************************************************************** -->
  */
 MediumVariant PyWind(Real A_star, std::optional<Real> n_ism = std::nullopt, std::optional<Real> n0 = std::nullopt,
-                     Real k = 2);
+                     Real k_m = 2);
 
 /**
  * <!-- ************************************************************************************** -->
