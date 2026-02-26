@@ -153,7 +153,8 @@ def parse_args(argv=None):
             "  vegasgen                                  # default tophat/ISM/on-axis\n"
             "  vegasgen --jet gaussian --z 0.5           # Gaussian jet at z=0.5\n"
             "  vegasgen --nu R J F606W --plot            # filter-name frequencies + plot\n"
-            "  vegasgen --medium wind --A_star 0.1 -o lc.csv\n"
+            "  vegasgen --medium wind --A_star 0.1 --k_m 1.5 -o lc.csv\n"
+            "  vegasgen --duration 100 --rvs --plot      # thick shell + reverse shock\n"
             "  vegasgen --rvs --plot                     # forward + reverse shock\n"
             "  vegasgen --rvs --rvs_eps_B 0.1 --plot     # RS with different microphysics\n"
             "  vegasgen --ssc --rvs --rvs_ssc --plot     # SSC on both shocks\n"
@@ -187,6 +188,9 @@ def parse_args(argv=None):
     jet.add_argument(
         "--spreading", action="store_true", help="enable lateral spreading"
     )
+    jet.add_argument(
+        "--duration", type=float, default=1, help="engine activity duration [s]"
+    )
 
     # -- Medium -------------------------------------------------------------
     med = p.add_argument_group("medium")
@@ -195,6 +199,9 @@ def parse_args(argv=None):
         "--n_ism", type=float, default=1.0, help="ISM number density [cm^-3]"
     )
     med.add_argument("--A_star", type=float, default=0.1, help="wind parameter A*")
+    med.add_argument(
+        "--k_m", type=float, default=2, help="wind density power-law index"
+    )
 
     # -- Observer -----------------------------------------------------------
     obs = p.add_argument_group("observer")
@@ -311,6 +318,7 @@ def build_jet(args):
         E_iso=args.E_iso,
         Gamma0=args.Gamma0,
         spreading=args.spreading,
+        duration=args.duration,
     )
     if args.jet == "tophat":
         return TophatJet(**common)
@@ -325,7 +333,7 @@ def build_medium(args):
 
     if args.medium == "ism":
         return ISM(n_ism=args.n_ism)
-    return Wind(A_star=args.A_star)
+    return Wind(A_star=args.A_star, k_m=args.k_m)
 
 
 def build_observer(args):
@@ -472,27 +480,44 @@ _FLUX_LABELS = {
 _TIME_LABELS = {"s": "s", "day": "days", "hr": "hr", "min": "min"}
 
 
-def _freq_color(nu):
-    """Map frequency to color: warm (red) for radio, cool (blue) for X-ray."""
+def _freq_colors(nus):
+    """Map frequencies to colors, adapting to the frequency range.
+
+    When the range spans > 3 decades, colors reflect absolute position on the
+    radio-to-X-ray spectrum.  For narrower ranges, colors are evenly spaced
+    across the palette so nearby frequencies remain visually distinct.
+    """
     from matplotlib.colors import LinearSegmentedColormap
 
-    colors = ["#E03530", "#E8872E", "#D4C43A", "#2AB07E", "#2878B5", "#7B3FA0"]
-    cmap = LinearSegmentedColormap.from_list("freq", colors)
-    log_nu = np.log10(nu)
-    t = np.clip((log_nu - 7) / (22 - 7), 0, 1)
-    rgba = cmap(t)
-    return f"#{int(rgba[0]*255):02x}{int(rgba[1]*255):02x}{int(rgba[2]*255):02x}"
+    palette = ["#E03530", "#E8872E", "#D4C43A", "#2AB07E", "#2878B5", "#7B3FA0"]
+    cmap = LinearSegmentedColormap.from_list("freq", palette)
 
+    log_nus = np.log10(nus)
+    log_range = log_nus.max() - log_nus.min()
 
-def _latex_available():
-    """Check if a LaTeX installation is available for matplotlib."""
-    import shutil
+    if len(nus) == 1:
+        t_vals = np.array([0.5])
+    elif log_range > 3:
+        # Wide range: map to absolute position on 10^7 – 10^22 Hz scale
+        t_vals = np.clip((log_nus - 7) / (22 - 7), 0, 1)
+    else:
+        # Narrow range: spread evenly across the full palette
+        t_vals = np.linspace(0, 1, len(nus))
 
-    return shutil.which("latex") is not None
+    hex_colors = []
+    for t in t_vals:
+        rgba = cmap(t)
+        hex_colors.append(
+            f"#{int(rgba[0]*255):02x}{int(rgba[1]*255):02x}{int(rgba[2]*255):02x}"
+        )
+    return hex_colors
 
 
 def _setup_plot_style(font=None):
-    """Configure matplotlib for publication-quality output."""
+    """Configure matplotlib for publication-quality output.
+
+    Uses mathtext with STIX fonts (no LaTeX subprocess) for fast rendering.
+    """
     import matplotlib as mpl
 
     _SANS_SERIF = {
@@ -507,20 +532,25 @@ def _setup_plot_style(font=None):
         "tahoma",
     }
 
-    use_tex = _latex_available()
-
     if font is None:
-        family = "serif"
-        font_list = ["Times New Roman"]
+        family = "sans-serif"
+        font_list = ["Helvetica"]
+        math_font = "Helvetica"
     elif font.lower() in _SANS_SERIF:
         family = "sans-serif"
         font_list = [font]
+        math_font = font
     else:
         family = "serif"
         font_list = [font]
+        math_font = font
 
     style = {
-        "text.usetex": use_tex,
+        "text.usetex": False,
+        "mathtext.fontset": "custom",
+        "mathtext.rm": math_font,
+        "mathtext.it": f"{math_font}:italic",
+        "mathtext.bf": f"{math_font}:bold",
         "font.family": family,
         f"font.{family}": font_list,
         "font.size": 10,
@@ -544,10 +574,6 @@ def _setup_plot_style(font=None):
         "savefig.bbox": "tight",
         "savefig.pad_inches": 0.03,
     }
-
-    if not use_tex:
-        # Fallback: use mathtext with STIX fonts for LaTeX-like rendering
-        style["mathtext.fontset"] = "stix"
 
     mpl.rcParams.update(style)
 
@@ -579,18 +605,16 @@ def _build_param_text(args):
         rf"$\epsilon_B={_sci_tex(args.eps_B)}$, "
         rf"$p={args.p:g}$"
     )
-    text = line1 + "\n" + line2
     if args.rvs:
         rvs_eps_e = args.rvs_eps_e if args.rvs_eps_e is not None else args.eps_e
         rvs_eps_B = args.rvs_eps_B if args.rvs_eps_B is not None else args.eps_B
         rvs_p = args.rvs_p if args.rvs_p is not None else args.p
-        text += (
-            "\n"
-            rf"$\epsilon_{{e,r}}={rvs_eps_e:g}$, "
+        line2 += (
+            rf", $\epsilon_{{e,r}}={rvs_eps_e:g}$, "
             rf"$\epsilon_{{B,r}}={_sci_tex(rvs_eps_B)}$, "
             rf"$p_r={rvs_p:g}$"
         )
-    return text
+    return line1 + "\n" + line2
 
 
 _COMP_STYLES = {
@@ -611,6 +635,14 @@ _COMP_LABELS = {
 
 def plot_lightcurve(times, nus, nu_labels, result, args):
     try:
+        # Force non-interactive Agg backend when saving to file (avoids GUI probe)
+        saving = args.output and args.output.lower().endswith(
+            (".png", ".pdf", ".jpg", ".svg")
+        )
+        if saving:
+            import matplotlib
+
+            matplotlib.use("Agg")
         import matplotlib.pyplot as plt
         from matplotlib.lines import Line2D
     except ImportError:
@@ -627,11 +659,12 @@ def plot_lightcurve(times, nus, nu_labels, result, args):
     components = _get_components(result)
 
     # Single-column journal figure: 3.5 in wide, golden ratio height
-    fig, ax = plt.subplots(figsize=(3.5, 2.6))
+    fig, ax = plt.subplots(figsize=(3.5, 3.0))
 
     plotted_comps = set()
+    colors = _freq_colors(nus)
     for i, nu in enumerate(nus):
-        color = _freq_color(nu)
+        color = colors[i]
         band_label = _format_nu_latex(nu, nu_labels[i])
         for comp_name, comp_flux in components:
             f = comp_flux[i] / f_scale
@@ -713,7 +746,7 @@ def plot_lightcurve(times, nus, nu_labels, result, args):
         pad=6,
     )
 
-    fig.tight_layout(pad=0.3)
+    fig.subplots_adjust(left=0.18, right=0.98, bottom=0.18, top=0.87)
 
     if args.output and args.output.lower().endswith((".png", ".pdf", ".jpg", ".svg")):
         dpi = 300 if args.output.lower().endswith(".png") else 150

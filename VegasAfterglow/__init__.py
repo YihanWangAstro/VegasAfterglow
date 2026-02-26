@@ -25,25 +25,24 @@ from .types import (
     logscale_screen,
 )
 
-# MCMC fitting (requires: pip install VegasAfterglow[mcmc])
-try:
-    from .runner import AfterglowLikelihood, Fitter
-except ImportError:
-    _MCMC_MISSING_MSG = (
-        "MCMC fitting requires additional dependencies. "
-        "Install them with: pip install VegasAfterglow[mcmc]"
-    )
 
-    def _mcmc_stub(name):
-        class _Stub:
-            def __init__(self, *args, **kwargs):
-                raise ImportError(_MCMC_MISSING_MSG)
+# MCMC fitting — lazy-loaded to avoid importing bilby/scipy on every startup.
+# Actual import happens on first access to Fitter or AfterglowLikelihood.
+def __getattr__(name):
+    if name in ("Fitter", "AfterglowLikelihood"):
+        try:
+            from .runner import AfterglowLikelihood, Fitter
+        except ImportError:
+            raise ImportError(
+                "MCMC fitting requires additional dependencies. "
+                "Install them with: pip install VegasAfterglow[mcmc]"
+            )
+        # Cache in module namespace so __getattr__ is only called once
+        globals()["Fitter"] = Fitter
+        globals()["AfterglowLikelihood"] = AfterglowLikelihood
+        return globals()[name]
+    raise AttributeError(f"module 'VegasAfterglow' has no attribute {name!r}")
 
-        _Stub.__name__ = _Stub.__qualname__ = name
-        return _Stub
-
-    Fitter = _mcmc_stub("Fitter")
-    AfterglowLikelihood = _mcmc_stub("AfterglowLikelihood")
 
 __all__ = [
     "__version__",
