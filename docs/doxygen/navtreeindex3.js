@@ -246,8 +246,8 @@ var NAVTREEINDEX3 =
 "structYEvaluator.html#a571deb0c4011ddaa5108e51454d4ea52":[3,0,41,1],
 "structYSpectrumGrid.html":[3,0,42],
 "structYSpectrumGrid.html#a33070195f22240e9c122551de53de436":[3,0,42,0],
-"structanonymous__namespace_02inverse-compton_8cpp_03_1_1ComptonSigmaLUT.html":[1,0,1,0],
 "structanonymous__namespace_02inverse-compton_8cpp_03_1_1ComptonSigmaLUT.html":[3,0,1,0],
-"structanonymous__namespace_02inverse-compton_8cpp_03_1_1ComptonSigmaLUT.html#a383a13b5685793290351e89fde1c3871":[3,0,1,0,8],
-"structanonymous__namespace_02inverse-compton_8cpp_03_1_1ComptonSigmaLUT.html#a383a13b5685793290351e89fde1c3871":[1,0,1,0,8]
+"structanonymous__namespace_02inverse-compton_8cpp_03_1_1ComptonSigmaLUT.html":[1,0,1,0],
+"structanonymous__namespace_02inverse-compton_8cpp_03_1_1ComptonSigmaLUT.html#a383a13b5685793290351e89fde1c3871":[1,0,1,0,8],
+"structanonymous__namespace_02inverse-compton_8cpp_03_1_1ComptonSigmaLUT.html#a383a13b5685793290351e89fde1c3871":[3,0,1,0,8]
 };

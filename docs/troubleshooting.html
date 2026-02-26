@@ -161,7 +161,7 @@
 <p><strong>Q: MCMC is too slow for practical use</strong></p>
 <p>A: Optimization strategies:</p>
 <ul class="simple">
-<li><p><strong>Reduce resolution</strong>: Use <code class="docutils literal notranslate"><span class="pre">resolution=(0.15,</span> <span class="pre">0.5,</span> <span class="pre">10)</span></code> for initial exploration</p></li>
+<li><p><strong>Reduce resolution</strong>: Use <code class="docutils literal notranslate"><span class="pre">resolution=(0.15,</span> <span class="pre">1.0,</span> <span class="pre">10)</span></code> for initial exploration</p></li>
 <li><p><strong>Fewer parameters</strong>: Fix some parameters with <code class="docutils literal notranslate"><span class="pre">Scale.fixed</span></code></p></li>
 <li><p><strong>Coarser time/frequency grids</strong>: Use fewer data points for initial fits</p></li>
 <li><p><strong>Parallel processing</strong>: Ensure you’re using multiple cores</p></li>
@@ -350,12 +350,12 @@ pip<span class="w"> </span>install<span class="w"> </span>h5py<span class="w">  
 <td><p>Low</p></td>
 </tr>
 <tr class="row-odd"><td><p>Standard calculations</p></td>
-<td><p><code class="docutils literal notranslate"><span class="pre">(0.15,</span> <span class="pre">0.5,</span> <span class="pre">10)</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">(0.15,</span> <span class="pre">1.0,</span> <span class="pre">10)</span></code></p></td>
 <td><p>Fast</p></td>
 <td><p>Good</p></td>
 </tr>
 <tr class="row-even"><td><p>MCMC fitting</p></td>
-<td><p><code class="docutils literal notranslate"><span class="pre">(0.15,</span> <span class="pre">1,</span> <span class="pre">10)</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">(0.15,</span> <span class="pre">1.0,</span> <span class="pre">10)</span></code></p></td>
 <td><p>Moderate</p></td>
 <td><p>Good</p></td>
 </tr>
@@ -369,7 +369,7 @@ pip<span class="w"> </span>install<span class="w"> </span>h5py<span class="w">  
 <p>Where <code class="docutils literal notranslate"><span class="pre">resolutions=(phi_ppd,</span> <span class="pre">theta_ppd,</span> <span class="pre">t_ppd)</span></code>:</p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">phi_ppd</span></code>: Azimuthal resolution in points per degree. The total number of phi grid points is <code class="docutils literal notranslate"><span class="pre">360</span> <span class="pre">×</span> <span class="pre">phi_ppd</span></code>, with a minimum of 1 total point.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">theta_ppd</span></code>: Polar resolution in points per degree. The total number of theta grid points is <code class="docutils literal notranslate"><span class="pre">(theta_max</span> <span class="pre">−</span> <span class="pre">theta_min)</span> <span class="pre">×</span> <span class="pre">theta_ppd</span></code>, with a minimum of 48 total points. Setting a lower resolution cannot reduce the grid below this minimum.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">theta_ppd</span></code>: Polar resolution in points per degree. The total number of theta grid points is <code class="docutils literal notranslate"><span class="pre">(theta_max</span> <span class="pre">−</span> <span class="pre">theta_min)</span> <span class="pre">×</span> <span class="pre">theta_ppd</span></code>, with a minimum of 32 total points. Setting a lower resolution cannot reduce the grid below this minimum.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">t_ppd</span></code>: Temporal resolution in points per decade. The total number of time grid points is <code class="docutils literal notranslate"><span class="pre">log10(t_max</span> <span class="pre">/</span> <span class="pre">t_min)</span> <span class="pre">×</span> <span class="pre">t_ppd</span></code>, with a minimum of 24 total points. Setting a lower resolution cannot reduce the grid below this minimum.</p></li>
 </ul>
 </section>

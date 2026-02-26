@@ -13,11 +13,11 @@
 <area shape="poly" id="edge10_Node000002_Node000008" title=" " alt="" coords="282,462,431,362,434,366,285,466"/>
 <area shape="rect" id="Node000009" href="$mesh_8h.html#a6130a6c9bb4bbe255dd8852fd154791d" title="Builds the engine&#45;time grid for each (phi, theta) cell in the coordinate system." alt="" coords="403,464,525,489"/>
 <area shape="poly" id="edge13_Node000002_Node000009" title=" " alt="" coords="304,474,389,474,389,479,304,479"/>
-<area shape="rect" id="Node000013" href="$mesh_8h.html#a0cb4f8dcb245bdf3dba21d11f42d07e0" title="Finds all sharp edges in the jet Gamma0 profile plus the outermost boundary." alt="" coords="615,592,732,617"/>
+<area shape="rect" id="Node000013" href="$mesh_8h.html#a675e7c2ff4bda6b68d34389fefca49f5" title="Finds sharp discontinuities (jumps) in the jet Gamma0 profile." alt="" coords="615,592,732,617"/>
 <area shape="poly" id="edge22_Node000002_Node000013" title=" " alt="" coords="305,487,619,585,618,590,303,492"/>
 <area shape="rect" id="Node000014" href="$mesh_8h.html#aa4bf3bc5ca82cf7ac350fab9eff68452" title=" " alt="" coords="819,648,942,673"/>
 <area shape="poly" id="edge24_Node000002_Node000014" title=" " alt="" coords="280,487,327,524,389,562,442,586,498,605,611,633,718,649,806,656,806,661,717,654,610,638,496,610,440,591,387,567,324,528,277,491"/>
-<area shape="rect" id="Node000015" href="$mesh_8h.html#ae31d546d7f15fece5525fd480b771b68" title=" " alt="" coords="591,697,756,723"/>
+<area shape="rect" id="Node000015" href="$mesh_8h.html#ac88029bbfd53e7ad59381da2323a7bec" title=" " alt="" coords="591,697,756,723"/>
 <area shape="poly" id="edge26_Node000002_Node000015" title=" " alt="" coords="270,489,284,527,308,578,343,631,365,654,389,673,434,695,482,708,531,714,577,716,577,721,530,719,481,713,432,700,387,678,361,658,338,634,303,580,279,529,265,491"/>
 <area shape="rect" id="Node000016" href="$mesh_8h.html#a3c066f2c8e6d102d7a56de8cb42cf5a8" title=" " alt="" coords="413,28,515,53"/>
 <area shape="poly" id="edge29_Node000002_Node000016" title=" " alt="" coords="262,464,266,397,283,293,299,235,320,176,349,121,386,71,402,57,406,62,390,74,354,123,325,178,304,236,288,294,272,397,267,464"/>

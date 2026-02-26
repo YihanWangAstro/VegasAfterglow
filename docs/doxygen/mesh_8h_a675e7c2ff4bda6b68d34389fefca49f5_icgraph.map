@@ -1,5 +1,5 @@
 <map id="find_jet_jumps" name="find_jet_jumps">
-<area shape="rect" id="Node000001" title="Finds all sharp edges in the jet Gamma0 profile plus the outermost boundary." alt="" coords="775,31,892,56"/>
+<area shape="rect" id="Node000001" title="Finds sharp discontinuities (jumps) in the jet Gamma0 profile." alt="" coords="775,31,892,56"/>
 <area shape="rect" id="Node000002" href="$mesh_8h.html#a96aa0a78a0de13a52955de3c2ce29ddd" title="Constructs a coordinate grid (Coord) for shock evolution." alt="" coords="644,31,727,56"/>
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="761,46,727,46,727,41,761,41"/>
 <area shape="rect" id="Node000003" href="$shock__dispatch_8h.html#af0bfd363789cd64adc2bb8fa697f96ae" title="Solve forward shock dynamics with variant dispatch." alt="" coords="463,5,595,31"/>

@@ -277,7 +277,7 @@
 
 <span class="c1"># 4. Run MCMC</span>
 <span class="n">result</span> <span class="o">=</span> <span class="n">fitter</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">mc_params</span><span class="p">,</span> <span class="n">sampler</span><span class="o">=</span><span class="s2">&quot;emcee&quot;</span><span class="p">,</span> <span class="n">nsteps</span><span class="o">=</span><span class="mi">10000</span><span class="p">,</span>
-                    <span class="n">nburn</span><span class="o">=</span><span class="mi">2000</span><span class="p">,</span> <span class="n">npool</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span> <span class="n">resolution</span><span class="o">=</span><span class="p">(</span><span class="mf">0.15</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mi">10</span><span class="p">))</span>
+                    <span class="n">nburn</span><span class="o">=</span><span class="mi">2000</span><span class="p">,</span> <span class="n">npool</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span> <span class="n">resolution</span><span class="o">=</span><span class="p">(</span><span class="mf">0.15</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mi">10</span><span class="p">))</span>
 
 <span class="c1"># 5. Inspect best-fit parameters</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Best-fit params:&quot;</span><span class="p">,</span> <span class="n">result</span><span class="o">.</span><span class="n">top_k_params</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>

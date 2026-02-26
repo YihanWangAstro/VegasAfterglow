@@ -90,11 +90,11 @@
 <area shape="poly" id="edge15_Node000006_Node000011" title=" " alt="" coords="795,609,905,582,906,587,797,615"/>
 <area shape="rect" id="Node000012" href="$mesh_8h.html#a6130a6c9bb4bbe255dd8852fd154791d" title="Builds the engine&#45;time grid for each (phi, theta) cell in the coordinate system." alt="" coords="909,225,1032,251"/>
 <area shape="poly" id="edge18_Node000006_Node000012" title=" " alt="" coords="795,616,819,609,838,595,859,565,870,537,874,509,873,480,869,419,873,385,886,348,914,299,946,259,950,263,918,302,890,350,879,386,875,419,878,480,879,509,876,538,864,568,842,599,821,613,797,621"/>
-<area shape="rect" id="Node000016" href="$mesh_8h.html#a0cb4f8dcb245bdf3dba21d11f42d07e0" title="Finds all sharp edges in the jet Gamma0 profile plus the outermost boundary." alt="" coords="912,361,1029,387"/>
+<area shape="rect" id="Node000016" href="$mesh_8h.html#a675e7c2ff4bda6b68d34389fefca49f5" title="Finds sharp discontinuities (jumps) in the jet Gamma0 profile." alt="" coords="912,361,1029,387"/>
 <area shape="poly" id="edge27_Node000006_Node000016" title=" " alt="" coords="795,616,818,608,838,595,853,575,861,556,865,517,867,475,873,453,886,430,906,408,929,391,932,396,910,412,890,433,878,455,872,476,870,517,867,557,858,578,842,599,821,613,797,621"/>
 <area shape="rect" id="Node000017" href="$mesh_8h.html#aa4bf3bc5ca82cf7ac350fab9eff68452" title=" " alt="" coords="909,444,1032,469"/>
 <area shape="poly" id="edge29_Node000006_Node000017" title=" " alt="" coords="796,612,818,605,839,594,854,582,864,571,886,542,946,477,950,481,890,545,868,574,858,586,841,599,820,610,797,617"/>
-<area shape="rect" id="Node000018" href="$mesh_8h.html#ae31d546d7f15fece5525fd480b771b68" title=" " alt="" coords="888,665,1053,691"/>
+<area shape="rect" id="Node000018" href="$mesh_8h.html#ac88029bbfd53e7ad59381da2323a7bec" title=" " alt="" coords="888,665,1053,691"/>
 <area shape="poly" id="edge31_Node000006_Node000018" title=" " alt="" coords="797,630,908,659,907,664,795,635"/>
 <area shape="rect" id="Node000019" href="$mesh_8h.html#a3c066f2c8e6d102d7a56de8cb42cf5a8" title=" " alt="" coords="919,729,1022,755"/>
 <area shape="poly" id="edge34_Node000006_Node000019" title=" " alt="" coords="777,632,889,700,931,721,928,726,887,704,774,637"/>

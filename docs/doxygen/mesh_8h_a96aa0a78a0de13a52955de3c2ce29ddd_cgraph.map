@@ -8,11 +8,11 @@
 <area shape="poly" id="edge9_Node000001_Node000007" title=" " alt="" coords="56,432,190,260,194,263,60,435"/>
 <area shape="rect" id="Node000008" href="$mesh_8h.html#a6130a6c9bb4bbe255dd8852fd154791d" title="Builds the engine&#45;time grid for each (phi, theta) cell in the coordinate system." alt="" coords="151,385,273,410"/>
 <area shape="poly" id="edge12_Node000001_Node000008" title=" " alt="" coords="87,432,155,412,156,417,89,437"/>
-<area shape="rect" id="Node000012" href="$mesh_8h.html#a0cb4f8dcb245bdf3dba21d11f42d07e0" title="Finds all sharp edges in the jet Gamma0 profile plus the outermost boundary." alt="" coords="363,489,480,514"/>
+<area shape="rect" id="Node000012" href="$mesh_8h.html#a675e7c2ff4bda6b68d34389fefca49f5" title="Finds sharp discontinuities (jumps) in the jet Gamma0 profile." alt="" coords="363,489,480,514"/>
 <area shape="poly" id="edge21_Node000001_Node000012" title=" " alt="" coords="89,450,349,489,349,494,88,455"/>
 <area shape="rect" id="Node000013" href="$mesh_8h.html#aa4bf3bc5ca82cf7ac350fab9eff68452" title=" " alt="" coords="567,542,690,568"/>
 <area shape="poly" id="edge23_Node000001_Node000013" title=" " alt="" coords="73,457,137,484,248,513,362,532,467,544,554,550,553,555,467,549,361,538,247,518,135,489,71,462"/>
-<area shape="rect" id="Node000014" href="$mesh_8h.html#ae31d546d7f15fece5525fd480b771b68" title=" " alt="" coords="339,592,504,617"/>
+<area shape="rect" id="Node000014" href="$mesh_8h.html#ac88029bbfd53e7ad59381da2323a7bec" title=" " alt="" coords="339,592,504,617"/>
 <area shape="poly" id="edge25_Node000001_Node000014" title=" " alt="" coords="55,459,84,515,108,545,137,570,182,590,230,603,279,609,325,610,325,615,279,614,229,608,180,595,135,575,104,549,79,517,50,461"/>
 <area shape="rect" id="Node000015" href="$mesh_8h.html#a3c066f2c8e6d102d7a56de8cb42cf5a8" title=" " alt="" coords="161,642,263,668"/>
 <area shape="poly" id="edge28_Node000001_Node000015" title=" " alt="" coords="54,459,63,491,80,534,105,580,138,621,156,634,153,638,134,625,100,583,75,537,58,493,49,461"/>

@@ -353,7 +353,7 @@ Functions</h2></td></tr>
 <div class="line"><span class="lineno">   37</span>        <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">jet</a>, medium);</div>
 <div class="line"><span class="lineno">   38</span>}</div>
 <div class="ttc" id="aforward-shock_8hpp_html_aa963867f4f98284c627afeff47fc3a18"><div class="ttname"><a href="forward-shock_8hpp.html#aa963867f4f98284c627afeff47fc3a18">generate_fwd_shock</a></div><div class="ttdeci">Shock generate_fwd_shock(Coord const &amp;coord, Medium const &amp;medium, Ejecta const &amp;jet, RadParams const &amp;rad_params, Real rtol=1e-5)</div><div class="ttdoc">Generates a forward shock model for given coordinates, medium, and jet parameters.</div></div>
-<div class="ttc" id="amesh_8h_html_a96aa0a78a0de13a52955de3c2ce29ddd"><div class="ttname"><a href="mesh_8h.html#a96aa0a78a0de13a52955de3c2ce29ddd">auto_grid</a></div><div class="ttdeci">Coord auto_grid(Ejecta const &amp;jet, Medium const &amp;medium, Array const &amp;t_obs, Real theta_cut, Real theta_view, Real z, Real phi_resol=defaults::grid::phi_resolution, Real theta_resol=defaults::grid::theta_resolution, Real t_resol=defaults::grid::time_resolution, bool is_axisymmetric=true, Real phi_view=0, size_t min_theta_num=defaults::grid::min_theta_points, Real fwd_ratio=defaults::grid::forward_ratio)</div><div class="ttdoc">Constructs a coordinate grid (Coord) for shock evolution.</div><div class="ttdef"><b>Definition</b> <a href="mesh_8h_source.html#l00926">mesh.h:926</a></div></div>
+<div class="ttc" id="amesh_8h_html_a96aa0a78a0de13a52955de3c2ce29ddd"><div class="ttname"><a href="mesh_8h.html#a96aa0a78a0de13a52955de3c2ce29ddd">auto_grid</a></div><div class="ttdeci">Coord auto_grid(Ejecta const &amp;jet, Medium const &amp;medium, Array const &amp;t_obs, Real theta_cut, Real theta_view, Real z, Real phi_resol=defaults::grid::phi_resolution, Real theta_resol=defaults::grid::theta_resolution, Real t_resol=defaults::grid::time_resolution, bool is_axisymmetric=true, Real phi_view=0, size_t min_theta_num=defaults::grid::min_theta_points, Real fwd_ratio=defaults::grid::forward_ratio)</div><div class="ttdoc">Constructs a coordinate grid (Coord) for shock evolution.</div><div class="ttdef"><b>Definition</b> <a href="mesh_8h_source.html#l00928">mesh.h:928</a></div></div>
 <div class="ttc" id="anamespaceunit_html_af4ac5b90426ecc30143a4e0f495978b6"><div class="ttname"><a href="namespaceunit.html#af4ac5b90426ecc30143a4e0f495978b6">unit::g</a></div><div class="ttdeci">constexpr Real g</div><div class="ttdoc">Gram in code units.</div><div class="ttdef"><b>Definition</b> <a href="macros_8h_source.html#l00049">macros.h:49</a></div></div>
 <div class="ttc" id="apybind_8cpp_html_ad93eae6422741850877b46bd61f08c89"><div class="ttname"><a href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">make_native_binary</a></div><div class="ttdeci">BinaryFunc make_native_binary(uintptr_t addr, std::vector&lt; Real &gt; const &amp;p)</div><div class="ttdef"><b>Definition</b> <a href="pybind_8cpp_source.html#l00027">pybind.cpp:27</a></div></div>
 </div><!-- fragment --><div class="dynheader">
@@ -375,11 +375,11 @@ Here is the call graph for this function:</div>
 <area shape="poly" title=" " alt="" coords="282,462,431,362,434,366,285,466"/>
 <area shape="rect" href="mesh_8h.html#a6130a6c9bb4bbe255dd8852fd154791d" title="Builds the engine&#45;time grid for each (phi, theta) cell in the coordinate system." alt="" coords="403,464,525,489"/>
 <area shape="poly" title=" " alt="" coords="304,474,389,474,389,479,304,479"/>
-<area shape="rect" href="mesh_8h.html#a0cb4f8dcb245bdf3dba21d11f42d07e0" title="Finds all sharp edges in the jet Gamma0 profile plus the outermost boundary." alt="" coords="615,592,732,617"/>
+<area shape="rect" href="mesh_8h.html#a675e7c2ff4bda6b68d34389fefca49f5" title="Finds sharp discontinuities (jumps) in the jet Gamma0 profile." alt="" coords="615,592,732,617"/>
 <area shape="poly" title=" " alt="" coords="305,487,619,585,618,590,303,492"/>
 <area shape="rect" href="mesh_8h.html#aa4bf3bc5ca82cf7ac350fab9eff68452" title=" " alt="" coords="819,648,942,673"/>
 <area shape="poly" title=" " alt="" coords="280,487,327,524,389,562,442,586,498,605,611,633,718,649,806,656,806,661,717,654,610,638,496,610,440,591,387,567,324,528,277,491"/>
-<area shape="rect" href="mesh_8h.html#ae31d546d7f15fece5525fd480b771b68" title=" " alt="" coords="591,697,756,723"/>
+<area shape="rect" href="mesh_8h.html#ac88029bbfd53e7ad59381da2323a7bec" title=" " alt="" coords="591,697,756,723"/>
 <area shape="poly" title=" " alt="" coords="270,489,284,527,308,578,343,631,365,654,389,673,434,695,482,708,531,714,577,716,577,721,530,719,481,713,432,700,387,678,361,658,338,634,303,580,279,529,265,491"/>
 <area shape="rect" href="mesh_8h.html#a3c066f2c8e6d102d7a56de8cb42cf5a8" title=" " alt="" coords="413,28,515,53"/>
 <area shape="poly" title=" " alt="" coords="262,464,266,397,283,293,299,235,320,176,349,121,386,71,402,57,406,62,390,74,354,123,325,178,304,236,288,294,272,397,267,464"/>
@@ -526,11 +526,11 @@ Here is the call graph for this function:</div>
 <area shape="poly" title=" " alt="" coords="286,462,436,362,439,366,289,466"/>
 <area shape="rect" href="mesh_8h.html#a6130a6c9bb4bbe255dd8852fd154791d" title="Builds the engine&#45;time grid for each (phi, theta) cell in the coordinate system." alt="" coords="408,464,531,489"/>
 <area shape="poly" title=" " alt="" coords="308,474,394,474,394,479,308,479"/>
-<area shape="rect" href="mesh_8h.html#a0cb4f8dcb245bdf3dba21d11f42d07e0" title="Finds all sharp edges in the jet Gamma0 profile plus the outermost boundary." alt="" coords="620,592,737,617"/>
+<area shape="rect" href="mesh_8h.html#a675e7c2ff4bda6b68d34389fefca49f5" title="Finds sharp discontinuities (jumps) in the jet Gamma0 profile." alt="" coords="620,592,737,617"/>
 <area shape="poly" title=" " alt="" coords="309,487,624,585,623,590,308,492"/>
 <area shape="rect" href="mesh_8h.html#aa4bf3bc5ca82cf7ac350fab9eff68452" title=" " alt="" coords="825,648,947,673"/>
 <area shape="poly" title=" " alt="" coords="284,487,331,525,395,565,447,588,503,607,617,635,723,650,811,656,811,662,723,655,616,640,502,612,445,593,392,570,328,530,281,492"/>
-<area shape="rect" href="mesh_8h.html#ae31d546d7f15fece5525fd480b771b68" title=" " alt="" coords="596,697,761,723"/>
+<area shape="rect" href="mesh_8h.html#ac88029bbfd53e7ad59381da2323a7bec" title=" " alt="" coords="596,697,761,723"/>
 <area shape="poly" title=" " alt="" coords="274,489,288,527,312,578,348,631,370,654,395,673,439,695,487,708,536,714,583,715,582,721,536,719,486,713,437,699,392,678,366,658,344,634,308,580,283,529,269,491"/>
 <area shape="rect" href="mesh_8h.html#a3c066f2c8e6d102d7a56de8cb42cf5a8" title=" " alt="" coords="418,28,521,53"/>
 <area shape="poly" title=" " alt="" coords="266,464,271,397,288,293,304,235,325,176,354,121,391,71,408,57,411,62,395,74,359,123,330,178,309,236,293,294,276,397,271,464"/>

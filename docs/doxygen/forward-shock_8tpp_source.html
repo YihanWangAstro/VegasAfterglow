@@ -293,7 +293,7 @@ $(document).ready(function(){initNavTree('forward-shock_8tpp_source.html',''); i
 <div class="line"><a id="l00192" name="l00192"></a><span class="lineno">  192</span>    Real t0;</div>
 <div class="line"><a id="l00193" name="l00193"></a><span class="lineno">  193</span> </div>
 <div class="line"><a id="l00194" name="l00194"></a><span class="lineno">  194</span>    Real t_dec = compute_dec_time(eqn);</div>
-<div class="line"><a id="l00195" name="l00195"></a><span class="lineno">  195</span>    t0 = min(t.front(), 0.01 * unit::sec, 0.1 * t_dec);</div>
+<div class="line"><a id="l00195" name="l00195"></a><span class="lineno">  195</span>    t0 = min(t.front(), 0.1 * unit::sec, 0.1 * t_dec);</div>
 <div class="line"><a id="l00196" name="l00196"></a><span class="lineno">  196</span>    eqn.set_init_state(state, t0);</div>
 <div class="line"><a id="l00197" name="l00197"></a><span class="lineno">  197</span> </div>
 <div class="line"><a id="l00198" name="l00198"></a><span class="lineno">  198</span>    if (state.Gamma &lt;= con::Gamma_cut) {</div>

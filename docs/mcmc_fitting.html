@@ -320,7 +320,7 @@
 
     <span class="c1"># Numerical parameters</span>
     <span class="n">rtol</span><span class="o">=</span><span class="mf">1e-5</span><span class="p">,</span>                <span class="c1"># Numerical tolerance</span>
-    <span class="n">resolution</span><span class="o">=</span><span class="p">(</span><span class="mf">0.15</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span>  <span class="c1"># Grid resolution (phi, theta, t)</span>
+    <span class="n">resolution</span><span class="o">=</span><span class="p">(</span><span class="mf">0.15</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span>  <span class="c1"># Grid resolution (phi, theta, t)</span>
 <span class="p">)</span>
 </pre></div>
 </div>
@@ -1078,7 +1078,7 @@
 <li><dl class="simple">
 <dt><code class="docutils literal notranslate"><span class="pre">resolution</span></code>: Optional tuple of (phi_res, theta_res, t_res)</dt><dd><ul>
 <li><p>Overrides the resolution set in the <code class="docutils literal notranslate"><span class="pre">Fitter</span></code> constructor for this run</p></li>
-<li><p>If <code class="docutils literal notranslate"><span class="pre">None</span></code>, uses the constructor value (default: <code class="docutils literal notranslate"><span class="pre">(0.15,</span> <span class="pre">0.5,</span> <span class="pre">10)</span></code>)</p></li>
+<li><p>If <code class="docutils literal notranslate"><span class="pre">None</span></code>, uses the constructor value (default: <code class="docutils literal notranslate"><span class="pre">(0.15,</span> <span class="pre">1.0,</span> <span class="pre">10)</span></code>)</p></li>
 <li><p>Example: <code class="docutils literal notranslate"><span class="pre">(0.1,</span> <span class="pre">1,</span> <span class="pre">15)</span></code> for higher accuracy</p></li>
 </ul>
 </dd>
@@ -1250,7 +1250,7 @@ Pass sampler-specific parameters via <code class="docutils literal notranslate">
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Using nestle sampler</span>
 <span class="n">result</span> <span class="o">=</span> <span class="n">fitter</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span>
     <span class="n">params</span><span class="p">,</span>
-    <span class="n">resolution</span><span class="o">=</span><span class="p">(</span><span class="mf">0.15</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span>
+    <span class="n">resolution</span><span class="o">=</span><span class="p">(</span><span class="mf">0.15</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span>
     <span class="n">sampler</span><span class="o">=</span><span class="s2">&quot;nestle&quot;</span><span class="p">,</span>
     <span class="n">nlive</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span>           <span class="c1"># nestle-specific parameter</span>
     <span class="n">method</span><span class="o">=</span><span class="s1">&#39;multi&#39;</span><span class="p">,</span>       <span class="c1"># nestle-specific: &#39;classic&#39;, &#39;single&#39;, or &#39;multi&#39;</span>
@@ -1330,7 +1330,7 @@ Pass sampler-specific parameters via <code class="docutils literal notranslate">
 <span class="c1"># Option 1 (Recommended): Nested sampling with dynesty (computes Bayesian evidence, robust for multimodal posteriors)</span>
 <span class="n">result</span> <span class="o">=</span> <span class="n">fitter</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span>
     <span class="n">params</span><span class="p">,</span>
-    <span class="n">resolution</span><span class="o">=</span><span class="p">(</span><span class="mf">0.15</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span>     <span class="c1"># Grid resolution (phi, theta, t)</span>
+    <span class="n">resolution</span><span class="o">=</span><span class="p">(</span><span class="mf">0.15</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span>     <span class="c1"># Grid resolution (phi, theta, t)</span>
     <span class="n">sampler</span><span class="o">=</span><span class="s2">&quot;dynesty&quot;</span><span class="p">,</span>             <span class="c1"># Nested sampling algorithm</span>
     <span class="n">nlive</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span>                    <span class="c1"># Number of live points</span>
     <span class="n">walks</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span>                     <span class="c1"># Number of random walks per live point</span>
@@ -1342,7 +1342,7 @@ Pass sampler-specific parameters via <code class="docutils literal notranslate">
 <span class="c1"># Option 2: MCMC with emcee (faster, good for unimodal posteriors, hard to converge for multimodal posteriors)</span>
 <span class="n">result</span> <span class="o">=</span> <span class="n">fitter</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span>
     <span class="n">params</span><span class="p">,</span>
-    <span class="n">resolution</span><span class="o">=</span><span class="p">(</span><span class="mf">0.15</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span>     <span class="c1"># Grid resolution (phi, theta, t)</span>
+    <span class="n">resolution</span><span class="o">=</span><span class="p">(</span><span class="mf">0.15</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span>     <span class="c1"># Grid resolution (phi, theta, t)</span>
     <span class="n">sampler</span><span class="o">=</span><span class="s2">&quot;emcee&quot;</span><span class="p">,</span>               <span class="c1"># MCMC sampler</span>
     <span class="n">nsteps</span><span class="o">=</span><span class="mi">50000</span><span class="p">,</span>                  <span class="c1"># Number of steps per walker</span>
     <span class="n">nburn</span><span class="o">=</span><span class="mi">10000</span><span class="p">,</span>                   <span class="c1"># Burn-in steps to discard</span>
