@@ -815,7 +815,7 @@ Here is the call graph for this function:</div>
 <div class="line"><span class="lineno">  304</span>                <span class="keywordflow">return</span> <a class="code hl_struct" href="structSpectrumEvaluator.html">SpectrumEvaluator</a>{</div>
 <div class="line"><span class="lineno">  305</span>                    [&amp;<a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">ph</a>, <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">I_unit</a>](<a class="code hl_typedef" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">nu_comv</a>) { <span class="keywordflow">return</span> <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">ph</a>.compute_I_nu(<a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">nu_comv</a> * <a class="code hl_variable" href="namespaceunit.html#a78d8f4bc3be7867d8171f2759251dad1">unit::Hz</a>) / <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">I_unit</a>; }};</div>
 <div class="line"><span class="lineno">  306</span>            },</div>
-<div class="line"><span class="lineno">  307</span>            py::keep_alive&lt;0, 1&gt;());</div>
+<div class="line"><span class="lineno">  307</span>            py::return_value_policy::reference_internal);</div>
 <div class="line"><span class="lineno">  308</span> </div>
 <div class="line"><span class="lineno">  309</span>    py::class_&lt;ICSpectrumGrid&gt;(m, <span class="stringliteral">&quot;_ICSpectrumGrid&quot;</span>)</div>
 <div class="line"><span class="lineno">  310</span>        .def(</div>
@@ -826,7 +826,7 @@ Here is the call graph for this function:</div>
 <div class="line"><span class="lineno">  315</span>                <span class="keywordflow">return</span> <a class="code hl_struct" href="structSpectrumEvaluator.html">SpectrumEvaluator</a>{</div>
 <div class="line"><span class="lineno">  316</span>                    [&amp;<a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">ph</a>, <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">I_unit</a>](<a class="code hl_typedef" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">nu_comv</a>) { <span class="keywordflow">return</span> <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">ph</a>.compute_I_nu(<a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">nu_comv</a> * <a class="code hl_variable" href="namespaceunit.html#a78d8f4bc3be7867d8171f2759251dad1">unit::Hz</a>) / <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">I_unit</a>; }};</div>
 <div class="line"><span class="lineno">  317</span>            },</div>
-<div class="line"><span class="lineno">  318</span>            py::keep_alive&lt;0, 1&gt;());</div>
+<div class="line"><span class="lineno">  318</span>            py::return_value_policy::reference_internal);</div>
 <div class="line"><span class="lineno">  319</span> </div>
 <div class="line"><span class="lineno">  320</span>    py::class_&lt;YSpectrumGrid&gt;(m, <span class="stringliteral">&quot;_YSpectrumGrid&quot;</span>)</div>
 <div class="line"><span class="lineno">  321</span>        .def(</div>
@@ -835,7 +835,7 @@ Here is the call graph for this function:</div>
 <div class="line"><span class="lineno">  324</span>                <span class="keyword">auto</span>&amp; <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">ph</a> = (*<a class="code hl_variable" href="namespaceunit.html#af4ac5b90426ecc30143a4e0f495978b6">g</a>.grid_)(<a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">idx</a>[0].<a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">cast&lt;size_t&gt;</a>(), <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">idx</a>[1].<a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">cast&lt;size_t&gt;</a>(), <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">idx</a>[2].<a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">cast&lt;size_t&gt;</a>());</div>
 <div class="line"><span class="lineno">  325</span>                <span class="keywordflow">return</span> <a class="code hl_struct" href="structYEvaluator.html">YEvaluator</a>{[&amp;<a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">ph</a>](<a class="code hl_typedef" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">gamma</a>) { <span class="keywordflow">return</span> <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">ph</a>.Ys.gamma_spectrum(<a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">gamma</a>); }};</div>
 <div class="line"><span class="lineno">  326</span>            },</div>
-<div class="line"><span class="lineno">  327</span>            py::keep_alive&lt;0, 1&gt;());</div>
+<div class="line"><span class="lineno">  327</span>            py::return_value_policy::reference_internal);</div>
 <div class="line"><span class="lineno">  328</span> </div>
 <div class="line"><span class="lineno">  329</span>    py::class_&lt;PyShock&gt;(m, <span class="stringliteral">&quot;ShockDetails&quot;</span>)</div>
 <div class="line"><span class="lineno">  330</span>        .def(py::init&lt;&gt;())</div>
@@ -870,15 +870,15 @@ Here is the call graph for this function:</div>
 <div class="line"><span class="lineno">  359</span>                    <span class="keywordflow">return</span> py::none();</div>
 <div class="line"><span class="lineno">  360</span>                <span class="keywordflow">return</span> py::cast(<a class="code hl_struct" href="structSynSpectrumGrid.html">SynSpectrumGrid</a>{&amp;<a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">self</a>.syn_photons_});</div>
 <div class="line"><span class="lineno">  361</span>            },</div>
-<div class="line"><span class="lineno">  362</span>            py::keep_alive&lt;0, 1&gt;())</div>
+<div class="line"><span class="lineno">  362</span>            py::return_value_policy::reference_internal)</div>
 <div class="line"><span class="lineno">  363</span>        .<a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">def_property_readonly</a>(</div>
 <div class="line"><span class="lineno">  364</span>            <span class="stringliteral">&quot;ssc_spectrum&quot;</span>,</div>
 <div class="line"><span class="lineno">  365</span>            [](<a class="code hl_struct" href="structPyShock.html">PyShock</a>&amp; <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">self</a>) -&gt; py::object {</div>
 <div class="line"><span class="lineno">  366</span>                <span class="keywordflow">if</span> (!<a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">self</a>.has_ssc_spectrum_)</div>
 <div class="line"><span class="lineno">  367</span>                    <span class="keywordflow">return</span> py::none();</div>
-<div class="line"><span class="lineno">  368</span>                <span class="keywordflow">return</span> py::cast(<a class="code hl_struct" href="structICSpectrumGrid.html">ICSpectrumGrid</a>{&amp;<a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">self</a>.ic_photons_}, py::return_value_policy::reference_internal);</div>
+<div class="line"><span class="lineno">  368</span>                <span class="keywordflow">return</span> py::cast(<a class="code hl_struct" href="structICSpectrumGrid.html">ICSpectrumGrid</a>{&amp;<a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">self</a>.ic_photons_});</div>
 <div class="line"><span class="lineno">  369</span>            },</div>
-<div class="line"><span class="lineno">  370</span>            py::keep_alive&lt;0, 1&gt;())</div>
+<div class="line"><span class="lineno">  370</span>            py::return_value_policy::reference_internal)</div>
 <div class="line"><span class="lineno">  371</span>        .<a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">def_property_readonly</a>(</div>
 <div class="line"><span class="lineno">  372</span>            <span class="stringliteral">&quot;Y_spectrum&quot;</span>,</div>
 <div class="line"><span class="lineno">  373</span>            [](<a class="code hl_struct" href="structPyShock.html">PyShock</a>&amp; <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">self</a>) -&gt; py::object {</div>
@@ -886,7 +886,7 @@ Here is the call graph for this function:</div>
 <div class="line"><span class="lineno">  375</span>                    <span class="keywordflow">return</span> py::none();</div>
 <div class="line"><span class="lineno">  376</span>                <span class="keywordflow">return</span> py::cast(<a class="code hl_struct" href="structYSpectrumGrid.html">YSpectrumGrid</a>{&amp;<a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">self</a>.syn_photons_});</div>
 <div class="line"><span class="lineno">  377</span>            },</div>
-<div class="line"><span class="lineno">  378</span>            py::keep_alive&lt;0, 1&gt;())</div>
+<div class="line"><span class="lineno">  378</span>            py::return_value_policy::reference_internal)</div>
 <div class="line"><span class="lineno">  379</span>        .<a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">def</a>(<span class="stringliteral">&quot;__repr__&quot;</span>, &amp;<a class="code hl_function" href="structPyShock.html#a9b4eeafbb83d9492336fa59d58802cba">PyShock::repr</a>);</div>
 <div class="line"><span class="lineno">  380</span> </div>
 <div class="line"><span class="lineno">  381</span>    py::class_&lt;PyDetails&gt;(m, <span class="stringliteral">&quot;SimulationDetails&quot;</span>)</div>
