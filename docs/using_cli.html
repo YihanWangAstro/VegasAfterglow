@@ -710,12 +710,6 @@ vegasgen<span class="w"> </span>--plot<span class="w"> </span>-o<span class="w">
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>vegasgen<span class="w"> </span>--nu<span class="w"> </span><span class="o">[</span><span class="m">7</span>.25e16,2.42e18<span class="o">]</span><span class="w"> </span>--plot
 </pre></div>
 </div>
-<p>In the Python API, use <code class="docutils literal notranslate"><span class="pre">units.band()</span></code> to look up named bands for use with <code class="docutils literal notranslate"><span class="pre">Fitter.add_flux()</span></code> or <code class="docutils literal notranslate"><span class="pre">Model.flux()</span></code>:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">VegasAfterglow.units</span><span class="w"> </span><span class="kn">import</span> <span class="n">band</span>
-
-<span class="n">fitter</span><span class="o">.</span><span class="n">add_flux</span><span class="p">(</span><span class="n">band</span><span class="o">=</span><span class="n">band</span><span class="p">(</span><span class="s2">&quot;XRT&quot;</span><span class="p">),</span> <span class="n">t</span><span class="o">=</span><span class="n">t</span><span class="p">,</span> <span class="n">flux</span><span class="o">=</span><span class="n">f</span><span class="p">,</span> <span class="n">err</span><span class="o">=</span><span class="n">e</span><span class="p">)</span>
-</pre></div>
-</div>
 </section>
 <section id="output-formats">
 <h2>Output Formats<a class="headerlink" href="#output-formats" title="Link to this heading"></a></h2>

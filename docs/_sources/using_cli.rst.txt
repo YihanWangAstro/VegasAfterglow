@@ -457,14 +457,6 @@ Custom bracket bands can also be specified with Hz values:
 
     vegasgen --nu [7.25e16,2.42e18] --plot
 
-In the Python API, use ``units.band()`` to look up named bands for use with ``Fitter.add_flux()`` or ``Model.flux()``:
-
-.. code-block:: python
-
-    from VegasAfterglow.units import band
-
-    fitter.add_flux(band=band("XRT"), t=t, flux=f, err=e)
-
 
 Output Formats
 --------------
