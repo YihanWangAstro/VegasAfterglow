@@ -100,6 +100,8 @@ def _format_nu_latex(nu, label=None):
                 return rf"{band} (${label}$-band)"
             if label in units._ST_FILTERS:
                 return rf"{band} ({label})"
+            if label in units._SURVEY_FILTERS:
+                return rf"{band} ({label})"
 
     E_keV = nu * _h_cgs / _eV_cgs / 1e3
     lam_nm = _c_A / nu / 10  # wavelength in nm

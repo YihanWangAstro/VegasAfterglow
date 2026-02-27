@@ -98,6 +98,7 @@ _ST_F0 = 3.631e-9  # ST zero-point flux density [erg/cm²/s/Å]
 #   Johnson-Cousins: Bessell & Murphy (2012)
 #   2MASS: Cohen et al. (2003)
 #   Swift UVOT: Breeveld et al. (2011), Poole et al. (2008)
+#   SDSS: Fukugita et al. (1996); AB offsets from Blanton & Roweis (2007)
 # ---------------------------------------------------------------------------
 _VEGA_FILTERS = {
     # Johnson-Cousins
@@ -117,6 +118,11 @@ _VEGA_FILTERS = {
     "uvw1": (905.0, 2600.0),
     "uvm2": (766.0, 2246.0),
     "uvw2": (741.0, 1928.0),
+    # SDSS (also used by WFST and Mephisto)
+    "g": (3910.0, 4686.0),
+    "r": (3130.0, 6166.0),
+    "i": (2580.0, 7480.0),
+    "z": (2210.0, 8932.0),
 }
 
 # ---------------------------------------------------------------------------
@@ -140,6 +146,19 @@ _ST_FILTERS = {
     "F125W": 12486.0,
     "F140W": 13923.0,
     "F160W": 15369.0,
+}
+
+# ---------------------------------------------------------------------------
+# Survey / telescope-specific filters: effective wavelength [Å]
+#   SVOM VT: Götz et al. (2024)
+#   WFST: Lei et al. (2023)
+# ---------------------------------------------------------------------------
+_SURVEY_FILTERS = {
+    # SVOM Visible Telescope dichroic channels
+    "VT_B": 5500.0,  # 450–650 nm blue channel
+    "VT_R": 8200.0,  # 650–1000 nm red channel
+    # WFST wide-band filter
+    "w": 6200.0,  # ~390–820 nm wide filter
 }
 
 
@@ -293,12 +312,12 @@ def cgs_to_STmag(f_nu, filt):
 def filter(filt):
     """Return the effective frequency [Hz] of a named filter.
 
-    Works for both Vega-system and ST-system filters.
+    Works for Vega-system, ST-system, and survey telescope filters.
 
     Parameters
     ----------
     filt : str
-        Filter name (e.g. 'V', 'J', 'F606W').
+        Filter name (e.g. 'V', 'J', 'F606W', 'g', 'VT_B').
 
     Returns
     -------
@@ -311,6 +330,11 @@ def filter(filt):
     if filt in _ST_FILTERS:
         lam_A = _ST_FILTERS[filt]
         return _c_A / lam_A
-    all_filters = sorted(set(list(_VEGA_FILTERS) + list(_ST_FILTERS)))
+    if filt in _SURVEY_FILTERS:
+        lam_A = _SURVEY_FILTERS[filt]
+        return _c_A / lam_A
+    all_filters = sorted(
+        set(list(_VEGA_FILTERS) + list(_ST_FILTERS) + list(_SURVEY_FILTERS))
+    )
     avail = ", ".join(all_filters)
     raise ValueError(f"Unknown filter '{filt}'. Available: {avail}")
