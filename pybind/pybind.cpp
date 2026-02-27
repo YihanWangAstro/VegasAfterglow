@@ -304,7 +304,7 @@ PYBIND11_MODULE(VegasAfterglowC, m) {
                 return SpectrumEvaluator{
                     [&ph, I_unit](Real nu_comv) { return ph.compute_I_nu(nu_comv * unit::Hz) / I_unit; }};
             },
-            py::keep_alive<0, 1>());
+            py::return_value_policy::reference_internal);
 
     py::class_<ICSpectrumGrid>(m, "_ICSpectrumGrid")
         .def(
@@ -315,7 +315,7 @@ PYBIND11_MODULE(VegasAfterglowC, m) {
                 return SpectrumEvaluator{
                     [&ph, I_unit](Real nu_comv) { return ph.compute_I_nu(nu_comv * unit::Hz) / I_unit; }};
             },
-            py::keep_alive<0, 1>());
+            py::return_value_policy::reference_internal);
 
     py::class_<YSpectrumGrid>(m, "_YSpectrumGrid")
         .def(
@@ -324,7 +324,7 @@ PYBIND11_MODULE(VegasAfterglowC, m) {
                 auto& ph = (*g.grid_)(idx[0].cast<size_t>(), idx[1].cast<size_t>(), idx[2].cast<size_t>());
                 return YEvaluator{[&ph](Real gamma) { return ph.Ys.gamma_spectrum(gamma); }};
             },
-            py::keep_alive<0, 1>());
+            py::return_value_policy::reference_internal);
 
     py::class_<PyShock>(m, "ShockDetails")
         .def(py::init<>())
@@ -359,15 +359,15 @@ PYBIND11_MODULE(VegasAfterglowC, m) {
                     return py::none();
                 return py::cast(SynSpectrumGrid{&self.syn_photons_});
             },
-            py::keep_alive<0, 1>())
+            py::return_value_policy::reference_internal)
         .def_property_readonly(
             "ssc_spectrum",
             [](PyShock& self) -> py::object {
                 if (!self.has_ssc_spectrum_)
                     return py::none();
-                return py::cast(ICSpectrumGrid{&self.ic_photons_}, py::return_value_policy::reference_internal);
+                return py::cast(ICSpectrumGrid{&self.ic_photons_});
             },
-            py::keep_alive<0, 1>())
+            py::return_value_policy::reference_internal)
         .def_property_readonly(
             "Y_spectrum",
             [](PyShock& self) -> py::object {
@@ -375,7 +375,7 @@ PYBIND11_MODULE(VegasAfterglowC, m) {
                     return py::none();
                 return py::cast(YSpectrumGrid{&self.syn_photons_});
             },
-            py::keep_alive<0, 1>())
+            py::return_value_policy::reference_internal)
         .def("__repr__", &PyShock::repr);
 
     py::class_<PyDetails>(m, "SimulationDetails")

@@ -13,7 +13,7 @@ import sys
 
 import numpy as np
 
-from .units import _NAMED_BANDS
+from .units import _NAMED_BANDS, _c_A
 from .units import keV as _keV
 
 
@@ -73,12 +73,7 @@ def _parse_nu_entry(value):
 
 def _format_nu_label(nu):
     """Format a frequency for CSV/JSON column headers."""
-    named = {1e9: "radio", 5e14: "optical", 1e18: "xray"}
-    if nu in named:
-        return named[nu]
-    if nu >= 1e9:
-        return f"{nu:.2e}Hz"
-    return f"{nu}Hz"
+    return _format_energy(nu)
 
 
 def _broad_band(nu):
@@ -105,18 +100,8 @@ def _broad_band(nu):
 
 
 def _format_nu_latex(nu, label=None):
-    """Format a frequency as a LaTeX label with broad-band prefix for plots.
-
-    Parameters
-    ----------
-    nu : float
-        Frequency in Hz.
-    label : str or None
-        Original user input string. If it's a filter name, show as filter;
-        if numeric, show wavelength/energy.
-    """
+    """Format a frequency as a LaTeX label with broad-band prefix for plots."""
     from . import units
-    from .units import _c_A
 
     band = _broad_band(nu)
 
@@ -125,7 +110,6 @@ def _format_nu_latex(nu, label=None):
         try:
             float(label)
         except ValueError:
-            # Not a number — user typed a filter name
             if label in units._VEGA_FILTERS:
                 return rf"{band} (${label}$-band)"
             if label in units._ST_FILTERS:
@@ -133,40 +117,7 @@ def _format_nu_latex(nu, label=None):
             if label in units._SURVEY_FILTERS:
                 return rf"{band} ({label})"
 
-    E_keV = nu / _keV
-    lam_nm = _c_A / nu / 10  # wavelength in nm
-
-    if nu < 1e6:
-        return rf"{band} (${nu:.0f}$ Hz)"
-    if nu < 1e9:
-        return rf"{band} (${nu / 1e6:.0f}$ MHz)"
-    if nu < 1e12:
-        val = nu / 1e9
-        s = f"{val:g}"
-        return rf"{band} (${s}$ GHz)"
-    if 100 < lam_nm < 10000:
-        s = f"{lam_nm:.3g}"
-        return rf"{band} (${s}$ nm)"
-    E_GeV = E_keV / 1e6
-    E_TeV = E_keV / 1e9
-    if E_TeV >= 1:
-        s = f"{E_TeV:.3g}"
-        return rf"{band} (${s}$ TeV)"
-    if E_GeV >= 1:
-        s = f"{E_GeV:.3g}"
-        return rf"{band} (${s}$ GeV)"
-    if E_keV >= 1e3:
-        s = f"{E_keV / 1e3:.3g}"
-        return rf"{band} (${s}$ MeV)"
-    if E_keV >= 0.1:
-        s = f"{E_keV:.3g}"
-        return rf"{band} (${s}$ keV)"
-    # Fallback: scientific notation
-    exp = int(np.floor(np.log10(nu)))
-    coeff = nu / 10**exp
-    if abs(coeff - 1) < 0.01:
-        return rf"{band} ($10^{{{exp}}}$ Hz)"
-    return rf"{band} (${coeff:.1f}\times10^{{{exp}}}$ Hz)"
+    return rf"{band} ({_format_energy(nu, latex=True)})"
 
 
 _FLUX_SCALES = {"mJy": 1e-26, "Jy": 1e-23, "uJy": 1e-29, "cgs": 1.0}
@@ -406,61 +357,49 @@ def build_radiation(args):
     return fwd_rad, rvs_rad
 
 
-def _format_energy(nu):
-    """Format a frequency as a human-readable energy/wavelength string."""
+def _format_energy(nu, latex=False):
+    """Format a frequency as a human-readable energy/wavelength/frequency string.
+
+    Uses wavelength (nm) for optical/IR/UV, photon energy for X-ray and above,
+    and frequency (GHz/MHz/Hz) for radio.
+    """
     E_keV = nu / _keV
-    E_GeV = E_keV / 1e6
-    E_TeV = E_keV / 1e9
-    if E_TeV >= 1:
-        return f"{E_TeV:.3g} TeV"
-    if E_GeV >= 1:
-        return f"{E_GeV:.3g} GeV"
+    lam_nm = _c_A / nu / 10
+
+    def _v(val, unit):
+        s = f"{val:.3g}"
+        return rf"${s}$ {unit}" if latex else f"{s} {unit}"
+
+    if E_keV >= 1e9:
+        return _v(E_keV / 1e9, "TeV")
+    if E_keV >= 1e6:
+        return _v(E_keV / 1e6, "GeV")
     if E_keV >= 1e3:
-        return f"{E_keV / 1e3:.3g} MeV"
+        return _v(E_keV / 1e3, "MeV")
     if E_keV >= 0.1:
-        return f"{E_keV:.3g} keV"
+        return _v(E_keV, "keV")
+    if 100 < lam_nm < 10000:
+        return _v(lam_nm, "nm")
     if nu >= 1e12:
-        return f"{nu / 1e12:.3g} THz"
+        return _v(nu / 1e12, "THz")
     if nu >= 1e9:
-        return f"{nu / 1e9:g} GHz"
-    return f"{nu:.2e} Hz"
+        s = f"{nu / 1e9:g}"
+        return rf"${s}$ GHz" if latex else f"{s} GHz"
+    if nu >= 1e6:
+        s = f"{nu / 1e6:.0f}"
+        return rf"${s}$ MHz" if latex else f"{s} MHz"
+    s = f"{nu:.0f}"
+    return rf"${s}$ Hz" if latex else f"{s} Hz"
 
 
-def _format_band_label(nu_min, nu_max, name=None):
-    """Format a frequency band for CSV/JSON column headers (plain text)."""
-    range_str = f"{_format_energy(nu_min)}-{_format_energy(nu_max)}"
+def _format_band(nu_min, nu_max, name=None, latex=False):
+    """Format a frequency band label (plain text or LaTeX)."""
+    lo = _format_energy(nu_min, latex=latex)
+    hi = _format_energy(nu_max, latex=latex)
+    sep = "\u2013" if latex else "-"
+    range_str = f"{lo}{sep}{hi}"
     if name and name in _NAMED_BANDS:
-        return f"{name}({range_str})"
-    return range_str
-
-
-def _format_energy_latex(nu):
-    """Format a frequency as a LaTeX energy/wavelength string for plots."""
-    E_keV = nu / _keV
-    E_GeV = E_keV / 1e6
-    E_TeV = E_keV / 1e9
-    if E_TeV >= 1:
-        return rf"${E_TeV:.3g}$ TeV"
-    if E_GeV >= 1:
-        return rf"${E_GeV:.3g}$ GeV"
-    if E_keV >= 1e3:
-        return rf"${E_keV / 1e3:.3g}$ MeV"
-    if E_keV >= 0.1:
-        return rf"${E_keV:.3g}$ keV"
-    if nu >= 1e12:
-        return rf"${nu / 1e12:.3g}$ THz"
-    if nu >= 1e9:
-        return rf"${nu / 1e9:g}$ GHz"
-    return rf"${nu:.2e}$ Hz"
-
-
-def _format_band_latex(nu_min, nu_max, name=None):
-    """Format a frequency band as a LaTeX label for plots."""
-    lo = _format_energy_latex(nu_min)
-    hi = _format_energy_latex(nu_max)
-    range_str = f"{lo}–{hi}"
-    if name and name in _NAMED_BANDS:
-        return f"{name} ({range_str})"
+        return f"{name} ({range_str})" if latex else f"{name}({range_str})"
     return range_str
 
 
@@ -553,7 +492,7 @@ def write_csv(times, nus, point_result, bands, band_results, args, file):
                 cols.append(f"F_{comp_name}({nu_label})")
     if has_bands:
         for nu_min, nu_max, name in bands:
-            band_label = _format_band_label(nu_min, nu_max, name)
+            band_label = _format_band(nu_min, nu_max, name)
             for comp_name, _ in band_comps:
                 cols.append(f"F_{comp_name}({band_label})")
     file.write(",".join(cols) + "\n")
@@ -614,7 +553,7 @@ def write_json(times, nus, point_result, bands, band_results, args, file):
         data["units"]["band_flux"] = "erg/cm2/s"
         data["bands"] = {}
         for b_idx, (nu_min, nu_max, name) in enumerate(bands):
-            band_label = _format_band_label(nu_min, nu_max, name)
+            band_label = _format_band(nu_min, nu_max, name)
             band_comps = _get_components(band_results[b_idx])
             data["bands"][band_label] = {
                 "nu_min_Hz": nu_min,
@@ -908,7 +847,7 @@ def _plot_band_ax(ax, times, bands, band_results, t_scale, colors=None):
 
     for b_idx, (nu_min, nu_max, name) in enumerate(bands):
         color = colors[b_idx]
-        label = _format_band_latex(nu_min, nu_max, name)
+        label = _format_band(nu_min, nu_max, name, latex=True)
         components = _get_components(band_results[b_idx])
         for comp_name, comp_flux in components:
             f = comp_flux
