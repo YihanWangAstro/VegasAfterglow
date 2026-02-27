@@ -338,3 +338,38 @@ def filter(filt):
     )
     avail = ", ".join(all_filters)
     raise ValueError(f"Unknown filter '{filt}'. Available: {avail}")
+
+
+# ---------------------------------------------------------------------------
+# Named instrument bands: (nu_min_Hz, nu_max_Hz)
+# ---------------------------------------------------------------------------
+
+_NAMED_BANDS = {
+    "XRT": (0.3 * keV, 10 * keV),  # Swift X-Ray Telescope
+    "BAT": (15 * keV, 150 * keV),  # Swift Burst Alert Telescope
+    "FXT": (0.3 * keV, 10 * keV),  # Einstein Probe FXT
+    "WXT": (0.5 * keV, 4 * keV),  # Einstein Probe WXT
+    "MXT": (0.2 * keV, 10 * keV),  # SVOM MXT
+    "ECLAIRs": (4 * keV, 150 * keV),  # SVOM ECLAIRs
+    "LAT": (100 * MeV, 300 * GeV),  # Fermi LAT
+    "GBM": (8 * keV, 40 * MeV),  # Fermi GBM
+}
+
+
+def band(name):
+    """Return (nu_min, nu_max) in Hz for a named instrument band.
+
+    Parameters
+    ----------
+    name : str
+        Band name (e.g. 'XRT', 'LAT', 'BAT').
+
+    Returns
+    -------
+    tuple of float
+        (nu_min, nu_max) in Hz.
+    """
+    if name not in _NAMED_BANDS:
+        avail = ", ".join(sorted(_NAMED_BANDS))
+        raise ValueError(f"Unknown band '{name}'. Available: {avail}")
+    return _NAMED_BANDS[name]

@@ -42,7 +42,9 @@ For the full MCMC fitting guide, including advanced customization examples, see 
 #### ► **Unit Conversion Constants**
 - New `VegasAfterglow.units` module with multiplicative constants for common astronomical units (days, GHz, keV, mJy, Mpc, degrees, etc.)
 - Multiply to convert inputs: `5*GHz`, `t_data*day`, `f_data*mJy`; divide to convert outputs: `flux.total / mJy`
-- Magnitude converters for AB, Vega, and ST (HST STMAG) systems with built-in filter data for Johnson-Cousins (UBVRI), 2MASS (JHKs), Swift UVOT, and HST WFC3/ACS filters
+- Magnitude converters for AB, Vega, and ST (HST STMAG) systems with built-in filter data for Johnson-Cousins (UBVRI), 2MASS (JHKs), Swift UVOT, SDSS (griz), and HST WFC3/ACS filters
+- Survey/telescope filters: SVOM VT (VT_B, VT_R) and WFST wide-band (w)
+- Named instrument bands via `units.band()`: look up frequency ranges for Swift XRT/BAT, Einstein Probe FXT/WXT, SVOM MXT/ECLAIRs, and Fermi LAT/GBM — use with `Fitter.add_flux()` or `Model.flux()`
 
 #### ► **Smooth Synchrotron Spectra**
 - New default synchrotron spectral model with smooth transitions at break frequencies (ν_m, ν_c, ν_a)
@@ -270,9 +272,9 @@ See the [MCMC Parameter Fitting](https://yihanwangastro.github.io/VegasAfterglow
   - **Method**: `add_flux_density(nu, t, f_nu, err, weights=None)`
     - Previous: `add_flux_density(nu_cgs, t_cgs, Fnu_cgs, Fnu_err, weights=None)`
     - Updated: `add_flux_density(nu, t, f_nu, err, weights=None)`
-  - **Method**: `add_flux(nu_min, nu_max, num_points, t, flux, err, weights=None)`
+  - **Method**: `add_flux(band, t, flux, err, num_points=15, weights=None)`
     - Previous: `add_flux(nu_min, nu_max, num_points, t_cgs, F, F_err, weights=None)`
-    - Updated: `add_flux(nu_min, nu_max, num_points, t, flux, err, weights=None)`
+    - Updated: `add_flux(band, t, flux, err, num_points=15, weights=None)` — `band` is a `(nu_min, nu_max)` tuple; use `units.band("XRT")` for named bands
   - **Method**: `add_spectrum(t, nu, f_nu, err, weights=None)`
     - Previous: `add_spectrum(t_cgs, nu_cgs, Fnu_cgs, Fnu_err, weights=None)`
     - Updated: `add_spectrum(t, nu, f_nu, err, weights=None)`
@@ -322,7 +324,7 @@ data.add_spectrum(t=1000, nu=freqs, f_nu=spectrum, err=errors)  # All quantities
 
 data.add_flux(nu_min=1e14, nu_max=1e15, num_points=5, t_cgs=times, F=flux, F_err=errors)
 # becomes:
-data.add_flux(nu_min=1e14, nu_max=1e15, num_points=5, t=times, flux=flux, err=errors)  # All quantities in CGS units
+data.add_flux(band=(1e14, 1e15), t=times, flux=flux, err=errors)  # or band=band("XRT")
 ```
 
 **Important**: All physical quantities are still expected in CGS units as before - only the parameter names have been simplified for a cleaner interface.

@@ -13,6 +13,9 @@ import sys
 
 import numpy as np
 
+from .units import _NAMED_BANDS
+from .units import keV as _keV
+
 
 def _lumi_dist_from_z(z):
     """Approximate luminosity distance from redshift (flat LCDM, H0=67.4)."""
@@ -39,6 +42,35 @@ def _parse_frequency(value):
         )
 
 
+def _parse_nu_entry(value):
+    """Parse a --nu entry as point frequency, named band, or [nu_min,nu_max].
+
+    Returns either a float (point frequency in Hz) or a tuple
+    (nu_min, nu_max, label) for a frequency band.
+    """
+    # Named band
+    if value in _NAMED_BANDS:
+        nu_min, nu_max = _NAMED_BANDS[value]
+        return (nu_min, nu_max, value)
+    # Bracket band: [nu_min,nu_max]
+    if value.startswith("[") and value.endswith("]"):
+        inner = value[1:-1]
+        parts = inner.split(",")
+        if len(parts) != 2:
+            raise argparse.ArgumentTypeError(
+                f"'{value}' — band format must be [nu_min,nu_max]"
+            )
+        try:
+            nu_min, nu_max = float(parts[0]), float(parts[1])
+        except ValueError:
+            raise argparse.ArgumentTypeError(
+                f"'{value}' — band edges must be numeric Hz values"
+            )
+        return (nu_min, nu_max, value)
+    # Point frequency or filter name
+    return _parse_frequency(value)
+
+
 def _format_nu_label(nu):
     """Format a frequency for CSV/JSON column headers."""
     named = {1e9: "radio", 5e14: "optical", 1e18: "xray"}
@@ -51,9 +83,9 @@ def _format_nu_label(nu):
 
 def _broad_band(nu):
     """Return the broad-band name for a frequency."""
-    _h_cgs = 6.62607015e-27
-    _eV_cgs = 1.602176634e-12
-    E_eV = nu * _h_cgs / _eV_cgs
+    from .units import eV as _eV_Hz
+
+    E_eV = nu / _eV_Hz
 
     if nu < 1e12:  # < 1 THz
         return "Radio"
@@ -84,10 +116,8 @@ def _format_nu_latex(nu, label=None):
         if numeric, show wavelength/energy.
     """
     from . import units
+    from .units import _c_A
 
-    _c_A = 2.99792458e18  # speed of light [A/s]
-    _h_cgs = 6.62607015e-27
-    _eV_cgs = 1.602176634e-12
     band = _broad_band(nu)
 
     # Show filter name only if the user actually typed a filter name
@@ -103,7 +133,7 @@ def _format_nu_latex(nu, label=None):
             if label in units._SURVEY_FILTERS:
                 return rf"{band} ({label})"
 
-    E_keV = nu * _h_cgs / _eV_cgs / 1e3
+    E_keV = nu / _keV
     lam_nm = _c_A / nu / 10  # wavelength in nm
 
     if nu < 1e6:
@@ -276,12 +306,18 @@ def parse_args(argv=None):
         "--nu",
         nargs="+",
         default=["1e9", "5e14", "1e18"],
-        help="frequencies in Hz or filter names (e.g. 1e9 R F606W)",
+        help=("frequencies, filters, or bands " "(e.g. 1e9 R F606W XRT [7e16,2e18])"),
+    )
+    freq.add_argument(
+        "--num_nu_band",
+        type=int,
+        default=15,
+        help="frequency sampling points per band integration (default: 15)",
     )
 
     # -- Time grid ----------------------------------------------------------
     tg = p.add_argument_group("time grid")
-    tg.add_argument("--t_min", type=float, default=100, help="start time [s]")
+    tg.add_argument("--t_min", type=float, default=1, help="start time [s]")
     tg.add_argument("--t_max", type=float, default=1e8, help="end time [s]")
     tg.add_argument("--num_t", type=int, default=100, help="number of time points")
 
@@ -370,35 +406,124 @@ def build_radiation(args):
     return fwd_rad, rvs_rad
 
 
+def _format_energy(nu):
+    """Format a frequency as a human-readable energy/wavelength string."""
+    E_keV = nu / _keV
+    E_GeV = E_keV / 1e6
+    E_TeV = E_keV / 1e9
+    if E_TeV >= 1:
+        return f"{E_TeV:.3g} TeV"
+    if E_GeV >= 1:
+        return f"{E_GeV:.3g} GeV"
+    if E_keV >= 1e3:
+        return f"{E_keV / 1e3:.3g} MeV"
+    if E_keV >= 0.1:
+        return f"{E_keV:.3g} keV"
+    if nu >= 1e12:
+        return f"{nu / 1e12:.3g} THz"
+    if nu >= 1e9:
+        return f"{nu / 1e9:g} GHz"
+    return f"{nu:.2e} Hz"
+
+
+def _format_band_label(nu_min, nu_max, name=None):
+    """Format a frequency band for CSV/JSON column headers (plain text)."""
+    range_str = f"{_format_energy(nu_min)}-{_format_energy(nu_max)}"
+    if name and name in _NAMED_BANDS:
+        return f"{name}({range_str})"
+    return range_str
+
+
+def _format_energy_latex(nu):
+    """Format a frequency as a LaTeX energy/wavelength string for plots."""
+    E_keV = nu / _keV
+    E_GeV = E_keV / 1e6
+    E_TeV = E_keV / 1e9
+    if E_TeV >= 1:
+        return rf"${E_TeV:.3g}$ TeV"
+    if E_GeV >= 1:
+        return rf"${E_GeV:.3g}$ GeV"
+    if E_keV >= 1e3:
+        return rf"${E_keV / 1e3:.3g}$ MeV"
+    if E_keV >= 0.1:
+        return rf"${E_keV:.3g}$ keV"
+    if nu >= 1e12:
+        return rf"${nu / 1e12:.3g}$ THz"
+    if nu >= 1e9:
+        return rf"${nu / 1e9:g}$ GHz"
+    return rf"${nu:.2e}$ Hz"
+
+
+def _format_band_latex(nu_min, nu_max, name=None):
+    """Format a frequency band as a LaTeX label for plots."""
+    lo = _format_energy_latex(nu_min)
+    hi = _format_energy_latex(nu_max)
+    range_str = f"{lo}–{hi}"
+    if name and name in _NAMED_BANDS:
+        return f"{name} ({range_str})"
+    return range_str
+
+
 def parse_frequencies(nu_args):
-    """Return (nus_array, nu_labels) where nu_labels are the original strings."""
-    nus = np.array([_parse_frequency(v) for v in nu_args])
-    return nus, list(nu_args)
+    """Parse --nu entries into point frequencies and bands.
+
+    Returns (point_nus, point_labels, bands) where:
+      - point_nus: ndarray of point frequencies [Hz] (may be empty)
+      - point_labels: list of original strings for each point frequency
+      - bands: list of (nu_min, nu_max, label) tuples (may be empty)
+    """
+    point_nus = []
+    point_labels = []
+    bands = []
+    for v in nu_args:
+        entry = _parse_nu_entry(v)
+        if isinstance(entry, tuple):
+            bands.append(entry)
+        else:
+            point_nus.append(entry)
+            point_labels.append(v)
+    nus = np.array(point_nus) if point_nus else np.array([])
+    return nus, point_labels, bands
 
 
 def _has_data(arr):
     """Check if a flux array has actual data (not 0-d or empty)."""
-    return arr.ndim >= 2 and arr.size > 0
+    return arr.ndim >= 1 and arr.size > 0
 
 
 def _get_components(result):
-    """Return list of (name, flux_array) for all active flux components."""
+    """Return list of (name, flux_array) for all active flux components.
+
+    Sub-components are only included when there are two or more (i.e. when
+    the decomposition is non-trivial).  A single sub-component is identical
+    to total and would just add clutter.
+    """
     components = [("total", result.total)]
+    subs = []
     if _has_data(result.fwd.sync):
-        components.append(("fwd_sync", result.fwd.sync))
+        subs.append(("fwd_sync", result.fwd.sync))
     if _has_data(result.fwd.ssc):
-        components.append(("fwd_ssc", result.fwd.ssc))
+        subs.append(("fwd_ssc", result.fwd.ssc))
     if _has_data(result.rvs.sync):
-        components.append(("rvs_sync", result.rvs.sync))
+        subs.append(("rvs_sync", result.rvs.sync))
     if _has_data(result.rvs.ssc):
-        components.append(("rvs_ssc", result.rvs.ssc))
+        subs.append(("rvs_ssc", result.rvs.ssc))
+    if len(subs) > 1:
+        components.extend(subs)
     return components
 
 
-def write_csv(times, nus, result, args, file):
+def write_csv(times, nus, point_result, bands, band_results, args, file):
     t_scale = _TIME_SCALES[args.time_unit]
     f_scale = _FLUX_SCALES[args.flux_unit]
-    components = _get_components(result)
+
+    has_points = point_result is not None and len(nus) > 0
+    has_bands = len(bands) > 0
+
+    if has_points:
+        point_comps = _get_components(point_result)
+    if has_bands:
+        band_comps = _get_components(band_results[0])
 
     # Header
     file.write("# VegasAfterglow light curve\n")
@@ -408,31 +533,53 @@ def write_csv(times, nus, result, args, file):
         f" z={args.z} theta_obs={args.theta_obs}\n"
     )
     file.write(f"# eps_e={args.eps_e} eps_B={args.eps_B} p={args.p}\n")
-    file.write(f"# t_unit={args.time_unit} flux_unit={args.flux_unit}\n")
+    if has_points and has_bands:
+        file.write(
+            f"# t_unit={args.time_unit}"
+            f" flux_density_unit={args.flux_unit}"
+            f" band_flux_unit=erg/cm2/s\n"
+        )
+    elif has_bands:
+        file.write(f"# t_unit={args.time_unit} band_flux_unit=erg/cm2/s\n")
+    else:
+        file.write(f"# t_unit={args.time_unit} flux_unit={args.flux_unit}\n")
 
-    # Column headers — grouped by frequency, one column per component
+    # Column headers
     cols = [f"t({args.time_unit})"]
-    for nu in nus:
-        nu_label = _format_nu_label(nu)
-        for comp_name, _ in components:
-            cols.append(f"F_{comp_name}({nu_label})")
+    if has_points:
+        for nu in nus:
+            nu_label = _format_nu_label(nu)
+            for comp_name, _ in point_comps:
+                cols.append(f"F_{comp_name}({nu_label})")
+    if has_bands:
+        for nu_min, nu_max, name in bands:
+            band_label = _format_band_label(nu_min, nu_max, name)
+            for comp_name, _ in band_comps:
+                cols.append(f"F_{comp_name}({band_label})")
     file.write(",".join(cols) + "\n")
 
-    # Data — each component array has shape (n_nu, n_t)
+    # Data
     for j in range(len(times)):
         row = [f"{times[j] / t_scale:.6e}"]
-        for i in range(len(nus)):
-            for _, comp_flux in components:
-                row.append(f"{comp_flux[i, j] / f_scale:.6e}")
+        if has_points:
+            for i in range(len(nus)):
+                for _, comp_flux in point_comps:
+                    row.append(f"{comp_flux[i, j] / f_scale:.6e}")
+        if has_bands:
+            for b_idx in range(len(bands)):
+                for _, comp_flux in _get_components(band_results[b_idx]):
+                    row.append(f"{comp_flux[j]:.6e}")
         file.write(",".join(row) + "\n")
 
 
-def write_json(times, nus, result, args, file):
+def write_json(times, nus, point_result, bands, band_results, args, file):
     import json
 
     t_scale = _TIME_SCALES[args.time_unit]
     f_scale = _FLUX_SCALES[args.flux_unit]
-    components = _get_components(result)
+
+    has_points = point_result is not None and len(nus) > 0
+    has_bands = len(bands) > 0
 
     data = {
         "parameters": {
@@ -447,29 +594,48 @@ def write_json(times, nus, result, args, file):
             "eps_B": args.eps_B,
             "p": args.p,
         },
-        "units": {"time": args.time_unit, "flux": args.flux_unit},
-        "frequencies_Hz": nus.tolist(),
+        "units": {"time": args.time_unit},
         "times": (times / t_scale).tolist(),
-        "flux": {
+    }
+
+    if has_points:
+        point_comps = _get_components(point_result)
+        data["units"]["flux_density"] = args.flux_unit
+        data["frequencies_Hz"] = nus.tolist()
+        data["flux_density"] = {
             _format_nu_label(nus[i]): {
                 comp_name: (comp_flux[i] / f_scale).tolist()
-                for comp_name, comp_flux in components
+                for comp_name, comp_flux in point_comps
             }
             for i in range(len(nus))
-        },
-    }
+        }
+
+    if has_bands:
+        data["units"]["band_flux"] = "erg/cm2/s"
+        data["bands"] = {}
+        for b_idx, (nu_min, nu_max, name) in enumerate(bands):
+            band_label = _format_band_label(nu_min, nu_max, name)
+            band_comps = _get_components(band_results[b_idx])
+            data["bands"][band_label] = {
+                "nu_min_Hz": nu_min,
+                "nu_max_Hz": nu_max,
+                "flux": {
+                    comp_name: comp_flux.tolist() for comp_name, comp_flux in band_comps
+                },
+            }
+
     json.dump(data, file, indent=2)
     file.write("\n")
 
 
-def write_output(times, nus, result, args):
+def write_output(times, nus, point_result, bands, band_results, args):
     writer = write_json if args.format == "json" else write_csv
     if args.output:
         with open(args.output, "w") as f:
-            writer(times, nus, result, args, f)
+            writer(times, nus, point_result, bands, band_results, args, f)
         print(f"Saved to {args.output}", file=sys.stderr)
     else:
-        writer(times, nus, result, args, sys.stdout)
+        writer(times, nus, point_result, bands, band_results, args, sys.stdout)
 
 
 _FLUX_LABELS = {
@@ -555,24 +721,30 @@ def _setup_plot_style(font=None):
         "mathtext.bf": f"{math_font}:bold",
         "font.family": family,
         f"font.{family}": font_list,
-        "font.size": 10,
-        "axes.labelsize": 11,
-        "axes.titlesize": 11,
-        "legend.fontsize": 7,
-        "xtick.labelsize": 9,
-        "ytick.labelsize": 9,
+        "font.size": 7,
+        "axes.labelsize": 7,
+        "axes.titlesize": 7,
+        "legend.fontsize": 5.5,
+        "xtick.labelsize": 6,
+        "ytick.labelsize": 6,
         "xtick.direction": "in",
         "ytick.direction": "in",
         "xtick.top": True,
         "ytick.right": True,
         "xtick.minor.visible": True,
         "ytick.minor.visible": True,
-        "xtick.major.size": 5,
-        "ytick.major.size": 5,
-        "xtick.minor.size": 3,
-        "ytick.minor.size": 3,
-        "axes.linewidth": 0.8,
-        "lines.linewidth": 1.5,
+        "xtick.major.size": 3,
+        "ytick.major.size": 3,
+        "xtick.minor.size": 1.5,
+        "ytick.minor.size": 1.5,
+        "axes.linewidth": 0.5,
+        "lines.linewidth": 1.0,
+        "axes.grid": True,
+        "axes.grid.which": "both",
+        "grid.color": "0.7",
+        "grid.linestyle": ":",
+        "grid.linewidth": 0.3,
+        "grid.alpha": 0.4,
         "savefig.bbox": "tight",
         "savefig.pad_inches": 0.03,
     }
@@ -635,85 +807,12 @@ _COMP_LABELS = {
 }
 
 
-def plot_lightcurve(times, nus, nu_labels, result, args):
-    try:
-        # Force non-interactive Agg backend when saving to file (avoids GUI probe)
-        saving = args.output and args.output.lower().endswith(
-            (".png", ".pdf", ".jpg", ".svg")
-        )
-        if saving:
-            import matplotlib
+def _add_legend(ax, plotted_comps, handles=None, labels=None):
+    """Add legend with band entries + component linestyle key."""
+    from matplotlib.lines import Line2D
 
-            matplotlib.use("Agg")
-        import matplotlib.pyplot as plt
-        from matplotlib.lines import Line2D
-    except ImportError:
-        print(
-            "Error: --plot requires matplotlib. Install with: pip install matplotlib",
-            file=sys.stderr,
-        )
-        sys.exit(1)
-
-    _setup_plot_style(font=args.font)
-
-    t_scale = _TIME_SCALES[args.time_unit]
-    f_scale = _FLUX_SCALES[args.flux_unit]
-    components = _get_components(result)
-
-    # Single-column journal figure: 3.5 in wide, golden ratio height
-    fig, ax = plt.subplots(figsize=(3.5, 3.0))
-
-    plotted_comps = set()
-    colors = _freq_colors(nus)
-    for i, nu in enumerate(nus):
-        color = colors[i]
-        band_label = _format_nu_latex(nu, nu_labels[i])
-        for comp_name, comp_flux in components:
-            f = comp_flux[i] / f_scale
-            mask = f > 0
-            if not np.any(mask):
-                continue
-            is_total = comp_name == "total"
-            # Only total lines get band labels; components are unlabeled
-            label = band_label if is_total else None
-            ax.plot(
-                (times / t_scale)[mask],
-                f[mask],
-                color=color,
-                linestyle=_COMP_STYLES[comp_name],
-                linewidth=1.2 if is_total else 0.9,
-                alpha=1.0 if is_total else 0.7,
-                label=label,
-                zorder=2 if is_total else 1,
-            )
-            if not is_total:
-                plotted_comps.add(comp_name)
-
-    ax.set_xscale("log")
-    ax.set_yscale("log")
-
-    # Smart y-axis range: consider all components, cap at 15 decades
-    all_pos = []
-    for _, comp_flux in components:
-        scaled = comp_flux / f_scale
-        pos = scaled[scaled > 0]
-        if pos.size > 0:
-            all_pos.append(pos)
-    if all_pos:
-        combined = np.concatenate(all_pos)
-        f_max, f_min = np.max(combined), np.min(combined)
-        y_top = f_max * 10
-        y_bot = f_min / 10
-        # Cap at 12 decades
-        if y_top / y_bot > 1e12:
-            y_bot = y_top * 1e-12
-        ax.set_ylim(bottom=y_bot, top=y_top)
-
-    ax.set_xlabel(rf"$t_\mathrm{{obs}}$ ({_TIME_LABELS[args.time_unit]})")
-    ax.set_ylabel(rf"$F_\nu$ ({_FLUX_LABELS[args.flux_unit]})")
-
-    # Build legend: band entries (colored solid) + linestyle key (gray)
-    handles, labels = ax.get_legend_handles_labels()
+    if handles is None or labels is None:
+        handles, labels = ax.get_legend_handles_labels()
     if plotted_comps:
         for comp_name in ["fwd_sync", "fwd_ssc", "rvs_sync", "rvs_ssc"]:
             if comp_name in plotted_comps:
@@ -732,23 +831,204 @@ def plot_lightcurve(times, nus, nu_labels, result, args):
         handles,
         labels,
         loc="best",
-        frameon=True,
-        fancybox=False,
-        edgecolor="0.7",
-        framealpha=0.9,
+        frameon=False,
         borderpad=0.4,
         handlelength=1.5,
     )
 
-    # Parameter text above the plot
-    ax.set_title(
-        _build_param_text(args),
-        fontsize=7,
-        color="0.3",
-        pad=6,
-    )
 
-    fig.subplots_adjust(left=0.18, right=0.98, bottom=0.18, top=0.87)
+def _smart_ylim(ax, flux_arrays, scale=1.0):
+    """Set smart log y-axis limits from flux arrays, capped at 12 decades."""
+    all_pos = []
+    for arr in flux_arrays:
+        scaled = arr / scale
+        pos = scaled[scaled > 0]
+        if pos.size > 0:
+            all_pos.append(pos)
+    if all_pos:
+        combined = np.concatenate(all_pos)
+        f_max, f_min = np.max(combined), np.min(combined)
+        y_top = f_max * 10
+        y_bot = f_min / 10
+        if y_top / y_bot > 1e12:
+            y_bot = y_top * 1e-12
+        ax.set_ylim(bottom=y_bot, top=y_top)
+
+
+def _plot_point_ax(
+    ax, times, nus, nu_labels, result, t_scale, f_scale, args, colors=None
+):
+    """Plot point-frequency flux density on the given axes.
+
+    Returns the set of plotted sub-component names (for legend building).
+    """
+    components = _get_components(result)
+    if colors is None:
+        colors = _freq_colors(nus)
+    plotted_comps = set()
+
+    for i, nu in enumerate(nus):
+        color = colors[i]
+        freq_label = _format_nu_latex(nu, nu_labels[i])
+        for comp_name, comp_flux in components:
+            f = comp_flux[i] / f_scale
+            mask = f > 0
+            if not np.any(mask):
+                continue
+            is_total = comp_name == "total"
+            ax.plot(
+                (times / t_scale)[mask],
+                f[mask],
+                color=color,
+                linestyle=_COMP_STYLES[comp_name],
+                linewidth=1.2 if is_total else 0.9,
+                alpha=1.0 if is_total else 0.7,
+                label=freq_label if is_total else None,
+                zorder=2 if is_total else 1,
+            )
+            if not is_total:
+                plotted_comps.add(comp_name)
+
+    ax.set_xscale("log")
+    ax.set_yscale("log")
+    _smart_ylim(ax, [cf for _, cf in components], f_scale)
+    ax.set_ylabel(rf"$F_\nu$ ({_FLUX_LABELS[args.flux_unit]})")
+    return plotted_comps
+
+
+def _plot_band_ax(ax, times, bands, band_results, t_scale, colors=None):
+    """Plot band-integrated flux on the given axes.
+
+    Returns the set of plotted sub-component names (for legend building).
+    """
+    band_freqs = np.array([np.sqrt(nu_min * nu_max) for nu_min, nu_max, _ in bands])
+    if colors is None:
+        colors = _freq_colors(band_freqs)
+    plotted_comps = set()
+
+    for b_idx, (nu_min, nu_max, name) in enumerate(bands):
+        color = colors[b_idx]
+        label = _format_band_latex(nu_min, nu_max, name)
+        components = _get_components(band_results[b_idx])
+        for comp_name, comp_flux in components:
+            f = comp_flux
+            mask = f > 0
+            if not np.any(mask):
+                continue
+            is_total = comp_name == "total"
+            ax.plot(
+                (times / t_scale)[mask],
+                f[mask],
+                color=color,
+                linestyle=_COMP_STYLES[comp_name],
+                linewidth=1.2 if is_total else 0.9,
+                alpha=1.0 if is_total else 0.7,
+                label=label if is_total else None,
+                zorder=2 if is_total else 1,
+            )
+            if not is_total:
+                plotted_comps.add(comp_name)
+
+    ax.set_xscale("log")
+    ax.set_yscale("log")
+    all_flux = []
+    for br in band_results:
+        for _, cf in _get_components(br):
+            all_flux.append(cf)
+    _smart_ylim(ax, all_flux)
+    ax.set_ylabel(r"$F$ (erg cm$^{-2}$ s$^{-1}$)")
+    return plotted_comps
+
+
+def plot_lightcurve(times, nus, nu_labels, point_result, bands, band_results, args):
+    try:
+        saving = args.output and args.output.lower().endswith(
+            (".png", ".pdf", ".jpg", ".svg")
+        )
+        if saving:
+            import matplotlib
+
+            matplotlib.use("Agg")
+        import matplotlib.pyplot as plt
+    except ImportError:
+        print(
+            "Error: --plot requires matplotlib. Install with: pip install matplotlib",
+            file=sys.stderr,
+        )
+        sys.exit(1)
+
+    _setup_plot_style(font=args.font)
+
+    t_scale = _TIME_SCALES[args.time_unit]
+    f_scale = _FLUX_SCALES[args.flux_unit]
+
+    has_points = point_result is not None and len(nus) > 0
+    has_bands = len(bands) > 0
+
+    if has_points and has_bands:
+        # Assign colors across all entries together for visual distinction
+        all_freqs = list(nus) + [
+            np.sqrt(nu_min * nu_max) for nu_min, nu_max, _ in bands
+        ]
+        all_colors = _freq_colors(np.array(all_freqs))
+        pt_colors = all_colors[: len(nus)]
+        bd_colors = all_colors[len(nus) :]
+
+        fig, ax_left = plt.subplots(figsize=(3.5, 3.0))
+        ax_right = ax_left.twinx()
+
+        pt_comps = _plot_point_ax(
+            ax_left,
+            times,
+            nus,
+            nu_labels,
+            point_result,
+            t_scale,
+            f_scale,
+            args,
+            colors=pt_colors,
+        )
+        bd_comps = _plot_band_ax(
+            ax_right,
+            times,
+            bands,
+            band_results,
+            t_scale,
+            colors=bd_colors,
+        )
+
+        ax_left.set_xlabel(rf"$t_\mathrm{{obs}}$ ({_TIME_LABELS[args.time_unit]})")
+
+        # Combined legend from both axes
+        h1, l1 = ax_left.get_legend_handles_labels()
+        h2, l2 = ax_right.get_legend_handles_labels()
+        _add_legend(ax_left, pt_comps | bd_comps, handles=h1 + h2, labels=l1 + l2)
+
+        ax_left.set_title(_build_param_text(args), fontsize=7, color="0.3", pad=6)
+        fig.subplots_adjust(left=0.16, right=0.84, bottom=0.18, top=0.87)
+    elif has_bands:
+        fig, ax = plt.subplots(figsize=(3.5, 3.0))
+        bd_comps = _plot_band_ax(ax, times, bands, band_results, t_scale)
+        ax.set_xlabel(rf"$t_\mathrm{{obs}}$ ({_TIME_LABELS[args.time_unit]})")
+        _add_legend(ax, bd_comps)
+        ax.set_title(_build_param_text(args), fontsize=7, color="0.3", pad=6)
+        fig.subplots_adjust(left=0.18, right=0.98, bottom=0.18, top=0.87)
+    else:
+        fig, ax = plt.subplots(figsize=(3.5, 3.0))
+        pt_comps = _plot_point_ax(
+            ax,
+            times,
+            nus,
+            nu_labels,
+            point_result,
+            t_scale,
+            f_scale,
+            args,
+        )
+        ax.set_xlabel(rf"$t_\mathrm{{obs}}$ ({_TIME_LABELS[args.time_unit]})")
+        _add_legend(ax, pt_comps)
+        ax.set_title(_build_param_text(args), fontsize=7, color="0.3", pad=6)
+        fig.subplots_adjust(left=0.18, right=0.98, bottom=0.18, top=0.87)
 
     if args.output and args.output.lower().endswith((".png", ".pdf", ".jpg", ".svg")):
         dpi = 300 if args.output.lower().endswith(".png") else 150
@@ -773,21 +1053,37 @@ def main():
     )
 
     times = np.logspace(np.log10(args.t_min), np.log10(args.t_max), args.num_t)
-    nus, nu_labels = parse_frequencies(args.nu)
+    nus, nu_labels, bands = parse_frequencies(args.nu)
 
+    n_point = len(nus)
+    n_band = len(bands)
     shock_desc = "FS+RS" if args.rvs else "FS"
+    parts = []
+    if n_point:
+        parts.append(f"{n_point} freq")
+    if n_band:
+        parts.append(f"{n_band} band{'s' if n_band > 1 else ''}")
+    desc = ", ".join(parts) if parts else "0 freq"
     print(
         f"Computing {args.jet}/{args.medium} ({shock_desc}) light curve "
-        f"({len(nus)} bands, {args.num_t} time points)...",
+        f"({desc}, {args.num_t} time points)...",
         file=sys.stderr,
     )
 
-    result = model.flux_density_grid(times, nus)
+    # Point-frequency flux density
+    point_result = None
+    if n_point:
+        point_result = model.flux_density_grid(times, nus)
+
+    # Band-integrated flux
+    band_results = []
+    for nu_min, nu_max, _ in bands:
+        band_results.append(model.flux(times, nu_min, nu_max, args.num_nu_band))
 
     if args.plot:
-        plot_lightcurve(times, nus, nu_labels, result, args)
+        plot_lightcurve(times, nus, nu_labels, point_result, bands, band_results, args)
     else:
-        write_output(times, nus, result, args)
+        write_output(times, nus, point_result, bands, band_results, args)
 
 
 if __name__ == "__main__":

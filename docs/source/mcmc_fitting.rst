@@ -174,15 +174,16 @@ The ``Fitter`` class handles both model configuration and observational data. Ad
                             weights=weights)  # All quantities in CGS units
 
     # Method 2: Add frequency-integrated light curve (broadband flux)
-    # For instruments with wide frequency coverage (e.g., BAT, LAT, Fermi)
-    nu_min = 1e17  # Lower frequency bound [Hz]
-    nu_max = 1e19  # Upper frequency bound [Hz]
-    num_points = 5  # Number of frequency points for integration
+    # For instruments with wide energy bands (e.g., Swift XRT, Fermi LAT)
+    from VegasAfterglow.units import band, keV
 
-    fitter.add_flux(nu_min=nu_min, nu_max=nu_max,
-                    num_points=num_points, t=t_data,
+    fitter.add_flux(band=band("XRT"), t=t_data,       # named band
                     flux=flux_data, err=flux_err,
-                    weights=weights)  # All quantities in CGS units
+                    weights=weights)  # flux in erg/cm²/s
+
+    # Or specify a custom band as (nu_min, nu_max) tuple
+    fitter.add_flux(band=(0.3*keV, 10*keV), t=t_data,
+                    flux=flux_data, err=flux_err)
 
     # Method 3: Load from CSV files
     bands = [2.4e17, 4.84e14, 1.4e14]  # X-ray, optical, near-IR
@@ -256,7 +257,13 @@ If your data is in magnitudes rather than flux density, use the built-in magnitu
     # Get the effective frequency for a filter (for the fitter)
     fitter.add_flux_density(nu=filter("R"), t=t_data, f_nu=f_nu, err=f_nu_err)
 
-Supported Vega filters: Johnson-Cousins (``U``, ``B``, ``V``, ``R``, ``I``), 2MASS (``J``, ``H``, ``Ks``), Swift UVOT (``v``, ``b``, ``u``, ``uvw1``, ``uvm2``, ``uvw2``). ST (HST STMAG) filters also available via ``STmag_to_cgs(mag, "F606W")``.
+Supported magnitude systems and filters:
+
+- **Vega magnitudes** via ``Vegamag_to_cgs(mag, filter_name)``: Johnson-Cousins (``U``, ``B``, ``V``, ``R``, ``I``), 2MASS (``J``, ``H``, ``Ks``), Swift UVOT (``v``, ``b``, ``u``, ``uvw1``, ``uvm2``, ``uvw2``), SDSS (``g``, ``r``, ``i``, ``z``)
+- **AB magnitudes** via ``ABmag_to_cgs(mag)``: universal zero-point, works for any filter without specifying a name
+- **ST magnitudes** via ``STmag_to_cgs(mag, filter_name)``: HST WFC3/UVIS (``F225W`` – ``F850LP``), WFC3/IR (``F105W`` – ``F160W``)
+
+The ``filter()`` function returns the effective frequency [Hz] for any supported filter name, including survey filters (``VT_B``, ``VT_R``, ``w``) that only support AB magnitude conversion.
 
 Data Selection and Optimization
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -1173,12 +1180,10 @@ Model Predictions
 
     # Frequency-integrated flux (broadband light curves)
     # Useful for comparing with instruments like Swift/BAT, Fermi/LAT
-    nu_min_broad = 1e17  # Lower frequency bound [Hz]
-    nu_max_broad = 1e19  # Upper frequency bound [Hz]
-    num_freq_points = 5  # Number of frequency points for integration
+    from VegasAfterglow.units import band
 
     flux_integrated = fitter.flux(result.top_k_params[0], t_model,
-                                  nu_min_broad, nu_max_broad, num_freq_points)
+                                  band=band("BAT"))
 
 Visualization
 ^^^^^^^^^^^^^

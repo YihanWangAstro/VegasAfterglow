@@ -178,25 +178,25 @@ class Fitter:
 
     def add_flux(
         self,
-        nu_min: float,
-        nu_max: float,
-        num_points: int,
+        band,
         t: np.ndarray,
         flux: np.ndarray,
         err: np.ndarray,
+        num_points: int = 15,
         weights: Optional[np.ndarray] = None,
     ):
         """Add band-integrated flux measurements.
 
         Args:
-            nu_min: Lower frequency bound [Hz]
-            nu_max: Upper frequency bound [Hz]
-            num_points: Number of frequency sampling points for integration
+            band: Frequency band as (nu_min, nu_max) tuple in Hz.
+                Use ``units.band("XRT")`` for named instrument bands.
             t: Observation times [seconds]
             flux: Observed integrated fluxes [erg/cm^2/s]
             err: Observational uncertainties [erg/cm^2/s]
+            num_points: Number of frequency sampling points for integration
             weights: Optional statistical weights
         """
+        nu_min, nu_max = band
         t = np.asarray(t, dtype=np.float64)
         flux = np.asarray(flux, dtype=np.float64)
         err = np.asarray(err, dtype=np.float64)
@@ -804,9 +804,8 @@ class Fitter:
         self,
         best_params: np.ndarray,
         t: np.ndarray,
-        nu_min: float,
-        nu_max: float,
-        num_points: int,
+        band,
+        num_points: int = 15,
         resolution: Optional[Tuple[float, float, float]] = None,
     ) -> np.ndarray:
         """Compute integrated flux at best-fit parameters.
@@ -814,11 +813,12 @@ class Fitter:
         Args:
             best_params: Best-fit parameter array (in sampler space)
             t: Time array [seconds]
-            nu_min: Lower frequency bound [Hz]
-            nu_max: Upper frequency bound [Hz]
+            band: Frequency band as (nu_min, nu_max) tuple in Hz.
+                Use ``units.band("XRT")`` for named instrument bands.
             num_points: Number of frequency sampling points
             resolution: Optional resolution override (phi, theta, t)
         """
+        nu_min, nu_max = band
         self._require_fitted()
         with self._override_resolution(resolution):
             params = self._to_params(best_params)
