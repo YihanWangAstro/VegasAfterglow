@@ -356,15 +356,16 @@
                         <span class="n">weights</span><span class="o">=</span><span class="n">weights</span><span class="p">)</span>  <span class="c1"># All quantities in CGS units</span>
 
 <span class="c1"># Method 2: Add frequency-integrated light curve (broadband flux)</span>
-<span class="c1"># For instruments with wide frequency coverage (e.g., BAT, LAT, Fermi)</span>
-<span class="n">nu_min</span> <span class="o">=</span> <span class="mf">1e17</span>  <span class="c1"># Lower frequency bound [Hz]</span>
-<span class="n">nu_max</span> <span class="o">=</span> <span class="mf">1e19</span>  <span class="c1"># Upper frequency bound [Hz]</span>
-<span class="n">num_points</span> <span class="o">=</span> <span class="mi">5</span>  <span class="c1"># Number of frequency points for integration</span>
+<span class="c1"># For instruments with wide energy bands (e.g., Swift XRT, Fermi LAT)</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">VegasAfterglow.units</span><span class="w"> </span><span class="kn">import</span> <span class="n">band</span><span class="p">,</span> <span class="n">keV</span>
 
-<span class="n">fitter</span><span class="o">.</span><span class="n">add_flux</span><span class="p">(</span><span class="n">nu_min</span><span class="o">=</span><span class="n">nu_min</span><span class="p">,</span> <span class="n">nu_max</span><span class="o">=</span><span class="n">nu_max</span><span class="p">,</span>
-                <span class="n">num_points</span><span class="o">=</span><span class="n">num_points</span><span class="p">,</span> <span class="n">t</span><span class="o">=</span><span class="n">t_data</span><span class="p">,</span>
+<span class="n">fitter</span><span class="o">.</span><span class="n">add_flux</span><span class="p">(</span><span class="n">band</span><span class="o">=</span><span class="n">band</span><span class="p">(</span><span class="s2">&quot;XRT&quot;</span><span class="p">),</span> <span class="n">t</span><span class="o">=</span><span class="n">t_data</span><span class="p">,</span>       <span class="c1"># named band</span>
                 <span class="n">flux</span><span class="o">=</span><span class="n">flux_data</span><span class="p">,</span> <span class="n">err</span><span class="o">=</span><span class="n">flux_err</span><span class="p">,</span>
-                <span class="n">weights</span><span class="o">=</span><span class="n">weights</span><span class="p">)</span>  <span class="c1"># All quantities in CGS units</span>
+                <span class="n">weights</span><span class="o">=</span><span class="n">weights</span><span class="p">)</span>  <span class="c1"># flux in erg/cm²/s</span>
+
+<span class="c1"># Or specify a custom band as (nu_min, nu_max) tuple</span>
+<span class="n">fitter</span><span class="o">.</span><span class="n">add_flux</span><span class="p">(</span><span class="n">band</span><span class="o">=</span><span class="p">(</span><span class="mf">0.3</span><span class="o">*</span><span class="n">keV</span><span class="p">,</span> <span class="mi">10</span><span class="o">*</span><span class="n">keV</span><span class="p">),</span> <span class="n">t</span><span class="o">=</span><span class="n">t_data</span><span class="p">,</span>
+                <span class="n">flux</span><span class="o">=</span><span class="n">flux_data</span><span class="p">,</span> <span class="n">err</span><span class="o">=</span><span class="n">flux_err</span><span class="p">)</span>
 
 <span class="c1"># Method 3: Load from CSV files</span>
 <span class="n">bands</span> <span class="o">=</span> <span class="p">[</span><span class="mf">2.4e17</span><span class="p">,</span> <span class="mf">4.84e14</span><span class="p">,</span> <span class="mf">1.4e14</span><span class="p">]</span>  <span class="c1"># X-ray, optical, near-IR</span>
@@ -433,7 +434,13 @@
 <span class="n">fitter</span><span class="o">.</span><span class="n">add_flux_density</span><span class="p">(</span><span class="n">nu</span><span class="o">=</span><span class="nb">filter</span><span class="p">(</span><span class="s2">&quot;R&quot;</span><span class="p">),</span> <span class="n">t</span><span class="o">=</span><span class="n">t_data</span><span class="p">,</span> <span class="n">f_nu</span><span class="o">=</span><span class="n">f_nu</span><span class="p">,</span> <span class="n">err</span><span class="o">=</span><span class="n">f_nu_err</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>Supported Vega filters: Johnson-Cousins (<code class="docutils literal notranslate"><span class="pre">U</span></code>, <code class="docutils literal notranslate"><span class="pre">B</span></code>, <code class="docutils literal notranslate"><span class="pre">V</span></code>, <code class="docutils literal notranslate"><span class="pre">R</span></code>, <code class="docutils literal notranslate"><span class="pre">I</span></code>), 2MASS (<code class="docutils literal notranslate"><span class="pre">J</span></code>, <code class="docutils literal notranslate"><span class="pre">H</span></code>, <code class="docutils literal notranslate"><span class="pre">Ks</span></code>), Swift UVOT (<code class="docutils literal notranslate"><span class="pre">v</span></code>, <code class="docutils literal notranslate"><span class="pre">b</span></code>, <code class="docutils literal notranslate"><span class="pre">u</span></code>, <code class="docutils literal notranslate"><span class="pre">uvw1</span></code>, <code class="docutils literal notranslate"><span class="pre">uvm2</span></code>, <code class="docutils literal notranslate"><span class="pre">uvw2</span></code>). ST (HST STMAG) filters also available via <code class="docutils literal notranslate"><span class="pre">STmag_to_cgs(mag,</span> <span class="pre">&quot;F606W&quot;)</span></code>.</p>
+<p>Supported magnitude systems and filters:</p>
+<ul class="simple">
+<li><p><strong>Vega magnitudes</strong> via <code class="docutils literal notranslate"><span class="pre">Vegamag_to_cgs(mag,</span> <span class="pre">filter_name)</span></code>: Johnson-Cousins (<code class="docutils literal notranslate"><span class="pre">U</span></code>, <code class="docutils literal notranslate"><span class="pre">B</span></code>, <code class="docutils literal notranslate"><span class="pre">V</span></code>, <code class="docutils literal notranslate"><span class="pre">R</span></code>, <code class="docutils literal notranslate"><span class="pre">I</span></code>), 2MASS (<code class="docutils literal notranslate"><span class="pre">J</span></code>, <code class="docutils literal notranslate"><span class="pre">H</span></code>, <code class="docutils literal notranslate"><span class="pre">Ks</span></code>), Swift UVOT (<code class="docutils literal notranslate"><span class="pre">v</span></code>, <code class="docutils literal notranslate"><span class="pre">b</span></code>, <code class="docutils literal notranslate"><span class="pre">u</span></code>, <code class="docutils literal notranslate"><span class="pre">uvw1</span></code>, <code class="docutils literal notranslate"><span class="pre">uvm2</span></code>, <code class="docutils literal notranslate"><span class="pre">uvw2</span></code>), SDSS (<code class="docutils literal notranslate"><span class="pre">g</span></code>, <code class="docutils literal notranslate"><span class="pre">r</span></code>, <code class="docutils literal notranslate"><span class="pre">i</span></code>, <code class="docutils literal notranslate"><span class="pre">z</span></code>)</p></li>
+<li><p><strong>AB magnitudes</strong> via <code class="docutils literal notranslate"><span class="pre">ABmag_to_cgs(mag)</span></code>: universal zero-point, works for any filter without specifying a name</p></li>
+<li><p><strong>ST magnitudes</strong> via <code class="docutils literal notranslate"><span class="pre">STmag_to_cgs(mag,</span> <span class="pre">filter_name)</span></code>: HST WFC3/UVIS (<code class="docutils literal notranslate"><span class="pre">F225W</span></code> – <code class="docutils literal notranslate"><span class="pre">F850LP</span></code>), WFC3/IR (<code class="docutils literal notranslate"><span class="pre">F105W</span></code> – <code class="docutils literal notranslate"><span class="pre">F160W</span></code>)</p></li>
+</ul>
+<p>The <code class="docutils literal notranslate"><span class="pre">filter()</span></code> function returns the effective frequency [Hz] for any supported filter name, including survey filters (<code class="docutils literal notranslate"><span class="pre">VT_B</span></code>, <code class="docutils literal notranslate"><span class="pre">VT_R</span></code>, <code class="docutils literal notranslate"><span class="pre">w</span></code>) that only support AB magnitude conversion.</p>
 </section>
 </section>
 <section id="data-selection-and-optimization">
@@ -1397,12 +1404,10 @@ Pass sampler-specific parameters via <code class="docutils literal notranslate">
 
 <span class="c1"># Frequency-integrated flux (broadband light curves)</span>
 <span class="c1"># Useful for comparing with instruments like Swift/BAT, Fermi/LAT</span>
-<span class="n">nu_min_broad</span> <span class="o">=</span> <span class="mf">1e17</span>  <span class="c1"># Lower frequency bound [Hz]</span>
-<span class="n">nu_max_broad</span> <span class="o">=</span> <span class="mf">1e19</span>  <span class="c1"># Upper frequency bound [Hz]</span>
-<span class="n">num_freq_points</span> <span class="o">=</span> <span class="mi">5</span>  <span class="c1"># Number of frequency points for integration</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">VegasAfterglow.units</span><span class="w"> </span><span class="kn">import</span> <span class="n">band</span>
 
 <span class="n">flux_integrated</span> <span class="o">=</span> <span class="n">fitter</span><span class="o">.</span><span class="n">flux</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">top_k_params</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">t_model</span><span class="p">,</span>
-                              <span class="n">nu_min_broad</span><span class="p">,</span> <span class="n">nu_max_broad</span><span class="p">,</span> <span class="n">num_freq_points</span><span class="p">)</span>
+                              <span class="n">band</span><span class="o">=</span><span class="n">band</span><span class="p">(</span><span class="s2">&quot;BAT&quot;</span><span class="p">))</span>
 </pre></div>
 </div>
 </section>

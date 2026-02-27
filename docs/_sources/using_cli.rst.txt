@@ -94,6 +94,10 @@ Jet Parameters
      - flag
      - off
      - Enable lateral spreading
+   * - ``--duration``
+     - float
+     - ``1``
+     - Engine activity duration [s] (thick shell when > 1)
 
 Medium Parameters
 ^^^^^^^^^^^^^^^^^
@@ -118,6 +122,10 @@ Medium Parameters
      - float
      - ``0.1``
      - Wind parameter A\ :sub:`*`
+   * - ``--k_m``
+     - float
+     - ``2``
+     - Wind density power-law index
 
 Observer Parameters
 ^^^^^^^^^^^^^^^^^^^
@@ -239,7 +247,20 @@ Frequency Specification
    * - ``--nu``
      - list
      - ``1e9 5e14 1e18``
-     - One or more frequencies. Accepts numeric Hz values or filter names (see :ref:`filter-names`)
+     - One or more frequencies, filter names, named bands, or bracket bands (see :ref:`filter-names` and :ref:`named-bands`)
+   * - ``--num_nu_band``
+     - int
+     - ``15``
+     - Number of frequency sampling points per band integration
+
+Each ``--nu`` entry is classified as:
+
+- **Numeric Hz** (e.g. ``1e9``) → point-frequency flux density
+- **Filter name** (e.g. ``R``, ``F606W``) → point-frequency flux density at the filter's effective frequency
+- **Named band** (e.g. ``XRT``, ``LAT``) → frequency-integrated flux [erg/cm²/s]
+- **Bracket band** (e.g. ``[7.25e16,2.42e18]``) → frequency-integrated flux [erg/cm²/s] over a custom range in Hz
+
+Point frequencies and bands can be mixed freely in a single command.
 
 Time Grid
 ^^^^^^^^^
@@ -254,7 +275,7 @@ Time Grid
      - Description
    * - ``--t_min``
      - float
-     - ``100``
+     - ``1``
      - Start time [s]
    * - ``--t_max``
      - float
@@ -314,8 +335,8 @@ Output Options
      - Generate a plot instead of data output
    * - ``--font``
      - string
-     - Times New Roman
-     - Plot font family (e.g. ``Helvetica``, ``Palatino``). Sans-serif fonts are auto-detected
+     - Helvetica
+     - Plot font family (e.g. ``Palatino``, ``Times New Roman``). Sans-serif fonts are auto-detected
    * - ``-v``, ``--version``
      - flag
      - \-
@@ -335,7 +356,7 @@ The ``--nu`` argument accepts both numeric Hz values and standard photometric fi
 
 Available filter names:
 
-**Vega system (Johnson-Cousins, 2MASS, Swift UVOT)**
+**Vega system (Johnson-Cousins, 2MASS, Swift UVOT, SDSS)**
 
 .. list-table::
    :header-rows: 1
@@ -353,6 +374,9 @@ Available filter names:
    * - Swift UVOT
      - v, b, u, uvw1, uvm2, uvw2
      - Breeveld et al. (2011)
+   * - SDSS
+     - g, r, i, z
+     - Fukugita et al. (1996)
 
 **ST system (HST WFC3)**
 
@@ -367,7 +391,79 @@ Available filter names:
    * - WFC3/IR
      - F105W, F110W, F125W, F140W, F160W
 
-Each filter name is converted to an effective frequency using its tabulated wavelength.
+**Survey / telescope-specific filters**
+
+.. list-table::
+   :header-rows: 1
+   :widths: 20 40 40
+
+   * - Filter
+     - Description
+     - Reference
+   * - VT_B
+     - SVOM Visible Telescope blue channel (450–650 nm)
+     - Götz et al. (2024)
+   * - VT_R
+     - SVOM Visible Telescope red channel (650–1000 nm)
+     - Götz et al. (2024)
+   * - w
+     - WFST wide-band filter (~390–820 nm)
+     - Lei et al. (2023)
+
+Each filter name is converted to an effective frequency using its tabulated wavelength. SDSS filters (g, r, i, z) are also used by WFST and Mephisto.
+
+.. _named-bands:
+
+Named Bands
+------------
+
+The ``--nu`` argument also accepts named instrument energy bands for frequency-integrated flux output. The result is total flux in erg/cm²/s integrated across the band.
+
+.. list-table::
+   :header-rows: 1
+   :widths: 15 25 60
+
+   * - Name
+     - Range
+     - Instrument
+   * - ``XRT``
+     - 0.3–10 keV
+     - Swift X-Ray Telescope
+   * - ``BAT``
+     - 15–150 keV
+     - Swift Burst Alert Telescope
+   * - ``FXT``
+     - 0.3–10 keV
+     - Einstein Probe Follow-up X-ray Telescope
+   * - ``WXT``
+     - 0.5–4 keV
+     - Einstein Probe Wide-field X-ray Telescope
+   * - ``MXT``
+     - 0.2–10 keV
+     - SVOM Microchannel X-ray Telescope
+   * - ``ECLAIRs``
+     - 4–150 keV
+     - SVOM coded-mask telescope
+   * - ``LAT``
+     - 100 MeV – 300 GeV
+     - Fermi Large Area Telescope
+   * - ``GBM``
+     - 8 keV – 40 MeV
+     - Fermi Gamma-ray Burst Monitor
+
+Custom bracket bands can also be specified with Hz values:
+
+.. code-block:: bash
+
+    vegasgen --nu [7.25e16,2.42e18] --plot
+
+In the Python API, use ``units.band()`` to look up named bands for use with ``Fitter.add_flux()`` or ``Model.flux()``:
+
+.. code-block:: python
+
+    from VegasAfterglow.units import band
+
+    fitter.add_flux(band=band("XRT"), t=t, flux=f, err=e)
 
 
 Output Formats
@@ -385,11 +481,11 @@ Produces:
 .. code-block:: text
 
     # VegasAfterglow light curve
-    # jet=tophat theta_c=0.1 E_iso=1.0e+52 Gamma0=300.0 medium=ism z=0.01 theta_obs=0
+    # jet=tophat theta_c=0.1 E_iso=1.0e+52 Gamma0=300 medium=ism z=0.01 theta_obs=0
     # eps_e=0.1 eps_B=0.001 p=2.3
     # t_unit=s flux_unit=mJy
     t(s),F_total(radio),F_total(optical),F_total(xray)
-    1.000000e+02,1.234567e-02,4.567890e+00,7.890123e-01
+    1.000000e+00,1.234567e-02,4.567890e+00,7.890123e-01
     ...
 
 When SSC or reverse shock is enabled, individual component columns are added per frequency:
@@ -397,6 +493,15 @@ When SSC or reverse shock is enabled, individual component columns are added per
 .. code-block:: text
 
     t(s),F_total(radio),F_fwd_sync(radio),F_fwd_ssc(radio),F_total(optical),...
+
+When bands are included, band columns are appended after point-frequency columns. Band flux is always in erg/cm²/s:
+
+.. code-block:: text
+
+    # t_unit=s flux_density_unit=mJy band_flux_unit=erg/cm2/s
+    t(s),F_total(radio),F_total(XRT(0.3 keV-10 keV))
+    1.000000e+00,1.234567e-02,1.955920e-06
+    ...
 
 JSON
 ^^^^
@@ -410,22 +515,11 @@ Produces a structured JSON object with per-frequency component breakdown:
 .. code-block:: json
 
     {
-      "parameters": {
-        "jet": "tophat",
-        "theta_c": 0.1,
-        "E_iso": 1e52,
-        "Gamma0": 300.0,
-        "medium": "ism",
-        "z": 0.01,
-        "theta_obs": 0,
-        "eps_e": 0.1,
-        "eps_B": 0.001,
-        "p": 2.3
-      },
-      "units": {"time": "s", "flux": "mJy"},
+      "parameters": {"jet": "tophat", "...": "..."},
+      "units": {"time": "s", "flux_density": "mJy"},
       "frequencies_Hz": [1e9, 5e14, 1e18],
-      "times": [100.0, "..."],
-      "flux": {
+      "times": [1.0, "..."],
+      "flux_density": {
         "radio": {"total": ["..."]},
         "optical": {"total": ["..."]},
         "xray": {"total": ["..."]}
@@ -437,12 +531,28 @@ When SSC or reverse shock is enabled, each frequency entry includes the individu
 .. code-block:: json
 
     {
-      "flux": {
+      "flux_density": {
         "radio": {
           "total": ["..."],
           "fwd_sync": ["..."],
           "fwd_ssc": ["..."],
           "rvs_sync": ["..."]
+        }
+      }
+    }
+
+When bands are included, a separate ``bands`` section is added with flux in erg/cm²/s:
+
+.. code-block:: json
+
+    {
+      "units": {"time": "s", "flux_density": "mJy", "band_flux": "erg/cm2/s"},
+      "flux_density": {"radio": {"total": ["..."]}},
+      "bands": {
+        "XRT(0.3 keV-10 keV)": {
+          "nu_min_Hz": 7.25e16,
+          "nu_max_Hz": 2.42e18,
+          "flux": {"total": ["..."]}
         }
       }
     }
@@ -465,20 +575,21 @@ The ``--plot`` flag generates publication-quality figures using matplotlib.
 Plot features:
 
 - **VegasAfterglow signature palette** — a vibrant, high-contrast color scheme designed for multi-band light curves
-- **Times New Roman** font by default, with LaTeX rendering. Change with ``--font``:
+- **Helvetica** font by default (sans-serif), with mathtext rendering. Change with ``--font``:
 
   .. code-block:: bash
 
-      vegasgen --plot --font "Helvetica"
       vegasgen --plot --font "Palatino"
+      vegasgen --plot --font "Times New Roman"
 
   Sans-serif fonts (Helvetica, Arial, etc.) are auto-detected.
 
-- **Log-log** axes with inward-facing ticks
+- **Log-log** axes with inward-facing ticks and dotted grid lines
 - **Context-aware frequency labels**: GHz for radio, nm for optical/IR, keV for X-ray, filter band names when applicable
 - **Parameter summary** displayed above the plot
 - **Single-column journal size** (3.5 in wide) suitable for direct inclusion in publications
-- **Component decomposition**: when SSC or reverse shock is enabled, individual components (FS sync, FS SSC, RS sync, RS SSC) are plotted as dashed/dotted lines alongside the total
+- **Component decomposition**: when two or more flux sub-components are active (e.g. FS sync + FS SSC, or FS + RS), individual components are plotted as dashed/dotted lines alongside the total. A single sub-component is omitted since it is identical to the total
+- **Dual y-axis for mixed mode**: when both point frequencies and bands are specified, point-frequency flux density is plotted on the left y-axis and band-integrated flux on the right y-axis, with a unified legend
 
 Supported output formats: ``.png``, ``.pdf``, ``.jpg``, ``.svg``. If ``-o`` is not specified or does not end in a recognized image extension, an interactive matplotlib window is shown.
 
@@ -564,6 +675,26 @@ Custom frequency bands
 
     # HST filters
     vegasgen --nu F606W F160W --flux_unit uJy --plot
+
+Band-integrated flux
+^^^^^^^^^^^^^^^^^^^^
+
+.. code-block:: bash
+
+    # Swift XRT band (0.3-10 keV)
+    vegasgen --nu XRT --plot
+
+    # Custom frequency range in Hz
+    vegasgen --nu [7.25e16,2.42e18] --plot
+
+    # Multiple bands
+    vegasgen --nu XRT LAT --plot
+
+    # Mixed point frequencies and bands (dual y-axis plot)
+    vegasgen --nu R J XRT --plot
+
+    # Band with custom integration resolution
+    vegasgen --nu XRT --num_nu_band 100 -o xrt.csv
 
 Custom time range and units
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
