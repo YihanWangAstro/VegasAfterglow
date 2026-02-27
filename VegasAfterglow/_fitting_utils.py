@@ -66,7 +66,7 @@ def _default_medium_factory(fitter):
             return ISM(n_ism=params.n_ism)
         elif fitter.medium == "wind":
             return Wind(
-                A_star=params.A_star, n_ism=params.n_ism, n0=params.n0, k=params.k_m
+                A_star=params.A_star, n_ism=params.n_ism, n0=params.n0, k_m=params.k_m
             )
         else:
             raise ValueError(f"Unknown medium type: {fitter.medium}")
