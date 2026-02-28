@@ -490,8 +490,13 @@ void grid_solve_shock_pair(size_t i, size_t j, View const& t, Shock& shock_fwd, 
     }
 
     bool reverse_shock_crossing = true;
-    while (stepper.current_time() <= t.back()) {
+    for (size_t steps = 0; stepper.current_time() <= t.back();) {
         stepper.do_step(eqn);
+        if (++steps > defaults::solver::max_ode_steps) {
+            std::fprintf(stderr, "Warning: reverse shock ODE exceeded %zu steps at (i=%zu, j=%zu), giving up\n",
+                         defaults::solver::max_ode_steps, i, j);
+            break;
+        }
         while (k < t.size() && stepper.current_time() > t(k)) {
             stepper.calc_state(t(k), state);
             if (reverse_shock_crossing && eqn.crossing_complete(state, t(k))) {

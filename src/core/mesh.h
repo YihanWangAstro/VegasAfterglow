@@ -597,7 +597,7 @@ Array adaptive_theta_grid(Ejecta const& jet, Real theta_min, Real theta_max, siz
     for (size_t i = 0; i <= scan_pts; ++i) {
         const Real theta = theta_min + (theta_max - theta_min) * static_cast<Real>(i) / scan_pts;
         const Real Gamma = jet.Gamma0(0, theta);
-        const Real w = Gamma * std::sqrt((Gamma - 1) * Gamma);
+        const Real w = Gamma * std::sqrt(std::fabs((Gamma - 1) * Gamma));
         peak_weight = std::max(peak_weight, w);
     }
     const Real floor_weight = 0.1 * peak_weight;
@@ -611,7 +611,7 @@ Array adaptive_theta_grid(Ejecta const& jet, Real theta_min, Real theta_max, siz
         const Real Gamma = jet.Gamma0(0, theta);
         const Real beta = std::sqrt(std::fabs(Gamma * Gamma - 1)) / Gamma;
         const Real a = (1 - beta) / (1 - beta * std::cos(theta - theta_v));
-        const Real structure = Gamma * std::sqrt((Gamma - 1) * Gamma);
+        const Real structure = Gamma * std::sqrt(std::fabs((Gamma - 1) * Gamma));
         pdf = (1 + alpha * a) * structure + floor_weight;
     };
 
@@ -675,7 +675,7 @@ Array adaptive_phi_grid(Ejecta const& jet, size_t phi_num, Real theta_v, Array c
             const Real beta = std::sqrt(std::fabs(Gamma * Gamma - 1)) / Gamma;
             const Real cos_alpha = std::cos(theta) * cos_tv + std::sin(theta) * sin_tv * cos_phi;
             const Real a = (1 - beta) / (1 - beta * cos_alpha);
-            w += a * Gamma * std::sqrt((Gamma - 1) * Gamma) * dcos[it];
+            w += a * Gamma * std::sqrt(std::fabs((Gamma - 1) * Gamma)) * dcos[it];
         }
         return w;
     };
@@ -907,17 +907,21 @@ void build_time_grid(Coord& coord, Ejecta const& jet, Medium const& medium, Real
                      Real t_resol, bool is_axisymmetric) {
     const size_t theta_size = coord.theta.size();
     const size_t phi_size_needed = is_axisymmetric ? 1 : coord.phi.size();
-    const Real theta_v_max = coord.theta.back() + coord.theta_view;
     const Real t_end = 1.01 * t_max / (1 + z);
 
+    const Real cos_tv = std::cos(coord.theta_view);
+    const Real sin_tv = std::sin(coord.theta_view);
+
     // First pass: find the widest per-cell engine-frame time range to size the budget.
-    // High-Gamma cells have much earlier t_start due to relativistic time-of-flight compression.
+    // Use per-cell angle alpha to the LOS (not the constant theta_v_max).
     Real min_t_start = t_end;
     for (size_t i = 0; i < phi_size_needed; ++i) {
         for (size_t j = 0; j < theta_size; ++j) {
             const Real b = physics::relativistic::gamma_to_beta(jet.Gamma0(coord.phi(i), coord.theta(j)));
+            const Real cos_alpha =
+                std::cos(coord.theta(j)) * cos_tv + std::sin(coord.theta(j)) * sin_tv * std::cos(coord.phi(i));
             const Real t_start =
-                std::max<Real>(0.99 * t_min * (1 - b) / (1 - std::cos(theta_v_max) * b) / (1 + z), 1e-2 * unit::sec);
+                std::max<Real>(0.99 * t_min * (1 - b) / (1 - cos_alpha * b) / (1 + z), 1e-2 * unit::sec);
             min_t_start = std::min(min_t_start, t_start);
         }
     }
@@ -932,16 +936,31 @@ void build_time_grid(Coord& coord, Ejecta const& jet, Medium const& medium, Real
 
     coord.t = xt::zeros<Real>({phi_size_needed, theta_size, t_num});
 
-    // Second pass: build per-cell grids with per-cell t_start and t_dec.
-    for (size_t i = 0; i < phi_size_needed; ++i) {
-        for (size_t j = 0; j < theta_size; ++j) {
-            const Real b = physics::relativistic::gamma_to_beta(jet.Gamma0(coord.phi(i), coord.theta(j)));
-            const Real t_start =
-                std::max<Real>(0.99 * t_min * (1 - b) / (1 - std::cos(theta_v_max) * b) / (1 + z), 1e-2 * unit::sec);
-            const Real t_dec = estimate_t_dec(jet, medium, coord.phi(i), coord.theta(j));
+    const bool use_broadcast = (coord.symmetry >= Symmetry::phi_symmetric);
 
-            xt::view(coord.t, i, j, xt::all()) =
-                refined_time_grid(t_start, t_end, t_dec, t_num, refine_lo_factor, refine_hi_factor);
+    if (use_broadcast) {
+        // Broadcast case: jet/medium identical per cell → t_dec is the same for all cells.
+        // Build ONE shared grid so k-indices map to identical physical times.
+        const Real t_dec = estimate_t_dec(jet, medium, coord.phi(0), coord.theta(0));
+        auto shared_grid = refined_time_grid(min_t_start, t_end, t_dec, t_num, refine_lo_factor, refine_hi_factor);
+        for (size_t i = 0; i < phi_size_needed; ++i) {
+            for (size_t j = 0; j < theta_size; ++j) {
+                xt::view(coord.t, i, j, xt::all()) = shared_grid;
+            }
+        }
+    } else {
+        // No broadcast: each cell uses its own t_start and t_dec.
+        for (size_t i = 0; i < phi_size_needed; ++i) {
+            for (size_t j = 0; j < theta_size; ++j) {
+                const Real b = physics::relativistic::gamma_to_beta(jet.Gamma0(coord.phi(i), coord.theta(j)));
+                const Real cos_alpha =
+                    std::cos(coord.theta(j)) * cos_tv + std::sin(coord.theta(j)) * sin_tv * std::cos(coord.phi(i));
+                const Real t_start =
+                    std::max<Real>(0.99 * t_min * (1 - b) / (1 - cos_alpha * b) / (1 + z), 1e-2 * unit::sec);
+                const Real t_dec = estimate_t_dec(jet, medium, coord.phi(i), coord.theta(j));
+                xt::view(coord.t, i, j, xt::all()) =
+                    refined_time_grid(t_start, t_end, t_dec, t_num, refine_lo_factor, refine_hi_factor);
+            }
         }
     }
 }
@@ -980,8 +999,10 @@ Coord auto_grid(Ejecta const& jet, Medium const& medium, Array const& t_obs, Rea
     // Shift phi grid by half the first spacing so no point lands on the
     // Doppler peak at phi=0; the grid becomes [delta, 2pi+delta] which
     // preserves the same topology (first/last at same physical angle).
-    const Real shift = 0.5 * (coord.phi(1) - coord.phi(0));
-    coord.phi += shift;
+    if (phi_num >= 2) {
+        const Real shift = 0.5 * (coord.phi(1) - coord.phi(0));
+        coord.phi += shift;
+    }
 
     if (t_obs.size() == 0) {
         assert(false && "auto_grid: t_obs is empty");

@@ -96,7 +96,7 @@ For the full MCMC fitting guide, including advanced customization examples, see 
 #### ► **Built-in Profiling**
 
 - See where computation time is spent (dynamics, electrons, photons, flux) via `Model.profile_data()` in Python
-- Useful for identifying bottlenecks when tuning resolution or enabling SSC
+- Useful for identifying bottlenecks
 
 #### ► **Per-Cell Spectrum Access in Simulation Details**
 

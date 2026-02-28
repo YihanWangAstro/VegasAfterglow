@@ -95,6 +95,10 @@ namespace defaults {
 
         /// Tolerance for checking linear/log scale arrays
         inline constexpr double scale_check_tol = 1e-6;
+
+        /// Maximum ODE integration steps before giving up
+        /// Prevents MCMC from hanging on pathological parameter combinations
+        inline constexpr std::size_t max_ode_steps = 100000;
     } // namespace solver
 
     /**

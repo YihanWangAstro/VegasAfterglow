@@ -203,8 +203,13 @@ void grid_solve_fwd_shock(size_t i, size_t j, View const& t, Shock& shock, FwdEq
     auto stepper = make_dense_output(rtol, rtol, runge_kutta_dopri5<typename FwdEqn::State>());
     stepper.initialize(state, t0, 0.01 * t0);
 
-    for (size_t k = 0; stepper.current_time() <= t.back();) {
+    for (size_t k = 0, steps = 0; stepper.current_time() <= t.back();) {
         stepper.do_step(eqn);
+        if (++steps > defaults::solver::max_ode_steps) {
+            std::fprintf(stderr, "Warning: forward shock ODE exceeded %zu steps at (i=%zu, j=%zu), giving up\n",
+                         defaults::solver::max_ode_steps, i, j);
+            return;
+        }
 
         while (k < t.size() && stepper.current_time() > t(k)) {
             stepper.calc_state(t(k), state);
