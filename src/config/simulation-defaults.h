@@ -58,11 +58,11 @@ namespace defaults {
     namespace grid {
         /// Azimuthal (phi) angular resolution factor
         /// Higher values = more phi grid points near the viewing direction
-        inline constexpr double phi_resolution = 0.15;
+        inline constexpr double phi_resolution = 0.1;
 
         /// Polar (theta) angular resolution factor
         /// Higher values = more theta grid points
-        inline constexpr double theta_resolution = 1.0;
+        inline constexpr double theta_resolution = 0.5;
 
         /// Temporal resolution factor
         /// Higher values = more time grid points (logarithmically spaced)

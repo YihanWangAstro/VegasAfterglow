@@ -236,7 +236,7 @@ PYBIND11_MODULE(VegasAfterglowC, m) {
                                 axisymmetric, min_theta_num);
              }),
              py::arg("jet"), py::arg("medium"), py::arg("observer"), py::arg("fwd_rad"),
-             py::arg("rvs_rad") = py::none(), py::arg("resolutions") = std::make_tuple(0.15, 1.0, 10),
+             py::arg("rvs_rad") = py::none(), py::arg("resolutions") = std::make_tuple(0.1, 0.5, 10),
              py::arg("rtol") = 1e-6, py::arg("axisymmetric") = true,
              py::arg("min_theta_num") = defaults::grid::min_theta_points)
 

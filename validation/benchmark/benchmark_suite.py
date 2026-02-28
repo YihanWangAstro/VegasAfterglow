@@ -76,7 +76,7 @@ class BenchmarkSession:
 # Constants
 # ---------------------------------------------------------------------------
 
-PHI_VALUES = [0.15, 0.2, 0.25, 0.3]
+PHI_VALUES = [0.1, 0.15, 0.2, 0.25]
 THETA_VALUES = [0.5, 1.0, 1.5, 2.0]
 T_VALUES = [10, 15, 20]
 REFERENCE_RESOLUTION = (PHI_VALUES[-1] * 1.2, THETA_VALUES[-1] * 1.2, T_VALUES[-1] * 1.2)

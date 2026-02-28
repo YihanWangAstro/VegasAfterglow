@@ -545,7 +545,7 @@ class PyModel {
      */
     PyModel(JetVariant jet, MediumVariant medium, PyObserver const& observer, PyRadiation const& fwd_rad,
             std::optional<PyRadiation> const& rvs_rad = std::nullopt,
-            std::tuple<Real, Real, Real> const& resolutions = std::make_tuple(0.15, 1.0, 10), Real rtol = 1e-5,
+            std::tuple<Real, Real, Real> const& resolutions = std::make_tuple(0.1, 0.5, 10), Real rtol = 1e-5,
             bool axisymmetric = true, size_t min_theta_num = defaults::grid::min_theta_points)
         : jet_(std::move(jet)),
           medium_(std::move(medium)),
@@ -757,19 +757,14 @@ class PyModel {
     static void average_exposure_flux(PyFlux& result, std::vector<size_t> const& idx_sorted, size_t original_size,
                                       size_t num_points);
 
-    GridConfig grid_config() const {
-        return {theta_w, obs_setup.theta_obs, obs_setup.z,   phi_resol, theta_resol,
-                t_resol, axisymmetric,        min_theta_num_};
-    }
-
     JetVariant jet_;                        ///< Jet model (TophatJet, GaussianJet, PowerLawJet, or Ejecta)
     MediumVariant medium_;                  ///< Circumburst medium (ISM, Wind, or generic Medium)
     PyObserver obs_setup;                   ///< Observer configuration
     PyRadiation fwd_rad;                    ///< Forward shock radiation parameters
     std::optional<PyRadiation> rvs_rad_opt; ///< Optional reverse shock radiation parameters
     Real theta_w{con::pi / 2};              ///< Maximum polar angle to calculate
-    Real phi_resol{0.15};                   ///< Azimuthal resolution: number of points per degree
-    Real theta_resol{1.0};                  ///< Polar resolution: number of points per degree
+    Real phi_resol{0.1};                    ///< Azimuthal resolution: number of points per degree
+    Real theta_resol{0.5};                  ///< Polar resolution: number of points per degree
     Real t_resol{10};                       ///< Time resolution: number of points per decade
     Real rtol{1e-5};                        ///< Relative tolerance
     bool axisymmetric{true};                ///< Whether to assume axisymmetric jet
@@ -837,14 +832,17 @@ auto PyModel::compute_emission(Array const& t_obs, Array const& nu_obs, Func&& f
     if (!rvs_rad_opt) {
         auto [coord, fwd_shock] = [&] {
             AFTERGLOW_PROFILE_SCOPE(dynamics);
-            return solve_fwd_shock(jet_, medium_, t_obs, grid_config(), fwd_rad.rad, rtol);
+            return solve_fwd_shock(jet_, medium_, t_obs, theta_w, obs_setup.theta_obs, obs_setup.z, phi_resol,
+                                   theta_resol, t_resol, axisymmetric, min_theta_num_, fwd_rad.rad, rtol);
         }();
         single_shock_emission(fwd_shock, coord, t_obs, nu_obs, observer, fwd_rad, flux.fwd,
                               std::forward<Func>(flux_func));
     } else {
         auto [coord, fwd_shock, rvs_shock] = [&] {
             AFTERGLOW_PROFILE_SCOPE(dynamics);
-            return solve_shock_pair(jet_, medium_, t_obs, grid_config(), fwd_rad.rad, rvs_rad_opt->rad, rtol);
+            return solve_shock_pair(jet_, medium_, t_obs, theta_w, obs_setup.theta_obs, obs_setup.z, phi_resol,
+                                    theta_resol, t_resol, axisymmetric, min_theta_num_, fwd_rad.rad, rvs_rad_opt->rad,
+                                    rtol);
         }();
         single_shock_emission(fwd_shock, coord, t_obs, nu_obs, observer, fwd_rad, flux.fwd,
                               std::forward<Func>(flux_func));

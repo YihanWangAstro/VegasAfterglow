@@ -417,7 +417,7 @@ obs = Observer(lumi_dist=1e26, z=z, theta_obs=0.)
 
 rad = Radiation(eps_e=1e-1, eps_B=1e-3, p=2.3)
 
-model = Model(jet=jet, medium=medium, observer=obs, fwd_rad=rad, resolutions=(0.15,1.0,10))
+model = Model(jet=jet, medium=medium, observer=obs, fwd_rad=rad, resolutions=(0.1,0.5,10))
 ```
 
 </details>
@@ -651,7 +651,7 @@ In addition to scalar quantities, `details()` provides callable spectrum accesso
 
 ```python
 rad = Radiation(eps_e=1e-1, eps_B=1e-3, p=2.3, ssc=True)
-model = Model(jet=jet, medium=medium, observer=obs, fwd_rad=rad, resolutions=(0.15,1.0,10))
+model = Model(jet=jet, medium=medium, observer=obs, fwd_rad=rad, resolutions=(0.1,0.5,10))
 details = model.details(t_min=1e0, t_max=1e8)
 
 nu_comv = np.logspace(8, 20, 200)  # comoving frame frequency [Hz]
@@ -758,7 +758,7 @@ fitter.add_spectrum(t=3000, nu=nu_data, f_nu=spectrum_data, err=spectrum_err)
 # Option 1: Nested sampling with dynesty (computes evidence, robust for multimodal posteriors)
 result = fitter.fit(
     mc_params,
-    resolution=(0.15, 1.0, 10),    # Grid resolution (phi, theta, t)
+    resolution=(0.1, 0.5, 10),    # Grid resolution (phi, theta, t)
     sampler="dynesty",             # Nested sampling algorithm
     nlive=1000,                    # Number of live points
     walks=100,                     # Number of random walks per live point
@@ -770,7 +770,7 @@ result = fitter.fit(
 # Option 2: MCMC with emcee (faster, good for unimodal posteriors, not optimal for multimodal posteriors)
 result = fitter.fit(
     mc_params,
-    resolution=(0.15, 1.0, 10),    # Grid resolution (phi, theta, t)
+    resolution=(0.1, 0.5, 10),    # Grid resolution (phi, theta, t)
     sampler="emcee",               # MCMC sampler
     nsteps=50000,                  # Number of steps per walker
     nburn=10000,                   # Burn-in steps to discard
@@ -980,7 +980,7 @@ Benchmark tests measure computational performance and verify numerical convergen
 - **Resolution Convergence**: Tests convergence in phi (azimuthal), theta (polar), and time dimensions
 - **Pass Criteria**: Mean error < 5% and max error < 10% at fiducial resolution
 
-The default fiducial resolution `(0.15, 1.0, 10)` has been tested to converge for most configurations. For details, see the [Validation Report (PDF)](https://yihanwangastro.github.io/VegasAfterglow/reports/latest/comprehensive_report.pdf).
+The default fiducial resolution `(0.1, 0.5, 10)` has been tested to converge for most configurations. For details, see the [Validation Report (PDF)](https://yihanwangastro.github.io/VegasAfterglow/reports/latest/comprehensive_report.pdf).
 
 </details>
 

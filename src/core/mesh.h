@@ -627,7 +627,7 @@ inline Array jump_refinement_grid(Array const& jumps, Real theta_min, Real theta
         if (jump_theta >= con::pi / 2 - 0.01)
             continue;
         const Real half = 2 * avg_spacing;
-        const size_t n = std::max<size_t>(static_cast<size_t>(10 * theta_resol), 2);
+        const size_t n = std::max<size_t>(static_cast<size_t>(5 * theta_resol), 2);
         for (size_t i = 1; i <= n; ++i) {
             const Real frac = static_cast<Real>(i) / static_cast<Real>(n);
             const Real offset = half * frac * frac;
@@ -651,38 +651,47 @@ Array adaptive_phi_grid(Ejecta const& jet, size_t phi_num, Real theta_v, Array c
                         bool is_axisymmetric) {
     if (theta_v == 0 && is_axisymmetric) {
         return xt::linspace(0., 2 * con::pi, phi_num);
-    } else {
-        const Real cos_tv = std::cos(theta_v);
-        const Real sin_tv = std::sin(theta_v);
-        const size_t n_theta = theta_grid.size();
-
-        // Precompute dcos_theta bin widths from theta grid
-        std::vector<Real> dcos(n_theta);
-        for (size_t it = 0; it < n_theta; ++it) {
-            const Real left = (it == 0) ? 0.0 : 0.5 * (theta_grid(it - 1) + theta_grid(it));
-            const Real right = (it == n_theta - 1) ? theta_grid(it) : 0.5 * (theta_grid(it) + theta_grid(it + 1));
-            dcos[it] = std::fabs(std::cos(left) - std::cos(right));
-        }
-
-        auto eqn = [=, &jet](Real const& /*cdf*/, Real& pdf, Real phi) {
-            const Real cos_phi = std::cos(phi);
-            Real max_weight = 0;
-            for (size_t it = 0; it < n_theta; ++it) {
-                const Real theta = theta_grid(it);
-                const Real Gamma = jet.Gamma0(phi, theta);
-                const Real beta = std::sqrt(std::fabs(Gamma * Gamma - 1)) / Gamma;
-                // cos(angle to LOS) = cos(theta)cos(theta_v) + sin(theta)sin(theta_v)cos(phi)
-                const Real cos_alpha = std::cos(theta) * cos_tv + std::sin(theta) * sin_tv * cos_phi;
-                const Real a = (1 - beta) / (1 - beta * cos_alpha);
-                const Real weight = a * Gamma * std::sqrt((Gamma - 1) * Gamma) * dcos[it]; //std::sin(theta);
-                //max_weight = std::max(max_weight, weight);
-                max_weight += weight;
-            }
-            pdf = max_weight;
-        };
-
-        return inverse_CFD_sampling(eqn, 0, 2 * con::pi, phi_num);
     }
+
+    const Real cos_tv = std::cos(theta_v);
+    const Real sin_tv = std::sin(theta_v);
+    const size_t n_theta = theta_grid.size();
+
+    // Precompute dcos_theta bin widths from theta grid
+    std::vector<Real> dcos(n_theta);
+    for (size_t it = 0; it < n_theta; ++it) {
+        const Real left = (it == 0) ? 0.0 : 0.5 * (theta_grid(it - 1) + theta_grid(it));
+        const Real right = (it == n_theta - 1) ? theta_grid(it) : 0.5 * (theta_grid(it) + theta_grid(it + 1));
+        dcos[it] = std::fabs(std::cos(left) - std::cos(right));
+    }
+
+    // Weight function: Doppler-weighted structure summed across theta bins
+    auto phi_weight = [=, &jet](Real phi) {
+        const Real cos_phi = std::cos(phi);
+        Real w = 0;
+        for (size_t it = 0; it < n_theta; ++it) {
+            const Real theta = theta_grid(it);
+            const Real Gamma = jet.Gamma0(phi, theta);
+            const Real beta = std::sqrt(std::fabs(Gamma * Gamma - 1)) / Gamma;
+            const Real cos_alpha = std::cos(theta) * cos_tv + std::sin(theta) * sin_tv * cos_phi;
+            const Real a = (1 - beta) / (1 - beta * cos_alpha);
+            w += a * Gamma * std::sqrt((Gamma - 1) * Gamma) * dcos[it];
+        }
+        return w;
+    };
+
+    // Pre-scan to find peak weight for floor calculation
+    constexpr size_t scan_pts = 100;
+    Real peak_weight = 0;
+    for (size_t s = 0; s <= scan_pts; ++s) {
+        const Real phi = 2 * con::pi * static_cast<Real>(s) / scan_pts;
+        peak_weight = std::max(peak_weight, phi_weight(phi));
+    }
+    const Real floor_weight = 0.05 * peak_weight;
+
+    auto eqn = [=](Real const& /*cdf*/, Real& pdf, Real phi) { pdf = phi_weight(phi) + floor_weight; };
+
+    return inverse_CFD_sampling(eqn, 0, 2 * con::pi, phi_num);
 }
 
 template <typename Arr>
@@ -966,12 +975,7 @@ Coord auto_grid(Ejecta const& jet, Medium const& medium, Array const& t_obs, Rea
     if (phi_num <= 2) {
         coord.phi = xt::linspace(0., 2 * con::pi, phi_num);
     } else {
-        const size_t uniform_phi_num = static_cast<size_t>(phi_num * 0.3);
-        const size_t adaptive_phi_num = phi_num - uniform_phi_num;
-
-        const Array uniform_phi = xt::linspace(0., 2 * con::pi, uniform_phi_num);
-        const Array adaptive_phi = adaptive_phi_grid(jet, adaptive_phi_num, theta_view, coord.theta, is_axisymmetric);
-        coord.phi = merge_grids(uniform_phi, adaptive_phi);
+        coord.phi = adaptive_phi_grid(jet, phi_num, theta_view, coord.theta, is_axisymmetric);
     }
     // Shift phi grid by half the first spacing so no point lands on the
     // Doppler peak at phi=0; the grid becomes [delta, 2pi+delta] which
