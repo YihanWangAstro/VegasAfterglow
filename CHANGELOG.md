@@ -84,7 +84,7 @@ For the full MCMC fitting guide, including advanced customization examples, see 
 
 #### ► **Validation and Testing**
 
-- **Benchmark tests**: Verify numerical convergence across resolution parameters and measure computation speed for all jet/medium/radiation configurations. Default resolution `(0.1, 0.5, 10)` validated to converge with mean error < 5%
+- **Benchmark tests**: Verify numerical convergence across resolution parameters and measure computation speed for all jet/medium/radiation configurations. Default resolution `(0.1, 0.5, 5)` validated to converge with mean error < 5%
 - **Regression tests**: Check that simulation outputs match theoretical predictions from GRB afterglow theory — shock dynamics power-law scaling, characteristic frequency evolution, spectral shape indices, and coasting/Blandford-McKee/Sedov-Taylor phases
 - **Python API tests**: Verify model creation, flux calculations, output correctness, and input validation across all jet types and configurations
 - **One-command validation**: Run `python validation/run_validation.py --all` to execute the full suite and generate a PDF report with convergence plots and diagnostics
@@ -151,7 +151,7 @@ See the [MCMC Parameter Fitting](https://yihanwangastro.github.io/VegasAfterglow
 - Update calls: `Radiation(..., ssc_cooling=True, ssc=True)` → `Radiation(..., ssc=True)`
 
 #### ► **Default Resolution**
-- Default grid resolution changed from `(0.3, 1, 10)` to `(0.1, 0.5, 10)` for better accuracy out of the box
+- Default grid resolution changed from `(0.3, 1, 10)` to `(0.1, 0.5, 5)` for better accuracy out of the box
 - Thanks to the improved adaptive grid algorithm (medium-aware time sampling, jet edge anchoring), the code converges with fewer grid points than before — so the new default is both more accurate and comparably fast
 
 #### ► **Default MCMC Sampler**
@@ -491,7 +491,7 @@ coordinates = details.theta            # New way
   - Removed `specific_flux_sorted_series()` method
   - Added `specific_flux_series_with_expo(t, nu, expo_time, num_points=10)` for exposure time averaging
   - Changed `details(t_obs)` to `details(t_min, t_max)` interface
-- **Resolution Parameters**: Default resolution changed from `(0.3, 3.0, 5.0)` to `(0.1, 0.5, 10)` for optimal performance/accuracy balance
+- **Resolution Parameters**: Default resolution changed from `(0.3, 3.0, 5.0)` to `(0.1, 0.5, 5)` for optimal performance/accuracy balance
 - **MCMC Parameters**: Major restructuring with new parameters for all jet types, medium configurations, and reverse shock physics
   - Added: `theta_v, n_ism, n0, A_star, k_e, k_g, duration, E_iso_w, Gamma0_w, theta_w, L0, t0, q`
   - Added reverse shock parameters: `p_r, eps_e_r, eps_B_r, xi_e_r`

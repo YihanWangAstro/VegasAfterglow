@@ -246,73 +246,86 @@ class ComprehensiveDashboard:
         # Section 2: Benchmark Results
         # =============================================================
         if benchmark_data and benchmark_data.get("configs"):
-            section_num += 1
-            bench_node = {"title": f"{section_num}. Benchmark Results", "page": builder.current_page, "children": []}
-
-            builder.add_section_header(section_num, "Benchmark Results",
-                                       "Performance timing and resolution convergence analysis")
-
-            print("  - Adding benchmark guide pages")
-            bench_node["children"].append({"title": "How to Read", "page": builder.current_page, "children": []})
-            builder.add_guide_pages("benchmark_guide")
-
-            configs = benchmark_data.get("configs", [])
-
-            print(f"\nGenerating benchmark section ({len(configs)} configs)...")
-            print("  - Overview plots")
-
-            on_axis_configs = [c for c in configs if c.get("theta_obs_ratio", 0) <= 1]
-            off_axis_configs = [c for c in configs if c.get("theta_obs_ratio", 0) > 1]
-
-            if on_axis_configs:
-                print("    - On-axis overview (θ_v/θ_c≤1)")
-                bench_node["children"].append({"title": "On-axis Overview", "page": builder.current_page, "children": []})
-                builder.add_fig(plot_benchmark_overview(benchmark_data, angle_filter="on-axis"))
-
-            if off_axis_configs:
-                print("    - Off-axis overview (θ_v/θ_c>1)")
-                bench_node["children"].append({"title": "Off-axis Overview", "page": builder.current_page, "children": []})
-                builder.add_fig(plot_benchmark_overview(benchmark_data, angle_filter="off-axis"))
-
-            has_convergence = any(c.get("phi_convergence") for c in configs)
-            if has_convergence:
-                print("  - Convergence summary")
-                bench_node["children"].append({"title": "Convergence Summary", "page": builder.current_page, "children": []})
-                summary_page = builder.current_page
-                fig, model_id_map, models_list, cell_rects = plot_convergence_summary(benchmark_data)
-                builder.add_fig(fig)
-
-                print("  - Error distribution")
-                bench_node["children"].append({"title": "Error Distribution", "page": builder.current_page, "children": []})
-                builder.add_fig(plot_error_distribution(benchmark_data))
-
-                # Generate convergence pages (parallel or sequential)
-                detail_start_page = builder.current_page
-                convergence_pdf_files = generate_convergence_pages(models_list, n_workers)
-                builder.add_fig_files(convergence_pdf_files)
-
-                # Register jump links from summary grid cells to detail pages
-                links = []
-                for i, model in enumerate(models_list):
-                    if i in cell_rects and i < len(convergence_pdf_files):
-                        links.append((cell_rects[i], detail_start_page + i))
-                if links:
-                    builder.add_internal_links(summary_page, links)
-
-                # Register back-links from each detail page to summary
-                # Back-link region: top title area
-                BACK_LINK_RECT = (0.0, 0.92, 1.0, 0.08)
-                for i in range(len(convergence_pdf_files)):
-                    detail_page = detail_start_page + i
-                    builder.add_internal_links(detail_page, [(BACK_LINK_RECT, summary_page)])
-
-            toc_nodes.append(bench_node)
+            bench_node = self._add_benchmark_section(
+                builder, benchmark_data, n_workers, section_num=section_num + 1, with_toc=True)
+            if bench_node:
+                section_num += 1
+                toc_nodes.append(bench_node)
 
         # Save final document
         print(f"\n{'='*70}")
         builder.save(toc_nodes=toc_nodes if toc_nodes else None)
         print(f"{'='*70}")
         return output_path
+
+    def _add_benchmark_section(self, builder, data, n_workers, section_num=None, with_toc=False):
+        """Add benchmark section to builder. Returns TOC node if with_toc, else None."""
+        configs = data.get("configs", [])
+        if not configs:
+            return None
+
+        node = None
+        if with_toc and section_num is not None:
+            node = {"title": f"{section_num}. Benchmark Results", "page": builder.current_page, "children": []}
+            builder.add_section_header(section_num, "Benchmark Results",
+                                       "Performance timing and resolution convergence analysis")
+
+        print(f"\nGenerating benchmark section ({len(configs)} configs)...")
+
+        if with_toc and node is not None:
+            print("  - Adding benchmark guide pages")
+            node["children"].append({"title": "How to Read", "page": builder.current_page, "children": []})
+        builder.add_guide_pages("benchmark_guide")
+
+        print("  - Overview plots")
+        on_axis = [c for c in configs if c.get("theta_obs_ratio", 0) <= 1]
+        off_axis = [c for c in configs if c.get("theta_obs_ratio", 0) > 1]
+
+        if on_axis:
+            if with_toc and node is not None:
+                print("    - On-axis overview (θ_v/θ_c≤1)")
+                node["children"].append({"title": "On-axis Overview", "page": builder.current_page, "children": []})
+            builder.add_fig(plot_benchmark_overview(data, angle_filter="on-axis"))
+
+        if off_axis:
+            if with_toc and node is not None:
+                print("    - Off-axis overview (θ_v/θ_c>1)")
+                node["children"].append({"title": "Off-axis Overview", "page": builder.current_page, "children": []})
+            builder.add_fig(plot_benchmark_overview(data, angle_filter="off-axis"))
+
+        has_convergence = any(c.get("phi_convergence") for c in configs)
+        if has_convergence:
+            if with_toc and node is not None:
+                print("  - Convergence summary")
+                node["children"].append({"title": "Convergence Summary", "page": builder.current_page, "children": []})
+            summary_page = builder.current_page
+            fig, model_id_map, models_list, cell_rects = plot_convergence_summary(data)
+            builder.add_fig(fig)
+
+            if with_toc and node is not None:
+                print("  - Error distribution")
+                node["children"].append({"title": "Error Distribution", "page": builder.current_page, "children": []})
+            builder.add_fig(plot_error_distribution(data))
+
+            detail_start_page = builder.current_page
+            convergence_pdf_files = generate_convergence_pages(models_list, n_workers)
+            builder.add_fig_files(convergence_pdf_files)
+
+            # Jump links from summary grid cells to detail pages
+            links = []
+            for i in range(len(models_list)):
+                if i in cell_rects and i < len(convergence_pdf_files):
+                    links.append((cell_rects[i], detail_start_page + i))
+            if links:
+                builder.add_internal_links(summary_page, links)
+
+            # Back-links from detail pages to summary
+            if with_toc:
+                BACK_LINK_RECT = (0.0, 0.92, 1.0, 0.08)
+                for i in range(len(convergence_pdf_files)):
+                    builder.add_internal_links(detail_start_page + i, [(BACK_LINK_RECT, summary_page)])
+
+        return node
 
     def generate_benchmark_report(self, benchmark_file: str, n_workers: int = 0):
         if not Path(benchmark_file).exists():
@@ -322,48 +335,11 @@ class ComprehensiveDashboard:
         data = load_json(benchmark_file)
         output_path = self.output_dir / "benchmark_report.pdf"
 
-        if data.get("configs"):
-            metadata = extract_session_metadata(data)
-        else:
-            metadata = get_runtime_build_info()
+        metadata = extract_session_metadata(data) if data.get("configs") else get_runtime_build_info()
 
         builder = ReportBuilder(output_path)
-
         builder.add_title_page("Benchmark Report", metadata=metadata)
-
-        print("  Adding benchmark guide pages...")
-        builder.add_guide_pages("benchmark_guide")
-
-        if data.get("configs"):
-            configs = data.get("configs", [])
-
-            on_axis_configs = [c for c in configs if c.get("theta_obs_ratio", 0) <= 1]
-            off_axis_configs = [c for c in configs if c.get("theta_obs_ratio", 0) > 1]
-
-            if on_axis_configs:
-                builder.add_fig(plot_benchmark_overview(data, angle_filter="on-axis"))
-            if off_axis_configs:
-                builder.add_fig(plot_benchmark_overview(data, angle_filter="off-axis"))
-
-            has_convergence = any(c.get("phi_convergence") for c in configs)
-            if has_convergence:
-                summary_page = builder.current_page
-                fig, model_id_map, models_list, cell_rects = plot_convergence_summary(data)
-                builder.add_fig(fig)
-
-                builder.add_fig(plot_error_distribution(data))
-
-                detail_start_page = builder.current_page
-                convergence_pdf_files = generate_convergence_pages(models_list, n_workers)
-                builder.add_fig_files(convergence_pdf_files)
-
-                links = []
-                for i in range(len(models_list)):
-                    if i in cell_rects and i < len(convergence_pdf_files):
-                        links.append((cell_rects[i], detail_start_page + i))
-                if links:
-                    builder.add_internal_links(summary_page, links)
-
+        self._add_benchmark_section(builder, data, n_workers)
         builder.save()
 
     def generate_regression_report(self, regression_file: str):

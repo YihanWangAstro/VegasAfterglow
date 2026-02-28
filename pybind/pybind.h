@@ -6,6 +6,7 @@
 //                            |___/                                            |___/
 
 #pragma once
+
 #include <pybind11/functional.h>
 #include <pybind11/stl.h>
 
@@ -23,8 +24,9 @@ using PyGrid3d = xt::pytensor<double, 3>;
 
 template <typename Array>
 bool is_ascending(Array const& arr) {
-    if (arr.size() <= 1)
+    if (arr.size() <= 1) {
         return true;
+    }
     for (size_t i = 1; i < arr.size(); ++i) {
         if (arr(i) < arr(i - 1)) {
             return false;

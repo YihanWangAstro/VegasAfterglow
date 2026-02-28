@@ -17,11 +17,11 @@
 #include "../util/macros.h"
 #include "../util/traits.h"
 #include "boost/numeric/odeint.hpp"
-
-constexpr Real log2_10 = std::numbers::ln10 / std::numbers::ln2;
 #include "physics.h"
 #include "xtensor/containers/xadapt.hpp"
 #include "xtensor/views/xview.hpp"
+
+constexpr Real log2_10 = std::numbers::ln10 / std::numbers::ln2;
 /**
  * <!-- ************************************************************************************** -->
  * @defgroup Mesh_Utilities Array and Grid Utilities
@@ -45,7 +45,7 @@ using MeshGrid = xt::xtensor<Real, 2>;
 using MeshGrid3d = xt::xtensor<Real, 3>;
 /// Type alias for 3D boolean grids for masking operations
 using MaskGrid = xt::xtensor<int, 3>;
-// Type alias for 2D grids
+/// Type alias for 2D index grids
 using IndexGrid = xt::xtensor<size_t, 2>;
 
 /**
@@ -252,6 +252,11 @@ Real jet_spreading_edge(Ejecta const& jet, Medium const& medium, Real phi, Real 
 //========================================================================================================
 //                                  template function implementation
 //========================================================================================================
+
+inline Real structure_weight(Real Gamma) {
+    return Gamma * std::sqrt(std::fabs((Gamma - 1) * Gamma));
+}
+
 template <typename Arr1, typename Arr2>
 void boundary_to_center(Arr1 const& boundary, Arr2& center) {
     if (boundary.size() < 2 || center.size() + 1 != boundary.size()) {
@@ -275,8 +280,9 @@ void boundary_to_center_log(Arr1 const& boundary, Arr2& center) {
 template <typename Arr = Array>
 void logspace_center(Real lg2_min, Real lg2_max, size_t size, Arr& center) {
     center = Arr::from_shape({size});
-    if (size == 0)
+    if (size == 0) {
         return;
+    }
 
     const Real dlg2 = (lg2_max - lg2_min) / static_cast<Real>(size);
     const Real r = std::exp2(dlg2);
@@ -301,11 +307,11 @@ template <typename Arr>
 void logspace_boundary_center(Real lg2_min, Real lg2_max, size_t size, Arr& center, Array& bin_width) {
     center = Arr::from_shape({size});
     bin_width = Array::from_shape({size});
-    if (size == 0)
+    if (size == 0) {
         return;
+    }
 
     const Real dlg2 = (lg2_max - lg2_min) / static_cast<Real>(size);
-
     const Real r = std::exp2(dlg2);
     const Real s = std::sqrt(r);
     const Real w = r - 1.;
@@ -529,15 +535,9 @@ Real jet_spreading_edge(Ejecta const& jet, Medium const& /*medium*/, Real phi, R
     Real dp_min = 0;
 
     for (Real theta = theta_min; theta <= theta_max; theta += step) {
-        // Real G = jet.Gamma0(phi, theta);
-        // Real beta0 = physics::relativistic::gamma_to_beta(G);
-        // Real r0 = beta0 * con::c * t0 / (1 - beta0);
-        // Real rho = medium.rho(phi, theta, 0);
-        Real th_lo = std::max(theta - step, theta_min);
-        Real th_hi = std::min(theta + step, theta_max);
-        const Real dG = (jet.Gamma0(phi, th_hi) - jet.Gamma0(phi, th_lo)) / (th_hi - th_lo);
-        // Real drho = (medium.rho(phi, th_hi, r0) - medium.rho(phi, th_lo, r0)) / (th_hi - th_lo);
-        const Real dp = dG; //(2 * G - 1) * rho * dG + (G - 1) * G * drho;
+        const Real th_lo = std::max(theta - step, theta_min);
+        const Real th_hi = std::min(theta + step, theta_max);
+        const Real dp = (jet.Gamma0(phi, th_hi) - jet.Gamma0(phi, th_lo)) / (th_hi - th_lo);
 
         if (dp < dp_min) {
             dp_min = dp;
@@ -597,21 +597,21 @@ Array adaptive_theta_grid(Ejecta const& jet, Real theta_min, Real theta_max, siz
     for (size_t i = 0; i <= scan_pts; ++i) {
         const Real theta = theta_min + (theta_max - theta_min) * static_cast<Real>(i) / scan_pts;
         const Real Gamma = jet.Gamma0(0, theta);
-        const Real w = Gamma * std::sqrt(std::fabs((Gamma - 1) * Gamma));
+        const Real w = structure_weight(Gamma);
         peak_weight = std::max(peak_weight, w);
     }
     const Real floor_weight = 0.1 * peak_weight;
 
     // Adaptive alpha: scale Doppler boost by sqrt(peak_structure / structure_at_view).
     const Real Gamma_v = jet.Gamma0(0, std::clamp(theta_v, theta_min, theta_max));
-    const Real structure_v = Gamma_v * std::sqrt(std::fabs((Gamma_v - 1) * Gamma_v));
+    const Real structure_v = structure_weight(Gamma_v);
     const Real alpha = 4.0 * std::sqrt(peak_weight / std::max(structure_v, 1.0));
 
     auto eqn = [=, &jet](Real const& /*cdf*/, Real& pdf, Real theta) {
         const Real Gamma = jet.Gamma0(0, theta);
         const Real beta = std::sqrt(std::fabs(Gamma * Gamma - 1)) / Gamma;
         const Real a = (1 - beta) / (1 - beta * std::cos(theta - theta_v));
-        const Real structure = Gamma * std::sqrt(std::fabs((Gamma - 1) * Gamma));
+        const Real structure = structure_weight(Gamma);
         pdf = (1 + alpha * a) * structure + floor_weight;
     };
 
@@ -624,8 +624,9 @@ inline Array jump_refinement_grid(Array const& jumps, Real theta_min, Real theta
     points.reserve(150);
     for (size_t idx = 0; idx < jumps.size(); ++idx) {
         const Real jump_theta = jumps(idx);
-        if (jump_theta >= con::pi / 2 - 0.01)
+        if (jump_theta >= con::pi / 2 - 0.01) {
             continue;
+        }
         const Real half = 2 * avg_spacing;
         const size_t n = std::max<size_t>(static_cast<size_t>(5 * theta_resol), 2);
         for (size_t i = 1; i <= n; ++i) {
@@ -633,13 +634,16 @@ inline Array jump_refinement_grid(Array const& jumps, Real theta_min, Real theta
             const Real offset = half * frac * frac;
             const Real below = jump_theta - offset;
             const Real above = jump_theta + offset;
-            if (below >= theta_min)
+            if (below >= theta_min) {
                 points.push_back(below);
-            if (above <= theta_max)
+            }
+            if (above <= theta_max) {
                 points.push_back(above);
+            }
         }
-        if (jump_theta >= theta_min && jump_theta <= theta_max)
+        if (jump_theta >= theta_min && jump_theta <= theta_max) {
             points.push_back(jump_theta);
+        }
     }
     std::ranges::sort(points);
     points.erase(std::ranges::unique(points).begin(), points.end());
@@ -675,7 +679,7 @@ Array adaptive_phi_grid(Ejecta const& jet, size_t phi_num, Real theta_v, Array c
             const Real beta = std::sqrt(std::fabs(Gamma * Gamma - 1)) / Gamma;
             const Real cos_alpha = std::cos(theta) * cos_tv + std::sin(theta) * sin_tv * cos_phi;
             const Real a = (1 - beta) / (1 - beta * cos_alpha);
-            w += a * Gamma * std::sqrt(std::fabs((Gamma - 1) * Gamma)) * dcos[it];
+            w += a * structure_weight(Gamma) * dcos[it];
         }
         return w;
     };
@@ -699,25 +703,30 @@ Array merge_grids(Arr const& arr1, Arr const& arr2) {
     std::vector<Real> result;
     result.reserve(arr1.size() + arr2.size());
 
-    size_t i = 0, j = 0;
+    size_t i = 0;
+    size_t j = 0;
     auto add_unique = [&](Real val) {
-        if (result.empty() || result.back() != val)
+        if (result.empty() || result.back() != val) {
             result.push_back(val);
+        }
     };
 
     while (i < arr1.size() && j < arr2.size()) {
         if (arr1[i] <= arr2[j]) {
             add_unique(arr1[i++]);
-            if (arr1[i - 1] == arr2[j])
+            if (arr1[i - 1] == arr2[j]) {
                 j++;
+            }
         } else {
             add_unique(arr2[j++]);
         }
     }
-    while (i < arr1.size())
+    while (i < arr1.size()) {
         add_unique(arr1[i++]);
-    while (j < arr2.size())
+    }
+    while (j < arr2.size()) {
         add_unique(arr2[j++]);
+    }
 
     return xt::adapt(result);
 }
@@ -784,7 +793,7 @@ Real estimate_t_dec(Ejecta const& jet, Medium const& medium, Real phi, Real thet
  * <!-- ************************************************************************************** -->
  */
 inline Array refined_time_grid(Real t_start, Real t_end, Real t_refine, size_t t_num, Real refine_lo_factor = 0.3,
-                               Real refine_hi_factor = 10.0) {
+                               Real refine_hi_factor = 10.0, Real refine_boost = 2.0) {
     Array result = xt::zeros<Real>({t_num});
 
     const Real log_s = std::log10(t_start);
@@ -803,40 +812,41 @@ inline Array refined_time_grid(Real t_start, Real t_end, Real t_refine, size_t t
 
     // Distribute points proportionally with a 2x density boost for the refinement zone.
     const Real log_refine = log_hi - log_lo;
-    constexpr Real refine_boost = 2.0;
     const Real eff = log_before + refine_boost * log_refine + log_after;
     size_t n1 = (log_before > 0) ? std::max<size_t>(static_cast<size_t>(t_num * log_before / eff), 2) : 0;
     size_t n3 = (log_after > 0) ? std::max<size_t>(static_cast<size_t>(t_num * log_after / eff), 2) : 0;
-    size_t shared = (n1 > 0 ? 1 : 0) + (n3 > 0 ? 1 : 0);
-    size_t n2_raw = (n1 + n3 + 2 <= t_num + shared) ? (t_num + shared - n1 - n3) : 0;
+    const size_t shared = (n1 > 0 ? 1 : 0) + (n3 > 0 ? 1 : 0);
+    const size_t n2 = (n1 + n3 + 2 <= t_num + shared) ? (t_num + shared - n1 - n3) : 0;
 
-    if (n2_raw < 2) {
+    if (n2 < 2) {
         return xt::logspace(log_s, log_e, t_num);
     }
 
-    size_t n2 = n2_raw;
     size_t idx = 0;
 
     // Segment 1: [t_start, t_lo]
     if (n1 > 0) {
         auto seg1 = xt::logspace(log_s, log_lo, n1);
-        for (size_t k = 0; k < n1; ++k)
+        for (size_t k = 0; k < n1; ++k) {
             result(idx++) = seg1(k);
+        }
     }
 
     // Segment 2: [t_lo, t_hi] - skip first point if it overlaps with seg1
     {
         auto seg2 = xt::logspace(log_lo, log_hi, n2);
-        size_t k0 = (n1 > 0) ? 1 : 0;
-        for (size_t k = k0; k < n2; ++k)
+        const size_t k0 = (n1 > 0) ? 1 : 0;
+        for (size_t k = k0; k < n2; ++k) {
             result(idx++) = seg2(k);
+        }
     }
 
     // Segment 3: [t_hi, t_end] - skip first point (overlaps with seg2)
     if (n3 > 0) {
         auto seg3 = xt::logspace(log_hi, log_e, n3);
-        for (size_t k = 1; k < n3; ++k)
+        for (size_t k = 1; k < n3; ++k) {
             result(idx++) = seg3(k);
+        }
     }
 
     return result;
@@ -865,24 +875,29 @@ void Coord::detect_symmetry(Ejecta const& jet, Medium const& medium, Real t_min,
     auto jet_ic_differs = [&](size_t ja, size_t jb) {
         const Real theta_a = theta(ja);
         const Real theta_b = theta(jb);
-        if (jet.eps_k(phi0, theta_a) != jet.eps_k(phi0, theta_b))
+        if (jet.eps_k(phi0, theta_a) != jet.eps_k(phi0, theta_b)) {
             return true;
-        if (jet.Gamma0(phi0, theta_a) != jet.Gamma0(phi0, theta_b))
+        }
+        if (jet.Gamma0(phi0, theta_a) != jet.Gamma0(phi0, theta_b)) {
             return true;
+        }
         if constexpr (HasSigma<Ejecta>) {
-            if (jet.sigma0(phi0, theta_a) != jet.sigma0(phi0, theta_b))
+            if (jet.sigma0(phi0, theta_a) != jet.sigma0(phi0, theta_b)) {
                 return true;
+            }
         }
         if constexpr (HasDedt<Ejecta>) {
             for (size_t k = 0; k < t_check; ++k) {
-                if (jet.deps_dt(phi0, theta_a, temp_t(k)) != jet.deps_dt(phi0, theta_b, temp_t(k)))
+                if (jet.deps_dt(phi0, theta_a, temp_t(k)) != jet.deps_dt(phi0, theta_b, temp_t(k))) {
                     return true;
+                }
             }
         }
         if constexpr (HasDmdt<Ejecta>) {
             for (size_t k = 0; k < t_check; ++k) {
-                if (jet.dm_dt(phi0, theta_a, temp_t(k)) != jet.dm_dt(phi0, theta_b, temp_t(k)))
+                if (jet.dm_dt(phi0, theta_a, temp_t(k)) != jet.dm_dt(phi0, theta_b, temp_t(k))) {
                     return true;
+                }
             }
         }
         return false;
@@ -894,12 +909,13 @@ void Coord::detect_symmetry(Ejecta const& jet, Medium const& medium, Real t_min,
         }
     }
 
-    if (theta_reps.size() == 1)
+    if (theta_reps.size() == 1) {
         symmetry = Symmetry::isotropic;
-    else if (theta_reps.size() < theta_size)
+    } else if (theta_reps.size() < theta_size) {
         symmetry = Symmetry::piecewise;
-    else
+    } else {
         symmetry = Symmetry::phi_symmetric;
+    }
 }
 
 template <typename Ejecta, typename Medium>
@@ -911,23 +927,23 @@ void build_time_grid(Coord& coord, Ejecta const& jet, Medium const& medium, Real
 
     const Real cos_tv = std::cos(coord.theta_view);
     const Real sin_tv = std::sin(coord.theta_view);
+    const Real t_start_cut = 1e-2 * unit::sec;
 
     // First pass: find the widest per-cell engine-frame time range to size the budget.
-    // Use per-cell angle alpha to the LOS (not the constant theta_v_max).
     Real min_t_start = t_end;
     for (size_t i = 0; i < phi_size_needed; ++i) {
         for (size_t j = 0; j < theta_size; ++j) {
             const Real b = physics::relativistic::gamma_to_beta(jet.Gamma0(coord.phi(i), coord.theta(j)));
             const Real cos_alpha =
                 std::cos(coord.theta(j)) * cos_tv + std::sin(coord.theta(j)) * sin_tv * std::cos(coord.phi(i));
-            const Real t_start =
-                std::max<Real>(0.99 * t_min * (1 - b) / (1 - cos_alpha * b) / (1 + z), 1e-2 * unit::sec);
+            Real t_start = 0.99 * t_min * (1 - b) / (1 - cos_alpha * b) / (1 + z);
+            t_start = std::max(t_start, t_start_cut);
             min_t_start = std::min(min_t_start, t_start);
         }
     }
 
     const size_t base_t_num = std::max<size_t>(static_cast<size_t>(std::log10(t_end / min_t_start) * t_resol), 24);
-    constexpr Real refine_ratio = 2.0;
+    constexpr Real refine_ratio = 2;
     constexpr Real refine_lo_factor = 0.3;
     constexpr Real refine_hi_factor = 10.0;
     const size_t refine_extra =
@@ -939,13 +955,18 @@ void build_time_grid(Coord& coord, Ejecta const& jet, Medium const& medium, Real
     const bool use_broadcast = (coord.symmetry >= Symmetry::phi_symmetric);
 
     if (use_broadcast) {
-        // Broadcast case: jet/medium identical per cell → t_dec is the same for all cells.
-        // Build ONE shared grid so k-indices map to identical physical times.
-        const Real t_dec = estimate_t_dec(jet, medium, coord.phi(0), coord.theta(0));
-        auto shared_grid = refined_time_grid(min_t_start, t_end, t_dec, t_num, refine_lo_factor, refine_hi_factor);
-        for (size_t i = 0; i < phi_size_needed; ++i) {
-            for (size_t j = 0; j < theta_size; ++j) {
-                xt::view(coord.t, i, j, xt::all()) = shared_grid;
+        // Broadcast case: build per-group shared grids.
+        // Within each theta group, jet/medium properties are identical → same t_dec.
+        for (size_t r = 0; r < coord.theta_reps.size(); ++r) {
+            const size_t j_rep = coord.theta_reps[r];
+            const size_t j_end = (r + 1 < coord.theta_reps.size()) ? coord.theta_reps[r + 1] : theta_size;
+            const Real t_dec = estimate_t_dec(jet, medium, coord.phi(0), coord.theta(j_rep));
+            auto group_grid =
+                refined_time_grid(min_t_start, t_end, t_dec, t_num, refine_lo_factor, refine_hi_factor, refine_ratio);
+            for (size_t i = 0; i < phi_size_needed; ++i) {
+                for (size_t j = j_rep; j < j_end; ++j) {
+                    xt::view(coord.t, i, j, xt::all()) = group_grid;
+                }
             }
         }
     } else {
@@ -955,11 +976,11 @@ void build_time_grid(Coord& coord, Ejecta const& jet, Medium const& medium, Real
                 const Real b = physics::relativistic::gamma_to_beta(jet.Gamma0(coord.phi(i), coord.theta(j)));
                 const Real cos_alpha =
                     std::cos(coord.theta(j)) * cos_tv + std::sin(coord.theta(j)) * sin_tv * std::cos(coord.phi(i));
-                const Real t_start =
-                    std::max<Real>(0.99 * t_min * (1 - b) / (1 - cos_alpha * b) / (1 + z), 1e-2 * unit::sec);
+                Real t_start = 0.99 * t_min * (1 - b) / (1 - cos_alpha * b) / (1 + z);
+                t_start = std::max(t_start, t_start_cut);
                 const Real t_dec = estimate_t_dec(jet, medium, coord.phi(i), coord.theta(j));
                 xt::view(coord.t, i, j, xt::all()) =
-                    refined_time_grid(t_start, t_end, t_dec, t_num, refine_lo_factor, refine_hi_factor);
+                    refined_time_grid(t_start, t_end, t_dec, t_num, refine_lo_factor, refine_hi_factor, refine_ratio);
             }
         }
     }
@@ -977,10 +998,10 @@ Coord auto_grid(Ejecta const& jet, Medium const& medium, Array const& t_obs, Rea
     for (size_t i = 0; i < jet_jumps.size(); ++i) {
         jet_edge = std::max(jet_edge, jet_jumps(i));
     }
-    Real theta_min = defaults::grid::theta_min;
-    Real theta_max = std::min(jet_edge, theta_cut);
+    const Real theta_min = defaults::grid::theta_min;
+    const Real theta_max = std::min(jet_edge, theta_cut);
 
-    size_t theta_num = min_theta_num + static_cast<size_t>((theta_max - theta_min) * 180 / con::pi * theta_resol);
+    const size_t theta_num = min_theta_num + static_cast<size_t>((theta_max - theta_min) * 180 / con::pi * theta_resol);
 
     const Array base_theta = adaptive_theta_grid(jet, theta_min, theta_max, theta_num, theta_view);
 
@@ -997,8 +1018,7 @@ Coord auto_grid(Ejecta const& jet, Medium const& medium, Array const& t_obs, Rea
         coord.phi = adaptive_phi_grid(jet, phi_num, theta_view, coord.theta, is_axisymmetric);
     }
     // Shift phi grid by half the first spacing so no point lands on the
-    // Doppler peak at phi=0; the grid becomes [delta, 2pi+delta] which
-    // preserves the same topology (first/last at same physical angle).
+    // Doppler peak at phi=0
     if (phi_num >= 2) {
         const Real shift = 0.5 * (coord.phi(1) - coord.phi(0));
         coord.phi += shift;

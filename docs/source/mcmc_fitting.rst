@@ -136,7 +136,7 @@ The ``Fitter`` constructor accepts keyword arguments for source properties, mode
 
         # Numerical parameters
         rtol=1e-5,                # Numerical tolerance
-        resolution=(0.1, 0.5, 10),   # Grid resolution (phi, theta, t)
+        resolution=(0.1, 0.5, 5),   # Grid resolution (phi, theta, t)
     )
 
 Setting up Data and the Fitter
@@ -953,7 +953,7 @@ The ``Fitter.fit()`` method provides a unified interface for parameter estimatio
 
 - ``resolution``: Optional tuple of (phi_res, theta_res, t_res)
     - Overrides the resolution set in the ``Fitter`` constructor for this run
-    - If ``None``, uses the constructor value (default: ``(0.1, 0.5, 10)``)
+    - If ``None``, uses the constructor value (default: ``(0.1, 0.5, 5)``)
     - Example: ``(0.1, 1, 15)`` for higher accuracy
 
 - ``sampler``: Sampling algorithm to use
@@ -1060,7 +1060,7 @@ Pass sampler-specific parameters via ``**sampler_kwargs`` in the ``fit()`` metho
     # Using nestle sampler
     result = fitter.fit(
         params,
-        resolution=(0.1, 0.5, 10),
+        resolution=(0.1, 0.5, 5),
         sampler="nestle",
         nlive=1000,           # nestle-specific parameter
         method='multi',       # nestle-specific: 'classic', 'single', or 'multi'
@@ -1113,7 +1113,7 @@ Basic MCMC Execution
     # Option 1 (Recommended): Nested sampling with dynesty (computes Bayesian evidence, robust for multimodal posteriors)
     result = fitter.fit(
         params,
-        resolution=(0.1, 0.5, 10),      # Grid resolution (phi, theta, t)
+        resolution=(0.1, 0.5, 5),      # Grid resolution (phi, theta, t)
         sampler="dynesty",             # Nested sampling algorithm
         nlive=1000,                    # Number of live points
         walks=100,                     # Number of random walks per live point
@@ -1125,7 +1125,7 @@ Basic MCMC Execution
     # Option 2: MCMC with emcee (faster, good for unimodal posteriors, hard to converge for multimodal posteriors)
     result = fitter.fit(
         params,
-        resolution=(0.1, 0.5, 10),      # Grid resolution (phi, theta, t)
+        resolution=(0.1, 0.5, 5),      # Grid resolution (phi, theta, t)
         sampler="emcee",               # MCMC sampler
         nsteps=50000,                  # Number of steps per walker
         nburn=10000,                   # Burn-in steps to discard

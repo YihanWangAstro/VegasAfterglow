@@ -303,12 +303,15 @@ class PyRadiation {
             snprintf(buf, sizeof(buf), ", xi_e=%.6g", rad.xi_e);
             s += buf;
         }
-        if (ssc)
+        if (ssc) {
             s += ", ssc=True";
-        if (kn)
+        }
+        if (kn) {
             s += ", kn=True";
-        if (rad.cmb_cooling)
+        }
+        if (rad.cmb_cooling) {
             s += ", cmb_cooling=True";
+        }
         s += ")";
         return s;
     }
@@ -345,13 +348,15 @@ struct Flux {
 
     [[nodiscard]] std::string repr() const {
         std::string s = "Flux(sync";
-        if (ssc.dimension() > 0)
+        if (ssc.dimension() > 0) {
             s += " + ssc";
+        }
         if (sync.dimension() > 0) {
             s += ", shape=(";
             for (size_t i = 0; i < sync.dimension(); ++i) {
-                if (i > 0)
+                if (i > 0) {
                     s += ", ";
+                }
                 s += std::to_string(sync.shape()[i]);
             }
             s += ")";
@@ -379,21 +384,26 @@ struct PyFlux {
     void calc_total();
 
     [[nodiscard]] std::string repr() const {
-        if (total.size() == 0)
+        if (total.size() == 0) {
             return "FluxDict(empty)";
+        }
         std::string s = "FluxDict(shape=(";
         for (size_t i = 0; i < total.dimension(); ++i) {
-            if (i > 0)
+            if (i > 0) {
                 s += ", ";
+            }
             s += std::to_string(total.shape()[i]);
         }
         s += "), components=[fwd.sync";
-        if (fwd.ssc.dimension() > 0)
+        if (fwd.ssc.dimension() > 0) {
             s += ", fwd.ssc";
-        if (rvs.sync.dimension() > 0)
+        }
+        if (rvs.sync.dimension() > 0) {
             s += ", rvs.sync";
-        if (rvs.ssc.dimension() > 0)
+        }
+        if (rvs.ssc.dimension() > 0) {
             s += ", rvs.ssc";
+        }
         s += "])";
         return s;
     }
@@ -473,12 +483,14 @@ struct PyShock {
     bool has_ssc_spectrum_{false};
 
     [[nodiscard]] std::string repr() const {
-        if (Gamma.size() == 0)
+        if (Gamma.size() == 0) {
             return "ShockDetails(empty)";
+        }
         std::string s = "ShockDetails(shape=(";
         for (size_t i = 0; i < Gamma.dimension(); ++i) {
-            if (i > 0)
+            if (i > 0) {
                 s += ", ";
+            }
             s += std::to_string(Gamma.shape()[i]);
         }
         s += "))";
@@ -657,7 +669,7 @@ class PyModel {
 
     [[nodiscard]] std::string repr() const {
         char buf[256];
-        Real d = obs_setup.lumi_dist / unit::cm;
+        const Real d = obs_setup.lumi_dist / unit::cm;
         snprintf(buf, sizeof(buf),
                  "Model(observer=Observer(lumi_dist=%.6g, z=%.6g, theta_obs=%.6g),\n"
                  "      fwd_rad=Radiation(eps_e=%.6g, eps_B=%.6g, p=%.6g%s%s)",
@@ -765,7 +777,7 @@ class PyModel {
     Real theta_w{con::pi / 2};              ///< Maximum polar angle to calculate
     Real phi_resol{0.1};                    ///< Azimuthal resolution: number of points per degree
     Real theta_resol{0.5};                  ///< Polar resolution: number of points per degree
-    Real t_resol{10};                       ///< Time resolution: number of points per decade
+    Real t_resol{5};                        ///< Time resolution: number of points per decade
     Real rtol{1e-5};                        ///< Relative tolerance
     bool axisymmetric{true};                ///< Whether to assume axisymmetric jet
     size_t min_theta_num_{defaults::grid::min_theta_points}; ///< Minimum number of theta grid points
@@ -841,8 +853,8 @@ auto PyModel::compute_emission(Array const& t_obs, Array const& nu_obs, Func&& f
         auto [coord, fwd_shock, rvs_shock] = [&] {
             AFTERGLOW_PROFILE_SCOPE(dynamics);
             return solve_shock_pair(jet_, medium_, t_obs, theta_w, obs_setup.theta_obs, obs_setup.z, phi_resol,
-                                    theta_resol, t_resol, axisymmetric, min_theta_num_, fwd_rad.rad, rvs_rad_opt->rad,
-                                    rtol);
+                                    theta_resol, 2 * t_resol, axisymmetric, min_theta_num_, fwd_rad.rad,
+                                    rvs_rad_opt->rad, rtol);
         }();
         single_shock_emission(fwd_shock, coord, t_obs, nu_obs, observer, fwd_rad, flux.fwd,
                               std::forward<Func>(flux_func));

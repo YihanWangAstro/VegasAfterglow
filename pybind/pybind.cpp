@@ -8,8 +8,6 @@
 #define FORCE_IMPORT_ARRAY // numpy C api loading must before any xtensor-python headers
 #include "pybind.h"
 
-#include <pybind11/stl.h>
-
 #include <array>
 #include <cstdint>
 
@@ -72,8 +70,8 @@ TernaryFunc dispatch_ternary(uintptr_t addr, std::vector<Real> const& p, std::in
 // --- Converters: detect NativeFunc and dispatch to GIL-free path ---
 BinaryFunc to_binary_func(py::object const& obj, py::object const& native_type) {
     if (!native_type.is_none() && py::isinstance(obj, native_type)) {
-        auto addr = obj.attr("address").cast<uintptr_t>();
-        auto params = obj.attr("params").cast<std::vector<Real>>();
+        const auto addr = obj.attr("address").cast<uintptr_t>();
+        const auto params = obj.attr("params").cast<std::vector<Real>>();
         return dispatch_binary(addr, params, std::make_index_sequence<MAX_NATIVE_PARAMS + 1>{});
     }
     return obj.cast<BinaryFunc>();
@@ -81,8 +79,8 @@ BinaryFunc to_binary_func(py::object const& obj, py::object const& native_type) 
 
 TernaryFunc to_ternary_func(py::object const& obj, py::object const& native_type) {
     if (!native_type.is_none() && py::isinstance(obj, native_type)) {
-        auto addr = obj.attr("address").cast<uintptr_t>();
-        auto params = obj.attr("params").cast<std::vector<Real>>();
+        const auto addr = obj.attr("address").cast<uintptr_t>();
+        const auto params = obj.attr("params").cast<std::vector<Real>>();
         return dispatch_ternary(addr, params, std::make_index_sequence<MAX_NATIVE_PARAMS + 1>{});
     }
     return obj.cast<TernaryFunc>();
@@ -210,25 +208,32 @@ PYBIND11_MODULE(VegasAfterglowC, m) {
                          bool axisymmetric, size_t min_theta_num) -> PyModel {
                  // Build JetVariant from Python object (IIFE avoids default construction)
                  auto jet = [&]() -> JetVariant {
-                     if (py::isinstance<TophatJet>(jet_obj))
+                     if (py::isinstance<TophatJet>(jet_obj)) {
                          return jet_obj.cast<TophatJet>();
-                     if (py::isinstance<GaussianJet>(jet_obj))
+                     }
+                     if (py::isinstance<GaussianJet>(jet_obj)) {
                          return jet_obj.cast<GaussianJet>();
-                     if (py::isinstance<PowerLawJet>(jet_obj))
+                     }
+                     if (py::isinstance<PowerLawJet>(jet_obj)) {
                          return jet_obj.cast<PowerLawJet>();
-                     if (py::isinstance<Ejecta>(jet_obj))
+                     }
+                     if (py::isinstance<Ejecta>(jet_obj)) {
                          return jet_obj.cast<Ejecta>();
+                     }
                      throw py::type_error("jet must be TophatJet, GaussianJet, PowerLawJet, or Ejecta");
                  }();
 
                  // Build MediumVariant from Python object
                  auto medium = [&]() -> MediumVariant {
-                     if (py::isinstance<ISM>(medium_obj))
+                     if (py::isinstance<ISM>(medium_obj)) {
                          return medium_obj.cast<ISM>();
-                     if (py::isinstance<Wind>(medium_obj))
+                     }
+                     if (py::isinstance<Wind>(medium_obj)) {
                          return medium_obj.cast<Wind>();
-                     if (py::isinstance<Medium>(medium_obj))
+                     }
+                     if (py::isinstance<Medium>(medium_obj)) {
                          return medium_obj.cast<Medium>();
+                     }
                      throw py::type_error("medium must be ISM, Wind, or Medium");
                  }();
 
@@ -356,24 +361,27 @@ PYBIND11_MODULE(VegasAfterglowC, m) {
         .def_property_readonly(
             "sync_spectrum",
             [](PyShock& self) -> py::object {
-                if (!self.has_syn_spectrum_)
+                if (!self.has_syn_spectrum_) {
                     return py::none();
+                }
                 return py::cast(SynSpectrumGrid{&self.syn_photons_});
             },
             py::return_value_policy::reference_internal)
         .def_property_readonly(
             "ssc_spectrum",
             [](PyShock& self) -> py::object {
-                if (!self.has_ssc_spectrum_)
+                if (!self.has_ssc_spectrum_) {
                     return py::none();
+                }
                 return py::cast(ICSpectrumGrid{&self.ic_photons_});
             },
             py::return_value_policy::reference_internal)
         .def_property_readonly(
             "Y_spectrum",
             [](PyShock& self) -> py::object {
-                if (!self.has_syn_spectrum_)
+                if (!self.has_syn_spectrum_) {
                     return py::none();
+                }
                 return py::cast(YSpectrumGrid{&self.syn_photons_});
             },
             py::return_value_policy::reference_internal)

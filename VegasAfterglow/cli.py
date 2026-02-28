@@ -278,7 +278,7 @@ def parse_args(argv=None):
         "--res",
         nargs=3,
         type=float,
-        default=[0.1, 0.5, 10],
+        default=[0.1, 0.5, 5],
         metavar=("PHI", "THETA", "T"),
         help="resolution (phi_ppd, theta_ppd, t_ppd)",
     )
@@ -903,21 +903,25 @@ def plot_lightcurve(times, nus, nu_labels, point_result, bands, band_results, ar
 
     has_points = point_result is not None and len(nus) > 0
     has_bands = len(bands) > 0
+    dual = has_points and has_bands
 
-    if has_points and has_bands:
-        # Assign colors across all entries together for visual distinction
+    # Assign colors across all entries together for visual distinction
+    if dual:
         all_freqs = list(nus) + [
             np.sqrt(nu_min * nu_max) for nu_min, nu_max, _ in bands
         ]
         all_colors = _freq_colors(np.array(all_freqs))
         pt_colors = all_colors[: len(nus)]
         bd_colors = all_colors[len(nus) :]
+    else:
+        pt_colors = bd_colors = None
 
-        fig, ax_left = plt.subplots(figsize=(3.5, 3.0))
-        ax_right = ax_left.twinx()
+    fig, ax = plt.subplots(figsize=(3.5, 3.0))
+    plotted_comps = set()
 
-        pt_comps = _plot_point_ax(
-            ax_left,
+    if has_points:
+        plotted_comps |= _plot_point_ax(
+            ax,
             times,
             nus,
             nu_labels,
@@ -927,8 +931,11 @@ def plot_lightcurve(times, nus, nu_labels, point_result, bands, band_results, ar
             args,
             colors=pt_colors,
         )
-        bd_comps = _plot_band_ax(
-            ax_right,
+
+    band_ax = ax.twinx() if dual else ax
+    if has_bands:
+        plotted_comps |= _plot_band_ax(
+            band_ax,
             times,
             bands,
             band_results,
@@ -936,38 +943,20 @@ def plot_lightcurve(times, nus, nu_labels, point_result, bands, band_results, ar
             colors=bd_colors,
         )
 
-        ax_left.set_xlabel(rf"$t_\mathrm{{obs}}$ ({_TIME_LABELS[args.time_unit]})")
+    ax.set_xlabel(rf"$t_\mathrm{{obs}}$ ({_TIME_LABELS[args.time_unit]})")
 
-        # Combined legend from both axes
-        h1, l1 = ax_left.get_legend_handles_labels()
-        h2, l2 = ax_right.get_legend_handles_labels()
-        _add_legend(ax_left, pt_comps | bd_comps, handles=h1 + h2, labels=l1 + l2)
-
-        ax_left.set_title(_build_param_text(args), fontsize=7, color="0.3", pad=6)
-        fig.subplots_adjust(left=0.16, right=0.84, bottom=0.18, top=0.87)
-    elif has_bands:
-        fig, ax = plt.subplots(figsize=(3.5, 3.0))
-        bd_comps = _plot_band_ax(ax, times, bands, band_results, t_scale)
-        ax.set_xlabel(rf"$t_\mathrm{{obs}}$ ({_TIME_LABELS[args.time_unit]})")
-        _add_legend(ax, bd_comps)
-        ax.set_title(_build_param_text(args), fontsize=7, color="0.3", pad=6)
-        fig.subplots_adjust(left=0.18, right=0.98, bottom=0.18, top=0.87)
+    if dual:
+        h1, l1 = ax.get_legend_handles_labels()
+        h2, l2 = band_ax.get_legend_handles_labels()
+        _add_legend(ax, plotted_comps, handles=h1 + h2, labels=l1 + l2)
     else:
-        fig, ax = plt.subplots(figsize=(3.5, 3.0))
-        pt_comps = _plot_point_ax(
-            ax,
-            times,
-            nus,
-            nu_labels,
-            point_result,
-            t_scale,
-            f_scale,
-            args,
-        )
-        ax.set_xlabel(rf"$t_\mathrm{{obs}}$ ({_TIME_LABELS[args.time_unit]})")
-        _add_legend(ax, pt_comps)
-        ax.set_title(_build_param_text(args), fontsize=7, color="0.3", pad=6)
-        fig.subplots_adjust(left=0.18, right=0.98, bottom=0.18, top=0.87)
+        _add_legend(ax, plotted_comps)
+
+    ax.set_title(_build_param_text(args), fontsize=7, color="0.3", pad=6)
+    right_margin = 0.84 if dual else 0.98
+    fig.subplots_adjust(
+        left=0.16 if dual else 0.18, right=right_margin, bottom=0.18, top=0.87
+    )
 
     if args.output and args.output.lower().endswith((".png", ".pdf", ".jpg", ".svg")):
         dpi = 300 if args.output.lower().endswith(".png") else 150

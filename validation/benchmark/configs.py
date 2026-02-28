@@ -98,15 +98,20 @@ def get_jet_config(name: str) -> JetConfig:            return _lookup(JET_CONFIG
 def get_medium_config(name: str) -> MediumConfig:      return _lookup(MEDIUM_CONFIGS, name)
 def get_radiation_config(name: str) -> RadiationConfig: return _lookup(RADIATION_CONFIGS, name)
 
-def get_all_jet_names() -> List[str]:       return list(JET_CONFIGS)
-def get_all_medium_names() -> List[str]:    return list(MEDIUM_CONFIGS)
-def get_all_radiation_names() -> List[str]: return list(RADIATION_CONFIGS)
+def _filter_names(registry, pred=None) -> List[str]:
+    if pred is None:
+        return list(registry)
+    return [n for n, c in registry.items() if pred(c)]
+
+def get_all_jet_names() -> List[str]:       return _filter_names(JET_CONFIGS)
+def get_all_medium_names() -> List[str]:    return _filter_names(MEDIUM_CONFIGS)
+def get_all_radiation_names() -> List[str]: return _filter_names(RADIATION_CONFIGS)
 def get_radiation_names_no_ssc() -> List[str]:
-    return [n for n, c in RADIATION_CONFIGS.items() if not c.params.get("ssc", False) and c.rvs_params is None]
+    return _filter_names(RADIATION_CONFIGS, lambda c: not c.params.get("ssc", False) and c.rvs_params is None)
 def get_fwd_only_radiation_names() -> List[str]:
-    return [n for n, c in RADIATION_CONFIGS.items() if c.rvs_params is None]
+    return _filter_names(RADIATION_CONFIGS, lambda c: c.rvs_params is None)
 def get_rvs_radiation_names() -> List[str]:
-    return [n for n, c in RADIATION_CONFIGS.items() if c.rvs_params is not None]
+    return _filter_names(RADIATION_CONFIGS, lambda c: c.rvs_params is not None)
 
 # ---------------------------------------------------------------------------
 # Factory functions

@@ -176,7 +176,7 @@ void save_shock_details(Shock const& shock, PyShock& details) {
 
 template <typename ElectronGrid>
 void save_electron_details(ElectronGrid const& electrons, PyShock& details) {
-    auto shape = electrons.shape();
+    const auto shape = electrons.shape();
 
     details.gamma_m = xt::zeros<Real>({shape[0], shape[1], shape[2]});
     details.gamma_c = xt::zeros<Real>({shape[0], shape[1], shape[2]});
@@ -202,7 +202,7 @@ void save_electron_details(ElectronGrid const& electrons, PyShock& details) {
 }
 template <typename PhotonGrid>
 void save_photon_details(PhotonGrid const& photons, PyShock& details, Shock const& shock) {
-    auto shape = photons.shape();
+    const auto shape = photons.shape();
 
     details.nu_m = xt::zeros<Real>({shape[0], shape[1], shape[2]});
     details.nu_c = xt::zeros<Real>({shape[0], shape[1], shape[2]});
@@ -284,7 +284,7 @@ auto PyModel::details(Real t_min, Real t_max) const -> PyDetails {
     } else {
         auto [coord, fwd_shock, rvs_shock] =
             solve_shock_pair(jet_, medium_, t_obs, theta_w, obs_setup.theta_obs, obs_setup.z, phi_resol, theta_resol,
-                             t_resol, axisymmetric, min_theta_num_, fwd_rad.rad, rvs_rad_opt->rad, rtol);
+                             2 * t_resol, axisymmetric, min_theta_num_, fwd_rad.rad, rvs_rad_opt->rad, rtol);
 
         details.phi = coord.phi;
         details.theta = coord.theta;

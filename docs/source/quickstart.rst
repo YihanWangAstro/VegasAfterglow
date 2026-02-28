@@ -196,7 +196,7 @@ Here is a minimal example showing the complete workflow:
 
     # 4. Run MCMC
     result = fitter.fit(mc_params, sampler="emcee", nsteps=10000,
-                        nburn=2000, npool=8, resolution=(0.1, 0.5, 10))
+                        nburn=2000, npool=8, resolution=(0.1, 0.5, 5))
 
     # 5. Inspect best-fit parameters
     print("Best-fit params:", result.top_k_params[0])

@@ -204,11 +204,11 @@ def cgs_to_ABmag(f_nu):
 # ---------------------------------------------------------------------------
 
 
-def _get_vega_filter(filt):
-    if filt not in _VEGA_FILTERS:
-        avail = ", ".join(sorted(_VEGA_FILTERS))
-        raise ValueError(f"Unknown Vega filter '{filt}'. Available: {avail}")
-    return _VEGA_FILTERS[filt]
+def _get_filter(filt, table, system):
+    if filt not in table:
+        avail = ", ".join(sorted(table))
+        raise ValueError(f"Unknown {system} filter '{filt}'. Available: {avail}")
+    return table[filt]
 
 
 def Vegamag_to_cgs(mag, filt):
@@ -226,7 +226,7 @@ def Vegamag_to_cgs(mag, filt):
     float or ndarray
         Flux density in erg/cm²/s/Hz.
     """
-    zp_Jy, _ = _get_vega_filter(filt)
+    zp_Jy, _ = _get_filter(filt, _VEGA_FILTERS, "Vega")
     return zp_Jy * 1e-23 * np.power(10.0, -0.4 * np.asarray(mag, dtype=float))
 
 
@@ -245,20 +245,13 @@ def cgs_to_Vegamag(f_nu, filt):
     float or ndarray
         Vega magnitude(s).
     """
-    zp_Jy, _ = _get_vega_filter(filt)
+    zp_Jy, _ = _get_filter(filt, _VEGA_FILTERS, "Vega")
     return -2.5 * np.log10(np.asarray(f_nu, dtype=float) / (zp_Jy * 1e-23))
 
 
 # ---------------------------------------------------------------------------
 # ST magnitude (HST STMAG system, per-filter pivot wavelength)
 # ---------------------------------------------------------------------------
-
-
-def _get_st_filter(filt):
-    if filt not in _ST_FILTERS:
-        avail = ", ".join(sorted(_ST_FILTERS))
-        raise ValueError(f"Unknown ST filter '{filt}'. Available: {avail}")
-    return _ST_FILTERS[filt]
 
 
 def STmag_to_cgs(mag, filt):
@@ -279,7 +272,7 @@ def STmag_to_cgs(mag, filt):
     float or ndarray
         Flux density in erg/cm²/s/Hz.
     """
-    lam_A = _get_st_filter(filt)
+    lam_A = _get_filter(filt, _ST_FILTERS, "ST")
     f_lambda = _ST_F0 * np.power(10.0, -0.4 * np.asarray(mag, dtype=float))
     return f_lambda * lam_A**2 / _c_A
 
@@ -299,7 +292,7 @@ def cgs_to_STmag(f_nu, filt):
     float or ndarray
         ST magnitude(s).
     """
-    lam_A = _get_st_filter(filt)
+    lam_A = _get_filter(filt, _ST_FILTERS, "ST")
     f_lambda = np.asarray(f_nu, dtype=float) * _c_A / lam_A**2
     return -2.5 * np.log10(f_lambda / _ST_F0)
 
@@ -307,6 +300,13 @@ def cgs_to_STmag(f_nu, filt):
 # ---------------------------------------------------------------------------
 # Filter effective frequency lookup
 # ---------------------------------------------------------------------------
+
+
+_ALL_FILTER_WAVELENGTHS = {}
+for _name, (_zp, _lam) in _VEGA_FILTERS.items():
+    _ALL_FILTER_WAVELENGTHS[_name] = _lam
+for _name, _lam in {**_ST_FILTERS, **_SURVEY_FILTERS}.items():
+    _ALL_FILTER_WAVELENGTHS[_name] = _lam
 
 
 def filter(filt):
@@ -324,19 +324,9 @@ def filter(filt):
     float
         Effective frequency in Hz.
     """
-    if filt in _VEGA_FILTERS:
-        _, lam_A = _VEGA_FILTERS[filt]
-        return _c_A / lam_A
-    if filt in _ST_FILTERS:
-        lam_A = _ST_FILTERS[filt]
-        return _c_A / lam_A
-    if filt in _SURVEY_FILTERS:
-        lam_A = _SURVEY_FILTERS[filt]
-        return _c_A / lam_A
-    all_filters = sorted(
-        set(list(_VEGA_FILTERS) + list(_ST_FILTERS) + list(_SURVEY_FILTERS))
-    )
-    avail = ", ".join(all_filters)
+    if filt in _ALL_FILTER_WAVELENGTHS:
+        return _c_A / _ALL_FILTER_WAVELENGTHS[filt]
+    avail = ", ".join(sorted(_ALL_FILTER_WAVELENGTHS))
     raise ValueError(f"Unknown filter '{filt}'. Available: {avail}")
 
 

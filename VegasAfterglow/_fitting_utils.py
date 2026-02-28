@@ -116,15 +116,7 @@ def _get_latex_label(param_def: ParamDef) -> str:
 
 def _get_model_params_defaults() -> dict:
     """Get default values for all ModelParams fields."""
-    mp = ModelParams()
-    defaults = {}
-    for attr in dir(mp):
-        if not attr.startswith("_"):
-            try:
-                defaults[attr] = getattr(mp, attr)
-            except Exception:
-                pass
-    return defaults
+    return vars(ModelParams())
 
 
 _MODEL_PARAMS_DEFAULTS = None

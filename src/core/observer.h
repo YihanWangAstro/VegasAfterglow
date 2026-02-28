@@ -42,12 +42,6 @@ class Observer {
      */
     void observe(Coord const& coord, Shock const& shock, Real luminosity_dist, Real redshift);
 
-    // /**
-    //  * @brief Sets up the Observer for flux calculation at specific observation times.
-    //  * @details Similar to observe(), but also marks required grid points for the given observation times.
-    //  */
-    // void observe_at(Array const& t_obs, Coord const& coord, Shock& shock, Real luminosity_dist, Real redshift);
-
     /**
      * <!-- ************************************************************************************** -->
      * @brief Computes the specific flux at a single observed frequency
@@ -138,12 +132,6 @@ class Observer {
     template <typename PhotonGrid>
     Array spectrum(Array const& freqs, Real t_obs, PhotonGrid& photons);
 
-    // /**
-    //  * @brief Updates the required grid points for observation.
-    //  * @details Identifies grid points needed for interpolation at requested observation times.
-    //  */
-    // void update_required(MaskGrid& required, Array const& t_obs);
-
     MeshGrid3d lg2_t;           ///< Log2 of observation time grid
     MeshGrid3d lg2_doppler;     ///< Log2 of Doppler factor grid
     MeshGrid3d lg2_geom_factor; ///< Log2 of observe frame geometric factor (solid angle * r^2 * D^3)
@@ -194,6 +182,17 @@ class Observer {
 
     /**
      * <!-- ************************************************************************************** -->
+     * @brief Fused EAT grid + geometric factor computation for non-spreading jets.
+     * @details Computes time, lg2_t, lg2_doppler, and lg2_geom_factor in a single pass,
+     *          avoiding redundant memory reads of shock.r and lg2_doppler.
+     * @param coord Coordinate grid containing angular information
+     * @param shock Shock object containing the evolution data
+     * <!-- ************************************************************************************** -->
+     */
+    void calc_eat_non_spreading(Coord const& coord, Shock const& shock);
+
+    /**
+     * <!-- ************************************************************************************** -->
      * @struct InterpState
      * @brief Helper structure for logarithmic interpolation state
      * <!-- ************************************************************************************** -->
@@ -216,21 +215,6 @@ class Observer {
      * <!-- ************************************************************************************** -->
      */
     [[nodiscard]] static Real loglog_interpolate(InterpState const& state, Real lg2_t_obs, Real lg2_t_lo) noexcept;
-
-    [[nodiscard]] static Real interpolate(InterpState const& state, Real lg2_t_obs, Real lg2_t_lo) noexcept;
-
-    /**
-     * <!-- ************************************************************************************** -->
-     * @brief Pre-computes the k index for each (i, j, idx) grid point.
-     * @details For each observation time t_obs(idx), finds the k such that
-     *          time(i,j,k) <= t_obs(idx) < time(i,j,k+1). This allows the flux
-     *          computation loops to directly look up k without dynamic searching.
-     * @param t_obs Array of observation times
-     * @return 3D tensor of k indices with shape (eff_phi_grid, theta_grid, t_obs_len).
-     *         A value of SIZE_MAX indicates no valid k exists for that (i, j, idx).
-     * <!-- ************************************************************************************** -->
-     */
-    [[nodiscard]] xt::xtensor<size_t, 3> compute_k_indices(Array const& t_obs) const noexcept;
 
     /**
      * @tparam PhotonGrid Types of photon grid objects
@@ -278,11 +262,7 @@ template <typename PhotonGrid>
 bool Observer::set_boundaries(InterpState& state, size_t eff_i, size_t i, size_t j, size_t k, Real lg2_nu_src,
                               PhotonGrid& photons) noexcept {
     if (state.last_hi == k + 1 && state.last_lg2_nu == lg2_nu_src) {
-        if (!std::isfinite(state.slope)) {
-            return false;
-        } else {
-            return true;
-        }
+        return std::isfinite(state.slope);
     }
 
     const Real lg2_t_ratio = lg2_t(i, j, k + 1) - lg2_t(i, j, k);
@@ -337,8 +317,9 @@ MeshGrid Observer::specific_flux(Array const& t_obs, Array const& nu_obs, Photon
             iterate_to(lg2_t(i, j, 0), lg2_t_obs, t_idx);
 
             for (size_t k = 0; k < t_grid - 1 && t_idx < t_obs_len; k++) {
-                if (lg2_t(i, j, k + 1) < lg2_t_obs(t_idx))
+                if (lg2_t(i, j, k + 1) < lg2_t_obs(t_idx)) {
                     continue;
+                }
                 const size_t idx_start = t_idx;
                 iterate_to(lg2_t(i, j, k + 1), lg2_t_obs, t_idx);
                 brackets.emplace_back(k, idx_start, t_idx, lg2_t(i, j, k));

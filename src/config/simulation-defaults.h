@@ -66,7 +66,7 @@ namespace defaults {
 
         /// Temporal resolution factor
         /// Higher values = more time grid points (logarithmically spaced)
-        inline constexpr double time_resolution = 10.0;
+        inline constexpr double time_resolution = 5.0;
 
         /// Minimum number of theta grid points
         /// Ensures adequate angular coverage even for narrow jets

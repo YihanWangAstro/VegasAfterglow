@@ -72,7 +72,7 @@ class Fitter:
         cmb_cooling: bool = False,
         magnetar: bool = False,
         rtol: float = 1e-6,
-        resolution: Tuple[float, float, float] = (0.1, 0.5, 10),
+        resolution: Tuple[float, float, float] = (0.1, 0.5, 5),
     ):
         self.z = z
         self.lumi_dist = lumi_dist
@@ -779,6 +779,11 @@ class Fitter:
         if self._to_params is None:
             raise RuntimeError("Call .fit(...) first")
 
+    def _model_from_fit(self, best_params):
+        """Build a Model from sampler-space parameters (requires prior fit)."""
+        self._require_fitted()
+        return self._build_model(self._to_params(best_params))
+
     def flux_density_grid(
         self,
         best_params: np.ndarray,
@@ -794,11 +799,8 @@ class Fitter:
             nu: Frequency array [Hz]
             resolution: Optional resolution override (phi, theta, t)
         """
-        self._require_fitted()
         with self._override_resolution(resolution):
-            params = self._to_params(best_params)
-            model = self._build_model(params)
-            return model.flux_density_grid(t, nu)
+            return self._model_from_fit(best_params).flux_density_grid(t, nu)
 
     def flux(
         self,
@@ -819,8 +821,5 @@ class Fitter:
             resolution: Optional resolution override (phi, theta, t)
         """
         nu_min, nu_max = band
-        self._require_fitted()
         with self._override_resolution(resolution):
-            params = self._to_params(best_params)
-            model = self._build_model(params)
-            return model.flux(t, nu_min, nu_max, num_points)
+            return self._model_from_fit(best_params).flux(t, nu_min, nu_max, num_points)

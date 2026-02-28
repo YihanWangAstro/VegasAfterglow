@@ -217,49 +217,6 @@ using PhotonGrid = xt::xtensor<Photons, 3>;
 
 inline constexpr Real IC_x0 = 0.47140452079103166;
 inline constexpr Real inv_4x0 = 1 / (4 * IC_x0);
-/**
- * <!-- ************************************************************************************** -->
- * @brief Creates and generates an IC photon grid from electron and photon distributions
- * @tparam Electrons Type of the electron distribution
- * @tparam Photons Type of the photon distribution
- * @param electrons The electron grid
- * @param photons The photon grid
- * @param KN flag for Klein-Nishina
- * @param conical flag for conical solution
- * @return A 3D grid of IC photons
- * <!-- ************************************************************************************** -->
- */
-template <typename Electrons, typename Photons>
-ICPhotonGrid<Electrons, Photons> generate_IC_photons(ElectronGrid<Electrons> const& electrons,
-                                                     PhotonGrid<Photons> const& photons, bool KN,
-                                                     Shock const& shock) noexcept;
-
-/**
- * <!-- ************************************************************************************** -->
- * @brief Applies Thomson cooling to electrons based on photon distribution
- * @tparam Electrons Type of the electron distribution
- * @tparam Photons Type of the photon distribution
- * @param electrons The electron grid to be modified
- * @param photons The photon grid
- * @param shock The shock properties
- * <!-- ************************************************************************************** -->
- */
-template <typename Electrons, typename Photons>
-void Thomson_cooling(ElectronGrid<Electrons>& electrons, PhotonGrid<Photons>& photons, Shock const& shock,
-                     Coord const& coord, Real redshift = 0.0);
-
-/**
- * <!-- ************************************************************************************** -->
- * @brief Applies Klein-Nishina cooling to electrons based on photon distribution
- * @tparam Electrons Type of the electron distribution
- * @tparam Photons Type of the photon distribution
- * @param electrons The electron grid to be modified
- * @param photons The photon grid
- * @param shock The shock properties
- * <!-- ************************************************************************************** -->
- */
-template <typename Electrons, typename Photons>
-void KN_cooling(ElectronGrid<Electrons>& electrons, PhotonGrid<Photons>& photons, Shock const& shock);
 
 //========================================================================================================
 //                                  template function implementation
@@ -537,18 +494,13 @@ ICPhotonGrid<Electrons, Photons> generate_IC_photons(ElectronGrid<Electrons> con
 
     const size_t phi_compute = (coord.symmetry != Symmetry::structured) ? 1 : phi_size;
 
+    const bool precompute = (coord.symmetry != Symmetry::structured);
+
     for (size_t i = 0; i < phi_compute; ++i) {
         for (size_t j : coord.theta_reps) {
             for (size_t k = 0; k < t_size; ++k) {
                 IC_ph(i, j, k) = ICPhoton(electrons(i, j, k), photons(i, j, k), KN);
-            }
-        }
-    }
-
-    if (coord.symmetry != Symmetry::structured) {
-        for (size_t i = 0; i < phi_compute; ++i) {
-            for (size_t j : coord.theta_reps) {
-                for (size_t k = 0; k < t_size; ++k) {
+                if (precompute) {
                     IC_ph(i, j, k).compute_log2_I_nu(0);
                 }
             }

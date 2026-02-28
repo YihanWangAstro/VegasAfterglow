@@ -120,7 +120,7 @@ Example:
     # Run MCMC with emcee
     result = fitter.fit(
         mc_params,
-        resolution=(0.1, 0.5, 10),     # Grid resolution (phi, theta, t)
+        resolution=(0.1, 0.5, 5),      # Grid resolution (phi, theta, t)
         sampler="emcee",               # MCMC sampler
         nsteps=10000,                  # Number of steps per walker
         nburn=1000,                    # Burn-in steps to discard

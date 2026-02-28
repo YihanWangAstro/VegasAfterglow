@@ -263,100 +263,72 @@ class RegressionRunner:
 
     # --- Core test methods ---
 
-    def run_shock_dynamics(self):
-        print(_subheader("1. Forward Shock Dynamics (All 3 Phases)"))
-        self.results.setdefault("shock_grid", {})
+    def _run_fwd_scaling_tests(self, header, grid_key, category, scalings, quantities, kind="shock"):
+        """Shared loop for forward shock dynamics and frequency tests."""
+        print(_subheader(header))
+        self.results.setdefault(grid_key, {})
         for medium in ["ISM", "wind"]:
             model, mk = self._get_viz_model(medium), _MEDIUM_KEY[medium]
             print(f"\n{_bold(f'--- {mk} ---')}")
-            self.results["shock_grid"].setdefault(mk, {})
+            self.results[grid_key].setdefault(mk, {})
             for phase in ["coasting", "BM", "deep_newtonian"]:
                 print(f"\n  Phase: {_cyan(phase)}")
-                t_range, expected, phase_results = TIME_RANGES[phase][medium], SHOCK_SCALINGS[phase][medium], {}
-                for qty in ["u", "r", "B", "N_p"]:
+                t_range, expected, phase_results = TIME_RANGES[phase][medium], scalings[phase][medium], {}
+                for qty in quantities:
                     if (exp_val := expected.get(qty)) is None:
                         continue
-                    result = self._run_shock_quantity(model, t_range, qty, exp_val, f"{mk} {phase}: {qty}", phase)
-                    self._record(result, "shock_dynamics", mk)
+                    result = self._run_scaling_test(model, t_range, qty, exp_val,
+                                                    f"{mk} {phase}: {qty}", phase, kind=kind)
+                    self._record(result, category, mk)
                     phase_results[qty] = result
-                self.results["shock_grid"][mk][phase] = phase_results
+                self.results[grid_key][mk][phase] = phase_results
 
-    def _run_shock_quantity(self, model, t_range, qty, expected, name, phase="BM",
-                            extractor=_fwd, expand_range=False, min_valid=5, type_prefix="shock",
-                            gamma_key="Gamma"):
-        """Run a single shock dynamics test for forward or reverse shock."""
+    def run_shock_dynamics(self):
+        self._run_fwd_scaling_tests(
+            "1. Forward Shock Dynamics (All 3 Phases)",
+            "shock_grid", "shock_dynamics", SHOCK_SCALINGS, ["u", "r", "B", "N_p"])
+
+    _SHOCK_ATTR_MAP = {"u": None, "r": "r", "B": "B_comv", "N_p": "N_p"}
+
+    def _run_scaling_test(self, model, t_range, qty, expected, name, phase="BM",
+                          kind="shock", extractor=_fwd, expand_range=False, min_valid=5,
+                          type_label=None, gamma_key="Gamma"):
+        """Run a single scaling test (shock dynamics or frequency)."""
         print(f"    Testing: {_bold(qty)}")
-        attr_map = {"u": None, "r": "r", "B": "B_comv", "N_p": "N_p"}
+        if type_label is None:
+            type_label = f"shock_{qty}" if kind == "shock" else "frequency"
         try:
             t_lo = t_range[0] / 10 if expand_range else t_range[0]
             t_hi = t_range[1] * 10 if expand_range else t_range[1]
             details = model.details(t_lo, t_hi)
-            arrays = extractor(details, gamma_key) if qty == "u" else extractor(details, attr_map[qty])
-            t = arrays[0]
-            mask = (t >= t_range[0]) & (t <= t_range[1])
-            t = t[mask]
-            if qty == "u":
-                Gamma = arrays[1][mask]
+            if kind == "freq":
+                t, Doppler, y = extractor(details, "Doppler", qty)
+                y = y * Doppler
+            elif qty == "u":
+                t, Gamma = extractor(details, gamma_key)
                 y = Gamma * np.sqrt(1.0 - 1.0 / (Gamma * Gamma))
-                valid = (y > 0) & np.isfinite(y)
-                if np.sum(valid) < min_valid:
-                    raise ValueError(f"Not enough valid points ({np.sum(valid)})")
-                measured = fit_powerlaw(t[valid], y[valid])
             else:
-                measured = fit_powerlaw(t, arrays[1][mask])
+                t, y = extractor(details, self._SHOCK_ATTR_MAP[qty])
+            mask = (t >= t_range[0]) & (t <= t_range[1])
+            t, y = t[mask], y[mask]
+            valid = (y > 0) & np.isfinite(y)
+            if np.sum(valid) < min_valid:
+                raise ValueError(f"Not enough valid points ({np.sum(valid)})")
+            measured = fit_powerlaw(t[valid], y[valid])
         except Exception as e:
             print(f"      {_bold_red('ERROR')}: {e}")
             measured = np.nan
         tol = SLOPE_TOLERANCE
         passed = _check(measured, expected, tol)
-        result = {"name": name, "quantity": qty, "phase": phase, "type": f"{type_prefix}_{qty}", "expected": float(expected),
+        result = {"name": name, "quantity": qty, "phase": phase, "type": type_label, "expected": float(expected),
                   "measured": float(measured) if not np.isnan(measured) else None, "tolerance": tol, "passed": passed}
         print(self._status_line(measured, float(expected), passed))
         return result
 
     def run_characteristic_frequencies(self):
-        print(_subheader("2. Forward Shock Frequencies (All 3 Phases)"))
-        self.results.setdefault("freq_grid", {})
-        for medium in ["ISM", "wind"]:
-            model, mk = self._get_viz_model(medium), _MEDIUM_KEY[medium]
-            print(f"\n{_bold(f'--- {mk} ---')}")
-            self.results["freq_grid"].setdefault(mk, {})
-            for phase in ["coasting", "BM", "deep_newtonian"]:
-                print(f"\n  Phase: {_cyan(phase)}")
-                t_range, expected, phase_results = TIME_RANGES[phase][medium], FREQ_SCALINGS[phase][medium], {}
-                for freq_name in ["nu_m", "nu_c", "nu_M"]:
-                    if (exp_val := expected.get(freq_name)) is None:
-                        continue
-                    result = self._run_nu_scaling(model, t_range, freq_name, exp_val, f"{mk} {phase}: {freq_name}", phase)
-                    self._record(result, "frequencies", mk)
-                    phase_results[freq_name] = result
-                self.results["freq_grid"][mk][phase] = phase_results
-
-    def _run_nu_scaling(self, model, t_range, freq_name, expected, name, phase="BM",
-                        extractor=_fwd, expand_range=False, min_valid=5, type_name="frequency"):
-        """Run a single frequency scaling test for forward or reverse shock."""
-        print(f"    Testing: {_bold(freq_name)}")
-        try:
-            t_lo = t_range[0] / 10 if expand_range else t_range[0]
-            t_hi = t_range[1] * 10 if expand_range else t_range[1]
-            details = model.details(t_lo, t_hi)
-            t, Doppler, nu = extractor(details, "Doppler", freq_name)
-            nu = nu * Doppler
-            mask = (t >= t_range[0]) & (t <= t_range[1])
-            t, nu = t[mask], nu[mask]
-            valid = (nu > 0) & np.isfinite(nu)
-            if np.sum(valid) < min_valid:
-                raise ValueError(f"Not enough valid points ({np.sum(valid)})")
-            measured = fit_powerlaw(t[valid], nu[valid])
-        except Exception as e:
-            print(f"      {_bold_red('ERROR')}: {e}")
-            measured = np.nan
-        tol = SLOPE_TOLERANCE
-        passed = _check(measured, expected, tol)
-        result = {"name": name, "quantity": freq_name, "phase": phase, "type": type_name, "expected": float(expected),
-                  "measured": float(measured) if not np.isnan(measured) else None, "tolerance": tol, "passed": passed}
-        print(self._status_line(measured, float(expected), passed))
-        return result
+        self._run_fwd_scaling_tests(
+            "2. Forward Shock Frequencies (All 3 Phases)",
+            "freq_grid", "frequencies", FREQ_SCALINGS, ["nu_m", "nu_c", "nu_M"], kind="freq")
 
     def run_spectrum_shapes(self):
         print(_subheader("3. Forward Shock Spectrum Shapes (5 Regimes)"))
@@ -408,16 +380,16 @@ class RegressionRunner:
 
     def _run_rvs_shock_quantity(self, model, t_range, qty, expected, name, phase="post_crossing"):
         """Run a single reverse-shock dynamics test."""
-        return self._run_shock_quantity(
+        return self._run_scaling_test(
             model, t_range, qty, expected, name, phase,
-            extractor=_rvs, expand_range=True, min_valid=3, type_prefix="rvs_shock",
+            extractor=_rvs, expand_range=True, min_valid=3, type_label=f"rvs_shock_{qty}",
             gamma_key="Gamma_th")
 
     def _run_rvs_nu_scaling(self, model, t_range, freq_name, expected, name, phase="post_crossing"):
         """Run a single reverse-shock frequency scaling test."""
-        return self._run_nu_scaling(
-            model, t_range, freq_name, expected, name, phase,
-            extractor=_rvs, expand_range=True, min_valid=3, type_name="rvs_frequency")
+        return self._run_scaling_test(
+            model, t_range, freq_name, expected, name, phase, kind="freq",
+            extractor=_rvs, expand_range=True, min_valid=3, type_label="rvs_frequency")
 
     def _run_rvs_tests(self, section_start, label, grid_prefix, category_prefix,
                         scalings_by_regime, quantities, test_fn):
@@ -498,38 +470,28 @@ class RegressionRunner:
 
         Returns (shock_data_dict, freq_data_dict).
         """
-        shock_phases = {}
-        for phase in time_ranges:
-            tr = time_ranges[phase][medium]
-            mask = RegressionRunner._make_phase_mask(t, u, tr, phase)
-            if mask is None:
-                continue
-            tp = t[mask]
-            fits = {}
-            for name, arr, key in [("r", r, "r"), ("u", u, "u"), ("B", B, "B"), ("N_p", N_p, "N_p")]:
-                vals = arr[mask]
-                valid = (vals > 0) & np.isfinite(vals)
-                if np.sum(valid) > 5:
-                    exp = shock_scalings.get(phase, {}).get(medium, {}).get(key)
-                    fits[name] = {"measured": float(fit_powerlaw(tp[valid], vals[valid])),
-                                  "expected": float(exp) if exp is not None else None}
-            shock_phases[phase] = {"t_range": [float(tp.min()), float(tp.max())], "fits": fits}
+        def _fit_phases(quantities, scalings):
+            """Fit power-law scalings for each phase and quantity."""
+            phases = {}
+            for phase in time_ranges:
+                tr = time_ranges[phase][medium]
+                mask = RegressionRunner._make_phase_mask(t, u, tr, phase)
+                if mask is None:
+                    continue
+                tp = t[mask]
+                fits = {}
+                for name, arr in quantities:
+                    vals = arr[mask]
+                    valid = (vals > 0) & np.isfinite(vals)
+                    if np.sum(valid) > 5:
+                        exp = scalings.get(phase, {}).get(medium, {}).get(name)
+                        fits[name] = {"measured": float(fit_powerlaw(tp[valid], vals[valid])),
+                                      "expected": float(exp) if exp is not None else None}
+                phases[phase] = {"t_range": [float(tp.min()), float(tp.max())], "fits": fits}
+            return phases
 
-        freq_phases = {}
-        for phase in time_ranges:
-            tr = time_ranges[phase][medium]
-            mask = RegressionRunner._make_phase_mask(t, u, tr, phase)
-            if mask is None:
-                continue
-            tp = t[mask]
-            fits = {}
-            for fname, farr in [("nu_m", nu_m), ("nu_c", nu_c), ("nu_a", nu_a), ("nu_M", nu_M)]:
-                valid = (farr[mask] > 0) & np.isfinite(farr[mask])
-                if np.sum(valid) > 5:
-                    exp = freq_scalings.get(phase, {}).get(medium, {}).get(fname)
-                    fits[fname] = {"measured": float(fit_powerlaw(tp[valid], farr[mask][valid])),
-                                   "expected": float(exp) if exp is not None else None}
-            freq_phases[phase] = {"t_range": [float(tp.min()), float(tp.max())], "fits": fits}
+        shock_phases = _fit_phases([("r", r), ("u", u), ("B", B), ("N_p", N_p)], shock_scalings)
+        freq_phases = _fit_phases([("nu_m", nu_m), ("nu_c", nu_c), ("nu_a", nu_a), ("nu_M", nu_M)], freq_scalings)
 
         shock_data = {"t": t.tolist(), "u": u.tolist(), "Gamma": Gamma.tolist(),
                       "r": r.tolist(), "B": B.tolist(), "N_p": N_p.tolist(), "phases": shock_phases}

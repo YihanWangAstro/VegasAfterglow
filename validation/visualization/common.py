@@ -35,7 +35,7 @@ MEDIUM_STYLES, MEDIUM_MARKERS = {"ISM": "-", "wind": "--"}, {"ISM": "o", "wind":
 MAX_ERROR_THRESHOLD, MEAN_ERROR_THRESHOLD = 0.15, 0.05
 
 # Fiducial resolution settings (single source of truth, used by benchmark and visualization)
-FIDUCIAL_RESOLUTION = (0.1, 0.5, 10)
+FIDUCIAL_RESOLUTION = (0.1, 0.5, 5)
 DIM_INDEX = {"phi": 0, "theta": 1, "t": 2}
 FIDUCIAL_VALUES = {dim: FIDUCIAL_RESOLUTION[idx] for dim, idx in DIM_INDEX.items()}
 
@@ -282,73 +282,6 @@ def find_regression_file() -> Optional[str]:
 
 def load_json(filepath: str) -> Dict:
     return json.loads(Path(filepath).read_text())
-
-
-def create_title_page(pdf: PdfPages, title: str, subtitle: str = "", metadata: Optional[Dict] = None):
-    fig = plt.figure(figsize=PAGE_PORTRAIT)
-
-    # Try to load and display logo (prefer PNG, fall back to SVG conversion)
-    logo_displayed = False
-    assets_dir = Path(__file__).parent.parent.parent / "assets"
-    img = None
-    if (logo_png := assets_dir / "logo.png").exists():
-        try:
-            from PIL import Image
-            img = Image.open(logo_png)
-        except ImportError:
-            pass
-    if img is None and (logo_svg := assets_dir / "logo.svg").exists():
-        try:
-            import cairosvg
-            from io import BytesIO
-            from PIL import Image
-            img = Image.open(BytesIO(cairosvg.svg2png(url=str(logo_svg), output_width=400)))
-        except (ImportError, OSError):
-            pass
-    if img is not None:
-        try:
-            ax = fig.add_axes([0.25, 0.62, 0.5, 0.25])
-            ax.imshow(img)
-            ax.axis("off")
-            logo_displayed = True
-        except Exception:
-            pass
-    if not logo_displayed:
-        fig.text(0.5, 0.70, "VegasAfterglow", fontsize=36, ha="center", fontweight="bold", color="#2C3E50")
-
-    # Vertical positions depend on whether logo is displayed
-    dy = -0.07 if logo_displayed else 0
-    title_y, subtitle_y, timestamp_y, metadata_y = 0.62 + dy, 0.56 + dy, 0.48 + dy, 0.40 + dy
-
-    fig.text(0.5, title_y, title, fontsize=24, ha="center", color="#34495E")
-    if subtitle:
-        fig.text(0.5, subtitle_y, subtitle, fontsize=14, ha="center", color="#7F8C8D")
-    fig.text(0.5, timestamp_y, f"Generated: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}", fontsize=11, ha="center", color="#95A5A6")
-    if metadata:
-        y_start = metadata_y
-        version_info = " | ".join(f"{k} {metadata[k]}" for k in ("Version", "Python") if k in metadata)
-        if version_info:
-            fig.text(0.5, y_start, version_info.replace("Version", "VegasAfterglow"), fontsize=10, ha="center", color="#34495E", fontweight="bold")
-            y_start -= 0.04
-        env_info = " | ".join(f"{k}: {metadata[k]}" for k in ("Commit", "Platform") if k in metadata)
-        if env_info:
-            fig.text(0.5, y_start, env_info, fontsize=9, ha="center", color="#7F8C8D")
-            y_start -= 0.03
-        if "CPU" in metadata and metadata["CPU"] != "unknown":
-            fig.text(0.5, y_start, f"CPU: {metadata['CPU']}", fontsize=8, ha="center", color="#95A5A6")
-    fig.text(0.5, 0.08, "Powered by Claude Code", fontsize=9, ha="center", color="#95A5A6", style="italic")
-    pdf.savefig(fig)
-    plt.close(fig)
-
-
-def create_section_header(pdf: PdfPages, section_num: int, title: str, description: str = ""):
-    fig = plt.figure(figsize=PAGE_PORTRAIT)
-    fig.text(0.5, 0.6, f"Section {section_num}", fontsize=14, ha="center", color="#7F8C8D")
-    fig.text(0.5, 0.5, title, fontsize=28, ha="center", fontweight="bold", color="#2C3E50")
-    if description:
-        fig.text(0.5, 0.4, description, fontsize=12, ha="center", color="#7F8C8D", wrap=True)
-    pdf.savefig(fig)
-    plt.close(fig)
 
 
 def _parse_markdown_content(markdown_path: Path) -> List[Dict]:
@@ -670,43 +603,6 @@ def create_toc_page_reportlab(toc_nodes: List[Dict], output_path: Path) -> int:
     except Exception as e:
         print(f"  Warning: reportlab TOC failed ({e})")
         return 0
-
-
-def _create_guide_pages(pdf: PdfPages, guide_name: str) -> tuple:
-    """Create guide pages from a markdown file.
-
-    Args:
-        pdf: PdfPages object to write fallback page into.
-        guide_name: Base name of the guide file (e.g., "benchmark_guide" or "regression_guide").
-
-    Returns (num_pages, pending_merge_info) where pending_merge_info is either
-    None (pages added inline) or a dict with PDF to merge later.
-    """
-    guide_path = Path(__file__).parent / "guides" / f"{guide_name}.md"
-
-    result = render_markdown_to_pdf_file(guide_path)
-    if result:
-        return (result["num_pages"], {"files": [result["pdf_path"]], "temp_dir": result["temp_dir"]})
-
-    # Fallback: create a simple placeholder page
-    label = guide_name.replace("_", " ").title()
-    fig = plt.figure(figsize=PAGE_PORTRAIT)
-    fig.patch.set_facecolor("white")
-    fig.text(0.5, 0.5, f"{label}\n\nSee {guide_name}.md for details",
-             ha="center", va="center", fontsize=14)
-    pdf.savefig(fig)
-    plt.close(fig)
-    return (1, None)
-
-
-def create_benchmark_guide_pages(pdf: PdfPages) -> tuple:
-    """Create guide pages for benchmark results."""
-    return _create_guide_pages(pdf, "benchmark_guide")
-
-
-def create_regression_guide_pages(pdf: PdfPages) -> tuple:
-    """Create guide pages for regression test results."""
-    return _create_guide_pages(pdf, "regression_guide")
 
 
 # ---------------------------------------------------------------------------
