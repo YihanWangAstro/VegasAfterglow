@@ -205,8 +205,7 @@ void build_time_grid(Coord& coord, Ejecta const& jet, Medium const& medium, Real
  * @param t_resol
  * @param is_axisymmetric Whether the jet is axisymmetric (default: true)
  * @param phi_view Viewing angle (default: 0)
- * @param min_theta_num Minimum number of theta grid points (default: 56)
- * @param fwd_ratio Forward ratio for grid resolution (default: 0.3)
+ * @param min_theta_num Minimum number of theta grid points (default: 32)
  * @return A Coord object with the constructed grid
  * @details The grid is based on the observation times (t_obs), maximum theta value (theta_cut), and
  *          specified numbers of grid points in phi, theta, and t. The radial grid is logarithmically
@@ -217,8 +216,7 @@ template <typename Ejecta, typename Medium>
 Coord auto_grid(Ejecta const& jet, Medium const& medium, Array const& t_obs, Real theta_cut, Real theta_view, Real z,
                 Real phi_resol = defaults::grid::phi_resolution, Real theta_resol = defaults::grid::theta_resolution,
                 Real t_resol = defaults::grid::time_resolution, bool is_axisymmetric = true, Real phi_view = 0,
-                size_t min_theta_num = defaults::grid::min_theta_points,
-                Real fwd_ratio = defaults::grid::forward_ratio);
+                size_t min_theta_num = defaults::grid::min_theta_points);
 
 /**
  * <!-- ************************************************************************************** -->
@@ -593,13 +591,28 @@ Array inverse_CFD_sampling(Func&& pdf, Real min, Real max, size_t num,
 
 template <typename Ejecta>
 Array adaptive_theta_grid(Ejecta const& jet, Real theta_min, Real theta_max, size_t theta_num, Real theta_v) {
+    // Pre-scan to find peak structure weight for floor calculation
+    constexpr size_t scan_pts = 100;
+    Real peak_weight = 0;
+    for (size_t i = 0; i <= scan_pts; ++i) {
+        const Real theta = theta_min + (theta_max - theta_min) * static_cast<Real>(i) / scan_pts;
+        const Real Gamma = jet.Gamma0(0, theta);
+        const Real w = Gamma * std::sqrt((Gamma - 1) * Gamma);
+        peak_weight = std::max(peak_weight, w);
+    }
+    const Real floor_weight = 0.1 * peak_weight;
+
+    // Adaptive alpha: scale Doppler boost by sqrt(peak_structure / structure_at_view).
+    const Real Gamma_v = jet.Gamma0(0, std::clamp(theta_v, theta_min, theta_max));
+    const Real structure_v = Gamma_v * std::sqrt(std::fabs((Gamma_v - 1) * Gamma_v));
+    const Real alpha = 4.0 * std::sqrt(peak_weight / std::max(structure_v, 1.0));
+
     auto eqn = [=, &jet](Real const& /*cdf*/, Real& pdf, Real theta) {
         const Real Gamma = jet.Gamma0(0, theta);
         const Real beta = std::sqrt(std::fabs(Gamma * Gamma - 1)) / Gamma;
-        // Real D = 1 / (Gamma * (1 - beta * std::cos(theta - theta_v)));
         const Real a = (1 - beta) / (1 - beta * std::cos(theta - theta_v));
-        pdf = a * Gamma * std::sqrt((Gamma - 1) * Gamma) * std::sin(theta);
-        // pdf = D * std::sin(theta);
+        const Real structure = Gamma * std::sqrt((Gamma - 1) * Gamma);
+        pdf = (1 + alpha * a) * structure + floor_weight;
     };
 
     return inverse_CFD_sampling(eqn, theta_min, theta_max, theta_num);
@@ -613,7 +626,7 @@ inline Array jump_refinement_grid(Array const& jumps, Real theta_min, Real theta
         const Real jump_theta = jumps(idx);
         if (jump_theta >= con::pi / 2 - 0.01)
             continue;
-        const Real half = 3 * avg_spacing;
+        const Real half = 2 * avg_spacing;
         const size_t n = std::max<size_t>(static_cast<size_t>(10 * theta_resol), 2);
         for (size_t i = 1; i <= n; ++i) {
             const Real frac = static_cast<Real>(i) / static_cast<Real>(n);
@@ -927,7 +940,7 @@ void build_time_grid(Coord& coord, Ejecta const& jet, Medium const& medium, Real
 template <typename Ejecta, typename Medium>
 Coord auto_grid(Ejecta const& jet, Medium const& medium, Array const& t_obs, Real theta_cut, Real theta_view, Real z,
                 Real phi_resol, Real theta_resol, Real t_resol, bool is_axisymmetric, Real /*phi_view*/,
-                size_t min_theta_num, Real fwd_ratio) {
+                size_t min_theta_num) {
     Coord coord;
     coord.theta_view = theta_view;
 
@@ -940,15 +953,13 @@ Coord auto_grid(Ejecta const& jet, Medium const& medium, Array const& t_obs, Rea
     Real theta_max = std::min(jet_edge, theta_cut);
 
     size_t theta_num = min_theta_num + static_cast<size_t>((theta_max - theta_min) * 180 / con::pi * theta_resol);
-    const size_t uniform_theta_num = static_cast<size_t>(static_cast<Real>(theta_num) * fwd_ratio);
-    size_t adaptive_theta_num = theta_num - uniform_theta_num;
 
-    const Array uniform_theta = xt::linspace(theta_min, theta_max, uniform_theta_num);
-    const Array adaptive_theta = adaptive_theta_grid(jet, theta_min, theta_max, adaptive_theta_num, theta_view);
+    const Array base_theta = adaptive_theta_grid(jet, theta_min, theta_max, theta_num, theta_view);
 
     const Real avg_spacing = (theta_max - theta_min) / theta_num;
     const Array feature_theta = jump_refinement_grid(jet_jumps, theta_min, theta_max, avg_spacing, theta_resol);
-    coord.theta = merge_grids(merge_grids(uniform_theta, adaptive_theta), feature_theta);
+
+    coord.theta = merge_grids(base_theta, feature_theta);
 
     const size_t phi_num = std::max<size_t>(static_cast<size_t>(360 * phi_resol), 1);
 

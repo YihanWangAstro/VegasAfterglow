@@ -72,10 +72,6 @@ namespace defaults {
         /// Ensures adequate angular coverage even for narrow jets
         inline constexpr std::size_t min_theta_points = 32;
 
-        /// Forward ratio for adaptive grid refinement
-        /// Controls distribution of grid points relative to jet edge
-        inline constexpr double forward_ratio = 0.4;
-
         /// Minimum polar angle (avoids singularity at theta=0)
         inline constexpr double theta_min = 1e-6;
     } // namespace grid

@@ -546,7 +546,7 @@ class PyModel {
     PyModel(JetVariant jet, MediumVariant medium, PyObserver const& observer, PyRadiation const& fwd_rad,
             std::optional<PyRadiation> const& rvs_rad = std::nullopt,
             std::tuple<Real, Real, Real> const& resolutions = std::make_tuple(0.15, 1.0, 10), Real rtol = 1e-5,
-            bool axisymmetric = true)
+            bool axisymmetric = true, size_t min_theta_num = defaults::grid::min_theta_points)
         : jet_(std::move(jet)),
           medium_(std::move(medium)),
           obs_setup(observer),
@@ -556,7 +556,8 @@ class PyModel {
           theta_resol(std::get<1>(resolutions)),
           t_resol(std::get<2>(resolutions)),
           rtol(rtol),
-          axisymmetric(axisymmetric) {
+          axisymmetric(axisymmetric),
+          min_theta_num_(min_theta_num) {
         convert_unit_jet(this->jet_);
         convert_unit_medium(this->medium_);
     }
@@ -756,9 +757,9 @@ class PyModel {
     static void average_exposure_flux(PyFlux& result, std::vector<size_t> const& idx_sorted, size_t original_size,
                                       size_t num_points);
 
-    GridConfig grid_config(size_t min_t_pts, Real min_t_frac) const {
-        return {theta_w, obs_setup.theta_obs, obs_setup.z, phi_resol, theta_resol,
-                t_resol, axisymmetric,        min_t_pts,   min_t_frac};
+    GridConfig grid_config() const {
+        return {theta_w, obs_setup.theta_obs, obs_setup.z,   phi_resol, theta_resol,
+                t_resol, axisymmetric,        min_theta_num_};
     }
 
     JetVariant jet_;                        ///< Jet model (TophatJet, GaussianJet, PowerLawJet, or Ejecta)
@@ -772,6 +773,7 @@ class PyModel {
     Real t_resol{10};                       ///< Time resolution: number of points per decade
     Real rtol{1e-5};                        ///< Relative tolerance
     bool axisymmetric{true};                ///< Whether to assume axisymmetric jet
+    size_t min_theta_num_{defaults::grid::min_theta_points}; ///< Minimum number of theta grid points
 };
 
 //========================================================================================================
@@ -835,14 +837,14 @@ auto PyModel::compute_emission(Array const& t_obs, Array const& nu_obs, Func&& f
     if (!rvs_rad_opt) {
         auto [coord, fwd_shock] = [&] {
             AFTERGLOW_PROFILE_SCOPE(dynamics);
-            return solve_fwd_shock(jet_, medium_, t_obs, grid_config(32, 0.5), fwd_rad.rad, rtol);
+            return solve_fwd_shock(jet_, medium_, t_obs, grid_config(), fwd_rad.rad, rtol);
         }();
         single_shock_emission(fwd_shock, coord, t_obs, nu_obs, observer, fwd_rad, flux.fwd,
                               std::forward<Func>(flux_func));
     } else {
         auto [coord, fwd_shock, rvs_shock] = [&] {
             AFTERGLOW_PROFILE_SCOPE(dynamics);
-            return solve_shock_pair(jet_, medium_, t_obs, grid_config(36, 0.5), fwd_rad.rad, rvs_rad_opt->rad, rtol);
+            return solve_shock_pair(jet_, medium_, t_obs, grid_config(), fwd_rad.rad, rvs_rad_opt->rad, rtol);
         }();
         single_shock_emission(fwd_shock, coord, t_obs, nu_obs, observer, fwd_rad, flux.fwd,
                               std::forward<Func>(flux_func));

@@ -77,7 +77,7 @@ class BenchmarkSession:
 # ---------------------------------------------------------------------------
 
 PHI_VALUES = [0.15, 0.2, 0.25, 0.3]
-THETA_VALUES = [1.0, 1.5, 2.0]
+THETA_VALUES = [0.5, 1.0, 1.5, 2.0]
 T_VALUES = [10, 15, 20]
 REFERENCE_RESOLUTION = (PHI_VALUES[-1] * 1.2, THETA_VALUES[-1] * 1.2, T_VALUES[-1] * 1.2)
 CONVERGENCE_T_LC = np.logspace(0, 8, 100)

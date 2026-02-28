@@ -35,7 +35,7 @@ MEDIUM_STYLES, MEDIUM_MARKERS = {"ISM": "-", "wind": "--"}, {"ISM": "o", "wind":
 MAX_ERROR_THRESHOLD, MEAN_ERROR_THRESHOLD = 0.15, 0.05
 
 # Fiducial resolution settings (single source of truth, used by benchmark and visualization)
-FIDUCIAL_RESOLUTION = (0.15, 1, 10)
+FIDUCIAL_RESOLUTION = (0.15, 0.5, 10)
 DIM_INDEX = {"phi": 0, "theta": 1, "t": 2}
 FIDUCIAL_VALUES = {dim: FIDUCIAL_RESOLUTION[idx] for dim, idx in DIM_INDEX.items()}
 

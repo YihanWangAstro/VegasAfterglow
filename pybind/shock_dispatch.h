@@ -19,7 +19,6 @@ struct GridConfig {
     Real t_resol;
     bool axisymmetric;
     size_t min_t_pts;
-    Real min_t_frac;
 };
 
 /// Solve forward shock dynamics with variant dispatch.
@@ -30,7 +29,7 @@ inline auto solve_fwd_shock(JetVariant const& jet, MediumVariant const& medium, 
     return std::visit(
         [&](auto const& j, auto const& med) {
             auto coord = auto_grid(j, med, t_obs, g.theta_w, g.theta_obs, g.z, g.phi_resol, g.theta_resol, g.t_resol,
-                                   g.axisymmetric, 0, g.min_t_pts, g.min_t_frac);
+                                   g.axisymmetric, 0, g.min_t_pts);
             auto shock = generate_fwd_shock(coord, med, j, rad, rtol);
             return std::pair{std::move(coord), std::move(shock)};
         },
@@ -44,7 +43,7 @@ inline auto solve_shock_pair(JetVariant const& jet, MediumVariant const& medium,
     return std::visit(
         [&](auto const& j, auto const& med) {
             auto coord = auto_grid(j, med, t_obs, g.theta_w, g.theta_obs, g.z, g.phi_resol, g.theta_resol, g.t_resol,
-                                   g.axisymmetric, 0, g.min_t_pts, g.min_t_frac);
+                                   g.axisymmetric, 0, g.min_t_pts);
             auto [fwd, rvs] = generate_shock_pair(coord, med, j, fwd_rad, rvs_rad, rtol);
             return std::tuple{std::move(coord), std::move(fwd), std::move(rvs)};
         },

@@ -272,7 +272,7 @@ auto PyModel::details(Real t_min, Real t_max) const -> PyDetails {
     Observer observer;
 
     if (!rvs_rad_opt) {
-        auto [coord, fwd_shock] = solve_fwd_shock(jet_, medium_, t_obs, grid_config(32, 0.4), fwd_rad.rad, rtol);
+        auto [coord, fwd_shock] = solve_fwd_shock(jet_, medium_, t_obs, grid_config(), fwd_rad.rad, rtol);
 
         details.phi = coord.phi;
         details.theta = coord.theta;
@@ -281,7 +281,7 @@ auto PyModel::details(Real t_min, Real t_max) const -> PyDetails {
         single_evo_details(fwd_shock, coord, observer, fwd_rad, details.fwd);
     } else {
         auto [coord, fwd_shock, rvs_shock] =
-            solve_shock_pair(jet_, medium_, t_obs, grid_config(36, 0.5), fwd_rad.rad, rvs_rad_opt->rad, rtol);
+            solve_shock_pair(jet_, medium_, t_obs, grid_config(), fwd_rad.rad, rvs_rad_opt->rad, rtol);
 
         details.phi = coord.phi;
         details.theta = coord.theta;
