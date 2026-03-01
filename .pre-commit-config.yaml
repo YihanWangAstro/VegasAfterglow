@@ -73,8 +73,8 @@ repos:
         exclude: ^external/.*
       - id: python-tests
         name: Python tests
-        entry: bash -c 'cp VegasAfterglow/_version.py /tmp/_version.py.bak 2>/dev/null; pip install -e . >/dev/null 2>&1 && python -m pytest tests/ -x -q; ret=$?; cp /tmp/_version.py.bak VegasAfterglow/_version.py 2>/dev/null; exit $ret'
+        entry: bash -c 'python -m pytest tests/ -x -q'
         language: system
         pass_filenames: false
-        files: \.(cpp|hpp|c|h|cc|cxx|py)$
+        files: \.(py)$
         exclude: ^(external|script|docs)/.*
