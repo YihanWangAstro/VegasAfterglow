@@ -267,6 +267,7 @@ PYBIND11_MODULE(VegasAfterglowC, m) {
 
         .def("jet_Gamma0", &PyModel::jet_Gamma0, py::arg("phi"), py::arg("theta"),
              py::call_guard<py::gil_scoped_release>())
+
         .def_property_readonly("observer", &PyModel::get_observer)
         .def_property_readonly("fwd_rad", &PyModel::get_fwd_rad)
         .def_property_readonly("rvs_rad", &PyModel::get_rvs_rad)

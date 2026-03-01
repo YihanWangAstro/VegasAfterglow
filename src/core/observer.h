@@ -7,6 +7,7 @@
 #pragma once
 
 #include <stdexcept>
+#include <vector>
 
 #include "../dynamics/shock.h"
 #include "../util/macros.h"

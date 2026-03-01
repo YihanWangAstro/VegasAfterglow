@@ -245,7 +245,7 @@ constexpr T min(T value) {
  */
 template <typename T, typename... Args>
 constexpr T min(T first, Args... args) {
-    return std::min(first, std::min(args...));
+    return std::min(first, ::min(args...));
 }
 
 /**
@@ -273,7 +273,7 @@ constexpr T max(T value) {
  */
 template <typename T, typename... Args>
 constexpr T max(T first, Args... args) {
-    return std::max(first, std::max(args...));
+    return std::max(first, ::max(args...));
 }
 
 /**

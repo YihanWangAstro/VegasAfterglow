@@ -314,6 +314,8 @@ void PyFlux::calc_total() {
 }
 
 auto PyModel::flux_density(PyArray const& t, PyArray const& nu) -> PyFlux {
+    AFTERGLOW_REQUIRE(t.size() > 0, "time array must be non-empty");
+    AFTERGLOW_REQUIRE(nu.size() > 0, "frequency array must be non-empty");
     AFTERGLOW_REQUIRE(
         t.size() == nu.size(),
         "time and frequency arrays must have the same size\nIf you intend to get grid-like output, use the "
@@ -333,6 +335,10 @@ auto PyModel::flux_density(PyArray const& t, PyArray const& nu) -> PyFlux {
 }
 
 auto PyModel::flux(PyArray const& t, double nu_min, double nu_max, size_t num_nu) -> PyFlux {
+    AFTERGLOW_REQUIRE(t.size() > 0, "time array must be non-empty");
+    AFTERGLOW_REQUIRE(nu_min > 0, "nu_min must be positive");
+    AFTERGLOW_REQUIRE(nu_max > nu_min, "nu_max must be greater than nu_min");
+    AFTERGLOW_REQUIRE(num_nu >= 2, "num_nu must be at least 2");
     AFTERGLOW_REQUIRE(is_ascending(t), "time array must be in ascending order");
 
     // Generate frequency array
@@ -429,6 +435,8 @@ auto PyModel::flux_density_exposures(PyArray const& t, PyArray const& nu, PyArra
 }
 
 auto PyModel::flux_density_grid(PyArray const& t, PyArray const& nu) -> PyFlux {
+    AFTERGLOW_REQUIRE(t.size() > 0, "time array must be non-empty");
+    AFTERGLOW_REQUIRE(nu.size() > 0, "frequency array must be non-empty");
     AFTERGLOW_REQUIRE(is_ascending(t), "time array must be in ascending order");
 
     const Array t_obs = t * unit::sec;

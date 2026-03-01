@@ -7,34 +7,6 @@
 
 #include "mesh.h"
 
-#include "../util/macros.h"
-
-bool is_linear_scale(Array const& arr, Real tolerance) {
-    if (arr.size() < 2)
-        return false; // At least two elements are needed.
-
-    const Real diff = arr[1] - arr[0];
-    for (size_t i = 2; i < arr.size(); ++i) {
-        if (std::fabs((arr[i] - arr[i - 1] - diff) / diff) > tolerance) {
-            return false;
-        }
-    }
-    return true;
-}
-
-bool is_log_scale(Array const& arr, Real tolerance) {
-    if (arr.size() < 2)
-        return false; // At least two elements are needed.
-
-    const Real ratio = arr[1] / arr[0];
-    for (size_t i = 2; i < arr.size(); ++i) {
-        if (std::fabs((arr[i] / arr[i - 1] - ratio) / ratio) > tolerance) {
-            return false;
-        }
-    }
-    return true;
-}
-
 Array boundary_to_center(Array const& boundary) {
     if (boundary.size() < 2) {
         return Array::from_shape({0});

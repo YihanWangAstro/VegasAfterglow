@@ -110,26 +110,6 @@ class Coord {
 
 /**
  * <!-- ************************************************************************************** -->
- * @brief Checks if an array is linearly scaled within a given tolerance
- * @param arr The array to check
- * @param tolerance Maximum allowed deviation from linearity (default: 1e-6)
- * @return True if the array is linearly scaled, false otherwise
- * <!-- ************************************************************************************** -->
- */
-bool is_linear_scale(Array const& arr, Real tolerance = defaults::solver::scale_check_tol);
-
-/**
- * <!-- ************************************************************************************** -->
- * @brief Checks if an array is logarithmically scaled within a given tolerance
- * @param arr The array to check
- * @param tolerance Maximum allowed deviation from logarithmic scaling (default: 1e-6)
- * @return True if the array is logarithmically scaled, false otherwise
- * <!-- ************************************************************************************** -->
- */
-bool is_log_scale(Array const& arr, Real tolerance = defaults::solver::scale_check_tol);
-
-/**
- * <!-- ************************************************************************************** -->
  * @brief Converts boundary values to center values using linear interpolation
  * @tparam Arr1 Type of the input array
  * @tparam Arr2 Type of the output array

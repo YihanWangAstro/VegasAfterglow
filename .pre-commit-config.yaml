@@ -60,3 +60,21 @@ repos:
       - id: mixed-line-ending
         args: ['--fix=lf']
         exclude: ^external/.*
+
+  # C++ unit tests and Python tests
+  - repo: local
+    hooks:
+      - id: cpp-unit-tests
+        name: C++ unit tests
+        entry: bash -c 'cd build && cmake .. -DAFTERGLOW_TESTS=ON -DCMAKE_BUILD_TYPE=Release >/dev/null 2>&1 && cmake --build . --target afterglow_tests -j8 >/dev/null 2>&1 && ./afterglow_tests --log_level=error'
+        language: system
+        pass_filenames: false
+        files: \.(cpp|hpp|c|h|cc|cxx)$
+        exclude: ^external/.*
+      - id: python-tests
+        name: Python tests
+        entry: bash -c 'cp VegasAfterglow/_version.py /tmp/_version.py.bak 2>/dev/null; pip install -e . >/dev/null 2>&1 && python -m pytest tests/ -x -q; ret=$?; cp /tmp/_version.py.bak VegasAfterglow/_version.py 2>/dev/null; exit $ret'
+        language: system
+        pass_filenames: false
+        files: \.(cpp|hpp|c|h|cc|cxx|py)$
+        exclude: ^(external|script|docs)/.*

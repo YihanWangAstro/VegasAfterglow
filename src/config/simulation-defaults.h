@@ -93,9 +93,6 @@ namespace defaults {
         /// Tolerance for binary search (jet edge finding)
         inline constexpr double binary_search_eps = 1e-9;
 
-        /// Tolerance for checking linear/log scale arrays
-        inline constexpr double scale_check_tol = 1e-6;
-
         /// Maximum ODE integration steps before giving up
         /// Prevents MCMC from hanging on pathological parameter combinations
         inline constexpr std::size_t max_ode_steps = 100000;

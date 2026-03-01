@@ -79,3 +79,53 @@ endif()
 
 # Install the module into the Python package directory
 install(TARGETS VegasAfterglowC DESTINATION VegasAfterglow)
+
+# C++ unit tests (opt-in)
+option(AFTERGLOW_TESTS "Build C++ unit tests" OFF)
+
+if(AFTERGLOW_TESTS)
+  enable_testing()
+
+  set(AFTERGLOW_CORE_SOURCES
+    src/core/mesh.cpp
+    src/core/observer.cpp
+    src/core/physics.cpp
+    src/dynamics/shock.cpp
+    src/radiation/inverse-compton.cpp
+    src/radiation/power-law-syn.cpp
+    src/radiation/prompt.cpp
+    src/radiation/smooth-power-law-syn.cpp
+    src/radiation/synchrotron.cpp
+    src/util/IO.cpp
+    src/util/utilities.cpp
+  )
+
+  add_executable(afterglow_tests
+    tests/cpp/test_main.cpp
+    tests/cpp/test_fast_math.cpp
+    tests/cpp/test_utilities.cpp
+    tests/cpp/test_physics.cpp
+    tests/cpp/test_mesh.cpp
+    tests/cpp/test_shock_physics.cpp
+    tests/cpp/test_synchrotron.cpp
+    tests/cpp/test_smooth_power_law.cpp
+    tests/cpp/test_environment.cpp
+    tests/cpp/test_quadrature.cpp
+    tests/cpp/test_power_law_syn.cpp
+    tests/cpp/test_synchrotron_kernel.cpp
+    tests/cpp/test_inverse_compton.cpp
+    ${AFTERGLOW_CORE_SOURCES}
+  )
+
+  target_include_directories(afterglow_tests PRIVATE
+    "${CMAKE_CURRENT_SOURCE_DIR}/include"
+    "${CMAKE_CURRENT_SOURCE_DIR}/src"
+  )
+  target_include_directories(afterglow_tests SYSTEM PRIVATE
+    "${CMAKE_CURRENT_SOURCE_DIR}/external"
+  )
+  target_compile_definitions(afterglow_tests PRIVATE NO_XTENSOR_IO)
+  target_compile_features(afterglow_tests PRIVATE cxx_std_20)
+
+  add_test(NAME afterglow_tests COMMAND afterglow_tests)
+endif()
