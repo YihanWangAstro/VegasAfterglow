@@ -905,7 +905,7 @@ Single Frame
         fwd_rad=Radiation(eps_e=1e-1, eps_B=1e-3, p=2.3),
     )
 
-    img = model.sky_image([1e6], nu_obs=1e9, fov=500 * uas, npixel=256)
+    img = model.sky_image([1e6], nu_obs=1e9, fov=500 * uas, npixel=128)
 
     fig, ax = plt.subplots(dpi=100)
     extent = img.extent / uas  # convert to microarcseconds
@@ -990,6 +990,59 @@ For off-axis observers, the image centroid drifts across the sky (superluminal a
 
     times_oa = np.logspace(5, 8, 30)
     imgs_oa = model_offaxis.sky_image(times_oa, nu_obs=1e9, fov=5000 * uas, npixel=128)
+
+Flux from Image vs Direct Calculation
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+The sky image contains surface brightness in erg/cm²/s/Hz/sr. Integrating over all pixels
+(i.e. summing the image and multiplying by the pixel solid angle) recovers the total flux
+density, which should match the result from ``flux_density_grid()``:
+
+.. code-block:: python
+
+    import numpy as np
+    import matplotlib.pyplot as plt
+    from VegasAfterglow import TophatJet, ISM, Observer, Radiation, Model
+    from VegasAfterglow.units import uas
+
+    model = Model(
+        jet=TophatJet(theta_c=0.1, E_iso=1e52, Gamma0=200),
+        medium=ISM(n_ism=1),
+        observer=Observer(lumi_dist=1e26, z=0.1, theta_obs=0),
+        fwd_rad=Radiation(eps_e=1e-1, eps_B=1e-3, p=2.3),
+    )
+
+    t_obs = np.logspace(3, 8, 30)
+    nu_obs = 1e9
+
+    # Method 1: integrate sky image
+    img = model.sky_image(t_obs, nu_obs=nu_obs, fov=2000 * uas, npixel=128)
+    flux_from_image = img.image.sum(axis=(1, 2)) * img.pixel_solid_angle
+
+    # Method 2: direct flux density calculation
+    flux_direct = model.flux_density_grid(t_obs, np.array([nu_obs])).total[0, :]
+
+    # Plot comparison
+    fig, (ax1, ax2) = plt.subplots(2, 1, figsize=(5, 5), dpi=150, sharex=True,
+                                    gridspec_kw={"height_ratios": [3, 1], "hspace": 0.05})
+
+    ax1.loglog(t_obs, flux_direct, "k-", label="flux_density_grid")
+    ax1.loglog(t_obs, flux_from_image, "o", ms=4, color="C1", label="sky_image (integrated)")
+    ax1.set_ylabel(r"Flux density (erg/cm$^2$/s/Hz)")
+    ax1.legend()
+
+    ratio = flux_from_image / flux_direct
+    ax2.semilogx(t_obs, ratio, "o-", ms=4, color="C1")
+    ax2.axhline(1, color="k", ls="--", lw=0.8)
+    ax2.set_ylabel("image / direct")
+    ax2.set_xlabel("Observer time (s)")
+    ax2.set_ylim(0.95, 1.05)
+    plt.tight_layout()
+
+.. note::
+    The two methods agree to within a few percent. Small differences arise because the image
+    uses a finite field of view and pixel resolution. Increasing ``npixel`` and ``fov`` improves
+    the agreement.
 
 .. note::
     For a complete working example with animations and plots, see ``script/sky-image.ipynb``.
