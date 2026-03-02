@@ -25,6 +25,13 @@ struct SkyImageResult {
     Real pixel_solid_angle{0};  ///< Pixel solid angle (sr)
 };
 
+/// Post-splatting symmetry enforcement for axisymmetric jets.
+enum class RenderSym {
+    none,     ///< No symmetry (non-axisymmetric or general case)
+    mirror_y, ///< Average y ↔ -y (off-axis axisymmetric: half-cell phi shift breaks natural pairing)
+    quadrant  ///< Render Q1 only, copy to Q2–Q4 (on-axis axisymmetric: circular symmetry)
+};
+
 /// Internal cell grid for Gaussian splatting (sky position, luminosity, kernel width per cell).
 struct SplatGrid {
     MeshGrid x, y, L, sigma;
@@ -41,10 +48,8 @@ struct SplatGrid {
     /// Compute per-cell Gaussian σ (half the max neighbor distance) and max_sigma.
     void compute_sigma();
 
-    /// Render the splat grid via Gaussian splatting into the provided 2D image, centered at (0,0).
-    /// @param image Output 2D image [npixel, npixel] (must be pre-zeroed)
-    /// @param pix_size Pixel size in radians
-    void render(MeshGrid& image, Real pix_size) const;
+    /// Render the splat grid via Gaussian splatting into a frame of the 3D result image.
+    void render(MeshGrid3d& image, size_t frame, Real pix_size, RenderSym sym) const;
 };
 
 /**
@@ -565,11 +570,10 @@ SkyImageResult Observer::sky_image(Coord const& coord, Shock const& shock, Array
     result.extent = {-half_fov, half_fov, -half_fov, half_fov};
     result.pixel_solid_angle = pix_size * pix_size;
 
-    // Allocate SplatGrid once and reuse across frames
-    const size_t n_splat_phi = (eff_phi_grid == 1) ? std::max<size_t>(4 * theta_grid, npixel) : eff_phi_grid;
+    // 2D Gaussian splatting
+    const size_t n_splat_phi = (eff_phi_grid == 1) ? 4 * theta_grid : eff_phi_grid;
     SplatGrid grid(n_splat_phi, theta_grid);
 
-    // Precompute phi sin/cos table once for axisymmetric case (reused across all frames)
     const size_t copies_per_phys = n_splat_phi / eff_phi_grid;
     std::vector<Real> cos_phi_tab, sin_phi_tab;
     if (eff_phi_grid == 1) {
@@ -582,12 +586,13 @@ SkyImageResult Observer::sky_image(Coord const& coord, Shock const& shock, Array
         }
     }
 
+    const RenderSym sym =
+        (eff_phi_grid == 1) ? (coord.theta_view == 0 ? RenderSym::quadrant : RenderSym::mirror_y) : RenderSym::none;
+
     for (size_t f = 0; f < n_frames; ++f) {
         grid.reset();
         build_splat_grid(grid, coord, shock, t_obs(f), nu_obs, photons, cos_phi_tab, sin_phi_tab);
-        MeshGrid frame_img({npixel, npixel}, 0);
-        grid.render(frame_img, pix_size);
-        xt::view(result.image, f, xt::all(), xt::all()) = frame_img;
+        grid.render(result.image, f, pix_size, sym);
     }
     return result;
 }

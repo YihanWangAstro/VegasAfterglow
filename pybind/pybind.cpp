@@ -258,7 +258,7 @@ PYBIND11_MODULE(VegasAfterglowC, m) {
              py::arg("expo_time"), py::arg("num_points") = 10, py::call_guard<py::gil_scoped_release>())
 
         .def("sky_image", &PyModel::sky_image, py::arg("t_obs"), py::arg("nu_obs"), py::arg("fov"),
-             py::arg("npixel") = 128, py::call_guard<py::gil_scoped_release>())
+             py::arg("npixel") = 256, py::call_guard<py::gil_scoped_release>())
 
         .def("details", &PyModel::details, py::arg("t_min"), py::arg("t_max"), py::call_guard<py::gil_scoped_release>())
 

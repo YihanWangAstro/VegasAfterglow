@@ -235,18 +235,21 @@ void SplatGrid::reset() {
     max_sigma = 0;
 }
 
-void SplatGrid::render(MeshGrid& image, Real pix_size) const {
+void SplatGrid::render(MeshGrid3d& image, size_t frame, Real pix_size, RenderSym sym) const {
     if (xmin > xmax) {
         return;
     }
 
-    const size_t npixel = image.shape(0);
+    const size_t npixel = image.shape(1);
     const Real half_fov = 0.5 * pix_size * static_cast<Real>(npixel);
     const Real x_lo = -half_fov;
     const Real y_lo = -half_fov;
     const Real inv_pix_size = 1.0 / pix_size;
+    const int half = static_cast<int>(npixel / 2);
+    const bool quad = (sym == RenderSym::quadrant);
 
-    // Gaussian splatting: paint each cell as a 2D Gaussian onto the pixel grid
+    // Gaussian splatting: paint each cell as a 2D Gaussian onto the pixel grid.
+    // For quadrant symmetry, only write to Q1 (x >= 0, y >= 0) and copy afterwards.
     for (size_t qi = 0; qi < n_phi; ++qi) {
         for (size_t qj = 0; qj < n_theta; ++qj) {
             if (L(qi, qj) <= 0) {
@@ -260,11 +263,11 @@ void SplatGrid::render(MeshGrid& image, Real pix_size) const {
             const Real inv_2sig2 = 0.5 / sig2;
             const Real amp = L(qi, qj) / (2 * con::pi * sig2);
 
-            const Real radius = 3 * sig;
-            const int px_lo = std::max(0, static_cast<int>((x_c - radius - x_lo) * inv_pix_size));
+            const Real radius = 4 * sig;
+            const int px_lo = std::max(quad ? half : 0, static_cast<int>((x_c - radius - x_lo) * inv_pix_size));
             const int px_hi =
                 std::min(static_cast<int>(npixel) - 1, static_cast<int>((x_c + radius - x_lo) * inv_pix_size));
-            const int py_lo = std::max(0, static_cast<int>((y_c - radius - y_lo) * inv_pix_size));
+            const int py_lo = std::max(quad ? half : 0, static_cast<int>((y_c - radius - y_lo) * inv_pix_size));
             const int py_hi =
                 std::min(static_cast<int>(npixel) - 1, static_cast<int>((y_c + radius - y_lo) * inv_pix_size));
 
@@ -275,21 +278,36 @@ void SplatGrid::render(MeshGrid& image, Real pix_size) const {
                     const Real dy = y_lo + (py + 0.5) * pix_size - y_c;
                     const Real d2 = dx2 + dy * dy;
                     if (d2 < radius * radius) {
-                        image(px, py) += amp * std::exp(-d2 * inv_2sig2);
+                        image(frame, px, py) += amp * std::exp(-d2 * inv_2sig2);
                     }
                 }
             }
         }
     }
 
-    // Enforce y=0 mirror symmetry (axisymmetric jet viewed off-axis has a half-cell
-    // phi shift that breaks the natural sin(phi) ↔ -sin(phi) pairing)
-    for (size_t px = 0; px < npixel; ++px) {
-        for (size_t py = 0; py < npixel / 2; ++py) {
-            const size_t py_m = npixel - 1 - py;
-            const Real avg = 0.5 * (image(px, py) + image(px, py_m));
-            image(px, py) = avg;
-            image(px, py_m) = avg;
+    if (sym == RenderSym::quadrant) {
+        // Replicate Q1 to Q2, Q3, Q4 with cache-friendly row access
+        const size_t h = npixel / 2;
+        for (size_t px = h; px < npixel; ++px) {
+            const size_t mx = npixel - 1 - px;
+            for (size_t py = h; py < npixel; ++py) {
+                image(frame, mx, py) = image(frame, px, py);
+            }
+        }
+        for (size_t px = 0; px < npixel; ++px) {
+            for (size_t py = h; py < npixel; ++py) {
+                image(frame, px, npixel - 1 - py) = image(frame, px, py);
+            }
+        }
+    } else if (sym == RenderSym::mirror_y) {
+        // Average y ↔ -y to enforce mirror symmetry
+        for (size_t px = 0; px < npixel; ++px) {
+            for (size_t py = 0; py < npixel / 2; ++py) {
+                const size_t py_m = npixel - 1 - py;
+                const Real avg = 0.5 * (image(frame, px, py) + image(frame, px, py_m));
+                image(frame, px, py) = avg;
+                image(frame, px, py_m) = avg;
+            }
         }
     }
 }
