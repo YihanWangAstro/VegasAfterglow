@@ -3,7 +3,7 @@ var structSplatGrid =
     [ "SplatGrid", "structSplatGrid.html#a5013a35f4afaf35f8bb9ad70e0dc2fef", null ],
     [ "SplatGrid", "structSplatGrid.html#a1a81931505072b70642612e39e1690b1", null ],
     [ "compute_sigma", "structSplatGrid.html#ae2d0676a9bfcb8dd21390c2c886dade5", null ],
-    [ "render", "structSplatGrid.html#a9ffeb9a575f70be2b040f424500f10d4", null ],
+    [ "render", "structSplatGrid.html#a46d68dc178d9936c56bc0a32de9d0ade", null ],
     [ "reset", "structSplatGrid.html#aabfa00c30a490abd9341703146170d5a", null ],
     [ "L", "structSplatGrid.html#a5e9b276046ce5ce275b9b8c0d30baea7", null ],
     [ "max_sigma", "structSplatGrid.html#a9b5043e4129b73ff33ff24fb45c52706", null ],

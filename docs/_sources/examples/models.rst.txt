@@ -363,6 +363,12 @@ Reverse Shock Emission
         plt.loglog(times, results.fwd.sync[i,:], label=fr'${base:.1f} \times 10^{{{exp}}}$ Hz (fwd)')
         plt.loglog(times, results.rvs.sync[i,:], label=fr'${base:.1f} \times 10^{{{exp}}}$ Hz (rvs)')#reverse shock synchrotron
 
+.. figure:: /_static/images/reverse_shock_lc.png
+   :width: 500
+   :align: center
+
+   Forward (solid) and reverse (dashed) shock synchrotron light curves at three frequency bands.
+
 .. note::
     You may increase the resolution of the grid to improve the accuracy of the reverse shock synchrotron radiation if you see spiky features.
 
@@ -407,6 +413,12 @@ Self-Synchrotron Compton Radiation
         base = nu / 10**exp
         plt.loglog(times, results.fwd.sync[i,:], label=fr'${base:.1f} \times 10^{{{exp}}}$ Hz (sync)')#synchrotron
         plt.loglog(times, results.fwd.ssc[i,:], label=fr'${base:.1f} \times 10^{{{exp}}}$ Hz (SSC)')#SSC
+
+.. figure:: /_static/images/ssc_lc.png
+   :width: 500
+   :align: center
+
+   Synchrotron (solid) and self-synchrotron Compton (dashed) light curves at three frequency bands with Klein-Nishina corrections.
 
 .. note::
     When ``ssc=True``, SSC cooling of electrons is automatically included. The ``kn`` flag controls whether Klein-Nishina corrections are applied:

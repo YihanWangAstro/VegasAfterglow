@@ -1,5 +1,5 @@
 <map id="SplatGrid::render" name="SplatGrid::render">
-<area shape="rect" id="Node000001" title="Render the splat grid via Gaussian splatting into the provided 2D image, centered at (0,..." alt="" coords="615,5,747,31"/>
+<area shape="rect" id="Node000001" title="Render the splat grid via Gaussian splatting into a frame of the 3D result image." alt="" coords="615,5,747,31"/>
 <area shape="rect" id="Node000002" href="$classObserver.html#a31570a410e64cffe1e4b9e16af5acef0" title="Computes resolved sky images at multiple observer times and a single frequency." alt="" coords="408,5,567,31"/>
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="601,21,567,21,567,15,601,15"/>
 <area shape="rect" id="Node000003" href="$classPyModel.html#a982ace37b25f18b6bb32d880739ae88a" title="Compute resolved sky images at multiple observer times and a single frequency." alt="" coords="204,5,360,31"/>

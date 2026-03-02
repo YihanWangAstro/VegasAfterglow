@@ -1,5 +1,9 @@
 var NAVTREEINDEX3 =
 {
+"shock-physics_8h.html#ade3d4f9e3f338b1bfe835a8526dce42b":[4,0,2,2,4,14],
+"shock-physics_8h.html#ae6e8e8dc604693f1e05b35c8590312a9":[4,0,2,2,4,21],
+"shock-physics_8h.html#aea01401141a45dba7c4cf45190428c86":[4,0,2,2,4,12],
+"shock-physics_8h.html#aed59bb7f40db395eee32105a82e245f4":[4,0,2,2,4,24],
 "shock-physics_8h.html#aedc1c5385b14986b267d8e27eec05cf7":[4,0,2,2,4,16],
 "shock-physics_8h.html#af85a63428f015989284de82ed97685ee":[4,0,2,2,4,31],
 "shock-physics_8h.html#af8c6e4984af9f6addc7959f6cd23bde6":[4,0,2,2,4,17],
@@ -225,12 +229,12 @@ var NAVTREEINDEX3 =
 "structSplatGrid.html#a10e3618a522b0f60ff0fd5eef3ca54f9":[3,0,38,12],
 "structSplatGrid.html#a1a81931505072b70642612e39e1690b1":[3,0,38,1],
 "structSplatGrid.html#a3ea2f3c8bb7e176c262d6a7680b466d1":[3,0,38,7],
+"structSplatGrid.html#a46d68dc178d9936c56bc0a32de9d0ade":[3,0,38,3],
 "structSplatGrid.html#a4ef3a08f4b41211c4b285b3b0b9bbcc4":[3,0,38,11],
 "structSplatGrid.html#a5013a35f4afaf35f8bb9ad70e0dc2fef":[3,0,38,0],
 "structSplatGrid.html#a5e9b276046ce5ce275b9b8c0d30baea7":[3,0,38,5],
 "structSplatGrid.html#a85d62c9239e6b863a90dc93e53b276b7":[3,0,38,13],
 "structSplatGrid.html#a9b5043e4129b73ff33ff24fb45c52706":[3,0,38,6],
-"structSplatGrid.html#a9ffeb9a575f70be2b040f424500f10d4":[3,0,38,3],
 "structSplatGrid.html#aa695a3a382c742a2811567b9d8e557dc":[3,0,38,14],
 "structSplatGrid.html#aabfa00c30a490abd9341703146170d5a":[3,0,38,4],
 "structSplatGrid.html#aafa8135f0aa3c7c6f7f1f3e5b6937bd2":[3,0,38,10],
@@ -245,9 +249,5 @@ var NAVTREEINDEX3 =
 "structSynElectrons.html#a25948b39422b587f0048fc5899c120c2":[3,0,39,8],
 "structSynElectrons.html#a4cfe5375f620c71ed77acdcd743a2639":[3,0,39,5],
 "structSynElectrons.html#a8f6f82711ad7212348f13d3a49c2d4b5":[3,0,39,10],
-"structSynElectrons.html#a921f1ee7f5bf087c1bd255da68091460":[3,0,39,9],
-"structSynElectrons.html#a96402c1ba35b1a66de649f47f9a4e3b5":[3,0,39,11],
-"structSynElectrons.html#a99879fd40758e9bca125100ffd799fc6":[3,0,39,4],
-"structSynElectrons.html#aa2e8c9dd55662d992284bd1baf49797c":[3,0,39,3],
-"structSynElectrons.html#aa5320cc5590c4ce7f3e58356fa653486":[3,0,39,2]
+"structSynElectrons.html#a921f1ee7f5bf087c1bd255da68091460":[3,0,39,9]
 };

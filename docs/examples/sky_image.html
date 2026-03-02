@@ -21,6 +21,7 @@
       <script src="../_static/documentation_options.js?v=01f34227"></script>
       <script src="../_static/doctools.js?v=9a2dae69"></script>
       <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
       <script src="../_static/js/custom.js"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
@@ -140,6 +141,13 @@
 <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
 </pre></div>
 </div>
+<figure class="align-center" id="id2">
+<a class="reference internal image-reference" href="../_images/sky_image_single.png"><img alt="../_images/sky_image_single.png" src="../_images/sky_image_single.png" style="width: 500px;" />
+</a>
+<figcaption>
+<p><span class="caption-text">On-axis sky image at <span class="math notranslate nohighlight">\(t_{\rm obs} = 10^6\)</span> s, <span class="math notranslate nohighlight">\(\nu = 1\)</span> GHz. The limb-brightened ring is characteristic of relativistic blast waves viewed on-axis.</span><a class="headerlink" href="#id2" title="Link to this image"></a></p>
+</figcaption>
+</figure>
 <p><strong>Return value (``SkyImage`` object):</strong></p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">img.image</span></code>: 3D numpy array of shape <code class="docutils literal notranslate"><span class="pre">(n_frames,</span> <span class="pre">npixel,</span> <span class="pre">npixel)</span></code> — surface brightness in erg/cm²/s/Hz/sr</p></li>
@@ -190,6 +198,8 @@ for microarcsecond scale: <code class="docutils literal notranslate"><span class
 <span class="n">anim</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s2">&quot;sky-image.gif&quot;</span><span class="p">,</span> <span class="n">writer</span><span class="o">=</span><span class="s2">&quot;pillow&quot;</span><span class="p">,</span> <span class="n">fps</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
 </pre></div>
 </div>
+<a class="reference internal image-reference" href="../_images/sky-image.gif"><img alt="../_images/sky-image.gif" class="align-center" src="../_images/sky-image.gif" style="width: 500px;" />
+</a>
 </section>
 <section id="off-axis-observer">
 <h2>Off-Axis Observer<a class="headerlink" href="#off-axis-observer" title="Link to this heading"></a></h2>
@@ -205,6 +215,13 @@ for microarcsecond scale: <code class="docutils literal notranslate"><span class
 <span class="n">imgs_oa</span> <span class="o">=</span> <span class="n">model_offaxis</span><span class="o">.</span><span class="n">sky_image</span><span class="p">(</span><span class="n">times_oa</span><span class="p">,</span> <span class="n">nu_obs</span><span class="o">=</span><span class="mf">1e9</span><span class="p">,</span> <span class="n">fov</span><span class="o">=</span><span class="mi">5000</span> <span class="o">*</span> <span class="n">uas</span><span class="p">,</span> <span class="n">npixel</span><span class="o">=</span><span class="mi">128</span><span class="p">)</span>
 </pre></div>
 </div>
+<figure class="align-center" id="id3">
+<a class="reference internal image-reference" href="../_images/sky_image_offaxis.png"><img alt="../_images/sky_image_offaxis.png" src="../_images/sky_image_offaxis.png" style="width: 700px;" />
+</a>
+<figcaption>
+<p><span class="caption-text">Off-axis sky image evolution (<span class="math notranslate nohighlight">\(\theta_{\rm obs} = 0.4\)</span> rad) at <span class="math notranslate nohighlight">\(t = 10^5, 10^6, 10^7\)</span> s. The image centroid drifts across the sky (superluminal apparent motion) as the jet decelerates and the beaming cone widens.</span><a class="headerlink" href="#id3" title="Link to this image"></a></p>
+</figcaption>
+</figure>
 </section>
 <section id="flux-from-image-vs-direct-calculation">
 <h2>Flux from Image vs Direct Calculation<a class="headerlink" href="#flux-from-image-vs-direct-calculation" title="Link to this heading"></a></h2>
@@ -251,6 +268,13 @@ density, which should match the result from <code class="docutils literal notran
 <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
 </pre></div>
 </div>
+<figure class="align-center" id="id4">
+<a class="reference internal image-reference" href="../_images/sky_image_flux_comparison.png"><img alt="../_images/sky_image_flux_comparison.png" src="../_images/sky_image_flux_comparison.png" style="width: 500px;" />
+</a>
+<figcaption>
+<p><span class="caption-text">Comparison of flux density obtained by integrating the sky image (orange dots) versus the direct <code class="docutils literal notranslate"><span class="pre">flux_density_grid()</span></code> calculation (black line). The bottom panel shows the ratio, confirming agreement to within a few percent.</span><a class="headerlink" href="#id4" title="Link to this image"></a></p>
+</figcaption>
+</figure>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>The two methods agree to within a few percent. Small differences arise because the image

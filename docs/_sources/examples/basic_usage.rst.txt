@@ -77,6 +77,12 @@ Setting up a simple afterglow model
     plt.legend(ncol=2)
     plt.title('Synchrotron Spectra')
 
+.. figure:: /_static/images/basic_lc_spec.png
+   :width: 700
+   :align: center
+
+   Multi-wavelength light curves (left) and broadband synchrotron spectra at different epochs (right). Dashed vertical lines mark the three frequency bands.
+
 Calculate flux on time-frequency pairs
 ---------------------------------------
 
@@ -151,6 +157,12 @@ For broadband flux measurements integrated over a frequency range (e.g., instrum
     plt.ylabel('Integrated Flux [erg/cm²/s]')
     plt.legend()
     plt.title('Broadband Light Curves')
+
+.. figure:: /_static/images/basic_bolometric.png
+   :width: 500
+   :align: center
+
+   Frequency-integrated (bolometric) light curves for Swift/BAT X-ray and V-band optical bands.
 
 .. note::
     **When to use `flux` vs `flux_density_grid`:**

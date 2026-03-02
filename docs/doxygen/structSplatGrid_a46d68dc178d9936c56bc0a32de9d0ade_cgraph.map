@@ -1,5 +1,5 @@
 <map id="SplatGrid::render" name="SplatGrid::render">
-<area shape="rect" id="Node000001" title="Render the splat grid via Gaussian splatting into the provided 2D image, centered at (0,..." alt="" coords="5,5,137,31"/>
+<area shape="rect" id="Node000001" title="Render the splat grid via Gaussian splatting into a frame of the 3D result image." alt="" coords="5,5,137,31"/>
 <area shape="rect" id="Node000002" href="$pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89" title=" " alt="" coords="185,5,340,31"/>
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="138,15,172,15,172,21,138,21"/>
 </map>

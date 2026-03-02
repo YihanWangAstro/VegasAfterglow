@@ -41,6 +41,12 @@ Single Frame
     fig.colorbar(im, label=r"Surface brightness (erg/cm$^2$/s/Hz/sr)")
     plt.tight_layout()
 
+.. figure:: /_static/images/sky_image_single.png
+   :width: 500
+   :align: center
+
+   On-axis sky image at :math:`t_{\rm obs} = 10^6` s, :math:`\nu = 1` GHz. The limb-brightened ring is characteristic of relativistic blast waves viewed on-axis.
+
 **Return value (``SkyImage`` object):**
 
 - ``img.image``: 3D numpy array of shape ``(n_frames, npixel, npixel)`` — surface brightness in erg/cm²/s/Hz/sr
@@ -92,6 +98,10 @@ Pass an array of observer times to generate an image sequence efficiently:
     anim = FuncAnimation(fig, update, frames=len(times), interval=100, blit=True)
     anim.save("sky-image.gif", writer="pillow", fps=10)
 
+.. image:: ../../../assets/sky-image.gif
+   :width: 500
+   :align: center
+
 Off-Axis Observer
 -----------------
 
@@ -108,6 +118,12 @@ For off-axis observers, the image centroid drifts across the sky (superluminal a
 
     times_oa = np.logspace(5, 8, 30)
     imgs_oa = model_offaxis.sky_image(times_oa, nu_obs=1e9, fov=5000 * uas, npixel=128)
+
+.. figure:: /_static/images/sky_image_offaxis.png
+   :width: 700
+   :align: center
+
+   Off-axis sky image evolution (:math:`\theta_{\rm obs} = 0.4` rad) at :math:`t = 10^5, 10^6, 10^7` s. The image centroid drifts across the sky (superluminal apparent motion) as the jet decelerates and the beaming cone widens.
 
 Flux from Image vs Direct Calculation
 ---------------------------------------
@@ -156,6 +172,12 @@ density, which should match the result from ``flux_density_grid()``:
     ax2.set_xlabel("Observer time (s)")
     ax2.set_ylim(0.95, 1.05)
     plt.tight_layout()
+
+.. figure:: /_static/images/sky_image_flux_comparison.png
+   :width: 500
+   :align: center
+
+   Comparison of flux density obtained by integrating the sky image (orange dots) versus the direct ``flux_density_grid()`` calculation (black line). The bottom panel shows the ratio, confirming agreement to within a few percent.
 
 .. note::
     The two methods agree to within a few percent. Small differences arise because the image
