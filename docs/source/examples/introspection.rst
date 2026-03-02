@@ -49,6 +49,12 @@ You can examine the angular dependence of jet properties using the ``jet_E_iso``
     plt.tight_layout()
     plt.show()
 
+.. figure:: /_static/images/introspection_jet.png
+   :width: 700
+   :align: center
+
+   Angular profiles of isotropic-equivalent energy (left) and initial Lorentz factor (right) for a power-law jet.
+
 Medium Density Introspection
 -----------------------------
 
@@ -90,6 +96,12 @@ You can examine the radial dependence of medium density using the ``medium`` met
     plt.axhline(0.1, color='blue', linestyle='--', alpha=0.7, label='Outer ISM density')
     plt.legend()
     plt.show()
+
+.. figure:: /_static/images/introspection_medium.png
+   :width: 500
+   :align: center
+
+   Stratified wind medium density profile showing the smooth transition from inner constant density to outer ISM density.
 
 Two-Component Jet Analysis
 ---------------------------
@@ -141,6 +153,12 @@ For complex jet structures like two-component jets, introspection is particularl
 
     plt.tight_layout()
     plt.show()
+
+.. figure:: /_static/images/introspection_twocomp.png
+   :width: 500
+   :align: center
+
+   Two-component jet structure showing the narrow core and wide component boundaries for both energy (top) and Lorentz factor (bottom).
 
 These introspection methods are essential for:
 
