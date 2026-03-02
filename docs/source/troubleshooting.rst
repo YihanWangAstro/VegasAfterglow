@@ -285,7 +285,7 @@ Getting Help
 
 If you encounter issues not covered here:
 
-1. **Check the examples**: The :doc:`examples` page covers many common use cases
+1. **Check the examples**: The :doc:`examples/index` page covers many common use cases
 2. **Search existing issues**: Visit our `GitHub Issues <https://github.com/YihanWangAstro/VegasAfterglow/issues>`_
 3. **Create a new issue**: Include:
 

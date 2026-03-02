@@ -39,6 +39,8 @@
     - [C++ Installation](#c-installation)
   - [Usage](#usage)
     - [Quick Start](#quick-start)
+      - [Command-Line Tool (`vegasgen`)](#command-line-tool-vegasgen)
+      - [Python API](#python-api)
     - [Light Curve \& Spectrum Calculation](#light-curve--spectrum-calculation)
     - [Internal Quantities Evolution](#internal-quantities-evolution)
     - [Sky Image](#sky-image)
@@ -61,7 +63,7 @@
 - **Forward and Reverse Shock Modeling:** Simulates both shocks via shock crossing dynamics with arbitrary magnetization levels and shell thicknesses.
 - **Relativistic and Non-Relativistic Regimes:** Accurately models shock evolution across all velocity regimes.
 - **Adiabatic and Radiative Blast Waves:** Supports smooth transition between adiabatic and radiative blast waves.
-- **Ambient Medium:** Supports uniform Interstellar Medium (ISM), stellar wind environments, and **[user-defined density profiles](https://yihanwangastro.github.io/VegasAfterglow/docs/examples.html#user-defined-medium)**.
+- **Ambient Medium:** Supports uniform Interstellar Medium (ISM), stellar wind environments, and **[user-defined density profiles](https://yihanwangastro.github.io/VegasAfterglow/docs/examples/models.html#user-defined-medium)**.
 - **Energy and Mass Injection:** Supports user-defined profiles for continuous energy and/or mass injection into the blast wave.
 
 <br clear="right"/>
@@ -70,7 +72,7 @@
 
 <img align="right" src="https://github.com/YihanWangAstro/VegasAfterglow/raw/main/assets/jet_geometry.svg" width="450"/>
 
-- **Structured Jet Profiles:** Allows **[user-defined angular profiles](https://yihanwangastro.github.io/VegasAfterglow/docs/examples.html#user-defined-jet)** for energy distribution, initial Lorentz factor, and magnetization.
+- **Structured Jet Profiles:** Allows **[user-defined angular profiles](https://yihanwangastro.github.io/VegasAfterglow/docs/examples/models.html#user-defined-jet)** for energy distribution, initial Lorentz factor, and magnetization.
 - **Arbitrary Viewing Angles:** Supports off-axis observers at any viewing angle relative to the jet axis.
 - **Jet Spreading:** Includes lateral expansion dynamics for realistic jet evolution (experimental).
 - **Non-Axisymmetric Jets:** Capable of modeling complex, non-axisymmetric jet structures.
@@ -100,12 +102,10 @@
 
 <img align="left" src="https://github.com/YihanWangAstro/VegasAfterglow/raw/main/assets/convergence_plot.png" width="450"/>
 
-VegasAfterglow delivers exceptional computational performance through deep optimization of its core algorithms. A 100-point single-frequency light curve (forward shock and synchrotron emission only) for a structured jet viewed off-axis can be generated in approximately 1 millisecond on a single core of an Apple M2 chip. This performance enables comprehensive Bayesian inference on standard laptop hardware in seconds to minutes:
+A 100-point single-frequency light curve for a structured off-axis jet runs in ~1 ms on one Apple M2 core. This enables MCMC parameter estimation on a laptop:
 
-* **Tophat jet**: On-axis forward synchrotron only, 10,000 MCMC steps (320,000 likelihood evaluations) with 8 parameters and 15 data points completes in ~15 seconds on an Apple M2 laptop (8 cores).
-* **Structured jet**: The same MCMC run completes in ~1 minute.
-
-This acceleration allows rapid iteration over different physical models and makes VegasAfterglow well suited for both detailed analyses of individual GRB events and large-scale population studies.
+* **Tophat jet**: 10,000 MCMC steps (320,000 likelihood evaluations), 8 parameters, 15 data points — ~15 seconds (Apple M2, 8 cores).
+* **Structured jet**: same setup — ~1 minute.
 
 <br clear="left"/>
 
@@ -242,26 +242,16 @@ The example below walks through the main components needed to model a GRB afterg
 <summary><b>Model Setup</b> <i>(click to expand/collapse)</i></summary>
 <br>
 
-First, let's set up the physical components of our afterglow model, including the environment, jet, observer, and radiation parameters:
-
 ```python
 import numpy as np
 import matplotlib.pyplot as plt
 from VegasAfterglow import ISM, TophatJet, Observer, Radiation, Model
 
-# 1. Define the circumburst environment (constant density ISM)
-medium = ISM(n_ism=1) #in cgs unit
+medium = ISM(n_ism=1)                                    # constant density ISM [cm^-3]
+jet = TophatJet(theta_c=0.1, E_iso=1e52, Gamma0=300)    # top-hat jet [rad, erg, dimensionless]
+obs = Observer(lumi_dist=1e26, z=0.1, theta_obs=0)      # observer [cm, dimensionless, rad]
+rad = Radiation(eps_e=1e-1, eps_B=1e-3, p=2.3)          # microphysics
 
-# 2. Configure the jet structure (top-hat with opening angle, energy, and Lorentz factor)
-jet = TophatJet(theta_c=0.1, E_iso=1e52, Gamma0=300) #in cgs unit
-
-# 3. Set observer parameters (distance, redshift, viewing angle)
-obs = Observer(lumi_dist=1e26, z=0.1, theta_obs=0) #in cgs unit
-
-# 4. Define radiation microphysics parameters
-rad = Radiation(eps_e=1e-1, eps_B=1e-3, p=2.3)
-
-# 5. Combine all components into a complete afterglow model
 model = Model(jet=jet, medium=medium, observer=obs, fwd_rad=rad)
 ```
 
@@ -271,45 +261,29 @@ model = Model(jet=jet, medium=medium, observer=obs, fwd_rad=rad)
 <summary><b>Light Curve Calculation</b> <i>(click to expand/collapse)</i></summary>
 <br>
 
-Now, let's compute and plot multi-wavelength light curves to see how the afterglow evolves over time:
+Compute and plot multi-wavelength light curves:
 
 ```python
-# 1. Create logarithmic time array from 10² to 10⁸ seconds (100s to ~3yrs)
 times = np.logspace(2, 8, 100)
+bands = np.array([1e9, 1e14, 1e17])  # radio, optical, X-ray
 
-# 2. Define observing frequencies (radio, optical, X-ray bands in Hz)
-bands = np.array([1e9, 1e14, 1e17])
-
-# 3. Calculate the afterglow emission at each time and frequency
-# NOTE: times array must be in ascending order, frequencies can be in random order
+# times must be in ascending order; frequencies can be in any order
 results = model.flux_density_grid(times, bands)
 
-# 4. Visualize the multi-wavelength light curves
-plt.figure(figsize=(4.8, 3.6),dpi=200)
-
-# 5. Plot each frequency band
+plt.figure(figsize=(4.8, 3.6), dpi=200)
 for i, nu in enumerate(bands):
     exp = int(np.floor(np.log10(nu)))
     base = nu / 10**exp
     plt.loglog(times, results.total[i,:], label=fr'${base:.1f} \times 10^{{{exp}}}$ Hz')
 
-def add_note(plt):
-    plt.annotate('jet break',xy=(3e4, 1e-26), xytext=(3e3, 5e-28), arrowprops=dict(arrowstyle='->'))
-    plt.annotate(r'$\nu_m=\nu_a$',xy=(8e5, 2e-25), xytext=(7.5e4, 5e-24), arrowprops=dict(arrowstyle='->'))
-    plt.annotate(r'$\nu=\nu_a$',xy=(4e6, 4e-25), xytext=(7.5e5, 5e-24), arrowprops=dict(arrowstyle='->'))
-
-add_note(plt)
 plt.xlabel('Time (s)')
 plt.ylabel('Flux Density (erg/cm²/s/Hz)')
 plt.legend()
 plt.title('Light Curves')
-plt.savefig('quick-lc.png',dpi=300,bbox_inches='tight')
 ```
 
 <div align="center">
 <img src="assets/quick-lc.png" alt="Afterglow Light Curves" width="600"/>
-
-Running the light curve script will produce this figure showing the afterglow evolution across different frequencies.
 </div>
 </details>
 
@@ -317,45 +291,30 @@ Running the light curve script will produce this figure showing the afterglow ev
 <summary><b>Spectrum Analysis</b> <i>(click to expand/collapse)</i></summary>
 <br>
 
-We can also examine how the broadband spectrum evolves at different times after the burst:
+Broadband spectra at different epochs:
 
 ```python
-# 1. Define broad frequency range (10⁵ to 10²² Hz)
 frequencies = np.logspace(5, 22, 100)
+epochs = np.array([1e2, 1e3, 1e4, 1e5, 1e6, 1e7, 1e8])
 
-# 2. Select specific time epochs for spectral snapshots
-epochs = np.array([1e2, 1e3, 1e4, 1e5 ,1e6, 1e7, 1e8])
-
-# 3. Calculate spectra at each epoch
-# NOTE: epochs array must be in ascending order, frequencies can be in random order
+# times must be in ascending order
 results = model.flux_density_grid(epochs, frequencies)
 
-# 4. Plot broadband spectra at each epoch
-plt.figure(figsize=(4.8, 3.6),dpi=200)
-colors = plt.cm.viridis(np.linspace(0,1,len(epochs)))
-
+plt.figure(figsize=(4.8, 3.6), dpi=200)
+colors = plt.cm.viridis(np.linspace(0, 1, len(epochs)))
 for i, t in enumerate(epochs):
     exp = int(np.floor(np.log10(t)))
     base = t / 10**exp
     plt.loglog(frequencies, results.total[:,i], color=colors[i], label=fr'${base:.1f} \times 10^{{{exp}}}$ s')
 
-# 5. Add vertical lines marking the bands from the light curve plot
-for i, band in enumerate(bands):
-    exp = int(np.floor(np.log10(band)))
-    base = band / 10**exp
-    plt.axvline(band,ls='--',color='C'+str(i))
-
-plt.xlabel('frequency (Hz)')
-plt.ylabel('flux density (erg/cm²/s/Hz)')
+plt.xlabel('Frequency (Hz)')
+plt.ylabel('Flux Density (erg/cm²/s/Hz)')
 plt.legend(ncol=2)
 plt.title('Synchrotron Spectra')
-plt.savefig('quick-spec.png',dpi=300,bbox_inches='tight')
 ```
 
 <div align="center">
 <img src="assets/quick-spec.png" alt="Broadband Spectra" width="600"/>
-
-The spectral analysis code will generate this visualization showing spectra at different times, with vertical lines indicating the frequencies calculated in the light curve example.
 </div>
 </details>
 
@@ -363,32 +322,21 @@ The spectral analysis code will generate this visualization showing spectra at d
 <summary><b>Time-Frequency Pairs Calculation</b> <i>(click to expand/collapse)</i></summary>
 <br>
 
-If you want to calculate flux at specific time-frequency pairs (t_i, nu_i) instead of a grid (t_i, nu_j), you can use the alternative series interfaces:
+For paired time-frequency points (t_i, nu_i) instead of a grid:
 
 ```python
-# Define time and frequency arrays (must be the same length)
 times = np.logspace(2, 8, 200)
-frequencies = np.logspace(9, 17, 200)
+frequencies = np.logspace(9, 17, 200)  # same length as times
 
-# For time-frequency pairs (times array must be in ascending order)
-results = model.flux_density(times, frequencies)
-
-# The returned results is a FluxDict object with different flux components
-print("Result attributes:", dir(results))  # Shows .fwd, .rvs, .total attributes
-print("Total flux shape:", results.total.shape)  # Same shape as input arrays
-print("Forward shock shape:", results.fwd.sync.shape)  # Forward shock synchrotron component
+results = model.flux_density(times, frequencies)  # times must be ascending
 ```
 
-**Key differences:**
-- `flux_density_grid()`: Calculates flux on a time-frequency grid (NxM output from N times and M frequencies)
-- `flux_density()`: Calculates flux at paired time-frequency points (N output from N time-frequency pairs), requires ascending order time arrays
-- `flux_density_exposures()`: Same as above but with exposure time averaging for realistic observational scenarios
+**Three flux methods:**
+- `flux_density_grid(times, freqs)`: NxM grid output
+- `flux_density(times, freqs)`: paired points (N output from N pairs)
+- `flux_density_exposures(times, freqs, expo)`: paired with exposure-time averaging
 
-**Return value structure:**
-All flux calculation methods return a `FluxDict` object with:
-- `.total`: Combined flux from all components
-- `.fwd`: Forward shock flux (has `.sync` and `.ssc` attributes)
-- `.rvs`: Reverse shock flux (has `.sync` and `.ssc` attributes)
+All return a `FluxDict` with `.total`, `.fwd` (`.sync`, `.ssc`), and `.rvs` (`.sync`, `.ssc`).
 
 </details>
 
@@ -402,23 +350,18 @@ The example below walks through how you can check the evolution of internal quan
 <summary><b>Model Setup</b> <i>(click to expand/collapse)</i></summary>
 <br>
 
-Same as for light curve generation, let's set up the physical components of our afterglow model, including the environment, jet, observer, and radiation parameters:
-
 ```python
 import numpy as np
 import matplotlib.pyplot as plt
 from VegasAfterglow import ISM, TophatJet, Observer, Radiation, Model
 
-medium = ISM(n_ism=1)
-
-jet = TophatJet(theta_c=0.3, E_iso=1e52, Gamma0=100)
-
 z = 0.1
+medium = ISM(n_ism=1)
+jet = TophatJet(theta_c=0.3, E_iso=1e52, Gamma0=100)
 obs = Observer(lumi_dist=1e26, z=z, theta_obs=0.)
-
 rad = Radiation(eps_e=1e-1, eps_B=1e-3, p=2.3)
 
-model = Model(jet=jet, medium=medium, observer=obs, fwd_rad=rad, resolutions=(0.1,0.5,10))
+model = Model(jet=jet, medium=medium, observer=obs, fwd_rad=rad, resolutions=(0.1, 0.5, 10))
 ```
 
 </details>
@@ -427,50 +370,22 @@ model = Model(jet=jet, medium=medium, observer=obs, fwd_rad=rad, resolutions=(0.
 <summary><b>Get the simulation quantities</b> <i>(click to expand/collapse)</i></summary>
 <br>
 
-Now, let's get the internal simulation quantities:
-
 ```python
-
-# Get the simulation details over a time range
 details = model.details(t_min=1e0, t_max=1e8)
-
-# Print the available attributes
-print("Simulation details attributes:", dir(details))
-print("Forward shock attributes:", dir(details.fwd))
 ```
-You will get a `SimulationDetails` object with the following structure:
 
-**Main grid coordinates:**
-- `details.phi`: 1D numpy array of azimuthal angles in `radians`
-- `details.theta`: 1D numpy array of polar angles in `radians`
-- `details.t_src`: 3D numpy array of source frame times on coordinate (phi_i, theta_j, t_k) grid in `seconds`
+Returns a `SimulationDetails` object. All quantities are 3D arrays on the `(phi, theta, t)` grid. Access forward shock via `details.fwd` (reverse shock via `details.rvs` when enabled).
 
-**Forward shock details (accessed via `details.fwd`):**
-- `details.fwd.t_comv`: 3D numpy array of comoving times for the forward shock in `seconds`
-- `details.fwd.t_obs`: 3D numpy array of observer times for the forward shock in `seconds`
-- `details.fwd.Gamma`: 3D numpy array of downstream Lorentz factors for the forward shock
-- `details.fwd.Gamma_th`: 3D numpy array of thermal Lorentz factors for the forward shock
-- `details.fwd.r`: 3D numpy array of lab frame radii in `cm`
-- `details.fwd.B_comv`: 3D numpy array of downstream comoving magnetic field strengths for the forward shock in `Gauss`
-- `details.fwd.theta`: 3D numpy array of polar angles for the forward shock in `radians`
-- `details.fwd.N_p`: 3D numpy array of downstream shocked proton number per solid angle for the forward shock
-- `details.fwd.N_e`: 3D numpy array of downstream synchrotron electron number per solid angle for the forward shock
-- `details.fwd.gamma_a`: 3D numpy array of comoving frame self-absorption Lorentz factors for the forward shock
-- `details.fwd.gamma_m`: 3D numpy array of comoving frame injection Lorentz factors for the forward shock
-- `details.fwd.gamma_c`: 3D numpy array of comoving frame cooling Lorentz factors for the forward shock
-- `details.fwd.gamma_M`: 3D numpy array of comoving frame maximum Lorentz factors for the forward shock
-- `details.fwd.nu_a`: 3D numpy array of comoving frame self-absorption frequencies for the forward shock in `Hz`
-- `details.fwd.nu_m`: 3D numpy array of comoving frame injection frequencies for the forward shock in `Hz`
-- `details.fwd.nu_c`: 3D numpy array of comoving frame cooling frequencies for the forward shock in `Hz`
-- `details.fwd.nu_M`: 3D numpy array of comoving frame maximum frequencies for the forward shock in `Hz`
-- `details.fwd.I_nu_max`: 3D numpy array of comoving frame synchrotron maximum specific intensities for the forward shock in `erg/cm²/s/Hz`
-- `details.fwd.Doppler`: 3D numpy array of Doppler factors for the forward shock
-- `details.fwd.sync_spectrum`: Per-cell callable synchrotron spectrum (see Per-Cell Spectrum Evaluation below)
-- `details.fwd.ssc_spectrum`: Per-cell callable SSC spectrum (`None` if `ssc=False`)
-- `details.fwd.Y_spectrum`: Per-cell callable Compton-Y parameter
+| Category | Attributes |
+|---|---|
+| **Grid** | `phi`, `theta`, `t_src` (source frame), `fwd.t_comv` (comoving), `fwd.t_obs` (observer) |
+| **Dynamics** | `Gamma`, `Gamma_th`, `r`, `theta`, `Doppler` |
+| **Microphysics** | `B_comv` [G], `N_p`, `N_e`, `I_nu_max` [erg/cm²/s/Hz] |
+| **Electron Lorentz factors** | `gamma_a`, `gamma_m`, `gamma_c`, `gamma_M` |
+| **Characteristic frequencies** | `nu_a`, `nu_m`, `nu_c`, `nu_M` [Hz] |
+| **Spectra (callable)** | `sync_spectrum`, `ssc_spectrum`, `Y_spectrum` |
 
-**Reverse shock details (accessed via `details.rvs`, if reverse shock is enabled):**
-- Similar attributes as forward shock but for the reverse shock component
+See the [documentation](https://yihanwangastro.github.io/VegasAfterglow/docs/examples/internal_quantities.html) for full descriptions.
 
 </details>
 
@@ -478,10 +393,7 @@ You will get a `SimulationDetails` object with the following structure:
 <summary><b>Checking the evolution of various parameters</b> <i>(click to expand/collapse)</i></summary>
 <br>
 
-To analyze the temporal evolution of physical parameters across different reference frames, we can visualize how key quantities evolve in the source, comoving, and observer frames. The following analysis demonstrates the comprehensive tracking of shock dynamics and microphysical parameters throughout the afterglow evolution:
-
-**Multi-parameter evolution visualization:**
-This code creates a comprehensive multi-panel figure displaying the temporal evolution of fundamental shock parameters (Lorentz factor, magnetic field, particle numbers, radius, and peak synchrotron power) across all three reference frames:
+Plot shock quantities across source, comoving, and observer frames:
 
 ```python
 attrs =['Gamma', 'B_comv', 'N_p','r','N_e','I_nu_max']
@@ -518,130 +430,7 @@ plt.savefig('shock_quantities.png', dpi=300,bbox_inches='tight')
 <img src="assets/shock_quantities.png" alt="Shock evolution" width="1000"/>
 </div>
 
-**Electron energy distribution analysis:**
-This visualization focuses specifically on the characteristic electron energies (self-absorption, injection, and cooling) across all three reference frames:
-
-```python
-frames = ['t_src', 't_comv', 't_obs']
-xlabels = [r'$t_{\rm src}$ [s]', r'$t^\prime$ [s]', r'$t_{\rm obs}$ [s]']
-plt.figure(figsize= (4.2*len(frames), 3.6))
-
-for i, frame in enumerate(frames):
-    plt.subplot(1, len(frames), i + 1)
-    if frame == 't_src':
-        t = getattr(details, frame)
-    else:
-        t = getattr(details.fwd, frame)
-    plt.loglog(t[0, 0, :], details.fwd.gamma_a[0, 0, :],label=r'$\gamma_a^\prime$',c='firebrick')
-    plt.loglog(t[0, 0, :], details.fwd.gamma_m[0, 0, :],label=r'$\gamma_m^\prime$',c='yellowgreen')
-    plt.loglog(t[0, 0, :], details.fwd.gamma_c[0, 0, :],label=r'$\gamma_c^\prime$',c='royalblue')
-    plt.loglog(t[0, 0, :], details.fwd.gamma_a[0, 0, :]*details.fwd.Doppler[0,0,:]/(1+z),label=r'$\gamma_a$',ls='--',c='firebrick')
-    plt.loglog(t[0, 0, :], details.fwd.gamma_m[0, 0, :]*details.fwd.Doppler[0,0,:]/(1+z),label=r'$\gamma_m$',ls='--',c='yellowgreen')
-    plt.loglog(t[0, 0, :], details.fwd.gamma_c[0, 0, :]*details.fwd.Doppler[0,0,:]/(1+z),label=r'$\gamma_c$',ls='--',c='royalblue')
-    plt.xlabel(xlabels[i])
-    plt.ylabel(r'$\gamma_e^\prime$')
-    plt.legend(ncol=2)
-plt.tight_layout()
-plt.savefig('electron_quantities.png', dpi=300,bbox_inches='tight')
-```
-
-<div align="center">
-<img src="assets/electron_quantities.png" alt="Shock evolution" width="1000"/>
-</div>
-
-**Synchrotron frequency evolution:**
-This analysis tracks the evolution of characteristic synchrotron frequencies:
-
-```python
-frames = ['t_src', 't_comv', 't_obs']
-xlabels = [r'$t_{\rm src}$ [s]', r'$t^\prime$ [s]', r'$t_{\rm obs}$ [s]']
-plt.figure(figsize= (4.2*len(frames), 3.6))
-
-for i, frame in enumerate(frames):
-    plt.subplot(1, len(frames), i + 1)
-    if frame == 't_src':
-        t = getattr(details, frame)
-    else:
-        t = getattr(details.fwd, frame)
-    plt.loglog(t[0, 0, :], details.fwd.nu_a[0, 0, :],label=r'$\nu_a^\prime$',c='firebrick')
-    plt.loglog(t[0, 0, :], details.fwd.nu_m[0, 0, :],label=r'$\nu_m^\prime$',c='yellowgreen')
-    plt.loglog(t[0, 0, :], details.fwd.nu_c[0, 0, :],label=r'$\nu_c^\prime$',c='royalblue')
-    plt.loglog(t[0, 0, :], details.fwd.nu_a[0, 0, :]*details.fwd.Doppler[0,0,:]/(1+z),label=r'$\nu_a$',ls='--',c='firebrick')
-    plt.loglog(t[0, 0, :], details.fwd.nu_m[0, 0, :]*details.fwd.Doppler[0,0,:]/(1+z),label=r'$\nu_m$',ls='--',c='yellowgreen')
-    plt.loglog(t[0, 0, :], details.fwd.nu_c[0, 0, :]*details.fwd.Doppler[0,0,:]/(1+z),label=r'$\nu_c$',ls='--',c='royalblue')
-    plt.xlabel(xlabels[i])
-    plt.ylabel(r'$\nu$ [Hz]')
-    plt.legend(ncol=2)
-plt.tight_layout()
-plt.savefig('photon_quantities.png', dpi=300,bbox_inches='tight')
-```
-<div align="center">
-<img src="assets/photon_quantities.png" alt="Shock evolution" width="1000"/>
-</div>
-
-**Doppler factor spatial distribution:**
-This polar plot visualizes the spatial distribution of the Doppler factor across the jet structure, showing how relativistic beaming varies with angular position and radial distance:
-
-```python
-plt.figure(figsize=(6,6))
-ax = plt.subplot(111, polar=True)
-
-theta = details.fwd.theta[0,:,:]
-r     = details.fwd.r[0,:,:]
-D     = details.fwd.Doppler[0,:,:]
-
-# Polar contour plot
-scale = 3.0
-c = ax.contourf(theta*scale, r, np.log10(D), levels=30, cmap='viridis')
-
-ax.set_rscale('log')
-true_ticks = np.linspace(0, 0.3, 6)
-ax.set_xticks(true_ticks * scale)
-ax.set_xticklabels([f"{t:.2f}" for t in true_ticks])
-ax.set_xlim(0,0.3*scale)
-ax.set_ylabel(r'$\theta$ [rad]')
-ax.set_xlabel(r'$r$ [cm]')
-
-plt.colorbar(c, ax=ax, label=r'$\log_{10} D$')
-
-plt.tight_layout()
-plt.savefig('doppler.png', dpi=300,bbox_inches='tight')
-```
-<div align="center">
-<img src="assets/doppler.png" alt="Shock evolution" width="600"/>
-</div>
-
-**Equal arrival time (EAT) surface visualization:**
-This final visualization maps the equal arrival time surfaces in polar coordinates, illustrating how light from different parts of the jet reaches the observer at the same time:
-
-```python
-plt.figure(figsize=(6,6))
-ax = plt.subplot(111, polar=True)
-
-theta = details.fwd.theta[0,:,:]
-r     = details.fwd.r[0,:,:]
-t_obs = details.fwd.t_obs[0,:,:]
-
-scale = 3.0
-c = ax.contourf(theta*scale, r, np.log10(t_obs), levels=30, cmap='viridis')
-
-ax.set_rscale('log')
-true_ticks = np.linspace(0, 0.3, 6)
-ax.set_xticks(true_ticks * scale)
-ax.set_xticklabels([f"{t:.2f}" for t in true_ticks])
-ax.set_xlim(0,0.3*scale)
-ax.set_ylabel(r'$\theta$ [rad]')
-ax.set_xlabel(r'$r$ [cm]')
-
-plt.colorbar(c, ax=ax, label=r'$\log_{10} (t_{\rm obs}/s)$')
-
-plt.tight_layout()
-plt.savefig('EAT.png', dpi=300,bbox_inches='tight')
-```
-<div align="center">
-<img src="assets/EAT.png" alt="Shock evolution" width="600"/>
-
-</div>
+See `script/details.ipynb` for additional plots including characteristic electron energies, synchrotron frequencies, Doppler factor maps, and equal arrival time surfaces.
 </details>
 
 <details>
@@ -675,7 +464,7 @@ These callable accessors are also available on `details.rvs` when a reverse shoc
 
 ### Sky Image
 
-Generate spatially resolved images of the afterglow at any observer time and frequency via `script/sky-image.ipynb`. The `sky_image()` method uses Gaussian splatting to render each fluid element onto a 2D image plane.
+Generate spatially resolved images of the afterglow at any observer time and frequency. See `script/sky-image.ipynb` for the full example.
 
 <details>
 <summary><b>Single Frame</b> <i>(click to expand/collapse)</i></summary>
@@ -777,7 +566,7 @@ All model configuration is passed directly to the `Fitter` constructor as keywor
 <summary><b>2. Defining Parameters and Running MCMC</b> <i>(click to expand/collapse)</i></summary>
 <br>
 
-The `ParamDef` class is used to define the parameters for MCMC exploration. Each parameter requires a name, prior range, and sampling scale:
+Define parameters with `ParamDef(name, min, max, scale)`. Use `Scale.log` for parameters spanning orders of magnitude, `Scale.linear` for narrow ranges, and `Scale.fixed` to hold a parameter constant:
 
 ```python
 mc_params = [
@@ -795,20 +584,7 @@ mc_params = [
 ]
 ```
 
-**Scale Types:**
-
-- `Scale.log`: Sample in logarithmic space (log10) - ideal for parameters spanning multiple orders of magnitude
-- `Scale.linear`: Sample in linear space - appropriate for parameters with narrower ranges
-- `Scale.fixed`: Keep parameter fixed at the initial value - use for parameters you don't want to vary
-
-**Parameter Choices:**
-The parameters you include depend on your model configuration (See documentation for all options):
-
-- For "wind" medium: use `A_star` parameter
-- For "ISM" medium: use `n_ism` parameter instead
-- Different jet structures may require different parameters
-
-Initialize the `Fitter` class with your configuration and add data directly:
+Add observational data and run the fit:
 
 ```python
 # Add light curves at specific frequencies (all quantities in CGS units)
@@ -853,19 +629,7 @@ result = fitter.fit(
 )
 ```
 
-**Important Notes:**
-- Parameters with `Scale.log` are sampled as `log10_<name>` (e.g., `log10_E_iso`)
-- The sampler works in log10 space for LOG-scale parameters, then transforms back
-- Use `npool` to parallelize likelihood evaluations across multiple CPU cores
-
-The `result` object contains:
-
-- `samples`: The posterior samples (shape: [n_samples, 1, n_params])
-- `labels`: Parameter names (with `log10_` prefix for LOG-scale params)
-- `latex_labels`: LaTeX-formatted labels for plotting (e.g., `$\log_{10}(E_{\rm iso})$`)
-- `top_k_params`: Top-k maximum likelihood parameter values
-- `top_k_log_probs`: Log probabilities for top-k samples
-- `bilby_result`: Full bilby Result object (for advanced diagnostics)
+The `result` object contains `samples`, `labels`, `latex_labels`, `top_k_params`, `top_k_log_probs`, and `bilby_result`.
 
 </details>
 
@@ -873,100 +637,26 @@ The `result` object contains:
 <summary><b>3. Analyzing Results and Generating Predictions</b> <i>(click to expand/collapse)</i></summary>
 <br>
 
-Check the top-k parameters and their uncertainties:
+Generate predictions with the best-fit parameters:
 
 ```python
-# Print top-k parameters (maximum likelihood)
-print("Top-k parameters:")
-header = f"{'Rank':>4s}  {'chi^2':>10s}  " + "  ".join(f"{name:>10s}" for name in result.labels)
-print(header)
-print("-" * len(header))
-for i in range(result.top_k_params.shape[0]):
-    chi2 = -2 * result.top_k_log_probs[i]
-    vals = "  ".join(f"{val:10.4f}" for val in result.top_k_params[i])
-    print(f"{i+1:4d}  {chi2:10.2f}  {vals}")
-```
-
-Use the best-fit parameters to generate model predictions
-
-```python
-# Define time and frequency ranges for predictions
-t_out = np.logspace(2, 9, 150)
-
-nu_out = np.logspace(16,20,150)
-
 best_params = result.top_k_params[0]
 
-# Generate model light curves at the specified bands using the best-fit parameters
-lc = fitter.flux_density_grid(best_params, t_out, bands)
+t_out = np.logspace(2, 9, 150)
+nu_out = np.logspace(16, 20, 150)
 
-# Generate model spectra at the specified times using the best-fit parameters
+lc = fitter.flux_density_grid(best_params, t_out, bands)
 spec = fitter.flux_density_grid(best_params, times, nu_out)
 ```
 
-Now you can plot the best-fit model:
+Corner plot:
 
 ```python
-# Function to plot model light curves along with observed data
-def draw_bestfit(t,lc_fit, nu, spec_fit):
-    fig =plt.figure(figsize=(4.5, 7.5))
-
-    ax1 = fig.add_subplot(211)
-    ax2 = fig.add_subplot(212)
-
-    shift = [1,1,200]
-    colors = ['blue', 'orange', 'green']
-    for i, file, sft, c in zip(range(len(lc_files)), lc_files, shift, colors ):
-        df = pd.read_csv(file)
-        ax1.errorbar(df["t"], df["Fv_obs"]*sft, df["Fv_err"]*sft, fmt='o',markersize=4,label=file, color=c,markeredgecolor='k', markeredgewidth=.4)
-        ax1.plot(t, np.array(lc_fit[i,:])*sft, color=c,lw=1)
-
-    ax1.set_xscale('log')
-    ax1.set_yscale('log')
-    ax1.set_xlabel('t [s]')
-    ax1.set_ylabel(r'$F_\nu$ [erg/cm$^2$/s/Hz]')
-    ax1.legend()
-
-    for i, file, sft, c in zip(range(len(spec_files)), spec_files, shift, colors ):
-        df = pd.read_csv(file)
-        ax2.errorbar(df["nu"], df["Fv_obs"]*sft, df["Fv_err"]*sft, fmt='o',markersize=4,label=file, color=c,markeredgecolor='k', markeredgewidth=.4)
-        ax2.plot(nu, np.array(spec_fit[:,i])*sft, color=c,lw=1)
-
-    ax2.set_xscale('log')
-    ax2.set_yscale('log')
-    ax2.set_xlabel(r'$\nu$ [Hz]')
-    ax2.set_ylabel(r'$F_\nu$ [erg/cm$^2$/s/Hz]')
-    ax2.legend()
-    plt.tight_layout()
-
-draw_bestfit(t_out, lc, nu_out, spec)
-```
-
-Corner plots are essential for visualizing parameter correlations and posterior distributions:
-
-```python
-def plot_corner(flat_chain, labels, filename="corner_plot.png"):
-    fig = corner.corner(
-        flat_chain,
-        labels=labels,
-        quantiles=[0.16, 0.5, 0.84],  # For median and ±1σ
-        show_titles=True,
-        title_kwargs={"fontsize": 14},
-        label_kwargs={"fontsize": 14},
-        truths=np.median(flat_chain, axis=0),  # Show median values
-        truth_color='red',
-        bins=30,
-        smooth=1,
-        fill_contours=True,
-        levels=[0.16, 0.5, 0.68],  # 1σ and 2σ contours
-        color='k'
-    )
-    fig.savefig(filename, dpi=300, bbox_inches='tight')
-
-# Create the corner plot
 flat_chain = result.samples.reshape(-1, result.samples.shape[-1])
-plot_corner(flat_chain, result.latex_labels)
+corner.corner(flat_chain, labels=result.latex_labels, quantiles=[0.16, 0.5, 0.84], show_titles=True)
 ```
+
+See `script/vegas-mcmc.ipynb` for a complete working example with data loading, fitting, and visualization.
 
 </details>
 
@@ -1041,68 +731,14 @@ For complete documentation on the API, visit the [**redback documentation**](htt
 
 ## Validation & Testing
 
-VegasAfterglow includes a comprehensive validation framework to ensure numerical accuracy and physical correctness. The validation suite consists of two main components:
+The validation suite includes **benchmark tests** (resolution convergence, performance timing) and **regression tests** (shock dynamics scaling laws, characteristic frequency evolution, spectral power-law indices across Blandford-McKee and Sedov-Taylor phases). The default fiducial resolution `(0.1, 0.5, 10)` achieves < 5% mean error for most configurations.
 
-<details>
-<summary><b>Benchmark Tests</b> <i>(click to expand/collapse)</i></summary>
-<br>
-
-Benchmark tests measure computational performance and verify numerical convergence across resolution parameters:
-
-- **Performance Timing**: Measures execution time for various jet/medium/radiation configurations
-- **Resolution Convergence**: Tests convergence in phi (azimuthal), theta (polar), and time dimensions
-- **Pass Criteria**: Mean error < 5% and max error < 10% at fiducial resolution
-
-The default fiducial resolution `(0.1, 0.5, 10)` has been tested to converge for most configurations. For details, see the [Validation Report (PDF)](https://yihanwangastro.github.io/VegasAfterglow/reports/latest/comprehensive_report.pdf).
-
-</details>
-
-<details>
-<summary><b>Regression Tests</b> <i>(click to expand/collapse)</i></summary>
-<br>
-
-Regression tests verify that simulation outputs match theoretical predictions from GRB afterglow theory:
-
-- **Shock Dynamics**: Validates power-law scaling of Lorentz factor, radius, magnetic field, and particle number
-- **Characteristic Frequencies**: Verifies evolution of injection (nu_m) and cooling (nu_c) frequencies
-- **Spectral Shapes**: Checks power-law indices across different frequency regimes (I-V)
-- **Evolutionary Phases**: Tests coasting, Blandford-McKee, and Sedov-Taylor phases for ISM and wind media
-
-</details>
-
-<details>
-<summary><b>Running Validation</b> <i>(click to expand/collapse)</i></summary>
-<br>
-
-**Prerequisite:** Install with validation support, which includes per-stage CPU profiling and PDF report dependencies:
+See the [Validation Report (PDF)](https://yihanwangastro.github.io/VegasAfterglow/reports/latest/comprehensive_report.pdf) for full results. To run locally:
 
 ```bash
 pip install -e ".[test]" --config-settings=cmake.define.AFTERGLOW_PROFILE=ON
-```
-
-```bash
-# Run full validation suite (benchmark + regression + PDF report)
 python validation/run_validation.py --all
-
-# Run only benchmark tests
-python validation/run_validation.py --benchmark
-
-# Run only regression tests
-python validation/run_validation.py --regression
-
-# Check existing results without re-running tests
-python validation/run_validation.py --check-only
 ```
-
-The validation runner generates a comprehensive PDF report with convergence plots, summary grids, and detailed diagnostics. The overview page includes a stacked bar chart breaking down CPU time by internal C++ computation stage. The latest report is available online as the [Validation Report (PDF)](https://yihanwangastro.github.io/VegasAfterglow/reports/latest/comprehensive_report.pdf). If you modify the code, you can regenerate the report locally by running the validation suite above — the report will be saved at `validation/comprehensive_report.pdf`.
-
-To return to the normal (zero-overhead) build:
-
-```bash
-pip install -e .
-```
-
-</details>
 
 Powered by [Claude Code](https://claude.ai/claude-code)
 
@@ -1110,20 +746,9 @@ Powered by [Claude Code](https://claude.ai/claude-code)
 
 ## Documentation
 
-Comprehensive documentation is available at **[Documentation](https://yihanwangastro.github.io/VegasAfterglow/docs/index.html)** including:
+Full documentation — installation, examples, MCMC fitting guide, parameter reference, Python/C++ API, and troubleshooting — is available at **[Documentation](https://yihanwangastro.github.io/VegasAfterglow/docs/index.html)**.
 
-- **Installation Guide**: Detailed instructions for setting up VegasAfterglow
-- **Quick Start**: Get up and running with basic examples
-- **Examples**: Practical examples showing common use cases
-- **MCMC Fitting**: Complete guide to Bayesian parameter estimation with bilby integration
-- **Parameter Reference**: Comprehensive reference for all physical and numerical parameters
-- **Validation & Testing**: Benchmark and regression test framework for verifying numerical accuracy
-- **Python API Reference**: Complete documentation of the Python interface
-- **C++ API Reference**: Detailed documentation of C++ classes and functions
-- **Troubleshooting**: Common issues and solutions
-- **Contributing Guide**: Information for developers who wish to contribute
-
-For a complete history of changes and new features, see our [**Changelog**](CHANGELOG.md).
+For a history of changes and new features, see the [**Changelog**](CHANGELOG.md).
 
 ---
 
@@ -1154,21 +779,7 @@ We value all contributions and aim to respond to issues promptly. All communicat
 
 ## License
 
-VegasAfterglow is released under the **BSD-3-Clause License**.
-
-The BSD 3-Clause License is a permissive open source license that allows you to:
-
-- Freely use, modify, and distribute the software in source and binary forms
-- Use the software for commercial purposes
-- Integrate the software into proprietary applications
-
-**Requirements:**
-
-- You must include the original copyright notice and the license text
-- You cannot use the names of the authors or contributors to endorse derived products
-- The license provides no warranty or liability protection
-
-For the full license text, see the [LICENSE](LICENSE) file in the repository.
+VegasAfterglow is released under the [**BSD-3-Clause License**](LICENSE).
 
 ---
 

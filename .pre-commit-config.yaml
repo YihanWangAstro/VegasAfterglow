@@ -61,6 +61,16 @@ repos:
         args: ['--fix=lf']
         exclude: ^external/.*
 
+  # RST code block syntax check
+  - repo: local
+    hooks:
+      - id: check-rst-python
+        name: Check Python syntax in RST code blocks
+        entry: python tests/python/check_rst_codeblocks.py
+        language: python
+        files: \.rst$
+        pass_filenames: true
+
   # C++ unit tests and Python tests
   - repo: local
     hooks:
