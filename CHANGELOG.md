@@ -11,7 +11,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - [ ] Proton processes
 - [ ] Time-evolving microphysical parameters (ε_e, ε_B, p, ξ_e)
-- [x] Sky image
 - [ ] Polarization
 - [ ] External inverse Compton
 
@@ -19,7 +18,7 @@ Have a feature request? [Open an issue](https://github.com/YihanWangAstro/VegasA
 
 ---
 
-## [v2.0.0-beta] - 2026-02-02
+## [v2.0.0] - 2026-03-01
 
 **[Download Validation Report (PDF)](https://yihanwangastro.github.io/VegasAfterglow/reports/latest/comprehensive_report.pdf)**
 
@@ -756,7 +755,7 @@ coordinates = details.theta            # New way
 
 | Version | Release Date | Key Features |
 |---------|--------------|--------------|
-| v2.0.0-beta | 2026-02-02 | Redesigned MCMC module, ~5x speedup for symmetric jets, smooth synchrotron spectra, custom jet/medium/prior/likelihood, lightweight install |
+| v2.0.0  | 2026-03-01   | Redesigned MCMC module, ~5x speedup for symmetric jets, smooth synchrotron spectra, custom jet/medium/prior/likelihood, lightweight install |
 | v1.1.0  | 2025-12-08   | Bilby MCMC integration, multi-sampler support, flexible parameter interface |
 | v1.0.3  | 2025-09-29   | Self-absorption heating disabled by default, MCMC improvements, flux unit fixes |
 | v1.0.2  | 2025-09-15   | Python interface method name updates, enhanced documentation, API consistency |
