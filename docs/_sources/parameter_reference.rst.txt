@@ -461,4 +461,4 @@ Understanding parameter correlations helps in MCMC fitting:
 - **Jet break time**: Determines :math:`\theta_c`, :math:`E_{\rm iso}`
 - **Late times (> 100 days)**: Sensitive to :math:`n_{\rm ISM}`, :math:`p`
 
-For more detailed information on parameter estimation strategies and examples of using these parameters in practice, see the :doc:`examples` and :doc:`mcmc_fitting` pages.
+For more detailed information on parameter estimation strategies and examples of using these parameters in practice, see the :doc:`examples/index` and :doc:`mcmc_fitting/index` pages.

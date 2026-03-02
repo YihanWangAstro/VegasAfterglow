@@ -409,4 +409,4 @@ For VegasAfterglow physics details, see:
 
 * :doc:`physics` - Detailed physics description
 * :doc:`parameter_reference` - Complete parameter reference
-* :doc:`examples` - VegasAfterglow usage examples
+* :doc:`examples/index` - VegasAfterglow usage examples

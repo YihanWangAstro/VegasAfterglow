@@ -1,0 +1,298 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sky Image &mdash; VegasAfterglow 0.1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=20074c1a" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=fd3f3429" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/custom.css?v=c0df17a3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/custom.css?v=c0df17a3" />
+
+  
+    <link rel="shortcut icon" href="../_static/logo.svg"/>
+    <link rel="canonical" href="https://yihanwangastro.github.io/VegasAfterglow/docs/examples/sky_image.html" />
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=01f34227"></script>
+      <script src="../_static/doctools.js?v=9a2dae69"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../_static/js/custom.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Model Configuration Introspection" href="introspection.html" />
+    <link rel="prev" title="Internal Quantities Evolution" href="internal_quantities.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            VegasAfterglow
+              <img src="../_static/logo.svg" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../quickstart.html">Quickstart</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../using_cli.html">Command-Line Interface (<code class="docutils literal notranslate"><span class="pre">vegasgen</span></code>)</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Examples</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="basic_usage.html">Basic Usage</a></li>
+<li class="toctree-l2"><a class="reference internal" href="models.html">Models and Radiation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="internal_quantities.html">Internal Quantities Evolution</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Sky Image</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#single-frame">Single Frame</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#multi-frame-movie">Multi-Frame Movie</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#off-axis-observer">Off-Axis Observer</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#flux-from-image-vs-direct-calculation">Flux from Image vs Direct Calculation</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="introspection.html">Model Configuration Introspection</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../mcmc_fitting/index.html">MCMC Parameter Fitting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../redback_integration.html">Parameter Estimation with Redback</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../parameter_reference.html">Parameter Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../validation.html">Validation &amp; Testing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../python_api.html">Python API Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cpp_api.html">C++ API Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../troubleshooting.html">Troubleshooting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing.html">Contributing</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">VegasAfterglow</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">Examples</a></li>
+      <li class="breadcrumb-item active">Sky Image</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/examples/sky_image.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="sky-image">
+<span id="id1"></span><h1>Sky Image<a class="headerlink" href="#sky-image" title="Link to this heading"></a></h1>
+<p>VegasAfterglow can generate spatially resolved images of the afterglow at any observer time and frequency. The <code class="docutils literal notranslate"><span class="pre">sky_image()</span></code> method uses Gaussian splatting to render each fluid element onto a 2D image plane. Batch evaluation is supported: pass an array of observer times to produce a multi-frame image sequence with minimal overhead (the blast-wave dynamics are solved once, and each frame only re-renders the sky projection).</p>
+<section id="single-frame">
+<h2>Single Frame<a class="headerlink" href="#single-frame" title="Link to this heading"></a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">matplotlib.colors</span><span class="w"> </span><span class="kn">import</span> <span class="n">LogNorm</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">VegasAfterglow</span><span class="w"> </span><span class="kn">import</span> <span class="n">TophatJet</span><span class="p">,</span> <span class="n">ISM</span><span class="p">,</span> <span class="n">Observer</span><span class="p">,</span> <span class="n">Radiation</span><span class="p">,</span> <span class="n">Model</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">VegasAfterglow.units</span><span class="w"> </span><span class="kn">import</span> <span class="n">uas</span>
+
+<span class="n">model</span> <span class="o">=</span> <span class="n">Model</span><span class="p">(</span>
+    <span class="n">jet</span><span class="o">=</span><span class="n">TophatJet</span><span class="p">(</span><span class="n">theta_c</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">E_iso</span><span class="o">=</span><span class="mf">1e52</span><span class="p">,</span> <span class="n">Gamma0</span><span class="o">=</span><span class="mi">200</span><span class="p">),</span>
+    <span class="n">medium</span><span class="o">=</span><span class="n">ISM</span><span class="p">(</span><span class="n">n_ism</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span>
+    <span class="n">observer</span><span class="o">=</span><span class="n">Observer</span><span class="p">(</span><span class="n">lumi_dist</span><span class="o">=</span><span class="mf">1e26</span><span class="p">,</span> <span class="n">z</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">theta_obs</span><span class="o">=</span><span class="mi">0</span><span class="p">),</span>
+    <span class="n">fwd_rad</span><span class="o">=</span><span class="n">Radiation</span><span class="p">(</span><span class="n">eps_e</span><span class="o">=</span><span class="mf">1e-1</span><span class="p">,</span> <span class="n">eps_B</span><span class="o">=</span><span class="mf">1e-3</span><span class="p">,</span> <span class="n">p</span><span class="o">=</span><span class="mf">2.3</span><span class="p">),</span>
+<span class="p">)</span>
+
+<span class="n">img</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">sky_image</span><span class="p">([</span><span class="mf">1e6</span><span class="p">],</span> <span class="n">nu_obs</span><span class="o">=</span><span class="mf">1e9</span><span class="p">,</span> <span class="n">fov</span><span class="o">=</span><span class="mi">500</span> <span class="o">*</span> <span class="n">uas</span><span class="p">,</span> <span class="n">npixel</span><span class="o">=</span><span class="mi">128</span><span class="p">)</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">dpi</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+<span class="n">extent</span> <span class="o">=</span> <span class="n">img</span><span class="o">.</span><span class="n">extent</span> <span class="o">/</span> <span class="n">uas</span>  <span class="c1"># convert to microarcseconds</span>
+
+<span class="n">im</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span>
+    <span class="n">img</span><span class="o">.</span><span class="n">image</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">T</span><span class="p">,</span>
+    <span class="n">origin</span><span class="o">=</span><span class="s2">&quot;lower&quot;</span><span class="p">,</span>
+    <span class="n">extent</span><span class="o">=</span><span class="n">extent</span><span class="p">,</span>
+    <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;inferno&quot;</span><span class="p">,</span>
+    <span class="n">norm</span><span class="o">=</span><span class="n">LogNorm</span><span class="p">(),</span>
+<span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;$\Delta x$ ($\mu$as)&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;$\Delta y$ ($\mu$as)&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;$t_{\rm obs} = 10^6$ s, $\nu = 1$ GHz&quot;</span><span class="p">)</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">im</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s2">&quot;Surface brightness (erg/cm$^2$/s/Hz/sr)&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+</pre></div>
+</div>
+<p><strong>Return value (``SkyImage`` object):</strong></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">img.image</span></code>: 3D numpy array of shape <code class="docutils literal notranslate"><span class="pre">(n_frames,</span> <span class="pre">npixel,</span> <span class="pre">npixel)</span></code> — surface brightness in erg/cm²/s/Hz/sr</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">img.extent</span></code>: 1D array <code class="docutils literal notranslate"><span class="pre">[x_min,</span> <span class="pre">x_max,</span> <span class="pre">y_min,</span> <span class="pre">y_max]</span></code> — angular extent in radians (pass directly to <code class="docutils literal notranslate"><span class="pre">imshow(extent=...)</span></code>)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">img.pixel_solid_angle</span></code>: pixel solid angle in steradians</p></li>
+</ul>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">fov</span></code> parameter sets the total field of view in radians. Use the <code class="docutils literal notranslate"><span class="pre">uas</span></code> unit constant
+for microarcsecond scale: <code class="docutils literal notranslate"><span class="pre">fov=500*uas</span></code> gives a 500 µas field of view.</p>
+</div>
+</section>
+<section id="multi-frame-movie">
+<h2>Multi-Frame Movie<a class="headerlink" href="#multi-frame-movie" title="Link to this heading"></a></h2>
+<p>Pass an array of observer times to generate an image sequence efficiently:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">matplotlib.animation</span><span class="w"> </span><span class="kn">import</span> <span class="n">FuncAnimation</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">IPython.display</span><span class="w"> </span><span class="kn">import</span> <span class="n">HTML</span>
+
+<span class="n">times</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">logspace</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">60</span><span class="p">)</span>  <span class="c1"># 60 frames from 10^4 to 10^8 s</span>
+
+<span class="n">imgs</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">sky_image</span><span class="p">(</span><span class="n">times</span><span class="p">,</span> <span class="n">nu_obs</span><span class="o">=</span><span class="mf">1e9</span><span class="p">,</span> <span class="n">fov</span><span class="o">=</span><span class="mi">2000</span> <span class="o">*</span> <span class="n">uas</span><span class="p">,</span> <span class="n">npixel</span><span class="o">=</span><span class="mi">128</span><span class="p">)</span>
+<span class="c1"># imgs.image.shape == (60, 128, 128)</span>
+
+<span class="n">extent</span> <span class="o">=</span> <span class="n">imgs</span><span class="o">.</span><span class="n">extent</span> <span class="o">/</span> <span class="n">uas</span>
+
+<span class="n">vmin</span> <span class="o">=</span> <span class="n">imgs</span><span class="o">.</span><span class="n">image</span><span class="p">[</span><span class="n">imgs</span><span class="o">.</span><span class="n">image</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">min</span><span class="p">()</span>
+<span class="n">vmax</span> <span class="o">=</span> <span class="n">imgs</span><span class="o">.</span><span class="n">image</span><span class="o">.</span><span class="n">max</span><span class="p">()</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">dpi</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+<span class="n">im</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span>
+    <span class="n">imgs</span><span class="o">.</span><span class="n">image</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">T</span><span class="p">,</span>
+    <span class="n">origin</span><span class="o">=</span><span class="s2">&quot;lower&quot;</span><span class="p">,</span>
+    <span class="n">extent</span><span class="o">=</span><span class="n">extent</span><span class="p">,</span>
+    <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;inferno&quot;</span><span class="p">,</span>
+    <span class="n">norm</span><span class="o">=</span><span class="n">LogNorm</span><span class="p">(</span><span class="n">vmin</span><span class="o">=</span><span class="n">vmin</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="n">vmax</span><span class="p">),</span>
+<span class="p">)</span>
+<span class="n">title</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;$\Delta x$ ($\mu$as)&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;$\Delta y$ ($\mu$as)&quot;</span><span class="p">)</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">im</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s2">&quot;erg/cm$^2$/s/Hz/sr&quot;</span><span class="p">)</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">update</span><span class="p">(</span><span class="n">frame</span><span class="p">):</span>
+    <span class="n">im</span><span class="o">.</span><span class="n">set_data</span><span class="p">(</span><span class="n">imgs</span><span class="o">.</span><span class="n">image</span><span class="p">[</span><span class="n">frame</span><span class="p">]</span><span class="o">.</span><span class="n">T</span><span class="p">)</span>
+    <span class="n">title</span><span class="o">.</span><span class="n">set_text</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;$t_</span><span class="se">{{\\</span><span class="s2">rm obs</span><span class="se">}}</span><span class="s2">$ = </span><span class="si">{</span><span class="n">times</span><span class="p">[</span><span class="n">frame</span><span class="p">]</span><span class="si">:</span><span class="s2">.1e</span><span class="si">}</span><span class="s2"> s&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">im</span><span class="p">,</span> <span class="n">title</span><span class="p">)</span>
+
+<span class="n">anim</span> <span class="o">=</span> <span class="n">FuncAnimation</span><span class="p">(</span><span class="n">fig</span><span class="p">,</span> <span class="n">update</span><span class="p">,</span> <span class="n">frames</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">times</span><span class="p">),</span> <span class="n">interval</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">blit</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">anim</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s2">&quot;sky-image.gif&quot;</span><span class="p">,</span> <span class="n">writer</span><span class="o">=</span><span class="s2">&quot;pillow&quot;</span><span class="p">,</span> <span class="n">fps</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="off-axis-observer">
+<h2>Off-Axis Observer<a class="headerlink" href="#off-axis-observer" title="Link to this heading"></a></h2>
+<p>For off-axis observers, the image centroid drifts across the sky (superluminal apparent motion):</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">model_offaxis</span> <span class="o">=</span> <span class="n">Model</span><span class="p">(</span>
+    <span class="n">jet</span><span class="o">=</span><span class="n">TophatJet</span><span class="p">(</span><span class="n">theta_c</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">E_iso</span><span class="o">=</span><span class="mf">1e52</span><span class="p">,</span> <span class="n">Gamma0</span><span class="o">=</span><span class="mi">200</span><span class="p">),</span>
+    <span class="n">medium</span><span class="o">=</span><span class="n">ISM</span><span class="p">(</span><span class="n">n_ism</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span>
+    <span class="n">observer</span><span class="o">=</span><span class="n">Observer</span><span class="p">(</span><span class="n">lumi_dist</span><span class="o">=</span><span class="mf">1e26</span><span class="p">,</span> <span class="n">z</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">theta_obs</span><span class="o">=</span><span class="mf">0.4</span><span class="p">),</span>
+    <span class="n">fwd_rad</span><span class="o">=</span><span class="n">Radiation</span><span class="p">(</span><span class="n">eps_e</span><span class="o">=</span><span class="mf">1e-1</span><span class="p">,</span> <span class="n">eps_B</span><span class="o">=</span><span class="mf">1e-3</span><span class="p">,</span> <span class="n">p</span><span class="o">=</span><span class="mf">2.3</span><span class="p">),</span>
+<span class="p">)</span>
+
+<span class="n">times_oa</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">logspace</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">30</span><span class="p">)</span>
+<span class="n">imgs_oa</span> <span class="o">=</span> <span class="n">model_offaxis</span><span class="o">.</span><span class="n">sky_image</span><span class="p">(</span><span class="n">times_oa</span><span class="p">,</span> <span class="n">nu_obs</span><span class="o">=</span><span class="mf">1e9</span><span class="p">,</span> <span class="n">fov</span><span class="o">=</span><span class="mi">5000</span> <span class="o">*</span> <span class="n">uas</span><span class="p">,</span> <span class="n">npixel</span><span class="o">=</span><span class="mi">128</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="flux-from-image-vs-direct-calculation">
+<h2>Flux from Image vs Direct Calculation<a class="headerlink" href="#flux-from-image-vs-direct-calculation" title="Link to this heading"></a></h2>
+<p>The sky image contains surface brightness in erg/cm²/s/Hz/sr. Integrating over all pixels
+(i.e. summing the image and multiplying by the pixel solid angle) recovers the total flux
+density, which should match the result from <code class="docutils literal notranslate"><span class="pre">flux_density_grid()</span></code>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">VegasAfterglow</span><span class="w"> </span><span class="kn">import</span> <span class="n">TophatJet</span><span class="p">,</span> <span class="n">ISM</span><span class="p">,</span> <span class="n">Observer</span><span class="p">,</span> <span class="n">Radiation</span><span class="p">,</span> <span class="n">Model</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">VegasAfterglow.units</span><span class="w"> </span><span class="kn">import</span> <span class="n">uas</span>
+
+<span class="n">model</span> <span class="o">=</span> <span class="n">Model</span><span class="p">(</span>
+    <span class="n">jet</span><span class="o">=</span><span class="n">TophatJet</span><span class="p">(</span><span class="n">theta_c</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">E_iso</span><span class="o">=</span><span class="mf">1e52</span><span class="p">,</span> <span class="n">Gamma0</span><span class="o">=</span><span class="mi">200</span><span class="p">),</span>
+    <span class="n">medium</span><span class="o">=</span><span class="n">ISM</span><span class="p">(</span><span class="n">n_ism</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span>
+    <span class="n">observer</span><span class="o">=</span><span class="n">Observer</span><span class="p">(</span><span class="n">lumi_dist</span><span class="o">=</span><span class="mf">1e26</span><span class="p">,</span> <span class="n">z</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">theta_obs</span><span class="o">=</span><span class="mi">0</span><span class="p">),</span>
+    <span class="n">fwd_rad</span><span class="o">=</span><span class="n">Radiation</span><span class="p">(</span><span class="n">eps_e</span><span class="o">=</span><span class="mf">1e-1</span><span class="p">,</span> <span class="n">eps_B</span><span class="o">=</span><span class="mf">1e-3</span><span class="p">,</span> <span class="n">p</span><span class="o">=</span><span class="mf">2.3</span><span class="p">),</span>
+<span class="p">)</span>
+
+<span class="n">t_obs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">logspace</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">30</span><span class="p">)</span>
+<span class="n">nu_obs</span> <span class="o">=</span> <span class="mf">1e9</span>
+
+<span class="c1"># Method 1: integrate sky image</span>
+<span class="n">img</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">sky_image</span><span class="p">(</span><span class="n">t_obs</span><span class="p">,</span> <span class="n">nu_obs</span><span class="o">=</span><span class="n">nu_obs</span><span class="p">,</span> <span class="n">fov</span><span class="o">=</span><span class="mi">2000</span> <span class="o">*</span> <span class="n">uas</span><span class="p">,</span> <span class="n">npixel</span><span class="o">=</span><span class="mi">128</span><span class="p">)</span>
+<span class="n">flux_from_image</span> <span class="o">=</span> <span class="n">img</span><span class="o">.</span><span class="n">image</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span> <span class="o">*</span> <span class="n">img</span><span class="o">.</span><span class="n">pixel_solid_angle</span>
+
+<span class="c1"># Method 2: direct flux density calculation</span>
+<span class="n">flux_direct</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">flux_density_grid</span><span class="p">(</span><span class="n">t_obs</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">nu_obs</span><span class="p">]))</span><span class="o">.</span><span class="n">total</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="p">:]</span>
+
+<span class="c1"># Plot comparison</span>
+<span class="n">fig</span><span class="p">,</span> <span class="p">(</span><span class="n">ax1</span><span class="p">,</span> <span class="n">ax2</span><span class="p">)</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">),</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">150</span><span class="p">,</span> <span class="n">sharex</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                                <span class="n">gridspec_kw</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;height_ratios&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="s2">&quot;hspace&quot;</span><span class="p">:</span> <span class="mf">0.05</span><span class="p">})</span>
+
+<span class="n">ax1</span><span class="o">.</span><span class="n">loglog</span><span class="p">(</span><span class="n">t_obs</span><span class="p">,</span> <span class="n">flux_direct</span><span class="p">,</span> <span class="s2">&quot;k-&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;flux_density_grid&quot;</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">loglog</span><span class="p">(</span><span class="n">t_obs</span><span class="p">,</span> <span class="n">flux_from_image</span><span class="p">,</span> <span class="s2">&quot;o&quot;</span><span class="p">,</span> <span class="n">ms</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;C1&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;sky_image (integrated)&quot;</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;Flux density (erg/cm$^2$/s/Hz)&quot;</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+
+<span class="n">ratio</span> <span class="o">=</span> <span class="n">flux_from_image</span> <span class="o">/</span> <span class="n">flux_direct</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">semilogx</span><span class="p">(</span><span class="n">t_obs</span><span class="p">,</span> <span class="n">ratio</span><span class="p">,</span> <span class="s2">&quot;o-&quot;</span><span class="p">,</span> <span class="n">ms</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;C1&quot;</span><span class="p">)</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;k&quot;</span><span class="p">,</span> <span class="n">ls</span><span class="o">=</span><span class="s2">&quot;--&quot;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mf">0.8</span><span class="p">)</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;image / direct&quot;</span><span class="p">)</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Observer time (s)&quot;</span><span class="p">)</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="mf">0.95</span><span class="p">,</span> <span class="mf">1.05</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The two methods agree to within a few percent. Small differences arise because the image
+uses a finite field of view and pixel resolution. Increasing <code class="docutils literal notranslate"><span class="pre">npixel</span></code> and <code class="docutils literal notranslate"><span class="pre">fov</span></code> improves
+the agreement.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>For a complete working example with animations and plots, see <code class="docutils literal notranslate"><span class="pre">script/sky-image.ipynb</span></code>.</p>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="internal_quantities.html" class="btn btn-neutral float-left" title="Internal Quantities Evolution" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="introspection.html" class="btn btn-neutral float-right" title="Model Configuration Introspection" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, VegasAfterglow Team.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

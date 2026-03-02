@@ -1,0 +1,579 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Models and Radiation &mdash; VegasAfterglow 0.1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=20074c1a" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=fd3f3429" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/custom.css?v=c0df17a3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/custom.css?v=c0df17a3" />
+
+  
+    <link rel="shortcut icon" href="../_static/logo.svg"/>
+    <link rel="canonical" href="https://yihanwangastro.github.io/VegasAfterglow/docs/examples/models.html" />
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=01f34227"></script>
+      <script src="../_static/doctools.js?v=9a2dae69"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../_static/js/custom.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Internal Quantities Evolution" href="internal_quantities.html" />
+    <link rel="prev" title="Basic Usage" href="basic_usage.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            VegasAfterglow
+              <img src="../_static/logo.svg" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../quickstart.html">Quickstart</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../using_cli.html">Command-Line Interface (<code class="docutils literal notranslate"><span class="pre">vegasgen</span></code>)</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Examples</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="basic_usage.html">Basic Usage</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Models and Radiation</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#ambient-media-models">Ambient Media Models</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#wind-medium">Wind Medium</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#stratified-medium">Stratified Medium</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#user-defined-medium">User-Defined Medium</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#jet-models">Jet Models</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#gaussian-jet">Gaussian Jet</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#power-law-jet">Power-Law Jet</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#two-component-jet">Two-Component Jet</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#step-power-law-jet">Step Power-Law Jet</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#jet-with-spreading">Jet with Spreading</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#magnetar-spin-down">Magnetar Spin-down</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#user-defined-jet">User-Defined Jet</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#gil-free-native-callbacks-gil-free">GIL-Free Native Callbacks (<code class="docutils literal notranslate"><span class="pre">&#64;gil_free</span></code>)</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#radiation-processes">Radiation Processes</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#reverse-shock-emission">Reverse Shock Emission</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#inverse-compton-cooling">Inverse Compton Cooling</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#self-synchrotron-compton-radiation">Self-Synchrotron Compton Radiation</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="internal_quantities.html">Internal Quantities Evolution</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sky_image.html">Sky Image</a></li>
+<li class="toctree-l2"><a class="reference internal" href="introspection.html">Model Configuration Introspection</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../mcmc_fitting/index.html">MCMC Parameter Fitting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../redback_integration.html">Parameter Estimation with Redback</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../parameter_reference.html">Parameter Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../validation.html">Validation &amp; Testing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../python_api.html">Python API Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cpp_api.html">C++ API Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../troubleshooting.html">Troubleshooting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing.html">Contributing</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">VegasAfterglow</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">Examples</a></li>
+      <li class="breadcrumb-item active">Models and Radiation</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/examples/models.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="models-and-radiation">
+<h1>Models and Radiation<a class="headerlink" href="#models-and-radiation" title="Link to this heading"></a></h1>
+<p>This section covers ambient media configurations, jet structure models, and radiation process settings.</p>
+<nav class="contents local" id="on-this-page">
+<p class="topic-title">On This Page</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#ambient-media-models" id="id3">Ambient Media Models</a></p>
+<ul>
+<li><p><a class="reference internal" href="#wind-medium" id="id4">Wind Medium</a></p></li>
+<li><p><a class="reference internal" href="#stratified-medium" id="id5">Stratified Medium</a></p></li>
+<li><p><a class="reference internal" href="#user-defined-medium" id="id6">User-Defined Medium</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#jet-models" id="id7">Jet Models</a></p>
+<ul>
+<li><p><a class="reference internal" href="#gaussian-jet" id="id8">Gaussian Jet</a></p></li>
+<li><p><a class="reference internal" href="#power-law-jet" id="id9">Power-Law Jet</a></p></li>
+<li><p><a class="reference internal" href="#two-component-jet" id="id10">Two-Component Jet</a></p></li>
+<li><p><a class="reference internal" href="#step-power-law-jet" id="id11">Step Power-Law Jet</a></p></li>
+<li><p><a class="reference internal" href="#jet-with-spreading" id="id12">Jet with Spreading</a></p></li>
+<li><p><a class="reference internal" href="#magnetar-spin-down" id="id13">Magnetar Spin-down</a></p></li>
+<li><p><a class="reference internal" href="#user-defined-jet" id="id14">User-Defined Jet</a></p></li>
+<li><p><a class="reference internal" href="#gil-free-native-callbacks-gil-free" id="id15">GIL-Free Native Callbacks (<code class="docutils literal notranslate"><span class="pre">&#64;gil_free</span></code>)</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#radiation-processes" id="id16">Radiation Processes</a></p>
+<ul>
+<li><p><a class="reference internal" href="#reverse-shock-emission" id="id17">Reverse Shock Emission</a></p></li>
+<li><p><a class="reference internal" href="#inverse-compton-cooling" id="id18">Inverse Compton Cooling</a></p></li>
+<li><p><a class="reference internal" href="#self-synchrotron-compton-radiation" id="id19">Self-Synchrotron Compton Radiation</a></p></li>
+</ul>
+</li>
+</ul>
+</nav>
+<section id="ambient-media-models">
+<h2><a class="toc-backref" href="#id3" role="doc-backlink">Ambient Media Models</a><a class="headerlink" href="#ambient-media-models" title="Link to this heading"></a></h2>
+<section id="wind-medium">
+<h3><a class="toc-backref" href="#id4" role="doc-backlink">Wind Medium</a><a class="headerlink" href="#wind-medium" title="Link to this heading"></a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">VegasAfterglow</span><span class="w"> </span><span class="kn">import</span> <span class="n">Wind</span>
+
+<span class="c1"># Create a stellar wind medium</span>
+<span class="n">wind</span> <span class="o">=</span> <span class="n">Wind</span><span class="p">(</span><span class="n">A_star</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span>  <span class="c1"># A* parameter</span>
+
+<span class="c1">#..other settings</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">Model</span><span class="p">(</span><span class="n">medium</span><span class="o">=</span><span class="n">wind</span><span class="p">,</span> <span class="o">...</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="stratified-medium">
+<h3><a class="toc-backref" href="#id5" role="doc-backlink">Stratified Medium</a><a class="headerlink" href="#stratified-medium" title="Link to this heading"></a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">VegasAfterglow</span><span class="w"> </span><span class="kn">import</span> <span class="n">Wind</span>
+
+<span class="c1"># Create a stratified stellar wind medium;</span>
+<span class="c1"># smooth transited stratified medium. Inner region, n(r) = n0, middle region n(r) \propto 1/r^k_m, outer region n(r)=n_ism</span>
+<span class="c1"># A = 0 (default): fallback to n = n_ism</span>
+<span class="c1"># n0 = inf (default): wind bubble, from wind profile to ism profile</span>
+<span class="c1"># A = 0 &amp; n0 = inf: pure wind;</span>
+<span class="n">wind</span> <span class="o">=</span> <span class="n">Wind</span><span class="p">(</span><span class="n">A_star</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">n_ism</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">n0</span> <span class="o">=</span> <span class="mf">1e3</span><span class="p">)</span>
+
+<span class="c1"># Use k_m to change the wind density power-law index (default k_m=2, i.e. n ∝ r^{-2})</span>
+<span class="n">wind</span> <span class="o">=</span> <span class="n">Wind</span><span class="p">(</span><span class="n">A_star</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">k_m</span><span class="o">=</span><span class="mf">1.5</span><span class="p">)</span>  <span class="c1"># n ∝ r^{-1.5}</span>
+
+<span class="c1">#..other settings</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">Model</span><span class="p">(</span><span class="n">medium</span><span class="o">=</span><span class="n">wind</span><span class="p">,</span> <span class="o">...</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="user-defined-medium">
+<span id="id1"></span><h3><a class="toc-backref" href="#id6" role="doc-backlink">User-Defined Medium</a><a class="headerlink" href="#user-defined-medium" title="Link to this heading"></a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">VegasAfterglow</span><span class="w"> </span><span class="kn">import</span> <span class="n">Medium</span>
+
+<span class="n">mp</span> <span class="o">=</span> <span class="mf">1.67e-24</span> <span class="c1"># proton mass in gram</span>
+
+<span class="c1"># Define a custom density profile function</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">density</span><span class="p">(</span><span class="n">phi</span><span class="p">,</span> <span class="n">theta</span><span class="p">,</span> <span class="n">r</span><span class="p">):</span><span class="c1"># r in cm, phi and theta in radians [scalar]</span>
+    <span class="k">return</span> <span class="n">mp</span> <span class="c1"># n_ism =  1 cm^-3</span>
+    <span class="c1">#return whatever density profile (g*cm^-3) you want as a function of phi, theta, and r</span>
+
+<span class="c1"># Create a user-defined medium</span>
+<span class="n">medium</span> <span class="o">=</span> <span class="n">Medium</span><span class="p">(</span><span class="n">rho</span><span class="o">=</span><span class="n">density</span><span class="p">)</span>
+
+<span class="c1">#..other settings</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">Model</span><span class="p">(</span><span class="n">medium</span><span class="o">=</span><span class="n">medium</span><span class="p">,</span> <span class="o">...</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="jet-models">
+<h2><a class="toc-backref" href="#id7" role="doc-backlink">Jet Models</a><a class="headerlink" href="#jet-models" title="Link to this heading"></a></h2>
+<section id="gaussian-jet">
+<h3><a class="toc-backref" href="#id8" role="doc-backlink">Gaussian Jet</a><a class="headerlink" href="#gaussian-jet" title="Link to this heading"></a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">VegasAfterglow</span><span class="w"> </span><span class="kn">import</span> <span class="n">GaussianJet</span>
+
+<span class="c1"># Create a structured jet with Gaussian energy profile</span>
+<span class="n">jet</span> <span class="o">=</span> <span class="n">GaussianJet</span><span class="p">(</span>
+    <span class="n">theta_c</span><span class="o">=</span><span class="mf">0.05</span><span class="p">,</span>         <span class="c1"># Core angular size (radians)</span>
+    <span class="n">E_iso</span><span class="o">=</span><span class="mf">1e53</span><span class="p">,</span>           <span class="c1"># Isotropic-equivalent energy (ergs)</span>
+    <span class="n">Gamma0</span><span class="o">=</span><span class="mi">300</span>            <span class="c1"># Initial Lorentz factor</span>
+<span class="p">)</span>
+
+<span class="c1">#..other settings</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">Model</span><span class="p">(</span><span class="n">jet</span><span class="o">=</span><span class="n">jet</span><span class="p">,</span> <span class="o">...</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="power-law-jet">
+<h3><a class="toc-backref" href="#id9" role="doc-backlink">Power-Law Jet</a><a class="headerlink" href="#power-law-jet" title="Link to this heading"></a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">VegasAfterglow</span><span class="w"> </span><span class="kn">import</span> <span class="n">PowerLawJet</span>
+
+<span class="c1"># Create a power-law structured jet</span>
+<span class="n">jet</span> <span class="o">=</span> <span class="n">PowerLawJet</span><span class="p">(</span>
+    <span class="n">theta_c</span><span class="o">=</span><span class="mf">0.05</span><span class="p">,</span>         <span class="c1"># Core angular size (radians)</span>
+    <span class="n">E_iso</span><span class="o">=</span><span class="mf">1e53</span><span class="p">,</span>           <span class="c1"># Isotropic-equivalent energy (ergs)</span>
+    <span class="n">Gamma0</span><span class="o">=</span><span class="mi">300</span><span class="p">,</span>           <span class="c1"># Initial Lorentz factor</span>
+    <span class="n">k_e</span><span class="o">=</span><span class="mf">2.0</span><span class="p">,</span>              <span class="c1"># Power-law index for energy angular dependence</span>
+    <span class="n">k_g</span><span class="o">=</span><span class="mf">2.0</span>               <span class="c1"># Power-law index for Lorentz factor angular dependence</span>
+<span class="p">)</span>
+
+<span class="c1">#..other settings</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">Model</span><span class="p">(</span><span class="n">jet</span><span class="o">=</span><span class="n">jet</span><span class="p">,</span> <span class="o">...</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="two-component-jet">
+<h3><a class="toc-backref" href="#id10" role="doc-backlink">Two-Component Jet</a><a class="headerlink" href="#two-component-jet" title="Link to this heading"></a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">VegasAfterglow</span><span class="w"> </span><span class="kn">import</span> <span class="n">TwoComponentJet</span>
+
+<span class="c1"># Create a two-component jet</span>
+<span class="n">jet</span> <span class="o">=</span> <span class="n">TwoComponentJet</span><span class="p">(</span>
+    <span class="n">theta_c</span><span class="o">=</span><span class="mf">0.05</span><span class="p">,</span>        <span class="c1"># Narrow component angular size (radians)</span>
+    <span class="n">E_iso</span><span class="o">=</span><span class="mf">1e53</span><span class="p">,</span>          <span class="c1"># Isotropic-equivalent energy of the narrow component (ergs)</span>
+    <span class="n">Gamma0</span><span class="o">=</span><span class="mi">300</span><span class="p">,</span>          <span class="c1"># Initial Lorentz factor of the narrow component</span>
+    <span class="n">theta_w</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span>         <span class="c1"># Wide component angular size (radians)</span>
+    <span class="n">E_iso_w</span><span class="o">=</span><span class="mf">1e52</span><span class="p">,</span>        <span class="c1"># Isotropic-equivalent energy of the wide component (ergs)</span>
+    <span class="n">Gamma0_w</span><span class="o">=</span><span class="mi">100</span>         <span class="c1"># Initial Lorentz factor of the wide component</span>
+<span class="p">)</span>
+
+<span class="c1">#..other settings</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">Model</span><span class="p">(</span><span class="n">jet</span><span class="o">=</span><span class="n">jet</span><span class="p">,</span> <span class="o">...</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="step-power-law-jet">
+<h3><a class="toc-backref" href="#id11" role="doc-backlink">Step Power-Law Jet</a><a class="headerlink" href="#step-power-law-jet" title="Link to this heading"></a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">VegasAfterglow</span><span class="w"> </span><span class="kn">import</span> <span class="n">StepPowerLawJet</span>
+
+<span class="c1"># Create a step power-law structured jet (uniform core with sharp transition)</span>
+<span class="n">jet</span> <span class="o">=</span> <span class="n">StepPowerLawJet</span><span class="p">(</span>
+    <span class="n">theta_c</span><span class="o">=</span><span class="mf">0.05</span><span class="p">,</span>        <span class="c1"># Core angular size (radians)</span>
+    <span class="n">E_iso</span><span class="o">=</span><span class="mf">1e53</span><span class="p">,</span>          <span class="c1"># Isotropic-equivalent energy of the core component (ergs)</span>
+    <span class="n">Gamma0</span><span class="o">=</span><span class="mi">300</span><span class="p">,</span>          <span class="c1"># Initial Lorentz factor of the core component</span>
+    <span class="n">E_iso_w</span><span class="o">=</span><span class="mf">1e52</span><span class="p">,</span>        <span class="c1"># Isotropic-equivalent energy of the wide component (ergs)</span>
+    <span class="n">Gamma0_w</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span>        <span class="c1"># Initial Lorentz factor of the wide component</span>
+    <span class="n">k_e</span><span class="o">=</span><span class="mf">2.0</span><span class="p">,</span>             <span class="c1"># Power-law index for energy angular dependence</span>
+    <span class="n">k_g</span><span class="o">=</span><span class="mf">2.0</span>              <span class="c1"># Power-law index for Lorentz factor angular dependence</span>
+<span class="p">)</span>
+
+<span class="c1">#..other settings</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">Model</span><span class="p">(</span><span class="n">jet</span><span class="o">=</span><span class="n">jet</span><span class="p">,</span> <span class="o">...</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="jet-with-spreading">
+<h3><a class="toc-backref" href="#id12" role="doc-backlink">Jet with Spreading</a><a class="headerlink" href="#jet-with-spreading" title="Link to this heading"></a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">VegasAfterglow</span><span class="w"> </span><span class="kn">import</span> <span class="n">TophatJet</span>
+
+<span class="n">jet</span> <span class="o">=</span> <span class="n">TophatJet</span><span class="p">(</span>
+    <span class="n">theta_c</span><span class="o">=</span><span class="mf">0.05</span><span class="p">,</span>
+    <span class="n">E_iso</span><span class="o">=</span><span class="mf">1e53</span><span class="p">,</span>
+    <span class="n">Gamma0</span><span class="o">=</span><span class="mi">300</span><span class="p">,</span>
+    <span class="n">spreading</span><span class="o">=</span><span class="kc">True</span>       <span class="c1"># Enable spreading</span>
+<span class="p">)</span>
+
+<span class="c1">#..other settings</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">Model</span><span class="p">(</span><span class="n">jet</span><span class="o">=</span><span class="n">jet</span><span class="p">,</span> <span class="o">...</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The jet spreading (Lateral Expansion) is experimental and only works for the top-hat jet, Gaussian jet, and power-law jet with a jet core.
+The spreading prescription may not work for arbitrary user-defined jet structures.</p>
+</div>
+</section>
+<section id="magnetar-spin-down">
+<h3><a class="toc-backref" href="#id13" role="doc-backlink">Magnetar Spin-down</a><a class="headerlink" href="#magnetar-spin-down" title="Link to this heading"></a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">VegasAfterglow</span><span class="w"> </span><span class="kn">import</span> <span class="n">Magnetar</span>
+
+<span class="c1"># Create a tophat jet with magnetar spin-down energy injection; Luminosity 1e46 erg/s, t_0 = 100 seconds, and q = 2</span>
+<span class="n">jet</span> <span class="o">=</span> <span class="n">TophatJet</span><span class="p">(</span><span class="n">theta_c</span><span class="o">=</span><span class="mf">0.05</span><span class="p">,</span> <span class="n">E_iso</span><span class="o">=</span><span class="mf">1e53</span><span class="p">,</span> <span class="n">Gamma0</span><span class="o">=</span><span class="mi">300</span><span class="p">,</span> <span class="n">magnetar</span><span class="o">=</span><span class="n">Magnetar</span><span class="p">(</span><span class="n">L0</span><span class="o">=</span><span class="mf">1e46</span><span class="p">,</span> <span class="n">t0</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">q</span><span class="o">=</span><span class="mi">2</span><span class="p">))</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The magnetar spin-down injection is implemented in the default form L0*(1+t/t0)^(-q) for theta &lt; theta_c. You can pass the <code class="xref any docutils literal notranslate"><span class="pre">magnetar</span></code> argument to the power-law and Gaussian jet as well.</p>
+</div>
+</section>
+<section id="user-defined-jet">
+<span id="id2"></span><h3><a class="toc-backref" href="#id14" role="doc-backlink">User-Defined Jet</a><a class="headerlink" href="#user-defined-jet" title="Link to this heading"></a></h3>
+<p>You may also define your own jet structure by providing the energy and lorentz factor profile.
+Those two profiles are required to complete a jet structure. You may also provide the magnetization profile, enregy injection profile, and mass injection profile.
+Those profiles are optional and will be set to zero function if not provided.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">VegasAfterglow</span><span class="w"> </span><span class="kn">import</span> <span class="n">Ejecta</span>
+
+<span class="c1"># Define a custom energy profile function, required to complete the jet structure</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">E_iso_profile</span><span class="p">(</span><span class="n">phi</span><span class="p">,</span> <span class="n">theta</span><span class="p">):</span>
+    <span class="k">return</span> <span class="mf">1e53</span>  <span class="c1"># E_iso = 1e53 erg isotropic fireball</span>
+    <span class="c1">#return whatever energy profile you want as a function of phi and theta in unit of erg [not erg per solid angle]</span>
+
+<span class="c1"># Define a custom lorentz factor profile function, required to complete the jet structure</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">Gamma0_profile</span><span class="p">(</span><span class="n">phi</span><span class="p">,</span> <span class="n">theta</span><span class="p">):</span>
+    <span class="k">return</span> <span class="mi">300</span> <span class="c1"># Gamma0 = 300</span>
+    <span class="c1">#return whatever lorentz factor profile you want as a function of phi and theta</span>
+
+<span class="c1"># Define a custom magnetization profile function, optional</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">sigma0_profile</span><span class="p">(</span><span class="n">phi</span><span class="p">,</span> <span class="n">theta</span><span class="p">):</span>
+    <span class="k">return</span> <span class="mf">0.1</span> <span class="c1"># sigma = 0.1</span>
+    <span class="c1">#return whatever magnetization profile you want as a function of phi and theta</span>
+
+<span class="c1"># Define a custom energy injection profile function, optional</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">E_dot_profile</span><span class="p">(</span><span class="n">phi</span><span class="p">,</span> <span class="n">theta</span><span class="p">,</span> <span class="n">t</span><span class="p">):</span>
+    <span class="k">return</span> <span class="mf">1e46</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">t</span> <span class="o">/</span> <span class="mi">100</span><span class="p">)</span><span class="o">**</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">)</span> <span class="c1"># L = 1e46 erg/s, t0 = 100 seconds</span>
+    <span class="c1">#return whatever energy injection  profile you want as a function of phi, theta, and time in unit of erg/s [not erg/s per solid angle]</span>
+
+<span class="c1"># Define a custom mass injection profile function, optional</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">M_dot_profile</span><span class="p">(</span><span class="n">phi</span><span class="p">,</span> <span class="n">theta</span><span class="p">,</span> <span class="n">t</span><span class="p">):</span>
+    <span class="k">return</span> <span class="mi">0</span>  <span class="c1"># return whatever mass injection profile you want [g/s, not g/s per solid angle]</span>
+
+<span class="c1"># Create a user-defined jet</span>
+<span class="n">jet</span> <span class="o">=</span> <span class="n">Ejecta</span><span class="p">(</span><span class="n">E_iso</span><span class="o">=</span><span class="n">E_iso_profile</span><span class="p">,</span> <span class="n">Gamma0</span><span class="o">=</span><span class="n">Gamma0_profile</span><span class="p">,</span> <span class="n">sigma0</span><span class="o">=</span><span class="n">sigma0_profile</span><span class="p">,</span> <span class="n">E_dot</span><span class="o">=</span><span class="n">E_dot_profile</span><span class="p">,</span> <span class="n">M_dot</span><span class="o">=</span><span class="n">M_dot_profile</span><span class="p">)</span>
+
+<span class="c1">#..other settings</span>
+
+<span class="c1">#if your jet is not axisymmetric, set axisymmetric to False</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">Model</span><span class="p">(</span><span class="n">jet</span><span class="o">=</span><span class="n">jet</span><span class="p">,</span> <span class="o">...</span><span class="p">,</span> <span class="n">axisymmetric</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">resolutions</span><span class="o">=</span><span class="p">(</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+
+<span class="c1"># the user-defined jet structure could be spiky, the default resolution may not resolve the jet structure. if that is the case, you can try a finer resolution (phi_ppd, theta_ppd, t_ppd)</span>
+<span class="c1"># where phi_ppd is the number of points per degree in the phi direction, theta_ppd is the number of points per degree in the theta direction, and t_ppd is the number of points per decade in the time direction    .</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Plain Python callbacks work well for single model evaluations (light curves, spectra).
+For multi-threaded MCMC fitting, use the <code class="docutils literal notranslate"><span class="pre">&#64;gil_free</span></code> decorator to compile
+your profile functions to native code, eliminating GIL contention across threads.
+See the <a class="reference internal" href="#gil-free-native-callbacks">GIL-Free Native Callbacks</a> section below and <a class="reference internal" href="../mcmc_fitting/index.html"><span class="doc">MCMC Parameter Fitting</span></a> for details.</p>
+</div>
+</section>
+<section id="gil-free-native-callbacks-gil-free">
+<span id="gil-free-native-callbacks"></span><h3><a class="toc-backref" href="#id15" role="doc-backlink">GIL-Free Native Callbacks (<code class="docutils literal notranslate"><span class="pre">&#64;gil_free</span></code>)</a><a class="headerlink" href="#gil-free-native-callbacks-gil-free" title="Link to this heading"></a></h3>
+<p>When C++ evaluates a plain Python callback (e.g., a custom jet or medium profile),
+it must acquire the Global Interpreter Lock (GIL) for every call. During blast wave
+evolution this happens hundreds of times per model evaluation, which serializes the
+angular-profile loop across threads.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">&#64;gil_free</span></code> decorator compiles a Python function to native machine code via
+<a class="reference external" href="https://numba.pydata.org/">numba</a>, so C++ calls it directly as a C function pointer
+— no GIL, no interpreter overhead:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span>numba
+</pre></div>
+</div>
+<p><strong>Key differences from plain Python callbacks:</strong></p>
+<ol class="arabic simple">
+<li><p>Decorate with <code class="docutils literal notranslate"><span class="pre">&#64;gil_free</span></code></p></li>
+<li><p>Physical parameters come as extra function arguments (after the spatial
+coordinates) instead of being captured from the enclosing scope</p></li>
+<li><p>Call the decorated function with keyword arguments to bind parameters — this
+returns a <code class="docutils literal notranslate"><span class="pre">NativeFunc</span></code> object that C++ can call at full speed</p></li>
+<li><p>Only <code class="docutils literal notranslate"><span class="pre">math</span></code> module functions and simple arithmetic are allowed (no <code class="docutils literal notranslate"><span class="pre">numpy</span></code>
+arrays, no Python objects)</p></li>
+</ol>
+<p><strong>Working example — Gaussian jet + wind medium:</strong></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">math</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">VegasAfterglow</span><span class="w"> </span><span class="kn">import</span> <span class="n">Ejecta</span><span class="p">,</span> <span class="n">Medium</span><span class="p">,</span> <span class="n">Observer</span><span class="p">,</span> <span class="n">Radiation</span><span class="p">,</span> <span class="n">Model</span><span class="p">,</span> <span class="n">gil_free</span>
+
+<span class="nd">@gil_free</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">gaussian_energy</span><span class="p">(</span><span class="n">phi</span><span class="p">,</span> <span class="n">theta</span><span class="p">,</span> <span class="n">E_iso</span><span class="p">,</span> <span class="n">theta_c</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">E_iso</span> <span class="o">*</span> <span class="n">math</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="mf">0.5</span> <span class="o">*</span> <span class="p">(</span><span class="n">theta</span> <span class="o">/</span> <span class="n">theta_c</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span>
+
+<span class="nd">@gil_free</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">gaussian_gamma</span><span class="p">(</span><span class="n">phi</span><span class="p">,</span> <span class="n">theta</span><span class="p">,</span> <span class="n">Gamma0</span><span class="p">,</span> <span class="n">theta_c</span><span class="p">):</span>
+    <span class="k">return</span> <span class="mf">1.0</span> <span class="o">+</span> <span class="p">(</span><span class="n">Gamma0</span> <span class="o">-</span> <span class="mf">1.0</span><span class="p">)</span> <span class="o">*</span> <span class="n">math</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="mf">0.5</span> <span class="o">*</span> <span class="p">(</span><span class="n">theta</span> <span class="o">/</span> <span class="n">theta_c</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span>
+
+
+<span class="nd">@gil_free</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">wind_density</span><span class="p">(</span><span class="n">phi</span><span class="p">,</span> <span class="n">theta</span><span class="p">,</span> <span class="n">r</span><span class="p">,</span> <span class="n">A_star</span><span class="p">):</span>
+    <span class="n">mp</span> <span class="o">=</span> <span class="mf">1.67e-24</span>
+    <span class="k">return</span> <span class="n">A_star</span> <span class="o">*</span> <span class="mf">5e11</span> <span class="o">*</span> <span class="n">mp</span> <span class="o">/</span> <span class="p">(</span><span class="n">r</span> <span class="o">*</span> <span class="n">r</span><span class="p">)</span>
+
+<span class="c1"># --- Build the model ---</span>
+<span class="c1"># Calling the decorated function with keyword arguments binds those parameters</span>
+<span class="c1"># and returns a NativeFunc. You can bind as many parameters as you need —</span>
+<span class="c1"># they just need to appear after the spatial coordinates in the function signature.</span>
+<span class="c1"># This is especially useful for MCMC, where you rebind parameters each step.</span>
+
+<span class="n">E_iso</span> <span class="o">=</span> <span class="mf">1e52</span>      <span class="c1"># these could come from MCMC sampler</span>
+<span class="n">Gamma0</span> <span class="o">=</span> <span class="mi">300</span>
+<span class="n">theta_c</span> <span class="o">=</span> <span class="mf">0.1</span>
+<span class="n">A_star</span> <span class="o">=</span> <span class="mf">0.1</span>
+
+<span class="n">jet</span> <span class="o">=</span> <span class="n">Ejecta</span><span class="p">(</span>
+    <span class="n">E_iso</span><span class="o">=</span><span class="n">gaussian_energy</span><span class="p">(</span><span class="n">E_iso</span><span class="o">=</span><span class="n">E_iso</span><span class="p">,</span> <span class="n">theta_c</span><span class="o">=</span><span class="n">theta_c</span><span class="p">),</span>
+    <span class="n">Gamma0</span><span class="o">=</span><span class="n">gaussian_gamma</span><span class="p">(</span><span class="n">Gamma0</span><span class="o">=</span><span class="n">Gamma0</span><span class="p">,</span> <span class="n">theta_c</span><span class="o">=</span><span class="n">theta_c</span><span class="p">),</span>
+<span class="p">)</span>
+
+<span class="n">medium</span> <span class="o">=</span> <span class="n">Medium</span><span class="p">(</span><span class="n">rho</span><span class="o">=</span><span class="n">wind_density</span><span class="p">(</span><span class="n">A_star</span><span class="o">=</span><span class="n">A_star</span><span class="p">))</span>
+<span class="n">obs</span> <span class="o">=</span> <span class="n">Observer</span><span class="p">(</span><span class="n">lumi_dist</span><span class="o">=</span><span class="mf">1e26</span><span class="p">,</span> <span class="n">z</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">theta_obs</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
+<span class="n">rad</span> <span class="o">=</span> <span class="n">Radiation</span><span class="p">(</span><span class="n">eps_e</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">eps_B</span><span class="o">=</span><span class="mf">1e-3</span><span class="p">,</span> <span class="n">p</span><span class="o">=</span><span class="mf">2.3</span><span class="p">)</span>
+
+<span class="n">model</span> <span class="o">=</span> <span class="n">Model</span><span class="p">(</span><span class="n">jet</span><span class="o">=</span><span class="n">jet</span><span class="p">,</span> <span class="n">medium</span><span class="o">=</span><span class="n">medium</span><span class="p">,</span> <span class="n">observer</span><span class="o">=</span><span class="n">obs</span><span class="p">,</span> <span class="n">fwd_rad</span><span class="o">=</span><span class="n">rad</span><span class="p">)</span>
+
+<span class="n">times</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">logspace</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+<span class="n">bands</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">1e9</span><span class="p">,</span> <span class="mf">1e14</span><span class="p">,</span> <span class="mf">1e17</span><span class="p">])</span>
+<span class="n">results</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">flux_density_grid</span><span class="p">(</span><span class="n">times</span><span class="p">,</span> <span class="n">bands</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">nu</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">bands</span><span class="p">):</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">loglog</span><span class="p">(</span><span class="n">times</span><span class="p">,</span> <span class="n">results</span><span class="o">.</span><span class="n">total</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="p">:])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Time (s)&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Flux Density (erg/cm²/s/Hz)&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>Functions decorated with <code class="docutils literal notranslate"><span class="pre">&#64;gil_free</span></code> must only use the <code class="docutils literal notranslate"><span class="pre">math</span></code> module
+(not <code class="docutils literal notranslate"><span class="pre">numpy</span></code>) and simple arithmetic — no Python objects, arrays, or closures.
+If you need more complex logic, use the plain Python callback approach instead.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Built-in jet types (<code class="docutils literal notranslate"><span class="pre">TophatJet</span></code>, <code class="docutils literal notranslate"><span class="pre">GaussianJet</span></code>, <code class="docutils literal notranslate"><span class="pre">PowerLawJet</span></code>, etc.) are
+already implemented in C++ and do not need this decorator. Use <code class="docutils literal notranslate"><span class="pre">&#64;gil_free</span></code>
+only for custom profiles passed via <code class="docutils literal notranslate"><span class="pre">Ejecta</span></code> or <code class="docutils literal notranslate"><span class="pre">Medium</span></code>.</p>
+</div>
+</section>
+</section>
+<section id="radiation-processes">
+<h2><a class="toc-backref" href="#id16" role="doc-backlink">Radiation Processes</a><a class="headerlink" href="#radiation-processes" title="Link to this heading"></a></h2>
+<section id="reverse-shock-emission">
+<h3><a class="toc-backref" href="#id17" role="doc-backlink">Reverse Shock Emission</a><a class="headerlink" href="#reverse-shock-emission" title="Link to this heading"></a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">VegasAfterglow</span><span class="w"> </span><span class="kn">import</span> <span class="n">Radiation</span>
+
+<span class="c1">#set the jet duration to be 100 seconds, the default is 1 second. The jet duration affects the reverse shock thickness (thin shell or thick shell).</span>
+<span class="n">jet</span> <span class="o">=</span> <span class="n">TophatJet</span><span class="p">(</span><span class="n">theta_c</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">E_iso</span><span class="o">=</span><span class="mf">1e52</span><span class="p">,</span> <span class="n">Gamma0</span><span class="o">=</span><span class="mi">300</span><span class="p">,</span> <span class="n">duration</span> <span class="o">=</span> <span class="mi">100</span><span class="p">)</span>
+
+<span class="c1"># Create a radiation model with both forward and reverse shock synchrotron radiation</span>
+<span class="n">fwd_rad</span> <span class="o">=</span> <span class="n">Radiation</span><span class="p">(</span><span class="n">eps_e</span><span class="o">=</span><span class="mf">1e-1</span><span class="p">,</span> <span class="n">eps_B</span><span class="o">=</span><span class="mf">1e-3</span><span class="p">,</span> <span class="n">p</span><span class="o">=</span><span class="mf">2.3</span><span class="p">)</span>
+<span class="n">rvs_rad</span> <span class="o">=</span> <span class="n">Radiation</span><span class="p">(</span><span class="n">eps_e</span><span class="o">=</span><span class="mf">1e-2</span><span class="p">,</span> <span class="n">eps_B</span><span class="o">=</span><span class="mf">1e-4</span><span class="p">,</span> <span class="n">p</span><span class="o">=</span><span class="mf">2.4</span><span class="p">)</span>
+
+<span class="c1">#..other settings</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">Model</span><span class="p">(</span><span class="n">fwd_rad</span><span class="o">=</span><span class="n">fwd_rad</span><span class="p">,</span> <span class="n">rvs_rad</span><span class="o">=</span><span class="n">rvs_rad</span><span class="p">,</span> <span class="n">resolutions</span><span class="o">=</span><span class="p">(</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mi">5</span><span class="p">),</span><span class="o">...</span><span class="p">)</span>
+
+<span class="n">times</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">logspace</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">200</span><span class="p">)</span>
+
+<span class="n">bands</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">1e9</span><span class="p">,</span> <span class="mf">1e14</span><span class="p">,</span> <span class="mf">1e17</span><span class="p">])</span>
+
+<span class="n">results</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">flux_density_grid</span><span class="p">(</span><span class="n">times</span><span class="p">,</span> <span class="n">bands</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mf">4.8</span><span class="p">,</span> <span class="mf">3.6</span><span class="p">),</span><span class="n">dpi</span><span class="o">=</span><span class="mi">200</span><span class="p">)</span>
+
+<span class="c1"># Plot each frequency band</span>
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">nu</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">bands</span><span class="p">):</span>
+    <span class="n">exp</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">floor</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="n">nu</span><span class="p">)))</span>
+    <span class="n">base</span> <span class="o">=</span> <span class="n">nu</span> <span class="o">/</span> <span class="mi">10</span><span class="o">**</span><span class="n">exp</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">loglog</span><span class="p">(</span><span class="n">times</span><span class="p">,</span> <span class="n">results</span><span class="o">.</span><span class="n">fwd</span><span class="o">.</span><span class="n">sync</span><span class="p">[</span><span class="n">i</span><span class="p">,:],</span> <span class="n">label</span><span class="o">=</span><span class="sa">fr</span><span class="s1">&#39;$</span><span class="si">{</span><span class="n">base</span><span class="si">:</span><span class="s1">.1f</span><span class="si">}</span><span class="s1"> \times 10^</span><span class="se">{{</span><span class="si">{</span><span class="n">exp</span><span class="si">}</span><span class="se">}}</span><span class="s1">$ Hz (fwd)&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">loglog</span><span class="p">(</span><span class="n">times</span><span class="p">,</span> <span class="n">results</span><span class="o">.</span><span class="n">rvs</span><span class="o">.</span><span class="n">sync</span><span class="p">[</span><span class="n">i</span><span class="p">,:],</span> <span class="n">label</span><span class="o">=</span><span class="sa">fr</span><span class="s1">&#39;$</span><span class="si">{</span><span class="n">base</span><span class="si">:</span><span class="s1">.1f</span><span class="si">}</span><span class="s1"> \times 10^</span><span class="se">{{</span><span class="si">{</span><span class="n">exp</span><span class="si">}</span><span class="se">}}</span><span class="s1">$ Hz (rvs)&#39;</span><span class="p">)</span><span class="c1">#reverse shock synchrotron</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>You may increase the resolution of the grid to improve the accuracy of the reverse shock synchrotron radiation if you see spiky features.</p>
+</div>
+</section>
+<section id="inverse-compton-cooling">
+<h3><a class="toc-backref" href="#id18" role="doc-backlink">Inverse Compton Cooling</a><a class="headerlink" href="#inverse-compton-cooling" title="Link to this heading"></a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">VegasAfterglow</span><span class="w"> </span><span class="kn">import</span> <span class="n">Radiation</span>
+
+<span class="c1"># Create a radiation model with SSC and IC cooling (without Klein-Nishina correction)</span>
+<span class="n">rad</span> <span class="o">=</span> <span class="n">Radiation</span><span class="p">(</span><span class="n">eps_e</span><span class="o">=</span><span class="mf">1e-1</span><span class="p">,</span> <span class="n">eps_B</span><span class="o">=</span><span class="mf">1e-3</span><span class="p">,</span> <span class="n">p</span><span class="o">=</span><span class="mf">2.3</span><span class="p">,</span> <span class="n">ssc</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">kn</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+<span class="c1">#..other settings</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">Model</span><span class="p">(</span><span class="n">fwd_rad</span><span class="o">=</span><span class="n">rad</span><span class="p">,</span> <span class="o">...</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="self-synchrotron-compton-radiation">
+<h3><a class="toc-backref" href="#id19" role="doc-backlink">Self-Synchrotron Compton Radiation</a><a class="headerlink" href="#self-synchrotron-compton-radiation" title="Link to this heading"></a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">VegasAfterglow</span><span class="w"> </span><span class="kn">import</span> <span class="n">Radiation</span>
+
+<span class="c1"># Create a radiation model with self-Compton radiation and Klein-Nishina corrections</span>
+<span class="n">rad</span> <span class="o">=</span> <span class="n">Radiation</span><span class="p">(</span><span class="n">eps_e</span><span class="o">=</span><span class="mf">1e-1</span><span class="p">,</span> <span class="n">eps_B</span><span class="o">=</span><span class="mf">1e-3</span><span class="p">,</span> <span class="n">p</span><span class="o">=</span><span class="mf">2.3</span><span class="p">,</span> <span class="n">ssc</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">kn</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="c1">#..other settings</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">Model</span><span class="p">(</span><span class="n">fwd_rad</span><span class="o">=</span><span class="n">rad</span><span class="p">,</span> <span class="o">...</span><span class="p">)</span>
+
+<span class="n">times</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">logspace</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">200</span><span class="p">)</span>
+
+<span class="n">bands</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">1e9</span><span class="p">,</span> <span class="mf">1e14</span><span class="p">,</span> <span class="mf">1e17</span><span class="p">])</span>
+
+<span class="n">results</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">flux_density_grid</span><span class="p">(</span><span class="n">times</span><span class="p">,</span> <span class="n">bands</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mf">4.8</span><span class="p">,</span> <span class="mf">3.6</span><span class="p">),</span><span class="n">dpi</span><span class="o">=</span><span class="mi">200</span><span class="p">)</span>
+
+<span class="c1"># Plot each frequency band</span>
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">nu</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">bands</span><span class="p">):</span>
+    <span class="n">exp</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">floor</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="n">nu</span><span class="p">)))</span>
+    <span class="n">base</span> <span class="o">=</span> <span class="n">nu</span> <span class="o">/</span> <span class="mi">10</span><span class="o">**</span><span class="n">exp</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">loglog</span><span class="p">(</span><span class="n">times</span><span class="p">,</span> <span class="n">results</span><span class="o">.</span><span class="n">fwd</span><span class="o">.</span><span class="n">sync</span><span class="p">[</span><span class="n">i</span><span class="p">,:],</span> <span class="n">label</span><span class="o">=</span><span class="sa">fr</span><span class="s1">&#39;$</span><span class="si">{</span><span class="n">base</span><span class="si">:</span><span class="s1">.1f</span><span class="si">}</span><span class="s1"> \times 10^</span><span class="se">{{</span><span class="si">{</span><span class="n">exp</span><span class="si">}</span><span class="se">}}</span><span class="s1">$ Hz (sync)&#39;</span><span class="p">)</span><span class="c1">#synchrotron</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">loglog</span><span class="p">(</span><span class="n">times</span><span class="p">,</span> <span class="n">results</span><span class="o">.</span><span class="n">fwd</span><span class="o">.</span><span class="n">ssc</span><span class="p">[</span><span class="n">i</span><span class="p">,:],</span> <span class="n">label</span><span class="o">=</span><span class="sa">fr</span><span class="s1">&#39;$</span><span class="si">{</span><span class="n">base</span><span class="si">:</span><span class="s1">.1f</span><span class="si">}</span><span class="s1"> \times 10^</span><span class="se">{{</span><span class="si">{</span><span class="n">exp</span><span class="si">}</span><span class="se">}}</span><span class="s1">$ Hz (SSC)&#39;</span><span class="p">)</span><span class="c1">#SSC</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>When <code class="docutils literal notranslate"><span class="pre">ssc=True</span></code>, SSC cooling of electrons is automatically included. The <code class="docutils literal notranslate"><span class="pre">kn</span></code> flag controls whether Klein-Nishina corrections are applied:</p>
+<p>(ssc = True, kn = False): SSC emission with IC cooling using the Thomson cross-section.</p>
+<p>(ssc = True, kn = True): SSC emission with IC cooling and Klein-Nishina corrections.</p>
+<p>CMB inverse Compton cooling can be enabled independently via <code class="docutils literal notranslate"><span class="pre">cmb_cooling=True</span></code>, which is useful for high-redshift sources where the CMB energy density is significant. When both <code class="docutils literal notranslate"><span class="pre">ssc</span></code> and <code class="docutils literal notranslate"><span class="pre">cmb_cooling</span></code> are active, the total Compton-Y includes both contributions.</p>
+</div>
+<p>For details on the underlying radiation physics, see <a class="reference internal" href="../physics.html"><span class="doc">GRB Afterglow Physics</span></a>.</p>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="basic_usage.html" class="btn btn-neutral float-left" title="Basic Usage" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="internal_quantities.html" class="btn btn-neutral float-right" title="Internal Quantities Evolution" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, VegasAfterglow Team.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

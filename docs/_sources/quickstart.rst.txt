@@ -204,13 +204,13 @@ Here is a minimal example showing the complete workflow:
     # 6. Generate predictions with best-fit model
     lc = fitter.flux_density_grid(result.top_k_params[0], t_out, bands)
 
-For the full guide including data selection strategies, custom jet/medium factories, multiple sampler options, and result analysis, see :doc:`mcmc_fitting`.
+For the full guide including data selection strategies, custom jet/medium factories, multiple sampler options, and result analysis, see :doc:`mcmc_fitting/index`.
 
 Next Steps
 ----------
 
-- :doc:`examples` -- detailed examples including internal quantities analysis and model introspection
-- :doc:`mcmc_fitting` -- comprehensive MCMC fitting guide
+- :doc:`examples/index` -- detailed examples including internal quantities analysis and model introspection
+- :doc:`mcmc_fitting/index` -- comprehensive MCMC fitting guide
 - :doc:`parameter_reference` -- parameter documentation and typical ranges
 - :doc:`physics` -- underlying physical models and equations
 - :doc:`troubleshooting` -- common issues and solutions

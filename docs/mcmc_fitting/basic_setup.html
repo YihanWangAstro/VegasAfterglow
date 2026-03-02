@@ -1,0 +1,385 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Basic Setup &mdash; VegasAfterglow 0.1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=20074c1a" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=fd3f3429" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/custom.css?v=c0df17a3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/custom.css?v=c0df17a3" />
+
+  
+    <link rel="shortcut icon" href="../_static/logo.svg"/>
+    <link rel="canonical" href="https://yihanwangastro.github.io/VegasAfterglow/docs/mcmc_fitting/basic_setup.html" />
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=01f34227"></script>
+      <script src="../_static/doctools.js?v=9a2dae69"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      <script src="../_static/js/custom.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Model Configurations" href="model_configurations.html" />
+    <link rel="prev" title="MCMC Best Practices" href="best_practices.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            VegasAfterglow
+              <img src="../_static/logo.svg" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../quickstart.html">Quickstart</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../using_cli.html">Command-Line Interface (<code class="docutils literal notranslate"><span class="pre">vegasgen</span></code>)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../examples/index.html">Examples</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">MCMC Parameter Fitting</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="best_practices.html">MCMC Best Practices</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Basic Setup</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#fitter-constructor">Fitter Constructor</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#setting-up-data-and-the-fitter">Setting up Data and the Fitter</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#unit-conversion">Unit Conversion</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#magnitude-conversion">Magnitude Conversion</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#data-selection-and-optimization">Data Selection and Optimization</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="model_configurations.html">Model Configurations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="running_and_results.html">Running MCMC</a></li>
+<li class="toctree-l2"><a class="reference internal" href="running_and_results.html#analyzing-results">Analyzing Results</a></li>
+<li class="toctree-l2"><a class="reference internal" href="advanced.html">Advanced Fitting</a></li>
+<li class="toctree-l2"><a class="reference internal" href="advanced.html#troubleshooting">Troubleshooting</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../redback_integration.html">Parameter Estimation with Redback</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../parameter_reference.html">Parameter Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../validation.html">Validation &amp; Testing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../python_api.html">Python API Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cpp_api.html">C++ API Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../troubleshooting.html">Troubleshooting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing.html">Contributing</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">VegasAfterglow</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">MCMC Parameter Fitting</a></li>
+      <li class="breadcrumb-item active">Basic Setup</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/mcmc_fitting/basic_setup.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="basic-setup">
+<h1>Basic Setup<a class="headerlink" href="#basic-setup" title="Link to this heading"></a></h1>
+<section id="fitter-constructor">
+<h2>Fitter Constructor<a class="headerlink" href="#fitter-constructor" title="Link to this heading"></a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">Fitter</span></code> constructor accepts keyword arguments for source properties, model selection, physics options, and numerical parameters:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">fitter</span> <span class="o">=</span> <span class="n">Fitter</span><span class="p">(</span>
+    <span class="c1"># Source properties</span>
+    <span class="n">z</span><span class="o">=</span><span class="mf">1.58</span><span class="p">,</span>                   <span class="c1"># Redshift</span>
+    <span class="n">lumi_dist</span><span class="o">=</span><span class="mf">3.364e28</span><span class="p">,</span>       <span class="c1"># Luminosity distance [cm]</span>
+
+    <span class="c1"># Model selection (see sections below for all options)</span>
+    <span class="n">jet</span><span class="o">=</span><span class="s2">&quot;powerlaw&quot;</span><span class="p">,</span>           <span class="c1"># Jet structure type</span>
+    <span class="n">medium</span><span class="o">=</span><span class="s2">&quot;wind&quot;</span><span class="p">,</span>            <span class="c1"># Ambient medium type</span>
+
+    <span class="c1"># Physics options</span>
+    <span class="n">rvs_shock</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>           <span class="c1"># Include reverse shock</span>
+    <span class="n">fwd_ssc</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>             <span class="c1"># Forward shock inverse Compton</span>
+    <span class="n">rvs_ssc</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>            <span class="c1"># Reverse shock inverse Compton</span>
+    <span class="n">kn</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>                  <span class="c1"># Klein-Nishina corrections</span>
+    <span class="n">magnetar</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>            <span class="c1"># Magnetar energy injection</span>
+
+    <span class="c1"># Numerical parameters</span>
+    <span class="n">rtol</span><span class="o">=</span><span class="mf">1e-5</span><span class="p">,</span>                <span class="c1"># Numerical tolerance</span>
+    <span class="n">resolution</span><span class="o">=</span><span class="p">(</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mi">5</span><span class="p">),</span>   <span class="c1"># Grid resolution (phi, theta, t)</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="setting-up-data-and-the-fitter">
+<h2>Setting up Data and the Fitter<a class="headerlink" href="#setting-up-data-and-the-fitter" title="Link to this heading"></a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">Fitter</span></code> class handles both model configuration and observational data. Add light curves, spectra, and broadband flux directly to the fitter:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">VegasAfterglow</span><span class="w"> </span><span class="kn">import</span> <span class="n">Fitter</span><span class="p">,</span> <span class="n">ParamDef</span><span class="p">,</span> <span class="n">Scale</span>
+
+<span class="c1"># Create the fitter with model configuration</span>
+<span class="n">fitter</span> <span class="o">=</span> <span class="n">Fitter</span><span class="p">(</span>
+    <span class="n">z</span><span class="o">=</span><span class="mf">1.58</span><span class="p">,</span>
+    <span class="n">lumi_dist</span><span class="o">=</span><span class="mf">3.364e28</span><span class="p">,</span>
+    <span class="n">jet</span><span class="o">=</span><span class="s2">&quot;tophat&quot;</span><span class="p">,</span>
+    <span class="n">medium</span><span class="o">=</span><span class="s2">&quot;ism&quot;</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="c1"># Method 1: Add data directly</span>
+<span class="n">t_data</span> <span class="o">=</span> <span class="p">[</span><span class="mf">1e3</span><span class="p">,</span> <span class="mf">2e3</span><span class="p">,</span> <span class="mf">5e3</span><span class="p">,</span> <span class="mf">1e4</span><span class="p">,</span> <span class="mf">2e4</span><span class="p">]</span>  <span class="c1"># Time in seconds</span>
+<span class="n">flux_data</span> <span class="o">=</span> <span class="p">[</span><span class="mf">1e-26</span><span class="p">,</span> <span class="mf">8e-27</span><span class="p">,</span> <span class="mf">5e-27</span><span class="p">,</span> <span class="mf">3e-27</span><span class="p">,</span> <span class="mf">2e-27</span><span class="p">]</span>  <span class="c1"># erg/cm²/s/Hz</span>
+<span class="n">flux_err</span> <span class="o">=</span> <span class="p">[</span><span class="mf">1e-28</span><span class="p">,</span> <span class="mf">8e-28</span><span class="p">,</span> <span class="mf">5e-28</span><span class="p">,</span> <span class="mf">3e-28</span><span class="p">,</span> <span class="mf">2e-28</span><span class="p">]</span>   <span class="c1"># Error bars</span>
+
+<span class="c1"># Add light curve at R-band frequency</span>
+<span class="n">fitter</span><span class="o">.</span><span class="n">add_flux_density</span><span class="p">(</span><span class="n">nu</span><span class="o">=</span><span class="mf">4.84e14</span><span class="p">,</span> <span class="n">t</span><span class="o">=</span><span class="n">t_data</span><span class="p">,</span>
+                        <span class="n">f_nu</span><span class="o">=</span><span class="n">flux_data</span><span class="p">,</span> <span class="n">err</span><span class="o">=</span><span class="n">flux_err</span><span class="p">)</span>  <span class="c1"># All quantities in CGS units</span>
+
+<span class="c1"># Optional: Add weights for systematic uncertainties, normalization handled internally</span>
+<span class="n">weights</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones_like</span><span class="p">(</span><span class="n">t_data</span><span class="p">)</span>  <span class="c1"># Equal weights</span>
+<span class="n">fitter</span><span class="o">.</span><span class="n">add_flux_density</span><span class="p">(</span><span class="n">nu</span><span class="o">=</span><span class="mf">2.4e17</span><span class="p">,</span> <span class="n">t</span><span class="o">=</span><span class="n">t_data</span><span class="p">,</span>
+                        <span class="n">f_nu</span><span class="o">=</span><span class="n">flux_data</span><span class="p">,</span> <span class="n">err</span><span class="o">=</span><span class="n">flux_err</span><span class="p">,</span>
+                        <span class="n">weights</span><span class="o">=</span><span class="n">weights</span><span class="p">)</span>  <span class="c1"># All quantities in CGS units</span>
+
+<span class="c1"># Method 2: Add frequency-integrated light curve (broadband flux)</span>
+<span class="c1"># For instruments with wide energy bands (e.g., Swift XRT, Fermi LAT)</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">VegasAfterglow.units</span><span class="w"> </span><span class="kn">import</span> <span class="n">band</span><span class="p">,</span> <span class="n">keV</span>
+
+<span class="n">fitter</span><span class="o">.</span><span class="n">add_flux</span><span class="p">(</span><span class="n">band</span><span class="o">=</span><span class="n">band</span><span class="p">(</span><span class="s2">&quot;XRT&quot;</span><span class="p">),</span> <span class="n">t</span><span class="o">=</span><span class="n">t_data</span><span class="p">,</span>       <span class="c1"># named band</span>
+                <span class="n">flux</span><span class="o">=</span><span class="n">flux_data</span><span class="p">,</span> <span class="n">err</span><span class="o">=</span><span class="n">flux_err</span><span class="p">,</span>
+                <span class="n">weights</span><span class="o">=</span><span class="n">weights</span><span class="p">)</span>  <span class="c1"># flux in erg/cm²/s</span>
+
+<span class="c1"># Or specify a custom band as (nu_min, nu_max) tuple</span>
+<span class="n">fitter</span><span class="o">.</span><span class="n">add_flux</span><span class="p">(</span><span class="n">band</span><span class="o">=</span><span class="p">(</span><span class="mf">0.3</span><span class="o">*</span><span class="n">keV</span><span class="p">,</span> <span class="mi">10</span><span class="o">*</span><span class="n">keV</span><span class="p">),</span> <span class="n">t</span><span class="o">=</span><span class="n">t_data</span><span class="p">,</span>
+                <span class="n">flux</span><span class="o">=</span><span class="n">flux_data</span><span class="p">,</span> <span class="n">err</span><span class="o">=</span><span class="n">flux_err</span><span class="p">)</span>
+
+<span class="c1"># Method 3: Load from CSV files</span>
+<span class="n">bands</span> <span class="o">=</span> <span class="p">[</span><span class="mf">2.4e17</span><span class="p">,</span> <span class="mf">4.84e14</span><span class="p">,</span> <span class="mf">1.4e14</span><span class="p">]</span>  <span class="c1"># X-ray, optical, near-IR</span>
+<span class="n">lc_files</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;data/xray.csv&quot;</span><span class="p">,</span> <span class="s2">&quot;data/optical.csv&quot;</span><span class="p">,</span> <span class="s2">&quot;data/nir.csv&quot;</span><span class="p">]</span>
+
+<span class="k">for</span> <span class="n">nu</span><span class="p">,</span> <span class="n">fname</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">bands</span><span class="p">,</span> <span class="n">lc_files</span><span class="p">):</span>
+    <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">fname</span><span class="p">)</span>
+    <span class="n">fitter</span><span class="o">.</span><span class="n">add_flux_density</span><span class="p">(</span><span class="n">nu</span><span class="o">=</span><span class="n">nu</span><span class="p">,</span> <span class="n">t</span><span class="o">=</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;t&quot;</span><span class="p">],</span>
+                            <span class="n">f_nu</span><span class="o">=</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;Fv_obs&quot;</span><span class="p">],</span> <span class="n">err</span><span class="o">=</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;Fv_err&quot;</span><span class="p">])</span>  <span class="c1"># All quantities in CGS units</span>
+
+<span class="c1"># Add spectra at specific times</span>
+<span class="n">spec_times</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1000</span><span class="p">,</span> <span class="mi">10000</span><span class="p">]</span>  <span class="c1"># seconds</span>
+<span class="n">spec_files</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;data/spec_1000s.csv&quot;</span><span class="p">,</span> <span class="s2">&quot;data/spec_10000s.csv&quot;</span><span class="p">]</span>
+
+<span class="k">for</span> <span class="n">t</span><span class="p">,</span> <span class="n">fname</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">spec_times</span><span class="p">,</span> <span class="n">spec_files</span><span class="p">):</span>
+    <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">fname</span><span class="p">)</span>
+    <span class="n">fitter</span><span class="o">.</span><span class="n">add_spectrum</span><span class="p">(</span><span class="n">t</span><span class="o">=</span><span class="n">t</span><span class="p">,</span> <span class="n">nu</span><span class="o">=</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;nu&quot;</span><span class="p">],</span>
+                        <span class="n">f_nu</span><span class="o">=</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;Fv_obs&quot;</span><span class="p">],</span> <span class="n">err</span><span class="o">=</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;Fv_err&quot;</span><span class="p">])</span>  <span class="c1"># All quantities in CGS units</span>
+</pre></div>
+</div>
+</section>
+<section id="unit-conversion">
+<h2>Unit Conversion<a class="headerlink" href="#unit-conversion" title="Link to this heading"></a></h2>
+<p>All API inputs use CGS base units (seconds, Hz, erg/cm²/s/Hz, cm, radians). The <code class="docutils literal notranslate"><span class="pre">VegasAfterglow.units</span></code> module provides multiplicative constants for convenient conversion from common astronomical units:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">VegasAfterglow.units</span><span class="w"> </span><span class="kn">import</span> <span class="n">day</span><span class="p">,</span> <span class="n">GHz</span><span class="p">,</span> <span class="n">keV</span><span class="p">,</span> <span class="n">mJy</span><span class="p">,</span> <span class="n">Mpc</span><span class="p">,</span> <span class="n">deg</span>
+
+<span class="c1"># Fitter setup with natural units</span>
+<span class="n">fitter</span> <span class="o">=</span> <span class="n">Fitter</span><span class="p">(</span><span class="n">z</span><span class="o">=</span><span class="mf">1.58</span><span class="p">,</span> <span class="n">lumi_dist</span><span class="o">=</span><span class="mi">100</span><span class="o">*</span><span class="n">Mpc</span><span class="p">,</span> <span class="n">jet</span><span class="o">=</span><span class="s2">&quot;tophat&quot;</span><span class="p">,</span> <span class="n">medium</span><span class="o">=</span><span class="s2">&quot;ism&quot;</span><span class="p">)</span>
+
+<span class="c1"># Load data in astronomer-friendly units</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;data/radio.csv&quot;</span><span class="p">)</span>
+<span class="n">fitter</span><span class="o">.</span><span class="n">add_flux_density</span><span class="p">(</span>
+    <span class="n">nu</span><span class="o">=</span><span class="mi">5</span><span class="o">*</span><span class="n">GHz</span><span class="p">,</span>
+    <span class="n">t</span><span class="o">=</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;t_days&quot;</span><span class="p">]</span> <span class="o">*</span> <span class="n">day</span><span class="p">,</span>
+    <span class="n">f_nu</span><span class="o">=</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;flux_mJy&quot;</span><span class="p">]</span> <span class="o">*</span> <span class="n">mJy</span><span class="p">,</span>
+    <span class="n">err</span><span class="o">=</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;err_mJy&quot;</span><span class="p">]</span> <span class="o">*</span> <span class="n">mJy</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="c1"># X-ray band specified in keV (converted to Hz via E=hν)</span>
+<span class="n">fitter</span><span class="o">.</span><span class="n">add_flux_density</span><span class="p">(</span>
+    <span class="n">nu</span><span class="o">=</span><span class="mi">1</span><span class="o">*</span><span class="n">keV</span><span class="p">,</span>
+    <span class="n">t</span><span class="o">=</span><span class="n">df_xray</span><span class="p">[</span><span class="s2">&quot;t_days&quot;</span><span class="p">]</span> <span class="o">*</span> <span class="n">day</span><span class="p">,</span>
+    <span class="n">f_nu</span><span class="o">=</span><span class="n">df_xray</span><span class="p">[</span><span class="s2">&quot;flux&quot;</span><span class="p">]</span> <span class="o">*</span> <span class="n">mJy</span><span class="p">,</span>
+    <span class="n">err</span><span class="o">=</span><span class="n">df_xray</span><span class="p">[</span><span class="s2">&quot;err&quot;</span><span class="p">]</span> <span class="o">*</span> <span class="n">mJy</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="c1"># Convert model output back to convenient units</span>
+<span class="n">result_flux</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">flux_density_grid</span><span class="p">(</span><span class="n">times</span><span class="p">,</span> <span class="n">nus</span><span class="p">)</span>
+<span class="n">flux_in_mJy</span> <span class="o">=</span> <span class="n">result_flux</span><span class="o">.</span><span class="n">total</span> <span class="o">/</span> <span class="n">mJy</span>
+</pre></div>
+</div>
+<p>Available constants: <code class="docutils literal notranslate"><span class="pre">sec</span></code>, <code class="docutils literal notranslate"><span class="pre">ms</span></code>, <code class="docutils literal notranslate"><span class="pre">minute</span></code>, <code class="docutils literal notranslate"><span class="pre">hr</span></code>, <code class="docutils literal notranslate"><span class="pre">day</span></code>, <code class="docutils literal notranslate"><span class="pre">yr</span></code> (time); <code class="docutils literal notranslate"><span class="pre">Hz</span></code>, <code class="docutils literal notranslate"><span class="pre">kHz</span></code>, <code class="docutils literal notranslate"><span class="pre">MHz</span></code>, <code class="docutils literal notranslate"><span class="pre">GHz</span></code> (frequency); <code class="docutils literal notranslate"><span class="pre">eV</span></code>, <code class="docutils literal notranslate"><span class="pre">keV</span></code>, <code class="docutils literal notranslate"><span class="pre">MeV</span></code>, <code class="docutils literal notranslate"><span class="pre">GeV</span></code> (photon energy → frequency); <code class="docutils literal notranslate"><span class="pre">Jy</span></code>, <code class="docutils literal notranslate"><span class="pre">mJy</span></code>, <code class="docutils literal notranslate"><span class="pre">uJy</span></code> (flux density); <code class="docutils literal notranslate"><span class="pre">cm</span></code>, <code class="docutils literal notranslate"><span class="pre">m</span></code>, <code class="docutils literal notranslate"><span class="pre">km</span></code>, <code class="docutils literal notranslate"><span class="pre">pc</span></code>, <code class="docutils literal notranslate"><span class="pre">kpc</span></code>, <code class="docutils literal notranslate"><span class="pre">Mpc</span></code>, <code class="docutils literal notranslate"><span class="pre">Gpc</span></code> (distance); <code class="docutils literal notranslate"><span class="pre">rad</span></code>, <code class="docutils literal notranslate"><span class="pre">deg</span></code>, <code class="docutils literal notranslate"><span class="pre">arcmin</span></code>, <code class="docutils literal notranslate"><span class="pre">arcsec</span></code> (angle).</p>
+<section id="magnitude-conversion">
+<h3>Magnitude Conversion<a class="headerlink" href="#magnitude-conversion" title="Link to this heading"></a></h3>
+<p>If your data is in magnitudes rather than flux density, use the built-in magnitude converters:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">VegasAfterglow.units</span><span class="w"> </span><span class="kn">import</span> <span class="n">ABmag_to_cgs</span><span class="p">,</span> <span class="n">Vegamag_to_cgs</span><span class="p">,</span> <span class="nb">filter</span>
+
+<span class="c1"># AB magnitudes (e.g., SDSS photometry)</span>
+<span class="n">f_nu</span> <span class="o">=</span> <span class="n">ABmag_to_cgs</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;mag_AB&quot;</span><span class="p">])</span>
+<span class="n">f_nu_err</span> <span class="o">=</span> <span class="n">ABmag_to_cgs</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;mag_AB&quot;</span><span class="p">]</span> <span class="o">-</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;mag_err&quot;</span><span class="p">])</span> <span class="o">-</span> <span class="n">f_nu</span>  <span class="c1"># asymmetric!</span>
+
+<span class="c1"># Vega magnitudes with filter name (e.g., Johnson R band)</span>
+<span class="n">f_nu</span> <span class="o">=</span> <span class="n">Vegamag_to_cgs</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;mag_R&quot;</span><span class="p">],</span> <span class="s2">&quot;R&quot;</span><span class="p">)</span>
+
+<span class="c1"># Get the effective frequency for a filter (for the fitter)</span>
+<span class="n">fitter</span><span class="o">.</span><span class="n">add_flux_density</span><span class="p">(</span><span class="n">nu</span><span class="o">=</span><span class="nb">filter</span><span class="p">(</span><span class="s2">&quot;R&quot;</span><span class="p">),</span> <span class="n">t</span><span class="o">=</span><span class="n">t_data</span><span class="p">,</span> <span class="n">f_nu</span><span class="o">=</span><span class="n">f_nu</span><span class="p">,</span> <span class="n">err</span><span class="o">=</span><span class="n">f_nu_err</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Supported magnitude systems and filters:</p>
+<ul class="simple">
+<li><p><strong>Vega magnitudes</strong> via <code class="docutils literal notranslate"><span class="pre">Vegamag_to_cgs(mag,</span> <span class="pre">filter_name)</span></code>: Johnson-Cousins (<code class="docutils literal notranslate"><span class="pre">U</span></code>, <code class="docutils literal notranslate"><span class="pre">B</span></code>, <code class="docutils literal notranslate"><span class="pre">V</span></code>, <code class="docutils literal notranslate"><span class="pre">R</span></code>, <code class="docutils literal notranslate"><span class="pre">I</span></code>), 2MASS (<code class="docutils literal notranslate"><span class="pre">J</span></code>, <code class="docutils literal notranslate"><span class="pre">H</span></code>, <code class="docutils literal notranslate"><span class="pre">Ks</span></code>), Swift UVOT (<code class="docutils literal notranslate"><span class="pre">v</span></code>, <code class="docutils literal notranslate"><span class="pre">b</span></code>, <code class="docutils literal notranslate"><span class="pre">u</span></code>, <code class="docutils literal notranslate"><span class="pre">uvw1</span></code>, <code class="docutils literal notranslate"><span class="pre">uvm2</span></code>, <code class="docutils literal notranslate"><span class="pre">uvw2</span></code>), SDSS (<code class="docutils literal notranslate"><span class="pre">g</span></code>, <code class="docutils literal notranslate"><span class="pre">r</span></code>, <code class="docutils literal notranslate"><span class="pre">i</span></code>, <code class="docutils literal notranslate"><span class="pre">z</span></code>)</p></li>
+<li><p><strong>AB magnitudes</strong> via <code class="docutils literal notranslate"><span class="pre">ABmag_to_cgs(mag)</span></code>: universal zero-point, works for any filter without specifying a name</p></li>
+<li><p><strong>ST magnitudes</strong> via <code class="docutils literal notranslate"><span class="pre">STmag_to_cgs(mag,</span> <span class="pre">filter_name)</span></code>: HST WFC3/UVIS (<code class="docutils literal notranslate"><span class="pre">F225W</span></code> – <code class="docutils literal notranslate"><span class="pre">F850LP</span></code>), WFC3/IR (<code class="docutils literal notranslate"><span class="pre">F105W</span></code> – <code class="docutils literal notranslate"><span class="pre">F160W</span></code>)</p></li>
+</ul>
+<p>The <code class="docutils literal notranslate"><span class="pre">filter()</span></code> function returns the effective frequency [Hz] for any supported filter name, including survey filters (<code class="docutils literal notranslate"><span class="pre">VT_B</span></code>, <code class="docutils literal notranslate"><span class="pre">VT_R</span></code>, <code class="docutils literal notranslate"><span class="pre">w</span></code>) that only support AB magnitude conversion.</p>
+</section>
+</section>
+<section id="data-selection-and-optimization">
+<h2>Data Selection and Optimization<a class="headerlink" href="#data-selection-and-optimization" title="Link to this heading"></a></h2>
+<p><strong>Smart Data Subsampling with logscale_screen</strong></p>
+<p>For large datasets or densely sampled observations, using all available data points can lead to computational inefficiency and biased parameter estimation. The <code class="docutils literal notranslate"><span class="pre">logscale_screen</span></code> utility provides intelligent data subsampling that maintains the essential information content while reducing computational overhead.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">VegasAfterglow</span><span class="w"> </span><span class="kn">import</span> <span class="n">logscale_screen</span>
+
+<span class="c1"># Example: Large dense dataset</span>
+<span class="n">t_dense</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">logspace</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">1000</span><span class="p">)</span>  <span class="c1"># 1000 time points</span>
+<span class="n">flux_dense</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">lognormal</span><span class="p">(</span><span class="o">-</span><span class="mi">60</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mi">1000</span><span class="p">)</span>  <span class="c1"># Dense flux measurements</span>
+<span class="n">flux_err_dense</span> <span class="o">=</span> <span class="mf">0.1</span> <span class="o">*</span> <span class="n">flux_dense</span>
+
+<span class="c1"># Subsample using logarithmic screening</span>
+<span class="c1"># This selects ~5*5=25 representative points across 5 decades in time</span>
+<span class="n">indices</span> <span class="o">=</span> <span class="n">logscale_screen</span><span class="p">(</span><span class="n">t_dense</span><span class="p">,</span> <span class="n">data_density</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+
+<span class="c1"># Add only the selected subset</span>
+<span class="n">fitter</span><span class="o">.</span><span class="n">add_flux_density</span><span class="p">(</span><span class="n">nu</span><span class="o">=</span><span class="mf">5e14</span><span class="p">,</span>
+                        <span class="n">t</span><span class="o">=</span><span class="n">t_dense</span><span class="p">[</span><span class="n">indices</span><span class="p">],</span>
+                        <span class="n">f_nu</span><span class="o">=</span><span class="n">flux_dense</span><span class="p">[</span><span class="n">indices</span><span class="p">],</span>
+                        <span class="n">err</span><span class="o">=</span><span class="n">flux_err_dense</span><span class="p">[</span><span class="n">indices</span><span class="p">])</span>
+</pre></div>
+</div>
+<p><strong>Why logscale_screen is Important:</strong></p>
+<ol class="arabic simple">
+<li><p><strong>Prevents Oversampling Bias</strong>: Dense data clusters can dominate the chi-squared calculation, causing the MCMC to over-fit specific frequency bands or time periods.</p></li>
+<li><p><strong>Computational Efficiency</strong>: Reduces the number of model evaluations needed during MCMC sampling, significantly improving performance.</p></li>
+<li><p><strong>Preserves Information</strong>: Unlike uniform thinning, logarithmic sampling maintains representation across all temporal/spectral scales.</p></li>
+<li><p><strong>Balanced Multi-band Fitting</strong>: Ensures each frequency band contributes proportionally to the parameter constraints.</p></li>
+</ol>
+<p><strong>Data Selection Guidelines:</strong></p>
+<ul class="simple">
+<li><p><strong>Target 10-30 points per frequency band</strong> for balanced constraints</p></li>
+<li><p><strong>Avoid &gt;100 points in any single band</strong> unless scientifically justified</p></li>
+<li><p><strong>Maintain temporal coverage</strong> across all evolutionary phases</p></li>
+<li><p><strong>Weight systematic uncertainties</strong> appropriately using the weights parameter</p></li>
+</ul>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p><strong>Common Data Selection Pitfalls:</strong></p>
+<ul class="simple">
+<li><p><strong>Optical-heavy datasets</strong>: Dense optical coverage can bias parameters toward optical-dominant solutions</p></li>
+<li><p><strong>Late-time clustering</strong>: Too many late-time points can over-constrain decay slopes at the expense of early physics</p></li>
+<li><p><strong>Single-epoch spectra</strong>: Broadband spectra at one time can dominate multi-epoch light curves in chi-squared space</p></li>
+</ul>
+<p><strong>Solution</strong>: Use <code class="docutils literal notranslate"><span class="pre">logscale_screen()</span></code> for manual temporal reduction of over-sampled bands.</p>
+</div>
+<p><strong>Handling Measurement Uncertainties</strong></p>
+<p>Error bars strongly influence MCMC fitting. Improperly characterized uncertainties can lead to biased parameter estimates or misleading confidence intervals.</p>
+<p><strong>The Problem with Small Error Bars</strong></p>
+<p>Data points with very small uncertainties dominate the chi-squared calculation:</p>
+<div class="math notranslate nohighlight">
+\[\chi^2 = \sum_i \frac{(F_{\rm obs,i} - F_{\rm model,i})^2}{\sigma_i^2}\]</div>
+<p>A single point with sigma = 0.01 mJy contributes 100x more to chi-squared than a point with sigma = 0.1 mJy. This causes the MCMC to:</p>
+<ul class="simple">
+<li><p>Heavily weight high-precision data at the expense of other observations</p></li>
+<li><p>Potentially fit noise or systematic effects in the “precise” data</p></li>
+<li><p>Produce artificially tight parameter constraints that don’t reflect true uncertainties</p></li>
+</ul>
+<p><strong>Common Scenarios:</strong></p>
+<ol class="arabic simple">
+<li><p><strong>Heterogeneous data quality</strong>: X-ray data from different telescopes may have vastly different calibration uncertainties</p></li>
+<li><p><strong>Underestimated errors</strong>: Published error bars sometimes only include statistical uncertainty, missing systematics</p></li>
+<li><p><strong>Calibration offsets</strong>: Different instruments may have 5-20% flux calibration offsets not captured in quoted errors</p></li>
+</ol>
+<p><strong>Solutions:</strong></p>
+<ol class="arabic">
+<li><p><strong>Add systematic error floors</strong></p>
+<p>For data where quoted errors seem unrealistically small:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Add 10% systematic floor to error bars</span>
+<span class="n">systematic_floor</span> <span class="o">=</span> <span class="mf">0.1</span>  <span class="c1"># 10% of flux</span>
+<span class="n">err_with_floor</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">err</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="p">(</span><span class="n">systematic_floor</span> <span class="o">*</span> <span class="n">flux</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+
+<span class="n">fitter</span><span class="o">.</span><span class="n">add_flux_density</span><span class="p">(</span><span class="n">nu</span><span class="o">=</span><span class="n">nu</span><span class="p">,</span> <span class="n">t</span><span class="o">=</span><span class="n">t</span><span class="p">,</span> <span class="n">f_nu</span><span class="o">=</span><span class="n">flux</span><span class="p">,</span> <span class="n">err</span><span class="o">=</span><span class="n">err_with_floor</span><span class="p">)</span>
+</pre></div>
+</div>
+</li>
+<li><p><strong>Use weights to balance bands</strong></p>
+<p>Down-weight bands with suspiciously small errors:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Reduce contribution of high-precision optical data</span>
+<span class="n">optical_weight</span> <span class="o">=</span> <span class="mf">0.5</span>  <span class="c1"># Effectively doubles the error contribution</span>
+<span class="n">fitter</span><span class="o">.</span><span class="n">add_flux_density</span><span class="p">(</span><span class="n">nu</span><span class="o">=</span><span class="mf">5e14</span><span class="p">,</span> <span class="n">t</span><span class="o">=</span><span class="n">t_optical</span><span class="p">,</span> <span class="n">f_nu</span><span class="o">=</span><span class="n">flux_optical</span><span class="p">,</span>
+                       <span class="n">err</span><span class="o">=</span><span class="n">err_optical</span><span class="p">,</span> <span class="n">weights</span><span class="o">=</span><span class="n">optical_weight</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">ones_like</span><span class="p">(</span><span class="n">t_optical</span><span class="p">))</span>
+</pre></div>
+</div>
+</li>
+<li><p><strong>Inspect residuals by band</strong></p>
+<p>After fitting, check if residuals are consistent across bands. If one band shows systematic deviations while others don’t, the errors for that band may be mischaracterized.</p>
+</li>
+</ol>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p><strong>Rule of thumb</strong>: If your best-fit chi-squared/dof &gt;&gt; 1, either the model is inadequate OR the error bars are underestimated. If chi-squared/dof &lt;&lt; 1, the errors may be overestimated.</p>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="best_practices.html" class="btn btn-neutral float-left" title="MCMC Best Practices" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="model_configurations.html" class="btn btn-neutral float-right" title="Model Configurations" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, VegasAfterglow Team.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

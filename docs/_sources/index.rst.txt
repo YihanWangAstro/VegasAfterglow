@@ -34,8 +34,8 @@ Key Features
    installation
    quickstart
    using_cli
-   examples
-   mcmc_fitting
+   examples/index
+   mcmc_fitting/index
    redback_integration
    parameter_reference
    validation

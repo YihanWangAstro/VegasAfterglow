@@ -1,0 +1,212 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MCMC Best Practices &mdash; VegasAfterglow 0.1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=20074c1a" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=fd3f3429" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/custom.css?v=c0df17a3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/custom.css?v=c0df17a3" />
+
+  
+    <link rel="shortcut icon" href="../_static/logo.svg"/>
+    <link rel="canonical" href="https://yihanwangastro.github.io/VegasAfterglow/docs/mcmc_fitting/best_practices.html" />
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=01f34227"></script>
+      <script src="../_static/doctools.js?v=9a2dae69"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../_static/js/custom.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Basic Setup" href="basic_setup.html" />
+    <link rel="prev" title="MCMC Parameter Fitting" href="index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            VegasAfterglow
+              <img src="../_static/logo.svg" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../quickstart.html">Quickstart</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../using_cli.html">Command-Line Interface (<code class="docutils literal notranslate"><span class="pre">vegasgen</span></code>)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../examples/index.html">Examples</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">MCMC Parameter Fitting</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">MCMC Best Practices</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#start-simple-add-complexity-gradually">Start Simple, Add Complexity Gradually</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#why-complex-models-are-problematic">Why Complex Models Are Problematic</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#when-to-use-complex-models">When to Use Complex Models</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="basic_setup.html">Basic Setup</a></li>
+<li class="toctree-l2"><a class="reference internal" href="model_configurations.html">Model Configurations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="running_and_results.html">Running MCMC</a></li>
+<li class="toctree-l2"><a class="reference internal" href="running_and_results.html#analyzing-results">Analyzing Results</a></li>
+<li class="toctree-l2"><a class="reference internal" href="advanced.html">Advanced Fitting</a></li>
+<li class="toctree-l2"><a class="reference internal" href="advanced.html#troubleshooting">Troubleshooting</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../redback_integration.html">Parameter Estimation with Redback</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../parameter_reference.html">Parameter Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../validation.html">Validation &amp; Testing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../python_api.html">Python API Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cpp_api.html">C++ API Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../troubleshooting.html">Troubleshooting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing.html">Contributing</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">VegasAfterglow</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">MCMC Parameter Fitting</a></li>
+      <li class="breadcrumb-item active">MCMC Best Practices</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/mcmc_fitting/best_practices.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="mcmc-best-practices">
+<h1>MCMC Best Practices<a class="headerlink" href="#mcmc-best-practices" title="Link to this heading"></a></h1>
+<section id="start-simple-add-complexity-gradually">
+<h2>Start Simple, Add Complexity Gradually<a class="headerlink" href="#start-simple-add-complexity-gradually" title="Link to this heading"></a></h2>
+<p>The most common mistake in GRB afterglow fitting is starting with an overly complex model. <strong>Always begin with the simplest physically motivated model</strong> and only add complexity when the data clearly demands it.</p>
+<p><strong>Recommended Progression:</strong></p>
+<ol class="arabic">
+<li><p><strong>Start with TopHat + ISM + Forward Shock Only</strong></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">fitter</span> <span class="o">=</span> <span class="n">Fitter</span><span class="p">(</span><span class="n">z</span><span class="o">=</span><span class="mf">1.58</span><span class="p">,</span> <span class="n">lumi_dist</span><span class="o">=</span><span class="mf">3.364e28</span><span class="p">,</span> <span class="n">jet</span><span class="o">=</span><span class="s2">&quot;tophat&quot;</span><span class="p">,</span> <span class="n">medium</span><span class="o">=</span><span class="s2">&quot;ism&quot;</span><span class="p">)</span>
+<span class="c1"># All other physics options default to False</span>
+</pre></div>
+</div>
+<p>This gives you ~7-8 free parameters. Run MCMC and examine the residuals.</p>
+</li>
+<li><p><strong>Check if residuals suggest additional physics</strong></p>
+<p>Examine the fit quality and residual structure. Systematic deviations at specific times or frequencies may indicate missing physics.</p>
+</li>
+<li><p><strong>Add ONE component at a time</strong></p>
+<p>Never jump from a simple model to enabling everything. Each addition should be justified by improved fit statistics (e.g., Bayesian evidence comparison).</p>
+</li>
+</ol>
+</section>
+<section id="why-complex-models-are-problematic">
+<h2>Why Complex Models Are Problematic<a class="headerlink" href="#why-complex-models-are-problematic" title="Link to this heading"></a></h2>
+<p><strong>1. Parameter Degeneracies</strong></p>
+<p>More parameters create more degeneracies. For example:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">E_iso</span></code> and <code class="docutils literal notranslate"><span class="pre">n_ism</span></code> are degenerate in flux normalization</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">eps_e</span></code> and <code class="docutils literal notranslate"><span class="pre">eps_B</span></code> trade off in spectral shape</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">theta_c</span></code> and <code class="docutils literal notranslate"><span class="pre">theta_v</span></code> correlate for off-axis observers</p></li>
+<li><p>Reverse shock parameters can mimic forward shock with different microphysics</p></li>
+</ul>
+<p>With a complex model, the MCMC may find multiple solutions that fit equally well but have very different physical interpretations.</p>
+<p><strong>2. Computational Cost</strong></p>
+<p>Each additional physics module increases computation time. A model with all physics enabled can be significantly slower than a basic forward-shock-only model.</p>
+<p><strong>3. Overfitting Risk</strong></p>
+<p>With enough free parameters, you can fit noise. A model that fits your data perfectly but has 15+ parameters may not be physically meaningful. Use Bayesian evidence (from dynesty) to compare models:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Compare two models using log evidence</span>
+<span class="n">result_simple</span> <span class="o">=</span> <span class="n">fitter_simple</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">params_simple</span><span class="p">,</span> <span class="n">sampler</span><span class="o">=</span><span class="s2">&quot;dynesty&quot;</span><span class="p">,</span> <span class="o">...</span><span class="p">)</span>
+<span class="n">result_complex</span> <span class="o">=</span> <span class="n">fitter_complex</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">params_complex</span><span class="p">,</span> <span class="n">sampler</span><span class="o">=</span><span class="s2">&quot;dynesty&quot;</span><span class="p">,</span> <span class="o">...</span><span class="p">)</span>
+
+<span class="c1"># Bayes factor</span>
+<span class="n">log_BF</span> <span class="o">=</span> <span class="n">result_complex</span><span class="o">.</span><span class="n">bilby_result</span><span class="o">.</span><span class="n">log_evidence</span> <span class="o">-</span> <span class="n">result_simple</span><span class="o">.</span><span class="n">bilby_result</span><span class="o">.</span><span class="n">log_evidence</span>
+
+<span class="c1"># Interpretation:</span>
+<span class="c1"># log_BF &lt; 1: No preference (stick with simple model)</span>
+<span class="c1"># 1 &lt; log_BF &lt; 3: Weak preference for complex</span>
+<span class="c1"># 3 &lt; log_BF &lt; 5: Moderate preference</span>
+<span class="c1"># log_BF &gt; 5: Strong preference for complex model</span>
+</pre></div>
+</div>
+<p><strong>4. Non-Physical Solutions</strong></p>
+<p>Complex models can converge to non-physical parameter combinations. Always check:</p>
+<ul class="simple">
+<li><p>Is <code class="docutils literal notranslate"><span class="pre">eps_e</span> <span class="pre">+</span> <span class="pre">eps_B</span> <span class="pre">&lt;</span> <span class="pre">1</span></code>? (energy conservation)</p></li>
+<li><p>Is <code class="docutils literal notranslate"><span class="pre">p</span> <span class="pre">&gt;</span> <span class="pre">2</span></code>? (required for finite electron energy)</p></li>
+<li><p>Are microphysics parameters consistent between forward/reverse shocks?</p></li>
+<li><p>Does the inferred jet energy make sense given the host galaxy and redshift?</p></li>
+</ul>
+</section>
+<section id="when-to-use-complex-models">
+<h2>When to Use Complex Models<a class="headerlink" href="#when-to-use-complex-models" title="Link to this heading"></a></h2>
+<p>Complex models are justified when:</p>
+<ul class="simple">
+<li><p><strong>Clear observational signatures</strong> that simple models cannot explain after careful analysis</p></li>
+<li><p><strong>Comparison with similar GRBs</strong> where the additional physics was robustly established</p></li>
+</ul>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p><strong>Golden Rule</strong>: If you cannot clearly explain WHY each physics component is needed based on your data, you probably don’t need it.</p>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="index.html" class="btn btn-neutral float-left" title="MCMC Parameter Fitting" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="basic_setup.html" class="btn btn-neutral float-right" title="Basic Setup" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, VegasAfterglow Team.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

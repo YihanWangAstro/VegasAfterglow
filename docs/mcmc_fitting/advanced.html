@@ -1,0 +1,507 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Advanced Fitting &mdash; VegasAfterglow 0.1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=20074c1a" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=fd3f3429" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/custom.css?v=c0df17a3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/custom.css?v=c0df17a3" />
+
+  
+    <link rel="shortcut icon" href="../_static/logo.svg"/>
+    <link rel="canonical" href="https://yihanwangastro.github.io/VegasAfterglow/docs/mcmc_fitting/advanced.html" />
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=01f34227"></script>
+      <script src="../_static/doctools.js?v=9a2dae69"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      <script src="../_static/js/custom.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Parameter Estimation with Redback" href="../redback_integration.html" />
+    <link rel="prev" title="Running MCMC" href="running_and_results.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            VegasAfterglow
+              <img src="../_static/logo.svg" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../quickstart.html">Quickstart</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../using_cli.html">Command-Line Interface (<code class="docutils literal notranslate"><span class="pre">vegasgen</span></code>)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../examples/index.html">Examples</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">MCMC Parameter Fitting</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="best_practices.html">MCMC Best Practices</a></li>
+<li class="toctree-l2"><a class="reference internal" href="basic_setup.html">Basic Setup</a></li>
+<li class="toctree-l2"><a class="reference internal" href="model_configurations.html">Model Configurations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="running_and_results.html">Running MCMC</a></li>
+<li class="toctree-l2"><a class="reference internal" href="running_and_results.html#analyzing-results">Analyzing Results</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Advanced Fitting</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#custom-priors">Custom Priors</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#custom-likelihood">Custom Likelihood</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#custom-jet-profiles">Custom Jet Profiles</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#custom-medium-profiles">Custom Medium Profiles</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#speeding-up-custom-profiles-with-gil-free">Speeding Up Custom Profiles with <code class="docutils literal notranslate"><span class="pre">&#64;gil_free</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#performance-notes">Performance Notes</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#troubleshooting">Troubleshooting</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../redback_integration.html">Parameter Estimation with Redback</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../parameter_reference.html">Parameter Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../validation.html">Validation &amp; Testing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../python_api.html">Python API Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cpp_api.html">C++ API Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../troubleshooting.html">Troubleshooting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing.html">Contributing</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">VegasAfterglow</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">MCMC Parameter Fitting</a></li>
+      <li class="breadcrumb-item active">Advanced Fitting</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/mcmc_fitting/advanced.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="advanced-fitting">
+<span id="id1"></span><h1>Advanced Fitting<a class="headerlink" href="#advanced-fitting" title="Link to this heading"></a></h1>
+<p>VegasAfterglow’s <code class="docutils literal notranslate"><span class="pre">Fitter</span></code> is built directly on the <code class="docutils literal notranslate"><span class="pre">Model</span></code> class, giving you full control over the fitting process. You can customize:</p>
+<ul class="simple">
+<li><p><strong>Priors</strong>: Use informative or custom prior distributions</p></li>
+<li><p><strong>Likelihood</strong>: Implement non-standard likelihood functions (e.g., upper limits, systematic uncertainties)</p></li>
+<li><p><strong>Jet profiles</strong>: Define arbitrary angular energy and Lorentz factor distributions</p></li>
+<li><p><strong>Medium profiles</strong>: Define custom circumburst density structures</p></li>
+</ul>
+<p>The <code class="docutils literal notranslate"><span class="pre">Fitter</span></code> evaluates models using Python’s <code class="docutils literal notranslate"><span class="pre">ThreadPoolExecutor</span></code>, where each thread constructs a <code class="docutils literal notranslate"><span class="pre">Model</span></code> and calls <code class="docutils literal notranslate"><span class="pre">flux_density()</span></code> with the GIL released during C++ computation. This provides near-native parallelism with full Python flexibility.</p>
+<section id="custom-priors">
+<span id="id2"></span><h2>Custom Priors<a class="headerlink" href="#custom-priors" title="Link to this heading"></a></h2>
+<p>Pass a <code class="docutils literal notranslate"><span class="pre">priors</span></code> dictionary to <code class="docutils literal notranslate"><span class="pre">fit()</span></code> to apply custom prior distributions. The same interface works for all samplers (emcee, dynesty, etc.).</p>
+<p>Keys are parameter labels (using the <code class="docutils literal notranslate"><span class="pre">log10_</span></code> prefix for <code class="docutils literal notranslate"><span class="pre">LOG</span></code>-scale parameters), and values are <code class="docutils literal notranslate"><span class="pre">bilby.core.prior.Prior</span></code> objects. Parameters not in the dict automatically get uniform priors based on the <code class="docutils literal notranslate"><span class="pre">ParamDef</span></code> bounds.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">bilby</span>
+
+<span class="n">custom_priors</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;p&quot;</span><span class="p">:</span> <span class="n">bilby</span><span class="o">.</span><span class="n">core</span><span class="o">.</span><span class="n">prior</span><span class="o">.</span><span class="n">Gaussian</span><span class="p">(</span>
+        <span class="n">mu</span><span class="o">=</span><span class="mf">2.3</span><span class="p">,</span> <span class="n">sigma</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span>
+        <span class="n">minimum</span><span class="o">=</span><span class="mf">2.1</span><span class="p">,</span> <span class="n">maximum</span><span class="o">=</span><span class="mf">2.8</span><span class="p">,</span>
+        <span class="n">name</span><span class="o">=</span><span class="s2">&quot;p&quot;</span><span class="p">,</span> <span class="n">latex_label</span><span class="o">=</span><span class="sa">r</span><span class="s2">&quot;$p$&quot;</span><span class="p">,</span>
+    <span class="p">),</span>
+    <span class="s2">&quot;log10_eps_e&quot;</span><span class="p">:</span> <span class="n">bilby</span><span class="o">.</span><span class="n">core</span><span class="o">.</span><span class="n">prior</span><span class="o">.</span><span class="n">Gaussian</span><span class="p">(</span>
+        <span class="n">mu</span><span class="o">=-</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">sigma</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span>
+        <span class="n">minimum</span><span class="o">=-</span><span class="mi">3</span><span class="p">,</span> <span class="n">maximum</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="mf">0.5</span><span class="p">),</span>
+        <span class="n">name</span><span class="o">=</span><span class="s2">&quot;log10_eps_e&quot;</span><span class="p">,</span>
+        <span class="n">latex_label</span><span class="o">=</span><span class="sa">r</span><span class="s2">&quot;$\log_</span><span class="si">{10}</span><span class="s2">(\epsilon_e)$&quot;</span><span class="p">,</span>
+    <span class="p">),</span>
+<span class="p">}</span>
+
+<span class="c1"># Works with emcee</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">fitter</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span>
+    <span class="n">params</span><span class="p">,</span>
+    <span class="n">sampler</span><span class="o">=</span><span class="s2">&quot;emcee&quot;</span><span class="p">,</span>
+    <span class="n">nsteps</span><span class="o">=</span><span class="mi">10000</span><span class="p">,</span>
+    <span class="n">priors</span><span class="o">=</span><span class="n">custom_priors</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="c1"># Same priors work with dynesty</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">fitter</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span>
+    <span class="n">params</span><span class="p">,</span>
+    <span class="n">sampler</span><span class="o">=</span><span class="s2">&quot;dynesty&quot;</span><span class="p">,</span>
+    <span class="n">nlive</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span>
+    <span class="n">priors</span><span class="o">=</span><span class="n">custom_priors</span><span class="p">,</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>When using <code class="docutils literal notranslate"><span class="pre">LOG</span></code>-scale parameters, the prior keys must use the <code class="docutils literal notranslate"><span class="pre">log10_</span></code> prefix (e.g., <code class="docutils literal notranslate"><span class="pre">log10_eps_e</span></code>, not <code class="docutils literal notranslate"><span class="pre">eps_e</span></code>), since the sampler operates in log-space.</p>
+</div>
+</section>
+<section id="custom-likelihood">
+<span id="id3"></span><h2>Custom Likelihood<a class="headerlink" href="#custom-likelihood" title="Link to this heading"></a></h2>
+<p>The default likelihood is Gaussian: <span class="math notranslate nohighlight">\(\ln\mathcal{L} = -\chi^2/2\)</span>. Override this with a <code class="docutils literal notranslate"><span class="pre">log_likelihood_fn</span></code> that maps <span class="math notranslate nohighlight">\(\chi^2\)</span> to log-likelihood:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">student_t_likelihood</span><span class="p">(</span><span class="n">chi2</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Student-t likelihood with nu=5 degrees of freedom.</span>
+
+<span class="sd">    More robust to outliers than Gaussian.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">nu</span> <span class="o">=</span> <span class="mi">5</span>
+    <span class="n">n_data</span> <span class="o">=</span> <span class="mi">50</span>  <span class="c1"># number of data points</span>
+    <span class="k">return</span> <span class="o">-</span><span class="mf">0.5</span> <span class="o">*</span> <span class="p">(</span><span class="n">nu</span> <span class="o">+</span> <span class="n">n_data</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">chi2</span> <span class="o">/</span> <span class="n">nu</span><span class="p">)</span>
+
+<span class="n">result</span> <span class="o">=</span> <span class="n">fitter</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span>
+    <span class="n">params</span><span class="p">,</span>
+    <span class="n">sampler</span><span class="o">=</span><span class="s2">&quot;emcee&quot;</span><span class="p">,</span>
+    <span class="n">log_likelihood_fn</span><span class="o">=</span><span class="n">student_t_likelihood</span><span class="p">,</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p><strong>Upper Limits</strong></p>
+<p>For non-detections, a common approach is to weight the likelihood so data points
+above the upper limit are penalized:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">likelihood_with_upper_limits</span><span class="p">(</span><span class="n">chi2</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Standard Gaussian likelihood; upper limits encoded in data weights.&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="o">-</span><span class="mf">0.5</span> <span class="o">*</span> <span class="n">chi2</span>
+
+<span class="c1"># Upper limits: set flux to 0 and error to the upper limit value,</span>
+<span class="c1"># so chi2 = (0 - model)^2 / upper_limit^2, which penalizes models above the limit</span>
+<span class="n">fitter</span><span class="o">.</span><span class="n">add_flux_density</span><span class="p">(</span>
+    <span class="n">nu</span><span class="o">=</span><span class="mf">1e10</span><span class="p">,</span> <span class="n">t</span><span class="o">=</span><span class="p">[</span><span class="mf">1e5</span><span class="p">],</span> <span class="n">f_nu</span><span class="o">=</span><span class="p">[</span><span class="mf">0.0</span><span class="p">],</span> <span class="n">err</span><span class="o">=</span><span class="p">[</span><span class="mf">3e-29</span><span class="p">],</span>
+    <span class="n">weights</span><span class="o">=</span><span class="p">[</span><span class="mf">1.0</span><span class="p">],</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="custom-jet-profiles">
+<h2>Custom Jet Profiles<a class="headerlink" href="#custom-jet-profiles" title="Link to this heading"></a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">Fitter</span></code> accepts a custom jet factory function via the <code class="docutils literal notranslate"><span class="pre">jet</span></code> keyword argument.
+This lets you define arbitrary angular profiles using the same <code class="docutils literal notranslate"><span class="pre">Ejecta</span></code> class used for
+direct model calculations (see <a class="reference internal" href="../examples/index.html"><span class="doc">Examples</span></a>).</p>
+<p><strong>How it works:</strong></p>
+<ol class="arabic simple">
+<li><p>Define functions for the energy and Lorentz factor angular profiles</p></li>
+<li><p>Wrap them in a <em>factory function</em> that takes <code class="docutils literal notranslate"><span class="pre">params</span></code> (the current MCMC sample) and returns an <code class="docutils literal notranslate"><span class="pre">Ejecta</span></code></p></li>
+<li><p>Pass the factory to <code class="docutils literal notranslate"><span class="pre">Fitter(jet=...)</span></code></p></li>
+</ol>
+<p>The fitter calls your factory on every MCMC step with fresh parameter values.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">VegasAfterglow</span><span class="w"> </span><span class="kn">import</span> <span class="n">Ejecta</span><span class="p">,</span> <span class="n">Fitter</span><span class="p">,</span> <span class="n">ParamDef</span><span class="p">,</span> <span class="n">Scale</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">double_gaussian_jet</span><span class="p">(</span><span class="n">params</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Double-Gaussian jet: narrow core + wide wing.&quot;&quot;&quot;</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">E_iso_func</span><span class="p">(</span><span class="n">phi</span><span class="p">,</span> <span class="n">theta</span><span class="p">):</span>
+        <span class="n">core</span> <span class="o">=</span> <span class="n">params</span><span class="o">.</span><span class="n">E_iso</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="p">(</span><span class="n">theta</span> <span class="o">/</span> <span class="n">params</span><span class="o">.</span><span class="n">theta_c</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span>
+        <span class="n">wing</span> <span class="o">=</span> <span class="n">params</span><span class="o">.</span><span class="n">E_iso_w</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="p">(</span><span class="n">theta</span> <span class="o">/</span> <span class="n">params</span><span class="o">.</span><span class="n">theta_w</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">core</span> <span class="o">+</span> <span class="n">wing</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">Gamma_func</span><span class="p">(</span><span class="n">phi</span><span class="p">,</span> <span class="n">theta</span><span class="p">):</span>
+        <span class="k">return</span> <span class="mi">1</span> <span class="o">+</span> <span class="p">(</span><span class="n">params</span><span class="o">.</span><span class="n">Gamma0</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="p">(</span><span class="n">theta</span> <span class="o">/</span> <span class="n">params</span><span class="o">.</span><span class="n">theta_c</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">Ejecta</span><span class="p">(</span><span class="n">E_iso</span><span class="o">=</span><span class="n">E_iso_func</span><span class="p">,</span> <span class="n">Gamma0</span><span class="o">=</span><span class="n">Gamma_func</span><span class="p">,</span> <span class="n">duration</span><span class="o">=</span><span class="n">params</span><span class="o">.</span><span class="n">tau</span><span class="p">)</span>
+
+<span class="n">mc_params</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;E_iso&quot;</span><span class="p">,</span>   <span class="mf">1e50</span><span class="p">,</span>  <span class="mf">1e54</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">log</span><span class="p">),</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;Gamma0&quot;</span><span class="p">,</span>    <span class="mi">50</span><span class="p">,</span>   <span class="mi">500</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">log</span><span class="p">),</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;theta_c&quot;</span><span class="p">,</span> <span class="mf">0.02</span><span class="p">,</span>   <span class="mf">0.15</span><span class="p">,</span> <span class="n">Scale</span><span class="o">.</span><span class="n">linear</span><span class="p">),</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;theta_v&quot;</span><span class="p">,</span>    <span class="mi">0</span><span class="p">,</span>   <span class="mf">0.5</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">linear</span><span class="p">),</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;E_iso_w&quot;</span><span class="p">,</span> <span class="mf">1e48</span><span class="p">,</span>  <span class="mf">1e52</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">log</span><span class="p">),</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;theta_w&quot;</span><span class="p">,</span>  <span class="mf">0.1</span><span class="p">,</span>   <span class="mf">0.5</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">linear</span><span class="p">),</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;tau&quot;</span><span class="p">,</span>        <span class="mi">1</span><span class="p">,</span>   <span class="mf">1e3</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">log</span><span class="p">),</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;n_ism&quot;</span><span class="p">,</span>   <span class="mf">1e-3</span><span class="p">,</span>   <span class="mi">100</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">log</span><span class="p">),</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;p&quot;</span><span class="p">,</span>        <span class="mf">2.1</span><span class="p">,</span>   <span class="mf">2.8</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">linear</span><span class="p">),</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;eps_e&quot;</span><span class="p">,</span>   <span class="mf">1e-3</span><span class="p">,</span>   <span class="mf">0.5</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">log</span><span class="p">),</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;eps_B&quot;</span><span class="p">,</span>   <span class="mf">1e-5</span><span class="p">,</span>   <span class="mf">0.1</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">log</span><span class="p">),</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;xi_e&quot;</span><span class="p">,</span>     <span class="mf">0.1</span><span class="p">,</span>   <span class="mf">1.0</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">linear</span><span class="p">),</span>
+<span class="p">]</span>
+
+<span class="n">fitter</span> <span class="o">=</span> <span class="n">Fitter</span><span class="p">(</span><span class="n">z</span><span class="o">=</span><span class="mf">1.58</span><span class="p">,</span> <span class="n">lumi_dist</span><span class="o">=</span><span class="mf">3.364e28</span><span class="p">,</span> <span class="n">jet</span><span class="o">=</span><span class="n">double_gaussian_jet</span><span class="p">)</span>
+<span class="n">fitter</span><span class="o">.</span><span class="n">add_flux_density</span><span class="p">(</span><span class="n">nu</span><span class="o">=</span><span class="mf">4.84e14</span><span class="p">,</span> <span class="n">t</span><span class="o">=</span><span class="n">t_data</span><span class="p">,</span> <span class="n">f_nu</span><span class="o">=</span><span class="n">flux_data</span><span class="p">,</span> <span class="n">err</span><span class="o">=</span><span class="n">flux_err</span><span class="p">)</span>
+
+<span class="n">result</span> <span class="o">=</span> <span class="n">fitter</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">mc_params</span><span class="p">,</span> <span class="n">sampler</span><span class="o">=</span><span class="s2">&quot;emcee&quot;</span><span class="p">,</span> <span class="n">nsteps</span><span class="o">=</span><span class="mi">10000</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">Ejecta</span></code> constructor supports these optional keyword arguments:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">sigma0</span></code>: Magnetization profile <code class="docutils literal notranslate"><span class="pre">sigma0(phi,</span> <span class="pre">theta)</span></code> (default: 0)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">E_dot</span></code>: Energy injection rate <code class="docutils literal notranslate"><span class="pre">E_dot(phi,</span> <span class="pre">theta,</span> <span class="pre">t)</span></code> in erg/s (default: 0)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">M_dot</span></code>: Mass injection rate <code class="docutils literal notranslate"><span class="pre">M_dot(phi,</span> <span class="pre">theta,</span> <span class="pre">t)</span></code> in g/s (default: 0)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">spreading</span></code>: Enable lateral spreading (default: False)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">duration</span></code>: Jet duration in seconds, for reverse shock (default: 1)</p></li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>When using a custom <code class="docutils literal notranslate"><span class="pre">jet</span></code>, parameter validation is automatically skipped since the fitter cannot know which parameters your factory requires. Ensure your factory function handles all necessary parameters.</p>
+</div>
+<p><strong>Energy and Mass Injection</strong></p>
+<p>The <code class="docutils literal notranslate"><span class="pre">Ejecta</span></code> class also supports time-dependent energy and mass injection via <code class="docutils literal notranslate"><span class="pre">E_dot</span></code> and <code class="docutils literal notranslate"><span class="pre">M_dot</span></code>.
+These are functions of <code class="docutils literal notranslate"><span class="pre">(phi,</span> <span class="pre">theta,</span> <span class="pre">t)</span></code> returning injection rates in erg/s and g/s respectively:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">jet_with_injection</span><span class="p">(</span><span class="n">params</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Custom jet with energy injection (spin-down luminosity).&quot;&quot;&quot;</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">E_iso_func</span><span class="p">(</span><span class="n">phi</span><span class="p">,</span> <span class="n">theta</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">params</span><span class="o">.</span><span class="n">E_iso</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="p">(</span><span class="n">theta</span> <span class="o">/</span> <span class="n">params</span><span class="o">.</span><span class="n">theta_c</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">Gamma_func</span><span class="p">(</span><span class="n">phi</span><span class="p">,</span> <span class="n">theta</span><span class="p">):</span>
+        <span class="k">return</span> <span class="mi">1</span> <span class="o">+</span> <span class="p">(</span><span class="n">params</span><span class="o">.</span><span class="n">Gamma0</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="p">(</span><span class="n">theta</span> <span class="o">/</span> <span class="n">params</span><span class="o">.</span><span class="n">theta_c</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">E_dot_func</span><span class="p">(</span><span class="n">phi</span><span class="p">,</span> <span class="n">theta</span><span class="p">,</span> <span class="n">t</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Spin-down energy injection: L(t) = L0 / (1 + t/t_sd)^2.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">params</span><span class="o">.</span><span class="n">L0</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">t</span> <span class="o">/</span> <span class="n">params</span><span class="o">.</span><span class="n">t_sd</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">M_dot_func</span><span class="p">(</span><span class="n">phi</span><span class="p">,</span> <span class="n">theta</span><span class="p">,</span> <span class="n">t</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Mass injection: decaying mass loading.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">params</span><span class="o">.</span><span class="n">M_dot0</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">t</span> <span class="o">/</span> <span class="n">params</span><span class="o">.</span><span class="n">t_sd</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">Ejecta</span><span class="p">(</span>
+        <span class="n">E_iso</span><span class="o">=</span><span class="n">E_iso_func</span><span class="p">,</span> <span class="n">Gamma0</span><span class="o">=</span><span class="n">Gamma_func</span><span class="p">,</span>
+        <span class="n">E_dot</span><span class="o">=</span><span class="n">E_dot_func</span><span class="p">,</span> <span class="n">M_dot</span><span class="o">=</span><span class="n">M_dot_func</span><span class="p">,</span>
+        <span class="n">duration</span><span class="o">=</span><span class="n">params</span><span class="o">.</span><span class="n">tau</span><span class="p">,</span>
+    <span class="p">)</span>
+
+<span class="n">mc_params</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;E_iso&quot;</span><span class="p">,</span>   <span class="mf">1e50</span><span class="p">,</span>  <span class="mf">1e54</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">log</span><span class="p">),</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;Gamma0&quot;</span><span class="p">,</span>    <span class="mi">50</span><span class="p">,</span>   <span class="mi">500</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">log</span><span class="p">),</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;theta_c&quot;</span><span class="p">,</span> <span class="mf">0.02</span><span class="p">,</span>   <span class="mf">0.15</span><span class="p">,</span> <span class="n">Scale</span><span class="o">.</span><span class="n">linear</span><span class="p">),</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;theta_v&quot;</span><span class="p">,</span>    <span class="mi">0</span><span class="p">,</span>   <span class="mf">0.5</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">linear</span><span class="p">),</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;L0&quot;</span><span class="p">,</span>      <span class="mf">1e44</span><span class="p">,</span>  <span class="mf">1e48</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">log</span><span class="p">),</span>       <span class="c1"># Injection luminosity [erg/s]</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;t_sd&quot;</span><span class="p">,</span>      <span class="mi">10</span><span class="p">,</span>  <span class="mf">1e4</span><span class="p">,</span>   <span class="n">Scale</span><span class="o">.</span><span class="n">log</span><span class="p">),</span>       <span class="c1"># Spin-down timescale [s]</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;M_dot0&quot;</span><span class="p">,</span>  <span class="mf">1e20</span><span class="p">,</span>  <span class="mf">1e26</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">log</span><span class="p">),</span>       <span class="c1"># Mass injection rate [g/s]</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;tau&quot;</span><span class="p">,</span>        <span class="mi">1</span><span class="p">,</span>   <span class="mf">1e3</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">log</span><span class="p">),</span>
+    <span class="c1"># ... other standard params (n_ism, p, eps_e, eps_B, xi_e)</span>
+<span class="p">]</span>
+
+<span class="n">fitter</span> <span class="o">=</span> <span class="n">Fitter</span><span class="p">(</span><span class="n">z</span><span class="o">=</span><span class="mf">1.58</span><span class="p">,</span> <span class="n">lumi_dist</span><span class="o">=</span><span class="mf">3.364e28</span><span class="p">,</span> <span class="n">jet</span><span class="o">=</span><span class="n">jet_with_injection</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>See <a class="reference internal" href="../examples/models.html"><span class="doc">Models and Radiation</span></a> for more user-defined jet examples.</p>
+</section>
+<section id="custom-medium-profiles">
+<h2>Custom Medium Profiles<a class="headerlink" href="#custom-medium-profiles" title="Link to this heading"></a></h2>
+<p>Similarly, pass a custom medium factory via the <code class="docutils literal notranslate"><span class="pre">medium</span></code> keyword argument to define custom density profiles using the <code class="docutils literal notranslate"><span class="pre">Medium</span></code> class:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">VegasAfterglow</span><span class="w"> </span><span class="kn">import</span> <span class="n">Medium</span><span class="p">,</span> <span class="n">Fitter</span><span class="p">,</span> <span class="n">ParamDef</span><span class="p">,</span> <span class="n">Scale</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">exponential_medium</span><span class="p">(</span><span class="n">params</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Exponential density profile: rho = mp * n_ism * exp(-r / r_scale).&quot;&quot;&quot;</span>
+    <span class="n">mp</span> <span class="o">=</span> <span class="mf">1.67e-24</span>  <span class="c1"># proton mass [g]</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">density_func</span><span class="p">(</span><span class="n">phi</span><span class="p">,</span> <span class="n">theta</span><span class="p">,</span> <span class="n">r</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">mp</span> <span class="o">*</span> <span class="n">params</span><span class="o">.</span><span class="n">n_ism</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">r</span> <span class="o">/</span> <span class="n">params</span><span class="o">.</span><span class="n">r_scale</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">Medium</span><span class="p">(</span><span class="n">rho</span><span class="o">=</span><span class="n">density_func</span><span class="p">)</span>
+
+<span class="n">fitter</span> <span class="o">=</span> <span class="n">Fitter</span><span class="p">(</span><span class="n">z</span><span class="o">=</span><span class="mf">1.58</span><span class="p">,</span> <span class="n">lumi_dist</span><span class="o">=</span><span class="mf">3.364e28</span><span class="p">,</span> <span class="n">medium</span><span class="o">=</span><span class="n">exponential_medium</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">Medium</span></code> class takes a callable <code class="docutils literal notranslate"><span class="pre">rho(phi,</span> <span class="pre">theta,</span> <span class="pre">r)</span></code> that returns the mass density [g/cm³] at position (phi, theta, r). See <a class="reference internal" href="../examples/models.html"><span class="doc">Models and Radiation</span></a> for more user-defined medium examples.</p>
+<p><strong>Custom MCMC Parameters</strong></p>
+<p>When using custom jet or medium functions, you can define arbitrary MCMC parameters beyond the standard set. Simply include them in the <code class="docutils literal notranslate"><span class="pre">ParamDef</span></code> list – the fitter automatically uses a Python-based parameter transformer when it detects non-standard parameter names:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">mc_params</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;E_iso&quot;</span><span class="p">,</span>   <span class="mf">1e50</span><span class="p">,</span>  <span class="mf">1e54</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">log</span><span class="p">),</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;Gamma0&quot;</span><span class="p">,</span>    <span class="mi">50</span><span class="p">,</span>   <span class="mi">500</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">log</span><span class="p">),</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;theta_c&quot;</span><span class="p">,</span> <span class="mf">0.02</span><span class="p">,</span>   <span class="mf">0.15</span><span class="p">,</span> <span class="n">Scale</span><span class="o">.</span><span class="n">linear</span><span class="p">),</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;theta_v&quot;</span><span class="p">,</span>    <span class="mi">0</span><span class="p">,</span>     <span class="mi">0</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">fixed</span><span class="p">),</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;n_ism&quot;</span><span class="p">,</span>   <span class="mf">1e-3</span><span class="p">,</span>   <span class="mi">100</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">log</span><span class="p">),</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;r_scale&quot;</span><span class="p">,</span> <span class="mf">1e16</span><span class="p">,</span>  <span class="mf">1e20</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">log</span><span class="p">),</span>     <span class="c1"># custom parameter</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;p&quot;</span><span class="p">,</span>        <span class="mf">2.1</span><span class="p">,</span>   <span class="mf">2.8</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">linear</span><span class="p">),</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;eps_e&quot;</span><span class="p">,</span>   <span class="mf">1e-3</span><span class="p">,</span>   <span class="mf">0.5</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">log</span><span class="p">),</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;eps_B&quot;</span><span class="p">,</span>   <span class="mf">1e-5</span><span class="p">,</span>   <span class="mf">0.1</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">log</span><span class="p">),</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;xi_e&quot;</span><span class="p">,</span>     <span class="mf">0.1</span><span class="p">,</span>   <span class="mf">1.0</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">linear</span><span class="p">),</span>
+<span class="p">]</span>
+
+<span class="n">fitter</span> <span class="o">=</span> <span class="n">Fitter</span><span class="p">(</span><span class="n">z</span><span class="o">=</span><span class="mf">1.58</span><span class="p">,</span> <span class="n">lumi_dist</span><span class="o">=</span><span class="mf">3.364e28</span><span class="p">,</span> <span class="n">medium</span><span class="o">=</span><span class="n">exponential_medium</span><span class="p">)</span>
+<span class="n">fitter</span><span class="o">.</span><span class="n">add_flux_density</span><span class="p">(</span><span class="n">nu</span><span class="o">=</span><span class="mf">4.84e14</span><span class="p">,</span> <span class="n">t</span><span class="o">=</span><span class="n">t_data</span><span class="p">,</span> <span class="n">f_nu</span><span class="o">=</span><span class="n">flux_data</span><span class="p">,</span> <span class="n">err</span><span class="o">=</span><span class="n">flux_err</span><span class="p">)</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">fitter</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">mc_params</span><span class="p">,</span> <span class="n">sampler</span><span class="o">=</span><span class="s2">&quot;emcee&quot;</span><span class="p">,</span> <span class="n">nsteps</span><span class="o">=</span><span class="mi">10000</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The custom parameter <code class="docutils literal notranslate"><span class="pre">r_scale</span></code> is accessible inside the factory via <code class="docutils literal notranslate"><span class="pre">params.r_scale</span></code>, and it is sampled by the MCMC just like any standard parameter. Standard parameters (<code class="docutils literal notranslate"><span class="pre">theta_v</span></code>, <code class="docutils literal notranslate"><span class="pre">eps_e</span></code>, etc.) retain their defaults and are still used internally for observer geometry and radiation physics.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Standard <code class="docutils literal notranslate"><span class="pre">ModelParams</span></code> fields (like <code class="docutils literal notranslate"><span class="pre">theta_v</span></code>, <code class="docutils literal notranslate"><span class="pre">eps_e</span></code>, <code class="docutils literal notranslate"><span class="pre">eps_B</span></code>, <code class="docutils literal notranslate"><span class="pre">p</span></code>, <code class="docutils literal notranslate"><span class="pre">xi_e</span></code>) must still be included in the <code class="docutils literal notranslate"><span class="pre">ParamDef</span></code> list – they are needed by the <code class="docutils literal notranslate"><span class="pre">Observer</span></code> and <code class="docutils literal notranslate"><span class="pre">Radiation</span></code> objects that the fitter constructs internally.</p>
+</div>
+<p><strong>Combining Custom Jet and Medium</strong></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">fitter</span> <span class="o">=</span> <span class="n">Fitter</span><span class="p">(</span>
+    <span class="n">z</span><span class="o">=</span><span class="mf">1.58</span><span class="p">,</span> <span class="n">lumi_dist</span><span class="o">=</span><span class="mf">3.364e28</span><span class="p">,</span>
+    <span class="n">jet</span><span class="o">=</span><span class="n">double_gaussian_jet</span><span class="p">,</span>
+    <span class="n">medium</span><span class="o">=</span><span class="n">exponential_medium</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="n">fitter</span><span class="o">.</span><span class="n">add_flux_density</span><span class="p">(</span><span class="n">nu</span><span class="o">=</span><span class="mf">4.84e14</span><span class="p">,</span> <span class="n">t</span><span class="o">=</span><span class="n">t_data</span><span class="p">,</span> <span class="n">f_nu</span><span class="o">=</span><span class="n">flux_data</span><span class="p">,</span> <span class="n">err</span><span class="o">=</span><span class="n">flux_err</span><span class="p">)</span>
+<span class="n">fitter</span><span class="o">.</span><span class="n">add_flux_density</span><span class="p">(</span><span class="n">nu</span><span class="o">=</span><span class="mf">2.4e17</span><span class="p">,</span> <span class="n">t</span><span class="o">=</span><span class="n">t_xray</span><span class="p">,</span> <span class="n">f_nu</span><span class="o">=</span><span class="n">flux_xray</span><span class="p">,</span> <span class="n">err</span><span class="o">=</span><span class="n">err_xray</span><span class="p">)</span>
+
+<span class="n">result</span> <span class="o">=</span> <span class="n">fitter</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span>
+    <span class="n">mc_params</span><span class="p">,</span>
+    <span class="n">sampler</span><span class="o">=</span><span class="s2">&quot;emcee&quot;</span><span class="p">,</span>
+    <span class="n">nsteps</span><span class="o">=</span><span class="mi">20000</span><span class="p">,</span>
+    <span class="n">nburn</span><span class="o">=</span><span class="mi">5000</span><span class="p">,</span>
+    <span class="n">log_likelihood_fn</span><span class="o">=</span><span class="n">student_t_likelihood</span><span class="p">,</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="speeding-up-custom-profiles-with-gil-free">
+<h2>Speeding Up Custom Profiles with <code class="docutils literal notranslate"><span class="pre">&#64;gil_free</span></code><a class="headerlink" href="#speeding-up-custom-profiles-with-gil-free" title="Link to this heading"></a></h2>
+<p>The custom jet and medium examples above use plain Python callbacks. Each time C++
+evaluates your profile function, it must cross the Python↔C++ boundary — acquiring the
+GIL, calling into the interpreter, and returning. During blast wave evolution, this
+happens hundreds of times per model evaluation, adding overhead even in single-threaded
+mode and preventing true parallelism in multi-threaded MCMC.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">&#64;gil_free</span></code> decorator compiles your profile function to native machine code
+using <a class="reference external" href="https://numba.pydata.org/">numba</a>, so C++ calls it directly as a C function
+pointer — no Python interpreter, no GIL, no boundary crossing:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span>numba
+</pre></div>
+</div>
+<p>The two differences from plain Python callbacks are:</p>
+<ol class="arabic simple">
+<li><p>Add the <code class="docutils literal notranslate"><span class="pre">&#64;gil_free</span></code> decorator</p></li>
+<li><p>Pass MCMC parameters as explicit function arguments (after the spatial coordinates)
+instead of capturing them from the enclosing scope — you can add as many parameters
+as you need</p></li>
+</ol>
+<p>Here is a complete example — a tophat jet with <code class="docutils literal notranslate"><span class="pre">&#64;gil_free</span></code>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">math</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">VegasAfterglow</span><span class="w"> </span><span class="kn">import</span> <span class="n">Fitter</span><span class="p">,</span> <span class="n">Ejecta</span><span class="p">,</span> <span class="n">ParamDef</span><span class="p">,</span> <span class="n">Scale</span><span class="p">,</span> <span class="n">gil_free</span>
+
+<span class="c1"># Decorate profile functions with @gil_free.</span>
+<span class="c1"># First 2 args (phi, theta) are spatial coordinates from C++.</span>
+<span class="c1"># Additional args are MCMC parameters, bound by keyword below.</span>
+<span class="nd">@gil_free</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">tophat_energy</span><span class="p">(</span><span class="n">phi</span><span class="p">,</span> <span class="n">theta</span><span class="p">,</span> <span class="n">E_iso</span><span class="p">,</span> <span class="n">theta_c</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">E_iso</span> <span class="k">if</span> <span class="n">theta</span> <span class="o">&lt;=</span> <span class="n">theta_c</span> <span class="k">else</span> <span class="mf">0.0</span>
+
+<span class="nd">@gil_free</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">tophat_gamma</span><span class="p">(</span><span class="n">phi</span><span class="p">,</span> <span class="n">theta</span><span class="p">,</span> <span class="n">Gamma0</span><span class="p">,</span> <span class="n">theta_c</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">Gamma0</span> <span class="k">if</span> <span class="n">theta</span> <span class="o">&lt;=</span> <span class="n">theta_c</span> <span class="k">else</span> <span class="mf">1.0</span>
+
+<span class="c1"># Factory: bind MCMC parameters by keyword each step</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">jet_factory</span><span class="p">(</span><span class="n">mc_params</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">Ejecta</span><span class="p">(</span>
+        <span class="n">E_iso</span><span class="o">=</span><span class="n">tophat_energy</span><span class="p">(</span><span class="n">E_iso</span><span class="o">=</span><span class="n">mc_params</span><span class="o">.</span><span class="n">E_iso</span><span class="p">,</span> <span class="n">theta_c</span><span class="o">=</span><span class="n">mc_params</span><span class="o">.</span><span class="n">theta_c</span><span class="p">),</span>
+        <span class="n">Gamma0</span><span class="o">=</span><span class="n">tophat_gamma</span><span class="p">(</span><span class="n">Gamma0</span><span class="o">=</span><span class="n">mc_params</span><span class="o">.</span><span class="n">Gamma0</span><span class="p">,</span> <span class="n">theta_c</span><span class="o">=</span><span class="n">mc_params</span><span class="o">.</span><span class="n">theta_c</span><span class="p">),</span>
+    <span class="p">)</span>
+
+<span class="n">fitter</span> <span class="o">=</span> <span class="n">Fitter</span><span class="p">(</span><span class="n">z</span><span class="o">=</span><span class="mf">1.58</span><span class="p">,</span> <span class="n">lumi_dist</span><span class="o">=</span><span class="mf">3.364e28</span><span class="p">,</span> <span class="n">jet</span><span class="o">=</span><span class="n">jet_factory</span><span class="p">,</span> <span class="n">medium</span><span class="o">=</span><span class="s2">&quot;wind&quot;</span><span class="p">)</span>
+<span class="n">fitter</span><span class="o">.</span><span class="n">add_flux_density</span><span class="p">(</span><span class="n">nu</span><span class="o">=</span><span class="mf">4.84e14</span><span class="p">,</span> <span class="n">t</span><span class="o">=</span><span class="n">t_data</span><span class="p">,</span> <span class="n">f_nu</span><span class="o">=</span><span class="n">flux_data</span><span class="p">,</span> <span class="n">err</span><span class="o">=</span><span class="n">flux_err</span><span class="p">)</span>
+
+<span class="n">mc_params</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;E_iso&quot;</span><span class="p">,</span>    <span class="mf">1e51</span><span class="p">,</span>  <span class="mf">1e54</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">log</span><span class="p">,</span>    <span class="mf">1e53</span><span class="p">),</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;Gamma0&quot;</span><span class="p">,</span>      <span class="mi">5</span><span class="p">,</span>  <span class="mi">1000</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">log</span><span class="p">,</span>      <span class="mi">20</span><span class="p">),</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;theta_c&quot;</span><span class="p">,</span>  <span class="mf">0.01</span><span class="p">,</span>   <span class="mf">0.5</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">linear</span><span class="p">,</span>  <span class="mf">0.1</span><span class="p">),</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;p&quot;</span><span class="p">,</span>           <span class="mi">2</span><span class="p">,</span>     <span class="mi">3</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">linear</span><span class="p">,</span>  <span class="mf">2.3</span><span class="p">),</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;eps_e&quot;</span><span class="p">,</span>    <span class="mf">1e-2</span><span class="p">,</span>   <span class="mf">0.3</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">log</span><span class="p">,</span>    <span class="mf">0.05</span><span class="p">),</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;eps_B&quot;</span><span class="p">,</span>    <span class="mf">1e-4</span><span class="p">,</span>   <span class="mf">0.3</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">log</span><span class="p">,</span>    <span class="mf">0.03</span><span class="p">),</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;xi_e&quot;</span><span class="p">,</span>     <span class="mf">1e-3</span><span class="p">,</span>   <span class="mf">0.1</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">log</span><span class="p">,</span>    <span class="mf">0.01</span><span class="p">),</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;A_star&quot;</span><span class="p">,</span>   <span class="mf">1e-3</span><span class="p">,</span>    <span class="mi">10</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">log</span><span class="p">,</span>    <span class="mf">0.05</span><span class="p">),</span>
+<span class="p">]</span>
+
+<span class="n">result</span> <span class="o">=</span> <span class="n">fitter</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">mc_params</span><span class="p">,</span> <span class="n">sampler</span><span class="o">=</span><span class="s2">&quot;emcee&quot;</span><span class="p">,</span> <span class="n">nsteps</span><span class="o">=</span><span class="mi">10000</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The same decorator works for custom medium density functions (3 spatial coordinates
+<code class="docutils literal notranslate"><span class="pre">phi,</span> <span class="pre">theta,</span> <span class="pre">r</span></code>) and for energy/mass injection functions (<code class="docutils literal notranslate"><span class="pre">phi,</span> <span class="pre">theta,</span> <span class="pre">t</span></code>):</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nd">@gil_free</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">custom_wind</span><span class="p">(</span><span class="n">phi</span><span class="p">,</span> <span class="n">theta</span><span class="p">,</span> <span class="n">r</span><span class="p">,</span> <span class="n">A_star</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">A_star</span> <span class="o">*</span> <span class="mf">5e11</span> <span class="o">*</span> <span class="mf">1.67e-24</span> <span class="o">/</span> <span class="p">(</span><span class="n">r</span> <span class="o">*</span> <span class="n">r</span><span class="p">)</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">medium_factory</span><span class="p">(</span><span class="n">mc_params</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">Medium</span><span class="p">(</span><span class="n">rho</span><span class="o">=</span><span class="n">custom_wind</span><span class="p">(</span><span class="n">A_star</span><span class="o">=</span><span class="n">mc_params</span><span class="o">.</span><span class="n">A_star</span><span class="p">))</span>
+
+<span class="nd">@gil_free</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">spindown_injection</span><span class="p">(</span><span class="n">phi</span><span class="p">,</span> <span class="n">theta</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">L0</span><span class="p">,</span> <span class="n">t_sd</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">L0</span> <span class="o">/</span> <span class="p">(</span><span class="mf">1.0</span> <span class="o">+</span> <span class="n">t</span> <span class="o">/</span> <span class="n">t_sd</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span>
+</pre></div>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>Functions decorated with <code class="docutils literal notranslate"><span class="pre">&#64;gil_free</span></code> must use the <code class="docutils literal notranslate"><span class="pre">math</span></code> module
+(not <code class="docutils literal notranslate"><span class="pre">numpy</span></code>) and only simple arithmetic — no Python objects, arrays, or closures.
+If you need more complex logic, use the plain Python callback approach instead.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Built-in jet types (<code class="docutils literal notranslate"><span class="pre">&quot;tophat&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;gaussian&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;powerlaw&quot;</span></code>, etc.) are already
+implemented in C++ and do not need this decorator.</p>
+</div>
+</section>
+<section id="performance-notes">
+<h2>Performance Notes<a class="headerlink" href="#performance-notes" title="Link to this heading"></a></h2>
+<p><strong>Threading vs. Multiprocessing</strong></p>
+<p>The <code class="docutils literal notranslate"><span class="pre">Fitter</span></code> uses <code class="docutils literal notranslate"><span class="pre">ThreadPoolExecutor</span></code> (threads, not processes) because:</p>
+<ol class="arabic simple">
+<li><p><strong>GIL is released</strong> during the C++ <code class="docutils literal notranslate"><span class="pre">flux_density()</span></code> computation, so threads run truly in parallel</p></li>
+<li><p><strong>No pickling overhead</strong>: Model objects stay in the same process</p></li>
+<li><p><strong>Shared memory</strong>: All threads share observation data without copying</p></li>
+</ol>
+<p>For typical afterglow models, the Python overhead (object creation, GIL acquisition) is &lt;5% of total time for synchrotron-only models and &lt;0.1% for SSC models.</p>
+<p><strong>Parallelism Tips</strong></p>
+<ul class="simple">
+<li><p><strong>Emcee</strong>: <code class="docutils literal notranslate"><span class="pre">npool</span></code> defaults to the number of CPU cores.</p></li>
+<li><p><strong>Dynesty</strong>: <code class="docutils literal notranslate"><span class="pre">npool</span></code> controls thread count. The <code class="docutils literal notranslate"><span class="pre">queue_size</span></code> is automatically optimized.</p></li>
+<li><p><strong>Custom jet/medium with ``&#64;gil_free``</strong>: Full thread parallelism is preserved. All profile evaluations run as native C function calls without the GIL.</p></li>
+<li><p><strong>Custom jet/medium with plain Python callbacks</strong>: Python callbacks require the GIL, which serializes the angular profile evaluation across threads. The blast wave evolution and radiation computation still run without the GIL, but the profile evaluation becomes a bottleneck. Use <code class="docutils literal notranslate"><span class="pre">&#64;gil_free</span></code> to eliminate this overhead.</p></li>
+</ul>
+</section>
+</section>
+<section id="troubleshooting">
+<h1>Troubleshooting<a class="headerlink" href="#troubleshooting" title="Link to this heading"></a></h1>
+<p>For comprehensive troubleshooting help including MCMC convergence issues, data selection problems, memory optimization, and performance tuning, see <a class="reference internal" href="../troubleshooting.html"><span class="doc">Troubleshooting</span></a>.</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="../validation.html"><span class="doc">Validation &amp; Testing</span></a> for code validation and comparison with other afterglow codes. <a class="reference internal" href="../parameter_reference.html"><span class="doc">Parameter Reference</span></a> for the complete parameter reference.</p>
+</div>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="running_and_results.html" class="btn btn-neutral float-left" title="Running MCMC" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../redback_integration.html" class="btn btn-neutral float-right" title="Parameter Estimation with Redback" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, VegasAfterglow Team.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

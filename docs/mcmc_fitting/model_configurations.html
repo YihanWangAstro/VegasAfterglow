@@ -1,0 +1,604 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Model Configurations &mdash; VegasAfterglow 0.1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=20074c1a" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=fd3f3429" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/custom.css?v=c0df17a3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/custom.css?v=c0df17a3" />
+
+  
+    <link rel="shortcut icon" href="../_static/logo.svg"/>
+    <link rel="canonical" href="https://yihanwangastro.github.io/VegasAfterglow/docs/mcmc_fitting/model_configurations.html" />
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=01f34227"></script>
+      <script src="../_static/doctools.js?v=9a2dae69"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../_static/js/custom.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Running MCMC" href="running_and_results.html" />
+    <link rel="prev" title="Basic Setup" href="basic_setup.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            VegasAfterglow
+              <img src="../_static/logo.svg" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../quickstart.html">Quickstart</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../using_cli.html">Command-Line Interface (<code class="docutils literal notranslate"><span class="pre">vegasgen</span></code>)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../examples/index.html">Examples</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">MCMC Parameter Fitting</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="best_practices.html">MCMC Best Practices</a></li>
+<li class="toctree-l2"><a class="reference internal" href="basic_setup.html">Basic Setup</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Model Configurations</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#tophat-ism-default">TopHat + ISM (Default)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#jet-structure-variations">Jet Structure Variations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#medium-type-variations">Medium Type Variations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#reverse-shock">Reverse Shock</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#inverse-compton-radiation">Inverse Compton Radiation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#energy-injection">Energy Injection</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#complex-model-combinations">Complex Model Combinations</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="running_and_results.html">Running MCMC</a></li>
+<li class="toctree-l2"><a class="reference internal" href="running_and_results.html#analyzing-results">Analyzing Results</a></li>
+<li class="toctree-l2"><a class="reference internal" href="advanced.html">Advanced Fitting</a></li>
+<li class="toctree-l2"><a class="reference internal" href="advanced.html#troubleshooting">Troubleshooting</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../redback_integration.html">Parameter Estimation with Redback</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../parameter_reference.html">Parameter Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../validation.html">Validation &amp; Testing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../python_api.html">Python API Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cpp_api.html">C++ API Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../troubleshooting.html">Troubleshooting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing.html">Contributing</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">VegasAfterglow</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">MCMC Parameter Fitting</a></li>
+      <li class="breadcrumb-item active">Model Configurations</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/mcmc_fitting/model_configurations.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="model-configurations">
+<h1>Model Configurations<a class="headerlink" href="#model-configurations" title="Link to this heading"></a></h1>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="../parameter_reference.html"><span class="doc">Parameter Reference</span></a> for all available parameters. <a class="reference internal" href="../examples/index.html"><span class="doc">Examples</span></a> for direct model calculation examples.</p>
+</div>
+<section id="tophat-ism-default">
+<h2>TopHat + ISM (Default)<a class="headerlink" href="#tophat-ism-default" title="Link to this heading"></a></h2>
+<p>The default configuration uses a top-hat jet in a uniform ISM environment with forward shock synchrotron emission:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Basic configuration</span>
+<span class="n">fitter</span> <span class="o">=</span> <span class="n">Fitter</span><span class="p">(</span><span class="n">z</span><span class="o">=</span><span class="mf">1.58</span><span class="p">,</span> <span class="n">lumi_dist</span><span class="o">=</span><span class="mf">3.364e28</span><span class="p">,</span> <span class="n">jet</span><span class="o">=</span><span class="s2">&quot;tophat&quot;</span><span class="p">,</span> <span class="n">medium</span><span class="o">=</span><span class="s2">&quot;ism&quot;</span><span class="p">)</span>
+
+<span class="c1"># Basic parameter set</span>
+<span class="n">params</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;E_iso&quot;</span><span class="p">,</span>   <span class="mf">1e50</span><span class="p">,</span>  <span class="mf">1e54</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">log</span><span class="p">),</span>     <span class="c1"># Isotropic energy in erg</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;Gamma0&quot;</span><span class="p">,</span>    <span class="mi">10</span><span class="p">,</span>   <span class="mi">500</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">log</span><span class="p">),</span>     <span class="c1"># Lorentz factor</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;theta_c&quot;</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">,</span>   <span class="mf">0.5</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">linear</span><span class="p">),</span>  <span class="c1"># Opening angle in radians</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;theta_v&quot;</span><span class="p">,</span>    <span class="mi">0</span><span class="p">,</span>     <span class="mi">0</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">fixed</span><span class="p">),</span>   <span class="c1"># Viewing angle (on-axis) in radians</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;n_ism&quot;</span><span class="p">,</span>   <span class="mf">1e-3</span><span class="p">,</span>   <span class="mi">100</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">log</span><span class="p">),</span>     <span class="c1"># Number density in cm^-3</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;p&quot;</span><span class="p">,</span>        <span class="mf">2.1</span><span class="p">,</span>   <span class="mf">2.8</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">linear</span><span class="p">),</span>  <span class="c1"># Electron spectral index</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;eps_e&quot;</span><span class="p">,</span>   <span class="mf">1e-3</span><span class="p">,</span>   <span class="mf">0.5</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">log</span><span class="p">),</span>     <span class="c1"># Electron energy fraction</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;eps_B&quot;</span><span class="p">,</span>   <span class="mf">1e-5</span><span class="p">,</span>   <span class="mf">0.1</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">log</span><span class="p">),</span>     <span class="c1"># Magnetic energy fraction</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;xi_e&quot;</span><span class="p">,</span>     <span class="mf">0.1</span><span class="p">,</span>   <span class="mf">1.0</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">linear</span><span class="p">),</span>  <span class="c1"># Fraction of accelerated electrons</span>
+<span class="p">]</span>
+</pre></div>
+</div>
+</section>
+<section id="jet-structure-variations">
+<h2>Jet Structure Variations<a class="headerlink" href="#jet-structure-variations" title="Link to this heading"></a></h2>
+<p><strong>Power-law Structured Jet</strong></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">fitter</span> <span class="o">=</span> <span class="n">Fitter</span><span class="p">(</span><span class="n">z</span><span class="o">=</span><span class="mf">1.58</span><span class="p">,</span> <span class="n">lumi_dist</span><span class="o">=</span><span class="mf">3.364e28</span><span class="p">,</span> <span class="n">jet</span><span class="o">=</span><span class="s2">&quot;powerlaw&quot;</span><span class="p">,</span> <span class="n">medium</span><span class="o">=</span><span class="s2">&quot;ism&quot;</span><span class="p">)</span>
+
+<span class="n">params</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="c1"># Basic jet parameters (same as default)</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;E_iso&quot;</span><span class="p">,</span>   <span class="mf">1e50</span><span class="p">,</span>  <span class="mf">1e54</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">log</span><span class="p">),</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;Gamma0&quot;</span><span class="p">,</span>    <span class="mi">10</span><span class="p">,</span>   <span class="mi">500</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">log</span><span class="p">),</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;theta_c&quot;</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">,</span>   <span class="mf">0.3</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">linear</span><span class="p">),</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;theta_v&quot;</span><span class="p">,</span>    <span class="mi">0</span><span class="p">,</span>   <span class="mf">0.5</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">linear</span><span class="p">),</span>  <span class="c1"># Allow off-axis viewing</span>
+
+    <span class="c1"># Power-law structure parameters</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;k_e&quot;</span><span class="p">,</span>      <span class="mf">1.5</span><span class="p">,</span>   <span class="mf">3.0</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">linear</span><span class="p">),</span>  <span class="c1"># Energy power-law index, default 2.0 if not specified</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;k_g&quot;</span><span class="p">,</span>      <span class="mf">1.5</span><span class="p">,</span>   <span class="mf">3.0</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">linear</span><span class="p">),</span>  <span class="c1"># Lorentz factor power-law, default 2.0 if not specified</span>
+
+    <span class="c1"># Medium and microphysics (same as default)</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;n_ism&quot;</span><span class="p">,</span>   <span class="mf">1e-3</span><span class="p">,</span>   <span class="mi">100</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">log</span><span class="p">),</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;p&quot;</span><span class="p">,</span>        <span class="mf">2.1</span><span class="p">,</span>   <span class="mf">2.8</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">linear</span><span class="p">),</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;eps_e&quot;</span><span class="p">,</span>   <span class="mf">1e-3</span><span class="p">,</span>   <span class="mf">0.5</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">log</span><span class="p">),</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;eps_B&quot;</span><span class="p">,</span>   <span class="mf">1e-5</span><span class="p">,</span>   <span class="mf">0.1</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">log</span><span class="p">),</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;xi_e&quot;</span><span class="p">,</span>     <span class="mf">0.1</span><span class="p">,</span>   <span class="mf">1.0</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">linear</span><span class="p">),</span>
+<span class="p">]</span>
+</pre></div>
+</div>
+<p><strong>Gaussian Structured Jet</strong></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">fitter</span> <span class="o">=</span> <span class="n">Fitter</span><span class="p">(</span><span class="n">z</span><span class="o">=</span><span class="mf">1.58</span><span class="p">,</span> <span class="n">lumi_dist</span><span class="o">=</span><span class="mf">3.364e28</span><span class="p">,</span> <span class="n">jet</span><span class="o">=</span><span class="s2">&quot;gaussian&quot;</span><span class="p">,</span> <span class="n">medium</span><span class="o">=</span><span class="s2">&quot;ism&quot;</span><span class="p">)</span>
+
+<span class="n">params</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="c1"># Basic parameters (same as default)</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;E_iso&quot;</span><span class="p">,</span>   <span class="mf">1e50</span><span class="p">,</span>  <span class="mf">1e54</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">log</span><span class="p">),</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;Gamma0&quot;</span><span class="p">,</span>    <span class="mi">10</span><span class="p">,</span>   <span class="mi">500</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">log</span><span class="p">),</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;theta_c&quot;</span><span class="p">,</span> <span class="mf">0.02</span><span class="p">,</span>   <span class="mf">0.2</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">linear</span><span class="p">),</span>  <span class="c1"># Gaussian width parameter</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;theta_v&quot;</span><span class="p">,</span>    <span class="mi">0</span><span class="p">,</span>   <span class="mf">0.5</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">linear</span><span class="p">),</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;n_ism&quot;</span><span class="p">,</span>   <span class="mf">1e-3</span><span class="p">,</span>   <span class="mi">100</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">log</span><span class="p">),</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;p&quot;</span><span class="p">,</span>        <span class="mf">2.1</span><span class="p">,</span>   <span class="mf">2.8</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">linear</span><span class="p">),</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;eps_e&quot;</span><span class="p">,</span>   <span class="mf">1e-3</span><span class="p">,</span>   <span class="mf">0.5</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">log</span><span class="p">),</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;eps_B&quot;</span><span class="p">,</span>   <span class="mf">1e-5</span><span class="p">,</span>   <span class="mf">0.1</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">log</span><span class="p">),</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;xi_e&quot;</span><span class="p">,</span>     <span class="mf">0.1</span><span class="p">,</span>   <span class="mf">1.0</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">linear</span><span class="p">),</span>
+<span class="p">]</span>
+</pre></div>
+</div>
+<p><strong>Two-Component Jet</strong></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">fitter</span> <span class="o">=</span> <span class="n">Fitter</span><span class="p">(</span><span class="n">z</span><span class="o">=</span><span class="mf">1.58</span><span class="p">,</span> <span class="n">lumi_dist</span><span class="o">=</span><span class="mf">3.364e28</span><span class="p">,</span> <span class="n">jet</span><span class="o">=</span><span class="s2">&quot;two_component&quot;</span><span class="p">,</span> <span class="n">medium</span><span class="o">=</span><span class="s2">&quot;ism&quot;</span><span class="p">)</span>
+
+<span class="n">params</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="c1"># Narrow component</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;E_iso&quot;</span><span class="p">,</span>   <span class="mf">1e50</span><span class="p">,</span>  <span class="mf">1e53</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">log</span><span class="p">),</span>     <span class="c1"># Core energy</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;Gamma0&quot;</span><span class="p">,</span>   <span class="mi">100</span><span class="p">,</span>   <span class="mi">500</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">log</span><span class="p">),</span>     <span class="c1"># Core Lorentz factor</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;theta_c&quot;</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">,</span>   <span class="mf">0.1</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">linear</span><span class="p">),</span>  <span class="c1"># Core angle</span>
+
+    <span class="c1"># Wide component</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;E_iso_w&quot;</span><span class="p">,</span> <span class="mf">1e49</span><span class="p">,</span>  <span class="mf">1e52</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">log</span><span class="p">),</span>     <span class="c1"># Wide energy in erg</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;Gamma0_w&quot;</span><span class="p">,</span>  <span class="mi">10</span><span class="p">,</span>   <span class="mi">100</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">log</span><span class="p">),</span>     <span class="c1"># Wide Lorentz factor</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;theta_w&quot;</span><span class="p">,</span>  <span class="mf">0.1</span><span class="p">,</span>   <span class="mf">0.5</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">linear</span><span class="p">),</span>  <span class="c1"># Wide angle in radians</span>
+
+    <span class="c1"># Observation and medium (same as default)</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;theta_v&quot;</span><span class="p">,</span>    <span class="mi">0</span><span class="p">,</span>   <span class="mf">0.3</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">linear</span><span class="p">),</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;n_ism&quot;</span><span class="p">,</span>   <span class="mf">1e-3</span><span class="p">,</span>   <span class="mi">100</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">log</span><span class="p">),</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;p&quot;</span><span class="p">,</span>        <span class="mf">2.1</span><span class="p">,</span>   <span class="mf">2.8</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">linear</span><span class="p">),</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;eps_e&quot;</span><span class="p">,</span>   <span class="mf">1e-3</span><span class="p">,</span>   <span class="mf">0.5</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">log</span><span class="p">),</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;eps_B&quot;</span><span class="p">,</span>   <span class="mf">1e-5</span><span class="p">,</span>   <span class="mf">0.1</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">log</span><span class="p">),</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;xi_e&quot;</span><span class="p">,</span>     <span class="mf">0.1</span><span class="p">,</span>   <span class="mf">1.0</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">linear</span><span class="p">),</span>
+<span class="p">]</span>
+</pre></div>
+</div>
+<p><strong>Step Power-law Jet</strong></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">fitter</span> <span class="o">=</span> <span class="n">Fitter</span><span class="p">(</span><span class="n">z</span><span class="o">=</span><span class="mf">1.58</span><span class="p">,</span> <span class="n">lumi_dist</span><span class="o">=</span><span class="mf">3.364e28</span><span class="p">,</span> <span class="n">jet</span><span class="o">=</span><span class="s2">&quot;step_powerlaw&quot;</span><span class="p">,</span> <span class="n">medium</span><span class="o">=</span><span class="s2">&quot;ism&quot;</span><span class="p">)</span>
+
+<span class="n">params</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="c1"># Core component (uniform)</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;E_iso&quot;</span><span class="p">,</span>   <span class="mf">1e51</span><span class="p">,</span>  <span class="mf">1e54</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">log</span><span class="p">),</span>     <span class="c1"># Core energy</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;Gamma0&quot;</span><span class="p">,</span>    <span class="mi">50</span><span class="p">,</span>   <span class="mi">500</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">log</span><span class="p">),</span>     <span class="c1"># Core Lorentz factor</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;theta_c&quot;</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">,</span>   <span class="mf">0.1</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">linear</span><span class="p">),</span>  <span class="c1"># Core boundary</span>
+
+    <span class="c1"># Wing component (power-law)</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;E_iso_w&quot;</span><span class="p">,</span> <span class="mf">1e49</span><span class="p">,</span>  <span class="mf">1e52</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">log</span><span class="p">),</span>     <span class="c1"># Wing energy scale</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;Gamma0_w&quot;</span><span class="p">,</span>  <span class="mi">10</span><span class="p">,</span>   <span class="mi">100</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">log</span><span class="p">),</span>     <span class="c1"># Wing Lorentz factor</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;k_e&quot;</span><span class="p">,</span>      <span class="mf">1.5</span><span class="p">,</span>   <span class="mf">3.0</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">linear</span><span class="p">),</span>  <span class="c1"># Energy power-law</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;k_g&quot;</span><span class="p">,</span>      <span class="mf">1.5</span><span class="p">,</span>   <span class="mf">3.0</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">linear</span><span class="p">),</span>  <span class="c1"># Lorentz factor power-law</span>
+
+    <span class="c1"># Standard parameters (same as default)</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;theta_v&quot;</span><span class="p">,</span>    <span class="mi">0</span><span class="p">,</span>   <span class="mf">0.3</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">linear</span><span class="p">),</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;n_ism&quot;</span><span class="p">,</span>   <span class="mf">1e-3</span><span class="p">,</span>   <span class="mi">100</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">log</span><span class="p">),</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;p&quot;</span><span class="p">,</span>        <span class="mf">2.1</span><span class="p">,</span>   <span class="mf">2.8</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">linear</span><span class="p">),</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;eps_e&quot;</span><span class="p">,</span>   <span class="mf">1e-3</span><span class="p">,</span>   <span class="mf">0.5</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">log</span><span class="p">),</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;eps_B&quot;</span><span class="p">,</span>   <span class="mf">1e-5</span><span class="p">,</span>   <span class="mf">0.1</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">log</span><span class="p">),</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;xi_e&quot;</span><span class="p">,</span>     <span class="mf">0.1</span><span class="p">,</span>   <span class="mf">1.0</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">linear</span><span class="p">),</span>
+<span class="p">]</span>
+</pre></div>
+</div>
+</section>
+<section id="medium-type-variations">
+<h2>Medium Type Variations<a class="headerlink" href="#medium-type-variations" title="Link to this heading"></a></h2>
+<p><strong>Stellar Wind Medium</strong></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">fitter</span> <span class="o">=</span> <span class="n">Fitter</span><span class="p">(</span><span class="n">z</span><span class="o">=</span><span class="mf">1.58</span><span class="p">,</span> <span class="n">lumi_dist</span><span class="o">=</span><span class="mf">3.364e28</span><span class="p">,</span> <span class="n">jet</span><span class="o">=</span><span class="s2">&quot;tophat&quot;</span><span class="p">,</span> <span class="n">medium</span><span class="o">=</span><span class="s2">&quot;wind&quot;</span><span class="p">)</span>
+
+<span class="n">params</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="c1"># Standard jet parameters (same as default)</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;E_iso&quot;</span><span class="p">,</span>   <span class="mf">1e50</span><span class="p">,</span>  <span class="mf">1e54</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">log</span><span class="p">),</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;Gamma0&quot;</span><span class="p">,</span>    <span class="mi">10</span><span class="p">,</span>   <span class="mi">500</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">log</span><span class="p">),</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;theta_c&quot;</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">,</span>   <span class="mf">0.5</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">linear</span><span class="p">),</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;theta_v&quot;</span><span class="p">,</span>    <span class="mi">0</span><span class="p">,</span>     <span class="mi">0</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">fixed</span><span class="p">),</span>
+
+    <span class="c1"># Wind medium parameter (replaces n_ism)</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;A_star&quot;</span><span class="p">,</span>  <span class="mf">1e-3</span><span class="p">,</span>   <span class="mf">1.0</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">log</span><span class="p">),</span>     <span class="c1"># Wind parameter</span>
+
+    <span class="c1"># Standard microphysics (same as default)</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;p&quot;</span><span class="p">,</span>        <span class="mf">2.1</span><span class="p">,</span>   <span class="mf">2.8</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">linear</span><span class="p">),</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;eps_e&quot;</span><span class="p">,</span>   <span class="mf">1e-3</span><span class="p">,</span>   <span class="mf">0.5</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">log</span><span class="p">),</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;eps_B&quot;</span><span class="p">,</span>   <span class="mf">1e-5</span><span class="p">,</span>   <span class="mf">0.1</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">log</span><span class="p">),</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;xi_e&quot;</span><span class="p">,</span>     <span class="mf">0.1</span><span class="p">,</span>   <span class="mf">1.0</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">linear</span><span class="p">),</span>
+<span class="p">]</span>
+</pre></div>
+</div>
+<p><strong>Stratified Medium: ISM-to-Wind</strong></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">fitter</span> <span class="o">=</span> <span class="n">Fitter</span><span class="p">(</span><span class="n">z</span><span class="o">=</span><span class="mf">1.58</span><span class="p">,</span> <span class="n">lumi_dist</span><span class="o">=</span><span class="mf">3.364e28</span><span class="p">,</span> <span class="n">jet</span><span class="o">=</span><span class="s2">&quot;tophat&quot;</span><span class="p">,</span> <span class="n">medium</span><span class="o">=</span><span class="s2">&quot;wind&quot;</span><span class="p">)</span>
+
+<span class="n">params</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="c1"># Standard jet parameters (same as default)</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;E_iso&quot;</span><span class="p">,</span>   <span class="mf">1e50</span><span class="p">,</span>  <span class="mf">1e54</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">log</span><span class="p">),</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;Gamma0&quot;</span><span class="p">,</span>    <span class="mi">10</span><span class="p">,</span>   <span class="mi">500</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">log</span><span class="p">),</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;theta_c&quot;</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">,</span>   <span class="mf">0.5</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">linear</span><span class="p">),</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;theta_v&quot;</span><span class="p">,</span>    <span class="mi">0</span><span class="p">,</span>     <span class="mi">0</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">fixed</span><span class="p">),</span>
+
+    <span class="c1"># Stratified medium parameters</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;A_star&quot;</span><span class="p">,</span>  <span class="mf">1e-5</span><span class="p">,</span>   <span class="mf">0.1</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">log</span><span class="p">),</span>     <span class="c1"># Wind strength (outer)</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;n0&quot;</span><span class="p">,</span>      <span class="mf">1e-3</span><span class="p">,</span>    <span class="mi">10</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">log</span><span class="p">),</span>     <span class="c1"># ISM density (inner) in cm^-3</span>
+
+    <span class="c1"># Standard microphysics (same as default)</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;p&quot;</span><span class="p">,</span>        <span class="mf">2.1</span><span class="p">,</span>   <span class="mf">2.8</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">linear</span><span class="p">),</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;eps_e&quot;</span><span class="p">,</span>   <span class="mf">1e-3</span><span class="p">,</span>   <span class="mf">0.5</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">log</span><span class="p">),</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;eps_B&quot;</span><span class="p">,</span>   <span class="mf">1e-5</span><span class="p">,</span>   <span class="mf">0.1</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">log</span><span class="p">),</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;xi_e&quot;</span><span class="p">,</span>     <span class="mf">0.1</span><span class="p">,</span>   <span class="mf">1.0</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">linear</span><span class="p">),</span>
+<span class="p">]</span>
+</pre></div>
+</div>
+<p><strong>Stratified Medium: Wind-to-ISM</strong></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">fitter</span> <span class="o">=</span> <span class="n">Fitter</span><span class="p">(</span><span class="n">z</span><span class="o">=</span><span class="mf">1.58</span><span class="p">,</span> <span class="n">lumi_dist</span><span class="o">=</span><span class="mf">3.364e28</span><span class="p">,</span> <span class="n">jet</span><span class="o">=</span><span class="s2">&quot;tophat&quot;</span><span class="p">,</span> <span class="n">medium</span><span class="o">=</span><span class="s2">&quot;wind&quot;</span><span class="p">)</span>
+
+<span class="n">params</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="c1"># Standard jet parameters (same as default)</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;E_iso&quot;</span><span class="p">,</span>   <span class="mf">1e50</span><span class="p">,</span>  <span class="mf">1e54</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">log</span><span class="p">),</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;Gamma0&quot;</span><span class="p">,</span>    <span class="mi">10</span><span class="p">,</span>   <span class="mi">500</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">log</span><span class="p">),</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;theta_c&quot;</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">,</span>   <span class="mf">0.5</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">linear</span><span class="p">),</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;theta_v&quot;</span><span class="p">,</span>    <span class="mi">0</span><span class="p">,</span>     <span class="mi">0</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">fixed</span><span class="p">),</span>
+
+    <span class="c1"># Stratified medium (wind -&gt; ISM)</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;A_star&quot;</span><span class="p">,</span>  <span class="mf">1e-3</span><span class="p">,</span>   <span class="mf">1.0</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">log</span><span class="p">),</span>     <span class="c1"># Inner wind strength</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;n_ism&quot;</span><span class="p">,</span>   <span class="mf">1e-3</span><span class="p">,</span>   <span class="mi">100</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">log</span><span class="p">),</span>     <span class="c1"># Outer ISM density</span>
+
+    <span class="c1"># Standard microphysics (same as default)</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;p&quot;</span><span class="p">,</span>        <span class="mf">2.1</span><span class="p">,</span>   <span class="mf">2.8</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">linear</span><span class="p">),</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;eps_e&quot;</span><span class="p">,</span>   <span class="mf">1e-3</span><span class="p">,</span>   <span class="mf">0.5</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">log</span><span class="p">),</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;eps_B&quot;</span><span class="p">,</span>   <span class="mf">1e-5</span><span class="p">,</span>   <span class="mf">0.1</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">log</span><span class="p">),</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;xi_e&quot;</span><span class="p">,</span>     <span class="mf">0.1</span><span class="p">,</span>   <span class="mf">1.0</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">linear</span><span class="p">),</span>
+<span class="p">]</span>
+</pre></div>
+</div>
+<p><strong>Stratified Medium: ISM-Wind-ISM</strong></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">fitter</span> <span class="o">=</span> <span class="n">Fitter</span><span class="p">(</span><span class="n">z</span><span class="o">=</span><span class="mf">1.58</span><span class="p">,</span> <span class="n">lumi_dist</span><span class="o">=</span><span class="mf">3.364e28</span><span class="p">,</span> <span class="n">jet</span><span class="o">=</span><span class="s2">&quot;tophat&quot;</span><span class="p">,</span> <span class="n">medium</span><span class="o">=</span><span class="s2">&quot;wind&quot;</span><span class="p">)</span>
+
+<span class="n">params</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="c1"># Standard jet parameters (same as default)</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;E_iso&quot;</span><span class="p">,</span>   <span class="mf">1e50</span><span class="p">,</span>  <span class="mf">1e54</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">log</span><span class="p">),</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;Gamma0&quot;</span><span class="p">,</span>    <span class="mi">10</span><span class="p">,</span>   <span class="mi">500</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">log</span><span class="p">),</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;theta_c&quot;</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">,</span>   <span class="mf">0.5</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">linear</span><span class="p">),</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;theta_v&quot;</span><span class="p">,</span>    <span class="mi">0</span><span class="p">,</span>     <span class="mi">0</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">fixed</span><span class="p">),</span>
+
+    <span class="c1"># Three-zone stratified medium</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;A_star&quot;</span><span class="p">,</span>  <span class="mf">1e-4</span><span class="p">,</span>   <span class="mf">0.1</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">log</span><span class="p">),</span>     <span class="c1"># Wind parameter (middle)</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;n_ism&quot;</span><span class="p">,</span>   <span class="mf">1e-3</span><span class="p">,</span>   <span class="mi">100</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">log</span><span class="p">),</span>     <span class="c1"># Outer ISM density</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;n0&quot;</span><span class="p">,</span>      <span class="mf">1e-2</span><span class="p">,</span>    <span class="mi">20</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">log</span><span class="p">),</span>     <span class="c1"># Inner ISM density</span>
+
+    <span class="c1"># Standard microphysics (same as default)</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;p&quot;</span><span class="p">,</span>        <span class="mf">2.1</span><span class="p">,</span>   <span class="mf">2.8</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">linear</span><span class="p">),</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;eps_e&quot;</span><span class="p">,</span>   <span class="mf">1e-3</span><span class="p">,</span>   <span class="mf">0.5</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">log</span><span class="p">),</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;eps_B&quot;</span><span class="p">,</span>   <span class="mf">1e-5</span><span class="p">,</span>   <span class="mf">0.1</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">log</span><span class="p">),</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;xi_e&quot;</span><span class="p">,</span>     <span class="mf">0.1</span><span class="p">,</span>   <span class="mf">1.0</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">linear</span><span class="p">),</span>
+<span class="p">]</span>
+</pre></div>
+</div>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p><strong>Stratified Medium Physics:</strong></p>
+<ul class="simple">
+<li><p><strong>A_star = 0</strong>: Pure ISM with density n_ism</p></li>
+<li><p><strong>n0 = infinity</strong>: Pure wind profile from center</p></li>
+<li><p><strong>A_star &gt; 0, n0 &lt; infinity</strong>: ISM-wind-ISM stratification</p></li>
+<li><p><strong>A_star &gt; 0, n0 = infinity</strong>: Wind-ISM stratification</p></li>
+</ul>
+<p><strong>Density Profile:</strong> Inner (r &lt; r1): n = n0, Middle (r1 &lt; r &lt; r2): n proportional to A_star/r^2, Outer (r &gt; r2): n = n_ism</p>
+</div>
+</section>
+<section id="reverse-shock">
+<h2>Reverse Shock<a class="headerlink" href="#reverse-shock" title="Link to this heading"></a></h2>
+<p><strong>Basic Reverse Shock</strong></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">fitter</span> <span class="o">=</span> <span class="n">Fitter</span><span class="p">(</span>
+    <span class="n">z</span><span class="o">=</span><span class="mf">1.58</span><span class="p">,</span> <span class="n">lumi_dist</span><span class="o">=</span><span class="mf">3.364e28</span><span class="p">,</span>
+    <span class="n">jet</span><span class="o">=</span><span class="s2">&quot;tophat&quot;</span><span class="p">,</span> <span class="n">medium</span><span class="o">=</span><span class="s2">&quot;ism&quot;</span><span class="p">,</span>
+    <span class="n">rvs_shock</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="n">params</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="c1"># Standard jet and medium parameters (same as default)</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;E_iso&quot;</span><span class="p">,</span>   <span class="mf">1e50</span><span class="p">,</span>  <span class="mf">1e54</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">log</span><span class="p">),</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;Gamma0&quot;</span><span class="p">,</span>    <span class="mi">10</span><span class="p">,</span>   <span class="mi">500</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">log</span><span class="p">),</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;theta_c&quot;</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">,</span>   <span class="mf">0.5</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">linear</span><span class="p">),</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;theta_v&quot;</span><span class="p">,</span>    <span class="mi">0</span><span class="p">,</span>     <span class="mi">0</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">fixed</span><span class="p">),</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;n_ism&quot;</span><span class="p">,</span>   <span class="mf">1e-3</span><span class="p">,</span>   <span class="mi">100</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">log</span><span class="p">),</span>
+
+    <span class="c1"># Jet duration (important for reverse shock)</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;tau&quot;</span><span class="p">,</span>        <span class="mi">1</span><span class="p">,</span>   <span class="mf">1e6</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">log</span><span class="p">),</span>     <span class="c1"># Jet duration in seconds</span>
+
+    <span class="c1"># Forward shock microphysics (same as default)</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;p&quot;</span><span class="p">,</span>        <span class="mf">2.1</span><span class="p">,</span>   <span class="mf">2.8</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">linear</span><span class="p">),</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;eps_e&quot;</span><span class="p">,</span>   <span class="mf">1e-3</span><span class="p">,</span>   <span class="mf">0.5</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">log</span><span class="p">),</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;eps_B&quot;</span><span class="p">,</span>   <span class="mf">1e-5</span><span class="p">,</span>   <span class="mf">0.1</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">log</span><span class="p">),</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;xi_e&quot;</span><span class="p">,</span>     <span class="mf">0.1</span><span class="p">,</span>   <span class="mf">1.0</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">linear</span><span class="p">),</span>
+
+    <span class="c1"># Reverse shock microphysics (can be different)</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;p_r&quot;</span><span class="p">,</span>      <span class="mf">2.1</span><span class="p">,</span>   <span class="mf">2.8</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">linear</span><span class="p">),</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;eps_e_r&quot;</span><span class="p">,</span> <span class="mf">1e-3</span><span class="p">,</span>   <span class="mf">0.5</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">log</span><span class="p">),</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;eps_B_r&quot;</span><span class="p">,</span> <span class="mf">1e-5</span><span class="p">,</span>   <span class="mf">0.1</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">log</span><span class="p">),</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;xi_e_r&quot;</span><span class="p">,</span>   <span class="mf">0.1</span><span class="p">,</span>   <span class="mf">1.0</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">linear</span><span class="p">),</span>
+<span class="p">]</span>
+</pre></div>
+</div>
+<p><strong>Reverse Shock with Structured Jet</strong></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">fitter</span> <span class="o">=</span> <span class="n">Fitter</span><span class="p">(</span>
+    <span class="n">z</span><span class="o">=</span><span class="mf">1.58</span><span class="p">,</span> <span class="n">lumi_dist</span><span class="o">=</span><span class="mf">3.364e28</span><span class="p">,</span>
+    <span class="n">jet</span><span class="o">=</span><span class="s2">&quot;gaussian&quot;</span><span class="p">,</span> <span class="n">medium</span><span class="o">=</span><span class="s2">&quot;ism&quot;</span><span class="p">,</span>
+    <span class="n">rvs_shock</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="n">params</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="c1"># Gaussian jet parameters</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;E_iso&quot;</span><span class="p">,</span>   <span class="mf">1e50</span><span class="p">,</span>  <span class="mf">1e54</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">log</span><span class="p">),</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;Gamma0&quot;</span><span class="p">,</span>    <span class="mi">50</span><span class="p">,</span>   <span class="mi">500</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">log</span><span class="p">),</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;theta_c&quot;</span><span class="p">,</span> <span class="mf">0.02</span><span class="p">,</span>   <span class="mf">0.2</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">linear</span><span class="p">),</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;theta_v&quot;</span><span class="p">,</span>    <span class="mi">0</span><span class="p">,</span>   <span class="mf">0.5</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">linear</span><span class="p">),</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;n_ism&quot;</span><span class="p">,</span>   <span class="mf">1e-3</span><span class="p">,</span>   <span class="mi">100</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">log</span><span class="p">),</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;tau&quot;</span><span class="p">,</span>        <span class="mi">1</span><span class="p">,</span>   <span class="mf">1e6</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">log</span><span class="p">),</span>
+
+    <span class="c1"># Forward + reverse shock microphysics</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;p&quot;</span><span class="p">,</span>        <span class="mf">2.1</span><span class="p">,</span>   <span class="mf">2.8</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">linear</span><span class="p">),</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;eps_e&quot;</span><span class="p">,</span>   <span class="mf">1e-3</span><span class="p">,</span>   <span class="mf">0.5</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">log</span><span class="p">),</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;eps_B&quot;</span><span class="p">,</span>   <span class="mf">1e-5</span><span class="p">,</span>   <span class="mf">0.1</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">log</span><span class="p">),</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;xi_e&quot;</span><span class="p">,</span>     <span class="mf">0.1</span><span class="p">,</span>   <span class="mf">1.0</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">linear</span><span class="p">),</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;p_r&quot;</span><span class="p">,</span>      <span class="mf">2.1</span><span class="p">,</span>   <span class="mf">2.8</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">linear</span><span class="p">),</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;eps_e_r&quot;</span><span class="p">,</span> <span class="mf">1e-3</span><span class="p">,</span>   <span class="mf">0.5</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">log</span><span class="p">),</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;eps_B_r&quot;</span><span class="p">,</span> <span class="mf">1e-5</span><span class="p">,</span>   <span class="mf">0.1</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">log</span><span class="p">),</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;xi_e_r&quot;</span><span class="p">,</span>   <span class="mf">0.1</span><span class="p">,</span>   <span class="mf">1.0</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">linear</span><span class="p">),</span>
+<span class="p">]</span>
+</pre></div>
+</div>
+</section>
+<section id="inverse-compton-radiation">
+<h2>Inverse Compton Radiation<a class="headerlink" href="#inverse-compton-radiation" title="Link to this heading"></a></h2>
+<p>For the physical details of inverse Compton and Klein-Nishina corrections, see <a class="reference internal" href="../physics.html"><span class="doc">GRB Afterglow Physics</span></a>.</p>
+<p><strong>Forward Shock Inverse Compton</strong></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">fitter</span> <span class="o">=</span> <span class="n">Fitter</span><span class="p">(</span>
+    <span class="n">z</span><span class="o">=</span><span class="mf">1.58</span><span class="p">,</span> <span class="n">lumi_dist</span><span class="o">=</span><span class="mf">3.364e28</span><span class="p">,</span>
+    <span class="n">jet</span><span class="o">=</span><span class="s2">&quot;tophat&quot;</span><span class="p">,</span> <span class="n">medium</span><span class="o">=</span><span class="s2">&quot;ism&quot;</span><span class="p">,</span>
+    <span class="n">fwd_ssc</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">kn</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="n">params</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="c1"># Standard parameters (same as default)</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;E_iso&quot;</span><span class="p">,</span>   <span class="mf">1e50</span><span class="p">,</span>  <span class="mf">1e54</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">log</span><span class="p">),</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;Gamma0&quot;</span><span class="p">,</span>    <span class="mi">10</span><span class="p">,</span>   <span class="mi">500</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">log</span><span class="p">),</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;theta_c&quot;</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">,</span>   <span class="mf">0.5</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">linear</span><span class="p">),</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;theta_v&quot;</span><span class="p">,</span>    <span class="mi">0</span><span class="p">,</span>     <span class="mi">0</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">fixed</span><span class="p">),</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;n_ism&quot;</span><span class="p">,</span>   <span class="mf">1e-3</span><span class="p">,</span>   <span class="mi">100</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">log</span><span class="p">),</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;p&quot;</span><span class="p">,</span>        <span class="mf">2.1</span><span class="p">,</span>   <span class="mf">2.8</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">linear</span><span class="p">),</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;eps_e&quot;</span><span class="p">,</span>   <span class="mf">1e-3</span><span class="p">,</span>   <span class="mf">0.5</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">log</span><span class="p">),</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;eps_B&quot;</span><span class="p">,</span>   <span class="mf">1e-5</span><span class="p">,</span>   <span class="mf">0.1</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">log</span><span class="p">),</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;xi_e&quot;</span><span class="p">,</span>     <span class="mf">0.1</span><span class="p">,</span>   <span class="mf">1.0</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">linear</span><span class="p">),</span>
+<span class="p">]</span>
+</pre></div>
+</div>
+<p><strong>Reverse Shock Inverse Compton</strong></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">fitter</span> <span class="o">=</span> <span class="n">Fitter</span><span class="p">(</span>
+    <span class="n">z</span><span class="o">=</span><span class="mf">1.58</span><span class="p">,</span> <span class="n">lumi_dist</span><span class="o">=</span><span class="mf">3.364e28</span><span class="p">,</span>
+    <span class="n">jet</span><span class="o">=</span><span class="s2">&quot;tophat&quot;</span><span class="p">,</span> <span class="n">medium</span><span class="o">=</span><span class="s2">&quot;ism&quot;</span><span class="p">,</span>
+    <span class="n">rvs_shock</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">fwd_ssc</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">rvs_ssc</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">kn</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="n">params</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="c1"># Standard parameters with reverse shock</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;E_iso&quot;</span><span class="p">,</span>   <span class="mf">1e50</span><span class="p">,</span>  <span class="mf">1e54</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">log</span><span class="p">),</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;Gamma0&quot;</span><span class="p">,</span>    <span class="mi">10</span><span class="p">,</span>   <span class="mi">500</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">log</span><span class="p">),</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;theta_c&quot;</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">,</span>   <span class="mf">0.5</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">linear</span><span class="p">),</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;theta_v&quot;</span><span class="p">,</span>    <span class="mi">0</span><span class="p">,</span>     <span class="mi">0</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">fixed</span><span class="p">),</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;n_ism&quot;</span><span class="p">,</span>   <span class="mf">1e-3</span><span class="p">,</span>   <span class="mi">100</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">log</span><span class="p">),</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;tau&quot;</span><span class="p">,</span>        <span class="mi">1</span><span class="p">,</span>   <span class="mi">100</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">log</span><span class="p">),</span>
+
+    <span class="c1"># Forward + reverse microphysics</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;p&quot;</span><span class="p">,</span>        <span class="mf">2.1</span><span class="p">,</span>   <span class="mf">2.8</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">linear</span><span class="p">),</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;eps_e&quot;</span><span class="p">,</span>   <span class="mf">1e-3</span><span class="p">,</span>   <span class="mf">0.5</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">log</span><span class="p">),</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;eps_B&quot;</span><span class="p">,</span>   <span class="mf">1e-5</span><span class="p">,</span>   <span class="mf">0.1</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">log</span><span class="p">),</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;xi_e&quot;</span><span class="p">,</span>     <span class="mf">0.1</span><span class="p">,</span>   <span class="mf">1.0</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">linear</span><span class="p">),</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;p_r&quot;</span><span class="p">,</span>      <span class="mf">2.1</span><span class="p">,</span>   <span class="mf">2.8</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">linear</span><span class="p">),</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;eps_e_r&quot;</span><span class="p">,</span> <span class="mf">1e-3</span><span class="p">,</span>   <span class="mf">0.5</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">log</span><span class="p">),</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;eps_B_r&quot;</span><span class="p">,</span> <span class="mf">1e-5</span><span class="p">,</span>   <span class="mf">0.1</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">log</span><span class="p">),</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;xi_e_r&quot;</span><span class="p">,</span>   <span class="mf">0.1</span><span class="p">,</span>   <span class="mf">1.0</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">linear</span><span class="p">),</span>
+<span class="p">]</span>
+</pre></div>
+</div>
+</section>
+<section id="energy-injection">
+<h2>Energy Injection<a class="headerlink" href="#energy-injection" title="Link to this heading"></a></h2>
+<p><strong>Magnetar Spin-down Injection</strong></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">fitter</span> <span class="o">=</span> <span class="n">Fitter</span><span class="p">(</span>
+    <span class="n">z</span><span class="o">=</span><span class="mf">1.58</span><span class="p">,</span> <span class="n">lumi_dist</span><span class="o">=</span><span class="mf">3.364e28</span><span class="p">,</span>
+    <span class="n">jet</span><span class="o">=</span><span class="s2">&quot;tophat&quot;</span><span class="p">,</span> <span class="n">medium</span><span class="o">=</span><span class="s2">&quot;ism&quot;</span><span class="p">,</span>
+    <span class="n">magnetar</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="n">params</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="c1"># Standard jet and medium parameters (same as default)</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;E_iso&quot;</span><span class="p">,</span>   <span class="mf">1e50</span><span class="p">,</span>  <span class="mf">1e54</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">log</span><span class="p">),</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;Gamma0&quot;</span><span class="p">,</span>    <span class="mi">10</span><span class="p">,</span>   <span class="mi">500</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">log</span><span class="p">),</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;theta_c&quot;</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">,</span>   <span class="mf">0.5</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">linear</span><span class="p">),</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;theta_v&quot;</span><span class="p">,</span>    <span class="mi">0</span><span class="p">,</span>     <span class="mi">0</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">fixed</span><span class="p">),</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;n_ism&quot;</span><span class="p">,</span>   <span class="mf">1e-3</span><span class="p">,</span>   <span class="mi">100</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">log</span><span class="p">),</span>
+
+    <span class="c1"># Magnetar injection parameters</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;L0&quot;</span><span class="p">,</span>      <span class="mf">1e42</span><span class="p">,</span>  <span class="mf">1e48</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">log</span><span class="p">),</span>     <span class="c1"># Initial luminosity [erg/s]</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;t0&quot;</span><span class="p">,</span>        <span class="mi">10</span><span class="p">,</span>  <span class="mi">1000</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">log</span><span class="p">),</span>     <span class="c1"># Spin-down timescale [s]</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;q&quot;</span><span class="p">,</span>        <span class="mf">1.5</span><span class="p">,</span>   <span class="mf">3.0</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">linear</span><span class="p">),</span>  <span class="c1"># Power-law index</span>
+
+    <span class="c1"># Standard microphysics (same as default)</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;p&quot;</span><span class="p">,</span>        <span class="mf">2.1</span><span class="p">,</span>   <span class="mf">2.8</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">linear</span><span class="p">),</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;eps_e&quot;</span><span class="p">,</span>   <span class="mf">1e-3</span><span class="p">,</span>   <span class="mf">0.5</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">log</span><span class="p">),</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;eps_B&quot;</span><span class="p">,</span>   <span class="mf">1e-5</span><span class="p">,</span>   <span class="mf">0.1</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">log</span><span class="p">),</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;xi_e&quot;</span><span class="p">,</span>     <span class="mf">0.1</span><span class="p">,</span>   <span class="mf">1.0</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">linear</span><span class="p">),</span>
+<span class="p">]</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><strong>Magnetar Injection Profile:</strong> L(t) = L0 x (1 + t/t0)^(-q) for theta &lt; theta_c</p>
+</div>
+<p><strong>Magnetar with Structured Jet</strong></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">fitter</span> <span class="o">=</span> <span class="n">Fitter</span><span class="p">(</span>
+    <span class="n">z</span><span class="o">=</span><span class="mf">1.58</span><span class="p">,</span> <span class="n">lumi_dist</span><span class="o">=</span><span class="mf">3.364e28</span><span class="p">,</span>
+    <span class="n">jet</span><span class="o">=</span><span class="s2">&quot;powerlaw&quot;</span><span class="p">,</span> <span class="n">medium</span><span class="o">=</span><span class="s2">&quot;ism&quot;</span><span class="p">,</span>
+    <span class="n">magnetar</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="n">params</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="c1"># Power-law jet with magnetar</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;E_iso&quot;</span><span class="p">,</span>   <span class="mf">1e50</span><span class="p">,</span>  <span class="mf">1e54</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">log</span><span class="p">),</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;Gamma0&quot;</span><span class="p">,</span>    <span class="mi">10</span><span class="p">,</span>   <span class="mi">500</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">log</span><span class="p">),</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;theta_c&quot;</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">,</span>   <span class="mf">0.3</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">linear</span><span class="p">),</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;k_e&quot;</span><span class="p">,</span>      <span class="mf">1.5</span><span class="p">,</span>   <span class="mf">3.0</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">linear</span><span class="p">),</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;k_g&quot;</span><span class="p">,</span>      <span class="mf">1.5</span><span class="p">,</span>   <span class="mf">3.0</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">linear</span><span class="p">),</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;theta_v&quot;</span><span class="p">,</span>    <span class="mi">0</span><span class="p">,</span>   <span class="mf">0.5</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">linear</span><span class="p">),</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;n_ism&quot;</span><span class="p">,</span>   <span class="mf">1e-3</span><span class="p">,</span>   <span class="mi">100</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">log</span><span class="p">),</span>
+
+    <span class="c1"># Magnetar parameters</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;L0&quot;</span><span class="p">,</span>      <span class="mf">1e42</span><span class="p">,</span>  <span class="mf">1e48</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">log</span><span class="p">),</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;t0&quot;</span><span class="p">,</span>        <span class="mi">10</span><span class="p">,</span>  <span class="mi">1000</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">log</span><span class="p">),</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;q&quot;</span><span class="p">,</span>        <span class="mf">1.5</span><span class="p">,</span>   <span class="mf">3.0</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">linear</span><span class="p">),</span>
+
+    <span class="c1"># Standard microphysics</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;p&quot;</span><span class="p">,</span>        <span class="mf">2.1</span><span class="p">,</span>   <span class="mf">2.8</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">linear</span><span class="p">),</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;eps_e&quot;</span><span class="p">,</span>   <span class="mf">1e-3</span><span class="p">,</span>   <span class="mf">0.5</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">log</span><span class="p">),</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;eps_B&quot;</span><span class="p">,</span>   <span class="mf">1e-5</span><span class="p">,</span>   <span class="mf">0.1</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">log</span><span class="p">),</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;xi_e&quot;</span><span class="p">,</span>     <span class="mf">0.1</span><span class="p">,</span>   <span class="mf">1.0</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">linear</span><span class="p">),</span>
+<span class="p">]</span>
+</pre></div>
+</div>
+</section>
+<section id="complex-model-combinations">
+<h2>Complex Model Combinations<a class="headerlink" href="#complex-model-combinations" title="Link to this heading"></a></h2>
+<p><strong>Full Physics: Structured Jet + Stratified Medium + Reverse Shock + IC + Magnetar</strong></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">fitter</span> <span class="o">=</span> <span class="n">Fitter</span><span class="p">(</span>
+    <span class="n">z</span><span class="o">=</span><span class="mf">1.58</span><span class="p">,</span> <span class="n">lumi_dist</span><span class="o">=</span><span class="mf">3.364e28</span><span class="p">,</span>
+    <span class="n">jet</span><span class="o">=</span><span class="s2">&quot;gaussian&quot;</span><span class="p">,</span> <span class="n">medium</span><span class="o">=</span><span class="s2">&quot;wind&quot;</span><span class="p">,</span>
+    <span class="n">rvs_shock</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">fwd_ssc</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">rvs_ssc</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">kn</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">magnetar</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="n">params</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="c1"># Gaussian jet</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;E_iso&quot;</span><span class="p">,</span>   <span class="mf">1e50</span><span class="p">,</span>  <span class="mf">1e54</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">log</span><span class="p">),</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;Gamma0&quot;</span><span class="p">,</span>    <span class="mi">50</span><span class="p">,</span>   <span class="mi">500</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">log</span><span class="p">),</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;theta_c&quot;</span><span class="p">,</span> <span class="mf">0.02</span><span class="p">,</span>   <span class="mf">0.2</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">linear</span><span class="p">),</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;theta_v&quot;</span><span class="p">,</span>    <span class="mi">0</span><span class="p">,</span>   <span class="mf">0.5</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">linear</span><span class="p">),</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;tau&quot;</span><span class="p">,</span>        <span class="mi">1</span><span class="p">,</span>   <span class="mi">100</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">log</span><span class="p">),</span>
+
+    <span class="c1"># Stratified medium</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;A_star&quot;</span><span class="p">,</span>  <span class="mf">1e-4</span><span class="p">,</span>   <span class="mf">1.0</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">log</span><span class="p">),</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;n_ism&quot;</span><span class="p">,</span>   <span class="mf">1e-3</span><span class="p">,</span>   <span class="mi">100</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">log</span><span class="p">),</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;n0&quot;</span><span class="p">,</span>      <span class="mf">1e-2</span><span class="p">,</span>    <span class="mi">50</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">log</span><span class="p">),</span>
+
+    <span class="c1"># Magnetar injection</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;L0&quot;</span><span class="p">,</span>      <span class="mf">1e42</span><span class="p">,</span>  <span class="mf">1e48</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">log</span><span class="p">),</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;t0&quot;</span><span class="p">,</span>        <span class="mi">10</span><span class="p">,</span>  <span class="mi">1000</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">log</span><span class="p">),</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;q&quot;</span><span class="p">,</span>        <span class="mf">1.5</span><span class="p">,</span>   <span class="mf">3.0</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">linear</span><span class="p">),</span>
+
+    <span class="c1"># Forward shock microphysics</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;p&quot;</span><span class="p">,</span>        <span class="mf">2.1</span><span class="p">,</span>   <span class="mf">2.8</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">linear</span><span class="p">),</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;eps_e&quot;</span><span class="p">,</span>   <span class="mf">1e-3</span><span class="p">,</span>   <span class="mf">0.5</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">log</span><span class="p">),</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;eps_B&quot;</span><span class="p">,</span>   <span class="mf">1e-5</span><span class="p">,</span>   <span class="mf">0.1</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">log</span><span class="p">),</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;xi_e&quot;</span><span class="p">,</span>     <span class="mf">0.1</span><span class="p">,</span>   <span class="mf">1.0</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">linear</span><span class="p">),</span>
+
+    <span class="c1"># Reverse shock microphysics</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;p_r&quot;</span><span class="p">,</span>      <span class="mf">2.1</span><span class="p">,</span>   <span class="mf">2.8</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">linear</span><span class="p">),</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;eps_e_r&quot;</span><span class="p">,</span> <span class="mf">1e-3</span><span class="p">,</span>   <span class="mf">0.5</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">log</span><span class="p">),</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;eps_B_r&quot;</span><span class="p">,</span> <span class="mf">1e-5</span><span class="p">,</span>   <span class="mf">0.1</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">log</span><span class="p">),</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;xi_e_r&quot;</span><span class="p">,</span>   <span class="mf">0.1</span><span class="p">,</span>   <span class="mf">1.0</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">linear</span><span class="p">),</span>
+<span class="p">]</span>
+</pre></div>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p><strong>Complex Model Considerations:</strong>
+- Use coarser resolution initially: <code class="docutils literal notranslate"><span class="pre">resolution=(0.2,</span> <span class="pre">0.7,</span> <span class="pre">7)</span></code>
+- Increase live points: <code class="docutils literal notranslate"><span class="pre">nlive=1000+</span></code>
+- Lower dlogz for better convergence: <code class="docutils literal notranslate"><span class="pre">dlogz=0.05</span></code>
+- Consider parameter degeneracies in interpretation</p>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="basic_setup.html" class="btn btn-neutral float-left" title="Basic Setup" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="running_and_results.html" class="btn btn-neutral float-right" title="Running MCMC" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, VegasAfterglow Team.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
