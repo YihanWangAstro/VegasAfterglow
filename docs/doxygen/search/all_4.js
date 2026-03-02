@@ -4,7 +4,7 @@ var searchData=
   ['e2_1',['e2',['../namespacecon.html#a81c8cc92a6dc246461e02ea5bedc92d3',1,'con']]],
   ['e3_2',['e3',['../namespacecon.html#a92791fe4a29975daa56e4277cc0f83ac',1,'con']]],
   ['e_5fnu_5fpeak_3',['E_nu_peak',['../structPromptPhotons.html#ab54b4857265596371c0945944d82f735',1,'PromptPhotons']]],
-  ['ejecta_4',['ejecta',['../classEjecta.html#a3ba7d93839cd4a8a3b3f4c5ec5e66efa',1,'Ejecta::Ejecta(BinaryFunc eps_k, BinaryFunc Gamma0, BinaryFunc sigma0=func::zero_2d, TernaryFunc deps_dt=func::zero_3d, TernaryFunc dm_dt=func::zero_3d, bool spreading=false, Real T0=1 *unit::sec) noexcept'],['../classEjecta.html#a240a0ed7fbc307a27d92ffa3d8057107',1,'Ejecta::Ejecta()=default'],['../classForwardShockEqn.html#a352d442954d91c77ea11d72f9a567179',1,'ForwardShockEqn::ejecta'],['../classFRShockEqn.html#a8b35d4a390124d2227998eb712a098d6',1,'FRShockEqn::ejecta'],['../classSimpleShockEqn.html#aa19b1598eb4774da08366de794457a0c',1,'SimpleShockEqn::ejecta'],['../classEjecta.html',1,'Ejecta']]],
+  ['ejecta_4',['ejecta',['../classForwardShockEqn.html#a352d442954d91c77ea11d72f9a567179',1,'ForwardShockEqn::ejecta'],['../classFRShockEqn.html#a8b35d4a390124d2227998eb712a098d6',1,'FRShockEqn::ejecta'],['../classSimpleShockEqn.html#aa19b1598eb4774da08366de794457a0c',1,'SimpleShockEqn::ejecta'],['../classEjecta.html#a3ba7d93839cd4a8a3b3f4c5ec5e66efa',1,'Ejecta::Ejecta(BinaryFunc eps_k, BinaryFunc Gamma0, BinaryFunc sigma0=func::zero_2d, TernaryFunc deps_dt=func::zero_3d, TernaryFunc dm_dt=func::zero_3d, bool spreading=false, Real T0=1 *unit::sec) noexcept'],['../classEjecta.html#a240a0ed7fbc307a27d92ffa3d8057107',1,'Ejecta::Ejecta()=default'],['../classEjecta.html',1,'Ejecta']]],
   ['electrongrid_5',['ElectronGrid',['../inverse-compton_8h.html#aaaf75fefdf774abf61fcab7b65b90bcd',1,'inverse-compton.h']]],
   ['electrons_6',['electrons',['../structICPhoton.html#aea5718d82370d9ae7fcaf2e70654bcf2',1,'ICPhoton']]],
   ['empty_7',['Empty',['../classEmpty.html',1,'']]],
@@ -17,7 +17,7 @@ var searchData=
   ['eps_5fb_14',['eps_B',['../structRadParams.html#a0521194caf6b87cb685fa67fd92204c7',1,'RadParams']]],
   ['eps_5fe_15',['eps_e',['../structRadParams.html#aac4103f83a674a9b9c7cd16e6be1e4a9',1,'RadParams']]],
   ['eps_5fjet_16',['eps_jet',['../structForwardState.html#a32da6a2c763df676d12a9a1c1230186e',1,'ForwardState::eps_jet'],['../structSimpleState.html#a05f3bf8627557a44c61c45c62c6c2500',1,'SimpleState::eps_jet']]],
-  ['eps_5fk_17',['eps_k',['../classTophatJet.html#ae03621dbe455f8bf0280d9abdbffab60',1,'TophatJet::eps_k()'],['../classPowerLawJet.html#ac70c7a3bc6047b714918544cbb521eea',1,'PowerLawJet::eps_k()'],['../classGaussianJet.html#a46d2b792dc7cf7c954223770740bb2dd',1,'GaussianJet::eps_k()'],['../classEjecta.html#a1952705ec5647300cd09255dcfc786cd',1,'Ejecta::eps_k']]],
+  ['eps_5fk_17',['eps_k',['../classGaussianJet.html#a46d2b792dc7cf7c954223770740bb2dd',1,'GaussianJet::eps_k()'],['../classPowerLawJet.html#ac70c7a3bc6047b714918544cbb521eea',1,'PowerLawJet::eps_k()'],['../classTophatJet.html#ae03621dbe455f8bf0280d9abdbffab60',1,'TophatJet::eps_k()'],['../classEjecta.html#a1952705ec5647300cd09255dcfc786cd',1,'Ejecta::eps_k']]],
   ['epsilon_18',['epsilon',['../classCoastingShock.html#ab94699fa87c9feb1fa9da4784b7fe771',1,'CoastingShock']]],
   ['erg_19',['erg',['../namespaceunit.html#a255e82bd3b0ebb273d6663111278d624',1,'unit']]],
   ['error_5fhandling_2eh_20',['error_handling.h',['../error__handling_8h.html',1,'']]],
@@ -28,5 +28,6 @@ var searchData=
   ['eval_5f_25',['eval_',['../structYEvaluator.html#a571deb0c4011ddaa5108e51454d4ea52',1,'YEvaluator::eval_'],['../structSpectrumEvaluator.html#aa76b2826609e6476572a75e18c82806b',1,'SpectrumEvaluator::eval_']]],
   ['eval_5fmid_5fx_26',['eval_mid_x',['../structanonymous__namespace_02inverse-compton_8cpp_03_1_1ComptonSigmaLUT.html#a813560b9f8a1e4bec1b5dadd5f5f3138',1,'anonymous_namespace{inverse-compton.cpp}::ComptonSigmaLUT']]],
   ['evn_27',['evn',['../namespaceevn.html',1,'']]],
-  ['evtohz_28',['eVtoHz',['../utilities_8h.html#a4a0c0709b5020a0346a3c58f7ccc6373',1,'utilities.h']]]
+  ['evtohz_28',['eVtoHz',['../utilities_8h.html#a4a0c0709b5020a0346a3c58f7ccc6373',1,'utilities.h']]],
+  ['extent_29',['extent',['../structSkyImageResult.html#ade9b1cc0411c9113bc9b12aac5a3028f',1,'SkyImageResult::extent'],['../structPySkyImage.html#a102aed4118f744d27392fee8377347e3',1,'PySkyImage::extent']]]
 ];

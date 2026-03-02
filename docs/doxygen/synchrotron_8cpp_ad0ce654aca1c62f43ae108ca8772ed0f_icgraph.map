@@ -1,15 +1,21 @@
 <map id="compute_syn_I_peak" name="compute_syn_I_peak">
-<area shape="rect" id="Node000001" title=" " alt="" coords="415,55,573,80"/>
-<area shape="rect" id="Node000002" href="$synchrotron_8cpp.html#a61ca4dde8d2466a6c4bbeb3ec4911141" title="Populates an existing electron grid with values based on shock parameters." alt="" coords="189,5,367,31"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="424,54,334,33,335,28,425,49"/>
-<area shape="rect" id="Node000003" href="$synchrotron_8cpp.html#a1ae959e558985198d460b76ec3a4f1ef" title="Populates an existing photon grid with values based on shock and electron grid." alt="" coords="193,55,363,80"/>
-<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="401,70,363,70,363,65,401,65"/>
-<area shape="rect" id="Node000004" href="$inverse-compton_8h.html#ac8f967d0ccd3b5b84d387756e0d5d463" title=" " alt="" coords="233,104,323,129"/>
-<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="425,86,324,109,322,104,424,81"/>
-<area shape="rect" id="Node000005" href="$inverse-compton_8h.html#a16fe11ca8fa61082a835d779419f6439" title=" " alt="" coords="20,55,127,80"/>
-<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="220,106,126,83,128,77,221,100"/>
-<area shape="rect" id="Node000006" href="$inverse-compton_8h.html#ac15130b99da7ae7363596cbf6b944efe" title=" " alt="" coords="26,104,121,129"/>
-<area shape="poly" id="edge5_Node000004_Node000006" title=" " alt="" coords="220,119,121,119,121,114,220,114"/>
-<area shape="rect" id="Node000007" href="$inverse-compton_8h.html#a8f645350e4623d03b237428488a88491" title="Applies Thomson cooling to electrons based on photon distribution." alt="" coords="5,153,141,179"/>
-<area shape="poly" id="edge6_Node000004_Node000007" title=" " alt="" coords="221,133,128,156,126,151,220,128"/>
+<area shape="rect" id="Node000001" title=" " alt="" coords="817,55,976,80"/>
+<area shape="rect" id="Node000002" href="$synchrotron_8cpp.html#a61ca4dde8d2466a6c4bbeb3ec4911141" title="Populates an existing electron grid with values based on shock parameters." alt="" coords="592,5,769,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="827,54,737,33,738,28,828,49"/>
+<area shape="rect" id="Node000003" href="$synchrotron_8cpp.html#a1ae959e558985198d460b76ec3a4f1ef" title="Populates an existing photon grid with values based on shock and electron grid." alt="" coords="596,55,765,80"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="804,70,766,70,766,65,804,65"/>
+<area shape="rect" id="Node000004" href="$inverse-compton_8h.html#ac8f967d0ccd3b5b84d387756e0d5d463" title=" " alt="" coords="636,104,725,129"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="828,86,726,109,725,104,826,81"/>
+<area shape="rect" id="Node000005" href="$inverse-compton_8h.html#a16fe11ca8fa61082a835d779419f6439" title=" " alt="" coords="423,55,529,80"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="622,106,529,83,530,77,624,100"/>
+<area shape="rect" id="Node000008" href="$inverse-compton_8h.html#ac15130b99da7ae7363596cbf6b944efe" title=" " alt="" coords="429,104,523,129"/>
+<area shape="poly" id="edge7_Node000004_Node000008" title=" " alt="" coords="623,119,523,119,523,114,623,114"/>
+<area shape="rect" id="Node000009" href="$inverse-compton_8h.html#a6a3797a89f1210d0773a9f20c7898156" title=" " alt="" coords="408,153,544,179"/>
+<area shape="poly" id="edge9_Node000004_Node000009" title=" " alt="" coords="624,133,530,156,529,151,622,128"/>
+<area shape="rect" id="Node000006" href="$classPyModel.html#a982ace37b25f18b6bb32d880739ae88a" title="Compute resolved sky images at multiple observer times and a single frequency." alt="" coords="204,104,360,129"/>
+<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="413,86,334,106,332,101,412,81"/>
+<area shape="rect" id="Node000007" href="$pybind_8cpp.html#a8c92987849ad296e28ec6c07c8e7860b" title=" " alt="" coords="5,104,156,129"/>
+<area shape="poly" id="edge6_Node000006_Node000007" title=" " alt="" coords="190,119,157,119,157,114,190,114"/>
+<area shape="poly" id="edge8_Node000008_Node000006" title=" " alt="" coords="415,119,360,119,360,114,415,114"/>
+<area shape="poly" id="edge10_Node000009_Node000006" title=" " alt="" coords="412,153,332,132,334,127,413,147"/>
 </map>

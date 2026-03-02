@@ -1,6 +1,6 @@
 var classPyModel =
 [
-    [ "PyModel", "classPyModel.html#ac94ef4384baba5bf401f22dbb314194f", null ],
+    [ "PyModel", "classPyModel.html#a3f8898496c32565d48bd8202784dd9df", null ],
     [ "compute_emission", "classPyModel.html#a3debe3d2ed8ff2a53bec469a6711cfa8", null ],
     [ "details", "classPyModel.html#ac47bbdbe6025c4def5d4a65f3ed6be34", null ],
     [ "flux", "classPyModel.html#a51390496a41c22c7c2dbb8838ac7a2d2", null ],
@@ -16,5 +16,6 @@ var classPyModel =
     [ "jet_E_iso", "classPyModel.html#a3f0a0a9887885a5052291118ed7ffcaf", null ],
     [ "jet_Gamma0", "classPyModel.html#a7389149e6ad32d8189fd1d98682e8abd", null ],
     [ "medium", "classPyModel.html#ae1049fe592b9616356f666bcab2a92d3", null ],
-    [ "repr", "classPyModel.html#ad81a9755e3f0c40f9cd36a2a76648906", null ]
+    [ "repr", "classPyModel.html#ad81a9755e3f0c40f9cd36a2a76648906", null ],
+    [ "sky_image", "classPyModel.html#a982ace37b25f18b6bb32d880739ae88a", null ]
 ];

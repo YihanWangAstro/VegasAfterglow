@@ -3,6 +3,7 @@ var classObserver =
     [ "Observer", "classObserver.html#acb0af5014875c6ec7465cccc85e4f39b", null ],
     [ "flux", "classObserver.html#a2588a9ebaec5465d6b5bd08fadadcb99", null ],
     [ "observe", "classObserver.html#a7e6b3154ceb89b3ff90758b874c2016d", null ],
+    [ "sky_image", "classObserver.html#a31570a410e64cffe1e4b9e16af5acef0", null ],
     [ "specific_flux", "classObserver.html#a5fe3b5d16f7cf532e20a6f600485a6b6", null ],
     [ "specific_flux", "classObserver.html#a5350b13ae5a6c7007ba6459923573136", null ],
     [ "specific_flux_series", "classObserver.html#a2497e02305dbf755a7d629311f8e772d", null ],

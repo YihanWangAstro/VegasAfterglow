@@ -5,6 +5,7 @@ var pymodel_8h =
     [ "PyRadiation", "classPyRadiation.html", "classPyRadiation" ],
     [ "Flux", "structFlux.html", "structFlux" ],
     [ "PyFlux", "structPyFlux.html", "structPyFlux" ],
+    [ "PySkyImage", "structPySkyImage.html", "structPySkyImage" ],
     [ "SpectrumEvaluator", "structSpectrumEvaluator.html", "structSpectrumEvaluator" ],
     [ "YEvaluator", "structYEvaluator.html", "structYEvaluator" ],
     [ "SynSpectrumGrid", "structSynSpectrumGrid.html", "structSynSpectrumGrid" ],

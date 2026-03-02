@@ -63,10 +63,10 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "IO_8cpp.html",
-"functions_func.html",
-"mesh_8h.html#ae1622b29b5488dbee3ef9068b9f8c7d4",
-"shock-physics_8h.html#ae6e8e8dc604693f1e05b35c8590312a9",
-"structanonymous__namespace_02inverse-compton_8cpp_03_1_1ComptonSigmaLUT.html#a40469345df5f27ac99d46c38900772b3"
+"functions_e.html",
+"mesh_8h.html#afadc5019976c36be16277dc4dc178a7f",
+"shock-physics_8h.html#aedc1c5385b14986b267d8e27eec05cf7",
+"structSynElectrons.html#aecf574c857a1b1930faf5ae00c4a9af3"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

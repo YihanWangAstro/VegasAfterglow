@@ -1,16 +1,22 @@
 <map id="InverseComptonY::gamma_spectrum" name="InverseComptonY::gamma_spectrum">
-<area shape="rect" id="Node000001" title="Calculates the effective Y parameter for a given electron Lorentz factor." alt="" coords="592,22,785,62"/>
-<area shape="rect" id="Node000002" href="$inverse-compton_8cpp.html#afe30262ca73705fdc9456009f6066fa8" title=" " alt="" coords="189,5,353,31"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="578,38,353,25,354,20,578,33"/>
-<area shape="rect" id="Node000004" href="$inverse-compton_8cpp.html#a1595a8694782ca55acc136e79089e784" title=" " alt="" coords="401,55,544,80"/>
-<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="579,58,545,62,544,56,578,52"/>
-<area shape="rect" id="Node000003" href="$inverse-compton_8h.html#ac15130b99da7ae7363596cbf6b944efe" title=" " alt="" coords="26,5,121,31"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="175,21,121,21,121,15,175,15"/>
-<area shape="rect" id="Node000005" href="$inverse-compton_8h.html#ac8f967d0ccd3b5b84d387756e0d5d463" title=" " alt="" coords="227,55,316,80"/>
-<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="388,70,316,70,316,65,388,65"/>
-<area shape="poly" id="edge6_Node000005_Node000003" title=" " alt="" coords="213,56,120,32,122,27,214,51"/>
-<area shape="rect" id="Node000006" href="$inverse-compton_8h.html#a16fe11ca8fa61082a835d779419f6439" title=" " alt="" coords="20,55,127,80"/>
-<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="213,70,127,70,127,65,213,65"/>
-<area shape="rect" id="Node000007" href="$inverse-compton_8h.html#a8f645350e4623d03b237428488a88491" title="Applies Thomson cooling to electrons based on photon distribution." alt="" coords="5,104,141,129"/>
-<area shape="poly" id="edge7_Node000005_Node000007" title=" " alt="" coords="214,84,126,107,124,101,213,79"/>
+<area shape="rect" id="Node000001" title="Calculates the effective Y parameter for a given electron Lorentz factor." alt="" coords="995,22,1188,62"/>
+<area shape="rect" id="Node000002" href="$inverse-compton_8cpp.html#afe30262ca73705fdc9456009f6066fa8" title=" " alt="" coords="592,5,756,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="981,38,756,25,756,20,981,33"/>
+<area shape="rect" id="Node000006" href="$inverse-compton_8cpp.html#a1595a8694782ca55acc136e79089e784" title=" " alt="" coords="804,55,947,80"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="981,58,947,62,947,56,981,52"/>
+<area shape="rect" id="Node000003" href="$inverse-compton_8h.html#ac15130b99da7ae7363596cbf6b944efe" title=" " alt="" coords="429,5,523,31"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="578,21,523,21,523,15,578,15"/>
+<area shape="rect" id="Node000004" href="$classPyModel.html#a982ace37b25f18b6bb32d880739ae88a" title="Compute resolved sky images at multiple observer times and a single frequency." alt="" coords="204,55,360,80"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="416,36,333,57,332,52,415,31"/>
+<area shape="rect" id="Node000005" href="$pybind_8cpp.html#a8c92987849ad296e28ec6c07c8e7860b" title=" " alt="" coords="5,55,156,80"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="190,70,157,70,157,65,190,65"/>
+<area shape="rect" id="Node000007" href="$inverse-compton_8h.html#ac8f967d0ccd3b5b84d387756e0d5d463" title=" " alt="" coords="629,55,719,80"/>
+<area shape="poly" id="edge6_Node000006_Node000007" title=" " alt="" coords="790,70,719,70,719,65,790,65"/>
+<area shape="poly" id="edge9_Node000007_Node000003" title=" " alt="" coords="616,56,523,32,524,27,617,51"/>
+<area shape="rect" id="Node000008" href="$inverse-compton_8h.html#a16fe11ca8fa61082a835d779419f6439" title=" " alt="" coords="423,55,529,80"/>
+<area shape="poly" id="edge7_Node000007_Node000008" title=" " alt="" coords="616,70,530,70,530,65,616,65"/>
+<area shape="rect" id="Node000009" href="$inverse-compton_8h.html#a6a3797a89f1210d0773a9f20c7898156" title=" " alt="" coords="408,104,544,129"/>
+<area shape="poly" id="edge10_Node000007_Node000009" title=" " alt="" coords="617,84,528,107,527,101,615,79"/>
+<area shape="poly" id="edge8_Node000008_Node000004" title=" " alt="" coords="409,70,360,70,360,65,409,65"/>
+<area shape="poly" id="edge11_Node000009_Node000004" title=" " alt="" coords="412,103,332,83,334,78,413,98"/>
 </map>

@@ -29,6 +29,5 @@ var searchData=
   ['array_20and_20grid_20utilities_26',['Array and Grid Utilities',['../group__Mesh__Utilities.html',1,'']]],
   ['array_5fsize_27',['array_size',['../structSimpleState.html#a45dbd1e3aac5158463b4921844c83819',1,'SimpleState::array_size'],['../structReverseState.html#aa736b47fe33588c1790fea60bf5ea895',1,'ReverseState::array_size'],['../structForwardState.html#ad2a43af97eb49e8694c45fd8fc50f889',1,'ForwardState::array_size']]],
   ['au_28',['au',['../namespaceunit.html#a6cc151b26a5507a0e63f9c9f68adf4d2',1,'unit']]],
-  ['auto_5fgrid_29',['auto_grid',['../mesh_8h.html#a96aa0a78a0de13a52955de3c2ce29ddd',1,'mesh.h']]],
-  ['axisymmetric_30',['axisymmetric',['../structGridConfig.html#a82d9cebc011d812e0875d41e2d41bd35',1,'GridConfig']]]
+  ['auto_5fgrid_29',['auto_grid',['../mesh_8h.html#ad197ba082b4452377f90e3a5bafd0ccc',1,'mesh.h']]]
 ];

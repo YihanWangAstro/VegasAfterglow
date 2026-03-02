@@ -1,12 +1,19 @@
 <map id="generate_syn_photons" name="generate_syn_photons">
-<area shape="rect" id="Node000001" title="Creates and returns a new photon grid based on shock and electron grid." alt="" coords="327,55,496,80"/>
-<area shape="poly" id="edge1_Node000001_Node000001" title=" " alt="" coords="442,44,433,36,411,33,393,35,383,40,381,46,386,53,382,56,376,46,379,37,391,30,411,28,436,32,446,40"/>
-<area shape="rect" id="Node000002" href="$inverse-compton_8h.html#ac8f967d0ccd3b5b84d387756e0d5d463" title=" " alt="" coords="189,55,279,80"/>
-<area shape="poly" id="edge2_Node000001_Node000002" title=" " alt="" coords="313,70,279,70,279,65,313,65"/>
-<area shape="rect" id="Node000003" href="$inverse-compton_8h.html#a16fe11ca8fa61082a835d779419f6439" title=" " alt="" coords="20,5,127,31"/>
-<area shape="poly" id="edge3_Node000002_Node000003" title=" " alt="" coords="178,53,115,33,117,28,180,48"/>
-<area shape="rect" id="Node000004" href="$inverse-compton_8h.html#ac15130b99da7ae7363596cbf6b944efe" title=" " alt="" coords="26,55,121,80"/>
-<area shape="poly" id="edge4_Node000002_Node000004" title=" " alt="" coords="176,70,121,70,121,65,176,65"/>
-<area shape="rect" id="Node000005" href="$inverse-compton_8h.html#a8f645350e4623d03b237428488a88491" title="Applies Thomson cooling to electrons based on photon distribution." alt="" coords="5,104,141,129"/>
-<area shape="poly" id="edge5_Node000002_Node000005" title=" " alt="" coords="180,87,117,106,115,101,178,82"/>
+<area shape="rect" id="Node000001" title="Creates and returns a new photon grid based on shock and electron grid." alt="" coords="729,129,899,155"/>
+<area shape="poly" id="edge1_Node000001_Node000001" title=" " alt="" coords="845,119,836,111,814,108,795,110,786,115,784,120,789,128,785,131,779,121,782,111,794,105,814,103,838,106,848,115"/>
+<area shape="rect" id="Node000002" href="$inverse-compton_8h.html#ac8f967d0ccd3b5b84d387756e0d5d463" title=" " alt="" coords="592,80,681,105"/>
+<area shape="poly" id="edge2_Node000001_Node000002" title=" " alt="" coords="754,128,681,108,682,102,756,123"/>
+<area shape="rect" id="Node000004" href="$classPyModel.html#a982ace37b25f18b6bb32d880739ae88a" title="Compute resolved sky images at multiple observer times and a single frequency." alt="" coords="204,80,360,105"/>
+<area shape="poly" id="edge10_Node000001_Node000004" title=" " alt="" coords="716,155,570,159,488,155,407,145,352,128,306,108,308,103,354,123,409,139,489,150,570,154,716,149"/>
+<area shape="rect" id="Node000003" href="$inverse-compton_8h.html#a16fe11ca8fa61082a835d779419f6439" title=" " alt="" coords="423,5,529,31"/>
+<area shape="poly" id="edge3_Node000002_Node000003" title=" " alt="" coords="602,75,543,44,515,33,517,28,545,40,604,71"/>
+<area shape="rect" id="Node000006" href="$inverse-compton_8h.html#ac15130b99da7ae7363596cbf6b944efe" title=" " alt="" coords="429,55,523,80"/>
+<area shape="poly" id="edge6_Node000002_Node000006" title=" " alt="" coords="578,86,523,77,524,72,579,81"/>
+<area shape="rect" id="Node000007" href="$inverse-compton_8h.html#a6a3797a89f1210d0773a9f20c7898156" title=" " alt="" coords="408,104,544,129"/>
+<area shape="poly" id="edge8_Node000002_Node000007" title=" " alt="" coords="579,104,545,109,544,104,578,99"/>
+<area shape="poly" id="edge4_Node000003_Node000004" title=" " alt="" coords="427,38,409,44,315,82,313,77,407,40,425,33"/>
+<area shape="rect" id="Node000005" href="$pybind_8cpp.html#a8c92987849ad296e28ec6c07c8e7860b" title=" " alt="" coords="5,80,156,105"/>
+<area shape="poly" id="edge5_Node000004_Node000005" title=" " alt="" coords="190,95,157,95,157,90,190,90"/>
+<area shape="poly" id="edge7_Node000006_Node000004" title=" " alt="" coords="415,78,361,85,360,80,415,73"/>
+<area shape="poly" id="edge9_Node000007_Node000004" title=" " alt="" coords="394,109,360,105,361,100,395,104"/>
 </map>

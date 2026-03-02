@@ -1,11 +1,14 @@
 <map id="generate_fwd_shock" name="generate_fwd_shock">
-<area shape="rect" id="Node000001" title="Generates a forward shock model for given coordinates, medium, and jet parameters." alt="" coords="641,31,796,56"/>
-<area shape="rect" id="Node000002" href="$shock__dispatch_8h.html#af0bfd363789cd64adc2bb8fa697f96ae" title="Solve forward shock dynamics with variant dispatch." alt="" coords="461,31,593,56"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="628,46,594,46,594,41,628,41"/>
+<area shape="rect" id="Node000001" title="Generates a forward shock model for given coordinates, medium, and jet parameters." alt="" coords="641,55,796,80"/>
+<area shape="rect" id="Node000002" href="$shock__dispatch_8h.html#a01217bc15eb375582596d9ede064fc63" title="Solve forward shock dynamics with variant dispatch." alt="" coords="461,55,593,80"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="628,70,594,70,594,65,628,65"/>
 <area shape="rect" id="Node000003" href="$classPyModel.html#a3debe3d2ed8ff2a53bec469a6711cfa8" title=" " alt="" coords="204,5,413,31"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="448,37,413,33,414,27,448,32"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="457,54,365,33,366,28,458,49"/>
 <area shape="rect" id="Node000004" href="$classPyModel.html#ac47bbdbe6025c4def5d4a65f3ed6be34" title="Get comprehensive details of the shock evolution and model configuration." alt="" coords="243,55,374,80"/>
-<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="448,55,374,63,374,58,447,49"/>
-<area shape="rect" id="Node000005" href="$pybind_8cpp.html#a8c92987849ad296e28ec6c07c8e7860b" title=" " alt="" coords="5,55,156,80"/>
-<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="229,70,156,70,156,65,229,65"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="448,70,374,70,374,65,448,65"/>
+<area shape="rect" id="Node000006" href="$classPyModel.html#a982ace37b25f18b6bb32d880739ae88a" title="Compute resolved sky images at multiple observer times and a single frequency." alt="" coords="231,104,387,129"/>
+<area shape="poly" id="edge5_Node000002_Node000006" title=" " alt="" coords="458,86,366,107,365,101,457,80"/>
+<area shape="rect" id="Node000005" href="$pybind_8cpp.html#a8c92987849ad296e28ec6c07c8e7860b" title=" " alt="" coords="5,80,156,105"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="229,79,156,87,156,82,229,73"/>
+<area shape="poly" id="edge6_Node000006_Node000005" title=" " alt="" coords="216,110,156,103,157,98,217,104"/>
 </map>

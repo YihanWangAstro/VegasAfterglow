@@ -9,5 +9,6 @@ var searchData=
   ['pymodel_6',['PyModel',['../classPyModel.html',1,'']]],
   ['pyobserver_7',['PyObserver',['../classPyObserver.html',1,'']]],
   ['pyradiation_8',['PyRadiation',['../classPyRadiation.html',1,'']]],
-  ['pyshock_9',['PyShock',['../structPyShock.html',1,'']]]
+  ['pyshock_9',['PyShock',['../structPyShock.html',1,'']]],
+  ['pyskyimage_10',['PySkyImage',['../structPySkyImage.html',1,'']]]
 ];

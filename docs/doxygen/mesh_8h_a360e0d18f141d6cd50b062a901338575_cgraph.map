@@ -1,9 +1,11 @@
 <map id="adaptive_phi_grid" name="adaptive_phi_grid">
-<area shape="rect" id="Node000001" title=" " alt="" coords="5,96,144,121"/>
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,121,144,146"/>
 <area shape="rect" id="Node000002" href="$mesh_8h.html#a6f8fa2784bc01569368e72d4020bb9b0" title=" " alt="" coords="192,46,363,72"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="127,93,211,73,212,78,128,98"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="109,118,228,74,230,79,111,123"/>
 <area shape="rect" id="Node000003" href="$pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89" title=" " alt="" coords="509,46,664,72"/>
-<area shape="poly" id="edge7_Node000001_Node000003" title=" " alt="" coords="144,114,211,118,291,120,376,117,461,106,506,93,548,76,550,81,508,98,462,111,377,122,291,125,211,124,144,119"/>
+<area shape="poly" id="edge7_Node000001_Node000003" title=" " alt="" coords="144,133,291,129,376,121,461,106,506,92,546,75,549,80,508,97,462,111,377,126,291,134,144,138"/>
+<area shape="rect" id="Node000006" href="$mesh_8h.html#ad55adb5281be8cbd065c18ba187846e1" title=" " alt="" coords="212,172,343,197"/>
+<area shape="poly" id="edge8_Node000001_Node000006" title=" " alt="" coords="127,144,213,166,212,171,126,149"/>
 <area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="299,44,330,28,371,14,416,4,462,6,509,20,551,38,548,43,507,25,461,11,416,10,372,19,333,33,302,49"/>
 <area shape="rect" id="Node000004" href="$utilities_8h.html#ab0cbe75cc4de84810290ad6f3075e491" title="Returns the value of a single parameter." alt="" coords="411,21,461,46"/>
 <area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="357,44,397,37,398,43,358,49"/>

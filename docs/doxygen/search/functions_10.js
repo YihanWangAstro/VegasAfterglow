@@ -14,11 +14,14 @@ var searchData=
   ['shock_11',['shock',['../classShock.html#ac4cbdd70892414adbdb7fc01071e49e0',1,'Shock::Shock(size_t phi_size, size_t theta_size, size_t t_size, RadParams const &amp;rad_params)'],['../classShock.html#a0bdc1bfb873fe39ba4d4fcbded4666f2',1,'Shock::Shock() noexcept=default']]],
   ['simpleshockeqn_12',['SimpleShockEqn',['../classSimpleShockEqn.html#a2ad30f482d445461e6d230c052205763',1,'SimpleShockEqn']]],
   ['simpson_5flogspace_13',['simpson_logspace',['../shock-physics_8h.html#a4eecaf485f5ac3854b4fceab00516fd4',1,'shock-physics.h']]],
-  ['solve_5ffwd_5fshock_14',['solve_fwd_shock',['../shock__dispatch_8h.html#af0bfd363789cd64adc2bb8fa697f96ae',1,'shock_dispatch.h']]],
-  ['solve_5fshock_5fpair_15',['solve_shock_pair',['../shock__dispatch_8h.html#a943fd075e455647c377f134a2bd02f5d',1,'shock_dispatch.h']]],
-  ['specific_5fflux_16',['specific_flux',['../classObserver.html#a5fe3b5d16f7cf532e20a6f600485a6b6',1,'Observer::specific_flux(Array const &amp;t_obs, Array const &amp;nu_obs, PhotonGrid &amp;photons)'],['../classObserver.html#a5350b13ae5a6c7007ba6459923573136',1,'Observer::specific_flux(Array const &amp;t_obs, Real nu_obs, PhotonGrid &amp;photons)']]],
-  ['specific_5fflux_5fseries_17',['specific_flux_series',['../classObserver.html#a2497e02305dbf755a7d629311f8e772d',1,'Observer']]],
-  ['spectra_18',['spectra',['../classObserver.html#a18a5b8ffa6dad54050d7de094c24094b',1,'Observer']]],
-  ['spectrum_19',['spectrum',['../classObserver.html#a096a45f3fcc7cd273c2bc89199ed74a2',1,'Observer']]],
-  ['stepfunc_20',['stepFunc',['../utilities_8h.html#a2a73f81f3c396f91aa3ca99956a5e480',1,'utilities.h']]]
+  ['sky_5fimage_14',['sky_image',['../classObserver.html#a31570a410e64cffe1e4b9e16af5acef0',1,'Observer::sky_image()'],['../classPyModel.html#a982ace37b25f18b6bb32d880739ae88a',1,'PyModel::sky_image()']]],
+  ['solve_5ffwd_5fshock_15',['solve_fwd_shock',['../shock__dispatch_8h.html#a01217bc15eb375582596d9ede064fc63',1,'shock_dispatch.h']]],
+  ['solve_5fshock_5fpair_16',['solve_shock_pair',['../shock__dispatch_8h.html#ad74e63e30c33c4742b55bcf90330f543',1,'shock_dispatch.h']]],
+  ['specific_5fflux_17',['specific_flux',['../classObserver.html#a5fe3b5d16f7cf532e20a6f600485a6b6',1,'Observer::specific_flux(Array const &amp;t_obs, Array const &amp;nu_obs, PhotonGrid &amp;photons)'],['../classObserver.html#a5350b13ae5a6c7007ba6459923573136',1,'Observer::specific_flux(Array const &amp;t_obs, Real nu_obs, PhotonGrid &amp;photons)']]],
+  ['specific_5fflux_5fseries_18',['specific_flux_series',['../classObserver.html#a2497e02305dbf755a7d629311f8e772d',1,'Observer']]],
+  ['spectra_19',['spectra',['../classObserver.html#a18a5b8ffa6dad54050d7de094c24094b',1,'Observer']]],
+  ['spectrum_20',['spectrum',['../classObserver.html#a096a45f3fcc7cd273c2bc89199ed74a2',1,'Observer']]],
+  ['splatgrid_21',['splatgrid',['../structSplatGrid.html#a1a81931505072b70642612e39e1690b1',1,'SplatGrid::SplatGrid(size_t n_phi, size_t n_theta)'],['../structSplatGrid.html#a5013a35f4afaf35f8bb9ad70e0dc2fef',1,'SplatGrid::SplatGrid()=default']]],
+  ['stepfunc_22',['stepFunc',['../utilities_8h.html#a2a73f81f3c396f91aa3ca99956a5e480',1,'utilities.h']]],
+  ['structure_5fweight_23',['structure_weight',['../mesh_8h.html#ad55adb5281be8cbd065c18ba187846e1',1,'mesh.h']]]
 ];

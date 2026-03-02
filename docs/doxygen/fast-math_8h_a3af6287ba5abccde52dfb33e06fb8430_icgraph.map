@@ -1,67 +1,73 @@
 <map id="fast_log2" name="fast_log2">
-<area shape="rect" id="Node000001" title="Fast approximation of the base&#45;2 logarithm." alt="" coords="1216,306,1299,331"/>
-<area shape="rect" id="Node000002" href="$structBrokenPowerLaw.html#a66b7bd352329cce7a3cc98bab9e68954" title=" " alt="" coords="967,120,1131,160"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="1245,294,1216,234,1194,202,1166,175,1130,157,1133,152,1170,171,1198,199,1221,231,1250,292"/>
-<area shape="rect" id="Node000003" href="$structPowerLawSyn.html#a79458bc4bd066014305a2a08d8554bd9" title="Updates cached calculation constants used for efficiently computing synchrotron spectra." alt="" coords="699,25,851,50"/>
-<area shape="poly" id="edge3_Node000001_Node000003" title=" " alt="" coords="1250,293,1243,252,1227,202,1203,152,1186,129,1167,110,1123,95,1040,78,851,50,852,44,1041,73,1124,90,1169,106,1190,126,1207,149,1232,200,1248,250,1256,292"/>
-<area shape="rect" id="Node000004" href="$structSmoothPowerLawSyn.html#a73f2f4825bc28a61f521e99408348d75" title="Updates cached calculation constants used for efficiently computing synchrotron spectra." alt="" coords="964,235,1135,275"/>
-<area shape="poly" id="edge4_Node000001_Node000004" title=" " alt="" coords="1209,304,1167,289,1127,277,1129,272,1169,284,1211,299"/>
-<area shape="rect" id="Node000005" href="$structPowerLawSyn.html#ac31ba1f874e1af2b561deefc363e3a7a" title="Calculates the base&#45;2 logarithm of comoving synchrotron specific intensity at a given frequency." alt="" coords="961,299,1138,339"/>
-<area shape="poly" id="edge5_Node000001_Node000005" title=" " alt="" coords="1202,321,1138,321,1138,316,1202,316"/>
-<area shape="rect" id="Node000006" href="$structSmoothPowerLawSyn.html#a470ae9ff819bdda137ad80d21abb9cf8" title="Calculates the base&#45;2 logarithm of comoving synchrotron specific intensity at a given frequency." alt="" coords="964,363,1135,403"/>
-<area shape="poly" id="edge6_Node000001_Node000006" title=" " alt="" coords="1211,339,1169,353,1129,365,1127,360,1167,348,1209,334"/>
-<area shape="rect" id="Node000007" href="$structBrokenPowerLaw.html#a49edae4ccefeb4c24304e6e849068048" title=" " alt="" coords="965,427,1133,453"/>
-<area shape="poly" id="edge7_Node000001_Node000007" title=" " alt="" coords="1243,344,1212,382,1192,401,1169,417,1135,431,1133,426,1167,412,1188,397,1208,379,1238,341"/>
-<area shape="rect" id="Node000008" href="$structanonymous__namespace_02inverse-compton_8cpp_03_1_1ComptonSigmaLUT.html#a813560b9f8a1e4bec1b5dadd5f5f3138" title=" " alt="" coords="931,477,1168,531"/>
-<area shape="poly" id="edge8_Node000001_Node000008" title=" " alt="" coords="1249,346,1220,407,1198,439,1170,467,1153,479,1150,474,1166,463,1193,436,1216,404,1245,343"/>
-<area shape="rect" id="Node000009" href="$fast-math_8h.html#a15db3978741a5dc40e64dbb2155314ed" title="Fast approximation of the natural logarithm." alt="" coords="1012,555,1087,581"/>
-<area shape="poly" id="edge9_Node000001_Node000009" title=" " alt="" coords="1256,346,1249,390,1234,444,1209,499,1191,524,1170,546,1151,558,1129,566,1087,572,1086,567,1128,561,1148,553,1166,542,1187,521,1204,497,1229,442,1244,389,1251,345"/>
-<area shape="rect" id="Node000010" href="$fast-math_8h.html#ade5247172c3a02cc1ba5c43976ab76d2" title="Fast approximation of a raised to the power of b." alt="" coords="1009,185,1090,210"/>
-<area shape="poly" id="edge10_Node000001_Node000010" title=" " alt="" coords="1238,296,1208,259,1188,240,1167,225,1128,210,1090,202,1091,197,1130,205,1169,220,1192,236,1212,255,1243,293"/>
-<area shape="rect" id="Node000027" href="$structBrokenPowerLaw.html#a024a5c963631cbdab6253f6f7bc5f35f" title=" " alt="" coords="967,5,1132,45"/>
-<area shape="poly" id="edge31_Node000001_Node000027" title=" " alt="" coords="1252,292,1245,244,1231,183,1206,120,1188,91,1166,66,1150,53,1131,44,1134,39,1153,49,1170,62,1192,88,1210,118,1236,181,1251,243,1257,291"/>
-<area shape="rect" id="Node000028" href="$fast-math_8h.html#abcf31622767f511a4b232211ac7d51f5" title="Computes log2(1+2^x)" alt="" coords="995,605,1103,630"/>
-<area shape="poly" id="edge33_Node000001_Node000028" title=" " alt="" coords="1259,345,1254,398,1241,466,1230,501,1215,536,1195,568,1170,595,1139,613,1104,620,1103,615,1137,608,1166,591,1191,564,1210,533,1225,499,1236,464,1249,397,1253,345"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="959,118,929,104,915,93,905,83,896,73,881,64,851,52,853,47,884,59,899,69,909,79,918,89,932,99,962,113"/>
-<area shape="poly" id="edge11_Node000010_Node000003" title=" " alt="" coords="994,199,960,191,929,174,916,160,909,146,904,117,899,89,893,76,881,63,850,47,853,43,884,59,897,73,904,87,909,116,914,144,921,157,932,170,962,186,995,194"/>
-<area shape="rect" id="Node000011" href="$shock-physics_8h.html#af8c6e4984af9f6addc7959f6cd23bde6" title="Computes the radiative efficiency based on the radiative constant, comoving time, Lorentz factor,..." alt="" coords="668,123,883,149"/>
-<area shape="poly" id="edge12_Node000010_Node000011" title=" " alt="" coords="994,189,930,175,829,151,831,146,931,169,995,183"/>
-<area shape="rect" id="Node000012" href="$synchrotron_8cpp.html#a0dd9222be02ad23c2ec055432df37eb4" title=" " alt="" coords="685,222,866,247"/>
-<area shape="poly" id="edge13_Node000010_Node000012" title=" " alt="" coords="996,207,866,225,866,220,995,202"/>
-<area shape="rect" id="Node000018" href="$synchrotron_8cpp.html#a018aa6d904c7b40ecbcefd494a4b60e4" title=" " alt="" coords="698,173,853,198"/>
-<area shape="poly" id="edge19_Node000010_Node000018" title=" " alt="" coords="995,198,853,191,853,186,995,192"/>
-<area shape="rect" id="Node000019" href="$classPowerLawJet.html#ac70c7a3bc6047b714918544cbb521eea" title="Energy per solid angle as a function of phi and theta, with power&#45;law falloff." alt="" coords="700,321,851,346"/>
-<area shape="poly" id="edge21_Node000010_Node000019" title=" " alt="" coords="995,202,962,210,932,225,916,245,909,267,902,290,884,311,852,327,850,323,881,307,898,287,904,265,911,242,929,221,960,205,994,197"/>
-<area shape="rect" id="Node000020" href="$inverse-compton_8h.html#ad7736d3269071d2ceaffcc56fa2fc71c" title=" " alt="" coords="706,271,845,297"/>
-<area shape="poly" id="edge22_Node000010_Node000020" title=" " alt="" coords="996,206,964,214,932,225,918,234,909,243,899,253,884,262,846,276,844,271,882,258,895,249,905,239,915,230,929,220,962,208,995,201"/>
-<area shape="rect" id="Node000024" href="$classPowerLawJet.html#a4f9900bbeabe5fc504e34d88941e525e" title="Initial Lorentz factor as a function of phi and theta, with power&#45;law falloff." alt="" coords="689,370,862,395"/>
-<area shape="poly" id="edge28_Node000010_Node000024" title=" " alt="" coords="995,200,962,208,932,225,919,240,912,256,909,291,906,326,899,344,884,361,864,374,861,369,881,357,894,341,901,325,904,290,907,255,914,238,929,221,960,203,994,195"/>
-<area shape="rect" id="Node000025" href="$structInverseComptonY.html#a2e2ffd78dd60c7da21a052b443bd51b3" title="Initializes an InverseComptonY object with frequency thresholds, magnetic field and Y parameter." alt="" coords="680,420,871,460"/>
-<area shape="poly" id="edge29_Node000010_Node000025" title=" " alt="" coords="995,200,962,207,932,225,916,246,908,268,907,291,908,314,910,338,909,362,902,386,885,410,869,422,866,418,881,406,897,384,904,361,905,338,903,315,901,291,903,267,911,244,929,221,960,202,994,194"/>
-<area shape="rect" id="Node000026" href="$jet_8h.html#a6fac8621479aea05abf6fef54a4df256" title="Creates a Lorentz factor distribution using the Liang &amp; Ghirlanda (2010) prescription." alt="" coords="699,74,851,99"/>
-<area shape="poly" id="edge30_Node000010_Node000026" title=" " alt="" coords="994,196,961,189,929,174,913,159,904,143,896,128,881,114,851,100,853,96,884,110,900,125,909,141,917,156,932,170,963,183,996,191"/>
-<area shape="rect" id="Node000013" href="$synchrotron_8cpp.html#a61ca4dde8d2466a6c4bbeb3ec4911141" title="Populates an existing electron grid with values based on shock parameters." alt="" coords="443,171,620,197"/>
-<area shape="poly" id="edge14_Node000012_Node000013" title=" " alt="" coords="699,222,593,199,594,194,700,216"/>
-<area shape="rect" id="Node000014" href="$inverse-compton_8h.html#ac8f967d0ccd3b5b84d387756e0d5d463" title=" " alt="" coords="247,222,337,247"/>
-<area shape="poly" id="edge15_Node000012_Node000014" title=" " alt="" coords="671,237,337,237,337,232,671,232"/>
-<area shape="rect" id="Node000015" href="$inverse-compton_8h.html#a16fe11ca8fa61082a835d779419f6439" title=" " alt="" coords="20,222,127,247"/>
-<area shape="poly" id="edge16_Node000014_Node000015" title=" " alt="" coords="233,237,127,237,127,232,233,232"/>
-<area shape="rect" id="Node000016" href="$inverse-compton_8h.html#ac15130b99da7ae7363596cbf6b944efe" title=" " alt="" coords="26,321,121,346"/>
-<area shape="poly" id="edge17_Node000014_Node000016" title=" " alt="" coords="235,245,191,262,176,274,167,286,158,299,143,312,120,323,118,318,140,307,154,295,163,283,172,270,188,258,233,240"/>
-<area shape="rect" id="Node000017" href="$inverse-compton_8h.html#a8f645350e4623d03b237428488a88491" title="Applies Thomson cooling to electrons based on photon distribution." alt="" coords="5,271,141,297"/>
-<area shape="poly" id="edge18_Node000014_Node000017" title=" " alt="" coords="234,250,131,274,130,269,233,245"/>
-<area shape="poly" id="edge20_Node000018_Node000013" title=" " alt="" coords="684,188,620,187,620,182,684,182"/>
-<area shape="rect" id="Node000021" href="$inverse-compton_8h.html#ac0230d2cf3ab151b3107eaf020bd07be" title=" " alt="" coords="451,273,612,298"/>
-<area shape="poly" id="edge23_Node000020_Node000021" title=" " alt="" coords="692,287,612,288,612,282,692,282"/>
-<area shape="rect" id="Node000022" href="$inverse-compton_8cpp.html#afe30262ca73705fdc9456009f6066fa8" title=" " alt="" coords="210,321,374,346"/>
-<area shape="poly" id="edge24_Node000021_Node000022" title=" " alt="" coords="454,303,357,323,355,318,453,298"/>
-<area shape="rect" id="Node000023" href="$inverse-compton_8cpp.html#ab7063c938c6e524260876e8ec068ba1b" title=" " alt="" coords="189,271,395,297"/>
-<area shape="poly" id="edge26_Node000021_Node000023" title=" " alt="" coords="437,287,395,287,395,282,437,282"/>
-<area shape="poly" id="edge25_Node000022_Node000016" title=" " alt="" coords="196,336,121,336,121,331,196,331"/>
-<area shape="poly" id="edge27_Node000023_Node000017" title=" " alt="" coords="175,287,142,287,142,281,175,281"/>
-<area shape="poly" id="edge32_Node000027_Node000003" title=" " alt="" coords="953,32,852,37,851,31,953,27"/>
-<area shape="rect" id="Node000029" href="$fast-math_8h.html#ac1ddb9381fb58d1252263e82e11225d8" title="Smooth broken power&#45;law transition in log2 space." alt="" coords="683,629,868,654"/>
-<area shape="poly" id="edge34_Node000028_Node000029" title=" " alt="" coords="982,626,869,636,868,631,981,621"/>
-<area shape="rect" id="Node000030" href="$smooth-power-law-syn_8cpp.html#a4c114da5a52b2034dddfca4646cc1c02" title=" " alt="" coords="707,579,844,605"/>
-<area shape="poly" id="edge35_Node000028_Node000030" title=" " alt="" coords="981,614,844,601,845,596,982,608"/>
+<area shape="rect" id="Node000001" title="Fast approximation of the base&#45;2 logarithm." alt="" coords="1619,306,1701,331"/>
+<area shape="rect" id="Node000002" href="$structBrokenPowerLaw.html#a66b7bd352329cce7a3cc98bab9e68954" title=" " alt="" coords="1370,120,1534,160"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="1648,294,1619,234,1597,202,1569,175,1533,157,1535,152,1572,171,1601,199,1623,231,1652,292"/>
+<area shape="rect" id="Node000003" href="$structPowerLawSyn.html#a79458bc4bd066014305a2a08d8554bd9" title="Updates cached calculation constants used for efficiently computing synchrotron spectra." alt="" coords="1102,25,1254,50"/>
+<area shape="poly" id="edge3_Node000001_Node000003" title=" " alt="" coords="1653,293,1645,252,1630,202,1605,152,1589,129,1569,110,1525,95,1443,78,1254,50,1255,44,1444,73,1527,90,1572,106,1593,126,1610,149,1635,200,1650,250,1658,292"/>
+<area shape="rect" id="Node000004" href="$structSmoothPowerLawSyn.html#a73f2f4825bc28a61f521e99408348d75" title="Updates cached calculation constants used for efficiently computing synchrotron spectra." alt="" coords="1367,235,1537,275"/>
+<area shape="poly" id="edge4_Node000001_Node000004" title=" " alt="" coords="1612,304,1570,289,1530,277,1531,272,1571,284,1613,299"/>
+<area shape="rect" id="Node000005" href="$structPowerLawSyn.html#ac31ba1f874e1af2b561deefc363e3a7a" title="Calculates the base&#45;2 logarithm of comoving synchrotron specific intensity at a given frequency." alt="" coords="1363,299,1541,339"/>
+<area shape="poly" id="edge5_Node000001_Node000005" title=" " alt="" coords="1605,321,1541,321,1541,316,1605,316"/>
+<area shape="rect" id="Node000006" href="$structSmoothPowerLawSyn.html#a470ae9ff819bdda137ad80d21abb9cf8" title="Calculates the base&#45;2 logarithm of comoving synchrotron specific intensity at a given frequency." alt="" coords="1367,363,1537,403"/>
+<area shape="poly" id="edge6_Node000001_Node000006" title=" " alt="" coords="1613,339,1571,353,1531,365,1530,360,1570,348,1612,334"/>
+<area shape="rect" id="Node000007" href="$structBrokenPowerLaw.html#a49edae4ccefeb4c24304e6e849068048" title=" " alt="" coords="1368,427,1536,453"/>
+<area shape="poly" id="edge7_Node000001_Node000007" title=" " alt="" coords="1645,344,1615,382,1594,401,1572,417,1538,431,1535,426,1569,412,1591,397,1611,379,1641,341"/>
+<area shape="rect" id="Node000008" href="$structanonymous__namespace_02inverse-compton_8cpp_03_1_1ComptonSigmaLUT.html#a813560b9f8a1e4bec1b5dadd5f5f3138" title=" " alt="" coords="1333,477,1571,531"/>
+<area shape="poly" id="edge8_Node000001_Node000008" title=" " alt="" coords="1652,346,1623,407,1600,439,1572,467,1555,479,1552,474,1569,463,1596,436,1618,404,1647,343"/>
+<area shape="rect" id="Node000009" href="$fast-math_8h.html#a15db3978741a5dc40e64dbb2155314ed" title="Fast approximation of the natural logarithm." alt="" coords="1415,555,1489,581"/>
+<area shape="poly" id="edge9_Node000001_Node000009" title=" " alt="" coords="1659,346,1652,390,1637,444,1611,499,1594,524,1572,546,1553,558,1532,566,1490,572,1489,567,1531,561,1551,553,1569,542,1590,521,1607,497,1632,442,1647,389,1654,345"/>
+<area shape="rect" id="Node000010" href="$fast-math_8h.html#ade5247172c3a02cc1ba5c43976ab76d2" title="Fast approximation of a raised to the power of b." alt="" coords="1411,185,1493,210"/>
+<area shape="poly" id="edge10_Node000001_Node000010" title=" " alt="" coords="1641,296,1611,259,1591,240,1569,225,1531,210,1492,202,1493,197,1533,205,1572,220,1594,236,1615,255,1645,293"/>
+<area shape="rect" id="Node000029" href="$structBrokenPowerLaw.html#a024a5c963631cbdab6253f6f7bc5f35f" title=" " alt="" coords="1369,5,1535,45"/>
+<area shape="poly" id="edge35_Node000001_Node000029" title=" " alt="" coords="1654,292,1648,244,1634,183,1608,120,1590,91,1569,66,1553,53,1534,44,1536,39,1556,49,1573,62,1595,88,1613,118,1639,181,1653,243,1660,291"/>
+<area shape="rect" id="Node000030" href="$fast-math_8h.html#abcf31622767f511a4b232211ac7d51f5" title="Computes log2(1+2^x)" alt="" coords="1398,605,1506,630"/>
+<area shape="poly" id="edge37_Node000001_Node000030" title=" " alt="" coords="1661,345,1657,398,1644,466,1633,501,1618,536,1598,568,1572,595,1541,613,1507,620,1506,615,1539,608,1569,591,1593,564,1613,533,1628,499,1639,464,1652,397,1656,345"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="1362,118,1332,104,1317,93,1308,83,1298,73,1284,64,1253,52,1255,47,1287,59,1302,69,1312,79,1321,89,1335,99,1364,113"/>
+<area shape="poly" id="edge11_Node000010_Node000003" title=" " alt="" coords="1396,199,1363,191,1332,174,1319,160,1312,146,1307,117,1302,89,1295,76,1284,63,1253,47,1255,43,1287,59,1300,73,1307,87,1312,116,1317,144,1323,157,1335,170,1365,186,1398,194"/>
+<area shape="rect" id="Node000011" href="$shock-physics_8h.html#af8c6e4984af9f6addc7959f6cd23bde6" title="Computes the radiative efficiency based on the radiative constant, comoving time, Lorentz factor,..." alt="" coords="1071,123,1285,149"/>
+<area shape="poly" id="edge12_Node000010_Node000011" title=" " alt="" coords="1397,189,1333,175,1232,151,1233,146,1334,169,1398,183"/>
+<area shape="rect" id="Node000012" href="$synchrotron_8cpp.html#a0dd9222be02ad23c2ec055432df37eb4" title=" " alt="" coords="1087,222,1269,247"/>
+<area shape="poly" id="edge13_Node000010_Node000012" title=" " alt="" coords="1398,207,1269,225,1268,220,1397,202"/>
+<area shape="rect" id="Node000020" href="$synchrotron_8cpp.html#a018aa6d904c7b40ecbcefd494a4b60e4" title=" " alt="" coords="1101,173,1255,198"/>
+<area shape="poly" id="edge23_Node000010_Node000020" title=" " alt="" coords="1398,198,1256,191,1256,186,1398,192"/>
+<area shape="rect" id="Node000021" href="$classPowerLawJet.html#ac70c7a3bc6047b714918544cbb521eea" title="Energy per solid angle as a function of phi and theta, with power&#45;law falloff." alt="" coords="1103,321,1253,346"/>
+<area shape="poly" id="edge25_Node000010_Node000021" title=" " alt="" coords="1398,202,1365,210,1335,225,1318,245,1312,267,1305,290,1287,311,1255,327,1252,323,1284,307,1300,287,1307,265,1314,242,1332,221,1363,205,1397,197"/>
+<area shape="rect" id="Node000022" href="$inverse-compton_8h.html#ad7736d3269071d2ceaffcc56fa2fc71c" title=" " alt="" coords="1109,271,1247,297"/>
+<area shape="poly" id="edge26_Node000010_Node000022" title=" " alt="" coords="1399,206,1366,214,1335,225,1321,234,1311,243,1301,253,1286,262,1248,276,1247,271,1284,258,1298,249,1307,239,1317,230,1332,220,1365,208,1397,201"/>
+<area shape="rect" id="Node000026" href="$classPowerLawJet.html#a4f9900bbeabe5fc504e34d88941e525e" title="Initial Lorentz factor as a function of phi and theta, with power&#45;law falloff." alt="" coords="1091,370,1265,395"/>
+<area shape="poly" id="edge32_Node000010_Node000026" title=" " alt="" coords="1398,200,1365,208,1335,225,1322,240,1315,256,1312,291,1309,326,1301,344,1287,361,1266,374,1263,369,1284,357,1297,341,1304,325,1307,290,1310,255,1317,238,1332,221,1363,203,1397,195"/>
+<area shape="rect" id="Node000027" href="$structInverseComptonY.html#a2e2ffd78dd60c7da21a052b443bd51b3" title="Initializes an InverseComptonY object with frequency thresholds, magnetic field and Y parameter." alt="" coords="1083,420,1273,460"/>
+<area shape="poly" id="edge33_Node000010_Node000027" title=" " alt="" coords="1398,200,1364,207,1335,225,1318,246,1311,268,1309,291,1311,314,1313,338,1312,362,1304,386,1287,410,1272,422,1269,418,1283,406,1299,384,1306,361,1308,338,1306,315,1304,291,1306,267,1314,244,1332,221,1362,202,1397,194"/>
+<area shape="rect" id="Node000028" href="$jet_8h.html#a6fac8621479aea05abf6fef54a4df256" title="Creates a Lorentz factor distribution using the Liang &amp; Ghirlanda (2010) prescription." alt="" coords="1102,74,1254,99"/>
+<area shape="poly" id="edge34_Node000010_Node000028" title=" " alt="" coords="1397,196,1364,189,1332,174,1316,159,1307,143,1299,128,1284,114,1253,100,1255,96,1287,110,1303,125,1312,141,1320,156,1335,170,1366,183,1398,191"/>
+<area shape="rect" id="Node000013" href="$synchrotron_8cpp.html#a61ca4dde8d2466a6c4bbeb3ec4911141" title="Populates an existing electron grid with values based on shock parameters." alt="" coords="845,171,1023,197"/>
+<area shape="poly" id="edge14_Node000012_Node000013" title=" " alt="" coords="1102,222,995,199,996,194,1103,216"/>
+<area shape="rect" id="Node000014" href="$inverse-compton_8h.html#ac8f967d0ccd3b5b84d387756e0d5d463" title=" " alt="" coords="650,222,739,247"/>
+<area shape="poly" id="edge15_Node000012_Node000014" title=" " alt="" coords="1073,237,740,237,740,232,1073,232"/>
+<area shape="rect" id="Node000015" href="$inverse-compton_8h.html#a16fe11ca8fa61082a835d779419f6439" title=" " alt="" coords="423,222,529,247"/>
+<area shape="poly" id="edge16_Node000014_Node000015" title=" " alt="" coords="636,237,529,237,529,232,636,232"/>
+<area shape="rect" id="Node000018" href="$inverse-compton_8h.html#ac15130b99da7ae7363596cbf6b944efe" title=" " alt="" coords="429,321,523,346"/>
+<area shape="poly" id="edge19_Node000014_Node000018" title=" " alt="" coords="638,245,593,262,579,274,570,286,561,299,545,312,523,323,521,318,543,307,557,295,566,283,575,270,591,258,636,240"/>
+<area shape="rect" id="Node000019" href="$inverse-compton_8h.html#a6a3797a89f1210d0773a9f20c7898156" title=" " alt="" coords="408,271,544,297"/>
+<area shape="poly" id="edge21_Node000014_Node000019" title=" " alt="" coords="637,250,534,274,532,269,636,245"/>
+<area shape="rect" id="Node000016" href="$classPyModel.html#a982ace37b25f18b6bb32d880739ae88a" title="Compute resolved sky images at multiple observer times and a single frequency." alt="" coords="204,271,360,297"/>
+<area shape="poly" id="edge17_Node000015_Node000016" title=" " alt="" coords="413,253,334,274,332,269,412,248"/>
+<area shape="rect" id="Node000017" href="$pybind_8cpp.html#a8c92987849ad296e28ec6c07c8e7860b" title=" " alt="" coords="5,271,156,297"/>
+<area shape="poly" id="edge18_Node000016_Node000017" title=" " alt="" coords="190,287,157,287,157,281,190,281"/>
+<area shape="poly" id="edge20_Node000018_Node000016" title=" " alt="" coords="415,321,332,299,333,294,416,315"/>
+<area shape="poly" id="edge22_Node000019_Node000016" title=" " alt="" coords="394,287,360,287,360,281,394,281"/>
+<area shape="poly" id="edge24_Node000020_Node000013" title=" " alt="" coords="1087,188,1023,187,1023,182,1087,182"/>
+<area shape="rect" id="Node000023" href="$inverse-compton_8h.html#ac0230d2cf3ab151b3107eaf020bd07be" title=" " alt="" coords="853,273,1015,298"/>
+<area shape="poly" id="edge27_Node000022_Node000023" title=" " alt="" coords="1095,287,1015,288,1015,282,1095,282"/>
+<area shape="rect" id="Node000024" href="$inverse-compton_8cpp.html#afe30262ca73705fdc9456009f6066fa8" title=" " alt="" coords="613,321,777,346"/>
+<area shape="poly" id="edge28_Node000023_Node000024" title=" " alt="" coords="857,303,759,323,758,318,856,298"/>
+<area shape="rect" id="Node000025" href="$inverse-compton_8cpp.html#ab7063c938c6e524260876e8ec068ba1b" title=" " alt="" coords="592,271,797,297"/>
+<area shape="poly" id="edge30_Node000023_Node000025" title=" " alt="" coords="840,287,798,287,798,282,840,282"/>
+<area shape="poly" id="edge29_Node000024_Node000018" title=" " alt="" coords="599,336,524,336,524,331,599,331"/>
+<area shape="poly" id="edge31_Node000025_Node000019" title=" " alt="" coords="578,287,545,287,545,281,578,281"/>
+<area shape="poly" id="edge36_Node000029_Node000003" title=" " alt="" coords="1356,32,1254,37,1254,31,1356,27"/>
+<area shape="rect" id="Node000031" href="$fast-math_8h.html#ac1ddb9381fb58d1252263e82e11225d8" title="Smooth broken power&#45;law transition in log2 space." alt="" coords="1085,629,1271,654"/>
+<area shape="poly" id="edge38_Node000030_Node000031" title=" " alt="" coords="1384,626,1271,636,1271,631,1384,621"/>
+<area shape="rect" id="Node000032" href="$smooth-power-law-syn_8cpp.html#a4c114da5a52b2034dddfca4646cc1c02" title=" " alt="" coords="1109,579,1247,605"/>
+<area shape="poly" id="edge39_Node000030_Node000032" title=" " alt="" coords="1384,614,1247,601,1247,596,1384,608"/>
 </map>

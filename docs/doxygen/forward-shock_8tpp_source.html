@@ -304,45 +304,50 @@ $(document).ready(function(){initNavTree('forward-shock_8tpp_source.html',''); i
 <div class="line"><a id="l00203" name="l00203"></a><span class="lineno">  203</span>    auto stepper = make_dense_output(rtol, rtol, runge_kutta_dopri5&lt;typename FwdEqn::State&gt;());</div>
 <div class="line"><a id="l00204" name="l00204"></a><span class="lineno">  204</span>    stepper.initialize(state, t0, 0.01 * t0);</div>
 <div class="line"><a id="l00205" name="l00205"></a><span class="lineno">  205</span> </div>
-<div class="line"><a id="l00206" name="l00206"></a><span class="lineno">  206</span>    for (size_t k = 0; stepper.current_time() &lt;= t.back();) {</div>
+<div class="line"><a id="l00206" name="l00206"></a><span class="lineno">  206</span>    for (size_t k = 0, steps = 0; stepper.current_time() &lt;= t.back();) {</div>
 <div class="line"><a id="l00207" name="l00207"></a><span class="lineno">  207</span>        stepper.do_step(eqn);</div>
-<div class="line"><a id="l00208" name="l00208"></a><span class="lineno">  208</span> </div>
-<div class="line"><a id="l00209" name="l00209"></a><span class="lineno">  209</span>        while (k &lt; t.size() &amp;&amp; stepper.current_time() &gt; t(k)) {</div>
-<div class="line"><a id="l00210" name="l00210"></a><span class="lineno">  210</span>            stepper.calc_state(t(k), state);</div>
-<div class="line"><a id="l00211" name="l00211"></a><span class="lineno">  211</span>            save_fwd_shock_state(i, j, k, eqn, state, shock);</div>
-<div class="line"><a id="l00212" name="l00212"></a><span class="lineno">  212</span>            ++k;</div>
-<div class="line"><a id="l00213" name="l00213"></a><span class="lineno">  213</span>        }</div>
-<div class="line"><a id="l00214" name="l00214"></a><span class="lineno">  214</span>    }</div>
-<div class="line"><a id="l00215" name="l00215"></a><span class="lineno">  215</span>}</div>
-<div class="line"><a id="l00216" name="l00216"></a><span class="lineno">  216</span> </div>
-<div class="line"><a id="l00217" name="l00217"></a><span class="lineno">  217</span>template &lt;typename Ejecta, typename Medium&gt;</div>
-<div class="line"><a id="l00218" name="l00218"></a><span class="lineno">  218</span>Shock generate_fwd_shock(Coord const&amp; coord, Medium const&amp; medium, Ejecta const&amp; jet, RadParams const&amp; rad_params,</div>
-<div class="line"><a id="l00219" name="l00219"></a><span class="lineno">  219</span>                         Real rtol) {</div>
-<div class="line"><a id="l00220" name="l00220"></a><span class="lineno">  220</span>    auto [phi_size, theta_size, t_size] = coord.shape(); // Unpack coordinate dimensions</div>
-<div class="line"><a id="l00221" name="l00221"></a><span class="lineno">  221</span>    const size_t phi_size_needed = coord.t.shape()[0];</div>
-<div class="line"><a id="l00222" name="l00222"></a><span class="lineno">  222</span>    Shock shock(phi_size_needed, theta_size, t_size, rad_params);</div>
-<div class="line"><a id="l00223" name="l00223"></a><span class="lineno">  223</span> </div>
-<div class="line"><a id="l00224" name="l00224"></a><span class="lineno">  224</span>    for (size_t i = 0; i &lt; phi_size_needed; ++i) {</div>
-<div class="line"><a id="l00225" name="l00225"></a><span class="lineno">  225</span>        Real theta_s = 0;</div>
-<div class="line"><a id="l00226" name="l00226"></a><span class="lineno">  226</span>        if (jet.spreading) {</div>
-<div class="line"><a id="l00227" name="l00227"></a><span class="lineno">  227</span>            theta_s =</div>
-<div class="line"><a id="l00228" name="l00228"></a><span class="lineno">  228</span>                jet_spreading_edge(jet, medium, coord.phi(i), coord.theta.front(), coord.theta.back(), coord.t.front());</div>
-<div class="line"><a id="l00229" name="l00229"></a><span class="lineno">  229</span>        }</div>
-<div class="line"><a id="l00230" name="l00230"></a><span class="lineno">  230</span> </div>
-<div class="line"><a id="l00231" name="l00231"></a><span class="lineno">  231</span>        for (size_t j : coord.theta_reps) {</div>
-<div class="line"><a id="l00232" name="l00232"></a><span class="lineno">  232</span>            auto eqn = ForwardShockEqn(medium, jet, coord.phi(i), coord.theta(j), rad_params, theta_s);</div>
-<div class="line"><a id="l00233" name="l00233"></a><span class="lineno">  233</span>            //auto eqn = SimpleShockEqn(medium, jet, coord.phi(i), coord.theta(j), rad_params, theta_s);</div>
-<div class="line"><a id="l00234" name="l00234"></a><span class="lineno">  234</span>            grid_solve_fwd_shock(i, j, xt::view(coord.t, i, j, xt::all()), shock, eqn, rtol);</div>
-<div class="line"><a id="l00235" name="l00235"></a><span class="lineno">  235</span>        }</div>
-<div class="line"><a id="l00236" name="l00236"></a><span class="lineno">  236</span> </div>
-<div class="line"><a id="l00237" name="l00237"></a><span class="lineno">  237</span>        if (coord.symmetry &gt;= Symmetry::phi_symmetric) {</div>
-<div class="line"><a id="l00238" name="l00238"></a><span class="lineno">  238</span>            shock.broadcast_groups(coord);</div>
-<div class="line"><a id="l00239" name="l00239"></a><span class="lineno">  239</span>            return shock;</div>
+<div class="line"><a id="l00208" name="l00208"></a><span class="lineno">  208</span>        if (++steps &gt; defaults::solver::max_ode_steps) {</div>
+<div class="line"><a id="l00209" name="l00209"></a><span class="lineno">  209</span>            std::fprintf(stderr, &quot;Warning: forward shock ODE exceeded %zu steps at (i=%zu, j=%zu), giving up\n&quot;,</div>
+<div class="line"><a id="l00210" name="l00210"></a><span class="lineno">  210</span>                         defaults::solver::max_ode_steps, i, j);</div>
+<div class="line"><a id="l00211" name="l00211"></a><span class="lineno">  211</span>            return;</div>
+<div class="line"><a id="l00212" name="l00212"></a><span class="lineno">  212</span>        }</div>
+<div class="line"><a id="l00213" name="l00213"></a><span class="lineno">  213</span> </div>
+<div class="line"><a id="l00214" name="l00214"></a><span class="lineno">  214</span>        while (k &lt; t.size() &amp;&amp; stepper.current_time() &gt; t(k)) {</div>
+<div class="line"><a id="l00215" name="l00215"></a><span class="lineno">  215</span>            stepper.calc_state(t(k), state);</div>
+<div class="line"><a id="l00216" name="l00216"></a><span class="lineno">  216</span>            save_fwd_shock_state(i, j, k, eqn, state, shock);</div>
+<div class="line"><a id="l00217" name="l00217"></a><span class="lineno">  217</span>            ++k;</div>
+<div class="line"><a id="l00218" name="l00218"></a><span class="lineno">  218</span>        }</div>
+<div class="line"><a id="l00219" name="l00219"></a><span class="lineno">  219</span>    }</div>
+<div class="line"><a id="l00220" name="l00220"></a><span class="lineno">  220</span>}</div>
+<div class="line"><a id="l00221" name="l00221"></a><span class="lineno">  221</span> </div>
+<div class="line"><a id="l00222" name="l00222"></a><span class="lineno">  222</span>template &lt;typename Ejecta, typename Medium&gt;</div>
+<div class="line"><a id="l00223" name="l00223"></a><span class="lineno">  223</span>Shock generate_fwd_shock(Coord const&amp; coord, Medium const&amp; medium, Ejecta const&amp; jet, RadParams const&amp; rad_params,</div>
+<div class="line"><a id="l00224" name="l00224"></a><span class="lineno">  224</span>                         Real rtol) {</div>
+<div class="line"><a id="l00225" name="l00225"></a><span class="lineno">  225</span>    auto [phi_size, theta_size, t_size] = coord.shape(); // Unpack coordinate dimensions</div>
+<div class="line"><a id="l00226" name="l00226"></a><span class="lineno">  226</span>    const size_t phi_size_needed = coord.t.shape()[0];</div>
+<div class="line"><a id="l00227" name="l00227"></a><span class="lineno">  227</span>    Shock shock(phi_size_needed, theta_size, t_size, rad_params);</div>
+<div class="line"><a id="l00228" name="l00228"></a><span class="lineno">  228</span> </div>
+<div class="line"><a id="l00229" name="l00229"></a><span class="lineno">  229</span>    for (size_t i = 0; i &lt; phi_size_needed; ++i) {</div>
+<div class="line"><a id="l00230" name="l00230"></a><span class="lineno">  230</span>        Real theta_s = 0;</div>
+<div class="line"><a id="l00231" name="l00231"></a><span class="lineno">  231</span>        if (jet.spreading) {</div>
+<div class="line"><a id="l00232" name="l00232"></a><span class="lineno">  232</span>            theta_s =</div>
+<div class="line"><a id="l00233" name="l00233"></a><span class="lineno">  233</span>                jet_spreading_edge(jet, medium, coord.phi(i), coord.theta.front(), coord.theta.back(), coord.t.front());</div>
+<div class="line"><a id="l00234" name="l00234"></a><span class="lineno">  234</span>        }</div>
+<div class="line"><a id="l00235" name="l00235"></a><span class="lineno">  235</span> </div>
+<div class="line"><a id="l00236" name="l00236"></a><span class="lineno">  236</span>        for (size_t j : coord.theta_reps) {</div>
+<div class="line"><a id="l00237" name="l00237"></a><span class="lineno">  237</span>            auto eqn = ForwardShockEqn(medium, jet, coord.phi(i), coord.theta(j), rad_params, theta_s);</div>
+<div class="line"><a id="l00238" name="l00238"></a><span class="lineno">  238</span>            //auto eqn = SimpleShockEqn(medium, jet, coord.phi(i), coord.theta(j), rad_params, theta_s);</div>
+<div class="line"><a id="l00239" name="l00239"></a><span class="lineno">  239</span>            grid_solve_fwd_shock(i, j, xt::view(coord.t, i, j, xt::all()), shock, eqn, rtol);</div>
 <div class="line"><a id="l00240" name="l00240"></a><span class="lineno">  240</span>        }</div>
-<div class="line"><a id="l00241" name="l00241"></a><span class="lineno">  241</span>    }</div>
-<div class="line"><a id="l00242" name="l00242"></a><span class="lineno">  242</span> </div>
-<div class="line"><a id="l00243" name="l00243"></a><span class="lineno">  243</span>    return shock;</div>
-<div class="line"><a id="l00244" name="l00244"></a><span class="lineno">  244</span>}</div>
+<div class="line"><a id="l00241" name="l00241"></a><span class="lineno">  241</span> </div>
+<div class="line"><a id="l00242" name="l00242"></a><span class="lineno">  242</span>        if (coord.symmetry &gt;= Symmetry::phi_symmetric) {</div>
+<div class="line"><a id="l00243" name="l00243"></a><span class="lineno">  243</span>            shock.broadcast_groups(coord);</div>
+<div class="line"><a id="l00244" name="l00244"></a><span class="lineno">  244</span>            return shock;</div>
+<div class="line"><a id="l00245" name="l00245"></a><span class="lineno">  245</span>        }</div>
+<div class="line"><a id="l00246" name="l00246"></a><span class="lineno">  246</span>    }</div>
+<div class="line"><a id="l00247" name="l00247"></a><span class="lineno">  247</span> </div>
+<div class="line"><a id="l00248" name="l00248"></a><span class="lineno">  248</span>    return shock;</div>
+<div class="line"><a id="l00249" name="l00249"></a><span class="lineno">  249</span>}</div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->

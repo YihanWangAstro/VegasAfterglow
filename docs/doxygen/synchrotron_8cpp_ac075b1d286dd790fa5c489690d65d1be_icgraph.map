@@ -1,4 +1,8 @@
 <map id="generate_syn_electrons" name="generate_syn_electrons">
-<area shape="rect" id="Node000001" title="Creates and returns a new electron grid based on shock parameters." alt="" coords="5,29,183,55"/>
-<area shape="poly" id="edge1_Node000001_Node000001" title=" " alt="" coords="125,19,116,11,94,8,75,10,66,15,64,20,69,28,65,31,59,21,62,11,74,5,94,3,118,6,128,15"/>
+<area shape="rect" id="Node000001" title="Creates and returns a new electron grid based on shock parameters." alt="" coords="408,29,585,55"/>
+<area shape="poly" id="edge1_Node000001_Node000001" title=" " alt="" coords="535,20,524,11,497,8,474,10,462,15,459,20,466,28,462,31,454,21,458,11,473,5,497,3,526,6,538,15"/>
+<area shape="rect" id="Node000002" href="$classPyModel.html#a982ace37b25f18b6bb32d880739ae88a" title="Compute resolved sky images at multiple observer times and a single frequency." alt="" coords="204,29,360,55"/>
+<area shape="poly" id="edge2_Node000001_Node000002" title=" " alt="" coords="394,45,360,45,360,39,394,39"/>
+<area shape="rect" id="Node000003" href="$pybind_8cpp.html#a8c92987849ad296e28ec6c07c8e7860b" title=" " alt="" coords="5,29,156,55"/>
+<area shape="poly" id="edge3_Node000002_Node000003" title=" " alt="" coords="190,45,157,45,157,39,190,39"/>
 </map>

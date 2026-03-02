@@ -244,6 +244,7 @@
 <li class="toctree-l4"><a class="reference internal" href="#_CPPv4I0EN8Observer4fluxE5ArrayRK5ArrayRK5ArrayR10PhotonGrid"><code class="docutils literal notranslate"><span class="pre">flux()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#_CPPv4I0EN8Observer7spectraE8MeshGridRK5ArrayRK5ArrayR10PhotonGrid"><code class="docutils literal notranslate"><span class="pre">spectra()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#_CPPv4I0EN8Observer8spectrumE5ArrayRK5Array4RealR10PhotonGrid"><code class="docutils literal notranslate"><span class="pre">spectrum()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#_CPPv4I0EN8Observer9sky_imageE14SkyImageResultRK5CoordRK5ShockRK5Array4RealR10PhotonGrid6size_t4Real"><code class="docutils literal notranslate"><span class="pre">sky_image()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#_CPPv4N8Observer4timeE"><code class="docutils literal notranslate"><span class="pre">time</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#_CPPv4N8Observer5lg2_tE"><code class="docutils literal notranslate"><span class="pre">lg2_t</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#_CPPv4N8Observer11lg2_dopplerE"><code class="docutils literal notranslate"><span class="pre">lg2_doppler</span></code></a></li>
@@ -1839,6 +1840,31 @@ Returns the spectrum (as an Array) at a single observation time by computing the
 </dd>
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
 <dd class="field-odd"><p>Array containing the spectrum at the given time </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4I0EN8Observer9sky_imageE14SkyImageResultRK5CoordRK5ShockRK5Array4RealR10PhotonGrid6size_t4Real">
+<span id="_CPPv3I0EN8Observer9sky_imageERK5CoordRK5ShockRK5Array4RealR10PhotonGrid6size_t4Real"></span><span id="_CPPv2I0EN8Observer9sky_imageERK5CoordRK5ShockRK5Array4RealR10PhotonGrid6size_t4Real"></span><span class="k"><span class="pre">template</span></span><span class="p"><span class="pre">&lt;</span></span><span class="k"><span class="pre">typename</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">PhotonGrid</span></span></span><span class="p"><span class="pre">&gt;</span></span><br /><span class="target" id="VegasAfterglowclassObserver_1a31570a410e64cffe1e4b9e16af5acef0"></span><span class="n"><span class="pre">SkyImageResult</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">sky_image</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv45Coord" title="Coord"><span class="n"><span class="pre">Coord</span></span></a><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">coord</span></span>, <a class="reference internal" href="#_CPPv45Shock" title="Shock"><span class="n"><span class="pre">Shock</span></span></a><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">shock</span></span>, <span class="n"><span class="pre">Array</span></span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">t_obs</span></span>, <span class="n"><span class="pre">Real</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">nu_obs</span></span>, <a class="reference internal" href="#_CPPv4I0EN8Observer9sky_imageE14SkyImageResultRK5CoordRK5ShockRK5Array4RealR10PhotonGrid6size_t4Real" title="Observer::sky_image::PhotonGrid"><span class="n"><span class="pre">PhotonGrid</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">photons</span></span>, <span class="n"><span class="pre">size_t</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">npixel</span></span>, <span class="n"><span class="pre">Real</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">pix_size</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4I0EN8Observer9sky_imageE14SkyImageResultRK5CoordRK5ShockRK5Array4RealR10PhotonGrid6size_t4Real" title="Link to this definition"></a><br /></dt>
+<dd><p>Computes resolved sky images at multiple observer times and a single frequency. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Template Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>PhotonGrid</strong> – Type of photon grid object </p>
+</dd>
+<dt class="field-even">Parameters<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>coord</strong> – Coordinate grid (needed for phi, theta_view projection) </p></li>
+<li><p><strong>shock</strong> – <a class="reference internal" href="#VegasAfterglowclassShock"><span class="std std-ref">Shock</span></a> object (needed for r, theta at interpolated time) </p></li>
+<li><p><strong>t_obs</strong> – Array of observer times (internal units) </p></li>
+<li><p><strong>nu_obs</strong> – <a class="reference internal" href="#VegasAfterglowclassObserver"><span class="std std-ref">Observer</span></a> frequency (internal units) </p></li>
+<li><p><strong>photons</strong> – Photon grid object </p></li>
+<li><p><strong>npixel</strong> – Number of pixels per side </p></li>
+<li><p><strong>pix_size</strong> – Pixel size in radians (FOV = pix_size × npixel) </p></li>
+</ul>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>SkyImageResult with [n_frames, npixel, npixel] surface brightness, shared extent and pixel_solid_angle </p>
 </dd>
 </dl>
 </dd></dl>

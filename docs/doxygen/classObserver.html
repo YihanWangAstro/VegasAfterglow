@@ -137,6 +137,10 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a096a45f3fcc7cd273c2bc89199ed74a2"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="mesh_8h.html#afd05120c4d579ec7fa4906f677781a83">Array</a>&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classObserver.html#a096a45f3fcc7cd273c2bc89199ed74a2">spectrum</a> (<a class="el" href="mesh_8h.html#afd05120c4d579ec7fa4906f677781a83">Array</a> <a class="el" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">const</a> &amp;<a class="el" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">freqs</a>, <a class="el" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> t_obs, <a class="el" href="inverse-compton_8h.html#a51afe1e3d9c293fd37d0862139cda1cf">PhotonGrid</a> &amp;photons)</td></tr>
 <tr class="memdesc:a096a45f3fcc7cd273c2bc89199ed74a2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Computes the spectrum at a single observation time.  <br /></td></tr>
 <tr class="separator:a096a45f3fcc7cd273c2bc89199ed74a2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a31570a410e64cffe1e4b9e16af5acef0" id="r_a31570a410e64cffe1e4b9e16af5acef0"><td class="memTemplParams" colspan="2">template&lt;<a class="el" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">typename</a> <a class="el" href="inverse-compton_8h.html#a51afe1e3d9c293fd37d0862139cda1cf">PhotonGrid</a> &gt; </td></tr>
+<tr class="memitem:a31570a410e64cffe1e4b9e16af5acef0"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="structSkyImageResult.html">SkyImageResult</a>&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classObserver.html#a31570a410e64cffe1e4b9e16af5acef0">sky_image</a> (<a class="el" href="classCoord.html">Coord</a> <a class="el" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">const</a> &amp;<a class="el" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">coord</a>, <a class="el" href="classShock.html">Shock</a> <a class="el" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">const</a> &amp;<a class="el" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">shock</a>, <a class="el" href="mesh_8h.html#afd05120c4d579ec7fa4906f677781a83">Array</a> <a class="el" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">const</a> &amp;t_obs, <a class="el" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> <a class="el" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">nu_obs</a>, <a class="el" href="inverse-compton_8h.html#a51afe1e3d9c293fd37d0862139cda1cf">PhotonGrid</a> &amp;photons, <a class="el" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">size_t</a> <a class="el" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">npixel</a>, <a class="el" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> <a class="el" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">pix_size</a>)</td></tr>
+<tr class="memdesc:a31570a410e64cffe1e4b9e16af5acef0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Computes resolved sky images at multiple observer times and a single frequency.  <br /></td></tr>
+<tr class="separator:a31570a410e64cffe1e4b9e16af5acef0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
@@ -160,7 +164,7 @@ Public Attributes</h2></td></tr>
 <div class="textblock"><p>Represents an observer in the GRB afterglow simulation. </p>
 <p>This class handles the calculation of observed quantities such as specific flux, integrated flux, and spectra. It accounts for relativistic effects (Doppler boosting), cosmological effects (redshift), and geometric effects (solid angle). The observer can be placed at any viewing angle relative to the jet axis. </p>
 
-<p class="definition">Definition at line <a class="el" href="observer_8h_source.html#l00025">25</a> of file <a class="el" href="observer_8h_source.html">observer.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="observer_8h_source.html#l00060">60</a> of file <a class="el" href="observer_8h_source.html">observer.h</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="acb0af5014875c6ec7465cccc85e4f39b" name="acb0af5014875c6ec7465cccc85e4f39b"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#acb0af5014875c6ec7465cccc85e4f39b">&#9670;&#160;</a></span>Observer()</h2>
@@ -241,24 +245,24 @@ template&lt;<a class="el" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c
 </dl>
 <p>Computes the integrated flux over a frequency band specified by band_freq. It converts band boundaries to center frequencies, computes the specific flux at each frequency, and integrates (sums) the flux contributions weighted by the frequency bin widths. </p><dl class="section return"><dt>Returns</dt><dd>Array of integrated flux values at each observation time </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="observer_8h_source.html#l00421">421</a> of file <a class="el" href="observer_8h_source.html">observer.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  421</span>                                                                                    {</div>
-<div class="line"><span class="lineno">  422</span>    <a class="code hl_typedef" href="mesh_8h.html#ae7ec6be5d638ad03ae6697ff2b71ef91">MeshGrid</a> <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">F_nu</a> = <a class="code hl_function" href="classObserver.html#a5350b13ae5a6c7007ba6459923573136">specific_flux</a>(t_obs, <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">band_freq</a>, photons);</div>
-<div class="line"><span class="lineno">  423</span>    <a class="code hl_typedef" href="mesh_8h.html#afd05120c4d579ec7fa4906f677781a83">Array</a> <a class="code hl_function" href="classObserver.html#a2588a9ebaec5465d6b5bd08fadadcb99">flux</a>({t_obs.size()}, 0);</div>
-<div class="line"><span class="lineno">  424</span>    <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">i</a> = 0; <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">i</a> &lt; <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">band_freq</a>.size() - 1; ++<a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">i</a>) {</div>
-<div class="line"><span class="lineno">  425</span>        <span class="keyword">const</span> <a class="code hl_typedef" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">dnu</a> = <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">band_freq</a>(<a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">i</a> + 1) - <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">band_freq</a>(<a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">i</a>);</div>
-<div class="line"><span class="lineno">  426</span>        <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">j</a> = 0; <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">j</a> &lt; <a class="code hl_function" href="classObserver.html#a2588a9ebaec5465d6b5bd08fadadcb99">flux</a>.size(); ++<a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">j</a>) {</div>
-<div class="line"><span class="lineno">  427</span>            <a class="code hl_function" href="classObserver.html#a2588a9ebaec5465d6b5bd08fadadcb99">flux</a>(<a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">j</a>) += 0.5 * (<a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">F_nu</a>(<a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">i</a>, <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">j</a>) + <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">F_nu</a>(<a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">i</a> + 1, <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">j</a>)) * <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">dnu</a>;</div>
-<div class="line"><span class="lineno">  428</span>        }</div>
-<div class="line"><span class="lineno">  429</span>    }</div>
-<div class="line"><span class="lineno">  430</span>    <span class="keywordflow">return</span> <a class="code hl_function" href="classObserver.html#a2588a9ebaec5465d6b5bd08fadadcb99">flux</a>;</div>
-<div class="line"><span class="lineno">  431</span>}</div>
-<div class="ttc" id="aclassObserver_html_a2588a9ebaec5465d6b5bd08fadadcb99"><div class="ttname"><a href="classObserver.html#a2588a9ebaec5465d6b5bd08fadadcb99">Observer::flux</a></div><div class="ttdeci">Array flux(Array const &amp;t_obs, Array const &amp;band_freq, PhotonGrid &amp;photons)</div><div class="ttdoc">Computes the integrated flux over a frequency band.</div><div class="ttdef"><b>Definition</b> <a href="observer_8h_source.html#l00421">observer.h:421</a></div></div>
-<div class="ttc" id="aclassObserver_html_a5350b13ae5a6c7007ba6459923573136"><div class="ttname"><a href="classObserver.html#a5350b13ae5a6c7007ba6459923573136">Observer::specific_flux</a></div><div class="ttdeci">Array specific_flux(Array const &amp;t_obs, Real nu_obs, PhotonGrid &amp;photons)</div><div class="ttdoc">Computes the specific flux at a single observed frequency.</div><div class="ttdef"><b>Definition</b> <a href="observer_8h_source.html#l00406">observer.h:406</a></div></div>
+<p class="definition">Definition at line <a class="el" href="observer_8h_source.html#l00458">458</a> of file <a class="el" href="observer_8h_source.html">observer.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  458</span>                                                                                    {</div>
+<div class="line"><span class="lineno">  459</span>    <a class="code hl_typedef" href="mesh_8h.html#ae7ec6be5d638ad03ae6697ff2b71ef91">MeshGrid</a> <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">F_nu</a> = <a class="code hl_function" href="classObserver.html#a5350b13ae5a6c7007ba6459923573136">specific_flux</a>(t_obs, <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">band_freq</a>, photons);</div>
+<div class="line"><span class="lineno">  460</span>    <a class="code hl_typedef" href="mesh_8h.html#afd05120c4d579ec7fa4906f677781a83">Array</a> <a class="code hl_function" href="classObserver.html#a2588a9ebaec5465d6b5bd08fadadcb99">flux</a>({t_obs.size()}, 0);</div>
+<div class="line"><span class="lineno">  461</span>    <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">i</a> = 0; <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">i</a> &lt; <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">band_freq</a>.size() - 1; ++<a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">i</a>) {</div>
+<div class="line"><span class="lineno">  462</span>        <span class="keyword">const</span> <a class="code hl_typedef" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">dnu</a> = <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">band_freq</a>(<a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">i</a> + 1) - <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">band_freq</a>(<a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">i</a>);</div>
+<div class="line"><span class="lineno">  463</span>        <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">j</a> = 0; <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">j</a> &lt; <a class="code hl_function" href="classObserver.html#a2588a9ebaec5465d6b5bd08fadadcb99">flux</a>.size(); ++<a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">j</a>) {</div>
+<div class="line"><span class="lineno">  464</span>            <a class="code hl_function" href="classObserver.html#a2588a9ebaec5465d6b5bd08fadadcb99">flux</a>(<a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">j</a>) += 0.5 * (<a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">F_nu</a>(<a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">i</a>, <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">j</a>) + <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">F_nu</a>(<a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">i</a> + 1, <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">j</a>)) * <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">dnu</a>;</div>
+<div class="line"><span class="lineno">  465</span>        }</div>
+<div class="line"><span class="lineno">  466</span>    }</div>
+<div class="line"><span class="lineno">  467</span>    <span class="keywordflow">return</span> <a class="code hl_function" href="classObserver.html#a2588a9ebaec5465d6b5bd08fadadcb99">flux</a>;</div>
+<div class="line"><span class="lineno">  468</span>}</div>
+<div class="ttc" id="aclassObserver_html_a2588a9ebaec5465d6b5bd08fadadcb99"><div class="ttname"><a href="classObserver.html#a2588a9ebaec5465d6b5bd08fadadcb99">Observer::flux</a></div><div class="ttdeci">Array flux(Array const &amp;t_obs, Array const &amp;band_freq, PhotonGrid &amp;photons)</div><div class="ttdoc">Computes the integrated flux over a frequency band.</div><div class="ttdef"><b>Definition</b> <a href="observer_8h_source.html#l00458">observer.h:458</a></div></div>
+<div class="ttc" id="aclassObserver_html_a5350b13ae5a6c7007ba6459923573136"><div class="ttname"><a href="classObserver.html#a5350b13ae5a6c7007ba6459923573136">Observer::specific_flux</a></div><div class="ttdeci">Array specific_flux(Array const &amp;t_obs, Real nu_obs, PhotonGrid &amp;photons)</div><div class="ttdoc">Computes the specific flux at a single observed frequency.</div><div class="ttdef"><b>Definition</b> <a href="observer_8h_source.html#l00443">observer.h:443</a></div></div>
 <div class="ttc" id="amacros_8h_html_a4b04262b81aa7d31eb5d2f607e2a35de"><div class="ttname"><a href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a></div><div class="ttdeci">double Real</div><div class="ttdoc">Type alias for floating-point precision used throughout the code.</div><div class="ttdef"><b>Definition</b> <a href="macros_8h_source.html#l00024">macros.h:24</a></div></div>
 <div class="ttc" id="amesh_8h_html_ae7ec6be5d638ad03ae6697ff2b71ef91"><div class="ttname"><a href="mesh_8h.html#ae7ec6be5d638ad03ae6697ff2b71ef91">MeshGrid</a></div><div class="ttdeci">xt::xtensor&lt; Real, 2 &gt; MeshGrid</div><div class="ttdoc">Type alias for 2D grids (e.g., spatial coordinates)</div><div class="ttdef"><b>Definition</b> <a href="mesh_8h_source.html#l00043">mesh.h:43</a></div></div>
 <div class="ttc" id="amesh_8h_html_afd05120c4d579ec7fa4906f677781a83"><div class="ttname"><a href="mesh_8h.html#afd05120c4d579ec7fa4906f677781a83">Array</a></div><div class="ttdeci">xt::xtensor&lt; Real, 1 &gt; Array</div><div class="ttdoc">Type alias for 1D arrays (e.g., time points)</div><div class="ttdef"><b>Definition</b> <a href="mesh_8h_source.html#l00041">mesh.h:41</a></div></div>
-<div class="ttc" id="apybind_8cpp_html_ad93eae6422741850877b46bd61f08c89"><div class="ttname"><a href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">make_native_binary</a></div><div class="ttdeci">BinaryFunc make_native_binary(uintptr_t addr, std::vector&lt; Real &gt; const &amp;p)</div><div class="ttdef"><b>Definition</b> <a href="pybind_8cpp_source.html#l00027">pybind.cpp:27</a></div></div>
+<div class="ttc" id="apybind_8cpp_html_ad93eae6422741850877b46bd61f08c89"><div class="ttname"><a href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">make_native_binary</a></div><div class="ttdeci">BinaryFunc make_native_binary(uintptr_t addr, std::vector&lt; Real &gt; const &amp;p)</div><div class="ttdef"><b>Definition</b> <a href="pybind_8cpp_source.html#l00025">pybind.cpp:25</a></div></div>
 </div><!-- fragment --><div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -335,11 +339,16 @@ Here is the caller graph for this function:</div>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="observer_8cpp_source.html#l00253">253</a> of file <a class="el" href="observer_8cpp_source.html">observer.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  253</span>                                                                                                  {</div>
-<div class="line"><span class="lineno">  254</span>    build_time_grid(<a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">coord</a>, <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">shock</a>, <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">luminosity_dist</a>, <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">redshift</a>);</div>
-<div class="line"><span class="lineno">  255</span>    calc_solid_angle(<a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">coord</a>, <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">shock</a>);</div>
-<div class="line"><span class="lineno">  256</span>}</div>
+<p class="definition">Definition at line <a class="el" href="observer_8cpp_source.html#l00344">344</a> of file <a class="el" href="observer_8cpp_source.html">observer.cpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  344</span>                                                                                                  {</div>
+<div class="line"><span class="lineno">  345</span>    build_time_grid(<a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">coord</a>, <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">shock</a>, <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">luminosity_dist</a>, <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">redshift</a>);</div>
+<div class="line"><span class="lineno">  346</span>    <span class="keywordflow">if</span> (jet_spreading_) {</div>
+<div class="line"><span class="lineno">  347</span>        calc_t_obs(<a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">coord</a>, <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">shock</a>);</div>
+<div class="line"><span class="lineno">  348</span>        calc_solid_angle(<a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">coord</a>, <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">shock</a>);</div>
+<div class="line"><span class="lineno">  349</span>    } <span class="keywordflow">else</span> {</div>
+<div class="line"><span class="lineno">  350</span>        calc_eat_non_spreading(<a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">coord</a>, <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">shock</a>);</div>
+<div class="line"><span class="lineno">  351</span>    }</div>
+<div class="line"><span class="lineno">  352</span>}</div>
 </div><!-- fragment --><div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -348,6 +357,175 @@ Here is the call graph for this function:</div>
 <area shape="rect" title="Sets up the Observer for flux calculation." alt="" coords="5,5,147,31"/>
 <area shape="rect" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89" title=" " alt="" coords="195,5,349,31"/>
 <area shape="poly" title=" " alt="" coords="147,15,181,15,181,21,147,21"/>
+</map>
+</div>
+<div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="classObserver_a7e6b3154ceb89b3ff90758b874c2016d_icgraph.png" border="0" usemap="#aclassObserver_a7e6b3154ceb89b3ff90758b874c2016d_icgraph" alt=""/></div>
+<map name="aclassObserver_a7e6b3154ceb89b3ff90758b874c2016d_icgraph" id="aclassObserver_a7e6b3154ceb89b3ff90758b874c2016d_icgraph">
+<area shape="rect" title="Sets up the Observer for flux calculation." alt="" coords="408,5,549,31"/>
+<area shape="rect" href="classPyModel.html#a982ace37b25f18b6bb32d880739ae88a" title="Compute resolved sky images at multiple observer times and a single frequency." alt="" coords="204,5,360,31"/>
+<area shape="poly" title=" " alt="" coords="394,21,360,21,360,15,394,15"/>
+<area shape="rect" href="pybind_8cpp.html#a8c92987849ad296e28ec6c07c8e7860b" title=" " alt="" coords="5,5,156,31"/>
+<area shape="poly" title=" " alt="" coords="190,21,157,21,157,15,190,15"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="a31570a410e64cffe1e4b9e16af5acef0" name="a31570a410e64cffe1e4b9e16af5acef0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a31570a410e64cffe1e4b9e16af5acef0">&#9670;&#160;</a></span>sky_image()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;<a class="el" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">typename</a> <a class="el" href="inverse-compton_8h.html#a51afe1e3d9c293fd37d0862139cda1cf">PhotonGrid</a> &gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="structSkyImageResult.html">SkyImageResult</a> Observer::sky_image </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classCoord.html">Coord</a> <a class="el" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">const</a> &amp;&#160;</td>
+          <td class="paramname"><em>coord</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classShock.html">Shock</a> <a class="el" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">const</a> &amp;&#160;</td>
+          <td class="paramname"><em>shock</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="mesh_8h.html#afd05120c4d579ec7fa4906f677781a83">Array</a> <a class="el" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">const</a> &amp;&#160;</td>
+          <td class="paramname"><em>t_obs</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a>&#160;</td>
+          <td class="paramname"><em>nu_obs</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="inverse-compton_8h.html#a51afe1e3d9c293fd37d0862139cda1cf">PhotonGrid</a> &amp;&#160;</td>
+          <td class="paramname"><em>photons</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">size_t</a>&#160;</td>
+          <td class="paramname"><em>npixel</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a>&#160;</td>
+          <td class="paramname"><em>pix_size</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Computes resolved sky images at multiple observer times and a single frequency. </p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">PhotonGrid</td><td>Type of photon grid object </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">coord</td><td>Coordinate grid (needed for phi, theta_view projection) </td></tr>
+    <tr><td class="paramname">shock</td><td><a class="el" href="classShock.html" title="Represents a shock wave in an astrophysical environment.">Shock</a> object (needed for r, theta at interpolated time) </td></tr>
+    <tr><td class="paramname">t_obs</td><td>Array of observer times (internal units) </td></tr>
+    <tr><td class="paramname">nu_obs</td><td><a class="el" href="classObserver.html" title="Represents an observer in the GRB afterglow simulation.">Observer</a> frequency (internal units) </td></tr>
+    <tr><td class="paramname">photons</td><td>Photon grid object </td></tr>
+    <tr><td class="paramname">npixel</td><td>Number of pixels per side </td></tr>
+    <tr><td class="paramname">pix_size</td><td>Pixel size in radians (FOV = pix_size × npixel) </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd><a class="el" href="structSkyImageResult.html" title="Result of a batched sky image computation: 3D surface brightness map with shared extent and pixel sol...">SkyImageResult</a> with [n_frames, npixel, npixel] surface brightness, shared extent and pixel_solid_angle </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="observer_8h_source.html#l00552">552</a> of file <a class="el" href="observer_8h_source.html">observer.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  553</span>                                                                                      {</div>
+<div class="line"><span class="lineno">  554</span>    <span class="keyword">const</span> <span class="keywordtype">size_t</span> <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">n_frames</a> = t_obs.size();</div>
+<div class="line"><span class="lineno">  555</span>    <a class="code hl_struct" href="structSkyImageResult.html">SkyImageResult</a> <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">result</a>;</div>
+<div class="line"><span class="lineno">  556</span>    <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">result</a>.<a class="code hl_variable" href="structSkyImageResult.html#a343793881491a365a38e9fb8c35d8a94">image</a> = <a class="code hl_typedef" href="mesh_8h.html#a6b76cc05bedc7fd9499c0bd3eec3bcb5">MeshGrid3d</a>({<a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">n_frames</a>, <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">npixel</a>, <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">npixel</a>}, 0);</div>
+<div class="line"><span class="lineno">  557</span> </div>
+<div class="line"><span class="lineno">  558</span>    <span class="keywordflow">if</span> (<a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">npixel</a> == 0 || t_grid &lt; 2) {</div>
+<div class="line"><span class="lineno">  559</span>        <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">result</a>.extent = {0, 0, 0, 0};</div>
+<div class="line"><span class="lineno">  560</span>        <span class="keywordflow">return</span> <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">result</a>;</div>
+<div class="line"><span class="lineno">  561</span>    }</div>
+<div class="line"><span class="lineno">  562</span> </div>
+<div class="line"><span class="lineno">  563</span>    <span class="comment">// Compute extent and pixel_solid_angle once (depends only on pix_size and npixel)</span></div>
+<div class="line"><span class="lineno">  564</span>    <span class="keyword">const</span> <a class="code hl_typedef" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">half_fov</a> = 0.5 * <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">pix_size</a> * <span class="keyword">static_cast&lt;</span><a class="code hl_typedef" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a><span class="keyword">&gt;</span>(<a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">npixel</a>);</div>
+<div class="line"><span class="lineno">  565</span>    <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">result</a>.extent = {-<a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">half_fov</a>, <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">half_fov</a>, -<a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">half_fov</a>, <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">half_fov</a>};</div>
+<div class="line"><span class="lineno">  566</span>    <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">result</a>.pixel_solid_angle = <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">pix_size</a> * <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">pix_size</a>;</div>
+<div class="line"><span class="lineno">  567</span> </div>
+<div class="line"><span class="lineno">  568</span>    <span class="comment">// Allocate SplatGrid once and reuse across frames</span></div>
+<div class="line"><span class="lineno">  569</span>    <span class="keyword">const</span> <span class="keywordtype">size_t</span> <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">n_splat_phi</a> = (eff_phi_grid == 1) ? std::max&lt;size_t&gt;(4 * theta_grid, <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">npixel</a>) : eff_phi_grid;</div>
+<div class="line"><span class="lineno">  570</span>    <a class="code hl_struct" href="structSplatGrid.html">SplatGrid</a> grid(<a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">n_splat_phi</a>, theta_grid);</div>
+<div class="line"><span class="lineno">  571</span> </div>
+<div class="line"><span class="lineno">  572</span>    <span class="comment">// Precompute phi sin/cos table once for axisymmetric case (reused across all frames)</span></div>
+<div class="line"><span class="lineno">  573</span>    <span class="keyword">const</span> <span class="keywordtype">size_t</span> <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">copies_per_phys</a> = <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">n_splat_phi</a> / eff_phi_grid;</div>
+<div class="line"><span class="lineno">  574</span>    std::vector&lt;Real&gt; <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">cos_phi_tab</a>, <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">sin_phi_tab</a>;</div>
+<div class="line"><span class="lineno">  575</span>    <span class="keywordflow">if</span> (eff_phi_grid == 1) {</div>
+<div class="line"><span class="lineno">  576</span>        <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">cos_phi_tab</a>.resize(<a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">copies_per_phys</a>);</div>
+<div class="line"><span class="lineno">  577</span>        <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">sin_phi_tab</a>.resize(<a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">copies_per_phys</a>);</div>
+<div class="line"><span class="lineno">  578</span>        <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> c = 0; <a class="code hl_variable" href="namespacecon.html#a2ff3edf57629ccb9a49d5bde7278a7c4">c</a> &lt; <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">copies_per_phys</a>; ++<a class="code hl_variable" href="namespacecon.html#a2ff3edf57629ccb9a49d5bde7278a7c4">c</a>) {</div>
+<div class="line"><span class="lineno">  579</span>            <span class="keyword">const</span> <a class="code hl_typedef" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> phi = 2.0 * <a class="code hl_variable" href="namespacecon.html#aa0ccd904b754d0f907898a942516d121">con::pi</a> * <a class="code hl_variable" href="namespacecon.html#a2ff3edf57629ccb9a49d5bde7278a7c4">c</a> / <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">n_splat_phi</a>;</div>
+<div class="line"><span class="lineno">  580</span>            <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">cos_phi_tab</a>[<a class="code hl_variable" href="namespacecon.html#a2ff3edf57629ccb9a49d5bde7278a7c4">c</a>] = std::cos(phi);</div>
+<div class="line"><span class="lineno">  581</span>            <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">sin_phi_tab</a>[<a class="code hl_variable" href="namespacecon.html#a2ff3edf57629ccb9a49d5bde7278a7c4">c</a>] = std::sin(phi);</div>
+<div class="line"><span class="lineno">  582</span>        }</div>
+<div class="line"><span class="lineno">  583</span>    }</div>
+<div class="line"><span class="lineno">  584</span> </div>
+<div class="line"><span class="lineno">  585</span>    <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">f</a> = 0; <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">f</a> &lt; <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">n_frames</a>; ++<a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">f</a>) {</div>
+<div class="line"><span class="lineno">  586</span>        grid.reset();</div>
+<div class="line"><span class="lineno">  587</span>        build_splat_grid(grid, <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">coord</a>, <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">shock</a>, t_obs(<a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">f</a>), <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">nu_obs</a>, photons, <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">cos_phi_tab</a>, <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">sin_phi_tab</a>);</div>
+<div class="line"><span class="lineno">  588</span>        <a class="code hl_typedef" href="mesh_8h.html#ae7ec6be5d638ad03ae6697ff2b71ef91">MeshGrid</a> <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">frame_img</a>({<a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">npixel</a>, <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">npixel</a>}, 0);</div>
+<div class="line"><span class="lineno">  589</span>        grid.render(<a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">frame_img</a>, <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">pix_size</a>);</div>
+<div class="line"><span class="lineno">  590</span>        xt::view(<a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">result</a>.image, <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">f</a>, xt::all(), xt::all()) = <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">frame_img</a>;</div>
+<div class="line"><span class="lineno">  591</span>    }</div>
+<div class="line"><span class="lineno">  592</span>    <span class="keywordflow">return</span> <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">result</a>;</div>
+<div class="line"><span class="lineno">  593</span>}</div>
+<div class="ttc" id="amesh_8h_html_a6b76cc05bedc7fd9499c0bd3eec3bcb5"><div class="ttname"><a href="mesh_8h.html#a6b76cc05bedc7fd9499c0bd3eec3bcb5">MeshGrid3d</a></div><div class="ttdeci">xt::xtensor&lt; Real, 3 &gt; MeshGrid3d</div><div class="ttdoc">Type alias for 3D grids (e.g., full spatial-temporal data)</div><div class="ttdef"><b>Definition</b> <a href="mesh_8h_source.html#l00045">mesh.h:45</a></div></div>
+<div class="ttc" id="anamespacecon_html_a2ff3edf57629ccb9a49d5bde7278a7c4"><div class="ttname"><a href="namespacecon.html#a2ff3edf57629ccb9a49d5bde7278a7c4">con::c</a></div><div class="ttdeci">constexpr Real c</div><div class="ttdoc">Speed of light (normalized to 1 in code units)</div><div class="ttdef"><b>Definition</b> <a href="macros_8h_source.html#l00087">macros.h:87</a></div></div>
+<div class="ttc" id="anamespacecon_html_aa0ccd904b754d0f907898a942516d121"><div class="ttname"><a href="namespacecon.html#aa0ccd904b754d0f907898a942516d121">con::pi</a></div><div class="ttdeci">constexpr Real pi</div><div class="ttdoc">Pi.</div><div class="ttdef"><b>Definition</b> <a href="macros_8h_source.html#l00097">macros.h:97</a></div></div>
+<div class="ttc" id="astructSkyImageResult_html"><div class="ttname"><a href="structSkyImageResult.html">SkyImageResult</a></div><div class="ttdoc">Result of a batched sky image computation: 3D surface brightness map with shared extent and pixel sol...</div><div class="ttdef"><b>Definition</b> <a href="observer_8h_source.html#l00022">observer.h:22</a></div></div>
+<div class="ttc" id="astructSkyImageResult_html_a343793881491a365a38e9fb8c35d8a94"><div class="ttname"><a href="structSkyImageResult.html#a343793881491a365a38e9fb8c35d8a94">SkyImageResult::image</a></div><div class="ttdeci">MeshGrid3d image</div><div class="ttdoc">[n_frames, npixel, npixel] surface brightness (code units)</div><div class="ttdef"><b>Definition</b> <a href="observer_8h_source.html#l00023">observer.h:23</a></div></div>
+<div class="ttc" id="astructSplatGrid_html"><div class="ttname"><a href="structSplatGrid.html">SplatGrid</a></div><div class="ttdoc">Internal cell grid for Gaussian splatting (sky position, luminosity, kernel width per cell).</div><div class="ttdef"><b>Definition</b> <a href="observer_8h_source.html#l00029">observer.h:29</a></div></div>
+</div><!-- fragment --><div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="classObserver_a31570a410e64cffe1e4b9e16af5acef0_cgraph.png" border="0" usemap="#aclassObserver_a31570a410e64cffe1e4b9e16af5acef0_cgraph" alt=""/></div>
+<map name="aclassObserver_a31570a410e64cffe1e4b9e16af5acef0_cgraph" id="aclassObserver_a31570a410e64cffe1e4b9e16af5acef0_cgraph">
+<area shape="rect" title="Computes resolved sky images at multiple observer times and a single frequency." alt="" coords="5,31,164,56"/>
+<area shape="rect" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89" title=" " alt="" coords="392,5,547,31"/>
+<area shape="poly" title=" " alt="" coords="137,28,212,15,297,11,378,11,378,16,297,16,212,21,138,33"/>
+<area shape="rect" href="structSplatGrid.html#a9ffeb9a575f70be2b040f424500f10d4" title="Render the splat grid via Gaussian splatting into the provided 2D image, centered at (0,..." alt="" coords="212,31,344,56"/>
+<area shape="poly" title=" " alt="" coords="164,41,198,41,198,46,164,46"/>
+<area shape="rect" href="structSplatGrid.html#aabfa00c30a490abd9341703146170d5a" title="Reset all arrays and bounds for reuse across frames." alt="" coords="217,80,339,105"/>
+<area shape="poly" title=" " alt="" coords="136,53,215,74,213,79,134,59"/>
+<area shape="poly" title=" " alt="" coords="344,32,378,27,379,33,345,37"/>
+</map>
+</div>
+<div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="classObserver_a31570a410e64cffe1e4b9e16af5acef0_icgraph.png" border="0" usemap="#aclassObserver_a31570a410e64cffe1e4b9e16af5acef0_icgraph" alt=""/></div>
+<map name="aclassObserver_a31570a410e64cffe1e4b9e16af5acef0_icgraph" id="aclassObserver_a31570a410e64cffe1e4b9e16af5acef0_icgraph">
+<area shape="rect" title="Computes resolved sky images at multiple observer times and a single frequency." alt="" coords="408,5,567,31"/>
+<area shape="rect" href="classPyModel.html#a982ace37b25f18b6bb32d880739ae88a" title="Compute resolved sky images at multiple observer times and a single frequency." alt="" coords="204,5,360,31"/>
+<area shape="poly" title=" " alt="" coords="394,21,360,21,360,15,394,15"/>
+<area shape="rect" href="pybind_8cpp.html#a8c92987849ad296e28ec6c07c8e7860b" title=" " alt="" coords="5,5,156,31"/>
+<area shape="poly" title=" " alt="" coords="190,21,157,21,157,15,190,15"/>
 </map>
 </div>
 
@@ -405,60 +583,61 @@ template&lt;<a class="el" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c
 <dl class="section return"><dt>Returns</dt><dd>2D grid of specific flux values (frequency × time)</dd></dl>
 <p>Returns the specific flux (as a MeshGrid) for multiple observed frequencies (nu_obs) by computing the specific flux for each frequency and assembling the results into a grid. This method accounts for relativistic beaming and cosmological effects. </p>
 
-<p class="definition">Definition at line <a class="el" href="observer_8h_source.html#l00314">314</a> of file <a class="el" href="observer_8h_source.html">observer.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  314</span>                                                                                             {</div>
-<div class="line"><span class="lineno">  315</span>    <span class="keyword">const</span> <span class="keywordtype">size_t</span> <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">t_obs_len</a> = t_obs.size();</div>
-<div class="line"><span class="lineno">  316</span>    <span class="keyword">const</span> <span class="keywordtype">size_t</span> <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">nu_len</a> = <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">nu_obs</a>.size();</div>
-<div class="line"><span class="lineno">  317</span> </div>
-<div class="line"><span class="lineno">  318</span>    <span class="keyword">const</span> <a class="code hl_typedef" href="mesh_8h.html#afd05120c4d579ec7fa4906f677781a83">Array</a> <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">lg2_t_obs</a> = xt::log2(t_obs);</div>
-<div class="line"><span class="lineno">  319</span>    <span class="keyword">const</span> <a class="code hl_typedef" href="mesh_8h.html#afd05120c4d579ec7fa4906f677781a83">Array</a> <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">lg2_nu_src</a> = xt::log2(<a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">nu_obs</a>) + std::log2(<a class="code hl_variable" href="classObserver.html#ada924f16ced53ca200a9f34222c5362d">one_plus_z</a>);</div>
-<div class="line"><span class="lineno">  320</span> </div>
-<div class="line"><span class="lineno">  321</span>    <a class="code hl_typedef" href="mesh_8h.html#ae7ec6be5d638ad03ae6697ff2b71ef91">MeshGrid</a> <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">F_nu</a>({<a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">nu_len</a>, <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">t_obs_len</a>}, 0);</div>
-<div class="line"><span class="lineno">  322</span> </div>
-<div class="line"><span class="lineno">  323</span>    <span class="keyword">struct </span><a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">Bracket</a> {</div>
-<div class="line"><span class="lineno">  324</span>        <span class="keywordtype">size_t</span> <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">k</a>;</div>
-<div class="line"><span class="lineno">  325</span>        <span class="keywordtype">size_t</span> <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">start</a>;</div>
-<div class="line"><span class="lineno">  326</span>        <span class="keywordtype">size_t</span> <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">end</a>;</div>
-<div class="line"><span class="lineno">  327</span>        <a class="code hl_typedef" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">t_lo</a>;</div>
-<div class="line"><span class="lineno">  328</span>    };</div>
-<div class="line"><span class="lineno">  329</span>    std::vector&lt;Bracket&gt; <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">brackets</a>;</div>
-<div class="line"><span class="lineno">  330</span>    <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">brackets</a>.reserve(t_grid);</div>
-<div class="line"><span class="lineno">  331</span> </div>
-<div class="line"><span class="lineno">  332</span>    <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">i</a> = 0; <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">i</a> &lt; eff_phi_grid; <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">i</a>++) {</div>
-<div class="line"><span class="lineno">  333</span>        <span class="keyword">const</span> <span class="keywordtype">size_t</span> <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">eff_i</a> = <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">i</a> * jet_3d;</div>
-<div class="line"><span class="lineno">  334</span>        <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">j</a> = 0; <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">j</a> &lt; theta_grid; <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">j</a>++) {</div>
-<div class="line"><span class="lineno">  335</span>            <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">brackets</a>.clear();</div>
-<div class="line"><span class="lineno">  336</span>            <span class="keywordtype">size_t</span> <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">t_idx</a> = 0;</div>
-<div class="line"><span class="lineno">  337</span>            <a class="code hl_function" href="observer_8h.html#aa53249b087b9b9d83f4c06e808deeed9">iterate_to</a>(<a class="code hl_variable" href="classObserver.html#aa4f3a6cbcc458b937c75befa86e04e2d">lg2_t</a>(<a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">i</a>, <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">j</a>, 0), <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">lg2_t_obs</a>, <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">t_idx</a>);</div>
-<div class="line"><span class="lineno">  338</span> </div>
-<div class="line"><span class="lineno">  339</span>            <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">k</a> = 0; <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">k</a> &lt; t_grid - 1 &amp;&amp; <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">t_idx</a> &lt; <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">t_obs_len</a>; <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">k</a>++) {</div>
-<div class="line"><span class="lineno">  340</span>                <span class="keywordflow">if</span> (<a class="code hl_variable" href="classObserver.html#aa4f3a6cbcc458b937c75befa86e04e2d">lg2_t</a>(<a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">i</a>, <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">j</a>, <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">k</a> + 1) &lt; <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">lg2_t_obs</a>(<a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">t_idx</a>))</div>
-<div class="line"><span class="lineno">  341</span>                    <span class="keywordflow">continue</span>;</div>
-<div class="line"><span class="lineno">  342</span>                <span class="keyword">const</span> <span class="keywordtype">size_t</span> <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">idx_start</a> = <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">t_idx</a>;</div>
-<div class="line"><span class="lineno">  343</span>                <a class="code hl_function" href="observer_8h.html#aa53249b087b9b9d83f4c06e808deeed9">iterate_to</a>(<a class="code hl_variable" href="classObserver.html#aa4f3a6cbcc458b937c75befa86e04e2d">lg2_t</a>(<a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">i</a>, <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">j</a>, <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">k</a> + 1), <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">lg2_t_obs</a>, <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">t_idx</a>);</div>
-<div class="line"><span class="lineno">  344</span>                <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">brackets</a>.emplace_back(<a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">k</a>, <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">idx_start</a>, <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">t_idx</a>, <a class="code hl_variable" href="classObserver.html#aa4f3a6cbcc458b937c75befa86e04e2d">lg2_t</a>(<a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">i</a>, <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">j</a>, <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">k</a>));</div>
-<div class="line"><span class="lineno">  345</span>            }</div>
-<div class="line"><span class="lineno">  346</span> </div>
-<div class="line"><span class="lineno">  347</span>            <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">l</a> = 0; <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">l</a> &lt; <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">nu_len</a>; <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">l</a>++) {</div>
-<div class="line"><span class="lineno">  348</span>                InterpState <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">state</a>;</div>
-<div class="line"><span class="lineno">  349</span>                <span class="keywordflow">for</span> (<span class="keyword">auto</span> <span class="keyword">const</span>&amp; <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">br</a> : <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">brackets</a>) {</div>
-<div class="line"><span class="lineno">  350</span>                    <span class="keywordflow">if</span> (set_boundaries(<a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">state</a>, <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">eff_i</a>, <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">i</a>, <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">j</a>, <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">br</a>.k, <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">lg2_nu_src</a>(<a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">l</a>), photons)) [[<a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">likely</a>]] {</div>
-<div class="line"><span class="lineno">  351</span>                        <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">idx</a> = <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">br</a>.start; <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">idx</a> &lt; <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">br</a>.end; <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">idx</a>++) {</div>
-<div class="line"><span class="lineno">  352</span>                            <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">F_nu</a>(<a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">l</a>, <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">idx</a>) += loglog_interpolate(<a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">state</a>, <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">lg2_t_obs</a>(<a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">idx</a>), <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">br</a>.t_lo);</div>
-<div class="line"><span class="lineno">  353</span>                        }</div>
-<div class="line"><span class="lineno">  354</span>                    }</div>
-<div class="line"><span class="lineno">  355</span>                }</div>
-<div class="line"><span class="lineno">  356</span>            }</div>
-<div class="line"><span class="lineno">  357</span>        }</div>
-<div class="line"><span class="lineno">  358</span>    }</div>
-<div class="line"><span class="lineno">  359</span> </div>
-<div class="line"><span class="lineno">  360</span>    <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">F_nu</a> *= <a class="code hl_variable" href="classObserver.html#ada924f16ced53ca200a9f34222c5362d">one_plus_z</a> / (lumi_dist * lumi_dist);</div>
-<div class="line"><span class="lineno">  361</span> </div>
-<div class="line"><span class="lineno">  362</span>    <span class="keywordflow">return</span> <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">F_nu</a>;</div>
-<div class="line"><span class="lineno">  363</span>}</div>
-<div class="ttc" id="aclassObserver_html_aa4f3a6cbcc458b937c75befa86e04e2d"><div class="ttname"><a href="classObserver.html#aa4f3a6cbcc458b937c75befa86e04e2d">Observer::lg2_t</a></div><div class="ttdeci">MeshGrid3d lg2_t</div><div class="ttdoc">Log2 of observation time grid.</div><div class="ttdef"><b>Definition</b> <a href="observer_8h_source.html#l00147">observer.h:147</a></div></div>
-<div class="ttc" id="aclassObserver_html_ada924f16ced53ca200a9f34222c5362d"><div class="ttname"><a href="classObserver.html#ada924f16ced53ca200a9f34222c5362d">Observer::one_plus_z</a></div><div class="ttdeci">Real one_plus_z</div><div class="ttdoc">1 + redshift</div><div class="ttdef"><b>Definition</b> <a href="observer_8h_source.html#l00150">observer.h:150</a></div></div>
-<div class="ttc" id="aobserver_8h_html_aa53249b087b9b9d83f4c06e808deeed9"><div class="ttname"><a href="observer_8h.html#aa53249b087b9b9d83f4c06e808deeed9">iterate_to</a></div><div class="ttdeci">void iterate_to(Real value, Array const &amp;arr, size_t &amp;it) noexcept</div><div class="ttdoc">Helper function that advances an iterator through an array until the value exceeds the target.</div><div class="ttdef"><b>Definition</b> <a href="observer_8h_source.html#l00271">observer.h:271</a></div></div>
+<p class="definition">Definition at line <a class="el" href="observer_8h_source.html#l00350">350</a> of file <a class="el" href="observer_8h_source.html">observer.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  350</span>                                                                                             {</div>
+<div class="line"><span class="lineno">  351</span>    <span class="keyword">const</span> <span class="keywordtype">size_t</span> <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">t_obs_len</a> = t_obs.size();</div>
+<div class="line"><span class="lineno">  352</span>    <span class="keyword">const</span> <span class="keywordtype">size_t</span> <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">nu_len</a> = <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">nu_obs</a>.size();</div>
+<div class="line"><span class="lineno">  353</span> </div>
+<div class="line"><span class="lineno">  354</span>    <span class="keyword">const</span> <a class="code hl_typedef" href="mesh_8h.html#afd05120c4d579ec7fa4906f677781a83">Array</a> <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">lg2_t_obs</a> = xt::log2(t_obs);</div>
+<div class="line"><span class="lineno">  355</span>    <span class="keyword">const</span> <a class="code hl_typedef" href="mesh_8h.html#afd05120c4d579ec7fa4906f677781a83">Array</a> <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">lg2_nu_src</a> = xt::log2(<a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">nu_obs</a>) + std::log2(<a class="code hl_variable" href="classObserver.html#ada924f16ced53ca200a9f34222c5362d">one_plus_z</a>);</div>
+<div class="line"><span class="lineno">  356</span> </div>
+<div class="line"><span class="lineno">  357</span>    <a class="code hl_typedef" href="mesh_8h.html#ae7ec6be5d638ad03ae6697ff2b71ef91">MeshGrid</a> <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">F_nu</a>({<a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">nu_len</a>, <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">t_obs_len</a>}, 0);</div>
+<div class="line"><span class="lineno">  358</span> </div>
+<div class="line"><span class="lineno">  359</span>    <span class="keyword">struct </span><a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">Bracket</a> {</div>
+<div class="line"><span class="lineno">  360</span>        <span class="keywordtype">size_t</span> <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">k</a>;</div>
+<div class="line"><span class="lineno">  361</span>        <span class="keywordtype">size_t</span> <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">start</a>;</div>
+<div class="line"><span class="lineno">  362</span>        <span class="keywordtype">size_t</span> <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">end</a>;</div>
+<div class="line"><span class="lineno">  363</span>        <a class="code hl_typedef" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">t_lo</a>;</div>
+<div class="line"><span class="lineno">  364</span>    };</div>
+<div class="line"><span class="lineno">  365</span>    std::vector&lt;Bracket&gt; <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">brackets</a>;</div>
+<div class="line"><span class="lineno">  366</span>    <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">brackets</a>.reserve(t_grid);</div>
+<div class="line"><span class="lineno">  367</span> </div>
+<div class="line"><span class="lineno">  368</span>    <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">i</a> = 0; <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">i</a> &lt; eff_phi_grid; <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">i</a>++) {</div>
+<div class="line"><span class="lineno">  369</span>        <span class="keyword">const</span> <span class="keywordtype">size_t</span> <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">eff_i</a> = <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">i</a> * jet_3d;</div>
+<div class="line"><span class="lineno">  370</span>        <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">j</a> = 0; <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">j</a> &lt; theta_grid; <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">j</a>++) {</div>
+<div class="line"><span class="lineno">  371</span>            <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">brackets</a>.clear();</div>
+<div class="line"><span class="lineno">  372</span>            <span class="keywordtype">size_t</span> <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">t_idx</a> = 0;</div>
+<div class="line"><span class="lineno">  373</span>            <a class="code hl_function" href="observer_8h.html#aa53249b087b9b9d83f4c06e808deeed9">iterate_to</a>(<a class="code hl_variable" href="classObserver.html#aa4f3a6cbcc458b937c75befa86e04e2d">lg2_t</a>(<a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">i</a>, <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">j</a>, 0), <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">lg2_t_obs</a>, <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">t_idx</a>);</div>
+<div class="line"><span class="lineno">  374</span> </div>
+<div class="line"><span class="lineno">  375</span>            <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">k</a> = 0; <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">k</a> &lt; t_grid - 1 &amp;&amp; <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">t_idx</a> &lt; <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">t_obs_len</a>; <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">k</a>++) {</div>
+<div class="line"><span class="lineno">  376</span>                <span class="keywordflow">if</span> (<a class="code hl_variable" href="classObserver.html#aa4f3a6cbcc458b937c75befa86e04e2d">lg2_t</a>(<a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">i</a>, <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">j</a>, <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">k</a> + 1) &lt; <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">lg2_t_obs</a>(<a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">t_idx</a>)) {</div>
+<div class="line"><span class="lineno">  377</span>                    <span class="keywordflow">continue</span>;</div>
+<div class="line"><span class="lineno">  378</span>                }</div>
+<div class="line"><span class="lineno">  379</span>                <span class="keyword">const</span> <span class="keywordtype">size_t</span> <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">idx_start</a> = <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">t_idx</a>;</div>
+<div class="line"><span class="lineno">  380</span>                <a class="code hl_function" href="observer_8h.html#aa53249b087b9b9d83f4c06e808deeed9">iterate_to</a>(<a class="code hl_variable" href="classObserver.html#aa4f3a6cbcc458b937c75befa86e04e2d">lg2_t</a>(<a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">i</a>, <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">j</a>, <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">k</a> + 1), <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">lg2_t_obs</a>, <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">t_idx</a>);</div>
+<div class="line"><span class="lineno">  381</span>                <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">brackets</a>.emplace_back(<a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">k</a>, <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">idx_start</a>, <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">t_idx</a>, <a class="code hl_variable" href="classObserver.html#aa4f3a6cbcc458b937c75befa86e04e2d">lg2_t</a>(<a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">i</a>, <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">j</a>, <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">k</a>));</div>
+<div class="line"><span class="lineno">  382</span>            }</div>
+<div class="line"><span class="lineno">  383</span> </div>
+<div class="line"><span class="lineno">  384</span>            <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">l</a> = 0; <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">l</a> &lt; <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">nu_len</a>; <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">l</a>++) {</div>
+<div class="line"><span class="lineno">  385</span>                InterpState <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">state</a>;</div>
+<div class="line"><span class="lineno">  386</span>                <span class="keywordflow">for</span> (<span class="keyword">auto</span> <span class="keyword">const</span>&amp; <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">br</a> : <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">brackets</a>) {</div>
+<div class="line"><span class="lineno">  387</span>                    <span class="keywordflow">if</span> (set_boundaries(<a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">state</a>, <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">eff_i</a>, <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">i</a>, <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">j</a>, <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">br</a>.k, <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">lg2_nu_src</a>(<a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">l</a>), photons)) [[<a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">likely</a>]] {</div>
+<div class="line"><span class="lineno">  388</span>                        <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">idx</a> = <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">br</a>.start; <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">idx</a> &lt; <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">br</a>.end; <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">idx</a>++) {</div>
+<div class="line"><span class="lineno">  389</span>                            <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">F_nu</a>(<a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">l</a>, <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">idx</a>) += loglog_interpolate(<a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">state</a>, <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">lg2_t_obs</a>(<a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">idx</a>), <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">br</a>.t_lo);</div>
+<div class="line"><span class="lineno">  390</span>                        }</div>
+<div class="line"><span class="lineno">  391</span>                    }</div>
+<div class="line"><span class="lineno">  392</span>                }</div>
+<div class="line"><span class="lineno">  393</span>            }</div>
+<div class="line"><span class="lineno">  394</span>        }</div>
+<div class="line"><span class="lineno">  395</span>    }</div>
+<div class="line"><span class="lineno">  396</span> </div>
+<div class="line"><span class="lineno">  397</span>    <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">F_nu</a> *= <a class="code hl_variable" href="classObserver.html#ada924f16ced53ca200a9f34222c5362d">one_plus_z</a> / (lumi_dist * lumi_dist);</div>
+<div class="line"><span class="lineno">  398</span> </div>
+<div class="line"><span class="lineno">  399</span>    <span class="keywordflow">return</span> <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">F_nu</a>;</div>
+<div class="line"><span class="lineno">  400</span>}</div>
+<div class="ttc" id="aclassObserver_html_aa4f3a6cbcc458b937c75befa86e04e2d"><div class="ttname"><a href="classObserver.html#aa4f3a6cbcc458b937c75befa86e04e2d">Observer::lg2_t</a></div><div class="ttdeci">MeshGrid3d lg2_t</div><div class="ttdoc">Log2 of observation time grid.</div><div class="ttdef"><b>Definition</b> <a href="observer_8h_source.html#l00186">observer.h:186</a></div></div>
+<div class="ttc" id="aclassObserver_html_ada924f16ced53ca200a9f34222c5362d"><div class="ttname"><a href="classObserver.html#ada924f16ced53ca200a9f34222c5362d">Observer::one_plus_z</a></div><div class="ttdeci">Real one_plus_z</div><div class="ttdoc">1 + redshift</div><div class="ttdef"><b>Definition</b> <a href="observer_8h_source.html#l00189">observer.h:189</a></div></div>
+<div class="ttc" id="aobserver_8h_html_aa53249b087b9b9d83f4c06e808deeed9"><div class="ttname"><a href="observer_8h.html#aa53249b087b9b9d83f4c06e808deeed9">iterate_to</a></div><div class="ttdeci">void iterate_to(Real value, Array const &amp;arr, size_t &amp;it) noexcept</div><div class="ttdoc">Helper function that advances an iterator through an array until the value exceeds the target.</div><div class="ttdef"><b>Definition</b> <a href="observer_8h_source.html#l00312">observer.h:312</a></div></div>
 </div><!-- fragment --><div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -526,10 +705,10 @@ template&lt;<a class="el" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c
 </dl>
 <p>Returns the specific flux (as an Array) for a single observed frequency (nu_obs) by computing the specific flux over the observation times. </p><dl class="section return"><dt>Returns</dt><dd>Array of specific flux values at each observation time </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="observer_8h_source.html#l00406">406</a> of file <a class="el" href="observer_8h_source.html">observer.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  406</span>                                                                                  {</div>
-<div class="line"><span class="lineno">  407</span>    <span class="keywordflow">return</span> xt::view(<a class="code hl_function" href="classObserver.html#a5350b13ae5a6c7007ba6459923573136">specific_flux</a>(t_obs, <a class="code hl_typedef" href="mesh_8h.html#afd05120c4d579ec7fa4906f677781a83">Array</a>({<a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">nu_obs</a>}), photons), 0);</div>
-<div class="line"><span class="lineno">  408</span>}</div>
+<p class="definition">Definition at line <a class="el" href="observer_8h_source.html#l00443">443</a> of file <a class="el" href="observer_8h_source.html">observer.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  443</span>                                                                                  {</div>
+<div class="line"><span class="lineno">  444</span>    <span class="keywordflow">return</span> xt::view(<a class="code hl_function" href="classObserver.html#a5350b13ae5a6c7007ba6459923573136">specific_flux</a>(t_obs, <a class="code hl_typedef" href="mesh_8h.html#afd05120c4d579ec7fa4906f677781a83">Array</a>({<a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">nu_obs</a>}), photons), 0);</div>
+<div class="line"><span class="lineno">  445</span>}</div>
 </div><!-- fragment --><div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -611,45 +790,45 @@ template&lt;<a class="el" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Array of specific flux values at each observation time for a single observed frequency </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="observer_8h_source.html#l00366">366</a> of file <a class="el" href="observer_8h_source.html">observer.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  366</span>                                                                                                 {</div>
-<div class="line"><span class="lineno">  367</span>    <span class="keyword">const</span> <span class="keywordtype">size_t</span> <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">t_obs_len</a> = t_obs.size();</div>
-<div class="line"><span class="lineno">  368</span> </div>
-<div class="line"><span class="lineno">  369</span>    <span class="keywordflow">if</span> (<a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">nu_obs</a>.size() != <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">t_obs_len</a>) {</div>
-<div class="line"><span class="lineno">  370</span>        <span class="keywordflow">throw</span> std::invalid_argument(<span class="stringliteral">&quot;specific_flux_series requires nu_obs and t_obs to have the same length&quot;</span>);</div>
-<div class="line"><span class="lineno">  371</span>    }</div>
-<div class="line"><span class="lineno">  372</span> </div>
-<div class="line"><span class="lineno">  373</span>    <span class="keyword">const</span> <a class="code hl_typedef" href="mesh_8h.html#afd05120c4d579ec7fa4906f677781a83">Array</a> <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">lg2_t_obs</a> = xt::log2(t_obs);</div>
-<div class="line"><span class="lineno">  374</span>    <span class="keyword">const</span> <a class="code hl_typedef" href="mesh_8h.html#afd05120c4d579ec7fa4906f677781a83">Array</a> <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">lg2_nu_src</a> = xt::log2(<a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">nu_obs</a>) + std::log2(<a class="code hl_variable" href="classObserver.html#ada924f16ced53ca200a9f34222c5362d">one_plus_z</a>);</div>
-<div class="line"><span class="lineno">  375</span> </div>
-<div class="line"><span class="lineno">  376</span>    <a class="code hl_typedef" href="mesh_8h.html#afd05120c4d579ec7fa4906f677781a83">Array</a> <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">F_nu</a> = xt::zeros&lt;Real&gt;({<a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">t_obs_len</a>});</div>
-<div class="line"><span class="lineno">  377</span> </div>
-<div class="line"><span class="lineno">  378</span>    <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">i</a> = 0; <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">i</a> &lt; eff_phi_grid; <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">i</a>++) {</div>
-<div class="line"><span class="lineno">  379</span>        <span class="keyword">const</span> <span class="keywordtype">size_t</span> <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">eff_i</a> = <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">i</a> * jet_3d;</div>
-<div class="line"><span class="lineno">  380</span>        <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">j</a> = 0; <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">j</a> &lt; theta_grid; <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">j</a>++) {</div>
-<div class="line"><span class="lineno">  381</span>            <span class="comment">// Skip observation times below the grid&#39;s start time</span></div>
-<div class="line"><span class="lineno">  382</span>            <span class="keywordtype">size_t</span> <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">idx</a> = 0;</div>
-<div class="line"><span class="lineno">  383</span>            <a class="code hl_function" href="observer_8h.html#aa53249b087b9b9d83f4c06e808deeed9">iterate_to</a>(<a class="code hl_variable" href="classObserver.html#aa4f3a6cbcc458b937c75befa86e04e2d">lg2_t</a>(<a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">i</a>, <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">j</a>, 0), <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">lg2_t_obs</a>, <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">idx</a>);</div>
-<div class="line"><span class="lineno">  384</span> </div>
-<div class="line"><span class="lineno">  385</span>            InterpState <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">state</a>;</div>
-<div class="line"><span class="lineno">  386</span>            <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">k</a> = 0; <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">idx</a> &lt; <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">t_obs_len</a> &amp;&amp; <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">k</a> &lt; t_grid - 1;) {</div>
-<div class="line"><span class="lineno">  387</span>                <span class="keywordflow">if</span> (<a class="code hl_variable" href="classObserver.html#aa4f3a6cbcc458b937c75befa86e04e2d">lg2_t</a>(<a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">i</a>, <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">j</a>, <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">k</a> + 1) &lt; <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">lg2_t_obs</a>(<a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">idx</a>)) {</div>
-<div class="line"><span class="lineno">  388</span>                    <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">k</a>++;</div>
-<div class="line"><span class="lineno">  389</span>                } <span class="keywordflow">else</span> {</div>
-<div class="line"><span class="lineno">  390</span>                    <span class="keywordflow">if</span> (set_boundaries(<a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">state</a>, <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">eff_i</a>, <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">i</a>, <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">j</a>, <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">k</a>, <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">lg2_nu_src</a>(<a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">idx</a>), photons)) [[<a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">likely</a>]] {</div>
-<div class="line"><span class="lineno">  391</span>                        <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">F_nu</a>(<a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">idx</a>) += loglog_interpolate(<a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">state</a>, <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">lg2_t_obs</a>(<a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">idx</a>), <a class="code hl_variable" href="classObserver.html#aa4f3a6cbcc458b937c75befa86e04e2d">lg2_t</a>(<a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">i</a>, <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">j</a>, <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">k</a>));</div>
-<div class="line"><span class="lineno">  392</span>                    }</div>
-<div class="line"><span class="lineno">  393</span>                    <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">idx</a>++;</div>
-<div class="line"><span class="lineno">  394</span>                }</div>
-<div class="line"><span class="lineno">  395</span>            }</div>
-<div class="line"><span class="lineno">  396</span>        }</div>
-<div class="line"><span class="lineno">  397</span>    }</div>
-<div class="line"><span class="lineno">  398</span> </div>
-<div class="line"><span class="lineno">  399</span>    <span class="comment">// Normalize the flux by the factor (1+z)/(lumi_dist^2).</span></div>
-<div class="line"><span class="lineno">  400</span>    <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">F_nu</a> *= <a class="code hl_variable" href="classObserver.html#ada924f16ced53ca200a9f34222c5362d">one_plus_z</a> / (lumi_dist * lumi_dist);</div>
-<div class="line"><span class="lineno">  401</span> </div>
-<div class="line"><span class="lineno">  402</span>    <span class="keywordflow">return</span> <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">F_nu</a>;</div>
-<div class="line"><span class="lineno">  403</span>}</div>
+<p class="definition">Definition at line <a class="el" href="observer_8h_source.html#l00403">403</a> of file <a class="el" href="observer_8h_source.html">observer.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  403</span>                                                                                                 {</div>
+<div class="line"><span class="lineno">  404</span>    <span class="keyword">const</span> <span class="keywordtype">size_t</span> <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">t_obs_len</a> = t_obs.size();</div>
+<div class="line"><span class="lineno">  405</span> </div>
+<div class="line"><span class="lineno">  406</span>    <span class="keywordflow">if</span> (<a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">nu_obs</a>.size() != <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">t_obs_len</a>) {</div>
+<div class="line"><span class="lineno">  407</span>        <span class="keywordflow">throw</span> std::invalid_argument(<span class="stringliteral">&quot;specific_flux_series requires nu_obs and t_obs to have the same length&quot;</span>);</div>
+<div class="line"><span class="lineno">  408</span>    }</div>
+<div class="line"><span class="lineno">  409</span> </div>
+<div class="line"><span class="lineno">  410</span>    <span class="keyword">const</span> <a class="code hl_typedef" href="mesh_8h.html#afd05120c4d579ec7fa4906f677781a83">Array</a> <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">lg2_t_obs</a> = xt::log2(t_obs);</div>
+<div class="line"><span class="lineno">  411</span>    <span class="keyword">const</span> <a class="code hl_typedef" href="mesh_8h.html#afd05120c4d579ec7fa4906f677781a83">Array</a> <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">lg2_nu_src</a> = xt::log2(<a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">nu_obs</a>) + std::log2(<a class="code hl_variable" href="classObserver.html#ada924f16ced53ca200a9f34222c5362d">one_plus_z</a>);</div>
+<div class="line"><span class="lineno">  412</span> </div>
+<div class="line"><span class="lineno">  413</span>    <a class="code hl_typedef" href="mesh_8h.html#afd05120c4d579ec7fa4906f677781a83">Array</a> <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">F_nu</a> = xt::zeros&lt;Real&gt;({<a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">t_obs_len</a>});</div>
+<div class="line"><span class="lineno">  414</span> </div>
+<div class="line"><span class="lineno">  415</span>    <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">i</a> = 0; <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">i</a> &lt; eff_phi_grid; <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">i</a>++) {</div>
+<div class="line"><span class="lineno">  416</span>        <span class="keyword">const</span> <span class="keywordtype">size_t</span> <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">eff_i</a> = <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">i</a> * jet_3d;</div>
+<div class="line"><span class="lineno">  417</span>        <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">j</a> = 0; <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">j</a> &lt; theta_grid; <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">j</a>++) {</div>
+<div class="line"><span class="lineno">  418</span>            <span class="comment">// Skip observation times below the grid&#39;s start time</span></div>
+<div class="line"><span class="lineno">  419</span>            <span class="keywordtype">size_t</span> <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">idx</a> = 0;</div>
+<div class="line"><span class="lineno">  420</span>            <a class="code hl_function" href="observer_8h.html#aa53249b087b9b9d83f4c06e808deeed9">iterate_to</a>(<a class="code hl_variable" href="classObserver.html#aa4f3a6cbcc458b937c75befa86e04e2d">lg2_t</a>(<a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">i</a>, <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">j</a>, 0), <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">lg2_t_obs</a>, <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">idx</a>);</div>
+<div class="line"><span class="lineno">  421</span> </div>
+<div class="line"><span class="lineno">  422</span>            InterpState <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">state</a>;</div>
+<div class="line"><span class="lineno">  423</span>            <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">k</a> = 0; <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">idx</a> &lt; <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">t_obs_len</a> &amp;&amp; <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">k</a> &lt; t_grid - 1;) {</div>
+<div class="line"><span class="lineno">  424</span>                <span class="keywordflow">if</span> (<a class="code hl_variable" href="classObserver.html#aa4f3a6cbcc458b937c75befa86e04e2d">lg2_t</a>(<a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">i</a>, <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">j</a>, <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">k</a> + 1) &lt; <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">lg2_t_obs</a>(<a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">idx</a>)) {</div>
+<div class="line"><span class="lineno">  425</span>                    <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">k</a>++;</div>
+<div class="line"><span class="lineno">  426</span>                } <span class="keywordflow">else</span> {</div>
+<div class="line"><span class="lineno">  427</span>                    <span class="keywordflow">if</span> (set_boundaries(<a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">state</a>, <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">eff_i</a>, <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">i</a>, <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">j</a>, <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">k</a>, <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">lg2_nu_src</a>(<a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">idx</a>), photons)) [[<a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">likely</a>]] {</div>
+<div class="line"><span class="lineno">  428</span>                        <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">F_nu</a>(<a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">idx</a>) += loglog_interpolate(<a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">state</a>, <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">lg2_t_obs</a>(<a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">idx</a>), <a class="code hl_variable" href="classObserver.html#aa4f3a6cbcc458b937c75befa86e04e2d">lg2_t</a>(<a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">i</a>, <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">j</a>, <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">k</a>));</div>
+<div class="line"><span class="lineno">  429</span>                    }</div>
+<div class="line"><span class="lineno">  430</span>                    <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">idx</a>++;</div>
+<div class="line"><span class="lineno">  431</span>                }</div>
+<div class="line"><span class="lineno">  432</span>            }</div>
+<div class="line"><span class="lineno">  433</span>        }</div>
+<div class="line"><span class="lineno">  434</span>    }</div>
+<div class="line"><span class="lineno">  435</span> </div>
+<div class="line"><span class="lineno">  436</span>    <span class="comment">// Normalize the flux by the factor (1+z)/(lumi_dist^2).</span></div>
+<div class="line"><span class="lineno">  437</span>    <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">F_nu</a> *= <a class="code hl_variable" href="classObserver.html#ada924f16ced53ca200a9f34222c5362d">one_plus_z</a> / (lumi_dist * lumi_dist);</div>
+<div class="line"><span class="lineno">  438</span> </div>
+<div class="line"><span class="lineno">  439</span>    <span class="keywordflow">return</span> <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">F_nu</a>;</div>
+<div class="line"><span class="lineno">  440</span>}</div>
 </div><!-- fragment --><div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -717,10 +896,10 @@ template&lt;<a class="el" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c
 </dl>
 <p>Returns the spectra (as a MeshGrid) for multiple observation times by computing the specific flux for each frequency and transposing the result to get freq × time format. </p><dl class="section return"><dt>Returns</dt><dd>2D grid of spectra (frequency × time) </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="observer_8h_source.html#l00416">416</a> of file <a class="el" href="observer_8h_source.html">observer.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  416</span>                                                                                      {</div>
-<div class="line"><span class="lineno">  417</span>    <span class="keywordflow">return</span> xt::transpose(<a class="code hl_function" href="classObserver.html#a5350b13ae5a6c7007ba6459923573136">specific_flux</a>(t_obs, <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">freqs</a>, photons));</div>
-<div class="line"><span class="lineno">  418</span>}</div>
+<p class="definition">Definition at line <a class="el" href="observer_8h_source.html#l00453">453</a> of file <a class="el" href="observer_8h_source.html">observer.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  453</span>                                                                                      {</div>
+<div class="line"><span class="lineno">  454</span>    <span class="keywordflow">return</span> xt::transpose(<a class="code hl_function" href="classObserver.html#a5350b13ae5a6c7007ba6459923573136">specific_flux</a>(t_obs, <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">freqs</a>, photons));</div>
+<div class="line"><span class="lineno">  455</span>}</div>
 </div><!-- fragment --><div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -799,11 +978,11 @@ template&lt;<a class="el" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c
 </dl>
 <p>Returns the spectrum (as an Array) at a single observation time by computing the specific flux for each frequency in the given array. </p><dl class="section return"><dt>Returns</dt><dd>Array containing the spectrum at the given time </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="observer_8h_source.html#l00411">411</a> of file <a class="el" href="observer_8h_source.html">observer.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  411</span>                                                                            {</div>
-<div class="line"><span class="lineno">  412</span>    <span class="keywordflow">return</span> xt::view(<a class="code hl_function" href="classObserver.html#a18a5b8ffa6dad54050d7de094c24094b">spectra</a>(<a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">freqs</a>, <a class="code hl_typedef" href="mesh_8h.html#afd05120c4d579ec7fa4906f677781a83">Array</a>({t_obs}), photons), 0);</div>
-<div class="line"><span class="lineno">  413</span>}</div>
-<div class="ttc" id="aclassObserver_html_a18a5b8ffa6dad54050d7de094c24094b"><div class="ttname"><a href="classObserver.html#a18a5b8ffa6dad54050d7de094c24094b">Observer::spectra</a></div><div class="ttdeci">MeshGrid spectra(Array const &amp;freqs, Array const &amp;t_obs, PhotonGrid &amp;photons)</div><div class="ttdoc">Computes the spectrum at multiple observation times.</div><div class="ttdef"><b>Definition</b> <a href="observer_8h_source.html#l00416">observer.h:416</a></div></div>
+<p class="definition">Definition at line <a class="el" href="observer_8h_source.html#l00448">448</a> of file <a class="el" href="observer_8h_source.html">observer.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  448</span>                                                                            {</div>
+<div class="line"><span class="lineno">  449</span>    <span class="keywordflow">return</span> xt::view(<a class="code hl_function" href="classObserver.html#a18a5b8ffa6dad54050d7de094c24094b">spectra</a>(<a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">freqs</a>, <a class="code hl_typedef" href="mesh_8h.html#afd05120c4d579ec7fa4906f677781a83">Array</a>({t_obs}), photons), 0);</div>
+<div class="line"><span class="lineno">  450</span>}</div>
+<div class="ttc" id="aclassObserver_html_a18a5b8ffa6dad54050d7de094c24094b"><div class="ttname"><a href="classObserver.html#a18a5b8ffa6dad54050d7de094c24094b">Observer::spectra</a></div><div class="ttdeci">MeshGrid spectra(Array const &amp;freqs, Array const &amp;t_obs, PhotonGrid &amp;photons)</div><div class="ttdoc">Computes the spectrum at multiple observation times.</div><div class="ttdef"><b>Definition</b> <a href="observer_8h_source.html#l00453">observer.h:453</a></div></div>
 </div><!-- fragment --><div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -839,7 +1018,7 @@ Here is the call graph for this function:</div>
 
 <p>Log2 of Doppler factor grid. </p>
 
-<p class="definition">Definition at line <a class="el" href="observer_8h_source.html#l00148">148</a> of file <a class="el" href="observer_8h_source.html">observer.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="observer_8h_source.html#l00187">187</a> of file <a class="el" href="observer_8h_source.html">observer.h</a>.</p>
 
 </div>
 </div>
@@ -857,7 +1036,7 @@ Here is the call graph for this function:</div>
 
 <p>Log2 of observe frame geometric factor (solid angle * r^2 * D^3) </p>
 
-<p class="definition">Definition at line <a class="el" href="observer_8h_source.html#l00149">149</a> of file <a class="el" href="observer_8h_source.html">observer.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="observer_8h_source.html#l00188">188</a> of file <a class="el" href="observer_8h_source.html">observer.h</a>.</p>
 
 </div>
 </div>
@@ -875,7 +1054,7 @@ Here is the call graph for this function:</div>
 
 <p>Log2 of observation time grid. </p>
 
-<p class="definition">Definition at line <a class="el" href="observer_8h_source.html#l00147">147</a> of file <a class="el" href="observer_8h_source.html">observer.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="observer_8h_source.html#l00186">186</a> of file <a class="el" href="observer_8h_source.html">observer.h</a>.</p>
 
 </div>
 </div>
@@ -893,8 +1072,8 @@ Here is the call graph for this function:</div>
 
 <p>1 + redshift </p>
 
-<p class="definition">Definition at line <a class="el" href="observer_8h_source.html#l00150">150</a> of file <a class="el" href="observer_8h_source.html">observer.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  150</span>{1};         <span class="comment">///&lt; 1 + redshift</span></div>
+<p class="definition">Definition at line <a class="el" href="observer_8h_source.html#l00189">189</a> of file <a class="el" href="observer_8h_source.html">observer.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  189</span>{1};         <span class="comment">///&lt; 1 + redshift</span></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -912,7 +1091,7 @@ Here is the call graph for this function:</div>
 
 <p>Grid of observation times. </p>
 
-<p class="definition">Definition at line <a class="el" href="observer_8h_source.html#l00031">31</a> of file <a class="el" href="observer_8h_source.html">observer.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="observer_8h_source.html#l00066">66</a> of file <a class="el" href="observer_8h_source.html">observer.h</a>.</p>
 
 </div>
 </div>

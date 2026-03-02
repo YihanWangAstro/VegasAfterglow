@@ -6,5 +6,5 @@ var searchData=
   ['adaptive_5ftheta_5fgrid_3',['adaptive_theta_grid',['../mesh_8h.html#a3dc6828dd13a70c0c203dba03e765cea',1,'mesh.h']]],
   ['add_5fsegment_4',['add_segment',['../structBrokenPowerLaw.html#a66b7bd352329cce7a3cc98bab9e68954',1,'BrokenPowerLaw']]],
   ['adiabatic_5fidx_5',['adiabatic_idx',['../namespacephysics_1_1thermo.html#a0e4362f3caba6d9e8472e027cc341820',1,'physics::thermo']]],
-  ['auto_5fgrid_6',['auto_grid',['../mesh_8h.html#a96aa0a78a0de13a52955de3c2ce29ddd',1,'mesh.h']]]
+  ['auto_5fgrid_6',['auto_grid',['../mesh_8h.html#ad197ba082b4452377f90e3a5bafd0ccc',1,'mesh.h']]]
 ];

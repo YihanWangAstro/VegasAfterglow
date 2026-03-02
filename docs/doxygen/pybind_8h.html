@@ -174,7 +174,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="pybind_8h_source.html#l00020">20</a> of file <a class="el" href="pybind_8h_source.html">pybind.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="pybind_8h_source.html#l00021">21</a> of file <a class="el" href="pybind_8h_source.html">pybind.h</a>.</p>
 
 </div>
 </div>
@@ -190,7 +190,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="pybind_8h_source.html#l00021">21</a> of file <a class="el" href="pybind_8h_source.html">pybind.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="pybind_8h_source.html#l00022">22</a> of file <a class="el" href="pybind_8h_source.html">pybind.h</a>.</p>
 
 </div>
 </div>
@@ -206,7 +206,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="pybind_8h_source.html#l00022">22</a> of file <a class="el" href="pybind_8h_source.html">pybind.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="pybind_8h_source.html#l00023">23</a> of file <a class="el" href="pybind_8h_source.html">pybind.h</a>.</p>
 
 </div>
 </div>
@@ -229,18 +229,19 @@ template&lt;<a class="el" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="pybind_8h_source.html#l00025">25</a> of file <a class="el" href="pybind_8h_source.html">pybind.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   25</span>                                    {</div>
-<div class="line"><span class="lineno">   26</span>    <span class="keywordflow">if</span> (<a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">arr</a>.size() &lt;= 1)</div>
-<div class="line"><span class="lineno">   27</span>        <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
-<div class="line"><span class="lineno">   28</span>    <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">i</a> = 1; <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">i</a> &lt; <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">arr</a>.size(); ++<a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">i</a>) {</div>
-<div class="line"><span class="lineno">   29</span>        <span class="keywordflow">if</span> (<a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">arr</a>(<a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">i</a>) &lt; <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">arr</a>(<a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">i</a> - 1)) {</div>
-<div class="line"><span class="lineno">   30</span>            <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
-<div class="line"><span class="lineno">   31</span>        }</div>
-<div class="line"><span class="lineno">   32</span>    }</div>
-<div class="line"><span class="lineno">   33</span>    <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
-<div class="line"><span class="lineno">   34</span>}</div>
-<div class="ttc" id="apybind_8cpp_html_ad93eae6422741850877b46bd61f08c89"><div class="ttname"><a href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">make_native_binary</a></div><div class="ttdeci">BinaryFunc make_native_binary(uintptr_t addr, std::vector&lt; Real &gt; const &amp;p)</div><div class="ttdef"><b>Definition</b> <a href="pybind_8cpp_source.html#l00027">pybind.cpp:27</a></div></div>
+<p class="definition">Definition at line <a class="el" href="pybind_8h_source.html#l00026">26</a> of file <a class="el" href="pybind_8h_source.html">pybind.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   26</span>                                    {</div>
+<div class="line"><span class="lineno">   27</span>    <span class="keywordflow">if</span> (<a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">arr</a>.size() &lt;= 1) {</div>
+<div class="line"><span class="lineno">   28</span>        <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
+<div class="line"><span class="lineno">   29</span>    }</div>
+<div class="line"><span class="lineno">   30</span>    <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">i</a> = 1; <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">i</a> &lt; <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">arr</a>.size(); ++<a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">i</a>) {</div>
+<div class="line"><span class="lineno">   31</span>        <span class="keywordflow">if</span> (<a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">arr</a>(<a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">i</a>) &lt; <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">arr</a>(<a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">i</a> - 1)) {</div>
+<div class="line"><span class="lineno">   32</span>            <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><span class="lineno">   33</span>        }</div>
+<div class="line"><span class="lineno">   34</span>    }</div>
+<div class="line"><span class="lineno">   35</span>    <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
+<div class="line"><span class="lineno">   36</span>}</div>
+<div class="ttc" id="apybind_8cpp_html_ad93eae6422741850877b46bd61f08c89"><div class="ttname"><a href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">make_native_binary</a></div><div class="ttdeci">BinaryFunc make_native_binary(uintptr_t addr, std::vector&lt; Real &gt; const &amp;p)</div><div class="ttdef"><b>Definition</b> <a href="pybind_8cpp_source.html#l00025">pybind.cpp:25</a></div></div>
 </div><!-- fragment --><div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -306,75 +307,75 @@ Here is the caller graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="pybind_8h_source.html#l00036">36</a> of file <a class="el" href="pybind_8h_source.html">pybind.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   36</span>                                                                                {</div>
-<div class="line"><span class="lineno">   37</span>    <span class="keyword">const</span> <span class="keywordtype">size_t</span> <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">total_size</a> = data.size();</div>
-<div class="line"><span class="lineno">   38</span> </div>
-<div class="line"><span class="lineno">   39</span>    <span class="comment">// Handle edge cases: empty or single-element arrays</span></div>
-<div class="line"><span class="lineno">   40</span>    <span class="keywordflow">if</span> (<a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">total_size</a> == 0) {</div>
-<div class="line"><span class="lineno">   41</span>        <span class="keywordflow">return</span> {};</div>
-<div class="line"><span class="lineno">   42</span>    }</div>
-<div class="line"><span class="lineno">   43</span>    <span class="keywordflow">if</span> (<a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">total_size</a> == 1) {</div>
-<div class="line"><span class="lineno">   44</span>        <span class="keywordflow">return</span> {0};</div>
-<div class="line"><span class="lineno">   45</span>    }</div>
-<div class="line"><span class="lineno">   46</span> </div>
-<div class="line"><span class="lineno">   47</span>    <span class="keywordflow">if</span> (<a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">num_order</a> == 0) {</div>
-<div class="line"><span class="lineno">   48</span>        std::vector&lt;size_t&gt; <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">indices</a>(<a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">total_size</a>);</div>
-<div class="line"><span class="lineno">   49</span>        std::iota(<a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">indices</a>.begin(), <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">indices</a>.end(), 0);</div>
-<div class="line"><span class="lineno">   50</span>        <span class="keywordflow">return</span> <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">indices</a>;</div>
-<div class="line"><span class="lineno">   51</span>    }</div>
-<div class="line"><span class="lineno">   52</span> </div>
-<div class="line"><span class="lineno">   53</span>    <span class="keyword">const</span> <span class="keywordtype">double</span> <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">log_start</a> = std::log10(<span class="keyword">static_cast&lt;</span><span class="keywordtype">double</span><span class="keyword">&gt;</span>(data(0)));</div>
-<div class="line"><span class="lineno">   54</span>    <span class="keyword">const</span> <span class="keywordtype">double</span> <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">log_end</a> = std::log10(<span class="keyword">static_cast&lt;</span><span class="keywordtype">double</span><span class="keyword">&gt;</span>(data(<a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">total_size</a> - 1)));</div>
-<div class="line"><span class="lineno">   55</span>    <span class="keyword">const</span> <span class="keywordtype">double</span> <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">log_range</a> = <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">log_end</a> - <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">log_start</a>;</div>
-<div class="line"><span class="lineno">   56</span>    <span class="keyword">const</span> <span class="keywordtype">size_t</span> <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">total_points</a> = <span class="keyword">static_cast&lt;</span><span class="keywordtype">size_t</span><span class="keyword">&gt;</span>(std::ceil(<a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">log_range</a> * <span class="keyword">static_cast&lt;</span><span class="keywordtype">double</span><span class="keyword">&gt;</span>(<a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">num_order</a>))) + 1;</div>
-<div class="line"><span class="lineno">   57</span> </div>
-<div class="line"><span class="lineno">   58</span>    std::vector&lt;size_t&gt; <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">indices</a>;</div>
-<div class="line"><span class="lineno">   59</span>    <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">indices</a>.reserve(<a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">total_points</a>);</div>
-<div class="line"><span class="lineno">   60</span> </div>
-<div class="line"><span class="lineno">   61</span>    <span class="comment">// Always include the first point</span></div>
-<div class="line"><span class="lineno">   62</span>    <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">indices</a>.push_back(0);</div>
-<div class="line"><span class="lineno">   63</span> </div>
-<div class="line"><span class="lineno">   64</span>    <span class="comment">// Handle case where total_points &lt;= 1 (avoid division by zero)</span></div>
-<div class="line"><span class="lineno">   65</span>    <span class="keywordflow">if</span> (<a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">total_points</a> &lt;= 1) {</div>
-<div class="line"><span class="lineno">   66</span>        <span class="keywordflow">if</span> (<a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">total_size</a> &gt; 1) {</div>
-<div class="line"><span class="lineno">   67</span>            <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">indices</a>.push_back(<a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">total_size</a> - 1);</div>
-<div class="line"><span class="lineno">   68</span>        }</div>
-<div class="line"><span class="lineno">   69</span>        <span class="keywordflow">return</span> <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">indices</a>;</div>
-<div class="line"><span class="lineno">   70</span>    }</div>
-<div class="line"><span class="lineno">   71</span> </div>
-<div class="line"><span class="lineno">   72</span>    <span class="keyword">const</span> <span class="keywordtype">double</span> <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">step</a> = <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">log_range</a> / <span class="keyword">static_cast&lt;</span><span class="keywordtype">double</span><span class="keyword">&gt;</span>(<a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">total_points</a> - 1);</div>
+<p class="definition">Definition at line <a class="el" href="pybind_8h_source.html#l00038">38</a> of file <a class="el" href="pybind_8h_source.html">pybind.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   38</span>                                                                                {</div>
+<div class="line"><span class="lineno">   39</span>    <span class="keyword">const</span> <span class="keywordtype">size_t</span> <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">total_size</a> = data.size();</div>
+<div class="line"><span class="lineno">   40</span> </div>
+<div class="line"><span class="lineno">   41</span>    <span class="comment">// Handle edge cases: empty or single-element arrays</span></div>
+<div class="line"><span class="lineno">   42</span>    <span class="keywordflow">if</span> (<a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">total_size</a> == 0) {</div>
+<div class="line"><span class="lineno">   43</span>        <span class="keywordflow">return</span> {};</div>
+<div class="line"><span class="lineno">   44</span>    }</div>
+<div class="line"><span class="lineno">   45</span>    <span class="keywordflow">if</span> (<a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">total_size</a> == 1) {</div>
+<div class="line"><span class="lineno">   46</span>        <span class="keywordflow">return</span> {0};</div>
+<div class="line"><span class="lineno">   47</span>    }</div>
+<div class="line"><span class="lineno">   48</span> </div>
+<div class="line"><span class="lineno">   49</span>    <span class="keywordflow">if</span> (<a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">num_order</a> == 0) {</div>
+<div class="line"><span class="lineno">   50</span>        std::vector&lt;size_t&gt; <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">indices</a>(<a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">total_size</a>);</div>
+<div class="line"><span class="lineno">   51</span>        std::iota(<a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">indices</a>.begin(), <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">indices</a>.end(), 0);</div>
+<div class="line"><span class="lineno">   52</span>        <span class="keywordflow">return</span> <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">indices</a>;</div>
+<div class="line"><span class="lineno">   53</span>    }</div>
+<div class="line"><span class="lineno">   54</span> </div>
+<div class="line"><span class="lineno">   55</span>    <span class="keyword">const</span> <span class="keywordtype">double</span> <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">log_start</a> = std::log10(<span class="keyword">static_cast&lt;</span><span class="keywordtype">double</span><span class="keyword">&gt;</span>(data(0)));</div>
+<div class="line"><span class="lineno">   56</span>    <span class="keyword">const</span> <span class="keywordtype">double</span> <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">log_end</a> = std::log10(<span class="keyword">static_cast&lt;</span><span class="keywordtype">double</span><span class="keyword">&gt;</span>(data(<a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">total_size</a> - 1)));</div>
+<div class="line"><span class="lineno">   57</span>    <span class="keyword">const</span> <span class="keywordtype">double</span> <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">log_range</a> = <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">log_end</a> - <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">log_start</a>;</div>
+<div class="line"><span class="lineno">   58</span>    <span class="keyword">const</span> <span class="keywordtype">size_t</span> <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">total_points</a> = <span class="keyword">static_cast&lt;</span><span class="keywordtype">size_t</span><span class="keyword">&gt;</span>(std::ceil(<a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">log_range</a> * <span class="keyword">static_cast&lt;</span><span class="keywordtype">double</span><span class="keyword">&gt;</span>(<a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">num_order</a>))) + 1;</div>
+<div class="line"><span class="lineno">   59</span> </div>
+<div class="line"><span class="lineno">   60</span>    std::vector&lt;size_t&gt; <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">indices</a>;</div>
+<div class="line"><span class="lineno">   61</span>    <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">indices</a>.reserve(<a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">total_points</a>);</div>
+<div class="line"><span class="lineno">   62</span> </div>
+<div class="line"><span class="lineno">   63</span>    <span class="comment">// Always include the first point</span></div>
+<div class="line"><span class="lineno">   64</span>    <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">indices</a>.push_back(0);</div>
+<div class="line"><span class="lineno">   65</span> </div>
+<div class="line"><span class="lineno">   66</span>    <span class="comment">// Handle case where total_points &lt;= 1 (avoid division by zero)</span></div>
+<div class="line"><span class="lineno">   67</span>    <span class="keywordflow">if</span> (<a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">total_points</a> &lt;= 1) {</div>
+<div class="line"><span class="lineno">   68</span>        <span class="keywordflow">if</span> (<a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">total_size</a> &gt; 1) {</div>
+<div class="line"><span class="lineno">   69</span>            <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">indices</a>.push_back(<a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">total_size</a> - 1);</div>
+<div class="line"><span class="lineno">   70</span>        }</div>
+<div class="line"><span class="lineno">   71</span>        <span class="keywordflow">return</span> <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">indices</a>;</div>
+<div class="line"><span class="lineno">   72</span>    }</div>
 <div class="line"><span class="lineno">   73</span> </div>
-<div class="line"><span class="lineno">   74</span>    <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">i</a> = 1; <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">i</a> &lt; <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">total_points</a> - 1; ++<a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">i</a>) {</div>
-<div class="line"><span class="lineno">   75</span>        <span class="keyword">const</span> <span class="keywordtype">double</span> <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">log_target</a> = <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">log_start</a> + <span class="keyword">static_cast&lt;</span><span class="keywordtype">double</span><span class="keyword">&gt;</span>(<a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">i</a>) * <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">step</a>;</div>
-<div class="line"><span class="lineno">   76</span>        <span class="keyword">const</span> <span class="keywordtype">double</span> <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">target_value</a> = std::pow(10.0, <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">log_target</a>);</div>
-<div class="line"><span class="lineno">   77</span> </div>
-<div class="line"><span class="lineno">   78</span>        <span class="keywordtype">size_t</span> <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">best_idx</a> = 1;</div>
-<div class="line"><span class="lineno">   79</span>        <span class="keywordtype">double</span> <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">min_diff</a> = std::abs(<span class="keyword">static_cast&lt;</span><span class="keywordtype">double</span><span class="keyword">&gt;</span>(data(1)) - <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">target_value</a>);</div>
-<div class="line"><span class="lineno">   80</span> </div>
-<div class="line"><span class="lineno">   81</span>        <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">j</a> = 2; <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">j</a> &lt; <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">total_size</a> - 1; ++<a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">j</a>) {</div>
-<div class="line"><span class="lineno">   82</span>            <span class="keyword">const</span> <span class="keywordtype">double</span> <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">diff</a> = std::abs(<span class="keyword">static_cast&lt;</span><span class="keywordtype">double</span><span class="keyword">&gt;</span>(data(<a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">j</a>)) - <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">target_value</a>);</div>
-<div class="line"><span class="lineno">   83</span>            <span class="keywordflow">if</span> (<a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">diff</a> &lt; <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">min_diff</a>) {</div>
-<div class="line"><span class="lineno">   84</span>                <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">min_diff</a> = <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">diff</a>;</div>
-<div class="line"><span class="lineno">   85</span>                <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">best_idx</a> = <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">j</a>;</div>
-<div class="line"><span class="lineno">   86</span>            }</div>
-<div class="line"><span class="lineno">   87</span>        }</div>
-<div class="line"><span class="lineno">   88</span> </div>
-<div class="line"><span class="lineno">   89</span>        <span class="keywordflow">if</span> (std::ranges::find(<a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">indices</a>, <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">best_idx</a>) == <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">indices</a>.end()) {</div>
-<div class="line"><span class="lineno">   90</span>            <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">indices</a>.push_back(<a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">best_idx</a>);</div>
-<div class="line"><span class="lineno">   91</span>        }</div>
-<div class="line"><span class="lineno">   92</span>    }</div>
-<div class="line"><span class="lineno">   93</span> </div>
-<div class="line"><span class="lineno">   94</span>    <span class="comment">// Always include the last point</span></div>
-<div class="line"><span class="lineno">   95</span>    <span class="keywordflow">if</span> (<a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">total_size</a> &gt; 1) {</div>
-<div class="line"><span class="lineno">   96</span>        <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">indices</a>.push_back(<a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">total_size</a> - 1);</div>
-<div class="line"><span class="lineno">   97</span>    }</div>
-<div class="line"><span class="lineno">   98</span> </div>
-<div class="line"><span class="lineno">   99</span>    std::ranges::sort(<a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">indices</a>);</div>
-<div class="line"><span class="lineno">  100</span>    <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">indices</a>.erase(std::ranges::unique(<a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">indices</a>).<a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">begin</a>(), <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">indices</a>.end());</div>
-<div class="line"><span class="lineno">  101</span> </div>
-<div class="line"><span class="lineno">  102</span>    <span class="keywordflow">return</span> <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">indices</a>;</div>
-<div class="line"><span class="lineno">  103</span>}</div>
+<div class="line"><span class="lineno">   74</span>    <span class="keyword">const</span> <span class="keywordtype">double</span> <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">step</a> = <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">log_range</a> / <span class="keyword">static_cast&lt;</span><span class="keywordtype">double</span><span class="keyword">&gt;</span>(<a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">total_points</a> - 1);</div>
+<div class="line"><span class="lineno">   75</span> </div>
+<div class="line"><span class="lineno">   76</span>    <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">i</a> = 1; <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">i</a> &lt; <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">total_points</a> - 1; ++<a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">i</a>) {</div>
+<div class="line"><span class="lineno">   77</span>        <span class="keyword">const</span> <span class="keywordtype">double</span> <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">log_target</a> = <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">log_start</a> + <span class="keyword">static_cast&lt;</span><span class="keywordtype">double</span><span class="keyword">&gt;</span>(<a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">i</a>) * <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">step</a>;</div>
+<div class="line"><span class="lineno">   78</span>        <span class="keyword">const</span> <span class="keywordtype">double</span> <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">target_value</a> = std::pow(10.0, <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">log_target</a>);</div>
+<div class="line"><span class="lineno">   79</span> </div>
+<div class="line"><span class="lineno">   80</span>        <span class="keywordtype">size_t</span> <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">best_idx</a> = 1;</div>
+<div class="line"><span class="lineno">   81</span>        <span class="keywordtype">double</span> <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">min_diff</a> = std::abs(<span class="keyword">static_cast&lt;</span><span class="keywordtype">double</span><span class="keyword">&gt;</span>(data(1)) - <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">target_value</a>);</div>
+<div class="line"><span class="lineno">   82</span> </div>
+<div class="line"><span class="lineno">   83</span>        <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">j</a> = 2; <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">j</a> &lt; <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">total_size</a> - 1; ++<a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">j</a>) {</div>
+<div class="line"><span class="lineno">   84</span>            <span class="keyword">const</span> <span class="keywordtype">double</span> <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">diff</a> = std::abs(<span class="keyword">static_cast&lt;</span><span class="keywordtype">double</span><span class="keyword">&gt;</span>(data(<a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">j</a>)) - <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">target_value</a>);</div>
+<div class="line"><span class="lineno">   85</span>            <span class="keywordflow">if</span> (<a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">diff</a> &lt; <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">min_diff</a>) {</div>
+<div class="line"><span class="lineno">   86</span>                <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">min_diff</a> = <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">diff</a>;</div>
+<div class="line"><span class="lineno">   87</span>                <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">best_idx</a> = <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">j</a>;</div>
+<div class="line"><span class="lineno">   88</span>            }</div>
+<div class="line"><span class="lineno">   89</span>        }</div>
+<div class="line"><span class="lineno">   90</span> </div>
+<div class="line"><span class="lineno">   91</span>        <span class="keywordflow">if</span> (std::ranges::find(<a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">indices</a>, <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">best_idx</a>) == <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">indices</a>.end()) {</div>
+<div class="line"><span class="lineno">   92</span>            <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">indices</a>.push_back(<a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">best_idx</a>);</div>
+<div class="line"><span class="lineno">   93</span>        }</div>
+<div class="line"><span class="lineno">   94</span>    }</div>
+<div class="line"><span class="lineno">   95</span> </div>
+<div class="line"><span class="lineno">   96</span>    <span class="comment">// Always include the last point</span></div>
+<div class="line"><span class="lineno">   97</span>    <span class="keywordflow">if</span> (<a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">total_size</a> &gt; 1) {</div>
+<div class="line"><span class="lineno">   98</span>        <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">indices</a>.push_back(<a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">total_size</a> - 1);</div>
+<div class="line"><span class="lineno">   99</span>    }</div>
+<div class="line"><span class="lineno">  100</span> </div>
+<div class="line"><span class="lineno">  101</span>    std::ranges::sort(<a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">indices</a>);</div>
+<div class="line"><span class="lineno">  102</span>    <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">indices</a>.erase(std::ranges::unique(<a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">indices</a>).<a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">begin</a>(), <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">indices</a>.end());</div>
+<div class="line"><span class="lineno">  103</span> </div>
+<div class="line"><span class="lineno">  104</span>    <span class="keywordflow">return</span> <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">indices</a>;</div>
+<div class="line"><span class="lineno">  105</span>}</div>
 </div><!-- fragment --><div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">

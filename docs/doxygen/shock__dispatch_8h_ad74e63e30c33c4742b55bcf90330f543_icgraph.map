@@ -1,0 +1,12 @@
+<map id="solve_shock_pair" name="solve_shock_pair">
+<area shape="rect" id="Node000001" title="Solve forward + reverse shock pair with variant dispatch." alt="" coords="461,55,596,80"/>
+<area shape="rect" id="Node000002" href="$classPyModel.html#a3debe3d2ed8ff2a53bec469a6711cfa8" title=" " alt="" coords="204,5,413,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="457,54,366,33,367,28,459,49"/>
+<area shape="rect" id="Node000003" href="$classPyModel.html#ac47bbdbe6025c4def5d4a65f3ed6be34" title="Get comprehensive details of the shock evolution and model configuration." alt="" coords="243,55,374,80"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="447,70,374,70,374,65,447,65"/>
+<area shape="rect" id="Node000005" href="$classPyModel.html#a982ace37b25f18b6bb32d880739ae88a" title="Compute resolved sky images at multiple observer times and a single frequency." alt="" coords="231,104,387,129"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="459,86,367,107,366,101,457,80"/>
+<area shape="rect" id="Node000004" href="$pybind_8cpp.html#a8c92987849ad296e28ec6c07c8e7860b" title=" " alt="" coords="5,80,156,105"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="229,79,156,87,156,82,229,73"/>
+<area shape="poly" id="edge5_Node000005_Node000004" title=" " alt="" coords="216,110,156,103,157,98,217,104"/>
+</map>

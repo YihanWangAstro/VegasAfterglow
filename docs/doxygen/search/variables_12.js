@@ -1,7 +1,7 @@
 var searchData=
 [
-  ['scale_5fcheck_5ftol_0',['scale_check_tol',['../namespacedefaults_1_1solver.html#a401c502a93d34d6eddb6d31ec991ae44',1,'defaults::solver']]],
-  ['sec_1',['sec',['../namespaceunit.html#a4e7c438655d3f34c7c30a155ec38f250',1,'unit']]],
+  ['sec_0',['sec',['../namespaceunit.html#a4e7c438655d3f34c7c30a155ec38f250',1,'unit']]],
+  ['sigma_1',['sigma',['../structSplatGrid.html#aeb5a2c3d0d6ebaa67f30fd177eef33c7',1,'SplatGrid']]],
   ['sigma0_2',['sigma0',['../classEjecta.html#abc25c1fa9cdee20b4431cf94796dcbef',1,'Ejecta']]],
   ['sigma_5fcut_3',['sigma_cut',['../namespacedefaults_1_1cutoffs.html#a0ddde26f6745ea360b0887b2b95f2ac3',1,'defaults::cutoffs::sigma_cut'],['../namespacecon.html#ae257fca076d03dd535871a9824d2f178',1,'con::sigma_cut']]],
   ['sigmat_4',['sigmaT',['../namespacecon.html#ad19e5b64c85c3e709fd0944358be97f6',1,'con']]],
