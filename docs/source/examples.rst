@@ -882,6 +882,118 @@ These callable accessors are also available on ``details.rvs`` when a reverse sh
 - ``details.fwd.ssc_spectrum[i, j, k](nu_comv)``: Comoving SSC specific intensity. Same units as synchrotron. Only available when ``ssc=True``.
 - ``details.fwd.Y_spectrum[i, j, k](gamma)``: Compton-Y parameter as a function of electron Lorentz factor. Input: dimensionless :math:`\gamma`. Output: dimensionless :math:`Y(\gamma)`.
 
+Sky Image
+---------
+
+VegasAfterglow can generate spatially resolved images of the afterglow at any observer time and frequency. The ``sky_image()`` method uses Gaussian splatting to render each fluid element onto a 2D image plane. Batch evaluation is supported: pass an array of observer times to produce a multi-frame image sequence with minimal overhead (the blast-wave dynamics are solved once, and each frame only re-renders the sky projection).
+
+Single Frame
+^^^^^^^^^^^^
+
+.. code-block:: python
+
+    import numpy as np
+    import matplotlib.pyplot as plt
+    from matplotlib.colors import LogNorm
+    from VegasAfterglow import TophatJet, ISM, Observer, Radiation, Model
+    from VegasAfterglow.units import uas
+
+    model = Model(
+        jet=TophatJet(theta_c=0.1, E_iso=1e52, Gamma0=200),
+        medium=ISM(n_ism=1),
+        observer=Observer(lumi_dist=1e26, z=0.1, theta_obs=0),
+        fwd_rad=Radiation(eps_e=1e-1, eps_B=1e-3, p=2.3),
+    )
+
+    img = model.sky_image([1e6], nu_obs=1e9, fov=500 * uas, npixel=256)
+
+    fig, ax = plt.subplots(dpi=100)
+    extent = img.extent / uas  # convert to microarcseconds
+
+    im = ax.imshow(
+        img.image[0].T,
+        origin="lower",
+        extent=extent,
+        cmap="inferno",
+        norm=LogNorm(),
+    )
+    ax.set_xlabel(r"$\Delta x$ ($\mu$as)")
+    ax.set_ylabel(r"$\Delta y$ ($\mu$as)")
+    ax.set_title(r"$t_{\rm obs} = 10^6$ s, $\nu = 1$ GHz")
+    fig.colorbar(im, label=r"Surface brightness (erg/cm$^2$/s/Hz/sr)")
+    plt.tight_layout()
+
+**Return value (``SkyImage`` object):**
+
+- ``img.image``: 3D numpy array of shape ``(n_frames, npixel, npixel)`` — surface brightness in erg/cm²/s/Hz/sr
+- ``img.extent``: 1D array ``[x_min, x_max, y_min, y_max]`` — angular extent in radians (pass directly to ``imshow(extent=...)``)
+- ``img.pixel_solid_angle``: pixel solid angle in steradians
+
+.. tip::
+    The ``fov`` parameter sets the total field of view in radians. Use the ``uas`` unit constant
+    for microarcsecond scale: ``fov=500*uas`` gives a 500 µas field of view.
+
+Multi-Frame Movie
+^^^^^^^^^^^^^^^^^
+
+Pass an array of observer times to generate an image sequence efficiently:
+
+.. code-block:: python
+
+    from matplotlib.animation import FuncAnimation
+    from IPython.display import HTML
+
+    times = np.logspace(4, 8, 60)  # 60 frames from 10^4 to 10^8 s
+
+    imgs = model.sky_image(times, nu_obs=1e9, fov=2000 * uas, npixel=128)
+    # imgs.image.shape == (60, 128, 128)
+
+    extent = imgs.extent / uas
+
+    vmin = imgs.image[imgs.image > 0].min()
+    vmax = imgs.image.max()
+
+    fig, ax = plt.subplots(dpi=100)
+    im = ax.imshow(
+        imgs.image[0].T,
+        origin="lower",
+        extent=extent,
+        cmap="inferno",
+        norm=LogNorm(vmin=vmin, vmax=vmax),
+    )
+    title = ax.set_title("")
+    ax.set_xlabel(r"$\Delta x$ ($\mu$as)")
+    ax.set_ylabel(r"$\Delta y$ ($\mu$as)")
+    fig.colorbar(im, label=r"erg/cm$^2$/s/Hz/sr")
+
+    def update(frame):
+        im.set_data(imgs.image[frame].T)
+        title.set_text(f"$t_{{\\rm obs}}$ = {times[frame]:.1e} s")
+        return (im, title)
+
+    anim = FuncAnimation(fig, update, frames=len(times), interval=100, blit=True)
+    anim.save("sky-image.gif", writer="pillow", fps=10)
+
+Off-Axis Observer
+^^^^^^^^^^^^^^^^^
+
+For off-axis observers, the image centroid drifts across the sky (superluminal apparent motion):
+
+.. code-block:: python
+
+    model_offaxis = Model(
+        jet=TophatJet(theta_c=0.1, E_iso=1e52, Gamma0=200),
+        medium=ISM(n_ism=1),
+        observer=Observer(lumi_dist=1e26, z=0.1, theta_obs=0.4),
+        fwd_rad=Radiation(eps_e=1e-1, eps_B=1e-3, p=2.3),
+    )
+
+    times_oa = np.logspace(5, 8, 30)
+    imgs_oa = model_offaxis.sky_image(times_oa, nu_obs=1e9, fov=5000 * uas, npixel=128)
+
+.. note::
+    For a complete working example with animations and plots, see ``script/sky-image.ipynb``.
+
 Model Configuration Introspection
 ----------------------------------
 

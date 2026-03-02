@@ -409,6 +409,27 @@ struct PyFlux {
     }
 };
 
+/**
+ * @struct PySkyImage
+ * @brief Resolved sky image sequence of the afterglow at given observer times and frequency.
+ */
+struct PySkyImage {
+    XTArray image;              ///< [n_frames, npixel, npixel] surface brightness (erg/cm²/s/Hz/sr)
+    std::array<Real, 4> extent; ///< {x_min, x_max, y_min, y_max} angular extent (rad), shared by all frames
+    Real pixel_solid_angle{0};  ///< Pixel solid angle (sr), shared by all frames
+
+    [[nodiscard]] std::string repr() const {
+        if (image.size() == 0) {
+            return "SkyImage(empty)";
+        }
+        char buf[256];
+        snprintf(buf, sizeof(buf),
+                 "SkyImage(n_frames=%zu, npixel=%zu, extent=(%.3e, %.3e, %.3e, %.3e) rad, pixel_solid_angle=%.3e sr)",
+                 image.shape()[0], image.shape()[1], extent[0], extent[1], extent[2], extent[3], pixel_solid_angle);
+        return buf;
+    }
+};
+
 // Type aliases for IC photon grid
 using SynICPhoton = ICPhoton<SynElectrons, SynPhotons>;
 using SynICPhotonGrid = xt::xtensor<SynICPhoton, 3>;
@@ -632,6 +653,16 @@ class PyModel {
      */
     PyFlux flux_density_exposures(PyArray const& t, PyArray const& nu, PyArray const& expo_time,
                                   size_t num_points = 10);
+
+    /**
+     * @brief Compute resolved sky images at multiple observer times and a single frequency.
+     * @param t_obs Array of observer times [seconds]
+     * @param nu_obs Observer frequency [Hz]
+     * @param fov Total field of view [radians] (pixel scale = fov / npixel)
+     * @param npixel Number of pixels per side (default 64)
+     * @return PySkyImage with (n_frames, npixel, npixel) surface brightness (erg/cm²/s/Hz/sr), shared extent and pixel_solid_angle
+     */
+    PySkyImage sky_image(PyArray const& t_obs, double nu_obs, double fov, size_t npixel = 128);
 
     /**
      * <!-- ************************************************************************************** -->

@@ -84,6 +84,8 @@ rad = 1.0
 deg = math.pi / 180
 arcmin = deg / 60
 arcsec = deg / 3600
+mas = arcsec / 1e3
+uas = arcsec / 1e6
 
 # ===========================================================================
 # Magnitude system converters

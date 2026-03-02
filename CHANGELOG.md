@@ -11,7 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - [ ] Proton processes
 - [ ] Time-evolving microphysical parameters (ε_e, ε_B, p, ξ_e)
-- [ ] Sky image
+- [x] Sky image
 - [ ] Polarization
 - [ ] External inverse Compton
 
@@ -115,6 +115,12 @@ For the full MCMC fitting guide, including advanced customization examples, see 
 
 - Adaptive frequency grid concentrates resolution near synchrotron break frequencies (ν_a, ν_m, ν_c, ν_M), improving accuracy of the seed photon spectrum
 - Redesigned electron energy integration produces smoother SSC light curves and spectra
+
+#### ► **Sky Image Generation**
+
+- New `model.sky_image()` method generates spatially resolved afterglow images at any observer time and frequency, supporting all jet types and viewing angles
+- Batch evaluation over multiple observer times for efficient multi-frame image sequences and movies
+- See the [sky image example notebook](script/sky-image.ipynb) and [documentation](https://vegasafterglow.readthedocs.io/en/latest/examples.html#sky-image) for usage
 
 #### ► **Smooth Electron Distribution for IC Integration**
 

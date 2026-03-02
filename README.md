@@ -41,6 +41,7 @@
     - [Quick Start](#quick-start)
     - [Light Curve \& Spectrum Calculation](#light-curve--spectrum-calculation)
     - [Internal Quantities Evolution](#internal-quantities-evolution)
+    - [Sky Image](#sky-image)
     - [MCMC Parameter Fitting](#mcmc-parameter-fitting)
     - [Parameter Fitting with **Redback**](#parameter-fitting-with-redback)
   - [Validation \& Testing](#validation--testing)
@@ -671,6 +672,77 @@ These callable accessors are also available on `details.rvs` when a reverse shoc
 
 </details>
 
+
+### Sky Image
+
+Generate spatially resolved images of the afterglow at any observer time and frequency via `script/sky-image.ipynb`. The `sky_image()` method uses Gaussian splatting to render each fluid element onto a 2D image plane.
+
+<details>
+<summary><b>Single Frame</b> <i>(click to expand/collapse)</i></summary>
+<br>
+
+```python
+from VegasAfterglow.units import uas
+
+img = model.sky_image([1e6], nu_obs=1e9, fov=500 * uas, npixel=256)
+
+fig, ax = plt.subplots(dpi=100)
+im = ax.imshow(
+    img.image[0].T,
+    origin="lower",
+    extent=img.extent / uas,
+    cmap="inferno",
+    norm=LogNorm(),
+)
+ax.set_xlabel(r"$\Delta x$ ($\mu$as)")
+ax.set_ylabel(r"$\Delta y$ ($\mu$as)")
+fig.colorbar(im, label=r"Surface brightness (erg/cm$^2$/s/Hz/sr)")
+```
+
+The return value is a `SkyImage` object with:
+- `img.image`: 3D array `(n_frames, npixel, npixel)` — surface brightness in erg/cm²/s/Hz/sr
+- `img.extent`: angular extent in radians (pass to `imshow(extent=...)`)
+- `img.pixel_solid_angle`: pixel solid angle in sr
+
+</details>
+
+<details>
+<summary><b>Multi-Frame Movie</b> <i>(click to expand/collapse)</i></summary>
+<br>
+
+Pass an array of observer times to generate an image sequence efficiently — dynamics are solved once, each frame only re-renders the sky projection:
+
+```python
+times = np.logspace(4, 8, 60)
+imgs = model.sky_image(times, nu_obs=1e9, fov=2000 * uas, npixel=128)
+# imgs.image.shape == (60, 128, 128)
+```
+
+<div align="center">
+<img src="assets/sky-image.gif" alt="Sky Image Movie" width="500"/>
+</div>
+
+</details>
+
+<details>
+<summary><b>Off-Axis Observer</b> <i>(click to expand/collapse)</i></summary>
+<br>
+
+For off-axis observers, the image centroid drifts across the sky (superluminal apparent motion):
+
+```python
+model_offaxis = Model(
+    jet=TophatJet(theta_c=0.1, E_iso=1e52, Gamma0=200),
+    medium=ISM(n_ism=1),
+    observer=Observer(lumi_dist=1e26, z=0.1, theta_obs=0.4),
+    fwd_rad=Radiation(eps_e=1e-1, eps_B=1e-3, p=2.3),
+)
+
+times_oa = np.logspace(5, 8, 30)
+imgs_oa = model_offaxis.sky_image(times_oa, nu_obs=1e9, fov=5000 * uas, npixel=128)
+```
+
+</details>
 
 ### MCMC Parameter Fitting
 

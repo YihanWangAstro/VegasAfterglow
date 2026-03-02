@@ -257,6 +257,9 @@ PYBIND11_MODULE(VegasAfterglowC, m) {
         .def("flux_density_exposures", &PyModel::flux_density_exposures, py::arg("t"), py::arg("nu"),
              py::arg("expo_time"), py::arg("num_points") = 10, py::call_guard<py::gil_scoped_release>())
 
+        .def("sky_image", &PyModel::sky_image, py::arg("t_obs"), py::arg("nu_obs"), py::arg("fov"),
+             py::arg("npixel") = 128, py::call_guard<py::gil_scoped_release>())
+
         .def("details", &PyModel::details, py::arg("t_min"), py::arg("t_max"), py::call_guard<py::gil_scoped_release>())
 
         .def("medium", &PyModel::medium, py::arg("phi"), py::arg("theta"), py::arg("r"),
@@ -282,6 +285,12 @@ PYBIND11_MODULE(VegasAfterglowC, m) {
         .def_static("profile_reset", &PyModel::profile_reset, "Reset profiling counters")
 #endif
         ;
+
+    py::class_<PySkyImage>(m, "SkyImage")
+        .def_readonly("image", &PySkyImage::image)
+        .def_property_readonly("extent", [](PySkyImage const& s) { return py::array_t<Real>(4, s.extent.data()); })
+        .def_readonly("pixel_solid_angle", &PySkyImage::pixel_solid_angle)
+        .def("__repr__", &PySkyImage::repr);
 
     py::class_<Flux>(m, "Flux")
         .def(py::init<>())

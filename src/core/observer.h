@@ -6,12 +6,46 @@
 //                            |___/                                            |___/
 #pragma once
 
+#include <algorithm>
+#include <array>
 #include <stdexcept>
 #include <vector>
 
 #include "../dynamics/shock.h"
 #include "../util/macros.h"
 #include "mesh.h"
+
+/**
+ * @struct SkyImageResult
+ * @brief Result of a batched sky image computation: 3D surface brightness map with shared extent and pixel solid angle.
+ */
+struct SkyImageResult {
+    MeshGrid3d image;           ///< [n_frames, npixel, npixel] surface brightness (code units)
+    std::array<Real, 4> extent; ///< {x_min, x_max, y_min, y_max} angular extent (rad)
+    Real pixel_solid_angle{0};  ///< Pixel solid angle (sr)
+};
+
+/// Internal cell grid for Gaussian splatting (sky position, luminosity, kernel width per cell).
+struct SplatGrid {
+    MeshGrid x, y, L, sigma;
+    size_t n_phi{0}, n_theta{0};
+    Real xmin{}, xmax{}, ymin{}, ymax{};
+    Real max_sigma{0};
+
+    SplatGrid() = default;
+    SplatGrid(size_t n_phi, size_t n_theta);
+
+    /// Reset all arrays and bounds for reuse across frames.
+    void reset();
+
+    /// Compute per-cell Gaussian σ (half the max neighbor distance) and max_sigma.
+    void compute_sigma();
+
+    /// Render the splat grid via Gaussian splatting into the provided 2D image, centered at (0,0).
+    /// @param image Output 2D image [npixel, npixel] (must be pre-zeroed)
+    /// @param pix_size Pixel size in radians
+    void render(MeshGrid& image, Real pix_size) const;
+};
 
 /**
  * <!-- ************************************************************************************** -->
@@ -133,6 +167,22 @@ class Observer {
     template <typename PhotonGrid>
     Array spectrum(Array const& freqs, Real t_obs, PhotonGrid& photons);
 
+    /**
+     * @brief Computes resolved sky images at multiple observer times and a single frequency.
+     * @tparam PhotonGrid Type of photon grid object
+     * @param coord Coordinate grid (needed for phi, theta_view projection)
+     * @param shock Shock object (needed for r, theta at interpolated time)
+     * @param t_obs Array of observer times (internal units)
+     * @param nu_obs Observer frequency (internal units)
+     * @param photons Photon grid object
+     * @param npixel Number of pixels per side
+     * @param pix_size Pixel size in radians (FOV = pix_size × npixel)
+     * @return SkyImageResult with [n_frames, npixel, npixel] surface brightness, shared extent and pixel_solid_angle
+     */
+    template <typename PhotonGrid>
+    SkyImageResult sky_image(Coord const& coord, Shock const& shock, Array const& t_obs, Real nu_obs,
+                             PhotonGrid& photons, size_t npixel, Real pix_size);
+
     MeshGrid3d lg2_t;           ///< Log2 of observation time grid
     MeshGrid3d lg2_doppler;     ///< Log2 of Doppler factor grid
     MeshGrid3d lg2_geom_factor; ///< Log2 of observe frame geometric factor (solid angle * r^2 * D^3)
@@ -191,6 +241,12 @@ class Observer {
      * <!-- ************************************************************************************** -->
      */
     void calc_eat_non_spreading(Coord const& coord, Shock const& shock);
+
+    /// Fills an existing splat grid (sky positions, luminosities, Gaussian widths) for a single frame.
+    template <typename PhotonGrid>
+    void build_splat_grid(SplatGrid& grid, Coord const& coord, Shock const& shock, Real t_obs, Real nu_obs,
+                          PhotonGrid& photons, std::vector<Real> const& cos_phi_tab,
+                          std::vector<Real> const& sin_phi_tab);
 
     /**
      * <!-- ************************************************************************************** -->
@@ -268,8 +324,7 @@ bool Observer::set_boundaries(InterpState& state, size_t eff_i, size_t i, size_t
 
     const Real lg2_t_ratio = lg2_t(i, j, k + 1) - lg2_t(i, j, k);
 
-    // continuing from the previous boundary, shift the high boundary to lower.
-    // Calling .I_nu()/.log_I_nu() could be expensive.
+    // Reuse previous hi boundary as new lo when advancing sequentially
     if (state.last_hi != 0 && k == state.last_hi && lg2_nu_src == state.last_lg2_nu) {
         state.lg2_L_nu_lo = state.lg2_L_nu_hi;
     } else {
@@ -410,4 +465,129 @@ Array Observer::flux(Array const& t_obs, Array const& band_freq, PhotonGrid& pho
         }
     }
     return flux;
+}
+
+//========================================================================================================
+//                                  sky_image template implementation
+//========================================================================================================
+
+template <typename PhotonGrid>
+void Observer::build_splat_grid(SplatGrid& grid, Coord const& coord, Shock const& shock, Real t_obs, Real nu_obs,
+                                PhotonGrid& photons, std::vector<Real> const& cos_phi_tab,
+                                std::vector<Real> const& sin_phi_tab) {
+    const Real lg2_t_target = fast_log2(t_obs);
+    const Real lg2_nu_src = fast_log2(nu_obs * one_plus_z);
+    const Real d_A = lumi_dist / (one_plus_z * one_plus_z);
+    const Real cos_obs = std::cos(coord.theta_view);
+    const Real sin_obs = std::sin(coord.theta_view);
+
+    const size_t copies_per_phys = grid.n_phi / eff_phi_grid;
+
+    // Interpolate luminosity and project each cell onto the sky plane
+    for (size_t i_phys = 0; i_phys < eff_phi_grid; ++i_phys) {
+        const size_t eff_i = i_phys * jet_3d;
+
+        // For non-axisymmetric jets, phi cos/sin is constant per i_phys
+        const Real cp_fixed = (eff_phi_grid > 1) ? std::cos(coord.phi[i_phys] - coord.phi_view) : 0;
+        const Real sp_fixed = (eff_phi_grid > 1) ? std::sin(coord.phi[i_phys] - coord.phi_view) : 0;
+
+        for (size_t j = 0; j < theta_grid; ++j) {
+            if (lg2_t_target < lg2_t(i_phys, j, 0) || lg2_t_target >= lg2_t(i_phys, j, t_grid - 1)) {
+                continue;
+            }
+
+            size_t k = 0;
+            while (k + 2 < t_grid && lg2_t(i_phys, j, k + 1) < lg2_t_target) {
+                ++k;
+            }
+
+            InterpState state_L;
+            if (!set_boundaries(state_L, eff_i, i_phys, j, k, lg2_nu_src, photons)) {
+                continue;
+            }
+            const Real L_val = loglog_interpolate(state_L, lg2_t_target, lg2_t(i_phys, j, k));
+            if (!std::isfinite(L_val) || L_val <= 0) {
+                continue;
+            }
+
+            // Sky position from interpolated r and theta
+            const Real lg2_dt = lg2_t(i_phys, j, k + 1) - lg2_t(i_phys, j, k);
+            const Real w = (lg2_t_target - lg2_t(i_phys, j, k)) / lg2_dt;
+            const Real r_val = shock.r(eff_i, j, k) + w * (shock.r(eff_i, j, k + 1) - shock.r(eff_i, j, k));
+            const Real theta_val = jet_spreading_ ? shock.theta(eff_i, j, k) +
+                                                        w * (shock.theta(eff_i, j, k + 1) - shock.theta(eff_i, j, k))
+                                                  : shock.theta(eff_i, j, 0);
+
+            const Real ct = std::cos(theta_val);
+            const Real st = std::sin(theta_val);
+            const Real L_per_copy = L_val / copies_per_phys;
+
+            for (size_t c = 0; c < copies_per_phys; ++c) {
+                const size_t i_splat = i_phys * copies_per_phys + c;
+                const Real cp = (eff_phi_grid == 1) ? cos_phi_tab[c] : cp_fixed;
+                const Real sp = (eff_phi_grid == 1) ? sin_phi_tab[c] : sp_fixed;
+                const Real x_ang = r_val * (st * cp * cos_obs - ct * sin_obs) / d_A;
+                const Real y_ang = r_val * st * sp / d_A;
+
+                grid.x(i_splat, j) = x_ang;
+                grid.y(i_splat, j) = y_ang;
+                grid.L(i_splat, j) = L_per_copy;
+
+                grid.xmin = std::min(grid.xmin, x_ang);
+                grid.xmax = std::max(grid.xmax, x_ang);
+                grid.ymin = std::min(grid.ymin, y_ang);
+                grid.ymax = std::max(grid.ymax, y_ang);
+            }
+        }
+    }
+
+    // Convert luminosity to flux units
+    const Real flux_norm = one_plus_z / (lumi_dist * lumi_dist);
+    grid.L *= flux_norm;
+
+    grid.compute_sigma();
+}
+
+template <typename PhotonGrid>
+SkyImageResult Observer::sky_image(Coord const& coord, Shock const& shock, Array const& t_obs, Real nu_obs,
+                                   PhotonGrid& photons, size_t npixel, Real pix_size) {
+    const size_t n_frames = t_obs.size();
+    SkyImageResult result;
+    result.image = MeshGrid3d({n_frames, npixel, npixel}, 0);
+
+    if (npixel == 0 || t_grid < 2) {
+        result.extent = {0, 0, 0, 0};
+        return result;
+    }
+
+    // Compute extent and pixel_solid_angle once (depends only on pix_size and npixel)
+    const Real half_fov = 0.5 * pix_size * static_cast<Real>(npixel);
+    result.extent = {-half_fov, half_fov, -half_fov, half_fov};
+    result.pixel_solid_angle = pix_size * pix_size;
+
+    // Allocate SplatGrid once and reuse across frames
+    const size_t n_splat_phi = (eff_phi_grid == 1) ? std::max<size_t>(4 * theta_grid, npixel) : eff_phi_grid;
+    SplatGrid grid(n_splat_phi, theta_grid);
+
+    // Precompute phi sin/cos table once for axisymmetric case (reused across all frames)
+    const size_t copies_per_phys = n_splat_phi / eff_phi_grid;
+    std::vector<Real> cos_phi_tab, sin_phi_tab;
+    if (eff_phi_grid == 1) {
+        cos_phi_tab.resize(copies_per_phys);
+        sin_phi_tab.resize(copies_per_phys);
+        for (size_t c = 0; c < copies_per_phys; ++c) {
+            const Real phi = 2.0 * con::pi * c / n_splat_phi;
+            cos_phi_tab[c] = std::cos(phi);
+            sin_phi_tab[c] = std::sin(phi);
+        }
+    }
+
+    for (size_t f = 0; f < n_frames; ++f) {
+        grid.reset();
+        build_splat_grid(grid, coord, shock, t_obs(f), nu_obs, photons, cos_phi_tab, sin_phi_tab);
+        MeshGrid frame_img({npixel, npixel}, 0);
+        grid.render(frame_img, pix_size);
+        xt::view(result.image, f, xt::all(), xt::all()) = frame_img;
+    }
+    return result;
 }

@@ -201,7 +201,7 @@ inline constexpr Real eVtoHz(Real eV) noexcept {
 template <typename Fun>
 auto root_bisect(Fun f, decltype(f(0)) low, decltype(f(0)) high, decltype(f(0)) eps = 1e-6) -> decltype(f(0)) {
     using Scalar = decltype(f(0));
-    while ((high - low) > std::fabs((high + low) * 0.5) * eps) {
+    for (size_t iter = 0; iter < 1000 && (high - low) > std::fabs((high + low) * 0.5) * eps; ++iter) {
         Scalar mid = 0.5 * (high + low);
         if (f(mid) * f(high) > 0)
             high = mid;

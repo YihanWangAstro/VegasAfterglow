@@ -208,6 +208,136 @@ void Observer::build_time_grid(Coord const& coord, Shock const& shock, Real lumi
 }
 
 //========================================================================================================
+//                                  SplatGrid Methods
+//========================================================================================================
+
+SplatGrid::SplatGrid(size_t n_phi_, size_t n_theta_)
+    : x({n_phi_, n_theta_}, 0),
+      y({n_phi_, n_theta_}, 0),
+      L({n_phi_, n_theta_}, 0),
+      sigma({n_phi_, n_theta_}, 0),
+      n_phi(n_phi_),
+      n_theta(n_theta_),
+      xmin(std::numeric_limits<Real>::max()),
+      xmax(-std::numeric_limits<Real>::max()),
+      ymin(std::numeric_limits<Real>::max()),
+      ymax(-std::numeric_limits<Real>::max()) {}
+
+void SplatGrid::reset() {
+    L.fill(0);
+    x.fill(0);
+    y.fill(0);
+    sigma.fill(0);
+    xmin = std::numeric_limits<Real>::max();
+    xmax = -std::numeric_limits<Real>::max();
+    ymin = std::numeric_limits<Real>::max();
+    ymax = -std::numeric_limits<Real>::max();
+    max_sigma = 0;
+}
+
+void SplatGrid::render(MeshGrid& image, Real pix_size) const {
+    if (xmin > xmax) {
+        return;
+    }
+
+    const size_t npixel = image.shape(0);
+    const Real half_fov = 0.5 * pix_size * static_cast<Real>(npixel);
+    const Real x_lo = -half_fov;
+    const Real y_lo = -half_fov;
+    const Real inv_pix_size = 1.0 / pix_size;
+
+    // Gaussian splatting: paint each cell as a 2D Gaussian onto the pixel grid
+    for (size_t qi = 0; qi < n_phi; ++qi) {
+        for (size_t qj = 0; qj < n_theta; ++qj) {
+            if (L(qi, qj) <= 0) {
+                continue;
+            }
+
+            const Real x_c = x(qi, qj);
+            const Real y_c = y(qi, qj);
+            const Real sig = std::max(sigma(qi, qj), pix_size);
+            const Real sig2 = sig * sig;
+            const Real inv_2sig2 = 0.5 / sig2;
+            const Real amp = L(qi, qj) / (2 * con::pi * sig2);
+
+            const Real radius = 3 * sig;
+            const int px_lo = std::max(0, static_cast<int>((x_c - radius - x_lo) * inv_pix_size));
+            const int px_hi =
+                std::min(static_cast<int>(npixel) - 1, static_cast<int>((x_c + radius - x_lo) * inv_pix_size));
+            const int py_lo = std::max(0, static_cast<int>((y_c - radius - y_lo) * inv_pix_size));
+            const int py_hi =
+                std::min(static_cast<int>(npixel) - 1, static_cast<int>((y_c + radius - y_lo) * inv_pix_size));
+
+            for (int px = px_lo; px <= px_hi; ++px) {
+                const Real dx = x_lo + (px + 0.5) * pix_size - x_c;
+                const Real dx2 = dx * dx;
+                for (int py = py_lo; py <= py_hi; ++py) {
+                    const Real dy = y_lo + (py + 0.5) * pix_size - y_c;
+                    const Real d2 = dx2 + dy * dy;
+                    if (d2 < radius * radius) {
+                        image(px, py) += amp * std::exp(-d2 * inv_2sig2);
+                    }
+                }
+            }
+        }
+    }
+
+    // Enforce y=0 mirror symmetry (axisymmetric jet viewed off-axis has a half-cell
+    // phi shift that breaks the natural sin(phi) ↔ -sin(phi) pairing)
+    for (size_t px = 0; px < npixel; ++px) {
+        for (size_t py = 0; py < npixel / 2; ++py) {
+            const size_t py_m = npixel - 1 - py;
+            const Real avg = 0.5 * (image(px, py) + image(px, py_m));
+            image(px, py) = avg;
+            image(px, py_m) = avg;
+        }
+    }
+}
+
+void SplatGrid::compute_sigma() {
+    for (size_t qi = 0; qi < n_phi; ++qi) {
+        for (size_t qj = 0; qj < n_theta; ++qj) {
+            if (L(qi, qj) <= 0) {
+                continue;
+            }
+
+            // Phi-direction half-span (wrapping; always valid for emitting cells)
+            const size_t qi_p = (qi + 1 < n_phi) ? qi + 1 : 0;
+            const size_t qi_m = (qi > 0) ? qi - 1 : n_phi - 1;
+            const Real vp_x = 0.5 * (x(qi_p, qj) - x(qi_m, qj));
+            const Real vp_y = 0.5 * (y(qi_p, qj) - y(qi_m, qj));
+
+            // Theta-direction half-span (one-sided at emission boundary)
+            const bool has_hi = (qj + 1 < n_theta) && (L(qi, qj + 1) > 0);
+            const bool has_lo = (qj > 0) && (L(qi, qj - 1) > 0);
+            Real vt_x, vt_y;
+            if (has_hi && has_lo) {
+                vt_x = 0.5 * (x(qi, qj + 1) - x(qi, qj - 1));
+                vt_y = 0.5 * (y(qi, qj + 1) - y(qi, qj - 1));
+            } else if (has_hi) {
+                vt_x = x(qi, qj + 1) - x(qi, qj);
+                vt_y = y(qi, qj + 1) - y(qi, qj);
+            } else if (has_lo) {
+                vt_x = x(qi, qj) - x(qi, qj - 1);
+                vt_y = y(qi, qj) - y(qi, qj - 1);
+            } else {
+                // Isolated in theta: use phi extent as fallback
+                sigma(qi, qj) = std::sqrt(vp_x * vp_x + vp_y * vp_y);
+                max_sigma = std::max(max_sigma, sigma(qi, qj));
+                continue;
+            }
+
+            // Use the larger of the two cell half-spans to ensure smooth overlap
+            // between neighbors in both directions; rescaling corrects total flux
+            const Real len_phi = std::sqrt(vp_x * vp_x + vp_y * vp_y);
+            const Real len_theta = std::sqrt(vt_x * vt_x + vt_y * vt_y);
+            sigma(qi, qj) = std::max(len_phi, len_theta);
+            max_sigma = std::max(max_sigma, sigma(qi, qj));
+        }
+    }
+}
+
+//========================================================================================================
 //                                  Public Interface Methods
 //========================================================================================================
 

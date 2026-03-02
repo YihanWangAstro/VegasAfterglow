@@ -568,11 +568,14 @@ class Fitter:
 
         def eval_one(theta):
             """Evaluate log-probability for a single walker."""
-            params = transformer(theta)
-            chi2 = self._evaluate(params)
-            if not np.isfinite(chi2):
+            try:
+                params = transformer(theta)
+                chi2 = self._evaluate(params)
+                if not np.isfinite(chi2):
+                    return -np.inf
+                return log_likelihood_fn(chi2)
+            except Exception:
                 return -np.inf
-            return log_likelihood_fn(chi2)
 
         def log_prob_batch(samples: np.ndarray) -> np.ndarray:
             in_bounds = np.all((samples >= pl) & (samples <= pu), axis=1)
@@ -615,7 +618,7 @@ class Fitter:
         try:
             sampler_obj.run_mcmc(pos0, nsteps, progress=True)
         finally:
-            pool.shutdown(wait=False)
+            pool.shutdown(wait=True)
 
         chain = sampler_obj.get_chain(discard=nburn, thin=thin, flat=True)
         log_probs_flat = sampler_obj.get_log_prob(discard=nburn, thin=thin, flat=True)

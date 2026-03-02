@@ -451,6 +451,68 @@ auto PyModel::flux_density_grid(PyArray const& t, PyArray const& nu) -> PyFlux {
     return result;
 }
 
+auto PyModel::sky_image(PyArray const& t_obs, double nu_obs, double fov, size_t npixel) -> PySkyImage {
+    AFTERGLOW_REQUIRE(t_obs.size() > 0, "t_obs array must be non-empty");
+    AFTERGLOW_REQUIRE(nu_obs > 0, "nu_obs must be positive");
+    AFTERGLOW_REQUIRE(npixel > 0, "npixel must be positive");
+    AFTERGLOW_REQUIRE(fov > 0, "fov must be positive");
+
+    const size_t n_frames = t_obs.size();
+    const Array t_arr = t_obs * unit::sec;
+    const Real nu_cgs = nu_obs * unit::Hz;
+    const Real pix_size = fov / static_cast<Real>(npixel);
+
+    Observer observer;
+    PySkyImage result;
+    result.image = xt::zeros<Real>({n_frames, npixel, npixel});
+
+    // Helper: set up a shock once (observe, electrons, photons, SSC cooling),
+    // then render sky images for all frames via batched sky_image.
+    auto render_shock_frames = [&](Shock const& shock, Coord const& coord, PyRadiation const& rad) {
+        observer.observe(coord, shock, obs_setup.lumi_dist, obs_setup.z);
+
+        auto syn_e = generate_syn_electrons(shock, coord);
+        auto syn_ph = generate_syn_photons(shock, syn_e, coord);
+
+        if (rad.ssc) {
+            if (rad.kn) {
+                KN_cooling(syn_e, syn_ph, shock, coord, obs_setup.z);
+            } else {
+                Thomson_cooling(syn_e, syn_ph, shock, coord, obs_setup.z);
+            }
+        } else if (rad.rad.cmb_cooling) {
+            CMB_cooling(syn_e, syn_ph, shock, coord, obs_setup.z);
+        }
+
+        auto img = observer.sky_image(coord, shock, t_arr, nu_cgs, syn_ph, npixel, pix_size);
+
+        if (rad.ssc) {
+            auto ic_ph = generate_IC_photons(syn_e, syn_ph, rad.kn, coord);
+            auto ssc_img = observer.sky_image(coord, shock, t_arr, nu_cgs, ic_ph, npixel, pix_size);
+            img.image += ssc_img.image;
+        }
+
+        result.image += img.image / unit::flux_den_cgs;
+        result.extent = img.extent;
+        result.pixel_solid_angle = img.pixel_solid_angle;
+    };
+
+    if (!rvs_rad_opt) {
+        auto [coord, fwd_shock] =
+            solve_fwd_shock(jet_, medium_, t_arr, theta_w, obs_setup.theta_obs, obs_setup.z, phi_resol, theta_resol,
+                            t_resol, axisymmetric, min_theta_num_, fwd_rad.rad, rtol);
+        render_shock_frames(fwd_shock, coord, fwd_rad);
+    } else {
+        auto [coord, fwd_shock, rvs_shock] =
+            solve_shock_pair(jet_, medium_, t_arr, theta_w, obs_setup.theta_obs, obs_setup.z, phi_resol, theta_resol,
+                             2 * t_resol, axisymmetric, min_theta_num_, fwd_rad.rad, rvs_rad_opt->rad, rtol);
+        render_shock_frames(fwd_shock, coord, fwd_rad);
+        render_shock_frames(rvs_shock, coord, *rvs_rad_opt);
+    }
+
+    return result;
+}
+
 Array PyModel::jet_E_iso(Real phi, Array const& theta) const {
     Array E_iso = xt::zeros<Real>(theta.shape());
     for (size_t i = 0; i < theta.size(); ++i) {

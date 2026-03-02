@@ -542,8 +542,11 @@ Array inverse_CFD_sampling(Func&& pdf, Real min, Real max, size_t num,
     auto stepper = make_dense_output(rtol, rtol, runge_kutta_dopri5<Real>());
     stepper.initialize(0, min, (max - min) / 1e3);
 
-    for (size_t k = 1; stepper.current_time() <= max;) {
+    for (size_t k = 1, steps = 0; stepper.current_time() <= max;) {
         stepper.do_step(pdf);
+        if (++steps > defaults::solver::max_ode_steps) {
+            break;
+        }
         while (k < x_i.size() && stepper.current_time() > x_i(k)) {
             stepper.calc_state(x_i(k), CDF_i(k));
             ++k;
