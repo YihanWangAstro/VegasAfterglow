@@ -682,6 +682,7 @@ Generate spatially resolved images of the afterglow at any observer time and fre
 <br>
 
 ```python
+from matplotlib.colors import LogNorm
 from VegasAfterglow.units import uas
 
 img = model.sky_image([1e6], nu_obs=1e9, fov=500 * uas, npixel=256)
