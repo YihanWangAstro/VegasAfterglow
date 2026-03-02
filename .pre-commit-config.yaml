@@ -83,8 +83,8 @@ repos:
         exclude: ^external/.*
       - id: python-tests
         name: Python tests
-        entry: bash -c 'python -m pytest tests/ -x -q'
+        entry: bash -c 'pip install -e . -q && python -m pytest tests/ -x -q'
         language: system
         pass_filenames: false
-        files: \.(py)$
+        files: \.(py|cpp|hpp|c|h|cc|cxx)$
         exclude: ^(external|script|docs)/.*

@@ -119,7 +119,7 @@ For the full MCMC fitting guide, including advanced customization examples, see 
 
 - New `model.sky_image()` method generates spatially resolved afterglow images at any observer time and frequency, supporting all jet types and viewing angles
 - Batch evaluation over multiple observer times for efficient multi-frame image sequences and movies
-- See the [sky image example notebook](script/sky-image.ipynb) and [documentation](https://vegasafterglow.readthedocs.io/en/latest/examples/sky_image.html) for usage
+- See the [sky image example notebook](script/sky-image.ipynb) and [documentation](https://yihanwangastro.github.io/VegasAfterglow/docs/examples/sky_image.html) for usage
 
 #### ► **Smooth Electron Distribution for IC Integration**
 

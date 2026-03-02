@@ -1,6 +1,7 @@
 #include <boost/numeric/odeint.hpp>
 #include <filesystem>
 #include <fstream>
+#include <thread>
 
 #include "afterglow.h"
 #include "json.hpp"
@@ -57,7 +58,7 @@ void lc_gen(std::string folder_name, bool out = false) {
     }
     jet.spreading = false;
 
-    Coord coord = auto_grid(jet, medium, t_bins, theta_w, theta_view, z, 0.5, 0.5, 20, true, 0, 48, 0.4);
+    Coord coord = auto_grid(jet, medium, t_bins, theta_w, theta_view, z, 0.5, 0.5, 20, true, 0, 48);
 
     // solve dynamics
     Shock f_shock = generate_fwd_shock(coord, medium, jet, rad_fwd);
@@ -66,9 +67,9 @@ void lc_gen(std::string folder_name, bool out = false) {
 
     obs.observe(coord, f_shock, lumi_dist, z);
 
-    auto syn_e = generate_syn_electrons(f_shock);
+    auto syn_e = generate_syn_electrons(f_shock, coord);
 
-    auto syn_ph = generate_syn_photons(f_shock, syn_e);
+    auto syn_ph = generate_syn_photons(f_shock, syn_e, coord);
 
     if (out) {
         write_npz("coord", coord);

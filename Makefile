@@ -18,11 +18,11 @@ TEST_DIR := tests
 
 # === Compiler & flags ===
 CXX ?= g++
-CXXFLAGS := -std=c++20 -O3 -march=native -flto -Iinclude -Isrc -Iexternal -w -g -DNDEBUG -DXTENSOR_DISABLE_EXCEPTIONS -DXTENSOR_USE_XSIMD -DEXTREME_SPEED
+CXXFLAGS := -std=c++20 -O3 -march=native -flto -Iinclude -Isrc -Iexternal -w -g -DNDEBUG -DXTENSOR_DISABLE_EXCEPTIONS -DXTENSOR_USE_XSIMD
 LDFLAGS := -lz
 
 # Tests: each tests/foo/bar.cpp → tests/foo/bar(.exe)
-TEST_SRCS := $(shell find $(TEST_DIR) -type f -name '*.cpp')
+TEST_SRCS := $(shell find $(TEST_DIR) -type f -name '*.cpp' -not -path '$(TEST_DIR)/cpp/*')
 TEST_EXES := $(patsubst %.cpp,%$(EXE_EXT),$(TEST_SRCS))
 
 # === Default target ===

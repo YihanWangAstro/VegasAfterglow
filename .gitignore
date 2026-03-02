@@ -42,3 +42,6 @@ tests/**/demo
 tests/**/x-ray
 tests/**/code-comp
 tests/**/fast_math_bench
+
+# Auto-generated version file (setuptools-scm)
+VegasAfterglow/_version.py
