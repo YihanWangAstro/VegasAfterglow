@@ -52,7 +52,7 @@ def sky_image_single():
     ax.set_title(r"$t_{\rm obs} = 10^6$ s, $\nu = 1$ GHz")
     fig.colorbar(im, label=r"Surface brightness (erg/cm$^2$/s/Hz/sr)")
     plt.tight_layout()
-    fig.savefig(os.path.join(ASSETS_DIR, "sky_image_single.png"))
+    fig.savefig(os.path.join(ASSETS_DIR, "sky_image_single.png"), bbox_inches="tight")
     plt.close(fig)
     print("  -> sky_image_single.png")
 
@@ -89,7 +89,7 @@ def sky_image_offaxis():
         if i == 0:
             ax.set_ylabel(r"$\Delta y$ ($\mu$as)")
     fig.colorbar(im, ax=axes, label=r"erg/cm$^2$/s/Hz/sr", shrink=0.85)
-    fig.savefig(os.path.join(ASSETS_DIR, "sky_image_offaxis.png"))
+    fig.savefig(os.path.join(ASSETS_DIR, "sky_image_offaxis.png"), bbox_inches="tight")
     plt.close(fig)
     print("  -> sky_image_offaxis.png")
 
@@ -128,7 +128,7 @@ def sky_image_flux_comparison():
     ax2.set_xlabel("Observer time (s)")
     ax2.set_ylim(0.95, 1.05)
     plt.tight_layout()
-    fig.savefig(os.path.join(ASSETS_DIR, "sky_image_flux_comparison.png"))
+    fig.savefig(os.path.join(ASSETS_DIR, "sky_image_flux_comparison.png"), bbox_inches="tight")
     plt.close(fig)
     print("  -> sky_image_flux_comparison.png")
 
@@ -171,7 +171,7 @@ def reverse_shock_lc():
     ax.set_ylabel(r"Flux density (erg/cm$^2$/s/Hz)")
     ax.legend(fontsize=7, ncol=2)
     plt.tight_layout()
-    fig.savefig(os.path.join(ASSETS_DIR, "reverse_shock_lc.png"))
+    fig.savefig(os.path.join(ASSETS_DIR, "reverse_shock_lc.png"), bbox_inches="tight")
     plt.close(fig)
     print("  -> reverse_shock_lc.png")
 
@@ -202,7 +202,7 @@ def ssc_lc():
     ax.set_ylabel(r"Flux density (erg/cm$^2$/s/Hz)")
     ax.legend(fontsize=7, ncol=2)
     plt.tight_layout()
-    fig.savefig(os.path.join(ASSETS_DIR, "ssc_lc.png"))
+    fig.savefig(os.path.join(ASSETS_DIR, "ssc_lc.png"), bbox_inches="tight")
     plt.close(fig)
     print("  -> ssc_lc.png")
 
@@ -251,7 +251,7 @@ def basic_lightcurves():
     ax2.set_title("Synchrotron Spectra")
 
     plt.tight_layout()
-    fig.savefig(os.path.join(ASSETS_DIR, "basic_lc_spec.png"))
+    fig.savefig(os.path.join(ASSETS_DIR, "basic_lc_spec.png"), bbox_inches="tight")
     plt.close(fig)
     print("  -> basic_lc_spec.png")
 
@@ -276,7 +276,7 @@ def basic_bolometric():
     ax.legend()
     ax.set_title("Broadband Light Curves")
     plt.tight_layout()
-    fig.savefig(os.path.join(ASSETS_DIR, "basic_bolometric.png"))
+    fig.savefig(os.path.join(ASSETS_DIR, "basic_bolometric.png"), bbox_inches="tight")
     plt.close(fig)
     print("  -> basic_bolometric.png")
 
@@ -308,7 +308,7 @@ def introspection_jet():
     ax2.grid(True, alpha=0.3)
 
     plt.tight_layout()
-    fig.savefig(os.path.join(ASSETS_DIR, "introspection_jet.png"))
+    fig.savefig(os.path.join(ASSETS_DIR, "introspection_jet.png"), bbox_inches="tight")
     plt.close(fig)
     print("  -> introspection_jet.png")
 
@@ -325,8 +325,7 @@ def introspection_medium():
     theta = 0.1
     r = np.logspace(13, 20, 200)
     rho_profile = model.medium(phi, theta, r)
-    mu = 1.3  # mean molecular weight (accounts for helium)
-    n_profile = rho_profile / (mu * 1.67e-24)
+    n_profile = rho_profile / 1.67e-24  # approximate number density (assuming pure hydrogen)
 
     fig, ax = plt.subplots(figsize=(5, 4), dpi=200)
     ax.loglog(r, n_profile)
@@ -338,7 +337,7 @@ def introspection_medium():
     ax.axhline(0.1, color="blue", ls="--", alpha=0.7, label=r"Outer ISM density ($n_{\rm ism}$)")
     ax.legend()
     plt.tight_layout()
-    fig.savefig(os.path.join(ASSETS_DIR, "introspection_medium.png"))
+    fig.savefig(os.path.join(ASSETS_DIR, "introspection_medium.png"), bbox_inches="tight")
     plt.close(fig)
     print("  -> introspection_medium.png")
 
@@ -377,7 +376,7 @@ def introspection_twocomp():
     ax2.grid(True, alpha=0.3)
 
     plt.tight_layout()
-    fig.savefig(os.path.join(ASSETS_DIR, "introspection_twocomp.png"))
+    fig.savefig(os.path.join(ASSETS_DIR, "introspection_twocomp.png"), bbox_inches="tight")
     plt.close(fig)
     print("  -> introspection_twocomp.png")
 
