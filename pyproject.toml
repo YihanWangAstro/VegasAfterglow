@@ -43,6 +43,7 @@ test = [
 webapp = [
   "streamlit>=1.28",
   "plotly>=5.15",
+  "kaleido>=1.0",
 ]
 
 [tool.scikit-build]
