@@ -475,59 +475,8 @@ Real enclosed_thermal_energy_medium(Medium const& medium, Real phi, Real theta, 
     }
 }
 
-/// @brief Finds the deceleration observer time by integrating swept mass outward until m_swept = m_jet/Gamma0.
-/// Works for any medium density profile. Returns observer time r_dec*(1-beta)/(beta*c).
+/// @brief Finds the deceleration engine-frame time by delegating to estimate_t_dec.
 template <typename Eqn>
 Real compute_dec_time(Eqn const& eqn) {
-    using MediumT = std::remove_cvref_t<decltype(eqn.medium)>;
-    const Real gamma = eqn.ejecta.Gamma0(eqn.phi, eqn.theta0);
-    const Real beta = physics::relativistic::gamma_to_beta(gamma);
-    Real m_jet = eqn.ejecta.eps_k(eqn.phi, eqn.theta0) / (gamma * con::c2);
-    if constexpr (HasSigma<decltype(eqn.ejecta)>) {
-        m_jet /= (1.0 + eqn.ejecta.sigma0(eqn.phi, eqn.theta0));
-    }
-    const Real target = m_jet / gamma;
-
-    constexpr Real r_min = 1e-3;
-    const Real r_max = r_min * std::pow(10.0, 40.0);
-    if (target <= 0) {
-        return r_min * (1 - beta) / (beta * con::c);
-    }
-
-    if constexpr (std::is_same_v<MediumT, ISM>) {
-        const Real rho = eqn.medium.rho(eqn.phi, eqn.theta0, r_min);
-        if (rho > 0) {
-            const Real r3_dec = r_min * r_min * r_min + 3 * target / rho;
-            const Real r_dec = std::cbrt(std::max(r3_dec, 0.0));
-            return std::min(r_dec, r_max) * (1 - beta) / (beta * con::c);
-        }
-        return r_max * (1 - beta) / (beta * con::c);
-    }
-
-    auto rho = [&](Real r) { return eqn.medium.rho(eqn.phi, eqn.theta0, r); };
-
-    // Trapezoidal integration in log-space with early exit at deceleration radius
-    constexpr size_t N = 256;
-    const Real u_min = std::log(1e-3);
-    const Real u_max = u_min + 40 * std::log(10.0);
-    const Real du = (u_max - u_min) / N;
-
-    Real mass = 0;
-    Real r_prev = std::exp(u_min);
-    Real f_prev = rho(r_prev) * r_prev * r_prev;
-
-    for (size_t i = 1; i <= N; ++i) {
-        const Real r_i = std::exp(u_min + i * du);
-        const Real f_i = rho(r_i) * r_i * r_i;
-        const Real dr = r_i - r_prev;
-        mass += 0.5 * (f_prev + f_i) * dr;
-
-        if (mass >= target) {
-            const Real r_dec = r_prev + (target - (mass - 0.5 * (f_prev + f_i) * dr)) / f_i;
-            return r_dec * (1 - beta) / (beta * con::c);
-        }
-        f_prev = f_i;
-        r_prev = r_i;
-    }
-    return std::exp(u_max) * (1 - beta) / (beta * con::c);
+    return estimate_t_dec(eqn.ejecta, eqn.medium, eqn.phi, eqn.theta0);
 }

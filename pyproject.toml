@@ -40,6 +40,10 @@ test = [
   "Pillow>=10.0",
   "pylatexenc>=2.10",
 ]
+webapp = [
+  "streamlit>=1.28",
+  "plotly>=5.15",
+]
 
 [tool.scikit-build]
 wheel.packages = ["VegasAfterglow"]

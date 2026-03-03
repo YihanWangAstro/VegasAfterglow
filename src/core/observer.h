@@ -420,11 +420,10 @@ Array Observer::specific_flux_series(Array const& t_obs, Array const& nu_obs, Ph
     for (size_t i = 0; i < eff_phi_grid; i++) {
         const size_t eff_i = i * jet_3d;
         for (size_t j = 0; j < theta_grid; j++) {
-            // Skip observation times below the grid's start time
             size_t idx = 0;
             iterate_to(lg2_t(i, j, 0), lg2_t_obs, idx);
-
             InterpState state;
+
             for (size_t k = 0; idx < t_obs_len && k < t_grid - 1;) {
                 if (lg2_t(i, j, k + 1) < lg2_t_obs(idx)) {
                     k++;

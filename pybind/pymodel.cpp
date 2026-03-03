@@ -119,9 +119,18 @@ MediumVariant PyWind(Real A_star, std::optional<Real> n_ism_opt, std::optional<R
     if (k_m == 2) {
         return Wind(A_star, n_ism / unit::cm3, n0 / unit::cm3);
     }
-    // General k_m: fall back to Medium with std::function (evn::wind handles unit conversion)
+    // General k_m: build Medium with CGS rho function.
+    // convert_unit_medium expects CGS (r in cm, returns g/cm³).
+    constexpr Real r0_cgs = 1e17;          // reference radius [cm]
+    constexpr Real mp_cgs = 1.6726219e-24; // proton mass [g]
+    const Real A_cgs = A_star * 5e11 * std::pow(r0_cgs, k_m - 2);
+    const Real rho_ism_cgs = n_ism * mp_cgs;
+    const Real r0k_cgs = A_cgs / (n0 * 1.3 * mp_cgs); // 0 when n0 = inf (no floor)
+
     Medium medium;
-    medium.rho = evn::wind(A_star, n_ism / unit::cm3, n0 / unit::cm3, k_m);
+    medium.rho = [=](Real /*phi*/, Real /*theta*/, Real r) noexcept {
+        return A_cgs / (r0k_cgs + std::pow(r, k_m)) + rho_ism_cgs;
+    };
     medium.isotropic = true;
     return medium;
 }

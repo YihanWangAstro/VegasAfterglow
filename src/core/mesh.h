@@ -727,7 +727,10 @@ Real estimate_t_dec(Ejecta const& jet, Medium const& medium, Real phi, Real thet
         return con::inf;
     }
     const Real beta = physics::relativistic::gamma_to_beta(gamma);
-    const Real m_jet = jet.eps_k(phi, theta) / ((gamma - 1) * con::c2);
+    Real m_jet = jet.eps_k(phi, theta) / (gamma * con::c2);
+    if constexpr (HasSigma<Ejecta>) {
+        m_jet /= (1.0 + jet.sigma0(phi, theta));
+    }
     const Real target = m_jet / gamma;
 
     constexpr size_t N = 256;
@@ -920,7 +923,9 @@ void build_time_grid(Coord& coord, Ejecta const& jet, Medium const& medium, Real
             const Real cos_alpha =
                 std::cos(coord.theta(j)) * cos_tv + std::sin(coord.theta(j)) * sin_tv * std::cos(coord.phi(i));
             Real t_start = 0.99 * t_min * (1 - b) / (1 - cos_alpha * b) / (1 + z);
-            t_start = std::max(t_start, t_start_cut);
+            Real t_dec = estimate_t_dec(jet, medium, coord.phi(i), coord.theta(j));
+            Real t_guard = std::min(t_dec, t_start_cut);
+            t_start = std::max(t_start, t_guard);
             min_t_start = std::min(min_t_start, t_start);
         }
     }
@@ -960,8 +965,9 @@ void build_time_grid(Coord& coord, Ejecta const& jet, Medium const& medium, Real
                 const Real cos_alpha =
                     std::cos(coord.theta(j)) * cos_tv + std::sin(coord.theta(j)) * sin_tv * std::cos(coord.phi(i));
                 Real t_start = 0.99 * t_min * (1 - b) / (1 - cos_alpha * b) / (1 + z);
-                t_start = std::max(t_start, t_start_cut);
-                const Real t_dec = estimate_t_dec(jet, medium, coord.phi(i), coord.theta(j));
+                Real t_dec = estimate_t_dec(jet, medium, coord.phi(i), coord.theta(j));
+                Real t_guard = std::min(t_dec, t_start_cut);
+                t_start = std::max(t_start, t_guard);
                 xt::view(coord.t, i, j, xt::all()) =
                     refined_time_grid(t_start, t_end, t_dec, t_num, refine_lo_factor, refine_hi_factor, refine_ratio);
             }
