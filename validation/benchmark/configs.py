@@ -69,10 +69,7 @@ RADIATION_CONFIGS: Dict[str, RadiationConfig] = {c.name: c for c in [
     RadiationConfig("synchrotron",      {**_STANDARD_RADIATION, "ssc": False, "kn": False}),
     RadiationConfig("full_ssc",         {**_STANDARD_RADIATION, "ssc": True,  "kn": False}),
     RadiationConfig("ssc_kn",           {**_STANDARD_RADIATION, "ssc": True,  "kn": True}),
-    RadiationConfig("fast_cooling",     {"eps_e": 0.1, "eps_B": 0.1,  "p": 2.5, "xi_e": 1e-3, "ssc": False, "kn": False}),
-    RadiationConfig("steep_spectrum",   {"eps_e": 0.1, "eps_B": 0.01, "p": 2.8, "xi_e": 1.0,  "ssc": False, "kn": False}),
-    RadiationConfig("flat_spectrum",    {"eps_e": 0.1, "eps_B": 0.01, "p": 2.05,"xi_e": 1.0,  "ssc": False, "kn": False}),
-    # Forward + reverse shock (TODO: enable when reverse shock benchmarks are ready)
+    # Forward + reverse shock
     RadiationConfig("rvs_sync_thin", {**_STANDARD_RADIATION, "ssc": False, "kn": False},
                      rvs_params={**_STANDARD_RVS_RADIATION, "duration": 1}),
     RadiationConfig("rvs_sync_thick", {**_STANDARD_RADIATION, "ssc": False, "kn": False},
@@ -106,12 +103,6 @@ def _filter_names(registry, pred=None) -> List[str]:
 def get_all_jet_names() -> List[str]:       return _filter_names(JET_CONFIGS)
 def get_all_medium_names() -> List[str]:    return _filter_names(MEDIUM_CONFIGS)
 def get_all_radiation_names() -> List[str]: return _filter_names(RADIATION_CONFIGS)
-def get_radiation_names_no_ssc() -> List[str]:
-    return _filter_names(RADIATION_CONFIGS, lambda c: not c.params.get("ssc", False) and c.rvs_params is None)
-def get_fwd_only_radiation_names() -> List[str]:
-    return _filter_names(RADIATION_CONFIGS, lambda c: c.rvs_params is None)
-def get_rvs_radiation_names() -> List[str]:
-    return _filter_names(RADIATION_CONFIGS, lambda c: c.rvs_params is not None)
 
 # ---------------------------------------------------------------------------
 # Factory functions

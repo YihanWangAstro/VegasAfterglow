@@ -134,7 +134,7 @@ def plot_benchmark_overview(session: Dict, angle_filter: str = "all") -> plt.Fig
     all_configs = session.get("configs", session.get("results", []))
 
     if angle_filter == "on-axis":
-        configs = [c for c in all_configs if c.get("theta_obs_ratio", 0) <= 1]
+        configs = [c for c in all_configs if c.get("theta_obs_ratio", 0) == 0]
         title_suffix = " (On-axis, θ_v=0)"
     elif angle_filter == "off-axis":
         configs = [c for c in all_configs if c.get("theta_obs_ratio", 0) > 1]

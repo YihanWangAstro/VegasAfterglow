@@ -18,7 +18,7 @@ import numpy as np
 sys.path.insert(0, str(Path(__file__).parent))
 from configs import (create_jet, create_medium, create_observer, create_radiation, create_rvs_radiation,
                      get_jet_config, get_medium_config, get_radiation_config, get_duration,
-                     get_all_jet_names, get_fwd_only_radiation_names, get_rvs_radiation_names)
+                     get_all_jet_names)
 
 sys.path.insert(0, str(Path(__file__).parent.parent))
 from validation.colors import _bold, _green, _red, _cyan, _dim, _bold_red, _header
@@ -77,13 +77,17 @@ class BenchmarkSession:
 # ---------------------------------------------------------------------------
 
 PHI_VALUES = [0.1, 0.15, 0.2, 0.25]
-THETA_VALUES = [0.5, 1.0, 1.5, 2.0]
+THETA_VALUES = [0.25, 0.5, 1.0, 1.5, 2.0]
 T_VALUES = [5, 10, 15, 20]
 REFERENCE_RESOLUTION = (PHI_VALUES[-1] * 1.2, THETA_VALUES[-1] * 1.2, T_VALUES[-1] * 1.2)
-CONVERGENCE_T_LC = np.logspace(0, 8, 100)
+CONVERGENCE_T_LC = np.logspace(1, 7, 100)
 CONVERGENCE_BANDS = {"Radio": 1e9, "Optical": 4.84e14, "X-ray": 1e18}
 SSC_BANDS = {"Radio": 1e9, "Optical": 4.84e14, "X-ray": 1e18, "TeV": 2.4e26}  # TeV ~ 1 TeV
-VIEWING_ANGLE_RATIOS = [0, 2, 4]
+VIEWING_ANGLE_RATIOS = [0, 1, 2, 4]
+
+# Representative radiation configs for standard benchmarks (microphysics-only variants
+# like fast_cooling/steep_spectrum/flat_spectrum are covered by regression tests)
+BENCHMARK_RADIATIONS = ["synchrotron", "full_ssc", "ssc_kn", "rvs_sync_thin", "rvs_sync_thick"]
 
 # ---------------------------------------------------------------------------
 # Utility functions
@@ -156,14 +160,22 @@ class ComprehensiveBenchmark:
 
     def _compute_timing(self, jet_name, medium_name, radiation_name, theta_obs, resolution, spreading=False):
         import VegasAfterglow as va
+        import time as _time
+        has_profiling = hasattr(va.Model, "profile_reset")
         t = np.logspace(2, 8, 30)
         nu = np.full_like(t, self.nu_ref)
         all_breakdowns = []
         for _ in range(self.iterations):
             model = self._create_model(jet_name, medium_name, radiation_name, theta_obs, resolution, spreading)
-            va.Model.profile_reset()
+            if has_profiling:
+                va.Model.profile_reset()
+            t0 = _time.perf_counter()
             model.flux_density(t, nu)
-            all_breakdowns.append(va.Model.profile_data())
+            wall_ms = (_time.perf_counter() - t0) * 1000
+            if has_profiling:
+                all_breakdowns.append(va.Model.profile_data())
+            else:
+                all_breakdowns.append({"total": wall_ms})
         # Average stage times across iterations
         all_stages = set()
         for bd in all_breakdowns:
@@ -176,8 +188,8 @@ class ComprehensiveBenchmark:
         return ComponentTiming(flux_single_ms=ms, total_ms=ms, stage_breakdown=stage_breakdown)
 
     @staticmethod
-    def _extract_flux(flux, has_rvs, has_ssc=False):
-        """Extract the single flux array to compare against reference."""
+    def _extract_flux_grid(flux, has_rvs, has_ssc=False):
+        """Extract the 2D flux grid (n_t, n_nu) to compare against reference."""
         if has_rvs:
             return np.asarray(flux.rvs.sync)
         if has_ssc:
@@ -198,9 +210,7 @@ class ComprehensiveBenchmark:
         # Use extended bands (including TeV) for SSC configs
         bands_dict = SSC_BANDS if has_ssc else CONVERGENCE_BANDS
         bands = list(bands_dict)
-
-        # Pre-allocate nu arrays for each frequency band
-        nu_arrays = {b: np.full_like(t_lc, nu) for b, nu in bands_dict.items()}
+        nu_arr = np.array([bands_dict[b] for b in bands])
 
         times_ms = []
         times_by_band = {b: [] for b in bands}
@@ -217,19 +227,21 @@ class ComprehensiveBenchmark:
                 t_array=t_lc.tolist(), flux_by_band={b: [] for b in bands},
             )
 
-        # Compute per-dimension reference: 2x the highest sweep value in this dimension,
+        # Compute per-dimension reference: 1.2x the highest sweep value in this dimension,
         # fiducial in all other dimensions (isolates convergence in one dimension)
         ref_res = fiducial.copy()
         ref_res[dim_idx] = max(values) * 1.2
         try:
             ref_model = self._create_model(jet_name, medium_name, radiation_name, theta_obs, tuple(ref_res), spreading)
-            ref_lcs = {}
-            for fb in bands:
-                ref_flux = ref_model.flux_density(t_lc, nu_arrays[fb])
-                ref_lcs[fb] = self._extract_flux(ref_flux, has_rvs, has_ssc).copy()
+            ref_grid = self._extract_flux_grid(ref_model.flux_density_grid(t_lc, nu_arr), has_rvs, has_ssc)
+            ref_lcs = {b: ref_grid[k, :].copy() for k, b in enumerate(bands)}
         except Exception as e:
             print(f"      {_bold_red('Error')} computing reference: {e}")
             return _nan_result()
+
+        import time as _time
+        has_profiling = hasattr(va.Model, "profile_reset")
+        log_t = np.log10(t_lc)
 
         for val in values:
             res = fiducial.copy()
@@ -237,35 +249,32 @@ class ComprehensiveBenchmark:
             try:
                 model = self._create_model(jet_name, medium_name, radiation_name, theta_obs, tuple(res), spreading)
 
-                band_times = []
-                for fb in bands:
-                    nu_arr = nu_arrays[fb]
+                if has_profiling:
                     va.Model.profile_reset()
-                    flux = model.flux_density(t_lc, nu_arr)
-                    elapsed = va.Model.profile_data().get("total", 0.0)
-                    band_times.append(elapsed)
+                t0 = _time.perf_counter()
+                flux_grid = self._extract_flux_grid(model.flux_density_grid(t_lc, nu_arr), has_rvs, has_ssc)
+                wall_ms = (_time.perf_counter() - t0) * 1000
+                elapsed = va.Model.profile_data().get("total", 0.0) if has_profiling else wall_ms
+                times_ms.append(elapsed)
 
-                    flux_arr = self._extract_flux(flux, has_rvs, has_ssc)
+                for k, fb in enumerate(bands):
+                    flux_col = flux_grid[k, :]
                     times_by_band[fb].append(elapsed)
-                    flux_by_band[fb].append(flux_arr.tolist())
+                    flux_by_band[fb].append(flux_col.tolist())
 
                     ref = ref_lcs[fb]
-                    valid = (ref > 0) & np.isfinite(ref) & (flux_arr > 0) & np.isfinite(flux_arr)
+                    valid = (ref > 0) & np.isfinite(ref) & (flux_col > 0) & np.isfinite(flux_col)
                     if np.any(valid):
-                        # Exclude exponential-decay regions: compute log-log
-                        # slope of reference curve and mask |slope| > 4
-                        log_t = np.log10(t_lc)
                         log_ref = np.full_like(log_t, np.nan)
                         pos = ref > 0
                         log_ref[pos] = np.log10(ref[pos])
                         slope = np.gradient(log_ref, log_t)
                         valid = valid & (np.abs(slope) <= 4)
-                        # Also exclude tail > 6 orders below peak
                         if np.any(valid):
                             ref_peak = np.max(ref[valid])
                             valid = valid & (ref > ref_peak * 1e-6)
                         if np.any(valid):
-                            err = np.abs(flux_arr[valid] - ref[valid]) / ref[valid]
+                            err = np.abs(flux_col[valid] - ref[valid]) / ref[valid]
                         else:
                             err = np.array([np.nan])
                         errors_by_band[fb].append(float(np.max(err)))
@@ -273,7 +282,6 @@ class ComprehensiveBenchmark:
                     else:
                         errors_by_band[fb].append(np.nan)
                         mean_errors_by_band[fb].append(np.nan)
-                times_ms.append(np.mean(band_times))
             except Exception as e:
                 print(f"      {_bold_red('Error')} at {dimension}={val}: {e}")
                 times_ms.append(np.nan)
@@ -330,9 +338,8 @@ class ComprehensiveBenchmark:
 
     def run_full_suite(self):
         jets, meds = get_all_jet_names(), ["ISM", "wind"]
-        all_rads = get_fwd_only_radiation_names() + get_rvs_radiation_names()
         configs = [(j, m, r, get_jet_theta_c(j) * ratio)
-                   for j, m, r, ratio in product(jets, meds, all_rads, VIEWING_ANGLE_RATIOS)]
+                   for j, m, r, ratio in product(jets, meds, BENCHMARK_RADIATIONS, VIEWING_ANGLE_RATIOS)]
         return self._run_suite("FULL BENCHMARK SUITE", configs)
 
     def run_convergence_only(self, jet_types=None, medium_types=None):
@@ -455,7 +462,7 @@ def main():
     parser.add_argument("-j", "--parallel", type=int, default=0, metavar="N", help="Parallel workers")
     parser.add_argument("--jet", type=str, nargs="+", help="Jet type(s)")
     parser.add_argument("--medium", type=str, nargs="+", help="Medium type(s)")
-    parser.add_argument("--iterations", type=int, default=5, help="Timing iterations for overview stage breakdown")
+    parser.add_argument("--iterations", type=int, default=1, help="Timing iterations for overview stage breakdown")
     parser.add_argument("--timeout", type=int, default=600, help="Per-config timeout in seconds (default: 600)")
     parser.add_argument("--output", type=str, default="results/benchmark_history.json", help="Output file")
     args = parser.parse_args()
@@ -467,7 +474,7 @@ def main():
     if args.parallel > 0:
         print(f"Parallel workers: {_bold(str(args.parallel))}")
         ratios = VIEWING_ANGLE_RATIOS if args.full else [0]
-        rads = get_fwd_only_radiation_names() + get_rvs_radiation_names() if args.full else ["synchrotron"]
+        rads = BENCHMARK_RADIATIONS if args.full else ["synchrotron"]
         b.run_parallel(jet_types=args.jet, medium_types=args.medium, radiation_types=rads,
                        viewing_ratios=ratios, n_workers=args.parallel, timeout=args.timeout)
     elif args.full:
