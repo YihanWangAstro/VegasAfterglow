@@ -550,7 +550,7 @@ def _show_plot_with_buttons(fig, downloads, prefix):
     """Render Plotly chart with buttons stacked vertically on the right."""
     plot_col, btn_col = st.columns([4, 1], vertical_alignment="center")
     with plot_col:
-        st.plotly_chart(fig, width="content",
+        st.plotly_chart(fig, width="stretch",
                         config={"toImageButtonOptions": {"format": "png", "scale": 3}})
     with btn_col:
         for label, content, ext, mime in downloads:
@@ -764,7 +764,15 @@ else:  # Sky Image
         # Title via PIL ImageDraw (no matplotlib per frame)
         from PIL import ImageDraw, ImageFont
         _title_size = int(9 * 200 / 72)
-        for _fname in ("Helvetica", "Arial", "DejaVuSans", "DejaVu Sans"):
+        _font_candidates = [
+            "Helvetica", "Arial",
+            "DejaVuSans", "DejaVu Sans",
+            # Linux: full paths for common Unicode-capable fonts
+            "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf",
+            "/usr/share/fonts/TTF/DejaVuSans.ttf",
+            "/usr/share/fonts/truetype/liberation/LiberationSans-Regular.ttf",
+        ]
+        for _fname in _font_candidates:
             try:
                 title_font = ImageFont.truetype(_fname, _title_size)
                 break
