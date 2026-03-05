@@ -1158,16 +1158,19 @@ def _skymap_mpl_style(plt):
         {
             "font.family": "sans-serif",
             "font.sans-serif": ["Helvetica", "Arial", "DejaVu Sans"],
-            "font.size": 8,
-            "axes.labelsize": 9,
-            "axes.titlesize": 9,
-            "xtick.labelsize": 8,
-            "ytick.labelsize": 8,
-            "axes.linewidth": 0.6,
-            "xtick.major.width": 0.6,
-            "ytick.major.width": 0.6,
-            "xtick.minor.width": 0.4,
-            "ytick.minor.width": 0.4,
+            "font.size": 6,
+            "font.weight": "normal",
+            "axes.labelsize": 7,
+            "axes.titlesize": 7,
+            "axes.labelweight": "normal",
+            "axes.titleweight": "normal",
+            "xtick.labelsize": 6,
+            "ytick.labelsize": 6,
+            "axes.linewidth": 0.4,
+            "xtick.major.width": 0.4,
+            "ytick.major.width": 0.4,
+            "xtick.minor.width": 0.3,
+            "ytick.minor.width": 0.3,
             "xtick.major.size": 5,
             "ytick.major.size": 5,
             "xtick.minor.size": 2.5,
@@ -1185,6 +1188,24 @@ def _skymap_mpl_style(plt):
             "grid.alpha": 0.3,
         }
     )
+
+
+def _skymap_mpl_light_text(ax, cb=None):
+    ax.xaxis.label.set_fontweight("normal")
+    ax.yaxis.label.set_fontweight("normal")
+    ax.title.set_fontweight("normal")
+    ax.xaxis.label.set_color("#000000")
+    ax.yaxis.label.set_color("#000000")
+    ax.title.set_color("#000000")
+    for lbl in ax.get_xticklabels() + ax.get_yticklabels():
+        lbl.set_fontweight("normal")
+        lbl.set_color("#000000")
+    if cb is not None:
+        cb.ax.yaxis.label.set_fontweight("normal")
+        cb.ax.yaxis.label.set_color("#000000")
+        for lbl in cb.ax.get_yticklabels():
+            lbl.set_fontweight("normal")
+            lbl.set_color("#000000")
 
 
 def render_skymap_mode():
@@ -1290,9 +1311,10 @@ def render_skymap_mode():
         title = ax.set_title("")
         cb = fig_mpl.colorbar(im, ax=ax, fraction=0.046, pad=0.04)
         cb.set_label(r"$\log_{10}\,I$ (erg cm$^{-2}$ s$^{-1}$ Hz$^{-1}$ sr$^{-1}$)")
-        cb.outline.set_linewidth(0.6)
-        cb.ax.tick_params(which="major", width=0.6)
-        cb.ax.tick_params(which="minor", width=0.4)
+        cb.outline.set_linewidth(0.4)
+        cb.ax.tick_params(which="major", width=0.4)
+        cb.ax.tick_params(which="minor", width=0.3)
+        _skymap_mpl_light_text(ax, cb)
         fig_mpl.subplots_adjust(left=0.15, right=0.88, bottom=0.13, top=0.92)
 
         nu_label = freq_label(data["nu_obs"])
@@ -1433,9 +1455,10 @@ def render_skymap_mode():
         ax.set_title(f"t = {t_label},  ν = {nu_label}")
         cb = fig_mpl.colorbar(im, ax=ax, fraction=0.046, pad=0.04)
         cb.set_label(r"$\log_{10}\,I$ (erg cm$^{-2}$ s$^{-1}$ Hz$^{-1}$ sr$^{-1}$)")
-        cb.outline.set_linewidth(0.6)
-        cb.ax.tick_params(which="major", width=0.6)
-        cb.ax.tick_params(which="minor", width=0.4)
+        cb.outline.set_linewidth(0.4)
+        cb.ax.tick_params(which="major", width=0.4)
+        cb.ax.tick_params(which="minor", width=0.3)
+        _skymap_mpl_light_text(ax, cb)
         fig_mpl.subplots_adjust(left=0.15, right=0.88, bottom=0.13, top=0.92)
 
         buf = _io.BytesIO()
