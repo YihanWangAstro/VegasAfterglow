@@ -14,11 +14,11 @@
 /// with concrete types for optimized template instantiation.
 inline auto solve_fwd_shock(JetVariant const& jet, MediumVariant const& medium, Array const& t_obs, Real theta_w,
                             Real theta_obs, Real z, Real phi_resol, Real theta_resol, Real t_resol, bool axisymmetric,
-                            size_t min_theta_num, RadParams const& rad, Real rtol) -> std::pair<Coord, Shock> {
+                            RadParams const& rad, Real rtol) -> std::pair<Coord, Shock> {
     return std::visit(
         [&](auto const& j, auto const& med) {
-            auto coord = auto_grid(j, med, t_obs, theta_w, theta_obs, z, phi_resol, theta_resol, t_resol, axisymmetric,
-                                   0, min_theta_num);
+            auto coord =
+                auto_grid(j, med, t_obs, theta_w, theta_obs, z, false, phi_resol, theta_resol, t_resol, axisymmetric);
             auto shock = generate_fwd_shock(coord, med, j, rad, rtol);
             return std::pair{std::move(coord), std::move(shock)};
         },
@@ -28,12 +28,12 @@ inline auto solve_fwd_shock(JetVariant const& jet, MediumVariant const& medium, 
 /// Solve forward + reverse shock pair with variant dispatch.
 inline auto solve_shock_pair(JetVariant const& jet, MediumVariant const& medium, Array const& t_obs, Real theta_w,
                              Real theta_obs, Real z, Real phi_resol, Real theta_resol, Real t_resol, bool axisymmetric,
-                             size_t min_theta_num, RadParams const& fwd_rad, RadParams const& rvs_rad, Real rtol)
+                             RadParams const& fwd_rad, RadParams const& rvs_rad, Real rtol)
     -> std::tuple<Coord, Shock, Shock> {
     return std::visit(
         [&](auto const& j, auto const& med) {
-            auto coord = auto_grid(j, med, t_obs, theta_w, theta_obs, z, phi_resol, theta_resol, t_resol, axisymmetric,
-                                   0, min_theta_num);
+            auto coord =
+                auto_grid(j, med, t_obs, theta_w, theta_obs, z, true, phi_resol, theta_resol, t_resol, axisymmetric);
             auto [fwd, rvs] = generate_shock_pair(coord, med, j, fwd_rad, rvs_rad, rtol);
             return std::tuple{std::move(coord), std::move(fwd), std::move(rvs)};
         },

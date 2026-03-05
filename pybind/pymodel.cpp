@@ -281,9 +281,8 @@ auto PyModel::details(Real t_min, Real t_max) const -> PyDetails {
     Observer observer;
 
     if (!rvs_rad_opt) {
-        auto [coord, fwd_shock] =
-            solve_fwd_shock(jet_, medium_, t_obs, theta_w, obs_setup.theta_obs, obs_setup.z, phi_resol, theta_resol,
-                            t_resol, axisymmetric, min_theta_num_, fwd_rad.rad, rtol);
+        auto [coord, fwd_shock] = solve_fwd_shock(jet_, medium_, t_obs, theta_w, obs_setup.theta_obs, obs_setup.z,
+                                                  phi_resol, theta_resol, t_resol, axisymmetric, fwd_rad.rad, rtol);
 
         details.phi = coord.phi;
         details.theta = coord.theta;
@@ -293,7 +292,7 @@ auto PyModel::details(Real t_min, Real t_max) const -> PyDetails {
     } else {
         auto [coord, fwd_shock, rvs_shock] =
             solve_shock_pair(jet_, medium_, t_obs, theta_w, obs_setup.theta_obs, obs_setup.z, phi_resol, theta_resol,
-                             2 * t_resol, axisymmetric, min_theta_num_, fwd_rad.rad, rvs_rad_opt->rad, rtol);
+                             t_resol, axisymmetric, fwd_rad.rad, rvs_rad_opt->rad, rtol);
 
         details.phi = coord.phi;
         details.theta = coord.theta;
@@ -507,14 +506,13 @@ auto PyModel::sky_image(PyArray const& t_obs, double nu_obs, double fov, size_t 
     };
 
     if (!rvs_rad_opt) {
-        auto [coord, fwd_shock] =
-            solve_fwd_shock(jet_, medium_, t_arr, theta_w, obs_setup.theta_obs, obs_setup.z, phi_resol, theta_resol,
-                            t_resol, axisymmetric, min_theta_num_, fwd_rad.rad, rtol);
+        auto [coord, fwd_shock] = solve_fwd_shock(jet_, medium_, t_arr, theta_w, obs_setup.theta_obs, obs_setup.z,
+                                                  phi_resol, theta_resol, t_resol, axisymmetric, fwd_rad.rad, rtol);
         render_shock_frames(fwd_shock, coord, fwd_rad);
     } else {
         auto [coord, fwd_shock, rvs_shock] =
             solve_shock_pair(jet_, medium_, t_arr, theta_w, obs_setup.theta_obs, obs_setup.z, phi_resol, theta_resol,
-                             2 * t_resol, axisymmetric, min_theta_num_, fwd_rad.rad, rvs_rad_opt->rad, rtol);
+                             t_resol, axisymmetric, fwd_rad.rad, rvs_rad_opt->rad, rtol);
         render_shock_frames(fwd_shock, coord, fwd_rad);
         render_shock_frames(rvs_shock, coord, *rvs_rad_opt);
     }

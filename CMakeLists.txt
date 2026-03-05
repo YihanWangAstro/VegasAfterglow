@@ -43,6 +43,7 @@ find_package(pybind11 CONFIG REQUIRED)
 set(AFTERGLOW_SOURCES
   pybind/pybind.cpp
   pybind/pymodel.cpp
+  src/core/grid-refinement.cpp
   src/core/mesh.cpp
   src/core/observer.cpp
   src/core/physics.cpp
@@ -87,6 +88,7 @@ if(AFTERGLOW_TESTS)
   enable_testing()
 
   set(AFTERGLOW_CORE_SOURCES
+    src/core/grid-refinement.cpp
     src/core/mesh.cpp
     src/core/observer.cpp
     src/core/physics.cpp

@@ -107,5 +107,4 @@ namespace con {
     constexpr Real gamma_therm_cut = defaults::cutoffs::gamma_therm_cut; ///< Cutoff thermal Lorentz factor value
     constexpr Real inf = std::numeric_limits<Real>::infinity();          ///< Infinity value
     constexpr Real sigma_cut = defaults::cutoffs::sigma_cut;             ///< Cutoff magnetization value
-    constexpr Real min_obs_time = defaults::observer::min_obs_time_sec * unit::sec; ///< Minimum observer time
 } // namespace con

@@ -579,7 +579,7 @@ class PyModel {
     PyModel(JetVariant jet, MediumVariant medium, PyObserver const& observer, PyRadiation const& fwd_rad,
             std::optional<PyRadiation> const& rvs_rad = std::nullopt,
             std::tuple<Real, Real, Real> const& resolutions = std::make_tuple(0.1, 0.5, 10), Real rtol = 1e-5,
-            bool axisymmetric = true, size_t min_theta_num = defaults::grid::min_theta_points)
+            bool axisymmetric = true)
         : jet_(std::move(jet)),
           medium_(std::move(medium)),
           obs_setup(observer),
@@ -589,8 +589,7 @@ class PyModel {
           theta_resol(std::get<1>(resolutions)),
           t_resol(std::get<2>(resolutions)),
           rtol(rtol),
-          axisymmetric(axisymmetric),
-          min_theta_num_(min_theta_num) {
+          axisymmetric(axisymmetric) {
         convert_unit_jet(this->jet_);
         convert_unit_medium(this->medium_);
     }
@@ -808,10 +807,9 @@ class PyModel {
     Real theta_w{con::pi / 2};              ///< Maximum polar angle to calculate
     Real phi_resol{0.1};                    ///< Azimuthal resolution: number of points per degree
     Real theta_resol{0.5};                  ///< Polar resolution: number of points per degree
-    Real t_resol{5};                        ///< Time resolution: number of points per decade
+    Real t_resol{10};                       ///< Time resolution: number of points per decade
     Real rtol{1e-5};                        ///< Relative tolerance
     bool axisymmetric{true};                ///< Whether to assume axisymmetric jet
-    size_t min_theta_num_{defaults::grid::min_theta_points}; ///< Minimum number of theta grid points
 };
 
 //========================================================================================================
@@ -876,7 +874,7 @@ auto PyModel::compute_emission(Array const& t_obs, Array const& nu_obs, Func&& f
         auto [coord, fwd_shock] = [&] {
             AFTERGLOW_PROFILE_SCOPE(dynamics);
             return solve_fwd_shock(jet_, medium_, t_obs, theta_w, obs_setup.theta_obs, obs_setup.z, phi_resol,
-                                   theta_resol, t_resol, axisymmetric, min_theta_num_, fwd_rad.rad, rtol);
+                                   theta_resol, t_resol, axisymmetric, fwd_rad.rad, rtol);
         }();
         single_shock_emission(fwd_shock, coord, t_obs, nu_obs, observer, fwd_rad, flux.fwd,
                               std::forward<Func>(flux_func));
@@ -884,8 +882,7 @@ auto PyModel::compute_emission(Array const& t_obs, Array const& nu_obs, Func&& f
         auto [coord, fwd_shock, rvs_shock] = [&] {
             AFTERGLOW_PROFILE_SCOPE(dynamics);
             return solve_shock_pair(jet_, medium_, t_obs, theta_w, obs_setup.theta_obs, obs_setup.z, phi_resol,
-                                    theta_resol, 2 * t_resol, axisymmetric, min_theta_num_, fwd_rad.rad,
-                                    rvs_rad_opt->rad, rtol);
+                                    theta_resol, t_resol, axisymmetric, fwd_rad.rad, rvs_rad_opt->rad, rtol);
         }();
         single_shock_emission(fwd_shock, coord, t_obs, nu_obs, observer, fwd_rad, flux.fwd,
                               std::forward<Func>(flux_func));

@@ -10,7 +10,7 @@
 #include <array>
 #include <limits>
 
-#include "../core/mesh.h"
+#include "../core/grid-refinement.h"
 #include "../core/physics.h"
 #include "../core/quadrature.h"
 #include "../dynamics/shock.h"

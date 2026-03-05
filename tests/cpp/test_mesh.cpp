@@ -2,7 +2,7 @@
 #include <cmath>
 #include <span>
 
-#include "core/mesh.h"
+#include "core/grid-refinement.h"
 #include "util/macros.h"
 
 BOOST_AUTO_TEST_SUITE(Mesh)
@@ -395,86 +395,12 @@ BOOST_AUTO_TEST_CASE(structure_weight_monotonic) {
 }
 
 // ---------------------------------------------------------------------------
-// refined_time_grid
-// ---------------------------------------------------------------------------
-
-BOOST_AUTO_TEST_CASE(refined_time_grid_count) {
-    Array grid = refined_time_grid(100.0, 1e6, 1e4, 100);
-    BOOST_CHECK_EQUAL(grid.size(), 100u);
-}
-
-BOOST_AUTO_TEST_CASE(refined_time_grid_bounds) {
-    const Real t_start = 100.0;
-    const Real t_end = 1e6;
-    Array grid = refined_time_grid(t_start, t_end, 1e4, 100);
-    // First element should be close to t_start, last close to t_end
-    BOOST_CHECK_CLOSE(grid(0), t_start, 1.0);
-    BOOST_CHECK_CLOSE(grid(99), t_end, 1.0);
-}
-
-BOOST_AUTO_TEST_CASE(refined_time_grid_denser_around_refine) {
-    const Real t_start = 100.0;
-    const Real t_end = 1e8;
-    const Real t_refine = 1e5;
-    Array grid = refined_time_grid(t_start, t_end, t_refine, 200);
-
-    // Measure spacing in log space around the refinement region vs far away
-    Real near_spacing = 0;
-    size_t near_count = 0;
-    Real far_spacing = 0;
-    size_t far_count = 0;
-
-    for (size_t i = 1; i < grid.size(); ++i) {
-        if (grid(i) <= 0 || grid(i - 1) <= 0) {
-            continue;
-        }
-        const Real log_mid = 0.5 * (std::log10(grid(i)) + std::log10(grid(i - 1)));
-        const Real log_step = std::log10(grid(i)) - std::log10(grid(i - 1));
-        if (log_step <= 0) {
-            continue;
-        }
-        const Real log_refine = std::log10(t_refine);
-        if (std::fabs(log_mid - log_refine) < 0.5) {
-            near_spacing += log_step;
-            near_count++;
-        } else if (std::fabs(log_mid - log_refine) > 2.0) {
-            far_spacing += log_step;
-            far_count++;
-        }
-    }
-
-    if (near_count > 0 && far_count > 0) {
-        const Real near_avg = near_spacing / near_count;
-        const Real far_avg = far_spacing / far_count;
-        BOOST_CHECK_LT(near_avg, far_avg);
-    }
-}
-
-BOOST_AUTO_TEST_CASE(refined_time_grid_refine_outside_range) {
-    // t_refine far above t_end -> falls back to simple logspace
-    const Real t_start = 100.0;
-    const Real t_end = 1e6;
-    const Real t_refine = 1e20; // far outside range
-    Array grid = refined_time_grid(t_start, t_end, t_refine, 50);
-    BOOST_CHECK_EQUAL(grid.size(), 50u);
-    // Should still span the correct range
-    BOOST_CHECK_CLOSE(grid(0), t_start, 1.0);
-    BOOST_CHECK_CLOSE(grid(49), t_end, 1.0);
-    // Should be a simple logspace: uniform ratio
-    if (grid.size() >= 3) {
-        const Real ratio_0 = grid(1) / grid(0);
-        const Real ratio_1 = grid(2) / grid(1);
-        BOOST_CHECK_CLOSE(ratio_0, ratio_1, 1.0);
-    }
-}
-
-// ---------------------------------------------------------------------------
 // jump_refinement_grid
 // ---------------------------------------------------------------------------
 
 BOOST_AUTO_TEST_CASE(jump_refinement_grid_near_jump) {
     Array jumps = {0.1};
-    Array result = jump_refinement_grid(jumps, 0.01, 1.0, 0.01, 1.0);
+    Array result = jump_refinement_grid(jumps, 0.01, 1.0, 0.01);
     BOOST_CHECK_GT(result.size(), 0u);
 
     // Check that points cluster near the jump location (0.1)

@@ -7,7 +7,7 @@
 
 #pragma once
 
-#include "core/mesh.h"
+#include "core/grid-refinement.h"
 #include "core/observer.h"
 #include "core/physics.h"
 #include "dynamics/forward-shock.hpp"

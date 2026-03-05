@@ -9,7 +9,7 @@
 
 #include <tuple>
 
-#include "../core/mesh.h"
+#include "../core/grid-refinement.h"
 #include "../core/physics.h"
 #include "../environment/jet.h"
 #include "../environment/medium.h"

@@ -66,11 +66,10 @@ namespace defaults {
 
         /// Temporal resolution factor
         /// Higher values = more time grid points (logarithmically spaced)
-        inline constexpr double time_resolution = 5.0;
+        inline constexpr double time_resolution = 10.0;
 
-        /// Minimum number of theta grid points
-        /// Ensures adequate angular coverage even for narrow jets
-        inline constexpr std::size_t min_theta_points = 32;
+        /// Minimum number of theta grid points (forward shock)
+        inline constexpr std::size_t min_theta_points = 36;
 
         /// Minimum polar angle (avoids singularity at theta=0)
         inline constexpr double theta_min = 1e-6;
@@ -97,17 +96,6 @@ namespace defaults {
         /// Prevents MCMC from hanging on pathological parameter combinations
         inline constexpr std::size_t max_ode_steps = 100000;
     } // namespace solver
-
-    /**
-     * <!-- ************************************************************************************** -->
-     * @brief Observer frame parameters
-     * <!-- ************************************************************************************** -->
-     */
-    namespace observer {
-        /// Minimum observer time to avoid numerical issues at t=0
-        /// Value in seconds (will be converted to code units)
-        inline constexpr double min_obs_time_sec = 0.1;
-    } // namespace observer
 
     /**
      * <!-- ************************************************************************************** -->

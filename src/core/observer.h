@@ -25,19 +25,11 @@ struct SkyImageResult {
     Real pixel_solid_angle{0};  ///< Pixel solid angle (sr)
 };
 
-/// Post-splatting symmetry enforcement for axisymmetric jets.
-enum class RenderSym {
-    none,     ///< No symmetry (non-axisymmetric or general case)
-    mirror_y, ///< Average y ↔ -y (off-axis axisymmetric: half-cell phi shift breaks natural pairing)
-    quadrant  ///< Render Q1 only, copy to Q2–Q4 (on-axis axisymmetric: circular symmetry)
-};
-
 /// Internal cell grid for Gaussian splatting (sky position, luminosity, kernel width per cell).
 struct SplatGrid {
     MeshGrid x, y, L, sigma;
     size_t n_phi{0}, n_theta{0};
     Real xmin{}, xmax{}, ymin{}, ymax{};
-    Real max_sigma{0};
 
     SplatGrid() = default;
     SplatGrid(size_t n_phi, size_t n_theta);
@@ -45,11 +37,11 @@ struct SplatGrid {
     /// Reset all arrays and bounds for reuse across frames.
     void reset();
 
-    /// Compute per-cell Gaussian σ (half the max neighbor distance) and max_sigma.
+    /// Compute per-cell Gaussian σ from neighbor distances.
     void compute_sigma();
 
-    /// Render the splat grid via Gaussian splatting into a frame of the 3D result image.
-    void render(MeshGrid3d& image, size_t frame, Real pix_size, RenderSym sym) const;
+    /// Render the splat grid into a frame of the 3D result image.
+    void render(MeshGrid3d& image, size_t frame, Real pix_size, bool azimuthal_avg, bool mirror_y) const;
 };
 
 /**
@@ -481,30 +473,29 @@ void Observer::build_splat_grid(SplatGrid& grid, Coord const& coord, Shock const
                                 std::vector<Real> const& sin_phi_tab) {
     const Real lg2_t_target = fast_log2(t_obs);
     const Real lg2_nu_src = fast_log2(nu_obs * one_plus_z);
-    const Real d_A = lumi_dist / (one_plus_z * one_plus_z);
+    const Real inv_d_A = one_plus_z * one_plus_z / lumi_dist;
     const Real cos_obs = std::cos(coord.theta_view);
     const Real sin_obs = std::sin(coord.theta_view);
-
+    const bool is_axisym = (eff_phi_grid == 1);
     const size_t copies_per_phys = grid.n_phi / eff_phi_grid;
 
-    // Interpolate luminosity and project each cell onto the sky plane
     for (size_t i_phys = 0; i_phys < eff_phi_grid; ++i_phys) {
         const size_t eff_i = i_phys * jet_3d;
-
-        // For non-axisymmetric jets, phi cos/sin is constant per i_phys
-        const Real cp_fixed = (eff_phi_grid > 1) ? std::cos(coord.phi[i_phys] - coord.phi_view) : 0;
-        const Real sp_fixed = (eff_phi_grid > 1) ? std::sin(coord.phi[i_phys] - coord.phi_view) : 0;
+        const Real cp_fixed = is_axisym ? 0 : std::cos(coord.phi[i_phys] - coord.phi_view);
+        const Real sp_fixed = is_axisym ? 0 : std::sin(coord.phi[i_phys] - coord.phi_view);
 
         for (size_t j = 0; j < theta_grid; ++j) {
             if (lg2_t_target < lg2_t(i_phys, j, 0) || lg2_t_target >= lg2_t(i_phys, j, t_grid - 1)) {
                 continue;
             }
 
+            // Find time bracket
             size_t k = 0;
             while (k + 2 < t_grid && lg2_t(i_phys, j, k + 1) < lg2_t_target) {
                 ++k;
             }
 
+            // Interpolate luminosity
             InterpState state_L;
             if (!set_boundaries(state_L, eff_i, i_phys, j, k, lg2_nu_src, photons)) {
                 continue;
@@ -514,29 +505,27 @@ void Observer::build_splat_grid(SplatGrid& grid, Coord const& coord, Shock const
                 continue;
             }
 
-            // Sky position from interpolated r and theta
-            const Real lg2_dt = lg2_t(i_phys, j, k + 1) - lg2_t(i_phys, j, k);
-            const Real w = (lg2_t_target - lg2_t(i_phys, j, k)) / lg2_dt;
-            const Real r_val = shock.r(eff_i, j, k) + w * (shock.r(eff_i, j, k + 1) - shock.r(eff_i, j, k));
+            // Interpolate position
+            const Real w = (lg2_t_target - lg2_t(i_phys, j, k)) / (lg2_t(i_phys, j, k + 1) - lg2_t(i_phys, j, k));
+            const Real r_ang = (shock.r(eff_i, j, k) + w * (shock.r(eff_i, j, k + 1) - shock.r(eff_i, j, k))) * inv_d_A;
             const Real theta_val = jet_spreading_ ? shock.theta(eff_i, j, k) +
                                                         w * (shock.theta(eff_i, j, k + 1) - shock.theta(eff_i, j, k))
                                                   : shock.theta(eff_i, j, 0);
-
             const Real ct = std::cos(theta_val);
             const Real st = std::sin(theta_val);
             const Real L_per_copy = L_val / copies_per_phys;
 
+            // Project onto sky plane for each azimuthal copy
             for (size_t c = 0; c < copies_per_phys; ++c) {
-                const size_t i_splat = i_phys * copies_per_phys + c;
-                const Real cp = (eff_phi_grid == 1) ? cos_phi_tab[c] : cp_fixed;
-                const Real sp = (eff_phi_grid == 1) ? sin_phi_tab[c] : sp_fixed;
-                const Real x_ang = r_val * (st * cp * cos_obs - ct * sin_obs) / d_A;
-                const Real y_ang = r_val * st * sp / d_A;
+                const Real cp = is_axisym ? cos_phi_tab[c] : cp_fixed;
+                const Real sp = is_axisym ? sin_phi_tab[c] : sp_fixed;
+                const Real x_ang = r_ang * (st * cp * cos_obs - ct * sin_obs);
+                const Real y_ang = r_ang * st * sp;
 
+                const size_t i_splat = i_phys * copies_per_phys + c;
                 grid.x(i_splat, j) = x_ang;
                 grid.y(i_splat, j) = y_ang;
                 grid.L(i_splat, j) = L_per_copy;
-
                 grid.xmin = std::min(grid.xmin, x_ang);
                 grid.xmax = std::max(grid.xmax, x_ang);
                 grid.ymin = std::min(grid.ymin, y_ang);
@@ -545,10 +534,8 @@ void Observer::build_splat_grid(SplatGrid& grid, Coord const& coord, Shock const
         }
     }
 
-    // Convert luminosity to flux units
-    const Real flux_norm = one_plus_z / (lumi_dist * lumi_dist);
-    grid.L *= flux_norm;
-
+    // Convert luminosity to surface brightness
+    grid.L *= one_plus_z / (lumi_dist * lumi_dist);
     grid.compute_sigma();
 }
 
@@ -585,13 +572,14 @@ SkyImageResult Observer::sky_image(Coord const& coord, Shock const& shock, Array
         }
     }
 
-    const RenderSym sym =
-        (eff_phi_grid == 1) ? (coord.theta_view == 0 ? RenderSym::quadrant : RenderSym::mirror_y) : RenderSym::none;
+    const bool is_axisym = (jet_3d == 0);
+    const bool azimuthal_avg = is_axisym && (coord.theta_view == 0);
+    const bool mirror_y = is_axisym && !azimuthal_avg;
 
     for (size_t f = 0; f < n_frames; ++f) {
         grid.reset();
         build_splat_grid(grid, coord, shock, t_obs(f), nu_obs, photons, cos_phi_tab, sin_phi_tab);
-        grid.render(result.image, f, pix_size, sym);
+        grid.render(result.image, f, pix_size, azimuthal_avg, mirror_y);
     }
     return result;
 }

@@ -232,10 +232,9 @@ void SplatGrid::reset() {
     xmax = -std::numeric_limits<Real>::max();
     ymin = std::numeric_limits<Real>::max();
     ymax = -std::numeric_limits<Real>::max();
-    max_sigma = 0;
 }
 
-void SplatGrid::render(MeshGrid3d& image, size_t frame, Real pix_size, RenderSym sym) const {
+void SplatGrid::render(MeshGrid3d& image, size_t frame, Real pix_size, bool azimuthal_avg, bool mirror_y) const {
     if (xmin > xmax) {
         return;
     }
@@ -245,62 +244,97 @@ void SplatGrid::render(MeshGrid3d& image, size_t frame, Real pix_size, RenderSym
     const Real x_lo = -half_fov;
     const Real y_lo = -half_fov;
     const Real inv_pix_size = 1.0 / pix_size;
-    const int half = static_cast<int>(npixel / 2);
-    const bool quad = (sym == RenderSym::quadrant);
 
-    // Gaussian splatting: paint each cell as a 2D Gaussian onto the pixel grid.
-    // For quadrant symmetry, only write to Q1 (x >= 0, y >= 0) and copy afterwards.
-    for (size_t qi = 0; qi < n_phi; ++qi) {
-        for (size_t qj = 0; qj < n_theta; ++qj) {
-            if (L(qi, qj) <= 0) {
-                continue;
+    // Compact source (extent < 8 pixels): deposit directly into containing pixel.
+    // Resolved source: Gaussian splatting with per-cell σ floored at pix_size.
+    const Real source_extent = std::max(xmax - xmin, ymax - ymin);
+
+    if (source_extent < 8 * pix_size) {
+        const Real inv_pix_area = inv_pix_size * inv_pix_size;
+        for (size_t qi = 0; qi < n_phi; ++qi) {
+            for (size_t qj = 0; qj < n_theta; ++qj) {
+                if (L(qi, qj) <= 0) {
+                    continue;
+                }
+                int px = static_cast<int>((x(qi, qj) - x_lo) * inv_pix_size);
+                int py = static_cast<int>((y(qi, qj) - y_lo) * inv_pix_size);
+                if (px >= 0 && px < static_cast<int>(npixel) && py >= 0 && py < static_cast<int>(npixel)) {
+                    image(frame, px, py) += L(qi, qj) * inv_pix_area;
+                }
             }
+        }
+    } else {
+        for (size_t qi = 0; qi < n_phi; ++qi) {
+            for (size_t qj = 0; qj < n_theta; ++qj) {
+                if (L(qi, qj) <= 0) {
+                    continue;
+                }
 
-            const Real x_c = x(qi, qj);
-            const Real y_c = y(qi, qj);
-            const Real sig = std::max(sigma(qi, qj), pix_size);
-            const Real sig2 = sig * sig;
-            const Real inv_2sig2 = 0.5 / sig2;
-            const Real amp = L(qi, qj) / (2 * con::pi * sig2);
+                const Real x_c = x(qi, qj);
+                const Real y_c = y(qi, qj);
+                const Real sig = std::max(sigma(qi, qj), pix_size);
+                const Real sig2 = sig * sig;
+                const Real inv_2sig2 = 0.5 / sig2;
+                const Real amp = L(qi, qj) / (2 * con::pi * sig2);
 
-            const Real radius = 4 * sig;
-            const int px_lo = std::max(quad ? half : 0, static_cast<int>((x_c - radius - x_lo) * inv_pix_size));
-            const int px_hi =
-                std::min(static_cast<int>(npixel) - 1, static_cast<int>((x_c + radius - x_lo) * inv_pix_size));
-            const int py_lo = std::max(quad ? half : 0, static_cast<int>((y_c - radius - y_lo) * inv_pix_size));
-            const int py_hi =
-                std::min(static_cast<int>(npixel) - 1, static_cast<int>((y_c + radius - y_lo) * inv_pix_size));
+                const Real radius = 4 * sig;
+                const int px_lo = std::max(0, static_cast<int>((x_c - radius - x_lo) * inv_pix_size));
+                const int px_hi =
+                    std::min(static_cast<int>(npixel) - 1, static_cast<int>((x_c + radius - x_lo) * inv_pix_size));
+                const int py_lo = std::max(0, static_cast<int>((y_c - radius - y_lo) * inv_pix_size));
+                const int py_hi =
+                    std::min(static_cast<int>(npixel) - 1, static_cast<int>((y_c + radius - y_lo) * inv_pix_size));
 
-            for (int px = px_lo; px <= px_hi; ++px) {
-                const Real dx = x_lo + (px + 0.5) * pix_size - x_c;
-                const Real dx2 = dx * dx;
-                for (int py = py_lo; py <= py_hi; ++py) {
-                    const Real dy = y_lo + (py + 0.5) * pix_size - y_c;
-                    const Real d2 = dx2 + dy * dy;
-                    if (d2 < radius * radius) {
-                        image(frame, px, py) += amp * std::exp(-d2 * inv_2sig2);
+                for (int px = px_lo; px <= px_hi; ++px) {
+                    const Real dx = x_lo + (px + 0.5) * pix_size - x_c;
+                    const Real dx2 = dx * dx;
+                    for (int py = py_lo; py <= py_hi; ++py) {
+                        const Real dy = y_lo + (py + 0.5) * pix_size - y_c;
+                        const Real d2 = dx2 + dy * dy;
+                        if (d2 < radius * radius) {
+                            image(frame, px, py) += amp * std::exp(-d2 * inv_2sig2);
+                        }
                     }
                 }
             }
         }
     }
 
-    if (sym == RenderSym::quadrant) {
-        // Replicate Q1 to Q2, Q3, Q4 with cache-friendly row access
-        const size_t h = npixel / 2;
-        for (size_t px = h; px < npixel; ++px) {
-            const size_t mx = npixel - 1 - px;
-            for (size_t py = h; py < npixel; ++py) {
-                image(frame, mx, py) = image(frame, px, py);
-            }
-        }
+    if (azimuthal_avg) {
+        // Enforce circular symmetry by azimuthal averaging (on-axis axisymmetric jets).
+        // Use quarter-pixel radial bins to avoid visible staircase rings.
+        constexpr size_t sub_pix = 4;
+        const Real center = 0.5 * static_cast<Real>(npixel);
+        const size_t max_r = static_cast<size_t>(center * std::sqrt(2.0) * sub_pix) + 1;
+        std::vector<Real> sum(max_r + 1, 0);
+        std::vector<size_t> count(max_r + 1, 0);
+
         for (size_t px = 0; px < npixel; ++px) {
-            for (size_t py = h; py < npixel; ++py) {
-                image(frame, px, npixel - 1 - py) = image(frame, px, py);
+            const Real dx = static_cast<Real>(px) + 0.5 - center;
+            const Real dx2 = dx * dx;
+            for (size_t py = 0; py < npixel; ++py) {
+                const Real dy = static_cast<Real>(py) + 0.5 - center;
+                const size_t r = static_cast<size_t>(std::sqrt(dx2 + dy * dy) * sub_pix);
+                if (r <= max_r) {
+                    sum[r] += image(frame, px, py);
+                    count[r]++;
+                }
             }
         }
-    } else if (sym == RenderSym::mirror_y) {
-        // Average y ↔ -y to enforce mirror symmetry
+
+        for (size_t px = 0; px < npixel; ++px) {
+            const Real dx = static_cast<Real>(px) + 0.5 - center;
+            const Real dx2 = dx * dx;
+            for (size_t py = 0; py < npixel; ++py) {
+                const Real dy = static_cast<Real>(py) + 0.5 - center;
+                const size_t r = static_cast<size_t>(std::sqrt(dx2 + dy * dy) * sub_pix);
+                if (r <= max_r && count[r] > 0) {
+                    image(frame, px, py) = sum[r] / count[r];
+                }
+            }
+        }
+    } else if (mirror_y) {
+        // Enforce y=0 mirror symmetry (off-axis axisymmetric jets)
         for (size_t px = 0; px < npixel; ++px) {
             for (size_t py = 0; py < npixel / 2; ++py) {
                 const size_t py_m = npixel - 1 - py;
@@ -341,16 +375,12 @@ void SplatGrid::compute_sigma() {
             } else {
                 // Isolated in theta: use phi extent as fallback
                 sigma(qi, qj) = std::sqrt(vp_x * vp_x + vp_y * vp_y);
-                max_sigma = std::max(max_sigma, sigma(qi, qj));
                 continue;
             }
 
-            // Use the larger of the two cell half-spans to ensure smooth overlap
-            // between neighbors in both directions; rescaling corrects total flux
             const Real len_phi = std::sqrt(vp_x * vp_x + vp_y * vp_y);
             const Real len_theta = std::sqrt(vt_x * vt_x + vt_y * vt_y);
             sigma(qi, qj) = std::max(len_phi, len_theta);
-            max_sigma = std::max(max_sigma, sigma(qi, qj));
         }
     }
 }
