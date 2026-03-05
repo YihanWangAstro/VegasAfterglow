@@ -145,7 +145,7 @@ def reverse_shock_lc():
         observer=Observer(lumi_dist=1e26, z=0.1, theta_obs=0),
         fwd_rad=fwd_rad,
         rvs_rad=rvs_rad,
-        resolutions=(0.1, 0.5, 5),
+        resolutions=(0.1, 0.25, 10),
     )
 
     times = np.logspace(2, 8, 200)
@@ -213,7 +213,7 @@ def basic_lightcurves():
     jet = TophatJet(theta_c=0.1, E_iso=1e52, Gamma0=300)
     obs = Observer(lumi_dist=1e26, z=0.1, theta_obs=0)
     rad = Radiation(eps_e=1e-1, eps_B=1e-3, p=2.3, xi_e=1)
-    model = Model(jet=jet, medium=medium, observer=obs, fwd_rad=rad, resolutions=(0.1, 0.5, 5))
+    model = Model(jet=jet, medium=medium, observer=obs, fwd_rad=rad, resolutions=(0.1, 0.25, 10))
 
     # --- Light curves ---
     times = np.logspace(2, 8, 200)
@@ -262,7 +262,7 @@ def basic_bolometric():
     jet = TophatJet(theta_c=0.1, E_iso=1e52, Gamma0=300)
     obs = Observer(lumi_dist=1e26, z=0.1, theta_obs=0)
     rad = Radiation(eps_e=1e-1, eps_B=1e-3, p=2.3, xi_e=1)
-    model = Model(jet=jet, medium=medium, observer=obs, fwd_rad=rad, resolutions=(0.1, 0.5, 5))
+    model = Model(jet=jet, medium=medium, observer=obs, fwd_rad=rad, resolutions=(0.1, 0.25, 10))
 
     times = np.logspace(2, 8, 100)
     flux_bat = model.flux(times, 3.6e18, 3.6e19, 20)

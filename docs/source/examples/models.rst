@@ -223,7 +223,7 @@ Those profiles are optional and will be set to zero function if not provided.
     #..other settings
 
     #if your jet is not axisymmetric, set axisymmetric to False
-    model = Model(jet=jet, ..., axisymmetric=False, resolutions=(0.1, 0.5, 5))
+    model = Model(jet=jet, ..., axisymmetric=False, resolutions=(0.1, 0.25, 10))
 
     # the user-defined jet structure could be spiky, the default resolution may not resolve the jet structure. if that is the case, you can try a finer resolution (phi_ppd, theta_ppd, t_ppd)
     # where phi_ppd is the number of points per degree in the phi direction, theta_ppd is the number of points per degree in the theta direction, and t_ppd is the number of points per decade in the time direction    .
@@ -346,7 +346,7 @@ Reverse Shock Emission
     rvs_rad = Radiation(eps_e=1e-2, eps_B=1e-4, p=2.4)
 
     #..other settings
-    model = Model(fwd_rad=fwd_rad, rvs_rad=rvs_rad, resolutions=(0.1, 0.5, 5),...)
+    model = Model(fwd_rad=fwd_rad, rvs_rad=rvs_rad, resolutions=(0.1, 0.25, 10),...)
 
     times = np.logspace(2, 8, 200)
 

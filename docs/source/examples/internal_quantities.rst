@@ -25,7 +25,7 @@ Similar to the light curve generation, let's set up the physical components of o
     rad = Radiation(eps_e=1e-1, eps_B=1e-3, p=2.3)
 
     # Include resolution parameters for detailed internal tracking
-    model = Model(jet=jet, medium=medium, observer=obs, fwd_rad=rad, resolutions=(0.1,0.5,5))
+    model = Model(jet=jet, medium=medium, observer=obs, fwd_rad=rad, resolutions=(0.1, 0.25, 10))
 
 Accessing Simulation Quantities
 ---------------------------------
@@ -270,7 +270,7 @@ In addition to scalar quantities, ``details()`` provides callable spectrum acces
 .. code-block:: python
 
     rad = Radiation(eps_e=1e-1, eps_B=1e-3, p=2.3, ssc=True)
-    model = Model(jet=jet, medium=medium, observer=obs, fwd_rad=rad, resolutions=(0.1,0.5,5))
+    model = Model(jet=jet, medium=medium, observer=obs, fwd_rad=rad, resolutions=(0.1, 0.25, 10))
     details = model.details(t_min=1e0, t_max=1e8)
 
     nu_comv = np.logspace(8, 20, 200)  # comoving frame frequency [Hz]

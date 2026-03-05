@@ -23,7 +23,7 @@ Setting up a simple afterglow model
     rad = Radiation(eps_e=1e-1, eps_B=1e-3, p=2.3, xi_e=1)
 
     # Combine all components into a complete afterglow model
-    model = Model(jet=jet, medium=medium, observer=obs, fwd_rad=rad, resolutions=(0.1,0.5,5))
+    model = Model(jet=jet, medium=medium, observer=obs, fwd_rad=rad, resolutions=(0.1, 0.25, 10))
 
     # Define time range for light curve calculation
     times = np.logspace(2, 8, 200)

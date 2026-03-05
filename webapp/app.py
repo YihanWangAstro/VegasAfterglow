@@ -475,7 +475,7 @@ with st.sidebar:
         with c1:
             res_phi = st.slider(r"$\phi$ ppd", 0.05, 1.0, 0.1, 0.05, key="res_phi")
         with c2:
-            res_theta = st.slider(r"$\theta$ ppd", 0.1, 2.0, 0.5, 0.1, key="res_theta")
+            res_theta = st.slider(r"$\theta$ ppd", 0.1, 2.0, 0.25, 0.1, key="res_theta")
         with c3:
             res_t = st.slider("t ppd", 1.0, 20.0, 10.0, 0.5, key="res_t")
 
