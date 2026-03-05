@@ -117,3 +117,71 @@ def mag_to_cgs(mag, mag_err):
     f_nu = 10.0 ** (-(mag + 48.6) / 2.5)
     f_err = f_nu * (np.log(10.0) / 2.5) * abs(mag_err) if mag_err else 0.0
     return f_nu, f_err
+
+
+def cgs_to_ab_mag(flux_cgs):
+    """Convert F_ν (erg/s/cm²/Hz) to AB magnitude. Returns NaN for non-positive flux."""
+    with np.errstate(divide="ignore", invalid="ignore"):
+        return np.where(flux_cgs > 0, -2.5 * np.log10(flux_cgs) - 48.6, np.nan)
+
+
+# ---------------------------------------------------------------------------
+# URL permalink (query-params ↔ session_state)
+# ---------------------------------------------------------------------------
+
+# Map widget keys to types for URL serialization.
+# "float" covers both plain sliders and log_sliders (exponent stored).
+PARAM_DEFS = {
+    "plot_mode": "str",
+    "nu_str": "str", "t_min": "float", "t_max": "float",
+    "t_snap_str": "str", "sed_nu_min": "float", "sed_nu_max": "float",
+    "num_nu": "int", "freq_unit": "str", "show_nufnu": "bool",
+    "sky_t_obs": "float", "sky_nu_str": "str", "sky_fov": "float",
+    "sky_npixel": "int",
+    "d_L_mpc": "float", "theta_obs": "float",
+    "flux_unit": "str", "time_unit": "str",
+    "jet_type": "str", "theta_c": "float",
+    "E_iso": "float", "Gamma0": "float", "spreading": "bool",
+    "k_e": "float", "k_g": "float",
+    "theta_w": "float", "E_iso_w": "float", "Gamma0_w": "float",
+    "medium_type": "str", "n_ism": "float", "A_star": "float", "k_m": "float",
+    "eps_e": "float", "eps_B": "float", "p_val": "float", "xi_e": "float",
+    "ssc": "bool", "kn": "bool",
+    "enable_rvs": "bool", "duration": "float",
+    "eps_e_r": "float", "eps_B_r": "float", "p_r": "float", "xi_e_r": "float",
+    "rvs_ssc": "bool", "rvs_kn": "bool",
+    "num_t": "int", "res_phi": "float", "res_theta": "float", "res_t": "float",
+}
+
+
+def apply_query_params():
+    """On first load, seed session_state from URL query parameters."""
+    if st.session_state.get("_qp_applied"):
+        return
+    st.session_state["_qp_applied"] = True
+    qp = st.query_params
+    for key, typ in PARAM_DEFS.items():
+        if key in qp:
+            val = qp[key]
+            try:
+                if typ == "float":
+                    st.session_state[key] = float(val)
+                elif typ == "int":
+                    st.session_state[key] = int(float(val))
+                elif typ == "bool":
+                    st.session_state[key] = val in ("1", "true", "True")
+                else:
+                    st.session_state[key] = val
+            except (ValueError, TypeError):
+                pass
+
+
+def build_share_url():
+    """Write current widget values to st.query_params so the URL is shareable."""
+    for key, typ in PARAM_DEFS.items():
+        if key in st.session_state:
+            val = st.session_state[key]
+            if typ == "bool":
+                st.query_params[key] = "1" if val else "0"
+            else:
+                st.query_params[key] = str(val)

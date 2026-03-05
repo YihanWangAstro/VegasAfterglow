@@ -30,6 +30,7 @@ PLOTLY_FLUX_LABELS = {
     "Jy": "Jy",
     "uJy": "\u03bcJy",
     "cgs": "erg cm<sup>\u22122</sup> s<sup>\u22121</sup> Hz<sup>\u22121</sup>",
+    "AB mag": "AB mag",
 }
 
 # Instrument sensitivities: (nu_min_Hz, nu_max_Hz, sensitivity, kind, color)
@@ -69,14 +70,15 @@ OBS_COLORS = [
 
 OBS_FLUX_UNITS = ["mJy", "Jy", "uJy", "cgs", "AB mag", "erg/cm\u00b2/s"]
 
-# Light-theme axis: ticks inside, subtle grid
+# Publication-quality axis style (matches CLI _setup_plot_style)
 AXIS_COMMON = dict(
-    showline=True, linewidth=1, linecolor="#000", mirror=True,
-    ticks="inside", ticklen=5, tickwidth=1, tickcolor="#000",
+    showline=True, linewidth=0.8, linecolor="#000", mirror=True,
+    ticks="inside", ticklen=5, tickwidth=0.8, tickcolor="#000",
     minor=dict(ticks="inside", ticklen=2.5, showgrid=True,
-               gridcolor="rgba(0,0,0,0.04)", griddash="dot"),
-    showgrid=True, gridcolor="rgba(0,0,0,0.08)", griddash="dot", gridwidth=0.5,
-    title_font=dict(size=12, color="#000"), tickfont=dict(size=10, color="#000"),
+               gridcolor="rgba(0,0,0,0.06)", griddash="dot", gridwidth=0.3),
+    showgrid=True, gridcolor="rgba(0,0,0,0.10)", griddash="dot", gridwidth=0.3,
+    title_font=dict(size=13, color="#000"), tickfont=dict(size=11, color="#000"),
+    exponentformat="power",
 )
 
 LEGEND_COMMON = dict(
@@ -85,18 +87,18 @@ LEGEND_COMMON = dict(
     y=0.02,
     xanchor="left",
     x=0.02,
-    font=dict(size=9, color="#333"),
+    font=dict(size=12, color="#333"),
     tracegroupgap=1,
     borderwidth=0,
-    bgcolor="rgba(255,255,255,0.8)",
+    bgcolor="rgba(255,255,255,0.75)",
 )
 
 LAYOUT_COMMON = dict(
     template="plotly_white",
-    hovermode="x unified",
-    height=525,
-    width=700,
-    margin=dict(l=60, r=30, t=20, b=60),
+    hovermode="closest",
+    height=500,
+    width=620,
+    margin=dict(l=65, r=20, t=15, b=55),
     plot_bgcolor="#ffffff",
     paper_bgcolor="#ffffff",
 )

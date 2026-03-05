@@ -170,6 +170,11 @@ SIDEBAR_CSS = """<style>
         margin-bottom: 0.3rem !important;
     }
 
+    /* ── Help tooltips: compact font ── */
+    [data-baseweb="tooltip"] * {
+        font-size: 0.72rem !important;
+    }
+
     /* ── Action buttons: accent outline ── */
     .stDownloadButton button,
     [data-testid="stMainBlockContainer"] .stButton button {

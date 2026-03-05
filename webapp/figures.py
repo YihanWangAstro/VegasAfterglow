@@ -25,6 +25,7 @@ from .constants import (
 )
 from .helpers import (
     band_label,
+    cgs_to_ab_mag,
     format_time_label,
     freq_label,
     mag_to_cgs,
@@ -33,7 +34,22 @@ from .helpers import (
 )
 
 
-def _add_traces(fig, x, groups, hover_x_fmt, secondary_y=None):
+_SUPER = str.maketrans("0123456789-", "⁰¹²³⁴⁵⁶⁷⁸⁹⁻")
+
+
+def _pow10(v):
+    """Format a number as '1.23×10⁴' using Unicode superscripts."""
+    if v == 0 or not np.isfinite(v):
+        return "0"
+    exp = int(np.floor(np.log10(np.abs(v))))
+    coeff = v / 10**exp
+    sup = str(exp).translate(_SUPER)
+    if abs(coeff - 1.0) < 0.005:
+        return f"10{sup}"
+    return f"{coeff:.2f}×10{sup}"
+
+
+def _add_traces(fig, x, groups, x_name, x_unit, secondary_y=None):
     """Add trace groups to a figure.
 
     groups: list of (label, color, components, hover_y_unit)
@@ -43,18 +59,26 @@ def _add_traces(fig, x, groups, hover_x_fmt, secondary_y=None):
         for comp_name, y in comps:
             is_total = comp_name == "total"
             name = label if is_total else f"{label} ({COMP_LABELS.get(comp_name, comp_name)})"
-            mask = y > 0
+            mask = np.isfinite(y)
+            x_m, y_m = x[mask], y[mask]
+            hover = [
+                f"{_pow10(xv)} {x_unit}<br>{_pow10(yv)} {hover_y_unit}"
+                for xv, yv in zip(x_m, y_m)
+            ]
             fig.add_trace(
                 go.Scatter(
-                    x=x[mask], y=y[mask], mode="lines", name=name,
+                    x=x_m, y=y_m, mode="lines", name=name,
                     line=dict(
                         color=color,
-                        width=1.5 if is_total else 0.8,
+                        width=1.2 if is_total else 0.9,
                         dash=PLOTLY_DASH.get(comp_name, "solid"),
                     ),
                     opacity=1.0 if is_total else 0.75,
-                    legendgroup=label,
-                    hovertemplate=f"{hover_x_fmt}<br>F=%{{y:.2e}} {hover_y_unit}<extra>{name}</extra>",
+                    legendgroup=name,
+                    hoverlabel=dict(bgcolor="white", font_color="black",
+                                    bordercolor="#ccc"),
+                    hovertemplate="%{text}<extra>" + name + "</extra>",
+                    text=hover,
                 ),
                 secondary_y=secondary_y,
             )
@@ -141,7 +165,8 @@ def _add_obs_traces(fig, obs_data, flux_unit, x_unit, has_secondary,
             fnu_groups.setdefault(label, []).append((x_phys, y_val * scale, err_val * scale))
 
     x_disp_scale = (TIME_SCALES if is_lc else FREQ_SCALES)[x_unit]
-    f_scale = FLUX_SCALES[flux_unit]
+    is_mag = (flux_unit == "AB mag")
+    f_scale = 1.0 if is_mag else FLUX_SCALES[flux_unit]
     if is_lc:
         x_hover = f"t=%{{x:.2e}} {TIME_LABELS[x_unit]}"
     else:
@@ -156,7 +181,11 @@ def _add_obs_traces(fig, obs_data, flux_unit, x_unit, has_secondary,
         if label in fnu_groups:
             pts = fnu_groups[label]
             xs = [r[0] / x_disp_scale for r in pts]
-            if not is_lc and nufnu:
+            if is_mag:
+                ys = [float(cgs_to_ab_mag(np.array([r[1]]))) for r in pts]
+                errs = [r[2] / r[1] * 2.5 / np.log(10) if r[1] > 0 else 0.0 for r in pts]
+                hover_y = "mag=%{y:.2f}"
+            elif not is_lc and nufnu:
                 ys = [r[0] * r[1] for r in pts]
                 errs = [r[0] * r[2] for r in pts]
                 hover_y = "\u03bdF\u03bd=%{y:.2e} erg/cm\u00b2/s"
@@ -194,13 +223,22 @@ def _add_obs_traces(fig, obs_data, flux_unit, x_unit, has_secondary,
                 secondary_y=True,
             )
 
-    pos = [v for v in all_fnu_ys if v > 0]
-    if pos:
-        cur = fig.layout.yaxis.range
-        if cur:
-            new_lo = min(cur[0], np.log10(min(pos) * 0.3))
-            new_hi = max(cur[1], np.log10(max(pos) * 3.0))
-            fig.update_layout(yaxis_range=[new_lo, new_hi])
+    if is_mag:
+        finite = [v for v in all_fnu_ys if np.isfinite(v)]
+        if finite:
+            cur = fig.layout.yaxis.range
+            if cur:
+                new_hi = max(cur[0], max(finite) + 1)  # faint end (big number)
+                new_lo = min(cur[1], min(finite) - 1)  # bright end (small number)
+                fig.update_layout(yaxis_range=[new_hi, new_lo])
+    else:
+        pos = [v for v in all_fnu_ys if v > 0]
+        if pos:
+            cur = fig.layout.yaxis.range
+            if cur:
+                new_lo = min(cur[0], np.log10(min(pos) * 0.3))
+                new_hi = max(cur[1], np.log10(max(pos) * 3.0))
+                fig.update_layout(yaxis_range=[new_lo, new_hi])
 
     all_fband_ys = [r[1] for pts in fband_groups.values() for r in pts if r[1] > 0]
     if all_fband_ys and has_secondary:
@@ -219,7 +257,8 @@ def make_figure(data, flux_unit, time_unit, t_min, t_max,
     pt_components = data["pt_components"]
     band_data = data["band_data"]
 
-    f_scale = FLUX_SCALES[flux_unit]
+    is_mag = (flux_unit == "AB mag")
+    f_scale = 1.0 if is_mag else FLUX_SCALES[flux_unit]
     t_scale = TIME_SCALES[time_unit]
     t_disp = times / t_scale
 
@@ -239,16 +278,24 @@ def make_figure(data, flux_unit, time_unit, t_min, t_max,
     else:
         fig = go.Figure()
 
-    hover_x = f"t=%{{x:.2e}} {TIME_LABELS[time_unit]}"
+    t_unit_label = TIME_LABELS[time_unit]
 
     if has_points:
-        pt_groups = [
-            (freq_label(nu), pt_colors[i],
-             [(cn, cf[i] / f_scale) for cn, cf in pt_components],
-             PLOTLY_FLUX_LABELS[flux_unit])
-            for i, nu in enumerate(freqs)
-        ]
-        _add_traces(fig, t_disp, pt_groups, hover_x,
+        if is_mag:
+            pt_groups = [
+                (freq_label(nu), pt_colors[i],
+                 [(cn, cgs_to_ab_mag(cf[i])) for cn, cf in pt_components],
+                 "mag")
+                for i, nu in enumerate(freqs)
+            ]
+        else:
+            pt_groups = [
+                (freq_label(nu), pt_colors[i],
+                 [(cn, cf[i] / f_scale) for cn, cf in pt_components],
+                 PLOTLY_FLUX_LABELS[flux_unit])
+                for i, nu in enumerate(freqs)
+            ]
+        _add_traces(fig, t_disp, pt_groups, "t", t_unit_label,
                      secondary_y=False if use_secondary else None)
 
     if has_bands:
@@ -258,19 +305,30 @@ def make_figure(data, flux_unit, time_unit, t_min, t_max,
             for b_idx, (nu_min, nu_max, blabel, comps) in enumerate(band_data)
         ]
         if dual:
-            _add_traces(fig, t_disp, bd_groups, hover_x, secondary_y=True)
+            _add_traces(fig, t_disp, bd_groups, "t", t_unit_label,
+                         secondary_y=True)
         else:
-            _add_traces(fig, t_disp, bd_groups, hover_x,
+            _add_traces(fig, t_disp, bd_groups, "t", t_unit_label,
                          secondary_y=False if use_secondary else None)
 
     x_lo = np.log10(t_min / t_scale)
     x_hi = np.log10(t_max / t_scale)
 
     if has_points:
-        pt_flux = [cf / f_scale for _, cf in pt_components]
-        y_bot, y_top = smart_ylim(pt_flux)
+        if is_mag:
+            all_mag = np.concatenate([cgs_to_ab_mag(cf[i]) for _, cf in pt_components
+                                      for i in range(len(freqs))])
+            finite = all_mag[np.isfinite(all_mag)]
+            if finite.size > 0:
+                y_range_pt = [np.max(finite) + 1, np.min(finite) - 1]  # reversed
+            else:
+                y_range_pt = None
+        else:
+            pt_flux = [cf / f_scale for _, cf in pt_components]
+            y_bot, y_top = smart_ylim(pt_flux)
+            y_range_pt = [np.log10(y_bot), np.log10(y_top)] if y_bot else None
     else:
-        y_bot, y_top = None, None
+        y_range_pt = None
 
     if has_bands:
         bd_flux = []
@@ -281,7 +339,6 @@ def make_figure(data, flux_unit, time_unit, t_min, t_max,
         bd_bot, bd_top = None, None
 
     x_range = [x_lo, x_hi]
-    y_range_pt = [np.log10(y_bot), np.log10(y_top)] if y_bot else None
 
     x_axis = dict(
         type="log",
@@ -290,12 +347,21 @@ def make_figure(data, flux_unit, time_unit, t_min, t_max,
         **AXIS_COMMON,
     )
 
-    y_axis_pt = dict(
-        type="log",
-        title=f"F<sub>\u03bd</sub> ({PLOTLY_FLUX_LABELS[flux_unit]})",
-        range=y_range_pt,
-        **AXIS_COMMON,
-    )
+    if is_mag:
+        y_axis_pt = dict(
+            type="linear",
+            title="AB mag",
+            range=y_range_pt,
+            autorange="reversed" if y_range_pt is None else None,
+            **AXIS_COMMON,
+        )
+    else:
+        y_axis_pt = dict(
+            type="log",
+            title=f"F<sub>\u03bd</sub> ({PLOTLY_FLUX_LABELS[flux_unit]})",
+            range=y_range_pt,
+            **AXIS_COMMON,
+        )
 
     if dual:
         y_range_bd = [np.log10(bd_bot), np.log10(bd_top)] if bd_bot else None
@@ -338,7 +404,8 @@ def make_sed_figure(data, flux_unit, freq_unit, nufnu=False,
     freqs = data["frequencies"]
     components = data["components"]
 
-    f_scale = FLUX_SCALES[flux_unit]
+    is_mag = (flux_unit == "AB mag")
+    f_scale = 1.0 if is_mag else FLUX_SCALES[flux_unit]
     nu_scale = FREQ_SCALES[freq_unit]
     nu_disp = freqs / nu_scale
 
@@ -349,29 +416,48 @@ def make_sed_figure(data, flux_unit, freq_unit, nufnu=False,
     else:
         fig = go.Figure()
 
-    y_label = f"\u03bdF<sub>\u03bd</sub> (erg cm<sup>\u22122</sup> s<sup>\u22121</sup>)" if nufnu else f"F<sub>\u03bd</sub> ({PLOTLY_FLUX_LABELS[flux_unit]})"
-    hover_unit = "erg/cm\u00b2/s" if nufnu else PLOTLY_FLUX_LABELS[flux_unit]
+    if is_mag:
+        y_label = "AB mag"
+        hover_unit = "mag"
+    elif nufnu:
+        y_label = f"\u03bdF<sub>\u03bd</sub> (erg cm<sup>\u22122</sup> s<sup>\u22121</sup>)"
+        hover_unit = "erg/cm\u00b2/s"
+    else:
+        y_label = f"F<sub>\u03bd</sub> ({PLOTLY_FLUX_LABELS[flux_unit]})"
+        hover_unit = PLOTLY_FLUX_LABELS[flux_unit]
 
     groups = []
     for j, t_snap in enumerate(t_snapshots):
-        if nufnu:
+        if is_mag:
+            comps = [(cn, cgs_to_ab_mag(cf[:, j])) for cn, cf in components]
+        elif nufnu:
             comps = [(cn, freqs * cf[:, j]) for cn, cf in components]
         else:
             comps = [(cn, cf[:, j] / f_scale) for cn, cf in components]
         groups.append((format_time_label(t_snap), colors[j], comps, hover_unit))
-    _add_traces(fig, nu_disp, groups, f"\u03bd=%{{x:.2e}} {freq_unit}",
+    _add_traces(fig, nu_disp, groups, "\u03bd", freq_unit,
                 secondary_y=False if need_secondary_y else None)
 
     nu_min, nu_max = freqs[0], freqs[-1]
     x_lo = np.log10(nu_min / nu_scale)
     x_hi = np.log10(nu_max / nu_scale)
 
-    if nufnu:
-        all_flux = [freqs[:, None] * cf for _, cf in components]
+    if is_mag:
+        all_mag = np.concatenate([cgs_to_ab_mag(cf[:, j])
+                                  for _, cf in components
+                                  for j in range(len(t_snapshots))])
+        finite = all_mag[np.isfinite(all_mag)]
+        if finite.size > 0:
+            y_range = [np.max(finite) + 1, np.min(finite) - 1]  # reversed
+        else:
+            y_range = None
     else:
-        all_flux = [cf / f_scale for _, cf in components]
-    y_bot, y_top = smart_ylim(all_flux)
-    y_range = [np.log10(y_bot), np.log10(y_top)] if y_bot else None
+        if nufnu:
+            all_flux = [freqs[:, None] * cf for _, cf in components]
+        else:
+            all_flux = [cf / f_scale for _, cf in components]
+        y_bot, y_top = smart_ylim(all_flux)
+        y_range = [np.log10(y_bot), np.log10(y_top)] if y_bot else None
 
     x_axis = dict(
         type="log",
@@ -379,12 +465,21 @@ def make_sed_figure(data, flux_unit, freq_unit, nufnu=False,
         range=[x_lo, x_hi],
         **AXIS_COMMON,
     )
-    y_axis = dict(
-        type="log",
-        title=y_label,
-        range=y_range,
-        **AXIS_COMMON,
-    )
+    if is_mag:
+        y_axis = dict(
+            type="linear",
+            title=y_label,
+            range=y_range,
+            autorange="reversed" if y_range is None else None,
+            **AXIS_COMMON,
+        )
+    else:
+        y_axis = dict(
+            type="log",
+            title=y_label,
+            range=y_range,
+            **AXIS_COMMON,
+        )
     fig.update_layout(xaxis=x_axis, yaxis=y_axis)
     if need_secondary_y:
         y_axis_bd = {
@@ -399,14 +494,55 @@ def make_sed_figure(data, flux_unit, freq_unit, nufnu=False,
     return fig
 
 
+def _skymap_heatmap(image, x_centers, y_centers, zmin=None, zmax=None):
+    """Create a Heatmap trace for a single sky image frame."""
+    img_plot = np.where(image > 0, image, np.nan)
+    z = np.log10(img_plot.T)
+    kw = {}
+    if zmin is not None:
+        kw["zmin"] = zmin
+        kw["zmax"] = zmax
+    return go.Heatmap(
+        z=z, x=x_centers, y=y_centers,
+        colorscale="Inferno",
+        colorbar=dict(
+            title=dict(text="log<sub>10</sub>(I)", side="right",
+                       font=dict(size=11, color="#000")),
+            tickfont=dict(size=9, color="#000"),
+        ),
+        hovertemplate=(
+            "\u0394x=%{x:.1f} \u03bcas<br>"
+            "\u0394y=%{y:.1f} \u03bcas<br>"
+            "log\u2081\u2080(I)=%{z:.2f}<extra></extra>"
+        ),
+        **kw,
+    )
+
+
+def _skymap_layout(extent, t_label, nu_label):
+    """Common layout dict for sky map figures."""
+    return dict(
+        xaxis=dict(
+            title="\u0394x (\u03bcas)", scaleanchor="y",
+            constrain="domain", **AXIS_COMMON,
+        ),
+        yaxis=dict(title="\u0394y (\u03bcas)", **AXIS_COMMON),
+        title=dict(
+            text=f"t = {t_label}, \u03bd = {nu_label}",
+            x=0.5, font=dict(size=12, color="#333"),
+        ),
+        height=550, width=600,
+        margin=dict(l=60, r=80, t=40, b=60),
+        plot_bgcolor="#ffffff", paper_bgcolor="#ffffff",
+    )
+
+
 def make_skymap_figure(data):
     """Build an interactive Plotly sky map figure from computation results."""
-    image = data["image"]
+    image = data["images"][0]
     extent = data["extent_uas"]
-    t_obs = data["t_obs"]
+    t_obs = data["t_obs_array"][0]
     nu_obs = data["nu_obs"]
-
-    img_plot = np.where(image > 0, image, np.nan)
 
     x_min, x_max, y_min, y_max = extent
     npixel = image.shape[0]
@@ -415,49 +551,6 @@ def make_skymap_figure(data):
     x_centers = np.linspace(x_min + dx / 2, x_max - dx / 2, npixel)
     y_centers = np.linspace(y_min + dy / 2, y_max - dy / 2, npixel)
 
-    fig = go.Figure(
-        data=go.Heatmap(
-            z=np.log10(img_plot.T),
-            x=x_centers,
-            y=y_centers,
-            colorscale="Inferno",
-            colorbar=dict(
-                title=dict(text="log<sub>10</sub>(I)", side="right", font=dict(size=11, color="#000")),
-                tickfont=dict(size=9, color="#000"),
-            ),
-            hovertemplate=(
-                "\u0394x=%{x:.1f} \u03bcas<br>"
-                "\u0394y=%{y:.1f} \u03bcas<br>"
-                "log\u2081\u2080(I)=%{z:.2f}"
-                "<extra></extra>"
-            ),
-        )
-    )
-
-    t_label = format_time_label(t_obs)
-    nu_label = freq_label(nu_obs)
-
-    fig.update_layout(
-        xaxis=dict(
-            title="\u0394x (\u03bcas)",
-            scaleanchor="y",
-            constrain="domain",
-            **AXIS_COMMON,
-        ),
-        yaxis=dict(
-            title="\u0394y (\u03bcas)",
-            **AXIS_COMMON,
-        ),
-        title=dict(
-            text=f"t = {t_label}, \u03bd = {nu_label}",
-            x=0.5,
-            font=dict(size=12, color="#333"),
-        ),
-        height=550,
-        width=600,
-        margin=dict(l=60, r=80, t=40, b=60),
-        plot_bgcolor="#ffffff",
-        paper_bgcolor="#ffffff",
-    )
-
+    fig = go.Figure(data=_skymap_heatmap(image, x_centers, y_centers))
+    fig.update_layout(**_skymap_layout(extent, format_time_label(t_obs), freq_label(nu_obs)))
     return fig

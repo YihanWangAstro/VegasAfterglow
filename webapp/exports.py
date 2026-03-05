@@ -128,11 +128,11 @@ def export_sed_json(data, flux_unit, freq_unit):
 def export_skymap_json(data):
     """Generate JSON string from sky map results."""
     obj = {
-        "t_obs_s": data["t_obs"],
+        "t_obs_s": data["t_obs_array"].tolist(),
         "nu_obs_Hz": data["nu_obs"],
         "fov_uas": data["fov_uas"],
         "extent_uas": data["extent_uas"].tolist(),
         "units": {"image": "erg/cm2/s/Hz/sr", "extent": "uas"},
-        "image": data["image"].tolist(),
+        "images": [img.tolist() for img in data["images"]],
     }
     return json.dumps(obj, indent=2)
