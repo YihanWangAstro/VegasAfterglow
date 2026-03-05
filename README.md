@@ -137,6 +137,8 @@ pip install VegasAfterglow[webapp]
 streamlit run webapp/app.py
 ```
 
+The web app requires Streamlit 1.52 or newer.
+
 VegasAfterglow requires Python 3.8 or higher.
 
 <details>
