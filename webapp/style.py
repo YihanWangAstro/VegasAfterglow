@@ -191,6 +191,12 @@ SIDEBAR_CSS = """<style>
         background: var(--accent) !important;
         color: var(--bg) !important;
     }
+
+    /* ── Plotly chart: responsive height ── */
+    .stPlotlyChart iframe {
+        min-height: 55vh !important;
+    }
+
     /* ── Mobile: responsive layout ── */
     @media (max-width: 768px) {
         [data-testid="stMainBlockContainer"] {

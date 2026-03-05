@@ -791,7 +791,7 @@ else:  # Sky Image
             frame = _PILImage.alpha_composite(frame, overlay_pil)
             # Draw title centered
             t_label = format_time_label(data["t_obs_array"][i])
-            txt = f"t = {t_label},  \u03bd = {nu_label}"
+            txt = f"t = {t_label},  freq = {nu_label}"
             draw = ImageDraw.Draw(frame)
             tw = draw.textlength(txt, font=title_font)
             draw.text(((w - tw) / 2, title_y), txt, fill=title_color, font=title_font)
