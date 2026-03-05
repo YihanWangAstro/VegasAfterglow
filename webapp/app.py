@@ -548,7 +548,8 @@ _physics_params = dict(
 
 def _show_plot(fig):
     """Render Plotly chart with 4:3 aspect ratio."""
-    st.plotly_chart(fig, config={"toImageButtonOptions": {"format": "png", "scale": 3}})
+    st.plotly_chart(fig, use_container_width=False,
+                    config={"toImageButtonOptions": {"format": "png", "scale": 3}})
 
 
 def _download_row(fig, downloads, prefix):

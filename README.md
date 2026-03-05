@@ -9,11 +9,12 @@
 [![Platform](https://img.shields.io/badge/Platform-Linux%20|%20macOS%20|%20Windows-lightgrey.svg)]()
 [![Python Version](https://img.shields.io/badge/Python-3.8%2B-blue.svg)](https://www.python.org/)
 [![Documentation](https://img.shields.io/badge/Documentation-Online-brightgreen.svg)](https://yihanwangastro.github.io/VegasAfterglow/docs/index.html)
+[![Interactive Tool](https://img.shields.io/badge/Interactive-Web%20Tool-orange.svg)](https://vegasafterglow.streamlit.app)
 [![Validation Report](https://img.shields.io/badge/Validation-Report-blue.svg)](https://yihanwangastro.github.io/VegasAfterglow/reports/latest/comprehensive_report.pdf)
 
 <div align="left">
 
-**[Latest Release Notes](CHANGELOG.md#v200-beta---2026-02-02)** | **[Validation Report (PDF)](https://yihanwangastro.github.io/VegasAfterglow/reports/latest/comprehensive_report.pdf)** | **[Install Now](#installation)**
+**[Latest Release Notes](CHANGELOG.md#v200-beta---2026-02-02)** | **[Interactive Web Tool](https://vegasafterglow.streamlit.app)** | **[Validation Report (PDF)](https://yihanwangastro.github.io/VegasAfterglow/reports/latest/comprehensive_report.pdf)** | **[Install Now](#installation)**
 </div>
 
 <p align="justify">
@@ -199,8 +200,9 @@ The following development tools are required:
 
 ### Quick Start
 
-VegasAfterglow can be used in two ways:
+VegasAfterglow can be used in three ways:
 
+* **[Interactive web tool](https://vegasafterglow.streamlit.app)** — explore light curves, spectra, and sky images in your browser, no installation required.
 * **Command line** — generate light curves instantly with the `vegasgen` command, no code needed.
 * **Python API** — full programmatic control for custom analysis, MCMC fitting, and access to internal quantities.
 

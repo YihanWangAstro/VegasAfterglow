@@ -121,6 +121,10 @@ For the full MCMC fitting guide, including advanced customization examples, see 
 - Batch evaluation over multiple observer times for efficient multi-frame image sequences and movies
 - See the [sky image example notebook](script/sky-image.ipynb) and [documentation](https://yihanwangastro.github.io/VegasAfterglow/docs/examples/sky_image.html) for usage
 
+#### ► **Interactive Web Tool**
+
+- Browser-based interactive tool for exploring afterglow light curves, spectra, and sky images — no installation required: [vegasafterglow.streamlit.app](https://vegasafterglow.streamlit.app)
+
 #### ► **Smooth Electron Distribution for IC Integration**
 
 - Electron energy distribution now uses smooth broken power-law transitions at cooling and injection breaks, consistent with the synchrotron photon spectrum
