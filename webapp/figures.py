@@ -5,8 +5,9 @@ import plotly.graph_objects as go
 import plotly.io as pio
 from plotly.subplots import make_subplots
 
-# Pre-load template so the first Figure() doesn't pay ~25ms penalty
-pio.templates.default = "plotly_white"
+# Avoid shipping a large default template blob with every figure payload.
+# Webapp layout styling is set explicitly via constants/layout updates.
+pio.templates.default = "none"
 
 from VegasAfterglow.cli import _freq_colors
 

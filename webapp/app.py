@@ -60,7 +60,7 @@ from webapp.helpers import (
     parse_entry,
     z_from_lumi_dist_mpc,
 )
-from webapp.style import CLIPBOARD_JS, SIDEBAR_CSS
+from webapp.style import BIBTEX, SIDEBAR_CSS
 
 import VegasAfterglow as _va
 
@@ -100,35 +100,10 @@ def _to_jsonable(value):
     return value
 
 
-def _decode_plotly_binary_arrays(value):
-    if isinstance(value, dict):
-        if (
-            "dtype" in value
-            and "bdata" in value
-            and isinstance(value["dtype"], str)
-            and isinstance(value["bdata"], str)
-        ):
-            try:
-                arr = np.frombuffer(
-                    base64.b64decode(value["bdata"]),
-                    dtype=np.dtype(value["dtype"]),
-                )
-                shape = value.get("shape")
-                if isinstance(shape, (list, tuple)) and len(shape) > 0:
-                    arr = arr.reshape(tuple(int(s) for s in shape))
-                return arr.tolist()
-            except Exception:
-                pass
-        return {k: _decode_plotly_binary_arrays(v) for k, v in value.items()}
-    if isinstance(value, list):
-        return [_decode_plotly_binary_arrays(v) for v in value]
-    return value
-
-
 def _plotly_component_figure(fig):
-    # Plotly.py v6 serializes arrays as {"dtype","bdata"} blobs.
-    # The custom JS path needs plain arrays for reliable updates.
-    return _decode_plotly_binary_arrays(json.loads(fig.to_json()))
+    # Keep Plotly.py v6 binary array blobs compact on the Python side;
+    # decode happens inside the JS component before Plotly.react/newPlot.
+    return fig.to_json()
 
 
 def _canonical_json(value):
@@ -297,6 +272,72 @@ def _render_footer(mode):
         f'<a href="https://github.com/YihanWangAstro/VegasAfterglow" target="_blank" '
         f'style="color:#4ecdc4;">Python package</a>.</p>',
         unsafe_allow_html=True,
+    )
+    _render_cite_note_inline(mode_key)
+
+
+def _render_cite_note_inline(mode_key):
+    bib_json = json.dumps(BIBTEX.strip(), ensure_ascii=True)
+    _stc.html(
+        f"""
+<style>
+  html, body {{
+    margin: 0;
+    padding: 0;
+    background: transparent;
+    font-family: "Source Sans Pro", -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+  }}
+</style>
+<div style="text-align:center;font-size:0.7em;color:#888;line-height:1.35;margin-top:0.15rem;
+            font-family:'Source Sans Pro',-apple-system,BlinkMacSystemFont,'Segoe UI',Arial,sans-serif;">
+  If you find VegasAfterglow useful in your research, we would be grateful if you could
+  <a href="#" id="cite_link_{mode_key}" style="color:#4ecdc4;text-decoration:underline;">cite</a>
+  our work.
+</div>
+<script>
+(function() {{
+  const text = {bib_json};
+  const link = document.getElementById("cite_link_{mode_key}");
+  if (!link) return;
+
+  async function copyBib() {{
+    try {{
+      if (window.parent && window.parent.navigator && window.parent.navigator.clipboard) {{
+        await window.parent.navigator.clipboard.writeText(text);
+        return true;
+      }}
+    }} catch (e) {{}}
+    try {{
+      if (navigator.clipboard) {{
+        await navigator.clipboard.writeText(text);
+        return true;
+      }}
+    }} catch (e) {{}}
+
+    const ta = document.createElement("textarea");
+    ta.value = text;
+    ta.style.position = "fixed";
+    ta.style.left = "-9999px";
+    document.body.appendChild(ta);
+    ta.select();
+    const ok = document.execCommand("copy");
+    document.body.removeChild(ta);
+    return ok;
+  }}
+
+  link.addEventListener("click", async function(ev) {{
+    ev.preventDefault();
+    const original = link.textContent;
+    const ok = await copyBib();
+    link.textContent = ok ? "copied" : "copy failed";
+    setTimeout(function() {{
+      link.textContent = original;
+    }}, 1200);
+  }});
+}})();
+</script>
+""",
+        height=44,
     )
 
 
@@ -736,7 +777,7 @@ def _physics_params_from_shared(shared):
     }
 
 
-def _render_plot_actions(fig, downloads, prefix, cite_key, main_slot, render_token):
+def _render_plot_actions(fig, downloads, prefix, main_slot, render_token):
     fig.update_layout(height=_PLOT_HEIGHT)
     # Keep the plotting area size stable across rerenders.
     fig.update_layout(margin=dict(autoexpand=False))
@@ -752,7 +793,7 @@ def _render_plot_actions(fig, downloads, prefix, cite_key, main_slot, render_tok
             default=None,
         )
 
-    cols = st.columns(len(downloads) + 1)
+    cols = st.columns(len(downloads))
     for i, spec in enumerate(downloads):
         label, metric_key, producer, ext, mime = spec
         with cols[i]:
@@ -765,11 +806,6 @@ def _render_plot_actions(fig, downloads, prefix, cite_key, main_slot, render_tok
                 use_container_width=True,
                 on_click="ignore",
             )
-
-    with cols[-1]:
-        if st.button("Cite", key=f"cite_{cite_key}", use_container_width=True):
-            _stc.html(CLIPBOARD_JS, height=0)
-            st.toast("\u2714 BibTeX copied to clipboard!")
 
 
 # ---------------------------------------------------------------------------
@@ -928,7 +964,6 @@ def render_lightcurve_fragment(main_slot):
     _lock_y_limits(fig, "lc", axis_key)
 
     export_unit = "cgs" if is_mag else flux_unit
-    fig_json = fig.to_json()
     downloads = [
         (
             "CSV",
@@ -944,15 +979,8 @@ def render_lightcurve_fragment(main_slot):
             "json",
             "application/json",
         ),
-        (
-            "PNG",
-            "lc_png",
-            lambda fj=fig_json: go.Figure(json.loads(fj)).to_image(format="png", scale=3),
-            "png",
-            "image/png",
-        ),
     ]
-    _render_plot_actions(fig, downloads, "afterglow_lightcurve", "lightcurve", main_slot, view_key)
+    _render_plot_actions(fig, downloads, "afterglow_lightcurve", main_slot, view_key)
     _show_perf_debug("lc", perf)
 
 
@@ -1099,7 +1127,6 @@ def render_spectrum_fragment(main_slot):
     _lock_y_limits(fig, "sed", axis_key)
 
     export_unit = "cgs" if is_mag else flux_unit
-    fig_json = fig.to_json()
     downloads = [
         (
             "CSV",
@@ -1115,15 +1142,8 @@ def render_spectrum_fragment(main_slot):
             "json",
             "application/json",
         ),
-        (
-            "PNG",
-            "sed_png",
-            lambda fj=fig_json: go.Figure(json.loads(fj)).to_image(format="png", scale=3),
-            "png",
-            "image/png",
-        ),
     ]
-    _render_plot_actions(fig, downloads, "afterglow_sed", "sed", main_slot, view_key)
+    _render_plot_actions(fig, downloads, "afterglow_sed", main_slot, view_key)
     _show_perf_debug("sed", perf)
 
 
@@ -1359,7 +1379,7 @@ def render_skymap_mode():
             unsafe_allow_html=True,
         )
 
-        _, c1, c2, c3, _ = st.columns([1, 1, 1, 1, 1])
+        _, c1, c2, _ = st.columns([1, 1, 1, 1])
         with c1:
             st.download_button(
                 "JSON",
@@ -1377,10 +1397,6 @@ def render_skymap_mode():
                 key="dl_gif_skymap",
                 width="stretch",
             )
-        with c3:
-            if st.button("Cite", key="cite_skymap_anim", width="stretch"):
-                _stc.html(CLIPBOARD_JS, height=0)
-                st.toast("\u2714 BibTeX copied to clipboard!")
 
     else:
         import io as _io
@@ -1430,7 +1446,7 @@ def render_skymap_mode():
             unsafe_allow_html=True,
         )
 
-        _, c1, c2, c3, _ = st.columns([1, 1, 1, 1, 1])
+        _, c1, c2, _ = st.columns([1, 1, 1, 1])
         with c1:
             st.download_button(
                 "JSON",
@@ -1448,10 +1464,6 @@ def render_skymap_mode():
                 key="dl_png_skymap_static",
                 width="stretch",
             )
-        with c3:
-            if st.button("Cite", key="cite_skymap_static", width="stretch"):
-                _stc.html(CLIPBOARD_JS, height=0)
-                st.toast("\u2714 BibTeX copied to clipboard!")
 
 
 # ---------------------------------------------------------------------------

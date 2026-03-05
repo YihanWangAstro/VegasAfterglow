@@ -112,9 +112,105 @@
         return value;
       }
 
+      function base64ToBuffer(b64) {
+        const raw = atob(b64);
+        const len = raw.length;
+        const bytes = new Uint8Array(len);
+        for (let i = 0; i < len; i += 1) {
+          bytes[i] = raw.charCodeAt(i);
+        }
+        return bytes.buffer;
+      }
+
+      function normalizeDtype(dtype) {
+        if (typeof dtype !== "string") return "";
+        return dtype.replace(/[<>=|]/g, "").toLowerCase();
+      }
+
+      function typedArrayFrom(dtype, buffer) {
+        const dt = normalizeDtype(dtype);
+        switch (dt) {
+          case "f8":
+          case "float64":
+            return new Float64Array(buffer);
+          case "f4":
+          case "float32":
+            return new Float32Array(buffer);
+          case "i1":
+          case "int8":
+            return new Int8Array(buffer);
+          case "u1":
+          case "uint8":
+            return new Uint8Array(buffer);
+          case "i2":
+          case "int16":
+            return new Int16Array(buffer);
+          case "u2":
+          case "uint16":
+            return new Uint16Array(buffer);
+          case "i4":
+          case "int32":
+            return new Int32Array(buffer);
+          case "u4":
+          case "uint32":
+            return new Uint32Array(buffer);
+          default:
+            return null;
+        }
+      }
+
+      function reshapeFlat(values, shape) {
+        if (!Array.isArray(shape) || shape.length <= 1) {
+          return values;
+        }
+        const out = [];
+        const dim0 = Number(shape[0]) || 0;
+        const rest = shape.slice(1);
+        const chunk = rest.reduce(function (acc, n) {
+          return acc * (Number(n) || 0);
+        }, 1);
+        for (let i = 0; i < dim0; i += 1) {
+          const start = i * chunk;
+          const end = start + chunk;
+          out.push(reshapeFlat(values.slice(start, end), rest));
+        }
+        return out;
+      }
+
+      function decodePlotlyBinaryArrays(value) {
+        if (Array.isArray(value)) {
+          for (let i = 0; i < value.length; i += 1) {
+            value[i] = decodePlotlyBinaryArrays(value[i]);
+          }
+          return value;
+        }
+        if (!value || typeof value !== "object") {
+          return value;
+        }
+        if (typeof value.dtype === "string" && typeof value.bdata === "string") {
+          try {
+            const typed = typedArrayFrom(value.dtype, base64ToBuffer(value.bdata));
+            if (!typed) return value;
+            const shape = Array.isArray(value.shape) ? value.shape : null;
+            if (shape && shape.length > 1) {
+              return reshapeFlat(Array.from(typed), shape);
+            }
+            return typed;
+          } catch (_) {
+            return value;
+          }
+        }
+        const keys = Object.keys(value);
+        for (let i = 0; i < keys.length; i += 1) {
+          const k = keys[i];
+          value[k] = decodePlotlyBinaryArrays(value[k]);
+        }
+        return value;
+      }
+
       async function renderOnce(args) {
         const Plotly = await ensurePlotlyLoaded();
-        const figure = parseMaybeJson(args.figure, {});
+        const figure = decodePlotlyBinaryArrays(parseMaybeJson(args.figure, {}));
         const data = Array.isArray(figure.data) ? figure.data : [];
         const layout = parseMaybeJson(figure.layout, {});
         const config = parseMaybeJson(args.config, {});
