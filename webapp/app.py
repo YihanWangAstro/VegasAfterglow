@@ -546,52 +546,11 @@ _physics_params = dict(
 # ---------------------------------------------------------------------------
 
 
-_PLOTLY_CDN = "https://cdn.plot.ly/plotly-2.35.2.min.js"
-
-_CHART_HTML = """
-<script src="{cdn}"></script>
-<div id="chart" style="width:100%;height:{height}px;"></div>
-<script>
-(function() {{
-  var fig = {fig_json}, div = document.getElementById('chart');
-  var axes = ['xaxis','yaxis','yaxis2'];
-  var sk = '_pz_{key}', saved = window.parent[sk];
-
-  if (saved) axes.forEach(function(ax) {{
-    if (saved[ax]) {{
-      fig.layout[ax] = fig.layout[ax] || {{}};
-      fig.layout[ax].range = saved[ax];
-      fig.layout[ax].autorange = false;
-    }}
-  }});
-
-  Plotly.newPlot(div, fig.data, fig.layout, {{
-    responsive: true, toImageButtonOptions: {{format: 'png', scale: 3}}
-  }});
-
-  function save() {{
-    var s = {{}};
-    axes.forEach(function(ax) {{ if (div.layout[ax]) s[ax] = div.layout[ax].range; }});
-    window.parent[sk] = s;
-  }}
-  save();
-  div.on('plotly_relayout', function(e) {{ if (!e.autosize) save(); }});
-  div.on('plotly_doubleclick', function() {{ delete window.parent[sk]; }});
-}})();
-</script>
-"""
-
-
-def _show_plot(fig, key="chart"):
-    """Render Plotly chart with zoom/pan preserved across reruns."""
+def _show_plot(fig):
+    """Render Plotly chart natively with auto-sized width."""
     fig.update_layout(width=None)
-    html = _CHART_HTML.format(
-        cdn=_PLOTLY_CDN,
-        fig_json=fig.to_json(),
-        key=key,
-        height=fig.layout.height or 500,
-    )
-    _stc.html(html, height=(fig.layout.height or 500) + 20)
+    st.plotly_chart(fig, use_container_width=True,
+                    config={"toImageButtonOptions": {"format": "png", "scale": 3}})
 
 
 def _download_row(fig, downloads, prefix):
@@ -660,7 +619,7 @@ if plot_mode == "Light Curve":
         _add_obs_traces(fig, obs_data_tuple, flux_unit, time_unit,
                         has_secondary=use_sec)
 
-    _show_plot(fig, key="chart_lc")
+    _show_plot(fig)
     export_unit = "cgs" if is_mag else flux_unit
     _download_row(fig, [
         ("CSV", export_csv(data, export_unit, time_unit), "csv", "text/csv"),
@@ -711,7 +670,7 @@ elif plot_mode == "Spectrum":
                         has_secondary=need_sec, mode="spectrum",
                         nufnu=show_nufnu)
 
-    _show_plot(fig, key="chart_sed")
+    _show_plot(fig)
     export_unit = "cgs" if is_mag else flux_unit
     _download_row(fig, [
         ("CSV", export_sed_csv(data, export_unit, freq_unit), "csv", "text/csv"),
@@ -813,13 +772,15 @@ else:  # Sky Image
 
         # Title via PIL ImageDraw (no matplotlib per frame)
         from PIL import ImageDraw, ImageFont
-        try:
-            title_font = ImageFont.truetype("Helvetica", int(9 * 200 / 72))
-        except OSError:
+        _title_size = int(9 * 200 / 72)
+        for _fname in ("Helvetica", "Arial", "DejaVuSans", "DejaVu Sans"):
             try:
-                title_font = ImageFont.truetype("Arial", int(9 * 200 / 72))
+                title_font = ImageFont.truetype(_fname, _title_size)
+                break
             except OSError:
-                title_font = ImageFont.load_default()
+                continue
+        else:
+            title_font = ImageFont.load_default(size=_title_size)
         title_y = h - y1 - int(9 * 200 / 72) - 4  # above axes top
         title_color = (51, 51, 51, 255)
 
