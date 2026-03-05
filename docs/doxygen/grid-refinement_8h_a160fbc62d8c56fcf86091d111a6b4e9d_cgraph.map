@@ -1,0 +1,12 @@
+<map id="scan_time_bounds" name="scan_time_bounds">
+<area shape="rect" id="Node000001" title="Scan all cells to determine global time bounds for grid construction." alt="" coords="5,69,148,94"/>
+<area shape="rect" id="Node000002" href="$grid-refinement_8h.html#aa7505ad2e84c2a29610c1a13cd3b25e3" title="Estimates deceleration time for a given angle from ejecta and medium properties." alt="" coords="196,69,319,94"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="148,79,182,79,182,84,148,84"/>
+<area shape="rect" id="Node000003" href="$namespacephysics_1_1relativistic.html#aed1c46f33c9d25ffa27131014b190090" title="Converts Lorentz factor (gamma) to a velocity fraction (beta)" alt="" coords="367,5,515,45"/>
+<area shape="poly" id="edge5_Node000001_Node000003" title=" " alt="" coords="132,66,196,53,352,32,353,37,196,59,133,71"/>
+<area shape="rect" id="Node000004" href="$pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89" title=" " alt="" coords="563,70,717,95"/>
+<area shape="poly" id="edge6_Node000001_Node000004" title=" " alt="" coords="130,91,196,103,290,108,385,106,549,93,549,98,385,112,290,113,196,108,129,97"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="299,66,361,47,362,52,300,71"/>
+<area shape="poly" id="edge4_Node000002_Node000004" title=" " alt="" coords="319,79,549,80,549,85,319,84"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="512,43,582,63,581,69,510,48"/>
+</map>

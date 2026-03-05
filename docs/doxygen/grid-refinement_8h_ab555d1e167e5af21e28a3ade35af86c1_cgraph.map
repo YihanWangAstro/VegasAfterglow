@@ -1,0 +1,19 @@
+<map id="build_time_grid" name="build_time_grid">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,45,128,70"/>
+<area shape="rect" id="Node000002" href="$namespacephysics_1_1relativistic.html#aed1c46f33c9d25ffa27131014b190090" title="Converts Lorentz factor (gamma) to a velocity fraction (beta)" alt="" coords="613,56,761,96"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="128,57,600,71,600,76,128,62"/>
+<area shape="rect" id="Node000003" href="$pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89" title=" " alt="" coords="809,121,964,146"/>
+<area shape="poly" id="edge3_Node000001_Node000003" title=" " alt="" coords="122,42,240,21,317,12,401,5,491,3,582,7,674,20,762,42,792,55,820,72,865,109,861,113,817,77,790,60,760,47,673,25,582,13,490,8,401,10,317,17,241,27,123,48"/>
+<area shape="rect" id="Node000004" href="$grid-refinement_8h.html#a160fbc62d8c56fcf86091d111a6b4e9d" title="Scan all cells to determine global time bounds for grid construction." alt="" coords="176,96,319,121"/>
+<area shape="poly" id="edge4_Node000001_Node000004" title=" " alt="" coords="114,68,189,89,187,94,112,73"/>
+<area shape="rect" id="Node000006" href="$grid-refinement_8cpp.html#aeef7d271b4fb4670a29742a2c09aff23" title="Create a two&#45;segment logspace grid with extra resolution before t_cross." alt="" coords="367,222,565,262"/>
+<area shape="poly" id="edge10_Node000001_Node000006" title=" " alt="" coords="85,68,126,98,177,130,285,178,386,215,384,220,283,183,175,135,123,103,82,73"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="758,94,829,115,827,120,757,99"/>
+<area shape="poly" id="edge8_Node000004_Node000002" title=" " alt="" coords="319,101,599,80,600,85,319,106"/>
+<area shape="poly" id="edge9_Node000004_Node000003" title=" " alt="" coords="276,119,326,141,367,157,427,166,488,171,609,170,720,160,811,146,812,152,721,165,609,175,487,176,426,171,366,162,324,146,274,124"/>
+<area shape="rect" id="Node000005" href="$grid-refinement_8h.html#aa7505ad2e84c2a29610c1a13cd3b25e3" title="Estimates deceleration time for a given angle from ejecta and medium properties." alt="" coords="405,121,527,146"/>
+<area shape="poly" id="edge5_Node000004_Node000005" title=" " alt="" coords="319,114,391,122,391,128,318,119"/>
+<area shape="poly" id="edge6_Node000005_Node000002" title=" " alt="" coords="515,118,599,96,601,102,517,124"/>
+<area shape="poly" id="edge7_Node000005_Node000003" title=" " alt="" coords="528,131,795,131,795,136,528,136"/>
+<area shape="poly" id="edge11_Node000006_Node000003" title=" " alt="" coords="565,235,661,224,712,214,760,201,811,178,855,152,857,157,814,183,762,206,713,219,662,229,566,241"/>
+</map>

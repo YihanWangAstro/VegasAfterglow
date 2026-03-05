@@ -5,12 +5,11 @@ var searchData=
   ['n_5fp_2',['n_p',['../structPyShock.html#a8f382c556d89d40f048b8ef3ab977eeb',1,'PyShock::N_p'],['../classShock.html#a935ec9fad9c096394707e59f81d0425d',1,'Shock::N_p']]],
   ['n_5fphi_3',['n_phi',['../structSplatGrid.html#a3ea2f3c8bb7e176c262d6a7680b466d1',1,'SplatGrid']]],
   ['n_5ftheta_4',['n_theta',['../structSplatGrid.html#ae4f655ad663a800f070cfcf1b48c65c7',1,'SplatGrid']]],
-  ['none_5',['none',['../observer_8h.html#a537d78de12d65408b5bf331825ce1501a334c4a4c42fdb79d7ebc3e73b517e6f8',1,'observer.h']]],
-  ['nu_5f0_6',['nu_0',['../structPromptPhotons.html#a54a5f92e9276e418638ebaac83fa4980',1,'PromptPhotons']]],
-  ['nu_5fa_7',['nu_a',['../structPyShock.html#a3a2c1bc271cfa9161bfea4e1731492e7',1,'PyShock::nu_a'],['../structPowerLawSyn.html#ad952652650961690e84dca86cb246289',1,'PowerLawSyn::nu_a'],['../structSmoothPowerLawSyn.html#a39a52136d19bf398e5c900af85cfb240',1,'SmoothPowerLawSyn::nu_a']]],
-  ['nu_5fc_8',['nu_c',['../structPyShock.html#a3b8bc9bf73c5966bc5fa54c5a96c89cc',1,'PyShock::nu_c'],['../structPowerLawSyn.html#a69b2e32bfd6ffbaa677da50e271e4a9e',1,'PowerLawSyn::nu_c'],['../structSmoothPowerLawSyn.html#a71d7f1af90eba6af8f2458d4f42da8e5',1,'SmoothPowerLawSyn::nu_c']]],
-  ['nu_5fc_5fhat_9',['nu_c_hat',['../structPyShock.html#a2bdec231180b5cba273178653a8b5627',1,'PyShock']]],
-  ['nu_5fm_10',['nu_m',['../structPyShock.html#aa5598e189d0f2d11ef7b0bb15f03da4f',1,'PyShock::nu_M'],['../structPowerLawSyn.html#a26e22b2c12e0eae886766da3ffcc732f',1,'PowerLawSyn::nu_M'],['../structSmoothPowerLawSyn.html#aab9ceea7470c20d870222eee4c33b3cc',1,'SmoothPowerLawSyn::nu_M'],['../structPyShock.html#a9d61259f3d3c4c23464ec748b3bb9315',1,'PyShock::nu_m'],['../structPowerLawSyn.html#a217491ac8c39bcb5c9c9247204653ac8',1,'PowerLawSyn::nu_m'],['../structSmoothPowerLawSyn.html#a7f2554d248094b98a51d54013c0945d8',1,'SmoothPowerLawSyn::nu_m']]],
-  ['nu_5fm_5fhat_11',['nu_m_hat',['../structPyShock.html#a6d6ca5ca3880d31ab37fdc67b6345bb7',1,'PyShock']]],
-  ['nu_5fspectrum_12',['nu_spectrum',['../structInverseComptonY.html#a8d2d46b7a11f4a549c1332c077786bd1',1,'InverseComptonY']]]
+  ['nu_5f0_5',['nu_0',['../structPromptPhotons.html#a54a5f92e9276e418638ebaac83fa4980',1,'PromptPhotons']]],
+  ['nu_5fa_6',['nu_a',['../structPyShock.html#a3a2c1bc271cfa9161bfea4e1731492e7',1,'PyShock::nu_a'],['../structPowerLawSyn.html#ad952652650961690e84dca86cb246289',1,'PowerLawSyn::nu_a'],['../structSmoothPowerLawSyn.html#a39a52136d19bf398e5c900af85cfb240',1,'SmoothPowerLawSyn::nu_a']]],
+  ['nu_5fc_7',['nu_c',['../structPyShock.html#a3b8bc9bf73c5966bc5fa54c5a96c89cc',1,'PyShock::nu_c'],['../structSmoothPowerLawSyn.html#a71d7f1af90eba6af8f2458d4f42da8e5',1,'SmoothPowerLawSyn::nu_c'],['../structPowerLawSyn.html#a69b2e32bfd6ffbaa677da50e271e4a9e',1,'PowerLawSyn::nu_c']]],
+  ['nu_5fc_5fhat_8',['nu_c_hat',['../structPyShock.html#a2bdec231180b5cba273178653a8b5627',1,'PyShock']]],
+  ['nu_5fm_9',['nu_m',['../structPyShock.html#aa5598e189d0f2d11ef7b0bb15f03da4f',1,'PyShock::nu_M'],['../structPowerLawSyn.html#a26e22b2c12e0eae886766da3ffcc732f',1,'PowerLawSyn::nu_M'],['../structSmoothPowerLawSyn.html#aab9ceea7470c20d870222eee4c33b3cc',1,'SmoothPowerLawSyn::nu_M'],['../structPyShock.html#a9d61259f3d3c4c23464ec748b3bb9315',1,'PyShock::nu_m'],['../structPowerLawSyn.html#a217491ac8c39bcb5c9c9247204653ac8',1,'PowerLawSyn::nu_m'],['../structSmoothPowerLawSyn.html#a7f2554d248094b98a51d54013c0945d8',1,'SmoothPowerLawSyn::nu_m']]],
+  ['nu_5fm_5fhat_10',['nu_m_hat',['../structPyShock.html#a6d6ca5ca3880d31ab37fdc67b6345bb7',1,'PyShock']]],
+  ['nu_5fspectrum_11',['nu_spectrum',['../structInverseComptonY.html#a8d2d46b7a11f4a549c1332c077786bd1',1,'InverseComptonY']]]
 ];

@@ -12,9 +12,6 @@ var namespacedefaults =
       [ "theta_resolution", "namespacedefaults_1_1grid.html#a372994c537be68d80989655f9b43c672", null ],
       [ "time_resolution", "namespacedefaults_1_1grid.html#aa203749fa338e32e6c7a711c82846582", null ]
     ] ],
-    [ "observer", "namespacedefaults_1_1observer.html", [
-      [ "min_obs_time_sec", "namespacedefaults_1_1observer.html#aa955f53126bae3c13bf752b75ed32558", null ]
-    ] ],
     [ "sampling", "namespacedefaults_1_1sampling.html", [
       [ "theta_samples", "namespacedefaults_1_1sampling.html#afb3d6cb58a2dc84e4f0a2ed64d7e1609", null ]
     ] ],

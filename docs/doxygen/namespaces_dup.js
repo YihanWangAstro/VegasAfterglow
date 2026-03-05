@@ -17,7 +17,6 @@ var namespaces_dup =
       [ "kB", "namespacecon.html#a86dbb8b01b3ccdf55dd3ae5b99a4b913", null ],
       [ "me", "namespacecon.html#a740c8edb3d4f2d904a1c76002f84fb7e", null ],
       [ "mec2", "namespacecon.html#ae1b8cddbe12f755f5d01b86b0e2b9e14", null ],
-      [ "min_obs_time", "namespacecon.html#a567e367066c9354a3cb44b696905b2a0", null ],
       [ "mp", "namespacecon.html#a47a54b8f758d02e6f8b85e41207ae620", null ],
       [ "mpc2", "namespacecon.html#a3069b33fec8e9e6ab27263b1bb30ad57", null ],
       [ "Omega_L", "namespacecon.html#ac228afba286b912a3ce0009d63c4b802", null ],

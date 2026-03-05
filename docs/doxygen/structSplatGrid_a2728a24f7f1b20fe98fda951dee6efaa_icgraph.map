@@ -1,0 +1,5 @@
+<map id="SplatGrid::render" name="SplatGrid::render">
+<area shape="rect" id="Node000001" title="Render the splat grid into a frame of the 3D result image." alt="" coords="212,5,344,31"/>
+<area shape="rect" id="Node000002" href="$classObserver.html#a31570a410e64cffe1e4b9e16af5acef0" title="Computes resolved sky images at multiple observer times and a single frequency." alt="" coords="5,5,164,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="198,21,164,21,164,15,198,15"/>
+</map>

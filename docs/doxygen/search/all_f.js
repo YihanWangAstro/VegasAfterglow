@@ -45,7 +45,7 @@ var searchData=
   ['pygrid3d_42',['PyGrid3d',['../pybind_8h.html#aeb2a0715dc62dd310f125ee3e47c7d2b',1,'pybind.h']]],
   ['pyism_43',['pyism',['../pymodel_8h.html#a4bee5796d2c014e9ec66f15f8066396a',1,'PyISM(Real n_ism):&#160;pymodel.cpp'],['../pymodel_8cpp.html#a4bee5796d2c014e9ec66f15f8066396a',1,'PyISM(Real n_ism):&#160;pymodel.cpp']]],
   ['pymagnetar_44',['pymagnetar',['../structPyMagnetar.html',1,'PyMagnetar'],['../structPyMagnetar.html#a088ac94a2447c79d31eed3edcf3114d0',1,'PyMagnetar::PyMagnetar()']]],
-  ['pymodel_45',['pymodel',['../classPyModel.html',1,'PyModel'],['../classPyModel.html#a3f8898496c32565d48bd8202784dd9df',1,'PyModel::PyModel()']]],
+  ['pymodel_45',['pymodel',['../classPyModel.html',1,'PyModel'],['../classPyModel.html#ac0f855cdbd7b6d057103d4469bde8256',1,'PyModel::PyModel()']]],
   ['pymodel_2ecpp_46',['pymodel.cpp',['../pymodel_8cpp.html',1,'']]],
   ['pymodel_2eh_47',['pymodel.h',['../pymodel_8h.html',1,'']]],
   ['pyobserver_48',['pyobserver',['../classPyObserver.html',1,'PyObserver'],['../classPyObserver.html#a81483263bfdc173c4ca6287add88ad9a',1,'PyObserver::PyObserver()']]],

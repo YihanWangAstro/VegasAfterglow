@@ -1,5 +1,6 @@
 var mesh_8h =
 [
+    [ "ThetaGridParams", "structThetaGridParams.html", "structThetaGridParams" ],
     [ "Coord", "classCoord.html", "classCoord" ],
     [ "Array", "mesh_8h.html#afd05120c4d579ec7fa4906f677781a83", null ],
     [ "IndexGrid", "mesh_8h.html#a27e3f4efb19b3f2b0694e0bee5fb25ae", null ],
@@ -12,26 +13,12 @@ var mesh_8h =
       [ "piecewise", "mesh_8h.html#a4c9eca1a51662c0a447221f4d3940caaa3e58619a3450b6f761468f6283dc8573", null ],
       [ "isotropic", "mesh_8h.html#a4c9eca1a51662c0a447221f4d3940caaa92fd05a96e739c61bbbd8b81d35ec741", null ]
     ] ],
-    [ "adaptive_grid_with_breaks", "mesh_8h.html#ae2e78f3cf4aabf7985519d581ce43182", null ],
-    [ "adaptive_phi_grid", "mesh_8h.html#a360e0d18f141d6cd50b062a901338575", null ],
-    [ "adaptive_theta_grid", "mesh_8h.html#a3dc6828dd13a70c0c203dba03e765cea", null ],
-    [ "auto_grid", "mesh_8h.html#ad197ba082b4452377f90e3a5bafd0ccc", null ],
     [ "boundary_to_center", "mesh_8h.html#a885b165e8d9c9d20f27ec99329a0c3cb", null ],
     [ "boundary_to_center", "mesh_8h.html#ae1622b29b5488dbee3ef9068b9f8c7d4", null ],
     [ "boundary_to_center_log", "mesh_8h.html#aba66986baad5475a202c20a92bda036e", null ],
     [ "boundary_to_center_log", "mesh_8h.html#ac536f77c32691232cb5e7546595fb3d2", null ],
-    [ "build_time_grid", "mesh_8h.html#a6130a6c9bb4bbe255dd8852fd154791d", null ],
-    [ "estimate_t_dec", "mesh_8h.html#aa7505ad2e84c2a29610c1a13cd3b25e3", null ],
-    [ "find_jet_jumps", "mesh_8h.html#a675e7c2ff4bda6b68d34389fefca49f5", null ],
-    [ "find_theta_max", "mesh_8h.html#aa4bf3bc5ca82cf7ac350fab9eff68452", null ],
-    [ "inverse_CFD_sampling", "mesh_8h.html#a6f8fa2784bc01569368e72d4020bb9b0", null ],
-    [ "jet_spreading_edge", "mesh_8h.html#a7cb4a7162e9b5a1e2ed39f7d9e94b53f", null ],
-    [ "jump_refinement_grid", "mesh_8h.html#ac88029bbfd53e7ad59381da2323a7bec", null ],
     [ "log2space", "mesh_8h.html#a76f104cdad403ea346ff1a6603c78ad6", null ],
     [ "logspace_boundary_center", "mesh_8h.html#ad7703ab8b66bb86ed857746606fac9a2", null ],
     [ "logspace_center", "mesh_8h.html#afadc5019976c36be16277dc4dc178a7f", null ],
-    [ "merge_grids", "mesh_8h.html#a3c066f2c8e6d102d7a56de8cb42cf5a8", null ],
-    [ "refined_time_grid", "mesh_8h.html#a20f479835feeb92e3a9899756357c877", null ],
-    [ "structure_weight", "mesh_8h.html#ad55adb5281be8cbd065c18ba187846e1", null ],
     [ "log2_10", "mesh_8h.html#aba685e866cceb5c13d7e357fcaa69529", null ]
 ];

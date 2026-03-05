@@ -1,8 +1,11 @@
 <map id="compute_dec_time" name="compute_dec_time">
-<area shape="rect" id="Node000001" title="Finds the deceleration observer time by integrating swept mass outward until m_swept = m_jet/Gamma0." alt="" coords="5,42,152,67"/>
-<area shape="rect" id="Node000002" href="$namespacephysics_1_1relativistic.html#aed1c46f33c9d25ffa27131014b190090" title="Converts Lorentz factor (gamma) to a velocity fraction (beta)" alt="" coords="200,5,348,45"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="152,41,186,36,187,41,153,46"/>
-<area shape="rect" id="Node000003" href="$pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89" title=" " alt="" coords="396,42,551,67"/>
-<area shape="poly" id="edge3_Node000001_Node000003" title=" " alt="" coords="152,54,200,55,348,55,382,54,382,59,348,60,200,60,152,59"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="348,34,383,39,382,44,348,39"/>
+<area shape="rect" id="Node000001" title="Finds the deceleration engine&#45;frame time by delegating to estimate_t_dec." alt="" coords="5,95,152,121"/>
+<area shape="rect" id="Node000002" href="$grid-refinement_8h.html#aa7505ad2e84c2a29610c1a13cd3b25e3" title="Estimates deceleration time for a given angle from ejecta and medium properties." alt="" coords="200,70,323,95"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="152,95,186,90,187,96,153,100"/>
+<area shape="rect" id="Node000004" href="$pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89" title=" " alt="" coords="567,70,721,95"/>
+<area shape="poly" id="edge5_Node000001_Node000004" title=" " alt="" coords="152,107,323,105,553,89,553,94,323,111,152,112"/>
+<area shape="rect" id="Node000003" href="$namespacephysics_1_1relativistic.html#aed1c46f33c9d25ffa27131014b190090" title="Converts Lorentz factor (gamma) to a velocity fraction (beta)" alt="" coords="371,5,519,45"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="302,67,367,47,368,52,304,72"/>
+<area shape="poly" id="edge4_Node000002_Node000004" title=" " alt="" coords="323,80,553,80,553,85,323,85"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="516,43,586,63,585,69,514,48"/>
 </map>

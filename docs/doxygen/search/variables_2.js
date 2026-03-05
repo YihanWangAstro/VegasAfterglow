@@ -6,5 +6,6 @@ var searchData=
   ['cm2_3',['cm2',['../namespaceunit.html#ad762a0ede549f5e21607910dc248c850',1,'unit']]],
   ['cm3_4',['cm3',['../namespaceunit.html#a8643f62ec4132cb409d20f4252d0bfe0',1,'unit']]],
   ['cmb_5fcooling_5',['cmb_cooling',['../structRadParams.html#a22f5bebb90f80bb770ffe6f80f70ea75',1,'RadParams']]],
-  ['column_5fden_6',['column_den',['../structSynElectrons.html#aa5320cc5590c4ce7f3e58356fa653486',1,'SynElectrons']]]
+  ['column_5fden_6',['column_den',['../structSynElectrons.html#aa5320cc5590c4ce7f3e58356fa653486',1,'SynElectrons']]],
+  ['core_5fbeam_5fcoeff_7',['core_beam_coeff',['../structThetaGridParams.html#a268647f43ef811810060f230d5786906',1,'ThetaGridParams']]]
 ];

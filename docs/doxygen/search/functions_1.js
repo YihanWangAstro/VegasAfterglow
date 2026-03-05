@@ -5,5 +5,5 @@ var searchData=
   ['broadcast_5fgroups_2',['broadcast_groups',['../classShock.html#ae96d00beb8a203ddd8928888a624941e',1,'Shock']]],
   ['broadcast_5fsymmetry_3',['broadcast_symmetry',['../utilities_8h.html#accedd963b24701622821b822a33107a1',1,'utilities.h']]],
   ['build_4',['build',['../structPowerLawSyn.html#a79458bc4bd066014305a2a08d8554bd9',1,'PowerLawSyn::build()'],['../structSmoothPowerLawSyn.html#a73f2f4825bc28a61f521e99408348d75',1,'SmoothPowerLawSyn::build()']]],
-  ['build_5ftime_5fgrid_5',['build_time_grid',['../mesh_8h.html#a6130a6c9bb4bbe255dd8852fd154791d',1,'mesh.h']]]
+  ['build_5ftime_5fgrid_5',['build_time_grid',['../grid-refinement_8h.html#ab555d1e167e5af21e28a3ade35af86c1',1,'grid-refinement.h']]]
 ];

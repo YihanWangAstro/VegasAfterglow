@@ -46,6 +46,8 @@ var annotated_dup =
     [ "SplatGrid", "structSplatGrid.html", "structSplatGrid" ],
     [ "SynElectrons", "structSynElectrons.html", "structSynElectrons" ],
     [ "SynSpectrumGrid", "structSynSpectrumGrid.html", "structSynSpectrumGrid" ],
+    [ "ThetaGridParams", "structThetaGridParams.html", "structThetaGridParams" ],
+    [ "TimeScanResult", "structTimeScanResult.html", "structTimeScanResult" ],
     [ "TophatJet", "classTophatJet.html", "classTophatJet" ],
     [ "Wind", "classWind.html", "classWind" ],
     [ "YEvaluator", "structYEvaluator.html", "structYEvaluator" ],

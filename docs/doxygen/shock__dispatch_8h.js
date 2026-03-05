@@ -1,5 +1,5 @@
 var shock__dispatch_8h =
 [
-    [ "solve_fwd_shock", "shock__dispatch_8h.html#a01217bc15eb375582596d9ede064fc63", null ],
-    [ "solve_shock_pair", "shock__dispatch_8h.html#ad74e63e30c33c4742b55bcf90330f543", null ]
+    [ "solve_fwd_shock", "shock__dispatch_8h.html#a42ab9b9521cae581300af449ae6ddd65", null ],
+    [ "solve_shock_pair", "shock__dispatch_8h.html#a3475e4d9da709e5029fe0813ce23ac4e", null ]
 ];

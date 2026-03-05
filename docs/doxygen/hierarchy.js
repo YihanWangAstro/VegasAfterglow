@@ -48,6 +48,8 @@ var hierarchy =
     [ "SplatGrid", "structSplatGrid.html", null ],
     [ "SynElectrons", "structSynElectrons.html", null ],
     [ "SynSpectrumGrid", "structSynSpectrumGrid.html", null ],
+    [ "ThetaGridParams", "structThetaGridParams.html", null ],
+    [ "TimeScanResult", "structTimeScanResult.html", null ],
     [ "TophatJet", "classTophatJet.html", null ],
     [ "Wind", "classWind.html", null ],
     [ "YEvaluator", "structYEvaluator.html", null ],

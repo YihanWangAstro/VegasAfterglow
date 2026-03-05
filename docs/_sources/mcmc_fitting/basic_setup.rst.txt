@@ -26,7 +26,7 @@ The ``Fitter`` constructor accepts keyword arguments for source properties, mode
 
         # Numerical parameters
         rtol=1e-5,                # Numerical tolerance
-        resolution=(0.1, 0.5, 5),   # Grid resolution (phi, theta, t)
+        resolution=(0.1, 0.25, 10),   # Grid resolution (phi, theta, t)
     )
 
 Setting up Data and the Fitter

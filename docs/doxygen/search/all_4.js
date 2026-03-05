@@ -21,7 +21,7 @@ var searchData=
   ['epsilon_18',['epsilon',['../classCoastingShock.html#ab94699fa87c9feb1fa9da4784b7fe771',1,'CoastingShock']]],
   ['erg_19',['erg',['../namespaceunit.html#a255e82bd3b0ebb273d6663111278d624',1,'unit']]],
   ['error_5fhandling_2eh_20',['error_handling.h',['../error__handling_8h.html',1,'']]],
-  ['estimate_5ft_5fdec_21',['estimate_t_dec',['../mesh_8h.html#aa7505ad2e84c2a29610c1a13cd3b25e3',1,'mesh.h']]],
+  ['estimate_5ft_5fdec_21',['estimate_t_dec',['../grid-refinement_8h.html#aa7505ad2e84c2a29610c1a13cd3b25e3',1,'grid-refinement.h']]],
   ['eta_5frad_5fthomson_22',['eta_rad_Thomson',['../inverse-compton_8h.html#ad7736d3269071d2ceaffcc56fa2fc71c',1,'inverse-compton.h']]],
   ['ev_23',['eV',['../namespaceunit.html#a4d688cefb8c96513c3aa8a4f8c83d200',1,'unit']]],
   ['eval_24',['eval',['../structBrokenPowerLaw.html#a49edae4ccefeb4c24304e6e849068048',1,'BrokenPowerLaw']]],

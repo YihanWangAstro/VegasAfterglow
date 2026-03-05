@@ -1,5 +1,0 @@
-<map id="refined_time_grid" name="refined_time_grid">
-<area shape="rect" id="Node000001" title="Create a refined logarithmic time grid with higher density around a specified time." alt="" coords="5,5,141,31"/>
-<area shape="rect" id="Node000002" href="$pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89" title=" " alt="" coords="189,5,344,31"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="141,15,176,15,176,21,141,21"/>
-</map>

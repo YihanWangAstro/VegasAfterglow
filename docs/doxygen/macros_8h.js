@@ -42,7 +42,6 @@ var macros_8h =
     [ "me", "macros_8h.html#a740c8edb3d4f2d904a1c76002f84fb7e", null ],
     [ "mec2", "macros_8h.html#ae1b8cddbe12f755f5d01b86b0e2b9e14", null ],
     [ "MeV", "macros_8h.html#a2eb22b37aa30bd73b34bc228f7229115", null ],
-    [ "min_obs_time", "macros_8h.html#a567e367066c9354a3cb44b696905b2a0", null ],
     [ "mJy", "macros_8h.html#acb88ce91365dfa4148e22780a7d6a0c0", null ],
     [ "mp", "macros_8h.html#a47a54b8f758d02e6f8b85e41207ae620", null ],
     [ "Mpc", "macros_8h.html#ae5c0551e07428abae88af1995358af73", null ],

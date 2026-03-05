@@ -60,7 +60,7 @@ A: Try the following:
 
 A: Optimization strategies:
 
-- **Reduce resolution**: Use ``resolution=(0.1, 0.5, 5)`` for initial exploration
+- **Reduce resolution**: Use ``resolution=(0.1, 0.25, 10)`` for initial exploration
 - **Fewer parameters**: Fix some parameters with ``Scale.fixed``
 - **Coarser time/frequency grids**: Use fewer data points for initial fits
 - **Parallel processing**: Ensure you're using multiple cores
@@ -252,11 +252,11 @@ The ``resolutions`` parameter in ``Model()`` controls computational accuracy vs 
      - Very Fast
      - Low
    * - Standard calculations
-     - ``(0.1, 0.5, 5)``
+     - ``(0.1, 0.25, 10)``
      - Fast
      - Good
    * - MCMC fitting
-     - ``(0.1, 0.5, 5)``
+     - ``(0.1, 0.25, 10)``
      - Moderate
      - Good
    * - Publication quality
@@ -269,6 +269,10 @@ Where ``resolutions=(phi_ppd, theta_ppd, t_ppd)``:
 - ``phi_ppd``: Azimuthal resolution in points per degree. The total number of phi grid points is ``360 × phi_ppd``, with a minimum of 1 total point.
 - ``theta_ppd``: Polar resolution in points per degree. The total number of theta grid points is ``(theta_max − theta_min) × theta_ppd``, with a minimum of 32 total points. Setting a lower resolution cannot reduce the grid below this minimum.
 - ``t_ppd``: Temporal resolution in points per decade. The total number of time grid points is ``log10(t_max / t_min) × t_ppd``, with a minimum of 24 total points. Setting a lower resolution cannot reduce the grid below this minimum.
+
+.. note::
+
+   The grid is **not uniform**. The code uses an internal adaptive algorithm that concentrates grid points where the solution varies most rapidly (e.g., near the jet edge and deceleration time). The resolution parameters control the *total* number of points, while the adaptive algorithm decides how to distribute them. The floor values (32 for theta, 24 for time) ensure the grid never becomes too coarse, even at low resolution settings.
 
 Memory Usage
 ^^^^^^^^^^^^

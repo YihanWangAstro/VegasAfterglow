@@ -14,5 +14,5 @@ var searchData=
   ['brokenpowerlaw_3c_204_20_3e_11',['BrokenPowerLaw&lt; 4 &gt;',['../structBrokenPowerLaw.html',1,'']]],
   ['brokenpowerlaw_3c_205_20_3e_12',['BrokenPowerLaw&lt; 5 &gt;',['../structBrokenPowerLaw.html',1,'']]],
   ['build_13',['build',['../structPowerLawSyn.html#a79458bc4bd066014305a2a08d8554bd9',1,'PowerLawSyn::build()'],['../structSmoothPowerLawSyn.html#a73f2f4825bc28a61f521e99408348d75',1,'SmoothPowerLawSyn::build()']]],
-  ['build_5ftime_5fgrid_14',['build_time_grid',['../mesh_8h.html#a6130a6c9bb4bbe255dd8852fd154791d',1,'mesh.h']]]
+  ['build_5ftime_5fgrid_14',['build_time_grid',['../grid-refinement_8h.html#ab555d1e167e5af21e28a3ade35af86c1',1,'grid-refinement.h']]]
 ];

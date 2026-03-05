@@ -108,11 +108,11 @@ Variables</h2></td></tr>
 <tr class="memitem:a372994c537be68d80989655f9b43c672" id="r_a372994c537be68d80989655f9b43c672"><td class="memItemLeft" align="right" valign="top"><a class="el" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">constexpr</a> <a class="el" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">double</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacedefaults_1_1grid.html#a372994c537be68d80989655f9b43c672">theta_resolution</a> = 0.5</td></tr>
 <tr class="memdesc:a372994c537be68d80989655f9b43c672"><td class="mdescLeft">&#160;</td><td class="mdescRight">Polar (theta) angular resolution factor Higher values = more theta grid points.  <br /></td></tr>
 <tr class="separator:a372994c537be68d80989655f9b43c672"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa203749fa338e32e6c7a711c82846582" id="r_aa203749fa338e32e6c7a711c82846582"><td class="memItemLeft" align="right" valign="top"><a class="el" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">constexpr</a> <a class="el" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">double</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacedefaults_1_1grid.html#aa203749fa338e32e6c7a711c82846582">time_resolution</a> = 5.0</td></tr>
+<tr class="memitem:aa203749fa338e32e6c7a711c82846582" id="r_aa203749fa338e32e6c7a711c82846582"><td class="memItemLeft" align="right" valign="top"><a class="el" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">constexpr</a> <a class="el" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">double</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacedefaults_1_1grid.html#aa203749fa338e32e6c7a711c82846582">time_resolution</a> = 10.0</td></tr>
 <tr class="memdesc:aa203749fa338e32e6c7a711c82846582"><td class="mdescLeft">&#160;</td><td class="mdescRight">Temporal resolution factor Higher values = more time grid points (logarithmically spaced)  <br /></td></tr>
 <tr class="separator:aa203749fa338e32e6c7a711c82846582"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a17f64e94f8f9cb660a1e9d80a2b1558c" id="r_a17f64e94f8f9cb660a1e9d80a2b1558c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">constexpr</a> std::size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacedefaults_1_1grid.html#a17f64e94f8f9cb660a1e9d80a2b1558c">min_theta_points</a> = 32</td></tr>
-<tr class="memdesc:a17f64e94f8f9cb660a1e9d80a2b1558c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Minimum number of theta grid points Ensures adequate angular coverage even for narrow jets.  <br /></td></tr>
+<tr class="memitem:a17f64e94f8f9cb660a1e9d80a2b1558c" id="r_a17f64e94f8f9cb660a1e9d80a2b1558c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">constexpr</a> std::size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacedefaults_1_1grid.html#a17f64e94f8f9cb660a1e9d80a2b1558c">min_theta_points</a> = 36</td></tr>
+<tr class="memdesc:a17f64e94f8f9cb660a1e9d80a2b1558c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Minimum number of theta grid points (forward shock)  <br /></td></tr>
 <tr class="separator:a17f64e94f8f9cb660a1e9d80a2b1558c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af2b7c5de15cb9c537f0de0e0e56148b1" id="r_af2b7c5de15cb9c537f0de0e0e56148b1"><td class="memItemLeft" align="right" valign="top"><a class="el" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">constexpr</a> <a class="el" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">double</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacedefaults_1_1grid.html#af2b7c5de15cb9c537f0de0e0e56148b1">theta_min</a> = 1e-6</td></tr>
 <tr class="memdesc:af2b7c5de15cb9c537f0de0e0e56148b1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Minimum polar angle (avoids singularity at theta=0)  <br /></td></tr>
@@ -132,7 +132,7 @@ Variables</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">constexpr</a> std::size_t defaults::grid::min_theta_points = 32</td>
+          <td class="memname"><a class="el" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">constexpr</a> std::size_t defaults::grid::min_theta_points = 36</td>
         </tr>
       </table>
   </td>
@@ -142,9 +142,9 @@ Variables</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Minimum number of theta grid points Ensures adequate angular coverage even for narrow jets. </p>
+<p>Minimum number of theta grid points (forward shock) </p>
 
-<p class="definition">Definition at line <a class="el" href="simulation-defaults_8h_source.html#l00073">73</a> of file <a class="el" href="simulation-defaults_8h_source.html">simulation-defaults.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="simulation-defaults_8h_source.html#l00072">72</a> of file <a class="el" href="simulation-defaults_8h_source.html">simulation-defaults.h</a>.</p>
 
 </div>
 </div>
@@ -196,7 +196,7 @@ Variables</h2></td></tr>
 
 <p>Minimum polar angle (avoids singularity at theta=0) </p>
 
-<p class="definition">Definition at line <a class="el" href="simulation-defaults_8h_source.html#l00076">76</a> of file <a class="el" href="simulation-defaults_8h_source.html">simulation-defaults.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="simulation-defaults_8h_source.html#l00075">75</a> of file <a class="el" href="simulation-defaults_8h_source.html">simulation-defaults.h</a>.</p>
 
 </div>
 </div>
@@ -236,7 +236,7 @@ Variables</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">constexpr</a> <a class="el" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">double</a> defaults::grid::time_resolution = 5.0</td>
+          <td class="memname"><a class="el" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">constexpr</a> <a class="el" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">double</a> defaults::grid::time_resolution = 10.0</td>
         </tr>
       </table>
   </td>

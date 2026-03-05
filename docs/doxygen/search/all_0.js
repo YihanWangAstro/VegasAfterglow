@@ -2,9 +2,9 @@ var searchData=
 [
   ['a_5fparam_0',['A_param',['../classWind.html#aea4c33b54df3d7473cb8f4c6635ef1b6',1,'Wind']]],
   ['a_5frad_1',['a_rad',['../namespacecon.html#ab37b7833834c14d05e3439326b611702',1,'con']]],
-  ['adaptive_5fgrid_5fwith_5fbreaks_2',['adaptive_grid_with_breaks',['../mesh_8h.html#ae2e78f3cf4aabf7985519d581ce43182',1,'mesh.h']]],
-  ['adaptive_5fphi_5fgrid_3',['adaptive_phi_grid',['../mesh_8h.html#a360e0d18f141d6cd50b062a901338575',1,'mesh.h']]],
-  ['adaptive_5ftheta_5fgrid_4',['adaptive_theta_grid',['../mesh_8h.html#a3dc6828dd13a70c0c203dba03e765cea',1,'mesh.h']]],
+  ['adaptive_5fgrid_5fwith_5fbreaks_2',['adaptive_grid_with_breaks',['../grid-refinement_8h.html#ae2e78f3cf4aabf7985519d581ce43182',1,'adaptive_grid_with_breaks(Real lg2_min, Real lg2_max, std::span&lt; const Real &gt; breaks, std::span&lt; const Real &gt; break_weights, Real pts_per_decade, Array &amp;grid, size_t max_refined_breaks=3, Real refine_radius_decades=0.5, Real refine_factor=3.0):&#160;grid-refinement.cpp'],['../grid-refinement_8cpp.html#a56cde4ca9589178f2f000ff1d20a09f6',1,'adaptive_grid_with_breaks(Real lg2_min, Real lg2_max, std::span&lt; const Real &gt; breaks, std::span&lt; const Real &gt; break_weights, Real pts_per_decade, Array &amp;grid, size_t max_refined_breaks, Real refine_radius_decades, Real refine_factor):&#160;grid-refinement.cpp']]],
+  ['adaptive_5fphi_5fgrid_3',['adaptive_phi_grid',['../grid-refinement_8h.html#a360e0d18f141d6cd50b062a901338575',1,'grid-refinement.h']]],
+  ['adaptive_5ftheta_5fgrid_4',['adaptive_theta_grid',['../grid-refinement_8h.html#a358c3e306cef7a24c039ef63207b9e2d',1,'grid-refinement.h']]],
   ['add_5fsegment_5',['add_segment',['../structBrokenPowerLaw.html#a66b7bd352329cce7a3cc98bab9e68954',1,'BrokenPowerLaw']]],
   ['adiabatic_5fidx_6',['adiabatic_idx',['../namespacephysics_1_1thermo.html#a0e4362f3caba6d9e8472e027cc341820',1,'physics::thermo']]],
   ['afterglow_7',['afterglow',['../namespaceafterglow.html',1,'']]],
@@ -29,5 +29,5 @@ var searchData=
   ['array_20and_20grid_20utilities_26',['Array and Grid Utilities',['../group__Mesh__Utilities.html',1,'']]],
   ['array_5fsize_27',['array_size',['../structSimpleState.html#a45dbd1e3aac5158463b4921844c83819',1,'SimpleState::array_size'],['../structReverseState.html#aa736b47fe33588c1790fea60bf5ea895',1,'ReverseState::array_size'],['../structForwardState.html#ad2a43af97eb49e8694c45fd8fc50f889',1,'ForwardState::array_size']]],
   ['au_28',['au',['../namespaceunit.html#a6cc151b26a5507a0e63f9c9f68adf4d2',1,'unit']]],
-  ['auto_5fgrid_29',['auto_grid',['../mesh_8h.html#ad197ba082b4452377f90e3a5bafd0ccc',1,'mesh.h']]]
+  ['auto_5fgrid_29',['auto_grid',['../grid-refinement_8h.html#a52f60ce2dd90f8839b361bba7a678f0c',1,'grid-refinement.h']]]
 ];

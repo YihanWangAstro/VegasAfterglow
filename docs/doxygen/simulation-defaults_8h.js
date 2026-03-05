@@ -4,7 +4,6 @@ var simulation_defaults_8h =
     [ "gamma_cut", "simulation-defaults_8h.html#a6cda2def28c77f63dbee9eb169d9d87a", null ],
     [ "gamma_therm_cut", "simulation-defaults_8h.html#ab39d9933981c5b821ab8938ba331050d", null ],
     [ "max_ode_steps", "simulation-defaults_8h.html#a975f02febe61cab9fb74ecdd5d7b5305", null ],
-    [ "min_obs_time_sec", "simulation-defaults_8h.html#aa955f53126bae3c13bf752b75ed32558", null ],
     [ "min_theta_points", "simulation-defaults_8h.html#a17f64e94f8f9cb660a1e9d80a2b1558c", null ],
     [ "ode_atol", "simulation-defaults_8h.html#af7b124ea80319659cfba4833beded247", null ],
     [ "ode_rtol", "simulation-defaults_8h.html#a3469dc43cf2d60069d164931e7656d12", null ],
