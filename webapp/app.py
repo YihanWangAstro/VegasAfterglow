@@ -10,15 +10,16 @@ import pathlib
 import re
 import sys
 
-# On Streamlit Cloud the repo is cloned and its root is on sys.path,
-# so the local VegasAfterglow/ source tree (no compiled C++ extension)
-# shadows the pip-installed wheel.  Fix: temporarily remove the repo
-# root, import VegasAfterglow from site-packages, then restore.
+# On Streamlit Cloud the local VegasAfterglow/ source tree (no compiled
+# C++ extension) shadows the pip-installed wheel.  Fix: strip the repo
+# root from sys.path, import VegasAfterglow from site-packages (caches
+# in sys.modules), then add the repo root back for webapp.* imports.
+# Subsequent VegasAfterglow submodule imports use the cached package's
+# __path__ (site-packages), not sys.path.
 _repo_root = str(pathlib.Path(__file__).resolve().parent.parent)
-_saved = sys.path[:]
 sys.path = [p for p in sys.path if p not in ("", ".", _repo_root)]
 import VegasAfterglow  # noqa: E402, F401  — from site-packages
-sys.path = _saved
+sys.path.insert(0, _repo_root)
 
 from PIL import Image as _PILImage
 
