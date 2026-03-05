@@ -1,5 +1,11 @@
 from . import units
-from ._version import __version__, __version_tuple__
+
+try:
+    from ._version import __version__, __version_tuple__
+except ImportError:
+    __version__ = "0.0.0"
+    __version_tuple__ = (0, 0, 0)
+
 from .native import NativeFunc, gil_free
 
 # Core physics types (always available)

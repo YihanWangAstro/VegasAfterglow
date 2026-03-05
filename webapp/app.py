@@ -10,9 +10,11 @@ import pathlib
 import re
 import sys
 
-# Ensure repo root is on sys.path so `webapp.*` imports resolve
-# when the file is run outside of `streamlit run`.
-sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent.parent))
+# Ensure `webapp.*` imports resolve when run outside of `streamlit run`.
+# Use append (not insert) so the pip-installed VegasAfterglow is found first.
+_repo_root = str(pathlib.Path(__file__).resolve().parent.parent)
+if _repo_root not in sys.path:
+    sys.path.append(_repo_root)
 
 from PIL import Image as _PILImage
 
