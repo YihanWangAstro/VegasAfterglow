@@ -192,6 +192,12 @@ SIDEBAR_CSS = """<style>
         color: var(--bg) !important;
     }
 
+    /* ── Center fixed-size Plotly charts ── */
+    .stPlotlyChart {
+        display: flex !important;
+        justify-content: center !important;
+    }
+
     /* ── Mobile: responsive layout ── */
     @media (max-width: 768px) {
         [data-testid="stMainBlockContainer"] {

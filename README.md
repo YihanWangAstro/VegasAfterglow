@@ -130,6 +130,13 @@ This installs the core physics engine. To also install MCMC fitting support:
 pip install VegasAfterglow[mcmc]
 ```
 
+To run the interactive web tool locally:
+
+```bash
+pip install VegasAfterglow[webapp]
+streamlit run webapp/app.py
+```
+
 VegasAfterglow requires Python 3.8 or higher.
 
 <details>
