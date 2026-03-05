@@ -10,11 +10,12 @@ import pathlib
 import re
 import sys
 
-# Ensure `webapp.*` imports resolve when run outside of `streamlit run`.
-# Use append (not insert) so the pip-installed VegasAfterglow is found first.
-_repo_root = str(pathlib.Path(__file__).resolve().parent.parent)
-if _repo_root not in sys.path:
-    sys.path.append(_repo_root)
+# Move CWD to end of sys.path so pip-installed VegasAfterglow (with compiled
+# C++ extensions) is found before the local source tree on Streamlit Cloud.
+for _p in ("", "."):
+    if _p in sys.path:
+        sys.path.remove(_p)
+        sys.path.append(_p)
 
 from PIL import Image as _PILImage
 
