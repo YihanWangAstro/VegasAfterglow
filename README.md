@@ -211,7 +211,7 @@ The following development tools are required:
 
 VegasAfterglow can be used in three ways:
 
-* **[Interactive web tool](https://vegasafterglow.streamlit.app)** — explore light curves, spectra, and sky images in your browser, no installation required.
+* **[Interactive web tool](https://vegasafterglow.streamlit.app)** — explore light curves, spectra, and sky images in your browser, no installation required. However, the network latency and server load may affect your experience.
 * **Command line** — generate light curves instantly with the `vegasgen` command, no code needed.
 * **Python API** — full programmatic control for custom analysis, MCMC fitting, and access to internal quantities.
 
