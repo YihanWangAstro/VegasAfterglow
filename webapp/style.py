@@ -191,6 +191,23 @@ SIDEBAR_CSS = """<style>
         background: var(--accent) !important;
         color: var(--bg) !important;
     }
+
+    /* ── Mobile: responsive layout ── */
+    @media (max-width: 768px) {
+        [data-testid="stMainBlockContainer"] {
+            padding-left: 0.5rem !important;
+            padding-right: 0.5rem !important;
+        }
+        .stPlotlyChart, .js-plotly-plot {
+            max-width: 100vw !important;
+            overflow-x: auto !important;
+        }
+        .stDownloadButton button,
+        [data-testid="stMainBlockContainer"] .stButton button {
+            font-size: 0.7rem !important;
+            padding: 0.25rem 0.5rem !important;
+        }
+    }
     </style>"""
 
 BIBTEX = r"""@ARTICLE{2026JHEAp..5000490W,
