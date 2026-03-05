@@ -101,6 +101,7 @@ LAYOUT_COMMON = dict(
     margin=dict(l=65, r=20, t=15, b=55),
     plot_bgcolor="#ffffff",
     paper_bgcolor="#ffffff",
+    uirevision="constant",
 )
 
 # Re-export cli constants for convenience
