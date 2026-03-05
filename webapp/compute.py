@@ -3,7 +3,6 @@
 import time as time_mod
 
 import numpy as np
-import streamlit as st
 
 from VegasAfterglow import (
     GaussianJet,
@@ -92,7 +91,7 @@ def _build_model(p):
     )
 
 
-@st.cache_data(show_spinner=False, hash_funcs={dict: lambda d: str(sorted(d.items()))})
+
 def compute_model(p):
     """Build model and compute light curve."""
     model = _build_model(p)
@@ -125,7 +124,7 @@ def compute_model(p):
     }
 
 
-@st.cache_data(show_spinner=False, hash_funcs={dict: lambda d: str(sorted(d.items()))})
+
 def compute_sed(p):
     """Build model and compute SED at snapshot times."""
     t_snapshots = np.array(sorted(p["t_snapshots"]))
@@ -146,7 +145,7 @@ def compute_sed(p):
     }
 
 
-@st.cache_data(show_spinner=False, hash_funcs={dict: lambda d: str(sorted(d.items()))})
+
 def compute_skymap(p):
     """Build model and compute sky image (single or multi-frame)."""
     model = _build_model(p)
