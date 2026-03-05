@@ -1,10 +1,12 @@
 """Plotly figure builders and trace helpers."""
 
-from collections import OrderedDict
-
 import numpy as np
 import plotly.graph_objects as go
+import plotly.io as pio
 from plotly.subplots import make_subplots
+
+# Pre-load template so the first Figure() doesn't pay ~25ms penalty
+pio.templates.default = "plotly_white"
 
 from VegasAfterglow.cli import _freq_colors
 
@@ -34,21 +36,6 @@ from .helpers import (
 )
 
 
-_SUPER = str.maketrans("0123456789-", "⁰¹²³⁴⁵⁶⁷⁸⁹⁻")
-
-
-def _pow10(v):
-    """Format a number as '1.23×10⁴' using Unicode superscripts."""
-    if v == 0 or not np.isfinite(v):
-        return "0"
-    exp = int(np.floor(np.log10(np.abs(v))))
-    coeff = v / 10**exp
-    sup = str(exp).translate(_SUPER)
-    if abs(coeff - 1.0) < 0.005:
-        return f"10{sup}"
-    return f"{coeff:.2f}×10{sup}"
-
-
 def _add_traces(fig, x, groups, x_name, x_unit, secondary_y=None):
     """Add trace groups to a figure.
 
@@ -61,10 +48,6 @@ def _add_traces(fig, x, groups, x_name, x_unit, secondary_y=None):
             name = label if is_total else f"{label} ({COMP_LABELS.get(comp_name, comp_name)})"
             mask = np.isfinite(y)
             x_m, y_m = x[mask], y[mask]
-            hover = [
-                f"{_pow10(xv)} {x_unit}<br>{_pow10(yv)} {hover_y_unit}"
-                for xv, yv in zip(x_m, y_m)
-            ]
             fig.add_trace(
                 go.Scatter(
                     x=x_m, y=y_m, mode="lines", name=name,
@@ -77,8 +60,11 @@ def _add_traces(fig, x, groups, x_name, x_unit, secondary_y=None):
                     legendgroup=name,
                     hoverlabel=dict(bgcolor="white", font_color="black",
                                     bordercolor="#ccc"),
-                    hovertemplate="%{text}<extra>" + name + "</extra>",
-                    text=hover,
+                    hovertemplate=(
+                        f"%{{x:.2e}} {x_unit}<br>"
+                        f"%{{y:.2e}} {hover_y_unit}"
+                        f"<extra>{name}</extra>"
+                    ),
                 ),
                 secondary_y=secondary_y,
             )
@@ -147,8 +133,8 @@ def _add_obs_traces(fig, obs_data, flux_unit, x_unit, has_secondary,
     is_lc = (mode == "lightcurve")
     x_scales = TIME_SCALES if is_lc else FREQ_SCALES
 
-    fnu_groups = OrderedDict()
-    fband_groups = OrderedDict()
+    fnu_groups = {}
+    fband_groups = {}
 
     for label, x_val, x_unit_row, y_val, err_val, y_unit in obs_data:
         if not (np.isfinite(x_val) and np.isfinite(y_val) and x_val > 0):
@@ -363,36 +349,35 @@ def make_figure(data, flux_unit, time_unit, t_min, t_max,
             **AXIS_COMMON,
         )
 
+    layout_kw = dict(xaxis=x_axis, legend=LEGEND_COMMON, **LAYOUT_COMMON)
+
     if dual:
         y_range_bd = [np.log10(bd_bot), np.log10(bd_top)] if bd_bot else None
-        y_axis_bd = {
+        layout_kw["yaxis"] = y_axis_pt
+        layout_kw["yaxis2"] = {
             "type": "log", "title": FBAND_TITLE, "range": y_range_bd,
             **AXIS_COMMON, "showgrid": False,
         }
-        fig.update_layout(xaxis=x_axis, yaxis=y_axis_pt, yaxis2=y_axis_bd)
     elif has_bands and not has_points:
         y_range_bd = [np.log10(bd_bot), np.log10(bd_top)] if bd_bot else None
-        y_axis_bd = dict(
+        layout_kw["yaxis"] = dict(
             type="log", title=FBAND_TITLE, range=y_range_bd, **AXIS_COMMON,
         )
         if use_secondary:
-            y_axis_inst = {
+            layout_kw["yaxis2"] = {
                 "type": "log", "title": FBAND_TITLE,
                 **AXIS_COMMON, "showgrid": False,
             }
-            fig.update_layout(xaxis=x_axis, yaxis=y_axis_bd, yaxis2=y_axis_inst)
-        else:
-            fig.update_layout(xaxis=x_axis, yaxis=y_axis_bd)
     elif use_secondary:
-        y_axis_bd = {
+        layout_kw["yaxis"] = y_axis_pt
+        layout_kw["yaxis2"] = {
             "type": "log", "title": FBAND_TITLE,
             **AXIS_COMMON, "showgrid": False,
         }
-        fig.update_layout(xaxis=x_axis, yaxis=y_axis_pt, yaxis2=y_axis_bd)
     else:
-        fig.update_layout(xaxis=x_axis, yaxis=y_axis_pt)
+        layout_kw["yaxis"] = y_axis_pt
 
-    fig.update_layout(legend=LEGEND_COMMON, **LAYOUT_COMMON)
+    fig.update_layout(**layout_kw)
 
     return fig
 
@@ -480,77 +465,13 @@ def make_sed_figure(data, flux_unit, freq_unit, nufnu=False,
             range=y_range,
             **AXIS_COMMON,
         )
-    fig.update_layout(xaxis=x_axis, yaxis=y_axis)
+    layout_kw = dict(xaxis=x_axis, yaxis=y_axis,
+                     legend=LEGEND_COMMON, **LAYOUT_COMMON)
     if need_secondary_y:
-        y_axis_bd = {
-            "type": "log",
-            "title": FBAND_TITLE,
-            **AXIS_COMMON,
-            "showgrid": False,
+        layout_kw["yaxis2"] = {
+            "type": "log", "title": FBAND_TITLE,
+            **AXIS_COMMON, "showgrid": False,
         }
-        fig.update_layout(yaxis2=y_axis_bd)
-    fig.update_layout(legend=LEGEND_COMMON, **LAYOUT_COMMON)
+    fig.update_layout(**layout_kw)
 
-    return fig
-
-
-def _skymap_heatmap(image, x_centers, y_centers, zmin=None, zmax=None):
-    """Create a Heatmap trace for a single sky image frame."""
-    img_plot = np.where(image > 0, image, np.nan)
-    z = np.log10(img_plot.T)
-    kw = {}
-    if zmin is not None:
-        kw["zmin"] = zmin
-        kw["zmax"] = zmax
-    return go.Heatmap(
-        z=z, x=x_centers, y=y_centers,
-        colorscale="Inferno",
-        colorbar=dict(
-            title=dict(text="log<sub>10</sub>(I)", side="right",
-                       font=dict(size=11, color="#000")),
-            tickfont=dict(size=9, color="#000"),
-        ),
-        hovertemplate=(
-            "\u0394x=%{x:.1f} \u03bcas<br>"
-            "\u0394y=%{y:.1f} \u03bcas<br>"
-            "log\u2081\u2080(I)=%{z:.2f}<extra></extra>"
-        ),
-        **kw,
-    )
-
-
-def _skymap_layout(extent, t_label, nu_label):
-    """Common layout dict for sky map figures."""
-    return dict(
-        xaxis=dict(
-            title="\u0394x (\u03bcas)", scaleanchor="y",
-            constrain="domain", **AXIS_COMMON,
-        ),
-        yaxis=dict(title="\u0394y (\u03bcas)", **AXIS_COMMON),
-        title=dict(
-            text=f"t = {t_label}, \u03bd = {nu_label}",
-            x=0.5, font=dict(size=12, color="#333"),
-        ),
-        height=550, width=600,
-        margin=dict(l=60, r=80, t=40, b=60),
-        plot_bgcolor="#ffffff", paper_bgcolor="#ffffff",
-    )
-
-
-def make_skymap_figure(data):
-    """Build an interactive Plotly sky map figure from computation results."""
-    image = data["images"][0]
-    extent = data["extent_uas"]
-    t_obs = data["t_obs_array"][0]
-    nu_obs = data["nu_obs"]
-
-    x_min, x_max, y_min, y_max = extent
-    npixel = image.shape[0]
-    dx = (x_max - x_min) / npixel
-    dy = (y_max - y_min) / npixel
-    x_centers = np.linspace(x_min + dx / 2, x_max - dx / 2, npixel)
-    y_centers = np.linspace(y_min + dy / 2, y_max - dy / 2, npixel)
-
-    fig = go.Figure(data=_skymap_heatmap(image, x_centers, y_centers))
-    fig.update_layout(**_skymap_layout(extent, format_time_label(t_obs), freq_label(nu_obs)))
     return fig

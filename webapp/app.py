@@ -9,7 +9,6 @@ import base64
 import pathlib
 import re
 import sys
-
 # On Streamlit Cloud the local VegasAfterglow/ source tree (no compiled
 # C++ extension) shadows the pip-installed wheel.  Fix: strip the repo
 # root from sys.path, import VegasAfterglow from site-packages (caches
@@ -621,7 +620,6 @@ if plot_mode == "Light Curve":
     except Exception as e:
         st.error(f"Computation failed: {e}")
         st.stop()
-
     has_fband_inst = any(INSTRUMENTS[n][3] == "Fband" for n in selected_instruments)
     has_fband_obs = any(len(r) >= 6 and r[5] == "erg/cm\u00b2/s" for r in obs_data_tuple)
     need_sec = has_fband_inst or has_fband_obs
@@ -640,9 +638,11 @@ if plot_mode == "Light Curve":
                         has_secondary=use_sec)
 
     export_unit = "cgs" if is_mag else flux_unit
+    _csv = export_csv(data, export_unit, time_unit)
+    _json = export_json(data, export_unit, time_unit)
     _show_plot_with_buttons(fig, [
-        ("CSV", export_csv(data, export_unit, time_unit), "csv", "text/csv"),
-        ("JSON", export_json(data, export_unit, time_unit), "json", "application/json"),
+        ("CSV", _csv, "csv", "text/csv"),
+        ("JSON", _json, "json", "application/json"),
     ], "afterglow_lightcurve")
 
 elif plot_mode == "Spectrum":
