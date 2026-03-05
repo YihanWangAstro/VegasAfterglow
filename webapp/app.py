@@ -10,9 +10,13 @@ import pathlib
 import re
 import sys
 
-# Move CWD to end of sys.path so pip-installed VegasAfterglow (with compiled
-# C++ extensions) is found before the local source tree on Streamlit Cloud.
-for _p in ("", "."):
+# On Streamlit Cloud the repo root is on sys.path, so the local
+# VegasAfterglow/ source tree shadows the pip-installed wheel (which has
+# the compiled C++ extension).  Move the repo root to the end so
+# site-packages is searched first.  webapp.* imports still resolve
+# because no pip package claims that name.
+_repo_root = str(pathlib.Path(__file__).resolve().parent.parent)
+for _p in ("", ".", _repo_root):
     if _p in sys.path:
         sys.path.remove(_p)
         sys.path.append(_p)
