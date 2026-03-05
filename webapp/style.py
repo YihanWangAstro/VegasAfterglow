@@ -195,9 +195,16 @@ SIDEBAR_CSS = """<style>
     /* ── Plotly chart: responsive height ── */
     .stPlotlyChart {
         height: 70vh !important;
+        overflow: visible !important;
     }
     .stPlotlyChart iframe {
         height: 100% !important;
+    }
+    /* Ensure parent containers don't clip the chart */
+    [data-testid="stHorizontalBlock"],
+    [data-testid="stColumn"],
+    [data-testid="stVerticalBlock"] {
+        overflow: visible !important;
     }
 
     /* ── Mobile: responsive layout ── */
