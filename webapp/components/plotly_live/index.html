@@ -1,0 +1,170 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      background: transparent;
+    }
+    #plot {
+      width: 100%;
+      height: 100%;
+    }
+  </style>
+</head>
+<body>
+  <div id="plot"></div>
+  <script>
+    (function () {
+      const API_VERSION = 1;
+      const DEFAULT_HEIGHT = 560;
+      const MIN_HEIGHT = 120;
+      const MSG = {
+        COMPONENT_READY: "streamlit:componentReady",
+        SET_COMPONENT_VALUE: "streamlit:setComponentValue",
+        SET_FRAME_HEIGHT: "streamlit:setFrameHeight",
+        RENDER: "streamlit:render",
+      };
+
+      const plotDiv = document.getElementById("plot");
+      let currentHeight = DEFAULT_HEIGHT;
+      let hasPlot = false;
+      let plotlyReadyPromise = null;
+      let renderQueue = Promise.resolve();
+      const PLOTLY_CDNS = [
+        "https://cdn.plot.ly/plotly-2.35.2.min.js",
+        "https://cdn.jsdelivr.net/npm/plotly.js-dist-min@2.35.2/plotly.min.js",
+      ];
+
+      function postMessage(type, payload) {
+        window.parent.postMessage(
+          Object.assign({ isStreamlitMessage: true, type: type }, payload || {}),
+          "*"
+        );
+      }
+
+      function clampHeight(height) {
+        const n = Number(height);
+        if (!Number.isFinite(n)) {
+          return currentHeight;
+        }
+        return Math.max(MIN_HEIGHT, Math.floor(n));
+      }
+
+      function setFrameHeight(height) {
+        currentHeight = clampHeight(height);
+        plotDiv.style.height = currentHeight + "px";
+        postMessage(MSG.SET_FRAME_HEIGHT, { height: currentHeight });
+      }
+
+      function loadScript(src) {
+        return new Promise(function (resolve, reject) {
+          const script = document.createElement("script");
+          script.src = src;
+          script.async = true;
+          script.onload = resolve;
+          script.onerror = function () {
+            reject(new Error("Failed to load script: " + src));
+          };
+          document.head.appendChild(script);
+        });
+      }
+
+      async function ensurePlotlyLoaded() {
+        if (window.Plotly) {
+          return window.Plotly;
+        }
+        if (plotlyReadyPromise) {
+          return plotlyReadyPromise;
+        }
+        plotlyReadyPromise = (async function () {
+          let lastError = null;
+          for (const src of PLOTLY_CDNS) {
+            try {
+              await loadScript(src);
+              if (window.Plotly) {
+                return window.Plotly;
+              }
+            } catch (err) {
+              lastError = err;
+            }
+          }
+          throw lastError || new Error("Unable to load Plotly runtime");
+        })();
+        return plotlyReadyPromise;
+      }
+
+      function parseMaybeJson(value, fallback) {
+        if (value == null) return fallback;
+        if (typeof value === "string") {
+          try {
+            return JSON.parse(value);
+          } catch (_) {
+            return fallback;
+          }
+        }
+        return value;
+      }
+
+      async function renderOnce(args) {
+        const Plotly = await ensurePlotlyLoaded();
+        const figure = parseMaybeJson(args.figure, {});
+        const data = Array.isArray(figure.data) ? figure.data : [];
+        const layout = parseMaybeJson(figure.layout, {});
+        const config = parseMaybeJson(args.config, {});
+        const height = clampHeight(args.height || layout.height || DEFAULT_HEIGHT);
+        const revision = args.revision == null ? null : String(args.revision);
+
+        layout.height = height;
+        layout.autosize = true;
+        if (revision !== null) {
+          layout.datarevision = revision;
+        }
+        config.responsive = true;
+        config.displaylogo = false;
+
+        const draw = hasPlot ? Plotly.react : Plotly.newPlot;
+        await draw(plotDiv, data, layout, config);
+        hasPlot = true;
+        setFrameHeight(height);
+      }
+
+      function render(args) {
+        renderQueue = renderQueue
+          .then(function () {
+            return renderOnce(args);
+          })
+          .catch(function (err) {
+            postMessage(MSG.SET_COMPONENT_VALUE, {
+              value: { error: String(err) },
+              dataType: "json",
+            });
+          });
+      }
+
+      function onMessage(event) {
+        const msg = event && event.data ? event.data : null;
+        if (!msg || msg.type !== MSG.RENDER) {
+          return;
+        }
+        const args = parseMaybeJson(msg.args, {});
+        render(args);
+      }
+
+      window.addEventListener("message", onMessage);
+      window.addEventListener("resize", function () {
+        setFrameHeight(currentHeight);
+      });
+
+      postMessage(MSG.COMPONENT_READY, { apiVersion: API_VERSION });
+      setFrameHeight(DEFAULT_HEIGHT);
+    })();
+  </script>
+</body>
+</html>
