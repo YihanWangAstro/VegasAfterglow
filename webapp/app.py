@@ -546,28 +546,55 @@ _physics_params = dict(
 # ---------------------------------------------------------------------------
 
 
+_RESIZE_JS = """<script>
+(function() {
+    var doc = window.parent.document;
+    var h = Math.floor(window.parent.innerHeight * 0.75);
+    function resize() {
+        doc.querySelectorAll('.js-plotly-plot').forEach(function(el) {
+            if (window.parent.Plotly) window.parent.Plotly.relayout(el, {height: h});
+        });
+    }
+    setTimeout(resize, 200);
+    window.parent.addEventListener('resize', function() {
+        h = Math.floor(window.parent.innerHeight * 0.75);
+        resize();
+    });
+})();
+</script>"""
+
+
 def _show_plot_with_buttons(fig, downloads, prefix):
-    """Render Plotly chart with buttons stacked vertically on the right."""
-    plot_col, btn_col = st.columns([4, 1], vertical_alignment="center")
-    with plot_col:
-        st.plotly_chart(fig, width="stretch",
-                        config={"toImageButtonOptions": {"format": "png", "scale": 3}})
-    with btn_col:
-        for label, content, ext, mime in downloads:
-            st.download_button(label, content, file_name=f"{prefix}.{ext}", mime=mime,
-                               width="stretch")
-        png_key = f"_png_{prefix}"
-        if png_key in st.session_state:
-            st.download_button("Download PNG", st.session_state[png_key],
-                               file_name=f"{prefix}.png", mime="image/png",
-                               key=f"dl_png_{prefix}", width="stretch")
-        else:
-            if st.button("Save PNG", key=f"save_{prefix}", width="stretch"):
-                st.session_state[png_key] = fig.to_image(format="png", scale=3)
-                st.rerun()
-        if st.button("Cite", key=f"cite_{prefix}", width="stretch"):
-            _stc.html(CLIPBOARD_JS, height=0)
-            st.toast("\u2714 BibTeX copied to clipboard!")
+    """Render Plotly chart full-width with button row below."""
+    st.plotly_chart(fig, width="stretch",
+                    config={"toImageButtonOptions": {"format": "png", "scale": 3}})
+    _stc.html(_RESIZE_JS, height=0)
+    # Button row below the chart — 4 equal columns
+    all_buttons = []
+    for label, content, ext, mime in downloads:
+        all_buttons.append(("download", label, content, f"{prefix}.{ext}", mime))
+    png_key = f"_png_{prefix}"
+    if png_key in st.session_state:
+        all_buttons.append(("download", "Download PNG", st.session_state[png_key],
+                            f"{prefix}.png", "image/png"))
+    else:
+        all_buttons.append(("save_png", "Save PNG", None, None, None))
+    all_buttons.append(("cite", "Cite", None, None, None))
+
+    btn_cols = st.columns(len(all_buttons))
+    for i, (kind, label, content, fname, mime) in enumerate(all_buttons):
+        with btn_cols[i]:
+            if kind == "download":
+                st.download_button(label, content, file_name=fname, mime=mime,
+                                   use_container_width=True)
+            elif kind == "save_png":
+                if st.button(label, key=f"save_{prefix}", use_container_width=True):
+                    st.session_state[png_key] = fig.to_image(format="png", scale=3)
+                    st.rerun()
+            elif kind == "cite":
+                if st.button(label, key=f"cite_{prefix}", use_container_width=True):
+                    _stc.html(CLIPBOARD_JS, height=0)
+                    st.toast("\u2714 BibTeX copied to clipboard!")
 
 
 # ---------------------------------------------------------------------------
