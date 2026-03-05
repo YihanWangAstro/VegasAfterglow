@@ -96,6 +96,7 @@ LEGEND_COMMON = dict(
 LAYOUT_COMMON = dict(
     template="plotly_white",
     hovermode="closest",
+    autosize=True,
     margin=dict(l=65, r=20, t=15, b=55),
     plot_bgcolor="#ffffff",
     paper_bgcolor="#ffffff",

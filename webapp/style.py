@@ -193,8 +193,11 @@ SIDEBAR_CSS = """<style>
     }
 
     /* ── Plotly chart: responsive height ── */
+    .stPlotlyChart {
+        height: 70vh !important;
+    }
     .stPlotlyChart iframe {
-        min-height: 55vh !important;
+        height: 100% !important;
     }
 
     /* ── Mobile: responsive layout ── */
