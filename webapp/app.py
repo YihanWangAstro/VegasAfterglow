@@ -546,32 +546,26 @@ _physics_params = dict(
 # ---------------------------------------------------------------------------
 
 
-def _show_plot(fig):
-    """Render Plotly chart with 4:3 aspect ratio."""
-    st.plotly_chart(fig, use_container_width=False,
-                    config={"toImageButtonOptions": {"format": "png", "scale": 3}})
-
-
-def _download_row(fig, downloads, prefix):
-    """Show download buttons + Save PNG + Cite in a centered row."""
-    n_btns = len(downloads) + 2
-    pad, *btn_cols, _ = st.columns([0.5] + [1] * n_btns + [0.5])
-    for i, (label, content, ext, mime) in enumerate(downloads):
-        with btn_cols[i]:
+def _show_plot_with_buttons(fig, downloads, prefix):
+    """Render Plotly chart with buttons stacked vertically on the right."""
+    plot_col, btn_col = st.columns([4, 1], vertical_alignment="center")
+    with plot_col:
+        st.plotly_chart(fig, width="content",
+                        config={"toImageButtonOptions": {"format": "png", "scale": 3}})
+    with btn_col:
+        for label, content, ext, mime in downloads:
             st.download_button(label, content, file_name=f"{prefix}.{ext}", mime=mime,
-                               use_container_width=True)
-    with btn_cols[-2]:
+                               width="stretch")
         png_key = f"_png_{prefix}"
         if png_key in st.session_state:
             st.download_button("Download PNG", st.session_state[png_key],
                                file_name=f"{prefix}.png", mime="image/png",
-                               key=f"dl_png_{prefix}", use_container_width=True)
+                               key=f"dl_png_{prefix}", width="stretch")
         else:
-            if st.button("Save PNG", key=f"save_{prefix}", use_container_width=True):
+            if st.button("Save PNG", key=f"save_{prefix}", width="stretch"):
                 st.session_state[png_key] = fig.to_image(format="png", scale=3)
                 st.rerun()
-    with btn_cols[-1]:
-        if st.button("Cite", use_container_width=True):
+        if st.button("Cite", key=f"cite_{prefix}", width="stretch"):
             _stc.html(CLIPBOARD_JS, height=0)
             st.toast("\u2714 BibTeX copied to clipboard!")
 
@@ -618,9 +612,8 @@ if plot_mode == "Light Curve":
         _add_obs_traces(fig, obs_data_tuple, flux_unit, time_unit,
                         has_secondary=use_sec)
 
-    _show_plot(fig)
     export_unit = "cgs" if is_mag else flux_unit
-    _download_row(fig, [
+    _show_plot_with_buttons(fig, [
         ("CSV", export_csv(data, export_unit, time_unit), "csv", "text/csv"),
         ("JSON", export_json(data, export_unit, time_unit), "json", "application/json"),
     ], "afterglow_lightcurve")
@@ -669,9 +662,8 @@ elif plot_mode == "Spectrum":
                         has_secondary=need_sec, mode="spectrum",
                         nufnu=show_nufnu)
 
-    _show_plot(fig)
     export_unit = "cgs" if is_mag else flux_unit
-    _download_row(fig, [
+    _show_plot_with_buttons(fig, [
         ("CSV", export_sed_csv(data, export_unit, freq_unit), "csv", "text/csv"),
         ("JSON", export_sed_json(data, export_unit, freq_unit), "json", "application/json"),
     ], "afterglow_sed")
@@ -812,13 +804,13 @@ else:  # Sky Image
         with c1:
             st.download_button("JSON", export_skymap_json(data),
                                file_name="afterglow_skymap.json", mime="application/json",
-                               use_container_width=True)
+                               width="stretch")
         with c2:
             st.download_button("GIF", gif_bytes,
                                file_name="afterglow_skymap.gif", mime="image/gif",
-                               key="dl_gif_skymap", use_container_width=True)
+                               key="dl_gif_skymap", width="stretch")
         with c3:
-            if st.button("Cite", key="cite_skymap_anim", use_container_width=True):
+            if st.button("Cite", key="cite_skymap_anim", width="stretch"):
                 _stc.html(CLIPBOARD_JS, height=0)
                 st.toast("\u2714 BibTeX copied to clipboard!")
     else:
@@ -869,12 +861,12 @@ else:  # Sky Image
         with c1:
             st.download_button("JSON", export_skymap_json(data),
                                file_name="afterglow_skymap.json", mime="application/json",
-                               use_container_width=True)
+                               width="stretch")
         with c2:
             st.download_button("PNG", png_bytes,
                                file_name="afterglow_skymap.png", mime="image/png",
-                               key="dl_png_skymap_static", use_container_width=True)
+                               key="dl_png_skymap_static", width="stretch")
         with c3:
-            if st.button("Cite", key="cite_skymap_static", use_container_width=True):
+            if st.button("Cite", key="cite_skymap_static", width="stretch"):
                 _stc.html(CLIPBOARD_JS, height=0)
                 st.toast("\u2714 BibTeX copied to clipboard!")
