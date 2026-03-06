@@ -36,6 +36,23 @@ from .helpers import (
     time_colors,
 )
 
+def _freq_colors_safe(freqs):
+    """Use VegasAfterglow's colormap when available; fallback if matplotlib is missing."""
+    try:
+        return _freq_colors(freqs)
+    except ModuleNotFoundError:
+        palette = [
+            "#1f77b4",
+            "#ff7f0e",
+            "#2ca02c",
+            "#d62728",
+            "#9467bd",
+            "#8c564b",
+            "#e377c2",
+            "#17becf",
+        ]
+        return [palette[i % len(palette)] for i in range(len(freqs))]
+
 
 def _add_traces(fig, x, groups, x_name, x_unit, secondary_y=None):
     """Add trace groups to a figure.
@@ -49,8 +66,10 @@ def _add_traces(fig, x, groups, x_name, x_unit, secondary_y=None):
             name = label if is_total else f"{label} ({COMP_LABELS.get(comp_name, comp_name)})"
             mask = np.isfinite(y)
             x_m, y_m = x[mask], y[mask]
+            # Scattergl helps on large traces; regular Scatter is faster on small traces.
+            trace_cls = go.Scattergl if x_m.size >= 400 else go.Scatter
             fig.add_trace(
-                go.Scatter(
+                trace_cls(
                     x=x_m, y=y_m, mode="lines", name=name,
                     line=dict(
                         color=color,
@@ -256,7 +275,7 @@ def make_figure(data, flux_unit, time_unit, t_min, t_max,
 
     all_freqs = list(freqs) if has_points else []
     all_freqs += [np.sqrt(b[0] * b[1]) for b in band_data]
-    all_colors = _freq_colors(np.array(all_freqs)) if all_freqs else []
+    all_colors = _freq_colors_safe(np.array(all_freqs)) if all_freqs else []
     pt_colors = all_colors[:len(freqs)] if has_points else []
     bd_colors = all_colors[len(freqs):] if has_bands else []
 

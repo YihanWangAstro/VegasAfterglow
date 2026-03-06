@@ -17,6 +17,7 @@
 
 external/
 projects/
+webapp/
 build/
 .vscode/
 .idea/

@@ -123,7 +123,7 @@ For the full MCMC fitting guide, including advanced customization examples, see 
 
 #### ► **Interactive Web Tool**
 
-- Browser-based interactive tool for exploring afterglow light curves, spectra, and sky images — no installation required: [vegasafterglow.streamlit.app](https://vegasafterglow.streamlit.app)
+- Browser-based interactive tool for exploring afterglow light curves, spectra, and sky images — no installation required: [vegasafterglow.streamlit.app](https://vegasafterglow.vercel.app)
 
 #### ► **Smooth Electron Distribution for IC Integration**
 

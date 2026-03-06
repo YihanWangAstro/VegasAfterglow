@@ -1,0 +1,17 @@
+# Python
+backend/.venv/
+backend/**/__pycache__/
+backend/.pytest_cache/
+backend/.mypy_cache/
+
+# Node
+frontend/node_modules/
+frontend/.next/
+frontend/.npm-cache/
+frontend/.vercel/
+
+# Local env files
+frontend/.env.local
+
+# OS/editor
+.DS_Store

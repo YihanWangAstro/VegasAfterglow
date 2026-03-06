@@ -1,9 +1,13 @@
 """CSV and JSON export functions."""
 
+import base64
 import io
 import json
 
+import numpy as np
 from VegasAfterglow.cli import _format_energy
+from matplotlib import cm, colors
+from PIL import Image
 
 from .constants import FLUX_SCALES, FREQ_SCALES, TIME_SCALES
 from .helpers import band_label, format_time_label
@@ -136,3 +140,38 @@ def export_skymap_json(data):
         "images": [img.tolist() for img in data["images"]],
     }
     return json.dumps(obj, indent=2)
+
+
+def export_skymap_gif_base64(data):
+    """Generate GIF (base64-encoded) from sky map frames."""
+    images = data.get("images", [])
+    if not images:
+        raise ValueError("Sky map returned no frames")
+
+    all_pos = np.concatenate([img[img > 0] for img in images if np.any(img > 0)])
+    vmin = float(np.log10(all_pos.min())) if all_pos.size > 0 else 0.0
+    vmax = float(np.log10(all_pos.max())) if all_pos.size > 0 else 1.0
+
+    cmap = cm.get_cmap("inferno").copy()
+    cmap.set_bad(color="white")
+    norm = colors.Normalize(vmin=vmin, vmax=vmax)
+
+    pil_frames = []
+    for img in images:
+        log_img = np.where(img > 0, np.log10(img), np.nan)
+        rgba = (cmap(norm(log_img.T)) * 255).astype(np.uint8)
+        rgba = rgba[::-1]
+        pil_frames.append(Image.fromarray(rgba, mode="RGBA"))
+
+    frame_ms = max(50, 2000 // max(1, len(pil_frames)))
+    buf = io.BytesIO()
+    pil_frames[0].save(
+        buf,
+        format="GIF",
+        save_all=True,
+        append_images=pil_frames[1:],
+        duration=frame_ms,
+        loop=0,
+        disposal=2,
+    )
+    return base64.b64encode(buf.getvalue()).decode("ascii")
