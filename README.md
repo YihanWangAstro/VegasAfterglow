@@ -9,12 +9,12 @@
 [![Platform](https://img.shields.io/badge/Platform-Linux%20|%20macOS%20|%20Windows-lightgrey.svg)]()
 [![Python Version](https://img.shields.io/badge/Python-3.8%2B-blue.svg)](https://www.python.org/)
 [![Documentation](https://img.shields.io/badge/Documentation-Online-brightgreen.svg)](https://yihanwangastro.github.io/VegasAfterglow/docs/index.html)
-[![Interactive Tool](https://img.shields.io/badge/Interactive-Web%20Tool-orange.svg)](https://vegasafterglow.vercel.app)
+[![Interactive Tool](https://img.shields.io/badge/Interactive-Web%20Tool-orange.svg)](https://www.vegasafterglow.com)
 [![Validation Report](https://img.shields.io/badge/Validation-Report-blue.svg)](https://yihanwangastro.github.io/VegasAfterglow/reports/latest/comprehensive_report.pdf)
 
 <div align="left">
 
-**[Latest Release Notes](CHANGELOG.md#v200-beta---2026-02-02)** | **[Interactive Web Tool](https://vegasafterglow.vercel.app)** | **[Validation Report (PDF)](https://yihanwangastro.github.io/VegasAfterglow/reports/latest/comprehensive_report.pdf)** | **[Install Now](#installation)**
+**[Latest Release Notes](CHANGELOG.md#v200-beta---2026-02-02)** | **[Interactive Web Tool](https://www.vegasafterglow.com)** | **[Validation Report (PDF)](https://yihanwangastro.github.io/VegasAfterglow/reports/latest/comprehensive_report.pdf)** | **[Install Now](#installation)**
 </div>
 
 <p align="justify">
@@ -150,7 +150,7 @@ npm run dev
 Open `http://localhost:3000`.
 Detailed local/deploy guide: [`webtool/README.md`](webtool/README.md) and [`webtool/DEPLOY.md`](webtool/DEPLOY.md).
 
-The hosted **[Interactive Web Tool](https://vegasafterglow.vercel.app)** provides real-time parameter-tunable afterglow modeling, mobile-phone compatible layout, and observational data input/upload support.
+The hosted **[Interactive Web Tool](https://www.vegasafterglow.com)** provides real-time parameter-tunable afterglow modeling, mobile-phone compatible layout, and observational data input/upload support.
 
 VegasAfterglow requires Python 3.8 or higher.
 
@@ -224,7 +224,7 @@ The following development tools are required:
 
 VegasAfterglow can be used in three ways:
 
-* **[Interactive web tool](https://vegasafterglow.vercel.app)** — real-time, parameter-tunable afterglow modeling for light curves, spectra, and sky images, with mobile-phone compatible UI and observational data input/upload support (CSV/TXT/XLS/XLSX). No installation required.
+* **[Interactive web tool](https://www.vegasafterglow.com)** — real-time, parameter-tunable afterglow modeling for light curves, spectra, and sky images, with mobile-phone compatible UI and observational data input/upload support (CSV/TXT/XLS/XLSX). No installation required.
 * **Command line** — generate light curves instantly with the `vegasgen` command, no code needed.
 * **Python API** — full programmatic control for custom analysis, MCMC fitting, and access to internal quantities.
 

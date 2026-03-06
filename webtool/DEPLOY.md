@@ -62,7 +62,7 @@ cd /Users/yihanwang/Repositories/afterglow
 Set common origins (replace custom domain if different):
 
 ```bash
-export ALLOWED_ORIGINS="https://vegasafterglow.vercel.app,https://vegasafterglow.com"
+export ALLOWED_ORIGINS="https://www.vegasafterglow.com,https://vegasafterglow.com"
 ```
 
 Deploy US region:

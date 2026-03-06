@@ -113,6 +113,7 @@ const SKY_MAX_PIXEL_ANIMATE = 512;
 const SKY_MAX_PIXEL_STATIC = 1024;
 const SKY_PIXEL_OPTIONS = [64, 128, 256, 512, 1024] as const;
 const ENABLE_INTERACTIVE_DOWNSAMPLE = false;
+const ABORT_STALE_WHILE_SLIDING = true;
 const INTERACTIVE_LIGHTCURVE_NUM_T_MAX = 120;
 const INTERACTIVE_SPECTRUM_NUM_NU_MAX = 120;
 const INTERACTIVE_SKY_PIXEL_MAX_STATIC = 256;
@@ -2354,6 +2355,9 @@ export default function HomePage() {
 
   useEffect(() => {
     if (!bootReady) return;
+    if (ABORT_STALE_WHILE_SLIDING && sliderInteracting && requestInFlightRef.current) {
+      activeRequestRef.current?.abort();
+    }
     pendingSpecRef.current = computationSpec;
     if (runTimerRef.current !== null) {
       window.clearTimeout(runTimerRef.current);
@@ -2686,11 +2690,12 @@ export default function HomePage() {
             .
           </p>
           <p className="sb-footer-text">
-            If you find VegasAfterglow useful in your research, we would be grateful if you could{" "}
+            VegasAfterglow Webtool is currently supported by personal funding from the developers. If this tool is
+            helpful, any support is appreciated, including sharing it with others or{" "}
             <button className="sb-footer-link sb-footer-link-btn" type="button" onClick={() => void copyBibtex()}>
               {citeLinkText}
             </button>{" "}
-            our work.
+            our work in research.
           </p>
           <div className="sidebar-downloads">
             {mode !== "skymap" ? (

@@ -123,7 +123,7 @@ For the full MCMC fitting guide, including advanced customization examples, see 
 
 #### ► **Interactive Web Tool**
 
-- Browser-based real-time, parameter-tunable afterglow modeling tool for light curves, spectra, and sky images, with mobile-phone compatible UI and observational data input/upload support (CSV/TXT/XLS/XLSX) — no installation required: [vegasafterglow.vercel.app](https://vegasafterglow.vercel.app)
+- Browser-based real-time, parameter-tunable afterglow modeling tool for light curves, spectra, and sky images, with mobile-phone compatible UI and observational data input/upload support (CSV/TXT/XLS/XLSX) — no installation required: [vegasafterglow.vercel.app](https://www.vegasafterglow.com)
 
 #### ► **Smooth Electron Distribution for IC Integration**
 
