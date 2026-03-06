@@ -107,7 +107,16 @@ type InstrumentGroup = {
 const Y_UNIT_OPTIONS = ["mJy", "Jy", "uJy", "cgs", "AB mag", "erg/cm²/s"];
 const TIME_UNIT_OPTIONS = ["s", "day", "hr", "min"];
 const FREQ_UNIT_OPTIONS = ["Hz", "GHz", "keV", "MeV"];
-const SKY_DEFAULT_N_FRAMES = 30;
+const SKY_DEFAULT_N_FRAMES = 15;
+const SKY_MAX_N_FRAMES = 30;
+const SKY_MAX_PIXEL_ANIMATE = 512;
+const SKY_MAX_PIXEL_STATIC = 1024;
+const SKY_PIXEL_OPTIONS = [64, 128, 256, 512, 1024] as const;
+const INTERACTIVE_LIGHTCURVE_NUM_T_MAX = 120;
+const INTERACTIVE_SPECTRUM_NUM_NU_MAX = 120;
+const INTERACTIVE_SKY_PIXEL_MAX_STATIC = 256;
+const INTERACTIVE_SKY_PIXEL_MAX_ANIMATE = 256;
+const INTERACTIVE_SKY_FRAMES_MAX = 8;
 const AUTO_RUN_DEBOUNCE_IDLE_MS = 10;
 const AUTO_RUN_DEBOUNCE_SLIDING_MS = 20;
 const SLIDER_COMMIT_INTERVAL_MS = 30;
@@ -133,6 +142,8 @@ const INSTRUMENT_TYPE_BY_NAME: Record<string, string> = {
   "EP/FXT": "X-ray",
   "SVOM/MXT": "X-ray",
   "SVOM/ECLAIRs": "X-ray",
+  "Swift/BAT": "Gamma-ray",
+  "Fermi/GBM": "Gamma-ray",
   "Fermi/LAT": "Gamma-ray",
   CTA: "Gamma-ray",
 };
@@ -150,7 +161,7 @@ const FREQ_HELP_TEXT = [
   "Units: Hz kHz MHz GHz | eV keV MeV GeV",
 ].join("\n");
 const JET_TYPE_OPTIONS: SharedParams["jet_type"][] = ["Top-hat", "Gaussian", "Power-law", "Two-component"];
-const MEDIUM_TYPE_OPTIONS: SharedParams["medium_type"][] = ["ISM", "Wind"];
+const MEDIUM_TYPE_OPTIONS: SharedParams["medium_type"][] = ["ISM", "Wind", "Wind bubble"];
 const DEFAULT_APP_VERSION = "2.0.1";
 const BIBTEX_TEXT = `@ARTICLE{2026JHEAp..5000490W,
        author = {{Wang}, Yihan and {Chen}, Connery and {Zhang}, Bing},
@@ -293,6 +304,13 @@ function sliderFillStyle(value: number, min: number, max: number): CSSProperties
   return { "--fill-percent": `${bounded}%` } as CSSProperties;
 }
 
+function legendFontSizeForWidth(plotWidthPx: number): number {
+  if (plotWidthPx <= 440) return 9;
+  if (plotWidthPx <= 620) return 10;
+  if (plotWidthPx <= 860) return 11;
+  return 12;
+}
+
 function downloadText(content: string, filename: string, mime: string): void {
   const blob = new Blob([content], { type: mime });
   const url = URL.createObjectURL(blob);
@@ -358,6 +376,18 @@ function parseStoredObsGroups(raw: string | null, isLc: boolean): ObservationGro
   } catch {
     return null;
   }
+}
+
+function compactObservationGroups(groups: ObservationGroup[]): ObservationGroup[] {
+  return groups
+    .filter((group) => group.visible && group.text.trim().length > 0)
+    .map((group) => ({
+      legend: group.legend.trim() || "data",
+      x_unit: group.x_unit,
+      y_unit: group.y_unit,
+      text: group.text.trim(),
+      visible: true,
+    }));
 }
 
 function groupInstrumentsByType(instrumentNames: string[]): InstrumentGroup[] {
@@ -498,7 +528,7 @@ function normalizeShared(shared: SharedParams, mode: Mode): SharedParams {
   if (next.medium_type === "ISM") {
     next.A_star = 0.1;
     next.k_m = 2.0;
-  } else {
+  } else if (next.medium_type === "Wind") {
     next.n_ism = 1.0;
   }
 
@@ -518,6 +548,45 @@ function normalizeShared(shared: SharedParams, mode: Mode): SharedParams {
   }
 
   return next;
+}
+
+function clampInt(value: unknown, min: number, max: number): number {
+  const numeric = Number(value);
+  if (!Number.isFinite(numeric)) return min;
+  return Math.max(min, Math.min(max, Math.round(numeric)));
+}
+
+function buildInteractiveSpec(base: ComputationSpec, interactive: boolean): ComputationSpec {
+  if (!interactive) return base;
+
+  if (base.endpoint === "lightcurve") {
+    const payload = { ...base.payload };
+    const maybeShared = payload.shared;
+    if (maybeShared && typeof maybeShared === "object") {
+      const nextShared = { ...(maybeShared as Record<string, unknown>) };
+      nextShared.num_t = clampInt(nextShared.num_t, 50, INTERACTIVE_LIGHTCURVE_NUM_T_MAX);
+      payload.shared = nextShared;
+    }
+    return { ...base, payload };
+  }
+
+  if (base.endpoint === "spectrum") {
+    const payload = { ...base.payload };
+    payload.num_nu = clampInt(payload.num_nu, 50, INTERACTIVE_SPECTRUM_NUM_NU_MAX);
+    return { ...base, payload };
+  }
+
+  const payload = { ...base.payload };
+  const animate = Boolean(payload.animate);
+  payload.npixel = clampInt(
+    payload.npixel,
+    64,
+    animate ? INTERACTIVE_SKY_PIXEL_MAX_ANIMATE : INTERACTIVE_SKY_PIXEL_MAX_STATIC,
+  );
+  if (animate) {
+    payload.n_frames = clampInt(payload.n_frames, 3, INTERACTIVE_SKY_FRAMES_MAX);
+  }
+  return { ...base, payload };
 }
 
 type LogSliderProps = {
@@ -740,6 +809,7 @@ export default function HomePage() {
   const [showRunning, setShowRunning] = useState(false);
   const [result, setResult] = useState<RunResponse | null>(null);
   const [resultMode, setResultMode] = useState<Mode | null>(null);
+  const [plotWidthPx, setPlotWidthPx] = useState(960);
   const [isFigurePending, startFigureTransition] = useTransition();
   const [downloading, setDownloading] = useState<DownloadKind | null>(null);
   const [appVersion, setAppVersion] = useState(DEFAULT_APP_VERSION);
@@ -752,7 +822,9 @@ export default function HomePage() {
   const pendingSpecRef = useRef<ComputationSpec | null>(null);
   const runTimerRef = useRef<number | null>(null);
   const activeRequestRef = useRef<AbortController | null>(null);
+  const [sliderInteracting, setSliderInteracting] = useState(false);
   const sliderInteractingRef = useRef(false);
+  const workspaceRef = useRef<HTMLElement | null>(null);
   const axisRangesRef = useRef<Record<Mode, AxisRanges>>({
     lightcurve: { xaxis: null, yaxis: null, yaxis2: null },
     spectrum: { xaxis: null, yaxis: null, yaxis2: null },
@@ -766,6 +838,7 @@ export default function HomePage() {
   const [lcTMax, setLcTMax] = useState(1e8);
   const [lcInstruments, setLcInstruments] = useState<string[]>([]);
   const [lcObsGroups, setLcObsGroups] = useState<ObservationGroup[]>([]);
+  const [activeLcObsTab, setActiveLcObsTab] = useState(0);
 
   const [sedTimes, setSedTimes] = useState("1e3, 1e4, 1e5, 1e6");
   const [sedTimesDraft, setSedTimesDraft] = useState("1e3, 1e4, 1e5, 1e6");
@@ -776,6 +849,7 @@ export default function HomePage() {
   const [sedNuFNu, setSedNuFNu] = useState(false);
   const [sedInstruments, setSedInstruments] = useState<string[]>([]);
   const [sedObsGroups, setSedObsGroups] = useState<ObservationGroup[]>([]);
+  const [activeSedObsTab, setActiveSedObsTab] = useState(0);
 
   const [skyAnimate, setSkyAnimate] = useState(false);
   const [skyTObs, setSkyTObs] = useState(1e6);
@@ -794,18 +868,21 @@ export default function HomePage() {
     const cleanPath = path.replace(/^\/+/, "");
     let lastErr: unknown = null;
 
-    for (const base of apiCandidates) {
+    // Prefer direct browser->API calls to avoid an extra frontend proxy hop; keep proxy as fallback.
+    const directTargets = apiCandidates.map((base) => `${base}/api/${cleanPath}`);
+    const targets = [...directTargets, `/api-proxy/${cleanPath}`];
+    for (const target of targets) {
       try {
-        return await fetch(`${base}/api/${cleanPath}`, init);
+        const response = await fetch(target, init);
+        // If proxy backend is unavailable, continue to the next candidate.
+        if (target.startsWith("/api-proxy/") && [502, 503, 504].includes(response.status)) {
+          lastErr = new Error(`Proxy unavailable (${response.status})`);
+          continue;
+        }
+        return response;
       } catch (err) {
         lastErr = err;
       }
-    }
-
-    try {
-      return await fetch(`/api-proxy/${cleanPath}`, init);
-    } catch (err) {
-      lastErr = err;
     }
     throw lastErr instanceof Error ? lastErr : new Error("Load failed");
   }, [apiCandidates]);
@@ -882,11 +959,13 @@ export default function HomePage() {
             if (typeof data.skymap.t_min === "number") setSkyTMin(data.skymap.t_min);
             if (typeof data.skymap.t_max === "number") setSkyTMax(data.skymap.t_max);
             if (typeof data.skymap.n_frames === "number") {
-              setSkyNFrames(Math.max(SKY_DEFAULT_N_FRAMES, Math.round(data.skymap.n_frames)));
+              setSkyNFrames(Math.max(3, Math.min(SKY_MAX_N_FRAMES, Math.round(data.skymap.n_frames))));
             }
             if (typeof data.skymap.nu_input === "string") setSkyNuInput(data.skymap.nu_input);
             if (typeof data.skymap.fov === "number") setSkyFov(data.skymap.fov);
-            if (typeof data.skymap.npixel === "number") setSkyNpixel(data.skymap.npixel);
+            if (typeof data.skymap.npixel === "number") {
+              setSkyNpixel(Math.max(64, Math.min(SKY_MAX_PIXEL_STATIC, Math.round(data.skymap.npixel))));
+            }
           }
         }
 
@@ -972,6 +1051,20 @@ export default function HomePage() {
     }
   }, [obsStorageReady, sedObsGroups]);
 
+  useEffect(() => {
+    setActiveLcObsTab((prev) => {
+      if (lcObsGroups.length === 0) return 0;
+      return Math.min(prev, lcObsGroups.length - 1);
+    });
+  }, [lcObsGroups.length]);
+
+  useEffect(() => {
+    setActiveSedObsTab((prev) => {
+      if (sedObsGroups.length === 0) return 0;
+      return Math.min(prev, sedObsGroups.length - 1);
+    });
+  }, [sedObsGroups.length]);
+
   const warnings = useMemo(() => (resultMode === mode ? result?.meta?.warnings ?? [] : []), [mode, result, resultMode]);
 
   const handlePlotRelayout = useCallback((event: Record<string, unknown>) => {
@@ -1029,6 +1122,28 @@ export default function HomePage() {
     }
   }, [mode, result, resultMode]);
 
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const workspace = workspaceRef.current;
+    if (!workspace) return;
+
+    const updateWidth = () => {
+      const next = workspace.clientWidth;
+      if (next <= 0) return;
+      setPlotWidthPx((prev) => (Math.abs(prev - next) > 1 ? next : prev));
+    };
+
+    updateWidth();
+    const observer = new ResizeObserver(updateWidth);
+    observer.observe(workspace);
+    window.addEventListener("resize", updateWidth);
+
+    return () => {
+      observer.disconnect();
+      window.removeEventListener("resize", updateWidth);
+    };
+  }, []);
+
   const displayFigure = useMemo(() => {
     if (resultMode !== mode) return null;
     const figure = result?.figure;
@@ -1077,10 +1192,21 @@ export default function HomePage() {
       layout.yaxis = yAxisObj;
     }
 
+    if (mode !== "skymap") {
+      const legendFontSize = legendFontSizeForWidth(plotWidthPx);
+      const legendObj =
+        layout.legend && typeof layout.legend === "object" ? { ...(layout.legend as Record<string, unknown>) } : {};
+      const legendFontObj =
+        legendObj.font && typeof legendObj.font === "object" ? { ...(legendObj.font as Record<string, unknown>) } : {};
+      legendFontObj.size = legendFontSize;
+      legendObj.font = legendFontObj;
+      layout.legend = legendObj;
+    }
+
     // Keep UI interactions (zoom/pan) stable across realtime data updates.
     layout.uirevision = `${mode}-zoom-state`;
     return { ...figure, layout };
-  }, [mode, result, resultMode, zoomRevision]);
+  }, [mode, plotWidthPx, result, resultMode, zoomRevision]);
   const deferredFigure = useDeferredValue(displayFigure);
 
   const clearSavedXAxis = useCallback(
@@ -1118,8 +1244,18 @@ export default function HomePage() {
   function removeObsGroup(isLc: boolean, index: number) {
     if (isLc) {
       setLcObsGroups((prev) => prev.filter((_, i) => i !== index));
+      setActiveLcObsTab((prev) => {
+        if (index < prev) return prev - 1;
+        if (index === prev) return Math.max(0, prev - 1);
+        return prev;
+      });
     } else {
       setSedObsGroups((prev) => prev.filter((_, i) => i !== index));
+      setActiveSedObsTab((prev) => {
+        if (index < prev) return prev - 1;
+        if (index === prev) return Math.max(0, prev - 1);
+        return prev;
+      });
     }
   }
 
@@ -1154,35 +1290,63 @@ export default function HomePage() {
 
   function renderObservationEditor(isLc: boolean) {
     const groups = isLc ? lcObsGroups : sedObsGroups;
+    const activeTab = isLc ? activeLcObsTab : activeSedObsTab;
+    const setActiveTab = isLc ? setActiveLcObsTab : setActiveSedObsTab;
     const xOptions = isLc ? TIME_UNIT_OPTIONS : FREQ_UNIT_OPTIONS;
     const xName = isLc ? "t" : "nu";
     const xUnitLabel = isLc ? "t unit" : "ν unit";
     const rowLabel = isLc ? "Rows: t, value, error" : "Rows: ν, value, error";
     const obsHelpText = `One row per line. Columns: ${xName}, value, error (optional). Separated by space, tab, or comma.`;
     const obsPlaceholder = `${xName}  value  error\n1e4  0.5  0.1\n1e5  0.3  0.05`;
+    const activeIndex = groups.length === 0 ? -1 : Math.max(0, Math.min(activeTab, groups.length - 1));
+    const activeGroup = activeIndex >= 0 ? groups[activeIndex] : null;
 
     return (
       <details className="sb-expander">
         <summary>Observation Data</summary>
-        <button className="sb-small-btn" type="button" onClick={() => addObsGroup(isLc)}>
+        <button
+          className="sb-small-btn"
+          type="button"
+          onClick={() => {
+            const nextIndex = groups.length;
+            addObsGroup(isLc);
+            setActiveTab(nextIndex);
+          }}
+        >
           + Add group
         </button>
         {groups.length === 0 ? <p className="sb-muted">No groups added.</p> : null}
-        {groups.map((g, idx) => (
-          <div className="obs-card" key={`${g.legend}-${idx}`}>
+        {groups.length > 0 ? (
+          <div className="obs-tabs" role="tablist" aria-label={isLc ? "Light curve data groups" : "Spectrum data groups"}>
+            {groups.map((group, idx) => (
+              <button
+                key={`${group.legend}-${idx}`}
+                type="button"
+                role="tab"
+                aria-selected={idx === activeIndex}
+                className={`obs-tab${idx === activeIndex ? " active" : ""}`}
+                onClick={() => setActiveTab(idx)}
+              >
+                {group.legend.trim() || `data ${idx + 1}`}
+              </button>
+            ))}
+          </div>
+        ) : null}
+        {activeGroup ? (
+          <div className="obs-card" key={`${activeGroup.legend}-${activeIndex}`}>
             <div className="obs-card-row obs-card-row-meta">
               <label className="sb-field">
                 <span className="sb-label">Legend</span>
                 <input
-                  value={g.legend}
-                  onChange={(e) => updateObsGroup(isLc, idx, { legend: e.target.value })}
+                  value={activeGroup.legend}
+                  onChange={(e) => updateObsGroup(isLc, activeIndex, { legend: e.target.value })}
                 />
               </label>
               <label className="sb-checkbox-inline">
                 <input
                   type="checkbox"
-                  checked={g.visible}
-                  onChange={(e) => updateObsGroup(isLc, idx, { visible: e.target.checked })}
+                  checked={activeGroup.visible}
+                  onChange={(e) => updateObsGroup(isLc, activeIndex, { visible: e.target.checked })}
                 />
                 Visible
               </label>
@@ -1191,8 +1355,8 @@ export default function HomePage() {
               <label className="sb-field">
                 <span className="sb-label">{xUnitLabel}</span>
                 <select
-                  value={g.x_unit}
-                  onChange={(e) => updateObsGroup(isLc, idx, { x_unit: e.target.value })}
+                  value={activeGroup.x_unit}
+                  onChange={(e) => updateObsGroup(isLc, activeIndex, { x_unit: e.target.value })}
                 >
                   {xOptions.map((u) => (
                     <option key={u} value={u}>
@@ -1204,8 +1368,8 @@ export default function HomePage() {
               <label className="sb-field">
                 <span className="sb-label">flux/flux den unit</span>
                 <select
-                  value={g.y_unit}
-                  onChange={(e) => updateObsGroup(isLc, idx, { y_unit: e.target.value })}
+                  value={activeGroup.y_unit}
+                  onChange={(e) => updateObsGroup(isLc, activeIndex, { y_unit: e.target.value })}
                 >
                   {Y_UNIT_OPTIONS.map((u) => (
                     <option key={u} value={u}>
@@ -1222,9 +1386,9 @@ export default function HomePage() {
               </span>
               <textarea
                 rows={4}
-                value={g.text}
+                value={activeGroup.text}
                 placeholder={obsPlaceholder}
-                onChange={(e) => updateObsGroup(isLc, idx, { text: e.target.value })}
+                onChange={(e) => updateObsGroup(isLc, activeIndex, { text: e.target.value })}
               />
             </label>
             <div className="obs-card-actions">
@@ -1236,19 +1400,19 @@ export default function HomePage() {
                   onChange={(e) => {
                     const file = e.target.files?.[0];
                     if (file) {
-                      void handleObservationUpload(isLc, idx, file);
+                      void handleObservationUpload(isLc, activeIndex, file);
                     }
                     e.currentTarget.value = "";
                   }}
                 />
               </label>
-              <button className="sb-danger-btn" type="button" onClick={() => removeObsGroup(isLc, idx)}>
+              <button className="sb-danger-btn" type="button" onClick={() => removeObsGroup(isLc, activeIndex)}>
                 Remove
               </button>
             </div>
             <p className="sb-muted sb-upload-hint">Supports .csv, .txt, .xls, .xlsx</p>
           </div>
-        ))}
+        ) : null}
       </details>
     );
   }
@@ -1518,7 +1682,7 @@ export default function HomePage() {
               )}
             </div>
 
-            {shared.medium_type === "Wind" ? (
+            {shared.medium_type !== "ISM" ? (
               <SliderField
                 label={
                   <>
@@ -1530,6 +1694,21 @@ export default function HomePage() {
                 step={0.1}
                 value={shared.k_m}
                 onChange={(v) => setSharedField("k_m", v)}
+              />
+            ) : null}
+            {shared.medium_type === "Wind bubble" ? (
+              <LogSliderField
+                label={
+                  <>
+                    log10(n<sub>floor</sub> (cm⁻³))
+                  </>
+                }
+                minExp={-8}
+                maxExp={5}
+                step={0.1}
+                value={shared.n_ism}
+                defaultExp={0}
+                onChange={(v) => setSharedField("n_ism", v)}
               />
             ) : null}
           </div>
@@ -1687,7 +1866,7 @@ export default function HomePage() {
 
         {!isSky ? (
           <details className="sb-expander">
-            <summary>Instruments</summary>
+            <summary>Instrument Sensitivities</summary>
             <div className="instrument-grid">
               {instrumentGroups.length === 0 ? <p className="sb-muted">No instrument list loaded.</p> : null}
               {instrumentGroups.map((group) => (
@@ -1774,8 +1953,10 @@ export default function HomePage() {
     );
   }
 
-  const computationSpec = useMemo<ComputationSpec>(() => {
+  const fullComputationSpec = useMemo<ComputationSpec>(() => {
     const normalized = normalizeShared(shared, mode);
+    const lcObsPayload = compactObservationGroups(lcObsGroups);
+    const sedObsPayload = compactObservationGroups(sedObsGroups);
 
     if (mode === "lightcurve") {
       return {
@@ -1786,7 +1967,7 @@ export default function HomePage() {
           t_min: lcTMin,
           t_max: lcTMax,
           selected_instruments: lcInstruments,
-          observation_groups: lcObsGroups,
+          observation_groups: lcObsPayload,
         },
       };
     }
@@ -1803,7 +1984,7 @@ export default function HomePage() {
           freq_unit: sedFreqUnit,
           show_nufnu: sedNuFNu,
           selected_instruments: sedInstruments,
-          observation_groups: sedObsGroups,
+          observation_groups: sedObsPayload,
         },
       };
     }
@@ -1848,7 +2029,15 @@ export default function HomePage() {
     skyNpixel,
   ]);
 
+  const computationSpec = useMemo<ComputationSpec>(
+    () => buildInteractiveSpec(fullComputationSpec, sliderInteracting),
+    [fullComputationSpec, sliderInteracting],
+  );
+
   function renderModeSpecific() {
+    const skyPixelMax = skyAnimate ? SKY_MAX_PIXEL_ANIMATE : SKY_MAX_PIXEL_STATIC;
+    const skyPixelOptions = SKY_PIXEL_OPTIONS.filter((v) => v <= skyPixelMax);
+
     if (mode === "lightcurve") {
       return (
         <>
@@ -1984,7 +2173,17 @@ export default function HomePage() {
     return (
       <>
         <label className="sb-checkbox-inline">
-          <input type="checkbox" checked={skyAnimate} onChange={(e) => setSkyAnimate(e.target.checked)} />
+          <input
+            type="checkbox"
+            checked={skyAnimate}
+            onChange={(e) => {
+              const nextAnimate = e.target.checked;
+              setSkyAnimate(nextAnimate);
+              if (nextAnimate && skyNpixel > SKY_MAX_PIXEL_ANIMATE) {
+                setSkyNpixel(SKY_MAX_PIXEL_ANIMATE);
+              }
+            }}
+          />
           Animate
         </label>
 
@@ -2021,11 +2220,11 @@ export default function HomePage() {
             <SliderField
               label="Frames"
               min={3}
-              max={60}
+              max={SKY_MAX_N_FRAMES}
               step={1}
               decimals={0}
               value={skyNFrames}
-              onChange={(v) => setSkyNFrames(Math.round(v))}
+              onChange={(v) => setSkyNFrames(Math.max(3, Math.min(SKY_MAX_N_FRAMES, Math.round(v))))}
             />
           </>
         ) : (
@@ -2067,7 +2266,7 @@ export default function HomePage() {
           <label className="sb-field">
             <span className="sb-label">Pixels</span>
             <select value={String(skyNpixel)} onChange={(e) => setSkyNpixel(Number(e.target.value))}>
-              {[64, 128, 256, 512, 1024].map((v) => (
+              {skyPixelOptions.map((v) => (
                 <option key={v} value={v}>
                   {v}
                 </option>
@@ -2158,7 +2357,7 @@ export default function HomePage() {
     if (runTimerRef.current !== null) {
       window.clearTimeout(runTimerRef.current);
     }
-    const debounceMs = sliderInteractingRef.current ? AUTO_RUN_DEBOUNCE_SLIDING_MS : AUTO_RUN_DEBOUNCE_IDLE_MS;
+    const debounceMs = sliderInteracting ? AUTO_RUN_DEBOUNCE_SLIDING_MS : AUTO_RUN_DEBOUNCE_IDLE_MS;
     runTimerRef.current = window.setTimeout(() => {
       runTimerRef.current = null;
       void flushQueuedComputation();
@@ -2169,7 +2368,7 @@ export default function HomePage() {
         runTimerRef.current = null;
       }
     };
-  }, [bootReady, computationSpec, flushQueuedComputation]);
+  }, [bootReady, computationSpec, flushQueuedComputation, sliderInteracting]);
 
   useEffect(() => {
     return () => {
@@ -2195,13 +2394,21 @@ export default function HomePage() {
 
   useEffect(() => {
     const sliderSelector = ".sb-slider input[type='range']";
+    const markInteracting = () => {
+      if (sliderInteractingRef.current) return;
+      sliderInteractingRef.current = true;
+      setSliderInteracting(true);
+    };
+    const clearInteracting = () => {
+      if (!sliderInteractingRef.current) return;
+      sliderInteractingRef.current = false;
+      setSliderInteracting(false);
+    };
+
     const handlePointerDown = (event: PointerEvent) => {
       const target = event.target as Element | null;
       if (!target?.closest(sliderSelector)) return;
-      sliderInteractingRef.current = true;
-    };
-    const clearInteracting = () => {
-      sliderInteractingRef.current = false;
+      markInteracting();
     };
 
     window.addEventListener("pointerdown", handlePointerDown, true);
@@ -2221,13 +2428,28 @@ export default function HomePage() {
     if (typeof window === "undefined" || typeof document === "undefined") return;
     const root = document.documentElement;
     let rafId: number | null = null;
+    let settleTimerShort: number | null = null;
+    let settleTimerLong: number | null = null;
+
+    const applyViewportHeight = () => {
+      const vh = window.innerHeight * 0.01;
+      root.style.setProperty("--app-vh", `${vh}px`);
+    };
 
     const updateViewportHeight = () => {
       if (rafId !== null) return;
       rafId = window.requestAnimationFrame(() => {
         rafId = null;
-        const vh = window.innerHeight * 0.01;
-        root.style.setProperty("--app-vh", `${vh}px`);
+        applyViewportHeight();
+        if (settleTimerShort !== null) {
+          window.clearTimeout(settleTimerShort);
+        }
+        if (settleTimerLong !== null) {
+          window.clearTimeout(settleTimerLong);
+        }
+        // Mobile browsers can report transient viewport sizes during rotation.
+        settleTimerShort = window.setTimeout(applyViewportHeight, 120);
+        settleTimerLong = window.setTimeout(applyViewportHeight, 320);
       });
     };
 
@@ -2243,6 +2465,12 @@ export default function HomePage() {
       viewport?.removeEventListener("resize", updateViewportHeight);
       if (rafId !== null) {
         window.cancelAnimationFrame(rafId);
+      }
+      if (settleTimerShort !== null) {
+        window.clearTimeout(settleTimerShort);
+      }
+      if (settleTimerLong !== null) {
+        window.clearTimeout(settleTimerLong);
       }
       root.style.removeProperty("--app-vh");
     };
@@ -2295,6 +2523,13 @@ export default function HomePage() {
   }, [sedTimesDraft, sedTimes]);
 
   useEffect(() => {
+    if (!skyAnimate) return;
+    if (skyNpixel > SKY_MAX_PIXEL_ANIMATE) {
+      setSkyNpixel(SKY_MAX_PIXEL_ANIMATE);
+    }
+  }, [skyAnimate, skyNpixel]);
+
+  useEffect(() => {
     clearSavedXAxis("lightcurve");
   }, [clearSavedXAxis, lcTMin, lcTMax, shared.time_unit]);
 
@@ -2325,11 +2560,11 @@ export default function HomePage() {
       try {
         let content = result?.exports?.[kind];
         if (!content) {
-          const response = await fetchFromApi(computationSpec.endpoint, {
+          const response = await fetchFromApi(fullComputationSpec.endpoint, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
-              ...computationSpec.payload,
+              ...fullComputationSpec.payload,
               include_figure: false,
               include_exports: true,
               export_kinds: [kind],
@@ -2365,7 +2600,7 @@ export default function HomePage() {
         setDownloading(null);
       }
     },
-    [computationSpec.endpoint, computationSpec.payload, fetchFromApi, mode, result?.exports],
+    [fetchFromApi, fullComputationSpec.endpoint, fullComputationSpec.payload, mode, result?.exports],
   );
 
   const copyBibtex = useCallback(async () => {
@@ -2489,7 +2724,7 @@ export default function HomePage() {
         <button className="sidebar-backdrop" onClick={() => setSidebarOpen(false)} aria-label="Close sidebar" />
       ) : null}
 
-      <section className="workspace">
+      <section ref={workspaceRef} className="workspace">
         {warnings.length > 0 ? (
           <div className="warn-box">
             {warnings.map((warning, idx) => (

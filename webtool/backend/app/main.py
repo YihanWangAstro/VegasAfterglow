@@ -131,7 +131,7 @@ class SkyMapRequest(BaseModel):
     t_obs: float = 1e6
     t_min: float = 1e4
     t_max: float = 1e7
-    n_frames: int = 10
+    n_frames: int = 15
     nu_input: str = "1e9"
     fov: float = 500.0
     npixel: int = 256
@@ -194,7 +194,7 @@ def _default_skymap() -> dict[str, Any]:
         "t_obs": 1e6,
         "t_min": 1e4,
         "t_max": 1e7,
-        "n_frames": 10,
+        "n_frames": 15,
         "nu_input": "1e9",
         "fov": 500.0,
         "npixel": 256,
@@ -349,16 +349,28 @@ def _make_skymap_figure(data: dict[str, Any]) -> go.Figure:
     if not images:
         raise HTTPException(status_code=500, detail="Sky map returned no images")
 
-    # Plotly heatmap x/y are cell centers. Build centers from extent edges to avoid
-    # half-cell clipping, which is most visible at small FOV values.
+    # Use x0/dx/y0/dy instead of full x/y arrays to reduce JSON payload size.
     nx = int(images[0].shape[0])
     ny = int(images[0].shape[1])
-    x_edges = np.linspace(float(extent[0]), float(extent[1]), nx + 1)
-    y_edges = np.linspace(float(extent[2]), float(extent[3]), ny + 1)
-    x = 0.5 * (x_edges[:-1] + x_edges[1:])
-    y = 0.5 * (y_edges[:-1] + y_edges[1:])
+    x_min = float(extent[0])
+    x_max = float(extent[1])
+    y_min = float(extent[2])
+    y_max = float(extent[3])
+    dx = (x_max - x_min) / max(nx, 1)
+    dy = (y_max - y_min) / max(ny, 1)
+    x0 = x_min + 0.5 * dx
+    y0 = y_min + 0.5 * dy
 
-    log_frames = [np.where(img > 0, np.log10(img), np.nan).T for img in images]
+    # Keep frame precision at float32 for lighter transfer without visual impact.
+    def _log10_image(img: np.ndarray) -> np.ndarray:
+        frame = np.asarray(img, dtype=np.float32).T
+        out = np.full(frame.shape, np.nan, dtype=np.float32)
+        positive = frame > 0
+        with np.errstate(divide="ignore", invalid="ignore"):
+            np.log10(frame, out=out, where=positive)
+        return np.round(out, decimals=4)
+
+    log_frames = [_log10_image(img) for img in images]
     finite_chunks = [frame[np.isfinite(frame)] for frame in log_frames if np.any(np.isfinite(frame))]
     finite_vals = np.concatenate(finite_chunks) if finite_chunks else np.array([])
     if finite_vals.size > 0:
@@ -373,13 +385,15 @@ def _make_skymap_figure(data: dict[str, Any]) -> go.Figure:
         data=[
             go.Heatmap(
                 z=log_frames[0],
-                x=x,
-                y=y,
+                x0=x0,
+                dx=dx,
+                y0=y0,
+                dy=dy,
                 colorscale="Inferno",
                 zmin=z_min,
                 zmax=z_max,
                 colorbar={"title": {"text": colorbar_title, "side": "right"}},
-                hovertemplate="Δx=%{x:.2f} μas<br>Δy=%{y:.2f} μas<br>log10 I=%{z:.3f}<extra></extra>",
+                hovertemplate="Δx=%{x:.3e} μas<br>Δy=%{y:.3e} μas<br>log10 I=%{z:.3e}<extra></extra>",
             )
         ]
     )
@@ -388,8 +402,8 @@ def _make_skymap_figure(data: dict[str, Any]) -> go.Figure:
         title=f"t = {format_time_label(float(t_arr[0]))}, ν = {nu_label}",
         xaxis_title="Δx (μas)",
         yaxis_title="Δy (μas)",
-        xaxis={"range": [float(extent[0]), float(extent[1])]},
-        yaxis={"range": [float(extent[2]), float(extent[3])]},
+        xaxis={"range": [x_min, x_max], "hoverformat": ".3e"},
+        yaxis={"range": [y_min, y_max], "hoverformat": ".3e"},
         template="none",
         plot_bgcolor="#ffffff",
         paper_bgcolor="#ffffff",
@@ -420,17 +434,8 @@ def _make_skymap_figure(data: dict[str, Any]) -> go.Figure:
             frame_objs.append(
                 go.Frame(
                     name=frame_name,
-                    data=[
-                        go.Heatmap(
-                            z=frame,
-                            x=x,
-                            y=y,
-                            colorscale="Inferno",
-                            zmin=z_min,
-                            zmax=z_max,
-                            colorbar={"title": {"text": colorbar_title, "side": "right"}},
-                        )
-                    ],
+                    data=[go.Heatmap(z=frame)],
+                    traces=[0],
                     layout={"title": f"t = {format_time_label(float(t_arr[i]))}, ν = {nu_label}"},
                 )
             )
@@ -712,6 +717,8 @@ def skymap(req: SkyMapRequest) -> dict[str, Any]:
         raise HTTPException(status_code=400, detail="fov must be positive")
     if req.npixel <= 1:
         raise HTTPException(status_code=400, detail="npixel must be greater than 1")
+    if req.npixel > 1024:
+        raise HTTPException(status_code=400, detail="npixel must be <= 1024")
 
     try:
         nu_entry = parse_entry(req.nu_input.strip()) if req.nu_input.strip() else 1e9
@@ -738,6 +745,10 @@ def skymap(req: SkyMapRequest) -> dict[str, Any]:
             raise HTTPException(status_code=400, detail="t_min must be less than t_max")
         if req.n_frames < 2:
             raise HTTPException(status_code=400, detail="n_frames must be >= 2 when animate=true")
+        if req.n_frames > 30:
+            raise HTTPException(status_code=400, detail="n_frames must be <= 30 when animate=true")
+        if req.npixel > 512:
+            raise HTTPException(status_code=400, detail="npixel must be <= 512 when animate=true")
         params["t_obs_array"] = np.logspace(np.log10(req.t_min), np.log10(req.t_max), int(req.n_frames)).tolist()
 
     params_json = _canonical_json(params)

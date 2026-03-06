@@ -130,14 +130,25 @@ This installs the core physics engine. To also install MCMC fitting support:
 pip install VegasAfterglow[mcmc]
 ```
 
-To run the interactive web tool locally:
+To run the interactive web tool locally (FastAPI + Next.js):
 
 ```bash
-pip install VegasAfterglow[webapp]
-streamlit run webapp/app.py
+# terminal 1: backend
+cd webtool/backend
+python3 -m venv .venv
+source .venv/bin/activate
+pip install -e '../..[webtool]'
+uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
+
+# terminal 2: frontend
+cd webtool/frontend
+cp .env.local.example .env.local
+npm install
+npm run dev
 ```
 
-The web app requires Streamlit 1.52 or newer.
+Open `http://localhost:3000`.
+Detailed local/deploy guide: [`webtool/README.md`](webtool/README.md) and [`webtool/DEPLOY.md`](webtool/DEPLOY.md).
 
 The hosted **[Interactive Web Tool](https://vegasafterglow.vercel.app)** provides real-time parameter-tunable afterglow modeling, mobile-phone compatible layout, and observational data input/upload support.
 

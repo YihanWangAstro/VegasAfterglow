@@ -54,7 +54,12 @@ INSTRUMENTS = {
     "EP/FXT":        (7.25e16, 2.42e18, 2e-14,   "Fband", "#4ECDC4"),
     "SVOM/MXT":      (4.84e16, 2.42e18, 1e-12,   "Fband", "#45B7D1"),
     "SVOM/ECLAIRs":  (9.67e17, 3.63e19, 5e-10,   "Fband", "#96CEB4"),
+    # Swift BAT 5-sigma ~2e-8 erg/cm2/s (15-150 keV, 1 s trigger sensitivity).
+    "Swift/BAT":     (3.63e18, 3.63e19, 2e-8,    "Fband", "#7A5C61"),
     # -- Gamma-ray (Fband, erg/cm²/s) --
+    # Fermi GBM onboard threshold ~0.7 ph/cm2/s (50-300 keV, 1 s), converted
+    # to an approximate energy flux scale ~2e-7 erg/cm2/s.
+    "Fermi/GBM":     (1.93e18, 9.67e21, 2e-7,    "Fband", "#BC6C25"),
     "Fermi/LAT":     (4.84e21, 7.25e25, 1e-12,   "Fband", "#6A0572"),
     "CTA":           (4.84e24, 7.25e28, 1e-13,   "Fband", "#C44536"),
 }

@@ -41,7 +41,7 @@ gcloud run deploy "$SERVICE_NAME" \
   --timeout 300 \
   --min-instances "$MIN_INSTANCES" \
   --max-instances 10 \
-  --set-env-vars "^,^ALLOWED_ORIGINS=${ALLOWED_ORIGINS}"
+  --set-env-vars "^|^ALLOWED_ORIGINS=${ALLOWED_ORIGINS}"
 
 SERVICE_URL="$(gcloud run services describe "$SERVICE_NAME" --project "$PROJECT_ID" --region "$REGION" --format='value(status.url)')"
 echo "Cloud Run deployed: ${SERVICE_URL}"

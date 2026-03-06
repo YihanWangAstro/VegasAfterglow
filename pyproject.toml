@@ -40,10 +40,22 @@ test = [
   "Pillow>=10.0",
   "pylatexenc>=2.10",
 ]
-webapp = [
-  "streamlit>=1.52",
-  "plotly>=5.15",
+webtool = [
+  "fastapi>=0.115",
+  "uvicorn[standard]>=0.30",
+  "pydantic>=2.7",
+  "plotly>=5.22",
   "kaleido>=1.0",
+  "matplotlib>=3.8",
+]
+# Legacy alias kept for compatibility with previous installation docs.
+webapp = [
+  "fastapi>=0.115",
+  "uvicorn[standard]>=0.30",
+  "pydantic>=2.7",
+  "plotly>=5.22",
+  "kaleido>=1.0",
+  "matplotlib>=3.8",
 ]
 
 [tool.scikit-build]

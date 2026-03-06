@@ -1,126 +1,215 @@
-# webtool Deployment (Step-by-Step)
+# webtool Deployment Runbook (Vercel + Cloud Run + Global API)
 
-This is the exact deployment runbook for this repository.
+This runbook matches your current project:
 
-Constants used in this project:
 - `PROJECT_ID=project-819bd021-ada6-4176-b14`
-- `REGION=us-west2`
-- `SERVICE_NAME=webtool-api`
-- `ARTIFACT_REPO=containers`
-- `REPO_ROOT=/Users/yihanwang/Repositories/afterglow`
+- frontend: Vercel (`webtool/frontend`)
+- backend: FastAPI on Cloud Run (`webtool-api`)
+- recommended global API domain: `api.vegasafterglow.com`
 
-Preferred backend URL (Cloud Run service URL):
-- `https://webtool-api-476587253129.us-west2.run.app`
+This setup is optimized for realtime slider updates:
 
-## 0) Prerequisites
+- frontend calls backend API directly first (no extra proxy hop)
+- Next.js `/api-proxy/*` is kept as fallback only
+- multi-region backend + global LB reduces user RTT for US/Asia users
 
-Run these once on your machine:
+## 0) One-time local tools
 
 ```bash
 brew install --cask google-cloud-sdk
 npm install -g vercel
 ```
 
-## 1) Login and project setup
+## 1) First-time auth and project config
 
 ```bash
 gcloud auth login
 gcloud config set project project-819bd021-ada6-4176-b14
-gcloud services enable run.googleapis.com cloudbuild.googleapis.com artifactregistry.googleapis.com
 
 vercel login
 ```
 
-## 2) Vercel project settings (one-time)
-
-In Vercel dashboard for this project:
-1. Set `Root Directory` to `webtool/frontend`
-2. Set `Install Command` to `npm install --legacy-peer-deps`
-
-`webtool/frontend/vercel.json` already matches this.
-
-## 3) Deploy frontend first (get public frontend URL)
+Enable required Google APIs:
 
 ```bash
-cd /Users/yihanwang/Repositories/afterglow/webtool/frontend
-vercel --prod
+gcloud services enable \
+  run.googleapis.com \
+  cloudbuild.googleapis.com \
+  artifactregistry.googleapis.com \
+  compute.googleapis.com \
+  certificatemanager.googleapis.com
 ```
 
-Copy the resulting frontend URL, for example:
-- `https://vegasafterglow-xxxxx.vercel.app`
+## 2) Vercel project setup (one-time)
 
-Set it in shell for next step:
+In Vercel dashboard:
 
-```bash
-export FRONTEND_URL="https://vegasafterglow-xxxxx.vercel.app"
-```
+1. import this repository
+2. set `Root Directory` = `webtool/frontend`
+3. build command = `npm run build`
+4. install command = `npm install --legacy-peer-deps`
 
-## 4) Deploy backend (Cloud Run)
+(`webtool/frontend/vercel.json` already sets install/build commands.)
+
+## 3) Deploy backend to two regions
+
+Run from repo root:
 
 ```bash
 cd /Users/yihanwang/Repositories/afterglow
+```
 
+Set common origins (replace custom domain if different):
+
+```bash
+export ALLOWED_ORIGINS="https://vegasafterglow.vercel.app,https://vegasafterglow.com"
+```
+
+Deploy US region:
+
+```bash
 PROJECT_ID=project-819bd021-ada6-4176-b14 \
 REGION=us-west2 \
 SERVICE_NAME=webtool-api \
 ARTIFACT_REPO=containers \
 MIN_INSTANCES=0 \
-ALLOWED_ORIGINS="$FRONTEND_URL" \
+ALLOWED_ORIGINS="$ALLOWED_ORIGINS" \
 bash webtool/scripts/deploy-cloudrun.sh
 ```
 
-## 5) Confirm backend service URL
-
-Use the Cloud Run **Service URL** (stable), not random aliases.
+Deploy Asia region (prefer `asia-east2`; if unavailable, use `asia-northeast1`):
 
 ```bash
-gcloud run services describe webtool-api \
-  --project project-819bd021-ada6-4176-b14 \
-  --region us-west2 \
-  --format='value(status.url)'
+PROJECT_ID=project-819bd021-ada6-4176-b14 \
+REGION=asia-east2 \
+SERVICE_NAME=webtool-api \
+ARTIFACT_REPO=containers \
+MIN_INSTANCES=0 \
+ALLOWED_ORIGINS="$ALLOWED_ORIGINS" \
+bash webtool/scripts/deploy-cloudrun.sh
 ```
 
-Set it in shell:
+Check both service URLs:
 
 ```bash
-export BACKEND_URL="https://webtool-api-476587253129.us-west2.run.app"
+gcloud run services describe webtool-api --region us-west2 --format='value(status.url)'
+gcloud run services describe webtool-api --region asia-east2 --format='value(status.url)'
 ```
 
-## 6) Set Vercel env vars exactly
+## 4) Create global HTTPS load balancer for API
 
-Run from frontend directory:
+All commands below run once unless noted.
+
+Create serverless NEGs:
+
+```bash
+gcloud compute network-endpoint-groups create webtool-api-usw2-neg \
+  --region=us-west2 \
+  --network-endpoint-type=serverless \
+  --cloud-run-service=webtool-api \
+  --cloud-run-region=us-west2
+
+gcloud compute network-endpoint-groups create webtool-api-asiae2-neg \
+  --region=asia-east2 \
+  --network-endpoint-type=serverless \
+  --cloud-run-service=webtool-api \
+  --cloud-run-region=asia-east2
+```
+
+Create global backend service:
+
+```bash
+gcloud compute backend-services create webtool-api-global-bs \
+  --global \
+  --load-balancing-scheme=EXTERNAL_MANAGED \
+  --protocol=HTTP \
+  --port-name=http \
+  --timeout=30s
+```
+
+Attach both NEGs:
+
+```bash
+gcloud compute backend-services add-backend webtool-api-global-bs \
+  --global \
+  --network-endpoint-group=webtool-api-usw2-neg \
+  --network-endpoint-group-region=us-west2
+
+gcloud compute backend-services add-backend webtool-api-global-bs \
+  --global \
+  --network-endpoint-group=webtool-api-asiae2-neg \
+  --network-endpoint-group-region=asia-east2
+```
+
+Create URL map + certificate + HTTPS proxy + global IP + forwarding rule:
+
+```bash
+gcloud compute url-maps create webtool-api-urlmap \
+  --default-service=webtool-api-global-bs
+
+gcloud compute ssl-certificates create webtool-api-cert \
+  --domains=api.vegasafterglow.com \
+  --global
+
+gcloud compute target-https-proxies create webtool-api-https-proxy \
+  --url-map=webtool-api-urlmap \
+  --ssl-certificates=webtool-api-cert
+
+gcloud compute addresses create webtool-api-lb-ip --global
+
+gcloud compute forwarding-rules create webtool-api-https-fr \
+  --global \
+  --target-https-proxy=webtool-api-https-proxy \
+  --ports=443 \
+  --address=webtool-api-lb-ip
+```
+
+Get LB IP:
+
+```bash
+gcloud compute addresses describe webtool-api-lb-ip --global --format='value(address)'
+```
+
+At your DNS provider, create:
+
+- type `A`
+- host `api`
+- value `<GLOBAL_LB_IP>`
+
+Wait for SSL to become active:
+
+```bash
+gcloud compute ssl-certificates describe webtool-api-cert --global --format='value(managed.status)'
+```
+
+Expected status: `ACTIVE`.
+
+## 5) Configure frontend API endpoint (Vercel env)
+
+Use the global API domain (not a single-region Cloud Run URL):
 
 ```bash
 cd /Users/yihanwang/Repositories/afterglow/webtool/frontend
-```
 
-If vars already exist, remove then re-add:
-
-```bash
 vercel env rm NEXT_PUBLIC_API_URL production --yes || true
-vercel env rm BACKEND_URL production --yes || true
+vercel env rm NEXT_PUBLIC_API_URL preview --yes || true
+
+printf '%s\n' "https://api.vegasafterglow.com" | vercel env add NEXT_PUBLIC_API_URL production
+printf '%s\n' "https://api.vegasafterglow.com" | vercel env add NEXT_PUBLIC_API_URL preview
 ```
 
-Add values:
+Deploy frontend:
 
 ```bash
-printf '%s\n' "$BACKEND_URL" | vercel env add NEXT_PUBLIC_API_URL production
-printf '%s\n' "$BACKEND_URL" | vercel env add BACKEND_URL production
-```
-
-## 7) Redeploy frontend (apply env changes)
-
-```bash
-cd /Users/yihanwang/Repositories/afterglow/webtool/frontend
 vercel --prod
 ```
 
-## 8) Verify
+## 6) Verify end-to-end
 
-Backend health:
+Health check via global API:
 
 ```bash
-curl "$BACKEND_URL/api/health"
+curl https://api.vegasafterglow.com/api/health
 ```
 
 Expected:
@@ -129,59 +218,45 @@ Expected:
 {"status":"ok","service":"fastapi"}
 ```
 
-Open frontend URL and verify:
-1. Light Curve computes successfully
-2. Spectrum computes successfully
-3. Sky Image computes successfully
+Then open your frontend and verify:
 
-## Future updates
+1. Light Curve realtime slider updates
+2. Spectrum realtime slider updates
+3. Sky Image render + GIF download
 
-### A) Update backend only
+## 7) Future updates
+
+### 7.1 Backend code update
+
+Redeploy both regions:
 
 ```bash
 cd /Users/yihanwang/Repositories/afterglow
 
-PROJECT_ID=project-819bd021-ada6-4176-b14 \
-REGION=us-west2 \
-SERVICE_NAME=webtool-api \
-ARTIFACT_REPO=containers \
-MIN_INSTANCES=0 \
-ALLOWED_ORIGINS="$FRONTEND_URL" \
-bash webtool/scripts/deploy-cloudrun.sh
+PROJECT_ID=project-819bd021-ada6-4176-b14 REGION=us-west2 SERVICE_NAME=webtool-api ARTIFACT_REPO=containers MIN_INSTANCES=0 ALLOWED_ORIGINS="$ALLOWED_ORIGINS" bash webtool/scripts/deploy-cloudrun.sh
+PROJECT_ID=project-819bd021-ada6-4176-b14 REGION=asia-east2 SERVICE_NAME=webtool-api ARTIFACT_REPO=containers MIN_INSTANCES=0 ALLOWED_ORIGINS="$ALLOWED_ORIGINS" bash webtool/scripts/deploy-cloudrun.sh
 ```
 
-If backend URL did not change, no Vercel env update needed.
+No Vercel env change is needed if API domain is unchanged.
 
-### B) Update frontend only
+### 7.2 Frontend-only update
 
 ```bash
 cd /Users/yihanwang/Repositories/afterglow/webtool/frontend
 vercel --prod
 ```
 
-### C) Update frontend env to a new backend URL
+### 7.3 Change API domain or endpoint
 
-```bash
-cd /Users/yihanwang/Repositories/afterglow/webtool/frontend
+Update Vercel `NEXT_PUBLIC_API_URL` (production + preview) and redeploy frontend.
 
-export BACKEND_URL="https://<new-cloud-run-service-url>"
-vercel env rm NEXT_PUBLIC_API_URL production --yes || true
-vercel env rm BACKEND_URL production --yes || true
-printf '%s\n' "$BACKEND_URL" | vercel env add NEXT_PUBLIC_API_URL production
-printf '%s\n' "$BACKEND_URL" | vercel env add BACKEND_URL production
-vercel --prod
-```
+## 8) Cost / cold start knobs
 
-## Troubleshooting used in this repo
+- `MIN_INSTANCES=0`: cheapest, but cold start can happen after idle period.
+- `MIN_INSTANCES=1`: lower latency, but not free (charged idle baseline).
 
-1. `COPY webtool/backend/requirements.txt ... file does not exist` in Cloud Build:
-`/.gcloudignore` must include:
-- `!webtool/backend/requirements.txt`
+Current script defaults:
 
-2. Cloud Run quota error about maxScale / total CPU:
-Use the repo defaults in `webtool/scripts/deploy-cloudrun.sh`:
-- `--cpu 1`
-- `--max-instances 10`
+- `cpu=1`, `memory=2Gi`, `concurrency=20`, `max-instances=10`
 
-3. Vercel install fails on eslint peer dependency:
-- `webtool/frontend/vercel.json` uses `npm install --legacy-peer-deps`
+For light traffic and cost control, keep `MIN_INSTANCES=0`.

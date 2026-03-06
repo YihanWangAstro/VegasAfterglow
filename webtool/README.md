@@ -15,11 +15,11 @@ The backend exposes compute + plotting + export APIs, and the frontend renders P
 cd webtool/backend
 python3 -m venv .venv
 source .venv/bin/activate
-pip install -r requirements.txt
+pip install -e '../..[webtool]'
 uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
 ```
 
-`pip install -r requirements.txt` will also build/install local `VegasAfterglow` (`-e ../..`), which can take a few minutes on first run.
+Optional (deployment parity): `pip install -r requirements.txt` to use the pinned Git tag build from `requirements.txt` instead of local editable source.
 
 Health check:
 

@@ -46,6 +46,8 @@ def build_jet(p):
 def build_medium(p):
     if p["medium_type"] == "ISM":
         return ISM(n_ism=p["n_ism"])
+    if p["medium_type"] == "Wind bubble":
+        return Wind(A_star=p["A_star"], n_ism=p["n_ism"], k_m=p["k_m"])
     return Wind(A_star=p["A_star"], k_m=p["k_m"])
 
 

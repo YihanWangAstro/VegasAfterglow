@@ -81,8 +81,8 @@ def _add_traces(fig, x, groups, x_name, x_unit, secondary_y=None):
                     hoverlabel=dict(bgcolor="white", font_color="black",
                                     bordercolor="#ccc"),
                     hovertemplate=(
-                        f"%{{x:.2e}} {x_unit}<br>"
-                        f"%{{y:.2e}} {hover_y_unit}"
+                        f"%{{x:.3e}} {x_unit}<br>"
+                        f"%{{y:.3e}} {hover_y_unit}"
                         f"<extra>{name}</extra>"
                     ),
                 ),
@@ -124,8 +124,8 @@ def _add_sensitivity_traces(fig, instruments, mode, freq_scale=1.0,
                 legendgrouptitle_text="Instruments",
                 showlegend=True,
                 hovertemplate=(
-                    f"{name}<br>F<sub>\u03bd</sub>=%{{y:.1e}}<extra></extra>" if is_fnu
-                    else f"{name}<br>F=%{{y:.1e}} erg/cm\u00b2/s<extra></extra>"
+                    f"{name}<br>F<sub>\u03bd</sub>=%{{y:.3e}}<extra></extra>" if is_fnu
+                    else f"{name}<br>F=%{{y:.3e}} erg/cm\u00b2/s<extra></extra>"
                 ),
             ),
             secondary_y=(False if has_secondary else None) if is_fnu else True,
@@ -174,9 +174,9 @@ def _add_obs_traces(fig, obs_data, flux_unit, x_unit, has_secondary,
     is_mag = (flux_unit == "AB mag")
     f_scale = 1.0 if is_mag else FLUX_SCALES[flux_unit]
     if is_lc:
-        x_hover = f"t=%{{x:.2e}} {TIME_LABELS[x_unit]}"
+        x_hover = f"t=%{{x:.3e}} {TIME_LABELS[x_unit]}"
     else:
-        x_hover = f"\u03bd=%{{x:.2e}} {x_unit}"
+        x_hover = f"\u03bd=%{{x:.3e}} {x_unit}"
 
     all_labels = list(dict.fromkeys(list(fnu_groups) + list(fband_groups)))
     all_fnu_ys = []
@@ -194,11 +194,11 @@ def _add_obs_traces(fig, obs_data, flux_unit, x_unit, has_secondary,
             elif not is_lc and nufnu:
                 ys = [r[0] * r[1] for r in pts]
                 errs = [r[0] * r[2] for r in pts]
-                hover_y = "\u03bdF\u03bd=%{y:.2e} erg/cm\u00b2/s"
+                hover_y = "\u03bdF\u03bd=%{y:.3e} erg/cm\u00b2/s"
             else:
                 ys = [r[1] / f_scale for r in pts]
                 errs = [r[2] / f_scale for r in pts]
-                hover_y = f"F\u03bd=%{{y:.2e}} {PLOTLY_FLUX_LABELS[flux_unit]}"
+                hover_y = f"F\u03bd=%{{y:.3e}} {PLOTLY_FLUX_LABELS[flux_unit]}"
             all_fnu_ys.extend(ys)
             fig.add_trace(
                 go.Scatter(
@@ -224,7 +224,7 @@ def _add_obs_traces(fig, obs_data, flux_unit, x_unit, has_secondary,
                     marker=dict(color=color, size=6, symbol="diamond"),
                     error_y=dict(type="data", array=errs, visible=True,
                                  color=color, thickness=1.0, width=3),
-                    hovertemplate=f"{x_hover}<br>F=%{{y:.2e}} erg/cm\u00b2/s<extra>{label}</extra>",
+                    hovertemplate=f"{x_hover}<br>F=%{{y:.3e}} erg/cm\u00b2/s<extra>{label}</extra>",
                 ),
                 secondary_y=True,
             )
@@ -350,6 +350,7 @@ def make_figure(data, flux_unit, time_unit, t_min, t_max,
         type="log",
         title=f"t<sub>obs</sub> ({TIME_LABELS[time_unit]})",
         range=x_range,
+        hoverformat=".3e",
         **AXIS_COMMON,
     )
 
@@ -366,6 +367,7 @@ def make_figure(data, flux_unit, time_unit, t_min, t_max,
             type="log",
             title=f"F<sub>\u03bd</sub> ({PLOTLY_FLUX_LABELS[flux_unit]})",
             range=y_range_pt,
+            hoverformat=".3e",
             **AXIS_COMMON,
         )
 
@@ -376,22 +378,25 @@ def make_figure(data, flux_unit, time_unit, t_min, t_max,
         layout_kw["yaxis"] = y_axis_pt
         layout_kw["yaxis2"] = {
             "type": "log", "title": FBAND_TITLE, "range": y_range_bd,
+            "hoverformat": ".3e",
             **AXIS_COMMON, "showgrid": False,
         }
     elif has_bands and not has_points:
         y_range_bd = [np.log10(bd_bot), np.log10(bd_top)] if bd_bot else None
         layout_kw["yaxis"] = dict(
-            type="log", title=FBAND_TITLE, range=y_range_bd, **AXIS_COMMON,
+            type="log", title=FBAND_TITLE, range=y_range_bd, hoverformat=".3e", **AXIS_COMMON,
         )
         if use_secondary:
             layout_kw["yaxis2"] = {
                 "type": "log", "title": FBAND_TITLE,
+                "hoverformat": ".3e",
                 **AXIS_COMMON, "showgrid": False,
             }
     elif use_secondary:
         layout_kw["yaxis"] = y_axis_pt
         layout_kw["yaxis2"] = {
             "type": "log", "title": FBAND_TITLE,
+            "hoverformat": ".3e",
             **AXIS_COMMON, "showgrid": False,
         }
     else:
@@ -468,6 +473,7 @@ def make_sed_figure(data, flux_unit, freq_unit, nufnu=False,
         type="log",
         title=f"\u03bd ({freq_unit})",
         range=[x_lo, x_hi],
+        hoverformat=".3e",
         **AXIS_COMMON,
     )
     if is_mag:
@@ -483,6 +489,7 @@ def make_sed_figure(data, flux_unit, freq_unit, nufnu=False,
             type="log",
             title=y_label,
             range=y_range,
+            hoverformat=".3e",
             **AXIS_COMMON,
         )
     layout_kw = dict(xaxis=x_axis, yaxis=y_axis,
@@ -490,6 +497,7 @@ def make_sed_figure(data, flux_unit, freq_unit, nufnu=False,
     if need_secondary_y:
         layout_kw["yaxis2"] = {
             "type": "log", "title": FBAND_TITLE,
+            "hoverformat": ".3e",
             **AXIS_COMMON, "showgrid": False,
         }
     fig.update_layout(**layout_kw)
