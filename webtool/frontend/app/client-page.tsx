@@ -2218,6 +2218,62 @@ export default function HomePage() {
   }, []);
 
   useEffect(() => {
+    if (typeof window === "undefined" || typeof document === "undefined") return;
+    const root = document.documentElement;
+    let rafId: number | null = null;
+
+    const updateViewportHeight = () => {
+      if (rafId !== null) return;
+      rafId = window.requestAnimationFrame(() => {
+        rafId = null;
+        const vh = window.innerHeight * 0.01;
+        root.style.setProperty("--app-vh", `${vh}px`);
+      });
+    };
+
+    updateViewportHeight();
+    window.addEventListener("resize", updateViewportHeight);
+    window.addEventListener("orientationchange", updateViewportHeight);
+    const viewport = window.visualViewport;
+    viewport?.addEventListener("resize", updateViewportHeight);
+
+    return () => {
+      window.removeEventListener("resize", updateViewportHeight);
+      window.removeEventListener("orientationchange", updateViewportHeight);
+      viewport?.removeEventListener("resize", updateViewportHeight);
+      if (rafId !== null) {
+        window.cancelAnimationFrame(rafId);
+      }
+      root.style.removeProperty("--app-vh");
+    };
+  }, []);
+
+  useEffect(() => {
+    if (typeof window === "undefined" || typeof document === "undefined") return;
+    const root = document.documentElement;
+    const syncViewport = () => {
+      const vh = window.innerHeight * 0.01;
+      root.style.setProperty("--app-vh", `${vh}px`);
+    };
+    const triggerResize = () => {
+      window.dispatchEvent(new Event("resize"));
+    };
+
+    syncViewport();
+    triggerResize();
+
+    // Sidebar open/close transition updates plot container size after animation.
+    const settleTimer = window.setTimeout(() => {
+      syncViewport();
+      triggerResize();
+    }, 220);
+
+    return () => {
+      window.clearTimeout(settleTimer);
+    };
+  }, [sidebarOpen]);
+
+  useEffect(() => {
     if (typeof document === "undefined") return;
     const prev = document.body.style.overflow;
     if (sidebarOpen) {

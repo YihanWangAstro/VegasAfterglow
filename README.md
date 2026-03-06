@@ -139,6 +139,8 @@ streamlit run webapp/app.py
 
 The web app requires Streamlit 1.52 or newer.
 
+The hosted **[Interactive Web Tool](https://vegasafterglow.vercel.app)** provides real-time parameter-tunable afterglow modeling, mobile-phone compatible layout, and observational data input/upload support.
+
 VegasAfterglow requires Python 3.8 or higher.
 
 <details>
@@ -211,7 +213,7 @@ The following development tools are required:
 
 VegasAfterglow can be used in three ways:
 
-* **[Interactive web tool](https://vegasafterglow.vercel.app)** — explore light curves, spectra, and sky images in your browser, no installation required. However, the network latency and server load may affect your experience.
+* **[Interactive web tool](https://vegasafterglow.vercel.app)** — real-time, parameter-tunable afterglow modeling for light curves, spectra, and sky images, with mobile-phone compatible UI and observational data input/upload support (CSV/TXT/XLS/XLSX). No installation required.
 * **Command line** — generate light curves instantly with the `vegasgen` command, no code needed.
 * **Python API** — full programmatic control for custom analysis, MCMC fitting, and access to internal quantities.
 

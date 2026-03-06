@@ -8,6 +8,7 @@
   --text: #e6edf3;
   --text-muted: #8b949e;
   --border: #30363d;
+  --app-vh: 1vh;
 }
 
 * {
@@ -731,7 +732,7 @@ textarea {
 
 @media (max-width: 760px) {
   .app-shell {
-    --mobile-sheet-height: clamp(270px, 50dvh, 470px);
+    --mobile-sheet-height: clamp(300px, calc(var(--app-vh) * 54), 520px);
   }
 
   .sidebar {
@@ -742,7 +743,7 @@ textarea {
     width: 100vw;
     max-width: 100vw;
     height: var(--mobile-sheet-height);
-    max-height: 58dvh;
+    max-height: calc(var(--app-vh) * 62);
     border-right: none;
     border-top: 1px solid var(--border);
     border-top-left-radius: 14px;
@@ -864,13 +865,13 @@ textarea {
   }
 
   .plot-wrap {
-    height: clamp(300px, 56dvh, 620px);
+    height: clamp(300px, calc(var(--app-vh) * 56), 620px);
     flex: 0 0 auto;
     transition: height 160ms ease;
   }
 
   .plot-wrap.plot-wrap-square {
-    width: min(100%, calc(100dvh - 7.4rem));
+    width: min(100%, calc(var(--app-vh) * 100 - 7.4rem));
   }
 
   .app-shell.sidebar-open .workspace {
@@ -878,7 +879,7 @@ textarea {
   }
 
   .app-shell.sidebar-open .plot-wrap {
-    height: clamp(230px, 40dvh, 420px);
+    height: clamp(230px, calc(var(--app-vh) * 40), 420px);
   }
 
   .workspace-empty {

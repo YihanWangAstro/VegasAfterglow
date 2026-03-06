@@ -5,6 +5,8 @@
 - Spectrum
 - Sky Image
 
+It is designed for real-time parameter tuning, mobile-phone compatible interaction, and observational data input/upload workflows.
+
 The backend exposes compute + plotting + export APIs, and the frontend renders Plotly figures and downloads CSV/JSON.
 
 ## 1) Run backend
