@@ -11,6 +11,8 @@ import {
   useState,
   useTransition,
   type CSSProperties,
+  type KeyboardEvent as ReactKeyboardEvent,
+  type PointerEvent as ReactPointerEvent,
   type ReactNode,
 } from "react";
 
@@ -49,7 +51,8 @@ type OptionsResponse = {
   instrument_groups?: { label?: string; items?: string[] }[];
   version?: string;
 };
-type DownloadKind = "csv" | "json" | "gif";
+type DownloadKind = "csv" | "json" | "gif" | "png";
+type BackendDownloadKind = Exclude<DownloadKind, "png">;
 
 type ObservationGroup = {
   legend: string;
@@ -118,9 +121,9 @@ const INTERACTIVE_SPECTRUM_NUM_NU_MAX = 120;
 const INTERACTIVE_SKY_PIXEL_MAX_STATIC = 256;
 const INTERACTIVE_SKY_PIXEL_MAX_ANIMATE = 256;
 const INTERACTIVE_SKY_FRAMES_MAX = 8;
-const AUTO_RUN_DEBOUNCE_IDLE_MS = 0;
-const AUTO_RUN_DEBOUNCE_SLIDING_MS = 12;
-const SLIDER_COMMIT_INTERVAL_MS = 16;
+const AUTO_RUN_DEBOUNCE_IDLE_MS = 10;
+const AUTO_RUN_DEBOUNCE_SLIDING_MS = 20;
+const SLIDER_COMMIT_INTERVAL_MS = 20;
 const SPECTRUM_TEXT_COMMIT_DEBOUNCE_MS = 220;
 const AXIS_EPS = 1e-6;
 const MODE_OPTIONS: { value: Mode; label: string }[] = [
@@ -192,10 +195,12 @@ const PlotFigure = memo(function PlotFigure({
   figure,
   mode,
   onRelayout,
+  onGraphReady,
 }: {
   figure: NonNullable<RunResponse["figure"]>;
   mode: Mode;
   onRelayout: (event: Record<string, unknown>) => void;
+  onGraphReady?: (graphDiv: unknown) => void;
 }) {
   const graphRef = useRef<any>(null);
   const [graphRevision, setGraphRevision] = useState(0);
@@ -204,9 +209,16 @@ const PlotFigure = memo(function PlotFigure({
     const nextGraph = graphDiv as any;
     if (graphRef.current !== nextGraph) {
       graphRef.current = nextGraph;
+      onGraphReady?.(nextGraph);
       setGraphRevision((v) => v + 1);
     }
-  }, []);
+  }, [onGraphReady]);
+
+  useEffect(() => {
+    return () => {
+      onGraphReady?.(null);
+    };
+  }, [onGraphReady]);
 
   useEffect(() => {
     const hasFrames = Array.isArray(figure.frames) && figure.frames.length > 1;
@@ -296,6 +308,137 @@ function stripTrailingSlash(url: string): string {
 
 function safeLog10(value: number, fallback: number): number {
   return Number.isFinite(value) && value > 0 ? Math.log10(value) : fallback;
+}
+
+function formatParamValueNode(value: number): ReactNode {
+  if (!Number.isFinite(value)) return String(value);
+  if (value === 0) return "0";
+  const abs = Math.abs(value);
+  const exponent = Math.floor(Math.log10(abs));
+  const mantissa = value / Math.pow(10, exponent);
+  const mantissaText = mantissa.toFixed(2).replace(/\.?0+$/, "");
+  if (exponent === 0) return mantissaText;
+  if (mantissaText === "1") {
+    return (
+      <>
+        10<sup>{exponent}</sup>
+      </>
+    );
+  }
+  if (mantissaText === "-1") {
+    return (
+      <>
+        -10<sup>{exponent}</sup>
+      </>
+    );
+  }
+  return (
+    <>
+      {mantissaText} x 10<sup>{exponent}</sup>
+    </>
+  );
+}
+
+function formatParamValueHtml(value: number): string {
+  if (!Number.isFinite(value)) return String(value);
+  if (value === 0) return "0";
+  const abs = Math.abs(value);
+  const exponent = Math.floor(Math.log10(abs));
+  const mantissa = value / Math.pow(10, exponent);
+  const mantissaText = mantissa.toFixed(2).replace(/\.?0+$/, "");
+  if (exponent === 0) return mantissaText;
+  if (mantissaText === "1") return `10<sup>${exponent}</sup>`;
+  if (mantissaText === "-1") return `-10<sup>${exponent}</sup>`;
+  return `${mantissaText} x 10<sup>${exponent}</sup>`;
+}
+
+function wrapCaptionForAnnotation(html: string, maxChars = 110): string {
+  const segments = html.split(", ");
+  const lines: string[] = [];
+  let current = "";
+  const plainLength = (value: string) => value.replace(/<[^>]+>/g, "").length;
+
+  for (const segment of segments) {
+    if (!current) {
+      current = segment;
+      continue;
+    }
+    const candidate = `${current}, ${segment}`;
+    if (plainLength(candidate) > maxChars) {
+      lines.push(current);
+      current = segment;
+    } else {
+      current = candidate;
+    }
+  }
+  if (current) lines.push(current);
+  return lines.join("<br>");
+}
+
+function clampRangeValue(value: number, min: number, max: number): number {
+  return Math.max(min, Math.min(max, value));
+}
+
+type RangeKeyAction = "dec" | "inc" | "min" | "max" | null;
+
+function rangeKeyAction(event: ReactKeyboardEvent<HTMLInputElement>): RangeKeyAction {
+  const key = event.key;
+  const code = event.code;
+  if (key === "ArrowLeft" || key === "ArrowDown" || key === "Left" || key === "Down") return "dec";
+  if (key === "ArrowRight" || key === "ArrowUp" || key === "Right" || key === "Up") return "inc";
+  if (key === "Home") return "min";
+  if (key === "End") return "max";
+  if (code === "ArrowLeft" || code === "ArrowDown") return "dec";
+  if (code === "ArrowRight" || code === "ArrowUp") return "inc";
+  if (code === "Home") return "min";
+  if (code === "End") return "max";
+  if (key === "UIKeyInputLeftArrow" || key === "UIKeyInputDownArrow") return "dec";
+  if (key === "UIKeyInputRightArrow" || key === "UIKeyInputUpArrow") return "inc";
+
+  const nativeEvent = event.nativeEvent as KeyboardEvent & { keyIdentifier?: string };
+  const keyIdentifier = nativeEvent.keyIdentifier;
+  if (keyIdentifier === "Left" || keyIdentifier === "Down") return "dec";
+  if (keyIdentifier === "Right" || keyIdentifier === "Up") return "inc";
+  if (keyIdentifier === "Home") return "min";
+  if (keyIdentifier === "End") return "max";
+
+  const keyCode = Number(nativeEvent.keyCode);
+  if (keyCode === 37 || keyCode === 40 || keyCode === 63234 || keyCode === 63233) return "dec";
+  if (keyCode === 39 || keyCode === 38 || keyCode === 63235 || keyCode === 63232) return "inc";
+  if (keyCode === 36 || keyCode === 63273) return "min";
+  if (keyCode === 35 || keyCode === 63275) return "max";
+  return null;
+}
+
+function stepRangeValue(
+  event: ReactKeyboardEvent<HTMLInputElement>,
+  current: number,
+  min: number,
+  max: number,
+  step: number,
+  apply: (next: number) => void,
+): void {
+  let next: number | null = null;
+  switch (rangeKeyAction(event)) {
+    case "dec":
+      next = current - step;
+      break;
+    case "inc":
+      next = current + step;
+      break;
+    case "min":
+      next = min;
+      break;
+    case "max":
+      next = max;
+      break;
+    default:
+      return;
+  }
+
+  event.preventDefault();
+  const snapped = clampRangeValue(Number(next.toFixed(10)), min, max);
+  apply(snapped);
 }
 
 function sliderFillStyle(value: number, min: number, max: number): CSSProperties {
@@ -657,8 +800,16 @@ function LogSliderField({ label, minExp, maxExp, step, value, defaultExp, precis
     scheduleCommit(nextExp);
   };
 
-  const handleStart = () => {
+  const handleKeyDown = (event: ReactKeyboardEvent<HTMLInputElement>) => {
+    stepRangeValue(event, draftExp, minExp, maxExp, step, (nextExp) => {
+      setDraftExp(nextExp);
+      flushCommit(nextExp);
+    });
+  };
+
+  const handleStart = (event: ReactPointerEvent<HTMLInputElement>) => {
     draggingRef.current = true;
+    event.currentTarget.focus();
   };
 
   const handleEnd = () => {
@@ -681,6 +832,9 @@ function LogSliderField({ label, minExp, maxExp, step, value, defaultExp, precis
           onPointerUp={handleEnd}
           onPointerCancel={handleEnd}
           onInput={(e) => handleInput((e.target as HTMLInputElement).value)}
+          onChange={(e) => handleInput((e.target as HTMLInputElement).value)}
+          onKeyDown={handleKeyDown}
+          aria-keyshortcuts="ArrowLeft ArrowRight ArrowUp ArrowDown Home End"
         />
         <span className="sb-value">{draftExp.toFixed(precision)}</span>
       </div>
@@ -754,8 +908,16 @@ function SliderField({ label, min, max, step, value, decimals = 2, formatValue, 
     scheduleCommit(next);
   };
 
-  const handleStart = () => {
+  const handleKeyDown = (event: ReactKeyboardEvent<HTMLInputElement>) => {
+    stepRangeValue(event, draft, min, max, step, (next) => {
+      setDraft(next);
+      flushCommit(next);
+    });
+  };
+
+  const handleStart = (event: ReactPointerEvent<HTMLInputElement>) => {
     draggingRef.current = true;
+    event.currentTarget.focus();
   };
 
   const handleEnd = () => {
@@ -778,6 +940,9 @@ function SliderField({ label, min, max, step, value, decimals = 2, formatValue, 
           onPointerUp={handleEnd}
           onPointerCancel={handleEnd}
           onInput={(e) => handleInput((e.target as HTMLInputElement).value)}
+          onChange={(e) => handleInput((e.target as HTMLInputElement).value)}
+          onKeyDown={handleKeyDown}
+          aria-keyshortcuts="ArrowLeft ArrowRight ArrowUp ArrowDown Home End"
         />
         <span className="sb-value">{formatValue ? formatValue(draft) : draft.toFixed(decimals)}</span>
       </div>
@@ -823,6 +988,7 @@ export default function HomePage() {
   const pendingSpecRef = useRef<ComputationSpec | null>(null);
   const runTimerRef = useRef<number | null>(null);
   const activeRequestRef = useRef<AbortController | null>(null);
+  const graphDivRef = useRef<any>(null);
   const [sliderInteracting, setSliderInteracting] = useState(false);
   const sliderInteractingRef = useRef(false);
   const workspaceRef = useRef<HTMLElement | null>(null);
@@ -1209,6 +1375,70 @@ export default function HomePage() {
     return { ...figure, layout };
   }, [mode, plotWidthPx, result, resultMode, zoomRevision]);
   const deferredFigure = useDeferredValue(displayFigure);
+
+  const figureCaption = useMemo(() => {
+    const title =
+      mode === "lightcurve"
+        ? "Multi-band GRB afterglow light curves"
+        : mode === "spectrum"
+          ? "GRB afterglow spectra"
+          : "GRB afterglow sky images";
+    const mediumLabel =
+      shared.medium_type === "ISM" ? "uniform ISM" : shared.medium_type === "Wind" ? "stellar-wind medium" : "wind-bubble medium";
+    const mediumParam =
+      shared.medium_type === "ISM"
+        ? (
+          <>
+            n<sub>ism</sub>={formatParamValueNode(shared.n_ism)} cm<sup>-3</sup>
+          </>
+        )
+        : shared.medium_type === "Wind"
+          ? (
+            <>
+              A<sub>*</sub>={formatParamValueNode(shared.A_star)}
+            </>
+          )
+          : (
+            <>
+              A<sub>*</sub>={formatParamValueNode(shared.A_star)}, n<sub>floor</sub>={formatParamValueNode(shared.n_ism)} cm<sup>-3</sup>
+            </>
+          );
+
+    return (
+      <>
+        {title} generated with VegasAfterglow for a {shared.jet_type.toLowerCase()} jet in a {mediumLabel}, with E
+        <sub>iso</sub>={formatParamValueNode(shared.E_iso)} erg, Γ<sub>0</sub>={formatParamValueNode(shared.Gamma0)}, θ
+        <sub>c</sub>={formatParamValueNode(shared.theta_c)} rad, {mediumParam}, ε<sub>e</sub>={formatParamValueNode(shared.eps_e)}, ε
+        <sub>B</sub>={formatParamValueNode(shared.eps_B)}, p={formatParamValueNode(shared.p)}, ξ<sub>e</sub>=
+        {formatParamValueNode(shared.xi_e)}, d<sub>L</sub>={formatParamValueNode(shared.d_L_mpc)} Mpc, and θ<sub>obs</sub>=
+        {formatParamValueNode(shared.theta_obs)} rad.
+      </>
+    );
+  }, [mode, shared]);
+
+  const figureCaptionHtml = useMemo(() => {
+    const title =
+      mode === "lightcurve"
+        ? "Multi-band GRB afterglow light curves"
+        : mode === "spectrum"
+          ? "GRB afterglow spectra"
+          : "GRB afterglow sky images";
+    const mediumLabel =
+      shared.medium_type === "ISM" ? "uniform ISM" : shared.medium_type === "Wind" ? "stellar-wind medium" : "wind-bubble medium";
+    const mediumParam =
+      shared.medium_type === "ISM"
+        ? `n<sub>ism</sub>=${formatParamValueHtml(shared.n_ism)} cm<sup>-3</sup>`
+        : shared.medium_type === "Wind"
+          ? `A<sub>*</sub>=${formatParamValueHtml(shared.A_star)}`
+          : `A<sub>*</sub>=${formatParamValueHtml(shared.A_star)}, n<sub>floor</sub>=${formatParamValueHtml(shared.n_ism)} cm<sup>-3</sup>`;
+
+    const html = `${title} generated with VegasAfterglow for a ${shared.jet_type.toLowerCase()} jet in a ${mediumLabel}, with E<sub>iso</sub>=${formatParamValueHtml(shared.E_iso)} erg, Γ<sub>0</sub>=${formatParamValueHtml(shared.Gamma0)}, θ<sub>c</sub>=${formatParamValueHtml(shared.theta_c)} rad, ${mediumParam}, ε<sub>e</sub>=${formatParamValueHtml(shared.eps_e)}, ε<sub>B</sub>=${formatParamValueHtml(shared.eps_B)}, p=${formatParamValueHtml(shared.p)}, ξ<sub>e</sub>=${formatParamValueHtml(shared.xi_e)}, d<sub>L</sub>=${formatParamValueHtml(shared.d_L_mpc)} Mpc, and θ<sub>obs</sub>=${formatParamValueHtml(shared.theta_obs)} rad.`;
+    return wrapCaptionForAnnotation(html);
+  }, [mode, shared]);
+
+  const handleGraphReady = useCallback((graphDiv: unknown) => {
+    graphDivRef.current = graphDiv;
+  }, []);
 
   const clearSavedXAxis = useCallback(
     (targetMode: Mode) => {
@@ -2554,8 +2784,72 @@ export default function HomePage() {
     setZoomRevision((v) => v + 1);
   }, [mode]);
 
+  const downloadPngWithCaption = useCallback(async () => {
+    setError("");
+    setDownloading("png");
+    try {
+      const graphDiv = graphDivRef.current;
+      if (!graphDiv) {
+        throw new Error("Plot is not ready for image export yet.");
+      }
+
+      const plotlyModule = await import("plotly.js-dist-min");
+      const Plotly = (plotlyModule as any).default ?? (plotlyModule as any);
+      const layout = (graphDiv.layout ?? {}) as Record<string, unknown>;
+      const marginObj =
+        layout.margin && typeof layout.margin === "object" ? (layout.margin as Record<string, unknown>) : {};
+      const marginBValue = Number(marginObj.b);
+      const hasMarginB = Number.isFinite(marginBValue);
+      const originalMarginB = hasMarginB ? marginBValue : 0;
+      const originalAnnotations = Array.isArray(layout.annotations) ? [...(layout.annotations as unknown[])] : [];
+      const captionAnnotation = {
+        text: figureCaptionHtml,
+        xref: "paper",
+        yref: "paper",
+        x: 0,
+        y: -0.26,
+        xanchor: "left",
+        yanchor: "top",
+        showarrow: false,
+        align: "left",
+        font: { size: 12, color: "#3c4f63" },
+      };
+      const exportMarginB = Math.max(originalMarginB, mode === "skymap" ? 120 : 140);
+
+      await Plotly.relayout(graphDiv, {
+        annotations: [...originalAnnotations, captionAnnotation],
+        "margin.b": exportMarginB,
+      });
+
+      try {
+        const width = Number(graphDiv.clientWidth);
+        const height = Number(graphDiv.clientHeight);
+        const image = await Plotly.toImage(graphDiv, {
+          format: "png",
+          scale: 2,
+          width: Number.isFinite(width) && width > 0 ? width : undefined,
+          height: Number.isFinite(height) && height > 0 ? height : undefined,
+        });
+        downloadBase64(image, `afterglow_${mode}.png`, "image/png");
+      } finally {
+        const restorePayload: Record<string, unknown> = { annotations: originalAnnotations };
+        restorePayload["margin.b"] = hasMarginB ? originalMarginB : null;
+        try {
+          await Plotly.relayout(graphDiv, restorePayload);
+        } catch {
+          // Ignore restore failures; next rerender will restore plot state.
+        }
+      }
+    } catch (err) {
+      const message = err instanceof Error ? err.message : "PNG export failed";
+      setError(message);
+    } finally {
+      setDownloading(null);
+    }
+  }, [figureCaptionHtml, mode]);
+
   const downloadCurrentExport = useCallback(
-    async (kind: DownloadKind) => {
+    async (kind: BackendDownloadKind) => {
       setError("");
       setDownloading(kind);
       try {
@@ -2709,6 +3003,9 @@ export default function HomePage() {
                 {downloading === "gif" ? "Preparing GIF..." : "Save GIF"}
               </button>
             )}
+            <button disabled={downloading !== null || !displayFigure?.data} onClick={() => void downloadPngWithCaption()}>
+              {downloading === "png" ? "Preparing PNG..." : "PNG"}
+            </button>
             <button
               disabled={downloading !== null || !displayFigure?.data}
               onClick={() => void downloadCurrentExport("json")}
@@ -2736,7 +3033,10 @@ export default function HomePage() {
         ) : null}
 
         {deferredFigure?.data ? (
-          <PlotFigure figure={deferredFigure} mode={mode} onRelayout={handlePlotRelayout} />
+          <div className={`figure-stack${mode === "skymap" ? " figure-stack-square" : ""}`}>
+            <PlotFigure figure={deferredFigure} mode={mode} onRelayout={handlePlotRelayout} onGraphReady={handleGraphReady} />
+            <p className="figure-caption">{figureCaption}</p>
+          </div>
         ) : (
           <div className="workspace-empty">
             <p className="muted">Adjust parameters in the sidebar to render plot.</p>

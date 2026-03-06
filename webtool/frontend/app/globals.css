@@ -662,6 +662,37 @@ textarea {
   margin: 0.2rem 0;
 }
 
+.figure-stack {
+  width: 100%;
+  min-height: 0;
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.figure-stack.figure-stack-square {
+  width: min(100%, calc(100vh - 2.6rem));
+  max-width: none;
+  margin: 0 auto;
+  flex: 0 0 auto;
+}
+
+.figure-stack.figure-stack-square .plot-wrap.plot-wrap-square {
+  width: 100%;
+}
+
+.figure-caption {
+  margin: 0.5rem 0 0;
+  width: 100%;
+  border: none;
+  background: transparent;
+  border-radius: 0;
+  padding: 0;
+  font-size: 0.82rem;
+  line-height: 1.45;
+  color: #3c4f63;
+}
+
 .plot-wrap {
   width: 100%;
   max-width: none;
@@ -900,6 +931,10 @@ textarea {
     width: min(100%, calc(var(--app-vh) * 100 - 7.4rem));
   }
 
+  .app-shell.sidebar-open .figure-caption {
+    display: none;
+  }
+
   .app-shell.sidebar-open .workspace {
     padding-bottom: calc(var(--mobile-sheet-height) + 0.8rem + env(safe-area-inset-bottom));
   }
@@ -930,7 +965,8 @@ textarea {
   }
 }
 
-@media (max-width: 900px) and (orientation: landscape) and (pointer: coarse) {
+@media (max-width: 1100px) and (orientation: landscape) and (pointer: coarse),
+  (max-width: 1100px) and (orientation: landscape) and (hover: none) {
   .app-shell {
     grid-template-columns: minmax(260px, 34vw) minmax(0, 1fr);
     min-height: 100dvh;
@@ -964,6 +1000,31 @@ textarea {
     line-height: 1.24;
   }
 
+  .sb-slider-track {
+    gap: 0.56rem;
+    min-height: 1.7rem;
+  }
+
+  .sb-slider input[type="range"]::-webkit-slider-runnable-track {
+    height: 0.3rem;
+  }
+
+  .sb-slider input[type="range"]::-webkit-slider-thumb {
+    width: 1.16rem;
+    height: 1.16rem;
+    margin-top: -0.43rem;
+  }
+
+  .sb-slider input[type="range"]::-moz-range-track,
+  .sb-slider input[type="range"]::-moz-range-progress {
+    height: 0.3rem;
+  }
+
+  .sb-slider input[type="range"]::-moz-range-thumb {
+    width: 1.16rem;
+    height: 1.16rem;
+  }
+
   .sidebar-header {
     position: static;
     margin-bottom: 0.2rem;
@@ -982,13 +1043,45 @@ textarea {
     padding: 0.55rem 0.55rem 0.62rem;
   }
 
+  .figure-stack,
+  .figure-stack.figure-stack-square {
+    width: 100%;
+    max-width: none;
+    margin: 0;
+    flex: 1 1 auto;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) clamp(64px, 10vw, 96px);
+    gap: 0.42rem;
+    align-items: stretch;
+  }
+
+  .figure-stack .plot-wrap.plot-wrap-square,
+  .figure-stack.figure-stack-square .plot-wrap.plot-wrap-square {
+    width: 100%;
+    max-width: none;
+    margin: 0;
+  }
+
   .plot-wrap {
     height: 100%;
     min-height: 0;
-    flex: 1 1 auto;
+    flex: 0 0 auto;
   }
 
   .plot-wrap.plot-wrap-square {
-    width: min(100%, calc(100dvh - 1.4rem));
+    width: 100%;
+  }
+
+  .figure-caption,
+  .app-shell.sidebar-open .figure-caption {
+    display: block;
+    margin: 0;
+    height: auto;
+    max-height: 100%;
+    align-self: center;
+    overflow: auto;
+    font-size: 0.66rem;
+    line-height: 1.15;
+    padding: 0;
   }
 }
