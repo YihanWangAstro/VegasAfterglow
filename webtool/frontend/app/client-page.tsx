@@ -113,15 +113,14 @@ const SKY_MAX_PIXEL_ANIMATE = 512;
 const SKY_MAX_PIXEL_STATIC = 1024;
 const SKY_PIXEL_OPTIONS = [64, 128, 256, 512, 1024] as const;
 const ENABLE_INTERACTIVE_DOWNSAMPLE = false;
-const ABORT_STALE_WHILE_SLIDING = true;
 const INTERACTIVE_LIGHTCURVE_NUM_T_MAX = 120;
 const INTERACTIVE_SPECTRUM_NUM_NU_MAX = 120;
 const INTERACTIVE_SKY_PIXEL_MAX_STATIC = 256;
 const INTERACTIVE_SKY_PIXEL_MAX_ANIMATE = 256;
 const INTERACTIVE_SKY_FRAMES_MAX = 8;
-const AUTO_RUN_DEBOUNCE_IDLE_MS = 10;
-const AUTO_RUN_DEBOUNCE_SLIDING_MS = 20;
-const SLIDER_COMMIT_INTERVAL_MS = 30;
+const AUTO_RUN_DEBOUNCE_IDLE_MS = 0;
+const AUTO_RUN_DEBOUNCE_SLIDING_MS = 12;
+const SLIDER_COMMIT_INTERVAL_MS = 16;
 const SPECTRUM_TEXT_COMMIT_DEBOUNCE_MS = 220;
 const AXIS_EPS = 1e-6;
 const MODE_OPTIONS: { value: Mode; label: string }[] = [
@@ -2355,9 +2354,6 @@ export default function HomePage() {
 
   useEffect(() => {
     if (!bootReady) return;
-    if (ABORT_STALE_WHILE_SLIDING && sliderInteracting && requestInFlightRef.current) {
-      activeRequestRef.current?.abort();
-    }
     pendingSpecRef.current = computationSpec;
     if (runTimerRef.current !== null) {
       window.clearTimeout(runTimerRef.current);
