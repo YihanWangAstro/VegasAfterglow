@@ -102,18 +102,19 @@ All commands below run once unless noted.
 
 Create serverless NEGs:
 
+Note: for serverless NEG, Cloud Run region is derived from `--region`.
+If your `gcloud` does not recognize `--cloud-run-region`, do not pass it.
+
 ```bash
 gcloud compute network-endpoint-groups create webtool-api-usw2-neg \
   --region=us-west2 \
   --network-endpoint-type=serverless \
-  --cloud-run-service=webtool-api \
-  --cloud-run-region=us-west2
+  --cloud-run-service=webtool-api
 
 gcloud compute network-endpoint-groups create webtool-api-asiae2-neg \
   --region=asia-east2 \
   --network-endpoint-type=serverless \
-  --cloud-run-service=webtool-api \
-  --cloud-run-region=asia-east2
+  --cloud-run-service=webtool-api
 ```
 
 Create global backend service:
@@ -170,19 +171,58 @@ Get LB IP:
 gcloud compute addresses describe webtool-api-lb-ip --global --format='value(address)'
 ```
 
-At your DNS provider, create:
-
-- type `A`
-- host `api`
-- value `<GLOBAL_LB_IP>`
-
-Wait for SSL to become active:
+Set it as a shell var (recommended):
 
 ```bash
-gcloud compute ssl-certificates describe webtool-api-cert --global --format='value(managed.status)'
+export GLOBAL_LB_IP="$(gcloud compute addresses describe webtool-api-lb-ip --global --format='value(address)')"
+echo "$GLOBAL_LB_IP"
 ```
 
-Expected status: `ACTIVE`.
+### 4.1 DNS setup (critical)
+
+At your DNS provider for `vegasafterglow.com`, create this record:
+
+- Type: `A`
+- Name/Host: `api`
+- Value/Content: `<GLOBAL_LB_IP>`
+- TTL: `Auto` (or `300`)
+
+Notes:
+
+- If using Cloudflare, set `Proxy status = DNS only` (gray cloud) while cert is provisioning.
+- Do not create a conflicting `CNAME` for `api`.
+- If you have an old `A` record for `api`, replace it with `GLOBAL_LB_IP`.
+
+### 4.2 Verify DNS propagation
+
+```bash
+dig +short api.vegasafterglow.com A
+dig @8.8.8.8 +short api.vegasafterglow.com A
+dig +short api.vegasafterglow.com AAAA
+```
+
+Expected:
+
+- `A` output contains exactly `GLOBAL_LB_IP`
+- `AAAA` is empty unless you also configured IPv6 forwarding
+
+### 4.3 Verify managed cert status
+
+```bash
+gcloud compute ssl-certificates describe webtool-api-cert --global \
+  --format='yaml(managed.status,managed.domainStatus,managed.domains)'
+```
+
+Expected final state:
+
+- `managed.status: ACTIVE`
+- `managed.domainStatus.api.vegasafterglow.com: ACTIVE`
+
+If it stays `PROVISIONING` for more than 1-2 hours:
+
+1. Re-check DNS A record points to `GLOBAL_LB_IP`
+2. Ensure Cloudflare proxy is off (DNS only)
+3. Wait for DNS propagation, then check cert status again
 
 ## 5) Configure frontend API endpoint (Vercel env)
 
@@ -194,8 +234,8 @@ cd /Users/yihanwang/Repositories/afterglow/webtool/frontend
 vercel env rm NEXT_PUBLIC_API_URL production --yes || true
 vercel env rm NEXT_PUBLIC_API_URL preview --yes || true
 
-printf '%s\n' "https://api.vegasafterglow.com" | vercel env add NEXT_PUBLIC_API_URL production
-printf '%s\n' "https://api.vegasafterglow.com" | vercel env add NEXT_PUBLIC_API_URL preview
+printf 'https://api.vegasafterglow.com' | vercel env add NEXT_PUBLIC_API_URL production
+printf 'https://api.vegasafterglow.com' | vercel env add NEXT_PUBLIC_API_URL preview
 ```
 
 Deploy frontend:
@@ -257,6 +297,6 @@ Update Vercel `NEXT_PUBLIC_API_URL` (production + preview) and redeploy frontend
 
 Current script defaults:
 
-- `cpu=1`, `memory=2Gi`, `concurrency=20`, `max-instances=10`
+- `cpu=1`, `memory=2Gi`, `concurrency=8`, `max-instances=10`
 
 For light traffic and cost control, keep `MIN_INSTANCES=0`.

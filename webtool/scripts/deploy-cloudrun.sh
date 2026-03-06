@@ -12,6 +12,7 @@ ALLOWED_ORIGINS="${ALLOWED_ORIGINS:?Set ALLOWED_ORIGINS (comma-separated, e.g. h
 IMAGE_TAG="${IMAGE_TAG:-$(git rev-parse --short HEAD 2>/dev/null || date +%Y%m%d%H%M%S)}"
 IMAGE_URI="${REGION}-docker.pkg.dev/${PROJECT_ID}/${ARTIFACT_REPO}/${SERVICE_NAME}:${IMAGE_TAG}"
 MIN_INSTANCES="${MIN_INSTANCES:-0}"
+CONCURRENCY="${CONCURRENCY:-8}"
 
 if ! gcloud artifacts repositories describe "$ARTIFACT_REPO" \
   --location "$REGION" \
@@ -37,7 +38,7 @@ gcloud run deploy "$SERVICE_NAME" \
   --execution-environment gen2 \
   --cpu 1 \
   --memory 2Gi \
-  --concurrency 20 \
+  --concurrency "$CONCURRENCY" \
   --timeout 300 \
   --min-instances "$MIN_INSTANCES" \
   --max-instances 10 \

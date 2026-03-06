@@ -112,6 +112,7 @@ const SKY_MAX_N_FRAMES = 30;
 const SKY_MAX_PIXEL_ANIMATE = 512;
 const SKY_MAX_PIXEL_STATIC = 1024;
 const SKY_PIXEL_OPTIONS = [64, 128, 256, 512, 1024] as const;
+const ENABLE_INTERACTIVE_DOWNSAMPLE = false;
 const INTERACTIVE_LIGHTCURVE_NUM_T_MAX = 120;
 const INTERACTIVE_SPECTRUM_NUM_NU_MAX = 120;
 const INTERACTIVE_SKY_PIXEL_MAX_STATIC = 256;
@@ -2030,7 +2031,7 @@ export default function HomePage() {
   ]);
 
   const computationSpec = useMemo<ComputationSpec>(
-    () => buildInteractiveSpec(fullComputationSpec, sliderInteracting),
+    () => buildInteractiveSpec(fullComputationSpec, ENABLE_INTERACTIVE_DOWNSAMPLE && sliderInteracting),
     [fullComputationSpec, sliderInteracting],
   );
 
