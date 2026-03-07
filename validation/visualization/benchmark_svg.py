@@ -82,10 +82,10 @@ def _make_chart(bench, rad_type, rad_label, out_path):
     raw_max = max(all_totals) if all_totals else 10.0
     grid_interval = 1.0
     for factor in [1, 2, 5, 10, 20, 25, 50, 100, 200, 250, 500]:
-        if factor * 4 >= raw_max * 1.15:
+        if factor * 3 >= raw_max * 1.10:
             grid_interval = factor
             break
-    Y_MAX = grid_interval * 4
+    Y_MAX = grid_interval * 3
 
     def gx(gi):   return X_LEFT + gi * (GROUP_W + INTER)
     def bx(gi, bi): return gx(gi) + bi * (BAR_W + INTRA)
@@ -108,8 +108,8 @@ def _make_chart(bench, rad_type, rad_label, out_path):
     emit('  <!-- Title -->')
     emit(f'  <text x="475" y="28" text-anchor="middle" font-size="15" font-weight="700"'
          f' fill="#E6EDF3" letter-spacing="0.3">Performance \u00b7 {rad_label}</text>')
-    cpu_note = (f"CPU time by stage \u00b7 {cpu_label} \u00b7 default resolution"
-                if cpu_label else "CPU time by stage \u00b7 default resolution")
+    cpu_note = (f"CPU time by stage \u00b7 {cpu_label} \u00b7 single core \u00b7 default resolution"
+                if cpu_label else "CPU time by stage \u00b7 single core \u00b7 default resolution")
     emit(f'  <text x="475" y="44" text-anchor="middle" font-size="9" fill="#A8B8CC">{cpu_note}</text>')
     emit(f'  <text x="475" y="57" text-anchor="middle" font-size="9" fill="#A8B8CC">'
          f'each group: \u03b8v/\u03b8c\u202f=\u202f0\u2002\u2502\u20021\u2002\u2502\u20022\u2002\u2502\u20024\u2002(left \u2192 right)</text>')
@@ -131,7 +131,7 @@ def _make_chart(bench, rad_type, rad_label, out_path):
     emit('  <!-- Gridlines -->')
     emit(f'  <line x1="{X_LEFT}" y1="{Y_BOT}" x2="{X_RIGHT}" y2="{Y_BOT}"'
          ' stroke="#2D3345" stroke-width="1"/>')
-    for n in range(1, 5):
+    for n in range(1, 4):
         ms_val = n * grid_interval
         gy = fy(ms_val)
         emit(f'  <line x1="{X_LEFT}" y1="{gy:.1f}" x2="{X_RIGHT}" y2="{gy:.1f}"'
