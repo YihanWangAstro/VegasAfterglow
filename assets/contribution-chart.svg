@@ -9,7 +9,7 @@
   </defs>
 
   <!-- Background -->
-  <rect width="950" height="340" fill="#111827" rx="12"/>
+  <rect width="950" height="340" fill="#0d1117" rx="12"/>
 
   <!-- Title -->
   <text x="475" y="30" text-anchor="middle" font-size="16" font-weight="700" fill="#E6EDF3" letter-spacing="0.3">Contribution Overview</text>
@@ -22,10 +22,7 @@
   <rect x="542" y="44" width="14" height="14" rx="2" fill="#9B7DD0"/>
   <text x="560" y="56" font-size="11" fill="#94A3B8">CodeX</text>
 
-  <!-- Group backgrounds -->
-  <rect x="56.0" y="67" width="120.0" height="238" rx="4" fill="#161D2C"/>
-  <rect x="359.2" y="67" width="120.0" height="238" rx="4" fill="#161D2C"/>
-  <rect x="662.4" y="67" width="120.0" height="238" rx="4" fill="#161D2C"/>
+
 
   <!-- Baseline -->
   <line x1="60" y1="255" x2="930" y2="255" stroke="#2D3345" stroke-width="1"/>

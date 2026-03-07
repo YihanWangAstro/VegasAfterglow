@@ -101,14 +101,19 @@
 
 ## Performance Highlights
 
-<img align="left" src="https://github.com/YihanWangAstro/VegasAfterglow/raw/main/assets/convergence_plot.png" width="450"/>
+VegasAfterglow is designed for speed. A tophat synchrotron light curve completes in under 1 ms; even the most demanding case — a structured jet with full SSC off-axis — finishes in ~300 ms. This makes MCMC parameter estimation practical on a laptop:
 
-A 100-point single-frequency light curve for a structured off-axis jet runs in ~1 ms on one Apple M2 core. This enables MCMC parameter estimation on a laptop:
-
-* **Tophat jet**: 10,000 MCMC steps (320,000 likelihood evaluations), 8 parameters, 15 data points — ~15 seconds (Apple M2, 8 cores).
+* **Tophat jet**: 10,000 MCMC steps, 8 parameters, 15 data points for ~0.3 M samples — ~15 s (Apple M2, 8 cores).
 * **Structured jet**: same setup — ~1 minute.
 
-<br clear="left"/>
+The charts below benchmark wall-clock time by stage across four jet profiles (Tophat, Gaussian, Power-law, Two-component), two media (ISM/Wind), and $\theta_v/\theta_c = 0, 1, 2, 4$, all at the default fiducial resolution — conservatively set to ensure convergence across a wide range of physical parameters. Cost scales with two factors: off-axis observers require a full 3D equal-arrival-time grid vs. 2D on-axis (~10–15× overhead near $\theta_v \sim \theta_c$), and structured jets compute radiation independently at each $\theta$ vs. reusing one solution for tophat (~5–8× for synchrotron, up to ~30× for SSC). Reverse shock adds a second shocked shell, roughly doubling the dynamics cost.
+
+
+<div align="center">
+<img src="assets/benchmark-sync.svg" alt="Synchrotron performance" width="900"/>
+<img src="assets/benchmark-rvs.svg" alt="Reverse shock performance" width="900"/>
+<img src="assets/benchmark-ssc.svg" alt="Full SSC performance" width="900"/>
+</div>
 
 ---
 

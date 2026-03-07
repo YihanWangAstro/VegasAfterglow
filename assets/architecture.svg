@@ -3,7 +3,7 @@
      font-family="-apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif">
 
   <!-- Background -->
-  <rect width="950" height="706" fill="#111827" rx="12"/>
+  <rect width="950" height="706" fill="#0d1117" rx="12"/>
 
   <!-- ════════════════════ TITLE ════════════════════ -->
   <text x="475" y="24" text-anchor="middle" font-size="17" font-weight="700" fill="#E6EDF3"

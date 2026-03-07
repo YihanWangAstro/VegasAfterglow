@@ -15,6 +15,7 @@ from validation.visualization.common import (FIDUCIAL_VALUES, MAX_ERROR_THRESHOL
 DEFAULT_WORKERS = os.cpu_count() or 4
 
 VALIDATION_DIR = Path(__file__).parent
+ROOT_DIR = VALIDATION_DIR.parent
 BENCH_RESULTS_PATH = VALIDATION_DIR / "benchmark" / "results" / "benchmark_history.json"
 REGR_RESULTS_PATH = VALIDATION_DIR / "regression" / "results" / "regression_results.json"
 
@@ -110,6 +111,23 @@ def run_regression():
     return ok, REGR_RESULTS_PATH
 
 
+def generate_benchmark_charts():
+    """Generate benchmark SVG assets from benchmark_history.json."""
+    if not BENCH_RESULTS_PATH.exists():
+        print("  Skipping benchmark chart generation (no results file found)")
+        return False
+    print(_header("Generating Benchmark Charts"))
+    try:
+        from validation.visualization.benchmark_svg import generate
+        generate(BENCH_RESULTS_PATH)
+        return True
+    except Exception as e:
+        print(f"{_bold_red('Error')} generating benchmark charts: {e}")
+        import traceback
+        traceback.print_exc()
+        return False
+
+
 def generate_report(benchmark_path=None, regression_path=None, output_dir=None, parallel=0, version_override=None):
     print(_header("Generating Validation Report"))
     try:
@@ -144,6 +162,8 @@ def main():
     parser.add_argument("--version", type=str, default=None,
                         help="Version to display in report (overrides detected version)")
     parser.add_argument("--strict", action="store_true", help="Fail on ACCEPTABLE status")
+    parser.add_argument("--update-assets", action="store_true",
+                        help="Regenerate benchmark SVG assets in assets/ (overwrites existing)")
     args = parser.parse_args()
 
     if not any([args.all, args.benchmark, args.regression, args.check_only]):
@@ -180,6 +200,10 @@ def main():
             if not passed:
                 all_passed = False
                 messages.append(f"{label} validation failed")
+
+    # Generate benchmark SVG charts (only when explicitly requested)
+    if args.update_assets:
+        generate_benchmark_charts()
 
     # Generate report
     if not args.no_report:
