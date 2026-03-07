@@ -35,6 +35,7 @@
   - [Table of Contents](#table-of-contents)
   - [Features](#features)
   - [Performance Highlights](#performance-highlights)
+  - [Architecture](#architecture)
   - [Installation](#installation)
     - [Python Installation](#python-installation)
     - [C++ Installation](#c-installation)
@@ -97,7 +98,7 @@
 
 ## Performance Highlights
 
-VegasAfterglow is designed for speed. A tophat synchrotron light curve completes in under 1 ms; even the most demanding case — a structured jet with full SSC off-axis — finishes in ~300 ms. This makes MCMC parameter estimation practical on a laptop:
+VegasAfterglow is designed for speed. A tophat synchrotron light curve completes in under 1 ms; even the most demanding case — a structured jet with full SSC off-axis — finishes in ~300 ms. This makes MCMC parameter estimation lightning fast on a laptop:
 
 * **Tophat jet**: 10,000 MCMC steps, 8 parameters, 15 data points for ~0.3 M samples — ~15 s (Apple M2, 8 cores).
 * **Structured jet**: same setup — ~1 minute.
