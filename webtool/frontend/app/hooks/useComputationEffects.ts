@@ -2,7 +2,7 @@ import { useCallback, useEffect, useRef, useState, type Dispatch, type SetStateA
 import { AUTO_RUN_DEBOUNCE_IDLE_MS, AUTO_RUN_DEBOUNCE_SLIDING_MS, COLD_START_HINT_MS } from "../lib/constants";
 import type { ComputationSpec, Mode, RunResponse } from "../lib/types";
 import { clearTimeoutRef, isAbortLikeError } from "../lib/utils/async";
-import { isEmptyLightcurveFrequencySpec } from "../lib/utils/snapshot";
+import { isEmptyPrimaryInputSpec } from "../lib/utils/snapshot";
 
 type Args = {
   bootReady: boolean;
@@ -173,7 +173,7 @@ export function useComputationEffects({
 
   useEffect(() => {
     if (!bootReady) return;
-    if (isEmptyLightcurveFrequencySpec(computationSpec)) {
+    if (isEmptyPrimaryInputSpec(computationSpec)) {
       clearQueuedComputation();
       clearTimeoutRef(runTimerRef);
       activeRequestRef.current?.abort();
@@ -216,7 +216,7 @@ export function useComputationEffects({
       return;
     }
 
-    if (isEmptyLightcurveFrequencySpec(compareSpec)) {
+    if (isEmptyPrimaryInputSpec(compareSpec)) {
       cancelCompareRun();
       clearCompareOverlay(true);
       return;

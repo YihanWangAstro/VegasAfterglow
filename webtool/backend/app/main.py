@@ -309,7 +309,7 @@ def spectrum(req: SpectrumRequest) -> dict[str, Any]:
             except ValueError:
                 warnings.append(f"Invalid time value: '{tok}'")
     if not t_snapshots:
-        t_snapshots = [1e4]
+        raise HTTPException(status_code=400, detail="t_snapshots_input must include at least one time")
 
     params = {
         **shared_to_physics(req.shared),

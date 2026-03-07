@@ -455,6 +455,13 @@ export default function HomePage() {
     },
   };
 
+  const emptyStateMessage =
+    mode === "lightcurve" && lcFreq.trim().length === 0
+      ? "Enter at least one frequency, filter, or band to render a light curve."
+      : mode === "spectrum" && sedTimes.trim().length === 0
+        ? "Enter at least one observation time to render a spectrum."
+        : "Adjust parameters in the sidebar to update the plot.";
+
   return (
     <main className={`app-shell ${sidebarOpen ? "sidebar-open" : ""}`}>
       {!sidebarOpen ? (
@@ -540,7 +547,7 @@ export default function HomePage() {
           </div>
         ) : (
           <div className="workspace-empty">
-            <p className="muted">Adjust parameters in the sidebar to render plot.</p>
+            <p className="muted">{emptyStateMessage}</p>
             {error ? <p className="workspace-inline-error">{error}</p> : null}
           </div>
         )}

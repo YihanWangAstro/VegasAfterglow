@@ -447,10 +447,18 @@ export function buildInteractiveSpec(base: ComputationSpec, interactive: boolean
   return { ...base, payload };
 }
 
-export function isEmptyLightcurveFrequencySpec(spec: ComputationSpec): boolean {
-  if (spec.endpoint !== "lightcurve") return false;
-  const raw = spec.payload.frequencies_input;
-  return typeof raw !== "string" || raw.trim().length === 0;
+export function isEmptyPrimaryInputSpec(spec: ComputationSpec): boolean {
+  if (spec.endpoint === "lightcurve") {
+    const raw = spec.payload.frequencies_input;
+    return typeof raw !== "string" || raw.trim().length === 0;
+  }
+
+  if (spec.endpoint === "spectrum") {
+    const raw = spec.payload.t_snapshots_input;
+    return typeof raw !== "string" || raw.trim().length === 0;
+  }
+
+  return false;
 }
 
 export function clampTabIndex(current: number, length: number): number {

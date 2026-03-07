@@ -62,4 +62,3 @@ Open `http://localhost:3000`.
 - Production deploy configs are in [DEPLOY.md](./DEPLOY.md):
   - Vercel frontend config: `webtool/frontend/vercel.json`
   - Cloud Run script: `webtool/scripts/deploy-cloudrun.sh`
-  - Fly.io script/template: `webtool/scripts/deploy-fly.sh`, `webtool/backend/fly.toml.example`

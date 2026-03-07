@@ -1,0 +1,30 @@
+.gcloudignore
+.git
+.gitignore
+
+# Keep Cloud Build source upload minimal for backend deploys while still
+# matching every COPY source used by webtool/backend/Dockerfile.
+**
+!.gcloudignore
+!.dockerignore
+!pyproject.toml
+!README.md
+!LICENSE
+!CMakeLists.txt
+!include/
+!include/**
+!src/
+!src/**
+!pybind/
+!pybind/**
+!external/
+!external/**
+!VegasAfterglow/
+!VegasAfterglow/**
+!webtool/
+!webtool/backend/
+!webtool/backend/**
+
+# Skip Python bytecode/cache artifacts.
+**/__pycache__/
+*.pyc

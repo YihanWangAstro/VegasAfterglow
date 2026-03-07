@@ -13,6 +13,12 @@ from PIL import Image
 from .constants import FLUX_SCALES, FREQ_SCALES, TIME_SCALES
 from .helpers import band_label, format_time_label
 
+_ORJSON_DUMP_OPTIONS = orjson.OPT_INDENT_2 | getattr(orjson, "OPT_SERIALIZE_NUMPY", 0)
+
+
+def _dump_json(obj):
+    return orjson.dumps(obj, option=_ORJSON_DUMP_OPTIONS).decode()
+
 
 def export_csv(data, flux_unit, time_unit):
     """Generate CSV string from results."""
@@ -77,7 +83,7 @@ def export_json(data, flux_unit, time_unit):
                 "nu_max_Hz": nu_max,
                 "flux": {comp_name: comp_flux for comp_name, comp_flux in comps},
             }
-    return orjson.dumps(obj, option=orjson.OPT_INDENT_2 | orjson.OPT_NUMPY).decode()
+    return _dump_json(obj)
 
 
 def export_sed_csv(data, flux_unit, freq_unit):
@@ -125,7 +131,7 @@ def export_sed_json(data, flux_unit, freq_unit):
             comp_name: comp_flux[:, j] / f_scale
             for comp_name, comp_flux in components
         }
-    return orjson.dumps(obj, option=orjson.OPT_INDENT_2 | orjson.OPT_NUMPY).decode()
+    return _dump_json(obj)
 
 
 def export_skymap_json(data):
@@ -138,7 +144,7 @@ def export_skymap_json(data):
         "units": {"image": "erg/cm2/s/Hz/sr", "extent": "uas"},
         "images": data["images"],
     }
-    return orjson.dumps(obj, option=orjson.OPT_INDENT_2 | orjson.OPT_NUMPY).decode()
+    return _dump_json(obj)
 
 
 def export_skymap_gif_base64(data):

@@ -15,10 +15,16 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 RUN python -m venv /venv
 ENV PATH="/venv/bin:$PATH"
 
-# VegasAfterglow (slow C++ build — own layer so app changes skip recompilation).
-COPY webtool/backend/requirements-base.txt /tmp/requirements-base.txt
-RUN pip install --upgrade pip setuptools wheel \
- && pip install -r /tmp/requirements-base.txt
+# Local VegasAfterglow source so CN deployments do not depend on GitHub access.
+COPY pyproject.toml README.md LICENSE CMakeLists.txt /tmp/vegasafterglow/
+COPY include /tmp/vegasafterglow/include
+COPY src /tmp/vegasafterglow/src
+COPY pybind /tmp/vegasafterglow/pybind
+COPY external /tmp/vegasafterglow/external
+COPY VegasAfterglow /tmp/vegasafterglow/VegasAfterglow
+
+RUN pip install --upgrade pip setuptools wheel scikit-build-core pybind11 numpy setuptools-scm \
+ && pip install --no-build-isolation /tmp/vegasafterglow
 
 # Remaining pure-Python deps (fast).
 COPY webtool/backend/requirements.txt /tmp/requirements.txt

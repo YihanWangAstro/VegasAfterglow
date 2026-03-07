@@ -389,9 +389,9 @@ The Dockerfile uses a multi-stage build to keep the runtime image small:
 - **builder stage** — installs build tools (cmake, ninja, gcc) and compiles VegasAfterglow from source
 - **runtime stage** — copies only the Python venv; no build tools in the final image
 
-Dependencies are split into two files:
+Dependency layers:
 
-- `requirements-base.txt` — VegasAfterglow (slow C++ build, own layer)
+- local VegasAfterglow source tree — compiled in the builder stage
 - `requirements.txt` — pure-Python deps (fastapi, uvicorn, plotly, etc.)
 
 `cloudbuild.yaml` passes `--cache-from :latest` to Docker so Cloud Build can reuse unchanged
@@ -404,5 +404,5 @@ pushed to Artifact Registry.
 | --- | --- |
 | `webtool/backend/app/**` only | none (copy layer only) |
 | `requirements.txt` | pure-Python deps layer |
-| `requirements-base.txt` | VegasAfterglow C++ build + all layers above |
+| `pyproject.toml`, `src/**`, `include/**`, `pybind/**`, `external/**`, `VegasAfterglow/**` | VegasAfterglow C++ build + all layers above |
 | Base image (`python:3.12-slim`) | everything |
