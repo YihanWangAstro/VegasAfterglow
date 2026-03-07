@@ -100,6 +100,10 @@ Defaults are chosen so the IP-based deploy works immediately.
 - `SERVER_NAME`
   - default: `_`
   - set a real domain later, for example: `cn.vegasafterglow.com`
+- `API_SERVER_NAME`
+  - default: empty
+  - optional separate API hostname, for example: `api.vegasafterglow.cn`
+  - if set, the deploy writes a split Nginx config for frontend and API hosts
 - `ALLOWED_ORIGINS`
   - default: `<PUBLIC_BASE_URL>,https://www.vegasafterglow.com,https://vegasafterglow.com`
 - `KEEP_RELEASES`
@@ -109,15 +113,16 @@ Defaults are chosen so the IP-based deploy works immediately.
 
 ## 5) Later: switch from IP to domain
 
-After DNS and ICP are ready, redeploy with your domain:
+After DNS and ICP are ready, redeploy with your frontend domain:
 
 ```bash
 cd /Users/yihanwang/Repositories/afterglow
 
 SSH_TARGET=root@8.136.116.255 \
-PUBLIC_BASE_URL=https://cn.vegasafterglow.com \
-SERVER_NAME=cn.vegasafterglow.com \
-ALLOWED_ORIGINS=https://cn.vegasafterglow.com,https://www.vegasafterglow.com,https://vegasafterglow.com \
+PUBLIC_BASE_URL=https://www.vegasafterglow.cn \
+SERVER_NAME=www.vegasafterglow.cn \
+API_SERVER_NAME=api.vegasafterglow.cn \
+ALLOWED_ORIGINS=https://www.vegasafterglow.cn,https://www.vegasafterglow.com,https://vegasafterglow.com \
 bash webtool/scripts/deploy-cn-ecs-via-ssh.sh
 ```
 
@@ -125,12 +130,9 @@ Then issue TLS certificates on the server:
 
 ```bash
 ssh root@8.136.116.255
-certbot --nginx -d cn.vegasafterglow.com
+certbot --nginx -d www.vegasafterglow.cn -d api.vegasafterglow.cn
 nginx -t && systemctl reload nginx
 ```
-
-If you later want a separate API hostname such as `api-cn.vegasafterglow.com`,
-add another Nginx config after the initial single-host deployment is stable.
 
 ## 6) Verification
 
@@ -148,4 +150,11 @@ From your Mac:
 ```bash
 curl -I http://8.136.116.255
 curl -fsS http://8.136.116.255/api/health
+```
+
+After the domain cutover:
+
+```bash
+curl -I https://www.vegasafterglow.cn
+curl -fsS https://api.vegasafterglow.cn/api/health
 ```

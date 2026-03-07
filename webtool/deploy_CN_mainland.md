@@ -31,9 +31,24 @@ not switch public DNS until ICP and TLS are ready.
 Suggested rollout:
 
 1. Deploy and validate on the ECS public IP first.
-2. Add a mainland hostname such as `cn.vegasafterglow.com`.
+2. Reserve the production mainland hostnames:
+   - `www.vegasafterglow.cn`
+   - `api.vegasafterglow.cn`
 3. After ICP approval, issue certificates with `certbot --nginx`.
-4. Redeploy with `PUBLIC_BASE_URL=https://<domain>` and `SERVER_NAME=<domain>`.
+4. Redeploy with:
+   - `PUBLIC_BASE_URL=https://www.vegasafterglow.cn`
+   - `SERVER_NAME=www.vegasafterglow.cn`
+   - `API_SERVER_NAME=api.vegasafterglow.cn`
+
+## Pre-filing prep already done
+
+The SSH deploy flow now supports both:
+
+- current IP-based single-host mode
+- later split-host mode for `www.vegasafterglow.cn` + `api.vegasafterglow.cn`
+
+So you do not need a second deployment path after ICP approval. Re-run the same
+deploy command with the domain variables when DNS and TLS are ready.
 
 ## Notes
 

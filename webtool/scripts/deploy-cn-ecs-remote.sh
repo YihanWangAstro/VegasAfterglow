@@ -16,6 +16,7 @@ PUBLIC_BASE_URL="${PUBLIC_BASE_URL:?Set PUBLIC_BASE_URL (for example: http://8.1
 NEXT_PUBLIC_API_URL="${NEXT_PUBLIC_API_URL:-$PUBLIC_BASE_URL}"
 NEXT_PUBLIC_API_STATUS_URLS="${NEXT_PUBLIC_API_STATUS_URLS:-$NEXT_PUBLIC_API_URL}"
 SERVER_NAME="${SERVER_NAME:-_}"
+API_SERVER_NAME="${API_SERVER_NAME:-}"
 GLOBAL_FRONTEND_ORIGINS="${GLOBAL_FRONTEND_ORIGINS:-https://www.vegasafterglow.com,https://vegasafterglow.com}"
 ALLOWED_ORIGINS="${ALLOWED_ORIGINS:-${PUBLIC_BASE_URL},${GLOBAL_FRONTEND_ORIGINS}}"
 
@@ -29,6 +30,7 @@ if [[ "$render_server_name" == "_" ]]; then
   render_server_name="${PUBLIC_BASE_URL#*://}"
   render_server_name="${render_server_name%%/*}"
 fi
+render_api_server_name="$API_SERVER_NAME"
 
 if [[ $(id -u) -ne 0 ]]; then
   echo "Run deploy as root or use SSH_TARGET=root@host." >&2
@@ -119,11 +121,17 @@ for attempt in $(seq 1 20); do
 done
 
 echo "Reloading Nginx"
+nginx_template="${CURRENT_DIR}/webtool/deploy/alicloud/nginx/vegasafterglow-cn-single-host.conf.template"
+if [[ -n "$render_api_server_name" && "$render_api_server_name" != "$render_server_name" ]]; then
+  nginx_template="${CURRENT_DIR}/webtool/deploy/alicloud/nginx/vegasafterglow-cn-split-host.conf.template"
+fi
+
 sed \
   -e "s/__PUBLIC_SERVER_NAME__/${render_server_name}/g" \
+  -e "s/__API_SERVER_NAME__/${render_api_server_name}/g" \
   -e "s/__FRONTEND_PORT__/${FRONTEND_PORT}/g" \
   -e "s/__BACKEND_PORT__/${BACKEND_HOST_PORT}/g" \
-  "${CURRENT_DIR}/webtool/deploy/alicloud/nginx/vegasafterglow-cn-single-host.conf.template" \
+  "$nginx_template" \
   >"/etc/nginx/conf.d/${NGINX_SITE_NAME}.conf"
 
 nginx -t
@@ -151,6 +159,23 @@ for attempt in $(seq 1 20); do
   sleep 1
 done
 
+if [[ -n "$render_api_server_name" && "$render_api_server_name" != "$render_server_name" ]]; then
+  echo "Waiting for Nginx API route"
+  for attempt in $(seq 1 20); do
+    if curl -fsS -H "Host: ${render_api_server_name}" "http://127.0.0.1/api/health" >/dev/null; then
+      break
+    fi
+
+    if (( attempt == 20 )); then
+      echo "Nginx API route failed after ${attempt} attempts." >&2
+      systemctl status nginx --no-pager >&2 || true
+      exit 1
+    fi
+
+    sleep 1
+  done
+fi
+
 if [[ "$KEEP_RELEASES" =~ ^[0-9]+$ ]] && (( KEEP_RELEASES > 0 )); then
   mapfile -t release_dirs < <(find "${APP_ROOT}/releases" -mindepth 1 -maxdepth 1 -type d | sort)
   if ((${#release_dirs[@]} > KEEP_RELEASES)); then
@@ -166,4 +191,11 @@ fi
 echo "ECS deploy complete."
 echo "Release: ${RELEASE_ID}"
 echo "App URL: ${PUBLIC_BASE_URL}"
+if [[ -n "$render_api_server_name" && "$render_api_server_name" != "$render_server_name" ]]; then
+  api_scheme="${NEXT_PUBLIC_API_URL%%://*}"
+  if [[ "$api_scheme" == "$NEXT_PUBLIC_API_URL" ]]; then
+    api_scheme="http"
+  fi
+  echo "API URL: ${api_scheme}://${render_api_server_name}"
+fi
 echo "Backend health: http://127.0.0.1:${BACKEND_HOST_PORT}/api/health"
