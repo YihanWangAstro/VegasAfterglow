@@ -93,10 +93,6 @@
 
 <br clear="right"/>
 
-<div align="center">
-<img src="assets/architecture.svg" alt="VegasAfterglow Architecture" width="900"/>
-</div>
-
 ---
 
 ## Performance Highlights
@@ -113,6 +109,14 @@ The charts below benchmark wall-clock time by stage across four jet profiles (To
 <img src="assets/benchmark-sync.svg" alt="Synchrotron performance" width="900"/>
 <img src="assets/benchmark-rvs.svg" alt="Reverse shock performance" width="900"/>
 <img src="assets/benchmark-ssc.svg" alt="Full SSC performance" width="900"/>
+</div>
+
+---
+
+## Architecture
+
+<div align="center">
+<img src="assets/architecture.svg" alt="VegasAfterglow Architecture" width="900"/>
 </div>
 
 ---

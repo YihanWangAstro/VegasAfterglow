@@ -160,9 +160,8 @@ def _make_chart(bench, rad_type, rad_label, out_path):
                      f' height="{rh:.1f}" fill="{color}"/>')
                 bot += ms
             top_y = fy(bar["total"])
-            emit(f'  <text x="{cx:.1f}" y="{top_y - 3:.1f}" text-anchor="start"'
-                 f' font-size="7.5" font-weight="600" fill="#D0DDE8"'
-                 f' transform="rotate(-60, {cx:.1f}, {top_y - 3:.1f})">{bar["total"]:.1f}</text>')
+            emit(f'  <text x="{cx:.1f}" y="{top_y - 4:.1f}" text-anchor="middle"'
+                 f' font-size="7.5" font-weight="600" fill="#D0DDE8">{bar["total"]:.1f}</text>')
     emit()
 
     emit('  <!-- Angle labels -->')
