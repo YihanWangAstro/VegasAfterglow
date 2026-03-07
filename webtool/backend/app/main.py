@@ -3,12 +3,15 @@ from __future__ import annotations
 import json
 import os
 import re
+import socket
 import sys
 import tempfile
 import time as time_mod
 from functools import lru_cache
 from pathlib import Path
 from typing import Any
+from urllib.error import URLError
+from urllib.request import Request, urlopen
 
 import numpy as np
 import plotly.graph_objects as go
@@ -161,6 +164,26 @@ app.add_middleware(
 app.add_middleware(GZipMiddleware, minimum_size=1000, compresslevel=5)
 
 
+@lru_cache(maxsize=1)
+def _detect_region() -> str:
+    for key in ("SERVER_REGION", "K_REGION", "CLOUD_RUN_REGION", "GOOGLE_CLOUD_REGION"):
+        value = os.getenv(key, "").strip()
+        if value:
+            return value
+
+    # Cloud Run may not always expose region in env vars; use metadata server.
+    metadata_url = "http://metadata.google.internal/computeMetadata/v1/instance/region"
+    request = Request(metadata_url, headers={"Metadata-Flavor": "Google"})
+    try:
+        with urlopen(request, timeout=0.5) as response:
+            raw = response.read().decode("utf-8").strip()
+            if raw:
+                return raw.rsplit("/", 1)[-1]
+    except (URLError, TimeoutError, OSError, ValueError):
+        pass
+    return ""
+
+
 def _default_shared() -> dict[str, Any]:
     return SharedParams().model_dump()
 
@@ -276,9 +299,6 @@ def _parse_frequency_input(frequencies_input: str) -> tuple[list[float], list[li
                 frequencies.append(float(entry))
         except Exception:
             warnings.append(f"Unknown frequency or filter: '{token}'")
-
-    if not frequencies and not bands:
-        frequencies = [1e9]
 
     return sorted(frequencies), bands, warnings
 
@@ -495,7 +515,29 @@ def _make_skymap_figure(data: dict[str, Any]) -> go.Figure:
 
 @app.get("/api/health")
 def health() -> dict[str, str]:
-    return {"status": "ok", "service": "fastapi"}
+    region = _detect_region()
+    service_name = os.getenv("K_SERVICE", "")
+    revision = os.getenv("K_REVISION", "")
+    instance = socket.gethostname()
+
+    payload: dict[str, str] = {"status": "ok", "service": "fastapi"}
+    if region:
+        payload["region"] = region
+        region_to_location = {
+            "us-west2": "Los Angeles",
+            "us-east4": "Northern Virginia",
+            "europe-west4": "Netherlands",
+            "asia-east2": "Hong Kong",
+            "asia-northeast1": "Tokyo",
+        }
+        payload["location_label"] = region_to_location.get(region, region)
+    if service_name:
+        payload["service_name"] = service_name
+    if revision:
+        payload["revision"] = revision
+    if instance and instance not in {"localhost", "127.0.0.1"}:
+        payload["instance"] = instance
+    return payload
 
 
 @app.get("/api/options")

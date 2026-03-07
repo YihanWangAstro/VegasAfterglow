@@ -51,7 +51,7 @@ In Vercel dashboard:
 
 (`webtool/frontend/vercel.json` already sets install/build commands.)
 
-## 3) Deploy backend to two regions
+## 3) Deploy backend to multi regions
 
 Run from repo root:
 
@@ -59,13 +59,13 @@ Run from repo root:
 cd /Users/yihanwang/Repositories/afterglow
 ```
 
-Set common origins (replace custom domain if different):
+Set common origins (must include every frontend origin you use):
 
 ```bash
-export ALLOWED_ORIGINS="https://www.vegasafterglow.com,https://vegasafterglow.com"
+export ALLOWED_ORIGINS="https://www.vegasafterglow.com,https://vegasafterglow.com,https://vegasafterglow.vercel.app"
 ```
 
-Deploy US region:
+Deploy US West:
 
 ```bash
 PROJECT_ID=project-819bd021-ada6-4176-b14 \
@@ -77,7 +77,31 @@ ALLOWED_ORIGINS="$ALLOWED_ORIGINS" \
 bash webtool/scripts/deploy-cloudrun.sh
 ```
 
-Deploy Asia region (prefer `asia-east2`; if unavailable, use `asia-northeast1`):
+Deploy US East:
+
+```bash
+PROJECT_ID=project-819bd021-ada6-4176-b14 \
+REGION=us-east4 \
+SERVICE_NAME=webtool-api \
+ARTIFACT_REPO=containers \
+MIN_INSTANCES=0 \
+ALLOWED_ORIGINS="$ALLOWED_ORIGINS" \
+bash webtool/scripts/deploy-cloudrun.sh
+```
+
+Deploy Europe:
+
+```bash
+PROJECT_ID=project-819bd021-ada6-4176-b14 \
+REGION=europe-west4 \
+SERVICE_NAME=webtool-api \
+ARTIFACT_REPO=containers \
+MIN_INSTANCES=0 \
+ALLOWED_ORIGINS="$ALLOWED_ORIGINS" \
+bash webtool/scripts/deploy-cloudrun.sh
+```
+
+Deploy Asia (Hong Kong):
 
 ```bash
 PROJECT_ID=project-819bd021-ada6-4176-b14 \
@@ -89,11 +113,26 @@ ALLOWED_ORIGINS="$ALLOWED_ORIGINS" \
 bash webtool/scripts/deploy-cloudrun.sh
 ```
 
-Check both service URLs:
+Deploy Asia (Tokyo):
+
+```bash
+PROJECT_ID=project-819bd021-ada6-4176-b14 \
+REGION=asia-northeast1 \
+SERVICE_NAME=webtool-api \
+ARTIFACT_REPO=containers \
+MIN_INSTANCES=0 \
+ALLOWED_ORIGINS="$ALLOWED_ORIGINS" \
+bash webtool/scripts/deploy-cloudrun.sh
+```
+
+Check all service URLs:
 
 ```bash
 gcloud run services describe webtool-api --region us-west2 --format='value(status.url)'
+gcloud run services describe webtool-api --region us-east4 --format='value(status.url)'
+gcloud run services describe webtool-api --region europe-west4 --format='value(status.url)'
 gcloud run services describe webtool-api --region asia-east2 --format='value(status.url)'
+gcloud run services describe webtool-api --region asia-northeast1 --format='value(status.url)'
 ```
 
 ## 4) Create global HTTPS load balancer for API
@@ -115,6 +154,21 @@ gcloud compute network-endpoint-groups create webtool-api-asiae2-neg \
   --region=asia-east2 \
   --network-endpoint-type=serverless \
   --cloud-run-service=webtool-api
+
+gcloud compute network-endpoint-groups create webtool-api-use4-neg \
+  --region=us-east4 \
+  --network-endpoint-type=serverless \
+  --cloud-run-service=webtool-api
+
+gcloud compute network-endpoint-groups create webtool-api-euw4-neg \
+  --region=europe-west4 \
+  --network-endpoint-type=serverless \
+  --cloud-run-service=webtool-api
+
+gcloud compute network-endpoint-groups create webtool-api-asiane1-neg \
+  --region=asia-northeast1 \
+  --network-endpoint-type=serverless \
+  --cloud-run-service=webtool-api
 ```
 
 Create global backend service:
@@ -128,7 +182,7 @@ gcloud compute backend-services create webtool-api-global-bs \
   --timeout=30s
 ```
 
-Attach both NEGs:
+Attach all NEGs:
 
 ```bash
 gcloud compute backend-services add-backend webtool-api-global-bs \
@@ -140,6 +194,21 @@ gcloud compute backend-services add-backend webtool-api-global-bs \
   --global \
   --network-endpoint-group=webtool-api-asiae2-neg \
   --network-endpoint-group-region=asia-east2
+
+gcloud compute backend-services add-backend webtool-api-global-bs \
+  --global \
+  --network-endpoint-group=webtool-api-use4-neg \
+  --network-endpoint-group-region=us-east4
+
+gcloud compute backend-services add-backend webtool-api-global-bs \
+  --global \
+  --network-endpoint-group=webtool-api-euw4-neg \
+  --network-endpoint-group-region=europe-west4
+
+gcloud compute backend-services add-backend webtool-api-global-bs \
+  --global \
+  --network-endpoint-group=webtool-api-asiane1-neg \
+  --network-endpoint-group-region=asia-northeast1
 ```
 
 Create URL map + certificate + HTTPS proxy + global IP + forwarding rule:
@@ -236,6 +305,12 @@ vercel env rm NEXT_PUBLIC_API_URL preview --yes || true
 
 printf 'https://api.vegasafterglow.com' | vercel env add NEXT_PUBLIC_API_URL production
 printf 'https://api.vegasafterglow.com' | vercel env add NEXT_PUBLIC_API_URL preview
+
+vercel env rm NEXT_PUBLIC_API_STATUS_URLS production --yes || true
+vercel env rm NEXT_PUBLIC_API_STATUS_URLS preview --yes || true
+
+printf 'https://webtool-api-qlcoh6gldq-wl.a.run.app,https://webtool-api-qlcoh6gldq-uk.a.run.app,https://webtool-api-qlcoh6gldq-ez.a.run.app,https://webtool-api-qlcoh6gldq-df.a.run.app,https://webtool-api-qlcoh6gldq-an.a.run.app' | vercel env add NEXT_PUBLIC_API_STATUS_URLS production
+printf 'https://webtool-api-qlcoh6gldq-wl.a.run.app,https://webtool-api-qlcoh6gldq-uk.a.run.app,https://webtool-api-qlcoh6gldq-ez.a.run.app,https://webtool-api-qlcoh6gldq-df.a.run.app,https://webtool-api-qlcoh6gldq-an.a.run.app' | vercel env add NEXT_PUBLIC_API_STATUS_URLS preview
 ```
 
 Deploy frontend:
@@ -268,13 +343,16 @@ Then open your frontend and verify:
 
 ### 7.1 Backend code update
 
-Redeploy both regions:
+Redeploy all active regions:
 
 ```bash
 cd /Users/yihanwang/Repositories/afterglow
 
 PROJECT_ID=project-819bd021-ada6-4176-b14 REGION=us-west2 SERVICE_NAME=webtool-api ARTIFACT_REPO=containers MIN_INSTANCES=0 ALLOWED_ORIGINS="$ALLOWED_ORIGINS" bash webtool/scripts/deploy-cloudrun.sh
+PROJECT_ID=project-819bd021-ada6-4176-b14 REGION=us-east4 SERVICE_NAME=webtool-api ARTIFACT_REPO=containers MIN_INSTANCES=0 ALLOWED_ORIGINS="$ALLOWED_ORIGINS" bash webtool/scripts/deploy-cloudrun.sh
+PROJECT_ID=project-819bd021-ada6-4176-b14 REGION=europe-west4 SERVICE_NAME=webtool-api ARTIFACT_REPO=containers MIN_INSTANCES=0 ALLOWED_ORIGINS="$ALLOWED_ORIGINS" bash webtool/scripts/deploy-cloudrun.sh
 PROJECT_ID=project-819bd021-ada6-4176-b14 REGION=asia-east2 SERVICE_NAME=webtool-api ARTIFACT_REPO=containers MIN_INSTANCES=0 ALLOWED_ORIGINS="$ALLOWED_ORIGINS" bash webtool/scripts/deploy-cloudrun.sh
+PROJECT_ID=project-819bd021-ada6-4176-b14 REGION=asia-northeast1 SERVICE_NAME=webtool-api ARTIFACT_REPO=containers MIN_INSTANCES=0 ALLOWED_ORIGINS="$ALLOWED_ORIGINS" bash webtool/scripts/deploy-cloudrun.sh
 ```
 
 No Vercel env change is needed if API domain is unchanged.

@@ -31,6 +31,23 @@ type AxisRanges = {
   yaxis: AxisRange | null;
   yaxis2: AxisRange | null;
 };
+type AxisSignatures = {
+  yaxis: string | null;
+  yaxis2: string | null;
+};
+type ApiEndpoint = {
+  key: string;
+  label: string;
+  healthTarget: string;
+};
+type ApiHealthStatus = {
+  up: boolean;
+  latencyMs: number | null;
+  statusCode: number | null;
+  region: string | null;
+  locationLabel: string | null;
+  backend: string | null;
+};
 
 type RunResponse = {
   meta?: {
@@ -51,8 +68,7 @@ type OptionsResponse = {
   instrument_groups?: { label?: string; items?: string[] }[];
   version?: string;
 };
-type DownloadKind = "csv" | "json" | "gif" | "png";
-type BackendDownloadKind = Exclude<DownloadKind, "png">;
+type DownloadKind = "csv" | "json" | "gif";
 
 type ObservationGroup = {
   legend: string;
@@ -61,9 +77,52 @@ type ObservationGroup = {
   text: string;
   visible: boolean;
 };
+type DistanceDriver = "dL" | "z";
+
+type UiSnapshot = {
+  mode: Mode;
+  distance_linked: boolean;
+  distance_driver: DistanceDriver;
+  shared: SharedParams;
+  lightcurve: {
+    frequencies_input: string;
+    t_min: number;
+    t_max: number;
+    selected_instruments: string[];
+    observation_groups: ObservationGroup[];
+  };
+  spectrum: {
+    t_snapshots_input: string;
+    nu_min: number;
+    nu_max: number;
+    num_nu: number;
+    freq_unit: string;
+    show_nufnu: boolean;
+    selected_instruments: string[];
+    observation_groups: ObservationGroup[];
+  };
+  skymap: {
+    animate: boolean;
+    t_obs: number;
+    t_min: number;
+    t_max: number;
+    n_frames: number;
+    nu_input: string;
+    fov: number;
+    npixel: number;
+  };
+};
+
+type BookmarkEntry = {
+  id: string;
+  name: string;
+  created_at: string;
+  snapshot: UiSnapshot;
+};
 
 const FALLBACK_SHARED = {
   d_L_mpc: 100,
+  z: 0.022,
   theta_obs: 0,
   flux_unit: "mJy",
   time_unit: "s",
@@ -125,7 +184,10 @@ const AUTO_RUN_DEBOUNCE_IDLE_MS = 10;
 const AUTO_RUN_DEBOUNCE_SLIDING_MS = 20;
 const SLIDER_COMMIT_INTERVAL_MS = 20;
 const SPECTRUM_TEXT_COMMIT_DEBOUNCE_MS = 220;
+const API_STATUS_REFRESH_DIRECT_MS = 2000;
 const AXIS_EPS = 1e-6;
+const H0_KM_S_MPC = 67.4;
+const C_KM_S = 299792.458;
 const MODE_OPTIONS: { value: Mode; label: string }[] = [
   { value: "lightcurve", label: "Light Curve" },
   { value: "spectrum", label: "Spectrum" },
@@ -154,6 +216,11 @@ const INSTRUMENT_TYPE_BY_NAME: Record<string, string> = {
 const INSTRUMENT_GROUP_ORDER = ["Radio", "Optical/IR", "X-ray", "Gamma-ray", "Other"] as const;
 const OBS_STORAGE_LC_KEY = "afterglow:webtool:obs:lightcurve";
 const OBS_STORAGE_SED_KEY = "afterglow:webtool:obs:spectrum";
+const BOOKMARKS_STORAGE_KEY = "afterglow:webtool:bookmarks:v1";
+const MAX_BOOKMARKS = 30;
+const URL_STATE_PARAM = "state";
+const URL_STATE_VERSION = 1;
+const URL_STATE_MAX_CHARS = 3500;
 const FREQ_HELP_TEXT = [
   "Accepts Hz values (1e9), unit suffixes (1GHz, 1keV), filter names, instrument bands, or custom ranges ([0.3keV,10keV]).",
   "",
@@ -165,7 +232,11 @@ const FREQ_HELP_TEXT = [
   "Units: Hz kHz MHz GHz | eV keV MeV GeV",
 ].join("\n");
 const JET_TYPE_OPTIONS: SharedParams["jet_type"][] = ["Top-hat", "Gaussian", "Power-law", "Two-component"];
-const MEDIUM_TYPE_OPTIONS: SharedParams["medium_type"][] = ["ISM", "Wind", "Wind bubble"];
+const MEDIUM_TYPE_OPTIONS: { value: SharedParams["medium_type"]; label: string }[] = [
+  { value: "ISM", label: "ISM" },
+  { value: "Wind", label: "Wind" },
+  { value: "Wind bubble", label: "Wind+ISM" },
+];
 const DEFAULT_APP_VERSION = "2.0.1";
 const BIBTEX_TEXT = `@ARTICLE{2026JHEAp..5000490W,
        author = {{Wang}, Yihan and {Chen}, Connery and {Zhang}, Bing},
@@ -195,12 +266,10 @@ const PlotFigure = memo(function PlotFigure({
   figure,
   mode,
   onRelayout,
-  onGraphReady,
 }: {
   figure: NonNullable<RunResponse["figure"]>;
   mode: Mode;
   onRelayout: (event: Record<string, unknown>) => void;
-  onGraphReady?: (graphDiv: unknown) => void;
 }) {
   const graphRef = useRef<any>(null);
   const [graphRevision, setGraphRevision] = useState(0);
@@ -209,16 +278,9 @@ const PlotFigure = memo(function PlotFigure({
     const nextGraph = graphDiv as any;
     if (graphRef.current !== nextGraph) {
       graphRef.current = nextGraph;
-      onGraphReady?.(nextGraph);
       setGraphRevision((v) => v + 1);
     }
-  }, [onGraphReady]);
-
-  useEffect(() => {
-    return () => {
-      onGraphReady?.(null);
-    };
-  }, [onGraphReady]);
+  }, []);
 
   useEffect(() => {
     const hasFrames = Array.isArray(figure.frames) && figure.frames.length > 1;
@@ -306,6 +368,47 @@ function stripTrailingSlash(url: string): string {
   return url.replace(/\/+$/, "");
 }
 
+function apiServerFromTarget(target: string): string {
+  try {
+    return new URL(target, "http://localhost").host;
+  } catch {
+    return target;
+  }
+}
+
+function backendFromHealthPayload(payload: unknown): string | null {
+  if (!payload || typeof payload !== "object") return null;
+  const record = payload as Record<string, unknown>;
+  const revision = typeof record.revision === "string" ? record.revision.trim() : "";
+  const serviceName = typeof record.service_name === "string" ? record.service_name.trim() : "";
+  const rawInstance = typeof record.instance === "string" ? record.instance.trim() : "";
+  const instance =
+    rawInstance && rawInstance !== "localhost" && rawInstance !== "127.0.0.1" ? rawInstance : "";
+
+  const parts: string[] = [];
+  if (revision) {
+    parts.push(revision);
+  } else if (serviceName) {
+    parts.push(serviceName);
+  }
+  if (instance) parts.push(instance);
+  return parts.length > 0 ? parts.join(" | ") : null;
+}
+
+function regionFromHealthPayload(payload: unknown): string | null {
+  if (!payload || typeof payload !== "object") return null;
+  const record = payload as Record<string, unknown>;
+  const region = typeof record.region === "string" ? record.region.trim() : "";
+  return region || null;
+}
+
+function locationLabelFromHealthPayload(payload: unknown): string | null {
+  if (!payload || typeof payload !== "object") return null;
+  const record = payload as Record<string, unknown>;
+  const label = typeof record.location_label === "string" ? record.location_label.trim() : "";
+  return label || null;
+}
+
 function safeLog10(value: number, fallback: number): number {
   return Number.isFinite(value) && value > 0 ? Math.log10(value) : fallback;
 }
@@ -339,44 +442,69 @@ function formatParamValueNode(value: number): ReactNode {
   );
 }
 
-function formatParamValueHtml(value: number): string {
-  if (!Number.isFinite(value)) return String(value);
-  if (value === 0) return "0";
-  const abs = Math.abs(value);
-  const exponent = Math.floor(Math.log10(abs));
-  const mantissa = value / Math.pow(10, exponent);
-  const mantissaText = mantissa.toFixed(2).replace(/\.?0+$/, "");
-  if (exponent === 0) return mantissaText;
-  if (mantissaText === "1") return `10<sup>${exponent}</sup>`;
-  if (mantissaText === "-1") return `-10<sup>${exponent}</sup>`;
-  return `${mantissaText} x 10<sup>${exponent}</sup>`;
-}
-
-function wrapCaptionForAnnotation(html: string, maxChars = 110): string {
-  const segments = html.split(", ");
-  const lines: string[] = [];
-  let current = "";
-  const plainLength = (value: string) => value.replace(/<[^>]+>/g, "").length;
-
-  for (const segment of segments) {
-    if (!current) {
-      current = segment;
-      continue;
-    }
-    const candidate = `${current}, ${segment}`;
-    if (plainLength(candidate) > maxChars) {
-      lines.push(current);
-      current = segment;
-    } else {
-      current = candidate;
-    }
-  }
-  if (current) lines.push(current);
-  return lines.join("<br>");
-}
-
 function clampRangeValue(value: number, min: number, max: number): number {
   return Math.max(min, Math.min(max, value));
+}
+
+function formatPowerHoverValue(value: unknown): string {
+  const numeric = Number(value);
+  if (!Number.isFinite(numeric)) return String(value ?? "");
+  if (numeric === 0) return "0";
+  const abs = Math.abs(numeric);
+  const exponent = Math.floor(Math.log10(abs));
+  const mantissa = numeric / Math.pow(10, exponent);
+  const mantissaText = Number(mantissa.toPrecision(3)).toString();
+  if (exponent === 0) return mantissaText;
+  return `${mantissaText}\u00d710<sup>${exponent}</sup>`;
+}
+
+function remapScientificHoverTemplate(trace: Record<string, unknown>): Record<string, unknown> {
+  const hovertemplate = typeof trace.hovertemplate === "string" ? trace.hovertemplate : "";
+  if (!hovertemplate) return trace;
+
+  let needsX = false;
+  let needsY = false;
+  let needsZ = false;
+  let rewritten = hovertemplate;
+
+  rewritten = rewritten.replace(/%\{x:[^}]*e\}/g, () => {
+    needsX = true;
+    return "%{customdata[0]}";
+  });
+  rewritten = rewritten.replace(/%\{y:[^}]*e\}/g, () => {
+    needsY = true;
+    return "%{customdata[1]}";
+  });
+  rewritten = rewritten.replace(/%\{z:[^}]*e\}/g, () => {
+    needsZ = true;
+    return "%{customdata[2]}";
+  });
+
+  if (!needsX && !needsY && !needsZ) return trace;
+
+  const xSeries = Array.isArray(trace.x) ? trace.x : null;
+  const ySeries = Array.isArray(trace.y) ? trace.y : null;
+  const zSeries = Array.isArray(trace.z) ? trace.z : null;
+  const zIs1D = zSeries ? zSeries.every((item) => !Array.isArray(item)) : false;
+
+  const length = Math.max(
+    needsX && xSeries ? xSeries.length : 0,
+    needsY && ySeries ? ySeries.length : 0,
+    needsZ && zIs1D && zSeries ? zSeries.length : 0,
+  );
+  if (length === 0) return trace;
+
+  const customdata = Array.from({ length }, (_, idx) => [
+    needsX && xSeries ? formatPowerHoverValue(xSeries[idx]) : "",
+    needsY && ySeries ? formatPowerHoverValue(ySeries[idx]) : "",
+    needsZ && zIs1D && zSeries ? formatPowerHoverValue(zSeries[idx]) : "",
+  ]);
+
+  return {
+    ...trace,
+    customdata,
+    hovertemplate: rewritten,
+  };
 }
 
 type RangeKeyAction = "dec" | "inc" | "min" | "max" | null;
@@ -449,10 +577,12 @@ function sliderFillStyle(value: number, min: number, max: number): CSSProperties
 }
 
 function legendFontSizeForWidth(plotWidthPx: number): number {
-  if (plotWidthPx <= 440) return 9;
-  if (plotWidthPx <= 620) return 10;
-  if (plotWidthPx <= 860) return 11;
-  return 12;
+  if (plotWidthPx <= 300) return 6;
+  if (plotWidthPx <= 380) return 7;
+  if (plotWidthPx <= 480) return 8;
+  if (plotWidthPx <= 640) return 9;
+  if (plotWidthPx <= 860) return 10;
+  return 11;
 }
 
 function downloadText(content: string, filename: string, mime: string): void {
@@ -532,6 +662,324 @@ function compactObservationGroups(groups: ObservationGroup[]): ObservationGroup[
       text: group.text.trim(),
       visible: true,
     }));
+}
+
+function cloneSnapshot(snapshot: UiSnapshot): UiSnapshot {
+  return JSON.parse(JSON.stringify(snapshot)) as UiSnapshot;
+}
+
+function asFiniteNumber(value: unknown, fallback: number): number {
+  const next = Number(value);
+  return Number.isFinite(next) ? next : fallback;
+}
+
+function clampNumber(value: number, min: number, max: number): number {
+  return Math.max(min, Math.min(max, value));
+}
+
+function asString(value: unknown, fallback: string): string {
+  return typeof value === "string" ? value : fallback;
+}
+
+function asBoolean(value: unknown, fallback: boolean): boolean {
+  return typeof value === "boolean" ? value : fallback;
+}
+
+function luminosityDistanceMpcFromRedshift(z: number): number {
+  const zSafe = Math.max(0, z);
+  return (C_KM_S / H0_KM_S_MPC) * zSafe * (1 + zSafe);
+}
+
+function redshiftFromLuminosityDistanceMpc(dLmpc: number): number {
+  const dSafe = Math.max(0, dLmpc);
+  const x = (dSafe * H0_KM_S_MPC) / C_KM_S;
+  return (-1 + Math.sqrt(1 + 4 * x)) / 2;
+}
+
+function normalizeDistanceMpc(value: number): number {
+  if (!Number.isFinite(value)) return 0;
+  return Math.max(0, Math.trunc(value));
+}
+
+function roundToSignificant(value: number, digits: number): number {
+  if (!Number.isFinite(value) || value === 0) return value;
+  const abs = Math.abs(value);
+  const exponent = Math.floor(Math.log10(abs));
+  const scale = Math.pow(10, exponent - digits + 1);
+  return Math.round(value / scale) * scale;
+}
+
+function normalizeRedshift(value: number): number {
+  if (!Number.isFinite(value)) return 0;
+  return Math.max(0, roundToSignificant(value, 3));
+}
+
+function nearlyEqualRelative(a: number, b: number, relTol = 1e-6): boolean {
+  return Math.abs(a - b) <= relTol * Math.max(1, Math.abs(a), Math.abs(b));
+}
+
+function asStringArray(value: unknown): string[] {
+  if (!Array.isArray(value)) return [];
+  return value.filter((item): item is string => typeof item === "string");
+}
+
+function normalizeSharedParams(value: unknown): SharedParams {
+  const defaults = FALLBACK_SHARED;
+  const next: SharedParams = { ...defaults };
+  if (!value || typeof value !== "object") return next;
+  const record = value as Record<string, unknown>;
+  const writable = next as Record<string, unknown>;
+
+  for (const key of Object.keys(defaults) as (keyof SharedParams)[]) {
+    const defaultValue = defaults[key];
+    const candidate = record[key as string];
+    if (typeof defaultValue === "number") {
+      const numeric = Number(candidate);
+      if (Number.isFinite(numeric)) {
+        writable[key as string] = numeric;
+      }
+      continue;
+    }
+    if (typeof defaultValue === "boolean") {
+      if (typeof candidate === "boolean") {
+        writable[key as string] = candidate;
+      }
+      continue;
+    }
+    if (typeof defaultValue === "string" && typeof candidate === "string") {
+      writable[key as string] = candidate;
+    }
+  }
+
+  return next;
+}
+
+function normalizeObsGroupArray(value: unknown, isLc: boolean): ObservationGroup[] {
+  if (!Array.isArray(value)) return [];
+  return value
+    .map((item, idx) => {
+      if (!item || typeof item !== "object") return null;
+      const base = defaultObsGroup(isLc, idx + 1);
+      const group = item as Partial<ObservationGroup>;
+      return {
+        legend: asString(group.legend, base.legend),
+        x_unit: asString(group.x_unit, base.x_unit),
+        y_unit: asString(group.y_unit, base.y_unit),
+        text: asString(group.text, ""),
+        visible: asBoolean(group.visible, true),
+      } satisfies ObservationGroup;
+    })
+    .filter((group): group is ObservationGroup => group !== null);
+}
+
+function defaultUiSnapshot(): UiSnapshot {
+  return {
+    mode: "lightcurve",
+    distance_linked: true,
+    distance_driver: "dL",
+    shared: { ...FALLBACK_SHARED },
+    lightcurve: {
+      frequencies_input: "1e9, R, 1keV",
+      t_min: 1,
+      t_max: 1e8,
+      selected_instruments: [],
+      observation_groups: [],
+    },
+    spectrum: {
+      t_snapshots_input: "1e3, 1e4, 1e5, 1e6",
+      nu_min: 1e8,
+      nu_max: 1e20,
+      num_nu: 200,
+      freq_unit: "Hz",
+      show_nufnu: false,
+      selected_instruments: [],
+      observation_groups: [],
+    },
+    skymap: {
+      animate: false,
+      t_obs: 1e6,
+      t_min: 1e4,
+      t_max: 1e7,
+      n_frames: SKY_DEFAULT_N_FRAMES,
+      nu_input: "1e9",
+      fov: 500,
+      npixel: 256,
+    },
+  };
+}
+
+function normalizeUiSnapshot(value: unknown): UiSnapshot | null {
+  if (!value || typeof value !== "object") return null;
+  const defaults = defaultUiSnapshot();
+  const record = value as Record<string, unknown>;
+
+  const modeCandidate = record.mode;
+  const mode: Mode =
+    modeCandidate === "lightcurve" || modeCandidate === "spectrum" || modeCandidate === "skymap"
+      ? modeCandidate
+      : defaults.mode;
+  const distanceLinked = asBoolean(record.distance_linked, defaults.distance_linked);
+  const distanceDriver =
+    record.distance_driver === "dL" || record.distance_driver === "z"
+      ? record.distance_driver
+      : defaults.distance_driver;
+
+  const lcRaw = record.lightcurve && typeof record.lightcurve === "object" ? (record.lightcurve as Record<string, unknown>) : {};
+  const sedRaw = record.spectrum && typeof record.spectrum === "object" ? (record.spectrum as Record<string, unknown>) : {};
+  const skyRaw = record.skymap && typeof record.skymap === "object" ? (record.skymap as Record<string, unknown>) : {};
+
+  return {
+    mode,
+    distance_linked: distanceLinked,
+    distance_driver: distanceDriver,
+    shared: normalizeSharedParams(record.shared),
+    lightcurve: {
+      frequencies_input: asString(lcRaw.frequencies_input, defaults.lightcurve.frequencies_input),
+      t_min: asFiniteNumber(lcRaw.t_min, defaults.lightcurve.t_min),
+      t_max: asFiniteNumber(lcRaw.t_max, defaults.lightcurve.t_max),
+      selected_instruments: asStringArray(lcRaw.selected_instruments),
+      observation_groups: normalizeObsGroupArray(lcRaw.observation_groups, true),
+    },
+    spectrum: {
+      t_snapshots_input: asString(sedRaw.t_snapshots_input, defaults.spectrum.t_snapshots_input),
+      nu_min: asFiniteNumber(sedRaw.nu_min, defaults.spectrum.nu_min),
+      nu_max: asFiniteNumber(sedRaw.nu_max, defaults.spectrum.nu_max),
+      num_nu: clampNumber(asFiniteNumber(sedRaw.num_nu, defaults.spectrum.num_nu), 50, 2000),
+      freq_unit: asString(sedRaw.freq_unit, defaults.spectrum.freq_unit),
+      show_nufnu: asBoolean(sedRaw.show_nufnu, defaults.spectrum.show_nufnu),
+      selected_instruments: asStringArray(sedRaw.selected_instruments),
+      observation_groups: normalizeObsGroupArray(sedRaw.observation_groups, false),
+    },
+    skymap: {
+      animate: asBoolean(skyRaw.animate, defaults.skymap.animate),
+      t_obs: asFiniteNumber(skyRaw.t_obs, defaults.skymap.t_obs),
+      t_min: asFiniteNumber(skyRaw.t_min, defaults.skymap.t_min),
+      t_max: asFiniteNumber(skyRaw.t_max, defaults.skymap.t_max),
+      n_frames: clampNumber(asFiniteNumber(skyRaw.n_frames, defaults.skymap.n_frames), 3, SKY_MAX_N_FRAMES),
+      nu_input: asString(skyRaw.nu_input, defaults.skymap.nu_input),
+      fov: asFiniteNumber(skyRaw.fov, defaults.skymap.fov),
+      npixel: clampNumber(asFiniteNumber(skyRaw.npixel, defaults.skymap.npixel), 64, SKY_MAX_PIXEL_STATIC),
+    },
+  };
+}
+
+function makeShareableSnapshot(snapshot: UiSnapshot): UiSnapshot {
+  const shared = cloneSnapshot(snapshot);
+  // Keep URL state compact; uploaded observation tables stay local.
+  shared.lightcurve.observation_groups = [];
+  shared.spectrum.observation_groups = [];
+  return shared;
+}
+
+function encodeUrlState(snapshot: UiSnapshot): string | null {
+  try {
+    const payload = JSON.stringify({ v: URL_STATE_VERSION, snapshot });
+    const bytes = new TextEncoder().encode(payload);
+    let binary = "";
+    for (let i = 0; i < bytes.length; i += 1) {
+      binary += String.fromCharCode(bytes[i]);
+    }
+    const encoded = window.btoa(binary).replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/g, "");
+    if (encoded.length > URL_STATE_MAX_CHARS) return null;
+    return encoded;
+  } catch {
+    return null;
+  }
+}
+
+function decodeUrlState(raw: string): UiSnapshot | null {
+  try {
+    const normalized = raw.replace(/-/g, "+").replace(/_/g, "/");
+    const padded = normalized + "=".repeat((4 - (normalized.length % 4)) % 4);
+    const binary = window.atob(padded);
+    const bytes = Uint8Array.from(binary, (char) => char.charCodeAt(0));
+    const decoded = new TextDecoder().decode(bytes);
+    const parsed = JSON.parse(decoded);
+    if (!parsed || typeof parsed !== "object") return null;
+    const payload = parsed as { v?: unknown; snapshot?: unknown };
+    if (payload.v !== undefined && payload.v !== URL_STATE_VERSION) return null;
+    return normalizeUiSnapshot(payload.snapshot ?? parsed);
+  } catch {
+    return null;
+  }
+}
+
+function parseStoredBookmarks(raw: string | null): BookmarkEntry[] | null {
+  if (!raw) return null;
+  try {
+    const parsed = JSON.parse(raw);
+    if (!Array.isArray(parsed)) return null;
+    const normalized = parsed
+      .map((item) => {
+        if (!item || typeof item !== "object") return null;
+        const candidate = item as Partial<BookmarkEntry>;
+        if (typeof candidate.id !== "string" || typeof candidate.name !== "string") return null;
+        if (!candidate.snapshot || typeof candidate.snapshot !== "object") return null;
+        const snapshot = normalizeUiSnapshot(candidate.snapshot);
+        if (!snapshot) return null;
+        const createdAt = typeof candidate.created_at === "string" ? candidate.created_at : new Date().toISOString();
+        return {
+          id: candidate.id,
+          name: candidate.name,
+          created_at: createdAt,
+          snapshot,
+        } satisfies BookmarkEntry;
+      })
+      .filter((item): item is BookmarkEntry => item !== null);
+    return normalized;
+  } catch {
+    return null;
+  }
+}
+
+function buildComputationSpecFromSnapshot(snapshot: UiSnapshot, mode: Mode): ComputationSpec {
+  const normalized = normalizeShared(snapshot.shared, mode);
+
+  if (mode === "lightcurve") {
+    return {
+      endpoint: "lightcurve",
+      payload: {
+        shared: normalized,
+        frequencies_input: snapshot.lightcurve.frequencies_input,
+        t_min: snapshot.lightcurve.t_min,
+        t_max: snapshot.lightcurve.t_max,
+        selected_instruments: [],
+        observation_groups: [],
+      },
+    };
+  }
+
+  if (mode === "spectrum") {
+    return {
+      endpoint: "spectrum",
+      payload: {
+        shared: normalized,
+        t_snapshots_input: snapshot.spectrum.t_snapshots_input,
+        nu_min: snapshot.spectrum.nu_min,
+        nu_max: snapshot.spectrum.nu_max,
+        num_nu: snapshot.spectrum.num_nu,
+        freq_unit: snapshot.spectrum.freq_unit,
+        show_nufnu: snapshot.spectrum.show_nufnu,
+        selected_instruments: [],
+        observation_groups: [],
+      },
+    };
+  }
+
+  return {
+    endpoint: "skymap",
+    payload: {
+      shared: normalized,
+      animate: snapshot.skymap.animate,
+      t_obs: snapshot.skymap.t_obs,
+      t_min: snapshot.skymap.t_min,
+      t_max: snapshot.skymap.t_max,
+      n_frames: snapshot.skymap.n_frames,
+      nu_input: snapshot.skymap.nu_input,
+      fov: snapshot.skymap.fov,
+      npixel: snapshot.skymap.npixel,
+    },
+  };
 }
 
 function groupInstrumentsByType(instrumentNames: string[]): InstrumentGroup[] {
@@ -655,8 +1103,28 @@ function rangesEqual(a: AxisRange | null, b: AxisRange | null): boolean {
   return Math.abs(a[0] - b[0]) <= AXIS_EPS && Math.abs(a[1] - b[1]) <= AXIS_EPS;
 }
 
+function axisTitleText(axisObj: Record<string, unknown>): string {
+  const title = axisObj.title;
+  if (typeof title === "string") return title;
+  if (title && typeof title === "object") {
+    const text = (title as { text?: unknown }).text;
+    if (typeof text === "string") return text;
+  }
+  return "";
+}
+
+function axisSignature(layout: Record<string, unknown>, axis: AxisName): string | null {
+  const axisObj = layout[axis];
+  if (!axisObj || typeof axisObj !== "object") return null;
+  const axisRecord = axisObj as Record<string, unknown>;
+  const axisType = typeof axisRecord.type === "string" ? axisRecord.type : "";
+  const title = axisTitleText(axisRecord);
+  return `${axisType}|${title}`;
+}
+
 function normalizeShared(shared: SharedParams, mode: Mode): SharedParams {
   const next = { ...shared };
+  next.d_L_mpc = normalizeDistanceMpc(next.d_L_mpc);
 
   if (next.jet_type !== "Power-law") {
     next.k_e = 2.0;
@@ -731,6 +1199,12 @@ function buildInteractiveSpec(base: ComputationSpec, interactive: boolean): Comp
     payload.n_frames = clampInt(payload.n_frames, 3, INTERACTIVE_SKY_FRAMES_MAX);
   }
   return { ...base, payload };
+}
+
+function isEmptyLightcurveFrequencySpec(spec: ComputationSpec): boolean {
+  if (spec.endpoint !== "lightcurve") return false;
+  const raw = spec.payload.frequencies_input;
+  return typeof raw !== "string" || raw.trim().length === 0;
 }
 
 type LogSliderProps = {
@@ -965,30 +1439,57 @@ export default function HomePage() {
     }
     return Array.from(new Set(candidates));
   }, []);
+  const apiStatusExtraCandidates = useMemo(() => {
+    const extraRaw = process.env.NEXT_PUBLIC_API_STATUS_URLS ?? "";
+    return extraRaw
+      .split(",")
+      .map((item) => stripTrailingSlash(item.trim()))
+      .filter((item) => item.length > 0);
+  }, []);
+  const apiStatusCandidates = useMemo(() => {
+    // Always probe both direct backends and primary API domain. This lets us
+    // map "(in use)" from global API to the concrete backend region.
+    return Array.from(new Set([...apiStatusExtraCandidates, ...apiCandidates]));
+  }, [apiCandidates, apiStatusExtraCandidates]);
+  const apiStatusDisplaySet = useMemo(() => {
+    return apiStatusExtraCandidates.length > 0 ? new Set(apiStatusExtraCandidates) : new Set(apiStatusCandidates);
+  }, [apiStatusCandidates, apiStatusExtraCandidates]);
 
   const [mode, setMode] = useState<Mode>("lightcurve");
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [shared, setShared] = useState<SharedParams>(FALLBACK_SHARED);
+  const [distanceLinked, setDistanceLinked] = useState(true);
+  const [distanceDriver, setDistanceDriver] = useState<DistanceDriver>("dL");
 
   const [error, setError] = useState<string>("");
   const [running, setRunning] = useState(false);
   const [showRunning, setShowRunning] = useState(false);
   const [result, setResult] = useState<RunResponse | null>(null);
   const [resultMode, setResultMode] = useState<Mode | null>(null);
+  const [compareResult, setCompareResult] = useState<RunResponse | null>(null);
+  const [compareResultMode, setCompareResultMode] = useState<Mode | null>(null);
+  const [compareRunning, setCompareRunning] = useState(false);
+  const [compareError, setCompareError] = useState("");
   const [plotWidthPx, setPlotWidthPx] = useState(960);
   const [isFigurePending, startFigureTransition] = useTransition();
   const [downloading, setDownloading] = useState<DownloadKind | null>(null);
   const [appVersion, setAppVersion] = useState(DEFAULT_APP_VERSION);
   const [citeLinkText, setCiteLinkText] = useState("cite");
+  const [setupStatusText, setSetupStatusText] = useState("");
   const [bootReady, setBootReady] = useState(false);
   const [obsStorageReady, setObsStorageReady] = useState(false);
+  const [urlStateReady, setUrlStateReady] = useState(false);
   const [zoomRevision, setZoomRevision] = useState(0);
   const requestSeqRef = useRef(0);
   const requestInFlightRef = useRef(false);
   const pendingSpecRef = useRef<ComputationSpec | null>(null);
   const runTimerRef = useRef<number | null>(null);
   const activeRequestRef = useRef<AbortController | null>(null);
-  const graphDivRef = useRef<any>(null);
+  const urlSyncTimerRef = useRef<number | null>(null);
+  const setupStatusTimerRef = useRef<number | null>(null);
+  const compareRequestSeqRef = useRef(0);
+  const compareTimerRef = useRef<number | null>(null);
+  const compareActiveRequestRef = useRef<AbortController | null>(null);
   const [sliderInteracting, setSliderInteracting] = useState(false);
   const sliderInteractingRef = useRef(false);
   const workspaceRef = useRef<HTMLElement | null>(null);
@@ -996,6 +1497,11 @@ export default function HomePage() {
     lightcurve: { xaxis: null, yaxis: null, yaxis2: null },
     spectrum: { xaxis: null, yaxis: null, yaxis2: null },
     skymap: { xaxis: null, yaxis: null, yaxis2: null },
+  });
+  const axisSignaturesRef = useRef<Record<Mode, AxisSignatures>>({
+    lightcurve: { yaxis: null, yaxis2: null },
+    spectrum: { yaxis: null, yaxis2: null },
+    skymap: { yaxis: null, yaxis2: null },
   });
 
   const [instrumentGroups, setInstrumentGroups] = useState<InstrumentGroup[]>([]);
@@ -1026,33 +1532,472 @@ export default function HomePage() {
   const [skyNuInput, setSkyNuInput] = useState("1e9");
   const [skyFov, setSkyFov] = useState(500);
   const [skyNpixel, setSkyNpixel] = useState(256);
+  const [bookmarks, setBookmarks] = useState<BookmarkEntry[]>([]);
+  const [bookmarkNameDraft, setBookmarkNameDraft] = useState("");
+  const [compareEnabled, setCompareEnabled] = useState(false);
+  const [compareBookmarkId, setCompareBookmarkId] = useState("");
+  const [activeApiKey, setActiveApiKey] = useState<string>("");
+  const [selectedOtherApiKey, setSelectedOtherApiKey] = useState<string>("");
+  const [apiStatusByKey, setApiStatusByKey] = useState<Record<string, ApiHealthStatus>>({});
 
   const setSharedField = useCallback(<K extends keyof SharedParams>(key: K, value: SharedParams[K]) => {
     setShared((prev) => ({ ...prev, [key]: value }));
   }, []);
 
+  const setDistanceMpc = useCallback(
+    (nextMpcRaw: number) => {
+      if (!Number.isFinite(nextMpcRaw)) return;
+      const nextMpc = normalizeDistanceMpc(nextMpcRaw);
+      setShared((prev) => {
+        const next: SharedParams = { ...prev, d_L_mpc: nextMpc };
+        if (distanceLinked) {
+          next.z = normalizeRedshift(redshiftFromLuminosityDistanceMpc(nextMpc));
+        }
+        return next;
+      });
+    },
+    [distanceLinked],
+  );
+
+  const setDistanceRedshift = useCallback(
+    (nextZRaw: number) => {
+      if (!Number.isFinite(nextZRaw)) return;
+      const nextZ = Math.max(0, nextZRaw);
+      setShared((prev) => {
+        const next: SharedParams = { ...prev, z: nextZ };
+        if (distanceLinked) {
+          next.d_L_mpc = normalizeDistanceMpc(luminosityDistanceMpcFromRedshift(nextZ));
+        }
+        return next;
+      });
+    },
+    [distanceLinked],
+  );
+
+  useEffect(() => {
+    if (!distanceLinked) return;
+    setShared((prev) => {
+      if (distanceDriver === "dL") {
+        const nextMpc = normalizeDistanceMpc(prev.d_L_mpc);
+        const nextZ = normalizeRedshift(redshiftFromLuminosityDistanceMpc(nextMpc));
+        if (nextMpc !== prev.d_L_mpc) {
+          return { ...prev, d_L_mpc: nextMpc, z: nextZ };
+        }
+        if (nearlyEqualRelative(prev.z, nextZ)) return prev;
+        return { ...prev, z: nextZ };
+      }
+      const nextDL = normalizeDistanceMpc(luminosityDistanceMpcFromRedshift(prev.z));
+      if (prev.d_L_mpc === nextDL) return prev;
+      return { ...prev, d_L_mpc: nextDL };
+    });
+  }, [distanceDriver, distanceLinked, shared.d_L_mpc, shared.z]);
+
+  const currentSnapshot = useMemo<UiSnapshot>(
+    () => ({
+      mode,
+      distance_linked: distanceLinked,
+      distance_driver: distanceDriver,
+      shared: { ...shared },
+      lightcurve: {
+        frequencies_input: lcFreq,
+        t_min: lcTMin,
+        t_max: lcTMax,
+        selected_instruments: [...lcInstruments],
+        observation_groups: lcObsGroups.map((group) => ({ ...group })),
+      },
+      spectrum: {
+        t_snapshots_input: sedTimes,
+        nu_min: sedNuMin,
+        nu_max: sedNuMax,
+        num_nu: sedNumNu,
+        freq_unit: sedFreqUnit,
+        show_nufnu: sedNuFNu,
+        selected_instruments: [...sedInstruments],
+        observation_groups: sedObsGroups.map((group) => ({ ...group })),
+      },
+      skymap: {
+        animate: skyAnimate,
+        t_obs: skyTObs,
+        t_min: skyTMin,
+        t_max: skyTMax,
+        n_frames: skyNFrames,
+        nu_input: skyNuInput,
+        fov: skyFov,
+        npixel: skyNpixel,
+      },
+    }),
+    [
+      mode,
+      shared,
+      distanceDriver,
+      lcFreq,
+      lcTMin,
+      lcTMax,
+      lcInstruments,
+      lcObsGroups,
+      sedTimes,
+      sedNuMin,
+      sedNuMax,
+      sedNumNu,
+      sedFreqUnit,
+      sedNuFNu,
+      sedInstruments,
+      sedObsGroups,
+      skyAnimate,
+      skyTObs,
+      skyTMin,
+      skyTMax,
+      skyNFrames,
+      skyNuInput,
+      skyFov,
+      skyNpixel,
+      distanceLinked,
+    ],
+  );
+
+  const applySnapshot = useCallback((snapshot: UiSnapshot) => {
+    setMode(snapshot.mode);
+    setDistanceLinked(snapshot.distance_linked);
+    setDistanceDriver(snapshot.distance_driver);
+    setShared({ ...FALLBACK_SHARED, ...snapshot.shared });
+    setLcFreq(snapshot.lightcurve.frequencies_input);
+    setLcTMin(snapshot.lightcurve.t_min);
+    setLcTMax(snapshot.lightcurve.t_max);
+    setLcInstruments([...snapshot.lightcurve.selected_instruments]);
+    setLcObsGroups(snapshot.lightcurve.observation_groups.map((group) => ({ ...group })));
+    setActiveLcObsTab(0);
+
+    setSedTimes(snapshot.spectrum.t_snapshots_input);
+    setSedTimesDraft(snapshot.spectrum.t_snapshots_input);
+    setSedNuMin(snapshot.spectrum.nu_min);
+    setSedNuMax(snapshot.spectrum.nu_max);
+    setSedNumNu(snapshot.spectrum.num_nu);
+    setSedFreqUnit(snapshot.spectrum.freq_unit);
+    setSedNuFNu(snapshot.spectrum.show_nufnu);
+    setSedInstruments([...snapshot.spectrum.selected_instruments]);
+    setSedObsGroups(snapshot.spectrum.observation_groups.map((group) => ({ ...group })));
+    setActiveSedObsTab(0);
+
+    setSkyAnimate(snapshot.skymap.animate);
+    setSkyTObs(snapshot.skymap.t_obs);
+    setSkyTMin(snapshot.skymap.t_min);
+    setSkyTMax(snapshot.skymap.t_max);
+    setSkyNFrames(snapshot.skymap.n_frames);
+    setSkyNuInput(snapshot.skymap.nu_input);
+    setSkyFov(snapshot.skymap.fov);
+    setSkyNpixel(snapshot.skymap.npixel);
+    setError("");
+    setCompareError("");
+  }, []);
+
+  const copyTextToClipboard = useCallback(async (text: string): Promise<boolean> => {
+    try {
+      await navigator.clipboard.writeText(text);
+      return true;
+    } catch {
+      try {
+        const ta = document.createElement("textarea");
+        ta.value = text;
+        ta.style.position = "fixed";
+        ta.style.left = "-9999px";
+        document.body.appendChild(ta);
+        ta.select();
+        const copied = document.execCommand("copy");
+        document.body.removeChild(ta);
+        return copied;
+      } catch {
+        return false;
+      }
+    }
+  }, []);
+
+  const saveSnapshotAsBookmark = useCallback((snapshot: UiSnapshot, proposedName?: string) => {
+    const nameHint = proposedName?.trim();
+    setBookmarks((prev) => {
+      const nextSetupIndex =
+        prev.reduce((max, entry) => {
+          const matched = /^setup\s+(\d+)$/i.exec(entry.name.trim());
+          if (!matched) return max;
+          const value = Number(matched[1]);
+          return Number.isFinite(value) ? Math.max(max, value) : max;
+        }, 0) + 1;
+      const fallbackName = `Setup ${nextSetupIndex}`;
+      const name = nameHint && nameHint.length > 0 ? nameHint : fallbackName;
+      const entry: BookmarkEntry = {
+        id: `bm-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`,
+        name,
+        created_at: new Date().toISOString(),
+        snapshot: cloneSnapshot(snapshot),
+      };
+      return [entry, ...prev].slice(0, MAX_BOOKMARKS);
+    });
+    setBookmarkNameDraft("");
+  }, []);
+
+  const showSetupStatus = useCallback((text: string, timeoutMs = 1500) => {
+    setSetupStatusText(text);
+    if (setupStatusTimerRef.current !== null) {
+      window.clearTimeout(setupStatusTimerRef.current);
+      setupStatusTimerRef.current = null;
+    }
+    setupStatusTimerRef.current = window.setTimeout(() => {
+      setupStatusTimerRef.current = null;
+      setSetupStatusText("");
+    }, timeoutMs);
+  }, []);
+
+  const buildShareLink = useCallback((snapshot: UiSnapshot): string | null => {
+    if (typeof window === "undefined") return null;
+    const encoded = encodeUrlState(makeShareableSnapshot(snapshot));
+    if (!encoded) return null;
+    const url = new URL(window.location.href);
+    url.searchParams.set(URL_STATE_PARAM, encoded);
+    return url.toString();
+  }, []);
+
+  const copyShareLinkForSnapshot = useCallback(
+    async (snapshot: UiSnapshot) => {
+      const link = buildShareLink(snapshot);
+      if (!link) {
+        showSetupStatus("Link is too large to share.");
+        return;
+      }
+      const copied = await copyTextToClipboard(link);
+      showSetupStatus(copied ? "setup url link copied" : "Copy failed.");
+    },
+    [buildShareLink, copyTextToClipboard, showSetupStatus],
+  );
+
+  const saveCurrentBookmark = useCallback(() => {
+    saveSnapshotAsBookmark(currentSnapshot, bookmarkNameDraft);
+  }, [bookmarkNameDraft, currentSnapshot, saveSnapshotAsBookmark]);
+
+  const loadBookmarkById = useCallback(
+    (bookmarkId: string) => {
+      const target = bookmarks.find((bookmark) => bookmark.id === bookmarkId);
+      if (!target) return;
+      try {
+        const snapshot = cloneSnapshot(target.snapshot);
+        if (!snapshot || typeof snapshot !== "object") throw new Error("Invalid snapshot");
+        if (!snapshot.lightcurve || !snapshot.spectrum || !snapshot.skymap) throw new Error("Invalid snapshot");
+        applySnapshot(snapshot);
+      } catch {
+        setError("Bookmark is incompatible with current app version.");
+      }
+    },
+    [applySnapshot, bookmarks],
+  );
+
+  const removeBookmarkById = useCallback((bookmarkId: string) => {
+    setBookmarks((prev) => prev.filter((bookmark) => bookmark.id !== bookmarkId));
+  }, []);
+
+  const selectedCompareBookmark = useMemo(
+    () => bookmarks.find((bookmark) => bookmark.id === compareBookmarkId) ?? null,
+    [bookmarks, compareBookmarkId],
+  );
+
+  const apiEndpoints = useMemo<ApiEndpoint[]>(
+    () =>
+      apiStatusCandidates.map((base) => ({
+        key: base,
+        label: apiServerFromTarget(base),
+        healthTarget: `${base}/api/health`,
+      })),
+    [apiStatusCandidates],
+  );
+
+  const resolveApiKeyFromTarget = useCallback(
+    (target: string): string | null => {
+      for (const base of apiCandidates) {
+        if (target.startsWith(`${base}/api/`)) return base;
+      }
+      return null;
+    },
+    [apiCandidates],
+  );
+
+  const noteApiTarget = useCallback((target: string) => {
+    const key = resolveApiKeyFromTarget(target);
+    if (!key) return;
+    setActiveApiKey((prev) => (prev === key ? prev : key));
+  }, [resolveApiKeyFromTarget]);
+
+  const updateApiStatus = useCallback((key: string, next: ApiHealthStatus) => {
+    setApiStatusByKey((prev) => {
+      const current = prev[key];
+      if (
+        current &&
+        current.up === next.up &&
+        current.latencyMs === next.latencyMs &&
+        current.statusCode === next.statusCode &&
+        current.region === next.region &&
+        current.locationLabel === next.locationLabel &&
+        current.backend === next.backend
+      ) {
+        return prev;
+      }
+      return { ...prev, [key]: next };
+    });
+  }, []);
+
+  const probeEndpoint = useCallback(
+    async (endpoint: ApiEndpoint, cancelledRef?: { current: boolean }): Promise<void> => {
+      const started = performance.now();
+      try {
+        const response = await fetch(endpoint.healthTarget, { cache: "no-store" });
+        if (cancelledRef?.current) return;
+        if (!response.ok) {
+          updateApiStatus(endpoint.key, {
+            up: false,
+            latencyMs: null,
+            statusCode: response.status,
+            region: null,
+            locationLabel: null,
+            backend: null,
+          });
+          return;
+        }
+        let backend: string | null = null;
+        let region: string | null = null;
+        let locationLabel: string | null = null;
+        try {
+          const payload = (await response.clone().json()) as unknown;
+          region = regionFromHealthPayload(payload);
+          locationLabel = locationLabelFromHealthPayload(payload);
+          backend = backendFromHealthPayload(payload);
+        } catch {
+          region = null;
+          locationLabel = null;
+          backend = null;
+        }
+        const elapsed = Math.max(1, Math.round(performance.now() - started));
+        updateApiStatus(endpoint.key, {
+          up: true,
+          latencyMs: elapsed,
+          statusCode: response.status,
+          region,
+          locationLabel,
+          backend,
+        });
+      } catch {
+        if (cancelledRef?.current) return;
+        updateApiStatus(endpoint.key, {
+          up: false,
+          latencyMs: null,
+          statusCode: null,
+          region: null,
+          locationLabel: null,
+          backend: null,
+        });
+      }
+    },
+    [updateApiStatus],
+  );
+
+  useEffect(() => {
+    setApiStatusByKey((prev) => {
+      const allowed = new Set(apiEndpoints.map((endpoint) => endpoint.key));
+      let changed = false;
+      const next: Record<string, ApiHealthStatus> = {};
+      for (const [key, value] of Object.entries(prev)) {
+        if (!allowed.has(key)) {
+          changed = true;
+          continue;
+        }
+        next[key] = value;
+      }
+      return changed ? next : prev;
+    });
+    if (activeApiKey && !apiEndpoints.some((endpoint) => endpoint.key === activeApiKey)) {
+      setActiveApiKey("");
+    }
+  }, [activeApiKey, apiEndpoints]);
+
+  useEffect(() => {
+    const cancelledRef = { current: false };
+    let directTimer: number | null = null;
+
+    const pickActiveEndpoint = (): ApiEndpoint | null => {
+      const endpointByKey = (key: string): ApiEndpoint | null =>
+        apiEndpoints.find((endpoint) => endpoint.key === key) ?? null;
+
+      const isDisplayEndpoint = (key: string): boolean => apiStatusDisplaySet.has(key);
+
+      if (activeApiKey && isDisplayEndpoint(activeApiKey)) {
+        const direct = endpointByKey(activeApiKey);
+        if (direct) return direct;
+      }
+
+      if (activeApiKey) {
+        const activeStatus = apiStatusByKey[activeApiKey];
+        const activeRegion = activeStatus?.region ?? null;
+        if (activeRegion) {
+          const mapped = apiEndpoints.find((endpoint) => {
+            if (!isDisplayEndpoint(endpoint.key)) return false;
+            const candidateRegion = apiStatusByKey[endpoint.key]?.region ?? null;
+            return candidateRegion === activeRegion;
+          });
+          if (mapped) return mapped;
+        }
+      }
+
+      const firstDisplay = apiEndpoints.find((endpoint) => isDisplayEndpoint(endpoint.key));
+      if (firstDisplay) return firstDisplay;
+      return apiEndpoints[0] ?? null;
+    };
+
+    const probeActive = async () => {
+      const endpoint = pickActiveEndpoint();
+      if (!endpoint) return;
+      await probeEndpoint(endpoint, cancelledRef);
+    };
+
+    void probeActive();
+    directTimer = window.setInterval(() => {
+      void probeActive();
+    }, API_STATUS_REFRESH_DIRECT_MS);
+
+    return () => {
+      cancelledRef.current = true;
+      if (directTimer !== null) {
+        window.clearInterval(directTimer);
+      }
+    };
+  }, [activeApiKey, apiEndpoints, apiStatusByKey, apiStatusDisplaySet, probeEndpoint]);
+
+  useEffect(() => {
+    const cancelledRef = { current: false };
+    const targets = apiEndpoints.filter((endpoint) => apiStatusDisplaySet.has(endpoint.key));
+    if (targets.length === 0) return;
+    // Measure all visible backends once on load so dropdown rows are pre-populated.
+    void Promise.all(targets.map((endpoint) => probeEndpoint(endpoint, cancelledRef)));
+    return () => {
+      cancelledRef.current = true;
+    };
+  }, [apiEndpoints, apiStatusDisplaySet, probeEndpoint]);
+
+  const compareSpec = useMemo<ComputationSpec | null>(() => {
+    if (!compareEnabled || mode === "skymap" || !selectedCompareBookmark) return null;
+    return buildComputationSpecFromSnapshot(selectedCompareBookmark.snapshot, mode);
+  }, [compareEnabled, mode, selectedCompareBookmark]);
+
   const fetchFromApi = useCallback(async (path: string, init?: RequestInit): Promise<Response> => {
     const cleanPath = path.replace(/^\/+/, "");
     let lastErr: unknown = null;
 
-    // Prefer direct browser->API calls to avoid an extra frontend proxy hop; keep proxy as fallback.
     const directTargets = apiCandidates.map((base) => `${base}/api/${cleanPath}`);
-    const targets = [...directTargets, `/api-proxy/${cleanPath}`];
-    for (const target of targets) {
+    for (const target of directTargets) {
       try {
         const response = await fetch(target, init);
-        // If proxy backend is unavailable, continue to the next candidate.
-        if (target.startsWith("/api-proxy/") && [502, 503, 504].includes(response.status)) {
-          lastErr = new Error(`Proxy unavailable (${response.status})`);
-          continue;
-        }
+        noteApiTarget(target);
         return response;
       } catch (err) {
         lastErr = err;
       }
     }
     throw lastErr instanceof Error ? lastErr : new Error("Load failed");
-  }, [apiCandidates]);
+  }, [apiCandidates, noteApiTarget]);
 
   useEffect(() => {
     async function boot() {
@@ -1219,6 +2164,84 @@ export default function HomePage() {
   }, [obsStorageReady, sedObsGroups]);
 
   useEffect(() => {
+    try {
+      const stored = parseStoredBookmarks(window.localStorage.getItem(BOOKMARKS_STORAGE_KEY));
+      if (stored !== null) {
+        setBookmarks(stored.slice(0, MAX_BOOKMARKS));
+      }
+    } catch {
+      // Ignore localStorage read errors.
+    }
+  }, []);
+
+  useEffect(() => {
+    try {
+      window.localStorage.setItem(BOOKMARKS_STORAGE_KEY, JSON.stringify(bookmarks));
+    } catch {
+      // Ignore localStorage write errors.
+    }
+  }, [bookmarks]);
+
+  useEffect(() => {
+    if (!bootReady || typeof window === "undefined") return;
+    const raw = new URL(window.location.href).searchParams.get(URL_STATE_PARAM);
+    if (!raw) {
+      setUrlStateReady(true);
+      return;
+    }
+    const snapshot = decodeUrlState(raw);
+    if (!snapshot) {
+      setError("URL state is invalid or incompatible.");
+      setUrlStateReady(true);
+      return;
+    }
+    applySnapshot(snapshot);
+    setUrlStateReady(true);
+  }, [applySnapshot, bootReady]);
+
+  useEffect(() => {
+    if (!urlStateReady || typeof window === "undefined") return;
+    if (sliderInteracting) return;
+    if (urlSyncTimerRef.current !== null) {
+      window.clearTimeout(urlSyncTimerRef.current);
+      urlSyncTimerRef.current = null;
+    }
+    const link = buildShareLink(currentSnapshot);
+    if (!link) return;
+    urlSyncTimerRef.current = window.setTimeout(() => {
+      urlSyncTimerRef.current = null;
+      const current = window.location.href;
+      if (current === link) return;
+      window.history.replaceState({}, "", link);
+    }, 120);
+
+    return () => {
+      if (urlSyncTimerRef.current !== null) {
+        window.clearTimeout(urlSyncTimerRef.current);
+        urlSyncTimerRef.current = null;
+      }
+    };
+  }, [buildShareLink, currentSnapshot, sliderInteracting, urlStateReady]);
+
+  useEffect(() => {
+    return () => {
+      if (setupStatusTimerRef.current !== null) {
+        window.clearTimeout(setupStatusTimerRef.current);
+        setupStatusTimerRef.current = null;
+      }
+    };
+  }, []);
+
+  useEffect(() => {
+    if (bookmarks.length === 0) {
+      setCompareBookmarkId("");
+      setCompareEnabled(false);
+      return;
+    }
+    setCompareBookmarkId((prev) => (bookmarks.some((bookmark) => bookmark.id === prev) ? prev : bookmarks[0].id));
+  }, [bookmarks]);
+
+  useEffect(() => {
     setActiveLcObsTab((prev) => {
       if (lcObsGroups.length === 0) return 0;
       return Math.min(prev, lcObsGroups.length - 1);
@@ -1290,24 +2313,101 @@ export default function HomePage() {
   }, [mode, result, resultMode]);
 
   useEffect(() => {
+    if (resultMode !== mode) return;
+    const layout = result?.figure?.layout;
+    if (!layout) return;
+
+    const nextYSig = axisSignature(layout, "yaxis");
+    const nextY2Sig = axisSignature(layout, "yaxis2");
+    const prevSig = axisSignaturesRef.current[mode];
+
+    let clearY = false;
+    let clearY2 = false;
+
+    if (prevSig.yaxis !== null && prevSig.yaxis !== nextYSig) {
+      clearY = true;
+    }
+    if (prevSig.yaxis2 !== null && prevSig.yaxis2 !== nextY2Sig) {
+      clearY2 = true;
+    }
+
+    axisSignaturesRef.current[mode] = { yaxis: nextYSig, yaxis2: nextY2Sig };
+
+    if (!clearY && !clearY2) return;
+
+    const zoom = axisRangesRef.current[mode];
+    const nextZoom: AxisRanges = { ...zoom };
+    let changed = false;
+
+    if (clearY && nextZoom.yaxis !== null) {
+      nextZoom.yaxis = null;
+      changed = true;
+    }
+    if (clearY2 && nextZoom.yaxis2 !== null) {
+      nextZoom.yaxis2 = null;
+      changed = true;
+    }
+
+    if (changed) {
+      axisRangesRef.current[mode] = nextZoom;
+      setZoomRevision((v) => v + 1);
+    }
+  }, [mode, result, resultMode]);
+
+  useEffect(() => {
     if (typeof window === "undefined") return;
     const workspace = workspaceRef.current;
     if (!workspace) return;
+    let observedPlotWrap: HTMLElement | null = null;
+
+    const resolveMeasuredWidth = () => {
+      const plotWrap = workspace.querySelector(".plot-wrap") as HTMLElement | null;
+      return plotWrap?.clientWidth ?? workspace.clientWidth;
+    };
 
     const updateWidth = () => {
-      const next = workspace.clientWidth;
+      const next = resolveMeasuredWidth();
       if (next <= 0) return;
       setPlotWidthPx((prev) => (Math.abs(prev - next) > 1 ? next : prev));
     };
 
+    const attachPlotObserver = (observer: ResizeObserver) => {
+      const nextPlotWrap = workspace.querySelector(".plot-wrap") as HTMLElement | null;
+      if (nextPlotWrap === observedPlotWrap) return;
+      if (observedPlotWrap) {
+        observer.unobserve(observedPlotWrap);
+      }
+      observedPlotWrap = nextPlotWrap;
+      if (observedPlotWrap) {
+        observer.observe(observedPlotWrap);
+      }
+    };
+
     updateWidth();
-    const observer = new ResizeObserver(updateWidth);
-    observer.observe(workspace);
+    const resizeObserver = new ResizeObserver(() => {
+      attachPlotObserver(resizeObserver);
+      updateWidth();
+    });
+    resizeObserver.observe(workspace);
+    attachPlotObserver(resizeObserver);
+
+    const mutationObserver = new MutationObserver(() => {
+      attachPlotObserver(resizeObserver);
+      updateWidth();
+    });
+    mutationObserver.observe(workspace, { childList: true, subtree: true });
+
     window.addEventListener("resize", updateWidth);
+    window.addEventListener("orientationchange", updateWidth);
 
     return () => {
-      observer.disconnect();
+      if (observedPlotWrap) {
+        resizeObserver.unobserve(observedPlotWrap);
+      }
+      resizeObserver.disconnect();
+      mutationObserver.disconnect();
       window.removeEventListener("resize", updateWidth);
+      window.removeEventListener("orientationchange", updateWidth);
     };
   }, []);
 
@@ -1315,6 +2415,48 @@ export default function HomePage() {
     if (resultMode !== mode) return null;
     const figure = result?.figure;
     if (!figure?.data) return null;
+    const rawData = Array.isArray(figure.data) ? [...figure.data] : [];
+    const baseData =
+      mode === "skymap"
+        ? rawData
+        : rawData.map((trace) => {
+            if (!trace || typeof trace !== "object") return trace;
+            return remapScientificHoverTemplate(trace as Record<string, unknown>);
+          });
+    let mergedData = baseData;
+
+    if (mode !== "skymap" && compareEnabled && compareResultMode === mode && selectedCompareBookmark) {
+      const compareData = compareResult?.figure?.data;
+      if (Array.isArray(compareData) && compareData.length > 0) {
+        const compareLabel = selectedCompareBookmark.name;
+        const overlayData = compareData.map((trace, idx) => {
+          if (!trace || typeof trace !== "object") return trace;
+          const sourceTrace = remapScientificHoverTemplate(trace as Record<string, unknown>);
+          const nextTrace = { ...sourceTrace };
+          const name = typeof nextTrace.name === "string" ? nextTrace.name : `trace ${idx + 1}`;
+          nextTrace.name = `${name} (${compareLabel})`;
+          nextTrace.legendgroup =
+            typeof nextTrace.legendgroup === "string" ? `cmp-${nextTrace.legendgroup}` : `cmp-${idx + 1}`;
+          nextTrace.opacity =
+            typeof nextTrace.opacity === "number" ? Math.min(0.9, nextTrace.opacity) : 0.85;
+          if (typeof nextTrace.fill === "string" && nextTrace.fill !== "none") {
+            nextTrace.fill = "none";
+          }
+
+          const traceType = typeof nextTrace.type === "string" ? nextTrace.type : "";
+          if (traceType === "" || traceType === "scatter" || traceType === "scattergl") {
+            const lineObj =
+              nextTrace.line && typeof nextTrace.line === "object"
+                ? { ...(nextTrace.line as Record<string, unknown>) }
+                : {};
+            lineObj.dash = "dot";
+            nextTrace.line = lineObj;
+          }
+          return nextTrace;
+        });
+        mergedData = [...baseData, ...overlayData];
+      }
+    }
 
     const layout = { ...(figure.layout ?? {}) } as Record<string, unknown>;
     const zoom = axisRangesRef.current[mode];
@@ -1372,8 +2514,8 @@ export default function HomePage() {
 
     // Keep UI interactions (zoom/pan) stable across realtime data updates.
     layout.uirevision = `${mode}-zoom-state`;
-    return { ...figure, layout };
-  }, [mode, plotWidthPx, result, resultMode, zoomRevision]);
+    return { ...figure, data: mergedData, layout };
+  }, [compareEnabled, compareResult, compareResultMode, mode, plotWidthPx, result, resultMode, selectedCompareBookmark, zoomRevision]);
   const deferredFigure = useDeferredValue(displayFigure);
 
   const figureCaption = useMemo(() => {
@@ -1403,6 +2545,36 @@ export default function HomePage() {
               A<sub>*</sub>={formatParamValueNode(shared.A_star)}, n<sub>floor</sub>={formatParamValueNode(shared.n_ism)} cm<sup>-3</sup>
             </>
           );
+    const reverseShockTerms: ReactNode[] = [];
+    if (shared.enable_rvs) {
+      reverseShockTerms.push(
+        <>
+          jet duration={formatParamValueNode(shared.duration)} s
+        </>,
+      );
+      reverseShockTerms.push(
+        <>
+          ε<sub>e,r</sub>={formatParamValueNode(shared.eps_e_r)}
+        </>,
+      );
+      reverseShockTerms.push(
+        <>
+          ε<sub>B,r</sub>={formatParamValueNode(shared.eps_B_r)}
+        </>,
+      );
+      reverseShockTerms.push(
+        <>
+          p<sub>r</sub>={formatParamValueNode(shared.p_r)}
+        </>,
+      );
+      reverseShockTerms.push(
+        <>
+          ξ<sub>e,r</sub>={formatParamValueNode(shared.xi_e_r)}
+        </>,
+      );
+      if (shared.rvs_ssc) reverseShockTerms.push("SSC_r enabled");
+      if (shared.rvs_kn) reverseShockTerms.push("KN_r enabled");
+    }
 
     return (
       <>
@@ -1411,34 +2583,22 @@ export default function HomePage() {
         <sub>c</sub>={formatParamValueNode(shared.theta_c)} rad, {mediumParam}, ε<sub>e</sub>={formatParamValueNode(shared.eps_e)}, ε
         <sub>B</sub>={formatParamValueNode(shared.eps_B)}, p={formatParamValueNode(shared.p)}, ξ<sub>e</sub>=
         {formatParamValueNode(shared.xi_e)}, d<sub>L</sub>={formatParamValueNode(shared.d_L_mpc)} Mpc, and θ<sub>obs</sub>=
-        {formatParamValueNode(shared.theta_obs)} rad.
+        {formatParamValueNode(shared.theta_obs)} rad
+        {shared.enable_rvs ? (
+          <>
+            ; reverse shock with{" "}
+            {reverseShockTerms.map((item, idx) => (
+              <span key={`rvs-node-${idx}`}>
+                {idx > 0 ? ", " : ""}
+                {item}
+              </span>
+            ))}
+          </>
+        ) : null}
+        .
       </>
     );
   }, [mode, shared]);
-
-  const figureCaptionHtml = useMemo(() => {
-    const title =
-      mode === "lightcurve"
-        ? "Multi-band GRB afterglow light curves"
-        : mode === "spectrum"
-          ? "GRB afterglow spectra"
-          : "GRB afterglow sky images";
-    const mediumLabel =
-      shared.medium_type === "ISM" ? "uniform ISM" : shared.medium_type === "Wind" ? "stellar-wind medium" : "wind-bubble medium";
-    const mediumParam =
-      shared.medium_type === "ISM"
-        ? `n<sub>ism</sub>=${formatParamValueHtml(shared.n_ism)} cm<sup>-3</sup>`
-        : shared.medium_type === "Wind"
-          ? `A<sub>*</sub>=${formatParamValueHtml(shared.A_star)}`
-          : `A<sub>*</sub>=${formatParamValueHtml(shared.A_star)}, n<sub>floor</sub>=${formatParamValueHtml(shared.n_ism)} cm<sup>-3</sup>`;
-
-    const html = `${title} generated with VegasAfterglow for a ${shared.jet_type.toLowerCase()} jet in a ${mediumLabel}, with E<sub>iso</sub>=${formatParamValueHtml(shared.E_iso)} erg, Γ<sub>0</sub>=${formatParamValueHtml(shared.Gamma0)}, θ<sub>c</sub>=${formatParamValueHtml(shared.theta_c)} rad, ${mediumParam}, ε<sub>e</sub>=${formatParamValueHtml(shared.eps_e)}, ε<sub>B</sub>=${formatParamValueHtml(shared.eps_B)}, p=${formatParamValueHtml(shared.p)}, ξ<sub>e</sub>=${formatParamValueHtml(shared.xi_e)}, d<sub>L</sub>=${formatParamValueHtml(shared.d_L_mpc)} Mpc, and θ<sub>obs</sub>=${formatParamValueHtml(shared.theta_obs)} rad.`;
-    return wrapCaptionForAnnotation(html);
-  }, [mode, shared]);
-
-  const handleGraphReady = useCallback((graphDiv: unknown) => {
-    graphDivRef.current = graphDiv;
-  }, []);
 
   const clearSavedXAxis = useCallback(
     (targetMode: Mode) => {
@@ -1648,71 +2808,169 @@ export default function HomePage() {
     );
   }
 
-  function renderSharedControls() {
+  function renderDistanceObserverControls() {
+    const formatZPlain = (value: number): string => {
+      if (!Number.isFinite(value)) return "";
+      if (value === 0) return "0";
+      const abs = Math.abs(value);
+      const exponent = Math.floor(Math.log10(abs));
+      const decimals = Math.max(0, Math.min(12, 2 - exponent));
+      return value.toFixed(decimals).replace(/\.?0+$/, "");
+    };
+
+    const convertedText =
+      distanceDriver === "dL" ? (
+        <>
+          z<span className="sb-distance-converted-eq"> = </span>
+          {formatZPlain(redshiftFromLuminosityDistanceMpc(shared.d_L_mpc))}
+        </>
+      ) : (
+        <>
+          d<sub>L</sub> (Mpc)
+          <span className="sb-distance-converted-eq"> = </span>
+          {normalizeDistanceMpc(luminosityDistanceMpcFromRedshift(shared.z))}
+        </>
+      );
+
+    return (
+      <div className="sb-stack sb-row-gap-top">
+        <div className="sb-distance-panel">
+          {distanceLinked ? (
+            <div className="sb-distance-row sb-distance-row-linked">
+              <div className="sb-distance-entry">
+                <select
+                  className="sb-distance-unit"
+                  value={distanceDriver}
+                  onChange={(e) => setDistanceDriver(e.target.value as DistanceDriver)}
+                >
+                  <option value="dL">dₗ (Mpc)</option>
+                  <option value="z">z</option>
+                </select>
+                <input
+                  className="sb-distance-number sb-distance-value"
+                  type="number"
+                  min={0}
+                  max={distanceDriver === "dL" ? 1e7 : 20}
+                  step={distanceDriver === "dL" ? 1 : 0.001}
+                  value={distanceDriver === "dL" ? shared.d_L_mpc : formatZPlain(shared.z)}
+                  onChange={(e) => {
+                    const numeric = Number(e.target.value);
+                    if (distanceDriver === "dL") {
+                      setDistanceMpc(numeric);
+                    } else {
+                      setDistanceRedshift(numeric);
+                    }
+                  }}
+                />
+              </div>
+              <span className="sb-muted sb-distance-converted">{convertedText}</span>
+              <label className="sb-checkbox-inline sb-distance-unlock">
+                <input type="checkbox" checked={!distanceLinked} onChange={(e) => setDistanceLinked(!e.target.checked)} />
+                unlock
+              </label>
+            </div>
+          ) : (
+            <div className="sb-distance-row">
+              <div className="sb-distance-unlocked-inline">
+                <span className="sb-distance-prefix">
+                  d<sub>L</sub> (Mpc)
+                </span>
+                <input
+                  className="sb-distance-number sb-distance-value"
+                  type="number"
+                  min={0}
+                  max={1e7}
+                  step={1}
+                  value={shared.d_L_mpc}
+                  onChange={(e) => setDistanceMpc(Number(e.target.value))}
+                />
+                <span className="sb-distance-prefix">z</span>
+                <input
+                  className="sb-distance-number sb-distance-value"
+                  type="number"
+                  min={0}
+                  max={20}
+                  step={0.001}
+                  value={formatZPlain(shared.z)}
+                  onChange={(e) => setDistanceRedshift(Number(e.target.value))}
+                />
+              </div>
+              <label className="sb-checkbox-inline sb-distance-unlock">
+                <input type="checkbox" checked={!distanceLinked} onChange={(e) => setDistanceLinked(!e.target.checked)} />
+                unlock
+              </label>
+            </div>
+          )}
+        </div>
+        <SliderField
+          label={
+            <>
+              θ<sub>obs</sub> (rad)
+            </>
+          }
+          min={0}
+          max={1.57}
+          step={0.01}
+          value={shared.theta_obs}
+          onChange={(v) => setSharedField("theta_obs", v)}
+        />
+      </div>
+    );
+  }
+
+  function renderFluxUnitControl() {
+    return (
+      <label className="sb-field">
+        <span className="sb-label">Flux</span>
+        <select
+          value={shared.flux_unit}
+          onChange={(e) => setSharedField("flux_unit", e.target.value as SharedParams["flux_unit"])}
+        >
+          <option value="mJy">mJy</option>
+          <option value="Jy">Jy</option>
+          <option value="uJy">uJy</option>
+          <option value="cgs">cgs</option>
+          <option value="AB mag">AB mag</option>
+        </select>
+      </label>
+    );
+  }
+
+  function renderPlotUnitControls(timeDisabled: boolean, showTime = true) {
+    if (!showTime) {
+      return renderFluxUnitControl();
+    }
+
+    return (
+      <div className="sb-row-2">
+        {renderFluxUnitControl()}
+        <label className="sb-field">
+          <span className="sb-label">Time</span>
+          <select
+            value={shared.time_unit}
+            disabled={timeDisabled}
+            onChange={(e) => setSharedField("time_unit", e.target.value as SharedParams["time_unit"])}
+          >
+            {TIME_UNIT_OPTIONS.map((u) => (
+              <option key={u} value={u}>
+                {u}
+              </option>
+            ))}
+          </select>
+        </label>
+      </div>
+    );
+  }
+
+  function renderSharedControls(options?: { hideDistanceObserver?: boolean; hidePlotUnits?: boolean }) {
     const isSky = mode === "skymap";
     const isLc = mode === "lightcurve";
 
     return (
       <>
-        <div className="sb-stack">
-          <label className="sb-field">
-            <span className="sb-label">
-              d<sub>L</sub> (Mpc)
-            </span>
-            <input
-              type="number"
-              min={0.1}
-              max={1e6}
-              step={10}
-              value={shared.d_L_mpc}
-              onChange={(e) => setSharedField("d_L_mpc", Number(e.target.value))}
-            />
-          </label>
-          <SliderField
-            label={
-              <>
-                θ<sub>obs</sub> (rad)
-              </>
-            }
-            min={0}
-            max={1.57}
-            step={0.01}
-            value={shared.theta_obs}
-            onChange={(v) => setSharedField("theta_obs", v)}
-          />
-        </div>
+        {!options?.hideDistanceObserver ? <div className="sb-stack">{renderDistanceObserverControls()}</div> : null}
 
-        {!isSky ? (
-          <div className="sb-row-2">
-              <label className="sb-field">
-                <span className="sb-label">Flux</span>
-              <select
-                value={shared.flux_unit}
-                onChange={(e) => setSharedField("flux_unit", e.target.value as SharedParams["flux_unit"])}
-              >
-                <option value="mJy">mJy</option>
-                <option value="Jy">Jy</option>
-                <option value="uJy">uJy</option>
-                <option value="cgs">cgs</option>
-                <option value="AB mag">AB mag</option>
-              </select>
-            </label>
-              <label className="sb-field">
-                <span className="sb-label">Time</span>
-              <select
-                value={shared.time_unit}
-                disabled={!isLc}
-                onChange={(e) => setSharedField("time_unit", e.target.value as SharedParams["time_unit"])}
-              >
-                {TIME_UNIT_OPTIONS.map((u) => (
-                  <option key={u} value={u}>
-                    {u}
-                  </option>
-                ))}
-              </select>
-            </label>
-          </div>
-        ) : null}
+        {!isSky && !options?.hidePlotUnits ? renderPlotUnitControls(!isLc, isLc) : null}
 
         <details className="sb-expander sb-major" open>
           <summary>Jet</summary>
@@ -1870,14 +3128,14 @@ export default function HomePage() {
                 <span className="sb-label">Type</span>
                 <div className="mode-radios sb-choice-radios">
                   {MEDIUM_TYPE_OPTIONS.map((mediumType) => (
-                    <label key={mediumType} className="mode-radio">
+                    <label key={mediumType.value} className="mode-radio">
                       <input
                         type="radio"
                         name="medium-type"
-                        checked={shared.medium_type === mediumType}
-                        onChange={() => setSharedField("medium_type", mediumType)}
+                        checked={shared.medium_type === mediumType.value}
+                        onChange={() => setSharedField("medium_type", mediumType.value)}
                       />
-                      <span>{mediumType}</span>
+                      <span>{mediumType.label}</span>
                     </label>
                   ))}
                 </div>
@@ -2018,7 +3276,7 @@ export default function HomePage() {
           {shared.enable_rvs ? (
             <>
               <LogSliderField
-                label="log10(Duration (s))"
+                label="log10(Jet Duration (s))"
                 minExp={-1}
                 maxExp={4}
                 step={0.05}
@@ -2128,20 +3386,7 @@ export default function HomePage() {
 
         <details className="sb-expander">
           <summary>Resolutions</summary>
-            <SliderField
-              label={
-                <>
-                  t points
-                </>
-              }
-              min={50}
-            max={300}
-            step={10}
-            decimals={0}
-            value={shared.num_t}
-            onChange={(v) => setSharedField("num_t", Math.round(v))}
-          />
-          <div className="sb-row-3">
+          <div className="sb-stack sb-resolution-ppd-stack">
             <SliderField
               label={
                 <>
@@ -2149,8 +3394,9 @@ export default function HomePage() {
                 </>
               }
               min={0.05}
-              max={1}
+              max={0.5}
               step={0.05}
+              decimals={2}
               value={shared.res_phi}
               onChange={(v) => setSharedField("res_phi", v)}
             />
@@ -2162,7 +3408,8 @@ export default function HomePage() {
               }
               min={0.1}
               max={2}
-              step={0.1}
+              step={0.05}
+              decimals={2}
               value={shared.res_theta}
               onChange={(v) => setSharedField("res_theta", v)}
             />
@@ -2173,8 +3420,9 @@ export default function HomePage() {
                 </>
               }
               min={1}
-              max={20}
+              max={30}
               step={0.5}
+              decimals={1}
               value={shared.res_t}
               onChange={(v) => setSharedField("res_t", v)}
             />
@@ -2265,6 +3513,84 @@ export default function HomePage() {
     [fullComputationSpec, sliderInteracting],
   );
 
+  function renderBookmarkPanel() {
+    const compareSupported = mode !== "skymap";
+    return (
+      <details className="sb-expander">
+        <summary>Saved Setups</summary>
+        <div className="bookmark-help-row">
+          <HelpHint
+            text="Save current parameters locally, then use each setup's Link button to share a URL so others can restore the same parameters."
+            ariaLabel="Saved setup sharing help"
+          />
+        </div>
+        <div className="bookmark-save-row">
+          <input
+            value={bookmarkNameDraft}
+            onChange={(e) => setBookmarkNameDraft(e.target.value)}
+            placeholder="Setup name (optional)"
+          />
+          <button className="sb-small-btn" type="button" onClick={saveCurrentBookmark}>
+            Save Setup
+          </button>
+        </div>
+        {setupStatusText ? <p className="sb-muted bookmark-status">{setupStatusText}</p> : null}
+
+        {bookmarks.length === 0 ? <p className="sb-muted">No saved setups yet.</p> : null}
+        {bookmarks.length > 0 ? (
+          <div className="bookmark-list">
+            {bookmarks.map((bookmark) => (
+              <div className="bookmark-row" key={bookmark.id}>
+                <span className="bookmark-name" title={bookmark.name}>
+                  {bookmark.name}
+                </span>
+                <div className="bookmark-row-actions">
+                  <button className="sb-small-btn" type="button" onClick={() => loadBookmarkById(bookmark.id)}>
+                    Load
+                  </button>
+                  <button className="sb-small-btn" type="button" onClick={() => void copyShareLinkForSnapshot(bookmark.snapshot)}>
+                    URL link
+                  </button>
+                  <button className="sb-danger-btn" type="button" onClick={() => removeBookmarkById(bookmark.id)}>
+                    Remove
+                  </button>
+                </div>
+              </div>
+            ))}
+          </div>
+        ) : null}
+
+        <label className="sb-checkbox-inline">
+          <input
+            type="checkbox"
+            checked={compareEnabled}
+            disabled={bookmarks.length === 0 || !compareSupported}
+            onChange={(e) => setCompareEnabled(e.target.checked)}
+          />
+          Overlay saved setup
+        </label>
+        {!compareSupported ? <p className="sb-muted">Compare overlay supports Light Curve and Spectrum only.</p> : null}
+
+        {compareEnabled && compareSupported ? (
+          <>
+            <label className="sb-field">
+              <span className="sb-label">Setup to overlay</span>
+              <select value={compareBookmarkId} onChange={(e) => setCompareBookmarkId(e.target.value)}>
+                {bookmarks.map((bookmark) => (
+                  <option key={bookmark.id} value={bookmark.id}>
+                    {bookmark.name}
+                  </option>
+                ))}
+              </select>
+            </label>
+            {compareRunning ? <p className="sb-muted">Updating overlay...</p> : null}
+            {compareError ? <p className="sb-compare-error">{compareError}</p> : null}
+          </>
+        ) : null}
+      </details>
+    );
+  }
+
   function renderModeSpecific() {
     const skyPixelMax = skyAnimate ? SKY_MAX_PIXEL_ANIMATE : SKY_MAX_PIXEL_STATIC;
     const skyPixelOptions = SKY_PIXEL_OPTIONS.filter((v) => v <= skyPixelMax);
@@ -2272,46 +3598,67 @@ export default function HomePage() {
     if (mode === "lightcurve") {
       return (
         <>
-          <label className="sb-field">
-            <span className="sb-label sb-label-with-help">
-              <span>Frequencies</span>
-              <HelpHint text={FREQ_HELP_TEXT} ariaLabel="Frequency input help" />
-            </span>
-            <input
-              value={lcFreq}
-              onChange={(e) => setLcFreq(e.target.value)}
-              placeholder="e.g. 1e9, R, 1keV, XRT, [0.3keV,10keV]"
-            />
-          </label>
-          <div className="sb-row-2 sb-row-gap-top">
-            <LogSliderField
-              label={
-                <>
-                  log10(t<sub>min</sub> (s))
-                </>
-              }
-              minExp={-1}
-              maxExp={6}
-              step={0.05}
-              value={lcTMin}
-              defaultExp={0}
-              onChange={setLcTMin}
-            />
-            <LogSliderField
-              label={
-                <>
-                  log10(t<sub>max</sub> (s))
-                </>
-              }
-              minExp={3}
-              maxExp={10}
-              step={0.05}
-              value={lcTMax}
-              defaultExp={8}
-              onChange={setLcTMax}
-            />
+          <div className="sb-stack">
+            <label className="sb-field">
+              <span className="sb-label sb-label-with-help">
+                <span>Frequencies</span>
+                <HelpHint text={FREQ_HELP_TEXT} ariaLabel="Frequency input help" />
+              </span>
+              <input
+                value={lcFreq}
+                onChange={(e) => setLcFreq(e.target.value)}
+                placeholder="e.g. 1e9, R, 1keV, XRT, [0.3keV,10keV]"
+              />
+            </label>
+            {renderDistanceObserverControls()}
           </div>
-          {renderSharedControls()}
+
+          <div className="sb-stack">
+            <div className="sb-row-2 sb-row-gap-top">
+              <LogSliderField
+                label={
+                  <>
+                    log10(t<sub>min</sub> (s))
+                  </>
+                }
+                minExp={-1}
+                maxExp={6}
+                step={0.05}
+                value={lcTMin}
+                defaultExp={0}
+                onChange={setLcTMin}
+              />
+              <LogSliderField
+                label={
+                  <>
+                    log10(t<sub>max</sub> (s))
+                  </>
+                }
+                minExp={3}
+                maxExp={10}
+                step={0.05}
+                value={lcTMax}
+                defaultExp={8}
+                onChange={setLcTMax}
+              />
+            </div>
+            <SliderField
+              label={
+                <>
+                  t points
+                </>
+              }
+              min={50}
+              max={300}
+              step={10}
+              decimals={0}
+              value={shared.num_t}
+              onChange={(v) => setSharedField("num_t", Math.round(v))}
+            />
+            {renderPlotUnitControls(false)}
+          </div>
+
+          {renderSharedControls({ hideDistanceObserver: true, hidePlotUnits: true })}
         </>
       );
     }
@@ -2319,84 +3666,91 @@ export default function HomePage() {
     if (mode === "spectrum") {
       return (
         <>
-          <label className="sb-field">
-            <span className="sb-label">
-              t<sub>obs</sub> (s)
-            </span>
-            <input
-              value={sedTimesDraft}
-              onChange={(e) => setSedTimesDraft(e.target.value)}
-              onBlur={() => setSedTimes(sedTimesDraft)}
-              placeholder="e.g. 1e3, 1e4, 1e5"
-            />
-          </label>
-
-          <div className="sb-row-2 sb-row-gap-top">
-            <LogSliderField
-              label={
-                <>
-                  log10(ν<sub>min</sub> (Hz))
-                </>
-              }
-              minExp={6}
-              maxExp={20}
-              step={0.05}
-              value={sedNuMin}
-              defaultExp={8}
-              onChange={setSedNuMin}
-            />
-            <LogSliderField
-              label={
-                <>
-                  log10(ν<sub>max</sub> (Hz))
-                </>
-              }
-              minExp={10}
-              maxExp={35}
-              step={0.05}
-              value={sedNuMax}
-              defaultExp={20}
-              onChange={setSedNuMax}
-            />
+          <div className="sb-stack">
+            <label className="sb-field">
+              <span className="sb-label">
+                t<sub>obs</sub> (s)
+              </span>
+              <input
+                value={sedTimesDraft}
+                onChange={(e) => setSedTimesDraft(e.target.value)}
+                onBlur={() => setSedTimes(sedTimesDraft)}
+                placeholder="e.g. 1e3, 1e4, 1e5"
+              />
+            </label>
+            {renderDistanceObserverControls()}
           </div>
 
           <div className="sb-stack">
-            <SliderField
-              label={
-                <>
-                  ν points
-                </>
-              }
-              min={50}
-              max={500}
-              step={10}
-              decimals={0}
-              value={sedNumNu}
-              onChange={(v) => setSedNumNu(Math.round(v))}
-            />
-            <label className="sb-field">
-              <span className="sb-label">ν unit</span>
-              <select value={sedFreqUnit} onChange={(e) => setSedFreqUnit(e.target.value)}>
-                {FREQ_UNIT_OPTIONS.map((u) => (
-                  <option key={u} value={u}>
-                    {u}
-                  </option>
-                ))}
-              </select>
-            </label>
-            <label className="sb-checkbox-inline sb-check-alone">
-              <input
-                type="checkbox"
-                checked={sedNuFNu}
-                disabled={shared.flux_unit === "AB mag"}
-                onChange={(e) => setSedNuFNu(e.target.checked)}
+            <div className="sb-row-2 sb-row-gap-top">
+              <LogSliderField
+                label={
+                  <>
+                    log10(ν<sub>min</sub> (Hz))
+                  </>
+                }
+                minExp={6}
+                maxExp={20}
+                step={0.05}
+                value={sedNuMin}
+                defaultExp={8}
+                onChange={setSedNuMin}
               />
-              ν F<sub>ν</sub>
-            </label>
+              <LogSliderField
+                label={
+                  <>
+                    log10(ν<sub>max</sub> (Hz))
+                  </>
+                }
+                minExp={10}
+                maxExp={35}
+                step={0.05}
+                value={sedNuMax}
+                defaultExp={20}
+                onChange={setSedNuMax}
+              />
+            </div>
+            <div className="sb-row-2 sb-row-fit-right">
+              <SliderField
+                label={
+                  <>
+                    ν points
+                  </>
+                }
+                min={50}
+                max={500}
+                step={10}
+                decimals={0}
+                value={sedNumNu}
+                onChange={(v) => setSedNumNu(Math.round(v))}
+              />
+              <label className="sb-checkbox-inline sb-nufnu-inline">
+                <input
+                  type="checkbox"
+                  checked={sedNuFNu}
+                  disabled={shared.flux_unit === "AB mag"}
+                  onChange={(e) => setSedNuFNu(e.target.checked)}
+                />
+                ν F<sub>ν</sub>
+              </label>
+            </div>
+            <div className="sb-row-2">
+              <label className="sb-field">
+                <span className="sb-label">ν unit</span>
+                <select value={sedFreqUnit} onChange={(e) => setSedFreqUnit(e.target.value)}>
+                  {FREQ_UNIT_OPTIONS.map((u) => (
+                    <option key={u} value={u}>
+                      {u}
+                    </option>
+                  ))}
+                </select>
+              </label>
+              {renderFluxUnitControl()}
+            </div>
             {shared.flux_unit === "AB mag" ? <p className="sb-muted">ν F<sub>ν</sub> is disabled for AB mag.</p> : null}
           </div>
 
-          {renderSharedControls()}
+          {renderSharedControls({ hideDistanceObserver: true, hidePlotUnits: true })}
         </>
       );
     }
@@ -2552,9 +3906,7 @@ export default function HomePage() {
       const lower = message.toLowerCase();
       const isNetworkFailure = lower.includes("load failed") || lower.includes("failed to fetch");
       setError(
-        isNetworkFailure
-          ? `Cannot reach backend. Checked /api-proxy and ${apiCandidates.join(" or ")}.`
-          : message,
+        isNetworkFailure ? `Cannot reach backend. Checked ${apiCandidates.join(" or ")}.` : message,
       );
     } finally {
       if (activeRequestRef.current === controller) {
@@ -2562,6 +3914,52 @@ export default function HomePage() {
       }
     }
   }, [apiCandidates, fetchFromApi, startFigureTransition]);
+
+  const runCompareComputation = useCallback(async (spec: ComputationSpec) => {
+    compareActiveRequestRef.current?.abort();
+    const controller = new AbortController();
+    compareActiveRequestRef.current = controller;
+    const requestSeq = ++compareRequestSeqRef.current;
+    setCompareRunning(true);
+    setCompareError("");
+
+    try {
+      const response = await fetchFromApi(spec.endpoint, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          ...spec.payload,
+          include_figure: true,
+          include_exports: false,
+        }),
+        signal: controller.signal,
+      });
+      if (!response.ok) {
+        const details = await response.text();
+        throw new Error(details || `HTTP ${response.status}`);
+      }
+
+      const data = (await response.json()) as RunResponse;
+      if (requestSeq !== compareRequestSeqRef.current) return;
+      setCompareResult(data);
+      setCompareResultMode(spec.endpoint);
+    } catch (err) {
+      if (controller.signal.aborted) return;
+      if (err instanceof DOMException && err.name === "AbortError") return;
+      if (requestSeq !== compareRequestSeqRef.current) return;
+      const message = err instanceof Error ? err.message : "Compare request failed";
+      setCompareError(message);
+      setCompareResult(null);
+      setCompareResultMode(null);
+    } finally {
+      if (compareActiveRequestRef.current === controller) {
+        compareActiveRequestRef.current = null;
+      }
+      if (requestSeq === compareRequestSeqRef.current) {
+        setCompareRunning(false);
+      }
+    }
+  }, [fetchFromApi]);
 
   const flushQueuedComputation = useCallback(async () => {
     if (requestInFlightRef.current) return;
@@ -2584,6 +3982,21 @@ export default function HomePage() {
 
   useEffect(() => {
     if (!bootReady) return;
+    if (isEmptyLightcurveFrequencySpec(computationSpec)) {
+      pendingSpecRef.current = null;
+      if (runTimerRef.current !== null) {
+        window.clearTimeout(runTimerRef.current);
+        runTimerRef.current = null;
+      }
+      activeRequestRef.current?.abort();
+      setRunning(false);
+      setError("");
+      startFigureTransition(() => {
+        setResult(null);
+        setResultMode(null);
+      });
+      return;
+    }
     pendingSpecRef.current = computationSpec;
     if (runTimerRef.current !== null) {
       window.clearTimeout(runTimerRef.current);
@@ -2602,6 +4015,46 @@ export default function HomePage() {
   }, [bootReady, computationSpec, flushQueuedComputation, sliderInteracting]);
 
   useEffect(() => {
+    if (compareTimerRef.current !== null) {
+      window.clearTimeout(compareTimerRef.current);
+      compareTimerRef.current = null;
+    }
+
+    if (!bootReady || !compareSpec) {
+      compareActiveRequestRef.current?.abort();
+      setCompareRunning(false);
+      if (!compareEnabled || mode === "skymap") {
+        setCompareResult(null);
+        setCompareResultMode(null);
+        setCompareError("");
+      }
+      return;
+    }
+
+    if (isEmptyLightcurveFrequencySpec(compareSpec)) {
+      compareActiveRequestRef.current?.abort();
+      setCompareRunning(false);
+      setCompareResult(null);
+      setCompareResultMode(null);
+      setCompareError("");
+      return;
+    }
+
+    const debounceMs = sliderInteracting ? AUTO_RUN_DEBOUNCE_SLIDING_MS : AUTO_RUN_DEBOUNCE_IDLE_MS;
+    compareTimerRef.current = window.setTimeout(() => {
+      compareTimerRef.current = null;
+      void runCompareComputation(compareSpec);
+    }, debounceMs);
+
+    return () => {
+      if (compareTimerRef.current !== null) {
+        window.clearTimeout(compareTimerRef.current);
+        compareTimerRef.current = null;
+      }
+    };
+  }, [bootReady, compareEnabled, compareSpec, mode, runCompareComputation, sliderInteracting]);
+
+  useEffect(() => {
     return () => {
       if (runTimerRef.current !== null) {
         window.clearTimeout(runTimerRef.current);
@@ -2609,6 +4062,11 @@ export default function HomePage() {
       }
       pendingSpecRef.current = null;
       activeRequestRef.current?.abort();
+      if (compareTimerRef.current !== null) {
+        window.clearTimeout(compareTimerRef.current);
+        compareTimerRef.current = null;
+      }
+      compareActiveRequestRef.current?.abort();
     };
   }, []);
 
@@ -2784,72 +4242,8 @@ export default function HomePage() {
     setZoomRevision((v) => v + 1);
   }, [mode]);
 
-  const downloadPngWithCaption = useCallback(async () => {
-    setError("");
-    setDownloading("png");
-    try {
-      const graphDiv = graphDivRef.current;
-      if (!graphDiv) {
-        throw new Error("Plot is not ready for image export yet.");
-      }
-
-      const plotlyModule = await import("plotly.js-dist-min");
-      const Plotly = (plotlyModule as any).default ?? (plotlyModule as any);
-      const layout = (graphDiv.layout ?? {}) as Record<string, unknown>;
-      const marginObj =
-        layout.margin && typeof layout.margin === "object" ? (layout.margin as Record<string, unknown>) : {};
-      const marginBValue = Number(marginObj.b);
-      const hasMarginB = Number.isFinite(marginBValue);
-      const originalMarginB = hasMarginB ? marginBValue : 0;
-      const originalAnnotations = Array.isArray(layout.annotations) ? [...(layout.annotations as unknown[])] : [];
-      const captionAnnotation = {
-        text: figureCaptionHtml,
-        xref: "paper",
-        yref: "paper",
-        x: 0,
-        y: -0.26,
-        xanchor: "left",
-        yanchor: "top",
-        showarrow: false,
-        align: "left",
-        font: { size: 12, color: "#3c4f63" },
-      };
-      const exportMarginB = Math.max(originalMarginB, mode === "skymap" ? 120 : 140);
-
-      await Plotly.relayout(graphDiv, {
-        annotations: [...originalAnnotations, captionAnnotation],
-        "margin.b": exportMarginB,
-      });
-
-      try {
-        const width = Number(graphDiv.clientWidth);
-        const height = Number(graphDiv.clientHeight);
-        const image = await Plotly.toImage(graphDiv, {
-          format: "png",
-          scale: 2,
-          width: Number.isFinite(width) && width > 0 ? width : undefined,
-          height: Number.isFinite(height) && height > 0 ? height : undefined,
-        });
-        downloadBase64(image, `afterglow_${mode}.png`, "image/png");
-      } finally {
-        const restorePayload: Record<string, unknown> = { annotations: originalAnnotations };
-        restorePayload["margin.b"] = hasMarginB ? originalMarginB : null;
-        try {
-          await Plotly.relayout(graphDiv, restorePayload);
-        } catch {
-          // Ignore restore failures; next rerender will restore plot state.
-        }
-      }
-    } catch (err) {
-      const message = err instanceof Error ? err.message : "PNG export failed";
-      setError(message);
-    } finally {
-      setDownloading(null);
-    }
-  }, [figureCaptionHtml, mode]);
-
   const downloadCurrentExport = useCallback(
-    async (kind: BackendDownloadKind) => {
+    async (kind: DownloadKind) => {
       setError("");
       setDownloading(kind);
       try {
@@ -2899,28 +4293,75 @@ export default function HomePage() {
   );
 
   const copyBibtex = useCallback(async () => {
-    let copied = false;
-    try {
-      await navigator.clipboard.writeText(BIBTEX_TEXT);
-      copied = true;
-    } catch {
-      try {
-        const ta = document.createElement("textarea");
-        ta.value = BIBTEX_TEXT;
-        ta.style.position = "fixed";
-        ta.style.left = "-9999px";
-        document.body.appendChild(ta);
-        ta.select();
-        copied = document.execCommand("copy");
-        document.body.removeChild(ta);
-      } catch {
-        copied = false;
-      }
-    }
-
+    const copied = await copyTextToClipboard(BIBTEX_TEXT);
     setCiteLinkText(copied ? "copied" : "copy failed");
     window.setTimeout(() => setCiteLinkText("cite"), 1200);
-  }, []);
+  }, [copyTextToClipboard]);
+
+  const apiStatusRows = useMemo(
+    () => {
+      const activeStatus = activeApiKey ? apiStatusByKey[activeApiKey] : undefined;
+      let activeDisplayKey = activeApiKey;
+      if (!apiStatusDisplaySet.has(activeDisplayKey) && activeStatus?.region) {
+        const mapped = apiEndpoints.find((endpoint) => {
+          if (!apiStatusDisplaySet.has(endpoint.key)) return false;
+          return apiStatusByKey[endpoint.key]?.region === activeStatus.region;
+        });
+        if (mapped) {
+          activeDisplayKey = mapped.key;
+        }
+      }
+
+      return apiEndpoints.filter((endpoint) => apiStatusDisplaySet.has(endpoint.key)).map((endpoint) => {
+        const status = apiStatusByKey[endpoint.key];
+        const isActive = activeDisplayKey === endpoint.key;
+        let statusText = "checking...";
+        let statusClass = "pending";
+        if (status) {
+          if (status.up) {
+            statusText = `${status.latencyMs ?? "--"} ms`;
+            statusClass = "up";
+          } else if (status.statusCode !== null) {
+            statusText = `down (${status.statusCode})`;
+            statusClass = "down";
+          } else {
+            statusText = "down";
+            statusClass = "down";
+          }
+        }
+        return {
+          ...endpoint,
+          isActive,
+          regionText: status?.locationLabel ?? status?.region ?? "region unknown",
+          statusClass,
+          statusText,
+        };
+      });
+    },
+    [activeApiKey, apiEndpoints, apiStatusByKey, apiStatusDisplaySet],
+  );
+  const activeApiStatusRow = useMemo(() => {
+    if (apiStatusRows.length === 0) return null;
+    return apiStatusRows.find((row) => row.isActive) ?? apiStatusRows[0];
+  }, [apiStatusRows]);
+  const otherApiStatusRows = useMemo(() => {
+    if (!activeApiStatusRow) return apiStatusRows;
+    return apiStatusRows.filter((row) => row.key !== activeApiStatusRow.key);
+  }, [activeApiStatusRow, apiStatusRows]);
+  const selectedOtherApiStatusRow = useMemo(() => {
+    if (otherApiStatusRows.length === 0) return null;
+    return otherApiStatusRows.find((row) => row.key === selectedOtherApiKey) ?? otherApiStatusRows[0];
+  }, [otherApiStatusRows, selectedOtherApiKey]);
+
+  useEffect(() => {
+    if (otherApiStatusRows.length === 0) {
+      if (selectedOtherApiKey) setSelectedOtherApiKey("");
+      return;
+    }
+    if (!otherApiStatusRows.some((row) => row.key === selectedOtherApiKey)) {
+      setSelectedOtherApiKey(otherApiStatusRows[0]?.key ?? "");
+    }
+  }, [otherApiStatusRows, selectedOtherApiKey]);
 
   return (
     <main className={`app-shell ${sidebarOpen ? "sidebar-open" : ""}`}>
@@ -2928,6 +4369,13 @@ export default function HomePage() {
         <button className="sidebar-toggle" onClick={() => setSidebarOpen(true)} aria-label="Open controls">
           Controls
         </button>
+      ) : null}
+      {!sidebarOpen && activeApiStatusRow ? (
+        <div className="sidebar-status-mini" aria-live="polite">
+          <span className="sidebar-api-working">Working Server:</span>
+          <span className="sidebar-status-mini-region">{activeApiStatusRow.regionText}</span>
+          <span className={`sidebar-api-pill ${activeApiStatusRow.statusClass}`}>{activeApiStatusRow.statusText}</span>
+        </div>
       ) : null}
 
       <aside className={`sidebar ${sidebarOpen ? "open" : ""}`}>
@@ -2943,6 +4391,45 @@ export default function HomePage() {
           <button className="sidebar-close" onClick={() => setSidebarOpen(false)}>
             Close
           </button>
+        </div>
+        <div className="sidebar-api-status" aria-live="polite">
+          {activeApiStatusRow ? (
+            <>
+              <div key={activeApiStatusRow.key} className="sidebar-api-row sidebar-api-row-primary active">
+                <span className="sidebar-api-name">
+                  <span className="sidebar-api-working">Working Server:</span>
+                  <span>{activeApiStatusRow.regionText}</span>
+                </span>
+                <span className={`sidebar-api-pill ${activeApiStatusRow.statusClass}`}>{activeApiStatusRow.statusText}</span>
+                {otherApiStatusRows.length > 0 ? (
+                  <label className="sidebar-api-select-wrap">
+                    <span className="sr-only">Other server</span>
+                    <select
+                      className="sidebar-api-select"
+                      value={selectedOtherApiStatusRow?.key ?? ""}
+                      onChange={(event) => setSelectedOtherApiKey(event.currentTarget.value)}
+                    >
+                      {otherApiStatusRows.map((row) => (
+                        <option key={row.key} value={row.key}>
+                          {row.regionText}
+                        </option>
+                      ))}
+                    </select>
+                  </label>
+                ) : null}
+              </div>
+              {selectedOtherApiStatusRow ? (
+                <div key={selectedOtherApiStatusRow.key} className="sidebar-api-row">
+                  <span className="sidebar-api-name">
+                    <span>{selectedOtherApiStatusRow.regionText}</span>
+                  </span>
+                  <span className={`sidebar-api-pill ${selectedOtherApiStatusRow.statusClass}`}>
+                    {selectedOtherApiStatusRow.statusText}
+                  </span>
+                </div>
+              ) : null}
+            </>
+          ) : null}
         </div>
         <div className="mode-block">
           <span className="sb-label sb-section-label">Mode</span>
@@ -2961,9 +4448,33 @@ export default function HomePage() {
           </div>
         </div>
 
+        {renderBookmarkPanel()}
         {renderModeSpecific()}
 
         <div className="sidebar-footer">
+          <div className="sidebar-downloads">
+            {mode !== "skymap" ? (
+              <button
+                disabled={downloading !== null || !displayFigure?.data}
+                onClick={() => void downloadCurrentExport("csv")}
+              >
+                {downloading === "csv" ? "Preparing Data CSV..." : "Download Data (CSV)"}
+              </button>
+            ) : (
+              <button
+                disabled={downloading !== null || !displayFigure?.data}
+                onClick={() => void downloadCurrentExport("gif")}
+              >
+                {downloading === "gif" ? "Preparing GIF..." : "Save GIF"}
+              </button>
+            )}
+            <button
+              disabled={downloading !== null || !displayFigure?.data}
+              onClick={() => void downloadCurrentExport("json")}
+            >
+              {downloading === "json" ? "Preparing Data JSON..." : "Download Data (JSON)"}
+            </button>
+          </div>
           <p className="sb-footer-text">
             VegasAfterglow v{appVersion}
             <br />
@@ -2987,32 +4498,6 @@ export default function HomePage() {
             </button>{" "}
             our work in research.
           </p>
-          <div className="sidebar-downloads">
-            {mode !== "skymap" ? (
-              <button
-                disabled={downloading !== null || !displayFigure?.data}
-                onClick={() => void downloadCurrentExport("csv")}
-              >
-                {downloading === "csv" ? "Preparing CSV..." : "CSV"}
-              </button>
-            ) : (
-              <button
-                disabled={downloading !== null || !displayFigure?.data}
-                onClick={() => void downloadCurrentExport("gif")}
-              >
-                {downloading === "gif" ? "Preparing GIF..." : "Save GIF"}
-              </button>
-            )}
-            <button disabled={downloading !== null || !displayFigure?.data} onClick={() => void downloadPngWithCaption()}>
-              {downloading === "png" ? "Preparing PNG..." : "PNG"}
-            </button>
-            <button
-              disabled={downloading !== null || !displayFigure?.data}
-              onClick={() => void downloadCurrentExport("json")}
-            >
-              {downloading === "json" ? "Preparing JSON..." : "JSON"}
-            </button>
-          </div>
         </div>
 
         {showRunning || isFigurePending ? <div className="status">{`Running ${mode} ...`}</div> : null}
@@ -3034,7 +4519,7 @@ export default function HomePage() {
 
         {deferredFigure?.data ? (
           <div className={`figure-stack${mode === "skymap" ? " figure-stack-square" : ""}`}>
-            <PlotFigure figure={deferredFigure} mode={mode} onRelayout={handlePlotRelayout} onGraphReady={handleGraphReady} />
+            <PlotFigure figure={deferredFigure} mode={mode} onRelayout={handlePlotRelayout} />
             <p className="figure-caption">{figureCaption}</p>
           </div>
         ) : (
