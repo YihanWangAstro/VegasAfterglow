@@ -1,11 +1,18 @@
 steps:
 - name: gcr.io/cloud-builders/docker
+  env: ['DOCKER_BUILDKIT=1']
   args:
   - build
+  - --build-arg=BUILDKIT_INLINE_CACHE=1
+  - --cache-from
+  - $_IMAGE_LATEST
   - -t
   - $_IMAGE_URI
+  - -t
+  - $_IMAGE_LATEST
   - -f
   - webtool/backend/Dockerfile
   - .
 images:
 - $_IMAGE_URI
+- $_IMAGE_LATEST

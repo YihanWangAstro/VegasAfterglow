@@ -3,6 +3,7 @@
 import numpy as np
 import plotly.graph_objects as go
 import plotly.io as pio
+from fastapi import HTTPException
 from plotly.subplots import make_subplots
 
 # Avoid shipping a large default template blob with every figure payload.
@@ -501,5 +502,78 @@ def make_sed_figure(data, flux_unit, freq_unit, nufnu=False,
             **AXIS_COMMON, "showgrid": False,
         }
     fig.update_layout(**layout_kw)
+
+    return fig
+
+
+def make_skymap_figure(data: dict) -> go.Figure:
+    """Build a Plotly heatmap figure for a sky image (single or animated)."""
+    images = data["images"]
+    extent = data["extent_uas"]
+    t_arr = data["t_obs_array"]
+    nu_obs = data["nu_obs"]
+
+    if not images:
+        raise HTTPException(status_code=500, detail="Sky map returned no images")
+
+    nx, ny = int(images[0].shape[0]), int(images[0].shape[1])
+    x_min, x_max, y_min, y_max = float(extent[0]), float(extent[1]), float(extent[2]), float(extent[3])
+    dx = (x_max - x_min) / max(nx, 1)
+    dy = (y_max - y_min) / max(ny, 1)
+    x0 = x_min + 0.5 * dx
+    y0 = y_min + 0.5 * dy
+
+    def _log10_image(img):
+        frame = np.asarray(img, dtype=np.float32).T
+        out = np.full(frame.shape, np.nan, dtype=np.float32)
+        np.log10(frame, out=out, where=frame > 0)
+        return np.round(out, decimals=4)
+
+    log_frames = [_log10_image(img) for img in images]
+    finite_vals = np.concatenate([f[np.isfinite(f)] for f in log_frames if np.any(np.isfinite(f))] or [np.array([])])
+    z_min = float(np.min(finite_vals)) if finite_vals.size > 0 else 0.0
+    z_max = float(np.max(finite_vals)) if finite_vals.size > 0 else 1.0
+
+    nu_label = freq_label(float(nu_obs))
+    colorbar_title = "log<sub>10</sub> I (erg cm<sup>-2</sup> s<sup>-1</sup> Hz<sup>-1</sup> sr<sup>-1</sup>)"
+
+    fig = go.Figure(data=[go.Heatmap(
+        z=log_frames[0], x0=x0, dx=dx, y0=y0, dy=dy,
+        colorscale="Inferno", zmin=z_min, zmax=z_max,
+        colorbar={"title": {"text": colorbar_title, "side": "right"}},
+        hovertemplate="Δx=%{x:.3e} μas<br>Δy=%{y:.3e} μas<br>log10 I=%{z:.3e}<extra></extra>",
+    )])
+
+    axis_style = dict(showline=True, linewidth=0.8, linecolor="#000", mirror=True,
+                      ticks="inside", ticklen=5, tickwidth=0.8, tickcolor="#000",
+                      showgrid=True, gridcolor="rgba(0,0,0,0.10)", griddash="dot", gridwidth=0.3)
+    fig.update_layout(
+        title=f"t = {format_time_label(float(t_arr[0]))}, ν = {nu_label}",
+        xaxis_title="Δx (μas)", yaxis_title="Δy (μas)",
+        xaxis={"range": [x_min, x_max], "hoverformat": ".3e", **axis_style},
+        yaxis={"range": [y_min, y_max], "hoverformat": ".3e", "scaleanchor": "x", "scaleratio": 1, **axis_style},
+        template="none", plot_bgcolor="#ffffff", paper_bgcolor="#ffffff",
+        margin={"l": 60, "r": 20, "t": 50, "b": 60},
+    )
+
+    if len(log_frames) > 1:
+        frames = [go.Frame(name=f"frame_{i}", data=[go.Heatmap(z=f)], traces=[0],
+                           layout={"title": f"t = {format_time_label(float(t_arr[i]))}, ν = {nu_label}"})
+                  for i, f in enumerate(log_frames)]
+        steps = [{"label": format_time_label(float(t_arr[i])), "method": "animate",
+                  "args": [[f"frame_{i}"], {"mode": "immediate", "frame": {"duration": 0, "redraw": True}, "transition": {"duration": 0}}]}
+                 for i in range(len(log_frames))]
+        fig.frames = frames
+        fig.update_layout(
+            margin={"b": 230},
+            updatemenus=[{"type": "buttons", "showactive": True, "active": 0,
+                          "x": 0.53, "xanchor": "center", "y": -0.44, "yanchor": "top",
+                          "buttons": [{"label": "Pause/Play", "method": "animate",
+                                       "args": [None, {"frame": {"duration": 300, "redraw": True}, "fromcurrent": True,
+                                                       "transition": {"duration": 0}, "mode": "immediate"}],
+                                       "args2": [[None], {"frame": {"duration": 0, "redraw": False}, "mode": "immediate"}]}]}],
+            sliders=[{"active": 0, "x": 0.13, "y": -0.08, "len": 0.8, "pad": {"t": 8, "b": 0},
+                      "currentvalue": {"prefix": "t: "}, "steps": steps}],
+        )
 
     return fig

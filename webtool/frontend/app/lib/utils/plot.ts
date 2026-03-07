@@ -1,0 +1,103 @@
+import { AXIS_EPS } from "../constants";
+import type { AxisName, AxisRange } from "../types";
+import { formatPowerHoverValue } from "./math";
+
+export function remapScientificHoverTemplate(trace: Record<string, unknown>): Record<string, unknown> {
+  const hovertemplate = typeof trace.hovertemplate === "string" ? trace.hovertemplate : "";
+  if (!hovertemplate) return trace;
+
+  let needsX = false;
+  let needsY = false;
+  let needsZ = false;
+  let rewritten = hovertemplate;
+
+  rewritten = rewritten.replace(/%\{x:[^}]*e\}/g, () => {
+    needsX = true;
+    return "%{customdata[0]}";
+  });
+  rewritten = rewritten.replace(/%\{y:[^}]*e\}/g, () => {
+    needsY = true;
+    return "%{customdata[1]}";
+  });
+  rewritten = rewritten.replace(/%\{z:[^}]*e\}/g, () => {
+    needsZ = true;
+    return "%{customdata[2]}";
+  });
+
+  if (!needsX && !needsY && !needsZ) return trace;
+
+  const xSeries = Array.isArray(trace.x) ? trace.x : null;
+  const ySeries = Array.isArray(trace.y) ? trace.y : null;
+  const zSeries = Array.isArray(trace.z) ? trace.z : null;
+  const zIs1D = zSeries ? zSeries.every((item) => !Array.isArray(item)) : false;
+
+  const length = Math.max(
+    needsX && xSeries ? xSeries.length : 0,
+    needsY && ySeries ? ySeries.length : 0,
+    needsZ && zIs1D && zSeries ? zSeries.length : 0,
+  );
+  if (length === 0) return trace;
+
+  const customdata = Array.from({ length }, (_, idx) => [
+    needsX && xSeries ? formatPowerHoverValue(xSeries[idx]) : "",
+    needsY && ySeries ? formatPowerHoverValue(ySeries[idx]) : "",
+    needsZ && zIs1D && zSeries ? formatPowerHoverValue(zSeries[idx]) : "",
+  ]);
+
+  return {
+    ...trace,
+    customdata,
+    hovertemplate: rewritten,
+  };
+}
+
+export function parseAxisRange(value: unknown): AxisRange | null {
+  if (!Array.isArray(value) || value.length !== 2) return null;
+  const lo = Number(value[0]);
+  const hi = Number(value[1]);
+  if (!Number.isFinite(lo) || !Number.isFinite(hi)) return null;
+  return [lo, hi];
+}
+
+export function parseRelayoutRange(event: Record<string, unknown>, axis: AxisName): AxisRange | null {
+  const direct = parseAxisRange(event[`${axis}.range`]);
+  if (direct) return direct;
+  const lo = Number(event[`${axis}.range[0]`]);
+  const hi = Number(event[`${axis}.range[1]`]);
+  if (!Number.isFinite(lo) || !Number.isFinite(hi)) return null;
+  return [lo, hi];
+}
+
+export function rangesEqual(a: AxisRange | null, b: AxisRange | null): boolean {
+  if (a === b) return true;
+  if (!a || !b) return false;
+  return Math.abs(a[0] - b[0]) <= AXIS_EPS && Math.abs(a[1] - b[1]) <= AXIS_EPS;
+}
+
+export function axisTitleText(axisObj: Record<string, unknown>): string {
+  const title = axisObj.title;
+  if (typeof title === "string") return title;
+  if (title && typeof title === "object") {
+    const text = (title as { text?: unknown }).text;
+    if (typeof text === "string") return text;
+  }
+  return "";
+}
+
+export function axisSignature(layout: Record<string, unknown>, axis: AxisName): string | null {
+  const axisObj = layout[axis];
+  if (!axisObj || typeof axisObj !== "object") return null;
+  const axisRecord = axisObj as Record<string, unknown>;
+  const axisType = typeof axisRecord.type === "string" ? axisRecord.type : "";
+  const title = axisTitleText(axisRecord);
+  return `${axisType}|${title}`;
+}
+
+export function legendFontSizeForWidth(plotWidthPx: number): number {
+  if (plotWidthPx <= 300) return 6;
+  if (plotWidthPx <= 380) return 7;
+  if (plotWidthPx <= 480) return 8;
+  if (plotWidthPx <= 640) return 9;
+  if (plotWidthPx <= 860) return 10;
+  return 11;
+}

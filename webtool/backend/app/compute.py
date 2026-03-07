@@ -93,7 +93,6 @@ def _build_model(p):
     )
 
 
-
 def compute_model(p):
     """Build model and compute light curve."""
     model = _build_model(p)
@@ -126,7 +125,6 @@ def compute_model(p):
     }
 
 
-
 def compute_sed(p):
     """Build model and compute SED at snapshot times."""
     t_snapshots = np.array(sorted(p["t_snapshots"]))
@@ -145,7 +143,6 @@ def compute_sed(p):
         "components": components,
         "elapsed": elapsed,
     }
-
 
 
 def compute_skymap(p):

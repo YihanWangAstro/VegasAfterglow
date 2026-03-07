@@ -12,6 +12,8 @@ frontend/.vercel/
 
 # Local env files
 frontend/.env.local
+frontend/.env.production.check
+frontend/tsconfig.tsbuildinfo
 
 # OS/editor
 .DS_Store

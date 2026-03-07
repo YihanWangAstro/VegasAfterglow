@@ -1,4 +1,5 @@
-FROM python:3.12-slim
+# ── builder: compile VegasAfterglow C++ extension ──────────────────────────────
+FROM python:3.12-slim AS builder
 
 ENV PYTHONDONTWRITEBYTECODE=1 \
     PYTHONUNBUFFERED=1 \
@@ -11,14 +12,28 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     git \
  && rm -rf /var/lib/apt/lists/*
 
-WORKDIR /app
+RUN python -m venv /venv
+ENV PATH="/venv/bin:$PATH"
 
-# API + VegasAfterglow dependencies (VegasAfterglow pinned to GitHub tag in requirements).
+# VegasAfterglow (slow C++ build — own layer so app changes skip recompilation).
+COPY webtool/backend/requirements-base.txt /tmp/requirements-base.txt
+RUN pip install --upgrade pip setuptools wheel \
+ && pip install -r /tmp/requirements-base.txt
+
+# Remaining pure-Python deps (fast).
 COPY webtool/backend/requirements.txt /tmp/requirements.txt
-RUN python -m pip install --upgrade pip setuptools wheel \
- && python -m pip install -r /tmp/requirements.txt
+RUN pip install -r /tmp/requirements.txt
 
-# FastAPI service.
+# ── runtime: lean image without build tools ──────────────────────────────────
+FROM python:3.12-slim
+
+ENV PYTHONDONTWRITEBYTECODE=1 \
+    PYTHONUNBUFFERED=1
+
+COPY --from=builder /venv /venv
+ENV PATH="/venv/bin:$PATH"
+
+WORKDIR /app
 COPY webtool/backend/app /app/app
 
 ENV PORT=8080

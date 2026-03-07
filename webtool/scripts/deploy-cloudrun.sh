@@ -11,6 +11,7 @@ ARTIFACT_REPO="${ARTIFACT_REPO:-containers}"
 ALLOWED_ORIGINS="${ALLOWED_ORIGINS:?Set ALLOWED_ORIGINS (comma-separated, e.g. https://app.vercel.app)}"
 IMAGE_TAG="${IMAGE_TAG:-$(git rev-parse --short HEAD 2>/dev/null || date +%Y%m%d%H%M%S)}"
 IMAGE_URI="${REGION}-docker.pkg.dev/${PROJECT_ID}/${ARTIFACT_REPO}/${SERVICE_NAME}:${IMAGE_TAG}"
+IMAGE_LATEST="${REGION}-docker.pkg.dev/${PROJECT_ID}/${ARTIFACT_REPO}/${SERVICE_NAME}:latest"
 MIN_INSTANCES="${MIN_INSTANCES:-0}"
 CONCURRENCY="${CONCURRENCY:-8}"
 
@@ -26,7 +27,7 @@ fi
 gcloud builds submit \
   --project "$PROJECT_ID" \
   --config webtool/backend/cloudrun/cloudbuild.yaml \
-  --substitutions "_IMAGE_URI=${IMAGE_URI}" \
+  --substitutions "_IMAGE_URI=${IMAGE_URI},_IMAGE_LATEST=${IMAGE_LATEST}" \
   .
 
 gcloud run deploy "$SERVICE_NAME" \

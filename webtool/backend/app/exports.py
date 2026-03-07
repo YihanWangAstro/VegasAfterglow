@@ -2,7 +2,8 @@
 
 import base64
 import io
-import json
+
+import orjson
 
 import numpy as np
 from VegasAfterglow.cli import _format_energy
@@ -56,14 +57,14 @@ def export_json(data, flux_unit, time_unit):
 
     obj = {
         "units": {"time": time_unit, "flux_density": flux_unit},
-        "times": (times / t_scale).tolist(),
-        "frequencies_Hz": freqs.tolist(),
+        "times": times / t_scale,
+        "frequencies_Hz": freqs,
         "flux_density": {},
     }
     for nu_idx, nu in enumerate(freqs):
         nu_label = _format_energy(nu)
         obj["flux_density"][nu_label] = {
-            comp_name: (comp_flux[nu_idx] / f_scale).tolist()
+            comp_name: comp_flux[nu_idx] / f_scale
             for comp_name, comp_flux in pt_components
         }
     if band_data:
@@ -74,11 +75,9 @@ def export_json(data, flux_unit, time_unit):
             obj["bands"][bl] = {
                 "nu_min_Hz": nu_min,
                 "nu_max_Hz": nu_max,
-                "flux": {
-                    comp_name: comp_flux.tolist() for comp_name, comp_flux in comps
-                },
+                "flux": {comp_name: comp_flux for comp_name, comp_flux in comps},
             }
-    return json.dumps(obj, indent=2)
+    return orjson.dumps(obj, option=orjson.OPT_INDENT_2 | orjson.OPT_NUMPY).decode()
 
 
 def export_sed_csv(data, flux_unit, freq_unit):
@@ -115,31 +114,31 @@ def export_sed_json(data, flux_unit, freq_unit):
 
     obj = {
         "units": {"frequency": freq_unit, "flux_density": flux_unit},
-        "frequencies": (freqs / nu_scale).tolist(),
-        "frequencies_Hz": freqs.tolist(),
-        "t_snapshots_s": t_snapshots.tolist(),
+        "frequencies": freqs / nu_scale,
+        "frequencies_Hz": freqs,
+        "t_snapshots_s": t_snapshots,
         "flux_density": {},
     }
     for j, t in enumerate(t_snapshots):
         t_label = format_time_label(t)
         obj["flux_density"][t_label] = {
-            comp_name: (comp_flux[:, j] / f_scale).tolist()
+            comp_name: comp_flux[:, j] / f_scale
             for comp_name, comp_flux in components
         }
-    return json.dumps(obj, indent=2)
+    return orjson.dumps(obj, option=orjson.OPT_INDENT_2 | orjson.OPT_NUMPY).decode()
 
 
 def export_skymap_json(data):
     """Generate JSON string from sky map results."""
     obj = {
-        "t_obs_s": data["t_obs_array"].tolist(),
+        "t_obs_s": data["t_obs_array"],
         "nu_obs_Hz": data["nu_obs"],
         "fov_uas": data["fov_uas"],
-        "extent_uas": data["extent_uas"].tolist(),
+        "extent_uas": data["extent_uas"],
         "units": {"image": "erg/cm2/s/Hz/sr", "extent": "uas"},
-        "images": [img.tolist() for img in data["images"]],
+        "images": data["images"],
     }
-    return json.dumps(obj, indent=2)
+    return orjson.dumps(obj, option=orjson.OPT_INDENT_2 | orjson.OPT_NUMPY).decode()
 
 
 def export_skymap_gif_base64(data):

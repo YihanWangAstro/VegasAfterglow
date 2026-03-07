@@ -2,7 +2,7 @@
 
 import dynamic from "next/dynamic";
 
-const ClientPage = dynamic(() => import("./client-page"), {
+const ClientPage = dynamic(() => import("./features/home/HomePage"), {
   ssr: false,
   loading: () => (
     <main className="page">

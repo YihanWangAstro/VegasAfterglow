@@ -343,6 +343,9 @@ Then open your frontend and verify:
 
 ### 7.1 Backend code update
 
+The build uses Docker layer caching: if only app code changed (not `requirements*.txt`), the
+VegasAfterglow C++ compilation layer is reused and the build finishes in ~1 min instead of ~5 min.
+
 Redeploy all active regions:
 
 ```bash
@@ -378,3 +381,28 @@ Current script defaults:
 - `cpu=1`, `memory=2Gi`, `concurrency=8`, `max-instances=10`
 
 For light traffic and cost control, keep `MIN_INSTANCES=0`.
+
+## 9) Build caching details
+
+The Dockerfile uses a multi-stage build to keep the runtime image small:
+
+- **builder stage** — installs build tools (cmake, ninja, gcc) and compiles VegasAfterglow from source
+- **runtime stage** — copies only the Python venv; no build tools in the final image
+
+Dependencies are split into two files:
+
+- `requirements-base.txt` — VegasAfterglow (slow C++ build, own layer)
+- `requirements.txt` — pure-Python deps (fastapi, uvicorn, plotly, etc.)
+
+`cloudbuild.yaml` passes `--cache-from :latest` to Docker so Cloud Build can reuse unchanged
+layers across builds. On each successful build, both a commit-tagged image and `:latest` are
+pushed to Artifact Registry.
+
+**Cache invalidation rules:**
+
+| What changed | Layers rebuilt |
+| --- | --- |
+| `webtool/backend/app/**` only | none (copy layer only) |
+| `requirements.txt` | pure-Python deps layer |
+| `requirements-base.txt` | VegasAfterglow C++ build + all layers above |
+| Base image (`python:3.12-slim`) | everything |
