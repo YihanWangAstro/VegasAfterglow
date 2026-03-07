@@ -119,7 +119,7 @@ textarea {
 }
 
 .sidebar-api-row-primary {
-  grid-template-columns: minmax(0, 1fr) auto auto;
+  grid-template-columns: minmax(0, 1fr) auto;
   column-gap: 0.34rem;
 }
 
@@ -165,40 +165,70 @@ textarea {
 }
 
 .sidebar-api-working {
-  color: #52a8ff;
+  color: var(--text-muted);
   font-weight: 600;
   white-space: nowrap;
 }
 
-.sr-only {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  padding: 0;
-  margin: -1px;
-  overflow: hidden;
-  clip: rect(0, 0, 0, 0);
-  border: 0;
+.sidebar-api-location {
+  color: var(--text);
 }
 
-.sidebar-api-select-wrap {
+.sidebar-api-dropdown-inline {
+  position: relative;
+}
+
+.sidebar-api-dropdown-inline summary {
+  list-style: none;
   display: inline-flex;
   align-items: center;
-}
-
-.sidebar-api-select {
-  min-width: 7rem;
-  max-width: 10.4rem;
-  min-height: 1.3rem;
+  gap: 0.28rem;
   margin: 0;
-  padding: 0.04rem 0.45rem;
   border: 1px solid var(--border);
   border-radius: 999px;
-  background: var(--bg-input);
+  padding: 0.04rem 0.46rem;
+  cursor: pointer;
   color: var(--text);
   font-size: 0.62rem;
+  white-space: nowrap;
   line-height: 1.2;
-  cursor: pointer;
+  user-select: none;
+}
+
+.sidebar-api-dropdown-inline summary::-webkit-details-marker {
+  display: none;
+}
+
+.sidebar-api-dropdown-inline summary::after {
+  content: "▾";
+  font-size: 1rem;
+  font-weight: 700;
+  line-height: 1;
+  margin-left: 0.04rem;
+  opacity: 0.9;
+  transform: translateY(-1px);
+  transition: transform 140ms ease;
+}
+
+.sidebar-api-dropdown-inline[open] summary {
+  border-color: #52a8ff;
+}
+
+.sidebar-api-dropdown-inline[open] summary::after {
+  transform: translateY(-1px) rotate(180deg);
+}
+
+.sidebar-api-dropdown-menu {
+  position: absolute;
+  right: 0;
+  top: calc(100% + 0.24rem);
+  z-index: 8;
+  min-width: min(18rem, calc(100vw - 2.4rem));
+  padding: 0.3rem 0.5rem;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--bg-raised);
+  box-shadow: 0 10px 22px rgba(0, 0, 0, 0.35);
 }
 
 .sidebar-api-backend {
@@ -1161,7 +1191,7 @@ textarea {
   }
 
   .sidebar-api-row-primary {
-    grid-template-columns: minmax(0, 1fr) auto auto;
+    grid-template-columns: minmax(0, 1fr) auto;
   }
 
   .sidebar-api-name {
@@ -1172,12 +1202,17 @@ textarea {
     font-size: 0.74rem;
   }
 
-  .sidebar-api-select {
-    min-height: 1.52rem;
-    min-width: 8rem;
-    max-width: 11.5rem;
+  .sidebar-api-dropdown-inline summary {
     font-size: 0.72rem;
     padding: 0.08rem 0.52rem;
+  }
+
+  .sidebar-api-dropdown-inline summary::after {
+    font-size: 1.12rem;
+  }
+
+  .sidebar-api-dropdown-menu {
+    min-width: min(15rem, calc(100vw - 2.2rem));
   }
 
   .sidebar-api-backend {

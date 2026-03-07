@@ -1537,8 +1537,9 @@ export default function HomePage() {
   const [compareEnabled, setCompareEnabled] = useState(false);
   const [compareBookmarkId, setCompareBookmarkId] = useState("");
   const [activeApiKey, setActiveApiKey] = useState<string>("");
-  const [selectedOtherApiKey, setSelectedOtherApiKey] = useState<string>("");
+  const [showAllServerStatus, setShowAllServerStatus] = useState(false);
   const [apiStatusByKey, setApiStatusByKey] = useState<Record<string, ApiHealthStatus>>({});
+  const apiStatusByKeyRef = useRef<Record<string, ApiHealthStatus>>({});
 
   const setSharedField = useCallback(<K extends keyof SharedParams>(key: K, value: SharedParams[K]) => {
     setShared((prev) => ({ ...prev, [key]: value }));
@@ -1841,6 +1842,10 @@ export default function HomePage() {
     });
   }, []);
 
+  useEffect(() => {
+    apiStatusByKeyRef.current = apiStatusByKey;
+  }, [apiStatusByKey]);
+
   const probeEndpoint = useCallback(
     async (endpoint: ApiEndpoint, cancelledRef?: { current: boolean }): Promise<void> => {
       const started = performance.now();
@@ -1918,39 +1923,49 @@ export default function HomePage() {
     const cancelledRef = { current: false };
     let directTimer: number | null = null;
 
-    const pickActiveEndpoint = (): ApiEndpoint | null => {
-      const endpointByKey = (key: string): ApiEndpoint | null =>
-        apiEndpoints.find((endpoint) => endpoint.key === key) ?? null;
-
-      const isDisplayEndpoint = (key: string): boolean => apiStatusDisplaySet.has(key);
-
+    const endpointByKey = (key: string): ApiEndpoint | null =>
+      apiEndpoints.find((endpoint) => endpoint.key === key) ?? null;
+    const isDisplayEndpoint = (key: string): boolean => apiStatusDisplaySet.has(key);
+    const mapDisplayEndpointByRegion = (region: string | null): ApiEndpoint | null => {
+      if (!region) return null;
+      return (
+        apiEndpoints.find((endpoint) => {
+          if (!isDisplayEndpoint(endpoint.key)) return false;
+          const endpointRegion = apiStatusByKeyRef.current[endpoint.key]?.region ?? null;
+          return endpointRegion === region;
+        }) ?? null
+      );
+    };
+    const pickDisplayEndpoint = (): ApiEndpoint | null => {
       if (activeApiKey && isDisplayEndpoint(activeApiKey)) {
         const direct = endpointByKey(activeApiKey);
         if (direct) return direct;
       }
-
       if (activeApiKey) {
-        const activeStatus = apiStatusByKey[activeApiKey];
-        const activeRegion = activeStatus?.region ?? null;
-        if (activeRegion) {
-          const mapped = apiEndpoints.find((endpoint) => {
-            if (!isDisplayEndpoint(endpoint.key)) return false;
-            const candidateRegion = apiStatusByKey[endpoint.key]?.region ?? null;
-            return candidateRegion === activeRegion;
-          });
-          if (mapped) return mapped;
-        }
+        const region = apiStatusByKeyRef.current[activeApiKey]?.region ?? null;
+        const mapped = mapDisplayEndpointByRegion(region);
+        if (mapped) return mapped;
       }
+      return apiEndpoints.find((endpoint) => isDisplayEndpoint(endpoint.key)) ?? apiEndpoints[0] ?? null;
+    };
 
-      const firstDisplay = apiEndpoints.find((endpoint) => isDisplayEndpoint(endpoint.key));
-      if (firstDisplay) return firstDisplay;
-      return apiEndpoints[0] ?? null;
+    const pickActiveEndpoint = (): ApiEndpoint | null => {
+      if (activeApiKey) {
+        const source = endpointByKey(activeApiKey);
+        if (source) return source;
+      }
+      return pickDisplayEndpoint();
     };
 
     const probeActive = async () => {
-      const endpoint = pickActiveEndpoint();
-      if (!endpoint) return;
-      await probeEndpoint(endpoint, cancelledRef);
+      const sourceEndpoint = pickActiveEndpoint();
+      if (sourceEndpoint) {
+        await probeEndpoint(sourceEndpoint, cancelledRef);
+      }
+      const displayEndpoint = pickDisplayEndpoint();
+      if (displayEndpoint && (!sourceEndpoint || displayEndpoint.key !== sourceEndpoint.key)) {
+        await probeEndpoint(displayEndpoint, cancelledRef);
+      }
     };
 
     void probeActive();
@@ -1964,7 +1979,7 @@ export default function HomePage() {
         window.clearInterval(directTimer);
       }
     };
-  }, [activeApiKey, apiEndpoints, apiStatusByKey, apiStatusDisplaySet, probeEndpoint]);
+  }, [activeApiKey, apiEndpoints, apiStatusDisplaySet, probeEndpoint]);
 
   useEffect(() => {
     const cancelledRef = { current: false };
@@ -4348,20 +4363,14 @@ export default function HomePage() {
     if (!activeApiStatusRow) return apiStatusRows;
     return apiStatusRows.filter((row) => row.key !== activeApiStatusRow.key);
   }, [activeApiStatusRow, apiStatusRows]);
-  const selectedOtherApiStatusRow = useMemo(() => {
-    if (otherApiStatusRows.length === 0) return null;
-    return otherApiStatusRows.find((row) => row.key === selectedOtherApiKey) ?? otherApiStatusRows[0];
-  }, [otherApiStatusRows, selectedOtherApiKey]);
-
-  useEffect(() => {
-    if (otherApiStatusRows.length === 0) {
-      if (selectedOtherApiKey) setSelectedOtherApiKey("");
-      return;
-    }
-    if (!otherApiStatusRows.some((row) => row.key === selectedOtherApiKey)) {
-      setSelectedOtherApiKey(otherApiStatusRows[0]?.key ?? "");
-    }
-  }, [otherApiStatusRows, selectedOtherApiKey]);
+  const probeOtherServersOnce = useCallback(() => {
+    const cancelledRef = { current: false };
+    const targets = otherApiStatusRows
+      .map((row) => apiEndpoints.find((endpoint) => endpoint.key === row.key))
+      .filter((endpoint): endpoint is ApiEndpoint => Boolean(endpoint));
+    if (targets.length === 0) return;
+    void Promise.all(targets.map((endpoint) => probeEndpoint(endpoint, cancelledRef)));
+  }, [apiEndpoints, otherApiStatusRows, probeEndpoint]);
 
   return (
     <main className={`app-shell ${sidebarOpen ? "sidebar-open" : ""}`}>
@@ -4398,36 +4407,37 @@ export default function HomePage() {
               <div key={activeApiStatusRow.key} className="sidebar-api-row sidebar-api-row-primary active">
                 <span className="sidebar-api-name">
                   <span className="sidebar-api-working">Working Server:</span>
-                  <span>{activeApiStatusRow.regionText}</span>
+                  <span className="sidebar-api-location">{activeApiStatusRow.regionText}</span>
+                  <span className={`sidebar-api-pill ${activeApiStatusRow.statusClass}`}>
+                    {activeApiStatusRow.statusText}
+                  </span>
                 </span>
-                <span className={`sidebar-api-pill ${activeApiStatusRow.statusClass}`}>{activeApiStatusRow.statusText}</span>
                 {otherApiStatusRows.length > 0 ? (
-                  <label className="sidebar-api-select-wrap">
-                    <span className="sr-only">Other server</span>
-                    <select
-                      className="sidebar-api-select"
-                      value={selectedOtherApiStatusRow?.key ?? ""}
-                      onChange={(event) => setSelectedOtherApiKey(event.currentTarget.value)}
-                    >
+                  <details
+                    className="sidebar-api-dropdown-inline"
+                    open={showAllServerStatus}
+                    onToggle={(event) => {
+                      const open = (event.currentTarget as HTMLDetailsElement).open;
+                      setShowAllServerStatus(open);
+                      if (open) {
+                        probeOtherServersOnce();
+                      }
+                    }}
+                  >
+                    <summary>Other</summary>
+                    <div className="sidebar-api-dropdown-menu">
                       {otherApiStatusRows.map((row) => (
-                        <option key={row.key} value={row.key}>
-                          {row.regionText}
-                        </option>
+                        <div key={row.key} className="sidebar-api-row">
+                          <span className="sidebar-api-name">
+                            <span className="sidebar-api-location">{row.regionText}</span>
+                            <span className={`sidebar-api-pill ${row.statusClass}`}>{row.statusText}</span>
+                          </span>
+                        </div>
                       ))}
-                    </select>
-                  </label>
+                    </div>
+                  </details>
                 ) : null}
               </div>
-              {selectedOtherApiStatusRow ? (
-                <div key={selectedOtherApiStatusRow.key} className="sidebar-api-row">
-                  <span className="sidebar-api-name">
-                    <span>{selectedOtherApiStatusRow.regionText}</span>
-                  </span>
-                  <span className={`sidebar-api-pill ${selectedOtherApiStatusRow.statusClass}`}>
-                    {selectedOtherApiStatusRow.statusText}
-                  </span>
-                </div>
-              ) : null}
             </>
           ) : null}
         </div>

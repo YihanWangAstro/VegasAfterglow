@@ -1,6 +1,0 @@
-streamlit>=1.52
-plotly>=5.15
-kaleido>=1.0
-matplotlib>=3.5
-numpy
-VegasAfterglow>=2.0.0
