@@ -850,4 +850,4 @@ archivePrefix = {arXiv},
 
 ---
 
-Parts of the documentation and code comments were generated with the assistance of [Claude Code](https://claude.ai/code).
+![Contribution Overview](assets/contribution-chart.svg)
