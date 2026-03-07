@@ -1,5 +1,5 @@
 import { AXIS_EPS } from "../constants";
-import type { AxisName, AxisRange } from "../types";
+import type { AxisName, AxisRange, Mode } from "../types";
 import { formatPowerHoverValue } from "./math";
 
 export function remapScientificHoverTemplate(trace: Record<string, unknown>): Record<string, unknown> {
@@ -91,6 +91,42 @@ export function axisSignature(layout: Record<string, unknown>, axis: AxisName): 
   const axisType = typeof axisRecord.type === "string" ? axisRecord.type : "";
   const title = axisTitleText(axisRecord);
   return `${axisType}|${title}`;
+}
+
+function asAxisRecord(layout: Record<string, unknown>, axis: "xaxis" | "yaxis"): Record<string, unknown> {
+  const axisObj = layout[axis];
+  if (!axisObj || typeof axisObj !== "object") return {};
+  return { ...(axisObj as Record<string, unknown>) };
+}
+
+export function shouldPreserveAxisRangesOnAutorange(mode: Mode): boolean {
+  return mode === "skymap";
+}
+
+export function applySkymapAxisPolicy(layout: Record<string, unknown>): void {
+  const xAxisObj = asAxisRecord(layout, "xaxis");
+  const yAxisObj = asAxisRecord(layout, "yaxis");
+
+  const xRange = parseAxisRange((xAxisObj as { range?: unknown }).range);
+  const yRange = parseAxisRange((yAxisObj as { range?: unknown }).range);
+  if (xRange && yRange) {
+    const xCenter = 0.5 * (xRange[0] + xRange[1]);
+    const yCenter = 0.5 * (yRange[0] + yRange[1]);
+    const span = Math.max(Math.abs(xRange[1] - xRange[0]), Math.abs(yRange[1] - yRange[0]));
+    const half = span * 0.5;
+    xAxisObj.range = [xCenter - half, xCenter + half];
+    yAxisObj.range = [yCenter - half, yCenter + half];
+  }
+
+  xAxisObj.autorange = false;
+  yAxisObj.autorange = false;
+  xAxisObj.constrain = "domain";
+  yAxisObj.constrain = "domain";
+  yAxisObj.scaleanchor = "x";
+  yAxisObj.scaleratio = 1;
+
+  layout.xaxis = xAxisObj;
+  layout.yaxis = yAxisObj;
 }
 
 export function legendFontSizeForWidth(plotWidthPx: number): number {

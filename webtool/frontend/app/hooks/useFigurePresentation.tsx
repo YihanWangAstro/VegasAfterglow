@@ -20,12 +20,14 @@ import type {
 } from "../lib/types";
 import { formatParamValueNode } from "../lib/utils/math";
 import {
+  applySkymapAxisPolicy,
   axisSignature,
   legendFontSizeForWidth,
   parseAxisRange,
   parseRelayoutRange,
   rangesEqual,
   remapScientificHoverTemplate,
+  shouldPreserveAxisRangesOnAutorange,
 } from "../lib/utils/plot";
 
 type UseFigurePresentationArgs = {
@@ -66,9 +68,13 @@ export function useFigurePresentation({
       const current = axisRangesRef.current[mode];
       const next: AxisRanges = { ...current };
       let changed = false;
+      const preserveOnAutorange = shouldPreserveAxisRangesOnAutorange(mode);
 
       for (const axis of ALL_AXES) {
         if (event[`${axis}.autorange`] === true && next[axis] !== null) {
+          if (preserveOnAutorange) {
+            continue;
+          }
           next[axis] = null;
           changed = true;
         }
@@ -200,16 +206,7 @@ export function useFigurePresentation({
 
     if (mode === "skymap") {
       delete layout.updatemenus;
-      const xAxisObj =
-        layout.xaxis && typeof layout.xaxis === "object" ? { ...(layout.xaxis as Record<string, unknown>) } : {};
-      const yAxisObj =
-        layout.yaxis && typeof layout.yaxis === "object" ? { ...(layout.yaxis as Record<string, unknown>) } : {};
-      xAxisObj.constrain = "domain";
-      yAxisObj.constrain = "domain";
-      yAxisObj.scaleanchor = "x";
-      yAxisObj.scaleratio = 1;
-      layout.xaxis = xAxisObj;
-      layout.yaxis = yAxisObj;
+      applySkymapAxisPolicy(layout);
     }
 
     if (mode !== "skymap") {
@@ -246,26 +243,7 @@ export function useFigurePresentation({
     }
 
     if (mode === "skymap") {
-      const xAxisObj =
-        layout.xaxis && typeof layout.xaxis === "object" ? { ...(layout.xaxis as Record<string, unknown>) } : {};
-      const yAxisObj =
-        layout.yaxis && typeof layout.yaxis === "object" ? { ...(layout.yaxis as Record<string, unknown>) } : {};
-      const xRange = parseAxisRange((xAxisObj as { range?: unknown }).range);
-      const yRange = parseAxisRange((yAxisObj as { range?: unknown }).range);
-
-      if (xRange && yRange) {
-        const xCenter = 0.5 * (xRange[0] + xRange[1]);
-        const yCenter = 0.5 * (yRange[0] + yRange[1]);
-        const span = Math.max(Math.abs(xRange[1] - xRange[0]), Math.abs(yRange[1] - yRange[0]));
-        const half = span * 0.5;
-        xAxisObj.range = [xCenter - half, xCenter + half];
-        yAxisObj.range = [yCenter - half, yCenter + half];
-        xAxisObj.autorange = false;
-        yAxisObj.autorange = false;
-      }
-
-      layout.xaxis = xAxisObj;
-      layout.yaxis = yAxisObj;
+      applySkymapAxisPolicy(layout);
     }
 
     return { ...baseFigure, layout };

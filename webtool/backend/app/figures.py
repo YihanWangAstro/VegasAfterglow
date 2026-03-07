@@ -506,6 +506,37 @@ def make_sed_figure(data, flux_unit, freq_unit, nufnu=False,
     return fig
 
 
+def _skymap_axes(x_min: float, x_max: float, y_min: float, y_max: float, axis_style: dict) -> tuple[dict, dict]:
+    x_axis = {
+        "range": [x_min, x_max],
+        "autorange": False,
+        "hoverformat": ".3e",
+        **axis_style,
+    }
+    y_axis = {
+        "range": [y_min, y_max],
+        "autorange": False,
+        "hoverformat": ".3e",
+        "scaleanchor": "x",
+        "scaleratio": 1,
+        **axis_style,
+    }
+    return x_axis, y_axis
+
+
+def _skymap_frame_layout(title: str, x_min: float, x_max: float, y_min: float, y_max: float) -> dict:
+    return {
+        "title": title,
+        "xaxis": {"range": [x_min, x_max], "autorange": False},
+        "yaxis": {
+            "range": [y_min, y_max],
+            "autorange": False,
+            "scaleanchor": "x",
+            "scaleratio": 1,
+        },
+    }
+
+
 def make_skymap_figure(data: dict) -> go.Figure:
     """Build a Plotly heatmap figure for a sky image (single or animated)."""
     images = data["images"]
@@ -547,19 +578,32 @@ def make_skymap_figure(data: dict) -> go.Figure:
     axis_style = dict(showline=True, linewidth=0.8, linecolor="#000", mirror=True,
                       ticks="inside", ticklen=5, tickwidth=0.8, tickcolor="#000",
                       showgrid=True, gridcolor="rgba(0,0,0,0.10)", griddash="dot", gridwidth=0.3)
+    x_axis, y_axis = _skymap_axes(x_min, x_max, y_min, y_max, axis_style)
     fig.update_layout(
         title=f"t = {format_time_label(float(t_arr[0]))}, ν = {nu_label}",
         xaxis_title="Δx (μas)", yaxis_title="Δy (μas)",
-        xaxis={"range": [x_min, x_max], "hoverformat": ".3e", **axis_style},
-        yaxis={"range": [y_min, y_max], "hoverformat": ".3e", "scaleanchor": "x", "scaleratio": 1, **axis_style},
+        xaxis=x_axis,
+        yaxis=y_axis,
         template="none", plot_bgcolor="#ffffff", paper_bgcolor="#ffffff",
         margin={"l": 60, "r": 20, "t": 50, "b": 60},
     )
 
     if len(log_frames) > 1:
-        frames = [go.Frame(name=f"frame_{i}", data=[go.Heatmap(z=f)], traces=[0],
-                           layout={"title": f"t = {format_time_label(float(t_arr[i]))}, ν = {nu_label}"})
-                  for i, f in enumerate(log_frames)]
+        frames = [
+            go.Frame(
+                name=f"frame_{i}",
+                data=[go.Heatmap(z=f)],
+                traces=[0],
+                layout=_skymap_frame_layout(
+                    title=f"t = {format_time_label(float(t_arr[i]))}, ν = {nu_label}",
+                    x_min=x_min,
+                    x_max=x_max,
+                    y_min=y_min,
+                    y_max=y_max,
+                ),
+            )
+            for i, f in enumerate(log_frames)
+        ]
         steps = [{"label": format_time_label(float(t_arr[i])), "method": "animate",
                   "args": [[f"frame_{i}"], {"mode": "immediate", "frame": {"duration": 0, "redraw": True}, "transition": {"duration": 0}}]}
                  for i in range(len(log_frames))]

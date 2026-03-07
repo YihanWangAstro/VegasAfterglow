@@ -57,6 +57,12 @@ export function useApiStatus() {
     [apiEndpoints, apiStatusDisplaySet],
   );
 
+  const preferredActiveApiKey = useMemo(() => {
+    if (activeApiKey) return activeApiKey;
+    if (apiCandidates.length > 0) return apiCandidates[0];
+    return displayApiEndpoints[0]?.key ?? "";
+  }, [activeApiKey, apiCandidates, displayApiEndpoints]);
+
   const resolveApiKeyFromTarget = useCallback(
     (target: string): string | null => {
       for (const base of apiCandidates) {
@@ -165,7 +171,7 @@ export function useApiStatus() {
     const endpointMap = new Map(apiEndpoints.map((endpoint) => [endpoint.key, endpoint] as const));
 
     const resolveProbeTargets = (): ApiEndpoint[] => {
-      const activeEndpoint = activeApiKey ? endpointMap.get(activeApiKey) ?? null : null;
+      const activeEndpoint = preferredActiveApiKey ? endpointMap.get(preferredActiveApiKey) ?? null : null;
       const fallbackDisplay = displayApiEndpoints[0] ?? apiEndpoints[0] ?? null;
       const targets = [activeEndpoint, fallbackDisplay].filter(
         (endpoint): endpoint is ApiEndpoint => endpoint !== null,
@@ -188,7 +194,7 @@ export function useApiStatus() {
       cancelledRef.current = true;
       window.clearInterval(directTimer);
     };
-  }, [activeApiKey, apiEndpoints, displayApiEndpoints, probeEndpoint]);
+  }, [apiEndpoints, displayApiEndpoints, preferredActiveApiKey, probeEndpoint]);
 
   useEffect(() => {
     const cancelledRef = { current: false };
@@ -199,39 +205,44 @@ export function useApiStatus() {
     };
   }, [displayApiEndpoints, probeEndpoint]);
 
-  const activeDisplayApiKey = useMemo(() => {
-    if (displayApiEndpoints.length === 0) return "";
-    if (activeApiKey && apiStatusDisplaySet.has(activeApiKey)) return activeApiKey;
-    return displayApiEndpoints[0]?.key ?? "";
-  }, [activeApiKey, apiStatusDisplaySet, displayApiEndpoints]);
-
-  const apiStatusRows = useMemo(
-    () =>
-      displayApiEndpoints.map((endpoint) => {
-        const status = apiStatusByKey[endpoint.key];
-        const statusClass = !status ? "pending" : status.up ? "up" : "down";
-        const statusText = !status
-          ? "checking..."
-          : status.up
-            ? `${status.latencyMs ?? "--"} ms`
-            : status.statusCode !== null
-              ? `down (${status.statusCode})`
-              : "down";
-        return {
-          ...endpoint,
-          isActive: endpoint.key === activeDisplayApiKey,
-          regionText: status?.locationLabel ?? status?.region ?? "region unknown",
-          statusClass,
-          statusText,
-        };
-      }),
-    [activeDisplayApiKey, apiStatusByKey, displayApiEndpoints],
+  const toStatusRow = useCallback(
+    (endpoint: ApiEndpoint, isActive: boolean) => {
+      const status = apiStatusByKey[endpoint.key];
+      const statusClass = !status ? "pending" : status.up ? "up" : "down";
+      const statusText = !status
+        ? "checking..."
+        : status.up
+          ? `${status.latencyMs ?? "--"} ms`
+          : status.statusCode !== null
+            ? `down (${status.statusCode})`
+            : "down";
+      return {
+        ...endpoint,
+        isActive,
+        regionText: status?.locationLabel ?? status?.region ?? "region unknown",
+        statusClass,
+        statusText,
+      };
+    },
+    [apiStatusByKey],
   );
 
-  const activeApiStatusRow = apiStatusRows.find((row) => row.isActive) ?? apiStatusRows[0] ?? null;
-  const otherApiStatusRows = activeApiStatusRow
-    ? apiStatusRows.filter((row) => row.key !== activeApiStatusRow.key)
-    : apiStatusRows;
+  const endpointByKey = useMemo(() => {
+    return new Map(apiEndpoints.map((endpoint) => [endpoint.key, endpoint] as const));
+  }, [apiEndpoints]);
+
+  const activeApiStatusRow = useMemo(() => {
+    if (!preferredActiveApiKey) return null;
+    const endpoint = endpointByKey.get(preferredActiveApiKey);
+    if (!endpoint) return null;
+    return toStatusRow(endpoint, true);
+  }, [endpointByKey, preferredActiveApiKey, toStatusRow]);
+
+  const otherApiStatusRows = useMemo(() => {
+    return displayApiEndpoints
+      .filter((endpoint) => endpoint.key !== preferredActiveApiKey)
+      .map((endpoint) => toStatusRow(endpoint, false));
+  }, [displayApiEndpoints, preferredActiveApiKey, toStatusRow]);
 
   const probeOtherServersOnce = useCallback(() => {
     if (otherApiStatusRows.length === 0) return;
