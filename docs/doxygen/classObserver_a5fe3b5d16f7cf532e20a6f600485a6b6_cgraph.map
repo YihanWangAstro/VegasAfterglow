@@ -1,8 +1,11 @@
 <map id="Observer::specific_flux" name="Observer::specific_flux">
-<area shape="rect" id="Node000001" title="Computes the specific flux at multiple observed frequencies." alt="" coords="5,31,175,56"/>
-<area shape="rect" id="Node000002" href="$observer_8h.html#aa53249b087b9b9d83f4c06e808deeed9" title="Helper function that advances an iterator through an array until the value exceeds the target." alt="" coords="223,5,308,31"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="175,28,209,23,210,29,176,34"/>
-<area shape="rect" id="Node000003" href="$pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89" title=" " alt="" coords="356,31,511,56"/>
-<area shape="poly" id="edge3_Node000001_Node000003" title=" " alt="" coords="175,41,342,41,342,46,175,46"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="309,22,343,27,342,32,308,27"/>
+<area shape="rect" id="Node000001" title="Computes the specific flux at multiple observed frequencies." alt="" coords="5,56,175,81"/>
+<area shape="rect" id="Node000002" href="$fast-math_8h.html#a97f986159608011ca67d0d8fc3d09926" title="Fast approximation of 2 raised to a power." alt="" coords="223,5,309,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="134,53,208,32,210,37,136,58"/>
+<area shape="rect" id="Node000003" href="$pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89" title=" " alt="" coords="357,56,512,81"/>
+<area shape="poly" id="edge5_Node000001_Node000003" title=" " alt="" coords="175,66,343,66,343,71,175,71"/>
+<area shape="rect" id="Node000004" href="$observer_8h.html#aa53249b087b9b9d83f4c06e808deeed9" title="Helper function that advances an iterator through an array until the value exceeds the target." alt="" coords="223,107,309,132"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="136,79,211,101,210,106,134,84"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="310,28,379,49,378,55,308,33"/>
+<area shape="poly" id="edge4_Node000004_Node000003" title=" " alt="" coords="308,104,378,83,380,88,310,109"/>
 </map>
