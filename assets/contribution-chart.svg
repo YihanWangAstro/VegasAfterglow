@@ -2,32 +2,51 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 950 340"
      font-family="-apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif">
 
+  <style>
+    :root {
+      --cp: #E6EDF3;
+      --cs: #8090A5;
+      --cg: #2D3345;
+    }
+    @media (prefers-color-scheme: light) {
+      :root {
+        --cp: #24292f;
+        --cs: #57606a;
+        --cg: #d0d7de;
+      }
+    }
+    .cp { fill: var(--cp); }
+    .cs { fill: var(--cs); }
+    .gl { stroke: var(--cg); fill: none; }
+    .gf { fill: var(--cg); }
+  </style>
+
   <defs>
     <marker id="arr" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto">
-      <polygon points="0 0, 7 2.5, 0 5" fill="#3D4A5C"/>
+      <polygon points="0 0, 7 2.5, 0 5" class="gf"/>
     </marker>
   </defs>
 
-  <rect width="950" height="340" fill="#0d1117" rx="12"/>
+  <rect width="950" height="340" fill="transparent" rx="12"/>
 
-  <text x="475" y="30" text-anchor="middle" font-size="16" font-weight="700" fill="#E6EDF3" letter-spacing="0.3">Contribution Overview</text>
+  <text x="475" y="30" text-anchor="middle" font-size="16" font-weight="700" class="cp" letter-spacing="0.3">Contribution Overview</text>
 
   <rect x="356" y="44" width="14" height="14" rx="2" fill="#45AB8A"/>
-  <text x="374" y="56" font-size="11" fill="#94A3B8">Human</text>
+  <text x="374" y="56" font-size="11" class="cs">Human</text>
   <rect x="429" y="44" width="14" height="14" rx="2" fill="#D4693A"/>
-  <text x="447" y="56" font-size="11" fill="#94A3B8">Claude Code</text>
+  <text x="447" y="56" font-size="11" class="cs">Claude Code</text>
   <rect x="542" y="44" width="14" height="14" rx="2" fill="#4A90D9"/>
-  <text x="560" y="56" font-size="11" fill="#94A3B8">CodeX</text>
+  <text x="560" y="56" font-size="11" class="cs">CodeX</text>
 
-  <line x1="60" y1="255" x2="930" y2="255" stroke="#2D3345" stroke-width="1"/>
-  <line x1="60" y1="210.0" x2="930" y2="210.0" stroke="#2D3345" stroke-width="1" stroke-dasharray="4,3"/>
-  <text x="55" y="214.0" text-anchor="end" font-size="8.5" fill="#5A6580">25%</text>
-  <line x1="60" y1="165.0" x2="930" y2="165.0" stroke="#2D3345" stroke-width="1" stroke-dasharray="4,3"/>
-  <text x="55" y="169.0" text-anchor="end" font-size="8.5" fill="#5A6580">50%</text>
-  <line x1="60" y1="120.0" x2="930" y2="120.0" stroke="#2D3345" stroke-width="1" stroke-dasharray="4,3"/>
-  <text x="55" y="124.0" text-anchor="end" font-size="8.5" fill="#5A6580">75%</text>
-  <text x="55" y="259" text-anchor="end" font-size="8.5" fill="#5A6580">0%</text>
-  <text x="55" y="79" text-anchor="end" font-size="8.5" fill="#5A6580">100%</text>
+  <line x1="60" y1="255" x2="930" y2="255" class="gl" stroke-width="1"/>
+  <line x1="60" y1="210.0" x2="930" y2="210.0" class="gl" stroke-width="1" stroke-dasharray="4,3"/>
+  <text x="55" y="214.0" text-anchor="end" font-size="8.5" class="cs">25%</text>
+  <line x1="60" y1="165.0" x2="930" y2="165.0" class="gl" stroke-width="1" stroke-dasharray="4,3"/>
+  <text x="55" y="169.0" text-anchor="end" font-size="8.5" class="cs">50%</text>
+  <line x1="60" y1="120.0" x2="930" y2="120.0" class="gl" stroke-width="1" stroke-dasharray="4,3"/>
+  <text x="55" y="124.0" text-anchor="end" font-size="8.5" class="cs">75%</text>
+  <text x="55" y="259" text-anchor="end" font-size="8.5" class="cs">0%</text>
+  <text x="55" y="79" text-anchor="end" font-size="8.5" class="cs">100%</text>
 
   <rect x="60.0" y="75.0" width="32" height="180.0" fill="#45AB8A"/>
   <text x="76.0" y="169.0" text-anchor="middle" font-size="9" font-weight="700" fill="white">100%</text>
@@ -86,34 +105,34 @@
   <rect x="898.0" y="75.0" width="32" height="180.0" fill="#D4693A"/>
   <text x="914.0" y="169.0" text-anchor="middle" font-size="9" font-weight="700" fill="white">100%</text>
 
-  <text x="76.0" y="270" text-anchor="middle" font-size="8.5" fill="#8090A5">Architect.</text>
-  <text x="116.0" y="270" text-anchor="middle" font-size="8.5" fill="#8090A5">Coding</text>
-  <text x="156.0" y="270" text-anchor="middle" font-size="8.5" fill="#8090A5">Optim.</text>
-  <text x="227.6" y="270" text-anchor="middle" font-size="8.5" fill="#8090A5">Architect.</text>
-  <text x="267.6" y="270" text-anchor="middle" font-size="8.5" fill="#8090A5">Coding</text>
-  <text x="307.6" y="270" text-anchor="middle" font-size="8.5" fill="#8090A5">Optim.</text>
-  <text x="379.2" y="270" text-anchor="middle" font-size="8.5" fill="#8090A5">Architect.</text>
-  <text x="419.2" y="270" text-anchor="middle" font-size="8.5" fill="#8090A5">Coding</text>
-  <text x="459.2" y="270" text-anchor="middle" font-size="8.5" fill="#8090A5">Optim.</text>
-  <text x="530.8" y="270" text-anchor="middle" font-size="8.5" fill="#8090A5">Architect.</text>
-  <text x="570.8" y="270" text-anchor="middle" font-size="8.5" fill="#8090A5">Coding</text>
-  <text x="610.8" y="270" text-anchor="middle" font-size="8.5" fill="#8090A5">Optim.</text>
-  <text x="682.4" y="270" text-anchor="middle" font-size="8.5" fill="#8090A5">Architect.</text>
-  <text x="722.4" y="270" text-anchor="middle" font-size="8.5" fill="#8090A5">Coding</text>
-  <text x="762.4" y="270" text-anchor="middle" font-size="8.5" fill="#8090A5">Optim.</text>
-  <text x="834.0" y="270" text-anchor="middle" font-size="8.5" fill="#8090A5">Architect.</text>
-  <text x="874.0" y="270" text-anchor="middle" font-size="8.5" fill="#8090A5">Coding</text>
-  <text x="914.0" y="270" text-anchor="middle" font-size="8.5" fill="#8090A5">Optim.</text>
+  <text x="76.0" y="270" text-anchor="middle" font-size="8.5" class="cs">Architect.</text>
+  <text x="116.0" y="270" text-anchor="middle" font-size="8.5" class="cs">Coding</text>
+  <text x="156.0" y="270" text-anchor="middle" font-size="8.5" class="cs">Optim.</text>
+  <text x="227.6" y="270" text-anchor="middle" font-size="8.5" class="cs">Architect.</text>
+  <text x="267.6" y="270" text-anchor="middle" font-size="8.5" class="cs">Coding</text>
+  <text x="307.6" y="270" text-anchor="middle" font-size="8.5" class="cs">Optim.</text>
+  <text x="379.2" y="270" text-anchor="middle" font-size="8.5" class="cs">Architect.</text>
+  <text x="419.2" y="270" text-anchor="middle" font-size="8.5" class="cs">Coding</text>
+  <text x="459.2" y="270" text-anchor="middle" font-size="8.5" class="cs">Optim.</text>
+  <text x="530.8" y="270" text-anchor="middle" font-size="8.5" class="cs">Architect.</text>
+  <text x="570.8" y="270" text-anchor="middle" font-size="8.5" class="cs">Coding</text>
+  <text x="610.8" y="270" text-anchor="middle" font-size="8.5" class="cs">Optim.</text>
+  <text x="682.4" y="270" text-anchor="middle" font-size="8.5" class="cs">Architect.</text>
+  <text x="722.4" y="270" text-anchor="middle" font-size="8.5" class="cs">Coding</text>
+  <text x="762.4" y="270" text-anchor="middle" font-size="8.5" class="cs">Optim.</text>
+  <text x="834.0" y="270" text-anchor="middle" font-size="8.5" class="cs">Architect.</text>
+  <text x="874.0" y="270" text-anchor="middle" font-size="8.5" class="cs">Coding</text>
+  <text x="914.0" y="270" text-anchor="middle" font-size="8.5" class="cs">Optim.</text>
 
-  <text x="116.0" y="288" text-anchor="middle" font-size="10" font-weight="700" fill="#E6EDF3">C++ Engine</text>
-  <text x="267.6" y="288" text-anchor="middle" font-size="10" font-weight="700" fill="#E6EDF3">Python Bindings</text>
-  <text x="419.2" y="288" text-anchor="middle" font-size="10" font-weight="700" fill="#E6EDF3">Python Package</text>
-  <text x="570.8" y="288" text-anchor="middle" font-size="10" font-weight="700" fill="#E6EDF3">Validation</text>
-  <text x="722.4" y="288" text-anchor="middle" font-size="10" font-weight="700" fill="#E6EDF3">Webtool</text>
-  <text x="874.0" y="288" text-anchor="middle" font-size="10" font-weight="700" fill="#E6EDF3">Docs/Code Comments</text>
+  <text x="116.0" y="288" text-anchor="middle" font-size="10" font-weight="700" class="cp">C++ Engine</text>
+  <text x="267.6" y="288" text-anchor="middle" font-size="10" font-weight="700" class="cp">Python Bindings</text>
+  <text x="419.2" y="288" text-anchor="middle" font-size="10" font-weight="700" class="cp">Python Package</text>
+  <text x="570.8" y="288" text-anchor="middle" font-size="10" font-weight="700" class="cp">Validation</text>
+  <text x="722.4" y="288" text-anchor="middle" font-size="10" font-weight="700" class="cp">Webtool</text>
+  <text x="874.0" y="288" text-anchor="middle" font-size="10" font-weight="700" class="cp">Docs/Code Comments</text>
 
-  <line x1="60" y1="310" x2="930" y2="310" stroke="#3D4A5C" stroke-width="1" marker-end="url(#arr)"/>
-  <text x="60" y="323" font-size="8.5" fill="#5A6580" font-style="italic">Machine Language</text>
-  <text x="930" y="323" text-anchor="end" font-size="8.5" fill="#5A6580" font-style="italic">Natural Language</text>
+  <line x1="60" y1="310" x2="930" y2="310" class="gl" stroke-width="1" marker-end="url(#arr)"/>
+  <text x="60" y="323" font-size="8.5" class="cs" font-style="italic">Machine Language</text>
+  <text x="930" y="323" text-anchor="end" font-size="8.5" class="cs" font-style="italic">Natural Language</text>
 
 </svg>
