@@ -4,13 +4,11 @@
 
   <style>
     svg { color-scheme: light dark; }
-    .cp { fill: #E6EDF3; }
-    .cs { fill: #A8B8CC; }
+    .cp, .cs { fill: #ffffff; }
     .gl { stroke: #2D3345; fill: none; }
     .arr { fill: #3D4A5C; }
     @media (prefers-color-scheme: light) {
-      .cp { fill: #24292f; }
-      .cs { fill: #57606a; }
+      .cp, .cs { fill: #000000; }
       .gl { stroke: #d0d7de; }
       .arr { fill: #57606a; }
     }

@@ -4,17 +4,10 @@
 
   <style>
     svg { color-scheme: light dark; }
-    .cp { fill: #E6EDF3; }
-    .cs { fill: #A8B8CC; }
-    .cb { fill: #D0DDE8; }
-    .mi { fill: #5B8ADB; }
-    .mw { fill: #45AB8A; }
+    .cp, .cs, .cb, .mi, .mw { fill: #ffffff; }
     .gl { stroke: #2D3345; fill: none; }
     @media (prefers-color-scheme: light) {
-      .cp, .cb { fill: #24292f; }
-      .cs { fill: #57606a; }
-      .mi { fill: #0969DA; }
-      .mw { fill: #1F7A5A; }
+      .cp, .cs, .cb, .mi, .mw { fill: #000000; }
       .gl { stroke: #d0d7de; }
     }
   </style>

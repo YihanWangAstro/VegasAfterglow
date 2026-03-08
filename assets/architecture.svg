@@ -4,21 +4,11 @@
 
   <style>
     svg { color-scheme: light dark; }
-    text[fill="white"] { fill: #E6EDF3; }
-    .cp { fill: #E6EDF3; }
-    .cs, .ca { fill: #A8B8CC; }
-    .env { fill: #60BB9A; }
-    .dyn { fill: #D4A855; }
-    .rad { fill: #D47878; }
-    .core { fill: #60B8CC; }
+    text[fill="white"] { fill: #ffffff; }
+    .cp, .cs, .ca, .env, .dyn, .rad, .core { fill: #ffffff; }
     @media (prefers-color-scheme: light) {
-      text[fill="white"] { fill: #24292f; }
-      .cp { fill: #24292f; }
-      .cs, .ca { fill: #57606a; }
-      .env { fill: #1F7A5A; }
-      .dyn { fill: #9A6700; }
-      .rad { fill: #B42318; }
-      .core { fill: #0969DA; }
+      text[fill="white"] { fill: #000000; }
+      .cp, .cs, .ca, .env, .dyn, .rad, .core { fill: #000000; }
     }
   </style>
 
