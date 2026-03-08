@@ -4,10 +4,9 @@ import re
 from typing import Any
 
 from ..helpers import parse_entry, z_from_lumi_dist_mpc
-from ..schemas import ObservationGroup, SharedParams
+from ..schemas import SharedParams
 
 _FREQ_SPLIT = re.compile(r",(?![^\[]*\])")
-_OBS_SPLIT = re.compile(r"[,\s\t]+")
 
 
 def shared_to_physics(shared: SharedParams) -> dict[str, Any]:
@@ -35,29 +34,3 @@ def parse_frequency_input(frequencies_input: str) -> tuple[list[float], list[lis
             warnings.append(f"Unknown frequency or filter: '{token}'")
 
     return sorted(frequencies), bands, warnings
-
-
-def parse_observation_rows(groups: list[ObservationGroup], is_lc: bool) -> tuple:
-    rows = []
-    x_default = "day" if is_lc else "Hz"
-    for group in groups:
-        if not group.visible:
-            continue
-        label = group.legend or "data"
-        x_unit = group.x_unit or x_default
-        y_unit = group.y_unit
-        for line in group.text.strip().splitlines():
-            parts = _OBS_SPLIT.split(line.strip())
-            if len(parts) < 2:
-                continue
-            try:
-                x_val = float(parts[0])
-                y_val = float(parts[1])
-            except (ValueError, IndexError):
-                continue
-            try:
-                err_val = float(parts[2]) if len(parts) > 2 else 0.0
-            except ValueError:
-                err_val = 0.0
-            rows.append((label, x_val, x_unit, y_val, err_val, y_unit))
-    return tuple(rows)

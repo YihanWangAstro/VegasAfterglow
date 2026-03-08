@@ -16,6 +16,7 @@ import type {
   BookmarkEntry,
   LcPlotData,
   Mode,
+  ObservationGroup,
   RunResponse,
   SedPlotData,
   SharedParams,
@@ -31,6 +32,7 @@ import {
   rangesEqual,
   shouldPreserveAxisRangesOnAutorange,
 } from "../lib/utils/plot";
+import { parseObsToEntries } from "../lib/utils/obs";
 import { buildLcFigure, buildSedFigure, buildSkymapFigure } from "../lib/utils/plot-builders";
 
 type UseFigurePresentationArgs = {
@@ -44,6 +46,8 @@ type UseFigurePresentationArgs = {
   plotWidthPx: number;
   zoomRevision: number;
   shared: SharedParams;
+  lcObsGroups: ObservationGroup[];
+  sedObsGroups: ObservationGroup[];
   axisRangesRef: MutableRefObject<Record<Mode, AxisRanges>>;
   axisSignaturesRef: MutableRefObject<Record<Mode, AxisSignatures>>;
   setZoomRevision: Dispatch<SetStateAction<number>>;
@@ -60,6 +64,8 @@ export function useFigurePresentation({
   plotWidthPx,
   zoomRevision,
   shared,
+  lcObsGroups,
+  sedObsGroups,
   axisRangesRef,
   axisSignaturesRef,
   setZoomRevision,
@@ -98,25 +104,49 @@ export function useFigurePresentation({
     [axisRangesRef, mode, setZoomRevision],
   );
 
+  // Parse obs groups client-side and build shift map.
+  const obsGroups = mode === "lightcurve" ? lcObsGroups : sedObsGroups;
+  const isLc = mode === "lightcurve";
+  const obsEntries = useMemo(() => parseObsToEntries(obsGroups, isLc), [obsGroups, isLc]);
+  const obsShiftMap = useMemo(() => {
+    const map = new Map<string, number>();
+    for (const g of obsGroups) {
+      if (g.shift && g.shift !== 1) map.set(g.legend.trim() || "data", g.shift);
+    }
+    return map;
+  }, [obsGroups]);
+
   // Build figure client-side from plot_data for all modes.
   const plotData = result?.plot_data;
   const builtFigure = useMemo(() => {
     if (resultMode !== mode) return null;
     if (!plotData) return null;
-    if (mode === "lightcurve") return buildLcFigure(plotData as LcPlotData);
-    if (mode === "spectrum") return buildSedFigure(plotData as SedPlotData);
+    if (mode === "lightcurve") {
+      const pd = { ...(plotData as LcPlotData), obs: obsEntries };
+      return buildLcFigure(pd, obsShiftMap);
+    }
+    if (mode === "spectrum") {
+      const pd = { ...(plotData as SedPlotData), obs: obsEntries };
+      return buildSedFigure(pd, obsShiftMap);
+    }
     if (mode === "skymap") return buildSkymapFigure(plotData as SkymapPlotData);
     return null;
-  }, [plotData, resultMode, mode]);
+  }, [plotData, resultMode, mode, obsEntries, obsShiftMap]);
 
   const comparePlotData = compareResult?.plot_data;
   const compareBuiltFigure = useMemo(() => {
     if (!compareEnabled || compareResultMode !== mode) return null;
     if (!comparePlotData) return null;
-    if (mode === "lightcurve") return buildLcFigure(comparePlotData as LcPlotData);
-    if (mode === "spectrum") return buildSedFigure(comparePlotData as SedPlotData);
+    if (mode === "lightcurve") {
+      const pd = { ...(comparePlotData as LcPlotData), obs: obsEntries };
+      return buildLcFigure(pd, obsShiftMap);
+    }
+    if (mode === "spectrum") {
+      const pd = { ...(comparePlotData as SedPlotData), obs: obsEntries };
+      return buildSedFigure(pd, obsShiftMap);
+    }
     return null;
-  }, [compareEnabled, comparePlotData, compareResultMode, mode]);
+  }, [compareEnabled, comparePlotData, compareResultMode, mode, obsEntries, obsShiftMap]);
 
   useEffect(() => {
     if (resultMode !== mode) return;

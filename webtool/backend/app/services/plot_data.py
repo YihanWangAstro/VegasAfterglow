@@ -5,52 +5,9 @@ import base64
 import numpy as np
 from fastapi import HTTPException
 
-from .constants import (
-    FLUX_SCALES,
-    FREQ_SCALES,
+from ..constants import (
     INSTRUMENTS,
-    TIME_SCALES,
 )
-from .helpers import (
-    mag_to_cgs,
-)
-
-
-def _build_obs_raw(obs_rows, x_scales):
-    """Convert obs_rows to raw [{label, fnu, fband}] list.
-
-    x_scales: dict mapping x_unit_row -> float (e.g. TIME_SCALES or FREQ_SCALES).
-    Points are returned with x in the physical unit of x_scales (seconds or Hz),
-    y in CGS (erg/cm²/s/Hz for fnu, erg/cm²/s for fband).
-    """
-    fnu_groups = {}
-    fband_groups = {}
-
-    for label, x_val, x_unit_row, y_val, err_val, y_unit in obs_rows:
-        if not (np.isfinite(x_val) and np.isfinite(y_val) and x_val > 0):
-            continue
-        x_phys = x_val * x_scales.get(x_unit_row, 1.0)
-        err_val = abs(err_val) if np.isfinite(err_val) else 0.0
-        if y_unit == "erg/cm\u00b2/s":
-            fband_groups.setdefault(label, []).append((x_phys, y_val, err_val))
-        elif y_unit == "AB mag":
-            f_cgs, e_cgs = mag_to_cgs(y_val, err_val)
-            fnu_groups.setdefault(label, []).append((x_phys, f_cgs, e_cgs))
-        else:
-            scale = FLUX_SCALES.get(y_unit, 1.0)
-            fnu_groups.setdefault(label, []).append((x_phys, y_val * scale, err_val * scale))
-
-    all_labels = list(dict.fromkeys(list(fnu_groups) + list(fband_groups)))
-    result = []
-    for label in all_labels:
-        fnu_pts = fnu_groups.get(label, [])
-        fband_pts = fband_groups.get(label, [])
-        result.append({
-            "label": label,
-            "fnu": [[r[0], r[1], r[2]] for r in fnu_pts],
-            "fband": [[r[0], r[1], r[2]] for r in fband_pts],
-        })
-    return result
 
 
 def _build_instruments_list(selected_instruments, t_lo_s=None, t_hi_s=None):
@@ -78,11 +35,11 @@ def _build_instruments_list(selected_instruments, t_lo_s=None, t_hi_s=None):
 
 
 def build_lc_plot_data(data, t_min, t_max, flux_unit, time_unit,
-                       obs_rows=None, selected_instruments=None):
+                       selected_instruments=None):
     """Return raw LC data for client-side rendering.
 
     Returns dict with times_s, pt (per-frequency components in CGS), bands,
-    obs, and instruments — all in CGS/seconds so the frontend can convert.
+    and instruments — all in CGS/seconds so the frontend can convert.
     """
     times = data["times"]
     freqs = data["frequencies"]
@@ -116,10 +73,6 @@ def build_lc_plot_data(data, t_min, t_max, flux_unit, time_unit,
             "components": band_components,
         })
 
-    obs_raw = []
-    if obs_rows:
-        obs_raw = _build_obs_raw(obs_rows, TIME_SCALES)
-
     instruments_list = _build_instruments_list(selected_instruments, t_lo_s=t_min, t_hi_s=t_max)
 
     return {
@@ -130,17 +83,16 @@ def build_lc_plot_data(data, t_min, t_max, flux_unit, time_unit,
         "times_s": times.tolist(),
         "pt": pt_block,
         "bands": bands_list,
-        "obs": obs_raw,
         "instruments": instruments_list,
     }
 
 
 def build_sed_plot_data(data, flux_unit, freq_unit, nufnu,
-                        obs_rows=None, selected_instruments=None):
+                        selected_instruments=None):
     """Return raw spectrum/SED data for client-side rendering.
 
     Returns dict with freq_hz, t_snapshots_s, components
-    (all in CGS erg/cm²/s/Hz), obs, and instruments.
+    (all in CGS erg/cm²/s/Hz), and instruments.
     """
     t_snapshots = data["t_snapshots"]
     freqs = data["frequencies"]
@@ -152,10 +104,6 @@ def build_sed_plot_data(data, flux_unit, freq_unit, nufnu,
     for comp_name, cf in components:
         components_dict[comp_name] = [cf[:, j].tolist() for j in range(len(t_snapshots))]
 
-    obs_raw = []
-    if obs_rows:
-        obs_raw = _build_obs_raw(obs_rows, FREQ_SCALES)
-
     instruments_list = _build_instruments_list(selected_instruments)
 
     return {
@@ -165,7 +113,6 @@ def build_sed_plot_data(data, flux_unit, freq_unit, nufnu,
         "freq_hz": freqs.tolist(),
         "t_snapshots_s": [float(t) for t in t_snapshots],
         "components": components_dict,
-        "obs": obs_raw,
         "instruments": instruments_list,
     }
 

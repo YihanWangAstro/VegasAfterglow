@@ -40,10 +40,3 @@ def parse_entry(value: str):
         if suffix in UNIT_SUFFIXES:
             return num * UNIT_SUFFIXES[suffix]
     return _parse_frequency(value)
-
-
-def mag_to_cgs(mag: float, mag_err: float):
-    """Convert AB magnitude (+ error) to F_ν in CGS (erg/s/cm²/Hz)."""
-    f_nu = 10.0 ** (-(mag + 48.6) / 2.5)
-    f_err = f_nu * (np.log(10.0) / 2.5) * abs(mag_err) if mag_err else 0.0
-    return f_nu, f_err

@@ -1,7 +1,6 @@
 import { useCallback, useMemo } from "react";
 import { ENABLE_INTERACTIVE_DOWNSAMPLE } from "../lib/constants";
 import type { ComputationSpec, RunResponse } from "../lib/types";
-import { compactObservationGroups } from "../lib/utils/obs";
 import { buildInteractiveSpec, normalizeShared } from "../lib/utils/snapshot";
 import type { ParameterState } from "./useParameterState";
 
@@ -20,7 +19,6 @@ export function useComputationApi({ parameterState, sliderInteracting, fetchFrom
       lcTMin,
       lcTMax,
       lcInstruments,
-      lcObsGroups,
       sedTimes,
       sedNuMin,
       sedNuMax,
@@ -28,7 +26,6 @@ export function useComputationApi({ parameterState, sliderInteracting, fetchFrom
       sedFreqUnit,
       sedNuFNu,
       sedInstruments,
-      sedObsGroups,
       skyAnimate,
       skyTObs,
       skyTMin,
@@ -40,8 +37,6 @@ export function useComputationApi({ parameterState, sliderInteracting, fetchFrom
     } = parameterState;
 
     const normalized = normalizeShared(shared, mode);
-    const lcObsPayload = compactObservationGroups(lcObsGroups);
-    const sedObsPayload = compactObservationGroups(sedObsGroups);
 
     if (mode === "lightcurve") {
       return {
@@ -52,7 +47,6 @@ export function useComputationApi({ parameterState, sliderInteracting, fetchFrom
           t_min: lcTMin,
           t_max: lcTMax,
           selected_instruments: lcInstruments,
-          observation_groups: lcObsPayload,
         },
       };
     }
@@ -69,7 +63,6 @@ export function useComputationApi({ parameterState, sliderInteracting, fetchFrom
           freq_unit: sedFreqUnit,
           show_nufnu: sedNuFNu,
           selected_instruments: sedInstruments,
-          observation_groups: sedObsPayload,
         },
       };
     }

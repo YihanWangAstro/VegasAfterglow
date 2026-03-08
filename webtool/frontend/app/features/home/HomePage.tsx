@@ -274,6 +274,8 @@ export default function HomePage() {
     plotWidthPx,
     zoomRevision,
     shared,
+    lcObsGroups,
+    sedObsGroups,
     axisRangesRef,
     axisSignaturesRef,
     setZoomRevision,

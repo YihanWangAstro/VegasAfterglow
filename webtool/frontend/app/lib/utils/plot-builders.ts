@@ -16,11 +16,11 @@ export type PlotlyFigure = {
 // Unit constants
 // ---------------------------------------------------------------------------
 
-const TIME_SCALES_S: Record<string, number> = { s: 1, day: 86400, hr: 3600, min: 60 };
+export const TIME_SCALES_S: Record<string, number> = { s: 1, day: 86400, hr: 3600, min: 60 };
 const TIME_AXIS_LABELS: Record<string, string> = { s: "s", day: "day", hr: "hr", min: "min" };
 
 // Scale: display = cgs / scale.  e.g. 1 mJy = 1e-26 CGS, so cgs / 1e-26 = mJy
-const FLUX_SCALES_CGS: Record<string, number> = {
+export const FLUX_SCALES_CGS: Record<string, number> = {
   mJy: 1e-26,
   Jy: 1e-23,
   uJy: 1e-29,
@@ -100,10 +100,8 @@ export function formatFreqLabel(nu: number): string {
 
 /** Format a frequency band label. */
 export function formatBandLabel(nuMin: number, nuMax: number, name: string | null): string {
-  const lo = formatFreqLabel(nuMin);
-  const hi = formatFreqLabel(nuMax);
-  const range = `${lo}-${hi}`;
-  return name ? `${name}(${range})` : range;
+  const range = `${formatEnergy(nuMin)}\u2013${formatEnergy(nuMax)}`;
+  return name ? `${name} (${range})` : range;
 }
 
 /** Format observer time for display labels. */
@@ -345,8 +343,8 @@ function pushAll(target: number[], source: number[]) {
 // LC figure builder
 // ---------------------------------------------------------------------------
 
-export function buildLcFigure(pd: LcPlotData): PlotlyFigure {
-  const { flux_unit, time_unit, t_min_s, t_max_s, times_s, pt, bands, obs, instruments } = pd;
+export function buildLcFigure(pd: LcPlotData, obsShifts?: Map<string, number>): PlotlyFigure {
+  const { flux_unit, time_unit, t_min_s, t_max_s, times_s, pt, bands, obs = [], instruments } = pd;
   const isABmag = flux_unit === "AB mag";
   const tScale = TIME_SCALES_S[time_unit] ?? 86400;
   const fluxScale = FLUX_SCALES_CGS[flux_unit] ?? 1e-26;
@@ -375,11 +373,14 @@ export function buildLcFigure(pd: LcPlotData): PlotlyFigure {
     for (let i = 0; i < pt.freq_hz.length; i++) {
       const label = ptLabels[i];
       const color = ptColors[i];
+      const shift = obsShifts?.get(label) ?? 1;
+      const shiftSuffix = shift !== 1 ? ` \u00d7 ${shift}` : "";
       for (const compName of ptOrderedComps) {
         const isTotal = compName === "total";
-        const traceName = isTotal ? label : `${label} (${COMP_LABELS[compName] ?? compName})`;
+        const baseTraceName = isTotal ? label : `${label} (${COMP_LABELS[compName] ?? compName})`;
+        const traceName = `${baseTraceName}${shiftSuffix}`;
         const fluxCgs = pt.components[compName][i];
-        const yDisp = isABmag ? fluxCgs.map(cgsToAbMag) : fluxCgs.map((f) => f / fluxScale);
+        const yDisp = isABmag ? fluxCgs.map((f) => cgsToAbMag(f * shift)) : fluxCgs.map((f) => (f * shift) / fluxScale);
         const yUnit = isABmag ? "mag" : FLUX_AXIS_LABELS[flux_unit];
         const hoverY = isABmag ? "mag=%{y:.2f}" : `F\u03bd=%{y} ${yUnit}`;
         traces.push({
@@ -408,17 +409,21 @@ export function buildLcFigure(pd: LcPlotData): PlotlyFigure {
     for (let bIdx = 0; bIdx < bands.length; bIdx++) {
       const band = bands[bIdx];
       const bandLabel = bandLabels[bIdx];
+      const shift = obsShifts?.get(bandLabel) ?? 1;
+      const shiftSuffix = shift !== 1 ? ` \u00d7 ${shift}` : "";
       const orderedComps = COMP_ORDER.filter((n) => n in band.components);
       for (const compName of orderedComps) {
         const isTotal = compName === "total";
-        const traceName = isTotal
+        const baseTraceName = isTotal
           ? bandLabel
           : `${bandLabel} (${COMP_LABELS[compName] ?? compName})`;
+        const traceName = `${baseTraceName}${shiftSuffix}`;
         const fluxCgs = band.components[compName];
+        const yDisp = shift !== 1 ? fluxCgs.map((f: number) => f * shift) : fluxCgs;
         traces.push({
           type: tDisp.length >= 400 ? "scattergl" : "scatter",
           x: tDisp,
-          y: fluxCgs,
+          y: yDisp,
           mode: "lines",
           name: traceName,
           line: {
@@ -471,18 +476,21 @@ export function buildLcFigure(pd: LcPlotData): PlotlyFigure {
   let obsUnmatched = 0;
   for (const group of obs) {
     const { label, fnu, fband } = group;
+    const shift = obsShifts?.get(label) ?? 1;
+    const shiftSuffix = shift !== 1 ? ` \u00d7 ${shift}` : "";
+    const displayLabel = `${label}${shiftSuffix}`;
     const { color, showLegend } = resolveObsStyle(label, curveLabels, curveColors, obsUnmatched);
     if (showLegend) obsUnmatched++;
     if (fnu.length > 0) {
       const xs = fnu.map((r) => r[0] / tScale);
       let ys: number[], errs: number[], hoverY: string;
       if (isABmag) {
-        ys = fnu.map((r) => cgsToAbMag(r[1]));
+        ys = fnu.map((r) => cgsToAbMag(r[1] * shift));
         errs = fnu.map((r) => (r[1] > 0 ? (r[2] / r[1]) * 2.5 / Math.LN10 : 0));
         hoverY = "mag=%{y:.2f}";
       } else {
-        ys = fnu.map((r) => r[1] / fluxScale);
-        errs = fnu.map((r) => r[2] / fluxScale);
+        ys = fnu.map((r) => (r[1] * shift) / fluxScale);
+        errs = fnu.map((r) => (r[2] * shift) / fluxScale);
         hoverY = `F\u03bd=%{y} ${FLUX_AXIS_LABELS[flux_unit]}`;
       }
       pushAll(allFnuYs, ys.filter((v) => isFinite(v)));
@@ -491,30 +499,30 @@ export function buildLcFigure(pd: LcPlotData): PlotlyFigure {
         x: xs,
         y: ys,
         mode: "markers",
-        name: label,
+        name: displayLabel,
         legendgroup: `obs_${label}`,
         showlegend: showLegend,
         marker: { color, size: 6, symbol: "circle" },
         error_y: { type: "data", array: errs, visible: true, color, thickness: 1.0, width: 3 },
-        hovertemplate: `${xHover}<br>${hoverY}<extra>${label}</extra>`,
+        hovertemplate: `${xHover}<br>${hoverY}<extra>${displayLabel}</extra>`,
         ...(useSecondary ? { yaxis: "y" } : {}),
       });
     }
     if (fband.length > 0 && (useSecondary || (!hasPt && !hasBands))) {
       const xs = fband.map((r) => r[0] / tScale);
-      const ys = fband.map((r) => r[1]);
-      const errs = fband.map((r) => r[2]);
+      const ys = fband.map((r) => r[1] * shift);
+      const errs = fband.map((r) => r[2] * shift);
       traces.push({
         type: "scatter",
         x: xs,
         y: ys,
         mode: "markers",
-        name: label,
+        name: displayLabel,
         legendgroup: `obs_${label}`,
         showlegend: showLegend,
         marker: { color, size: 6, symbol: "diamond" },
         error_y: { type: "data", array: errs, visible: true, color, thickness: 1.0, width: 3 },
-        hovertemplate: `${xHover}<br>F=%{y} erg/cm\u00b2/s<extra>${label}</extra>`,
+        hovertemplate: `${xHover}<br>F=%{y} erg/cm\u00b2/s<extra>${displayLabel}</extra>`,
         yaxis: "y2",
       });
     }
@@ -583,10 +591,10 @@ export function buildLcFigure(pd: LcPlotData): PlotlyFigure {
       overlaying: "y",
       side: "right",
       ...AXIS_COMMON,
-      title: axisTitle(FBAND_TITLE),
+      title: { text: FBAND_TITLE, font: AXIS_TITLE_FONT, standoff: 8 },
       showgrid: false,
     };
-    layout.margin = { l: 65, r: 65, t: 15, b: 55 };
+    layout.margin = { l: 65, r: 75, t: 15, b: 55 };
   } else if (hasBands && !hasPt) {
     layout.yaxis = {
       type: "log",
@@ -605,7 +613,7 @@ export function buildLcFigure(pd: LcPlotData): PlotlyFigure {
 // Spectrum / SED figure builder
 // ---------------------------------------------------------------------------
 
-export function buildSedFigure(pd: SedPlotData): PlotlyFigure {
+export function buildSedFigure(pd: SedPlotData, obsShifts?: Map<string, number>): PlotlyFigure {
   const {
     flux_unit,
     freq_unit,
@@ -613,7 +621,7 @@ export function buildSedFigure(pd: SedPlotData): PlotlyFigure {
     freq_hz,
     t_snapshots_s,
     components,
-    obs,
+    obs = [],
     instruments,
   } = pd;
   const t_labels = t_snapshots_s.map(formatTimeLabel);
@@ -632,19 +640,22 @@ export function buildSedFigure(pd: SedPlotData): PlotlyFigure {
   for (let j = 0; j < t_snapshots_s.length; j++) {
     const label = t_labels[j];
     const color = t_colors[j];
+    const shift = obsShifts?.get(label) ?? 1;
+    const shiftSuffix = shift !== 1 ? ` \u00d7 ${shift}` : "";
     for (const compName of orderedComps) {
       const isTotal = compName === "total";
-      const traceName = isTotal ? label : `${label} (${COMP_LABELS[compName] ?? compName})`;
+      const baseTraceName = isTotal ? label : `${label} (${COMP_LABELS[compName] ?? compName})`;
+      const traceName = `${baseTraceName}${shiftSuffix}`;
       const fluxCgs = components[compName][j]; // [nu_idx], CGS
       let yDisp: number[], hoverY: string;
       if (isABmag) {
-        yDisp = fluxCgs.map(cgsToAbMag);
+        yDisp = fluxCgs.map((f) => cgsToAbMag(f * shift));
         hoverY = "mag=%{y:.2f}";
       } else if (actualNufnu) {
-        yDisp = freq_hz.map((nu, k) => nu * fluxCgs[k]);
+        yDisp = freq_hz.map((nu, k) => nu * fluxCgs[k] * shift);
         hoverY = "\u03bdF\u03bd=%{y} erg/cm\u00b2/s";
       } else {
-        yDisp = fluxCgs.map((f) => f / fluxScale);
+        yDisp = fluxCgs.map((f) => (f * shift) / fluxScale);
         hoverY = `F\u03bd=%{y} ${FLUX_AXIS_LABELS[flux_unit]}`;
       }
       traces.push({
@@ -693,22 +704,25 @@ export function buildSedFigure(pd: SedPlotData): PlotlyFigure {
   let sedObsUnmatched = 0;
   for (const group of obs) {
     const { label, fnu } = group;
+    const shift = obsShifts?.get(label) ?? 1;
+    const shiftSuffix = shift !== 1 ? ` \u00d7 ${shift}` : "";
+    const displayLabel = `${label}${shiftSuffix}`;
     const { color, showLegend } = resolveObsStyle(label, t_labels, t_colors, sedObsUnmatched);
     if (showLegend) sedObsUnmatched++;
     if (fnu.length > 0) {
       const xs = fnu.map((r) => r[0] / freqScale);
       let ys: number[], errs: number[], hoverY: string;
       if (isABmag) {
-        ys = fnu.map((r) => cgsToAbMag(r[1]));
+        ys = fnu.map((r) => cgsToAbMag(r[1] * shift));
         errs = fnu.map((r) => (r[1] > 0 ? (r[2] / r[1]) * 2.5 / Math.LN10 : 0));
         hoverY = "mag=%{y:.2f}";
       } else if (actualNufnu) {
-        ys = fnu.map((r) => r[0] * r[1]); // nu * Fnu in CGS
-        errs = fnu.map((r) => r[0] * r[2]);
+        ys = fnu.map((r) => r[0] * r[1] * shift); // nu * Fnu in CGS
+        errs = fnu.map((r) => r[0] * r[2] * shift);
         hoverY = "\u03bdF\u03bd=%{y} erg/cm\u00b2/s";
       } else {
-        ys = fnu.map((r) => r[1] / fluxScale);
-        errs = fnu.map((r) => r[2] / fluxScale);
+        ys = fnu.map((r) => (r[1] * shift) / fluxScale);
+        errs = fnu.map((r) => (r[2] * shift) / fluxScale);
         hoverY = `F\u03bd=%{y} ${FLUX_AXIS_LABELS[flux_unit]}`;
       }
       traces.push({
@@ -716,12 +730,12 @@ export function buildSedFigure(pd: SedPlotData): PlotlyFigure {
         x: xs,
         y: ys,
         mode: "markers",
-        name: label,
+        name: displayLabel,
         legendgroup: `obs_${label}`,
         showlegend: showLegend,
         marker: { color, size: 6, symbol: "circle" },
         error_y: { type: "data", array: errs, visible: true, color, thickness: 1.0, width: 3 },
-        hovertemplate: `${xHover}<br>${hoverY}<extra>${label}</extra>`,
+        hovertemplate: `${xHover}<br>${hoverY}<extra>${displayLabel}</extra>`,
       });
     }
   }

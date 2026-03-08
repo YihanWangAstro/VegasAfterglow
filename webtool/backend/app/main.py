@@ -41,10 +41,10 @@ from .exports import (
     export_skymap_gif_base64,
     export_skymap_json,
 )
-from .figures import build_lc_plot_data, build_sed_plot_data, build_skymap_plot_data
+from .services.plot_data import build_lc_plot_data, build_sed_plot_data, build_skymap_plot_data
 from .helpers import parse_entry
 from .schemas import LightCurveRequest, SharedParams, SkyMapRequest, SpectrumRequest
-from .services.parsing import parse_frequency_input, parse_observation_rows, shared_to_physics
+from .services.parsing import parse_frequency_input, shared_to_physics
 from .services.validation import resolve_export_kinds, validate_instruments, validate_shared
 
 try:
@@ -231,8 +231,6 @@ def lightcurve(req: LightCurveRequest) -> dict[str, Any]:
         raise HTTPException(status_code=400, detail=f"Light curve computation failed: {exc}") from exc
     compute_s = time_mod.perf_counter() - t0
 
-    obs_rows = parse_observation_rows(req.observation_groups, is_lc=True)
-
     is_mag = req.shared.flux_unit == "AB mag"
 
     export_unit = "cgs" if is_mag else req.shared.flux_unit
@@ -251,7 +249,6 @@ def lightcurve(req: LightCurveRequest) -> dict[str, Any]:
         req.t_max,
         req.shared.flux_unit,
         req.shared.time_unit,
-        obs_rows=obs_rows,
         selected_instruments=selected_instruments if not is_mag else None,
     )
     response["plot_data"] = plot_data
@@ -307,8 +304,6 @@ def spectrum(req: SpectrumRequest) -> dict[str, Any]:
         raise HTTPException(status_code=400, detail=f"Spectrum computation failed: {exc}") from exc
     compute_s = time_mod.perf_counter() - t0
 
-    obs_rows = parse_observation_rows(req.observation_groups, is_lc=False)
-
     is_mag = req.shared.flux_unit == "AB mag"
     show_nufnu = req.show_nufnu
     if is_mag and show_nufnu:
@@ -329,7 +324,6 @@ def spectrum(req: SpectrumRequest) -> dict[str, Any]:
         req.shared.flux_unit,
         req.freq_unit,
         show_nufnu,
-        obs_rows=obs_rows,
         selected_instruments=selected_instruments if not is_mag else None,
     )
     response["plot_data"] = plot_data

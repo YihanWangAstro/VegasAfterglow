@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { HelpHint } from "./HelpHint";
 import type { ObservationGroup, SelectOption } from "../lib/types";
 
@@ -63,6 +63,9 @@ export function ObservationEditor({
 
   const activeIndex = groups.length === 0 ? -1 : Math.max(0, Math.min(activeTab, groups.length - 1));
   const activeGroup = activeIndex >= 0 ? groups[activeIndex] : null;
+
+  const [shiftText, setShiftText] = useState(() => String(activeGroup?.shift ?? 1));
+  useEffect(() => { setShiftText(String(activeGroup?.shift ?? 1)); }, [activeIndex, activeGroup?.shift]);
 
   const hasCurves = curveOptions && curveOptions.length > 0;
   const freqMatchesCurve = activeGroup?.freq && hasCurves && curveOptions.some((o) => o.value === activeGroup.freq);
@@ -168,6 +171,22 @@ export function ObservationEditor({
               <select value={activeGroup.y_unit} onChange={(e) => updateObsGroup(activeIndex, { y_unit: e.target.value })}>
                 {renderStringOptions(yUnitOptions)}
               </select>
+            </label>
+            <label className="sb-field">
+              <span className="sb-label">y shift</span>
+              <input
+                type="text"
+                inputMode="decimal"
+                value={shiftText}
+                onChange={(e) => setShiftText(e.target.value)}
+                onBlur={() => {
+                  const v = parseFloat(shiftText);
+                  const valid = Number.isFinite(v) && v > 0 ? v : 1;
+                  setShiftText(String(valid));
+                  updateObsGroup(activeIndex, { shift: valid });
+                }}
+                style={{ width: "5em" }}
+              />
             </label>
           </div>
           <label className="sb-field">

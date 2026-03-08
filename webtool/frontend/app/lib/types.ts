@@ -57,7 +57,7 @@ export type LcPlotData = {
     nu_cen: number;
     components: Record<string, number[]>; // name -> [time_idx]
   }[];
-  obs: ObsEntry[];
+  obs?: ObsEntry[];
   instruments: {
     name: string;
     nu_min: number;
@@ -76,7 +76,7 @@ export type SedPlotData = {
   freq_hz: number[];
   t_snapshots_s: number[];
   components: Record<string, number[][]>; // name -> [t_idx][nu_idx]
-  obs: ObsEntry[];
+  obs?: ObsEntry[];
   instruments: {
     name: string;
     nu_min: number;
@@ -127,6 +127,7 @@ export type ObservationGroup = {
   text: string;
   visible: boolean;
   freq?: string;
+  shift?: number;
 };
 
 export type SharedParams = {

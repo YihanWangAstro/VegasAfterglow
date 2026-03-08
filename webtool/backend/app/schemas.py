@@ -3,15 +3,6 @@ from __future__ import annotations
 from pydantic import BaseModel, Field
 
 
-class ObservationGroup(BaseModel):
-    legend: str = "data"
-    x_unit: str | None = None
-    y_unit: str = "mJy"
-    text: str = ""
-    visible: bool = True
-    freq: str | None = None
-
-
 class SharedParams(BaseModel):
     d_L_mpc: float = 100.0
     theta_obs: float = 0.0
@@ -57,7 +48,6 @@ class LightCurveRequest(BaseModel):
     t_min: float = 1.0
     t_max: float = 1e8
     selected_instruments: list[str] = Field(default_factory=list)
-    observation_groups: list[ObservationGroup] = Field(default_factory=list)
     include_figure: bool = True
     include_exports: bool = True
     export_kinds: list[str] = Field(default_factory=list)
@@ -72,7 +62,6 @@ class SpectrumRequest(BaseModel):
     freq_unit: str = "Hz"
     show_nufnu: bool = False
     selected_instruments: list[str] = Field(default_factory=list)
-    observation_groups: list[ObservationGroup] = Field(default_factory=list)
     include_figure: bool = True
     include_exports: bool = True
     export_kinds: list[str] = Field(default_factory=list)
