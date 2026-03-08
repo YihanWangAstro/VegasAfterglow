@@ -5,11 +5,16 @@ set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 
+option(AFTERGLOW_MARCH_NATIVE "Enable -march=native (disable for portable/PyPI builds)" ON)
+
 if(CMAKE_CXX_COMPILER_ID MATCHES "GNU|Clang")
   add_compile_options(-O3 -pipe -DNDEBUG -DXTENSOR_DISABLE_EXCEPTIONS -Wall -Wextra -Wpedantic)
   add_compile_options(-fno-math-errno -fno-trapping-math -fno-signed-zeros -ffp-contract=fast
                        -freciprocal-math)
   add_compile_options(-fvisibility=hidden)
+  if(AFTERGLOW_MARCH_NATIVE)
+    add_compile_options(-march=native)
+  endif()
   if(APPLE)
     add_compile_options(-fveclib=Accelerate)
   endif()

@@ -130,7 +130,7 @@ export function useComputationApi({ parameterState, sliderInteracting, fetchFrom
         spec,
         {
           include_figure: true,
-          include_exports: false,
+          include_exports: true,
         },
         controller.signal,
       );

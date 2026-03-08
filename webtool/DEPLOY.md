@@ -346,10 +346,17 @@ Then open your frontend and verify:
 The build uses Docker layer caching: if only app code changed (not `requirements*.txt`), the
 VegasAfterglow C++ compilation layer is reused and the build finishes in ~1 min instead of ~5 min.
 
-Redeploy all active regions:
+> **What gets uploaded**: `gcloud builds submit .` tarballs and uploads your **local working directory**
+> to Cloud Build — not a GitHub tag or remote branch. Uncommitted local changes are included.
+> By default the image is tagged with the current git short SHA. Pass `IMAGE_TAG=v2.x.x` to tag
+> with a specific version (e.g. after creating a git release tag).
+
+Redeploy all active regions (default: git short SHA tag):
 
 ```bash
 cd /Users/yihanwang/Repositories/afterglow
+
+export ALLOWED_ORIGINS="https://www.vegasafterglow.com,https://vegasafterglow.com,https://vegasafterglow.vercel.app"
 
 PROJECT_ID=project-819bd021-ada6-4176-b14 REGION=us-west2 SERVICE_NAME=webtool-api ARTIFACT_REPO=containers MIN_INSTANCES=0 ALLOWED_ORIGINS="$ALLOWED_ORIGINS" bash webtool/scripts/deploy-cloudrun.sh
 PROJECT_ID=project-819bd021-ada6-4176-b14 REGION=us-east4 SERVICE_NAME=webtool-api ARTIFACT_REPO=containers MIN_INSTANCES=0 ALLOWED_ORIGINS="$ALLOWED_ORIGINS" bash webtool/scripts/deploy-cloudrun.sh
@@ -359,6 +366,13 @@ PROJECT_ID=project-819bd021-ada6-4176-b14 REGION=asia-northeast1 SERVICE_NAME=we
 ```
 
 No Vercel env change is needed if API domain is unchanged.
+
+To deploy with a specific version tag (e.g. `v2.1.0`), prefix each command with `IMAGE_TAG=v2.1.0`:
+
+```bash
+IMAGE_TAG=v2.1.0 PROJECT_ID=project-819bd021-ada6-4176-b14 REGION=us-west2 SERVICE_NAME=webtool-api ARTIFACT_REPO=containers MIN_INSTANCES=0 ALLOWED_ORIGINS="$ALLOWED_ORIGINS" bash webtool/scripts/deploy-cloudrun.sh
+# ... repeat for other regions
+```
 
 ### 7.2 Frontend-only update
 

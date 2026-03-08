@@ -14,7 +14,7 @@ from urllib.request import Request, urlopen
 
 import numpy as np
 import orjson
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, Response
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.middleware.gzip import GZipMiddleware
 from fastapi.responses import ORJSONResponse
@@ -32,6 +32,7 @@ if _repo_root and (_repo_root / "VegasAfterglow").exists():
     if str(_repo_root) not in sys.path:
         sys.path.insert(0, str(_repo_root))
 
+from .compute import compute_model, compute_sed, compute_skymap
 from .constants import FLUX_SCALES, FREQ_SCALES, INSTRUMENTS, OBS_FLUX_UNITS, TIME_SCALES
 from .exports import (
     export_csv,
@@ -44,7 +45,6 @@ from .exports import (
 from .figures import _add_obs_traces, _add_sensitivity_traces, make_figure, make_sed_figure, make_skymap_figure
 from .helpers import parse_entry
 from .schemas import LightCurveRequest, SharedParams, SkyMapRequest, SpectrumRequest
-from .services.cache import cached_compute_model, cached_compute_sed, cached_compute_skymap, canonical_json
 from .services.parsing import parse_frequency_input, parse_observation_rows, shared_to_physics
 from .services.validation import resolve_export_kinds, validate_instruments, validate_shared
 
@@ -60,6 +60,17 @@ _TIME_UNITS = list(TIME_SCALES.keys())
 _FREQ_UNITS = list(FREQ_SCALES.keys())
 
 
+def _json_response(data: dict[str, Any], figure_json: str | None = None) -> Response:
+    """Serialize response dict to JSON, splicing in a pre-rendered figure JSON string
+    directly as bytes to avoid a redundant parse→re-serialize round-trip."""
+    data_bytes = orjson.dumps(data)
+    if figure_json is None:
+        return Response(content=data_bytes, media_type="application/json")
+    # data_bytes ends with b'}'; splice in ,"figure":<fig> before closing brace.
+    content = data_bytes[:-1] + b',"figure":' + figure_json.encode() + b'}'
+    return Response(content=content, media_type="application/json")
+
+
 @asynccontextmanager
 async def _lifespan(app: FastAPI):
     # Warm up: run a minimal computation so cold-start latency is paid at boot,
@@ -73,7 +84,7 @@ async def _lifespan(app: FastAPI):
             "t_max": 1e6,
             "num_t": 2,
         }
-        cached_compute_model(canonical_json(_warmup_params))
+        compute_model(_warmup_params)
     except Exception:
         pass
     yield
@@ -105,7 +116,7 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
-app.add_middleware(GZipMiddleware, minimum_size=200, compresslevel=6)
+app.add_middleware(GZipMiddleware, minimum_size=1024, compresslevel=9)
 
 
 @lru_cache(maxsize=1)
@@ -157,7 +168,8 @@ def health() -> dict[str, str]:
 
 
 @app.get("/api/options")
-def options() -> dict[str, Any]:
+def options(response: Response) -> dict[str, Any]:
+    response.headers["Cache-Control"] = "public, max-age=300"
     return {
         "version": APP_VERSION,
         "flux_units": _FLUX_UNITS,
@@ -169,7 +181,8 @@ def options() -> dict[str, Any]:
 
 
 @app.get("/api/defaults")
-def defaults() -> dict[str, Any]:
+def defaults(response: Response) -> dict[str, Any]:
+    response.headers["Cache-Control"] = "public, max-age=300"
     return {
         "shared": SharedParams().model_dump(),
         "lightcurve": {
@@ -223,11 +236,9 @@ def lightcurve(req: LightCurveRequest) -> dict[str, Any]:
         "num_t": req.shared.num_t,
     }
 
-    params_json = canonical_json(params)
-
     t0 = time_mod.perf_counter()
     try:
-        data = cached_compute_model(params_json)
+        data = compute_model(params)
     except Exception as exc:
         raise HTTPException(status_code=400, detail=f"Light curve computation failed: {exc}") from exc
     compute_s = time_mod.perf_counter() - t0
@@ -272,7 +283,9 @@ def lightcurve(req: LightCurveRequest) -> dict[str, Any]:
 
         if obs_rows:
             _add_obs_traces(fig, obs_rows, req.shared.flux_unit, req.shared.time_unit, has_secondary=use_secondary)
-        response["figure"] = orjson.loads(fig.to_json(engine="orjson"))
+        figure_json = fig.to_json(engine="orjson")
+    else:
+        figure_json = None
 
     if req.include_exports:
         kinds = resolve_export_kinds(req.export_kinds, defaults={"csv", "json"}, allowed={"csv", "json"})
@@ -283,7 +296,7 @@ def lightcurve(req: LightCurveRequest) -> dict[str, Any]:
             exports["json"] = export_json(data, export_unit, req.shared.time_unit)
         response["exports"] = exports
 
-    return response
+    return _json_response(response, figure_json)
 
 
 @app.post("/api/spectrum")
@@ -318,11 +331,9 @@ def spectrum(req: SpectrumRequest) -> dict[str, Any]:
         "nu_max": req.nu_max,
         "num_nu": req.num_nu,
     }
-    params_json = canonical_json(params)
-
     t0 = time_mod.perf_counter()
     try:
-        data = cached_compute_sed(params_json)
+        data = compute_sed(params)
     except Exception as exc:
         raise HTTPException(status_code=400, detail=f"Spectrum computation failed: {exc}") from exc
     compute_s = time_mod.perf_counter() - t0
@@ -377,7 +388,9 @@ def spectrum(req: SpectrumRequest) -> dict[str, Any]:
                 mode="spectrum",
                 nufnu=show_nufnu,
             )
-        response["figure"] = orjson.loads(fig.to_json(engine="orjson"))
+        figure_json = fig.to_json(engine="orjson")
+    else:
+        figure_json = None
 
     if req.include_exports:
         kinds = resolve_export_kinds(req.export_kinds, defaults={"csv", "json"}, allowed={"csv", "json"})
@@ -388,7 +401,7 @@ def spectrum(req: SpectrumRequest) -> dict[str, Any]:
             exports["json"] = export_sed_json(data, export_unit, req.freq_unit)
         response["exports"] = exports
 
-    return response
+    return _json_response(response, figure_json)
 
 
 @app.post("/api/skymap")
@@ -433,11 +446,9 @@ def skymap(req: SkyMapRequest) -> dict[str, Any]:
             raise HTTPException(status_code=400, detail="npixel must be <= 512 when animate=true")
         params["t_obs_array"] = np.logspace(np.log10(req.t_min), np.log10(req.t_max), req.n_frames).tolist()
 
-    params_json = canonical_json(params)
-
     t0 = time_mod.perf_counter()
     try:
-        data = cached_compute_skymap(params_json)
+        data = compute_skymap(params)
     except Exception as exc:
         raise HTTPException(status_code=400, detail=f"Sky image computation failed: {exc}") from exc
     compute_s = time_mod.perf_counter() - t0
@@ -450,7 +461,9 @@ def skymap(req: SkyMapRequest) -> dict[str, Any]:
     }
     if req.include_figure:
         fig = make_skymap_figure(data)
-        response["figure"] = orjson.loads(fig.to_json(engine="orjson"))
+        figure_json = fig.to_json(engine="orjson")
+    else:
+        figure_json = None
     if req.include_exports:
         kinds = resolve_export_kinds(req.export_kinds, defaults={"json"}, allowed={"json", "gif"})
         exports: dict[str, str] = {}
@@ -459,4 +472,4 @@ def skymap(req: SkyMapRequest) -> dict[str, Any]:
         if "gif" in kinds:
             exports["gif"] = export_skymap_gif_base64(data)
         response["exports"] = exports
-    return response
+    return _json_response(response, figure_json)
