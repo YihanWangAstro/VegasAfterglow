@@ -88,24 +88,20 @@ def _make_chart(bench, rad_type, rad_label, out_path):
     emit()
 
     emit('  <style>')
-    emit('    :root {')
-    emit('      --cp: #E6EDF3;')   # primary text (titles, jet names)
-    emit('      --cs: #A8B8CC;')   # secondary text (subtitles, axis labels)
-    emit('      --cb: #D0DDE8;')   # bar labels, legend text
-    emit('      --cg: #2D3345;')   # grid lines
-    emit('    }')
+    emit('    svg { color-scheme: light dark; }')
+    emit('    .cp { fill: #E6EDF3; }')
+    emit('    .cs { fill: #A8B8CC; }')
+    emit('    .cb { fill: #D0DDE8; }')
+    emit('    .mi { fill: #5B8ADB; }')
+    emit('    .mw { fill: #45AB8A; }')
+    emit('    .gl { stroke: #2D3345; fill: none; }')
     emit('    @media (prefers-color-scheme: light) {')
-    emit('      :root {')
-    emit('        --cp: #24292f;')
-    emit('        --cs: #57606a;')
-    emit('        --cb: #24292f;')
-    emit('        --cg: #d0d7de;')
-    emit('      }')
+    emit('      .cp, .cb { fill: #24292f; }')
+    emit('      .cs { fill: #57606a; }')
+    emit('      .mi { fill: #0969DA; }')
+    emit('      .mw { fill: #1F7A5A; }')
+    emit('      .gl { stroke: #d0d7de; }')
     emit('    }')
-    emit('    .cp { fill: var(--cp); }')
-    emit('    .cs { fill: var(--cs); }')
-    emit('    .cb { fill: var(--cb); }')
-    emit('    .gl { stroke: var(--cg); fill: none; }')
     emit('  </style>')
     emit()
 
@@ -167,9 +163,8 @@ def _make_chart(bench, rad_type, rad_label, out_path):
         cx = gcx(gi)
         emit(f'  <text x="{cx:.1f}" y="{Y_BOT + 28}" text-anchor="middle"'
              f' font-size="9.5" font-weight="700" class="cp">{JET_NAMES[group["jet"]]}</text>')
-        med_color = "#5B8ADB" if group["med"] == "ISM" else "#45AB8A"
         emit(f'  <text x="{cx:.1f}" y="{Y_BOT + 41}" text-anchor="middle"'
-             f' font-size="8.5" fill="{med_color}">{group["med"]}</text>')
+             f' font-size="8.5" class="{"mi" if group["med"] == "ISM" else "mw"}">{group["med"]}</text>')
     emit()
 
     mid_y = (Y_TOP + Y_BOT) // 2

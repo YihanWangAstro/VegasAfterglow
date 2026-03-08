@@ -3,24 +3,20 @@
      font-family="-apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif">
 
   <style>
-    :root {
-      --cp: #E6EDF3;
-      --cs: #A8B8CC;
-      --cb: #D0DDE8;
-      --cg: #2D3345;
-    }
+    svg { color-scheme: light dark; }
+    .cp { fill: #E6EDF3; }
+    .cs { fill: #A8B8CC; }
+    .cb { fill: #D0DDE8; }
+    .mi { fill: #5B8ADB; }
+    .mw { fill: #45AB8A; }
+    .gl { stroke: #2D3345; fill: none; }
     @media (prefers-color-scheme: light) {
-      :root {
-        --cp: #24292f;
-        --cs: #57606a;
-        --cb: #24292f;
-        --cg: #d0d7de;
-      }
+      .cp, .cb { fill: #24292f; }
+      .cs { fill: #57606a; }
+      .mi { fill: #0969DA; }
+      .mw { fill: #1F7A5A; }
+      .gl { stroke: #d0d7de; }
     }
-    .cp { fill: var(--cp); }
-    .cs { fill: var(--cs); }
-    .cb { fill: var(--cb); }
-    .gl { stroke: var(--cg); fill: none; }
   </style>
 
   <rect width="950" height="360" fill="transparent" rx="12"/>
@@ -278,21 +274,21 @@
   <text x="897.5" y="278" text-anchor="middle" font-size="7.5" class="cs">4</text>
 
   <text x="98.5" y="293" text-anchor="middle" font-size="9.5" font-weight="700" class="cp">Tophat</text>
-  <text x="98.5" y="306" text-anchor="middle" font-size="8.5" fill="#5B8ADB">ISM</text>
+  <text x="98.5" y="306" text-anchor="middle" font-size="8.5" class="mi">ISM</text>
   <text x="207.5" y="293" text-anchor="middle" font-size="9.5" font-weight="700" class="cp">Tophat</text>
-  <text x="207.5" y="306" text-anchor="middle" font-size="8.5" fill="#45AB8A">wind</text>
+  <text x="207.5" y="306" text-anchor="middle" font-size="8.5" class="mw">wind</text>
   <text x="316.5" y="293" text-anchor="middle" font-size="9.5" font-weight="700" class="cp">Two-comp.</text>
-  <text x="316.5" y="306" text-anchor="middle" font-size="8.5" fill="#5B8ADB">ISM</text>
+  <text x="316.5" y="306" text-anchor="middle" font-size="8.5" class="mi">ISM</text>
   <text x="425.5" y="293" text-anchor="middle" font-size="9.5" font-weight="700" class="cp">Two-comp.</text>
-  <text x="425.5" y="306" text-anchor="middle" font-size="8.5" fill="#45AB8A">wind</text>
+  <text x="425.5" y="306" text-anchor="middle" font-size="8.5" class="mw">wind</text>
   <text x="534.5" y="293" text-anchor="middle" font-size="9.5" font-weight="700" class="cp">Gaussian</text>
-  <text x="534.5" y="306" text-anchor="middle" font-size="8.5" fill="#5B8ADB">ISM</text>
+  <text x="534.5" y="306" text-anchor="middle" font-size="8.5" class="mi">ISM</text>
   <text x="643.5" y="293" text-anchor="middle" font-size="9.5" font-weight="700" class="cp">Gaussian</text>
-  <text x="643.5" y="306" text-anchor="middle" font-size="8.5" fill="#45AB8A">wind</text>
+  <text x="643.5" y="306" text-anchor="middle" font-size="8.5" class="mw">wind</text>
   <text x="752.5" y="293" text-anchor="middle" font-size="9.5" font-weight="700" class="cp">Power-law</text>
-  <text x="752.5" y="306" text-anchor="middle" font-size="8.5" fill="#5B8ADB">ISM</text>
+  <text x="752.5" y="306" text-anchor="middle" font-size="8.5" class="mi">ISM</text>
   <text x="861.5" y="293" text-anchor="middle" font-size="9.5" font-weight="700" class="cp">Power-law</text>
-  <text x="861.5" y="306" text-anchor="middle" font-size="8.5" fill="#45AB8A">wind</text>
+  <text x="861.5" y="306" text-anchor="middle" font-size="8.5" class="mw">wind</text>
 
   <text x="13" y="180" text-anchor="middle" font-size="9" class="cs" transform="rotate(-90, 13, 180)">Wall time (ms)</text>
 

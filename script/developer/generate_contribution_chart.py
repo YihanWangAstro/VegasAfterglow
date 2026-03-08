@@ -75,32 +75,47 @@ def main():
     emit(f'     font-family="{FONT}">')
     emit()
 
+    emit('  <style>')
+    emit('    svg { color-scheme: light dark; }')
+    emit('    .cp { fill: #E6EDF3; }')
+    emit('    .cs { fill: #A8B8CC; }')
+    emit('    .gl { stroke: #2D3345; fill: none; }')
+    emit('    .arr { fill: #3D4A5C; }')
+    emit('    @media (prefers-color-scheme: light) {')
+    emit('      .cp { fill: #24292f; }')
+    emit('      .cs { fill: #57606a; }')
+    emit('      .gl { stroke: #d0d7de; }')
+    emit('      .arr { fill: #57606a; }')
+    emit('    }')
+    emit('  </style>')
+    emit()
+
     emit('  <defs>')
     emit('    <marker id="arr" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto">')
-    emit('      <polygon points="0 0, 7 2.5, 0 5" fill="#3D4A5C"/>')
+    emit('      <polygon points="0 0, 7 2.5, 0 5" class="arr"/>')
     emit('    </marker>')
     emit('  </defs>')
     emit()
 
-    emit(f'  <rect width="{SVG_W}" height="{SVG_H}" fill="#0d1117" rx="12"/>')
+    emit(f'  <rect width="{SVG_W}" height="{SVG_H}" fill="transparent" rx="12"/>')
     emit()
 
     emit('  <text x="475" y="30" text-anchor="middle" font-size="16" font-weight="700"'
-         ' fill="#E6EDF3" letter-spacing="0.3">Contribution Overview</text>')
+         ' class="cp" letter-spacing="0.3">Contribution Overview</text>')
     emit()
 
     for lx, label, color in [(356, "Human", COLOR_HUMAN), (429, "Claude Code", COLOR_CLAUDE), (542, "CodeX", COLOR_CODEX)]:
         emit(f'  <rect x="{lx}" y="44" width="14" height="14" rx="2" fill="{color}"/>')
-        emit(f'  <text x="{lx + 18}" y="56" font-size="11" fill="#94A3B8">{label}</text>')
+        emit(f'  <text x="{lx + 18}" y="56" font-size="11" class="cs">{label}</text>')
     emit()
 
-    emit(f'  <line x1="{X_LEFT}" y1="{Y_BOT}" x2="{X_RIGHT}" y2="{Y_BOT}" stroke="#2D3345" stroke-width="1"/>')
+    emit(f'  <line x1="{X_LEFT}" y1="{Y_BOT}" x2="{X_RIGHT}" y2="{Y_BOT}" class="gl" stroke-width="1"/>')
     for pct in [0.25, 0.50, 0.75]:
         gy = fy(pct)
-        emit(f'  <line x1="{X_LEFT}" y1="{gy:.1f}" x2="{X_RIGHT}" y2="{gy:.1f}" stroke="#2D3345" stroke-width="1" stroke-dasharray="4,3"/>')
-        emit(f'  <text x="{X_LEFT - 5}" y="{gy + 4:.1f}" text-anchor="end" font-size="8.5" fill="#5A6580">{pct * 100:.0f}%</text>')
-    emit(f'  <text x="{X_LEFT - 5}" y="{Y_BOT + 4}" text-anchor="end" font-size="8.5" fill="#5A6580">0%</text>')
-    emit(f'  <text x="{X_LEFT - 5}" y="{Y_TOP + 4}" text-anchor="end" font-size="8.5" fill="#5A6580">100%</text>')
+        emit(f'  <line x1="{X_LEFT}" y1="{gy:.1f}" x2="{X_RIGHT}" y2="{gy:.1f}" class="gl" stroke-width="1" stroke-dasharray="4,3"/>')
+        emit(f'  <text x="{X_LEFT - 5}" y="{gy + 4:.1f}" text-anchor="end" font-size="8.5" class="cs">{pct * 100:.0f}%</text>')
+    emit(f'  <text x="{X_LEFT - 5}" y="{Y_BOT + 4}" text-anchor="end" font-size="8.5" class="cs">0%</text>')
+    emit(f'  <text x="{X_LEFT - 5}" y="{Y_TOP + 4}" text-anchor="end" font-size="8.5" class="cs">100%</text>')
     emit()
 
     for m, mod in enumerate(MODULES):
@@ -113,25 +128,25 @@ def main():
                     emit(f'  <rect x="{rx:.1f}" y="{fy(bot + frac):.1f}" width="{BAR_W}" height="{frac * CHART_H:.1f}" fill="{color}"/>')
                     if frac >= 0.08:
                         emit(f'  <text x="{bcx:.1f}" y="{fy(bot + frac / 2) + 4:.1f}" text-anchor="middle"'
-                             f' font-size="9" font-weight="700" fill="white">{frac * 100:.0f}%</text>')
+                             f' font-size="9" font-weight="700" class="cp">{frac * 100:.0f}%</text>')
                     bot += frac
     emit()
 
     for m, mod in enumerate(MODULES):
         for a, act in enumerate(ACTIVITIES):
             bcx = bar_cx(m, a)
-            emit(f'  <text x="{bcx:.1f}" y="{Y_BOT + 15}" text-anchor="middle" font-size="8.5" fill="#8090A5">{act}</text>')
+            emit(f'  <text x="{bcx:.1f}" y="{Y_BOT + 15}" text-anchor="middle" font-size="8.5" class="cs">{act}</text>')
     emit()
 
     for m, mod in enumerate(MODULES):
         mid = (bar_cx(m, 0) + bar_cx(m, len(ACTIVITIES) - 1)) / 2
-        emit(f'  <text x="{mid:.1f}" y="{Y_BOT + 33}" text-anchor="middle" font-size="10" font-weight="700" fill="#E6EDF3">{mod}</text>')
+        emit(f'  <text x="{mid:.1f}" y="{Y_BOT + 33}" text-anchor="middle" font-size="10" font-weight="700" class="cp">{mod}</text>')
     emit()
 
     arr_y = Y_BOT + 55
-    emit(f'  <line x1="{X_LEFT}" y1="{arr_y}" x2="{X_RIGHT}" y2="{arr_y}" stroke="#3D4A5C" stroke-width="1" marker-end="url(#arr)"/>')
-    emit(f'  <text x="{X_LEFT}" y="{arr_y + 13}" font-size="8.5" fill="#5A6580" font-style="italic">Machine Language</text>')
-    emit(f'  <text x="{X_RIGHT}" y="{arr_y + 13}" text-anchor="end" font-size="8.5" fill="#5A6580" font-style="italic">Natural Language</text>')
+    emit(f'  <line x1="{X_LEFT}" y1="{arr_y}" x2="{X_RIGHT}" y2="{arr_y}" class="gl" stroke-width="1" marker-end="url(#arr)"/>')
+    emit(f'  <text x="{X_LEFT}" y="{arr_y + 13}" font-size="8.5" class="cs" font-style="italic">Machine Language</text>')
+    emit(f'  <text x="{X_RIGHT}" y="{arr_y + 13}" text-anchor="end" font-size="8.5" class="cs" font-style="italic">Natural Language</text>')
     emit()
 
     emit('</svg>')
