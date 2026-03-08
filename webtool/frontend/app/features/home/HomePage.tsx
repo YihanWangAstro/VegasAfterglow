@@ -22,14 +22,18 @@ import {
 import type {
   ComputationSpec,
   InstrumentGroup,
+  LcPlotData,
   Mode,
   RunResponse,
+  SedPlotData,
+  SelectOption,
   UiSnapshot,
 } from "../../lib/types";
 import {
   buildComputationSpecFromSnapshot,
   cloneSnapshot,
 } from "../../lib/utils/snapshot";
+import { formatFreqLabel, formatBandLabel, formatTimeLabel } from "../../lib/utils/plot-builders";
 import { useApiStatus } from "../../hooks/useApiStatus";
 import { useAxisPersistence } from "../../hooks/useAxisPersistence";
 import { useBookmarks } from "../../hooks/useBookmarks";
@@ -373,6 +377,27 @@ export default function HomePage() {
     setError,
   });
 
+  const resultPlotData = result?.plot_data;
+  const lcCurveOptions = useMemo<SelectOption[] | undefined>(() => {
+    if (!resultPlotData) return undefined;
+    const pd = resultPlotData as LcPlotData;
+    const ptOpts = pd?.pt
+      ? pd.pt.freq_hz.map((nu) => ({ label: formatFreqLabel(nu), value: String(nu) }))
+      : [];
+    const bandOpts = (pd?.bands ?? []).map((b) => {
+      const label = formatBandLabel(b.nu_min, b.nu_max, b.name);
+      return { label, value: `band:${label}` };
+    });
+    return [...ptOpts, ...bandOpts];
+  }, [resultPlotData]);
+
+  const sedCurveOptions = useMemo<SelectOption[] | undefined>(() => {
+    if (!resultPlotData) return undefined;
+    const pd = resultPlotData as SedPlotData;
+    if (!pd?.t_snapshots_s) return [];
+    return pd.t_snapshots_s.map((t) => ({ label: formatTimeLabel(t), value: String(t) }));
+  }, [resultPlotData]);
+
   const sidebarPanelsProps = {
     mode,
     shared,
@@ -400,6 +425,8 @@ export default function HomePage() {
       setActiveLcObsTab,
       setActiveSedObsTab,
       setError,
+      lcCurveOptions,
+      sedCurveOptions,
     },
     bookmark: {
       bookmarkNameDraft,

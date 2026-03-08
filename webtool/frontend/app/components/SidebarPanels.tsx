@@ -8,6 +8,7 @@ import type {
   Mode,
   ModeLogSliderSpec,
   ObservationGroup,
+  SelectOption,
   SharedParams,
 } from "../lib/types";
 import { BookmarkPanel } from "./BookmarkPanel";
@@ -43,6 +44,8 @@ type SharedControlsSection = {
   setActiveLcObsTab: (value: UpdateValue<number>) => void;
   setActiveSedObsTab: (value: UpdateValue<number>) => void;
   setError: (value: string) => void;
+  lcCurveOptions?: SelectOption[];
+  sedCurveOptions?: SelectOption[];
 };
 
 type BookmarkSection = {
@@ -157,6 +160,8 @@ export function SidebarPanels({
     setActiveLcObsTab,
     setActiveSedObsTab,
     setError,
+    lcCurveOptions,
+    sedCurveOptions,
   } = sharedControls;
   const {
     bookmarkNameDraft,
@@ -260,6 +265,8 @@ export function SidebarPanels({
         setActiveLcObsTab={setActiveLcObsTab}
         setActiveSedObsTab={setActiveSedObsTab}
         setError={setError}
+        lcCurveOptions={lcCurveOptions}
+        sedCurveOptions={sedCurveOptions}
       />
     );
   }

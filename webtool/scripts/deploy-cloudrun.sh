@@ -10,6 +10,8 @@ SERVICE_NAME="${SERVICE_NAME:-webtool-api}"
 ARTIFACT_REPO="${ARTIFACT_REPO:-containers}"
 ALLOWED_ORIGINS="${ALLOWED_ORIGINS:?Set ALLOWED_ORIGINS (comma-separated, e.g. https://app.vercel.app)}"
 IMAGE_TAG="${IMAGE_TAG:-$(git rev-parse --short HEAD 2>/dev/null || date +%Y%m%d%H%M%S)}"
+VA_VERSION="$(python -m setuptools_scm 2>/dev/null || git describe --tags --always 2>/dev/null || echo 0.0.0)"
+VA_VERSION="${VA_VERSION%.dev*}"
 IMAGE_URI="${REGION}-docker.pkg.dev/${PROJECT_ID}/${ARTIFACT_REPO}/${SERVICE_NAME}:${IMAGE_TAG}"
 IMAGE_LATEST="${REGION}-docker.pkg.dev/${PROJECT_ID}/${ARTIFACT_REPO}/${SERVICE_NAME}:latest"
 MIN_INSTANCES="${MIN_INSTANCES:-0}"
@@ -27,7 +29,7 @@ fi
 gcloud builds submit \
   --project "$PROJECT_ID" \
   --config webtool/backend/cloudrun/cloudbuild.yaml \
-  --substitutions "_IMAGE_URI=${IMAGE_URI},_IMAGE_LATEST=${IMAGE_LATEST}" \
+  --substitutions "_IMAGE_URI=${IMAGE_URI},_IMAGE_LATEST=${IMAGE_LATEST},_VA_VERSION=${VA_VERSION}" \
   .
 
 gcloud run deploy "$SERVICE_NAME" \

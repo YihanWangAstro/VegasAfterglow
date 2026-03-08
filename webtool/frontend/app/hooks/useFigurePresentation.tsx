@@ -14,9 +14,12 @@ import type {
   AxisRanges,
   AxisSignatures,
   BookmarkEntry,
+  LcPlotData,
   Mode,
   RunResponse,
+  SedPlotData,
   SharedParams,
+  SkymapPlotData,
 } from "../lib/types";
 import { formatParamValueNode } from "../lib/utils/math";
 import {
@@ -26,9 +29,9 @@ import {
   parseAxisRange,
   parseRelayoutRange,
   rangesEqual,
-  remapScientificHoverTemplate,
   shouldPreserveAxisRangesOnAutorange,
 } from "../lib/utils/plot";
+import { buildLcFigure, buildSedFigure, buildSkymapFigure } from "../lib/utils/plot-builders";
 
 type UseFigurePresentationArgs = {
   mode: Mode;
@@ -95,9 +98,29 @@ export function useFigurePresentation({
     [axisRangesRef, mode, setZoomRevision],
   );
 
+  // Build figure client-side from plot_data for all modes.
+  const plotData = result?.plot_data;
+  const builtFigure = useMemo(() => {
+    if (resultMode !== mode) return null;
+    if (!plotData) return null;
+    if (mode === "lightcurve") return buildLcFigure(plotData as LcPlotData);
+    if (mode === "spectrum") return buildSedFigure(plotData as SedPlotData);
+    if (mode === "skymap") return buildSkymapFigure(plotData as SkymapPlotData);
+    return null;
+  }, [plotData, resultMode, mode]);
+
+  const comparePlotData = compareResult?.plot_data;
+  const compareBuiltFigure = useMemo(() => {
+    if (!compareEnabled || compareResultMode !== mode) return null;
+    if (!comparePlotData) return null;
+    if (mode === "lightcurve") return buildLcFigure(comparePlotData as LcPlotData);
+    if (mode === "spectrum") return buildSedFigure(comparePlotData as SedPlotData);
+    return null;
+  }, [compareEnabled, comparePlotData, compareResultMode, mode]);
+
   useEffect(() => {
     if (resultMode !== mode) return;
-    const layout = result?.figure?.layout;
+    const layout = builtFigure?.layout;
     if (!layout) return;
 
     const current = axisRangesRef.current[mode];
@@ -118,11 +141,11 @@ export function useFigurePresentation({
       axisRangesRef.current[mode] = next;
       setZoomRevision((value) => value + 1);
     }
-  }, [axisRangesRef, mode, result, resultMode, setZoomRevision]);
+  }, [axisRangesRef, builtFigure, mode, resultMode, setZoomRevision]);
 
   useEffect(() => {
     if (resultMode !== mode) return;
-    const layout = result?.figure?.layout;
+    const layout = builtFigure?.layout;
     if (!layout) return;
 
     const nextYSig = axisSignature(layout, "yaxis");
@@ -151,33 +174,25 @@ export function useFigurePresentation({
       axisRangesRef.current[mode] = next;
       setZoomRevision((value) => value + 1);
     }
-  }, [axisRangesRef, axisSignaturesRef, mode, result, resultMode, setZoomRevision]);
+  }, [axisRangesRef, axisSignaturesRef, builtFigure, mode, resultMode, setZoomRevision]);
 
-  // baseFigure: expensive work — data remap, compare overlay, legend, skymap layout.
+  // baseFigure: compare overlay, legend font, skymap layout, uirevision.
   // Runs only when computation results or compare settings change, NOT on every zoom.
   const baseFigure = useMemo(() => {
     if (resultMode !== mode) return null;
-    const figure = result?.figure;
+    const figure = builtFigure;
     if (!figure?.data) return null;
 
     const rawData = Array.isArray(figure.data) ? [...figure.data] : [];
-    const baseData =
-      mode === "skymap"
-        ? rawData
-        : rawData.map((trace) => {
-            if (!trace || typeof trace !== "object") return trace;
-            return remapScientificHoverTemplate(trace as Record<string, unknown>);
-          });
-    let mergedData = baseData;
+    let mergedData = rawData;
 
     if (mode !== "skymap" && compareEnabled && compareResultMode === mode && selectedCompareBookmark) {
-      const compareData = compareResult?.figure?.data;
+      const compareData = compareBuiltFigure?.data;
       if (Array.isArray(compareData) && compareData.length > 0) {
         const compareLabel = selectedCompareBookmark.name;
         const overlayData = compareData.map((trace, index) => {
           if (!trace || typeof trace !== "object") return trace;
-          const sourceTrace = remapScientificHoverTemplate(trace as Record<string, unknown>);
-          const nextTrace = { ...sourceTrace };
+          const nextTrace = { ...(trace as Record<string, unknown>) };
           const name = typeof nextTrace.name === "string" ? nextTrace.name : `trace ${index + 1}`;
           nextTrace.name = `${name} (${compareLabel})`;
           nextTrace.legendgroup =
@@ -198,7 +213,7 @@ export function useFigurePresentation({
           }
           return nextTrace;
         });
-        mergedData = [...baseData, ...overlayData];
+        mergedData = [...rawData, ...overlayData];
       }
     }
 
@@ -209,20 +224,9 @@ export function useFigurePresentation({
       applySkymapAxisPolicy(layout);
     }
 
-    if (mode !== "skymap") {
-      const legendFontSize = legendFontSizeForWidth(plotWidthPx);
-      const legendObj =
-        layout.legend && typeof layout.legend === "object" ? { ...(layout.legend as Record<string, unknown>) } : {};
-      const legendFontObj =
-        legendObj.font && typeof legendObj.font === "object" ? { ...(legendObj.font as Record<string, unknown>) } : {};
-      legendFontObj.size = legendFontSize;
-      legendObj.font = legendFontObj;
-      layout.legend = legendObj;
-    }
-
     layout.uirevision = `${mode}-zoom-state`;
     return { ...figure, data: mergedData, layout };
-  }, [compareEnabled, compareResult, compareResultMode, mode, plotWidthPx, result, resultMode, selectedCompareBookmark]);
+  }, [builtFigure, compareBuiltFigure, compareEnabled, compareResultMode, mode, resultMode, selectedCompareBookmark]);
 
   // displayFigure: cheap zoom application — runs on every zoom/pan interaction.
   const displayFigure = useMemo(() => {
@@ -244,10 +248,19 @@ export function useFigurePresentation({
 
     if (mode === "skymap") {
       applySkymapAxisPolicy(layout);
+    } else {
+      const legendFontSize = legendFontSizeForWidth(plotWidthPx);
+      const legendObj =
+        layout.legend && typeof layout.legend === "object" ? { ...(layout.legend as Record<string, unknown>) } : {};
+      const legendFontObj =
+        legendObj.font && typeof legendObj.font === "object" ? { ...(legendObj.font as Record<string, unknown>) } : {};
+      legendFontObj.size = legendFontSize;
+      legendObj.font = legendFontObj;
+      layout.legend = legendObj;
     }
 
     return { ...baseFigure, layout };
-  }, [axisRangesRef, baseFigure, mode, zoomRevision]);
+  }, [axisRangesRef, baseFigure, mode, plotWidthPx, zoomRevision]);
 
   const deferredFigure = useDeferredValue(displayFigure);
 

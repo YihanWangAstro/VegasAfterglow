@@ -6,12 +6,29 @@ import io
 import orjson
 
 import numpy as np
-from VegasAfterglow.cli import _format_energy
+from VegasAfterglow.cli import _format_band, _format_energy
 from matplotlib import cm, colors
 from PIL import Image
 
 from .constants import FLUX_SCALES, FREQ_SCALES, TIME_SCALES
-from .helpers import band_label, format_time_label
+
+
+def _band_label(nu_min: float, nu_max: float, name: str | None = None) -> str:
+    """Human-readable band label for export column headers (plain text)."""
+    return _format_band(nu_min, nu_max, name, latex=False)
+
+
+def _time_label(t_sec: float) -> str:
+    """Format observer time for export labels (plain text)."""
+    if t_sec >= 365.25 * 86400:
+        return f"{t_sec / (365.25 * 86400):.3g} yr"
+    if t_sec >= 86400:
+        return f"{t_sec / 86400:.3g} day"
+    if t_sec >= 3600:
+        return f"{t_sec / 3600:.3g} hr"
+    if t_sec >= 60:
+        return f"{t_sec / 60:.3g} min"
+    return f"{t_sec:.3g} s"
 
 _ORJSON_DUMP_OPTIONS = orjson.OPT_INDENT_2 | getattr(orjson, "OPT_SERIALIZE_NUMPY", 0)
 
@@ -36,7 +53,7 @@ def export_csv(data, flux_unit, time_unit):
         for comp_name, _ in pt_components:
             cols.append(f"F_{comp_name}({nu_label})[{flux_unit}]")
     for nu_min, nu_max, blabel, comps in band_data:
-        bl = band_label(nu_min, nu_max, blabel)
+        bl = _band_label(nu_min, nu_max, blabel)
         for comp_name, _ in comps:
             cols.append(f"F_{comp_name}({bl})[erg/cm2/s]")
     buf.write(",".join(cols) + "\n")
@@ -77,7 +94,7 @@ def export_json(data, flux_unit, time_unit):
         obj["units"]["band_flux"] = "erg/cm2/s"
         obj["bands"] = {}
         for nu_min, nu_max, blabel, comps in band_data:
-            bl = band_label(nu_min, nu_max, blabel)
+            bl = _band_label(nu_min, nu_max, blabel)
             obj["bands"][bl] = {
                 "nu_min_Hz": nu_min,
                 "nu_max_Hz": nu_max,
@@ -97,7 +114,7 @@ def export_sed_csv(data, flux_unit, freq_unit):
     buf = io.StringIO()
     cols = [f"nu({freq_unit})"]
     for t in t_snapshots:
-        t_label = format_time_label(t)
+        t_label = _time_label(t)
         for comp_name, _ in components:
             cols.append(f"F_{comp_name}(t={t_label})[{flux_unit}]")
     buf.write(",".join(cols) + "\n")
@@ -126,7 +143,7 @@ def export_sed_json(data, flux_unit, freq_unit):
         "flux_density": {},
     }
     for j, t in enumerate(t_snapshots):
-        t_label = format_time_label(t)
+        t_label = _time_label(t)
         obj["flux_density"][t_label] = {
             comp_name: comp_flux[:, j] / f_scale
             for comp_name, comp_flux in components

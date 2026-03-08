@@ -184,6 +184,7 @@ function normalizeObsGroupArray(value: unknown, isLc: boolean): ObservationGroup
         y_unit: asString(group.y_unit, base.y_unit),
         text: asString(group.text, ""),
         visible: asBoolean(group.visible, true),
+        ...(typeof group.freq === "string" ? { freq: group.freq } : {}),
       } satisfies ObservationGroup;
     })
     .filter((group): group is ObservationGroup => group !== null);

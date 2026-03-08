@@ -13,7 +13,6 @@ from urllib.error import URLError
 from urllib.request import Request, urlopen
 
 import numpy as np
-import orjson
 from fastapi import FastAPI, HTTPException, Response
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.middleware.gzip import GZipMiddleware
@@ -42,7 +41,7 @@ from .exports import (
     export_skymap_gif_base64,
     export_skymap_json,
 )
-from .figures import _add_obs_traces, _add_sensitivity_traces, make_figure, make_sed_figure, make_skymap_figure
+from .figures import build_lc_plot_data, build_sed_plot_data, build_skymap_plot_data
 from .helpers import parse_entry
 from .schemas import LightCurveRequest, SharedParams, SkyMapRequest, SpectrumRequest
 from .services.parsing import parse_frequency_input, parse_observation_rows, shared_to_physics
@@ -58,17 +57,6 @@ except Exception:
 _FLUX_UNITS = list(FLUX_SCALES.keys()) + ["AB mag"]
 _TIME_UNITS = list(TIME_SCALES.keys())
 _FREQ_UNITS = list(FREQ_SCALES.keys())
-
-
-def _json_response(data: dict[str, Any], figure_json: str | None = None) -> Response:
-    """Serialize response dict to JSON, splicing in a pre-rendered figure JSON string
-    directly as bytes to avoid a redundant parse→re-serialize round-trip."""
-    data_bytes = orjson.dumps(data)
-    if figure_json is None:
-        return Response(content=data_bytes, media_type="application/json")
-    # data_bytes ends with b'}'; splice in ,"figure":<fig> before closing brace.
-    content = data_bytes[:-1] + b',"figure":' + figure_json.encode() + b'}'
-    return Response(content=content, media_type="application/json")
 
 
 @asynccontextmanager
@@ -245,10 +233,6 @@ def lightcurve(req: LightCurveRequest) -> dict[str, Any]:
 
     obs_rows = parse_observation_rows(req.observation_groups, is_lc=True)
 
-    has_fband_inst = any(INSTRUMENTS[name][3] == "Fband" for name in selected_instruments)
-    has_fband_obs = any(len(row) >= 6 and row[5] == "erg/cm²/s" for row in obs_rows)
-    need_secondary = has_fband_inst or has_fband_obs
-    use_secondary = need_secondary or len(data["band_data"]) > 0
     is_mag = req.shared.flux_unit == "AB mag"
 
     export_unit = "cgs" if is_mag else req.shared.flux_unit
@@ -260,32 +244,17 @@ def lightcurve(req: LightCurveRequest) -> dict[str, Any]:
             "warnings": parse_warnings,
         },
     }
-    if req.include_figure:
-        fig = make_figure(
-            data,
-            req.shared.flux_unit,
-            req.shared.time_unit,
-            req.t_min,
-            req.t_max,
-            need_secondary_y=need_secondary,
-        )
 
-        if selected_instruments and not is_mag:
-            t_scale = TIME_SCALES[req.shared.time_unit]
-            _add_sensitivity_traces(
-                fig,
-                selected_instruments,
-                "lightcurve",
-                flux_scale=FLUX_SCALES[req.shared.flux_unit],
-                x_range=[req.t_min / t_scale, req.t_max / t_scale],
-                has_secondary=use_secondary,
-            )
-
-        if obs_rows:
-            _add_obs_traces(fig, obs_rows, req.shared.flux_unit, req.shared.time_unit, has_secondary=use_secondary)
-        figure_json = fig.to_json(engine="orjson")
-    else:
-        figure_json = None
+    plot_data = build_lc_plot_data(
+        data,
+        req.t_min,
+        req.t_max,
+        req.shared.flux_unit,
+        req.shared.time_unit,
+        obs_rows=obs_rows,
+        selected_instruments=selected_instruments if not is_mag else None,
+    )
+    response["plot_data"] = plot_data
 
     if req.include_exports:
         kinds = resolve_export_kinds(req.export_kinds, defaults={"csv", "json"}, allowed={"csv", "json"})
@@ -296,7 +265,7 @@ def lightcurve(req: LightCurveRequest) -> dict[str, Any]:
             exports["json"] = export_json(data, export_unit, req.shared.time_unit)
         response["exports"] = exports
 
-    return _json_response(response, figure_json)
+    return ORJSONResponse(response)
 
 
 @app.post("/api/spectrum")
@@ -346,10 +315,6 @@ def spectrum(req: SpectrumRequest) -> dict[str, Any]:
         show_nufnu = False
         warnings.append("AB mag is not compatible with νFν. Showing Fν in AB mag.")
 
-    has_fband_inst = any(INSTRUMENTS[name][3] == "Fband" for name in selected_instruments)
-    has_fband_obs = any(len(row) >= 6 and row[5] == "erg/cm²/s" for row in obs_rows)
-    need_secondary = has_fband_inst or has_fband_obs
-
     export_unit = "cgs" if is_mag else req.shared.flux_unit
     response: dict[str, Any] = {
         "meta": {
@@ -358,39 +323,16 @@ def spectrum(req: SpectrumRequest) -> dict[str, Any]:
             "warnings": warnings,
         },
     }
-    if req.include_figure:
-        fig = make_sed_figure(
-            data,
-            req.shared.flux_unit,
-            req.freq_unit,
-            nufnu=show_nufnu,
-            need_secondary_y=need_secondary,
-        )
 
-        if selected_instruments and not is_mag:
-            _add_sensitivity_traces(
-                fig,
-                selected_instruments,
-                "spectrum",
-                freq_scale=FREQ_SCALES[req.freq_unit],
-                flux_scale=FLUX_SCALES[req.shared.flux_unit],
-                nufnu=show_nufnu,
-                has_secondary=need_secondary,
-            )
-
-        if obs_rows:
-            _add_obs_traces(
-                fig,
-                obs_rows,
-                req.shared.flux_unit,
-                req.freq_unit,
-                has_secondary=need_secondary,
-                mode="spectrum",
-                nufnu=show_nufnu,
-            )
-        figure_json = fig.to_json(engine="orjson")
-    else:
-        figure_json = None
+    plot_data = build_sed_plot_data(
+        data,
+        req.shared.flux_unit,
+        req.freq_unit,
+        show_nufnu,
+        obs_rows=obs_rows,
+        selected_instruments=selected_instruments if not is_mag else None,
+    )
+    response["plot_data"] = plot_data
 
     if req.include_exports:
         kinds = resolve_export_kinds(req.export_kinds, defaults={"csv", "json"}, allowed={"csv", "json"})
@@ -401,7 +343,7 @@ def spectrum(req: SpectrumRequest) -> dict[str, Any]:
             exports["json"] = export_sed_json(data, export_unit, req.freq_unit)
         response["exports"] = exports
 
-    return _json_response(response, figure_json)
+    return ORJSONResponse(response)
 
 
 @app.post("/api/skymap")
@@ -459,11 +401,7 @@ def skymap(req: SkyMapRequest) -> dict[str, Any]:
             "n_frames": len(data.get("images", [])),
         },
     }
-    if req.include_figure:
-        fig = make_skymap_figure(data)
-        figure_json = fig.to_json(engine="orjson")
-    else:
-        figure_json = None
+    response["plot_data"] = build_skymap_plot_data(data)
     if req.include_exports:
         kinds = resolve_export_kinds(req.export_kinds, defaults={"json"}, allowed={"json", "gif"})
         exports: dict[str, str] = {}
@@ -472,4 +410,4 @@ def skymap(req: SkyMapRequest) -> dict[str, Any]:
         if "gif" in kinds:
             exports["gif"] = export_skymap_gif_base64(data)
         response["exports"] = exports
-    return _json_response(response, figure_json)
+    return ORJSONResponse(response)

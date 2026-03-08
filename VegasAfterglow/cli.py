@@ -587,37 +587,38 @@ _FLUX_LABELS = {
 _TIME_LABELS = {"s": "s", "day": "days", "hr": "hr", "min": "min"}
 
 
+# Discrete qualitative palette ordered warm → cool (radio → X-ray/gamma).
+FREQ_PALETTE = [
+    "#E03530",  # red
+    "#E8872E",  # orange
+    "#D4A017",  # gold
+    "#8C564B",  # brown
+    "#BCBD22",  # olive
+    "#2AB07E",  # green
+    "#17BECF",  # cyan
+    "#2878B5",  # blue
+    "#1D3557",  # navy
+    "#7B3FA0",  # purple
+    "#E377C2",  # pink
+    "#555555",  # gray
+]
+
+
 def _freq_colors(nus):
-    """Map frequencies to colors, adapting to the frequency range.
+    """Map frequencies to distinct colors ordered warm (low ν) → cool (high ν).
 
-    When the range spans > 3 decades, colors reflect absolute position on the
-    radio-to-X-ray spectrum.  For narrower ranges, colors are evenly spaced
-    across the palette so nearby frequencies remain visually distinct.
+    Assigns colors from a discrete qualitative palette by frequency rank,
+    so even closely-spaced frequencies (e.g. optical filters) get visually
+    distinct colors while preserving spectral ordering.
     """
-    from matplotlib.colors import LinearSegmentedColormap
-
-    palette = ["#E03530", "#E8872E", "#D4C43A", "#2AB07E", "#2878B5", "#7B3FA0"]
-    cmap = LinearSegmentedColormap.from_list("freq", palette)
-
-    log_nus = np.log10(nus)
-    log_range = log_nus.max() - log_nus.min()
-
-    if len(nus) == 1:
-        t_vals = np.array([0.5])
-    elif log_range > 3:
-        # Wide range: map to absolute position on 10^7 – 10^22 Hz scale
-        t_vals = np.clip((log_nus - 7) / (22 - 7), 0, 1)
-    else:
-        # Narrow range: spread evenly across the full palette
-        t_vals = np.linspace(0, 1, len(nus))
-
-    hex_colors = []
-    for t in t_vals:
-        rgba = cmap(t)
-        hex_colors.append(
-            f"#{int(rgba[0]*255):02x}{int(rgba[1]*255):02x}{int(rgba[2]*255):02x}"
-        )
-    return hex_colors
+    n = len(nus)
+    if n == 0:
+        return []
+    order = np.argsort(nus)
+    colors = [""] * n
+    for rank, idx in enumerate(order):
+        colors[idx] = FREQ_PALETTE[rank % len(FREQ_PALETTE)]
+    return colors
 
 
 def _setup_plot_style(font=None):

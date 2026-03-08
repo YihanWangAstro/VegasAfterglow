@@ -38,18 +38,6 @@ export function clampRangeValue(value: number, min: number, max: number): number
   return Math.max(min, Math.min(max, value));
 }
 
-export function formatPowerHoverValue(value: unknown): string {
-  const numeric = Number(value);
-  if (!Number.isFinite(numeric)) return String(value ?? "");
-  if (numeric === 0) return "0";
-  const abs = Math.abs(numeric);
-  const exponent = Math.floor(Math.log10(abs));
-  const mantissa = numeric / Math.pow(10, exponent);
-  const mantissaText = Number(mantissa.toPrecision(3)).toString();
-  if (exponent === 0) return mantissaText;
-  return `${mantissaText}\u00d710<sup>${exponent}</sup>`;
-}
-
 export function luminosityDistanceMpcFromRedshift(z: number): number {
   const zSafe = Math.max(0, z);
   return (C_KM_S / H0_KM_S_MPC) * zSafe * (1 + zSafe);

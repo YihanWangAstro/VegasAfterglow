@@ -4,6 +4,7 @@ steps:
   args:
   - build
   - --build-arg=BUILDKIT_INLINE_CACHE=1
+  - --build-arg=VEGASAFTERGLOW_VERSION=${_VA_VERSION}
   - --cache-from
   - $_IMAGE_LATEST
   - -t
@@ -13,6 +14,8 @@ steps:
   - -f
   - webtool/backend/Dockerfile
   - .
+substitutions:
+  _VA_VERSION: '0.0.0'
 images:
 - $_IMAGE_URI
 - $_IMAGE_LATEST

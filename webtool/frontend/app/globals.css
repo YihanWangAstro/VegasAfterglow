@@ -545,6 +545,11 @@ textarea {
   border-radius: 6px;
   min-height: var(--sb-input-min-h, 1.85rem);
   padding: var(--sb-input-padding, 0 0.5rem);
+  box-sizing: border-box;
+}
+
+.sidebar select {
+  height: var(--sb-input-min-h, 1.85rem);
 }
 
 .sidebar textarea {
@@ -809,8 +814,14 @@ textarea {
 }
 
 .obs-card-row-meta {
-  grid-template-columns: minmax(0, 1fr) auto;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
   align-items: end;
+}
+.obs-card-row-meta > .sb-field {
+  flex: 1 1 6rem;
+  min-width: 0;
 }
 
 .obs-card-row-units {

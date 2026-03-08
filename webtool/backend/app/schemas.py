@@ -9,6 +9,7 @@ class ObservationGroup(BaseModel):
     y_unit: str = "mJy"
     text: str = ""
     visible: bool = True
+    freq: str | None = None
 
 
 class SharedParams(BaseModel):

@@ -1,5 +1,6 @@
+import { useEffect, useRef } from "react";
 import { HelpHint } from "./HelpHint";
-import type { ObservationGroup } from "../lib/types";
+import type { ObservationGroup, SelectOption } from "../lib/types";
 
 function renderStringOptions(options: readonly string[]) {
   return options.map((item) => (
@@ -15,7 +16,6 @@ type Props = {
   activeTab: number;
   setActiveTab: (value: number) => void;
   xOptions: readonly string[];
-  xName: string;
   xUnitLabel: string;
   rowLabel: string;
   obsHelpText: string;
@@ -25,6 +25,7 @@ type Props = {
   addObsGroup: () => void;
   handleObservationUpload: (index: number, file: File) => Promise<void>;
   yUnitOptions: readonly string[];
+  curveOptions?: SelectOption[];
 };
 
 export function ObservationEditor({
@@ -33,7 +34,6 @@ export function ObservationEditor({
   activeTab,
   setActiveTab,
   xOptions,
-  xName,
   xUnitLabel,
   rowLabel,
   obsHelpText,
@@ -43,9 +43,48 @@ export function ObservationEditor({
   addObsGroup,
   handleObservationUpload,
   yUnitOptions,
+  curveOptions,
 }: Props) {
+  // Clear stale freq bindings when available curves change.
+  // Uses refs for groups/updateObsGroup to avoid re-firing on every parent render.
+  const groupsRef = useRef(groups);
+  groupsRef.current = groups;
+  const updateRef = useRef(updateObsGroup);
+  updateRef.current = updateObsGroup;
+
+  useEffect(() => {
+    if (!curveOptions) return;
+    groupsRef.current.forEach((group, idx) => {
+      if (group.freq && !curveOptions.some((o) => o.value === group.freq)) {
+        updateRef.current(idx, { freq: undefined });
+      }
+    });
+  }, [curveOptions]);
+
   const activeIndex = groups.length === 0 ? -1 : Math.max(0, Math.min(activeTab, groups.length - 1));
   const activeGroup = activeIndex >= 0 ? groups[activeIndex] : null;
+
+  const hasCurves = curveOptions && curveOptions.length > 0;
+  const freqMatchesCurve = activeGroup?.freq && hasCurves && curveOptions.some((o) => o.value === activeGroup.freq);
+  const isCustom = !activeGroup?.freq || !freqMatchesCurve;
+
+  // Collect freqs already bound by other groups so we can exclude them from the dropdown.
+  const takenFreqs = new Set(
+    groups
+      .filter((_, i) => i !== activeIndex)
+      .map((g) => g.freq)
+      .filter((f): f is string => !!f),
+  );
+  const availableCurveOptions = hasCurves
+    ? curveOptions.filter((o) => !takenFreqs.has(o.value))
+    : undefined;
+
+  const legendField = activeGroup ? (
+    <label className="sb-field">
+      <span className="sb-label">Legend</span>
+      <input value={activeGroup.legend} onChange={(e) => updateObsGroup(activeIndex, { legend: e.target.value })} />
+    </label>
+  ) : null;
 
   return (
     <details className="sb-expander">
@@ -79,12 +118,35 @@ export function ObservationEditor({
         </div>
       ) : null}
       {activeGroup ? (
-        <div className="obs-card" key={`${activeGroup.legend}-${activeIndex}`}>
+        <div className="obs-card" key={activeIndex}>
           <div className="obs-card-row obs-card-row-meta">
-            <label className="sb-field">
-              <span className="sb-label">Legend</span>
-              <input value={activeGroup.legend} onChange={(e) => updateObsGroup(activeIndex, { legend: e.target.value })} />
-            </label>
+            {hasCurves ? (
+              <>
+                <label className="sb-field">
+                  <span className="sb-label">Group</span>
+                  <select
+                    value={freqMatchesCurve ? activeGroup.freq! : ""}
+                    onChange={(e) => {
+                      const val = e.target.value;
+                      if (val) {
+                        const opt = curveOptions.find((o) => o.value === val);
+                        updateObsGroup(activeIndex, { freq: val, legend: opt?.label ?? val });
+                      } else {
+                        updateObsGroup(activeIndex, { freq: undefined });
+                      }
+                    }}
+                  >
+                    <option value="">— custom —</option>
+                    {(availableCurveOptions ?? []).map((opt) => (
+                      <option key={opt.value} value={opt.value}>{opt.label}</option>
+                    ))}
+                  </select>
+                </label>
+                {isCustom ? legendField : null}
+              </>
+            ) : (
+              legendField
+            )}
             <label className="sb-checkbox-inline">
               <input
                 type="checkbox"

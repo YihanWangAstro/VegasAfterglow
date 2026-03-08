@@ -1,6 +1,5 @@
 import { useCallback, useMemo } from "react";
 import { ENABLE_INTERACTIVE_DOWNSAMPLE } from "../lib/constants";
-import { decodePlotlyFigureBinaryInPlace } from "../lib/plotly/decode";
 import type { ComputationSpec, RunResponse } from "../lib/types";
 import { compactObservationGroups } from "../lib/utils/obs";
 import { buildInteractiveSpec, normalizeShared } from "../lib/utils/snapshot";
@@ -116,9 +115,6 @@ export function useComputationApi({ parameterState, sliderInteracting, fetchFrom
         throw new Error(details || `HTTP ${response.status}`);
       }
       const data = (await response.json()) as RunResponse;
-      if (data.figure) {
-        decodePlotlyFigureBinaryInPlace(data.figure);
-      }
       return data;
     },
     [fetchFromApi],

@@ -23,6 +23,10 @@ COPY pybind /tmp/vegasafterglow/pybind
 COPY external /tmp/vegasafterglow/external
 COPY VegasAfterglow /tmp/vegasafterglow/VegasAfterglow
 
+# setuptools-scm needs .git to resolve the version; pass it via build arg instead.
+ARG VEGASAFTERGLOW_VERSION=0.0.0
+ENV SETUPTOOLS_SCM_PRETEND_VERSION=${VEGASAFTERGLOW_VERSION}
+
 RUN pip install --upgrade pip setuptools wheel scikit-build-core pybind11 numpy setuptools-scm \
  && pip install --no-build-isolation /tmp/vegasafterglow
 

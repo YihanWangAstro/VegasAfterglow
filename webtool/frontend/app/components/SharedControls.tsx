@@ -19,7 +19,7 @@ import {
   TIME_UNIT_OPTIONS,
   Y_UNIT_OPTIONS,
 } from "../lib/constants";
-import type { InstrumentGroup, Mode, ObservationGroup, SharedParams, SharedSliderSpec } from "../lib/types";
+import type { InstrumentGroup, Mode, ObservationGroup, SelectOption, SharedParams, SharedSliderSpec } from "../lib/types";
 import { defaultObsGroup, parseObservationUpload } from "../lib/utils/obs";
 import type { UpdateValue } from "../hooks/useParameterState";
 import { LogSliderField, SliderField } from "./SliderField";
@@ -47,6 +47,8 @@ type Props = {
   setActiveLcObsTab: (value: UpdateValue<number>) => void;
   setActiveSedObsTab: (value: UpdateValue<number>) => void;
   setError: (value: string) => void;
+  lcCurveOptions?: SelectOption[];
+  sedCurveOptions?: SelectOption[];
 };
 
 export function SharedControls({
@@ -71,6 +73,8 @@ export function SharedControls({
   setActiveLcObsTab,
   setActiveSedObsTab,
   setError,
+  lcCurveOptions,
+  sedCurveOptions,
 }: Props) {
   const isSky = mode === "skymap";
   const isLc = mode === "lightcurve";
@@ -146,7 +150,6 @@ export function SharedControls({
         activeTab={activeTab}
         setActiveTab={(value) => setActiveTab(value)}
         xOptions={xOptions}
-        xName={xName}
         xUnitLabel={xUnitLabel}
         rowLabel={rowLabel}
         obsHelpText={obsHelpText}
@@ -156,6 +159,7 @@ export function SharedControls({
         addObsGroup={() => addObsGroup(isLcMode)}
         handleObservationUpload={(index, file) => handleObservationUpload(isLcMode, index, file)}
         yUnitOptions={Y_UNIT_OPTIONS}
+        curveOptions={isLcMode ? lcCurveOptions : sedCurveOptions}
       />
     );
   }

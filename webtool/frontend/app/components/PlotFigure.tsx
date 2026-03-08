@@ -3,7 +3,8 @@
 import dynamic from "next/dynamic";
 import { memo, useCallback, useEffect, useRef, useState } from "react";
 import { PLOT_CONFIG } from "../lib/constants";
-import type { Mode, RunResponse } from "../lib/types";
+import type { Mode } from "../lib/types";
+import type { PlotlyFigure } from "../lib/utils/plot-builders";
 
 const Plot = dynamic(() => import("react-plotly.js"), { ssr: false });
 
@@ -12,7 +13,7 @@ export const PlotFigure = memo(function PlotFigure({
   mode,
   onRelayout,
 }: {
-  figure: NonNullable<RunResponse["figure"]>;
+  figure: PlotlyFigure;
   mode: Mode;
   onRelayout: (event: Record<string, unknown>) => void;
 }) {

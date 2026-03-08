@@ -63,11 +63,15 @@ rsync_run \
   "$ROOT_DIR/" \
   "${SSH_TARGET}:${RELEASE_DIR}/"
 
-echo "Building backend image on ${SSH_TARGET} ..."
+VA_VERSION="$(python -m setuptools_scm 2>/dev/null || git describe --tags --always 2>/dev/null || echo 0.0.0)"
+VA_VERSION="${VA_VERSION%.dev*}"
+
+echo "Building backend image on ${SSH_TARGET} (VegasAfterglow ${VA_VERSION}) ..."
 # Base image (python:3.12-slim) is pulled via the Alibaba Cloud registry mirror configured
 # in /etc/docker/daemon.json on the server. Docker layer cache means only changed layers rebuild.
 ssh_run "$SSH_TARGET" \
   "docker build \
+    --build-arg VEGASAFTERGLOW_VERSION=$(printf '%q' "$VA_VERSION") \
     --platform $(printf '%q' "$BACKEND_IMAGE_PLATFORM") \
     -f $(printf '%q' "$RELEASE_DIR/webtool/backend/Dockerfile") \
     -t $(printf '%q' "${BACKEND_IMAGE_NAME}:${RELEASE_ID}") \

@@ -1,55 +1,5 @@
 import { AXIS_EPS } from "../constants";
 import type { AxisName, AxisRange, Mode } from "../types";
-import { formatPowerHoverValue } from "./math";
-
-export function remapScientificHoverTemplate(trace: Record<string, unknown>): Record<string, unknown> {
-  const hovertemplate = typeof trace.hovertemplate === "string" ? trace.hovertemplate : "";
-  if (!hovertemplate) return trace;
-
-  let needsX = false;
-  let needsY = false;
-  let needsZ = false;
-  let rewritten = hovertemplate;
-
-  rewritten = rewritten.replace(/%\{x:[^}]*e\}/g, () => {
-    needsX = true;
-    return "%{customdata[0]}";
-  });
-  rewritten = rewritten.replace(/%\{y:[^}]*e\}/g, () => {
-    needsY = true;
-    return "%{customdata[1]}";
-  });
-  rewritten = rewritten.replace(/%\{z:[^}]*e\}/g, () => {
-    needsZ = true;
-    return "%{customdata[2]}";
-  });
-
-  if (!needsX && !needsY && !needsZ) return trace;
-
-  const xSeries = Array.isArray(trace.x) ? trace.x : null;
-  const ySeries = Array.isArray(trace.y) ? trace.y : null;
-  const zSeries = Array.isArray(trace.z) ? trace.z : null;
-  const zIs1D = zSeries ? zSeries.every((item) => !Array.isArray(item)) : false;
-
-  const length = Math.max(
-    needsX && xSeries ? xSeries.length : 0,
-    needsY && ySeries ? ySeries.length : 0,
-    needsZ && zIs1D && zSeries ? zSeries.length : 0,
-  );
-  if (length === 0) return trace;
-
-  const customdata = Array.from({ length }, (_, idx) => [
-    needsX && xSeries ? formatPowerHoverValue(xSeries[idx]) : "",
-    needsY && ySeries ? formatPowerHoverValue(ySeries[idx]) : "",
-    needsZ && zIs1D && zSeries ? formatPowerHoverValue(zSeries[idx]) : "",
-  ]);
-
-  return {
-    ...trace,
-    customdata,
-    hovertemplate: rewritten,
-  };
-}
 
 export function parseAxisRange(value: unknown): AxisRange | null {
   if (!Array.isArray(value) || value.length !== 2) return null;

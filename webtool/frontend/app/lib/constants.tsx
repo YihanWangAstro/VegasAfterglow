@@ -9,7 +9,7 @@ export const FALLBACK_SHARED: SharedParams = {
   z: 0.022,
   theta_obs: 0,
   flux_unit: "mJy",
-  time_unit: "s",
+  time_unit: "day",
   jet_type: "Top-hat",
   theta_c: 0.1,
   E_iso: 1e52,

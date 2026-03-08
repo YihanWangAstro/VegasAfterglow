@@ -27,6 +27,7 @@ export function parseStoredObsGroups(raw: string | null, isLc: boolean): Observa
           y_unit: typeof group.y_unit === "string" ? group.y_unit : base.y_unit,
           text: typeof group.text === "string" ? group.text : "",
           visible: typeof group.visible === "boolean" ? group.visible : true,
+          ...(typeof group.freq === "string" && group.freq.trim() ? { freq: group.freq.trim() } : {}),
         };
       })
       .filter((group): group is ObservationGroup => group !== null);
@@ -46,6 +47,7 @@ export function compactObservationGroups(groups: ObservationGroup[]): Observatio
       y_unit: group.y_unit,
       text: group.text.trim(),
       visible: true,
+      ...(group.freq?.trim() ? { freq: group.freq.trim() } : {}),
     }));
 }
 

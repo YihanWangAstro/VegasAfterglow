@@ -2,6 +2,8 @@ import type { ReactNode } from "react";
 
 export type Mode = "lightcurve" | "spectrum" | "skymap";
 
+export type SelectOption = { label: string; value: string };
+
 export type ComputationSpec = {
   endpoint: Mode;
   payload: Record<string, unknown>;
@@ -32,17 +34,80 @@ export type ApiHealthStatus = {
   locationLabel: string | null;
 };
 
+export type ObsEntry = {
+  label: string;
+  fnu: [number, number, number][];   // [x_s, y_cgs, err_cgs]
+  fband: [number, number, number][]; // [x_s, y_cgs, err_cgs]
+};
+
+export type LcPlotData = {
+  flux_unit: string;
+  time_unit: string;
+  t_min_s: number;
+  t_max_s: number;
+  times_s: number[];
+  pt: {
+    freq_hz: number[];
+    components: Record<string, number[][]>; // name -> [freq_idx][time_idx]
+  } | null;
+  bands: {
+    nu_min: number;
+    nu_max: number;
+    name: string | null;
+    nu_cen: number;
+    components: Record<string, number[]>; // name -> [time_idx]
+  }[];
+  obs: ObsEntry[];
+  instruments: {
+    name: string;
+    nu_min: number;
+    nu_max: number;
+    sensitivity: number;
+    kind: string;
+    t_lo_s: number;
+    t_hi_s: number;
+  }[];
+};
+
+export type SedPlotData = {
+  flux_unit: string;
+  freq_unit: string;
+  nufnu: boolean;
+  freq_hz: number[];
+  t_snapshots_s: number[];
+  components: Record<string, number[][]>; // name -> [t_idx][nu_idx]
+  obs: ObsEntry[];
+  instruments: {
+    name: string;
+    nu_min: number;
+    nu_max: number;
+    sensitivity: number;
+    kind: string;
+  }[];
+};
+
+export type SkymapPlotData = {
+  nx: number;
+  ny: number;
+  frames_b64f32: string[];  // base64-encoded float32 arrays, shape [ny][nx] per frame
+  extent_uas: [number, number, number, number];  // [x_min, x_max, y_min, y_max]
+  t_obs_s: number[];
+  nu_obs_hz: number;
+  dx: number;
+  dy: number;
+  x0: number;
+  y0: number;
+  z_min: number;
+  z_max: number;
+};
+
 export type RunResponse = {
   meta?: {
     compute_seconds?: number;
     warnings?: string[];
     [key: string]: unknown;
   };
-  figure?: {
-    data?: unknown[];
-    layout?: Record<string, unknown>;
-    frames?: unknown[];
-  };
+  plot_data?: LcPlotData | SedPlotData | SkymapPlotData;
   exports?: Record<string, string>;
 };
 
@@ -61,6 +126,7 @@ export type ObservationGroup = {
   y_unit: string;
   text: string;
   visible: boolean;
+  freq?: string;
 };
 
 export type SharedParams = {
