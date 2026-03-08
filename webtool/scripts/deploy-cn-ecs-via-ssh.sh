@@ -48,57 +48,30 @@ fi
 echo "Preparing remote release: ${RELEASE_DIR}"
 ssh_run "$SSH_TARGET" "mkdir -p $(printf '%q' "$RELEASE_DIR")"
 
-tmp_dir="$(mktemp -d)"
-archive_path="${tmp_dir}/webtool-${RELEASE_ID}.tar.gz"
-remote_archive="/tmp/webtool-${RELEASE_ID}.tar.gz"
-trap 'rm -rf "$tmp_dir"' EXIT
-
-backend_image_archive="${tmp_dir}/backend-image-${RELEASE_ID}.tar.gz"
-remote_backend_image_archive="/tmp/backend-image-${RELEASE_ID}.tar.gz"
-
-echo "Creating local deploy archive ..."
-COPYFILE_DISABLE=1 COPY_EXTENDED_ATTRIBUTES_DISABLE=1 tar \
-  --no-mac-metadata \
-  --no-xattrs \
-  --no-acls \
-  --no-fflags \
-  --exclude-vcs \
+echo "Syncing source to ${SSH_TARGET}:${RELEASE_DIR} ..."
+rsync_run \
+  --delete \
+  --exclude='.git' \
   --exclude='.DS_Store' \
-  --exclude='webtool/frontend/node_modules' \
-  --exclude='webtool/frontend/.next' \
-  --exclude='webtool/backend/.venv' \
-  -czf "$archive_path" \
-  pyproject.toml \
-  README.md \
-  LICENSE \
-  CMakeLists.txt \
-  include \
-  src \
-  pybind \
-  external \
-  VegasAfterglow \
-  webtool \
-  2> >(grep -v 'LIBARCHIVE.xattr\.' >&2)
+  --exclude='build/' \
+  --exclude='dist/' \
+  --exclude='__pycache__/' \
+  --exclude='*.pyc' \
+  --exclude='webtool/frontend/node_modules/' \
+  --exclude='webtool/frontend/.next/' \
+  --exclude='webtool/backend/.venv/' \
+  "$ROOT_DIR/" \
+  "${SSH_TARGET}:${RELEASE_DIR}/"
 
-echo "Building backend image locally for ${BACKEND_IMAGE_PLATFORM} ..."
-docker build \
-  --platform "$BACKEND_IMAGE_PLATFORM" \
-  -f webtool/backend/Dockerfile \
-  -t "${BACKEND_IMAGE_NAME}:${RELEASE_ID}" \
-  .
-
-echo "Saving backend image archive ..."
-docker save "${BACKEND_IMAGE_NAME}:${RELEASE_ID}" | gzip > "$backend_image_archive"
-
-echo "Syncing deploy bundle to ${SSH_TARGET} ..."
-scp_run "$archive_path" "${SSH_TARGET}:$(printf '%q' "$remote_archive")"
+echo "Building backend image on ${SSH_TARGET} ..."
+# Base image (python:3.12-slim) is pulled via the Alibaba Cloud registry mirror configured
+# in /etc/docker/daemon.json on the server. Docker layer cache means only changed layers rebuild.
 ssh_run "$SSH_TARGET" \
-  "tar -xzf $(printf '%q' "$remote_archive") -C $(printf '%q' "$RELEASE_DIR") && rm -f $(printf '%q' "$remote_archive")"
-
-echo "Syncing backend image to ${SSH_TARGET} ..."
-scp_run "$backend_image_archive" "${SSH_TARGET}:$(printf '%q' "$remote_backend_image_archive")"
-ssh_run "$SSH_TARGET" \
-  "gzip -dc $(printf '%q' "$remote_backend_image_archive") | docker load && rm -f $(printf '%q' "$remote_backend_image_archive")"
+  "docker build \
+    --platform $(printf '%q' "$BACKEND_IMAGE_PLATFORM") \
+    -f $(printf '%q' "$RELEASE_DIR/webtool/backend/Dockerfile") \
+    -t $(printf '%q' "${BACKEND_IMAGE_NAME}:${RELEASE_ID}") \
+    $(printf '%q' "$RELEASE_DIR")"
 
 remote_script="${RELEASE_DIR}/webtool/scripts/deploy-cn-ecs-remote.sh"
 

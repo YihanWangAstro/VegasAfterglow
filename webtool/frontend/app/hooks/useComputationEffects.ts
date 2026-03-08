@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useRef, useState, type Dispatch, type SetStateAction, type TransitionStartFunction } from "react";
-import { AUTO_RUN_DEBOUNCE_IDLE_MS, AUTO_RUN_DEBOUNCE_SLIDING_MS, COLD_START_HINT_MS } from "../lib/constants";
+import { AUTO_RUN_DEBOUNCE_IDLE_MS, COLD_START_HINT_MS } from "../lib/constants";
 import type { ComputationSpec, Mode, RunResponse } from "../lib/types";
 import { clearTimeoutRef, isAbortLikeError } from "../lib/utils/async";
 import { isEmptyPrimaryInputSpec } from "../lib/utils/snapshot";
@@ -186,11 +186,15 @@ export function useComputationEffects({
     }
     enqueueComputation(computationSpec);
     clearTimeoutRef(runTimerRef);
-    const debounceMs = sliderInteracting ? AUTO_RUN_DEBOUNCE_SLIDING_MS : AUTO_RUN_DEBOUNCE_IDLE_MS;
-    runTimerRef.current = window.setTimeout(() => {
-      runTimerRef.current = null;
+    if (sliderInteracting) {
+      // Fire immediately — SLIDER_COMMIT_INTERVAL_MS already throttles commit rate
       void flushQueuedComputation();
-    }, debounceMs);
+    } else {
+      runTimerRef.current = window.setTimeout(() => {
+        runTimerRef.current = null;
+        void flushQueuedComputation();
+      }, AUTO_RUN_DEBOUNCE_IDLE_MS);
+    }
     return () => clearTimeoutRef(runTimerRef);
   }, [
     bootReady,
@@ -222,7 +226,7 @@ export function useComputationEffects({
       return;
     }
 
-    const debounceMs = sliderInteracting ? AUTO_RUN_DEBOUNCE_SLIDING_MS : AUTO_RUN_DEBOUNCE_IDLE_MS;
+    const debounceMs = sliderInteracting ? 0 : AUTO_RUN_DEBOUNCE_IDLE_MS;
     compareTimerRef.current = window.setTimeout(() => {
       compareTimerRef.current = null;
       void runCompareComputation(compareSpec);
