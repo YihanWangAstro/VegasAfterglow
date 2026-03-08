@@ -107,9 +107,21 @@ The charts below benchmark **single-core** wall-clock time by stage across four 
 
 
 <div align="center">
-<img src="assets/benchmark-sync.svg" alt="Synchrotron performance" width="900"/>
-<img src="assets/benchmark-rvs.svg" alt="Reverse shock performance" width="900"/>
-<img src="assets/benchmark-ssc.svg" alt="Full SSC performance" width="900"/>
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="assets/benchmark-sync-dark.svg">
+  <source media="(prefers-color-scheme: light)" srcset="assets/benchmark-sync-light.svg">
+  <img src="assets/benchmark-sync-light.svg" alt="Synchrotron performance" width="900">
+</picture>
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="assets/benchmark-rvs-dark.svg">
+  <source media="(prefers-color-scheme: light)" srcset="assets/benchmark-rvs-light.svg">
+  <img src="assets/benchmark-rvs-light.svg" alt="Reverse shock performance" width="900">
+</picture>
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="assets/benchmark-ssc-dark.svg">
+  <source media="(prefers-color-scheme: light)" srcset="assets/benchmark-ssc-light.svg">
+  <img src="assets/benchmark-ssc-light.svg" alt="Full SSC performance" width="900">
+</picture>
 </div>
 
 ---
@@ -117,7 +129,11 @@ The charts below benchmark **single-core** wall-clock time by stage across four 
 ## Architecture
 
 <div align="center">
-<img src="assets/architecture.svg" alt="VegasAfterglow Architecture" width="900"/>
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="assets/architecture-dark.svg">
+  <source media="(prefers-color-scheme: light)" srcset="assets/architecture-light.svg">
+  <img src="assets/architecture-light.svg" alt="VegasAfterglow Architecture" width="900">
+</picture>
 </div>
 
 ---
@@ -861,4 +877,10 @@ archivePrefix = {arXiv},
 
 ---
 
-![Contribution Overview](assets/contribution-chart.svg)
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="assets/contribution-chart-dark.svg">
+    <source media="(prefers-color-scheme: light)" srcset="assets/contribution-chart-light.svg">
+    <img src="assets/contribution-chart-light.svg" alt="Contribution Overview" width="900">
+  </picture>
+</p>

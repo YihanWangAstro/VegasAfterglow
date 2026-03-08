@@ -64,7 +64,36 @@ def fy(frac):
     return Y_BOT - frac * CHART_H
 
 
-def main():
+def _output_path(theme):
+    name = "contribution-chart.svg" if theme == "adaptive" else f"contribution-chart-{theme}.svg"
+    return Path(__file__).parent.parent.parent / "assets" / name
+
+
+def _emit_style(emit, theme):
+    emit('  <style>')
+    if theme == "adaptive":
+        emit('    svg { color-scheme: light dark; }')
+        emit('    .cp, .cs { fill: #ffffff; }')
+        emit('    .gl { stroke: #2D3345; fill: none; }')
+        emit('    .arr { fill: #3D4A5C; }')
+        emit('    @media (prefers-color-scheme: light) {')
+        emit('      .cp, .cs { fill: #000000; }')
+        emit('      .gl { stroke: #d0d7de; }')
+        emit('      .arr { fill: #57606a; }')
+        emit('    }')
+    elif theme == "light":
+        emit('    .cp, .cs, .arr { fill: #000000; }')
+        emit('    .gl { stroke: #d0d7de; fill: none; }')
+    elif theme == "dark":
+        emit('    .cp, .cs { fill: #ffffff; }')
+        emit('    .gl { stroke: #2D3345; fill: none; }')
+        emit('    .arr { fill: #3D4A5C; }')
+    else:
+        raise ValueError(f"Unknown theme: {theme}")
+    emit('  </style>')
+
+
+def _write_chart(theme):
     L = []
 
     def emit(s=""):
@@ -75,17 +104,7 @@ def main():
     emit(f'     font-family="{FONT}">')
     emit()
 
-    emit('  <style>')
-    emit('    svg { color-scheme: light dark; }')
-    emit('    .cp, .cs { fill: #ffffff; }')
-    emit('    .gl { stroke: #2D3345; fill: none; }')
-    emit('    .arr { fill: #3D4A5C; }')
-    emit('    @media (prefers-color-scheme: light) {')
-    emit('      .cp, .cs { fill: #000000; }')
-    emit('      .gl { stroke: #d0d7de; }')
-    emit('      .arr { fill: #57606a; }')
-    emit('    }')
-    emit('  </style>')
+    _emit_style(emit, theme)
     emit()
 
     emit('  <defs>')
@@ -149,9 +168,14 @@ def main():
 
     emit('</svg>')
 
-    out = Path(__file__).parent.parent.parent / "assets" / "contribution-chart.svg"
+    out = _output_path(theme)
     out.write_text("\n".join(L) + "\n", encoding="utf-8")
     print(f"Saved: {out}")
+
+
+def main():
+    for theme in ("adaptive", "light", "dark"):
+        _write_chart(theme)
 
 
 if __name__ == "__main__":

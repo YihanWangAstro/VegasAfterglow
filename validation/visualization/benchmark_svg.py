@@ -38,7 +38,35 @@ ANGLES = [0.0, 1.0, 2.0, 4.0]
 FONT = "-apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif"
 
 
-def _make_chart(bench, rad_type, rad_label, out_path):
+def _variant_name(filename, theme):
+    if theme == "adaptive":
+        return filename
+    stem, suffix = filename.rsplit(".", 1)
+    return f"{stem}-{theme}.{suffix}"
+
+
+def _emit_style(emit, theme):
+    emit('  <style>')
+    if theme == "adaptive":
+        emit('    svg { color-scheme: light dark; }')
+        emit('    .cp, .cs, .cb, .mi, .mw { fill: #ffffff; }')
+        emit('    .gl { stroke: #2D3345; fill: none; }')
+        emit('    @media (prefers-color-scheme: light) {')
+        emit('      .cp, .cs, .cb, .mi, .mw { fill: #000000; }')
+        emit('      .gl { stroke: #d0d7de; }')
+        emit('    }')
+    elif theme == "light":
+        emit('    .cp, .cs, .cb, .mi, .mw { fill: #000000; }')
+        emit('    .gl { stroke: #d0d7de; fill: none; }')
+    elif theme == "dark":
+        emit('    .cp, .cs, .cb, .mi, .mw { fill: #ffffff; }')
+        emit('    .gl { stroke: #2D3345; fill: none; }')
+    else:
+        raise ValueError(f"Unknown theme: {theme}")
+    emit('  </style>')
+
+
+def _make_chart(bench, rad_type, rad_label, out_path, theme="adaptive"):
     cpu_label = bench.get("cpu", "")
 
     cfg_index = {(c["jet_type"], c["medium"], float(c["theta_obs_ratio"])): c
@@ -87,15 +115,7 @@ def _make_chart(bench, rad_type, rad_label, out_path):
     emit(f'     font-family="{FONT}">')
     emit()
 
-    emit('  <style>')
-    emit('    svg { color-scheme: light dark; }')
-    emit('    .cp, .cs, .cb, .mi, .mw { fill: #ffffff; }')
-    emit('    .gl { stroke: #2D3345; fill: none; }')
-    emit('    @media (prefers-color-scheme: light) {')
-    emit('      .cp, .cs, .cb, .mi, .mw { fill: #000000; }')
-    emit('      .gl { stroke: #d0d7de; }')
-    emit('    }')
-    emit('  </style>')
+    _emit_style(emit, theme)
     emit()
 
     emit(f'  <rect width="{SVG_W}" height="{SVG_H}" fill="transparent" rx="12"/>')
@@ -177,7 +197,9 @@ def generate(json_path):
         bench = json.load(f)
     _ASSETS.mkdir(parents=True, exist_ok=True)
     for rad_type, (rad_label, filename) in RAD_INFO.items():
-        _make_chart(bench, rad_type, rad_label, _ASSETS / filename)
+        for theme in ("adaptive", "light", "dark"):
+            out_name = _variant_name(filename, theme)
+            _make_chart(bench, rad_type, rad_label, _ASSETS / out_name, theme=theme)
 
 
 if __name__ == "__main__":
