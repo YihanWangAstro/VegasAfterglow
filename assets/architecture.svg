@@ -2,11 +2,26 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 950 706"
      font-family="-apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif">
 
+  <style>
+    :root {
+      --cp: #E6EDF3;
+      --cs: #7A8AA0;
+    }
+    @media (prefers-color-scheme: light) {
+      :root {
+        --cp: #24292f;
+        --cs: #57606a;
+      }
+    }
+    .cp { fill: var(--cp); }
+    .cs { fill: var(--cs); }
+  </style>
+
   <!-- Background -->
-  <rect width="950" height="706" fill="#0d1117" rx="12"/>
+  <rect width="950" height="706" fill="transparent" rx="12"/>
 
   <!-- ════════════════════ TITLE ════════════════════ -->
-  <text x="475" y="24" text-anchor="middle" font-size="17" font-weight="700" fill="#E6EDF3"
+  <text x="475" y="24" text-anchor="middle" font-size="17" font-weight="700" class="cp"
         letter-spacing="0.3">VegasAfterglow — Software Architecture</text>
 
   <!-- ════════════════════ CLI LAYER ════════════════════ -->
@@ -19,7 +34,7 @@
   </g>
 
   <!-- ════════════════════ ARROW CLI→API ════════════════════ -->
-  <g fill="#5A6580">
+  <g class="cs">
     <polygon points="475,70 470,78 480,78"/>
     <rect x="474" y="68" width="2" height="4"/>
   </g>
@@ -77,7 +92,7 @@
   </g>
 
   <!-- ════════════════════ ARROWS 1 ════════════════════ -->
-  <g fill="#5A6580">
+  <g class="cs">
     <polygon points="475,172 470,180 480,180"/>
     <rect x="474" y="170" width="2" height="4"/>
   </g>
@@ -102,7 +117,7 @@
   </g>
 
   <!-- ════════════════════ ARROWS 2 ════════════════════ -->
-  <g fill="#5A6580">
+  <g class="cs">
     <polygon points="475,236 470,244 480,244"/>
     <rect x="474" y="234" width="2" height="4"/>
   </g>
@@ -277,32 +292,32 @@
   <!-- ════════════════════ COMPUTATION PIPELINE ════════════════════ -->
   <g id="pipeline">
     <rect x="25" y="604" width="900" height="58" rx="8" fill="#151A25" stroke="#2D3345" stroke-width="1"/>
-    <text x="475" y="620" text-anchor="middle" font-size="10" font-weight="600" fill="#94A3B8">Computation Pipeline</text>
+    <text x="475" y="620" text-anchor="middle" font-size="10" font-weight="600" class="cs">Computation Pipeline</text>
 
     <!-- Flow boxes -->
     <rect x="42" y="628" width="90" height="24" rx="4" fill="#2D3850"/>
     <text x="87" y="644" text-anchor="middle" font-size="8.5" fill="white" font-weight="500">User Input</text>
-    <text x="140" y="642" text-anchor="middle" font-size="11" fill="#5A6580">→</text>
+    <text x="140" y="642" text-anchor="middle" font-size="11" class="cs">→</text>
 
     <rect x="150" y="628" width="110" height="24" rx="4" fill="#45AB8A"/>
     <text x="205" y="644" text-anchor="middle" font-size="8.5" fill="white" font-weight="500">Jet + Medium</text>
-    <text x="268" y="642" text-anchor="middle" font-size="11" fill="#5A6580">→</text>
+    <text x="268" y="642" text-anchor="middle" font-size="11" class="cs">→</text>
 
     <rect x="278" y="628" width="90" height="24" rx="4" fill="#4DA5BB"/>
     <text x="323" y="644" text-anchor="middle" font-size="8.5" fill="white" font-weight="500">3D Mesh</text>
-    <text x="376" y="642" text-anchor="middle" font-size="11" fill="#5A6580">→</text>
+    <text x="376" y="642" text-anchor="middle" font-size="11" class="cs">→</text>
 
     <rect x="386" y="628" width="120" height="24" rx="4" fill="#D49B40"/>
     <text x="446" y="644" text-anchor="middle" font-size="8.5" fill="white" font-weight="500">Shock Evolution</text>
-    <text x="514" y="642" text-anchor="middle" font-size="11" fill="#5A6580">→</text>
+    <text x="514" y="642" text-anchor="middle" font-size="11" class="cs">→</text>
 
     <rect x="524" y="628" width="120" height="24" rx="4" fill="#D46565"/>
     <text x="584" y="644" text-anchor="middle" font-size="8.5" fill="white" font-weight="500">Radiation Calc</text>
-    <text x="652" y="642" text-anchor="middle" font-size="11" fill="#5A6580">→</text>
+    <text x="652" y="642" text-anchor="middle" font-size="11" class="cs">→</text>
 
     <rect x="662" y="628" width="110" height="24" rx="4" fill="#4DA5BB"/>
     <text x="717" y="644" text-anchor="middle" font-size="8.5" fill="white" font-weight="500">Flux Integration</text>
-    <text x="780" y="642" text-anchor="middle" font-size="11" fill="#5A6580">→</text>
+    <text x="780" y="642" text-anchor="middle" font-size="11" class="cs">→</text>
 
     <rect x="790" y="628" width="120" height="24" rx="4" fill="#2D3850"/>
     <text x="850" y="644" text-anchor="middle" font-size="8.5" fill="white" font-weight="500">Light Curves / Spectra</text>
@@ -311,7 +326,7 @@
   <!-- ════════════════════ EXTERNAL DEPENDENCIES ════════════════════ -->
   <g id="external">
     <rect x="25" y="675" width="900" height="26" rx="6" fill="#1A1E28"/>
-    <text x="475" y="692" text-anchor="middle" font-size="10" fill="#8090A5">
+    <text x="475" y="692" text-anchor="middle" font-size="10" class="cs">
       <tspan font-weight="600">External:</tspan>
       <tspan dx="8">xtensor</tspan>
       <tspan dx="8">·</tspan>

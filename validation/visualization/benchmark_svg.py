@@ -68,7 +68,7 @@ def _make_chart(bench, rad_type, rad_label, out_path):
     GROUP_W = N_BARS * BAR_W + (N_BARS - 1) * INTRA
 
     raw_max = max((sum(b.get(k, 0) for k in ALL_STAGE_KEYS) for g in groups for b in g["bars"] if b), default=10.0)
-    ideal   = raw_max * 1.05 / 4
+    ideal   = max(raw_max * 1.05 / 4, 1e-6)
     mag     = 10 ** math.floor(math.log10(ideal))
     grid_interval = next(m * mag for m in [1, 1.2, 1.5, 2, 2.5, 3, 4, 5, 6, 7.5, 8, 10] if m >= ideal / mag)
     Y_MAX   = grid_interval * 4

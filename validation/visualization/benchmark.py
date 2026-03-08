@@ -95,7 +95,8 @@ def _plot_stage_breakdown_panel(ax, configs, jets, media):
         ax.set_xticks(x)
         ax.set_xticklabels(combo_labels, rotation=45, ha="right")
         ax.set_ylabel("Time [ms]")
-        ax.legend(fontsize=6, loc="upper right", ncol=2)
+        if stage_names:
+            ax.legend(fontsize=6, loc="upper right", ncol=2)
         ax.grid(axis="y", alpha=0.3)
         ax.minorticks_on()
         ax.tick_params(axis='x', which='minor', bottom=False)
