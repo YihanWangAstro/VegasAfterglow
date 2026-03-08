@@ -122,6 +122,10 @@ textarea {
   column-gap: 0.34rem;
 }
 
+.sidebar-api-primary {
+  min-width: 0;
+}
+
 .sidebar-api-name {
   min-width: 0;
   display: inline-flex;
@@ -167,6 +171,19 @@ textarea {
 
 .sidebar-api-location {
   color: var(--text);
+}
+
+.sidebar-api-note {
+  margin: 0.14rem 0 0;
+  font-size: 0.61rem;
+  line-height: 1.35;
+  color: var(--text-muted);
+}
+
+.sidebar-api-note a {
+  color: var(--text);
+  text-decoration: underline;
+  text-underline-offset: 0.12em;
 }
 
 .sidebar-api-dropdown-inline {
@@ -1147,6 +1164,10 @@ textarea {
 
   .sidebar-api-name {
     font-size: 0.78rem;
+  }
+
+  .sidebar-api-note {
+    font-size: 0.72rem;
   }
 
   .sidebar-api-pill {

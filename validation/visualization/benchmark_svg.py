@@ -87,15 +87,37 @@ def _make_chart(bench, rad_type, rad_label, out_path):
     emit(f'     font-family="{FONT}">')
     emit()
 
-    emit(f'  <rect width="{SVG_W}" height="{SVG_H}" fill="#0d1117" rx="12"/>')
+    emit('  <style>')
+    emit('    :root {')
+    emit('      --cp: #E6EDF3;')   # primary text (titles, jet names)
+    emit('      --cs: #A8B8CC;')   # secondary text (subtitles, axis labels)
+    emit('      --cb: #D0DDE8;')   # bar labels, legend text
+    emit('      --cg: #2D3345;')   # grid lines
+    emit('    }')
+    emit('    @media (prefers-color-scheme: light) {')
+    emit('      :root {')
+    emit('        --cp: #24292f;')
+    emit('        --cs: #57606a;')
+    emit('        --cb: #24292f;')
+    emit('        --cg: #d0d7de;')
+    emit('      }')
+    emit('    }')
+    emit('    .cp { fill: var(--cp); }')
+    emit('    .cs { fill: var(--cs); }')
+    emit('    .cb { fill: var(--cb); }')
+    emit('    .gl { stroke: var(--cg); fill: none; }')
+    emit('  </style>')
+    emit()
+
+    emit(f'  <rect width="{SVG_W}" height="{SVG_H}" fill="transparent" rx="12"/>')
     emit()
 
     emit(f'  <text x="475" y="28" text-anchor="middle" font-size="15" font-weight="700"'
-         f' fill="#E6EDF3" letter-spacing="0.3">Performance \u00b7 {rad_label}</text>')
+         f' class="cp" letter-spacing="0.3">Performance \u00b7 {rad_label}</text>')
     cpu_note = (f"CPU time by stage \u00b7 {cpu_label} \u00b7 single core \u00b7 default resolution"
                 if cpu_label else "CPU time by stage \u00b7 single core \u00b7 default resolution")
-    emit(f'  <text x="475" y="44" text-anchor="middle" font-size="9" fill="#A8B8CC">{cpu_note}</text>')
-    emit(f'  <text x="475" y="57" text-anchor="middle" font-size="9" fill="#A8B8CC">'
+    emit(f'  <text x="475" y="44" text-anchor="middle" font-size="9" class="cs">{cpu_note}</text>')
+    emit(f'  <text x="475" y="57" text-anchor="middle" font-size="9" class="cs">'
          f'each group: \u03b8v/\u03b8c\u202f=\u202f0\u2002\u2502\u20021\u2002\u2502\u20022\u2002\u2502\u20024\u2002(left \u2192 right)</text>')
     emit()
 
@@ -104,19 +126,19 @@ def _make_chart(bench, rad_type, rad_label, out_path):
     lx = 475 - total_lw // 2
     for key, color, label in active_stages:
         emit(f'  <rect x="{lx}" y="67" width="12" height="12" rx="2" fill="{color}"/>')
-        emit(f'  <text x="{lx + 16}" y="78" font-size="10" fill="#D0DDE8">{label}</text>')
+        emit(f'  <text x="{lx + 16}" y="78" font-size="10" class="cb">{label}</text>')
         lx += 17 + len(label) * 6 + 14
     emit()
 
-    emit(f'  <line x1="{X_LEFT}" y1="{Y_BOT}" x2="{X_RIGHT}" y2="{Y_BOT}" stroke="#2D3345" stroke-width="1"/>')
+    emit(f'  <line x1="{X_LEFT}" y1="{Y_BOT}" x2="{X_RIGHT}" y2="{Y_BOT}" class="gl" stroke-width="1"/>')
     for n in range(1, 5):
         ms_val = n * grid_interval
         gy = fy(ms_val)
         emit(f'  <line x1="{X_LEFT}" y1="{gy:.1f}" x2="{X_RIGHT}" y2="{gy:.1f}"'
-             ' stroke="#2D3345" stroke-width="1" stroke-dasharray="4,3"/>')
+             ' class="gl" stroke-width="1" stroke-dasharray="4,3"/>')
         label_ms = f"{ms_val/1000:.2g} s" if ms_val >= 1000 else f"{ms_val:.4g} ms"
-        emit(f'  <text x="{X_LEFT - 4}" y="{gy + 4:.1f}" text-anchor="end" font-size="8" fill="#A8B8CC">{label_ms}</text>')
-    emit(f'  <text x="{X_LEFT - 4}" y="{Y_BOT + 4}" text-anchor="end" font-size="8" fill="#A8B8CC">0</text>')
+        emit(f'  <text x="{X_LEFT - 4}" y="{gy + 4:.1f}" text-anchor="end" font-size="8" class="cs">{label_ms}</text>')
+    emit(f'  <text x="{X_LEFT - 4}" y="{Y_BOT + 4}" text-anchor="end" font-size="8" class="cs">0</text>')
     emit()
 
     for gi, group in enumerate(groups):
@@ -132,26 +154,26 @@ def _make_chart(bench, rad_type, rad_label, out_path):
                      f' height="{ms / Y_MAX * CHART_H:.1f}" fill="{color}"/>')
                 bot += ms
             emit(f'  <text x="{cx:.1f}" y="{fy(bot) - 4:.1f}" text-anchor="middle"'
-                 f' font-size="8" font-weight="600" fill="#D0DDE8">{bot:.1f}</text>')
+                 f' font-size="8" font-weight="600" class="cb">{bot:.1f}</text>')
     emit()
 
     for gi in range(N_GROUPS):
         for bi, ang_lbl in enumerate(["0", "1", "2", "4"]):
             emit(f'  <text x="{bcx(gi, bi):.1f}" y="{Y_BOT + 13}" text-anchor="middle"'
-                 f' font-size="7.5" fill="#A8B8CC">{ang_lbl}</text>')
+                 f' font-size="7.5" class="cs">{ang_lbl}</text>')
     emit()
 
     for gi, group in enumerate(groups):
         cx = gcx(gi)
         emit(f'  <text x="{cx:.1f}" y="{Y_BOT + 28}" text-anchor="middle"'
-             f' font-size="9.5" font-weight="700" fill="#E6EDF3">{JET_NAMES[group["jet"]]}</text>')
+             f' font-size="9.5" font-weight="700" class="cp">{JET_NAMES[group["jet"]]}</text>')
         med_color = "#5B8ADB" if group["med"] == "ISM" else "#45AB8A"
         emit(f'  <text x="{cx:.1f}" y="{Y_BOT + 41}" text-anchor="middle"'
              f' font-size="8.5" fill="{med_color}">{group["med"]}</text>')
     emit()
 
     mid_y = (Y_TOP + Y_BOT) // 2
-    emit(f'  <text x="13" y="{mid_y}" text-anchor="middle" font-size="9" fill="#A8B8CC"'
+    emit(f'  <text x="13" y="{mid_y}" text-anchor="middle" font-size="9" class="cs"'
          f' transform="rotate(-90, 13, {mid_y})">Wall time (ms)</text>')
     emit()
     emit('</svg>')
