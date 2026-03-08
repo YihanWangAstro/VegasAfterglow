@@ -423,7 +423,7 @@ Real estimate_t_dec(Ejecta const& jet, Medium const& medium, Real phi, Real thet
 
 /// Create a two-segment logspace grid with extra resolution before t_cross.
 /// Post-crossing density matches base logspace (base_t_num); extra points all go to pre-crossing.
-Array shock_crossing_refinement_logspace(Real t_start, Real t_end, Real t_cross, size_t t_num, size_t base_t_num);
+Array logspace_with_cross_refinement(Real t_start, Real t_end, Real t_cross, size_t t_num, size_t base_t_num);
 
 template <typename Ejecta, typename Medium>
 void Coord::detect_symmetry(Ejecta const& jet, Medium const& medium, Real t_min, Real t_max, Real z, Real t_resol) {
@@ -493,11 +493,13 @@ void Coord::detect_symmetry(Ejecta const& jet, Medium const& medium, Real t_min,
 
 /// Result of scanning cell time bounds for grid sizing.
 struct TimeScanResult {
-    Real min_t_start_raw;
+    Real min_t_early;
     Real min_t_start;
     bool has_early_point;
     Real max_t_refine;
-    xt::xtensor<Real, 2> t_dec; // cached deceleration times [phi_size x theta_size]
+    xt::xtensor<Real, 2> t_dec;   ///< deceleration time per cell [phi_size x theta_size]
+    xt::xtensor<Real, 2> t_start; ///< effective grid start per cell = max(t_raw, cut)
+    xt::xtensor<Real, 2> early_t; ///< early-point value per cell = 0.99 * min(t_raw, cut)
 };
 
 /// Scan all cells to determine global time bounds for grid construction.
@@ -510,6 +512,8 @@ TimeScanResult scan_time_bounds(Coord const& coord, Ejecta const& jet, Medium co
 
     Real min_raw = t_end, min_guarded = t_end, min_cut = t_end, max_ref = 0;
     auto t_dec_cache = xt::xtensor<Real, 2>::from_shape({phi_size, theta_size});
+    auto t_start_cache = xt::xtensor<Real, 2>::from_shape({phi_size, theta_size});
+    auto early_t_cache = xt::xtensor<Real, 2>::from_shape({phi_size, theta_size});
 
     for (size_t i = 0; i < phi_size; ++i) {
         for (size_t j = 0; j < theta_size; ++j) {
@@ -526,13 +530,55 @@ TimeScanResult scan_time_bounds(Coord const& coord, Ejecta const& jet, Medium co
                 max_ref = std::max(max_ref, 10.0 * std::max(td, jet.T0));
             }
 
+            t_start_cache(i, j) = std::max(ts, cut);
+            early_t_cache(i, j) = 0.99 * std::min(ts, cut);
+
             min_raw = std::min(min_raw, ts);
             min_guarded = std::min(min_guarded, std::max(ts, cut));
             min_cut = std::min(min_cut, cut);
         }
     }
 
-    return {min_raw, min_guarded, min_raw < min_cut, max_ref, std::move(t_dec_cache)};
+    return {min_raw,
+            min_guarded,
+            min_raw < min_cut,
+            max_ref,
+            std::move(t_dec_cache),
+            std::move(t_start_cache),
+            std::move(early_t_cache)};
+}
+
+inline std::pair<size_t, size_t> compute_time_grid_size(Real t_end, Real min_t_start, Real max_t_refine, Real t_resol,
+                                                        bool is_rvs) {
+    constexpr Real rvs_refinement_ratio = 2;
+    // t_num_base: points a plain fwd logspace would use (reference density for post-crossing)
+    const size_t t_num_base = static_cast<size_t>(std::max(std::log10(t_end / min_t_start), 1.0) * t_resol);
+    // Extra pre-crossing points so that pre/post density ratio = rvs_refinement_ratio
+    size_t t_num_rvs_extra = 0;
+    if (is_rvs && max_t_refine > min_t_start) {
+        const Real log_pre_span = std::log10(std::min(max_t_refine, t_end) / min_t_start);
+        t_num_rvs_extra = static_cast<size_t>((rvs_refinement_ratio - 1.0) * log_pre_span * t_resol);
+    }
+    return {t_num_base, t_num_base + t_num_rvs_extra};
+}
+
+inline Array make_time_grid(Real ts, Real td, Real t_end, Real T0, size_t t_num_tot, size_t t_num_base, bool is_rvs) {
+    if (is_rvs) {
+        const Real t_cross_limit = std::max(td, T0);
+        const Real t_refine = 10 * t_cross_limit;
+        return logspace_with_cross_refinement(ts, t_end, t_refine, t_num_tot, t_num_base);
+    }
+    return xt::logspace(std::log10(ts), std::log10(t_end), t_num_tot);
+}
+
+inline void store_time_grid(Coord& coord, size_t i, size_t j, Real et, Array const& grid, bool has_early_point,
+                            size_t t_num) {
+    if (has_early_point) {
+        xt::view(coord.t, i, j, 0) = et;
+        xt::view(coord.t, i, j, xt::range(1, t_num)) = grid;
+    } else {
+        xt::view(coord.t, i, j, xt::all()) = grid;
+    }
 }
 
 template <typename Ejecta, typename Medium>
@@ -542,65 +588,30 @@ void build_time_grid(Coord& coord, Ejecta const& jet, Medium const& medium, Real
     const size_t phi_size = is_axisymmetric ? 1 : coord.phi.size();
     const Real t_end = 1.01 * t_max / (1 + z);
 
-    auto [min_t_start_raw, min_t_start, has_early_point, max_t_refine, t_dec] =
+    auto [min_t_early, min_t_start, has_early_point, max_t_refine, t_dec, t_start, early_t] =
         scan_time_bounds(coord, jet, medium, t_min, t_end, z, is_rvs, phi_size);
 
-    size_t n_pre_extra = 0;
-    if (is_rvs && max_t_refine > min_t_start) {
-        n_pre_extra = static_cast<size_t>(std::log10(std::min(max_t_refine, t_end) / min_t_start) * t_resol);
-    }
-    const size_t t_num_base_fwd = static_cast<size_t>(std::max(std::log10(t_end / min_t_start), 1.0) * t_resol);
-    const size_t t_num_base = t_num_base_fwd + n_pre_extra;
-    const size_t t_num = t_num_base + (has_early_point ? 1 : 0);
+    auto [t_num_base, t_num_tot] = compute_time_grid_size(t_end, min_t_start, max_t_refine, t_resol, is_rvs);
+    const size_t t_num = t_num_tot + (has_early_point ? 1 : 0);
 
     coord.t = xt::zeros<Real>({phi_size, theta_size, t_num});
-
-    auto make_grid = [&](Real t_start, Real t_dec) -> Array {
-        if (is_rvs) {
-            return shock_crossing_refinement_logspace(t_start, t_end, 10.0 * std::max(t_dec, jet.T0), t_num_base,
-                                                      t_num_base_fwd);
-        }
-        return xt::logspace(std::log10(t_start), std::log10(t_end), t_num_base);
-    };
-
-    auto store_time_grid = [&](size_t i, size_t j, Real early_t, auto const& grid) {
-        if (has_early_point) {
-            xt::view(coord.t, i, j, 0) = early_t;
-            xt::view(coord.t, i, j, xt::range(1, t_num)) = grid;
-        } else {
-            xt::view(coord.t, i, j, xt::all()) = grid;
-        }
-    };
 
     if (coord.symmetry >= Symmetry::phi_symmetric) {
         for (size_t r = 0; r < coord.theta_reps.size(); ++r) {
             const size_t j_rep = coord.theta_reps[r];
             const size_t j_end = (r + 1 < coord.theta_reps.size()) ? coord.theta_reps[r + 1] : theta_size;
-            auto grid = make_grid(min_t_start, t_dec(0, j_rep));
+            auto grid = make_time_grid(min_t_start, t_dec(0, j_rep), t_end, jet.T0, t_num_tot, t_num_base, is_rvs);
             for (size_t i = 0; i < phi_size; ++i) {
                 for (size_t j = j_rep; j < j_end; ++j) {
-                    store_time_grid(i, j, min_t_start_raw, grid);
+                    store_time_grid(coord, i, j, min_t_early, grid, has_early_point, t_num);
                 }
             }
         }
     } else {
-        const Real cos_tv = std::cos(coord.theta_view);
-        const Real sin_tv = std::sin(coord.theta_view);
         for (size_t i = 0; i < phi_size; ++i) {
             for (size_t j = 0; j < theta_size; ++j) {
-                const Real b = physics::relativistic::gamma_to_beta(jet.Gamma0(coord.phi(i), coord.theta(j)));
-                const Real cos_a =
-                    std::cos(coord.theta(j)) * cos_tv + std::sin(coord.theta(j)) * sin_tv * std::cos(coord.phi(i));
-                const Real t_raw = 0.99 * t_min * (1 - b) / (1 - cos_a * b) / (1 + z);
-
-                const Real td = t_dec(i, j);
-                Real cut = std::min(0.01 * td, 1e-2 * unit::sec);
-                if (is_rvs) {
-                    cut = std::min(cut, 0.01 * jet.T0);
-                }
-                const Real t_start = std::max(t_raw, cut);
-                auto grid = make_grid(t_start, td);
-                store_time_grid(i, j, 0.99 * std::min(t_raw, cut), grid);
+                auto grid = make_time_grid(t_start(i, j), t_dec(i, j), t_end, jet.T0, t_num_tot, t_num_base, is_rvs);
+                store_time_grid(coord, i, j, early_t(i, j), grid, has_early_point, t_num);
             }
         }
     }

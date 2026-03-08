@@ -144,32 +144,32 @@ Array jump_refinement_grid(Array const& jumps, Real theta_min, Real theta_max, R
     return xt::adapt(points, {points.size()});
 }
 
-Array shock_crossing_refinement_logspace(Real t_start, Real t_end, Real t_cross, size_t t_num, size_t base_t_num) {
-    t_cross = std::clamp(t_cross, t_start, t_end);
-    if (t_cross <= t_start || t_cross >= t_end) {
+Array logspace_with_cross_refinement(Real t_start, Real t_end, Real t_refine, size_t t_num, size_t base_t_num) {
+    t_refine = std::clamp(t_refine, t_start, t_end);
+    if (t_refine <= t_start || t_refine >= t_end) {
         return xt::logspace(std::log10(t_start), std::log10(t_end), t_num);
     }
 
     const Real log_total = std::log10(t_end / t_start);
-    const Real log_after = std::log10(t_end / t_cross);
+    const Real log_after = std::log10(t_end / t_refine);
 
-    // Post-crossing: same density as base (fwd-equivalent) logspace
+    // Post-crossing: fwd-equivalent density (base_t_num points over the full log span)
     size_t n_post = std::max<size_t>(static_cast<size_t>(base_t_num * log_after / log_total), 2);
     if (n_post >= t_num) {
         n_post = t_num / 2;
     }
-    // Pre-crossing: gets all remaining points (base + extra)
+    // Pre-crossing: all remaining points — denser by rvs_refinement_ratio relative to post
     size_t n_pre = t_num + 1 - n_post;
 
     Array result = xt::zeros<Real>({t_num});
     size_t idx = 0;
 
-    auto seg1 = xt::logspace(std::log10(t_start), std::log10(t_cross), n_pre);
+    auto seg1 = xt::logspace(std::log10(t_start), std::log10(t_refine), n_pre);
     for (size_t k = 0; k < n_pre; ++k) {
         result(idx++) = seg1(k);
     }
 
-    auto seg2 = xt::logspace(std::log10(t_cross), std::log10(t_end), n_post);
+    auto seg2 = xt::logspace(std::log10(t_refine), std::log10(t_end), n_post);
     for (size_t k = 1; k < n_post && idx < t_num; ++k) {
         result(idx++) = seg2(k);
     }

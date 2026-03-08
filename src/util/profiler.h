@@ -42,10 +42,10 @@ namespace afterglow {
 
     class ScopedTimer {
       public:
-        explicit ScopedTimer(char const* name) : name_(name), start_(std::chrono::high_resolution_clock::now()) {}
+        explicit ScopedTimer(char const* name) : name_(name), start_(std::chrono::steady_clock::now()) {}
 
         ~ScopedTimer() {
-            auto end = std::chrono::high_resolution_clock::now();
+            auto end = std::chrono::steady_clock::now();
             double ms = std::chrono::duration<double, std::milli>(end - start_).count();
             profiler().add(name_, ms);
         }
@@ -55,7 +55,7 @@ namespace afterglow {
 
       private:
         char const* name_;
-        std::chrono::high_resolution_clock::time_point start_;
+        std::chrono::steady_clock::time_point start_;
     };
 
 } // namespace afterglow

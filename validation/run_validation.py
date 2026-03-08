@@ -100,8 +100,9 @@ def _run_suite(name, script, extra_args=()):
         return False
 
 
-def run_benchmark(parallel=0):
-    args = ["--full"] + (["-j", str(parallel)] if parallel > 0 else [])
+def run_benchmark(parallel=0, fast=False):
+    # Fast mode always runs sequentially for accurate single-core timing
+    args = ["--fast"] if fast else (["-j", str(parallel)] if parallel > 0 else [])
     ok = _run_suite("Benchmark Suite", VALIDATION_DIR / "benchmark" / "benchmark_suite.py", args)
     return ok, BENCH_RESULTS_PATH
 
@@ -110,22 +111,6 @@ def run_regression():
     ok = _run_suite("Regression Tests", VALIDATION_DIR / "regression" / "run_regression.py")
     return ok, REGR_RESULTS_PATH
 
-
-def generate_benchmark_charts():
-    """Generate benchmark SVG assets from benchmark_history.json."""
-    if not BENCH_RESULTS_PATH.exists():
-        print("  Skipping benchmark chart generation (no results file found)")
-        return False
-    print(_header("Generating Benchmark Charts"))
-    try:
-        from validation.visualization.benchmark_svg import generate
-        generate(BENCH_RESULTS_PATH)
-        return True
-    except Exception as e:
-        print(f"{_bold_red('Error')} generating benchmark charts: {e}")
-        import traceback
-        traceback.print_exc()
-        return False
 
 
 def generate_report(benchmark_path=None, regression_path=None, output_dir=None, parallel=0, version_override=None):
@@ -154,6 +139,8 @@ def main():
     parser.add_argument("--all", action="store_true", help="Run all validation tests")
     parser.add_argument("--benchmark", action="store_true", help="Run benchmark tests")
     parser.add_argument("--regression", action="store_true", help="Run regression tests")
+    parser.add_argument("--fast", action="store_true",
+                        help="Fast mode: skip resolution convergence scans; PDF report omits convergence detail pages")
     parser.add_argument("--check-only", action="store_true", help="Only check existing results")
     parser.add_argument("--no-report", action="store_true", help="Skip PDF report generation")
     parser.add_argument("-j", "--parallel", type=int, default=DEFAULT_WORKERS,
@@ -162,8 +149,6 @@ def main():
     parser.add_argument("--version", type=str, default=None,
                         help="Version to display in report (overrides detected version)")
     parser.add_argument("--strict", action="store_true", help="Fail on ACCEPTABLE status")
-    parser.add_argument("--update-assets", action="store_true",
-                        help="Regenerate benchmark SVG assets in assets/ (overwrites existing)")
     args = parser.parse_args()
 
     if not any([args.all, args.benchmark, args.regression, args.check_only]):
@@ -178,7 +163,7 @@ def main():
     # Run tests
     if not args.check_only:
         if args.all or args.benchmark:
-            ok, bench_path = run_benchmark(parallel=args.parallel)
+            ok, bench_path = run_benchmark(parallel=args.parallel, fast=args.fast)
             if not ok:
                 messages.append("Benchmark execution failed")
                 all_passed = False
@@ -200,10 +185,6 @@ def main():
             if not passed:
                 all_passed = False
                 messages.append(f"{label} validation failed")
-
-    # Generate benchmark SVG charts (only when explicitly requested)
-    if args.update_assets:
-        generate_benchmark_charts()
 
     # Generate report
     if not args.no_report:

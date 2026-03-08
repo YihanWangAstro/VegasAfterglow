@@ -98,12 +98,12 @@
 
 ## Performance Highlights
 
-VegasAfterglow is designed for speed. A tophat synchrotron light curve completes in under 1 ms; even the most demanding case — a structured jet with full SSC off-axis — finishes in ~300 ms. This makes MCMC parameter estimation lightning fast on a laptop:
+VegasAfterglow is designed for speed. A tophat synchrotron light curve completes in under 1 ms; even the most demanding case — a structured jet with full SSC off-axis — finishes in ~180 ms. This makes MCMC parameter estimation lightning fast on a laptop:
 
 * **Tophat jet**: 10,000 MCMC steps, 8 parameters, 15 data points for ~0.3 M samples — ~15 s (Apple M2, 8 cores).
 * **Structured jet**: same setup — ~1 minute.
 
-The charts below benchmark **single-core** wall-clock time by stage across four jet profiles (Tophat, Gaussian, Power-law, Two-component), two media (ISM/Wind), and $\theta_v/\theta_c = 0, 1, 2, 4$, all at the default fiducial resolution — conservatively set to ensure convergence across a wide range of physical parameters. Cost scales with two factors: off-axis observers require a full 3D equal-arrival-time grid vs. 2D on-axis (~10–15× overhead near $\theta_v \sim \theta_c$), and structured jets compute radiation independently at each $\theta$ vs. reusing one solution for tophat (~5–8× for synchrotron, up to ~30× for SSC). Reverse shock adds a second shocked shell, roughly doubling the dynamics cost.
+The charts below benchmark **single-core** wall-clock time by stage across four jet profiles (Tophat, Gaussian, Power-law, Two-component), two media (ISM/Wind), and $\theta_v/\theta_c = 0, 1, 2, 4$, all at the default fiducial resolution — conservatively set to ensure convergence across a wide range of physical parameters. Cost scales with two factors: off-axis observers require a full 3D equal-arrival-time grid vs. 2D on-axis, and structured jets compute radiation independently at each $\theta$ vs. reusing one solution for tophat. Reverse shock adds a second shocked shell, roughly doubling the dynamics cost.
 
 
 <div align="center">
@@ -771,7 +771,8 @@ See the [Validation Report (PDF)](https://yihanwangastro.github.io/VegasAfterglo
 
 ```bash
 pip install -e ".[test]" --config-settings=cmake.define.AFTERGLOW_PROFILE=ON
-python validation/run_validation.py --all
+python validation/run_validation.py --all        # full suite (timing + convergence + regression)
+python validation/run_validation.py --all --fast  # fast mode: skip convergence scans
 ```
 
 Powered by [Claude Code](https://claude.ai/claude-code)
