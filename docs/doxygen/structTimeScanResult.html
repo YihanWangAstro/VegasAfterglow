@@ -105,8 +105,8 @@ $(document).ready(function(){initNavTree('structTimeScanResult.html',''); initRe
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
-<tr class="memitem:ae205ef1579dbb0067b7b10194a3e72b2" id="r_ae205ef1579dbb0067b7b10194a3e72b2"><td class="memItemLeft" align="right" valign="top"><a class="el" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structTimeScanResult.html#ae205ef1579dbb0067b7b10194a3e72b2">min_t_start_raw</a></td></tr>
-<tr class="separator:ae205ef1579dbb0067b7b10194a3e72b2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a776903d21795b46ea3428911fafbf772" id="r_a776903d21795b46ea3428911fafbf772"><td class="memItemLeft" align="right" valign="top"><a class="el" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structTimeScanResult.html#a776903d21795b46ea3428911fafbf772">min_t_early</a></td></tr>
+<tr class="separator:a776903d21795b46ea3428911fafbf772"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a79aa02d82c56671718d845e7d89d560d" id="r_a79aa02d82c56671718d845e7d89d560d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structTimeScanResult.html#a79aa02d82c56671718d845e7d89d560d">min_t_start</a></td></tr>
 <tr class="separator:a79aa02d82c56671718d845e7d89d560d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a249d242d51367628e1a784c88df82fe8" id="r_a249d242d51367628e1a784c88df82fe8"><td class="memItemLeft" align="right" valign="top"><a class="el" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">bool</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structTimeScanResult.html#a249d242d51367628e1a784c88df82fe8">has_early_point</a></td></tr>
@@ -114,13 +114,38 @@ Public Attributes</h2></td></tr>
 <tr class="memitem:af791b5992b9a809fcd08ca35123536d8" id="r_af791b5992b9a809fcd08ca35123536d8"><td class="memItemLeft" align="right" valign="top"><a class="el" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structTimeScanResult.html#af791b5992b9a809fcd08ca35123536d8">max_t_refine</a></td></tr>
 <tr class="separator:af791b5992b9a809fcd08ca35123536d8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae965e844c9f255d591857b1bb512163e" id="r_ae965e844c9f255d591857b1bb512163e"><td class="memItemLeft" align="right" valign="top">xt::xtensor&lt; <a class="el" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a>, 2 &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structTimeScanResult.html#ae965e844c9f255d591857b1bb512163e">t_dec</a></td></tr>
+<tr class="memdesc:ae965e844c9f255d591857b1bb512163e"><td class="mdescLeft">&#160;</td><td class="mdescRight">deceleration time per cell [phi_size x theta_size]  <br /></td></tr>
 <tr class="separator:ae965e844c9f255d591857b1bb512163e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aeabec0bbc5b2e10ff3d73bec7acac6ac" id="r_aeabec0bbc5b2e10ff3d73bec7acac6ac"><td class="memItemLeft" align="right" valign="top">xt::xtensor&lt; <a class="el" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a>, 2 &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structTimeScanResult.html#aeabec0bbc5b2e10ff3d73bec7acac6ac">t_start</a></td></tr>
+<tr class="memdesc:aeabec0bbc5b2e10ff3d73bec7acac6ac"><td class="mdescLeft">&#160;</td><td class="mdescRight">effective grid start per cell = max(t_raw, cut)  <br /></td></tr>
+<tr class="separator:aeabec0bbc5b2e10ff3d73bec7acac6ac"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0246791498a5f974477e4c06e774dc03" id="r_a0246791498a5f974477e4c06e774dc03"><td class="memItemLeft" align="right" valign="top">xt::xtensor&lt; <a class="el" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a>, 2 &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structTimeScanResult.html#a0246791498a5f974477e4c06e774dc03">early_t</a></td></tr>
+<tr class="memdesc:a0246791498a5f974477e4c06e774dc03"><td class="mdescLeft">&#160;</td><td class="mdescRight">early-point value per cell = 0.99 * min(t_raw, cut)  <br /></td></tr>
+<tr class="separator:a0246791498a5f974477e4c06e774dc03"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Result of scanning cell time bounds for grid sizing. </p>
 
 <p class="definition">Definition at line <a class="el" href="grid-refinement_8h_source.html#l00495">495</a> of file <a class="el" href="grid-refinement_8h_source.html">grid-refinement.h</a>.</p>
 </div><h2 class="groupheader">Member Data Documentation</h2>
+<a id="a0246791498a5f974477e4c06e774dc03" name="a0246791498a5f974477e4c06e774dc03"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0246791498a5f974477e4c06e774dc03">&#9670;&#160;</a></span>early_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">xt::xtensor&lt;<a class="el" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a>, 2&gt; TimeScanResult::early_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>early-point value per cell = 0.99 * min(t_raw, cut) </p>
+
+<p class="definition">Definition at line <a class="el" href="grid-refinement_8h_source.html#l00502">502</a> of file <a class="el" href="grid-refinement_8h_source.html">grid-refinement.h</a>.</p>
+
+</div>
+</div>
 <a id="a249d242d51367628e1a784c88df82fe8" name="a249d242d51367628e1a784c88df82fe8"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a249d242d51367628e1a784c88df82fe8">&#9670;&#160;</a></span>has_early_point</h2>
 
@@ -153,6 +178,22 @@ Public Attributes</h2></td></tr>
 
 </div>
 </div>
+<a id="a776903d21795b46ea3428911fafbf772" name="a776903d21795b46ea3428911fafbf772"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a776903d21795b46ea3428911fafbf772">&#9670;&#160;</a></span>min_t_early</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> TimeScanResult::min_t_early</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="grid-refinement_8h_source.html#l00496">496</a> of file <a class="el" href="grid-refinement_8h_source.html">grid-refinement.h</a>.</p>
+
+</div>
+</div>
 <a id="a79aa02d82c56671718d845e7d89d560d" name="a79aa02d82c56671718d845e7d89d560d"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a79aa02d82c56671718d845e7d89d560d">&#9670;&#160;</a></span>min_t_start</h2>
 
@@ -169,22 +210,6 @@ Public Attributes</h2></td></tr>
 
 </div>
 </div>
-<a id="ae205ef1579dbb0067b7b10194a3e72b2" name="ae205ef1579dbb0067b7b10194a3e72b2"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae205ef1579dbb0067b7b10194a3e72b2">&#9670;&#160;</a></span>min_t_start_raw</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a> TimeScanResult::min_t_start_raw</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="grid-refinement_8h_source.html#l00496">496</a> of file <a class="el" href="grid-refinement_8h_source.html">grid-refinement.h</a>.</p>
-
-</div>
-</div>
 <a id="ae965e844c9f255d591857b1bb512163e" name="ae965e844c9f255d591857b1bb512163e"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ae965e844c9f255d591857b1bb512163e">&#9670;&#160;</a></span>t_dec</h2>
 
@@ -197,7 +222,27 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>deceleration time per cell [phi_size x theta_size] </p>
+
 <p class="definition">Definition at line <a class="el" href="grid-refinement_8h_source.html#l00500">500</a> of file <a class="el" href="grid-refinement_8h_source.html">grid-refinement.h</a>.</p>
+
+</div>
+</div>
+<a id="aeabec0bbc5b2e10ff3d73bec7acac6ac" name="aeabec0bbc5b2e10ff3d73bec7acac6ac"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aeabec0bbc5b2e10ff3d73bec7acac6ac">&#9670;&#160;</a></span>t_start</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">xt::xtensor&lt;<a class="el" href="macros_8h.html#a4b04262b81aa7d31eb5d2f607e2a35de">Real</a>, 2&gt; TimeScanResult::t_start</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>effective grid start per cell = max(t_raw, cut) </p>
+
+<p class="definition">Definition at line <a class="el" href="grid-refinement_8h_source.html#l00501">501</a> of file <a class="el" href="grid-refinement_8h_source.html">grid-refinement.h</a>.</p>
 
 </div>
 </div>

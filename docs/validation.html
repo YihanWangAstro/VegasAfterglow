@@ -120,10 +120,14 @@ python<span class="w"> </span>validation/run_validation.py<span class="w"> </spa
 <span class="c1"># Check existing results without re-running tests</span>
 python<span class="w"> </span>validation/run_validation.py<span class="w"> </span>--check-only
 
+<span class="c1"># Fast mode: skip resolution convergence scans (timing + regression only)</span>
+python<span class="w"> </span>validation/run_validation.py<span class="w"> </span>--all<span class="w"> </span>--fast
+
 <span class="c1"># Control parallelism (default: all CPU cores)</span>
 python<span class="w"> </span>validation/run_validation.py<span class="w"> </span>--all<span class="w"> </span>-j<span class="w"> </span><span class="m">4</span>
 </pre></div>
 </div>
+<p><code class="docutils literal notranslate"><span class="pre">--fast</span></code> is useful for a quick sanity check — it runs performance timing and regression tests but skips the resolution convergence scans, so it completes significantly faster. The PDF report generated in fast mode omits the convergence detail pages.</p>
 <p>The validation runner returns exit code 0 on success and 1 on failure, making it suitable for CI/CD pipelines.</p>
 </section>
 <section id="benchmark-tests">

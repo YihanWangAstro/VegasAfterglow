@@ -388,66 +388,74 @@ Functions</h2></td></tr>
 <div class="line"><span class="lineno">   25</span>        <a class="code hl_function" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">jet</a>, medium);</div>
 <div class="line"><span class="lineno">   26</span>}</div>
 <div class="ttc" id="aforward-shock_8hpp_html_aa963867f4f98284c627afeff47fc3a18"><div class="ttname"><a href="forward-shock_8hpp.html#aa963867f4f98284c627afeff47fc3a18">generate_fwd_shock</a></div><div class="ttdeci">Shock generate_fwd_shock(Coord const &amp;coord, Medium const &amp;medium, Ejecta const &amp;jet, RadParams const &amp;rad_params, Real rtol=1e-5)</div><div class="ttdoc">Generates a forward shock model for given coordinates, medium, and jet parameters.</div></div>
-<div class="ttc" id="agrid-refinement_8h_html_a52f60ce2dd90f8839b361bba7a678f0c"><div class="ttname"><a href="grid-refinement_8h.html#a52f60ce2dd90f8839b361bba7a678f0c">auto_grid</a></div><div class="ttdeci">Coord auto_grid(Ejecta const &amp;jet, Medium const &amp;medium, Array const &amp;t_obs, Real theta_cut, Real theta_view, Real z, bool is_rvs, Real phi_resol, Real theta_resol, Real t_resol, bool is_axisymmetric)</div><div class="ttdef"><b>Definition</b> <a href="grid-refinement_8h_source.html#l00610">grid-refinement.h:610</a></div></div>
+<div class="ttc" id="agrid-refinement_8h_html_a52f60ce2dd90f8839b361bba7a678f0c"><div class="ttname"><a href="grid-refinement_8h.html#a52f60ce2dd90f8839b361bba7a678f0c">auto_grid</a></div><div class="ttdeci">Coord auto_grid(Ejecta const &amp;jet, Medium const &amp;medium, Array const &amp;t_obs, Real theta_cut, Real theta_view, Real z, bool is_rvs, Real phi_resol, Real theta_resol, Real t_resol, bool is_axisymmetric)</div><div class="ttdef"><b>Definition</b> <a href="grid-refinement_8h_source.html#l00621">grid-refinement.h:621</a></div></div>
 <div class="ttc" id="apybind_8cpp_html_ad93eae6422741850877b46bd61f08c89"><div class="ttname"><a href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89">make_native_binary</a></div><div class="ttdeci">BinaryFunc make_native_binary(uintptr_t addr, std::vector&lt; Real &gt; const &amp;p)</div><div class="ttdef"><b>Definition</b> <a href="pybind_8cpp_source.html#l00025">pybind.cpp:25</a></div></div>
 </div><!-- fragment --><div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="shock__dispatch_8h_a42ab9b9521cae581300af449ae6ddd65_cgraph.png" border="0" usemap="#ashock__dispatch_8h_a42ab9b9521cae581300af449ae6ddd65_cgraph" alt=""/></div>
 <map name="ashock__dispatch_8h_a42ab9b9521cae581300af449ae6ddd65_cgraph" id="ashock__dispatch_8h_a42ab9b9521cae581300af449ae6ddd65_cgraph">
-<area shape="rect" title="Solve forward shock dynamics with variant dispatch." alt="" coords="5,797,137,822"/>
-<area shape="rect" href="grid-refinement_8h.html#a52f60ce2dd90f8839b361bba7a678f0c" title=" " alt="" coords="221,537,304,562"/>
-<area shape="poly" title=" " alt="" coords="80,795,242,572,246,575,84,798"/>
-<area shape="rect" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89" title=" " alt="" coords="1267,391,1421,417"/>
-<area shape="poly" title=" " alt="" coords="138,807,463,807,921,807,968,809,1009,814,1081,825,1114,825,1146,820,1180,806,1217,782,1254,744,1283,700,1305,650,1320,599,1331,549,1337,502,1340,430,1346,430,1342,503,1336,550,1326,601,1310,652,1288,702,1258,748,1220,786,1183,811,1148,825,1114,831,1081,830,1009,819,968,814,921,812,463,812,138,812"/>
-<area shape="rect" href="forward-shock_8hpp.html#aa963867f4f98284c627afeff47fc3a18" title="Generates a forward shock model for given coordinates, medium, and jet parameters." alt="" coords="185,847,340,873"/>
-<area shape="poly" title=" " alt="" coords="121,819,201,841,200,846,120,825"/>
-<area shape="rect" href="grid-refinement_8h.html#a360e0d18f141d6cd50b062a901338575" title=" " alt="" coords="618,165,757,190"/>
-<area shape="poly" title=" " alt="" coords="264,535,275,488,298,420,334,347,358,312,386,282,437,245,493,218,551,199,604,186,605,191,552,204,495,223,440,250,390,286,362,316,339,350,303,422,280,490,269,537"/>
-<area shape="poly" title=" " alt="" coords="273,534,331,476,374,438,426,398,485,361,548,329,616,308,686,300,921,300,975,302,1030,309,1135,331,1229,358,1300,384,1298,389,1227,363,1134,336,1029,314,975,308,921,305,686,305,617,313,550,334,487,365,429,403,378,442,334,480,277,538"/>
-<area shape="rect" href="grid-refinement_8h.html#a358c3e306cef7a24c039ef63207b9e2d" title=" " alt="" coords="388,487,540,513"/>
-<area shape="poly" title=" " alt="" coords="304,537,398,513,399,518,305,542"/>
-<area shape="rect" href="grid-refinement_8h.html#ab555d1e167e5af21e28a3ade35af86c1" title=" " alt="" coords="403,537,525,562"/>
-<area shape="poly" title=" " alt="" coords="304,547,389,547,389,552,304,552"/>
-<area shape="rect" href="grid-refinement_8h.html#a675e7c2ff4bda6b68d34389fefca49f5" title=" " alt="" coords="629,645,746,670"/>
-<area shape="poly" title=" " alt="" coords="305,557,624,639,623,644,303,562"/>
-<area shape="rect" href="grid-refinement_8h.html#aa4bf3bc5ca82cf7ac350fab9eff68452" title=" " alt="" coords="859,695,981,721"/>
-<area shape="poly" title=" " alt="" coords="284,560,330,590,389,621,486,658,588,680,724,697,845,704,845,709,724,702,588,685,485,663,387,626,328,595,281,564"/>
-<area shape="rect" href="grid-refinement_8cpp.html#a3055d65c1afa436033d80c8cf76fc2ee" title=" " alt="" coords="1053,746,1219,771"/>
-<area shape="poly" title=" " alt="" coords="274,560,318,617,351,649,389,675,472,711,559,737,649,755,738,767,824,772,905,773,1039,767,1040,772,905,778,824,777,737,772,648,761,558,742,470,716,387,680,348,653,314,621,270,564"/>
-<area shape="rect" href="grid-refinement_8h.html#a3c066f2c8e6d102d7a56de8cb42cf5a8" title=" " alt="" coords="413,101,515,126"/>
-<area shape="poly" title=" " alt="" coords="265,535,304,398,340,302,386,207,412,168,439,135,443,138,416,171,390,209,345,304,309,400,270,537"/>
-<area shape="rect" href="grid-refinement_8h.html#af272a55c4e94ac8ec9d799be8df2d193" title=" " alt="" coords="835,189,1005,214"/>
-<area shape="poly" title=" " alt="" coords="757,182,822,188,821,194,757,187"/>
-<area shape="poly" title=" " alt="" coords="713,162,804,125,866,105,935,88,1008,79,1082,79,1118,84,1154,93,1188,106,1220,124,1251,149,1276,180,1296,215,1312,251,1333,321,1343,377,1337,378,1328,323,1307,253,1292,217,1272,183,1247,153,1217,129,1186,111,1152,98,1117,90,1081,84,1008,84,936,93,867,110,805,130,716,167"/>
-<area shape="rect" href="grid-refinement_8h.html#ad55adb5281be8cbd065c18ba187846e1" title=" " alt="" coords="855,139,985,165"/>
-<area shape="poly" title=" " alt="" coords="757,167,841,158,841,163,757,172"/>
-<area shape="poly" title=" " alt="" coords="1006,188,1057,187,1112,191,1168,203,1220,226,1261,258,1294,299,1319,342,1335,377,1331,379,1314,344,1290,302,1257,262,1217,230,1166,208,1111,196,1056,192,1006,193"/>
-<area shape="rect" href="utilities_8h.html#ab0cbe75cc4de84810290ad6f3075e491" title="Returns the value of a single parameter." alt="" coords="1111,239,1161,265"/>
-<area shape="poly" title=" " alt="" coords="976,211,1098,240,1096,245,975,217"/>
-<area shape="rect" href="utilities_8h.html#a87dde689be8887c64263f13adace7ae1" title="Returns the value of a single parameter." alt="" coords="1113,138,1159,163"/>
-<area shape="poly" title=" " alt="" coords="975,186,1099,156,1100,162,976,191"/>
-<area shape="poly" title=" " alt="" coords="1163,256,1191,267,1220,282,1251,305,1280,331,1326,379,1322,383,1277,334,1248,309,1217,286,1189,271,1161,261"/>
-<area shape="poly" title=" " alt="" coords="1160,152,1190,162,1220,180,1263,228,1297,282,1321,335,1337,377,1332,379,1316,337,1292,285,1259,231,1217,185,1188,167,1159,157"/>
-<area shape="poly" title=" " alt="" coords="505,559,545,570,588,579,769,605,844,614,914,618,982,615,1053,602,1130,577,1217,538,1252,514,1283,485,1326,427,1330,430,1287,489,1256,518,1220,542,1132,582,1054,607,982,620,914,624,843,620,768,610,588,584,544,576,503,565"/>
-<area shape="rect" href="namespacephysics_1_1relativistic.html#aed1c46f33c9d25ffa27131014b190090" title="Converts Lorentz factor (gamma) to a velocity fraction (beta)" alt="" coords="1062,441,1210,481"/>
-<area shape="poly" title=" " alt="" coords="507,534,587,515,712,495,838,481,1048,463,1048,469,838,486,713,501,589,520,508,539"/>
-<area shape="rect" href="grid-refinement_8h.html#a160fbc62d8c56fcf86091d111a6b4e9d" title="Scan all cells to determine global time bounds for grid construction." alt="" coords="616,410,759,435"/>
-<area shape="poly" title=" " alt="" coords="516,534,539,523,553,511,562,498,572,485,586,471,641,439,644,443,590,475,576,489,567,502,557,514,541,527,518,539"/>
-<area shape="rect" href="grid-refinement_8cpp.html#aeef7d271b4fb4670a29742a2c09aff23" title="Create a two&#45;segment logspace grid with extra resolution before t_cross." alt="" coords="588,529,787,569"/>
-<area shape="poly" title=" " alt="" coords="526,547,574,547,574,552,526,552"/>
-<area shape="poly" title=" " alt="" coords="1208,439,1283,418,1284,423,1210,444"/>
-<area shape="poly" title=" " alt="" coords="721,407,774,390,834,377,947,368,1060,369,1166,376,1254,387,1253,392,1165,382,1060,374,947,373,835,382,775,396,723,412"/>
-<area shape="poly" title=" " alt="" coords="759,426,1048,451,1048,456,759,431"/>
-<area shape="rect" href="grid-refinement_8h.html#aa7505ad2e84c2a29610c1a13cd3b25e3" title="Estimates deceleration time for a given angle from ejecta and medium properties." alt="" coords="859,391,981,417"/>
-<area shape="poly" title=" " alt="" coords="759,414,845,407,845,412,759,419"/>
-<area shape="poly" title=" " alt="" coords="982,401,1253,401,1253,407,982,407"/>
-<area shape="poly" title=" " alt="" coords="969,414,1049,435,1048,441,968,419"/>
-<area shape="poly" title=" " alt="" coords="787,551,880,550,990,542,1106,523,1163,509,1218,491,1247,477,1274,460,1318,424,1321,428,1277,464,1249,482,1220,496,1164,514,1107,529,990,547,880,555,787,556"/>
-<area shape="poly" title=" " alt="" coords="746,658,860,662,998,661,1067,657,1129,649,1180,638,1217,623,1242,604,1263,581,1298,527,1321,474,1334,429,1339,431,1326,475,1302,530,1268,584,1246,608,1220,627,1182,643,1130,655,1067,662,999,666,860,667,746,663"/>
-<area shape="poly" title=" " alt="" coords="982,715,1036,718,1098,716,1161,702,1190,690,1217,674,1245,648,1269,618,1289,585,1304,550,1326,483,1337,430,1342,431,1331,484,1309,552,1293,588,1274,621,1249,652,1220,678,1192,695,1162,707,1099,721,1036,724,981,720"/>
-<area shape="poly" title=" " alt="" coords="1187,744,1217,725,1246,690,1270,651,1290,610,1305,568,1327,490,1337,430,1342,431,1332,491,1311,570,1295,612,1275,654,1250,693,1220,729,1190,748"/>
-<area shape="poly" title=" " alt="" coords="494,98,620,54,710,30,810,12,916,3,969,4,1023,9,1075,18,1126,33,1174,54,1220,82,1254,112,1281,149,1303,189,1318,232,1337,314,1344,377,1339,378,1332,315,1313,234,1298,192,1277,151,1250,116,1217,86,1172,59,1124,38,1074,24,1022,14,969,9,916,8,810,17,711,35,622,59,496,103"/>
+<area shape="rect" title="Solve forward shock dynamics with variant dispatch." alt="" coords="5,887,137,912"/>
+<area shape="rect" href="grid-refinement_8h.html#a52f60ce2dd90f8839b361bba7a678f0c" title=" " alt="" coords="221,684,304,710"/>
+<area shape="poly" title=" " alt="" coords="83,885,238,718,242,722,86,889"/>
+<area shape="rect" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89" title=" " alt="" coords="1240,440,1395,466"/>
+<area shape="poly" title=" " alt="" coords="138,897,469,897,879,897,928,899,972,905,1047,915,1082,915,1116,909,1152,894,1190,867,1212,840,1233,797,1251,744,1268,685,1294,567,1309,479,1315,480,1299,568,1273,687,1256,746,1238,799,1217,842,1194,871,1155,898,1118,914,1083,921,1047,920,971,910,928,905,879,902,469,902,138,902"/>
+<area shape="rect" href="forward-shock_8hpp.html#aa963867f4f98284c627afeff47fc3a18" title="Generates a forward shock model for given coordinates, medium, and jet parameters." alt="" coords="185,938,340,963"/>
+<area shape="poly" title=" " alt="" coords="121,910,201,932,200,937,120,915"/>
+<area shape="rect" href="grid-refinement_8h.html#a360e0d18f141d6cd50b062a901338575" title=" " alt="" coords="603,114,742,139"/>
+<area shape="poly" title=" " alt="" coords="263,684,275,588,300,440,317,363,337,292,360,233,386,194,408,176,432,161,484,139,538,127,589,122,590,127,539,133,485,144,434,165,411,180,390,198,365,236,342,294,322,364,305,441,280,589,268,685"/>
+<area shape="poly" title=" " alt="" coords="265,683,302,577,336,501,381,419,436,341,468,306,503,275,541,249,581,229,625,216,671,212,879,212,970,209,1044,208,1078,212,1114,221,1152,237,1194,262,1236,298,1269,343,1293,388,1309,426,1305,428,1289,391,1264,346,1232,302,1190,266,1149,242,1112,226,1077,217,1044,213,971,214,879,217,671,217,626,221,583,234,543,253,506,279,472,310,440,344,385,422,341,503,307,579,270,685"/>
+<area shape="rect" href="grid-refinement_8h.html#a358c3e306cef7a24c039ef63207b9e2d" title=" " alt="" coords="395,471,547,496"/>
+<area shape="poly" title=" " alt="" coords="266,683,281,648,307,600,342,549,363,526,386,506,394,500,397,505,390,510,367,530,346,553,311,603,286,650,271,685"/>
+<area shape="rect" href="grid-refinement_8h.html#ab555d1e167e5af21e28a3ade35af86c1" title=" " alt="" coords="409,520,532,546"/>
+<area shape="poly" title=" " alt="" coords="278,682,441,552,444,556,282,686"/>
+<area shape="rect" href="grid-refinement_8h.html#a675e7c2ff4bda6b68d34389fefca49f5" title=" " alt="" coords="614,684,731,710"/>
+<area shape="poly" title=" " alt="" coords="304,694,600,694,600,700,304,700"/>
+<area shape="rect" href="grid-refinement_8h.html#aa4bf3bc5ca82cf7ac350fab9eff68452" title=" " alt="" coords="816,735,939,760"/>
+<area shape="poly" title=" " alt="" coords="304,698,802,739,802,744,304,703"/>
+<area shape="rect" href="grid-refinement_8cpp.html#a3055d65c1afa436033d80c8cf76fc2ee" title=" " alt="" coords="388,786,553,811"/>
+<area shape="poly" title=" " alt="" coords="286,708,389,764,422,778,420,783,387,769,284,712"/>
+<area shape="rect" href="grid-refinement_8h.html#a3c066f2c8e6d102d7a56de8cb42cf5a8" title=" " alt="" coords="419,835,522,860"/>
+<area shape="poly" title=" " alt="" coords="275,708,320,762,353,793,389,820,408,829,405,834,387,825,349,797,316,766,271,711"/>
+<area shape="rect" href="grid-refinement_8h.html#af272a55c4e94ac8ec9d799be8df2d193" title=" " alt="" coords="792,50,963,75"/>
+<area shape="poly" title=" " alt="" coords="714,111,822,77,824,82,715,116"/>
+<area shape="poly" title=" " alt="" coords="742,123,846,125,963,136,1031,142,1086,145,1112,150,1137,158,1164,173,1194,194,1220,219,1243,249,1278,313,1301,376,1314,426,1308,427,1296,378,1273,316,1238,252,1216,223,1190,198,1162,177,1135,163,1110,155,1085,150,1031,147,962,141,846,130,742,128"/>
+<area shape="rect" href="grid-refinement_8h.html#ad55adb5281be8cbd065c18ba187846e1" title=" " alt="" coords="812,151,943,176"/>
+<area shape="poly" title=" " alt="" coords="743,136,799,147,798,152,742,142"/>
+<area shape="poly" title=" " alt="" coords="904,47,962,25,1038,7,1078,3,1119,5,1158,15,1194,35,1217,63,1239,105,1258,159,1274,218,1300,337,1315,426,1310,427,1295,338,1269,219,1253,160,1234,108,1213,66,1190,39,1156,20,1118,11,1079,8,1038,12,963,30,906,52"/>
+<area shape="rect" href="utilities_8h.html#ab0cbe75cc4de84810290ad6f3075e491" title="Returns the value of a single parameter." alt="" coords="1076,50,1127,75"/>
+<area shape="poly" title=" " alt="" coords="963,60,1062,60,1062,65,963,65"/>
+<area shape="rect" href="utilities_8h.html#a87dde689be8887c64263f13adace7ae1" title="Returns the value of a single parameter." alt="" coords="1078,99,1125,124"/>
+<area shape="poly" title=" " alt="" coords="936,73,1065,101,1064,106,935,78"/>
+<area shape="poly" title=" " alt="" coords="1127,60,1161,67,1178,74,1194,84,1228,124,1255,169,1277,217,1292,266,1311,358,1318,426,1313,427,1306,359,1287,267,1272,219,1251,171,1224,127,1190,88,1176,78,1160,72,1126,65"/>
+<area shape="poly" title=" " alt="" coords="1126,112,1160,121,1178,130,1194,142,1223,175,1247,212,1267,252,1283,292,1304,368,1315,426,1310,427,1299,369,1278,294,1262,254,1242,215,1219,178,1190,146,1175,134,1158,126,1124,117"/>
+<area shape="poly" title=" " alt="" coords="531,518,552,506,569,483,575,459,582,435,599,410,650,369,697,340,742,321,788,309,887,298,1010,288,1104,271,1145,271,1193,288,1234,317,1266,354,1291,393,1308,427,1303,429,1286,396,1262,357,1230,321,1191,293,1144,277,1105,276,1011,293,887,303,789,314,744,326,699,344,653,373,603,414,586,437,580,461,574,485,555,510,534,523"/>
+<area shape="rect" href="grid-refinement_8h.html#a3c8fc23c7206ba9a4bb1b922493f321d" title=" " alt="" coords="1011,303,1192,328"/>
+<area shape="poly" title=" " alt="" coords="524,518,552,505,566,495,575,483,585,472,600,460,649,434,700,410,806,373,908,346,997,328,998,333,909,351,807,378,702,415,651,438,603,465,589,476,579,487,570,498,555,510,526,523"/>
+<area shape="rect" href="grid-refinement_8h.html#a28e9c4faeb0fb91e493d90d1e6842424" title=" " alt="" coords="814,411,941,436"/>
+<area shape="poly" title=" " alt="" coords="518,518,816,437,817,442,520,523"/>
+<area shape="rect" href="grid-refinement_8h.html#a160fbc62d8c56fcf86091d111a6b4e9d" title="Scan all cells to determine global time bounds for grid construction." alt="" coords="601,520,744,546"/>
+<area shape="poly" title=" " alt="" coords="532,530,588,530,588,536,532,536"/>
+<area shape="rect" href="grid-refinement_8h.html#aafe0a1c5e5c26990a7d79f0cb3327d5c" title=" " alt="" coords="611,602,735,627"/>
+<area shape="poly" title=" " alt="" coords="504,543,628,594,626,599,502,548"/>
+<area shape="poly" title=" " alt="" coords="1149,326,1193,345,1251,387,1296,429,1293,433,1248,391,1191,350,1147,331"/>
+<area shape="poly" title=" " alt="" coords="919,408,974,395,1042,384,1118,380,1156,383,1193,389,1244,407,1287,431,1284,435,1241,412,1191,394,1155,388,1118,386,1043,389,975,400,920,414"/>
+<area shape="rect" href="grid-refinement_8cpp.html#ab2936b0f379412b03968ea4af4bc0787" title="Create a two&#45;segment logspace grid with extra resolution before t_cross." alt="" coords="1023,404,1179,444"/>
+<area shape="poly" title=" " alt="" coords="941,421,1010,421,1010,426,941,426"/>
+<area shape="poly" title=" " alt="" coords="1180,432,1227,438,1226,443,1179,437"/>
+<area shape="poly" title=" " alt="" coords="727,518,792,505,1026,475,1226,457,1226,462,1027,480,792,510,728,523"/>
+<area shape="rect" href="grid-refinement_8h.html#aa7505ad2e84c2a29610c1a13cd3b25e3" title="Estimates deceleration time for a given angle from ejecta and medium properties." alt="" coords="816,520,939,546"/>
+<area shape="poly" title=" " alt="" coords="744,530,802,530,802,536,744,536"/>
+<area shape="rect" href="namespacephysics_1_1relativistic.html#aed1c46f33c9d25ffa27131014b190090" title="Converts Lorentz factor (gamma) to a velocity fraction (beta)" alt="" coords="1027,569,1175,609"/>
+<area shape="poly" title=" " alt="" coords="731,543,792,554,908,569,1014,580,1013,585,907,575,792,560,730,548"/>
+<area shape="poly" title=" " alt="" coords="939,529,1057,519,1124,510,1191,497,1235,484,1275,469,1277,474,1236,489,1193,502,1125,516,1057,525,939,534"/>
+<area shape="poly" title=" " alt="" coords="930,543,1015,565,1014,570,928,548"/>
+<area shape="poly" title=" " alt="" coords="1154,567,1191,548,1245,510,1290,473,1294,477,1249,514,1193,553,1156,571"/>
+<area shape="poly" title=" " alt="" coords="716,625,807,646,865,655,928,661,995,663,1063,657,1129,643,1191,619,1231,590,1263,552,1287,512,1304,478,1308,480,1292,514,1267,555,1234,594,1193,623,1130,648,1063,662,995,668,928,667,864,660,806,651,715,630"/>
+<area shape="poly" title=" " alt="" coords="731,698,843,703,978,703,1104,693,1155,683,1191,668,1215,650,1236,627,1270,575,1293,522,1307,479,1312,480,1298,524,1275,578,1241,631,1219,654,1193,673,1156,688,1105,698,978,708,843,708,731,704"/>
+<area shape="poly" title=" " alt="" coords="939,755,997,760,1063,757,1130,743,1161,731,1190,714,1218,690,1241,661,1261,629,1276,596,1298,531,1310,479,1315,480,1303,532,1281,598,1265,632,1246,664,1222,693,1194,718,1164,735,1131,748,1063,762,997,765,939,761"/>
+<area shape="poly" title=" " alt="" coords="554,803,710,813,898,816,990,812,1073,803,1142,788,1169,778,1190,766,1223,736,1249,701,1270,661,1285,620,1305,540,1312,479,1317,480,1310,541,1291,622,1275,664,1254,704,1227,740,1194,770,1171,783,1143,793,1074,808,990,817,898,821,710,818,554,808"/>
+<area shape="poly" title=" " alt="" coords="522,850,674,862,872,868,972,865,1063,856,1138,841,1168,830,1190,816,1227,781,1256,739,1277,692,1293,643,1309,550,1314,479,1319,480,1315,550,1298,645,1282,694,1260,742,1231,785,1194,821,1170,834,1140,846,1064,862,972,870,872,873,673,867,522,855"/>
 </map>
 </div>
 <div class="dynheader">
@@ -589,59 +597,67 @@ Here is the call graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="shock__dispatch_8h_a3475e4d9da709e5029fe0813ce23ac4e_cgraph.png" border="0" usemap="#ashock__dispatch_8h_a3475e4d9da709e5029fe0813ce23ac4e_cgraph" alt=""/></div>
 <map name="ashock__dispatch_8h_a3475e4d9da709e5029fe0813ce23ac4e_cgraph" id="ashock__dispatch_8h_a3475e4d9da709e5029fe0813ce23ac4e_cgraph">
-<area shape="rect" title="Solve forward + reverse shock pair with variant dispatch." alt="" coords="5,797,140,822"/>
-<area shape="rect" href="grid-refinement_8h.html#a52f60ce2dd90f8839b361bba7a678f0c" title=" " alt="" coords="225,537,308,562"/>
-<area shape="poly" title=" " alt="" coords="81,795,246,571,250,575,86,798"/>
-<area shape="rect" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89" title=" " alt="" coords="1272,391,1427,417"/>
-<area shape="poly" title=" " alt="" coords="140,807,468,807,927,807,973,809,1015,814,1086,825,1119,825,1152,820,1186,806,1222,782,1260,744,1289,700,1310,650,1326,599,1336,549,1342,502,1346,430,1351,430,1347,503,1341,550,1331,601,1315,652,1293,702,1264,748,1226,786,1188,811,1153,825,1119,831,1086,830,1014,819,973,814,927,812,468,812,140,812"/>
-<area shape="rect" href="reverse-shock_8hpp.html#ab50c063a2b81579f107e7e79f12961b0" title="Generates a pair of forward and reverse shocks." alt="" coords="188,847,345,873"/>
-<area shape="poly" title=" " alt="" coords="123,819,205,841,203,846,122,825"/>
-<area shape="rect" href="grid-refinement_8h.html#a360e0d18f141d6cd50b062a901338575" title=" " alt="" coords="623,165,762,190"/>
-<area shape="poly" title=" " alt="" coords="268,535,279,488,302,420,339,347,363,312,392,282,442,245,499,218,556,199,610,186,611,191,558,204,501,223,445,250,395,286,367,316,344,349,307,422,285,490,273,537"/>
-<area shape="poly" title=" " alt="" coords="277,534,335,476,379,438,431,398,489,361,553,329,621,308,691,300,927,300,981,302,1035,309,1141,331,1234,358,1305,384,1303,389,1232,363,1139,336,1034,314,980,308,927,305,691,305,622,313,555,334,492,365,434,403,382,442,339,480,281,538"/>
-<area shape="rect" href="grid-refinement_8h.html#a358c3e306cef7a24c039ef63207b9e2d" title=" " alt="" coords="393,487,545,513"/>
-<area shape="poly" title=" " alt="" coords="308,537,403,513,404,518,309,542"/>
-<area shape="rect" href="grid-refinement_8h.html#ab555d1e167e5af21e28a3ade35af86c1" title=" " alt="" coords="408,537,531,562"/>
-<area shape="poly" title=" " alt="" coords="308,547,394,547,394,552,308,552"/>
-<area shape="rect" href="grid-refinement_8h.html#a675e7c2ff4bda6b68d34389fefca49f5" title=" " alt="" coords="634,645,751,670"/>
-<area shape="poly" title=" " alt="" coords="309,557,629,639,628,644,308,562"/>
-<area shape="rect" href="grid-refinement_8h.html#aa4bf3bc5ca82cf7ac350fab9eff68452" title=" " alt="" coords="864,695,987,721"/>
-<area shape="poly" title=" " alt="" coords="288,560,335,590,394,621,492,658,594,680,730,697,851,704,850,709,729,702,593,685,490,663,392,626,332,595,285,564"/>
-<area shape="rect" href="grid-refinement_8cpp.html#a3055d65c1afa436033d80c8cf76fc2ee" title=" " alt="" coords="1059,746,1224,771"/>
-<area shape="poly" title=" " alt="" coords="278,560,323,617,356,649,395,675,477,711,564,737,654,755,743,766,830,772,910,773,1045,766,1045,772,910,778,829,777,743,772,653,760,563,742,475,716,392,680,353,653,319,621,274,564"/>
-<area shape="rect" href="grid-refinement_8h.html#a3c066f2c8e6d102d7a56de8cb42cf5a8" title=" " alt="" coords="418,101,521,126"/>
-<area shape="poly" title=" " alt="" coords="269,535,309,399,345,302,391,207,417,168,444,135,448,138,421,171,396,209,350,304,314,400,274,537"/>
-<area shape="rect" href="grid-refinement_8h.html#af272a55c4e94ac8ec9d799be8df2d193" title=" " alt="" coords="840,189,1011,214"/>
-<area shape="poly" title=" " alt="" coords="763,182,827,188,826,194,762,187"/>
-<area shape="poly" title=" " alt="" coords="719,162,809,125,871,105,940,88,1013,79,1087,79,1124,84,1159,93,1193,106,1225,124,1256,149,1281,180,1302,215,1318,251,1338,321,1348,377,1343,378,1333,323,1313,253,1297,217,1277,183,1252,153,1223,129,1191,111,1157,98,1123,90,1087,84,1014,84,941,93,872,110,811,130,721,167"/>
-<area shape="rect" href="grid-refinement_8h.html#ad55adb5281be8cbd065c18ba187846e1" title=" " alt="" coords="860,139,991,165"/>
-<area shape="poly" title=" " alt="" coords="762,167,846,158,847,163,763,172"/>
-<area shape="poly" title=" " alt="" coords="1011,188,1062,187,1117,191,1173,203,1225,226,1267,258,1299,299,1324,342,1341,377,1336,379,1319,344,1295,302,1263,262,1223,230,1172,208,1117,196,1062,192,1011,193"/>
-<area shape="rect" href="utilities_8h.html#ab0cbe75cc4de84810290ad6f3075e491" title="Returns the value of a single parameter." alt="" coords="1116,239,1167,265"/>
-<area shape="poly" title=" " alt="" coords="981,211,1103,240,1102,245,980,217"/>
-<area shape="rect" href="utilities_8h.html#a87dde689be8887c64263f13adace7ae1" title="Returns the value of a single parameter." alt="" coords="1118,138,1165,163"/>
-<area shape="poly" title=" " alt="" coords="980,186,1104,156,1105,162,981,191"/>
-<area shape="poly" title=" " alt="" coords="1168,256,1196,267,1225,282,1257,305,1286,331,1331,379,1327,383,1282,334,1253,309,1223,286,1194,271,1166,261"/>
-<area shape="poly" title=" " alt="" coords="1166,152,1196,162,1226,180,1269,228,1302,282,1327,335,1342,377,1337,379,1322,337,1297,285,1264,231,1222,185,1194,167,1164,157"/>
-<area shape="poly" title=" " alt="" coords="510,559,550,570,594,579,774,605,849,614,919,618,987,615,1058,602,1135,577,1223,538,1258,514,1288,485,1331,427,1336,430,1292,489,1261,518,1225,542,1137,582,1059,607,988,620,919,624,849,620,774,610,593,584,549,576,509,565"/>
-<area shape="rect" href="namespacephysics_1_1relativistic.html#aed1c46f33c9d25ffa27131014b190090" title="Converts Lorentz factor (gamma) to a velocity fraction (beta)" alt="" coords="1067,441,1215,481"/>
-<area shape="poly" title=" " alt="" coords="512,534,593,515,718,495,843,481,1053,463,1054,469,844,486,718,501,594,520,514,539"/>
-<area shape="rect" href="grid-refinement_8h.html#a160fbc62d8c56fcf86091d111a6b4e9d" title="Scan all cells to determine global time bounds for grid construction." alt="" coords="621,410,764,435"/>
-<area shape="poly" title=" " alt="" coords="521,534,544,523,559,511,568,498,577,485,592,471,646,439,649,443,595,475,581,489,572,502,562,514,547,527,524,539"/>
-<area shape="rect" href="grid-refinement_8cpp.html#aeef7d271b4fb4670a29742a2c09aff23" title="Create a two&#45;segment logspace grid with extra resolution before t_cross." alt="" coords="593,529,792,569"/>
-<area shape="poly" title=" " alt="" coords="531,547,580,547,580,552,531,552"/>
-<area shape="poly" title=" " alt="" coords="1214,439,1288,418,1290,423,1215,444"/>
-<area shape="poly" title=" " alt="" coords="727,407,779,390,840,377,952,368,1066,369,1171,376,1259,387,1258,392,1170,382,1066,374,953,373,840,382,781,396,728,412"/>
-<area shape="poly" title=" " alt="" coords="764,426,1054,451,1053,456,764,431"/>
-<area shape="rect" href="grid-refinement_8h.html#aa7505ad2e84c2a29610c1a13cd3b25e3" title="Estimates deceleration time for a given angle from ejecta and medium properties." alt="" coords="864,391,987,417"/>
-<area shape="poly" title=" " alt="" coords="764,414,850,407,850,412,764,419"/>
-<area shape="poly" title=" " alt="" coords="987,401,1258,401,1258,407,987,407"/>
-<area shape="poly" title=" " alt="" coords="975,414,1055,435,1053,441,973,419"/>
-<area shape="poly" title=" " alt="" coords="792,551,886,550,995,542,1111,523,1168,509,1223,491,1252,477,1279,460,1323,424,1327,428,1282,464,1254,482,1225,496,1170,514,1112,529,996,547,886,555,792,556"/>
-<area shape="poly" title=" " alt="" coords="751,658,865,662,1004,661,1072,657,1134,649,1186,638,1223,623,1247,604,1269,581,1303,527,1326,474,1340,429,1345,431,1331,475,1308,530,1273,584,1251,608,1225,627,1187,643,1135,655,1073,662,1004,666,865,667,751,663"/>
-<area shape="poly" title=" " alt="" coords="987,715,1042,718,1103,716,1166,702,1195,690,1222,674,1251,648,1275,618,1294,585,1310,550,1331,483,1342,430,1347,431,1336,484,1315,552,1299,588,1279,621,1255,652,1226,678,1198,695,1168,707,1104,721,1042,724,987,720"/>
-<area shape="poly" title=" " alt="" coords="1192,744,1222,725,1251,690,1275,651,1295,610,1311,568,1332,490,1342,430,1348,431,1337,491,1316,570,1300,612,1280,654,1255,693,1226,729,1195,748"/>
-<area shape="poly" title=" " alt="" coords="500,98,626,54,715,30,815,12,921,3,975,4,1028,9,1080,18,1131,33,1180,54,1226,82,1260,112,1287,149,1308,189,1324,232,1343,314,1350,377,1344,378,1337,315,1319,234,1303,192,1282,151,1256,116,1222,86,1177,59,1129,38,1079,24,1027,14,974,9,921,8,816,17,716,35,627,59,501,103"/>
+<area shape="rect" title="Solve forward + reverse shock pair with variant dispatch." alt="" coords="5,887,140,912"/>
+<area shape="rect" href="grid-refinement_8h.html#a52f60ce2dd90f8839b361bba7a678f0c" title=" " alt="" coords="225,684,308,710"/>
+<area shape="poly" title=" " alt="" coords="84,885,242,718,246,721,88,889"/>
+<area shape="rect" href="pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89" title=" " alt="" coords="1245,440,1400,466"/>
+<area shape="poly" title=" " alt="" coords="140,897,475,897,884,897,933,899,977,905,1053,915,1087,915,1122,909,1157,894,1196,867,1218,840,1238,797,1257,744,1273,685,1299,567,1315,479,1320,480,1304,568,1278,687,1262,746,1243,799,1222,842,1199,871,1160,898,1123,914,1088,921,1052,920,976,910,933,905,884,902,475,902,140,902"/>
+<area shape="rect" href="reverse-shock_8hpp.html#ab50c063a2b81579f107e7e79f12961b0" title="Generates a pair of forward and reverse shocks." alt="" coords="188,938,345,963"/>
+<area shape="poly" title=" " alt="" coords="123,910,205,932,203,937,122,915"/>
+<area shape="rect" href="grid-refinement_8h.html#a360e0d18f141d6cd50b062a901338575" title=" " alt="" coords="609,114,747,139"/>
+<area shape="poly" title=" " alt="" coords="267,684,279,588,304,440,322,363,342,292,365,233,391,194,413,176,437,161,489,139,543,127,594,122,595,128,544,133,491,144,439,165,416,180,395,198,370,236,347,294,327,364,310,441,285,589,272,685"/>
+<area shape="poly" title=" " alt="" coords="269,683,306,577,341,501,385,419,441,341,473,306,508,275,546,249,586,229,630,216,677,212,884,212,976,209,1049,208,1084,212,1119,221,1157,237,1199,262,1241,298,1274,343,1299,388,1315,426,1310,428,1294,391,1270,346,1237,302,1196,266,1154,242,1117,226,1083,217,1049,213,976,214,884,217,677,217,631,221,588,234,548,253,511,279,477,310,445,344,390,422,345,503,311,579,274,685"/>
+<area shape="rect" href="grid-refinement_8h.html#a358c3e306cef7a24c039ef63207b9e2d" title=" " alt="" coords="400,471,552,496"/>
+<area shape="poly" title=" " alt="" coords="270,683,286,648,311,600,347,549,368,526,392,506,400,500,403,505,395,510,372,530,351,553,316,603,290,650,275,685"/>
+<area shape="rect" href="grid-refinement_8h.html#ab555d1e167e5af21e28a3ade35af86c1" title=" " alt="" coords="415,520,537,546"/>
+<area shape="poly" title=" " alt="" coords="283,682,446,552,450,556,286,686"/>
+<area shape="rect" href="grid-refinement_8h.html#a675e7c2ff4bda6b68d34389fefca49f5" title=" " alt="" coords="619,684,737,710"/>
+<area shape="poly" title=" " alt="" coords="308,694,605,694,605,700,308,700"/>
+<area shape="rect" href="grid-refinement_8h.html#aa4bf3bc5ca82cf7ac350fab9eff68452" title=" " alt="" coords="821,735,944,760"/>
+<area shape="poly" title=" " alt="" coords="308,698,808,739,808,744,308,703"/>
+<area shape="rect" href="grid-refinement_8cpp.html#a3055d65c1afa436033d80c8cf76fc2ee" title=" " alt="" coords="393,786,559,811"/>
+<area shape="poly" title=" " alt="" coords="291,708,394,764,428,778,426,783,392,769,288,712"/>
+<area shape="rect" href="grid-refinement_8h.html#a3c066f2c8e6d102d7a56de8cb42cf5a8" title=" " alt="" coords="425,835,527,860"/>
+<area shape="poly" title=" " alt="" coords="279,708,325,762,358,793,395,820,413,829,411,834,392,825,354,797,321,766,275,711"/>
+<area shape="rect" href="grid-refinement_8h.html#af272a55c4e94ac8ec9d799be8df2d193" title=" " alt="" coords="797,50,968,75"/>
+<area shape="poly" title=" " alt="" coords="719,111,827,77,829,82,721,116"/>
+<area shape="poly" title=" " alt="" coords="747,123,852,125,968,136,1036,142,1091,145,1117,150,1143,158,1170,173,1199,194,1226,219,1248,249,1283,313,1306,376,1319,426,1314,427,1301,378,1278,316,1244,252,1222,223,1196,198,1167,177,1141,163,1116,155,1091,150,1036,147,968,141,851,130,747,128"/>
+<area shape="rect" href="grid-refinement_8h.html#ad55adb5281be8cbd065c18ba187846e1" title=" " alt="" coords="817,151,948,176"/>
+<area shape="poly" title=" " alt="" coords="748,136,804,147,803,152,747,142"/>
+<area shape="poly" title=" " alt="" coords="910,47,967,25,1043,7,1084,3,1124,5,1163,15,1199,35,1223,63,1244,105,1263,159,1280,218,1305,337,1320,426,1315,427,1300,338,1274,219,1258,160,1239,108,1218,66,1196,39,1161,20,1124,11,1084,8,1044,12,969,30,912,52"/>
+<area shape="rect" href="utilities_8h.html#ab0cbe75cc4de84810290ad6f3075e491" title="Returns the value of a single parameter." alt="" coords="1081,50,1132,75"/>
+<area shape="poly" title=" " alt="" coords="968,60,1067,60,1067,65,968,65"/>
+<area shape="rect" href="utilities_8h.html#a87dde689be8887c64263f13adace7ae1" title="Returns the value of a single parameter." alt="" coords="1083,99,1130,124"/>
+<area shape="poly" title=" " alt="" coords="942,73,1071,101,1069,106,940,78"/>
+<area shape="poly" title=" " alt="" coords="1133,60,1166,67,1184,74,1199,84,1233,124,1261,169,1282,217,1298,266,1316,358,1323,426,1318,427,1311,359,1293,267,1277,219,1256,171,1229,127,1196,88,1181,78,1165,72,1132,65"/>
+<area shape="poly" title=" " alt="" coords="1131,112,1165,121,1183,130,1199,142,1228,175,1252,212,1272,252,1288,292,1310,368,1321,426,1315,427,1305,369,1283,294,1267,254,1248,215,1224,178,1196,146,1181,134,1163,126,1129,117"/>
+<area shape="poly" title=" " alt="" coords="536,518,557,506,574,483,580,459,587,435,605,410,655,369,702,340,748,321,793,309,892,298,1016,288,1109,271,1150,271,1199,288,1239,317,1272,354,1296,393,1313,427,1309,429,1292,396,1267,357,1235,321,1196,293,1149,277,1110,276,1016,293,893,303,794,314,749,326,705,344,659,373,609,414,592,437,586,461,579,485,560,510,539,523"/>
+<area shape="rect" href="grid-refinement_8h.html#a3c8fc23c7206ba9a4bb1b922493f321d" title=" " alt="" coords="1016,303,1197,328"/>
+<area shape="poly" title=" " alt="" coords="529,518,557,505,571,495,581,483,590,472,605,460,654,434,705,410,811,373,913,346,1002,328,1003,333,914,351,813,378,707,415,656,438,608,465,594,476,585,487,575,498,560,510,532,523"/>
+<area shape="rect" href="grid-refinement_8h.html#a28e9c4faeb0fb91e493d90d1e6842424" title=" " alt="" coords="819,411,946,436"/>
+<area shape="poly" title=" " alt="" coords="524,518,821,437,822,442,525,523"/>
+<area shape="rect" href="grid-refinement_8h.html#a160fbc62d8c56fcf86091d111a6b4e9d" title="Scan all cells to determine global time bounds for grid construction." alt="" coords="607,520,749,546"/>
+<area shape="poly" title=" " alt="" coords="538,530,593,530,593,536,538,536"/>
+<area shape="rect" href="grid-refinement_8h.html#aafe0a1c5e5c26990a7d79f0cb3327d5c" title=" " alt="" coords="616,602,740,627"/>
+<area shape="poly" title=" " alt="" coords="509,543,633,594,631,599,507,548"/>
+<area shape="poly" title=" " alt="" coords="1155,326,1199,345,1257,387,1302,429,1298,433,1253,391,1196,350,1152,331"/>
+<area shape="poly" title=" " alt="" coords="924,408,979,395,1048,384,1123,380,1161,383,1198,389,1249,407,1292,431,1290,435,1247,412,1197,394,1160,388,1123,386,1048,389,980,400,926,414"/>
+<area shape="rect" href="grid-refinement_8cpp.html#ab2936b0f379412b03968ea4af4bc0787" title="Create a two&#45;segment logspace grid with extra resolution before t_cross." alt="" coords="1029,404,1185,444"/>
+<area shape="poly" title=" " alt="" coords="946,421,1015,421,1015,426,946,426"/>
+<area shape="poly" title=" " alt="" coords="1185,432,1232,438,1231,443,1185,437"/>
+<area shape="poly" title=" " alt="" coords="732,518,797,505,1032,475,1231,457,1232,462,1032,480,798,510,733,523"/>
+<area shape="rect" href="grid-refinement_8h.html#aa7505ad2e84c2a29610c1a13cd3b25e3" title="Estimates deceleration time for a given angle from ejecta and medium properties." alt="" coords="821,520,944,546"/>
+<area shape="poly" title=" " alt="" coords="749,530,807,530,807,536,749,536"/>
+<area shape="rect" href="namespacephysics_1_1relativistic.html#aed1c46f33c9d25ffa27131014b190090" title="Converts Lorentz factor (gamma) to a velocity fraction (beta)" alt="" coords="1033,569,1181,609"/>
+<area shape="poly" title=" " alt="" coords="737,543,798,554,913,569,1019,580,1018,585,912,575,797,560,736,548"/>
+<area shape="poly" title=" " alt="" coords="944,529,1062,519,1130,510,1197,497,1240,484,1280,469,1282,474,1242,489,1198,502,1131,516,1063,525,944,534"/>
+<area shape="poly" title=" " alt="" coords="935,543,1020,565,1019,570,934,548"/>
+<area shape="poly" title=" " alt="" coords="1159,567,1196,548,1251,510,1296,473,1299,477,1254,514,1199,553,1162,571"/>
+<area shape="poly" title=" " alt="" coords="721,625,812,646,870,655,934,661,1000,663,1068,657,1134,643,1196,619,1236,590,1268,552,1293,512,1309,478,1314,480,1297,514,1273,555,1240,594,1199,623,1135,648,1069,662,1001,668,933,667,869,660,811,651,720,630"/>
+<area shape="poly" title=" " alt="" coords="737,698,848,703,983,703,1110,693,1160,683,1196,668,1220,650,1242,627,1276,575,1299,522,1313,479,1318,480,1304,524,1280,578,1246,631,1224,654,1199,673,1161,688,1110,698,983,708,848,708,737,704"/>
+<area shape="poly" title=" " alt="" coords="944,755,1002,760,1068,757,1135,743,1167,731,1196,714,1223,690,1247,661,1266,629,1282,596,1304,531,1315,479,1320,480,1309,532,1287,598,1271,632,1251,664,1227,693,1199,718,1169,735,1137,748,1069,762,1002,765,944,761"/>
+<area shape="poly" title=" " alt="" coords="559,803,715,813,903,816,995,812,1078,803,1147,788,1174,778,1196,766,1228,736,1255,701,1275,661,1291,620,1310,540,1317,479,1323,480,1315,541,1296,622,1280,664,1259,704,1232,740,1199,770,1177,783,1149,793,1079,808,995,817,903,821,715,818,559,808"/>
+<area shape="poly" title=" " alt="" coords="528,850,679,862,877,868,977,865,1068,856,1144,841,1173,830,1196,816,1232,781,1261,739,1283,692,1298,643,1315,550,1319,479,1324,480,1320,550,1303,645,1288,694,1266,742,1236,785,1199,821,1175,834,1145,846,1069,862,978,870,877,873,679,867,527,855"/>
 </map>
 </div>
 <div class="dynheader">

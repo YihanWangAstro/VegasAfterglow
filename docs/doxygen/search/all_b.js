@@ -25,6 +25,7 @@ var searchData=
   ['logscale_5fscreen_22',['logscale_screen',['../pybind_8h.html#a3b6b5a8315c0dca0d19f474914b9d903',1,'pybind.h']]],
   ['logspace_5fboundary_5fcenter_23',['logspace_boundary_center',['../mesh_8h.html#ad7703ab8b66bb86ed857746606fac9a2',1,'mesh.h']]],
   ['logspace_5fcenter_24',['logspace_center',['../mesh_8h.html#afadc5019976c36be16277dc4dc178a7f',1,'mesh.h']]],
-  ['lumi_5fdist_25',['lumi_dist',['../classPyObserver.html#a3767075003ef446259a3f2a1dcaa6c8e',1,'PyObserver']]],
-  ['lumi_5fdist_5fcgs_26',['lumi_dist_cgs',['../classPyObserver.html#ab42810f147ee7f7bf629534c1f832574',1,'PyObserver']]]
+  ['logspace_5fwith_5fcross_5frefinement_25',['logspace_with_cross_refinement',['../grid-refinement_8cpp.html#ab2936b0f379412b03968ea4af4bc0787',1,'logspace_with_cross_refinement(Real t_start, Real t_end, Real t_refine, size_t t_num, size_t base_t_num):&#160;grid-refinement.cpp'],['../grid-refinement_8h.html#accc5c7d9aa1671dcc6f6c75a9f4a18a8',1,'logspace_with_cross_refinement(Real t_start, Real t_end, Real t_cross, size_t t_num, size_t base_t_num):&#160;grid-refinement.cpp']]],
+  ['lumi_5fdist_26',['lumi_dist',['../classPyObserver.html#a3767075003ef446259a3f2a1dcaa6c8e',1,'PyObserver']]],
+  ['lumi_5fdist_5fcgs_27',['lumi_dist_cgs',['../classPyObserver.html#ab42810f147ee7f7bf629534c1f832574',1,'PyObserver']]]
 ];

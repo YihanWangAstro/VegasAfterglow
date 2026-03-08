@@ -1,7 +1,7 @@
-<map id="shock_crossing_refinement_logspace" name="shock_crossing_refinement_logspace">
-<area shape="rect" id="Node000001" title="Create a two&#45;segment logspace grid with extra resolution before t_cross." alt="" coords="945,49,1144,89"/>
+<map id="make_time_grid" name="make_time_grid">
+<area shape="rect" id="Node000001" title=" " alt="" coords="945,56,1072,81"/>
 <area shape="rect" id="Node000002" href="$grid-refinement_8h.html#ab555d1e167e5af21e28a3ade35af86c1" title=" " alt="" coords="775,56,897,81"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="932,71,898,71,898,66,932,66"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="931,71,897,71,897,66,931,66"/>
 <area shape="rect" id="Node000003" href="$grid-refinement_8h.html#a52f60ce2dd90f8839b361bba7a678f0c" title=" " alt="" coords="644,56,727,81"/>
 <area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="761,71,727,71,727,66,761,66"/>
 <area shape="rect" id="Node000004" href="$shock__dispatch_8h.html#a42ab9b9521cae581300af449ae6ddd65" title="Solve forward shock dynamics with variant dispatch." alt="" coords="463,31,595,56"/>

@@ -1,0 +1,8 @@
+<map id="make_time_grid" name="make_time_grid">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,42,132,67"/>
+<area shape="rect" id="Node000002" href="$grid-refinement_8cpp.html#ab2936b0f379412b03968ea4af4bc0787" title="Create a two&#45;segment logspace grid with extra resolution before t_cross." alt="" coords="180,5,336,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="132,42,166,37,167,42,133,48"/>
+<area shape="rect" id="Node000003" href="$pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89" title=" " alt="" coords="384,42,539,67"/>
+<area shape="poly" id="edge3_Node000001_Node000003" title=" " alt="" coords="132,54,180,55,336,55,370,54,370,59,336,60,180,60,132,59"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="337,34,371,39,370,44,336,39"/>
+</map>

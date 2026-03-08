@@ -28,8 +28,13 @@ The unified validation runner orchestrates all tests and generates reports:
    # Check existing results without re-running tests
    python validation/run_validation.py --check-only
 
+   # Fast mode: skip resolution convergence scans (timing + regression only)
+   python validation/run_validation.py --all --fast
+
    # Control parallelism (default: all CPU cores)
    python validation/run_validation.py --all -j 4
+
+``--fast`` is useful for a quick sanity check — it runs performance timing and regression tests but skips the resolution convergence scans, so it completes significantly faster. The PDF report generated in fast mode omits the convergence detail pages.
 
 The validation runner returns exit code 0 on success and 1 on failure, making it suitable for CI/CD pipelines.
 
