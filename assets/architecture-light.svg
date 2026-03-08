@@ -3,8 +3,13 @@
      font-family="-apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif">
 
   <style>
-    text[fill="white"] { fill: #000000; }
-    .cp, .cs, .ca, .env, .dyn, .rad, .core { fill: #000000; }
+    text[fill="white"] { fill: #ffffff; }
+    .cp { fill: #24292F; }
+    .cs, .ca { fill: #57606A; }
+    .env { fill: #1F7A5A; }
+    .dyn { fill: #9A6700; }
+    .rad { fill: #B42318; }
+    .core { fill: #0969DA; }
   </style>
 
   <!-- Background -->

@@ -34,6 +34,23 @@ COLOR_CODEX  = "#4A90D9"   # blue   (OpenAI brand palette)
 
 FONT = "-apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif"
 
+PALETTES = {
+    "dark": {
+        "cp": "#E6EDF3",
+        "cs": "#A8B8CC",
+        "pct": "#FFFFFF",
+        "gl": "#2D3345",
+        "arr": "#3D4A5C",
+    },
+    "light": {
+        "cp": "#24292F",
+        "cs": "#57606A",
+        "pct": "#FFFFFF",
+        "gl": "#D0D7DE",
+        "arr": "#57606A",
+    },
+}
+
 # ── Layout ───────────────────────────────────────────────────────────────────
 SVG_W, SVG_H = 950, 340
 BAR_W    = 32
@@ -70,24 +87,35 @@ def _output_path(theme):
 
 
 def _emit_style(emit, theme):
+    dark = PALETTES["dark"]
+    light = PALETTES["light"]
     emit('  <style>')
     if theme == "adaptive":
         emit('    svg { color-scheme: light dark; }')
-        emit('    .cp, .cs { fill: #ffffff; }')
-        emit('    .gl { stroke: #2D3345; fill: none; }')
-        emit('    .arr { fill: #3D4A5C; }')
+        emit(f'    .cp {{ fill: {dark["cp"]}; }}')
+        emit(f'    .cs {{ fill: {dark["cs"]}; }}')
+        emit(f'    .pct {{ fill: {dark["pct"]}; }}')
+        emit(f'    .gl {{ stroke: {dark["gl"]}; fill: none; }}')
+        emit(f'    .arr {{ fill: {dark["arr"]}; }}')
         emit('    @media (prefers-color-scheme: light) {')
-        emit('      .cp, .cs { fill: #000000; }')
-        emit('      .gl { stroke: #d0d7de; }')
-        emit('      .arr { fill: #57606a; }')
+        emit(f'      .cp {{ fill: {light["cp"]}; }}')
+        emit(f'      .cs {{ fill: {light["cs"]}; }}')
+        emit(f'      .pct {{ fill: {light["pct"]}; }}')
+        emit(f'      .gl {{ stroke: {light["gl"]}; }}')
+        emit(f'      .arr {{ fill: {light["arr"]}; }}')
         emit('    }')
     elif theme == "light":
-        emit('    .cp, .cs, .arr { fill: #000000; }')
-        emit('    .gl { stroke: #d0d7de; fill: none; }')
+        emit(f'    .cp {{ fill: {light["cp"]}; }}')
+        emit(f'    .cs {{ fill: {light["cs"]}; }}')
+        emit(f'    .pct {{ fill: {light["pct"]}; }}')
+        emit(f'    .gl {{ stroke: {light["gl"]}; fill: none; }}')
+        emit(f'    .arr {{ fill: {light["arr"]}; }}')
     elif theme == "dark":
-        emit('    .cp, .cs { fill: #ffffff; }')
-        emit('    .gl { stroke: #2D3345; fill: none; }')
-        emit('    .arr { fill: #3D4A5C; }')
+        emit(f'    .cp {{ fill: {dark["cp"]}; }}')
+        emit(f'    .cs {{ fill: {dark["cs"]}; }}')
+        emit(f'    .pct {{ fill: {dark["pct"]}; }}')
+        emit(f'    .gl {{ stroke: {dark["gl"]}; fill: none; }}')
+        emit(f'    .arr {{ fill: {dark["arr"]}; }}')
     else:
         raise ValueError(f"Unknown theme: {theme}")
     emit('  </style>')
@@ -145,7 +173,7 @@ def _write_chart(theme):
                     emit(f'  <rect x="{rx:.1f}" y="{fy(bot + frac):.1f}" width="{BAR_W}" height="{frac * CHART_H:.1f}" fill="{color}"/>')
                     if frac >= 0.08:
                         emit(f'  <text x="{bcx:.1f}" y="{fy(bot + frac / 2) + 4:.1f}" text-anchor="middle"'
-                             f' font-size="9" font-weight="700" class="cp">{frac * 100:.0f}%</text>')
+                             f' font-size="9" font-weight="700" class="pct">{frac * 100:.0f}%</text>')
                     bot += frac
     emit()
 

@@ -3,8 +3,11 @@
      font-family="-apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif">
 
   <style>
-    .cp, .cs, .arr { fill: #000000; }
-    .gl { stroke: #d0d7de; fill: none; }
+    .cp { fill: #24292F; }
+    .cs { fill: #57606A; }
+    .pct { fill: #FFFFFF; }
+    .gl { stroke: #D0D7DE; fill: none; }
+    .arr { fill: #57606A; }
   </style>
 
   <defs>
@@ -35,61 +38,61 @@
   <text x="55" y="79" text-anchor="end" font-size="8.5" class="cs">100%</text>
 
   <rect x="60.0" y="75.0" width="32" height="180.0" fill="#45AB8A"/>
-  <text x="76.0" y="169.0" text-anchor="middle" font-size="9" font-weight="700" class="cp">100%</text>
+  <text x="76.0" y="169.0" text-anchor="middle" font-size="9" font-weight="700" class="pct">100%</text>
   <rect x="100.0" y="93.0" width="32" height="162.0" fill="#45AB8A"/>
-  <text x="116.0" y="178.0" text-anchor="middle" font-size="9" font-weight="700" class="cp">90%</text>
+  <text x="116.0" y="178.0" text-anchor="middle" font-size="9" font-weight="700" class="pct">90%</text>
   <rect x="100.0" y="75.0" width="32" height="18.0" fill="#D4693A"/>
-  <text x="116.0" y="88.0" text-anchor="middle" font-size="9" font-weight="700" class="cp">10%</text>
+  <text x="116.0" y="88.0" text-anchor="middle" font-size="9" font-weight="700" class="pct">10%</text>
   <rect x="140.0" y="111.0" width="32" height="144.0" fill="#45AB8A"/>
-  <text x="156.0" y="187.0" text-anchor="middle" font-size="9" font-weight="700" class="cp">80%</text>
+  <text x="156.0" y="187.0" text-anchor="middle" font-size="9" font-weight="700" class="pct">80%</text>
   <rect x="140.0" y="75.0" width="32" height="36.0" fill="#D4693A"/>
-  <text x="156.0" y="97.0" text-anchor="middle" font-size="9" font-weight="700" class="cp">20%</text>
+  <text x="156.0" y="97.0" text-anchor="middle" font-size="9" font-weight="700" class="pct">20%</text>
   <rect x="211.6" y="75.0" width="32" height="180.0" fill="#45AB8A"/>
-  <text x="227.6" y="169.0" text-anchor="middle" font-size="9" font-weight="700" class="cp">100%</text>
+  <text x="227.6" y="169.0" text-anchor="middle" font-size="9" font-weight="700" class="pct">100%</text>
   <rect x="251.6" y="129.0" width="32" height="126.0" fill="#45AB8A"/>
-  <text x="267.6" y="196.0" text-anchor="middle" font-size="9" font-weight="700" class="cp">70%</text>
+  <text x="267.6" y="196.0" text-anchor="middle" font-size="9" font-weight="700" class="pct">70%</text>
   <rect x="251.6" y="75.0" width="32" height="54.0" fill="#D4693A"/>
-  <text x="267.6" y="106.0" text-anchor="middle" font-size="9" font-weight="700" class="cp">30%</text>
+  <text x="267.6" y="106.0" text-anchor="middle" font-size="9" font-weight="700" class="pct">30%</text>
   <rect x="291.6" y="75.0" width="32" height="180.0" fill="#45AB8A"/>
-  <text x="307.6" y="169.0" text-anchor="middle" font-size="9" font-weight="700" class="cp">100%</text>
+  <text x="307.6" y="169.0" text-anchor="middle" font-size="9" font-weight="700" class="pct">100%</text>
   <rect x="363.2" y="75.0" width="32" height="180.0" fill="#45AB8A"/>
-  <text x="379.2" y="169.0" text-anchor="middle" font-size="9" font-weight="700" class="cp">100%</text>
+  <text x="379.2" y="169.0" text-anchor="middle" font-size="9" font-weight="700" class="pct">100%</text>
   <rect x="403.2" y="237.0" width="32" height="18.0" fill="#45AB8A"/>
-  <text x="419.2" y="250.0" text-anchor="middle" font-size="9" font-weight="700" class="cp">10%</text>
+  <text x="419.2" y="250.0" text-anchor="middle" font-size="9" font-weight="700" class="pct">10%</text>
   <rect x="403.2" y="75.0" width="32" height="162.0" fill="#D4693A"/>
-  <text x="419.2" y="160.0" text-anchor="middle" font-size="9" font-weight="700" class="cp">90%</text>
+  <text x="419.2" y="160.0" text-anchor="middle" font-size="9" font-weight="700" class="pct">90%</text>
   <rect x="443.2" y="75.0" width="32" height="180.0" fill="#D4693A"/>
-  <text x="459.2" y="169.0" text-anchor="middle" font-size="9" font-weight="700" class="cp">100%</text>
+  <text x="459.2" y="169.0" text-anchor="middle" font-size="9" font-weight="700" class="pct">100%</text>
   <rect x="514.8" y="129.0" width="32" height="126.0" fill="#45AB8A"/>
-  <text x="530.8" y="196.0" text-anchor="middle" font-size="9" font-weight="700" class="cp">70%</text>
+  <text x="530.8" y="196.0" text-anchor="middle" font-size="9" font-weight="700" class="pct">70%</text>
   <rect x="514.8" y="75.0" width="32" height="54.0" fill="#D4693A"/>
-  <text x="530.8" y="106.0" text-anchor="middle" font-size="9" font-weight="700" class="cp">30%</text>
+  <text x="530.8" y="106.0" text-anchor="middle" font-size="9" font-weight="700" class="pct">30%</text>
   <rect x="554.8" y="219.0" width="32" height="36.0" fill="#45AB8A"/>
-  <text x="570.8" y="241.0" text-anchor="middle" font-size="9" font-weight="700" class="cp">20%</text>
+  <text x="570.8" y="241.0" text-anchor="middle" font-size="9" font-weight="700" class="pct">20%</text>
   <rect x="554.8" y="75.0" width="32" height="144.0" fill="#D4693A"/>
-  <text x="570.8" y="151.0" text-anchor="middle" font-size="9" font-weight="700" class="cp">80%</text>
+  <text x="570.8" y="151.0" text-anchor="middle" font-size="9" font-weight="700" class="pct">80%</text>
   <rect x="594.8" y="75.0" width="32" height="180.0" fill="#D4693A"/>
-  <text x="610.8" y="169.0" text-anchor="middle" font-size="9" font-weight="700" class="cp">100%</text>
+  <text x="610.8" y="169.0" text-anchor="middle" font-size="9" font-weight="700" class="pct">100%</text>
   <rect x="666.4" y="165.0" width="32" height="90.0" fill="#45AB8A"/>
-  <text x="682.4" y="214.0" text-anchor="middle" font-size="9" font-weight="700" class="cp">50%</text>
+  <text x="682.4" y="214.0" text-anchor="middle" font-size="9" font-weight="700" class="pct">50%</text>
   <rect x="666.4" y="75.0" width="32" height="90.0" fill="#4A90D9"/>
-  <text x="682.4" y="124.0" text-anchor="middle" font-size="9" font-weight="700" class="cp">50%</text>
+  <text x="682.4" y="124.0" text-anchor="middle" font-size="9" font-weight="700" class="pct">50%</text>
   <rect x="706.4" y="75.0" width="32" height="180.0" fill="#4A90D9"/>
-  <text x="722.4" y="169.0" text-anchor="middle" font-size="9" font-weight="700" class="cp">100%</text>
+  <text x="722.4" y="169.0" text-anchor="middle" font-size="9" font-weight="700" class="pct">100%</text>
   <rect x="746.4" y="201.0" width="32" height="54.0" fill="#D4693A"/>
-  <text x="762.4" y="232.0" text-anchor="middle" font-size="9" font-weight="700" class="cp">30%</text>
+  <text x="762.4" y="232.0" text-anchor="middle" font-size="9" font-weight="700" class="pct">30%</text>
   <rect x="746.4" y="75.0" width="32" height="126.0" fill="#4A90D9"/>
-  <text x="762.4" y="142.0" text-anchor="middle" font-size="9" font-weight="700" class="cp">70%</text>
+  <text x="762.4" y="142.0" text-anchor="middle" font-size="9" font-weight="700" class="pct">70%</text>
   <rect x="818.0" y="201.0" width="32" height="54.0" fill="#45AB8A"/>
-  <text x="834.0" y="232.0" text-anchor="middle" font-size="9" font-weight="700" class="cp">30%</text>
+  <text x="834.0" y="232.0" text-anchor="middle" font-size="9" font-weight="700" class="pct">30%</text>
   <rect x="818.0" y="75.0" width="32" height="126.0" fill="#D4693A"/>
-  <text x="834.0" y="142.0" text-anchor="middle" font-size="9" font-weight="700" class="cp">70%</text>
+  <text x="834.0" y="142.0" text-anchor="middle" font-size="9" font-weight="700" class="pct">70%</text>
   <rect x="858.0" y="219.0" width="32" height="36.0" fill="#45AB8A"/>
-  <text x="874.0" y="241.0" text-anchor="middle" font-size="9" font-weight="700" class="cp">20%</text>
+  <text x="874.0" y="241.0" text-anchor="middle" font-size="9" font-weight="700" class="pct">20%</text>
   <rect x="858.0" y="75.0" width="32" height="144.0" fill="#D4693A"/>
-  <text x="874.0" y="151.0" text-anchor="middle" font-size="9" font-weight="700" class="cp">80%</text>
+  <text x="874.0" y="151.0" text-anchor="middle" font-size="9" font-weight="700" class="pct">80%</text>
   <rect x="898.0" y="75.0" width="32" height="180.0" fill="#D4693A"/>
-  <text x="914.0" y="169.0" text-anchor="middle" font-size="9" font-weight="700" class="cp">100%</text>
+  <text x="914.0" y="169.0" text-anchor="middle" font-size="9" font-weight="700" class="pct">100%</text>
 
   <text x="76.0" y="270" text-anchor="middle" font-size="8.5" class="cs">Architect.</text>
   <text x="116.0" y="270" text-anchor="middle" font-size="8.5" class="cs">Coding</text>

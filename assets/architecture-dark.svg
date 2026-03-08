@@ -4,7 +4,12 @@
 
   <style>
     text[fill="white"] { fill: #ffffff; }
-    .cp, .cs, .ca, .env, .dyn, .rad, .core { fill: #ffffff; }
+    .cp { fill: #E6EDF3; }
+    .cs, .ca { fill: #A8B8CC; }
+    .env { fill: #60BB9A; }
+    .dyn { fill: #D4A855; }
+    .rad { fill: #D47878; }
+    .core { fill: #60B8CC; }
   </style>
 
   <!-- Background -->

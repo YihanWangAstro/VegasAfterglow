@@ -3,8 +3,12 @@
      font-family="-apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif">
 
   <style>
-    .cp, .cs, .cb, .mi, .mw { fill: #000000; }
-    .gl { stroke: #d0d7de; fill: none; }
+    .cp { fill: #24292F; }
+    .cs { fill: #57606A; }
+    .cb { fill: #24292F; }
+    .mi { fill: #0969DA; }
+    .mw { fill: #1A7F37; }
+    .gl { stroke: #D0D7DE; fill: none; }
   </style>
 
   <rect width="950" height="360" fill="transparent" rx="12"/>

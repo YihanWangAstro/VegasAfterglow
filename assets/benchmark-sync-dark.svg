@@ -3,7 +3,11 @@
      font-family="-apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif">
 
   <style>
-    .cp, .cs, .cb, .mi, .mw { fill: #ffffff; }
+    .cp { fill: #E6EDF3; }
+    .cs { fill: #A8B8CC; }
+    .cb { fill: #D0DDE8; }
+    .mi { fill: #5B8ADB; }
+    .mw { fill: #45AB8A; }
     .gl { stroke: #2D3345; fill: none; }
   </style>
 

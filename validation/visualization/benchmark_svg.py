@@ -37,6 +37,25 @@ ANGLES = [0.0, 1.0, 2.0, 4.0]
 
 FONT = "-apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif"
 
+PALETTES = {
+    "dark": {
+        "cp": "#E6EDF3",
+        "cs": "#A8B8CC",
+        "cb": "#D0DDE8",
+        "mi": "#5B8ADB",
+        "mw": "#45AB8A",
+        "gl": "#2D3345",
+    },
+    "light": {
+        "cp": "#24292F",
+        "cs": "#57606A",
+        "cb": "#24292F",
+        "mi": "#0969DA",
+        "mw": "#1A7F37",
+        "gl": "#D0D7DE",
+    },
+}
+
 
 def _variant_name(filename, theme):
     if theme == "adaptive":
@@ -46,21 +65,39 @@ def _variant_name(filename, theme):
 
 
 def _emit_style(emit, theme):
+    dark = PALETTES["dark"]
+    light = PALETTES["light"]
     emit('  <style>')
     if theme == "adaptive":
         emit('    svg { color-scheme: light dark; }')
-        emit('    .cp, .cs, .cb, .mi, .mw { fill: #ffffff; }')
-        emit('    .gl { stroke: #2D3345; fill: none; }')
+        emit(f'    .cp {{ fill: {dark["cp"]}; }}')
+        emit(f'    .cs {{ fill: {dark["cs"]}; }}')
+        emit(f'    .cb {{ fill: {dark["cb"]}; }}')
+        emit(f'    .mi {{ fill: {dark["mi"]}; }}')
+        emit(f'    .mw {{ fill: {dark["mw"]}; }}')
+        emit(f'    .gl {{ stroke: {dark["gl"]}; fill: none; }}')
         emit('    @media (prefers-color-scheme: light) {')
-        emit('      .cp, .cs, .cb, .mi, .mw { fill: #000000; }')
-        emit('      .gl { stroke: #d0d7de; }')
+        emit(f'      .cp {{ fill: {light["cp"]}; }}')
+        emit(f'      .cs {{ fill: {light["cs"]}; }}')
+        emit(f'      .cb {{ fill: {light["cb"]}; }}')
+        emit(f'      .mi {{ fill: {light["mi"]}; }}')
+        emit(f'      .mw {{ fill: {light["mw"]}; }}')
+        emit(f'      .gl {{ stroke: {light["gl"]}; }}')
         emit('    }')
     elif theme == "light":
-        emit('    .cp, .cs, .cb, .mi, .mw { fill: #000000; }')
-        emit('    .gl { stroke: #d0d7de; fill: none; }')
+        emit(f'    .cp {{ fill: {light["cp"]}; }}')
+        emit(f'    .cs {{ fill: {light["cs"]}; }}')
+        emit(f'    .cb {{ fill: {light["cb"]}; }}')
+        emit(f'    .mi {{ fill: {light["mi"]}; }}')
+        emit(f'    .mw {{ fill: {light["mw"]}; }}')
+        emit(f'    .gl {{ stroke: {light["gl"]}; fill: none; }}')
     elif theme == "dark":
-        emit('    .cp, .cs, .cb, .mi, .mw { fill: #ffffff; }')
-        emit('    .gl { stroke: #2D3345; fill: none; }')
+        emit(f'    .cp {{ fill: {dark["cp"]}; }}')
+        emit(f'    .cs {{ fill: {dark["cs"]}; }}')
+        emit(f'    .cb {{ fill: {dark["cb"]}; }}')
+        emit(f'    .mi {{ fill: {dark["mi"]}; }}')
+        emit(f'    .mw {{ fill: {dark["mw"]}; }}')
+        emit(f'    .gl {{ stroke: {dark["gl"]}; fill: none; }}')
     else:
         raise ValueError(f"Unknown theme: {theme}")
     emit('  </style>')
