@@ -3,22 +3,16 @@
      font-family="-apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif">
 
   <style>
-    :root {
-      --cp: #E6EDF3;
-      --cs: #8090A5;
-      --cg: #2D3345;
-    }
+    .cp { fill: #ffffff; }
+    .cs { fill: #ffffff; }
+    .gl { stroke: #2D3345; fill: none; }
+    .gf { fill: #2D3345; }
     @media (prefers-color-scheme: light) {
-      :root {
-        --cp: #24292f;
-        --cs: #57606a;
-        --cg: #d0d7de;
-      }
+      .cp { fill: #24292f; }
+      .cs { fill: #57606a; }
+      .gl { stroke: #d0d7de; }
+      .gf { fill: #d0d7de; }
     }
-    .cp { fill: var(--cp); }
-    .cs { fill: var(--cs); }
-    .gl { stroke: var(--cg); fill: none; }
-    .gf { fill: var(--cg); }
   </style>
 
   <defs>
