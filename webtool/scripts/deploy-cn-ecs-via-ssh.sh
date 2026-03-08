@@ -16,6 +16,10 @@ KEEP_RELEASES="${KEEP_RELEASES:-3}"
 SERVER_NAME="${SERVER_NAME:-_}"
 API_SERVER_NAME="${API_SERVER_NAME:-}"
 BACKEND_IMAGE_PLATFORM="${BACKEND_IMAGE_PLATFORM:-linux/amd64}"
+REGISTRY_MIRROR="${REGISTRY_MIRROR:-}"
+PIP_INDEX_URL="${PIP_INDEX_URL:-https://pypi.tuna.tsinghua.edu.cn/simple}"
+APT_MIRROR="${APT_MIRROR:-mirrors.aliyun.com}"
+CMAKE_BUILD_PARALLEL_LEVEL="${CMAKE_BUILD_PARALLEL_LEVEL:-1}"
 
 target_host="${SSH_TARGET##*@}"
 PUBLIC_BASE_URL="${PUBLIC_BASE_URL:-http://${target_host}}"
@@ -48,34 +52,66 @@ fi
 echo "Preparing remote release: ${RELEASE_DIR}"
 ssh_run "$SSH_TARGET" "mkdir -p $(printf '%q' "$RELEASE_DIR")"
 
-echo "Syncing source to ${SSH_TARGET}:${RELEASE_DIR} ..."
+# Sync external/ (boost, xtensor headers — ~36k files, rarely changes) to a shared
+# cache so repeat deploys skip re-uploading unchanged files.
+EXTERNAL_CACHE="${APP_ROOT}/cache/external"
+echo "Syncing external/ to shared cache ..."
+ssh_run "$SSH_TARGET" "mkdir -p $(printf '%q' "$EXTERNAL_CACHE")"
 rsync_run \
   --delete \
-  --exclude='.git' \
-  --exclude='.DS_Store' \
-  --exclude='build/' \
-  --exclude='dist/' \
+  "$ROOT_DIR/external/" \
+  "${SSH_TARGET}:${EXTERNAL_CACHE}/"
+
+echo "Syncing source to ${SSH_TARGET}:${RELEASE_DIR} ..."
+# Only upload paths needed by the Dockerfile and frontend build.
+rsync_run \
+  --delete \
+  --exclude='node_modules/' \
+  --exclude='.next/' \
+  --exclude='.venv/' \
   --exclude='__pycache__/' \
   --exclude='*.pyc' \
-  --exclude='webtool/frontend/node_modules/' \
-  --exclude='webtool/frontend/.next/' \
-  --exclude='webtool/backend/.venv/' \
+  --exclude='.DS_Store' \
+  --include='.dockerignore' \
+  --include='pyproject.toml' \
+  --include='README.md' \
+  --include='LICENSE' \
+  --include='CMakeLists.txt' \
+  --include='include/***' \
+  --include='src/***' \
+  --include='pybind/***' \
+  --include='VegasAfterglow/***' \
+  --include='webtool/' \
+  --include='webtool/backend/***' \
+  --include='webtool/frontend/***' \
+  --include='webtool/deploy/***' \
+  --include='webtool/scripts/***' \
+  --exclude='*' \
   "$ROOT_DIR/" \
   "${SSH_TARGET}:${RELEASE_DIR}/"
+
+# Hard-link external/ from cache into this release (instant, no extra disk space).
+ssh_run "$SSH_TARGET" "cp -al $(printf '%q' "$EXTERNAL_CACHE") $(printf '%q' "$RELEASE_DIR/external")"
 
 VA_VERSION="$(python -m setuptools_scm 2>/dev/null || git describe --tags --always 2>/dev/null || echo 0.0.0)"
 VA_VERSION="${VA_VERSION%.dev*}"
 
 echo "Building backend image on ${SSH_TARGET} (VegasAfterglow ${VA_VERSION}) ..."
-# Base image (python:3.12-slim) is pulled via the Alibaba Cloud registry mirror configured
-# in /etc/docker/daemon.json on the server. Docker layer cache means only changed layers rebuild.
-ssh_run "$SSH_TARGET" \
-  "docker build \
-    --build-arg VEGASAFTERGLOW_VERSION=$(printf '%q' "$VA_VERSION") \
-    --platform $(printf '%q' "$BACKEND_IMAGE_PLATFORM") \
-    -f $(printf '%q' "$RELEASE_DIR/webtool/backend/Dockerfile") \
-    -t $(printf '%q' "${BACKEND_IMAGE_NAME}:${RELEASE_ID}") \
-    $(printf '%q' "$RELEASE_DIR")"
+# REGISTRY_MIRROR prefixes Docker Hub image refs with a CN mirror (e.g. docker.m.daocloud.io/).
+# PIP_INDEX_URL points pip at a CN PyPI mirror. Docker layer cache means only changed layers rebuild.
+build_cmd="docker build"
+build_cmd+=" --build-arg VEGASAFTERGLOW_VERSION='${VA_VERSION}'"
+[[ -n "$REGISTRY_MIRROR" ]] && build_cmd+=" --build-arg REGISTRY_MIRROR='${REGISTRY_MIRROR}'"
+[[ -n "$PIP_INDEX_URL" ]]   && build_cmd+=" --build-arg PIP_INDEX_URL='${PIP_INDEX_URL}'"
+[[ -n "$APT_MIRROR" ]]      && build_cmd+=" --build-arg APT_MIRROR='${APT_MIRROR}'"
+[[ -n "$CMAKE_BUILD_PARALLEL_LEVEL" ]] && build_cmd+=" --build-arg CMAKE_BUILD_PARALLEL_LEVEL='${CMAKE_BUILD_PARALLEL_LEVEL}'"
+build_cmd+=" --platform '${BACKEND_IMAGE_PLATFORM}'"
+build_cmd+=" -f '${RELEASE_DIR}/webtool/backend/Dockerfile'"
+build_cmd+=" -t '${BACKEND_IMAGE_NAME}:${RELEASE_ID}'"
+build_cmd+=" '${RELEASE_DIR}'"
+
+ssh_run "$SSH_TARGET" "$build_cmd"
+echo "Docker build succeeded."
 
 remote_script="${RELEASE_DIR}/webtool/scripts/deploy-cn-ecs-remote.sh"
 

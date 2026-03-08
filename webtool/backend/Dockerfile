@@ -1,11 +1,17 @@
 # ── builder: compile VegasAfterglow C++ extension ──────────────────────────────
-FROM python:3.12-slim AS builder
+ARG REGISTRY_MIRROR=
+FROM ${REGISTRY_MIRROR}python:3.12-slim AS builder
 
 ENV PYTHONDONTWRITEBYTECODE=1 \
     PYTHONUNBUFFERED=1 \
     PIP_NO_CACHE_DIR=1
 
-RUN apt-get update && apt-get install -y --no-install-recommends \
+# Optional CN Debian mirror (e.g. mirrors.aliyun.com) for faster apt in mainland China.
+ARG APT_MIRROR=
+RUN if [ -n "$APT_MIRROR" ]; then \
+      sed -i "s|deb.debian.org|${APT_MIRROR}|g" /etc/apt/sources.list.d/debian.sources; \
+    fi \
+ && apt-get update && apt-get install -y --no-install-recommends \
     build-essential \
     cmake \
     ninja-build \
@@ -27,6 +33,14 @@ COPY VegasAfterglow /tmp/vegasafterglow/VegasAfterglow
 ARG VEGASAFTERGLOW_VERSION=0.0.0
 ENV SETUPTOOLS_SCM_PRETEND_VERSION=${VEGASAFTERGLOW_VERSION}
 
+# Limit parallel compilation to avoid OOM on small instances (e.g. 1-2 GB RAM ECS).
+# Empty default = unlimited (uses all cores). CN deploy sets this to 1.
+ARG CMAKE_BUILD_PARALLEL_LEVEL=
+ENV CMAKE_BUILD_PARALLEL_LEVEL=${CMAKE_BUILD_PARALLEL_LEVEL}
+
+# Optional PyPI mirror for CN mainland deploys (e.g. https://pypi.tuna.tsinghua.edu.cn/simple).
+ARG PIP_INDEX_URL=
+
 RUN pip install --upgrade pip setuptools wheel scikit-build-core pybind11 numpy setuptools-scm \
  && pip install --no-build-isolation /tmp/vegasafterglow
 
@@ -35,7 +49,7 @@ COPY webtool/backend/requirements.txt /tmp/requirements.txt
 RUN pip install -r /tmp/requirements.txt
 
 # ── runtime: lean image without build tools ──────────────────────────────────
-FROM python:3.12-slim
+FROM ${REGISTRY_MIRROR}python:3.12-slim
 
 ENV PYTHONDONTWRITEBYTECODE=1 \
     PYTHONUNBUFFERED=1

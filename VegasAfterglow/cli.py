@@ -608,16 +608,19 @@ def _freq_colors(nus):
     """Map frequencies to distinct colors ordered warm (low ν) → cool (high ν).
 
     Assigns colors from a discrete qualitative palette by frequency rank,
-    so even closely-spaced frequencies (e.g. optical filters) get visually
-    distinct colors while preserving spectral ordering.
+    spread evenly across the full palette so even a few frequencies use
+    the full warm→cool range.
     """
     n = len(nus)
     if n == 0:
         return []
+    P = len(FREQ_PALETTE)
     order = np.argsort(nus)
     colors = [""] * n
+    step = (P - 1) / max(1, n - 1) if n <= P else 1
     for rank, idx in enumerate(order):
-        colors[idx] = FREQ_PALETTE[rank % len(FREQ_PALETTE)]
+        ci = round(rank * step) if n <= P else rank % P
+        colors[idx] = FREQ_PALETTE[ci]
     return colors
 
 

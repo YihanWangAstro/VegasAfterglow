@@ -16,7 +16,7 @@ class SharedParams(BaseModel):
     d_L_mpc: float = 100.0
     theta_obs: float = 0.0
     flux_unit: str = "mJy"
-    time_unit: str = "s"
+    time_unit: str = "day"
     jet_type: str = "Top-hat"
     theta_c: float = 0.1
     E_iso: float = 1e52

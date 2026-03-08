@@ -1,28 +1,19 @@
 #!/usr/bin/env bash
 
+# Keep SSH alive during long operations (C++ builds can take 5-10 min with no output).
+_SSH_KEEPALIVE="-o ServerAliveInterval=30 -o ServerAliveCountMax=10"
+
 ssh_run() {
-  if [[ -n "${SSH_OPTS:-}" && -n "${SSH_OPTS//[[:space:]]/}" ]]; then
-    # shellcheck disable=SC2086
-    ssh $SSH_OPTS "$@"
-  else
-    ssh "$@"
-  fi
+  # shellcheck disable=SC2086
+  ssh $_SSH_KEEPALIVE ${SSH_OPTS:-} "$@"
 }
 
 scp_run() {
-  if [[ -n "${SSH_OPTS:-}" && -n "${SSH_OPTS//[[:space:]]/}" ]]; then
-    # shellcheck disable=SC2086
-    scp $SSH_OPTS "$@"
-  else
-    scp "$@"
-  fi
+  # shellcheck disable=SC2086
+  scp $_SSH_KEEPALIVE ${SSH_OPTS:-} "$@"
 }
 
 rsync_run() {
-  local ssh_cmd="ssh"
-  if [[ -n "${SSH_OPTS:-}" && -n "${SSH_OPTS//[[:space:]]/}" ]]; then
-    ssh_cmd="ssh ${SSH_OPTS}"
-  fi
   # shellcheck disable=SC2086
-  rsync -az --progress -e "$ssh_cmd" "$@"
+  rsync -az --progress -e "ssh $_SSH_KEEPALIVE ${SSH_OPTS:-}" "$@"
 }

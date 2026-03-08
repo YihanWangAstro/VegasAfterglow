@@ -1,4 +1,5 @@
 import type { Metadata, Viewport } from "next";
+import Script from "next/script";
 import "./globals.css";
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/+$/, "") || "https://vegasafterglow.com";
@@ -35,6 +36,12 @@ export default function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en" suppressHydrationWarning>
+      <head>
+        <Script
+          src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"
+          strategy="afterInteractive"
+        />
+      </head>
       <body suppressHydrationWarning>{children}</body>
     </html>
   );

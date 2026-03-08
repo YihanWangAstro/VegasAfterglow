@@ -135,7 +135,7 @@ sed \
   >"/etc/nginx/conf.d/${NGINX_SITE_NAME}.conf"
 
 nginx -t
-systemctl reload nginx
+systemctl restart nginx
 
 echo "Waiting for Nginx frontend route"
 nginx_check_url="http://127.0.0.1/"

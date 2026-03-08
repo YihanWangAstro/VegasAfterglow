@@ -27,12 +27,21 @@ const FLUX_SCALES_CGS: Record<string, number> = {
   cgs: 1,
 };
 
+// Plain-text flux labels for hover templates
 const FLUX_AXIS_LABELS: Record<string, string> = {
   mJy: "mJy",
   Jy: "Jy",
   uJy: "\u03bcJy",
   cgs: "erg cm\u207b\u00b2 s\u207b\u00b9 Hz\u207b\u00b9",
   "AB mag": "AB mag",
+};
+
+// LaTeX flux unit labels for axis titles
+const FLUX_LATEX: Record<string, string> = {
+  mJy: "mJy",
+  Jy: "Jy",
+  uJy: "\\mu Jy",
+  cgs: "erg\\,cm^{-2}\\,s^{-1}\\,Hz^{-1}",
 };
 
 // Physical constants used for label formatting and frequency scaling
@@ -47,13 +56,28 @@ const FREQ_DISP_SCALES: Record<string, number> = {
   MeV: KEV_HZ * 1e3,
 };
 
+const EV_HZ = KEV_HZ / 1e3;
+
 /** Format number to 3 significant figures, stripping trailing zeros (matches Python :.3g). */
 function sig3(val: number): string {
   return parseFloat(val.toPrecision(3)).toString();
 }
 
-/** Format a frequency as human-readable energy/wavelength/frequency string. */
-export function formatFreqLabel(nu: number): string {
+/** Return the broad-band category for a frequency. */
+function broadBand(nu: number): string {
+  if (nu < 1e12) return "Radio";
+  if (nu < 4e14) return "IR";
+  if (nu < 7.5e14) return "Optical";
+  const E_eV = nu / EV_HZ;
+  if (E_eV < 100) return "UV";
+  if (E_eV < 1e5) return "X-ray";
+  if (E_eV < 1e9) return "\u03b3-ray";
+  if (E_eV < 1e12) return "GeV";
+  return "TeV";
+}
+
+/** Format a frequency as energy/wavelength/frequency string (no category prefix). */
+function formatEnergy(nu: number): string {
   const E_keV = nu / KEV_HZ;
   const lam_nm = C_ANGSTROM_PER_S / nu / 10;
   const v = (val: number, unit: string) => `${sig3(val)} ${unit}`;
@@ -67,6 +91,11 @@ export function formatFreqLabel(nu: number): string {
   if (nu >= 1e9) return `${sig3(nu / 1e9)} GHz`;
   if (nu >= 1e6) return `${Math.round(nu / 1e6)} MHz`;
   return `${Math.round(nu)} Hz`;
+}
+
+/** Format a frequency with broad-band category prefix, e.g. "Radio (1 GHz)". */
+export function formatFreqLabel(nu: number): string {
+  return `${broadBand(nu)} (${formatEnergy(nu)})`;
 }
 
 /** Format a frequency band label. */
@@ -104,7 +133,7 @@ const COMP_LABELS: Record<string, string> = {
 
 const COMP_ORDER = ["total", "fwd_sync", "fwd_ssc", "rvs_sync", "rvs_ssc"];
 
-const FBAND_TITLE = "F (erg cm\u207b\u00b2 s\u207b\u00b9)";
+const FBAND_TITLE = "$F\\;(\\mathrm{erg\\,cm^{-2}\\,s^{-1}})$";
 
 // Discrete qualitative palette ordered warm → cool (radio → X-ray/gamma).
 // Colors are assigned by frequency rank so closely-spaced frequencies stay distinct.
@@ -116,12 +145,14 @@ const FREQ_PALETTE = [
 
 const TIME_PALETTE = ["#E03530", "#E8872E", "#2AB07E", "#2878B5", "#7B3FA0", "#D4A017"];
 
+// Unmatched obs colors — intentionally distinct from FREQ_PALETTE to avoid confusion.
 const OBS_COLORS = [
-  "#000000", "#E03530", "#2878B5", "#2AB07E", "#7B3FA0",
-  "#E8872E", "#D4A017", "#555555", "#C44536", "#1D3557",
+  "#000000", "#FF1493", "#00CED1", "#FF8C00", "#4169E1",
+  "#32CD32", "#DC143C", "#8B008B", "#008080", "#A0522D",
 ];
 
-/** Assign colors from FREQ_PALETTE by frequency rank (warm→cool). */
+/** Assign colors from FREQ_PALETTE by frequency rank (warm→cool).
+ *  Spreads evenly across the full palette so even a few frequencies use the full warm→cool range. */
 function freqColors(freqHz: number[]): string[] {
   const n = freqHz.length;
   if (n === 0) return [];
@@ -129,8 +160,11 @@ function freqColors(freqHz: number[]): string[] {
     .map((nu, i) => ({ nu, i }))
     .sort((a, b) => a.nu - b.nu);
   const colors = new Array<string>(n);
+  const P = FREQ_PALETTE.length;
+  const step = n <= P ? (P - 1) / Math.max(1, n - 1) : 1;
   for (let rank = 0; rank < n; rank++) {
-    colors[order[rank].i] = FREQ_PALETTE[rank % FREQ_PALETTE.length];
+    const idx = n <= P ? Math.round(rank * step) : rank % P;
+    colors[order[rank].i] = FREQ_PALETTE[idx];
   }
   return colors;
 }
@@ -524,14 +558,14 @@ export function buildLcFigure(pd: LcPlotData): PlotlyFigure {
   // Build layout
   const xAxis: Record<string, unknown> = {
     type: "log",
-    title: axisTitle(`t<sub>obs</sub> (${tUnit})`),
+    title: axisTitle(`$t_{\\rm obs}\\;(\\mathrm{${tUnit}})$`),
     range: [xLo, xHi],
     ...AXIS_COMMON,
   };
 
   const yAxisPt = buildYAxisConfig(
     isABmag,
-    isABmag ? "AB mag" : `F<sub>\u03bd</sub> (${FLUX_AXIS_LABELS[flux_unit]})`,
+    isABmag ? "AB mag" : `$F_\\nu\\;(\\mathrm{${FLUX_LATEX[flux_unit] ?? flux_unit}})$`,
     yRangePt,
   );
 
@@ -545,13 +579,14 @@ export function buildLcFigure(pd: LcPlotData): PlotlyFigure {
     layout.yaxis = yAxisPt;
     layout.yaxis2 = {
       type: "log",
-      title: axisTitle(FBAND_TITLE),
       ...(yRangeBd ? { range: yRangeBd } : {}),
       overlaying: "y",
       side: "right",
       ...AXIS_COMMON,
+      title: axisTitle(FBAND_TITLE),
       showgrid: false,
     };
+    layout.margin = { l: 65, r: 65, t: 15, b: 55 };
   } else if (hasBands && !hasPt) {
     layout.yaxis = {
       type: "log",
@@ -715,13 +750,13 @@ export function buildSedFigure(pd: SedPlotData): PlotlyFigure {
   const yLabel = isABmag
     ? "AB mag"
     : actualNufnu
-      ? "\u03bdF<sub>\u03bd</sub> (erg cm<sup>\u22122</sup> s<sup>\u22121</sup>)"
-      : `F<sub>\u03bd</sub> (${FLUX_AXIS_LABELS[flux_unit]})`;
+      ? "$\\nu F_\\nu\\;(\\mathrm{erg\\,cm^{-2}\\,s^{-1}})$"
+      : `$F_\\nu\\;(\\mathrm{${FLUX_LATEX[flux_unit] ?? flux_unit}})$`;
 
   const layout: Record<string, unknown> = {
     xaxis: {
       type: "log",
-      title: axisTitle(`\u03bd (${freq_unit})`),
+      title: axisTitle(`$\\nu\\;(\\mathrm{${freq_unit}})$`),
       range: [xLo, xHi],
       ...AXIS_COMMON,
     },
@@ -773,13 +808,13 @@ export function buildSkymapFigure(pd: SkymapPlotData): PlotlyFigure {
     zmin: z_min, zmax: z_max,
     zauto: false,
     colorbar: {
-      title: { text: colorbarTitle, side: "right", font: { size: 10 } },
+      title: { text: colorbarTitle, side: "right", font: { size: 12 } },
       xref: "paper",
       x: 1.01,
       xanchor: "left",
       len: 0.85,
-      thickness: 22,
-      tickfont: { size: 9 },
+      thickness: 28,
+      tickfont: { size: 12 },
     },
     hovertemplate: "\u0394x=%{x} \u03bcas<br>\u0394y=%{y} \u03bcas<br>log\u2081\u2080 I=%{z:.3g}<extra></extra>",
   }];
