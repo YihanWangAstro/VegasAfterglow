@@ -1,6 +1,6 @@
 import type { ReactNode } from "react";
 import type { UpdateValue } from "../hooks/useParameterState";
-import { PLOT_FLUX_UNIT_OPTIONS, SKY_MAX_PIXEL_ANIMATE, SKY_MAX_PIXEL_STATIC, SKY_PIXEL_OPTIONS, TIME_UNIT_OPTIONS } from "../lib/constants";
+import { PLOT_FLUX_UNIT_OPTIONS, SKY_MAX_PIXEL_STATIC, SKY_PIXEL_OPTIONS, TIME_UNIT_OPTIONS } from "../lib/constants";
 import type {
   BookmarkEntry,
   DistanceDriver,
@@ -69,8 +69,9 @@ type CompareSection = {
 };
 
 type LightcurveSection = {
-  lcFreq: string;
-  setLcFreq: (value: string) => void;
+  lcFreqDraft: string;
+  setLcFreqDraft: (value: string) => void;
+  commitLcFreq: () => void;
   lcTMin: number;
   setLcTMin: (value: number) => void;
   lcTMax: number;
@@ -94,22 +95,19 @@ type SpectrumSection = {
 };
 
 type SkymapSection = {
-  skyAnimate: boolean;
-  setSkyAnimate: (value: boolean) => void;
   skyNpixel: number;
   setSkyNpixel: (value: number) => void;
-  skyTMin: number;
-  setSkyTMin: (value: number) => void;
-  skyTMax: number;
-  setSkyTMax: (value: number) => void;
-  skyNFrames: number;
-  setSkyNFrames: (value: number) => void;
   skyTObs: number;
   setSkyTObs: (value: number) => void;
-  skyNuInput: string;
-  setSkyNuInput: (value: string) => void;
+  skyNuInputDraft: string;
+  setSkyNuInputDraft: (value: string) => void;
+  commitSkyNuInput: () => void;
   skyFov: number;
   setSkyFov: (value: number) => void;
+  skyFovUnit: string;
+  setSkyFovUnit: (value: string) => void;
+  skyIntensityUnit: string;
+  setSkyIntensityUnit: (value: string) => void;
 };
 
 type Props = {
@@ -123,6 +121,8 @@ type Props = {
   spectrum: SpectrumSection;
   skymap: SkymapSection;
 };
+
+const skyPixelOptions = SKY_PIXEL_OPTIONS.filter((v) => v <= SKY_MAX_PIXEL_STATIC);
 
 function renderStringOptions(options: readonly string[]): ReactNode[] {
   return options.map((item) => (
@@ -174,10 +174,10 @@ export function SidebarPanels({
     removeBookmarkById,
   } = bookmark;
   const { compareEnabled, setCompareEnabled, compareBookmarkId, setCompareBookmarkId, compareRunning, compareError } = compare;
-  const { lcFreq, setLcFreq, lcTMin, setLcTMin, lcTMax, setLcTMax } = lightcurve;
+  const { lcFreqDraft, setLcFreqDraft, commitLcFreq, lcTMin, setLcTMin, lcTMax, setLcTMax } = lightcurve;
   const { sedTimesDraft, setSedTimesDraft, commitSedTimes, sedNuMin, setSedNuMin, sedNuMax, setSedNuMax, sedNumNu, setSedNumNu, sedNuFNu, setSedNuFNu, sedFreqUnit, setSedFreqUnit } =
     spectrum;
-  const { skyAnimate, setSkyAnimate, skyNpixel, setSkyNpixel, skyTMin, setSkyTMin, skyTMax, setSkyTMax, skyNFrames, setSkyNFrames, skyTObs, setSkyTObs, skyNuInput, setSkyNuInput, skyFov, setSkyFov } =
+  const { skyNpixel, setSkyNpixel, skyTObs, setSkyTObs, skyNuInputDraft, setSkyNuInputDraft, commitSkyNuInput, skyFov, setSkyFov, skyFovUnit, setSkyFovUnit, skyIntensityUnit, setSkyIntensityUnit } =
     skymap;
 
   function renderDistanceObserverControls() {
@@ -271,9 +271,6 @@ export function SidebarPanels({
     );
   }
 
-  const skyPixelMax = skyAnimate ? SKY_MAX_PIXEL_ANIMATE : SKY_MAX_PIXEL_STATIC;
-  const skyPixelOptions = SKY_PIXEL_OPTIONS.filter((value) => value <= skyPixelMax);
-
   return (
     <>
       <BookmarkPanel
@@ -296,8 +293,9 @@ export function SidebarPanels({
 
       {mode === "lightcurve" ? (
         <ModePanelLightcurve
-          lcFreq={lcFreq}
-          setLcFreq={setLcFreq}
+          lcFreqDraft={lcFreqDraft}
+          setLcFreqDraft={setLcFreqDraft}
+          commitLcFreq={commitLcFreq}
           renderDistanceObserverControls={renderDistanceObserverControls}
           renderModeLogSliderRow={renderModeLogSliderRow}
           lcTMin={lcTMin}
@@ -337,24 +335,21 @@ export function SidebarPanels({
 
       {mode === "skymap" ? (
         <ModePanelSkymap
-          skyAnimate={skyAnimate}
-          setSkyAnimate={setSkyAnimate}
           skyNpixel={skyNpixel}
           setSkyNpixel={setSkyNpixel}
-          renderModeLogSliderRow={renderModeLogSliderRow}
-          skyTMin={skyTMin}
-          setSkyTMin={setSkyTMin}
-          skyTMax={skyTMax}
-          setSkyTMax={setSkyTMax}
-          skyNFrames={skyNFrames}
-          setSkyNFrames={setSkyNFrames}
           skyTObs={skyTObs}
           setSkyTObs={setSkyTObs}
-          skyNuInput={skyNuInput}
-          setSkyNuInput={setSkyNuInput}
+          skyNuInputDraft={skyNuInputDraft}
+          setSkyNuInputDraft={setSkyNuInputDraft}
+          commitSkyNuInput={commitSkyNuInput}
           skyFov={skyFov}
           setSkyFov={setSkyFov}
+          skyFovUnit={skyFovUnit}
+          setSkyFovUnit={setSkyFovUnit}
+          skyIntensityUnit={skyIntensityUnit}
+          setSkyIntensityUnit={setSkyIntensityUnit}
           skyPixelOptions={skyPixelOptions}
+          renderDistanceObserverControls={renderDistanceObserverControls}
           renderSharedControls={renderSharedControls}
         />
       ) : null}

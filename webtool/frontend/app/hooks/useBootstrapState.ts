@@ -2,19 +2,18 @@ import { useEffect, useRef, useState, type Dispatch, type SetStateAction } from 
 import {
   BOOKMARKS_STORAGE_KEY,
   FALLBACK_SHARED,
+  INSTRUMENT_CATALOG,
   MAX_BOOKMARKS,
   OBS_STORAGE_LC_KEY,
   OBS_STORAGE_SED_KEY,
-  SKY_MAX_N_FRAMES,
   SKY_MAX_PIXEL_STATIC,
   URL_STATE_PARAM,
 } from "../lib/constants";
-import type { BookmarkEntry, DefaultsResponse, InstrumentGroup, ObservationGroup, OptionsResponse, UiSnapshot } from "../lib/types";
+import type { BookmarkEntry, DefaultsResponse, InstrumentGroup, ObservationGroup, UiSnapshot } from "../lib/types";
 import { parseStoredObsGroups } from "../lib/utils/obs";
 import {
-  asStringArray,
   decodeUrlState,
-  groupedInstrumentsFromOptions,
+  groupInstrumentsByType,
   parseStoredBookmarks,
   setIfArray,
   setIfBoolean,
@@ -73,7 +72,6 @@ export function useBootstrapState({
             setIfString(data.lightcurve.frequencies_input, actions.setLcFreq);
             setIfNumber(data.lightcurve.t_min, actions.setLcTMin);
             setIfNumber(data.lightcurve.t_max, actions.setLcTMax);
-            setIfArray<string>(data.lightcurve.selected_instruments, actions.setLcInstruments);
             setIfArray<ObservationGroup>(data.lightcurve.observation_groups, actions.setLcObsGroups);
           }
 
@@ -87,18 +85,11 @@ export function useBootstrapState({
             setIfNumber(data.spectrum.num_nu, actions.setSedNumNu);
             setIfString(data.spectrum.freq_unit, actions.setSedFreqUnit);
             setIfBoolean(data.spectrum.show_nufnu, actions.setSedNuFNu);
-            setIfArray<string>(data.spectrum.selected_instruments, actions.setSedInstruments);
             setIfArray<ObservationGroup>(data.spectrum.observation_groups, actions.setSedObsGroups);
           }
 
           if (data.skymap) {
-            setIfBoolean(data.skymap.animate, actions.setSkyAnimate);
             setIfNumber(data.skymap.t_obs, actions.setSkyTObs);
-            setIfNumber(data.skymap.t_min, actions.setSkyTMin);
-            setIfNumber(data.skymap.t_max, actions.setSkyTMax);
-            setIfNumber(data.skymap.n_frames, (value) => {
-              actions.setSkyNFrames(Math.max(3, Math.min(SKY_MAX_N_FRAMES, Math.round(value))));
-            });
             setIfString(data.skymap.nu_input, actions.setSkyNuInput);
             setIfNumber(data.skymap.fov, actions.setSkyFov);
             setIfNumber(data.skymap.npixel, (value) => {
@@ -107,16 +98,15 @@ export function useBootstrapState({
           }
         }
 
-        if (optionsRes.ok) {
-          const options = (await optionsRes.json()) as OptionsResponse;
-          const fallbackInstruments = asStringArray(options.instruments);
-          setInstrumentGroups(groupedInstrumentsFromOptions(options));
+        // Instrument catalog is defined locally — group from local constant.
+        const catalogNames = Object.keys(INSTRUMENT_CATALOG);
+        setInstrumentGroups(groupInstrumentsByType(catalogNames));
+        const allowed = new Set(catalogNames);
+        actions.setLcInstruments((prev) => prev.filter((name) => allowed.has(name)));
+        actions.setSedInstruments((prev) => prev.filter((name) => allowed.has(name)));
 
-          if (fallbackInstruments.length > 0) {
-            const allowed = new Set(fallbackInstruments);
-            actions.setLcInstruments((prev) => prev.filter((name) => allowed.has(name)));
-            actions.setSedInstruments((prev) => prev.filter((name) => allowed.has(name)));
-          }
+        if (optionsRes.ok) {
+          const options = (await optionsRes.json()) as Record<string, unknown>;
           if (typeof options.version === "string" && options.version.trim()) {
             setAppVersion(options.version.trim());
           }

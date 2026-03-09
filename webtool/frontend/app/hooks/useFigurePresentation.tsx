@@ -3,6 +3,7 @@ import {
   useDeferredValue,
   useEffect,
   useMemo,
+  useRef,
   type Dispatch,
   type MutableRefObject,
   type ReactNode,
@@ -48,6 +49,12 @@ type UseFigurePresentationArgs = {
   shared: SharedParams;
   lcObsGroups: ObservationGroup[];
   sedObsGroups: ObservationGroup[];
+  lcInstruments: string[];
+  sedInstruments: string[];
+  sedFreqUnit: string;
+  sedNuFNu: boolean;
+  skyFovUnit: string;
+  skyIntensityUnit: string;
   axisRangesRef: MutableRefObject<Record<Mode, AxisRanges>>;
   axisSignaturesRef: MutableRefObject<Record<Mode, AxisSignatures>>;
   setZoomRevision: Dispatch<SetStateAction<number>>;
@@ -66,6 +73,12 @@ export function useFigurePresentation({
   shared,
   lcObsGroups,
   sedObsGroups,
+  lcInstruments,
+  sedInstruments,
+  sedFreqUnit,
+  sedNuFNu,
+  skyFovUnit,
+  skyIntensityUnit,
   axisRangesRef,
   axisSignaturesRef,
   setZoomRevision,
@@ -116,22 +129,35 @@ export function useFigurePresentation({
     return map;
   }, [obsGroups]);
 
-  // Build figure client-side from plot_data for all modes.
+  // Build figure client-side from plot_data.
+  // Display units come from frontend state — changing them rebuilds the figure
+  // locally without triggering a backend re-computation.
   const plotData = result?.plot_data;
+  const { flux_unit, time_unit } = shared;
+  const lcOpts = useMemo(() => ({ fluxUnit: flux_unit, timeUnit: time_unit, instruments: lcInstruments }), [flux_unit, time_unit, lcInstruments]);
+  const sedOpts = useMemo(() => ({ fluxUnit: flux_unit, freqUnit: sedFreqUnit, nufnu: sedNuFNu, instruments: sedInstruments }), [flux_unit, sedFreqUnit, sedNuFNu, sedInstruments]);
+
+  // Mode-specific display options — only the active mode's options are in the deps
+  // to avoid unnecessary figure rebuilds when changing settings for other modes.
+  const modeDisplayDeps = mode === "lightcurve" ? lcOpts
+    : mode === "spectrum" ? sedOpts
+    : { fovUnit: skyFovUnit, intensityUnit: skyIntensityUnit };
+
   const builtFigure = useMemo(() => {
     if (resultMode !== mode) return null;
     if (!plotData) return null;
     if (mode === "lightcurve") {
       const pd = { ...(plotData as LcPlotData), obs: obsEntries };
-      return buildLcFigure(pd, obsShiftMap);
+      return buildLcFigure(pd, lcOpts, obsShiftMap);
     }
     if (mode === "spectrum") {
       const pd = { ...(plotData as SedPlotData), obs: obsEntries };
-      return buildSedFigure(pd, obsShiftMap);
+      return buildSedFigure(pd, sedOpts, obsShiftMap);
     }
-    if (mode === "skymap") return buildSkymapFigure(plotData as SkymapPlotData);
+    if (mode === "skymap") return buildSkymapFigure(plotData as SkymapPlotData, { fovUnit: skyFovUnit, intensityUnit: skyIntensityUnit });
     return null;
-  }, [plotData, resultMode, mode, obsEntries, obsShiftMap]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [plotData, resultMode, mode, obsEntries, obsShiftMap, modeDisplayDeps]);
 
   const comparePlotData = compareResult?.plot_data;
   const compareBuiltFigure = useMemo(() => {
@@ -139,14 +165,14 @@ export function useFigurePresentation({
     if (!comparePlotData) return null;
     if (mode === "lightcurve") {
       const pd = { ...(comparePlotData as LcPlotData), obs: obsEntries };
-      return buildLcFigure(pd, obsShiftMap);
+      return buildLcFigure(pd, lcOpts, obsShiftMap);
     }
     if (mode === "spectrum") {
       const pd = { ...(comparePlotData as SedPlotData), obs: obsEntries };
-      return buildSedFigure(pd, obsShiftMap);
+      return buildSedFigure(pd, sedOpts, obsShiftMap);
     }
     return null;
-  }, [compareEnabled, comparePlotData, compareResultMode, mode, obsEntries, obsShiftMap]);
+  }, [compareEnabled, comparePlotData, compareResultMode, mode, obsEntries, obsShiftMap, lcOpts, sedOpts]);
 
   useEffect(() => {
     if (resultMode !== mode) return;
@@ -205,6 +231,20 @@ export function useFigurePresentation({
       setZoomRevision((value) => value + 1);
     }
   }, [axisRangesRef, axisSignaturesRef, builtFigure, mode, resultMode, setZoomRevision]);
+
+  // Clear saved skymap axis ranges when FOV unit changes, since stored values
+  // are in the previous unit and would produce a wrong zoom.
+  const prevFovUnitRef = useRef(skyFovUnit);
+  useEffect(() => {
+    if (mode !== "skymap") return;
+    if (prevFovUnitRef.current === skyFovUnit) return;
+    prevFovUnitRef.current = skyFovUnit;
+    const cur = axisRangesRef.current.skymap;
+    if (cur.xaxis !== null || cur.yaxis !== null) {
+      axisRangesRef.current.skymap = { xaxis: null, yaxis: null, yaxis2: null };
+      setZoomRevision((v) => v + 1);
+    }
+  }, [axisRangesRef, mode, setZoomRevision, skyFovUnit]);
 
   // baseFigure: compare overlay, legend font, skymap layout, uirevision.
   // Runs only when computation results or compare settings change, NOT on every zoom.

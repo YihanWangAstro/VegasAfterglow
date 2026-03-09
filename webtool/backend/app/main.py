@@ -32,20 +32,11 @@ if _repo_root and (_repo_root / "VegasAfterglow").exists():
         sys.path.insert(0, str(_repo_root))
 
 from .compute import compute_model, compute_sed, compute_skymap
-from .constants import FLUX_SCALES, FREQ_SCALES, INSTRUMENTS, OBS_FLUX_UNITS, TIME_SCALES
-from .exports import (
-    export_csv,
-    export_json,
-    export_sed_csv,
-    export_sed_json,
-    export_skymap_gif_base64,
-    export_skymap_json,
-)
+from .constants import OBS_FLUX_UNITS
 from .services.plot_data import build_lc_plot_data, build_sed_plot_data, build_skymap_plot_data
 from .helpers import parse_entry
 from .schemas import LightCurveRequest, SharedParams, SkyMapRequest, SpectrumRequest
 from .services.parsing import parse_frequency_input, shared_to_physics
-from .services.validation import resolve_export_kinds, validate_instruments, validate_shared
 
 try:
     import VegasAfterglow as _va
@@ -54,9 +45,6 @@ try:
 except Exception:
     APP_VERSION = "unknown"
 
-_FLUX_UNITS = list(FLUX_SCALES.keys()) + ["AB mag"]
-_TIME_UNITS = list(TIME_SCALES.keys())
-_FREQ_UNITS = list(FREQ_SCALES.keys())
 
 
 @asynccontextmanager
@@ -160,11 +148,7 @@ def options(response: Response) -> dict[str, Any]:
     response.headers["Cache-Control"] = "public, max-age=300"
     return {
         "version": APP_VERSION,
-        "flux_units": _FLUX_UNITS,
-        "time_units": _TIME_UNITS,
-        "freq_units": _FREQ_UNITS,
         "obs_flux_units": OBS_FLUX_UNITS,
-        "instruments": sorted(INSTRUMENTS),
     }
 
 
@@ -177,7 +161,6 @@ def defaults(response: Response) -> dict[str, Any]:
             "frequencies_input": "1e9, R, 1keV",
             "t_min": 1.0,
             "t_max": 1e8,
-            "selected_instruments": [],
             "observation_groups": [],
         },
         "spectrum": {
@@ -185,9 +168,6 @@ def defaults(response: Response) -> dict[str, Any]:
             "nu_min": 1e8,
             "nu_max": 1e20,
             "num_nu": 200,
-            "freq_unit": "Hz",
-            "show_nufnu": False,
-            "selected_instruments": [],
             "observation_groups": [],
         },
         "skymap": {
@@ -205,8 +185,6 @@ def defaults(response: Response) -> dict[str, Any]:
 
 @app.post("/api/lightcurve")
 def lightcurve(req: LightCurveRequest) -> dict[str, Any]:
-    validate_shared(req.shared)
-    selected_instruments = validate_instruments(req.selected_instruments)
 
     if req.t_min <= 0 or req.t_max <= 0:
         raise HTTPException(status_code=400, detail="t_min and t_max must be positive")
@@ -231,9 +209,6 @@ def lightcurve(req: LightCurveRequest) -> dict[str, Any]:
         raise HTTPException(status_code=400, detail=f"Light curve computation failed: {exc}") from exc
     compute_s = time_mod.perf_counter() - t0
 
-    is_mag = req.shared.flux_unit == "AB mag"
-
-    export_unit = "cgs" if is_mag else req.shared.flux_unit
     response: dict[str, Any] = {
         "meta": {
             "compute_seconds": compute_s,
@@ -243,35 +218,14 @@ def lightcurve(req: LightCurveRequest) -> dict[str, Any]:
         },
     }
 
-    plot_data = build_lc_plot_data(
-        data,
-        req.t_min,
-        req.t_max,
-        req.shared.flux_unit,
-        req.shared.time_unit,
-        selected_instruments=selected_instruments if not is_mag else None,
-    )
+    plot_data = build_lc_plot_data(data, req.t_min, req.t_max)
     response["plot_data"] = plot_data
-
-    if req.include_exports:
-        kinds = resolve_export_kinds(req.export_kinds, defaults={"csv", "json"}, allowed={"csv", "json"})
-        exports: dict[str, str] = {}
-        if "csv" in kinds:
-            exports["csv"] = export_csv(data, export_unit, req.shared.time_unit)
-        if "json" in kinds:
-            exports["json"] = export_json(data, export_unit, req.shared.time_unit)
-        response["exports"] = exports
 
     return ORJSONResponse(response)
 
 
 @app.post("/api/spectrum")
 def spectrum(req: SpectrumRequest) -> dict[str, Any]:
-    validate_shared(req.shared)
-    selected_instruments = validate_instruments(req.selected_instruments)
-
-    if req.freq_unit not in FREQ_SCALES:
-        raise HTTPException(status_code=400, detail=f"Unsupported freq_unit: {req.freq_unit}")
 
     if req.nu_min <= 0 or req.nu_max <= 0:
         raise HTTPException(status_code=400, detail="nu_min and nu_max must be positive")
@@ -304,13 +258,6 @@ def spectrum(req: SpectrumRequest) -> dict[str, Any]:
         raise HTTPException(status_code=400, detail=f"Spectrum computation failed: {exc}") from exc
     compute_s = time_mod.perf_counter() - t0
 
-    is_mag = req.shared.flux_unit == "AB mag"
-    show_nufnu = req.show_nufnu
-    if is_mag and show_nufnu:
-        show_nufnu = False
-        warnings.append("AB mag is not compatible with νFν. Showing Fν in AB mag.")
-
-    export_unit = "cgs" if is_mag else req.shared.flux_unit
     response: dict[str, Any] = {
         "meta": {
             "compute_seconds": compute_s,
@@ -319,30 +266,15 @@ def spectrum(req: SpectrumRequest) -> dict[str, Any]:
         },
     }
 
-    plot_data = build_sed_plot_data(
-        data,
-        req.shared.flux_unit,
-        req.freq_unit,
-        show_nufnu,
-        selected_instruments=selected_instruments if not is_mag else None,
-    )
+    plot_data = build_sed_plot_data(data)
     response["plot_data"] = plot_data
-
-    if req.include_exports:
-        kinds = resolve_export_kinds(req.export_kinds, defaults={"csv", "json"}, allowed={"csv", "json"})
-        exports: dict[str, str] = {}
-        if "csv" in kinds:
-            exports["csv"] = export_sed_csv(data, export_unit, req.freq_unit)
-        if "json" in kinds:
-            exports["json"] = export_sed_json(data, export_unit, req.freq_unit)
-        response["exports"] = exports
 
     return ORJSONResponse(response)
 
 
 @app.post("/api/skymap")
 def skymap(req: SkyMapRequest) -> dict[str, Any]:
-    validate_shared(req.shared)
+
 
     if req.fov <= 0:
         raise HTTPException(status_code=400, detail="fov must be positive")
@@ -396,12 +328,4 @@ def skymap(req: SkyMapRequest) -> dict[str, Any]:
         },
     }
     response["plot_data"] = build_skymap_plot_data(data)
-    if req.include_exports:
-        kinds = resolve_export_kinds(req.export_kinds, defaults={"json"}, allowed={"json", "gif"})
-        exports: dict[str, str] = {}
-        if "json" in kinds:
-            exports["json"] = export_skymap_json(data)
-        if "gif" in kinds:
-            exports["gif"] = export_skymap_gif_base64(data)
-        response["exports"] = exports
     return ORJSONResponse(response)

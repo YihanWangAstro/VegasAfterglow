@@ -11,7 +11,7 @@ _FREQ_SPLIT = re.compile(r",(?![^\[]*\])")
 
 def shared_to_physics(shared: SharedParams) -> dict[str, Any]:
     # Exclude UI-only fields; add derived d_L_cm and z in place of d_L_mpc.
-    physics = shared.model_dump(exclude={"flux_unit", "time_unit", "d_L_mpc", "num_t"})
+    physics = shared.model_dump(exclude={"d_L_mpc", "num_t"})
     physics["d_L_cm"] = shared.d_L_mpc * 3.0856775814913673e24
     physics["z"] = z_from_lumi_dist_mpc(shared.d_L_mpc)
     return physics

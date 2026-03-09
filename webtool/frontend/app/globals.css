@@ -383,6 +383,7 @@ textarea {
 }
 
 .sb-field {
+  position: relative;
   display: grid;
   gap: 0.25rem;
 }
@@ -495,7 +496,7 @@ textarea {
 }
 
 .sb-help {
-  position: relative;
+  position: static;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -512,10 +513,10 @@ textarea {
 
 .sb-help-tip {
   position: absolute;
-  right: calc(100% + 0.45rem);
-  top: 50%;
-  transform: translateY(-50%);
-  width: min(18.5rem, 72vw);
+  left: 0;
+  right: 0;
+  top: calc(100% + 0.35rem);
+  width: auto;
   border: 1px solid var(--border);
   border-radius: 8px;
   background: var(--bg-raised);

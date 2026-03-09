@@ -57,6 +57,7 @@ export function ModePanelSpectrum({
             value={sedTimesDraft}
             onChange={(e) => setSedTimesDraft(e.target.value)}
             onBlur={commitSedTimes}
+            onKeyDown={(e) => { if (e.key === "Enter") commitSedTimes(); }}
             placeholder="e.g. 1e3, 1e4, 1e5"
           />
         </label>

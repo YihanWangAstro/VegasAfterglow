@@ -2,7 +2,6 @@ import type { DownloadKind, Mode } from "../lib/types";
 
 type Props = {
   mode: Mode;
-  downloading: DownloadKind | null;
   hasFigureData: boolean;
   appVersion: string;
   citeLinkText: string;
@@ -12,7 +11,6 @@ type Props = {
 
 export function SidebarFooter({
   mode,
-  downloading,
   hasFigureData,
   appVersion,
   citeLinkText,
@@ -22,17 +20,13 @@ export function SidebarFooter({
   return (
     <div className="sidebar-footer">
       <div className="sidebar-downloads">
-        {mode !== "skymap" ? (
-          <button disabled={downloading !== null || !hasFigureData} onClick={() => onDownload("csv")}>
-            {downloading === "csv" ? "Preparing Data CSV..." : "Download Data (CSV)"}
-          </button>
-        ) : (
-          <button disabled={downloading !== null || !hasFigureData} onClick={() => onDownload("gif")}>
-            {downloading === "gif" ? "Preparing GIF..." : "Save GIF"}
+        {mode !== "skymap" && (
+          <button disabled={!hasFigureData} onClick={() => onDownload("csv")}>
+            Download Data (CSV)
           </button>
         )}
-        <button disabled={downloading !== null || !hasFigureData} onClick={() => onDownload("json")}>
-          {downloading === "json" ? "Preparing Data JSON..." : "Download Data (JSON)"}
+        <button disabled={!hasFigureData} onClick={() => onDownload("json")}>
+          Download Data (JSON)
         </button>
       </div>
       <p className="sb-footer-text">

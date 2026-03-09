@@ -41,8 +41,6 @@ export type ObsEntry = {
 };
 
 export type LcPlotData = {
-  flux_unit: string;
-  time_unit: string;
   t_min_s: number;
   t_max_s: number;
   times_s: number[];
@@ -58,32 +56,13 @@ export type LcPlotData = {
     components: Record<string, number[]>; // name -> [time_idx]
   }[];
   obs?: ObsEntry[];
-  instruments: {
-    name: string;
-    nu_min: number;
-    nu_max: number;
-    sensitivity: number;
-    kind: string;
-    t_lo_s: number;
-    t_hi_s: number;
-  }[];
 };
 
 export type SedPlotData = {
-  flux_unit: string;
-  freq_unit: string;
-  nufnu: boolean;
   freq_hz: number[];
   t_snapshots_s: number[];
   components: Record<string, number[][]>; // name -> [t_idx][nu_idx]
   obs?: ObsEntry[];
-  instruments: {
-    name: string;
-    nu_min: number;
-    nu_max: number;
-    sensitivity: number;
-    kind: string;
-  }[];
 };
 
 export type SkymapPlotData = {
@@ -108,16 +87,9 @@ export type RunResponse = {
     [key: string]: unknown;
   };
   plot_data?: LcPlotData | SedPlotData | SkymapPlotData;
-  exports?: Record<string, string>;
 };
 
-export type OptionsResponse = {
-  instruments?: string[];
-  instrument_groups?: { label?: string; items?: string[] }[];
-  version?: string;
-};
-
-export type DownloadKind = "csv" | "json" | "gif";
+export type DownloadKind = "csv" | "json";
 export type DistanceDriver = "dL" | "z";
 
 export type ObservationGroup = {
@@ -200,7 +172,9 @@ export type UiSnapshot = {
     n_frames: number;
     nu_input: string;
     fov: number;
+    fov_unit: string;
     npixel: number;
+    intensity_unit: string;
   };
 };
 
@@ -255,7 +229,6 @@ export type DefaultsResponse = {
     frequencies_input?: string;
     t_min?: number;
     t_max?: number;
-    selected_instruments?: string[];
     observation_groups?: ObservationGroup[];
   };
   spectrum?: {
@@ -265,7 +238,6 @@ export type DefaultsResponse = {
     num_nu?: number;
     freq_unit?: string;
     show_nufnu?: boolean;
-    selected_instruments?: string[];
     observation_groups?: ObservationGroup[];
   };
   skymap?: {
@@ -276,6 +248,8 @@ export type DefaultsResponse = {
     n_frames?: number;
     nu_input?: string;
     fov?: number;
+    fov_unit?: string;
     npixel?: number;
+    intensity_unit?: string;
   };
 };

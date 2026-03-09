@@ -4,6 +4,7 @@
  * trace + layout objects.
  */
 
+import { INSTRUMENT_CATALOG } from "../constants";
 import type { LcPlotData, SedPlotData, SkymapPlotData } from "../types";
 
 export type PlotlyFigure = {
@@ -49,7 +50,7 @@ const KEV_HZ = 2.417989242084918e17;
 const C_ANGSTROM_PER_S = 2.99792458e18;
 
 // Freq scales: display = hz / scale
-const FREQ_DISP_SCALES: Record<string, number> = {
+export const FREQ_DISP_SCALES: Record<string, number> = {
   Hz: 1,
   GHz: 1e9,
   keV: KEV_HZ,
@@ -129,7 +130,7 @@ const COMP_LABELS: Record<string, string> = {
   rvs_ssc: "rvs IC",
 };
 
-const COMP_ORDER = ["total", "fwd_sync", "fwd_ssc", "rvs_sync", "rvs_ssc"];
+export const COMP_ORDER = ["total", "fwd_sync", "fwd_ssc", "rvs_sync", "rvs_ssc"];
 
 const FBAND_TITLE = "$F\\;(\\mathrm{erg\\,cm^{-2}\\,s^{-1}})$";
 
@@ -170,6 +171,17 @@ function freqColors(freqHz: number[]): string[] {
 /** Assign colors from TIME_PALETTE by index. */
 function timeColors(n: number): string[] {
   return Array.from({ length: n }, (_, i) => TIME_PALETTE[i % TIME_PALETTE.length]);
+}
+
+type ResolvedInstrument = { name: string; nu_min: number; nu_max: number; sensitivity: number; kind: "Fnu" | "Fband" };
+
+function resolveInstruments(names: string[]): ResolvedInstrument[] {
+  const result: ResolvedInstrument[] = [];
+  for (const name of names) {
+    const entry = INSTRUMENT_CATALOG[name];
+    if (entry) result.push({ name, ...entry });
+  }
+  return result;
 }
 
 const INSTRUMENT_COLORS: Record<string, string> = {
@@ -343,15 +355,21 @@ function pushAll(target: number[], source: number[]) {
 // LC figure builder
 // ---------------------------------------------------------------------------
 
-export function buildLcFigure(pd: LcPlotData, obsShifts?: Map<string, number>): PlotlyFigure {
-  const { flux_unit, time_unit, t_min_s, t_max_s, times_s, pt, bands, obs = [], instruments } = pd;
+export type LcDisplayOptions = { fluxUnit: string; timeUnit: string; instruments: string[] };
+
+export function buildLcFigure(pd: LcPlotData, opts: LcDisplayOptions, obsShifts?: Map<string, number>): PlotlyFigure {
+  const { t_min_s, t_max_s, times_s, pt, bands, obs = [] } = pd;
+  const instruments = resolveInstruments(opts.instruments);
+  const flux_unit = opts.fluxUnit;
+  const time_unit = opts.timeUnit;
   const isABmag = flux_unit === "AB mag";
   const tScale = TIME_SCALES_S[time_unit] ?? 86400;
   const fluxScale = FLUX_SCALES_CGS[flux_unit] ?? 1e-26;
   const tDisp = times_s.map((t) => t / tScale);
   const hasPt = pt != null && pt.freq_hz.length > 0;
   const hasBands = bands.length > 0;
-  const useSecondary = hasPt && hasBands;
+  const hasFbandInst = instruments.some((i) => i.kind === "Fband");
+  const useSecondary = hasPt && (hasBands || hasFbandInst);
 
   // Compute colors for all frequencies (pt + band centroids) together.
   const allFreqs = [...(pt?.freq_hz ?? []), ...bands.map((b) => b.nu_cen)];
@@ -444,8 +462,8 @@ export function buildLcFigure(pd: LcPlotData, obsShifts?: Map<string, number>): 
   // Instrument sensitivity traces
   for (const inst of instruments) {
     const isFnu = inst.kind === "Fnu";
-    const tLo = inst.t_lo_s / tScale;
-    const tHi = inst.t_hi_s / tScale;
+    const tLo = t_min_s / tScale;
+    const tHi = t_max_s / tScale;
     const yVal = isFnu ? (isABmag ? NaN : inst.sensitivity / fluxScale) : inst.sensitivity;
     if (!isFinite(yVal)) continue;
     traces.push({
@@ -585,9 +603,10 @@ export function buildLcFigure(pd: LcPlotData, obsShifts?: Map<string, number>): 
 
   if (useSecondary) {
     layout.yaxis = yAxisPt;
+    const y2Range = hasBands && yRangeBd ? { range: yRangeBd } : {};
     layout.yaxis2 = {
       type: "log",
-      ...(yRangeBd ? { range: yRangeBd } : {}),
+      ...y2Range,
       overlaying: "y",
       side: "right",
       ...AXIS_COMMON,
@@ -613,17 +632,19 @@ export function buildLcFigure(pd: LcPlotData, obsShifts?: Map<string, number>): 
 // Spectrum / SED figure builder
 // ---------------------------------------------------------------------------
 
-export function buildSedFigure(pd: SedPlotData, obsShifts?: Map<string, number>): PlotlyFigure {
+export type SedDisplayOptions = { fluxUnit: string; freqUnit: string; nufnu: boolean; instruments: string[] };
+
+export function buildSedFigure(pd: SedPlotData, opts: SedDisplayOptions, obsShifts?: Map<string, number>): PlotlyFigure {
   const {
-    flux_unit,
-    freq_unit,
-    nufnu,
     freq_hz,
     t_snapshots_s,
     components,
     obs = [],
-    instruments,
   } = pd;
+  const instruments = resolveInstruments(opts.instruments);
+  const flux_unit = opts.fluxUnit;
+  const freq_unit = opts.freqUnit;
+  const nufnu = opts.nufnu;
   const t_labels = t_snapshots_s.map(formatTimeLabel);
   const isABmag = flux_unit === "AB mag";
   const actualNufnu = nufnu && !isABmag;
@@ -806,20 +827,71 @@ function decodeFloat32Frame(b64: string, ny: number, nx: number): number[][] {
 // Skymap axes: inherit common styling but omit minor ticks, tickfont, and exponentformat.
 const { minor: _, tickfont: _tf, exponentformat: _ef, ...SKYMAP_AXIS_STYLE } = AXIS_COMMON;
 
-export function buildSkymapFigure(pd: SkymapPlotData): PlotlyFigure {
+// Log10 offsets to convert from CGS specific intensity (erg/cm²/s/Hz/sr) to display units.
+// Display value = log10(I_cgs) + offset.
+const SKY_UNIT_LOG_OFFSETS: Record<string, number> = {
+  "cgs": 0,
+  "mJy/sr": 26,      // 1 mJy = 1e-26 erg/cm²/s/Hz
+  "Jy/sr": 23,       // 1 Jy  = 1e-23
+  "MJy/sr": 17,      // 1 MJy = 1e-17
+  "μJy/μas²": Math.log10(1e29 / (206265e6) ** 2),  // ≈ 6.371
+};
+
+const SKY_UNIT_LABELS: Record<string, string> = {
+  "cgs": "erg cm<sup>-2</sup> s<sup>-1</sup> Hz<sup>-1</sup> sr<sup>-1</sup>",
+  "mJy/sr": "mJy sr<sup>-1</sup>",
+  "Jy/sr": "Jy sr<sup>-1</sup>",
+  "MJy/sr": "MJy sr<sup>-1</sup>",
+  "μJy/μas²": "\u03bcJy \u03bcas<sup>-2</sup>",
+};
+
+const SKY_FOV_SCALES: Record<string, number> = { "μas": 1, "mas": 1e3, "arcsec": 1e6 };
+const SKY_FOV_LABELS: Record<string, string> = { "μas": "\u03bcas", "mas": "mas", "arcsec": "arcsec" };
+
+type SkymapOptions = {
+  intensityUnit?: string;
+  fovUnit?: string;
+};
+
+function offsetFrame(frame: number[][], offset: number): number[][] {
+  if (offset === 0) return frame;
+  for (const row of frame) {
+    for (let i = 0; i < row.length; i++) {
+      if (Number.isFinite(row[i])) row[i] += offset;
+    }
+  }
+  return frame;
+}
+
+export function buildSkymapFigure(pd: SkymapPlotData, opts?: SkymapOptions): PlotlyFigure {
   const { nx, ny, frames_b64f32, extent_uas, t_obs_s, nu_obs_hz, dx, dy, x0, y0, z_min, z_max } = pd;
   const t_labels = t_obs_s.map(formatTimeLabel);
   const nu_label = formatFreqLabel(nu_obs_hz);
-  const [x_min, x_max, y_min, y_max] = extent_uas;
 
-  const z0 = decodeFloat32Frame(frames_b64f32[0], ny, nx);
-  const colorbarTitle = "log<sub>10</sub> I (erg cm<sup>-2</sup> s<sup>-1</sup> Hz<sup>-1</sup> sr<sup>-1</sup>)";
+  const fovUnit = opts?.fovUnit ?? "μas";
+  const fovScale = SKY_FOV_SCALES[fovUnit] ?? 1;
+  const fovLabel = SKY_FOV_LABELS[fovUnit] ?? fovUnit;
+  const [x_min, x_max, y_min, y_max] = extent_uas.map((v) => v / fovScale) as [number, number, number, number];
+  const dxScaled = dx / fovScale;
+  const dyScaled = dy / fovScale;
+  const x0Scaled = x0 / fovScale;
+  const y0Scaled = y0 / fovScale;
+
+  const unit = opts?.intensityUnit ?? "cgs";
+  const logOffset = SKY_UNIT_LOG_OFFSETS[unit] ?? 0;
+  const unitLabel = SKY_UNIT_LABELS[unit] ?? unit;
+  const colorbarTitle = `log<sub>10</sub> I (${unitLabel})`;
+
+  const zMinDisp = z_min + logOffset;
+  const zMaxDisp = z_max + logOffset;
+
+  const z0 = offsetFrame(decodeFloat32Frame(frames_b64f32[0], ny, nx), logOffset);
 
   const data: Record<string, unknown>[] = [{
     type: "heatmap",
-    z: z0, x0, dx, y0, dy,
+    z: z0, x0: x0Scaled, dx: dxScaled, y0: y0Scaled, dy: dyScaled,
     colorscale: "Electric",
-    zmin: z_min, zmax: z_max,
+    zmin: zMinDisp, zmax: zMaxDisp,
     zauto: false,
     colorbar: {
       title: { text: colorbarTitle, side: "right", font: { size: 12 } },
@@ -830,22 +902,22 @@ export function buildSkymapFigure(pd: SkymapPlotData): PlotlyFigure {
       thickness: 28,
       tickfont: { size: 12 },
     },
-    hovertemplate: "\u0394x=%{x} \u03bcas<br>\u0394y=%{y} \u03bcas<br>log\u2081\u2080 I=%{z:.3g}<extra></extra>",
+    hovertemplate: `\u0394x=%{x} ${fovLabel}<br>\u0394y=%{y} ${fovLabel}<br>log\u2081\u2080 I=%{z:.3g}<extra></extra>`,
   }];
 
   const isAnimated = frames_b64f32.length > 1;
 
   const frames: Record<string, unknown>[] = frames_b64f32.map((b64, i) => ({
     name: `frame_${i}`,
-    data: [{ z: i === 0 ? z0 : decodeFloat32Frame(b64, ny, nx) }],
+    data: [{ z: i === 0 ? z0 : offsetFrame(decodeFloat32Frame(b64, ny, nx), logOffset) }],
     traces: [0],
   }));
 
   const layout: Record<string, unknown> = {
     title: isAnimated ? `\u03bd = ${nu_label}` : `t = ${t_labels[0]}, \u03bd = ${nu_label}`,
-    xaxis: { title: axisTitle("\u0394x (\u03bcas)"), range: [x_min, x_max], autorange: false, ...SKYMAP_AXIS_STYLE },
+    xaxis: { title: axisTitle(`\u0394x (${fovLabel})`), range: [x_min, x_max], autorange: false, ...SKYMAP_AXIS_STYLE },
     yaxis: {
-      title: axisTitle("\u0394y (\u03bcas)"), range: [y_min, y_max], autorange: false,
+      title: axisTitle(`\u0394y (${fovLabel})`), range: [y_min, y_max], autorange: false,
       ...SKYMAP_AXIS_STYLE,
     },
     template: "none",

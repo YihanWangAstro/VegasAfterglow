@@ -49,22 +49,18 @@ export const PLOT_FLUX_UNIT_OPTIONS = ["mJy", "Jy", "uJy", "cgs", "AB mag"] as c
 export const TIME_UNIT_OPTIONS = ["s", "day", "hr", "min"] as const;
 export const FREQ_UNIT_OPTIONS = ["Hz", "GHz", "keV", "MeV"] as const;
 
-export const SKY_DEFAULT_N_FRAMES = 15;
-export const SKY_MAX_N_FRAMES = 30;
-export const SKY_MAX_PIXEL_ANIMATE = 512;
 export const SKY_MAX_PIXEL_STATIC = 1024;
 export const SKY_PIXEL_OPTIONS = [64, 128, 256, 512, 1024] as const;
+export const SKY_FOV_UNIT_OPTIONS = ["μas", "mas", "arcsec"] as const;
+export const SKY_INTENSITY_UNIT_OPTIONS = ["cgs", "mJy/sr", "Jy/sr", "MJy/sr", "μJy/μas²"] as const;
 
 export const ENABLE_INTERACTIVE_DOWNSAMPLE = true;
 export const INTERACTIVE_LIGHTCURVE_NUM_T_MAX = 120;
 export const INTERACTIVE_SPECTRUM_NUM_NU_MAX = 120;
 export const INTERACTIVE_SKY_PIXEL_MAX_STATIC = 256;
-export const INTERACTIVE_SKY_PIXEL_MAX_ANIMATE = 256;
-export const INTERACTIVE_SKY_FRAMES_MAX = 8;
 
 export const AUTO_RUN_DEBOUNCE_IDLE_MS = 10;
 export const SLIDER_COMMIT_INTERVAL_MS = 20;
-export const SPECTRUM_TEXT_COMMIT_DEBOUNCE_MS = 220;
 export const API_STATUS_REFRESH_DIRECT_MS = 2000;
 export const COLD_START_HINT_MS = 1200;
 
@@ -100,6 +96,30 @@ export const INSTRUMENT_TYPE_BY_NAME: Record<string, string> = {
 };
 
 export const INSTRUMENT_GROUP_ORDER = ["Radio", "Optical/IR", "X-ray", "Gamma-ray", "Other"] as const;
+
+// Instrument sensitivity catalog: { nu_min_Hz, nu_max_Hz, sensitivity, kind }
+// kind="Fnu": flux density (erg/cm²/s/Hz); kind="Fband": band-integrated flux (erg/cm²/s)
+export type InstrumentEntry = { nu_min: number; nu_max: number; sensitivity: number; kind: "Fnu" | "Fband" };
+export const INSTRUMENT_CATALOG: Record<string, InstrumentEntry> = {
+  "VLA":           { nu_min: 1e9,     nu_max: 5e10,    sensitivity: 5e-29,   kind: "Fnu" },
+  "ALMA":          { nu_min: 8.4e10,  nu_max: 9.5e11,  sensitivity: 3e-28,   kind: "Fnu" },
+  "MeerKAT":       { nu_min: 9e8,     nu_max: 1.67e9,  sensitivity: 5e-29,   kind: "Fnu" },
+  "ngVLA":         { nu_min: 1e9,     nu_max: 1.16e11, sensitivity: 3e-30,   kind: "Fnu" },
+  "Rubin/LSST":    { nu_min: 3.3e14,  nu_max: 1e15,    sensitivity: 3.6e-31, kind: "Fnu" },
+  "JWST":          { nu_min: 6e13,    nu_max: 2.5e14,  sensitivity: 9e-33,   kind: "Fnu" },
+  "WFST":          { nu_min: 3e14,    nu_max: 9.4e14,  sensitivity: 3.6e-30, kind: "Fnu" },
+  "SVOM/VT":       { nu_min: 4.6e14,  nu_max: 7.5e14,  sensitivity: 3.6e-30, kind: "Fnu" },
+  "Swift/XRT":     { nu_min: 7.25e16, nu_max: 2.42e18, sensitivity: 1e-13,   kind: "Fband" },
+  "Chandra":       { nu_min: 1.21e17, nu_max: 1.93e18, sensitivity: 1e-15,   kind: "Fband" },
+  "EP/WXT":        { nu_min: 1.21e17, nu_max: 9.67e17, sensitivity: 1e-10,   kind: "Fband" },
+  "EP/FXT":        { nu_min: 7.25e16, nu_max: 2.42e18, sensitivity: 2e-14,   kind: "Fband" },
+  "SVOM/MXT":      { nu_min: 4.84e16, nu_max: 2.42e18, sensitivity: 1e-12,   kind: "Fband" },
+  "SVOM/ECLAIRs":  { nu_min: 9.67e17, nu_max: 3.63e19, sensitivity: 5e-10,   kind: "Fband" },
+  "Swift/BAT":     { nu_min: 3.63e18, nu_max: 3.63e19, sensitivity: 2e-8,    kind: "Fband" },
+  "Fermi/GBM":     { nu_min: 1.93e18, nu_max: 9.67e21, sensitivity: 2e-7,    kind: "Fband" },
+  "Fermi/LAT":     { nu_min: 4.84e21, nu_max: 7.25e25, sensitivity: 1e-12,   kind: "Fband" },
+  "CTA":           { nu_min: 4.84e24, nu_max: 7.25e28, sensitivity: 1e-13,   kind: "Fband" },
+};
 
 export const OBS_STORAGE_LC_KEY = "afterglow:webtool:obs:lightcurve";
 export const OBS_STORAGE_SED_KEY = "afterglow:webtool:obs:spectrum";

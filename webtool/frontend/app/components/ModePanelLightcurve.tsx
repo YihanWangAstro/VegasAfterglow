@@ -5,8 +5,9 @@ import { HelpHint } from "./HelpHint";
 import { SliderField } from "./SliderField";
 
 type Props = {
-  lcFreq: string;
-  setLcFreq: (value: string) => void;
+  lcFreqDraft: string;
+  setLcFreqDraft: (value: string) => void;
+  commitLcFreq: () => void;
   renderDistanceObserverControls: () => ReactNode;
   renderModeLogSliderRow: (specs: ModeLogSliderSpec[], className?: string) => ReactNode;
   lcTMin: number;
@@ -20,8 +21,9 @@ type Props = {
 };
 
 export function ModePanelLightcurve({
-  lcFreq,
-  setLcFreq,
+  lcFreqDraft,
+  setLcFreqDraft,
+  commitLcFreq,
   renderDistanceObserverControls,
   renderModeLogSliderRow,
   lcTMin,
@@ -42,8 +44,10 @@ export function ModePanelLightcurve({
             <HelpHint text={FREQ_HELP_TEXT} ariaLabel="Frequency input help" />
           </span>
           <input
-            value={lcFreq}
-            onChange={(e) => setLcFreq(e.target.value)}
+            value={lcFreqDraft}
+            onChange={(e) => setLcFreqDraft(e.target.value)}
+            onBlur={commitLcFreq}
+            onKeyDown={(e) => { if (e.key === "Enter") commitLcFreq(); }}
             placeholder="e.g. 1e9, R, 1keV, XRT, [0.3keV,10keV]"
           />
         </label>

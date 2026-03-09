@@ -3,12 +3,8 @@ import {
   INSTRUMENT_GROUP_ORDER,
   INSTRUMENT_TYPE_BY_NAME,
   INTERACTIVE_LIGHTCURVE_NUM_T_MAX,
-  INTERACTIVE_SKY_FRAMES_MAX,
-  INTERACTIVE_SKY_PIXEL_MAX_ANIMATE,
   INTERACTIVE_SKY_PIXEL_MAX_STATIC,
   INTERACTIVE_SPECTRUM_NUM_NU_MAX,
-  SKY_DEFAULT_N_FRAMES,
-  SKY_MAX_N_FRAMES,
   SKY_MAX_PIXEL_STATIC,
   URL_STATE_MAX_CHARS,
   URL_STATE_VERSION,
@@ -20,7 +16,6 @@ import type {
   InstrumentGroup,
   Mode,
   ObservationGroup,
-  OptionsResponse,
   SharedParams,
   UiSnapshot,
 } from "../types";
@@ -118,27 +113,6 @@ export function normalizeShared(shared: SharedParams, mode: Mode): SharedParams 
   return next;
 }
 
-export function groupedInstrumentsFromOptions(options: OptionsResponse): InstrumentGroup[] {
-  const groupedFromApi =
-    Array.isArray(options.instrument_groups) && options.instrument_groups.length > 0
-      ? options.instrument_groups
-          .map((group) => ({
-            label: typeof group.label === "string" ? group.label : "",
-            items: asStringArray(group.items),
-          }))
-          .filter((group) => group.label.length > 0 && group.items.length > 0)
-      : [];
-
-  const fallbackInstruments = asStringArray(options.instruments);
-  if (groupedFromApi.length === 0) {
-    return fallbackInstruments.length > 0 ? groupInstrumentsByType(fallbackInstruments) : [];
-  }
-
-  const groupedKnown = new Set(groupedFromApi.flatMap((group) => group.items));
-  const ungrouped = fallbackInstruments.filter((name) => !groupedKnown.has(name));
-  if (ungrouped.length === 0) return groupedFromApi;
-  return [...groupedFromApi, { label: "Other", items: ungrouped }];
-}
 
 function normalizeSharedParams(value: unknown): SharedParams {
   const defaults = FALLBACK_SHARED;
@@ -216,12 +190,14 @@ export function defaultUiSnapshot(): UiSnapshot {
     skymap: {
       animate: false,
       t_obs: 1e6,
-      t_min: 1e4,
-      t_max: 1e7,
-      n_frames: SKY_DEFAULT_N_FRAMES,
+      t_min: 1e6,
+      t_max: 1e6,
+      n_frames: 1,
       nu_input: "1e9",
       fov: 500,
+      fov_unit: "μas",
       npixel: 256,
+      intensity_unit: "cgs",
     },
   };
 }
@@ -269,14 +245,16 @@ export function normalizeUiSnapshot(value: unknown): UiSnapshot | null {
       observation_groups: normalizeObsGroupArray(sedRaw.observation_groups, false),
     },
     skymap: {
-      animate: asBoolean(skyRaw.animate, defaults.skymap.animate),
+      animate: false,
       t_obs: asFiniteNumber(skyRaw.t_obs, defaults.skymap.t_obs),
-      t_min: asFiniteNumber(skyRaw.t_min, defaults.skymap.t_min),
-      t_max: asFiniteNumber(skyRaw.t_max, defaults.skymap.t_max),
-      n_frames: clampRangeValue(asFiniteNumber(skyRaw.n_frames, defaults.skymap.n_frames), 3, SKY_MAX_N_FRAMES),
+      t_min: asFiniteNumber(skyRaw.t_obs, defaults.skymap.t_obs),
+      t_max: asFiniteNumber(skyRaw.t_obs, defaults.skymap.t_obs),
+      n_frames: 1,
       nu_input: asString(skyRaw.nu_input, defaults.skymap.nu_input),
       fov: asFiniteNumber(skyRaw.fov, defaults.skymap.fov),
+      fov_unit: asString(skyRaw.fov_unit, defaults.skymap.fov_unit),
       npixel: clampRangeValue(asFiniteNumber(skyRaw.npixel, defaults.skymap.npixel), 64, SKY_MAX_PIXEL_STATIC),
+      intensity_unit: asString(skyRaw.intensity_unit, defaults.skymap.intensity_unit),
     },
   };
 }
@@ -387,11 +365,11 @@ export function buildComputationSpecFromSnapshot(snapshot: UiSnapshot, mode: Mod
     endpoint: "skymap",
     payload: {
       shared: normalized,
-      animate: snapshot.skymap.animate,
+      animate: false,
       t_obs: snapshot.skymap.t_obs,
-      t_min: snapshot.skymap.t_min,
-      t_max: snapshot.skymap.t_max,
-      n_frames: snapshot.skymap.n_frames,
+      t_min: snapshot.skymap.t_obs,
+      t_max: snapshot.skymap.t_obs,
+      n_frames: 1,
       nu_input: snapshot.skymap.nu_input,
       fov: snapshot.skymap.fov,
       npixel: snapshot.skymap.npixel,
@@ -436,15 +414,7 @@ export function buildInteractiveSpec(base: ComputationSpec, interactive: boolean
   }
 
   const payload = { ...base.payload };
-  const animate = Boolean(payload.animate);
-  payload.npixel = clampInt(
-    payload.npixel,
-    64,
-    animate ? INTERACTIVE_SKY_PIXEL_MAX_ANIMATE : INTERACTIVE_SKY_PIXEL_MAX_STATIC,
-  );
-  if (animate) {
-    payload.n_frames = clampInt(payload.n_frames, 3, INTERACTIVE_SKY_FRAMES_MAX);
-  }
+  payload.npixel = clampInt(payload.npixel, 64, INTERACTIVE_SKY_PIXEL_MAX_STATIC);
   return { ...base, payload };
 }
 

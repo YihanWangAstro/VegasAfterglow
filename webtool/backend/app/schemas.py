@@ -6,8 +6,6 @@ from pydantic import BaseModel, Field
 class SharedParams(BaseModel):
     d_L_mpc: float = 100.0
     theta_obs: float = 0.0
-    flux_unit: str = "mJy"
-    time_unit: str = "day"
     jet_type: str = "Top-hat"
     theta_c: float = 0.1
     E_iso: float = 1e52
@@ -47,10 +45,6 @@ class LightCurveRequest(BaseModel):
     frequencies_input: str = "1e9, R, 1keV"
     t_min: float = 1.0
     t_max: float = 1e8
-    selected_instruments: list[str] = Field(default_factory=list)
-    include_figure: bool = True
-    include_exports: bool = True
-    export_kinds: list[str] = Field(default_factory=list)
 
 
 class SpectrumRequest(BaseModel):
@@ -59,12 +53,6 @@ class SpectrumRequest(BaseModel):
     nu_min: float = 1e8
     nu_max: float = 1e20
     num_nu: int = 200
-    freq_unit: str = "Hz"
-    show_nufnu: bool = False
-    selected_instruments: list[str] = Field(default_factory=list)
-    include_figure: bool = True
-    include_exports: bool = True
-    export_kinds: list[str] = Field(default_factory=list)
 
 
 class SkyMapRequest(BaseModel):
@@ -77,6 +65,3 @@ class SkyMapRequest(BaseModel):
     nu_input: str = "1e9"
     fov: float = 500.0
     npixel: int = 256
-    include_figure: bool = True
-    include_exports: bool = True
-    export_kinds: list[str] = Field(default_factory=list)

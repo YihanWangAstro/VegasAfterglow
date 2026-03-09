@@ -20,16 +20,6 @@ type Args = {
   buildShareLink: (snapshot: UiSnapshot) => string | null;
   currentSnapshot: UiSnapshot;
 
-  sedTimesDraft: string;
-  sedTimes: string;
-  setSedTimes: (value: string) => void;
-  spectrumTextCommitDebounceMs: number;
-
-  skyAnimate: boolean;
-  skyNpixel: number;
-  setSkyNpixel: (value: number) => void;
-  skyMaxPixelAnimate: number;
-
   clearSavedXAxis: (mode: Mode) => void;
   clearSavedYAxes: (mode: Mode) => void;
   lcTMin: number;
@@ -40,6 +30,7 @@ type Args = {
   sedFreqUnit: string;
   shared: SharedParams;
   skyFov: number;
+  skyNpixel: number;
   mode: Mode;
   axisRangesRef: MutableRefObject<Record<Mode, AxisRanges>>;
   setZoomRevision: Dispatch<SetStateAction<number>>;
@@ -59,14 +50,6 @@ export function useHomeSyncEffects({
   sliderInteracting,
   buildShareLink,
   currentSnapshot,
-  sedTimesDraft,
-  sedTimes,
-  setSedTimes,
-  spectrumTextCommitDebounceMs,
-  skyAnimate,
-  skyNpixel,
-  setSkyNpixel,
-  skyMaxPixelAnimate,
   clearSavedXAxis,
   clearSavedYAxes,
   lcTMin,
@@ -77,6 +60,7 @@ export function useHomeSyncEffects({
   sedFreqUnit,
   shared,
   skyFov,
+  skyNpixel,
   mode,
   axisRangesRef,
   setZoomRevision,
@@ -114,21 +98,6 @@ export function useHomeSyncEffects({
       clearTimeoutRef(urlSyncTimerRef);
     };
   }, [buildShareLink, currentSnapshot, sliderInteracting, urlStateReady]);
-
-  useEffect(() => {
-    if (sedTimesDraft === sedTimes) return;
-    const timer = window.setTimeout(() => {
-      setSedTimes(sedTimesDraft);
-    }, spectrumTextCommitDebounceMs);
-    return () => window.clearTimeout(timer);
-  }, [sedTimesDraft, sedTimes, setSedTimes, spectrumTextCommitDebounceMs]);
-
-  useEffect(() => {
-    if (!skyAnimate) return;
-    if (skyNpixel > skyMaxPixelAnimate) {
-      setSkyNpixel(skyMaxPixelAnimate);
-    }
-  }, [setSkyNpixel, skyAnimate, skyMaxPixelAnimate, skyNpixel]);
 
   useEffect(() => {
     clearSavedXAxis("lightcurve");

@@ -185,6 +185,9 @@ export function ObservationEditor({
                   setShiftText(String(valid));
                   updateObsGroup(activeIndex, { shift: valid });
                 }}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter") (e.target as HTMLInputElement).blur();
+                }}
                 style={{ width: "5em" }}
               />
             </label>

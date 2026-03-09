@@ -2,7 +2,6 @@
 
 import {
   useCallback,
-  useEffect,
   useMemo,
   useRef,
   useState,
@@ -16,8 +15,6 @@ import {
   BIBTEX_TEXT,
   DEFAULT_APP_VERSION,
   MODE_OPTIONS,
-  SKY_MAX_PIXEL_ANIMATE,
-  SPECTRUM_TEXT_COMMIT_DEBOUNCE_MS,
 } from "../../lib/constants";
 import type {
   ComputationSpec,
@@ -65,6 +62,7 @@ export default function HomePage() {
     distanceDriver,
     shared,
     lcFreq,
+    lcFreqDraft,
     lcTMin,
     lcTMax,
     lcInstruments,
@@ -80,14 +78,13 @@ export default function HomePage() {
     sedInstruments,
     sedObsGroups,
     activeSedObsTab,
-    skyAnimate,
     skyTObs,
-    skyTMin,
-    skyTMax,
-    skyNFrames,
     skyNuInput,
+    skyNuInputDraft,
     skyFov,
+    skyFovUnit,
     skyNpixel,
+    skyIntensityUnit,
   } = parameterState;
 
   const {
@@ -96,6 +93,7 @@ export default function HomePage() {
     setDistanceDriver,
     setShared,
     setLcFreq,
+    setLcFreqDraft,
     setLcTMin,
     setLcTMax,
     setLcInstruments,
@@ -111,14 +109,13 @@ export default function HomePage() {
     setSedInstruments,
     setSedObsGroups,
     setActiveSedObsTab,
-    setSkyAnimate,
     setSkyTObs,
-    setSkyTMin,
-    setSkyTMax,
-    setSkyNFrames,
     setSkyNuInput,
+    setSkyNuInputDraft,
     setSkyFov,
+    setSkyFovUnit,
     setSkyNpixel,
+    setSkyIntensityUnit,
   } = actions;
 
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -186,14 +183,16 @@ export default function HomePage() {
         observation_groups: sedObsGroups.map((group) => ({ ...group })),
       },
       skymap: {
-        animate: skyAnimate,
+        animate: false,
         t_obs: skyTObs,
-        t_min: skyTMin,
-        t_max: skyTMax,
-        n_frames: skyNFrames,
+        t_min: skyTObs,
+        t_max: skyTObs,
+        n_frames: 1,
         nu_input: skyNuInput,
         fov: skyFov,
+        fov_unit: skyFovUnit,
         npixel: skyNpixel,
+        intensity_unit: skyIntensityUnit,
       },
     }),
     [parameterState],
@@ -276,6 +275,12 @@ export default function HomePage() {
     shared,
     lcObsGroups,
     sedObsGroups,
+    lcInstruments,
+    sedInstruments,
+    sedFreqUnit,
+    sedNuFNu,
+    skyFovUnit,
+    skyIntensityUnit,
     axisRangesRef,
     axisSignaturesRef,
     setZoomRevision,
@@ -305,7 +310,7 @@ export default function HomePage() {
     },
     [axisRangesRef, clearSavedYAxesBase, mode],
   );
-  const { fullComputationSpec, computationSpec, postRunRequest, postFigureRequest } = useComputationApi({
+  const { computationSpec, postFigureRequest } = useComputationApi({
     parameterState,
     sliderInteracting,
     fetchFromApi,
@@ -345,14 +350,6 @@ export default function HomePage() {
     sliderInteracting,
     buildShareLink,
     currentSnapshot,
-    sedTimesDraft,
-    sedTimes,
-    setSedTimes,
-    spectrumTextCommitDebounceMs: SPECTRUM_TEXT_COMMIT_DEBOUNCE_MS,
-    skyAnimate,
-    skyNpixel,
-    setSkyNpixel,
-    skyMaxPixelAnimate: SKY_MAX_PIXEL_ANIMATE,
     clearSavedXAxis,
     clearSavedYAxes,
     lcTMin,
@@ -363,6 +360,7 @@ export default function HomePage() {
     sedFreqUnit,
     shared,
     skyFov,
+    skyNpixel,
     mode,
     axisRangesRef,
     setZoomRevision,
@@ -370,13 +368,16 @@ export default function HomePage() {
 
   useViewportLayout(sidebarOpen);
 
-  const { downloading, downloadCurrentExport } = useDownloadExports({
+  const presentationParams = useMemo(() => ({
+    fluxUnit: shared.flux_unit,
+    timeUnit: shared.time_unit,
+    sedFreqUnit,
+  }), [shared.flux_unit, shared.time_unit, sedFreqUnit]);
+
+  const { downloadCurrentExport } = useDownloadExports({
     mode,
-    fullComputationSpec,
-    postRunRequest,
-    exportsCache: result?.exports,
-    setResult,
-    setError,
+    result,
+    presentationParams,
   });
 
   const resultPlotData = result?.plot_data;
@@ -399,6 +400,10 @@ export default function HomePage() {
     if (!pd?.t_snapshots_s) return [];
     return pd.t_snapshots_s.map((t) => ({ label: formatTimeLabel(t), value: String(t) }));
   }, [resultPlotData]);
+
+  const commitLcFreq = useCallback(() => setLcFreq(lcFreqDraft), [lcFreqDraft, setLcFreq]);
+  const commitSedTimes = useCallback(() => setSedTimes(sedTimesDraft), [sedTimesDraft, setSedTimes]);
+  const commitSkyNuInput = useCallback(() => setSkyNuInput(skyNuInputDraft), [skyNuInputDraft, setSkyNuInput]);
 
   const sidebarPanelsProps = {
     mode,
@@ -448,11 +453,11 @@ export default function HomePage() {
       compareRunning,
       compareError,
     },
-    lightcurve: { lcFreq, setLcFreq, lcTMin, setLcTMin, lcTMax, setLcTMax },
+    lightcurve: { lcFreqDraft, setLcFreqDraft, commitLcFreq, lcTMin, setLcTMin, lcTMax, setLcTMax },
     spectrum: {
       sedTimesDraft,
       setSedTimesDraft,
-      commitSedTimes: () => setSedTimes(sedTimesDraft),
+      commitSedTimes,
       sedNuMin,
       setSedNuMin,
       sedNuMax,
@@ -465,22 +470,19 @@ export default function HomePage() {
       setSedFreqUnit,
     },
     skymap: {
-      skyAnimate,
-      setSkyAnimate,
       skyNpixel,
       setSkyNpixel,
-      skyTMin,
-      setSkyTMin,
-      skyTMax,
-      setSkyTMax,
-      skyNFrames,
-      setSkyNFrames,
       skyTObs,
       setSkyTObs,
-      skyNuInput,
-      setSkyNuInput,
+      skyNuInputDraft,
+      setSkyNuInputDraft,
+      commitSkyNuInput,
       skyFov,
       setSkyFov,
+      skyFovUnit,
+      setSkyFovUnit,
+      skyIntensityUnit,
+      setSkyIntensityUnit,
     },
   };
 
@@ -539,7 +541,6 @@ export default function HomePage() {
 
         <SidebarFooter
           mode={mode}
-          downloading={downloading}
           hasFigureData={Boolean(displayFigure?.data)}
           appVersion={appVersion}
           citeLinkText={citeLinkText}
