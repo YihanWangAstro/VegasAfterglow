@@ -156,7 +156,7 @@ This installs the core physics engine. To also install MCMC fitting support:
 pip install VegasAfterglow[mcmc]
 ```
 
-To run the interactive web tool locally (FastAPI + Next.js):
+The interactive web tool is deployed across multiple global regions for low latency. If none of the servers provide a satisfactory experience from your location, you can run the interactive web tool locally for the best responsiveness (FastAPI + Next.js):
 
 ```bash
 # terminal 1: backend
