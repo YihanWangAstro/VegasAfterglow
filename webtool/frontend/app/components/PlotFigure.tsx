@@ -6,7 +6,7 @@ import { PLOT_CONFIG } from "../lib/constants";
 import type { Mode } from "../lib/types";
 import type { PlotlyFigure } from "../lib/utils/plot-builders";
 
-const Plot = dynamic(() => import("react-plotly.js"), { ssr: false });
+const Plot = dynamic(() => import("./PlotlyCustom").then((m) => ({ default: m.default })), { ssr: false });
 
 export const PlotFigure = memo(function PlotFigure({
   figure,

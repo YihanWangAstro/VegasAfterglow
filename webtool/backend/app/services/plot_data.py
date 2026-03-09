@@ -79,8 +79,9 @@ def build_sed_plot_data(data):
 def build_skymap_plot_data(data: dict) -> dict:
     """Return raw skymap data for client-side rendering.
 
+    Zero-border is trimmed before log10 to reduce computation and transfer size.
     Frames are encoded as base64 float32 (row-major, NaN for non-positive pixels).
-    Shape is [ny, nx] after the .T transpose applied during log10 conversion.
+    x0/y0/nx/ny are adjusted to reflect the cropped region.
     """
     images = data["images"]
     extent = data["extent_uas"]
@@ -97,19 +98,34 @@ def build_skymap_plot_data(data: dict) -> dict:
     x0 = x_min + 0.5 * dx
     y0 = y_min + 0.5 * dy
 
-    def _log10_frame(img):
-        frame = np.asarray(img, dtype=np.float32).T  # shape (ny, nx)
-        out = np.full(frame.shape, np.nan, dtype=np.float32)
-        np.log10(frame, out=out, where=frame > 0)
-        return out
+    # Stack transposed frames into single (n_frames, ny, nx) array
+    stacked = np.stack([np.asarray(img, dtype=np.float32).T for img in images])
 
-    log_frames = [_log10_frame(img) for img in images]
-    stacked = np.stack(log_frames)
+    # Crop to bounding box of positive pixels (union across all frames).
+    # np.max avoids materializing a full boolean temporary like `stacked > 0`.
+    max_frame = np.max(stacked, axis=0)  # (ny, nx)
+    rows_any = np.any(max_frame > 0, axis=1)
+    cols_any = np.any(max_frame > 0, axis=0)
+    if rows_any.any() and cols_any.any():
+        row_idx = np.where(rows_any)[0]
+        col_idx = np.where(cols_any)[0]
+        r0, r1 = int(row_idx[0]), int(row_idx[-1]) + 1
+        c0, c1 = int(col_idx[0]), int(col_idx[-1]) + 1
+        stacked = stacked[:, r0:r1, c0:c1]
+        x0 += c0 * dx
+        y0 += r0 * dy
+        nx = c1 - c0
+        ny = r1 - r0
+
+    # log10 in-place on the cropped array, NaN for non-positive pixels
+    stacked[stacked <= 0] = np.nan
+    np.log10(stacked, out=stacked, where=np.isfinite(stacked))
+
     has_finite = bool(np.any(np.isfinite(stacked)))
     z_min = float(np.nanmin(stacked)) if has_finite else 0.0
     z_max = float(np.nanmax(stacked)) if has_finite else 1.0
 
-    frames_b64 = [base64.b64encode(f.tobytes()).decode("ascii") for f in log_frames]
+    frames_b64 = [base64.b64encode(stacked[i].tobytes()).decode("ascii") for i in range(stacked.shape[0])]
 
     return {
         "nx": nx,

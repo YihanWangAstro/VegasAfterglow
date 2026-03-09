@@ -824,6 +824,12 @@ function decodeFloat32Frame(b64: string, ny: number, nx: number): number[][] {
   return rows;
 }
 
+/** Decode all base64 frames upfront (expensive). Cache this result. */
+export function decodeSkymapFrames(pd: SkymapPlotData): number[][][] {
+  const { nx, ny, frames_b64f32 } = pd;
+  return frames_b64f32.map((b64) => decodeFloat32Frame(b64, ny, nx));
+}
+
 // Skymap axes: inherit common styling but omit minor ticks, tickfont, and exponentformat.
 const { minor: _, tickfont: _tf, exponentformat: _ef, ...SKYMAP_AXIS_STYLE } = AXIS_COMMON;
 
@@ -855,16 +861,11 @@ type SkymapOptions = {
 
 function offsetFrame(frame: number[][], offset: number): number[][] {
   if (offset === 0) return frame;
-  for (const row of frame) {
-    for (let i = 0; i < row.length; i++) {
-      if (Number.isFinite(row[i])) row[i] += offset;
-    }
-  }
-  return frame;
+  return frame.map((row) => row.map((v) => Number.isFinite(v) ? v + offset : NaN));
 }
 
-export function buildSkymapFigure(pd: SkymapPlotData, opts?: SkymapOptions): PlotlyFigure {
-  const { nx, ny, frames_b64f32, extent_uas, t_obs_s, nu_obs_hz, dx, dy, x0, y0, z_min, z_max } = pd;
+export function buildSkymapFigure(pd: SkymapPlotData, decodedFrames: number[][][], opts?: SkymapOptions): PlotlyFigure {
+  const { extent_uas, t_obs_s, nu_obs_hz, dx, dy, x0, y0, z_min, z_max } = pd;
   const t_labels = t_obs_s.map(formatTimeLabel);
   const nu_label = formatFreqLabel(nu_obs_hz);
 
@@ -885,11 +886,11 @@ export function buildSkymapFigure(pd: SkymapPlotData, opts?: SkymapOptions): Plo
   const zMinDisp = z_min + logOffset;
   const zMaxDisp = z_max + logOffset;
 
-  const z0 = offsetFrame(decodeFloat32Frame(frames_b64f32[0], ny, nx), logOffset);
+  const offsetFrames = decodedFrames.map((f) => offsetFrame(f, logOffset));
 
   const data: Record<string, unknown>[] = [{
     type: "heatmap",
-    z: z0, x0: x0Scaled, dx: dxScaled, y0: y0Scaled, dy: dyScaled,
+    z: offsetFrames[0], x0: x0Scaled, dx: dxScaled, y0: y0Scaled, dy: dyScaled,
     colorscale: "Electric",
     zmin: zMinDisp, zmax: zMaxDisp,
     zauto: false,
@@ -905,11 +906,11 @@ export function buildSkymapFigure(pd: SkymapPlotData, opts?: SkymapOptions): Plo
     hovertemplate: `\u0394x=%{x} ${fovLabel}<br>\u0394y=%{y} ${fovLabel}<br>log\u2081\u2080 I=%{z:.3g}<extra></extra>`,
   }];
 
-  const isAnimated = frames_b64f32.length > 1;
+  const isAnimated = decodedFrames.length > 1;
 
-  const frames: Record<string, unknown>[] = frames_b64f32.map((b64, i) => ({
+  const frames: Record<string, unknown>[] = offsetFrames.map((z, i) => ({
     name: `frame_${i}`,
-    data: [{ z: i === 0 ? z0 : offsetFrame(decodeFloat32Frame(b64, ny, nx), logOffset) }],
+    data: [{ z }],
     traces: [0],
   }));
 
@@ -923,10 +924,10 @@ export function buildSkymapFigure(pd: SkymapPlotData, opts?: SkymapOptions): Plo
     template: "none",
     plot_bgcolor: "#ffffff",
     paper_bgcolor: "#ffffff",
-    margin: frames_b64f32.length > 1 ? { l: 60, r: 120, t: 50, b: 130 } : { l: 60, r: 120, t: 50, b: 60 },
+    margin: decodedFrames.length > 1 ? { l: 60, r: 120, t: 50, b: 130 } : { l: 60, r: 120, t: 50, b: 60 },
   };
 
-  if (frames_b64f32.length > 1) {
+  if (decodedFrames.length > 1) {
     const steps = t_labels.map((label, i) => ({
       label,
       method: "animate",
@@ -938,5 +939,5 @@ export function buildSkymapFigure(pd: SkymapPlotData, opts?: SkymapOptions): Plo
     }];
   }
 
-  return { data, layout, frames: frames_b64f32.length > 1 ? frames : [] };
+  return { data, layout, frames: decodedFrames.length > 1 ? frames : [] };
 }
