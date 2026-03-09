@@ -117,22 +117,11 @@ export function useViewportLayout(sidebarOpen: boolean, workspaceRef?: RefObject
   }, []);
 
   useEffect(() => {
-    if (typeof window === "undefined" || typeof document === "undefined") return;
-    const root = document.documentElement;
-    const syncViewport = () => {
-      const vh = window.innerHeight * 0.01;
-      root.style.setProperty("--app-vh", `${vh}px`);
-    };
-    const triggerResize = () => {
-      window.dispatchEvent(new Event("resize"));
-    };
+    if (typeof window === "undefined") return;
+    const triggerResize = () => window.dispatchEvent(new Event("resize"));
 
-    syncViewport();
     triggerResize();
-    const settleTimer = window.setTimeout(() => {
-      syncViewport();
-      triggerResize();
-    }, 220);
+    const settleTimer = window.setTimeout(triggerResize, 220);
 
     return () => {
       window.clearTimeout(settleTimer);

@@ -267,6 +267,8 @@ const LEGEND_COMMON: Record<string, unknown> = {
   bgcolor: "rgba(255,255,255,0.75)",
 };
 
+const HOVERLABEL_COMMON = { bgcolor: "white", font: { color: "black" }, bordercolor: "#ccc" };
+
 const LAYOUT_COMMON: Record<string, unknown> = {
   hovermode: "closest",
   autosize: true,
@@ -431,7 +433,7 @@ export function buildLcFigure(pd: LcPlotData, opts: LcDisplayOptions, obsShifts?
           },
           opacity: isTotal ? 1.0 : 0.75,
           legendgroup: traceName,
-          hoverlabel: { bgcolor: "white", font: { color: "black" }, bordercolor: "#ccc" },
+          hoverlabel: HOVERLABEL_COMMON,
           hovertemplate: `${xHover}<br>${hoverY}<extra>${traceName}</extra>`,
           ...(useSecondary ? { yaxis: "y" } : {}),
         });
@@ -468,7 +470,7 @@ export function buildLcFigure(pd: LcPlotData, opts: LcDisplayOptions, obsShifts?
           },
           opacity: isTotal ? 1.0 : 0.75,
           legendgroup: traceName,
-          hoverlabel: { bgcolor: "white", font: { color: "black" }, bordercolor: "#ccc" },
+          hoverlabel: HOVERLABEL_COMMON,
           hovertemplate: `${xHover}<br>F=%{y} erg/cm\u00b2/s<extra>${traceName}</extra>`,
           ...(useSecondary ? { yaxis: "y2" } : hasPt ? { yaxis: "y" } : {}),
         });
@@ -748,7 +750,7 @@ export function buildSedFigure(pd: SedPlotData, opts: SedDisplayOptions, obsShif
         },
         opacity: isTotal ? 1.0 : 0.75,
         legendgroup: traceName,
-        hoverlabel: { bgcolor: "white", font: { color: "black" }, bordercolor: "#ccc" },
+        hoverlabel: HOVERLABEL_COMMON,
         hovertemplate: `${xHover}<br>${hoverY}<extra>${traceName}</extra>`,
       });
     }

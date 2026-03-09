@@ -139,9 +139,10 @@ export function useFigurePresentation({
 
   // Mode-specific display options — only the active mode's options are in the deps
   // to avoid unnecessary figure rebuilds when changing settings for other modes.
+  const skyOpts = useMemo(() => ({ fovUnit: skyFovUnit, intensityUnit: skyIntensityUnit }), [skyFovUnit, skyIntensityUnit]);
   const modeDisplayDeps = mode === "lightcurve" ? lcOpts
     : mode === "spectrum" ? sedOpts
-    : { fovUnit: skyFovUnit, intensityUnit: skyIntensityUnit };
+    : skyOpts;
 
   // Cache decoded skymap frames — only re-decode when plot data changes,
   // not when display units (intensity, FOV) change.
