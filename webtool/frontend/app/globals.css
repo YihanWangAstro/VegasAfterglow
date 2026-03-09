@@ -578,11 +578,14 @@ textarea {
   appearance: none;
   -webkit-appearance: none;
   width: 100%;
-  min-height: 0;
+  min-height: 2.2rem;
   padding: 0;
   border: none;
   background: transparent;
   touch-action: pan-y;
+  cursor: pointer;
+  outline: none;
+  -webkit-tap-highlight-color: transparent;
 }
 
 .sb-slider input[type="range"]::-webkit-slider-runnable-track {
@@ -1265,6 +1268,10 @@ textarea {
     --slider-thumb-offset: -0.49rem;
   }
 
+  .sb-slider input[type="range"] {
+    min-height: 3.4rem;
+  }
+
   .sb-slider-track {
     min-height: 1.9rem;
   }
@@ -1315,16 +1322,18 @@ textarea {
   }
 
   .app-shell.sidebar-open .workspace {
-    padding-bottom: calc(var(--mobile-sheet-height) + 0.8rem + env(safe-area-inset-bottom));
+    height: calc(var(--app-vh) * 100 - var(--mobile-sheet-height));
+    max-height: calc(var(--app-vh) * 100 - var(--mobile-sheet-height));
+    overflow: hidden;
   }
 
   .app-shell.sidebar-open .plot-wrap {
-    height: clamp(230px, calc(var(--app-vh) * 40), 420px);
+    height: 100%;
   }
 
   .app-shell.sidebar-open .plot-wrap.plot-wrap-square {
     height: auto;
-    width: min(100%, calc(var(--app-vh) * 40));
+    width: min(100%, calc(var(--app-vh) * 100 - var(--mobile-sheet-height) - 1.4rem));
   }
 
   .workspace-empty {

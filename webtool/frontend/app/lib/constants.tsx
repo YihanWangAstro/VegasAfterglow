@@ -61,7 +61,7 @@ export const INTERACTIVE_SKY_PIXEL_MAX_STATIC = 256;
 
 export const AUTO_RUN_DEBOUNCE_IDLE_MS = 10;
 export const SLIDER_COMMIT_INTERVAL_MS = 20;
-export const API_STATUS_REFRESH_DIRECT_MS = 2000;
+export const API_STATUS_REFRESH_DIRECT_MS = 5000;
 export const COLD_START_HINT_MS = 1200;
 
 export const AXIS_EPS = 1e-6;

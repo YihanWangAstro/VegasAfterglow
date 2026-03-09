@@ -143,8 +143,14 @@ export function useViewportLayout(sidebarOpen: boolean, workspaceRef?: RefObject
     if (typeof document === "undefined") return;
     const prev = document.body.style.overflow;
     if (sidebarOpen) {
+      const ws = workspaceRef?.current;
+      if (ws) ws.scrollTop = 0;
+      window.scrollTo(0, 0);
       document.body.style.overflow = "hidden";
-      workspaceRef?.current?.scrollTo({ top: 0 });
+      requestAnimationFrame(() => {
+        if (ws) ws.scrollTop = 0;
+        window.scrollTo(0, 0);
+      });
     } else {
       document.body.style.overflow = "";
     }

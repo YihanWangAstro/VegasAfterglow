@@ -600,7 +600,7 @@ export function buildLcFigure(pd: LcPlotData, opts: LcDisplayOptions, obsShifts?
   // Build layout
   const xAxis: Record<string, unknown> = {
     type: "log",
-    title: axisTitle(`$t_{\\rm obs}\\;(\\mathrm{${tUnit}})$`),
+    title: axisTitle(`$t_{\\rm obs} - t_0\\;(\\mathrm{${tUnit}})$`),
     range: [xLo, xHi],
     ...AXIS_COMMON,
   };
