@@ -99,3 +99,25 @@ Requirements
 * C++20 compatible compiler (for building from source)
 * NumPy (automatically installed when using pip)
 * For MCMC fitting: ``pip install VegasAfterglow[mcmc]`` (installs bilby, emcee, dynesty)
+
+Interactive Web Tool
+--------------------
+
+The `interactive web tool <https://www.vegasafterglow.com>`_ is deployed across multiple global regions for low latency. If none of the servers provide a satisfactory experience from your location, you can run it locally for the best responsiveness:
+
+.. code-block:: bash
+
+    # terminal 1: backend
+    cd webtool/backend
+    python3 -m venv .venv
+    source .venv/bin/activate
+    pip install -e '../..[webtool]'
+    uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
+
+    # terminal 2: frontend
+    cd webtool/frontend
+    cp .env.local.example .env.local
+    npm install
+    npm run dev
+
+Open ``http://localhost:3000``. For detailed deployment options, see `webtool/README.md <https://github.com/YihanWangAstro/VegasAfterglow/blob/main/webtool/README.md>`_ and `webtool/DEPLOY.md <https://github.com/YihanWangAstro/VegasAfterglow/blob/main/webtool/DEPLOY.md>`_.

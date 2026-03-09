@@ -61,6 +61,7 @@
 <li class="toctree-l2"><a class="reference internal" href="#github-repository">GitHub Repository</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#c-installation">C++ Installation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#requirements">Requirements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#interactive-web-tool">Interactive Web Tool</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="quickstart.html">Quickstart</a></li>
@@ -192,6 +193,25 @@
 <li><p>NumPy (automatically installed when using pip)</p></li>
 <li><p>For MCMC fitting: <code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">VegasAfterglow[mcmc]</span></code> (installs bilby, emcee, dynesty)</p></li>
 </ul>
+</section>
+<section id="interactive-web-tool">
+<h2>Interactive Web Tool<a class="headerlink" href="#interactive-web-tool" title="Link to this heading"></a></h2>
+<p>The <a class="reference external" href="https://www.vegasafterglow.com">interactive web tool</a> is deployed across multiple global regions for low latency. If none of the servers provide a satisfactory experience from your location, you can run it locally for the best responsiveness:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># terminal 1: backend</span>
+<span class="nb">cd</span><span class="w"> </span>webtool/backend
+python3<span class="w"> </span>-m<span class="w"> </span>venv<span class="w"> </span>.venv
+<span class="nb">source</span><span class="w"> </span>.venv/bin/activate
+pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </span><span class="s1">&#39;../..[webtool]&#39;</span>
+uvicorn<span class="w"> </span>app.main:app<span class="w"> </span>--reload<span class="w"> </span>--host<span class="w"> </span><span class="m">0</span>.0.0.0<span class="w"> </span>--port<span class="w"> </span><span class="m">8000</span>
+
+<span class="c1"># terminal 2: frontend</span>
+<span class="nb">cd</span><span class="w"> </span>webtool/frontend
+cp<span class="w"> </span>.env.local.example<span class="w"> </span>.env.local
+npm<span class="w"> </span>install
+npm<span class="w"> </span>run<span class="w"> </span>dev
+</pre></div>
+</div>
+<p>Open <code class="docutils literal notranslate"><span class="pre">http://localhost:3000</span></code>. For detailed deployment options, see <a class="reference external" href="https://github.com/YihanWangAstro/VegasAfterglow/blob/main/webtool/README.md">webtool/README.md</a> and <a class="reference external" href="https://github.com/YihanWangAstro/VegasAfterglow/blob/main/webtool/DEPLOY.md">webtool/DEPLOY.md</a>.</p>
 </section>
 </section>
 
