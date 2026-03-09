@@ -1,6 +1,36 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { HelpHint } from "./HelpHint";
+import { sliderFillStyle } from "../lib/utils/slider";
 import type { ObservationGroup, SelectOption } from "../lib/types";
+
+const SHIFT_MIN = -10;
+const SHIFT_MAX = 10;
+const SHIFT_STEP = 0.001;
+
+function superscript(n: number): string {
+  const map: Record<string, string> = { "-": "\u207B", "0": "\u2070", "1": "\u00B9", "2": "\u00B2", "3": "\u00B3", "4": "\u2074", "5": "\u2075", "6": "\u2076", "7": "\u2077", "8": "\u2078", "9": "\u2079" };
+  return String(n).split("").map((c) => map[c] ?? c).join("");
+}
+
+function formatShiftLabel(shift: number): string {
+  if (shift === 1) return "1";
+  const exp = Math.floor(Math.log10(shift));
+  const leading = Math.round(shift / Math.pow(10, exp));
+  if (exp === 0) return String(leading);
+  if (leading === 1) return `10${superscript(exp)}`;
+  return `${leading}\u00b710${superscript(exp)}`;
+}
+
+function shiftToSlider(s: number): number {
+  return Math.log10(Math.max(1e-10, Math.min(1e10, s)));
+}
+
+function sliderToShift(v: number): number {
+  const exp = Math.floor(v);
+  const leading = Math.round(Math.pow(10, v - exp));
+  const clamped = Math.max(1, Math.min(9, leading));
+  return clamped * Math.pow(10, exp);
+}
 
 function renderStringOptions(options: readonly string[]) {
   return options.map((item) => (
@@ -64,8 +94,9 @@ export function ObservationEditor({
   const activeIndex = groups.length === 0 ? -1 : Math.max(0, Math.min(activeTab, groups.length - 1));
   const activeGroup = activeIndex >= 0 ? groups[activeIndex] : null;
 
-  const [shiftText, setShiftText] = useState(() => String(activeGroup?.shift ?? 1));
-  useEffect(() => { setShiftText(String(activeGroup?.shift ?? 1)); }, [activeIndex, activeGroup?.shift]);
+  const [shiftDraft, setShiftDraft] = useState(() => shiftToSlider(activeGroup?.shift ?? 1));
+  useEffect(() => { setShiftDraft(shiftToSlider(activeGroup?.shift ?? 1)); }, [activeIndex, activeGroup?.shift]);
+  const shiftFillStyle = useMemo(() => sliderFillStyle(shiftDraft, SHIFT_MIN, SHIFT_MAX), [shiftDraft]);
 
   const hasCurves = curveOptions && curveOptions.length > 0;
   const freqMatchesCurve = activeGroup?.freq && hasCurves && curveOptions.some((o) => o.value === activeGroup.freq);
@@ -172,24 +203,31 @@ export function ObservationEditor({
                 {renderStringOptions(yUnitOptions)}
               </select>
             </label>
-            <label className="sb-field">
-              <span className="sb-label">y shift</span>
-              <input
-                type="text"
-                inputMode="decimal"
-                value={shiftText}
-                onChange={(e) => setShiftText(e.target.value)}
-                onBlur={() => {
-                  const v = parseFloat(shiftText);
-                  const valid = Number.isFinite(v) && v > 0 ? v : 1;
-                  setShiftText(String(valid));
-                  updateObsGroup(activeIndex, { shift: valid });
-                }}
-                onKeyDown={(e) => {
-                  if (e.key === "Enter") (e.target as HTMLInputElement).blur();
-                }}
-                style={{ width: "5em" }}
-              />
+            <label className="sb-field sb-slider" style={{ gridColumn: "1 / -1" }}>
+              <span className="sb-label">y shift: {formatShiftLabel(activeGroup.shift ?? 1)}</span>
+              <div className="sb-slider-track">
+                <input
+                  type="range"
+                  min={SHIFT_MIN}
+                  max={SHIFT_MAX}
+                  step={SHIFT_STEP}
+                  value={shiftDraft}
+                  style={shiftFillStyle}
+                  onInput={(e) => {
+                    const raw = parseFloat((e.target as HTMLInputElement).value);
+                    setShiftDraft(raw);
+                    const snapped = sliderToShift(raw);
+                    updateObsGroup(activeIndex, { shift: snapped });
+                  }}
+                  onChange={(e) => {
+                    const raw = parseFloat((e.target as HTMLInputElement).value);
+                    setShiftDraft(raw);
+                    const snapped = sliderToShift(raw);
+                    updateObsGroup(activeIndex, { shift: snapped });
+                  }}
+                />
+                <span className="sb-value">{formatShiftLabel(activeGroup.shift ?? 1)}</span>
+              </div>
             </label>
           </div>
           <label className="sb-field">

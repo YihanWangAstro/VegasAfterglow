@@ -7,6 +7,22 @@
 import { INSTRUMENT_CATALOG } from "../constants";
 import type { LcPlotData, SedPlotData, SkymapPlotData } from "../types";
 
+function shiftSuperscript(n: number): string {
+  const map: Record<string, string> = { "-": "\u207B", "0": "\u2070", "1": "\u00B9", "2": "\u00B2", "3": "\u00B3", "4": "\u2074", "5": "\u2075", "6": "\u2076", "7": "\u2077", "8": "\u2078", "9": "\u2079" };
+  return String(n).split("").map((c) => map[c] ?? c).join("");
+}
+
+function formatShiftSuffix(shift: number): string {
+  if (shift === 1) return "";
+  const exp = Math.floor(Math.log10(shift));
+  const leading = Math.round(shift / Math.pow(10, exp));
+  let base: string;
+  if (exp === 0) base = String(leading);
+  else if (leading === 1) base = `10${shiftSuperscript(exp)}`;
+  else base = `${leading}\u00b710${shiftSuperscript(exp)}`;
+  return ` \u00d7 ${base}`;
+}
+
 export type PlotlyFigure = {
   data: Record<string, unknown>[];
   layout: Record<string, unknown>;
@@ -392,7 +408,7 @@ export function buildLcFigure(pd: LcPlotData, opts: LcDisplayOptions, obsShifts?
       const label = ptLabels[i];
       const color = ptColors[i];
       const shift = obsShifts?.get(label) ?? 1;
-      const shiftSuffix = shift !== 1 ? ` \u00d7 ${shift}` : "";
+      const shiftSuffix = formatShiftSuffix(shift);
       for (const compName of ptOrderedComps) {
         const isTotal = compName === "total";
         const baseTraceName = isTotal ? label : `${label} (${COMP_LABELS[compName] ?? compName})`;
@@ -428,7 +444,7 @@ export function buildLcFigure(pd: LcPlotData, opts: LcDisplayOptions, obsShifts?
       const band = bands[bIdx];
       const bandLabel = bandLabels[bIdx];
       const shift = obsShifts?.get(bandLabel) ?? 1;
-      const shiftSuffix = shift !== 1 ? ` \u00d7 ${shift}` : "";
+      const shiftSuffix = formatShiftSuffix(shift);
       const orderedComps = COMP_ORDER.filter((n) => n in band.components);
       for (const compName of orderedComps) {
         const isTotal = compName === "total";
@@ -495,7 +511,7 @@ export function buildLcFigure(pd: LcPlotData, opts: LcDisplayOptions, obsShifts?
   for (const group of obs) {
     const { label, fnu, fband } = group;
     const shift = obsShifts?.get(label) ?? 1;
-    const shiftSuffix = shift !== 1 ? ` \u00d7 ${shift}` : "";
+    const shiftSuffix = formatShiftSuffix(shift);
     const displayLabel = `${label}${shiftSuffix}`;
     const { color, showLegend } = resolveObsStyle(label, curveLabels, curveColors, obsUnmatched);
     if (showLegend) obsUnmatched++;
@@ -662,7 +678,7 @@ export function buildSedFigure(pd: SedPlotData, opts: SedDisplayOptions, obsShif
     const label = t_labels[j];
     const color = t_colors[j];
     const shift = obsShifts?.get(label) ?? 1;
-    const shiftSuffix = shift !== 1 ? ` \u00d7 ${shift}` : "";
+    const shiftSuffix = formatShiftSuffix(shift);
     for (const compName of orderedComps) {
       const isTotal = compName === "total";
       const baseTraceName = isTotal ? label : `${label} (${COMP_LABELS[compName] ?? compName})`;
@@ -726,7 +742,7 @@ export function buildSedFigure(pd: SedPlotData, opts: SedDisplayOptions, obsShif
   for (const group of obs) {
     const { label, fnu } = group;
     const shift = obsShifts?.get(label) ?? 1;
-    const shiftSuffix = shift !== 1 ? ` \u00d7 ${shift}` : "";
+    const shiftSuffix = formatShiftSuffix(shift);
     const displayLabel = `${label}${shiftSuffix}`;
     const { color, showLegend } = resolveObsStyle(label, t_labels, t_colors, sedObsUnmatched);
     if (showLegend) sedObsUnmatched++;
@@ -899,9 +915,10 @@ export function buildSkymapFigure(pd: SkymapPlotData, decodedFrames: number[][][
       xref: "paper",
       x: 1.01,
       xanchor: "left",
-      len: 0.85,
+      len: 0.9,
       thickness: 28,
       tickfont: { size: 12 },
+      dtick: 1,
     },
     hovertemplate: `\u0394x=%{x} ${fovLabel}<br>\u0394y=%{y} ${fovLabel}<br>log\u2081\u2080 I=%{z:.3g}<extra></extra>`,
   }];
