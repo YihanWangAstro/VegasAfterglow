@@ -64,7 +64,7 @@ export function usePlotWidthObserver({ workspaceRef, setPlotWidthPx }: PlotWidth
   }, [setPlotWidthPx, workspaceRef]);
 }
 
-export function useViewportLayout(sidebarOpen: boolean) {
+export function useViewportLayout(sidebarOpen: boolean, workspaceRef?: RefObject<HTMLElement | null>) {
   useEffect(() => {
     if (typeof window === "undefined" || typeof document === "undefined") return;
     const root = document.documentElement;
@@ -144,11 +144,12 @@ export function useViewportLayout(sidebarOpen: boolean) {
     const prev = document.body.style.overflow;
     if (sidebarOpen) {
       document.body.style.overflow = "hidden";
+      workspaceRef?.current?.scrollTo({ top: 0 });
     } else {
       document.body.style.overflow = "";
     }
     return () => {
       document.body.style.overflow = prev;
     };
-  }, [sidebarOpen]);
+  }, [sidebarOpen, workspaceRef]);
 }

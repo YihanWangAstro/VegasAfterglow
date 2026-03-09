@@ -366,7 +366,7 @@ export default function HomePage() {
     setZoomRevision,
   });
 
-  useViewportLayout(sidebarOpen);
+  useViewportLayout(sidebarOpen, workspaceRef);
 
   const presentationParams = useMemo(() => ({
     fluxUnit: shared.flux_unit,
