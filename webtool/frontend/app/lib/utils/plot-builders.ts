@@ -141,9 +141,9 @@ const COMP_DASHES: Record<string, string> = {
 const COMP_LABELS: Record<string, string> = {
   total: "total",
   fwd_sync: "fwd syn",
-  fwd_ssc: "fwd IC",
+  fwd_ssc: "fwd SSC",
   rvs_sync: "rvs syn",
-  rvs_ssc: "rvs IC",
+  rvs_ssc: "rvs SSC",
 };
 
 export const COMP_ORDER = ["total", "fwd_sync", "fwd_ssc", "rvs_sync", "rvs_ssc"];
@@ -200,14 +200,15 @@ function resolveInstruments(names: string[]): ResolvedInstrument[] {
   return result;
 }
 
-const INSTRUMENT_COLORS: Record<string, string> = {
-  "VLA": "#E63946", "ALMA": "#457B9D", "MeerKAT": "#2A9D8F", "ngVLA": "#E9C46A",
-  "Rubin/LSST": "#F4A261", "JWST": "#264653", "WFST": "#8B5E3C", "SVOM/VT": "#D4A017",
-  "Swift/XRT": "#A8DADC", "Chandra": "#1D3557", "EP/WXT": "#FF6B6B", "EP/FXT": "#4ECDC4",
-  "SVOM/MXT": "#45B7D1", "SVOM/ECLAIRs": "#96CEB4", "Swift/BAT": "#7A5C61",
-  "Fermi/GBM": "#BC6C25", "Fermi/LAT": "#6A0572", "CTA": "#C44536",
-};
-const DEFAULT_INST_COLOR = "#888888";
+/** Pick n colors cycling through the matplotlib tab10 colormap. */
+const TAB10 = [
+  "#1f77b4", "#ff7f0e", "#2ca02c", "#d62728", "#9467bd",
+  "#8c564b", "#e377c2", "#7f7f7f", "#bcbd22", "#17becf",
+];
+function tab10Colors(n: number): string[] {
+  return Array.from({ length: n }, (_, i) => TAB10[i % TAB10.length]);
+}
+const DEFAULT_INST_COLOR = "#757575";
 
 /**
  * Resolve color and showlegend for each obs group by matching its label
@@ -411,7 +412,7 @@ export function buildLcFigure(pd: LcPlotData, opts: LcDisplayOptions, obsShifts?
       const shiftSuffix = formatShiftSuffix(shift);
       for (const compName of ptOrderedComps) {
         const isTotal = compName === "total";
-        const baseTraceName = isTotal ? label : `${label} (${COMP_LABELS[compName] ?? compName})`;
+        const baseTraceName = isTotal ? label : `${label} [${COMP_LABELS[compName] ?? compName}]`;
         const traceName = `${baseTraceName}${shiftSuffix}`;
         const fluxCgs = pt.components[compName][i];
         const yDisp = isABmag ? fluxCgs.map((f) => cgsToAbMag(f * shift)) : fluxCgs.map((f) => (f * shift) / fluxScale);
@@ -450,7 +451,7 @@ export function buildLcFigure(pd: LcPlotData, opts: LcDisplayOptions, obsShifts?
         const isTotal = compName === "total";
         const baseTraceName = isTotal
           ? bandLabel
-          : `${bandLabel} (${COMP_LABELS[compName] ?? compName})`;
+          : `${bandLabel} [${COMP_LABELS[compName] ?? compName}]`;
         const traceName = `${baseTraceName}${shiftSuffix}`;
         const fluxCgs = band.components[compName];
         const yDisp = shift !== 1 ? fluxCgs.map((f: number) => f * shift) : fluxCgs;
@@ -476,12 +477,23 @@ export function buildLcFigure(pd: LcPlotData, opts: LcDisplayOptions, obsShifts?
   }
 
   // Instrument sensitivity traces
-  for (const inst of instruments) {
+  const instPalette = tab10Colors(instruments.length);
+  const tLo = t_min_s / tScale;
+  const tHi = t_max_s / tScale;
+  const logXRange = Math.log10(tHi / tLo);
+  type Arrow = { xArrow: number; yVal: number; instColor: string; isFnu: boolean; instYAxis: Record<string, unknown> };
+  const pendingArrows: Arrow[] = [];
+  for (let ii = 0; ii < instruments.length; ii++) {
+    const inst = instruments[ii];
     const isFnu = inst.kind === "Fnu";
-    const tLo = t_min_s / tScale;
-    const tHi = t_max_s / tScale;
     const yVal = isFnu ? (isABmag ? NaN : inst.sensitivity / fluxScale) : inst.sensitivity;
     if (!isFinite(yVal)) continue;
+    const instColor = instPalette[ii] ?? DEFAULT_INST_COLOR;
+    const instYAxis = useSecondary
+      ? { yaxis: isFnu ? "y" : "y2" }
+      : hasPt
+        ? { yaxis: "y" }
+        : {};
     traces.push({
       type: "scatter",
       x: [tLo, tHi],
@@ -491,16 +503,14 @@ export function buildLcFigure(pd: LcPlotData, opts: LcDisplayOptions, obsShifts?
       legendgroup: "inst",
       legendgrouptitle: { text: "Instruments" },
       showlegend: true,
-      line: { color: INSTRUMENT_COLORS[inst.name] ?? DEFAULT_INST_COLOR, width: 1, dash: isFnu ? "dash" : "solid" },
+      line: { color: instColor, width: 1, dash: "dot" },
       hovertemplate: isFnu
         ? `${inst.name}<br>F\u03bd=%{y}<extra></extra>`
         : `${inst.name}<br>F=%{y} erg/cm\u00b2/s<extra></extra>`,
-      ...(useSecondary
-        ? { yaxis: isFnu ? "y" : "y2" }
-        : hasPt
-          ? { yaxis: "y" }
-          : {}),
+      ...instYAxis,
     });
+    const xArrow = isFnu ? tLo * Math.pow(10, logXRange * 0.02) : tHi / Math.pow(10, logXRange * 0.02);
+    pendingArrows.push({ xArrow, yVal, instColor, isFnu, instYAxis });
   }
 
   // Obs traces — resolve colors from curve labels/colors
@@ -597,6 +607,17 @@ export function buildLcFigure(pd: LcPlotData, opts: LcDisplayOptions, obsShifts?
     yRangeBd = lim ? [Math.log10(lim[0]), Math.log10(lim[1])] : null;
   }
 
+  // If no band data but Fband instrument limits exist, set a reasonable y2 range
+  if (!yRangeBd) {
+    const fbandSens = instruments
+      .filter((inst) => inst.kind === "Fband" && isFinite(inst.sensitivity) && inst.sensitivity > 0)
+      .map((inst) => Math.log10(inst.sensitivity));
+    if (fbandSens.length > 0) {
+      const [lo, hi] = arrayMinMax(fbandSens);
+      yRangeBd = [lo - 2, hi + 2];
+    }
+  }
+
   // Build layout
   const xAxis: Record<string, unknown> = {
     type: "log",
@@ -611,6 +632,25 @@ export function buildLcFigure(pd: LcPlotData, opts: LcDisplayOptions, obsShifts?
     yRangePt,
   );
 
+  // Add arrow traces now that y-ranges are known
+  for (const a of pendingArrows) {
+    const yRange = a.isFnu ? yRangePt : yRangeBd;
+    const span = yRange && yRange !== "reversed" ? yRange[1] - yRange[0] : 4;
+    const arrowTop = a.yVal * Math.pow(10, span * 0.02);
+    traces.push({
+      type: "scatter",
+      x: [a.xArrow, a.xArrow],
+      y: [a.yVal, arrowTop],
+      mode: "lines+markers",
+      line: { color: a.instColor, width: 1 },
+      marker: { symbol: ["circle", "triangle-up"], size: [0, 7], color: a.instColor },
+      showlegend: false,
+      hoverinfo: "skip",
+      legendgroup: "inst",
+      ...a.instYAxis,
+    });
+  }
+
   const layout: Record<string, unknown> = {
     xaxis: xAxis,
     legend: LEGEND_COMMON,
@@ -619,7 +659,7 @@ export function buildLcFigure(pd: LcPlotData, opts: LcDisplayOptions, obsShifts?
 
   if (useSecondary) {
     layout.yaxis = yAxisPt;
-    const y2Range = hasBands && yRangeBd ? { range: yRangeBd } : {};
+    const y2Range = yRangeBd ? { range: yRangeBd } : {};
     layout.yaxis2 = {
       type: "log",
       ...y2Range,
@@ -681,7 +721,7 @@ export function buildSedFigure(pd: SedPlotData, opts: SedDisplayOptions, obsShif
     const shiftSuffix = formatShiftSuffix(shift);
     for (const compName of orderedComps) {
       const isTotal = compName === "total";
-      const baseTraceName = isTotal ? label : `${label} (${COMP_LABELS[compName] ?? compName})`;
+      const baseTraceName = isTotal ? label : `${label} [${COMP_LABELS[compName] ?? compName}]`;
       const traceName = `${baseTraceName}${shiftSuffix}`;
       const fluxCgs = components[compName][j]; // [nu_idx], CGS
       let yDisp: number[], hoverY: string;
@@ -715,12 +755,15 @@ export function buildSedFigure(pd: SedPlotData, opts: SedDisplayOptions, obsShif
   }
 
   // Instrument traces for spectrum
-  for (const inst of instruments) {
+  const sedInstPalette = tab10Colors(instruments.length);
+  for (let ii = 0; ii < instruments.length; ii++) {
+    const inst = instruments[ii];
     const isFnu = inst.kind === "Fnu";
     const xLo = inst.nu_min / freqScale;
     const xHi = inst.nu_max / freqScale;
     const yVal = isFnu ? (isABmag ? NaN : inst.sensitivity / fluxScale) : inst.sensitivity;
     if (!isFinite(yVal)) continue;
+    const instColor = sedInstPalette[ii] ?? DEFAULT_INST_COLOR;
     traces.push({
       type: "scatter",
       x: [xLo, xHi],
@@ -730,11 +773,25 @@ export function buildSedFigure(pd: SedPlotData, opts: SedDisplayOptions, obsShif
       legendgroup: "inst",
       legendgrouptitle: { text: "Instruments" },
       showlegend: true,
-      line: { color: INSTRUMENT_COLORS[inst.name] ?? DEFAULT_INST_COLOR, width: 1, dash: isFnu ? "dash" : "solid" },
+      line: { color: instColor, width: 1, dash: "dot" },
       hovertemplate: isFnu
         ? `${inst.name}<br>F\u03bd=%{y}<extra></extra>`
         : `${inst.name}<br>F=%{y} erg/cm\u00b2/s<extra></extra>`,
     });
+    const tickTop = isABmag ? yVal - 0.15 : yVal * Math.SQRT2;
+    const tickBottom = isABmag ? yVal + 0.15 : yVal / Math.SQRT2;
+    for (const xEnd of [xLo, xHi]) {
+      traces.push({
+        type: "scatter",
+        x: [xEnd, xEnd],
+        y: [tickTop, tickBottom],
+        mode: "lines",
+        line: { color: instColor, width: 1 },
+        showlegend: false,
+        hoverinfo: "skip",
+        legendgroup: "inst",
+      });
+    }
   }
 
   // Obs traces for spectrum — resolve colors from time snapshot labels/colors
