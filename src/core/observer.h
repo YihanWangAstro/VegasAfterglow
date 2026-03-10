@@ -14,6 +14,7 @@
 #include "../dynamics/shock.h"
 #include "../util/macros.h"
 #include "mesh.h"
+#include "quadrature.h"
 
 /**
  * @struct SkyImageResult
@@ -356,113 +357,52 @@ MeshGrid Observer::specific_flux(Array const& t_obs, Array const& nu_obs, Photon
     const Real* lg2t = lg2_t_obs.data();
     const Real* lg2nu = lg2_nu_src.data();
     Real* fnu_ptr = F_nu.data();
-    const bool nu_dominant = nu_len > t_obs_len;
 
-    // Each bracket spans one time cell [k, k+1] and records which observation times fall in it.
-    // lo_bi/hi_bi index into boundary_vals (the precomputed luminosity table).
-    struct Bracket {
-        size_t lo_bi;
-        size_t hi_bi;
-        size_t start;
-        size_t end;
-        Real t_lo;
-        Real inv_t_ratio;
-    };
-
-    std::vector<Bracket> brackets;
-    std::vector<size_t> boundary_ks;
-    Array boundary_vals({(t_grid + 1) * nu_len}, 0); // bi-major: boundary_vals[bi * nu_len + l]
-
-    brackets.reserve(t_grid);
-    boundary_ks.reserve(t_grid + 1);
+    // Precomputed log2-luminosity at each time boundary × frequency. [k * nu_len + l]
+    Array boundary_vals({t_grid * nu_len}, 0);
+    Array slope_buf({nu_len}, 0);
+    Array lo_buf({nu_len}, 0);
+    Real* slope = slope_buf.data();
+    Real* lo = lo_buf.data();
 
     for (size_t i = 0; i < eff_phi_grid; i++) {
         const size_t eff_i = i * jet_3d;
         for (size_t j = 0; j < theta_grid; j++) {
-            brackets.clear();
-            boundary_ks.clear();
-            size_t t_idx = 0;
-            iterate_to(lg2_t(i, j, 0), lg2_t_obs, t_idx);
-
-            // Collect brackets, deduplicating shared boundaries between adjacent intervals.
-            bool has_prev_hi = false;
-            size_t prev_hi_k = 0;
-            size_t prev_hi_bi = 0;
-
-            for (size_t k = 0; k < t_grid - 1 && t_idx < t_obs_len; k++) {
-                if (lg2_t(i, j, k + 1) < lg2_t_obs(t_idx)) {
-                    continue;
-                }
-                const size_t idx_start = t_idx;
-                iterate_to(lg2_t(i, j, k + 1), lg2_t_obs, t_idx);
-
-                size_t lo_bi;
-                if (has_prev_hi && prev_hi_k == k) {
-                    lo_bi = prev_hi_bi; // reuse previous hi as lo (no duplicate entry)
-                } else {
-                    lo_bi = boundary_ks.size();
-                    boundary_ks.push_back(k);
-                }
-                const size_t hi_bi = boundary_ks.size();
-                boundary_ks.push_back(k + 1);
-
-                const Real t_lo_val = lg2_t(i, j, k);
-                const Real t_ratio = lg2_t(i, j, k + 1) - t_lo_val;
-                brackets.push_back({lo_bi, hi_bi, idx_start, t_idx, t_lo_val, 1.0 / t_ratio});
-
-                has_prev_hi = true;
-                prev_hi_k = k + 1;
-                prev_hi_bi = hi_bi;
-            }
-
-            // Precompute lg2_L for every boundary point × every observed frequency (bi-major).
-            const size_t num_boundaries = boundary_ks.size();
-            for (size_t bi = 0; bi < num_boundaries; bi++) {
-                const size_t k = boundary_ks[bi];
+            // Precompute boundary values for all time grid points.
+            for (size_t k = 0; k < t_grid; k++) {
                 const Real lg2_dop = lg2_doppler(i, j, k);
                 const Real lg2_geom = lg2_geom_factor(i, j, k);
-                Real* vals = boundary_vals.data() + bi * nu_len;
+                Real* vals = boundary_vals.data() + k * nu_len;
                 for (size_t l = 0; l < nu_len; l++) {
                     vals[l] = photons(eff_i, j, k).compute_log2_I_nu(lg2nu[l] - lg2_dop) + lg2_geom;
                 }
             }
 
-            if (!nu_dominant) {
-                // nu outer, t inner: contiguous writes along each F_nu row.
+            size_t t_idx = 0;
+            iterate_to(lg2_t(i, j, 0), lg2_t_obs, t_idx);
+
+            for (size_t k = 0; k < t_grid - 1 && t_idx < t_obs_len; k++) {
+                if (lg2_t(i, j, k + 1) < lg2_t_obs(t_idx))
+                    continue;
+
+                const size_t idx_start = t_idx;
+                iterate_to(lg2_t(i, j, k + 1), lg2_t_obs, t_idx);
+
+                const Real* lo_row = boundary_vals.data() + k * nu_len;
+                const Real* hi_row = boundary_vals.data() + (k + 1) * nu_len;
+                const Real t_lo_val = lg2_t(i, j, k);
+                const Real inv_t_ratio = 1.0 / (lg2_t(i, j, k + 1) - t_lo_val);
+
                 for (size_t l = 0; l < nu_len; l++) {
-                    Real* fnu_row = fnu_ptr + l * t_obs_len;
-                    for (auto const& br : brackets) {
-                        const Real lo = boundary_vals[br.lo_bi * nu_len + l];
-                        const Real hi = boundary_vals[br.hi_bi * nu_len + l];
-                        const Real slope = (hi - lo) * br.inv_t_ratio;
-                        if (!std::isfinite(slope)) [[unlikely]]
-                            continue;
-                        for (size_t idx = br.start; idx < br.end; idx++) {
-                            fnu_row[idx] += fast_exp2(lo + (lg2t[idx] - br.t_lo) * slope);
-                        }
-                    }
+                    const Real s = (hi_row[l] - lo_row[l]) * inv_t_ratio;
+                    const bool ok = std::isfinite(s);
+                    slope[l] = ok ? s : 0.0;
+                    lo[l] = ok ? lo_row[l] : -con::inf;
                 }
-            } else {
-                // Non-finite slopes (zero-flux boundaries) are clamped: slope=0, lo=-inf,
-                // so fast_exp2(-inf)=0 contributes nothing without branching in the inner loop.
-                Array slope_buf({nu_len}, 0);
-                Array lo_buf({nu_len}, 0);
-                Real* slope = slope_buf.data();
-                Real* lo = lo_buf.data();
-                for (auto const& br : brackets) {
-                    const Real* lo_row = boundary_vals.data() + br.lo_bi * nu_len;
-                    const Real* hi_row = boundary_vals.data() + br.hi_bi * nu_len;
+                for (size_t idx = idx_start; idx < t_idx; idx++) {
+                    const Real dlg2_t = lg2t[idx] - t_lo_val;
                     for (size_t l = 0; l < nu_len; l++) {
-                        const Real s = (hi_row[l] - lo_row[l]) * br.inv_t_ratio;
-                        const bool ok = std::isfinite(s);
-                        slope[l] = ok ? s : 0.0;
-                        lo[l] = ok ? lo_row[l] : -con::inf;
-                    }
-                    for (size_t idx = br.start; idx < br.end; idx++) {
-                        const Real dlg2_t = lg2t[idx] - br.t_lo;
-                        for (size_t l = 0; l < nu_len; l++) {
-                            fnu_ptr[l * t_obs_len + idx] += fast_exp2(lo[l] + dlg2_t * slope[l]);
-                        }
+                        fnu_ptr[l * t_obs_len + idx] += fast_exp2(lo[l] + dlg2_t * slope[l]);
                     }
                 }
             }
@@ -535,11 +475,12 @@ MeshGrid Observer::spectra(Array const& freqs, Array const& t_obs, PhotonGrid& p
 template <typename PhotonGrid>
 Array Observer::flux(Array const& t_obs, Array const& band_freq, PhotonGrid& photons) {
     MeshGrid F_nu = specific_flux(t_obs, band_freq, photons);
+    Array weights;
+    compute_boole_weights(band_freq, weights);
     Array flux({t_obs.size()}, 0);
-    for (size_t i = 0; i < band_freq.size() - 1; ++i) {
-        const Real dnu = band_freq(i + 1) - band_freq(i);
+    for (size_t i = 0; i < band_freq.size(); ++i) {
         for (size_t j = 0; j < flux.size(); ++j) {
-            flux(j) += 0.5 * (F_nu(i, j) + F_nu(i + 1, j)) * dnu;
+            flux(j) += F_nu(i, j) * weights(i);
         }
     }
     return flux;

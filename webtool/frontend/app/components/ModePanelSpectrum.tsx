@@ -1,51 +1,36 @@
-import type { ReactNode } from "react";
+import { useCallback, type ReactNode } from "react";
 import { FREQ_UNIT_OPTIONS } from "../lib/constants";
+import { useParameters } from "../lib/ParameterContext";
 import type { ModeLogSliderSpec } from "../lib/types";
 import { SliderField } from "./SliderField";
 
+function renderStringOptions(options: readonly string[]): ReactNode[] {
+  return options.map((item) => (
+    <option key={item} value={item}>
+      {item}
+    </option>
+  ));
+}
+
 type Props = {
-  sedTimesDraft: string;
-  setSedTimesDraft: (value: string) => void;
-  commitSedTimes: () => void;
   renderDistanceObserverControls: () => ReactNode;
   renderModeLogSliderRow: (specs: ModeLogSliderSpec[], className?: string) => ReactNode;
-  sedNuMin: number;
-  setSedNuMin: (value: number) => void;
-  sedNuMax: number;
-  setSedNuMax: (value: number) => void;
-  sedNumNu: number;
-  setSedNumNu: (value: number) => void;
-  sedNuFNu: boolean;
-  setSedNuFNu: (value: boolean) => void;
-  fluxIsAbMag: boolean;
-  sedFreqUnit: string;
-  setSedFreqUnit: (value: string) => void;
-  renderStringOptions: (options: readonly string[]) => ReactNode;
   renderFluxUnitControl: () => ReactNode;
   renderSharedControls: (options: { hideDistanceObserver?: boolean; hidePlotUnits?: boolean }) => ReactNode;
 };
 
 export function ModePanelSpectrum({
-  sedTimesDraft,
-  setSedTimesDraft,
-  commitSedTimes,
   renderDistanceObserverControls,
   renderModeLogSliderRow,
-  sedNuMin,
-  setSedNuMin,
-  sedNuMax,
-  setSedNuMax,
-  sedNumNu,
-  setSedNumNu,
-  sedNuFNu,
-  setSedNuFNu,
-  fluxIsAbMag,
-  sedFreqUnit,
-  setSedFreqUnit,
-  renderStringOptions,
   renderFluxUnitControl,
   renderSharedControls,
 }: Props) {
+  const { state, actions } = useParameters();
+  const { sedTimesDraft, sedNuMin, sedNuMax, sedNumNu, sedNuFNu, sedFreqUnit, shared } = state;
+  const fluxIsAbMag = shared.flux_unit === "AB mag";
+
+  const commitSedTimes = useCallback(() => actions.setSedTimes(sedTimesDraft), [sedTimesDraft, actions.setSedTimes]);
+
   return (
     <>
       <div className="sb-stack">
@@ -55,7 +40,7 @@ export function ModePanelSpectrum({
           </span>
           <input
             value={sedTimesDraft}
-            onChange={(e) => setSedTimesDraft(e.target.value)}
+            onChange={(e) => actions.setSedTimesDraft(e.target.value)}
             onBlur={commitSedTimes}
             onKeyDown={(e) => { if (e.key === "Enter") commitSedTimes(); }}
             placeholder="e.g. 1e3, 1e4, 1e5"
@@ -78,7 +63,7 @@ export function ModePanelSpectrum({
             step: 0.05,
             value: sedNuMin,
             defaultExp: 8,
-            onChange: setSedNuMin,
+            onChange: actions.setSedNuMin,
           },
           {
             key: "sed-nu-max",
@@ -92,7 +77,7 @@ export function ModePanelSpectrum({
             step: 0.05,
             value: sedNuMax,
             defaultExp: 20,
-            onChange: setSedNuMax,
+            onChange: actions.setSedNuMax,
           },
         ])}
         <div className="sb-row-2 sb-row-fit-right">
@@ -103,17 +88,17 @@ export function ModePanelSpectrum({
             step={10}
             decimals={0}
             value={sedNumNu}
-            onChange={(v) => setSedNumNu(Math.round(v))}
+            onChange={(v) => actions.setSedNumNu(Math.round(v))}
           />
           <label className="sb-checkbox-inline sb-nufnu-inline">
-            <input type="checkbox" checked={sedNuFNu} disabled={fluxIsAbMag} onChange={(e) => setSedNuFNu(e.target.checked)} />
+            <input type="checkbox" checked={sedNuFNu} disabled={fluxIsAbMag} onChange={(e) => actions.setSedNuFNu(e.target.checked)} />
             ν F<sub>ν</sub>
           </label>
         </div>
         <div className="sb-row-2">
           <label className="sb-field">
             <span className="sb-label">ν unit</span>
-            <select value={sedFreqUnit} onChange={(e) => setSedFreqUnit(e.target.value)}>
+            <select value={sedFreqUnit} onChange={(e) => actions.setSedFreqUnit(e.target.value)}>
               {renderStringOptions(FREQ_UNIT_OPTIONS)}
             </select>
           </label>

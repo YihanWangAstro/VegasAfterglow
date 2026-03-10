@@ -1,13 +1,10 @@
 import type { ReactNode } from "react";
-import type { UpdateValue } from "../hooks/useParameterState";
+import { useParameters } from "../lib/ParameterContext";
 import { PLOT_FLUX_UNIT_OPTIONS, SKY_MAX_PIXEL_STATIC, SKY_PIXEL_OPTIONS, TIME_UNIT_OPTIONS } from "../lib/constants";
 import type {
   BookmarkEntry,
-  DistanceDriver,
   InstrumentGroup,
-  Mode,
   ModeLogSliderSpec,
-  ObservationGroup,
   SelectOption,
   SharedParams,
 } from "../lib/types";
@@ -18,35 +15,6 @@ import { ModePanelSkymap } from "./ModePanelSkymap";
 import { ModePanelSpectrum } from "./ModePanelSpectrum";
 import { SharedControls } from "./SharedControls";
 import { LogSliderField } from "./SliderField";
-
-type DistanceSection = {
-  distanceDriver: DistanceDriver;
-  distanceLinked: boolean;
-  setDistanceLinked: (next: boolean) => void;
-  setDistanceDriver: (next: DistanceDriver) => void;
-  setDistanceMpc: (next: number) => void;
-  setDistanceRedshift: (next: number) => void;
-  setSharedField: <K extends keyof SharedParams>(key: K, value: SharedParams[K]) => void;
-};
-
-type SharedControlsSection = {
-  instrumentGroups: InstrumentGroup[];
-  lcInstruments: string[];
-  sedInstruments: string[];
-  setLcInstruments: (value: UpdateValue<string[]>) => void;
-  setSedInstruments: (value: UpdateValue<string[]>) => void;
-  lcObsGroups: ObservationGroup[];
-  sedObsGroups: ObservationGroup[];
-  activeLcObsTab: number;
-  activeSedObsTab: number;
-  setLcObsGroups: (value: UpdateValue<ObservationGroup[]>) => void;
-  setSedObsGroups: (value: UpdateValue<ObservationGroup[]>) => void;
-  setActiveLcObsTab: (value: UpdateValue<number>) => void;
-  setActiveSedObsTab: (value: UpdateValue<number>) => void;
-  setError: (value: string) => void;
-  lcCurveOptions?: SelectOption[];
-  sedCurveOptions?: SelectOption[];
-};
 
 type BookmarkSection = {
   bookmarkNameDraft: string;
@@ -68,58 +36,13 @@ type CompareSection = {
   compareError: string;
 };
 
-type LightcurveSection = {
-  lcFreqDraft: string;
-  setLcFreqDraft: (value: string) => void;
-  commitLcFreq: () => void;
-  lcTMin: number;
-  setLcTMin: (value: number) => void;
-  lcTMax: number;
-  setLcTMax: (value: number) => void;
-};
-
-type SpectrumSection = {
-  sedTimesDraft: string;
-  setSedTimesDraft: (value: string) => void;
-  commitSedTimes: () => void;
-  sedNuMin: number;
-  setSedNuMin: (value: number) => void;
-  sedNuMax: number;
-  setSedNuMax: (value: number) => void;
-  sedNumNu: number;
-  setSedNumNu: (value: number) => void;
-  sedNuFNu: boolean;
-  setSedNuFNu: (value: boolean) => void;
-  sedFreqUnit: string;
-  setSedFreqUnit: (value: string) => void;
-};
-
-type SkymapSection = {
-  skyNpixel: number;
-  setSkyNpixel: (value: number) => void;
-  skyTObs: number;
-  setSkyTObs: (value: number) => void;
-  skyNuInputDraft: string;
-  setSkyNuInputDraft: (value: string) => void;
-  commitSkyNuInput: () => void;
-  skyFov: number;
-  setSkyFov: (value: number) => void;
-  skyFovUnit: string;
-  setSkyFovUnit: (value: string) => void;
-  skyIntensityUnit: string;
-  setSkyIntensityUnit: (value: string) => void;
-};
-
 type Props = {
-  mode: Mode;
-  shared: SharedParams;
-  distance: DistanceSection;
-  sharedControls: SharedControlsSection;
+  instrumentGroups: InstrumentGroup[];
+  setError: (value: string) => void;
+  lcCurveOptions?: SelectOption[];
+  sedCurveOptions?: SelectOption[];
   bookmark: BookmarkSection;
   compare: CompareSection;
-  lightcurve: LightcurveSection;
-  spectrum: SpectrumSection;
-  skymap: SkymapSection;
 };
 
 const skyPixelOptions = SKY_PIXEL_OPTIONS.filter((v) => v <= SKY_MAX_PIXEL_STATIC);
@@ -133,27 +56,27 @@ function renderStringOptions(options: readonly string[]): ReactNode[] {
 }
 
 export function SidebarPanels({
-  mode,
-  shared,
-  distance,
-  sharedControls,
+  instrumentGroups,
+  setError,
+  lcCurveOptions,
+  sedCurveOptions,
   bookmark,
   compare,
-  lightcurve,
-  spectrum,
-  skymap,
 }: Props) {
+  const { state, actions, setSharedField, setDistanceMpc, setDistanceRedshift } = useParameters();
+  const { mode, shared } = state;
+
   function renderDistanceObserverControls() {
     return (
       <DistanceControls
-        distanceDriver={distance.distanceDriver}
-        distanceLinked={distance.distanceLinked}
+        distanceDriver={state.distanceDriver}
+        distanceLinked={state.distanceLinked}
         shared={shared}
-        setDistanceLinked={distance.setDistanceLinked}
-        setDistanceDriver={distance.setDistanceDriver}
-        setDistanceMpc={distance.setDistanceMpc}
-        setDistanceRedshift={distance.setDistanceRedshift}
-        setSharedField={distance.setSharedField}
+        setDistanceLinked={actions.setDistanceLinked}
+        setDistanceDriver={actions.setDistanceDriver}
+        setDistanceMpc={setDistanceMpc}
+        setDistanceRedshift={setDistanceRedshift}
+        setSharedField={setSharedField}
       />
     );
   }
@@ -162,7 +85,7 @@ export function SidebarPanels({
     return (
       <label className="sb-field">
         <span className="sb-label">Flux</span>
-        <select value={shared.flux_unit} onChange={(e) => distance.setSharedField("flux_unit", e.target.value as SharedParams["flux_unit"])}>
+        <select value={shared.flux_unit} onChange={(e) => setSharedField("flux_unit", e.target.value as SharedParams["flux_unit"])}>
           {renderStringOptions(PLOT_FLUX_UNIT_OPTIONS)}
         </select>
       </label>
@@ -177,7 +100,7 @@ export function SidebarPanels({
         {renderFluxUnitControl()}
         <label className="sb-field">
           <span className="sb-label">Time</span>
-          <select value={shared.time_unit} disabled={timeDisabled} onChange={(e) => distance.setSharedField("time_unit", e.target.value as SharedParams["time_unit"])}>
+          <select value={shared.time_unit} disabled={timeDisabled} onChange={(e) => setSharedField("time_unit", e.target.value as SharedParams["time_unit"])}>
             {renderStringOptions(TIME_UNIT_OPTIONS)}
           </select>
         </label>
@@ -207,14 +130,14 @@ export function SidebarPanels({
   function renderSharedControls(options?: { hideDistanceObserver?: boolean; hidePlotUnits?: boolean }) {
     return (
       <SharedControls
-        mode={mode}
-        shared={shared}
-        setSharedField={distance.setSharedField}
+        instrumentGroups={instrumentGroups}
+        setError={setError}
+        lcCurveOptions={lcCurveOptions}
+        sedCurveOptions={sedCurveOptions}
         hideDistanceObserver={options?.hideDistanceObserver}
         hidePlotUnits={options?.hidePlotUnits}
         distanceControls={renderDistanceObserverControls()}
         plotUnitControls={renderPlotUnitControls(mode !== "lightcurve", mode === "lightcurve")}
-        {...sharedControls}
       />
     );
   }
@@ -229,11 +152,8 @@ export function SidebarPanels({
 
       {mode === "lightcurve" ? (
         <ModePanelLightcurve
-          {...lightcurve}
           renderDistanceObserverControls={renderDistanceObserverControls}
           renderModeLogSliderRow={renderModeLogSliderRow}
-          numT={shared.num_t}
-          setNumT={(value) => distance.setSharedField("num_t", value)}
           renderPlotUnitControls={renderPlotUnitControls}
           renderSharedControls={renderSharedControls}
         />
@@ -241,11 +161,8 @@ export function SidebarPanels({
 
       {mode === "spectrum" ? (
         <ModePanelSpectrum
-          {...spectrum}
           renderDistanceObserverControls={renderDistanceObserverControls}
           renderModeLogSliderRow={renderModeLogSliderRow}
-          fluxIsAbMag={shared.flux_unit === "AB mag"}
-          renderStringOptions={renderStringOptions}
           renderFluxUnitControl={renderFluxUnitControl}
           renderSharedControls={renderSharedControls}
         />
@@ -253,7 +170,6 @@ export function SidebarPanels({
 
       {mode === "skymap" ? (
         <ModePanelSkymap
-          {...skymap}
           skyPixelOptions={skyPixelOptions}
           renderDistanceObserverControls={renderDistanceObserverControls}
           renderSharedControls={renderSharedControls}

@@ -1,40 +1,28 @@
-import type { ReactNode } from "react";
+import { useCallback, type ReactNode } from "react";
 import { FREQ_HELP_TEXT } from "../lib/constants";
+import { useParameters } from "../lib/ParameterContext";
 import type { ModeLogSliderSpec } from "../lib/types";
 import { HelpHint } from "./HelpHint";
 import { SliderField } from "./SliderField";
 
 type Props = {
-  lcFreqDraft: string;
-  setLcFreqDraft: (value: string) => void;
-  commitLcFreq: () => void;
   renderDistanceObserverControls: () => ReactNode;
   renderModeLogSliderRow: (specs: ModeLogSliderSpec[], className?: string) => ReactNode;
-  lcTMin: number;
-  setLcTMin: (value: number) => void;
-  lcTMax: number;
-  setLcTMax: (value: number) => void;
-  numT: number;
-  setNumT: (value: number) => void;
   renderPlotUnitControls: (timeDisabled: boolean, showTime?: boolean) => ReactNode;
   renderSharedControls: (options: { hideDistanceObserver?: boolean; hidePlotUnits?: boolean }) => ReactNode;
 };
 
 export function ModePanelLightcurve({
-  lcFreqDraft,
-  setLcFreqDraft,
-  commitLcFreq,
   renderDistanceObserverControls,
   renderModeLogSliderRow,
-  lcTMin,
-  setLcTMin,
-  lcTMax,
-  setLcTMax,
-  numT,
-  setNumT,
   renderPlotUnitControls,
   renderSharedControls,
 }: Props) {
+  const { state, actions, setSharedField } = useParameters();
+  const { lcFreqDraft, lcTMin, lcTMax, shared } = state;
+
+  const commitLcFreq = useCallback(() => actions.setLcFreq(lcFreqDraft), [lcFreqDraft, actions.setLcFreq]);
+
   return (
     <>
       <div className="sb-stack">
@@ -45,7 +33,7 @@ export function ModePanelLightcurve({
           </span>
           <input
             value={lcFreqDraft}
-            onChange={(e) => setLcFreqDraft(e.target.value)}
+            onChange={(e) => actions.setLcFreqDraft(e.target.value)}
             onBlur={commitLcFreq}
             onKeyDown={(e) => { if (e.key === "Enter") commitLcFreq(); }}
             placeholder="e.g. 1e9, R, 1keV, XRT, [0.3keV,10keV]"
@@ -68,7 +56,7 @@ export function ModePanelLightcurve({
             step: 0.05,
             value: lcTMin,
             defaultExp: 0,
-            onChange: setLcTMin,
+            onChange: actions.setLcTMin,
           },
           {
             key: "lc-t-max",
@@ -82,7 +70,7 @@ export function ModePanelLightcurve({
             step: 0.05,
             value: lcTMax,
             defaultExp: 8,
-            onChange: setLcTMax,
+            onChange: actions.setLcTMax,
           },
         ])}
         <SliderField
@@ -91,8 +79,8 @@ export function ModePanelLightcurve({
           max={300}
           step={10}
           decimals={0}
-          value={numT}
-          onChange={(v) => setNumT(Math.round(v))}
+          value={shared.num_t}
+          onChange={(v) => setSharedField("num_t", Math.round(v))}
         />
         {renderPlotUnitControls(false)}
       </div>

@@ -110,7 +110,7 @@ def compute_model(p):
 
     band_data = []
     for nu_min, nu_max, label in bands:
-        num_nu_band = max(5, int(np.log10(nu_max / nu_min) * 10))
+        num_nu_band = max(5, int(np.log10(nu_max / nu_min) * 5))
         br = model.flux(times, nu_min, nu_max, num_nu_band)
         comps = [(name, np.array(flux)) for name, flux in _get_components(br)]
         band_data.append((nu_min, nu_max, label, comps))

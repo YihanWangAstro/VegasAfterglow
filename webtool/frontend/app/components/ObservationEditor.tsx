@@ -247,7 +247,7 @@ export function ObservationEditor({
               Upload file
               <input
                 type="file"
-                accept=".csv,.txt,.dat,.xls,.xlsx,text/csv,text/plain,application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+                accept=".csv,.txt,.dat,text/csv,text/plain"
                 onChange={(e) => {
                   const file = e.target.files?.[0];
                   if (file) {
@@ -261,7 +261,7 @@ export function ObservationEditor({
               Remove
             </button>
           </div>
-          <p className="sb-muted sb-upload-hint">Supports .csv, .txt, .xls, .xlsx</p>
+          <p className="sb-muted sb-upload-hint">Supports .csv, .txt, .dat</p>
         </div>
       ) : null}
     </details>

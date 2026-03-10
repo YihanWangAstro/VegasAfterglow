@@ -19,63 +19,37 @@ import {
   TIME_UNIT_OPTIONS,
   Y_UNIT_OPTIONS,
 } from "../lib/constants";
-import type { InstrumentGroup, Mode, ObservationGroup, SelectOption, SharedParams, SharedSliderSpec } from "../lib/types";
+import { useParameters } from "../lib/ParameterContext";
+import type { InstrumentGroup, ObservationGroup, SelectOption, SharedParams, SharedSliderSpec } from "../lib/types";
 import { defaultObsGroup, parseObservationUpload } from "../lib/utils/obs";
-import type { UpdateValue } from "../hooks/useParameterState";
 import { LogSliderField, SliderField } from "./SliderField";
 import { ObservationEditor } from "./ObservationEditor";
 
 type Props = {
-  mode: Mode;
-  shared: SharedParams;
-  setSharedField: <K extends keyof SharedParams>(key: K, value: SharedParams[K]) => void;
+  instrumentGroups: InstrumentGroup[];
+  setError: (value: string) => void;
+  lcCurveOptions?: SelectOption[];
+  sedCurveOptions?: SelectOption[];
   hideDistanceObserver?: boolean;
   hidePlotUnits?: boolean;
   distanceControls?: ReactNode;
   plotUnitControls?: ReactNode;
-  instrumentGroups: InstrumentGroup[];
-  lcInstruments: string[];
-  sedInstruments: string[];
-  setLcInstruments: (value: UpdateValue<string[]>) => void;
-  setSedInstruments: (value: UpdateValue<string[]>) => void;
-  lcObsGroups: ObservationGroup[];
-  sedObsGroups: ObservationGroup[];
-  activeLcObsTab: number;
-  activeSedObsTab: number;
-  setLcObsGroups: (value: UpdateValue<ObservationGroup[]>) => void;
-  setSedObsGroups: (value: UpdateValue<ObservationGroup[]>) => void;
-  setActiveLcObsTab: (value: UpdateValue<number>) => void;
-  setActiveSedObsTab: (value: UpdateValue<number>) => void;
-  setError: (value: string) => void;
-  lcCurveOptions?: SelectOption[];
-  sedCurveOptions?: SelectOption[];
 };
 
 export function SharedControls({
-  mode,
-  shared,
-  setSharedField,
+  instrumentGroups,
+  setError,
+  lcCurveOptions,
+  sedCurveOptions,
   hideDistanceObserver,
   hidePlotUnits,
   distanceControls,
   plotUnitControls,
-  instrumentGroups,
-  lcInstruments,
-  sedInstruments,
-  setLcInstruments,
-  setSedInstruments,
-  lcObsGroups,
-  sedObsGroups,
-  activeLcObsTab,
-  activeSedObsTab,
-  setLcObsGroups,
-  setSedObsGroups,
-  setActiveLcObsTab,
-  setActiveSedObsTab,
-  setError,
-  lcCurveOptions,
-  sedCurveOptions,
 }: Props) {
+  const { state, actions, setSharedField } = useParameters();
+  const { mode, shared, lcInstruments, sedInstruments, lcObsGroups, sedObsGroups, activeLcObsTab, activeSedObsTab } = state;
+  const { setLcInstruments, setSedInstruments, setLcObsGroups, setSedObsGroups, setActiveLcObsTab, setActiveSedObsTab } = actions;
+
   const isSky = mode === "skymap";
   const isLc = mode === "lightcurve";
 

@@ -79,17 +79,6 @@ function rowsFromDelimitedText(text: string): string[] {
   return rows;
 }
 
-function rowsFromMatrix(rows: unknown[][]): string[] {
-  const out: string[] = [];
-  for (const row of rows) {
-    const tokens = normalizeObservationTokens(row);
-    if (tokens.length >= 2) {
-      out.push(tokens.join("  "));
-    }
-  }
-  return out;
-}
-
 const FREQ_SCALES: Record<string, number> = { Hz: 1, GHz: 1e9, keV: 2.417989242e17, MeV: 2.417989242e20 };
 
 function magToCgs(mag: number, magErr: number): [number, number] {
@@ -155,22 +144,7 @@ export function parseObsToEntries(groups: ObservationGroup[], isLc: boolean): Ob
 }
 
 export async function parseObservationUpload(file: File): Promise<string> {
-  const lowered = file.name.toLowerCase();
-  const isExcel = lowered.endsWith(".xlsx") || lowered.endsWith(".xls");
-  let rows: string[] = [];
-  if (isExcel) {
-    const XLSX = await import("xlsx");
-    const bytes = await file.arrayBuffer();
-    const workbook = XLSX.read(bytes, { type: "array" });
-    const firstSheet = workbook.SheetNames[0];
-    if (firstSheet) {
-      const sheet = workbook.Sheets[firstSheet];
-      const matrix = XLSX.utils.sheet_to_json(sheet, { header: 1, blankrows: false, raw: true }) as unknown[][];
-      rows = rowsFromMatrix(matrix);
-    }
-  } else {
-    rows = rowsFromDelimitedText(await file.text());
-  }
+  const rows = rowsFromDelimitedText(await file.text());
 
   if (rows.length === 0) {
     throw new Error("No valid rows found. Expected numeric columns: x, value, error(optional).");

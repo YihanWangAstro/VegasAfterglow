@@ -16,6 +16,7 @@ import {
   DEFAULT_APP_VERSION,
   MODE_OPTIONS,
 } from "../../lib/constants";
+import { ParameterContext } from "../../lib/ParameterContext";
 import type {
   ComputationSpec,
   InstrumentGroup,
@@ -56,67 +57,6 @@ export default function HomePage() {
   } = useApiStatus();
 
   const { parameterState, actions } = useParameterState();
-  const {
-    mode,
-    distanceLinked,
-    distanceDriver,
-    shared,
-    lcFreq,
-    lcFreqDraft,
-    lcTMin,
-    lcTMax,
-    lcInstruments,
-    lcObsGroups,
-    activeLcObsTab,
-    sedTimes,
-    sedTimesDraft,
-    sedNuMin,
-    sedNuMax,
-    sedNumNu,
-    sedFreqUnit,
-    sedNuFNu,
-    sedInstruments,
-    sedObsGroups,
-    activeSedObsTab,
-    skyTObs,
-    skyNuInput,
-    skyNuInputDraft,
-    skyFov,
-    skyFovUnit,
-    skyNpixel,
-    skyIntensityUnit,
-  } = parameterState;
-
-  const {
-    setMode,
-    setDistanceLinked,
-    setDistanceDriver,
-    setShared,
-    setLcFreq,
-    setLcFreqDraft,
-    setLcTMin,
-    setLcTMax,
-    setLcInstruments,
-    setLcObsGroups,
-    setActiveLcObsTab,
-    setSedTimes,
-    setSedTimesDraft,
-    setSedNuMin,
-    setSedNuMax,
-    setSedNumNu,
-    setSedFreqUnit,
-    setSedNuFNu,
-    setSedInstruments,
-    setSedObsGroups,
-    setActiveSedObsTab,
-    setSkyTObs,
-    setSkyNuInput,
-    setSkyNuInputDraft,
-    setSkyFov,
-    setSkyFovUnit,
-    setSkyNpixel,
-    setSkyIntensityUnit,
-  } = actions;
 
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
@@ -152,50 +92,65 @@ export default function HomePage() {
   const [compareEnabled, setCompareEnabled] = useState(false);
   const [compareBookmarkId, setCompareBookmarkId] = useState("");
 
+  const { mode, shared, lcObsGroups, sedObsGroups, lcFreq, sedTimes,
+    lcInstruments, sedInstruments, sedFreqUnit, sedNuFNu,
+    skyFovUnit, skyIntensityUnit, lcTMin, lcTMax,
+    sedNuMin, sedNuMax, skyFov, skyNpixel,
+  } = parameterState;
+
   const { setSharedField, setDistanceMpc, setDistanceRedshift } = useDistanceLinking({
-    distanceLinked,
-    distanceDriver,
+    distanceLinked: parameterState.distanceLinked,
+    distanceDriver: parameterState.distanceDriver,
     shared,
-    setShared,
+    setShared: actions.setShared,
   });
 
+  const parameterCtx = useMemo(() => ({
+    state: parameterState,
+    actions,
+    setSharedField,
+    setDistanceMpc,
+    setDistanceRedshift,
+  }), [parameterState, actions, setSharedField, setDistanceMpc, setDistanceRedshift]);
+
+  const ps = parameterState;
   const currentSnapshot = useMemo<UiSnapshot>(
     () => ({
-      mode,
-      distance_linked: distanceLinked,
-      distance_driver: distanceDriver,
-      shared: { ...shared },
+      mode: ps.mode,
+      distance_linked: ps.distanceLinked,
+      distance_driver: ps.distanceDriver,
+      shared: { ...ps.shared },
       lightcurve: {
-        frequencies_input: lcFreq,
-        t_min: lcTMin,
-        t_max: lcTMax,
-        selected_instruments: [...lcInstruments],
-        observation_groups: lcObsGroups.map((group) => ({ ...group })),
+        frequencies_input: ps.lcFreq,
+        t_min: ps.lcTMin,
+        t_max: ps.lcTMax,
+        selected_instruments: [...ps.lcInstruments],
+        observation_groups: ps.lcObsGroups.map((group) => ({ ...group })),
       },
       spectrum: {
-        t_snapshots_input: sedTimes,
-        nu_min: sedNuMin,
-        nu_max: sedNuMax,
-        num_nu: sedNumNu,
-        freq_unit: sedFreqUnit,
-        show_nufnu: sedNuFNu,
-        selected_instruments: [...sedInstruments],
-        observation_groups: sedObsGroups.map((group) => ({ ...group })),
+        t_snapshots_input: ps.sedTimes,
+        nu_min: ps.sedNuMin,
+        nu_max: ps.sedNuMax,
+        num_nu: ps.sedNumNu,
+        freq_unit: ps.sedFreqUnit,
+        show_nufnu: ps.sedNuFNu,
+        selected_instruments: [...ps.sedInstruments],
+        observation_groups: ps.sedObsGroups.map((group) => ({ ...group })),
       },
       skymap: {
         animate: false,
-        t_obs: skyTObs,
-        t_min: skyTObs,
-        t_max: skyTObs,
+        t_obs: ps.skyTObs,
+        t_min: ps.skyTObs,
+        t_max: ps.skyTObs,
         n_frames: 1,
-        nu_input: skyNuInput,
-        fov: skyFov,
-        fov_unit: skyFovUnit,
-        npixel: skyNpixel,
-        intensity_unit: skyIntensityUnit,
+        nu_input: ps.skyNuInput,
+        fov: ps.skyFov,
+        fov_unit: ps.skyFovUnit,
+        npixel: ps.skyNpixel,
+        intensity_unit: ps.skyIntensityUnit,
       },
     }),
-    [parameterState],
+    [ps],
   );
 
   const applySnapshot = useCallback((snapshot: UiSnapshot) => {
@@ -344,8 +299,8 @@ export default function HomePage() {
     setCompareEnabled,
     lcObsGroupsLength: lcObsGroups.length,
     sedObsGroupsLength: sedObsGroups.length,
-    setActiveLcObsTab,
-    setActiveSedObsTab,
+    setActiveLcObsTab: actions.setActiveLcObsTab,
+    setActiveSedObsTab: actions.setActiveSedObsTab,
     urlStateReady,
     sliderInteracting,
     buildShareLink,
@@ -401,91 +356,6 @@ export default function HomePage() {
     return pd.t_snapshots_s.map((t) => ({ label: formatTimeLabel(t), value: String(t) }));
   }, [resultPlotData]);
 
-  const commitLcFreq = useCallback(() => setLcFreq(lcFreqDraft), [lcFreqDraft, setLcFreq]);
-  const commitSedTimes = useCallback(() => setSedTimes(sedTimesDraft), [sedTimesDraft, setSedTimes]);
-  const commitSkyNuInput = useCallback(() => setSkyNuInput(skyNuInputDraft), [skyNuInputDraft, setSkyNuInput]);
-
-  const sidebarPanelsProps = {
-    mode,
-    shared,
-    distance: {
-      distanceDriver,
-      distanceLinked,
-      setDistanceLinked,
-      setDistanceDriver,
-      setDistanceMpc,
-      setDistanceRedshift,
-      setSharedField,
-    },
-    sharedControls: {
-      instrumentGroups,
-      lcInstruments,
-      sedInstruments,
-      setLcInstruments,
-      setSedInstruments,
-      lcObsGroups,
-      sedObsGroups,
-      activeLcObsTab,
-      activeSedObsTab,
-      setLcObsGroups,
-      setSedObsGroups,
-      setActiveLcObsTab,
-      setActiveSedObsTab,
-      setError,
-      lcCurveOptions,
-      sedCurveOptions,
-    },
-    bookmark: {
-      bookmarkNameDraft,
-      setBookmarkNameDraft,
-      saveCurrentBookmark,
-      setupStatusText,
-      bookmarks,
-      loadBookmarkById,
-      copyShareLinkForSnapshot,
-      removeBookmarkById,
-    },
-    compare: {
-      compareEnabled,
-      setCompareEnabled,
-      compareBookmarkId,
-      setCompareBookmarkId,
-      compareRunning,
-      compareError,
-    },
-    lightcurve: { lcFreqDraft, setLcFreqDraft, commitLcFreq, lcTMin, setLcTMin, lcTMax, setLcTMax },
-    spectrum: {
-      sedTimesDraft,
-      setSedTimesDraft,
-      commitSedTimes,
-      sedNuMin,
-      setSedNuMin,
-      sedNuMax,
-      setSedNuMax,
-      sedNumNu,
-      setSedNumNu,
-      sedNuFNu,
-      setSedNuFNu,
-      sedFreqUnit,
-      setSedFreqUnit,
-    },
-    skymap: {
-      skyNpixel,
-      setSkyNpixel,
-      skyTObs,
-      setSkyTObs,
-      skyNuInputDraft,
-      setSkyNuInputDraft,
-      commitSkyNuInput,
-      skyFov,
-      setSkyFov,
-      skyFovUnit,
-      setSkyFovUnit,
-      skyIntensityUnit,
-      setSkyIntensityUnit,
-    },
-  };
-
   const emptyStateMessage =
     mode === "lightcurve" && lcFreq.trim().length === 0
       ? "Enter at least one frequency, filter, or band to render a light curve."
@@ -494,6 +364,7 @@ export default function HomePage() {
         : "Adjust parameters in the sidebar to update the plot.";
 
   return (
+    <ParameterContext.Provider value={parameterCtx}>
     <main className={`app-shell ${sidebarOpen ? "sidebar-open" : ""}`}>
       {!sidebarOpen ? (
         <button className="sidebar-toggle" onClick={() => setSidebarOpen(true)} aria-label="Open controls">
@@ -529,7 +400,7 @@ export default function HomePage() {
                   type="radio"
                   name="plot-mode"
                   checked={mode === item.value}
-                  onChange={() => setMode(item.value)}
+                  onChange={() => actions.setMode(item.value)}
                 />
                 <span>{item.label}</span>
               </label>
@@ -537,7 +408,30 @@ export default function HomePage() {
           </div>
         </div>
 
-        <SidebarPanels {...sidebarPanelsProps} />
+        <SidebarPanels
+          instrumentGroups={instrumentGroups}
+          setError={setError}
+          lcCurveOptions={lcCurveOptions}
+          sedCurveOptions={sedCurveOptions}
+          bookmark={{
+            bookmarkNameDraft,
+            setBookmarkNameDraft,
+            saveCurrentBookmark,
+            setupStatusText,
+            bookmarks,
+            loadBookmarkById,
+            copyShareLinkForSnapshot,
+            removeBookmarkById,
+          }}
+          compare={{
+            compareEnabled,
+            setCompareEnabled,
+            compareBookmarkId,
+            setCompareBookmarkId,
+            compareRunning,
+            compareError,
+          }}
+        />
 
         <SidebarFooter
           mode={mode}
@@ -584,5 +478,6 @@ export default function HomePage() {
 
       </section>
     </main>
+    </ParameterContext.Provider>
   );
 }

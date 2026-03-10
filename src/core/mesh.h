@@ -65,7 +65,7 @@ struct ThetaGridParams {
     Real core_beam_coeff = 55.0; ///< Extra beam points per log-decade for core beaming
     Real view_beam_coeff = 25.0; ///< Extra beam points per log-decade for view beaming
     Real doppler_alpha = 12.0;   ///< Doppler boost factor in structure term
-    Real floor_fraction = 0.15;  ///< Uniform floor weight as fraction of peak_weight
+    Real floor_fraction = 0.25;  ///< Uniform floor weight as fraction of peak_weight
 };
 
 /**

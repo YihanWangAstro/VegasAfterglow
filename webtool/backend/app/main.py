@@ -4,7 +4,10 @@ import os
 import socket
 import sys
 import tempfile
+import threading
 import time as time_mod
+from collections import defaultdict
+from concurrent.futures import ThreadPoolExecutor, TimeoutError as FuturesTimeoutError
 from contextlib import asynccontextmanager
 from functools import lru_cache
 from pathlib import Path
@@ -13,7 +16,7 @@ from urllib.error import URLError
 from urllib.request import Request, urlopen
 
 import numpy as np
-from fastapi import FastAPI, HTTPException, Response
+from fastapi import FastAPI, HTTPException, Request as FastAPIRequest, Response
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.middleware.gzip import GZipMiddleware
 from fastapi.responses import ORJSONResponse
@@ -33,7 +36,7 @@ if _repo_root and (_repo_root / "VegasAfterglow").exists():
 
 from .compute import compute_model, compute_sed, compute_skymap
 from .helpers import OBS_FLUX_UNITS, parse_entry, parse_frequency_input, shared_to_physics
-from .schemas import LightCurveRequest, SharedParams, SkyMapRequest, SpectrumRequest
+from .schemas import MAX_FREQUENCIES, MAX_SNAPSHOTS, LightCurveRequest, SharedParams, SkyMapRequest, SpectrumRequest
 from .services.plot_data import build_lc_plot_data, build_sed_plot_data, build_skymap_plot_data
 
 try:
@@ -86,11 +89,69 @@ allowed_origins = sorted(_default_origins | _env_origins)
 app.add_middleware(
     CORSMiddleware,
     allow_origins=allowed_origins,
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
+    allow_credentials=False,
+    allow_methods=["GET", "POST", "OPTIONS"],
+    allow_headers=["Content-Type", "Accept"],
 )
 app.add_middleware(GZipMiddleware, minimum_size=1024, compresslevel=9)
+
+# ---------------------------------------------------------------------------
+# Rate limiting (per-IP, in-memory)
+# ---------------------------------------------------------------------------
+
+RATE_LIMIT_WINDOW = 10  # seconds
+RATE_LIMIT_MAX = int(os.getenv("RATE_LIMIT_MAX", "300"))  # requests per window
+_RATE_EVICT_INTERVAL = 60  # seconds between stale-IP eviction sweeps
+
+_rate_lock = threading.Lock()
+_rate_buckets: dict[str, list[float]] = defaultdict(list)
+_rate_last_evict = 0.0
+
+
+def _get_client_ip(request: FastAPIRequest) -> str:
+    forwarded = request.headers.get("x-forwarded-for")
+    if forwarded:
+        return forwarded.split(",")[0].strip()
+    return request.client.host if request.client else "unknown"
+
+
+def _check_rate_limit(request: FastAPIRequest) -> None:
+    ip = _get_client_ip(request)
+    now = time_mod.monotonic()
+    with _rate_lock:
+        global _rate_last_evict
+        if now - _rate_last_evict > _RATE_EVICT_INTERVAL:
+            cutoff = now - RATE_LIMIT_WINDOW
+            stale = [k for k, v in _rate_buckets.items() if not v or v[-1] <= cutoff]
+            for k in stale:
+                del _rate_buckets[k]
+            _rate_last_evict = now
+
+        bucket = _rate_buckets[ip]
+        cutoff = now - RATE_LIMIT_WINDOW
+        _rate_buckets[ip] = bucket = [t for t in bucket if t > cutoff]
+        if len(bucket) >= RATE_LIMIT_MAX:
+            raise HTTPException(status_code=429, detail="Too many requests. Please wait before trying again.")
+        bucket.append(now)
+
+
+# ---------------------------------------------------------------------------
+# Computation timeout
+# ---------------------------------------------------------------------------
+
+COMPUTE_TIMEOUT = int(os.getenv("COMPUTE_TIMEOUT", "120"))  # seconds
+_compute_pool = ThreadPoolExecutor(max_workers=4)
+
+
+def _run_with_timeout(fn, params: dict, label: str):
+    """Run *fn(params)* in the compute pool with a timeout. Raises HTTPException on failure."""
+    future = _compute_pool.submit(fn, params)
+    try:
+        return future.result(timeout=COMPUTE_TIMEOUT)
+    except FuturesTimeoutError:
+        raise HTTPException(status_code=504, detail=f"Computation timed out (limit: {COMPUTE_TIMEOUT}s)")
+    except Exception as exc:
+        raise HTTPException(status_code=400, detail=f"{label} failed: {exc}") from exc
 
 
 @lru_cache(maxsize=1)
@@ -182,7 +243,8 @@ def defaults(response: Response) -> dict[str, Any]:
 
 
 @app.post("/api/lightcurve")
-def lightcurve(req: LightCurveRequest) -> dict[str, Any]:
+def lightcurve(req: LightCurveRequest, request: FastAPIRequest) -> dict[str, Any]:
+    _check_rate_limit(request)
 
     if req.t_min <= 0 or req.t_max <= 0:
         raise HTTPException(status_code=400, detail="t_min and t_max must be positive")
@@ -190,6 +252,8 @@ def lightcurve(req: LightCurveRequest) -> dict[str, Any]:
         raise HTTPException(status_code=400, detail="t_min must be less than t_max")
 
     frequencies, bands, parse_warnings = parse_frequency_input(req.frequencies_input)
+    if len(frequencies) + len(bands) > MAX_FREQUENCIES:
+        raise HTTPException(status_code=400, detail=f"Too many frequencies (max {MAX_FREQUENCIES})")
 
     params = {
         **shared_to_physics(req.shared),
@@ -201,10 +265,7 @@ def lightcurve(req: LightCurveRequest) -> dict[str, Any]:
     }
 
     t0 = time_mod.perf_counter()
-    try:
-        data = compute_model(params)
-    except Exception as exc:
-        raise HTTPException(status_code=400, detail=f"Light curve computation failed: {exc}") from exc
+    data = _run_with_timeout(compute_model, params, "Light curve computation")
     compute_s = time_mod.perf_counter() - t0
 
     response: dict[str, Any] = {
@@ -223,7 +284,8 @@ def lightcurve(req: LightCurveRequest) -> dict[str, Any]:
 
 
 @app.post("/api/spectrum")
-def spectrum(req: SpectrumRequest) -> dict[str, Any]:
+def spectrum(req: SpectrumRequest, request: FastAPIRequest) -> dict[str, Any]:
+    _check_rate_limit(request)
 
     if req.nu_min <= 0 or req.nu_max <= 0:
         raise HTTPException(status_code=400, detail="nu_min and nu_max must be positive")
@@ -241,6 +303,8 @@ def spectrum(req: SpectrumRequest) -> dict[str, Any]:
                 warnings.append(f"Invalid time value: '{tok}'")
     if not t_snapshots:
         raise HTTPException(status_code=400, detail="t_snapshots_input must include at least one time")
+    if len(t_snapshots) > MAX_SNAPSHOTS:
+        raise HTTPException(status_code=400, detail=f"Too many time snapshots (max {MAX_SNAPSHOTS})")
 
     params = {
         **shared_to_physics(req.shared),
@@ -250,10 +314,7 @@ def spectrum(req: SpectrumRequest) -> dict[str, Any]:
         "num_nu": req.num_nu,
     }
     t0 = time_mod.perf_counter()
-    try:
-        data = compute_sed(params)
-    except Exception as exc:
-        raise HTTPException(status_code=400, detail=f"Spectrum computation failed: {exc}") from exc
+    data = _run_with_timeout(compute_sed, params, "Spectrum computation")
     compute_s = time_mod.perf_counter() - t0
 
     response: dict[str, Any] = {
@@ -271,8 +332,8 @@ def spectrum(req: SpectrumRequest) -> dict[str, Any]:
 
 
 @app.post("/api/skymap")
-def skymap(req: SkyMapRequest) -> dict[str, Any]:
-
+def skymap(req: SkyMapRequest, request: FastAPIRequest) -> dict[str, Any]:
+    _check_rate_limit(request)
 
     if req.fov <= 0:
         raise HTTPException(status_code=400, detail="fov must be positive")
@@ -313,10 +374,7 @@ def skymap(req: SkyMapRequest) -> dict[str, Any]:
         params["t_obs_array"] = np.logspace(np.log10(req.t_min), np.log10(req.t_max), req.n_frames).tolist()
 
     t0 = time_mod.perf_counter()
-    try:
-        data = compute_skymap(params)
-    except Exception as exc:
-        raise HTTPException(status_code=400, detail=f"Sky image computation failed: {exc}") from exc
+    data = _run_with_timeout(compute_skymap, params, "Sky image computation")
     compute_s = time_mod.perf_counter() - t0
 
     response: dict[str, Any] = {
