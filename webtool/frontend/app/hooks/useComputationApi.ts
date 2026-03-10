@@ -17,86 +17,36 @@ type Args = {
 };
 
 export function useComputationApi({ parameterState, sliderInteracting, fetchFromApi }: Args) {
-  // Physics-only spec — excludes presentation params (flux_unit, time_unit,
-  // freq_unit, show_nufnu) so changing display units doesn't trigger a backend
-  // re-computation.  The frontend handles all unit conversion locally.
-  const fullComputationSpec = useMemo<ComputationSpec>(() => {
-    const {
-      mode,
-      shared,
-      lcFreq,
-      lcTMin,
-      lcTMax,
-      sedTimes,
-      sedNuMin,
-      sedNuMax,
-      sedNumNu,
-      skyTObs,
-      skyNuInput,
-      skyFov,
-      skyNpixel,
-    } = parameterState;
+  // Stable identity key for physics params — changes only when a physics-relevant
+  // parameter changes, not when presentation-only params (flux_unit, time_unit) change.
+  const { mode, shared, lcFreq, lcTMin, lcTMax, sedTimes, sedNuMin, sedNuMax, sedNumNu, skyTObs, skyNuInput, skyFov, skyNpixel } = parameterState;
+  const physicsKey = useMemo(
+    () => JSON.stringify(stripPresentationParams(normalizeShared(shared, mode))),
+    [shared, mode],
+  );
 
-    const normalized = stripPresentationParams(normalizeShared(shared, mode));
+  const fullComputationSpec = useMemo<ComputationSpec>(() => {
+    const normalized = JSON.parse(physicsKey);
 
     if (mode === "lightcurve") {
       return {
         endpoint: "lightcurve",
-        payload: {
-          shared: normalized,
-          frequencies_input: lcFreq,
-          t_min: lcTMin,
-          t_max: lcTMax,
-        },
+        payload: { shared: normalized, frequencies_input: lcFreq, t_min: lcTMin, t_max: lcTMax },
       };
     }
 
     if (mode === "spectrum") {
       return {
         endpoint: "spectrum",
-        payload: {
-          shared: normalized,
-          t_snapshots_input: sedTimes,
-          nu_min: sedNuMin,
-          nu_max: sedNuMax,
-          num_nu: sedNumNu,
-        },
+        payload: { shared: normalized, t_snapshots_input: sedTimes, nu_min: sedNuMin, nu_max: sedNuMax, num_nu: sedNumNu },
       };
     }
 
     return {
       endpoint: "skymap",
-      payload: {
-        shared: normalized,
-        animate: false,
-        t_obs: skyTObs,
-        t_min: skyTObs,
-        t_max: skyTObs,
-        n_frames: 1,
-        nu_input: skyNuInput,
-        fov: skyFov,
-        npixel: skyNpixel,
-      },
+      payload: { shared: normalized, animate: false, t_obs: skyTObs, t_min: skyTObs, t_max: skyTObs, n_frames: 1, nu_input: skyNuInput, fov: skyFov, npixel: skyNpixel },
     };
-  }, [
-    parameterState.mode,
-    parameterState.shared.E_iso, parameterState.shared.Gamma0, parameterState.shared.theta_c,
-    parameterState.shared.theta_w, parameterState.shared.E_iso_w, parameterState.shared.Gamma0_w,
-    parameterState.shared.k_e, parameterState.shared.k_g,
-    parameterState.shared.jet_type, parameterState.shared.medium_type,
-    parameterState.shared.n_ism, parameterState.shared.A_star,
-    parameterState.shared.eps_e, parameterState.shared.eps_B, parameterState.shared.p, parameterState.shared.xi_e,
-    parameterState.shared.d_L_mpc, parameterState.shared.z, parameterState.shared.theta_obs,
-    parameterState.shared.enable_rvs, parameterState.shared.duration,
-    parameterState.shared.eps_e_r, parameterState.shared.eps_B_r, parameterState.shared.p_r, parameterState.shared.xi_e_r,
-    parameterState.shared.spreading,
-    parameterState.shared.ssc, parameterState.shared.kn, parameterState.shared.rvs_ssc, parameterState.shared.rvs_kn,
-    parameterState.shared.num_t, parameterState.shared.k_m,
-    parameterState.shared.res_phi, parameterState.shared.res_theta, parameterState.shared.res_t,
-    parameterState.lcFreq, parameterState.lcTMin, parameterState.lcTMax,
-    parameterState.sedTimes, parameterState.sedNuMin, parameterState.sedNuMax, parameterState.sedNumNu,
-    parameterState.skyTObs, parameterState.skyNuInput, parameterState.skyFov, parameterState.skyNpixel,
-  ]);
+  }, [physicsKey, mode, lcFreq, lcTMin, lcTMax, sedTimes, sedNuMin, sedNuMax, sedNumNu, skyTObs, skyNuInput, skyFov, skyNpixel]);
 
   const computationSpec = useMemo<ComputationSpec>(
     () => buildInteractiveSpec(fullComputationSpec, ENABLE_INTERACTIVE_DOWNSAMPLE && sliderInteracting),

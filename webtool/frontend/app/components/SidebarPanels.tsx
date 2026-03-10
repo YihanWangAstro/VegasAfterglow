@@ -143,54 +143,17 @@ export function SidebarPanels({
   spectrum,
   skymap,
 }: Props) {
-  const { distanceDriver, distanceLinked, setDistanceLinked, setDistanceDriver, setDistanceMpc, setDistanceRedshift, setSharedField } =
-    distance;
-  const {
-    instrumentGroups,
-    lcInstruments,
-    sedInstruments,
-    setLcInstruments,
-    setSedInstruments,
-    lcObsGroups,
-    sedObsGroups,
-    activeLcObsTab,
-    activeSedObsTab,
-    setLcObsGroups,
-    setSedObsGroups,
-    setActiveLcObsTab,
-    setActiveSedObsTab,
-    setError,
-    lcCurveOptions,
-    sedCurveOptions,
-  } = sharedControls;
-  const {
-    bookmarkNameDraft,
-    setBookmarkNameDraft,
-    saveCurrentBookmark,
-    setupStatusText,
-    bookmarks,
-    loadBookmarkById,
-    copyShareLinkForSnapshot,
-    removeBookmarkById,
-  } = bookmark;
-  const { compareEnabled, setCompareEnabled, compareBookmarkId, setCompareBookmarkId, compareRunning, compareError } = compare;
-  const { lcFreqDraft, setLcFreqDraft, commitLcFreq, lcTMin, setLcTMin, lcTMax, setLcTMax } = lightcurve;
-  const { sedTimesDraft, setSedTimesDraft, commitSedTimes, sedNuMin, setSedNuMin, sedNuMax, setSedNuMax, sedNumNu, setSedNumNu, sedNuFNu, setSedNuFNu, sedFreqUnit, setSedFreqUnit } =
-    spectrum;
-  const { skyNpixel, setSkyNpixel, skyTObs, setSkyTObs, skyNuInputDraft, setSkyNuInputDraft, commitSkyNuInput, skyFov, setSkyFov, skyFovUnit, setSkyFovUnit, skyIntensityUnit, setSkyIntensityUnit } =
-    skymap;
-
   function renderDistanceObserverControls() {
     return (
       <DistanceControls
-        distanceDriver={distanceDriver}
-        distanceLinked={distanceLinked}
+        distanceDriver={distance.distanceDriver}
+        distanceLinked={distance.distanceLinked}
         shared={shared}
-        setDistanceLinked={setDistanceLinked}
-        setDistanceDriver={setDistanceDriver}
-        setDistanceMpc={setDistanceMpc}
-        setDistanceRedshift={setDistanceRedshift}
-        setSharedField={setSharedField}
+        setDistanceLinked={distance.setDistanceLinked}
+        setDistanceDriver={distance.setDistanceDriver}
+        setDistanceMpc={distance.setDistanceMpc}
+        setDistanceRedshift={distance.setDistanceRedshift}
+        setSharedField={distance.setSharedField}
       />
     );
   }
@@ -199,7 +162,7 @@ export function SidebarPanels({
     return (
       <label className="sb-field">
         <span className="sb-label">Flux</span>
-        <select value={shared.flux_unit} onChange={(e) => setSharedField("flux_unit", e.target.value as SharedParams["flux_unit"])}>
+        <select value={shared.flux_unit} onChange={(e) => distance.setSharedField("flux_unit", e.target.value as SharedParams["flux_unit"])}>
           {renderStringOptions(PLOT_FLUX_UNIT_OPTIONS)}
         </select>
       </label>
@@ -214,7 +177,7 @@ export function SidebarPanels({
         {renderFluxUnitControl()}
         <label className="sb-field">
           <span className="sb-label">Time</span>
-          <select value={shared.time_unit} disabled={timeDisabled} onChange={(e) => setSharedField("time_unit", e.target.value as SharedParams["time_unit"])}>
+          <select value={shared.time_unit} disabled={timeDisabled} onChange={(e) => distance.setSharedField("time_unit", e.target.value as SharedParams["time_unit"])}>
             {renderStringOptions(TIME_UNIT_OPTIONS)}
           </select>
         </label>
@@ -246,27 +209,12 @@ export function SidebarPanels({
       <SharedControls
         mode={mode}
         shared={shared}
-        setSharedField={setSharedField}
+        setSharedField={distance.setSharedField}
         hideDistanceObserver={options?.hideDistanceObserver}
         hidePlotUnits={options?.hidePlotUnits}
         distanceControls={renderDistanceObserverControls()}
         plotUnitControls={renderPlotUnitControls(mode !== "lightcurve", mode === "lightcurve")}
-        instrumentGroups={instrumentGroups}
-        lcInstruments={lcInstruments}
-        sedInstruments={sedInstruments}
-        setLcInstruments={setLcInstruments}
-        setSedInstruments={setSedInstruments}
-        lcObsGroups={lcObsGroups}
-        sedObsGroups={sedObsGroups}
-        activeLcObsTab={activeLcObsTab}
-        activeSedObsTab={activeSedObsTab}
-        setLcObsGroups={setLcObsGroups}
-        setSedObsGroups={setSedObsGroups}
-        setActiveLcObsTab={setActiveLcObsTab}
-        setActiveSedObsTab={setActiveSedObsTab}
-        setError={setError}
-        lcCurveOptions={lcCurveOptions}
-        sedCurveOptions={sedCurveOptions}
+        {...sharedControls}
       />
     );
   }
@@ -275,35 +223,17 @@ export function SidebarPanels({
     <>
       <BookmarkPanel
         mode={mode}
-        bookmarkNameDraft={bookmarkNameDraft}
-        setBookmarkNameDraft={setBookmarkNameDraft}
-        saveCurrentBookmark={saveCurrentBookmark}
-        setupStatusText={setupStatusText}
-        bookmarks={bookmarks}
-        loadBookmarkById={loadBookmarkById}
-        copyShareLinkForSnapshot={copyShareLinkForSnapshot}
-        removeBookmarkById={removeBookmarkById}
-        compareEnabled={compareEnabled}
-        setCompareEnabled={setCompareEnabled}
-        compareBookmarkId={compareBookmarkId}
-        setCompareBookmarkId={setCompareBookmarkId}
-        compareRunning={compareRunning}
-        compareError={compareError}
+        {...bookmark}
+        {...compare}
       />
 
       {mode === "lightcurve" ? (
         <ModePanelLightcurve
-          lcFreqDraft={lcFreqDraft}
-          setLcFreqDraft={setLcFreqDraft}
-          commitLcFreq={commitLcFreq}
+          {...lightcurve}
           renderDistanceObserverControls={renderDistanceObserverControls}
           renderModeLogSliderRow={renderModeLogSliderRow}
-          lcTMin={lcTMin}
-          setLcTMin={setLcTMin}
-          lcTMax={lcTMax}
-          setLcTMax={setLcTMax}
           numT={shared.num_t}
-          setNumT={(value) => setSharedField("num_t", value)}
+          setNumT={(value) => distance.setSharedField("num_t", value)}
           renderPlotUnitControls={renderPlotUnitControls}
           renderSharedControls={renderSharedControls}
         />
@@ -311,22 +241,10 @@ export function SidebarPanels({
 
       {mode === "spectrum" ? (
         <ModePanelSpectrum
-          sedTimesDraft={sedTimesDraft}
-          setSedTimesDraft={setSedTimesDraft}
-          commitSedTimes={commitSedTimes}
+          {...spectrum}
           renderDistanceObserverControls={renderDistanceObserverControls}
           renderModeLogSliderRow={renderModeLogSliderRow}
-          sedNuMin={sedNuMin}
-          setSedNuMin={setSedNuMin}
-          sedNuMax={sedNuMax}
-          setSedNuMax={setSedNuMax}
-          sedNumNu={sedNumNu}
-          setSedNumNu={setSedNumNu}
-          sedNuFNu={sedNuFNu}
-          setSedNuFNu={setSedNuFNu}
           fluxIsAbMag={shared.flux_unit === "AB mag"}
-          sedFreqUnit={sedFreqUnit}
-          setSedFreqUnit={setSedFreqUnit}
           renderStringOptions={renderStringOptions}
           renderFluxUnitControl={renderFluxUnitControl}
           renderSharedControls={renderSharedControls}
@@ -335,19 +253,7 @@ export function SidebarPanels({
 
       {mode === "skymap" ? (
         <ModePanelSkymap
-          skyNpixel={skyNpixel}
-          setSkyNpixel={setSkyNpixel}
-          skyTObs={skyTObs}
-          setSkyTObs={setSkyTObs}
-          skyNuInputDraft={skyNuInputDraft}
-          setSkyNuInputDraft={setSkyNuInputDraft}
-          commitSkyNuInput={commitSkyNuInput}
-          skyFov={skyFov}
-          setSkyFov={setSkyFov}
-          skyFovUnit={skyFovUnit}
-          setSkyFovUnit={setSkyFovUnit}
-          skyIntensityUnit={skyIntensityUnit}
-          setSkyIntensityUnit={setSkyIntensityUnit}
+          {...skymap}
           skyPixelOptions={skyPixelOptions}
           renderDistanceObserverControls={renderDistanceObserverControls}
           renderSharedControls={renderSharedControls}

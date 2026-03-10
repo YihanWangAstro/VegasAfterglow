@@ -121,8 +121,8 @@
 
   <text x="116.0" y="288" text-anchor="middle" font-size="10" font-weight="700" class="cp">C++ Engine</text>
   <text x="267.6" y="288" text-anchor="middle" font-size="10" font-weight="700" class="cp">Python Bindings</text>
-  <text x="419.2" y="288" text-anchor="middle" font-size="10" font-weight="700" class="cp">Python Package</text>
-  <text x="570.8" y="288" text-anchor="middle" font-size="10" font-weight="700" class="cp">Validation</text>
+  <text x="419.2" y="288" text-anchor="middle" font-size="10" font-weight="700" class="cp">Python Wrapper</text>
+  <text x="570.8" y="288" text-anchor="middle" font-size="10" font-weight="700" class="cp">Tests</text>
   <text x="722.4" y="288" text-anchor="middle" font-size="10" font-weight="700" class="cp">Webtool</text>
   <text x="874.0" y="288" text-anchor="middle" font-size="10" font-weight="700" class="cp">Docs/Code Comments</text>
 

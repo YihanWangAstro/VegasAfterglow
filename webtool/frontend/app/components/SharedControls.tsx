@@ -79,26 +79,21 @@ export function SharedControls({
   const isSky = mode === "skymap";
   const isLc = mode === "lightcurve";
 
+  function obsSetters(isLcMode: boolean) {
+    return {
+      setGroups: isLcMode ? setLcObsGroups : setSedObsGroups,
+      setActiveTab: isLcMode ? setActiveLcObsTab : setActiveSedObsTab,
+    };
+  }
+
   function updateObsGroup(isLcMode: boolean, index: number, patch: Partial<ObservationGroup>) {
-    if (isLcMode) {
-      setLcObsGroups((prev) => prev.map((group, i) => (i === index ? { ...group, ...patch } : group)));
-      return;
-    }
-    setSedObsGroups((prev) => prev.map((group, i) => (i === index ? { ...group, ...patch } : group)));
+    obsSetters(isLcMode).setGroups((prev) => prev.map((group, i) => (i === index ? { ...group, ...patch } : group)));
   }
 
   function removeObsGroup(isLcMode: boolean, index: number) {
-    if (isLcMode) {
-      setLcObsGroups((prev) => prev.filter((_, i) => i !== index));
-      setActiveLcObsTab((prev) => {
-        if (index < prev) return prev - 1;
-        if (index === prev) return Math.max(0, prev - 1);
-        return prev;
-      });
-      return;
-    }
-    setSedObsGroups((prev) => prev.filter((_, i) => i !== index));
-    setActiveSedObsTab((prev) => {
+    const { setGroups, setActiveTab } = obsSetters(isLcMode);
+    setGroups((prev) => prev.filter((_, i) => i !== index));
+    setActiveTab((prev) => {
       if (index < prev) return prev - 1;
       if (index === prev) return Math.max(0, prev - 1);
       return prev;
@@ -106,16 +101,11 @@ export function SharedControls({
   }
 
   function addObsGroup(isLcMode: boolean) {
-    if (isLcMode) {
-      setLcObsGroups((prev) => [...prev, defaultObsGroup(true, prev.length + 1)]);
-      return;
-    }
-    setSedObsGroups((prev) => [...prev, defaultObsGroup(false, prev.length + 1)]);
+    obsSetters(isLcMode).setGroups((prev) => [...prev, defaultObsGroup(isLcMode, prev.length + 1)]);
   }
 
   function toggleInstrument(isLcMode: boolean, name: string, checked: boolean) {
-    const setter = isLcMode ? setLcInstruments : setSedInstruments;
-    setter((prev) => {
+    (isLcMode ? setLcInstruments : setSedInstruments)((prev) => {
       if (checked) return prev.includes(name) ? prev : [...prev, name];
       return prev.filter((value) => value !== name);
     });

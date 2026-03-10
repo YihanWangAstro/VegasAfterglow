@@ -10,8 +10,8 @@ from pathlib import Path
 MODULES = [
     "C++ Engine",
     "Python Bindings",
-    "Python Package",
-    "Validation",
+    "Python Wrapper",
+    "Tests",
     "Webtool",
     "Docs/Code Comments",
 ]
@@ -21,8 +21,8 @@ ACTIVITIES = ["Architect.", "Coding", "Optim."]
 DATA = {
     "C++ Engine":         {"Architect.": (1.00, 0.00, 0.00), "Coding": (0.90, 0.10, 0.00), "Optim.": (0.80, 0.20, 0.00)},
     "Python Bindings":    {"Architect.": (1.00, 0.00, 0.00), "Coding": (0.70, 0.30, 0.00), "Optim.": (1.00, 0.00, 0.00)},
-    "Python Package":     {"Architect.": (1.00, 0.00, 0.00), "Coding": (0.10, 0.90, 0.00), "Optim.": (0.30, 0.70, 0.00)},
-    "Validation":         {"Architect.": (0.70, 0.30, 0.00), "Coding": (0.20, 0.80, 0.00), "Optim.": (0.20, 0.80, 0.00)},
+    "Python Wrapper":     {"Architect.": (1.00, 0.00, 0.00), "Coding": (0.10, 0.90, 0.00), "Optim.": (0.30, 0.70, 0.00)},
+    "Tests":              {"Architect.": (0.70, 0.30, 0.00), "Coding": (0.20, 0.80, 0.00), "Optim.": (0.20, 0.80, 0.00)},
     "Webtool":            {"Architect.": (0.50, 0.00, 0.50), "Coding": (0.00, 0.00, 1.00), "Optim.": (0.50, 0.30, 0.20)},
     "Docs/Code Comments": {"Architect.": (0.30, 0.70, 0.00), "Coding": (0.20, 0.80, 0.00), "Optim.": (0.00, 1.00, 0.00)},
 }
