@@ -93,7 +93,7 @@ app.add_middleware(
     allow_methods=["GET", "POST", "OPTIONS"],
     allow_headers=["Content-Type", "Accept"],
 )
-app.add_middleware(GZipMiddleware, minimum_size=1024, compresslevel=9)
+app.add_middleware(GZipMiddleware, minimum_size=1024, compresslevel=6)
 
 # ---------------------------------------------------------------------------
 # Rate limiting (per-IP, in-memory)
