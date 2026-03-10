@@ -16,7 +16,7 @@ const nextConfig = {
               "script-src 'self' cdn.jsdelivr.net 'unsafe-eval' 'unsafe-inline'",
               "style-src 'self' 'unsafe-inline'",
               "img-src 'self' data: blob:",
-              "connect-src 'self' api.vegasafterglow.com *.vegasafterglow.com",
+              "connect-src 'self' http://localhost:8000 http://127.0.0.1:8000 https://api.vegasafterglow.com https://*.vegasafterglow.com http://8.136.116.255",
               "font-src 'self' data:",
             ].join("; "),
           },
