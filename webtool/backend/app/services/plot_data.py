@@ -3,7 +3,6 @@
 import base64
 
 import numpy as np
-from fastapi import HTTPException
 
 
 def build_lc_plot_data(data, t_min, t_max):
@@ -79,60 +78,52 @@ def build_sed_plot_data(data):
 def build_skymap_plot_data(data: dict) -> dict:
     """Return raw skymap data for client-side rendering.
 
-    Zero-border is trimmed before log10 to reduce computation and transfer size.
-    Frames are encoded as base64 float32 (row-major, NaN for non-positive pixels).
+    Zero-border is trimmed before log10 to reduce transfer size.
+    The frame is encoded as base64 float32 (row-major, NaN for non-positive pixels).
     x0/y0/nx/ny are adjusted to reflect the cropped region.
     """
-    images = data["images"]
+    image = data["image"]
     extent = data["extent_uas"]
-    t_arr = data["t_obs_array"]
+    t_obs = data["t_obs"]
     nu_obs = data["nu_obs"]
 
-    if not images:
-        raise HTTPException(status_code=500, detail="Sky map returned no images")
-
-    nx, ny = int(images[0].shape[0]), int(images[0].shape[1])
+    nx, ny = int(image.shape[0]), int(image.shape[1])
     x_min, x_max, y_min, y_max = float(extent[0]), float(extent[1]), float(extent[2]), float(extent[3])
     dx = (x_max - x_min) / max(nx, 1)
     dy = (y_max - y_min) / max(ny, 1)
     x0 = x_min + 0.5 * dx
     y0 = y_min + 0.5 * dy
 
-    # Stack transposed frames into single (n_frames, ny, nx) array
-    stacked = np.stack([np.asarray(img, dtype=np.float32).T for img in images])
+    frame = np.asarray(image, dtype=np.float32).T  # (ny, nx)
 
-    # Crop to bounding box of positive pixels (union across all frames).
-    # np.max avoids materializing a full boolean temporary like `stacked > 0`.
-    max_frame = np.max(stacked, axis=0)  # (ny, nx)
-    rows_any = np.any(max_frame > 0, axis=1)
-    cols_any = np.any(max_frame > 0, axis=0)
+    # Crop to bounding box of positive pixels.
+    rows_any = np.any(frame > 0, axis=1)
+    cols_any = np.any(frame > 0, axis=0)
     if rows_any.any() and cols_any.any():
         row_idx = np.where(rows_any)[0]
         col_idx = np.where(cols_any)[0]
         r0, r1 = int(row_idx[0]), int(row_idx[-1]) + 1
         c0, c1 = int(col_idx[0]), int(col_idx[-1]) + 1
-        stacked = stacked[:, r0:r1, c0:c1]
+        frame = frame[r0:r1, c0:c1]
         x0 += c0 * dx
         y0 += r0 * dy
         nx = c1 - c0
         ny = r1 - r0
 
-    # log10 in-place on the cropped array, NaN for non-positive pixels
-    stacked[stacked <= 0] = np.nan
-    np.log10(stacked, out=stacked, where=np.isfinite(stacked))
+    # log10 in-place, NaN for non-positive pixels
+    frame[frame <= 0] = np.nan
+    np.log10(frame, out=frame, where=np.isfinite(frame))
 
-    has_finite = bool(np.any(np.isfinite(stacked)))
-    z_min = float(np.nanmin(stacked)) if has_finite else 0.0
-    z_max = float(np.nanmax(stacked)) if has_finite else 1.0
-
-    frames_b64 = [base64.b64encode(stacked[i].tobytes()).decode("ascii") for i in range(stacked.shape[0])]
+    has_finite = bool(np.any(np.isfinite(frame)))
+    z_min = float(np.nanmin(frame)) if has_finite else 0.0
+    z_max = float(np.nanmax(frame)) if has_finite else 1.0
 
     return {
         "nx": nx,
         "ny": ny,
-        "frames_b64f32": frames_b64,
+        "frame_b64f32": base64.b64encode(frame.tobytes()).decode("ascii"),
         "extent_uas": [x_min, x_max, y_min, y_max],
-        "t_obs_s": [float(t) for t in t_arr],
+        "t_obs_s": float(t_obs),
         "nu_obs_hz": float(nu_obs),
         "dx": dx,
         "dy": dy,

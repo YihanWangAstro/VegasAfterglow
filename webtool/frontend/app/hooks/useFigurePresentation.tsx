@@ -34,7 +34,7 @@ import {
   shouldPreserveAxisRangesOnAutorange,
 } from "../lib/utils/plot";
 import { parseObsToEntries } from "../lib/utils/obs";
-import { buildLcFigure, buildSedFigure, buildSkymapFigure, decodeSkymapFrames } from "../lib/utils/plot-builders";
+import { buildLcFigure, buildSedFigure, buildSkymapFigure, decodeSkymapFrame } from "../lib/utils/plot-builders";
 
 type UseFigurePresentationArgs = {
   mode: Mode;
@@ -144,11 +144,11 @@ export function useFigurePresentation({
     : mode === "spectrum" ? sedOpts
     : skyOpts;
 
-  // Cache decoded skymap frames — only re-decode when plot data changes,
+  // Cache decoded skymap frame — only re-decode when plot data changes,
   // not when display units (intensity, FOV) change.
-  const decodedSkyFrames = useMemo(() => {
+  const decodedSkyFrame = useMemo(() => {
     if (mode !== "skymap" || resultMode !== mode || !plotData) return null;
-    return decodeSkymapFrames(plotData as SkymapPlotData);
+    return decodeSkymapFrame(plotData as SkymapPlotData);
   }, [plotData, resultMode, mode]);
 
   const builtFigure = useMemo(() => {
@@ -162,10 +162,10 @@ export function useFigurePresentation({
       const pd = { ...(plotData as SedPlotData), obs: obsEntries };
       return buildSedFigure(pd, sedOpts, obsShiftMap);
     }
-    if (mode === "skymap" && decodedSkyFrames) return buildSkymapFigure(plotData as SkymapPlotData, decodedSkyFrames, { fovUnit: skyFovUnit, intensityUnit: skyIntensityUnit });
+    if (mode === "skymap" && decodedSkyFrame) return buildSkymapFigure(plotData as SkymapPlotData, decodedSkyFrame, { fovUnit: skyFovUnit, intensityUnit: skyIntensityUnit });
     return null;
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [plotData, resultMode, mode, obsEntries, obsShiftMap, modeDisplayDeps, decodedSkyFrames]);
+  }, [plotData, resultMode, mode, obsEntries, obsShiftMap, modeDisplayDeps, decodedSkyFrame]);
 
   const comparePlotData = compareResult?.plot_data;
   const compareBuiltFigure = useMemo(() => {

@@ -60,10 +60,9 @@ function decodeFloat32Frame(b64: string, ny: number, nx: number): number[][] {
   return rows;
 }
 
-/** Decode all base64 frames upfront (expensive). Cache this result. */
-export function decodeSkymapFrames(pd: SkymapPlotData): number[][][] {
-  const { nx, ny, frames_b64f32 } = pd;
-  return frames_b64f32.map((b64) => decodeFloat32Frame(b64, ny, nx));
+/** Decode the base64 frame. Cache this result. */
+export function decodeSkymapFrame(pd: SkymapPlotData): number[][] {
+  return decodeFloat32Frame(pd.frame_b64f32, pd.ny, pd.nx);
 }
 
 function offsetFrame(frame: number[][], offset: number): number[][] {
@@ -75,9 +74,9 @@ function offsetFrame(frame: number[][], offset: number): number[][] {
 // Figure builder
 // ---------------------------------------------------------------------------
 
-export function buildSkymapFigure(pd: SkymapPlotData, decodedFrames: number[][][], opts?: SkymapOptions): PlotlyFigure {
+export function buildSkymapFigure(pd: SkymapPlotData, decodedFrame: number[][], opts?: SkymapOptions): PlotlyFigure {
   const { extent_uas, t_obs_s, nu_obs_hz, dx, dy, x0, y0, z_min, z_max } = pd;
-  const t_labels = t_obs_s.map(formatTimeLabel);
+  const t_label = formatTimeLabel(t_obs_s);
   const nu_label = formatFreqLabel(nu_obs_hz);
 
   const fovUnit = opts?.fovUnit ?? "μas";
@@ -97,11 +96,11 @@ export function buildSkymapFigure(pd: SkymapPlotData, decodedFrames: number[][][
   const zMinDisp = z_min + logOffset;
   const zMaxDisp = z_max + logOffset;
 
-  const offsetFrames = decodedFrames.map((f) => offsetFrame(f, logOffset));
+  const z = offsetFrame(decodedFrame, logOffset);
 
   const data: Record<string, unknown>[] = [{
     type: "heatmap",
-    z: offsetFrames[0], x0: x0Scaled, dx: dxScaled, y0: y0Scaled, dy: dyScaled,
+    z, x0: x0Scaled, dx: dxScaled, y0: y0Scaled, dy: dyScaled,
     colorscale: "Electric",
     zmin: zMinDisp, zmax: zMaxDisp,
     zauto: false,
@@ -118,16 +117,8 @@ export function buildSkymapFigure(pd: SkymapPlotData, decodedFrames: number[][][
     hovertemplate: `\u0394x=%{x} ${fovLabel}<br>\u0394y=%{y} ${fovLabel}<br>log\u2081\u2080 I=%{z:.3g}<extra></extra>`,
   }];
 
-  const isAnimated = decodedFrames.length > 1;
-
-  const frames: Record<string, unknown>[] = offsetFrames.map((z, i) => ({
-    name: `frame_${i}`,
-    data: [{ z }],
-    traces: [0],
-  }));
-
   const layout: Record<string, unknown> = {
-    title: isAnimated ? `\u03bd = ${nu_label}` : `t = ${t_labels[0]}, \u03bd = ${nu_label}`,
+    title: `t = ${t_label}, \u03bd = ${nu_label}`,
     xaxis: { title: axisTitle(`\u0394x (${fovLabel})`), range: [x_min, x_max], autorange: false, ...SKYMAP_AXIS_STYLE },
     yaxis: {
       title: axisTitle(`\u0394y (${fovLabel})`), range: [y_min, y_max], autorange: false,
@@ -136,20 +127,8 @@ export function buildSkymapFigure(pd: SkymapPlotData, decodedFrames: number[][][
     template: "none",
     plot_bgcolor: "#ffffff",
     paper_bgcolor: "#ffffff",
-    margin: decodedFrames.length > 1 ? { l: 60, r: 120, t: 50, b: 130 } : { l: 60, r: 120, t: 50, b: 60 },
+    margin: { l: 60, r: 120, t: 50, b: 60 },
   };
 
-  if (decodedFrames.length > 1) {
-    const steps = t_labels.map((label, i) => ({
-      label,
-      method: "animate",
-      args: [[`frame_${i}`], { mode: "immediate", frame: { duration: 0, redraw: true }, transition: { duration: 0 } }],
-    }));
-    layout.sliders = [{
-      active: 0, x: 0.13, y: -0.08, len: 0.8, pad: { t: 8, b: 0 },
-      currentvalue: { prefix: "t = ", font: { size: 13 }, xanchor: "left" }, steps,
-    }];
-  }
-
-  return { data, layout, frames: decodedFrames.length > 1 ? frames : [] };
+  return { data, layout, frames: [] };
 }

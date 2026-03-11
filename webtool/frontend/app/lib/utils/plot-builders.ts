@@ -29,4 +29,4 @@ export {
 
 export { type LcDisplayOptions, buildLcFigure } from "./plot-lc";
 export { type SedDisplayOptions, buildSedFigure } from "./plot-sed";
-export { type SkymapOptions, buildSkymapFigure, decodeSkymapFrames } from "./plot-skymap";
+export { type SkymapOptions, buildSkymapFigure, decodeSkymapFrame } from "./plot-skymap";

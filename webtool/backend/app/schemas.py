@@ -63,11 +63,7 @@ class SpectrumRequest(BaseModel):
 
 class SkyMapRequest(BaseModel):
     shared: SharedParams = Field(default_factory=SharedParams)
-    animate: bool = False
     t_obs: float = Field(default=1e6, gt=0)
-    t_min: float = Field(default=1e4, gt=0)
-    t_max: float = Field(default=1e7, gt=0)
-    n_frames: int = Field(default=15, ge=2, le=30)
     nu_input: str = Field(default="1e9", max_length=200)
     fov: float = Field(default=500.0, gt=0)
     npixel: int = Field(default=256, ge=2, le=1024)

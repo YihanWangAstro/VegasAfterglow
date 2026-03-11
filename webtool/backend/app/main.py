@@ -15,7 +15,6 @@ from typing import Any
 from urllib.error import URLError
 from urllib.request import Request, urlopen
 
-import numpy as np
 from fastapi import FastAPI, HTTPException, Request as FastAPIRequest, Response
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.middleware.gzip import GZipMiddleware
@@ -230,11 +229,7 @@ def defaults(response: Response) -> dict[str, Any]:
             "observation_groups": [],
         },
         "skymap": {
-            "animate": False,
             "t_obs": 1e6,
-            "t_min": 1e4,
-            "t_max": 1e7,
-            "n_frames": 15,
             "nu_input": "1e9",
             "fov": 500.0,
             "npixel": 256,
@@ -360,19 +355,6 @@ def skymap(req: SkyMapRequest, request: FastAPIRequest) -> dict[str, Any]:
         "npixel": req.npixel,
     }
 
-    if req.animate:
-        if req.t_min <= 0 or req.t_max <= 0:
-            raise HTTPException(status_code=400, detail="t_min and t_max must be positive")
-        if req.t_min >= req.t_max:
-            raise HTTPException(status_code=400, detail="t_min must be less than t_max")
-        if req.n_frames < 2:
-            raise HTTPException(status_code=400, detail="n_frames must be >= 2 when animate=true")
-        if req.n_frames > 30:
-            raise HTTPException(status_code=400, detail="n_frames must be <= 30 when animate=true")
-        if req.npixel > 512:
-            raise HTTPException(status_code=400, detail="npixel must be <= 512 when animate=true")
-        params["t_obs_array"] = np.logspace(np.log10(req.t_min), np.log10(req.t_max), req.n_frames).tolist()
-
     t0 = time_mod.perf_counter()
     data = _run_with_timeout(compute_skymap, params, "Sky image computation")
     compute_s = time_mod.perf_counter() - t0
@@ -380,7 +362,6 @@ def skymap(req: SkyMapRequest, request: FastAPIRequest) -> dict[str, Any]:
     response: dict[str, Any] = {
         "meta": {
             "compute_seconds": compute_s,
-            "n_frames": len(data.get("images", [])),
         },
     }
     response["plot_data"] = build_skymap_plot_data(data)

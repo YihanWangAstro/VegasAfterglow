@@ -147,22 +147,21 @@ def compute_sed(p):
 
 
 def compute_skymap(p):
-    """Build model and compute sky image (single or multi-frame)."""
+    """Build model and compute a single sky image."""
     model = _build_model(p)
-    t_obs_array = p.get("t_obs_array", [p["t_obs"]])
+    t_obs = p["t_obs"]
     t0 = time_mod.time()
     result = model.sky_image(
-        t_obs_array,
+        [t_obs],
         nu_obs=p["nu_obs"],
         fov=p["fov"] * uas,
         npixel=p["npixel"],
     )
     elapsed = time_mod.time() - t0
-    images = [np.array(result.image[i]) for i in range(len(t_obs_array))]
     return {
-        "images": images,
+        "image": np.array(result.image[0]),
         "extent_uas": np.array(result.extent) / uas,
-        "t_obs_array": np.array(t_obs_array),
+        "t_obs": t_obs,
         "nu_obs": p["nu_obs"],
         "fov_uas": p["fov"],
         "elapsed": elapsed,

@@ -154,7 +154,7 @@ function exportSkymapJson(pd: SkymapPlotData): string {
     units: { image: "log10(erg/cm2/s/Hz/sr)", extent: "uas" },
     nx: pd.nx,
     ny: pd.ny,
-    frames_b64f32: pd.frames_b64f32,
+    frame_b64f32: pd.frame_b64f32,
   };
   return JSON.stringify(obj, null, 2);
 }

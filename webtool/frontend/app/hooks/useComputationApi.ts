@@ -44,7 +44,7 @@ export function useComputationApi({ parameterState, sliderInteracting, fetchFrom
 
     return {
       endpoint: "skymap",
-      payload: { shared: normalized, animate: false, t_obs: skyTObs, t_min: skyTObs, t_max: skyTObs, n_frames: 1, nu_input: skyNuInput, fov: skyFov, npixel: skyNpixel },
+      payload: { shared: normalized, t_obs: skyTObs, nu_input: skyNuInput, fov: skyFov, npixel: skyNpixel },
     };
   }, [physicsKey, mode, lcFreq, lcTMin, lcTMax, sedTimes, sedNuMin, sedNuMax, sedNumNu, skyTObs, skyNuInput, skyFov, skyNpixel]);
 

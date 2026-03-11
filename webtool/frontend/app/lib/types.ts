@@ -68,9 +68,9 @@ export type SedPlotData = {
 export type SkymapPlotData = {
   nx: number;
   ny: number;
-  frames_b64f32: string[];  // base64-encoded float32 arrays, shape [ny][nx] per frame
+  frame_b64f32: string;  // base64-encoded float32 array, shape [ny][nx]
   extent_uas: [number, number, number, number];  // [x_min, x_max, y_min, y_max]
-  t_obs_s: number[];
+  t_obs_s: number;
   nu_obs_hz: number;
   dx: number;
   dy: number;
@@ -165,11 +165,7 @@ export type UiSnapshot = {
     observation_groups: ObservationGroup[];
   };
   skymap: {
-    animate: boolean;
     t_obs: number;
-    t_min: number;
-    t_max: number;
-    n_frames: number;
     nu_input: string;
     fov: number;
     fov_unit: string;
@@ -241,11 +237,7 @@ export type DefaultsResponse = {
     observation_groups?: ObservationGroup[];
   };
   skymap?: {
-    animate?: boolean;
     t_obs?: number;
-    t_min?: number;
-    t_max?: number;
-    n_frames?: number;
     nu_input?: string;
     fov?: number;
     fov_unit?: string;

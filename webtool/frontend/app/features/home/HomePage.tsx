@@ -138,11 +138,7 @@ export default function HomePage() {
         observation_groups: ps.sedObsGroups.map((group) => ({ ...group })),
       },
       skymap: {
-        animate: false,
         t_obs: ps.skyTObs,
-        t_min: ps.skyTObs,
-        t_max: ps.skyTObs,
-        n_frames: 1,
         nu_input: ps.skyNuInput,
         fov: ps.skyFov,
         fov_unit: ps.skyFovUnit,
