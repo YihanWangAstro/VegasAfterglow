@@ -1,0 +1,6 @@
+<map id="compute_boole_weights" name="compute_boole_weights">
+<area shape="rect" id="Node000001" title="Computes Boole&#39;s rule (Newton&#45;Cotes 4th order, O(h^6)) weights for a uniform log&#45;spaced grid." alt="" coords="167,29,347,55"/>
+<area shape="rect" id="Node000002" href="$classObserver.html#a2588a9ebaec5465d6b5bd08fadadcb99" title="Computes the integrated flux over a frequency band." alt="" coords="5,29,119,55"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="153,45,119,45,119,39,153,39"/>
+<area shape="poly" id="edge2_Node000002_Node000002" title=" " alt="" coords="97,19,87,11,62,8,41,10,30,15,28,20,34,28,30,31,23,21,27,11,40,5,62,3,89,6,100,15"/>
+</map>
