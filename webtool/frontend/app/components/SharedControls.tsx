@@ -247,12 +247,14 @@ export function SharedControls({
           <div className="sb-row-2 sb-check-row">
             <label className="sb-checkbox-inline">
               <input type="checkbox" checked={shared.ssc} onChange={(e) => setSharedField("ssc", e.target.checked)} />
-              SSC
+              Synchrotron Self-Compton
             </label>
-            <label className="sb-checkbox-inline">
-              <input type="checkbox" checked={shared.kn} onChange={(e) => setSharedField("kn", e.target.checked)} />
-              KN
-            </label>
+            {shared.ssc && (
+              <label className="sb-checkbox-inline">
+                <input type="checkbox" checked={shared.kn} onChange={(e) => setSharedField("kn", e.target.checked)} />
+                Klein-Nishina
+              </label>
+            )}
           </div>
         </div>
       </details>
@@ -274,12 +276,14 @@ export function SharedControls({
             <div className="sb-row-2 sb-check-row">
               <label className="sb-checkbox-inline">
                 <input type="checkbox" checked={shared.rvs_ssc} onChange={(e) => setSharedField("rvs_ssc", e.target.checked)} />
-                SSC
+                Synchrotron Self-Compton
               </label>
-              <label className="sb-checkbox-inline">
-                <input type="checkbox" checked={shared.rvs_kn} onChange={(e) => setSharedField("rvs_kn", e.target.checked)} />
-                KN
-              </label>
+              {shared.rvs_ssc && (
+                <label className="sb-checkbox-inline">
+                  <input type="checkbox" checked={shared.rvs_kn} onChange={(e) => setSharedField("rvs_kn", e.target.checked)} />
+                  Klein-Nishina
+                </label>
+              )}
             </div>
           </>
         ) : null}
