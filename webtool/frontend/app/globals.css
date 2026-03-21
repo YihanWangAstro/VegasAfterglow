@@ -907,6 +907,26 @@ textarea {
   cursor: pointer;
 }
 
+.sb-footer-logos {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+  margin-top: 0.5rem;
+  padding-top: 0.6rem;
+}
+
+.sb-footer-logo {
+  opacity: 0.75;
+  object-fit: contain;
+  height: auto;
+  transition: opacity 0.2s;
+}
+
+.sb-footer-logo:hover {
+  opacity: 1;
+}
+
 .sidebar-downloads {
   margin-top: 0.45rem;
   display: grid;

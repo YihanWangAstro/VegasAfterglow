@@ -47,6 +47,11 @@ export function SidebarFooter({
         </button>{" "}
         our work in research.
       </p>
+      <div className="sb-footer-logos">
+        <img src="/logo-hku.png" alt="The University of Hong Kong" className="sb-footer-logo" style={{ width: 100 }} />
+        <img src="/logo-madison.png" alt="University of Wisconsin-Madison" className="sb-footer-logo" style={{ width: 138 }} />
+        <img src="/logo-ncfa.png" alt="Nevada Center for Astrophysics" className="sb-footer-logo" style={{ width: 65 }} />
+      </div>
     </div>
   );
 }

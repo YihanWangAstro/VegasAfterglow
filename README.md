@@ -884,3 +884,13 @@ archivePrefix = {arXiv},
     <img src="assets/contribution-chart-light.svg" alt="Contribution Overview" width="900">
   </picture>
 </p>
+
+<table align="center" border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <td align="center" width="180"><img src="assets/logo-hku.png" alt="The University of Hong Kong" height="80"/></td>
+    <td width="40"></td>
+    <td align="center" width="220"><img src="assets/logo-madison.png" alt="University of Wisconsin-Madison" height="110"/></td>
+    <td width="40"></td>
+    <td align="center" width="180"><img src="assets/logo-ncfa.png" alt="Nevada Center for Astrophysics" height="80"/></td>
+  </tr>
+</table>
