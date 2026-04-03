@@ -838,7 +838,11 @@ VegasAfterglow is released under the [**BSD-3-Clause License**](LICENSE).
 
 We would like to thank the contributors who helped improve VegasAfterglow. **Special thanks to Weihua Lei, Shaoyu Fu, Liang-Jun Chen, Iris Yin, Cuiyuan Dai, Binbin Zhang and Nikhil Sarin** for their invaluable work as beta testers, providing feedback and helping with bug fixes during development. We also thank the broader community for their suggestions and support.
 
-If you find VegasAfterglow useful in your research, we would be grateful if you could cite:
+If you find VegasAfterglow useful, please consider giving us a star — it helps others discover the project!
+
+ [![Star this repo](https://img.shields.io/github/stars/YihanWangAstro/VegasAfterglow?style=social)](https://github.com/YihanWangAstro/VegasAfterglow)
+
+If you use VegasAfterglow in your research, we would be grateful if you could cite:
 
 **Wang, Y., Chen, C., & Zhang, B. (2026).** VegasAfterglow: A high-performance framework for gamma-ray burst afterglows. *Journal of High Energy Astrophysics*, 50, 100490. [ADS](https://ui.adsabs.harvard.edu/abs/2026JHEAp..5000490W/abstract)
 
@@ -887,10 +891,10 @@ archivePrefix = {arXiv},
 
 <table align="center" border="0" cellpadding="0" cellspacing="0">
   <tr>
-    <td align="center" width="180"><img src="assets/logo-hku.png" alt="The University of Hong Kong" height="80"/></td>
+    <td align="center" width="200"><img src="assets/logo-hku.png" alt="The University of Hong Kong" width="180"/></td>
     <td width="40"></td>
     <td align="center" width="220"><img src="assets/logo-madison.png" alt="University of Wisconsin-Madison" height="110"/></td>
     <td width="40"></td>
-    <td align="center" width="180"><img src="assets/logo-ncfa.png" alt="Nevada Center for Astrophysics" height="80"/></td>
+    <td align="center" width="200"><img src="assets/logo-ncfa.png" alt="Nevada Center for Astrophysics" height="80"/></td>
   </tr>
 </table>

@@ -14,7 +14,8 @@
     "plotly.js": "^3.4.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-plotly.js": "^2.6.0"
+    "react-plotly.js": "^2.6.0",
+    "vercel": "^50.34.3"
   },
   "devDependencies": {
     "@types/node": "^20.14.0",

@@ -99,12 +99,15 @@ export function useApiStatus() {
     });
   }, []);
 
-  const probeEndpoint = useCallback(
-    async (endpoint: ApiEndpoint, cancelledRef?: { current: boolean }): Promise<void> => {
+  const probeOnce = useCallback(
+    async (endpoint: ApiEndpoint, cancelledRef?: { current: boolean }): Promise<boolean> => {
+      const controller = new AbortController();
+      const timer = window.setTimeout(() => controller.abort(), 15_000);
       const started = performance.now();
       try {
-        const response = await fetch(endpoint.healthTarget, { cache: "no-store" });
-        if (cancelledRef?.current) return;
+        const response = await fetch(endpoint.healthTarget, { cache: "no-store", signal: controller.signal });
+        clearTimeout(timer);
+        if (cancelledRef?.current) return true;
         if (!response.ok) {
           updateApiStatus(endpoint.key, {
             up: false,
@@ -113,7 +116,7 @@ export function useApiStatus() {
             region: null,
             locationLabel: null,
           });
-          return;
+          return false;
         }
         let region: string | null = null;
         let locationLabel: string | null = null;
@@ -133,8 +136,23 @@ export function useApiStatus() {
           region,
           locationLabel,
         });
+        return true;
       } catch {
-        if (cancelledRef?.current) return;
+        clearTimeout(timer);
+        return false;
+      }
+    },
+    [updateApiStatus],
+  );
+
+  const probeEndpoint = useCallback(
+    async (endpoint: ApiEndpoint, cancelledRef?: { current: boolean }): Promise<void> => {
+      const ok = await probeOnce(endpoint, cancelledRef);
+      if (ok || cancelledRef?.current) return;
+      await new Promise((r) => setTimeout(r, 2_000));
+      if (cancelledRef?.current) return;
+      const retryOk = await probeOnce(endpoint, cancelledRef);
+      if (!retryOk && !cancelledRef?.current) {
         updateApiStatus(endpoint.key, {
           up: false,
           latencyMs: null,
@@ -144,7 +162,7 @@ export function useApiStatus() {
         });
       }
     },
-    [updateApiStatus],
+    [probeOnce, updateApiStatus],
   );
 
   useEffect(() => {
