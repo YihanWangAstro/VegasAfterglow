@@ -145,6 +145,7 @@ Medium Type Variations
 
         # Wind medium parameter (replaces n_ism)
         ParamDef("A_star",  1e-3,   1.0,  Scale.log),     # Wind parameter
+        ParamDef("k_m",      1.0,   3.0,  Scale.linear),  # Wind density power-law index (default 2, i.e. n ∝ r^{-2})
 
         # Standard microphysics (same as default)
         ParamDef("p",        2.1,   2.8,  Scale.linear),
@@ -484,7 +485,7 @@ Complex Model Combinations
 
 .. warning::
     **Complex Model Considerations:**
-    - Use coarser resolution initially: ``resolution=(0.2, 0.7, 7)``
+    - Use default resolution: ``resolution=(0.1, 0.25, 10)``
     - Increase live points: ``nlive=1000+``
     - Lower dlogz for better convergence: ``dlogz=0.05``
     - Consider parameter degeneracies in interpretation

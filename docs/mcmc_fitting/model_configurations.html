@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Model Configurations &mdash; VegasAfterglow 0.1.0 documentation</title>
+  <title>Model Configurations &mdash; VegasAfterglow 0.0.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=20074c1a" />
       <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=fd3f3429" />
@@ -18,7 +18,7 @@
     <link rel="canonical" href="https://yihanwangastro.github.io/VegasAfterglow/docs/mcmc_fitting/model_configurations.html" />
       <script src="../_static/jquery.js?v=5d32c60e"></script>
       <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../_static/documentation_options.js?v=01f34227"></script>
+      <script src="../_static/documentation_options.js?v=7026087e"></script>
       <script src="../_static/doctools.js?v=9a2dae69"></script>
       <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
       <script src="../_static/js/custom.js"></script>
@@ -241,6 +241,7 @@
 
     <span class="c1"># Wind medium parameter (replaces n_ism)</span>
     <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;A_star&quot;</span><span class="p">,</span>  <span class="mf">1e-3</span><span class="p">,</span>   <span class="mf">1.0</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">log</span><span class="p">),</span>     <span class="c1"># Wind parameter</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;k_m&quot;</span><span class="p">,</span>      <span class="mf">1.0</span><span class="p">,</span>   <span class="mf">3.0</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">linear</span><span class="p">),</span>  <span class="c1"># Wind density power-law index (default 2, i.e. n ∝ r^{-2})</span>
 
     <span class="c1"># Standard microphysics (same as default)</span>
     <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;p&quot;</span><span class="p">,</span>        <span class="mf">2.1</span><span class="p">,</span>   <span class="mf">2.8</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">linear</span><span class="p">),</span>
@@ -562,7 +563,7 @@
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
 <p><strong>Complex Model Considerations:</strong>
-- Use coarser resolution initially: <code class="docutils literal notranslate"><span class="pre">resolution=(0.2,</span> <span class="pre">0.7,</span> <span class="pre">7)</span></code>
+- Use default resolution: <code class="docutils literal notranslate"><span class="pre">resolution=(0.1,</span> <span class="pre">0.25,</span> <span class="pre">10)</span></code>
 - Increase live points: <code class="docutils literal notranslate"><span class="pre">nlive=1000+</span></code>
 - Lower dlogz for better convergence: <code class="docutils literal notranslate"><span class="pre">dlogz=0.05</span></code>
 - Consider parameter degeneracies in interpretation</p>

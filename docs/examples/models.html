@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Models and Radiation &mdash; VegasAfterglow 0.1.0 documentation</title>
+  <title>Models and Radiation &mdash; VegasAfterglow 0.0.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=20074c1a" />
       <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=fd3f3429" />
@@ -18,7 +18,7 @@
     <link rel="canonical" href="https://yihanwangastro.github.io/VegasAfterglow/docs/examples/models.html" />
       <script src="../_static/jquery.js?v=5d32c60e"></script>
       <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../_static/documentation_options.js?v=01f34227"></script>
+      <script src="../_static/documentation_options.js?v=7026087e"></script>
       <script src="../_static/doctools.js?v=9a2dae69"></script>
       <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
       <script src="../_static/js/custom.js"></script>
@@ -363,7 +363,9 @@ Those profiles are optional and will be set to zero function if not provided.</p
 </div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>Plain Python callbacks work well for single model evaluations (light curves, spectra).
+<p>Plain Python callbacks work well for single model evaluations (light curves, spectra),
+but they are significantly slower than the built-in C++ profiles due to the overhead
+of crossing the Python/C++ boundary on every call.
 For multi-threaded MCMC fitting, use the <code class="docutils literal notranslate"><span class="pre">&#64;gil_free</span></code> decorator to compile
 your profile functions to native code, eliminating GIL contention across threads.
 See the <a class="reference internal" href="#gil-free-native-callbacks">GIL-Free Native Callbacks</a> section below and <a class="reference internal" href="../mcmc_fitting/index.html"><span class="doc">MCMC Parameter Fitting</span></a> for details.</p>
@@ -374,10 +376,12 @@ See the <a class="reference internal" href="#gil-free-native-callbacks">GIL-Free
 <p>When C++ evaluates a plain Python callback (e.g., a custom jet or medium profile),
 it must acquire the Global Interpreter Lock (GIL) for every call. During blast wave
 evolution this happens hundreds of times per model evaluation, which serializes the
-angular-profile loop across threads.</p>
+angular-profile loop across threads. This also makes plain Python callbacks
+significantly slower than the built-in C++ profiles, even in single-threaded mode,
+due to the repeated Python/C++ boundary crossings.</p>
 <p>The <code class="docutils literal notranslate"><span class="pre">&#64;gil_free</span></code> decorator compiles a Python function to native machine code via
 <a class="reference external" href="https://numba.pydata.org/">numba</a>, so C++ calls it directly as a C function pointer
-— no GIL, no interpreter overhead:</p>
+— no GIL, no interpreter overhead, and performance comparable to the built-in C++ profiles:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span>numba
 </pre></div>
 </div>
@@ -552,7 +556,7 @@ only for custom profiles passed via <code class="docutils literal notranslate"><
 <p>When <code class="docutils literal notranslate"><span class="pre">ssc=True</span></code>, SSC cooling of electrons is automatically included. The <code class="docutils literal notranslate"><span class="pre">kn</span></code> flag controls whether Klein-Nishina corrections are applied:</p>
 <p>(ssc = True, kn = False): SSC emission with IC cooling using the Thomson cross-section.</p>
 <p>(ssc = True, kn = True): SSC emission with IC cooling and Klein-Nishina corrections.</p>
-<p>CMB inverse Compton cooling can be enabled independently via <code class="docutils literal notranslate"><span class="pre">cmb_cooling=True</span></code>, which is useful for high-redshift sources where the CMB energy density is significant. When both <code class="docutils literal notranslate"><span class="pre">ssc</span></code> and <code class="docutils literal notranslate"><span class="pre">cmb_cooling</span></code> are active, the total Compton-Y includes both contributions.</p>
+<p>CMB inverse Compton cooling can be enabled independently via <code class="docutils literal notranslate"><span class="pre">cmb_cooling=True</span></code>, which is relevant for AGN jets where the CMB energy density contributes significantly to electron cooling. When both <code class="docutils literal notranslate"><span class="pre">ssc</span></code> and <code class="docutils literal notranslate"><span class="pre">cmb_cooling</span></code> are active, the total Compton-Y includes both contributions.</p>
 </div>
 <p>For details on the underlying radiation physics, see <a class="reference internal" href="../physics.html"><span class="doc">GRB Afterglow Physics</span></a>.</p>
 </section>

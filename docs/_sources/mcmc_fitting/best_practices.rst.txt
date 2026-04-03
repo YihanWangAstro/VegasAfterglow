@@ -69,7 +69,6 @@ Complex models can converge to non-physical parameter combinations. Always check
 - Is ``eps_e + eps_B < 1``? (energy conservation)
 - Is ``p > 2``? (required for finite electron energy)
 - Are microphysics parameters consistent between forward/reverse shocks?
-- Does the inferred jet energy make sense given the host galaxy and redshift?
 
 When to Use Complex Models
 ---------------------------

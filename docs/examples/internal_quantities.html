@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Internal Quantities Evolution &mdash; VegasAfterglow 0.1.0 documentation</title>
+  <title>Internal Quantities Evolution &mdash; VegasAfterglow 0.0.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=20074c1a" />
       <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=fd3f3429" />
@@ -18,7 +18,7 @@
     <link rel="canonical" href="https://yihanwangastro.github.io/VegasAfterglow/docs/examples/internal_quantities.html" />
       <script src="../_static/jquery.js?v=5d32c60e"></script>
       <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../_static/documentation_options.js?v=01f34227"></script>
+      <script src="../_static/documentation_options.js?v=7026087e"></script>
       <script src="../_static/doctools.js?v=9a2dae69"></script>
       <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
       <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
@@ -142,11 +142,19 @@
 </pre></div>
 </div>
 <p>You will get a <code class="docutils literal notranslate"><span class="pre">SimulationDetails</span></code> object with the following structure:</p>
+<p><strong>Array dimensions:</strong></p>
+<p>All 3D arrays have shape <code class="docutils literal notranslate"><span class="pre">(n_phi,</span> <span class="pre">n_theta,</span> <span class="pre">n_time)</span></code>, where:</p>
+<ul class="simple">
+<li><p><strong>Axis 0</strong> (<code class="docutils literal notranslate"><span class="pre">n_phi</span></code>): azimuthal angle index, corresponding to <code class="docutils literal notranslate"><span class="pre">details.phi</span></code></p></li>
+<li><p><strong>Axis 1</strong> (<code class="docutils literal notranslate"><span class="pre">n_theta</span></code>): polar angle index, corresponding to <code class="docutils literal notranslate"><span class="pre">details.theta</span></code></p></li>
+<li><p><strong>Axis 2</strong> (<code class="docutils literal notranslate"><span class="pre">n_time</span></code>): time step index</p></li>
+</ul>
+<p>For example, <code class="docutils literal notranslate"><span class="pre">details.fwd.Gamma[i,</span> <span class="pre">j,</span> <span class="pre">k]</span></code> gives the Lorentz factor at the <code class="docutils literal notranslate"><span class="pre">i</span></code>-th azimuthal bin, <code class="docutils literal notranslate"><span class="pre">j</span></code>-th polar bin, and <code class="docutils literal notranslate"><span class="pre">k</span></code>-th time step. To extract the time evolution along the jet axis, use <code class="docutils literal notranslate"><span class="pre">[0,</span> <span class="pre">0,</span> <span class="pre">:]</span></code>.</p>
 <p><strong>Main grid coordinates:</strong></p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">details.phi</span></code>: 1D numpy array of azimuthal angles in radians</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">details.theta</span></code>: 1D numpy array of polar angles in radians</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">details.t_src</span></code>: 3D numpy array of source frame times on coordinate (phi_i, theta_j, t_k) grid in seconds</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">details.t_src</span></code>: 3D numpy array of source frame times on the <code class="docutils literal notranslate"><span class="pre">(phi,</span> <span class="pre">theta,</span> <span class="pre">time)</span></code> grid in seconds</p></li>
 </ul>
 <p><strong>Forward shock details (accessed via ``details.fwd``):</strong></p>
 <ul class="simple">
@@ -190,7 +198,9 @@
 <span class="n">xlabels</span> <span class="o">=</span> <span class="p">[</span><span class="sa">r</span><span class="s1">&#39;$t_{\rm src}$ [s]&#39;</span><span class="p">,</span> <span class="sa">r</span><span class="s1">&#39;$t^\prime$ [s]&#39;</span><span class="p">,</span> <span class="sa">r</span><span class="s1">&#39;$t_{\rm obs}$ [s]&#39;</span><span class="p">]</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span> <span class="p">(</span><span class="mf">4.2</span><span class="o">*</span><span class="nb">len</span><span class="p">(</span><span class="n">frames</span><span class="p">),</span> <span class="mi">3</span><span class="o">*</span><span class="nb">len</span><span class="p">(</span><span class="n">attrs</span><span class="p">)))</span>
 
-<span class="c1">#plot the evolution of various parameters for phi = 0 and theta = 0 (so the first two indexes are 0)</span>
+<span class="c1"># All 3D arrays have shape (n_phi, n_theta, n_time).</span>
+<span class="c1"># Using [0, 0, :] extracts the time evolution at the first azimuthal and</span>
+<span class="c1"># polar bin, i.e. along the jet symmetry axis.</span>
 <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">frame</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">frames</span><span class="p">):</span>
     <span class="k">for</span> <span class="n">j</span><span class="p">,</span> <span class="n">attr</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">attrs</span><span class="p">):</span>
         <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">attrs</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">frames</span><span class="p">)</span> <span class="p">,</span> <span class="n">j</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">frames</span><span class="p">)</span> <span class="o">+</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
