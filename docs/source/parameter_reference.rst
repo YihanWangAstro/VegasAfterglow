@@ -136,7 +136,12 @@ Ambient Medium Parameters
      - :math:`A_*`
      - dimensionless
      - :math:`10^{-3} - 10`
-     - Wind parameter: :math:`\rho = A_* \times 5 \times 10^{11} r^{-2}` g/cm³
+     - Wind parameter: :math:`\rho = A_* \times 5 \times 10^{11} r^{-k_m}` g/cm³
+   * - ``k_m``
+     - :math:`k_m`
+     - dimensionless
+     - :math:`1 - 3`
+     - Wind density power-law index (default 2, i.e. :math:`n \propto r^{-2}`)
 
 Forward Shock Radiation Parameters
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^

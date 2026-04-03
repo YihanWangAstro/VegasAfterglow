@@ -29,7 +29,11 @@ sys.path.insert(0, os.path.abspath('../../'))
 project = 'VegasAfterglow'
 copyright = '2024, VegasAfterglow Team'
 author = 'VegasAfterglow Team'
-release = '0.1.0'  # Update this with your actual version
+
+try:
+    from VegasAfterglow._version import __version__ as release
+except ImportError:
+    release = '0.0.0'
 
 # -- General configuration ---------------------------------------------------
 

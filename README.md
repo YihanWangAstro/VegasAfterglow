@@ -424,7 +424,7 @@ model = Model(jet=jet, medium=medium, observer=obs, fwd_rad=rad, resolutions=(0.
 details = model.details(t_min=1e0, t_max=1e8)
 ```
 
-Returns a `SimulationDetails` object. All quantities are 3D arrays on the `(phi, theta, t)` grid. Access forward shock via `details.fwd` (reverse shock via `details.rvs` when enabled).
+Returns a `SimulationDetails` object. All quantities are 3D numpy arrays with shape `(n_phi, n_theta, n_time)`, where axis 0 is the azimuthal angle, axis 1 is the polar angle, and axis 2 is the time step. For example, `details.fwd.Gamma[0, 0, :]` gives the Lorentz factor time evolution along the jet symmetry axis. Access forward shock via `details.fwd` (reverse shock via `details.rvs` when enabled).
 
 | Category | Attributes |
 |---|---|
@@ -455,7 +455,9 @@ colors = ['C0', 'C1', 'C2']
 xlabels = [r'$t_{\rm src}$ [s]', r'$t^\prime$ [s]', r'$t_{\rm obs}$ [s]']
 plt.figure(figsize= (4.2*len(frames), 3*len(attrs)))
 
-#plot the evolution of various parameters for phi = 0 and theta = 0 (so the first two indexes are 0)
+# All 3D arrays have shape (n_phi, n_theta, n_time).
+# Using [0, 0, :] extracts the time evolution at the first azimuthal and
+# polar bin, i.e. along the jet symmetry axis.
 for i, frame in enumerate(frames):
     for j, attr in enumerate(attrs):
         plt.subplot(len(attrs), len(frames) , j * len(frames) + i + 1)
@@ -891,10 +893,10 @@ archivePrefix = {arXiv},
 
 <table align="center" border="0" cellpadding="0" cellspacing="0">
   <tr>
-    <td align="center" width="200"><img src="assets/logo-hku.png" alt="The University of Hong Kong" width="180"/></td>
+    <td align="center" width="220"><img src="assets/logo-hku.png" alt="The University of Hong Kong" width="180"/></td>
     <td width="40"></td>
-    <td align="center" width="220"><img src="assets/logo-madison.png" alt="University of Wisconsin-Madison" height="110"/></td>
+    <td align="center" width="240"><img src="assets/logo-madison.png" alt="University of Wisconsin-Madison" height="110"/></td>
     <td width="40"></td>
-    <td align="center" width="200"><img src="assets/logo-ncfa.png" alt="Nevada Center for Astrophysics" height="80"/></td>
+    <td align="center" width="220"><img src="assets/logo-ncfa.png" alt="Nevada Center for Astrophysics" height="80"/></td>
   </tr>
 </table>

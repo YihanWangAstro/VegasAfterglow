@@ -125,7 +125,8 @@ MediumVariant PyWind(Real A_star, std::optional<Real> n_ism_opt, std::optional<R
     constexpr Real mp_cgs = 1.6726219e-24; // proton mass [g]
     const Real A_cgs = A_star * 5e11 * std::pow(r0_cgs, k_m - 2);
     const Real rho_ism_cgs = n_ism * mp_cgs;
-    const Real r0k_cgs = A_cgs / (n0 * 1.3 * mp_cgs); // 0 when n0 = inf (no floor)
+    const Real r0k_cgs =
+        A_cgs / (n0 * 1.3 * mp_cgs); // 0 when n0 = inf (no floor), 1.3 is mean molecular weight for solar wind
 
     Medium medium;
     medium.rho = [=](Real /*phi*/, Real /*theta*/, Real r) noexcept {

@@ -229,7 +229,9 @@ Those profiles are optional and will be set to zero function if not provided.
     # where phi_ppd is the number of points per degree in the phi direction, theta_ppd is the number of points per degree in the theta direction, and t_ppd is the number of points per decade in the time direction    .
 
 .. note::
-    Plain Python callbacks work well for single model evaluations (light curves, spectra).
+    Plain Python callbacks work well for single model evaluations (light curves, spectra),
+    but they are significantly slower than the built-in C++ profiles due to the overhead
+    of crossing the Python/C++ boundary on every call.
     For multi-threaded MCMC fitting, use the ``@gil_free`` decorator to compile
     your profile functions to native code, eliminating GIL contention across threads.
     See the `GIL-Free Native Callbacks`_ section below and :doc:`/mcmc_fitting/index` for details.
@@ -242,11 +244,13 @@ GIL-Free Native Callbacks (``@gil_free``)
 When C++ evaluates a plain Python callback (e.g., a custom jet or medium profile),
 it must acquire the Global Interpreter Lock (GIL) for every call. During blast wave
 evolution this happens hundreds of times per model evaluation, which serializes the
-angular-profile loop across threads.
+angular-profile loop across threads. This also makes plain Python callbacks
+significantly slower than the built-in C++ profiles, even in single-threaded mode,
+due to the repeated Python/C++ boundary crossings.
 
 The ``@gil_free`` decorator compiles a Python function to native machine code via
 `numba <https://numba.pydata.org/>`_, so C++ calls it directly as a C function pointer
-— no GIL, no interpreter overhead:
+— no GIL, no interpreter overhead, and performance comparable to the built-in C++ profiles:
 
 .. code-block:: bash
 
@@ -427,6 +431,6 @@ Self-Synchrotron Compton Radiation
 
     (ssc = True, kn = True): SSC emission with IC cooling and Klein-Nishina corrections.
 
-    CMB inverse Compton cooling can be enabled independently via ``cmb_cooling=True``, which is useful for high-redshift sources where the CMB energy density is significant. When both ``ssc`` and ``cmb_cooling`` are active, the total Compton-Y includes both contributions.
+    CMB inverse Compton cooling can be enabled independently via ``cmb_cooling=True``, which is relevant for AGN jets where the CMB energy density contributes significantly to electron cooling. When both ``ssc`` and ``cmb_cooling`` are active, the total Compton-Y includes both contributions.
 
 For details on the underlying radiation physics, see :doc:`/physics`.

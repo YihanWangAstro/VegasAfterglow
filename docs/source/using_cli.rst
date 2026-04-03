@@ -97,7 +97,7 @@ Jet Parameters
    * - ``--duration``
      - float
      - ``1``
-     - Engine activity duration [s] (thick shell when > 1)
+     - Engine activity duration [s]
 
 Medium Parameters
 ^^^^^^^^^^^^^^^^^

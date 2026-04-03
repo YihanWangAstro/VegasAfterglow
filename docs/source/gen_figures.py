@@ -333,7 +333,7 @@ def introspection_medium():
     ax.set_ylabel(r"Number Density (cm$^{-3}$)")
     ax.set_title("Medium Density Profile")
     ax.grid(True, alpha=0.3)
-    ax.axhline(1e3, color="red", ls="--", alpha=0.7, label=r"Inner density ($n_0$)")
+    ax.axhline(1e3*1.3, color="red", ls="--", alpha=0.7, label=r"Inner density ($n_0$)")
     ax.axhline(0.1, color="blue", ls="--", alpha=0.7, label=r"Outer ISM density ($n_{\rm ism}$)")
     ax.legend()
     plt.tight_layout()

@@ -44,11 +44,21 @@ Now, let's access the internal simulation quantities using the ``details`` metho
 
 You will get a ``SimulationDetails`` object with the following structure:
 
+**Array dimensions:**
+
+All 3D arrays have shape ``(n_phi, n_theta, n_time)``, where:
+
+- **Axis 0** (``n_phi``): azimuthal angle index, corresponding to ``details.phi``
+- **Axis 1** (``n_theta``): polar angle index, corresponding to ``details.theta``
+- **Axis 2** (``n_time``): time step index
+
+For example, ``details.fwd.Gamma[i, j, k]`` gives the Lorentz factor at the ``i``-th azimuthal bin, ``j``-th polar bin, and ``k``-th time step. To extract the time evolution along the jet axis, use ``[0, 0, :]``.
+
 **Main grid coordinates:**
 
 - ``details.phi``: 1D numpy array of azimuthal angles in radians
 - ``details.theta``: 1D numpy array of polar angles in radians
-- ``details.t_src``: 3D numpy array of source frame times on coordinate (phi_i, theta_j, t_k) grid in seconds
+- ``details.t_src``: 3D numpy array of source frame times on the ``(phi, theta, time)`` grid in seconds
 
 **Forward shock details (accessed via ``details.fwd``):**
 
@@ -95,7 +105,9 @@ To analyze the temporal evolution of physical parameters across different refere
     xlabels = [r'$t_{\rm src}$ [s]', r'$t^\prime$ [s]', r'$t_{\rm obs}$ [s]']
     plt.figure(figsize= (4.2*len(frames), 3*len(attrs)))
 
-    #plot the evolution of various parameters for phi = 0 and theta = 0 (so the first two indexes are 0)
+    # All 3D arrays have shape (n_phi, n_theta, n_time).
+    # Using [0, 0, :] extracts the time evolution at the first azimuthal and
+    # polar bin, i.e. along the jet symmetry axis.
     for i, frame in enumerate(frames):
         for j, attr in enumerate(attrs):
             plt.subplot(len(attrs), len(frames) , j * len(frames) + i + 1)
