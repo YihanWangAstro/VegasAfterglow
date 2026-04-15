@@ -1,5 +1,6 @@
 var hierarchy =
 [
+    [ "Break", "structBreak.html", null ],
     [ "BrokenPowerLaw< N >", "structBrokenPowerLaw.html", null ],
     [ "BrokenPowerLaw< 4 >", "structBrokenPowerLaw.html", null ],
     [ "BrokenPowerLaw< 5 >", "structBrokenPowerLaw.html", null ],
@@ -28,6 +29,7 @@ var hierarchy =
     [ "PowerLawJet", "classPowerLawJet.html", null ],
     [ "PowerLawSyn", "structPowerLawSyn.html", null ],
     [ "PromptPhotons", "structPromptPhotons.html", null ],
+    [ "Pt", "structPt.html", null ],
     [ "PyDetails", "structPyDetails.html", null ],
     [ "PyFlux", "structPyFlux.html", null ],
     [ "PyMagnetar", "structPyMagnetar.html", null ],

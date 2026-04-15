@@ -7,6 +7,7 @@ var annotated_dup =
     [ "anonymous_namespace{inverse-compton.cpp}", "namespaceanonymous__namespace_02inverse-compton_8cpp_03.html", [
       [ "ComptonSigmaLUT", "structanonymous__namespace_02inverse-compton_8cpp_03_1_1ComptonSigmaLUT.html", "structanonymous__namespace_02inverse-compton_8cpp_03_1_1ComptonSigmaLUT" ]
     ] ],
+    [ "Break", "structBreak.html", "structBreak" ],
     [ "BrokenPowerLaw", "structBrokenPowerLaw.html", "structBrokenPowerLaw" ],
     [ "CoastingShock", "classCoastingShock.html", "classCoastingShock" ],
     [ "Coord", "classCoord.html", "classCoord" ],
@@ -26,6 +27,7 @@ var annotated_dup =
     [ "PowerLawJet", "classPowerLawJet.html", "classPowerLawJet" ],
     [ "PowerLawSyn", "structPowerLawSyn.html", "structPowerLawSyn" ],
     [ "PromptPhotons", "structPromptPhotons.html", "structPromptPhotons" ],
+    [ "Pt", "structPt.html", "structPt" ],
     [ "PyDetails", "structPyDetails.html", "structPyDetails" ],
     [ "PyFlux", "structPyFlux.html", "structPyFlux" ],
     [ "PyMagnetar", "structPyMagnetar.html", "structPyMagnetar" ],

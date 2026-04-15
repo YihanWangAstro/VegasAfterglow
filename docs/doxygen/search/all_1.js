@@ -8,11 +8,13 @@ var searchData=
   ['binaryfunc_5',['BinaryFunc',['../utilities_8h.html#a9058f9c7378af277ef076530161c3c9d',1,'utilities.h']]],
   ['boundary_5fto_5fcenter_6',['boundary_to_center',['../mesh_8cpp.html#ae1622b29b5488dbee3ef9068b9f8c7d4',1,'boundary_to_center(Array const &amp;boundary):&#160;mesh.cpp'],['../mesh_8h.html#a885b165e8d9c9d20f27ec99329a0c3cb',1,'boundary_to_center(Arr1 const &amp;boundary, Arr2 &amp;center):&#160;mesh.h'],['../mesh_8h.html#ae1622b29b5488dbee3ef9068b9f8c7d4',1,'boundary_to_center(Array const &amp;boundary):&#160;mesh.cpp']]],
   ['boundary_5fto_5fcenter_5flog_7',['boundary_to_center_log',['../mesh_8cpp.html#ac536f77c32691232cb5e7546595fb3d2',1,'boundary_to_center_log(Array const &amp;boundary):&#160;mesh.cpp'],['../mesh_8h.html#aba66986baad5475a202c20a92bda036e',1,'boundary_to_center_log(Arr1 const &amp;boundary, Arr2 &amp;center):&#160;mesh.h'],['../mesh_8h.html#ac536f77c32691232cb5e7546595fb3d2',1,'boundary_to_center_log(Array const &amp;boundary):&#160;mesh.cpp']]],
-  ['broadcast_5fgroups_8',['broadcast_groups',['../classShock.html#ae96d00beb8a203ddd8928888a624941e',1,'Shock']]],
-  ['broadcast_5fsymmetry_9',['broadcast_symmetry',['../utilities_8h.html#accedd963b24701622821b822a33107a1',1,'utilities.h']]],
-  ['brokenpowerlaw_10',['BrokenPowerLaw',['../structBrokenPowerLaw.html',1,'']]],
-  ['brokenpowerlaw_3c_204_20_3e_11',['BrokenPowerLaw&lt; 4 &gt;',['../structBrokenPowerLaw.html',1,'']]],
-  ['brokenpowerlaw_3c_205_20_3e_12',['BrokenPowerLaw&lt; 5 &gt;',['../structBrokenPowerLaw.html',1,'']]],
-  ['build_13',['build',['../structPowerLawSyn.html#a79458bc4bd066014305a2a08d8554bd9',1,'PowerLawSyn::build()'],['../structSmoothPowerLawSyn.html#a73f2f4825bc28a61f521e99408348d75',1,'SmoothPowerLawSyn::build()']]],
-  ['build_5ftime_5fgrid_14',['build_time_grid',['../grid-refinement_8h.html#ab555d1e167e5af21e28a3ade35af86c1',1,'grid-refinement.h']]]
+  ['break_8',['Break',['../structBreak.html',1,'']]],
+  ['broadcast_5fgroups_9',['broadcast_groups',['../classShock.html#ae96d00beb8a203ddd8928888a624941e',1,'Shock']]],
+  ['broadcast_5fsymmetry_10',['broadcast_symmetry',['../utilities_8h.html#accedd963b24701622821b822a33107a1',1,'utilities.h']]],
+  ['brokenpowerlaw_11',['BrokenPowerLaw',['../structBrokenPowerLaw.html',1,'']]],
+  ['brokenpowerlaw_3c_204_20_3e_12',['BrokenPowerLaw&lt; 4 &gt;',['../structBrokenPowerLaw.html',1,'']]],
+  ['brokenpowerlaw_3c_205_20_3e_13',['BrokenPowerLaw&lt; 5 &gt;',['../structBrokenPowerLaw.html',1,'']]],
+  ['build_14',['build',['../structPowerLawSyn.html#a79458bc4bd066014305a2a08d8554bd9',1,'PowerLawSyn::build()'],['../structSmoothPowerLawSyn.html#a73f2f4825bc28a61f521e99408348d75',1,'SmoothPowerLawSyn::build()']]],
+  ['build_5fraw_5fgrid_15',['build_raw_grid',['../grid-refinement_8cpp.html#a4d15b9b435f1e4089c9760c4c8e89d15',1,'grid-refinement.cpp']]],
+  ['build_5ftime_5fgrid_16',['build_time_grid',['../grid-refinement_8h.html#ab555d1e167e5af21e28a3ade35af86c1',1,'grid-refinement.h']]]
 ];

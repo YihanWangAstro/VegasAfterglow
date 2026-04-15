@@ -64,9 +64,9 @@ var NAVTREEINDEX =
 [
 "IO_8cpp.html",
 "functions_e.html",
-"mesh_8h.html#a4c9eca1a51662c0a447221f4d3940caaa92fd05a96e739c61bbbd8b81d35ec741",
-"shock-physics_8h.html#acc6d84207549ad55230c89d5f2492ae0",
-"structSynElectrons.html#a921f1ee7f5bf087c1bd255da68091460"
+"mesh_8h.html#a4c9eca1a51662c0a447221f4d3940caa",
+"shock-physics_8h.html#a9e2f7451f9e3a546ff98444a4e77faef",
+"structSplatGrid.html#ae2d0676a9bfcb8dd21390c2c886dade5"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

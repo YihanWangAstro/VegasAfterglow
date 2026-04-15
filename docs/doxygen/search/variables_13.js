@@ -1,7 +1,7 @@
 var searchData=
 [
   ['t_0',['t',['../classCoord.html#a1be0d478cc7dc556eb9db65cf851da5c',1,'Coord']]],
-  ['t0_1',['t0',['../classEjecta.html#a4317c1c49676662f347708942bc61bdf',1,'Ejecta::T0'],['../classTophatJet.html#a8646027b99fed9bb2e206956ff284c84',1,'TophatJet::T0'],['../classGaussianJet.html#ac044ed063b0720f124551a728ce1ac67',1,'GaussianJet::T0'],['../classPowerLawJet.html#aefe6b9e991605a6b451090adad143e39',1,'PowerLawJet::T0'],['../structPyMagnetar.html#aac488f2dea4704845b1b2c9c4664cde8',1,'PyMagnetar::t0']]],
+  ['t0_1',['t0',['../structPyMagnetar.html#aac488f2dea4704845b1b2c9c4664cde8',1,'PyMagnetar::t0'],['../classEjecta.html#a4317c1c49676662f347708942bc61bdf',1,'Ejecta::T0'],['../classTophatJet.html#a8646027b99fed9bb2e206956ff284c84',1,'TophatJet::T0'],['../classGaussianJet.html#ac044ed063b0720f124551a728ce1ac67',1,'GaussianJet::T0'],['../classPowerLawJet.html#aefe6b9e991605a6b451090adad143e39',1,'PowerLawJet::T0']]],
   ['t_5fcmb0_2',['T_CMB0',['../namespacecon.html#a5ebffb74c6352a45bf585d8e9d3acfb9',1,'con']]],
   ['t_5fcomv_3',['t_comv',['../structSimpleState.html#a98332d35342f9f2779dd10281d30768a',1,'SimpleState::t_comv'],['../classShock.html#a2f750335b1c4474905426fd1a78b006a',1,'Shock::t_comv'],['../structReverseState.html#a32a4fc6a76c28ed2056d1ad01790f08b',1,'ReverseState::t_comv'],['../structForwardState.html#a5c68a522be4913771d213fc734564cc7',1,'ForwardState::t_comv'],['../structPyShock.html#a3538d2218dd586d492a93f4eaaac2879',1,'PyShock::t_comv']]],
   ['t_5fdec_4',['t_dec',['../structTimeScanResult.html#ae965e844c9f255d591857b1bb512163e',1,'TimeScanResult']]],

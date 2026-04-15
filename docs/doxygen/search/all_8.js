@@ -20,11 +20,12 @@ var searchData=
   ['inverse_2dcompton_2eh_17',['inverse-compton.h',['../inverse-compton_8h.html',1,'']]],
   ['inverse_5fcfd_5fsampling_18',['inverse_CFD_sampling',['../grid-refinement_8h.html#af272a55c4e94ac8ec9d799be8df2d193',1,'grid-refinement.h']]],
   ['inverse_5fcompton_5fcorrection_19',['inverse_compton_correction',['../inverse-compton_8h.html#a90de46adbdc9f7f4c2bed7b5ab79c494',1,'inverse-compton.h']]],
-  ['inversecomptony_20',['inversecomptony',['../structInverseComptonY.html#a8ddd88e2b0ae996e2bf8a79630653392',1,'InverseComptonY::InverseComptonY() noexcept'],['../structInverseComptonY.html#a2e2ffd78dd60c7da21a052b443bd51b3',1,'InverseComptonY::InverseComptonY(Real gamma_m, Real gamma_c, Real p, Real B, Real Y_T, bool is_KN) noexcept'],['../structInverseComptonY.html',1,'InverseComptonY']]],
+  ['inversecomptony_20',['inversecomptony',['../structInverseComptonY.html#a8ddd88e2b0ae996e2bf8a79630653392',1,'InverseComptonY::InverseComptonY()'],['../structInverseComptonY.html',1,'InverseComptonY'],['../structInverseComptonY.html#a2e2ffd78dd60c7da21a052b443bd51b3',1,'InverseComptonY::InverseComptonY()']]],
   ['io_2ecpp_21',['IO.cpp',['../IO_8cpp.html',1,'']]],
   ['io_2eh_22',['IO.h',['../IO_8h.html',1,'']]],
   ['is_5fascending_23',['is_ascending',['../pybind_8h.html#a65fbb7ac1dd1f2667e68724a512f691c',1,'pybind.h']]],
-  ['ism_24',['ism',['../classISM.html#a84b54625cac41da743d803e3425e5c6c',1,'ISM::ISM()'],['../classISM.html',1,'ISM']]],
-  ['isotropic_25',['isotropic',['../classWind.html#a0a5c1450e106c8fa6b926f185f6eb905',1,'Wind::isotropic'],['../classISM.html#a267b49a9932ce2570973700acc69fed1',1,'ISM::isotropic'],['../classMedium.html#a47df3f80b9a5c6e3a2c459b00d4faaa1',1,'Medium::isotropic'],['../mesh_8h.html#a4c9eca1a51662c0a447221f4d3940caaa92fd05a96e739c61bbbd8b81d35ec741',1,'isotropic:&#160;mesh.h']]],
-  ['iterate_5fto_26',['iterate_to',['../observer_8h.html#aa53249b087b9b9d83f4c06e808deeed9',1,'observer.h']]]
+  ['is_5fbreak_24',['is_break',['../structPt.html#adfad4838bf270020c935e1b2eb25679d',1,'Pt']]],
+  ['ism_25',['ism',['../classISM.html',1,'ISM'],['../classISM.html#a84b54625cac41da743d803e3425e5c6c',1,'ISM::ISM()']]],
+  ['isotropic_26',['isotropic',['../classWind.html#a0a5c1450e106c8fa6b926f185f6eb905',1,'Wind::isotropic'],['../classISM.html#a267b49a9932ce2570973700acc69fed1',1,'ISM::isotropic'],['../classMedium.html#a47df3f80b9a5c6e3a2c459b00d4faaa1',1,'Medium::isotropic'],['../mesh_8h.html#a4c9eca1a51662c0a447221f4d3940caaa92fd05a96e739c61bbbd8b81d35ec741',1,'isotropic:&#160;mesh.h']]],
+  ['iterate_5fto_27',['iterate_to',['../observer_8h.html#aa53249b087b9b9d83f4c06e808deeed9',1,'observer.h']]]
 ];

@@ -8,5 +8,6 @@ var searchData=
   ['injection_5fidx_5',['injection_idx',['../classShock.html#a5ffabf6d9963528567fa8d398c806a57',1,'Shock']]],
   ['inv_5f4x0_6',['inv_4x0',['../inverse-compton_8h.html#a94bc6ab043a2a9201941bbcaaf7fec81',1,'inverse-compton.h']]],
   ['inv_5fstep_7',['inv_step',['../structanonymous__namespace_02inverse-compton_8cpp_03_1_1ComptonSigmaLUT.html#a64727b53a1c51bd1c2b1e9821dd16d3a',1,'anonymous_namespace{inverse-compton.cpp}::ComptonSigmaLUT']]],
-  ['isotropic_8',['isotropic',['../classMedium.html#a47df3f80b9a5c6e3a2c459b00d4faaa1',1,'Medium::isotropic'],['../classISM.html#a267b49a9932ce2570973700acc69fed1',1,'ISM::isotropic'],['../classWind.html#a0a5c1450e106c8fa6b926f185f6eb905',1,'Wind::isotropic']]]
+  ['is_5fbreak_8',['is_break',['../structPt.html#adfad4838bf270020c935e1b2eb25679d',1,'Pt']]],
+  ['isotropic_9',['isotropic',['../classMedium.html#a47df3f80b9a5c6e3a2c459b00d4faaa1',1,'Medium::isotropic'],['../classISM.html#a267b49a9932ce2570973700acc69fed1',1,'ISM::isotropic'],['../classWind.html#a0a5c1450e106c8fa6b926f185f6eb905',1,'Wind::isotropic']]]
 ];
