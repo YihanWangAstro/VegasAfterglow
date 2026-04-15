@@ -352,7 +352,7 @@ The same decorator works for custom medium density functions (3 spatial coordina
 
     @gil_free
     def custom_wind(phi, theta, r, A_star):
-        return A_star * 5e11 * 1.67e-24 / (r * r)
+        return A_star * 5e11 / (r * r)
 
     def medium_factory(mc_params):
         return Medium(rho=custom_wind(A_star=mc_params.A_star))

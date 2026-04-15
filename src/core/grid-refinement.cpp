@@ -1,22 +1,19 @@
 #include "grid-refinement.h"
 
-size_t adaptive_grid_with_breaks(Real lg2_min, Real lg2_max, std::span<const Real> breaks,
-                                 std::span<const Real> break_weights, Real pts_per_decade, Array& grid,
-                                 size_t max_refined_breaks, Real refine_radius_decades, Real refine_factor) {
-    constexpr size_t MAX_PTS = 256;
-    const Real lg2_per_decade = log2_10;
-    const Real refine_radius = refine_radius_decades * lg2_per_decade;
-    const Real coarse_step = lg2_per_decade / std::max(pts_per_decade, Real(1e-6));
-    const Real fine_step = coarse_step / refine_factor;
-    const Real merge_eps = 0.5 * fine_step;
+struct Break {
+    Real lg2;
+    Real weight;
+};
 
-    // Collect valid breaks within range with weights
-    struct Break {
-        Real lg2;
-        Real weight;
-    };
-    std::vector<Break> valid_breaks;
-    valid_breaks.reserve(breaks.size());
+struct Pt {
+    Real lg2;
+    bool is_break;
+};
+
+std::vector<Break> collect_valid_breaks(std::span<const Real> breaks, std::span<const Real> break_weights, Real lg2_min,
+                                        Real lg2_max) {
+    std::vector<Break> valid;
+    valid.reserve(breaks.size());
     for (size_t i = 0; i < breaks.size(); ++i) {
         const Real b = breaks[i];
         if (!(b > 0) || !std::isfinite(b)) {
@@ -31,23 +28,18 @@ size_t adaptive_grid_with_breaks(Real lg2_min, Real lg2_max, std::span<const Rea
                     w = wi;
                 }
             }
-            valid_breaks.push_back({lg2_b, w});
+            valid.push_back({lg2_b, w});
         }
     }
+    std::ranges::sort(valid, [](const auto& a, const auto& b) { return a.weight > b.weight; });
+    return valid;
+}
 
-    // Sort by weight descending; top N get refinement
-    std::ranges::sort(valid_breaks, [](const auto& a, const auto& b) { return a.weight > b.weight; });
-    const size_t n_refine = std::min(max_refined_breaks, valid_breaks.size());
-
-    // Build grid points with break tracking for merge protection
-    struct Pt {
-        Real lg2;
-        bool is_break;
-    };
+std::vector<Pt> build_raw_grid(Real lg2_min, Real lg2_max, Real coarse_step, std::vector<Break> const& valid_breaks,
+                               size_t n_refine, Real refine_radius, Real fine_step) {
     std::vector<Pt> pts;
-    pts.reserve(MAX_PTS * 2);
+    pts.reserve(512);
 
-    // Coarse uniform grid
     const Real span = std::max(lg2_max - lg2_min, Real(0));
     const size_t n_coarse = (span > 0 && coarse_step > 0)
                                 ? std::max<size_t>(1, static_cast<size_t>(std::ceil(span / coarse_step)))
@@ -56,7 +48,6 @@ size_t adaptive_grid_with_breaks(Real lg2_min, Real lg2_max, std::span<const Rea
         pts.push_back({lg2_min + span * static_cast<Real>(i) / static_cast<Real>(n_coarse), false});
     }
 
-    // Break anchors
     for (const auto& br : valid_breaks) {
         pts.push_back({br.lg2, true});
     }
@@ -71,7 +62,10 @@ size_t adaptive_grid_with_breaks(Real lg2_min, Real lg2_max, std::span<const Rea
         }
     }
 
-    // Sort and merge close points, protecting break positions
+    return pts;
+}
+
+std::vector<Pt> merge_and_finalize(std::vector<Pt>& pts, Real merge_eps, Real lg2_min, Real lg2_max, size_t max_pts) {
     std::ranges::sort(pts, [](const auto& a, const auto& b) { return a.lg2 < b.lg2; });
 
     std::vector<Pt> merged;
@@ -88,7 +82,6 @@ size_t adaptive_grid_with_breaks(Real lg2_min, Real lg2_max, std::span<const Rea
         }
     }
 
-    // Ensure endpoints
     if (merged.empty()) {
         merged.push_back({lg2_min, true});
         merged.push_back({lg2_max, true});
@@ -101,15 +94,32 @@ size_t adaptive_grid_with_breaks(Real lg2_min, Real lg2_max, std::span<const Rea
         }
     }
 
-    // Hard cap with uniform subsampling
-    if (merged.size() > MAX_PTS) {
+    if (merged.size() > max_pts) {
         std::vector<Pt> capped;
-        capped.reserve(MAX_PTS);
-        for (size_t i = 0; i < MAX_PTS; ++i) {
-            capped.push_back(merged[i * (merged.size() - 1) / (MAX_PTS - 1)]);
+        capped.reserve(max_pts);
+        for (size_t i = 0; i < max_pts; ++i) {
+            capped.push_back(merged[i * (merged.size() - 1) / (max_pts - 1)]);
         }
         merged.swap(capped);
     }
+
+    return merged;
+}
+
+size_t adaptive_grid_with_breaks(Real lg2_min, Real lg2_max, std::span<const Real> breaks,
+                                 std::span<const Real> break_weights, Real pts_per_decade, Array& grid,
+                                 size_t max_refined_breaks, Real refine_radius_decades, Real refine_factor) {
+    constexpr size_t MAX_PTS = 256;
+    const Real lg2_per_decade = log2_10;
+    const Real coarse_step = lg2_per_decade / std::max(pts_per_decade, Real(1e-6));
+    const Real fine_step = coarse_step / refine_factor;
+
+    auto valid_breaks = collect_valid_breaks(breaks, break_weights, lg2_min, lg2_max);
+    const size_t n_refine = std::min(max_refined_breaks, valid_breaks.size());
+    const Real refine_radius = refine_radius_decades * lg2_per_decade;
+
+    auto pts = build_raw_grid(lg2_min, lg2_max, coarse_step, valid_breaks, n_refine, refine_radius, fine_step);
+    auto merged = merge_and_finalize(pts, 0.5 * fine_step, lg2_min, lg2_max, MAX_PTS);
 
     grid = Array::from_shape({merged.size()});
     for (size_t i = 0; i < merged.size(); ++i) {

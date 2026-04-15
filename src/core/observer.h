@@ -354,16 +354,10 @@ MeshGrid Observer::specific_flux(Array const& t_obs, Array const& nu_obs, Photon
 
     MeshGrid F_nu({nu_len, t_obs_len}, 0);
 
-    const Real* lg2t = lg2_t_obs.data();
-    const Real* lg2nu = lg2_nu_src.data();
-    Real* fnu_ptr = F_nu.data();
-
     // Precomputed log2-luminosity at each time boundary × frequency. [k * nu_len + l]
     Array boundary_vals({t_grid * nu_len}, 0);
-    Array slope_buf({nu_len}, 0);
-    Array lo_buf({nu_len}, 0);
-    Real* slope = slope_buf.data();
-    Real* lo = lo_buf.data();
+    Array slope({nu_len}, 0);
+    Array lo({nu_len}, 0);
 
     for (size_t i = 0; i < eff_phi_grid; i++) {
         const size_t eff_i = i * jet_3d;
@@ -372,9 +366,10 @@ MeshGrid Observer::specific_flux(Array const& t_obs, Array const& nu_obs, Photon
             for (size_t k = 0; k < t_grid; k++) {
                 const Real lg2_dop = lg2_doppler(i, j, k);
                 const Real lg2_geom = lg2_geom_factor(i, j, k);
-                Real* vals = boundary_vals.data() + k * nu_len;
+                const size_t base = k * nu_len;
                 for (size_t l = 0; l < nu_len; l++) {
-                    vals[l] = photons(eff_i, j, k).compute_log2_I_nu(lg2nu[l] - lg2_dop) + lg2_geom;
+                    boundary_vals(base + l) =
+                        photons(eff_i, j, k).compute_log2_I_nu(lg2_nu_src(l) - lg2_dop) + lg2_geom;
                 }
             }
 
@@ -388,21 +383,21 @@ MeshGrid Observer::specific_flux(Array const& t_obs, Array const& nu_obs, Photon
                 const size_t idx_start = t_idx;
                 iterate_to(lg2_t(i, j, k + 1), lg2_t_obs, t_idx);
 
-                const Real* lo_row = boundary_vals.data() + k * nu_len;
-                const Real* hi_row = boundary_vals.data() + (k + 1) * nu_len;
+                const size_t lo_base = k * nu_len;
+                const size_t hi_base = (k + 1) * nu_len;
                 const Real t_lo_val = lg2_t(i, j, k);
                 const Real inv_t_ratio = 1.0 / (lg2_t(i, j, k + 1) - t_lo_val);
 
                 for (size_t l = 0; l < nu_len; l++) {
-                    const Real s = (hi_row[l] - lo_row[l]) * inv_t_ratio;
+                    const Real s = (boundary_vals(hi_base + l) - boundary_vals(lo_base + l)) * inv_t_ratio;
                     const bool ok = std::isfinite(s);
-                    slope[l] = ok ? s : 0.0;
-                    lo[l] = ok ? lo_row[l] : -con::inf;
+                    slope(l) = ok ? s : 0.0;
+                    lo(l) = ok ? boundary_vals(lo_base + l) : -con::inf;
                 }
                 for (size_t idx = idx_start; idx < t_idx; idx++) {
-                    const Real dlg2_t = lg2t[idx] - t_lo_val;
+                    const Real dlg2_t = lg2_t_obs(idx) - t_lo_val;
                     for (size_t l = 0; l < nu_len; l++) {
-                        fnu_ptr[l * t_obs_len + idx] += fast_exp2(lo[l] + dlg2_t * slope[l]);
+                        F_nu(l, idx) += fast_exp2(lo(l) + dlg2_t * slope(l));
                     }
                 }
             }
@@ -427,10 +422,6 @@ Array Observer::specific_flux_series(Array const& t_obs, Array const& nu_obs, Ph
 
     Array F_nu = xt::zeros<Real>({t_obs_len});
 
-    const Real* lg2t = lg2_t_obs.data();
-    const Real* lg2nu = lg2_nu_src.data();
-    Real* fnu = F_nu.data();
-
     for (size_t i = 0; i < eff_phi_grid; i++) {
         const size_t eff_i = i * jet_3d;
         for (size_t j = 0; j < theta_grid; j++) {
@@ -439,11 +430,11 @@ Array Observer::specific_flux_series(Array const& t_obs, Array const& nu_obs, Ph
             InterpState state;
 
             for (size_t k = 0; idx < t_obs_len && k < t_grid - 1;) {
-                if (lg2_t(i, j, k + 1) < lg2t[idx]) {
+                if (lg2_t(i, j, k + 1) < lg2_t_obs(idx)) {
                     k++;
                 } else {
-                    if (set_boundaries(state, eff_i, i, j, k, lg2nu[idx], photons)) [[likely]] {
-                        fnu[idx] += loglog_interpolate(state, lg2t[idx], lg2_t(i, j, k));
+                    if (set_boundaries(state, eff_i, i, j, k, lg2_nu_src(idx), photons)) [[likely]] {
+                        F_nu(idx) += loglog_interpolate(state, lg2_t_obs(idx), lg2_t(i, j, k));
                     }
                     idx++;
                 }
