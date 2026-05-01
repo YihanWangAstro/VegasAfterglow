@@ -108,8 +108,9 @@ void Observer::calc_solid_angle(Coord const& coord, Shock const& shock) {
             size_t k_hint_lo = 0, k_hint_hi = 0;
             for (size_t k = 0; k < t_grid; ++k) {
                 const Real t_target = coord.t(i, j, k);
-                const Real th_lo =
-                    (j == 0) ? 0.0 : 0.5 * (shock.theta(i, j, k) + interp_theta(i, j - 1, t_target, k_hint_lo));
+                const Real th_lo = (j == 0)
+                                       ? shock.theta(i, j, k)
+                                       : 0.5 * (shock.theta(i, j, k) + interp_theta(i, j - 1, t_target, k_hint_lo));
                 const Real th_hi = (j == last)
                                        ? shock.theta(i, j, k)
                                        : 0.5 * (shock.theta(i, j, k) + interp_theta(i, j_p1, t_target, k_hint_hi));
@@ -149,7 +150,8 @@ void Observer::calc_eat_non_spreading(Coord const& coord, Shock const& shock) {
 
             // Solid angle: constant along k for non-spreading jets
             const size_t j_p1 = (j == last) ? last : (j + 1);
-            const Real th_lo = (j == 0) ? 0.0 : 0.5 * (shock.theta(i_eff, j, 0) + shock.theta(i_eff, j - 1, 0));
+            const Real th_lo =
+                (j == 0) ? shock.theta(i_eff, j, 0) : 0.5 * (shock.theta(i_eff, j, 0) + shock.theta(i_eff, j - 1, 0));
             const Real th_hi = 0.5 * (shock.theta(i_eff, j, 0) + shock.theta(i_eff, j_p1, 0));
             const Real dOmega = std::fabs((std::cos(th_hi) - std::cos(th_lo)) * dphi_i);
             const Real lg2_dOmega = fast_log2(dOmega);

@@ -826,3 +826,9 @@ class Fitter:
         nu_min, nu_max = band
         with self._override_resolution(resolution):
             return self._model_from_fit(best_params).flux(t, nu_min, nu_max, num_points)
+
+    def model(
+        self,
+        best_params: np.ndarray,
+    ) -> Model:
+        return self._model_from_fit(best_params)

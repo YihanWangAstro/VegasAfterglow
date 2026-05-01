@@ -111,7 +111,7 @@ def _get_latex_label(param_def: ParamDef) -> str:
     base_latex = LATEX_LABELS.get(param_def.name, param_def.name)
     if param_def.scale is Scale.LOG:
         return rf"$\log_{{10}}({base_latex.strip('$')})$"
-    return base_latex
+    return rf"${base_latex.strip('$')}$"
 
 
 def _get_model_params_defaults() -> dict:

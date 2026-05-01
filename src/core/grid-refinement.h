@@ -1,5 +1,7 @@
 #pragma once
 
+#include <tuple>
+
 #include "../environment/medium.h"
 #include "mesh.h"
 
@@ -81,18 +83,28 @@ Array find_jet_jumps(Ejecta const& jet, Real gamma_cut, [[maybe_unused]] bool is
 }
 
 template <typename Ejecta>
-Real find_theta_max(Ejecta const& jet, Real gamma_cut) {
-    constexpr size_t n_scan = 512;
+auto find_theta_range(Ejecta const& jet, Real gamma_cut, size_t n_scan = 512) -> std::tuple<Real, Real> {
     const Real theta_lo = defaults::grid::theta_min;
     const Real theta_hi = con::pi / 2;
+
+    Real theta_max = theta_hi;
+    Real theta_min = theta_lo;
 
     const Real step = (theta_hi - theta_lo) / n_scan;
     for (Real th = theta_hi; th >= theta_lo; th -= step) {
         if (jet.Gamma0(0, th) >= gamma_cut) {
-            return th;
+            theta_max = th;
+            break;
         }
     }
-    return theta_lo;
+
+    for (Real th = theta_lo; th <= theta_hi; th += step) {
+        if (jet.Gamma0(0, th) >= gamma_cut) {
+            theta_min = th;
+            break;
+        }
+    }
+    return std::make_tuple(theta_min, theta_max);
 }
 
 template <typename Ejecta, typename Medium>
@@ -626,12 +638,13 @@ Coord auto_grid(Ejecta const& jet, Medium const& medium, Array const& t_obs, Rea
     size_t min_theta_num = defaults::grid::min_theta_points;
 
     const Array jet_jumps = find_jet_jumps(jet, con::Gamma_cut, is_axisymmetric);
-    Real jet_edge = find_theta_max(jet, con::Gamma_cut);
+    auto [inner_edge, outer_edge] = find_theta_range(jet, con::Gamma_cut);
+
     for (size_t i = 0; i < jet_jumps.size(); ++i) {
-        jet_edge = std::max(jet_edge, jet_jumps(i));
+        outer_edge = std::max(outer_edge, jet_jumps(i));
     }
-    const Real theta_min = defaults::grid::theta_min;
-    const Real theta_max = std::min(jet_edge, theta_cut);
+    const Real theta_min = std::max(defaults::grid::theta_min, inner_edge);
+    const Real theta_max = std::min(outer_edge, theta_cut);
 
     const size_t theta_num = min_theta_num + static_cast<size_t>((theta_max - theta_min) * 180 / con::pi * theta_resol);
 
