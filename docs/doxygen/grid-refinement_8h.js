@@ -9,7 +9,7 @@ var grid_refinement_8h =
     [ "compute_time_grid_size", "grid-refinement_8h.html#a3c8fc23c7206ba9a4bb1b922493f321d", null ],
     [ "estimate_t_dec", "grid-refinement_8h.html#aa7505ad2e84c2a29610c1a13cd3b25e3", null ],
     [ "find_jet_jumps", "grid-refinement_8h.html#a675e7c2ff4bda6b68d34389fefca49f5", null ],
-    [ "find_theta_max", "grid-refinement_8h.html#aa4bf3bc5ca82cf7ac350fab9eff68452", null ],
+    [ "find_theta_range", "grid-refinement_8h.html#a28764f25dff901cb417eb5ee3e9b9d1f", null ],
     [ "inverse_CFD_sampling", "grid-refinement_8h.html#af272a55c4e94ac8ec9d799be8df2d193", null ],
     [ "jet_spreading_edge", "grid-refinement_8h.html#ad9e5d8e127588dbb9f0e0bc0282ce66f", null ],
     [ "jump_refinement_grid", "grid-refinement_8h.html#a3055d65c1afa436033d80c8cf76fc2ee", null ],

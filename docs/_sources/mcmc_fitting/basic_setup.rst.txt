@@ -23,6 +23,7 @@ The ``Fitter`` constructor accepts keyword arguments for source properties, mode
         rvs_ssc=False,            # Reverse shock inverse Compton
         kn=True,                  # Klein-Nishina corrections
         magnetar=True,            # Magnetar energy injection
+        extinction="smc",         # Host-galaxy dust extinction (None | "smc"/"lmc"/"mw" | callable)
 
         # Numerical parameters
         rtol=1e-5,                # Numerical tolerance

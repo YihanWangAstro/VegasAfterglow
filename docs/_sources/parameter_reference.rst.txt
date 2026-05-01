@@ -209,6 +209,24 @@ Reverse Shock Radiation Parameters
      - :math:`10^{-3} - 1`
      - Reverse shock electron acceleration fraction
 
+Host-Galaxy Extinction Parameters
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. list-table::
+   :header-rows: 1
+   :widths: 15 15 10 20 40
+
+   * - Parameter
+     - Symbol
+     - Units
+     - Typical Range
+     - Description
+   * - ``A_V``
+     - :math:`A_V`
+     - mag
+     - :math:`0 - 3`
+     - Host-galaxy V-band extinction in magnitudes; used only when ``extinction`` is set on ``Fitter``
+
 Energy Injection Parameters (Magnetar)
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -275,6 +293,26 @@ Medium Types
      - Uniform interstellar medium with constant density n_ism
    * - ``wind``
      - Stellar wind medium with :math:`\rho \propto r^{-2}` profile
+
+Extinction Profiles
+^^^^^^^^^^^^^^^^^^^
+
+.. list-table::
+   :header-rows: 1
+   :widths: 20 80
+
+   * - Profile
+     - Description
+   * - ``"smc"``
+     - Pei (1992) SMC dust law (steep UV rise, weak 2175 |angstrom| bump). Common default for high-redshift hosts.
+   * - ``"lmc"``
+     - Pei (1992) LMC dust law.
+   * - ``"mw"``
+     - Pei (1992) Milky Way dust law (strong 2175 |angstrom| bump).
+
+A callable ``f(lam_cm, params) -> k(lam)`` may also be passed for a user-defined law -- see :doc:`mcmc_fitting/advanced` for details.
+
+.. |angstrom| unicode:: U+00C5
 
 Physics Switches
 ^^^^^^^^^^^^^^^^

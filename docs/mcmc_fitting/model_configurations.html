@@ -21,6 +21,7 @@
       <script src="../_static/documentation_options.js?v=7026087e"></script>
       <script src="../_static/doctools.js?v=9a2dae69"></script>
       <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
       <script src="../_static/js/custom.js"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
@@ -65,6 +66,7 @@
 <li class="toctree-l3"><a class="reference internal" href="#reverse-shock">Reverse Shock</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#inverse-compton-radiation">Inverse Compton Radiation</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#energy-injection">Energy Injection</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#host-galaxy-extinction">Host-Galaxy Extinction</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#complex-model-combinations">Complex Model Combinations</a></li>
 </ul>
 </li>
@@ -513,6 +515,42 @@
     <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;xi_e&quot;</span><span class="p">,</span>     <span class="mf">0.1</span><span class="p">,</span>   <span class="mf">1.0</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">linear</span><span class="p">),</span>
 <span class="p">]</span>
 </pre></div>
+</div>
+</section>
+<section id="host-galaxy-extinction">
+<h2>Host-Galaxy Extinction<a class="headerlink" href="#host-galaxy-extinction" title="Link to this heading"></a></h2>
+<p>Optical/UV model fluxes can be attenuated by host-galaxy dust before chi-squared is computed. Built-in Pei (1992) laws are selected via the <code class="docutils literal notranslate"><span class="pre">extinction</span></code> keyword, and <code class="docutils literal notranslate"><span class="pre">A_V</span></code> is fitted as a normal <code class="docutils literal notranslate"><span class="pre">ParamDef</span></code>. Galactic (Milky Way) line-of-sight dust is <strong>not</strong> handled here – deredden the data upstream before passing it to the fitter.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">fitter</span> <span class="o">=</span> <span class="n">Fitter</span><span class="p">(</span>
+    <span class="n">z</span><span class="o">=</span><span class="mf">1.58</span><span class="p">,</span> <span class="n">lumi_dist</span><span class="o">=</span><span class="mf">3.364e28</span><span class="p">,</span>
+    <span class="n">jet</span><span class="o">=</span><span class="s2">&quot;tophat&quot;</span><span class="p">,</span> <span class="n">medium</span><span class="o">=</span><span class="s2">&quot;ism&quot;</span><span class="p">,</span>
+    <span class="n">extinction</span><span class="o">=</span><span class="s2">&quot;smc&quot;</span><span class="p">,</span>                              <span class="c1"># &quot;smc&quot; | &quot;lmc&quot; | &quot;mw&quot;</span>
+<span class="p">)</span>
+
+<span class="n">params</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="c1"># Standard jet and medium parameters</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;E_iso&quot;</span><span class="p">,</span>   <span class="mf">1e50</span><span class="p">,</span>  <span class="mf">1e54</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">log</span><span class="p">),</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;Gamma0&quot;</span><span class="p">,</span>    <span class="mi">10</span><span class="p">,</span>   <span class="mi">500</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">log</span><span class="p">),</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;theta_c&quot;</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">,</span>   <span class="mf">0.5</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">linear</span><span class="p">),</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;theta_v&quot;</span><span class="p">,</span>    <span class="mi">0</span><span class="p">,</span>     <span class="mi">0</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">fixed</span><span class="p">),</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;n_ism&quot;</span><span class="p">,</span>   <span class="mf">1e-3</span><span class="p">,</span>   <span class="mi">100</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">log</span><span class="p">),</span>
+
+    <span class="c1"># Host-galaxy extinction</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;A_V&quot;</span><span class="p">,</span>        <span class="mi">0</span><span class="p">,</span>     <span class="mi">3</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">linear</span><span class="p">),</span>  <span class="c1"># V-band extinction [mag]</span>
+
+    <span class="c1"># Standard microphysics</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;p&quot;</span><span class="p">,</span>        <span class="mf">2.1</span><span class="p">,</span>   <span class="mf">2.8</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">linear</span><span class="p">),</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;eps_e&quot;</span><span class="p">,</span>   <span class="mf">1e-3</span><span class="p">,</span>   <span class="mf">0.5</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">log</span><span class="p">),</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;eps_B&quot;</span><span class="p">,</span>   <span class="mf">1e-5</span><span class="p">,</span>   <span class="mf">0.1</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">log</span><span class="p">),</span>
+    <span class="n">ParamDef</span><span class="p">(</span><span class="s2">&quot;xi_e&quot;</span><span class="p">,</span>     <span class="mf">0.1</span><span class="p">,</span>   <span class="mf">1.0</span><span class="p">,</span>  <span class="n">Scale</span><span class="o">.</span><span class="n">linear</span><span class="p">),</span>
+<span class="p">]</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><strong>Attenuation:</strong> <span class="math notranslate nohighlight">\(f_{\rm obs} = f_{\rm model} \cdot 10^{-0.4 \, A_V \, k(\lambda_{\rm rest})}\)</span>,
+where <span class="math notranslate nohighlight">\(k(\lambda) = A(\lambda)/A_V\)</span> is the chosen profile, normalized so <span class="math notranslate nohighlight">\(k(V) = 1\)</span> exactly.
+Built-in laws return zero below the Lyman limit (912 Å), so X-ray data is unaffected – X-ray opacity is gas-driven (<span class="math notranslate nohighlight">\(N_H\)</span>), not dust.</p>
+<p>For a fitted <span class="math notranslate nohighlight">\(R_V\)</span> or any other custom extinction law, see <a class="reference internal" href="advanced.html"><span class="doc">Advanced Fitting</span></a>.</p>
 </div>
 </section>
 <section id="complex-model-combinations">

@@ -8,7 +8,7 @@ var searchData=
   ['fast_5flog2_5',['fast_log2',['../fast-math_8h.html#a3af6287ba5abccde52dfb33e06fb8430',1,'fast-math.h']]],
   ['fast_5fpow_6',['fast_pow',['../fast-math_8h.html#ade5247172c3a02cc1ba5c43976ab76d2',1,'fast-math.h']]],
   ['find_5fjet_5fjumps_7',['find_jet_jumps',['../grid-refinement_8h.html#a675e7c2ff4bda6b68d34389fefca49f5',1,'grid-refinement.h']]],
-  ['find_5ftheta_5fmax_8',['find_theta_max',['../grid-refinement_8h.html#aa4bf3bc5ca82cf7ac350fab9eff68452',1,'grid-refinement.h']]],
+  ['find_5ftheta_5frange_8',['find_theta_range',['../grid-refinement_8h.html#a28764f25dff901cb417eb5ee3e9b9d1f',1,'grid-refinement.h']]],
   ['finding_20methods_9',['Root Finding Methods',['../group__RootFinding.html',1,'']]],
   ['first_5fsegment_10',['first_segment',['../structBrokenPowerLaw.html#a024a5c963631cbdab6253f6f7bc5f35f',1,'BrokenPowerLaw']]],
   ['floor_5ffraction_11',['floor_fraction',['../structThetaGridParams.html#a0f265ac460d8c18034a13c2db08c1c3e',1,'ThetaGridParams']]],

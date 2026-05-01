@@ -21,6 +21,7 @@
       <script src="_static/documentation_options.js?v=7026087e"></script>
       <script src="_static/doctools.js?v=9a2dae69"></script>
       <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
       <script src="_static/js/custom.js"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
@@ -66,6 +67,7 @@
 <li class="toctree-l3"><a class="reference internal" href="#modelparams">ModelParams</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#paramdef-and-scale">ParamDef and Scale</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#fitter">Fitter</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#extinction-module">Extinction Module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#fitresult">FitResult</a></li>
 </ul>
 </li>
@@ -117,13 +119,14 @@
 <li><p><a class="reference internal" href="#modelparams" id="id4">ModelParams</a></p></li>
 <li><p><a class="reference internal" href="#paramdef-and-scale" id="id5">ParamDef and Scale</a></p></li>
 <li><p><a class="reference internal" href="#fitter" id="id6">Fitter</a></p></li>
-<li><p><a class="reference internal" href="#fitresult" id="id7">FitResult</a></p></li>
+<li><p><a class="reference internal" href="#extinction-module" id="id7">Extinction Module</a></p></li>
+<li><p><a class="reference internal" href="#fitresult" id="id8">FitResult</a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#documenting-python-code" id="id8">Documenting Python Code</a></p>
+<li><p><a class="reference internal" href="#documenting-python-code" id="id9">Documenting Python Code</a></p>
 <ul>
-<li><p><a class="reference internal" href="#class-and-function-documentation" id="id9">Class and Function Documentation</a></p></li>
-<li><p><a class="reference internal" href="#example-class" id="id10">Example Class</a></p></li>
+<li><p><a class="reference internal" href="#class-and-function-documentation" id="id10">Class and Function Documentation</a></p></li>
+<li><p><a class="reference internal" href="#example-class" id="id11">Example Class</a></p></li>
 </ul>
 </li>
 </ul>
@@ -208,16 +211,20 @@
 </pre></div>
 </div>
 </section>
+<section id="extinction-module">
+<span id="api-extinction"></span><h3><a class="toc-backref" href="#id7" role="doc-backlink">Extinction Module</a><a class="headerlink" href="#extinction-module" title="Link to this heading"></a></h3>
+<p>The <code class="docutils literal notranslate"><span class="pre">VegasAfterglow.extinction</span></code> module provides Pei (1992) SMC, LMC, and MW dust laws used by <code class="docutils literal notranslate"><span class="pre">Fitter(extinction=...)</span></code>. See <a class="reference internal" href="mcmc_fitting/model_configurations.html"><span class="doc">Model Configurations</span></a> for the higher-level fitter interface; the functions below can also be called directly to evaluate <span class="math notranslate nohighlight">\(k(\lambda) = A(\lambda)/A_V\)</span> outside of fitting.</p>
+</section>
 <section id="fitresult">
-<span id="api-fitresult"></span><h3><a class="toc-backref" href="#id7" role="doc-backlink">FitResult</a><a class="headerlink" href="#fitresult" title="Link to this heading"></a></h3>
+<span id="api-fitresult"></span><h3><a class="toc-backref" href="#id8" role="doc-backlink">FitResult</a><a class="headerlink" href="#fitresult" title="Link to this heading"></a></h3>
 <p>The <code class="xref any docutils literal notranslate"><span class="pre">FitResult</span></code> class stores the results of an MCMC fit, including the posterior samples, log probabilities, top-k best-fit parameters, and the full bilby Result object for diagnostics.</p>
 </section>
 </section>
 <section id="documenting-python-code">
-<h2><a class="toc-backref" href="#id8" role="doc-backlink">Documenting Python Code</a><a class="headerlink" href="#documenting-python-code" title="Link to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id9" role="doc-backlink">Documenting Python Code</a><a class="headerlink" href="#documenting-python-code" title="Link to this heading"></a></h2>
 <p>When contributing to the Python codebase, please follow these documentation guidelines:</p>
 <section id="class-and-function-documentation">
-<h3><a class="toc-backref" href="#id9" role="doc-backlink">Class and Function Documentation</a><a class="headerlink" href="#class-and-function-documentation" title="Link to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id10" role="doc-backlink">Class and Function Documentation</a><a class="headerlink" href="#class-and-function-documentation" title="Link to this heading"></a></h3>
 <p>Use NumPy-style docstrings for all classes and functions:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">function</span><span class="p">(</span><span class="n">param1</span><span class="p">,</span> <span class="n">param2</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
@@ -247,7 +254,7 @@
 </div>
 </section>
 <section id="example-class">
-<h3><a class="toc-backref" href="#id10" role="doc-backlink">Example Class</a><a class="headerlink" href="#example-class" title="Link to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id11" role="doc-backlink">Example Class</a><a class="headerlink" href="#example-class" title="Link to this heading"></a></h3>
 <p>Here’s an example of a well-documented class:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">ParamDef</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>

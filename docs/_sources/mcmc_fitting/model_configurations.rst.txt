@@ -435,6 +435,46 @@ Energy Injection
         ParamDef("xi_e",     0.1,   1.0,  Scale.linear),
     ]
 
+Host-Galaxy Extinction
+----------------------
+
+Optical/UV model fluxes can be attenuated by host-galaxy dust before chi-squared is computed. Built-in Pei (1992) laws are selected via the ``extinction`` keyword, and ``A_V`` is fitted as a normal ``ParamDef``. Galactic (Milky Way) line-of-sight dust is **not** handled here -- deredden the data upstream before passing it to the fitter.
+
+.. code-block:: python
+
+    fitter = Fitter(
+        z=1.58, lumi_dist=3.364e28,
+        jet="tophat", medium="ism",
+        extinction="smc",                              # "smc" | "lmc" | "mw"
+    )
+
+    params = [
+        # Standard jet and medium parameters
+        ParamDef("E_iso",   1e50,  1e54,  Scale.log),
+        ParamDef("Gamma0",    10,   500,  Scale.log),
+        ParamDef("theta_c", 0.01,   0.5,  Scale.linear),
+        ParamDef("theta_v",    0,     0,  Scale.fixed),
+        ParamDef("n_ism",   1e-3,   100,  Scale.log),
+
+        # Host-galaxy extinction
+        ParamDef("A_V",        0,     3,  Scale.linear),  # V-band extinction [mag]
+
+        # Standard microphysics
+        ParamDef("p",        2.1,   2.8,  Scale.linear),
+        ParamDef("eps_e",   1e-3,   0.5,  Scale.log),
+        ParamDef("eps_B",   1e-5,   0.1,  Scale.log),
+        ParamDef("xi_e",     0.1,   1.0,  Scale.linear),
+    ]
+
+.. note::
+    **Attenuation:** :math:`f_{\rm obs} = f_{\rm model} \cdot 10^{-0.4 \, A_V \, k(\lambda_{\rm rest})}`,
+    where :math:`k(\lambda) = A(\lambda)/A_V` is the chosen profile, normalized so :math:`k(V) = 1` exactly.
+    Built-in laws return zero below the Lyman limit (912 |angstrom|), so X-ray data is unaffected -- X-ray opacity is gas-driven (:math:`N_H`), not dust.
+
+    For a fitted :math:`R_V` or any other custom extinction law, see :doc:`advanced`.
+
+.. |angstrom| unicode:: U+00C5
+
 Complex Model Combinations
 ----------------------------
 

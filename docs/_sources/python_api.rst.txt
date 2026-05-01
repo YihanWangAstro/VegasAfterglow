@@ -134,6 +134,17 @@ Example:
     # Generate spectra with best-fit parameters
     spec_best = fitter.flux_density_grid(result.top_k_params[0], times, nu_out)
 
+.. _api-extinction:
+
+Extinction Module
+^^^^^^^^^^^^^^^^^
+
+The ``VegasAfterglow.extinction`` module provides Pei (1992) SMC, LMC, and MW dust laws used by ``Fitter(extinction=...)``. See :doc:`mcmc_fitting/model_configurations` for the higher-level fitter interface; the functions below can also be called directly to evaluate :math:`k(\lambda) = A(\lambda)/A_V` outside of fitting.
+
+.. automodule:: VegasAfterglow.extinction
+   :members: pei92, smc, lmc, mw
+   :undoc-members:
+
 .. _api-fitresult:
 
 FitResult

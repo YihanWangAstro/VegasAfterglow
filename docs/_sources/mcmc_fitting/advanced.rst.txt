@@ -231,6 +231,39 @@ Similarly, pass a custom medium factory via the ``medium`` keyword argument to d
 
 The ``Medium`` class takes a callable ``rho(phi, theta, r)`` that returns the mass density [g/cm³] at position (phi, theta, r). See :doc:`/examples/models` for more user-defined medium examples.
 
+Custom Extinction Profiles
+---------------------------
+
+In addition to the built-in Pei (1992) ``"smc"``, ``"lmc"``, and ``"mw"`` laws (see :doc:`model_configurations`), the ``extinction`` keyword on ``Fitter`` accepts an arbitrary callable ``f(lam_cm, params) -> ndarray`` returning :math:`k(\lambda) = A(\lambda)/A_V` per rest-frame wavelength. Custom callables can introduce their own fitted parameters such as :math:`R_V`:
+
+.. code-block:: python
+
+    from VegasAfterglow import Fitter, ParamDef, Scale
+
+    def my_law(lam_cm, params):
+        """Custom extinction law with a fitted R_V."""
+        return ccm89(lam_cm, R_V=params.R_V)        # user-supplied function
+
+    fitter = Fitter(z=1.58, lumi_dist=3.364e28, extinction=my_law)
+
+    mc_params = [
+        ParamDef("E_iso",   1e50,  1e54,  Scale.log),
+        ParamDef("Gamma0",    10,   500,  Scale.log),
+        ParamDef("theta_c", 0.01,   0.5,  Scale.linear),
+        ParamDef("n_ism",   1e-3,   100,  Scale.log),
+        ParamDef("p",        2.1,   2.8,  Scale.linear),
+        ParamDef("eps_e",   1e-3,   0.5,  Scale.log),
+        ParamDef("eps_B",   1e-5,   0.1,  Scale.log),
+        ParamDef("xi_e",     0.1,   1.0,  Scale.linear),
+        ParamDef("A_V",        0,     3,  Scale.linear),
+        ParamDef("R_V",        2,     5,  Scale.linear),    # custom parameter
+    ]
+
+.. note::
+    When ``extinction`` is a callable, parameter validation is automatically skipped (same precedent as a custom ``jet`` or ``medium``), so custom parameter names like ``R_V`` are accepted without appearing on ``ModelParams``.
+
+    The callable runs once per MCMC step on the full rest-wavelength array (vectorized post-processing) -- *not* a per-cell C++ callback, so the ``@gil_free`` decorator does not apply here. It must be pure / thread-safe, and is responsible for its own falloff outside its valid range (e.g., return 0 above the Lyman limit so X-ray data is not spuriously attenuated).
+
 **Custom MCMC Parameters**
 
 When using custom jet or medium functions, you can define arbitrary MCMC parameters beyond the standard set. Simply include them in the ``ParamDef`` list -- the fitter automatically uses a Python-based parameter transformer when it detects non-standard parameter names:
