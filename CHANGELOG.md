@@ -18,6 +18,19 @@ Have a feature request? [Open an issue](https://github.com/YihanWangAstro/VegasA
 
 ---
 
+## [v2.0.2] - 2026-05-01
+
+### Added
+
+#### ► **Host-Galaxy Dust Extinction**
+
+- New `extinction` keyword on `Fitter` applies host-galaxy attenuation to model fluxes before chi-squared. Pass `"smc"`, `"lmc"`, or `"mw"` for built-in Pei (1992) laws, or a callable `f(lam_cm, params) -> k(lam)` for a custom law (e.g., a fitted `R_V`)
+- Fit host extinction via `ParamDef("A_V", 0, 3, Scale.linear)`; attenuation is `f_obs = f_model · 10^(-0.4 · A_V · k(λ_rest))`
+- Built-in laws zero out below the Lyman limit (912 Å), so X-ray data is unaffected — Galactic line-of-sight dust must still be removed from the data upstream
+- See [Host-Galaxy Extinction](https://yihanwangastro.github.io/VegasAfterglow/docs/mcmc_fitting/model_configurations.html#host-galaxy-extinction) and [Custom Extinction Profiles](https://yihanwangastro.github.io/VegasAfterglow/docs/mcmc_fitting/advanced.html#custom-extinction-profiles)
+
+---
+
 ## [v2.0.0] - 2026-03-01
 
 **[Download Validation Report (PDF)](https://yihanwangastro.github.io/VegasAfterglow/reports/latest/comprehensive_report.pdf)**
