@@ -73,6 +73,9 @@ class ModelParams:
         self.eps_B_r = 0.01
         self.xi_e_r = 1.0
 
+        # Host-galaxy extinction
+        self.A_V = 0.0
+
 
 @dataclass
 class FitResult:

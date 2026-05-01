@@ -1,7 +1,10 @@
 """Afterglow model fitting with custom priors, likelihoods, and jet/medium profiles."""
 
+import ast
+import inspect
 import logging
 import os
+import textwrap
 from concurrent.futures import ThreadPoolExecutor
 from contextlib import contextmanager
 from typing import Callable, List, Optional, Sequence, Tuple
@@ -32,6 +35,9 @@ from .VegasAfterglowC import Model, Observer, Radiation
 
 logger = logging.getLogger(__name__)
 
+_C_CGS = 2.99792458e10  # speed of light [cm/s]
+_LN10_OVER_2P5 = 0.4 * np.log(10.0)  # 0.4 * ln(10), converts A_V * k -> optical depth
+
 
 class Fitter:
     """Model-based afterglow fitter with custom priors, likelihood, and jet/medium profiles.
@@ -56,6 +62,12 @@ class Fitter:
         magnetar: Enable magnetar energy injection
         rtol: Numerical tolerance
         resolution: Grid resolution tuple (phi, theta, t). Can be overridden per-fit.
+        extinction: Host-galaxy dust extinction. ``None`` (default) disables it;
+            a string ``"smc" | "lmc" | "mw"`` selects a built-in Pei (1992) law;
+            a callable ``f(lam_cm, params) -> k(lam)`` supplies a custom law.
+            Requires a fitted ``A_V`` parameter via ``ParamDef``. Galactic
+            (Milky Way) extinction along the line of sight should be removed
+            from the data before fitting; this layer handles host-galaxy only.
     """
 
     def __init__(
@@ -73,6 +85,7 @@ class Fitter:
         magnetar: bool = False,
         rtol: float = 1e-6,
         resolution: Tuple[float, float, float] = (0.1, 0.25, 10),
+        extinction=None,
     ):
         self.z = z
         self.lumi_dist = lumi_dist
@@ -102,6 +115,14 @@ class Fitter:
             self.medium_factory = medium
         else:
             self.medium_factory = _default_medium_factory(self)
+
+        # Host-galaxy extinction: None | "smc"/"lmc"/"mw" | callable
+        self.extinction = extinction
+        self._custom_extinction = callable(extinction)
+        self._ext_law = self._resolve_extinction(extinction)
+        # Filled by _consolidate_data() once observation data is known:
+        self._ext_kernel = None  # 0.4*ln(10) * k(lam_rest), built-in path
+        self._lam_rest_cm = None  # rest-frame wavelengths, custom path
 
         self._to_params = None
 
@@ -219,6 +240,26 @@ class Fitter:
             )
         )
 
+    def _resolve_extinction(self, ext):
+        """Resolve the ``extinction`` constructor argument to a callable or None.
+
+        Built-in string profiles are wrapped to discard the unused ``params``
+        argument so the call site is uniform regardless of source.
+        """
+        if ext is None:
+            return None
+        if callable(ext):
+            return ext
+        from .extinction import BUILTIN_LAWS
+
+        if ext not in BUILTIN_LAWS:
+            raise ValueError(
+                f"Unknown extinction law: {ext!r}. "
+                f"Expected one of {sorted(BUILTIN_LAWS)} or a callable."
+            )
+        law = BUILTIN_LAWS[ext]
+        return lambda lam_cm, _params=None: law(lam_cm)
+
     def _consolidate_data(self):
         """Consolidate point observation data into single arrays."""
         if self._all_t is not None:
@@ -243,6 +284,18 @@ class Fitter:
             w_sum = self._all_weights.sum()
             if w_sum > 0:
                 self._all_weights *= len(self._all_weights) / w_sum
+
+            # Precompute extinction kernel from rest-frame wavelengths.
+            # Built-in laws collapse k(lambda) and the 0.4*ln(10) factor into
+            # one cached array (one np.exp + one in-place multiply per step).
+            # Custom laws may depend on params, so we only cache the wavelengths.
+            if self._ext_law is not None:
+                lam_rest_cm = (_C_CGS / self._all_nu) / (1.0 + self.z)
+                if self._custom_extinction:
+                    self._lam_rest_cm = lam_rest_cm
+                else:
+                    k = self._ext_law(lam_rest_cm, None)
+                    self._ext_kernel = _LN10_OVER_2P5 * k
         else:
             self._all_t = np.array([])
 
@@ -300,6 +353,12 @@ class Fitter:
         if len(self._all_t) > 0:
             flux_result = model.flux_density(self._all_t, self._all_nu)
             model_flux = np.asarray(flux_result.total)
+            if self._ext_law is not None and params.A_V != 0.0:
+                if self._ext_kernel is not None:
+                    model_flux = model_flux * np.exp(-params.A_V * self._ext_kernel)
+                else:
+                    k = self._ext_law(self._lam_rest_cm, params)
+                    model_flux = model_flux * np.exp((-params.A_V * _LN10_OVER_2P5) * k)
             diff = self._all_flux - model_flux
             chi2 += float(np.sum(self._all_weights * (diff / self._all_err) ** 2))
 
@@ -359,14 +418,131 @@ class Fitter:
 
     # --- Sampler Parameter Setup ---
 
+    @staticmethod
+    def _factory_attrs_ast(factory, arg_index: int = 0):
+        """Parse a factory's source and return every ``<arg>.X`` reference.
+
+        Walks the full AST including nested function definitions and
+        lambdas, so factories that return closures capturing ``params``
+        (the common pattern for ``Ejecta``-based jets) are handled
+        correctly. ``arg_index`` selects which positional arg to inspect:
+        0 for jet/medium ``factory(params)`` factories, 1 for extinction
+        ``f(lam_cm, params)`` callables.
+
+        Returns ``None`` when the source cannot be retrieved or parsed
+        (e.g., REPL-defined lambdas, bound C-extension callables); the
+        caller should treat this as "introspection failed" and fall back
+        to lenient validation rather than blocking the user.
+        """
+        try:
+            src = inspect.getsource(factory)
+        except (OSError, TypeError):
+            return None
+        src = textwrap.dedent(src)
+        try:
+            tree = ast.parse(src)
+        except SyntaxError:
+            return None
+        outermost = next(
+            (
+                n
+                for n in ast.walk(tree)
+                if isinstance(n, (ast.FunctionDef, ast.AsyncFunctionDef, ast.Lambda))
+            ),
+            None,
+        )
+        if outermost is None or len(outermost.args.args) <= arg_index:
+            return None
+        arg_name = outermost.args.args[arg_index].arg
+        return {
+            node.attr
+            for node in ast.walk(tree)
+            if isinstance(node, ast.Attribute)
+            and isinstance(node.value, ast.Name)
+            and node.value.id == arg_name
+        }
+
+    def _collect_factory_accesses(self):
+        """Discover which ``params`` attributes the custom factories read.
+
+        Returns ``(accessed, ast_complete)`` where ``accessed`` is the
+        union of names found across all configured custom factories and
+        ``ast_complete`` is False if any factory's source could not be
+        parsed (in which case the caller should be lenient about
+        ParamDefs that don't appear to match anything).
+
+        Returns ``(set(), True)`` when no custom factories are configured.
+        """
+        if not (self._custom_jet or self._custom_medium or self._custom_extinction):
+            return set(), True
+
+        accessed: set = set()
+        ast_complete = True
+
+        for active, factory, arg_idx in (
+            (self._custom_jet, self.jet_factory, 0),
+            (self._custom_medium, self.medium_factory, 0),
+            (self._custom_extinction, self._ext_law, 1),
+        ):
+            if not active:
+                continue
+            names = self._factory_attrs_ast(factory, arg_idx)
+            if names is None:
+                ast_complete = False
+            else:
+                accessed |= names
+
+        return accessed, ast_complete
+
     def _build_sampler_params(
         self, param_defs: List[ParamDef]
     ) -> Tuple[Tuple[str, ...], np.ndarray, np.ndarray, int]:
-        """Build parameter labels and bounds for sampler."""
-        if not (self._custom_jet or self._custom_medium):
-            p_test = ModelParams()
+        """Build parameter labels and bounds for sampler.
+
+        Validates ``ParamDef`` names against the standard ``ModelParams``
+        fields and, when custom factories are configured, against the set
+        of attributes those factories read at dry-run time. Catches:
+
+        - ``ParamDef('typo')`` not used by any factory or standard model.
+        - Custom factory reading ``params.X`` with no matching ``ParamDef``
+          for ``X`` (which would silently fail at fit time with -inf).
+        """
+        standard_fields = set(vars(ModelParams()).keys())
+        custom_active = (
+            self._custom_jet or self._custom_medium or self._custom_extinction
+        )
+
+        if custom_active:
+            accessed, ast_complete = self._collect_factory_accesses()
+            paramdef_names = {pd.name for pd in param_defs}
+
             for pd in param_defs:
-                if not hasattr(p_test, pd.name):
+                if pd.name in standard_fields or pd.name in accessed:
+                    continue
+                if not ast_complete:
+                    # At least one factory's source was unparseable, so the
+                    # accessed set may be incomplete -- don't block the user.
+                    continue
+                raise AttributeError(
+                    f"ParamDef('{pd.name}') is neither a standard ModelParams "
+                    f"field nor read by any custom factory; likely a typo or "
+                    f"dead parameter. Custom factories read: {sorted(accessed)}"
+                )
+
+            if ast_complete:
+                missing = accessed - standard_fields - paramdef_names
+                if missing:
+                    raise AttributeError(
+                        f"Custom factory reads {sorted(missing)} from `params` "
+                        f"but no matching ParamDef is declared and these are "
+                        f"not on ModelParams; the fit would silently return "
+                        f"-inf likelihood. Add them as ParamDefs (Scale.fixed "
+                        f"if not fitted), or use ``getattr(params, X, default)`` "
+                        f"if the dynamic access is intentional."
+                    )
+        else:
+            for pd in param_defs:
+                if pd.name not in standard_fields:
                     raise AttributeError(f"'{pd.name}' is not a valid MCMC parameter")
 
         labels, lowers, uppers = zip(
