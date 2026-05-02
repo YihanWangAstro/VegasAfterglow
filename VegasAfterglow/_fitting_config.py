@@ -40,6 +40,7 @@ LATEX_LABELS = {
     "L0": r"$L_0$",
     "t0": r"$t_0$",
     "q": r"$q$",
+    "A_V": r"$A_V$",
 }
 
 MEDIUM_RULES = {

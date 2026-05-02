@@ -1,4 +1,4 @@
-from . import units
+from . import extinction, units
 
 try:
     from ._version import __version__, __version_tuple__
@@ -79,6 +79,8 @@ __all__ = [
     "Scale",
     # Units
     "units",
+    # Extinction laws
+    "extinction",
     # MCMC fitting (requires VegasAfterglow[mcmc])
     "Fitter",
     "AfterglowLikelihood",
