@@ -1,4 +1,5 @@
 import inspect
+from functools import wraps
 
 
 class NativeFunc:
@@ -95,11 +96,9 @@ def gil_free(fn):
     n_params = len(inspect.signature(fn).parameters)
     compiled = cfunc(float64(*([float64] * n_params)))(fn)
 
+    @wraps(fn)
     def factory(**kwargs):
         return NativeFunc(compiled, **kwargs)
 
-    factory.__name__ = fn.__name__
-    factory.__qualname__ = fn.__qualname__
-    factory.__doc__ = fn.__doc__
     factory._cfunc = compiled
     return factory

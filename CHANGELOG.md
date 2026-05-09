@@ -18,6 +18,17 @@ Have a feature request? [Open an issue](https://github.com/YihanWangAstro/VegasA
 
 ---
 
+## [v2.0.3] - 2026-05-09
+
+### Fixed
+
+#### ► **Extinction now applied in post-fit `flux_density_grid`**
+
+- `Fitter.flux_density_grid(best_params, t, nu)` now applies the same per-nu host-galaxy extinction used during the fit's chi-squared evaluation, so plotted best-fit light curves match the data instead of being systematically brighter at optical wavelengths
+- `Fitter.flux(...)` (band-integrated) and `Fitter.model(...)` (raw `Model` escape hatch) remain consistent with the fit-time band-integrated path and explicitly do not apply extinction; docstrings updated to reflect this
+
+---
+
 ## [v2.0.2] - 2026-05-01
 
 ### Added

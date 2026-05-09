@@ -114,23 +114,13 @@ def _get_latex_label(param_def: ParamDef) -> str:
     return rf"${base_latex.strip('$')}$"
 
 
-def _get_model_params_defaults() -> dict:
-    """Get default values for all ModelParams fields."""
-    return vars(ModelParams())
-
-
-_MODEL_PARAMS_DEFAULTS = None
-
-
 def _build_transformer(param_defs: List[ParamDef]):
     """Build a parameter transformer from sampler array to parameter namespace.
 
     Standard ModelParams fields get their defaults; ParamDef values override them.
     Custom parameters (e.g., r_scale) are also supported.
     """
-    global _MODEL_PARAMS_DEFAULTS
-    if _MODEL_PARAMS_DEFAULTS is None:
-        _MODEL_PARAMS_DEFAULTS = _get_model_params_defaults()
+    defaults = vars(ModelParams())
 
     free_mappings = []  # (name, is_log)
     fixed_values = []  # (name, value)
@@ -140,8 +130,6 @@ def _build_transformer(param_defs: List[ParamDef]):
             fixed_values.append((pd.name, val))
         else:
             free_mappings.append((pd.name, pd.scale is Scale.LOG))
-
-    defaults = dict(_MODEL_PARAMS_DEFAULTS)
 
     def transformer(theta):
         params = types.SimpleNamespace(**defaults)

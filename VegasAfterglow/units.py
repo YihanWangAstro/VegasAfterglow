@@ -304,11 +304,11 @@ def cgs_to_STmag(f_nu, filt):
 # ---------------------------------------------------------------------------
 
 
-_ALL_FILTER_WAVELENGTHS = {}
-for _name, (_zp, _lam) in _VEGA_FILTERS.items():
-    _ALL_FILTER_WAVELENGTHS[_name] = _lam
-for _name, _lam in {**_ST_FILTERS, **_SURVEY_FILTERS}.items():
-    _ALL_FILTER_WAVELENGTHS[_name] = _lam
+_ALL_FILTER_WAVELENGTHS = {
+    **{name: lam for name, (_zp, lam) in _VEGA_FILTERS.items()},
+    **_ST_FILTERS,
+    **_SURVEY_FILTERS,
+}
 
 
 def filter(filt):

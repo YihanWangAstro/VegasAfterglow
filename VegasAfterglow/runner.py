@@ -7,6 +7,7 @@ import os
 import textwrap
 from concurrent.futures import ThreadPoolExecutor
 from contextlib import contextmanager
+from types import SimpleNamespace
 from typing import Callable, List, Optional, Sequence, Tuple
 
 import bilby
@@ -963,14 +964,51 @@ class Fitter:
         self._require_fitted()
         return self._build_model(self._to_params(best_params))
 
+    def _apply_extinction_to_grid(self, result, nu, params):
+        """Apply per-nu host-galaxy extinction to a ``flux_density_grid`` result.
+
+        Mirrors the per-frequency path used during fitting in ``_evaluate``.
+        Returns ``result`` unchanged when extinction is disabled or
+        ``A_V == 0``; otherwise returns a ``SimpleNamespace`` with the same
+        ``.total / .fwd.sync / .fwd.ssc / .rvs.sync / .rvs.ssc`` shape as
+        ``PyFlux``, each component multiplied by
+        ``exp(-A_V * 0.4*ln(10) * k(lam_rest))`` along the nu axis.
+        """
+        if self._ext_law is None or params.A_V == 0.0:
+            return result
+
+        lam_rest = (_C_CGS / np.asarray(nu)) / (1.0 + self.z)
+        k = self._ext_law(lam_rest, params)
+        attn = np.exp(-params.A_V * _LN10_OVER_2P5 * k)  # shape (n_nu,)
+
+        def _attn(arr):
+            a = np.asarray(arr)
+            if a.size == 0:
+                return a
+            # PyFlux components are shape (n_nu, n_t); broadcast attn along axis 0
+            return a * attn.reshape((-1,) + (1,) * (a.ndim - 1))
+
+        return SimpleNamespace(
+            total=_attn(result.total),
+            fwd=SimpleNamespace(sync=_attn(result.fwd.sync), ssc=_attn(result.fwd.ssc)),
+            rvs=SimpleNamespace(sync=_attn(result.rvs.sync), ssc=_attn(result.rvs.ssc)),
+        )
+
     def flux_density_grid(
         self,
         best_params: np.ndarray,
         t: np.ndarray,
         nu: np.ndarray,
         resolution: Optional[Tuple[float, float, float]] = None,
-    ) -> np.ndarray:
+    ):
         """Compute flux density grid at best-fit parameters.
+
+        Host-galaxy dust extinction (when ``Fitter(extinction=...)`` was
+        configured and the best-fit ``A_V != 0``) is applied per-nu, matching
+        the fitter's per-frequency chi-squared path. The return type then
+        becomes a ``SimpleNamespace`` with the same ``.total / .fwd / .rvs``
+        layout as ``PyFlux``; in the no-extinction case the underlying
+        ``PyFlux`` is returned directly.
 
         Args:
             best_params: Best-fit parameter array (in sampler space)
@@ -979,7 +1017,9 @@ class Fitter:
             resolution: Optional resolution override (phi, theta, t)
         """
         with self._override_resolution(resolution):
-            return self._model_from_fit(best_params).flux_density_grid(t, nu)
+            params = self._to_params(best_params)
+            result = self._build_model(params).flux_density_grid(t, nu)
+            return self._apply_extinction_to_grid(result, nu, params)
 
     def flux(
         self,
@@ -990,6 +1030,13 @@ class Fitter:
         resolution: Optional[Tuple[float, float, float]] = None,
     ) -> np.ndarray:
         """Compute integrated flux at best-fit parameters.
+
+        Extinction is **not** applied here, matching the fitter's
+        band-integrated chi-squared path: built-in Pei (1992) laws return
+        zero above the Lyman limit (so X-ray bands are unaffected anyway),
+        and band-integrated extinction would require re-doing the C++ band
+        integration in Python with per-nu attenuation. Use
+        ``flux_density_grid`` if you need extincted predictions.
 
         Args:
             best_params: Best-fit parameter array (in sampler space)
@@ -1007,4 +1054,10 @@ class Fitter:
         self,
         best_params: np.ndarray,
     ) -> Model:
+        """Return the raw underlying ``Model`` at best-fit parameters.
+
+        No extinction is applied -- this is the escape hatch for users who
+        want to drive the C++ flux interfaces directly. To get extincted
+        predictions, use ``flux_density_grid`` instead.
+        """
         return self._model_from_fit(best_params)

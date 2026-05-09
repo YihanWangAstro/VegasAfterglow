@@ -71,11 +71,6 @@ def _parse_nu_entry(value):
     return _parse_frequency(value)
 
 
-def _format_nu_label(nu):
-    """Format a frequency for CSV/JSON column headers."""
-    return _format_energy(nu)
-
-
 def _broad_band(nu):
     """Return the broad-band name for a frequency."""
     from .units import eV as _eV_Hz
@@ -487,7 +482,7 @@ def write_csv(times, nus, point_result, bands, band_results, args, file):
     cols = [f"t({args.time_unit})"]
     if has_points:
         for nu in nus:
-            nu_label = _format_nu_label(nu)
+            nu_label = _format_energy(nu)
             for comp_name, _ in point_comps:
                 cols.append(f"F_{comp_name}({nu_label})")
     if has_bands:
@@ -542,7 +537,7 @@ def write_json(times, nus, point_result, bands, band_results, args, file):
         data["units"]["flux_density"] = args.flux_unit
         data["frequencies_Hz"] = nus.tolist()
         data["flux_density"] = {
-            _format_nu_label(nus[i]): {
+            _format_energy(nus[i]): {
                 comp_name: (comp_flux[i] / f_scale).tolist()
                 for comp_name, comp_flux in point_comps
             }
