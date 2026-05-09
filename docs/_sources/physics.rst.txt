@@ -87,15 +87,15 @@ VegasAfterglow supports arbitrary user-defined jet profiles, with several common
         \sigma(\phi, \theta) = \sigma_{\rm 0}
 
 **Power-law Jet**
-    A jet profile with power-law distribution:
+    A jet profile with power-law distribution. The Lorentz factor falls with index :math:`k_\Gamma`, the energy with index :math:`k_E`:
 
     .. math::
 
-        \Gamma_{0}(\phi, \theta) = (\Gamma_{\rm 0}-1)\left(1+\frac{\theta}{\theta_{\rm c}}\right)^{-k}+1
+        \Gamma_{0}(\phi, \theta) = \frac{\Gamma_{\rm 0}-1}{1+\left(\theta/\theta_{\rm c}\right)^{k_\Gamma}}+1
 
     .. math::
 
-        \frac{dE}{d\Omega}(\phi, \theta) = \frac{E_{\rm iso}}{4\pi}\left(1+\frac{\theta}{\theta_{\rm c}}\right)^{-k}
+        \frac{dE}{d\Omega}(\phi, \theta) = \frac{E_{\rm iso}}{4\pi}\,\frac{1}{1+\left(\theta/\theta_{\rm c}\right)^{k_E}}
 
     .. math::
 
