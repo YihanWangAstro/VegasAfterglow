@@ -1,5 +1,0 @@
-<map id="compute_simpson_weights" name="compute_simpson_weights">
-<area shape="rect" id="Node000001" title="Computes composite Simpson&#39;s quadrature weights for a non&#45;uniform grid." alt="" coords="5,5,204,31"/>
-<area shape="rect" id="Node000002" href="$pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89" title=" " alt="" coords="252,5,407,31"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="204,15,238,15,238,21,204,21"/>
-</map>

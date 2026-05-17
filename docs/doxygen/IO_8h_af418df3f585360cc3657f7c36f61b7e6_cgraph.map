@@ -1,6 +1,0 @@
-<map id="write_npz_recursive" name="write_npz_recursive">
-<area shape="rect" id="Node000001" title="Helper recursive function for writing multiple arrays to a single NPZ file." alt="" coords="5,29,157,55"/>
-<area shape="poly" id="edge2_Node000001_Node000001" title=" " alt="" coords="48,31,41,21,45,11,59,5,81,3,109,6,120,16,117,20,107,11,81,8,60,10,49,15,47,20,53,28"/>
-<area shape="rect" id="Node000002" href="$pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89" title=" " alt="" coords="205,29,360,55"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="158,39,191,39,191,45,158,45"/>
-</map>

@@ -1,8 +1,0 @@
-<map id="compute_syn_gamma_m" name="compute_syn_gamma_m">
-<area shape="rect" id="Node000001" title=" " alt="" coords="5,5,192,31"/>
-<area shape="rect" id="Node000002" href="$pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89" title=" " alt="" coords="383,5,537,31"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="192,15,369,15,369,21,192,21"/>
-<area shape="rect" id="Node000003" href="$utilities_8h.html#a29a716285d00743072d357c4a64a7f85" title="Finds the root of a function using the bisection method." alt="" coords="240,31,335,56"/>
-<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="193,28,227,33,226,38,192,33"/>
-<area shape="poly" id="edge3_Node000003_Node000002" title=" " alt="" coords="334,34,369,29,369,34,335,39"/>
-</map>

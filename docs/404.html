@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>VegasAfterglow Documentation</title>
+  <script>
+    // Strip the repo + "docs" prefix from the requested path and rewrite onto
+    // the matching RTD page. Falls back to the RTD root if extraction fails.
+    var path = window.location.pathname.replace(/^.*?\/docs\//, "");
+    var target = "https://vegasafterglow.readthedocs.io/en/latest/" + path;
+    window.location.replace(target);
+  </script>
+</head>
+<body>
+  <p>This page has moved to
+    <a href="https://vegasafterglow.readthedocs.io/">vegasafterglow.readthedocs.io</a>.</p>
+</body>
+</html>

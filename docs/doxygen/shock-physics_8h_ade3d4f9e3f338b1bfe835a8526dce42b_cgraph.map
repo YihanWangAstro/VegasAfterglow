@@ -1,5 +1,0 @@
-<map id="compute_effective_Gamma_dGamma" name="compute_effective_Gamma_dGamma">
-<area shape="rect" id="Node000001" title="Computes the derivative of the effective Lorentz factor with respect to the bulk Lorentz factor." alt="" coords="5,5,208,45"/>
-<area shape="rect" id="Node000002" href="$pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89" title=" " alt="" coords="256,13,411,38"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="208,23,242,23,242,28,208,28"/>
-</map>

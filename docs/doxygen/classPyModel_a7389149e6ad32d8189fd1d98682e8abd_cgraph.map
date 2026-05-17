@@ -1,6 +1,0 @@
-<map id="PyModel::jet_Gamma0" name="PyModel::jet_Gamma0">
-<area shape="rect" id="Node000001" title=" " alt="" coords="5,29,176,55"/>
-<area shape="poly" id="edge1_Node000001_Node000001" title=" " alt="" coords="56,31,49,21,53,11,67,5,91,3,120,6,132,15,128,20,118,11,91,8,68,10,56,15,54,20,60,28"/>
-<area shape="rect" id="Node000002" href="$pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89" title=" " alt="" coords="224,29,379,55"/>
-<area shape="poly" id="edge2_Node000001_Node000002" title=" " alt="" coords="176,39,210,39,210,45,176,45"/>
-</map>

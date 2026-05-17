@@ -1,8 +1,0 @@
-<map id="PyModel::jet_E_iso" name="PyModel::jet_E_iso">
-<area shape="rect" id="Node000001" title=" " alt="" coords="5,31,149,56"/>
-<area shape="rect" id="Node000002" href="$jet_8h.html#a72b4ff8405eeab1f6bbcddd66c03fd73" title="Helper: evaluate eps_k on a JetVariant (for non&#45;hot&#45;path code)" alt="" coords="197,5,281,31"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="149,29,183,24,184,29,150,35"/>
-<area shape="rect" id="Node000003" href="$pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89" title=" " alt="" coords="329,31,484,56"/>
-<area shape="poly" id="edge3_Node000001_Node000003" title=" " alt="" coords="150,41,316,41,316,46,150,46"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="282,22,316,27,315,32,281,27"/>
-</map>

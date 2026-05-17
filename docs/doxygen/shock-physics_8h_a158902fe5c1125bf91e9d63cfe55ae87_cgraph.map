@@ -1,5 +1,0 @@
-<map id="compute_dtheta_dt" name="compute_dtheta_dt">
-<area shape="rect" id="Node000001" title="Computes the time derivative of theta (dθ/dt) for jet spreading." alt="" coords="5,5,153,31"/>
-<area shape="rect" id="Node000002" href="$pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89" title=" " alt="" coords="201,5,356,31"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="153,15,188,15,188,21,153,21"/>
-</map>

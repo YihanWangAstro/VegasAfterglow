@@ -1,8 +1,0 @@
-<map id="enclosed_mass" name="enclosed_mass">
-<area shape="rect" id="Node000001" title="Computes enclosed mass per solid angle." alt="" coords="5,5,128,31"/>
-<area shape="rect" id="Node000002" href="$pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89" title=" " alt="" coords="367,5,521,31"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="128,15,353,15,353,21,128,21"/>
-<area shape="rect" id="Node000003" href="$shock-physics_8h.html#a4eecaf485f5ac3854b4fceab00516fd4" title="Simpson&#39;s rule integration in log&#45;space: ∫ f(r&#39;) dr&#39; via u = ln(r&#39;)." alt="" coords="176,31,319,56"/>
-<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="129,24,163,29,162,34,128,29"/>
-<area shape="poly" id="edge3_Node000003_Node000002" title=" " alt="" coords="318,32,352,27,353,32,319,37"/>
-</map>

@@ -1,7 +1,0 @@
-<map id="iterate_to" name="iterate_to">
-<area shape="rect" id="Node000001" title="Helper function that advances an iterator through an array until the value exceeds the target." alt="" coords="223,35,308,60"/>
-<area shape="rect" id="Node000002" href="$classObserver.html#a5fe3b5d16f7cf532e20a6f600485a6b6" title="Computes the specific flux at multiple observed frequencies." alt="" coords="5,5,175,31"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="209,41,166,33,167,28,210,35"/>
-<area shape="rect" id="Node000003" href="$classObserver.html#a2497e02305dbf755a7d629311f8e772d" title="Computes the specific flux at a single observed frequency for multiple observation times." alt="" coords="21,55,159,95"/>
-<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="210,59,160,67,159,62,209,54"/>
-</map>

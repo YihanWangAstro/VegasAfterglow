@@ -1,5 +1,0 @@
-<map id="compute_Gamma_from_relative" name="compute_Gamma_from_relative">
-<area shape="rect" id="Node000001" title="Computes a Lorentz factor from a reference Lorentz factor and relative Lorentz factor." alt="" coords="5,5,181,45"/>
-<area shape="rect" id="Node000002" href="$pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89" title=" " alt="" coords="229,13,384,38"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="182,23,215,23,215,28,182,28"/>
-</map>

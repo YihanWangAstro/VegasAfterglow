@@ -1,8 +1,0 @@
-<map id="compton_correction" name="compton_correction">
-<area shape="rect" id="Node000001" title="Fast KN correction lookup: returns sigma_KN/sigmaT at frequency nu." alt="" coords="5,63,156,89"/>
-<area shape="rect" id="Node000002" href="$namespaceanonymous__namespace_02inverse-compton_8cpp_03.html#a772b174002f6c7db7aab8a1e25cf4e67" title=" " alt="" coords="204,5,387,75"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="156,61,190,55,191,60,157,66"/>
-<area shape="rect" id="Node000003" href="$pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89" title=" " alt="" coords="435,63,589,89"/>
-<area shape="poly" id="edge3_Node000001_Node000003" title=" " alt="" coords="156,81,204,84,295,87,387,84,421,82,421,87,387,89,295,92,204,89,156,86"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="387,53,422,58,421,64,386,58"/>
-</map>

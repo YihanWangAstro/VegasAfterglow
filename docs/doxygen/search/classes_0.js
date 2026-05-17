@@ -1,7 +1,0 @@
-var searchData=
-[
-  ['break_0',['Break',['../structBreak.html',1,'']]],
-  ['brokenpowerlaw_1',['BrokenPowerLaw',['../structBrokenPowerLaw.html',1,'']]],
-  ['brokenpowerlaw_3c_204_20_3e_2',['BrokenPowerLaw&lt; 4 &gt;',['../structBrokenPowerLaw.html',1,'']]],
-  ['brokenpowerlaw_3c_205_20_3e_3',['BrokenPowerLaw&lt; 5 &gt;',['../structBrokenPowerLaw.html',1,'']]]
-];

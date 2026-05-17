@@ -1,8 +1,0 @@
-<map id="PyModel::medium" name="PyModel::medium">
-<area shape="rect" id="Node000001" title=" " alt="" coords="5,5,145,31"/>
-<area shape="rect" id="Node000002" href="$pybind_8cpp.html#ad93eae6422741850877b46bd61f08c89" title=" " alt="" coords="345,5,500,31"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="146,15,331,15,331,21,146,21"/>
-<area shape="rect" id="Node000003" href="$medium_8h.html#a66da7cadc3e1de6427fff15fef0e87a0" title="Helper: evaluate rho on a MediumVariant (for non&#45;hot&#45;path code)" alt="" coords="193,31,297,56"/>
-<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="146,26,180,31,179,36,145,31"/>
-<area shape="poly" id="edge3_Node000003_Node000002" title=" " alt="" coords="297,33,332,28,332,34,298,39"/>
-</map>
