@@ -11,8 +11,13 @@ build:
     - doxygen
     - graphviz
   jobs:
-    # Doxygen XML is consumed by Breathe in the Sphinx build below.
     pre_build:
+      # Mirror what docs/build_docs.sh does locally:
+      # 1. Stage the figures referenced by *.rst into Sphinx's _static tree.
+      #    Single source of truth stays in assets/ at the repo root.
+      - mkdir -p docs/source/_static/images
+      - cp assets/*.png docs/source/_static/images/
+      # 2. Generate Doxygen XML for Breathe (consumed by the Sphinx build).
       - cd docs && doxygen Doxyfile
 
 sphinx:

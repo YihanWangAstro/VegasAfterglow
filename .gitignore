@@ -52,6 +52,13 @@ VegasAfterglow/_version.py
 compile_commands.json
 docs/plans/
 
+# Docs build-time copies (assets/*.png is copied here by build_docs.sh on local
+# builds and by .readthedocs.yaml's pre_build step on RTD).
+docs/source/_static/images/
+
+# Build-generated CSS (conf.py writes custom.css here at every build).
+docs/source/_static/css/
+
 # Local exploratory notebooks under script/ (PNGs/PDFs already ignored above)
 script/*.ipynb
 script/*.gif
