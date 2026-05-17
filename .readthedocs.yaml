@@ -1,0 +1,43 @@
+# Read the Docs configuration file.
+# See https://docs.readthedocs.io/en/stable/config-file/v2.html
+
+version: 2
+
+build:
+  os: ubuntu-22.04
+  tools:
+    python: "3.11"
+  apt_packages:
+    - doxygen
+    - graphviz
+  jobs:
+    # Doxygen XML is consumed by Breathe in the Sphinx build below.
+    pre_build:
+      - cd docs && doxygen Doxyfile
+
+sphinx:
+  configuration: docs/source/conf.py
+  # Fail the build on warnings so docs drift is caught at PR time.
+  # Disable temporarily if the legacy pre-existing warnings need to be
+  # triaged separately.
+  fail_on_warning: false
+
+python:
+  install:
+    - requirements: docs/requirements.txt
+    # Install the package itself in editable mode so sphinx-autodoc can import
+    # VegasAfterglow.* (with bilby/emcee available via the mcmc extra so the
+    # FitResult / Fitter autodoc populates correctly).
+    - method: pip
+      path: .
+      extra_requirements:
+        - mcmc
+
+# Build PDF + HTML on every version. EPUB is skipped for size.
+formats:
+  - pdf
+
+# RTD picks up git tags automatically and serves them at
+# https://<slug>.readthedocs.io/en/<tag>/. The "stable" alias tracks the
+# latest tag; "latest" tracks the main branch. Configure these aliases in
+# the RTD admin once the project is imported.
