@@ -46,6 +46,10 @@ void initialize_ejecta(Ejecta& jet, bool spreading, Real duration, std::optional
 
 JetVariant PyTophatJet(Real theta_c, Real E_iso, Real Gamma0, bool spreading, Real duration,
                        std::optional<PyMagnetar> const& magnetar) {
+    AFTERGLOW_REQUIRE_RANGE_OI(theta_c, 0.0, con::pi / 2);
+    AFTERGLOW_REQUIRE_FINITE_POS(E_iso);
+    AFTERGLOW_REQUIRE_GREATER_THAN(Gamma0, 1.0);
+    AFTERGLOW_REQUIRE_FINITE_POS(duration);
     if (magnetar) {
         Ejecta jet;
         jet.eps_k = math::tophat(theta_c, E_iso);
@@ -58,6 +62,10 @@ JetVariant PyTophatJet(Real theta_c, Real E_iso, Real Gamma0, bool spreading, Re
 
 JetVariant PyGaussianJet(Real theta_c, Real E_iso, Real Gamma0, bool spreading, Real duration,
                          std::optional<PyMagnetar> const& magnetar) {
+    AFTERGLOW_REQUIRE_RANGE_OI(theta_c, 0.0, con::pi / 2);
+    AFTERGLOW_REQUIRE_FINITE_POS(E_iso);
+    AFTERGLOW_REQUIRE_GREATER_THAN(Gamma0, 1.0);
+    AFTERGLOW_REQUIRE_FINITE_POS(duration);
     if (magnetar) {
         Ejecta jet;
         jet.eps_k = math::gaussian(theta_c, E_iso);
@@ -70,6 +78,12 @@ JetVariant PyGaussianJet(Real theta_c, Real E_iso, Real Gamma0, bool spreading, 
 
 JetVariant PyPowerLawJet(Real theta_c, Real E_iso, Real Gamma0, Real k_e, Real k_g, bool spreading, Real duration,
                          std::optional<PyMagnetar> const& magnetar) {
+    AFTERGLOW_REQUIRE_RANGE_OI(theta_c, 0.0, con::pi / 2);
+    AFTERGLOW_REQUIRE_FINITE_POS(E_iso);
+    AFTERGLOW_REQUIRE_GREATER_THAN(Gamma0, 1.0);
+    AFTERGLOW_REQUIRE_FINITE_POS(k_e);
+    AFTERGLOW_REQUIRE_FINITE_POS(k_g);
+    AFTERGLOW_REQUIRE_FINITE_POS(duration);
     if (magnetar) {
         Ejecta jet;
         jet.eps_k = math::powerlaw(theta_c, E_iso, k_e);
@@ -82,6 +96,12 @@ JetVariant PyPowerLawJet(Real theta_c, Real E_iso, Real Gamma0, Real k_e, Real k
 
 JetVariant PyPowerLawWing(Real theta_c, Real E_iso_w, Real Gamma0_w, Real k_e, Real k_g, bool spreading,
                           Real duration) {
+    AFTERGLOW_REQUIRE_RANGE_OI(theta_c, 0.0, con::pi / 2);
+    AFTERGLOW_REQUIRE_FINITE_POS(E_iso_w);
+    AFTERGLOW_REQUIRE_GREATER_THAN(Gamma0_w, 1.0);
+    AFTERGLOW_REQUIRE_FINITE_POS(k_e);
+    AFTERGLOW_REQUIRE_FINITE_POS(k_g);
+    AFTERGLOW_REQUIRE_FINITE_POS(duration);
     Ejecta jet;
     jet.eps_k = math::powerlaw_wing(theta_c, E_iso_w, k_e);
     jet.Gamma0 = math::powerlaw_wing_plus_one(theta_c, Gamma0_w - 1, k_g);
@@ -92,6 +112,14 @@ JetVariant PyPowerLawWing(Real theta_c, Real E_iso_w, Real Gamma0_w, Real k_e, R
 
 JetVariant PyStepPowerLawJet(Real theta_c, Real E_iso, Real Gamma0, Real E_iso_w, Real Gamma0_w, Real k_e, Real k_g,
                              bool spreading, Real duration, std::optional<PyMagnetar> const& magnetar) {
+    AFTERGLOW_REQUIRE_RANGE_OI(theta_c, 0.0, con::pi / 2);
+    AFTERGLOW_REQUIRE_FINITE_POS(E_iso);
+    AFTERGLOW_REQUIRE_GREATER_THAN(Gamma0, 1.0);
+    AFTERGLOW_REQUIRE_FINITE_POS(E_iso_w);
+    AFTERGLOW_REQUIRE_GREATER_THAN(Gamma0_w, 1.0);
+    AFTERGLOW_REQUIRE_FINITE_POS(k_e);
+    AFTERGLOW_REQUIRE_FINITE_POS(k_g);
+    AFTERGLOW_REQUIRE_FINITE_POS(duration);
     Ejecta jet;
     jet.eps_k = math::step_powerlaw(theta_c, E_iso, E_iso_w, k_e);
     jet.Gamma0 = math::step_powerlaw_plus_one(theta_c, Gamma0 - 1, Gamma0_w - 1, k_g);
@@ -101,6 +129,16 @@ JetVariant PyStepPowerLawJet(Real theta_c, Real E_iso, Real Gamma0, Real E_iso_w
 
 JetVariant PyTwoComponentJet(Real theta_c, Real E_iso, Real Gamma0, Real theta_w, Real E_iso_w, Real Gamma0_w,
                              bool spreading, Real duration, std::optional<PyMagnetar> const& magnetar) {
+    AFTERGLOW_REQUIRE_RANGE_OI(theta_c, 0.0, con::pi / 2);
+    AFTERGLOW_REQUIRE_RANGE_OI(theta_w, 0.0, con::pi / 2);
+    AFTERGLOW_REQUIRE(theta_w > theta_c,
+                      "theta_w (wing angle) must be greater than theta_c (core angle), got theta_w=" +
+                          std::to_string(theta_w) + ", theta_c=" + std::to_string(theta_c));
+    AFTERGLOW_REQUIRE_FINITE_POS(E_iso);
+    AFTERGLOW_REQUIRE_GREATER_THAN(Gamma0, 1.0);
+    AFTERGLOW_REQUIRE_FINITE_POS(E_iso_w);
+    AFTERGLOW_REQUIRE_GREATER_THAN(Gamma0_w, 1.0);
+    AFTERGLOW_REQUIRE_FINITE_POS(duration);
     Ejecta jet;
     jet.eps_k = math::two_component(theta_c, theta_w, E_iso, E_iso_w);
     jet.Gamma0 = math::two_component_plus_one(theta_c, theta_w, Gamma0 - 1, Gamma0_w - 1);
@@ -109,10 +147,22 @@ JetVariant PyTwoComponentJet(Real theta_c, Real E_iso, Real Gamma0, Real theta_w
 }
 
 ISM PyISM(Real n_ism) {
+    AFTERGLOW_REQUIRE_FINITE_NONNEG(n_ism);
     return ISM(n_ism / unit::cm3);
 }
 
 MediumVariant PyWind(Real A_star, std::optional<Real> n_ism_opt, std::optional<Real> n0_opt, Real k_m) {
+    AFTERGLOW_REQUIRE_FINITE_POS(A_star);
+    AFTERGLOW_REQUIRE_FINITE_POS(k_m);
+    if (n_ism_opt) {
+        AFTERGLOW_REQUIRE_FINITE_NONNEG(*n_ism_opt);
+    }
+    if (n0_opt) {
+        // ``x > 0`` rejects 0, negative, -inf, and NaN; accepts positive finite and +inf (the
+        // documented "no floor" sentinel) -- exactly the contract we want.
+        AFTERGLOW_REQUIRE(*n0_opt > 0,
+                          std::string("n0 must be > 0 (or +inf for no floor), got ") + std::to_string(*n0_opt));
+    }
     const Real n_ism = n_ism_opt.value_or(0);
     const Real n0 = n0_opt.value_or(con::inf);
 
@@ -428,6 +478,15 @@ auto PyModel::flux_density_exposures(PyArray const& t, PyArray const& nu, PyArra
     AFTERGLOW_REQUIRE(t.size() == nu.size() && t.size() == expo_time.size(),
                       "time, frequency, and exposure time arrays must have the same size");
     AFTERGLOW_REQUIRE(num_points >= 2, "num_points must be at least 2 to sample within each exposure time");
+    // Guard against per-element bad input: negative / zero / NaN exposure times cause undefined
+    // behaviour inside the sampling loop, and overlong total_points overflows size_t multiplication.
+    for (size_t i = 0; i < expo_time.size(); ++i) {
+        AFTERGLOW_REQUIRE(::afterglow::_finite_pos(expo_time(i)), std::string("expo_time[") + std::to_string(i) +
+                                                                      "] must be finite and > 0, got " +
+                                                                      std::to_string(expo_time(i)));
+    }
+    AFTERGLOW_REQUIRE(t.size() <= std::numeric_limits<size_t>::max() / num_points,
+                      "t.size() * num_points would overflow size_t");
 
     const auto [t_obs_sorted, nu_obs_sorted, idx_sorted] = generate_exposure_sampling(t, nu, expo_time, num_points);
 

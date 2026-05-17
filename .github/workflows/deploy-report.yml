@@ -1,0 +1,45 @@
+name: Deploy Validation Report
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Version label for versioned copy (e.g., 2.0.1). Leave empty to update latest only.'
+        required: false
+        type: string
+
+jobs:
+  deploy:
+    name: Deploy Report to GitHub Pages
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Prepare report
+        run: |
+          if [ ! -f "validation/comprehensive_report.pdf" ]; then
+            echo "::error::validation/comprehensive_report.pdf not found. Generate it locally and commit it first."
+            exit 1
+          fi
+          mkdir -p deploy_report
+          cp validation/comprehensive_report.pdf deploy_report/
+
+      - name: Deploy to GitHub Pages (latest)
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: deploy_report/
+          destination_dir: reports/latest
+          keep_files: true
+
+      - name: Deploy to GitHub Pages (versioned)
+        if: ${{ inputs.version != '' }}
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: deploy_report/
+          destination_dir: reports/v${{ inputs.version }}
+          keep_files: true

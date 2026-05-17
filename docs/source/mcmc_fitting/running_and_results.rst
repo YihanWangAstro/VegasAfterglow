@@ -236,6 +236,12 @@ The method returns a ``FitResult`` object with the following attributes:
     - Use for advanced analysis and plotting
     - Access via: ``result.bilby_result.plot_corner()``
 
+``FitResult`` also exposes three convenience methods:
+
+- ``summary(top_k=None)``: returns a formatted top-K best-fit table (rank, chi-squared, parameter values), renders cleanly in both ``print()`` and Jupyter last-line auto-display.
+- ``save(path)``: write the fit to disk in bilby's native HDF5 (``.h5`` / ``.hdf5``) or JSON (``.json``) format. The resulting file is interoperable with bilby's tooling.
+- ``FitResult.load(path)``: classmethod that loads a previously saved file, or any file produced by ``bilby.core.result.Result.save_to_file(...)``.
+
 Basic MCMC Execution
 ---------------------
 
@@ -286,15 +292,11 @@ Parameter Constraints
 
 .. code-block:: python
 
-    # Print best-fit parameters
-    print("Top-k parameters:")
-    header = f"{'Rank':>4s}  {'chi^2':>10s}  " + "  ".join(f"{name:>10s}" for name in result.labels)
-    print(header)
-    print("-" * len(header))
-    for i in range(result.top_k_params.shape[0]):
-        chi2 = -2 * result.top_k_log_probs[i]
-        vals = "  ".join(f"{val:10.4f}" for val in result.top_k_params[i])
-        print(f"{i+1:4d}  {chi2:10.2f}  {vals}")
+    # Top-K best-fit parameters with chi-squared
+    print(result.summary())
+
+    # In a Jupyter cell, last-line auto-display also works:
+    # result.summary()
 
 Model Predictions
 ------------------
@@ -319,6 +321,36 @@ Model Predictions
 
     flux_integrated = fitter.flux(result.top_k_params[0], t_model,
                                   band=band("BAT"))
+
+Saving and Loading Fits
+------------------------
+
+MCMC fits can take minutes to hours. To avoid re-running the sampler when reopening a notebook, persist the result to disk using bilby's native HDF5 / JSON format:
+
+.. code-block:: python
+
+    # After fitting
+    result.save("ep_grb_fit.h5")   # .h5 / .hdf5 (recommended) or .json
+
+    # Later session:
+    from VegasAfterglow import FitResult
+    result = FitResult.load("ep_grb_fit.h5")
+
+    print(result.summary())                            # works
+    result.bilby_result.plot_corner()                  # bilby tools work
+
+    # Predictions still need the Fitter (build it the same way as before fitting):
+    lc = fitter.flux_density_grid(result.top_k_params[0], t_out, nu_out)
+
+Files written by ``result.save()`` are full bilby Result files. They can also be opened directly by bilby's tools — useful when sharing fits with collaborators who use bilby:
+
+.. code-block:: python
+
+    import bilby
+    br = bilby.read_in_result(filename="ep_grb_fit.h5")
+    br.plot_corner()
+
+Conversely, any pre-existing bilby Result file can be loaded as a ``FitResult`` (the top-K cache is set to ``None`` when loading external files; everything else is available).
 
 Visualization
 --------------

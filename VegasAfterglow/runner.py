@@ -28,6 +28,7 @@ from ._fitting_utils import (
     _default_jet_factory,
     _default_medium_factory,
     _get_latex_label,
+    _param_label,
     get_optimal_nwalkers,
     get_optimal_queue_size,
 )
@@ -35,6 +36,11 @@ from .types import FitResult, ModelParams, ParamDef, Scale
 from .VegasAfterglowC import Model, Observer, Radiation
 
 logger = logging.getLogger(__name__)
+# Library convention: attach a NullHandler so the package stays silent unless the
+# application configures logging itself. See
+# https://docs.python.org/3/howto/logging.html#configuring-logging-for-a-library
+if not logger.handlers:
+    logger.addHandler(logging.NullHandler())
 
 _C_CGS = 2.99792458e10  # speed of light [cm/s]
 _LN10_OVER_2P5 = 0.4 * np.log(10.0)  # 0.4 * ln(10), converts A_V * k -> optical depth
@@ -46,6 +52,34 @@ class Fitter:
     Uses Model directly for flux evaluation, with ThreadPoolExecutor for parallelism.
     Each thread creates a Model instance (brief GIL hold), then calls flux_density
     (GIL released during C++ computation).
+
+    Resolution lifecycle
+    --------------------
+    The grid ``resolution`` defines the chi-squared evaluated by the sampler;
+    rendering the best-fit at a different resolution would produce a different
+    model than the one minimized against. The contract is therefore:
+
+    * The constructor's ``resolution`` is the session default.
+    * ``fit(resolution=...)`` overrides it *and persists*: subsequent
+      post-fit calls (``flux_density_grid``, ``flux``) inherit this resolution
+      so the rendered best-fit matches the fit.
+    * Post-fit methods accept their own ``resolution=`` for one-shot overrides
+      (e.g. plotting at higher resolution than the fit ran at) without
+      changing the Fitter's persistent state.
+
+    Thread safety
+    -------------
+    During ``fit()`` the Fitter dispatches per-walker likelihood evaluations
+    across worker threads. The contract is:
+
+    * **Set all state before calling fit().** Use ``add_flux_density()``,
+      ``add_spectrum()``, ``add_flux()``, and the per-call ``resolution=``
+      kwarg on ``fit()`` itself; do not mutate the Fitter from another
+      thread once ``fit()`` has dispatched the worker pool.
+    * Worker threads only *read* ``self`` (``_all_*``, ``_ext_kernel``,
+      ``_lam_rest_cm``, ``phi/theta/t_resol``, factories); these are populated
+      synchronously before the pool is dispatched and are stable for the
+      fit's duration.
 
     Args:
         z: Source redshift
@@ -142,6 +176,35 @@ class Fitter:
         self._all_err = None
         self._all_weights = None
 
+    def __repr__(self) -> str:
+        """One-line summary of model selection, physics flags, and loaded data."""
+        flags = [
+            name
+            for name in (
+                "rvs_shock",
+                "fwd_ssc",
+                "rvs_ssc",
+                "kn",
+                "cmb_cooling",
+                "magnetar",
+            )
+            if getattr(self, name, False)
+        ]
+        flag_str = f", flags=[{', '.join(flags)}]" if flags else ""
+        ext_str = (
+            f", extinction={self.extinction!r}" if self.extinction is not None else ""
+        )
+        n_pts = sum(len(t) for t in self._point_t)
+        if n_pts or self._band_obs:
+            data_str = f", data={n_pts} points + {len(self._band_obs)} bands"
+        else:
+            data_str = ", data=empty"
+        return (
+            f"Fitter(z={self.z}, lumi_dist={self.lumi_dist:.3g}, "
+            f"jet={self.jet!r}, medium={self.medium!r}"
+            f"{ext_str}{flag_str}{data_str})"
+        )
+
     def _add_point_data(self, t, nu, f_nu, err, weights):
         """Append point observation arrays to internal lists."""
         f_nu = np.asarray(f_nu, dtype=np.float64)
@@ -158,6 +221,49 @@ class Fitter:
         self._point_weights.append(w)
         self._all_t = None
 
+    @staticmethod
+    def _validate_observation_arrays(*, t, f_nu, err, weights, context: str):
+        """Validate ``t``, ``f_nu``, ``err`` (and optional ``weights``) at the
+        boundary of an ``add_*`` method. Catches shape mismatch, empty data,
+        non-finite values, and non-positive error bars with a clear ValueError
+        naming the caller (``context``).
+
+        Returns the arrays converted to ``float64`` numpy arrays so callers
+        don't have to re-cast them.
+        """
+        t = np.asarray(t, dtype=np.float64)
+        f_nu = np.asarray(f_nu, dtype=np.float64)
+        err = np.asarray(err, dtype=np.float64)
+        if t.size == 0:
+            raise ValueError(f"{context}: time array is empty")
+        if t.shape != f_nu.shape or t.shape != err.shape:
+            raise ValueError(
+                f"{context}: t, f_nu, err must have the same shape; got "
+                f"t.shape={t.shape}, f_nu.shape={f_nu.shape}, err.shape={err.shape}"
+            )
+        if not np.isfinite(f_nu).all():
+            raise ValueError(
+                f"{context}: f_nu contains {int((~np.isfinite(f_nu)).sum())} "
+                f"non-finite (NaN or inf) values"
+            )
+        if not np.isfinite(err).all() or (err <= 0).any():
+            raise ValueError(
+                f"{context}: err must be finite and > 0 at every point (got "
+                f"min={float(err.min())}, max={float(err.max())})"
+            )
+        w = None
+        if weights is not None:
+            w = np.asarray(weights, dtype=np.float64)
+            if w.shape != t.shape:
+                raise ValueError(
+                    f"{context}: weights.shape={w.shape} must match t.shape={t.shape}"
+                )
+            if not np.isfinite(w).all() or (w < 0).any():
+                raise ValueError(
+                    f"{context}: weights must be finite and >= 0 at every point"
+                )
+        return t, f_nu, err, w
+
     def add_flux_density(
         self,
         nu: float,
@@ -165,7 +271,7 @@ class Fitter:
         f_nu: np.ndarray,
         err: np.ndarray,
         weights: Optional[np.ndarray] = None,
-    ):
+    ) -> None:
         """Add light curve data at a single frequency.
 
         Args:
@@ -175,7 +281,11 @@ class Fitter:
             err: Observational uncertainties [erg/cm^2/s/Hz]
             weights: Optional statistical weights
         """
-        t = np.asarray(t, dtype=np.float64)
+        if not np.isfinite(nu) or nu <= 0:
+            raise ValueError(f"add_flux_density: nu must be finite and > 0, got {nu}")
+        t, f_nu, err, weights = self._validate_observation_arrays(
+            t=t, f_nu=f_nu, err=err, weights=weights, context="add_flux_density"
+        )
         self._add_point_data(t, np.full_like(t, nu), f_nu, err, weights)
 
     def add_spectrum(
@@ -185,7 +295,7 @@ class Fitter:
         f_nu: np.ndarray,
         err: np.ndarray,
         weights: Optional[np.ndarray] = None,
-    ):
+    ) -> None:
         """Add a broadband spectrum at a specific time.
 
         Args:
@@ -195,7 +305,19 @@ class Fitter:
             err: Observational uncertainties [erg/cm^2/s/Hz]
             weights: Optional statistical weights
         """
+        if not np.isfinite(t) or t <= 0:
+            raise ValueError(f"add_spectrum: t must be finite and > 0, got {t}")
         nu = np.asarray(nu, dtype=np.float64)
+        if not np.isfinite(nu).all() or (nu <= 0).any():
+            raise ValueError(
+                "add_spectrum: nu must be finite and > 0 at every point "
+                f"(got min={float(nu.min())}, max={float(nu.max())})"
+            )
+        # nu plays the role of the "axis" array here (one row per frequency at
+        # a fixed time), so validate shapes against it.
+        nu, f_nu, err, weights = self._validate_observation_arrays(
+            t=nu, f_nu=f_nu, err=err, weights=weights, context="add_spectrum"
+        )
         self._add_point_data(np.full_like(nu, t), nu, f_nu, err, weights)
 
     def add_flux(
@@ -206,7 +328,7 @@ class Fitter:
         err: np.ndarray,
         num_points: int = 15,
         weights: Optional[np.ndarray] = None,
-    ):
+    ) -> None:
         """Add band-integrated flux measurements.
 
         Args:
@@ -218,15 +340,26 @@ class Fitter:
             num_points: Number of frequency sampling points for integration
             weights: Optional statistical weights
         """
-        nu_min, nu_max = band
-        t = np.asarray(t, dtype=np.float64)
-        flux = np.asarray(flux, dtype=np.float64)
-        err = np.asarray(err, dtype=np.float64)
-        w = (
-            np.asarray(weights, dtype=np.float64)
-            if weights is not None
-            else np.ones_like(t)
+        try:
+            nu_min, nu_max = band
+        except (TypeError, ValueError):
+            raise ValueError(
+                f"add_flux: band must be a (nu_min, nu_max) tuple in Hz, got {band!r}"
+            ) from None
+        if not (np.isfinite(nu_min) and np.isfinite(nu_max) and 0 < nu_min < nu_max):
+            raise ValueError(
+                f"add_flux: band must satisfy 0 < nu_min < nu_max with both finite; "
+                f"got nu_min={nu_min}, nu_max={nu_max}"
+            )
+        if num_points < 2:
+            raise ValueError(
+                f"add_flux: num_points must be >= 2 for band integration, got {num_points}"
+            )
+        t, flux, err, w = self._validate_observation_arrays(
+            t=t, f_nu=flux, err=err, weights=weights, context="add_flux"
         )
+        if w is None:
+            w = np.ones_like(t)
 
         order = np.argsort(t)
         self._band_obs.append(
@@ -549,7 +682,7 @@ class Fitter:
         labels, lowers, uppers = zip(
             *(
                 (
-                    f"log10_{pd.name}" if pd.scale is Scale.LOG else pd.name,
+                    _param_label(pd),
                     np.log10(pd.lower) if pd.scale is Scale.LOG else pd.lower,
                     np.log10(pd.upper) if pd.scale is Scale.LOG else pd.upper,
                 )
@@ -569,9 +702,7 @@ class Fitter:
     ):
         """Build bilby PriorDict: user priors where provided, Uniform for the rest."""
         label_to_def = {
-            (f"log10_{pd.name}" if pd.scale is Scale.LOG else pd.name): pd
-            for pd in defs
-            if pd.scale is not Scale.FIXED
+            _param_label(pd): pd for pd in defs if pd.scale is not Scale.FIXED
         }
 
         priors_dict = {}
@@ -635,8 +766,10 @@ class Fitter:
         Args:
             param_defs: Parameter definitions
             sampler: Sampler name ('emcee', 'dynesty', etc.)
-            resolution: Optional (phi, theta, t) override. If None, uses the
-                values set at construction time.
+            resolution: Optional (phi, theta, t) override. If provided, it persists
+                on the Fitter so subsequent post-fit calls (``flux_density_grid``,
+                ``flux``) render the best-fit at the same resolution used for chi-squared.
+                If None, the values set at construction time are used.
             npool: Number of threads for parallelism (default: auto-detect)
             top_k: Number of top samples to return
             outdir: Output directory for bilby
@@ -655,11 +788,17 @@ class Fitter:
         self.validate_parameters(param_defs)
         defs = list(param_defs)
 
-        # Override resolution if provided
+        # Per-fit resolution override persists on the Fitter so that
+        # subsequent post-fit calls (``flux_density_grid``, ``flux``) render
+        # the best-fit prediction at the SAME resolution used to compute
+        # chi-squared. Plotting at a different resolution would render a
+        # different model than the one the sampler minimized against.
         if resolution is not None:
             self.phi_resol, self.theta_resol, self.t_resol = resolution
 
-        # Consolidate observation data
+        # Consolidate observation data (populates _all_*, _ext_kernel,
+        # _lam_rest_cm) before the worker pool is dispatched, so the
+        # values worker threads read are already stable.
         self._consolidate_data()
 
         if len(self._all_t) == 0 and not self._band_obs:
@@ -1028,7 +1167,7 @@ class Fitter:
         band,
         num_points: int = 15,
         resolution: Optional[Tuple[float, float, float]] = None,
-    ) -> np.ndarray:
+    ):
         """Compute integrated flux at best-fit parameters.
 
         Extinction is **not** applied here, matching the fitter's

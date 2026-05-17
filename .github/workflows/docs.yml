@@ -1,98 +1,113 @@
-name: Documentation Build and Deploy
+name: Redirect GitHub Pages docs to Read the Docs
+
+# The full documentation now builds on Read the Docs at
+# https://vegasafterglow.readthedocs.io/. This workflow deploys a tiny redirect
+# stub to the legacy GitHub Pages URL so pre-existing bookmarks or external
+# links land on the new location without breakage.
+#
+# - index.html  redirects the root to the RTD landing.
+# - 404.html    catches any deep link (e.g. /docs/mcmc_fitting/advanced.html)
+#               and rewrites it onto the matching RTD path. Sphinx output
+#               paths are identical between GH Pages and RTD, so deep links
+#               preserve their target page.
 
 on:
   push:
     branches:
       - main
     paths:
-      - 'docs/**'
-      - 'include/**'
-      - 'src/**'
-      - 'pybind/**'
       - '.github/workflows/docs.yml'
-  workflow_dispatch:  # Allow manual triggering
+  workflow_dispatch:
 
 jobs:
-  build_and_deploy:
+  deploy_redirect:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
-
-      - name: Setup Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: '3.9'
-
-      - name: Install Doxygen
+      - name: Generate redirect HTML
         run: |
-          sudo apt-get update
-          sudo apt-get install -y doxygen graphviz
+          mkdir -p redirect
+          cat > redirect/index.html << 'EOF'
+          <!DOCTYPE html>
+          <html lang="en">
+          <head>
+            <meta charset="utf-8">
+            <title>VegasAfterglow Documentation</title>
+            <meta http-equiv="refresh" content="0; url=https://vegasafterglow.readthedocs.io/">
+            <link rel="canonical" href="https://vegasafterglow.readthedocs.io/">
+            <script>window.location.replace("https://vegasafterglow.readthedocs.io/");</script>
+          </head>
+          <body>
+            <p>The VegasAfterglow documentation has moved to
+              <a href="https://vegasafterglow.readthedocs.io/">vegasafterglow.readthedocs.io</a>.
+              Redirecting...</p>
+          </body>
+          </html>
+          EOF
 
-      - name: Install Python dependencies
-        run: |
-          python -m pip install --upgrade pip
-          pip install -r docs/requirements.txt
+          cat > redirect/404.html << 'EOF'
+          <!DOCTYPE html>
+          <html lang="en">
+          <head>
+            <meta charset="utf-8">
+            <title>VegasAfterglow Documentation</title>
+            <script>
+              // Strip the repo + "docs" prefix from the requested path and rewrite onto
+              // the matching RTD page. Falls back to the RTD root if extraction fails.
+              var path = window.location.pathname.replace(/^.*?\/docs\//, "");
+              var target = "https://vegasafterglow.readthedocs.io/en/latest/" + path;
+              window.location.replace(target);
+            </script>
+          </head>
+          <body>
+            <p>This page has moved to
+              <a href="https://vegasafterglow.readthedocs.io/">vegasafterglow.readthedocs.io</a>.</p>
+          </body>
+          </html>
+          EOF
 
-      - name: Build documentation
-        run: |
-          cd docs
-          chmod +x build_docs.sh
-          ./build_docs.sh
-
-      - name: Deploy to GitHub Pages
+      - name: Deploy redirect to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
           personal_token: ${{ secrets.GH_PERSONAL_ACCESS_TOKEN }}
-          publish_dir: ./docs/build/html
+          publish_dir: ./redirect
           destination_dir: docs
 
       - name: Create Wiki Content
         run: |
-          # Install pandoc for HTML to Markdown conversion
-          sudo apt-get install -y pandoc
-
-          # Create a directory for wiki content
           mkdir -p wiki_content
 
-          # Copy Home.md with proper formatting
           cat > wiki_content/Home.md << 'EOL'
           # VegasAfterglow Documentation
 
-          Welcome to the VegasAfterglow documentation wiki.
+          The full documentation is hosted on Read the Docs:
 
-          ## Documentation
-
-          The complete documentation is published to GitHub Pages. Please visit:
-
-          **[Full Documentation Site](https://yihanwangastro.github.io/VegasAfterglow/docs/)**
+          **[https://vegasafterglow.readthedocs.io/](https://vegasafterglow.readthedocs.io/)**
 
           ## Quick Links
 
-          * [C++ API Reference](https://yihanwangastro.github.io/VegasAfterglow/docs/cpp_api.html)
-          * [Python API Reference](https://yihanwangastro.github.io/VegasAfterglow/docs/python_api.html)
-          * [Installation Guide](https://yihanwangastro.github.io/VegasAfterglow/docs/installation.html)
-          * [Quick Start Guide](https://yihanwangastro.github.io/VegasAfterglow/docs/quickstart.html)
-          * [Examples](https://yihanwangastro.github.io/VegasAfterglow/docs/examples/index.html)
-          * [Contributing Guide](https://yihanwangastro.github.io/VegasAfterglow/docs/contributing.html)
+          * [Installation Guide](https://vegasafterglow.readthedocs.io/en/latest/installation.html)
+          * [Quick Start Guide](https://vegasafterglow.readthedocs.io/en/latest/quickstart.html)
+          * [Python API Reference](https://vegasafterglow.readthedocs.io/en/latest/python_api.html)
+          * [C++ API Reference](https://vegasafterglow.readthedocs.io/en/latest/cpp_api.html)
+          * [Examples](https://vegasafterglow.readthedocs.io/en/latest/examples/index.html)
+          * [Contributing Guide](https://vegasafterglow.readthedocs.io/en/latest/contributing.html)
+
+          Each tagged release has its own URL under ``/en/v<version>/``; the
+          version dropdown in the sidebar lists all available releases.
 
           ## Building Documentation Locally
 
-          To build the documentation locally, please refer to the [docs/README.md](https://github.com/YihanWangAstro/VegasAfterglow/blob/main/docs/README.md) file in the main repository.
+          See [docs/README.md](https://github.com/YihanWangAstro/VegasAfterglow/blob/main/docs/README.md).
           EOL
 
-          # Create sidebar navigation
           cat > wiki_content/_Sidebar.md << 'EOL'
           ## VegasAfterglow
 
           * [Home](Home)
-          * [Documentation Site](https://yihanwangastro.github.io/VegasAfterglow/docs/)
+          * [Documentation Site](https://vegasafterglow.readthedocs.io/)
           EOL
 
-          # Create footer
           cat > wiki_content/_Footer.md << 'EOL'
           ---
           Documentation generated automatically from the [VegasAfterglow repository](https://github.com/YihanWangAstro/VegasAfterglow).

@@ -18,6 +18,17 @@ Have a feature request? [Open an issue](https://github.com/YihanWangAstro/VegasA
 
 ---
 
+## [v2.0.4] - 2026-05-17
+
+### Added
+
+#### ► **`FitResult.summary()` / `save()` / `load()`**
+
+- `result.summary()` returns a top-K best-fit table (rank, chi², parameter values) matching the boilerplate every fit notebook re-implements today — drops ~10 lines per notebook. Renders cleanly in both `print(result.summary())` and Jupyter last-line auto-display.
+- `result.save(path)` / `FitResult.load(path)` persist a fit to disk in bilby's native HDF5 (`.h5`/`.hdf5`) or JSON (`.json`) format. Files are interoperable with bilby tooling — `bilby.read_in_result(path).plot_corner()` works on any saved file, and any pre-existing bilby Result file loads as a `FitResult`. Skips re-running the MCMC when reopening a notebook.
+
+---
+
 ## [v2.0.3] - 2026-05-09
 
 ### Fixed
@@ -38,7 +49,7 @@ Have a feature request? [Open an issue](https://github.com/YihanWangAstro/VegasA
 - New `extinction` keyword on `Fitter` applies host-galaxy attenuation to model fluxes before chi-squared. Pass `"smc"`, `"lmc"`, or `"mw"` for built-in Pei (1992) laws, or a callable `f(lam_cm, params) -> k(lam)` for a custom law (e.g., a fitted `R_V`)
 - Fit host extinction via `ParamDef("A_V", 0, 3, Scale.linear)`; attenuation is `f_obs = f_model · 10^(-0.4 · A_V · k(λ_rest))`
 - Built-in laws zero out below the Lyman limit (912 Å), so X-ray data is unaffected — Galactic line-of-sight dust must still be removed from the data upstream
-- See [Host-Galaxy Extinction](https://yihanwangastro.github.io/VegasAfterglow/docs/mcmc_fitting/model_configurations.html#host-galaxy-extinction) and [Custom Extinction Profiles](https://yihanwangastro.github.io/VegasAfterglow/docs/mcmc_fitting/advanced.html#custom-extinction-profiles)
+- See [Host-Galaxy Extinction](https://vegasafterglow.readthedocs.io/en/latest/mcmc_fitting/model_configurations.html#host-galaxy-extinction) and [Custom Extinction Profiles](https://vegasafterglow.readthedocs.io/en/latest/mcmc_fitting/advanced.html#custom-extinction-profiles)
 
 ---
 
@@ -53,14 +64,14 @@ Have a feature request? [Open an issue](https://github.com/YihanWangAstro/VegasA
 The `Fitter` class has been rebuilt on top of the `Model` API, replacing the internal `VegasMC` batch evaluator. This brings full Python-level flexibility while retaining C++ performance.
 
 - **Simplified data workflow**: Add observations directly to the fitter with `fitter.add_flux_density()`, `fitter.add_spectrum()`, and `fitter.add_flux()`
-- **Custom jet and medium profiles**: Pass `jet` or `medium` factory functions to `Fitter` to use arbitrary angular energy/Lorentz factor profiles or density structures in MCMC fitting (see [Advanced Fitting](https://yihanwangastro.github.io/VegasAfterglow/docs/mcmc_fitting/advanced.html#advanced-fitting))
+- **Custom jet and medium profiles**: Pass `jet` or `medium` factory functions to `Fitter` to use arbitrary angular energy/Lorentz factor profiles or density structures in MCMC fitting (see [Advanced Fitting](https://vegasafterglow.readthedocs.io/en/latest/mcmc_fitting/advanced.html#advanced-fitting))
 - **`@gil_free` decorator**: Compile custom jet/medium profile functions to native code for full multi-threaded performance, eliminating the GIL bottleneck that slows Python callbacks during parallel MCMC evaluation (requires `numba`)
-- **Custom priors**: Supply bilby `Prior` objects via the `priors` argument to go beyond uniform priors — works with all samplers (see [Custom Priors](https://yihanwangastro.github.io/VegasAfterglow/docs/mcmc_fitting/advanced.html#custom-priors))
-- **Custom likelihood functions**: Override the default Gaussian log-likelihood with `log_likelihood_fn` for non-standard noise models or upper limits (see [Custom Likelihood](https://yihanwangastro.github.io/VegasAfterglow/docs/mcmc_fitting/advanced.html#custom-likelihood))
+- **Custom priors**: Supply bilby `Prior` objects via the `priors` argument to go beyond uniform priors — works with all samplers (see [Custom Priors](https://vegasafterglow.readthedocs.io/en/latest/mcmc_fitting/advanced.html#custom-priors))
+- **Custom likelihood functions**: Override the default Gaussian log-likelihood with `log_likelihood_fn` for non-standard noise models or upper limits (see [Custom Likelihood](https://vegasafterglow.readthedocs.io/en/latest/mcmc_fitting/advanced.html#custom-likelihood))
 - **`logscale_screen` standalone utility**: Logarithmic data subsampling now available as a module-level function
 - **Thread-based parallelism**: Likelihood evaluations parallelized via `ThreadPoolExecutor` with the GIL released during C++ computation, providing near-native throughput
 
-For the full MCMC fitting guide, including advanced customization examples, see the [MCMC Parameter Fitting](https://yihanwangastro.github.io/VegasAfterglow/docs/mcmc_fitting/index.html) documentation.
+For the full MCMC fitting guide, including advanced customization examples, see the [MCMC Parameter Fitting](https://vegasafterglow.readthedocs.io/en/latest/mcmc_fitting/index.html) documentation.
 
 #### ► **Unit Conversion Constants**
 - New `VegasAfterglow.units` module with multiplicative constants for common astronomical units (days, GHz, keV, mJy, Mpc, degrees, etc.)
@@ -85,7 +96,7 @@ For the full MCMC fitting guide, including advanced customization examples, see 
 - All physical parameters (jet type, medium, observer, radiation) configurable via command-line arguments with sensible defaults
 - Frequencies can be specified as Hz values or standard filter names (e.g., `--nu R J F606W 1e18`), with support for Johnson-Cousins, 2MASS, Swift UVOT, and HST filters
 - Output to CSV or JSON, or generate publication-quality plots with `--plot` (Times New Roman, LaTeX labels, colorblind-friendly palette)
-- See the [CLI documentation](https://yihanwangastro.github.io/VegasAfterglow/docs/using_cli.html) for the full argument reference
+- See the [CLI documentation](https://vegasafterglow.readthedocs.io/en/latest/using_cli.html) for the full argument reference
 
 #### ► **Smarter Adaptive Grid Generation**
 - Grid generation now accounts for the ambient medium density profile, producing better time sampling near the deceleration time
@@ -143,7 +154,7 @@ For the full MCMC fitting guide, including advanced customization examples, see 
 
 - New `model.sky_image()` method generates spatially resolved afterglow images at any observer time and frequency, supporting all jet types and viewing angles
 - Batch evaluation over multiple observer times for efficient multi-frame image sequences and movies
-- See the [sky image example notebook](script/sky-image.ipynb) and [documentation](https://yihanwangastro.github.io/VegasAfterglow/docs/examples/sky_image.html) for usage
+- See the [sky image example notebook](script/sky-image.ipynb) and [documentation](https://vegasafterglow.readthedocs.io/en/latest/examples/sky_image.html) for usage
 
 #### ► **Interactive Web Tool**
 
@@ -176,7 +187,7 @@ The MCMC fitting module has been completely redesigned. Existing fitting scripts
 - **`Setups` removed**: All model configuration is now passed directly to the `Fitter` constructor as keyword arguments: `Fitter(z=1.58, lumi_dist=3.364e28, jet="tophat", medium="ism", rvs_shock=True, ...)`
 - **`jet` and `medium` accept callables**: In addition to built-in type strings, you can now pass factory functions that return custom `Ejecta` or `Medium` objects
 
-See the [MCMC Parameter Fitting](https://yihanwangastro.github.io/VegasAfterglow/docs/mcmc_fitting/index.html) documentation for migration examples.
+See the [MCMC Parameter Fitting](https://vegasafterglow.readthedocs.io/en/latest/mcmc_fitting/index.html) documentation for migration examples.
 
 #### ► **⚠️ BREAKING: `ssc_cooling` Parameter Removed**
 - The `ssc_cooling` parameter has been removed from `Radiation` and `Fitter`

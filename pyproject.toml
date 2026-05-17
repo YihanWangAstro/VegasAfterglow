@@ -18,8 +18,11 @@ authors = [
   {name = "Yihan Wang", email = "yihan.astro@gmail.com"}
 ]
 requires-python = ">=3.8"
+# Upper bounds guard against future major releases that may introduce ABI breaks (numpy 2.x)
+# or backwards-incompatible API changes (the MCMC sampler suite). Loosen when a new major
+# is verified compatible.
 dependencies = [
-  "numpy>=1.20",
+  "numpy>=1.20,<3",
 ]
 license = {text = "BSD-3-Clause"}
 
@@ -28,9 +31,9 @@ vegasgen = "VegasAfterglow.cli:main"
 
 [project.optional-dependencies]
 mcmc = [
-  "bilby>=2.7",
-  "emcee",
-  "dynesty",
+  "bilby>=2.7,<4",
+  "emcee>=3,<4",
+  "dynesty>=1.2,<3",
 ]
 test = [
   "matplotlib>=3.5",

@@ -1,7 +1,7 @@
 import math
 from dataclasses import dataclass
 from enum import Enum
-from typing import Sequence
+from typing import Optional, Sequence
 
 import numpy as np
 
@@ -76,8 +76,36 @@ class ModelParams:
         # Host-galaxy extinction
         self.A_V = 0.0
 
+    def __repr__(self) -> str:
+        """Show only fields that differ from the constructor defaults, plus any
+        custom attributes the user attached. Empty namespace -> "ModelParams(defaults)".
+        """
+        defaults = vars(ModelParams())
+        items = [
+            f"{name}={val!r}"
+            for name, val in vars(self).items()
+            if name not in defaults or defaults[name] != val
+        ]
+        return f"ModelParams({', '.join(items)})" if items else "ModelParams(defaults)"
 
-@dataclass
+
+class _SummaryTable:
+    """Wraps a formatted multi-line string so it renders cleanly in both
+    ``print(...)`` (via ``__str__``) and Jupyter last-line auto-display
+    (via ``__repr__``)."""
+
+    __slots__ = ("_text",)
+
+    def __init__(self, text: str) -> None:
+        self._text = text
+
+    def __repr__(self) -> str:
+        return self._text
+
+    __str__ = __repr__
+
+
+@dataclass(repr=False)
 class FitResult:
     """
     The result of a sampling fit.
@@ -91,6 +119,155 @@ class FitResult:
     top_k_log_probs: np.ndarray = None
     bilby_result: object = None  # Full bilby Result object (for diagnostics)
 
+    def __repr__(self) -> str:
+        """One-line summary; deliberately avoids dumping the (potentially 100k-row)
+        ``samples`` / ``log_probs`` arrays the dataclass default would print."""
+        n_samples = self.samples.shape[0]
+        ndim = self.samples.shape[-1]
+        lp_best = float(self.log_probs.max()) if self.log_probs.size else float("nan")
+        n_top = len(self.top_k_params) if self.top_k_params is not None else 0
+        return (
+            f"FitResult(n_samples={n_samples}, ndim={ndim}, "
+            f"labels={list(self.labels)}, top_k={n_top}, best_logL={lp_best:.4g})"
+        )
+
+    def summary(self, top_k: Optional[int] = None) -> _SummaryTable:
+        """Top-K best-fit table, ranked by log-likelihood.
+
+        Columns: ``Rank``, ``chi^2``, and the sampler-space value of each
+        parameter (parameters defined with ``Scale.log`` appear with the
+        ``log10_`` prefix matching ``self.labels``).
+
+        The ``chi^2`` column is ``-2 * log_prob`` -- exact for the default
+        Gaussian likelihood (``log_likelihood_fn=None``), a generic deviance
+        for custom likelihoods.
+
+        Parameters
+        ----------
+        top_k : int, optional
+            Limit output to the first ``top_k`` rows. If ``None`` (default),
+            shows all rows stored in ``self.top_k_params``.
+
+        Returns
+        -------
+        _SummaryTable
+            Formatted table; renders identically under ``print()`` and
+            Jupyter last-line evaluation.
+        """
+        if self.top_k_params is None or len(self.top_k_params) == 0:
+            return _SummaryTable("FitResult: no top_k_params stored")
+        rows = self.top_k_params if top_k is None else self.top_k_params[:top_k]
+        logp = self.top_k_log_probs[: len(rows)]
+        name_w = max(max(len(s) for s in self.labels), 10)
+        header = f"{'Rank':>4}  {'chi^2':>10}  " + "  ".join(
+            f"{name:>{name_w}}" for name in self.labels
+        )
+        lines = [header, "-" * len(header)]
+        for i, params in enumerate(rows):
+            chi2 = -2.0 * logp[i]
+            vals = "  ".join(f"{v:>{name_w}.4f}" for v in params)
+            lines.append(f"{i + 1:>4d}  {chi2:>10.2f}  {vals}")
+        return _SummaryTable("\n".join(lines))
+
+    def save(self, path) -> None:
+        """Save this FitResult to bilby's native format (HDF5 by default).
+
+        The resulting file is interoperable with bilby's tooling: it can be
+        opened directly via ``bilby.read_in_result(path)`` and the returned
+        ``Result`` object exposes the standard analysis methods
+        (``plot_corner``, ``plot_marginals``, etc.). Reload as a ``FitResult``
+        with :meth:`FitResult.load`.
+
+        Parameters
+        ----------
+        path : str | os.PathLike
+            Output filename. Extension determines the format: ``.h5`` /
+            ``.hdf5`` (recommended; smaller, faster) or ``.json``
+            (human-readable). If no extension is provided, HDF5 is used.
+        """
+        import bilby
+        import pandas as pd
+
+        latex = list(self.latex_labels) if self.latex_labels else None
+        vg_meta = {
+            "top_k_params": self.top_k_params,
+            "top_k_log_probs": self.top_k_log_probs,
+            "latex_labels": latex,
+            "samples_shape": list(self.samples.shape),
+        }
+
+        if self.bilby_result is not None:
+            # Preserves all sampler-specific metadata bilby tracks.
+            br = self.bilby_result
+            br.meta_data = dict(br.meta_data or {})
+            br.meta_data["vegasafterglow"] = vg_meta
+            br.save_to_file(filename=str(path))
+            return
+
+        # Emcee path (no bilby Result yet): synthesize a minimal one.
+        # bilby's HDF5 reader requires the ``priors`` key to be present; use
+        # constant Uniform(0, 1) as a placeholder -- the priors are bookkeeping
+        # only here and are not used by ``summary()`` / ``samples`` / ``load()``.
+        flat = self.samples.reshape(-1, self.samples.shape[-1])
+        posterior = pd.DataFrame(flat, columns=list(self.labels))
+        posterior["log_likelihood"] = self.log_probs.reshape(-1)
+        priors = bilby.core.prior.PriorDict(
+            {label: bilby.core.prior.Uniform(0, 1, label) for label in self.labels}
+        )
+        br = bilby.core.result.Result(
+            label="vegasafterglow",
+            outdir=".",
+            sampler="emcee",
+            posterior=posterior,
+            search_parameter_keys=list(self.labels),
+            parameter_labels=latex or list(self.labels),
+            priors=priors,
+            meta_data={"vegasafterglow": vg_meta},
+        )
+        br.save_to_file(filename=str(path))
+
+    @classmethod
+    def load(cls, path) -> "FitResult":
+        """Load a FitResult from a bilby-format file (HDF5 / JSON).
+
+        Interoperable with any file written by :meth:`save` or by bilby's own
+        ``Result.save_to_file(...)``. If the file was written by ``save()``,
+        the original ``top_k_params``, ``top_k_log_probs``, and walker-axis
+        shape are restored from ``meta_data['vegasafterglow']``. Otherwise
+        (a plain bilby Result), ``top_k_params`` is ``None`` and ``samples``
+        is flattened to ``(N, 1, ndim)`` -- the same shape ``Fitter`` uses.
+        """
+        import bilby
+
+        br = bilby.read_in_result(filename=str(path))
+        labels = tuple(br.search_parameter_keys)
+        ndim = len(labels)
+        flat_samples = br.posterior[list(labels)].values
+        flat_log_probs = br.posterior["log_likelihood"].values
+
+        vg = (br.meta_data or {}).get("vegasafterglow") or {}
+        shape = vg.get("samples_shape")
+        # HDF5 round-tripping can return ``shape`` as a numpy array; coerce to
+        # a tuple of ints for a clean reshape() call.
+        if shape is not None and len(shape) == 3 and int(shape[-1]) == ndim:
+            shape_tuple = tuple(int(s) for s in shape)
+            samples = flat_samples.reshape(shape_tuple)
+            log_probs = flat_log_probs.reshape(shape_tuple[0], shape_tuple[1])
+        else:
+            samples = flat_samples.reshape(-1, 1, ndim)
+            log_probs = flat_log_probs.reshape(-1, 1)
+
+        latex = vg.get("latex_labels") or br.parameter_labels
+        return cls(
+            samples=samples,
+            log_probs=log_probs,
+            labels=labels,
+            latex_labels=tuple(latex) if latex else None,
+            top_k_params=vg.get("top_k_params"),
+            top_k_log_probs=vg.get("top_k_log_probs"),
+            bilby_result=br,
+        )
+
 
 class Scale(Enum):
     linear = "linear"
@@ -102,8 +279,11 @@ class Scale(Enum):
     LOG = "log"
     FIXED = "fixed"
 
+    def __repr__(self) -> str:
+        return f"Scale.{self.name}"
+
     @classmethod
-    def _missing_(cls, value):
+    def _missing_(cls, value) -> Optional["Scale"]:
         if isinstance(value, str):
             for member in cls:
                 if member.value == value.lower():

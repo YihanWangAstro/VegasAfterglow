@@ -46,3 +46,13 @@ tests/**/fast_math_bench
 
 # Auto-generated version file (setuptools-scm)
 VegasAfterglow/_version.py
+
+# Local session / tooling state
+.claude/
+compile_commands.json
+docs/plans/
+
+# Local exploratory notebooks under script/ (PNGs/PDFs already ignored above)
+script/*.ipynb
+script/*.gif
+script/bench_*.sh

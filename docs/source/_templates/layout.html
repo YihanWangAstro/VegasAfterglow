@@ -1,0 +1,21 @@
+{# Extend sphinx-rtd-theme's layout to display the package version under the
+   project name in the sidebar. sphinx-rtd-theme >= 3.x removed the simple
+   `display_version` widget and only shows the version switcher when built on
+   Read the Docs. This template injects a small version line for non-RTD builds
+   (local builds, GitHub Pages) so users always see which release they're
+   reading. On RTD itself, the version-switcher widget appears automatically. #}
+{# Inject the package version under the sidebar logo. sphinx-rtd-theme >= 3.x
+   removed the simple "display_version" widget and only shows the RTD-served
+   version-switcher when built on Read the Docs. This override gives local
+   and GitHub Pages builds a static version line so users always know which
+   release they're reading. On RTD, the switcher appears alongside this line. #}
+{%- extends "!layout.html" %}
+
+{%- block sidebartitle %}
+  {{ super() }}
+  {%- if version %}
+    <div class="version" style="color: #fcfcfc; font-size: 0.85em; padding: 0.2em 0 0.5em;">
+      v{{ version }}
+    </div>
+  {%- endif %}
+{%- endblock %}

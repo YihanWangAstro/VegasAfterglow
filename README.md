@@ -8,7 +8,7 @@
 [![License](https://img.shields.io/badge/License-BSD--3--Clause-green.svg)](LICENSE)
 [![Platform](https://img.shields.io/badge/Platform-Linux%20|%20macOS%20|%20Windows-lightgrey.svg)]()
 [![Python Version](https://img.shields.io/badge/Python-3.8%2B-blue.svg)](https://www.python.org/)
-[![Documentation](https://img.shields.io/badge/Documentation-Online-brightgreen.svg)](https://yihanwangastro.github.io/VegasAfterglow/docs/index.html)
+[![Documentation](https://img.shields.io/badge/Documentation-Online-brightgreen.svg)](https://vegasafterglow.readthedocs.io/en/latest/index.html)
 [![Interactive Tool](https://img.shields.io/badge/Interactive-Web%20Tool-orange.svg)](https://www.vegasafterglow.com)
 [![Validation Report](https://img.shields.io/badge/Validation-Report-blue.svg)](https://yihanwangastro.github.io/VegasAfterglow/reports/latest/comprehensive_report.pdf)
 
@@ -65,7 +65,7 @@
 - **Forward and Reverse Shock Modeling:** Simulates both shocks via shock crossing dynamics with arbitrary magnetization levels and shell thicknesses.
 - **Relativistic and Non-Relativistic Regimes:** Accurately models shock evolution across all velocity regimes.
 - **Adiabatic and Radiative Blast Waves:** Supports smooth transition between adiabatic and radiative blast waves.
-- **Ambient Medium:** Supports uniform Interstellar Medium (ISM), stellar wind environments, and **[user-defined density profiles](https://yihanwangastro.github.io/VegasAfterglow/docs/examples/models.html#user-defined-medium)**.
+- **Ambient Medium:** Supports uniform Interstellar Medium (ISM), stellar wind environments, and **[user-defined density profiles](https://vegasafterglow.readthedocs.io/en/latest/examples/models.html#user-defined-medium)**.
 - **Energy and Mass Injection:** Supports user-defined profiles for continuous energy and/or mass injection into the blast wave.
 
 <br clear="right"/>
@@ -74,7 +74,7 @@
 
 <img align="right" src="https://github.com/YihanWangAstro/VegasAfterglow/raw/main/assets/jet_geometry.svg" width="450"/>
 
-- **Structured Jet Profiles:** Allows **[user-defined angular profiles](https://yihanwangastro.github.io/VegasAfterglow/docs/examples/models.html#user-defined-jet)** for energy distribution, initial Lorentz factor, and magnetization.
+- **Structured Jet Profiles:** Allows **[user-defined angular profiles](https://vegasafterglow.readthedocs.io/en/latest/examples/models.html#user-defined-jet)** for energy distribution, initial Lorentz factor, and magnetization.
 - **Arbitrary Viewing Angles:** Supports off-axis observers at any viewing angle relative to the jet axis.
 - **Jet Spreading:** Includes lateral expansion dynamics for realistic jet evolution (experimental).
 - **Non-Axisymmetric Jets:** Capable of modeling complex, non-axisymmetric jet structures.
@@ -270,7 +270,7 @@ vegasgen --nu R J 1e18 -o lightcurve.csv
 vegasgen --medium wind --ssc --plot -o lightcurve.png
 ```
 
-All parameters have sensible defaults. Run `vegasgen --help` for the full option list, or see the [CLI documentation](https://yihanwangastro.github.io/VegasAfterglow/docs/using_cli.html) for detailed usage.
+All parameters have sensible defaults. Run `vegasgen --help` for the full option list, or see the [CLI documentation](https://vegasafterglow.readthedocs.io/en/latest/using_cli.html) for detailed usage.
 
 #### Python API
 
@@ -435,7 +435,7 @@ Returns a `SimulationDetails` object. All quantities are 3D numpy arrays with sh
 | **Characteristic frequencies** | `nu_a`, `nu_m`, `nu_c`, `nu_M` [Hz] |
 | **Spectra (callable)** | `sync_spectrum`, `ssc_spectrum`, `Y_spectrum` |
 
-See the [documentation](https://yihanwangastro.github.io/VegasAfterglow/docs/examples/internal_quantities.html) for full descriptions.
+See the [documentation](https://vegasafterglow.readthedocs.io/en/latest/examples/internal_quantities.html) for full descriptions.
 
 </details>
 
@@ -611,7 +611,7 @@ fitter = Fitter(
 )
 ```
 
-All model configuration is passed directly to the `Fitter` constructor as keyword arguments. Check the [documentation](https://yihanwangastro.github.io/VegasAfterglow/docs/index.html) for all available options.
+All model configuration is passed directly to the `Fitter` constructor as keyword arguments. Check the [documentation](https://vegasafterglow.readthedocs.io/en/latest/index.html) for all available options.
 </details>
 
 <details>
@@ -681,13 +681,19 @@ result = fitter.fit(
 )
 ```
 
-The `result` object contains `samples`, `labels`, `latex_labels`, `top_k_params`, `top_k_log_probs`, and `bilby_result`.
+The `result` object contains `samples`, `labels`, `latex_labels`, `top_k_params`, `top_k_log_probs`, and `bilby_result`. It also exposes `summary()`, `save()`, and `load()` for inspecting and persisting fits — see below.
 
 </details>
 
 <details>
 <summary><b>3. Analyzing Results and Generating Predictions</b> <i>(click to expand/collapse)</i></summary>
 <br>
+
+Inspect the top-K best fits:
+
+```python
+print(result.summary())
+```
 
 Generate predictions with the best-fit parameters:
 
@@ -706,6 +712,17 @@ Corner plot:
 ```python
 flat_chain = result.samples.reshape(-1, result.samples.shape[-1])
 corner.corner(flat_chain, labels=result.latex_labels, quantiles=[0.16, 0.5, 0.84], show_titles=True)
+```
+
+Persist the fit to disk and reload later (bilby-native HDF5 / JSON — interoperable with `bilby.read_in_result(path)`):
+
+```python
+result.save("my_fit.h5")
+
+# later session, no need to re-run the MCMC:
+from VegasAfterglow import FitResult
+result = FitResult.load("my_fit.h5")
+print(result.summary())
 ```
 
 See `script/vegas-mcmc.ipynb` for a complete working example with data loading, fitting, and visualization.
@@ -799,7 +816,7 @@ Powered by [Claude Code](https://claude.ai/claude-code)
 
 ## Documentation
 
-Full documentation — installation, examples, MCMC fitting guide, parameter reference, Python/C++ API, and troubleshooting — is available at **[Documentation](https://yihanwangastro.github.io/VegasAfterglow/docs/index.html)**.
+Full documentation — installation, examples, MCMC fitting guide, parameter reference, Python/C++ API, and troubleshooting — is available at **[Documentation](https://vegasafterglow.readthedocs.io/en/latest/index.html)**.
 
 For a history of changes and new features, see the [**Changelog**](CHANGELOG.md).
 

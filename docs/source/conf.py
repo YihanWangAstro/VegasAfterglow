@@ -5,6 +5,7 @@
 
 # -- Project information -----------------------------------------------------
 import os
+import re
 import sys
 from unittest.mock import MagicMock
 
@@ -30,10 +31,22 @@ project = 'VegasAfterglow'
 copyright = '2024, VegasAfterglow Team'
 author = 'VegasAfterglow Team'
 
+# Use importlib.metadata (reads installed dist-info) rather than importing
+# ``VegasAfterglow._version`` -- the latter triggers ``VegasAfterglow/__init__.py``
+# which imports the C extension, and the docs build env mocks that with an
+# incomplete shim, causing the import to fail silently and the version to fall
+# back to "0.0.0".
+from importlib.metadata import version as _get_version, PackageNotFoundError
 try:
-    from VegasAfterglow._version import __version__ as release
-except ImportError:
-    release = '0.0.0'
+    release = _get_version("VegasAfterglow")
+    # ``release`` is the full PEP 440 string (e.g. ``2.0.4.dev9+g3623d41``).
+    # Strip the dev / local-version suffix so the sphinx-rtd-theme sidebar
+    # reads a clean ``X.Y.Z``. ``version`` is what the theme shows in the
+    # sidebar; ``release`` is the full string shown on the title page.
+    _match = re.match(r"^(\d+\.\d+\.\d+)", release)
+    version = _match.group(1) if _match else release
+except PackageNotFoundError:
+    version = release = '0.0.0'
 
 # -- General configuration ---------------------------------------------------
 
@@ -81,6 +94,19 @@ html_theme_options = {
     'titles_only': False,
     'globaltoc_collapse': False,
     'globaltoc_maxdepth': 4,
+    # Show version in the sidebar (top-left, under the project name) so users
+    # immediately know which release the docs they're reading correspond to.
+    'display_version': True,
+}
+
+# Source-link metadata used by the sphinx-rtd-theme "Edit on GitHub" widget
+# and by Read the Docs' version dropdown when this project is built there.
+html_context = {
+    'display_github': True,
+    'github_user': 'YihanWangAstro',
+    'github_repo': 'VegasAfterglow',
+    'github_version': 'main',
+    'conf_py_path': '/docs/source/',
 }
 html_css_files = [
     'css/custom.css',
@@ -95,7 +121,7 @@ html_js_files = [
 pygments_style = 'material'
 highlight_language = 'python'  # Ensuring Python is the default language
 # GitHub Pages settings
-html_baseurl = 'https://yihanwangastro.github.io/VegasAfterglow/docs/'
+html_baseurl = 'https://vegasafterglow.readthedocs.io/en/latest/'
 
 # Create a custom css file for basic styling
 css_dir = os.path.join(os.path.dirname(__file__), '_static', 'css')

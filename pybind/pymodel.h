@@ -14,6 +14,7 @@
 #include <utility>
 #include <vector>
 
+#include "error_handling.h"
 #include "pybind.h"
 #include "shock_dispatch.h"
 #include "util/macros.h"
@@ -41,7 +42,11 @@ struct PyMagnetar {
      * @param q Power-law index for spin-down evolution (typically 1-3, default 2)
      * <!-- ************************************************************************************** -->
      */
-    PyMagnetar(Real L0, Real t0, Real q = 2) : L0(L0), t0(t0), q(q) {}
+    PyMagnetar(Real L0, Real t0, Real q = 2) : L0(L0), t0(t0), q(q) {
+        AFTERGLOW_REQUIRE_FINITE_POS(L0);
+        AFTERGLOW_REQUIRE_FINITE_POS(t0);
+        AFTERGLOW_REQUIRE_FINITE_POS(q);
+    }
 
     Real L0; ///< Characteristic luminosity [erg/s]
     Real t0; ///< Spin-down time scale [s]
@@ -238,7 +243,15 @@ class PyObserver {
      * <!-- ************************************************************************************** -->
      */
     PyObserver(Real lumi_dist, Real z, Real theta_obs, Real phi_obs = 0)
-        : lumi_dist(lumi_dist * unit::cm), z(z), theta_obs(theta_obs), phi_obs(phi_obs) {}
+        : lumi_dist(lumi_dist * unit::cm), z(z), theta_obs(theta_obs), phi_obs(phi_obs) {
+        AFTERGLOW_REQUIRE_FINITE_POS(lumi_dist);
+        AFTERGLOW_REQUIRE_FINITE_NONNEG(z);
+        // theta_obs in [0, pi] (covers off-axis observers up to behind the jet axis)
+        AFTERGLOW_REQUIRE(std::isfinite(theta_obs) && theta_obs >= 0 && theta_obs <= con::pi,
+                          std::string("theta_obs must be in [0, pi], got ") + std::to_string(theta_obs));
+        AFTERGLOW_REQUIRE(std::isfinite(phi_obs),
+                          std::string("phi_obs must be finite, got ") + std::to_string(phi_obs));
+    }
 
     Real lumi_dist{1e28}; ///< Luminosity distance [internal units]
     Real z{0};            ///< Redshift
@@ -289,7 +302,14 @@ class PyRadiation {
      */
     PyRadiation(Real eps_e, Real eps_B, Real p, Real xi_e = 1, bool ssc = false, bool kn = false,
                 bool cmb_cooling = false)
-        : rad(RadParams{eps_e, eps_B, p, xi_e, cmb_cooling}), ssc(ssc), kn(kn) {}
+        : rad(RadParams{eps_e, eps_B, p, xi_e, cmb_cooling}), ssc(ssc), kn(kn) {
+        AFTERGLOW_REQUIRE_RANGE_OI(eps_e, 0.0, 1.0);
+        AFTERGLOW_REQUIRE_RANGE_OI(eps_B, 0.0, 1.0);
+        AFTERGLOW_REQUIRE_RANGE_OI(xi_e, 0.0, 1.0);
+        // p > 1 is the physical minimum for a finite electron-energy integral. The model handles
+        // both slow-cooling (p > 2) and fast-cooling (1 < p < 2) regimes, so don't impose p > 2.
+        AFTERGLOW_REQUIRE_GREATER_THAN(p, 1.0);
+    }
 
     RadParams rad;
     bool ssc{false}; ///< Whether to include SSC emission and IC cooling
@@ -590,6 +610,12 @@ class PyModel {
           t_resol(std::get<2>(resolutions)),
           rtol(rtol),
           axisymmetric(axisymmetric) {
+        // rtol = 1.0 means "100% relative error is OK" -- the integrator gives up. Reject both ends.
+        AFTERGLOW_REQUIRE(std::isfinite(rtol) && rtol > 0 && rtol < 1,
+                          std::string("rtol must be in (0, 1), got ") + std::to_string(rtol));
+        AFTERGLOW_REQUIRE_FINITE_POS(phi_resol);
+        AFTERGLOW_REQUIRE_FINITE_POS(theta_resol);
+        AFTERGLOW_REQUIRE_FINITE_POS(t_resol);
         convert_unit_jet(this->jet_);
         convert_unit_medium(this->medium_);
     }

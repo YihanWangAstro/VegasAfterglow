@@ -155,7 +155,7 @@ FitResult
    :undoc-members:
    :show-inheritance:
 
-The `FitResult` class stores the results of an MCMC fit, including the posterior samples, log probabilities, top-k best-fit parameters, and the full bilby Result object for diagnostics.
+The `FitResult` class stores the results of an MCMC fit, including the posterior samples, log probabilities, top-k best-fit parameters, and the full bilby Result object for diagnostics. The convenience methods ``summary()`` (formatted top-K table) and ``save()`` / ``load()`` (bilby-native HDF5 / JSON persistence) let you inspect a fit at a glance and reload it across sessions without re-running the sampler.
 
 Documenting Python Code
 -----------------------

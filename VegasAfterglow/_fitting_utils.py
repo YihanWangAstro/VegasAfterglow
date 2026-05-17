@@ -4,7 +4,7 @@ import math
 import os
 import types
 from concurrent.futures import ThreadPoolExecutor
-from typing import List, Optional
+from typing import Callable, List, Optional
 
 import bilby
 import numpy as np
@@ -94,16 +94,15 @@ def get_optimal_nwalkers(ndim: int, ncpu: Optional[int] = None) -> int:
     return units_needed * align_unit
 
 
-def get_optimal_queue_size(ncpu, nlive):
+def get_optimal_queue_size(ncpu, nlive) -> int:
     """Compute optimal queue_size for dynesty based on hardware and sampling parameters."""
-    target_size = ncpu * 2
-    max_safe_size = int(nlive * 0.15)
-    optimal_size = min(target_size, max_safe_size)
-    aligned_size = (optimal_size // ncpu) * ncpu
+    optimal = min(2 * ncpu, int(nlive * 0.15))
+    return max(ncpu, (optimal // ncpu) * ncpu)
 
-    if aligned_size < ncpu:
-        aligned_size = ncpu
-    return aligned_size
+
+def _param_label(pd: ParamDef) -> str:
+    """Sampler-space label for a parameter: ``log10_<name>`` for LOG scale, else ``<name>``."""
+    return f"log10_{pd.name}" if pd.scale is Scale.LOG else pd.name
 
 
 def _get_latex_label(param_def: ParamDef) -> str:
@@ -114,7 +113,7 @@ def _get_latex_label(param_def: ParamDef) -> str:
     return rf"${base_latex.strip('$')}$"
 
 
-def _build_transformer(param_defs: List[ParamDef]):
+def _build_transformer(param_defs: List[ParamDef]) -> Callable:
     """Build a parameter transformer from sampler array to parameter namespace.
 
     Standard ModelParams fields get their defaults; ParamDef values override them.
@@ -165,9 +164,7 @@ class AfterglowLikelihood(bilby.Likelihood):
         transformer,
     ):
         param_keys = tuple(
-            f"log10_{pd.name}" if pd.scale is Scale.LOG else pd.name
-            for pd in param_defs
-            if pd.scale is not Scale.FIXED
+            _param_label(pd) for pd in param_defs if pd.scale is not Scale.FIXED
         )
         super().__init__(parameters={key: None for key in param_keys})
         self.param_keys = param_keys
