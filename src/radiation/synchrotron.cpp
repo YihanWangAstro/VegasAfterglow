@@ -105,6 +105,9 @@ Real compute_syn_I_peak(Real B, Real p, Real column_den) {
  * <!-- ************************************************************************************** -->
  */
 Real compute_syn_freq(Real gamma, Real B) {
+    if (B == 0 || !std::isfinite(gamma)) {
+        return 0;
+    }
     return 3 * con::e / (4 * con::pi * con::me * con::c) * B * gamma * gamma;
 }
 

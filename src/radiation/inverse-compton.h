@@ -229,6 +229,14 @@ ICPhoton<Electrons, Photons>::ICPhoton(Electrons const& electrons, Photons const
 template <typename Electrons, typename Photons>
 void ICPhoton<Electrons, Photons>::generate_spectrum() {
     GridParams params = compute_grid_params();
+
+    auto positive_finite = [](Real x) { return std::isfinite(x) && x > 0; };
+    if (!(positive_finite(params.gamma_min) && positive_finite(params.gamma_max) && positive_finite(params.nu_min) &&
+          positive_finite(params.nu_max) && positive_finite(params.nu_IC_min) && positive_finite(params.nu_IC_max))) {
+        generated = true;
+        return;
+    }
+
     Array gamma, dgamma, nu_seed, dnu_seed, nu_IC;
     initialize_grids(params, gamma, dgamma, nu_seed, dnu_seed, nu_IC);
 
