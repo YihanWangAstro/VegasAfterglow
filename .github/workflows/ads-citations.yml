@@ -1,9 +1,11 @@
 name: Update ADS citation count
 
 # Daily job that queries the NASA ADS API for the number of papers citing the
-# VegasAfterglow methods paper (Wang, Chen & Zhang 2026) and writes the result
-# to .github/ads-citations.json. The README badge reads this file via the
-# shields.io endpoint protocol.
+# VegasAfterglow methods paper (Wang, Chen & Zhang 2026) and publishes the
+# result to the `badge-data` branch as ads-citations.json. The README badge
+# reads that file via the shields.io endpoint protocol. The default `main`
+# branch is never touched by this workflow, so local clones don't need to
+# pull after each run.
 
 on:
   schedule:
@@ -17,9 +19,6 @@ jobs:
   update-citations:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
       - name: Query ADS API for citation count
         id: ads
         env:
@@ -43,29 +42,26 @@ jobs:
           echo "count=$count" >> "$GITHUB_OUTPUT"
           echo "ADS citation count: $count"
 
-      - name: Update ads-citations.json
+      - name: Render ads-citations.json
         env:
           COUNT: ${{ steps.ads.outputs.count }}
         run: |
           set -euo pipefail
+          mkdir -p badge-output
           jq -n \
             --arg label "ADS citations" \
             --arg message "$COUNT" \
             --arg color "blue" \
             '{schemaVersion: 1, label: $label, message: $message, color: $color, cacheSeconds: 3600}' \
-            > .github/ads-citations.json
+            > badge-output/ads-citations.json
 
-      - name: Commit if changed
-        env:
-          COUNT: ${{ steps.ads.outputs.count }}
-        run: |
-          set -euo pipefail
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          if git diff --quiet .github/ads-citations.json; then
-            echo "Citation count unchanged; skipping commit."
-            exit 0
-          fi
-          git add .github/ads-citations.json
-          git commit -m "chore: update ADS citation count to ${COUNT}"
-          git push
+      - name: Publish to badge-data branch
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_branch: badge-data
+          publish_dir: ./badge-output
+          force_orphan: true
+          commit_message: "chore: update ADS citation count to ${{ steps.ads.outputs.count }}"
+          user_name: "github-actions[bot]"
+          user_email: "41898282+github-actions[bot]@users.noreply.github.com"
