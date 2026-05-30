@@ -51,6 +51,8 @@ VegasAfterglow/_version.py
 .claude/
 compile_commands.json
 docs/plans/
+CLAUDE.md
+.agents/
 
 # Docs build-time copies (assets/*.png is copied here by build_docs.sh on local
 # builds and by .readthedocs.yaml's pre_build step on RTD).
