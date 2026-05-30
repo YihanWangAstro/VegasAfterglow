@@ -1,0 +1,71 @@
+name: Update ADS citation count
+
+# Daily job that queries the NASA ADS API for the number of papers citing the
+# VegasAfterglow methods paper (Wang, Chen & Zhang 2026) and writes the result
+# to .github/ads-citations.json. The README badge reads this file via the
+# shields.io endpoint protocol.
+
+on:
+  schedule:
+    - cron: '0 6 * * *'  # daily at 06:00 UTC
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  update-citations:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Query ADS API for citation count
+        id: ads
+        env:
+          ADS_API_TOKEN: ${{ secrets.ADS_API_TOKEN }}
+          BIBCODE: '2026JHEAp..5000490W'
+        run: |
+          set -euo pipefail
+          encoded_query=$(python3 -c 'import urllib.parse,sys; print(urllib.parse.quote("citations(bibcode:" + sys.argv[1] + ")"))' "$BIBCODE")
+          response=$(curl -fsSL \
+            -H "Authorization: Bearer $ADS_API_TOKEN" \
+            "https://api.adsabs.harvard.edu/v1/search/query?q=${encoded_query}&rows=1&fl=bibcode")
+          count=$(echo "$response" | jq -r '.response.numFound')
+          # numFound is documented as a non-negative integer; reject anything else
+          # to prevent newline/shell injection into $GITHUB_OUTPUT and the later
+          # commit message, even if ADS ever returns an unexpected payload.
+          if ! [[ "$count" =~ ^[0-9]+$ ]]; then
+            echo "Failed to parse citation count from response (got: '$count'):" >&2
+            echo "$response" >&2
+            exit 1
+          fi
+          echo "count=$count" >> "$GITHUB_OUTPUT"
+          echo "ADS citation count: $count"
+
+      - name: Update ads-citations.json
+        env:
+          COUNT: ${{ steps.ads.outputs.count }}
+        run: |
+          set -euo pipefail
+          jq -n \
+            --arg label "ADS citations" \
+            --arg message "$COUNT" \
+            --arg color "blue" \
+            '{schemaVersion: 1, label: $label, message: $message, color: $color, cacheSeconds: 3600}' \
+            > .github/ads-citations.json
+
+      - name: Commit if changed
+        env:
+          COUNT: ${{ steps.ads.outputs.count }}
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          if git diff --quiet .github/ads-citations.json; then
+            echo "Citation count unchanged; skipping commit."
+            exit 0
+          fi
+          git add .github/ads-citations.json
+          git commit -m "chore: update ADS citation count to ${COUNT}"
+          git push

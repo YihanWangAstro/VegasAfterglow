@@ -11,6 +11,7 @@
 [![Documentation](https://img.shields.io/badge/Documentation-Online-brightgreen.svg)](https://vegasafterglow.readthedocs.io/en/latest/index.html)
 [![Interactive Tool](https://img.shields.io/badge/Interactive-Web%20Tool-orange.svg)](https://www.vegasafterglow.com)
 [![Validation Report](https://img.shields.io/badge/Validation-Report-blue.svg)](https://yihanwangastro.github.io/VegasAfterglow/reports/latest/comprehensive_report.pdf)
+[![ADS citations](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/YihanWangAstro/VegasAfterglow/main/.github/ads-citations.json)](https://ui.adsabs.harvard.edu/abs/2026JHEAp..5000490W/citations)
 
 <div align="left">
 
