@@ -18,6 +18,33 @@ Have a feature request? [Open an issue](https://github.com/YihanWangAstro/VegasA
 
 ---
 
+## [v2.0.5] - 2026-06-01
+
+### Changed
+
+#### ► **Synchrotron break shapes use Granot & Sari (2002) Table 2**
+
+- Broken-power-law smoothing at the injection, cooling, and self-absorption breaks now uses the regime-dependent smoothing parameters tabulated in Granot & Sari (2002) Table 2 for ISM (k=0), replacing the uniform `s = 1` approximation. The synchrotron spectrum shape is correspondingly closer to the analytic integral over the Blandford–McKee profile.
+- Light-curve amplitudes shift by a p-dependent factor at frequencies above ν_c: ~−1% at p=2.05, ~+6% at p=2.3, ~+19% at p=2.6. MCMC fits calibrated against earlier releases may need a re-run.
+
+#### ► **Continuous synchrotron formula across regime crossings**
+
+- The optically-thin spectrum is now evaluated from a single double-smoothed expression that asymptotically reproduces both slow-cooling and fast-cooling segments. Previously, a per-regime branch produced a ~3% jump in the predicted light curve whenever ν_m crossed ν_c during a simulation; the unified formula is continuous through the crossing.
+- The smoothing of the optically-thin / optically-thick join at ν_a is now blended continuously as ν_a moves through ν_m and ν_c, removing similar regime-switch discontinuities when self-absorption transitions across the other breaks (e.g. as ν_a falls below ν_c during late-time evolution).
+
+### Fixed
+
+#### ► **Inverse Compton correction self-consistency**
+
+- The IC steepening factor `(1+Y_c)/(1+Y(ν))` is now applied only to the optically-thin emission branch above ν_c, not to the full spectrum. The SSA-dominated optically-thick branch is no longer over-suppressed in fast cooling or whenever ν_a > ν_c.
+- The self-absorption frequency ν_a calculation now incorporates IC cooling in the segments where ν_a > ν_c, removing a small but real inconsistency between ν_a (computed without IC) and the spectrum it bounds (computed with IC). Default behaviour with `ssc=False` is unchanged.
+
+#### ► **Spectrum below ν_c independent of cooling treatment**
+
+- Below ν_c, where IC physics is inactive, the optically-thin synchrotron spectrum no longer depends on the ν_c position. Previously, a normalization tail from the cooling break leaked into the radio band, producing a small (~4%) upward shift in models with stronger IC cooling (closer ν_c). KN-cooling spectra are now correctly bounded above by the no-IC spectrum everywhere.
+
+---
+
 ## [v2.0.4] - 2026-05-17
 
 ### Added
