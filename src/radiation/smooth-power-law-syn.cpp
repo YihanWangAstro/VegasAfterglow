@@ -134,8 +134,17 @@ void SmoothPowerLawSyn::build() noexcept {
     const Real s_a_above = std::max(0.94 - 0.14 * p, s_floor); // b=6
     s_a_blend_ = w_below * s_a_below + w_above * s_a_above + (1.0 - w_below - w_above) * s_a_mid;
 
-    // Self-normalise: peak value of optical-thin at log2_nu_lo_ becomes 1.0 linear.
-    log2_norm_ = -log2_optical_thin(log2_nu_lo_);
+    // Analytic normalisation at the lower break, equivalent to G&S Eq. S3.E1
+    // prefactor convention F_b. Using `-log2_optical_thin(log2_nu_lo_)` would
+    // include the upper-break smoothing tail leaking into log2_nu_lo_, which
+    // propagates as a uniform multiplicative offset to every frequency below
+    // the upper break (visible when comparing models with different nu_c
+    // positions, e.g. Thomson vs no-IC cooling). The analytic 1/smooth_lo_ is
+    // independent of nu_c position so models with the same nu_m coincide at
+    // all frequencies below their respective cooling breaks. The trade-off:
+    // when breaks are close, the value at log2_nu_lo_ drops naturally with
+    // separation -- this is the correct smooth-broken-power-law behaviour.
+    log2_norm_ = 1.0 / smooth_lo_;
     log2_thick_norm_ = log2_optical_thin_sharp(log2_nu_a) - log2_optical_thick_sharp(log2_nu_a);
 }
 
