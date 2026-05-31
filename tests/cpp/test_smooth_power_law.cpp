@@ -371,4 +371,99 @@ BOOST_AUTO_TEST_CASE(spectrum_nu_a_very_large) {
     BOOST_CHECK_LT(I_above, I_at_a);
 }
 
+// ---------------------------------------------------------------------------
+// 20. continuity_at_nu_c_crossing_nu_m — phase 2 unified-formula crossing
+// ---------------------------------------------------------------------------
+BOOST_AUTO_TEST_CASE(continuity_at_nu_c_crossing_nu_m) {
+    // Sweep nu_c through nu_m at a fixed observation frequency well above both
+    // breaks. The spectrum at the observation frequency must not jump as the
+    // formula transitions through the regime crossing. Pre-phase-2, this jump
+    // was ~3-5% (s=1) or ~4-5% (G&S Table 2 values per regime).
+    constexpr Real nu_m = 1e15;
+    constexpr Real nu_obs = 8.0 * nu_m; // 3 octaves above the break
+
+    // Three nu_c values straddling the crossing tightly.
+    const Real epsilons[] = {-1e-3, +1e-3}; // factors very close to 1
+    Real I_values[2] = {0.0, 0.0};
+    for (int i = 0; i < 2; ++i) {
+        Real nu_c = nu_m * std::exp(epsilons[i] * std::log(2.0));
+        auto ph = make_photon(1.0, nu_m, nu_c);
+        I_values[i] = ph.compute_I_nu(nu_obs);
+    }
+    Real jump = std::abs(I_values[1] / I_values[0] - 1.0);
+    // 0.5% catches a regime-switch artifact; the unified formula gives O(0.05%).
+    BOOST_CHECK_LT(jump, 5e-3);
+}
+
+// ---------------------------------------------------------------------------
+// 21. continuity_at_nu_a_crossing_nu_m — phase 3 blended thin/thick smoothing
+// ---------------------------------------------------------------------------
+BOOST_AUTO_TEST_CASE(continuity_at_nu_a_crossing_nu_m) {
+    // Sweep nu_a past nu_m at a fixed observation frequency. The s_a_blend
+    // sigmoid transitions through w_below->w_mid here, and the result must
+    // remain continuous.
+    constexpr Real nu_m = 1e15;
+    constexpr Real nu_c = 1e17;         // well-separated, deep slow cooling
+    constexpr Real nu_obs = 4.0 * nu_m; // 2 octaves above nu_m, between breaks
+
+    const Real epsilons[] = {-1e-3, +1e-3};
+    Real I_values[2] = {0.0, 0.0};
+    for (int i = 0; i < 2; ++i) {
+        Real nu_a = nu_m * std::exp(epsilons[i] * std::log(2.0));
+        auto ph = make_photon(nu_a, nu_m, nu_c);
+        I_values[i] = ph.compute_I_nu(nu_obs);
+    }
+    Real jump = std::abs(I_values[1] / I_values[0] - 1.0);
+    BOOST_CHECK_LT(jump, 5e-3);
+}
+
+// ---------------------------------------------------------------------------
+// 22. continuity_at_nu_a_crossing_nu_c — phase 3 blended thin/thick smoothing
+// ---------------------------------------------------------------------------
+BOOST_AUTO_TEST_CASE(continuity_at_nu_a_crossing_nu_c) {
+    // Same idea as test 22 but the nu_a sweep crosses nu_c.
+    constexpr Real nu_m = 1e15;
+    constexpr Real nu_c = 1e17;
+    constexpr Real nu_obs = 4.0 * nu_m; // between breaks
+
+    const Real epsilons[] = {-1e-3, +1e-3};
+    Real I_values[2] = {0.0, 0.0};
+    for (int i = 0; i < 2; ++i) {
+        Real nu_a = nu_c * std::exp(epsilons[i] * std::log(2.0));
+        auto ph = make_photon(nu_a, nu_m, nu_c);
+        I_values[i] = ph.compute_I_nu(nu_obs);
+    }
+    Real jump = std::abs(I_values[1] / I_values[0] - 1.0);
+    BOOST_CHECK_LT(jump, 5e-3);
+}
+
+// ---------------------------------------------------------------------------
+// 23. asymptotic_slopes_deep_slow — verify G&S Table 2 limits
+// ---------------------------------------------------------------------------
+BOOST_AUTO_TEST_CASE(asymptotic_slopes_deep_slow) {
+    // Deep slow cooling: well-separated nu_m << nu_c. Measure local slopes
+    // far from any break and confirm they match the G&S asymptotic values:
+    //   below nu_m:           1/3
+    //   between nu_m and nu_c: -(p-1)/2
+    //   above nu_c:           -p/2
+    constexpr Real nu_m = 1e10;
+    constexpr Real nu_c = 1e20; // 10 decades above nu_m
+    auto ph = make_photon(1.0, nu_m, nu_c);
+
+    auto local_slope = [&ph](Real nu) {
+        // d log I / d log nu, centred at nu
+        Real I_lo = ph.compute_I_nu(nu / 1.01);
+        Real I_hi = ph.compute_I_nu(nu * 1.01);
+        return (std::log(I_hi) - std::log(I_lo)) / (2.0 * std::log(1.01));
+    };
+
+    // 5 decades below nu_m -> expect ~1/3
+    BOOST_CHECK_CLOSE(local_slope(nu_m * 1e-5), 1.0 / 3.0, 5.0);
+    // 5 decades into the middle segment -> expect -(p-1)/2 = -0.65 at p=2.3
+    BOOST_CHECK_CLOSE(local_slope(nu_m * 1e5), -0.5 * (kP - 1.0), 5.0);
+    // 5 decades above nu_c -> expect -p/2 = -1.15 at p=2.3 (kI_nu_max scaling
+    // negligible; nu_M cutoff at 1e22 still leaves margin).
+    BOOST_CHECK_CLOSE(local_slope(nu_c * 1e1), -0.5 * kP, 5.0);
+}
+
 BOOST_AUTO_TEST_SUITE_END()

@@ -209,28 +209,36 @@ Real cool_after_crossing(Real gamma_x, Real gamma_m_x, Real gamma_m, Real /*dt_c
  * @return Self-absorption Lorentz factor
  * <!-- ************************************************************************************** -->
  */
-Real compute_syn_gamma_a(Real B, Real I_syn_peak, Real gamma_m, Real gamma_c, Real /*gamma_M*/, Real p) {
+Real compute_syn_gamma_a(Real B, Real I_syn_peak, Real gamma_m, Real gamma_c, Real /*gamma_M*/, Real p,
+                         InverseComptonY const& Ys, Real Y_c) {
     const Real gamma_peak = std::min(gamma_m, gamma_c);
     const Real nu_peak = compute_syn_freq(gamma_peak, B);
 
     const Real kT = (gamma_peak - 1) * (con::me * con::c2) / 3;
-    // 2kT(nu_a/c)^2 = I_peak*(nu_a/nu_peak)^(1/3) // first assume nu_a is in the 1/3 segment
+    // First assume nu_a is in the 1/3 segment (below nu_peak -> always below nu_c, no IC).
     Real nu_a = fast_pow(I_syn_peak * con::c2 / (std::cbrt(nu_peak) * 2 * kT), 0.6);
 
-    if (nu_a > nu_peak) {        // nu_a is not in the 1/3 segment
-        if (gamma_c > gamma_m) { // first assume nu_a is in the -(p-1)/2 segment
+    if (nu_a > nu_peak) { // nu_a is not in the 1/3 segment
+        if (gamma_c >
+            gamma_m) { // slow cooling: first assume nu_a is in the -(p-1)/2 segment (between nu_m and nu_c -> still below nu_c, no IC)
             const Real nu_m = compute_syn_freq(gamma_m, B);
             nu_a = fast_pow(I_syn_peak * con::c2 / (2 * kT) * fast_pow(nu_m, p / 2), 2 / (p + 4));
             const Real nu_c = compute_syn_freq(gamma_c, B);
-            if (nu_a > nu_c) { //  nu_a is not in the -(p-1)/2 but -p/2 segment
+            if (nu_a > nu_c) { // -p/2 segment: nu_a > nu_c, apply IC correction
                 nu_a = fast_pow(I_syn_peak * con::c2 / (2 * kT) * std::sqrt(nu_c) * fast_pow(nu_m, p / 2), 2 / (p + 5));
+                const Real ic = (1 + Y_c) / (1 + Ys.nu_spectrum(nu_a));
+                nu_a *= fast_pow(ic, 2 / (p + 5));
             }
-        } else { //first assume nu_a is in the -1/2 segment
+        } else { // fast cooling: nu_a in -1/2 segment (nu_c < nu_a < nu_m -> above nu_c, apply IC)
             const Real nu_c = compute_syn_freq(gamma_c, B);
             nu_a = fast_pow(I_syn_peak * con::c2 / (2 * kT) * std::sqrt(nu_c), 0.4);
+            Real ic = (1 + Y_c) / (1 + Ys.nu_spectrum(nu_a));
+            nu_a *= fast_pow(ic, 0.4);
             const Real nu_m = compute_syn_freq(gamma_m, B);
-            if (nu_a > nu_m) { // nu_a is not in the -1/2 segment but -p/2 segment
+            if (nu_a > nu_m) { // re-solve in -p/2 segment, still above nu_c
                 nu_a = fast_pow(I_syn_peak * con::c2 / (2 * kT) * std::sqrt(nu_c) * fast_pow(nu_m, p / 2), 2 / (p + 5));
+                ic = (1 + Y_c) / (1 + Ys.nu_spectrum(nu_a));
+                nu_a *= fast_pow(ic, 2 / (p + 5));
             }
         }
     }
@@ -367,7 +375,10 @@ void generate_syn_electrons(SynElectronGrid& electrons, Shock const& shock, Coor
                     elec.gamma_c = compute_gamma_c(t_com, B, 0.);
                 }
 
-                elec.gamma_a = compute_syn_gamma_a(B, I_nu_peak, elec.gamma_m, elec.gamma_c, elec.gamma_M, rad.p);
+                // Initial pass: no IC yet (Ys default-constructed, Y_c = 0). The IC
+                // iteration in IC_cooling will recompute gamma_a with the populated Ys.
+                elec.gamma_a = compute_syn_gamma_a(B, I_nu_peak, elec.gamma_m, elec.gamma_c, elec.gamma_M, rad.p,
+                                                   InverseComptonY{}, 0.0);
                 elec.regime = determine_regime(elec.gamma_a, elec.gamma_c, elec.gamma_m);
                 elec.p = rad.p;
             }

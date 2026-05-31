@@ -554,7 +554,8 @@ Real compute_syn_gamma_M(Real B, Real Y, Real p);
 
 Real compute_syn_I_peak(Real B, Real p, Real column_den);
 
-Real compute_syn_gamma_a(Real B, Real I_nu_peak, Real gamma_m, Real gamma_c, Real gamma_M, Real p);
+Real compute_syn_gamma_a(Real B, Real I_nu_peak, Real gamma_m, Real gamma_c, Real gamma_M, Real p,
+                         InverseComptonY const& Ys, Real Y_c);
 
 size_t determine_regime(Real gamma_a, Real gamma_c, Real gamma_m);
 
@@ -607,9 +608,10 @@ void IC_cooling(ElectronGrid<Electrons>& electrons, PhotonGrid<Photons>& photons
                 }
 
                 const Real I_nu_peak = compute_syn_I_peak(B, p, elec.column_den);
-                elec.gamma_a = compute_syn_gamma_a(B, I_nu_peak, elec.gamma_m, elec.gamma_c, elec.gamma_M, p);
-                elec.regime = determine_regime(elec.gamma_a, elec.gamma_c, elec.gamma_m);
                 elec.Y_c = Ys.gamma_spectrum(elec.gamma_c);
+                elec.gamma_a =
+                    compute_syn_gamma_a(B, I_nu_peak, elec.gamma_m, elec.gamma_c, elec.gamma_M, p, Ys, elec.Y_c);
+                elec.regime = determine_regime(elec.gamma_a, elec.gamma_c, elec.gamma_m);
             }
         }
     }

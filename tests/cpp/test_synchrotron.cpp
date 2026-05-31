@@ -16,7 +16,8 @@ Real compute_syn_I_peak(Real B, Real p, Real column_den);
 Real compute_syn_gamma_M(Real B, Real Y, Real p);
 Real compute_syn_gamma_m(Real Gamma_th, Real gamma_M, Real eps_e, Real p, Real xi);
 Real cool_after_crossing(Real gamma_x, Real gamma_m_x, Real gamma_m, Real dt_comv, Real B, Real Y);
-Real compute_syn_gamma_a(Real B, Real I_syn_peak, Real gamma_m, Real gamma_c, Real gamma_M, Real p);
+Real compute_syn_gamma_a(Real B, Real I_syn_peak, Real gamma_m, Real gamma_c, Real gamma_M, Real p,
+                         InverseComptonY const& Ys, Real Y_c);
 Real cyclotron_correction(Real gamma_m, Real p);
 
 BOOST_AUTO_TEST_SUITE(Synchrotron)
@@ -409,7 +410,7 @@ BOOST_AUTO_TEST_CASE(compute_syn_gamma_a_positive) {
     const Real gamma_M = 1e8;
     const Real p = 2.3;
 
-    const Real ga = compute_syn_gamma_a(B, I_peak, gamma_m, gamma_c, gamma_M, p);
+    const Real ga = compute_syn_gamma_a(B, I_peak, gamma_m, gamma_c, gamma_M, p, InverseComptonY{}, 0.0);
     BOOST_CHECK(std::isfinite(ga));
     BOOST_CHECK_GE(ga, 1.0);
 }
@@ -418,7 +419,7 @@ BOOST_AUTO_TEST_CASE(compute_syn_gamma_a_fast_cooling) {
     // Fast cooling: gamma_c < gamma_m
     const Real B = 0.1 * unit::Gauss;
     const Real I_peak = 1e-22;
-    const Real ga = compute_syn_gamma_a(B, I_peak, 1000.0, 50.0, 1e8, 2.3);
+    const Real ga = compute_syn_gamma_a(B, I_peak, 1000.0, 50.0, 1e8, 2.3, InverseComptonY{}, 0.0);
     BOOST_CHECK(std::isfinite(ga));
     BOOST_CHECK_GE(ga, 1.0);
 }
@@ -426,8 +427,8 @@ BOOST_AUTO_TEST_CASE(compute_syn_gamma_a_fast_cooling) {
 BOOST_AUTO_TEST_CASE(compute_syn_gamma_a_large_I_peak) {
     // Large I_peak -> stronger self-absorption -> larger gamma_a
     const Real B = 1.0 * unit::Gauss;
-    const Real ga_small = compute_syn_gamma_a(B, 1e-25, 100.0, 1000.0, 1e8, 2.3);
-    const Real ga_large = compute_syn_gamma_a(B, 1e-18, 100.0, 1000.0, 1e8, 2.3);
+    const Real ga_small = compute_syn_gamma_a(B, 1e-25, 100.0, 1000.0, 1e8, 2.3, InverseComptonY{}, 0.0);
+    const Real ga_large = compute_syn_gamma_a(B, 1e-18, 100.0, 1000.0, 1e8, 2.3, InverseComptonY{}, 0.0);
     BOOST_CHECK_GT(ga_large, ga_small);
 }
 
