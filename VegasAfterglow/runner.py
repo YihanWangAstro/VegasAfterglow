@@ -159,7 +159,12 @@ class Fitter:
         self._ext_kernel = None  # 0.4*ln(10) * k(lam_rest), built-in path
         self._lam_rest_cm = None  # rest-frame wavelengths, custom path
 
+        # Populated by Fitter.fit(...) or Fitter.load(...). _to_params is the
+        # sampler-space -> ModelParams transformer; _param_defs is the original
+        # list, kept so Fitter.save can persist it for round-tripping.
         self._to_params = None
+        self._param_defs: Optional[List[ParamDef]] = None
+        self.result: Optional[FitResult] = None
 
         # Observation data in user units (seconds, Hz, erg/cm^2/s/Hz)
         self._point_t = []
@@ -787,6 +792,7 @@ class Fitter:
         """
         self.validate_parameters(param_defs)
         defs = list(param_defs)
+        self._param_defs = defs
 
         # Per-fit resolution override persists on the Fitter so that
         # subsequent post-fit calls (``flux_density_grid``, ``flux``) render
@@ -821,7 +827,7 @@ class Fitter:
         prior_dict = self._build_prior_dict(labels, pl, pu, defs, priors)
 
         if sampler.lower() == "emcee":
-            return self._fit_emcee(
+            result = self._fit_emcee(
                 defs,
                 labels,
                 pl,
@@ -834,7 +840,7 @@ class Fitter:
                 **sampler_kwargs,
             )
         else:
-            return self._fit_bilby(
+            result = self._fit_bilby(
                 defs,
                 labels,
                 ndim,
@@ -849,6 +855,10 @@ class Fitter:
                 prior_dict,
                 **sampler_kwargs,
             )
+        # Cache for convenience: matches Fitter.load(...) post-condition so
+        # downstream code can rely on fitter.result either way.
+        self.result = result
+        return result
 
     # --- Emcee (ThreadPoolExecutor) ---
 
@@ -1096,7 +1106,333 @@ class Fitter:
 
     def _require_fitted(self):
         if self._to_params is None:
-            raise RuntimeError("Call .fit(...) first")
+            raise RuntimeError(
+                "Call .fit(...) first, or load a saved fit with Fitter.load(path)."
+            )
+
+    def save(self, path) -> None:
+        """Persist this fit to a bilby-native HDF5 / JSON file.
+
+        Stores the posterior, top-K best-fit parameters, the original
+        ``ParamDef`` list, and a snapshot of the fitter configuration
+        (constructor args + added observation data), so that
+        :py:meth:`Fitter.load` can rebuild everything in one step. The
+        on-disk format remains interoperable with bilby tooling -- the file
+        can still be opened directly via ``bilby.read_in_result(path)`` for
+        inspection-only access.
+
+        Parameters
+        ----------
+        path : str | os.PathLike
+            Output filename. Extension determines the format: ``.h5`` /
+            ``.hdf5`` (recommended; smaller, faster) or ``.json``
+            (human-readable). If no extension is provided, HDF5 is used.
+
+        Raises
+        ------
+        RuntimeError
+            If ``.fit(...)`` has not been called yet (nothing to save).
+        """
+        import json
+
+        if self.result is None:
+            raise RuntimeError(
+                "Fitter.save(...) requires a completed fit; call .fit(...) first."
+            )
+
+        r = self.result
+        latex = list(r.latex_labels) if r.latex_labels else None
+
+        # ParamDef + snapshot go through JSON strings: bilby's HDF5 writer
+        # rejects nested list-of-dicts in meta_data, but a flat string field
+        # round-trips cleanly.
+        defs_json = (
+            json.dumps(
+                [
+                    {
+                        "name": pd.name,
+                        "lower": float(pd.lower),
+                        "upper": float(pd.upper),
+                        "scale": pd.scale.value,
+                        "initial": None if pd.initial is None else float(pd.initial),
+                    }
+                    for pd in self._param_defs
+                ]
+            )
+            if self._param_defs is not None
+            else None
+        )
+        vg_meta = {
+            "top_k_params": r.top_k_params,
+            "top_k_log_probs": r.top_k_log_probs,
+            "latex_labels": latex,
+            "samples_shape": list(r.samples.shape),
+            "param_defs_json": defs_json,
+            "fitter_config_json": json.dumps(self._snapshot_config()),
+        }
+
+        if r.bilby_result is not None:
+            br = r.bilby_result
+            br.meta_data = dict(br.meta_data or {})
+            br.meta_data["vegasafterglow"] = vg_meta
+            br.save_to_file(filename=str(path))
+            return
+
+        # Emcee path: synthesize a minimal bilby Result. The placeholder priors
+        # are required by bilby's HDF5 reader but are not consulted on reload.
+        import bilby
+        import pandas as pd
+
+        flat = r.samples.reshape(-1, r.samples.shape[-1])
+        posterior = pd.DataFrame(flat, columns=list(r.labels))
+        posterior["log_likelihood"] = r.log_probs.reshape(-1)
+        priors = bilby.core.prior.PriorDict(
+            {label: bilby.core.prior.Uniform(0, 1, label) for label in r.labels}
+        )
+        br = bilby.core.result.Result(
+            label="vegasafterglow",
+            outdir=".",
+            sampler="emcee",
+            posterior=posterior,
+            search_parameter_keys=list(r.labels),
+            parameter_labels=latex or list(r.labels),
+            priors=priors,
+            meta_data={"vegasafterglow": vg_meta},
+        )
+        br.save_to_file(filename=str(path))
+
+    def _snapshot_config(self) -> dict:
+        """Capture constructor args + added observation data as a JSON-friendly dict.
+
+        Persisted alongside the ``FitResult`` so :py:meth:`Fitter.load` can
+        rebuild the entire fitter from a saved file with no manual
+        reconfiguration. Custom (callable) jet / medium / extinction can't
+        round-trip through serialisation and are recorded as ``None`` with
+        the corresponding ``had_custom_X`` flag set; the user must pass the
+        same callable to ``Fitter.load(path, jet=..., medium=..., extinction=...)``
+        in that case.
+        """
+
+        def _arr(x):
+            return np.asarray(x).tolist()
+
+        return {
+            "version": 1,
+            "constructor": {
+                "z": float(self.z),
+                "lumi_dist": float(self.lumi_dist),
+                "jet": self.jet if isinstance(self.jet, str) else None,
+                "medium": self.medium if isinstance(self.medium, str) else None,
+                "fwd_ssc": bool(self.fwd_ssc),
+                "rvs_ssc": bool(self.rvs_ssc),
+                "rvs_shock": bool(self.rvs_shock),
+                "kn": bool(self.kn),
+                "cmb_cooling": bool(self.cmb_cooling),
+                "magnetar": bool(self.magnetar),
+                "rtol": float(self.rtol),
+                "resolution": [
+                    float(self.phi_resol),
+                    float(self.theta_resol),
+                    float(self.t_resol),
+                ],
+                "extinction": self.extinction
+                if isinstance(self.extinction, str)
+                else None,
+            },
+            "had_custom_jet": bool(self._custom_jet),
+            "had_custom_medium": bool(self._custom_medium),
+            "had_custom_extinction": bool(self._custom_extinction),
+            "point_data": [
+                {
+                    "t": _arr(t),
+                    "nu": _arr(nu),
+                    "flux": _arr(flux),
+                    "err": _arr(err),
+                    "weights": _arr(w),
+                }
+                for t, nu, flux, err, w in zip(
+                    self._point_t,
+                    self._point_nu,
+                    self._point_flux,
+                    self._point_err,
+                    self._point_weights,
+                )
+            ],
+            "band_data": [
+                {
+                    "nu_min": float(b.nu_min),
+                    "nu_max": float(b.nu_max),
+                    "num_points": int(b.num_points),
+                    "t": _arr(b.t),
+                    "flux": _arr(b.flux),
+                    "err": _arr(b.err),
+                    "weights": _arr(b.weights),
+                }
+                for b in self._band_obs
+            ],
+        }
+
+    @classmethod
+    def load(cls, path, *, jet=None, medium=None, extinction=None) -> "Fitter":
+        """Reload a saved fit as a fully-configured ``Fitter``.
+
+        Symmetric counterpart to :py:meth:`Fitter.save`: reads the file and
+        reconstructs the original ``Fitter`` (constructor args, observation
+        data, parameter transformer) along with the ``FitResult``. The returned
+        fitter is immediately ready for prediction calls -- no manual
+        reconfiguration, no MCMC re-run.
+
+        Typical reload workflow::
+
+            from VegasAfterglow import Fitter
+            fitter = Fitter.load("vegas_mcmc_fit.h5")     # one step
+            result = fitter.result
+            lc = fitter.flux_density_grid(result.top_k_params[0], t, nu).total
+
+        For custom (callable) ``jet`` / ``medium`` / ``extinction`` -- which
+        cannot round-trip through serialisation -- pass the same callable as
+        a keyword argument::
+
+            fitter = Fitter.load("fit.h5", jet=my_custom_jet_factory)
+
+        Parameters
+        ----------
+        path : str | os.PathLike
+            Path to a previously-saved HDF5 / JSON file.
+        jet, medium, extinction : optional
+            Override for jet / medium / extinction. Required if the original
+            fitter used a custom callable for these; ignored otherwise.
+
+        Returns
+        -------
+        Fitter
+            Fully-configured fitter, with ``.result`` set to the loaded
+            ``FitResult``.
+
+        Raises
+        ------
+        ValueError
+            If the file was written by an older release that doesn't include
+            the fitter snapshot, or if the original used a custom callable
+            that wasn't provided as an override.
+        """
+        import json
+
+        import bilby
+
+        br = bilby.read_in_result(filename=str(path))
+        vg = (br.meta_data or {}).get("vegasafterglow") or {}
+        fitter_json = vg.get("fitter_config_json")
+        if not fitter_json:
+            raise ValueError(
+                "Saved file does not include a Fitter snapshot (written by "
+                "VegasAfterglow < v2.0.5). For inspection-only access to "
+                "samples / corner / summary, use `bilby.read_in_result(path)` "
+                "directly."
+            )
+        cfg = json.loads(fitter_json) if isinstance(fitter_json, str) else fitter_json
+        cc = cfg["constructor"]
+
+        # Resolve overrides (required if the original used a custom callable).
+        def _resolve(name, original_str, override, had_custom):
+            if had_custom:
+                if override is None:
+                    raise ValueError(
+                        f"Saved fit used a custom {name} (callable); pass it as "
+                        f"`Fitter.load(path, {name}=...)`."
+                    )
+                return override
+            return override if override is not None else original_str
+
+        fitter = cls(
+            z=cc["z"],
+            lumi_dist=cc["lumi_dist"],
+            jet=_resolve("jet", cc["jet"], jet, cfg.get("had_custom_jet", False)),
+            medium=_resolve(
+                "medium", cc["medium"], medium, cfg.get("had_custom_medium", False)
+            ),
+            fwd_ssc=cc["fwd_ssc"],
+            rvs_ssc=cc["rvs_ssc"],
+            rvs_shock=cc["rvs_shock"],
+            kn=cc["kn"],
+            cmb_cooling=cc["cmb_cooling"],
+            magnetar=cc["magnetar"],
+            rtol=cc["rtol"],
+            resolution=tuple(cc["resolution"]),
+            extinction=_resolve(
+                "extinction",
+                cc["extinction"],
+                extinction,
+                cfg.get("had_custom_extinction", False),
+            ),
+        )
+
+        # Restore observation data (already validated when first added).
+        for pt in cfg.get("point_data", []):
+            fitter._point_t.append(np.asarray(pt["t"], dtype=np.float64))
+            fitter._point_nu.append(np.asarray(pt["nu"], dtype=np.float64))
+            fitter._point_flux.append(np.asarray(pt["flux"], dtype=np.float64))
+            fitter._point_err.append(np.asarray(pt["err"], dtype=np.float64))
+            fitter._point_weights.append(np.asarray(pt["weights"], dtype=np.float64))
+        for bd in cfg.get("band_data", []):
+            fitter._band_obs.append(
+                _BandObs(
+                    nu_min=bd["nu_min"],
+                    nu_max=bd["nu_max"],
+                    num_points=bd["num_points"],
+                    t=np.asarray(bd["t"], dtype=np.float64),
+                    flux=np.asarray(bd["flux"], dtype=np.float64),
+                    err=np.asarray(bd["err"], dtype=np.float64),
+                    weights=np.asarray(bd["weights"], dtype=np.float64),
+                )
+            )
+
+        # Rebuild ParamDef list and parameter transformer.
+        defs_json = vg.get("param_defs_json")
+        if defs_json:
+            defs_meta = (
+                json.loads(defs_json) if isinstance(defs_json, str) else defs_json
+            )
+            param_defs = [
+                ParamDef(
+                    name=str(d["name"]),
+                    lower=float(d["lower"]),
+                    upper=float(d["upper"]),
+                    scale=Scale(str(d["scale"])),
+                    initial=(None if d.get("initial") is None else float(d["initial"])),
+                )
+                for d in defs_meta
+            ]
+            fitter._param_defs = param_defs
+            fitter._to_params = _build_transformer(param_defs)
+
+        # Reconstruct the FitResult from the posterior + cached top-K metadata.
+        labels = tuple(br.search_parameter_keys)
+        ndim = len(labels)
+        flat_samples = br.posterior[list(labels)].values
+        flat_log_probs = br.posterior["log_likelihood"].values
+        # HDF5 round-tripping can return ``samples_shape`` as a numpy array;
+        # coerce to a tuple of ints for a clean reshape() call.
+        shape = vg.get("samples_shape")
+        if shape is not None and len(shape) == 3 and int(shape[-1]) == ndim:
+            shape_tuple = tuple(int(s) for s in shape)
+            samples = flat_samples.reshape(shape_tuple)
+            log_probs = flat_log_probs.reshape(shape_tuple[0], shape_tuple[1])
+        else:
+            samples = flat_samples.reshape(-1, 1, ndim)
+            log_probs = flat_log_probs.reshape(-1, 1)
+        latex = vg.get("latex_labels") or br.parameter_labels
+
+        fitter.result = FitResult(
+            samples=samples,
+            log_probs=log_probs,
+            labels=labels,
+            latex_labels=tuple(latex) if latex else None,
+            top_k_params=vg.get("top_k_params"),
+            top_k_log_probs=vg.get("top_k_log_probs"),
+            bilby_result=br,
+        )
+        return fitter
 
     def _model_from_fit(self, best_params):
         """Build a Model from sampler-space parameters (requires prior fit)."""

@@ -236,11 +236,12 @@ The method returns a ``FitResult`` object with the following attributes:
     - Use for advanced analysis and plotting
     - Access via: ``result.bilby_result.plot_corner()``
 
-``FitResult`` also exposes three convenience methods:
+``FitResult`` also exposes two convenience methods:
 
 - ``summary(top_k=None)``: returns a formatted top-K best-fit table (rank, chi-squared, parameter values), renders cleanly in both ``print()`` and Jupyter last-line auto-display.
-- ``save(path)``: write the fit to disk in bilby's native HDF5 (``.h5`` / ``.hdf5``) or JSON (``.json``) format. The resulting file is interoperable with bilby's tooling.
-- ``FitResult.load(path)``: classmethod that loads a previously saved file, or any file produced by ``bilby.core.result.Result.save_to_file(...)``.
+- ``save(path)``: write the fit to disk in bilby's native HDF5 (``.h5`` / ``.hdf5``) or JSON (``.json``) format. The resulting file is interoperable with bilby's tooling. The original ``Fitter`` configuration (constructor args, observation data, parameter definitions) is persisted alongside the samples so a later session can reload the full state with :py:meth:`Fitter.load` -- no manual reconfiguration required.
+
+To reload a saved fit, use :py:meth:`Fitter.load` (see below). Raw bilby Result files without VegasAfterglow metadata can be opened directly with ``bilby.read_in_result(path)``.
 
 Basic MCMC Execution
 ---------------------
@@ -329,20 +330,29 @@ MCMC fits can take minutes to hours. To avoid re-running the sampler when reopen
 
 .. code-block:: python
 
-    # After fitting
-    result.save("ep_grb_fit.h5")   # .h5 / .hdf5 (recommended) or .json
+    # After fitting -- symmetric with Fitter.load below.
+    fitter.save("ep_grb_fit.h5")   # .h5 / .hdf5 (recommended) or .json
 
-    # Later session:
-    from VegasAfterglow import FitResult
-    result = FitResult.load("ep_grb_fit.h5")
+    # Later session: a single line restores the fitter (constructor args,
+    # observation data, parameter transformer) and the result. No manual
+    # reconfiguration, no MCMC re-run.
+    from VegasAfterglow import Fitter
+    fitter = Fitter.load("ep_grb_fit.h5")
+    result = fitter.result
 
     print(result.summary())                            # works
     result.bilby_result.plot_corner()                  # bilby tools work
-
-    # Predictions still need the Fitter (build it the same way as before fitting):
     lc = fitter.flux_density_grid(result.top_k_params[0], t_out, nu_out)
 
-Files written by ``result.save()`` are full bilby Result files. They can also be opened directly by bilby's tools — useful when sharing fits with collaborators who use bilby:
+If the original fit used a custom callable for ``jet``, ``medium``, or ``extinction``, pass the same callable as a keyword to ``Fitter.load`` -- callables don't round-trip through HDF5/JSON serialization:
+
+.. code-block:: python
+
+    fitter = Fitter.load("ep_grb_fit.h5", jet=my_custom_jet_factory)
+
+If you have a raw bilby Result file from another tool (no VegasAfterglow metadata), open it directly with ``bilby.read_in_result(path)`` instead -- ``Fitter.load`` will raise a clear ``ValueError`` for those files.
+
+Files written by ``fitter.save()`` are full bilby Result files. They can also be opened directly by bilby's tools — useful when sharing fits with collaborators who use bilby:
 
 .. code-block:: python
 
@@ -350,7 +360,7 @@ Files written by ``result.save()`` are full bilby Result files. They can also be
     br = bilby.read_in_result(filename="ep_grb_fit.h5")
     br.plot_corner()
 
-Conversely, any pre-existing bilby Result file can be loaded as a ``FitResult`` (the top-K cache is set to ``None`` when loading external files; everything else is available).
+Pre-existing bilby Result files from other tools (no VegasAfterglow metadata) can be opened directly with ``bilby.read_in_result(path)`` for samples / corner inspection — ``Fitter.load`` requires the VegasAfterglow snapshot so it can't load those files for predictions; re-run ``.fit(...)`` if you need them.
 
 Visualization
 --------------

@@ -718,12 +718,17 @@ corner.corner(flat_chain, labels=result.latex_labels, quantiles=[0.16, 0.5, 0.84
 Persist the fit to disk and reload later (bilby-native HDF5 / JSON — interoperable with `bilby.read_in_result(path)`):
 
 ```python
-result.save("my_fit.h5")
+# After fitting -- saves the full Fitter state (constructor args, observation
+# data, parameter definitions) alongside the samples.
+fitter.save("my_fit.h5")
 
-# later session, no need to re-run the MCMC:
-from VegasAfterglow import FitResult
-result = FitResult.load("my_fit.h5")
+# Later session: one classmethod call reloads the configured Fitter and the
+# FitResult. No manual reconfiguration, no MCMC re-run.
+from VegasAfterglow import Fitter
+fitter = Fitter.load("my_fit.h5")
+result = fitter.result
 print(result.summary())
+lc = fitter.flux_density_grid(result.top_k_params[0], t_out, bands)
 ```
 
 See `script/vegas-mcmc.ipynb` for a complete working example with data loading, fitting, and visualization.

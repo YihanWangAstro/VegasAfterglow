@@ -20,6 +20,14 @@ Have a feature request? [Open an issue](https://github.com/YihanWangAstro/VegasA
 
 ## [v2.0.5] - 2026-06-01
 
+### Added
+
+#### ► **`fitter.save(path)` / `Fitter.load(path)` — symmetric one-line persistence**
+
+- Saving and loading now live on the same class. ``fitter.save(path)`` writes the full fitter snapshot (constructor args, observation data, parameter definitions, samples) to bilby-native HDF5 / JSON, and ``Fitter.load(path)`` reconstructs a fully-configured ``Fitter`` plus ``FitResult`` from it in one call. ``fitter.flux_density_grid`` / ``fitter.flux`` work immediately on ``fitter.result.top_k_params[0]``. If the original fit used a custom callable for ``jet`` / ``medium`` / ``extinction``, pass the same callable as ``Fitter.load(path, jet=...)`` since callables can't round-trip through HDF5 / JSON.
+- Files written by earlier releases (or raw bilby Result files from other tools) can be opened with ``bilby.read_in_result(path)`` for samples / corner inspection, but ``Fitter.load`` requires a v2.0.5+ snapshot.
+- ``Fitter.fit(...)`` also stores the returned result on ``self.result``, so downstream code can rely on ``fitter.result`` regardless of how the fitter was obtained.
+
 ### Changed
 
 #### ► **Synchrotron break shapes use Granot & Sari (2002) Table 2**
