@@ -13,29 +13,17 @@
 
 namespace afterglow {
 
-    class ValidationError final : public std::invalid_argument {
-      public:
-        explicit ValidationError(std::string const& message) : std::invalid_argument(message) {}
-        explicit ValidationError(char const* message) : std::invalid_argument(message) {}
-    };
-
-    class LogicError final : public std::logic_error {
-      public:
-        explicit LogicError(std::string const& message) : std::logic_error(message) {}
-        explicit LogicError(char const* message) : std::logic_error(message) {}
-    };
-
 #define AFTERGLOW_REQUIRE(condition, message)                                                                          \
     do {                                                                                                               \
         if (!(condition)) [[unlikely]] {                                                                               \
-            throw ::afterglow::ValidationError(message);                                                               \
+            throw std::invalid_argument(message);                                                                      \
         }                                                                                                              \
     } while (0)
 
 #define AFTERGLOW_ENSURE(condition, message)                                                                           \
     do {                                                                                                               \
         if (!(condition)) [[unlikely]] {                                                                               \
-            throw ::afterglow::LogicError(message);                                                                    \
+            throw std::logic_error(message);                                                                           \
         }                                                                                                              \
     } while (0)
 

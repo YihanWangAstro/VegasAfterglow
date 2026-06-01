@@ -119,9 +119,10 @@ Real compute_downstr_4vel(Real gamma_rel, Real sigma) noexcept {
         const Real d = D / A;
         const Real P = c - b * b / 3;
         const Real Q = 2 * b * b * b / 27 - b * c / 3 + d;
-        const Real u = std::sqrt(-P / 3);
-        const Real v = std::clamp(3 * Q / (2 * P * u), -1.0, 1.0);
+        const Real u = std::sqrt(std::fabs(P) / 3);
+        const Real denom = 2 * P * u;
+        const Real v = (denom != 0) ? std::clamp(3 * Q / denom, -1.0, 1.0) : 0.0;
         const Real uds = 2 * u * std::cos((std::acos(v) - 2 * con::pi) / 3) - b / 3;
-        return std::sqrt(uds);
+        return std::sqrt(std::fabs(uds));
     }
 }

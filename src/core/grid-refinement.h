@@ -163,8 +163,13 @@ Array inverse_CFD_sampling(Func&& pdf, Real min, Real max, size_t num,
                 if (j == 0) {
                     x_out(k) = x_i(j);
                 } else {
-                    Real slope = (x_i(j) - x_i(j - 1)) / (CDF_i(j) - CDF_i(j - 1));
-                    x_out(k) = x_i(j - 1) + slope * (CDF_out(k) - CDF_i(j - 1));
+                    const Real denom = CDF_i(j) - CDF_i(j - 1);
+                    if (denom > 0) {
+                        Real slope = (x_i(j) - x_i(j - 1)) / denom;
+                        x_out(k) = x_i(j - 1) + slope * (CDF_out(k) - CDF_i(j - 1));
+                    } else {
+                        x_out(k) = x_i(j - 1);
+                    }
                 }
                 break;
             }
