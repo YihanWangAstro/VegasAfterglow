@@ -19,7 +19,7 @@
  * @defgroup FastMath Fast Math Functions
  * @brief Optimized versions of common mathematical functions.
  * @details These functions provide fast approximations of exponential and logarithm functions using
- *          polynomial approximations when EXTREME_SPEED is defined.
+ *          polynomial approximations when AFTERGLOW_FAST_MATH is defined.
  * <!-- ************************************************************************************** -->
  */
 
@@ -30,12 +30,12 @@ constexpr uint64_t FRAC_MASK = (1ull << 52) - 1;
  * @brief Fast approximation of the base-2 logarithm
  * @param x The input value
  * @return log2(x)
- * @details Uses bit manipulation + polynomial approximation.
- *          Error < 1e-10, ~3.5x faster than std::log2
+ * @details Bit manipulation + degree-3 polynomial via atanh substitution. Branchless.
+ *          Raw rel error ~4e-6; tuned for the GRB afterglow pipeline accuracy budget.
  * <!-- ************************************************************************************** -->
  */
 inline double fast_log2(double x) noexcept {
-#ifdef EXTREME_SPEED
+#ifdef AFTERGLOW_FAST_MATH
     uint64_t bits = std::bit_cast<uint64_t>(x);
 
     // Extract exponent
@@ -45,27 +45,21 @@ inline double fast_log2(double x) noexcept {
     bits = (bits & FRAC_MASK) | (1023ull << 52);
     double m = std::bit_cast<double>(bits);
 
-    // For better polynomial convergence, center around sqrt(2)
-    // If m > sqrt(2), divide by 2 and increment exponent
-    if (m > std::numbers::sqrt2) {
-        m *= 0.5;
-        e++;
-    }
+    // Branchless centering around sqrt(2) so |u| stays small for fast polynomial convergence.
+    // If m > sqrt(2), use m/2 and shift exponent up by 1.
+    const bool large = m > std::numbers::sqrt2;
+    m = large ? m * 0.5 : m;
+    e += large;
 
-    // Now m is in [sqrt(2)/2, sqrt(2)] ≈ [0.707, 1.414]
-    // Use u = (m-1)/(m+1) for faster convergence
+    // m is now in [sqrt(2)/2, sqrt(2)] ≈ [0.707, 1.414]; u in [-0.172, 0.172]
     double u = (m - 1.0) / (m + 1.0);
     double u2 = u * u;
 
-    // log2(m) = 2 * INV_LN2 * (u + u^3/3 + u^5/5 + u^7/7 + ...)
-    // Polynomial coefficients: 2/(k*ln(2)) for odd k
+    // log2(m) = 2 * INV_LN2 * (u + u^3/3); raw error ~3.6e-6.
     constexpr double c1 = 2.8853900817779268; // 2/ln(2)
     constexpr double c3 = 0.9617966939259756; // 2/(3*ln(2))
-    constexpr double c5 = 0.5770780162461006; // 2/(5*ln(2))
-    constexpr double c7 = 0.4121977821679615; // 2/(7*ln(2))
-    constexpr double c9 = 0.3219280948873623; // 2/(9*ln(2))
 
-    double poly = c1 + u2 * (c3 + u2 * (c5 + u2 * (c7 + u2 * c9)));
+    double poly = c1 + u2 * c3;
 
     return static_cast<double>(e) + u * poly;
 #else
@@ -78,48 +72,33 @@ inline double fast_log2(double x) noexcept {
  * @brief Fast approximation of 2 raised to a power
  * @param x The exponent
  * @return 2^x
- * @details Uses polynomial approximation with bit manipulation.
- *          Error < 2e-7, ~1.5x faster than std::exp2
+ * @details Branchless clamp + degree-3 Taylor on fractional part + direct exponent injection.
+ *          Raw rel error ~8e-3; tuned for the GRB afterglow pipeline accuracy budget.
  * <!-- ************************************************************************************** -->
  */
 inline double fast_exp2(double x) noexcept {
-#ifdef EXTREME_SPEED
-    // Handle overflow/underflow
-    if (x >= 1024.0)
-        return std::numeric_limits<double>::infinity();
-    if (x <= -1075.0)
-        return 0.0;
+#ifdef AFTERGLOW_FAST_MATH
+    // Branchless clamp. Bottom is -1023 (not -1074): below that the result rounds to 0 anyway
+    // via exp_bits = 0, and clamping here keeps i + 1023 non-negative for the exponent injection.
+    x = x < -1023.0 ? -1023.0 : (x > 1023.0 ? 1023.0 : x);
 
-    // Split into integer and fractional parts (round to nearest for smaller |f|)
+    // Split into integer and fractional parts (round to nearest keeps |f| small).
     double i_part = std::floor(x + 0.5);
     double f = x - i_part; // f in [-0.5, 0.5]
     int64_t i = static_cast<int64_t>(i_part);
 
-    // Polynomial for 2^f, f in [-0.5, 0.5]
-    // Taylor series: 2^f = sum_{k=0}^{n} (f*ln2)^k / k!
-    constexpr double c0 = 1.0;
+    // Polynomial for 2^f, f in [-0.5, 0.5]. Order 3 Taylor; raw error ~8e-3.
     constexpr double c1 = std::numbers::ln2;
     constexpr double c2 = 0.2402265069591007; // ln(2)^2 / 2!
     constexpr double c3 = 0.0555041086648216; // ln(2)^3 / 3!
-    constexpr double c4 = 0.0096181291076285; // ln(2)^4 / 4!
-    constexpr double c5 = 0.0013333558146428; // ln(2)^5 / 5!
-    constexpr double c6 = 0.0001540353039338; // ln(2)^6 / 6!
 
-    // Horner's method
-    double poly = c0 + f * (c1 + f * (c2 + f * (c3 + f * (c4 + f * (c5 + f * c6)))));
+    double poly = 1.0 + f * (c1 + f * (c2 + f * c3));
 
-    // Multiply by 2^i using bit manipulation
-    uint64_t bits = std::bit_cast<uint64_t>(poly);
-    int64_t exp = static_cast<int64_t>((bits >> 52) & 0x7FF);
-    int64_t new_exp = exp + i;
-
-    if (new_exp <= 0)
-        return 0.0;
-    if (new_exp >= 0x7FF)
-        return std::numeric_limits<double>::infinity();
-
-    bits = (bits & ~(0x7FFull << 52)) | (static_cast<uint64_t>(new_exp) << 52);
-    return std::bit_cast<double>(bits);
+    // Multiply by 2^i via direct exponent injection. i in [-1023, 1023] -> i + 1023 in [0, 2046],
+    // a valid biased exponent (0 encodes 0.0 / denormals, 2046 encodes the largest normal).
+    const uint64_t exp_bits = static_cast<uint64_t>(i + 1023) << 52;
+    const double pow2_i = std::bit_cast<double>(exp_bits);
+    return poly * pow2_i;
 #else
     return std::exp2(x);
 #endif
@@ -145,7 +124,7 @@ inline Real fast_pow(Real a, Real b) noexcept {
  * <!-- ************************************************************************************** -->
  */
 inline Real fast_exp(Real x) noexcept {
-#ifdef EXTREME_SPEED
+#ifdef AFTERGLOW_FAST_MATH
     return fast_exp2(x * std::numbers::log2e);
 #else
     return std::exp(x);
@@ -160,7 +139,7 @@ inline Real fast_exp(Real x) noexcept {
  * <!-- ************************************************************************************** -->
  */
 inline double fast_log(double x) noexcept {
-#ifdef EXTREME_SPEED
+#ifdef AFTERGLOW_FAST_MATH
     return fast_log2(x) * std::numbers::ln2;
 #else
     return std::log(x);

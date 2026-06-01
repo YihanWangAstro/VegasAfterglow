@@ -81,7 +81,7 @@ Now, let's compute and plot multi-wavelength light curves to see how the aftergl
     # 1. Create logarithmic time array from 10² to 10⁸ seconds (100s to ~3yrs)
     times = np.logspace(2, 8, 200)
 
-    # 2. Define observing frequencies (radio, optical, X-ray bands in Hz)
+    # 2. Define observing frequencies (radio, near-IR, X-ray bands in Hz)
     bands = np.array([1e9, 1e14, 1e17])
 
     # 3. Calculate the afterglow emission at each time and frequency

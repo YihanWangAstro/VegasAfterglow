@@ -36,10 +36,12 @@ else()
 endif()
 
 option(AFTERGLOW_PROFILE "Enable per-stage profiling instrumentation" OFF)
+option(AFTERGLOW_FAST_MATH "Enable fast polynomial log2/exp2 in src/util/fast-math.h" OFF)
 
 add_compile_definitions(
   NO_XTENSOR_IO
   $<$<BOOL:${AFTERGLOW_PROFILE}>:AFTERGLOW_PROFILE>
+  $<$<BOOL:${AFTERGLOW_FAST_MATH}>:AFTERGLOW_FAST_MATH>
 )
 
 find_package(Python COMPONENTS Interpreter Development.Module NumPy REQUIRED)

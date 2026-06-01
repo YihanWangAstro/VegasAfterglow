@@ -47,8 +47,8 @@ model = Model(
     fwd_rad=Radiation(eps_e=0.1, eps_B=1e-3, p=2.3),
 )
 
-times = np.logspace(2, 8, 100)            # 100 s to 100 Myr
-bands = [1e9, 1e14, 1e17]                 # radio, optical, X-ray
+times = np.logspace(2, 8, 100)            # 100 s to ~3 years
+bands = [1e9, 1e14, 1e17]                 # radio, near-IR, X-ray
 flux = model.flux_density_grid(times, bands).total
 
 for f, nu in zip(flux, bands):
@@ -309,7 +309,7 @@ Compute and plot multi-wavelength light curves:
 
 ```python
 times = np.logspace(2, 8, 100)
-bands = np.array([1e9, 1e14, 1e17])  # radio, optical, X-ray
+bands = np.array([1e9, 1e14, 1e17])  # radio, near-IR, X-ray
 
 # times must be in ascending order; frequencies can be in any order
 results = model.flux_density_grid(times, bands)
