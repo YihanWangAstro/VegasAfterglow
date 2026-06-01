@@ -89,6 +89,41 @@ For example, ``details.fwd.Gamma[i, j, k]`` gives the Lorentz factor at the ``i`
 
 - Similar attributes as forward shock but for the reverse shock component
 
+.. important::
+
+   **All electron Lorentz factors (``gamma_a``, ``gamma_m``, ``gamma_c``, ``gamma_M``)
+   and synchrotron characteristic frequencies (``nu_a``, ``nu_m``, ``nu_c``,
+   ``nu_M``), along with ``I_nu_max`` and ``B_comv``, are evaluated in the comoving
+   (rest) frame of the shocked fluid** — not the observer frame.
+
+   To map a comoving-frame frequency to the corresponding observer-frame frequency,
+   apply the Doppler boost and the cosmological redshift:
+
+   .. math::
+
+      \nu_{\rm obs} = \nu_{\rm comv}\,\frac{\mathcal{D}}{1 + z}
+
+   where :math:`\mathcal{D}` is the Doppler factor (``details.fwd.Doppler``) and
+   :math:`z` is the source redshift. The inverse direction (observer → comoving)
+   multiplies by :math:`(1 + z) / \mathcal{D}`. The transformation applies
+   cell-by-cell on the ``(phi, theta, time)`` grid; on the jet symmetry axis,
+   a typical extraction is:
+
+   .. code-block:: python
+
+      D = details.fwd.Doppler[0, 0, :]
+      nu_m_obs = details.fwd.nu_m[0, 0, :] * D / (1 + z)
+      nu_c_obs = details.fwd.nu_c[0, 0, :] * D / (1 + z)
+
+   The same factor :math:`\mathcal{D}/(1+z)` converts comoving-frame
+   ``sync_spectrum`` / ``ssc_spectrum`` *frequencies* to the observer frame; the
+   specific intensity itself transforms as
+   :math:`I_{\nu_{\rm obs}} = \mathcal{D}^3\,I_{\nu_{\rm comv}}^\prime / (1+z)^3`
+   (see Granot & Sari 2002, Eq. 10).
+
+   The "Synchrotron Frequency Evolution" example below applies this transformation
+   inline (dashed lines: observer frame; solid lines: comoving frame).
+
 Multi-Parameter Evolution Visualization
 -----------------------------------------
 

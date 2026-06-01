@@ -105,6 +105,10 @@ class Fitter:
             from the data before fitting; this layer handles host-galaxy only.
     """
 
+    # =========================================================================
+    # Construction & configuration
+    # =========================================================================
+
     def __init__(
         self,
         *,
@@ -209,6 +213,10 @@ class Fitter:
             f"jet={self.jet!r}, medium={self.medium!r}"
             f"{ext_str}{flag_str}{data_str})"
         )
+
+    # =========================================================================
+    # Observation data input
+    # =========================================================================
 
     def _add_point_data(self, t, nu, f_nu, err, weights):
         """Append point observation arrays to internal lists."""
@@ -379,6 +387,10 @@ class Fitter:
             )
         )
 
+    # =========================================================================
+    # Extinction & data consolidation
+    # =========================================================================
+
     def _resolve_extinction(self, ext):
         """Resolve the ``extinction`` constructor argument to a callable or None.
 
@@ -437,6 +449,10 @@ class Fitter:
                     self._ext_kernel = _LN10_OVER_2P5 * k
         else:
             self._all_t = np.array([])
+
+    # =========================================================================
+    # Model evaluation (hot path)
+    # =========================================================================
 
     def _build_model(self, params: ModelParams) -> Model:
         """Create a Model instance from MCMC parameters."""
@@ -512,6 +528,10 @@ class Fitter:
         return chi2
 
     # --- Parameter Validation ---
+
+    # =========================================================================
+    # Parameter validation & sampler setup
+    # =========================================================================
 
     def validate_parameters(self, param_defs: Sequence[ParamDef]) -> None:
         """Validate parameter definitions against the current configuration."""
@@ -688,11 +708,11 @@ class Fitter:
             *(
                 (
                     _param_label(pd),
-                    np.log10(pd.lower) if pd.scale is Scale.LOG else pd.lower,
-                    np.log10(pd.upper) if pd.scale is Scale.LOG else pd.upper,
+                    np.log10(pd.lower) if pd.scale is Scale.log else pd.lower,
+                    np.log10(pd.upper) if pd.scale is Scale.log else pd.upper,
                 )
                 for pd in param_defs
-                if pd.scale is not Scale.FIXED
+                if pd.scale is not Scale.fixed
             )
         )
         return labels, np.array(lowers), np.array(uppers), len(labels)
@@ -707,7 +727,7 @@ class Fitter:
     ):
         """Build bilby PriorDict: user priors where provided, Uniform for the rest."""
         label_to_def = {
-            _param_label(pd): pd for pd in defs if pd.scale is not Scale.FIXED
+            _param_label(pd): pd for pd in defs if pd.scale is not Scale.fixed
         }
 
         priors_dict = {}
@@ -732,10 +752,10 @@ class Fitter:
         initial_vals = []
         idx = 0
         for pd in param_defs:
-            if pd.scale is Scale.FIXED:
+            if pd.scale is Scale.fixed:
                 continue
             if pd.initial is not None:
-                val = np.log10(pd.initial) if pd.scale is Scale.LOG else pd.initial
+                val = np.log10(pd.initial) if pd.scale is Scale.log else pd.initial
             else:
                 val = 0.5 * (lower_bounds[idx] + upper_bounds[idx])
             initial_vals.append(val)
@@ -750,6 +770,10 @@ class Fitter:
         return pos0
 
     # --- Main Fit Interface ---
+
+    # =========================================================================
+    # Sampler dispatch
+    # =========================================================================
 
     def fit(
         self,
@@ -1037,7 +1061,7 @@ class Fitter:
     ) -> FitResult:
         """Process MCMC samples to find top-k fits."""
         latex_labels = [
-            _get_latex_label(pd) for pd in defs if pd.scale is not Scale.FIXED
+            _get_latex_label(pd) for pd in defs if pd.scale is not Scale.fixed
         ]
 
         medians = np.median(samples, axis=0)
@@ -1091,6 +1115,10 @@ class Fitter:
 
     # --- Post-fit Model Predictions ---
 
+    # =========================================================================
+    # Lifecycle helpers
+    # =========================================================================
+
     @contextmanager
     def _override_resolution(self, resolution):
         """Temporarily override resolution, restoring on exit."""
@@ -1109,6 +1137,10 @@ class Fitter:
             raise RuntimeError(
                 "Call .fit(...) first, or load a saved fit with Fitter.load(path)."
             )
+
+    # =========================================================================
+    # Persistence (save / load)
+    # =========================================================================
 
     def save(self, path) -> None:
         """Persist this fit to a bilby-native HDF5 / JSON file.
@@ -1433,6 +1465,10 @@ class Fitter:
             bilby_result=br,
         )
         return fitter
+
+    # =========================================================================
+    # Post-fit prediction
+    # =========================================================================
 
     def _model_from_fit(self, best_params):
         """Build a Model from sampler-space parameters (requires prior fit)."""

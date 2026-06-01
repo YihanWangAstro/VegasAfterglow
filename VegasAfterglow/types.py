@@ -92,7 +92,8 @@ class ModelParams:
 class _SummaryTable:
     """Wraps a formatted multi-line string so it renders cleanly in both
     ``print(...)`` (via ``__str__``) and Jupyter last-line auto-display
-    (via ``__repr__``)."""
+    (via ``__repr__``). Test coverage: ``tests/python/test_fit_result_summary.py``
+    pins this behavior — do not collapse to a plain ``str``."""
 
     __slots__ = ("_text",)
 
@@ -175,7 +176,8 @@ class Scale(Enum):
     log = "log"
     fixed = "fixed"
 
-    # Uppercase aliases for backward compatibility
+    # Uppercase aliases — supported API; tests/python/test_types.py pins this.
+    # Both forms refer to the same enum members (Python Enum value-collision aliasing).
     LINEAR = "linear"
     LOG = "log"
     FIXED = "fixed"
@@ -203,7 +205,7 @@ class ParamDef:
     name: str
     lower: float
     upper: float
-    scale: Scale = Scale.LINEAR
+    scale: Scale = Scale.linear
     initial: float = (
         None  # Initial value (in linear space, auto-converted for LOG scale)
     )

@@ -2,7 +2,6 @@
 
 <img align="left" src="https://github.com/YihanWangAstro/VegasAfterglow/raw/main/assets/logo.svg" alt="VegasAfterglow Logo" width="350"/>
 
-[![C++ Version](https://img.shields.io/badge/C%2B%2B-20-blue.svg)](https://en.cppreference.com/w/cpp/20)
 [![PyPI version](https://img.shields.io/pypi/v/VegasAfterglow.svg)](https://pypi.org/project/VegasAfterglow/)
 [![License](https://img.shields.io/badge/License-BSD--3--Clause-green.svg)](LICENSE)
 [![Platform](https://img.shields.io/badge/Platform-Linux%20|%20macOS%20|%20Windows-lightgrey.svg)]()
@@ -429,7 +428,7 @@ Returns a `SimulationDetails` object. All quantities are 3D numpy arrays with sh
 | **Characteristic frequencies** | `nu_a`, `nu_m`, `nu_c`, `nu_M` [Hz] |
 | **Spectra (callable)** | `sync_spectrum`, `ssc_spectrum`, `Y_spectrum` |
 
-See the [documentation](https://vegasafterglow.readthedocs.io/en/latest/examples/internal_quantities.html) for full descriptions.
+> **Frame**: `gamma_*`, `nu_*`, `I_nu_max`, and `B_comv` are all in the **comoving (rest) frame of the shocked fluid**. Convert a comoving frequency to the observer frame with `nu_obs = nu_comv * Doppler / (1 + z)` (the inverse applies for observer → comoving). See the [internal-quantities docs](https://vegasafterglow.readthedocs.io/en/latest/examples/internal_quantities.html) for details and the inline example below for usage.
 
 </details>
 

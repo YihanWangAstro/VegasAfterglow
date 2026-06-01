@@ -102,13 +102,13 @@ def get_optimal_queue_size(ncpu, nlive) -> int:
 
 def _param_label(pd: ParamDef) -> str:
     """Sampler-space label for a parameter: ``log10_<name>`` for LOG scale, else ``<name>``."""
-    return f"log10_{pd.name}" if pd.scale is Scale.LOG else pd.name
+    return f"log10_{pd.name}" if pd.scale is Scale.log else pd.name
 
 
 def _get_latex_label(param_def: ParamDef) -> str:
     """Generate LaTeX label for parameter (with log10 wrapper if needed)."""
     base_latex = LATEX_LABELS.get(param_def.name, param_def.name)
-    if param_def.scale is Scale.LOG:
+    if param_def.scale is Scale.log:
         return rf"$\log_{{10}}({base_latex.strip('$')})$"
     return rf"${base_latex.strip('$')}$"
 
@@ -124,11 +124,11 @@ def _build_transformer(param_defs: List[ParamDef]) -> Callable:
     free_mappings = []  # (name, is_log)
     fixed_values = []  # (name, value)
     for pd in param_defs:
-        if pd.scale is Scale.FIXED:
+        if pd.scale is Scale.fixed:
             val = pd.initial if pd.initial is not None else pd.lower
             fixed_values.append((pd.name, val))
         else:
-            free_mappings.append((pd.name, pd.scale is Scale.LOG))
+            free_mappings.append((pd.name, pd.scale is Scale.log))
 
     def transformer(theta):
         params = types.SimpleNamespace(**defaults)
@@ -164,7 +164,7 @@ class AfterglowLikelihood(bilby.Likelihood):
         transformer,
     ):
         param_keys = tuple(
-            _param_label(pd) for pd in param_defs if pd.scale is not Scale.FIXED
+            _param_label(pd) for pd in param_defs if pd.scale is not Scale.fixed
         )
         super().__init__(parameters={key: None for key in param_keys})
         self.param_keys = param_keys
