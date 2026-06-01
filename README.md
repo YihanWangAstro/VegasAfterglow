@@ -4,7 +4,6 @@
 
 [![C++ Version](https://img.shields.io/badge/C%2B%2B-20-blue.svg)](https://en.cppreference.com/w/cpp/20)
 [![PyPI version](https://img.shields.io/pypi/v/VegasAfterglow.svg)](https://pypi.org/project/VegasAfterglow/)
-[![Build Status](https://github.com/YihanWangAstro/VegasAfterglow/actions/workflows/PyPI-build.yml/badge.svg)](https://github.com/YihanWangAstro/VegasAfterglow/actions/workflows/PyPI-build.yml)
 [![License](https://img.shields.io/badge/License-BSD--3--Clause-green.svg)](LICENSE)
 [![Platform](https://img.shields.io/badge/Platform-Linux%20|%20macOS%20|%20Windows-lightgrey.svg)]()
 [![Python Version](https://img.shields.io/badge/Python-3.8%2B-blue.svg)](https://www.python.org/)
@@ -68,6 +67,7 @@ Prefer no install? Open the **[interactive web tool](https://www.vegasafterglow.
 ## Table of Contents
 
 - [VegasAfterglow](#vegasafterglow)
+  - [Quick Start](#quick-start)
   - [Table of Contents](#table-of-contents)
   - [Features](#features)
   - [Installation](#installation)
