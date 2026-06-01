@@ -2,17 +2,30 @@
 
 <img align="left" src="https://github.com/YihanWangAstro/VegasAfterglow/raw/main/assets/logo.svg" alt="VegasAfterglow Logo" width="350"/>
 
+[![C++ Version](https://img.shields.io/badge/C%2B%2B-20-blue.svg)](https://en.cppreference.com/w/cpp/20)
 [![PyPI version](https://img.shields.io/pypi/v/VegasAfterglow.svg)](https://pypi.org/project/VegasAfterglow/)
+[![Build Status](https://github.com/YihanWangAstro/VegasAfterglow/actions/workflows/PyPI-build.yml/badge.svg)](https://github.com/YihanWangAstro/VegasAfterglow/actions/workflows/PyPI-build.yml)
 [![License](https://img.shields.io/badge/License-BSD--3--Clause-green.svg)](LICENSE)
+[![Platform](https://img.shields.io/badge/Platform-Linux%20|%20macOS%20|%20Windows-lightgrey.svg)]()
+[![Python Version](https://img.shields.io/badge/Python-3.8%2B-blue.svg)](https://www.python.org/)
 [![Documentation](https://img.shields.io/badge/Documentation-Online-brightgreen.svg)](https://vegasafterglow.readthedocs.io/en/latest/index.html)
+[![Interactive Tool](https://img.shields.io/badge/Interactive-Web%20Tool-orange.svg)](https://www.vegasafterglow.com)
+[![Validation Report](https://img.shields.io/badge/Validation-Report-blue.svg)](https://yihanwangastro.github.io/VegasAfterglow/reports/latest/comprehensive_report.pdf)
 [![ADS citations](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/YihanWangAstro/VegasAfterglow/badge-data/ads-citations.json)](https://ui.adsabs.harvard.edu/abs/2026JHEAp..5000490W/citations)
 
-<p align="left">
-<b>VegasAfterglow</b> is a high-performance C++/Python framework for Gamma-Ray Burst afterglow modeling. Multi-wavelength light curves in milliseconds, full forward + reverse shock dynamics, synchrotron + SSC with Klein-Nishina, structured jets, and a fast MCMC fitter — designed for laptops.
+<div align="left">
+
+**[Latest Release Notes](CHANGELOG.md#v200-beta---2026-02-02)** | **[Interactive Web Tool](https://www.vegasafterglow.com)** | **[Validation Report (PDF)](https://yihanwangastro.github.io/VegasAfterglow/reports/latest/comprehensive_report.pdf)** | **[Install Now](#installation)**
+</div>
+
+<p align="justify">
+<b>VegasAfterglow</b> is a high-performance C++ framework with a user-friendly Python interface designed for the comprehensive modeling of Gamma-Ray Burst (GRB) afterglows. It achieves exceptional computational efficiency, enabling the generation of multi-wavelength light curves in milliseconds and facilitating robust Markov Chain Monte Carlo (MCMC) parameter inference. The framework incorporates advanced models for shock dynamics (both forward and reverse shocks), diverse radiation mechanisms (synchrotron with self-absorption, and inverse Compton scattering with Klein-Nishina corrections), and complex structured jet configurations.
 </p>
 
-**[Web Tool](https://www.vegasafterglow.com)** (no install) · **[Docs](https://vegasafterglow.readthedocs.io/en/latest/index.html)** · **[Validation Report](https://yihanwangastro.github.io/VegasAfterglow/reports/latest/comprehensive_report.pdf)** · **[Changelog](CHANGELOG.md#v200-beta---2026-02-02)**
+<h3 align="center">Ecosystem & Integration</h3>
 
+* **Advanced Inference:** While VegasAfterglow includes a standalone fitter, its models are also integrated into [**Redback**](https://github.com/nikhil-sarin/redback) for more advanced Bayesian inference, model comparison, and multi-messenger analysis.
+* **Community Tools:** We also recommend checking out [**PyFRS**](https://github.com/leiwh/PyFRS), [**Jetsimpy**](https://github.com/haowang-astro/jetsimpy), [**ASGARD**](https://github.com/mikuru1096/ASGARD_GRBAfterglow) as tool for afterglow modeling.
 <br clear="left"/>
 
 ---
@@ -50,26 +63,32 @@ plt.xlabel("Time (s)"); plt.ylabel("Flux density (erg/cm²/s/Hz)"); plt.legend()
 
 Prefer no install? Open the **[interactive web tool](https://www.vegasafterglow.com)** — parameter sliders, observational data upload, mobile-friendly.
 
-<details>
-<summary><b>Table of Contents</b> <i>(click to expand)</i></summary>
+---
 
-- [Features](#features)
-- [Installation](#installation)
-- [Usage](#usage)
-  - [Command-Line Tool (`vegasgen`)](#command-line-tool-vegasgen)
-  - [Light Curve & Spectrum Calculation](#light-curve--spectrum-calculation)
-  - [Internal Quantities Evolution](#internal-quantities-evolution)
-  - [Sky Image](#sky-image)
-  - [MCMC Parameter Fitting](#mcmc-parameter-fitting)
-  - [Parameter Fitting with Redback](#parameter-fitting-with-redback)
-- [Performance](#performance)
-- [Architecture](#architecture)
-- [Validation & Testing](#validation--testing)
-- [Documentation](#documentation)
-- [Contributing](#contributing)
-- [Acknowledgments & Citation](#acknowledgments--citation)
+## Table of Contents
 
-</details>
+- [VegasAfterglow](#vegasafterglow)
+  - [Table of Contents](#table-of-contents)
+  - [Features](#features)
+  - [Installation](#installation)
+    - [Python Installation](#python-installation)
+    - [C++ Installation](#c-installation)
+  - [Usage](#usage)
+    - [Quick Start](#quick-start-1)
+      - [Command-Line Tool (`vegasgen`)](#command-line-tool-vegasgen)
+      - [Python API](#python-api)
+    - [Light Curve \& Spectrum Calculation](#light-curve--spectrum-calculation)
+    - [Internal Quantities Evolution](#internal-quantities-evolution)
+    - [Sky Image](#sky-image)
+    - [MCMC Parameter Fitting](#mcmc-parameter-fitting)
+    - [Parameter Fitting with **Redback**](#parameter-fitting-with-redback)
+  - [Performance Highlights](#performance-highlights)
+  - [Architecture](#architecture)
+  - [Validation \& Testing](#validation--testing)
+  - [Documentation](#documentation)
+  - [Contributing](#contributing)
+  - [License](#license)
+  - [Acknowledgments \& Citation](#acknowledgments--citation)
 
 ---
 
@@ -79,7 +98,11 @@ Prefer no install? Open the **[interactive web tool](https://www.vegasafterglow.
 
 <img align="right" src="https://github.com/YihanWangAstro/VegasAfterglow/raw/main/assets/shock_dynamics.svg" width="450"/>
 
-Forward and reverse shocks with arbitrary magnetization and shell thickness; relativistic to non-relativistic; adiabatic ↔ radiative transitions; ISM, wind, or [user-defined media](https://vegasafterglow.readthedocs.io/en/latest/examples/models.html#user-defined-medium); energy and mass injection.
+- **Forward and Reverse Shock Modeling:** Simulates both shocks via shock crossing dynamics with arbitrary magnetization levels and shell thicknesses.
+- **Relativistic and Non-Relativistic Regimes:** Accurately models shock evolution across all velocity regimes.
+- **Adiabatic and Radiative Blast Waves:** Supports smooth transition between adiabatic and radiative blast waves.
+- **Ambient Medium:** Supports uniform Interstellar Medium (ISM), stellar wind environments, and **[user-defined density profiles](https://vegasafterglow.readthedocs.io/en/latest/examples/models.html#user-defined-medium)**.
+- **Energy and Mass Injection:** Supports user-defined profiles for continuous energy and/or mass injection into the blast wave.
 
 <br clear="right"/>
 
@@ -87,7 +110,10 @@ Forward and reverse shocks with arbitrary magnetization and shell thickness; rel
 
 <img align="right" src="https://github.com/YihanWangAstro/VegasAfterglow/raw/main/assets/jet_geometry.svg" width="450"/>
 
-Tophat, Gaussian, power-law, two-component, or [user-defined angular profiles](https://vegasafterglow.readthedocs.io/en/latest/examples/models.html#user-defined-jet); arbitrary viewing angles; jet spreading (experimental); non-axisymmetric jets.
+- **Structured Jet Profiles:** Allows **[user-defined angular profiles](https://vegasafterglow.readthedocs.io/en/latest/examples/models.html#user-defined-jet)** for energy distribution, initial Lorentz factor, and magnetization.
+- **Arbitrary Viewing Angles:** Supports off-axis observers at any viewing angle relative to the jet axis.
+- **Jet Spreading:** Includes lateral expansion dynamics for realistic jet evolution (experimental).
+- **Non-Axisymmetric Jets:** Capable of modeling complex, non-axisymmetric jet structures.
 
 <br clear="right"/>
 
@@ -95,28 +121,36 @@ Tophat, Gaussian, power-law, two-component, or [user-defined angular profiles](h
 
 <img align="right" src="https://github.com/YihanWangAstro/VegasAfterglow/raw/main/assets/radiation_mechanisms.svg" width="450"/>
 
-Synchrotron with self-absorption; SSC from forward and reverse shocks; pairwise IC between FS/RS populations (experimental); Klein-Nishina corrections.
+- **Synchrotron Radiation:** Calculates synchrotron emission from shocked electrons.
+- **Synchrotron Self-Absorption (SSA):** Includes SSA effects, crucial at low frequencies.
+- **Inverse Compton (IC) Scattering:** Models IC processes, including:
+  - Synchrotron Self-Compton (SSC) from both forward and reverse shocks.
+  - Pairwise IC between forward and reverse shock electron and photon populations (experimental).
+  - Includes Klein-Nishina corrections for accurate synchrotron and IC emission.
 
 <br clear="right"/>
-
-**Ecosystem** — integrated into [**Redback**](https://github.com/nikhil-sarin/redback) for Bayesian inference and multi-messenger analysis. Also see [**PyFRS**](https://github.com/leiwh/PyFRS), [**Jetsimpy**](https://github.com/haowang-astro/jetsimpy), and [**ASGARD**](https://github.com/mikuru1096/ASGARD_GRBAfterglow).
 
 ---
 
 ## Installation
 
+VegasAfterglow is available as a Python package with C++ source code also provided for direct use.
+
+### Python Installation
+
+To install VegasAfterglow using pip:
+
 ```bash
-pip install VegasAfterglow              # core
-pip install VegasAfterglow[mcmc]        # + MCMC fitting
+pip install VegasAfterglow
 ```
 
-Requires Python 3.8+.
+This installs the core physics engine. To also install MCMC fitting support:
 
-<details>
-<summary><b>Run the interactive web tool locally</b> <i>(click to expand)</i></summary>
-<br>
+```bash
+pip install VegasAfterglow[mcmc]
+```
 
-The hosted [web tool](https://www.vegasafterglow.com) is deployed across multiple regions. To run locally for best responsiveness (FastAPI + Next.js):
+The interactive web tool is deployed across multiple global regions for low latency. If none of the servers provide a satisfactory experience from your location, you can run the interactive web tool locally for the best responsiveness (FastAPI + Next.js):
 
 ```bash
 # terminal 1: backend
@@ -133,72 +167,120 @@ npm install
 npm run dev
 ```
 
-Open `http://localhost:3000`. Detailed local/deploy guide: [`webtool/README.md`](webtool/README.md) and [`webtool/DEPLOY.md`](webtool/DEPLOY.md).
-</details>
+Open `http://localhost:3000`.
+Detailed local/deploy guide: [`webtool/README.md`](webtool/README.md) and [`webtool/DEPLOY.md`](webtool/DEPLOY.md).
+
+The hosted **[Interactive Web Tool](https://www.vegasafterglow.com)** provides real-time parameter-tunable afterglow modeling, mobile-phone compatible layout, and observational data input/upload support.
+
+VegasAfterglow requires Python 3.8 or higher.
 
 <details>
-<summary><b>Install from source</b> <i>(click to expand)</i></summary>
+<summary><b>Alternative: Install from Source</b> <i>(click to expand/collapse)</i></summary>
 <br>
+
+For cases where pip installation is not viable or when the development version is required:
+
+1. Clone this repository:
 
 ```bash
 git clone https://github.com/YihanWangAstro/VegasAfterglow.git
+```
+
+2. Navigate to the directory and install the Python package:
+
+```bash
 cd VegasAfterglow
 pip install .
 ```
 
-Requires a C++20 compiler. See the [C++ installation](#c-installation) section for prerequisites.
+Standard development environments typically include the necessary prerequisites (C++20 compatible compiler). For build-related issues, refer to the prerequisites section in [C++ Installation](#c-installation).
 </details>
 
+### C++ Installation
+
+For advanced users who need to compile and use the C++ library directly:
+
 <details>
-<summary><b>C++ installation</b> <i>(click to expand)</i></summary>
+<summary><b>Instructions for C++ Installation</b> <i>(click to expand/collapse)</i></summary>
 <br>
 
-For advanced users compiling the C++ library directly:
+1. Clone the repository (if not previously done):
 
 ```bash
 git clone https://github.com/YihanWangAstro/VegasAfterglow.git
 cd VegasAfterglow
+```
+
+2. Compile and run tests:
+
+```bash
 make tests
 ```
 
-Create custom C++ problem generators using the VegasAfterglow interfaces — see example generators in `tests/demo/`.
+Upon successful compilation, you can create custom C++ problem generators using the VegasAfterglow interfaces. For implementation details, refer to the [Creating Custom Problem Generators with C++](#creating-custom-problem-generators-with-c) section or examine the example problem generators in `tests/demo/`.
 
-**Build prerequisites:**
-- **C++20 compiler**: GCC 10+ / Clang 13+ (Linux), Apple Clang 13+ (macOS), MSVC 19.29+ / MinGW-w64 GCC 10+ (Windows)
-- **Build tools**: GNU Make 4.0+
+<details>
+<summary><b>Build Prerequisites</b> <i>(click to expand for dependency information)</i></summary>
+<br>
 
+The following development tools are required:
+
+- **C++20 compatible compiler**:
+  - **Linux**: GCC 10+ or Clang 13+
+  - **macOS**: Apple Clang 13+ (with Xcode 13+) or GCC 10+ (via Homebrew)
+  - **Windows**: MSVC 19.29+ (Visual Studio 2019 16.10+) or MinGW-w64 with GCC 10+
+
+- **Build tools**:
+  - Make (GNU Make 4.0+ recommended)
+
+</details>
 </details>
 
 ---
 
 ## Usage
 
-VegasAfterglow can be used three ways:
-* **[Web tool](https://www.vegasafterglow.com)** — real-time, parameter-tunable modeling. No install.
-* **Command line** — `vegasgen` for one-shot light curves.
-* **Python API** — full programmatic control, internal quantities, MCMC fitting.
+### Quick Start
 
-### Command-Line Tool (`vegasgen`)
+VegasAfterglow can be used in three ways:
+
+* **[Interactive web tool](https://www.vegasafterglow.com)** — real-time, parameter-tunable afterglow modeling for light curves, spectra, and sky images, with mobile-phone compatible UI and observational data input/upload support (CSV/TXT/XLS/XLSX). No installation required.
+* **Command line** — generate light curves instantly with the `vegasgen` command, no code needed.
+* **Python API** — full programmatic control for custom analysis, MCMC fitting, and access to internal quantities.
+
+#### Command-Line Tool (`vegasgen`)
 
 ```bash
-# Default tophat jet, ISM, on-axis
+# Default tophat jet, ISM, on-axis — just run it
 vegasgen
 
 # Gaussian jet at z=0.5 with plot output
 vegasgen --jet gaussian --z 0.5 --plot
 
-# Filter names for frequencies, save to file
+# Use filter names for frequencies, save to file
 vegasgen --nu R J 1e18 -o lightcurve.csv
 
 # Wind medium with SSC, save plot as PNG
 vegasgen --medium wind --ssc --plot -o lightcurve.png
 ```
 
-All parameters have sensible defaults. Run `vegasgen --help` for the full option list, or see the [CLI documentation](https://vegasafterglow.readthedocs.io/en/latest/using_cli.html).
+All parameters have sensible defaults. Run `vegasgen --help` for the full option list, or see the [CLI documentation](https://vegasafterglow.readthedocs.io/en/latest/using_cli.html) for detailed usage.
+
+#### Python API
+
+```python
+from VegasAfterglow import ISM, TophatJet, Observer, Radiation, Model
+import numpy as np
+
+model = Model(TophatJet(0.1, 1e52, 300), ISM(1), Observer(1e26, 0.1, 0), Radiation(0.1, 1e-3, 2.3))
+result = model.flux_density_grid(np.logspace(2, 8, 100), [1e9, 1e14, 1e17])
+```
+
+See the detailed sections below and the example notebooks (`script/quick.ipynb`, `script/details.ipynb`, `script/vegas-mcmc.ipynb`) for Python usage including light curves, spectra, internal quantities, and MCMC fitting.
 
 ### Light Curve & Spectrum Calculation
 
-The example below walks through the main components, from setting up the physical parameters to producing light curves and spectra. See `script/quick.ipynb` for the full notebook.
+The example below walks through the main components needed to model a GRB afterglow, from setting up the physical parameters to producing light curves and spectra via `script/quick.ipynb`.
 
 <details>
 <summary><b>Model Setup</b> <i>(click to expand/collapse)</i></summary>
@@ -302,9 +384,11 @@ All return a `FluxDict` with `.total`, `.fwd` (`.sync`, `.ssc`), and `.rvs` (`.s
 
 </details>
 
+
+
 ### Internal Quantities Evolution
 
-The example below walks through how to check the evolution of internal quantities under various reference frames. See `script/details.ipynb` for the full notebook.
+The example below walks through how you can check the evolution of internal quantities under various reference frames via `script/details.ipynb`.
 
 <details>
 <summary><b>Model Setup</b> <i>(click to expand/collapse)</i></summary>
@@ -708,17 +792,20 @@ result.plot_residuals()
  - `Visualization`: Generate publication-ready corner plots and multi-band light curves automatically.
 
 For complete documentation on the API, visit the [**redback documentation**](https://redback.readthedocs.io/en/latest/?badge=latest).
+<br>
+
 
 ---
 
-## Performance
+## Performance Highlights
 
 VegasAfterglow is designed for speed. A tophat synchrotron light curve completes in under 1 ms; even the most demanding case — a structured jet with full SSC off-axis — finishes in ~180 ms. This makes MCMC parameter estimation lightning fast on a laptop:
 
-* **Tophat jet**: 10,000 MCMC steps, 8 parameters, 15 data points for ~0.3 M samples in ~15 s (Apple M2, 8 cores).
+* **Tophat jet**: 10,000 MCMC steps, 8 parameters, 15 data points for ~0.3 M samples ~15 s (Apple M2, 8 cores).
 * **Structured jet**: same setup ~1 minute.
 
 The charts below benchmark **single-core** wall-clock time by stage across four jet profiles (Tophat, Gaussian, Power-law, Two-component), two media (ISM/Wind), and $\theta_v/\theta_c = 0, 1, 2, 4$, all at the default fiducial resolution — conservatively set to ensure convergence across a wide range of physical parameters. Cost scales with two factors: off-axis observers require a full 3D equal-arrival-time grid vs. 2D on-axis, and structured jets compute radiation independently at each $\theta$ vs. reusing one solution for tophat. Reverse shock adds a second shocked shell, roughly doubling the dynamics cost.
+
 
 <div align="center">
 <picture>
