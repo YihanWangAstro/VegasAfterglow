@@ -10,9 +10,9 @@ import bilby
 import numpy as np
 from bilby.core.sampler.emcee import Emcee as _BilbyEmcee
 
-from ._fitting_config import _JET_CONSTRUCTORS, LATEX_LABELS
-from .types import ModelParams, ParamDef, Scale
-from .VegasAfterglowC import ISM, Magnetar, Wind
+from ..types import ModelParams, ParamDef, Scale
+from ..VegasAfterglowC import ISM, Magnetar, Wind
+from .config import _JET_CONSTRUCTORS, LATEX_LABELS
 
 # Patch bilby to accept 'moves' kwarg for emcee sampler
 _BilbyEmcee.default_kwargs["moves"] = None

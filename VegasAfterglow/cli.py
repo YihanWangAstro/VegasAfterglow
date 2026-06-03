@@ -6,6 +6,11 @@ Usage::
     vegasgen --jet gaussian --z 0.5   # override params
     vegasgen --nu R J --plot          # filter names + quick plot
     vegasgen -o lc.csv                # save to file
+
+Reusable plotting helpers (filter color registry, label formatting, style
+presets, the ``draw_best_fit`` diagnostic) live in :mod:`VegasAfterglow.plotting`.
+For backwards compatibility this module re-exports the small set that other
+code (webtool backend, tests) imported by their old names.
 """
 
 import argparse
@@ -13,8 +18,26 @@ import sys
 
 import numpy as np
 
-from .units import _NAMED_BANDS, _c_A
-from .units import keV as _keV
+# Reusable helpers now live under VegasAfterglow.plotting; re-export here for
+# backwards compatibility with code that imported them from VegasAfterglow.cli.
+from .plotting.colors import (  # noqa: F401
+    _FILTER_COLOR_MAP,
+    FREQ_PALETTE,
+    _auto_filter_name,
+    _broad_band,
+    _disambiguate_filter_colors,
+    _emission_spectrum_color,
+    _filter_color,
+    _freq_colors,
+)
+from .plotting.labels import (  # noqa: F401
+    _format_band,
+    _format_energy,
+    _format_nu_latex,
+    _sci_tex,
+)
+from .plotting.style import _setup_plot_style, _smart_ylim  # noqa: F401
+from .units import _NAMED_BANDS
 
 
 def _lumi_dist_from_z(z):
@@ -69,50 +92,6 @@ def _parse_nu_entry(value):
         return (nu_min, nu_max, value)
     # Point frequency or filter name
     return _parse_frequency(value)
-
-
-def _broad_band(nu):
-    """Return the broad-band name for a frequency."""
-    from .units import eV as _eV_Hz
-
-    E_eV = nu / _eV_Hz
-
-    if nu < 1e12:  # < 1 THz
-        return "Radio"
-    if nu < 4e14:  # 1 THz - 400 THz  (λ > 750 nm)
-        return "IR"
-    if nu < 7.5e14:  # 400 - 750 THz  (400-750 nm)
-        return "Optical"
-    if E_eV < 100:  # 750 THz - 0.1 keV  (λ > 12 nm)
-        return "UV"
-    if E_eV < 1e5:  # 0.1 - 100 keV
-        return "X-ray"
-    if E_eV < 1e9:  # 100 keV - 1 GeV
-        return r"$\gamma$-ray"
-    if E_eV < 1e12:  # 1 GeV - 1 TeV
-        return "GeV"
-    return "TeV"
-
-
-def _format_nu_latex(nu, label=None):
-    """Format a frequency as a LaTeX label with broad-band prefix for plots."""
-    from . import units
-
-    band = _broad_band(nu)
-
-    # Show filter name only if the user actually typed a filter name
-    if label is not None:
-        try:
-            float(label)
-        except ValueError:
-            if label in units._VEGA_FILTERS:
-                return rf"{band} (${label}$-band)"
-            if label in units._ST_FILTERS:
-                return rf"{band} ({label})"
-            if label in units._SURVEY_FILTERS:
-                return rf"{band} ({label})"
-
-    return rf"{band} ({_format_energy(nu, latex=True)})"
 
 
 _FLUX_SCALES = {"mJy": 1e-26, "Jy": 1e-23, "uJy": 1e-29, "cgs": 1.0}
@@ -352,52 +331,6 @@ def build_radiation(args):
     return fwd_rad, rvs_rad
 
 
-def _format_energy(nu, latex=False):
-    """Format a frequency as a human-readable energy/wavelength/frequency string.
-
-    Uses wavelength (nm) for optical/IR/UV, photon energy for X-ray and above,
-    and frequency (GHz/MHz/Hz) for radio.
-    """
-    E_keV = nu / _keV
-    lam_nm = _c_A / nu / 10
-
-    def _v(val, unit):
-        s = f"{val:.3g}"
-        return rf"${s}$ {unit}" if latex else f"{s} {unit}"
-
-    if E_keV >= 1e9:
-        return _v(E_keV / 1e9, "TeV")
-    if E_keV >= 1e6:
-        return _v(E_keV / 1e6, "GeV")
-    if E_keV >= 1e3:
-        return _v(E_keV / 1e3, "MeV")
-    if E_keV >= 0.1:
-        return _v(E_keV, "keV")
-    if 100 < lam_nm < 10000:
-        return _v(lam_nm, "nm")
-    if nu >= 1e12:
-        return _v(nu / 1e12, "THz")
-    if nu >= 1e9:
-        s = f"{nu / 1e9:g}"
-        return rf"${s}$ GHz" if latex else f"{s} GHz"
-    if nu >= 1e6:
-        s = f"{nu / 1e6:.0f}"
-        return rf"${s}$ MHz" if latex else f"{s} MHz"
-    s = f"{nu:.0f}"
-    return rf"${s}$ Hz" if latex else f"{s} Hz"
-
-
-def _format_band(nu_min, nu_max, name=None, latex=False):
-    """Format a frequency band label (plain text or LaTeX)."""
-    lo = _format_energy(nu_min, latex=latex)
-    hi = _format_energy(nu_max, latex=latex)
-    sep = "\u2013" if latex else "-"
-    range_str = f"{lo}{sep}{hi}"
-    if name and name in _NAMED_BANDS:
-        return f"{name} ({range_str})" if latex else f"{name}({range_str})"
-    return range_str
-
-
 def parse_frequencies(nu_args):
     """Parse --nu entries into point frequencies and bands.
 
@@ -582,125 +515,6 @@ _FLUX_LABELS = {
 _TIME_LABELS = {"s": "s", "day": "days", "hr": "hr", "min": "min"}
 
 
-# Discrete qualitative palette ordered warm → cool (radio → X-ray/gamma).
-FREQ_PALETTE = [
-    "#E03530",  # red
-    "#E8872E",  # orange
-    "#D4A017",  # gold
-    "#8C564B",  # brown
-    "#BCBD22",  # olive
-    "#2AB07E",  # green
-    "#17BECF",  # cyan
-    "#2878B5",  # blue
-    "#1D3557",  # navy
-    "#7B3FA0",  # purple
-    "#E377C2",  # pink
-    "#555555",  # gray
-]
-
-
-def _freq_colors(nus):
-    """Map frequencies to distinct colors ordered warm (low ν) → cool (high ν).
-
-    Assigns colors from a discrete qualitative palette by frequency rank,
-    spread evenly across the full palette so even a few frequencies use
-    the full warm→cool range.
-    """
-    n = len(nus)
-    if n == 0:
-        return []
-    P = len(FREQ_PALETTE)
-    order = np.argsort(nus)
-    colors = [""] * n
-    step = (P - 1) / max(1, n - 1) if n <= P else 1
-    for rank, idx in enumerate(order):
-        ci = round(rank * step) if n <= P else rank % P
-        colors[idx] = FREQ_PALETTE[ci]
-    return colors
-
-
-def _setup_plot_style(font=None):
-    """Configure matplotlib for publication-quality output.
-
-    Uses mathtext with STIX fonts (no LaTeX subprocess) for fast rendering.
-    """
-    import matplotlib as mpl
-
-    _SANS_SERIF = {
-        "helvetica",
-        "arial",
-        "liberation sans",
-        "dejavu sans",
-        "gill sans",
-        "futura",
-        "optima",
-        "verdana",
-        "tahoma",
-    }
-
-    if font is None:
-        family = "sans-serif"
-        font_list = ["Helvetica"]
-        math_font = "Helvetica"
-    elif font.lower() in _SANS_SERIF:
-        family = "sans-serif"
-        font_list = [font]
-        math_font = font
-    else:
-        family = "serif"
-        font_list = [font]
-        math_font = font
-
-    style = {
-        "text.usetex": False,
-        "mathtext.fontset": "custom",
-        "mathtext.rm": math_font,
-        "mathtext.it": f"{math_font}:italic",
-        "mathtext.bf": f"{math_font}:bold",
-        "font.family": family,
-        f"font.{family}": font_list,
-        "font.size": 7,
-        "axes.labelsize": 7,
-        "axes.titlesize": 7,
-        "legend.fontsize": 5.5,
-        "xtick.labelsize": 6,
-        "ytick.labelsize": 6,
-        "xtick.direction": "in",
-        "ytick.direction": "in",
-        "xtick.top": True,
-        "ytick.right": True,
-        "xtick.minor.visible": True,
-        "ytick.minor.visible": True,
-        "xtick.major.size": 3,
-        "ytick.major.size": 3,
-        "xtick.minor.size": 1.5,
-        "ytick.minor.size": 1.5,
-        "axes.linewidth": 0.5,
-        "lines.linewidth": 1.0,
-        "axes.grid": True,
-        "axes.grid.which": "both",
-        "grid.color": "0.7",
-        "grid.linestyle": ":",
-        "grid.linewidth": 0.3,
-        "grid.alpha": 0.4,
-        "savefig.bbox": "tight",
-        "savefig.pad_inches": 0.03,
-    }
-
-    mpl.rcParams.update(style)
-
-
-def _sci_tex(val):
-    """Format a number as LaTeX scientific notation: 1e52 -> 10^{52}."""
-    if val == 0:
-        return "0"
-    exp = int(np.floor(np.log10(abs(val))))
-    coeff = val / 10**exp
-    if abs(coeff - 1) < 0.01:
-        return rf"10^{{{exp}}}"
-    return rf"{coeff:.1f}\times10^{{{exp}}}"
-
-
 def _build_param_text(args):
     """Build a compact two-line parameter summary for figure title area."""
     jet_names = {"tophat": "Top-hat", "gaussian": "Gaussian", "powerlaw": "Power-law"}
@@ -773,24 +587,6 @@ def _add_legend(ax, plotted_comps, handles=None, labels=None):
         borderpad=0.4,
         handlelength=1.5,
     )
-
-
-def _smart_ylim(ax, flux_arrays, scale=1.0):
-    """Set smart log y-axis limits from flux arrays, capped at 12 decades."""
-    all_pos = []
-    for arr in flux_arrays:
-        scaled = arr / scale
-        pos = scaled[scaled > 0]
-        if pos.size > 0:
-            all_pos.append(pos)
-    if all_pos:
-        combined = np.concatenate(all_pos)
-        f_max, f_min = np.max(combined), np.min(combined)
-        y_top = f_max * 10
-        y_bot = f_min / 10
-        if y_top / y_bot > 1e12:
-            y_bot = y_top * 1e-12
-        ax.set_ylim(bottom=y_bot, top=y_top)
 
 
 def _plot_point_ax(

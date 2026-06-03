@@ -291,13 +291,28 @@ Analyzing Results
 Parameter Constraints
 ----------------------
 
+``FitResult.summary(top_k=None)`` returns a ranked table of the best-fit parameter sets, sorted by log-likelihood. Each row shows the rank, the chi-squared (``-2 * log_prob``; exact for the default Gaussian likelihood, a generic deviance for custom likelihoods), and the sampler-space value of every parameter (``Scale.log`` parameters appear as ``log10_<name>``):
+
 .. code-block:: python
 
-    # Top-K best-fit parameters with chi-squared
+    # All top-K rows stored on the result (top_k was set at fit() time)
     print(result.summary())
+
+    # Show only the top 3
+    print(result.summary(top_k=3))
 
     # In a Jupyter cell, last-line auto-display also works:
     # result.summary()
+
+Example output::
+
+    Rank       chi^2     log10_E_iso       log10_Gamma0          theta_c               p
+    -----------------------------------------------------------------------------------
+       1       42.18         53.4127             2.4912           0.0612          2.2143
+       2       43.05         53.3984             2.5031           0.0598          2.2255
+       3       44.71         53.4276             2.4798           0.0625          2.2079
+
+The returned object renders identically under ``print(result.summary())`` and a bare ``result.summary()`` in a Jupyter cell, so you can paste either pattern into a notebook.
 
 Model Predictions
 ------------------
@@ -322,6 +337,45 @@ Model Predictions
 
     flux_integrated = fitter.flux(result.top_k_params[0], t_model,
                                   band=band("BAT"))
+
+.. _diagnostic-plot:
+
+Diagnostic Plot
+----------------
+
+``Fitter.draw_best_fit()`` produces a publication-style two-panel diagnostic figure of the best-fit model overlaid on the observation data, in one call:
+
+.. code-block:: python
+
+    fig, (ax_top, ax_bot) = fitter.draw_best_fit()
+
+The figure layout:
+
+- **Top panel** — observed data with errorbars plus the best-fit model curves. Single-frequency light curves (added via ``add_flux_density``) appear on the left y-axis as ``F_nu``; band-integrated fluxes (added via ``add_flux``) appear on the right y-axis as ``F``. When both kinds are present the two log y-axes are matched to span the same number of decades so a power-law slope alpha has identical visual slope on both sides. Multiple bands are auto-shifted vertically (rank-based, relaxed to avoid overlap) and the legend reports the shift factors.
+- **Bottom panel** — observer-frame evolution of the synchrotron break frequencies ``nu_a``, ``nu_m``, ``nu_c``. Observed light-curve frequencies are overlaid as horizontal dashed lines; observed bands appear as shaded ``axhspan`` regions. Circles mark where each break-frequency curve crosses an observed line; squares mark crossings with the band edges -- useful for reading off when the model transitions through each observed band.
+
+The break frequencies are evaluated at the jet ``theta`` column closest to the line of sight (``theta_v``), so the Doppler boost reflects what the off-axis observer sees (this collapses to the jet axis for ``theta_v == 0``).
+
+Common kwargs:
+
+- ``best_params=None`` — sampler-space parameter array. Defaults to ``self.result.top_k_params[0]`` (raises if no fit has been run).
+- ``t_range=None`` — ``(t_min, t_max)`` for the model curves in seconds. Default extends one decade below ``tmin`` and two decades above ``tmax`` of the observed data so the curves reach the visible edges.
+- ``n_t=200`` — number of points on the model time grid.
+- ``auto_shift_gap=1.0`` — decades added between consecutive bands (frequency-sorted). Each band is shifted by ``(rank - (n-1)/2) * auto_shift_gap``, then a second pass pushes bands apart locally if their shifted log-flux ranges still overlap. Raise this for wider visual separation.
+- ``shifts=None`` — dict overriding individual auto-computed shifts. Keys are ``("lc", nu_hz)`` for light curves or ``("band", (nu_min, nu_max))`` for band-integrated entries; values are ``log10`` multipliers.
+- ``show_nu_panel=True`` — set ``False`` to drop the bottom break-frequency panel and get a single-panel data/model plot.
+- ``resolution=None`` — ``(phi, theta, t)`` override applied just to this rendering call.
+- ``fig=None, axes=None`` — pass an existing figure / ``(ax_top, ax_bot)`` tuple to draw into instead of letting the method allocate its own.
+
+Legend entries pick up filter / instrument names from the optional ``label=`` argument on ``add_flux_density`` and ``add_flux``:
+
+.. code-block:: python
+
+    fitter.add_flux_density(nu=4.6e14, t=t_r, f_nu=f_r, err=e_r, label="r")
+    fitter.add_flux_density(nu=4.6e14, t=t_VT_R, f_nu=f_VT_R, err=e_VT_R, label="VT_R")
+    fitter.add_flux(band=(0.5e3 * u_keV, 4.0e3 * u_keV), t=t_x, flux=f_x, err=e_x, label="WXT")
+
+Known filter codes (SDSS ``u/g/r/i/z``, Johnson ``UBVRI``, 2MASS ``JHK``, X-ray instruments like ``WXT``, ``XRT``, ``BAT``) get curated colors from a built-in registry; same-color filters at different frequencies (e.g. ``r`` and ``VT_R``) are disambiguated via lightness so they remain visually distinct.
 
 Saving and Loading Fits
 ------------------------
@@ -365,6 +419,8 @@ Pre-existing bilby Result files from other tools (no VegasAfterglow metadata) ca
 Visualization
 --------------
 
+For the data/model overlay use :ref:`Diagnostic Plot <diagnostic-plot>` above (``fitter.draw_best_fit()``). For posterior correlations, the standard tool is the external ``corner`` package:
+
 .. code-block:: python
 
     import matplotlib.pyplot as plt
@@ -372,31 +428,13 @@ Visualization
 
     flat_chain = result.samples.reshape(-1, result.samples.shape[-1])
 
-    # Corner plot for parameter correlations
     fig = corner.corner(
         flat_chain,
         labels=result.latex_labels,
         quantiles=[0.16, 0.5, 0.84],
         show_titles=True,
-        title_kwargs={"fontsize": 12}
+        title_kwargs={"fontsize": 12},
     )
-    plt.savefig("corner_plot.png", dpi=300, bbox_inches='tight')
+    plt.savefig("corner_plot.png", dpi=300, bbox_inches="tight")
 
-    # Light curve comparison
-    fig, axes = plt.subplots(1, 3, figsize=(15, 5))
-    colors = ['blue', 'orange', 'red']
-
-    for i, (nu, color) in enumerate(zip(nu_model, colors)):
-        ax = axes[i]
-
-        # Plot data (if available)
-        # ax.errorbar(t_data, flux_data, flux_err, fmt='o', color=color)
-
-        # Plot model
-        ax.loglog(t_model, lc_model[i], '-', color=color, linewidth=2)
-        ax.set_xlabel('Time [s]')
-        ax.set_ylabel('Flux Density [erg/cm^2/s/Hz]')
-        ax.set_title(f'nu = {nu:.1e} Hz')
-
-    plt.tight_layout()
-    plt.savefig("lightcurve_fit.png", dpi=300, bbox_inches='tight')
+bilby's own corner helper is also available via ``result.bilby_result.plot_corner()`` if you prefer the bilby styling.

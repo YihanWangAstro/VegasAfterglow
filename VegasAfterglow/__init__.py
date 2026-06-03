@@ -37,7 +37,7 @@ from .types import (
 def __getattr__(name):
     if name in ("Fitter", "AfterglowLikelihood"):
         try:
-            from .runner import AfterglowLikelihood, Fitter
+            from .fitting import AfterglowLikelihood, Fitter
         except ImportError:
             raise ImportError(
                 "MCMC fitting requires additional dependencies. "

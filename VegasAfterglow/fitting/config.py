@@ -5,7 +5,7 @@ from dataclasses import dataclass
 import emcee
 import numpy as np
 
-from .VegasAfterglowC import (
+from ..VegasAfterglowC import (
     GaussianJet,
     PowerLawJet,
     PowerLawWing,
@@ -120,3 +120,4 @@ class _BandObs:
     flux: np.ndarray
     err: np.ndarray
     weights: np.ndarray
+    name: "str | None" = None
