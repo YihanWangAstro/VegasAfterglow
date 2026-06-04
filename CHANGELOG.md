@@ -22,6 +22,12 @@ Have a feature request? [Open an issue](https://github.com/YihanWangAstro/VegasA
 
 ### Added
 
+#### ► **`Fitter.draw_best_fit()` — one-call diagnostic plot**
+
+- ``fig, (ax_top, ax_bot) = fitter.draw_best_fit()`` produces a publication-style two-panel figure of your observation data overlaid with the best-fit model — drops the ~30 lines of matplotlib boilerplate every notebook re-implements. The top panel handles a mix of single-frequency light curves (``add_flux_density``) and band-integrated fluxes (``add_flux``) automatically: a dual y-axis when both are present, with the two log scales matched so spectral slopes look the same on either side, and multi-band data auto-shifted in log-flux so curves don't overlap (shift factors appear in the legend).
+- The bottom panel shows the observer-frame evolution of the synchrotron break frequencies ν_a, ν_m, ν_c, with your observed frequencies drawn as horizontal lines and circles marking where each break passes through an observed band — useful for reading off when the model transitions through each frequency.
+- Filter / instrument names go straight from your data into the legend and into a curated color palette: pass ``label="r"`` or ``label="WXT"`` to ``add_flux_density`` / ``add_flux``, or call ``add_flux_density(nu=filter("r"), ...)`` and the name is picked up automatically. SDSS, Johnson–Cousins, 2MASS, HST WFC3, SVOM VT, Swift, Einstein Probe, and Fermi instruments are all recognised; sister filters that share a base color (e.g. SDSS ``r`` vs SVOM ``VT_R``) are spread by lightness when both appear.
+
 #### ► **`fitter.save(path)` / `Fitter.load(path)` — symmetric one-line persistence**
 
 - Saving and loading now live on the same class. ``fitter.save(path)`` writes the full fitter snapshot (constructor args, observation data, parameter definitions, samples) to bilby-native HDF5 / JSON, and ``Fitter.load(path)`` reconstructs a fully-configured ``Fitter`` plus ``FitResult`` from it in one call. ``fitter.flux_density_grid`` / ``fitter.flux`` work immediately on ``fitter.result.top_k_params[0]``. If the original fit used a custom callable for ``jet`` / ``medium`` / ``extinction``, pass the same callable as ``Fitter.load(path, jet=...)`` since callables can't round-trip through HDF5 / JSON.

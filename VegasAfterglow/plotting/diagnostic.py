@@ -72,30 +72,14 @@ def _flux_log10_range(flux, err):
     return float(np.log10(lower[mask].min())), float(np.log10(upper[mask].max()))
 
 
-def _auto_shifts_by_frequency(lc_list, band_list, gap_decades):
-    """Per-band log10 shifts: rank-based spacing, relaxed to avoid overlap.
+def _stack_entries(entries, gap_decades):
+    """Rank-based shifts with bottom-up overlap relaxation, re-centred on zero.
 
-    1. **First pass** — frequency-rank uniform spacing: each band gets
-       ``(rank - (n-1)/2) * gap_decades``. Keeps shifts small and the legend
-       readable.
-    2. **Second pass** — walk bottom-up; whenever a band's shifted log10
-       range still overlaps the band below it, push it (and all bands above
-       it, preserving rank order) up by exactly enough to make the ranges
-       touch.
-
-    Shifts are finally re-centred on zero. Keys: ``("lc", nu_hz)`` and
-    ``("band", (nu_min, nu_max))``.
+    ``entries`` is a list of ``(sort_key, kind_key, lo, hi)`` tuples where
+    ``lo``/``hi`` bound the log10-flux range of one observed band on a single
+    axis. Returns ``{kind_key: shift_decades}``.
     """
-    entries = []  # (sort_key, kind_key, lo, hi)
-    for nu, _t, f, e, _lbl in lc_list:
-        lo, hi = _flux_log10_range(f, e)
-        entries.append((float(nu), ("lc", float(nu)), lo, hi))
-    for b in band_list:
-        lo, hi = _flux_log10_range(b.flux, b.err)
-        center = float(np.sqrt(b.nu_min * b.nu_max))
-        entries.append((center, ("band", (b.nu_min, b.nu_max)), lo, hi))
-
-    entries.sort(key=lambda x: x[0])
+    entries = sorted(entries, key=lambda x: x[0])
     n = len(entries)
     if n == 0:
         return {}
@@ -103,6 +87,8 @@ def _auto_shifts_by_frequency(lc_list, band_list, gap_decades):
     offset = (n - 1) / 2.0
     shifts = [(i - offset) * gap_decades for i in range(n)]
 
+    # Bottom-up: push later entries up just enough so adjacent shifted ranges
+    # touch instead of overlap.
     for i in range(1, n):
         prev_top = shifts[i - 1] + entries[i - 1][3]
         curr_bot = shifts[i] + entries[i][2]
@@ -113,6 +99,36 @@ def _auto_shifts_by_frequency(lc_list, band_list, gap_decades):
 
     median_shift = float(np.median(shifts))
     return {entries[i][1]: shifts[i] - median_shift for i in range(n)}
+
+
+def _auto_shifts_by_frequency(lc_list, band_list, gap_decades):
+    """Per-band log10 shifts: rank-based spacing, relaxed to avoid overlap.
+
+    Light curves and band-integrated entries are stacked **independently**
+    when both are present, because ``draw_best_fit`` puts them on different
+    y-axes (``F_nu`` vs ``F``) with different unit systems — interleaving them
+    in a single rank order would make the overlap relaxation compare
+    log10-flux values that live on different scales.
+
+    Returns ``{kind_key: shift_decades}`` where ``kind_key`` is either
+    ``("lc", nu_hz)`` or ``("band", (nu_min, nu_max))``.
+    """
+    lc_entries = [
+        (float(nu), ("lc", float(nu)), *_flux_log10_range(f, e))
+        for nu, _t, f, e, _lbl in lc_list
+    ]
+    band_entries = [
+        (
+            float(np.sqrt(b.nu_min * b.nu_max)),
+            ("band", (b.nu_min, b.nu_max)),
+            *_flux_log10_range(b.flux, b.err),
+        )
+        for b in band_list
+    ]
+    return {
+        **_stack_entries(lc_entries, gap_decades),
+        **_stack_entries(band_entries, gap_decades),
+    }
 
 
 def _match_decade_span(ax_L, ax_R):

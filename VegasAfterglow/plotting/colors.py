@@ -63,38 +63,42 @@ _FILTER_COLOR_MAP = {
     "g": "#3F8F3F",  # green
     "r": "#D32F2F",  # red
     "i": "#8B1A1A",  # dark red
-    "z": "#5D4037",  # NIR brown
-    "y": "#3E2723",  # deep NIR brown
+    "z": "#BFA28F",  # NIR light tan
+    "y": "#9A7B5E",  # NIR medium tan
     # Johnson-Cousins UBVRI
     "U": "#7B1FA2",
     "B": "#1976D2",  # blue
     "V": "#3F8F3F",  # green
     "R": "#D32F2F",
     "I": "#8B1A1A",
-    # 2MASS / UKIDSS near-IR
-    "J": "#A0521C",
-    "H": "#7C3A14",
-    "K": "#5C2A0E",
-    "Ks": "#5C2A0E",
+    # 2MASS / UKIDSS near-IR: warm-brown ramp tuned for ΔE > 13 between any
+    # adjacent pair, so H (mid-NIR) reads as clearly brown rather than the
+    # red-brown that previously collided with the visible-red filters (i, R).
+    "J": "#704435",  # medium warm brown
+    "H": "#4A2C24",  # dark warm brown
+    "K": "#2A1F1B",  # near-black brown
+    "Ks": "#2A1F1B",
     # HST common WFC3/ACS broad filters
     "F275W": "#9C27B0",  # near-UV
     "F336W": "#7B1FA2",
     "F438W": "#1976D2",
     "F555W": "#3F8F3F",
-    "F606W": "#5F9F4F",  # green-ish broad-V
+    "F606W": "#7CB342",  # broad-V (lighter green to differ from g/V)
     "F814W": "#8B1A1A",
     "F125W": "#A0521C",
     "F160W": "#7C3A14",
-    # X-ray instruments — increasing photon energy = darker / deeper blue
-    "WXT": "#1B3E72",  # Einstein Probe WXT (soft, 0.5–4 keV)
-    "FXT": "#11295C",  # Einstein Probe FXT
-    "XRT": "#0D47A1",  # Swift XRT (0.3–10 keV)
-    "BAT": "#1A237E",  # Swift BAT (15–150 keV)
-    "NICER": "#0D47A1",
-    "Chandra": "#0A2E5C",
-    # Gamma-ray
-    "GBM": "#311B92",  # Fermi GBM
-    "LAT": "#1A0F4A",  # Fermi LAT
+    # X-ray and γ-ray instruments — spread across blue → cyan → indigo →
+    # purple so several instruments can coexist on one plot without colour
+    # clashes. Lightness still trends darker with photon energy within a hue
+    # family, but the family changes when ΔE would otherwise drop below ~10.
+    "WXT": "#4FC3F7",  # Einstein Probe WXT (soft, 0.5–4 keV) — bright cyan-blue
+    "NICER": "#2196F3",  # NICER (0.2–12 keV) — medium blue
+    "XRT": "#0D47A1",  # Swift XRT (0.3–10 keV) — deep blue
+    "FXT": "#00838F",  # Einstein Probe FXT — teal
+    "Chandra": "#1A237E",  # Chandra (0.5–7 keV) — dark indigo
+    "BAT": "#5E35B1",  # Swift BAT (15–150 keV) — purple
+    "GBM": "#311B92",  # Fermi GBM (8 keV – 40 MeV) — deep indigo-purple
+    "LAT": "#0D0029",  # Fermi LAT (100 MeV+) — near-black purple
 }
 
 
