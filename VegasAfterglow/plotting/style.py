@@ -1,4 +1,4 @@
-"""Shared matplotlib style presets used by both CLI plots and ``draw_best_fit``.
+"""Shared matplotlib style presets used by both CLI plots and ``draw_fit``.
 
 * ``_ERRBAR_STYLE`` / ``_MARKER_STYLE`` — kwargs dicts so all panels render
   data points and crossing markers with identical visual weight.
@@ -10,7 +10,7 @@
 
 import numpy as np
 
-# Errorbar style for plotted data points (Fitter.draw_best_fit + CLI plots).
+# Errorbar style for plotted data points (Fitter.draw_fit + CLI plots).
 _ERRBAR_STYLE = dict(
     linestyle="none",
     linewidth=0.5,

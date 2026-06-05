@@ -1,8 +1,8 @@
-"""``Fitter.draw_best_fit`` implementation and its private helpers.
+"""``Fitter.draw_fit`` implementation and its private helpers.
 
 Kept out of the ``Fitter`` class itself so the fitter module stays focused on
 data setup, sampler orchestration, and post-fit prediction. The public entry
-point is ``draw_best_fit(fitter, ...)``, which the ``Fitter.draw_best_fit``
+point is ``draw_fit(fitter, ...)``, which the ``Fitter.draw_fit``
 method delegates to.
 """
 
@@ -105,7 +105,7 @@ def _auto_shifts_by_frequency(lc_list, band_list, gap_decades):
     """Per-band log10 shifts: rank-based spacing, relaxed to avoid overlap.
 
     Light curves and band-integrated entries are stacked **independently**
-    when both are present, because ``draw_best_fit`` puts them on different
+    when both are present, because ``draw_fit`` puts them on different
     y-axes (``F_nu`` vs ``F``) with different unit systems — interleaving them
     in a single rank order would make the overlap relaxation compare
     log10-flux values that live on different scales.
@@ -245,10 +245,12 @@ def _draw_freq_panel(
         ax_bot.legend(loc="best", fontsize=9, ncol=3)
 
 
-def draw_best_fit(
+def draw_fit(
     fitter,
     best_params: Optional[np.ndarray] = None,
     *,
+    ci: float = 0.68,
+    n_samples: int = 100,
     t_range: Optional[Tuple[float, float]] = None,
     n_t: int = 500,
     shifts: Optional[dict] = None,
@@ -258,9 +260,9 @@ def draw_best_fit(
     fig=None,
     axes=None,
 ):
-    """Diagnostic plot of observation data overlaid with the best-fit model.
+    """Diagnostic plot of observation data overlaid with the fitted model.
 
-    See :py:meth:`VegasAfterglow.fitting.fitter.Fitter.draw_best_fit` for the
+    See :py:meth:`VegasAfterglow.fitting.fitter.Fitter.draw_fit` for the
     full parameter documentation -- this free function holds the
     implementation so the ``Fitter`` class can stay focused on fitting.
     """
@@ -281,14 +283,14 @@ def draw_best_fit(
     )
     if spectrum_count > 0:
         logger.warning(
-            "draw_best_fit: %d spectrum entries skipped "
+            "draw_fit: %d spectrum entries skipped "
             "(v1 supports light-curve and band-integrated data only)",
             spectrum_count,
         )
 
     if not lc_list and not fitter._band_obs:
         raise ValueError(
-            "draw_best_fit: no observation data — "
+            "draw_fit: no observation data — "
             "call add_flux_density(...) or add_flux(...) first."
         )
 
@@ -381,44 +383,69 @@ def draw_best_fit(
     def _shifted_label(base, shift):
         return f"{base} $\\times 10^{{{shift:.0f}}}$" if abs(shift) > 1e-9 else base
 
-    with fitter._override_resolution(resolution):
-        # Light curves on the left axis.
-        for nu, t_data, f_data, e_data, _user_label in lc_list:
-            shift = float(shift_map.get(("lc", nu), 0.0))
-            scale = 10.0**shift
-            color = lc_color_map[nu]
-            model_flux = np.asarray(
-                fitter.flux_density_grid(
-                    best_params, t_grid, np.array([nu]), resolution=resolution
-                ).total
-            )[0]
-            label = _shifted_label(lc_names[nu] or _broad_band(nu), shift)
-            ax_top.errorbar(
-                t_data,
-                f_data * scale,
-                yerr=e_data * scale,
-                color=color,
-                ecolor=color,
-                **_ERRBAR_STYLE,
-            )
-            ax_top.plot(t_grid, model_flux * scale, "-", color=color, label=label, lw=1)
+    # When posterior samples are available and the user did not opt out
+    # (n_samples=0), show the posterior median trajectory with a shaded
+    # ``ci`` credible band. Otherwise fall back to the MAP curve.
+    use_band = n_samples > 0 and fitter._has_posterior_samples()
 
-        # Band-integrated on the right axis (or the left, if no LC data).
+    with fitter._override_resolution(resolution):
+        # ---- Light curves on the left axis ----
+        if lc_list:
+            lc_nus = np.array([nu for nu, *_ in lc_list], dtype=float)
+            if use_band:
+                cb = fitter.flux_density_credible(
+                    t_grid, lc_nus, ci=ci, n_samples=n_samples
+                )
+                lc_central, lc_lower, lc_upper = cb.median, cb.lower, cb.upper
+            else:
+                lc_central = np.asarray(
+                    fitter.flux_density_grid(best_params, t_grid, lc_nus).total
+                )
+                lc_lower = lc_upper = None
+
+            for i, (nu, t_data, f_data, e_data, _user_label) in enumerate(lc_list):
+                shift = float(shift_map.get(("lc", nu), 0.0))
+                scale = 10.0**shift
+                color = lc_color_map[nu]
+                label = _shifted_label(lc_names[nu] or _broad_band(nu), shift)
+                ax_top.errorbar(
+                    t_data,
+                    f_data * scale,
+                    yerr=e_data * scale,
+                    color=color,
+                    ecolor=color,
+                    **_ERRBAR_STYLE,
+                )
+                ax_top.plot(
+                    t_grid, lc_central[i] * scale, "-", color=color, label=label, lw=1
+                )
+                if lc_lower is not None:
+                    ax_top.fill_between(
+                        t_grid,
+                        lc_lower[i] * scale,
+                        lc_upper[i] * scale,
+                        color=color,
+                        alpha=0.2,
+                        lw=0,
+                    )
+
+        # ---- Band-integrated on the right axis (or the left, if no LC data) ----
         band_ax = ax_top_R if dual else ax_top
         for b in fitter._band_obs:
             key = (b.nu_min, b.nu_max)
             shift = float(shift_map.get(("band", key), 0.0))
             scale = 10.0**shift
             color = band_color_map[key]
-            model_flux = np.asarray(
-                fitter.flux(
-                    best_params,
-                    t_grid,
-                    key,
-                    num_points=b.num_points,
-                    resolution=resolution,
-                ).total
-            )
+            if use_band:
+                cb = fitter.flux_credible(
+                    t_grid, key, ci=ci, n_samples=n_samples, num_points=b.num_points
+                )
+                central, lower, upper = cb.median, cb.lower, cb.upper
+            else:
+                central = np.asarray(
+                    fitter.flux(best_params, t_grid, key, num_points=b.num_points).total
+                )
+                lower = upper = None
             nu_center = float(np.sqrt(b.nu_min * b.nu_max))
             label = _shifted_label(band_names[key] or _broad_band(nu_center), shift)
             band_ax.errorbar(
@@ -429,9 +456,16 @@ def draw_best_fit(
                 ecolor=color,
                 **_ERRBAR_STYLE,
             )
-            band_ax.plot(
-                t_grid, model_flux * scale, "--", color=color, label=label, lw=1
-            )
+            band_ax.plot(t_grid, central * scale, "--", color=color, label=label, lw=1)
+            if lower is not None:
+                band_ax.fill_between(
+                    t_grid,
+                    lower * scale,
+                    upper * scale,
+                    color=color,
+                    alpha=0.2,
+                    lw=0,
+                )
 
     ax_top.set_xscale("log")
     ax_top.set_yscale("log")

@@ -1,6 +1,6 @@
 """Color registry and frequency/filter color helpers.
 
-Used by both the ``vegasgen`` CLI plots and ``Fitter.draw_best_fit``. Three
+Used by both the ``vegasgen`` CLI plots and ``Fitter.draw_fit``. Three
 layers stacked from most-specific to least-specific:
 
 1. ``_FILTER_COLOR_MAP`` — canonical colors for known filter / instrument
@@ -170,7 +170,7 @@ def _auto_filter_name(nu, tol=0.01):
 
     Matches ``nu`` against the photometric filter table in ``units.py``
     (Johnson-Cousins, SDSS, 2MASS, Swift UVOT, HST WFC3, SVOM VT, WFST).
-    Used by ``Fitter.draw_best_fit`` as a fallback when the user adds data via
+    Used by ``Fitter.draw_fit`` as a fallback when the user adds data via
     ``nu=filter('r')`` without an explicit ``label=`` — a 1% tolerance is
     tight enough to distinguish neighbouring filters (e.g. SDSS r vs Johnson
     R, ~4% apart) but loose enough to forgive small floating-point drift.

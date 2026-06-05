@@ -58,6 +58,10 @@ def save_fitter(fitter, path) -> None:
         "samples_shape": list(r.samples.shape),
         "param_defs_json": defs_json,
         "fitter_config_json": json.dumps(_snapshot_config(fitter)),
+        # Fit-quality bookkeeping. None on older saved files; consumers must
+        # tolerate the missing key.
+        "n_data": r.n_data,
+        "n_free_params": r.n_free_params,
     }
 
     if r.bilby_result is not None:
@@ -280,5 +284,7 @@ def load_fitter(path, *, jet=None, medium=None, extinction=None):
         top_k_params=vg.get("top_k_params"),
         top_k_log_probs=vg.get("top_k_log_probs"),
         bilby_result=br,
+        n_data=vg.get("n_data"),
+        n_free_params=vg.get("n_free_params"),
     )
     return fitter

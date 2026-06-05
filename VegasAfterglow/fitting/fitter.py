@@ -1,13 +1,15 @@
 """Afterglow model fitting with custom priors, likelihoods, and jet/medium profiles."""
 
 import logging
+import os
+from concurrent.futures import ThreadPoolExecutor
 from contextlib import contextmanager
 from types import SimpleNamespace
 from typing import Callable, List, Optional, Sequence, Tuple
 
 import numpy as np
 
-from ..types import FitResult, ModelParams, ParamDef
+from ..types import FitResult, ModelParams, ParamDef, Scale
 from ..VegasAfterglowC import Model, Observer, Radiation
 from .config import _BandObs
 from .utils import _build_transformer, _default_jet_factory, _default_medium_factory
@@ -123,7 +125,7 @@ class Fitter:
         self._point_flux = []
         self._point_err = []
         self._point_weights = []
-        # Per-entry optional filter/band name for draw_best_fit legends.
+        # Per-entry optional filter/band name for draw_fit legends.
         self._point_labels: List[Optional[str]] = []
         self._band_obs: List[_BandObs] = []
 
@@ -168,7 +170,7 @@ class Fitter:
     def _add_point_data(self, t, nu, f_nu, err, weights, label=None):
         """Append point observation arrays to internal lists.
 
-        ``label`` is an optional filter/band name used by ``draw_best_fit`` for
+        ``label`` is an optional filter/band name used by ``draw_fit`` for
         legend display (e.g., ``'r'``, ``'WXT'``, ``'VT_R'``). Not used for
         chi-squared evaluation.
         """
@@ -248,7 +250,7 @@ class Fitter:
             err: Observational uncertainties [erg/cm^2/s/Hz]
             weights: Optional statistical weights
             label: Optional filter/band name (e.g., ``'r'``, ``'VT_R'``, ``'WXT'``)
-                used by ``draw_best_fit`` for legend display. Not used for
+                used by ``draw_fit`` for legend display. Not used for
                 chi-squared evaluation. If omitted, the broad-band name
                 (Radio / IR / Optical / X-ray / ...) is used as a fallback.
         """
@@ -312,7 +314,7 @@ class Fitter:
             num_points: Number of frequency sampling points for integration
             weights: Optional statistical weights
             label: Optional instrument/band name (e.g., ``'WXT'``, ``'XRT'``)
-                used by ``draw_best_fit`` for legend display.
+                used by ``draw_fit`` for legend display.
         """
         try:
             nu_min, nu_max = band
@@ -594,6 +596,13 @@ class Fitter:
                 prior_dict,
                 **sampler_kwargs,
             )
+        # Populate fit-quality bookkeeping so FitResult.summary() can surface
+        # reduced χ² / BIC / AIC without the user counting data points.
+        result.n_data = sum(len(arr) for arr in self._point_t) + sum(
+            len(b.t) for b in self._band_obs
+        )
+        result.n_free_params = sum(1 for d in defs if d.scale is not Scale.fixed)
+
         # Cache for convenience: matches Fitter.load(...) post-condition.
         self.result = result
         return result
@@ -776,6 +785,142 @@ class Fitter:
         with self._override_resolution(resolution):
             return self._model_from_fit(best_params).flux(t, nu_min, nu_max, num_points)
 
+    def _has_posterior_samples(self) -> bool:
+        """True when ``self.result`` carries usable posterior samples (set by
+        ``.fit()`` or loaded via ``Fitter.load``)."""
+        return (
+            self.result is not None
+            and self.result.samples is not None
+            and self.result.samples.size > 0
+        )
+
+    def _draw_posterior(
+        self, n_samples: int, rng: Optional[np.random.Generator]
+    ) -> np.ndarray:
+        """Sample ``n_samples`` rows from the flat posterior. Sampling is with
+        replacement only when ``n_samples`` exceeds the posterior size."""
+        if not self._has_posterior_samples():
+            raise RuntimeError(
+                "credible bands require posterior samples; call .fit() first"
+            )
+        if n_samples < 2:
+            raise ValueError(f"n_samples must be >= 2, got {n_samples}")
+        rng = np.random.default_rng() if rng is None else rng
+        flat = self.result.samples.reshape(-1, self.result.samples.shape[-1])
+        idx = rng.choice(
+            flat.shape[0], size=n_samples, replace=(n_samples > flat.shape[0])
+        )
+        return flat[idx]
+
+    def _credible_band(
+        self,
+        draws: np.ndarray,
+        ci: float,
+        evaluate: Callable[[np.ndarray], np.ndarray],
+        n_workers: Optional[int],
+        resolution: Optional[Tuple[float, float, float]],
+    ) -> SimpleNamespace:
+        """Apply ``evaluate(params)`` to each posterior draw and return the
+        central-``ci`` percentile envelope plus the posterior median. Threads
+        share a single ``_override_resolution`` context so the per-call
+        resolution mutation doesn't race between draws."""
+        if not (0.0 < ci < 1.0):
+            raise ValueError(f"ci must be in (0, 1), got {ci}")
+        workers = n_workers if n_workers is not None else max(1, os.cpu_count() or 1)
+        with self._override_resolution(resolution):
+            if workers > 1:
+                with ThreadPoolExecutor(max_workers=workers) as pool:
+                    results = [r for r in pool.map(evaluate, draws)]
+            else:
+                results = [evaluate(p) for p in draws]
+
+        stack = np.stack([np.asarray(r) for r in results], axis=0)
+        lower, median, upper = np.percentile(
+            stack, [50.0 * (1.0 - ci), 50.0, 50.0 * (1.0 + ci)], axis=0
+        )
+        return SimpleNamespace(lower=lower, median=median, upper=upper)
+
+    def flux_density_credible(
+        self,
+        t: np.ndarray,
+        nu: np.ndarray,
+        ci: float = 0.68,
+        n_samples: int = 200,
+        n_workers: Optional[int] = None,
+        rng: Optional[np.random.Generator] = None,
+        resolution: Optional[Tuple[float, float, float]] = None,
+    ) -> SimpleNamespace:
+        """Posterior credible band on the total flux density.
+
+        Draws ``n_samples`` random posterior samples, evaluates
+        ``flux_density_grid`` at each, and returns the central ``ci``
+        credible interval per ``(nu, t)`` cell. Extinction is applied
+        per draw (matching ``flux_density_grid``) so the band reflects
+        ``A_V`` uncertainty when ``A_V`` is sampled.
+
+        Args:
+            t: Time array [seconds]
+            nu: Frequency array [Hz]
+            ci: Credible interval (e.g. 0.68 for ~1σ, 0.95 for ~2σ)
+            n_samples: Posterior draws to evaluate (larger = smoother)
+            n_workers: Thread count for parallel evaluation. ``None`` -> ``os.cpu_count()``.
+            rng: ``numpy.random.Generator``; defaults to ``np.random.default_rng()``
+            resolution: Optional ``(phi, theta, t)`` override
+
+        Returns:
+            ``SimpleNamespace(lower, median, upper)`` with arrays of shape
+            ``(len(nu), len(t))``. The median trajectory is the natural
+            central line for plotting since it is guaranteed to lie inside
+            ``[lower, upper]`` (the MAP trajectory is not).
+            Usage: ``ax.fill_between(t, out.lower[i_nu], out.upper[i_nu])``
+            followed by ``ax.plot(t, out.median[i_nu])``.
+        """
+        draws = self._draw_posterior(n_samples, rng)
+        t_arr = np.atleast_1d(np.asarray(t, dtype=np.float64))
+        nu_arr = np.atleast_1d(np.asarray(nu, dtype=np.float64))
+        return self._credible_band(
+            draws,
+            ci,
+            lambda p: np.asarray(self.flux_density_grid(p, t_arr, nu_arr).total),
+            n_workers,
+            resolution,
+        )
+
+    def flux_credible(
+        self,
+        t: np.ndarray,
+        band,
+        ci: float = 0.68,
+        n_samples: int = 200,
+        num_points: int = 15,
+        n_workers: Optional[int] = None,
+        rng: Optional[np.random.Generator] = None,
+        resolution: Optional[Tuple[float, float, float]] = None,
+    ) -> SimpleNamespace:
+        """Posterior credible band on band-integrated flux.
+
+        Same semantics as :meth:`flux_density_credible` but mirrors
+        :meth:`flux` (band-integrated, no extinction applied).
+
+        Returns:
+            ``SimpleNamespace(lower, median, upper)`` with arrays of shape ``(len(t),)``.
+        """
+        try:
+            _, _ = band
+        except (TypeError, ValueError):
+            raise ValueError(
+                f"flux_credible: band must be a (nu_min, nu_max) tuple in Hz, got {band!r}"
+            ) from None
+        draws = self._draw_posterior(n_samples, rng)
+        t_arr = np.atleast_1d(np.asarray(t, dtype=np.float64))
+        return self._credible_band(
+            draws,
+            ci,
+            lambda p: np.asarray(self.flux(p, t_arr, band, num_points).total),
+            n_workers,
+            resolution,
+        )
+
     def model(
         self,
         best_params: np.ndarray,
@@ -788,10 +933,12 @@ class Fitter:
         """
         return self._model_from_fit(best_params)
 
-    def draw_best_fit(
+    def draw_fit(
         self,
         best_params: Optional[np.ndarray] = None,
         *,
+        ci: float = 0.68,
+        n_samples: int = 100,
         t_range: Optional[Tuple[float, float]] = None,
         n_t: int = 500,
         shifts: Optional[dict] = None,
@@ -801,18 +948,19 @@ class Fitter:
         fig=None,
         axes=None,
     ):
-        """Diagnostic plot of observation data overlaid with the best-fit model.
+        """Diagnostic plot of observation data overlaid with the fitted model.
 
         Builds a two-panel figure:
 
-        * **Top panel** -- data + model curves. Single-frequency light curves
-          (added via ``add_flux_density``) and band-integrated fluxes (added via
-          ``add_flux``) get a dual y-axis if both kinds are present: left is
-          ``F_nu`` in erg/cm^2/s/Hz, right is ``F`` in erg/cm^2/s. The two
-          y-scales are matched to span the same number of decades so a power-law
-          slope alpha looks identical on both sides. Multiple bands are shifted
-          vertically (in log) by amounts chosen from the data ranges so they
-          don't overlap; the legend reports the shift factors.
+        * **Top panel** -- data + model curves. When posterior samples are
+          available (post-``fit()``), each band's central line is the
+          **posterior median** trajectory with a shaded ``ci`` credible
+          band; otherwise the curve is the MAP (``best_params``) trajectory.
+          Single-frequency light curves (added via ``add_flux_density``) and
+          band-integrated fluxes (added via ``add_flux``) get a dual y-axis
+          if both kinds are present: left is ``F_nu`` in erg/cm^2/s/Hz,
+          right is ``F`` in erg/cm^2/s. Multiple bands are shifted vertically
+          (in log) so they don't overlap; the legend reports the shift factors.
 
         * **Bottom panel** (optional, ``show_nu_panel=True``) -- evolution of
           the characteristic synchrotron break frequencies
@@ -827,6 +975,14 @@ class Fitter:
         ----------
         best_params
             Sampler-space parameter array. Defaults to ``self.result.top_k_params[0]``.
+            Used for the break-frequency panel and as the model trajectory
+            when posterior samples are unavailable or ``n_samples == 0``.
+        ci
+            Credible interval for the shaded band (e.g. 0.68 for ~1σ,
+            0.95 for ~2σ). Ignored when ``n_samples == 0``.
+        n_samples
+            Posterior draws for the credible band. ``0`` skips the band and
+            plots the MAP trajectory only. Default ``100``.
         t_range
             (t_min, t_max) for the model curves in seconds. Defaults to one
             decade below ``tmin`` and two decades above ``tmax`` across all
@@ -872,11 +1028,13 @@ class Fitter:
         light curves. Reverse-shock break frequencies are not drawn in v1
         (forward-shock only).
         """
-        from ..plotting.diagnostic import draw_best_fit as _impl
+        from ..plotting.diagnostic import draw_fit as _impl
 
         return _impl(
             self,
             best_params=best_params,
+            ci=ci,
+            n_samples=n_samples,
             t_range=t_range,
             n_t=n_t,
             shifts=shifts,

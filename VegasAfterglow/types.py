@@ -166,6 +166,9 @@ class FitResult:
     top_k_params: np.ndarray = None
     top_k_log_probs: np.ndarray = None
     bilby_result: object = None  # Full bilby Result object (for diagnostics)
+    # Fit-quality bookkeeping (None for results loaded from older files).
+    n_data: Optional[int] = None  # Total observation count across point + band data
+    n_free_params: Optional[int] = None  # Sampled (non-fixed) parameter count
 
     def __repr__(self) -> str:
         """One-line summary; deliberately avoids dumping the (potentially 100k-row)
@@ -257,6 +260,25 @@ class FitResult:
 
         title = f"Best-fit summary (top {n_rows} of {m_total})"
         lines = [title, "=" * len(title)]
+
+        # Suppress the fit-quality header when n_data / n_free_params is
+        # missing (older saved fits) or DOF would be <= 0 (over-parametrized).
+        if (
+            self.n_data is not None
+            and self.n_free_params is not None
+            and self.n_data > self.n_free_params
+        ):
+            chi2_min = float(-2.0 * np.max(self.top_k_log_probs))
+            n, k = self.n_data, self.n_free_params
+            dof = n - k
+            bic = chi2_min + k * float(np.log(n))
+            aic = chi2_min + 2 * k
+            lines.append(
+                f"χ²_min / DOF = {chi2_min:.2f} / {dof} = {chi2_min / dof:.3g}"
+                f"    BIC = {bic:.3g}    AIC = {aic:.3g}"
+            )
+            lines.append("")
+
         lines.append(_row("Rank", "chi^2", list(self.labels)))
         lines.append(
             _row(
@@ -331,3 +353,29 @@ class ParamDef:
     initial: float = (
         None  # Initial value (in linear space, auto-converted for LOG scale)
     )
+
+    def __post_init__(self) -> None:
+        """Catch obvious mistakes at construction time so the user sees the
+        offending parameter immediately, not 30 seconds into the first MCMC
+        step."""
+        # Scale.fixed collapses bounds to a single value; ``lower`` serves as
+        # the value when ``initial`` is omitted (see fitting/utils.py), so we
+        # do not require initial here.
+        if self.scale is Scale.fixed:
+            return
+        if self.lower >= self.upper:
+            raise ValueError(
+                f"ParamDef(name={self.name!r}): lower={self.lower} must be "
+                f"strictly less than upper={self.upper}."
+            )
+        if self.scale is Scale.log and self.lower <= 0:
+            raise ValueError(
+                f"ParamDef(name={self.name!r}): scale=Scale.log requires "
+                f"lower > 0 (log10 is undefined for non-positive values); "
+                f"got lower={self.lower}."
+            )
+        if self.initial is not None and not (self.lower <= self.initial <= self.upper):
+            raise ValueError(
+                f"ParamDef(name={self.name!r}): initial={self.initial} must lie "
+                f"in [lower={self.lower}, upper={self.upper}]."
+            )

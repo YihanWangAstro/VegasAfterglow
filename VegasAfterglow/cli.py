@@ -8,7 +8,7 @@ Usage::
     vegasgen -o lc.csv                # save to file
 
 Reusable plotting helpers (filter color registry, label formatting, style
-presets, the ``draw_best_fit`` diagnostic) live in :mod:`VegasAfterglow.plotting`.
+presets, the ``draw_fit`` diagnostic) live in :mod:`VegasAfterglow.plotting`.
 For backwards compatibility this module re-exports the small set that other
 code (webtool backend, tests) imported by their old names.
 """
