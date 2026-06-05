@@ -106,6 +106,53 @@ class _SummaryTable:
     __str__ = __repr__
 
 
+def _auto_format(values: np.ndarray) -> str:
+    """Pick a printf-style format string for a column of values, targeting
+    ~4 significant figures. Falls back to ``.4g`` (scientific) for values
+    outside [1e-2, 1e5)."""
+    arr = np.asarray(values, dtype=float).ravel()
+    if arr.size == 0:
+        return "{:.4f}"
+    vmax = float(np.max(np.abs(arr)))
+    if vmax == 0 or not np.isfinite(vmax):
+        return "{:.4f}"
+    magnitude = int(np.floor(np.log10(vmax)))
+    if magnitude < -2 or magnitude > 4:
+        return "{:.4g}"
+    decimals = max(0, 3 - magnitude)
+    return f"{{:.{decimals}f}}"
+
+
+def _strip_dollars(s: str) -> str:
+    """Strip a single pair of outer ``$`` delimiters if present, so the label
+    can be embedded inside a larger LaTeX equation."""
+    s = s.strip()
+    if len(s) >= 2 and s.startswith("$") and s.endswith("$"):
+        return s[1:-1]
+    return s
+
+
+def _format_value_with_bounds(
+    value: float, upper: float, lower: float
+) -> tuple[str, str, str]:
+    """Format ``(value, +upper, -lower)`` using the physics-paper convention:
+    2 significant figures in the smaller positive bound, with the central
+    value rounded to the same decimal place."""
+    candidates = [abs(b) for b in (upper, lower) if b > 0 and np.isfinite(b)]
+    if not candidates:
+        # No usable bound; fall back to 2 sig figs on the value itself.
+        ref = abs(value) if value != 0 else 1.0
+    else:
+        ref = min(candidates)
+    if ref == 0 or not np.isfinite(ref):
+        fmt = "{:.2f}"
+    else:
+        magnitude = int(np.floor(np.log10(ref)))
+        decimals = max(0, 1 - magnitude)
+        fmt = f"{{:.{decimals}f}}"
+    return fmt.format(value), fmt.format(upper), fmt.format(lower)
+
+
 @dataclass(repr=False)
 class FitResult:
     """
@@ -132,7 +179,11 @@ class FitResult:
             f"labels={list(self.labels)}, top_k={n_top}, best_logL={lp_best:.4g})"
         )
 
-    def summary(self, top_k: Optional[int] = None) -> _SummaryTable:
+    def summary(
+        self,
+        top_k: Optional[int] = None,
+        latex: Optional[bool] = None,
+    ) -> _SummaryTable:
         """Top-K best-fit table, ranked by log-likelihood.
 
         Columns: ``Rank``, ``chi^2``, and the sampler-space value of each
@@ -143,11 +194,20 @@ class FitResult:
         Gaussian likelihood (``log_likelihood_fn=None``), a generic deviance
         for custom likelihoods.
 
+        When ``latex_labels`` are set on the ``FitResult``, a single
+        copy-pasteable LaTeX block is appended showing each parameter's
+        posterior median with asymmetric 1σ bounds (16th/50th/84th
+        percentiles of ``self.samples``). These values match the conventional
+        ``corner`` plot annotations.
+
         Parameters
         ----------
         top_k : int, optional
             Limit output to the first ``top_k`` rows. If ``None`` (default),
             shows all rows stored in ``self.top_k_params``.
+        latex : bool, optional
+            Force the LaTeX block on/off. If ``None`` (default), the block is
+            included when ``self.latex_labels`` is set.
 
         Returns
         -------
@@ -157,17 +217,79 @@ class FitResult:
         """
         if self.top_k_params is None or len(self.top_k_params) == 0:
             return _SummaryTable("FitResult: no top_k_params stored")
-        rows = self.top_k_params if top_k is None else self.top_k_params[:top_k]
-        logp = self.top_k_log_probs[: len(rows)]
-        name_w = max(max(len(s) for s in self.labels), 10)
-        header = f"{'Rank':>4}  {'chi^2':>10}  " + "  ".join(
-            f"{name:>{name_w}}" for name in self.labels
+
+        rows = np.asarray(
+            self.top_k_params if top_k is None else self.top_k_params[:top_k],
+            dtype=float,
         )
-        lines = [header, "-" * len(header)]
-        for i, params in enumerate(rows):
-            chi2 = -2.0 * logp[i]
-            vals = "  ".join(f"{v:>{name_w}.4f}" for v in params)
-            lines.append(f"{i + 1:>4d}  {chi2:>10.2f}  {vals}")
+        logp = np.asarray(self.top_k_log_probs[: len(rows)], dtype=float)
+        chi2_vals = -2.0 * logp
+        n_rows = len(rows)
+        n_params = rows.shape[1]
+        m_total = len(self.top_k_params)
+
+        chi2_fmt = _auto_format(chi2_vals)
+        param_fmts = [_auto_format(rows[:, j]) for j in range(n_params)]
+
+        rank_strs = [str(i + 1) for i in range(n_rows)]
+        chi2_strs = [chi2_fmt.format(v) for v in chi2_vals]
+        param_strs = [
+            [param_fmts[j].format(rows[i, j]) for j in range(n_params)]
+            for i in range(n_rows)
+        ]
+
+        rank_w = max(len("Rank"), max(len(s) for s in rank_strs))
+        chi2_w = max(len("chi^2"), max(len(s) for s in chi2_strs))
+        param_ws = [
+            max(
+                len(self.labels[j]),
+                max(len(param_strs[i][j]) for i in range(n_rows)),
+            )
+            for j in range(n_params)
+        ]
+
+        gap = "   "
+
+        def _row(rank_cell: str, chi2_cell: str, param_cells: Sequence[str]) -> str:
+            parts = [f"{rank_cell:>{rank_w}}", f"{chi2_cell:>{chi2_w}}"]
+            parts.extend(f"{param_cells[j]:>{param_ws[j]}}" for j in range(n_params))
+            return gap.join(parts)
+
+        title = f"Best-fit summary (top {n_rows} of {m_total})"
+        lines = [title, "=" * len(title)]
+        lines.append(_row("Rank", "chi^2", list(self.labels)))
+        lines.append(
+            _row(
+                "-" * rank_w,
+                "-" * chi2_w,
+                ["-" * w for w in param_ws],
+            )
+        )
+        for i in range(n_rows):
+            lines.append(_row(rank_strs[i], chi2_strs[i], param_strs[i]))
+
+        show_latex = latex if latex is not None else (self.latex_labels is not None)
+        if show_latex:
+            if self.latex_labels is None:
+                lines.append("")
+                lines.append(
+                    "# (no latex_labels set; pass latex_labels=[...] to FitResult"
+                    " to enable LaTeX block)"
+                )
+            else:
+                flat = self.samples.reshape(-1, self.samples.shape[-1])
+                p16, p50, p84 = np.percentile(flat, [16, 50, 84], axis=0)
+                lines.append("")
+                lines.append("LaTeX (median ± 1σ, matches corner plot):")
+                for j in range(n_params):
+                    label = _strip_dollars(self.latex_labels[j])
+                    med_s, up_s, lo_s = _format_value_with_bounds(
+                        float(p50[j]),
+                        float(p84[j] - p50[j]),
+                        float(p50[j] - p16[j]),
+                    )
+                    lines.append(f"  ${label} = {med_s}^{{+{up_s}}}_{{-{lo_s}}}$")
+
         return _SummaryTable("\n".join(lines))
 
 

@@ -379,7 +379,7 @@ def draw_best_fit(
     }
 
     def _shifted_label(base, shift):
-        return f"{base} $\\times 10^{{{shift:+.0f}}}$" if abs(shift) > 1e-9 else base
+        return f"{base} $\\times 10^{{{shift:.0f}}}$" if abs(shift) > 1e-9 else base
 
     with fitter._override_resolution(resolution):
         # Light curves on the left axis.
