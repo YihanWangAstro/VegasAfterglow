@@ -134,6 +134,10 @@ Example:
     # Generate spectra with best-fit parameters
     spec_best = fitter.flux_density_grid(result.top_k_params[0], times, nu_out)
 
+    # Posterior credible bands (median + 16/84 percentile envelope) for paper figures
+    lc_band = fitter.flux_density_credible(t_out, bands, ci=0.68, n_samples=200)
+    # lc_band.median, lc_band.lower, lc_band.upper -- shape (len(bands), len(t_out))
+
 .. _api-extinction:
 
 Extinction Module

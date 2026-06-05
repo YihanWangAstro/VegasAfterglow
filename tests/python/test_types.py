@@ -74,6 +74,34 @@ class TestParamDef:
         )
         assert param.scale == Scale.FIXED
 
+    def test_paramdef_rejects_inverted_bounds(self):
+        """lower must be strictly less than upper for non-fixed scales."""
+        with pytest.raises(ValueError, match="lower=2.0 must be strictly less than upper=1.0"):
+            ParamDef(name="bad", lower=2.0, upper=1.0)
+        with pytest.raises(ValueError, match="bad_eq"):
+            # Equal bounds also rejected (would be a degenerate sampler).
+            ParamDef(name="bad_eq", lower=1.0, upper=1.0)
+
+    def test_paramdef_rejects_log_with_nonpositive_lower(self):
+        """Scale.log requires lower > 0; log10(<=0) is undefined."""
+        with pytest.raises(ValueError, match="scale=Scale.log requires lower > 0"):
+            ParamDef(name="E_iso", lower=0.0, upper=1e54, scale=Scale.log)
+        with pytest.raises(ValueError, match="E_iso_neg"):
+            ParamDef(name="E_iso_neg", lower=-1.0, upper=1e54, scale=Scale.log)
+
+    def test_paramdef_rejects_initial_outside_bounds(self):
+        """initial, when given, must lie within [lower, upper]."""
+        with pytest.raises(ValueError, match="initial=5.0 must lie in"):
+            ParamDef(name="p", lower=2.0, upper=3.0, initial=5.0)
+        with pytest.raises(ValueError, match="initial=1.5 must lie in"):
+            ParamDef(name="p", lower=2.0, upper=3.0, initial=1.5)
+
+    def test_paramdef_fixed_accepts_any_bounds(self):
+        """Scale.fixed skips bound validation; lower==upper or even degenerate
+        configurations work because the fitting layer uses `initial or lower`."""
+        ParamDef(name="theta_v", lower=0.0, upper=0.0, scale=Scale.fixed)
+        ParamDef(name="theta_v", lower=0.0, upper=0.0, scale=Scale.fixed, initial=0.1)
+
 
 class TestJetCreation:
     """Test jet structure creation."""

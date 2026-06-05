@@ -343,22 +343,24 @@ Model Predictions
 Diagnostic Plot
 ----------------
 
-``Fitter.draw_best_fit()`` produces a publication-style two-panel diagnostic figure of the best-fit model overlaid on the observation data, in one call:
+``Fitter.draw_fit()`` produces a publication-style two-panel diagnostic figure of the fitted model overlaid on the observation data, in one call:
 
 .. code-block:: python
 
-    fig, (ax_top, ax_bot) = fitter.draw_best_fit()
+    fig, (ax_top, ax_bot) = fitter.draw_fit()
 
 The figure layout:
 
-- **Top panel** — observed data with errorbars plus the best-fit model curves. Single-frequency light curves (added via ``add_flux_density``) appear on the left y-axis as ``F_nu``; band-integrated fluxes (added via ``add_flux``) appear on the right y-axis as ``F``. When both kinds are present the two log y-axes are matched to span the same number of decades so a power-law slope alpha has identical visual slope on both sides. Multiple bands are auto-shifted vertically (rank-based, relaxed to avoid overlap) and the legend reports the shift factors.
+- **Top panel** — observed data with errorbars plus the model curves. When posterior samples are available, each band's central line is the **posterior median** trajectory with a shaded ``ci`` credible band (default 68%); if no posterior is available the curve falls back to the MAP (``best_params``) trajectory. Single-frequency light curves (added via ``add_flux_density``) appear on the left y-axis as ``F_nu``; band-integrated fluxes (added via ``add_flux``) appear on the right y-axis as ``F``. When both kinds are present the two log y-axes are matched to span the same number of decades so a power-law slope alpha has identical visual slope on both sides. Multiple bands are auto-shifted vertically (rank-based, relaxed to avoid overlap) and the legend reports the shift factors.
 - **Bottom panel** — observer-frame evolution of the synchrotron break frequencies ``nu_a``, ``nu_m``, ``nu_c``. Observed light-curve frequencies are overlaid as horizontal dashed lines; observed bands appear as shaded ``axhspan`` regions. Circles mark where each break-frequency curve crosses an observed line; squares mark crossings with the band edges -- useful for reading off when the model transitions through each observed band.
 
 The break frequencies are evaluated at the jet ``theta`` column closest to the line of sight (``theta_v``), so the Doppler boost reflects what the off-axis observer sees (this collapses to the jet axis for ``theta_v == 0``).
 
 Common kwargs:
 
-- ``best_params=None`` — sampler-space parameter array. Defaults to ``self.result.top_k_params[0]`` (raises if no fit has been run).
+- ``best_params=None`` — sampler-space parameter array. Defaults to ``self.result.top_k_params[0]``. Used for the break-frequency panel and as the model trajectory when posterior samples are unavailable or ``n_samples == 0``.
+- ``ci=0.68`` — credible interval for the shaded band (e.g. ``0.95`` for ~2σ). Ignored when ``n_samples == 0``.
+- ``n_samples=100`` — posterior draws used to construct the credible band. Set ``n_samples=0`` to skip the band entirely and plot the MAP trajectory only.
 - ``t_range=None`` — ``(t_min, t_max)`` for the model curves in seconds. Default extends one decade below ``tmin`` and two decades above ``tmax`` of the observed data so the curves reach the visible edges.
 - ``n_t=200`` — number of points on the model time grid.
 - ``auto_shift_gap=1.0`` — decades added between consecutive bands (frequency-sorted). Each band is shifted by ``(rank - (n-1)/2) * auto_shift_gap``, then a second pass pushes bands apart locally if their shifted log-flux ranges still overlap. Raise this for wider visual separation.
@@ -376,6 +378,46 @@ Legend entries pick up filter / instrument names from the optional ``label=`` ar
     fitter.add_flux(band=(0.5e3 * u_keV, 4.0e3 * u_keV), t=t_x, flux=f_x, err=e_x, label="WXT")
 
 Known filter codes (SDSS ``u/g/r/i/z``, Johnson ``UBVRI``, 2MASS ``JHK``, X-ray instruments like ``WXT``, ``XRT``, ``BAT``) get curated colors from a built-in registry; same-color filters at different frequencies (e.g. ``r`` and ``VT_R``) are disambiguated via lightness so they remain visually distinct.
+
+.. _posterior-credible-bands:
+
+Posterior Credible Bands
+-------------------------
+
+For custom plotting (or any analysis that needs a flux uncertainty), ``Fitter.flux_density_credible()`` and ``Fitter.flux_credible()`` are the posterior-predictive siblings of ``flux_density_grid`` and ``flux``. They draw ``n_samples`` posterior samples, evaluate the model at each (in parallel), and return the central ``ci`` percentile envelope plus the posterior median trajectory.
+
+.. code-block:: python
+
+    # 68% credible band on multi-band light curves
+    t_out = np.logspace(2, 9, 200)
+    nu_out = np.array([1e9, 5e14, 2.4e17])           # radio, optical, X-ray [Hz]
+    cb = fitter.flux_density_credible(t_out, nu_out, ci=0.68, n_samples=200)
+
+    # Drop straight into matplotlib
+    for i, nu in enumerate(nu_out):
+        ax.plot(t_out, cb.median[i, :])
+        ax.fill_between(t_out, cb.lower[i, :], cb.upper[i, :], alpha=0.2)
+
+    # 95% credible band on band-integrated flux (e.g. XRT band-pass)
+    cb_xrt = fitter.flux_credible(t_out, band=(2.4e17, 2.4e18), ci=0.95, n_samples=200)
+    ax.fill_between(t_out, cb_xrt.lower, cb_xrt.upper, alpha=0.2)
+
+Returned ``SimpleNamespace`` with three arrays:
+
+- ``cb.lower`` / ``cb.upper`` — the ``(50 - 50·ci, 50 + 50·ci)`` percentiles at each ``(nu, t)`` cell. Shape is ``(len(nu), len(t))`` for ``flux_density_credible`` and ``(len(t),)`` for ``flux_credible``.
+- ``cb.median`` — same shape, the posterior median trajectory. **This is what you usually want for the central line**: by construction it lies inside ``[lower, upper]`` at every cell. The MAP / best-fit trajectory does *not* — for correlated posteriors it can sit outside the 1-D marginal band at some points, which is statistically expected (the 16/84 envelope is a per-cell marginal, the MAP is a single joint point estimate).
+
+Common kwargs:
+
+- ``ci=0.68`` — credible interval (``0.95`` for ~2σ, ``0.99`` for ~3σ).
+- ``n_samples=200`` — posterior draws. Larger gives smoother bands at the cost of more model evaluations.
+- ``n_workers=None`` — thread parallelism. Defaults to ``os.cpu_count()``; pass an int to throttle.
+- ``rng=None`` — ``numpy.random.Generator`` for reproducible draw selection.
+- ``resolution=None`` — ``(phi, theta, t)`` override applied to all draws.
+
+Extinction caveat: ``flux_density_credible`` *does* apply host-galaxy extinction per draw (matching ``flux_density_grid``), so the band reflects ``A_V`` uncertainty when ``A_V`` is a sampled parameter. ``flux_credible`` does *not* apply extinction — same as ``flux`` and the band-integrated chi² evaluation path.
+
+``Fitter.draw_fit()`` uses these internally to render its credible band; call them directly when you want full control over the figure.
 
 Saving and Loading Fits
 ------------------------
@@ -419,7 +461,7 @@ Pre-existing bilby Result files from other tools (no VegasAfterglow metadata) ca
 Visualization
 --------------
 
-For the data/model overlay use :ref:`Diagnostic Plot <diagnostic-plot>` above (``fitter.draw_best_fit()``). For posterior correlations, the standard tool is the external ``corner`` package:
+For the data/model overlay use :ref:`Diagnostic Plot <diagnostic-plot>` above (``fitter.draw_fit()``); for custom plots with posterior-predictive uncertainty, build them yourself with :ref:`flux_density_credible <posterior-credible-bands>`. For posterior correlations, the standard tool is the external ``corner`` package:
 
 .. code-block:: python
 
