@@ -24,38 +24,37 @@ Have a feature request? [Open an issue](https://github.com/YihanWangAstro/VegasA
 
 #### ► **`Fitter.draw_fit()` — one-call diagnostic plot with credible bands**
 
-- ``fig, (ax_top, ax_bot) = fitter.draw_fit()`` produces a publication-style two-panel figure of your observation data overlaid with the fitted model — drops the ~30 lines of matplotlib boilerplate every notebook re-implements. When posterior samples are present, each band's central line is the **posterior median** trajectory with a shaded 68% credible band by default (``ci=`` to change the level, ``n_samples=0`` to fall back to MAP-only). The default band is the pure model-curve credible interval (``obs_noise='none'``); switch to ``obs_noise='frac'`` for a *posterior predictive* band with fractional observation noise added in quadrature (``central * median(err/flux)`` — visually well-behaved on log-y plots and an honest goodness-of-fit visual where ~68% of data points should fall inside), or ``obs_noise='abs'`` for constant absolute σ (detector-noise-limited regime). The top panel handles a mix of single-frequency light curves (``add_flux_density``) and band-integrated fluxes (``add_flux``) automatically: a dual y-axis when both are present, with the two log scales matched so spectral slopes look the same on either side, and multi-band data auto-shifted in log-flux so curves don't overlap (shift factors appear in the legend).
-- The bottom panel shows the observer-frame evolution of the synchrotron break frequencies ν_a, ν_m, ν_c, with your observed frequencies drawn as horizontal lines and circles marking where each break passes through an observed band — useful for reading off when the model transitions through each frequency.
-- Filter / instrument names go straight from your data into the legend and into a curated color palette: pass ``label="r"`` or ``label="WXT"`` to ``add_flux_density`` / ``add_flux``, or call ``add_flux_density(nu=filter("r"), ...)`` and the name is picked up automatically. SDSS, Johnson–Cousins, 2MASS, HST WFC3, SVOM VT, Swift, Einstein Probe, and Fermi instruments are all recognised; sister filters that share a base color (e.g. SDSS ``r`` vs SVOM ``VT_R``) are spread by lightness when both appear.
+- Two-panel data + model figure in one call. Top: data + posterior-median light curves with a shaded 68% credible band. Bottom: observer-frame ν_a / ν_m / ν_c, marking where each break crosses an observed band.
+- Band style via ``obs_noise``: ``'none'`` (default) for the model-curve band, ``'frac'`` for a posterior-predictive band with σ ∝ flux, ``'abs'`` for constant σ. ``ci=`` / ``n_samples=`` tune the band; ``n_samples=0`` falls back to MAP.
+- Filter / instrument names from ``add_flux_density(label=...)`` (or auto-detected from ``nu=filter("r")``) drive a curated color palette: SDSS, Johnson, 2MASS, HST WFC3, SVOM VT, Swift, Einstein Probe, Fermi.
 
-#### ► **`fitter.save(path)` / `Fitter.load(path)` — symmetric one-line persistence**
+#### ► **`fitter.save(path)` / `Fitter.load(path)` — one-line persistence**
 
-- Saving and loading now live on the same class. ``fitter.save(path)`` writes the full fitter snapshot (constructor args, observation data, parameter definitions, samples) to bilby-native HDF5 / JSON, and ``Fitter.load(path)`` reconstructs a fully-configured ``Fitter`` plus ``FitResult`` from it in one call. ``fitter.flux_density_grid`` / ``fitter.flux`` work immediately on ``fitter.result.top_k_params[0]``. If the original fit used a custom callable for ``jet`` / ``medium`` / ``extinction``, pass the same callable as ``Fitter.load(path, jet=...)`` since callables can't round-trip through HDF5 / JSON.
-- Files written by earlier releases (or raw bilby Result files from other tools) can be opened with ``bilby.read_in_result(path)`` for samples / corner inspection, but ``Fitter.load`` requires a v2.0.5+ snapshot.
-- ``Fitter.fit(...)`` also stores the returned result on ``self.result``, so downstream code can rely on ``fitter.result`` regardless of how the fitter was obtained.
+- ``fitter.save(path)`` writes a full snapshot (constructor args, data, parameter defs, samples) to bilby-native HDF5 / JSON; ``Fitter.load(path)`` reconstructs the configured ``Fitter`` + ``FitResult`` in one call, ready for predictions.
+- Custom ``jet`` / ``medium`` / ``extinction`` callables can't round-trip — pass them back via ``Fitter.load(path, jet=...)``. ``Fitter.fit(...)`` also caches its result on ``self.result``.
 
 ### Changed
 
 #### ► **Synchrotron break shapes use Granot & Sari (2002) Table 2**
 
-- Broken-power-law smoothing at the injection, cooling, and self-absorption breaks now uses the regime-dependent smoothing parameters tabulated in Granot & Sari (2002) Table 2 for ISM (k=0), replacing the uniform `s = 1` approximation. The synchrotron spectrum shape is correspondingly closer to the analytic integral over the Blandford–McKee profile.
-- Light-curve amplitudes shift by a p-dependent factor at frequencies above ν_c: ~−1% at p=2.05, ~+6% at p=2.3, ~+19% at p=2.6. MCMC fits calibrated against earlier releases may need a re-run.
+- Regime-dependent smoothing parameters at the ν_m / ν_c / ν_a breaks for ISM (k=0), replacing the uniform `s = 1` approximation.
+- Light-curve amplitudes above ν_c shift by a p-dependent factor: ~−1% at p=2.05, ~+6% at p=2.3, ~+19% at p=2.6. MCMC fits calibrated against earlier releases may need a re-run.
 
 #### ► **Continuous synchrotron formula across regime crossings**
 
-- The optically-thin spectrum is now evaluated from a single double-smoothed expression that asymptotically reproduces both slow-cooling and fast-cooling segments. Previously, a per-regime branch produced a ~3% jump in the predicted light curve whenever ν_m crossed ν_c during a simulation; the unified formula is continuous through the crossing.
-- The smoothing of the optically-thin / optically-thick join at ν_a is now blended continuously as ν_a moves through ν_m and ν_c, removing similar regime-switch discontinuities when self-absorption transitions across the other breaks (e.g. as ν_a falls below ν_c during late-time evolution).
+- The optically-thin spectrum is now a single double-smoothed expression that asymptotes to both slow- and fast-cooling segments — removes the ~3% light-curve jump at the ν_m–ν_c crossing.
+- The ν_a join is also smoothed continuously as ν_a moves through ν_m and ν_c, removing similar regime-switch discontinuities.
 
 ### Fixed
 
 #### ► **Inverse Compton correction self-consistency**
 
-- The IC steepening factor `(1+Y_c)/(1+Y(ν))` is now applied only to the optically-thin emission branch above ν_c, not to the full spectrum. The SSA-dominated optically-thick branch is no longer over-suppressed in fast cooling or whenever ν_a > ν_c.
-- The self-absorption frequency ν_a calculation now incorporates IC cooling in the segments where ν_a > ν_c, removing a small but real inconsistency between ν_a (computed without IC) and the spectrum it bounds (computed with IC). Default behaviour with `ssc=False` is unchanged.
+- The IC steepening factor `(1+Y_c)/(1+Y(ν))` is applied only to the optically-thin branch above ν_c, not to the full spectrum, so the SSA-dominated branch is no longer over-suppressed in fast cooling or when ν_a > ν_c.
+- ν_a now incorporates IC cooling in segments where ν_a > ν_c. Default behaviour with `ssc=False` is unchanged.
 
 #### ► **Spectrum below ν_c independent of cooling treatment**
 
-- Below ν_c, where IC physics is inactive, the optically-thin synchrotron spectrum no longer depends on the ν_c position. Previously, a normalization tail from the cooling break leaked into the radio band, producing a small (~4%) upward shift in models with stronger IC cooling (closer ν_c). KN-cooling spectra are now correctly bounded above by the no-IC spectrum everywhere.
+- The optically-thin synchrotron spectrum below ν_c no longer depends on the ν_c position; the ~4% upward leak in models with stronger IC cooling is gone. KN-cooling spectra are now correctly bounded above by the no-IC spectrum everywhere.
 
 ---
 
