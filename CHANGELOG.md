@@ -45,6 +45,12 @@ Have a feature request? [Open an issue](https://github.com/YihanWangAstro/VegasA
 - The optically-thin spectrum is now a single double-smoothed expression that asymptotes to both slow- and fast-cooling segments — removes the ~3% light-curve jump at the ν_m–ν_c crossing.
 - The ν_a join is also smoothed continuously as ν_a moves through ν_m and ν_c, removing similar regime-switch discontinuities.
 
+### Removed
+
+#### ► **Dropped Python 3.8 support**
+
+- Minimum Python version is now 3.9. Python 3.8 reached end-of-life in October 2024, and several runtime dependencies (`bilby>=2.7`, `numpy>=2.0`) already required 3.9+.
+
 ### Fixed
 
 #### ► **Inverse Compton correction self-consistency**

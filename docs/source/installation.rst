@@ -41,7 +41,7 @@ This installs the core physics engine (light curves, spectra, jet models). To al
 
     pip install VegasAfterglow[mcmc]
 
-VegasAfterglow requires Python 3.8 or higher.
+VegasAfterglow requires Python 3.9 or higher.
 
 From Source
 ^^^^^^^^^^^
@@ -95,7 +95,7 @@ For advanced users who want to compile and use the C++ library directly:
 Requirements
 ------------
 
-* Python 3.8 or higher
+* Python 3.9 or higher
 * C++20 compatible compiler (for building from source)
 * NumPy (automatically installed when using pip)
 * For MCMC fitting: ``pip install VegasAfterglow[mcmc]`` (installs bilby, emcee, dynesty)

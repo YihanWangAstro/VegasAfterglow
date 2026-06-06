@@ -226,7 +226,7 @@ A: Platform-specific solutions:
 
 A: Check:
 
-- **Python version**: VegasAfterglow requires Python 3.8+
+- **Python version**: VegasAfterglow requires Python 3.9+
 - **Virtual environment**: Ensure you're in the correct environment
 - **Installation location**: Try ``pip show VegasAfterglow`` to verify installation
 - **Conflicting packages**: Try installing in a clean environment

@@ -54,7 +54,7 @@ Python Code
 * Use type hints for function signatures
 * Keep functions small and focused
 * Document all functions, classes, and modules with docstrings
-* Support Python 3.8 and higher
+* Support Python 3.9 and higher
 
 Documentation Guidelines
 ------------------------

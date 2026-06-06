@@ -171,7 +171,7 @@ Detailed local/deploy guide: [`webtool/README.md`](webtool/README.md) and [`webt
 
 The hosted **[Interactive Web Tool](https://www.vegasafterglow.com)** provides real-time parameter-tunable afterglow modeling, mobile-phone compatible layout, and observational data input/upload support.
 
-VegasAfterglow requires Python 3.8 or higher.
+VegasAfterglow requires Python 3.9 or higher.
 
 <details>
 <summary><b>Alternative: Install from Source</b> <i>(click to expand/collapse)</i></summary>
