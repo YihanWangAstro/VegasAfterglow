@@ -2,7 +2,7 @@
 requires = [
   "scikit-build-core>=0.4.3",
   "pybind11>=2.6.0",
-  "numpy>=1.20",
+  "numpy>=2.0",
   "setuptools>=42",
   "setuptools-scm>=6.2",
   "wheel",
@@ -18,11 +18,8 @@ authors = [
   {name = "Yihan Wang", email = "yihan.astro@gmail.com"}
 ]
 requires-python = ">=3.8"
-# Upper bounds guard against future major releases that may introduce ABI breaks (numpy 2.x)
-# or backwards-incompatible API changes (the MCMC sampler suite). Loosen when a new major
-# is verified compatible.
 dependencies = [
-  "numpy>=1.20,<3",
+  "numpy>=2.0",
 ]
 license = {text = "BSD-3-Clause"}
 
