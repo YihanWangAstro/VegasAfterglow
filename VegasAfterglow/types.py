@@ -1,7 +1,7 @@
 import math
 from dataclasses import dataclass
 from enum import Enum
-from typing import Optional, Sequence
+from typing import Optional, Sequence, Tuple
 
 import numpy as np
 
@@ -134,7 +134,7 @@ def _strip_dollars(s: str) -> str:
 
 def _format_value_with_bounds(
     value: float, upper: float, lower: float
-) -> tuple[str, str, str]:
+) -> Tuple[str, str, str]:
     """Format ``(value, +upper, -lower)`` using the physics-paper convention:
     2 significant figures in the smaller positive bound, with the central
     value rounded to the same decimal place."""

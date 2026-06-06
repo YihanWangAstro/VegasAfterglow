@@ -14,6 +14,7 @@ import ast
 import re
 import sys
 from pathlib import Path
+from typing import List, Tuple
 
 _DIRECTIVE_RE = re.compile(r"^(\s*)\.\. code-block:: python\s*$")
 
@@ -119,7 +120,7 @@ def normalise(code: str) -> str:
     return code
 
 
-def check_file(path: Path) -> list[tuple[int, str]]:
+def check_file(path: Path) -> List[Tuple[int, str]]:
     """Return list of (line, error_message) for blocks that fail parsing."""
     text = path.read_text(encoding="utf-8")
     errors = []
