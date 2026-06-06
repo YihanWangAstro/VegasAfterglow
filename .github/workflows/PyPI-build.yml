@@ -15,11 +15,12 @@ on:
 
 jobs:
   build_wheels:
-    name: Build on ${{ matrix.os }}
+    name: Build ${{ matrix.python }} on ${{ matrix.os }}
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
         os: [ubuntu-latest, windows-latest, macos-latest]
+        python: [cp38, cp39, cp310, cp311, cp312, cp313, cp314]
       fail-fast: false
 
     steps:
@@ -37,7 +38,9 @@ jobs:
       - name: Setup ccache
         uses: hendrikmuhs/ccache-action@v1.2
         with:
-          key: ${{ matrix.os }}-ccache
+          key: ${{ matrix.os }}-${{ matrix.python }}-ccache
+          restore-keys: |
+            ${{ matrix.os }}-ccache
 
       - name: Build wheels
         run: |
@@ -45,7 +48,7 @@ jobs:
           python -m cibuildwheel --output-dir wheelhouse
         env:
           SETUPTOOLS_SCM_PRETEND_VERSION: ${{ inputs.version }}
-          CIBW_BUILD: "cp38-* cp39-* cp310-* cp311-* cp312-* cp313-* cp314-*"
+          CIBW_BUILD: "${{ matrix.python }}-*"
           CIBW_SKIP: "*-win32* *_i686* *musllinux*"
           CIBW_ARCHS_WINDOWS: "AMD64 ARM64"
           CIBW_ARCHS_MACOS: "arm64 x86_64"
@@ -104,6 +107,7 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           path: wheelhouse/
+          pattern: 'wheels-*'
 
       - name: Collect wheels
         run: |
