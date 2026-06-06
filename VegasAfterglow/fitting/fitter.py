@@ -5,7 +5,7 @@ import os
 from concurrent.futures import ThreadPoolExecutor
 from contextlib import contextmanager
 from types import SimpleNamespace
-from typing import Callable, List, Optional, Sequence, Tuple
+from typing import Callable, List, Literal, Optional, Sequence, Tuple
 
 import numpy as np
 
@@ -939,6 +939,7 @@ class Fitter:
         *,
         ci: float = 0.68,
         n_samples: int = 100,
+        obs_noise: Literal["frac", "abs", "none"] = "none",
         t_range: Optional[Tuple[float, float]] = None,
         n_t: int = 500,
         shifts: Optional[dict] = None,
@@ -956,6 +957,15 @@ class Fitter:
           available (post-``fit()``), each band's central line is the
           **posterior median** trajectory with a shaded ``ci`` credible
           band; otherwise the curve is the MAP (``best_params``) trajectory.
+          By default (``obs_noise='none'``) the band is the pure
+          model-curve credible band (pinches at the data, no observation
+          noise added). Switch to ``obs_noise='frac'`` to broaden into a
+          *posterior predictive* envelope where σ scales with the model
+          flux as ``central * median(err/flux)`` — represents *"where
+          would a new observation fall?"* and stays visually well-behaved
+          on log-y plots that span many decades. Use ``obs_noise='abs'``
+          for a constant absolute σ instead (suitable when noise is
+          detector-limited).
           Single-frequency light curves (added via ``add_flux_density``) and
           band-integrated fluxes (added via ``add_flux``) get a dual y-axis
           if both kinds are present: left is ``F_nu`` in erg/cm^2/s/Hz,
@@ -983,6 +993,20 @@ class Fitter:
         n_samples
             Posterior draws for the credible band. ``0`` skips the band and
             plots the MAP trajectory only. Default ``100``.
+        obs_noise
+            Noise model used to broaden the credible band into a posterior
+            predictive band:
+
+            * ``'none'`` (default) -- skip observation noise; the band is
+              the pure model-curve credible band and pinches at the data.
+            * ``'frac'`` -- σ scales with the model flux as
+              ``central * median(err/flux)``; visually well-behaved on
+              log-y plots over many decades. Use this for a goodness-of-fit
+              display where ~``ci`` of the data points should fall inside
+              the band.
+            * ``'abs'`` -- constant absolute σ equal to the per-band median
+              ``err``. Appropriate when the noise really is a constant floor
+              (detector-noise-limited measurements).
         t_range
             (t_min, t_max) for the model curves in seconds. Defaults to one
             decade below ``tmin`` and two decades above ``tmax`` across all
@@ -1035,6 +1059,7 @@ class Fitter:
             best_params=best_params,
             ci=ci,
             n_samples=n_samples,
+            obs_noise=obs_noise,
             t_range=t_range,
             n_t=n_t,
             shifts=shifts,

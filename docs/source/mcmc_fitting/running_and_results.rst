@@ -351,7 +351,7 @@ Diagnostic Plot
 
 The figure layout:
 
-- **Top panel** — observed data with errorbars plus the model curves. When posterior samples are available, each band's central line is the **posterior median** trajectory with a shaded ``ci`` credible band (default 68%); if no posterior is available the curve falls back to the MAP (``best_params``) trajectory. Single-frequency light curves (added via ``add_flux_density``) appear on the left y-axis as ``F_nu``; band-integrated fluxes (added via ``add_flux``) appear on the right y-axis as ``F``. When both kinds are present the two log y-axes are matched to span the same number of decades so a power-law slope alpha has identical visual slope on both sides. Multiple bands are auto-shifted vertically (rank-based, relaxed to avoid overlap) and the legend reports the shift factors.
+- **Top panel** — observed data with errorbars plus the model curves. When posterior samples are available, each band's central line is the **posterior median** trajectory with a shaded ``ci`` credible band (default 68%); if no posterior is available the curve falls back to the MAP (``best_params``) trajectory. By default (``obs_noise='none'``) the band is the pure model-curve credible band — it pinches at the observed data points and widens where data does not constrain the model. Switch to ``obs_noise='frac'`` to broaden into a *posterior predictive* envelope with σ scaling as ``central * median(err/flux)`` (so a well-calibrated fit lands ~``ci`` of the data points inside the band — goodness-of-fit visual — and the band stays visually well-behaved on log-y plots across many decades). Use ``obs_noise='abs'`` for constant absolute σ instead (detector-noise-limited regime). Single-frequency light curves (added via ``add_flux_density``) appear on the left y-axis as ``F_nu``; band-integrated fluxes (added via ``add_flux``) appear on the right y-axis as ``F``. When both kinds are present the two log y-axes are matched to span the same number of decades so a power-law slope alpha has identical visual slope on both sides. Multiple bands are auto-shifted vertically (rank-based, relaxed to avoid overlap) and the legend reports the shift factors.
 - **Bottom panel** — observer-frame evolution of the synchrotron break frequencies ``nu_a``, ``nu_m``, ``nu_c``. Observed light-curve frequencies are overlaid as horizontal dashed lines; observed bands appear as shaded ``axhspan`` regions. Circles mark where each break-frequency curve crosses an observed line; squares mark crossings with the band edges -- useful for reading off when the model transitions through each observed band.
 
 The break frequencies are evaluated at the jet ``theta`` column closest to the line of sight (``theta_v``), so the Doppler boost reflects what the off-axis observer sees (this collapses to the jet axis for ``theta_v == 0``).
@@ -361,6 +361,7 @@ Common kwargs:
 - ``best_params=None`` — sampler-space parameter array. Defaults to ``self.result.top_k_params[0]``. Used for the break-frequency panel and as the model trajectory when posterior samples are unavailable or ``n_samples == 0``.
 - ``ci=0.68`` — credible interval for the shaded band (e.g. ``0.95`` for ~2σ). Ignored when ``n_samples == 0``.
 - ``n_samples=100`` — posterior draws used to construct the credible band. Set ``n_samples=0`` to skip the band entirely and plot the MAP trajectory only.
+- ``obs_noise='none'`` (default) — pure model-curve credible band (pinches at the data). Switch to ``'frac'`` to broaden into the posterior predictive band with σ that scales with the model flux, or ``'abs'`` for constant absolute σ; see :ref:`Posterior Credible Bands <posterior-credible-bands>` for the conceptual distinction.
 - ``t_range=None`` — ``(t_min, t_max)`` for the model curves in seconds. Default extends one decade below ``tmin`` and two decades above ``tmax`` of the observed data so the curves reach the visible edges.
 - ``n_t=200`` — number of points on the model time grid.
 - ``auto_shift_gap=1.0`` — decades added between consecutive bands (frequency-sorted). Each band is shifted by ``(rank - (n-1)/2) * auto_shift_gap``, then a second pass pushes bands apart locally if their shifted log-flux ranges still overlap. Raise this for wider visual separation.
@@ -417,7 +418,19 @@ Common kwargs:
 
 Extinction caveat: ``flux_density_credible`` *does* apply host-galaxy extinction per draw (matching ``flux_density_grid``), so the band reflects ``A_V`` uncertainty when ``A_V`` is a sampled parameter. ``flux_credible`` does *not* apply extinction — same as ``flux`` and the band-integrated chi² evaluation path.
 
-``Fitter.draw_fit()`` uses these internally to render its credible band; call them directly when you want full control over the figure.
+**Model curve vs posterior predictive.** The bands above are *posterior on the model curve*: they show where the underlying ``f(t, ν; θ)`` lies, narrow at the data and wide where data does not constrain it. For a data-vs-model goodness-of-fit display (where ~``ci`` of the data points should fall inside the band), you usually want the *posterior predictive* band, which adds the measurement noise ``σ_data`` in quadrature:
+
+.. code-block:: python
+
+    cb = fitter.flux_density_credible(t_out, nu_out, ci=0.68, n_samples=200)
+    sigma_data = err_arr[:, None]                                   # shape (n_nu, 1)
+    half_lo = cb.median - cb.lower
+    half_hi = cb.upper - cb.median
+    pred_lower = cb.median - np.sqrt(half_lo**2 + sigma_data**2)
+    pred_upper = cb.median + np.sqrt(half_hi**2 + sigma_data**2)
+    ax.fill_between(t_out, pred_lower[i], pred_upper[i], alpha=0.2)
+
+``Fitter.draw_fit()`` does this automatically when you pass ``obs_noise='frac'`` (per-band fractional σ) or ``obs_noise='abs'`` (per-band absolute σ); the default ``obs_noise='none'`` plots the pure model-curve band. Call ``flux_density_credible`` / ``flux_credible`` directly when you want full control over the noise model.
 
 Saving and Loading Fits
 ------------------------

@@ -7,7 +7,7 @@ method delegates to.
 """
 
 import logging
-from typing import Optional, Tuple
+from typing import Literal, Optional, Tuple
 
 import numpy as np
 
@@ -201,35 +201,41 @@ def _draw_freq_panel(
     t_obs = _slice(det.fwd.t_obs)
     boost = _slice(det.fwd.Doppler) / (1.0 + redshift)
 
-    def _plot_pos(arr, label, color):
-        y = arr * boost
-        good = np.isfinite(y) & (y > 0) & np.isfinite(t_obs) & (t_obs > 0)
-        if good.any():
-            ax_bot.plot(t_obs[good], y[good], label=label, color=color, lw=1)
+    # (curve, label, color) triples shared by the line plot below and the
+    # crossing-marker loop so the marker edge can encode which break frequency
+    # is doing the crossing.
+    break_curves = [
+        (nu_a * boost, r"$\nu_a$", "firebrick"),
+        (nu_m * boost, r"$\nu_m$", "yellowgreen"),
+        (nu_c * boost, r"$\nu_c$", "royalblue"),
+    ]
 
-    _plot_pos(nu_a, r"$\nu_a$", "firebrick")
-    _plot_pos(nu_m, r"$\nu_m$", "yellowgreen")
-    _plot_pos(nu_c, r"$\nu_c$", "royalblue")
+    for curve, label, color in break_curves:
+        good = np.isfinite(curve) & (curve > 0) & np.isfinite(t_obs) & (t_obs > 0)
+        if good.any():
+            ax_bot.plot(t_obs[good], curve[good], label=label, color=color, lw=1)
     ax_bot.set_xscale("log")
     ax_bot.set_yscale("log")
 
-    # Crossing markers: circles where each break-freq curve passes through an
-    # observed LC frequency. Bands (axhspan) get no markers -- their edges
-    # are usually wider than the curve features, so square markers there
-    # just clutter the panel.
-    break_curves = [arr * boost for arr in (nu_a, nu_m, nu_c)]
-
-    for nu, color in lc_color_map.items():
-        ax_bot.axhline(nu, color=color, linestyle="--", alpha=0.7, lw=1)
-        for curve in break_curves:
+    # Crossing markers: face = observed-band color, edge = break-curve color,
+    # so a quick glance reads off "ν_m crossed the X-ray band here". Bands
+    # (axhspan) get no markers -- their edges are usually wider than the curve
+    # features, so square markers there just clutter the panel.
+    for nu, band_color in lc_color_map.items():
+        ax_bot.axhline(nu, color=band_color, linestyle="--", alpha=0.7, lw=1)
+        for curve, _label, curve_color in break_curves:
             times = _find_log_crossings(t_obs, curve, nu)
             if times:
                 ax_bot.plot(
                     times,
                     [nu] * len(times),
                     marker="o",
-                    color=color,
-                    **_MARKER_STYLE,
+                    color=band_color,
+                    **{
+                        **_MARKER_STYLE,
+                        "markeredgecolor": curve_color,
+                        "markeredgewidth": 0.5,
+                    },
                 )
     for b in band_obs:
         ax_bot.axhspan(
@@ -251,6 +257,7 @@ def draw_fit(
     *,
     ci: float = 0.68,
     n_samples: int = 100,
+    obs_noise: Literal["frac", "abs", "none"] = "none",
     t_range: Optional[Tuple[float, float]] = None,
     n_t: int = 500,
     shifts: Optional[dict] = None,
@@ -383,6 +390,41 @@ def draw_fit(
     def _shifted_label(base, shift):
         return f"{base} $\\times 10^{{{shift:.0f}}}$" if abs(shift) > 1e-9 else base
 
+    if obs_noise not in ("frac", "abs", "none"):
+        raise ValueError(
+            f"draw_fit: obs_noise must be one of 'frac', 'abs', 'none'; got {obs_noise!r}"
+        )
+
+    def _broaden(central, lower, upper, sigma):
+        """Posterior-predictive widening: combine model spread and observation
+        noise in quadrature so the band represents *"where would a new
+        observation fall?"* rather than *"where is the underlying model?"*.
+        ``sigma`` may be a scalar or an array broadcastable with ``central``."""
+        half_lo = central - lower
+        half_hi = upper - central
+        return (
+            central - np.sqrt(half_lo * half_lo + sigma * sigma),
+            central + np.sqrt(half_hi * half_hi + sigma * sigma),
+        )
+
+    def _obs_sigma(central, flux, err):
+        """Per-mode observation noise for the broadening step. Returns ``None``
+        when ``obs_noise='none'``; ``'abs'`` returns the per-band median
+        ``err`` as a scalar; ``'frac'`` returns ``central * median(err/flux)``
+        evaluated only over positive flux samples (median is robust to outliers
+        and skips marginal detections that would inflate the ratio)."""
+        if obs_noise == "none":
+            return None
+        err = np.asarray(err)
+        if obs_noise == "abs":
+            return float(np.median(err))
+        flux = np.asarray(flux)
+        positive = flux > 0
+        if not positive.any():
+            # No usable points for the fractional ratio; fall back to abs σ.
+            return float(np.median(err))
+        return central * float(np.median(err[positive] / flux[positive]))
+
     # When posterior samples are available and the user did not opt out
     # (n_samples=0), show the posterior median trajectory with a shaded
     # ``ci`` credible band. Otherwise fall back to the MAP curve.
@@ -420,10 +462,16 @@ def draw_fit(
                     t_grid, lc_central[i] * scale, "-", color=color, label=label, lw=1
                 )
                 if lc_lower is not None:
+                    band_lo, band_hi = lc_lower[i], lc_upper[i]
+                    sigma = _obs_sigma(lc_central[i], f_data, e_data)
+                    if sigma is not None:
+                        band_lo, band_hi = _broaden(
+                            lc_central[i], band_lo, band_hi, sigma
+                        )
                     ax_top.fill_between(
                         t_grid,
-                        lc_lower[i] * scale,
-                        lc_upper[i] * scale,
+                        band_lo * scale,
+                        band_hi * scale,
                         color=color,
                         alpha=0.2,
                         lw=0,
@@ -458,6 +506,9 @@ def draw_fit(
             )
             band_ax.plot(t_grid, central * scale, "--", color=color, label=label, lw=1)
             if lower is not None:
+                sigma = _obs_sigma(central, b.flux, b.err)
+                if sigma is not None:
+                    lower, upper = _broaden(central, lower, upper, sigma)
                 band_ax.fill_between(
                     t_grid,
                     lower * scale,
