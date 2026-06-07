@@ -65,3 +65,5 @@ docs/source/_static/css/
 script/*.ipynb
 script/*.gif
 script/bench_*.sh
+script/*.h5
+script/*.h5.old

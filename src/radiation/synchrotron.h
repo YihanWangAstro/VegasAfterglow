@@ -17,6 +17,7 @@
  * <!-- ************************************************************************************** -->
  */
 struct SynElectrons {
+    constexpr static size_t n_breaks{4}; ///< Number of break gamma
     // All values in comoving frame
     Real gamma_m{0};    ///< Minimum electron Lorentz factor
     Real gamma_c{0};    ///< Cooling electron Lorentz factor

@@ -134,26 +134,22 @@ void SmoothPowerLawSyn::build() noexcept {
     const Real s_a_above = std::max(0.94 - 0.14 * p, s_floor); // b=6
     s_a_blend_ = w_below * s_a_below + w_above * s_a_above + (1.0 - w_below - w_above) * s_a_mid;
 
-    // Analytic normalisation at the lower break, equivalent to G&S Eq. S3.E1
-    // prefactor convention F_b. Using `-log2_optical_thin(log2_nu_lo_)` would
-    // include the upper-break smoothing tail leaking into log2_nu_lo_, which
-    // propagates as a uniform multiplicative offset to every frequency below
-    // the upper break (visible when comparing models with different nu_c
-    // positions, e.g. Thomson vs no-IC cooling). The analytic 1/smooth_lo_ is
-    // independent of nu_c position so models with the same nu_m coincide at
-    // all frequencies below their respective cooling breaks. The trade-off:
-    // when breaks are close, the value at log2_nu_lo_ drops naturally with
-    // separation -- this is the correct smooth-broken-power-law behaviour.
+    // Analytic 1/smooth_lo_ (G&S F_b convention): independent of nu_c position,
+    // so sub-break flux is consistent across models with different nu_c. Peak
+    // drops naturally when breaks are close -- correct smooth-broken behavior.
     log2_norm_ = 1.0 / smooth_lo_;
     log2_thick_norm_ = log2_optical_thin_sharp(log2_nu_a) - log2_optical_thick_sharp(log2_nu_a);
 }
 
 Real SmoothPowerLawSyn::compute_I_nu(Real nu) const noexcept {
-    // IC correction folded into compute_log2_spectrum (thin branch only).
     return fast_exp(-nu * inv_nu_M_) * I_nu_max * compute_spectrum(nu);
 }
 
 Real SmoothPowerLawSyn::compute_log2_I_nu(Real log2_nu) const noexcept {
+    const Real spec = log2_I_nu_max + compute_log2_spectrum(log2_nu);
+    // Skip the exponential-cutoff term when nu/nu_M < 2^-20 (negligible).
+    if (log2_nu - log2_nu_M < -20)
+        return spec;
     constexpr Real log2e = std::numbers::log2e;
-    return log2_I_nu_max + compute_log2_spectrum(log2_nu) - log2e * inv_nu_M_ * fast_exp2(log2_nu);
+    return spec - log2e * inv_nu_M_ * fast_exp2(log2_nu);
 }

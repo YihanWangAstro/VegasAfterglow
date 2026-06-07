@@ -820,23 +820,27 @@ class Fitter:
         n_workers: Optional[int],
         resolution: Optional[Tuple[float, float, float]],
     ) -> SimpleNamespace:
-        """Apply ``evaluate(params)`` to each posterior draw and return the
-        central-``ci`` percentile envelope plus the posterior median. Threads
+        """Apply ``evaluate(params)`` to each posterior draw, return the
+        central-``ci`` percentile envelope from those draws plus the light
+        curve evaluated at the posterior-median parameter vector. Threads
         share a single ``_override_resolution`` context so the per-call
         resolution mutation doesn't race between draws."""
         if not (0.0 < ci < 1.0):
             raise ValueError(f"ci must be in (0, 1), got {ci}")
         workers = n_workers if n_workers is not None else max(1, os.cpu_count() or 1)
+        flat_samples = self.result.samples.reshape(-1, self.result.samples.shape[-1])
+        median_params = np.median(flat_samples, axis=0)
         with self._override_resolution(resolution):
             if workers > 1:
                 with ThreadPoolExecutor(max_workers=workers) as pool:
                     results = [r for r in pool.map(evaluate, draws)]
             else:
                 results = [evaluate(p) for p in draws]
+            median = np.asarray(evaluate(median_params))
 
         stack = np.stack([np.asarray(r) for r in results], axis=0)
-        lower, median, upper = np.percentile(
-            stack, [50.0 * (1.0 - ci), 50.0, 50.0 * (1.0 + ci)], axis=0
+        lower, upper = np.percentile(
+            stack, [50.0 * (1.0 - ci), 50.0 * (1.0 + ci)], axis=0
         )
         return SimpleNamespace(lower=lower, median=median, upper=upper)
 
@@ -869,9 +873,11 @@ class Fitter:
 
         Returns:
             ``SimpleNamespace(lower, median, upper)`` with arrays of shape
-            ``(len(nu), len(t))``. The median trajectory is the natural
-            central line for plotting since it is guaranteed to lie inside
-            ``[lower, upper]`` (the MAP trajectory is not).
+            ``(len(nu), len(t))``. ``lower`` / ``upper`` are per-cell
+            percentiles of the ``n_samples`` posterior draws; ``median`` is
+            the light curve evaluated at the posterior-median parameter
+            vector (one extra model call). The median trajectory is not
+            guaranteed to lie inside ``[lower, upper]`` for nonlinear models.
             Usage: ``ax.fill_between(t, out.lower[i_nu], out.upper[i_nu])``
             followed by ``ax.plot(t, out.median[i_nu])``.
         """

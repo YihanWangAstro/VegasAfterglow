@@ -142,19 +142,29 @@ void Observer::calc_eat_non_spreading(Coord const& coord, Shock const& shock) {
         const size_t i_eff = i * jet_3d;
         const Real dphi_i = dphi(i);
 
+        // Carries cos(th_hi) from previous j into next j's cos(th_lo) — the boundary
+        // midpoints satisfy th_hi(j) == th_lo(j+1), so each interior cos is reused once.
+        Real cos_th_carry = 0;
         for (size_t j = 0; j < theta_grid; ++j) {
             const Real ct = std::cos(shock.theta(i_eff, j, 0));
             const Real st = std::sin(shock.theta(i_eff, j, 0));
             const Real cos_v = st * cos_phi * sin_obs + ct * cos_obs;
             const Real t_coeff = (1 - cos_v) / con::c * one_plus_z;
 
-            // Solid angle: constant along k for non-spreading jets
-            const size_t j_p1 = (j == last) ? last : (j + 1);
-            const Real th_lo =
-                (j == 0) ? shock.theta(i_eff, j, 0) : 0.5 * (shock.theta(i_eff, j, 0) + shock.theta(i_eff, j - 1, 0));
-            const Real th_hi = 0.5 * (shock.theta(i_eff, j, 0) + shock.theta(i_eff, j_p1, 0));
-            const Real dOmega = std::fabs((std::cos(th_hi) - std::cos(th_lo)) * dphi_i);
+            // Solid angle: constant along k for non-spreading jets.
+            // Edge cells use cos(theta) directly (already in ct); interior cells reuse
+            // the carry for cos(th_lo) and compute one new cos for cos(th_hi).
+            const Real cos_th_lo = (j == 0) ? ct : cos_th_carry;
+            Real cos_th_hi;
+            if (j == last) {
+                cos_th_hi = ct;
+            } else {
+                const Real th_hi = 0.5 * (shock.theta(i_eff, j, 0) + shock.theta(i_eff, j + 1, 0));
+                cos_th_hi = std::cos(th_hi);
+            }
+            const Real dOmega = std::fabs((cos_th_hi - cos_th_lo) * dphi_i);
             const Real lg2_dOmega = fast_log2(dOmega);
+            cos_th_carry = cos_th_hi;
 
             for (size_t k = 0; k < t_grid; ++k) {
                 const Real gamma_ = shock.Gamma(i_eff, j, k);

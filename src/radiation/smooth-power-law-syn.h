@@ -15,6 +15,7 @@
  * <!-- ************************************************************************************** -->
  */
 struct SmoothPowerLawSyn {
+    constexpr static size_t n_breaks{4}; ///< Number of break nu
     // All values in comoving frame
     Real I_nu_max{0}; ///< Maximum specific synchrotron power PER SOLID ANGLE
     Real nu_m{0};     ///< Characteristic frequency corresponding to gamma_m

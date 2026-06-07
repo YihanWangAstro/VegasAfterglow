@@ -152,12 +152,12 @@ struct ICPhoton {
         Real nu_max;
         Real nu_IC_min;
         Real nu_IC_max;
-        std::array<Real, 4> gamma_breaks{};
-        std::array<Real, 4> nu_breaks;
-        std::array<Real, 4> nu_break_weight{};
-        std::array<Real, 4> gamma_break_weight{};
-        std::array<Real, 16> nu_IC_breaks{};
-        std::array<Real, 16> nu_IC_break_weight{};
+        std::array<Real, Electrons::n_breaks> gamma_breaks{};
+        std::array<Real, Photons::n_breaks> nu_breaks;
+        std::array<Real, Photons::n_breaks> nu_break_weight{};
+        std::array<Real, Electrons::n_breaks> gamma_break_weight{};
+        std::array<Real, Photons::n_breaks * Electrons::n_breaks> nu_IC_breaks{};
+        std::array<Real, Photons::n_breaks * Electrons::n_breaks> nu_IC_break_weight{};
     };
 
     /**
@@ -284,12 +284,10 @@ void ICPhoton<Electrons, Photons>::compute_break_weight(GridParams& params) cons
     params.nu_IC_break_weight.fill(0);
     params.nu_IC_breaks.fill(std::numeric_limits<Real>::quiet_NaN());
 
-    const std::array<Real, 4> nu_seed_breaks = params.nu_breaks;
-    const std::array<Real, 4> gamma_breaks = params.gamma_breaks;
+    const auto& nu_seed_breaks = params.nu_breaks;
+    const auto& gamma_breaks = params.gamma_breaks;
 
-    static_assert(std::tuple_size_v<decltype(GridParams::nu_IC_breaks)> == nu_seed_breaks.size() * gamma_breaks.size());
-
-    std::array<Real, 4> dN_e_break{};
+    std::array<Real, Electrons::n_breaks> dN_e_break{};
     for (size_t j = 0; j < gamma_breaks.size(); ++j) {
         dN_e_break[j] = electrons.compute_column_den(gamma_breaks[j]);
         params.gamma_break_weight[j] = dN_e_break[j] / (gamma_breaks[j] * gamma_breaks[j]);
