@@ -333,7 +333,7 @@ void FRShockEqn<Ejecta, Medium>::set_init_state(State& state, Real t0) const noe
 inline Real get_post_cross_g(Real gamma_rel, Real /*k*/ = 0) {
     constexpr Real g_low = 1.5;  // k is the medium power law index
     constexpr Real g_high = 3.5; // Blandford-McKee limit// TODO: need to be modified for non ISM medium
-    const Real p = std::sqrt(std::sqrt(std::fabs(gamma_rel - 1)));
+    const Real p = std::sqrt(std::sqrt(std::max(gamma_rel - 1, 0.0)));
     return g_low + (g_high - g_low) * p / (1 + p);
 }
 

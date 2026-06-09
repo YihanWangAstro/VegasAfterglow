@@ -6,7 +6,7 @@
 #include "mesh.h"
 
 inline Real structure_weight(Real Gamma) {
-    return Gamma * std::sqrt(std::fabs((Gamma - 1) * Gamma));
+    return Gamma * std::sqrt(std::max((Gamma - 1) * Gamma, 0.0));
 }
 
 /**
@@ -247,7 +247,7 @@ Array adaptive_theta_grid(Ejecta const& jet, Real theta_min, Real theta_max, siz
 
     auto pdf_eqn = [=, &jet](Real const& /*cdf*/, Real& pdf, Real theta) {
         const Real Gamma = jet.Gamma0(0, theta);
-        const Real beta = std::sqrt(std::fabs(Gamma * Gamma - 1)) / Gamma;
+        const Real beta = physics::relativistic::gamma_to_beta(Gamma);
         const Real doppler = (1 - beta) / (1 - beta * std::cos(theta - theta_v));
         const Real structure = structure_weight(Gamma);
         const Real dtheta = theta - theta_v;
@@ -288,7 +288,7 @@ Array adaptive_phi_grid(Ejecta const& jet, size_t phi_num, Real theta_v, Array c
         for (size_t it = 0; it < n_theta; ++it) {
             const Real theta = theta_grid(it);
             const Real Gamma = jet.Gamma0(phi, theta);
-            const Real beta = std::sqrt(std::fabs(Gamma * Gamma - 1)) / Gamma;
+            const Real beta = physics::relativistic::gamma_to_beta(Gamma);
             const Real cos_alpha = std::cos(theta) * cos_tv + std::sin(theta) * sin_tv * cos_phi;
             const Real a = (1 - beta) / (1 - beta * cos_alpha);
             w += a * structure_weight(Gamma) * dcos[it];

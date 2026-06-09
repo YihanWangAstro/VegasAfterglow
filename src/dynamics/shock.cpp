@@ -96,7 +96,7 @@ Real compute_downstr_4vel(Real gamma_rel, Real sigma) noexcept {
     const Real ad_idx_m_2 = ad_idx - 2;   // (ad_idx - 2)
     const Real ad_idx_m_1 = ad_idx - 1;   // (ad_idx - 1)
     if (sigma <= con::sigma_cut) {
-        return std::sqrt(std::fabs(gamma_m_1 * ad_idx_m_1 * ad_idx_m_1 / (-ad_idx * ad_idx_m_2 * gamma_m_1 + 2)));
+        return std::sqrt(std::max(gamma_m_1 * ad_idx_m_1 * ad_idx_m_1 / (-ad_idx * ad_idx_m_2 * gamma_m_1 + 2), 0.0));
     } else {
         const Real gamma_sq = gamma_rel * gamma_rel; // gamma_rel^2
         const Real gamma_p_1 = gamma_rel + 1;        // (gamma_rel + 1)
@@ -119,10 +119,10 @@ Real compute_downstr_4vel(Real gamma_rel, Real sigma) noexcept {
         const Real d = D / A;
         const Real P = c - b * b / 3;
         const Real Q = 2 * b * b * b / 27 - b * c / 3 + d;
-        const Real u = std::sqrt(std::fabs(P) / 3);
+        const Real u = std::sqrt(std::max(-P, 0.0) / 3);
         const Real denom = 2 * P * u;
         const Real v = (denom != 0) ? std::clamp(3 * Q / denom, -1.0, 1.0) : 0.0;
         const Real uds = 2 * u * std::cos((std::acos(v) - 2 * con::pi) / 3) - b / 3;
-        return std::sqrt(std::fabs(uds));
+        return std::sqrt(std::max(uds, 0.0));
     }
 }

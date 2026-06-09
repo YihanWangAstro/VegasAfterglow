@@ -74,7 +74,7 @@ inline Real compute_4vel_jump(Real gamma_rel, Real sigma_upstr) noexcept {
  */
 inline Real compute_sound_speed(Real Gamma_rel) noexcept {
     const Real ad_idx = physics::thermo::adiabatic_idx(Gamma_rel);
-    return std::sqrt(std::fabs(ad_idx * (ad_idx - 1) * (Gamma_rel - 1) / (1 + (Gamma_rel - 1) * ad_idx))) * con::c;
+    return std::sqrt(std::max(ad_idx * (ad_idx - 1) * (Gamma_rel - 1) / (1 + (Gamma_rel - 1) * ad_idx), 0.0)) * con::c;
 }
 
 /**
@@ -190,7 +190,7 @@ inline Real compute_upstr_B(Real rho_up, Real sigma) noexcept {
  * <!-- ************************************************************************************** -->
  */
 inline Real compute_rel_Gamma(Real gamma1, Real gamma2) noexcept {
-    return gamma1 * gamma2 - std::sqrt(std::fabs((gamma1 * gamma1 - 1) * (gamma2 * gamma2 - 1)));
+    return gamma1 * gamma2 - std::sqrt(std::max((gamma1 * gamma1 - 1) * (gamma2 * gamma2 - 1), 0.0));
 }
 
 /**
@@ -218,7 +218,7 @@ inline constexpr Real compute_rel_Gamma(Real gamma1, Real gamma2, Real beta1, Re
 inline Real compute_Gamma_from_relative(Real gamma4, Real gamma_rel) noexcept {
     const Real b = -2 * gamma4 * gamma_rel;
     const Real c = gamma4 * gamma4 + gamma_rel * gamma_rel - 1;
-    return (-b - std::sqrt(std::fabs(b * b - 4 * c))) / 2;
+    return (-b - std::sqrt(std::max(b * b - 4 * c, 0.0))) / 2;
 }
 
 /**
