@@ -16,6 +16,7 @@
 #include "../dynamics/shock.h"
 #include "../util/macros.h"
 #include "../util/utilities.h"
+#include "syn-concepts.h"
 
 /**
  * <!-- ************************************************************************************** -->
@@ -110,6 +111,11 @@ Real compton_correction(Real nu);
 template <typename Electrons, typename Photons>
 struct ICPhoton {
   public:
+    static_assert(SynElectronModel<Electrons>,
+                  "ICPhoton: Electrons must satisfy the SynElectronModel concept (see syn-concepts.h)");
+    static_assert(SynPhotonModel<Photons>,
+                  "ICPhoton: Photons must satisfy the SynPhotonModel concept (see syn-concepts.h)");
+
     /// Default constructor
     ICPhoton() = default;
 
@@ -488,7 +494,7 @@ Real ICPhoton<Electrons, Photons>::compute_log2_I_nu(Real log2_nu) {
     return log2_I_nu_IC(idx) + (log2_nu - log2_nu_IC(idx)) * interp_slope(idx);
 }
 
-template <typename Electrons, typename Photons>
+template <SynElectronModel Electrons, SynPhotonModel Photons>
 ICPhotonGrid<Electrons, Photons> generate_IC_photons(ElectronGrid<Electrons> const& electrons,
                                                      PhotonGrid<Photons> const& photons, bool KN,
                                                      Coord const& coord) noexcept {
@@ -572,7 +578,7 @@ void update_gamma_M(Real& gamma_M, InverseComptonY const& Ys, Real p, Real B);
 
 Real compute_syn_gamma(Real nu, Real B);
 
-template <typename Electrons, typename Photons, typename Updater>
+template <SynElectronModel Electrons, SynPhotonModel Photons, typename Updater>
 void IC_cooling(ElectronGrid<Electrons>& electrons, PhotonGrid<Photons>& photons, Shock const& shock,
                 Coord const& coord, Updater&& update_gamma_c, Real redshift = 0.0) {
     const size_t phi_size = electrons.shape()[0];
@@ -617,19 +623,19 @@ void IC_cooling(ElectronGrid<Electrons>& electrons, PhotonGrid<Photons>& photons
     generate_syn_photons(photons, shock, electrons, coord);
 }
 
-template <typename Electrons, typename Photons>
+template <SynElectronModel Electrons, SynPhotonModel Photons>
 void Thomson_cooling(ElectronGrid<Electrons>& electrons, PhotonGrid<Photons>& photons, Shock const& shock,
                      Coord const& coord, Real redshift) {
     IC_cooling(electrons, photons, shock, coord, update_gamma_c_Thomson, redshift);
 }
 
-template <typename Electrons, typename Photons>
+template <SynElectronModel Electrons, SynPhotonModel Photons>
 void KN_cooling(ElectronGrid<Electrons>& electrons, PhotonGrid<Photons>& photons, Shock const& shock,
                 Coord const& coord, Real redshift) {
     IC_cooling(electrons, photons, shock, coord, update_gamma_c_KN, redshift);
 }
 
-template <typename Electrons, typename Photons>
+template <SynElectronModel Electrons, SynPhotonModel Photons>
 void CMB_cooling(ElectronGrid<Electrons>& electrons, PhotonGrid<Photons>& photons, Shock const& shock,
                  Coord const& coord, Real redshift) {
     IC_cooling(electrons, photons, shock, coord, update_gamma_c_CMB, redshift);

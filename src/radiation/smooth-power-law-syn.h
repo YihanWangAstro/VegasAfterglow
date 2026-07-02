@@ -7,6 +7,7 @@
 #pragma once
 
 #include "inverse-compton.h"
+#include "syn-concepts.h"
 
 /**
  * <!-- ************************************************************************************** -->
@@ -104,3 +105,6 @@ struct SmoothPowerLawSyn {
     [[nodiscard]] inline Real log2_optical_thin(Real log2_nu) const noexcept;
     [[nodiscard]] inline Real log2_optical_thick(Real log2_nu) const noexcept;
 };
+
+static_assert(SynPhotonModel<SmoothPowerLawSyn>,
+              "SmoothPowerLawSyn must satisfy the SynPhotonModel concept (syn-concepts.h)");

@@ -7,6 +7,7 @@
 #pragma once
 
 #include "inverse-compton.h"
+#include "syn-concepts.h"
 /**
  * <!-- ************************************************************************************** -->
  * @struct PowerLawSyn
@@ -65,3 +66,5 @@ struct PowerLawSyn {
     [[nodiscard]] inline Real compute_spectrum(Real nu) const;
     [[nodiscard]] inline Real compute_log2_spectrum(Real log2_nu) const;
 };
+
+static_assert(SynPhotonModel<PowerLawSyn>, "PowerLawSyn must satisfy the SynPhotonModel concept (syn-concepts.h)");

@@ -9,6 +9,7 @@
 #include "../dynamics/shock.h"
 #include "inverse-compton.h"
 #include "smooth-power-law-syn.h"
+#include "syn-concepts.h"
 /**
  * <!-- ************************************************************************************** -->
  * @struct SynElectrons
@@ -63,6 +64,9 @@ struct SynElectrons {
     [[nodiscard]] inline Real compute_spectrum(Real gamma) const noexcept;
 };
 
+static_assert(SynElectronModel<SynElectrons>,
+              "SynElectrons must satisfy the SynElectronModel concept (syn-concepts.h)");
+
 /**
  * <!-- ************************************************************************************** -->
  * @defgroup SynchrotronGrids Synchrotron Grid Type Aliases
@@ -70,6 +74,9 @@ struct SynElectrons {
  * <!-- ************************************************************************************** -->
  */
 
+/// The active synchrotron photon model — one-line switch. Any replacement must satisfy the
+/// SynPhotonModel concept (syn-concepts.h); conformance is static_assert'ed in each model's
+/// header, so the compiler enforces the contract instead of comment discipline.
 using SynPhotons = SmoothPowerLawSyn;
 
 /// Type alias for 3D grid of synchrotron photons
