@@ -260,6 +260,15 @@ class PowerLawJet {
 /// Concrete jet types have inline eps_k()/Gamma0() and no injection members,
 /// enabling smaller state vectors and eliminated code paths via if constexpr.
 /// Ejecta uses std::function as fallback for custom jets and magnetar injection.
+///
+/// Adding a jet type — two paths:
+/// 1. Default: build it as an Ejecta (see PyTwoComponentJet/PyStepPowerLawJet/PyPowerLawWing in
+///    pybind/pymodel.cpp) — one factory + m.def, plus a JETS entry in VegasAfterglow/fitting/config.py.
+///    No variant changes, no new solver instantiations.
+/// 2. Variant arm (only when profiling shows the Ejecta std::function overhead matters for a
+///    heavily-used profile): add the arm here, then update in lockstep the py::class_ registration
+///    and m.def in pybind/pybind.cpp, the factory in pybind/pymodel.{h,cpp}, and convert_unit_jet
+///    in pybind/pymodel.cpp. Every arm multiplies the jet x medium solver template cross-product.
 using JetVariant = std::variant<TophatJet, GaussianJet, PowerLawJet, Ejecta>;
 
 /// Helper: evaluate eps_k on a JetVariant (for non-hot-path code)
