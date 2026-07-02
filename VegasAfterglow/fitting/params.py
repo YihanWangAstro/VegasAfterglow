@@ -20,7 +20,7 @@ import bilby
 import numpy as np
 
 from ..types import ModelParams, ParamDef, Scale
-from .config import JET_RULES, MEDIUM_RULES, TOGGLE_RULES
+from .config import JETS, MEDIA, TOGGLE_RULES
 from .utils import _get_latex_label, _param_label
 
 
@@ -39,13 +39,13 @@ def validate_parameters(fitter, param_defs: Sequence[ParamDef]) -> None:
             f"{p} (not used with {context})" for p in forbidden & param_names
         )
 
-    for rules, config_attr, label in [
-        (MEDIUM_RULES, fitter.medium, "medium"),
-        (JET_RULES, fitter.jet, "jet"),
+    for registry, config_attr, label in [
+        (MEDIA, fitter.medium, "medium"),
+        (JETS, fitter.jet, "jet"),
     ]:
-        if config_attr in rules:
-            required, forbidden = rules[config_attr]
-            add_violations(required, forbidden, f"{config_attr} {label}")
+        spec = registry.get(config_attr)
+        if spec is not None:
+            add_violations(spec.required, spec.forbidden, f"{config_attr} {label}")
 
     for toggle, (required_on, forbidden_off) in TOGGLE_RULES.items():
         enabled = toggle == "forward_shock" or getattr(fitter, toggle, False)

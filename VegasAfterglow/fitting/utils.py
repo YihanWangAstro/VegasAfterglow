@@ -11,8 +11,8 @@ import numpy as np
 from bilby.core.sampler.emcee import Emcee as _BilbyEmcee
 
 from ..types import ModelParams, ParamDef, Scale
-from ..VegasAfterglowC import ISM, Magnetar, Wind
-from .config import _JET_CONSTRUCTORS, LATEX_LABELS
+from ..VegasAfterglowC import Magnetar
+from .config import JETS, LATEX_LABELS, MEDIA
 
 # Patch bilby to accept 'moves' kwarg for emcee sampler
 _BilbyEmcee.default_kwargs["moves"] = None
@@ -34,26 +34,24 @@ def _default_jet_factory(fitter):
 
     def factory(params: ModelParams):
         jet_type = fitter.jet
-        if jet_type not in _JET_CONSTRUCTORS:
+        if jet_type not in JETS:
             raise ValueError(f"Unknown jet type: {jet_type}")
 
-        cls, param_names = _JET_CONSTRUCTORS[jet_type]
-        kwargs = {name: getattr(params, name) for name in param_names}
-
-        if jet_type == "uniform":
-            kwargs["theta_c"] = np.pi / 2
+        spec = JETS[jet_type]
+        kwargs = {name: getattr(params, name) for name in spec.params}
+        kwargs.update(spec.fixed_kwargs)
 
         kwargs["spreading"] = False
         kwargs["duration"] = params.tau if hasattr(params, "tau") else 1.0
 
-        if jet_type != "powerlaw_wing":
+        if spec.supports_magnetar:
             kwargs["magnetar"] = (
                 Magnetar(L0=params.L0, t0=params.t0, q=params.q)
                 if fitter.magnetar
                 else None
             )
 
-        return cls(**kwargs)
+        return spec.constructor(**kwargs)
 
     return factory
 
@@ -62,14 +60,12 @@ def _default_medium_factory(fitter):
     """Build a medium factory from fitter's medium type string."""
 
     def factory(params: ModelParams):
-        if fitter.medium == "ism":
-            return ISM(n_ism=params.n_ism)
-        elif fitter.medium == "wind":
-            return Wind(
-                A_star=params.A_star, n_ism=params.n_ism, n0=params.n0, k_m=params.k_m
-            )
-        else:
+        if fitter.medium not in MEDIA:
             raise ValueError(f"Unknown medium type: {fitter.medium}")
+
+        spec = MEDIA[fitter.medium]
+        kwargs = {name: getattr(params, name) for name in spec.params}
+        return spec.constructor(**kwargs)
 
     return factory
 

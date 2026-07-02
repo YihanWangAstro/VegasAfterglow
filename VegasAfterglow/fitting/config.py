@@ -1,17 +1,21 @@
 """Configuration constants for afterglow model fitting."""
 
-from dataclasses import dataclass
+import math
+from dataclasses import dataclass, field
+from typing import Any, Callable, Dict, FrozenSet, Tuple
 
 import emcee
 import numpy as np
 
 from ..VegasAfterglowC import (
+    ISM,
     GaussianJet,
     PowerLawJet,
     PowerLawWing,
     StepPowerLawJet,
     TophatJet,
     TwoComponentJet,
+    Wind,
 )
 
 LATEX_LABELS = {
@@ -42,26 +46,93 @@ LATEX_LABELS = {
     "q": r"$q$",
 }
 
-MEDIUM_RULES = {
-    "ism": ({"n_ism"}, {"A_star", "n0", "k_m"}),
-    "wind": ({"A_star"}, set()),
+
+@dataclass(frozen=True)
+class JetSpec:
+    """Everything the fitting pipeline needs to know about one jet type.
+
+    ``params`` is the ordered list of constructor arguments pulled from
+    ``ModelParams`` -- it doubles as the set of sampler parameters this jet
+    requires. ``fixed_kwargs`` are constructor arguments with a hard-coded
+    value (not sampled). Parameters in ``_SWAPPABLE_JET_PARAMS`` that a jet
+    does not require are forbidden for it (they would be silently unused).
+    The opening angles theta_c / theta_w are never forbidden.
+    """
+
+    constructor: Callable
+    params: Tuple[str, ...]
+    fixed_kwargs: Dict[str, Any] = field(default_factory=dict)
+    supports_magnetar: bool = True
+
+    @property
+    def required(self) -> FrozenSet[str]:
+        return frozenset(self.params)
+
+    @property
+    def forbidden(self) -> FrozenSet[str]:
+        return _SWAPPABLE_JET_PARAMS - self.required
+
+
+@dataclass(frozen=True)
+class MediumSpec:
+    """Everything the fitting pipeline needs to know about one medium type.
+
+    Unlike jets, ``required`` is not ``set(params)``: the wind medium always
+    passes n_ism/n0/k_m through from ``ModelParams`` (which has physical
+    defaults for them), so they are constructor arguments without being
+    required sampler parameters.
+    """
+
+    constructor: Callable
+    params: Tuple[str, ...]
+    required: FrozenSet[str]
+    forbidden: FrozenSet[str]
+
+
+#: Structure parameters that switch on/off with the jet type; anything here
+#: that a jet does not require is rejected by parameter validation.
+_SWAPPABLE_JET_PARAMS = frozenset(
+    {"E_iso", "Gamma0", "k_e", "k_g", "E_iso_w", "Gamma0_w"}
+)
+
+#: The jet registry: adding a jet type to the fitting pipeline is one entry here.
+JETS = {
+    "tophat": JetSpec(TophatJet, ("theta_c", "E_iso", "Gamma0")),
+    "gaussian": JetSpec(GaussianJet, ("theta_c", "E_iso", "Gamma0")),
+    "powerlaw": JetSpec(PowerLawJet, ("theta_c", "E_iso", "Gamma0", "k_e", "k_g")),
+    "two_component": JetSpec(
+        TwoComponentJet,
+        ("theta_c", "E_iso", "Gamma0", "theta_w", "E_iso_w", "Gamma0_w"),
+    ),
+    "step_powerlaw": JetSpec(
+        StepPowerLawJet,
+        ("theta_c", "E_iso", "Gamma0", "E_iso_w", "Gamma0_w", "k_e", "k_g"),
+    ),
+    "powerlaw_wing": JetSpec(
+        PowerLawWing,
+        ("theta_c", "E_iso_w", "Gamma0_w", "k_e", "k_g"),
+        supports_magnetar=False,
+    ),
+    "uniform": JetSpec(
+        TophatJet,
+        ("E_iso", "Gamma0"),
+        fixed_kwargs={"theta_c": math.pi / 2},
+    ),
 }
 
-JET_RULES = {
-    "tophat": ({"theta_c", "E_iso", "Gamma0"}, {"k_e", "k_g", "E_iso_w", "Gamma0_w"}),
-    "gaussian": ({"theta_c", "E_iso", "Gamma0"}, {"k_e", "k_g", "E_iso_w", "Gamma0_w"}),
-    "powerlaw": ({"theta_c", "E_iso", "Gamma0", "k_e", "k_g"}, {"E_iso_w", "Gamma0_w"}),
-    "two_component": (
-        {"theta_c", "E_iso", "Gamma0", "theta_w", "E_iso_w", "Gamma0_w"},
-        {"k_e", "k_g"},
+#: The medium registry, same idea as JETS.
+MEDIA = {
+    "ism": MediumSpec(
+        ISM,
+        params=("n_ism",),
+        required=frozenset({"n_ism"}),
+        forbidden=frozenset({"A_star", "n0", "k_m"}),
     ),
-    "step_powerlaw": (
-        {"theta_c", "E_iso", "Gamma0", "E_iso_w", "Gamma0_w", "k_e", "k_g"},
-        set(),
-    ),
-    "powerlaw_wing": (
-        {"theta_c", "E_iso_w", "Gamma0_w", "k_e", "k_g"},
-        {"E_iso", "Gamma0"},
+    "wind": MediumSpec(
+        Wind,
+        params=("A_star", "n_ism", "n0", "k_m"),
+        required=frozenset({"A_star"}),
+        forbidden=frozenset(),
     ),
 }
 
@@ -90,22 +161,6 @@ SAMPLER_DEFAULTS = {
             (emcee.moves.DESnookerMove(), 0.3),
         ],
     },
-}
-
-_JET_CONSTRUCTORS = {
-    "tophat": (TophatJet, ["theta_c", "E_iso", "Gamma0"]),
-    "gaussian": (GaussianJet, ["theta_c", "E_iso", "Gamma0"]),
-    "powerlaw": (PowerLawJet, ["theta_c", "E_iso", "Gamma0", "k_e", "k_g"]),
-    "two_component": (
-        TwoComponentJet,
-        ["theta_c", "E_iso", "Gamma0", "theta_w", "E_iso_w", "Gamma0_w"],
-    ),
-    "step_powerlaw": (
-        StepPowerLawJet,
-        ["theta_c", "E_iso", "Gamma0", "E_iso_w", "Gamma0_w", "k_e", "k_g"],
-    ),
-    "powerlaw_wing": (PowerLawWing, ["theta_c", "E_iso_w", "Gamma0_w", "k_e", "k_g"]),
-    "uniform": (TophatJet, ["E_iso", "Gamma0"]),
 }
 
 
