@@ -160,6 +160,48 @@ Real compute_gamma_c(Real t_comv, Real B, Real Y);
 
 /**
  * <!-- ************************************************************************************** -->
+ * @brief Passive cooling of a Lorentz factor frozen at reverse-shock crossing.
+ * @param gamma_x Lorentz factor at crossing
+ * @param gamma_m_x Minimum Lorentz factor at crossing
+ * @param gamma_m Current minimum Lorentz factor
+ * @param dt_comv Comoving time elapsed since crossing
+ * @param B Magnetic field
+ * @param Y Inverse Compton Y parameter
+ * @return The cooled Lorentz factor
+ * <!-- ************************************************************************************** -->
+ */
+Real cool_after_crossing(Real gamma_x, Real gamma_m_x, Real gamma_m, Real dt_comv, Real B, Real Y);
+
+/**
+ * <!-- ************************************************************************************** -->
+ * @brief Applies relic cooling to one grid cell if it lies beyond the electron-injection cutoff.
+ * @details Single owner of the relic-cooling rule: beyond Shock::injection_idx no new electrons
+ *          are shocked (the reverse shock has finished crossing), so gamma_c and gamma_M evolve
+ *          by passive cooling of the population frozen at the crossing cell (injection_idx - 1).
+ *          Forward shocks always inject (injection_idx == t_size), so this is a no-op for them.
+ * @param electrons Electron grid; cell (i, j, k) is updated in place
+ * @param shock Shock providing injection_idx, t_comv, and B
+ * @return true if the cell is a relic cell (gamma_c/gamma_M were overwritten)
+ * <!-- ************************************************************************************** -->
+ */
+template <SynElectronModel Electrons>
+bool cool_relic_electrons(ElectronGrid<Electrons>& electrons, Shock const& shock, size_t i, size_t j, size_t k) {
+    if (!shock.is_relic(i, j, k)) {
+        return false;
+    }
+    const size_t k_inj = shock.injection_idx(i, j);
+    auto& elec = electrons(i, j, k);
+    auto const& inj = electrons(i, j, k_inj - 1);
+    const Real t_com = shock.t_comv(i, j, k);
+    const Real B = shock.B(i, j, k);
+    const Real dt_comv = t_com - shock.t_comv(i, j, k_inj - 1);
+    elec.gamma_c = cool_after_crossing(inj.gamma_c, inj.gamma_m, elec.gamma_m, t_com, B, 0);
+    elec.gamma_M = cool_after_crossing(inj.gamma_M, inj.gamma_m, elec.gamma_m, dt_comv, B, 0);
+    return true;
+}
+
+/**
+ * <!-- ************************************************************************************** -->
  * @brief Calculates synchrotron frequency for a given Lorentz factor and magnetic field
  * @param gamma Electron Lorentz factor
  * @param B Magnetic field

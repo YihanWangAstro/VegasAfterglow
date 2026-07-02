@@ -552,8 +552,6 @@ inline Real compute_Thomson_Y(RadParams const& rad, Real gamma_m, Real gamma_c, 
 
 Real compute_gamma_c(Real t_comv, Real B, Real Y);
 
-Real cool_after_crossing(Real gamma_x, Real gamma_m_x, Real gamma_m, Real dt_comv, Real B, Real Y);
-
 Real compute_syn_gamma_M(Real B, Real Y, Real p);
 
 Real compute_syn_I_peak(Real B, Real p, Real column_den);
@@ -588,8 +586,6 @@ void IC_cooling(ElectronGrid<Electrons>& electrons, PhotonGrid<Photons>& photons
 
     for (size_t i = 0; i < phi_compute; ++i) {
         for (size_t j : coord.theta_reps) {
-            const size_t k_inj = shock.injection_idx(i, j);
-
             for (size_t k = 0; k < t_size; ++k) {
                 const Real t_com = shock.t_comv(i, j, k);
                 const Real B = shock.B(i, j, k);
@@ -603,13 +599,7 @@ void IC_cooling(ElectronGrid<Electrons>& electrons, PhotonGrid<Photons>& photons
 
                 update_gamma_M(elec.gamma_M, Ys, p, B);
 
-                if (k >= k_inj) {
-                    auto const& inj = electrons(i, j, k_inj - 1);
-                    const Real dt_comv = t_com - shock.t_comv(i, j, k_inj - 1);
-                    elec.gamma_c = cool_after_crossing(inj.gamma_c, inj.gamma_m, elec.gamma_m, t_com, B, 0);
-
-                    elec.gamma_M = cool_after_crossing(inj.gamma_M, inj.gamma_m, elec.gamma_m, dt_comv, B, 0);
-                }
+                cool_relic_electrons(electrons, shock, i, j, k);
 
                 const Real I_nu_peak = compute_syn_I_peak(B, p, elec.column_den);
                 elec.Y_c = Ys.gamma_spectrum(elec.gamma_c);

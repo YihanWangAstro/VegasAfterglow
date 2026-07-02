@@ -323,7 +323,6 @@ void generate_syn_electrons(SynElectronGrid& electrons, Shock const& shock, Coor
 
     for (size_t i = 0; i < phi_compute; ++i) {
         for (size_t j : coord.theta_reps) {
-            const size_t k_inj = shock.injection_idx(i, j);
             for (size_t k = 0; k < t_size; ++k) {
                 const Real t_com = shock.t_comv(i, j, k);
                 const Real B = shock.B(i, j, k);
@@ -343,14 +342,7 @@ void generate_syn_electrons(SynElectronGrid& electrons, Shock const& shock, Coor
                 elec.column_den = elec.N_e / (r * r);
                 const Real I_nu_peak = compute_syn_I_peak(B, rad.p, elec.column_den);
 
-                // no new shocked electrons, cool the relic population from crossing
-                if (k >= k_inj) {
-                    auto const& inj = electrons(i, j, k_inj - 1);
-                    const Real dt_comv = t_com - shock.t_comv(i, j, k_inj - 1);
-                    elec.gamma_c = cool_after_crossing(inj.gamma_c, inj.gamma_m, elec.gamma_m, t_com, B, 0);
-
-                    elec.gamma_M = cool_after_crossing(inj.gamma_M, inj.gamma_m, elec.gamma_m, dt_comv, B, 0);
-                } else {
+                if (!cool_relic_electrons(electrons, shock, i, j, k)) {
                     elec.gamma_c = compute_gamma_c(t_com, B, 0.);
                 }
 

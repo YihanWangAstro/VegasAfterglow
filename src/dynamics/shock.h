@@ -50,6 +50,11 @@ class Shock {
     IndexGrid injection_idx; ///< Beyond which grid index there is no electron injection
     RadParams rad;           ///< Radiation parameters
 
+    /// Whether grid point k lies beyond the electron-injection cutoff: no freshly shocked
+    /// electrons there, only the relic population from the crossing (set by the reverse-shock
+    /// solver; forward shocks always inject, injection_idx == t_size).
+    [[nodiscard]] bool is_relic(size_t i, size_t j, size_t k) const noexcept { return k >= injection_idx(i, j); }
+
     /// Returns grid dimensions as a tuple
     [[nodiscard]] auto shape() const { return std::make_tuple(phi_size_, theta_size_, t_size_); }
 
