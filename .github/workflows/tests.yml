@@ -1,0 +1,55 @@
+name: Tests
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+concurrency:
+  group: tests-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  pytest:
+    name: pytest on ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # setuptools-scm needs tags for the version
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Set up ccache
+        if: runner.os != 'Windows'
+        uses: hendrikmuhs/ccache-action@v1.2
+        with:
+          key: tests-${{ matrix.os }}
+          restore-keys: |
+            tests-${{ matrix.os }}
+
+      - name: Build and install package
+        if: runner.os != 'Windows'
+        run: pip install ".[test,mcmc]" pytest
+        env:
+          CMAKE_ARGS: "-DAFTERGLOW_MARCH_NATIVE=OFF -DCMAKE_C_COMPILER_LAUNCHER=ccache -DCMAKE_CXX_COMPILER_LAUNCHER=ccache"
+
+      - name: Build and install package (Windows)
+        if: runner.os == 'Windows'
+        run: pip install ".[test,mcmc]" pytest
+        env:
+          CMAKE_ARGS: "-DAFTERGLOW_MARCH_NATIVE=OFF"
+
+      - name: Run pytest
+        run: python -m pytest tests/ -x -q
+
+      - name: Wheel smoke test
+        run: python tests/wheel_smoke.py

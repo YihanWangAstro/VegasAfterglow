@@ -112,9 +112,10 @@ class SimpleShockEqn {
      */
     Real dGamma_dt(Real eps_rad, State const& state, State const& diff) const noexcept;
 
-    Real const dOmega0{0}; ///< Initial solid angle
-    Real const theta_s{0}; ///< Critical angle for jet spreading
-    Real m_jet0{0};        ///< Ejecta mass per solid angle
+    Real const dOmega0_{0};             ///< Initial solid angle
+    Real const theta_s_{0};             ///< Critical angle for jet spreading
+    RadiativeEfficiency const eps_rad_; ///< Radiative efficiency evaluator (shared formula in shock-physics.h)
+    Real m_jet0_{0};                    ///< Ejecta mass per solid angle
 };
 
 #include "../src/dynamics/simple-shock.tpp"

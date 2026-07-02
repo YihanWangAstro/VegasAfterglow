@@ -162,10 +162,10 @@ class FitResult:
     samples: np.ndarray
     log_probs: np.ndarray
     labels: Sequence[str]
-    latex_labels: Sequence[str] = None  # LaTeX labels for plotting
-    top_k_params: np.ndarray = None
-    top_k_log_probs: np.ndarray = None
-    bilby_result: object = None  # Full bilby Result object (for diagnostics)
+    latex_labels: Optional[Sequence[str]] = None  # LaTeX labels for plotting
+    top_k_params: Optional[np.ndarray] = None
+    top_k_log_probs: Optional[np.ndarray] = None
+    bilby_result: Optional[object] = None  # Full bilby Result object (for diagnostics)
     # Fit-quality bookkeeping (None for results loaded from older files).
     n_data: Optional[int] = None  # Total observation count across point + band data
     n_free_params: Optional[int] = None  # Sampled (non-fixed) parameter count
@@ -218,7 +218,11 @@ class FitResult:
             Formatted table; renders identically under ``print()`` and
             Jupyter last-line evaluation.
         """
-        if self.top_k_params is None or len(self.top_k_params) == 0:
+        if (
+            self.top_k_params is None
+            or self.top_k_log_probs is None
+            or len(self.top_k_params) == 0
+        ):
             return _SummaryTable("FitResult: no top_k_params stored")
 
         rows = np.asarray(
@@ -350,9 +354,9 @@ class ParamDef:
     lower: float
     upper: float
     scale: Scale = Scale.linear
-    initial: float = (
-        None  # Initial value (in linear space, auto-converted for LOG scale)
-    )
+    initial: Optional[
+        float
+    ] = None  # Initial value (in linear space, auto-converted for LOG scale)
 
     def __post_init__(self) -> None:
         """Catch obvious mistakes at construction time so the user sees the

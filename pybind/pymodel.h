@@ -211,7 +211,7 @@ ISM PyISM(Real n_ism);
  * @param A_star Wind parameter A* = Ṁv_w/(4π) in units of 5×10^11 g/cm [dimensionless]
  * @param n_ism Constant density component for large radii [cm^-3] (default: 0)
  * @param n0 Inner boundary density for stratified wind model [cm^-3] (default: ∞)
- * @param k Power-law index for wind density profile (ρ ∝ r^(-k), default: 2)
+ * @param k_m Power-law index for wind density profile (ρ ∝ r^(-k_m), default: 2)
  * @return Medium Configured medium object representing stellar wind properties
  * <!-- ************************************************************************************** -->
  */
@@ -298,6 +298,7 @@ class PyRadiation {
      * @param xi_e Fraction of shock-heated electrons that are accelerated to relativistic energies
      * @param ssc Whether to include synchrotron self-Compton emission and IC cooling (default: false)
      * @param kn Whether to include Klein-Nishina corrections for IC processes (default: false)
+     * @param cmb_cooling Whether to include IC cooling on CMB photons (default: false)
      * <!-- ************************************************************************************** -->
      */
     PyRadiation(Real eps_e, Real eps_B, Real p, Real xi_e = 1, bool ssc = false, bool kn = false,
@@ -591,15 +592,17 @@ class PyModel {
      * @param rvs_rad Optional radiation parameters for reverse shock (default: none)
      * @param resolutions Grid resolution tuple (phi_res, theta_res, time_res) in (deg⁻¹, deg⁻¹, decade⁻¹).
      *        The total grid points in each dimension are computed from these resolutions, but
-     *        each has a minimum that cannot be reduced further: phi (min 1), theta (min 48), time (min 24).
-     * @param rtol Relative tolerance for numerical integration (default: 1×10⁻⁵)
+     *        each has a minimum that cannot be reduced further: phi (min 1), theta (min 36), time (min 24).
+     * @param rtol Relative tolerance for numerical integration (default: 1×10⁻⁶)
      * @param axisymmetric Whether to assume axisymmetric jet structure (default: true)
      * <!-- ************************************************************************************** -->
      */
     PyModel(JetVariant jet, MediumVariant medium, PyObserver const& observer, PyRadiation const& fwd_rad,
             std::optional<PyRadiation> const& rvs_rad = std::nullopt,
-            std::tuple<Real, Real, Real> const& resolutions = std::make_tuple(0.1, 0.25, 10), Real rtol = 1e-5,
-            bool axisymmetric = true)
+            std::tuple<Real, Real, Real> const& resolutions = std::make_tuple(defaults::grid::phi_resolution,
+                                                                              defaults::grid::theta_resolution,
+                                                                              defaults::grid::time_resolution),
+            Real rtol = defaults::solver::ode_rtol, bool axisymmetric = true)
         : jet_(std::move(jet)),
           medium_(std::move(medium)),
           obs_setup(observer),
@@ -825,17 +828,17 @@ class PyModel {
     static void average_exposure_flux(PyFlux& result, std::vector<size_t> const& idx_sorted, size_t original_size,
                                       size_t num_points);
 
-    JetVariant jet_;                        ///< Jet model (TophatJet, GaussianJet, PowerLawJet, or Ejecta)
-    MediumVariant medium_;                  ///< Circumburst medium (ISM, Wind, or generic Medium)
-    PyObserver obs_setup;                   ///< Observer configuration
-    PyRadiation fwd_rad;                    ///< Forward shock radiation parameters
-    std::optional<PyRadiation> rvs_rad_opt; ///< Optional reverse shock radiation parameters
-    Real theta_w{con::pi / 2};              ///< Maximum polar angle to calculate
-    Real phi_resol{0.1};                    ///< Azimuthal resolution: number of points per degree
-    Real theta_resol{0.5};                  ///< Polar resolution: number of points per degree
-    Real t_resol{10};                       ///< Time resolution: number of points per decade
-    Real rtol{1e-5};                        ///< Relative tolerance
-    bool axisymmetric{true};                ///< Whether to assume axisymmetric jet
+    JetVariant jet_;                                    ///< Jet model (TophatJet, GaussianJet, PowerLawJet, or Ejecta)
+    MediumVariant medium_;                              ///< Circumburst medium (ISM, Wind, or generic Medium)
+    PyObserver obs_setup;                               ///< Observer configuration
+    PyRadiation fwd_rad;                                ///< Forward shock radiation parameters
+    std::optional<PyRadiation> rvs_rad_opt;             ///< Optional reverse shock radiation parameters
+    Real theta_w{con::pi / 2};                          ///< Maximum polar angle to calculate
+    Real phi_resol{defaults::grid::phi_resolution};     ///< Azimuthal resolution: number of points per degree
+    Real theta_resol{defaults::grid::theta_resolution}; ///< Polar resolution: number of points per degree
+    Real t_resol{defaults::grid::time_resolution};      ///< Time resolution: number of points per decade
+    Real rtol{defaults::solver::ode_rtol};              ///< Relative tolerance
+    bool axisymmetric{true};                            ///< Whether to assume axisymmetric jet
 };
 
 //========================================================================================================

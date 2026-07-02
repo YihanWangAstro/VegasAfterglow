@@ -124,29 +124,55 @@ PYBIND11_MODULE(VegasAfterglowC, m) {
           py::arg("duration") = 1, py::arg("magnetar") = py::none());
 
     py::class_<Ejecta>(m, "Ejecta")
-        .def(py::init([](py::object E_iso_obj, py::object Gamma0_obj, py::object sigma0_obj, py::object E_dot_obj,
-                         py::object M_dot_obj, bool spreading, Real duration) {
-                 // Import NativeFunc type once (cached by pybind11); falls back to py::none()
-                 py::object native_type = py::none();
-                 try {
-                     native_type = py::module_::import("VegasAfterglow.native").attr("NativeFunc");
-                 } catch (...) {}
+        .def(
+            py::init([](py::object E_iso_obj, py::object Gamma0_obj, py::object sigma0_obj, py::object E_dot_obj,
+                        py::object M_dot_obj, bool spreading, Real duration) {
+                AFTERGLOW_REQUIRE(std::isfinite(duration) && duration > 0,
+                                  std::string("duration must be positive and finite, got ") + std::to_string(duration));
+                AFTERGLOW_REQUIRE(PyCallable_Check(E_iso_obj.ptr()), "E_iso must be callable: (phi, theta) -> erg");
+                AFTERGLOW_REQUIRE(PyCallable_Check(Gamma0_obj.ptr()),
+                                  "Gamma0 must be callable: (phi, theta) -> Lorentz factor");
+                AFTERGLOW_REQUIRE(sigma0_obj.is_none() || PyCallable_Check(sigma0_obj.ptr()),
+                                  "sigma0 must be callable: (phi, theta) -> magnetization");
+                AFTERGLOW_REQUIRE(E_dot_obj.is_none() || PyCallable_Check(E_dot_obj.ptr()),
+                                  "E_dot must be callable: (phi, theta, t) -> erg/s");
+                AFTERGLOW_REQUIRE(M_dot_obj.is_none() || PyCallable_Check(M_dot_obj.ptr()),
+                                  "M_dot must be callable: (phi, theta, t) -> g/s");
 
-                 auto eps_k = to_binary_func(E_iso_obj, native_type);
-                 auto Gamma0 = to_binary_func(Gamma0_obj, native_type);
-                 // Default sigma0/E_dot/M_dot to C++ zero functions (GIL-free)
-                 auto sigma0 =
-                     sigma0_obj.is_none() ? BinaryFunc(func::zero_2d) : to_binary_func(sigma0_obj, native_type);
-                 auto E_dot =
-                     E_dot_obj.is_none() ? TernaryFunc(func::zero_3d) : to_ternary_func(E_dot_obj, native_type);
-                 auto M_dot =
-                     M_dot_obj.is_none() ? TernaryFunc(func::zero_3d) : to_ternary_func(M_dot_obj, native_type);
+                // Import NativeFunc type once (cached by pybind11); falls back to py::none()
+                py::object native_type = py::none();
+                try {
+                    native_type = py::module_::import("VegasAfterglow.native").attr("NativeFunc");
+                } catch (...) {}
 
-                 return Ejecta(std::move(eps_k), std::move(Gamma0), std::move(sigma0), std::move(E_dot),
-                               std::move(M_dot), spreading, duration);
-             }),
-             py::arg("E_iso"), py::arg("Gamma0"), py::arg("sigma0") = py::none(), py::arg("E_dot") = py::none(),
-             py::arg("M_dot") = py::none(), py::arg("spreading") = false, py::arg("duration") = 1);
+                auto eps_k = to_binary_func(E_iso_obj, native_type);
+                auto Gamma0 = to_binary_func(Gamma0_obj, native_type);
+                // Default sigma0/E_dot/M_dot to C++ zero functions (GIL-free)
+                auto sigma0 =
+                    sigma0_obj.is_none() ? BinaryFunc(func::zero_2d) : to_binary_func(sigma0_obj, native_type);
+                auto E_dot = E_dot_obj.is_none() ? TernaryFunc(func::zero_3d) : to_ternary_func(E_dot_obj, native_type);
+                auto M_dot = M_dot_obj.is_none() ? TernaryFunc(func::zero_3d) : to_ternary_func(M_dot_obj, native_type);
+
+                // Probe the profiles on-axis to reject obviously broken functions at construction
+                // time (same contract as the typed jet factories, which validate their scalars).
+                const Real eps_probe = eps_k(0, 0);
+                AFTERGLOW_REQUIRE(std::isfinite(eps_probe) && eps_probe >= 0,
+                                  std::string("E_iso(phi=0, theta=0) must be finite and non-negative, got ") +
+                                      std::to_string(eps_probe));
+                const Real Gamma_probe = Gamma0(0, 0);
+                AFTERGLOW_REQUIRE(std::isfinite(Gamma_probe) && Gamma_probe >= 1,
+                                  std::string("Gamma0(phi=0, theta=0) must be finite and >= 1, got ") +
+                                      std::to_string(Gamma_probe));
+                const Real sigma_probe = sigma0(0, 0);
+                AFTERGLOW_REQUIRE(std::isfinite(sigma_probe) && sigma_probe >= 0,
+                                  std::string("sigma0(phi=0, theta=0) must be finite and non-negative, got ") +
+                                      std::to_string(sigma_probe));
+
+                return Ejecta(std::move(eps_k), std::move(Gamma0), std::move(sigma0), std::move(E_dot),
+                              std::move(M_dot), spreading, duration);
+            }),
+            py::arg("E_iso"), py::arg("Gamma0"), py::arg("sigma0") = py::none(), py::arg("E_dot") = py::none(),
+            py::arg("M_dot") = py::none(), py::arg("spreading") = false, py::arg("duration") = 1);
 
     // Jet bindings — register concrete types for std::variant support
     auto tophat_type [[maybe_unused]] = py::class_<TophatJet>(m, "_TophatJet");
@@ -158,11 +184,21 @@ PYBIND11_MODULE(VegasAfterglowC, m) {
     auto wind_type [[maybe_unused]] = py::class_<Wind>(m, "_Wind");
     py::class_<Medium>(m, "Medium")
         .def(py::init([](py::object rho_obj) {
+                 AFTERGLOW_REQUIRE(PyCallable_Check(rho_obj.ptr()), "rho must be callable: (phi, theta, r) -> g/cm^3");
                  py::object native_type = py::none();
                  try {
                      native_type = py::module_::import("VegasAfterglow.native").attr("NativeFunc");
                  } catch (...) {}
                  auto rho = to_ternary_func(rho_obj, native_type);
+
+                 // Probe the density on-axis at a typical afterglow radius to reject obviously
+                 // broken functions at construction time (mirrors the typed ISM/Wind factories).
+                 const Real rho_probe = rho(0, 0, 1e17);
+                 AFTERGLOW_REQUIRE(std::isfinite(rho_probe) && rho_probe >= 0,
+                                   std::string("rho(phi=0, theta=0, r=1e17 cm) must be finite and non-negative, "
+                                               "got ") +
+                                       std::to_string(rho_probe));
+
                  return Medium(std::move(rho));
              }),
              py::arg("rho"));
@@ -241,8 +277,10 @@ PYBIND11_MODULE(VegasAfterglowC, m) {
                                 axisymmetric);
              }),
              py::arg("jet"), py::arg("medium"), py::arg("observer"), py::arg("fwd_rad"),
-             py::arg("rvs_rad") = py::none(), py::arg("resolutions") = std::make_tuple(0.1, 0.25, 10),
-             py::arg("rtol") = 1e-6, py::arg("axisymmetric") = true)
+             py::arg("rvs_rad") = py::none(),
+             py::arg("resolutions") = std::make_tuple(defaults::grid::phi_resolution, defaults::grid::theta_resolution,
+                                                      defaults::grid::time_resolution),
+             py::arg("rtol") = defaults::solver::ode_rtol, py::arg("axisymmetric") = true)
 
         .def("flux_density_grid", &PyModel::flux_density_grid, py::arg("t"), py::arg("nu"),
              py::call_guard<py::gil_scoped_release>())

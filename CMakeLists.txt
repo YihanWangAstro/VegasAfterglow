@@ -39,7 +39,8 @@ option(AFTERGLOW_PROFILE "Enable per-stage profiling instrumentation" OFF)
 option(AFTERGLOW_FAST_MATH "Enable fast polynomial log2/exp2 in src/util/fast-math.h" OFF)
 
 add_compile_definitions(
-  NO_XTENSOR_IO
+  NO_XTENSOR_IO # intentionally CMake-only: xtensor-io fails to build on Windows
+  XTENSOR_USE_XSIMD
   $<$<BOOL:${AFTERGLOW_PROFILE}>:AFTERGLOW_PROFILE>
   $<$<BOOL:${AFTERGLOW_FAST_MATH}>:AFTERGLOW_FAST_MATH>
 )
@@ -121,10 +122,15 @@ if(AFTERGLOW_TESTS)
     tests/cpp/test_environment.cpp
     tests/cpp/test_quadrature.cpp
     tests/cpp/test_power_law_syn.cpp
-    tests/cpp/test_synchrotron_kernel.cpp
     tests/cpp/test_inverse_compton.cpp
     ${AFTERGLOW_CORE_SOURCES}
   )
+
+  # Local-only test for the in-development synchrotron kernel (untracked files)
+  if(EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/tests/cpp/test_synchrotron_kernel.cpp"
+     AND EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/src/radiation/synchrotron-kernel.h")
+    target_sources(afterglow_tests PRIVATE tests/cpp/test_synchrotron_kernel.cpp)
+  endif()
 
   target_include_directories(afterglow_tests PRIVATE
     "${CMAKE_CURRENT_SOURCE_DIR}/include"

@@ -303,22 +303,6 @@ BOOST_AUTO_TEST_CASE(compute_shock_heating_rate_positive) {
 }
 
 // ---------------------------------------------------------------------------
-// 25. compute_adiabatic_cooling_rate: expanding (drdt > 0) -> negative
-// ---------------------------------------------------------------------------
-BOOST_AUTO_TEST_CASE(compute_adiabatic_cooling_rate_sign) {
-    Real ad_idx = 4.0 / 3.0;
-    Real r = 1e16;
-    Real Gamma = 10.0;
-    Real u = 1e10;       // internal energy density
-    Real drdt = 1e8;     // positive: expanding
-    Real dGammadt = 0.0; // no acceleration
-    Real rate = compute_adiabatic_cooling_rate(ad_idx, r, Gamma, u, drdt, dGammadt);
-    // -(ad_idx - 1) * (3*drdt/r - 0) * u should be negative
-    BOOST_CHECK_LT(rate, 0.0);
-    BOOST_CHECK(std::isfinite(rate));
-}
-
-// ---------------------------------------------------------------------------
 // 26. compute_adiabatic_cooling_rate2: expanding -> negative
 // ---------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE(compute_adiabatic_cooling_rate2_sign) {
@@ -438,7 +422,7 @@ BOOST_AUTO_TEST_CASE(compute_radiative_efficiency_slow_cooling) {
     Real t_comv = 1e10;
     Real Gamma_th = 2.0;
     Real u = 1e-10;
-    Real eff = compute_radiative_efficiency(t_comv, Gamma_th, u, rad);
+    Real eff = RadiativeEfficiency(rad)(t_comv, Gamma_th, u);
     // Slow cooling: efficiency < eps_e
     BOOST_CHECK_GE(eff, 0.0);
     BOOST_CHECK_LE(eff, rad.eps_e);
@@ -459,7 +443,7 @@ BOOST_AUTO_TEST_CASE(compute_radiative_efficiency_fast_cooling) {
     Real t_comv = 1e5;
     Real Gamma_th = 1000.0;
     Real u = 1e10;
-    Real eff = compute_radiative_efficiency(t_comv, Gamma_th, u, rad);
+    Real eff = RadiativeEfficiency(rad)(t_comv, Gamma_th, u);
     BOOST_CHECK_CLOSE(eff, rad.eps_e, 1e-10);
 }
 
@@ -550,9 +534,11 @@ BOOST_AUTO_TEST_CASE(compute_radiative_efficiency_zero_B) {
     Real t_comv = 1e6;
     Real Gamma_th = 10.0;
     Real u = 1e-5;
-    Real eff = compute_radiative_efficiency(t_comv, Gamma_th, u, rad);
-    // With extremely small eps_B, gamma_c is huge, so gamma_m/gamma_c < 1e-2 -> returns 0
-    BOOST_CHECK_SMALL(eff, 1e-10);
+    Real eff = RadiativeEfficiency(rad)(t_comv, Gamma_th, u);
+    // With extremely small eps_B, gamma_c is huge, so eps_e * ratio^(p-2) is strongly
+    // suppressed but nonzero (no hard truncation)
+    BOOST_CHECK_GT(eff, 0.0);
+    BOOST_CHECK_LT(eff, 1e-4);
 }
 
 // ---------------------------------------------------------------------------
@@ -570,7 +556,7 @@ BOOST_AUTO_TEST_CASE(compute_radiative_efficiency_p_equals_2) {
     Real t_comv = 1e6;
     Real Gamma_th = 10.0;
     Real u = 1e-5;
-    Real eff = compute_radiative_efficiency(t_comv, Gamma_th, u, rad);
+    Real eff = RadiativeEfficiency(rad)(t_comv, Gamma_th, u);
     // p <= 2 always returns eps_e (falls through to fast cooling branch)
     BOOST_CHECK_CLOSE(eff, rad.eps_e, 1e-10);
 }

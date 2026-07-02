@@ -181,24 +181,6 @@ void boundary_to_center_log(Arr1 const& boundary, Arr2& center) {
 }
 
 template <typename Arr = Array>
-void logspace_center(Real lg2_min, Real lg2_max, size_t size, Arr& center) {
-    center = Arr::from_shape({size});
-    if (size == 0) {
-        return;
-    }
-
-    const Real dlg2 = (lg2_max - lg2_min) / static_cast<Real>(size);
-    const Real r = std::exp2(dlg2);
-    const Real s = std::sqrt(r);
-    Real left = std::exp2(lg2_min);
-
-    for (std::size_t i = 0; i < size; ++i) {
-        center(i) = left * s;
-        left *= r;
-    }
-}
-
-template <typename Arr = Array>
 void log2space(Real lg2_min, Real lg2_max, Real grid_per_order, Arr& array) {
     const Real decades = (lg2_max - lg2_min) / log2_10;
     const size_t n = std::max<size_t>(2, static_cast<size_t>(std::ceil(decades * grid_per_order)));

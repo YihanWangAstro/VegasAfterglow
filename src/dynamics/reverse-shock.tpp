@@ -29,20 +29,19 @@ FRShockEqn<Ejecta, Medium>::FRShockEqn(Medium const& medium, Ejecta const& eject
       phi(phi),
       theta0(theta),
       Gamma4(ejecta.Gamma0(phi, theta)),
-      deps0_dt(ejecta.eps_k(phi, theta) / ejecta.T0),
-      dm0_dt(deps0_dt / (Gamma4 * con::c2)),
-      u4(std::sqrt(Gamma4 * Gamma4 - 1) * con::c) {
+      deps0_dt_(ejecta.eps_k(phi, theta) / ejecta.T0),
+      dm0_dt_(deps0_dt_ / (Gamma4 * con::c2)),
+      u4_(std::sqrt(Gamma4 * Gamma4 - 1) * con::c) {
     if constexpr (HasSigma<Ejecta>) {
-        dm0_dt /= 1 + ejecta.sigma0(phi, theta);
+        dm0_dt_ /= 1 + ejecta.sigma0(phi, theta);
     }
-    gamma_m_coeff_fwd_ = (rad_fwd.p - 2) / (rad_fwd.p - 1) * rad_fwd.eps_e * con::mp / con::me / rad_fwd.xi_e;
-    gamma_c_coeff_fwd_ = 6 * con::pi * con::me * con::c / con::sigmaT / rad_fwd.eps_B;
+    eps_rad_fwd_ = RadiativeEfficiency(rad_fwd);
 }
 
 template <typename Ejecta, typename Medium>
 Real FRShockEqn<Ejecta, Medium>::injection_efficiency(State const& diff) const noexcept {
-    if (dm0_dt > 0 && diff.m4 > 0)
-        return std::min(diff.m4 / dm0_dt, 1.0);
+    if (dm0_dt_ > 0 && diff.m4 > 0)
+        return std::min(diff.m4 / dm0_dt_, 1.0);
     return 0.0;
 }
 
@@ -93,7 +92,7 @@ Real FRShockEqn<Ejecta, Medium>::compute_dGamma_dt(State const& state, State con
 template <typename Ejecta, typename Medium>
 Real FRShockEqn<Ejecta, Medium>::compute_dU2_dt(State const& state, State const& diff, Real /*t*/) const noexcept {
     const Real e_th = (state.Gamma - 1) * 4 * state.Gamma * medium.rho(phi, state.theta, state.r) * con::c2;
-    const Real eps_rad = compute_eps_rad_fwd(state.t_comv, state.Gamma, e_th);
+    const Real eps_rad = eps_rad_fwd_(state.t_comv, state.Gamma, e_th);
 
     const Real ad_idx = physics::thermo::adiabatic_idx(state.Gamma);
 
@@ -173,7 +172,7 @@ Real FRShockEqn<Ejecta, Medium>::compute_dx4_dt(State const& /*state*/, State co
     const Real spreading = compute_shell_spreading_rate(this->Gamma4, diff.t_comv);
     const Real f = injection_efficiency(diff);
     if (f > 1e-6)
-        return f * u4 + (1 - f) * spreading;
+        return f * u4_ + (1 - f) * spreading;
     return spreading;
 }
 
@@ -189,7 +188,7 @@ Real FRShockEqn<Ejecta, Medium>::compute_deps4_dt(State const& /*state*/, State 
     // Smooth injection shutdown over 50% of T0
     const Real inject_w = smoothstep(ejecta.T0 * 1.5, ejecta.T0 * 0.5, t);
     if (inject_w > 1e-6) {
-        deps4_dt = inject_w * deps0_dt;
+        deps4_dt = inject_w * deps0_dt_;
     }
 
     if constexpr (State::energy_inject) {
@@ -206,7 +205,7 @@ Real FRShockEqn<Ejecta, Medium>::compute_dm4_dt(State const& /*state*/, State co
     // Smooth injection shutdown over 50% of T0
     const Real inject_w = smoothstep(ejecta.T0 * 1.5, ejecta.T0 * 0.5, t);
     if (inject_w > 1e-6) {
-        dm4_dt = inject_w * dm0_dt;
+        dm4_dt = inject_w * dm0_dt_;
     }
 
     if constexpr (State::mass_inject) {
@@ -214,19 +213,6 @@ Real FRShockEqn<Ejecta, Medium>::compute_dm4_dt(State const& /*state*/, State co
     }
 
     return dm4_dt;
-}
-
-template <typename Ejecta, typename Medium>
-Real FRShockEqn<Ejecta, Medium>::compute_eps_rad_fwd(Real t_comv, Real Gamma, Real e_th) const noexcept {
-    const Real gamma_m = gamma_m_coeff_fwd_ * (Gamma - 1) + 1;
-    const Real gamma_c = std::max(gamma_c_coeff_fwd_ / (e_th * t_comv), 1.0);
-    const Real ratio = gamma_m / gamma_c;
-    if (ratio < 1 && rad_fwd.p > 2) {
-        if (ratio < 1e-2)
-            return 0;
-        return rad_fwd.eps_e * fast_pow(ratio, rad_fwd.p - 2);
-    }
-    return rad_fwd.eps_e;
 }
 
 template <typename Ejecta, typename Medium>
@@ -286,15 +272,15 @@ void FRShockEqn<Ejecta, Medium>::set_init_state(State& state, Real t0) const noe
     state.theta = theta0;
 
     const Real dt = std::min(t0, ejecta.T0);
-    state.eps4 = deps0_dt * dt;
-    state.m4 = dm0_dt * dt;
+    state.eps4 = deps0_dt_ * dt;
+    state.m4 = dm0_dt_ * dt;
     state.x4 = compute_init_comv_shell_width(Gamma4, t0, ejecta.T0);
 
     auto rho_func = [&](Real r_) { return medium.rho(phi, theta0, r_); };
 
     state.m2 = enclosed_mass(rho_func, state.r);
 
-    const Real m_jet_total = dm0_dt * ejecta.T0;
+    const Real m_jet_total = dm0_dt_ * ejecta.T0;
     if (m_jet_total > 0 && state.m2 > 0) {
         state.Gamma = Gamma4 / (1 + state.m2 / m_jet_total);
     } else {
@@ -317,24 +303,6 @@ void FRShockEqn<Ejecta, Medium>::set_init_state(State& state, Real t0) const noe
         state.U3_th = 0;
         state.x3 = 0;
     }
-}
-
-/**
- * <!-- ************************************************************************************** -->
- * @internal
- * @brief Calculates the power-law index for post-crossing four-velocity evolution.
- * @details The index transitions from g_low=1.5 for low relative Lorentz factors to g_high=3.5
- *          for high relative Lorentz factors (Blandford-McKee limit).
- * @param gamma_rel Relative Lorentz factor
- * @param k Medium power law index (default: 0)
- * @return The power-law index for velocity evolution
- * <!-- ************************************************************************************** -->
- */
-inline Real get_post_cross_g(Real gamma_rel, Real /*k*/ = 0) {
-    constexpr Real g_low = 1.5;  // k is the medium power law index
-    constexpr Real g_high = 3.5; // Blandford-McKee limit// TODO: need to be modified for non ISM medium
-    const Real p = std::sqrt(std::sqrt(std::max(gamma_rel - 1, 0.0)));
-    return g_low + (g_high - g_low) * p / (1 + p);
 }
 
 template <typename Ejecta, typename Medium>
@@ -479,7 +447,6 @@ void grid_solve_shock_pair(size_t i, size_t j, View const& t, Shock& shock_fwd, 
     }
 
     auto stepper = make_dense_output(rtol, rtol, runge_kutta_dopri5<typename Eqn::State>());
-    // auto stepper = bulirsch_stoer_dense_out<typename Eqn::State>{rtol, rtol};
     stepper.initialize(state, t0, 1e-9 * t0);
 
     size_t k = 0;
@@ -522,8 +489,6 @@ ShockPair generate_shock_pair(Coord const& coord, Medium const& medium, Ejecta c
     Shock r_shock(phi_size_needed, theta_size, t_size, rad_rvs);
 
     for (size_t i = 0; i < phi_size_needed; ++i) {
-        // Real theta_s =
-        //     jet_spreading_edge(jet, medium, coord.phi(i), coord.theta.front(), coord.theta.back(), coord.t.front());
         for (size_t j : coord.theta_reps) {
             auto eqn_r = FRShockEqn(medium, jet, coord.phi(i), coord.theta(j), rad_fwd, rad_rvs);
             grid_solve_shock_pair(i, j, xt::view(coord.t, i, j, xt::all()), f_shock, r_shock, eqn_r, rtol);

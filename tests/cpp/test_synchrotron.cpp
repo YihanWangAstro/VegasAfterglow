@@ -192,30 +192,6 @@ BOOST_AUTO_TEST_CASE(compute_gamma_c_huge_t) {
 }
 
 // ============================================================================
-//  compute_gamma_peak
-// ============================================================================
-
-BOOST_AUTO_TEST_CASE(compute_gamma_peak_slow_cooling) {
-    // Slow cooling: gamma_m < gamma_c, gamma_a < gamma_c
-    // peak = min(gamma_m, gamma_c) = gamma_m
-    const Real gp = compute_gamma_peak(1.0, 100.0, 1000.0);
-    BOOST_CHECK_CLOSE(gp, 100.0, 1e-10);
-}
-
-BOOST_AUTO_TEST_CASE(compute_gamma_peak_fast_cooling) {
-    // Fast cooling: gamma_c < gamma_m, and gamma_a > gamma_c
-    // When gamma_a > gamma_c: peak = gamma_a
-    const Real gp = compute_gamma_peak(50.0, 1000.0, 10.0);
-    BOOST_CHECK_CLOSE(gp, 50.0, 1e-10);
-}
-
-BOOST_AUTO_TEST_CASE(compute_gamma_peak_equal_gammas) {
-    // All three equal: peak = min(m,c) = value, and a <= c, so peak = value
-    const Real gp = compute_gamma_peak(100.0, 100.0, 100.0);
-    BOOST_CHECK_CLOSE(gp, 100.0, 1e-10);
-}
-
-// ============================================================================
 //  compute_single_elec_P_nu_max / compute_syn_I_peak
 // ============================================================================
 

@@ -69,62 +69,6 @@ BOOST_AUTO_TEST_CASE(boundary_to_center_size_mismatch) {
 }
 
 // ---------------------------------------------------------------------------
-// logspace_center
-// ---------------------------------------------------------------------------
-
-BOOST_AUTO_TEST_CASE(logspace_center_count) {
-    Array center;
-    logspace_center(0.0, 10.0, 20, center);
-    BOOST_CHECK_EQUAL(center.size(), 20u);
-}
-
-BOOST_AUTO_TEST_CASE(logspace_center_bounds) {
-    Array center;
-    const Real lg2_min = 2.0;
-    const Real lg2_max = 8.0;
-    logspace_center(lg2_min, lg2_max, 50, center);
-    for (size_t i = 0; i < center.size(); ++i) {
-        BOOST_CHECK_GE(center(i), std::exp2(lg2_min));
-        BOOST_CHECK_LE(center(i), std::exp2(lg2_max));
-    }
-}
-
-BOOST_AUTO_TEST_CASE(logspace_center_monotonic) {
-    Array center;
-    logspace_center(0.0, 20.0, 100, center);
-    for (size_t i = 1; i < center.size(); ++i) {
-        BOOST_CHECK_GT(center(i), center(i - 1));
-    }
-}
-
-BOOST_AUTO_TEST_CASE(logspace_center_ratio) {
-    Array center;
-    logspace_center(0.0, 10.0, 40, center);
-    // In logspace, consecutive centers should have a uniform ratio
-    const Real expected_ratio = center(1) / center(0);
-    for (size_t i = 2; i < center.size(); ++i) {
-        const Real ratio = center(i) / center(i - 1);
-        BOOST_CHECK_CLOSE(ratio, expected_ratio, 1e-8);
-    }
-}
-
-BOOST_AUTO_TEST_CASE(logspace_center_zero_size) {
-    Array center;
-    logspace_center(0.0, 10.0, 0, center);
-    BOOST_CHECK_EQUAL(center.size(), 0u);
-}
-
-BOOST_AUTO_TEST_CASE(logspace_center_size_one) {
-    Array center;
-    logspace_center(0.0, 10.0, 1, center);
-    BOOST_REQUIRE_EQUAL(center.size(), 1u);
-    // Single center should be the geometric mean of endpoints
-    const Real lo = std::exp2(0.0);
-    const Real hi = std::exp2(10.0);
-    BOOST_CHECK_CLOSE(center(0), std::sqrt(lo * hi), 1e-8);
-}
-
-// ---------------------------------------------------------------------------
 // log2space
 // ---------------------------------------------------------------------------
 

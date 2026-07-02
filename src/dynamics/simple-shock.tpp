@@ -16,11 +16,12 @@ SimpleShockEqn<Ejecta, Medium>::SimpleShockEqn(Medium const& medium, Ejecta cons
       phi(phi),
       theta0(theta),
       rad(rad_params),
-      dOmega0(1 - std::cos(theta0)),
-      theta_s(theta_s) {
-    m_jet0 = ejecta.eps_k(phi, theta0) / ejecta.Gamma0(phi, theta0) / con::c2;
+      dOmega0_(1 - std::cos(theta0)),
+      theta_s_(theta_s),
+      eps_rad_(rad_params) {
+    m_jet0_ = ejecta.eps_k(phi, theta0) / ejecta.Gamma0(phi, theta0) / con::c2;
     if constexpr (HasSigma<Ejecta>) {
-        m_jet0 /= 1 + ejecta.sigma0(phi, theta0);
+        m_jet0_ /= 1 + ejecta.sigma0(phi, theta0);
     }
 }
 
@@ -32,7 +33,7 @@ void SimpleShockEqn<Ejecta, Medium>::operator()(State const& state, State& diff,
     diff.t_comv = compute_dt_dt_comv(state.Gamma, beta);
 
     if (ejecta.spreading && state.theta < 0.5 * con::pi) {
-        diff.theta = compute_dtheta_dt(theta_s, state.theta, diff.r, state.r, state.Gamma);
+        diff.theta = compute_dtheta_dt(theta_s_, state.theta, diff.r, state.r, state.Gamma);
     } else {
         diff.theta = 0;
     }
@@ -49,7 +50,7 @@ void SimpleShockEqn<Ejecta, Medium>::operator()(State const& state, State& diff,
     diff.m2 = state.r * state.r * rho * diff.r;
 
     const Real e_th = (state.Gamma - 1) * 4 * state.Gamma * rho * con::c2;
-    const Real eps_rad = compute_radiative_efficiency(state.t_comv, state.Gamma, e_th, rad);
+    const Real eps_rad = eps_rad_(state.t_comv, state.Gamma, e_th);
 
     diff.Gamma = dGamma_dt(eps_rad, state, diff);
 }
@@ -57,12 +58,12 @@ void SimpleShockEqn<Ejecta, Medium>::operator()(State const& state, State& diff,
 template <typename Ejecta, typename Medium>
 Real SimpleShockEqn<Ejecta, Medium>::dGamma_dt(Real eps_rad, State const& state, State const& diff) const noexcept {
     Real m_swept = state.m2;
-    Real m_jet = this->m_jet0;
+    Real m_jet = this->m_jet0_;
     Real dm_dt_swept = diff.m2;
 
     if (ejecta.spreading) {
-        const Real f_spread = (1 - std::cos(state.theta)) / dOmega0;
-        dm_dt_swept = dm_dt_swept * f_spread + m_swept / dOmega0 * std::sin(state.theta) * diff.theta;
+        const Real f_spread = (1 - std::cos(state.theta)) / dOmega0_;
+        dm_dt_swept = dm_dt_swept * f_spread + m_swept / dOmega0_ * std::sin(state.theta) * diff.theta;
         m_swept *= f_spread;
     }
 
@@ -98,6 +99,6 @@ void SimpleShockEqn<Ejecta, Medium>::set_init_state(State& state, Real t0) const
     }
 
     if constexpr (State::mass_inject) {
-        state.m_jet = m_jet0;
+        state.m_jet = m_jet0_;
     }
 }

@@ -18,6 +18,20 @@ Have a feature request? [Open an issue](https://github.com/YihanWangAstro/VegasA
 
 ---
 
+## [Unreleased]
+
+### Changed
+
+- Removed the hard radiative-efficiency truncation (`eps_rad = 0` deep in slow cooling); the efficiency now follows the analytic form everywhere, consistently across forward, reverse, and simple shock solvers
+- Default polar (theta) grid resolution unified at 0.25 points per degree; `Model` docstrings now match the actual defaults (`rtol=1e-6`)
+- Generic `Ejecta` and `Medium` constructors now validate their inputs (callability, finite on-axis values) like the typed factories
+
+### Added
+
+- CI workflow running the full Python test suite on Linux, macOS, and Windows
+
+---
+
 ## [v2.0.5] - 2026-06-01
 
 ### Added

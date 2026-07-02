@@ -245,27 +245,6 @@ Real compute_syn_gamma_a(Real B, Real I_syn_peak, Real gamma_m, Real gamma_c, Re
     return compute_syn_gamma(nu_a, B) + 1;
 }
 
-Real compute_gamma_peak(Real gamma_a, Real gamma_m, Real gamma_c) {
-    const Real gamma_peak = std::min(gamma_m, gamma_c);
-    if (gamma_a > gamma_c) {
-        return gamma_a;
-    } else {
-        return gamma_peak;
-    }
-}
-
-/**
- * <!-- ************************************************************************************** -->
- * @brief Determines the peak Lorentz factor directly from a SynElectrons object.
- * @details Convenient wrapper around the three-parameter version.
- * @param e Synchrotron electron object
- * @return Peak Lorentz factor
- * <!-- ************************************************************************************** -->
- */
-Real compute_gamma_peak(SynElectrons const& e) {
-    return compute_gamma_peak(e.gamma_a, e.gamma_m, e.gamma_c);
-}
-
 Real cyclotron_correction(Real gamma_m, Real p) {
     Real f = (gamma_m - 1) / gamma_m;
     if (p > 3) {

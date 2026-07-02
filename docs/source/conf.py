@@ -112,37 +112,13 @@ html_css_files = [
     'css/custom.css',
 ]
 
-# Add javascript for source code toggling
-html_js_files = [
-    'js/custom.js',
-]
-
 # Add syntax highlighting style
 pygments_style = 'material'
 highlight_language = 'python'  # Ensuring Python is the default language
 # GitHub Pages settings
 html_baseurl = 'https://vegasafterglow.readthedocs.io/en/latest/'
 
-# Create a custom css file for basic styling
-css_dir = os.path.join(os.path.dirname(__file__), '_static', 'css')
-os.makedirs(css_dir, exist_ok=True)
-with open(os.path.join(css_dir, 'custom.css'), 'w') as f:
-    f.write("""
-/* Basic styling for documentation */
-dl.cpp.function {
-    margin-bottom: 15px;
-    padding: 10px;
-    border-radius: 5px;
-    background-color: #f7f7f7;
-}
-
-dl.cpp.class {
-    padding: 10px;
-    margin: 10px 0;
-    border: 1px solid #eee;
-    border-radius: 5px;
-}
-""")
+# custom.css is generated once, further down (the C++ documentation styling block).
 
 # -- Breathe configuration ---------------------------------------------------
 breathe_projects = {

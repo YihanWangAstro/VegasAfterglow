@@ -15,14 +15,13 @@ ForwardShockEqn<Ejecta, Medium>::ForwardShockEqn(Medium const& medium, Ejecta co
       phi(phi),
       theta0(theta),
       rad(rad_params),
-      dOmega0(1 - std::cos(theta)),
-      theta_s(theta_s) {
-    m_jet0 = ejecta.eps_k(phi, theta0) / ejecta.Gamma0(phi, theta0) / con::c2;
+      dOmega0_(1 - std::cos(theta)),
+      theta_s_(theta_s) {
+    m_jet0_ = ejecta.eps_k(phi, theta0) / ejecta.Gamma0(phi, theta0) / con::c2;
     if constexpr (HasSigma<Ejecta>) {
-        m_jet0 /= 1 + ejecta.sigma0(phi, theta0);
+        m_jet0_ /= 1 + ejecta.sigma0(phi, theta0);
     }
-    gamma_m_coeff_ = (rad.p - 2) / (rad.p - 1) * rad.eps_e * con::mp / con::me / rad.xi_e;
-    gamma_c_coeff_ = 6 * con::pi * con::me * con::c / con::sigmaT / rad.eps_B;
+    eps_rad_ = RadiativeEfficiency(rad);
 }
 
 template <typename Ejecta, typename Medium>
@@ -36,7 +35,7 @@ void ForwardShockEqn<Ejecta, Medium>::operator()(State const& state, State& diff
     diff.t_comv = Gamma + u;
 
     if (ejecta.spreading && state.theta < 0.5 * con::pi) {
-        diff.theta = compute_dtheta_dt(theta_s, state.theta, diff.r, state.r, Gamma, u, u2);
+        diff.theta = compute_dtheta_dt(theta_s_, state.theta, diff.r, state.r, Gamma, u, u2);
     } else {
         diff.theta = 0;
     }
@@ -52,7 +51,7 @@ void ForwardShockEqn<Ejecta, Medium>::operator()(State const& state, State& diff
     const Real rho = medium.rho(phi, state.theta, state.r);
     diff.m2 = state.r * state.r * rho * diff.r;
     const Real e_th = (Gamma - 1) * 4 * Gamma * rho * con::c2;
-    const Real eps_rad = compute_eps_rad(state.t_comv, Gamma, e_th);
+    const Real eps_rad = eps_rad_(state.t_comv, Gamma, e_th);
     const Real ad_idx = physics::thermo::adiabatic_idx(Gamma);
     Real sin_theta = 0;
     Real cos_theta = 1;
@@ -74,12 +73,12 @@ Real ForwardShockEqn<Ejecta, Medium>::compute_dGamma_dt(State const& state, Stat
     Real dGamma_eff = (ad_idx * (Gamma2 + 1) - 1) / Gamma2;
     Real dlnVdt = 3 / state.r * diff.r; // only r term
 
-    Real m_jet = this->m_jet0;
+    Real m_jet = this->m_jet0_;
     Real U = state.U2_th; // Internal energy per unit solid angle
 
     if (ejecta.spreading) {
-        const Real f_spread = (1 - cos_theta) / dOmega0;
-        dm_dt_swept = dm_dt_swept * f_spread + m_swept / dOmega0 * sin_theta * diff.theta;
+        const Real f_spread = (1 - cos_theta) / dOmega0_;
+        dm_dt_swept = dm_dt_swept * f_spread + m_swept / dOmega0_ * sin_theta * diff.theta;
         m_swept *= f_spread;
         dlnVdt += sin_theta / (1 - cos_theta) * diff.theta;
         U *= f_spread;
@@ -120,17 +119,6 @@ Real ForwardShockEqn<Ejecta, Medium>::compute_dU_dt(Real eps_rad, State const& s
 }
 
 template <typename Ejecta, typename Medium>
-Real ForwardShockEqn<Ejecta, Medium>::compute_eps_rad(Real t_comv, Real Gamma, Real e_th) const noexcept {
-    const Real gamma_m = gamma_m_coeff_ * (Gamma - 1) + 1;
-    const Real gamma_c = std::max(gamma_c_coeff_ / (e_th * t_comv), 1.0);
-    const Real ratio = gamma_m / gamma_c;
-    if (ratio < 1 && rad.p > 2) {
-        return rad.eps_e * fast_pow(ratio, rad.p - 2);
-    }
-    return rad.eps_e;
-}
-
-template <typename Ejecta, typename Medium>
 void ForwardShockEqn<Ejecta, Medium>::set_init_state(State& state, Real t0) const noexcept {
     Real Gamma4 = ejecta.Gamma0(phi, theta0);
 
@@ -150,7 +138,7 @@ void ForwardShockEqn<Ejecta, Medium>::set_init_state(State& state, Real t0) cons
     }
 
     if constexpr (State::mass_inject) {
-        state.m_jet = m_jet0;
+        state.m_jet = m_jet0_;
     }
 
     Real ad_idx = physics::thermo::adiabatic_idx(state.Gamma);
@@ -233,7 +221,6 @@ Shock generate_fwd_shock(Coord const& coord, Medium const& medium, Ejecta const&
 
         for (size_t j : coord.theta_reps) {
             auto eqn = ForwardShockEqn(medium, jet, coord.phi(i), coord.theta(j), rad_params, theta_s);
-            //auto eqn = SimpleShockEqn(medium, jet, coord.phi(i), coord.theta(j), rad_params, theta_s);
             grid_solve_fwd_shock(i, j, xt::view(coord.t, i, j, xt::all()), shock, eqn, rtol);
         }
 

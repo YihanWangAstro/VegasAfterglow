@@ -18,16 +18,15 @@ Shock::Shock(size_t phi_size, size_t theta_size, size_t t_size, RadParams const&
       B({phi_size, theta_size, t_size}, 0),          // Initialize magnetic field grid with 0
       N_p({phi_size, theta_size, t_size}, 0),        // Initialize column density grid with 0
       injection_idx({phi_size, theta_size}, t_size), // Initialize a cross-index grid with t_size
-      // required({phi_size, theta_size, t_size}, 1),    // Initialize the required grid with all-true
-      rad(rad_params),        // Set radiation parameters
-      phi_size(phi_size),     // Store phi grid size
-      theta_size(theta_size), // Store theta grid size
-      t_size(t_size) {}
+      rad(rad_params),                               // Set radiation parameters
+      phi_size_(phi_size),                           // Store phi grid size
+      theta_size_(theta_size),                       // Store theta grid size
+      t_size_(t_size) {}
 
 void Shock::resize(size_t phi_size, size_t theta_size, size_t t_size) {
-    this->phi_size = phi_size;
-    this->theta_size = theta_size;
-    this->t_size = t_size;
+    phi_size_ = phi_size;
+    theta_size_ = theta_size;
+    t_size_ = t_size;
     t_comv.resize({phi_size, theta_size, t_size});
     r.resize({phi_size, theta_size, t_size});
     theta.resize({phi_size, theta_size, t_size});
@@ -37,15 +36,13 @@ void Shock::resize(size_t phi_size, size_t theta_size, size_t t_size) {
     N_p.resize({phi_size, theta_size, t_size});
     injection_idx.resize({phi_size, theta_size});
     injection_idx.fill(t_size);
-    // required.resize({phi_size, theta_size, t_size});
-    // required.fill(1);
 }
 
 void Shock::broadcast_groups(Coord const& coord) {
     if (coord.symmetry == Symmetry::isotropic) {
-        for (size_t j = 1; j < theta_size; ++j) {
+        for (size_t j = 1; j < theta_size_; ++j) {
             injection_idx(0, j) = injection_idx(0, 0);
-            for (size_t k = 0; k < t_size; ++k) {
+            for (size_t k = 0; k < t_size_; ++k) {
                 t_comv(0, j, k) = t_comv(0, 0, k);
                 this->r(0, j, k) = this->r(0, 0, k);
                 theta(0, j, k) = coord.theta(j);
@@ -58,10 +55,10 @@ void Shock::broadcast_groups(Coord const& coord) {
     } else if (coord.symmetry == Symmetry::piecewise) {
         for (size_t r = 0; r < coord.theta_reps.size(); ++r) {
             const size_t j_start = coord.theta_reps[r];
-            const size_t j_end = (r + 1 < coord.theta_reps.size()) ? coord.theta_reps[r + 1] : theta_size;
+            const size_t j_end = (r + 1 < coord.theta_reps.size()) ? coord.theta_reps[r + 1] : theta_size_;
             for (size_t j = j_start + 1; j < j_end; ++j) {
                 injection_idx(0, j) = injection_idx(0, j_start);
-                for (size_t k = 0; k < t_size; ++k) {
+                for (size_t k = 0; k < t_size_; ++k) {
                     t_comv(0, j, k) = t_comv(0, j_start, k);
                     this->r(0, j, k) = this->r(0, j_start, k);
                     theta(0, j, k) = coord.theta(j);
@@ -74,10 +71,10 @@ void Shock::broadcast_groups(Coord const& coord) {
         }
     }
 
-    for (size_t i = 1; i < phi_size; ++i) {
-        for (size_t j = 0; j < theta_size; ++j) {
+    for (size_t i = 1; i < phi_size_; ++i) {
+        for (size_t j = 0; j < theta_size_; ++j) {
             injection_idx(i, j) = injection_idx(0, j);
-            for (size_t k = 0; k < t_size; ++k) {
+            for (size_t k = 0; k < t_size_; ++k) {
                 t_comv(i, j, k) = t_comv(0, j, k);
                 this->r(i, j, k) = this->r(0, j, k);
                 theta(i, j, k) = coord.theta(j);

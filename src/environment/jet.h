@@ -537,7 +537,7 @@ namespace math {
  * <!-- ************************************************************************************** -->
  */
 template <typename F>
-auto LiangGhirlanda2010(F energy_func, Real e_max, Real gamma_max, Real idx) {
+auto liang_ghirlanda_2010(F energy_func, Real e_max, Real gamma_max, Real idx) {
     return [=](Real phi, Real theta) noexcept {
         // Get the energy at the given angle
         const Real e = energy_func(phi, theta);

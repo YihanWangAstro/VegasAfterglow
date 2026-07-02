@@ -1,5 +1,6 @@
 #pragma once
 
+#include <stdexcept>
 #include <tuple>
 
 #include "../environment/medium.h"
@@ -351,41 +352,6 @@ Array merge_grids(Arr const& arr1, Arr const& arr2) {
  */
 template <typename Ejecta, typename Medium>
 Real estimate_t_dec(Ejecta const& jet, Medium const& medium, Real phi, Real theta) {
-    /*const Real gamma = jet.Gamma0(phi, theta);
-    if (gamma <= 1) {
-        return con::inf;
-    }
-    const Real beta = physics::relativistic::gamma_to_beta(gamma);
-    Real m_jet = jet.eps_k(phi, theta) / (gamma * con::c2);
-    if constexpr (HasSigma<Ejecta>) {
-        m_jet /= (1.0 + jet.sigma0(phi, theta));
-    }
-    const Real target = m_jet / gamma;
-
-    constexpr size_t N = 256;
-    const Real u_min = std::log(1e-3);
-    const Real u_max = u_min + 40 * std::log(10.0);
-    const Real du = (u_max - u_min) / N;
-
-    Real mass = 0;
-    Real r_prev = std::exp(u_min);
-    Real f_prev = medium.rho(phi, theta, r_prev) * r_prev * r_prev;
-
-    for (size_t i = 1; i <= N; ++i) {
-        const Real r_i = std::exp(u_min + i * du);
-        const Real f_i = medium.rho(phi, theta, r_i) * r_i * r_i;
-        const Real dr = r_i - r_prev;
-        mass += 0.5 * (f_prev + f_i) * dr;
-
-        if (mass >= target) {
-            const Real r_dec = r_prev + (target - (mass - 0.5 * (f_prev + f_i) * dr)) / f_i;
-            return r_dec * (1 - beta) / (beta * con::c);
-        }
-        f_prev = f_i;
-        r_prev = r_i;
-    }
-    return std::exp(u_max) * (1 - beta) / (beta * con::c);*/
-
     const Real gamma = jet.Gamma0(phi, theta);
     const Real beta = physics::relativistic::gamma_to_beta(gamma);
     Real m_jet = jet.eps_k(phi, theta) / (gamma * con::c2);
@@ -400,7 +366,7 @@ Real estimate_t_dec(Ejecta const& jet, Medium const& medium, Real phi, Real thet
         return r_min * (1 - beta) / (beta * con::c);
     }
 
-    if constexpr (std::is_same_v<Medium, ISM>) {
+    if constexpr (std::is_same_v<std::remove_cvref_t<Medium>, ISM>) {
         const Real rho = medium.rho(phi, theta, r_min);
         if (rho > 0) {
             const Real r3_dec = r_min * r_min * r_min + 3 * target / rho;
@@ -678,8 +644,7 @@ Coord auto_grid(Ejecta const& jet, Medium const& medium, Array const& t_obs, Rea
     }
 
     if (t_obs.size() == 0) {
-        assert(false && "auto_grid: t_obs is empty");
-        return coord;
+        throw std::invalid_argument("auto_grid: t_obs is empty");
     }
 
     const Real t_max = *std::ranges::max_element(t_obs);

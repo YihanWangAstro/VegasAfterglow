@@ -1,4 +1,5 @@
 **/*.txt
+!**/requirements.txt
 **/*.csv
 **/*.dat
 **/*.out
@@ -15,7 +16,8 @@
 **/*.dSYM
 **/.ipynb_checkpoints/
 
-external/
+# external/ itself is tracked (vendored libs); only ignore the local pybind11 symlink
+external/pybind11
 projects/
 webapp/
 build/
@@ -53,6 +55,7 @@ compile_commands.json
 docs/plans/
 CLAUDE.md
 .agents/
+.mcp.json
 
 # Docs build-time copies (assets/*.png is copied here by build_docs.sh on local
 # builds and by .readthedocs.yaml's pre_build step on RTD).

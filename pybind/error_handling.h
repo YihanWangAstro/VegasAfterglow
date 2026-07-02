@@ -11,6 +11,21 @@
 #include <stdexcept>
 #include <string>
 
+// ============================================================================================
+// Failure-handling policy (library-wide)
+//
+// 1. Bad inputs throw. Anything a caller can get wrong (invalid parameters, empty arrays,
+//    malformed grids) throws std::invalid_argument — at the pybind seam via the
+//    AFTERGLOW_REQUIRE macros below, and in the C++ core directly (e.g. observer.h, auto_grid).
+// 2. Solver breakdown degrades gracefully. Inside the ODE grid solves, a blown-up step or
+//    non-finite derivative must not abort a whole light-curve computation: the solver warns on
+//    stderr and continues with the physically-motivated fallback (stop the shock, zero the
+//    derivative). These paths are per-cell numerics, not caller errors.
+// 3. No runtime assert() for reachable conditions — it vanishes under NDEBUG and silently
+//    returns garbage in release builds. Use a throw (caller error) or the solver fallback
+//    (numerics) instead. static_assert for compile-time contracts is fine.
+// ============================================================================================
+
 namespace afterglow {
 
 #define AFTERGLOW_REQUIRE(condition, message)                                                                          \

@@ -152,13 +152,10 @@ class FRShockEqn {
 
     inline Real compute_dm4_dt(State const& state, State const& diff, Real t) const noexcept;
 
-    inline Real compute_eps_rad_fwd(Real t_comv, Real Gamma, Real e_th) const noexcept;
-
-    Real deps0_dt{0};           ///< Ejecta energy injection rate
-    Real dm0_dt{0};             ///< Ejecta mass injection rate
-    Real u4{0};                 ///< Four-velocity of the unshocked ejecta
-    Real gamma_m_coeff_fwd_{0}; ///< Precomputed: (p-2)/(p-1) * eps_e * mp/me / xi_e for fwd
-    Real gamma_c_coeff_fwd_{0}; ///< Precomputed: 6π me c / (σ_T * eps_B) for fwd
+    Real deps0_dt_{0};                ///< Ejecta energy injection rate
+    Real dm0_dt_{0};                  ///< Ejecta mass injection rate
+    Real u4_{0};                      ///< Four-velocity of the unshocked ejecta
+    RadiativeEfficiency eps_rad_fwd_; ///< Radiative efficiency evaluator for the forward component
 };
 
 /**

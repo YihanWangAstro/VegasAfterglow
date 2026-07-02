@@ -153,18 +153,6 @@ Real compute_gamma_c(Real t_comv, Real B, Real Y);
 
 /**
  * <!-- ************************************************************************************** -->
- * @brief Determines the electron Lorentz factor at which the number density peaks.
- * @details Based on the relative ordering of absorption, minimum, and cooling Lorentz factors.
- * @param gamma_a Absorption Lorentz factor
- * @param gamma_m Minimum electron Lorentz factor
- * @param gamma_c Cooling electron Lorentz factor
- * @return Peak Lorentz factor
- * <!-- ************************************************************************************** -->
- */
-Real compute_gamma_peak(Real gamma_a, Real gamma_m, Real gamma_c);
-
-/**
- * <!-- ************************************************************************************** -->
  * @brief Calculates synchrotron frequency for a given Lorentz factor and magnetic field
  * @param gamma Electron Lorentz factor
  * @param B Magnetic field

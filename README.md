@@ -5,7 +5,7 @@
 [![PyPI version](https://img.shields.io/pypi/v/VegasAfterglow.svg)](https://pypi.org/project/VegasAfterglow/)
 [![License](https://img.shields.io/badge/License-BSD--3--Clause-green.svg)](LICENSE)
 [![Platform](https://img.shields.io/badge/Platform-Linux%20|%20macOS%20|%20Windows-lightgrey.svg)]()
-[![Python Version](https://img.shields.io/badge/Python-3.8%2B-blue.svg)](https://www.python.org/)
+[![Python Version](https://img.shields.io/badge/Python-3.9%2B-blue.svg)](https://www.python.org/)
 [![Documentation](https://img.shields.io/badge/Documentation-Online-brightgreen.svg)](https://vegasafterglow.readthedocs.io/en/latest/index.html)
 [![Interactive Tool](https://img.shields.io/badge/Interactive-Web%20Tool-orange.svg)](https://www.vegasafterglow.com)
 [![Validation Report](https://img.shields.io/badge/Validation-Report-blue.svg)](https://yihanwangastro.github.io/VegasAfterglow/reports/latest/comprehensive_report.pdf)
@@ -149,6 +149,8 @@ This installs the core physics engine. To also install MCMC fitting support:
 pip install VegasAfterglow[mcmc]
 ```
 
+> **Performance note:** PyPI wheels are compiled for broad CPU compatibility and run on any machine. For the fastest runs on your own hardware, build from source (see *Install from Source* below) — the build auto-tunes to your CPU's instruction set.
+
 The interactive web tool is deployed across multiple global regions for low latency. If none of the servers provide a satisfactory experience from your location, you can run the interactive web tool locally for the best responsiveness (FastAPI + Next.js):
 
 ```bash
@@ -177,7 +179,15 @@ VegasAfterglow requires Python 3.9 or higher.
 <summary><b>Alternative: Install from Source</b> <i>(click to expand/collapse)</i></summary>
 <br>
 
-For cases where pip installation is not viable or when the development version is required:
+Build from source when pip installation is not viable, when the development version is required, or for **maximum performance** — a source build auto-tunes to your CPU's instruction set, which is typically several times faster than the portable PyPI wheel.
+
+The quickest route compiles only VegasAfterglow from source while keeping binary dependencies:
+
+```bash
+pip install --no-binary VegasAfterglow VegasAfterglow
+```
+
+Or clone and install:
 
 1. Clone this repository:
 

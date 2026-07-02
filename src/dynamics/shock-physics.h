@@ -233,23 +233,6 @@ inline constexpr Real compute_shock_heating_rate(Real Gamma_rel, Real mdot) noex
     return mdot * (Gamma_rel - 1) * con::c2;
 }
 
-/**
- * <!-- ************************************************************************************** -->
- * @brief Computes the adiabatic cooling rate.
- * @param ad_idx Adiabatic index
- * @param r Radius
- * @param Gamma Lorentz factor
- * @param u Internal energy density
- * @param drdt Rate of change of radius
- * @param dGammadt Rate of change of the Lorentz factor
- * @return The adiabatic cooling rate
- * <!-- ************************************************************************************** -->
- */
-inline constexpr Real compute_adiabatic_cooling_rate(Real ad_idx, Real r, Real Gamma, Real u, Real drdt,
-                                                     Real dGammadt) noexcept {
-    return -(ad_idx - 1) * (3 * drdt / r - dGammadt / Gamma) * u;
-}
-
 inline Real compute_adiabatic_cooling_rate2(Real ad_idx, Real r, Real x, Real u, Real drdt, Real dxdt) noexcept {
     Real dlnvdt = 2 * drdt / r;
     if (x > 0) {
@@ -272,27 +255,44 @@ inline Real compute_shell_spreading_rate(Real Gamma_rel, Real dtdt_comv) noexcep
 
 /**
  * <!-- ************************************************************************************** -->
- * @brief Computes the radiative efficiency based on the radiative constant, comoving time, Lorentz factor, and density.
- * @param t_comv Comoving time
- * @param Gamma_th Thermal Lorentz factor
- * @param u    internal energy density
- * @param rad  Radiation parameters
- * @return The radiative efficiency
+ * @brief Radiative efficiency of a shock, precomputed from the radiation parameters.
+ * @details Single owner of the gamma_m/gamma_c efficiency formula shared by all shock equations
+ *          (forward, reverse pair, and simple). Construct once per equation, evaluate per ODE step.
  * <!-- ************************************************************************************** -->
  */
-inline Real compute_radiative_efficiency(Real t_comv, Real Gamma_th, Real u, RadParams const& rad) noexcept { //
-    const Real gamma_m = (rad.p - 2) / (rad.p - 1) * rad.eps_e * (Gamma_th - 1) * con::mp / con::me / rad.xi_e + 1;
-    const Real gamma_c = std::max((6 * con::pi * con::me * con::c / con::sigmaT) / (rad.eps_B * u * t_comv), 1.0);
+class RadiativeEfficiency {
+  public:
+    RadiativeEfficiency() = default;
 
-    const Real g_m_g_c = std::fabs(gamma_m / gamma_c); // gamma_m/gamma_c
-    if (g_m_g_c < 1 && rad.p > 2) {                    // slow cooling
-        if (g_m_g_c < 1e-2)
-            return 0;
-        return rad.eps_e * fast_pow(g_m_g_c, rad.p - 2);
-    } else { // fast cooling or p<=2
-        return rad.eps_e;
+    explicit RadiativeEfficiency(RadParams const& rad) noexcept
+        : gamma_m_coeff_((rad.p - 2) / (rad.p - 1) * rad.eps_e * con::mp / con::me / rad.xi_e),
+          gamma_c_coeff_(6 * con::pi * con::me * con::c / con::sigmaT / rad.eps_B),
+          eps_e_(rad.eps_e),
+          p_(rad.p) {}
+
+    /**
+     * @brief Evaluates the radiative efficiency at the current shock state.
+     * @param t_comv Comoving time
+     * @param Gamma_th Thermal Lorentz factor
+     * @param e_th Internal energy density
+     * @return The radiative efficiency
+     */
+    Real operator()(Real t_comv, Real Gamma_th, Real e_th) const noexcept {
+        const Real gamma_m = gamma_m_coeff_ * (Gamma_th - 1) + 1;
+        const Real gamma_c = std::max(gamma_c_coeff_ / (e_th * t_comv), 1.0);
+        const Real ratio = gamma_m / gamma_c;
+        if (ratio < 1 && p_ > 2) { // slow cooling
+            return eps_e_ * fast_pow(ratio, p_ - 2);
+        }
+        return eps_e_; // fast cooling or p<=2
     }
-}
+
+  private:
+    Real gamma_m_coeff_{0}; ///< Precomputed: (p-2)/(p-1) * eps_e * mp/me / xi_e
+    Real gamma_c_coeff_{0}; ///< Precomputed: 6π me c / (σ_T * eps_B)
+    Real eps_e_{0};         ///< Fraction of shock energy in electrons
+    Real p_{0};             ///< Electron spectral index
+};
 
 /**
  * <!-- ************************************************************************************** -->

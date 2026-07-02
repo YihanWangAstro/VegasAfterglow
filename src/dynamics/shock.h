@@ -48,11 +48,10 @@ class Shock {
     MeshGrid3d B;            ///< Comoving magnetic field
     MeshGrid3d N_p;          ///< Downstream proton number per solid angle
     IndexGrid injection_idx; ///< Beyond which grid index there is no electron injection
-    // MaskGrid required;        ///< Grid points actually required for final flux calculation
-    RadParams rad; ///< Radiation parameters
+    RadParams rad;           ///< Radiation parameters
 
     /// Returns grid dimensions as a tuple
-    [[nodiscard]] auto shape() const { return std::make_tuple(phi_size, theta_size, t_size); }
+    [[nodiscard]] auto shape() const { return std::make_tuple(phi_size_, theta_size_, t_size_); }
 
     /**
      * <!-- ************************************************************************************** -->
@@ -77,7 +76,7 @@ class Shock {
     void broadcast_groups(Coord const& coord);
 
   private:
-    size_t phi_size{0};   ///< Number of grid points in phi direction
-    size_t theta_size{0}; ///< Number of grid points in theta direction
-    size_t t_size{0};     ///< Number of grid points in time direction
+    size_t phi_size_{0};   ///< Number of grid points in phi direction
+    size_t theta_size_{0}; ///< Number of grid points in theta direction
+    size_t t_size_{0};     ///< Number of grid points in time direction
 };
