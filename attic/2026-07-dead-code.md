@@ -178,3 +178,9 @@ Real compute_gamma_peak(SynElectrons const& e) {
     // required.resize({phi_size, theta_size, t_size});
     // required.fill(1);
 ```
+
+## `MaskGrid` alias — src/core/mesh.h (zero uses anywhere; companion of the MaskGrid remnants above)
+
+```cpp
+using MaskGrid = xt::xtensor<int, 3>; ///< 3D grid alias for masks
+```

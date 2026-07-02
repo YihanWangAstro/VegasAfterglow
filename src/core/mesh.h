@@ -8,7 +8,6 @@
 #pragma once
 
 #include <algorithm>
-#include <cassert>
 #include <cstdint>
 #include <numeric>
 #include <span>
@@ -16,9 +15,9 @@
 
 #include "../util/macros.h"
 #include "../util/traits.h"
-#include "boost/numeric/odeint.hpp"
 #include "physics.h"
 #include "xtensor/containers/xadapt.hpp"
+#include "xtensor/generators/xbuilder.hpp"
 #include "xtensor/views/xview.hpp"
 
 constexpr Real log2_10 = std::numbers::ln10 / std::numbers::ln2;
@@ -44,7 +43,6 @@ using MeshGrid = xt::xtensor<Real, 2>;
 /// Type alias for 3D grids (e.g., full spatial-temporal data)
 using MeshGrid3d = xt::xtensor<Real, 3>;
 /// Type alias for 3D boolean grids for masking operations
-using MaskGrid = xt::xtensor<int, 3>;
 /// Type alias for 2D index grids
 using IndexGrid = xt::xtensor<size_t, 2>;
 
@@ -60,14 +58,6 @@ enum class Symmetry : uint8_t {
     isotropic      ///< Uniform in both phi and theta; compute one point, broadcast everywhere
 };
 
-/// Tunable coefficients for the adaptive theta grid PDF.
-struct ThetaGridParams {
-    Real core_beam_coeff = 55.0; ///< Extra beam points per log-decade for core beaming
-    Real view_beam_coeff = 25.0; ///< Extra beam points per log-decade for view beaming
-    Real doppler_alpha = 12.0;   ///< Doppler boost factor in structure term
-    Real floor_fraction = 0.25;  ///< Uniform floor weight as fraction of peak_weight
-};
-
 /**
  * <!-- ************************************************************************************** -->
  * @class Coord
@@ -75,6 +65,9 @@ struct ThetaGridParams {
  * @details This class is used to define the computational grid for GRB simulations.
  *          It stores the angular coordinates (phi, theta) and time (t) arrays,
  *          along with derived quantities needed for numerical calculations.
+ *          Lifecycle: instances are built by auto_grid (grid-refinement.h), which fills
+ *          theta/phi via the adaptive-grid algorithms, classifies symmetry via
+ *          detect_symmetry, and populates t via build_time_grid.
  * <!-- ************************************************************************************** -->
  */
 class Coord {
@@ -115,6 +108,72 @@ class Coord {
     template <typename Ejecta, typename Medium>
     void detect_symmetry(Ejecta const& jet, Medium const& medium, Real t_min, Real t_max, Real z, Real t_resol);
 };
+
+template <typename Ejecta, typename Medium>
+void Coord::detect_symmetry(Ejecta const& jet, Medium const& medium, Real t_min, Real t_max, Real z, Real t_resol) {
+    const size_t theta_size = theta.size();
+
+    if (jet.spreading || !medium.isotropic) {
+        symmetry = Symmetry::structured;
+        theta_reps.resize(theta_size);
+        std::iota(theta_reps.begin(), theta_reps.end(), size_t(0));
+        return;
+    }
+
+    const Real phi0 = phi(0);
+    theta_reps.clear();
+    theta_reps.reserve(theta_size);
+    theta_reps.push_back(0);
+
+    // Logspaced engine time for time-dependent injection checks
+    const size_t t_check = std::max<size_t>(static_cast<size_t>(std::log10(t_max / t_min) * t_resol), 24);
+    const Array temp_t = xt::logspace(std::log10(t_min / (1 + z)), std::log10(t_max / (1 + z)), t_check);
+
+    auto jet_ic_differs = [&](size_t ja, size_t jb) {
+        const Real theta_a = theta(ja);
+        const Real theta_b = theta(jb);
+        if (jet.eps_k(phi0, theta_a) != jet.eps_k(phi0, theta_b)) {
+            return true;
+        }
+        if (jet.Gamma0(phi0, theta_a) != jet.Gamma0(phi0, theta_b)) {
+            return true;
+        }
+        if constexpr (HasSigma<Ejecta>) {
+            if (jet.sigma0(phi0, theta_a) != jet.sigma0(phi0, theta_b)) {
+                return true;
+            }
+        }
+        if constexpr (HasDedt<Ejecta>) {
+            for (size_t k = 0; k < t_check; ++k) {
+                if (jet.deps_dt(phi0, theta_a, temp_t(k)) != jet.deps_dt(phi0, theta_b, temp_t(k))) {
+                    return true;
+                }
+            }
+        }
+        if constexpr (HasDmdt<Ejecta>) {
+            for (size_t k = 0; k < t_check; ++k) {
+                if (jet.dm_dt(phi0, theta_a, temp_t(k)) != jet.dm_dt(phi0, theta_b, temp_t(k))) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    };
+
+    for (size_t j = 1; j < theta_size; ++j) {
+        if (jet_ic_differs(j - 1, j)) {
+            theta_reps.push_back(j);
+        }
+    }
+
+    if (theta_reps.size() == 1) {
+        symmetry = Symmetry::isotropic;
+    } else if (theta_reps.size() < theta_size) {
+        symmetry = Symmetry::piecewise;
+    } else {
+        symmetry = Symmetry::phi_symmetric;
+    }
+}
 
 /**
  * <!-- ************************************************************************************** -->

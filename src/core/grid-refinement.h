@@ -4,6 +4,7 @@
 #include <tuple>
 
 #include "../environment/medium.h"
+#include "boost/numeric/odeint.hpp"
 #include "mesh.h"
 
 inline Real structure_weight(Real Gamma) {
@@ -178,6 +179,14 @@ Array inverse_CFD_sampling(Func&& pdf, Real min, Real max, size_t num,
     }
     return x_out;
 }
+
+/// Tunable coefficients for the adaptive theta grid PDF.
+struct ThetaGridParams {
+    Real core_beam_coeff = 55.0; ///< Extra beam points per log-decade for core beaming
+    Real view_beam_coeff = 25.0; ///< Extra beam points per log-decade for view beaming
+    Real doppler_alpha = 12.0;   ///< Doppler boost factor in structure term
+    Real floor_fraction = 0.25;  ///< Uniform floor weight as fraction of peak_weight
+};
 
 template <typename Ejecta>
 Array adaptive_theta_grid(Ejecta const& jet, Real theta_min, Real theta_max, size_t base_pts, Real theta_v,
@@ -407,72 +416,6 @@ Real estimate_t_dec(Ejecta const& jet, Medium const& medium, Real phi, Real thet
 /// Create a two-segment logspace grid with extra resolution before t_cross.
 /// Post-crossing density matches base logspace (base_t_num); extra points all go to pre-crossing.
 Array logspace_with_cross_refinement(Real t_start, Real t_end, Real t_cross, size_t t_num, size_t base_t_num);
-
-template <typename Ejecta, typename Medium>
-void Coord::detect_symmetry(Ejecta const& jet, Medium const& medium, Real t_min, Real t_max, Real z, Real t_resol) {
-    const size_t theta_size = theta.size();
-
-    if (jet.spreading || !medium.isotropic) {
-        symmetry = Symmetry::structured;
-        theta_reps.resize(theta_size);
-        std::iota(theta_reps.begin(), theta_reps.end(), size_t(0));
-        return;
-    }
-
-    const Real phi0 = phi(0);
-    theta_reps.clear();
-    theta_reps.reserve(theta_size);
-    theta_reps.push_back(0);
-
-    // Logspaced engine time for time-dependent injection checks
-    const size_t t_check = std::max<size_t>(static_cast<size_t>(std::log10(t_max / t_min) * t_resol), 24);
-    const Array temp_t = xt::logspace(std::log10(t_min / (1 + z)), std::log10(t_max / (1 + z)), t_check);
-
-    auto jet_ic_differs = [&](size_t ja, size_t jb) {
-        const Real theta_a = theta(ja);
-        const Real theta_b = theta(jb);
-        if (jet.eps_k(phi0, theta_a) != jet.eps_k(phi0, theta_b)) {
-            return true;
-        }
-        if (jet.Gamma0(phi0, theta_a) != jet.Gamma0(phi0, theta_b)) {
-            return true;
-        }
-        if constexpr (HasSigma<Ejecta>) {
-            if (jet.sigma0(phi0, theta_a) != jet.sigma0(phi0, theta_b)) {
-                return true;
-            }
-        }
-        if constexpr (HasDedt<Ejecta>) {
-            for (size_t k = 0; k < t_check; ++k) {
-                if (jet.deps_dt(phi0, theta_a, temp_t(k)) != jet.deps_dt(phi0, theta_b, temp_t(k))) {
-                    return true;
-                }
-            }
-        }
-        if constexpr (HasDmdt<Ejecta>) {
-            for (size_t k = 0; k < t_check; ++k) {
-                if (jet.dm_dt(phi0, theta_a, temp_t(k)) != jet.dm_dt(phi0, theta_b, temp_t(k))) {
-                    return true;
-                }
-            }
-        }
-        return false;
-    };
-
-    for (size_t j = 1; j < theta_size; ++j) {
-        if (jet_ic_differs(j - 1, j)) {
-            theta_reps.push_back(j);
-        }
-    }
-
-    if (theta_reps.size() == 1) {
-        symmetry = Symmetry::isotropic;
-    } else if (theta_reps.size() < theta_size) {
-        symmetry = Symmetry::piecewise;
-    } else {
-        symmetry = Symmetry::phi_symmetric;
-    }
-}
 
 /// Result of scanning cell time bounds for grid sizing.
 struct TimeScanResult {
