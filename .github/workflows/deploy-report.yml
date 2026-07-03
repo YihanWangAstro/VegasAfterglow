@@ -30,11 +30,21 @@ jobs:
           python-version: "3.x"
 
       - name: Generate unified test & validation report
+        id: generate
         run: |
           echo "::notice::Benchmark timings reflect the CI runner, not release hardware"
-          pip install -e ".[test,mcmc]" --config-settings=cmake.define.AFTERGLOW_PROFILE=ON
+          # MARCH_NATIVE=OFF: validate the portable codegen that shipped wheels use,
+          # not whatever SIMD ISA this runner happens to have
+          pip install -e ".[test,mcmc]" \
+            --config-settings=cmake.define.AFTERGLOW_PROFILE=ON \
+            --config-settings=cmake.define.AFTERGLOW_MARCH_NATIVE=OFF
           pytest tests/ -q --junitxml=py-junit.xml
-          python tests/validation/run_validation.py --all
+          # a validation failure must not block publishing the report that documents it
+          if python tests/validation/run_validation.py --all; then
+            echo "validation=passed" >> "$GITHUB_OUTPUT"
+          else
+            echo "validation=failed" >> "$GITHUB_OUTPUT"
+          fi
           mkdir -p deploy_report
           python tests/report.py py-junit.xml \
             --label py-junit.xml="Python (pytest)" \
@@ -75,3 +85,9 @@ jobs:
           publish_dir: report_index/
           destination_dir: reports
           keep_files: true
+
+      - name: Fail if validation failed
+        if: steps.generate.outputs.validation == 'failed'
+        run: |
+          echo "::error::Validation failed — the published report documents the failure"
+          exit 1
