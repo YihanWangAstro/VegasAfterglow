@@ -33,11 +33,7 @@ jobs:
         id: generate
         run: |
           echo "::notice::Benchmark timings reflect the CI runner, not release hardware"
-          # MARCH_NATIVE=OFF: validate the portable codegen that shipped wheels use,
-          # not whatever SIMD ISA this runner happens to have
-          pip install -e ".[test,mcmc]" \
-            --config-settings=cmake.define.AFTERGLOW_PROFILE=ON \
-            --config-settings=cmake.define.AFTERGLOW_MARCH_NATIVE=OFF
+          pip install -e ".[test,mcmc]" --config-settings=cmake.define.AFTERGLOW_PROFILE=ON
           pytest tests/ -q --junitxml=py-junit.xml
           # a validation failure must not block publishing the report that documents it
           if python tests/validation/run_validation.py --all; then

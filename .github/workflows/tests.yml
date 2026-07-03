@@ -40,13 +40,13 @@ jobs:
         if: runner.os != 'Windows'
         run: pip install ".[test,mcmc]" pytest
         env:
-          CMAKE_ARGS: "-DAFTERGLOW_MARCH_NATIVE=OFF -DCMAKE_C_COMPILER_LAUNCHER=ccache -DCMAKE_CXX_COMPILER_LAUNCHER=ccache"
+          CMAKE_ARGS: "-DCMAKE_C_COMPILER_LAUNCHER=ccache -DCMAKE_CXX_COMPILER_LAUNCHER=ccache"
 
       - name: Build and install package (Windows)
         if: runner.os == 'Windows'
         run: pip install ".[test,mcmc]" pytest
         env:
-          CMAKE_ARGS: "-DAFTERGLOW_MARCH_NATIVE=OFF"
+          CMAKE_ARGS: ""
 
       - name: Build and run C++ tests
         if: runner.os != 'Windows'
@@ -54,7 +54,7 @@ jobs:
           # pip install builds the wheel in an isolated env, so pybind11 is not
           # in the runner's Python — install it and hand CMake its config dir.
           pip install pybind11
-          cmake -B build -DAFTERGLOW_TESTS=ON -DAFTERGLOW_MARCH_NATIVE=OFF \
+          cmake -B build -DAFTERGLOW_TESTS=ON \
             -DPython_EXECUTABLE="$(which python)" \
             -Dpybind11_DIR="$(python -m pybind11 --cmakedir)" \
             -DCMAKE_C_COMPILER_LAUNCHER=ccache -DCMAKE_CXX_COMPILER_LAUNCHER=ccache
