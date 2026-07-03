@@ -46,33 +46,41 @@ jobs:
         with:
           python-version: "3.12"
 
-      - name: Run tests + full validation, build report
+      - name: Install (profile build)
+        shell: bash
+        run: pip install -e ".[test,mcmc]" --config-settings=cmake.define.AFTERGLOW_PROFILE=ON
+
+      - name: Run pytest
+        shell: bash
+        run: pytest tests/ -q --junitxml=py-junit.xml
+
+      - name: Full validation + report
         shell: bash
         run: |
           echo "::notice::Benchmark timings reflect the CI runner, not release hardware"
-          pip install -e ".[test,mcmc]" --config-settings=cmake.define.AFTERGLOW_PROFILE=ON
-          pytest tests/ -q --junitxml=py-junit.xml
+          mkdir -p out
           # a validation failure must not block publishing the report that documents it
           if python tests/validation/run_validation.py --all; then
-            echo "passed" > validation-status.txt
+            echo "passed" > out/validation-status.txt
           else
-            echo "failed" > validation-status.txt
+            echo "failed" > out/validation-status.txt
           fi
-          mkdir -p out
           python tests/report.py py-junit.xml \
             --label py-junit.xml="Python (pytest)" \
             --validation tests/validation/regression/results/regression_results.json \
             --benchmark tests/validation/benchmark/results/benchmark_history.json \
             ${{ matrix.links }} \
             -o out/index.html
-          cp validation-status.txt out/
 
-      - name: Upload platform report
+      - name: Upload platform report (and junit for diagnosis)
+        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: report-${{ matrix.platform }}
-          path: out/
-          if-no-files-found: error
+          path: |
+            out/
+            py-junit.xml
+          if-no-files-found: warn
 
   deploy:
     name: Assemble and deploy to GitHub Pages
@@ -94,18 +102,24 @@ jobs:
       - name: Assemble report tree (macOS at the root)
         run: |
           mkdir -p deploy_report
-          [ -f artifacts/report-macos/index.html ] && cp artifacts/report-macos/index.html deploy_report/index.html
-          [ -f artifacts/report-linux/index.html ] && mkdir -p deploy_report/linux \
-            && cp artifacts/report-linux/index.html deploy_report/linux/index.html
-          [ -f artifacts/report-windows/index.html ] && mkdir -p deploy_report/windows \
-            && cp artifacts/report-windows/index.html deploy_report/windows/index.html
+          [ -f artifacts/report-macos/out/index.html ] && cp artifacts/report-macos/out/index.html deploy_report/index.html
+          [ -f artifacts/report-linux/out/index.html ] && mkdir -p deploy_report/linux \
+            && cp artifacts/report-linux/out/index.html deploy_report/linux/index.html
+          [ -f artifacts/report-windows/out/index.html ] && mkdir -p deploy_report/windows \
+            && cp artifacts/report-windows/out/index.html deploy_report/windows/index.html
           # degraded fallback: never leave reports/latest/ without a root page
           if [ ! -f deploy_report/index.html ]; then
-            FIRST=$(ls artifacts/report-*/index.html 2>/dev/null | head -1)
+            FIRST=$(ls artifacts/report-*/out/index.html 2>/dev/null | head -1)
             [ -n "$FIRST" ] && cp "$FIRST" deploy_report/index.html
           fi
           [ -f deploy_report/index.html ] || { echo "::error::no platform report was produced"; exit 1; }
-          cat artifacts/report-*/validation-status.txt 2>/dev/null | sort -u > statuses.txt
+          cat artifacts/report-*/out/validation-status.txt 2>/dev/null | sort -u > statuses.txt
+          # a generate leg that died before validation produced no status: treat as failed
+          FAILED_LEGS=0
+          for plat in macos linux windows; do
+            [ -f "artifacts/report-$plat/out/validation-status.txt" ] || FAILED_LEGS=$((FAILED_LEGS+1))
+          done
+          [ "$FAILED_LEGS" -gt 0 ] && echo "failed" >> statuses.txt
           echo "validation statuses: $(paste -sd, statuses.txt)"
 
       - name: Deploy to GitHub Pages (latest)
