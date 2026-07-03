@@ -10,6 +10,7 @@ BOOST_AUTO_TEST_SUITE(Quadrature)
 //  compute_bin_widths
 // ============================================================================
 
+// A uniform 5-point grid yields 4 bin widths, each equal to the grid spacing
 BOOST_AUTO_TEST_CASE(bin_widths_uniform) {
     Array grid = {1.0, 2.0, 3.0, 4.0, 5.0};
     Array dg;
@@ -20,6 +21,7 @@ BOOST_AUTO_TEST_CASE(bin_widths_uniform) {
     }
 }
 
+// Non-uniform grid yields widths equal to successive point differences (3-1=2, 10-3=7)
 BOOST_AUTO_TEST_CASE(bin_widths_nonuniform) {
     Array grid = {1.0, 3.0, 10.0};
     Array dg;
@@ -29,6 +31,7 @@ BOOST_AUTO_TEST_CASE(bin_widths_nonuniform) {
     BOOST_CHECK_CLOSE(dg(1), 7.0, 1e-10);
 }
 
+// A single-point grid produces an empty bin-width array
 BOOST_AUTO_TEST_CASE(bin_widths_single_point) {
     Array grid = {5.0};
     Array dg;
@@ -36,6 +39,7 @@ BOOST_AUTO_TEST_CASE(bin_widths_single_point) {
     BOOST_CHECK_EQUAL(dg.size(), 0u);
 }
 
+// An empty grid produces an empty bin-width array without error
 BOOST_AUTO_TEST_CASE(bin_widths_empty) {
     Array grid = Array::from_shape({0});
     Array dg;
@@ -47,6 +51,7 @@ BOOST_AUTO_TEST_CASE(bin_widths_empty) {
 //  compute_midpoint_grid
 // ============================================================================
 
+// Bin centers are geometric means of adjacent boundaries; weights are linear bin widths
 BOOST_AUTO_TEST_CASE(midpoint_grid_basic) {
     Array boundaries = {1.0, 4.0, 16.0};
     Array centers, weights;
@@ -61,6 +66,7 @@ BOOST_AUTO_TEST_CASE(midpoint_grid_basic) {
     BOOST_CHECK_CLOSE(weights(1), 12.0, 1e-10);
 }
 
+// Two boundaries yield one bin: center at the geometric mean sqrt(2*8)=4, weight 8-2=6
 BOOST_AUTO_TEST_CASE(midpoint_grid_single_bin) {
     Array boundaries = {2.0, 8.0};
     Array centers, weights;
@@ -70,6 +76,7 @@ BOOST_AUTO_TEST_CASE(midpoint_grid_single_bin) {
     BOOST_CHECK_CLOSE(weights(0), 6.0, 1e-10);
 }
 
+// Fewer than two boundaries yields empty center and weight arrays
 BOOST_AUTO_TEST_CASE(midpoint_grid_too_few) {
     Array boundaries = {5.0};
     Array centers, weights;
@@ -82,6 +89,7 @@ BOOST_AUTO_TEST_CASE(midpoint_grid_too_few) {
 //  compute_rectangle_weights
 // ============================================================================
 
+// Rectangle (left-endpoint) weights equal each point's forward bin width; the last point gets 0
 BOOST_AUTO_TEST_CASE(rectangle_weights_uniform) {
     Array grid = {0.0, 1.0, 2.0, 3.0};
     Array weights;
@@ -93,6 +101,7 @@ BOOST_AUTO_TEST_CASE(rectangle_weights_uniform) {
     BOOST_CHECK_CLOSE(weights(3), 0.0, 1e-10);
 }
 
+// A single-point grid gets one rectangle weight of zero (no interval to integrate)
 BOOST_AUTO_TEST_CASE(rectangle_weights_single_point) {
     Array grid = {5.0};
     Array weights;
@@ -105,6 +114,7 @@ BOOST_AUTO_TEST_CASE(rectangle_weights_single_point) {
 //  compute_trapezoidal_weights
 // ============================================================================
 
+// On a uniform grid, trapezoidal weights are h/2 at the endpoints and h at interior points
 BOOST_AUTO_TEST_CASE(trapezoidal_weights_uniform) {
     // Uniform grid: endpoints get h/2, interior get h
     Array grid = {0.0, 1.0, 2.0, 3.0, 4.0};
@@ -118,6 +128,7 @@ BOOST_AUTO_TEST_CASE(trapezoidal_weights_uniform) {
     BOOST_CHECK_CLOSE(weights(4), 0.5, 1e-10);
 }
 
+// A two-point grid gives each endpoint half the interval width (h/2 = 1)
 BOOST_AUTO_TEST_CASE(trapezoidal_weights_two_points) {
     Array grid = {0.0, 2.0};
     Array weights;
@@ -127,6 +138,7 @@ BOOST_AUTO_TEST_CASE(trapezoidal_weights_two_points) {
     BOOST_CHECK_CLOSE(weights(1), 1.0, 1e-10);
 }
 
+// Trapezoidal weights integrate the linear function f(x)=x exactly (integral over [0,4] equals 8)
 BOOST_AUTO_TEST_CASE(trapezoidal_integrates_linear) {
     // Trapezoidal should integrate a linear function f(x)=x exactly
     Array grid = {0.0, 1.0, 2.0, 3.0, 4.0};
@@ -140,6 +152,7 @@ BOOST_AUTO_TEST_CASE(trapezoidal_integrates_linear) {
     BOOST_CHECK_CLOSE(integral, 8.0, 1e-10);
 }
 
+// A single-point grid gets one trapezoidal weight of zero
 BOOST_AUTO_TEST_CASE(trapezoidal_single_point) {
     Array grid = {3.0};
     Array weights;
@@ -152,6 +165,7 @@ BOOST_AUTO_TEST_CASE(trapezoidal_single_point) {
 //  compute_simpson_weights
 // ============================================================================
 
+// Simpson weights integrate f(x)=x^3 exactly on [0,2] (result 4), as expected up to cubics
 BOOST_AUTO_TEST_CASE(simpson_integrates_cubic) {
     // Simpson's rule should exactly integrate up to cubic polynomials
     // f(x) = x^3 on [0, 2], exact integral = 4
@@ -166,6 +180,7 @@ BOOST_AUTO_TEST_CASE(simpson_integrates_cubic) {
     BOOST_CHECK_CLOSE(integral, 4.0, 1e-10);
 }
 
+// Simpson weights on a uniform 5-point grid are all non-negative
 BOOST_AUTO_TEST_CASE(simpson_weights_positive) {
     Array grid = {0.0, 1.0, 2.0, 3.0, 4.0};
     Array weights;
@@ -175,6 +190,7 @@ BOOST_AUTO_TEST_CASE(simpson_weights_positive) {
     }
 }
 
+// With an odd interval count (Simpson + trapezoidal fallback), f(x)=1 still integrates exactly to the interval length
 BOOST_AUTO_TEST_CASE(simpson_odd_intervals_fallback) {
     // 4 points = 3 intervals (odd): 2 intervals Simpson + 1 trapezoidal
     Array grid = {0.0, 1.0, 2.0, 3.0};
@@ -192,6 +208,7 @@ BOOST_AUTO_TEST_CASE(simpson_odd_intervals_fallback) {
 //  compute_boole_weights
 // ============================================================================
 
+// Boole weights on a 17-point log-spaced grid are all non-negative
 BOOST_AUTO_TEST_CASE(boole_weights_positive) {
     // Boole's rule weights should all be non-negative
     const size_t n = 17;
@@ -208,6 +225,7 @@ BOOST_AUTO_TEST_CASE(boole_weights_positive) {
     }
 }
 
+// Boole weights integrate f(gamma)=gamma^2 on a log-spaced grid to within 1% of the analytic (b^3-a^3)/3
 BOOST_AUTO_TEST_CASE(boole_integrates_power_law) {
     // Integrate f(gamma) = gamma^2 over log-spaced grid
     // Analytic: integral gamma^2 dgamma from a to b = (b^3 - a^3)/3
@@ -235,6 +253,7 @@ BOOST_AUTO_TEST_CASE(boole_integrates_power_law) {
 //  compute_nc7_weights
 // ============================================================================
 
+// NC7 weights on a 25-point log-spaced grid are all non-negative
 BOOST_AUTO_TEST_CASE(nc7_weights_positive) {
     // NC7 weights should all be non-negative (guaranteed by property)
     const size_t n = 25;
@@ -250,6 +269,7 @@ BOOST_AUTO_TEST_CASE(nc7_weights_positive) {
     }
 }
 
+// NC7 integrates gamma^2 on a log-spaced grid to within 0.1% of analytic — tighter than Boole's 1%
 BOOST_AUTO_TEST_CASE(nc7_integrates_power_law) {
     // Higher-order NC7 should be more accurate than Boole for smooth functions
     const size_t n = 25;
@@ -272,6 +292,7 @@ BOOST_AUTO_TEST_CASE(nc7_integrates_power_law) {
     BOOST_CHECK_CLOSE(integral, exact, 0.1); // Within 0.1%
 }
 
+// For grid sizes 3-8 and 13 (covering all leftover branches), NC7 weights stay non-negative and sum to the interval length within 5%
 BOOST_AUTO_TEST_CASE(nc7_leftover_handling) {
     // Test with various sizes that exercise different leftover branches
     for (size_t n : {3u, 4u, 5u, 6u, 7u, 8u, 13u}) {
@@ -300,6 +321,7 @@ BOOST_AUTO_TEST_CASE(nc7_leftover_handling) {
 //  Weight sum consistency: all methods should agree on integral of f=1
 // ============================================================================
 
+// Trapezoidal and Simpson weight sums (integral of f=1) both equal the exact interval length 4
 BOOST_AUTO_TEST_CASE(weight_methods_agree_on_constant) {
     // All quadrature methods integrating f(x)=1 should give the same result
     Array grid = {1.0, 2.0, 3.0, 4.0, 5.0};

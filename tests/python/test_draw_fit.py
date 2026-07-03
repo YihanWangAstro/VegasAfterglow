@@ -189,7 +189,7 @@ def _has_polycollection(ax):
 
 
 def test_credible_band_path():
-    """With a realistic posterior, draw_fit produces a fill_between per band."""
+    """With a realistic posterior and n_samples>0, draw_fit renders at least one credible-band fill (PolyCollection) on the top axis."""
     try:
         fig, (ax_top, _) = _fitter_with_realistic_posterior().draw_fit(
             n_samples=8, show_nu_panel=False

@@ -242,13 +242,15 @@ inline Real compute_adiabatic_cooling_rate2(Real ad_idx, Real r, Real x, Real u,
 }
 /**
  * <!-- ************************************************************************************** -->
- * @brief Computes the rate at which the shock shell spreads in the comoving frame.
+ * @brief Computes the sound-speed expansion rate of the comoving shell width.
+ * @details Radial widening of the shell at the local sound speed — distinct from
+ *          lateral jet spreading (compute_dtheta_dt / Ejecta::spreading).
  * @param Gamma_rel Relative Lorentz factor
  * @param dtdt_comv Rate of change of comoving time with respect to burst time
- * @return The shell spreading rate in the comoving frame
+ * @return The sound-speed expansion rate of the comoving shell width
  * <!-- ************************************************************************************** -->
  */
-inline Real compute_shell_spreading_rate(Real Gamma_rel, Real dtdt_comv) noexcept {
+inline Real compute_shell_sound_expansion_rate(Real Gamma_rel, Real dtdt_comv) noexcept {
     const Real cs = compute_sound_speed(Gamma_rel);
     return cs * dtdt_comv;
 }

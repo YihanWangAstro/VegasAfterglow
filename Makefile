@@ -26,7 +26,32 @@ TEST_SRCS := $(shell find $(TEST_DIR) -type f -name '*.cpp' -not -path '$(TEST_D
 TEST_EXES := $(patsubst %.cpp,%$(EXE_EXT),$(TEST_SRCS))
 
 # === Default target ===
-.PHONY: all tests clean test
+.PHONY: all tests clean test test-quick test-demos test-cpp test-py test-physics test-cov test-report test-validation
+
+# === Test runner shortcuts (see tests/run_all.sh and TESTING.md) ===
+test:
+	@bash tests/run_all.sh
+
+test-quick:
+	@bash tests/run_all.sh --quick
+
+test-cpp:
+	@bash tests/run_all.sh --cpp
+
+test-py:
+	@bash tests/run_all.sh --py
+
+test-physics:
+	@bash tests/run_all.sh --physics
+
+test-cov:
+	@bash tests/run_all.sh --py --cov
+
+test-report:
+	@bash tests/run_all.sh --html
+
+test-validation:
+	@bash tests/run_all.sh --validation
 
 # Default to building tests
 all: tests
@@ -39,9 +64,9 @@ tests: $(TEST_EXES)
 	@mkdir -p $(@D)
 	$(CXX) $(CXXFLAGS) $< $(shell find $(SRC_DIR) -name '*.cpp') $(LDFLAGS) -o $@
 
-# Run tests
-test: $(TEST_EXES)
-	@echo "Running tests..."
+# Build and run the demo/benchmark executables (tests/benchmark, tests/demo, ...)
+test-demos: $(TEST_EXES)
+	@echo "Running demo/benchmark executables..."
 	@for test in $(TEST_EXES); do ./$$test || exit 1; done
 
 # Clean up tests

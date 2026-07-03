@@ -50,7 +50,7 @@ BOOST_AUTO_TEST_CASE(compute_upstr_4vel_values) {
 }
 
 // ---------------------------------------------------------------------------
-// 4. compute_4vel_jump: sigma=0, ultrarelativistic limit
+// 4. compute_4vel_jump: sigma=0, gamma_rel=100 -> finite, ratio > 1
 // ---------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE(compute_4vel_jump_sigma0_limit) {
     // For ultrarelativistic unmagnetized shocks, the 4-velocity jump ratio -> ~4*gamma_rel
@@ -319,12 +319,12 @@ BOOST_AUTO_TEST_CASE(compute_adiabatic_cooling_rate2_sign) {
 }
 
 // ---------------------------------------------------------------------------
-// 27. compute_shell_spreading_rate: positive for physical inputs
+// 27. compute_shell_sound_expansion_rate: positive for physical inputs
 // ---------------------------------------------------------------------------
-BOOST_AUTO_TEST_CASE(compute_shell_spreading_rate_positive) {
+BOOST_AUTO_TEST_CASE(compute_shell_sound_expansion_rate_positive) {
     Real gamma_rel = 10.0;
     Real dtdt_comv = 0.5;
-    Real rate = compute_shell_spreading_rate(gamma_rel, dtdt_comv);
+    Real rate = compute_shell_sound_expansion_rate(gamma_rel, dtdt_comv);
     BOOST_CHECK_GT(rate, 0.0);
     BOOST_CHECK(std::isfinite(rate));
 }
@@ -376,7 +376,7 @@ BOOST_AUTO_TEST_CASE(compute_Gamma_therm_limiter) {
 }
 
 // ---------------------------------------------------------------------------
-// 32. compute_compression: known Gamma values
+// 32. compute_compression: finite and > 1 for relativistic Gammas
 // ---------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE(compute_compression_values) {
     Real Gamma_up = 100.0;
@@ -409,7 +409,7 @@ BOOST_AUTO_TEST_CASE(compute_downstr_B_values) {
 }
 
 // ---------------------------------------------------------------------------
-// 34. compute_radiative_efficiency: slow cooling (gamma_m < gamma_c)
+// 34. compute_radiative_efficiency: efficiency bounded in [0, eps_e]
 // ---------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE(compute_radiative_efficiency_slow_cooling) {
     // Use parameters that ensure gamma_m < gamma_c (slow cooling)
@@ -594,6 +594,49 @@ BOOST_AUTO_TEST_CASE(enclosed_thermal_energy_consistency) {
     // Thermal energy should be less than total available energy: (1 - eps_e) * (Gamma - 1) * c2 * mass
     Real max_energy = (1 - eps_e) * (Gamma - 1) * con::c2 * mass;
     BOOST_CHECK_LE(U_th, max_energy * 1.01); // allow 1% numerical tolerance
+}
+
+// ---------------------------------------------------------------------------
+// 46. compute_4vel_jump: ultrarelativistic proportionality -> 4*gamma_rel
+// ---------------------------------------------------------------------------
+BOOST_AUTO_TEST_CASE(compute_4vel_jump_ultrarelativistic) {
+    // With the trans-relativistic EOS ad_idx = 4/3 + 1/(3*gamma_rel), the
+    // sigma=0 jump is analytically (g_hat*gamma_rel + 1)/(g_hat - 1), which
+    // reduces to exactly 4*gamma_rel at every gamma_rel (measured: exact to
+    // 6+ digits at gamma_rel = 100 and 1000). Assert the UR proportionality.
+    for (Real gamma_rel : {100.0, 1000.0}) {
+        Real ratio = compute_4vel_jump(gamma_rel, 0.0);
+        BOOST_CHECK_CLOSE(ratio / (4.0 * gamma_rel), 1.0, 0.01);
+    }
+}
+
+// ---------------------------------------------------------------------------
+// 47. compute_downstr_4vel: UR limit u' -> 1/(2*sqrt(2))
+// ---------------------------------------------------------------------------
+BOOST_AUTO_TEST_CASE(compute_downstr_4vel_UR_limit) {
+    // Textbook strong-shock downstream speed beta' = 1/3 in the shock frame
+    // gives u' = 1/(2*sqrt(2)) ~ 0.35355. The code converges to exactly this
+    // constant (measured: 0.353534 at gamma_rel = 100, 0.353553 at 1000).
+    const Real expected = 1.0 / (2.0 * std::sqrt(2.0));
+    BOOST_CHECK_CLOSE(compute_downstr_4vel(100.0, 0.0), expected, 0.1);
+    BOOST_CHECK_CLOSE(compute_downstr_4vel(1000.0, 0.0), expected, 0.01);
+}
+
+// ---------------------------------------------------------------------------
+// 48. compute_compression: Blandford-McKee UR and Newtonian strong-shock limits
+// ---------------------------------------------------------------------------
+BOOST_AUTO_TEST_CASE(compute_compression_limits) {
+    // Ultrarelativistic: compression -> 4*gamma_rel (Blandford-McKee).
+    // compute_compression(1, Gamma, 0) has gamma_rel = Gamma, and the EOS
+    // makes the proportionality exact (measured: 400.000 and 4000.000).
+    BOOST_CHECK_CLOSE(compute_compression(1.0, 100.0, 0.0) / (4.0 * 100.0), 1.0, 1.0);
+    BOOST_CHECK_CLOSE(compute_compression(1.0, 1000.0, 0.0) / (4.0 * 1000.0), 1.0, 1.0);
+
+    // Newtonian strong shock (gamma_hat = 5/3): compression -> 4. The code
+    // gives exactly 4*gamma_rel = 4.0004 at gamma_rel = 1.0001 (the
+    // 4*gamma_rel law holds at all gamma_rel with this EOS, so the
+    // gamma_rel -> 1 limit is exactly 4).
+    BOOST_CHECK_CLOSE(compute_compression(1.0, 1.0001, 0.0), 4.0, 0.1);
 }
 
 BOOST_AUTO_TEST_SUITE_END()

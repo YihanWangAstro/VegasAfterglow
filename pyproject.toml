@@ -48,12 +48,9 @@ mcmc = [
   "dynesty>=1.2,<3",
 ]
 test = [
+  "pytest>=7",
+  "pytest-cov>=4",
   "matplotlib>=3.5",
-  "pypdf>=4.0",
-  "reportlab>=4.0",
-  "pdfrw>=0.4",
-  "Pillow>=10.0",
-  "pylatexenc>=2.10",
 ]
 webtool = [
   "fastapi>=0.115",
@@ -99,6 +96,14 @@ include = [
   "pybind/**/*",
   "external/**/*",
   "VegasAfterglow/**/*"
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+markers = [
+  "physics: quantitative physics checks (closure relations, scaling laws) calibrated against theory",
+  "golden: regression against stored golden baselines (tests/python/golden/)",
+  "corners: parameter-space corner sweep (finiteness/positivity across all switches)",
 ]
 
 [tool.cibuildwheel]

@@ -20,15 +20,24 @@ Have a feature request? [Open an issue](https://github.com/YihanWangAstro/VegasA
 
 ## [Unreleased]
 
+### Fixed
+
+- **Reverse shock with magnetized ejecta (`sigma0 > 0`)**: fixed a forward-shock flux runaway when reverse-shock emission was enabled — the shell-crossing rate is now gated on shell penetration and capped at the fast magnetosonic speed, so light curves evolve correctly across sigma0 from 0 to >10 (unmagnetized results unchanged)
+
 ### Changed
 
 - Removed the hard radiative-efficiency truncation (`eps_rad = 0` deep in slow cooling); the efficiency now follows the analytic form everywhere, consistently across forward, reverse, and simple shock solvers
 - Default polar (theta) grid resolution unified at 0.25 points per degree; `Model` docstrings now match the actual defaults (`rtol=1e-6`)
 - Generic `Ejecta` and `Medium` constructors now validate their inputs (callability, finite on-axis values) like the typed factories
+- Validation suite moved under the unified test tree at `tests/validation/`; the release validation PDF was replaced by the HTML report published at [reports/latest](https://yihanwangastro.github.io/VegasAfterglow/reports/latest/), with per-release snapshots archived in the [reports index](https://yihanwangastro.github.io/VegasAfterglow/reports/)
+- `run_validation.py` slimmed to running and checking the suites (report flags removed); the `[test]` extra now needs only pytest, pytest-cov, and matplotlib
 
 ### Added
 
-- CI workflow running the full Python test suite on Linux, macOS, and Windows
+- **Unified test framework** (see `TESTING.md`): `make test` runs the C++ unit tests, the Python suite, and the full validation suite, and writes `test-report.html` — a single self-contained page with every test outcome and description, physics-validation figures (shock evolution, characteristic frequencies, spectral regimes, measured-vs-expected checks), full resolution-convergence results, and per-configuration performance timing; `make test-quick` runs just the fast tiers
+- Comprehensive test coverage: closure relations against standard afterglow theory, exact invariants, golden-baseline regression, parameter-space corner sweeps (including a magnetized-ejecta + reverse-shock regression), and expanded C++ physics assertions — every test carries a one-line description of what it asserts
+- CI workflow running the full Python test suite on Linux, macOS, and Windows, with C++ tests on Linux/macOS and a unified report artifact per OS
+- Weekly scheduled validation run that refreshes the published report
 
 ---
 
@@ -115,7 +124,7 @@ Have a feature request? [Open an issue](https://github.com/YihanWangAstro/VegasA
 
 ## [v2.0.0] - 2026-03-01
 
-**[Download Validation Report (PDF)](https://yihanwangastro.github.io/VegasAfterglow/reports/latest/comprehensive_report.pdf)**
+**[Validation Report](https://yihanwangastro.github.io/VegasAfterglow/reports/latest/)**
 
 ### Added
 

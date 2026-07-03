@@ -122,6 +122,7 @@ if(AFTERGLOW_TESTS)
     tests/cpp/test_environment.cpp
     tests/cpp/test_quadrature.cpp
     tests/cpp/test_power_law_syn.cpp
+    tests/cpp/test_reverse_shock.cpp
     tests/cpp/test_inverse_compton.cpp
     ${AFTERGLOW_CORE_SOURCES}
   )

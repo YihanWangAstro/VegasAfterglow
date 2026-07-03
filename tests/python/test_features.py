@@ -64,6 +64,7 @@ class TestKN:
     """Test Klein-Nishina corrections."""
 
     def test_kn_model_runs(self):
+        """SSC with Klein-Nishina suppression enabled yields finite, strictly positive total flux."""
         jet = TophatJet(theta_c=0.1, E_iso=1e52, Gamma0=300)
         medium = ISM(n_ism=1.0)
         obs = Observer(lumi_dist=1e28, z=1.0, theta_obs=0.0)
@@ -83,6 +84,7 @@ class TestReverseShock:
     """Test reverse shock emission."""
 
     def test_reverse_shock_produces_flux(self):
+        """Reverse-shock synchrotron flux matches the time-grid shape, is nonzero at some epoch, and the total stays finite."""
         jet = TophatJet(theta_c=0.1, E_iso=1e52, Gamma0=300)
         medium = ISM(n_ism=1.0)
         obs = Observer(lumi_dist=1e28, z=1.0, theta_obs=0.0)
@@ -97,6 +99,7 @@ class TestReverseShock:
         assert np.any(flux.rvs.sync > 0)
 
     def test_reverse_shock_details(self):
+        """Shock details for a reverse-shock model include a non-empty reverse-shock Lorentz factor array."""
         jet = TophatJet(theta_c=0.1, E_iso=1e52, Gamma0=300)
         medium = ISM(n_ism=1.0)
         obs = Observer(lumi_dist=1e28, z=1.0, theta_obs=0.0)
@@ -114,6 +117,7 @@ class TestWindFlux:
     """Test Wind medium produces valid flux."""
 
     def test_wind_medium_flux(self):
+        """A stellar-wind (A_star) medium yields finite, strictly positive total flux."""
         jet = TophatJet(theta_c=0.1, E_iso=1e52, Gamma0=300)
         medium = Wind(A_star=0.1)
         obs = Observer(lumi_dist=1e28, z=1.0, theta_obs=0.0)
@@ -126,6 +130,7 @@ class TestWindFlux:
         assert np.all(flux.total > 0)
 
     def test_wind_with_floor(self):
+        """A wind medium with an ISM density floor (n_ism) yields finite, strictly positive total flux."""
         jet = TophatJet(theta_c=0.1, E_iso=1e52, Gamma0=300)
         medium = Wind(A_star=0.1, n_ism=0.01)
         obs = Observer(lumi_dist=1e28, z=1.0, theta_obs=0.0)
@@ -145,6 +150,7 @@ class TestOffAxis:
     """Test off-axis observer produces valid flux."""
 
     def test_off_axis_flux(self):
+        """An observer at theta_obs=0.3 (outside the jet core) yields finite, strictly positive total flux."""
         jet = TophatJet(theta_c=0.1, E_iso=1e52, Gamma0=300)
         medium = ISM(n_ism=1.0)
         obs = Observer(lumi_dist=1e28, z=1.0, theta_obs=0.3)
@@ -157,7 +163,7 @@ class TestOffAxis:
         assert np.all(flux.total > 0)
 
     def test_off_axis_dimmer_at_early_times(self):
-        """Off-axis observer should see less flux at early times."""
+        """On-axis total flux exceeds off-axis (theta_obs=0.4) total flux at the earliest sampled time."""
         jet = TophatJet(theta_c=0.1, E_iso=1e52, Gamma0=300)
         medium = ISM(n_ism=1.0)
         rad = Radiation(eps_e=0.1, eps_B=0.01, p=2.2)
@@ -199,6 +205,7 @@ class TestJetTypeFlux:
         return Model(jet, medium, obs, rad, resolutions=LOW_RES)
 
     def test_produces_finite_positive_flux(self, model):
+        """Each parametrized jet structure yields finite, strictly positive total flux."""
         t = np.logspace(3, 6, 10)
         nu = np.full_like(t, 4.84e14)
         flux = model.flux_density(t, nu)
@@ -213,6 +220,7 @@ class TestCMBCooling:
     """Test CMB inverse Compton cooling."""
 
     def test_cmb_cooling_runs(self):
+        """Enabling CMB inverse Compton cooling at z=2 yields finite, strictly positive total flux."""
         jet = TophatJet(theta_c=0.1, E_iso=1e52, Gamma0=300)
         medium = ISM(n_ism=1.0)
         obs = Observer(lumi_dist=1e28, z=2.0, theta_obs=0.0)

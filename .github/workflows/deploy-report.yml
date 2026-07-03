@@ -7,6 +7,9 @@ on:
         description: 'Version label for versioned copy (e.g., 2.0.1). Leave empty to update latest only.'
         required: false
         type: string
+  schedule:
+    # Weekly full-validation run; refreshes reports/latest only (no versioned copy)
+    - cron: '17 6 * * 1'
 
 jobs:
   deploy:
@@ -17,15 +20,27 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          fetch-tags: true
 
-      - name: Prepare report
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
+
+      - name: Generate unified test & validation report
         run: |
-          if [ ! -f "validation/comprehensive_report.pdf" ]; then
-            echo "::error::validation/comprehensive_report.pdf not found. Generate it locally and commit it first."
-            exit 1
-          fi
+          echo "::notice::Benchmark timings reflect the CI runner, not release hardware"
+          pip install -e ".[test]" --config-settings=cmake.define.AFTERGLOW_PROFILE=ON
+          python -m pytest tests/ -q --junitxml=py-junit.xml
+          python tests/validation/run_validation.py --all
           mkdir -p deploy_report
-          cp validation/comprehensive_report.pdf deploy_report/
+          python tests/report.py py-junit.xml \
+            --label py-junit.xml="Python (pytest)" \
+            --validation tests/validation/regression/results/regression_results.json \
+            --benchmark tests/validation/benchmark/results/benchmark_history.json \
+            -o deploy_report/index.html
 
       - name: Deploy to GitHub Pages (latest)
         uses: peaceiris/actions-gh-pages@v4
@@ -42,4 +57,21 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: deploy_report/
           destination_dir: reports/v${{ inputs.version }}
+          keep_files: true
+
+      - name: Build reports index
+        run: |
+          git fetch origin gh-pages --depth=1 2>/dev/null || true
+          {
+            git ls-tree --name-only origin/gh-pages reports/ 2>/dev/null || true
+            echo "reports/v${{ inputs.version }}"
+          } | grep -oE 'v[0-9][^/ ]*' | sort -urV > versions.txt || true
+          python tests/report_index.py versions.txt report_index/index.html
+
+      - name: Deploy reports index
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: report_index/
+          destination_dir: reports
           keep_files: true

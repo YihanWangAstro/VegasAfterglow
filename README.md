@@ -8,12 +8,12 @@
 [![Python Version](https://img.shields.io/badge/Python-3.9%2B-blue.svg)](https://www.python.org/)
 [![Documentation](https://img.shields.io/badge/Documentation-Online-brightgreen.svg)](https://vegasafterglow.readthedocs.io/en/latest/index.html)
 [![Interactive Tool](https://img.shields.io/badge/Interactive-Web%20Tool-orange.svg)](https://www.vegasafterglow.com)
-[![Validation Report](https://img.shields.io/badge/Validation-Report-blue.svg)](https://yihanwangastro.github.io/VegasAfterglow/reports/latest/comprehensive_report.pdf)
+[![Validation Report](https://img.shields.io/badge/Validation-Report-blue.svg)](https://yihanwangastro.github.io/VegasAfterglow/reports/latest/)
 [![ADS citations](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/YihanWangAstro/VegasAfterglow/badge-data/ads-citations.json)](https://ui.adsabs.harvard.edu/abs/2026JHEAp..5000490W/citations)
 
 <div align="left">
 
-**[Latest Release Notes](CHANGELOG.md#v200-beta---2026-02-02)** | **[Interactive Web Tool](https://www.vegasafterglow.com)** | **[Validation Report (PDF)](https://yihanwangastro.github.io/VegasAfterglow/reports/latest/comprehensive_report.pdf)** | **[Install Now](#installation)**
+**[Latest Release Notes](CHANGELOG.md#v200-beta---2026-02-02)** | **[Interactive Web Tool](https://www.vegasafterglow.com)** | **[Validation Report](https://yihanwangastro.github.io/VegasAfterglow/reports/latest/)** | **[Install Now](#installation)**
 </div>
 
 <p align="justify">
@@ -850,14 +850,26 @@ The charts below benchmark **single-core** wall-clock time by stage across four 
 
 ## Validation & Testing
 
-The validation suite includes **benchmark tests** (resolution convergence, performance timing) and **regression tests** (shock dynamics scaling laws, characteristic frequency evolution, spectral power-law indices across Blandford-McKee and Sedov-Taylor phases). The default fiducial resolution `(0.1, 0.25, 10)` achieves < 5% mean error for most configurations.
+VegasAfterglow ships a unified test framework (see [TESTING.md](TESTING.md)) with three tiers under `tests/`:
 
-See the [Validation Report (PDF)](https://yihanwangastro.github.io/VegasAfterglow/reports/latest/comprehensive_report.pdf) for full results. To run locally:
+* **Code correctness** — C++ unit tests (Boost.Test) and Python API tests (pytest), run on every push across Linux/macOS/Windows.
+* **Physics correctness** — closure relations against standard afterglow theory, exact invariants (distance/redshift scalings, component additivity), golden-baseline regression, and parameter-space corner sweeps.
+* **Full validation** (`tests/validation/`) — **benchmark tests** (resolution convergence, performance timing) and **regression tests** (shock dynamics scaling laws, characteristic frequency evolution, spectral power-law indices across Blandford-McKee and Sedov-Taylor phases). The default fiducial resolution `(0.1, 0.25, 10)` achieves < 5% mean error for most configurations.
+
+```bash
+make test               # everything: C++ + Python suites + full validation + HTML report (slow)
+make test-quick         # C++ + Python suites only (seconds)
+make test-validation    # the full validation suite only (slow)
+```
+
+Every run writes `test-report.html` — a single self-contained page with all test outcomes, physics validation figures, and performance results.
+
+See the [latest Validation Report](https://yihanwangastro.github.io/VegasAfterglow/reports/latest/) for full results (refreshed on every release and by a weekly scheduled run); per-release snapshots are archived in the [reports index](https://yihanwangastro.github.io/VegasAfterglow/reports/). To run the full validation locally:
 
 ```bash
 pip install -e ".[test]" --config-settings=cmake.define.AFTERGLOW_PROFILE=ON
-python validation/run_validation.py --all        # full suite (timing + convergence + regression)
-python validation/run_validation.py --all --fast  # fast mode: skip convergence scans
+python tests/validation/run_validation.py --all        # full suite (timing + convergence + regression)
+python tests/validation/run_validation.py --all --fast  # fast mode: skip convergence scans
 ```
 
 Powered by [Claude Code](https://claude.ai/claude-code)

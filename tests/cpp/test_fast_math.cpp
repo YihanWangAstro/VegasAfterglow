@@ -8,23 +8,27 @@ BOOST_AUTO_TEST_SUITE(FastMath)
 
 // log2_softplus tests
 
+// At x = 0, log2(1 + 2^0) = log2(2) = 1 exactly
 BOOST_AUTO_TEST_CASE(log2_softplus_zero) {
     // log2(1 + 2^0) = log2(2) = 1
     BOOST_CHECK_CLOSE(log2_softplus(0.0), 1.0, 1e-10);
 }
 
+// Large-x asymptote: log2(1 + 2^x) -> x, checked at x = 50 and 100
 BOOST_AUTO_TEST_CASE(log2_softplus_large_positive) {
     // For large x, log2(1 + 2^x) ~ x
     BOOST_CHECK_CLOSE(log2_softplus(50.0), 50.0, 1e-10);
     BOOST_CHECK_CLOSE(log2_softplus(100.0), 100.0, 1e-10);
 }
 
+// Large-negative asymptote: log2(1 + 2^x) -> 0, checked at x = -50 and -100
 BOOST_AUTO_TEST_CASE(log2_softplus_large_negative) {
     // For large negative x, log2(1 + 2^x) ~ 0
     BOOST_CHECK_SMALL(log2_softplus(-50.0), 1e-10);
     BOOST_CHECK_SMALL(log2_softplus(-100.0), 1e-10);
 }
 
+// log2_softplus is non-decreasing over x in [-30, 30], sampled in unit steps
 BOOST_AUTO_TEST_CASE(log2_softplus_monotonic) {
     Real prev = log2_softplus(-30.0);
     for (Real x = -29.0; x <= 30.0; x += 1.0) {
@@ -34,6 +38,7 @@ BOOST_AUTO_TEST_CASE(log2_softplus_monotonic) {
     }
 }
 
+// Strictly increasing across the x = 20 branch point: value(19) < value(20) < value(21)
 BOOST_AUTO_TEST_CASE(log2_softplus_boundary_20) {
     // Branch points at ±20 — values just inside and outside should be close
     Real at_19 = log2_softplus(19.0);
@@ -44,6 +49,7 @@ BOOST_AUTO_TEST_CASE(log2_softplus_boundary_20) {
     BOOST_CHECK_LT(at_20, at_21);
 }
 
+// Crossing the x = 20 branch changes the value by < 1%; near x = -20 the result stays finite and non-negative
 BOOST_AUTO_TEST_CASE(log2_softplus_continuity_at_branch) {
     // No discontinuity at x=20 and x=-20
     const Real eps = 0.01;
@@ -63,12 +69,14 @@ BOOST_AUTO_TEST_CASE(log2_softplus_continuity_at_branch) {
 
 // log2_broken_power_ratio tests
 
+// Far below the break the slope correction vanishes (|result| < 0.01), preserving the original power law
 BOOST_AUTO_TEST_CASE(log2_broken_power_ratio_far_below_break) {
     // Far below break, correction should be ~0
     Real result = log2_broken_power_ratio(-100.0, 0.0, 2.0, 1.0);
     BOOST_CHECK_SMALL(std::fabs(result), 0.01);
 }
 
+// Far above the break the correction is negative and grows more negative with distance (steeper slope)
 BOOST_AUTO_TEST_CASE(log2_broken_power_ratio_far_above_break) {
     // Far above break, correction is proportional to distance
     Real r1 = log2_broken_power_ratio(50.0, 0.0, 2.0, 1.0);
@@ -78,6 +86,7 @@ BOOST_AUTO_TEST_CASE(log2_broken_power_ratio_far_above_break) {
     BOOST_CHECK_LT(r1, 0);
 }
 
+// Exactly at the break the correction is finite and negative (never positive)
 BOOST_AUTO_TEST_CASE(log2_broken_power_ratio_at_break) {
     // At the break point, check it's a reasonable intermediate value
     Real result = log2_broken_power_ratio(0.0, 0.0, 2.0, 1.0);
@@ -85,6 +94,7 @@ BOOST_AUTO_TEST_CASE(log2_broken_power_ratio_at_break) {
     BOOST_CHECK_LT(result, 0); // correction is always non-positive
 }
 
+// The correction is monotonically non-increasing in log2_x over [-20, 40], sampled in unit steps
 BOOST_AUTO_TEST_CASE(log2_broken_power_ratio_monotonic) {
     // Correction is monotonically decreasing with increasing x
     const Real log2_break = 10.0;
@@ -98,6 +108,7 @@ BOOST_AUTO_TEST_CASE(log2_broken_power_ratio_monotonic) {
     }
 }
 
+// With sharpness s = 100 the transition is step-like: correction ~0 one unit below the break, clearly negative one unit above
 BOOST_AUTO_TEST_CASE(log2_broken_power_ratio_extreme_sharpness) {
     // Very sharp transition (s=100) approaches step function
     Real below = log2_broken_power_ratio(-1.0, 0.0, 2.0, 100.0);
@@ -110,6 +121,7 @@ BOOST_AUTO_TEST_CASE(log2_broken_power_ratio_extreme_sharpness) {
 
 // fast_* functions match std (EXTREME_SPEED is off)
 
+// fast_log2/fast_log/fast_exp2/fast_exp are bit-exact equal to their std counterparts, and fast_pow == exp2(b * log2(a))
 BOOST_AUTO_TEST_CASE(fast_functions_match_std) {
     const double values[] = {0.001, 0.1, 1.0, 2.5, 10.0, 100.0, 1e6};
     for (double x : values) {
@@ -125,6 +137,7 @@ BOOST_AUTO_TEST_CASE(fast_functions_match_std) {
     BOOST_CHECK_EQUAL(fast_pow(2.0, 3.0), std::exp2(3.0 * std::log2(2.0)));
 }
 
+// A tiny positive input (1e-300) yields a finite result matching std::log2
 BOOST_AUTO_TEST_CASE(fast_log2_subnormal) {
     // Very small positive input
     double result = fast_log2(1e-300);
@@ -132,11 +145,13 @@ BOOST_AUTO_TEST_CASE(fast_log2_subnormal) {
     BOOST_CHECK_CLOSE(result, std::log2(1e-300), 1e-10);
 }
 
+// fast_exp2(1024) equals std::exp2(1024), which overflows to +infinity
 BOOST_AUTO_TEST_CASE(fast_exp2_overflow) {
     double result = fast_exp2(1024.0);
     BOOST_CHECK_EQUAL(result, std::exp2(1024.0));
 }
 
+// fast_exp2(-1100) equals std::exp2(-1100), which underflows to zero (below the subnormal range)
 BOOST_AUTO_TEST_CASE(fast_exp2_underflow) {
     double result = fast_exp2(-1100.0);
     BOOST_CHECK_EQUAL(result, std::exp2(-1100.0));

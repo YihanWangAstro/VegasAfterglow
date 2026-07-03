@@ -8,18 +8,21 @@ BOOST_AUTO_TEST_SUITE(Physics)
 
 // ========================== relativistic ==========================
 
+// A fluid at rest (gamma = 1) has velocity beta = 0 to machine precision
 BOOST_AUTO_TEST_CASE(gamma_to_beta_rest) {
     // gamma = 1 is at rest: beta should be exactly 0
     Real beta = physics::relativistic::gamma_to_beta(1.0);
     BOOST_CHECK_SMALL(beta, 1e-15);
 }
 
+// gamma = 2 gives beta = sqrt(3)/2, i.e. beta = sqrt(1 - 1/gamma^2)
 BOOST_AUTO_TEST_CASE(gamma_to_beta_mildly_relativistic) {
     // gamma = 2 -> beta = sqrt(3)/2
     Real beta = physics::relativistic::gamma_to_beta(2.0);
     BOOST_CHECK_CLOSE(beta, std::sqrt(3.0) / 2.0, 1e-10);
 }
 
+// gamma = 1000 matches sqrt(1 - 1/gamma^2) and beta stays strictly below 1
 BOOST_AUTO_TEST_CASE(gamma_to_beta_ultra_relativistic) {
     // gamma = 1000 -> beta = sqrt(1 - 1/gamma^2) ~ 1 - 5e-7
     Real beta = physics::relativistic::gamma_to_beta(1000.0);
@@ -30,6 +33,7 @@ BOOST_AUTO_TEST_CASE(gamma_to_beta_ultra_relativistic) {
     BOOST_CHECK_LT(beta, 1.0);
 }
 
+// beta increases strictly monotonically with gamma over 1.01 to 1e6
 BOOST_AUTO_TEST_CASE(gamma_to_beta_monotonic) {
     // Larger gamma should always give larger beta
     Real prev = physics::relativistic::gamma_to_beta(1.0);
@@ -41,6 +45,7 @@ BOOST_AUTO_TEST_CASE(gamma_to_beta_monotonic) {
     }
 }
 
+// gamma = 1 + 1e-10 yields a finite beta in [0, 1) with no NaN
 BOOST_AUTO_TEST_CASE(gamma_to_beta_near_one) {
     // gamma = 1 + 1e-10: should not produce NaN, and beta should be small but positive
     Real gamma = 1.0 + 1e-10;
@@ -50,6 +55,7 @@ BOOST_AUTO_TEST_CASE(gamma_to_beta_near_one) {
     BOOST_CHECK_LT(beta, 1.0);
 }
 
+// gamma = 1e15 gives a finite beta within 1e-10 of 1 without exceeding 1
 BOOST_AUTO_TEST_CASE(gamma_to_beta_huge) {
     // gamma = 1e15: extreme ultrarelativistic limit
     Real gamma = 1e15;
@@ -62,12 +68,14 @@ BOOST_AUTO_TEST_CASE(gamma_to_beta_huge) {
 
 // ========================== thermo ==========================
 
+// A non-relativistic gas (gamma = 1) has adiabatic index 5/3
 BOOST_AUTO_TEST_CASE(adiabatic_idx_non_relativistic) {
     // gamma = 1 -> adiabatic index = 4/3 + 1/3 = 5/3
     Real idx = physics::thermo::adiabatic_idx(1.0);
     BOOST_CHECK_CLOSE(idx, 5.0 / 3.0, 1e-10);
 }
 
+// gamma = 1000 gives 4/3 + 1/(3*gamma), within 0.1% of the relativistic limit 4/3
 BOOST_AUTO_TEST_CASE(adiabatic_idx_ultra_relativistic) {
     // gamma = 1000 -> adiabatic index ~ 4/3 + 1/3000 ~ 4/3
     Real idx = physics::thermo::adiabatic_idx(1000.0);
@@ -77,6 +85,7 @@ BOOST_AUTO_TEST_CASE(adiabatic_idx_ultra_relativistic) {
     BOOST_CHECK_CLOSE(idx, 4.0 / 3.0, 0.1); // within 0.1%
 }
 
+// Adiabatic index stays within the physical bounds [4/3, 5/3] for all gamma >= 1
 BOOST_AUTO_TEST_CASE(adiabatic_idx_range) {
     // For any gamma >= 1, the adiabatic index should be in [4/3, 5/3]
     Real gammas[] = {1.0, 1.001, 1.5, 2.0, 10.0, 100.0, 1000.0, 1e6, 1e15};
@@ -87,6 +96,7 @@ BOOST_AUTO_TEST_CASE(adiabatic_idx_range) {
     }
 }
 
+// gamma = 1 + 1e-12 gives a finite index converging to the non-relativistic value 5/3
 BOOST_AUTO_TEST_CASE(adiabatic_idx_near_one) {
     // gamma = 1 + 1e-12: should approach 5/3 without numerical issues
     Real gamma = 1.0 + 1e-12;
@@ -105,6 +115,7 @@ namespace {
     const Real engine_dura = 1.0 * unit::sec;
 } // anonymous namespace
 
+// Sedov length matches cbrt(E_iso / (4*pi/3 * n_ism * mp * c^2)) and is positive and finite
 BOOST_AUTO_TEST_CASE(sedov_length_known) {
     // Sedov length = cbrt(E_iso / (4*pi/3 * n_ism * mp * c^2))
     Real expected = std::cbrt(E_iso / (4.0 * con::pi / 3.0 * n_ism * con::mp * con::c2));
@@ -115,6 +126,7 @@ BOOST_AUTO_TEST_CASE(sedov_length_known) {
     BOOST_CHECK(std::isfinite(result));
 }
 
+// Thin-shell deceleration radius matches cbrt(3 * E_iso / (4 * pi * mp * c^2 * n_ism * Gamma0^2))
 BOOST_AUTO_TEST_CASE(thin_shell_dec_radius) {
     // R_thin = cbrt(3 * E_iso / (4 * pi * mp * c^2 * n_ism * Gamma0^2))
     Real expected = std::cbrt(3.0 * E_iso / (4.0 * con::pi * con::mp * con::c2 * n_ism * Gamma0 * Gamma0));
@@ -124,6 +136,7 @@ BOOST_AUTO_TEST_CASE(thin_shell_dec_radius) {
     BOOST_CHECK(std::isfinite(result));
 }
 
+// Thick-shell deceleration radius matches (3 * E_iso * T * c / (4 * pi * n_ism * mp * c^2))^(1/4)
 BOOST_AUTO_TEST_CASE(thick_shell_dec_radius) {
     // R_thick = (3 * E_iso * T * c / (4 * pi * n_ism * mp * c^2))^(1/4)
     Real expected =
@@ -134,6 +147,7 @@ BOOST_AUTO_TEST_CASE(thick_shell_dec_radius) {
     BOOST_CHECK(std::isfinite(result));
 }
 
+// Deceleration radius equals the maximum of the thin-shell and thick-shell radii
 BOOST_AUTO_TEST_CASE(dec_radius_is_max) {
     // dec_radius should be max(thin_shell, thick_shell)
     Real r_dec = physics::scales::dec_radius(E_iso, n_ism, Gamma0, engine_dura);
@@ -146,6 +160,7 @@ BOOST_AUTO_TEST_CASE(dec_radius_is_max) {
     BOOST_CHECK_CLOSE(r_dec, expected_max, 1e-10);
 }
 
+// Shell spreading radius equals Gamma0^2 * c * T
 BOOST_AUTO_TEST_CASE(shell_spreading_radius) {
     // R_spread = Gamma0^2 * c * T
     Real expected = Gamma0 * Gamma0 * con::c * engine_dura;
@@ -155,6 +170,7 @@ BOOST_AUTO_TEST_CASE(shell_spreading_radius) {
     BOOST_CHECK(std::isfinite(result));
 }
 
+// Reverse-shock crossing radius equals (l^3 * c * T)^(1/4) with l the Sedov length
 BOOST_AUTO_TEST_CASE(RS_crossing_radius) {
     // R_RS_cross = (l^3 * c * T)^(1/4)
     Real l = physics::scales::sedov_length(E_iso, n_ism);
@@ -165,6 +181,7 @@ BOOST_AUTO_TEST_CASE(RS_crossing_radius) {
     BOOST_CHECK(std::isfinite(result));
 }
 
+// Reverse-shock transition radius equals l^1.5 / sqrt(c * T) / Gamma0^2
 BOOST_AUTO_TEST_CASE(RS_transition_radius) {
     // R_RS_trans = l^1.5 / sqrt(c * T) / Gamma0^2
     Real l = physics::scales::sedov_length(E_iso, n_ism);
@@ -175,6 +192,7 @@ BOOST_AUTO_TEST_CASE(RS_transition_radius) {
     BOOST_CHECK(std::isfinite(result));
 }
 
+// Shell thickness parameter xi equals sqrt(l / (c * T)) * Gamma0^(-4/3)
 BOOST_AUTO_TEST_CASE(shell_thickness_param) {
     // xi = sqrt(l / (c * T)) * Gamma0^(-4/3)
     Real l = physics::scales::sedov_length(E_iso, n_ism);
@@ -186,6 +204,7 @@ BOOST_AUTO_TEST_CASE(shell_thickness_param) {
     BOOST_CHECK(std::isfinite(result));
 }
 
+// calc_engine_duration inverts shell_thickness_param: engine duration is recovered from xi
 BOOST_AUTO_TEST_CASE(calc_engine_duration_roundtrip) {
     // Compute xi from known parameters, then recover engine_dura from calc_engine_duration
     Real xi = physics::scales::shell_thickness_param(E_iso, n_ism, Gamma0, engine_dura);
@@ -193,6 +212,7 @@ BOOST_AUTO_TEST_CASE(calc_engine_duration_roundtrip) {
     BOOST_CHECK_CLOSE(recovered_T, engine_dura, 1e-8);
 }
 
+// Extreme inputs (E_iso = 1e60 erg, n_ism = 1e-10) give a finite Sedov length larger than fiducial
 BOOST_AUTO_TEST_CASE(sedov_length_extreme_params) {
     // Very large E_iso and very small n_ism: should still produce finite positive result
     Real E_extreme = 1e60 * unit::erg;
@@ -205,6 +225,7 @@ BOOST_AUTO_TEST_CASE(sedov_length_extreme_params) {
     BOOST_CHECK_GT(result, result_fid);
 }
 
+// Degenerate Gamma0 = 1 keeps all deceleration radii finite; thin-shell radius exceeds the Gamma0 = 300 one
 BOOST_AUTO_TEST_CASE(dec_radius_zero_Gamma) {
     // Gamma0 = 1 is a degenerate case (non-relativistic outflow)
     // thin_shell_dec_radius with Gamma0=1 should still give a finite positive result

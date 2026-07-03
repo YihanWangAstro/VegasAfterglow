@@ -39,6 +39,7 @@ HISTORICAL_MEDIUM_RULES = {
 
 @pytest.mark.parametrize("jet_type", sorted(HISTORICAL_JET_RULES))
 def test_derived_jet_rules_match_historical(jet_type):
+    """Each jet type's required and forbidden parameter sets derived from its JetSpec equal the historical hand-maintained JET_RULES entry verbatim."""
     required, forbidden = HISTORICAL_JET_RULES[jet_type]
     spec = JETS[jet_type]
     assert spec.required == required
@@ -46,6 +47,7 @@ def test_derived_jet_rules_match_historical(jet_type):
 
 
 def test_uniform_jet_rules():
+    """The uniform jet, historically unvalidated, now derives required {E_iso, Gamma0}, forbidden wing/power-law-index params, and a fixed theta_c of pi/2."""
     # "uniform" had no JET_RULES entry historically (it went unvalidated);
     # the registry now gives it sensible derived rules.
     spec = JETS["uniform"]
@@ -56,6 +58,7 @@ def test_uniform_jet_rules():
 
 @pytest.mark.parametrize("medium_type", sorted(HISTORICAL_MEDIUM_RULES))
 def test_medium_rules_match_historical(medium_type):
+    """Each medium type's required and forbidden parameter sets derived from its spec equal the historical hand-maintained MEDIUM_RULES entry verbatim."""
     required, forbidden = HISTORICAL_MEDIUM_RULES[medium_type]
     spec = MEDIA[medium_type]
     assert spec.required == required
@@ -64,6 +67,7 @@ def test_medium_rules_match_historical(medium_type):
 
 @pytest.mark.parametrize("jet_type", sorted(JETS))
 def test_every_jet_constructs_from_defaults(jet_type):
+    """Each registered jet type constructs a non-None jet object from ModelParams defaults combined with its spec's fixed_kwargs."""
     spec = JETS[jet_type]
     params = ModelParams()
     kwargs = {name: getattr(params, name) for name in spec.params}
@@ -74,6 +78,7 @@ def test_every_jet_constructs_from_defaults(jet_type):
 
 @pytest.mark.parametrize("medium_type", sorted(MEDIA))
 def test_every_medium_constructs_from_defaults(medium_type):
+    """Each registered medium type constructs a non-None medium object from ModelParams once its density normalization (n_ism or A_star) is set nonzero to pass validation."""
     spec = MEDIA[medium_type]
     params = ModelParams()
     if medium_type == "ism":
@@ -87,6 +92,7 @@ def test_every_medium_constructs_from_defaults(medium_type):
 
 @pytest.mark.parametrize("jet_type", sorted(JETS))
 def test_registry_self_consistency(jet_type):
+    """For each jet spec, the required and forbidden sets are disjoint and no constructor argument is both sampled (params) and fixed (fixed_kwargs)."""
     spec = JETS[jet_type]
     assert not (spec.required & spec.forbidden)
     assert not (set(spec.params) & set(spec.fixed_kwargs)), (

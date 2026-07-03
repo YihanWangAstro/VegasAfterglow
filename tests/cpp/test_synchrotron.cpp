@@ -90,6 +90,7 @@ BOOST_AUTO_TEST_CASE(determine_regime_two_equal) {
 //  compute_syn_freq / compute_syn_gamma — formulae and roundtrip
 // ============================================================================
 
+// Characteristic synchrotron frequency matches nu = 3*e/(4*pi*me*c) * B * gamma^2 exactly and is positive
 BOOST_AUTO_TEST_CASE(compute_syn_freq_values) {
     const Real gamma = 100.0;
     const Real B = 1.0 * unit::Gauss;
@@ -101,6 +102,7 @@ BOOST_AUTO_TEST_CASE(compute_syn_freq_values) {
     BOOST_CHECK_GT(nu, 0);
 }
 
+// Emitting Lorentz factor matches gamma = sqrt(4*pi*me*c/(3*e) * nu/B) exactly and is positive
 BOOST_AUTO_TEST_CASE(compute_syn_gamma_values) {
     const Real B = 0.1 * unit::Gauss;
     const Real nu = 1e14 * unit::Hz;
@@ -112,6 +114,7 @@ BOOST_AUTO_TEST_CASE(compute_syn_gamma_values) {
     BOOST_CHECK_GT(gamma, 0);
 }
 
+// compute_syn_gamma inverts compute_syn_freq: gamma -> nu -> gamma recovers the input
 BOOST_AUTO_TEST_CASE(compute_syn_freq_gamma_roundtrip) {
     const Real gamma_in = 300.0;
     const Real B = 0.5 * unit::Gauss;
@@ -126,11 +129,13 @@ BOOST_AUTO_TEST_CASE(compute_syn_freq_gamma_roundtrip) {
 //  compute_syn_freq / compute_syn_gamma — edge cases
 // ============================================================================
 
+// Zero magnetic field yields exactly zero synchrotron frequency
 BOOST_AUTO_TEST_CASE(compute_syn_freq_zero_B) {
     // B=0 should give zero frequency
     BOOST_CHECK_EQUAL(compute_syn_freq(100.0, 0.0), 0.0);
 }
 
+// For positive B and nu the emitting Lorentz factor is finite and positive
 BOOST_AUTO_TEST_CASE(compute_syn_gamma_positive_B) {
     // For positive B and nu, gamma should be finite and positive
     const Real gamma = compute_syn_gamma(1e10 * unit::Hz, 1.0 * unit::Gauss);
@@ -142,6 +147,8 @@ BOOST_AUTO_TEST_CASE(compute_syn_gamma_positive_B) {
 //  compute_gamma_c
 // ============================================================================
 
+// Without IC cooling (Y=0), gamma_c equals the quadratic root (gamma_bar + sqrt(gamma_bar^2 + 4))/2
+// with gamma_bar = 6*pi*me*c/(sigmaT*B^2*t), and exceeds 1
 BOOST_AUTO_TEST_CASE(compute_gamma_c_no_IC) {
     // Without IC cooling (Y=0), check the analytic formula
     const Real B = 1.0 * unit::Gauss;
@@ -156,6 +163,7 @@ BOOST_AUTO_TEST_CASE(compute_gamma_c_no_IC) {
     BOOST_CHECK_GT(gc, 1.0);
 }
 
+// IC cooling (Y>0) lowers gamma_c relative to the Y=0 value while keeping it above 1
 BOOST_AUTO_TEST_CASE(compute_gamma_c_with_IC) {
     // IC cooling (Y > 0) should lower gamma_c compared to Y=0
     const Real B = 1.0 * unit::Gauss;
@@ -168,6 +176,7 @@ BOOST_AUTO_TEST_CASE(compute_gamma_c_with_IC) {
     BOOST_CHECK_GT(gc_with_IC, 1.0);
 }
 
+// gamma_c never drops below 1 across a grid of B (0.01-100 G) and comoving time (1 s - 1 yr)
 BOOST_AUTO_TEST_CASE(compute_gamma_c_positive) {
     // gamma_c should always be >= 1 for physical parameters
     for (Real B : {0.01 * unit::Gauss, 1.0 * unit::Gauss, 100.0 * unit::Gauss}) {
@@ -178,12 +187,14 @@ BOOST_AUTO_TEST_CASE(compute_gamma_c_positive) {
     }
 }
 
+// With B=0 there is no synchrotron cooling, so gamma_c is effectively unbounded (> 1e10)
 BOOST_AUTO_TEST_CASE(compute_gamma_c_zero_B) {
     // B=0 means no synchrotron cooling: gamma_c should be very large
     const Real gc = compute_gamma_c(1.0 * unit::day, 0.0, 0.0);
     BOOST_CHECK_GT(gc, 1e10);
 }
 
+// In the long-time limit (t = 1e20 s) gamma_c approaches 1 from above: 1 <= gamma_c < 2
 BOOST_AUTO_TEST_CASE(compute_gamma_c_huge_t) {
     // Very large comoving time -> gamma_c approaches 1 from above
     const Real gc = compute_gamma_c(1e20 * unit::sec, 1.0 * unit::Gauss, 0.0);
@@ -195,12 +206,14 @@ BOOST_AUTO_TEST_CASE(compute_gamma_c_huge_t) {
 //  compute_single_elec_P_nu_max / compute_syn_I_peak
 // ============================================================================
 
+// Peak single-electron synchrotron power is finite and positive for B = 1 G
 BOOST_AUTO_TEST_CASE(compute_single_elec_P_nu_max_positive) {
     const Real P = compute_single_elec_P_nu_max(1.0 * unit::Gauss, 2.3);
     BOOST_CHECK(std::isfinite(P));
     BOOST_CHECK_GT(P, 0);
 }
 
+// Peak synchrotron specific intensity is finite and positive for physical B, p, and column density
 BOOST_AUTO_TEST_CASE(compute_syn_I_peak_positive) {
     const Real I = compute_syn_I_peak(1.0 * unit::Gauss, 2.3, 1e20);
     BOOST_CHECK(std::isfinite(I));
@@ -227,6 +240,8 @@ static SynElectrons make_test_electrons(Real gamma_a, Real gamma_m, Real gamma_c
     return e;
 }
 
+// Slow-cooling ordering is classified as regime 1 and N(gamma) is finite and positive
+// from below gamma_m up past gamma_c
 BOOST_AUTO_TEST_CASE(syn_electrons_spectrum_slow_cooling) {
     // Slow cooling (regime 1): gamma_a < gamma_m < gamma_c
     auto e = make_test_electrons(10, 100, 1000, 1e8, 2.3);
@@ -240,6 +255,8 @@ BOOST_AUTO_TEST_CASE(syn_electrons_spectrum_slow_cooling) {
     }
 }
 
+// Fast-cooling ordering is classified as regime 3 and N(gamma) is finite and positive
+// from below gamma_c up past gamma_m
 BOOST_AUTO_TEST_CASE(syn_electrons_spectrum_fast_cooling) {
     // Fast cooling (regime 3): gamma_a < gamma_c < gamma_m
     auto e = make_test_electrons(5, 1000, 50, 1e8, 2.5);
@@ -252,6 +269,7 @@ BOOST_AUTO_TEST_CASE(syn_electrons_spectrum_fast_cooling) {
     }
 }
 
+// Per-gamma electron column density is finite and positive across the distribution
 BOOST_AUTO_TEST_CASE(syn_electrons_column_den) {
     auto e = make_test_electrons(10, 100, 1000, 1e8, 2.3);
 
@@ -262,6 +280,8 @@ BOOST_AUTO_TEST_CASE(syn_electrons_column_den) {
     }
 }
 
+// The regime flips 1 -> 3 as gamma_m crosses gamma_c, and N(gamma) stays finite and
+// positive on both sides of the slow/fast-cooling transition
 BOOST_AUTO_TEST_CASE(syn_electrons_regime_transitions) {
     // Near the boundary between regimes: gamma_m ~ gamma_c
     // Slightly slow-cooling
@@ -287,6 +307,7 @@ BOOST_AUTO_TEST_CASE(syn_electrons_regime_transitions) {
 
 // --- compute_syn_gamma_M ---
 
+// Burn-off limit matches gamma_M = sqrt(6*pi*e/(sigmaT*B*(1+Y))) at Y=0 and exceeds 1
 BOOST_AUTO_TEST_CASE(compute_syn_gamma_M_positive) {
     const Real B = 1.0 * unit::Gauss;
     const Real gM = compute_syn_gamma_M(B, 0.0, 2.3);
@@ -296,6 +317,7 @@ BOOST_AUTO_TEST_CASE(compute_syn_gamma_M_positive) {
     BOOST_CHECK_GT(gM, 1.0);
 }
 
+// IC cooling (Y=1) reduces gamma_M below the Y=0 value while keeping it above 1
 BOOST_AUTO_TEST_CASE(compute_syn_gamma_M_with_IC) {
     const Real B = 1.0 * unit::Gauss;
     const Real gM_no_IC = compute_syn_gamma_M(B, 0.0, 2.3);
@@ -305,6 +327,7 @@ BOOST_AUTO_TEST_CASE(compute_syn_gamma_M_with_IC) {
     BOOST_CHECK_GT(gM_with_IC, 1.0);
 }
 
+// B=0 removes the synchrotron burn-off limit entirely: gamma_M is infinite
 BOOST_AUTO_TEST_CASE(compute_syn_gamma_M_zero_B) {
     // B=0 -> no synchrotron limit -> infinity
     const Real gM = compute_syn_gamma_M(0.0, 0.0, 2.3);
@@ -313,6 +336,7 @@ BOOST_AUTO_TEST_CASE(compute_syn_gamma_M_zero_B) {
 
 // --- compute_syn_gamma_m ---
 
+// For p > 2, gamma_m - 1 equals the shock-heating partition (p-2)/(p-1) * eps_e*(Gamma_th-1)*(mp/me)/xi
 BOOST_AUTO_TEST_CASE(compute_syn_gamma_m_basic_p_gt_2) {
     // p > 2: gamma_m - 1 = (p-2)/(p-1) * eps_e*(Gamma_th-1)*(mp/me)/xi
     const Real Gamma_th = 10.0;
@@ -327,6 +351,7 @@ BOOST_AUTO_TEST_CASE(compute_syn_gamma_m_basic_p_gt_2) {
     BOOST_CHECK_GT(gm, 1.0);
 }
 
+// The p=2 branch (bisection root solve) yields a finite gamma_m above 1
 BOOST_AUTO_TEST_CASE(compute_syn_gamma_m_p_equals_2) {
     // p=2 uses root_bisect internally
     const Real gm = compute_syn_gamma_m(10.0, 1e8, 0.1, 2.0, 1.0);
@@ -334,6 +359,7 @@ BOOST_AUTO_TEST_CASE(compute_syn_gamma_m_p_equals_2) {
     BOOST_CHECK_GT(gm, 1.0);
 }
 
+// The p < 2 formula branch yields a finite gamma_m above 1
 BOOST_AUTO_TEST_CASE(compute_syn_gamma_m_p_lt_2) {
     // p < 2: different formula branch
     const Real gm = compute_syn_gamma_m(10.0, 1e8, 0.1, 1.8, 1.0);
@@ -341,6 +367,7 @@ BOOST_AUTO_TEST_CASE(compute_syn_gamma_m_p_lt_2) {
     BOOST_CHECK_GT(gm, 1.0);
 }
 
+// Vanishing eps_e drives gamma_m toward unity: result stays bounded in (1, 10)
 BOOST_AUTO_TEST_CASE(compute_syn_gamma_m_low_eps_e) {
     // Very small eps_e -> gamma_m close to 1
     const Real gm = compute_syn_gamma_m(2.0, 1e8, 1e-10, 2.3, 1.0);
@@ -350,12 +377,15 @@ BOOST_AUTO_TEST_CASE(compute_syn_gamma_m_low_eps_e) {
 
 // --- cool_after_crossing ---
 
+// When gamma_m == gamma_m_x the adiabatic factor is 1 and gamma_x is returned unchanged
 BOOST_AUTO_TEST_CASE(cool_after_crossing_no_change) {
     // If gamma_m == gamma_m_x, f_ad = 1, result = gamma_x
     const Real result = cool_after_crossing(100.0, 50.0, 50.0, 1.0, 1.0, 0.0);
     BOOST_CHECK_CLOSE(result, 100.0, 1e-10);
 }
 
+// With gamma_m < gamma_m_x, adiabatic expansion cools the electron to
+// (gamma_x - 1)*f_ad + 1 with f_ad = (gamma_m - 1)/(gamma_m_x - 1) < 1
 BOOST_AUTO_TEST_CASE(cool_after_crossing_adiabatic_expansion) {
     // gamma_m < gamma_m_x means f_ad < 1: adiabatic cooling reduces the result
     const Real gamma_x = 100.0;
@@ -369,6 +399,7 @@ BOOST_AUTO_TEST_CASE(cool_after_crossing_adiabatic_expansion) {
     BOOST_CHECK_LT(result, gamma_x);
 }
 
+// The post-crossing Lorentz factor never drops below 1
 BOOST_AUTO_TEST_CASE(cool_after_crossing_positive) {
     // Result should always be >= 1
     const Real result = cool_after_crossing(5.0, 100.0, 50.0, 10.0, 1.0, 0.0);
@@ -377,6 +408,7 @@ BOOST_AUTO_TEST_CASE(cool_after_crossing_positive) {
 
 // --- compute_syn_gamma_a ---
 
+// Self-absorption Lorentz factor gamma_a is finite and >= 1 for slow-cooling parameters
 BOOST_AUTO_TEST_CASE(compute_syn_gamma_a_positive) {
     // gamma_a should be positive and >= 1 for physical parameters
     const Real B = 1.0 * unit::Gauss;
@@ -391,6 +423,7 @@ BOOST_AUTO_TEST_CASE(compute_syn_gamma_a_positive) {
     BOOST_CHECK_GE(ga, 1.0);
 }
 
+// gamma_a stays finite and >= 1 in fast cooling (gamma_c < gamma_m)
 BOOST_AUTO_TEST_CASE(compute_syn_gamma_a_fast_cooling) {
     // Fast cooling: gamma_c < gamma_m
     const Real B = 0.1 * unit::Gauss;
@@ -400,6 +433,7 @@ BOOST_AUTO_TEST_CASE(compute_syn_gamma_a_fast_cooling) {
     BOOST_CHECK_GE(ga, 1.0);
 }
 
+// Larger peak intensity means stronger self-absorption, so gamma_a increases monotonically with I_peak
 BOOST_AUTO_TEST_CASE(compute_syn_gamma_a_large_I_peak) {
     // Large I_peak -> stronger self-absorption -> larger gamma_a
     const Real B = 1.0 * unit::Gauss;
@@ -410,12 +444,14 @@ BOOST_AUTO_TEST_CASE(compute_syn_gamma_a_large_I_peak) {
 
 // --- cyclotron_correction ---
 
+// For gamma_m >> 1 the cyclotron correction factor approaches 1 (within 0.2%)
 BOOST_AUTO_TEST_CASE(cyclotron_correction_large_gamma_m) {
     // For gamma_m >> 1: f ~ 1
     const Real f = cyclotron_correction(1000.0, 2.3);
     BOOST_CHECK_CLOSE(f, 1.0, 0.2);
 }
 
+// As gamma_m -> 1 the correction factor vanishes: bounded in [0, 0.1)
 BOOST_AUTO_TEST_CASE(cyclotron_correction_gamma_m_near_1) {
     // gamma_m ~ 1: f ~ 0
     const Real f = cyclotron_correction(1.01, 2.3);
@@ -423,6 +459,7 @@ BOOST_AUTO_TEST_CASE(cyclotron_correction_gamma_m_near_1) {
     BOOST_CHECK_GE(f, 0.0);
 }
 
+// For p > 3 the correction equals ((gamma_m-1)/gamma_m)^((p-1)/2)
 BOOST_AUTO_TEST_CASE(cyclotron_correction_p_gt_3) {
     // For p > 3: f = ((gamma_m-1)/gamma_m)^((p-1)/2)
     const Real gamma_m = 10.0;
@@ -433,6 +470,7 @@ BOOST_AUTO_TEST_CASE(cyclotron_correction_p_gt_3) {
     BOOST_CHECK_CLOSE(f, expected, 1e-6);
 }
 
+// For p <= 3 the correction equals (gamma_m-1)/gamma_m exactly, with no extra exponent
 BOOST_AUTO_TEST_CASE(cyclotron_correction_p_le_3) {
     // For p <= 3: f = (gamma_m-1)/gamma_m (no extra power)
     const Real gamma_m = 10.0;
@@ -440,6 +478,102 @@ BOOST_AUTO_TEST_CASE(cyclotron_correction_p_le_3) {
     const Real f = cyclotron_correction(gamma_m, p);
     const Real expected = (gamma_m - 1.0) / gamma_m;
     BOOST_CHECK_CLOSE(f, expected, 1e-10);
+}
+
+// ============================================================================
+//  SynElectrons — quantitative distribution slopes
+// ============================================================================
+
+// Local log-slope of the electron number distribution: d log N / d log gamma
+static Real electron_local_slope(SynElectrons const& e, Real gamma) {
+    const Real N_lo = e.compute_N_gamma(gamma / 1.01);
+    const Real N_hi = e.compute_N_gamma(gamma * 1.01);
+    return (std::log(N_hi) - std::log(N_lo)) / (2.0 * std::log(1.01));
+}
+
+// Slow-cooling log-slopes: -p between gamma_m and gamma_c, steepening to -(p+1) above
+// gamma_c (pins measured midpoint slopes -2.299 and -3.301 to within 0.05)
+BOOST_AUTO_TEST_CASE(syn_electrons_slope_slow_cooling) {
+    // Slow cooling with cooling break: N(gamma) ~ gamma^-p between gamma_m and
+    // gamma_c, steepening to gamma^-(p+1) between gamma_c and gamma_M.
+    // (Ys default-constructed and Y_c=0, so no IC correction enters.)
+    const Real p = 2.3;
+    auto e = make_test_electrons(1.0, 100.0, 1e5, 1e8, p);
+    e.N_e = 1.0;
+    BOOST_CHECK_EQUAL(e.regime, 1u);
+
+    // Geometric midpoint of [gamma_m, gamma_c] (measured: -2.299)
+    BOOST_CHECK_LT(std::abs(electron_local_slope(e, 3162.0) - (-p)), 0.05);
+    // Geometric midpoint of [gamma_c, gamma_M] (measured: -3.301)
+    BOOST_CHECK_LT(std::abs(electron_local_slope(e, 3.16e6) - (-(p + 1.0))), 0.05);
+}
+
+// Fast-cooling log-slopes: -2 between gamma_c and gamma_m, steepening to -(p+1) above
+// gamma_m (pins measured midpoint slopes -1.983 and -3.317 to within 0.05)
+BOOST_AUTO_TEST_CASE(syn_electrons_slope_fast_cooling) {
+    // Fast cooling: N(gamma) ~ gamma^-2 between gamma_c and gamma_m,
+    // steepening to gamma^-(p+1) between gamma_m and gamma_M.
+    const Real p = 2.3;
+    auto e = make_test_electrons(1.0, 1e5, 100.0, 1e8, p);
+    e.N_e = 1.0;
+    BOOST_CHECK_EQUAL(e.regime, 3u);
+
+    // Geometric midpoint of [gamma_c, gamma_m] (measured: -1.983)
+    BOOST_CHECK_LT(std::abs(electron_local_slope(e, 3162.0) - (-2.0)), 0.05);
+    // Geometric midpoint of [gamma_m, gamma_M] (measured: -3.317)
+    BOOST_CHECK_LT(std::abs(electron_local_slope(e, 3.16e6) - (-(p + 1.0))), 0.05);
+}
+
+// ============================================================================
+//  SynElectrons — smoke tests for the absorption-dominated regimes
+// ============================================================================
+
+// Ordering gamma_m < gamma_a < gamma_c is classified as regime 2 and N(gamma) stays finite and positive
+BOOST_AUTO_TEST_CASE(syn_electrons_regime_2_smoke) {
+    // Regime 2: gamma_m < gamma_a < gamma_c
+    auto e = make_test_electrons(1e3, 100.0, 1e5, 1e8, 2.3);
+    BOOST_CHECK_EQUAL(e.regime, 2u);
+    for (Real gamma : {50.0, 500.0, 1e4, 1e6}) {
+        Real N = e.compute_N_gamma(gamma);
+        BOOST_CHECK(std::isfinite(N));
+        BOOST_CHECK_GT(N, 0.0);
+    }
+}
+
+// Ordering gamma_c < gamma_a < gamma_m is classified as regime 4 and N(gamma) stays finite and positive
+BOOST_AUTO_TEST_CASE(syn_electrons_regime_4_smoke) {
+    // Regime 4: gamma_c < gamma_a < gamma_m
+    auto e = make_test_electrons(1e3, 1e5, 100.0, 1e8, 2.3);
+    BOOST_CHECK_EQUAL(e.regime, 4u);
+    for (Real gamma : {50.0, 500.0, 1e4, 1e6}) {
+        Real N = e.compute_N_gamma(gamma);
+        BOOST_CHECK(std::isfinite(N));
+        BOOST_CHECK_GT(N, 0.0);
+    }
+}
+
+// Ordering gamma_m < gamma_c < gamma_a is classified as regime 5 and N(gamma) stays finite and positive
+BOOST_AUTO_TEST_CASE(syn_electrons_regime_5_smoke) {
+    // Regime 5: gamma_m < gamma_c < gamma_a
+    auto e = make_test_electrons(1e5, 100.0, 1e3, 1e8, 2.3);
+    BOOST_CHECK_EQUAL(e.regime, 5u);
+    for (Real gamma : {50.0, 500.0, 1e4, 1e6}) {
+        Real N = e.compute_N_gamma(gamma);
+        BOOST_CHECK(std::isfinite(N));
+        BOOST_CHECK_GT(N, 0.0);
+    }
+}
+
+// Ordering gamma_c < gamma_m < gamma_a is classified as regime 6 and N(gamma) stays finite and positive
+BOOST_AUTO_TEST_CASE(syn_electrons_regime_6_smoke) {
+    // Regime 6: gamma_c < gamma_m < gamma_a
+    auto e = make_test_electrons(1e5, 1e3, 100.0, 1e8, 2.3);
+    BOOST_CHECK_EQUAL(e.regime, 6u);
+    for (Real gamma : {50.0, 500.0, 1e4, 1e6}) {
+        Real N = e.compute_N_gamma(gamma);
+        BOOST_CHECK(std::isfinite(N));
+        BOOST_CHECK_GT(N, 0.0);
+    }
 }
 
 BOOST_AUTO_TEST_SUITE_END()

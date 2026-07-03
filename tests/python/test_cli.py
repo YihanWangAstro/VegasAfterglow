@@ -14,6 +14,7 @@ def _run(monkeypatch, argv):
 
 
 def test_csv_output(tmp_path, monkeypatch):
+    """CSV output has a column header plus exactly num_t data rows, and the first data row has at least two columns with positive time and flux values."""
     out = tmp_path / "lc.csv"
     _run(monkeypatch, ["--nu", "1e17", "--num_t", "16", "--t_max", "1e6",
                        "--output", str(out), "--format", "csv"])
@@ -28,6 +29,7 @@ def test_csv_output(tmp_path, monkeypatch):
 
 
 def test_json_output(tmp_path, monkeypatch):
+    """JSON output parses to a dict containing light-curve content (numeric values, a flux field, or a time key)."""
     out = tmp_path / "lc.json"
     _run(monkeypatch, ["--nu", "1e17", "--num_t", "12", "--t_max", "1e6",
                        "--output", str(out), "--format", "json"])
@@ -38,6 +40,7 @@ def test_json_output(tmp_path, monkeypatch):
 
 
 def test_named_band_frequency(tmp_path, monkeypatch):
+    """A named band ("XRT") is accepted for --nu and the run still writes the output file."""
     out = tmp_path / "lc_band.csv"
     _run(monkeypatch, ["--nu", "XRT", "--num_t", "10", "--t_max", "1e6",
                        "--output", str(out), "--format", "csv"])
@@ -45,6 +48,7 @@ def test_named_band_frequency(tmp_path, monkeypatch):
 
 
 def test_bad_frequency_rejected(monkeypatch):
+    """An unparseable --nu value aborts with SystemExit or ArgumentTypeError rather than running the model."""
     import argparse
 
     # Raised as ArgumentTypeError from parse_frequencies (post-parse_args), not

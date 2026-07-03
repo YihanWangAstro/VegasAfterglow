@@ -1,1 +1,0 @@
-"""VegasAfterglow test suite."""

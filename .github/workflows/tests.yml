@@ -48,8 +48,34 @@ jobs:
         env:
           CMAKE_ARGS: "-DAFTERGLOW_MARCH_NATIVE=OFF"
 
+      - name: Build and run C++ tests
+        if: runner.os != 'Windows'
+        run: |
+          cmake -B build -DAFTERGLOW_TESTS=ON -DAFTERGLOW_MARCH_NATIVE=OFF \
+            -DCMAKE_C_COMPILER_LAUNCHER=ccache -DCMAKE_CXX_COMPILER_LAUNCHER=ccache
+          cmake --build build -j4 --target afterglow_tests
+          ./build/afterglow_tests "--logger=HRF,error:JUNIT,all,cpp-junit.xml"
+
       - name: Run pytest
-        run: python -m pytest tests/ -x -q
+        run: python -m pytest tests/ -q --junitxml=py-junit.xml
 
       - name: Wheel smoke test
         run: python tests/wheel_smoke.py
+
+      - name: Build unified test report
+        if: always()
+        shell: bash
+        run: |
+          ARGS=()
+          [ -f cpp-junit.xml ] && ARGS+=(cpp-junit.xml)
+          [ -f py-junit.xml ] && ARGS+=(py-junit.xml)
+          [ ${#ARGS[@]} -gt 0 ] && python tests/report.py "${ARGS[@]}" \
+            --label "cpp-junit.xml=C++ (Boost.Test)" --label "py-junit.xml=Python (pytest)" \
+            -o test-report-${{ matrix.os }}.html || true
+
+      - name: Upload test report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-report-${{ matrix.os }}
+          path: test-report-${{ matrix.os }}.html

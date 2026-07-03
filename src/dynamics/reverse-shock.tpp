@@ -116,27 +116,55 @@ Real FRShockEqn<Ejecta, Medium>::compute_dU3_dt(State const& state, State const&
 }
 
 template <typename Ejecta, typename Medium>
-Real FRShockEqn<Ejecta, Medium>::compute_dx3_dt(State const& state, State const& diff, Real /*t*/, Real Gamma34, Real /*sigma*/,
+Real FRShockEqn<Ejecta, Medium>::compute_dx3_dt(State const& state, State const& diff, Real /*t*/, Real Gamma34, Real sigma,
                                                 Real comp_ratio) const noexcept {
-    const Real spreading = compute_shell_spreading_rate(Gamma34, diff.t_comv);
+    const Real sound_expansion = compute_shell_sound_expansion_rate(Gamma34, diff.t_comv);
 
-    if (state.m4 <= 0)
-        return spreading;
+    if (state.m4 <= 0) {
+        return sound_expansion;
+    }
 
-    // Blend crossing/spreading using same effective mass fraction as dm3
+    // Blend crossing/sound-expansion using same effective mass fraction as dm3
     const Real f = injection_efficiency(diff);
     const Real remaining = std::max(state.m4 - state.m3, 0.0);
     const Real crossing_w = f + (1.0 - f) * remaining / state.m4;
 
-    if (crossing_w < 1e-6)
-        return spreading;
+    if (crossing_w < 1e-6) {
+        return sound_expansion;
+    }
+
+    // Shock-penetration factor: the reverse shock only eats into the shell when the
+    // shocked-region compression actually advances relative to the unshocked ejecta.
+    // For magnetized shells with Gamma34 -> 1 the jump ratio -> 1 (a magnetosonic
+    // disturbance, not a shock; cf. the existence condition Eq. 43 of the method
+    // paper) and this factor -> 0, where the crossing rate below would blow up 0/0.
+    // No penetration => the shell width only grows at the sound speed; the reverse
+    // shock develops later, once deceleration raises Gamma34. For sigma = 0 this
+    // branch is unreachable: comp_ratio = 4*Gamma34 makes the factor >= 1 for all Gamma.
+    const Real penetration = state.Gamma * comp_ratio / this->Gamma4 - 1;
+    if (penetration <= 0) {
+        return sound_expansion;
+    }
 
     const Real beta3 = physics::relativistic::gamma_to_beta(state.Gamma);
     const Real beta4 = physics::relativistic::gamma_to_beta(this->Gamma4);
-    Real dx3dt = (beta4 - beta3) * con::c / ((1 - beta3) * (state.Gamma * comp_ratio / this->Gamma4 - 1));
-    const Real crossing = std::fabs(dx3dt * state.Gamma);
+    Real dx3dt = (beta4 - beta3) * con::c / ((1 - beta3) * penetration);
+    Real crossing = std::fabs(dx3dt * state.Gamma);
 
-    return crossing_w * crossing + (1.0 - crossing_w) * spreading;
+    // Regularize the weak-penetration regime (reachable only for magnetized shells;
+    // sigma = 0 always has penetration >= 1): as penetration -> 0+ the crossing rate
+    // above diverges, but physically the shock front cannot consume the shell faster
+    // than the fast magnetosonic speed of the magnetized upstream. Cap the comoving
+    // consumption rate accordingly.
+    if (penetration < 1) {
+        const Real cs = compute_sound_speed(Gamma34);
+        const Real va2 = sigma / (1 + sigma); // relativistic (v_A/c)^2
+        const Real cs2 = cs * cs / (con::c * con::c);
+        const Real v_ms = std::sqrt(va2 + cs2 * (1 - va2)) * con::c;
+        crossing = std::min(crossing, v_ms * diff.t_comv);
+    }
+
+    return crossing_w * crossing + (1.0 - crossing_w) * sound_expansion;
 }
 
 template <typename Ejecta, typename Medium>
@@ -169,11 +197,11 @@ Real FRShockEqn<Ejecta, Medium>::compute_dm3_dt(State const& state, State const&
 
 template <typename Ejecta, typename Medium>
 Real FRShockEqn<Ejecta, Medium>::compute_dx4_dt(State const& /*state*/, State const& diff, Real /*t*/) const noexcept {
-    const Real spreading = compute_shell_spreading_rate(this->Gamma4, diff.t_comv);
+    const Real sound_expansion = compute_shell_sound_expansion_rate(this->Gamma4, diff.t_comv);
     const Real f = injection_efficiency(diff);
     if (f > 1e-6)
-        return f * u4_ + (1 - f) * spreading;
-    return spreading;
+        return f * u4_ + (1 - f) * sound_expansion;
+    return sound_expansion;
 }
 
 template <typename Ejecta, typename Medium>
@@ -319,7 +347,7 @@ Real FRShockEqn<Ejecta, Medium>::compute_shell_sigma(State const& state) const n
  * <!-- ************************************************************************************** -->
  * @internal
  * @brief Calculates the comoving shell width at initial radius.
- * @details Accounts for both pure injection phase and shell spreading phase.
+ * @details Accounts for both pure injection phase and sound-speed shell expansion phase.
  * @param Gamma4 Lorentz factor of the unshocked ejecta
  * @param t0 Initial time
  * @param T Engine duration
@@ -330,7 +358,7 @@ inline Real compute_init_comv_shell_width(Real Gamma4, Real t0, Real T) {
     const Real beta4 = physics::relativistic::gamma_to_beta(Gamma4);
     if (t0 < T) { // pure injection
         return Gamma4 * t0 * beta4 * con::c;
-    } else { // injection+shell spreading
+    } else { // injection + sound-speed shell expansion
         const Real cs = compute_sound_speed(Gamma4);
         return Gamma4 * T * beta4 * con::c + cs * (t0 - T) * Gamma4;
     }

@@ -36,6 +36,7 @@ BOOST_AUTO_TEST_SUITE(PowerLawSynTests)
 //  build() and cached values
 // ============================================================================
 
+// build() caches log2_I_nu_max as a nonzero value equal to log2(I_nu_max)
 BOOST_AUTO_TEST_CASE(build_sets_log2_values) {
     auto ph = make_photon(1e10, 1e14, 1e16);
     // build() sets log2_I_nu_max; log2_nu_c is set by the factory (not build)
@@ -47,6 +48,7 @@ BOOST_AUTO_TEST_CASE(build_sets_log2_values) {
 //  compute_I_nu positive and finite
 // ============================================================================
 
+// Intensity is positive and finite at every frequency from nu_a up to well above nu_c
 BOOST_AUTO_TEST_CASE(compute_I_nu_positive) {
     auto ph = make_photon(1e10, 1e14, 1e16);
     for (Real nu : {1e10, 1e12, 1e14, 1e15, 1e16, 1e18, 1e20}) {
@@ -60,6 +62,7 @@ BOOST_AUTO_TEST_CASE(compute_I_nu_positive) {
 //  Exponential cutoff above nu_M
 // ============================================================================
 
+// Exponential cutoff: intensity three decades above nu_M is suppressed by more than 10 orders of magnitude
 BOOST_AUTO_TEST_CASE(compute_I_nu_cutoff) {
     auto ph = make_photon(1e10, 1e14, 1e16);
     Real I_at_M = ph.compute_I_nu(ph.nu_M);
@@ -71,6 +74,7 @@ BOOST_AUTO_TEST_CASE(compute_I_nu_cutoff) {
 //  compute_I_nu matches compute_log2_I_nu
 // ============================================================================
 
+// Linear-space compute_I_nu agrees with exp2(compute_log2_I_nu(log2(nu))) to 0.1% across the spectrum
 BOOST_AUTO_TEST_CASE(compute_I_nu_matches_log2) {
     auto ph = make_photon(1e10, 1e14, 1e16);
     for (Real nu : {1e10, 1e12, 1e14, 1e16, 1e18}) {
@@ -84,6 +88,7 @@ BOOST_AUTO_TEST_CASE(compute_I_nu_matches_log2) {
 //  All 6 regimes produce valid spectra
 // ============================================================================
 
+// Regime 1: a <= m <= c (slow cooling, weak absorption) is classified as 1; intensity positive at nu_m and nu_c
 BOOST_AUTO_TEST_CASE(regime_1) {
     auto ph = make_photon(1e8, 1e12, 1e16);
     BOOST_CHECK_EQUAL(ph.regime, 1u);
@@ -91,6 +96,7 @@ BOOST_AUTO_TEST_CASE(regime_1) {
     BOOST_CHECK_GT(ph.compute_I_nu(ph.nu_c), 0.0);
 }
 
+// Regime 2: m <= a <= c is classified as 2; intensity positive at nu_a and nu_c
 BOOST_AUTO_TEST_CASE(regime_2) {
     auto ph = make_photon(1e12, 1e8, 1e16);
     BOOST_CHECK_EQUAL(ph.regime, 2u);
@@ -98,6 +104,7 @@ BOOST_AUTO_TEST_CASE(regime_2) {
     BOOST_CHECK_GT(ph.compute_I_nu(ph.nu_c), 0.0);
 }
 
+// Regime 3: a <= c <= m (fast cooling, weak absorption) is classified as 3; intensity positive at nu_c and nu_m
 BOOST_AUTO_TEST_CASE(regime_3) {
     auto ph = make_photon(1e8, 1e16, 1e12);
     BOOST_CHECK_EQUAL(ph.regime, 3u);
@@ -105,6 +112,7 @@ BOOST_AUTO_TEST_CASE(regime_3) {
     BOOST_CHECK_GT(ph.compute_I_nu(ph.nu_m), 0.0);
 }
 
+// Regime 4: c <= a <= m is classified as 4; intensity positive at nu_a and nu_m
 BOOST_AUTO_TEST_CASE(regime_4) {
     auto ph = make_photon(1e12, 1e16, 1e8);
     BOOST_CHECK_EQUAL(ph.regime, 4u);
@@ -112,12 +120,14 @@ BOOST_AUTO_TEST_CASE(regime_4) {
     BOOST_CHECK_GT(ph.compute_I_nu(ph.nu_m), 0.0);
 }
 
+// Regime 5: m <= c <= a (strong absorption) is classified as 5; intensity positive at nu_a
 BOOST_AUTO_TEST_CASE(regime_5) {
     auto ph = make_photon(1e16, 1e8, 1e12);
     BOOST_CHECK_EQUAL(ph.regime, 5u);
     BOOST_CHECK_GT(ph.compute_I_nu(ph.nu_a), 0.0);
 }
 
+// Regime 6: c <= m <= a (strong absorption) is classified as 6; intensity positive at nu_a
 BOOST_AUTO_TEST_CASE(regime_6) {
     auto ph = make_photon(1e16, 1e12, 1e8);
     BOOST_CHECK_EQUAL(ph.regime, 6u);
@@ -128,6 +138,8 @@ BOOST_AUTO_TEST_CASE(regime_6) {
 //  Spectrum continuity
 // ============================================================================
 
+// Piecewise spectrum has no jumps at the breaks: adjacent points on a 100-point log grid
+// from nu_a to nu_M differ by less than a factor of 4
 BOOST_AUTO_TEST_CASE(spectrum_continuity) {
     auto ph = make_photon(1e10, 1e14, 1e16);
     constexpr int N = 100;
@@ -152,6 +164,7 @@ BOOST_AUTO_TEST_CASE(spectrum_continuity) {
 //  Edge cases
 // ============================================================================
 
+// I_nu_max = 0 yields an effectively zero spectrum (|I_nu| < 1e-300) at all frequencies
 BOOST_AUTO_TEST_CASE(build_zero_I_nu_max) {
     auto ph = make_photon(1e10, 1e14, 1e16, kNu_M, 0.0);
     for (Real nu : {1e12, 1e14, 1e16}) {
@@ -159,6 +172,7 @@ BOOST_AUTO_TEST_CASE(build_zero_I_nu_max) {
     }
 }
 
+// Degenerate breaks nu_m = nu_c still yield a finite, positive intensity at the coincident break
 BOOST_AUTO_TEST_CASE(build_equal_frequencies) {
     // nu_m = nu_c should not crash
     auto ph = make_photon(1e10, 1e14, 1e14);

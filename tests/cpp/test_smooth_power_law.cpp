@@ -382,7 +382,7 @@ BOOST_AUTO_TEST_CASE(continuity_at_nu_c_crossing_nu_m) {
     constexpr Real nu_m = 1e15;
     constexpr Real nu_obs = 8.0 * nu_m; // 3 octaves above the break
 
-    // Three nu_c values straddling the crossing tightly.
+    // Two nu_c values straddling the crossing tightly.
     const Real epsilons[] = {-1e-3, +1e-3}; // factors very close to 1
     Real I_values[2] = {0.0, 0.0};
     for (int i = 0; i < 2; ++i) {
@@ -421,7 +421,7 @@ BOOST_AUTO_TEST_CASE(continuity_at_nu_a_crossing_nu_m) {
 // 22. continuity_at_nu_a_crossing_nu_c — phase 3 blended thin/thick smoothing
 // ---------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE(continuity_at_nu_a_crossing_nu_c) {
-    // Same idea as test 22 but the nu_a sweep crosses nu_c.
+    // Same idea as test 21 but the nu_a sweep crosses nu_c.
     constexpr Real nu_m = 1e15;
     constexpr Real nu_c = 1e17;
     constexpr Real nu_obs = 4.0 * nu_m; // between breaks
@@ -461,9 +461,93 @@ BOOST_AUTO_TEST_CASE(asymptotic_slopes_deep_slow) {
     BOOST_CHECK_CLOSE(local_slope(nu_m * 1e-5), 1.0 / 3.0, 5.0);
     // 5 decades into the middle segment -> expect -(p-1)/2 = -0.65 at p=2.3
     BOOST_CHECK_CLOSE(local_slope(nu_m * 1e5), -0.5 * (kP - 1.0), 5.0);
-    // 5 decades above nu_c -> expect -p/2 = -1.15 at p=2.3 (kI_nu_max scaling
+    // 1 decade above nu_c -> expect -p/2 = -1.15 at p=2.3 (kI_nu_max scaling
     // negligible; nu_M cutoff at 1e22 still leaves margin).
     BOOST_CHECK_CLOSE(local_slope(nu_c * 1e1), -0.5 * kP, 5.0);
+}
+
+// ---------------------------------------------------------------------------
+// 24. asymptotic_slopes_deep_fast — G&S fast-cooling limits
+// ---------------------------------------------------------------------------
+BOOST_AUTO_TEST_CASE(asymptotic_slopes_deep_fast) {
+    // Deep fast cooling: nu_a << nu_c << nu_m. Local slopes far from breaks
+    // should match the G&S fast-cooling asymptotic values:
+    //   below nu_c:            1/3
+    //   between nu_c and nu_m: -1/2
+    //   above nu_m:            -p/2
+    constexpr Real p = 2.3;
+    auto ph = make_photon(1e8, 1e16, 1e12, 1e20, 1.0, p);
+    BOOST_CHECK_EQUAL(ph.regime, 3u);
+
+    auto local_slope = [&ph](Real nu) {
+        Real I_lo = ph.compute_I_nu(nu / 1.01);
+        Real I_hi = ph.compute_I_nu(nu * 1.01);
+        return (std::log(I_hi) - std::log(I_lo)) / (2.0 * std::log(1.01));
+    };
+
+    // The fast-cooling nu_c break uses a soft G&S sharpness (s ~ 0.6), so even
+    // 2 decades away the local slope still curves by ~0.07-0.08 toward the
+    // neighbouring segment; use an absolute tolerance of 0.1 for the two
+    // segments adjacent to nu_c (measured: 0.257 and -0.432).
+    BOOST_CHECK_LT(std::abs(local_slope(1e10) - 1.0 / 3.0), 0.1);
+    BOOST_CHECK_LT(std::abs(local_slope(1e14) - (-0.5)), 0.1);
+    // -p/2 tail is deep asymptotic 2 decades above nu_m (measured: -1.151).
+    BOOST_CHECK_LT(std::abs(local_slope(1e18) - (-0.5 * p)), 0.05);
+}
+
+// ---------------------------------------------------------------------------
+// 25. self_absorbed_slopes — optically thick asymptotes
+// ---------------------------------------------------------------------------
+BOOST_AUTO_TEST_CASE(self_absorbed_slopes) {
+    auto local_slope = [](SmoothPowerLawSyn const& ph, Real nu) {
+        Real I_lo = ph.compute_I_nu(nu / 1.01);
+        Real I_hi = ph.compute_I_nu(nu * 1.01);
+        return (std::log(I_hi) - std::log(I_lo)) / (2.0 * std::log(1.01));
+    };
+
+    // Regime 1 (nu_a < nu_m < nu_c): below nu_a the source function of the
+    // uncooled electrons gives I_nu ~ nu^2 (Rayleigh-Jeans). The smooth model
+    // reaches the asymptote to 4 digits 2-3 decades below nu_a.
+    {
+        auto ph = make_photon(1e12, 1e15, 1e18);
+        BOOST_CHECK_EQUAL(ph.regime, 1u);
+        BOOST_CHECK_LT(std::abs(local_slope(ph, 1e10) - 2.0), 0.05);
+        BOOST_CHECK_LT(std::abs(local_slope(ph, 1e9) - 2.0), 0.05);
+    }
+
+    // Regime 2 (nu_m < nu_a < nu_c): between nu_m and nu_a the self-absorbed
+    // slope is +5/2 (source function of the power-law electrons).
+    {
+        auto ph = make_photon(1e13, 1e10, 1e18);
+        BOOST_CHECK_EQUAL(ph.regime, 2u);
+        BOOST_CHECK_LT(std::abs(local_slope(ph, 1e11) - 2.5), 0.05);
+        BOOST_CHECK_LT(std::abs(local_slope(ph, 1e12) - 2.5), 0.05);
+    }
+}
+
+// ---------------------------------------------------------------------------
+// 26. asymptotic_slopes_track_p — slow-cooling slopes follow p
+// ---------------------------------------------------------------------------
+BOOST_AUTO_TEST_CASE(asymptotic_slopes_track_p) {
+    // Same deep slow-cooling setup as asymptotic_slopes_deep_slow but with
+    // p = 2.02 and p = 2.8: the -(p-1)/2 and -p/2 segments must track p.
+    constexpr Real nu_m = 1e10;
+    constexpr Real nu_c = 1e20;
+
+    for (Real p : {2.02, 2.8}) {
+        auto ph = make_photon(1.0, nu_m, nu_c, kNu_M, kI_nu_max, p);
+
+        auto local_slope = [&ph](Real nu) {
+            Real I_lo = ph.compute_I_nu(nu / 1.01);
+            Real I_hi = ph.compute_I_nu(nu * 1.01);
+            return (std::log(I_hi) - std::log(I_lo)) / (2.0 * std::log(1.01));
+        };
+
+        // 5 decades above nu_m -> -(p-1)/2
+        BOOST_CHECK_CLOSE(local_slope(nu_m * 1e5), -0.5 * (p - 1.0), 5.0);
+        // 1 decade above nu_c -> -p/2
+        BOOST_CHECK_CLOSE(local_slope(nu_c * 1e1), -0.5 * p, 5.0);
+    }
 }
 
 BOOST_AUTO_TEST_SUITE_END()

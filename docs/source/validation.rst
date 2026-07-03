@@ -1,12 +1,12 @@
 Validation & Testing
 ====================
 
-VegasAfterglow includes a comprehensive validation framework to ensure numerical accuracy and physical correctness. The validation suite is located in the ``validation/`` directory.
+VegasAfterglow includes a comprehensive validation framework to ensure numerical accuracy and physical correctness. The validation suite is located in the ``tests/validation/`` directory, as the slow tier of the unified test framework (see ``TESTING.md`` in the repository root for the fast tiers: C++/Python unit tests and physics regression tests that run on every push).
 
 Running Validation
 ------------------
 
-**Prerequisite:** Install with validation support, which includes per-stage CPU profiling and PDF report dependencies:
+**Prerequisite:** Install with validation support, which includes per-stage CPU profiling:
 
 .. code-block:: bash
 
@@ -16,32 +16,32 @@ The unified validation runner orchestrates all tests and generates reports:
 
 .. code-block:: bash
 
-   # Run full validation suite (benchmark + regression + PDF report)
-   python validation/run_validation.py --all
+   # Run full validation suite (benchmark + regression)
+   python tests/validation/run_validation.py --all
 
    # Run only benchmark tests
-   python validation/run_validation.py --benchmark
+   python tests/validation/run_validation.py --benchmark
 
    # Run only regression tests
-   python validation/run_validation.py --regression
+   python tests/validation/run_validation.py --regression
 
    # Check existing results without re-running tests
-   python validation/run_validation.py --check-only
+   python tests/validation/run_validation.py --check-only
 
    # Fast mode: skip resolution convergence scans (timing + regression only)
-   python validation/run_validation.py --all --fast
+   python tests/validation/run_validation.py --all --fast
 
    # Control parallelism (default: all CPU cores)
-   python validation/run_validation.py --all -j 4
+   python tests/validation/run_validation.py --all -j 4
 
-``--fast`` is useful for a quick sanity check — it runs performance timing and regression tests but skips the resolution convergence scans, so it completes significantly faster. The PDF report generated in fast mode omits the convergence detail pages.
+``--fast`` is useful for a quick sanity check — it runs performance timing and regression tests but skips the resolution convergence scans, so it completes significantly faster.
 
 The validation runner returns exit code 0 on success and 1 on failure, making it suitable for CI/CD pipelines.
 
 Benchmark Tests
 ---------------
 
-Benchmark tests measure computational performance and verify numerical convergence. Located in ``validation/benchmark/``.
+Benchmark tests measure computational performance and verify numerical convergence. Located in ``tests/validation/benchmark/``.
 
 **What is tested:**
 
@@ -69,7 +69,7 @@ Benchmark tests measure computational performance and verify numerical convergen
 Regression Tests
 ----------------
 
-Regression tests verify that simulation outputs match theoretical predictions from GRB afterglow theory. Located in ``validation/regression/``.
+Regression tests verify that simulation outputs match theoretical predictions from GRB afterglow theory. Located in ``tests/validation/regression/``.
 
 **Shock Dynamics Tests:**
 
@@ -114,31 +114,29 @@ Checks power-law spectral indices beta = d(log F)/d(log nu) across five regimes:
 Validation Reports
 ------------------
 
-The validation runner generates a comprehensive PDF report (``validation/comprehensive_report.pdf``) containing:
+Validation results feed the unified HTML test report (``tests/report.py``, or
+``make test-report`` from the repository root), which renders:
 
-1. **Title Page**: Version info, commit hash, platform details
-2. **Table of Contents**: Clickable navigation with page numbers
-3. **Benchmark Section**:
+- **Physics validation**: evolution and spectral figures with fitted phase
+  windows and expected-slope guides, plus every check as a
+  measured-vs-expected interval chart with tolerance band
+- **Performance**: benchmark timing by radiation type, per-stage CPU
+  breakdown, and resolution convergence classification
 
-   - Guide pages explaining how to interpret results
-   - Overview plots (on-axis and off-axis configurations)
-   - Convergence summary grid with color-coded pass/fail status
-   - Detailed convergence plots for each configuration
-
-4. **Regression Section**:
-
-   - Guide pages with theoretical background
-   - Summary grid comparing measured vs expected power-law exponents
-   - Detailed diagnostic plots for shock dynamics and frequencies
+The report is a single self-contained page with no external assets. The
+latest release report is published to GitHub Pages at
+`reports/latest <https://yihanwangastro.github.io/VegasAfterglow/reports/latest/>`_.
+Methodology guides live in ``tests/validation/guides/``.
 
 Directory Structure
 -------------------
 
 .. code-block:: text
 
-   validation/
+   tests/validation/
    ├── run_validation.py          # Unified CLI runner
-   ├── comprehensive_report.pdf   # Generated PDF report
+   ├── common.py                  # Shared constants and helpers
+   ├── benchmark_svg.py           # README performance SVG generator
    ├── benchmark/
    │   ├── benchmark_suite.py     # Benchmark test implementation
    │   ├── configs.py             # Test configurations
@@ -146,17 +144,12 @@ Directory Structure
    ├── regression/
    │   ├── run_regression.py      # Regression test runner
    │   └── results/               # JSON output files
-   └── visualization/
-       ├── dashboard.py           # PDF report generator
-       ├── common.py              # Shared utilities
-       ├── benchmark_plots.py     # Benchmark visualizations
-       ├── regression_plots.py    # Regression visualizations
-       └── guides/                # Markdown guide documents
+   └── guides/                    # Markdown methodology guides
 
 Profiling Per-Stage CPU Cost
 ----------------------------
 
-When installed with validation support (see above), per-stage CPU profiling is automatically enabled. The benchmark overview page will show a stacked bar chart breaking down CPU time by internal C++ computation stage:
+When installed with validation support (see above), per-stage CPU profiling is automatically enabled. The unified report's performance section shows a stacked bar chart breaking down CPU time by internal C++ computation stage:
 
 +------------------+------------------------------------------+
 | Stage            | Description                              |
@@ -209,17 +202,17 @@ The validation framework is designed for CI/CD pipelines:
 
    # Example GitHub Actions workflow
    - name: Run validation
-     run: python validation/run_validation.py --all
+     run: python tests/validation/run_validation.py --all
 
-   - name: Upload report
-     uses: actions/upload-artifact@v3
-     with:
-       name: validation-report
-       path: validation/comprehensive_report.pdf
+   - name: Build unified report
+     run: |
+       python tests/report.py py-junit.xml \
+         --validation tests/validation/regression/results/regression_results.json \
+         --benchmark tests/validation/benchmark/results/benchmark_history.json \
+         -o test-report.html
 
 The validation runner:
 
 - Returns exit code 0 only if all tests pass
-- Generates reports even when tests fail (for debugging)
 - Supports parallel execution for faster CI runs
-- Produces machine-readable JSON results
+- Produces machine-readable JSON results consumed by the unified report

@@ -46,6 +46,7 @@ def _seed_fitter(result):
 
 
 def test_summary_populated_table():
+    """summary() table has Rank and chi^2 columns, every parameter label, magnitude-aware decimal formatting per column, and chi^2 = -2 * log_prob."""
     r = _make_result()
     out = str(r.summary())
     assert "Rank" in out and "chi^2" in out
@@ -58,6 +59,7 @@ def test_summary_populated_table():
 
 
 def test_summary_title_shows_rows_and_total():
+    """summary() title reports displayed rows versus total stored top-k rows ("top 2 of 2")."""
     r = _make_result()
     out = str(r.summary())
     assert "Best-fit summary (top 2 of 2)" in out
@@ -93,6 +95,7 @@ def test_summary_omits_fit_quality_header_when_unpopulated():
 
 
 def test_summary_empty_top_k():
+    """summary() on a FitResult without top_k_params reports "no top_k_params stored" instead of a table."""
     r = FitResult(
         samples=np.zeros((10, 1, 2)),
         log_probs=np.zeros((10, 1)),
@@ -102,6 +105,7 @@ def test_summary_empty_top_k():
 
 
 def test_summary_top_k_kwarg():
+    """summary(top_k=1) keeps only the first rank's row and the title reflects the slice ("top 1 of 2")."""
     r = _make_result()
     out = str(r.summary(top_k=1))
     # First row present, second pruned
@@ -170,6 +174,7 @@ def test_summary_renders_via_repr_for_notebook():
 
 
 def test_save_load_h5_roundtrip():
+    """HDF5 save/load restores samples, log_probs, top-k arrays, labels, and the Fitter snapshot (jet/medium/z/lumi_dist/data), populates bilby_result, keeps summary() text identical, and leaves unset fit-quality fields None."""
     fitter = _seed_fitter(_make_result())
     r = fitter.result
     with tempfile.TemporaryDirectory() as d:
@@ -202,6 +207,7 @@ def test_save_load_h5_roundtrip():
 
 
 def test_save_load_json_roundtrip():
+    """JSON save/load restores samples, top_k_params, and labels, with unset fit-quality fields staying None."""
     fitter = _seed_fitter(_make_result())
     r = fitter.result
     with tempfile.TemporaryDirectory() as d:
@@ -277,9 +283,7 @@ def test_saved_file_readable_by_bilby_directly():
 
 
 def test_plain_bilby_file_rejected_with_clear_error():
-    """A bilby Result file with no VegasAfterglow snapshot can't reconstruct a
-    Fitter; Fitter.load should raise a clear ValueError directing the user to
-    bilby.read_in_result for inspection-only access."""
+    """A bilby Result file with no VegasAfterglow snapshot makes Fitter.load raise a ValueError stating the file does not include a Fitter snapshot."""
     import bilby
     import pandas as pd
     import pytest

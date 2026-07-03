@@ -11,6 +11,7 @@ BOOST_AUTO_TEST_SUITE(Mesh)
 // boundary_to_center (non-template, returns Array)
 // ---------------------------------------------------------------------------
 
+// Centers are the arithmetic midpoints of adjacent boundaries: {1,3,5} -> {2,4}.
 BOOST_AUTO_TEST_CASE(boundary_to_center_linear) {
     Array boundary = {1.0, 3.0, 5.0};
     Array center = boundary_to_center(boundary);
@@ -19,6 +20,7 @@ BOOST_AUTO_TEST_CASE(boundary_to_center_linear) {
     BOOST_CHECK_CLOSE(center(1), 4.0, 1e-10);
 }
 
+// A two-point boundary yields a single center at the arithmetic midpoint.
 BOOST_AUTO_TEST_CASE(boundary_to_center_single) {
     Array boundary = {1.0, 3.0};
     Array center = boundary_to_center(boundary);
@@ -30,6 +32,7 @@ BOOST_AUTO_TEST_CASE(boundary_to_center_single) {
 // boundary_to_center_log (non-template, returns Array)
 // ---------------------------------------------------------------------------
 
+// Log-space centers are the geometric means of adjacent boundaries: {1,4,16} -> {2,8}.
 BOOST_AUTO_TEST_CASE(boundary_to_center_log_values) {
     Array boundary = {1.0, 4.0, 16.0};
     Array center = boundary_to_center_log(boundary);
@@ -38,6 +41,7 @@ BOOST_AUTO_TEST_CASE(boundary_to_center_log_values) {
     BOOST_CHECK_CLOSE(center(1), 8.0, 1e-10);
 }
 
+// A two-point boundary yields a single geometric-mean center: {1,9} -> {3}.
 BOOST_AUTO_TEST_CASE(boundary_to_center_log_single) {
     Array boundary = {1.0, 9.0};
     Array center = boundary_to_center_log(boundary);
@@ -49,6 +53,7 @@ BOOST_AUTO_TEST_CASE(boundary_to_center_log_single) {
 // boundary_to_center (template version) edge cases
 // ---------------------------------------------------------------------------
 
+// An empty boundary array yields an empty center array without crashing.
 BOOST_AUTO_TEST_CASE(boundary_to_center_empty) {
     // Empty boundary should not crash
     Array boundary = Array::from_shape({0});
@@ -56,6 +61,7 @@ BOOST_AUTO_TEST_CASE(boundary_to_center_empty) {
     BOOST_CHECK_EQUAL(center.size(), 0u);
 }
 
+// When center.size() + 1 != boundary.size(), the template overload returns early and leaves center untouched.
 BOOST_AUTO_TEST_CASE(boundary_to_center_size_mismatch) {
     // Template version: if center.size()+1 != boundary.size(), early return
     Array boundary = {1.0, 3.0, 5.0};
@@ -72,6 +78,7 @@ BOOST_AUTO_TEST_CASE(boundary_to_center_size_mismatch) {
 // log2space
 // ---------------------------------------------------------------------------
 
+// Point count is ceil(decades * pts_per_decade) + 1: 10 decades at 4 per decade gives 41 points.
 BOOST_AUTO_TEST_CASE(log2space_count) {
     Array arr;
     log2space(0.0, 10.0 * log2_10, 4, arr);
@@ -81,6 +88,7 @@ BOOST_AUTO_TEST_CASE(log2space_count) {
     BOOST_CHECK_EQUAL(arr.size(), expected);
 }
 
+// First and last grid values equal exp2 of the requested log2 bounds.
 BOOST_AUTO_TEST_CASE(log2space_bounds) {
     Array arr;
     const Real lg2_min = 5.0;
@@ -94,6 +102,7 @@ BOOST_AUTO_TEST_CASE(log2space_bounds) {
 // logspace_boundary_center
 // ---------------------------------------------------------------------------
 
+// Each returned center equals the geometric mean of its log-spaced bin boundaries.
 BOOST_AUTO_TEST_CASE(logspace_boundary_center_consistency) {
     Array center;
     Array bin_width;
@@ -117,6 +126,7 @@ BOOST_AUTO_TEST_CASE(logspace_boundary_center_consistency) {
     }
 }
 
+// All bin widths are strictly positive.
 BOOST_AUTO_TEST_CASE(logspace_boundary_center_width) {
     Array center;
     Array bin_width;
@@ -126,6 +136,7 @@ BOOST_AUTO_TEST_CASE(logspace_boundary_center_width) {
     }
 }
 
+// Requesting zero bins yields empty center and bin_width arrays.
 BOOST_AUTO_TEST_CASE(logspace_boundary_center_zero_size) {
     Array center;
     Array bin_width;
@@ -138,6 +149,7 @@ BOOST_AUTO_TEST_CASE(logspace_boundary_center_zero_size) {
 // adaptive_grid_with_breaks
 // ---------------------------------------------------------------------------
 
+// First and last grid points land on exp2(lg2_min) and exp2(lg2_max) even with breaks present.
 BOOST_AUTO_TEST_CASE(adaptive_grid_endpoints) {
     Array grid;
     Real breaks[] = {1e5, 1e8};
@@ -148,6 +160,7 @@ BOOST_AUTO_TEST_CASE(adaptive_grid_endpoints) {
     BOOST_CHECK_CLOSE(grid(n - 1), std::exp2(40.0), 1e-4);
 }
 
+// Every requested break frequency appears in the grid to within a factor of 2 (1 in log2).
 BOOST_AUTO_TEST_CASE(adaptive_grid_contains_breaks) {
     Array grid;
     Real breaks[] = {1e5, 1e8};
@@ -167,6 +180,7 @@ BOOST_AUTO_TEST_CASE(adaptive_grid_contains_breaks) {
     }
 }
 
+// Grid size is capped at 256 points even when pts_per_decade requests more.
 BOOST_AUTO_TEST_CASE(adaptive_grid_max_256) {
     Array grid;
     Real breaks[] = {1e5};
@@ -176,6 +190,8 @@ BOOST_AUTO_TEST_CASE(adaptive_grid_max_256) {
     BOOST_CHECK_LE(grid.size(), 256u);
 }
 
+// Average log2 spacing within 2 log2 units of the break is finer than more than 10 log2 units
+// away, compared only when both regions contain grid intervals.
 BOOST_AUTO_TEST_CASE(adaptive_grid_refined_denser) {
     Array grid;
     Real breaks[] = {1e10};
@@ -208,6 +224,7 @@ BOOST_AUTO_TEST_CASE(adaptive_grid_refined_denser) {
     }
 }
 
+// With empty break spans the grid is still built and spans exp2(lg2_min) to exp2(lg2_max).
 BOOST_AUTO_TEST_CASE(adaptive_grid_no_breaks) {
     Array grid;
     std::span<const Real> no_breaks;
@@ -218,6 +235,7 @@ BOOST_AUTO_TEST_CASE(adaptive_grid_no_breaks) {
     BOOST_CHECK_CLOSE(grid(n - 1), std::exp2(20.0), 1e-4);
 }
 
+// Degenerate range (lg2_min == lg2_max) still yields at least one point, located at exp2(lg2_min).
 BOOST_AUTO_TEST_CASE(adaptive_grid_min_equals_max) {
     Array grid;
     std::span<const Real> no_breaks;
@@ -228,6 +246,7 @@ BOOST_AUTO_TEST_CASE(adaptive_grid_min_equals_max) {
     BOOST_CHECK_CLOSE(grid(0), std::exp2(10.0), 1e-8);
 }
 
+// The 256-point cap holds even at an extreme density of 1000 points per decade.
 BOOST_AUTO_TEST_CASE(adaptive_grid_huge_pts_per_decade) {
     Array grid;
     Real breaks[] = {1e5};
@@ -236,6 +255,8 @@ BOOST_AUTO_TEST_CASE(adaptive_grid_huge_pts_per_decade) {
     BOOST_CHECK_LE(n, 256u);
 }
 
+// NaN and negative breaks do not crash grid construction: the result stays finite,
+// non-decreasing, and spans exp2(lg2_min) to exp2(lg2_max).
 BOOST_AUTO_TEST_CASE(adaptive_grid_invalid_breaks) {
     Array grid;
     Real breaks[] = {std::numeric_limits<Real>::quiet_NaN(), -5.0, 1e5};
@@ -260,6 +281,7 @@ BOOST_AUTO_TEST_CASE(adaptive_grid_invalid_breaks) {
 // merge_grids
 // ---------------------------------------------------------------------------
 
+// Merging two sorted grids produces a non-decreasing result.
 BOOST_AUTO_TEST_CASE(merge_grids_sorted) {
     Array a = {5.0, 1.0, 3.0};
     // merge_grids assumes sorted input, so sort first
@@ -271,6 +293,7 @@ BOOST_AUTO_TEST_CASE(merge_grids_sorted) {
     }
 }
 
+// Values shared between the inputs appear only once: no adjacent duplicates in the merged grid.
 BOOST_AUTO_TEST_CASE(merge_grids_unique) {
     Array a = {1.0, 2.0, 3.0};
     Array b = {2.0, 3.0, 4.0};
@@ -280,6 +303,7 @@ BOOST_AUTO_TEST_CASE(merge_grids_unique) {
     }
 }
 
+// Disjoint inputs {1,3,5} and {2,4,6} interleave into the sorted 6-element union.
 BOOST_AUTO_TEST_CASE(merge_grids_disjoint) {
     Array a = {1.0, 3.0, 5.0};
     Array b = {2.0, 4.0, 6.0};
@@ -293,6 +317,7 @@ BOOST_AUTO_TEST_CASE(merge_grids_disjoint) {
     BOOST_CHECK_CLOSE(merged(5), 6.0, 1e-10);
 }
 
+// Overlapping inputs {1,2,3} and {2,3,4} merge to the 4-element union {1,2,3,4}.
 BOOST_AUTO_TEST_CASE(merge_grids_overlapping) {
     Array a = {1.0, 2.0, 3.0};
     Array b = {2.0, 3.0, 4.0};
@@ -304,6 +329,7 @@ BOOST_AUTO_TEST_CASE(merge_grids_overlapping) {
     BOOST_CHECK_CLOSE(merged(3), 4.0, 1e-10);
 }
 
+// Merging an empty first grid with a non-empty second returns the second grid unchanged.
 BOOST_AUTO_TEST_CASE(merge_grids_empty_first) {
     Array a = Array::from_shape({0});
     Array b = {2.0, 4.0, 6.0};
@@ -318,17 +344,20 @@ BOOST_AUTO_TEST_CASE(merge_grids_empty_first) {
 // structure_weight
 // ---------------------------------------------------------------------------
 
+// Gamma = 1 (no bulk motion) gives zero structure weight: 1 * sqrt(0 * 1) = 0.
 BOOST_AUTO_TEST_CASE(structure_weight_one) {
     // Gamma=1: structure_weight = 1 * sqrt(|0*1|) = 0
     BOOST_CHECK_SMALL(structure_weight(1.0), 1e-15);
 }
 
+// Gamma = 2 gives a positive weight matching the closed form Gamma * sqrt((Gamma-1) * Gamma) = 2*sqrt(2).
 BOOST_AUTO_TEST_CASE(structure_weight_positive) {
     // Gamma=2: 2 * sqrt(|1*2|) = 2*sqrt(2) > 0
     BOOST_CHECK_GT(structure_weight(2.0), 0.0);
     BOOST_CHECK_CLOSE(structure_weight(2.0), 2.0 * std::sqrt(2.0), 1e-10);
 }
 
+// structure_weight increases strictly monotonically with Gamma over [1.5, 100].
 BOOST_AUTO_TEST_CASE(structure_weight_monotonic) {
     Real prev = structure_weight(1.5);
     for (Real Gamma = 2.0; Gamma <= 100.0; Gamma += 1.0) {
@@ -342,6 +371,8 @@ BOOST_AUTO_TEST_CASE(structure_weight_monotonic) {
 // jump_refinement_grid
 // ---------------------------------------------------------------------------
 
+// Refinement points cluster near the jump (over 1/3 of them within 0.03 of theta = 0.1),
+// stay within [theta_min, theta_max], and come out sorted.
 BOOST_AUTO_TEST_CASE(jump_refinement_grid_near_jump) {
     Array jumps = {0.1};
     Array result = jump_refinement_grid(jumps, 0.01, 1.0, 0.01);

@@ -36,8 +36,8 @@ script/*.png
 script/bilby_output/
 docs/build/
 docs/doxygen/
-validation/benchmark/results/
-validation/regression/results/
+tests/validation/benchmark/results/
+tests/validation/regression/results/
 
 # Local compiled test binaries (source .cpp files remain tracked)
 tests/**/benchmark
@@ -56,6 +56,10 @@ docs/plans/
 CLAUDE.md
 .agents/
 .mcp.json
+.coverage
+htmlcov/
+test-report.html
+*-junit.xml
 
 # Docs build-time copies (assets/*.png is copied here by build_docs.sh on local
 # builds and by .readthedocs.yaml's pre_build step on RTD).
