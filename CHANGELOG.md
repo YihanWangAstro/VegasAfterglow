@@ -31,6 +31,7 @@ Have a feature request? [Open an issue](https://github.com/YihanWangAstro/VegasA
 - Generic `Ejecta` and `Medium` constructors now validate their inputs (callability, finite on-axis values) like the typed factories
 - Validation suite moved under the unified test tree at `tests/validation/`; the release validation PDF was replaced by the HTML report published at [reports/latest](https://yihanwangastro.github.io/VegasAfterglow/reports/latest/), with per-release snapshots archived in the [reports index](https://yihanwangastro.github.io/VegasAfterglow/reports/)
 - `run_validation.py` slimmed to running and checking the suites (report flags removed); the `[test]` extra now needs only pytest, pytest-cov, and matplotlib
+- Fast-math kernels (`AFTERGLOW_FAST_MATH`, off by default) rewritten with minimax coefficients: ~10× lower error (relative flux deviations ~10⁻⁵) and 6–13% faster light curves when enabled; `fast_exp2` stays exact at integer exponents
 
 ### Added
 
