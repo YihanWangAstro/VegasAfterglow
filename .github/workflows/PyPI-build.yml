@@ -122,7 +122,7 @@ jobs:
       - name: Generate unified test & validation report
         run: |
           echo "::notice::Benchmark timings reflect the CI runner, not release hardware"
-          pip install -e ".[test]" --config-settings=cmake.define.AFTERGLOW_PROFILE=ON
+          pip install -e ".[test,mcmc]" --config-settings=cmake.define.AFTERGLOW_PROFILE=ON
           pytest tests/ -q --junitxml=py-junit.xml
           python tests/validation/run_validation.py --all
           mkdir -p deploy_report
