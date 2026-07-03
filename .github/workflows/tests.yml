@@ -62,7 +62,10 @@ jobs:
           ./build/afterglow_tests "--logger=HRF,error:JUNIT,all,cpp-junit.xml"
 
       - name: Run pytest
-        run: python -m pytest tests/ -q --junitxml=py-junit.xml
+        # bare `pytest` (not `python -m pytest`): -m prepends the CWD to
+        # sys.path, so the VegasAfterglow/ source tree — which has no compiled
+        # extension — would shadow the installed wheel.
+        run: pytest tests/ -q --junitxml=py-junit.xml
 
       - name: Wheel smoke test
         run: python tests/wheel_smoke.py

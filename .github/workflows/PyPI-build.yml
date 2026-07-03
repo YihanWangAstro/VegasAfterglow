@@ -123,7 +123,7 @@ jobs:
         run: |
           echo "::notice::Benchmark timings reflect the CI runner, not release hardware"
           pip install -e ".[test]" --config-settings=cmake.define.AFTERGLOW_PROFILE=ON
-          python -m pytest tests/ -q --junitxml=py-junit.xml
+          pytest tests/ -q --junitxml=py-junit.xml
           python tests/validation/run_validation.py --all
           mkdir -p deploy_report
           python tests/report.py py-junit.xml \
