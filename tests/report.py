@@ -1278,6 +1278,9 @@ def inline_logo():
 
 
 def main():
+    # Windows consoles default to cp1252; the summary line prints unicode
+    if hasattr(sys.stdout, "reconfigure"):
+        sys.stdout.reconfigure(encoding="utf-8", errors="replace")
     ap = argparse.ArgumentParser()
     ap.add_argument("xml", nargs="*", help="JUnit XML files")
     ap.add_argument("-o", "--output", default="test-report.html")
