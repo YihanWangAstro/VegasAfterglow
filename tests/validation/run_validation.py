@@ -114,6 +114,9 @@ def run_regression():
 
 
 def main():
+    # Windows consoles default to cp1252; validation output prints unicode
+    if hasattr(sys.stdout, "reconfigure"):
+        sys.stdout.reconfigure(encoding="utf-8", errors="replace")
     parser = argparse.ArgumentParser(description="VegasAfterglow Validation Runner")
     parser.add_argument("--all", action="store_true", help="Run all validation tests")
     parser.add_argument("--benchmark", action="store_true", help="Run benchmark tests")

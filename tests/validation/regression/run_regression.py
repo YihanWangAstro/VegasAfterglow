@@ -644,6 +644,9 @@ class RegressionRunner:
 
 
 def main():
+    # Windows consoles default to cp1252; validation output prints unicode
+    if hasattr(sys.stdout, "reconfigure"):
+        sys.stdout.reconfigure(encoding="utf-8", errors="replace")
     parser = argparse.ArgumentParser(description="Run VegasAfterglow regression tests")
     parser.add_argument("--no-viz", action="store_true",
                         help="Skip visualization data collection (omits the viz_* payloads that tests/report.py renders as figures)")

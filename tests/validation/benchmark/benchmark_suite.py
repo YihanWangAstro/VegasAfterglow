@@ -445,6 +445,9 @@ class ComprehensiveBenchmark:
 
 
 def main():
+    # Windows consoles default to cp1252; validation output prints unicode
+    if hasattr(sys.stdout, "reconfigure"):
+        sys.stdout.reconfigure(encoding="utf-8", errors="replace")
     parser = argparse.ArgumentParser(description="VegasAfterglow Benchmark Suite")
     parser.add_argument("--fast", action="store_true", help="Timing only, skip resolution convergence scans")
     parser.add_argument("--convergence", action="store_true", help="Convergence tests only")
