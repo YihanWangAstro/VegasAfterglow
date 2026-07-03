@@ -51,7 +51,12 @@ jobs:
       - name: Build and run C++ tests
         if: runner.os != 'Windows'
         run: |
+          # pip install builds the wheel in an isolated env, so pybind11 is not
+          # in the runner's Python — install it and hand CMake its config dir.
+          pip install pybind11
           cmake -B build -DAFTERGLOW_TESTS=ON -DAFTERGLOW_MARCH_NATIVE=OFF \
+            -DPython_EXECUTABLE="$(which python)" \
+            -Dpybind11_DIR="$(python -m pybind11 --cmakedir)" \
             -DCMAKE_C_COMPILER_LAUNCHER=ccache -DCMAKE_CXX_COMPILER_LAUNCHER=ccache
           cmake --build build -j4 --target afterglow_tests
           ./build/afterglow_tests "--logger=HRF,error:JUNIT,all,cpp-junit.xml"
@@ -78,4 +83,8 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: test-report-${{ matrix.os }}
-          path: test-report-${{ matrix.os }}.html
+          path: |
+            test-report-${{ matrix.os }}.html
+            py-junit.xml
+            cpp-junit.xml
+          if-no-files-found: warn
