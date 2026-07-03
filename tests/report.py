@@ -1116,6 +1116,7 @@ nav a { text-decoration: none; color: var(--ink-2); font-size: 13px; font-weight
   padding: 6px 14px; border-radius: 999px; border: 1px solid transparent; }
 nav a:hover { background: var(--surface); border-color: var(--ring); color: var(--ink); }
 nav a .n { color: var(--muted); font-weight: 500; }
+nav a.archive { margin-left: auto; color: var(--muted); }
 .tiles { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
   gap: 12px; margin: 22px 0 8px; }
 .tile { background: var(--surface); border: 1px solid var(--ring); border-radius: 12px;
@@ -1358,7 +1359,7 @@ def main():
  · {esc(platform.system())} {esc(platform.machine())} · Python {platform.python_version()}</div>
 </div><span class="verdict {'ok' if ok else 'bad'}">{"✓ ALL PASSING" if ok
     else f"✕ {n_fail_total} FAILING"}</span></div>
-<nav>{"".join(nav)}</nav>
+<nav>{"".join(nav)}<a class="archive" href="../" title="All published report versions">all versions ↗</a></nav>
 <section id="overview">{tiles}
 <div class="card"><h3>Outcomes by suite</h3>
 {stacked_status_bar(outcome_rows(comp_rows), "Outcomes by suite")}</div>

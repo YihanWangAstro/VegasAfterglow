@@ -35,6 +35,8 @@ h2 {{ font-size: 15px; color: var(--ink-2); margin-top: 32px;
 a {{ color: var(--blue); }}
 li {{ margin: 6px 0; }}
 .note {{ color: var(--muted); font-size: 14px; margin-top: 32px; }}
+.tag {{ font-size: 12px; color: var(--blue); border: 1px solid currentColor;
+  border-radius: 999px; padding: 1px 9px; margin-left: 8px; }}
 </style></head><body>
 <h1>VegasAfterglow test &amp; validation reports</h1>
 <p><a href="latest/"><strong>Latest report</strong></a> — refreshed on every
@@ -56,8 +58,11 @@ def main():
         versions = sorted({v.strip() for v in p.read_text(encoding="utf-8").split() if v.strip()},
                           key=version_key, reverse=True)
     if versions:
+        stable = next((v for v in versions if "-" not in v), None)
         body = "<ul>" + "".join(
-            f'<li><a href="{v}/">VegasAfterglow {v}</a></li>' for v in versions
+            f'<li><a href="{v}/">VegasAfterglow {v}</a>'
+            + (' <span class="tag">latest stable</span>' if v == stable else "")
+            + "</li>" for v in versions
         ) + "</ul>"
     else:
         body = '<p class="note">No release snapshots published yet.</p>'
