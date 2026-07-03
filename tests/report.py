@@ -19,7 +19,6 @@ Usage:
 """
 import argparse
 import ast
-import base64
 import html
 import itertools
 import json
@@ -1099,7 +1098,7 @@ body { margin: 0; font: 15px/1.55 -apple-system, "Segoe UI", Roboto,
 .wrap { max-width: 1040px; margin: 0 auto; padding: 0 28px 80px; }
 .masthead { padding: 34px 0 22px; display: flex; align-items: center; gap: 18px;
   flex-wrap: wrap; }
-.masthead img.logo { width: 52px; height: 56px; }
+.masthead svg.logo { width: 52px; height: 56px; flex-shrink: 0; }
 .masthead h1 { font-size: 25px; letter-spacing: -0.015em; margin: 0; }
 .masthead .meta { color: var(--ink-2); font-size: 13px; margin-top: 3px; }
 .verdict { margin-left: auto; font-size: 14px; font-weight: 700; padding: 9px 20px;
@@ -1256,10 +1255,15 @@ document.getElementById('search').addEventListener('input', function () {
 
 
 def inline_logo():
+    # Inline the SVG as a real element, NOT a data: URI — GitHub Pages'
+    # deployment pipeline rejects pages carrying large base64 data URIs.
     p = Path(__file__).resolve().parents[1] / "assets" / "logo.svg"
     if p.exists() and p.stat().st_size < 64_000:
-        b64 = base64.b64encode(p.read_bytes()).decode()
-        return f'<img class="logo" alt="" src="data:image/svg+xml;base64,{b64}">'
+        svg = p.read_text(encoding="utf-8")
+        svg = re.sub(r"<\?xml[^>]*\?>", "", svg)
+        svg = re.sub(r"<svg ", '<svg class="logo" ', svg, count=1)
+        svg = re.sub(r'(<svg[^>]*?) width="\d+" height="\d+"', r"\1", svg, count=1)
+        return svg
     return ""
 
 
