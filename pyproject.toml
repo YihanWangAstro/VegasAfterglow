@@ -100,6 +100,10 @@ include = [
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
+# importlib mode keeps pytest from inserting the repo root into sys.path
+# (tests/ is a package chain, so prepend mode walks up to the repo root and
+# the VegasAfterglow/ source tree would shadow the installed wheel in CI).
+addopts = "--import-mode=importlib"
 markers = [
   "physics: quantitative physics checks (closure relations, scaling laws) calibrated against theory",
   "golden: regression against stored golden baselines (tests/python/golden/)",
