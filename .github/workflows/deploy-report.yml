@@ -70,7 +70,9 @@ jobs:
             --validation tests/validation/regression/results/regression_results.json \
             --benchmark tests/validation/benchmark/results/benchmark_history.json \
             ${{ matrix.links }} \
-            -o out/index.html
+            -o out/index.html || true
+          # report.py exits nonzero when the content it renders contains
+          # failures; the status gate in the deploy job owns that semantics
 
       - name: Upload platform report (and junit for diagnosis)
         if: always()
