@@ -7,16 +7,33 @@ on:
         description: 'Version label for versioned copy (e.g., 2.0.1). Leave empty to update latest only.'
         required: false
         type: string
+  workflow_call:
+    inputs:
+      version:
+        required: false
+        type: string
   schedule:
     # Weekly full-validation run; refreshes reports/latest only (no versioned copy)
     - cron: '17 6 * * 1'
 
 jobs:
-  deploy:
-    name: Deploy Report to GitHub Pages
-    runs-on: ubuntu-latest
-    permissions:
-      contents: write
+  generate:
+    name: Generate report (${{ matrix.platform }})
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          # macOS is the default report at reports/latest/; others are siblings
+          - os: macos-latest
+            platform: macos
+            links: '--platform-link macos=. --platform-link linux=linux/ --platform-link windows=windows/ --archive-href ../'
+          - os: ubuntu-latest
+            platform: linux
+            links: '--platform-link macos=../ --platform-link linux=. --platform-link windows=../windows/ --archive-href ../../'
+          - os: windows-latest
+            platform: windows
+            links: '--platform-link macos=../ --platform-link linux=../linux/ --platform-link windows=. --archive-href ../../'
 
     steps:
       - uses: actions/checkout@v4
@@ -27,26 +44,69 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: "3.x"
+          python-version: "3.12"
 
-      - name: Generate unified test & validation report
-        id: generate
+      - name: Run tests + full validation, build report
+        shell: bash
         run: |
           echo "::notice::Benchmark timings reflect the CI runner, not release hardware"
           pip install -e ".[test,mcmc]" --config-settings=cmake.define.AFTERGLOW_PROFILE=ON
           pytest tests/ -q --junitxml=py-junit.xml
           # a validation failure must not block publishing the report that documents it
           if python tests/validation/run_validation.py --all; then
-            echo "validation=passed" >> "$GITHUB_OUTPUT"
+            echo "passed" > validation-status.txt
           else
-            echo "validation=failed" >> "$GITHUB_OUTPUT"
+            echo "failed" > validation-status.txt
           fi
-          mkdir -p deploy_report
+          mkdir -p out
           python tests/report.py py-junit.xml \
             --label py-junit.xml="Python (pytest)" \
             --validation tests/validation/regression/results/regression_results.json \
             --benchmark tests/validation/benchmark/results/benchmark_history.json \
-            -o deploy_report/index.html
+            ${{ matrix.links }} \
+            -o out/index.html
+          cp validation-status.txt out/
+
+      - name: Upload platform report
+        uses: actions/upload-artifact@v4
+        with:
+          name: report-${{ matrix.platform }}
+          path: out/
+          if-no-files-found: error
+
+  deploy:
+    name: Assemble and deploy to GitHub Pages
+    needs: generate
+    if: always()
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Download platform reports
+        uses: actions/download-artifact@v4
+        with:
+          pattern: report-*
+          path: artifacts/
+
+      - name: Assemble report tree (macOS at the root)
+        run: |
+          mkdir -p deploy_report
+          [ -f artifacts/report-macos/index.html ] && cp artifacts/report-macos/index.html deploy_report/index.html
+          [ -f artifacts/report-linux/index.html ] && mkdir -p deploy_report/linux \
+            && cp artifacts/report-linux/index.html deploy_report/linux/index.html
+          [ -f artifacts/report-windows/index.html ] && mkdir -p deploy_report/windows \
+            && cp artifacts/report-windows/index.html deploy_report/windows/index.html
+          # degraded fallback: never leave reports/latest/ without a root page
+          if [ ! -f deploy_report/index.html ]; then
+            FIRST=$(ls artifacts/report-*/index.html 2>/dev/null | head -1)
+            [ -n "$FIRST" ] && cp "$FIRST" deploy_report/index.html
+          fi
+          [ -f deploy_report/index.html ] || { echo "::error::no platform report was produced"; exit 1; }
+          cat artifacts/report-*/validation-status.txt 2>/dev/null | sort -u > statuses.txt
+          echo "validation statuses: $(paste -sd, statuses.txt)"
 
       - name: Deploy to GitHub Pages (latest)
         uses: peaceiris/actions-gh-pages@v4
@@ -82,8 +142,9 @@ jobs:
           destination_dir: reports
           keep_files: true
 
-      - name: Fail if validation failed
-        if: steps.generate.outputs.validation == 'failed'
+      - name: Fail if any platform's validation failed
         run: |
-          echo "::error::Validation failed — the published report documents the failure"
-          exit 1
+          if grep -q failed statuses.txt; then
+            echo "::error::Validation failed on at least one platform — the published report documents it"
+            exit 1
+          fi

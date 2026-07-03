@@ -110,12 +110,14 @@ test pins the measured behavior with a comment saying so.
 - **Every CI run** builds the same unified report per OS
   (`test-report-<os>.html`, uploaded as an artifact on the Tests workflow).
   CI runs the C++ suite on Linux/macOS and pytest on all three platforms.
-- **Full validation** publishes the same unified report to GitHub Pages:
-  `reports/latest/` is overwritten by every release, by the weekly scheduled
-  run (Deploy Validation Report workflow, Mondays), and by manual dispatch;
-  each release additionally gets an immutable snapshot at
-  `reports/v<version>/`, listed in the `reports/` index. Per-push reports
-  live only as CI artifacts (90-day expiry). Tier 2's
+- **Full validation** publishes the unified report to GitHub Pages for all
+  three platforms: `reports/latest/` carries the macOS report, with
+  `linux/` and `windows/` siblings switchable from the report's nav bar.
+  It is refreshed by every release, by the weekly scheduled run (Deploy
+  Validation Report workflow, Mondays), and by manual dispatch; each
+  release additionally gets an immutable snapshot at `reports/v<version>/`,
+  listed in the `reports/` index. Per-push reports live only as CI
+  artifacts (90-day expiry). Tier 2's
   `test_shock_scalings.py` shares the validation suite's scaling tables, so
   a table change is exercised on the next push, not at the next release.
 

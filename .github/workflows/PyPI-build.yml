@@ -83,12 +83,19 @@ jobs:
           path: wheelhouse/
           if-no-files-found: error
 
-  validate_and_report:
-    name: Validate and Deploy Report
+  report:
+    name: Validation report (all platforms)
     needs: build_wheels
-    runs-on: ubuntu-latest
+    uses: ./.github/workflows/deploy-report.yml
+    with:
+      version: ${{ inputs.version }}
     permissions:
       contents: write
+
+  assemble_dist:
+    name: Assemble distribution
+    needs: build_wheels
+    runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v4
@@ -119,62 +126,6 @@ jobs:
         env:
           SETUPTOOLS_SCM_PRETEND_VERSION: ${{ inputs.version }}
 
-      - name: Generate unified test & validation report
-        id: generate
-        run: |
-          echo "::notice::Benchmark timings reflect the CI runner, not release hardware"
-          # MARCH_NATIVE=OFF: validate the portable codegen that shipped wheels use,
-          # not whatever SIMD ISA this runner happens to have
-          pip install -e ".[test,mcmc]" \
-            --config-settings=cmake.define.AFTERGLOW_PROFILE=ON \
-            --config-settings=cmake.define.AFTERGLOW_MARCH_NATIVE=OFF
-          pytest tests/ -q --junitxml=py-junit.xml
-          # a validation failure must not block publishing the report that documents it
-          if python tests/validation/run_validation.py --all; then
-            echo "validation=passed" >> "$GITHUB_OUTPUT"
-          else
-            echo "validation=failed" >> "$GITHUB_OUTPUT"
-          fi
-          mkdir -p deploy_report
-          python tests/report.py py-junit.xml \
-            --label py-junit.xml="Python (pytest)" \
-            --validation tests/validation/regression/results/regression_results.json \
-            --benchmark tests/validation/benchmark/results/benchmark_history.json \
-            -o deploy_report/index.html
-
-      - name: Deploy report to GitHub Pages (versioned)
-        uses: peaceiris/actions-gh-pages@v4
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: deploy_report/
-          destination_dir: reports/v${{ inputs.version }}
-          keep_files: true
-
-      - name: Deploy report to GitHub Pages (latest)
-        uses: peaceiris/actions-gh-pages@v4
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: deploy_report/
-          destination_dir: reports/latest
-          keep_files: true
-
-      - name: Build reports index
-        run: |
-          git fetch origin gh-pages --depth=1 2>/dev/null || true
-          {
-            git ls-tree --name-only origin/gh-pages reports/ 2>/dev/null || true
-            echo "reports/v${{ inputs.version }}"
-          } | grep -oE 'v[0-9][^/ ]*' | sort -urV > versions.txt || true
-          python tests/report_index.py versions.txt report_index/index.html
-
-      - name: Deploy reports index
-        uses: peaceiris/actions-gh-pages@v4
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: report_index/
-          destination_dir: reports
-          keep_files: true
-
       - name: Upload dist for publish job
         if: ${{ !inputs.dry_run }}
         uses: actions/upload-artifact@v4
@@ -184,7 +135,7 @@ jobs:
 
   publish:
     name: Tag and Publish to PyPI
-    needs: validate_and_report
+    needs: [assemble_dist, report]
     runs-on: ubuntu-latest
     if: ${{ !inputs.dry_run }}
     permissions:

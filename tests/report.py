@@ -1116,7 +1116,12 @@ nav a { text-decoration: none; color: var(--ink-2); font-size: 13px; font-weight
   padding: 6px 14px; border-radius: 999px; border: 1px solid transparent; }
 nav a:hover { background: var(--surface); border-color: var(--ring); color: var(--ink); }
 nav a .n { color: var(--muted); font-weight: 500; }
-nav a.archive { margin-left: auto; color: var(--muted); }
+nav a.archive { color: var(--muted); }
+nav .plat-label { margin-left: auto; color: var(--muted); font-size: 13px;
+  padding: 7px 4px 7px 14px; }
+nav a.plat { color: var(--ink-2); }
+nav .plat-cur { color: var(--ink); font-size: 13px; font-weight: 700;
+  padding: 7px 10px; }
 .tiles { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
   gap: 12px; margin: 22px 0 8px; }
 .tile { background: var(--surface); border: 1px solid var(--ring); border-radius: 12px;
@@ -1277,6 +1282,10 @@ def main():
     ap.add_argument("xml", nargs="*", help="JUnit XML files")
     ap.add_argument("-o", "--output", default="test-report.html")
     ap.add_argument("--label", action="append", default=[], metavar="FILE=LABEL")
+    ap.add_argument("--platform-link", action="append", default=[], metavar="NAME=HREF",
+                    help="platform switcher entry; HREF '.' marks this report's platform")
+    ap.add_argument("--archive-href", default="../",
+                    help="relative href of the reports index (default ../)")
     ap.add_argument("--validation", default=None,
                     help="validation regression_results.json")
     ap.add_argument("--benchmark", default=None,
@@ -1344,6 +1353,15 @@ def main():
     if bench_html:
         nav.append('<a href="#performance">Performance</a>')
 
+    plat_entries = []
+    for spec in args.platform_link:
+        name, _, href = spec.partition("=")
+        plat_entries.append(
+            f'<span class="plat-cur">{esc(name)}</span>' if href in (".", "")
+            else f'<a class="plat" href="{esc(href)}">{esc(name)}</a>')
+    platform_nav = (('<span class="plat-label">platform:</span>' + "".join(plat_entries))
+                    if plat_entries else "")
+
     test_docs = collect_test_docs()
     code_sections = "".join(
         f'<h3 class="suite-h">{esc(label)}</h3>{suite_table(cases, test_docs)}'
@@ -1359,7 +1377,7 @@ def main():
  · {esc(platform.system())} {esc(platform.machine())} · Python {platform.python_version()}</div>
 </div><span class="verdict {'ok' if ok else 'bad'}">{"✓ ALL PASSING" if ok
     else f"✕ {n_fail_total} FAILING"}</span></div>
-<nav>{"".join(nav)}<a class="archive" href="../" title="All published report versions">all versions ↗</a></nav>
+<nav>{"".join(nav)}{platform_nav}<a class="archive" href="{esc(args.archive_href)}" title="All published report versions">all versions ↗</a></nav>
 <section id="overview">{tiles}
 <div class="card"><h3>Outcomes by suite</h3>
 {stacked_status_bar(outcome_rows(comp_rows), "Outcomes by suite")}</div>
