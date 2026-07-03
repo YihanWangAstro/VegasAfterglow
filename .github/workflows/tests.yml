@@ -28,13 +28,29 @@ jobs:
           python-version: "3.12"
           cache: pip
 
+      - name: CPU tag for ccache key
+        # -march=native objects are CPU-generation-specific; the runner fleet is
+        # heterogeneous, so a shared cache would serve AVX-512 objects to an
+        # AVX2 machine (SIGILL). Key the cache by CPU model.
+        if: runner.os != 'Windows'
+        id: cpu
+        shell: bash
+        run: |
+          if [ "$RUNNER_OS" = "macOS" ]; then
+            MODEL=$(sysctl -n machdep.cpu.brand_string)
+          else
+            MODEL=$(grep -m1 'model name' /proc/cpuinfo)
+          fi
+          echo "tag=$(echo "$MODEL" | shasum | cut -c1-10)" >> "$GITHUB_OUTPUT"
+          echo "runner CPU: $MODEL"
+
       - name: Set up ccache
         if: runner.os != 'Windows'
         uses: hendrikmuhs/ccache-action@v1.2
         with:
-          key: tests-${{ matrix.os }}
+          key: tests-${{ matrix.os }}-${{ steps.cpu.outputs.tag }}
           restore-keys: |
-            tests-${{ matrix.os }}
+            tests-${{ matrix.os }}-${{ steps.cpu.outputs.tag }}
 
       - name: Build and install package
         if: runner.os != 'Windows'
