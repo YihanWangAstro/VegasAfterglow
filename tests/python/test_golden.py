@@ -53,10 +53,10 @@ def recomputed():
 
 @pytest.mark.parametrize("name", sorted(regen.CONFIGS))
 def test_baseline_grid_matches(name):
-    """Each config's stored baseline time and frequency grids are exactly equal to the current regeneration grids."""
+    """Each config's stored baseline time and frequency grids match the current regeneration grids to 1e-12 relative (logspace differs by one ulp across platform libms)."""
     baseline = np.load(os.path.join(GOLDEN_DIR, f"{name}.npz"))
-    np.testing.assert_array_equal(baseline["t"], regen.T)
-    np.testing.assert_array_equal(baseline["nus"], regen.NUS)
+    np.testing.assert_allclose(baseline["t"], regen.T, rtol=1e-12)
+    np.testing.assert_allclose(baseline["nus"], regen.NUS, rtol=1e-12)
 
 
 @pytest.mark.parametrize("component", COMPONENTS)
