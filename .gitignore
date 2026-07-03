@@ -10,6 +10,7 @@
 **/*.so
 **/*.npy
 **/*.npz
+!tests/python/golden/*.npz
 **/.DS_Store
 **/*.pyc
 **/__pycache__/

@@ -1,0 +1,76 @@
+"""Golden-baseline regression tests.
+
+Each canonical config in tests/python/golden/regenerate.py is recomputed and
+compared component by component (total, fwd.sync, fwd.ssc, rvs.sync, rvs.ssc)
+against the stored .npz baseline. The tolerance rtol=2e-3 absorbs
+cross-platform fast-math/SIMD differences (different vectorization, FMA
+contraction, and libm implementations shift results at the ~1e-4 level)
+while still catching real physics drift, which typically changes fluxes at
+the percent level or more. The atol floor of 1e-12 times the component peak
+ignores noise in bins that are vanishingly small relative to the peak.
+
+If these tests fail after an INTENDED physics change: inspect the diff, then
+regenerate via `python tests/python/golden/regenerate.py` and commit the new
+baselines with the change.
+"""
+
+import importlib.util
+import os
+
+import numpy as np
+import pytest
+
+pytestmark = pytest.mark.golden
+
+GOLDEN_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "golden")
+
+
+def _load_regenerate_module():
+    path = os.path.join(GOLDEN_DIR, "regenerate.py")
+    spec = importlib.util.spec_from_file_location("golden_regenerate", path)
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    return module
+
+
+regen = _load_regenerate_module()
+
+COMPONENTS = ("total", "fwd_sync", "fwd_ssc", "rvs_sync", "rvs_ssc")
+
+
+@pytest.fixture(scope="module")
+def recomputed():
+    cache = {}
+
+    def get(name):
+        if name not in cache:
+            model = regen.build_model(regen.CONFIGS[name])
+            cache[name] = regen.compute_components(model)
+        return cache[name]
+
+    return get
+
+
+@pytest.mark.parametrize("name", sorted(regen.CONFIGS))
+def test_baseline_grid_matches(name):
+    """Each config's stored baseline time and frequency grids are exactly equal to the current regeneration grids."""
+    baseline = np.load(os.path.join(GOLDEN_DIR, f"{name}.npz"))
+    np.testing.assert_array_equal(baseline["t"], regen.T)
+    np.testing.assert_array_equal(baseline["nus"], regen.NUS)
+
+
+@pytest.mark.parametrize("component", COMPONENTS)
+@pytest.mark.parametrize("name", sorted(regen.CONFIGS))
+def test_golden_component(name, component, recomputed):
+    """Each recomputed flux component matches its golden baseline within the calibrated rtol=2e-3 (atol 1e-12 of the component peak), and identically-zero baseline components stay zero."""
+    baseline = np.load(os.path.join(GOLDEN_DIR, f"{name}.npz"))
+    reference = np.asarray(baseline[component])
+    current = np.asarray(recomputed(name)[component])
+    assert current.shape == reference.shape
+
+    if not np.any(reference):
+        assert not np.any(current), f"{name}/{component} was identically zero in the baseline"
+        return
+
+    peak = np.max(np.abs(reference))
+    np.testing.assert_allclose(current, reference, rtol=2e-3, atol=1e-12 * peak)

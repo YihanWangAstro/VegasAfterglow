@@ -48,9 +48,9 @@ Benchmark tests measure computational performance and verify numerical convergen
 - **Performance Timing**: Execution time for various jet/medium/radiation configurations
 - **Resolution Convergence**: Convergence analysis in three dimensions:
 
-  - **Phi (azimuthal)**: Tests values from 0.15 to 0.3 radians
-  - **Theta (polar)**: Tests values from 0.5 to 1.25 radians
-  - **Time**: Tests values from 10 to 25 points per decade
+  - **Phi (azimuthal)**: 0.1 to 0.25 points per degree
+  - **Theta (polar)**: 0.25 to 1.0 points per degree
+  - **Time**: 5 to 20 points per decade
 
 - **Configuration Matrix**: All combinations of jet types (tophat, gaussian, powerlaw), media (ISM, wind), and viewing angles
 
@@ -123,10 +123,13 @@ Validation results feed the unified HTML test report (``tests/report.py``, or
 - **Performance**: benchmark timing by radiation type, per-stage CPU
   breakdown, and resolution convergence classification
 
-The report is a single self-contained page with no external assets. The
-latest release report is published to GitHub Pages at
-`reports/latest <https://yihanwangastro.github.io/VegasAfterglow/reports/latest/>`_.
-Methodology guides live in ``tests/validation/guides/``.
+The report is a single self-contained page with no external assets; each
+section carries a collapsible "How to read this section" note explaining the
+checks, phases, and pass criteria. The latest release report is published to
+GitHub Pages at
+`reports/latest <https://yihanwangastro.github.io/VegasAfterglow/reports/latest/>`_,
+with per-release snapshots in the
+`reports index <https://yihanwangastro.github.io/VegasAfterglow/reports/>`_.
 
 Directory Structure
 -------------------
@@ -141,10 +144,9 @@ Directory Structure
    │   ├── benchmark_suite.py     # Benchmark test implementation
    │   ├── configs.py             # Test configurations
    │   └── results/               # JSON output files
-   ├── regression/
-   │   ├── run_regression.py      # Regression test runner
-   │   └── results/               # JSON output files
-   └── guides/                    # Markdown methodology guides
+   └── regression/
+       ├── run_regression.py      # Regression test runner
+       └── results/               # JSON output files
 
 Profiling Per-Stage CPU Cost
 ----------------------------
