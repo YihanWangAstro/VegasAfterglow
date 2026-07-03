@@ -1255,12 +1255,16 @@ document.getElementById('search').addEventListener('input', function () {
 
 
 def inline_logo():
-    # Inline the SVG as a real element, NOT a data: URI — GitHub Pages'
-    # deployment pipeline rejects pages carrying large base64 data URIs.
+    # Inline the SVG as a real element with SMIL animations stripped: GitHub
+    # Pages' deployment pipeline rejects pages whose SVG carries <animate>/
+    # <animateTransform> (bisected 2026-07-03 — the identical page with a
+    # static logo deploys, the animated one fails).
     p = Path(__file__).resolve().parents[1] / "assets" / "logo.svg"
     if p.exists() and p.stat().st_size < 64_000:
         svg = p.read_text(encoding="utf-8")
         svg = re.sub(r"<\?xml[^>]*\?>", "", svg)
+        svg = re.sub(r"<animateTransform.*?/>", "", svg, flags=re.S)
+        svg = re.sub(r"<animate .*?/>", "", svg, flags=re.S)
         svg = re.sub(r"<svg ", '<svg class="logo" ', svg, count=1)
         svg = re.sub(r'(<svg[^>]*?) width="\d+" height="\d+"', r"\1", svg, count=1)
         return svg
