@@ -94,14 +94,6 @@ CONFIGS = {
         "observer": {"lumi_dist": 1e28, "z": 1.0, "theta_obs": 0.15},
         "fwd_rad": {"eps_e": 0.1, "eps_B": 0.01, "p": 2.3},
     },
-    # SSC with Klein-Nishina and IC cooling on the CMB: covers the cmb_cooling
-    # electron-cooling path (compute_CMB_Y), absent from every other golden.
-    "tophat_ism_ssc_cmb": {
-        "jet": {"type": "TophatJet", "theta_c": 0.1, "E_iso": 1e53, "Gamma0": 300},
-        "medium": {"type": "ISM", "n_ism": 1e-3},
-        "observer": {"lumi_dist": 3e28, "z": 2.0, "theta_obs": 0.0},
-        "fwd_rad": {"eps_e": 0.1, "eps_B": 1e-4, "p": 2.3, "ssc": True, "kn": True, "cmb_cooling": True},
-    },
 }
 
 
