@@ -3,13 +3,18 @@
 #
 #   tests/run_all.sh                 # everything: C++ + pytest + full validation + test-report.html
 #   tests/run_all.sh --quick         # skip the validation suite (tiers 1+2 only, seconds)
-#   tests/run_all.sh --build         # rebuild C++ tests and reinstall the module first
+#   tests/run_all.sh --build         # force-rebuild C++ tests and reinstall the module first
+#   tests/run_all.sh --no-build      # skip the automatic staleness check
 #   tests/run_all.sh --cpp           # C++ only
 #   tests/run_all.sh --py            # pytest only
 #   tests/run_all.sh --physics       # pytest -m "physics or golden" only
 #   tests/run_all.sh --validation    # validation suite only (slow)
 #   tests/run_all.sh --no-html       # skip the self-contained test-report.html
 #   tests/run_all.sh --cov           # also write coverage summary + htmlcov/
+#
+# Anything the selected tiers need that is older than the sources (the C++ test
+# binary, the installed Python module) is rebuilt automatically; testing a stale
+# build silently is worse than the rebuild wait.
 #
 # Exit code is nonzero if any selected tier fails.
 set -u
@@ -23,7 +28,7 @@ GREEN=$(tput setaf 2 2>/dev/null || true)
 CYAN=$(tput setaf 6 2>/dev/null || true)
 RESET=$(tput sgr0 2>/dev/null || true)
 
-RUN_CPP=1 RUN_PY=1 RUN_VALIDATION=1 DO_BUILD=0 DO_HTML=1 DO_COV=0 PY_MARK=""
+RUN_CPP=1 RUN_PY=1 RUN_VALIDATION=1 DO_BUILD=0 NO_BUILD=0 DO_HTML=1 DO_COV=0 PY_MARK=""
 for arg in "$@"; do
     case "$arg" in
         --quick) RUN_VALIDATION=0 ;;
@@ -32,6 +37,7 @@ for arg in "$@"; do
         --physics) RUN_CPP=0 RUN_VALIDATION=0 PY_MARK="physics or golden" ;;
         --validation) RUN_CPP=0 RUN_PY=0 RUN_VALIDATION=1 ;;
         --build) DO_BUILD=1 ;;
+        --no-build) NO_BUILD=1 ;;
         --html) DO_HTML=1 ;;
         --no-html) DO_HTML=0 ;;
         --cov) DO_COV=1 ;;
@@ -58,9 +64,50 @@ run_tier() { # name, command...
     fi
 }
 
-if [ $DO_BUILD -eq 1 ]; then
+# A target is stale when any C++ source, build script, or packaging file is
+# newer than it. `find -newer` prints the first offender (empty = fresh).
+newer_than() { # ref-file; stdout: first source newer than it
+    find src pybind tests/cpp CMakeLists.txt pyproject.toml \
+        \( -name '*.cpp' -o -name '*.h' -o -name '*.hpp' -o -name '*.tpp' \
+           -o -name 'CMakeLists.txt' -o -name 'pyproject.toml' \) \
+        -newer "$1" -print 2>/dev/null | head -1
+}
+
+NEED_CPP_BUILD=$DO_BUILD
+NEED_PY_BUILD=$DO_BUILD
+if [ $NO_BUILD -eq 0 ] && [ $DO_BUILD -eq 0 ]; then
+    if [ $RUN_CPP -eq 1 ]; then
+        if [ ! -x build/afterglow_tests ]; then
+            echo "build/afterglow_tests missing — will build"
+            NEED_CPP_BUILD=1
+        else
+            OFFENDER=$(newer_than build/afterglow_tests)
+            [ -n "$OFFENDER" ] && {
+                echo "build/afterglow_tests is stale ($OFFENDER is newer) — rebuilding"
+                NEED_CPP_BUILD=1
+            }
+        fi
+    fi
+    if [ $RUN_PY -eq 1 ] || [ $RUN_VALIDATION -eq 1 ]; then
+        MODULE_SO=$(python -c "import VegasAfterglow.VegasAfterglowC as m; print(m.__file__)" 2>/dev/null)
+        if [ -z "$MODULE_SO" ]; then
+            echo "VegasAfterglow module not importable — will install"
+            NEED_PY_BUILD=1
+        else
+            OFFENDER=$(newer_than "$MODULE_SO")
+            [ -n "$OFFENDER" ] && {
+                echo "installed module is stale ($OFFENDER is newer) — reinstalling"
+                NEED_PY_BUILD=1
+            }
+        fi
+    fi
+fi
+
+if [ $NEED_CPP_BUILD -eq 1 ] && [ $RUN_CPP -eq 1 ]; then
     run_tier "build: C++ tests" bash -c \
         "cmake -B build -DAFTERGLOW_TESTS=ON >/dev/null && cmake --build build -j8 | tail -1"
+fi
+if [ $NEED_PY_BUILD -eq 1 ] && { [ $RUN_PY -eq 1 ] || [ $RUN_VALIDATION -eq 1 ]; }; then
     run_tier "build: python module (pip install -e .)" pip install -e . -q
 fi
 
