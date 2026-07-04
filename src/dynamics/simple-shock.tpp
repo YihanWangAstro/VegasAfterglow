@@ -86,9 +86,11 @@ void SimpleShockEqn<Ejecta, Medium>::set_init_state(State& state, Real t0) const
     state.Gamma = ejecta.Gamma0(phi, theta0);
 
     const Real beta0 = physics::relativistic::gamma_to_beta(state.Gamma);
-    state.r = beta0 * con::c * t0 / (1 - beta0);
+    // beta / (1 - beta) = beta * Gamma^2 * (1 + beta): avoids 1 - beta, which
+    // loses ~2 Gamma^2 ulp of relative precision for ultrarelativistic shells.
+    state.r = beta0 * con::c * t0 * state.Gamma * state.Gamma * (1 + beta0);
 
-    state.t_comv = state.r / std::sqrt(state.Gamma * state.Gamma - 1) / con::c;
+    state.t_comv = state.r / std::sqrt((state.Gamma - 1) * (state.Gamma + 1)) / con::c;
 
     state.m2 = enclosed_mass([&](Real r_) { return medium.rho(phi, theta0, r_); }, state.r);
 

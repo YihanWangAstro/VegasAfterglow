@@ -34,7 +34,9 @@ namespace physics {
  * <!-- ************************************************************************************** -->
  */
         inline Real gamma_to_beta(Real gamma) noexcept {
-            return std::sqrt(gamma * gamma - 1) / gamma;
+            // (gamma - 1) * (gamma + 1) rather than gamma * gamma - 1: exact for
+            // gamma -> 1 regardless of FMA contraction (platform-independent).
+            return std::sqrt((gamma - 1) * (gamma + 1)) / gamma;
         }
 
     } // namespace relativistic

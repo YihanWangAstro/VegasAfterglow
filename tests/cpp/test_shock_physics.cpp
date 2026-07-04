@@ -247,19 +247,6 @@ BOOST_AUTO_TEST_CASE(compute_rel_Gamma_same_frame) {
 }
 
 // ---------------------------------------------------------------------------
-// 20. compute_rel_Gamma: both overloads agree
-// ---------------------------------------------------------------------------
-BOOST_AUTO_TEST_CASE(compute_rel_Gamma_overloads_agree) {
-    Real g1 = 10.0;
-    Real g2 = 5.0;
-    Real b1 = std::sqrt(1.0 - 1.0 / (g1 * g1));
-    Real b2 = std::sqrt(1.0 - 1.0 / (g2 * g2));
-    Real rel1 = compute_rel_Gamma(g1, g2);
-    Real rel2 = compute_rel_Gamma(g1, g2, b1, b2);
-    BOOST_CHECK_CLOSE(rel1, rel2, 1e-8);
-}
-
-// ---------------------------------------------------------------------------
 // 21. compute_rel_Gamma: symmetric
 // ---------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE(compute_rel_Gamma_symmetric) {
@@ -268,18 +255,6 @@ BOOST_AUTO_TEST_CASE(compute_rel_Gamma_symmetric) {
     Real rel12 = compute_rel_Gamma(g1, g2);
     Real rel21 = compute_rel_Gamma(g2, g1);
     BOOST_CHECK_CLOSE(rel12, rel21, 1e-12);
-}
-
-// ---------------------------------------------------------------------------
-// 22. compute_Gamma_from_relative: roundtrip
-// ---------------------------------------------------------------------------
-BOOST_AUTO_TEST_CASE(compute_Gamma_from_relative_roundtrip) {
-    Real g1 = 10.0;
-    Real g2 = 50.0;
-    Real gamma_rel = compute_rel_Gamma(g1, g2);
-    // Given g2 (as gamma4) and gamma_rel, recover g1
-    Real recovered = compute_Gamma_from_relative(g2, gamma_rel);
-    BOOST_CHECK_CLOSE(recovered, g1, 0.1); // 0.1% tolerance
 }
 
 // ---------------------------------------------------------------------------
@@ -495,17 +470,6 @@ BOOST_AUTO_TEST_CASE(compute_rel_Gamma_one_at_rest) {
     // Symmetric check
     Real rel2 = compute_rel_Gamma(g_moving, 1.0);
     BOOST_CHECK_CLOSE(rel2, g_moving, 1e-6);
-}
-
-// ---------------------------------------------------------------------------
-// 40. compute_Gamma_from_relative: gamma_rel=1 (no relative motion)
-// ---------------------------------------------------------------------------
-BOOST_AUTO_TEST_CASE(compute_Gamma_from_relative_edge) {
-    Real gamma4 = 10.0;
-    Real gamma_rel = 1.0;
-    // No relative motion: the derived Gamma should equal gamma4
-    Real result = compute_Gamma_from_relative(gamma4, gamma_rel);
-    BOOST_CHECK_CLOSE(result, gamma4, 0.1);
 }
 
 // ---------------------------------------------------------------------------

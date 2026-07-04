@@ -27,8 +27,7 @@ ForwardShockEqn<Ejecta, Medium>::ForwardShockEqn(Medium const& medium, Ejecta co
 template <typename Ejecta, typename Medium>
 void ForwardShockEqn<Ejecta, Medium>::operator()(State const& state, State& diff, Real t) const noexcept {
     const Real Gamma = state.Gamma;
-    const Real Gamma2 = Gamma * Gamma;
-    const Real u2 = Gamma2 - 1;
+    const Real u2 = (Gamma - 1) * (Gamma + 1);
     const Real u = std::sqrt(u2);
 
     diff.r = compute_dr_dt(Gamma, u);
@@ -123,9 +122,11 @@ void ForwardShockEqn<Ejecta, Medium>::set_init_state(State& state, Real t0) cons
     Real Gamma4 = ejecta.Gamma0(phi, theta0);
 
     const Real beta4 = physics::relativistic::gamma_to_beta(Gamma4);
-    state.r = beta4 * con::c * t0 / (1 - beta4);
+    // beta / (1 - beta) = beta * Gamma^2 * (1 + beta): avoids 1 - beta, which
+    // loses ~2 Gamma^2 ulp of relative precision for ultrarelativistic shells.
+    state.r = beta4 * con::c * t0 * Gamma4 * Gamma4 * (1 + beta4);
 
-    state.t_comv = state.r / std::sqrt(Gamma4 * Gamma4 - 1) / con::c;
+    state.t_comv = state.r / std::sqrt((Gamma4 - 1) * (Gamma4 + 1)) / con::c;
 
     state.theta = theta0;
 

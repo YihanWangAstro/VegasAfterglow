@@ -148,7 +148,12 @@ Real FRShockEqn<Ejecta, Medium>::compute_dx3_dt(State const& state, State const&
 
     const Real beta3 = physics::relativistic::gamma_to_beta(state.Gamma);
     const Real beta4 = physics::relativistic::gamma_to_beta(this->Gamma4);
-    Real dx3dt = (beta4 - beta3) * con::c / ((1 - beta3) * penetration);
+    // (beta4 - beta3) / (1 - beta3) written via Lorentz-factor identities: the direct
+    // differences catastrophically cancel at crossing onset where Gamma3 ~ Gamma4 and
+    // both betas -> 1. Using beta4 - beta3 = (Gamma4^2 - Gamma3^2) / (Gamma3^2 Gamma4^2
+    // (beta3 + beta4)) and 1 - beta3 = 1 / (Gamma3^2 (1 + beta3)) keeps full precision.
+    Real dx3dt = (this->Gamma4 - state.Gamma) * (this->Gamma4 + state.Gamma) * (1 + beta3) * con::c /
+                 (this->Gamma4 * this->Gamma4 * (beta3 + beta4) * penetration);
     Real crossing = std::fabs(dx3dt * state.Gamma);
 
     // Regularize the weak-penetration regime (reachable only for magnetized shells;
@@ -246,7 +251,7 @@ Real FRShockEqn<Ejecta, Medium>::compute_dm4_dt(State const& /*state*/, State co
 template <typename Ejecta, typename Medium>
 void FRShockEqn<Ejecta, Medium>::operator()(State const& state, State& diff, Real t) noexcept {
     const Real Gamma = state.Gamma;
-    const Real u3 = std::sqrt(Gamma * Gamma - 1);
+    const Real u3 = std::sqrt((Gamma - 1) * (Gamma + 1));
 
     diff.r = compute_dr_dt(Gamma, u3);
     diff.t_comv = Gamma + u3;
@@ -278,7 +283,7 @@ inline Real compute_init_comv_shell_width(Real Gamma4, Real t0, Real T);
 template <typename Ejecta, typename Medium>
 void FRShockEqn<Ejecta, Medium>::save_cross_state(State const& state) {
     r_x = state.r;
-    u_x = std::sqrt(state.Gamma * state.Gamma - 1);
+    u_x = std::sqrt((state.Gamma - 1) * (state.Gamma + 1));
 
     V3_comv_x = r_x * r_x * state.x3;
 
@@ -295,8 +300,10 @@ template <typename Ejecta, typename Medium>
 void FRShockEqn<Ejecta, Medium>::set_init_state(State& state, Real t0) const noexcept {
     const Real beta4 = physics::relativistic::gamma_to_beta(Gamma4);
 
-    state.r = beta4 * con::c * t0 / (1 - beta4);
-    state.t_comv = state.r / std::sqrt(Gamma4 * Gamma4 - 1) / con::c;
+    // beta / (1 - beta) = beta * Gamma^2 * (1 + beta): avoids 1 - beta, which
+    // loses ~2 Gamma^2 ulp of relative precision for ultrarelativistic shells.
+    state.r = beta4 * con::c * t0 * Gamma4 * Gamma4 * (1 + beta4);
+    state.t_comv = state.r / std::sqrt((Gamma4 - 1) * (Gamma4 + 1)) / con::c;
     state.theta = theta0;
 
     const Real dt = std::min(t0, ejecta.T0);

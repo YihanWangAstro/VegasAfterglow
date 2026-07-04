@@ -72,7 +72,7 @@ void Observer::calc_t_obs(Coord const& coord, Shock const& shock) {
                 const Real cos_v = sin_theta(i_eff, j, k) * cos_phi * sin_obs + cos_theta(i_eff, j, k) * cos_obs;
                 const Real t_val = (t_eng_ + (1 - cos_v) * r / con::c) * one_plus_z;
 
-                lg2_doppler(i, j, k) = -fast_log2(gamma_ - std::sqrt(gamma_ * gamma_ - 1) * cos_v);
+                lg2_doppler(i, j, k) = -fast_log2(gamma_ - std::sqrt((gamma_ - 1) * (gamma_ + 1)) * cos_v);
                 time(i, j, k) = t_val;
                 lg2_t(i, j, k) = fast_log2(t_val);
             }
@@ -170,7 +170,7 @@ void Observer::calc_eat_non_spreading(Coord const& coord, Shock const& shock) {
                 const Real gamma_ = shock.Gamma(i_eff, j, k);
                 const Real r = shock.r(i_eff, j, k);
                 const Real t_val = coord.t(i_eff, j, k) * one_plus_z + t_coeff * r;
-                const Real lg2_dop = -fast_log2(gamma_ - std::sqrt(gamma_ * gamma_ - 1) * cos_v);
+                const Real lg2_dop = -fast_log2(gamma_ - std::sqrt((gamma_ - 1) * (gamma_ + 1)) * cos_v);
 
                 lg2_doppler(i, j, k) = lg2_dop;
                 time(i, j, k) = t_val;

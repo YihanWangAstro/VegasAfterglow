@@ -42,7 +42,7 @@ Real compute_downstr_4vel(Real gamma_rel, Real sigma) noexcept;
  * <!-- ************************************************************************************** -->
  */
 inline Real compute_upstr_4vel(Real u_down, Real gamma_rel) noexcept {
-    return std::sqrt((1 + u_down * u_down) * std::fabs(gamma_rel * gamma_rel - 1)) + u_down * gamma_rel;
+    return std::sqrt((1 + u_down * u_down) * std::max((gamma_rel - 1) * (gamma_rel + 1), 0.0)) + u_down * gamma_rel;
 }
 
 /**
@@ -144,7 +144,7 @@ inline constexpr Real compute_dr_dt(Real Gamma, Real u) noexcept {
  */
 inline Real compute_dtheta_dt(Real theta_s, Real /*theta*/, Real drdt, Real r, Real Gamma) noexcept {
     constexpr Real Q = 7;
-    const Real u2 = Gamma * Gamma - 1;
+    const Real u2 = (Gamma - 1) * (Gamma + 1);
     const Real u = std::sqrt(u2);
     const Real f = 1 / (1 + u * theta_s * Q);
     return drdt / (2 * Gamma * r) * std::sqrt((2 * u2 + 3) / (4 * u2 + 3)) * f;
@@ -194,41 +194,13 @@ inline Real compute_rel_Gamma(Real gamma1, Real gamma2) noexcept {
     // O(gamma^2) numbers to produce 1 + O(1e-6) near equal velocities; the
     // exact identity Gamma_rel - 1 = (gamma1 - gamma2)^2 / (gamma1*gamma2 - 1
     // + u1*u2) keeps full precision there (both denominator terms positive).
-    const Real u1u2 = std::sqrt(std::max((gamma1 * gamma1 - 1) * (gamma2 * gamma2 - 1), 0.0));
+    const Real u1u2 = std::sqrt(std::max((gamma1 - 1) * (gamma1 + 1) * (gamma2 - 1) * (gamma2 + 1), 0.0));
     const Real d = gamma1 - gamma2;
     const Real denom = gamma1 * gamma2 - 1 + u1u2;
     if (denom <= 0) {
         return 1;
     }
     return 1 + d * d / denom;
-}
-
-/**
- * <!-- ************************************************************************************** -->
- * @brief Computes the relative Lorentz factor between two frames with given Lorentz factors and velocities.
- * @param gamma1 First frame's Lorentz factor
- * @param gamma2 Second frame's Lorentz factor
- * @param beta1 First frame's velocity as a fraction of light speed
- * @param beta2 Second frame's velocity as a fraction of light speed
- * @return The relative Lorentz factor between the two frames
- * <!-- ************************************************************************************** -->
- */
-inline constexpr Real compute_rel_Gamma(Real gamma1, Real gamma2, Real beta1, Real beta2) noexcept {
-    return gamma1 * gamma2 * (1 - beta1 * beta2);
-}
-
-/**
- * <!-- ************************************************************************************** -->
- * @brief Computes a Lorentz factor from a reference Lorentz factor and relative Lorentz factor.
- * @param gamma4 Reference Lorentz factor (typically for region 4, unshocked ejecta)
- * @param gamma_rel Relative Lorentz factor
- * @return The derived Lorentz factor
- * <!-- ************************************************************************************** -->
- */
-inline Real compute_Gamma_from_relative(Real gamma4, Real gamma_rel) noexcept {
-    const Real b = -2 * gamma4 * gamma_rel;
-    const Real c = gamma4 * gamma4 + gamma_rel * gamma_rel - 1;
-    return (-b - std::sqrt(std::max(b * b - 4 * c, 0.0))) / 2;
 }
 
 /**
