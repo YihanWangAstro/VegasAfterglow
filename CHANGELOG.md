@@ -22,6 +22,7 @@ Have a feature request? [Open an issue](https://github.com/YihanWangAstro/VegasA
 
 ### Fixed
 
+- **Reverse-shock relative Lorentz factor** now computed via a cancellation-free identity: near equal shell/shock velocities the old form lost precision to catastrophic cancellation, seeding numerical noise that could destabilize resolution-convergence of reverse-shock light curves (platform/SIMD dependent)
 - **Reverse shock with magnetized ejecta (`sigma0 > 0`)**: fixed a forward-shock flux runaway when reverse-shock emission was enabled — the shell-crossing rate is now gated on shell penetration and capped at the fast magnetosonic speed, so light curves evolve correctly across sigma0 from 0 to >10 (unmagnetized results unchanged)
 
 ### Changed
