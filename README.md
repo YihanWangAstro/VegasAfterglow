@@ -676,8 +676,8 @@ result = fitter.fit(
     mc_params,
     resolution=(0.1, 0.25, 10),    # Grid resolution (phi, theta, t)
     sampler="emcee",               # MCMC sampler
-    nsteps=50000,                  # Number of steps per walker
-    nburn=10000,                   # Burn-in steps to discard
+    nsteps=25000,                  # Number of steps per walker
+    nburn=5000,                    # Burn-in steps to discard
     thin=1,                        # Save every nth sample
     npool=8,                       # Number of parallel threads
     top_k=10,                      # Number of best-fit parameters to return

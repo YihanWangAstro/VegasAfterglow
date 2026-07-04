@@ -122,7 +122,7 @@ Example:
         mc_params,
         resolution=(0.1, 0.25, 10),      # Grid resolution (phi, theta, t)
         sampler="emcee",               # MCMC sampler
-        nsteps=10000,                  # Number of steps per walker
+        nsteps=5000,                   # Number of steps per walker
         nburn=1000,                    # Burn-in steps to discard
         npool=8,                       # Number of parallel threads
         top_k=10,                      # Number of best-fit parameters to return

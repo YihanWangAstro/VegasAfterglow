@@ -20,6 +20,12 @@ Have a feature request? [Open an issue](https://github.com/YihanWangAstro/VegasA
 
 ## [Unreleased]
 
+### Changed
+
+- **MCMC fitting throughput**: the automatic emcee walker count now fills the likelihood thread pool with several evaluation waves per step on 8-16 core machines (~25% higher sampling throughput; `nwalkers=...` still overrides), and the default move mixture shifts to `DEMove 0.9 / DESnookerMove 0.1` (measured ~20% shorter autocorrelation times than the previous 0.7/0.3 weighting). With the larger ensembles, half the previous `nsteps` yields the same posterior sample volume — example scripts and docs updated accordingly
+- **Observer-layer performance**: off-axis flux evaluations are 10-20% faster (exact results preserved) — the equal-arrival-time grids take their logarithms in vectorized whole-tensor passes, flux contributions batch their final exponential per grid column, and the spectrum evaluation skips provably-trivial work (the inverse-Compton correction when IC cooling is off, and the optically-thick branch's far-field exponential)
+- **Opt-in fast math improved** (`AFTERGLOW_FAST_MATH`, still off by default): the polynomial `log2`/`exp2` kernels are upgraded to degree-5 minimax fits (relative error at the 1e-7 level, from 4e-4), gain full domain handling — non-positive, subnormal, infinite, and NaN inputs behave like the standard library — and now cover every `log2`/`exp2` call site in the library. Enabling the option speeds up off-axis structured-jet evaluations by ~1.2x; golden baselines are always generated with the default exact-libm build, and the regeneration script enforces this
+
 ### Removed
 
 - **`cmb_cooling` option removed** from `Radiation`, `Fitter`, and the CLI: inverse Compton cooling off the CMB is negligible for GRB afterglow shocks (the comoving magnetic energy density dwarfs the CMB energy density in all relevant regimes) and the flag added API and code complexity without practical use

@@ -157,8 +157,8 @@ SAMPLER_DEFAULTS = {
         "nburn": 1000,
         "thin": 1,
         "moves": [
-            (emcee.moves.DEMove(), 0.7),
-            (emcee.moves.DESnookerMove(), 0.3),
+            (emcee.moves.DEMove(), 0.9),
+            (emcee.moves.DESnookerMove(), 0.1),
         ],
     },
 }
