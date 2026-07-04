@@ -14,8 +14,11 @@ regenerate via `python tests/python/golden/regenerate.py` and commit the new
 baselines with the change.
 """
 
+import contextlib
 import importlib.util
 import os
+import sys
+import tempfile
 
 import numpy as np
 import pytest
@@ -23,6 +26,21 @@ import pytest
 pytestmark = pytest.mark.golden
 
 GOLDEN_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "golden")
+
+
+@contextlib.contextmanager
+def _capture_stderr_fd():
+    """Capture writes to file descriptor 2, including C++ fprintf(stderr)."""
+    sys.stderr.flush()
+    saved = os.dup(2)
+    with tempfile.TemporaryFile(mode="w+") as tmp:
+        os.dup2(tmp.fileno(), 2)
+        try:
+            yield tmp
+        finally:
+            sys.stderr.flush()
+            os.dup2(saved, 2)
+            os.close(saved)
 
 
 def _load_regenerate_module():
@@ -45,10 +63,21 @@ def recomputed():
     def get(name):
         if name not in cache:
             model = regen.build_model(regen.CONFIGS[name])
-            cache[name] = regen.compute_components(model)
+            with _capture_stderr_fd() as tmp:
+                components = regen.compute_components(model)
+                tmp.seek(0)
+                stderr_text = tmp.read()
+            cache[name] = (components, stderr_text)
         return cache[name]
 
     return get
+
+
+@pytest.mark.parametrize("name", sorted(regen.CONFIGS))
+def test_no_solver_warnings(name, recomputed):
+    """The shock solver must not abandon any grid row ("giving up" on stderr): an abandoned row leaves its stored state at initialization values and silently corrupts the light curve."""
+    _, stderr_text = recomputed(name)
+    assert "giving up" not in stderr_text, f"solver warnings during {name}:\n{stderr_text}"
 
 
 @pytest.mark.parametrize("name", sorted(regen.CONFIGS))
@@ -65,7 +94,7 @@ def test_golden_component(name, component, recomputed):
     """Each recomputed flux component matches its golden baseline within the calibrated rtol=2e-3 (atol 1e-12 of the component peak), and identically-zero baseline components stay zero."""
     baseline = np.load(os.path.join(GOLDEN_DIR, f"{name}.npz"))
     reference = np.asarray(baseline[component])
-    current = np.asarray(recomputed(name)[component])
+    current = np.asarray(recomputed(name)[0][component])
     assert current.shape == reference.shape
 
     if not np.any(reference):

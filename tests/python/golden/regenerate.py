@@ -43,6 +43,19 @@ CONFIGS = {
         "observer": {"lumi_dist": 3e28, "z": 1.0, "theta_obs": 0.2},
         "fwd_rad": {"eps_e": 0.1, "eps_B": 1e-4, "p": 2.3, "ssc": True, "kn": True},
     },
+    # Structured-jet reverse shock, viewed off-axis at a fine theta grid: the jet
+    # wings put rows at Gamma0(theta) ~ 20-60, where the region-3 seed state is
+    # most fragile at early times (see the physical-domain projection in
+    # FRShockEqn::operator()). No other golden reaches this regime, and the full
+    # validation benchmark that does only runs on the weekly deploy workflow.
+    "gauss_ism_rs": {
+        "jet": {"type": "GaussianJet", "theta_c": 0.1, "E_iso": 1e52, "Gamma0": 300, "duration": 1.0},
+        "medium": {"type": "ISM", "n_ism": 1.0},
+        "observer": {"lumi_dist": 1e28, "z": 1.0, "theta_obs": 0.4},
+        "fwd_rad": {"eps_e": 0.1, "eps_B": 0.01, "p": 2.3},
+        "rvs_rad": {"eps_e": 0.1, "eps_B": 0.01, "p": 2.3},
+        "resolutions": (0.1, 1.2, 10),
+    },
 }
 
 
@@ -54,7 +67,10 @@ def build_model(config):
     observer = va.Observer(**config["observer"])
     fwd_rad = va.Radiation(**config["fwd_rad"])
     rvs_rad = va.Radiation(**config["rvs_rad"]) if "rvs_rad" in config else None
-    return va.Model(jet=jet, medium=medium, observer=observer, fwd_rad=fwd_rad, rvs_rad=rvs_rad)
+    kwargs = {}
+    if "resolutions" in config:
+        kwargs["resolutions"] = tuple(config["resolutions"])
+    return va.Model(jet=jet, medium=medium, observer=observer, fwd_rad=fwd_rad, rvs_rad=rvs_rad, **kwargs)
 
 
 def compute_components(model):
