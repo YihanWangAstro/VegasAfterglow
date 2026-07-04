@@ -119,11 +119,14 @@ Real compute_downstr_4vel(Real gamma_rel, Real sigma) noexcept {
         const Real u = std::sqrt(std::max(-P, 0.0) / 3);
         const Real denom = 2 * P * u;
         const Real v = (denom != 0) ? std::clamp(3 * Q / denom, -1.0, 1.0) : 0.0;
-        // The physical root (the middle one) extracted directly from the trig formula
+        // The returned root is still the physical (middle) one; only the evaluation
+        // route changes. Extracting the middle root directly from the trig formula
         // subtracts two O(gamma_rel^2) terms to produce an O(1) result, losing up to
-        // all precision at large gamma_rel. Instead take the largest root (well
-        // conditioned: same magnitude as the trig terms), deflate the cubic with
-        // Vieta's formulas, and pick the larger root of the remaining quadratic.
+        // all precision at large gamma_rel. The (unphysical) largest root is the one
+        // the trig formula evaluates without cancellation (it is itself O(|b|)), so
+        // compute that as an intermediate, divide it out via Vieta's identities
+        // (x0*x1*x2 = -d, c = x0*(x1+x2) + x1*x2), and recover the middle root as
+        // the larger root of the deflated quadratic.
         const Real x_max = 2 * u * std::cos(std::acos(v) / 3) - b / 3;
         if (x_max <= 0) {
             return 0;
