@@ -6,7 +6,14 @@ These hold to numerical precision by construction (verified empirically to
 import numpy as np
 import pytest
 
+import VegasAfterglow as va
 from VegasAfterglow import ISM, Model, Observer, Radiation, TophatJet
+
+# Exact analytic invariants verify to float precision on the exact-libm build;
+# under AFTERGLOW_FAST_MATH the two compared paths evaluate the polynomial
+# kernels (rel err ~1e-7) with different arguments, so the achievable agreement
+# is bounded by the kernel accuracy, not by the invariant.
+EXACT_RTOL = 1e-6 if getattr(va.VegasAfterglowC, "fast_math_enabled", False) else 1e-9
 
 P = 2.5
 T = np.logspace(3.5, 5.5, 16)
@@ -31,7 +38,7 @@ def test_flux_scales_exactly_with_inverse_distance_squared():
     """Doubling the luminosity distance reduces the total flux density by exactly a factor of 4 (F proportional to 1/D_L^2) to 1e-9 relative."""
     f1 = np.asarray(_model(lumi_dist=3e28).flux_density(T, NU).total)
     f2 = np.asarray(_model(lumi_dist=6e28).flux_density(T, NU).total)
-    np.testing.assert_allclose(f1 / f2, 4.0, rtol=1e-9)
+    np.testing.assert_allclose(f1 / f2, 4.0, rtol=EXACT_RTOL)
 
 
 def test_total_equals_sum_of_components():
@@ -47,7 +54,7 @@ def test_axisymmetric_flag_consistent_on_axis():
     """For an on-axis observer (theta_obs=0) the axisymmetric fast path and the full 3D integration yield the same flux to 1e-9 relative."""
     fa = np.asarray(_model(axisymmetric=True).flux_density(T, NU).total)
     fb = np.asarray(_model(axisymmetric=False).flux_density(T, NU).total)
-    np.testing.assert_allclose(fa, fb, rtol=1e-9)
+    np.testing.assert_allclose(fa, fb, rtol=EXACT_RTOL)
 
 
 def test_redshift_transformation_invariance():
@@ -58,7 +65,7 @@ def test_redshift_transformation_invariance():
     scale = (1 + z2) / (1 + z1)
     f_transformed = np.asarray(m1.flux_density(T / scale, NU * scale).total) * scale
     f_direct = np.asarray(m2.flux_density(T, NU).total)
-    np.testing.assert_allclose(f_transformed, f_direct, rtol=1e-9)
+    np.testing.assert_allclose(f_transformed, f_direct, rtol=EXACT_RTOL)
 
 
 def test_disabled_components_are_zero():

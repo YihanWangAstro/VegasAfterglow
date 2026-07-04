@@ -34,8 +34,14 @@ Real SmoothPowerLawSyn::log2_optical_thin(Real log2_nu) const noexcept {
 
 Real SmoothPowerLawSyn::log2_optical_thick(Real log2_nu) const noexcept {
     const Real log2_x = log2_nu - log2_nu_m;
-    const Real s = -smooth_thick_ * fast_exp2(2. / 3 * log2_x);
 
+    // Beyond log2_x_far_ the softplus argument -0.5*log2_x + s is below the -20
+    // shortcut of log2_softplus, which then returns exactly 0 — skip its exp2.
+    if (log2_x > log2_x_far_) {
+        return 2.5 * log2_x;
+    }
+
+    const Real s = -smooth_thick_ * fast_exp2(2. / 3 * log2_x);
     return 2.5 * log2_x + log2_softplus(-0.5 * log2_x + s);
 }
 
@@ -74,10 +80,11 @@ Real SmoothPowerLawSyn::compute_spectrum(Real nu) const noexcept {
 Real SmoothPowerLawSyn::compute_log2_spectrum(Real log2_nu) const noexcept {
     Real log2_f_thin = log2_optical_thin(log2_nu);
     Real log2_f_thick = log2_optical_thick(log2_nu);
-    if (log2_nu > log2_nu_c) {
-        // IC steepens the emission spectrum above nu_c. The SSA-dominated thick
-        // branch is set by the source function and is not directly modified, so
-        // apply the IC correction to the thin component only, before the blend.
+    // IC steepens the emission spectrum above nu_c. The SSA-dominated thick
+    // branch is set by the source function and is not directly modified, so
+    // apply the IC correction to the thin component only, before the blend
+    // (and only when it is nontrivial: see has_IC_correction).
+    if (log2_nu > log2_nu_c && has_IC_correction(*this)) {
         const Real nu = fast_exp2(log2_nu);
         log2_f_thin += fast_log2(inverse_compton_correction(*this, nu));
     }
@@ -96,6 +103,10 @@ void SmoothPowerLawSyn::build() noexcept {
     // G&S Table 2 b=4 (ISM, k=0): 2 -> 5/2 transition at nu_m, s = 3.44p - 1.41.
     // Divided by ln2 because the optical-thick form uses 2^(...) where G&S uses exp(...).
     smooth_thick_ = (3.44 * p - 1.41) / ln2;
+    // Where the optical-thick softplus provably hits its -20 shortcut:
+    // smooth_thick_ * 2^(2*log2_x/3) >= 20 alone pushes the argument below -20
+    // for log2_x > 0 (the -0.5*log2_x term only helps).
+    log2_x_far_ = 1.5 * fast_log2(20.0 / smooth_thick_);
 
     constexpr Real s_swap = 4.0;  // sigmoid sharpness for all regime blends (~1 octave window)
     constexpr Real s_floor = 0.1; // protect against atypical p flipping G&S linear fits negative

@@ -300,7 +300,7 @@ namespace {
             inv_step = 1.0 / step;
             for (size_t i = 0; i < n; ++i) {
                 const Real lg2_x = lg2_x_min + step * static_cast<Real>(i);
-                ratio[i] = compton_cross_section_ratio_from_x(std::exp2(lg2_x));
+                ratio[i] = compton_cross_section_ratio_from_x(fast_exp2(lg2_x));
             }
         }
 

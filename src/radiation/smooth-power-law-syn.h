@@ -66,6 +66,7 @@ struct SmoothPowerLawSyn {
     Real log2_norm_{0};       ///< Cached spectral coefficient 0 in log2
     Real log2_thick_norm_{0}; ///< Cached spectral coefficient 1 in log2
     Real smooth_thick_;       ///< 2->5/2 transition sharpness at nu_m in the optically-thick formula (G&S b=4, ISM)
+    Real log2_x_far_;         ///< nu/nu_m distance beyond which the optically-thick softplus is exactly 0
     Real s_a_blend_{1};       ///< Sigmoid-blended G&S smoothing at the thin/thick join (b=1, b=5, b=6 by nu_a position)
 
     // Unified-formula cached values (single double-smoothed expression that

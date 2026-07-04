@@ -89,6 +89,14 @@ TernaryFunc to_ternary_func(py::object const& obj, py::object const& native_type
 PYBIND11_MODULE(VegasAfterglowC, m) {
     xt::import_numpy();
 
+    // Build-flavor introspection: golden baselines must be generated with the
+    // exact-libm build (AFTERGLOW_FAST_MATH off); regenerate.py checks this.
+#ifdef AFTERGLOW_FAST_MATH
+    m.attr("fast_math_enabled") = true;
+#else
+    m.attr("fast_math_enabled") = false;
+#endif
+
     // Jet bindings
     py::object zero2d_fn = py::cpp_function(func::zero_2d);
     py::object zero3d_fn = py::cpp_function(func::zero_3d);

@@ -13,6 +13,7 @@
 #include <span>
 #include <vector>
 
+#include "../util/fast-math.h"
 #include "../util/macros.h"
 #include "../util/traits.h"
 #include "physics.h"
@@ -256,11 +257,11 @@ void logspace_boundary_center(Real lg2_min, Real lg2_max, size_t size, Arr& cent
     }
 
     const Real dlg2 = (lg2_max - lg2_min) / static_cast<Real>(size);
-    const Real r = std::exp2(dlg2);
+    const Real r = fast_exp2(dlg2);
     const Real s = std::sqrt(r);
     const Real w = r - 1.;
 
-    Real left = std::exp2(lg2_min);
+    Real left = fast_exp2(lg2_min);
 
     for (std::size_t i = 0; i < size; ++i) {
         center(i) = left * s;

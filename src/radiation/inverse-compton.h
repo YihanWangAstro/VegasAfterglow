@@ -325,17 +325,17 @@ void ICPhoton<Electrons, Photons>::initialize_grids(GridParams const& params, Ar
     constexpr Real nu_grid_per_order{3.5};
     constexpr Real ic_grid_per_order{2};
 
-    adaptive_grid_with_breaks(std::log2(params.nu_IC_min), std::log2(params.nu_IC_max),
+    adaptive_grid_with_breaks(fast_log2(params.nu_IC_min), fast_log2(params.nu_IC_max),
                               std::span<const Real>(params.nu_IC_breaks),
                               std::span<const Real>(params.nu_IC_break_weight), ic_grid_per_order, nu_IC, 1, 2, 3);
     log2_nu_IC = xt::log2(nu_IC);
 
-    adaptive_grid_with_breaks(std::log2(params.nu_min), std::log2(params.nu_max),
+    adaptive_grid_with_breaks(fast_log2(params.nu_min), fast_log2(params.nu_max),
                               std::span<const Real>(params.nu_breaks), std::span<const Real>(params.nu_break_weight),
                               nu_grid_per_order, nu_seed, 1, 0.5, 3);
     compute_bin_widths(nu_seed, dnu_seed);
 
-    log2space(std::log2(params.gamma_min), std::log2(params.gamma_max), gamma_grid_per_order, gamma);
+    log2space(fast_log2(params.gamma_min), fast_log2(params.gamma_max), gamma_grid_per_order, gamma);
     compute_trapezoidal_weights(gamma, dgamma);
 }
 
@@ -472,7 +472,7 @@ void ICPhoton<Electrons, Photons>::compute_IC_spectrum(Array const& gamma, Array
 
 template <typename Electrons, typename Photons>
 Real ICPhoton<Electrons, Photons>::compute_I_nu(Real nu) {
-    return std::exp2(compute_log2_I_nu(std::log2(nu)));
+    return fast_exp2(compute_log2_I_nu(fast_log2(nu)));
 }
 
 template <typename Electrons, typename Photons>
@@ -610,7 +610,18 @@ void KN_cooling(ElectronGrid<Electrons>& electrons, PhotonGrid<Photons>& photons
     IC_cooling(electrons, photons, shock, coord, update_gamma_c_KN);
 }
 
+/// Whether IC cooling shaped this photon's spectrum. When false, the spectrum
+/// segments are empty and Y_c = 0, so inverse_compton_correction is exactly 1 —
+/// callers can skip it (and any log/exp wrapping around it).
+template <typename Photon>
+bool has_IC_correction(Photon const& ph) {
+    return ph.Y_c > 0 || ph.Ys.Y_T > 0;
+}
+
 template <typename Photon>
 Real inverse_compton_correction(Photon const& ph, Real nu) {
+    if (!has_IC_correction(ph)) {
+        return 1.0;
+    }
     return (1. + ph.Y_c) / (1 + ph.Ys.nu_spectrum(nu));
 }

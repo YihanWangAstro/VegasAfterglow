@@ -30,9 +30,12 @@ static Array compute_dphi(Coord const& coord, size_t eff_phi_grid) {
 //                                  Static Member Functions
 //========================================================================================================
 
+Real Observer::lg2_loglog_interpolate(InterpState const& state, Real lg2_t_obs, Real lg2_t_lo) noexcept {
+    return state.lg2_L_nu_lo + (lg2_t_obs - lg2_t_lo) * state.slope;
+}
+
 Real Observer::loglog_interpolate(InterpState const& state, Real lg2_t_obs, Real lg2_t_lo) noexcept {
-    const Real dlg2_t = lg2_t_obs - lg2_t_lo;
-    return fast_exp2(state.lg2_L_nu_lo + dlg2_t * state.slope);
+    return fast_exp2(lg2_loglog_interpolate(state, lg2_t_obs, lg2_t_lo));
 }
 
 //========================================================================================================
@@ -70,11 +73,11 @@ void Observer::calc_t_obs(Coord const& coord, Shock const& shock) {
                 const Real r = shock.r(i_eff, j, k);
                 const Real t_eng_ = coord.t(i_eff, j, k);
                 const Real cos_v = sin_theta(i_eff, j, k) * cos_phi * sin_obs + cos_theta(i_eff, j, k) * cos_obs;
-                const Real t_val = (t_eng_ + (1 - cos_v) * r / con::c) * one_plus_z;
 
-                lg2_doppler(i, j, k) = -fast_log2(gamma_ - std::sqrt((gamma_ - 1) * (gamma_ + 1)) * cos_v);
-                time(i, j, k) = t_val;
-                lg2_t(i, j, k) = fast_log2(t_val);
+                // Linear values only; observe() takes the log2 of the whole
+                // tensors in one vectorized pass (finalize_log_grids).
+                lg2_doppler(i, j, k) = gamma_ - std::sqrt((gamma_ - 1) * (gamma_ + 1)) * cos_v;
+                time(i, j, k) = (t_eng_ + (1 - cos_v) * r / con::c) * one_plus_z;
             }
         }
     }
@@ -125,7 +128,7 @@ void Observer::calc_solid_angle(Coord const& coord, Shock const& shock) {
             for (size_t k = 0; k < t_grid; ++k) {
                 const Real dOmega = std::fabs(dcos(i_eff, j, k) * dphi(i));
                 const Real r = shock.r(i_eff, j, k);
-                lg2_geom_factor(i, j, k) = fast_log2(dOmega * r * r) + 3 * lg2_doppler(i, j, k);
+                lg2_geom_factor(i, j, k) = dOmega * r * r;
             }
         }
     }
@@ -163,19 +166,18 @@ void Observer::calc_eat_non_spreading(Coord const& coord, Shock const& shock) {
                 cos_th_hi = std::cos(th_hi);
             }
             const Real dOmega = std::fabs((cos_th_hi - cos_th_lo) * dphi_i);
-            const Real lg2_dOmega = fast_log2(dOmega);
             cos_th_carry = cos_th_hi;
 
+            // Linear values only; the loop stays libm-free (and autovectorizable),
+            // and observe() takes the log2 of the whole tensors in one vectorized
+            // pass (finalize_log_grids).
             for (size_t k = 0; k < t_grid; ++k) {
                 const Real gamma_ = shock.Gamma(i_eff, j, k);
                 const Real r = shock.r(i_eff, j, k);
-                const Real t_val = coord.t(i_eff, j, k) * one_plus_z + t_coeff * r;
-                const Real lg2_dop = -fast_log2(gamma_ - std::sqrt((gamma_ - 1) * (gamma_ + 1)) * cos_v);
 
-                lg2_doppler(i, j, k) = lg2_dop;
-                time(i, j, k) = t_val;
-                lg2_t(i, j, k) = fast_log2(t_val);
-                lg2_geom_factor(i, j, k) = lg2_dOmega + fast_log2(r * r) + 3 * lg2_dop;
+                lg2_doppler(i, j, k) = gamma_ - std::sqrt((gamma_ - 1) * (gamma_ + 1)) * cos_v;
+                time(i, j, k) = coord.t(i_eff, j, k) * one_plus_z + t_coeff * r;
+                lg2_geom_factor(i, j, k) = dOmega * r * r;
             }
         }
     }
@@ -409,4 +411,16 @@ void Observer::observe(Coord const& coord, Shock const& shock, Real luminosity_d
     } else {
         calc_eat_non_spreading(coord, shock);
     }
+    finalize_log_grids();
+}
+
+void Observer::finalize_log_grids() {
+    // The calc_* fills above store linear values (Doppler denominator, observer
+    // time, dOmega * r^2); take their logarithms in vectorized whole-tensor
+    // passes here instead of one libm call per cell. noalias: each output
+    // element depends only on the same-index input, so in-place assignment is
+    // safe and skips the overlap-checker's full-grid temporary.
+    xt::noalias(lg2_doppler) = -xt::log2(lg2_doppler);
+    xt::noalias(lg2_t) = xt::log2(time);
+    xt::noalias(lg2_geom_factor) = xt::log2(lg2_geom_factor) + 3.0 * lg2_doppler;
 }

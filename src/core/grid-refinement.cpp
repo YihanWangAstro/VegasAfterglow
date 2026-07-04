@@ -1,5 +1,7 @@
 #include "grid-refinement.h"
 
+#include "../util/fast-math.h"
+
 struct Break {
     Real lg2;
     Real weight;
@@ -19,7 +21,7 @@ std::vector<Break> collect_valid_breaks(std::span<const Real> breaks, std::span<
         if (!(b > 0) || !std::isfinite(b)) {
             continue;
         }
-        const Real lg2_b = std::log2(b);
+        const Real lg2_b = fast_log2(b);
         if (lg2_b > lg2_min && lg2_b < lg2_max) {
             Real w = 1;
             if (i < break_weights.size()) {
@@ -123,7 +125,7 @@ size_t adaptive_grid_with_breaks(Real lg2_min, Real lg2_max, std::span<const Rea
 
     grid = Array::from_shape({merged.size()});
     for (size_t i = 0; i < merged.size(); ++i) {
-        grid(i) = std::exp2(merged[i].lg2);
+        grid(i) = fast_exp2(merged[i].lg2);
     }
     return merged.size();
 }

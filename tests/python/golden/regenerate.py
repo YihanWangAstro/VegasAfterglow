@@ -130,6 +130,11 @@ def compute_components(model):
 
 
 def main():
+    if getattr(va.VegasAfterglowC, "fast_math_enabled", False):
+        raise SystemExit(
+            "refusing to regenerate: the installed module was built with "
+            "AFTERGLOW_FAST_MATH. Baselines are canonical exact-libm results; "
+            "reinstall with --config-settings=cmake.define.AFTERGLOW_FAST_MATH=OFF first.")
     version = getattr(va, "__version__", "unknown")
     print(f"VegasAfterglow version: {version}")
     print("WARNING: regenerating golden baselines. Only do this when a physics")

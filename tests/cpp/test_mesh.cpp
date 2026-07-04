@@ -114,14 +114,24 @@ BOOST_AUTO_TEST_CASE(logspace_boundary_center_consistency) {
     // center(i) = left * sqrt(r), bin_width(i) = left * (r - 1)
     // so left = center(i) / sqrt(r), right = left * r
     // We check that center is approximately the geometric mean of adjacent boundaries.
-    // A simpler check: build boundaries from the logspace and compare.
+    // A simpler check: build boundaries from the logspace and compare. The mesh
+    // builds its grid through fast_exp2, so under AFTERGLOW_FAST_MATH the
+    // comparison against this std::exp2 reference carries the kernel's ~1e-7
+    // relative error COMPOUNDED across the bins (the boundaries are built
+    // multiplicatively, so the drift grows linearly with bin index: ~30 bins
+    // x 1e-7 = 3e-6 relative). BOOST_CHECK_CLOSE tolerances are in percent.
+#ifdef AFTERGLOW_FAST_MATH
+    constexpr Real MESH_TOL = 1e-3;
+#else
+    constexpr Real MESH_TOL = 1e-8;
+#endif
     const Real dlg2 = (10.0 - 2.0) / 30.0;
     const Real r = std::exp2(dlg2);
     Real left = std::exp2(2.0);
     for (size_t i = 0; i < 30; ++i) {
         const Real right = left * r;
         const Real geo_center = std::sqrt(left * right);
-        BOOST_CHECK_CLOSE(center(i), geo_center, 1e-8);
+        BOOST_CHECK_CLOSE(center(i), geo_center, MESH_TOL);
         left = right;
     }
 }

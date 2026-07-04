@@ -146,14 +146,23 @@ BOOST_AUTO_TEST_CASE(variadic_max) {
 }
 
 // BrokenPowerLaw
+//
+// BOOST_CHECK_CLOSE tolerances are in PERCENT. The log2-space evaluation path
+// goes through fast_log2/fast_exp2: exact under the default build, minimax
+// polynomials (rel err ~1e-7) under AFTERGLOW_FAST_MATH.
+#ifdef AFTERGLOW_FAST_MATH
+constexpr Real BPL_TOL = 1e-4; // percent; kernel bound 1e-7 rel = 1e-5 % + margin
+#else
+constexpr Real BPL_TOL = 1e-8;
+#endif
 
 // A single segment evaluates as a pure power law 10 * x^{-2} at and above the normalization point x = 1
 BOOST_AUTO_TEST_CASE(broken_power_law_single_segment) {
     BrokenPowerLaw<3> bpl;
     bpl.first_segment(10.0, 1.0, -2.0); // 10 * x^{-2}
-    BOOST_CHECK_CLOSE(bpl.eval(1.0), 10.0, 1e-8);
-    BOOST_CHECK_CLOSE(bpl.eval(2.0), 10.0 / 4.0, 1e-8);
-    BOOST_CHECK_CLOSE(bpl.eval(10.0), 0.1, 1e-8);
+    BOOST_CHECK_CLOSE(bpl.eval(1.0), 10.0, BPL_TOL);
+    BOOST_CHECK_CLOSE(bpl.eval(2.0), 10.0 / 4.0, BPL_TOL);
+    BOOST_CHECK_CLOSE(bpl.eval(10.0), 0.1, BPL_TOL);
 }
 
 // Adjacent segments join continuously: the value at the break x = 10 is 0.1
@@ -181,7 +190,7 @@ BOOST_AUTO_TEST_CASE(broken_power_law_eval_matches_log2) {
     for (Real x : test_values) {
         Real from_eval = bpl.eval(x);
         Real from_log2 = std::exp2(bpl.log2_eval(std::log2(x)));
-        BOOST_CHECK_CLOSE(from_eval, from_log2, 1e-8);
+        BOOST_CHECK_CLOSE(from_eval, from_log2, BPL_TOL);
     }
 }
 
@@ -193,15 +202,15 @@ BOOST_AUTO_TEST_CASE(broken_power_law_three_segments) {
     bpl.add_segment(100.0, -1.0);     // x^{-1} above 100
 
     // In first segment: f(5) = 5
-    BOOST_CHECK_CLOSE(bpl.eval(5.0), 5.0, 1e-6);
+    BOOST_CHECK_CLOSE(bpl.eval(5.0), 5.0, BPL_TOL);
     // At first break: f(10) = 10
-    BOOST_CHECK_CLOSE(bpl.eval(10.0), 10.0, 1e-6);
+    BOOST_CHECK_CLOSE(bpl.eval(10.0), 10.0, BPL_TOL);
     // In flat region: f(50) = 10
-    BOOST_CHECK_CLOSE(bpl.eval(50.0), 10.0, 1e-6);
+    BOOST_CHECK_CLOSE(bpl.eval(50.0), 10.0, BPL_TOL);
     // At second break: f(100) = 10
-    BOOST_CHECK_CLOSE(bpl.eval(100.0), 10.0, 1e-6);
+    BOOST_CHECK_CLOSE(bpl.eval(100.0), 10.0, BPL_TOL);
     // Above: f(200) = 10 * (200/100)^{-1} = 5
-    BOOST_CHECK_CLOSE(bpl.eval(200.0), 5.0, 1e-4);
+    BOOST_CHECK_CLOSE(bpl.eval(200.0), 5.0, BPL_TOL);
 }
 
 // clear() removes all segments, after which eval() returns 0

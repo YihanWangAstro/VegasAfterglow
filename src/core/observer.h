@@ -15,6 +15,7 @@
 #include "../util/macros.h"
 #include "mesh.h"
 #include "quadrature.h"
+#include "xtensor/core/xnoalias.hpp"
 
 /**
  * @struct SkyImageResult
@@ -240,6 +241,10 @@ class Observer {
      */
     void calc_eat_non_spreading(Coord const& coord, Shock const& shock);
 
+    /// Converts the linear-valued grids filled by the calc_* methods to log2 space
+    /// in vectorized whole-tensor passes (one libm-free pass per tensor).
+    void finalize_log_grids();
+
     /// Fills an existing splat grid (sky positions, luminosities, Gaussian widths) for a single frame.
     template <typename PhotonGrid>
     void build_splat_grid(SplatGrid& grid, Coord const& coord, Shock const& shock, Real t_obs, Real nu_obs,
@@ -270,6 +275,9 @@ class Observer {
      * <!-- ************************************************************************************** -->
      */
     [[nodiscard]] static Real loglog_interpolate(InterpState const& state, Real lg2_t_obs, Real lg2_t_lo) noexcept;
+
+    /// Same interpolation as loglog_interpolate but returns the log2-space value.
+    [[nodiscard]] static Real lg2_loglog_interpolate(InterpState const& state, Real lg2_t_obs, Real lg2_t_lo) noexcept;
 
     /**
      * @tparam PhotonGrid Types of photon grid objects
@@ -350,7 +358,7 @@ MeshGrid Observer::specific_flux(Array const& t_obs, Array const& nu_obs, Photon
     const size_t nu_len = nu_obs.size();
 
     const Array lg2_t_obs = xt::log2(t_obs);
-    const Array lg2_nu_src = xt::log2(nu_obs) + std::log2(one_plus_z);
+    const Array lg2_nu_src = xt::log2(nu_obs) + fast_log2(one_plus_z);
 
     MeshGrid F_nu({nu_len, t_obs_len}, 0);
 
@@ -358,6 +366,12 @@ MeshGrid Observer::specific_flux(Array const& t_obs, Array const& nu_obs, Photon
     Array boundary_vals({t_grid * nu_len}, 0);
     Array slope({nu_len}, 0);
     Array lo({nu_len}, 0);
+    // Per-column log2-flux contributions; exp2 runs once per column as a
+    // vectorized pass instead of one libm call per (frequency, time) sample.
+    // Every slot in [col_first, t_idx) is written before each flush (the
+    // k-segments tile the range and a non-finite slope writes -inf via lo),
+    // so no sentinel reset between columns is needed.
+    MeshGrid col_lg2({nu_len, t_obs_len}, 0);
 
     for (size_t i = 0; i < eff_phi_grid; i++) {
         const size_t eff_i = i * jet_3d;
@@ -375,6 +389,7 @@ MeshGrid Observer::specific_flux(Array const& t_obs, Array const& nu_obs, Photon
 
             size_t t_idx = 0;
             iterate_to(lg2_t(i, j, 0), lg2_t_obs, t_idx);
+            const size_t col_first = t_idx;
 
             for (size_t k = 0; k < t_grid - 1 && t_idx < t_obs_len; k++) {
                 if (lg2_t(i, j, k + 1) < lg2_t_obs(t_idx))
@@ -397,9 +412,14 @@ MeshGrid Observer::specific_flux(Array const& t_obs, Array const& nu_obs, Photon
                 for (size_t idx = idx_start; idx < t_idx; idx++) {
                     const Real dlg2_t = lg2_t_obs(idx) - t_lo_val;
                     for (size_t l = 0; l < nu_len; l++) {
-                        F_nu(l, idx) += fast_exp2(lo(l) + dlg2_t * slope(l));
+                        col_lg2(l, idx) = lo(l) + dlg2_t * slope(l);
                     }
                 }
+            }
+
+            if (col_first < t_idx) {
+                xt::noalias(xt::view(F_nu, xt::all(), xt::range(col_first, t_idx))) +=
+                    xt::exp2(xt::view(col_lg2, xt::all(), xt::range(col_first, t_idx)));
             }
         }
     }
@@ -418,15 +438,21 @@ Array Observer::specific_flux_series(Array const& t_obs, Array const& nu_obs, Ph
     }
 
     const Array lg2_t_obs = xt::log2(t_obs);
-    const Array lg2_nu_src = xt::log2(nu_obs) + std::log2(one_plus_z);
+    const Array lg2_nu_src = xt::log2(nu_obs) + fast_log2(one_plus_z);
 
     Array F_nu = xt::zeros<Real>({t_obs_len});
+    // Per-column log2-flux contributions; exp2 runs once per column as a
+    // vectorized pass instead of one libm call per observation point. Slots are
+    // written for every advancing idx; the (cold) boundary-failure branch writes
+    // the -inf sentinel itself, so no reset pass between columns is needed.
+    Array col_lg2({t_obs_len}, -con::inf);
 
     for (size_t i = 0; i < eff_phi_grid; i++) {
         const size_t eff_i = i * jet_3d;
         for (size_t j = 0; j < theta_grid; j++) {
             size_t idx = 0;
             iterate_to(lg2_t(i, j, 0), lg2_t_obs, idx);
+            const size_t col_first = idx;
             InterpState state;
 
             for (size_t k = 0; idx < t_obs_len && k < t_grid - 1;) {
@@ -434,10 +460,17 @@ Array Observer::specific_flux_series(Array const& t_obs, Array const& nu_obs, Ph
                     k++;
                 } else {
                     if (set_boundaries(state, eff_i, i, j, k, lg2_nu_src(idx), photons)) [[likely]] {
-                        F_nu(idx) += loglog_interpolate(state, lg2_t_obs(idx), lg2_t(i, j, k));
+                        col_lg2(idx) = lg2_loglog_interpolate(state, lg2_t_obs(idx), lg2_t(i, j, k));
+                    } else {
+                        col_lg2(idx) = -con::inf;
                     }
                     idx++;
                 }
+            }
+
+            if (col_first < idx) {
+                xt::noalias(xt::view(F_nu, xt::range(col_first, idx))) +=
+                    xt::exp2(xt::view(col_lg2, xt::range(col_first, idx)));
             }
         }
     }
