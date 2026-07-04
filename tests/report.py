@@ -353,7 +353,9 @@ def loglog_panel(title, series, phases=(), guides=(), vlines=(),
                 return ya if xb <= xa else ya + (yb - ya) * (lx - xa) / (xb - xa)
         return ref[-1][1]
 
-    for x1, x2, slope, tip in guides:
+    xsym = xlabel.split(" ")[0] if xlabel else "x"
+    guide_labels = []
+    for gi, (x1, x2, slope, tip) in enumerate(guides):
         if slope is None or not (x1 and x2 and x1 > 0 and x2 > 0):
             continue
         a, b = max(math.log10(x1), lx0), min(math.log10(x2), lx1)
@@ -365,6 +367,23 @@ def loglog_panel(title, series, phases=(), guides=(), vlines=(),
         yb = y_at(mid) + slope * (b - mid) + off
         marks.append(f'<line x1="{X(a):.1f}" y1="{Y(ya):.1f}" x2="{X(b):.1f}" '
                      f'y2="{Y(yb):.1f}" class="guide"><title>{esc(tip)}</title></line>')
+        # Visible expected-slope label along the guide (staggered so labels on
+        # adjacent phase windows don't collide, clamped into the frame and kept
+        # outside the clip group so they are never truncated); the tooltip
+        # keeps the measured-vs-expected details.
+        if X(b) - X(a) >= 10:
+            cx = min(max((X(a) + X(b)) / 2, FIG_ML + 18), FIG_ML + pw - 18)
+            cy = min(max((Y(ya) + Y(yb)) / 2 - 5 - (gi % 2) * 9, FIG_MT + 24),
+                     FIG_MT + ph - 6)
+            ang = math.degrees(math.atan2(Y(yb) - Y(ya), X(b) - X(a)))
+            exp = f"{slope:+.2f}".rstrip("0").rstrip(".").replace("-", "−")
+            if exp == "+0":
+                exp = "0"
+            guide_labels.append(
+                f'<text x="{cx:.1f}" y="{cy:.1f}" class="guide-label" text-anchor="middle" '
+                f'transform="rotate({ang:.1f} {cx:.1f} {cy:.1f})">{xsym}'
+                f'<tspan class="guide-exp" dy="-3.5">{exp}</tspan>'
+                f'<title>{esc(tip)}</title></text>')
 
     for color, pts in clean:
         stride = max(1, len(pts) // 140)
@@ -375,6 +394,7 @@ def loglog_panel(title, series, phases=(), guides=(), vlines=(),
         marks.append(f'<path d="{path}" fill="none" stroke="{color}" '
                      f'stroke-width="2" stroke-linejoin="round"/>')
     out.append(f'<g clip-path="url(#{cid})">{"".join(marks)}</g>')
+    out.extend(guide_labels)
 
     for vi, (xv, lab, color) in enumerate(vlines):
         if not xv or xv <= 0 or not math.isfinite(xv):
@@ -434,7 +454,7 @@ def dynamics_figures(viz):
                 f"{medium} — {qlab}(t)", [("#5B8ADB", md["t"], md[q])],
                 phases, guides, ylabel=f"{qlab} [{unit}]" if unit else qlab))
     return panels, ('<span class="lg"><span class="sw guide-sw"></span>'
-                    'expected slope (hover for fit)</span>')
+                    'expected slope (hover for the measured fit)</span>')
 
 
 def frequency_figures(viz):
@@ -466,7 +486,7 @@ def spectrum_figures(viz, grid):
             [("#5B8ADB", rd["nu"], rd["flux"])], guides=guides, vlines=vlines,
             xlabel="ν [Hz]", ylabel="F_ν"))
     return panels, ('<span class="lg"><span class="sw guide-sw"></span>'
-                    'expected segment slope (hover for fit)</span>')
+                    'expected segment slope (hover for the measured fit)</span>')
 
 
 def fig_cells(panels):
@@ -1161,6 +1181,8 @@ svg { display: block; width: 100%; height: auto; }
 .phase-band { fill: var(--blue); opacity: 0.08; }
 .phase-label { fill: var(--ink-2); font-size: 10px; }
 .guide { stroke: var(--warn); stroke-width: 1.6; stroke-dasharray: 5 4; fill: none; }
+.guide-label { fill: var(--warn); font-size: 9.5px; font-weight: 600; }
+.guide-label .guide-exp { font-size: 7.5px; }
 .guide-sw { background: repeating-linear-gradient(90deg, var(--warn) 0 5px,
   transparent 5px 9px); height: 3px; margin-top: 4px; border-radius: 0; }
 .vline-label { font-size: 10.5px; font-weight: 650; }
