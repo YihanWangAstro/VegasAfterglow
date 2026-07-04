@@ -56,12 +56,73 @@ CONFIGS = {
         "rvs_rad": {"eps_e": 0.1, "eps_B": 0.01, "p": 2.3},
         "resolutions": (0.1, 1.2, 10),
     },
+    # Magnetized ejecta reverse shock: the only golden exercising the sigma > 0
+    # jump conditions (cubic root of the downstream four-velocity), the shell
+    # magnetization evolution, and the magnetosonic crossing-rate cap.
+    "tophat_sigma_rs": {
+        "jet": {"type": "MagnetizedTophat", "theta_c": 0.1, "E_iso": 1e52, "Gamma0": 300,
+                "sigma0": 0.1, "duration": 1.0},
+        "medium": {"type": "ISM", "n_ism": 1.0},
+        "observer": {"lumi_dist": 3e28, "z": 0.5, "theta_obs": 0.0},
+        "fwd_rad": {"eps_e": 0.1, "eps_B": 1e-3, "p": 2.3},
+        "rvs_rad": {"eps_e": 0.1, "eps_B": 1e-2, "p": 2.5},
+    },
+    # Power-law jet in a wind: covers the power-law structure profile and the
+    # only reverse shock evolved in a wind (k = 2) density gradient.
+    "powerlaw_wind_rs": {
+        "jet": {"type": "PowerLawJet", "theta_c": 0.1, "E_iso": 1e52, "Gamma0": 300,
+                "k_e": 2.0, "k_g": 2.0, "duration": 1.0},
+        "medium": {"type": "Wind", "A_star": 0.1},
+        "observer": {"lumi_dist": 1e28, "z": 1.0, "theta_obs": 0.3},
+        "fwd_rad": {"eps_e": 0.1, "eps_B": 0.01, "p": 2.3},
+        "rvs_rad": {"eps_e": 0.1, "eps_B": 0.01, "p": 2.3},
+    },
+    # Lateral spreading: the only golden running the jet-spreading branches
+    # (dtheta/dt evolution and the spreading terms of the forward-shock RHS).
+    "tophat_ism_spread": {
+        "jet": {"type": "TophatJet", "theta_c": 0.1, "E_iso": 1e53, "Gamma0": 300, "spreading": True},
+        "medium": {"type": "ISM", "n_ism": 1.0},
+        "observer": {"lumi_dist": 3e28, "z": 0.5, "theta_obs": 0.0},
+        "fwd_rad": {"eps_e": 0.1, "eps_B": 1e-3, "p": 2.3},
+    },
+    # Two-component jet viewed between the core and the wing: covers the
+    # two-component structure profile (narrow fast core + wide slow sheath).
+    "two_component_ism": {
+        "jet": {"type": "TwoComponentJet", "theta_c": 0.05, "E_iso": 1e52, "Gamma0": 300,
+                "theta_w": 0.3, "E_iso_w": 1e50, "Gamma0_w": 50},
+        "medium": {"type": "ISM", "n_ism": 1.0},
+        "observer": {"lumi_dist": 1e28, "z": 1.0, "theta_obs": 0.15},
+        "fwd_rad": {"eps_e": 0.1, "eps_B": 0.01, "p": 2.3},
+    },
+    # SSC with Klein-Nishina and IC cooling on the CMB: covers the cmb_cooling
+    # electron-cooling path (compute_CMB_Y), absent from every other golden.
+    "tophat_ism_ssc_cmb": {
+        "jet": {"type": "TophatJet", "theta_c": 0.1, "E_iso": 1e53, "Gamma0": 300},
+        "medium": {"type": "ISM", "n_ism": 1e-3},
+        "observer": {"lumi_dist": 3e28, "z": 2.0, "theta_obs": 0.0},
+        "fwd_rad": {"eps_e": 0.1, "eps_B": 1e-4, "p": 2.3, "ssc": True, "kn": True, "cmb_cooling": True},
+    },
 }
+
+
+def _magnetized_tophat(theta_c, E_iso, Gamma0, sigma0, duration=1.0):
+    # Named jet factories take no magnetization; build the tophat profile on the
+    # generic Ejecta with a constant sigma0 (scalars stay JSON-serializable).
+    return va.Ejecta(
+        E_iso=lambda phi, theta: E_iso if theta <= theta_c else 0.0,
+        Gamma0=lambda phi, theta: Gamma0 if theta <= theta_c else 1.0,
+        sigma0=lambda phi, theta: sigma0,
+        duration=duration,
+    )
 
 
 def build_model(config):
     jet_kwargs = dict(config["jet"])
-    jet = getattr(va, jet_kwargs.pop("type"))(**jet_kwargs)
+    jet_type = jet_kwargs.pop("type")
+    if jet_type == "MagnetizedTophat":
+        jet = _magnetized_tophat(**jet_kwargs)
+    else:
+        jet = getattr(va, jet_type)(**jet_kwargs)
     medium_kwargs = dict(config["medium"])
     medium = getattr(va, medium_kwargs.pop("type"))(**medium_kwargs)
     observer = va.Observer(**config["observer"])
