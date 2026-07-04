@@ -118,7 +118,6 @@ def _snapshot_config(fitter) -> dict:
             "rvs_ssc": bool(fitter.rvs_ssc),
             "rvs_shock": bool(fitter.rvs_shock),
             "kn": bool(fitter.kn),
-            "cmb_cooling": bool(fitter.cmb_cooling),
             "magnetar": bool(fitter.magnetar),
             "rtol": float(fitter.rtol),
             "resolution": [
@@ -210,7 +209,6 @@ def load_fitter(path, *, jet=None, medium=None, extinction=None):
         rvs_ssc=cc["rvs_ssc"],
         rvs_shock=cc["rvs_shock"],
         kn=cc["kn"],
-        cmb_cooling=cc["cmb_cooling"],
         magnetar=cc["magnetar"],
         rtol=cc["rtol"],
         resolution=tuple(cc["resolution"]),

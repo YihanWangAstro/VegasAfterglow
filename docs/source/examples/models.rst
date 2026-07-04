@@ -431,6 +431,4 @@ Self-Synchrotron Compton Radiation
 
     (ssc = True, kn = True): SSC emission with IC cooling and Klein-Nishina corrections.
 
-    CMB inverse Compton cooling can be enabled independently via ``cmb_cooling=True``, which is relevant for AGN jets where the CMB energy density contributes significantly to electron cooling. When both ``ssc`` and ``cmb_cooling`` are active, the total Compton-Y includes both contributions.
-
 For details on the underlying radiation physics, see :doc:`/physics`.

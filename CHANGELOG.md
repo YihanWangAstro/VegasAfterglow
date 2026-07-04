@@ -20,6 +20,10 @@ Have a feature request? [Open an issue](https://github.com/YihanWangAstro/VegasA
 
 ## [Unreleased]
 
+### Removed
+
+- **`cmb_cooling` option removed** from `Radiation`, `Fitter`, and the CLI: inverse Compton cooling off the CMB is negligible for GRB afterglow shocks (the comoving magnetic energy density dwarfs the CMB energy density in all relevant regimes) and the flag added API and code complexity without practical use
+
 ### Fixed
 
 - **Reverse-shock rates are evaluated on the physical domain** (`Gamma3 <= Gamma4`, `0 <= m3 <= m4`, `x3, U3 >= 0`): adaptive-step overshoot at the seed scale of the shocked-shell variables could previously escalate into a runaway that stalled the solver ("ODE exceeded steps" warnings) and corrupted that grid row's light curve; healthy solves are unaffected

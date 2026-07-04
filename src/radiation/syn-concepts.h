@@ -20,8 +20,8 @@ struct InverseComptonY;
  * @concept SynElectronModel
  * @brief Contract a synchrotron electron-distribution type must satisfy to drive ICPhoton and
  *        the IC cooling pipeline.
- * @details This is the interface consumed by ICPhoton, IC_cooling/Thomson_cooling/KN_cooling/
- *          CMB_cooling, and the photon factory (generate_syn_photons). Mutability matters:
+ * @details This is the interface consumed by ICPhoton, IC_cooling/Thomson_cooling/KN_cooling,
+ *          and the photon factory (generate_syn_photons). Mutability matters:
  *          IC_cooling writes gamma_a/gamma_c/gamma_M/Y_c/regime and mutates Ys in place, so
  *          these must be plain public data members (genuine lvalues), not accessors.
  *          n_breaks must be a constant expression equal to 4 — ICPhoton sizes its break arrays

@@ -186,10 +186,6 @@ Radiation Parameters
      - flag
      - off
      - Enable Klein-Nishina corrections (requires ``--ssc``)
-   * - ``--cmb_cooling``
-     - flag
-     - off
-     - Enable CMB inverse Compton cooling
 
 Reverse Shock Parameters
 ^^^^^^^^^^^^^^^^^^^^^^^^

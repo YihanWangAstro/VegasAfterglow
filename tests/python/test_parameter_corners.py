@@ -64,7 +64,6 @@ RADS = {
     "plain": lambda: va.Radiation(eps_e=0.1, eps_B=0.01, p=2.3),
     "ssc": lambda: va.Radiation(eps_e=0.1, eps_B=1e-4, p=2.3, ssc=True),
     "ssc_kn": lambda: va.Radiation(eps_e=0.1, eps_B=1e-4, p=2.3, ssc=True, kn=True),
-    "cmb_cooling": lambda: va.Radiation(eps_e=0.1, eps_B=0.01, p=2.3, cmb_cooling=True),
     "p_near2": lambda: va.Radiation(eps_e=0.1, eps_B=0.01, p=2.02),
     "p_steep": lambda: va.Radiation(eps_e=0.3, eps_B=0.3, p=2.9),
     "xi_e": lambda: va.Radiation(eps_e=0.1, eps_B=0.01, p=2.3, xi_e=0.1),
@@ -101,7 +100,7 @@ def test_medium_corner(medium_name):
 
 @pytest.mark.parametrize("rad_name", sorted(RADS))
 def test_radiation_corner(rad_name):
-    """Each forward-shock radiation configuration (synchrotron only, SSC, SSC with Klein-Nishina, CMB cooling, p near 2, steep p, reduced xi_e) produces a finite, strictly positive light curve."""
+    """Each forward-shock radiation configuration (synchrotron only, SSC, SSC with Klein-Nishina, p near 2, steep p, reduced xi_e) produces a finite, strictly positive light curve."""
     model = _build_model(rad=rad_name)
     _assert_light_curve(model.flux_density(T, NU))
 

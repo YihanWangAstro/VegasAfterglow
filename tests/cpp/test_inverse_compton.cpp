@@ -175,43 +175,6 @@ BOOST_AUTO_TEST_CASE(eta_rad_thomson_p_equals_2) {
 }
 
 // ============================================================================
-//  compute_CMB_Y
-// ============================================================================
-
-// Y_CMB = u_CMB(z)/u_B is finite and strictly positive for B = 1 G at z = 1.
-BOOST_AUTO_TEST_CASE(compute_CMB_Y_positive) {
-    Real Y = compute_CMB_Y(1.0 * unit::Gauss, 1.0);
-    BOOST_CHECK(std::isfinite(Y));
-    BOOST_CHECK_GT(Y, 0.0);
-}
-
-// B = 0 is guarded: returns exactly Y = 0 instead of diverging as 1/u_B.
-BOOST_AUTO_TEST_CASE(compute_CMB_Y_zero_B) {
-    BOOST_CHECK_EQUAL(compute_CMB_Y(0.0, 1.0), 0.0);
-}
-
-// z = 0 is guarded: returns exactly Y = 0 (CMB cooling disabled at zero redshift).
-BOOST_AUTO_TEST_CASE(compute_CMB_Y_zero_z) {
-    BOOST_CHECK_EQUAL(compute_CMB_Y(1.0 * unit::Gauss, 0.0), 0.0);
-}
-
-// Y_CMB grows with redshift since u_CMB scales as (1+z)^4: Y(z=5) > Y(z=1) at fixed B.
-BOOST_AUTO_TEST_CASE(compute_CMB_Y_increases_with_z) {
-    // Higher redshift -> more CMB energy density -> larger Y
-    Real Y_z1 = compute_CMB_Y(1.0 * unit::Gauss, 1.0);
-    Real Y_z5 = compute_CMB_Y(1.0 * unit::Gauss, 5.0);
-    BOOST_CHECK_GT(Y_z5, Y_z1);
-}
-
-// Y_CMB falls with field strength since u_B = B^2/(8*pi) sits in the denominator: Y(1 G) > Y(10 G).
-BOOST_AUTO_TEST_CASE(compute_CMB_Y_decreases_with_B) {
-    // Stronger B -> more magnetic energy density -> smaller Y_CMB
-    Real Y_B1 = compute_CMB_Y(1.0 * unit::Gauss, 1.0);
-    Real Y_B10 = compute_CMB_Y(10.0 * unit::Gauss, 1.0);
-    BOOST_CHECK_GT(Y_B1, Y_B10);
-}
-
-// ============================================================================
 //  compute_Thomson_Y
 // ============================================================================
 
@@ -221,25 +184,9 @@ BOOST_AUTO_TEST_CASE(compute_Thomson_Y_positive) {
     rad.eps_e = 0.1;
     rad.eps_B = 0.01;
     rad.p = 2.3;
-    rad.cmb_cooling = false;
     Real Y = compute_Thomson_Y(rad, 100.0, 1000.0);
     BOOST_CHECK(std::isfinite(Y));
     BOOST_CHECK_GT(Y, 0.0);
-}
-
-// cmb_cooling = true adds Y_CMB on top of Y_SSC: Y with CMB exceeds Y without, at fixed B and z.
-BOOST_AUTO_TEST_CASE(compute_Thomson_Y_with_CMB) {
-    RadParams rad;
-    rad.eps_e = 0.1;
-    rad.eps_B = 0.01;
-    rad.p = 2.3;
-    rad.cmb_cooling = true;
-    Real Y_with = compute_Thomson_Y(rad, 100.0, 1000.0, 1.0 * unit::Gauss, 1.0);
-
-    rad.cmb_cooling = false;
-    Real Y_without = compute_Thomson_Y(rad, 100.0, 1000.0, 1.0 * unit::Gauss, 1.0);
-
-    BOOST_CHECK_GT(Y_with, Y_without);
 }
 
 // ============================================================================
@@ -414,7 +361,6 @@ BOOST_AUTO_TEST_CASE(compute_Thomson_Y_limits) {
     // Fast cooling (gamma_c < gamma_m) gives eta = 1, so b = eps_e/eps_B.
     RadParams rad;
     rad.p = 2.3;
-    rad.cmb_cooling = false;
     const Real gamma_m = 1000.0;
     const Real gamma_c = 100.0;
 

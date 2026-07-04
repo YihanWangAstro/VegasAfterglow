@@ -298,12 +298,10 @@ class PyRadiation {
      * @param xi_e Fraction of shock-heated electrons that are accelerated to relativistic energies
      * @param ssc Whether to include synchrotron self-Compton emission and IC cooling (default: false)
      * @param kn Whether to include Klein-Nishina corrections for IC processes (default: false)
-     * @param cmb_cooling Whether to include IC cooling on CMB photons (default: false)
      * <!-- ************************************************************************************** -->
      */
-    PyRadiation(Real eps_e, Real eps_B, Real p, Real xi_e = 1, bool ssc = false, bool kn = false,
-                bool cmb_cooling = false)
-        : rad(RadParams{eps_e, eps_B, p, xi_e, cmb_cooling}), ssc(ssc), kn(kn) {
+    PyRadiation(Real eps_e, Real eps_B, Real p, Real xi_e = 1, bool ssc = false, bool kn = false)
+        : rad(RadParams{eps_e, eps_B, p, xi_e}), ssc(ssc), kn(kn) {
         AFTERGLOW_REQUIRE_RANGE_OI(eps_e, 0.0, 1.0);
         AFTERGLOW_REQUIRE_RANGE_OI(eps_B, 0.0, 1.0);
         AFTERGLOW_REQUIRE_RANGE_OI(xi_e, 0.0, 1.0);
@@ -329,9 +327,6 @@ class PyRadiation {
         }
         if (kn) {
             s += ", kn=True";
-        }
-        if (rad.cmb_cooling) {
-            s += ", cmb_cooling=True";
         }
         s += ")";
         return s;
@@ -866,13 +861,10 @@ void PyModel::single_shock_emission(Shock const& shock, Coord const& coord, Arra
     if (rad.ssc) {
         AFTERGLOW_PROFILE_SCOPE(cooling);
         if (rad.kn) {
-            KN_cooling(syn_e, syn_ph, shock, coord, obs_setup.z);
+            KN_cooling(syn_e, syn_ph, shock, coord);
         } else {
-            Thomson_cooling(syn_e, syn_ph, shock, coord, obs_setup.z);
+            Thomson_cooling(syn_e, syn_ph, shock, coord);
         }
-    } else if (rad.rad.cmb_cooling) {
-        AFTERGLOW_PROFILE_SCOPE(cooling);
-        CMB_cooling(syn_e, syn_ph, shock, coord, obs_setup.z);
     }
 
     {

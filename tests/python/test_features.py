@@ -211,23 +211,3 @@ class TestJetTypeFlux:
         flux = model.flux_density(t, nu)
         assert np.all(np.isfinite(flux.total))
         assert np.all(flux.total > 0)
-
-
-# ========================================
-#  CMB Cooling
-# ========================================
-class TestCMBCooling:
-    """Test CMB inverse Compton cooling."""
-
-    def test_cmb_cooling_runs(self):
-        """Enabling CMB inverse Compton cooling at z=2 yields finite, strictly positive total flux."""
-        jet = TophatJet(theta_c=0.1, E_iso=1e52, Gamma0=300)
-        medium = ISM(n_ism=1.0)
-        obs = Observer(lumi_dist=1e28, z=2.0, theta_obs=0.0)
-        rad = Radiation(eps_e=0.1, eps_B=0.01, p=2.2, cmb_cooling=True)
-        model = Model(jet, medium, obs, rad, resolutions=LOW_RES)
-        t = np.logspace(3, 6, 10)
-        nu = np.full_like(t, 4.84e14)
-        flux = model.flux_density(t, nu)
-        assert np.all(np.isfinite(flux.total))
-        assert np.all(flux.total > 0)

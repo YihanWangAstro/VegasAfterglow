@@ -189,7 +189,6 @@ def parse_args(argv=None):
     rad.add_argument(
         "--kn", action="store_true", help="enable Klein-Nishina corrections"
     )
-    rad.add_argument("--cmb_cooling", action="store_true", help="enable CMB IC cooling")
 
     # -- Reverse shock ------------------------------------------------------
     rvs = p.add_argument_group("reverse shock")
@@ -316,7 +315,6 @@ def build_radiation(args):
         xi_e=args.xi_e,
         ssc=args.ssc,
         kn=args.kn,
-        cmb_cooling=args.cmb_cooling,
     )
     rvs_rad = None
     if args.rvs:
