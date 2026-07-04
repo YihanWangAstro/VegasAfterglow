@@ -3,8 +3,8 @@
 #
 #   tests/run_all.sh                 # everything: C++ + pytest + full validation + test-report.html
 #   tests/run_all.sh --quick         # skip the validation suite (tiers 1+2 only, seconds)
-#   tests/run_all.sh --build         # force-rebuild C++ tests and reinstall the module first
-#   tests/run_all.sh --no-build      # skip the automatic staleness check
+#   tests/run_all.sh --build         # force-reinstall the python module first
+#   tests/run_all.sh --no-build      # skip the automatic build/freshness step
 #   tests/run_all.sh --cpp           # C++ only
 #   tests/run_all.sh --py            # pytest only
 #   tests/run_all.sh --physics       # pytest -m "physics or golden" only
@@ -12,12 +12,13 @@
 #   tests/run_all.sh --no-html       # skip the self-contained test-report.html
 #   tests/run_all.sh --cov           # also write coverage summary + htmlcov/
 #
-# Anything the selected tiers need that is older than the sources (the C++ test
-# binary, the installed Python module) is rebuilt automatically; testing a stale
-# build silently is worse than the rebuild wait. The module is always built with
+# The build is kept fresh automatically — testing a stale build silently is
+# worse than the rebuild wait. The C++ tier defers to cmake, whose dependency
+# tracking makes a fresh tree a near-instant no-op; the installed Python module
+# has no incremental mechanism, so it is reinstalled when it is missing, older
+# than the sources, or built without profiling. The module is always built with
 # AFTERGLOW_PROFILE=ON (like the deploy workflow) so the report's per-stage
-# performance breakdown works; a profiling-less install counts as stale when
-# the validation tier needs it.
+# performance breakdown works.
 #
 # Exit code is nonzero if any selected tier fails.
 set -u
@@ -67,62 +68,50 @@ run_tier() { # name, command...
     fi
 }
 
-# A target is stale when any of the files it is built from is newer than it.
-# `find -newer` prints the first offender (empty = fresh).
-newer_than() { # ref-file, source-roots...; stdout: first source newer than the ref
-    local ref=$1; shift
-    find "$@" \
-        \( -name '*.cpp' -o -name '*.h' -o -name '*.hpp' -o -name '*.tpp' \
-           -o -name 'CMakeLists.txt' -o -name 'pyproject.toml' \) \
-        -newer "$ref" -print 2>/dev/null | head -1
-}
+if [ $RUN_CPP -eq 1 ] && [ $NO_BUILD -eq 0 ]; then
+    # cmake's own dependency tracking is the freshness oracle: a fresh tree is a
+    # near-instant no-op, and the heuristic alternatives (mtime scans) can only
+    # drift from the real dependency graph.
+    run_tier "build: C++ tests" bash -c \
+        "cmake -B build -DAFTERGLOW_TESTS=ON >/dev/null && cmake --build build -j8 --target afterglow_tests | tail -1"
+fi
 
-NEED_CPP_BUILD=$DO_BUILD
-NEED_PY_BUILD=$DO_BUILD
-if [ $NO_BUILD -eq 0 ] && [ $DO_BUILD -eq 0 ]; then
-    if [ $RUN_CPP -eq 1 ]; then
-        if [ ! -x build/afterglow_tests ]; then
-            echo "build/afterglow_tests missing — will build"
-            NEED_CPP_BUILD=1
-        else
-            OFFENDER=$(newer_than build/afterglow_tests src tests/cpp CMakeLists.txt)
-            if [ -n "$OFFENDER" ]; then
-                echo "build/afterglow_tests is stale ($OFFENDER is newer) — rebuilding"
-                NEED_CPP_BUILD=1
-            fi
-        fi
-    fi
-    if [ $RUN_PY -eq 1 ] || [ $RUN_VALIDATION -eq 1 ]; then
-        MODULE_SO=$(python -c "import VegasAfterglow.VegasAfterglowC as m; print(m.__file__)" 2>/dev/null)
+if { [ $RUN_PY -eq 1 ] || [ $RUN_VALIDATION -eq 1 ]; } && [ $NO_BUILD -eq 0 ]; then
+    NEED_PY_BUILD=$DO_BUILD
+    if [ $NEED_PY_BUILD -eq 0 ]; then
+        # One probe answers both freshness questions: where the installed module
+        # lives, and whether it was built with profiling (probe the symbol the
+        # report actually consumes).
+        PROBE=$(python -c "import VegasAfterglow as va
+print(va.VegasAfterglowC.__file__)
+print(int(hasattr(va.Model, 'profile_data')))" 2>/dev/null)
+        MODULE_SO=$(printf '%s\n' "$PROBE" | sed -n 1p)
+        HAS_PROFILING=$(printf '%s\n' "$PROBE" | sed -n 2p)
+        OFFENDER=""
+        [ -n "$MODULE_SO" ] && OFFENDER=$(find src pybind external CMakeLists.txt pyproject.toml \
+            \( -name '*.cpp' -o -name '*.h' -o -name '*.hpp' -o -name '*.tpp' \
+               -o -name 'CMakeLists.txt' -o -name 'pyproject.toml' \) \
+            -newer "$MODULE_SO" -print -quit)
         if [ -z "$MODULE_SO" ]; then
             echo "VegasAfterglow module not importable — will install"
             NEED_PY_BUILD=1
-        else
-            OFFENDER=$(newer_than "$MODULE_SO" src pybind CMakeLists.txt pyproject.toml)
-            if [ -n "$OFFENDER" ]; then
-                echo "installed module is stale ($OFFENDER is newer) — reinstalling"
-                NEED_PY_BUILD=1
-            elif [ $RUN_VALIDATION -eq 1 ] && \
-                 ! python -c "import VegasAfterglow as va, sys; sys.exit(0 if hasattr(va.Model, 'profile_reset') else 1)" 2>/dev/null; then
-                echo "installed module lacks profiling (report needs per-stage timings) — reinstalling"
-                NEED_PY_BUILD=1
-            fi
+        elif [ -n "$OFFENDER" ]; then
+            echo "installed module is stale ($OFFENDER is newer) — reinstalling"
+            NEED_PY_BUILD=1
+        elif [ "$HAS_PROFILING" != 1 ]; then
+            echo "installed module lacks profiling (the report's per-stage timings need it) — reinstalling"
+            NEED_PY_BUILD=1
         fi
     fi
-fi
-
-if [ $NEED_CPP_BUILD -eq 1 ] && [ $RUN_CPP -eq 1 ]; then
-    run_tier "build: C++ tests" bash -c \
-        "cmake -B build -DAFTERGLOW_TESTS=ON >/dev/null && cmake --build build -j8 | tail -1"
-fi
-if [ $NEED_PY_BUILD -eq 1 ] && { [ $RUN_PY -eq 1 ] || [ $RUN_VALIDATION -eq 1 ]; }; then
-    run_tier "build: python module (pip install -e ., profiling on)" \
-        pip install -e . -q --config-settings=cmake.define.AFTERGLOW_PROFILE=ON
+    if [ $NEED_PY_BUILD -eq 1 ]; then
+        run_tier "build: python module (pip install -e ., profiling on)" \
+            pip install -e . -q --config-settings=cmake.define.AFTERGLOW_PROFILE=ON
+    fi
 fi
 
 if [ $RUN_CPP -eq 1 ]; then
     if [ ! -x build/afterglow_tests ]; then
-        echo "${RED}build/afterglow_tests not found — run with --build first${RESET}"
+        echo "${RED}build/afterglow_tests not found — the build failed or --no-build was given${RESET}"
         overall=1
     else
         CPP_ARGS=(--log_level=error)
