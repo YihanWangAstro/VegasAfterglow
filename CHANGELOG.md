@@ -22,6 +22,7 @@ Have a feature request? [Open an issue](https://github.com/YihanWangAstro/VegasA
 
 ### Fixed
 
+- **Reverse-shock rates are evaluated on the physical domain** (`Gamma3 <= Gamma4`, `0 <= m3 <= m4`, `x3, U3 >= 0`): adaptive-step overshoot at the seed scale of the shocked-shell variables could previously escalate into a runaway that stalled the solver ("ODE exceeded steps" warnings) and corrupted that grid row's light curve; healthy solves are unaffected
 - **Reverse-shock crossing end** is now located by bisection on the ODE dense output instead of at stored grid times: the frozen crossing state was previously up to one time-grid step late, biasing the post-crossing reverse-shock light curve near the crossing peak (golden baselines regenerated)
 - **Reverse-shock crossing rate** now computed via cancellation-free Lorentz-factor identities: the direct `(beta4 - beta3)/(1 - beta3)` form lost up to all precision at crossing onset where the shocked and unshocked ejecta move at nearly equal speeds
 - **Magnetized shock jump conditions**: the downstream four-velocity cubic is now solved by root deflation; the previous direct evaluation lost precision for relativistic shocks with high relative Lorentz factors

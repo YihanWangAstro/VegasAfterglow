@@ -249,7 +249,21 @@ Real FRShockEqn<Ejecta, Medium>::compute_dm4_dt(State const& /*state*/, State co
 }
 
 template <typename Ejecta, typename Medium>
-void FRShockEqn<Ejecta, Medium>::operator()(State const& state, State& diff, Real t) noexcept {
+void FRShockEqn<Ejecta, Medium>::operator()(State const& state_raw, State& diff, Real t) noexcept {
+    // Evaluate all rates on the projection of the state onto the physical domain:
+    // Gamma3 in [1, Gamma4], m3 in [0, m4], x3 >= 0, U3_th >= 0. Adaptive RK stages
+    // (and, near zero, accepted steps) can overshoot these bounds at the seed scale
+    // of the region-3 variables; rates computed from unphysical values are not
+    // self-correcting — dGamma/dt = -a/b swings through b ~ 0, |Gamma4 - Gamma3|
+    // feeds m3/U3 growth on both sides, and the solve runs away until dt falls
+    // below one ulp of t and time freezes. On the physical domain the projection
+    // is the identity, so healthy solves are unaffected bit-for-bit.
+    State state = state_raw;
+    state.Gamma = std::clamp(state.Gamma, 1.0, Gamma4);
+    state.m3 = std::clamp(state.m3, 0.0, std::max(state.m4, 0.0));
+    state.x3 = std::max(state.x3, 0.0);
+    state.U3_th = std::max(state.U3_th, 0.0);
+
     const Real Gamma = state.Gamma;
     const Real u3 = std::sqrt((Gamma - 1) * (Gamma + 1));
 
@@ -529,6 +543,13 @@ void grid_solve_shock_pair(size_t i, size_t j, View const& t, Shock& shock_fwd, 
         if (++steps > defaults::solver::max_ode_steps) {
             std::fprintf(stderr, "Warning: reverse shock ODE exceeded %zu steps at (i=%zu, j=%zu), giving up\n",
                          defaults::solver::max_ode_steps, i, j);
+            break;
+        }
+        if (stepper.current_time() + stepper.current_time_step() == stepper.current_time()) {
+            // dt has collapsed below one ulp of t: time can no longer advance, so
+            // spinning until the step cap would only burn cycles. Fail fast instead.
+            std::fprintf(stderr, "Warning: reverse shock ODE stalled (dt below time ulp) at (i=%zu, j=%zu), giving up\n",
+                         i, j);
             break;
         }
         if (reverse_shock_crossing &&
