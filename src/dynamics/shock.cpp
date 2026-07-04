@@ -119,8 +119,7 @@ Real compute_downstr_4vel(Real gamma_rel, Real sigma) noexcept {
         const Real u = std::sqrt(std::max(-P, 0.0) / 3);
         const Real denom = 2 * P * u;
         const Real v = (denom != 0) ? std::clamp(3 * Q / denom, -1.0, 1.0) : 0.0;
-        // The returned root is still the physical (middle) one; only the evaluation
-        // route changes. Extracting the middle root directly from the trig formula
+        // Extracting the middle root directly from the trig formula
         // subtracts two O(gamma_rel^2) terms to produce an O(1) result, losing up to
         // all precision at large gamma_rel. The (unphysical) largest root is the one
         // the trig formula evaluates without cancellation (it is itself O(|b|)), so

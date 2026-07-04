@@ -452,6 +452,35 @@ inline void reverse_shock_early_extrap(size_t i, size_t j, Shock& shock) {
 /**
  * <!-- ************************************************************************************** -->
  * @internal
+ * @brief Bisects the crossing-end time on the stepper's dense output.
+ * @details On entry, crossing must be incomplete at t_lo and complete at t_hi (the ends of the
+ *          last accepted step). On exit, state holds the solution at the returned time.
+ * @param stepper Dense-output ODE stepper holding the last accepted step
+ * @param eqn Reverse shock equation system
+ * @param state Scratch state; receives the solution at the crossing time
+ * @param t_lo Step start time (crossing incomplete)
+ * @param t_hi Step end time (crossing complete)
+ * @return The crossing-end time, to relative precision 1e-12
+ * <!-- ************************************************************************************** -->
+ */
+template <typename Stepper, typename Eqn>
+Real locate_crossing_time(Stepper& stepper, Eqn const& eqn, typename Eqn::State& state, Real t_lo, Real t_hi) {
+    for (int iter = 0; iter < 100 && (t_hi - t_lo) > 1e-12 * t_hi; ++iter) {
+        const Real t_mid = 0.5 * (t_lo + t_hi);
+        stepper.calc_state(t_mid, state);
+        if (eqn.crossing_complete(state, t_mid)) {
+            t_hi = t_mid;
+        } else {
+            t_lo = t_mid;
+        }
+    }
+    stepper.calc_state(t_hi, state);
+    return t_hi;
+}
+
+/**
+ * <!-- ************************************************************************************** -->
+ * @internal
  * @brief Solves the reverse/forward shock ODE at a grid point.
  * @details Manages the evolution of both shocks before and after crossing.
  * @param i Grid index for phi
@@ -492,6 +521,9 @@ void grid_solve_shock_pair(size_t i, size_t j, View const& t, Shock& shock_fwd, 
     }
 
     bool reverse_shock_crossing = true;
+    bool injection_idx_pending = false;
+    Real t_cross = 0;
+    Real t_step_start = t0;
     for (size_t steps = 0; stepper.current_time() <= t.back();) {
         stepper.do_step(eqn);
         if (++steps > defaults::solver::max_ode_steps) {
@@ -499,12 +531,23 @@ void grid_solve_shock_pair(size_t i, size_t j, View const& t, Shock& shock_fwd, 
                          defaults::solver::max_ode_steps, i, j);
             break;
         }
+        if (reverse_shock_crossing &&
+            eqn.crossing_complete(stepper.current_state(), stepper.current_time())) {
+            // The crossing ended within this step. Freeze the crossing state at the
+            // bisected event time rather than at the next stored grid time, which
+            // would anchor the post-crossing profile up to one grid step late and
+            // discontinuously in the inputs.
+            t_cross = locate_crossing_time(stepper, eqn, state, t_step_start, stepper.current_time());
+            eqn.save_cross_state(state);
+            reverse_shock_crossing = false;
+            injection_idx_pending = true;
+        }
+        t_step_start = stepper.current_time();
         while (k < t.size() && stepper.current_time() > t(k)) {
             stepper.calc_state(t(k), state);
-            if (reverse_shock_crossing && eqn.crossing_complete(state, t(k))) {
+            if (injection_idx_pending && t(k) >= t_cross) {
                 shock_rvs.injection_idx(i, j) = k > 0 ? k : 1;
-                reverse_shock_crossing = false;
-                eqn.save_cross_state(state);
+                injection_idx_pending = false;
             }
 
             save_fwd_shock_state(i, j, k, eqn, state, shock_fwd);

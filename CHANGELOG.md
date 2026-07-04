@@ -22,6 +22,7 @@ Have a feature request? [Open an issue](https://github.com/YihanWangAstro/VegasA
 
 ### Fixed
 
+- **Reverse-shock crossing end** is now located by bisection on the ODE dense output instead of at stored grid times: the frozen crossing state was previously up to one time-grid step late, biasing the post-crossing reverse-shock light curve near the crossing peak (golden baselines regenerated)
 - **Reverse-shock crossing rate** now computed via cancellation-free Lorentz-factor identities: the direct `(beta4 - beta3)/(1 - beta3)` form lost up to all precision at crossing onset where the shocked and unshocked ejecta move at nearly equal speeds
 - **Magnetized shock jump conditions**: the downstream four-velocity cubic is now solved by root deflation; the previous direct evaluation lost precision for relativistic shocks with high relative Lorentz factors
 - Relativistic kinematics helpers now use `(Gamma - 1)(Gamma + 1)` in place of `Gamma^2 - 1` and avoid `1 - beta` forms, making results independent of platform FMA behavior
