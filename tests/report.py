@@ -1116,12 +1116,12 @@ nav a { text-decoration: none; color: var(--ink-2); font-size: 13px; font-weight
   padding: 6px 14px; border-radius: 999px; border: 1px solid transparent; }
 nav a:hover { background: var(--surface); border-color: var(--ring); color: var(--ink); }
 nav a .n { color: var(--muted); font-weight: 500; }
-nav a.archive { color: var(--muted); }
-nav .plat-label { margin-left: auto; color: var(--muted); font-size: 13px;
-  padding: 7px 4px 7px 14px; }
-nav a.plat { color: var(--ink-2); }
-nav .plat-cur { color: var(--ink); font-size: 13px; font-weight: 700;
-  padding: 7px 10px; }
+nav a.archive { color: var(--muted); margin-left: auto; }
+.meta .plat-label { color: var(--muted); margin-left: 10px; }
+.meta a.plat { color: var(--ink-2); margin-left: 8px; text-decoration: underline;
+  text-decoration-color: var(--ring); text-underline-offset: 3px; }
+.meta a.plat:hover { color: var(--ink); }
+.meta .plat-cur { color: var(--ink); font-weight: 700; margin-left: 8px; }
 .tiles { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
   gap: 12px; margin: 22px 0 8px; }
 .tile { background: var(--surface); border: 1px solid var(--ring); border-radius: 12px;
@@ -1377,10 +1377,10 @@ def main():
 <style>{CSS}</style></head><body><div class="wrap">
 <div class="masthead">{inline_logo()}<div><h1>VegasAfterglow test &amp; validation report</h1>
 <div class="meta">{datetime.now().strftime("%Y-%m-%d %H:%M")} · commit {esc(git_commit())}
- · {esc(platform.system())} {esc(platform.machine())} · Python {platform.python_version()}</div>
+ · {esc(platform.system())} {esc(platform.machine())} · Python {platform.python_version()}{platform_nav}</div>
 </div><span class="verdict {'ok' if ok else 'bad'}">{"✓ ALL PASSING" if ok
     else f"✕ {n_fail_total} FAILING"}</span></div>
-<nav>{"".join(nav)}{platform_nav}<a class="archive" href="{esc(args.archive_href)}" title="All published report versions">all versions ↗</a></nav>
+<nav>{"".join(nav)}<a class="archive" href="{esc(args.archive_href)}" title="All published report versions">all versions ↗</a></nav>
 <section id="overview">{tiles}
 <div class="card"><h3>Outcomes by suite</h3>
 {stacked_status_bar(outcome_rows(comp_rows), "Outcomes by suite")}</div>
