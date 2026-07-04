@@ -376,9 +376,7 @@ def loglog_panel(title, series, phases=(), guides=(), vlines=(),
             cy = min(max((Y(ya) + Y(yb)) / 2 - 5 - (gi % 2) * 9, FIG_MT + 24),
                      FIG_MT + ph - 6)
             ang = math.degrees(math.atan2(Y(yb) - Y(ya), X(b) - X(a)))
-            exp = f"{slope:+.2f}".rstrip("0").rstrip(".").replace("-", "−")
-            if exp == "+0":
-                exp = "0"
+            exp = f"{slope:.2f}".rstrip("0").rstrip(".").replace("-", "−")
             guide_labels.append(
                 f'<text x="{cx:.1f}" y="{cy:.1f}" class="guide-label" text-anchor="middle" '
                 f'transform="rotate({ang:.1f} {cx:.1f} {cy:.1f})">{xsym}'
