@@ -190,7 +190,17 @@ inline Real compute_upstr_B(Real rho_up, Real sigma) noexcept {
  * <!-- ************************************************************************************** -->
  */
 inline Real compute_rel_Gamma(Real gamma1, Real gamma2) noexcept {
-    return gamma1 * gamma2 - std::sqrt(std::max((gamma1 * gamma1 - 1) * (gamma2 * gamma2 - 1), 0.0));
+    // Cancellation-free form. The naive gamma1*gamma2 - u1*u2 subtracts two
+    // O(gamma^2) numbers to produce 1 + O(1e-6) near equal velocities; the
+    // exact identity Gamma_rel - 1 = (gamma1 - gamma2)^2 / (gamma1*gamma2 - 1
+    // + u1*u2) keeps full precision there (both denominator terms positive).
+    const Real u1u2 = std::sqrt(std::max((gamma1 * gamma1 - 1) * (gamma2 * gamma2 - 1), 0.0));
+    const Real d = gamma1 - gamma2;
+    const Real denom = gamma1 * gamma2 - 1 + u1u2;
+    if (denom <= 0) {
+        return 1;
+    }
+    return 1 + d * d / denom;
 }
 
 /**
