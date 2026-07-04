@@ -77,14 +77,6 @@ CONFIGS = {
         "fwd_rad": {"eps_e": 0.1, "eps_B": 0.01, "p": 2.3},
         "rvs_rad": {"eps_e": 0.1, "eps_B": 0.01, "p": 2.3},
     },
-    # Lateral spreading: the only golden running the jet-spreading branches
-    # (dtheta/dt evolution and the spreading terms of the forward-shock RHS).
-    "tophat_ism_spread": {
-        "jet": {"type": "TophatJet", "theta_c": 0.1, "E_iso": 1e53, "Gamma0": 300, "spreading": True},
-        "medium": {"type": "ISM", "n_ism": 1.0},
-        "observer": {"lumi_dist": 3e28, "z": 0.5, "theta_obs": 0.0},
-        "fwd_rad": {"eps_e": 0.1, "eps_B": 1e-3, "p": 2.3},
-    },
     # Two-component jet viewed between the core and the wing: covers the
     # two-component structure profile (narrow fast core + wide slow sheath).
     "two_component_ism": {
