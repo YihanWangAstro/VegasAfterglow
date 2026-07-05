@@ -135,7 +135,8 @@ Real jet_spreading_edge(Ejecta const& jet, Medium const& /*medium*/, Real phi, R
 
 template <typename Func>
 Array inverse_CFD_sampling(Func&& pdf, Real min, Real max, size_t num,
-                           size_t sample_num = defaults::sampling::theta_samples, bool log_sample = false) {
+                           size_t sample_num = defaults::sampling::theta_samples, bool log_sample = false,
+                           bool midpoint = false) {
     using namespace boost::numeric::odeint;
     constexpr Real rtol = defaults::solver::ode_rtol;
     Array x_i = log_sample ? xt::eval(xt::logspace(std::log10(min), std::log10(max), sample_num))
@@ -156,7 +157,13 @@ Array inverse_CFD_sampling(Func&& pdf, Real min, Real max, size_t num,
         }
     }
 
-    Array CDF_out = xt::linspace(CDF_i.front(), CDF_i.back(), num);
+    // Midpoint quantiles place all nodes strictly inside (min, max): the
+    // midpoint rule on a function with even endpoints retains the spectral
+    // accuracy of the periodic trapezoidal rule, and no node lands on the
+    // integrand peak at the boundary.
+    Array CDF_out = midpoint
+                        ? Array(CDF_i.front() + (CDF_i.back() - CDF_i.front()) * (xt::arange<Real>(num) + 0.5) / num)
+                        : Array(xt::linspace(CDF_i.front(), CDF_i.back(), num));
     Array x_out = xt::zeros<Real>({num});
 
     for (size_t k = 0; k < num; ++k) {
@@ -273,11 +280,12 @@ Array adaptive_theta_grid(Ejecta const& jet, Real theta_min, Real theta_max, siz
 Array jump_refinement_grid(Array const& jumps, Real theta_min, Real theta_max, Real avg_spacing);
 
 template <typename Ejecta>
-Array adaptive_phi_grid(Ejecta const& jet, size_t phi_num, Real theta_v, Array const& theta_grid,
-                        bool is_axisymmetric) {
+Array adaptive_phi_grid(Ejecta const& jet, size_t phi_num, Real theta_v, Array const& theta_grid, bool is_axisymmetric,
+                        Real phi_max = 2 * con::pi) {
     if (theta_v == 0 && is_axisymmetric) {
         return xt::linspace(0., 2 * con::pi, phi_num);
     }
+    const bool half_range = phi_max < 2 * con::pi;
 
     const Real cos_tv = std::cos(theta_v);
     const Real sin_tv = std::sin(theta_v);
@@ -310,14 +318,16 @@ Array adaptive_phi_grid(Ejecta const& jet, size_t phi_num, Real theta_v, Array c
     constexpr size_t scan_pts = 100;
     Real peak_weight = 0;
     for (size_t s = 0; s <= scan_pts; ++s) {
-        const Real phi = 2 * con::pi * static_cast<Real>(s) / scan_pts;
+        const Real phi = phi_max * static_cast<Real>(s) / scan_pts;
         peak_weight = std::max(peak_weight, phi_weight(phi));
     }
     const Real floor_weight = 0.05 * peak_weight;
 
     auto eqn = [=](Real const& /*cdf*/, Real& pdf, Real phi) { pdf = phi_weight(phi) + floor_weight; };
 
-    return inverse_CFD_sampling(eqn, 0, 2 * con::pi, phi_num);
+    // Half-range (mirror-symmetric) grids use midpoint quantiles: nodes stay
+    // strictly inside (0, pi), so no separate peak-avoidance shift is needed.
+    return inverse_CFD_sampling(eqn, 0, phi_max, phi_num, defaults::sampling::theta_samples, false, half_range);
 }
 
 template <typename Arr>
@@ -574,14 +584,24 @@ Coord auto_grid(Ejecta const& jet, Medium const& medium, Array const& t_obs, Rea
     const Real phi_boost = std::sqrt(std::max(doppler_sharpness / (2 * con::pi), 1.0));
     const size_t phi_num = std::clamp(static_cast<size_t>(phi_base * phi_boost), size_t(1), phi_base * 5);
 
-    if (phi_num <= 2) {
+    // Axisymmetric jets viewed off-axis are mirror-symmetric about the
+    // jet-observer plane: sample phi over [0, pi] at the same angular density
+    // and double the weights (see Coord::phi_mirrored), halving the observer
+    // work at identical quadrature accuracy.
+    const bool mirror_phi = is_axisymmetric && theta_view != 0 && phi_num > 4;
+
+    if (mirror_phi) {
+        const size_t n_half = (phi_num + 1) / 2;
+        coord.phi = adaptive_phi_grid(jet, n_half, theta_view, coord.theta, is_axisymmetric, con::pi);
+        coord.phi_mirrored = true;
+    } else if (phi_num <= 2) {
         coord.phi = xt::linspace(0., 2 * con::pi, phi_num);
     } else {
         coord.phi = adaptive_phi_grid(jet, phi_num, theta_view, coord.theta, is_axisymmetric);
     }
     // Shift phi grid by half the first spacing so no point lands on the
-    // Doppler peak at phi=0
-    if (phi_num >= 2) {
+    // Doppler peak at phi=0 (mirror grids use midpoint nodes instead).
+    if (!mirror_phi && phi_num >= 2) {
         const Real shift = 0.5 * (coord.phi(1) - coord.phi(0));
         coord.phi += shift;
     }

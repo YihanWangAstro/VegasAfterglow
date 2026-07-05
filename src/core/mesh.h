@@ -82,6 +82,12 @@ class Coord {
     Real theta_view{0}; ///< Viewing angle
     Real phi_view{0};   ///< Viewing angle
 
+    /// True when phi covers [0, pi] only: axisymmetric jets viewed off-axis are
+    /// mirror-symmetric about the jet-observer plane, so the phi integral over
+    /// [0, 2pi] is exactly twice the integral over [0, pi]. The doubling lives
+    /// in the observer's phi weights.
+    bool phi_mirrored{false};
+
     Symmetry symmetry{Symmetry::structured}; ///< Auto-detected symmetry level
     std::vector<size_t> theta_reps;          ///< Representative theta indices (contiguous groups)
 

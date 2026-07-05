@@ -17,6 +17,15 @@ static Array compute_dphi(Coord const& coord, size_t eff_phi_grid) {
     Array dphi({eff_phi_grid}, 0);
     if (eff_phi_grid == 1) {
         dphi(0) = 2 * con::pi;
+    } else if (coord.phi_mirrored) {
+        // Midpoint-rule bins tiling [0, pi], doubled by the mirror symmetry
+        // about the jet-observer plane.
+        const size_t last = eff_phi_grid - 1;
+        for (size_t i = 0; i < eff_phi_grid; ++i) {
+            const Real left = (i > 0) ? 0.5 * (coord.phi(i - 1) + coord.phi(i)) : 0.0;
+            const Real right = (i < last) ? 0.5 * (coord.phi(i) + coord.phi(i + 1)) : con::pi;
+            dphi(i) = 2 * (right - left);
+        }
     } else {
         const size_t last = eff_phi_grid - 1;
         for (size_t i = 0; i < eff_phi_grid; ++i) {
