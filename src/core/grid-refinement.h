@@ -281,7 +281,7 @@ Array jump_refinement_grid(Array const& jumps, Real theta_min, Real theta_max, R
 
 template <typename Ejecta>
 Array adaptive_phi_grid(Ejecta const& jet, size_t phi_num, Real theta_v, Array const& theta_grid, bool is_axisymmetric,
-                        Real phi_max = 2 * con::pi) {
+                        Real phi_max = 2 * con::pi, Real self_boost_cap = 0) {
     if (theta_v == 0 && is_axisymmetric) {
         return xt::linspace(0., 2 * con::pi, phi_num);
     }
@@ -317,11 +317,27 @@ Array adaptive_phi_grid(Ejecta const& jet, size_t phi_num, Real theta_v, Array c
     // Pre-scan to find peak weight for floor calculation
     constexpr size_t scan_pts = 100;
     Real peak_weight = 0;
+    Real sum_weight = 0;
     for (size_t s = 0; s <= scan_pts; ++s) {
         const Real phi = phi_max * static_cast<Real>(s) / scan_pts;
-        peak_weight = std::max(peak_weight, phi_weight(phi));
+        const Real w = phi_weight(phi);
+        peak_weight = std::max(peak_weight, w);
+        sum_weight += w;
     }
     const Real floor_weight = 0.05 * peak_weight;
+
+    // Self-scaled node count: the pdf's peak-to-mean ratio measures how
+    // concentrated the phi structure is; sqrt-scale the base count by it.
+    // Smooth in all parameters (no point sampling of the jet profile), so the
+    // node count cannot jump discontinuously as theta_v crosses a jet edge.
+    if (self_boost_cap > 0 && peak_weight > 0) {
+        const Real mean_pdf = sum_weight / (scan_pts + 1) + floor_weight;
+        const Real concentration = (peak_weight + floor_weight) / mean_pdf;
+        // The base resolution handles ordinary off-axis concentration (~3-6
+        // measured across jet families); scale up only beyond that.
+        const Real boost = std::clamp(concentration / 5, Real(1), self_boost_cap);
+        phi_num = static_cast<size_t>(static_cast<Real>(phi_num) * boost);
+    }
 
     auto eqn = [=](Real const& /*cdf*/, Real& pdf, Real phi) { pdf = phi_weight(phi) + floor_weight; };
 
@@ -580,30 +596,34 @@ Coord auto_grid(Ejecta const& jet, Medium const& medium, Array const& t_obs, Rea
     coord.theta = merge_grids(base_theta, feature_theta);
 
     const size_t phi_base = std::max<size_t>(static_cast<size_t>(360 * phi_resol), 1);
-    const Real doppler_sharpness = jet.Gamma0(0, theta_view) * std::sin(theta_view);
-    const Real phi_boost = std::sqrt(std::max(doppler_sharpness / (2 * con::pi), 1.0));
-    const size_t phi_num = std::clamp(static_cast<size_t>(phi_base * phi_boost), size_t(1), phi_base * 5);
 
     // Axisymmetric jets viewed off-axis are mirror-symmetric about the
     // jet-observer plane: sample phi over [0, pi] at the same angular density
     // and double the weights (see Coord::phi_mirrored), halving the observer
-    // work at identical quadrature accuracy.
-    const bool mirror_phi = is_axisymmetric && theta_view != 0 && phi_num > 4;
+    // work at identical quadrature accuracy. The node count self-scales from
+    // the concentration of the phi pdf inside adaptive_phi_grid.
+    const bool mirror_phi = is_axisymmetric && theta_view != 0 && phi_base > 4;
 
     if (mirror_phi) {
-        const size_t n_half = (phi_num + 1) / 2;
-        coord.phi = adaptive_phi_grid(jet, n_half, theta_view, coord.theta, is_axisymmetric, con::pi);
+        const size_t n_half = (phi_base + 1) / 2;
+        coord.phi = adaptive_phi_grid(jet, n_half, theta_view, coord.theta, is_axisymmetric, con::pi, Real(5));
         coord.phi_mirrored = true;
-    } else if (phi_num <= 2) {
-        coord.phi = xt::linspace(0., 2 * con::pi, phi_num);
     } else {
-        coord.phi = adaptive_phi_grid(jet, phi_num, theta_view, coord.theta, is_axisymmetric);
-    }
-    // Shift phi grid by half the first spacing so no point lands on the
-    // Doppler peak at phi=0 (mirror grids use midpoint nodes instead).
-    if (!mirror_phi && phi_num >= 2) {
-        const Real shift = 0.5 * (coord.phi(1) - coord.phi(0));
-        coord.phi += shift;
+        // Full-circle grids keep the point-sampled Doppler boost.
+        const Real doppler_sharpness = jet.Gamma0(0, theta_view) * std::sin(theta_view);
+        const Real phi_boost = std::sqrt(std::max(doppler_sharpness / (2 * con::pi), 1.0));
+        const size_t phi_num = std::clamp(static_cast<size_t>(phi_base * phi_boost), size_t(1), phi_base * 5);
+        if (phi_num <= 2) {
+            coord.phi = xt::linspace(0., 2 * con::pi, phi_num);
+        } else {
+            coord.phi = adaptive_phi_grid(jet, phi_num, theta_view, coord.theta, is_axisymmetric);
+        }
+        // Shift phi grid by half the first spacing so no point lands on the
+        // Doppler peak at phi=0 (mirror grids use midpoint nodes instead).
+        if (phi_num >= 2) {
+            const Real shift = 0.5 * (coord.phi(1) - coord.phi(0));
+            coord.phi += shift;
+        }
     }
 
     if (t_obs.size() == 0) {
