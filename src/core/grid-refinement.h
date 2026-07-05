@@ -207,8 +207,16 @@ Array adaptive_theta_grid(Ejecta const& jet, Real theta_min, Real theta_max, siz
     Real Gamma_peak = 1.0;
     Real struct_sum = 0;
     size_t last_bright = 0;
+    // Effective Lorentz factor of the rows dominating the observer's Doppler
+    // structure: Gamma damped by the beam offset from theta_v. Point-sampling
+    // Gamma0(theta_v) reads the dim side of a sharp edge (tophat viewed at
+    // theta_obs >= theta_c), which disables the view-beam refinement exactly
+    // where the bright limb needs it; the damped max is smooth in theta_v and
+    // recovers Gamma0(theta_v) for continuous profiles.
+    Real Gamma_v = 1.0;
     for (size_t i = 0; i <= scan_pts; ++i) {
-        const Real Gamma = jet.Gamma0(0, theta_min + theta_extent * i / scan_pts);
+        const Real theta = theta_min + theta_extent * i / scan_pts;
+        const Real Gamma = jet.Gamma0(0, theta);
         const Real w = structure_weight(Gamma);
         struct_sum += w;
         if (w > peak_weight) {
@@ -218,12 +226,13 @@ Array adaptive_theta_grid(Ejecta const& jet, Real theta_min, Real theta_max, siz
         } else if (w > 0.01 * peak_weight) {
             last_bright = i;
         }
+        const Real dth = theta - theta_v;
+        Gamma_v = std::max(Gamma_v, Gamma / std::sqrt(1.0 + Gamma * Gamma * dth * dth));
     }
     const Real floor_weight = tgp.floor_fraction * peak_weight;
     const Real CDF_est = (struct_sum / scan_pts + floor_weight) * theta_extent;
     const Real theta_bright = theta_min + theta_extent * last_bright / scan_pts;
 
-    const Real Gamma_v = jet.Gamma0(0, std::clamp(theta_v, theta_min, theta_max));
     Gamma_peak = std::max(Gamma_peak, Gamma_v);
     const Real doppler_alpha = tgp.doppler_alpha * std::sqrt(peak_weight / std::max(structure_weight(Gamma_v), 1.0));
 
@@ -233,18 +242,21 @@ Array adaptive_theta_grid(Ejecta const& jet, Real theta_min, Real theta_max, siz
     // is outside the core beaming cone (θ_v·Γ > 3).
     constexpr Real beam_offset = 1.0;
 
-    auto compute_beam_pts = [&](Real log_decades, Real beam_coeff) -> size_t {
-        return static_cast<size_t>(std::max(0.0, log_decades - beam_offset) * theta_resol * beam_coeff);
+    auto compute_beam_pts = [&](Real log_decades, Real beam_coeff, Real offset) -> size_t {
+        return static_cast<size_t>(std::max(0.0, log_decades - offset) * theta_resol * beam_coeff);
     };
 
     const Real Gamma_peak_sq = Gamma_peak * Gamma_peak;
     const Real Gamma_v_sq = Gamma_v * Gamma_v;
-    const size_t core_beam_pts =
-        compute_beam_pts(std::log10(std::max(1.0, Gamma_peak * (theta_bright - theta_min))), tgp.core_beam_coeff);
+    const size_t core_beam_pts = compute_beam_pts(std::log10(std::max(1.0, Gamma_peak * (theta_bright - theta_min))),
+                                                  tgp.core_beam_coeff, beam_offset);
+    // No offset on the view term: its 1/|theta - theta_v| concentration is
+    // what resolves the bright limb when the observer sits at or just outside
+    // a sharp edge, where the Doppler transition spans barely a decade.
     const size_t view_beam_pts =
         (theta_v * Gamma_peak > 3.0)
             ? compute_beam_pts(std::log10(std::max(1.0, Gamma_v * std::max(theta_v - theta_min, theta_max - theta_v))),
-                               tgp.view_beam_coeff)
+                               tgp.view_beam_coeff, 0.0)
             : 0;
     const size_t total_pts = base_pts + core_beam_pts + view_beam_pts;
 
