@@ -526,13 +526,53 @@ inline std::pair<size_t, size_t> compute_time_grid_size(Real t_end, Real min_t_s
     return {t_num_base, t_num_base + t_num_rvs_extra};
 }
 
+/// Fixed-count log grid with a densified band [b_lo, b_hi] (relative density
+/// x factor): resolves a localized feature -- the deceleration turnover --
+/// by redistributing points, without growing the lattice.
+inline Array logspace_with_band_refinement(Real ts, Real t_end, Real b_lo, Real b_hi, size_t n, Real factor) {
+    b_lo = std::max(b_lo, ts);
+    b_hi = std::min(b_hi, t_end);
+    if (!(b_hi > b_lo) || n < 8) {
+        return xt::logspace(std::log10(ts), std::log10(t_end), n);
+    }
+    const Real l0 = std::log10(ts);
+    const Real l1 = std::log10(b_lo);
+    const Real l2 = std::log10(b_hi);
+    const Real l3 = std::log10(t_end);
+    const Real w1 = l1 - l0;
+    const Real w2 = factor * (l2 - l1);
+    const Real w3 = l3 - l2;
+    const size_t segs = n - 1;
+    size_t n1 = static_cast<size_t>(std::round(static_cast<Real>(segs) * w1 / (w1 + w2 + w3)));
+    size_t n3 = static_cast<size_t>(std::round(static_cast<Real>(segs) * w3 / (w1 + w2 + w3)));
+    n1 = std::min(n1, segs - 2);
+    n3 = std::min(n3, segs - 1 - n1 - 1);
+    const size_t n2 = segs - n1 - n3;
+
+    Array grid = Array::from_shape({n});
+    size_t idx = 0;
+    for (size_t k = 0; k < n1; ++k) {
+        grid(idx++) = l0 + (l1 - l0) * static_cast<Real>(k) / static_cast<Real>(n1);
+    }
+    for (size_t k = 0; k < n2; ++k) {
+        grid(idx++) = l1 + (l2 - l1) * static_cast<Real>(k) / static_cast<Real>(n2);
+    }
+    for (size_t k = 0; k <= n3; ++k) {
+        grid(idx++) = l2 + (l3 - l2) * static_cast<Real>(k) / static_cast<Real>(n3);
+    }
+    return xt::eval(xt::pow(Real(10), grid));
+}
+
 inline Array make_time_grid(Real ts, Real td, Real t_end, Real T0, size_t t_num_tot, size_t t_num_base, bool is_rvs) {
     if (is_rvs) {
         const Real t_cross_limit = std::max(td, T0);
         const Real t_refine = 10 * t_cross_limit;
         return logspace_with_cross_refinement(ts, t_end, t_refine, t_num_tot, t_num_base);
     }
-    return xt::logspace(std::log10(ts), std::log10(t_end), t_num_tot);
+    // Forward-shock-only lattice: densify around the deceleration turnover,
+    // where the light curve's log-log curvature peaks (the smooth power-law
+    // rise before it tolerates the thinning).
+    return logspace_with_band_refinement(ts, t_end, td / 3, 3 * td, t_num_tot, 3.0);
 }
 
 inline void store_time_grid(Coord& coord, size_t i, size_t j, Real et, Array const& grid, bool has_early_point,

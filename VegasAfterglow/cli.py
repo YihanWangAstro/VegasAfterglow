@@ -251,7 +251,7 @@ def parse_args(argv=None):
         "--res",
         nargs=3,
         type=float,
-        default=[0.1, 0.25, 10],
+        default=[0.075, 0.25, 7],
         metavar=("PHI", "THETA", "T"),
         help="resolution (phi_ppd, theta_ppd, t_ppd)",
     )

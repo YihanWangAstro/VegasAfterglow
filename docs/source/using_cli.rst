@@ -702,7 +702,7 @@ Higher resolution
 
     vegasgen --res 0.3 1.0 20
 
-Sets finer angular (phi=0.3, theta=1.0 points per degree) and temporal (20 points per decade) resolution compared to the defaults (0.1, 0.25, 10). Larger values mean more grid points and higher accuracy. The grid is not uniform — an internal adaptive algorithm concentrates points where the solution varies most rapidly. Floor values (minimum 32 theta points, 24 time points) prevent the grid from becoming too coarse at low resolution settings.
+Sets finer angular (phi=0.3, theta=1.0 points per degree) and temporal (20 points per decade) resolution compared to the defaults (0.075, 0.25, 7). Larger values mean more grid points and higher accuracy. The grid is not uniform — an internal adaptive algorithm concentrates points where the solution varies most rapidly. Floor values (minimum 32 theta points, 24 time points) prevent the grid from becoming too coarse at low resolution settings.
 
 Output in different formats and units
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^

@@ -58,7 +58,7 @@ namespace defaults {
     namespace grid {
         /// Azimuthal (phi) angular resolution factor
         /// Higher values = more phi grid points near the viewing direction
-        inline constexpr double phi_resolution = 0.1;
+        inline constexpr double phi_resolution = 0.075;
 
         /// Polar (theta) angular resolution factor
         /// Higher values = more theta grid points
@@ -66,7 +66,7 @@ namespace defaults {
 
         /// Temporal resolution factor
         /// Higher values = more time grid points (logarithmically spaced)
-        inline constexpr double time_resolution = 10.0;
+        inline constexpr double time_resolution = 7.0;
 
         /// Minimum number of theta grid points (forward shock)
         inline constexpr std::size_t min_theta_points = 36;

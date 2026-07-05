@@ -81,7 +81,7 @@ class Fitter:
         kn: bool = False,
         magnetar: bool = False,
         rtol: float = 1e-6,
-        resolution: Tuple[float, float, float] = (0.1, 0.25, 10),
+        resolution: Tuple[float, float, float] = (0.075, 0.25, 7),
         extinction=None,
     ):
         self.z = z
