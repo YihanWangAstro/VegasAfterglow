@@ -18,6 +18,23 @@ Have a feature request? [Open an issue](https://github.com/YihanWangAstro/VegasA
 
 ---
 
+## [Unreleased]
+
+### Fixed
+
+- **Silent zero flux for narrow early time windows** (v2.0.6 regression): when a requested observation window ended inside the deceleration refinement band of the time lattice, the grid's last node evaluated to NaN and every shock ODE row was silently skipped, returning identically zero flux (e.g. a single epoch near the deceleration time). Now guarded, with regression tests
+
+### Changed
+
+The SSC (inverse Compton) pipeline was rebuilt this release. It was unchanged between v2.0.5 and v2.0.6, so the comparisons below hold against both.
+
+- **SSC spectra are substantially more accurate**: the seed-photon integral treats each spectral bin as the local power law instead of a linear trapezoid, removing a systematic overestimate that all previous releases carried and that grew toward high frequencies (against a converged reference: optical ~20% → ~3%, X-ray ~25% → ~3%, TeV ~45% → ~4%). SSC light curves above the seed peak come out ~15% fainter for typical parameters — the earlier values were the biased ones
+- **Radio-band SSC was under-predicted by ~45% in all previous releases**: the electron integral was truncated at min(gamma_m, gamma_c)/3, cutting the soft low-energy tail exp(-gamma_m/gamma) whose suppression is cancelled by the 1/gamma^2 Compton weight for a full decade below the injection minimum. The integration now extends to where that tail genuinely dies; low-frequency SSC brightens by up to ~1.9x and its resolution-convergence noise (up to 15% scatter) disappears. SSC golden baselines are regenerated accordingly
+- **SSC is ~2.8x faster than v2.0.5, Klein-Nishina SSC ~2.2x**: inverse-Compton spectra are computed only over the frequency band the observer actually samples; the electron, seed, and output grids share a commensurate log lattice, so the KN cross-section is evaluated once per lattice node (instead of once per electron-seed pair) and the scattering convolution reduces to integer-indexed accumulation
+- **SSC spectral-regime test coverage**: two new golden baselines (dense-medium configurations) pin every ordering of the synchrotron self-absorption, injection, and cooling breaks that shapes the SSC seed spectrum, including the strongly self-absorbed regimes
+
+---
+
 ## [v2.0.6] - 2026-07-05
 
 ### Changed

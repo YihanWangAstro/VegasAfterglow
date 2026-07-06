@@ -293,6 +293,7 @@ namespace {
         static constexpr Real lg2_x_max = 6.6438561897747247;
 
         std::array<Real, n> ratio{};
+        std::array<Real, n> lg2_ratio{};
         Real inv_step{0};
 
         ComptonSigmaLUT() {
@@ -301,6 +302,7 @@ namespace {
             for (size_t i = 0; i < n; ++i) {
                 const Real lg2_x = lg2_x_min + step * static_cast<Real>(i);
                 ratio[i] = compton_cross_section_ratio_from_x(fast_exp2(lg2_x));
+                lg2_ratio[i] = fast_log2(ratio[i]);
             }
         }
 
@@ -317,6 +319,25 @@ namespace {
             const Real frac = pos - static_cast<Real>(idx);
             return ratio[idx] + (ratio[idx + 1] - ratio[idx]) * frac;
         }
+
+        inline void eval_pair_mid_x(Real x, Real& corr, Real& lg2_corr) const noexcept {
+            const Real lg2_x = fast_log2(x);
+            const Real pos = (lg2_x - lg2_x_min) * inv_step;
+            if (pos <= 0) {
+                corr = ratio.front();
+                lg2_corr = lg2_ratio.front();
+                return;
+            }
+            if (pos >= static_cast<Real>(n - 1)) {
+                corr = ratio.back();
+                lg2_corr = lg2_ratio.back();
+                return;
+            }
+            const size_t idx = static_cast<size_t>(pos);
+            const Real frac = pos - static_cast<Real>(idx);
+            corr = ratio[idx] + (ratio[idx + 1] - ratio[idx]) * frac;
+            lg2_corr = lg2_ratio[idx] + (lg2_ratio[idx + 1] - lg2_ratio[idx]) * frac;
+        }
     };
 } // namespace
 
@@ -330,4 +351,28 @@ Real compton_correction(Real nu) {
     }
     static const ComptonSigmaLUT lut;
     return lut.eval_mid_x(x);
+}
+
+void compton_correction_pair(Real nu, Real& corr, Real& lg2_corr) {
+    constexpr Real inv_ln2 = 1.4426950408889634;
+    const Real x = con::h / (con::me * con::c2) * nu;
+    if (!(x > 0)) {
+        corr = 0;
+        lg2_corr = -con::inf;
+        return;
+    }
+    if (x <= ComptonSigmaLUT::x_min) {
+        // Thomson limit: sigma/sigmaT = 1 - 2x; log2 via the ln(1-2x) series
+        // (relative error < 3e-6 at the branch boundary).
+        corr = 1 - 2 * x;
+        lg2_corr = -(2 * x + 2 * x * x) * inv_ln2;
+        return;
+    }
+    if (x >= ComptonSigmaLUT::x_max) {
+        corr = compton_cross_section_ratio_from_x(x);
+        lg2_corr = fast_log2(corr);
+        return;
+    }
+    static const ComptonSigmaLUT lut;
+    lut.eval_pair_mid_x(x, corr, lg2_corr);
 }

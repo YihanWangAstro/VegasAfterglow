@@ -251,7 +251,13 @@ void log2space(Real lg2_min, Real lg2_max, Real grid_per_order, Arr& array) {
     const Real decades = (lg2_max - lg2_min) / log2_10;
     const size_t n = std::max<size_t>(2, static_cast<size_t>(std::ceil(decades * grid_per_order)));
 
-    array = xt::logspace<Real>(lg2_min, lg2_max, n + 1, 2.0);
+    // Direct exp2 lattice: xt::logspace(base 2) routes every node through libm
+    // pow(2, x), which dominates the cost of building these small grids.
+    array = Arr::from_shape({n + 1});
+    const Real step = (lg2_max - lg2_min) / static_cast<Real>(n);
+    for (size_t i = 0; i <= n; ++i) {
+        array(i) = std::exp2(lg2_min + step * static_cast<Real>(i));
+    }
 }
 
 template <typename Arr>

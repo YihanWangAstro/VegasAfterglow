@@ -143,6 +143,100 @@ class TestWindFlux:
 
 
 # ========================================
+#  Time-Grid Edge Cases
+# ========================================
+class TestTimeGridEdgeCases:
+    """Guard the time-lattice construction against degenerate request windows."""
+
+    def test_single_epoch_near_deceleration_time(self):
+        """A single early epoch whose window ends inside the deceleration
+        refinement band produced a NaN time node, silently skipping every ODE
+        row and returning identically zero flux (v2.0.6 regression)."""
+        jet = TophatJet(theta_c=0.1, E_iso=1e52, Gamma0=300)
+        medium = ISM(n_ism=0.1)
+        obs = Observer(lumi_dist=1e26, z=0.1, theta_obs=0.0)
+        rad = Radiation(eps_e=0.1, eps_B=0.5, p=2.5)
+        model = Model(jet, medium, obs, rad)
+        flux = model.flux_density_grid(np.array([10.0]), np.array([1e14, 1e17]))
+        total = np.asarray(flux.total)
+        assert np.all(np.isfinite(total))
+        assert np.all(total > 0)
+
+    def test_single_epoch_sweep_positive(self):
+        """Single-epoch requests across the light curve never hit a degenerate
+        lattice (any zero would mean a dropped ODE row, not faint emission)."""
+        jet = TophatJet(theta_c=0.1, E_iso=1e52, Gamma0=300)
+        medium = ISM(n_ism=0.1)
+        obs = Observer(lumi_dist=1e26, z=0.1, theta_obs=0.0)
+        rad = Radiation(eps_e=0.1, eps_B=0.5, p=2.5)
+        model = Model(jet, medium, obs, rad)
+        for t in np.logspace(0, 7, 15):
+            total = np.asarray(model.flux_density_grid(np.array([t]), np.array([1e14])).total)
+            assert np.all(total > 0), f"zero flux at single epoch t={t:g}s"
+
+    # Every distinct lattice-construction path: the forward-shock band
+    # refinement, the reverse-shock cross refinement, and both media (t_dec
+    # moves with the density profile). Off-axis shifts the per-row grid-start
+    # spread, exercising the early-point branch.
+    GRID_PATHS = {
+        "fwd_ism": dict(medium=("ism", 0.1), rvs=False, theta_obs=0.0),
+        "fwd_wind": dict(medium=("wind", 0.1), rvs=False, theta_obs=0.0),
+        "fwd_offaxis": dict(medium=("ism", 0.1), rvs=False, theta_obs=0.3),
+        "rvs_ism": dict(medium=("ism", 0.1), rvs=True, theta_obs=0.0),
+        "rvs_wind": dict(medium=("wind", 0.1), rvs=True, theta_obs=0.0),
+    }
+    # Window shapes that historically stress grid sizing: a single early epoch
+    # (window may end inside a refinement band), a single late epoch, and a
+    # narrow two-point window at several scales.
+    WINDOWS = [
+        [10.0],
+        [1e6],
+        [10.0, 11.0],
+        [1e3, 1.1e3],
+        [1e6, 1.1e6],
+    ]
+
+    @pytest.mark.parametrize("path", sorted(GRID_PATHS))
+    def test_degenerate_windows_all_grid_paths(self, path):
+        """All time-lattice construction paths return finite, strictly positive
+        flux for degenerate observation windows (single epochs, narrow
+        windows). A zero or NaN means a poisoned lattice node dropped ODE
+        rows -- the failure mode of the v2.0.6 regression -- not faint
+        emission."""
+        cfg = self.GRID_PATHS[path]
+        kind, value = cfg["medium"]
+        medium = ISM(n_ism=value) if kind == "ism" else Wind(A_star=value)
+        jet = TophatJet(theta_c=0.1, E_iso=1e52, Gamma0=300, duration=1.0)
+        obs = Observer(lumi_dist=1e26, z=0.1, theta_obs=cfg["theta_obs"])
+        rad = Radiation(eps_e=0.1, eps_B=0.01, p=2.3)
+        rvs_rad = Radiation(eps_e=0.1, eps_B=0.01, p=2.3) if cfg["rvs"] else None
+        model = Model(jet, medium, obs, rad, rvs_rad=rvs_rad)
+        for window in self.WINDOWS:
+            flux = model.flux_density_grid(np.array(window), np.array([1e14]))
+            total = np.asarray(flux.total)
+            assert np.all(np.isfinite(total)), f"{path}, window={window}: non-finite flux"
+            assert np.all(total > 0), f"{path}, window={window}: zero flux (dropped ODE rows)"
+
+    def test_eat_grid_nodes_finite(self):
+        """The equal-arrival-time node grid itself contains no NaN/inf: a
+        single poisoned node silently disables a whole (phi, theta) row even
+        when other windows would mask it in the flux."""
+        jet = TophatJet(theta_c=0.1, E_iso=1e52, Gamma0=300)
+        medium = ISM(n_ism=0.1)
+        obs = Observer(lumi_dist=1e26, z=0.1, theta_obs=0.0)
+        rad = Radiation(eps_e=0.1, eps_B=0.5, p=2.5)
+        model = Model(jet, medium, obs, rad)
+        # Windows chosen to land the grid end below, inside, and above the
+        # deceleration refinement band (t_dec ~ 10 s observer frame here).
+        for t_min, t_max in [(1.0, 2.0), (9.0, 11.0), (5.0, 1e3), (1e4, 1e6)]:
+            details = model.details(t_min, t_max)
+            t_obs = np.asarray(details.fwd.t_obs)
+            assert np.all(np.isfinite(t_obs)), f"NaN/inf EAT node for window ({t_min}, {t_max})"
+            doppler = np.asarray(details.fwd.Doppler)
+            assert np.all(np.isfinite(doppler)) and np.all(doppler > 0)
+
+
+# ========================================
 #  Off-Axis Observer
 # ========================================
 class TestOffAxis:

@@ -134,7 +134,7 @@ class ComprehensiveBenchmark:
     # reference_resolution=None lets the Model resolve them per shock mode --
     # so the README performance charts reflect what users actually get. The
     # convergence scans keep the pinned FIDUCIAL_RESOLUTION baseline.
-    def __init__(self, iterations=1, reference_resolution=None):
+    def __init__(self, iterations=5, reference_resolution=None):
         self.iterations = iterations
         self.reference_resolution = reference_resolution
         self.results: List[ConfigResult] = []
@@ -172,6 +172,12 @@ class ComprehensiveBenchmark:
                 all_breakdowns.append(va.Model.profile_data())
             else:
                 all_breakdowns.append({"total": wall_ms})
+        # Robust timing: drop the slowest run (by total) before averaging — absorbs
+        # one-off scheduler hiccups and the cold-cache first call. Stages are dropped
+        # with their run so the breakdown stays internally consistent.
+        if len(all_breakdowns) >= 3:
+            totals = [bd.get("total", 0.0) for bd in all_breakdowns]
+            all_breakdowns.pop(int(np.argmax(totals)))
         all_stages = set().union(*[bd.keys() for bd in all_breakdowns])
         stage_breakdown = {s: float(np.mean([bd.get(s, 0.0) for bd in all_breakdowns])) for s in all_stages}
         ms = stage_breakdown.get("total", 0.0)
@@ -448,7 +454,8 @@ def main():
     parser.add_argument("-j", "--parallel", type=int, default=0, metavar="N", help="Parallel workers")
     parser.add_argument("--jet", type=str, nargs="+", help="Jet type(s)")
     parser.add_argument("--medium", type=str, nargs="+", help="Medium type(s)")
-    parser.add_argument("--iterations", type=int, default=1, help="Timing iterations for overview stage breakdown")
+    parser.add_argument("--iterations", type=int, default=5,
+                        help="Timing iterations; the slowest is discarded and the rest averaged")
     parser.add_argument("--timeout", type=int, default=600, help="Per-config timeout in seconds (default: 600)")
     parser.add_argument("--output", type=str, default="results/benchmark_history.json", help="Output file")
     args = parser.parse_args()

@@ -1,5 +1,6 @@
 #pragma once
 
+#include <cstdio>
 #include <stdexcept>
 #include <tuple>
 
@@ -34,7 +35,7 @@ inline Real structure_weight(Real Gamma) {
 size_t adaptive_grid_with_breaks(Real lg2_min, Real lg2_max, std::span<const Real> breaks,
                                  std::span<const Real> break_weights, Real pts_per_decade, Array& grid,
                                  size_t max_refined_breaks = 3, Real refine_radius_decades = 0.5,
-                                 Real refine_factor = 3.0);
+                                 Real refine_factor = 3.0, Array* lg2_grid = nullptr);
 
 template <typename Ejecta>
 Array find_jet_jumps(Ejecta const& jet, Real gamma_cut, [[maybe_unused]] bool is_axisymmetric) {
@@ -558,7 +559,11 @@ inline Array logspace_with_band_refinement(Real ts, Real t_end, Real b_lo, Real 
         grid(idx++) = l1 + (l2 - l1) * static_cast<Real>(k) / static_cast<Real>(n2);
     }
     for (size_t k = 0; k <= n3; ++k) {
-        grid(idx++) = l2 + (l3 - l2) * static_cast<Real>(k) / static_cast<Real>(n3);
+        // n3 == 0 when the band's upper edge clips t_end (its tail segment
+        // rounds to no points): the single remaining point is t_end itself.
+        // The general expression would evaluate 0/0 = NaN there, and one NaN
+        // node makes the ODE save loop skip the whole row (silent zero flux).
+        grid(idx++) = (n3 > 0) ? l2 + (l3 - l2) * static_cast<Real>(k) / static_cast<Real>(n3) : l3;
     }
     return xt::eval(xt::pow(Real(10), grid));
 }
@@ -618,6 +623,15 @@ void build_time_grid(Coord& coord, Ejecta const& jet, Medium const& medium, Real
                 store_time_grid(coord, i, j, early_t(i, j), grid, has_early_point, t_num);
             }
         }
+    }
+
+    // A single non-finite node silently disables its whole row: the ODE save
+    // loop's `current_time() <= t.back()` test is false against NaN, so the
+    // row keeps its initialization state and contributes zero flux. Warn
+    // loudly instead of letting that read as faint emission (the golden tests
+    // scan stderr, so any future lattice edge case fails there).
+    if (!xt::all(xt::isfinite(coord.t))) {
+        std::fprintf(stderr, "Warning: time grid contains non-finite nodes; affected rows will be skipped\n");
     }
 }
 

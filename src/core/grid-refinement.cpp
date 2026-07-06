@@ -12,10 +12,10 @@ struct Pt {
     bool is_break;
 };
 
-std::vector<Break> collect_valid_breaks(std::span<const Real> breaks, std::span<const Real> break_weights, Real lg2_min,
-                                        Real lg2_max) {
-    std::vector<Break> valid;
-    valid.reserve(breaks.size());
+std::vector<Break>& collect_valid_breaks(std::span<const Real> breaks, std::span<const Real> break_weights,
+                                         Real lg2_min, Real lg2_max) {
+    static thread_local std::vector<Break> valid;
+    valid.clear();
     for (size_t i = 0; i < breaks.size(); ++i) {
         const Real b = breaks[i];
         if (!(b > 0) || !std::isfinite(b)) {
@@ -37,10 +37,10 @@ std::vector<Break> collect_valid_breaks(std::span<const Real> breaks, std::span<
     return valid;
 }
 
-std::vector<Pt> build_raw_grid(Real lg2_min, Real lg2_max, Real coarse_step, std::vector<Break> const& valid_breaks,
-                               size_t n_refine, Real refine_radius, Real fine_step) {
-    std::vector<Pt> pts;
-    pts.reserve(512);
+std::vector<Pt>& build_raw_grid(Real lg2_min, Real lg2_max, Real coarse_step, std::vector<Break> const& valid_breaks,
+                                size_t n_refine, Real refine_radius, Real fine_step) {
+    static thread_local std::vector<Pt> pts;
+    pts.clear();
 
     const Real span = std::max(lg2_max - lg2_min, Real(0));
     const size_t n_coarse = (span > 0 && coarse_step > 0)
@@ -67,11 +67,11 @@ std::vector<Pt> build_raw_grid(Real lg2_min, Real lg2_max, Real coarse_step, std
     return pts;
 }
 
-std::vector<Pt> merge_and_finalize(std::vector<Pt>& pts, Real merge_eps, Real lg2_min, Real lg2_max, size_t max_pts) {
+std::vector<Pt>& merge_and_finalize(std::vector<Pt>& pts, Real merge_eps, Real lg2_min, Real lg2_max, size_t max_pts) {
     std::ranges::sort(pts, [](const auto& a, const auto& b) { return a.lg2 < b.lg2; });
 
-    std::vector<Pt> merged;
-    merged.reserve(pts.size());
+    static thread_local std::vector<Pt> merged;
+    merged.clear();
     for (const auto& p : pts) {
         if (!merged.empty() && p.lg2 - merged.back().lg2 < merge_eps) {
             if (p.is_break && !merged.back().is_break) {
@@ -97,8 +97,8 @@ std::vector<Pt> merge_and_finalize(std::vector<Pt>& pts, Real merge_eps, Real lg
     }
 
     if (merged.size() > max_pts) {
-        std::vector<Pt> capped;
-        capped.reserve(max_pts);
+        static thread_local std::vector<Pt> capped;
+        capped.clear();
         for (size_t i = 0; i < max_pts; ++i) {
             capped.push_back(merged[i * (merged.size() - 1) / (max_pts - 1)]);
         }
@@ -110,22 +110,29 @@ std::vector<Pt> merge_and_finalize(std::vector<Pt>& pts, Real merge_eps, Real lg
 
 size_t adaptive_grid_with_breaks(Real lg2_min, Real lg2_max, std::span<const Real> breaks,
                                  std::span<const Real> break_weights, Real pts_per_decade, Array& grid,
-                                 size_t max_refined_breaks, Real refine_radius_decades, Real refine_factor) {
+                                 size_t max_refined_breaks, Real refine_radius_decades, Real refine_factor,
+                                 Array* lg2_grid) {
     constexpr size_t MAX_PTS = 256;
     const Real lg2_per_decade = log2_10;
     const Real coarse_step = lg2_per_decade / std::max(pts_per_decade, Real(1e-6));
     const Real fine_step = coarse_step / refine_factor;
 
-    auto valid_breaks = collect_valid_breaks(breaks, break_weights, lg2_min, lg2_max);
+    auto& valid_breaks = collect_valid_breaks(breaks, break_weights, lg2_min, lg2_max);
     const size_t n_refine = std::min(max_refined_breaks, valid_breaks.size());
     const Real refine_radius = refine_radius_decades * lg2_per_decade;
 
-    auto pts = build_raw_grid(lg2_min, lg2_max, coarse_step, valid_breaks, n_refine, refine_radius, fine_step);
-    auto merged = merge_and_finalize(pts, 0.5 * fine_step, lg2_min, lg2_max, MAX_PTS);
+    auto& pts = build_raw_grid(lg2_min, lg2_max, coarse_step, valid_breaks, n_refine, refine_radius, fine_step);
+    auto& merged = merge_and_finalize(pts, 0.5 * fine_step, lg2_min, lg2_max, MAX_PTS);
 
     grid = Array::from_shape({merged.size()});
+    if (lg2_grid != nullptr) {
+        lg2_grid->resize({merged.size()});
+    }
     for (size_t i = 0; i < merged.size(); ++i) {
         grid(i) = fast_exp2(merged[i].lg2);
+        if (lg2_grid != nullptr) {
+            (*lg2_grid)(i) = merged[i].lg2;
+        }
     }
     return merged.size();
 }

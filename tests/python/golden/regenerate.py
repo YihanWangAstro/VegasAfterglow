@@ -99,6 +99,26 @@ CONFIGS = {
         "fwd_rad": {"eps_e": 0.1, "eps_B": 0.01, "p": 2.3},
         "rvs_rad": {"eps_e": 0.1, "eps_B": 0.01, "p": 2.3},
     },
+    # SSC spectral-regime coverage: together with gauss_wind_ssc (c<a<m) and the
+    # feature tests (a<m<c, a<c<m), these two pin every ordering of the
+    # synchrotron breaks nu_a / nu_m / nu_c that shapes the SSC seed spectrum.
+    # Dense medium: sweeps the strong-self-absorption orderings c<a<m -> c<m<a
+    # -> m<c<a over the light curve (the nu^1 absorbed seed segment dominates
+    # the scattering CDF -- its logarithmic integration branch).
+    "dense_ism_ssa_ssc": {
+        "jet": {"type": "TophatJet", "theta_c": 0.1, "E_iso": 1e52, "Gamma0": 300},
+        "medium": {"type": "ISM", "n_ism": 1e5},
+        "observer": {"lumi_dist": 1e26, "z": 0.1, "theta_obs": 0.0},
+        "fwd_rad": {"eps_e": 0.1, "eps_B": 3e-2, "p": 2.5, "ssc": True, "kn": True},
+    },
+    # Weak field, elevated density: covers the remaining m<a<c ordering
+    # (slow cooling with self-absorption above the injection break).
+    "ism_absorbed_slow_ssc": {
+        "jet": {"type": "TophatJet", "theta_c": 0.1, "E_iso": 1e52, "Gamma0": 300},
+        "medium": {"type": "ISM", "n_ism": 1e3},
+        "observer": {"lumi_dist": 1e26, "z": 0.1, "theta_obs": 0.0},
+        "fwd_rad": {"eps_e": 0.1, "eps_B": 1e-6, "p": 2.5, "ssc": True, "kn": True},
+    },
     # Two-component jet viewed between the core and the wing: covers the
     # two-component structure profile (narrow fast core + wide slow sheath).
     "two_component_ism": {

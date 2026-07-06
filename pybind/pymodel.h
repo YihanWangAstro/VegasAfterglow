@@ -894,9 +894,18 @@ void PyModel::single_shock_emission(Shock const& shock, Coord const& coord, Arra
     }
 
     if (rad.ssc) {
+        // The observer samples IC spectra only at nu_obs (1+z) / D; restrict each
+        // cell's output grid to that comoving band instead of the full
+        // theoretical IC range (tens of decades wider).
+        const Real lg2_dop_min = xt::amin(obs.lg2_doppler)();
+        const Real lg2_dop_max = xt::amax(obs.lg2_doppler)();
+        const Real lg2_1pz = fast_log2(obs.one_plus_z);
+        const Real nu_eval_min = fast_exp2(fast_log2(xt::amin(nu_obs)()) + lg2_1pz - lg2_dop_max);
+        const Real nu_eval_max = fast_exp2(fast_log2(xt::amax(nu_obs)()) + lg2_1pz - lg2_dop_min);
+
         auto IC_ph = [&] {
             AFTERGLOW_PROFILE_SCOPE(ic_photons);
-            return generate_IC_photons(syn_e, syn_ph, rad.kn, coord);
+            return generate_IC_photons(syn_e, syn_ph, rad.kn, coord, nu_eval_min, nu_eval_max);
         }();
         {
             AFTERGLOW_PROFILE_SCOPE(ssc_flux);
