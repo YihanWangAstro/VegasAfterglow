@@ -21,6 +21,13 @@ jobs:
       matrix:
         os: [ubuntu-latest, windows-latest, windows-11-arm, macos-latest]
         python: [cp39, cp310, cp311, cp312, cp313, cp314]
+        exclude:
+          # numpy (a build requirement) ships win_arm64 wheels only for cp311+,
+          # and python.org has no ARM64 Windows installers before 3.11 anyway.
+          - os: windows-11-arm
+            python: cp39
+          - os: windows-11-arm
+            python: cp310
       fail-fast: false
 
     steps:
