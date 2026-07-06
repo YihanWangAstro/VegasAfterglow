@@ -18,10 +18,11 @@ Have a feature request? [Open an issue](https://github.com/YihanWangAstro/VegasA
 
 ---
 
-## [Unreleased]
+## [v2.0.6] - 2026-07-05
 
 ### Changed
 
+- **MCMC fitting throughput up 3-4x**: the grid, observer, and default-resolution improvements below combine to make typical likelihood evaluations 3-4x faster than v2.0.5 (on-axis tophat fit: 2.2 ms → 0.6 ms per evaluation; gaussian jet with reverse shock: 29 ms → 7 ms), which carries one-to-one into MCMC throughput on any machine. The walker retuning below adds ~25% on top
 - **Angular and temporal grids sharpened**: off-axis axisymmetric jets now integrate azimuth over the half range (the flux is mirror-symmetric about the jet-observer plane), roughly doubling off-axis evaluation speed at identical accuracy. Azimuthal and polar refinement respond to the actual Doppler structure, resolving viewing angles at and just outside a sharp jet edge that were previously under-resolved (errors of several percent reduced to below one percent), and the forward-shock time lattice concentrates points around the deceleration turnover at no extra cost
 - **Lower default resolution, per mode**: with the sharper grids, the default drops from (0.1, 0.25, 10) to (0.06, 0.15, 6) for forward-shock-only runs and (0.06, 0.2, 10) with a reverse shock (its components need denser polar and time lattices) — 15-35% faster at unchanged worst-case accuracy, calibrated per emission component against the validation gates (mean < 5%, max < 15%) across jet families and viewing angles. An explicit `resolutions` is honored as given. Golden baselines regenerated
 - **Magnetized reverse-shock accuracy**: shells with `sigma0 > 0` automatically tighten the dynamics ODE tolerance one decade — their jump conditions are far more tolerance-sensitive than the unmagnetized path, and at the previous uniform tolerance a sigma ~ 1 shell silently carried ~1% reverse-shock flux error. New golden baselines pin the reverse shock at sigma = 1 and 10 alongside the existing 0.1
@@ -29,6 +30,10 @@ Have a feature request? [Open an issue](https://github.com/YihanWangAstro/VegasA
 - **MCMC fitting: twice the walkers, half the steps**: the automatic emcee walker count roughly doubles — sized to fill the likelihood thread pool with several evaluation waves per step on 8-16 core machines (~25% higher sampling throughput; `nwalkers=...` still overrides). Since each step now draws twice the samples, **half the previous `nsteps` yields the same posterior sample volume** — halve `nsteps` (and `nburn`) in existing scripts to keep runtimes unchanged with better ensemble mixing; example scripts and docs updated accordingly. The default move mixture also shifts to `DEMove 0.9 / DESnookerMove 0.1` (measured ~20% shorter autocorrelation times than the previous 0.7/0.3 weighting)
 - **Observer-layer performance**: off-axis flux evaluations are 10-20% faster (exact results preserved) — the equal-arrival-time grids take their logarithms in vectorized whole-tensor passes, flux contributions batch their final exponential per grid column, and the spectrum evaluation skips provably-trivial work (the inverse-Compton correction when IC cooling is off, and the optically-thick branch's far-field exponential)
 - **Opt-in fast math improved** (`AFTERGLOW_FAST_MATH`, still off by default): the polynomial `log2`/`exp2` kernels are upgraded to degree-5 minimax fits (relative error at the 1e-7 level, from 4e-4), gain full domain handling — non-positive, subnormal, infinite, and NaN inputs behave like the standard library — and now cover every `log2`/`exp2` call site in the library. Enabling the option speeds up off-axis structured-jet evaluations by ~1.2x; golden baselines are always generated with the default exact-libm build, and the regeneration script enforces this
+- Removed the hard radiative-efficiency truncation (`eps_rad = 0` deep in slow cooling); the efficiency now follows the analytic form everywhere, consistently across forward, reverse, and simple shock solvers
+- Generic `Ejecta` and `Medium` constructors now validate their inputs (callability, finite on-axis values) like the typed factories
+- Validation suite moved under the unified test tree at `tests/validation/`; the release validation PDF was replaced by the HTML report published at [reports/latest](https://yihanwangastro.github.io/VegasAfterglow/reports/latest/), with per-release snapshots archived in the [reports index](https://yihanwangastro.github.io/VegasAfterglow/reports/)
+- `run_validation.py` slimmed to running and checking the suites (report flags removed); the `[test]` extra now needs only pytest, pytest-cov, and matplotlib
 
 ### Removed
 
@@ -36,6 +41,7 @@ Have a feature request? [Open an issue](https://github.com/YihanWangAstro/VegasA
 
 ### Fixed
 
+- **Radiative losses in the blast-wave dynamics were underestimated**: the cooling Lorentz factor in the dynamics-side radiative efficiency omitted the 8π from `B'² = 8π ε_B e` (the synchrotron module had it right), placing the cooling break ~25× too high — the fireball evolved too adiabatically. With the fix, radiative deceleration strengthens and late-time light curves dim by up to ~10-30% at `eps_e = 0.1` (up to ~70% at `eps_e = 0.3`); the effect grows with `eps_e`. The efficiency also gains the same trans-relativistic cooling correction the synchrotron module uses. Present in all releases since v1.0.0; golden baselines regenerated, all closure-relation and crossing-scaling checks pass unchanged
 - **Reverse-shock rates are evaluated on the physical domain** (`Gamma3 <= Gamma4`, `0 <= m3 <= m4`, `x3, U3 >= 0`): adaptive-step overshoot at the seed scale of the shocked-shell variables could previously escalate into a runaway that stalled the solver ("ODE exceeded steps" warnings) and corrupted that grid row's light curve; healthy solves are unaffected
 - **Reverse-shock crossing end** is now located by bisection on the ODE dense output instead of at stored grid times: the frozen crossing state was previously up to one time-grid step late, biasing the post-crossing reverse-shock light curve near the crossing peak (golden baselines regenerated)
 - **Reverse-shock crossing rate** now computed via cancellation-free Lorentz-factor identities: the direct `(beta4 - beta3)/(1 - beta3)` form lost up to all precision at crossing onset where the shocked and unshocked ejecta move at nearly equal speeds
@@ -43,15 +49,6 @@ Have a feature request? [Open an issue](https://github.com/YihanWangAstro/VegasA
 - Relativistic kinematics helpers now use `(Gamma - 1)(Gamma + 1)` in place of `Gamma^2 - 1` and avoid `1 - beta` forms, making results independent of platform FMA behavior
 - **Reverse-shock relative Lorentz factor** now computed via a cancellation-free identity: near equal shell/shock velocities the old form lost precision to catastrophic cancellation, seeding numerical noise that could destabilize resolution-convergence of reverse-shock light curves (platform/SIMD dependent)
 - **Reverse shock with magnetized ejecta (`sigma0 > 0`)**: fixed a forward-shock flux runaway when reverse-shock emission was enabled — the shell-crossing rate is now gated on shell penetration and capped at the fast magnetosonic speed, so light curves evolve correctly across sigma0 from 0 to >10 (unmagnetized results unchanged)
-
-### Changed
-
-- Removed the hard radiative-efficiency truncation (`eps_rad = 0` deep in slow cooling); the efficiency now follows the analytic form everywhere, consistently across forward, reverse, and simple shock solvers
-- Default polar (theta) grid resolution unified at 0.25 points per degree; `Model` docstrings now match the actual defaults (`rtol=1e-6`)
-- Generic `Ejecta` and `Medium` constructors now validate their inputs (callability, finite on-axis values) like the typed factories
-- Validation suite moved under the unified test tree at `tests/validation/`; the release validation PDF was replaced by the HTML report published at [reports/latest](https://yihanwangastro.github.io/VegasAfterglow/reports/latest/), with per-release snapshots archived in the [reports index](https://yihanwangastro.github.io/VegasAfterglow/reports/)
-- `run_validation.py` slimmed to running and checking the suites (report flags removed); the `[test]` extra now needs only pytest, pytest-cov, and matplotlib
-- Fast-math kernels (`AFTERGLOW_FAST_MATH`, off by default) rewritten with minimax coefficients: ~10× lower error (relative flux deviations ~10⁻⁵) and 6–13% faster light curves when enabled; `fast_exp2` stays exact at integer exponents
 
 ### Added
 

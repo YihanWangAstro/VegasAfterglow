@@ -390,6 +390,8 @@ These quantities are defined as:
     dU_{\rm rad} &= -\epsilon(\Gamma_2-1)c^2dm\\
     \epsilon &= \epsilon_{\rm rad}\epsilon_{e}
 
+where :math:`\epsilon_{\rm rad} = \min\left[1, (\gamma_m/\gamma_c)^{p-2}\right]` is the electron radiative efficiency, evaluated with the synchrotron cooling Lorentz factor (see the electron cooling section below) with :math:`\tilde{Y}=0`: the SSC feedback on the blast-wave dynamics is neglected to keep the dynamics independent of the inverse-Compton calculation.
+
 The blast wave equation for :math:`\Gamma_2` evolution can then be written as:
 
 .. math::

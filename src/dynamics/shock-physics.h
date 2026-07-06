@@ -250,7 +250,10 @@ class RadiativeEfficiency {
 
     explicit RadiativeEfficiency(RadParams const& rad) noexcept
         : gamma_m_coeff_((rad.p - 2) / (rad.p - 1) * rad.eps_e * con::mp / con::me / rad.xi_e),
-          gamma_c_coeff_(6 * con::pi * con::me * con::c / con::sigmaT / rad.eps_B),
+          // gamma_c = 6π me c / (σ_T B'² t') with B'² = 8π eps_B e_th (the synchrotron-side
+          // convention, compute_gamma_c). The SSC (1+Y) term is deliberately omitted here to
+          // keep the dynamics decoupled from the radiation-side Compton solve.
+          gamma_c_coeff_(6 * con::pi * con::me * con::c / con::sigmaT / (8 * con::pi * rad.eps_B)),
           eps_e_(rad.eps_e),
           p_(rad.p) {}
 
@@ -263,7 +266,10 @@ class RadiativeEfficiency {
      */
     Real operator()(Real t_comv, Real Gamma_th, Real e_th) const noexcept {
         const Real gamma_m = gamma_m_coeff_ * (Gamma_th - 1) + 1;
-        const Real gamma_c = std::max(gamma_c_coeff_ / (e_th * t_comv), 1.0);
+        const Real gamma_bar = gamma_c_coeff_ / (e_th * t_comv);
+        // Trans-relativistic correction (same as compute_gamma_c): cooling rate ∝ γ²β², so
+        // gamma_c -> 1 smoothly as gamma_bar -> 0 instead of a hard clamp.
+        const Real gamma_c = 0.5 * (gamma_bar + std::sqrt(gamma_bar * gamma_bar + 4));
         const Real ratio = gamma_m / gamma_c;
         if (ratio < 1 && p_ > 2) { // slow cooling
             return eps_e_ * fast_pow(ratio, p_ - 2);
@@ -273,7 +279,7 @@ class RadiativeEfficiency {
 
   private:
     Real gamma_m_coeff_{0}; ///< Precomputed: (p-2)/(p-1) * eps_e * mp/me / xi_e
-    Real gamma_c_coeff_{0}; ///< Precomputed: 6π me c / (σ_T * eps_B)
+    Real gamma_c_coeff_{0}; ///< Precomputed: 6π me c / (σ_T * 8π * eps_B)
     Real eps_e_{0};         ///< Fraction of shock energy in electrons
     Real p_{0};             ///< Electron spectral index
 };
