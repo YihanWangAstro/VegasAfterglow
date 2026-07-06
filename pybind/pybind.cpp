@@ -247,8 +247,8 @@ PYBIND11_MODULE(VegasAfterglowC, m) {
     // Model bindings
     py::class_<PyModel>(m, "Model")
         .def(py::init([](py::object jet_obj, py::object medium_obj, PyObserver observer, PyRadiation fwd_rad,
-                         std::optional<PyRadiation> rvs_rad, std::tuple<Real, Real, Real> resolutions, Real rtol,
-                         bool axisymmetric) -> PyModel {
+                         std::optional<PyRadiation> rvs_rad, std::optional<std::tuple<Real, Real, Real>> resolutions,
+                         Real rtol, bool axisymmetric) -> PyModel {
                  // Build JetVariant from Python object (IIFE avoids default construction)
                  auto jet = [&]() -> JetVariant {
                      if (py::isinstance<TophatJet>(jet_obj)) {
@@ -284,10 +284,8 @@ PYBIND11_MODULE(VegasAfterglowC, m) {
                                 axisymmetric);
              }),
              py::arg("jet"), py::arg("medium"), py::arg("observer"), py::arg("fwd_rad"),
-             py::arg("rvs_rad") = py::none(),
-             py::arg("resolutions") = std::make_tuple(defaults::grid::phi_resolution, defaults::grid::theta_resolution,
-                                                      defaults::grid::time_resolution),
-             py::arg("rtol") = defaults::solver::ode_rtol, py::arg("axisymmetric") = true)
+             py::arg("rvs_rad") = py::none(), py::arg("resolutions") = py::none(),
+             py::arg("rtol") = defaults::solver::dynamics_rtol, py::arg("axisymmetric") = true)
 
         .def("flux_density_grid", &PyModel::flux_density_grid, py::arg("t"), py::arg("nu"),
              py::call_guard<py::gil_scoped_release>())

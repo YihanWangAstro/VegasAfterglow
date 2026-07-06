@@ -15,7 +15,6 @@ from VegasAfterglow import (
     logscale_screen,
 )
 
-LOW_RES = (0.3, 1, 10)
 
 
 # ========================================
@@ -30,7 +29,7 @@ class TestExposureAveraging:
         medium = ISM(n_ism=1.0)
         obs = Observer(lumi_dist=1e28, z=1.0, theta_obs=0.0)
         rad = Radiation(eps_e=0.1, eps_B=0.01, p=2.2)
-        return Model(jet, medium, obs, rad, resolutions=LOW_RES)
+        return Model(jet, medium, obs, rad)
 
     def test_exposure_produces_valid_flux(self, model):
         """Exposure-averaged flux has the same shape as the input times and is finite and positive."""
@@ -65,7 +64,7 @@ class TestMagnetar:
         medium = ISM(n_ism=1.0)
         obs = Observer(lumi_dist=1e28, z=1.0, theta_obs=0.0)
         rad = Radiation(eps_e=0.1, eps_B=0.01, p=2.2)
-        model = Model(jet, medium, obs, rad, resolutions=LOW_RES)
+        model = Model(jet, medium, obs, rad)
         t = np.logspace(3, 6, 10)
         nu = np.full_like(t, 4.84e14)
         flux = model.flux_density(t, nu)
@@ -91,7 +90,7 @@ class TestModelProperties:
         medium = ISM(n_ism=1.0)
         obs = Observer(lumi_dist=1e28, z=1.0, theta_obs=0.0)
         rad = Radiation(eps_e=0.1, eps_B=0.01, p=2.2)
-        return Model(jet, medium, obs, rad, resolutions=LOW_RES)
+        return Model(jet, medium, obs, rad)
 
     def test_observer_property(self, model):
         """Model.observer round-trips the redshift and viewing angle given at construction."""
@@ -140,7 +139,7 @@ class TestEdgeCases:
         medium = ISM(n_ism=1.0)
         obs = Observer(lumi_dist=1e28, z=1.0, theta_obs=0.0)
         rad = Radiation(eps_e=0.1, eps_B=0.01, p=2.2)
-        return Model(jet, medium, obs, rad, resolutions=LOW_RES)
+        return Model(jet, medium, obs, rad)
 
     def test_single_time_point(self, model):
         """flux_density with a single time-frequency pair returns a length-1 finite array."""
@@ -170,7 +169,7 @@ class TestEdgeCases:
         medium = ISM(n_ism=1.0)
         obs = Observer(lumi_dist=1e28, z=1.0, theta_obs=0.0)
         rad = Radiation(eps_e=0.1, eps_B=0.01, p=2.2, ssc=True)
-        model = Model(jet, medium, obs, rad, resolutions=LOW_RES)
+        model = Model(jet, medium, obs, rad)
         det = model.details(t_min=1e3, t_max=1e5)
         assert det.fwd.ssc_spectrum is not None
 

@@ -116,8 +116,8 @@ Real FRShockEqn<Ejecta, Medium>::compute_dU3_dt(State const& state, State const&
 }
 
 template <typename Ejecta, typename Medium>
-Real FRShockEqn<Ejecta, Medium>::compute_dx3_dt(State const& state, State const& diff, Real /*t*/, Real Gamma34, Real sigma,
-                                                Real comp_ratio) const noexcept {
+Real FRShockEqn<Ejecta, Medium>::compute_dx3_dt(State const& state, State const& diff, Real /*t*/, Real Gamma34,
+                                                Real sigma, Real comp_ratio) const noexcept {
     const Real sound_expansion = compute_shell_sound_expansion_rate(Gamma34, diff.t_comv);
 
     if (state.m4 <= 0) {
@@ -173,8 +173,8 @@ Real FRShockEqn<Ejecta, Medium>::compute_dx3_dt(State const& state, State const&
 }
 
 template <typename Ejecta, typename Medium>
-Real FRShockEqn<Ejecta, Medium>::compute_dm3_dt(State const& state, State const& diff, Real /*t*/, Real /*Gamma34*/, Real /*sigma*/,
-                                                Real comp_ratio) const noexcept {
+Real FRShockEqn<Ejecta, Medium>::compute_dm3_dt(State const& state, State const& diff, Real /*t*/, Real /*Gamma34*/,
+                                                Real /*sigma*/, Real comp_ratio) const noexcept {
     if (state.m4 <= 0)
         return 0.;
 
@@ -215,7 +215,8 @@ Real FRShockEqn<Ejecta, Medium>::compute_dm2_dt(State const& state, State const&
 }
 
 template <typename Ejecta, typename Medium>
-Real FRShockEqn<Ejecta, Medium>::compute_deps4_dt(State const& /*state*/, State const& /*diff*/, Real t) const noexcept {
+Real FRShockEqn<Ejecta, Medium>::compute_deps4_dt(State const& /*state*/, State const& /*diff*/,
+                                                  Real t) const noexcept {
     Real deps4_dt = 0;
 
     // Smooth injection shutdown over 50% of T0
@@ -508,7 +509,7 @@ Real locate_crossing_time(Stepper& stepper, Eqn const& eqn, typename Eqn::State&
  */
 template <typename Eqn, typename View>
 void grid_solve_shock_pair(size_t i, size_t j, View const& t, Shock& shock_fwd, Shock& shock_rvs, Eqn& eqn,
-                           Real rtol = 1e-6) {
+                           Real rtol) {
 
     using namespace boost::numeric::odeint;
 
@@ -522,6 +523,16 @@ void grid_solve_shock_pair(size_t i, size_t j, View const& t, Shock& shock_fwd, 
         set_stopping_shock(i, j, shock_fwd, state);
         set_stopping_shock(i, j, shock_rvs, state);
         return;
+    }
+
+    // Magnetized shells solve the sigma > 0 jump conditions (cubic root),
+    // which are far more tolerance-sensitive than the sigma = 0 path:
+    // reverse-shock flux vs a deep reference converges as 9.4e-3 / 1.0e-4 /
+    // 5.4e-5 at rtol 1e-6 / 1e-7 / 1e-8 (worst case sigma ~ 1). Tighten one
+    // decade so magnetized runs deliver the same accuracy class as the
+    // unmagnetized default.
+    if (eqn.compute_shell_sigma(state) > 0) {
+        rtol *= defaults::solver::magnetized_rtol_factor;
     }
 
     auto stepper = make_dense_output(rtol, rtol, runge_kutta_dopri5<typename Eqn::State>());
@@ -548,12 +559,11 @@ void grid_solve_shock_pair(size_t i, size_t j, View const& t, Shock& shock_fwd, 
         if (stepper.current_time() + stepper.current_time_step() == stepper.current_time()) {
             // dt has collapsed below one ulp of t: time can no longer advance, so
             // spinning until the step cap would only burn cycles. Fail fast instead.
-            std::fprintf(stderr, "Warning: reverse shock ODE stalled (dt below time ulp) at (i=%zu, j=%zu), giving up\n",
-                         i, j);
+            std::fprintf(stderr,
+                         "Warning: reverse shock ODE stalled (dt below time ulp) at (i=%zu, j=%zu), giving up\n", i, j);
             break;
         }
-        if (reverse_shock_crossing &&
-            eqn.crossing_complete(stepper.current_state(), stepper.current_time())) {
+        if (reverse_shock_crossing && eqn.crossing_complete(stepper.current_state(), stepper.current_time())) {
             // The crossing ended within this step. Freeze the crossing state at the
             // bisected event time rather than at the next stored grid time, which
             // would anchor the post-crossing profile up to one grid step late and

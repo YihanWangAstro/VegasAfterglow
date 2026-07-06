@@ -8,6 +8,7 @@
 #include "observer.h"
 
 #include "../util/macros.h"
+#include "../util/profiler.h"
 
 //========================================================================================================
 //                                  File-Local Helper Functions
@@ -39,12 +40,8 @@ static Array compute_dphi(Coord const& coord, size_t eff_phi_grid) {
 //                                  Static Member Functions
 //========================================================================================================
 
-Real Observer::lg2_loglog_interpolate(InterpState const& state, Real lg2_t_obs, Real lg2_t_lo) noexcept {
-    return state.lg2_L_nu_lo + (lg2_t_obs - lg2_t_lo) * state.slope;
-}
-
 Real Observer::loglog_interpolate(InterpState const& state, Real lg2_t_obs, Real lg2_t_lo) noexcept {
-    return fast_exp2(lg2_loglog_interpolate(state, lg2_t_obs, lg2_t_lo));
+    return fast_exp2(state.lg2_L_nu_lo + (lg2_t_obs - lg2_t_lo) * state.slope);
 }
 
 //========================================================================================================
@@ -149,6 +146,18 @@ void Observer::calc_eat_non_spreading(Coord const& coord, Shock const& shock) {
     const Array dphi = compute_dphi(coord, eff_phi_grid);
     const size_t last = theta_grid - 1;
 
+    // Axisymmetric jets share r(j, k) across phi: factorize the geometry as
+    // log2(dOmega * r^2) = log2(dOmega)(i, j) + 2 log2(r)(j, k), so the
+    // per-cell geometry log pass in finalize_log_grids collapses to one
+    // vectorized log2(r) pass plus a scalar log per (i, j) (geom_pre_logged_).
+    static thread_local MeshGrid lg2_r2;
+    if (geom_pre_logged_) {
+        if (lg2_r2.shape(0) != theta_grid || lg2_r2.shape(1) != t_grid) {
+            lg2_r2 = MeshGrid::from_shape({theta_grid, t_grid});
+        }
+        xt::noalias(lg2_r2) = 2.0 * xt::log2(xt::view(shock.r, 0, xt::all(), xt::all()));
+    }
+
     for (size_t i = 0; i < eff_phi_grid; ++i) {
         const Real cos_phi = std::cos(coord.phi[i] - coord.phi_view);
         const size_t i_eff = i * jet_3d;
@@ -177,16 +186,19 @@ void Observer::calc_eat_non_spreading(Coord const& coord, Shock const& shock) {
             const Real dOmega = std::fabs((cos_th_hi - cos_th_lo) * dphi_i);
             cos_th_carry = cos_th_hi;
 
-            // Linear values only; the loop stays libm-free (and autovectorizable),
-            // and observe() takes the log2 of the whole tensors in one vectorized
-            // pass (finalize_log_grids).
+            const Real lg2_dOmega = geom_pre_logged_ ? std::log2(dOmega) : 0;
+            const Real* r2_row = geom_pre_logged_ ? &lg2_r2(j, 0) : nullptr;
+
+            // Doppler and time stay linear (the loop-invariant branch below is
+            // hoisted); observe() takes their logs in vectorized whole-tensor
+            // passes (finalize_log_grids).
             for (size_t k = 0; k < t_grid; ++k) {
                 const Real gamma_ = shock.Gamma(i_eff, j, k);
                 const Real r = shock.r(i_eff, j, k);
 
                 lg2_doppler(i, j, k) = gamma_ - std::sqrt((gamma_ - 1) * (gamma_ + 1)) * cos_v;
                 time(i, j, k) = coord.t(i_eff, j, k) * one_plus_z + t_coeff * r;
-                lg2_geom_factor(i, j, k) = dOmega * r * r;
+                lg2_geom_factor(i, j, k) = geom_pre_logged_ ? lg2_dOmega + r2_row[k] : dOmega * r * r;
             }
         }
     }
@@ -413,14 +425,23 @@ void SplatGrid::compute_sigma() {
 //========================================================================================================
 
 void Observer::observe(Coord const& coord, Shock const& shock, Real luminosity_dist, Real redshift) {
-    build_time_grid(coord, shock, luminosity_dist, redshift);
-    if (jet_spreading_) {
-        calc_t_obs(coord, shock);
-        calc_solid_angle(coord, shock);
-    } else {
-        calc_eat_non_spreading(coord, shock);
+    {
+        AFTERGLOW_PROFILE_SCOPE(eat_fill);
+        build_time_grid(coord, shock, luminosity_dist, redshift);
+        // The geometry factorization needs r shared across phi and dOmega
+        // constant along k: axisymmetric, non-spreading jets only.
+        geom_pre_logged_ = !jet_spreading_ && (jet_3d == 0);
+        if (jet_spreading_) {
+            calc_t_obs(coord, shock);
+            calc_solid_angle(coord, shock);
+        } else {
+            calc_eat_non_spreading(coord, shock);
+        }
     }
-    finalize_log_grids();
+    {
+        AFTERGLOW_PROFILE_SCOPE(eat_logs);
+        finalize_log_grids();
+    }
 }
 
 void Observer::finalize_log_grids() {
@@ -428,8 +449,14 @@ void Observer::finalize_log_grids() {
     // time, dOmega * r^2); take their logarithms in vectorized whole-tensor
     // passes here instead of one libm call per cell. noalias: each output
     // element depends only on the same-index input, so in-place assignment is
-    // safe and skips the overlap-checker's full-grid temporary.
+    // safe and skips the overlap-checker's full-grid temporary. When the
+    // geometry was factorized into small pre-logged pieces (axisymmetric
+    // jets), only the Doppler-cubed term remains to add.
     xt::noalias(lg2_doppler) = -xt::log2(lg2_doppler);
     xt::noalias(lg2_t) = xt::log2(time);
-    xt::noalias(lg2_geom_factor) = xt::log2(lg2_geom_factor) + 3.0 * lg2_doppler;
+    if (geom_pre_logged_) {
+        xt::noalias(lg2_geom_factor) = lg2_geom_factor + 3.0 * lg2_doppler;
+    } else {
+        xt::noalias(lg2_geom_factor) = xt::log2(lg2_geom_factor) + 3.0 * lg2_doppler;
+    }
 }

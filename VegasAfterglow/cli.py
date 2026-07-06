@@ -251,9 +251,9 @@ def parse_args(argv=None):
         "--res",
         nargs=3,
         type=float,
-        default=[0.075, 0.25, 7],
+        default=None,
         metavar=("PHI", "THETA", "T"),
-        help="resolution (phi_ppd, theta_ppd, t_ppd)",
+        help="resolution (phi_ppd, theta_ppd, t_ppd); default (0.06, 0.15, 6), or (0.06, 0.2, 10) with --rvs",
     )
 
     # -- Output -------------------------------------------------------------
@@ -770,7 +770,12 @@ def main():
     from . import Model
 
     model = Model(
-        jet, medium, observer, fwd_rad, rvs_rad=rvs_rad, resolutions=tuple(args.res)
+        jet,
+        medium,
+        observer,
+        fwd_rad,
+        rvs_rad=rvs_rad,
+        resolutions=tuple(args.res) if args.res is not None else None,
     )
 
     times = np.logspace(np.log10(args.t_min), np.log10(args.t_max), args.num_t)

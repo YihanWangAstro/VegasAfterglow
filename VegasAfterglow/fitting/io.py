@@ -120,11 +120,9 @@ def _snapshot_config(fitter) -> dict:
             "kn": bool(fitter.kn),
             "magnetar": bool(fitter.magnetar),
             "rtol": float(fitter.rtol),
-            "resolution": [
-                float(fitter.phi_resol),
-                float(fitter.theta_resol),
-                float(fitter.t_resol),
-            ],
+            "resolution": list(fitter.resolution)
+            if fitter.resolution is not None
+            else None,
             "extinction": fitter.extinction
             if isinstance(fitter.extinction, str)
             else None,
@@ -211,7 +209,7 @@ def load_fitter(path, *, jet=None, medium=None, extinction=None):
         kn=cc["kn"],
         magnetar=cc["magnetar"],
         rtol=cc["rtol"],
-        resolution=tuple(cc["resolution"]),
+        resolution=tuple(cc["resolution"]) if cc["resolution"] is not None else None,
         extinction=_resolve(
             "extinction",
             cc["extinction"],

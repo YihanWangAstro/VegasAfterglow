@@ -22,7 +22,6 @@ from VegasAfterglow import (
 pytestmark = pytest.mark.physics
 
 TRUE_E = 1e53
-COARSE = (0.1, 0.3, 5)
 
 
 @pytest.fixture(scope="module")
@@ -35,14 +34,13 @@ def fit_result(tmp_path_factory):
         medium=ISM(n_ism=1.0),
         observer=Observer(lumi_dist=3e28, z=0.5, theta_obs=0.0),
         fwd_rad=Radiation(eps_e=0.1, eps_B=1e-3, p=2.3),
-        resolutions=COARSE,
     )
     flux = np.asarray(truth.flux_density(t, nu).total)
     err = 0.1 * flux
     rng = np.random.default_rng(42)
     obs = flux * (1 + 0.05 * rng.standard_normal(flux.size))
 
-    fitter = Fitter(z=0.5, lumi_dist=3e28, jet="tophat", medium="ism", resolution=COARSE)
+    fitter = Fitter(z=0.5, lumi_dist=3e28, jet="tophat", medium="ism")
     fitter.add_flux_density(nu=1e15, t=t, f_nu=obs, err=err)
 
     defs = [

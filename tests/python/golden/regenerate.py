@@ -23,6 +23,20 @@ GOLDEN_DIR = os.path.dirname(os.path.abspath(__file__))
 T = np.logspace(2, 8, 40)
 NUS = np.array([1e9, 1e14, 1e17, 1e22])
 
+
+def _sigma_config(sigma0):
+    """Magnetized-tophat reverse-shock config; the three pinned magnetizations
+    differ only in sigma0."""
+    return {
+        "jet": {"type": "MagnetizedTophat", "theta_c": 0.1, "E_iso": 1e52, "Gamma0": 300,
+                "sigma0": sigma0, "duration": 1.0},
+        "medium": {"type": "ISM", "n_ism": 1.0},
+        "observer": {"lumi_dist": 3e28, "z": 0.5, "theta_obs": 0.0},
+        "fwd_rad": {"eps_e": 0.1, "eps_B": 1e-3, "p": 2.3},
+        "rvs_rad": {"eps_e": 0.1, "eps_B": 1e-2, "p": 2.5},
+    }
+
+
 CONFIGS = {
     "tophat_ism": {
         "jet": {"type": "TophatJet", "theta_c": 0.1, "E_iso": 1e53, "Gamma0": 300},
@@ -56,17 +70,16 @@ CONFIGS = {
         "rvs_rad": {"eps_e": 0.1, "eps_B": 0.01, "p": 2.3},
         "resolutions": (0.1, 1.2, 10),
     },
-    # Magnetized ejecta reverse shock: the only golden exercising the sigma > 0
-    # jump conditions (cubic root of the downstream four-velocity), the shell
-    # magnetization evolution, and the magnetosonic crossing-rate cap.
-    "tophat_sigma_rs": {
-        "jet": {"type": "MagnetizedTophat", "theta_c": 0.1, "E_iso": 1e52, "Gamma0": 300,
-                "sigma0": 0.1, "duration": 1.0},
-        "medium": {"type": "ISM", "n_ism": 1.0},
-        "observer": {"lumi_dist": 3e28, "z": 0.5, "theta_obs": 0.0},
-        "fwd_rad": {"eps_e": 0.1, "eps_B": 1e-3, "p": 2.3},
-        "rvs_rad": {"eps_e": 0.1, "eps_B": 1e-2, "p": 2.5},
-    },
+    # Magnetized ejecta reverse shock: exercises the sigma > 0 jump conditions
+    # (cubic root of the downstream four-velocity), the shell magnetization
+    # evolution, and the magnetosonic crossing-rate cap. Three magnetizations:
+    # the sigma > 0 ODE solve is far more tolerance-sensitive than sigma = 0
+    # (hence the magnetized rtol guard in grid_solve_shock_pair), and the
+    # sensitivity is sigma-dependent, so weak/moderate/strong are pinned
+    # separately.
+    "tophat_sigma_rs": _sigma_config(0.1),
+    "tophat_sigma1_rs": _sigma_config(1.0),
+    "tophat_sigma10_rs": _sigma_config(10.0),
     # Power-law jet in a wind: covers the power-law structure profile and the
     # only reverse shock evolved in a wind (k = 2) density gradient.
     "powerlaw_wind_rs": {

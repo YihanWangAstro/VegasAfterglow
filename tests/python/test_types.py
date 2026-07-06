@@ -230,7 +230,7 @@ class TestModelCalculations:
         medium = ISM(n_ism=1.0)
         observer = Observer(lumi_dist=1e28, z=1.0, theta_obs=0.0)
         radiation = Radiation(eps_e=0.1, eps_B=0.01, p=2.2, xi_e=1.0)
-        return Model(jet, medium, observer, radiation, resolutions=(0.3, 1, 10))
+        return Model(jet, medium, observer, radiation)
 
     def test_flux_density(self, model, sample_time_array, sample_frequency):
         """Test flux_density calculation."""
@@ -360,7 +360,7 @@ class TestInputValidation:
         medium = ISM(n_ism=1.0)
         observer = Observer(lumi_dist=1e28, z=1.0, theta_obs=0.0)
         radiation = Radiation(eps_e=0.1, eps_B=0.01, p=2.2, xi_e=1.0)
-        return Model(jet, medium, observer, radiation, resolutions=(0.3, 1, 10))
+        return Model(jet, medium, observer, radiation)
 
     def test_flux_density_requires_ascending_time(self, model):
         """Test that flux_density requires ascending time array."""

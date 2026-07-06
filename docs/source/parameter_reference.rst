@@ -355,15 +355,15 @@ Grid Resolution
      - Units
      - Description
    * - ``phi_resol``
-     - 0.1
+     - 0.06
      - points/degree
      - Angular resolution in azimuthal direction
    * - ``theta_resol``
-     - 0.5
+     - 0.15 (0.2 with reverse shock)
      - points/degree
      - Angular resolution in polar direction
    * - ``t_resol``
-     - 10.0
+     - 6 (10 with reverse shock)
      - points/decade
      - Temporal resolution (logarithmic spacing)
 

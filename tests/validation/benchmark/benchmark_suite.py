@@ -21,7 +21,7 @@ from configs import (create_jet, create_medium, create_observer, create_radiatio
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
 from validation.colors import _bold, _green, _red, _cyan, _dim, _bold_red, _header
-from validation.common import (FIDUCIAL_RESOLUTION, DIM_INDEX, get_git_commit)
+from validation.common import (FIDUCIAL_RESOLUTION, DIM_INDEX, get_git_commit, masked_relative_errors)
 
 # ---------------------------------------------------------------------------
 # Data classes
@@ -130,7 +130,11 @@ def _convergence_worker(args: Tuple) -> Optional[Dict]:
 # ---------------------------------------------------------------------------
 
 class ComprehensiveBenchmark:
-    def __init__(self, iterations=1, reference_resolution=FIDUCIAL_RESOLUTION):
+    # Timing runs measure the shipped (mode-aware) default resolutions --
+    # reference_resolution=None lets the Model resolve them per shock mode --
+    # so the README performance charts reflect what users actually get. The
+    # convergence scans keep the pinned FIDUCIAL_RESOLUTION baseline.
+    def __init__(self, iterations=1, reference_resolution=None):
         self.iterations = iterations
         self.reference_resolution = reference_resolution
         self.results: List[ConfigResult] = []
@@ -243,18 +247,8 @@ class ComprehensiveBenchmark:
                     times_by_band[fb].append(elapsed)
                     flux_by_band[fb].append(flux_col.tolist())
 
-                    ref = ref_lcs[fb]
-                    valid = (ref > 0) & np.isfinite(ref) & (flux_col > 0) & np.isfinite(flux_col)
-                    if np.any(valid):
-                        log_ref = np.full_like(log_t, np.nan)
-                        pos = ref > 0
-                        log_ref[pos] = np.log10(ref[pos])
-                        slope = np.gradient(log_ref, log_t)
-                        valid = valid & (np.abs(slope) <= 4)
-                        if np.any(valid):
-                            ref_peak = np.max(ref[valid])
-                            valid = valid & (ref > ref_peak * 1e-6)
-                        err = np.abs(flux_col[valid] - ref[valid]) / ref[valid] if np.any(valid) else np.array([np.nan])
+                    err = masked_relative_errors(flux_col, ref_lcs[fb], log_t)
+                    if err is not None:
                         errors_by_band[fb].append(float(np.max(err)))
                         mean_errors_by_band[fb].append(float(np.mean(err)))
                     else:

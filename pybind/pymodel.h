@@ -588,26 +588,34 @@ class PyModel {
      * @param resolutions Grid resolution tuple (phi_res, theta_res, time_res) in (deg⁻¹, deg⁻¹, decade⁻¹).
      *        The total grid points in each dimension are computed from these resolutions, but
      *        each has a minimum that cannot be reduced further: phi (min 1), theta (min 36), time (min 24).
-     * @param rtol Relative tolerance for numerical integration (default: 1×10⁻⁶)
+     *        When omitted, the default is (0.06, 0.15, 6) for forward-shock-only runs and (0.06, 0.2, 10)
+     *        with a reverse shock; explicit values are honored as given.
+     * @param rtol Relative tolerance for the shock-dynamics ODE solves (default: 1×10⁻⁶; magnetized shells tighten one decade internally)
      * @param axisymmetric Whether to assume axisymmetric jet structure (default: true)
      * <!-- ************************************************************************************** -->
      */
     PyModel(JetVariant jet, MediumVariant medium, PyObserver const& observer, PyRadiation const& fwd_rad,
             std::optional<PyRadiation> const& rvs_rad = std::nullopt,
-            std::tuple<Real, Real, Real> const& resolutions = std::make_tuple(defaults::grid::phi_resolution,
-                                                                              defaults::grid::theta_resolution,
-                                                                              defaults::grid::time_resolution),
-            Real rtol = defaults::solver::ode_rtol, bool axisymmetric = true)
+            std::optional<std::tuple<Real, Real, Real>> const& resolutions = std::nullopt,
+            Real rtol = defaults::solver::dynamics_rtol, bool axisymmetric = true)
         : jet_(std::move(jet)),
           medium_(std::move(medium)),
           obs_setup(observer),
           fwd_rad(fwd_rad),
           rvs_rad_opt(rvs_rad),
-          phi_resol(std::get<0>(resolutions)),
-          theta_resol(std::get<1>(resolutions)),
-          t_resol(std::get<2>(resolutions)),
           rtol(rtol),
           axisymmetric(axisymmetric) {
+        // Forward-shock-only runs default to the coarser calibrated grid;
+        // reverse-shock light curves need denser theta and time (see
+        // defaults::grid). An explicit `resolutions` is honored as given.
+        const auto res = resolutions.value_or(
+            rvs_rad ? std::make_tuple(defaults::grid::phi_resolution, defaults::grid::rvs_theta_resolution,
+                                      defaults::grid::rvs_time_resolution)
+                    : std::make_tuple(defaults::grid::phi_resolution, defaults::grid::theta_resolution,
+                                      defaults::grid::time_resolution));
+        phi_resol = std::get<0>(res);
+        theta_resol = std::get<1>(res);
+        t_resol = std::get<2>(res);
         // rtol = 1.0 means "100% relative error is OK" -- the integrator gives up. Reject both ends.
         AFTERGLOW_REQUIRE(std::isfinite(rtol) && rtol > 0 && rtol < 1,
                           std::string("rtol must be in (0, 1), got ") + std::to_string(rtol));
@@ -768,7 +776,9 @@ class PyModel {
      * @param coord Coordinate system for the simulation
      * @param t_obs Observer time array [internal units]
      * @param nu_obs Observer frequency array [internal units]
-     * @param obs Observer object for flux calculation
+     * @param obs Observer object for flux calculation. Precondition: obs.observe() has already run
+     *            against kinematically identical shock data — the pair solver evolves both shocks
+     *            from one ODE state, so a single EAT grid serves forward and reverse emission.
      * @param rad Radiation parameters controlling microphysics
      * @param emission Output flux structure to populate
      * @param flux_func Function to compute flux (either specific_flux or specific_flux_series)
@@ -823,17 +833,17 @@ class PyModel {
     static void average_exposure_flux(PyFlux& result, std::vector<size_t> const& idx_sorted, size_t original_size,
                                       size_t num_points);
 
-    JetVariant jet_;                                    ///< Jet model (TophatJet, GaussianJet, PowerLawJet, or Ejecta)
-    MediumVariant medium_;                              ///< Circumburst medium (ISM, Wind, or generic Medium)
-    PyObserver obs_setup;                               ///< Observer configuration
-    PyRadiation fwd_rad;                                ///< Forward shock radiation parameters
-    std::optional<PyRadiation> rvs_rad_opt;             ///< Optional reverse shock radiation parameters
-    Real theta_w{con::pi / 2};                          ///< Maximum polar angle to calculate
-    Real phi_resol{defaults::grid::phi_resolution};     ///< Azimuthal resolution: number of points per degree
-    Real theta_resol{defaults::grid::theta_resolution}; ///< Polar resolution: number of points per degree
-    Real t_resol{defaults::grid::time_resolution};      ///< Time resolution: number of points per decade
-    Real rtol{defaults::solver::ode_rtol};              ///< Relative tolerance
-    bool axisymmetric{true};                            ///< Whether to assume axisymmetric jet
+    JetVariant jet_;                            ///< Jet model (TophatJet, GaussianJet, PowerLawJet, or Ejecta)
+    MediumVariant medium_;                      ///< Circumburst medium (ISM, Wind, or generic Medium)
+    PyObserver obs_setup;                       ///< Observer configuration
+    PyRadiation fwd_rad;                        ///< Forward shock radiation parameters
+    std::optional<PyRadiation> rvs_rad_opt;     ///< Optional reverse shock radiation parameters
+    Real theta_w{con::pi / 2};                  ///< Maximum polar angle to calculate
+    Real phi_resol;                             ///< Azimuthal resolution: number of points per degree (set in ctor)
+    Real theta_resol;                           ///< Polar resolution: number of points per degree (set in ctor)
+    Real t_resol;                               ///< Time resolution: number of points per decade (set in ctor)
+    Real rtol{defaults::solver::dynamics_rtol}; ///< Relative tolerance for shock dynamics
+    bool axisymmetric{true};                    ///< Whether to assume axisymmetric jet
 };
 
 //========================================================================================================
@@ -843,11 +853,6 @@ class PyModel {
 template <typename Func>
 void PyModel::single_shock_emission(Shock const& shock, Coord const& coord, Array const& t_obs, Array const& nu_obs,
                                     Observer& obs, PyRadiation rad, Flux& emission, Func&& flux_func) {
-    {
-        AFTERGLOW_PROFILE_SCOPE(EAT_grid);
-        obs.observe(coord, shock, obs_setup.lumi_dist, obs_setup.z);
-    }
-
     auto syn_e = [&] {
         AFTERGLOW_PROFILE_SCOPE(syn_electrons);
         return generate_syn_electrons(shock, coord);
@@ -897,6 +902,10 @@ auto PyModel::compute_emission(Array const& t_obs, Array const& nu_obs, Func&& f
             return solve_fwd_shock(jet_, medium_, t_obs, theta_w, obs_setup.theta_obs, obs_setup.z, phi_resol,
                                    theta_resol, t_resol, axisymmetric, fwd_rad.rad, rtol);
         }();
+        {
+            AFTERGLOW_PROFILE_SCOPE(EAT_grid);
+            observer.observe(coord, fwd_shock, obs_setup.lumi_dist, obs_setup.z);
+        }
         single_shock_emission(fwd_shock, coord, t_obs, nu_obs, observer, fwd_rad, flux.fwd,
                               std::forward<Func>(flux_func));
     } else {
@@ -905,6 +914,14 @@ auto PyModel::compute_emission(Array const& t_obs, Array const& nu_obs, Func&& f
             return solve_shock_pair(jet_, medium_, t_obs, theta_w, obs_setup.theta_obs, obs_setup.z, phi_resol,
                                     theta_resol, t_resol, axisymmetric, fwd_rad.rad, rvs_rad_opt->rad, rtol);
         }();
+        // The pair solver writes both shocks from one ODE state: regions 2 and 3
+        // ride the same contact discontinuity, so t_comv, r, theta, and Gamma --
+        // everything the observer reads -- are identical, and one set of EAT
+        // grids serves both emission passes.
+        {
+            AFTERGLOW_PROFILE_SCOPE(EAT_grid);
+            observer.observe(coord, fwd_shock, obs_setup.lumi_dist, obs_setup.z);
+        }
         single_shock_emission(fwd_shock, coord, t_obs, nu_obs, observer, fwd_rad, flux.fwd,
                               std::forward<Func>(flux_func));
         single_shock_emission(rvs_shock, coord, t_obs, nu_obs, observer, *rvs_rad_opt, flux.rvs,

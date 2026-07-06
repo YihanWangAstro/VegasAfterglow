@@ -8,7 +8,6 @@ import pytest
 
 from VegasAfterglow import ISM, Model, Observer, Radiation, TophatJet
 
-LOW_RES = (0.3, 1, 10)
 
 
 @pytest.fixture
@@ -17,7 +16,7 @@ def model():
     medium = ISM(n_ism=1.0)
     obs = Observer(lumi_dist=1e28, z=1.0, theta_obs=0.0)
     rad = Radiation(eps_e=0.1, eps_B=0.01, p=2.2)
-    return Model(jet, medium, obs, rad, resolutions=LOW_RES)
+    return Model(jet, medium, obs, rad)
 
 
 class TestFluxDensityValidation:

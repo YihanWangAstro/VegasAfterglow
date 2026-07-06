@@ -414,7 +414,7 @@ jet = TophatJet(theta_c=0.3, E_iso=1e52, Gamma0=100)
 obs = Observer(lumi_dist=1e26, z=z, theta_obs=0.)
 rad = Radiation(eps_e=1e-1, eps_B=1e-3, p=2.3)
 
-model = Model(jet=jet, medium=medium, observer=obs, fwd_rad=rad, resolutions=(0.1, 0.25, 10))
+model = Model(jet=jet, medium=medium, observer=obs, fwd_rad=rad, resolutions=(0.06, 0.15, 6))
 ```
 
 </details>
@@ -496,7 +496,7 @@ In addition to scalar quantities, `details()` provides callable spectrum accesso
 
 ```python
 rad = Radiation(eps_e=1e-1, eps_B=1e-3, p=2.3, ssc=True)
-model = Model(jet=jet, medium=medium, observer=obs, fwd_rad=rad, resolutions=(0.1, 0.25, 10))
+model = Model(jet=jet, medium=medium, observer=obs, fwd_rad=rad, resolutions=(0.06, 0.15, 6))
 details = model.details(t_min=1e0, t_max=1e8)
 
 nu_comv = np.logspace(8, 20, 200)  # comoving frame frequency [Hz]
@@ -662,7 +662,7 @@ fitter.add_spectrum(t=3000, nu=nu_data, f_nu=spectrum_data, err=spectrum_err)
 # Option 1: Nested sampling with dynesty (computes evidence, robust for multimodal posteriors)
 result = fitter.fit(
     mc_params,
-    resolution=(0.1, 0.25, 10),    # Grid resolution (phi, theta, t)
+    resolution=(0.06, 0.15, 6),    # Grid resolution (phi, theta, t)
     sampler="dynesty",             # Nested sampling algorithm
     nlive=1000,                    # Number of live points
     walks=100,                     # Number of random walks per live point
@@ -674,7 +674,7 @@ result = fitter.fit(
 # Option 2: MCMC with emcee (faster, good for unimodal posteriors, not optimal for multimodal posteriors)
 result = fitter.fit(
     mc_params,
-    resolution=(0.1, 0.25, 10),    # Grid resolution (phi, theta, t)
+    resolution=(0.06, 0.15, 6),    # Grid resolution (phi, theta, t)
     sampler="emcee",               # MCMC sampler
     nsteps=25000,                  # Number of steps per walker
     nburn=5000,                    # Burn-in steps to discard
@@ -808,12 +808,12 @@ For complete documentation on the API, visit the [**redback documentation**](htt
 
 ## Performance Highlights
 
-VegasAfterglow is designed for speed. A tophat synchrotron light curve completes in under 1 ms; even the most demanding case — a structured jet with full SSC off-axis — finishes in ~180 ms. This makes MCMC parameter estimation lightning fast on a laptop:
+VegasAfterglow is designed for speed. A tophat synchrotron light curve completes in under 1 ms; even the most demanding case — a structured jet with full SSC and Klein-Nishina cooling off-axis — finishes in ~140 ms. This makes MCMC parameter estimation lightning fast on a laptop:
 
 * **Tophat jet**: 10,000 MCMC steps, 8 parameters, 15 data points for ~0.3 M samples ~15 s (Apple M2, 8 cores).
 * **Structured jet**: same setup ~1 minute.
 
-The charts below benchmark **single-core** wall-clock time by stage across four jet profiles (Tophat, Gaussian, Power-law, Two-component), two media (ISM/Wind), and $\theta_v/\theta_c = 0, 1, 2, 4$, all at the default fiducial resolution — conservatively set to ensure convergence across a wide range of physical parameters. Cost scales with two factors: off-axis observers require a full 3D equal-arrival-time grid vs. 2D on-axis, and structured jets compute radiation independently at each $\theta$ vs. reusing one solution for tophat. Reverse shock adds a second shocked shell, roughly doubling the dynamics cost.
+The charts below benchmark **single-core** wall-clock time by stage across four jet profiles (Tophat, Gaussian, Power-law, Two-component), two media (ISM/Wind), and $\theta_v/\theta_c = 0, 1, 2, 4$, all at the shipped default resolutions — calibrated per emission component to hold the validation gates across jet families and viewing angles (reverse-shock runs automatically use a denser grid). Cost scales with two factors: off-axis observers require a full 3D equal-arrival-time grid vs. 2D on-axis, and structured jets compute radiation independently at each $\theta$ vs. reusing one solution for tophat. Reverse shock adds a second shocked shell, roughly doubling the dynamics cost.
 
 
 <div align="center">
@@ -854,7 +854,7 @@ VegasAfterglow ships a unified test framework (see [TESTING.md](TESTING.md)) wit
 
 * **Code correctness** — C++ unit tests (Boost.Test) and Python API tests (pytest), run on every push across Linux/macOS/Windows.
 * **Physics correctness** — closure relations against standard afterglow theory, exact invariants (distance/redshift scalings, component additivity), golden-baseline regression, and parameter-space corner sweeps.
-* **Full validation** (`tests/validation/`) — **benchmark tests** (resolution convergence, performance timing) and **regression tests** (shock dynamics scaling laws, characteristic frequency evolution, spectral power-law indices across Blandford-McKee and Sedov-Taylor phases). The default fiducial resolution `(0.1, 0.25, 10)` achieves < 5% mean error for most configurations.
+* **Full validation** (`tests/validation/`) — **benchmark tests** (resolution convergence, performance timing) and **regression tests** (shock dynamics scaling laws, characteristic frequency evolution, spectral power-law indices across Blandford-McKee and Sedov-Taylor phases). The suite's pinned fiducial resolution `(0.1, 0.25, 10)` achieves < 5% mean error for most configurations; the shipped defaults are gated separately per emission component (`tests/python/test_default_convergence.py`).
 
 ```bash
 make test               # everything: C++ + Python suites + full validation + HTML report (slow)

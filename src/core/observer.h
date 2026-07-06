@@ -189,11 +189,12 @@ class Observer {
   private:
     Real lumi_dist{1}; ///< Luminosity distance
     // Grid dimensions
-    size_t jet_3d{0};           ///< Flag indicating if the jet is non-axis-symmetric (non-zero if true)
-    size_t eff_phi_grid{1};     ///< Effective number of phi grid points
-    size_t theta_grid{0};       ///< Number of theta grid points
-    size_t t_grid{0};           ///< Number of time grid points
-    bool jet_spreading_{false}; ///< Whether the jet has lateral spreading (theta varies along k)
+    size_t jet_3d{0};             ///< Flag indicating if the jet is non-axis-symmetric (non-zero if true)
+    size_t eff_phi_grid{1};       ///< Effective number of phi grid points
+    size_t theta_grid{0};         ///< Number of theta grid points
+    size_t t_grid{0};             ///< Number of time grid points
+    bool jet_spreading_{false};   ///< Whether the jet has lateral spreading (theta varies along k)
+    bool geom_pre_logged_{false}; ///< lg2_geom_factor already holds log2(dOmega r^2) (factorized axisymmetric path)
 
     /**
      * <!-- ************************************************************************************** -->
@@ -260,9 +261,6 @@ class Observer {
     struct InterpState {
         Real slope{0};       ///< Slope for logarithmic interpolation
         Real lg2_L_nu_lo{0}; ///< Lower boundary of specific luminosity (log2 scale)
-        Real lg2_L_nu_hi{0}; ///< Upper boundary of specific luminosity (log2 scale)
-        Real last_lg2_nu{0}; ///< Last log2 frequency (for interpolation)
-        size_t last_hi{0};   ///< Index for the upper boundary in the grid
     };
 
     /**
@@ -276,9 +274,6 @@ class Observer {
      */
     [[nodiscard]] static Real loglog_interpolate(InterpState const& state, Real lg2_t_obs, Real lg2_t_lo) noexcept;
 
-    /// Same interpolation as loglog_interpolate but returns the log2-space value.
-    [[nodiscard]] static Real lg2_loglog_interpolate(InterpState const& state, Real lg2_t_obs, Real lg2_t_lo) noexcept;
-
     /**
      * @tparam PhotonGrid Types of photon grid objects
      * @param state The interpolation state to update
@@ -288,13 +283,9 @@ class Observer {
      * @param k Time grid index
      * @param lg2_nu_src Log2 of the observed frequency
      * @param photons Parameter pack of photon grid objects
-     * @details Attempts to set the lower and upper boundary values for logarithmic interpolation.
-     *          It updates the internal boundary members for:
-     *            - Logarithmic observation time (t_obs_lo, log_t_ratio)
-     *            - Logarithmic luminosity (L_lo, L_hi)
-     *          The boundaries are set using data from the provided grids and the photon grids.
-     *          Returns true if both lower and upper boundaries are finite such that interpolation can proceed
-     * @return True if both lower and upper boundaries are valid for interpolation, false otherwise
+     * @details Computes the log2 luminosity at the two time-grid endpoints of interval k and the
+     *          interpolation slope between them.
+     * @return True if the slope is finite (both boundaries valid for interpolation), false otherwise
      * <!-- ************************************************************************************** -->
      */
     template <typename PhotonGrid>
@@ -321,35 +312,26 @@ inline void iterate_to(Real value, Array const& arr, size_t& it) noexcept {
     }
 }
 
+/// Same as iterate_to, but also consumes entries equal to the target value.
+inline void iterate_through(Real value, Array const& arr, size_t& it) noexcept {
+    while (it < arr.size() && arr(it) <= value) {
+        it++;
+    }
+}
+
 template <typename PhotonGrid>
 bool Observer::set_boundaries(InterpState& state, size_t eff_i, size_t i, size_t j, size_t k, Real lg2_nu_src,
                               PhotonGrid& photons) noexcept {
-    if (state.last_hi == k + 1 && state.last_lg2_nu == lg2_nu_src) {
-        return std::isfinite(state.slope);
-    }
-
     const Real lg2_t_ratio = lg2_t(i, j, k + 1) - lg2_t(i, j, k);
 
-    // Reuse previous hi boundary as new lo when advancing sequentially
-    if (state.last_hi != 0 && k == state.last_hi && lg2_nu_src == state.last_lg2_nu) {
-        state.lg2_L_nu_lo = state.lg2_L_nu_hi;
-    } else {
-        Real lg2_nu_lo = lg2_nu_src - lg2_doppler(i, j, k);
-        state.lg2_L_nu_lo = photons(eff_i, j, k).compute_log2_I_nu(lg2_nu_lo) + lg2_geom_factor(i, j, k);
-    }
+    const Real lg2_nu_lo = lg2_nu_src - lg2_doppler(i, j, k);
+    state.lg2_L_nu_lo = photons(eff_i, j, k).compute_log2_I_nu(lg2_nu_lo) + lg2_geom_factor(i, j, k);
 
-    Real lg2_nu_hi = lg2_nu_src - lg2_doppler(i, j, k + 1);
-    state.lg2_L_nu_hi = photons(eff_i, j, k + 1).compute_log2_I_nu(lg2_nu_hi) + lg2_geom_factor(i, j, k + 1);
+    const Real lg2_nu_hi = lg2_nu_src - lg2_doppler(i, j, k + 1);
+    const Real lg2_L_nu_hi = photons(eff_i, j, k + 1).compute_log2_I_nu(lg2_nu_hi) + lg2_geom_factor(i, j, k + 1);
 
-    state.slope = (state.lg2_L_nu_hi - state.lg2_L_nu_lo) / lg2_t_ratio;
-
-    if (!std::isfinite(state.slope)) {
-        return false;
-    }
-
-    state.last_hi = k + 1;
-    state.last_lg2_nu = lg2_nu_src;
-    return true;
+    state.slope = (lg2_L_nu_hi - state.lg2_L_nu_lo) / lg2_t_ratio;
+    return std::isfinite(state.slope);
 }
 
 template <typename PhotonGrid>
@@ -376,32 +358,39 @@ MeshGrid Observer::specific_flux(Array const& t_obs, Array const& nu_obs, Photon
     for (size_t i = 0; i < eff_phi_grid; i++) {
         const size_t eff_i = i * jet_3d;
         for (size_t j = 0; j < theta_grid; j++) {
+            // Row pointers for the member tensors; the local buffers below
+            // need none (the compiler already hoists their stride math).
+            const Real* t_row = &lg2_t(i, j, 0);
+            const Real* dop_row = &lg2_doppler(i, j, 0);
+            const Real* geom_row = &lg2_geom_factor(i, j, 0);
+            auto* ph_row = &photons(eff_i, j, 0);
+
             // Precompute boundary values for all time grid points.
             for (size_t k = 0; k < t_grid; k++) {
-                const Real lg2_dop = lg2_doppler(i, j, k);
-                const Real lg2_geom = lg2_geom_factor(i, j, k);
+                const Real lg2_dop = dop_row[k];
+                const Real lg2_geom = geom_row[k];
+                auto& ph = ph_row[k];
                 const size_t base = k * nu_len;
                 for (size_t l = 0; l < nu_len; l++) {
-                    boundary_vals(base + l) =
-                        photons(eff_i, j, k).compute_log2_I_nu(lg2_nu_src(l) - lg2_dop) + lg2_geom;
+                    boundary_vals(base + l) = ph.compute_log2_I_nu(lg2_nu_src(l) - lg2_dop) + lg2_geom;
                 }
             }
 
             size_t t_idx = 0;
-            iterate_to(lg2_t(i, j, 0), lg2_t_obs, t_idx);
+            iterate_to(t_row[0], lg2_t_obs, t_idx);
             const size_t col_first = t_idx;
 
             for (size_t k = 0; k < t_grid - 1 && t_idx < t_obs_len; k++) {
-                if (lg2_t(i, j, k + 1) < lg2_t_obs(t_idx))
+                if (t_row[k + 1] < lg2_t_obs(t_idx))
                     continue;
 
                 const size_t idx_start = t_idx;
-                iterate_to(lg2_t(i, j, k + 1), lg2_t_obs, t_idx);
+                iterate_to(t_row[k + 1], lg2_t_obs, t_idx);
 
                 const size_t lo_base = k * nu_len;
                 const size_t hi_base = (k + 1) * nu_len;
-                const Real t_lo_val = lg2_t(i, j, k);
-                const Real inv_t_ratio = 1.0 / (lg2_t(i, j, k + 1) - t_lo_val);
+                const Real t_lo_val = t_row[k];
+                const Real inv_t_ratio = 1.0 / (t_row[k + 1] - t_lo_val);
 
                 for (size_t l = 0; l < nu_len; l++) {
                     const Real s = (boundary_vals(hi_base + l) - boundary_vals(lo_base + l)) * inv_t_ratio;
@@ -450,21 +439,48 @@ Array Observer::specific_flux_series(Array const& t_obs, Array const& nu_obs, Ph
     for (size_t i = 0; i < eff_phi_grid; i++) {
         const size_t eff_i = i * jet_3d;
         for (size_t j = 0; j < theta_grid; j++) {
-            size_t idx = 0;
-            iterate_to(lg2_t(i, j, 0), lg2_t_obs, idx);
-            const size_t col_first = idx;
-            InterpState state;
+            // Row pointers: member-tensor indexing would redo the 3D stride
+            // arithmetic on every access (the interleaved col_lg2 stores keep
+            // the compiler from hoisting it).
+            const Real* t_row = &lg2_t(i, j, 0);
+            const Real* dop_row = &lg2_doppler(i, j, 0);
+            const Real* geom_row = &lg2_geom_factor(i, j, 0);
+            auto* ph_row = &photons(eff_i, j, 0);
 
-            for (size_t k = 0; idx < t_obs_len && k < t_grid - 1;) {
-                if (lg2_t(i, j, k + 1) < lg2_t_obs(idx)) {
-                    k++;
-                } else {
-                    if (set_boundaries(state, eff_i, i, j, k, lg2_nu_src(idx), photons)) [[likely]] {
-                        col_lg2(idx) = lg2_loglog_interpolate(state, lg2_t_obs(idx), lg2_t(i, j, k));
-                    } else {
-                        col_lg2(idx) = -con::inf;
-                    }
-                    idx++;
+            size_t idx = 0;
+            iterate_to(t_row[0], lg2_t_obs, idx);
+            const size_t col_first = idx;
+
+            // The previous interval's upper boundary doubles as the next lower
+            // boundary when consecutive same-band points sit in adjacent
+            // intervals (data locally denser than the time lattice).
+            size_t carry_k = t_grid;
+            Real carry_nu = 0;
+            Real carry_val = 0;
+
+            // Each time interval processes every observation point it brackets,
+            // with the interval's endpoint cells hoisted once.
+            for (size_t k = 0; idx < t_obs_len && k < t_grid - 1; k++) {
+                if (t_row[k + 1] < lg2_t_obs(idx)) {
+                    continue;
+                }
+                const size_t block_first = idx;
+                iterate_through(t_row[k + 1], lg2_t_obs, idx);
+
+                const Real inv_dt = 1.0 / (t_row[k + 1] - t_row[k]);
+                auto& ph_lo = ph_row[k];
+                auto& ph_hi = ph_row[k + 1];
+
+                for (size_t s = block_first; s < idx; s++) {
+                    const Real lg2_nu = lg2_nu_src(s);
+                    const bool carried = (s == block_first && carry_k == k && carry_nu == lg2_nu);
+                    const Real lo = carried ? carry_val : ph_lo.compute_log2_I_nu(lg2_nu - dop_row[k]) + geom_row[k];
+                    const Real hi = ph_hi.compute_log2_I_nu(lg2_nu - dop_row[k + 1]) + geom_row[k + 1];
+                    const Real slope = (hi - lo) * inv_dt;
+                    col_lg2(s) = std::isfinite(slope) ? lo + (lg2_t_obs(s) - t_row[k]) * slope : -con::inf;
+                    carry_k = k + 1;
+                    carry_nu = lg2_nu;
+                    carry_val = hi;
                 }
             }
 

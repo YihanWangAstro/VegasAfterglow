@@ -6,6 +6,8 @@ import sys
 from pathlib import Path
 from typing import Dict, Optional, Tuple
 
+import numpy as np
+
 try:
     import VegasAfterglow as va
     HAS_VA = True
@@ -17,6 +19,27 @@ ROOT_DIR = Path(__file__).parents[2]
 
 # Convergence thresholds
 MAX_ERROR_THRESHOLD, MEAN_ERROR_THRESHOLD = 0.15, 0.05
+
+
+def masked_relative_errors(flux, ref, log_t):
+    """Relative errors |flux/ref - 1| under the suite's convergence mask:
+    positive finite flux in both curves, |dlogF/dlogt| <= 4 on the reference
+    (steep de-beamed rises carry meaningless relative errors), and above 1e-6
+    of the reference band peak. Returns None when nothing survives the mask."""
+    flux = np.asarray(flux)
+    ref = np.asarray(ref)
+    valid = (ref > 0) & np.isfinite(ref) & (flux > 0) & np.isfinite(flux)
+    if not valid.any():
+        return None
+    log_ref = np.full_like(log_t, np.nan)
+    pos = ref > 0
+    log_ref[pos] = np.log10(ref[pos])
+    slope = np.gradient(log_ref, log_t)
+    valid &= np.abs(slope) <= 4
+    if not valid.any():
+        return None
+    valid &= ref > ref[valid].max() * 1e-6
+    return np.abs(flux[valid] - ref[valid]) / ref[valid]
 
 # Fiducial resolution settings (single source of truth, used by benchmark and report)
 FIDUCIAL_RESOLUTION = (0.1, 0.25, 10)

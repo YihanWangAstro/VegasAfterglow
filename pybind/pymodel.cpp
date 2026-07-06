@@ -294,8 +294,7 @@ void save_photon_details(PhotonGrid const& photons, PyShock& details, Shock cons
 
 void PyModel::single_evo_details(Shock const& shock, Coord const& coord, Observer& obs, PyRadiation const& rad,
                                  PyShock& details) const {
-    obs.observe(coord, shock, obs_setup.lumi_dist, obs_setup.z);
-
+    // Precondition: obs.observe() has already run (kinematics are shared between paired shocks).
     details.t_obs = obs.time / unit::sec;
     details.Doppler = xt::exp2(obs.lg2_doppler);
 
@@ -336,6 +335,7 @@ auto PyModel::details(Real t_min, Real t_max) const -> PyDetails {
         details.phi = coord.phi;
         details.theta = coord.theta;
         details.t_src = coord.t / unit::sec;
+        observer.observe(coord, fwd_shock, obs_setup.lumi_dist, obs_setup.z);
         save_shock_details(fwd_shock, details.fwd);
         single_evo_details(fwd_shock, coord, observer, fwd_rad, details.fwd);
     } else {
@@ -346,6 +346,8 @@ auto PyModel::details(Real t_min, Real t_max) const -> PyDetails {
         details.phi = coord.phi;
         details.theta = coord.theta;
         details.t_src = coord.t / unit::sec;
+        // One EAT grid serves both shocks: the pair solver evolves them from one ODE state.
+        observer.observe(coord, fwd_shock, obs_setup.lumi_dist, obs_setup.z);
         save_shock_details(fwd_shock, details.fwd);
         save_shock_details(rvs_shock, details.rvs);
         single_evo_details(fwd_shock, coord, observer, fwd_rad, details.fwd);
@@ -535,8 +537,6 @@ auto PyModel::sky_image(PyArray const& t_obs, double nu_obs, double fov, size_t 
     // Helper: set up a shock once (observe, electrons, photons, SSC cooling),
     // then render sky images for all frames via batched sky_image.
     auto render_shock_frames = [&](Shock const& shock, Coord const& coord, PyRadiation const& rad) {
-        observer.observe(coord, shock, obs_setup.lumi_dist, obs_setup.z);
-
         auto syn_e = generate_syn_electrons(shock, coord);
         auto syn_ph = generate_syn_photons(shock, syn_e, coord);
 
@@ -564,11 +564,15 @@ auto PyModel::sky_image(PyArray const& t_obs, double nu_obs, double fov, size_t 
     if (!rvs_rad_opt) {
         auto [coord, fwd_shock] = solve_fwd_shock(jet_, medium_, t_arr, theta_w, obs_setup.theta_obs, obs_setup.z,
                                                   phi_resol, theta_resol, t_resol, axisymmetric, fwd_rad.rad, rtol);
+        observer.observe(coord, fwd_shock, obs_setup.lumi_dist, obs_setup.z);
         render_shock_frames(fwd_shock, coord, fwd_rad);
     } else {
         auto [coord, fwd_shock, rvs_shock] =
             solve_shock_pair(jet_, medium_, t_arr, theta_w, obs_setup.theta_obs, obs_setup.z, phi_resol, theta_resol,
                              t_resol, axisymmetric, fwd_rad.rad, rvs_rad_opt->rad, rtol);
+        // The pair solver gives both shocks identical kinematics: one set of
+        // EAT grids serves both renders.
+        observer.observe(coord, fwd_shock, obs_setup.lumi_dist, obs_setup.z);
         render_shock_frames(fwd_shock, coord, fwd_rad);
         render_shock_frames(rvs_shock, coord, *rvs_rad_opt);
     }

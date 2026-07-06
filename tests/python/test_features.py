@@ -22,7 +22,6 @@ from VegasAfterglow import (
     Wind,
 )
 
-LOW_RES = (0.3, 1, 10)
 
 
 # ========================================
@@ -37,7 +36,7 @@ class TestSSC:
         medium = ISM(n_ism=1.0)
         obs = Observer(lumi_dist=1e28, z=1.0, theta_obs=0.0)
         rad = Radiation(eps_e=0.1, eps_B=0.01, p=2.2, ssc=True)
-        return Model(jet, medium, obs, rad, resolutions=LOW_RES)
+        return Model(jet, medium, obs, rad)
 
     def test_ssc_flux_has_components(self, ssc_model):
         """SSC model should produce both sync and ssc flux components."""
@@ -69,7 +68,7 @@ class TestKN:
         medium = ISM(n_ism=1.0)
         obs = Observer(lumi_dist=1e28, z=1.0, theta_obs=0.0)
         rad = Radiation(eps_e=0.1, eps_B=0.01, p=2.2, ssc=True, kn=True)
-        model = Model(jet, medium, obs, rad, resolutions=LOW_RES)
+        model = Model(jet, medium, obs, rad)
         t = np.logspace(3, 6, 10)
         nu = np.full_like(t, 1e14)
         flux = model.flux_density(t, nu)
@@ -90,7 +89,7 @@ class TestReverseShock:
         obs = Observer(lumi_dist=1e28, z=1.0, theta_obs=0.0)
         fwd_rad = Radiation(eps_e=0.1, eps_B=0.01, p=2.2)
         rvs_rad = Radiation(eps_e=0.1, eps_B=0.01, p=2.2)
-        model = Model(jet, medium, obs, fwd_rad, rvs_rad=rvs_rad, resolutions=LOW_RES)
+        model = Model(jet, medium, obs, fwd_rad, rvs_rad=rvs_rad)
         t = np.logspace(2, 6, 15)
         nu = np.full_like(t, 4.84e14)
         flux = model.flux_density(t, nu)
@@ -105,7 +104,7 @@ class TestReverseShock:
         obs = Observer(lumi_dist=1e28, z=1.0, theta_obs=0.0)
         fwd_rad = Radiation(eps_e=0.1, eps_B=0.01, p=2.2)
         rvs_rad = Radiation(eps_e=0.1, eps_B=0.01, p=2.2)
-        model = Model(jet, medium, obs, fwd_rad, rvs_rad=rvs_rad, resolutions=LOW_RES)
+        model = Model(jet, medium, obs, fwd_rad, rvs_rad=rvs_rad)
         det = model.details(t_min=1e2, t_max=1e5)
         assert det.rvs.Gamma.size > 0
 
@@ -122,7 +121,7 @@ class TestWindFlux:
         medium = Wind(A_star=0.1)
         obs = Observer(lumi_dist=1e28, z=1.0, theta_obs=0.0)
         rad = Radiation(eps_e=0.1, eps_B=0.01, p=2.2)
-        model = Model(jet, medium, obs, rad, resolutions=LOW_RES)
+        model = Model(jet, medium, obs, rad)
         t = np.logspace(2, 6, 15)
         nu = np.full_like(t, 4.84e14)
         flux = model.flux_density(t, nu)
@@ -135,7 +134,7 @@ class TestWindFlux:
         medium = Wind(A_star=0.1, n_ism=0.01)
         obs = Observer(lumi_dist=1e28, z=1.0, theta_obs=0.0)
         rad = Radiation(eps_e=0.1, eps_B=0.01, p=2.2)
-        model = Model(jet, medium, obs, rad, resolutions=LOW_RES)
+        model = Model(jet, medium, obs, rad)
         t = np.logspace(2, 6, 10)
         nu = np.full_like(t, 4.84e14)
         flux = model.flux_density(t, nu)
@@ -155,7 +154,7 @@ class TestOffAxis:
         medium = ISM(n_ism=1.0)
         obs = Observer(lumi_dist=1e28, z=1.0, theta_obs=0.3)
         rad = Radiation(eps_e=0.1, eps_B=0.01, p=2.2)
-        model = Model(jet, medium, obs, rad, resolutions=LOW_RES)
+        model = Model(jet, medium, obs, rad)
         t = np.logspace(3, 7, 15)
         nu = np.full_like(t, 4.84e14)
         flux = model.flux_density(t, nu)
@@ -169,11 +168,11 @@ class TestOffAxis:
         rad = Radiation(eps_e=0.1, eps_B=0.01, p=2.2)
         on_axis = Model(
             jet, medium, Observer(lumi_dist=1e28, z=1.0, theta_obs=0.0),
-            rad, resolutions=LOW_RES,
+            rad,
         )
         off_axis = Model(
             jet, medium, Observer(lumi_dist=1e28, z=1.0, theta_obs=0.4),
-            rad, resolutions=LOW_RES,
+            rad,
         )
         t = np.logspace(3, 5, 5)
         nu = np.full_like(t, 4.84e14)
@@ -202,7 +201,7 @@ class TestJetTypeFlux:
                 theta_c=0.05, E_iso=1e52, Gamma0=300,
                 E_iso_w=1e50, Gamma0_w=50, k_e=2.0, k_g=2.0,
             )
-        return Model(jet, medium, obs, rad, resolutions=LOW_RES)
+        return Model(jet, medium, obs, rad)
 
     def test_produces_finite_positive_flux(self, model):
         """Each parametrized jet structure yields finite, strictly positive total flux."""

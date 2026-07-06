@@ -57,7 +57,8 @@ class Fitter:
         kn: Enable Klein-Nishina corrections
         magnetar: Enable magnetar energy injection
         rtol: Numerical tolerance
-        resolution: Grid resolution tuple (phi, theta, t). Can be overridden per-fit.
+        resolution: Grid resolution tuple (phi, theta, t). Defaults to (0.06, 0.15, 6),
+            or (0.06, 0.2, 10) when the reverse shock is enabled. Can be overridden per-fit.
         extinction: Host-galaxy dust extinction. ``None`` (default) disables it;
             a string ``"smc" | "lmc" | "mw"`` selects a built-in Pei (1992) law;
             a callable ``f(lam_cm, params) -> k(lam)`` supplies a custom law.
@@ -81,7 +82,7 @@ class Fitter:
         kn: bool = False,
         magnetar: bool = False,
         rtol: float = 1e-6,
-        resolution: Tuple[float, float, float] = (0.075, 0.25, 7),
+        resolution: Optional[Tuple[float, float, float]] = None,
         extinction=None,
     ):
         self.z = z
@@ -92,7 +93,9 @@ class Fitter:
         self.kn = kn
         self.magnetar = magnetar
         self.rtol = rtol
-        self.phi_resol, self.theta_resol, self.t_resol = resolution
+        # None forwards to Model, which resolves the mode-aware default
+        # (defaults::grid in the C++ core is the single source of truth).
+        self.resolution = tuple(resolution) if resolution is not None else None
 
         self.jet = jet
         self._custom_jet = callable(jet)
@@ -447,7 +450,7 @@ class Fitter:
             observer=observer,
             fwd_rad=fwd_rad,
             rvs_rad=rvs_rad,
-            resolutions=(self.phi_resol, self.theta_resol, self.t_resol),
+            resolutions=self.resolution,
             rtol=self.rtol,
         )
 
@@ -539,7 +542,7 @@ class Fitter:
         # (``flux_density_grid``, ``flux``) render at the SAME resolution used
         # to compute chi-squared.
         if resolution is not None:
-            self.phi_resol, self.theta_resol, self.t_resol = resolution
+            self.resolution = tuple(resolution)
 
         # Consolidate before dispatching the worker pool so the values worker
         # threads read are stable.
@@ -607,12 +610,12 @@ class Fitter:
     def _override_resolution(self, resolution):
         """Temporarily override resolution, restoring on exit."""
         if resolution is not None:
-            saved = (self.phi_resol, self.theta_resol, self.t_resol)
-            self.phi_resol, self.theta_resol, self.t_resol = resolution
+            saved = self.resolution
+            self.resolution = tuple(resolution)
             try:
                 yield
             finally:
-                self.phi_resol, self.theta_resol, self.t_resol = saved
+                self.resolution = saved
         else:
             yield
 
