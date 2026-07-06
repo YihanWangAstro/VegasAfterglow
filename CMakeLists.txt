@@ -40,7 +40,11 @@ option(AFTERGLOW_FAST_MATH "Enable fast polynomial log2/exp2 in src/util/fast-ma
 
 add_compile_definitions(
   NO_XTENSOR_IO # intentionally CMake-only: xtensor-io fails to build on Windows
-  XTENSOR_USE_XSIMD
+  # MSVC does not define __SSE2__ / __ARM_NEON by default, so xsimd 13.x
+  # would declare XSIMD_NO_SUPPORTED_ARCHITECTURE and skip xsimd_traits.hpp,
+  # breaking every xt_simd:: type alias.  Fall back to xtensor's scalar path
+  # on Windows instead.
+  $<$<NOT:$<CXX_COMPILER_ID:MSVC>>:XTENSOR_USE_XSIMD>
   $<$<BOOL:${AFTERGLOW_PROFILE}>:AFTERGLOW_PROFILE>
   $<$<BOOL:${AFTERGLOW_FAST_MATH}>:AFTERGLOW_FAST_MATH>
 )
