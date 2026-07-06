@@ -31,7 +31,9 @@ jobs:
       - name: CPU tag for ccache key
         # -march=native objects are CPU-generation-specific; the runner fleet is
         # heterogeneous, so a shared cache would serve AVX-512 objects to an
-        # AVX2 machine (SIGILL). Key the cache by CPU model.
+        # AVX2 machine (SIGILL). Key by model AND feature flags: VMs with the
+        # same model name can expose different ISA extensions (hypervisor
+        # masking) — a model-only key produced a SIGILL in CI (2026-07).
         if: runner.os != 'Windows'
         id: cpu
         shell: bash
@@ -39,7 +41,7 @@ jobs:
           if [ "$RUNNER_OS" = "macOS" ]; then
             MODEL=$(sysctl -n machdep.cpu.brand_string)
           else
-            MODEL=$(grep -m1 'model name' /proc/cpuinfo)
+            MODEL=$(grep -m1 'model name' /proc/cpuinfo; grep -m1 '^flags' /proc/cpuinfo)
           fi
           echo "tag=$(echo "$MODEL" | shasum | cut -c1-10)" >> "$GITHUB_OUTPUT"
           echo "runner CPU: $MODEL"
@@ -53,16 +55,10 @@ jobs:
             tests-${{ matrix.os }}-${{ steps.cpu.outputs.tag }}
 
       - name: Build and install package
-        if: runner.os != 'Windows'
         run: pip install ".[test,mcmc]" pytest
         env:
-          CMAKE_ARGS: "-DCMAKE_C_COMPILER_LAUNCHER=ccache -DCMAKE_CXX_COMPILER_LAUNCHER=ccache"
-
-      - name: Build and install package (Windows)
-        if: runner.os == 'Windows'
-        run: pip install ".[test,mcmc]" pytest
-        env:
-          CMAKE_ARGS: ""
+          # ccache launchers everywhere except Windows (no ccache there)
+          CMAKE_ARGS: ${{ runner.os != 'Windows' && '-DCMAKE_C_COMPILER_LAUNCHER=ccache -DCMAKE_CXX_COMPILER_LAUNCHER=ccache' || '' }}
 
       - name: Build and run C++ tests
         if: runner.os != 'Windows'

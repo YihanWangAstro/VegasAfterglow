@@ -19,8 +19,6 @@
 
 namespace py = pybind11;
 using PyArray = xt::pytensor<double, 1>;
-using PyGrid = xt::pytensor<double, 2>;
-using PyGrid3d = xt::pytensor<double, 3>;
 
 template <typename Array>
 bool is_ascending(Array const& arr) {

@@ -35,13 +35,6 @@ namespace afterglow {
         }                                                                                                              \
     } while (0)
 
-#define AFTERGLOW_ENSURE(condition, message)                                                                           \
-    do {                                                                                                               \
-        if (!(condition)) [[unlikely]] {                                                                               \
-            throw std::logic_error(message);                                                                           \
-        }                                                                                                              \
-    } while (0)
-
     // ---- physics-parameter validation helpers ---------------------------------
     //
     // Used at pybind constructor entry points to reject obviously-bad inputs

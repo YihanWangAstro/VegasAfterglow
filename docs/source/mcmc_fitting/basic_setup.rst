@@ -23,11 +23,13 @@ The ``Fitter`` constructor accepts keyword arguments for source properties, mode
         rvs_ssc=False,            # Reverse shock inverse Compton
         kn=True,                  # Klein-Nishina corrections
         magnetar=True,            # Magnetar energy injection
+        radiative_fireball=True,  # Radiative losses decelerate the blast wave
+                                  # (False = adiabatic, the convention of most codes)
         extinction="smc",         # Host-galaxy dust extinction (None | "smc"/"lmc"/"mw" | callable)
 
         # Numerical parameters
-        rtol=1e-5,                # Numerical tolerance
-        resolution=(0.1, 0.25, 10),   # Grid resolution (phi, theta, t)
+        rtol=1e-6,                # Numerical tolerance (the default)
+        resolution=None,          # None -> mode-aware defaults; or an explicit (phi, theta, t) tuple
     )
 
 Setting up Data and the Fitter

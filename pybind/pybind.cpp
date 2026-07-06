@@ -86,6 +86,21 @@ TernaryFunc to_ternary_func(py::object const& obj, py::object const& native_type
     return obj.cast<TernaryFunc>();
 }
 
+/// The VegasAfterglow.native NativeFunc type, resolved once per process (py::none() when the
+/// module is unavailable). Deliberately leaked: a static py::object would be destroyed after
+/// interpreter finalization.
+static py::handle native_func_type() {
+    static py::handle type = [] {
+        try {
+            py::object t = py::module_::import("VegasAfterglow.native").attr("NativeFunc");
+            return t.release();
+        } catch (...) {
+            return py::handle();
+        }
+    }();
+    return type;
+}
+
 PYBIND11_MODULE(VegasAfterglowC, m) {
     xt::import_numpy();
 
@@ -98,8 +113,6 @@ PYBIND11_MODULE(VegasAfterglowC, m) {
 #endif
 
     // Jet bindings
-    py::object zero2d_fn = py::cpp_function(func::zero_2d);
-    py::object zero3d_fn = py::cpp_function(func::zero_3d);
 
     //========================================================================================================
     //                                 Model bindings
@@ -147,11 +160,8 @@ PYBIND11_MODULE(VegasAfterglowC, m) {
                 AFTERGLOW_REQUIRE(M_dot_obj.is_none() || PyCallable_Check(M_dot_obj.ptr()),
                                   "M_dot must be callable: (phi, theta, t) -> g/s");
 
-                // Import NativeFunc type once (cached by pybind11); falls back to py::none()
-                py::object native_type = py::none();
-                try {
-                    native_type = py::module_::import("VegasAfterglow.native").attr("NativeFunc");
-                } catch (...) {}
+                const py::object native_type =
+                    native_func_type() ? py::reinterpret_borrow<py::object>(native_func_type()) : py::none();
 
                 auto eps_k = to_binary_func(E_iso_obj, native_type);
                 auto Gamma0 = to_binary_func(Gamma0_obj, native_type);
@@ -193,10 +203,8 @@ PYBIND11_MODULE(VegasAfterglowC, m) {
     py::class_<Medium>(m, "Medium")
         .def(py::init([](py::object rho_obj) {
                  AFTERGLOW_REQUIRE(PyCallable_Check(rho_obj.ptr()), "rho must be callable: (phi, theta, r) -> g/cm^3");
-                 py::object native_type = py::none();
-                 try {
-                     native_type = py::module_::import("VegasAfterglow.native").attr("NativeFunc");
-                 } catch (...) {}
+                 const py::object native_type =
+                     native_func_type() ? py::reinterpret_borrow<py::object>(native_func_type()) : py::none();
                  auto rho = to_ternary_func(rho_obj, native_type);
 
                  // Probe the density on-axis at a typical afterglow radius to reject obviously
@@ -246,10 +254,12 @@ PYBIND11_MODULE(VegasAfterglowC, m) {
 
     // Model bindings
     py::class_<PyModel>(m, "Model")
+        // NOTE: pybind11's std::variant caster cannot LOAD JetVariant/MediumVariant (their
+        // alternatives hold const members, so the variant is not copy-assignable and the
+        // caster's load path does not compile) — hence the explicit isinstance dispatch.
         .def(py::init([](py::object jet_obj, py::object medium_obj, PyObserver observer, PyRadiation fwd_rad,
                          std::optional<PyRadiation> rvs_rad, std::optional<std::tuple<Real, Real, Real>> resolutions,
                          Real rtol, bool axisymmetric, bool radiative_fireball) -> PyModel {
-                 // Build JetVariant from Python object (IIFE avoids default construction)
                  auto jet = [&]() -> JetVariant {
                      if (py::isinstance<TophatJet>(jet_obj)) {
                          return jet_obj.cast<TophatJet>();
@@ -266,7 +276,6 @@ PYBIND11_MODULE(VegasAfterglowC, m) {
                      throw py::type_error("jet must be TophatJet, GaussianJet, PowerLawJet, or Ejecta");
                  }();
 
-                 // Build MediumVariant from Python object
                  auto medium = [&]() -> MediumVariant {
                      if (py::isinstance<ISM>(medium_obj)) {
                          return medium_obj.cast<ISM>();
@@ -318,6 +327,7 @@ PYBIND11_MODULE(VegasAfterglowC, m) {
         .def_property_readonly("fwd_rad", &PyModel::get_fwd_rad)
         .def_property_readonly("rvs_rad", &PyModel::get_rvs_rad)
         .def_property_readonly("resolutions", &PyModel::get_resolutions)
+        .def_property_readonly("radiative_fireball", &PyModel::get_radiative_fireball)
         .def_property_readonly("rtol", &PyModel::get_rtol)
         .def_property_readonly("axisymmetric", &PyModel::get_axisymmetric)
         .def("__repr__", &PyModel::repr)
@@ -359,7 +369,7 @@ PYBIND11_MODULE(VegasAfterglowC, m) {
             "__getitem__",
             [](SynSpectrumGrid const& g, py::tuple idx) {
                 auto& ph = (*g.grid_)(idx[0].cast<size_t>(), idx[1].cast<size_t>(), idx[2].cast<size_t>());
-                const Real I_unit = unit::erg / (unit::Hz * unit::sec * unit::cm2);
+                const Real I_unit = unit::flux_den_cgs;
                 return SpectrumEvaluator{
                     [&ph, I_unit](Real nu_comv) { return ph.compute_I_nu(nu_comv * unit::Hz) / I_unit; }};
             },
@@ -370,7 +380,7 @@ PYBIND11_MODULE(VegasAfterglowC, m) {
             "__getitem__",
             [](ICSpectrumGrid& g, py::tuple idx) {
                 auto& ph = (*g.grid_)(idx[0].cast<size_t>(), idx[1].cast<size_t>(), idx[2].cast<size_t>());
-                const Real I_unit = unit::erg / (unit::Hz * unit::sec * unit::cm2);
+                const Real I_unit = unit::flux_den_cgs;
                 return SpectrumEvaluator{
                     [&ph, I_unit](Real nu_comv) { return ph.compute_I_nu(nu_comv * unit::Hz) / I_unit; }};
             },
@@ -414,7 +424,7 @@ PYBIND11_MODULE(VegasAfterglowC, m) {
         .def_property_readonly(
             "sync_spectrum",
             [](PyShock& self) -> py::object {
-                if (!self.has_syn_spectrum_) {
+                if (self.syn_photons_.size() == 0) {
                     return py::none();
                 }
                 return py::cast(SynSpectrumGrid{&self.syn_photons_});
@@ -423,7 +433,7 @@ PYBIND11_MODULE(VegasAfterglowC, m) {
         .def_property_readonly(
             "ssc_spectrum",
             [](PyShock& self) -> py::object {
-                if (!self.has_ssc_spectrum_) {
+                if (self.ic_photons_.size() == 0) {
                     return py::none();
                 }
                 return py::cast(ICSpectrumGrid{&self.ic_photons_});
@@ -432,7 +442,7 @@ PYBIND11_MODULE(VegasAfterglowC, m) {
         .def_property_readonly(
             "Y_spectrum",
             [](PyShock& self) -> py::object {
-                if (!self.has_syn_spectrum_) {
+                if (self.syn_photons_.size() == 0) {
                     return py::none();
                 }
                 return py::cast(YSpectrumGrid{&self.syn_photons_});

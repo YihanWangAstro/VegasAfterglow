@@ -514,10 +514,9 @@ struct PyShock {
     XTArray Doppler;  ///< Doppler factor for beaming
 
     // Stored photon grids for per-cell spectrum evaluation
+    // Stored photon grids double as presence flags: size() == 0 until assigned.
     SynPhotonGrid syn_photons_;
     SynICPhotonGrid ic_photons_;
-    bool has_syn_spectrum_{false};
-    bool has_ssc_spectrum_{false};
 
     [[nodiscard]] std::string repr() const {
         if (Gamma.size() == 0) {
@@ -559,6 +558,23 @@ struct PyDetails {
         return buf;
     }
 };
+
+/**
+ * <!-- ************************************************************************************** -->
+ * @brief Applies inverse-Compton electron cooling (Klein-Nishina or Thomson) when SSC is enabled.
+ * <!-- ************************************************************************************** -->
+ */
+template <typename Electrons, typename Photons>
+void apply_ic_cooling(Electrons& syn_e, Photons& syn_ph, Shock const& shock, Coord const& coord,
+                      PyRadiation const& rad) {
+    if (rad.ssc) {
+        if (rad.kn) {
+            KN_cooling(syn_e, syn_ph, shock, coord);
+        } else {
+            Thomson_cooling(syn_e, syn_ph, shock, coord);
+        }
+    }
+}
 
 /**
  * <!-- ************************************************************************************** -->
@@ -732,27 +748,25 @@ class PyModel {
     [[nodiscard]] PyRadiation const& get_fwd_rad() const { return fwd_rad; }
     [[nodiscard]] std::optional<PyRadiation> const& get_rvs_rad() const { return rvs_rad_opt; }
     [[nodiscard]] std::tuple<Real, Real, Real> get_resolutions() const { return {phi_resol, theta_resol, t_resol}; }
+
+    [[nodiscard]] bool get_radiative_fireball() const { return fwd_rad.rad.radiative; }
     [[nodiscard]] Real get_rtol() const { return rtol; }
     [[nodiscard]] bool get_axisymmetric() const { return axisymmetric; }
 
     [[nodiscard]] std::string repr() const {
-        char buf[256];
-        const Real d = obs_setup.lumi_dist / unit::cm;
-        snprintf(buf, sizeof(buf),
-                 "Model(observer=Observer(lumi_dist=%.6g, z=%.6g, theta_obs=%.6g),\n"
-                 "      fwd_rad=Radiation(eps_e=%.6g, eps_B=%.6g, p=%.6g%s%s)",
-                 d, obs_setup.z, obs_setup.theta_obs, fwd_rad.rad.eps_e, fwd_rad.rad.eps_B, fwd_rad.rad.p,
-                 fwd_rad.ssc ? ", ssc=True" : "", fwd_rad.kn ? ", kn=True" : "");
-        std::string s = buf;
+        // Nested objects format themselves so this can never drift from their own reprs.
+        std::string s = "Model(observer=" + obs_setup.repr() + ",\n      fwd_rad=" + fwd_rad.repr();
         if (rvs_rad_opt) {
-            snprintf(buf, sizeof(buf), ",\n      rvs_rad=Radiation(eps_e=%.6g, eps_B=%.6g, p=%.6g)",
-                     rvs_rad_opt->rad.eps_e, rvs_rad_opt->rad.eps_B, rvs_rad_opt->rad.p);
-            s += buf;
+            s += ",\n      rvs_rad=" + rvs_rad_opt->repr();
         }
-        snprintf(buf, sizeof(buf), ",\n      resolutions=(%.6g, %.6g, %.6g), rtol=%.6g)", phi_resol, theta_resol,
+        char buf[128];
+        snprintf(buf, sizeof(buf), ",\n      resolutions=(%.6g, %.6g, %.6g), rtol=%.6g", phi_resol, theta_resol,
                  t_resol, rtol);
         s += buf;
-        return s;
+        if (!fwd_rad.rad.radiative) {
+            s += ", radiative_fireball=False";
+        }
+        return s + ")";
     }
 
   private:
@@ -792,7 +806,7 @@ class PyModel {
      */
     template <typename Func>
     void single_shock_emission(Shock const& shock, Coord const& coord, Array const& t_obs, Array const& nu_obs,
-                               Observer& obs, PyRadiation rad, Flux& emission, Func&& flux_func);
+                               Observer& obs, PyRadiation const& rad, Flux& emission, Func&& flux_func);
 
     /**
      * <!-- ************************************************************************************** -->
@@ -839,17 +853,17 @@ class PyModel {
     static void average_exposure_flux(PyFlux& result, std::vector<size_t> const& idx_sorted, size_t original_size,
                                       size_t num_points);
 
-    JetVariant jet_;                            ///< Jet model (TophatJet, GaussianJet, PowerLawJet, or Ejecta)
-    MediumVariant medium_;                      ///< Circumburst medium (ISM, Wind, or generic Medium)
-    PyObserver obs_setup;                       ///< Observer configuration
-    PyRadiation fwd_rad;                        ///< Forward shock radiation parameters
-    std::optional<PyRadiation> rvs_rad_opt;     ///< Optional reverse shock radiation parameters
-    Real theta_w{con::pi / 2};                  ///< Maximum polar angle to calculate
-    Real phi_resol;                             ///< Azimuthal resolution: number of points per degree (set in ctor)
-    Real theta_resol;                           ///< Polar resolution: number of points per degree (set in ctor)
-    Real t_resol;                               ///< Time resolution: number of points per decade (set in ctor)
-    Real rtol{defaults::solver::dynamics_rtol}; ///< Relative tolerance for shock dynamics
-    bool axisymmetric{true};                    ///< Whether to assume axisymmetric jet
+    JetVariant jet_;                        ///< Jet model (TophatJet, GaussianJet, PowerLawJet, or Ejecta)
+    MediumVariant medium_;                  ///< Circumburst medium (ISM, Wind, or generic Medium)
+    PyObserver obs_setup;                   ///< Observer configuration
+    PyRadiation fwd_rad;                    ///< Forward shock radiation parameters
+    std::optional<PyRadiation> rvs_rad_opt; ///< Optional reverse shock radiation parameters
+    Real theta_w{con::pi / 2};              ///< Maximum polar angle to calculate
+    Real phi_resol;                         ///< Azimuthal resolution: number of points per degree (set in ctor)
+    Real theta_resol;                       ///< Polar resolution: number of points per degree (set in ctor)
+    Real t_resol;                           ///< Time resolution: number of points per decade (set in ctor)
+    Real rtol;                              ///< Relative tolerance for shock dynamics (set in ctor)
+    bool axisymmetric;                      ///< Whether to assume axisymmetric jet (set in ctor)
 };
 
 //========================================================================================================
@@ -858,7 +872,7 @@ class PyModel {
 
 template <typename Func>
 void PyModel::single_shock_emission(Shock const& shock, Coord const& coord, Array const& t_obs, Array const& nu_obs,
-                                    Observer& obs, PyRadiation rad, Flux& emission, Func&& flux_func) {
+                                    Observer& obs, PyRadiation const& rad, Flux& emission, Func&& flux_func) {
     auto syn_e = [&] {
         AFTERGLOW_PROFILE_SCOPE(syn_electrons);
         return generate_syn_electrons(shock, coord);
@@ -869,13 +883,9 @@ void PyModel::single_shock_emission(Shock const& shock, Coord const& coord, Arra
         return generate_syn_photons(shock, syn_e, coord);
     }();
 
-    if (rad.ssc) {
+    {
         AFTERGLOW_PROFILE_SCOPE(cooling);
-        if (rad.kn) {
-            KN_cooling(syn_e, syn_ph, shock, coord);
-        } else {
-            Thomson_cooling(syn_e, syn_ph, shock, coord);
-        }
+        apply_ic_cooling(syn_e, syn_ph, shock, coord, rad);
     }
 
     {

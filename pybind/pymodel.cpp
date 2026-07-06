@@ -34,7 +34,7 @@ XTArray YEvaluator::operator()(PyArray const& gamma) const {
     return result;
 }
 
-// Overload for magnetar
+// Shared post-construction setup for the named jet factories.
 void initialize_ejecta(Ejecta& jet, bool spreading, Real duration, std::optional<PyMagnetar> const& magnetar,
                        Real theta_c) {
     jet.spreading = spreading;
@@ -105,8 +105,7 @@ JetVariant PyPowerLawWing(Real theta_c, Real E_iso_w, Real Gamma0_w, Real k_e, R
     Ejecta jet;
     jet.eps_k = math::powerlaw_wing(theta_c, E_iso_w, k_e);
     jet.Gamma0 = math::powerlaw_wing_plus_one(theta_c, Gamma0_w - 1, k_g);
-    jet.spreading = spreading;
-    jet.T0 = duration;
+    initialize_ejecta(jet, spreading, duration, std::nullopt, theta_c);
     return jet;
 }
 
@@ -172,7 +171,7 @@ MediumVariant PyWind(Real A_star, std::optional<Real> n_ism_opt, std::optional<R
     // General k_m: build Medium with CGS rho function.
     // convert_unit_medium expects CGS (r in cm, returns g/cm³).
     constexpr Real r0_cgs = 1e17;          // reference radius [cm]
-    constexpr Real mp_cgs = 1.6726219e-24; // proton mass [g]
+    const Real mp_cgs = con::mp / unit::g; // proton mass [g], same constant the core uses
     const Real A_cgs = A_star * 5e11 * std::pow(r0_cgs, k_m - 2);
     const Real rho_ism_cgs = n_ism * mp_cgs;
     const Real r0k_cgs =
@@ -284,8 +283,7 @@ void save_photon_details(PhotonGrid const& photons, PyShock& details, Shock cons
                     compute_syn_freq(photons(i, j, k).Ys.gamma_m_hat, shock.B(i, j, k)) / unit::Hz;
                 details.nu_c_hat(i, j, k) =
                     compute_syn_freq(photons(i, j, k).Ys.gamma_c_hat, shock.B(i, j, k)) / unit::Hz;
-                details.I_nu_max(i, j, k) =
-                    photons(i, j, k).I_nu_max / (unit::erg / (unit::Hz * unit::sec * unit::cm2));
+                details.I_nu_max(i, j, k) = photons(i, j, k).I_nu_max / unit::flux_den_cgs;
                 details.Y_T(i, j, k) = photons(i, j, k).Ys.Y_T;
             }
         }
@@ -302,23 +300,15 @@ void PyModel::single_evo_details(Shock const& shock, Coord const& coord, Observe
 
     auto syn_ph = generate_syn_photons(shock, syn_e, coord);
 
-    if (rad.ssc) {
-        if (rad.kn) {
-            KN_cooling(syn_e, syn_ph, shock, coord);
-        } else {
-            Thomson_cooling(syn_e, syn_ph, shock, coord);
-        }
-    }
+    apply_ic_cooling(syn_e, syn_ph, shock, coord, rad);
     save_electron_details(syn_e, details);
     save_photon_details(syn_ph, details, shock);
 
-    // Store photon grids for per-cell spectrum evaluation
+    // Store photon grids for per-cell spectrum evaluation (their size doubles as the flag)
     details.syn_photons_ = syn_ph;
-    details.has_syn_spectrum_ = true;
 
     if (rad.ssc) {
         details.ic_photons_ = generate_IC_photons(syn_e, syn_ph, rad.kn, coord);
-        details.has_ssc_spectrum_ = true;
     }
 }
 
@@ -372,6 +362,13 @@ void PyFlux::calc_total() {
     }
 }
 
+// Multi-band light-curve flux in mJy: the shared flux functor of flux_density and
+// flux_density_exposures.
+static constexpr auto series_flux_mJy = [](Observer& obs, Array const& time, Array const& freq,
+                                           auto& photons) -> XTArray {
+    return obs.specific_flux_series(time, freq, photons) / unit::flux_den_cgs;
+};
+
 auto PyModel::flux_density(PyArray const& t, PyArray const& nu) -> PyFlux {
     AFTERGLOW_REQUIRE(t.size() > 0, "time array must be non-empty");
     AFTERGLOW_REQUIRE(nu.size() > 0, "frequency array must be non-empty");
@@ -384,11 +381,7 @@ auto PyModel::flux_density(PyArray const& t, PyArray const& nu) -> PyFlux {
     const Array t_obs = t * unit::sec;
     const Array nu_obs = nu * unit::Hz;
 
-    auto flux_func = [](Observer& obs, Array const& time, Array const& freq, auto& photons) -> XTArray {
-        return obs.specific_flux_series(time, freq, photons) / unit::flux_den_cgs;
-    };
-
-    auto result = compute_emission(t_obs, nu_obs, flux_func);
+    auto result = compute_emission(t_obs, nu_obs, series_flux_mJy);
     result.calc_total();
     return result;
 }
@@ -490,11 +483,7 @@ auto PyModel::flux_density_exposures(PyArray const& t, PyArray const& nu, PyArra
 
     const auto [t_obs_sorted, nu_obs_sorted, idx_sorted] = generate_exposure_sampling(t, nu, expo_time, num_points);
 
-    auto flux_func = [](Observer& obs, Array const& time, Array const& freq, auto& photons) -> XTArray {
-        return obs.specific_flux_series(time, freq, photons) / unit::flux_den_cgs;
-    };
-
-    auto result = compute_emission(t_obs_sorted, nu_obs_sorted, flux_func);
+    auto result = compute_emission(t_obs_sorted, nu_obs_sorted, series_flux_mJy);
 
     average_exposure_flux(result, idx_sorted, t.size(), num_points);
 
@@ -540,13 +529,7 @@ auto PyModel::sky_image(PyArray const& t_obs, double nu_obs, double fov, size_t 
         auto syn_e = generate_syn_electrons(shock, coord);
         auto syn_ph = generate_syn_photons(shock, syn_e, coord);
 
-        if (rad.ssc) {
-            if (rad.kn) {
-                KN_cooling(syn_e, syn_ph, shock, coord);
-            } else {
-                Thomson_cooling(syn_e, syn_ph, shock, coord);
-            }
-        }
+        apply_ic_cooling(syn_e, syn_ph, shock, coord, rad);
 
         auto img = observer.sky_image(coord, shock, t_arr, nu_cgs, syn_ph, npixel, pix_size);
 
