@@ -182,6 +182,11 @@ class FitResult:
             f"labels={list(self.labels)}, top_k={n_top}, best_logL={lp_best:.4g})"
         )
 
+    @property
+    def flat_samples(self):
+        """Posterior samples flattened to shape (n_steps * n_walkers, ndim)."""
+        return self.samples.reshape(-1, self.samples.shape[-1])
+
     def summary(
         self,
         top_k: Optional[int] = None,
@@ -303,7 +308,7 @@ class FitResult:
                     " to enable LaTeX block)"
                 )
             else:
-                flat = self.samples.reshape(-1, self.samples.shape[-1])
+                flat = self.flat_samples
                 p16, p50, p84 = np.percentile(flat, [16, 50, 84], axis=0)
                 lines.append("")
                 lines.append("LaTeX (median ± 1σ, matches corner plot):")

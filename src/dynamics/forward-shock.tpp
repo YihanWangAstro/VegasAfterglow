@@ -144,7 +144,8 @@ void ForwardShockEqn<Ejecta, Medium>::set_init_state(State& state, Real t0) cons
 
     Real ad_idx = physics::thermo::adiabatic_idx(state.Gamma);
 
-    state.U2_th = enclosed_thermal_energy_medium(medium, phi, theta0, state.r, state.Gamma, ad_idx, rad.eps_e);
+    state.U2_th = enclosed_thermal_energy_medium(medium, phi, theta0, state.r, state.Gamma, ad_idx,
+                                                 rad.radiative ? rad.eps_e : 0.0);
 }
 
 template <typename Eqn, typename State>

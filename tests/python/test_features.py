@@ -210,3 +210,66 @@ class TestJetTypeFlux:
         flux = model.flux_density(t, nu)
         assert np.all(np.isfinite(flux.total))
         assert np.all(flux.total > 0)
+
+
+class TestRadiativeFireball:
+    """The Model-level radiative_fireball switch (False = adiabatic dynamics)."""
+
+    def _flux(self, radiative, eps_e=0.3):
+        t = np.logspace(4, 8, 15)
+        model = Model(
+            TophatJet(theta_c=0.1, E_iso=1e53, Gamma0=300),
+            ISM(n_ism=1.0),
+            Observer(lumi_dist=3e28, z=0.5, theta_obs=0.0),
+            Radiation(eps_e=eps_e, eps_B=0.01, p=2.3),
+            radiative_fireball=radiative,
+        )
+        return np.asarray(model.flux_density(t, np.full_like(t, 1e15)).total)
+
+    def test_adiabatic_brighter_at_late_times(self):
+        """Radiative losses drain blast-wave energy, so the adiabatic light curve
+        must be brighter, increasingly so toward late times."""
+        f_rad = self._flux(True)
+        f_ad = self._flux(False)
+        assert np.all(f_ad >= f_rad * 0.999)
+        assert f_ad[-1] > 1.2 * f_rad[-1]
+
+    def test_adiabatic_default_is_radiative(self):
+        """Omitting the flag must match radiative_fireball=True."""
+        t = np.logspace(4, 7, 8)
+        kw = dict(
+            jet=TophatJet(theta_c=0.1, E_iso=1e53, Gamma0=300),
+            medium=ISM(n_ism=1.0),
+            observer=Observer(lumi_dist=3e28, z=0.5, theta_obs=0.0),
+            fwd_rad=Radiation(eps_e=0.3, eps_B=0.01, p=2.3),
+        )
+        f_default = np.asarray(Model(**kw).flux_density(t, np.full_like(t, 1e15)).total)
+        f_on = np.asarray(
+            Model(**kw, radiative_fireball=True).flux_density(t, np.full_like(t, 1e15)).total
+        )
+        assert np.array_equal(f_default, f_on)
+
+    def test_deceleration_slopes(self):
+        """Gamma(r) local slope in the ultra-relativistic deceleration phase:
+        adiabatic follows Blandford-McKee (-3/2); the fully radiative limit
+        (eps_rad = eps_e = 1, forced via p < 2) is much steeper (toward -3)."""
+
+        def slope(radiative, eps_e, p):
+            model = Model(
+                TophatJet(theta_c=0.1, E_iso=1e53, Gamma0=300),
+                ISM(n_ism=100.0),
+                Observer(lumi_dist=1e28, z=0.0, theta_obs=0.0),
+                Radiation(eps_e=eps_e, eps_B=0.01, p=p, xi_e=1.0),
+                radiative_fireball=radiative,
+            )
+            d = model.details(1e-1, 1e9)
+            G = np.asarray(d.fwd.Gamma)[0, 0, :]
+            r = np.asarray(d.fwd.r)[0, 0, :]
+            w = (G > 15) & (G < 60)
+            s = np.gradient(np.log(G), np.log(r))
+            return float(np.median(s[w]))
+
+        s_ad = slope(False, 0.9, 2.3)
+        s_rad = slope(True, 1.0, 1.9)
+        assert -1.6 < s_ad < -1.3, f"adiabatic slope {s_ad} not Blandford-McKee-like"
+        assert s_rad < -2.2, f"radiative slope {s_rad} not steepened"

@@ -56,6 +56,8 @@ class Fitter:
         rvs_shock: Enable reverse shock
         kn: Enable Klein-Nishina corrections
         magnetar: Enable magnetar energy injection
+        radiative_fireball: Radiative losses decelerate the blast wave (default True).
+            Set False for the adiabatic approximation used by most afterglow codes.
         rtol: Numerical tolerance
         resolution: Grid resolution tuple (phi, theta, t). Defaults to (0.06, 0.15, 6),
             or (0.06, 0.2, 10) when the reverse shock is enabled. Can be overridden per-fit.
@@ -66,6 +68,18 @@ class Fitter:
             (Milky Way) extinction along the line of sight should be removed
             from the data before fitting; this layer handles host-galaxy only.
     """
+
+    #: Boolean physics/config flags with their defaults — the single source of truth
+    #: for ``__repr__`` and the save/load snapshot in ``fitting/io.py``. Adding a flag:
+    #: one entry here plus the constructor keyword.
+    CONFIG_FLAGS = {
+        "fwd_ssc": False,
+        "rvs_ssc": False,
+        "rvs_shock": False,
+        "kn": False,
+        "magnetar": False,
+        "radiative_fireball": True,
+    }
 
     # ── Construction & configuration ─────────────────────────────────────────────────────────
 
@@ -81,6 +95,7 @@ class Fitter:
         rvs_shock: bool = False,
         kn: bool = False,
         magnetar: bool = False,
+        radiative_fireball: bool = True,
         rtol: float = 1e-6,
         resolution: Optional[Tuple[float, float, float]] = None,
         extinction=None,
@@ -92,6 +107,7 @@ class Fitter:
         self.rvs_shock = rvs_shock
         self.kn = kn
         self.magnetar = magnetar
+        self.radiative_fireball = radiative_fireball
         self.rtol = rtol
         # None forwards to Model, which resolves the mode-aware default
         # (defaults::grid in the C++ core is the single source of truth).
@@ -139,15 +155,9 @@ class Fitter:
     def __repr__(self) -> str:
         """One-line summary of model selection, physics flags, and loaded data."""
         flags = [
-            name
-            for name in (
-                "rvs_shock",
-                "fwd_ssc",
-                "rvs_ssc",
-                "kn",
-                "magnetar",
-            )
-            if getattr(self, name, False)
+            name if getattr(self, name) else f"{name}=False"
+            for name, default in self.CONFIG_FLAGS.items()
+            if getattr(self, name) != default
         ]
         flag_str = f", flags=[{', '.join(flags)}]" if flags else ""
         ext_str = (
@@ -452,6 +462,7 @@ class Fitter:
             rvs_rad=rvs_rad,
             resolutions=self.resolution,
             rtol=self.rtol,
+            radiative_fireball=self.radiative_fireball,
         )
 
     def _evaluate(self, params: ModelParams) -> float:
@@ -609,15 +620,13 @@ class Fitter:
     @contextmanager
     def _override_resolution(self, resolution):
         """Temporarily override resolution, restoring on exit."""
+        saved = self.resolution
         if resolution is not None:
-            saved = self.resolution
             self.resolution = tuple(resolution)
-            try:
-                yield
-            finally:
-                self.resolution = saved
-        else:
+        try:
             yield
+        finally:
+            self.resolution = saved
 
     def _require_fitted(self):
         if self._to_params is None:
@@ -803,7 +812,7 @@ class Fitter:
         if n_samples < 2:
             raise ValueError(f"n_samples must be >= 2, got {n_samples}")
         rng = np.random.default_rng() if rng is None else rng
-        flat = self.result.samples.reshape(-1, self.result.samples.shape[-1])
+        flat = self.result.flat_samples
         idx = rng.choice(
             flat.shape[0], size=n_samples, replace=(n_samples > flat.shape[0])
         )
@@ -825,15 +834,16 @@ class Fitter:
         if not (0.0 < ci < 1.0):
             raise ValueError(f"ci must be in (0, 1), got {ci}")
         workers = n_workers if n_workers is not None else max(1, os.cpu_count() or 1)
-        flat_samples = self.result.samples.reshape(-1, self.result.samples.shape[-1])
-        median_params = np.median(flat_samples, axis=0)
+        median_params = np.median(self.result.flat_samples, axis=0)
         with self._override_resolution(resolution):
             if workers > 1:
                 with ThreadPoolExecutor(max_workers=workers) as pool:
-                    results = [r for r in pool.map(evaluate, draws)]
+                    median_future = pool.submit(evaluate, median_params)
+                    results = list(pool.map(evaluate, draws))
+                    median = np.asarray(median_future.result())
             else:
                 results = [evaluate(p) for p in draws]
-            median = np.asarray(evaluate(median_params))
+                median = np.asarray(evaluate(median_params))
 
         stack = np.stack([np.asarray(r) for r in results], axis=0)
         lower, upper = np.percentile(

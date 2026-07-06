@@ -254,7 +254,7 @@ class RadiativeEfficiency {
           // convention, compute_gamma_c). The SSC (1+Y) term is deliberately omitted here to
           // keep the dynamics decoupled from the radiation-side Compton solve.
           gamma_c_coeff_(6 * con::pi * con::me * con::c / con::sigmaT / (8 * con::pi * rad.eps_B)),
-          eps_e_(rad.eps_e),
+          eps_e_(rad.radiative ? rad.eps_e : 0),
           p_(rad.p) {}
 
     /**
@@ -265,6 +265,9 @@ class RadiativeEfficiency {
      * @return The radiative efficiency
      */
     Real operator()(Real t_comv, Real Gamma_th, Real e_th) const noexcept {
+        if (eps_e_ == 0) { // adiabatic fireball (radiative = false) or no accelerated electrons
+            return 0;
+        }
         const Real gamma_m = gamma_m_coeff_ * (Gamma_th - 1) + 1;
         const Real gamma_bar = gamma_c_coeff_ / (e_th * t_comv);
         // Trans-relativistic correction (same as compute_gamma_c): cooling rate ∝ γ²β², so

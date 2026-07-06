@@ -76,7 +76,7 @@ def save_fitter(fitter, path) -> None:
     import bilby
     import pandas as pd
 
-    flat = r.samples.reshape(-1, r.samples.shape[-1])
+    flat = r.flat_samples
     posterior = pd.DataFrame(flat, columns=list(r.labels))
     posterior["log_likelihood"] = r.log_probs.reshape(-1)
     priors = bilby.core.prior.PriorDict(
@@ -114,15 +114,9 @@ def _snapshot_config(fitter) -> dict:
             "lumi_dist": float(fitter.lumi_dist),
             "jet": fitter.jet if isinstance(fitter.jet, str) else None,
             "medium": fitter.medium if isinstance(fitter.medium, str) else None,
-            "fwd_ssc": bool(fitter.fwd_ssc),
-            "rvs_ssc": bool(fitter.rvs_ssc),
-            "rvs_shock": bool(fitter.rvs_shock),
-            "kn": bool(fitter.kn),
-            "magnetar": bool(fitter.magnetar),
+            **{name: bool(getattr(fitter, name)) for name in type(fitter).CONFIG_FLAGS},
             "rtol": float(fitter.rtol),
-            "resolution": list(fitter.resolution)
-            if fitter.resolution is not None
-            else None,
+            "resolution": fitter.resolution,  # tuple or None; JSON stores it as a list
             "extinction": fitter.extinction
             if isinstance(fitter.extinction, str)
             else None,
@@ -203,13 +197,12 @@ def load_fitter(path, *, jet=None, medium=None, extinction=None):
         medium=_resolve(
             "medium", cc["medium"], medium, cfg.get("had_custom_medium", False)
         ),
-        fwd_ssc=cc["fwd_ssc"],
-        rvs_ssc=cc["rvs_ssc"],
-        rvs_shock=cc["rvs_shock"],
-        kn=cc["kn"],
-        magnetar=cc["magnetar"],
+        # Flags default from the table for files saved before a flag existed.
+        **{
+            name: cc.get(name, default) for name, default in Fitter.CONFIG_FLAGS.items()
+        },
         rtol=cc["rtol"],
-        resolution=tuple(cc["resolution"]) if cc["resolution"] is not None else None,
+        resolution=cc["resolution"],  # list or None; the constructor normalizes
         extinction=_resolve(
             "extinction",
             cc["extinction"],

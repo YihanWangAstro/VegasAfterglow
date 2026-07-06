@@ -338,7 +338,8 @@ void FRShockEqn<Ejecta, Medium>::set_init_state(State& state, Real t0) const noe
     }
 
     Real ad_idx = physics::thermo::adiabatic_idx(state.Gamma);
-    state.U2_th = enclosed_thermal_energy(rho_func, state.r, state.Gamma, ad_idx, rad_fwd.eps_e);
+    state.U2_th = enclosed_thermal_energy(rho_func, state.r, state.Gamma, ad_idx,
+                                          rad_fwd.radiative ? rad_fwd.eps_e : 0.0);
 
     const Real Gamma34 = compute_rel_Gamma(Gamma4, state.Gamma);
     if (Gamma34 > 1 && state.m4 > 0 && state.x4 > 0) {

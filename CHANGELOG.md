@@ -52,6 +52,7 @@ Have a feature request? [Open an issue](https://github.com/YihanWangAstro/VegasA
 
 ### Added
 
+- **`radiative_fireball` switch** on `Model`, `Fitter`, and the CLI (`--adiabatic`): set `False` to disable the radiative-loss feedback on the blast-wave dynamics — the adiabatic approximation used by most afterglow codes — for cross-code comparisons or genuinely low-`eps_e` sources. Default remains the full radiative dynamics; a new golden baseline pins the adiabatic mode
 - **Unified test framework** (see `TESTING.md`): `make test` runs the C++ unit tests, the Python suite, and the full validation suite, and writes `test-report.html` — a single self-contained page with every test outcome and description, physics-validation figures (shock evolution, characteristic frequencies, spectral regimes, measured-vs-expected checks), full resolution-convergence results, and per-configuration performance timing; `make test-quick` runs just the fast tiers
 - Comprehensive test coverage: closure relations against standard afterglow theory, exact invariants, golden-baseline regression, parameter-space corner sweeps (including a magnetized-ejecta + reverse-shock regression), and expanded C++ physics assertions — every test carries a one-line description of what it asserts
 - CI workflow running the full Python test suite on Linux, macOS, and Windows, with C++ tests on Linux/macOS and a unified report artifact per OS

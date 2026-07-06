@@ -74,28 +74,18 @@ def _default_medium_factory(fitter):
 
 
 def get_optimal_nwalkers(ndim: int, ncpu: Optional[int] = None) -> int:
-    """Compute optimal nwalkers for emcee.
-
-    Ensures nwalkers >= max(4 * ndim, min(8 * ncpu, 64)) and is a multiple
-    of 2 * ncpu. emcee evaluates half the ensemble per move, so each half
-    should fill the thread pool evenly. Giving each half several pool waves
-    (nwalkers/2 >= a few * ncpu) additionally smooths the batch barrier over
-    the 2-5x walker-to-walker spread in model evaluation cost; measured on an
-    8-core machine at +7-25% fitting throughput (largest with heterogeneous
-    cores). The 64 cap confines that adjustment to the measured regime —
-    on machines with more cores the behavior stays at the pool-filling
-    minimum, and nwalkers should be tuned to the hardware and evaluation
-    budget explicitly.
+    """Default emcee walker count: at least max(4 * ndim, min(8 * ncpu, 64)),
+    rounded up to a multiple of 2 * ncpu so each half-ensemble move fills the
+    likelihood thread pool with several evaluation waves (smoothing the batch
+    barrier over walker-to-walker cost spread). The 64 cap keeps large-core
+    machines at the pool-filling minimum; tune ``nwalkers`` explicitly there.
     """
     if ncpu is None:
         ncpu = os.cpu_count() or 1
 
     math_floor = max(4 * ndim, min(8 * ncpu, 64))
     align_unit = 2 * ncpu
-    units_needed = math.ceil(math_floor / align_unit)
-    units_needed = max(1, units_needed)
-
-    return units_needed * align_unit
+    return math.ceil(math_floor / align_unit) * align_unit
 
 
 def get_optimal_queue_size(ncpu, nlive) -> int:

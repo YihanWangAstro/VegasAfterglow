@@ -597,7 +597,7 @@ class PyModel {
     PyModel(JetVariant jet, MediumVariant medium, PyObserver const& observer, PyRadiation const& fwd_rad,
             std::optional<PyRadiation> const& rvs_rad = std::nullopt,
             std::optional<std::tuple<Real, Real, Real>> const& resolutions = std::nullopt,
-            Real rtol = defaults::solver::dynamics_rtol, bool axisymmetric = true)
+            Real rtol = defaults::solver::dynamics_rtol, bool axisymmetric = true, bool radiative_fireball = true)
         : jet_(std::move(jet)),
           medium_(std::move(medium)),
           obs_setup(observer),
@@ -605,6 +605,12 @@ class PyModel {
           rvs_rad_opt(rvs_rad),
           rtol(rtol),
           axisymmetric(axisymmetric) {
+        // Radiative losses back-react on the blast-wave dynamics by default; radiative_fireball
+        // = false selects the adiabatic approximation used by most afterglow codes.
+        this->fwd_rad.rad.radiative = radiative_fireball;
+        if (rvs_rad_opt) {
+            rvs_rad_opt->rad.radiative = radiative_fireball;
+        }
         // Forward-shock-only runs default to the coarser calibrated grid;
         // reverse-shock light curves need denser theta and time (see
         // defaults::grid). An explicit `resolutions` is honored as given.

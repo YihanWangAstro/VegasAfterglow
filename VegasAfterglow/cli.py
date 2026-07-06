@@ -189,6 +189,13 @@ def parse_args(argv=None):
     rad.add_argument(
         "--kn", action="store_true", help="enable Klein-Nishina corrections"
     )
+    rad.add_argument(
+        "--adiabatic",
+        dest="radiative_fireball",
+        action="store_false",
+        help="adiabatic fireball: radiative losses do not decelerate the blast wave "
+        "(the approximation used by most afterglow codes)",
+    )
 
     # -- Reverse shock ------------------------------------------------------
     rvs = p.add_argument_group("reverse shock")
@@ -776,6 +783,7 @@ def main():
         fwd_rad,
         rvs_rad=rvs_rad,
         resolutions=tuple(args.res) if args.res is not None else None,
+        radiative_fireball=args.radiative_fireball,
     )
 
     times = np.logspace(np.log10(args.t_min), np.log10(args.t_max), args.num_t)

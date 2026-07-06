@@ -38,6 +38,15 @@ def _sigma_config(sigma0):
 
 
 CONFIGS = {
+    # Adiabatic-fireball switch: pins radiative_fireball=False (the convention of
+    # most afterglow codes; radiative losses do not decelerate the blast wave).
+    "tophat_ism_adiabatic": {
+        "jet": {"type": "TophatJet", "theta_c": 0.1, "E_iso": 1e53, "Gamma0": 300},
+        "medium": {"type": "ISM", "n_ism": 1.0},
+        "observer": {"lumi_dist": 3e28, "z": 0.5, "theta_obs": 0.0},
+        "fwd_rad": {"eps_e": 0.1, "eps_B": 1e-3, "p": 2.3},
+        "radiative_fireball": False,
+    },
     "tophat_ism": {
         "jet": {"type": "TophatJet", "theta_c": 0.1, "E_iso": 1e53, "Gamma0": 300},
         "medium": {"type": "ISM", "n_ism": 1.0},
@@ -128,6 +137,8 @@ def build_model(config):
     kwargs = {}
     if "resolutions" in config:
         kwargs["resolutions"] = tuple(config["resolutions"])
+    if "radiative_fireball" in config:
+        kwargs["radiative_fireball"] = config["radiative_fireball"]
     return va.Model(jet=jet, medium=medium, observer=observer, fwd_rad=fwd_rad, rvs_rad=rvs_rad, **kwargs)
 
 

@@ -392,6 +392,8 @@ These quantities are defined as:
 
 where :math:`\epsilon_{\rm rad} = \min\left[1, (\gamma_m/\gamma_c)^{p-2}\right]` is the electron radiative efficiency, evaluated with the synchrotron cooling Lorentz factor (see the electron cooling section below) with :math:`\tilde{Y}=0`: the SSC feedback on the blast-wave dynamics is neglected to keep the dynamics independent of the inverse-Compton calculation.
 
+Setting ``radiative_fireball=False`` on the ``Model`` (or ``Fitter``) forces :math:`\epsilon_{\rm rad}=0`, i.e. a fully adiabatic blast wave — the approximation adopted by most afterglow codes. The default keeps the radiative losses on.
+
 The blast wave equation for :math:`\Gamma_2` evolution can then be written as:
 
 .. math::

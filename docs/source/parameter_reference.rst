@@ -354,18 +354,10 @@ Grid Resolution
      - Default
      - Units
      - Description
-   * - ``phi_resol``
-     - 0.06
-     - points/degree
-     - Angular resolution in azimuthal direction
-   * - ``theta_resol``
-     - 0.15 (0.2 with reverse shock)
-     - points/degree
-     - Angular resolution in polar direction
-   * - ``t_resol``
-     - 6 (10 with reverse shock)
-     - points/decade
-     - Temporal resolution (logarithmic spacing)
+   * - ``resolution`` (``resolutions`` on ``Model``)
+     - (0.06, 0.15, 6); (0.06, 0.2, 10) with reverse shock
+     - (points/degree, points/degree, points/decade)
+     - Grid resolution tuple (phi, theta, t): azimuthal, polar, and logarithmic temporal spacing. Leave unset to use the mode-aware defaults
 
 Numerical Parameters
 ^^^^^^^^^^^^^^^^^^^^
@@ -380,6 +372,9 @@ Numerical Parameters
    * - ``rtol``
      - 1e-6
      - Relative tolerance for numerical integration
+   * - ``radiative_fireball``
+     - True
+     - Radiative losses decelerate the blast wave. Set ``False`` for the adiabatic approximation used by most afterglow codes (light curves brighten at late times)
 
 MCMC Parameters
 ^^^^^^^^^^^^^^^
