@@ -50,7 +50,12 @@ jobs:
           SETUPTOOLS_SCM_PRETEND_VERSION: ${{ inputs.version }}
           CIBW_BUILD: "${{ matrix.python }}-*"
           CIBW_SKIP: "*-win32* *_i686* *musllinux*"
-          CIBW_ARCHS_WINDOWS: "AMD64 ARM64"
+          # AMD64 only: the ARM64 "cross-builds" were never real — CMake compiled x64
+          # .pyds into arm64-tagged wheels (verified in the shipped 2.0.5 artifacts),
+          # so those wheels could never import on Windows-on-ARM. Newer delvewheel
+          # rejects the arch mismatch. Real arm64 support needs -A ARM64 CMake plumbing
+          # plus the arm64 VC redist for wheel repair.
+          CIBW_ARCHS_WINDOWS: "AMD64"
           CIBW_ARCHS_MACOS: "arm64 x86_64"
           # Install ccache for each platform
           CIBW_BEFORE_ALL_LINUX: >
