@@ -1,0 +1,103 @@
+name: Papers-using-VegasAfterglow page
+
+# Weekly rebuild of the "Papers using VegasAfterglow" page at
+# https://yihanwangastro.github.io/VegasAfterglow/papers/
+#
+# Discovery unions NASA ADS full-text + citations (needs ADS_API_TOKEN),
+# OpenAlex citations + full-text, and the curated lists in
+# tools/papers_page/{extra,exclude}_papers.json. Papers that merely cite
+# the methods paper without using the code are classified out from their
+# arXiv source text. The default `main` branch is never touched.
+
+on:
+  schedule:
+    - cron: '41 7 * * 1'  # weekly, Monday 07:41 UTC
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    services:
+      grobid:
+        image: lfoppiano/grobid:0.8.1
+        ports:
+          - 8070:8070
+    env:
+      GROBID_URL: http://localhost:8070
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install tools
+        run: |
+          sudo apt-get update -q && sudo apt-get install -y -q poppler-utils ghostscript
+          pip install pillow pypdf
+
+      - name: Wait for GROBID
+        run: |
+          for i in $(seq 1 30); do
+            curl -fsS http://localhost:8070/api/isalive && exit 0 || sleep 5
+          done
+          echo "::warning::GROBID did not come up — falling back to heuristics"
+          echo "GROBID_URL=" >> "$GITHUB_ENV"
+
+      - name: Seed caches from the published page
+        # Reuse previously extracted figures and resolved institutes so the
+        # weekly run only downloads what is new.
+        run: |
+          base="https://yihanwangastro.github.io/VegasAfterglow/papers"
+          mkdir -p tools/papers_page/data tools/papers_page/site
+          curl -fsSL "$base/data/papers.json" -o tools/papers_page/data/papers.json || true
+          curl -fsSL "$base/data/institutes_cache.json" -o tools/papers_page/data/institutes_cache.json || true
+          if [ -f tools/papers_page/data/papers.json ]; then
+            python3 - <<'PY'
+          import json, pathlib, urllib.request
+          data = json.loads(pathlib.Path("tools/papers_page/data/papers.json").read_text())
+          base = "https://yihanwangastro.github.io/VegasAfterglow/papers/"
+          figdir = pathlib.Path("tools/papers_page/site")
+          for paper in data.get("papers", []):
+              for fig in paper.get("figures") or []:
+                  dest = figdir / fig["file"]
+                  dest.parent.mkdir(parents=True, exist_ok=True)
+                  try:
+                      urllib.request.urlretrieve(base + fig["file"], dest)
+                  except Exception:
+                      pass
+          PY
+          fi
+
+      - name: Fetch papers (ADS + OpenAlex + curated)
+        env:
+          ADS_API_TOKEN: ${{ secrets.ADS_API_TOKEN }}
+        run: python3 tools/papers_page/fetch.py
+
+      - name: Extract figures and classify usage
+        run: python3 tools/papers_page/figures.py
+
+      - name: Build page
+        run: |
+          python3 tools/papers_page/build.py
+          python3 tools/papers_page/worldmap.py
+          mkdir -p tools/papers_page/site/data
+          cp tools/papers_page/data/papers.json tools/papers_page/site/data/
+          cp tools/papers_page/data/institutes_cache.json tools/papers_page/site/data/ 2>/dev/null || true
+
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: tools/papers_page/site/
+          destination_dir: papers
+          # keep_files guards the sibling trees on gh-pages (reports/, docs);
+          # stale figures may linger in papers/figures/ — harmless.
+          keep_files: true
+          commit_message: "chore: weekly papers-page update"
+          user_name: "github-actions[bot]"
+          user_email: "41898282+github-actions[bot]@users.noreply.github.com"

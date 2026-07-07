@@ -26,6 +26,26 @@
 * **Community Tools:** We also recommend checking out [**PyFRS**](https://github.com/leiwh/PyFRS), [**Jetsimpy**](https://github.com/haowang-astro/jetsimpy), [**ASGARD**](https://github.com/mikuru1096/ASGARD_GRBAfterglow) as tool for afterglow modeling.
 <br clear="left"/>
 
+<h3 align="center">Who uses VegasAfterglow</h3>
+
+<div align="center">
+<a href="https://yihanwangastro.github.io/VegasAfterglow/papers/">
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="https://yihanwangastro.github.io/VegasAfterglow/papers/worldmap-dark.svg">
+  <source media="(prefers-color-scheme: light)" srcset="https://yihanwangastro.github.io/VegasAfterglow/papers/worldmap-light.svg">
+  <img src="https://yihanwangastro.github.io/VegasAfterglow/papers/worldmap-light.svg" alt="Institutes of papers using VegasAfterglow" width="900">
+</picture>
+</a>
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="https://yihanwangastro.github.io/VegasAfterglow/papers/papers-summary-dark.svg">
+  <source media="(prefers-color-scheme: light)" srcset="https://yihanwangastro.github.io/VegasAfterglow/papers/papers-summary-light.svg">
+  <img src="https://yihanwangastro.github.io/VegasAfterglow/papers/papers-summary-light.svg" alt="Papers using VegasAfterglow: summary" width="900">
+</picture>
+
+Institutes behind the [papers using VegasAfterglow](https://yihanwangastro.github.io/VegasAfterglow/papers/) — refreshed weekly.
+</div>
+
 ---
 
 ## Quick Start
