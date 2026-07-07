@@ -1,0 +1,2917 @@
+{
+ "generated": "2026-07-07",
+ "papers": [
+  {
+   "key": "W7166900500",
+   "title": "JWST observations of SN 2024abup: First Detection of CO in a broad-lined Type Ic Supernova and Constraints on r-process Nucleosynthesis",
+   "year": 2026,
+   "date": "2026-06-26",
+   "type": "preprint",
+   "authors": [
+    "Manisha Shrestha",
+    "Lindsey A. Kwok",
+    "D J Sand",
+    "Stan Bartmentloo",
+    "Collin Christy",
+    "Anders Jerkstrand",
+    "K. Azalee Bostroem",
+    "Jennifer E. Andrews",
+    "Kate D. Alexander",
+    "Yize Dong",
+    "Carl Fields",
+    "Emily Hoang",
+    "Griffin Hosseinzadeh",
+    "Brian Hsu",
+    "Daryl Janzen",
+    "S W Jha",
+    "Joel Johansson",
+    "Jeniveve Pearson",
+    "M. J. Lundquist",
+    "Darshana Mehta",
+    "Aidan Martas",
+    "Maryam Modjaz",
+    "Bernhard M\u00fcller",
+    "C. L. Ransome",
+    "Aravind P. Ravi",
+    "Mathieu Renzo",
+    "Nicol\u00e1s Meza Retamal",
+    "Bhagya Subrayan",
+    "Nathan Smith",
+    "Stefano Valenti",
+    "Sergiy Vasylyev",
+    "Giacomo Ricigliano",
+    "Peter J. Brown",
+    "Moira Andrews",
+    "Joseph Farah",
+    "D. Andrew Howell",
+    "Curtis McCully",
+    "Megan Newsome",
+    "Kathryn Wynn",
+    "Ryan Chornock",
+    "Natalie LeBaro",
+    "Raffaella Margutti",
+    "Melissa Shahbandeh",
+    "Chris Ashall",
+    "P. Ho\u00eaflich"
+   ],
+   "journal": "arXiv (Cornell University)",
+   "doi": "",
+   "arxiv": "2606.28561",
+   "abstract": "SN 2024abup is a nearby broad-lined Type Ic supernova (SN Ic-bl) in NGC 0681 at a distance of 23.3 \\pm 1.6 Mpc. As energetic explosions of massive stars, SNe Ic-bl are considered a plausible site for rapid-neutron capture nucleosynthesis (r-process) and chemical enrichment from short-lived progenitors. They may also contribute to dust production in the early Universe. We present JWST near- to mid-infrared (NIR+MIR) observations (1-14 micron) of SN Ic-bl 2024abup at +41 days after the V band maximum (+54 days after explosion), the first-ever JWST+MIR observation of a SN Ic-bl along with radio and optical data. Using the spectral synthesis code SUMO, we identify the observed broad IR line features in SN 2024abup and find significant contributions from C, O, Mg, and carbon monoxide (CO) -- the earliest detection of molecules in a core-collapse SN so far. The spectrum shows continuum emission at wavelengths greater than 1.5 micron, which could be explained by dust -- preexisting, newly formed, or a combination-heated by the SN. We do not find compelling evidence for infrared signatures of r-process elements, though our search is hampered by the presence of many broad and blended features from the non-r-process elements. These new observations indicate that SNe Ic-bl could be a contributor to early-universe dust production, and suggest that if r-process elements are produced, revealing their presence from spectra requires very high-quality data and models to disentangle blends.",
+   "institutes": [
+    {
+     "id": "02bfwt286",
+     "name": "Monash University",
+     "ror": "https://ror.org/02bfwt286",
+     "country": "Australia",
+     "city": "Melbourne",
+     "lat": -37.814,
+     "lng": 144.96332,
+     "homepage": "https://www.monash.edu",
+     "logo": "https://www.google.com/s2/favicons?domain=monash.edu&sz=64"
+    }
+   ],
+   "co_institutes": [],
+   "sources": [
+    "openalex:fulltext"
+   ],
+   "figures": [
+    {
+     "file": "figures/W7166900500_0.png",
+     "caption": "Radio light curve of SN\\,2024abup at frequencies shown in tab:radio, shown alongside other well-studied SN\\,Ic-bl for comparison: 1998bw ; 2002ap ; 2003jd ; 2007bg ; 2009bb ; detections and upper limits of several other SNe are from , , and . The solid and dashed curves show the expected 6 GHz light curves generated using VegasAfterglow for a typical relativistic jet with energy $E_iso=10^51 erg$, initial Lorentz \u2026",
+     "matched": true
+    }
+   ],
+   "usage": "used"
+  },
+  {
+   "key": "W7165762260",
+   "title": "A 14-yr-old Mystery: The Peculiar Case of the Engine-driven SN 2012ap",
+   "year": 2026,
+   "date": "2026-06-24",
+   "type": "article",
+   "authors": [
+    "Itai Sfaradi",
+    "R. Margutti",
+    "R. Chornock",
+    "A. J. Nayana",
+    "Eli Wiston",
+    "Fabio De Colle",
+    "T. E. Clarke",
+    "Wendy Peters",
+    "Paz Beniamini",
+    "Wenbin Lu",
+    "Rodolfo Barniol Duran",
+    "M. F. Bietenholz",
+    "Collin T. Christy",
+    "D. L. Coppejans",
+    "M. R. Drout",
+    "Dina Ibrahimzade",
+    "M. J. Micha\u0142owski",
+    "D. Milisavljevi\u0107",
+    "Conor M. B. Omand",
+    "Yihan Wang",
+    "K. D. Alexander",
+    "Carles Badenes",
+    "Joe Bright",
+    "Jonathan Granot",
+    "Erica Hammerstein",
+    "W. V. Jacobson-Gal\u00e1n",
+    "Natalie LeBaron",
+    "Kohta Murase",
+    "Gitika Rameshan",
+    "Huei Sears",
+    "M. C. Stroh",
+    "G. Terreran"
+   ],
+   "journal": "The Astrophysical Journal Letters",
+   "doi": "10.3847/2041-8213/ae796d",
+   "arxiv": "2605.16495",
+   "abstract": "Abstract We present late-time ( \u03b4t &gt; 3000 days) optical (Keck), X-ray (Chandra and the Nuclear Spectroscopic Telescope Array), and radio (the Very Large Area, the Atacama Large Millimeter/submillimeter Array, and the Upgraded Giant Metrewave Radio Telescope) observations of the Type Ic-BL (SN Ic-BL) SN 2012ap. Previous studies of this supernova (SN) have suggested that it stands out as a key example of a weak engine-driven explosion due to the lack of gamma-ray burst (GRB) detection and mildly relativistic ejecta. Recently, radio sky surveys revealed the rebrightening of the radio emission from this SN, highlighting the possibilities of a density enhancement at large radii or the existence of an off-axis relativistic jet. While the late-time optical spectra do not exhibit the broad emission lines seen in other interacting supernovae (SNe), our analysis of the broadband radio and X-ray emission implies that both scenarios are plausible. If a density enhancement is responsible for the radio rebrightening, it has to result from a change in the mass-loss rate and/or wind velocity, possibly due to the transition of the progenitor from a red supergiant to a Wolf\u2013Rayet star. If the late-time radio component is a result of an off-axis relativistic jet, we find that an energetic narrow jet viewed at \u03b8 obs \u2265 80\u00b0 is needed. In this scenario, SN 2012ap is not a result of a weak engine-driven explosion, and instead, it is similar to other GRBs. However, radio rebrightenings of SN Ic-BL are not enough on their own to determine the existence of off-axis jets, and our planned Very Long Baseline Array observation will help reveal the true nature of this SN.",
+   "institutes": [
+    {
+     "id": "01an7q238",
+     "name": "University of California, Berkeley",
+     "ror": "https://ror.org/01an7q238",
+     "country": "United States",
+     "city": "Berkeley",
+     "lat": 37.87159,
+     "lng": -122.27275,
+     "homepage": "https://www.berkeley.edu",
+     "logo": "https://www.google.com/s2/favicons?domain=berkeley.edu&sz=64"
+    }
+   ],
+   "co_institutes": [
+    {
+     "id": "I8961855",
+     "name": "Universidad Nacional Aut\u00f3noma de M\u00e9xico",
+     "ror": "https://ror.org/01tmp8f25",
+     "country": "Mexico",
+     "city": "Mexico City",
+     "lat": 19.42847,
+     "lng": -99.12766,
+     "homepage": "http://www.unam.mx",
+     "logo": "https://www.google.com/s2/favicons?domain=unam.mx&sz=64"
+    },
+    {
+     "id": "I1288214837",
+     "name": "United States Naval Research Laboratory",
+     "ror": "https://ror.org/04d23a975",
+     "country": "United States",
+     "city": "Washington",
+     "lat": 38.895111083984375,
+     "lng": -77.03636932373047,
+     "homepage": "http://www.nrl.navy.mil/",
+     "logo": "https://www.google.com/s2/favicons?domain=nrl.navy.mil&sz=64"
+    },
+    {
+     "id": "I4399598358",
+     "name": "United States Navy",
+     "ror": "https://ror.org/03cs53d16",
+     "country": "United States",
+     "city": "Washington",
+     "lat": 38.89511,
+     "lng": -77.03637,
+     "homepage": "https://www.navy.mil",
+     "logo": "https://www.google.com/s2/favicons?domain=navy.mil&sz=64"
+    },
+    {
+     "id": "I164950643",
+     "name": "Open University of Israel",
+     "ror": "https://ror.org/027z64205",
+     "country": "Israel",
+     "city": "Raanana",
+     "lat": 32.18360137939453,
+     "lng": 34.87385940551758,
+     "homepage": "http://www-e.openu.ac.il/",
+     "logo": "https://www.google.com/s2/favicons?domain=www-e.openu.ac.il&sz=64"
+    },
+    {
+     "id": "I193531525",
+     "name": "George Washington University",
+     "ror": "https://ror.org/00y4zzh67",
+     "country": "United States",
+     "city": "Washington",
+     "lat": 38.89511,
+     "lng": -77.03637,
+     "homepage": "http://www.gwu.edu/",
+     "logo": "https://www.google.com/s2/favicons?domain=gwu.edu&sz=64"
+    },
+    {
+     "id": "I127339247",
+     "name": "California State University System",
+     "ror": "https://ror.org/020qm1538",
+     "country": "United States",
+     "city": "Long Beach",
+     "lat": 33.76696,
+     "lng": -118.18923,
+     "homepage": "http://www.calstate.edu/",
+     "logo": "https://www.google.com/s2/favicons?domain=calstate.edu&sz=64"
+    },
+    {
+     "id": "I192455969",
+     "name": "York University",
+     "ror": "https://ror.org/05fq50484",
+     "country": "Canada",
+     "city": "Toronto",
+     "lat": 43.70642852783203,
+     "lng": -79.39864349365234,
+     "homepage": "https://www.yorku.ca",
+     "logo": "https://www.google.com/s2/favicons?domain=yorku.ca&sz=64"
+    },
+    {
+     "id": "I2801409098",
+     "name": "Hartebeesthoek Radio Astronomy Observatory",
+     "ror": "https://ror.org/04kzeme37",
+     "country": "South Africa",
+     "city": "Krugersdorp",
+     "lat": -26.08577,
+     "lng": 27.77515,
+     "homepage": "http://www.sarao.ac.za/about/hartrao",
+     "logo": "https://www.google.com/s2/favicons?domain=sarao.ac.za&sz=64"
+    },
+    {
+     "id": "I138006243",
+     "name": "University of Arizona",
+     "ror": "https://ror.org/03m2x1q45",
+     "country": "United States",
+     "city": "Tucson",
+     "lat": 32.22174,
+     "lng": -110.92648,
+     "homepage": "http://www.arizona.edu/",
+     "logo": "https://www.google.com/s2/favicons?domain=arizona.edu&sz=64"
+    },
+    {
+     "id": "I39555362",
+     "name": "University of Warwick",
+     "ror": "https://ror.org/01a77tt86",
+     "country": "United Kingdom",
+     "city": "Coventry",
+     "lat": 52.40656,
+     "lng": -1.51217,
+     "homepage": "http://www2.warwick.ac.uk/",
+     "logo": "https://www.google.com/s2/favicons?domain=www2.warwick.ac.uk&sz=64"
+    },
+    {
+     "id": "I185261750",
+     "name": "University of Toronto",
+     "ror": "https://ror.org/03dbr7087",
+     "country": "Canada",
+     "city": "Toronto",
+     "lat": 43.70643,
+     "lng": -79.39864,
+     "homepage": "https://www.utoronto.ca",
+     "logo": "https://www.google.com/s2/favicons?domain=utoronto.ca&sz=64"
+    },
+    {
+     "id": "I59411706",
+     "name": "Adam Mickiewicz University in Pozna\u0144",
+     "ror": "https://ror.org/04g6bbq64",
+     "country": "Poland",
+     "city": "Poznan",
+     "lat": 52.40692,
+     "lng": 16.92993,
+     "homepage": "https://amu.edu.pl",
+     "logo": "https://www.google.com/s2/favicons?domain=amu.edu.pl&sz=64"
+    },
+    {
+     "id": "I219193219",
+     "name": "Purdue University West Lafayette",
+     "ror": "https://ror.org/02dqehb95",
+     "country": "United States",
+     "city": "West Lafayette",
+     "lat": 40.42587,
+     "lng": -86.90807,
+     "homepage": "http://www.purdue.edu/",
+     "logo": "https://www.google.com/s2/favicons?domain=purdue.edu&sz=64"
+    },
+    {
+     "id": "I63098007",
+     "name": "Liverpool John Moores University",
+     "ror": "https://ror.org/04zfme737",
+     "country": "United Kingdom",
+     "city": "Liverpool",
+     "lat": 53.410579681396484,
+     "lng": -2.977940082550049,
+     "homepage": "https://www.ljmu.ac.uk/",
+     "logo": "https://www.google.com/s2/favicons?domain=ljmu.ac.uk&sz=64"
+    },
+    {
+     "id": "I170201317",
+     "name": "University of Pittsburgh",
+     "ror": "https://ror.org/01an3r305",
+     "country": "United States",
+     "city": "Pittsburgh",
+     "lat": 40.44062,
+     "lng": -79.99589,
+     "homepage": "http://www.pitt.edu/",
+     "logo": "https://www.google.com/s2/favicons?domain=pitt.edu&sz=64"
+    },
+    {
+     "id": "I40120149",
+     "name": "University of Oxford",
+     "ror": "https://ror.org/052gg0110",
+     "country": "United Kingdom",
+     "city": "Oxford",
+     "lat": 51.75222,
+     "lng": -1.25596,
+     "homepage": "https://www.ox.ac.uk",
+     "logo": "https://www.google.com/s2/favicons?domain=ox.ac.uk&sz=64"
+    },
+    {
+     "id": "I122411786",
+     "name": "California Institute of Technology",
+     "ror": "https://ror.org/05dxps055",
+     "country": "United States",
+     "city": "Pasadena",
+     "lat": 34.14778,
+     "lng": -118.14452,
+     "homepage": "https://www.caltech.edu",
+     "logo": "https://www.google.com/s2/favicons?domain=caltech.edu&sz=64"
+    },
+    {
+     "id": "I4210112966",
+     "name": "Instituto de F\u00edsica Te\u00f3rica",
+     "ror": "https://ror.org/022r8mj40",
+     "country": "Spain",
+     "city": "Madrid",
+     "lat": 40.416500091552734,
+     "lng": -3.7025599479675293,
+     "homepage": "https://www.ift.uam-csic.es",
+     "logo": "https://www.google.com/s2/favicons?domain=ift.uam-csic.es&sz=64"
+    },
+    {
+     "id": "I4399657944",
+     "name": "Yukawa Institute for Theoretical Physics",
+     "ror": "https://ror.org/0589kgd85",
+     "country": "Japan",
+     "city": "Saky\u014d Ku",
+     "lat": 35.16563,
+     "lng": 135.79625,
+     "homepage": "https://www.yukawa.kyoto-u.ac.jp",
+     "logo": "https://www.google.com/s2/favicons?domain=yukawa.kyoto-u.ac.jp&sz=64"
+    },
+    {
+     "id": "I140717209",
+     "name": "Indian Institute of Astrophysics",
+     "ror": "https://ror.org/01msc1703",
+     "country": "India",
+     "city": "Bengaluru",
+     "lat": 12.971940040588379,
+     "lng": 77.59368896484375,
+     "homepage": "https://www.iiap.res.in",
+     "logo": "https://www.google.com/s2/favicons?domain=iiap.res.in&sz=64"
+    },
+    {
+     "id": "I99364266",
+     "name": "Academy of Scientific and Innovative Research",
+     "ror": "https://ror.org/053rcsq61",
+     "country": "India",
+     "city": "Ghaziabad",
+     "lat": 28.66535,
+     "lng": 77.43915,
+     "homepage": "http://acsir.res.in/",
+     "logo": "https://www.google.com/s2/favicons?domain=acsir.res.in&sz=64"
+    },
+    {
+     "id": "I102322142",
+     "name": "Rutgers, The State University of New Jersey",
+     "ror": "https://ror.org/05vt9qd57",
+     "country": "United States",
+     "city": "New Brunswick",
+     "lat": 40.48622,
+     "lng": -74.45182,
+     "homepage": "http://www.rutgers.edu",
+     "logo": "https://www.google.com/s2/favicons?domain=rutgers.edu&sz=64"
+    },
+    {
+     "id": "I2609998029",
+     "name": "National Radio Astronomy Observatory",
+     "ror": "https://ror.org/04m24yn62",
+     "country": "United States",
+     "city": "Charlottesville",
+     "lat": 38.02931,
+     "lng": -78.47668,
+     "homepage": "http://www.nrao.edu/",
+     "logo": "https://www.google.com/s2/favicons?domain=nrao.edu&sz=64"
+    },
+    {
+     "id": "I1337163019",
+     "name": "Adler Planetarium",
+     "ror": "https://ror.org/0248gc218",
+     "country": "United States",
+     "city": "Chicago",
+     "lat": 41.85003,
+     "lng": -87.65005,
+     "homepage": "https://www.adlerplanetarium.org/",
+     "logo": "https://www.google.com/s2/favicons?domain=adlerplanetarium.org&sz=64"
+    }
+   ],
+   "sources": [
+    "openalex:cites",
+    "openalex:fulltext"
+   ],
+   "figures": [
+    {
+     "file": "figures/W7165762260_0.png",
+     "caption": "Best-fitting results for the jet+cocoon model using VegasAfterglow code. The top left panel is for the late-time radio emission observed with the VLA, GMRT, and ALMA modeled with the jet component. The bottom left panel is for the early time radio emission observed with the VLA and modeled with the wide-angle outflow (i.e., the cocoon). The lines are drawn from the posterior distributions shown Fig. in the appendix. \u2026",
+     "matched": true
+    },
+    {
+     "file": "figures/W7165762260_1.png",
+     "caption": "Corner plots of the posterior distributions for the jet+cocoon model using VegasAfterglow code. As seen from these plots, the collimated corrected energy of the jet is reaching the highest value we impose as an upper limit for our prior, $3 10^52 \\, erg$, the initial Lorentz factor of the jet is unconstrained and therefore serves as a lower limit. In addition, the observing angle is also reaching the highest value \u2026",
+     "matched": true
+    }
+   ],
+   "usage": "used"
+  },
+  {
+   "key": "W7163918826",
+   "title": "Observational Properties of Nonthermal Emission from Relativistic Jets Escaping Active Galactic Nucleus Disks",
+   "year": 2026,
+   "date": "2026-06-08",
+   "type": "article",
+   "authors": [
+    "K X Chen",
+    "Zi-Gao Dai"
+   ],
+   "journal": "The Astrophysical Journal",
+   "doi": "10.3847/1538-4357/ae6b83",
+   "arxiv": "2605.10557",
+   "abstract": "Abstract Relativistic jets launched from stellar-mass compact objects embedded in the accretion disk of an active galactic nucleus (AGN) can produce nonthermal emission upon successfully breaking out of the disk. In this paper, we present a comprehensive study of the long-term propagation dynamics and broadband nonthermal radiation signatures of such jets in a realistic AGN environment, explicitly modeled as wind outflows. Our modeling reveals two distinct features imprinted by the high-density AGN medium: rapid deceleration of the jet ejecta, accompanied by a prompt downshift of the emission spectral energy distribution, and persistently strong synchrotron self-absorption, giving rise to a prominent quasi-thermal hump in the emission spectrum. Crucially, both gamma-ray burst jets and jets powered by accreting binary black hole merger remnants can produce detectable multiwavelength emissions that substantially outshine the AGN background. Moreover, the short time delays between gravitational-wave triggers and these electromagnetic counterparts\u2014typically less than 10 6 s\u2014greatly facilitate secure multimessenger associations. Besides, our findings highlight that the interaction-induced radiation from AGN-embedded jet systems offers a powerful diagnostic probe of the spatial distribution, density structure, and physical properties of the AGN medium.",
+   "institutes": [
+    {
+     "id": "04c4dkn09",
+     "name": "University of Science and Technology of China",
+     "ror": "https://ror.org/04c4dkn09",
+     "country": "China",
+     "city": "Hefei",
+     "lat": 31.86389,
+     "lng": 117.28083,
+     "homepage": "https://ustc.edu.cn",
+     "logo": "https://www.google.com/s2/favicons?domain=ustc.edu.cn&sz=64"
+    }
+   ],
+   "co_institutes": [],
+   "sources": [
+    "openalex:cites"
+   ],
+   "figures": [],
+   "usage": "cited"
+  },
+  {
+   "key": "W7164446528",
+   "title": "EP260321a/SN 2026gzf: The Faintest Shock Breakout Associated with a Broad-Lined Supernova",
+   "year": 2026,
+   "date": "2026-06-08",
+   "type": "preprint",
+   "authors": [
+    "Brendan O'Connor",
+    "Xander J. Hall",
+    "Malte Busmann",
+    "Daniel Gruen",
+    "Alberto Floris",
+    "Tomas Cabrera",
+    "Ziyuan Zhu",
+    "Antonella Palmese",
+    "D. Green",
+    "John Banovetz",
+    "Julius Gassert",
+    "Christopher L. Fryer",
+    "Roberto Ricci",
+    "Eleonora Troja",
+    "Surya Shivaprasad",
+    "Gregory R. Zeimann",
+    "Ariel J. Amsellem",
+    "S. Bailey",
+    "Segev BenZvi",
+    "Simone Dichiara",
+    "Hendrik van Eerten",
+    "Jeremy Hare",
+    "Lei Hu",
+    "Christopher M. Irwin",
+    "Keerthi Kunnumkai",
+    "Konstantin Malanchev",
+    "Mitra Maleki",
+    "Michael J. Moss",
+    "Adam D. Myers",
+    "Dheeraj Pasham",
+    "C. Ries",
+    "Geoffrey Ryan",
+    "David Schlegel",
+    "Michael Schmidt",
+    "Silona Wilke",
+    "Yu-Han Yang"
+   ],
+   "journal": "arXiv (Cornell University)",
+   "doi": "",
+   "arxiv": "2606.09992",
+   "abstract": "The explosion of a star is first marked by the shock wave breaking out of the stellar surface, producing a burst of ultraviolet and X-ray radiation. These events are observationally rare, despite likely accompanying the majority of supernovae. Here, we report on our multi-wavelength observing campaign of the closest Einstein Probe fast X-ray transient EP260321a at $z=0.0344$. The thermal ($kT=130$ eV) X-ray emission with peak luminosity $1.0\\times10^{45}$ erg s$^{-1}$ points to a shock breakout origin. We demonstrate that EP260321a is accompanied by a broad-lined Type Ic supernova, SN 2026gzf. The supernova properties, including its spectral evolution, lightcurve evolution, and expansion velocities, are all typical of the energetic stripped-envelope supernovae associated with gamma-ray bursts. However, deep X-ray upper limits obtained with the \\textit{Chandra X-ray Observatory} do not detect an X-ray afterglow, and instead exclude the afterglow of known gamma-ray bursts or fast X-ray transients. If the stellar explosion launched a successful relativistic jet, we require that it had both a low Lorentz factor $\u0393_0$\\,$<$\\,$30$ and a kinetic energy $E_\\textrm{kin}$\\,$<$\\,$10^{49}$ erg for a stellar wind density of $A_*$\\,$\\gtrsim$\\,$1$. We propose that EP260321a originated from a mildly relativistic, weak outflow that was choked by the progenitor star. This scenario is capable of naturally explaining its low X-ray luminosity and lack of prompt gamma-ray emission. EP260321a bridges the gap between SN 2008D and low-luminosity GRBs, suggesting a greater diversity in the physical parameters of stripped stars as they undergo terminal collapse.",
+   "institutes": [
+    {
+     "id": "05x2bcf33",
+     "name": "Carnegie Mellon University",
+     "ror": "https://ror.org/05x2bcf33",
+     "country": "United States",
+     "city": "Pittsburgh",
+     "lat": 40.44062,
+     "lng": -79.99589,
+     "homepage": "https://www.cmu.edu",
+     "logo": "https://www.google.com/s2/favicons?domain=cmu.edu&sz=64"
+    }
+   ],
+   "co_institutes": [],
+   "sources": [
+    "openalex:fulltext"
+   ],
+   "figures": [
+    {
+     "file": "figures/W7164446528_0.png",
+     "caption": "Finding chart of EP260321a/SN 2026gzf using DECam imaging in the $g$ and $i$ filters. Archival pre-explosion DECam images from 2013 (13 years before discovery) are shown in the top panels, while the bottom panels show imaging obtained on 2026-03-25 ($T_0+3.6$ d). A blue point source ($g-i$\\,$ $\\,$-1.3$ mag) is visible at the location of transient in archival imaging (see Appendix ). The transient explosion site (red \u2026",
+     "matched": false
+    }
+   ],
+   "usage": "used"
+  },
+  {
+   "key": "W7164447803",
+   "title": "A Multi-Wavelength View of the First Type Ic-BL Supernova with an Einstein Probe X-ray Shock Breakout",
+   "year": 2026,
+   "date": "2026-06-08",
+   "type": "preprint",
+   "authors": [
+    "Jillian C. Rastinejad",
+    "Gokul Srinivasaragavan",
+    "Nikhil Sarin",
+    "Tanner O'Dwyer",
+    "S. Bradley Cenko",
+    "James K. Leung",
+    "Anya E. Nugent",
+    "Daniel A. Perley",
+    "Genevieve Schroeder",
+    "Shreya Anand",
+    "Tom\u00e1s Ahumada",
+    "Igor Andreoni",
+    "Aleksandra Bochenek",
+    "Alessandra Corsi",
+    "Christoffer Fremling",
+    "Anna Y. Q. Ho",
+    "Mansi M. Kasliwal",
+    "Geoffrey Mo",
+    "Anirudh Salgundi",
+    "Kendall I. Sippy",
+    "J. Sollerman",
+    "Eric C. Bellm",
+    "Tracy X. Chen",
+    "Michael W. Coughlin",
+    "Michael C. Davis",
+    "Fabio De Colle",
+    "Danielle Frostig",
+    "Christopher L. Fryer",
+    "Michael J. Graham",
+    "Xander J. Hall",
+    "K. -R. Hinds",
+    "Luca Izzo",
+    "Wynn Jacobson-Galan",
+    "Nathan P. Lourie",
+    "Keiichi Maeda",
+    "Josiah Purdum",
+    "Ben Rusholme",
+    "Avinash Singh",
+    "Robert Stein"
+   ],
+   "journal": "arXiv (Cornell University)",
+   "doi": "",
+   "arxiv": "2606.10011",
+   "abstract": "In March 2026, the Einstein Probe (EP) discovered its most nearby (z = 0.0343) Fast X-ray Transient (FXT), EP260321a, the first EP FXT to provide a strong match to expectations for X-ray ''shock breakout'' (SBO) emission. Here, we present our multi-wavelength follow-up campaign of EP260321a and its broad-line Type Ic (Ic-BL) supernova (SN) counterpart, SN 2026gzf, the first Type Ic-BL SN with a definitive X-ray SBO. We show that our radio follow-up extending over 5.8 - 54.5 days post-FXT rules out an on-axis jet counterpart of isotropic-equivalent kinetic energy $E_{K} > 10^{49}$ erg for circumburst densities $n > 10^{-2}~{\\rm cm}^{-3}$ and constrains radio synchrotron emission from the fastest-moving SN ejecta. In addition, we derive the properties of SN 2026gzf and its host galaxy from our well-sampled optical data and compare them with those of optically discovered Type Ic-BL SNe, finding that SN2026gzf is well within the 90% confidence interval across all properties. We further fit SN 2026gzf's light curve with five different physical models, and determine that combined emission from both interaction with circumstellar material (CSM) and $^{56}$Ni radioactive decay provides the best fit with plausible model parameters. Finally, using the rate of Ic-BL SNe from the ZTF Bright Transient Survey and assuming all Type Ic-BL SNe produce EP260321a-like FXTs, we infer an expected rate of EP-detected SBOs of 4.4 - 16 year$^{-1}$. This is inconsistent at the 90% confidence level with current EP detection rates, potentially indicating that most Type Ic-BL SNe produce less luminous X-ray SBO signals compared to EP 260321a.",
+   "institutes": [
+    {
+     "id": "047s2c258",
+     "name": "University of Maryland, College Park",
+     "ror": "https://ror.org/047s2c258",
+     "country": "United States",
+     "city": "College Park",
+     "lat": 38.98067,
+     "lng": -76.93692,
+     "homepage": "https://umd.edu",
+     "logo": "https://www.google.com/s2/favicons?domain=umd.edu&sz=64"
+    }
+   ],
+   "co_institutes": [],
+   "sources": [
+    "openalex:fulltext"
+   ],
+   "figures": [
+    {
+     "file": "figures/W7164447803_0.png",
+     "caption": "Comparison of the X-ray properties of EP\\,260321a from the GCNs against the X-ray light curves of other SESNe. With the exception of SBO XRF\\,080109, EP\\,260321a is the least luminous FXT, peaking several orders of magnitude below FXTs associated with on-axis relativistic jets.",
+     "matched": false
+    }
+   ],
+   "usage": "used"
+  },
+  {
+   "key": "W7163596618",
+   "title": "Revealing the high redshift host galaxy of the short GRB 061201 with JWST",
+   "year": 2026,
+   "date": "2026-06-01",
+   "type": "preprint",
+   "authors": [
+    "Yuhan Mao",
+    "Hanrui He",
+    "Jia Ren",
+    "Yun Wang",
+    "Hao Zhou",
+    "Qiuli Wang",
+    "Yiming Zhu",
+    "Zhiping Jin",
+    "Daming Wei"
+   ],
+   "journal": "arXiv (Cornell University)",
+   "doi": "",
+   "arxiv": "2606.02032",
+   "abstract": "Using deep near-infrared and optical images from JWST and HST, we identify a new host galaxy candidate for GRB 061201. It lies ~2\" from the optical afterglow position. Photometric redshift fitting yields z~1.2. We compare the previously proposed host at z=0.111 with the new candidate. The chance-coincidence probability is $P_{cc}=0.18$, above the classical threshold of 0.1 but consistent with a physical association given the extreme depth of JWST imaging. In contrast, evaluated with corresponding JWST observations, the previously claimed host has a lower $P_{cc}=0.11$, which is driven primarily by bright-tail statistics rather than a more plausible association. A high-z origin is favored by three independent lines of evidence. First, for the z=0.111 scenario, the beaming-corrected energy shows GRB 061201 is an outlier of the Ghirlanda ($E_{p,i}-E_\u03b3$) relation for short GRBs, while for the z=1.2 scenario, it is well consistent with the Amati relation. Second, deep near-infrared observations rule out a kilonova similar to AT2017gfo at z=0.111. Third, afterglow modeling yields an AIC criterion of $\u0394$AIC=16.35, providing strong evidence for the high-redshift scenario. Assuming the host candidate is the actual host galaxy of GRB 061201, the physical offset is 16.4-16.9 kpc (substantially reduced from ~42 kpc) and the host stellar age is ~2 Gyr, which are consistent with the host population of short GRBs. A low-redshift origin would lead to a very high binary neutron star merger rate of ~1400 Gpc$^{-3}$ yr$^{-1}$, which is contradictory to the gravitational-wave constraint. We suggest that GRB 061201 originates from a moderately high-redshift (z~1.2) host, significantly alleviating this apparent merger rate discrepancy. This case demonstrates the power of deep JWST exposures in revealing the host galaxies of historically hostless GRBs.",
+   "institutes": [
+    {
+     "id": "02eb4t121",
+     "name": "Purple Mountain Observatory",
+     "ror": "https://ror.org/02eb4t121",
+     "country": "China",
+     "city": "Nanjing",
+     "lat": 32.06167,
+     "lng": 118.77778,
+     "homepage": "http://english.pmo.cas.cn/",
+     "logo": "https://www.google.com/s2/favicons?domain=english.pmo.cas.cn&sz=64"
+    },
+    {
+     "id": "04c4dkn09",
+     "name": "University of Science and Technology of China",
+     "ror": "https://ror.org/04c4dkn09",
+     "country": "China",
+     "city": "Hefei",
+     "lat": 31.86389,
+     "lng": 117.28083,
+     "homepage": "https://ustc.edu.cn",
+     "logo": "https://www.google.com/s2/favicons?domain=ustc.edu.cn&sz=64"
+    }
+   ],
+   "co_institutes": [],
+   "sources": [
+    "openalex:fulltext"
+   ],
+   "figures": [
+    {
+     "file": "figures/W7163596618_0.png",
+     "caption": "Multi-band afterglow modeling of GRB 061201 with VEGASAFTERGLOW. The left panel (a) shows the best-fitted result at $z=0.111$. For comparison, the light curve of the kilonova AT2017gfo, artificially shifted to $z=0.111$, is over-plotted (star symbols). The right panel (b) displays the best-fitted result at $z=1.2$.",
+     "matched": true
+    }
+   ],
+   "usage": "used"
+  },
+  {
+   "key": "W7162655324",
+   "title": "Successive Partial Disruptions with Orbital Precession in a White Dwarf\u2013Black Hole System for Repeating GRB 250702B",
+   "year": 2026,
+   "date": "2026-05-28",
+   "type": "article",
+   "authors": [
+    "Yuri Sato",
+    "Rin Oikawa",
+    "K. Kato",
+    "Tatsuya Matsumoto",
+    "Kazumi Kashiyama"
+   ],
+   "journal": "The Astrophysical Journal Letters",
+   "doi": "10.3847/2041-8213/ae6a8f",
+   "arxiv": "2602.01073",
+   "abstract": "Abstract The peculiar gamma-ray burst GRB 250702B is the longest event ever observed, lasting about 1 day and exhibiting four prompt-emission flares of \u223c100 s with irregular recurrence intervals of at least 1 hr. To explain this hierarchy of timescales, we consider a scenario in which a stellar object undergoes repeated partial tidal disruptions by a black hole (BH). We find that if a white dwarf (WD) is on a highly eccentric orbit ( e \u2248 0.97) around an intermediate-mass BH with M BH \u2272 10 6 M \u2299 and <mml:math xmlns:mml=\"http://www.w3.org/1998/Math/MathML\" overflow=\"scroll\"> <mml:mi>a</mml:mi> <mml:mo>=</mml:mo> <mml:mn>60</mml:mn> <mml:mspace width=\"0.25em\"/> <mml:msub> <mml:mrow> <mml:mi>R</mml:mi> </mml:mrow> <mml:mrow> <mml:mo>\u2299</mml:mo> </mml:mrow> </mml:msub> <mml:msup> <mml:mrow> <mml:mfenced close=\")\" open=\"(\"> <mml:mrow> <mml:msub> <mml:mrow> <mml:mi>M</mml:mi> </mml:mrow> <mml:mrow> <mml:mi mathvariant=\"normal\">BH</mml:mi> </mml:mrow> </mml:msub> <mml:mo>/</mml:mo> <mml:mn>1</mml:mn> <mml:msup> <mml:mrow> <mml:mn>0</mml:mn> </mml:mrow> <mml:mrow> <mml:mn>6</mml:mn> </mml:mrow> </mml:msup> <mml:mspace width=\"0.25em\"/> <mml:msub> <mml:mrow> <mml:mi>M</mml:mi> </mml:mrow> <mml:mrow> <mml:mo>\u2299</mml:mo> </mml:mrow> </mml:msub> </mml:mrow> </mml:mfenced> </mml:mrow> <mml:mrow> <mml:mn>1</mml:mn> <mml:mo>/</mml:mo> <mml:mn>3</mml:mn> </mml:mrow> </mml:msup> </mml:math> , the observed properties of GRB 250702B can be reproduced. In this framework, the duration of each flare is determined by the viscous accretion timescale of material stripped near pericenter, with a typical mass \u0394 M \u2248 2 \u00d7 10 \u22122 M \u2299 . The minimum recurrence time corresponds to the orbital period, while the total activity period is set by the secular orbital evolution timescale, leading to the complete disruption of the WD. Furthermore, if M BH \u2273 10 5 M \u2299 and the orbit has a minimum polar angle relative to the BH equatorial plane of <mml:math xmlns:mml=\"http://www.w3.org/1998/Math/MathML\" overflow=\"scroll\"> <mml:msub> <mml:mrow> <mml:mi>\u03b8</mml:mi> </mml:mrow> <mml:mrow> <mml:mi mathvariant=\"normal\">min</mml:mi> </mml:mrow> </mml:msub> <mml:mo>\u2273</mml:mo> <mml:mn>0.12</mml:mn> <mml:mspace width=\"0.25em\"/> <mml:mi mathvariant=\"normal\">rad</mml:mi> </mml:math> , relativistic frame dragging induces \u22730.1 rad precession of the orbital angular momentum between successive pericenter passages, comparable to a typical gamma-ray burst jet half-opening angle, resulting in intermittent alignment with the observer and irregular flare spacing. The WD experiences \u224840 jet-launch episodes before complete disruption, but only four are expected to be observed on-axis. The remaining off-axis jets become visible at late times, enhancing the radio afterglow by about an order of magnitude, providing a testable prediction of this scenario.",
+   "institutes": [
+    {
+     "id": "01dq60k83",
+     "name": "Tohoku University",
+     "ror": "https://ror.org/01dq60k83",
+     "country": "Japan",
+     "city": "Sendai",
+     "lat": 38.26667,
+     "lng": 140.86667,
+     "homepage": "http://www.tohoku.ac.jp/en/",
+     "logo": "https://www.google.com/s2/favicons?domain=tohoku.ac.jp&sz=64"
+    }
+   ],
+   "co_institutes": [
+    {
+     "id": "I74801974",
+     "name": "The University of Tokyo",
+     "ror": "https://ror.org/057zh3y96",
+     "country": "Japan",
+     "city": "Tokyo",
+     "lat": 35.68949890136719,
+     "lng": 139.69171142578125,
+     "homepage": "https://www.u-tokyo.ac.jp",
+     "logo": "https://www.google.com/s2/favicons?domain=u-tokyo.ac.jp&sz=64"
+    }
+   ],
+   "sources": [
+    "openalex:cites",
+    "openalex:fulltext"
+   ],
+   "figures": [
+    {
+     "file": "figures/W7162655324_0.png",
+     "caption": "Our physical picture for GRB 250702B. Panel (a) shows the geodesic orbit of the WD, where the red line represents our numerical result with $a = 30\\,R_ $, $e = 0.97$, $M_ BH = 1 10^5\\,M_ $, $a_ spin=0.9$, and $ _ min = 0.12 rad$ ($7^ $). The BH spin axis is indicated by the vertical black line. The orbit exhibits relativistic precession. Mass loss from the WD is not included in this calculation. Panel (b) \u2026",
+     "matched": false
+    }
+   ],
+   "usage": "used"
+  },
+  {
+   "key": "W7162475202",
+   "title": "An extremely bright slow-rising afterglow from an off-axis jet in GRB 260310A",
+   "year": 2026,
+   "date": "2026-05-22",
+   "type": "preprint",
+   "authors": [
+    "Yu-Han Yang",
+    "Roberto Ricci",
+    "Eleonora Troja",
+    "Muskan Yadav",
+    "Yi-Han Iris Yin",
+    "Rub\u00e9n S\u00e1nchez-Ram\u00edrez",
+    "Brendan O'Connor",
+    "Niccol\u00f2 Passaleva",
+    "Alberto J. Castro-Tirado",
+    "Hendrik van Eerten",
+    "Simone Dichiara",
+    "Vincenzo Galluzzi",
+    "Narjes Shahamat Dehsorkh",
+    "Iv\u00e1n Agudo",
+    "Jes\u00fas Aceituno",
+    "Malte Busmann",
+    "Mar\u00eda D. Caballero-Garc\u00eda",
+    "Emilio Fern\u00e1ndez-Garc\u00eda",
+    "Daniel Gruen",
+    "Maria Gritsevich",
+    "Sergiy Guziy",
+    "David Hiriart",
+    "Y. D. Hu",
+    "Martin Jel\u00ednek",
+    "Alexander Kutyrev",
+    "Al\u017eb\u011bta Male\u0148\u00e0kov\u00e0",
+    "Filip Novotny",
+    "Ignacio P\u00e9rez-Garc\u00eda",
+    "Shashi B. Pandey",
+    "Jorma Ryske",
+    "A. Sota",
+    "J. \u0160trobl",
+    "Hira Waseem",
+    "Siyu Wu"
+   ],
+   "journal": "arXiv (Cornell University)",
+   "doi": "",
+   "arxiv": "2605.23818",
+   "abstract": "We present a multi-wavelength study of GRB 260310A, a nearby long-duration gamma-ray burst at $z\\simeq0.153$ associated with a broad-lined Type Ic supernova. Despite its modest prompt gamma-ray output, $E_{\u03b3,\\rm iso}\\simeq3.5\\times10^{50}$ erg, GRB\\,260310A exhibits one of the brightest afterglows ever observed in the X-ray, optical, and radio bands. Its apparent brightness is not its only remarkable feature. The optical afterglow displays a delayed onset, characterized by a slow rising phase, with slope $\u03b1\\approx-1$, and a late peak at $\\approx$0.1 d. We argue that the combination of weak prompt emission, hard peak energy, and late afterglow onset is naturally explained by a GRB jet viewed off-axis. The radio spectral energy distributions are consistent with synchrotron radiation and indicate the presence of both reverse- and forward-shock components, thus providing a first test of reverse-shock models in an off-axis geometry. The X-ray afterglow displays a prominent rebrightening, monitored for up to $\\approx$68 d with no evidence of spectral evolution. A low level of linear polarization, $\u03a0\\approx1.7\\%$, is measured at 15 GHz at $T_0+55$ d and suggests that, at these late times, the forward-shock is the dominant emission component from radio to X-rays. This late-time rebrightening represents a critical test for the two-component jet model. If interpreted as the emergence of a narrow jet core viewed further off-axis, it would imply extreme luminosities and energetics for an on-axis observer.",
+   "institutes": [
+    {
+     "id": "02p77k626",
+     "name": "University of Rome Tor Vergata",
+     "ror": "https://ror.org/02p77k626",
+     "country": "Italy",
+     "city": "Rome",
+     "lat": 41.89193,
+     "lng": 12.51133,
+     "homepage": "https://web.uniroma2.it",
+     "logo": "https://www.google.com/s2/favicons?domain=web.uniroma2.it&sz=64"
+    }
+   ],
+   "co_institutes": [],
+   "sources": [
+    "openalex:fulltext"
+   ],
+   "figures": [
+    {
+     "file": "figures/W7162475202_0.png",
+     "caption": "Prompt emission properties of GRB\\,260310A. a. Fermi/GBM count-rate light curves from NaI detectors na and nb in the $50-300$ keV energy band. The black lines and gray lines represent the net counts and errors with a bin size of 2 s. b. Accumulated counts. The blue horizontal solid (dashed) lines are drawn at 0\\%--100\\% (5\\%--95\\%) of the total accumulated counts. The vertical lines in a and b represent the $T_90$ \u2026",
+     "matched": false
+    }
+   ],
+   "usage": "used"
+  },
+  {
+   "key": "W7160102728",
+   "title": "A gamma-ray burst associated with a superluminous supernova",
+   "year": 2026,
+   "date": "2026-05-04",
+   "type": "preprint",
+   "authors": [
+    "Andrew Levan",
+    "Nikhil Sarin",
+    "Agnes van Hoof",
+    "L. Izzo",
+    "Daniele Malesani",
+    "Andrew Fruchter",
+    "Jens Hjorth",
+    "N. R. Tanvir",
+    "Eric Burns",
+    "Johan Fynbo",
+    "Jillian Rastinejad",
+    "BenJamin Gompertz",
+    "Peter Jonker",
+    "Antonio Martin-Carrillo",
+    "S. Belkin",
+    "D O\u2019Neill",
+    "S. Schulze",
+    "Jesper Sollerman",
+    "Danny Steeghs",
+    "D Xu"
+   ],
+   "journal": "Research Square",
+   "doi": "10.21203/rs.3.rs-9506415/v1",
+   "arxiv": null,
+   "abstract": "",
+   "institutes": [
+    {
+     "id": "I145872427",
+     "name": "Radboud University Nijmegen",
+     "ror": "https://ror.org/016xsfp80",
+     "country": "The Netherlands",
+     "city": "Nijmegen",
+     "lat": 51.8425,
+     "lng": 5.85278,
+     "homepage": "https://www.ru.nl",
+     "logo": "https://www.google.com/s2/favicons?domain=ru.nl&sz=64"
+    }
+   ],
+   "co_institutes": [
+    {
+     "id": "I2801954024",
+     "name": "Astronomical Observatory of Capodimonte",
+     "ror": "https://ror.org/02fwden70",
+     "country": "Italy",
+     "city": "Naples",
+     "lat": 40.86354446411133,
+     "lng": 14.255544662475586,
+     "homepage": "http://www.oacn.inaf.it/",
+     "logo": "https://www.google.com/s2/favicons?domain=oacn.inaf.it&sz=64"
+    },
+    {
+     "id": "I1297127228",
+     "name": "Space Telescope Science Institute",
+     "ror": "https://ror.org/036f5mx38",
+     "country": "United States",
+     "city": "Baltimore",
+     "lat": 39.29038,
+     "lng": -76.61219,
+     "homepage": "https://www.stsci.edu",
+     "logo": "https://www.google.com/s2/favicons?domain=stsci.edu&sz=64"
+    },
+    {
+     "id": "I124055696",
+     "name": "University of Copenhagen",
+     "ror": "https://ror.org/035b05819",
+     "country": "Denmark",
+     "city": "Copenhagen",
+     "lat": 55.67594,
+     "lng": 12.56553,
+     "homepage": "https://www.ku.dk",
+     "logo": "https://www.google.com/s2/favicons?domain=ku.dk&sz=64"
+    },
+    {
+     "id": "I153648349",
+     "name": "University of Leicester",
+     "ror": "https://ror.org/04h699437",
+     "country": "United Kingdom",
+     "city": "Leicester",
+     "lat": 52.63859939575195,
+     "lng": -1.1316900253295898,
+     "homepage": "https://le.ac.uk",
+     "logo": "https://www.google.com/s2/favicons?domain=le.ac.uk&sz=64"
+    },
+    {
+     "id": "I121820613",
+     "name": "Louisiana State University",
+     "ror": "https://ror.org/05ect4e57",
+     "country": "United States",
+     "city": "Baton Rouge",
+     "lat": 30.44332,
+     "lng": -91.18747,
+     "homepage": "http://www.lsu.edu/",
+     "logo": "https://www.google.com/s2/favicons?domain=lsu.edu&sz=64"
+    },
+    {
+     "id": "I66946132",
+     "name": "University of Maryland, College Park",
+     "ror": "https://ror.org/047s2c258",
+     "country": "United States",
+     "city": "College Park",
+     "lat": 38.98067,
+     "lng": -76.93692,
+     "homepage": "https://umd.edu",
+     "logo": "https://www.google.com/s2/favicons?domain=umd.edu&sz=64"
+    },
+    {
+     "id": "I79619799",
+     "name": "University of Birmingham",
+     "ror": "https://ror.org/03angcq70",
+     "country": "United Kingdom",
+     "city": "Birmingham",
+     "lat": 52.48142,
+     "lng": -1.89983,
+     "homepage": "http://www.birmingham.ac.uk/index.aspx",
+     "logo": "https://www.google.com/s2/favicons?domain=birmingham.ac.uk&sz=64"
+    },
+    {
+     "id": "I100930933",
+     "name": "University College Dublin",
+     "ror": "https://ror.org/05m7pjf47",
+     "country": "Ireland",
+     "city": "Dublin",
+     "lat": 53.33306,
+     "lng": -6.24889,
+     "homepage": "https://www.ucd.ie",
+     "logo": "https://www.google.com/s2/favicons?domain=ucd.ie&sz=64"
+    },
+    {
+     "id": "I2801239119",
+     "name": "Australian Regenerative Medicine Institute",
+     "ror": "https://ror.org/02qa5kg76",
+     "country": "Australia",
+     "city": "Clayton",
+     "lat": -37.91049575805664,
+     "lng": 145.12930297851562,
+     "homepage": "http://www.armi.org.au/",
+     "logo": "https://www.google.com/s2/favicons?domain=armi.org.au&sz=64"
+    },
+    {
+     "id": "I56590836",
+     "name": "Monash University",
+     "ror": "https://ror.org/02bfwt286",
+     "country": "Australia",
+     "city": "Melbourne",
+     "lat": -37.814,
+     "lng": 144.96332,
+     "homepage": "https://www.monash.edu",
+     "logo": "https://www.google.com/s2/favicons?domain=monash.edu&sz=64"
+    },
+    {
+     "id": "I53964585",
+     "name": "Weizmann Institute of Science",
+     "ror": "https://ror.org/0316ej306",
+     "country": "Israel",
+     "city": "Rehovot",
+     "lat": 31.89421,
+     "lng": 34.81199,
+     "homepage": "https://www.weizmann.ac.il",
+     "logo": "https://www.google.com/s2/favicons?domain=weizmann.ac.il&sz=64"
+    },
+    {
+     "id": "I161593684",
+     "name": "Stockholm University",
+     "ror": "https://ror.org/05f0yaq80",
+     "country": "Sweden",
+     "city": "Stockholm",
+     "lat": 59.32938,
+     "lng": 18.06871,
+     "homepage": "https://www.su.se",
+     "logo": "https://www.google.com/s2/favicons?domain=su.se&sz=64"
+    },
+    {
+     "id": "I39555362",
+     "name": "University of Warwick",
+     "ror": "https://ror.org/01a77tt86",
+     "country": "United Kingdom",
+     "city": "Coventry",
+     "lat": 52.40656,
+     "lng": -1.51217,
+     "homepage": "http://www2.warwick.ac.uk/",
+     "logo": "https://www.google.com/s2/favicons?domain=www2.warwick.ac.uk&sz=64"
+    },
+    {
+     "id": "I19820366",
+     "name": "Chinese Academy of Sciences",
+     "ror": "https://ror.org/034t30j35",
+     "country": "China",
+     "city": "Beijing",
+     "lat": 39.9075,
+     "lng": 116.39723,
+     "homepage": "https://www.cas.cn",
+     "logo": "https://www.google.com/s2/favicons?domain=cas.cn&sz=64"
+    },
+    {
+     "id": "I4210164580",
+     "name": "National Astronomical Observatories",
+     "ror": "https://ror.org/058pyyv44",
+     "country": "China",
+     "city": "Beijing",
+     "lat": 40.00466537475586,
+     "lng": 116.38436889648438,
+     "homepage": "http://english.nao.cas.cn/",
+     "logo": "https://www.google.com/s2/favicons?domain=english.nao.cas.cn&sz=64"
+    }
+   ],
+   "sources": [
+    "openalex:fulltext"
+   ],
+   "figures": [],
+   "usage": "unverified"
+  },
+  {
+   "key": "W7157079341",
+   "title": "Signature of a Magnetar Central Engine from the Multiband Afterglow of GRB 151027A Associated with a Supernova",
+   "year": 2026,
+   "date": "2026-04-28",
+   "type": "article",
+   "authors": [
+    "Liang-Jun Chen",
+    "Xiang-Gao Wang",
+    "Hou-Jun L\u00fc",
+    "WeiKang Zheng",
+    "D. A. Perley",
+    "Da-Bin Lin",
+    "Yihan Wang",
+    "De-Feng Kong",
+    "Y. D. Hu",
+    "Jie Xia",
+    "S. Bradley Cenko",
+    "Hong-Bang Liu",
+    "Fei Xie",
+    "Jing L\u00fc",
+    "En-Wei Liang",
+    "B Zhang",
+    "Alexei V. Filippenko"
+   ],
+   "journal": "The Astrophysical Journal",
+   "doi": "10.3847/1538-4357/ae595e",
+   "arxiv": null,
+   "abstract": "Abstract We report multiwavelength observations and theoretical modeling of the afterglow of gamma-ray burst (GRB) 151027A. The object exhibits a complete evolutionary sequence, including prompt gamma-ray and optical emission, an initial optical onset bump, an optical rebrightening, a late-time supernova bump, an X-ray flare, and two distinct X-ray plateaus. GRB 151027A exhibits nearly all characteristic features observed in GRB afterglows. Such a rich set of features within a single event is exceptionally rare. We show that the first X-ray plateau followed by a rapid decay can be attributed to the collapse of a newly formed magnetar to form a black hole. The second X-ray plateau can be explained by fallback accretion. We find that the energy-injection model successfully reproduces the optical rebrightening of GRB 151027A. The late-time optical bump is well described by a 56 Ni-powered supernova light curve. GRB 151027A presents a complete physical picture for GRB phenomenology, whereas reconstructing such a comprehensive picture previously required the statistical analysis of multiple GRBs.",
+   "institutes": [
+    {
+     "id": "I150807315",
+     "name": "Guangxi University",
+     "ror": "https://ror.org/02c9qn167",
+     "country": "China",
+     "city": "Nanning",
+     "lat": 22.816669464111328,
+     "lng": 108.3166732788086,
+     "homepage": "https://www.gxu.edu.cn",
+     "logo": "https://www.google.com/s2/favicons?domain=gxu.edu.cn&sz=64"
+    }
+   ],
+   "co_institutes": [
+    {
+     "id": "I95457486",
+     "name": "University of California, Berkeley",
+     "ror": "https://ror.org/01an7q238",
+     "country": "United States",
+     "city": "Berkeley",
+     "lat": 37.87159,
+     "lng": -122.27275,
+     "homepage": "https://www.berkeley.edu",
+     "logo": "https://www.google.com/s2/favicons?domain=berkeley.edu&sz=64"
+    },
+    {
+     "id": "I63098007",
+     "name": "Liverpool John Moores University",
+     "ror": "https://ror.org/04zfme737",
+     "country": "United Kingdom",
+     "city": "Liverpool",
+     "lat": 53.410579681396484,
+     "lng": -2.977940082550049,
+     "homepage": "https://www.ljmu.ac.uk/",
+     "logo": "https://www.google.com/s2/favicons?domain=ljmu.ac.uk&sz=64"
+    },
+    {
+     "id": "I133999245",
+     "name": "University of Nevada, Las Vegas",
+     "ror": "https://ror.org/0406gha72",
+     "country": "United States",
+     "city": "Las Vegas",
+     "lat": 36.17497,
+     "lng": -115.13722,
+     "homepage": "https://www.unlv.edu",
+     "logo": "https://www.google.com/s2/favicons?domain=unlv.edu&sz=64"
+    },
+    {
+     "id": "I135310074",
+     "name": "University of Wisconsin\u2013Madison",
+     "ror": "https://ror.org/01y2jtd41",
+     "country": "United States",
+     "city": "Madison",
+     "lat": 43.07305,
+     "lng": -89.40123,
+     "homepage": "http://www.wisc.edu/",
+     "logo": "https://www.google.com/s2/favicons?domain=wisc.edu&sz=64"
+    },
+    {
+     "id": "I126520041",
+     "name": "University of Science and Technology of China",
+     "ror": "https://ror.org/04c4dkn09",
+     "country": "China",
+     "city": "Hefei",
+     "lat": 31.86389,
+     "lng": 117.28083,
+     "homepage": "https://ustc.edu.cn",
+     "logo": "https://www.google.com/s2/favicons?domain=ustc.edu.cn&sz=64"
+    },
+    {
+     "id": "I2802340896",
+     "name": "Purple Mountain Observatory",
+     "ror": "https://ror.org/02eb4t121",
+     "country": "China",
+     "city": "Nanjing",
+     "lat": 32.06598663330078,
+     "lng": 118.82951354980469,
+     "homepage": "http://english.pmo.cas.cn/",
+     "logo": "https://www.google.com/s2/favicons?domain=english.pmo.cas.cn&sz=64"
+    },
+    {
+     "id": "I1306266525",
+     "name": "Goddard Space Flight Center",
+     "ror": "https://ror.org/0171mag52",
+     "country": "United States",
+     "city": "Greenbelt",
+     "lat": 39.00455,
+     "lng": -76.87553,
+     "homepage": "https://www.nasa.gov/centers/goddard/home/index.html",
+     "logo": "https://www.google.com/s2/favicons?domain=nasa.gov&sz=64"
+    },
+    {
+     "id": "I4389424196",
+     "name": "Deleted Institution",
+     "ror": null,
+     "country": "",
+     "city": null,
+     "lat": null,
+     "lng": null,
+     "homepage": null,
+     "logo": null
+    },
+    {
+     "id": "I889458895",
+     "name": "University of Hong Kong",
+     "ror": "https://ror.org/02zhqgq86",
+     "country": "Hong Kong",
+     "city": "Pok Fu Lam",
+     "lat": 22.26861,
+     "lng": 114.12924,
+     "homepage": "https://www.hku.hk",
+     "logo": "https://www.google.com/s2/favicons?domain=hku.hk&sz=64"
+    }
+   ],
+   "sources": [
+    "openalex:cites",
+    "openalex:fulltext"
+   ],
+   "figures": [],
+   "usage": "unverified"
+  },
+  {
+   "key": "W4415026534",
+   "title": "X-Ray Emission Signatures of Neutron Star Mergers",
+   "year": 2026,
+   "date": "2026-04-15",
+   "type": "article",
+   "authors": [
+    "Connery Chen",
+    "Yihan Wang",
+    "Bing Zhang"
+   ],
+   "journal": "The Astrophysical Journal",
+   "doi": "10.3847/1538-4357/ae5535",
+   "arxiv": "2505.01606",
+   "abstract": "Abstract Neutron star (NS) mergers, including both binary NS mergers and black hole\u2013NS mergers, are multimessenger sources detectable in both gravitational wave (GW) and electromagnetic (EM) radiation. The expected EM emission signatures depend on the source\u2019s progenitor, merger remnant, and observer\u2019s line of sight (LoS). Widely discussed EM counterparts of NS mergers have been focused on the gamma-ray (in terms of short-duration gamma-ray bursts) and optical (in terms of kilonova) bands. In this paper, we demonstrate that X-ray emission provides a powerful and complementary probe of post-merger physics and geometry, offering diagnostic signatures across both the prompt and long-term afterglow phases. We consider several binary progenitor and central engine models and investigate X-ray emission signatures from the prompt phase immediately after the merger to the afterglow phase extending years later. For the prompt phase, we devise a general method for computing phenomenological X-ray light curves and spectra for structured jets viewed from any LoS, which can be applied to X-ray observations of NS mergers to constrain the geometry. The geometric constraints can in turn be used to model the afterglow and estimate a peak time and flux\u2014to preemptively determine afterglow characteristics would be monumental for follow-up observation campaigns of future GW sources. Finally, we provide constraints on the time window for X-ray counterpart searches of NS mergers across a range of luminosity distances and detector sensitivities.",
+   "institutes": [
+    {
+     "id": "0406gha72",
+     "name": "University of Nevada, Las Vegas",
+     "ror": "https://ror.org/0406gha72",
+     "country": "United States",
+     "city": "Las Vegas",
+     "lat": 36.17497,
+     "lng": -115.13722,
+     "homepage": "https://www.unlv.edu",
+     "logo": "https://www.google.com/s2/favicons?domain=unlv.edu&sz=64"
+    }
+   ],
+   "co_institutes": [],
+   "sources": [
+    "openalex:fulltext"
+   ],
+   "figures": [
+    {
+     "file": "figures/W4415026534_0.png",
+     "caption": "BNS-I model light curves composed of GRB prompt (red), magnetar wind (blue), GRB afterglow (green), and kilonova afterglow (yellow) emissions. Prompt emission is calculated for a Gaussian jet with $ _c = 3^ $ and $E_ , \\, iso = 10^51$ erg (see Section ). Magnetar wind emission is calculated from spindown luminosity (Eq. ) and assumed to be isotropic (see Section ). GRB and kilonova afterglows are calculated using \u2026",
+     "matched": true
+    }
+   ],
+   "usage": "used"
+  },
+  {
+   "key": "W7154790034",
+   "title": "Prospects for GRB Afterglow Discovery with the Eric and Wendy Schmidt Observatory System",
+   "year": 2026,
+   "date": "2026-04-15",
+   "type": "preprint",
+   "authors": [
+    "James Freeburn",
+    "Dougal Dobie",
+    "Akash Anumarlapudi",
+    "Igor Andreoni",
+    "Brendan O'Connor",
+    "Eric Burns",
+    "Jonathan Carney",
+    "Hank Corbett",
+    "Michael W. Coughlin",
+    "Anna Tartaglia",
+    "V. Ashley Villar"
+   ],
+   "journal": "arXiv (Cornell University)",
+   "doi": "",
+   "arxiv": "2604.13650",
+   "abstract": "Two time domain surveys, recently funded as part of the Eric and Wendy Schmidt Observatory System; the Argus Array, in the optical, and the Deep Synoptic Array (DSA), in the radio, will transform gamma-ray burst (GRB) science via the serendipitous discovery of hundreds of GRB afterglows per year. In this work, we simulate DSA and Argus observations of GRB afterglows. We find that, of the long-duration GRBs (LGRBs) detected by the Fermi Gamma-ray Burst Monitor, $(24 \\pm 2)\\%$ will yield afterglow detections with Argus and $(42 \\pm 3)\\%$ with DSA, corresponding to rate of $47 \\pm 4$ and $82 \\pm 7$ per year respectively. We also compute rates for both upcoming and proposed GRB monitors; the forthcoming StarBurst Multi-messenger Pioneer, with $62 \\pm 5$ detections per year in Argus and $117 \\pm 8$ detections per year in DSA and the Moon Burst Energetics All-sky Monitor (MoonBEAM) concept, with $62 \\pm 6$ per year in Argus and $105 \\pm 10$ per year in DSA. The observatory system will detect also 116$\\pm$8 optical and 217$\\pm$15 radio afterglows per year, independent of GRB triggers, exceeding the current annual rate with global follow-up. Afterglow counterparts to short-duration GRBs, originating from neutron star mergers, will be detected at $5$-$10$% of the LGRB afterglow rate, which is promising for multi-messenger detections of gravitational wave sources and constraining the neutron star merger rate. The Argus Array, with its second-minute cadence, will detect afterglows before they peak $\\sim 18\\%$ of the time which will dramatically increase the sample of observed reverse shock and prompt optical emission.",
+   "institutes": [
+    {
+     "id": "0384j8v12",
+     "name": "The University of Sydney",
+     "ror": "https://ror.org/0384j8v12",
+     "country": "Australia",
+     "city": "Sydney",
+     "lat": -33.86785,
+     "lng": 151.20732,
+     "homepage": "https://www.sydney.edu.au",
+     "logo": "https://www.google.com/s2/favicons?domain=sydney.edu.au&sz=64"
+    },
+    {
+     "id": "02zp3yd51",
+     "name": "ARC Centre of Excellence for Gravitational Wave Discovery",
+     "ror": "https://ror.org/02zp3yd51",
+     "country": "Australia",
+     "city": "Melbourne",
+     "lat": -37.814,
+     "lng": 144.96332,
+     "homepage": "http://www.ozgrav.org/",
+     "logo": "https://www.google.com/s2/favicons?domain=ozgrav.org&sz=64"
+    },
+    {
+     "id": "0130frc33",
+     "name": "University of North Carolina at Chapel Hill",
+     "ror": "https://ror.org/0130frc33",
+     "country": "United States",
+     "city": "Chapel Hill",
+     "lat": 35.9132,
+     "lng": -79.05584,
+     "homepage": "https://www.unc.edu",
+     "logo": "https://www.google.com/s2/favicons?domain=unc.edu&sz=64"
+    }
+   ],
+   "co_institutes": [],
+   "sources": [
+    "openalex:fulltext"
+   ],
+   "figures": [
+    {
+     "file": "figures/W7154790034_0.png",
+     "caption": "Posterior distribution of an MCMC fit of a synthetic LGRB afterglow population to a selection of observed afterglow flux density distributions at a range of frequencies and times. The jet-opening angle, $ _c$, is in units of radians. Our synthetic population of afterglows are drawn from this posterior distribution.",
+     "matched": false
+    }
+   ],
+   "usage": "used"
+  },
+  {
+   "key": "W7148177702",
+   "title": "Systematic Study of Forward and Reverse Shock Afterglow Emission from Two-Component Jets",
+   "year": 2026,
+   "date": "2026-03-28",
+   "type": "preprint",
+   "authors": [
+    "Olzhas Mukazhanov",
+    "Ernazar Abdikamalov",
+    "Paz Beniamini"
+   ],
+   "journal": "arXiv (Cornell University)",
+   "doi": "",
+   "arxiv": "2603.27225",
+   "abstract": "Two-component jets are frequently invoked to explain complex features in gamma-ray burst (GRB) afterglows, such as late-time rebrightening and chromatic breaks. While many studies fit these models to individual events, a systematic exploration mapping the broader parameter space, particularly the reverse shock contribution, is currently lacking. To address this, we present a comprehensive systematic analysis of two-component jet signatures using numerical modeling with the VegasAfterglow code. Our modeling shows that observable rebrightenings in the forward shock require the wing to carry substantially more energy, while for the reverse shock the energies can be comparable. Because the two components can occupy different spectral regimes, spectral breaks may arise when the wing emission overtakes the core. When the wing's initial velocity is high, relativistic beaming can render its emission invisible to the on-axis observer. As the flow decelerates, the resulting debeaming produces a steeper rise in the observed emission, reaching temporal slopes as steep as about $4.5$ and peaking shortly after the core jet break. In this case, the wing masks the core's break, leaving only a single late-time break. Slower wings that are not initially beamed away do not obscure the core, allowing the observer to see two distinct jet breaks. At late times, the decaying post-jet-break slopes are unaffected and limited to temporal slopes of about $-p$. Additionally, the forward shock dominates the emission across most of the parameter space, while the reverse shock contributes noticeably only under conditions of high magnetization and long engine durations.",
+   "institutes": [
+    {
+     "id": "052bx8q98",
+     "name": "Nazarbayev University",
+     "ror": "https://ror.org/052bx8q98",
+     "country": "Kazakhstan",
+     "city": "Astana",
+     "lat": 51.1801,
+     "lng": 71.44598,
+     "homepage": "https://nu.edu.kz/",
+     "logo": "https://www.google.com/s2/favicons?domain=nu.edu.kz&sz=64"
+    }
+   ],
+   "co_institutes": [],
+   "sources": [
+    "openalex:fulltext"
+   ],
+   "figures": [
+    {
+     "file": "figures/W7148177702_0.png",
+     "caption": "Schematic illustration of a two-component jet structure and the associated forward\u2013reverse shock pairs formed in both the jet core and the wing. The top panel depicts the case of a fast wing, in which the emission is relativistically beamed away from an on-axis observer. The bottom panel shows the case of a slower wing, where the wing emission lies within the observer\u2019s beaming cone and is therefore detectable. The \u2026",
+     "matched": false
+    }
+   ],
+   "usage": "used"
+  },
+  {
+   "key": "W7144391256",
+   "title": "An energetic dirty fireball detected in soft X-rays",
+   "year": 2026,
+   "date": "2026-03-27",
+   "type": "preprint",
+   "authors": [
+    "C. -Y. Dai",
+    "J. Quirola-V\u00e1squez",
+    "Y. -X. Wang",
+    "H. -L. Li",
+    "J. Yang",
+    "X. -L. Chen",
+    "A. -L. Wang",
+    "H. Sun",
+    "X. -F. Wang",
+    "B. -B. Zhang",
+    "P. G. Jonker",
+    "Y. Liu",
+    "W. Yuan",
+    "D. Xu",
+    "Z. -G. Dai",
+    "M. E. Ravasio",
+    "L. Piro",
+    "P. O'Brien",
+    "D. Stern",
+    "H. -M. Zhang",
+    "Y. -P. Yang",
+    "T. An",
+    "Y. -L. Qiu",
+    "L. -P. Xin",
+    "W. -X. Li",
+    "R. -Y. Liu",
+    "X. -F. Wu",
+    "C. -Y. Wang",
+    "D. -M. Wei",
+    "Y. -F. Huang",
+    "F. E. Bauer",
+    "W. -H. Lei",
+    "B. -B. Zhang",
+    "N. -C. Sun",
+    "H. Gao",
+    "V. S. Dhillon",
+    "J. An",
+    "C. -H. Bai",
+    "A. Martin-Carrillo",
+    "H. -Q. Cheng",
+    "J. A. Chacon Chavez",
+    "Y. Chen",
+    "G. -W. Du",
+    "J. N. D. van Dalen",
+    "A. Esamdin",
+    "Y. -Z. Fan",
+    "X. Gao",
+    "F. Harrison",
+    "J. -W. Hu",
+    "M. -Q. Huang",
+    "S. -M. Jia",
+    "A. J. Levan",
+    "C. -K. Li",
+    "D. -Y. Li",
+    "E. -W. Liang",
+    "S. Littlefair",
+    "X. -W. Liu",
+    "Z. -Y. Liu",
+    "Z. -X. Ling",
+    "D. B. Malesani",
+    "H. -W. Pan",
+    "A. Y. Rodriguez",
+    "A. M. Rossi",
+    "D. Jimeno Sanchez",
+    "J. S\u00e1nchez-Sierras",
+    "X. -J. Sun",
+    "M. A. P. Torres",
+    "A. P. C. van Hoof",
+    "X. -F. Wang",
+    "Q. -Y. Wu",
+    "X. -P. Xu",
+    "Y. -F. Xu",
+    "Y. -W. Yu",
+    "C. C. Zhang",
+    "M. -H. Zhang",
+    "S. -N. Zhang",
+    "Y. -H. Zhang",
+    "Y. -H. Zhang",
+    "Z. -P. Zhu"
+   ],
+   "journal": "arXiv (Cornell University)",
+   "doi": "",
+   "arxiv": "2603.26213",
+   "abstract": "The collapse of massive stars drives explosions that power relativistic fireballs. If only a small amount of matter is entrained, such clean fireballs can expand with Lorentz factors $\u0393> 100$, accounting for gamma-ray bursts (GRBs). It has been hypothesized that energetic explosions with more baryon contamination, dubbed ``dirty fireballs'', may exist in nature, but they have not been observed. Here we report the observation of an extragalactic fast X-ray transient, EP241113a, detected by Einstein Probe. Compared to GRBs, it has a similar isotropic energy of $1.4\\times 10^{51}$ erg, but significantly lower spectral peak energy. Theoretical modeling of its early X-ray afterglow suggests a relativistic jet with a low Lorentz factor of $\u0393\\sim 20$ aligned close to the line-of-sight, signifying the prototype of a dirty fireball.",
+   "institutes": [
+    {
+     "id": "01rxvg760",
+     "name": "Nanjing University",
+     "ror": "https://ror.org/01rxvg760",
+     "country": "China",
+     "city": "Nanjing",
+     "lat": 32.06167,
+     "lng": 118.77778,
+     "homepage": "http://www.nju.edu.cn/english/",
+     "logo": "https://www.google.com/s2/favicons?domain=nju.edu.cn&sz=64"
+    }
+   ],
+   "co_institutes": [],
+   "sources": [
+    "openalex:fulltext"
+   ],
+   "figures": [
+    {
+     "file": "figures/W7144391256_0.png",
+     "caption": "Characteristics of the prompt X-ray emission of EP241113a observed by EP-WXT. (a) Upper panel: The light curve of the net count rate of EP241113a in the $0.5$--$4\\, keV$ band, with a time bin size of $3\\, s$. Middle panel: Cumulative X-ray photon count distribution as a function of time. Lower panel: The photon index in the absorbed power-law model for three time bins. The two vertical dashed lines mark the epochs \u2026",
+     "matched": false
+    }
+   ],
+   "usage": "used"
+  },
+  {
+   "key": "W7134828934",
+   "title": "Short-duration GRB 250221A Afterglow Driven by Two-component Jets from the Merger of a Compact Star",
+   "year": 2026,
+   "date": "2026-03-10",
+   "type": "article",
+   "authors": [
+    "Xiao Tian",
+    "Hou-Jun L\u00fc",
+    "Xiao-Xuan Liu",
+    "Xiao-Fei Dong",
+    "Jia Ren",
+    "Wen-Long Zhang",
+    "E. P. T. Liang"
+   ],
+   "journal": "The Astrophysical Journal",
+   "doi": "10.3847/1538-4357/ae469e",
+   "arxiv": "2602.21516",
+   "abstract": "Abstract GRB 250221A is a short gamma-ray burst (GRB) at redshift z = 0.768, with a duration of 1.8 s and no extended emission in either Swift/Burst Alert Telescope or Konus-Wind bands. A remarkable rebrightening feature in both optical and X-ray bands was observed at \u223c0.6 days after the burst trigger, but no supernova or kilonova signature was detected. The burst properties and empirical correlations or distributions (e.g., duration, spectral hardness, location in the Amati correlation, \u03b5 value, f eff parameter, and physical offset) favor a compact binary merger origin. However, a dense circumburst medium with n \u223c 80 cm \u22123 , obtained by adopting the energy injection into a jet to interpret the late-time rebrightening, is inconsistent with the compact binary merger origin. In this paper, we propose a two-component jet model to explain the multiwavelength afterglow observations of GRB 250221A, in which the relativistic narrow jet ( <mml:math xmlns:mml=\"http://www.w3.org/1998/Math/MathML\" overflow=\"scroll\"> <mml:msub> <mml:mrow> <mml:mi>\u03b8</mml:mi> </mml:mrow> <mml:mrow> <mml:mi mathvariant=\"normal\">c</mml:mi> </mml:mrow> </mml:msub> <mml:mo>\u223c</mml:mo> <mml:mn>3</mml:mn> <mml:mover accent=\"true\"> <mml:mrow> <mml:mi>.</mml:mi> </mml:mrow> <mml:mrow> <mml:mi>\u00b0</mml:mi> </mml:mrow> </mml:mover> <mml:mn>8</mml:mn> </mml:math> ) produces the prompt and the early decay afterglow emission, while the mildly relativistic wide jet ( <mml:math xmlns:mml=\"http://www.w3.org/1998/Math/MathML\" overflow=\"scroll\"> <mml:msub> <mml:mrow> <mml:mi>\u03b8</mml:mi> </mml:mrow> <mml:mrow> <mml:mi mathvariant=\"normal\">w</mml:mi> </mml:mrow> </mml:msub> <mml:mo>\u223c</mml:mo> <mml:mn>4</mml:mn> <mml:mover accent=\"true\"> <mml:mrow> <mml:mi>.</mml:mi> </mml:mrow> <mml:mrow> <mml:mi>\u00b0</mml:mi> </mml:mrow> </mml:mover> <mml:mn>4</mml:mn> </mml:math> ) dominates at later times, resulting in the observed rebrightening feature. If this is the case, one can obtain a lower medium density with n \u223c 0.72 cm \u22123 , which is a little bit higher than that of short GRBs in merger environments, but falls into the reasonable and acceptable range. Finally, a possible kilonova emission is also discussed within the scenario of compact star merger origin of GRB 250221A.",
+   "institutes": [
+    {
+     "id": "02c9qn167",
+     "name": "Guangxi University",
+     "ror": "https://ror.org/02c9qn167",
+     "country": "China",
+     "city": "Nanning",
+     "lat": 22.81667,
+     "lng": 108.31667,
+     "homepage": "https://www.gxu.edu.cn",
+     "logo": "https://www.google.com/s2/favicons?domain=gxu.edu.cn&sz=64"
+    }
+   ],
+   "co_institutes": [
+    {
+     "id": "I881766915",
+     "name": "Nanjing University",
+     "ror": "https://ror.org/01rxvg760",
+     "country": "China",
+     "city": "Nanjing",
+     "lat": 32.061668395996094,
+     "lng": 118.77777862548828,
+     "homepage": "http://www.nju.edu.cn/english/",
+     "logo": "https://www.google.com/s2/favicons?domain=nju.edu.cn&sz=64"
+    },
+    {
+     "id": "I2802340896",
+     "name": "Purple Mountain Observatory",
+     "ror": "https://ror.org/02eb4t121",
+     "country": "China",
+     "city": "Nanjing",
+     "lat": 32.06598663330078,
+     "lng": 118.82951354980469,
+     "homepage": "http://english.pmo.cas.cn/",
+     "logo": "https://www.google.com/s2/favicons?domain=english.pmo.cas.cn&sz=64"
+    },
+    {
+     "id": "I126520041",
+     "name": "University of Science and Technology of China",
+     "ror": "https://ror.org/04c4dkn09",
+     "country": "China",
+     "city": "Hefei",
+     "lat": 31.86389,
+     "lng": 117.28083,
+     "homepage": "https://ustc.edu.cn",
+     "logo": "https://www.google.com/s2/favicons?domain=ustc.edu.cn&sz=64"
+    }
+   ],
+   "sources": [
+    "openalex:cites",
+    "openalex:fulltext"
+   ],
+   "figures": [
+    {
+     "file": "figures/W7134828934_0.png",
+     "caption": "(a) $E_ p-E_ ,iso$ correlation plane. Gray diamonds and black-filled circles represent Type II and Type I GRBs, respectively. (b) 1D and 2D distributions in the $T_90- $ plane. The dashed line marks the empirical boundary $ = 0.03$. (c) The $f_ eff-T_ 90$ distribution. The vertical solid line denotes the traditional classification boundary at $T_90$ = 2 s. The data adopted above are taken from .",
+     "matched": false
+    }
+   ],
+   "usage": "used"
+  },
+  {
+   "key": "W7128439219",
+   "title": "EP241217a: A Likely Type II GRB with an Achromatic Bump at z = 4.59",
+   "year": 2026,
+   "date": "2026-02-09",
+   "type": "article",
+   "authors": [
+    "Hao Zhou",
+    "Jia Ren",
+    "Chen-Wei Wang",
+    "Xing Liu",
+    "Bin-Yang Liu",
+    "Andrew J. Levan",
+    "Jillian C. Rastinejad",
+    "Jin-Jun Geng",
+    "Hao Wang",
+    "Peter K. Blanchard",
+    "W. Fong",
+    "Benjamin P. Gompertz",
+    "Daniele B. Malesani",
+    "Charles D. Kilpatrick",
+    "Gavin P. Lamb",
+    "Brian D. Metzger",
+    "Matt Nicholl",
+    "Nial R. Tanvir",
+    "Yun Wang",
+    "Yu Rong",
+    "Runduo Liang",
+    "Zhi-Xing Ling",
+    "Dong Xu",
+    "Zhi-Ping Jin",
+    "Da-Ming Wei"
+   ],
+   "journal": "The Astrophysical Journal",
+   "doi": "10.3847/1538-4357/ae29b5",
+   "arxiv": null,
+   "abstract": "Abstract EP241217a is an X-ray transient detected by the Einstein Probe lasting for about 100 s and without accompanying \u03b3 -ray detection. The optical spectroscopy reveals the redshift of EP241217a is 4.59. By combining the \u03b3 -ray upper limit provided by GECAM-C, there is a considerable possibility that EP241217a is a typical type II gamma-ray burst, but it is fainter than the detection threshold of any available \u03b3 -ray monitors (i.e., E \u03b3 ,iso \u2272 10 53 erg). The X-ray light curve exhibits a plateau lasting for \u223c5 \u00d7 10 4 s. However, the joint analysis with optical data suggests the presence of an achromatic bump peaking at \u223c3 \u00d7 10 4 s after the trigger, indicating the actual duration of the X-ray plateau may be significantly shorter than it appears. To interpret the achromatic bump, we adopt the scenario of a mildly relativistic jet coasting in a wind-like medium and encountering a rapid density enhancement of the circumburst medium, which is likely induced by the interaction of the progenitor\u2019s stellar wind and the interstellar medium. However, this model cannot fully explain observed data, and some issues do exist, e.g., the observed spectrum is harder than the model prediction. Consequently, we conclude that the scenario of a mildly relativistic jet coasting in the wind-like medium cannot explain all observed features of EP241217a. In addition, some alternative models commonly invoked to explain X-ray plateaus are discussed, but there are more or less issues when they were applied to EP241217a. Therefore, further theoretical modeling is encouraged to explore the origin of EP241217a.",
+   "institutes": [],
+   "co_institutes": [],
+   "sources": [
+    "openalex:cites",
+    "openalex:fulltext"
+   ],
+   "figures": [],
+   "usage": "unverified"
+  },
+  {
+   "key": "W7125804839",
+   "title": "Extremely Luminous Optical Afterglow of an Energetic Gamma-Ray Burst GRB 230204B",
+   "year": 2026,
+   "date": "2026-01-27",
+   "type": "article",
+   "authors": [
+    "Rahul Gupta",
+    "Judith Racusin",
+    "Vladimir Lipunov",
+    "Y.-D. Hu",
+    "Ashna Gulati",
+    "Alberto J. Castro-Tirado",
+    "Tara Murphy",
+    "Motoko Serino",
+    "Kirill Zhirkov",
+    "S. Shilling",
+    "Samantha R. Oates",
+    "James K. Leung",
+    "T. Parsotan",
+    "Amit K. Ror",
+    "Shashi B. Pandey",
+    "S. Iyyani",
+    "V. Sharma",
+    "A. Aryan",
+    "Jin-Ming Bai",
+    "Pavel Balanutsa",
+    "David Buckley",
+    "Mar\u00eda D. Caballero-Garc\u00eda",
+    "I. M. Carrasco-Garc\u00eda",
+    "A. Castell\u00f3n",
+    "Sebasti\u00e1n Castillo",
+    "Chen-Zhou Cui",
+    "Yu-Feng Fan",
+    "Emilio Fern\u00e1ndez-Garc\u00eda",
+    "Guillermo Garc\u00eda- Segura",
+    "Maria Gritsevich",
+    "Sergiy Guziy",
+    "David Hiriart",
+    "William H. Lee",
+    "Soomin Jeong",
+    "Carlos Jesus P\u00e9rez del Pulgar",
+    "Ignacio Olivares",
+    "Il H. Park",
+    "Ignacio P\u00e9rez-Garc\u00eda",
+    "S. Razzaque",
+    "Rub\u00e9n S\u00e1nchez-Ram\u00edrez",
+    "Nataly Tiurina",
+    "Vladislav Topolev",
+    "Chuan-Jun Wang",
+    "Si-Yu Wu",
+    "Yu-Xin Xin",
+    "Ding-Rong Xiong",
+    "Xiao-Hong Zhao",
+    "Jirong Mao",
+    "Bao-Li Lun",
+    "Ye Kai"
+   ],
+   "journal": "The Astrophysical Journal",
+   "doi": "10.3847/1538-4357/ae2794",
+   "arxiv": "2412.18152",
+   "abstract": "Abstract Robotic telescope networks play an important role in capturing early and bright optical afterglows, providing critical insights into the energetics and emission mechanisms of GRBs. In this study, we analyze GRB 230204B, an exceptionally energetic and multipulsed long GRB, detected by the Fermi Gamma-ray Burst Monitor and MAXI detectors, with an isotropic equivalent gamma-ray energy exceeding 10 54 erg. Time-resolved spectral analysis reveals a transition in the prompt emission from hard (sub-photospheric-dominated) spectra during early pulses to softer (synchrotron-radiation-dominated) spectra in later pulses, indicative of a hybrid jet composition. We report the discovery and characterization of the optical afterglow using the Mobile Astronomical System of Telescope-Robots (MASTER) and Burst Observer and Optical Transient Exploring System (BOOTES) robotic telescope networks, which enabled rapid follow-up observations starting at \u223c1.3 ks post-burst. The optical luminosity at this time was exceptionally high, surpassing that of many other optically bright GRBs, such as GRB 990123 and GRB 080319B. This places the burst among the most luminous optical GRBs observed to date. Long-term radio observations extending to 335 days post-burst were conducted with the Australia Telescope Compact Array. Multiwavelength modeling, incorporating data from MASTER, BOOTES, Devasthal Optical Telescope, Swift/XRT, and radio observations, was conducted using an external interstellar medium (ISM) forward-shock top-hat jet model with afterglowpy . The results reveal a narrow and highly collimated jet with a circumburst density of n 0 \u223c 28.12 cm \u22123 , kinetic energy E K \u223c 4.18 \u00d7 10 55 erg, and a relatively low value of \u03f5 B = 2.14 \u00d7 10 \u22126 , indicating shock-compression of the magnetic field in the surrounding ISM. We constrained a low radiative efficiency of \u223c4.3%. This study highlights the indispensable contribution of robotic networks to early afterglow observations and advances our understanding of GRB 230204B unique characteristics and underlying jet physics.",
+   "institutes": [
+    {
+     "id": "0171mag52",
+     "name": "Goddard Space Flight Center",
+     "ror": "https://ror.org/0171mag52",
+     "country": "United States",
+     "city": "Greenbelt",
+     "lat": 39.00455,
+     "lng": -76.87553,
+     "homepage": "https://www.nasa.gov/centers/goddard/home/index.html",
+     "logo": "https://www.google.com/s2/favicons?domain=nasa.gov&sz=64"
+    }
+   ],
+   "co_institutes": [],
+   "sources": [
+    "openalex:cites",
+    "openalex:fulltext"
+   ],
+   "figures": [
+    {
+     "file": "figures/W7125804839_0.png",
+     "caption": "Sequence of prompt and afterglow observations for , the dashed vertical line indicating the -GBM trigger time. Vertical green and orange lines with dots correspond to the start times of observations by respective instruments.",
+     "matched": false
+    }
+   ],
+   "usage": "used"
+  },
+  {
+   "key": "W4416895750",
+   "title": "Multiwavelength Observations of the Apparently Nonrepeating FRB 20250316A",
+   "year": 2025,
+   "date": "2025-12-02",
+   "type": "article",
+   "authors": [
+    "Ye Li",
+    "Hui Sun",
+    "Lei Qian",
+    "Dongyue Li",
+    "Yan-Long Hua",
+    "Li-Ping Xin",
+    "Cheng-Kui Li",
+    "Yihan Wang",
+    "Jiarui Niu",
+    "Tianrui Sun",
+    "Zhu-Heng Yao",
+    "Jin-Jun Geng",
+    "Chichuan Jin",
+    "N. Rea",
+    "Yuan Liu",
+    "Zhichen Pan",
+    "Tao An",
+    "V. Burwitz",
+    "Zhiming Cai",
+    "Jin-Huang Cao",
+    "Yong Chen",
+    "Huaqing Cheng",
+    "Wei Cui",
+    "Hua Feng",
+    "P\u00e9ter Friedrich",
+    "Dawei Han",
+    "J. Y. Hu",
+    "Lei Hu",
+    "Yuxiang Huang",
+    "S. M. Jia",
+    "Ji-an Jiang",
+    "Bin Li",
+    "Feng Li",
+    "Ming Liang",
+    "Y. F. Liang",
+    "Hao Liu",
+    "He\u2010Yang Liu",
+    "H.M Liu",
+    "Norbert Meidinger",
+    "Haiwu Pan",
+    "A. Rau",
+    "Xinwen Shu",
+    "Chun Sun",
+    "Lian Tao",
+    "Jinlong Tang",
+    "Zhen Wan",
+    "Hairen Wang",
+    "Jian Wang",
+    "Jing Wang",
+    "Yunfei Xu",
+    "Yongquan Xue",
+    "Xuan Yang",
+    "Dazhi Yao",
+    "Yuhan Yao",
+    "Wen Zhao",
+    "Xiaofan Zhao",
+    "Hongfei Zhang",
+    "J. L. Zhang",
+    "Juan Zhang",
+    "Mo Zhang",
+    "Songbo Zhang",
+    "Wenda Zhang",
+    "Xiaoling Zhang",
+    "Yong-He Zhang",
+    "Yongkun Zhang",
+    "Xianzhong Zheng",
+    "Yu\u2010Hao Zhu",
+    "Yingxi Zuo",
+    "Shengli Sun",
+    "Jian\u2010Yan Wei",
+    "Weiwei Zhu",
+    "Peng Jiang",
+    "Weimin Yuan",
+    "Xue-Feng Wu",
+    "Bing Zhang"
+   ],
+   "journal": "The Astrophysical Journal",
+   "doi": "10.3847/1538-4357/ae1463",
+   "arxiv": null,
+   "abstract": "Abstract The physical origin of fast radio bursts (FRBs) remains uncertain. Although multiwavelength observations have been widely conducted, only Galactic FRB 20200428D is associated with an X-ray burst from the magnetar SGR J1935+2154. Here we present multiwavelength follow-up observations of the nearby bright FRB 20250316A, including the Five-hundred-meter Aperture Spherical radio Telescope (FAST), Einstein Probe (EP) X-ray mission, Chandra X-ray Observatory, Wide Field Survey Telescope (WFST), and Space Variable Objects Monitor/Visible Telescope (SVOM/VT). The 13.08 hr FAST follow-up campaign without pulse detection requires an energy distribution flatter than those of well-known repeating FRBs, suggesting that this burst is likely a one-off event. A prompt EP follow-up and multiepoch observational campaign totaling &gt;100 ks led to the detection of an X-ray source within the angular resolution of its Follow-up X-ray Telescope (FXT; 10\u2033). A subsequent Chandra observation revealed this source to be offset by 7\u2033 from the FRB position and established a 0.5\u201310 keV flux upper limit of 7.6 \u00d7 10 \u221215 erg cm \u22122 s \u22121 at the FRB position, corresponding to \u223c10 39 erg s \u22121 at the 40 Mpc distance of the host galaxy NGC 4141. These results set one of the most stringent limits on X-ray emission from a nonrepeating FRB, disfavoring ultraluminous X-ray sources as counterparts of apparently one-off FRBs and offering critical insights into afterglow models. Our study suggests that an arcsecond localization of both the FRB and its potential X-ray counterpart is essential for exploring the X-ray counterpart of an FRB.",
+   "institutes": [
+    {
+     "id": "I2802340896",
+     "name": "Purple Mountain Observatory",
+     "ror": "https://ror.org/02eb4t121",
+     "country": "China",
+     "city": "Nanjing",
+     "lat": 32.06598663330078,
+     "lng": 118.82951354980469,
+     "homepage": "http://english.pmo.cas.cn/",
+     "logo": "https://www.google.com/s2/favicons?domain=english.pmo.cas.cn&sz=64"
+    }
+   ],
+   "co_institutes": [
+    {
+     "id": "I19820366",
+     "name": "Chinese Academy of Sciences",
+     "ror": "https://ror.org/034t30j35",
+     "country": "China",
+     "city": "Beijing",
+     "lat": 39.9075,
+     "lng": 116.39723,
+     "homepage": "https://www.cas.cn",
+     "logo": "https://www.google.com/s2/favicons?domain=cas.cn&sz=64"
+    },
+    {
+     "id": "I4210164580",
+     "name": "National Astronomical Observatories",
+     "ror": "https://ror.org/058pyyv44",
+     "country": "China",
+     "city": "Beijing",
+     "lat": 40.00466537475586,
+     "lng": 116.38436889648438,
+     "homepage": "http://english.nao.cas.cn/",
+     "logo": "https://www.google.com/s2/favicons?domain=english.nao.cas.cn&sz=64"
+    },
+    {
+     "id": "I4210137180",
+     "name": "Institute of High Energy Physics",
+     "ror": "https://ror.org/03v8tnc06",
+     "country": "China",
+     "city": "Beijing",
+     "lat": 39.907501220703125,
+     "lng": 116.39723205566406,
+     "homepage": "http://english.ihep.cas.cn/",
+     "logo": "https://www.google.com/s2/favicons?domain=english.ihep.cas.cn&sz=64"
+    },
+    {
+     "id": "I133999245",
+     "name": "University of Nevada, Las Vegas",
+     "ror": "https://ror.org/0406gha72",
+     "country": "United States",
+     "city": "Las Vegas",
+     "lat": 36.17497,
+     "lng": -115.13722,
+     "homepage": "https://www.unlv.edu",
+     "logo": "https://www.google.com/s2/favicons?domain=unlv.edu&sz=64"
+    },
+    {
+     "id": "I135310074",
+     "name": "University of Wisconsin\u2013Madison",
+     "ror": "https://ror.org/01y2jtd41",
+     "country": "United States",
+     "city": "Madison",
+     "lat": 43.07305,
+     "lng": -89.40123,
+     "homepage": "http://www.wisc.edu/",
+     "logo": "https://www.google.com/s2/favicons?domain=wisc.edu&sz=64"
+    },
+    {
+     "id": "I25254941",
+     "name": "Beijing Normal University",
+     "ror": "https://ror.org/022k4wk35",
+     "country": "China",
+     "city": "Beijing",
+     "lat": 39.9075,
+     "lng": 116.39723,
+     "homepage": "https://www.bnu.edu.cn",
+     "logo": "https://www.google.com/s2/favicons?domain=bnu.edu.cn&sz=64"
+    },
+    {
+     "id": "I4210165038",
+     "name": "University of Chinese Academy of Sciences",
+     "ror": "https://ror.org/05qbk4x57",
+     "country": "China",
+     "city": "Beijing",
+     "lat": 39.9075,
+     "lng": 116.39723,
+     "homepage": "https://www.ucas.ac.cn",
+     "logo": "https://www.google.com/s2/favicons?domain=ucas.ac.cn&sz=64"
+    },
+    {
+     "id": "I132487946",
+     "name": "Institute of Space Sciences",
+     "ror": "https://ror.org/01vbgty78",
+     "country": "Spain",
+     "city": "Cerdanyola del Vall\u00e8s",
+     "lat": 41.4910888671875,
+     "lng": 2.1407899856567383,
+     "homepage": "https://www.ice.csic.es",
+     "logo": "https://www.google.com/s2/favicons?domain=ice.csic.es&sz=64"
+    },
+    {
+     "id": "I4210092024",
+     "name": "Institut d'Estudis Espacials de Catalunya",
+     "ror": "https://ror.org/00k6njn28",
+     "country": "Spain",
+     "city": "Castelldefels",
+     "lat": 41.27794,
+     "lng": 1.97033,
+     "homepage": "https://www.ieec.cat",
+     "logo": "https://www.google.com/s2/favicons?domain=ieec.cat&sz=64"
+    },
+    {
+     "id": "I178232147",
+     "name": "Guizhou University",
+     "ror": "https://ror.org/02wmsc916",
+     "country": "China",
+     "city": "Guiyang",
+     "lat": 26.420438766479492,
+     "lng": 106.67110443115234,
+     "homepage": "http://www.gzu.edu.cn/en/",
+     "logo": "https://www.google.com/s2/favicons?domain=gzu.edu.cn&sz=64"
+    },
+    {
+     "id": "I2799714274",
+     "name": "Shanghai Astronomical Observatory",
+     "ror": "https://ror.org/003n8re58",
+     "country": "China",
+     "city": "Shanghai",
+     "lat": 31.190277099609375,
+     "lng": 121.429443359375,
+     "homepage": "http://english.shao.cas.cn/",
+     "logo": "https://www.google.com/s2/favicons?domain=english.shao.cas.cn&sz=64"
+    },
+    {
+     "id": "I4210091772",
+     "name": "Max Planck Institute for Extraterrestrial Physics",
+     "ror": "https://ror.org/00e4bwe12",
+     "country": "Germany",
+     "city": "Garching bei M\u00fcnchen",
+     "lat": 48.26166534423828,
+     "lng": 11.671667098999023,
+     "homepage": "http://www.mpe.mpg.de/2169/en",
+     "logo": "https://www.google.com/s2/favicons?domain=mpe.mpg.de&sz=64"
+    },
+    {
+     "id": "I4210088244",
+     "name": "Shanghai Micro Satellite Engineering Center",
+     "ror": "https://ror.org/003cp7918",
+     "country": "China",
+     "city": "Shanghai",
+     "lat": 31.194944381713867,
+     "lng": 121.2815933227539,
+     "homepage": "http://www.microsate.com/",
+     "logo": "https://www.google.com/s2/favicons?domain=microsate.com&sz=64"
+    },
+    {
+     "id": "I4387154354",
+     "name": "Innovation Academy for Microsatellites of Chinese Academy of Sciences",
+     "ror": "https://ror.org/05f6mer85",
+     "country": "China",
+     "city": "Shanghai",
+     "lat": 31.222219467163086,
+     "lng": 121.45806121826172,
+     "homepage": "http://www.microsate.com",
+     "logo": "https://www.google.com/s2/favicons?domain=microsate.com&sz=64"
+    },
+    {
+     "id": "I74973139",
+     "name": "Carnegie Mellon University",
+     "ror": "https://ror.org/05x2bcf33",
+     "country": "United States",
+     "city": "Pittsburgh",
+     "lat": 40.44062,
+     "lng": -79.99589,
+     "homepage": "https://www.cmu.edu",
+     "logo": "https://www.google.com/s2/favicons?domain=cmu.edu&sz=64"
+    },
+    {
+     "id": "I2801168720",
+     "name": "Yunnan Observatories",
+     "ror": "https://ror.org/02f42pw58",
+     "country": "China",
+     "city": "Kunming",
+     "lat": 24.88498306274414,
+     "lng": 102.83253479003906,
+     "homepage": "http://english.ynao.cas.cn/",
+     "logo": "https://www.google.com/s2/favicons?domain=english.ynao.cas.cn&sz=64"
+    },
+    {
+     "id": "I126520041",
+     "name": "University of Science and Technology of China",
+     "ror": "https://ror.org/04c4dkn09",
+     "country": "China",
+     "city": "Hefei",
+     "lat": 31.86389,
+     "lng": 117.28083,
+     "homepage": "https://ustc.edu.cn",
+     "logo": "https://www.google.com/s2/favicons?domain=ustc.edu.cn&sz=64"
+    },
+    {
+     "id": "I199525922",
+     "name": "National Institutes of Natural Sciences",
+     "ror": "https://ror.org/055n47h92",
+     "country": "Japan",
+     "city": "Tokyo",
+     "lat": 35.68949890136719,
+     "lng": 139.69171142578125,
+     "homepage": "https://www.nins.jp",
+     "logo": "https://www.google.com/s2/favicons?domain=nins.jp&sz=64"
+    },
+    {
+     "id": "I4210159940",
+     "name": "National Astronomical Observatory of Japan",
+     "ror": "https://ror.org/052rrw050",
+     "country": "Japan",
+     "city": "Mitaka-shi",
+     "lat": 35.68351,
+     "lng": 139.55963,
+     "homepage": "https://www.nao.ac.jp",
+     "logo": "https://www.google.com/s2/favicons?domain=nao.ac.jp&sz=64"
+    },
+    {
+     "id": "I4210141577",
+     "name": "NSF NOIRLab",
+     "ror": "https://ror.org/03zmsge54",
+     "country": "United States",
+     "city": "Tucson",
+     "lat": 32.22174,
+     "lng": -110.92648,
+     "homepage": "https://noirlab.edu/",
+     "logo": "https://www.google.com/s2/favicons?domain=noirlab.edu&sz=64"
+    },
+    {
+     "id": "I4472751",
+     "name": "Anhui Normal University",
+     "ror": "https://ror.org/05fsfvw79",
+     "country": "China",
+     "city": "Wuhu",
+     "lat": 31.352590560913086,
+     "lng": 118.4294662475586,
+     "homepage": "https://ahnu.edu.cn",
+     "logo": "https://www.google.com/s2/favicons?domain=ahnu.edu.cn&sz=64"
+    },
+    {
+     "id": "I4210128284",
+     "name": "Institute of Optics and Electronics, Chinese Academy of Sciences",
+     "ror": "https://ror.org/02bn68w95",
+     "country": "China",
+     "city": "Chengdu",
+     "lat": 30.666669845581055,
+     "lng": 104.0666732788086,
+     "homepage": "https://ioe.cas.cn",
+     "logo": "https://www.google.com/s2/favicons?domain=ioe.cas.cn&sz=64"
+    },
+    {
+     "id": "I4210148107",
+     "name": "Space Engineering University",
+     "ror": "https://ror.org/04rj1td02",
+     "country": "China",
+     "city": "Beijing",
+     "lat": 40.35554885864258,
+     "lng": 116.65843963623047,
+     "homepage": "http://www.mod.gov.cn/services/2017-06/15/content_4783023.htm",
+     "logo": "https://www.google.com/s2/favicons?domain=mod.gov.cn&sz=64"
+    },
+    {
+     "id": "I2801317473",
+     "name": "Miller College",
+     "ror": "https://ror.org/00pctvz49",
+     "country": "United States",
+     "city": "Battle Creek",
+     "lat": 42.33300018310547,
+     "lng": -85.17900085449219,
+     "homepage": "https://www.millercollege.edu/",
+     "logo": "https://www.google.com/s2/favicons?domain=millercollege.edu&sz=64"
+    },
+    {
+     "id": "I95457486",
+     "name": "University of California, Berkeley",
+     "ror": "https://ror.org/01an7q238",
+     "country": "United States",
+     "city": "Berkeley",
+     "lat": 37.87159,
+     "lng": -122.27275,
+     "homepage": "https://www.berkeley.edu",
+     "logo": "https://www.google.com/s2/favicons?domain=berkeley.edu&sz=64"
+    },
+    {
+     "id": "I1292875679",
+     "name": "Commonwealth Scientific and Industrial Research Organisation",
+     "ror": "https://ror.org/03qn8fb07",
+     "country": "Australia",
+     "city": "Canberra",
+     "lat": -35.28346,
+     "lng": 149.12807,
+     "homepage": "https://www.csiro.au",
+     "logo": "https://www.google.com/s2/favicons?domain=csiro.au&sz=64"
+    },
+    {
+     "id": "I1299164729",
+     "name": "Australia Telescope National Facility",
+     "ror": "https://ror.org/05qajvd42",
+     "country": "Australia",
+     "city": "Sydney",
+     "lat": -33.86785125732422,
+     "lng": 151.2073211669922,
+     "homepage": "http://www.atnf.csiro.au",
+     "logo": "https://www.google.com/s2/favicons?domain=atnf.csiro.au&sz=64"
+    },
+    {
+     "id": "I4210135469",
+     "name": "Astronomy Australia",
+     "ror": "https://ror.org/03xh6aq63",
+     "country": "Australia",
+     "city": "Hawthorn South",
+     "lat": -37.83290100097656,
+     "lng": 145.0366973876953,
+     "homepage": "http://astronomyaustralia.org.au/",
+     "logo": "https://www.google.com/s2/favicons?domain=astronomyaustralia.org.au&sz=64"
+    },
+    {
+     "id": "I4210141165",
+     "name": "Ministry of Education",
+     "ror": "https://ror.org/03m01yf64",
+     "country": "Taiwan",
+     "city": "Taipei",
+     "lat": 25.05306,
+     "lng": 121.52639,
+     "homepage": "http://english.moe.gov.tw/",
+     "logo": "https://www.google.com/s2/favicons?domain=english.moe.gov.tw&sz=64"
+    },
+    {
+     "id": "I4210135723",
+     "name": "Shanghai Institute of Technical Physics",
+     "ror": "https://ror.org/02txedb84",
+     "country": "China",
+     "city": "Shanghai",
+     "lat": 31.222219467163086,
+     "lng": 121.45806121826172,
+     "homepage": "http://english.sitp.cas.cn/",
+     "logo": "https://www.google.com/s2/favicons?domain=english.sitp.cas.cn&sz=64"
+    },
+    {
+     "id": "I889458895",
+     "name": "University of Hong Kong",
+     "ror": "https://ror.org/02zhqgq86",
+     "country": "Hong Kong",
+     "city": "Pok Fu Lam",
+     "lat": 22.26861,
+     "lng": 114.12924,
+     "homepage": "https://www.hku.hk",
+     "logo": "https://www.google.com/s2/favicons?domain=hku.hk&sz=64"
+    }
+   ],
+   "sources": [
+    "openalex:cites"
+   ],
+   "figures": [],
+   "usage": "unverified"
+  },
+  {
+   "key": "W4416715526",
+   "title": "Optical/Infrared Observations of the Extraordinary GRB 250702B: A Highly Obscured Afterglow in a Massive Galaxy Consistent with Multiple Possible Progenitors",
+   "year": 2025,
+   "date": "2025-11-26",
+   "type": "article",
+   "authors": [
+    "Jonathan Carney",
+    "Igor Andreoni",
+    "Brendan O\u2019Connor",
+    "James Freeburn",
+    "Hannah Skobe",
+    "Lewi Westcott",
+    "Malte Busmann",
+    "A. Palmese",
+    "Xander J. Hall",
+    "Ramandeep Gill",
+    "Paz Beniamini",
+    "Eric R. Coughlin",
+    "C. D. Kilpatrick",
+    "Akash Anumarlapudi",
+    "Nicholas M. Law",
+    "Hank Corbett",
+    "Tom\u00e1s Ahumada",
+    "Ping Chen",
+    "Christopher J. Conselice",
+    "G. Damke",
+    "Kaustav K. Das",
+    "A. Gal\u2010Yam",
+    "D. Gruen",
+    "Steve Heathcote",
+    "Lei Hu",
+    "Viraj Karambelkar",
+    "M. M. Kasliwal",
+    "Kathleen Labrie",
+    "Dheeraj R. Pasham",
+    "A. Riffeser",
+    "M. J. Schmidt",
+    "Kritti Sharma",
+    "Silona Wilke",
+    "Weicheng Zang"
+   ],
+   "journal": "The Astrophysical Journal Letters",
+   "doi": "10.3847/2041-8213/ae1d67",
+   "arxiv": "2509.22784",
+   "abstract": "Abstract GRB 250702B was the longest gamma-ray burst ever detected, with a duration that challenges standard collapsar models and suggests an exotic progenitor. We collected a rich set of optical and infrared follow-up observations of its rapidly fading afterglow using a suite of telescopes including the W. M. Keck Observatory, the Gemini telescopes, the Magellan Baade Telescope, the Victor M. Blanco 4 m telescope, and the Fraunhofer Telescope at Wendelstein Observatory. Our analysis reveals that the afterglow emission is well described by forward shock emission from a highly obscured relativistic jet. Deep photometric observations of the host galaxy reveal a massive (10 10.66 M \u2299 ), dusty, and extremely asymmetric system that is consistent with two galaxies undergoing a major merger. The galactocentric offset, host galaxy properties, and jet characteristics disfavor a jetted tidal disruption event (TDE) around a supermassive black hole but do not definitively distinguish between competing progenitor scenarios. We find that the afterglow and host are consistent with a range of progenitors, including an atypical collapsar, a merger between a helium star and a stellar-mass black hole, the disruption of a star by a stellar-mass compact object (micro-TDE), and the tidal disruption of a star by an off-nuclear intermediate-mass black hole.",
+   "institutes": [
+    {
+     "id": "0130frc33",
+     "name": "University of North Carolina at Chapel Hill",
+     "ror": "https://ror.org/0130frc33",
+     "country": "United States",
+     "city": "Chapel Hill",
+     "lat": 35.9132,
+     "lng": -79.05584,
+     "homepage": "https://www.unc.edu",
+     "logo": "https://www.google.com/s2/favicons?domain=unc.edu&sz=64"
+    }
+   ],
+   "co_institutes": [
+    {
+     "id": "I74973139",
+     "name": "Carnegie Mellon University",
+     "ror": "https://ror.org/05x2bcf33",
+     "country": "United States",
+     "city": "Pittsburgh",
+     "lat": 40.44062,
+     "lng": -79.99589,
+     "homepage": "https://www.cmu.edu",
+     "logo": "https://www.google.com/s2/favicons?domain=cmu.edu&sz=64"
+    },
+    {
+     "id": "I28407311",
+     "name": "University of Manchester",
+     "ror": "https://ror.org/027m9bs27",
+     "country": "United Kingdom",
+     "city": "Manchester",
+     "lat": 53.48095,
+     "lng": -2.23743,
+     "homepage": "http://www.manchester.ac.uk/",
+     "logo": "https://www.google.com/s2/favicons?domain=manchester.ac.uk&sz=64"
+    },
+    {
+     "id": "I8204097",
+     "name": "Ludwig-Maximilians-Universit\u00e4t M\u00fcnchen",
+     "ror": "https://ror.org/05591te55",
+     "country": "Germany",
+     "city": "Munich",
+     "lat": 48.13743,
+     "lng": 11.57549,
+     "homepage": "https://www.lmu.de",
+     "logo": "https://www.google.com/s2/favicons?domain=lmu.de&sz=64"
+    },
+    {
+     "id": "I164950643",
+     "name": "Open University of Israel",
+     "ror": "https://ror.org/027z64205",
+     "country": "Israel",
+     "city": "Raanana",
+     "lat": 32.18360137939453,
+     "lng": 34.87385940551758,
+     "homepage": "http://www-e.openu.ac.il/",
+     "logo": "https://www.google.com/s2/favicons?domain=www-e.openu.ac.il&sz=64"
+    },
+    {
+     "id": "I8961855",
+     "name": "Universidad Nacional Aut\u00f3noma de M\u00e9xico",
+     "ror": "https://ror.org/01tmp8f25",
+     "country": "Mexico",
+     "city": "Mexico City",
+     "lat": 19.42847,
+     "lng": -99.12766,
+     "homepage": "http://www.unam.mx",
+     "logo": "https://www.google.com/s2/favicons?domain=unam.mx&sz=64"
+    },
+    {
+     "id": "I193531525",
+     "name": "George Washington University",
+     "ror": "https://ror.org/00y4zzh67",
+     "country": "United States",
+     "city": "Washington",
+     "lat": 38.89511,
+     "lng": -77.03637,
+     "homepage": "http://www.gwu.edu/",
+     "logo": "https://www.google.com/s2/favicons?domain=gwu.edu&sz=64"
+    },
+    {
+     "id": "I70983195",
+     "name": "Syracuse University",
+     "ror": "https://ror.org/025r5qe02",
+     "country": "United States",
+     "city": "Syracuse",
+     "lat": 43.048118591308594,
+     "lng": -76.14742279052734,
+     "homepage": "https://www.syracuse.edu",
+     "logo": "https://www.google.com/s2/favicons?domain=syracuse.edu&sz=64"
+    },
+    {
+     "id": "I111979921",
+     "name": "Northwestern University",
+     "ror": "https://ror.org/000e0be47",
+     "country": "United States",
+     "city": "Evanston",
+     "lat": 42.04114,
+     "lng": -87.69006,
+     "homepage": "http://www.northwestern.edu/",
+     "logo": "https://www.google.com/s2/favicons?domain=northwestern.edu&sz=64"
+    },
+    {
+     "id": "I122411786",
+     "name": "California Institute of Technology",
+     "ror": "https://ror.org/05dxps055",
+     "country": "United States",
+     "city": "Pasadena",
+     "lat": 34.14778,
+     "lng": -118.14452,
+     "homepage": "https://www.caltech.edu",
+     "logo": "https://www.google.com/s2/favicons?domain=caltech.edu&sz=64"
+    },
+    {
+     "id": "I76130692",
+     "name": "Zhejiang University",
+     "ror": "https://ror.org/00a2xv884",
+     "country": "China",
+     "city": "Hangzhou",
+     "lat": 30.29365,
+     "lng": 120.16142,
+     "homepage": "https://www.zju.edu.cn",
+     "logo": "https://www.google.com/s2/favicons?domain=zju.edu.cn&sz=64"
+    },
+    {
+     "id": "I4210140583",
+     "name": "Cerro Tololo Inter-American Observatory",
+     "ror": "https://ror.org/03w6nzd18",
+     "country": "Chile",
+     "city": "La Serena",
+     "lat": -29.90591,
+     "lng": -71.25014,
+     "homepage": "https://noirlab.edu/public/programs/ctio/",
+     "logo": "https://www.google.com/s2/favicons?domain=noirlab.edu&sz=64"
+    },
+    {
+     "id": "I53964585",
+     "name": "Weizmann Institute of Science",
+     "ror": "https://ror.org/0316ej306",
+     "country": "Israel",
+     "city": "Rehovot",
+     "lat": 31.89421,
+     "lng": 34.81199,
+     "homepage": "https://www.weizmann.ac.il",
+     "logo": "https://www.google.com/s2/favicons?domain=weizmann.ac.il&sz=64"
+    },
+    {
+     "id": "I4210099156",
+     "name": "Excellence Cluster Origins",
+     "ror": "https://ror.org/010wkny21",
+     "country": "Germany",
+     "city": "Garching",
+     "lat": 48.248958587646484,
+     "lng": 11.651009559631348,
+     "homepage": "https://www.origins-cluster.de",
+     "logo": "https://www.google.com/s2/favicons?domain=origins-cluster.de&sz=64"
+    },
+    {
+     "id": "I4210100831",
+     "name": "Gemini North Observatory",
+     "ror": "https://ror.org/0141j1w94",
+     "country": "United States",
+     "city": "Hawaiian Acres",
+     "lat": 19.53805923461914,
+     "lng": -155.05221557617188,
+     "homepage": "https://noirlab.edu/public/programs/gemini-observatory/",
+     "logo": "https://www.google.com/s2/favicons?domain=noirlab.edu&sz=64"
+    },
+    {
+     "id": "I4210148378",
+     "name": "Eureka Scientific",
+     "ror": "https://ror.org/04hx2r306",
+     "country": "United States",
+     "city": "Oakland",
+     "lat": 37.8039436340332,
+     "lng": -122.20848083496094,
+     "homepage": "http://eurekasci.com/",
+     "logo": "https://www.google.com/s2/favicons?domain=eurekasci.com&sz=64"
+    },
+    {
+     "id": "I4210124175",
+     "name": "Center for Astrophysics Harvard & Smithsonian",
+     "ror": "https://ror.org/03c3r2d17",
+     "country": "United States",
+     "city": "Cambridge",
+     "lat": 42.375099182128906,
+     "lng": -71.1056137084961,
+     "homepage": "https://pweb.cfa.harvard.edu/",
+     "logo": "https://www.google.com/s2/favicons?domain=pweb.cfa.harvard.edu&sz=64"
+    }
+   ],
+   "sources": [
+    "openalex:cites"
+   ],
+   "figures": [
+    {
+     "file": "figures/W4416715526_0.png",
+     "caption": "Radio, X-ray and infrared detections of the counterparts to . The $1 $ posteriors from VegasAfterglow fit to these data are shown as shaded regions. The left-hand panel shows the fitting results without jet spreading enabled and the right-hand panel shows the results with jet spreading enabled.",
+     "matched": true
+    },
+    {
+     "file": "figures/W4416715526_1.png",
+     "caption": "Posterior distributions of the jet parameters derived using VegasAfterglow to fit the available multi-wavelength data with a non-spreading top-hat jet.",
+     "matched": true
+    }
+   ],
+   "usage": "used"
+  },
+  {
+   "key": "W4416593657",
+   "title": "Double-peaked optical afterglow in GRB 110213A inferring a magnetized thick shell ejecta",
+   "year": 2025,
+   "date": "2025-11-06",
+   "type": "article",
+   "authors": [
+    "Yo Kusafuka",
+    "Kaori Obayashi",
+    "Katsuaki Asano",
+    "Ryo Yamazaki"
+   ],
+   "journal": "Monthly Notices of the Royal Astronomical Society",
+   "doi": "10.1093/mnras/staf1923",
+   "arxiv": "2508.13066",
+   "abstract": "ABSTRACT Gamma-ray burst early afterglows are important tracers for determining the radial structure and magnetization of the ejecta. In this paper, we focus on GRB 110213A that shows double-peaked optical afterglow light curves and the shallow decay feature of the X-ray afterglow. We adopt a semi-analytical model for the dynamics of forward and reverse shocks generated through an interaction between an arbitrary magnetized ejecta with a finite thickness and a stratified circumstellar medium. Multiwavelength radiation from forward and reverse shocks seen from an arbitrary viewing angle is calculated under a thin-shell approximation. Our analysis with multimodal nested sampling methods for GRB 110213A suggests that the thick shell ejecta naturally explains the shallow decay feature of the X-ray afterglow. The combination of the reverse shock emission in the strongly magnetized jet and forward shock emission in the weakly magnetized circumstellar medium makes the double peak feature of the optical afterglows. The estimated low radiative efficiency in the prompt phase may be a consequence of the high magnetization of the jet in this case. A multimessenger emission simulator based on the magnetic bullet afterglow model is publicly available as the open-source Julia package \u2018Magglow\u2019.",
+   "institutes": [
+    {
+     "id": "057zh3y96",
+     "name": "The University of Tokyo",
+     "ror": "https://ror.org/057zh3y96",
+     "country": "Japan",
+     "city": "Tokyo",
+     "lat": 35.6895,
+     "lng": 139.69171,
+     "homepage": "https://www.u-tokyo.ac.jp",
+     "logo": "https://www.google.com/s2/favicons?domain=u-tokyo.ac.jp&sz=64"
+    }
+   ],
+   "co_institutes": [
+    {
+     "id": "I131231118",
+     "name": "Aoyama Gakuin University",
+     "ror": "https://ror.org/002rw7y37",
+     "country": "Japan",
+     "city": "Tokyo",
+     "lat": 35.6617546081543,
+     "lng": 139.70944213867188,
+     "homepage": "http://www.aoyama.ac.jp/en/",
+     "logo": "https://www.google.com/s2/favicons?domain=aoyama.ac.jp&sz=64"
+    },
+    {
+     "id": "I98285908",
+     "name": "The University of Osaka",
+     "ror": "https://ror.org/035t8zc32",
+     "country": "Japan",
+     "city": "Osaka",
+     "lat": 34.69379,
+     "lng": 135.50107,
+     "homepage": "https://www.osaka-u.ac.jp",
+     "logo": "https://www.google.com/s2/favicons?domain=osaka-u.ac.jp&sz=64"
+    }
+   ],
+   "sources": [
+    "openalex:cites",
+    "openalex:fulltext"
+   ],
+   "figures": [],
+   "usage": "cited"
+  },
+  {
+   "key": "ads_2025ApJ___994L__46C",
+   "title": "Optical/Infrared Observations of the Extraordinary GRB 250702B: A Highly Obscured Afterglow in a Massive Galaxy Consistent with Multiple Possible Progenitors",
+   "year": 2025,
+   "date": "2025-12-01",
+   "type": "article",
+   "authors": [
+    "Carney, Jonathan",
+    "Andreoni, Igor",
+    "O'Connor, Brendan",
+    "Freeburn, James",
+    "Skobe, Hannah",
+    "Westcott, Lewi",
+    "Busmann, Malte",
+    "Palmese, Antonella",
+    "Hall, Xander J.",
+    "Gill, Ramandeep",
+    "Beniamini, Paz",
+    "Coughlin, Eric R.",
+    "Kilpatrick, Charles D.",
+    "Anumarlapudi, Akash",
+    "Law, Nicholas M.",
+    "Corbett, Hank",
+    "Ahumada, Tomas",
+    "Chen, Ping",
+    "Conselice, Christopher",
+    "Damke, Guillermo",
+    "Das, Kaustav K.",
+    "Gal-Yam, Avishay",
+    "Gruen, Daniel",
+    "Heathcote, Steve",
+    "Hu, Lei",
+    "Karambelkar, Viraj",
+    "Kasliwal, Mansi",
+    "Labrie, Kathleen",
+    "Pasham, Dheeraj",
+    "Riffeser, Arno",
+    "Schmidt, Michael",
+    "Sharma, Kritti",
+    "Wilke, Silona",
+    "Zang, Weicheng"
+   ],
+   "journal": "The Astrophysical Journal",
+   "doi": "10.3847/2041-8213/ae1d67",
+   "arxiv": "2509.22784",
+   "abstract": "GRB 250702B was the longest gamma-ray burst ever detected, with a duration that challenges standard collapsar models and suggests an exotic progenitor. We collected a rich set of optical and infrared follow-up observations of its rapidly fading afterglow using a suite of telescopes including the W. M. Keck Observatory, the Gemini telescopes, the Magellan Baade Telescope, the Victor M. Blanco 4 m telescope, and the Fraunhofer Telescope at Wendelstein Observatory. Our analysis reveals that the afterglow emission is well described by forward shock emission from a highly obscured relativistic jet. Deep photometric observations of the host galaxy reveal a massive (10<SUP>10.66</SUP> M<SUB>\u2299</SUB>), dusty, and extremely asymmetric system that is consistent with two galaxies undergoing a major merger. The galactocentric offset, host galaxy properties, and jet characteristics disfavor a jetted tidal disruption event (TDE) around a supermassive black hole but do not definitively distinguish between competing progenitor scenarios. We find that the afterglow and host are consistent with a range of progenitors, including an atypical collapsar, a merger between a helium star and a stellar-mass black hole, the disruption of a star by a stellar-mass compact object (micro-TDE), and the tidal disruption of a star by an off-nuclear intermediate-mass black hole.",
+   "institutes": [
+    {
+     "id": "0130frc33",
+     "name": "University of North Carolina at Chapel Hill",
+     "ror": "https://ror.org/0130frc33",
+     "country": "United States",
+     "city": "Chapel Hill",
+     "lat": 35.9132,
+     "lng": -79.05584,
+     "homepage": "https://www.unc.edu",
+     "logo": "https://www.google.com/s2/favicons?domain=unc.edu&sz=64"
+    }
+   ],
+   "sources": [
+    "ads"
+   ],
+   "figures": [
+    {
+     "file": "figures/ads_2025ApJ___994L__46C_0.png",
+     "caption": "Radio, X-ray and infrared detections of the counterparts to . The $1 $ posteriors from VegasAfterglow fit to these data are shown as shaded regions. The left-hand panel shows the fitting results without jet spreading enabled and the right-hand panel shows the results with jet spreading enabled.",
+     "matched": true
+    },
+    {
+     "file": "figures/ads_2025ApJ___994L__46C_1.png",
+     "caption": "Posterior distributions of the jet parameters derived using VegasAfterglow to fit the available multi-wavelength data with a non-spreading top-hat jet.",
+     "matched": true
+    }
+   ],
+   "usage": "used"
+  },
+  {
+   "key": "ads_2026ApJ___998__163Z",
+   "title": "EP241217a: A Likely Type II GRB with an Achromatic Bump at z = 4.59",
+   "year": 2026,
+   "date": "2026-02-01",
+   "type": "article",
+   "authors": [
+    "Zhou, Hao",
+    "Ren, Jia",
+    "Wang, Chen-Wei",
+    "Liu, Xing",
+    "Liu, Bin-Yang",
+    "Levan, Andrew J.",
+    "Rastinejad, Jillian C.",
+    "Geng, Jin-Jun",
+    "Wang, Hao",
+    "Blanchard, Peter K.",
+    "Fong, Wen-fai",
+    "Gompertz, Benjamin P.",
+    "Malesani, Daniele B.",
+    "Kilpatrick, Charles D.",
+    "Lamb, Gavin P.",
+    "Metzger, Brian D.",
+    "Nicholl, Matt",
+    "Tanvir, Nial R.",
+    "Wang, Yun",
+    "Rong, Yu",
+    "Liang, Run-Duo",
+    "Ling, Zhi-Xing",
+    "Xu, Dong",
+    "Jin, Zhi-Ping",
+    "Wei, Da-Ming"
+   ],
+   "journal": "The Astrophysical Journal",
+   "doi": "10.3847/1538-4357/ae29b5",
+   "arxiv": "2512.07233",
+   "abstract": "EP241217a is an X-ray transient detected by the Einstein Probe lasting for about 100 s and without accompanying \u03b3-ray detection. The optical spectroscopy reveals the redshift of EP241217a is 4.59. By combining the \u03b3-ray upper limit provided by GECAM-C, there is a considerable possibility that EP241217a is a typical type II gamma-ray burst, but it is fainter than the detection threshold of any available \u03b3-ray monitors (i.e., E<SUB>\u03b3,iso</SUB> \u2272 10<SUP>53</SUP> erg). The X-ray light curve exhibits a plateau lasting for \u223c5 \u00d7 10<SUP>4</SUP> s. However, the joint analysis with optical data suggests the presence of an achromatic bump peaking at \u223c3 \u00d7 10<SUP>4</SUP> s after the trigger, indicating the actual duration of the X-ray plateau may be significantly shorter than it appears. To interpret the achromatic bump, we adopt the scenario of a mildly relativistic jet coasting in a wind-like medium and encountering a rapid density enhancement of the circumburst medium, which is likely induced by the interaction of the progenitor's stellar wind and the interstellar medium. However, this model cannot fully explain observed data, and some issues do exist, e.g., the observed spectrum is harder than the model prediction. Consequently, we conclude that the scenario of a mildly relativistic jet coasting in the wind-like medium cannot explain all observed features of EP241217a. In addition, some alternative models commonly invoked to explain X-ray plateaus are discussed, but there are more or less issues when they were applied to EP241217a. Therefore, further theoretical modeling is encouraged to explore the origin of EP241217a.",
+   "institutes": [
+    {
+     "id": "02eb4t121",
+     "name": "Purple Mountain Observatory",
+     "ror": "https://ror.org/02eb4t121",
+     "country": "China",
+     "city": "Nanjing",
+     "lat": 32.06167,
+     "lng": 118.77778,
+     "homepage": "http://english.pmo.cas.cn/",
+     "logo": "https://www.google.com/s2/favicons?domain=english.pmo.cas.cn&sz=64"
+    },
+    {
+     "id": "04c4dkn09",
+     "name": "University of Science and Technology of China",
+     "ror": "https://ror.org/04c4dkn09",
+     "country": "China",
+     "city": "Hefei",
+     "lat": 31.86389,
+     "lng": 117.28083,
+     "homepage": "https://ustc.edu.cn",
+     "logo": "https://www.google.com/s2/favicons?domain=ustc.edu.cn&sz=64"
+    }
+   ],
+   "sources": [
+    "ads"
+   ],
+   "figures": [
+    {
+     "file": "figures/ads_2026ApJ___998__163Z_0.png",
+     "caption": "The prompt X-ray light curve of EP241217a. The black line represents the EP-WXT (0.5-4\\,keV) rate curve of EP241217a, and the gray region represents the 1-$ $ uncertainty. The width of each time bin is 5\\,s. The vertical dashed line represent the possible start time of EP241217a, i.e., $T_0 T_ trig-114.0$\\,s.",
+     "matched": false
+    }
+   ],
+   "usage": "used"
+  },
+  {
+   "key": "ads_2025MNRAS_544_3115K",
+   "title": "Double-peaked optical afterglow in GRB 110213A inferring a magnetized thick shell ejecta",
+   "year": 2025,
+   "date": "2025-12-01",
+   "type": "article",
+   "authors": [
+    "Kusafuka, Yo",
+    "Obayashi, Kaori",
+    "Asano, Katsuaki",
+    "Yamazaki, Ryo"
+   ],
+   "journal": "Monthly Notices of the Royal Astronomical Society",
+   "doi": "10.1093/mnras/staf1923",
+   "arxiv": "2508.13066",
+   "abstract": "Gamma-ray burst early afterglows are important tracers for determining the radial structure and magnetization of the ejecta. In this paper, we focus on GRB 110213A that shows double-peaked optical afterglow light curves and the shallow decay feature of the X-ray afterglow. We adopt a semi-analytical model for the dynamics of forward and reverse shocks generated through an interaction between an arbitrary magnetized ejecta with a finite thickness and a stratified circumstellar medium. Multiwavelength radiation from forward and reverse shocks seen from an arbitrary viewing angle is calculated under a thin-shell approximation. Our analysis with multimodal nested sampling methods for GRB 110213A suggests that the thick shell ejecta naturally explains the shallow decay feature of the X-ray afterglow. The combination of the reverse shock emission in the strongly magnetized jet and forward shock emission in the weakly magnetized circumstellar medium makes the double peak feature of the optical afterglows. The estimated low radiative efficiency in the prompt phase may be a consequence of the high magnetization of the jet in this case. A multimessenger emission simulator based on the magnetic bullet afterglow model is publicly available as the open-source JULIA package 'MAGGLOW'.",
+   "institutes": [
+    {
+     "id": "057zh3y96",
+     "name": "The University of Tokyo",
+     "ror": "https://ror.org/057zh3y96",
+     "country": "Japan",
+     "city": "Tokyo",
+     "lat": 35.6895,
+     "lng": 139.69171,
+     "homepage": "https://www.u-tokyo.ac.jp",
+     "logo": "https://www.google.com/s2/favicons?domain=u-tokyo.ac.jp&sz=64"
+    }
+   ],
+   "sources": [
+    "ads"
+   ],
+   "figures": [],
+   "usage": "cited"
+  },
+  {
+   "key": "ads_2025ApJ___990__110W",
+   "title": "Forward and Reverse Shock Emission from Relativistic Jets with Arbitrary Angular and Stratified Radial Profiles",
+   "year": 2025,
+   "date": "2025-09-01",
+   "type": "article",
+   "authors": [
+    "Wang, Hao",
+    "Zhou, Hao",
+    "Fan, Yi-Zhong",
+    "Wei, Da-Ming"
+   ],
+   "journal": "The Astrophysical Journal",
+   "doi": "10.3847/1538-4357/adf1a2",
+   "arxiv": "2507.15311",
+   "abstract": "Gamma-ray bursts are expected to be generated by structured jets, whose profiles significantly impact their afterglow emission. Previously, we developed a numerical code jetsimpy, to model the afterglow of jets with arbitrary angular profiles. In this study, we extend the code to incorporate a stratified radial profile, enabling it to model jets with arbitrary axisymmetric two-dimensional structures. The radial profile leads to the formation of a reverse shock. We modeled the shock system using an energy conservation prescription, which differs from the pressure balance approach. This leads to remarkably different predictions for reverse shock emission. In particular, we find that the reverse shock emission in the thin shell case is significantly overestimated in analytic models. We also explore the off-axis reverse shock emission from structured jets, where the cores belong to thick shell cases and the wings belong to thin shell cases. We have confirmed the prediction that off-axis observers may see a thin-to-thick transition, but we find that the light curve morphology is hard to distinguish from pure thin or thick shell cases. A radial profile also introduces hydrodynamic energy injection. As such, our code can naturally apply to refreshed shock cases, where the modeling of kilonova afterglows is demonstrated as an example. To validate our method, we fit the optical flash of GRB 990123, showing good agreement with the data. The upgraded jetsimpy provides unprecedented flexibility in modeling the afterglow emission of jets with various profiles, including those derived from general relativistic magnetohydrodynamic simulations.",
+   "institutes": [
+    {
+     "id": "02eb4t121",
+     "name": "Purple Mountain Observatory",
+     "ror": "https://ror.org/02eb4t121",
+     "country": "China",
+     "city": "Nanjing",
+     "lat": 32.06167,
+     "lng": 118.77778,
+     "homepage": "http://english.pmo.cas.cn/",
+     "logo": "https://www.google.com/s2/favicons?domain=english.pmo.cas.cn&sz=64"
+    }
+   ],
+   "sources": [
+    "ads"
+   ],
+   "figures": [],
+   "usage": "cited"
+  },
+  {
+   "key": "ads_2026arXiv260420346S",
+   "title": "XRF 241001A/SN 2024aiiq: A Faint Soft X-ray Transient Detected by SVOM with a Broad-Line Type Ic Supernova Revealed by JWST",
+   "year": 2026,
+   "date": "2026-04-01",
+   "type": "article",
+   "authors": [
+    "Schneider, B.",
+    "Brunet, M.",
+    "Gompertz, B. P.",
+    "Turpin, D.",
+    "Malesani, D. B.",
+    "Godet, O.",
+    "Levan, A. J.",
+    "Daigne, F.",
+    "Sarin, N.",
+    "Rakotondrainibe, N. A.",
+    "Martin-Carrillo, A.",
+    "Palmerio, J. T.",
+    "Th\u00f6ne, C. C.",
+    "Li, H. L.",
+    "Saccardi, A.",
+    "de Ugarte Postigo, A.",
+    "Antier, S.",
+    "Buat, V.",
+    "\u010eurov\u010d\u00edkov\u00e1, D.",
+    "Izzo, L.",
+    "Leung, J. K.",
+    "Mo, G.",
+    "Qiu, Y. L.",
+    "Vergani, S. D.",
+    "Wang, J.",
+    "Wei, J. Y.",
+    "Xin, L. P.",
+    "Mochkovitch, R.",
+    "Zhang, B.",
+    "Cai, H. B.",
+    "Campana, S.",
+    "Coleiro, A.",
+    "Cordier, B.",
+    "D'Avanzo, P.",
+    "Dagoneau, N.",
+    "D'Elia, V.",
+    "Dong, Y. W.",
+    "G\u00f6tz, D.",
+    "Guillot, S.",
+    "Han, X. H.",
+    "Hartmann, D. H.",
+    "Huang, L.",
+    "Huang, Y. F.",
+    "Jakobsson, P.",
+    "Klotz, A.",
+    "Lachaud, C.",
+    "Lu, X. M.",
+    "Maggi, P.",
+    "De Pasquale, M.",
+    "Piron, F.",
+    "Salvaterra, R.",
+    "Schanne, S.",
+    "Sollerman, J.",
+    "Tanvir, N. R.",
+    "Vidadi, Z.",
+    "Wang, P.",
+    "Wu, C.",
+    "Xiong, S. L.",
+    "Xu, Y.",
+    "Zafar, T.",
+    "Zhang, P. P.",
+    "Zhang, S. N.",
+    "Zheng, S. J."
+   ],
+   "journal": "arXiv e-prints",
+   "doi": "10.48550/arXiv.2604.20346",
+   "arxiv": "2604.20346",
+   "abstract": "X-ray flashes (XRFs) are a type of gamma-ray bursts (GRBs) with prompt emission predominantly below 30 keV poorly detected by previous missions. The advent of the SVOM mission, with its wide-field instrument ECLAIRs, provides a new way to detect soft X-ray transients such as XRFs. We present photometric and spectroscopic observations of XRF 241001A detected by SVOM, a soft, sub-luminous, and low-energetic burst located in a poorly populated region of the Amati relation. We investigate the origin of its faint, soft high-energy emission to assess its connection to the long GRB population. We analyze the SVOM/ECLAIRs prompt emission and model its afterglow emission from X-ray to-radio. We present JWST/NIRSpec and SVOM/VT observations of the associated supernova (SN 2024aiiq), which we model with an Arnett radioactive decay component and compare its properties with previously detected GRB/SNe. XRF 241001A is located at z = 0.573 and has a prompt emission dominated by photons below 20 keV with a duration of T90 = 3.14 seconds. Its spectrum can be modeled by non-thermal or thermal models, all pointing towards a low Epeak &lt; 10 keV and Eiso ~ 8x10^49 erg. The X-ray-to-radio afterglow modeling favors an origin from a relativistic jet viewed on-axis. In the optical, XRF 241001A exhibits an early blue emission, similar to that detected in some fast X-ray transients and inconsistent with synchrotron emission. The JWST/NIRSpec observations firmly established its collapsar origin by revealing a SN Type Ic with broad lines, comparable to SN 1998bw and SN 2025kg-like events. XRF 241001A is a soft, low-luminosity collapsar event produced by a weak relativistic jet observed on-axis, supporting the view that part of the XRF population forms the low-energy tail of the long GRB population. It demonstrates the potential of SVOM/ECLAIRs to probe the soft regime of the high-energy transient population.",
+   "institutes": [],
+   "sources": [
+    "ads"
+   ],
+   "figures": [
+    {
+     "file": "figures/ads_2026arXiv260420346S_0.png",
+     "caption": "Light curve of the prompt emission of XRF 241001A detected by SVOM/ECLAIRs. The background-subtracted signal is centered on the trigger time $T_0 = 2024 -10 -01T17:08:57.74$ UT and shown in three energy bands: 4--20 keV (top, black), 20--50 keV (middle, blue), and 50--120 keV (bottom, red). The gray shaded region indicates the $T_90$ interval of the burst.",
+     "matched": false
+    }
+   ],
+   "usage": "used"
+  },
+  {
+   "key": "ads_2025ApJ___995____8L",
+   "title": "Multiwavelength Observations of the Apparently Nonrepeating FRB 20250316A",
+   "year": 2025,
+   "date": "2025-12-01",
+   "type": "article",
+   "authors": [
+    "Li, Ye",
+    "Sun, Hui",
+    "Qian, Lei",
+    "Li, Dong-Yue",
+    "Hua, Yan-Long",
+    "Xin, Li-Ping",
+    "Li, Cheng-Kui",
+    "Wang, Yi-Han",
+    "Niu, Jia-Rui",
+    "Sun, Tian-Rui",
+    "Yao, Zhu-Heng",
+    "Geng, Jin-Jun",
+    "Jin, Chi-Chuan",
+    "Rea, Nanda",
+    "Liu, Yuan",
+    "Pan, Zhi-Chen",
+    "An, Tao",
+    "Burwitz, Vadim",
+    "Cai, Zhi-Ming",
+    "Cao, Jin-Huang",
+    "Chen, Yong",
+    "Cheng, Hua-Qing",
+    "Cui, Wei-Wei",
+    "Feng, Hua",
+    "Friedrich, Peter",
+    "Han, Da-Wei",
+    "Hu, Jing-Wei",
+    "Hu, Lei",
+    "Huang, Yu-Xiang",
+    "Jia, Shu-Mei",
+    "Jiang, Ji-An",
+    "Li, Bin",
+    "Li, Feng",
+    "Liang, Ming",
+    "Liang, Yi-Fang",
+    "Liu, Hao",
+    "Liu, He-Yang",
+    "Liu, Hua-Qiu",
+    "Meidinger, Norbert",
+    "Pan, Hai-Wu",
+    "Rau, Arne",
+    "Shu, Xin-Wen",
+    "Sun, Chun",
+    "Tao, Lian",
+    "Tang, Jin-Long",
+    "Wan, Zhen",
+    "Wang, Hai-Ren",
+    "Wang, Jian",
+    "Wang, Jing",
+    "Xu, Yun-Fei",
+    "Xue, Yongquan",
+    "Yang, Xuan",
+    "Yao, Da-Zhi",
+    "Yao, Yuhan",
+    "Zhao, Wen",
+    "Zhao, Xiao-Fan",
+    "Zhang, Hong-Fei",
+    "Zhang, Jia-Heng",
+    "Zhang, Juan",
+    "Zhang, Mo",
+    "Zhang, Song-Bo",
+    "Zhang, Wen-Da",
+    "Zhang, Xiao-Ling",
+    "Zhang, Yong-He",
+    "Zhang, Yong-Kun",
+    "Zheng, Xian-Zhong",
+    "Zhu, Yu-Hao",
+    "Zuo, Ying-Xi",
+    "Sun, Sheng-Li",
+    "Wei, Jian-Yan",
+    "Zhu, Wei-Wei",
+    "Jiang, Peng",
+    "Yuan, Weimin",
+    "Wu, Xue-Feng",
+    "Zhang, Bing"
+   ],
+   "journal": "The Astrophysical Journal",
+   "doi": "10.3847/1538-4357/ae1463",
+   "arxiv": "2508.13999",
+   "abstract": "The physical origin of fast radio bursts (FRBs) remains uncertain. Although multiwavelength observations have been widely conducted, only Galactic FRB 20200428D is associated with an X-ray burst from the magnetar SGR J1935+2154. Here we present multiwavelength follow-up observations of the nearby bright FRB 20250316A, including the Five-hundred-meter Aperture Spherical radio Telescope (FAST), Einstein Probe (EP) X-ray mission, Chandra X-ray Observatory, Wide Field Survey Telescope (WFST), and Space Variable Objects Monitor/Visible Telescope (SVOM/VT). The 13.08 hr FAST follow-up campaign without pulse detection requires an energy distribution flatter than those of well-known repeating FRBs, suggesting that this burst is likely a one-off event. A prompt EP follow-up and multiepoch observational campaign totaling &gt;100 ks led to the detection of an X-ray source within the angular resolution of its Follow-up X-ray Telescope (FXT; 10\u2033). A subsequent Chandra observation revealed this source to be offset by 7\u2033 from the FRB position and established a 0.5\u250010 keV flux upper limit of 7.6 \u00d7 10<SUP>\u221215</SUP> erg cm<SUP>\u22122</SUP> s<SUP>\u22121</SUP> at the FRB position, corresponding to \u223c10<SUP>39</SUP> erg s<SUP>\u22121</SUP> at the 40 Mpc distance of the host galaxy NGC 4141. These results set one of the most stringent limits on X-ray emission from a nonrepeating FRB, disfavoring ultraluminous X-ray sources as counterparts of apparently one-off FRBs and offering critical insights into afterglow models. Our study suggests that an arcsecond localization of both the FRB and its potential X-ray counterpart is essential for exploring the X-ray counterpart of an FRB.",
+   "institutes": [
+    {
+     "id": "02eb4t121",
+     "name": "Purple Mountain Observatory",
+     "ror": "https://ror.org/02eb4t121",
+     "country": "China",
+     "city": "Nanjing",
+     "lat": 32.06167,
+     "lng": 118.77778,
+     "homepage": "http://english.pmo.cas.cn/",
+     "logo": "https://www.google.com/s2/favicons?domain=english.pmo.cas.cn&sz=64"
+    },
+    {
+     "id": "034t30j35",
+     "name": "Chinese Academy of Sciences",
+     "ror": "https://ror.org/034t30j35",
+     "country": "China",
+     "city": "Beijing",
+     "lat": 39.9075,
+     "lng": 116.39723,
+     "homepage": "https://www.cas.cn",
+     "logo": "https://www.google.com/s2/favicons?domain=cas.cn&sz=64"
+    }
+   ],
+   "sources": [
+    "ads"
+   ],
+   "figures": [
+    {
+     "file": "figures/ads_2025ApJ___995____8L_0.png",
+     "caption": "The timeline of the FRB 20250316A follow-up observations. For EP/WXT, only those observations within 12 hours before and after the FRB are presented. Vertical gray lines indicate the time of FRB 20250316A and the time at which FRB 20250316A was localized to be arc-second accuracy.",
+     "matched": false
+    }
+   ],
+   "usage": "used"
+  },
+  {
+   "key": "ads_2025A_A___704A__55K",
+   "title": "Efficient Bayesian analysis of kilonovae and gamma ray burst afterglows with FIESTA",
+   "year": 2025,
+   "date": "2025-12-01",
+   "type": "article",
+   "authors": [
+    "Koehn, H.",
+    "Wouters, T.",
+    "Pang, P. T. H.",
+    "Bulla, M.",
+    "Rose, H.",
+    "Wichern, H.",
+    "Dietrich, T."
+   ],
+   "journal": "Astronomy and Astrophysics",
+   "doi": "10.1051/0004-6361/202556626",
+   "arxiv": "2507.13807",
+   "abstract": "Gamma-ray burst (GRB) afterglows and kilonovae (KNe) are electromagnetic transients that can accompany binary neutron star (BNS) mergers. Therefore, studying their emission processes is of general interest for constraining cosmological parameters or the behavior of ultra-dense matter. One common method to analyze electromagnetic data from BNS mergers is to sample a Bayesian posterior over the parameters of a physical model for the transient. However, sampling the posterior is computationally costly and because of the many likelihood evaluations required in this process, detailed models are too expensive to be used directly in Bayesian inference. In this paper, we address the problem by introducing FIESTA, a PYTHON package to train machine learning (ML) surrogates for GRB afterglow and kilonova models that have the capacity to accelerate likelihood evaluations. Specifically, we introduce extensive ML surrogates for the state-of-the-art GRB afterglow models AFTERGLOWPY and PYBLASTAFTERGLOW, along with a new surrogate for KN emission based on the POSSIS code. Our surrogates enable evaluation of the light-curve posterior within minutes. We also provide built-in posterior sampling capabilities in FIESTA that rely on the FLOWMC package, which efficiently scale to higher dimensions when adding up to tens of nuisance sampling parameters. Because of its use of the JAX framework, FIESTA also allows for GPU acceleration during both surrogate training and posterior sampling. We applied our framework to reanalyze AT2017gfo/GRB170817A and GRB211211A with our surrogates, thus employing the new PYBLASTAFTERGLOW model for the first time in Bayesian inference.",
+   "institutes": [
+    {
+     "id": "03bnmw459",
+     "name": "University of Potsdam",
+     "ror": "https://ror.org/03bnmw459",
+     "country": "Germany",
+     "city": "Potsdam",
+     "lat": 52.39886,
+     "lng": 13.06566,
+     "homepage": "https://www.uni-potsdam.de/en/",
+     "logo": "https://www.google.com/s2/favicons?domain=uni-potsdam.de&sz=64"
+    }
+   ],
+   "sources": [
+    "ads"
+   ],
+   "figures": [],
+   "usage": "cited"
+  },
+  {
+   "key": "ads_2026ApJ__1004___95C",
+   "title": "Observational Properties of Nonthermal Emission from Relativistic Jets Escaping Active Galactic Nucleus Disks",
+   "year": 2026,
+   "date": "2026-06-01",
+   "type": "article",
+   "authors": [
+    "Chen, Ken",
+    "Dai, Zi-Gao"
+   ],
+   "journal": "The Astrophysical Journal",
+   "doi": "10.3847/1538-4357/ae6b83",
+   "arxiv": "2605.10557",
+   "abstract": "Relativistic jets launched from stellar-mass compact objects embedded in the accretion disk of an active galactic nucleus (AGN) can produce nonthermal emission upon successfully breaking out of the disk. In this paper, we present a comprehensive study of the long-term propagation dynamics and broadband nonthermal radiation signatures of such jets in a realistic AGN environment, explicitly modeled as wind outflows. Our modeling reveals two distinct features imprinted by the high-density AGN medium: rapid deceleration of the jet ejecta, accompanied by a prompt downshift of the emission spectral energy distribution, and persistently strong synchrotron self-absorption, giving rise to a prominent quasi-thermal hump in the emission spectrum. Crucially, both gamma-ray burst jets and jets powered by accreting binary black hole merger remnants can produce detectable multiwavelength emissions that substantially outshine the AGN background. Moreover, the short time delays between gravitational-wave triggers and these electromagnetic counterparts\u2014typically less than 10<SUP>6</SUP> s\u2014greatly facilitate secure multimessenger associations. Besides, our findings highlight that the interaction-induced radiation from AGN-embedded jet systems offers a powerful diagnostic probe of the spatial distribution, density structure, and physical properties of the AGN medium.",
+   "institutes": [
+    {
+     "id": "04c4dkn09",
+     "name": "University of Science and Technology of China",
+     "ror": "https://ror.org/04c4dkn09",
+     "country": "China",
+     "city": "Hefei",
+     "lat": 31.86389,
+     "lng": 117.28083,
+     "homepage": "https://ustc.edu.cn",
+     "logo": "https://www.google.com/s2/favicons?domain=ustc.edu.cn&sz=64"
+    }
+   ],
+   "sources": [
+    "ads"
+   ],
+   "figures": [],
+   "usage": "cited"
+  }
+ ]
+}
