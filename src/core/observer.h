@@ -319,6 +319,24 @@ inline void iterate_through(Real value, Array const& arr, size_t& it) noexcept {
     }
 }
 
+/// Bracket [k_lo, k_hi] of time-lattice intervals covering the observation window [w_lo, w_hi];
+/// returns false when the row lies entirely outside the window.
+inline bool observed_window(Real const* t_row, size_t t_grid, Real w_lo, Real w_hi, size_t& k_lo,
+                            size_t& k_hi) noexcept {
+    if (t_row[t_grid - 1] < w_lo || t_row[0] > w_hi) {
+        return false;
+    }
+    k_lo = 0;
+    while (k_lo + 1 < t_grid && t_row[k_lo + 1] < w_lo) {
+        k_lo++;
+    }
+    k_hi = k_lo + 1;
+    while (k_hi + 1 < t_grid && t_row[k_hi] <= w_hi) {
+        k_hi++;
+    }
+    return true;
+}
+
 template <typename PhotonGrid>
 bool Observer::set_boundaries(InterpState& state, size_t eff_i, size_t i, size_t j, size_t k, Real lg2_nu_src,
                               PhotonGrid& photons) noexcept {
@@ -369,16 +387,9 @@ MeshGrid Observer::specific_flux(Array const& t_obs, Array const& nu_obs, Photon
             // read: clamp the boundary precompute to that window. Off-axis rows
             // span many decades outside a narrow request, so this skips the
             // bulk of the photon evaluations for fit-style calls.
-            if (t_row[t_grid - 1] < lg2_t_obs(0) || t_row[0] > lg2_t_obs(t_obs_len - 1)) {
+            size_t k_lo, k_hi;
+            if (!observed_window(t_row, t_grid, lg2_t_obs(0), lg2_t_obs(t_obs_len - 1), k_lo, k_hi)) {
                 continue;
-            }
-            size_t k_lo = 0;
-            while (k_lo + 1 < t_grid && t_row[k_lo + 1] < lg2_t_obs(0)) {
-                k_lo++;
-            }
-            size_t k_hi = k_lo + 1;
-            while (k_hi + 1 < t_grid && t_row[k_hi] <= lg2_t_obs(t_obs_len - 1)) {
-                k_hi++;
             }
 
             for (size_t k = k_lo; k <= k_hi; k++) {
