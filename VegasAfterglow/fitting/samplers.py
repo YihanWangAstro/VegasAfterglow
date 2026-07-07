@@ -115,7 +115,14 @@ def fit_emcee(
     chain = sampler_obj.get_chain(discard=nburn, thin=thin, flat=True)
     log_probs_flat = sampler_obj.get_log_prob(discard=nburn, thin=thin, flat=True)
 
-    return process_samples(chain, log_probs_flat, labels, defs, ndim, top_k)
+    # get_log_prob returns the posterior; strip the prior so downstream
+    # chi2 reporting (-2 * logp) reflects the data likelihood alone.
+    log_prior_flat = np.zeros(len(chain))
+    for i, name in enumerate(labels):
+        log_prior_flat += prior_dict[name].ln_prob(chain[:, i])
+    log_likelihoods_flat = log_probs_flat - log_prior_flat
+
+    return process_samples(chain, log_likelihoods_flat, labels, defs, ndim, top_k)
 
 
 def fit_bilby(

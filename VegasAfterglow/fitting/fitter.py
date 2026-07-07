@@ -818,6 +818,34 @@ class Fitter:
         )
         return flat[idx]
 
+    def _draw_chi2_region(
+        self, cl: float, n_samples: int, rng: Optional[np.random.Generator]
+    ) -> np.ndarray:
+        """Rows of the flat posterior inside the joint chi-squared confidence
+        region ``chi2 <= chi2_min + delta_chi2(cl, n_free)``. The offset form
+        makes the selection independent of any constant in the stored
+        log-probabilities. The minimum-chi2 sample is always included so the
+        best-fit curve lies inside the resulting envelope."""
+        if not self._has_posterior_samples():
+            raise RuntimeError(
+                "confidence bands require posterior samples; call .fit() first"
+            )
+        if not (0.0 < cl < 1.0):
+            raise ValueError(f"cl must be in (0, 1), got {cl}")
+        from scipy.stats import chi2 as _chi2_dist
+
+        flat = self.result.flat_samples
+        chi2 = -2.0 * self.result.log_probs.ravel()
+        n_free = self.result.n_free_params or flat.shape[1]
+        thresh = float(chi2.min()) + float(_chi2_dist.ppf(cl, df=n_free))
+        region = flat[chi2 <= thresh]
+        best = flat[int(np.argmin(chi2))]
+        if len(region) > n_samples:
+            rng = np.random.default_rng() if rng is None else rng
+            idx = rng.choice(region.shape[0], size=n_samples, replace=False)
+            region = region[idx]
+        return np.vstack([best[None, :], region])
+
     def _credible_band(
         self,
         draws: np.ndarray,
@@ -827,27 +855,23 @@ class Fitter:
         resolution: Optional[Tuple[float, float, float]],
     ) -> SimpleNamespace:
         """Apply ``evaluate(params)`` to each posterior draw, return the
-        central-``ci`` percentile envelope from those draws plus the light
-        curve evaluated at the posterior-median parameter vector. Threads
-        share a single ``_override_resolution`` context so the per-call
-        resolution mutation doesn't race between draws."""
-        if not (0.0 < ci < 1.0):
-            raise ValueError(f"ci must be in (0, 1), got {ci}")
+        central-``ci`` percentile envelope from those draws plus the
+        pointwise median curve of the same draws. Threads share a single
+        ``_override_resolution`` context so the per-call resolution
+        mutation doesn't race between draws."""
+        if not (0.0 < ci <= 1.0):
+            raise ValueError(f"ci must be in (0, 1], got {ci}")
         workers = n_workers if n_workers is not None else max(1, os.cpu_count() or 1)
-        median_params = np.median(self.result.flat_samples, axis=0)
         with self._override_resolution(resolution):
             if workers > 1:
                 with ThreadPoolExecutor(max_workers=workers) as pool:
-                    median_future = pool.submit(evaluate, median_params)
                     results = list(pool.map(evaluate, draws))
-                    median = np.asarray(median_future.result())
             else:
                 results = [evaluate(p) for p in draws]
-                median = np.asarray(evaluate(median_params))
 
         stack = np.stack([np.asarray(r) for r in results], axis=0)
-        lower, upper = np.percentile(
-            stack, [50.0 * (1.0 - ci), 50.0 * (1.0 + ci)], axis=0
+        lower, median, upper = np.percentile(
+            stack, [50.0 * (1.0 - ci), 50.0, 50.0 * (1.0 + ci)], axis=0
         )
         return SimpleNamespace(lower=lower, median=median, upper=upper)
 
@@ -880,11 +904,12 @@ class Fitter:
 
         Returns:
             ``SimpleNamespace(lower, median, upper)`` with arrays of shape
-            ``(len(nu), len(t))``. ``lower`` / ``upper`` are per-cell
-            percentiles of the ``n_samples`` posterior draws; ``median`` is
-            the light curve evaluated at the posterior-median parameter
-            vector (one extra model call). The median trajectory is not
-            guaranteed to lie inside ``[lower, upper]`` for nonlinear models.
+            ``(len(nu), len(t))``. All three are per-cell percentiles of the
+            ``n_samples`` posterior draws (``median`` is the 50th), so the
+            median curve always lies inside the band. It represents the
+            typical posterior prediction, not any single parameter set; for
+            a best-fit overlay evaluate ``flux_density_grid`` at
+            ``result.top_k_params[0]``.
             Usage: ``ax.fill_between(t, out.lower[i_nu], out.upper[i_nu])``
             followed by ``ax.plot(t, out.median[i_nu])``.
         """
@@ -934,6 +959,94 @@ class Fitter:
             resolution,
         )
 
+    def flux_density_confidence(
+        self,
+        t: np.ndarray,
+        nu: np.ndarray,
+        cl: float = 0.68,
+        n_samples: int = 200,
+        n_workers: Optional[int] = None,
+        rng: Optional[np.random.Generator] = None,
+        resolution: Optional[Tuple[float, float, float]] = None,
+    ) -> SimpleNamespace:
+        """Joint chi-squared confidence envelope on the total flux density.
+
+        The likelihood-consistent companion of the best-fit curve: selects
+        every posterior sample with ``chi2 <= chi2_min + delta_chi2(cl,
+        n_free)`` (the joint ``cl`` confidence region), evaluates the model
+        at up to ``n_samples`` of them, and returns the pointwise min/max
+        envelope of those curves. The minimum-chi2 sample is always
+        included, so the best-fit curve lies inside the envelope by
+        construction. The selection depends only on chi-squared
+        *differences*, so it is insensitive to any constant offset in the
+        stored log-probabilities.
+
+        Compared to :meth:`flux_density_credible` (pointwise posterior
+        percentiles), this band is a *joint* region — for many free
+        parameters it is wider, and its edges are set by the extreme
+        curves inside the region, so larger ``n_samples`` gives a more
+        complete envelope.
+
+        Args:
+            t: Time array [seconds]
+            nu: Frequency array [Hz]
+            cl: Joint confidence level (e.g. 0.68 for ~1σ)
+            n_samples: Maximum region samples to evaluate
+            n_workers: Thread count for parallel evaluation. ``None`` -> ``os.cpu_count()``.
+            rng: ``numpy.random.Generator``; defaults to ``np.random.default_rng()``
+            resolution: Optional ``(phi, theta, t)`` override
+
+        Returns:
+            ``SimpleNamespace(lower, median, upper)`` with arrays of shape
+            ``(len(nu), len(t))``. ``lower`` / ``upper`` are the envelope of
+            region curves; ``median`` is their pointwise median.
+        """
+        draws = self._draw_chi2_region(cl, n_samples, rng)
+        t_arr = np.atleast_1d(np.asarray(t, dtype=np.float64))
+        nu_arr = np.atleast_1d(np.asarray(nu, dtype=np.float64))
+        return self._credible_band(
+            draws,
+            1.0,
+            lambda p: np.asarray(self.flux_density_grid(p, t_arr, nu_arr).total),
+            n_workers,
+            resolution,
+        )
+
+    def flux_confidence(
+        self,
+        t: np.ndarray,
+        band,
+        cl: float = 0.68,
+        n_samples: int = 200,
+        num_points: int = 15,
+        n_workers: Optional[int] = None,
+        rng: Optional[np.random.Generator] = None,
+        resolution: Optional[Tuple[float, float, float]] = None,
+    ) -> SimpleNamespace:
+        """Joint chi-squared confidence envelope on band-integrated flux.
+
+        Same semantics as :meth:`flux_density_confidence` but mirrors
+        :meth:`flux` (band-integrated, no extinction applied).
+
+        Returns:
+            ``SimpleNamespace(lower, median, upper)`` with arrays of shape ``(len(t),)``.
+        """
+        try:
+            _, _ = band
+        except (TypeError, ValueError):
+            raise ValueError(
+                f"flux_confidence: band must be a (nu_min, nu_max) tuple in Hz, got {band!r}"
+            ) from None
+        draws = self._draw_chi2_region(cl, n_samples, rng)
+        t_arr = np.atleast_1d(np.asarray(t, dtype=np.float64))
+        return self._credible_band(
+            draws,
+            1.0,
+            lambda p: np.asarray(self.flux(p, t_arr, band, num_points).total),
+            n_workers,
+            resolution,
+        )
+
     def model(
         self,
         best_params: np.ndarray,
@@ -966,12 +1079,16 @@ class Fitter:
 
         Builds a two-panel figure:
 
-        * **Top panel** -- data + model curves. When posterior samples are
-          available (post-``fit()``), each band's central line is the
-          **posterior median** trajectory with a shaded ``ci`` credible
-          band; otherwise the curve is the MAP (``best_params``) trajectory.
+        * **Top panel** -- data + model curves. Each band's central line is
+          the **best-fit model** (``best_params``, defaulting to
+          ``result.top_k_params[0]``); when posterior samples are available
+          (post-``fit()``) it is surrounded by the joint chi-squared
+          confidence envelope — curves from samples with
+          ``chi2 <= chi2_min + delta_chi2(ci, n_free)`` — which is
+          likelihood-consistent with the best-fit line and contains it by
+          construction (see :meth:`flux_density_confidence`).
           By default (``obs_noise='none'``) the band is the pure
-          model-curve credible band (pinches at the data, no observation
+          model-curve envelope (pinches at the data, no observation
           noise added). Switch to ``obs_noise='frac'`` to broaden into a
           *posterior predictive* envelope where σ scales with the model
           flux as ``central * median(err/flux)`` — represents *"where
@@ -998,20 +1115,20 @@ class Fitter:
         ----------
         best_params
             Sampler-space parameter array. Defaults to ``self.result.top_k_params[0]``.
-            Used for the break-frequency panel and as the model trajectory
-            when posterior samples are unavailable or ``n_samples == 0``.
+            Sets the central model trajectory in the top panel and the
+            break-frequency evolution in the bottom panel.
         ci
             Credible interval for the shaded band (e.g. 0.68 for ~1σ,
             0.95 for ~2σ). Ignored when ``n_samples == 0``.
         n_samples
-            Posterior draws for the credible band. ``0`` skips the band and
+            Posterior draws for the shaded band. ``0`` skips the band and
             plots the MAP trajectory only. Default ``100``.
         obs_noise
-            Noise model used to broaden the credible band into a posterior
-            predictive band:
+            Noise model used to broaden the confidence envelope into a
+            posterior predictive band:
 
             * ``'none'`` (default) -- skip observation noise; the band is
-              the pure model-curve credible band and pinches at the data.
+              the pure model-curve envelope and pinches at the data.
             * ``'frac'`` -- σ scales with the model flux as
               ``central * median(err/flux)``; visually well-behaved on
               log-y plots over many decades. Use this for a goodness-of-fit

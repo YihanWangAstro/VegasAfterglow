@@ -23,8 +23,17 @@ Have a feature request? [Open an issue](https://github.com/YihanWangAstro/VegasA
 ### Fixed
 
 - **Silent zero flux for narrow early time windows** (v2.0.6 regression): when a requested observation window ended inside the deceleration refinement band of the time lattice, the grid's last node evaluated to NaN and every shock ODE row was silently skipped, returning identically zero flux (e.g. a single epoch near the deceleration time). Now guarded, with regression tests
+- **emcee chi-squared reporting included the prior normalization**: the sampler stored the posterior log-probability, so `summary()` and the top-k table over-stated chi-squared by a constant (−2·log-prior; ~10 for typical uniform priors — e.g. chi²/DOF reading 2.1 when the data chi²/DOF was 1.2). The prior is now subtracted so reported values reflect the data likelihood alone. Dynesty results were unaffected
+- **Credible-band central line matches its documentation**: `flux_density_credible` / `flux_credible` returned `.median` evaluated at the componentwise-median parameter vector, which for correlated posteriors is not a representative model and can fall outside the band (documentation already described the pointwise median). `.median` is now the 50th percentile of the sampled curves, always inside `[lower, upper]`; for a best-fit overlay evaluate `flux_density_grid` at `result.top_k_params[0]`
+- **`draw_fit` central line is the best-fit model**: with posterior samples available, the plotted line was the credible-band median rather than the best-fit trajectory, so the curve did not correspond to the chi-squared quoted from the fit. The line is now always `best_params` (defaulting to `result.top_k_params[0]`)
+
+### Added
+
+- **Chi-squared confidence envelopes**: `flux_density_confidence` / `flux_confidence` shade the envelope of curves from all posterior samples inside the joint confidence region `chi2 <= chi2_min + dchi2(cl, n_free)` — the likelihood-consistent uncertainty band for a best-fit curve, containing it by construction. `draw_fit` uses this band; `flux_density_credible` / `flux_credible` remain available for pointwise posterior credible bands
 
 ### Changed
+
+- **Faster flux evaluation for fitting workloads**: narrow-window and band-integrated flux requests no longer pay for the full time range (evaluations are clamped to the observed window — up to ~2x for fit-style calls), and repeated-frequency light-curve points share their boundary evaluations (~2x for densely sampled light curves)
 
 The SSC (inverse Compton) pipeline was rebuilt this release. It was unchanged between v2.0.5 and v2.0.6, so the comparisons below hold against both.
 

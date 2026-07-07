@@ -707,6 +707,19 @@ nu_out = np.logspace(16, 20, 150)
 
 lc = fitter.flux_density_grid(best_params, t_out, bands)
 spec = fitter.flux_density_grid(best_params, times, nu_out)
+
+# 68% joint chi-squared confidence envelopes to shade around the best-fit
+# curves: built from posterior samples with chi2 <= chi2_min + dchi2, so the
+# best-fit curve lies inside the band by construction
+lc_band = fitter.flux_density_confidence(t_out, bands, cl=0.68, n_samples=1000)
+spec_band = fitter.flux_density_confidence(times, nu_out, cl=0.68, n_samples=1000)
+# lc_band.lower / lc_band.upper -- same shapes as the best-fit grids
+```
+
+One-call diagnostic figure — best-fit curves with the confidence envelopes over the data, plus the observer-frame evolution of the synchrotron break frequencies:
+
+```python
+fig, (ax_top, ax_bot) = fitter.draw_fit(ci=0.68)
 ```
 
 Corner plot:

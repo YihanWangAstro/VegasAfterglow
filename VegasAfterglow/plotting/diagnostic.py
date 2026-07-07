@@ -425,24 +425,25 @@ def draw_fit(
             return float(np.median(err))
         return central * float(np.median(err[positive] / flux[positive]))
 
-    # When posterior samples are available and the user did not opt out
-    # (n_samples=0), show the posterior median trajectory with a shaded
-    # ``ci`` credible band. Otherwise fall back to the MAP curve.
+    # The central line is always the best-fit model (``best_params``). When
+    # posterior samples are available and the user did not opt out
+    # (n_samples=0), a shaded ``ci`` credible band from posterior draws is
+    # added around it.
     use_band = n_samples > 0 and fitter._has_posterior_samples()
 
     with fitter._override_resolution(resolution):
         # ---- Light curves on the left axis ----
         if lc_list:
             lc_nus = np.array([nu for nu, *_ in lc_list], dtype=float)
+            lc_central = np.asarray(
+                fitter.flux_density_grid(best_params, t_grid, lc_nus).total
+            )
             if use_band:
-                cb = fitter.flux_density_credible(
-                    t_grid, lc_nus, ci=ci, n_samples=n_samples
+                cb = fitter.flux_density_confidence(
+                    t_grid, lc_nus, cl=ci, n_samples=n_samples
                 )
-                lc_central, lc_lower, lc_upper = cb.median, cb.lower, cb.upper
+                lc_lower, lc_upper = cb.lower, cb.upper
             else:
-                lc_central = np.asarray(
-                    fitter.flux_density_grid(best_params, t_grid, lc_nus).total
-                )
                 lc_lower = lc_upper = None
 
             for i, (nu, t_data, f_data, e_data, _user_label) in enumerate(lc_list):
@@ -484,15 +485,15 @@ def draw_fit(
             shift = float(shift_map.get(("band", key), 0.0))
             scale = 10.0**shift
             color = band_color_map[key]
+            central = np.asarray(
+                fitter.flux(best_params, t_grid, key, num_points=b.num_points).total
+            )
             if use_band:
-                cb = fitter.flux_credible(
-                    t_grid, key, ci=ci, n_samples=n_samples, num_points=b.num_points
+                cb = fitter.flux_confidence(
+                    t_grid, key, cl=ci, n_samples=n_samples, num_points=b.num_points
                 )
-                central, lower, upper = cb.median, cb.lower, cb.upper
+                lower, upper = cb.lower, cb.upper
             else:
-                central = np.asarray(
-                    fitter.flux(best_params, t_grid, key, num_points=b.num_points).total
-                )
                 lower = upper = None
             nu_center = float(np.sqrt(b.nu_min * b.nu_max))
             label = _shifted_label(band_names[key] or _broad_band(nu_center), shift)

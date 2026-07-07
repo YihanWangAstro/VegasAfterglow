@@ -134,9 +134,14 @@ Example:
     # Generate spectra with best-fit parameters
     spec_best = fitter.flux_density_grid(result.top_k_params[0], times, nu_out)
 
-    # Posterior credible bands (median + 16/84 percentile envelope) for paper figures
-    lc_band = fitter.flux_density_credible(t_out, bands, ci=0.68, n_samples=200)
-    # lc_band.median, lc_band.lower, lc_band.upper -- shape (len(bands), len(t_out))
+    # Joint chi^2 confidence envelope to shade around the best-fit curves:
+    # curves from samples with chi2 <= chi2_min + dchi2(cl, n_free), so the
+    # best-fit line lies inside the band by construction
+    lc_band = fitter.flux_density_confidence(t_out, bands, cl=0.68, n_samples=200)
+    # lc_band.lower, lc_band.upper -- shape (len(bands), len(t_out))
+
+    # Alternative: pointwise posterior credible band (16/50/84 percentiles per cell)
+    # lc_band = fitter.flux_density_credible(t_out, bands, ci=0.68, n_samples=200)
 
 .. _api-extinction:
 
