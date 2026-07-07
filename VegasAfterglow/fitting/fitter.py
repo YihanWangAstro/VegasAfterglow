@@ -308,7 +308,7 @@ class Fitter:
         t: np.ndarray,
         flux: np.ndarray,
         err: np.ndarray,
-        num_points: int = 15,
+        num_points: int = 5,
         weights: Optional[np.ndarray] = None,
         label: Optional[str] = None,
     ) -> None:
@@ -320,7 +320,10 @@ class Fitter:
             t: Observation times [seconds]
             flux: Observed integrated fluxes [erg/cm^2/s]
             err: Observational uncertainties [erg/cm^2/s]
-            num_points: Number of frequency sampling points for integration
+            num_points: Frequency sampling points for the band integration
+                (Boole's rule on a log grid; best with num_points = 4k+1 —
+                5 covers optical/X-ray instrument bands, use 9-13 for radio
+                or bands wider than two decades, 17+ for bolometric)
             weights: Optional statistical weights
             label: Optional instrument/band name (e.g., ``'WXT'``, ``'XRT'``)
                 used by ``draw_fit`` for legend display.
@@ -771,7 +774,7 @@ class Fitter:
         best_params: np.ndarray,
         t: np.ndarray,
         band,
-        num_points: int = 15,
+        num_points: int = 5,
         resolution: Optional[Tuple[float, float, float]] = None,
     ):
         """Compute integrated flux at best-fit parameters.
@@ -784,7 +787,9 @@ class Fitter:
             t: Time array [seconds]
             band: Frequency band as (nu_min, nu_max) tuple in Hz.
                 Use ``units.band("XRT")`` for named instrument bands.
-            num_points: Number of frequency sampling points
+            num_points: Frequency sampling points (Boole's rule; best with
+                4k+1 — 5 covers optical/X-ray bands, 9-17 for radio or
+                wider than two decades)
             resolution: Optional resolution override (phi, theta, t)
         """
         nu_min, nu_max = band
@@ -930,7 +935,7 @@ class Fitter:
         band,
         ci: float = 0.68,
         n_samples: int = 200,
-        num_points: int = 15,
+        num_points: int = 5,
         n_workers: Optional[int] = None,
         rng: Optional[np.random.Generator] = None,
         resolution: Optional[Tuple[float, float, float]] = None,
@@ -1018,7 +1023,7 @@ class Fitter:
         band,
         cl: float = 0.68,
         n_samples: int = 200,
-        num_points: int = 15,
+        num_points: int = 5,
         n_workers: Optional[int] = None,
         rng: Optional[np.random.Generator] = None,
         resolution: Optional[Tuple[float, float, float]] = None,

@@ -138,7 +138,7 @@ For broadband flux measurements integrated over a frequency range (e.g., instrum
     # Example 1: Swift/BAT bandpass (15-150 keV ≈ 3.6e18 - 3.6e19 Hz)
     nu_min_bat = 3.6e18  # Lower frequency bound [Hz]
     nu_max_bat = 3.6e19  # Upper frequency bound [Hz]
-    num_points = 20      # Number of frequency sampling points for integration
+    num_points = 5       # Number of frequency sampling points for integration
 
     # Calculate frequency-integrated flux
     flux_bat = model.flux(times, nu_min_bat, nu_max_bat, num_points)
@@ -175,7 +175,12 @@ For broadband flux measurements integrated over a frequency range (e.g., instrum
 .. tip::
     **Frequency Integration Guidelines:**
 
-    - **Narrow bands** (Δν/ν < 0.5): Use ``num_points = 5-10``
-    - **Wide bands** (Δν/ν > 1): Use ``num_points = 20-50``
-    - **Very wide bands** (multiple decades): Use ``num_points = 50+``
-    - Monitor convergence by testing different ``num_points`` values
+    The integration uses Boole's rule on a log-spaced frequency grid, so it
+    converges quickly and works best when ``num_points = 4k + 1``
+    (9, 13, 17, ...):
+
+    - **Optical/X-ray instrument bands** (optical filters, WXT, XRT, BAT): ``num_points = 5``
+    - **Radio bands and wide bands** (breaks often in-band, or 2-4 decades): ``num_points = 9-17``
+    - **Bolometric** (many decades): ``num_points = 33+``
+    - Off-alignment values (e.g. 10, 14, 15) cost more evaluations for less
+      accuracy than the nearest ``4k + 1``

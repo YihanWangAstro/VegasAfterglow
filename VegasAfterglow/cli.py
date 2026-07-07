@@ -242,8 +242,9 @@ def parse_args(argv=None):
     freq.add_argument(
         "--num_nu_band",
         type=int,
-        default=15,
-        help="frequency sampling points per band integration (default: 15)",
+        default=5,
+        help="frequency sampling points per band integration (default: 5; "
+        "best with 4k+1 — use 9-17 for radio or bands wider than two decades)",
     )
 
     # -- Time grid ----------------------------------------------------------

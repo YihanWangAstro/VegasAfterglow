@@ -34,6 +34,7 @@ Have a feature request? [Open an issue](https://github.com/YihanWangAstro/VegasA
 ### Changed
 
 - **Faster flux evaluation for fitting workloads**: narrow-window and band-integrated flux requests no longer pay for the full time range (evaluations are clamped to the observed window — up to ~2x for fit-style calls), and repeated-frequency light-curve points share their boundary evaluations (~2x for densely sampled light curves)
+- **Band-integration default is faster and Boole-aligned**: the band integrator uses Boole's rule on a log frequency grid, which is most accurate when `num_points = 4k + 1`. The fitter default drops from 15 to 5 — band-flux calls run ~2.7x faster with integration error below a few 1e-4 for optical and X-ray instrument bands. Radio bands (spectral breaks often in-band) and bands wider than two decades should pass 9-17; bolometric requests 33+
 
 The SSC (inverse Compton) pipeline was rebuilt this release. It was unchanged between v2.0.5 and v2.0.6, so the comparisons below hold against both.
 
