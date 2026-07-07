@@ -2,6 +2,14 @@
  "generated": "2026-07-07",
  "papers": [
   {
+   "figures": [
+    {
+     "file": "figures/W7166900500_0.png",
+     "caption": "Radio light curve of SN\\,2024abup at frequencies shown in tab:radio, shown alongside other well-studied SN\\,Ic-bl for comparison: 1998bw ; 2002ap ; 2003jd ; 2007bg ; 2009bb ; detections and upper limits of several other SNe are from , , and . The solid and dashed curves show the expected 6 GHz light curves generated using VegasAfterglow for a typical relativistic jet with energy $E_iso=10^51 erg$, initial Lorentz \u2026",
+     "matched": true
+    }
+   ],
+   "usage": "used",
    "key": "W7166900500",
    "title": "JWST observations of SN 2024abup: First Detection of CO in a broad-lined Type Ic Supernova and Constraints on r-process Nucleosynthesis",
    "year": 2026,
@@ -74,17 +82,22 @@
    "co_institutes": [],
    "sources": [
     "openalex:fulltext"
-   ],
+   ]
+  },
+  {
    "figures": [
     {
-     "file": "figures/W7166900500_0.png",
-     "caption": "Radio light curve of SN\\,2024abup at frequencies shown in tab:radio, shown alongside other well-studied SN\\,Ic-bl for comparison: 1998bw ; 2002ap ; 2003jd ; 2007bg ; 2009bb ; detections and upper limits of several other SNe are from , , and . The solid and dashed curves show the expected 6 GHz light curves generated using VegasAfterglow for a typical relativistic jet with energy $E_iso=10^51 erg$, initial Lorentz \u2026",
+     "file": "figures/W7165762260_0.png",
+     "caption": "Best-fitting results for the jet+cocoon model using VegasAfterglow code. The top left panel is for the late-time radio emission observed with the VLA, GMRT, and ALMA modeled with the jet component. The bottom left panel is for the early time radio emission observed with the VLA and modeled with the wide-angle outflow (i.e., the cocoon). The lines are drawn from the posterior distributions shown Fig. in the appendix. \u2026",
+     "matched": true
+    },
+    {
+     "file": "figures/W7165762260_1.png",
+     "caption": "Corner plots of the posterior distributions for the jet+cocoon model using VegasAfterglow code. As seen from these plots, the collimated corrected energy of the jet is reaching the highest value we impose as an upper limit for our prior, $3 10^52 \\, erg$, the initial Lorentz factor of the jet is unconstrained and therefore serves as a lower limit. In addition, the observing angle is also reaching the highest value \u2026",
      "matched": true
     }
    ],
-   "usage": "used"
-  },
-  {
+   "usage": "used",
    "key": "W7165762260",
    "title": "A 14-yr-old Mystery: The Peculiar Case of the Engine-driven SN 2012ap",
    "year": 2026,
@@ -410,22 +423,11 @@
    "sources": [
     "openalex:cites",
     "openalex:fulltext"
-   ],
-   "figures": [
-    {
-     "file": "figures/W7165762260_0.png",
-     "caption": "Best-fitting results for the jet+cocoon model using VegasAfterglow code. The top left panel is for the late-time radio emission observed with the VLA, GMRT, and ALMA modeled with the jet component. The bottom left panel is for the early time radio emission observed with the VLA and modeled with the wide-angle outflow (i.e., the cocoon). The lines are drawn from the posterior distributions shown Fig. in the appendix. \u2026",
-     "matched": true
-    },
-    {
-     "file": "figures/W7165762260_1.png",
-     "caption": "Corner plots of the posterior distributions for the jet+cocoon model using VegasAfterglow code. As seen from these plots, the collimated corrected energy of the jet is reaching the highest value we impose as an upper limit for our prior, $3 10^52 \\, erg$, the initial Lorentz factor of the jet is unconstrained and therefore serves as a lower limit. In addition, the observing angle is also reaching the highest value \u2026",
-     "matched": true
-    }
-   ],
-   "usage": "used"
+   ]
   },
   {
+   "figures": [],
+   "usage": "cited",
    "key": "W7163918826",
    "title": "Observational Properties of Nonthermal Emission from Relativistic Jets Escaping Active Galactic Nucleus Disks",
    "year": 2026,
@@ -455,11 +457,17 @@
    "co_institutes": [],
    "sources": [
     "openalex:cites"
-   ],
-   "figures": [],
-   "usage": "cited"
+   ]
   },
   {
+   "figures": [
+    {
+     "file": "figures/W7164446528_0.png",
+     "caption": "Finding chart of EP260321a/SN 2026gzf using DECam imaging in the $g$ and $i$ filters. Archival pre-explosion DECam images from 2013 (13 years before discovery) are shown in the top panels, while the bottom panels show imaging obtained on 2026-03-25 ($T_0+3.6$ d). A blue point source ($g-i$\\,$ $\\,$-1.3$ mag) is visible at the location of transient in archival imaging (see Appendix ). The transient explosion site (red \u2026",
+     "matched": false
+    }
+   ],
+   "usage": "used",
    "key": "W7164446528",
    "title": "EP260321a/SN 2026gzf: The Faintest Shock Breakout Associated with a Broad-Lined Supernova",
    "year": 2026,
@@ -523,17 +531,17 @@
    "co_institutes": [],
    "sources": [
     "openalex:fulltext"
-   ],
+   ]
+  },
+  {
    "figures": [
     {
-     "file": "figures/W7164446528_0.png",
-     "caption": "Finding chart of EP260321a/SN 2026gzf using DECam imaging in the $g$ and $i$ filters. Archival pre-explosion DECam images from 2013 (13 years before discovery) are shown in the top panels, while the bottom panels show imaging obtained on 2026-03-25 ($T_0+3.6$ d). A blue point source ($g-i$\\,$ $\\,$-1.3$ mag) is visible at the location of transient in archival imaging (see Appendix ). The transient explosion site (red \u2026",
+     "file": "figures/W7164447803_0.png",
+     "caption": "Comparison of the X-ray properties of EP\\,260321a from the GCNs against the X-ray light curves of other SESNe. With the exception of SBO XRF\\,080109, EP\\,260321a is the least luminous FXT, peaking several orders of magnitude below FXTs associated with on-axis relativistic jets.",
      "matched": false
     }
    ],
-   "usage": "used"
-  },
-  {
+   "usage": "used",
    "key": "W7164447803",
    "title": "A Multi-Wavelength View of the First Type Ic-BL Supernova with an Einstein Probe X-ray Shock Breakout",
    "year": 2026,
@@ -600,17 +608,17 @@
    "co_institutes": [],
    "sources": [
     "openalex:fulltext"
-   ],
-   "figures": [
-    {
-     "file": "figures/W7164447803_0.png",
-     "caption": "Comparison of the X-ray properties of EP\\,260321a from the GCNs against the X-ray light curves of other SESNe. With the exception of SBO XRF\\,080109, EP\\,260321a is the least luminous FXT, peaking several orders of magnitude below FXTs associated with on-axis relativistic jets.",
-     "matched": false
-    }
-   ],
-   "usage": "used"
+   ]
   },
   {
+   "figures": [
+    {
+     "file": "figures/W7163596618_0.png",
+     "caption": "Multi-band afterglow modeling of GRB 061201 with VEGASAFTERGLOW. The left panel (a) shows the best-fitted result at $z=0.111$. For comparison, the light curve of the kilonova AT2017gfo, artificially shifted to $z=0.111$, is over-plotted (star symbols). The right panel (b) displays the best-fitted result at $z=1.2$.",
+     "matched": true
+    }
+   ],
+   "usage": "used",
    "key": "W7163596618",
    "title": "Revealing the high redshift host galaxy of the short GRB 061201 with JWST",
    "year": 2026,
@@ -658,17 +666,17 @@
    "co_institutes": [],
    "sources": [
     "openalex:fulltext"
-   ],
-   "figures": [
-    {
-     "file": "figures/W7163596618_0.png",
-     "caption": "Multi-band afterglow modeling of GRB 061201 with VEGASAFTERGLOW. The left panel (a) shows the best-fitted result at $z=0.111$. For comparison, the light curve of the kilonova AT2017gfo, artificially shifted to $z=0.111$, is over-plotted (star symbols). The right panel (b) displays the best-fitted result at $z=1.2$.",
-     "matched": true
-    }
-   ],
-   "usage": "used"
+   ]
   },
   {
+   "figures": [
+    {
+     "file": "figures/W7162655324_0.png",
+     "caption": "Our physical picture for GRB 250702B. Panel (a) shows the geodesic orbit of the WD, where the red line represents our numerical result with $a = 30\\,R_ $, $e = 0.97$, $M_ BH = 1 10^5\\,M_ $, $a_ spin=0.9$, and $ _ min = 0.12 rad$ ($7^ $). The BH spin axis is indicated by the vertical black line. The orbit exhibits relativistic precession. Mass loss from the WD is not included in this calculation. Panel (b) \u2026",
+     "matched": false
+    }
+   ],
+   "usage": "used",
    "key": "W7162655324",
    "title": "Successive Partial Disruptions with Orbital Precession in a White Dwarf\u2013Black Hole System for Repeating GRB 250702B",
    "year": 2026,
@@ -714,17 +722,17 @@
    "sources": [
     "openalex:cites",
     "openalex:fulltext"
-   ],
+   ]
+  },
+  {
    "figures": [
     {
-     "file": "figures/W7162655324_0.png",
-     "caption": "Our physical picture for GRB 250702B. Panel (a) shows the geodesic orbit of the WD, where the red line represents our numerical result with $a = 30\\,R_ $, $e = 0.97$, $M_ BH = 1 10^5\\,M_ $, $a_ spin=0.9$, and $ _ min = 0.12 rad$ ($7^ $). The BH spin axis is indicated by the vertical black line. The orbit exhibits relativistic precession. Mass loss from the WD is not included in this calculation. Panel (b) \u2026",
+     "file": "figures/W7162475202_0.png",
+     "caption": "Prompt emission properties of GRB\\,260310A. a. Fermi/GBM count-rate light curves from NaI detectors na and nb in the $50-300$ keV energy band. The black lines and gray lines represent the net counts and errors with a bin size of 2 s. b. Accumulated counts. The blue horizontal solid (dashed) lines are drawn at 0\\%--100\\% (5\\%--95\\%) of the total accumulated counts. The vertical lines in a and b represent the $T_90$ \u2026",
      "matched": false
     }
    ],
-   "usage": "used"
-  },
-  {
+   "usage": "used",
    "key": "W7162475202",
    "title": "An extremely bright slow-rising afterglow from an off-axis jet in GRB 260310A",
    "year": 2026,
@@ -786,17 +794,11 @@
    "co_institutes": [],
    "sources": [
     "openalex:fulltext"
-   ],
-   "figures": [
-    {
-     "file": "figures/W7162475202_0.png",
-     "caption": "Prompt emission properties of GRB\\,260310A. a. Fermi/GBM count-rate light curves from NaI detectors na and nb in the $50-300$ keV energy band. The black lines and gray lines represent the net counts and errors with a bin size of 2 s. b. Accumulated counts. The blue horizontal solid (dashed) lines are drawn at 0\\%--100\\% (5\\%--95\\%) of the total accumulated counts. The vertical lines in a and b represent the $T_90$ \u2026",
-     "matched": false
-    }
-   ],
-   "usage": "used"
+   ]
   },
   {
+   "figures": [],
+   "usage": "unverified",
    "key": "W7160102728",
    "title": "A gamma-ray burst associated with a superluminous supernova",
    "year": 2026,
@@ -1010,11 +1012,11 @@
    ],
    "sources": [
     "openalex:fulltext"
-   ],
-   "figures": [],
-   "usage": "unverified"
+   ]
   },
   {
+   "figures": [],
+   "usage": "unverified",
    "key": "W7157079341",
    "title": "Signature of a Magnetar Central Engine from the Multiband Afterglow of GRB 151027A Associated with a Supernova",
    "year": 2026,
@@ -1160,11 +1162,17 @@
    "sources": [
     "openalex:cites",
     "openalex:fulltext"
-   ],
-   "figures": [],
-   "usage": "unverified"
+   ]
   },
   {
+   "figures": [
+    {
+     "file": "figures/W4415026534_0.png",
+     "caption": "BNS-I model light curves composed of GRB prompt (red), magnetar wind (blue), GRB afterglow (green), and kilonova afterglow (yellow) emissions. Prompt emission is calculated for a Gaussian jet with $ _c = 3^ $ and $E_ , \\, iso = 10^51$ erg (see Section ). Magnetar wind emission is calculated from spindown luminosity (Eq. ) and assumed to be isotropic (see Section ). GRB and kilonova afterglows are calculated using \u2026",
+     "matched": true
+    }
+   ],
+   "usage": "used",
    "key": "W4415026534",
    "title": "X-Ray Emission Signatures of Neutron Star Mergers",
    "year": 2026,
@@ -1195,17 +1203,17 @@
    "co_institutes": [],
    "sources": [
     "openalex:fulltext"
-   ],
-   "figures": [
-    {
-     "file": "figures/W4415026534_0.png",
-     "caption": "BNS-I model light curves composed of GRB prompt (red), magnetar wind (blue), GRB afterglow (green), and kilonova afterglow (yellow) emissions. Prompt emission is calculated for a Gaussian jet with $ _c = 3^ $ and $E_ , \\, iso = 10^51$ erg (see Section ). Magnetar wind emission is calculated from spindown luminosity (Eq. ) and assumed to be isotropic (see Section ). GRB and kilonova afterglows are calculated using \u2026",
-     "matched": true
-    }
-   ],
-   "usage": "used"
+   ]
   },
   {
+   "figures": [
+    {
+     "file": "figures/W7154790034_0.png",
+     "caption": "Posterior distribution of an MCMC fit of a synthetic LGRB afterglow population to a selection of observed afterglow flux density distributions at a range of frequencies and times. The jet-opening angle, $ _c$, is in units of radians. Our synthetic population of afterglows are drawn from this posterior distribution.",
+     "matched": false
+    }
+   ],
+   "usage": "used",
    "key": "W7154790034",
    "title": "Prospects for GRB Afterglow Discovery with the Eric and Wendy Schmidt Observatory System",
    "year": 2026,
@@ -1266,17 +1274,17 @@
    "co_institutes": [],
    "sources": [
     "openalex:fulltext"
-   ],
+   ]
+  },
+  {
    "figures": [
     {
-     "file": "figures/W7154790034_0.png",
-     "caption": "Posterior distribution of an MCMC fit of a synthetic LGRB afterglow population to a selection of observed afterglow flux density distributions at a range of frequencies and times. The jet-opening angle, $ _c$, is in units of radians. Our synthetic population of afterglows are drawn from this posterior distribution.",
+     "file": "figures/W7148177702_0.png",
+     "caption": "Schematic illustration of a two-component jet structure and the associated forward\u2013reverse shock pairs formed in both the jet core and the wing. The top panel depicts the case of a fast wing, in which the emission is relativistically beamed away from an on-axis observer. The bottom panel shows the case of a slower wing, where the wing emission lies within the observer\u2019s beaming cone and is therefore detectable. The \u2026",
      "matched": false
     }
    ],
-   "usage": "used"
-  },
-  {
+   "usage": "used",
    "key": "W7148177702",
    "title": "Systematic Study of Forward and Reverse Shock Afterglow Emission from Two-Component Jets",
    "year": 2026,
@@ -1307,17 +1315,17 @@
    "co_institutes": [],
    "sources": [
     "openalex:fulltext"
-   ],
+   ]
+  },
+  {
    "figures": [
     {
-     "file": "figures/W7148177702_0.png",
-     "caption": "Schematic illustration of a two-component jet structure and the associated forward\u2013reverse shock pairs formed in both the jet core and the wing. The top panel depicts the case of a fast wing, in which the emission is relativistically beamed away from an on-axis observer. The bottom panel shows the case of a slower wing, where the wing emission lies within the observer\u2019s beaming cone and is therefore detectable. The \u2026",
+     "file": "figures/W7144391256_0.png",
+     "caption": "Characteristics of the prompt X-ray emission of EP241113a observed by EP-WXT. (a) Upper panel: The light curve of the net count rate of EP241113a in the $0.5$--$4\\, keV$ band, with a time bin size of $3\\, s$. Middle panel: Cumulative X-ray photon count distribution as a function of time. Lower panel: The photon index in the absorbed power-law model for three time bins. The two vertical dashed lines mark the epochs \u2026",
      "matched": false
     }
    ],
-   "usage": "used"
-  },
-  {
+   "usage": "used",
    "key": "W7144391256",
    "title": "An energetic dirty fireball detected in soft X-rays",
    "year": 2026,
@@ -1424,17 +1432,17 @@
    "co_institutes": [],
    "sources": [
     "openalex:fulltext"
-   ],
+   ]
+  },
+  {
    "figures": [
     {
-     "file": "figures/W7144391256_0.png",
-     "caption": "Characteristics of the prompt X-ray emission of EP241113a observed by EP-WXT. (a) Upper panel: The light curve of the net count rate of EP241113a in the $0.5$--$4\\, keV$ band, with a time bin size of $3\\, s$. Middle panel: Cumulative X-ray photon count distribution as a function of time. Lower panel: The photon index in the absorbed power-law model for three time bins. The two vertical dashed lines mark the epochs \u2026",
+     "file": "figures/W7134828934_0.png",
+     "caption": "(a) $E_ p-E_ ,iso$ correlation plane. Gray diamonds and black-filled circles represent Type II and Type I GRBs, respectively. (b) 1D and 2D distributions in the $T_90- $ plane. The dashed line marks the empirical boundary $ = 0.03$. (c) The $f_ eff-T_ 90$ distribution. The vertical solid line denotes the traditional classification boundary at $T_90$ = 2 s. The data adopted above are taken from .",
      "matched": false
     }
    ],
-   "usage": "used"
-  },
-  {
+   "usage": "used",
    "key": "W7134828934",
    "title": "Short-duration GRB 250221A Afterglow Driven by Two-component Jets from the Merger of a Compact Star",
    "year": 2026,
@@ -1504,17 +1512,11 @@
    "sources": [
     "openalex:cites",
     "openalex:fulltext"
-   ],
-   "figures": [
-    {
-     "file": "figures/W7134828934_0.png",
-     "caption": "(a) $E_ p-E_ ,iso$ correlation plane. Gray diamonds and black-filled circles represent Type II and Type I GRBs, respectively. (b) 1D and 2D distributions in the $T_90- $ plane. The dashed line marks the empirical boundary $ = 0.03$. (c) The $f_ eff-T_ 90$ distribution. The vertical solid line denotes the traditional classification boundary at $T_90$ = 2 s. The data adopted above are taken from .",
-     "matched": false
-    }
-   ],
-   "usage": "used"
+   ]
   },
   {
+   "figures": [],
+   "usage": "unverified",
    "key": "W7128439219",
    "title": "EP241217a: A Likely Type II GRB with an Achromatic Bump at z = 4.59",
    "year": 2026,
@@ -1556,11 +1558,17 @@
    "sources": [
     "openalex:cites",
     "openalex:fulltext"
-   ],
-   "figures": [],
-   "usage": "unverified"
+   ]
   },
   {
+   "figures": [
+    {
+     "file": "figures/W7125804839_0.png",
+     "caption": "Sequence of prompt and afterglow observations for , the dashed vertical line indicating the -GBM trigger time. Vertical green and orange lines with dots correspond to the start times of observations by respective instruments.",
+     "matched": false
+    }
+   ],
+   "usage": "used",
    "key": "W7125804839",
    "title": "Extremely Luminous Optical Afterglow of an Energetic Gamma-Ray Burst GRB 230204B",
    "year": 2026,
@@ -1639,17 +1647,11 @@
    "sources": [
     "openalex:cites",
     "openalex:fulltext"
-   ],
-   "figures": [
-    {
-     "file": "figures/W7125804839_0.png",
-     "caption": "Sequence of prompt and afterglow observations for , the dashed vertical line indicating the -GBM trigger time. Vertical green and orange lines with dots correspond to the start times of observations by respective instruments.",
-     "matched": false
-    }
-   ],
-   "usage": "used"
+   ]
   },
   {
+   "figures": [],
+   "usage": "unverified",
    "key": "W4416895750",
    "title": "Multiwavelength Observations of the Apparently Nonrepeating FRB 20250316A",
    "year": 2025,
@@ -2094,11 +2096,22 @@
    ],
    "sources": [
     "openalex:cites"
-   ],
-   "figures": [],
-   "usage": "unverified"
+   ]
   },
   {
+   "figures": [
+    {
+     "file": "figures/W4416715526_0.png",
+     "caption": "Radio, X-ray and infrared detections of the counterparts to . The $1 $ posteriors from VegasAfterglow fit to these data are shown as shaded regions. The left-hand panel shows the fitting results without jet spreading enabled and the right-hand panel shows the results with jet spreading enabled.",
+     "matched": true
+    },
+    {
+     "file": "figures/W4416715526_1.png",
+     "caption": "Posterior distributions of the jet parameters derived using VegasAfterglow to fit the available multi-wavelength data with a non-spreading top-hat jet.",
+     "matched": true
+    }
+   ],
+   "usage": "used",
    "key": "W4416715526",
    "title": "Optical/Infrared Observations of the Extraordinary GRB 250702B: A Highly Obscured Afterglow in a Massive Galaxy Consistent with Multiple Possible Progenitors",
    "year": 2025,
@@ -2337,22 +2350,11 @@
    ],
    "sources": [
     "openalex:cites"
-   ],
-   "figures": [
-    {
-     "file": "figures/W4416715526_0.png",
-     "caption": "Radio, X-ray and infrared detections of the counterparts to . The $1 $ posteriors from VegasAfterglow fit to these data are shown as shaded regions. The left-hand panel shows the fitting results without jet spreading enabled and the right-hand panel shows the results with jet spreading enabled.",
-     "matched": true
-    },
-    {
-     "file": "figures/W4416715526_1.png",
-     "caption": "Posterior distributions of the jet parameters derived using VegasAfterglow to fit the available multi-wavelength data with a non-spreading top-hat jet.",
-     "matched": true
-    }
-   ],
-   "usage": "used"
+   ]
   },
   {
+   "figures": [],
+   "usage": "cited",
    "key": "W4416593657",
    "title": "Double-peaked optical afterglow in GRB 110213A inferring a magnetized thick shell ejecta",
    "year": 2025,
@@ -2408,9 +2410,7 @@
    "sources": [
     "openalex:cites",
     "openalex:fulltext"
-   ],
-   "figures": [],
-   "usage": "cited"
+   ]
   },
   {
    "key": "ads_2025ApJ___994L__46C",
