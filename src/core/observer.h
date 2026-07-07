@@ -365,8 +365,23 @@ MeshGrid Observer::specific_flux(Array const& t_obs, Array const& nu_obs, Photon
             const Real* geom_row = &lg2_geom_factor(i, j, 0);
             auto* ph_row = &photons(eff_i, j, 0);
 
-            // Precompute boundary values for all time grid points.
-            for (size_t k = 0; k < t_grid; k++) {
+            // Only the time intervals bracketing an observation point are ever
+            // read: clamp the boundary precompute to that window. Off-axis rows
+            // span many decades outside a narrow request, so this skips the
+            // bulk of the photon evaluations for fit-style calls.
+            if (t_row[t_grid - 1] < lg2_t_obs(0) || t_row[0] > lg2_t_obs(t_obs_len - 1)) {
+                continue;
+            }
+            size_t k_lo = 0;
+            while (k_lo + 1 < t_grid && t_row[k_lo + 1] < lg2_t_obs(0)) {
+                k_lo++;
+            }
+            size_t k_hi = k_lo + 1;
+            while (k_hi + 1 < t_grid && t_row[k_hi] <= lg2_t_obs(t_obs_len - 1)) {
+                k_hi++;
+            }
+
+            for (size_t k = k_lo; k <= k_hi; k++) {
                 const Real lg2_dop = dop_row[k];
                 const Real lg2_geom = geom_row[k];
                 auto& ph = ph_row[k];
@@ -380,7 +395,7 @@ MeshGrid Observer::specific_flux(Array const& t_obs, Array const& nu_obs, Photon
             iterate_to(t_row[0], lg2_t_obs, t_idx);
             const size_t col_first = t_idx;
 
-            for (size_t k = 0; k < t_grid - 1 && t_idx < t_obs_len; k++) {
+            for (size_t k = k_lo; k < k_hi && t_idx < t_obs_len; k++) {
                 if (t_row[k + 1] < lg2_t_obs(t_idx))
                     continue;
 
@@ -471,11 +486,25 @@ Array Observer::specific_flux_series(Array const& t_obs, Array const& nu_obs, Ph
                 auto& ph_lo = ph_row[k];
                 auto& ph_hi = ph_row[k + 1];
 
+                Real prev_nu = std::numeric_limits<Real>::quiet_NaN();
+                Real prev_lo = 0;
+                Real prev_hi = 0;
                 for (size_t s = block_first; s < idx; s++) {
                     const Real lg2_nu = lg2_nu_src(s);
-                    const bool carried = (s == block_first && carry_k == k && carry_nu == lg2_nu);
-                    const Real lo = carried ? carry_val : ph_lo.compute_log2_I_nu(lg2_nu - dop_row[k]) + geom_row[k];
-                    const Real hi = ph_hi.compute_log2_I_nu(lg2_nu - dop_row[k + 1]) + geom_row[k + 1];
+                    Real lo, hi;
+                    if (lg2_nu == prev_nu) {
+                        // Runs of same-frequency points (light curves; per-band
+                        // fit data) share both boundary evaluations.
+                        lo = prev_lo;
+                        hi = prev_hi;
+                    } else {
+                        const bool carried = (s == block_first && carry_k == k && carry_nu == lg2_nu);
+                        lo = carried ? carry_val : ph_lo.compute_log2_I_nu(lg2_nu - dop_row[k]) + geom_row[k];
+                        hi = ph_hi.compute_log2_I_nu(lg2_nu - dop_row[k + 1]) + geom_row[k + 1];
+                        prev_nu = lg2_nu;
+                        prev_lo = lo;
+                        prev_hi = hi;
+                    }
                     const Real slope = (hi - lo) * inv_dt;
                     col_lg2(s) = std::isfinite(slope) ? lo + (lg2_t_obs(s) - t_row[k]) * slope : -con::inf;
                     carry_k = k + 1;

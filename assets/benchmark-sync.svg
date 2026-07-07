@@ -26,18 +26,16 @@
   <text x="475" y="44" text-anchor="middle" font-size="9" class="cs">CPU time by stage · Apple M2 · single core · default resolution</text>
   <text x="475" y="57" text-anchor="middle" font-size="9" class="cs">each group: θv/θc = 0 │ 1 │ 2 │ 4 (left → right)</text>
 
-  <rect x="167" y="67" width="12" height="12" rx="2" fill="#D49B40"/>
-  <text x="183" y="78" font-size="10" class="cb">Shock Dynamics</text>
-  <rect x="282" y="67" width="12" height="12" rx="2" fill="#4DA5BB"/>
-  <text x="298" y="78" font-size="10" class="cb">EAT Grid</text>
-  <rect x="361" y="67" width="12" height="12" rx="2" fill="#45AB8A"/>
-  <text x="377" y="78" font-size="10" class="cb">Syn. Electrons</text>
-  <rect x="476" y="67" width="12" height="12" rx="2" fill="#D46565"/>
-  <text x="492" y="78" font-size="10" class="cb">Syn. Photons</text>
-  <rect x="579" y="67" width="12" height="12" rx="2" fill="#5B8ADB"/>
-  <text x="595" y="78" font-size="10" class="cb">Flux Integration</text>
-  <rect x="706" y="67" width="12" height="12" rx="2" fill="#9B72CF"/>
-  <text x="722" y="78" font-size="10" class="cb">IC Cooling</text>
+  <rect x="213" y="67" width="12" height="12" rx="2" fill="#D49B40"/>
+  <text x="229" y="78" font-size="10" class="cb">Shock Dynamics</text>
+  <rect x="328" y="67" width="12" height="12" rx="2" fill="#4DA5BB"/>
+  <text x="344" y="78" font-size="10" class="cb">EAT Grid</text>
+  <rect x="407" y="67" width="12" height="12" rx="2" fill="#45AB8A"/>
+  <text x="423" y="78" font-size="10" class="cb">Syn. Electrons</text>
+  <rect x="522" y="67" width="12" height="12" rx="2" fill="#D46565"/>
+  <text x="538" y="78" font-size="10" class="cb">Syn. Photons</text>
+  <rect x="625" y="67" width="12" height="12" rx="2" fill="#5B8ADB"/>
+  <text x="641" y="78" font-size="10" class="cb">Flux Integration</text>
 
   <line x1="52" y1="265" x2="935" y2="265" class="gl" stroke-width="1"/>
   <line x1="52" y1="222.8" x2="935" y2="222.8" class="gl" stroke-width="1" stroke-dasharray="4,3"/>

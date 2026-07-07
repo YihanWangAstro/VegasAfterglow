@@ -168,7 +168,9 @@ def _make_chart(bench, rad_type, rad_label, out_path, theme="adaptive"):
          'each group: \u03b8v/\u03b8c\u202f=\u202f0\u2002\u2502\u20021\u2002\u2502\u20022\u2002\u2502\u20024\u2002(left \u2192 right)</text>')
     emit()
 
-    active_stages = [s for s in STAGES if any(b and b.get(s[0], 0) > 0 for g in groups for b in g["bars"])]
+    # A no-op stage still records its ~tens-of-ns scope-timer overhead (e.g.
+    # IC cooling in synchrotron-only runs); require a visible contribution.
+    active_stages = [s for s in STAGES if any(b and b.get(s[0], 0) > 1e-3 for g in groups for b in g["bars"])]
     total_lw = sum(17 + len(label) * 6 for _, _, label in active_stages) + 14 * (len(active_stages) - 1)
     lx = 475 - total_lw // 2
     for key, color, label in active_stages:
