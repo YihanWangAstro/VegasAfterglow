@@ -740,7 +740,7 @@ See `script/vegas-mcmc.ipynb` for a complete working example with data loading, 
 
 ## Performance Highlights
 
-VegasAfterglow is designed for speed. A tophat synchrotron light curve completes in under 1 ms; even the most demanding case — a structured jet with full SSC and Klein-Nishina cooling off-axis — finishes in ~140 ms. This makes MCMC parameter estimation lightning fast on a laptop:
+VegasAfterglow is designed for speed. A tophat synchrotron light curve completes in under 1 ms; even the most demanding case — a structured jet with full SSC and Klein-Nishina cooling off-axis — finishes in ~60 ms. This makes MCMC parameter estimation lightning fast on a laptop:
 
 * **Tophat jet**: 10,000 MCMC steps, 8 parameters, 15 data points for ~0.3 M samples ~15 s (Apple M2, 8 cores).
 * **Structured jet**: same setup ~1 minute.
