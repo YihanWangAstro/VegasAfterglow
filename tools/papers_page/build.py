@@ -345,8 +345,8 @@ def main():
 <style>{CSS}</style></head><body><div class="wrap">
 <div class="masthead">{inline_logo()}<div>
   <h1>Papers using VegasAfterglow</h1>
-  <div class="meta">updated {esc(data["generated"])} · sources: NASA ADS full-text
-  &amp; citations, OpenAlex, curated additions</div></div>
+  <div class="meta">auto-updated weekly · last run {esc(data["generated"])} ·
+  sources: NASA ADS full-text &amp; citations, OpenAlex, curated additions</div></div>
   <div class="verdict">{len(papers)} papers</div></div>
 <nav>
   <a href="#map">World map <span class="n">{len(institutes)}</span></a>
