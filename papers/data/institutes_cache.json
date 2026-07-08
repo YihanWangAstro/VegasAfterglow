@@ -1253,5 +1253,126 @@
   "lng": 13.06566,
   "homepage": "https://www.uni-potsdam.de/en/",
   "logo": "https://www.google.com/s2/favicons?domain=uni-potsdam.de&sz=64"
+ },
+ "I40963666": {
+  "id": "I40963666",
+  "name": "Central China Normal University",
+  "ror": "https://ror.org/03x1jna21",
+  "country": "China",
+  "city": "Wuhan",
+  "lat": 30.518009185791016,
+  "lng": 114.3636245727539,
+  "homepage": "http://english.ccnu.edu.cn/",
+  "logo": "https://www.google.com/s2/favicons?domain=english.ccnu.edu.cn&sz=64"
+ },
+ "I4210136460": {
+  "id": "I4210136460",
+  "name": "Astronomical Institute of the Slovak Academy of Sciences",
+  "ror": "https://ror.org/03t6cz096",
+  "country": "Slovakia",
+  "city": "Ke\u017emarok",
+  "lat": 49.135711669921875,
+  "lng": 20.43351936340332,
+  "homepage": "https://www.astro.sk",
+  "logo": "https://www.google.com/s2/favicons?domain=astro.sk&sz=64"
+ },
+ "I4210155633": {
+  "id": "I4210155633",
+  "name": "Astronomical Observatory",
+  "ror": "https://ror.org/04t4pcw17",
+  "country": "Serbia",
+  "city": "Belgrade",
+  "lat": 44.803611755371094,
+  "lng": 20.507999420166016,
+  "homepage": "http://www.aob.rs/",
+  "logo": "https://www.google.com/s2/favicons?domain=aob.rs&sz=64"
+ },
+ "I176453806": {
+  "id": "I176453806",
+  "name": "University of Potsdam",
+  "ror": "https://ror.org/03bnmw459",
+  "country": "Germany",
+  "city": "Potsdam",
+  "lat": 52.39886,
+  "lng": 13.06566,
+  "homepage": "https://www.uni-potsdam.de/en/",
+  "logo": "https://www.google.com/s2/favicons?domain=uni-potsdam.de&sz=64"
+ },
+ "I193662353": {
+  "id": "I193662353",
+  "name": "Utrecht University",
+  "ror": "https://ror.org/04pp8hn57",
+  "country": "The Netherlands",
+  "city": "Utrecht",
+  "lat": 52.09083,
+  "lng": 5.12222,
+  "homepage": "https://www.uu.nl",
+  "logo": "https://www.google.com/s2/favicons?domain=uu.nl&sz=64"
+ },
+ "I4210093566": {
+  "id": "I4210093566",
+  "name": "National Institute for Subatomic Physics",
+  "ror": "https://ror.org/00f9tz983",
+  "country": "The Netherlands",
+  "city": "Amsterdam",
+  "lat": 52.37403,
+  "lng": 4.88969,
+  "homepage": "https://www.nikhef.nl/",
+  "logo": "https://www.google.com/s2/favicons?domain=nikhef.nl&sz=64"
+ },
+ "I201324441": {
+  "id": "I201324441",
+  "name": "University of Ferrara",
+  "ror": "https://ror.org/041zkgm14",
+  "country": "Italy",
+  "city": "Ferrara",
+  "lat": 44.83804,
+  "lng": 11.62057,
+  "homepage": "https://www.unife.it",
+  "logo": "https://www.google.com/s2/favicons?domain=unife.it&sz=64"
+ },
+ "I4210107105": {
+  "id": "I4210107105",
+  "name": "Istituto Nazionale di Fisica Nucleare, Sezione di Ferrara",
+  "ror": "https://ror.org/00zs3y046",
+  "country": "Italy",
+  "city": "Ferrara",
+  "lat": 44.83804,
+  "lng": 11.62057,
+  "homepage": "https://www.fe.infn.it",
+  "logo": "https://www.google.com/s2/favicons?domain=fe.infn.it&sz=64"
+ },
+ "I4210124420": {
+  "id": "I4210124420",
+  "name": "Collurania Teramo Observatory",
+  "ror": "https://ror.org/02ttb5s67",
+  "country": "Italy",
+  "city": "Teramo",
+  "lat": 42.66122817993164,
+  "lng": 13.699009895324707,
+  "homepage": "http://www.oa-teramo.inaf.it/",
+  "logo": "https://www.google.com/s2/favicons?domain=oa-teramo.inaf.it&sz=64"
+ },
+ "I96673099": {
+  "id": "I96673099",
+  "name": "Technical University of Denmark",
+  "ror": "https://ror.org/04qtj9h94",
+  "country": "Denmark",
+  "city": "Kongens Lyngby",
+  "lat": 55.77043914794922,
+  "lng": 12.503780364990234,
+  "homepage": "https://dtu.dk",
+  "logo": "https://www.google.com/s2/favicons?domain=dtu.dk&sz=64"
+ },
+ "I4210127646": {
+  "id": "I4210127646",
+  "name": "Max Planck Institute for Gravitational Physics",
+  "ror": "https://ror.org/03sry2h30",
+  "country": "Germany",
+  "city": "Potsdam",
+  "lat": 52.41638946533203,
+  "lng": 12.96916675567627,
+  "homepage": "http://www.aei.mpg.de/",
+  "logo": "https://www.google.com/s2/favicons?domain=aei.mpg.de&sz=64"
  }
 }

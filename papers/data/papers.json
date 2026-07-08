@@ -1,6 +1,95 @@
 {
- "generated": "2026-07-07",
+ "generated": "2026-07-08",
  "papers": [
+  {
+   "key": "W7167492665",
+   "title": "AT2019ijn: A Fast-rising, Slow-decaying Blue Optical Transient with Exceptionally Bright Radio Emission",
+   "year": 2026,
+   "date": "2026-07-06",
+   "type": "article",
+   "authors": [
+    "Hucheng Ding",
+    "Xinwen Shu",
+    "Luming Sun",
+    "Liang-Duan Liu",
+    "Lei Yang",
+    "Yun-Wei Yu",
+    "Xueguang Zhang",
+    "Ying Gu",
+    "Fang\u2010Kun Peng",
+    "Fabao Zhang",
+    "Zhumao Zhang",
+    "Ningyu Tang"
+   ],
+   "journal": "The Astrophysical Journal Letters",
+   "doi": "10.3847/2041-8213/ae732c",
+   "arxiv": null,
+   "abstract": "Abstract We report the discovery of a peculiar optical transient, AT2019ijn, that occurred in the nuclear region of a dwarf galaxy at z = 0.2729 \u00b1 0.0001. It rises rapidly to peak at a luminosity of M g = \u221221.05 \u00b1 0.02 in 5.26 \u00b1 0.29 days, followed by a slow decline over more than a month, during which the optical emission has a persistently high blackbody temperature from <mml:math xmlns:mml=\"http://www.w3.org/1998/Math/MathML\" overflow=\"scroll\"> <mml:msub> <mml:mrow> <mml:mi>T</mml:mi> </mml:mrow> <mml:mrow> <mml:mi mathvariant=\"normal\">BB</mml:mi> </mml:mrow> </mml:msub> <mml:mo>=</mml:mo> <mml:mn>1.4</mml:mn> <mml:msubsup> <mml:mrow> <mml:mn>5</mml:mn> </mml:mrow> <mml:mrow> <mml:mo>\u2212</mml:mo> <mml:mn>0.13</mml:mn> </mml:mrow> <mml:mrow> <mml:mo>+</mml:mo> <mml:mn>0.16</mml:mn> </mml:mrow> </mml:msubsup> </mml:math> to <mml:math xmlns:mml=\"http://www.w3.org/1998/Math/MathML\" overflow=\"scroll\"> <mml:mn>1.5</mml:mn> <mml:msubsup> <mml:mrow> <mml:mn>9</mml:mn> </mml:mrow> <mml:mrow> <mml:mo>\u2212</mml:mo> <mml:mn>0.51</mml:mn> </mml:mrow> <mml:mrow> <mml:mo>+</mml:mo> <mml:mn>1.68</mml:mn> </mml:mrow> </mml:msubsup> <mml:mo>\u00d7</mml:mo> <mml:mn>1</mml:mn> <mml:msup> <mml:mrow> <mml:mn>0</mml:mn> </mml:mrow> <mml:mrow> <mml:mn>4</mml:mn> </mml:mrow> </mml:msup> </mml:math> K. The radio emission is exceptional, peaking at 641 days after optical discovery with a high luminosity of (2.0 \u00b1 0.1) \u00d7 10 31 erg s \u22121 Hz \u22121 . The peak radio luminosity is at least two orders of magnitude brighter than known radio-bright fast blue optical transients and supernova explosions at similar epochs but comparable to jetted tidal disruption events. The luminous and long-lasting radio emission with a late-time peak can be explained by an off-axis relativistic jet with a viewing angle of <mml:math xmlns:mml=\"http://www.w3.org/1998/Math/MathML\" overflow=\"scroll\"> <mml:mn>38</mml:mn> <mml:mo>.</mml:mo> <mml:msubsup> <mml:mrow> <mml:mn>9</mml:mn> </mml:mrow> <mml:mrow> <mml:mo>\u2212</mml:mo> <mml:mn>6.1</mml:mn> </mml:mrow> <mml:mrow> <mml:mo>+</mml:mo> <mml:mn>7.0</mml:mn> </mml:mrow> </mml:msubsup> <mml:mo>\u00b0</mml:mo> </mml:math> . We discuss possible origins for AT2019ijn and favor a jetted tidal disruption event involving an intermediate-mass black hole of <mml:math xmlns:mml=\"http://www.w3.org/1998/Math/MathML\" overflow=\"scroll\"> <mml:mn>1.3</mml:mn> <mml:msubsup> <mml:mrow> <mml:mn>2</mml:mn> </mml:mrow> <mml:mrow> <mml:mo>\u2212</mml:mo> <mml:mn>0.67</mml:mn> </mml:mrow> <mml:mrow> <mml:mo>+</mml:mo> <mml:mn>1.19</mml:mn> </mml:mrow> </mml:msubsup> <mml:mo>\u00d7</mml:mo> <mml:mn>1</mml:mn> <mml:msup> <mml:mrow> <mml:mn>0</mml:mn> </mml:mrow> <mml:mrow> <mml:mn>5</mml:mn> </mml:mrow> </mml:msup> </mml:math> M \u2299 , although a jetted magnetar model cannot be fully ruled out. AT2019ijn represents a new class of relativistic optical transients that highlights the importance of radio surveys for discovering off-axis jetted events.",
+   "institutes": [
+    {
+     "id": "I4472751",
+     "name": "Anhui Normal University",
+     "ror": "https://ror.org/05fsfvw79",
+     "country": "China",
+     "city": "Wuhu",
+     "lat": 31.352590560913086,
+     "lng": 118.4294662475586,
+     "homepage": "https://ahnu.edu.cn",
+     "logo": "https://www.google.com/s2/favicons?domain=ahnu.edu.cn&sz=64"
+    }
+   ],
+   "co_institutes": [
+    {
+     "id": "I40963666",
+     "name": "Central China Normal University",
+     "ror": "https://ror.org/03x1jna21",
+     "country": "China",
+     "city": "Wuhan",
+     "lat": 30.518009185791016,
+     "lng": 114.3636245727539,
+     "homepage": "http://english.ccnu.edu.cn/",
+     "logo": "https://www.google.com/s2/favicons?domain=english.ccnu.edu.cn&sz=64"
+    },
+    {
+     "id": "I4210136460",
+     "name": "Astronomical Institute of the Slovak Academy of Sciences",
+     "ror": "https://ror.org/03t6cz096",
+     "country": "Slovakia",
+     "city": "Ke\u017emarok",
+     "lat": 49.135711669921875,
+     "lng": 20.43351936340332,
+     "homepage": "https://www.astro.sk",
+     "logo": "https://www.google.com/s2/favicons?domain=astro.sk&sz=64"
+    },
+    {
+     "id": "I4210155633",
+     "name": "Astronomical Observatory",
+     "ror": "https://ror.org/04t4pcw17",
+     "country": "Serbia",
+     "city": "Belgrade",
+     "lat": 44.803611755371094,
+     "lng": 20.507999420166016,
+     "homepage": "http://www.aob.rs/",
+     "logo": "https://www.google.com/s2/favicons?domain=aob.rs&sz=64"
+    },
+    {
+     "id": "I150807315",
+     "name": "Guangxi University",
+     "ror": "https://ror.org/02c9qn167",
+     "country": "China",
+     "city": "Nanning",
+     "lat": 22.816669464111328,
+     "lng": 108.3166732788086,
+     "homepage": "https://www.gxu.edu.cn",
+     "logo": "https://www.google.com/s2/favicons?domain=gxu.edu.cn&sz=64"
+    }
+   ],
+   "sources": [
+    "openalex:cites"
+   ],
+   "figures": [],
+   "usage": "unverified"
+  },
   {
    "figures": [
     {
@@ -1163,6 +1252,95 @@
     "openalex:cites",
     "openalex:fulltext"
    ]
+  },
+  {
+   "key": "W7155385488",
+   "title": "XRF 241001A/SN 2024aiiq: A Faint Soft X-ray Transient Detected by SVOM with a Broad-Line Type Ic Supernova Revealed by JWST",
+   "year": 2026,
+   "date": "2026-04-22",
+   "type": "preprint",
+   "authors": [
+    "B. Schneider",
+    "M. Brunet",
+    "B. P. Gompertz",
+    "D. Turpin",
+    "D. B. Malesani",
+    "O. Godet",
+    "A. J. Levan",
+    "F. Daigne",
+    "N. Sarin",
+    "N. A. Rakotondrainibe",
+    "A. Martin-Carrillo",
+    "J. T. Palmerio",
+    "C. C. Th\u00f6ne",
+    "H. L. Li",
+    "A. Saccardi",
+    "A. de Ugarte Postigo",
+    "S. Antier",
+    "V. Buat",
+    "D. \u010eurov\u010d\u00edkov\u00e1",
+    "L. Izzo",
+    "J. K. Leung",
+    "G. Mo",
+    "Y. L. Qiu",
+    "S. D. Vergani",
+    "J.Christina Wang",
+    "J. Y. Wei",
+    "L. P. Xin",
+    "R. Mochkovitch",
+    "B. Zhang",
+    "H. B. Cai",
+    "S. Campana",
+    "A. Coleiro",
+    "B. Cordier",
+    "P. D'Avanzo",
+    "N. Dagoneau",
+    "V. D'Elia",
+    "Y. W. Dong",
+    "D. G\u00f6tz",
+    "S. Guillot",
+    "X. H. Han",
+    "D. H. Hartmann",
+    "L. Huang",
+    "Y. F. Huang",
+    "P. Jakobsson",
+    "A. Klotz",
+    "C. Lachaud",
+    "X. M. Lu",
+    "P. Maggi",
+    "M. De Pasquale",
+    "F. Piron",
+    "R. Salvaterra",
+    "S. Schanne",
+    "J. Sollerman",
+    "N. R. Tanvir",
+    "Z. Vidadi",
+    "P. Wang",
+    "C. Wu",
+    "S. L. Xiong",
+    "Y. Xu",
+    "T. Zafar",
+    "P. Zhang",
+    "S. N. Zhang",
+    "S. J. Zheng"
+   ],
+   "journal": "HAL (Le Centre pour la Communication Scientifique Directe)",
+   "doi": "10.48550/arxiv.2604.20346",
+   "arxiv": "2604.20346",
+   "abstract": "X-ray flashes (XRFs) are a type of gamma-ray bursts (GRBs) with prompt emission predominantly below 30 keV poorly detected by previous missions. The advent of the SVOM mission, with its wide-field instrument ECLAIRs, provides a new way to detect soft X-ray transients such as XRFs. We present photometric and spectroscopic observations of XRF 241001A detected by SVOM, a soft, sub-luminous, and low-energetic burst located in a poorly populated region of the Amati relation. We investigate the origin of its faint, soft high-energy emission to assess its connection to the long GRB population. We analyze the SVOM/ECLAIRs prompt emission and model its afterglow emission from X-ray to-radio. We present JWST/NIRSpec and SVOM/VT observations of the associated supernova (SN 2024aiiq), which we model with an Arnett radioactive decay component and compare its properties with previously detected GRB/SNe. XRF 241001A is located at z = 0.573 and has a prompt emission dominated by photons below 20 keV with a duration of T90 = 3.14 seconds. Its spectrum can be modeled by non-thermal or thermal models, all pointing towards a low Epeak &lt; 10 keV and Eiso ~ 8x10^49 erg. The X-ray-to-radio afterglow modeling favors an origin from a relativistic jet viewed on-axis. In the optical, XRF 241001A exhibits an early blue emission, similar to that detected in some fast X-ray transients and inconsistent with synchrotron emission. The JWST/NIRSpec observations firmly established its collapsar origin by revealing a SN Type Ic with broad lines, comparable to SN 1998bw and SN 2025kg-like events. XRF 241001A is a soft, low-luminosity collapsar event produced by a weak relativistic jet observed on-axis, supporting the view that part of the XRF population forms the low-energy tail of the long GRB population. It demonstrates the potential of SVOM/ECLAIRs to probe the soft regime of the high-energy transient population.",
+   "institutes": [],
+   "co_institutes": [],
+   "sources": [
+    "ads"
+   ],
+   "figures": [
+    {
+     "file": "figures/W7155385488_0.png",
+     "caption": "Light curve of the prompt emission of XRF 241001A detected by SVOM/ECLAIRs. The background-subtracted signal is centered on the trigger time $T_0 = 2024 -10 -01T17:08:57.74$ UT and shown in three energy bands: 4--20 keV (top, black), 20--50 keV (middle, blue), and 50--120 keV (bottom, red). The gray shaded region indicates the $T_90$ interval of the burst.",
+     "matched": false
+    }
+   ],
+   "usage": "used"
   },
   {
    "figures": [
@@ -2413,454 +2591,24 @@
    ]
   },
   {
-   "key": "ads_2025ApJ___994L__46C",
-   "title": "Optical/Infrared Observations of the Extraordinary GRB 250702B: A Highly Obscured Afterglow in a Massive Galaxy Consistent with Multiple Possible Progenitors",
-   "year": 2025,
-   "date": "2025-12-01",
-   "type": "article",
-   "authors": [
-    "Carney, Jonathan",
-    "Andreoni, Igor",
-    "O'Connor, Brendan",
-    "Freeburn, James",
-    "Skobe, Hannah",
-    "Westcott, Lewi",
-    "Busmann, Malte",
-    "Palmese, Antonella",
-    "Hall, Xander J.",
-    "Gill, Ramandeep",
-    "Beniamini, Paz",
-    "Coughlin, Eric R.",
-    "Kilpatrick, Charles D.",
-    "Anumarlapudi, Akash",
-    "Law, Nicholas M.",
-    "Corbett, Hank",
-    "Ahumada, Tomas",
-    "Chen, Ping",
-    "Conselice, Christopher",
-    "Damke, Guillermo",
-    "Das, Kaustav K.",
-    "Gal-Yam, Avishay",
-    "Gruen, Daniel",
-    "Heathcote, Steve",
-    "Hu, Lei",
-    "Karambelkar, Viraj",
-    "Kasliwal, Mansi",
-    "Labrie, Kathleen",
-    "Pasham, Dheeraj",
-    "Riffeser, Arno",
-    "Schmidt, Michael",
-    "Sharma, Kritti",
-    "Wilke, Silona",
-    "Zang, Weicheng"
-   ],
-   "journal": "The Astrophysical Journal",
-   "doi": "10.3847/2041-8213/ae1d67",
-   "arxiv": "2509.22784",
-   "abstract": "GRB 250702B was the longest gamma-ray burst ever detected, with a duration that challenges standard collapsar models and suggests an exotic progenitor. We collected a rich set of optical and infrared follow-up observations of its rapidly fading afterglow using a suite of telescopes including the W. M. Keck Observatory, the Gemini telescopes, the Magellan Baade Telescope, the Victor M. Blanco 4 m telescope, and the Fraunhofer Telescope at Wendelstein Observatory. Our analysis reveals that the afterglow emission is well described by forward shock emission from a highly obscured relativistic jet. Deep photometric observations of the host galaxy reveal a massive (10<SUP>10.66</SUP> M<SUB>\u2299</SUB>), dusty, and extremely asymmetric system that is consistent with two galaxies undergoing a major merger. The galactocentric offset, host galaxy properties, and jet characteristics disfavor a jetted tidal disruption event (TDE) around a supermassive black hole but do not definitively distinguish between competing progenitor scenarios. We find that the afterglow and host are consistent with a range of progenitors, including an atypical collapsar, a merger between a helium star and a stellar-mass black hole, the disruption of a star by a stellar-mass compact object (micro-TDE), and the tidal disruption of a star by an off-nuclear intermediate-mass black hole.",
-   "institutes": [
-    {
-     "id": "0130frc33",
-     "name": "University of North Carolina at Chapel Hill",
-     "ror": "https://ror.org/0130frc33",
-     "country": "United States",
-     "city": "Chapel Hill",
-     "lat": 35.9132,
-     "lng": -79.05584,
-     "homepage": "https://www.unc.edu",
-     "logo": "https://www.google.com/s2/favicons?domain=unc.edu&sz=64"
-    }
-   ],
-   "sources": [
-    "ads"
-   ],
-   "figures": [
-    {
-     "file": "figures/ads_2025ApJ___994L__46C_0.png",
-     "caption": "Radio, X-ray and infrared detections of the counterparts to . The $1 $ posteriors from VegasAfterglow fit to these data are shown as shaded regions. The left-hand panel shows the fitting results without jet spreading enabled and the right-hand panel shows the results with jet spreading enabled.",
-     "matched": true
-    },
-    {
-     "file": "figures/ads_2025ApJ___994L__46C_1.png",
-     "caption": "Posterior distributions of the jet parameters derived using VegasAfterglow to fit the available multi-wavelength data with a non-spreading top-hat jet.",
-     "matched": true
-    }
-   ],
-   "usage": "used"
-  },
-  {
-   "key": "ads_2026ApJ___998__163Z",
-   "title": "EP241217a: A Likely Type II GRB with an Achromatic Bump at z = 4.59",
-   "year": 2026,
-   "date": "2026-02-01",
-   "type": "article",
-   "authors": [
-    "Zhou, Hao",
-    "Ren, Jia",
-    "Wang, Chen-Wei",
-    "Liu, Xing",
-    "Liu, Bin-Yang",
-    "Levan, Andrew J.",
-    "Rastinejad, Jillian C.",
-    "Geng, Jin-Jun",
-    "Wang, Hao",
-    "Blanchard, Peter K.",
-    "Fong, Wen-fai",
-    "Gompertz, Benjamin P.",
-    "Malesani, Daniele B.",
-    "Kilpatrick, Charles D.",
-    "Lamb, Gavin P.",
-    "Metzger, Brian D.",
-    "Nicholl, Matt",
-    "Tanvir, Nial R.",
-    "Wang, Yun",
-    "Rong, Yu",
-    "Liang, Run-Duo",
-    "Ling, Zhi-Xing",
-    "Xu, Dong",
-    "Jin, Zhi-Ping",
-    "Wei, Da-Ming"
-   ],
-   "journal": "The Astrophysical Journal",
-   "doi": "10.3847/1538-4357/ae29b5",
-   "arxiv": "2512.07233",
-   "abstract": "EP241217a is an X-ray transient detected by the Einstein Probe lasting for about 100 s and without accompanying \u03b3-ray detection. The optical spectroscopy reveals the redshift of EP241217a is 4.59. By combining the \u03b3-ray upper limit provided by GECAM-C, there is a considerable possibility that EP241217a is a typical type II gamma-ray burst, but it is fainter than the detection threshold of any available \u03b3-ray monitors (i.e., E<SUB>\u03b3,iso</SUB> \u2272 10<SUP>53</SUP> erg). The X-ray light curve exhibits a plateau lasting for \u223c5 \u00d7 10<SUP>4</SUP> s. However, the joint analysis with optical data suggests the presence of an achromatic bump peaking at \u223c3 \u00d7 10<SUP>4</SUP> s after the trigger, indicating the actual duration of the X-ray plateau may be significantly shorter than it appears. To interpret the achromatic bump, we adopt the scenario of a mildly relativistic jet coasting in a wind-like medium and encountering a rapid density enhancement of the circumburst medium, which is likely induced by the interaction of the progenitor's stellar wind and the interstellar medium. However, this model cannot fully explain observed data, and some issues do exist, e.g., the observed spectrum is harder than the model prediction. Consequently, we conclude that the scenario of a mildly relativistic jet coasting in the wind-like medium cannot explain all observed features of EP241217a. In addition, some alternative models commonly invoked to explain X-ray plateaus are discussed, but there are more or less issues when they were applied to EP241217a. Therefore, further theoretical modeling is encouraged to explore the origin of EP241217a.",
-   "institutes": [
-    {
-     "id": "02eb4t121",
-     "name": "Purple Mountain Observatory",
-     "ror": "https://ror.org/02eb4t121",
-     "country": "China",
-     "city": "Nanjing",
-     "lat": 32.06167,
-     "lng": 118.77778,
-     "homepage": "http://english.pmo.cas.cn/",
-     "logo": "https://www.google.com/s2/favicons?domain=english.pmo.cas.cn&sz=64"
-    },
-    {
-     "id": "04c4dkn09",
-     "name": "University of Science and Technology of China",
-     "ror": "https://ror.org/04c4dkn09",
-     "country": "China",
-     "city": "Hefei",
-     "lat": 31.86389,
-     "lng": 117.28083,
-     "homepage": "https://ustc.edu.cn",
-     "logo": "https://www.google.com/s2/favicons?domain=ustc.edu.cn&sz=64"
-    }
-   ],
-   "sources": [
-    "ads"
-   ],
-   "figures": [
-    {
-     "file": "figures/ads_2026ApJ___998__163Z_0.png",
-     "caption": "The prompt X-ray light curve of EP241217a. The black line represents the EP-WXT (0.5-4\\,keV) rate curve of EP241217a, and the gray region represents the 1-$ $ uncertainty. The width of each time bin is 5\\,s. The vertical dashed line represent the possible start time of EP241217a, i.e., $T_0 T_ trig-114.0$\\,s.",
-     "matched": false
-    }
-   ],
-   "usage": "used"
-  },
-  {
-   "key": "ads_2025MNRAS_544_3115K",
-   "title": "Double-peaked optical afterglow in GRB 110213A inferring a magnetized thick shell ejecta",
-   "year": 2025,
-   "date": "2025-12-01",
-   "type": "article",
-   "authors": [
-    "Kusafuka, Yo",
-    "Obayashi, Kaori",
-    "Asano, Katsuaki",
-    "Yamazaki, Ryo"
-   ],
-   "journal": "Monthly Notices of the Royal Astronomical Society",
-   "doi": "10.1093/mnras/staf1923",
-   "arxiv": "2508.13066",
-   "abstract": "Gamma-ray burst early afterglows are important tracers for determining the radial structure and magnetization of the ejecta. In this paper, we focus on GRB 110213A that shows double-peaked optical afterglow light curves and the shallow decay feature of the X-ray afterglow. We adopt a semi-analytical model for the dynamics of forward and reverse shocks generated through an interaction between an arbitrary magnetized ejecta with a finite thickness and a stratified circumstellar medium. Multiwavelength radiation from forward and reverse shocks seen from an arbitrary viewing angle is calculated under a thin-shell approximation. Our analysis with multimodal nested sampling methods for GRB 110213A suggests that the thick shell ejecta naturally explains the shallow decay feature of the X-ray afterglow. The combination of the reverse shock emission in the strongly magnetized jet and forward shock emission in the weakly magnetized circumstellar medium makes the double peak feature of the optical afterglows. The estimated low radiative efficiency in the prompt phase may be a consequence of the high magnetization of the jet in this case. A multimessenger emission simulator based on the magnetic bullet afterglow model is publicly available as the open-source JULIA package 'MAGGLOW'.",
-   "institutes": [
-    {
-     "id": "057zh3y96",
-     "name": "The University of Tokyo",
-     "ror": "https://ror.org/057zh3y96",
-     "country": "Japan",
-     "city": "Tokyo",
-     "lat": 35.6895,
-     "lng": 139.69171,
-     "homepage": "https://www.u-tokyo.ac.jp",
-     "logo": "https://www.google.com/s2/favicons?domain=u-tokyo.ac.jp&sz=64"
-    }
-   ],
-   "sources": [
-    "ads"
-   ],
-   "figures": [],
-   "usage": "cited"
-  },
-  {
-   "key": "ads_2025ApJ___990__110W",
-   "title": "Forward and Reverse Shock Emission from Relativistic Jets with Arbitrary Angular and Stratified Radial Profiles",
-   "year": 2025,
-   "date": "2025-09-01",
-   "type": "article",
-   "authors": [
-    "Wang, Hao",
-    "Zhou, Hao",
-    "Fan, Yi-Zhong",
-    "Wei, Da-Ming"
-   ],
-   "journal": "The Astrophysical Journal",
-   "doi": "10.3847/1538-4357/adf1a2",
-   "arxiv": "2507.15311",
-   "abstract": "Gamma-ray bursts are expected to be generated by structured jets, whose profiles significantly impact their afterglow emission. Previously, we developed a numerical code jetsimpy, to model the afterglow of jets with arbitrary angular profiles. In this study, we extend the code to incorporate a stratified radial profile, enabling it to model jets with arbitrary axisymmetric two-dimensional structures. The radial profile leads to the formation of a reverse shock. We modeled the shock system using an energy conservation prescription, which differs from the pressure balance approach. This leads to remarkably different predictions for reverse shock emission. In particular, we find that the reverse shock emission in the thin shell case is significantly overestimated in analytic models. We also explore the off-axis reverse shock emission from structured jets, where the cores belong to thick shell cases and the wings belong to thin shell cases. We have confirmed the prediction that off-axis observers may see a thin-to-thick transition, but we find that the light curve morphology is hard to distinguish from pure thin or thick shell cases. A radial profile also introduces hydrodynamic energy injection. As such, our code can naturally apply to refreshed shock cases, where the modeling of kilonova afterglows is demonstrated as an example. To validate our method, we fit the optical flash of GRB 990123, showing good agreement with the data. The upgraded jetsimpy provides unprecedented flexibility in modeling the afterglow emission of jets with various profiles, including those derived from general relativistic magnetohydrodynamic simulations.",
-   "institutes": [
-    {
-     "id": "02eb4t121",
-     "name": "Purple Mountain Observatory",
-     "ror": "https://ror.org/02eb4t121",
-     "country": "China",
-     "city": "Nanjing",
-     "lat": 32.06167,
-     "lng": 118.77778,
-     "homepage": "http://english.pmo.cas.cn/",
-     "logo": "https://www.google.com/s2/favicons?domain=english.pmo.cas.cn&sz=64"
-    }
-   ],
-   "sources": [
-    "ads"
-   ],
-   "figures": [],
-   "usage": "cited"
-  },
-  {
-   "key": "ads_2026arXiv260420346S",
-   "title": "XRF 241001A/SN 2024aiiq: A Faint Soft X-ray Transient Detected by SVOM with a Broad-Line Type Ic Supernova Revealed by JWST",
-   "year": 2026,
-   "date": "2026-04-01",
-   "type": "article",
-   "authors": [
-    "Schneider, B.",
-    "Brunet, M.",
-    "Gompertz, B. P.",
-    "Turpin, D.",
-    "Malesani, D. B.",
-    "Godet, O.",
-    "Levan, A. J.",
-    "Daigne, F.",
-    "Sarin, N.",
-    "Rakotondrainibe, N. A.",
-    "Martin-Carrillo, A.",
-    "Palmerio, J. T.",
-    "Th\u00f6ne, C. C.",
-    "Li, H. L.",
-    "Saccardi, A.",
-    "de Ugarte Postigo, A.",
-    "Antier, S.",
-    "Buat, V.",
-    "\u010eurov\u010d\u00edkov\u00e1, D.",
-    "Izzo, L.",
-    "Leung, J. K.",
-    "Mo, G.",
-    "Qiu, Y. L.",
-    "Vergani, S. D.",
-    "Wang, J.",
-    "Wei, J. Y.",
-    "Xin, L. P.",
-    "Mochkovitch, R.",
-    "Zhang, B.",
-    "Cai, H. B.",
-    "Campana, S.",
-    "Coleiro, A.",
-    "Cordier, B.",
-    "D'Avanzo, P.",
-    "Dagoneau, N.",
-    "D'Elia, V.",
-    "Dong, Y. W.",
-    "G\u00f6tz, D.",
-    "Guillot, S.",
-    "Han, X. H.",
-    "Hartmann, D. H.",
-    "Huang, L.",
-    "Huang, Y. F.",
-    "Jakobsson, P.",
-    "Klotz, A.",
-    "Lachaud, C.",
-    "Lu, X. M.",
-    "Maggi, P.",
-    "De Pasquale, M.",
-    "Piron, F.",
-    "Salvaterra, R.",
-    "Schanne, S.",
-    "Sollerman, J.",
-    "Tanvir, N. R.",
-    "Vidadi, Z.",
-    "Wang, P.",
-    "Wu, C.",
-    "Xiong, S. L.",
-    "Xu, Y.",
-    "Zafar, T.",
-    "Zhang, P. P.",
-    "Zhang, S. N.",
-    "Zheng, S. J."
-   ],
-   "journal": "arXiv e-prints",
-   "doi": "10.48550/arXiv.2604.20346",
-   "arxiv": "2604.20346",
-   "abstract": "X-ray flashes (XRFs) are a type of gamma-ray bursts (GRBs) with prompt emission predominantly below 30 keV poorly detected by previous missions. The advent of the SVOM mission, with its wide-field instrument ECLAIRs, provides a new way to detect soft X-ray transients such as XRFs. We present photometric and spectroscopic observations of XRF 241001A detected by SVOM, a soft, sub-luminous, and low-energetic burst located in a poorly populated region of the Amati relation. We investigate the origin of its faint, soft high-energy emission to assess its connection to the long GRB population. We analyze the SVOM/ECLAIRs prompt emission and model its afterglow emission from X-ray to-radio. We present JWST/NIRSpec and SVOM/VT observations of the associated supernova (SN 2024aiiq), which we model with an Arnett radioactive decay component and compare its properties with previously detected GRB/SNe. XRF 241001A is located at z = 0.573 and has a prompt emission dominated by photons below 20 keV with a duration of T90 = 3.14 seconds. Its spectrum can be modeled by non-thermal or thermal models, all pointing towards a low Epeak &lt; 10 keV and Eiso ~ 8x10^49 erg. The X-ray-to-radio afterglow modeling favors an origin from a relativistic jet viewed on-axis. In the optical, XRF 241001A exhibits an early blue emission, similar to that detected in some fast X-ray transients and inconsistent with synchrotron emission. The JWST/NIRSpec observations firmly established its collapsar origin by revealing a SN Type Ic with broad lines, comparable to SN 1998bw and SN 2025kg-like events. XRF 241001A is a soft, low-luminosity collapsar event produced by a weak relativistic jet observed on-axis, supporting the view that part of the XRF population forms the low-energy tail of the long GRB population. It demonstrates the potential of SVOM/ECLAIRs to probe the soft regime of the high-energy transient population.",
-   "institutes": [],
-   "sources": [
-    "ads"
-   ],
-   "figures": [
-    {
-     "file": "figures/ads_2026arXiv260420346S_0.png",
-     "caption": "Light curve of the prompt emission of XRF 241001A detected by SVOM/ECLAIRs. The background-subtracted signal is centered on the trigger time $T_0 = 2024 -10 -01T17:08:57.74$ UT and shown in three energy bands: 4--20 keV (top, black), 20--50 keV (middle, blue), and 50--120 keV (bottom, red). The gray shaded region indicates the $T_90$ interval of the burst.",
-     "matched": false
-    }
-   ],
-   "usage": "used"
-  },
-  {
-   "key": "ads_2025ApJ___995____8L",
-   "title": "Multiwavelength Observations of the Apparently Nonrepeating FRB 20250316A",
-   "year": 2025,
-   "date": "2025-12-01",
-   "type": "article",
-   "authors": [
-    "Li, Ye",
-    "Sun, Hui",
-    "Qian, Lei",
-    "Li, Dong-Yue",
-    "Hua, Yan-Long",
-    "Xin, Li-Ping",
-    "Li, Cheng-Kui",
-    "Wang, Yi-Han",
-    "Niu, Jia-Rui",
-    "Sun, Tian-Rui",
-    "Yao, Zhu-Heng",
-    "Geng, Jin-Jun",
-    "Jin, Chi-Chuan",
-    "Rea, Nanda",
-    "Liu, Yuan",
-    "Pan, Zhi-Chen",
-    "An, Tao",
-    "Burwitz, Vadim",
-    "Cai, Zhi-Ming",
-    "Cao, Jin-Huang",
-    "Chen, Yong",
-    "Cheng, Hua-Qing",
-    "Cui, Wei-Wei",
-    "Feng, Hua",
-    "Friedrich, Peter",
-    "Han, Da-Wei",
-    "Hu, Jing-Wei",
-    "Hu, Lei",
-    "Huang, Yu-Xiang",
-    "Jia, Shu-Mei",
-    "Jiang, Ji-An",
-    "Li, Bin",
-    "Li, Feng",
-    "Liang, Ming",
-    "Liang, Yi-Fang",
-    "Liu, Hao",
-    "Liu, He-Yang",
-    "Liu, Hua-Qiu",
-    "Meidinger, Norbert",
-    "Pan, Hai-Wu",
-    "Rau, Arne",
-    "Shu, Xin-Wen",
-    "Sun, Chun",
-    "Tao, Lian",
-    "Tang, Jin-Long",
-    "Wan, Zhen",
-    "Wang, Hai-Ren",
-    "Wang, Jian",
-    "Wang, Jing",
-    "Xu, Yun-Fei",
-    "Xue, Yongquan",
-    "Yang, Xuan",
-    "Yao, Da-Zhi",
-    "Yao, Yuhan",
-    "Zhao, Wen",
-    "Zhao, Xiao-Fan",
-    "Zhang, Hong-Fei",
-    "Zhang, Jia-Heng",
-    "Zhang, Juan",
-    "Zhang, Mo",
-    "Zhang, Song-Bo",
-    "Zhang, Wen-Da",
-    "Zhang, Xiao-Ling",
-    "Zhang, Yong-He",
-    "Zhang, Yong-Kun",
-    "Zheng, Xian-Zhong",
-    "Zhu, Yu-Hao",
-    "Zuo, Ying-Xi",
-    "Sun, Sheng-Li",
-    "Wei, Jian-Yan",
-    "Zhu, Wei-Wei",
-    "Jiang, Peng",
-    "Yuan, Weimin",
-    "Wu, Xue-Feng",
-    "Zhang, Bing"
-   ],
-   "journal": "The Astrophysical Journal",
-   "doi": "10.3847/1538-4357/ae1463",
-   "arxiv": "2508.13999",
-   "abstract": "The physical origin of fast radio bursts (FRBs) remains uncertain. Although multiwavelength observations have been widely conducted, only Galactic FRB 20200428D is associated with an X-ray burst from the magnetar SGR J1935+2154. Here we present multiwavelength follow-up observations of the nearby bright FRB 20250316A, including the Five-hundred-meter Aperture Spherical radio Telescope (FAST), Einstein Probe (EP) X-ray mission, Chandra X-ray Observatory, Wide Field Survey Telescope (WFST), and Space Variable Objects Monitor/Visible Telescope (SVOM/VT). The 13.08 hr FAST follow-up campaign without pulse detection requires an energy distribution flatter than those of well-known repeating FRBs, suggesting that this burst is likely a one-off event. A prompt EP follow-up and multiepoch observational campaign totaling &gt;100 ks led to the detection of an X-ray source within the angular resolution of its Follow-up X-ray Telescope (FXT; 10\u2033). A subsequent Chandra observation revealed this source to be offset by 7\u2033 from the FRB position and established a 0.5\u250010 keV flux upper limit of 7.6 \u00d7 10<SUP>\u221215</SUP> erg cm<SUP>\u22122</SUP> s<SUP>\u22121</SUP> at the FRB position, corresponding to \u223c10<SUP>39</SUP> erg s<SUP>\u22121</SUP> at the 40 Mpc distance of the host galaxy NGC 4141. These results set one of the most stringent limits on X-ray emission from a nonrepeating FRB, disfavoring ultraluminous X-ray sources as counterparts of apparently one-off FRBs and offering critical insights into afterglow models. Our study suggests that an arcsecond localization of both the FRB and its potential X-ray counterpart is essential for exploring the X-ray counterpart of an FRB.",
-   "institutes": [
-    {
-     "id": "02eb4t121",
-     "name": "Purple Mountain Observatory",
-     "ror": "https://ror.org/02eb4t121",
-     "country": "China",
-     "city": "Nanjing",
-     "lat": 32.06167,
-     "lng": 118.77778,
-     "homepage": "http://english.pmo.cas.cn/",
-     "logo": "https://www.google.com/s2/favicons?domain=english.pmo.cas.cn&sz=64"
-    },
-    {
-     "id": "034t30j35",
-     "name": "Chinese Academy of Sciences",
-     "ror": "https://ror.org/034t30j35",
-     "country": "China",
-     "city": "Beijing",
-     "lat": 39.9075,
-     "lng": 116.39723,
-     "homepage": "https://www.cas.cn",
-     "logo": "https://www.google.com/s2/favicons?domain=cas.cn&sz=64"
-    }
-   ],
-   "sources": [
-    "ads"
-   ],
-   "figures": [
-    {
-     "file": "figures/ads_2025ApJ___995____8L_0.png",
-     "caption": "The timeline of the FRB 20250316A follow-up observations. For EP/WXT, only those observations within 12 hours before and after the FRB are presented. Vertical gray lines indicate the time of FRB 20250316A and the time at which FRB 20250316A was localized to be arc-second accuracy.",
-     "matched": false
-    }
-   ],
-   "usage": "used"
-  },
-  {
-   "key": "ads_2025A_A___704A__55K",
+   "key": "W4415711369",
    "title": "Efficient Bayesian analysis of kilonovae and gamma ray burst afterglows with FIESTA",
    "year": 2025,
-   "date": "2025-12-01",
+   "date": "2025-10-30",
    "type": "article",
    "authors": [
-    "Koehn, H.",
-    "Wouters, T.",
-    "Pang, P. T. H.",
-    "Bulla, M.",
-    "Rose, H.",
-    "Wichern, H.",
-    "Dietrich, T."
+    "H. Koehn",
+    "Thibeau Wouters",
+    "P. T. H. Pang",
+    "Mattia Bulla",
+    "H. Rose",
+    "H. C. I. Wichern",
+    "T. Dietrich"
    ],
    "journal": "Astronomy and Astrophysics",
    "doi": "10.1051/0004-6361/202556626",
    "arxiv": "2507.13807",
-   "abstract": "Gamma-ray burst (GRB) afterglows and kilonovae (KNe) are electromagnetic transients that can accompany binary neutron star (BNS) mergers. Therefore, studying their emission processes is of general interest for constraining cosmological parameters or the behavior of ultra-dense matter. One common method to analyze electromagnetic data from BNS mergers is to sample a Bayesian posterior over the parameters of a physical model for the transient. However, sampling the posterior is computationally costly and because of the many likelihood evaluations required in this process, detailed models are too expensive to be used directly in Bayesian inference. In this paper, we address the problem by introducing FIESTA, a PYTHON package to train machine learning (ML) surrogates for GRB afterglow and kilonova models that have the capacity to accelerate likelihood evaluations. Specifically, we introduce extensive ML surrogates for the state-of-the-art GRB afterglow models AFTERGLOWPY and PYBLASTAFTERGLOW, along with a new surrogate for KN emission based on the POSSIS code. Our surrogates enable evaluation of the light-curve posterior within minutes. We also provide built-in posterior sampling capabilities in FIESTA that rely on the FLOWMC package, which efficiently scale to higher dimensions when adding up to tens of nuisance sampling parameters. Because of its use of the JAX framework, FIESTA also allows for GPU acceleration during both surrogate training and posterior sampling. We applied our framework to reanalyze AT2017gfo/GRB170817A and GRB211211A with our surrogates, thus employing the new PYBLASTAFTERGLOW model for the first time in Bayesian inference.",
+   "abstract": "Gamma-ray burst (GRB) afterglows and kilonovae (KNe) are electromagnetic transients that can accompany binary neutron star (BNS) mergers. Therefore, studying their emission processes is of general interest for constraining cosmological parameters or the behavior of ultra-dense matter. One common method to analyze electromagnetic data from BNS mergers is to sample a Bayesian posterior over the parameters of a physical model for the transient. However, sampling the posterior is computationally costly and because of the many likelihood evaluations required in this process, detailed models are too expensive to be used directly in Bayesian inference. In this paper, we address the problem by introducing FIESTA , a PYTHON package to train machine learning (ML) surrogates for GRB afterglow and kilonova models that have the capacity to accelerate likelihood evaluations. Specifically, we introduce extensive ML surrogates for the state-of-the-art GRB afterglow models AFTERGLOWPY and PYBLASTAFTERGLOW , along with a new surrogate for KN emission based on the POSSIS code. Our surrogates enable evaluation of the light-curve posterior within minutes. We also provide built-in posterior sampling capabilities in FIESTA that rely on the FLOWMC package, which efficiently scale to higher dimensions when adding up to tens of nuisance sampling parameters. Because of its use of the JAX framework, FIESTA also allows for GPU acceleration during both surrogate training and posterior sampling. We applied our framework to reanalyze AT2017gfo/GRB170817A and GRB211211A with our surrogates, thus employing the new PYBLASTAFTERGLOW model for the first time in Bayesian inference.",
    "institutes": [
     {
      "id": "03bnmw459",
@@ -2874,6 +2622,85 @@
      "logo": "https://www.google.com/s2/favicons?domain=uni-potsdam.de&sz=64"
     }
    ],
+   "co_institutes": [
+    {
+     "id": "I193662353",
+     "name": "Utrecht University",
+     "ror": "https://ror.org/04pp8hn57",
+     "country": "The Netherlands",
+     "city": "Utrecht",
+     "lat": 52.09083,
+     "lng": 5.12222,
+     "homepage": "https://www.uu.nl",
+     "logo": "https://www.google.com/s2/favicons?domain=uu.nl&sz=64"
+    },
+    {
+     "id": "I4210093566",
+     "name": "National Institute for Subatomic Physics",
+     "ror": "https://ror.org/00f9tz983",
+     "country": "The Netherlands",
+     "city": "Amsterdam",
+     "lat": 52.37403,
+     "lng": 4.88969,
+     "homepage": "https://www.nikhef.nl/",
+     "logo": "https://www.google.com/s2/favicons?domain=nikhef.nl&sz=64"
+    },
+    {
+     "id": "I201324441",
+     "name": "University of Ferrara",
+     "ror": "https://ror.org/041zkgm14",
+     "country": "Italy",
+     "city": "Ferrara",
+     "lat": 44.83804,
+     "lng": 11.62057,
+     "homepage": "https://www.unife.it",
+     "logo": "https://www.google.com/s2/favicons?domain=unife.it&sz=64"
+    },
+    {
+     "id": "I4210107105",
+     "name": "Istituto Nazionale di Fisica Nucleare, Sezione di Ferrara",
+     "ror": "https://ror.org/00zs3y046",
+     "country": "Italy",
+     "city": "Ferrara",
+     "lat": 44.83804,
+     "lng": 11.62057,
+     "homepage": "https://www.fe.infn.it",
+     "logo": "https://www.google.com/s2/favicons?domain=fe.infn.it&sz=64"
+    },
+    {
+     "id": "I4210124420",
+     "name": "Collurania Teramo Observatory",
+     "ror": "https://ror.org/02ttb5s67",
+     "country": "Italy",
+     "city": "Teramo",
+     "lat": 42.66122817993164,
+     "lng": 13.699009895324707,
+     "homepage": "http://www.oa-teramo.inaf.it/",
+     "logo": "https://www.google.com/s2/favicons?domain=oa-teramo.inaf.it&sz=64"
+    },
+    {
+     "id": "I96673099",
+     "name": "Technical University of Denmark",
+     "ror": "https://ror.org/04qtj9h94",
+     "country": "Denmark",
+     "city": "Kongens Lyngby",
+     "lat": 55.77043914794922,
+     "lng": 12.503780364990234,
+     "homepage": "https://dtu.dk",
+     "logo": "https://www.google.com/s2/favicons?domain=dtu.dk&sz=64"
+    },
+    {
+     "id": "I4210127646",
+     "name": "Max Planck Institute for Gravitational Physics",
+     "ror": "https://ror.org/03sry2h30",
+     "country": "Germany",
+     "city": "Potsdam",
+     "lat": 52.41638946533203,
+     "lng": 12.96916675567627,
+     "homepage": "http://www.aei.mpg.de/",
+     "logo": "https://www.google.com/s2/favicons?domain=aei.mpg.de&sz=64"
+    }
+   ],
    "sources": [
     "ads"
    ],
@@ -2881,32 +2708,35 @@
    "usage": "cited"
   },
   {
-   "key": "ads_2026ApJ__1004___95C",
-   "title": "Observational Properties of Nonthermal Emission from Relativistic Jets Escaping Active Galactic Nucleus Disks",
-   "year": 2026,
-   "date": "2026-06-01",
+   "key": "W4413928100",
+   "title": "Forward and Reverse Shock Emission from Relativistic Jets with Arbitrary Angular and Stratified Radial Profiles",
+   "year": 2025,
+   "date": "2025-09-02",
    "type": "article",
    "authors": [
-    "Chen, Ken",
-    "Dai, Zi-Gao"
+    "Hao Wang",
+    "Hao Zhou",
+    "Yi-Zhong Fan",
+    "Da-Ming Wei"
    ],
    "journal": "The Astrophysical Journal",
-   "doi": "10.3847/1538-4357/ae6b83",
-   "arxiv": "2605.10557",
-   "abstract": "Relativistic jets launched from stellar-mass compact objects embedded in the accretion disk of an active galactic nucleus (AGN) can produce nonthermal emission upon successfully breaking out of the disk. In this paper, we present a comprehensive study of the long-term propagation dynamics and broadband nonthermal radiation signatures of such jets in a realistic AGN environment, explicitly modeled as wind outflows. Our modeling reveals two distinct features imprinted by the high-density AGN medium: rapid deceleration of the jet ejecta, accompanied by a prompt downshift of the emission spectral energy distribution, and persistently strong synchrotron self-absorption, giving rise to a prominent quasi-thermal hump in the emission spectrum. Crucially, both gamma-ray burst jets and jets powered by accreting binary black hole merger remnants can produce detectable multiwavelength emissions that substantially outshine the AGN background. Moreover, the short time delays between gravitational-wave triggers and these electromagnetic counterparts\u2014typically less than 10<SUP>6</SUP> s\u2014greatly facilitate secure multimessenger associations. Besides, our findings highlight that the interaction-induced radiation from AGN-embedded jet systems offers a powerful diagnostic probe of the spatial distribution, density structure, and physical properties of the AGN medium.",
+   "doi": "10.3847/1538-4357/adf1a2",
+   "arxiv": "2507.15311",
+   "abstract": "Abstract Gamma-ray bursts are expected to be generated by structured jets, whose profiles significantly impact their afterglow emission. Previously, we developed a numerical code jetsimpy , to model the afterglow of jets with arbitrary angular profiles. In this study, we extend the code to incorporate a stratified radial profile, enabling it to model jets with arbitrary axisymmetric two-dimensional structures. The radial profile leads to the formation of a reverse shock. We modeled the shock system using an energy conservation prescription, which differs from the pressure balance approach. This leads to remarkably different predictions for reverse shock emission. In particular, we find that the reverse shock emission in the thin shell case is significantly overestimated in analytic models. We also explore the off-axis reverse shock emission from structured jets, where the cores belong to thick shell cases and the wings belong to thin shell cases. We have confirmed the prediction that off-axis observers may see a thin-to-thick transition, but we find that the light curve morphology is hard to distinguish from pure thin or thick shell cases. A radial profile also introduces hydrodynamic energy injection. As such, our code can naturally apply to refreshed shock cases, where the modeling of kilonova afterglows is demonstrated as an example. To validate our method, we fit the optical flash of GRB 990123, showing good agreement with the data. The upgraded jetsimpy provides unprecedented flexibility in modeling the afterglow emission of jets with various profiles, including those derived from general relativistic magnetohydrodynamic simulations.",
    "institutes": [
     {
-     "id": "04c4dkn09",
-     "name": "University of Science and Technology of China",
-     "ror": "https://ror.org/04c4dkn09",
+     "id": "02eb4t121",
+     "name": "Purple Mountain Observatory",
+     "ror": "https://ror.org/02eb4t121",
      "country": "China",
-     "city": "Hefei",
-     "lat": 31.86389,
-     "lng": 117.28083,
-     "homepage": "https://ustc.edu.cn",
-     "logo": "https://www.google.com/s2/favicons?domain=ustc.edu.cn&sz=64"
+     "city": "Nanjing",
+     "lat": 32.06167,
+     "lng": 118.77778,
+     "homepage": "http://english.pmo.cas.cn/",
+     "logo": "https://www.google.com/s2/favicons?domain=english.pmo.cas.cn&sz=64"
     }
    ],
+   "co_institutes": [],
    "sources": [
     "ads"
    ],
