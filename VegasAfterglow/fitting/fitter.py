@@ -38,6 +38,15 @@ class Fitter:
     ``flux``) inherit it. Those post-fit methods accept their own one-shot
     ``resolution=`` override that does not mutate the Fitter.
 
+    Likelihood
+    ----------
+    The chi-squared is evaluated in log-flux space:
+    ``chi2 = sum(((ln F_obs - ln F_model) / sigma_ln)**2)`` with
+    ``sigma_ln = err / F_obs`` propagated from the linear errors passed to the
+    ``add_*`` methods. Scale-invariant, so bright points do not dominate data
+    spanning decades; fluxes and errors must be strictly positive. For a
+    different likelihood, pass ``log_likelihood_fn`` to :meth:`fit`.
+
     Thread safety
     -------------
     Set all state (``add_*``, per-call ``resolution=``) before calling ``fit()``;
@@ -151,6 +160,8 @@ class Fitter:
         self._all_flux = None
         self._all_err = None
         self._all_weights = None
+        self._all_log_flux = None
+        self._all_log_err = None
 
     def __repr__(self) -> str:
         """One-line summary of model selection, physics flags, and loaded data."""
@@ -385,10 +396,21 @@ class Fitter:
         law = BUILTIN_LAWS[ext]
         return lambda lam_cm, _params=None: law(lam_cm)
 
+    @staticmethod
+    def _require_positive_flux(flux, err) -> None:
+        """Guard the log-flux likelihood: ``ln(F)`` and ``err/F`` need positive inputs."""
+        if np.any(flux <= 0) or np.any(err <= 0):
+            raise ValueError(
+                "the log-flux likelihood requires strictly positive fluxes and errors"
+            )
+
     def _consolidate_data(self):
         """Consolidate point observation data into single arrays."""
         if self._all_t is not None:
             return
+
+        for bd in self._band_obs:
+            self._require_positive_flux(bd.flux, bd.err)
 
         if self._point_t:
             self._all_t = np.concatenate(self._point_t)
@@ -409,6 +431,10 @@ class Fitter:
             w_sum = self._all_weights.sum()
             if w_sum > 0:
                 self._all_weights *= len(self._all_weights) / w_sum
+
+            self._require_positive_flux(self._all_flux, self._all_err)
+            self._all_log_flux = np.log(self._all_flux)
+            self._all_log_err = self._all_err / self._all_flux
 
             # Precompute extinction kernel from rest-frame wavelengths.
             # Built-in laws collapse k(lambda) and the 0.4*ln(10) factor into
@@ -468,6 +494,12 @@ class Fitter:
             radiative_fireball=self.radiative_fireball,
         )
 
+    @staticmethod
+    def _chi2_sum(log_obs, log_err, model_flux, weights) -> float:
+        """Weighted chi-squared sum in ln-flux space."""
+        diff = log_obs - np.log(np.maximum(model_flux, 1e-300))
+        return float(np.sum(weights * (diff / log_err) ** 2))
+
     def _evaluate(self, params: ModelParams) -> float:
         """Compute chi-squared for given parameters using Model directly."""
         self._consolidate_data()
@@ -485,16 +517,18 @@ class Fitter:
                 else:
                     k = self._ext_law(self._lam_rest_cm, params)
                     model_flux = model_flux * np.exp((-params.A_V * _LN10_OVER_2P5) * k)
-            diff = self._all_flux - model_flux
-            chi2 += float(np.sum(self._all_weights * (diff / self._all_err) ** 2))
+            chi2 += self._chi2_sum(
+                self._all_log_flux, self._all_log_err, model_flux, self._all_weights
+            )
 
         # Band-integrated flux
         for bd in self._band_obs:
             model_flux = np.asarray(
                 model.flux(bd.t, bd.nu_min, bd.nu_max, bd.num_points).total
             )
-            diff = bd.flux - model_flux
-            chi2 += float(np.sum(bd.weights * (diff / bd.err) ** 2))
+            chi2 += self._chi2_sum(
+                np.log(bd.flux), bd.err / bd.flux, model_flux, bd.weights
+            )
 
         return chi2
 

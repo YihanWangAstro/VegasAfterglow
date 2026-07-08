@@ -81,3 +81,54 @@ def test_fit_summary_renders(fit_result):
     """FitResult.summary() renders without raising and its repr contains ranking or chi-square content."""
     text = repr(fit_result.summary())
     assert "Rank" in text or "chi" in text.lower()
+
+
+class TestLogFluxLikelihood:
+    """The likelihood evaluates chi2 in ln-flux space with sigma_ln = err/F."""
+
+    @pytest.fixture(scope="class")
+    def data(self):
+        """Synthetic optical light curve offset 1.3x from the fitting model."""
+        t = np.logspace(3.5, 5.5, 10)
+        nu = np.full_like(t, 1e15)
+        truth = Model(
+            jet=TophatJet(theta_c=0.1, E_iso=TRUE_E, Gamma0=300),
+            medium=ISM(n_ism=1.0),
+            observer=Observer(lumi_dist=3e28, z=0.5, theta_obs=0.0),
+            fwd_rad=Radiation(eps_e=0.1, eps_B=1e-3, p=2.3),
+        )
+        flux = np.asarray(truth.flux_density(t, nu).total) * 1.3
+        return t, nu, flux, 0.1 * flux
+
+    @staticmethod
+    def _fitter(data):
+        t, _, flux, err = data
+        fitter = Fitter(z=0.5, lumi_dist=3e28, jet="tophat", medium="ism")
+        fitter.add_flux_density(nu=1e15, t=t, f_nu=flux, err=err)
+        return fitter
+
+    @staticmethod
+    def _truth_params():
+        from VegasAfterglow import ModelParams
+
+        p = ModelParams()
+        p.E_iso, p.Gamma0, p.theta_c, p.theta_v = TRUE_E, 300, 0.1, 0.0
+        p.p, p.eps_e, p.eps_B, p.n_ism = 2.3, 0.1, 1e-3, 1.0
+        return p
+
+    def test_log_chi2_matches_manual_computation(self, data):
+        t, nu, flux, err = data
+        fitter = self._fitter(data)
+        p = self._truth_params()
+        chi2 = fitter._evaluate(p)
+
+        model_flux = np.asarray(fitter._build_model(p).flux_density(t, nu).total)
+        expected = np.sum(((np.log(flux) - np.log(model_flux)) / (err / flux)) ** 2)
+        assert chi2 == pytest.approx(expected, rel=1e-12)
+
+    def test_nonpositive_flux_rejected(self):
+        fitter = Fitter(z=0.5, lumi_dist=3e28, jet="tophat", medium="ism")
+        fitter.add_flux_density(nu=1e15, t=[1e4, 1e5], f_nu=[1e-28, -1e-30],
+                                err=[1e-29, 1e-29])
+        with pytest.raises(ValueError, match="strictly positive"):
+            fitter._consolidate_data()

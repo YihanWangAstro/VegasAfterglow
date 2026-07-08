@@ -225,7 +225,7 @@ Similarly, pass a custom medium factory via the ``medium`` keyword argument to d
         def density_func(phi, theta, r):
             return mp * params.n_ism * np.exp(-r / params.r_scale)
 
-        return Medium(rho=density_func)
+        return Medium(rho=density_func, isotropic=True)
 
     fitter = Fitter(z=1.58, lumi_dist=3.364e28, medium=exponential_medium)
 
@@ -388,7 +388,7 @@ The same decorator works for custom medium density functions (3 spatial coordina
         return A_star * 5e11 / (r * r)
 
     def medium_factory(mc_params):
-        return Medium(rho=custom_wind(A_star=mc_params.A_star))
+        return Medium(rho=custom_wind(A_star=mc_params.A_star), isotropic=True)
 
     @gil_free
     def spindown_injection(phi, theta, t, L0, t_sd):

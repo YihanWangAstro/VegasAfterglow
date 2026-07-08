@@ -20,7 +20,7 @@ Use emcee when:
 
 VegasAfterglow uses an optimized emcee configuration:
 
-- **Custom proposal moves**: DEMove (70%) + DESnookerMove (30%) for better mixing than default stretch move
+- **Custom proposal moves**: DEMove (90%) + DESnookerMove (10%) for better mixing than default stretch move
 - **Thread-based parallelism**: Likelihood evaluations are parallelized via ``ThreadPoolExecutor`` with the GIL released during C++ computation
 - **Automatic nwalkers**: Optimized based on parameter count and CPU cores
 
