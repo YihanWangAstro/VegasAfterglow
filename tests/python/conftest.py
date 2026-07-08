@@ -6,6 +6,7 @@ import base64
 import importlib.util
 import io
 import os
+import warnings
 
 import numpy as np
 import pytest
@@ -36,22 +37,27 @@ def _golden_case_png(item):
     if name is None or recomputed is None:
         return None
     if name not in _GOLDEN_PLOT_CACHE:
-        plots_dir = os.path.join(os.path.dirname(__file__), "golden", "plots")
-        os.makedirs(plots_dir, exist_ok=True)
-        if not _GOLDEN_PLOT_CACHE:
-            # first render of this session: drop leftovers from renamed/removed
-            # cases so the report never embeds a figure with no matching test
-            for stale in os.listdir(plots_dir):
-                if stale.endswith(".png"):
-                    os.remove(os.path.join(plots_dir, stale))
-        golden_plot = _golden_plot_module()
-        fig, _ = golden_plot.render_case(name, recomputed(name)[0])
-        buf = io.BytesIO()
-        fig.savefig(buf, format="png", dpi=110)
-        golden_plot.plt.close(fig)
-        _GOLDEN_PLOT_CACHE[name] = buf.getvalue()
-        with open(os.path.join(plots_dir, f"{name}.png"), "wb") as f:
-            f.write(_GOLDEN_PLOT_CACHE[name])
+        try:
+            plots_dir = os.path.join(os.path.dirname(__file__), "golden", "plots")
+            os.makedirs(plots_dir, exist_ok=True)
+            if not _GOLDEN_PLOT_CACHE:
+                # first render of this session: drop leftovers from renamed/removed
+                # cases so the report never embeds a figure with no matching test
+                for stale in os.listdir(plots_dir):
+                    if stale.endswith(".png"):
+                        os.remove(os.path.join(plots_dir, stale))
+            golden_plot = _golden_plot_module()
+            fig, _ = golden_plot.render_case(name, recomputed(name)[0])
+            buf = io.BytesIO()
+            fig.savefig(buf, format="png", dpi=110)
+            golden_plot.plt.close(fig)
+            _GOLDEN_PLOT_CACHE[name] = buf.getvalue()
+            with open(os.path.join(plots_dir, f"{name}.png"), "wb") as f:
+                f.write(_GOLDEN_PLOT_CACHE[name])
+        except Exception as exc:  # diagnostics only — never take down the test run
+            _GOLDEN_PLOT_CACHE[name] = None
+            warnings.warn(f"golden comparison plot for {name!r} not rendered: {exc}",
+                          stacklevel=2)
     return _GOLDEN_PLOT_CACHE[name]
 
 
