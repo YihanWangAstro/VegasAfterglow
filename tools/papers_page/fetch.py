@@ -223,6 +223,23 @@ def ads_discover(token):
     return docs
 
 
+def dedup_papers(papers):
+    """Drop entries sharing a DOI, arXiv id, or normalized title with an earlier one.
+
+    Final safety net over all harvest paths; OpenAlex-derived entries precede
+    ADS-only ones in the list, so they win.
+    """
+    deduped, seen = [], set()
+    for p in papers:
+        idents = {v for v in ((p.get("doi") or "").lower(), p.get("arxiv") or "",
+                              norm_title(p.get("title"))) if v}
+        if idents & seen:
+            continue
+        seen |= idents
+        deduped.append(p)
+    return deduped
+
+
 def main():
     DATA.mkdir(exist_ok=True)
     resolver = InstituteResolver(DATA / "institutes_cache.json")
@@ -267,12 +284,25 @@ def main():
                       for w in works.values()}
         known_arxiv = {arxiv_id_of(w) for w in works.values()}
         for (kind, ident), doc in ads_docs.items():
-            if (kind == "doi" and ident in known_dois) or (kind == "arxiv" and ident in known_arxiv):
+            # Match on every identifier the doc carries, not just its dict key: an
+            # arXiv-keyed doc whose DOI is already listed is the same paper (fresh
+            # OpenAlex records often lack the arXiv location, so the arXiv id alone
+            # does not identify it as known).
+            doc_dois = {d.lower().removeprefix("https://doi.org/") for d in (doc.get("doi") or [])}
+            doc_arxiv = {ident} if kind == "arxiv" else set()
+            if (doc_dois & known_dois) or (doc_arxiv & known_arxiv):
                 continue
-            w = openalex(f"works/{kind}:{ident}", select=OPENALEX_FIELDS)
+            w = None
+            for path in ([f"works/{kind}:{ident}"]
+                         + [f"works/doi:{d}" for d in sorted(doc_dois) if kind != "doi"]):
+                w = openalex(path, select=OPENALEX_FIELDS)
+                if w:
+                    break
             if w:
                 entry = works.setdefault(w["id"], {**w, "_sources": set()})
                 entry["_sources"] = entry.get("_sources", set()) | {"ads"}
+                known_dois.add((w.get("doi") or "").lower().removeprefix("https://doi.org/"))
+                known_arxiv.add(arxiv_id_of(w))
             else:
                 ads_extra[ident] = doc  # rendered from ADS metadata alone
     else:
@@ -391,6 +421,7 @@ def main():
         })
 
     resolver.save()
+    papers = dedup_papers(papers)
     out = {"generated": time.strftime("%Y-%m-%d"), "papers": papers}
     (DATA / "papers.json").write_text(json.dumps(out, indent=1))
     n_inst = len({i["id"] for p in papers for i in p["institutes"]})
