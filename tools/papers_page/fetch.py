@@ -100,6 +100,10 @@ def arxiv_id_of(work):
     return m.group(1) if m else None
 
 
+def norm_doi(doi):
+    return (doi or "").lower().removeprefix("https://doi.org/")
+
+
 def norm_title(title):
     return re.sub(r"[^a-z0-9]", "", (title or "").lower())
 
@@ -280,28 +284,29 @@ def main():
     if token:
         print("ADS: full-text + citations ...")
         ads_docs = ads_discover(token)
-        known_dois = {(w.get("doi") or "").lower().removeprefix("https://doi.org/")
-                      for w in works.values()}
+        known_dois = {norm_doi(w.get("doi")) for w in works.values()}
         known_arxiv = {arxiv_id_of(w) for w in works.values()}
         for (kind, ident), doc in ads_docs.items():
             # Match on every identifier the doc carries, not just its dict key: an
             # arXiv-keyed doc whose DOI is already listed is the same paper (fresh
             # OpenAlex records often lack the arXiv location, so the arXiv id alone
             # does not identify it as known).
-            doc_dois = {d.lower().removeprefix("https://doi.org/") for d in (doc.get("doi") or [])}
+            doc_dois = {norm_doi(d) for d in (doc.get("doi") or [])}
             doc_arxiv = {ident} if kind == "arxiv" else set()
             if (doc_dois & known_dois) or (doc_arxiv & known_arxiv):
                 continue
+            lookups = [f"works/{kind}:{ident}"]
+            if kind != "doi":
+                lookups += [f"works/doi:{d}" for d in sorted(doc_dois)]
             w = None
-            for path in ([f"works/{kind}:{ident}"]
-                         + [f"works/doi:{d}" for d in sorted(doc_dois) if kind != "doi"]):
+            for path in lookups:
                 w = openalex(path, select=OPENALEX_FIELDS)
                 if w:
                     break
             if w:
                 entry = works.setdefault(w["id"], {**w, "_sources": set()})
                 entry["_sources"] = entry.get("_sources", set()) | {"ads"}
-                known_dois.add((w.get("doi") or "").lower().removeprefix("https://doi.org/"))
+                known_dois.add(norm_doi(w.get("doi")))
                 known_arxiv.add(arxiv_id_of(w))
             else:
                 ads_extra[ident] = doc  # rendered from ADS metadata alone

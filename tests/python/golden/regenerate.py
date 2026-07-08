@@ -23,6 +23,13 @@ GOLDEN_DIR = os.path.dirname(os.path.abspath(__file__))
 T = np.logspace(2, 8, 40)
 NUS = np.array([1e9, 1e14, 1e17, 1e22])
 
+# The golden acceptance contract, shared by test_golden.py (the assert) and
+# plot.py (the deviation panels): |current - baseline| <= RTOL*|baseline| +
+# ATOL_PEAK*max|baseline| per component.
+RTOL = 2e-3
+ATOL_PEAK = 1e-2
+COMPONENTS = ("total", "fwd_sync", "fwd_ssc", "rvs_sync", "rvs_ssc")
+
 
 def _sigma_config(sigma0):
     """Magnetized-tophat reverse-shock config; the three pinned magnetizations

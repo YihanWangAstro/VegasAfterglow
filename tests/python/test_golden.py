@@ -54,7 +54,7 @@ def _load_regenerate_module():
 
 regen = _load_regenerate_module()
 
-COMPONENTS = ("total", "fwd_sync", "fwd_ssc", "rvs_sync", "rvs_ssc")
+COMPONENTS = regen.COMPONENTS
 
 
 @pytest.fixture(scope="module")
@@ -103,4 +103,4 @@ def test_golden_component(name, component, recomputed):
         return
 
     peak = np.max(np.abs(reference))
-    np.testing.assert_allclose(current, reference, rtol=2e-3, atol=1e-2 * peak)
+    np.testing.assert_allclose(current, reference, rtol=regen.RTOL, atol=regen.ATOL_PEAK * peak)

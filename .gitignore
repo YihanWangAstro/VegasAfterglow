@@ -75,3 +75,4 @@ script/*.gif
 script/bench_*.sh
 script/*.h5
 script/*.h5.old
+tests/python/golden/plots/
