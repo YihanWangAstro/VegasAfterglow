@@ -89,6 +89,7 @@ class Coord {
     bool phi_mirrored{false};
 
     Symmetry symmetry{Symmetry::structured}; ///< Auto-detected symmetry level
+    bool spreading{false};                   ///< Jet lateral spreading (set by detect_symmetry)
     std::vector<size_t> theta_reps;          ///< Representative theta indices (contiguous groups)
 
     /**
@@ -119,6 +120,7 @@ class Coord {
 template <typename Ejecta, typename Medium>
 void Coord::detect_symmetry(Ejecta const& jet, Medium const& medium, Real t_min, Real t_max, Real z, Real t_resol) {
     const size_t theta_size = theta.size();
+    spreading = jet.spreading;
 
     if (jet.spreading || !medium.isotropic) {
         symmetry = Symmetry::structured;

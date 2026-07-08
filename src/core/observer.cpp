@@ -226,15 +226,7 @@ void Observer::build_time_grid(Coord const& coord, Shock const& shock, Real lumi
     lumi_dist = luminosity_dist;
     one_plus_z = 1 + redshift;
 
-    // Detect jet spreading: theta varies along the k (time) axis
-    jet_spreading_ = false;
-    if (t_size > 1) {
-        for (size_t i = 0; i < phi_size && !jet_spreading_; ++i) {
-            for (size_t j = 0; j < theta_size && !jet_spreading_; ++j) {
-                jet_spreading_ = (shock.theta(i, j, 0) != shock.theta(i, j, t_size - 1));
-            }
-        }
-    }
+    jet_spreading_ = coord.spreading;
 
     time = MeshGrid3d::from_shape({eff_phi_grid, theta_size, t_size});
     lg2_t = MeshGrid3d::from_shape({eff_phi_grid, theta_size, t_size});

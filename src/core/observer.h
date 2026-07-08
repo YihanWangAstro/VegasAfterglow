@@ -193,7 +193,7 @@ class Observer {
     size_t eff_phi_grid{1};       ///< Effective number of phi grid points
     size_t theta_grid{0};         ///< Number of theta grid points
     size_t t_grid{0};             ///< Number of time grid points
-    bool jet_spreading_{false};   ///< Whether the jet has lateral spreading (theta varies along k)
+    bool jet_spreading_{false};   ///< Jet lateral spreading (from Coord, set by detect_symmetry)
     bool geom_pre_logged_{false}; ///< lg2_geom_factor already holds log2(dOmega r^2) (factorized axisymmetric path)
 
     /**
