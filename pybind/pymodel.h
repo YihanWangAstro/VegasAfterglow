@@ -896,16 +896,21 @@ void PyModel::single_shock_emission(Shock const& shock, Coord const& coord, Arra
     if (rad.ssc) {
         // The observer samples IC spectra only at nu_obs (1+z) / D; restrict each
         // cell's output grid to that comoving band instead of the full
-        // theoretical IC range (tens of decades wider).
-        const Real lg2_dop_min = xt::amin(obs.lg2_doppler)();
-        const Real lg2_dop_max = xt::amax(obs.lg2_doppler)();
+        // theoretical IC range (tens of decades wider). The band is computed
+        // per time index from that k-slice's Doppler extrema — the Doppler
+        // factor decays with time, so per-k bands are much narrower than the
+        // global union across the whole evolution.
         const Real lg2_1pz = fast_log2(obs.one_plus_z);
-        const Real nu_eval_min = fast_exp2(fast_log2(xt::amin(nu_obs)()) + lg2_1pz - lg2_dop_max);
-        const Real nu_eval_max = fast_exp2(fast_log2(xt::amax(nu_obs)()) + lg2_1pz - lg2_dop_min);
+        const Real lg2_nu_lo = fast_log2(xt::amin(nu_obs)()) + lg2_1pz;
+        const Real lg2_nu_hi = fast_log2(xt::amax(nu_obs)()) + lg2_1pz;
+        const Array lg2_dop_min_k = xt::amin(obs.lg2_doppler, {0, 1});
+        const Array lg2_dop_max_k = xt::amax(obs.lg2_doppler, {0, 1});
+        const Array nu_eval_min_k = xt::exp2(lg2_nu_lo - lg2_dop_max_k);
+        const Array nu_eval_max_k = xt::exp2(lg2_nu_hi - lg2_dop_min_k);
 
         auto IC_ph = [&] {
             AFTERGLOW_PROFILE_SCOPE(ic_photons);
-            return generate_IC_photons(syn_e, syn_ph, rad.kn, coord, nu_eval_min, nu_eval_max);
+            return generate_IC_photons(syn_e, syn_ph, rad.kn, coord, nu_eval_min_k, nu_eval_max_k);
         }();
         {
             AFTERGLOW_PROFILE_SCOPE(ssc_flux);

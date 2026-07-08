@@ -8,6 +8,7 @@
 #pragma once
 #include <algorithm>
 #include <array>
+#include <cassert>
 #include <limits>
 
 #include "../core/grid-refinement.h"
@@ -147,6 +148,17 @@ struct ICPhoton {
      * <!-- ************************************************************************************** -->
      */
     Real compute_log2_I_nu(Real log2_nu);
+
+    /**
+     * <!-- ************************************************************************************** -->
+     * @brief Generates the IC spectrum grid now instead of lazily on the first query.
+     * <!-- ************************************************************************************** -->
+     */
+    void build() {
+        if (!generated) {
+            generate_spectrum();
+        }
+    }
 
     Photons photons;
 
@@ -634,11 +646,17 @@ Real ICPhoton<Electrons, Photons>::compute_log2_I_nu(Real log2_nu) {
     return log2_I_nu_IC(idx) + (log2_nu - log2_nu_IC(idx)) * interp_slope(idx);
 }
 
+/**
+ * @brief Build the IC photon grid, restricting each cell's output band to what the observer samples.
+ * @details ``nu_eval_min_k`` / ``nu_eval_max_k`` give the comoving evaluation band per time index
+ *          (the observer band shifted by that k-slice's Doppler extrema). Broadcast groups share a
+ *          cell across angles but always preserve k, so per-k bands cover every query the copies
+ *          receive. Empty arrays disable the clamp (full theoretical range, e.g. for details()).
+ */
 template <SynElectronModel Electrons, SynPhotonModel Photons>
 ICPhotonGrid<Electrons, Photons>
 generate_IC_photons(ElectronGrid<Electrons> const& electrons, PhotonGrid<Photons> const& photons, bool KN,
-                    Coord const& coord, Real nu_eval_min = 0,
-                    Real nu_eval_max = std::numeric_limits<Real>::infinity()) noexcept {
+                    Coord const& coord, Array const& nu_eval_min_k = {}, Array const& nu_eval_max_k = {}) noexcept {
     size_t phi_size = electrons.shape()[0];
     size_t theta_size = electrons.shape()[1];
     size_t t_size = electrons.shape()[2];
@@ -648,13 +666,19 @@ generate_IC_photons(ElectronGrid<Electrons> const& electrons, PhotonGrid<Photons
     const size_t phi_compute = (coord.symmetry != Symmetry::structured) ? 1 : phi_size;
 
     const bool precompute = (coord.symmetry != Symmetry::structured);
+    assert((nu_eval_min_k.size() == 0 || nu_eval_min_k.size() == t_size) &&
+           (nu_eval_max_k.size() == 0 || nu_eval_max_k.size() == t_size) &&
+           "per-k band arrays must match the grid time dimension");
+    const bool clamped = (nu_eval_min_k.size() == t_size) && (nu_eval_max_k.size() == t_size);
 
     for (size_t i = 0; i < phi_compute; ++i) {
         for (size_t j : coord.theta_reps) {
             for (size_t k = 0; k < t_size; ++k) {
-                IC_ph(i, j, k) = ICPhoton(electrons(i, j, k), photons(i, j, k), KN, nu_eval_min, nu_eval_max);
+                const Real nu_lo = clamped ? nu_eval_min_k(k) : 0;
+                const Real nu_hi = clamped ? nu_eval_max_k(k) : std::numeric_limits<Real>::infinity();
+                IC_ph(i, j, k) = ICPhoton(electrons(i, j, k), photons(i, j, k), KN, nu_lo, nu_hi);
                 if (precompute) {
-                    IC_ph(i, j, k).compute_log2_I_nu(0);
+                    IC_ph(i, j, k).build();
                 }
             }
         }
