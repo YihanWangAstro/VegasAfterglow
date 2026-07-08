@@ -29,6 +29,19 @@ class NativeFunc:
 
     def __init__(self, cfunc_obj, **kwargs):
         self.address = cfunc_obj.address
+        # The C++ side casts the address to a double(double, ...) signature;
+        # any non-float64 argument or return type would be read from the
+        # wrong registers and silently corrupt the physics.
+        sig = getattr(cfunc_obj, "_sig", None)
+        if sig is not None:
+            from numba import float64
+
+            bad = [str(t) for t in list(sig.args) + [sig.return_type] if t != float64]
+            if bad:
+                raise TypeError(
+                    "NativeFunc requires a float64(float64, ...) cfunc "
+                    f"signature; got non-float64 type(s): {', '.join(bad)}"
+                )
         pyfunc = cfunc_obj._pyfunc
         all_names = list(inspect.signature(pyfunc).parameters.keys())
 
@@ -87,7 +100,7 @@ def gil_free(fn):
         def wind_rho(phi, theta, r, A_star):
             return A_star * 5e11 * 1.67e-24 / (r * r)
 
-        medium = Medium(rho=wind_rho(A_star=1.0))
+        medium = Medium(rho=wind_rho(A_star=1.0), isotropic=True)
 
     Requires numba: ``pip install numba``
     """

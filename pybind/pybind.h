@@ -17,6 +17,10 @@
 
 #include "xtensor-python/pytensor.hpp"
 
+/// Rethrow (and clear) an error captured from a user Python callback that was
+/// swallowed inside a noexcept solver path. Call before returning results.
+void rethrow_callback_error();
+
 namespace py = pybind11;
 using PyArray = xt::pytensor<double, 1>;
 

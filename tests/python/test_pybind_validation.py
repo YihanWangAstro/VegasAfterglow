@@ -409,14 +409,14 @@ def test_ejecta_rejects_broken_sigma0_profile():
 def test_medium_happy_path():
     """Medium constructs from a callable mass-density profile rho(phi, theta, r) without raising."""
     from VegasAfterglow import Medium
-    Medium(rho=lambda phi, theta, r: 1.67e-24)
+    Medium(rho=lambda phi, theta, r: 1.67e-24, isotropic=True)
 
 
 def test_medium_rejects_non_callable():
     """Medium raises ValueError saying 'rho must be callable' when the density profile is passed as a scalar."""
     from VegasAfterglow import Medium
     with pytest.raises(ValueError, match="rho must be callable"):
-        Medium(rho=1.0)
+        Medium(rho=1.0, isotropic=True)
 
 
 @pytest.mark.parametrize("bad", [NAN, INF, -1e-24])
@@ -424,4 +424,4 @@ def test_medium_rejects_broken_rho_profile(bad):
     """Medium raises ValueError naming rho when the density profile callable returns NaN, Inf, or a negative value."""
     from VegasAfterglow import Medium
     with pytest.raises(ValueError, match="rho"):
-        Medium(rho=lambda phi, theta, r: bad)
+        Medium(rho=lambda phi, theta, r: bad, isotropic=True)

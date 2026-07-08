@@ -60,7 +60,7 @@ User-Defined Medium
         #return whatever density profile (g*cm^-3) you want as a function of phi, theta, and r
 
     # Create a user-defined medium
-    medium = Medium(rho=density)
+    medium = Medium(rho=density, isotropic=True)
 
     #..other settings
     model = Model(medium=medium, ...)
@@ -305,7 +305,7 @@ The ``@gil_free`` decorator compiles a Python function to native machine code vi
         Gamma0=gaussian_gamma(Gamma0=Gamma0, theta_c=theta_c),
     )
 
-    medium = Medium(rho=wind_density(A_star=A_star))
+    medium = Medium(rho=wind_density(A_star=A_star), isotropic=True)
     obs = Observer(lumi_dist=1e26, z=0.1, theta_obs=0.3)
     rad = Radiation(eps_e=0.1, eps_B=1e-3, p=2.3)
 

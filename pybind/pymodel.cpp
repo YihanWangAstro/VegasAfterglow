@@ -343,6 +343,7 @@ auto PyModel::details(Real t_min, Real t_max) const -> PyDetails {
         single_evo_details(fwd_shock, coord, observer, fwd_rad, details.fwd);
         single_evo_details(rvs_shock, coord, observer, *rvs_rad_opt, details.rvs);
     }
+    rethrow_callback_error();
     return details;
 }
 
@@ -383,6 +384,7 @@ auto PyModel::flux_density(PyArray const& t, PyArray const& nu) -> PyFlux {
 
     auto result = compute_emission(t_obs, nu_obs, series_flux_mJy);
     result.calc_total();
+    rethrow_callback_error();
     return result;
 }
 
@@ -403,6 +405,7 @@ auto PyModel::flux(PyArray const& t, double nu_min, double nu_max, size_t num_nu
 
     auto result = compute_emission(t_obs, nu_obs, flux_func);
     result.calc_total();
+    rethrow_callback_error();
     return result;
 }
 
@@ -488,6 +491,7 @@ auto PyModel::flux_density_exposures(PyArray const& t, PyArray const& nu, PyArra
     average_exposure_flux(result, idx_sorted, t.size(), num_points);
 
     result.calc_total();
+    rethrow_callback_error();
     return result;
 }
 
@@ -505,6 +509,7 @@ auto PyModel::flux_density_grid(PyArray const& t, PyArray const& nu) -> PyFlux {
 
     auto result = compute_emission(t_obs, nu_obs, flux_func);
     result.calc_total();
+    rethrow_callback_error();
     return result;
 }
 
@@ -560,6 +565,7 @@ auto PyModel::sky_image(PyArray const& t_obs, double nu_obs, double fov, size_t 
         render_shock_frames(rvs_shock, coord, *rvs_rad_opt);
     }
 
+    rethrow_callback_error();
     return result;
 }
 

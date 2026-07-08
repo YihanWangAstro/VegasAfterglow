@@ -57,7 +57,7 @@ MEDIA = {
     "ism_thin": lambda: va.ISM(n_ism=1e-4),
     "wind": lambda: va.Wind(A_star=0.1),
     "wind_full": lambda: va.Wind(A_star=0.5, n_ism=1.0, n0=1e6, k_m=1.5),
-    "custom": lambda: va.Medium(rho=lambda phi, theta, r: 1.67e-24 / (1 + (r / 1e17) ** 2)),
+    "custom": lambda: va.Medium(rho=lambda phi, theta, r: 1.67e-24 / (1 + (r / 1e17) ** 2), isotropic=True),
 }
 
 RADS = {

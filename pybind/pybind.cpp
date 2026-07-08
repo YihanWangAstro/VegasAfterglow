@@ -10,6 +10,7 @@
 
 #include <array>
 #include <cstdint>
+#include <cstdio>
 
 #include "pymodel.h"
 
@@ -20,6 +21,69 @@
 // The index pack simultaneously deduces the function pointer type via
 // decltype((void)I, Real{})..., initializes params, and unpacks the call.
 constexpr size_t MAX_NATIVE_PARAMS = 10;
+
+// ---------------------------------------------------------------------------
+// Callback exception guard: user Python callbacks are invoked deep inside
+// noexcept ODE right-hand sides, where a propagating py::error_already_set
+// would std::terminate the interpreter. The wrappers below never throw --
+// they capture the error thread-locally, return NaN (poisoning the solve),
+// and the PyModel entry points rethrow before returning to Python.
+// ---------------------------------------------------------------------------
+namespace callback_guard {
+    inline std::exception_ptr& slot() {
+        thread_local std::exception_ptr err;
+        return err;
+    }
+
+    inline Real capture_current() noexcept {
+        try {
+            py::gil_scoped_acquire gil;
+            try {
+                throw;
+            } catch (py::error_already_set& e) {
+                slot() = std::make_exception_ptr(
+                    std::runtime_error(std::string("user-defined jet/medium callback raised:\n") + e.what()));
+            } catch (std::exception& e) {
+                slot() = std::make_exception_ptr(
+                    std::runtime_error(std::string("user-defined jet/medium callback failed: ") + e.what()));
+            } catch (...) {
+                slot() = std::make_exception_ptr(std::runtime_error("user-defined jet/medium callback failed"));
+            }
+        } catch (...) { // never propagate from a noexcept context
+        }
+        return std::numeric_limits<Real>::quiet_NaN();
+    }
+
+    template <typename F>
+    BinaryFunc guard_binary(F f) {
+        return [f = std::move(f)](Real a, Real b) noexcept -> Real {
+            try {
+                return f(a, b);
+            } catch (...) {
+                return capture_current();
+            }
+        };
+    }
+
+    template <typename F>
+    TernaryFunc guard_ternary(F f) {
+        return [f = std::move(f)](Real a, Real b, Real c) noexcept -> Real {
+            try {
+                return f(a, b, c);
+            } catch (...) {
+                return capture_current();
+            }
+        };
+    }
+} // namespace callback_guard
+
+void rethrow_callback_error() {
+    if (callback_guard::slot()) {
+        auto err = callback_guard::slot();
+        callback_guard::slot() = nullptr;
+        std::rethrow_exception(err);
+    }
+}
 
 template <size_t N>
 BinaryFunc make_native_binary(uintptr_t addr, std::vector<Real> const& p) {
@@ -68,22 +132,36 @@ TernaryFunc dispatch_ternary(uintptr_t addr, std::vector<Real> const& p, std::in
 }
 
 // --- Converters: detect NativeFunc and dispatch to GIL-free path ---
+// A NativeFunc's cfunc signature is (runtime args..., bound params...); the
+// raw function pointer is reinterpret_cast to that exact arity, so a mismatch
+// (e.g. a two-argument cfunc used as a medium rho) would silently read bound
+// parameters from the wrong registers. Validate the total argument count.
+void check_native_arity(py::object const& obj, size_t runtime_args, size_t n_params, char const* what) {
+    const auto n_args = obj.attr("n_args").cast<size_t>();
+    AFTERGLOW_REQUIRE(n_args == runtime_args + n_params, std::string(what) + ": cfunc takes " + std::to_string(n_args) +
+                                                             " arguments but " + std::to_string(runtime_args) +
+                                                             " runtime argument(s) + " + std::to_string(n_params) +
+                                                             " bound parameter(s) were provided");
+}
+
 BinaryFunc to_binary_func(py::object const& obj, py::object const& native_type) {
     if (!native_type.is_none() && py::isinstance(obj, native_type)) {
         const auto addr = obj.attr("address").cast<uintptr_t>();
         const auto params = obj.attr("params").cast<std::vector<Real>>();
+        check_native_arity(obj, 2, params.size(), "NativeFunc used as (phi, theta) function");
         return dispatch_binary(addr, params, std::make_index_sequence<MAX_NATIVE_PARAMS + 1>{});
     }
-    return obj.cast<BinaryFunc>();
+    return callback_guard::guard_binary(obj.cast<BinaryFunc>());
 }
 
 TernaryFunc to_ternary_func(py::object const& obj, py::object const& native_type) {
     if (!native_type.is_none() && py::isinstance(obj, native_type)) {
         const auto addr = obj.attr("address").cast<uintptr_t>();
         const auto params = obj.attr("params").cast<std::vector<Real>>();
+        check_native_arity(obj, 3, params.size(), "NativeFunc used as (phi, theta, r) or (phi, theta, t) function");
         return dispatch_ternary(addr, params, std::make_index_sequence<MAX_NATIVE_PARAMS + 1>{});
     }
-    return obj.cast<TernaryFunc>();
+    return callback_guard::guard_ternary(obj.cast<TernaryFunc>());
 }
 
 /// The VegasAfterglow.native NativeFunc type, resolved once per process (py::none() when the
@@ -174,10 +252,12 @@ PYBIND11_MODULE(VegasAfterglowC, m) {
                 // Probe the profiles on-axis to reject obviously broken functions at construction
                 // time (same contract as the typed jet factories, which validate their scalars).
                 const Real eps_probe = eps_k(0, 0);
+                rethrow_callback_error();
                 AFTERGLOW_REQUIRE(std::isfinite(eps_probe) && eps_probe >= 0,
                                   std::string("E_iso(phi=0, theta=0) must be finite and non-negative, got ") +
                                       std::to_string(eps_probe));
                 const Real Gamma_probe = Gamma0(0, 0);
+                rethrow_callback_error();
                 AFTERGLOW_REQUIRE(std::isfinite(Gamma_probe) && Gamma_probe >= 1,
                                   std::string("Gamma0(phi=0, theta=0) must be finite and >= 1, got ") +
                                       std::to_string(Gamma_probe));
@@ -201,7 +281,7 @@ PYBIND11_MODULE(VegasAfterglowC, m) {
     auto ism_type [[maybe_unused]] = py::class_<ISM>(m, "_ISM");
     auto wind_type [[maybe_unused]] = py::class_<Wind>(m, "_Wind");
     py::class_<Medium>(m, "Medium")
-        .def(py::init([](py::object rho_obj) {
+        .def(py::init([](py::object rho_obj, bool isotropic) {
                  AFTERGLOW_REQUIRE(PyCallable_Check(rho_obj.ptr()), "rho must be callable: (phi, theta, r) -> g/cm^3");
                  const py::object native_type =
                      native_func_type() ? py::reinterpret_borrow<py::object>(native_func_type()) : py::none();
@@ -210,14 +290,58 @@ PYBIND11_MODULE(VegasAfterglowC, m) {
                  // Probe the density on-axis at a typical afterglow radius to reject obviously
                  // broken functions at construction time (mirrors the typed ISM/Wind factories).
                  const Real rho_probe = rho(0, 0, 1e17);
+                 rethrow_callback_error();
                  AFTERGLOW_REQUIRE(std::isfinite(rho_probe) && rho_probe >= 0,
                                    std::string("rho(phi=0, theta=0, r=1e17 cm) must be finite and non-negative, "
                                                "got ") +
                                        std::to_string(rho_probe));
 
-                 return Medium(std::move(rho));
+                 // ``isotropic`` is a required declaration: an anisotropic medium forces
+                 // per-cell blast-wave dynamics (no angular broadcast, an order-of-magnitude
+                 // cost), while wrongly declaring an angular profile isotropic would give
+                 // wrong physics. Sampling cannot *prove* isotropy for a black-box function,
+                 // but it can disprove it — so a True declaration is cross-checked against
+                 // an angular probe grid and rejected when the profile visibly varies.
+                 if (isotropic) {
+                     constexpr std::array thetas = {0.11, 0.31, 0.52, 0.73, 0.94, 1.15, 1.36, 1.57};
+                     constexpr std::array phis = {0.7, 1.9, 3.4, 5.3};
+                     constexpr std::array radii = {1e13, 1e14, 1e15, 1e16, 1e17, 1e18, 1e19, 1e20};
+                     auto fmt = [](Real v) {
+                         char buf[32];
+                         std::snprintf(buf, sizeof(buf), "%.6g", v);
+                         return std::string(buf);
+                     };
+                     for (const Real r : radii) {
+                         const Real ref = rho(0, 0, r);
+                         auto check = [&](Real phi, Real theta) {
+                             const Real val = rho(phi, theta, r);
+                             rethrow_callback_error();
+                             AFTERGLOW_REQUIRE(
+                                 val == ref,
+                                 std::string("Medium was declared isotropic=True but rho varies with angle: "
+                                             "rho(phi=") +
+                                     fmt(phi) + ", theta=" + fmt(theta) + ", r=" + fmt(r) + " cm) = " + fmt(val) +
+                                     " != rho(0, 0, r) = " + fmt(ref) +
+                                     ". Pass isotropic=False for angle-dependent density profiles.");
+                         };
+                         for (const Real theta : thetas) {
+                             check(0, theta);
+                         }
+                         for (const Real phi : phis) {
+                             check(phi, 0);
+                         }
+                         // joint samples catch profiles separable in neither angle alone
+                         check(1.3, 0.62);
+                         check(4.1, 1.24);
+                     }
+                 }
+
+                 return Medium(std::move(rho), isotropic);
              }),
-             py::arg("rho"));
+             py::arg("rho"), py::arg("isotropic"),
+             "Custom density profile rho(phi, theta, r[cm]) -> g/cm^3. ``isotropic`` must be\n"
+             "declared explicitly: True keeps the fast broadcast dynamics (the declaration is\n"
+             "cross-checked against an angular probe grid), False solves every angular cell.");
 
     // Factory functions return MediumVariant (ISM/Wind for optimized path, Medium for fallback)
     m.def(
