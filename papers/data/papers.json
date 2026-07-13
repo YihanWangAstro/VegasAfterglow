@@ -1,7 +1,9 @@
 {
- "generated": "2026-07-08",
+ "generated": "2026-07-13",
  "papers": [
   {
+   "figures": [],
+   "usage": "unverified",
    "key": "W7167492665",
    "title": "AT2019ijn: A Fast-rising, Slow-decaying Blue Optical Transient with Exceptionally Bright Radio Emission",
    "year": 2026,
@@ -85,10 +87,9 @@
     }
    ],
    "sources": [
-    "openalex:cites"
-   ],
-   "figures": [],
-   "usage": "unverified"
+    "openalex:cites",
+    "openalex:fulltext"
+   ]
   },
   {
    "figures": [
@@ -1254,6 +1255,14 @@
    ]
   },
   {
+   "figures": [
+    {
+     "file": "figures/W7155385488_0.png",
+     "caption": "Light curve of the prompt emission of XRF 241001A detected by SVOM/ECLAIRs. The background-subtracted signal is centered on the trigger time $T_0 = 2024 -10 -01T17:08:57.74$ UT and shown in three energy bands: 4--20 keV (top, black), 20--50 keV (middle, blue), and 50--120 keV (bottom, red). The gray shaded region indicates the $T_90$ interval of the burst.",
+     "matched": false
+    }
+   ],
+   "usage": "used",
    "key": "W7155385488",
    "title": "XRF 241001A/SN 2024aiiq: A Faint Soft X-ray Transient Detected by SVOM with a Broad-Line Type Ic Supernova Revealed by JWST",
    "year": 2026,
@@ -1332,15 +1341,7 @@
    "co_institutes": [],
    "sources": [
     "ads"
-   ],
-   "figures": [
-    {
-     "file": "figures/W7155385488_0.png",
-     "caption": "Light curve of the prompt emission of XRF 241001A detected by SVOM/ECLAIRs. The background-subtracted signal is centered on the trigger time $T_0 = 2024 -10 -01T17:08:57.74$ UT and shown in three energy bands: 4--20 keV (top, black), 20--50 keV (middle, blue), and 50--120 keV (bottom, red). The gray shaded region indicates the $T_90$ interval of the burst.",
-     "matched": false
-    }
-   ],
-   "usage": "used"
+   ]
   },
   {
    "figures": [
@@ -2591,6 +2592,8 @@
    ]
   },
   {
+   "figures": [],
+   "usage": "cited",
    "key": "W4415711369",
    "title": "Efficient Bayesian analysis of kilonovae and gamma ray burst afterglows with FIESTA",
    "year": 2025,
@@ -2703,11 +2706,11 @@
    ],
    "sources": [
     "ads"
-   ],
-   "figures": [],
-   "usage": "cited"
+   ]
   },
   {
+   "figures": [],
+   "usage": "cited",
    "key": "W4413928100",
    "title": "Forward and Reverse Shock Emission from Relativistic Jets with Arbitrary Angular and Stratified Radial Profiles",
    "year": 2025,
@@ -2739,9 +2742,7 @@
    "co_institutes": [],
    "sources": [
     "ads"
-   ],
-   "figures": [],
-   "usage": "cited"
+   ]
   }
  ]
 }
