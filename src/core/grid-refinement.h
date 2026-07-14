@@ -158,10 +158,8 @@ Array inverse_CFD_sampling(Func&& pdf, Real min, Real max, size_t num,
         }
     }
 
-    // Midpoint quantiles place all nodes strictly inside (min, max): the
-    // midpoint rule on a function with even endpoints retains the spectral
-    // accuracy of the periodic trapezoidal rule, and no node lands on the
-    // integrand peak at the boundary.
+    // Midpoint quantiles keep all nodes strictly inside (min, max), so none lands
+    // on the integrand peak at the boundary.
     Array CDF_out = midpoint
                         ? Array(CDF_i.front() + (CDF_i.back() - CDF_i.front()) * (xt::arange<Real>(num) + 0.5) / num)
                         : Array(xt::linspace(CDF_i.front(), CDF_i.back(), num));
@@ -199,21 +197,17 @@ struct ThetaGridParams {
 template <typename Ejecta>
 Array adaptive_theta_grid(Ejecta const& jet, Real theta_min, Real theta_max, size_t base_pts, Real theta_v,
                           Real theta_resol, ThetaGridParams const& tgp = {}) {
-    // Pre-scan: find peak structure weight, Gamma_peak, CDF estimate, and bright edge.
-    // Bright edge = outermost angle where structure > 1% of peak; limits core beam extent
-    // so structured jets (Gaussian, power-law) don't waste beam points in dim wings.
+    // Pre-scan: peak structure weight, Gamma_peak, CDF estimate, and bright edge
+    // (outermost angle with structure > 1% of peak, capping the core beam extent).
     constexpr size_t scan_pts = 100;
     const Real theta_extent = theta_max - theta_min;
     Real peak_weight = 0;
     Real Gamma_peak = 1.0;
     Real struct_sum = 0;
     size_t last_bright = 0;
-    // Effective Lorentz factor of the rows dominating the observer's Doppler
-    // structure: Gamma damped by the beam offset from theta_v. Point-sampling
-    // Gamma0(theta_v) reads the dim side of a sharp edge (tophat viewed at
-    // theta_obs >= theta_c), which disables the view-beam refinement exactly
-    // where the bright limb needs it; the damped max is smooth in theta_v and
-    // recovers Gamma0(theta_v) for continuous profiles.
+    // Beam-damped max instead of point-sampling Gamma0(theta_v): at a sharp edge the
+    // point sample reads the dim side and disables the view-beam refinement exactly
+    // where the bright limb needs it.
     Real Gamma_v = 1.0;
     for (size_t i = 0; i <= scan_pts; ++i) {
         const Real theta = theta_min + theta_extent * i / scan_pts;
@@ -251,9 +245,8 @@ Array adaptive_theta_grid(Ejecta const& jet, Real theta_min, Real theta_max, siz
     const Real Gamma_v_sq = Gamma_v * Gamma_v;
     const size_t core_beam_pts = compute_beam_pts(std::log10(std::max(1.0, Gamma_peak * (theta_bright - theta_min))),
                                                   tgp.core_beam_coeff, beam_offset);
-    // No offset on the view term: its 1/|theta - theta_v| concentration is
-    // what resolves the bright limb when the observer sits at or just outside
-    // a sharp edge, where the Doppler transition spans barely a decade.
+    // No offset on the view term: near a sharp edge the Doppler transition spans
+    // barely a decade and needs the full 1/|theta - theta_v| concentration.
     const size_t view_beam_pts =
         (theta_v * Gamma_peak > 3.0)
             ? compute_beam_pts(std::log10(std::max(1.0, Gamma_v * std::max(theta_v - theta_min, theta_max - theta_v))),
@@ -304,23 +297,29 @@ Array adaptive_phi_grid(Ejecta const& jet, size_t phi_num, Real theta_v, Array c
     const Real sin_tv = std::sin(theta_v);
     const size_t n_theta = theta_grid.size();
 
-    // Precompute dcos_theta bin widths from theta grid
-    std::vector<Real> dcos(n_theta);
+    // Per-bin terms of the phi weight, hoisted out of its hot path; axisymmetric jets
+    // (phi-independent profiles, see auto_grid) also cache the Lorentz factor at phi = 0.
+    std::vector<Real> dcos(n_theta), cos_th(n_theta), sin_th(n_theta);
+    std::vector<Real> Gamma_th(is_axisymmetric ? n_theta : 0);
     for (size_t it = 0; it < n_theta; ++it) {
         const Real left = (it == 0) ? 0.0 : 0.5 * (theta_grid(it - 1) + theta_grid(it));
         const Real right = (it == n_theta - 1) ? theta_grid(it) : 0.5 * (theta_grid(it) + theta_grid(it + 1));
         dcos[it] = std::fabs(std::cos(left) - std::cos(right));
+        cos_th[it] = std::cos(theta_grid(it));
+        sin_th[it] = std::sin(theta_grid(it));
+        if (is_axisymmetric) {
+            Gamma_th[it] = jet.Gamma0(0, theta_grid(it));
+        }
     }
 
     // Weight function: Doppler-weighted structure summed across theta bins
-    auto phi_weight = [=, &jet](Real phi) {
+    auto phi_weight = [&](Real phi) {
         const Real cos_phi = std::cos(phi);
         Real w = 0;
         for (size_t it = 0; it < n_theta; ++it) {
-            const Real theta = theta_grid(it);
-            const Real Gamma = jet.Gamma0(phi, theta);
+            const Real Gamma = is_axisymmetric ? Gamma_th[it] : jet.Gamma0(phi, theta_grid(it));
             const Real beta = physics::relativistic::gamma_to_beta(Gamma);
-            const Real cos_alpha = std::cos(theta) * cos_tv + std::sin(theta) * sin_tv * cos_phi;
+            const Real cos_alpha = cos_th[it] * cos_tv + sin_th[it] * sin_tv * cos_phi;
             const Real a = (1 - beta) / (1 - beta * cos_alpha);
             w += a * structure_weight(Gamma) * dcos[it];
         }
@@ -339,10 +338,8 @@ Array adaptive_phi_grid(Ejecta const& jet, size_t phi_num, Real theta_v, Array c
     }
     const Real floor_weight = 0.05 * peak_weight;
 
-    // Self-scaled node count: the pdf's peak-to-mean ratio measures how
-    // concentrated the phi structure is; sqrt-scale the base count by it.
-    // Smooth in all parameters (no point sampling of the jet profile), so the
-    // node count cannot jump discontinuously as theta_v crosses a jet edge.
+    // Node count scales with the pdf's peak-to-mean concentration; smooth in all
+    // parameters, so the count cannot jump as theta_v crosses a jet edge.
     if (self_boost_cap > 0 && peak_weight > 0) {
         const Real mean_pdf = sum_weight / (scan_pts + 1) + floor_weight;
         const Real concentration = (peak_weight + floor_weight) / mean_pdf;
@@ -559,13 +556,16 @@ inline Array logspace_with_band_refinement(Real ts, Real t_end, Real b_lo, Real 
         grid(idx++) = l1 + (l2 - l1) * static_cast<Real>(k) / static_cast<Real>(n2);
     }
     for (size_t k = 0; k <= n3; ++k) {
-        // n3 == 0 when the band's upper edge clips t_end (its tail segment
-        // rounds to no points): the single remaining point is t_end itself.
-        // The general expression would evaluate 0/0 = NaN there, and one NaN
-        // node makes the ODE save loop skip the whole row (silent zero flux).
+        // n3 == 0 when the band clips t_end: the general expression would be
+        // 0/0 = NaN there, and one NaN node silently zeroes the whole row's flux.
         grid(idx++) = (n3 > 0) ? l2 + (l3 - l2) * static_cast<Real>(k) / static_cast<Real>(n3) : l3;
     }
-    return xt::eval(xt::pow(Real(10), grid));
+    // Scalar std::pow, like the other grid builders; xt's lazy simd path uses a
+    // different pow kernel.
+    for (Real& v : grid) {
+        v = std::pow(Real(10), v);
+    }
+    return grid;
 }
 
 inline Array make_time_grid(Real ts, Real td, Real t_end, Real T0, size_t t_num_tot, size_t t_num_base, bool is_rvs) {
@@ -574,9 +574,8 @@ inline Array make_time_grid(Real ts, Real td, Real t_end, Real T0, size_t t_num_
         const Real t_refine = 10 * t_cross_limit;
         return logspace_with_cross_refinement(ts, t_end, t_refine, t_num_tot, t_num_base);
     }
-    // Forward-shock-only lattice: densify around the deceleration turnover,
-    // where the light curve's log-log curvature peaks (the smooth power-law
-    // rise before it tolerates the thinning).
+    // Forward-shock-only lattice: densify around the deceleration turnover, where
+    // the light curve's log-log curvature peaks.
     return logspace_with_band_refinement(ts, t_end, td / 3, 3 * td, t_num_tot, 3.0);
 }
 
@@ -625,16 +624,16 @@ void build_time_grid(Coord& coord, Ejecta const& jet, Medium const& medium, Real
         }
     }
 
-    // A single non-finite node silently disables its whole row: the ODE save
-    // loop's `current_time() <= t.back()` test is false against NaN, so the
-    // row keeps its initialization state and contributes zero flux. Warn
-    // loudly instead of letting that read as faint emission (the golden tests
-    // scan stderr, so any future lattice edge case fails there).
-    if (!xt::all(xt::isfinite(coord.t))) {
+    // A non-finite node silently disables its whole row (zero flux); warn loudly
+    // instead of letting that read as faint emission.
+    if (!std::ranges::all_of(coord.t, [](Real v) { return std::isfinite(v); })) {
         std::fprintf(stderr, "Warning: time grid contains non-finite nodes; affected rows will be skipped\n");
     }
 }
 
+/// Builds the (phi, theta, t) lattices adapted to jet, medium, and observation window.
+/// `is_axisymmetric` declares the profile phi-independent; builders then sample it at
+/// phi = 0 (non-axisymmetric jets use the phi = 0 meridian for sizing only).
 template <typename Ejecta, typename Medium>
 Coord auto_grid(Ejecta const& jet, Medium const& medium, Array const& t_obs, Real theta_cut, Real theta_view, Real z,
                 bool is_rvs, Real phi_resol, Real theta_resol, Real t_resol, bool is_axisymmetric) {
@@ -663,11 +662,8 @@ Coord auto_grid(Ejecta const& jet, Medium const& medium, Array const& t_obs, Rea
 
     const size_t phi_base = std::max<size_t>(static_cast<size_t>(360 * phi_resol), 1);
 
-    // Axisymmetric jets viewed off-axis are mirror-symmetric about the
-    // jet-observer plane: sample phi over [0, pi] at the same angular density
-    // and double the weights (see Coord::phi_mirrored), halving the observer
-    // work at identical quadrature accuracy. The node count self-scales from
-    // the concentration of the phi pdf inside adaptive_phi_grid.
+    // Axisymmetric jets viewed off-axis are mirror-symmetric about the jet-observer
+    // plane: sample phi over [0, pi] and double the weights (Coord::phi_mirrored).
     const bool mirror_phi = is_axisymmetric && theta_view != 0 && phi_base > 4;
 
     if (mirror_phi) {

@@ -603,8 +603,9 @@ class PyModel {
      * @param rvs_rad Optional radiation parameters for reverse shock (default: none)
      * @param resolutions Grid resolution tuple (phi_res, theta_res, time_res) in (deg⁻¹, deg⁻¹, decade⁻¹).
      *        The total grid points in each dimension are computed from these resolutions, but
-     *        each has a minimum that cannot be reduced further: phi (min 1), theta (min 36), time (min 24).
-     *        When omitted, the default is (0.06, 0.15, 6) for forward-shock-only runs and (0.06, 0.2, 10)
+     *        each has a minimum that cannot be reduced further: phi (min 1), theta (min 36),
+     *        time (min one decade's worth of points).
+     *        When omitted, the default is (0.06, 0.15, 5) for forward-shock-only runs and (0.06, 0.2, 10)
      *        with a reverse shock; explicit values are honored as given.
      * @param rtol Relative tolerance for the shock-dynamics ODE solves (default: 1×10⁻⁶; magnetized shells tighten one decade internally)
      * @param axisymmetric Whether to assume axisymmetric jet structure (default: true)
@@ -944,10 +945,8 @@ auto PyModel::compute_emission(Array const& t_obs, Array const& nu_obs, Func&& f
             return solve_shock_pair(jet_, medium_, t_obs, theta_w, obs_setup.theta_obs, obs_setup.z, phi_resol,
                                     theta_resol, t_resol, axisymmetric, fwd_rad.rad, rvs_rad_opt->rad, rtol);
         }();
-        // The pair solver writes both shocks from one ODE state: regions 2 and 3
-        // ride the same contact discontinuity, so t_comv, r, theta, and Gamma --
-        // everything the observer reads -- are identical, and one set of EAT
-        // grids serves both emission passes.
+        // Regions 2 and 3 ride the same contact discontinuity, so everything the
+        // observer reads is identical and one set of EAT grids serves both shocks.
         {
             AFTERGLOW_PROFILE_SCOPE(EAT_grid);
             observer.observe(coord, fwd_shock, obs_setup.lumi_dist, obs_setup.z);

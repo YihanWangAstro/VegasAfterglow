@@ -56,16 +56,10 @@ namespace defaults {
      * <!-- ************************************************************************************** -->
      */
     namespace grid {
-        // Default grid resolutions, calibrated 2026-07 against the validation
-        // gates (per-component mean error < 5%, max < 15%, over the pinning
-        // jet families across viewing angles). Forward-shock-only runs hold
-        // the gates on a coarser grid than reverse-shock runs: the
-        // deceleration-band time lattice and smoother emission allow
-        // (0.06, 0.15, 6), while reverse-shock components need
-        // (0.06, 0.2, 10) — theta for the wing rows driving both shocks,
-        // time for the crossing-resolved light curves (t = 9 passes on-axis
-        // but fails off-axis: 8%/34% at theta_obs = 2 theta_c). An explicit
-        // `resolutions` argument overrides either set.
+        // Defaults hold per-component mean error < 5% and max < 15% across jet
+        // families and viewing angles: forward-shock-only runs at (0.06, 0.15, 5),
+        // reverse-shock runs at (0.06, 0.2, 10) — the RS time density is limited by
+        // crossing dynamics sampling, not interpolation. `resolutions` overrides.
 
         /// Azimuthal (phi) angular resolution factor
         inline constexpr double phi_resolution = 0.06;
@@ -74,7 +68,7 @@ namespace defaults {
         inline constexpr double theta_resolution = 0.15;
 
         /// Temporal resolution factor (forward-shock only)
-        inline constexpr double time_resolution = 6.0;
+        inline constexpr double time_resolution = 5.0;
 
         /// Polar (theta) angular resolution for reverse-shock runs
         inline constexpr double rvs_theta_resolution = 0.2;

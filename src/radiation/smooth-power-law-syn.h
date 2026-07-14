@@ -31,17 +31,16 @@ struct SmoothPowerLawSyn {
   private:
     Real log2_norm_{0};       ///< Cached spectral coefficient 0 in log2
     Real log2_thick_norm_{0}; ///< Cached spectral coefficient 1 in log2
-    Real smooth_thick_;       ///< 2->5/2 transition sharpness at nu_m in the optically-thick formula (G&S b=4, ISM)
+    Real smooth_thick_;       ///< 2->5/2 transition sharpness at nu_m in the optically-thick formula ((3.5p-1.5)/ln2)
     Real log2_x_far_;         ///< nu/nu_m distance beyond which the optically-thick softplus is exactly 0
-    Real s_a_blend_{1};       ///< Sigmoid-blended G&S smoothing at the thin/thick join (b=1, b=5, b=6 by nu_a position)
+    Real s_a_blend_{1};       ///< Thin/thick join sharpness at nu_a (uniform s = 1)
 
-    // Unified-formula cached values (single double-smoothed expression that
-    // works in both slow- and fast-cooling regimes; asymptotically reproduces
-    // Granot & Sari 2002 Table 2 in each limit).
-    Real log2_nu_lo_{0}; ///< Log2 of soft min(nu_m, nu_c) -- lower break
-    Real log2_nu_hi_{0}; ///< Log2 of soft max(nu_m, nu_c) -- upper break
-    Real smooth_lo_{1};  ///< Smoothing sharpness at lower break (G&S blend)
-    Real smooth_hi_{1};  ///< Smoothing sharpness at upper break (G&S blend)
+    // Cached values of the double-smoothed expression; the cooling regime is
+    // resolved once in build() by break order.
+    Real log2_nu_lo_{0}; ///< Log2 of min(nu_m, nu_c) -- lower break
+    Real log2_nu_hi_{0}; ///< Log2 of max(nu_m, nu_c) -- upper break
+    Real smooth_lo_{1};  ///< Smoothing sharpness at lower break (uniform s = 1)
+    Real smooth_hi_{1};  ///< Smoothing sharpness at upper break (uniform s = 1)
     Real diff_lo_{0};    ///< smooth_lo_ * (beta_low - beta_mid) at lower break
     Real diff_hi_{0};    ///< smooth_hi_ * (beta_mid - beta_high) at upper break
     Real inv_nu_M_{0};   ///< Cached 1/nu_M for division optimization

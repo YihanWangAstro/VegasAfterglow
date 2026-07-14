@@ -8,6 +8,7 @@
 
 #include <algorithm>
 #include <array>
+#include <span>
 #include <stdexcept>
 #include <vector>
 
@@ -44,6 +45,33 @@ struct SplatGrid {
 
     /// Render the splat grid into a frame of the 3D result image.
     void render(MeshGrid3d& image, size_t frame, Real pix_size, bool azimuthal_avg, bool mirror_y) const;
+};
+
+/// One cell's per-node rows along the source-time lattice (all log2). Raw row pointers:
+/// interleaved output stores keep the compiler from hoisting member-tensor strides.
+/// Every flux path evaluates node fluxes through this struct (single-sourced math).
+template <typename Photon>
+struct CellRow {
+    Real const* t;    ///< log2 arrival time per node
+    Real const* dop;  ///< log2 Doppler factor per node
+    Real const* geom; ///< log2 geometry factor per node
+    Photon* ph;       ///< comoving spectrum per node
+
+    /// log2 observed luminosity of node `node` at source-frame log2 frequency `lg2_nu_src`.
+    [[nodiscard]] Real node_flux(size_t node, Real lg2_nu_src) const noexcept {
+        return ph[node].compute_log2_I_nu(lg2_nu_src - dop[node]) + geom[node];
+    }
+
+    /// node_flux across a whole frequency row into dst; dst.size() == lg2_nu_src.size().
+    /// Per-node terms are hoisted to stay in registers across the opaque spectrum calls.
+    void node_flux_row(size_t node, std::span<const Real> lg2_nu_src, std::span<Real> dst) const noexcept {
+        const Real lg2_dop = dop[node];
+        const Real lg2_geom = geom[node];
+        auto& spectrum = ph[node];
+        for (size_t l = 0; l < dst.size(); l++) {
+            dst[l] = spectrum.compute_log2_I_nu(lg2_nu_src[l] - lg2_dop) + lg2_geom;
+        }
+    }
 };
 
 /**
@@ -255,7 +283,10 @@ class Observer {
     /**
      * <!-- ************************************************************************************** -->
      * @struct InterpState
-     * @brief Helper structure for logarithmic interpolation state
+     * @brief Log-log chord interpolation state for single-time sampling (sky-image splatting only).
+     * @details The flux paths interpolate with HermiteSegment; the chord is sufficient here because
+     *          each frame samples one target time per cell and the splat kernel's own smoothing
+     *          dominates.
      * <!-- ************************************************************************************** -->
      */
     struct InterpState {
@@ -275,22 +306,18 @@ class Observer {
     [[nodiscard]] static Real loglog_interpolate(InterpState const& state, Real lg2_t_obs, Real lg2_t_lo) noexcept;
 
     /**
-     * @tparam PhotonGrid Types of photon grid objects
+     * @tparam Photon Photon type of the cell row
      * @param state The interpolation state to update
-     * @param eff_i Effective phi grid index (accounts for jet symmetry)
-     * @param i Phi grid index
-     * @param j Theta grid index
+     * @param row The cell's per-node rows
      * @param k Time grid index
      * @param lg2_nu_src Log2 of the observed frequency
-     * @param photons Parameter pack of photon grid objects
      * @details Computes the log2 luminosity at the two time-grid endpoints of interval k and the
      *          interpolation slope between them.
      * @return True if the slope is finite (both boundaries valid for interpolation), false otherwise
      * <!-- ************************************************************************************** -->
      */
-    template <typename PhotonGrid>
-    bool set_boundaries(InterpState& state, size_t eff_i, size_t i, size_t j, size_t k, Real lg2_nu_src,
-                        PhotonGrid& photons) noexcept;
+    template <typename Photon>
+    bool set_boundaries(InterpState& state, CellRow<Photon> const& row, size_t k, Real lg2_nu_src) noexcept;
 };
 
 //========================================================================================================
@@ -319,38 +346,197 @@ inline void iterate_through(Real value, Array const& arr, size_t& it) noexcept {
     }
 }
 
-/// Bracket [k_lo, k_hi] of time-lattice intervals covering the observation window [w_lo, w_hi];
-/// returns false when the row lies entirely outside the window.
-inline bool observed_window(Real const* t_row, size_t t_grid, Real w_lo, Real w_hi, size_t& k_lo,
-                            size_t& k_hi) noexcept {
-    if (t_row[t_grid - 1] < w_lo || t_row[0] > w_hi) {
-        return false;
-    }
-    k_lo = 0;
-    while (k_lo + 1 < t_grid && t_row[k_lo + 1] < w_lo) {
-        k_lo++;
-    }
-    k_hi = k_lo + 1;
-    while (k_hi + 1 < t_grid && t_row[k_hi] <= w_hi) {
-        k_hi++;
-    }
-    return true;
-}
-
-template <typename PhotonGrid>
-bool Observer::set_boundaries(InterpState& state, size_t eff_i, size_t i, size_t j, size_t k, Real lg2_nu_src,
-                              PhotonGrid& photons) noexcept {
-    const Real lg2_t_ratio = lg2_t(i, j, k + 1) - lg2_t(i, j, k);
-
-    const Real lg2_nu_lo = lg2_nu_src - lg2_doppler(i, j, k);
-    state.lg2_L_nu_lo = photons(eff_i, j, k).compute_log2_I_nu(lg2_nu_lo) + lg2_geom_factor(i, j, k);
-
-    const Real lg2_nu_hi = lg2_nu_src - lg2_doppler(i, j, k + 1);
-    const Real lg2_L_nu_hi = photons(eff_i, j, k + 1).compute_log2_I_nu(lg2_nu_hi) + lg2_geom_factor(i, j, k + 1);
-
-    state.slope = (lg2_L_nu_hi - state.lg2_L_nu_lo) / lg2_t_ratio;
+template <typename Photon>
+bool Observer::set_boundaries(InterpState& state, CellRow<Photon> const& row, size_t k, Real lg2_nu_src) noexcept {
+    state.lg2_L_nu_lo = row.node_flux(k, lg2_nu_src);
+    const Real lg2_L_nu_hi = row.node_flux(k + 1, lg2_nu_src);
+    state.slope = (lg2_L_nu_hi - state.lg2_L_nu_lo) / (row.t[k + 1] - row.t[k]);
     return std::isfinite(state.slope);
 }
+
+/**
+ * <!-- ************************************************************************************** -->
+ * @struct HermiteSegment
+ * @brief Local cubic Hermite (log-log, weighted-secant slopes) over one source-time interval.
+ * @details Tracks the light-curve bend across spectral-break crossings that a straight chord
+ *          cuts; C1 across nodes, exact chord on pure power-law segments and when a neighbor
+ *          node is missing (lattice ends, non-finite values).
+ * <!-- ************************************************************************************** -->
+ */
+struct HermiteSegment {
+    Real t_lo;  ///< log2 arrival time of the lower node
+    Real lo;    ///< log2 flux at the lower node
+    Real slope; ///< interpolant slope at the lower node (the chord slope when degenerate)
+    Real c2;    ///< quadratic coefficient
+    Real c3;    ///< cubic coefficient
+
+    [[nodiscard]] Real operator()(Real t) const noexcept {
+        const Real x = t - t_lo;
+        return lo + x * (slope + x * (c2 + x * c3));
+    }
+};
+
+/// Unified "no usable value" marker: absent stencil neighbor, unevaluated window slot,
+/// or no previous band. Known-dead nodes are -inf, not NaN, so they are never re-evaluated.
+inline constexpr Real missing_node = std::numeric_limits<Real>::quiet_NaN();
+
+/// Node times and reciprocals of one source-time interval, shared by every frequency
+/// evaluated on it (the divisions run once per interval instead of once per frequency).
+struct SegmentGeometry {
+    Real t_lo{0};                                   ///< log2 time of the lower node
+    Real dt{0}, dt_prev{0}, dt_next{0};             ///< interval widths: [k, k+1], [k-1, k], [k+1, k+2]
+    Real inv_dt{0}, inv_dt_prev{0}, inv_dt_next{0}; ///< their reciprocals
+    Real inv_span_prev{0}, inv_span_next{0};        ///< 1 / (dt_prev + dt), 1 / (dt + dt_next)
+};
+
+inline SegmentGeometry make_segment_geometry(Real const* t_row, size_t k, size_t t_grid) noexcept {
+    SegmentGeometry g;
+    g.t_lo = t_row[k];
+    g.dt = t_row[k + 1] - g.t_lo;
+    g.inv_dt = 1 / g.dt;
+    if (k >= 1) {
+        g.dt_prev = g.t_lo - t_row[k - 1];
+        g.inv_dt_prev = 1 / g.dt_prev;
+        g.inv_span_prev = 1 / (g.dt_prev + g.dt);
+    }
+    if (k + 2 < t_grid) {
+        g.dt_next = t_row[k + 2] - t_row[k + 1];
+        g.inv_dt_next = 1 / g.dt_next;
+        g.inv_span_next = 1 / (g.dt + g.dt_next);
+    }
+    return g;
+}
+
+/// Node slopes are the interval-weighted mean of adjacent secants, recovering bracketed
+/// extrema. Missing neighbors (NaN) degrade to the chord; non-finite endpoints yield the
+/// -inf sentinel, so callers evaluate unconditionally.
+inline HermiteSegment make_hermite_segment(SegmentGeometry const& g, Real lo_prev, Real lo, Real hi,
+                                           Real hi_next) noexcept {
+    const Real chord = (hi - lo) * g.inv_dt;
+    if (!std::isfinite(chord)) {
+        return {g.t_lo, -con::inf, 0.0, 0.0, 0.0};
+    }
+    if (!std::isfinite(lo_prev) || !std::isfinite(hi_next)) {
+        return {g.t_lo, lo, chord, 0.0, 0.0};
+    }
+    const Real chord_prev = (lo - lo_prev) * g.inv_dt_prev;
+    const Real chord_next = (hi_next - hi) * g.inv_dt_next;
+
+    const Real slope_lo = (g.dt_prev * chord + g.dt * chord_prev) * g.inv_span_prev;
+    const Real slope_hi = (g.dt * chord_next + g.dt_next * chord) * g.inv_span_next;
+    const Real c2 = (3 * chord - 2 * slope_lo - slope_hi) * g.inv_dt;
+    const Real c3 = (slope_lo + slope_hi - 2 * chord) * g.inv_dt * g.inv_dt;
+    return {g.t_lo, lo, slope_lo, c2, c3};
+}
+
+/// Rolling three-node flux window keyed by band: after building interval k it holds nodes
+/// (k, k+1, k+2), so the next interval costs one fresh evaluation.
+struct StencilWindow {
+    size_t first_node{0};       ///< node index of vals[0]
+    Real nu{missing_node};      ///< band the held fluxes belong to (NaN: nothing held yet)
+    std::array<Real, 3> vals{}; ///< fluxes at nodes first_node + {0, 1, 2}; NaN = not evaluated
+
+    /// Window flux at `node` for `band`, or the marker when not held.
+    [[nodiscard]] Real held(size_t node, Real band) const noexcept {
+        return (nu == band && node - first_node < 3) ? vals[node - first_node] : missing_node;
+    }
+
+    /// Window flux at `node` for `band`, evaluated fresh when not held.
+    template <typename Photon>
+    [[nodiscard]] Real fetch(CellRow<Photon> const& row, size_t node, Real band) const noexcept {
+        const Real f = held(node, band);
+        return std::isnan(f) ? row.node_flux(node, band) : f;
+    }
+
+    /// Builds interval k's segment at band lg2_nu and re-anchors the window to (k, k+1, k+2).
+    /// Nodes are fetched only when usable: endpoints always, lo_prev only for a live
+    /// interval, hi_next only when the chord upgrades to the cubic.
+    template <typename Photon>
+    HermiteSegment build(CellRow<Photon> const& row, SegmentGeometry const& seg_geom, size_t k, size_t t_grid,
+                         Real lg2_nu) noexcept {
+        const Real f_lo = fetch(row, k, lg2_nu);
+        const Real f_hi = fetch(row, k + 1, lg2_nu);
+
+        Real f_lo_prev = missing_node;
+        Real f_hi_next = missing_node;
+        if (std::isfinite(f_lo) && std::isfinite(f_hi)) { // dead intervals stay a 2-node sentinel
+            if (k >= 1) {
+                f_lo_prev = fetch(row, k - 1, lg2_nu);
+            }
+            if (std::isfinite(f_lo_prev) && k + 2 < t_grid) { // chord-degenerate: hi_next unused
+                f_hi_next = fetch(row, k + 2, lg2_nu);
+            }
+        }
+
+        first_node = k;
+        nu = lg2_nu;
+        vals = {f_lo, f_hi, f_hi_next};
+        return make_hermite_segment(seg_geom, f_lo_prev, f_lo, f_hi, f_hi_next);
+    }
+};
+
+/// Lazily-filled node-flux table for the grid path (whole frequency rows per node) --
+/// the grid analogue of StencilWindow. Returned rows are views valid until the next
+/// begin_cell(); absent or gated-off stencil rows read missing().
+template <typename Photon>
+struct NodeTable {
+    std::span<const Real> lg2_nu_src; ///< requested source-frame frequencies (borrowed)
+    MeshGrid vals;                    ///< [t_grid, nu_len] log2 node fluxes
+    Array missing_row;                ///< missing_node markers served for absent rows
+    std::vector<char> filled;         ///< per-node fill flag for the current cell
+    CellRow<Photon> row{};            ///< current cell
+
+    NodeTable(size_t t_grid, Array const& lg2_nu_src)
+        : lg2_nu_src(lg2_nu_src.data(), lg2_nu_src.size()),
+          vals(MeshGrid::from_shape({t_grid, lg2_nu_src.size()})),
+          missing_row({lg2_nu_src.size()}, missing_node),
+          filled(t_grid, 0) {}
+    NodeTable(size_t, Array&&) = delete; // the borrowed frequencies must outlive the table
+
+    void begin_cell(CellRow<Photon> const& cell) noexcept {
+        row = cell;
+        std::fill(filled.begin(), filled.end(), char{0});
+    }
+
+    /// The node's flux row across all frequencies, evaluated on first use.
+    [[nodiscard]] std::span<const Real> node(size_t k) {
+        const std::span<Real> dst{&vals(k, 0), lg2_nu_src.size()};
+        if (!filled[k]) {
+            filled[k] = 1;
+            row.node_flux_row(k, lg2_nu_src, dst);
+        }
+        return dst;
+    }
+
+    /// The row served for stencil rows outside the lattice or gated off.
+    [[nodiscard]] std::span<const Real> missing() const noexcept { return {&missing_row(0), missing_row.size()}; }
+
+    /// Interval k's stencil rows plus liveness, fetched only when usable: endpoints always;
+    /// lo_prev only if some band is live; hi_next only if some live band has finite lo_prev.
+    struct Stencil {
+        std::span<const Real> lo_prev, lo, hi, hi_next;
+        bool any_live; ///< some band has both endpoints finite
+    };
+
+    [[nodiscard]] Stencil stencil(size_t k) {
+        Stencil st{missing(), node(k), node(k + 1), missing(), false};
+        const size_t nu_len = lg2_nu_src.size();
+        for (size_t l = 0; l < nu_len && !st.any_live; l++) {
+            st.any_live = std::isfinite(st.lo[l]) && std::isfinite(st.hi[l]);
+        }
+        if (st.any_live && k >= 1) {
+            st.lo_prev = node(k - 1);
+            bool any_cubic = false; // some band can use the full four-node stencil
+            for (size_t l = 0; l < nu_len && !any_cubic; l++) {
+                any_cubic = std::isfinite(st.lo_prev[l]) && std::isfinite(st.lo[l]) && std::isfinite(st.hi[l]);
+            }
+            if (any_cubic && k + 2 < filled.size()) {
+                st.hi_next = node(k + 2);
+            }
+        }
+        return st;
+    }
+};
 
 template <typename PhotonGrid>
 MeshGrid Observer::specific_flux(Array const& t_obs, Array const& nu_obs, PhotonGrid& photons) {
@@ -362,72 +548,48 @@ MeshGrid Observer::specific_flux(Array const& t_obs, Array const& nu_obs, Photon
 
     MeshGrid F_nu({nu_len, t_obs_len}, 0);
 
-    // Precomputed log2-luminosity at each time boundary × frequency. [k * nu_len + l]
-    Array boundary_vals({t_grid * nu_len}, 0);
-    Array slope({nu_len}, 0);
-    Array lo({nu_len}, 0);
-    // Per-column log2-flux contributions; exp2 runs once per column as a
-    // vectorized pass instead of one libm call per (frequency, time) sample.
-    // Every slot in [col_first, t_idx) is written before each flush (the
-    // k-segments tile the range and a non-finite slope writes -inf via lo),
-    // so no sentinel reset between columns is needed.
-    MeshGrid col_lg2({nu_len, t_obs_len}, 0);
+    using Photon = std::remove_reference_t<decltype(photons(0, 0, 0))>;
+    NodeTable<Photon> nodes(t_grid, lg2_nu_src);
+    MeshGrid col_lg2 = MeshGrid::from_shape({nu_len, t_obs_len});
 
     for (size_t i = 0; i < eff_phi_grid; i++) {
         const size_t eff_i = i * jet_3d;
         for (size_t j = 0; j < theta_grid; j++) {
-            // Row pointers for the member tensors; the local buffers below
-            // need none (the compiler already hoists their stride math).
-            const Real* t_row = &lg2_t(i, j, 0);
-            const Real* dop_row = &lg2_doppler(i, j, 0);
-            const Real* geom_row = &lg2_geom_factor(i, j, 0);
-            auto* ph_row = &photons(eff_i, j, 0);
+            const CellRow row{&lg2_t(i, j, 0), &lg2_doppler(i, j, 0), &lg2_geom_factor(i, j, 0), &photons(eff_i, j, 0)};
 
-            // Only the time intervals bracketing an observation point are ever
-            // read: clamp the boundary precompute to that window. Off-axis rows
-            // span many decades outside a narrow request, so this skips the
-            // bulk of the photon evaluations for fit-style calls.
-            size_t k_lo, k_hi;
-            if (!observed_window(t_row, t_grid, lg2_t_obs(0), lg2_t_obs(t_obs_len - 1), k_lo, k_hi)) {
+            // Skip rows whose arrival times never intersect the requested window.
+            if (row.t[t_grid - 1] < lg2_t_obs(0) || row.t[0] > lg2_t_obs(t_obs_len - 1)) {
                 continue;
             }
 
-            for (size_t k = k_lo; k <= k_hi; k++) {
-                const Real lg2_dop = dop_row[k];
-                const Real lg2_geom = geom_row[k];
-                auto& ph = ph_row[k];
-                const size_t base = k * nu_len;
-                for (size_t l = 0; l < nu_len; l++) {
-                    boundary_vals(base + l) = ph.compute_log2_I_nu(lg2_nu_src(l) - lg2_dop) + lg2_geom;
-                }
-            }
+            nodes.begin_cell(row);
 
             size_t t_idx = 0;
-            iterate_to(t_row[0], lg2_t_obs, t_idx);
+            iterate_to(row.t[0], lg2_t_obs, t_idx);
             const size_t col_first = t_idx;
 
-            for (size_t k = k_lo; k < k_hi && t_idx < t_obs_len; k++) {
-                if (t_row[k + 1] < lg2_t_obs(t_idx))
-                    continue;
-
-                const size_t idx_start = t_idx;
-                iterate_to(t_row[k + 1], lg2_t_obs, t_idx);
-
-                const size_t lo_base = k * nu_len;
-                const size_t hi_base = (k + 1) * nu_len;
-                const Real t_lo_val = t_row[k];
-                const Real inv_t_ratio = 1.0 / (t_row[k + 1] - t_lo_val);
-
-                for (size_t l = 0; l < nu_len; l++) {
-                    const Real s = (boundary_vals(hi_base + l) - boundary_vals(lo_base + l)) * inv_t_ratio;
-                    const bool ok = std::isfinite(s);
-                    slope(l) = ok ? s : 0.0;
-                    lo(l) = ok ? boundary_vals(lo_base + l) : -con::inf;
+            // Walk the intervals front to back; each one processes the block of
+            // observation times it brackets.
+            for (size_t k = 0; t_idx < t_obs_len && k < t_grid - 1; k++) {
+                if (row.t[k + 1] < lg2_t_obs(t_idx)) {
+                    continue; // no observation time falls inside this interval
                 }
-                for (size_t idx = idx_start; idx < t_idx; idx++) {
-                    const Real dlg2_t = lg2_t_obs(idx) - t_lo_val;
-                    for (size_t l = 0; l < nu_len; l++) {
-                        col_lg2(l, idx) = lo(l) + dlg2_t * slope(l);
+                const size_t idx_start = t_idx;
+                iterate_to(row.t[k + 1], lg2_t_obs, t_idx);
+
+                const auto stencil = nodes.stencil(k);
+                if (!stencil.any_live) { // every band dead: sentinel segments emit -inf
+                    xt::view(col_lg2, xt::all(), xt::range(idx_start, t_idx)) = -con::inf;
+                    continue;
+                }
+
+                // One cubic segment per frequency, evaluated over the bracketed times.
+                const SegmentGeometry seg_geom = make_segment_geometry(row.t, k, t_grid);
+                for (size_t l = 0; l < nu_len; l++) {
+                    const HermiteSegment seg = make_hermite_segment(seg_geom, stencil.lo_prev[l], stencil.lo[l],
+                                                                    stencil.hi[l], stencil.hi_next[l]);
+                    for (size_t idx = idx_start; idx < t_idx; idx++) {
+                        col_lg2(l, idx) = seg(lg2_t_obs(idx));
                     }
                 }
             }
@@ -456,71 +618,40 @@ Array Observer::specific_flux_series(Array const& t_obs, Array const& nu_obs, Ph
     const Array lg2_nu_src = xt::log2(nu_obs) + fast_log2(one_plus_z);
 
     Array F_nu = xt::zeros<Real>({t_obs_len});
-    // Per-column log2-flux contributions; exp2 runs once per column as a
-    // vectorized pass instead of one libm call per observation point. Slots are
-    // written for every advancing idx; the (cold) boundary-failure branch writes
-    // the -inf sentinel itself, so no reset pass between columns is needed.
-    Array col_lg2({t_obs_len}, -con::inf);
+    // Per-column log2 contributions; exp2 runs once per column. Never reset between cells:
+    // every flushed column is written by the current cell (dead bands write -inf).
+    Array col_lg2 = Array::from_shape({t_obs_len});
 
     for (size_t i = 0; i < eff_phi_grid; i++) {
         const size_t eff_i = i * jet_3d;
         for (size_t j = 0; j < theta_grid; j++) {
-            // Row pointers: member-tensor indexing would redo the 3D stride
-            // arithmetic on every access (the interleaved col_lg2 stores keep
-            // the compiler from hoisting it).
-            const Real* t_row = &lg2_t(i, j, 0);
-            const Real* dop_row = &lg2_doppler(i, j, 0);
-            const Real* geom_row = &lg2_geom_factor(i, j, 0);
-            auto* ph_row = &photons(eff_i, j, 0);
+            const CellRow row{&lg2_t(i, j, 0), &lg2_doppler(i, j, 0), &lg2_geom_factor(i, j, 0), &photons(eff_i, j, 0)};
 
             size_t idx = 0;
-            iterate_to(t_row[0], lg2_t_obs, idx);
+            iterate_to(row.t[0], lg2_t_obs, idx);
             const size_t col_first = idx;
 
-            // The previous interval's upper boundary doubles as the next lower
-            // boundary when consecutive same-band points sit in adjacent
-            // intervals (data locally denser than the time lattice).
-            size_t carry_k = t_grid;
-            Real carry_nu = 0;
-            Real carry_val = 0;
+            StencilWindow window;
 
-            // Each time interval processes every observation point it brackets,
-            // with the interval's endpoint cells hoisted once.
+            // Walk the intervals front to back; each one processes the block of
+            // observation points it brackets.
             for (size_t k = 0; idx < t_obs_len && k < t_grid - 1; k++) {
-                if (t_row[k + 1] < lg2_t_obs(idx)) {
-                    continue;
+                if (row.t[k + 1] < lg2_t_obs(idx)) {
+                    continue; // no observation point falls inside this interval
                 }
                 const size_t block_first = idx;
-                iterate_through(t_row[k + 1], lg2_t_obs, idx);
+                iterate_through(row.t[k + 1], lg2_t_obs, idx);
 
-                const Real inv_dt = 1.0 / (t_row[k + 1] - t_row[k]);
-                auto& ph_lo = ph_row[k];
-                auto& ph_hi = ph_row[k + 1];
-
-                Real prev_nu = std::numeric_limits<Real>::quiet_NaN();
-                Real prev_lo = 0;
-                Real prev_hi = 0;
+                const SegmentGeometry seg_geom = make_segment_geometry(row.t, k, t_grid);
+                Real prev_nu = missing_node;
+                HermiteSegment seg{};
                 for (size_t s = block_first; s < idx; s++) {
                     const Real lg2_nu = lg2_nu_src(s);
-                    Real lo, hi;
-                    if (lg2_nu == prev_nu) {
-                        // Runs of same-frequency points (light curves; per-band
-                        // fit data) share both boundary evaluations.
-                        lo = prev_lo;
-                        hi = prev_hi;
-                    } else {
-                        const bool carried = (s == block_first && carry_k == k && carry_nu == lg2_nu);
-                        lo = carried ? carry_val : ph_lo.compute_log2_I_nu(lg2_nu - dop_row[k]) + geom_row[k];
-                        hi = ph_hi.compute_log2_I_nu(lg2_nu - dop_row[k + 1]) + geom_row[k + 1];
+                    if (lg2_nu != prev_nu) { // same-band runs share the whole segment
+                        seg = window.build(row, seg_geom, k, t_grid, lg2_nu);
                         prev_nu = lg2_nu;
-                        prev_lo = lo;
-                        prev_hi = hi;
                     }
-                    const Real slope = (hi - lo) * inv_dt;
-                    col_lg2(s) = std::isfinite(slope) ? lo + (lg2_t_obs(s) - t_row[k]) * slope : -con::inf;
-                    carry_k = k + 1;
-                    carry_nu = lg2_nu;
-                    carry_val = hi;
+                    col_lg2(s) = seg(lg2_t_obs(s));
                 }
             }
 
@@ -531,7 +662,6 @@ Array Observer::specific_flux_series(Array const& t_obs, Array const& nu_obs, Ph
         }
     }
 
-    // Normalize the flux by the factor (1+z)/(lumi_dist^2).
     F_nu *= one_plus_z / (lumi_dist * lumi_dist);
 
     return F_nu;
@@ -588,22 +718,24 @@ void Observer::build_splat_grid(SplatGrid& grid, Coord const& coord, Shock const
         const Real sp_fixed = is_axisym ? 0 : std::sin(coord.phi[i_phys] - coord.phi_view);
 
         for (size_t j = 0; j < theta_grid; ++j) {
-            if (lg2_t_target < lg2_t(i_phys, j, 0) || lg2_t_target >= lg2_t(i_phys, j, t_grid - 1)) {
+            const CellRow row{&lg2_t(i_phys, j, 0), &lg2_doppler(i_phys, j, 0), &lg2_geom_factor(i_phys, j, 0),
+                              &photons(eff_i, j, 0)};
+            if (lg2_t_target < row.t[0] || lg2_t_target >= row.t[t_grid - 1]) {
                 continue;
             }
 
             // Find time bracket
             size_t k = 0;
-            while (k + 2 < t_grid && lg2_t(i_phys, j, k + 1) < lg2_t_target) {
+            while (k + 2 < t_grid && row.t[k + 1] < lg2_t_target) {
                 ++k;
             }
 
             // Interpolate luminosity
             InterpState state_L;
-            if (!set_boundaries(state_L, eff_i, i_phys, j, k, lg2_nu_src, photons)) {
+            if (!set_boundaries(state_L, row, k, lg2_nu_src)) {
                 continue;
             }
-            const Real L_val = loglog_interpolate(state_L, lg2_t_target, lg2_t(i_phys, j, k));
+            const Real L_val = loglog_interpolate(state_L, lg2_t_target, row.t[k]);
             if (!std::isfinite(L_val) || L_val <= 0) {
                 continue;
             }

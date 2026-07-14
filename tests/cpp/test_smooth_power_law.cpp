@@ -372,13 +372,16 @@ BOOST_AUTO_TEST_CASE(spectrum_nu_a_very_large) {
 }
 
 // ---------------------------------------------------------------------------
-// 20. continuity_at_nu_c_crossing_nu_m — phase 2 unified-formula crossing
+// 20. bounded_step_at_nu_c_crossing_nu_m — hard fast/slow regime branch
 // ---------------------------------------------------------------------------
-BOOST_AUTO_TEST_CASE(continuity_at_nu_c_crossing_nu_m) {
+BOOST_AUTO_TEST_CASE(bounded_step_at_nu_c_crossing_nu_m) {
     // Sweep nu_c through nu_m at a fixed observation frequency well above both
-    // breaks. The spectrum at the observation frequency must not jump as the
-    // formula transitions through the regime crossing. Pre-phase-2, this jump
-    // was ~3-5% (s=1) or ~4-5% (G&S Table 2 values per regime).
+    // breaks. The spectrum picks the slow- or fast-cooling form by break order
+    // (the pre-v2.0.5 convention, restored with the uniform s = 1 smoothing),
+    // so the crossing carries a small step: the two smoothed forms differ near
+    // coincident breaks because their mid-segment slopes differ. Measured ~3%
+    // at s = 1; pin that it stays small (a regression here means the regime
+    // forms diverged, not just reordered).
     constexpr Real nu_m = 1e15;
     constexpr Real nu_obs = 8.0 * nu_m; // 3 octaves above the break
 
@@ -391,17 +394,15 @@ BOOST_AUTO_TEST_CASE(continuity_at_nu_c_crossing_nu_m) {
         I_values[i] = ph.compute_I_nu(nu_obs);
     }
     Real jump = std::abs(I_values[1] / I_values[0] - 1.0);
-    // 0.5% catches a regime-switch artifact; the unified formula gives O(0.05%).
-    BOOST_CHECK_LT(jump, 5e-3);
+    BOOST_CHECK_LT(jump, 5e-2); // measured 3.0e-2 at s = 1; headroom for benign smoothing tweaks
 }
 
 // ---------------------------------------------------------------------------
-// 21. continuity_at_nu_a_crossing_nu_m — phase 3 blended thin/thick smoothing
+// 21. continuity_at_nu_a_crossing_nu_m — thin/thick join continuity
 // ---------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE(continuity_at_nu_a_crossing_nu_m) {
-    // Sweep nu_a past nu_m at a fixed observation frequency. The s_a_blend
-    // sigmoid transitions through w_below->w_mid here, and the result must
-    // remain continuous.
+    // Sweep nu_a past nu_m at a fixed observation frequency. The optically
+    // thick/thin join must stay continuous as the break ordering changes.
     constexpr Real nu_m = 1e15;
     constexpr Real nu_c = 1e17;         // well-separated, deep slow cooling
     constexpr Real nu_obs = 4.0 * nu_m; // 2 octaves above nu_m, between breaks
@@ -418,7 +419,7 @@ BOOST_AUTO_TEST_CASE(continuity_at_nu_a_crossing_nu_m) {
 }
 
 // ---------------------------------------------------------------------------
-// 22. continuity_at_nu_a_crossing_nu_c — phase 3 blended thin/thick smoothing
+// 22. continuity_at_nu_a_crossing_nu_c — thin/thick join continuity
 // ---------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE(continuity_at_nu_a_crossing_nu_c) {
     // Same idea as test 21 but the nu_a sweep crosses nu_c.
@@ -485,10 +486,9 @@ BOOST_AUTO_TEST_CASE(asymptotic_slopes_deep_fast) {
         return (std::log(I_hi) - std::log(I_lo)) / (2.0 * std::log(1.01));
     };
 
-    // The fast-cooling nu_c break uses a soft G&S sharpness (s ~ 0.6), so even
-    // 2 decades away the local slope still curves by ~0.07-0.08 toward the
-    // neighbouring segment; use an absolute tolerance of 0.1 for the two
-    // segments adjacent to nu_c (measured: 0.257 and -0.432).
+    // The s = 1 smoothing is broad, so even 2 decades from nu_c the local slope
+    // still curves toward the neighbouring segment; use an absolute tolerance
+    // of 0.1 for the two segments adjacent to nu_c.
     BOOST_CHECK_LT(std::abs(local_slope(1e10) - 1.0 / 3.0), 0.1);
     BOOST_CHECK_LT(std::abs(local_slope(1e14) - (-0.5)), 0.1);
     // -p/2 tail is deep asymptotic 2 decades above nu_m (measured: -1.151).

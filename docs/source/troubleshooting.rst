@@ -21,7 +21,7 @@ A: This is usually caused by one of the following:
 
 A: Performance can be improved by:
 
-- **Reducing resolution**: Use ``resolutions=(0.05, 0.2, 5)`` for speed, ``(0.1, 0.5, 20)`` for accuracy
+- **Resolution**: The defaults are calibrated for speed at fit-quality accuracy; use ``resolutions=(0.1, 0.5, 20)`` to verify a result at high accuracy
 - **Limiting frequency/time ranges**: Calculate only the bands and times you need
 - **Using built-in profiles**: Built-in jet structures are faster than user-defined Python functions
 - **For MCMC**: Consider using fewer parameters or coarser resolution
@@ -54,13 +54,13 @@ A: Try the following:
 - **Increase live points**: Use ``nlive=1000`` or higher for difficult problems
 - **Lower dlogz**: Use ``dlogz=0.05`` for better convergence (at cost of runtime)
 - **Check data quality**: Ensure observational uncertainties are realistic
-- **Start with coarser resolution**: Use ``resolution=(0.5, 1.5, 7)`` for initial exploration
+- **Keep the default resolution**: It is calibrated for speed; verify the final fit with ``resolution=(0.1, 0.5, 20)``
 
 **Q: MCMC is too slow for practical use**
 
 A: Optimization strategies:
 
-- **Reduce resolution**: Use ``resolution=(0.06, 0.15, 6)`` for initial exploration
+- **Keep the default resolution**: It is calibrated for speed; raise it only to verify the final fit
 - **Fewer parameters**: Fix some parameters with ``Scale.fixed``
 - **Coarser time/frequency grids**: Use fewer data points for initial fits
 - **Parallel processing**: Ensure you're using multiple cores
@@ -267,12 +267,12 @@ The ``resolutions`` parameter in ``Model()`` controls computational accuracy vs 
 Where ``resolutions=(phi_ppd, theta_ppd, t_ppd)``:
 
 - ``phi_ppd``: Azimuthal resolution in points per degree. The total number of phi grid points is ``360 × phi_ppd``, with a minimum of 1 total point.
-- ``theta_ppd``: Polar resolution in points per degree. The total number of theta grid points is ``(theta_max − theta_min) × theta_ppd``, with a minimum of 32 total points. Setting a lower resolution cannot reduce the grid below this minimum.
-- ``t_ppd``: Temporal resolution in points per decade. The total number of time grid points is ``log10(t_max / t_min) × t_ppd``, with a minimum of 24 total points. Setting a lower resolution cannot reduce the grid below this minimum.
+- ``theta_ppd``: Polar resolution in points per degree. The total number of theta grid points is ``(theta_max − theta_min) × theta_ppd``, with a minimum of 36 total points. Setting a lower resolution cannot reduce the grid below this minimum.
+- ``t_ppd``: Temporal resolution in points per decade. The total number of time grid points is ``log10(t_max / t_min) × t_ppd``, with a minimum of one decade's worth of points. The internal time span is wider than the requested window (it starts early enough to cover every cell's emission).
 
 .. note::
 
-   The grid is **not uniform**. The code uses an internal adaptive algorithm that concentrates grid points where the solution varies most rapidly (e.g., near the jet edge and deceleration time). The resolution parameters control the *total* number of points, while the adaptive algorithm decides how to distribute them. The floor values (32 for theta, 24 for time) ensure the grid never becomes too coarse, even at low resolution settings.
+   The grid is **not uniform**. The code uses an internal adaptive algorithm that concentrates grid points where the solution varies most rapidly (e.g., near the jet edge and deceleration time). The resolution parameters control the *total* number of points, while the adaptive algorithm decides how to distribute them. The floor values (36 for theta, one decade's worth for time) ensure the grid never becomes too coarse, even at low resolution settings.
 
 Memory Usage
 ^^^^^^^^^^^^

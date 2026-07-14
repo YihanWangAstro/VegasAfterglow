@@ -8,6 +8,7 @@
 
 #include "../dynamics/shock.h"
 #include "inverse-compton.h"
+#include "radiation/power-law-syn.h"
 #include "smooth-power-law-syn.h"
 #include "syn-concepts.h"
 /**
