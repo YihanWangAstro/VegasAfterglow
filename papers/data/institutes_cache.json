@@ -1374,5 +1374,159 @@
   "lng": 12.96916675567627,
   "homepage": "http://www.aei.mpg.de/",
   "logo": "https://www.google.com/s2/favicons?domain=aei.mpg.de&sz=64"
+ },
+ "I142617266": {
+  "id": "I142617266",
+  "name": "University of Crete",
+  "ror": "https://ror.org/00dr28g20",
+  "country": "Greece",
+  "city": "Rethymno",
+  "lat": 35.36555,
+  "lng": 24.48232,
+  "homepage": "https://www.uoc.gr",
+  "logo": "https://www.google.com/s2/favicons?domain=uoc.gr&sz=64"
+ },
+ "I4210089473": {
+  "id": "I4210089473",
+  "name": "Institute of Astrophysics and Space Sciences",
+  "ror": "https://ror.org/006bxqs05",
+  "country": "Portugal",
+  "city": "Porto",
+  "lat": 41.14961,
+  "lng": -8.61099,
+  "homepage": "http://www.iastro.pt/",
+  "logo": "https://www.google.com/s2/favicons?domain=iastro.pt&sz=64"
+ },
+ "I875825670": {
+  "id": "I875825670",
+  "name": "National Institute for Astrophysics",
+  "ror": "https://ror.org/02gh4kt33",
+  "country": "Italy",
+  "city": "Rome",
+  "lat": 41.891929626464844,
+  "lng": 12.511329650878906,
+  "homepage": "http://www.inaf.it/en",
+  "logo": "https://www.google.com/s2/favicons?domain=inaf.it&sz=64"
+ },
+ "I148283060": {
+  "id": "I148283060",
+  "name": "Lawrence Berkeley National Laboratory",
+  "ror": "https://ror.org/02jbv0t02",
+  "country": "United States",
+  "city": "Berkeley",
+  "lat": 37.87158966064453,
+  "lng": -122.27275085449219,
+  "homepage": "https://www.lbl.gov/",
+  "logo": "https://www.google.com/s2/favicons?domain=lbl.gov&sz=64"
+ },
+ "I1343871089": {
+  "id": "I1343871089",
+  "name": "Los Alamos National Laboratory",
+  "ror": "https://ror.org/01e41cf67",
+  "country": "United States",
+  "city": "Los Alamos",
+  "lat": 35.88808059692383,
+  "lng": -106.30696868896484,
+  "homepage": "http://lanl.gov/",
+  "logo": "https://www.google.com/s2/favicons?domain=lanl.gov&sz=64"
+ },
+ "I116067653": {
+  "id": "I116067653",
+  "name": "University of Rome Tor Vergata",
+  "ror": "https://ror.org/02p77k626",
+  "country": "Italy",
+  "city": "Rome",
+  "lat": 41.89193,
+  "lng": 12.51133,
+  "homepage": "https://web.uniroma2.it",
+  "logo": "https://www.google.com/s2/favicons?domain=web.uniroma2.it&sz=64"
+ },
+ "I4210115661": {
+  "id": "I4210115661",
+  "name": "Istituto di Radioastronomia di Bologna",
+  "ror": "https://ror.org/029st3z03",
+  "country": "Italy",
+  "city": "Bologna",
+  "lat": 44.49380874633789,
+  "lng": 11.338749885559082,
+  "homepage": "http://www.ira.inaf.it/Home-ita.html",
+  "logo": "https://www.google.com/s2/favicons?domain=ira.inaf.it&sz=64"
+ },
+ "I5388228": {
+  "id": "I5388228",
+  "name": "University of Rochester",
+  "ror": "https://ror.org/022kthw22",
+  "country": "United States",
+  "city": "Rochester",
+  "lat": 43.15478,
+  "lng": -77.61556,
+  "homepage": "https://www.rochester.edu",
+  "logo": "https://www.google.com/s2/favicons?domain=rochester.edu&sz=64"
+ },
+ "I130769515": {
+  "id": "I130769515",
+  "name": "Pennsylvania State University",
+  "ror": "https://ror.org/04p491231",
+  "country": "United States",
+  "city": "State College",
+  "lat": 40.79339,
+  "lng": -77.86,
+  "homepage": "https://www.psu.edu",
+  "logo": "https://www.google.com/s2/favicons?domain=psu.edu&sz=64"
+ },
+ "I51601045": {
+  "id": "I51601045",
+  "name": "University of Bath",
+  "ror": "https://ror.org/002h8g185",
+  "country": "United Kingdom",
+  "city": "Bath",
+  "lat": 51.3751,
+  "lng": -2.36172,
+  "homepage": "http://www.bath.ac.uk/",
+  "logo": "https://www.google.com/s2/favicons?domain=bath.ac.uk&sz=64"
+ },
+ "I84470341": {
+  "id": "I84470341",
+  "name": "Catholic University of America",
+  "ror": "https://ror.org/047yk3s18",
+  "country": "United States",
+  "city": "Washington D.C.",
+  "lat": 38.93688201904297,
+  "lng": -76.99869537353516,
+  "homepage": "http://www.cua.edu/",
+  "logo": "https://www.google.com/s2/favicons?domain=cua.edu&sz=64"
+ },
+ "I12834331": {
+  "id": "I12834331",
+  "name": "University of Wyoming",
+  "ror": "https://ror.org/01485tq96",
+  "country": "United States",
+  "city": "Laramie",
+  "lat": 41.31137,
+  "lng": -105.5911,
+  "homepage": "https://www.uwyo.edu",
+  "logo": "https://www.google.com/s2/favicons?domain=uwyo.edu&sz=64"
+ },
+ "I4210116506": {
+  "id": "I4210116506",
+  "name": "Wyoming Department of Education",
+  "ror": "https://ror.org/02abxwv41",
+  "country": "United States",
+  "city": "Cheyenne",
+  "lat": 41.14113998413086,
+  "lng": -104.82074737548828,
+  "homepage": "https://edu.wyoming.gov/",
+  "logo": "https://www.google.com/s2/favicons?domain=edu.wyoming.gov&sz=64"
+ },
+ "I183974707": {
+  "id": "I183974707",
+  "name": "Perimeter Institute",
+  "ror": "https://ror.org/013m0ej23",
+  "country": "Canada",
+  "city": "Waterloo",
+  "lat": 43.466800689697266,
+  "lng": -80.51638793945312,
+  "homepage": "http://www.perimeterinstitute.ca/",
+  "logo": "https://www.google.com/s2/favicons?domain=perimeterinstitute.ca&sz=64"
  }
 }

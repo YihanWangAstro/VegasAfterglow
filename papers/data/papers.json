@@ -1,6 +1,291 @@
 {
- "generated": "2026-07-13",
+ "generated": "2026-07-20",
  "papers": [
+  {
+   "key": "W7168237800",
+   "title": "EP260321a/SN 2026gzf: The Faintest Shock Breakout Associated with a Broad-lined Supernova",
+   "year": 2026,
+   "date": "2026-07-14",
+   "type": "article",
+   "authors": [
+    "Brendan O\u2019Connor",
+    "Xander J. Hall",
+    "Malte Busmann",
+    "Daniel Gruen",
+    "Alberto Floris",
+    "Tom\u00e1s Cabrera",
+    "Ziyuan Zhu",
+    "Antonella Palmese",
+    "Dylan Green",
+    "John Banovetz",
+    "Julius Gassert",
+    "Christopher L. Fryer",
+    "Roberto Ricci",
+    "Eleonora Troja",
+    "Surya Shivaprasad",
+    "Gregory R. Zeimann",
+    "Ariel J. Amsellem",
+    "Stephen Bailey",
+    "Segev BenZvi",
+    "Simone Dichiara",
+    "Hendrik van Eerten",
+    "Jeremy Hare",
+    "Lei Hu",
+    "Christopher M. Irwin",
+    "Keerthi Kunnumkai",
+    "Konstantin Malanchev",
+    "Mitra Maleki",
+    "Michael J. Moss",
+    "Adam D. Myers",
+    "Dheeraj Pasham",
+    "Christoph Ries",
+    "Geoffrey Ryan",
+    "David Schlegel",
+    "Michael Schmidt",
+    "Silona Wilke",
+    "Yu-Han Yang"
+   ],
+   "journal": "The Astrophysical Journal Letters",
+   "doi": "10.3847/2041-8213/ae84ba",
+   "arxiv": "2606.09992",
+   "abstract": "Abstract The explosion of a star is first marked by the shock wave breaking out of the stellar surface, producing a burst of ultraviolet and X-ray radiation. These events are observationally rare, despite likely accompanying the majority of supernovae (SNe). Here, we report on our multiwavelength observing campaign of the closest Einstein Probe fast X-ray transient (FXT) EP260321a at z = 0.0344. The thermal ( kT = 130 eV) X-ray emission with peak luminosity of 1.0 \u00d7 10 45 erg s \u22121 points to a shock breakout origin. We demonstrate that EP260321a is accompanied by a broad-lined Type Ic supernova, SN 2026gzf. The supernova (SN) properties, including its spectral evolution, lightcurve evolution, and expansion velocities, are all typical of the energetic stripped-envelope SNe associated with gamma-ray bursts (GRBs). However, deep X-ray upper limits obtained with the Chandra X-ray Observatory do not detect an X-ray afterglow, and instead exclude the afterglow of known GRBs or FXTs. If the stellar explosion launched a successful relativistic jet, we require that it had both a low Lorentz factor of \u0393 0 &lt; 30 and a kinetic energy of E kin &lt; 10 49 erg for a stellar wind density of A * \u2273 1. We propose that EP260321a originated from a mildly relativistic, weak outflow that was choked by the progenitor star. This scenario is capable of naturally explaining its low X-ray luminosity and lack of prompt gamma-ray emission. EP260321a bridges the gap between SN 2008D and low-luminosity GRBs, suggesting a greater diversity in the physical parameters of stripped stars as they undergo terminal collapse.",
+   "institutes": [
+    {
+     "id": "05x2bcf33",
+     "name": "Carnegie Mellon University",
+     "ror": "https://ror.org/05x2bcf33",
+     "country": "United States",
+     "city": "Pittsburgh",
+     "lat": 40.44062,
+     "lng": -79.99589,
+     "homepage": "https://www.cmu.edu",
+     "logo": "https://www.google.com/s2/favicons?domain=cmu.edu&sz=64"
+    }
+   ],
+   "co_institutes": [
+    {
+     "id": "I4210099156",
+     "name": "Excellence Cluster Origins",
+     "ror": "https://ror.org/010wkny21",
+     "country": "Germany",
+     "city": "Garching",
+     "lat": 48.248958587646484,
+     "lng": 11.651009559631348,
+     "homepage": "https://www.origins-cluster.de",
+     "logo": "https://www.google.com/s2/favicons?domain=origins-cluster.de&sz=64"
+    },
+    {
+     "id": "I142617266",
+     "name": "University of Crete",
+     "ror": "https://ror.org/00dr28g20",
+     "country": "Greece",
+     "city": "Rethymno",
+     "lat": 35.36555,
+     "lng": 24.48232,
+     "homepage": "https://www.uoc.gr",
+     "logo": "https://www.google.com/s2/favicons?domain=uoc.gr&sz=64"
+    },
+    {
+     "id": "I4210089473",
+     "name": "Institute of Astrophysics and Space Sciences",
+     "ror": "https://ror.org/006bxqs05",
+     "country": "Portugal",
+     "city": "Porto",
+     "lat": 41.14961,
+     "lng": -8.61099,
+     "homepage": "http://www.iastro.pt/",
+     "logo": "https://www.google.com/s2/favicons?domain=iastro.pt&sz=64"
+    },
+    {
+     "id": "I875825670",
+     "name": "National Institute for Astrophysics",
+     "ror": "https://ror.org/02gh4kt33",
+     "country": "Italy",
+     "city": "Rome",
+     "lat": 41.891929626464844,
+     "lng": 12.511329650878906,
+     "homepage": "http://www.inaf.it/en",
+     "logo": "https://www.google.com/s2/favicons?domain=inaf.it&sz=64"
+    },
+    {
+     "id": "I148283060",
+     "name": "Lawrence Berkeley National Laboratory",
+     "ror": "https://ror.org/02jbv0t02",
+     "country": "United States",
+     "city": "Berkeley",
+     "lat": 37.87158966064453,
+     "lng": -122.27275085449219,
+     "homepage": "https://www.lbl.gov/",
+     "logo": "https://www.google.com/s2/favicons?domain=lbl.gov&sz=64"
+    },
+    {
+     "id": "I1343871089",
+     "name": "Los Alamos National Laboratory",
+     "ror": "https://ror.org/01e41cf67",
+     "country": "United States",
+     "city": "Los Alamos",
+     "lat": 35.88808059692383,
+     "lng": -106.30696868896484,
+     "homepage": "http://lanl.gov/",
+     "logo": "https://www.google.com/s2/favicons?domain=lanl.gov&sz=64"
+    },
+    {
+     "id": "I193531525",
+     "name": "George Washington University",
+     "ror": "https://ror.org/00y4zzh67",
+     "country": "United States",
+     "city": "Washington",
+     "lat": 38.89511,
+     "lng": -77.03637,
+     "homepage": "http://www.gwu.edu/",
+     "logo": "https://www.google.com/s2/favicons?domain=gwu.edu&sz=64"
+    },
+    {
+     "id": "I116067653",
+     "name": "University of Rome Tor Vergata",
+     "ror": "https://ror.org/02p77k626",
+     "country": "Italy",
+     "city": "Rome",
+     "lat": 41.89193,
+     "lng": 12.51133,
+     "homepage": "https://web.uniroma2.it",
+     "logo": "https://www.google.com/s2/favicons?domain=web.uniroma2.it&sz=64"
+    },
+    {
+     "id": "I4210115661",
+     "name": "Istituto di Radioastronomia di Bologna",
+     "ror": "https://ror.org/029st3z03",
+     "country": "Italy",
+     "city": "Bologna",
+     "lat": 44.49380874633789,
+     "lng": 11.338749885559082,
+     "homepage": "http://www.ira.inaf.it/Home-ita.html",
+     "logo": "https://www.google.com/s2/favicons?domain=ira.inaf.it&sz=64"
+    },
+    {
+     "id": "I5388228",
+     "name": "University of Rochester",
+     "ror": "https://ror.org/022kthw22",
+     "country": "United States",
+     "city": "Rochester",
+     "lat": 43.15478,
+     "lng": -77.61556,
+     "homepage": "https://www.rochester.edu",
+     "logo": "https://www.google.com/s2/favicons?domain=rochester.edu&sz=64"
+    },
+    {
+     "id": "I130769515",
+     "name": "Pennsylvania State University",
+     "ror": "https://ror.org/04p491231",
+     "country": "United States",
+     "city": "State College",
+     "lat": 40.79339,
+     "lng": -77.86,
+     "homepage": "https://www.psu.edu",
+     "logo": "https://www.google.com/s2/favicons?domain=psu.edu&sz=64"
+    },
+    {
+     "id": "I51601045",
+     "name": "University of Bath",
+     "ror": "https://ror.org/002h8g185",
+     "country": "United Kingdom",
+     "city": "Bath",
+     "lat": 51.3751,
+     "lng": -2.36172,
+     "homepage": "http://www.bath.ac.uk/",
+     "logo": "https://www.google.com/s2/favicons?domain=bath.ac.uk&sz=64"
+    },
+    {
+     "id": "I1306266525",
+     "name": "Goddard Space Flight Center",
+     "ror": "https://ror.org/0171mag52",
+     "country": "United States",
+     "city": "Greenbelt",
+     "lat": 39.00455,
+     "lng": -76.87553,
+     "homepage": "https://www.nasa.gov/centers/goddard/home/index.html",
+     "logo": "https://www.google.com/s2/favicons?domain=nasa.gov&sz=64"
+    },
+    {
+     "id": "I84470341",
+     "name": "Catholic University of America",
+     "ror": "https://ror.org/047yk3s18",
+     "country": "United States",
+     "city": "Washington D.C.",
+     "lat": 38.93688201904297,
+     "lng": -76.99869537353516,
+     "homepage": "http://www.cua.edu/",
+     "logo": "https://www.google.com/s2/favicons?domain=cua.edu&sz=64"
+    },
+    {
+     "id": "I201537933",
+     "name": "Tohoku University",
+     "ror": "https://ror.org/01dq60k83",
+     "country": "Japan",
+     "city": "Sendai",
+     "lat": 38.26667,
+     "lng": 140.86667,
+     "homepage": "http://www.tohoku.ac.jp/en/",
+     "logo": "https://www.google.com/s2/favicons?domain=tohoku.ac.jp&sz=64"
+    },
+    {
+     "id": "I12834331",
+     "name": "University of Wyoming",
+     "ror": "https://ror.org/01485tq96",
+     "country": "United States",
+     "city": "Laramie",
+     "lat": 41.31137,
+     "lng": -105.5911,
+     "homepage": "https://www.uwyo.edu",
+     "logo": "https://www.google.com/s2/favicons?domain=uwyo.edu&sz=64"
+    },
+    {
+     "id": "I4210116506",
+     "name": "Wyoming Department of Education",
+     "ror": "https://ror.org/02abxwv41",
+     "country": "United States",
+     "city": "Cheyenne",
+     "lat": 41.14113998413086,
+     "lng": -104.82074737548828,
+     "homepage": "https://edu.wyoming.gov/",
+     "logo": "https://www.google.com/s2/favicons?domain=edu.wyoming.gov&sz=64"
+    },
+    {
+     "id": "I4210148378",
+     "name": "Eureka Scientific",
+     "ror": "https://ror.org/04hx2r306",
+     "country": "United States",
+     "city": "Oakland",
+     "lat": 37.8039436340332,
+     "lng": -122.20848083496094,
+     "homepage": "http://eurekasci.com/",
+     "logo": "https://www.google.com/s2/favicons?domain=eurekasci.com&sz=64"
+    },
+    {
+     "id": "I183974707",
+     "name": "Perimeter Institute",
+     "ror": "https://ror.org/013m0ej23",
+     "country": "Canada",
+     "city": "Waterloo",
+     "lat": 43.466800689697266,
+     "lng": -80.51638793945312,
+     "homepage": "http://www.perimeterinstitute.ca/",
+     "logo": "https://www.google.com/s2/favicons?domain=perimeterinstitute.ca&sz=64"
+    }
+   ],
+   "sources": [
+    "openalex:cites",
+    "openalex:fulltext"
+   ],
+   "figures": [
+    {
+     "file": "figures/W7168237800_0.png",
+     "caption": "Finding chart of EP260321a/SN 2026gzf using DECam imaging in the $g$ and $i$ filters. Archival pre-explosion DECam images from 2013 (13 years before discovery) are shown in the top panels, while the bottom panels show imaging obtained on 2026-03-25 ($T_0+3.6$ d). A blue point source ($g-i$\\,$ $\\,$-1.3$ mag) is visible at the location of transient in archival imaging (see Appendix ). The transient explosion site (red \u2026",
+     "matched": false
+    }
+   ],
+   "usage": "used"
+  },
   {
    "figures": [],
    "usage": "unverified",
@@ -25,7 +310,7 @@
    ],
    "journal": "The Astrophysical Journal Letters",
    "doi": "10.3847/2041-8213/ae732c",
-   "arxiv": null,
+   "arxiv": "2607.11545",
    "abstract": "Abstract We report the discovery of a peculiar optical transient, AT2019ijn, that occurred in the nuclear region of a dwarf galaxy at z = 0.2729 \u00b1 0.0001. It rises rapidly to peak at a luminosity of M g = \u221221.05 \u00b1 0.02 in 5.26 \u00b1 0.29 days, followed by a slow decline over more than a month, during which the optical emission has a persistently high blackbody temperature from <mml:math xmlns:mml=\"http://www.w3.org/1998/Math/MathML\" overflow=\"scroll\"> <mml:msub> <mml:mrow> <mml:mi>T</mml:mi> </mml:mrow> <mml:mrow> <mml:mi mathvariant=\"normal\">BB</mml:mi> </mml:mrow> </mml:msub> <mml:mo>=</mml:mo> <mml:mn>1.4</mml:mn> <mml:msubsup> <mml:mrow> <mml:mn>5</mml:mn> </mml:mrow> <mml:mrow> <mml:mo>\u2212</mml:mo> <mml:mn>0.13</mml:mn> </mml:mrow> <mml:mrow> <mml:mo>+</mml:mo> <mml:mn>0.16</mml:mn> </mml:mrow> </mml:msubsup> </mml:math> to <mml:math xmlns:mml=\"http://www.w3.org/1998/Math/MathML\" overflow=\"scroll\"> <mml:mn>1.5</mml:mn> <mml:msubsup> <mml:mrow> <mml:mn>9</mml:mn> </mml:mrow> <mml:mrow> <mml:mo>\u2212</mml:mo> <mml:mn>0.51</mml:mn> </mml:mrow> <mml:mrow> <mml:mo>+</mml:mo> <mml:mn>1.68</mml:mn> </mml:mrow> </mml:msubsup> <mml:mo>\u00d7</mml:mo> <mml:mn>1</mml:mn> <mml:msup> <mml:mrow> <mml:mn>0</mml:mn> </mml:mrow> <mml:mrow> <mml:mn>4</mml:mn> </mml:mrow> </mml:msup> </mml:math> K. The radio emission is exceptional, peaking at 641 days after optical discovery with a high luminosity of (2.0 \u00b1 0.1) \u00d7 10 31 erg s \u22121 Hz \u22121 . The peak radio luminosity is at least two orders of magnitude brighter than known radio-bright fast blue optical transients and supernova explosions at similar epochs but comparable to jetted tidal disruption events. The luminous and long-lasting radio emission with a late-time peak can be explained by an off-axis relativistic jet with a viewing angle of <mml:math xmlns:mml=\"http://www.w3.org/1998/Math/MathML\" overflow=\"scroll\"> <mml:mn>38</mml:mn> <mml:mo>.</mml:mo> <mml:msubsup> <mml:mrow> <mml:mn>9</mml:mn> </mml:mrow> <mml:mrow> <mml:mo>\u2212</mml:mo> <mml:mn>6.1</mml:mn> </mml:mrow> <mml:mrow> <mml:mo>+</mml:mo> <mml:mn>7.0</mml:mn> </mml:mrow> </mml:msubsup> <mml:mo>\u00b0</mml:mo> </mml:math> . We discuss possible origins for AT2019ijn and favor a jetted tidal disruption event involving an intermediate-mass black hole of <mml:math xmlns:mml=\"http://www.w3.org/1998/Math/MathML\" overflow=\"scroll\"> <mml:mn>1.3</mml:mn> <mml:msubsup> <mml:mrow> <mml:mn>2</mml:mn> </mml:mrow> <mml:mrow> <mml:mo>\u2212</mml:mo> <mml:mn>0.67</mml:mn> </mml:mrow> <mml:mrow> <mml:mo>+</mml:mo> <mml:mn>1.19</mml:mn> </mml:mrow> </mml:msubsup> <mml:mo>\u00d7</mml:mo> <mml:mn>1</mml:mn> <mml:msup> <mml:mrow> <mml:mn>0</mml:mn> </mml:mrow> <mml:mrow> <mml:mn>5</mml:mn> </mml:mrow> </mml:msup> </mml:math> M \u2299 , although a jetted magnetar model cannot be fully ruled out. AT2019ijn represents a new class of relativistic optical transients that highlights the importance of radio surveys for discovering off-axis jetted events.",
    "institutes": [
     {
@@ -552,80 +837,6 @@
   {
    "figures": [
     {
-     "file": "figures/W7164446528_0.png",
-     "caption": "Finding chart of EP260321a/SN 2026gzf using DECam imaging in the $g$ and $i$ filters. Archival pre-explosion DECam images from 2013 (13 years before discovery) are shown in the top panels, while the bottom panels show imaging obtained on 2026-03-25 ($T_0+3.6$ d). A blue point source ($g-i$\\,$ $\\,$-1.3$ mag) is visible at the location of transient in archival imaging (see Appendix ). The transient explosion site (red \u2026",
-     "matched": false
-    }
-   ],
-   "usage": "used",
-   "key": "W7164446528",
-   "title": "EP260321a/SN 2026gzf: The Faintest Shock Breakout Associated with a Broad-Lined Supernova",
-   "year": 2026,
-   "date": "2026-06-08",
-   "type": "preprint",
-   "authors": [
-    "Brendan O'Connor",
-    "Xander J. Hall",
-    "Malte Busmann",
-    "Daniel Gruen",
-    "Alberto Floris",
-    "Tomas Cabrera",
-    "Ziyuan Zhu",
-    "Antonella Palmese",
-    "D. Green",
-    "John Banovetz",
-    "Julius Gassert",
-    "Christopher L. Fryer",
-    "Roberto Ricci",
-    "Eleonora Troja",
-    "Surya Shivaprasad",
-    "Gregory R. Zeimann",
-    "Ariel J. Amsellem",
-    "S. Bailey",
-    "Segev BenZvi",
-    "Simone Dichiara",
-    "Hendrik van Eerten",
-    "Jeremy Hare",
-    "Lei Hu",
-    "Christopher M. Irwin",
-    "Keerthi Kunnumkai",
-    "Konstantin Malanchev",
-    "Mitra Maleki",
-    "Michael J. Moss",
-    "Adam D. Myers",
-    "Dheeraj Pasham",
-    "C. Ries",
-    "Geoffrey Ryan",
-    "David Schlegel",
-    "Michael Schmidt",
-    "Silona Wilke",
-    "Yu-Han Yang"
-   ],
-   "journal": "arXiv (Cornell University)",
-   "doi": "",
-   "arxiv": "2606.09992",
-   "abstract": "The explosion of a star is first marked by the shock wave breaking out of the stellar surface, producing a burst of ultraviolet and X-ray radiation. These events are observationally rare, despite likely accompanying the majority of supernovae. Here, we report on our multi-wavelength observing campaign of the closest Einstein Probe fast X-ray transient EP260321a at $z=0.0344$. The thermal ($kT=130$ eV) X-ray emission with peak luminosity $1.0\\times10^{45}$ erg s$^{-1}$ points to a shock breakout origin. We demonstrate that EP260321a is accompanied by a broad-lined Type Ic supernova, SN 2026gzf. The supernova properties, including its spectral evolution, lightcurve evolution, and expansion velocities, are all typical of the energetic stripped-envelope supernovae associated with gamma-ray bursts. However, deep X-ray upper limits obtained with the \\textit{Chandra X-ray Observatory} do not detect an X-ray afterglow, and instead exclude the afterglow of known gamma-ray bursts or fast X-ray transients. If the stellar explosion launched a successful relativistic jet, we require that it had both a low Lorentz factor $\u0393_0$\\,$<$\\,$30$ and a kinetic energy $E_\\textrm{kin}$\\,$<$\\,$10^{49}$ erg for a stellar wind density of $A_*$\\,$\\gtrsim$\\,$1$. We propose that EP260321a originated from a mildly relativistic, weak outflow that was choked by the progenitor star. This scenario is capable of naturally explaining its low X-ray luminosity and lack of prompt gamma-ray emission. EP260321a bridges the gap between SN 2008D and low-luminosity GRBs, suggesting a greater diversity in the physical parameters of stripped stars as they undergo terminal collapse.",
-   "institutes": [
-    {
-     "id": "05x2bcf33",
-     "name": "Carnegie Mellon University",
-     "ror": "https://ror.org/05x2bcf33",
-     "country": "United States",
-     "city": "Pittsburgh",
-     "lat": 40.44062,
-     "lng": -79.99589,
-     "homepage": "https://www.cmu.edu",
-     "logo": "https://www.google.com/s2/favicons?domain=cmu.edu&sz=64"
-    }
-   ],
-   "co_institutes": [],
-   "sources": [
-    "openalex:fulltext"
-   ]
-  },
-  {
-   "figures": [
-    {
      "file": "figures/W7164447803_0.png",
      "caption": "Comparison of the X-ray properties of EP\\,260321a from the GCNs against the X-ray light curves of other SESNe. With the exception of SBO XRF\\,080109, EP\\,260321a is the least luminous FXT, peaking several orders of magnitude below FXTs associated with on-axis relativistic jets.",
      "matched": false
@@ -681,7 +892,7 @@
    "journal": "arXiv (Cornell University)",
    "doi": "",
    "arxiv": "2606.10011",
-   "abstract": "In March 2026, the Einstein Probe (EP) discovered its most nearby (z = 0.0343) Fast X-ray Transient (FXT), EP260321a, the first EP FXT to provide a strong match to expectations for X-ray ''shock breakout'' (SBO) emission. Here, we present our multi-wavelength follow-up campaign of EP260321a and its broad-line Type Ic (Ic-BL) supernova (SN) counterpart, SN 2026gzf, the first Type Ic-BL SN with a definitive X-ray SBO. We show that our radio follow-up extending over 5.8 - 54.5 days post-FXT rules out an on-axis jet counterpart of isotropic-equivalent kinetic energy $E_{K} > 10^{49}$ erg for circumburst densities $n > 10^{-2}~{\\rm cm}^{-3}$ and constrains radio synchrotron emission from the fastest-moving SN ejecta. In addition, we derive the properties of SN 2026gzf and its host galaxy from our well-sampled optical data and compare them with those of optically discovered Type Ic-BL SNe, finding that SN2026gzf is well within the 90% confidence interval across all properties. We further fit SN 2026gzf's light curve with five different physical models, and determine that combined emission from both interaction with circumstellar material (CSM) and $^{56}$Ni radioactive decay provides the best fit with plausible model parameters. Finally, using the rate of Ic-BL SNe from the ZTF Bright Transient Survey and assuming all Type Ic-BL SNe produce EP260321a-like FXTs, we infer an expected rate of EP-detected SBOs of 4.4 - 16 year$^{-1}$. This is inconsistent at the 90% confidence level with current EP detection rates, potentially indicating that most Type Ic-BL SNe produce less luminous X-ray SBO signals compared to EP 260321a.",
+   "abstract": "In March 2026, the Einstein Probe (EP) discovered its most nearby (z = 0.0343) Fast X-ray Transient (FXT), EP260321a, the first EP FXT to provide a strong match to expectations for X-ray \"shock breakout'\" (SBO) emission. Here, we present our multi-wavelength follow-up campaign of EP260321a and its broad-line Type Ic (Ic-BL) supernova (SN) counterpart, SN2026gzf. We show that our radio follow-up extending over 5.8 - 54.5 days post-FXT rules out an on-axis jet counterpart of isotropic-equivalent kinetic energy $E_{K} \\gtrsim 10^{49}$ erg for circumburst densities $n > 10^{-2}~{\\rm cm}^{-3}$ and assuming microphysical parameters $\u03b5_e = \u03b5_B = 0.1$. Our radio data also constrains a median mass-loss rate of $\\dot{M} \\lesssim 1.2 \\times 10^{-5} M_{\\odot}~{\\rm yr}^{-1}$ for a Wolf-Rayet progenitor. In addition, we derive SN2026gzf's properties, including $^{56}$Ni mass, diffusion timescale, and expansion velocities, from our $\\sim$nightly-cadence optical data and compare them with those of optically discovered Type Ic-BL SNe, finding that SN 2026gzf is well within the 90\\% confidence interval across all properties. We further fit SN2026gzf's light curve and determine that combined emission from both interaction with CSM and $^{56}$Ni radioactive decay provides the best fit with plausible model parameters. Finally, using the rate of Ic-BL SNe from the ZTF Bright Transient Survey and assuming all Type Ic-BL SNe produce EP260321a-like FXTs, we infer an expected rate of EP-detected SBOs of 4.4 - 16 year$^{-1}$. This is inconsistent at the 90% confidence level with current EP detection rates, potentially indicating that most Type Ic-BL SNe produce less luminous X-ray SBO signals compared to EP260321a.",
    "institutes": [
     {
      "id": "047s2c258",
