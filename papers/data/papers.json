@@ -1,7 +1,15 @@
 {
- "generated": "2026-07-20",
+ "generated": "2026-07-27",
  "papers": [
   {
+   "figures": [
+    {
+     "file": "figures/W7168237800_0.png",
+     "caption": "Finding chart of EP260321a/SN 2026gzf using DECam imaging in the $g$ and $i$ filters. Archival pre-explosion DECam images from 2013 (13 years before discovery) are shown in the top panels, while the bottom panels show imaging obtained on 2026-03-25 ($T_0+3.6$ d). A blue point source ($g-i$\\,$ $\\,$-1.3$ mag) is visible at the location of transient in archival imaging (see Appendix ). The transient explosion site (red \u2026",
+     "matched": false
+    }
+   ],
+   "usage": "used",
    "key": "W7168237800",
    "title": "EP260321a/SN 2026gzf: The Faintest Shock Breakout Associated with a Broad-lined Supernova",
    "year": 2026,
@@ -276,15 +284,7 @@
    "sources": [
     "openalex:cites",
     "openalex:fulltext"
-   ],
-   "figures": [
-    {
-     "file": "figures/W7168237800_0.png",
-     "caption": "Finding chart of EP260321a/SN 2026gzf using DECam imaging in the $g$ and $i$ filters. Archival pre-explosion DECam images from 2013 (13 years before discovery) are shown in the top panels, while the bottom panels show imaging obtained on 2026-03-25 ($T_0+3.6$ d). A blue point source ($g-i$\\,$ $\\,$-1.3$ mag) is visible at the location of transient in archival imaging (see Appendix ). The transient explosion site (red \u2026",
-     "matched": false
-    }
-   ],
-   "usage": "used"
+   ]
   },
   {
    "figures": [],
@@ -1619,13 +1619,14 @@
     "Jonathan Carney",
     "Hank Corbett",
     "Michael W. Coughlin",
+    "adam goldstein",
     "Anna Tartaglia",
     "V. Ashley Villar"
    ],
    "journal": "arXiv (Cornell University)",
    "doi": "",
    "arxiv": "2604.13650",
-   "abstract": "Two time domain surveys, recently funded as part of the Eric and Wendy Schmidt Observatory System; the Argus Array, in the optical, and the Deep Synoptic Array (DSA), in the radio, will transform gamma-ray burst (GRB) science via the serendipitous discovery of hundreds of GRB afterglows per year. In this work, we simulate DSA and Argus observations of GRB afterglows. We find that, of the long-duration GRBs (LGRBs) detected by the Fermi Gamma-ray Burst Monitor, $(24 \\pm 2)\\%$ will yield afterglow detections with Argus and $(42 \\pm 3)\\%$ with DSA, corresponding to rate of $47 \\pm 4$ and $82 \\pm 7$ per year respectively. We also compute rates for both upcoming and proposed GRB monitors; the forthcoming StarBurst Multi-messenger Pioneer, with $62 \\pm 5$ detections per year in Argus and $117 \\pm 8$ detections per year in DSA and the Moon Burst Energetics All-sky Monitor (MoonBEAM) concept, with $62 \\pm 6$ per year in Argus and $105 \\pm 10$ per year in DSA. The observatory system will detect also 116$\\pm$8 optical and 217$\\pm$15 radio afterglows per year, independent of GRB triggers, exceeding the current annual rate with global follow-up. Afterglow counterparts to short-duration GRBs, originating from neutron star mergers, will be detected at $5$-$10$% of the LGRB afterglow rate, which is promising for multi-messenger detections of gravitational wave sources and constraining the neutron star merger rate. The Argus Array, with its second-minute cadence, will detect afterglows before they peak $\\sim 18\\%$ of the time which will dramatically increase the sample of observed reverse shock and prompt optical emission.",
+   "abstract": "Two time domain surveys, recently funded as part of the Eric and Wendy Schmidt Observatory System; the Argus Array, in the optical, and the Deep Synoptic Array (DSA), in the radio, will transform gamma-ray burst (GRB) science via the serendipitous discovery of hundreds of GRB afterglows per year. In this work, we simulate DSA and Argus observations of GRB afterglows. We find that, of the long-duration GRBs (LGRBs) detected by the Fermi Gamma-ray Burst Monitor, (26$\\pm$3)% will yield afterglow detections with Argus and (44$\\pm$3)% with DSA, corresponding to rates of 51$\\pm$5 and 86$\\pm$8 per year respectively. We also compute rates for both upcoming and proposed GRB monitors; the forthcoming StarBurst Multi-messenger Pioneer, with 84$\\pm$6 detections per year in Argus and 158$\\pm$11 detections per year in DSA, and the Moon Burst Energetics All-sky Monitor (MoonBEAM) concept, with 90$\\pm$9 per year in Argus and 160$\\pm$14 per year in DSA. The observatory system will also detect 118$\\pm$10 optical and 199$\\pm$17 radio afterglows per year, independent of GRB triggers, exceeding the current annual rate with global follow-up. Afterglow counterparts to short-duration GRBs, originating from neutron star mergers, will be detected at 5-10% of the LGRB afterglow rate, which is promising for multi-messenger detections of gravitational wave sources and constraining the neutron star merger rate. The Argus Array, with its second-minute cadence, will detect afterglows before they peak $\\sim$18% of the time, which will dramatically increase the sample of observed reverse shock and prompt optical emission.",
    "institutes": [
     {
      "id": "0384j8v12",
