@@ -1528,5 +1528,137 @@
   "lng": -80.51638793945312,
   "homepage": "http://www.perimeterinstitute.ca/",
   "logo": "https://www.google.com/s2/favicons?domain=perimeterinstitute.ca&sz=64"
+ },
+ "I241749": {
+  "id": "I241749",
+  "name": "University of Cambridge",
+  "ror": "https://ror.org/013meh722",
+  "country": "United Kingdom",
+  "city": "Cambridge",
+  "lat": 52.2,
+  "lng": 0.11667,
+  "homepage": "https://www.cam.ac.uk",
+  "logo": "https://www.google.com/s2/favicons?domain=cam.ac.uk&sz=64"
+ },
+ "I145311948": {
+  "id": "I145311948",
+  "name": "Johns Hopkins University",
+  "ror": "https://ror.org/00za53h95",
+  "country": "United States",
+  "city": "Baltimore",
+  "lat": 39.29038,
+  "lng": -76.61219,
+  "homepage": "https://www.jhu.edu/",
+  "logo": "https://www.google.com/s2/favicons?domain=jhu.edu&sz=64"
+ },
+ "I197251160": {
+  "id": "I197251160",
+  "name": "Hebrew University of Jerusalem",
+  "ror": "https://ror.org/03qxff017",
+  "country": "Israel",
+  "city": "Jerusalem",
+  "lat": 31.76904,
+  "lng": 35.21633,
+  "homepage": "http://new.huji.ac.il/en",
+  "logo": "https://www.google.com/s2/favicons?domain=new.huji.ac.il&sz=64"
+ },
+ "I205783295": {
+  "id": "I205783295",
+  "name": "Cornell University",
+  "ror": "https://ror.org/05bnh6r87",
+  "country": "United States",
+  "city": "Ithaca",
+  "lat": 42.44063,
+  "lng": -76.49661,
+  "homepage": "https://www.cornell.edu",
+  "logo": "https://www.google.com/s2/favicons?domain=cornell.edu&sz=64"
+ },
+ "I97018004": {
+  "id": "I97018004",
+  "name": "Stanford University",
+  "ror": "https://ror.org/00f54p054",
+  "country": "United States",
+  "city": "Stanford",
+  "lat": 37.42411,
+  "lng": -122.16608,
+  "homepage": "https://www.stanford.edu",
+  "logo": "https://www.google.com/s2/favicons?domain=stanford.edu&sz=64"
+ },
+ "I196817621": {
+  "id": "I196817621",
+  "name": "Carnegie Institution for Science",
+  "ror": "https://ror.org/04jr01610",
+  "country": "United States",
+  "city": "Washington",
+  "lat": 38.89511,
+  "lng": -77.03637,
+  "homepage": "https://carnegiescience.edu/",
+  "logo": "https://www.google.com/s2/favicons?domain=carnegiescience.edu&sz=64"
+ },
+ "I201448701": {
+  "id": "I201448701",
+  "name": "University of Washington",
+  "ror": "https://ror.org/00cvxb145",
+  "country": "United States",
+  "city": "Seattle",
+  "lat": 47.60621,
+  "lng": -122.33207,
+  "homepage": "https://www.washington.edu",
+  "logo": "https://www.google.com/s2/favicons?domain=washington.edu&sz=64"
+ },
+ "I2800403580": {
+  "id": "I2800403580",
+  "name": "University of Minnesota System",
+  "ror": "https://ror.org/03grvy078",
+  "country": "United States",
+  "city": "Minneapolis",
+  "lat": 44.97997,
+  "lng": -93.26384,
+  "homepage": "http://twin-cities.umn.edu/",
+  "logo": "https://www.google.com/s2/favicons?domain=twin-cities.umn.edu&sz=64"
+ },
+ "I63966007": {
+  "id": "I63966007",
+  "name": "Massachusetts Institute of Technology",
+  "ror": "https://ror.org/042nb2s44",
+  "country": "United States",
+  "city": "Cambridge",
+  "lat": 42.3751,
+  "lng": -71.10561,
+  "homepage": "https://web.mit.edu",
+  "logo": "https://www.google.com/s2/favicons?domain=web.mit.edu&sz=64"
+ },
+ "I22299242": {
+  "id": "I22299242",
+  "name": "Kyoto University",
+  "ror": "https://ror.org/02kpeqv85",
+  "country": "Japan",
+  "city": "Kyoto",
+  "lat": 35.02107,
+  "lng": 135.75385,
+  "homepage": "http://www.kyoto-u.ac.jp/en",
+  "logo": "https://www.google.com/s2/favicons?domain=kyoto-u.ac.jp&sz=64"
+ },
+ "I2802155305": {
+  "id": "I2802155305",
+  "name": "Brera Astronomical Observatory",
+  "ror": "https://ror.org/02kx1hs47",
+  "country": "Italy",
+  "city": "Milan",
+  "lat": 45.47218704223633,
+  "lng": 9.187772750854492,
+  "homepage": "http://www.merate.mi.astro.it/",
+  "logo": "https://www.google.com/s2/favicons?domain=merate.mi.astro.it&sz=64"
+ },
+ "I4210149034": {
+  "id": "I4210149034",
+  "name": "Nanjing Institute of Astronomical Optics & Technology",
+  "ror": "https://ror.org/04sxr1261",
+  "country": "China",
+  "city": "Nanjing",
+  "lat": 32.074371337890625,
+  "lng": 118.82516479492188,
+  "homepage": "http://english.niaot.cas.cn/",
+  "logo": "https://www.google.com/s2/favicons?domain=english.niaot.cas.cn&sz=64"
  }
 }

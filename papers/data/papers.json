@@ -1,6 +1,453 @@
 {
- "generated": "2026-08-03",
+ "generated": "2026-08-10",
  "papers": [
+  {
+   "key": "W7172525334",
+   "title": "A Multiwavelength View of the First Type Ic-BL Supernova with an Einstein Probe X-Ray Shock Breakout",
+   "year": 2026,
+   "date": "2026-08-05",
+   "type": "article",
+   "authors": [
+    "Jillian Rastinejad",
+    "Gokul P. Srinivasaragavan",
+    "Nikhil Sarin",
+    "Tanner O'Dwyer",
+    "S. B. Cenko",
+    "James K. Leung",
+    "Anya E. Nugent",
+    "D. A. Perley",
+    "Genevieve Schroeder",
+    "Shreya Anand",
+    "Tom\u00e1s Ahumada",
+    "Igor Andreoni",
+    "Aleksandra Bochenek",
+    "A. Corsi",
+    "C. Fremling",
+    "Anna Y. Q. Ho",
+    "M. M. Kasliwal",
+    "G. Mo",
+    "Anirudh Salgundi",
+    "Kendall I. Sippy",
+    "J. Sollerman",
+    "Eric C. Bellm",
+    "X. Chen",
+    "M. W. Coughlin",
+    "M. C. Davis",
+    "Fabio De Colle",
+    "Danielle Frostig",
+    "Chris L. Fryer",
+    "M. J. Graham",
+    "Xander J. Hall",
+    "K-Ryan Hinds",
+    "L. Izzo",
+    "W. V. Jacobson-Gal\u00e1n",
+    "Nathan P. Lourie",
+    "Keiichi Maeda",
+    "Josiah Purdum",
+    "B. Rusholme",
+    "Avinash Singh",
+    "Robert Stein"
+   ],
+   "journal": "The Astrophysical Journal Letters",
+   "doi": "10.3847/2041-8213/ae8a4b",
+   "arxiv": "2606.10011",
+   "abstract": "Abstract In 2026 March, the Einstein Probe (EP) discovered its nearest ( z = 0.0343) Fast X-ray Transient (FXT), EP 260321a, the first EP FXT to provide a strong match to expectations for X-ray \u201cshock breakout\u201d (SBO) emission. Here, we present our multiwavelength follow-up campaign of EP 260321a and its broad-line Type Ic (Ic-BL) supernova (SN) counterpart, SN 2026gzf. We show that our radio follow-up extending over 5.8\u201354.5 days post-FXT rules out an on-axis jet counterpart of isotropic-equivalent kinetic energy E K \u2273 10 49 erg for circumburst densities n &gt; 10 \u22122 cm \u22123 and assuming microphysical parameters \u03f5 e = \u03f5 B = 0.1. Our radio data also constrain a median mass-loss rate of <mml:math xmlns:mml=\"http://www.w3.org/1998/Math/MathML\" overflow=\"scroll\"> <mml:mover accent=\"true\"> <mml:mrow> <mml:mi>M</mml:mi> </mml:mrow> <mml:mrow> <mml:mo>\u0307</mml:mo> </mml:mrow> </mml:mover> <mml:mo>\u2272</mml:mo> <mml:mn>1.2</mml:mn> <mml:mo>\u00d7</mml:mo> <mml:mn>1</mml:mn> <mml:msup> <mml:mrow> <mml:mn>0</mml:mn> </mml:mrow> <mml:mrow> <mml:mo>\u2212</mml:mo> <mml:mn>5</mml:mn> </mml:mrow> </mml:msup> <mml:msub> <mml:mrow> <mml:mi>M</mml:mi> </mml:mrow> <mml:mrow> <mml:mo>\u2299</mml:mo> </mml:mrow> </mml:msub> <mml:mspace width=\"0.25em\"/> <mml:msup> <mml:mrow> <mml:mi mathvariant=\"normal\">yr</mml:mi> </mml:mrow> <mml:mrow> <mml:mo>\u2212</mml:mo> <mml:mn>1</mml:mn> </mml:mrow> </mml:msup> </mml:math> for a Wolf\u2013Rayet progenitor. In addition, we derive SN 2026gzf\u2019s properties, including 56 Ni mass, diffusion timescale, and expansion velocities, from our \u223cnightly cadence optical data and compare them with those of optically discovered Type Ic-BL SNe, finding that SN 2026gzf is well within the 90% confidence interval across all properties. We further fit SN 2026gzf\u2019s light curve and determine that combined emission from both interaction with CSM and 56 Ni radioactive decay provides the best fit with plausible model parameters. Finally, using the rate of Ic-BL SNe from the Zwicky Transient Facility Bright Transient Survey and assuming all Type Ic-BL SNe produce EP 260321a-like FXTs, we infer an expected rate of EP-detected SBOs of 4.4\u201316 yr \u22121 . This is inconsistent at the 90% confidence level with current EP detection rates, potentially indicating that most Type Ic-BL SNe produce less luminous X-ray SBO signals compared to EP 260321a.",
+   "institutes": [
+    {
+     "id": "047s2c258",
+     "name": "University of Maryland, College Park",
+     "ror": "https://ror.org/047s2c258",
+     "country": "United States",
+     "city": "College Park",
+     "lat": 38.98067,
+     "lng": -76.93692,
+     "homepage": "https://umd.edu",
+     "logo": "https://www.google.com/s2/favicons?domain=umd.edu&sz=64"
+    }
+   ],
+   "co_institutes": [
+    {
+     "id": "I122411786",
+     "name": "California Institute of Technology",
+     "ror": "https://ror.org/05dxps055",
+     "country": "United States",
+     "city": "Pasadena",
+     "lat": 34.14778,
+     "lng": -118.14452,
+     "homepage": "https://www.caltech.edu",
+     "logo": "https://www.google.com/s2/favicons?domain=caltech.edu&sz=64"
+    },
+    {
+     "id": "I1306266525",
+     "name": "Goddard Space Flight Center",
+     "ror": "https://ror.org/0171mag52",
+     "country": "United States",
+     "city": "Greenbelt",
+     "lat": 39.00455,
+     "lng": -76.87553,
+     "homepage": "https://www.nasa.gov/centers/goddard/home/index.html",
+     "logo": "https://www.google.com/s2/favicons?domain=nasa.gov&sz=64"
+    },
+    {
+     "id": "I241749",
+     "name": "University of Cambridge",
+     "ror": "https://ror.org/013meh722",
+     "country": "United Kingdom",
+     "city": "Cambridge",
+     "lat": 52.2,
+     "lng": 0.11667,
+     "homepage": "https://www.cam.ac.uk",
+     "logo": "https://www.google.com/s2/favicons?domain=cam.ac.uk&sz=64"
+    },
+    {
+     "id": "I145311948",
+     "name": "Johns Hopkins University",
+     "ror": "https://ror.org/00za53h95",
+     "country": "United States",
+     "city": "Baltimore",
+     "lat": 39.29038,
+     "lng": -76.61219,
+     "homepage": "https://www.jhu.edu/",
+     "logo": "https://www.google.com/s2/favicons?domain=jhu.edu&sz=64"
+    },
+    {
+     "id": "I193531525",
+     "name": "George Washington University",
+     "ror": "https://ror.org/00y4zzh67",
+     "country": "United States",
+     "city": "Washington",
+     "lat": 38.89511,
+     "lng": -77.03637,
+     "homepage": "http://www.gwu.edu/",
+     "logo": "https://www.google.com/s2/favicons?domain=gwu.edu&sz=64"
+    },
+    {
+     "id": "I185261750",
+     "name": "University of Toronto",
+     "ror": "https://ror.org/03dbr7087",
+     "country": "Canada",
+     "city": "Toronto",
+     "lat": 43.70643,
+     "lng": -79.39864,
+     "homepage": "https://www.utoronto.ca",
+     "logo": "https://www.google.com/s2/favicons?domain=utoronto.ca&sz=64"
+    },
+    {
+     "id": "I197251160",
+     "name": "Hebrew University of Jerusalem",
+     "ror": "https://ror.org/03qxff017",
+     "country": "Israel",
+     "city": "Jerusalem",
+     "lat": 31.76904,
+     "lng": 35.21633,
+     "homepage": "http://new.huji.ac.il/en",
+     "logo": "https://www.google.com/s2/favicons?domain=new.huji.ac.il&sz=64"
+    },
+    {
+     "id": "I4210124175",
+     "name": "Center for Astrophysics Harvard & Smithsonian",
+     "ror": "https://ror.org/03c3r2d17",
+     "country": "United States",
+     "city": "Cambridge",
+     "lat": 42.375099182128906,
+     "lng": -71.1056137084961,
+     "homepage": "https://pweb.cfa.harvard.edu/",
+     "logo": "https://www.google.com/s2/favicons?domain=pweb.cfa.harvard.edu&sz=64"
+    },
+    {
+     "id": "I63098007",
+     "name": "Liverpool John Moores University",
+     "ror": "https://ror.org/04zfme737",
+     "country": "United Kingdom",
+     "city": "Liverpool",
+     "lat": 53.410579681396484,
+     "lng": -2.977940082550049,
+     "homepage": "https://www.ljmu.ac.uk/",
+     "logo": "https://www.google.com/s2/favicons?domain=ljmu.ac.uk&sz=64"
+    },
+    {
+     "id": "I205783295",
+     "name": "Cornell University",
+     "ror": "https://ror.org/05bnh6r87",
+     "country": "United States",
+     "city": "Ithaca",
+     "lat": 42.44063,
+     "lng": -76.49661,
+     "homepage": "https://www.cornell.edu",
+     "logo": "https://www.google.com/s2/favicons?domain=cornell.edu&sz=64"
+    },
+    {
+     "id": "I97018004",
+     "name": "Stanford University",
+     "ror": "https://ror.org/00f54p054",
+     "country": "United States",
+     "city": "Stanford",
+     "lat": 37.42411,
+     "lng": -122.16608,
+     "homepage": "https://www.stanford.edu",
+     "logo": "https://www.google.com/s2/favicons?domain=stanford.edu&sz=64"
+    },
+    {
+     "id": "I4210140583",
+     "name": "Cerro Tololo Inter-American Observatory",
+     "ror": "https://ror.org/03w6nzd18",
+     "country": "Chile",
+     "city": "La Serena",
+     "lat": -29.90591,
+     "lng": -71.25014,
+     "homepage": "https://noirlab.edu/public/programs/ctio/",
+     "logo": "https://www.google.com/s2/favicons?domain=noirlab.edu&sz=64"
+    },
+    {
+     "id": "I114027177",
+     "name": "University of North Carolina at Chapel Hill",
+     "ror": "https://ror.org/0130frc33",
+     "country": "United States",
+     "city": "Chapel Hill",
+     "lat": 35.9132,
+     "lng": -79.05584,
+     "homepage": "https://www.unc.edu",
+     "logo": "https://www.google.com/s2/favicons?domain=unc.edu&sz=64"
+    },
+    {
+     "id": "I196817621",
+     "name": "Carnegie Institution for Science",
+     "ror": "https://ror.org/04jr01610",
+     "country": "United States",
+     "city": "Washington",
+     "lat": 38.89511,
+     "lng": -77.03637,
+     "homepage": "https://carnegiescience.edu/",
+     "logo": "https://www.google.com/s2/favicons?domain=carnegiescience.edu&sz=64"
+    },
+    {
+     "id": "I130769515",
+     "name": "Pennsylvania State University",
+     "ror": "https://ror.org/04p491231",
+     "country": "United States",
+     "city": "State College",
+     "lat": 40.79339,
+     "lng": -77.86,
+     "homepage": "https://www.psu.edu",
+     "logo": "https://www.google.com/s2/favicons?domain=psu.edu&sz=64"
+    },
+    {
+     "id": "I161593684",
+     "name": "Stockholm University",
+     "ror": "https://ror.org/05f0yaq80",
+     "country": "Sweden",
+     "city": "Stockholm",
+     "lat": 59.32938,
+     "lng": 18.06871,
+     "homepage": "https://www.su.se",
+     "logo": "https://www.google.com/s2/favicons?domain=su.se&sz=64"
+    },
+    {
+     "id": "I201448701",
+     "name": "University of Washington",
+     "ror": "https://ror.org/00cvxb145",
+     "country": "United States",
+     "city": "Seattle",
+     "lat": 47.60621,
+     "lng": -122.33207,
+     "homepage": "https://www.washington.edu",
+     "logo": "https://www.google.com/s2/favicons?domain=washington.edu&sz=64"
+    },
+    {
+     "id": "I2800403580",
+     "name": "University of Minnesota System",
+     "ror": "https://ror.org/03grvy078",
+     "country": "United States",
+     "city": "Minneapolis",
+     "lat": 44.97997,
+     "lng": -93.26384,
+     "homepage": "http://twin-cities.umn.edu/",
+     "logo": "https://www.google.com/s2/favicons?domain=twin-cities.umn.edu&sz=64"
+    },
+    {
+     "id": "I8961855",
+     "name": "Universidad Nacional Aut\u00f3noma de M\u00e9xico",
+     "ror": "https://ror.org/01tmp8f25",
+     "country": "Mexico",
+     "city": "Mexico City",
+     "lat": 19.42847,
+     "lng": -99.12766,
+     "homepage": "http://www.unam.mx",
+     "logo": "https://www.google.com/s2/favicons?domain=unam.mx&sz=64"
+    },
+    {
+     "id": "I1343871089",
+     "name": "Los Alamos National Laboratory",
+     "ror": "https://ror.org/01e41cf67",
+     "country": "United States",
+     "city": "Los Alamos",
+     "lat": 35.88808059692383,
+     "lng": -106.30696868896484,
+     "homepage": "http://lanl.gov/",
+     "logo": "https://www.google.com/s2/favicons?domain=lanl.gov&sz=64"
+    },
+    {
+     "id": "I74973139",
+     "name": "Carnegie Mellon University",
+     "ror": "https://ror.org/05x2bcf33",
+     "country": "United States",
+     "city": "Pittsburgh",
+     "lat": 40.44062,
+     "lng": -79.99589,
+     "homepage": "https://www.cmu.edu",
+     "logo": "https://www.google.com/s2/favicons?domain=cmu.edu&sz=64"
+    },
+    {
+     "id": "I124055696",
+     "name": "University of Copenhagen",
+     "ror": "https://ror.org/035b05819",
+     "country": "Denmark",
+     "city": "Copenhagen",
+     "lat": 55.67594,
+     "lng": 12.56553,
+     "homepage": "https://www.ku.dk",
+     "logo": "https://www.google.com/s2/favicons?domain=ku.dk&sz=64"
+    },
+    {
+     "id": "I2801954024",
+     "name": "Astronomical Observatory of Capodimonte",
+     "ror": "https://ror.org/02fwden70",
+     "country": "Italy",
+     "city": "Naples",
+     "lat": 40.86354446411133,
+     "lng": 14.255544662475586,
+     "homepage": "http://www.oacn.inaf.it/",
+     "logo": "https://www.google.com/s2/favicons?domain=oacn.inaf.it&sz=64"
+    },
+    {
+     "id": "I63966007",
+     "name": "Massachusetts Institute of Technology",
+     "ror": "https://ror.org/042nb2s44",
+     "country": "United States",
+     "city": "Cambridge",
+     "lat": 42.3751,
+     "lng": -71.10561,
+     "homepage": "https://web.mit.edu",
+     "logo": "https://www.google.com/s2/favicons?domain=web.mit.edu&sz=64"
+    },
+    {
+     "id": "I22299242",
+     "name": "Kyoto University",
+     "ror": "https://ror.org/02kpeqv85",
+     "country": "Japan",
+     "city": "Kyoto",
+     "lat": 35.02107,
+     "lng": 135.75385,
+     "homepage": "http://www.kyoto-u.ac.jp/en",
+     "logo": "https://www.google.com/s2/favicons?domain=kyoto-u.ac.jp&sz=64"
+    }
+   ],
+   "sources": [
+    "openalex:cites",
+    "openalex:fulltext"
+   ],
+   "figures": [
+    {
+     "file": "figures/W7172525334_0.png",
+     "caption": "Comparison of the X-ray properties of EP\\,260321a from the GCNs against the X-ray light curves of other SESNe . With the exception of SBO XRF\\,080109, EP\\,260321a is the least luminous FXT, peaking several orders of magnitude below FXTs associated with on-axis relativistic jets.",
+     "matched": false
+    }
+   ],
+   "usage": "used"
+  },
+  {
+   "key": "W7172299108",
+   "title": "Revealing the High-redshift Host Galaxy of the Short GRB 061201 with JWST",
+   "year": 2026,
+   "date": "2026-08-03",
+   "type": "article",
+   "authors": [
+    "Yuhan Mao",
+    "Hanrui He",
+    "Jia Ren",
+    "Yun Wang",
+    "Hao Zhou",
+    "Qiuli Wang",
+    "Yiming Zhu",
+    "Zhi-Ping Jin",
+    "Da-Ming Wei"
+   ],
+   "journal": "The Astrophysical Journal",
+   "doi": "10.3847/1538-4357/ae89a3",
+   "arxiv": "2606.02032",
+   "abstract": "Abstract Using deep near-infrared and optical JWST and Hubble Space Telescope imaging, we identify a new host-galaxy candidate for the short GRB 061201 at an angular offset of \u223c2\u2033 from the optical afterglow, with a best-fit photometric redshift of z \u223c 1.2. We compare it with the prior putative host candidate at z = 0.111. The new candidate has a chance-coincidence probability of P cc = 0.18, above the classical 0.1 threshold but consistent with a physical association given the depth of the JWST imaging. In contrast, the lower P cc = 0.11 of the z = 0.111 galaxy is driven primarily by bright-tail statistics. A high-redshift origin is favored by three lines of evidence. First, although both scenarios satisfy the Amati ( E p,i \u2013 E iso ) relation, the beaming-corrected energy at z = 0.111 makes GRB 061201 an outlier in the Ghirlanda ( E p,i \u2013 E \u03b3 ) relation. Second, near-infrared data disfavor an AT2017gfo-like kilonova at z = 0.111. Third, afterglow modeling favors the high-redshift scenario, with the Akaike information criterion (AIC) for the z = 1.2 model lower than that for z = 0.111 by \u0394AIC = 16.35. Adopting the z \u223c 1.2 candidate as the host gives a physical offset of 16.4\u201316.9 kpc (substantially reduced from \u223c42 kpc implied under the low-redshift scenario) and a stellar age of \u223c2 Gyr, consistent with the general population of short gamma-ray bursts (sGRBs). Furthermore, a low-redshift origin implies a binary neutron-star merger rate of \u223c1400 Gpc \u22123 yr \u22121 , in tension with gravitational-wave constraints. We conclude that a moderately high-redshift host provides a more self-consistent physical framework for GRB 061201, demonstrating the capability of deep JWST imaging for historically hostless sGRBs.",
+   "institutes": [
+    {
+     "id": "02eb4t121",
+     "name": "Purple Mountain Observatory",
+     "ror": "https://ror.org/02eb4t121",
+     "country": "China",
+     "city": "Nanjing",
+     "lat": 32.06167,
+     "lng": 118.77778,
+     "homepage": "http://english.pmo.cas.cn/",
+     "logo": "https://www.google.com/s2/favicons?domain=english.pmo.cas.cn&sz=64"
+    },
+    {
+     "id": "04c4dkn09",
+     "name": "University of Science and Technology of China",
+     "ror": "https://ror.org/04c4dkn09",
+     "country": "China",
+     "city": "Hefei",
+     "lat": 31.86389,
+     "lng": 117.28083,
+     "homepage": "https://ustc.edu.cn",
+     "logo": "https://www.google.com/s2/favicons?domain=ustc.edu.cn&sz=64"
+    }
+   ],
+   "co_institutes": [
+    {
+     "id": "I2803209242",
+     "name": "University of California System",
+     "ror": "https://ror.org/00pjdza24",
+     "country": "United States",
+     "city": "Oakland",
+     "lat": 37.80437,
+     "lng": -122.2708,
+     "homepage": "https://www.universityofcalifornia.edu",
+     "logo": "https://www.google.com/s2/favicons?domain=universityofcalifornia.edu&sz=64"
+    },
+    {
+     "id": "I2802155305",
+     "name": "Brera Astronomical Observatory",
+     "ror": "https://ror.org/02kx1hs47",
+     "country": "Italy",
+     "city": "Milan",
+     "lat": 45.47218704223633,
+     "lng": 9.187772750854492,
+     "homepage": "http://www.merate.mi.astro.it/",
+     "logo": "https://www.google.com/s2/favicons?domain=merate.mi.astro.it&sz=64"
+    },
+    {
+     "id": "I4210149034",
+     "name": "Nanjing Institute of Astronomical Optics & Technology",
+     "ror": "https://ror.org/04sxr1261",
+     "country": "China",
+     "city": "Nanjing",
+     "lat": 32.074371337890625,
+     "lng": 118.82516479492188,
+     "homepage": "http://english.niaot.cas.cn/",
+     "logo": "https://www.google.com/s2/favicons?domain=english.niaot.cas.cn&sz=64"
+    }
+   ],
+   "sources": [
+    "openalex:cites",
+    "openalex:fulltext"
+   ],
+   "figures": [
+    {
+     "file": "figures/W7172299108_0.png",
+     "caption": "Multi-band afterglow modeling of GRB 061201 with VEGASAFTERGLOW. The left panel (a) shows the best-fitted result at $z=0.111$. For comparison, the light curve of the kilonova AT2017gfo, artificially shifted to $z=0.111$, is over-plotted (star symbols). The right panel (b) displays the best-fitted result at $z=1.2$.",
+     "matched": true
+    }
+   ],
+   "usage": "used"
+  },
   {
    "figures": [
     {
@@ -837,141 +1284,6 @@
   {
    "figures": [
     {
-     "file": "figures/W7164447803_0.png",
-     "caption": "Comparison of the X-ray properties of EP\\,260321a from the GCNs against the X-ray light curves of other SESNe. With the exception of SBO XRF\\,080109, EP\\,260321a is the least luminous FXT, peaking several orders of magnitude below FXTs associated with on-axis relativistic jets.",
-     "matched": false
-    }
-   ],
-   "usage": "used",
-   "key": "W7164447803",
-   "title": "A Multi-Wavelength View of the First Type Ic-BL Supernova with an Einstein Probe X-ray Shock Breakout",
-   "year": 2026,
-   "date": "2026-06-08",
-   "type": "preprint",
-   "authors": [
-    "Jillian C. Rastinejad",
-    "Gokul Srinivasaragavan",
-    "Nikhil Sarin",
-    "Tanner O'Dwyer",
-    "S. Bradley Cenko",
-    "James K. Leung",
-    "Anya E. Nugent",
-    "Daniel A. Perley",
-    "Genevieve Schroeder",
-    "Shreya Anand",
-    "Tom\u00e1s Ahumada",
-    "Igor Andreoni",
-    "Aleksandra Bochenek",
-    "Alessandra Corsi",
-    "Christoffer Fremling",
-    "Anna Y. Q. Ho",
-    "Mansi M. Kasliwal",
-    "Geoffrey Mo",
-    "Anirudh Salgundi",
-    "Kendall I. Sippy",
-    "J. Sollerman",
-    "Eric C. Bellm",
-    "Tracy X. Chen",
-    "Michael W. Coughlin",
-    "Michael C. Davis",
-    "Fabio De Colle",
-    "Danielle Frostig",
-    "Christopher L. Fryer",
-    "Michael J. Graham",
-    "Xander J. Hall",
-    "K. -R. Hinds",
-    "Luca Izzo",
-    "Wynn Jacobson-Galan",
-    "Nathan P. Lourie",
-    "Keiichi Maeda",
-    "Josiah Purdum",
-    "Ben Rusholme",
-    "Avinash Singh",
-    "Robert Stein"
-   ],
-   "journal": "arXiv (Cornell University)",
-   "doi": "",
-   "arxiv": "2606.10011",
-   "abstract": "In March 2026, the Einstein Probe (EP) discovered its most nearby (z = 0.0343) Fast X-ray Transient (FXT), EP260321a, the first EP FXT to provide a strong match to expectations for X-ray \"shock breakout'\" (SBO) emission. Here, we present our multi-wavelength follow-up campaign of EP260321a and its broad-line Type Ic (Ic-BL) supernova (SN) counterpart, SN2026gzf. We show that our radio follow-up extending over 5.8 - 54.5 days post-FXT rules out an on-axis jet counterpart of isotropic-equivalent kinetic energy $E_{K} \\gtrsim 10^{49}$ erg for circumburst densities $n > 10^{-2}~{\\rm cm}^{-3}$ and assuming microphysical parameters $\u03b5_e = \u03b5_B = 0.1$. Our radio data also constrains a median mass-loss rate of $\\dot{M} \\lesssim 1.2 \\times 10^{-5} M_{\\odot}~{\\rm yr}^{-1}$ for a Wolf-Rayet progenitor. In addition, we derive SN2026gzf's properties, including $^{56}$Ni mass, diffusion timescale, and expansion velocities, from our $\\sim$nightly-cadence optical data and compare them with those of optically discovered Type Ic-BL SNe, finding that SN 2026gzf is well within the 90\\% confidence interval across all properties. We further fit SN2026gzf's light curve and determine that combined emission from both interaction with CSM and $^{56}$Ni radioactive decay provides the best fit with plausible model parameters. Finally, using the rate of Ic-BL SNe from the ZTF Bright Transient Survey and assuming all Type Ic-BL SNe produce EP260321a-like FXTs, we infer an expected rate of EP-detected SBOs of 4.4 - 16 year$^{-1}$. This is inconsistent at the 90% confidence level with current EP detection rates, potentially indicating that most Type Ic-BL SNe produce less luminous X-ray SBO signals compared to EP260321a.",
-   "institutes": [
-    {
-     "id": "047s2c258",
-     "name": "University of Maryland, College Park",
-     "ror": "https://ror.org/047s2c258",
-     "country": "United States",
-     "city": "College Park",
-     "lat": 38.98067,
-     "lng": -76.93692,
-     "homepage": "https://umd.edu",
-     "logo": "https://www.google.com/s2/favicons?domain=umd.edu&sz=64"
-    }
-   ],
-   "co_institutes": [],
-   "sources": [
-    "openalex:fulltext"
-   ]
-  },
-  {
-   "figures": [
-    {
-     "file": "figures/W7163596618_0.png",
-     "caption": "Multi-band afterglow modeling of GRB 061201 with VEGASAFTERGLOW. The left panel (a) shows the best-fitted result at $z=0.111$. For comparison, the light curve of the kilonova AT2017gfo, artificially shifted to $z=0.111$, is over-plotted (star symbols). The right panel (b) displays the best-fitted result at $z=1.2$.",
-     "matched": true
-    }
-   ],
-   "usage": "used",
-   "key": "W7163596618",
-   "title": "Revealing the high redshift host galaxy of the short GRB 061201 with JWST",
-   "year": 2026,
-   "date": "2026-06-01",
-   "type": "preprint",
-   "authors": [
-    "Yuhan Mao",
-    "Hanrui He",
-    "Jia Ren",
-    "Yun Wang",
-    "Hao Zhou",
-    "Qiuli Wang",
-    "Yiming Zhu",
-    "Zhiping Jin",
-    "Daming Wei"
-   ],
-   "journal": "arXiv (Cornell University)",
-   "doi": "",
-   "arxiv": "2606.02032",
-   "abstract": "Using deep near-infrared and optical images from JWST and HST, we identify a new host galaxy candidate for GRB 061201. It lies ~2\" from the optical afterglow position. Photometric redshift fitting yields z~1.2. We compare the previously proposed host at z=0.111 with the new candidate. The chance-coincidence probability is $P_{cc}=0.18$, above the classical threshold of 0.1 but consistent with a physical association given the extreme depth of JWST imaging. In contrast, evaluated with corresponding JWST observations, the previously claimed host has a lower $P_{cc}=0.11$, which is driven primarily by bright-tail statistics rather than a more plausible association. A high-z origin is favored by three independent lines of evidence. First, for the z=0.111 scenario, the beaming-corrected energy shows GRB 061201 is an outlier of the Ghirlanda ($E_{p,i}-E_\u03b3$) relation for short GRBs, while for the z=1.2 scenario, it is well consistent with the Amati relation. Second, deep near-infrared observations rule out a kilonova similar to AT2017gfo at z=0.111. Third, afterglow modeling yields an AIC criterion of $\u0394$AIC=16.35, providing strong evidence for the high-redshift scenario. Assuming the host candidate is the actual host galaxy of GRB 061201, the physical offset is 16.4-16.9 kpc (substantially reduced from ~42 kpc) and the host stellar age is ~2 Gyr, which are consistent with the host population of short GRBs. A low-redshift origin would lead to a very high binary neutron star merger rate of ~1400 Gpc$^{-3}$ yr$^{-1}$, which is contradictory to the gravitational-wave constraint. We suggest that GRB 061201 originates from a moderately high-redshift (z~1.2) host, significantly alleviating this apparent merger rate discrepancy. This case demonstrates the power of deep JWST exposures in revealing the host galaxies of historically hostless GRBs.",
-   "institutes": [
-    {
-     "id": "02eb4t121",
-     "name": "Purple Mountain Observatory",
-     "ror": "https://ror.org/02eb4t121",
-     "country": "China",
-     "city": "Nanjing",
-     "lat": 32.06167,
-     "lng": 118.77778,
-     "homepage": "http://english.pmo.cas.cn/",
-     "logo": "https://www.google.com/s2/favicons?domain=english.pmo.cas.cn&sz=64"
-    },
-    {
-     "id": "04c4dkn09",
-     "name": "University of Science and Technology of China",
-     "ror": "https://ror.org/04c4dkn09",
-     "country": "China",
-     "city": "Hefei",
-     "lat": 31.86389,
-     "lng": 117.28083,
-     "homepage": "https://ustc.edu.cn",
-     "logo": "https://www.google.com/s2/favicons?domain=ustc.edu.cn&sz=64"
-    }
-   ],
-   "co_institutes": [],
-   "sources": [
-    "openalex:fulltext"
-   ]
-  },
-  {
-   "figures": [
-    {
      "file": "figures/W7162655324_0.png",
      "caption": "Our physical picture for GRB 250702B. Panel (a) shows the geodesic orbit of the WD, where the red line represents our numerical result with $a = 30\\,R_ $, $e = 0.97$, $M_ BH = 1 10^5\\,M_ $, $a_ spin=0.9$, and $ _ min = 0.12 rad$ ($7^ $). The BH spin axis is indicated by the vertical black line. The orbit exhibits relativistic precession. Mass loss from the WD is not included in this calculation. Panel (b) \u2026",
      "matched": false
@@ -1475,7 +1787,7 @@
    ],
    "usage": "used",
    "key": "W7155385488",
-   "title": "XRF 241001A/SN 2024aiiq: A Faint Soft X-ray Transient Detected by SVOM with a Broad-Line Type Ic Supernova Revealed by JWST",
+   "title": "XRF 241001A/SN 2024aiiq: A faint soft X-ray transient detected by SVOM with a broad-line type Ic supernova revealed by JWST",
    "year": 2026,
    "date": "2026-04-22",
    "type": "preprint",
@@ -1526,6 +1838,7 @@
     "P. Jakobsson",
     "A. Klotz",
     "C. Lachaud",
+    "E. Le Floc'h",
     "X. M. Lu",
     "P. Maggi",
     "M. De Pasquale",
@@ -1540,14 +1853,14 @@
     "S. L. Xiong",
     "Y. Xu",
     "T. Zafar",
-    "P. Zhang",
     "S. N. Zhang",
+    "S. J. Zheng",
     "S. J. Zheng"
    ],
    "journal": "HAL (Le Centre pour la Communication Scientifique Directe)",
    "doi": "10.48550/arxiv.2604.20346",
    "arxiv": "2604.20346",
-   "abstract": "X-ray flashes (XRFs) are a type of gamma-ray bursts (GRBs) with prompt emission predominantly below 30 keV poorly detected by previous missions. The advent of the SVOM mission, with its wide-field instrument ECLAIRs, provides a new way to detect soft X-ray transients such as XRFs. We present photometric and spectroscopic observations of XRF 241001A detected by SVOM, a soft, sub-luminous, and low-energetic burst located in a poorly populated region of the Amati relation. We investigate the origin of its faint, soft high-energy emission to assess its connection to the long GRB population. We analyze the SVOM/ECLAIRs prompt emission and model its afterglow emission from X-ray to-radio. We present JWST/NIRSpec and SVOM/VT observations of the associated supernova (SN 2024aiiq), which we model with an Arnett radioactive decay component and compare its properties with previously detected GRB/SNe. XRF 241001A is located at z = 0.573 and has a prompt emission dominated by photons below 20 keV with a duration of T90 = 3.14 seconds. Its spectrum can be modeled by non-thermal or thermal models, all pointing towards a low Epeak &lt; 10 keV and Eiso ~ 8x10^49 erg. The X-ray-to-radio afterglow modeling favors an origin from a relativistic jet viewed on-axis. In the optical, XRF 241001A exhibits an early blue emission, similar to that detected in some fast X-ray transients and inconsistent with synchrotron emission. The JWST/NIRSpec observations firmly established its collapsar origin by revealing a SN Type Ic with broad lines, comparable to SN 1998bw and SN 2025kg-like events. XRF 241001A is a soft, low-luminosity collapsar event produced by a weak relativistic jet observed on-axis, supporting the view that part of the XRF population forms the low-energy tail of the long GRB population. It demonstrates the potential of SVOM/ECLAIRs to probe the soft regime of the high-energy transient population.",
+   "abstract": "X-ray flashes (XRFs) are a type of gamma-ray burst (GRB) with prompt emission predominantly below 30 keV and have been poorly detected by previous missions. The advent of the SVOM mission, with its wide-field instrument ECLAIRs, provides a new way to detect soft X-ray transients. We present photometric and spectroscopic observations of XRF 241001A detected by SVOM, a soft, subluminous, and low-energetic burst located in a poorly populated region of the Amati relation. We investigated the origin of its faint, soft high-energy emission to assess its connection to the long GRB population. We analyzed the SVOM/ECLAIRs prompt emission and modeled its afterglow emission from X-ray to-radio. We present JWST/NIRSpec and SVOM/VT observations of the associated supernova (SN 2024aiiq), and we compared its properties with previously detected GRB/SNe. The event XRF 241001A is located at z = 0.573 and has a prompt emission dominated by photons below 20 keV with a duration of T90 = 3.14 seconds. Its spectrum is consistent with both thermal and nonthermal models, each implying a low Epeak &lt; 10 keV and Eiso ~ 8x10^49 erg. The X-ray-to-radio afterglow modeling favors an origin from a relativistic jet viewed on-axis. In the optical, XRF 241001A exhibits an early blue emission, similar to that detected in some eFXTs and inconsistent with synchrotron emission. The JWST/NIRSpec observations firmly established its collapsar origin by revealing a SN Type Ic with broad lines, comparable to SN 1998bw and SN 2025kg-like events. The event XRF 241001A is a soft low-luminosity collapsar event produced by a weak relativistic jet observed on-axis, supporting the view that part of the XRF population forms the low-energy soft tail of the long GRB population. Its observation demonstrates the potential of SVOM/ECLAIRs to probe the soft regime of the high-energy transient population that remains largely unexplored.",
    "institutes": [],
    "co_institutes": [],
    "sources": [
