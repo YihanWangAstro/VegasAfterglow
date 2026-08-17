@@ -1,7 +1,15 @@
 {
- "generated": "2026-08-10",
+ "generated": "2026-08-17",
  "papers": [
   {
+   "figures": [
+    {
+     "file": "figures/W7172525334_0.png",
+     "caption": "Comparison of the X-ray properties of EP\\,260321a from the GCNs against the X-ray light curves of other SESNe . With the exception of SBO XRF\\,080109, EP\\,260321a is the least luminous FXT, peaking several orders of magnitude below FXTs associated with on-axis relativistic jets.",
+     "matched": false
+    }
+   ],
+   "usage": "used",
    "key": "W7172525334",
    "title": "A Multiwavelength View of the First Type Ic-BL Supernova with an Einstein Probe X-Ray Shock Breakout",
    "year": 2026,
@@ -50,7 +58,7 @@
    ],
    "journal": "The Astrophysical Journal Letters",
    "doi": "10.3847/2041-8213/ae8a4b",
-   "arxiv": "2606.10011",
+   "arxiv": null,
    "abstract": "Abstract In 2026 March, the Einstein Probe (EP) discovered its nearest ( z = 0.0343) Fast X-ray Transient (FXT), EP 260321a, the first EP FXT to provide a strong match to expectations for X-ray \u201cshock breakout\u201d (SBO) emission. Here, we present our multiwavelength follow-up campaign of EP 260321a and its broad-line Type Ic (Ic-BL) supernova (SN) counterpart, SN 2026gzf. We show that our radio follow-up extending over 5.8\u201354.5 days post-FXT rules out an on-axis jet counterpart of isotropic-equivalent kinetic energy E K \u2273 10 49 erg for circumburst densities n &gt; 10 \u22122 cm \u22123 and assuming microphysical parameters \u03f5 e = \u03f5 B = 0.1. Our radio data also constrain a median mass-loss rate of <mml:math xmlns:mml=\"http://www.w3.org/1998/Math/MathML\" overflow=\"scroll\"> <mml:mover accent=\"true\"> <mml:mrow> <mml:mi>M</mml:mi> </mml:mrow> <mml:mrow> <mml:mo>\u0307</mml:mo> </mml:mrow> </mml:mover> <mml:mo>\u2272</mml:mo> <mml:mn>1.2</mml:mn> <mml:mo>\u00d7</mml:mo> <mml:mn>1</mml:mn> <mml:msup> <mml:mrow> <mml:mn>0</mml:mn> </mml:mrow> <mml:mrow> <mml:mo>\u2212</mml:mo> <mml:mn>5</mml:mn> </mml:mrow> </mml:msup> <mml:msub> <mml:mrow> <mml:mi>M</mml:mi> </mml:mrow> <mml:mrow> <mml:mo>\u2299</mml:mo> </mml:mrow> </mml:msub> <mml:mspace width=\"0.25em\"/> <mml:msup> <mml:mrow> <mml:mi mathvariant=\"normal\">yr</mml:mi> </mml:mrow> <mml:mrow> <mml:mo>\u2212</mml:mo> <mml:mn>1</mml:mn> </mml:mrow> </mml:msup> </mml:math> for a Wolf\u2013Rayet progenitor. In addition, we derive SN 2026gzf\u2019s properties, including 56 Ni mass, diffusion timescale, and expansion velocities, from our \u223cnightly cadence optical data and compare them with those of optically discovered Type Ic-BL SNe, finding that SN 2026gzf is well within the 90% confidence interval across all properties. We further fit SN 2026gzf\u2019s light curve and determine that combined emission from both interaction with CSM and 56 Ni radioactive decay provides the best fit with plausible model parameters. Finally, using the rate of Ic-BL SNe from the Zwicky Transient Facility Bright Transient Survey and assuming all Type Ic-BL SNe produce EP 260321a-like FXTs, we infer an expected rate of EP-detected SBOs of 4.4\u201316 yr \u22121 . This is inconsistent at the 90% confidence level with current EP detection rates, potentially indicating that most Type Ic-BL SNe produce less luminous X-ray SBO signals compared to EP 260321a.",
    "institutes": [
     {
@@ -343,19 +351,18 @@
     }
    ],
    "sources": [
-    "openalex:cites",
-    "openalex:fulltext"
-   ],
-   "figures": [
-    {
-     "file": "figures/W7172525334_0.png",
-     "caption": "Comparison of the X-ray properties of EP\\,260321a from the GCNs against the X-ray light curves of other SESNe . With the exception of SBO XRF\\,080109, EP\\,260321a is the least luminous FXT, peaking several orders of magnitude below FXTs associated with on-axis relativistic jets.",
-     "matched": false
-    }
-   ],
-   "usage": "used"
+    "ads"
+   ]
   },
   {
+   "figures": [
+    {
+     "file": "figures/W7172299108_0.png",
+     "caption": "Multi-band afterglow modeling of GRB 061201 with VEGASAFTERGLOW. The left panel (a) shows the best-fitted result at $z=0.111$. For comparison, the light curve of the kilonova AT2017gfo, artificially shifted to $z=0.111$, is over-plotted (star symbols). The right panel (b) displays the best-fitted result at $z=1.2$.",
+     "matched": true
+    }
+   ],
+   "usage": "used",
    "key": "W7172299108",
    "title": "Revealing the High-redshift Host Galaxy of the Short GRB 061201 with JWST",
    "year": 2026,
@@ -436,17 +443,8 @@
     }
    ],
    "sources": [
-    "openalex:cites",
-    "openalex:fulltext"
-   ],
-   "figures": [
-    {
-     "file": "figures/W7172299108_0.png",
-     "caption": "Multi-band afterglow modeling of GRB 061201 with VEGASAFTERGLOW. The left panel (a) shows the best-fitted result at $z=0.111$. For comparison, the light curve of the kilonova AT2017gfo, artificially shifted to $z=0.111$, is over-plotted (star symbols). The right panel (b) displays the best-fitted result at $z=1.2$.",
-     "matched": true
-    }
-   ],
-   "usage": "used"
+    "ads"
+   ]
   },
   {
    "figures": [
@@ -729,8 +727,7 @@
     }
    ],
    "sources": [
-    "openalex:cites",
-    "openalex:fulltext"
+    "ads"
    ]
   },
   {
@@ -819,20 +816,11 @@
     }
    ],
    "sources": [
-    "openalex:cites",
-    "openalex:fulltext"
+    "ads"
    ]
   },
   {
-   "figures": [
-    {
-     "file": "figures/W7166900500_0.png",
-     "caption": "Radio light curve of SN\\,2024abup at frequencies shown in tab:radio, shown alongside other well-studied SN\\,Ic-bl for comparison: 1998bw ; 2002ap ; 2003jd ; 2007bg ; 2009bb ; detections and upper limits of several other SNe are from , , and . The solid and dashed curves show the expected 6 GHz light curves generated using VegasAfterglow for a typical relativistic jet with energy $E_iso=10^51 erg$, initial Lorentz \u2026",
-     "matched": true
-    }
-   ],
-   "usage": "used",
-   "key": "W7166900500",
+   "key": "W7166684506",
    "title": "JWST observations of SN 2024abup: First Detection of CO in a broad-lined Type Ic Supernova and Constraints on r-process Nucleosynthesis",
    "year": 2026,
    "date": "2026-06-26",
@@ -840,20 +828,20 @@
    "authors": [
     "Manisha Shrestha",
     "Lindsey A. Kwok",
-    "D J Sand",
+    "David J. Sand",
     "Stan Bartmentloo",
     "Collin Christy",
     "Anders Jerkstrand",
     "K. Azalee Bostroem",
     "Jennifer E. Andrews",
     "Kate D. Alexander",
-    "Yize Dong",
+    "Y H Dong",
     "Carl Fields",
     "Emily Hoang",
     "Griffin Hosseinzadeh",
     "Brian Hsu",
     "Daryl Janzen",
-    "S W Jha",
+    "Saurabh W. Jha",
     "Joel Johansson",
     "Jeniveve Pearson",
     "M. J. Lundquist",
@@ -885,7 +873,7 @@
     "P. Ho\u00eaflich"
    ],
    "journal": "arXiv (Cornell University)",
-   "doi": "",
+   "doi": "10.48550/arxiv.2606.28561",
    "arxiv": "2606.28561",
    "abstract": "SN 2024abup is a nearby broad-lined Type Ic supernova (SN Ic-bl) in NGC 0681 at a distance of 23.3 \\pm 1.6 Mpc. As energetic explosions of massive stars, SNe Ic-bl are considered a plausible site for rapid-neutron capture nucleosynthesis (r-process) and chemical enrichment from short-lived progenitors. They may also contribute to dust production in the early Universe. We present JWST near- to mid-infrared (NIR+MIR) observations (1-14 micron) of SN Ic-bl 2024abup at +41 days after the V band maximum (+54 days after explosion), the first-ever JWST+MIR observation of a SN Ic-bl along with radio and optical data. Using the spectral synthesis code SUMO, we identify the observed broad IR line features in SN 2024abup and find significant contributions from C, O, Mg, and carbon monoxide (CO) -- the earliest detection of molecules in a core-collapse SN so far. The spectrum shows continuum emission at wavelengths greater than 1.5 micron, which could be explained by dust -- preexisting, newly formed, or a combination-heated by the SN. We do not find compelling evidence for infrared signatures of r-process elements, though our search is hampered by the presence of many broad and blended features from the non-r-process elements. These new observations indicate that SNe Ic-bl could be a contributor to early-universe dust production, and suggest that if r-process elements are produced, revealing their presence from spectra requires very high-quality data and models to disentangle blends.",
    "institutes": [
@@ -903,8 +891,16 @@
    ],
    "co_institutes": [],
    "sources": [
-    "openalex:fulltext"
-   ]
+    "ads"
+   ],
+   "figures": [
+    {
+     "file": "figures/W7166684506_0.png",
+     "caption": "Radio light curve of SN\\,2024abup at frequencies shown in tab:radio, shown alongside other well-studied SN\\,Ic-bl for comparison: 1998bw ; 2002ap ; 2003jd ; 2007bg ; 2009bb ; detections and upper limits of several other SNe are from , , and . The solid and dashed curves show the expected 6 GHz light curves generated using VegasAfterglow for a typical relativistic jet with energy $E_iso=10^51 erg$, initial Lorentz \u2026",
+     "matched": true
+    }
+   ],
+   "usage": "used"
   },
   {
    "figures": [
@@ -961,7 +957,7 @@
    ],
    "journal": "The Astrophysical Journal Letters",
    "doi": "10.3847/2041-8213/ae796d",
-   "arxiv": "2605.16495",
+   "arxiv": null,
    "abstract": "Abstract We present late-time ( \u03b4t &gt; 3000 days) optical (Keck), X-ray (Chandra and the Nuclear Spectroscopic Telescope Array), and radio (the Very Large Area, the Atacama Large Millimeter/submillimeter Array, and the Upgraded Giant Metrewave Radio Telescope) observations of the Type Ic-BL (SN Ic-BL) SN 2012ap. Previous studies of this supernova (SN) have suggested that it stands out as a key example of a weak engine-driven explosion due to the lack of gamma-ray burst (GRB) detection and mildly relativistic ejecta. Recently, radio sky surveys revealed the rebrightening of the radio emission from this SN, highlighting the possibilities of a density enhancement at large radii or the existence of an off-axis relativistic jet. While the late-time optical spectra do not exhibit the broad emission lines seen in other interacting supernovae (SNe), our analysis of the broadband radio and X-ray emission implies that both scenarios are plausible. If a density enhancement is responsible for the radio rebrightening, it has to result from a change in the mass-loss rate and/or wind velocity, possibly due to the transition of the progenitor from a red supergiant to a Wolf\u2013Rayet star. If the late-time radio component is a result of an off-axis relativistic jet, we find that an energetic narrow jet viewed at \u03b8 obs \u2265 80\u00b0 is needed. In this scenario, SN 2012ap is not a result of a weak engine-driven explosion, and instead, it is similar to other GRBs. However, radio rebrightenings of SN Ic-BL are not enough on their own to determine the existence of off-axis jets, and our planned Very Long Baseline Array observation will help reveal the true nature of this SN.",
    "institutes": [
     {
@@ -1243,8 +1239,7 @@
     }
    ],
    "sources": [
-    "openalex:cites",
-    "openalex:fulltext"
+    "ads"
    ]
   },
   {
@@ -1278,7 +1273,7 @@
    ],
    "co_institutes": [],
    "sources": [
-    "openalex:cites"
+    "ads"
    ]
   },
   {
@@ -1333,20 +1328,11 @@
     }
    ],
    "sources": [
-    "openalex:cites",
-    "openalex:fulltext"
+    "ads"
    ]
   },
   {
-   "figures": [
-    {
-     "file": "figures/W7162475202_0.png",
-     "caption": "Prompt emission properties of GRB\\,260310A. a. Fermi/GBM count-rate light curves from NaI detectors na and nb in the $50-300$ keV energy band. The black lines and gray lines represent the net counts and errors with a bin size of 2 s. b. Accumulated counts. The blue horizontal solid (dashed) lines are drawn at 0\\%--100\\% (5\\%--95\\%) of the total accumulated counts. The vertical lines in a and b represent the $T_90$ \u2026",
-     "matched": false
-    }
-   ],
-   "usage": "used",
-   "key": "W7162475202",
+   "key": "W7162287227",
    "title": "An extremely bright slow-rising afterglow from an off-axis jet in GRB 260310A",
    "year": 2026,
    "date": "2026-05-22",
@@ -1388,7 +1374,7 @@
     "Siyu Wu"
    ],
    "journal": "arXiv (Cornell University)",
-   "doi": "",
+   "doi": "10.48550/arxiv.2605.23818",
    "arxiv": "2605.23818",
    "abstract": "We present a multi-wavelength study of GRB 260310A, a nearby long-duration gamma-ray burst at $z\\simeq0.153$ associated with a broad-lined Type Ic supernova. Despite its modest prompt gamma-ray output, $E_{\u03b3,\\rm iso}\\simeq3.5\\times10^{50}$ erg, GRB\\,260310A exhibits one of the brightest afterglows ever observed in the X-ray, optical, and radio bands. Its apparent brightness is not its only remarkable feature. The optical afterglow displays a delayed onset, characterized by a slow rising phase, with slope $\u03b1\\approx-1$, and a late peak at $\\approx$0.1 d. We argue that the combination of weak prompt emission, hard peak energy, and late afterglow onset is naturally explained by a GRB jet viewed off-axis. The radio spectral energy distributions are consistent with synchrotron radiation and indicate the presence of both reverse- and forward-shock components, thus providing a first test of reverse-shock models in an off-axis geometry. The X-ray afterglow displays a prominent rebrightening, monitored for up to $\\approx$68 d with no evidence of spectral evolution. A low level of linear polarization, $\u03a0\\approx1.7\\%$, is measured at 15 GHz at $T_0+55$ d and suggests that, at these late times, the forward-shock is the dominant emission component from radio to X-rays. This late-time rebrightening represents a critical test for the two-component jet model. If interpreted as the emergence of a narrow jet core viewed further off-axis, it would imply extreme luminosities and energetics for an on-axis observer.",
    "institutes": [
@@ -1406,226 +1392,16 @@
    ],
    "co_institutes": [],
    "sources": [
-    "openalex:fulltext"
-   ]
-  },
-  {
-   "figures": [],
-   "usage": "unverified",
-   "key": "W7160102728",
-   "title": "A gamma-ray burst associated with a superluminous supernova",
-   "year": 2026,
-   "date": "2026-05-04",
-   "type": "preprint",
-   "authors": [
-    "Andrew Levan",
-    "Nikhil Sarin",
-    "Agnes van Hoof",
-    "L. Izzo",
-    "Daniele Malesani",
-    "Andrew Fruchter",
-    "Jens Hjorth",
-    "N. R. Tanvir",
-    "Eric Burns",
-    "Johan Fynbo",
-    "Jillian Rastinejad",
-    "BenJamin Gompertz",
-    "Peter Jonker",
-    "Antonio Martin-Carrillo",
-    "S. Belkin",
-    "D O\u2019Neill",
-    "S. Schulze",
-    "Jesper Sollerman",
-    "Danny Steeghs",
-    "D Xu"
+    "ads"
    ],
-   "journal": "Research Square",
-   "doi": "10.21203/rs.3.rs-9506415/v1",
-   "arxiv": null,
-   "abstract": "",
-   "institutes": [
+   "figures": [
     {
-     "id": "I145872427",
-     "name": "Radboud University Nijmegen",
-     "ror": "https://ror.org/016xsfp80",
-     "country": "The Netherlands",
-     "city": "Nijmegen",
-     "lat": 51.8425,
-     "lng": 5.85278,
-     "homepage": "https://www.ru.nl",
-     "logo": "https://www.google.com/s2/favicons?domain=ru.nl&sz=64"
+     "file": "figures/W7162287227_0.png",
+     "caption": "Prompt emission properties of GRB\\,260310A. a. Fermi/GBM count-rate light curves from NaI detectors na and nb in the $50-300$ keV energy band. The black lines and gray lines represent the net counts and errors with a bin size of 2 s. b. Accumulated counts. The blue horizontal solid (dashed) lines are drawn at 0\\%--100\\% (5\\%--95\\%) of the total accumulated counts. The vertical lines in a and b represent the $T_90$ \u2026",
+     "matched": false
     }
    ],
-   "co_institutes": [
-    {
-     "id": "I2801954024",
-     "name": "Astronomical Observatory of Capodimonte",
-     "ror": "https://ror.org/02fwden70",
-     "country": "Italy",
-     "city": "Naples",
-     "lat": 40.86354446411133,
-     "lng": 14.255544662475586,
-     "homepage": "http://www.oacn.inaf.it/",
-     "logo": "https://www.google.com/s2/favicons?domain=oacn.inaf.it&sz=64"
-    },
-    {
-     "id": "I1297127228",
-     "name": "Space Telescope Science Institute",
-     "ror": "https://ror.org/036f5mx38",
-     "country": "United States",
-     "city": "Baltimore",
-     "lat": 39.29038,
-     "lng": -76.61219,
-     "homepage": "https://www.stsci.edu",
-     "logo": "https://www.google.com/s2/favicons?domain=stsci.edu&sz=64"
-    },
-    {
-     "id": "I124055696",
-     "name": "University of Copenhagen",
-     "ror": "https://ror.org/035b05819",
-     "country": "Denmark",
-     "city": "Copenhagen",
-     "lat": 55.67594,
-     "lng": 12.56553,
-     "homepage": "https://www.ku.dk",
-     "logo": "https://www.google.com/s2/favicons?domain=ku.dk&sz=64"
-    },
-    {
-     "id": "I153648349",
-     "name": "University of Leicester",
-     "ror": "https://ror.org/04h699437",
-     "country": "United Kingdom",
-     "city": "Leicester",
-     "lat": 52.63859939575195,
-     "lng": -1.1316900253295898,
-     "homepage": "https://le.ac.uk",
-     "logo": "https://www.google.com/s2/favicons?domain=le.ac.uk&sz=64"
-    },
-    {
-     "id": "I121820613",
-     "name": "Louisiana State University",
-     "ror": "https://ror.org/05ect4e57",
-     "country": "United States",
-     "city": "Baton Rouge",
-     "lat": 30.44332,
-     "lng": -91.18747,
-     "homepage": "http://www.lsu.edu/",
-     "logo": "https://www.google.com/s2/favicons?domain=lsu.edu&sz=64"
-    },
-    {
-     "id": "I66946132",
-     "name": "University of Maryland, College Park",
-     "ror": "https://ror.org/047s2c258",
-     "country": "United States",
-     "city": "College Park",
-     "lat": 38.98067,
-     "lng": -76.93692,
-     "homepage": "https://umd.edu",
-     "logo": "https://www.google.com/s2/favicons?domain=umd.edu&sz=64"
-    },
-    {
-     "id": "I79619799",
-     "name": "University of Birmingham",
-     "ror": "https://ror.org/03angcq70",
-     "country": "United Kingdom",
-     "city": "Birmingham",
-     "lat": 52.48142,
-     "lng": -1.89983,
-     "homepage": "http://www.birmingham.ac.uk/index.aspx",
-     "logo": "https://www.google.com/s2/favicons?domain=birmingham.ac.uk&sz=64"
-    },
-    {
-     "id": "I100930933",
-     "name": "University College Dublin",
-     "ror": "https://ror.org/05m7pjf47",
-     "country": "Ireland",
-     "city": "Dublin",
-     "lat": 53.33306,
-     "lng": -6.24889,
-     "homepage": "https://www.ucd.ie",
-     "logo": "https://www.google.com/s2/favicons?domain=ucd.ie&sz=64"
-    },
-    {
-     "id": "I2801239119",
-     "name": "Australian Regenerative Medicine Institute",
-     "ror": "https://ror.org/02qa5kg76",
-     "country": "Australia",
-     "city": "Clayton",
-     "lat": -37.91049575805664,
-     "lng": 145.12930297851562,
-     "homepage": "http://www.armi.org.au/",
-     "logo": "https://www.google.com/s2/favicons?domain=armi.org.au&sz=64"
-    },
-    {
-     "id": "I56590836",
-     "name": "Monash University",
-     "ror": "https://ror.org/02bfwt286",
-     "country": "Australia",
-     "city": "Melbourne",
-     "lat": -37.814,
-     "lng": 144.96332,
-     "homepage": "https://www.monash.edu",
-     "logo": "https://www.google.com/s2/favicons?domain=monash.edu&sz=64"
-    },
-    {
-     "id": "I53964585",
-     "name": "Weizmann Institute of Science",
-     "ror": "https://ror.org/0316ej306",
-     "country": "Israel",
-     "city": "Rehovot",
-     "lat": 31.89421,
-     "lng": 34.81199,
-     "homepage": "https://www.weizmann.ac.il",
-     "logo": "https://www.google.com/s2/favicons?domain=weizmann.ac.il&sz=64"
-    },
-    {
-     "id": "I161593684",
-     "name": "Stockholm University",
-     "ror": "https://ror.org/05f0yaq80",
-     "country": "Sweden",
-     "city": "Stockholm",
-     "lat": 59.32938,
-     "lng": 18.06871,
-     "homepage": "https://www.su.se",
-     "logo": "https://www.google.com/s2/favicons?domain=su.se&sz=64"
-    },
-    {
-     "id": "I39555362",
-     "name": "University of Warwick",
-     "ror": "https://ror.org/01a77tt86",
-     "country": "United Kingdom",
-     "city": "Coventry",
-     "lat": 52.40656,
-     "lng": -1.51217,
-     "homepage": "http://www2.warwick.ac.uk/",
-     "logo": "https://www.google.com/s2/favicons?domain=www2.warwick.ac.uk&sz=64"
-    },
-    {
-     "id": "I19820366",
-     "name": "Chinese Academy of Sciences",
-     "ror": "https://ror.org/034t30j35",
-     "country": "China",
-     "city": "Beijing",
-     "lat": 39.9075,
-     "lng": 116.39723,
-     "homepage": "https://www.cas.cn",
-     "logo": "https://www.google.com/s2/favicons?domain=cas.cn&sz=64"
-    },
-    {
-     "id": "I4210164580",
-     "name": "National Astronomical Observatories",
-     "ror": "https://ror.org/058pyyv44",
-     "country": "China",
-     "city": "Beijing",
-     "lat": 40.00466537475586,
-     "lng": 116.38436889648438,
-     "homepage": "http://english.nao.cas.cn/",
-     "logo": "https://www.google.com/s2/favicons?domain=english.nao.cas.cn&sz=64"
-    }
-   ],
-   "sources": [
-    "openalex:fulltext"
-   ]
+   "usage": "used"
   },
   {
    "figures": [],
@@ -1773,8 +1549,7 @@
     }
    ],
    "sources": [
-    "openalex:cites",
-    "openalex:fulltext"
+    "ads"
    ]
   },
   {
@@ -1905,19 +1680,11 @@
    ],
    "co_institutes": [],
    "sources": [
-    "openalex:fulltext"
+    "ads"
    ]
   },
   {
-   "figures": [
-    {
-     "file": "figures/W7154790034_0.png",
-     "caption": "Posterior distribution of an MCMC fit of a synthetic LGRB afterglow population to a selection of observed afterglow flux density distributions at a range of frequencies and times. The jet-opening angle, $ _c$, is in units of radians. Our synthetic population of afterglows are drawn from this posterior distribution.",
-     "matched": false
-    }
-   ],
-   "usage": "used",
-   "key": "W7154790034",
+   "key": "W7154606522",
    "title": "Prospects for GRB Afterglow Discovery with the Eric and Wendy Schmidt Observatory System",
    "year": 2026,
    "date": "2026-04-15",
@@ -1937,7 +1704,7 @@
     "V. Ashley Villar"
    ],
    "journal": "arXiv (Cornell University)",
-   "doi": "",
+   "doi": "10.48550/arxiv.2604.13650",
    "arxiv": "2604.13650",
    "abstract": "Two time domain surveys, recently funded as part of the Eric and Wendy Schmidt Observatory System; the Argus Array, in the optical, and the Deep Synoptic Array (DSA), in the radio, will transform gamma-ray burst (GRB) science via the serendipitous discovery of hundreds of GRB afterglows per year. In this work, we simulate DSA and Argus observations of GRB afterglows. We find that, of the long-duration GRBs (LGRBs) detected by the Fermi Gamma-ray Burst Monitor, (26$\\pm$3)% will yield afterglow detections with Argus and (44$\\pm$3)% with DSA, corresponding to rates of 51$\\pm$5 and 86$\\pm$8 per year respectively. We also compute rates for both upcoming and proposed GRB monitors; the forthcoming StarBurst Multi-messenger Pioneer, with 84$\\pm$6 detections per year in Argus and 158$\\pm$11 detections per year in DSA, and the Moon Burst Energetics All-sky Monitor (MoonBEAM) concept, with 90$\\pm$9 per year in Argus and 160$\\pm$14 per year in DSA. The observatory system will also detect 118$\\pm$10 optical and 199$\\pm$17 radio afterglows per year, independent of GRB triggers, exceeding the current annual rate with global follow-up. Afterglow counterparts to short-duration GRBs, originating from neutron star mergers, will be detected at 5-10% of the LGRB afterglow rate, which is promising for multi-messenger detections of gravitational wave sources and constraining the neutron star merger rate. The Argus Array, with its second-minute cadence, will detect afterglows before they peak $\\sim$18% of the time, which will dramatically increase the sample of observed reverse shock and prompt optical emission.",
    "institutes": [
@@ -1977,19 +1744,19 @@
    ],
    "co_institutes": [],
    "sources": [
-    "openalex:fulltext"
-   ]
-  },
-  {
+    "ads"
+   ],
    "figures": [
     {
-     "file": "figures/W7148177702_0.png",
-     "caption": "Schematic illustration of a two-component jet structure and the associated forward\u2013reverse shock pairs formed in both the jet core and the wing. The top panel depicts the case of a fast wing, in which the emission is relativistically beamed away from an on-axis observer. The bottom panel shows the case of a slower wing, where the wing emission lies within the observer\u2019s beaming cone and is therefore detectable. The \u2026",
+     "file": "figures/W7154606522_0.png",
+     "caption": "Posterior distribution of an MCMC fit of a synthetic LGRB afterglow population to a selection of observed afterglow flux density distributions at a range of frequencies and times. The jet-opening angle, $ _c$, is in units of radians. Our synthetic population of afterglows are drawn from this posterior distribution.",
      "matched": false
     }
    ],
-   "usage": "used",
-   "key": "W7148177702",
+   "usage": "used"
+  },
+  {
+   "key": "W7147014040",
    "title": "Systematic Study of Forward and Reverse Shock Afterglow Emission from Two-Component Jets",
    "year": 2026,
    "date": "2026-03-28",
@@ -2000,7 +1767,7 @@
     "Paz Beniamini"
    ],
    "journal": "arXiv (Cornell University)",
-   "doi": "",
+   "doi": "10.48550/arxiv.2603.27225",
    "arxiv": "2603.27225",
    "abstract": "Two-component jets are frequently invoked to explain complex features in gamma-ray burst (GRB) afterglows, such as late-time rebrightening and chromatic breaks. While many studies fit these models to individual events, a systematic exploration mapping the broader parameter space, particularly the reverse shock contribution, is currently lacking. To address this, we present a comprehensive systematic analysis of two-component jet signatures using numerical modeling with the VegasAfterglow code. Our modeling shows that observable rebrightenings in the forward shock require the wing to carry substantially more energy, while for the reverse shock the energies can be comparable. Because the two components can occupy different spectral regimes, spectral breaks may arise when the wing emission overtakes the core. When the wing's initial velocity is high, relativistic beaming can render its emission invisible to the on-axis observer. As the flow decelerates, the resulting debeaming produces a steeper rise in the observed emission, reaching temporal slopes as steep as about $4.5$ and peaking shortly after the core jet break. In this case, the wing masks the core's break, leaving only a single late-time break. Slower wings that are not initially beamed away do not obscure the core, allowing the observer to see two distinct jet breaks. At late times, the decaying post-jet-break slopes are unaffected and limited to temporal slopes of about $-p$. Additionally, the forward shock dominates the emission across most of the parameter space, while the reverse shock contributes noticeably only under conditions of high magnetization and long engine durations.",
    "institutes": [
@@ -2018,19 +1785,19 @@
    ],
    "co_institutes": [],
    "sources": [
-    "openalex:fulltext"
-   ]
-  },
-  {
+    "ads"
+   ],
    "figures": [
     {
-     "file": "figures/W7144391256_0.png",
-     "caption": "Characteristics of the prompt X-ray emission of EP241113a observed by EP-WXT. (a) Upper panel: The light curve of the net count rate of EP241113a in the $0.5$--$4\\, keV$ band, with a time bin size of $3\\, s$. Middle panel: Cumulative X-ray photon count distribution as a function of time. Lower panel: The photon index in the absorbed power-law model for three time bins. The two vertical dashed lines mark the epochs \u2026",
+     "file": "figures/W7147014040_0.png",
+     "caption": "Schematic illustration of a two-component jet structure and the associated forward\u2013reverse shock pairs formed in both the jet core and the wing. The top panel depicts the case of a fast wing, in which the emission is relativistically beamed away from an on-axis observer. The bottom panel shows the case of a slower wing, where the wing emission lies within the observer\u2019s beaming cone and is therefore detectable. The \u2026",
      "matched": false
     }
    ],
-   "usage": "used",
-   "key": "W7144391256",
+   "usage": "used"
+  },
+  {
+   "key": "W7143337184",
    "title": "An energetic dirty fireball detected in soft X-rays",
    "year": 2026,
    "date": "2026-03-27",
@@ -2038,9 +1805,9 @@
    "authors": [
     "C. -Y. Dai",
     "J. Quirola-V\u00e1squez",
-    "Y. -X. Wang",
+    "Y. -H. Wang",
     "H. -L. Li",
-    "J. Yang",
+    "J. H. Yang",
     "X. -L. Chen",
     "A. -L. Wang",
     "H. Sun",
@@ -2072,7 +1839,7 @@
     "N. -C. Sun",
     "H. Gao",
     "V. S. Dhillon",
-    "J. An",
+    "J. H. An",
     "C. -H. Bai",
     "A. Martin-Carrillo",
     "H. -Q. Cheng",
@@ -2097,9 +1864,9 @@
     "Z. -X. Ling",
     "D. B. Malesani",
     "H. -W. Pan",
-    "A. Y. Rodriguez",
-    "A. M. Rossi",
-    "D. Jimeno Sanchez",
+    "A. Rodriguez",
+    "A. Rossi",
+    "D. Mata S\u00e1nchez",
     "J. S\u00e1nchez-Sierras",
     "X. -J. Sun",
     "M. A. P. Torres",
@@ -2109,17 +1876,17 @@
     "X. -P. Xu",
     "Y. -F. Xu",
     "Y. -W. Yu",
-    "C. C. Zhang",
+    "C. Lili Zhang",
     "M. -H. Zhang",
     "S. -N. Zhang",
-    "Y. -H. Zhang",
-    "Y. -H. Zhang",
-    "Z. -P. Zhu"
+    "Y. Joseph Zhang",
+    "Y. Joseph Zhang",
+    "Z. -H. Zhu"
    ],
    "journal": "arXiv (Cornell University)",
-   "doi": "",
+   "doi": "10.48550/arxiv.2603.26213",
    "arxiv": "2603.26213",
-   "abstract": "The collapse of massive stars drives explosions that power relativistic fireballs. If only a small amount of matter is entrained, such clean fireballs can expand with Lorentz factors $\u0393> 100$, accounting for gamma-ray bursts (GRBs). It has been hypothesized that energetic explosions with more baryon contamination, dubbed ``dirty fireballs'', may exist in nature, but they have not been observed. Here we report the observation of an extragalactic fast X-ray transient, EP241113a, detected by Einstein Probe. Compared to GRBs, it has a similar isotropic energy of $1.4\\times 10^{51}$ erg, but significantly lower spectral peak energy. Theoretical modeling of its early X-ray afterglow suggests a relativistic jet with a low Lorentz factor of $\u0393\\sim 20$ aligned close to the line-of-sight, signifying the prototype of a dirty fireball.",
+   "abstract": "The collapse of massive stars drives explosions that power relativistic fireballs. If only a small amount of matter is entrained, such clean fireballs can expand with Lorentz factors $\u0393&gt; 100$, accounting for gamma-ray bursts (GRBs). It has been hypothesized that energetic explosions with more baryon contamination, dubbed ``dirty fireballs'', may exist in nature, but they have not been observed. Here we report the observation of an extragalactic fast X-ray transient, EP241113a, detected by Einstein Probe. Compared to GRBs, it has a similar isotropic energy of $1.4\\times 10^{51}$ erg, but significantly lower spectral peak energy. Theoretical modeling of its early X-ray afterglow suggests a relativistic jet with a low Lorentz factor of $\u0393\\sim 20$ aligned close to the line-of-sight, signifying the prototype of a dirty fireball.",
    "institutes": [
     {
      "id": "01rxvg760",
@@ -2135,8 +1902,16 @@
    ],
    "co_institutes": [],
    "sources": [
-    "openalex:fulltext"
-   ]
+    "ads"
+   ],
+   "figures": [
+    {
+     "file": "figures/W7143337184_0.png",
+     "caption": "Characteristics of the prompt X-ray emission of EP241113a observed by EP-WXT. (a) Upper panel: The light curve of the net count rate of EP241113a in the $0.5$--$4\\, keV$ band, with a time bin size of $3\\, s$. Middle panel: Cumulative X-ray photon count distribution as a function of time. Lower panel: The photon index in the absorbed power-law model for three time bins. The two vertical dashed lines mark the epochs \u2026",
+     "matched": false
+    }
+   ],
+   "usage": "used"
   },
   {
    "figures": [
@@ -2214,8 +1989,7 @@
     }
    ],
    "sources": [
-    "openalex:cites",
-    "openalex:fulltext"
+    "ads"
    ]
   },
   {
@@ -2260,8 +2034,7 @@
    "institutes": [],
    "co_institutes": [],
    "sources": [
-    "openalex:cites",
-    "openalex:fulltext"
+    "ads"
    ]
   },
   {
@@ -2349,8 +2122,7 @@
    ],
    "co_institutes": [],
    "sources": [
-    "openalex:cites",
-    "openalex:fulltext"
+    "ads"
    ]
   },
   {
@@ -2799,7 +2571,7 @@
     }
    ],
    "sources": [
-    "openalex:cites"
+    "ads"
    ]
   },
   {
@@ -3053,7 +2825,7 @@
     }
    ],
    "sources": [
-    "openalex:cites"
+    "ads"
    ]
   },
   {
@@ -3112,8 +2884,7 @@
     }
    ],
    "sources": [
-    "openalex:cites",
-    "openalex:fulltext"
+    "ads"
    ]
   },
   {
