@@ -1,7 +1,9 @@
 {
- "generated": "2026-08-24",
+ "generated": "2026-08-31",
  "papers": [
   {
+   "figures": [],
+   "usage": "unverified",
    "key": "W7203997848",
    "title": "Integrating VegasAfterglow into AMpy to explore GRB afterglow enviroments",
    "year": 2026,
@@ -30,11 +32,17 @@
    "co_institutes": [],
    "sources": [
     "openalex:fulltext"
-   ],
-   "figures": [],
-   "usage": "unverified"
+   ]
   },
   {
+   "figures": [
+    {
+     "file": "figures/W7203744656_0.png",
+     "caption": "Posterior distribution of an MCMC fit of a synthetic LGRB afterglow population to a selection of observed afterglow flux density distributions at a range of frequencies and times. The jet-opening angle, $ _c$, is in units of radians. Our synthetic population of afterglows are drawn from this posterior distribution.",
+     "matched": false
+    }
+   ],
+   "usage": "used",
    "key": "W7203744656",
    "title": "Prospects for Gamma-Ray Burst Afterglow Discovery with the Eric and Wendy Schmidt Observatory System",
    "year": 2026,
@@ -153,17 +161,17 @@
    "sources": [
     "openalex:cites",
     "openalex:fulltext"
-   ],
+   ]
+  },
+  {
    "figures": [
     {
-     "file": "figures/W7203744656_0.png",
-     "caption": "Posterior distribution of an MCMC fit of a synthetic LGRB afterglow population to a selection of observed afterglow flux density distributions at a range of frequencies and times. The jet-opening angle, $ _c$, is in units of radians. Our synthetic population of afterglows are drawn from this posterior distribution.",
+     "file": "figures/W7203747935_0.png",
+     "caption": "The extragalactic optical transient TSS 042144.31-383308.66T59177. Top Row: Flux-calibrated light curve extracted through PSF photometry. The shaded blue region indicates the time span during which the event was detected in TESSELLATE. Middle Row: \\ images of the region at various epochs before, during, and after the event. The red plus indicates the event's PSF fit centroid returned by TESSELLATE. Bottom Left: \u2026",
      "matched": false
     }
    ],
-   "usage": "used"
-  },
-  {
+   "usage": "used",
    "key": "W7203747935",
    "title": "AT 2020afjz (TSS2020a): The First Fast Extragalactic Transient Discovered by TESS",
    "year": 2026,
@@ -218,15 +226,7 @@
    "co_institutes": [],
    "sources": [
     "openalex:fulltext"
-   ],
-   "figures": [
-    {
-     "file": "figures/W7203747935_0.png",
-     "caption": "The extragalactic optical transient TSS 042144.31-383308.66T59177. Top Row: Flux-calibrated light curve extracted through PSF photometry. The shaded blue region indicates the time span during which the event was detected in TESSELLATE. Middle Row: \\ images of the region at various epochs before, during, and after the event. The red plus indicates the event's PSF fit centroid returned by TESSELLATE. Bottom Left: \u2026",
-     "matched": false
-    }
-   ],
-   "usage": "used"
+   ]
   },
   {
    "figures": [
@@ -1051,6 +1051,14 @@
    ]
   },
   {
+   "figures": [
+    {
+     "file": "figures/W7166900500_0.png",
+     "caption": "Radio light curve of SN\\,2024abup at frequencies shown in tab:radio, shown alongside other well-studied SN\\,Ic-bl for comparison: 1998bw ; 2002ap ; 2003jd ; 2007bg ; 2009bb ; detections and upper limits of several other SNe are from , , and . The solid and dashed curves show the expected 6 GHz light curves generated using VegasAfterglow for a typical relativistic jet with energy $E_iso=10^51 erg$, initial Lorentz \u2026",
+     "matched": true
+    }
+   ],
+   "usage": "used",
    "key": "W7166900500",
    "title": "JWST observations of SN 2024abup: First Detection of CO in a broad-lined Type Ic Supernova and Constraints on r-process Nucleosynthesis",
    "year": 2026,
@@ -1399,15 +1407,7 @@
    ],
    "sources": [
     "openalex:fulltext"
-   ],
-   "figures": [
-    {
-     "file": "figures/W7166900500_0.png",
-     "caption": "Radio light curve of SN\\,2024abup at frequencies shown in tab:radio, shown alongside other well-studied SN\\,Ic-bl for comparison: 1998bw ; 2002ap ; 2003jd ; 2007bg ; 2009bb ; detections and upper limits of several other SNe are from , , and . The solid and dashed curves show the expected 6 GHz light curves generated using VegasAfterglow for a typical relativistic jet with energy $E_iso=10^51 erg$, initial Lorentz \u2026",
-     "matched": true
-    }
-   ],
-   "usage": "used"
+   ]
   },
   {
    "figures": [
@@ -1785,6 +1785,14 @@
    ]
   },
   {
+   "figures": [
+    {
+     "file": "figures/W7163340977_0.png",
+     "caption": "A schematic diagram of the fluid primitives in the `two-zone' model. The zones are: (4) unshocked ejecta, (3) shocked ejecta, (2) shocked circumburst medium, and (1) unshocked circumburst medium. The fluid primitives are spatially uniform within each zone, and the fluid states in zones 1 and 4 are known time-dependent boundary conditions.",
+     "matched": false
+    }
+   ],
+   "usage": "used",
    "key": "W7163340977",
    "title": "Systematic Error in Approximate Models of the GRB Early Afterglow",
    "year": 2026,
@@ -1815,15 +1823,7 @@
    "co_institutes": [],
    "sources": [
     "ads"
-   ],
-   "figures": [
-    {
-     "file": "figures/W7163340977_0.png",
-     "caption": "A schematic diagram of the fluid primitives in the `two-zone' model. The zones are: (4) unshocked ejecta, (3) shocked ejecta, (2) shocked circumburst medium, and (1) unshocked circumburst medium. The fluid primitives are spatially uniform within each zone, and the fluid states in zones 1 and 4 are known time-dependent boundary conditions.",
-     "matched": false
-    }
-   ],
-   "usage": "used"
+   ]
   },
   {
    "figures": [
@@ -1882,6 +1882,14 @@
    ]
   },
   {
+   "figures": [
+    {
+     "file": "figures/W7162475202_0.png",
+     "caption": "Prompt emission properties of GRB\\,260310A. a. Fermi/GBM count-rate light curves from NaI detectors na and nb in the $50-300$ keV energy band. The black lines and gray lines represent the net counts and errors with a bin size of 2 s. b. Accumulated counts. The blue horizontal solid (dashed) lines are drawn at 0\\%--100\\% (5\\%--95\\%) of the total accumulated counts. The vertical lines in a and b represent the $T_90$ \u2026",
+     "matched": false
+    }
+   ],
+   "usage": "used",
    "key": "W7162475202",
    "title": "An extremely bright slow-rising afterglow from an off-axis jet in GRB 260310A",
    "year": 2026,
@@ -2131,17 +2139,44 @@
    ],
    "sources": [
     "openalex:fulltext"
-   ],
-   "figures": [
-    {
-     "file": "figures/W7162475202_0.png",
-     "caption": "Prompt emission properties of GRB\\,260310A. a. Fermi/GBM count-rate light curves from NaI detectors na and nb in the $50-300$ keV energy band. The black lines and gray lines represent the net counts and errors with a bin size of 2 s. b. Accumulated counts. The blue horizontal solid (dashed) lines are drawn at 0\\%--100\\% (5\\%--95\\%) of the total accumulated counts. The vertical lines in a and b represent the $T_90$ \u2026",
-     "matched": false
-    }
-   ],
-   "usage": "used"
+   ]
   },
   {
+   "key": "W7204613324",
+   "title": "Relativistic Transients from Compact Objects: Radiation Processes and Geometric Effects",
+   "year": 2026,
+   "date": "2026-05-15",
+   "type": "article",
+   "authors": [
+    "Connery Chen"
+   ],
+   "journal": "Digital Scholarship - UNLV (University of Nevada Reno)",
+   "doi": "",
+   "arxiv": null,
+   "abstract": "Relativistic transients from compact objects probe the most extreme regimes of physics, where strong gravity, ultra-relativistic outflows, and high-energy radiation operate simultaneously; understanding the underlying radiation mechanisms and extrinsic geometric and relativistic effects is essential for interpreting observations and constraining source properties. I develop theoretical and computational frameworks to quantify how geometry and relativistic motion shape observed emission from fast radio bursts, gamma-ray bursts, and neutron star mergers. I analyze fast radio bursts from the Galactic magnetar SGR J1935+2154 and show that emission geometry strongly governs burst energetics and detection probability, and influences the link between radio and X-ray emission. I present PromptX, a computational toolkit for modeling X-ray counterparts to neutron star mergers. PromptX computes observer-frame light curves and spectra, enabling rapid characterization of multimessenger events. In tandem with GRB afterglow modeling toolkits such as VegasAfterglow, these frameworks provide predictive, low-latency diagnostics to inform and optimize broadband follow-up campaigns. Applying PromptX to the growing population of luminous, spectrally soft fast X-ray transients detected by the Einstein Probe, I show that geometry alone cannot explain their observed energetics. Interpreting these events requires understanding the distinct radiation mechanisms, outflow dynamics, and progenitor properties that power them. These results demonstrate that geometric effects and radiation processes are inseparable in interpreting transient emission from compact objects and provide self-consistent modeling frameworks that integrate theoretical models with high-energy astrophysical observations.",
+   "institutes": [
+    {
+     "id": "I133999245",
+     "name": "University of Nevada, Las Vegas",
+     "ror": "https://ror.org/0406gha72",
+     "country": "United States",
+     "city": "Las Vegas",
+     "lat": 36.17497,
+     "lng": -115.13722,
+     "homepage": "https://www.unlv.edu",
+     "logo": "https://www.google.com/s2/favicons?domain=unlv.edu&sz=64"
+    }
+   ],
+   "co_institutes": [],
+   "sources": [
+    "openalex:fulltext"
+   ],
+   "figures": [],
+   "usage": "unverified"
+  },
+  {
+   "figures": [],
+   "usage": "unverified",
    "key": "W7160102728",
    "title": "A gamma-ray burst associated with a superluminous supernova",
    "year": 2026,
@@ -2355,9 +2390,7 @@
    ],
    "sources": [
     "openalex:fulltext"
-   ],
-   "figures": [],
-   "usage": "unverified"
+   ]
   },
   {
    "figures": [],
@@ -2641,6 +2674,14 @@
    ]
   },
   {
+   "figures": [
+    {
+     "file": "figures/W7148177702_0.png",
+     "caption": "Schematic illustration of a two-component jet structure and the associated forward\u2013reverse shock pairs formed in both the jet core and the wing. The top panel depicts the case of a fast wing, in which the emission is relativistically beamed away from an on-axis observer. The bottom panel shows the case of a slower wing, where the wing emission lies within the observer\u2019s beaming cone and is therefore detectable. The \u2026",
+     "matched": false
+    }
+   ],
+   "usage": "used",
    "key": "W7148177702",
    "title": "Systematic Study of Forward and Reverse Shock Afterglow Emission from Two-Component Jets",
    "year": 2026,
@@ -2671,17 +2712,17 @@
    "co_institutes": [],
    "sources": [
     "openalex:fulltext"
-   ],
+   ]
+  },
+  {
    "figures": [
     {
-     "file": "figures/W7148177702_0.png",
-     "caption": "Schematic illustration of a two-component jet structure and the associated forward\u2013reverse shock pairs formed in both the jet core and the wing. The top panel depicts the case of a fast wing, in which the emission is relativistically beamed away from an on-axis observer. The bottom panel shows the case of a slower wing, where the wing emission lies within the observer\u2019s beaming cone and is therefore detectable. The \u2026",
+     "file": "figures/W7144391256_0.png",
+     "caption": "Characteristics of the prompt X-ray emission of EP241113a observed by EP-WXT. (a) Upper panel: The light curve of the net count rate of EP241113a in the $0.5$--$4\\, keV$ band, with a time bin size of $3\\, s$. Middle panel: Cumulative X-ray photon count distribution as a function of time. Lower panel: The photon index in the absorbed power-law model for three time bins. The two vertical dashed lines mark the epochs \u2026",
      "matched": false
     }
    ],
-   "usage": "used"
-  },
-  {
+   "usage": "used",
    "key": "W7144391256",
    "title": "An energetic dirty fireball detected in soft X-rays",
    "year": 2026,
@@ -3185,15 +3226,7 @@
    ],
    "sources": [
     "openalex:fulltext"
-   ],
-   "figures": [
-    {
-     "file": "figures/W7144391256_0.png",
-     "caption": "Characteristics of the prompt X-ray emission of EP241113a observed by EP-WXT. (a) Upper panel: The light curve of the net count rate of EP241113a in the $0.5$--$4\\, keV$ band, with a time bin size of $3\\, s$. Middle panel: Cumulative X-ray photon count distribution as a function of time. Lower panel: The photon index in the absorbed power-law model for three time bins. The two vertical dashed lines mark the epochs \u2026",
-     "matched": false
-    }
-   ],
-   "usage": "used"
+   ]
   },
   {
    "figures": [
