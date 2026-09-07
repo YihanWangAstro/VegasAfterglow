@@ -1,5 +1,5 @@
 {
- "generated": "2026-08-31",
+ "generated": "2026-09-07",
  "papers": [
   {
    "figures": [],
@@ -1787,47 +1787,6 @@
   {
    "figures": [
     {
-     "file": "figures/W7163340977_0.png",
-     "caption": "A schematic diagram of the fluid primitives in the `two-zone' model. The zones are: (4) unshocked ejecta, (3) shocked ejecta, (2) shocked circumburst medium, and (1) unshocked circumburst medium. The fluid primitives are spatially uniform within each zone, and the fluid states in zones 1 and 4 are known time-dependent boundary conditions.",
-     "matched": false
-    }
-   ],
-   "usage": "used",
-   "key": "W7163340977",
-   "title": "Systematic Error in Approximate Models of the GRB Early Afterglow",
-   "year": 2026,
-   "date": "2026-06-01",
-   "type": "preprint",
-   "authors": [
-    "Benjamin Amend",
-    "Eric R. Coughlin",
-    "Jonathan Zrake"
-   ],
-   "journal": "arXiv (Cornell University)",
-   "doi": "10.48550/arxiv.2606.02691",
-   "arxiv": "2606.02691",
-   "abstract": "Gamma-ray burst (GRB) afterglows are thought to arise when relativistic ejecta launched by a compact central engine drive a blast wave into the surrounding circumburst medium, producing broadband synchrotron emission. We present a rigorous assessment, based on high-resolution special relativistic hydrodynamics simulations, of a widely adopted `two-zone model' for approximating the dynamics of the early afterglow phase. Before the onset of the Blandford-McKee (BMK) self-similar solution, the outflow generally produces two emission components, associated with the forward-shocked circumburst medium and the reverse-shocked ejecta. The subsequent evolution depends on whether the reverse shock significantly decelerates the ejecta as it crosses the shell, separating the so-called relativistic and Newtonian reverse shock regimes. We show that when the reverse shock is Newtonian, it crosses the ejecta shell long before BMK self-similarity is established, leaving a prolonged interval that can span $\\sim$ hours in observer time in which the true hydrodynamic evolution is not captured by standard semi-analytic prescriptions. We demonstrate that this mismatch can, for representative afterglow parameters, substantially overpredict the reverse-shock emission from radio through ultraviolet frequencies, or overpredict the forward-shock emission at X-ray frequencies, depending on how the transition away from the two-zone model is prescribed.",
-   "institutes": [
-    {
-     "id": "037s24f05",
-     "name": "Clemson University",
-     "ror": "https://ror.org/037s24f05",
-     "country": "United States",
-     "city": "Clemson",
-     "lat": 34.68344,
-     "lng": -82.83737,
-     "homepage": "https://www.clemson.edu",
-     "logo": "https://www.google.com/s2/favicons?domain=clemson.edu&sz=64"
-    }
-   ],
-   "co_institutes": [],
-   "sources": [
-    "ads"
-   ]
-  },
-  {
-   "figures": [
-    {
      "file": "figures/W7162655324_0.png",
      "caption": "Our physical picture for GRB 250702B. Panel (a) shows the geodesic orbit of the WD, where the red line represents our numerical result with $a = 30\\,R_ $, $e = 0.97$, $M_ BH = 1 10^5\\,M_ $, $a_ spin=0.9$, and $ _ min = 0.12 rad$ ($7^ $). The BH spin axis is indicated by the vertical black line. The orbit exhibits relativistic precession. Mass loss from the WD is not included in this calculation. Panel (b) \u2026",
      "matched": false
@@ -2142,6 +2101,8 @@
    ]
   },
   {
+   "figures": [],
+   "usage": "unverified",
    "key": "W7204613324",
    "title": "Relativistic Transients from Compact Objects: Radiation Processes and Geometric Effects",
    "year": 2026,
@@ -2170,9 +2131,7 @@
    "co_institutes": [],
    "sources": [
     "openalex:fulltext"
-   ],
-   "figures": [],
-   "usage": "unverified"
+   ]
   },
   {
    "figures": [],
@@ -4358,6 +4317,46 @@
    "sources": [
     "ads"
    ]
+  },
+  {
+   "key": "ads_2026arXiv260602691A",
+   "title": "Systematic Error in Approximate Models of the GRB Early Afterglow",
+   "year": 2026,
+   "date": "2026-06-01",
+   "type": "article",
+   "authors": [
+    "Amend, Benjamin",
+    "Coughlin, Eric R.",
+    "Zrake, Jonathan"
+   ],
+   "journal": "arXiv e-prints",
+   "doi": "10.48550/arXiv.2606.02691",
+   "arxiv": "2606.02691",
+   "abstract": "Gamma-ray burst (GRB) afterglows are thought to arise when relativistic ejecta launched by a compact central engine drive a blast wave into the surrounding circumburst medium, producing broadband synchrotron emission. We present a rigorous assessment, based on high-resolution special relativistic hydrodynamics simulations, of a widely adopted `two-zone model' for approximating the dynamics of the early afterglow phase. Before the onset of the Blandford-McKee (BMK) self-similar solution, the outflow generally produces two emission components, associated with the forward-shocked circumburst medium and the reverse-shocked ejecta. The subsequent evolution depends on whether the reverse shock significantly decelerates the ejecta as it crosses the shell, separating the so-called relativistic and Newtonian reverse shock regimes. We show that when the reverse shock is Newtonian, it crosses the ejecta shell long before BMK self-similarity is established, leaving a prolonged interval that can span $\\sim$ hours in observer time in which the true hydrodynamic evolution is not captured by standard semi-analytic prescriptions. We demonstrate that this mismatch can, for representative afterglow parameters, substantially overpredict the reverse-shock emission from radio through ultraviolet frequencies, or overpredict the forward-shock emission at X-ray frequencies, depending on how the transition away from the two-zone model is prescribed.",
+   "institutes": [
+    {
+     "id": "037s24f05",
+     "name": "Clemson University",
+     "ror": "https://ror.org/037s24f05",
+     "country": "United States",
+     "city": "Clemson",
+     "lat": 34.68344,
+     "lng": -82.83737,
+     "homepage": "https://www.clemson.edu",
+     "logo": "https://www.google.com/s2/favicons?domain=clemson.edu&sz=64"
+    }
+   ],
+   "sources": [
+    "ads"
+   ],
+   "figures": [
+    {
+     "file": "figures/ads_2026arXiv260602691A_0.png",
+     "caption": "A schematic diagram of the fluid primitives in the `two-zone' model. The zones are: (4) unshocked ejecta, (3) shocked ejecta, (2) shocked circumburst medium, and (1) unshocked circumburst medium. The fluid primitives are spatially uniform within each zone, and the fluid states in zones 1 and 4 are known time-dependent boundary conditions.",
+     "matched": false
+    }
+   ],
+   "usage": "used"
   }
  ]
 }
