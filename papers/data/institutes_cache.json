@@ -2199,5 +2199,38 @@
   "lng": -82.83737,
   "homepage": "https://www.clemson.edu",
   "logo": "https://www.google.com/s2/favicons?domain=clemson.edu&sz=64"
+ },
+ "I208081647": {
+  "id": "I208081647",
+  "name": "Coastal Carolina University",
+  "ror": "https://ror.org/01621q256",
+  "country": "United States",
+  "city": "Conway",
+  "lat": 33.83599853515625,
+  "lng": -79.04781341552734,
+  "homepage": "https://www.coastal.edu",
+  "logo": "https://www.google.com/s2/favicons?domain=coastal.edu&sz=64"
+ },
+ "I8078737": {
+  "id": "I8078737",
+  "name": "Clemson University",
+  "ror": "https://ror.org/037s24f05",
+  "country": "United States",
+  "city": "Clemson",
+  "lat": 34.683441162109375,
+  "lng": -82.83737182617188,
+  "homepage": "https://www.clemson.edu",
+  "logo": "https://www.google.com/s2/favicons?domain=clemson.edu&sz=64"
+ },
+ "aff:school of astronomy and space sciences, university of chinese academy of sciences, beijing 100049, china": {
+  "id": "05qbk4x57",
+  "name": "University of Chinese Academy of Sciences",
+  "ror": "https://ror.org/05qbk4x57",
+  "country": "China",
+  "city": "Beijing",
+  "lat": 39.9075,
+  "lng": 116.39723,
+  "homepage": "https://www.ucas.ac.cn",
+  "logo": "https://www.google.com/s2/favicons?domain=ucas.ac.cn&sz=64"
  }
 }

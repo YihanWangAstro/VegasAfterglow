@@ -1,6 +1,109 @@
 {
- "generated": "2026-09-07",
+ "generated": "2026-09-14",
  "papers": [
+  {
+   "key": "W7212062512",
+   "title": "Radio Emission with Dust: A Bow-Shock Interpretation for the TDE Candidate AT 2019avd",
+   "year": 2026,
+   "date": "2026-09-08",
+   "type": "preprint",
+   "authors": [
+    "Shuyuan Wei",
+    "Yanan Wang",
+    "Guobin Mou",
+    "Linhui Wu",
+    "S. del Palacio",
+    "Ranieri D. Baldi",
+    "Xiaolong Yang",
+    "Yang Huang"
+   ],
+   "journal": "arXiv (Cornell University)",
+   "doi": "10.48550/arxiv.2609.08324",
+   "arxiv": "2609.08324",
+   "abstract": "Forward shocks produced by interactions between a single ejected blob and the circumnuclear medium (CNM) around a supermassive black hole are widely invoked to explain radio emission from tidal disruption events (TDEs). However, recent observational evidence such as rapidly rising radio emission, double-peaked broadband spectral energy distributions, and declining shock energies at late times poses challenges to this picture. Alternative scenarios have therefore been proposed, including bow shocks arising from outflows colliding with dense clouds, the production of new ejecta at late times, and variations in microphysical parameters. To investigate the roles of these factors, we analyze the long-lived radio flare of the TDE candidate AT 2019avd, for which dust has been identified through mid-infrared observations, using a radio dataset spanning more than five years. We find that a bow-shock scenario can account for the majority of the observed radio emission, while a forward shock, or an additional bow shock involving different clouds, may begin to dominate at late times. However, a forward-shock scenario remains viable when allowing for evolving microphysical parameters and more complex CNM structures. We discuss the remaining tensions in both the outflow-CNM and outflow-cloud interaction scenarios.",
+   "institutes": [
+    {
+     "id": "05qbk4x57",
+     "name": "University of Chinese Academy of Sciences",
+     "ror": "https://ror.org/05qbk4x57",
+     "country": "China",
+     "city": "Beijing",
+     "lat": 39.9075,
+     "lng": 116.39723,
+     "homepage": "https://www.ucas.ac.cn",
+     "logo": "https://www.google.com/s2/favicons?domain=ucas.ac.cn&sz=64"
+    }
+   ],
+   "co_institutes": [],
+   "sources": [
+    "openalex:fulltext"
+   ],
+   "figures": [
+    {
+     "file": "figures/W7212062512_0.png",
+     "caption": "Radio SED fits of \\ using top-hat jet models computed with VegasAfterglow. The upper and lower panels correspond to fixed launch times of $t_ 0=58803.5$ and $t_ 0^ =59335$, respectively. In each panel, the upper subpanel shows the observed flux densities and the corresponding best-fitting model SEDs, while the lower subpanel shows the residuals, defined as $(F_ ,\\, obs-F_ ,\\, mod)/ _F_ ,\\, obs$.",
+     "matched": true
+    }
+   ],
+   "usage": "used"
+  },
+  {
+   "key": "W7163340977",
+   "title": "Systematic error in approximate models of the GRB early afterglow",
+   "year": 2026,
+   "date": "2026-08-31",
+   "type": "article",
+   "authors": [
+    "Benjamin Amend",
+    "Eric R. Coughlin",
+    "Jonathan Zrake"
+   ],
+   "journal": "Monthly Notices of the Royal Astronomical Society",
+   "doi": "10.1093/mnras/stag1611",
+   "arxiv": null,
+   "abstract": "ABSTRACT Gamma-ray burst (GRB) afterglows are thought to arise when relativistic ejecta launched by a compact central engine drive a blast wave into the surrounding circumburst medium, producing broad-band synchrotron emission. We present a rigorous assessment, based on high-resolution special-relativistic hydrodynamical simulations, of a widely adopted \u2018two-zone model\u2019 for approximating the dynamics of the early afterglow phase. Before the onset of the Blandford\u2013McKee (BMK) self-similar solution, the outflow generally produces two emission components, associated with the forward-shocked circumburst medium and the reverse-shocked ejecta. The subsequent evolution depends on whether the reverse shock significantly decelerates the ejecta as it crosses the shell, separating the so-called relativistic and Newtonian reverse shock regimes. We show that when the reverse shock is Newtonian, it crosses the ejecta shell long before BMK self-similarity is established, leaving a prolonged interval that can span $\\sim$ hours in observer time in which the true hydrodynamic evolution is not captured by standard semi-analytical prescriptions. We demonstrate that this mismatch can, for representative afterglow parameters, substantially overpredict the reverse-shock emission from radio through ultraviolet frequencies, or overpredict the forward-shock emission at X-ray frequencies, depending on how the transition away from the two-zone model is prescribed.",
+   "institutes": [
+    {
+     "id": "I208081647",
+     "name": "Coastal Carolina University",
+     "ror": "https://ror.org/01621q256",
+     "country": "United States",
+     "city": "Conway",
+     "lat": 33.83599853515625,
+     "lng": -79.04781341552734,
+     "homepage": "https://www.coastal.edu",
+     "logo": "https://www.google.com/s2/favicons?domain=coastal.edu&sz=64"
+    },
+    {
+     "id": "I70983195",
+     "name": "Syracuse University",
+     "ror": "https://ror.org/025r5qe02",
+     "country": "United States",
+     "city": "Syracuse",
+     "lat": 43.048118591308594,
+     "lng": -76.14742279052734,
+     "homepage": "https://www.syracuse.edu",
+     "logo": "https://www.google.com/s2/favicons?domain=syracuse.edu&sz=64"
+    },
+    {
+     "id": "I8078737",
+     "name": "Clemson University",
+     "ror": "https://ror.org/037s24f05",
+     "country": "United States",
+     "city": "Clemson",
+     "lat": 34.683441162109375,
+     "lng": -82.83737182617188,
+     "homepage": "https://www.clemson.edu",
+     "logo": "https://www.google.com/s2/favicons?domain=clemson.edu&sz=64"
+    }
+   ],
+   "co_institutes": [],
+   "sources": [
+    "openalex:cites"
+   ],
+   "figures": [],
+   "usage": "unverified"
+  },
   {
    "figures": [],
    "usage": "unverified",
@@ -1764,7 +1867,7 @@
    ],
    "journal": "The Astrophysical Journal",
    "doi": "10.3847/1538-4357/ae6b83",
-   "arxiv": "2605.10557",
+   "arxiv": null,
    "abstract": "Abstract Relativistic jets launched from stellar-mass compact objects embedded in the accretion disk of an active galactic nucleus (AGN) can produce nonthermal emission upon successfully breaking out of the disk. In this paper, we present a comprehensive study of the long-term propagation dynamics and broadband nonthermal radiation signatures of such jets in a realistic AGN environment, explicitly modeled as wind outflows. Our modeling reveals two distinct features imprinted by the high-density AGN medium: rapid deceleration of the jet ejecta, accompanied by a prompt downshift of the emission spectral energy distribution, and persistently strong synchrotron self-absorption, giving rise to a prominent quasi-thermal hump in the emission spectrum. Crucially, both gamma-ray burst jets and jets powered by accreting binary black hole merger remnants can produce detectable multiwavelength emissions that substantially outshine the AGN background. Moreover, the short time delays between gravitational-wave triggers and these electromagnetic counterparts\u2014typically less than 10 6 s\u2014greatly facilitate secure multimessenger associations. Besides, our findings highlight that the interaction-induced radiation from AGN-embedded jet systems offers a powerful diagnostic probe of the spatial distribution, density structure, and physical properties of the AGN medium.",
    "institutes": [
     {
@@ -2583,7 +2686,7 @@
    ],
    "journal": "Springer Link (Chiba Institute of Technology)",
    "doi": "10.48550/arxiv.2604.20346",
-   "arxiv": "2604.20346",
+   "arxiv": null,
    "abstract": "X-ray flashes (XRFs) are a type of gamma-ray burst (GRB) with prompt emission predominantly below 30 keV and have been poorly detected by previous missions. The advent of the SVOM mission, with its wide-field instrument ECLAIRs, provides a new way to detect soft X-ray transients. We present photometric and spectroscopic observations of XRF 241001A detected by SVOM, a soft, subluminous, and low-energetic burst located in a poorly populated region of the Amati relation. We investigated the origin of its faint, soft high-energy emission to assess its connection to the long GRB population. We analyzed the SVOM/ECLAIRs prompt emission and modeled its afterglow emission from X-ray to-radio. We present JWST/NIRSpec and SVOM/VT observations of the associated supernova (SN 2024aiiq), and we compared its properties with previously detected GRB/SNe. The event XRF 241001A is located at z = 0.573 and has a prompt emission dominated by photons below 20 keV with a duration of T90 = 3.14 seconds. Its spectrum is consistent with both thermal and nonthermal models, each implying a low Epeak < 10 keV and Eiso ~ 8x10^49 erg. The X-ray-to-radio afterglow modeling favors an origin from a relativistic jet viewed on-axis. In the optical, XRF 241001A exhibits an early blue emission, similar to that detected in some eFXTs and inconsistent with synchrotron emission. The JWST/NIRSpec observations firmly established its collapsar origin by revealing a SN Type Ic with broad lines, comparable to SN 1998bw and SN 2025kg-like events. The event XRF 241001A is a soft low-luminosity collapsar event produced by a weak relativistic jet observed on-axis, supporting the view that part of the XRF population forms the low-energy soft tail of the long GRB population. Its observation demonstrates the potential of SVOM/ECLAIRs to probe the soft regime of the high-energy transient population that remains largely unexplored.",
    "institutes": [],
    "co_institutes": [],
@@ -3403,6 +3506,27 @@
    ]
   },
   {
+   "key": "W7212320206",
+   "title": "The need for speed : modelling fast transients.",
+   "year": 2026,
+   "date": "2026-01-01",
+   "type": "dissertation",
+   "authors": [
+    "Clarinda Montilla"
+   ],
+   "journal": "University of Canterbury Research Repository (University of Canterbury)",
+   "doi": "10.26021/16642",
+   "arxiv": null,
+   "abstract": "Fast astrophysical transients evolve on timescales of milliseconds to hours, making them among the most difficult phenomena to observe and model. Our understanding is limited by existing models that have not been tested against high-cadence data, and the still-unknown physical mechanisms behind some transient populations. This thesis studies two distinct, yet related challenges to modelling the fastest transients known. The first project evaluates the reliability and self-consistency of two well-known gamma-ray burst (GRB) afterglow modelling packages, afterglowpy and VegasAfterglow. Using dynamic nested sampling with dynesty, I simulate data under idealised conditions to test the self-consistency. I then simulate data that is representative of TESS and LSST observations, demonstrating that to recover parameters reliably, high-cadence data is needed. This same pipeline is applied to two known GRB afterglows, AT 2021buv (GRB 210204A), and AT 2024zuk (GRB 241030A), where I find that we cannot recover physical afterglow parameters when using TESS data with the spectroscopically defined redshift for either afterglow. Through the tests in this thesis parameter recovery is only possible with high-cadence, multi-band, noiseless data. In this thesis I also demonstrate that afterglowpy exhibits numerical instability that reduces its functionality when being used to fit to data. I also identified a fundamental error in the Redback modelling front-end that affects all band-pass calculations done prior to April 2025. Furthermore, I demonstrate that it is necessary to account for the integration time of high cadence telescopes such as TESS when modelling the peak brightness of fast transients, which significantly helps to improve fitting of the texp parameter for GRB afterglows. In the second project, I create a simulation framework to determine if the bimodal energy distributions (BEDs) seen in some hyperactive repeating fast radio bursts (FRBs) can be produced by relativistic beaming. Using six beam shape models and three intrinsic energy distributions across a large sample of simulated bursts, I find that only the combination of a relativistic beam with an isotropic plateau paired with a log-normal intrinsic energy distribution produced a BED consistent with observations. This framework provides a physically motivated beaming origin for the bimodality. Together these results demonstrate that high-cadence imaging of fast transients is essential to constrain their models. GRB afterglow packages require significant improvements before reliable parameters can be acquired by general users. Additionally, the FRB BEDs may be explained by geometric beaming effects, similar to those of GRB afterglows. With new upcoming time-domain instruments, such as the Argus Array, we need to look at the theory behind these fascinating phenomena to prepare for the influx of faster, fainter events we will discover in the coming decades.",
+   "institutes": [],
+   "co_institutes": [],
+   "sources": [
+    "openalex:fulltext"
+   ],
+   "figures": [],
+   "usage": "unverified"
+  },
+  {
    "figures": [],
    "usage": "unverified",
    "key": "W4416895750",
@@ -3908,7 +4032,7 @@
    ],
    "journal": "The Astrophysical Journal Letters",
    "doi": "10.3847/2041-8213/ae1d67",
-   "arxiv": "2509.22784",
+   "arxiv": null,
    "abstract": "Abstract GRB 250702B was the longest gamma-ray burst ever detected, with a duration that challenges standard collapsar models and suggests an exotic progenitor. We collected a rich set of optical and infrared follow-up observations of its rapidly fading afterglow using a suite of telescopes including the W. M. Keck Observatory, the Gemini telescopes, the Magellan Baade Telescope, the Victor M. Blanco 4 m telescope, and the Fraunhofer Telescope at Wendelstein Observatory. Our analysis reveals that the afterglow emission is well described by forward shock emission from a highly obscured relativistic jet. Deep photometric observations of the host galaxy reveal a massive (10 10.66 M \u2299 ), dusty, and extremely asymmetric system that is consistent with two galaxies undergoing a major merger. The galactocentric offset, host galaxy properties, and jet characteristics disfavor a jetted tidal disruption event (TDE) around a supermassive black hole but do not definitively distinguish between competing progenitor scenarios. We find that the afterglow and host are consistent with a range of progenitors, including an atypical collapsar, a merger between a helium star and a stellar-mass black hole, the disruption of a star by a stellar-mass compact object (micro-TDE), and the tidal disruption of a star by an off-nuclear intermediate-mass black hole.",
    "institutes": [
     {
@@ -4121,7 +4245,7 @@
    ],
    "journal": "Monthly Notices of the Royal Astronomical Society",
    "doi": "10.1093/mnras/staf1923",
-   "arxiv": "2508.13066",
+   "arxiv": null,
    "abstract": "ABSTRACT Gamma-ray burst early afterglows are important tracers for determining the radial structure and magnetization of the ejecta. In this paper, we focus on GRB 110213A that shows double-peaked optical afterglow light curves and the shallow decay feature of the X-ray afterglow. We adopt a semi-analytical model for the dynamics of forward and reverse shocks generated through an interaction between an arbitrary magnetized ejecta with a finite thickness and a stratified circumstellar medium. Multiwavelength radiation from forward and reverse shocks seen from an arbitrary viewing angle is calculated under a thin-shell approximation. Our analysis with multimodal nested sampling methods for GRB 110213A suggests that the thick shell ejecta naturally explains the shallow decay feature of the X-ray afterglow. The combination of the reverse shock emission in the strongly magnetized jet and forward shock emission in the weakly magnetized circumstellar medium makes the double peak feature of the optical afterglows. The estimated low radiative efficiency in the prompt phase may be a consequence of the high magnetization of the jet in this case. A multimessenger emission simulator based on the magnetic bullet afterglow model is publicly available as the open-source Julia package \u2018Magglow\u2019.",
    "institutes": [
     {
@@ -4298,7 +4422,7 @@
    ],
    "journal": "The Astrophysical Journal",
    "doi": "10.3847/1538-4357/adf1a2",
-   "arxiv": "2507.15311",
+   "arxiv": null,
    "abstract": "Abstract Gamma-ray bursts are expected to be generated by structured jets, whose profiles significantly impact their afterglow emission. Previously, we developed a numerical code jetsimpy, to model the afterglow of jets with arbitrary angular profiles. In this study, we extend the code to incorporate a stratified radial profile, enabling it to model jets with arbitrary axisymmetric two-dimensional structures. The radial profile leads to the formation of a reverse shock. We modeled the shock system using an energy conservation prescription, which differs from the pressure balance approach. This leads to remarkably different predictions for reverse shock emission. In particular, we find that the reverse shock emission in the thin shell case is significantly overestimated in analytic models. We also explore the off-axis reverse shock emission from structured jets, where the cores belong to thick shell cases and the wings belong to thin shell cases. We have confirmed the prediction that off-axis observers may see a thin-to-thick transition, but we find that the light curve morphology is hard to distinguish from pure thin or thick shell cases. A radial profile also introduces hydrodynamic energy injection. As such, our code can naturally apply to refreshed shock cases, where the modeling of kilonova afterglows is demonstrated as an example. To validate our method, we fit the optical flash of GRB 990123, showing good agreement with the data. The upgraded jetsimpy provides unprecedented flexibility in modeling the afterglow emission of jets with various profiles, including those derived from general relativistic magnetohydrodynamic simulations.",
    "institutes": [
     {
@@ -4317,46 +4441,6 @@
    "sources": [
     "ads"
    ]
-  },
-  {
-   "key": "ads_2026arXiv260602691A",
-   "title": "Systematic Error in Approximate Models of the GRB Early Afterglow",
-   "year": 2026,
-   "date": "2026-06-01",
-   "type": "article",
-   "authors": [
-    "Amend, Benjamin",
-    "Coughlin, Eric R.",
-    "Zrake, Jonathan"
-   ],
-   "journal": "arXiv e-prints",
-   "doi": "10.48550/arXiv.2606.02691",
-   "arxiv": "2606.02691",
-   "abstract": "Gamma-ray burst (GRB) afterglows are thought to arise when relativistic ejecta launched by a compact central engine drive a blast wave into the surrounding circumburst medium, producing broadband synchrotron emission. We present a rigorous assessment, based on high-resolution special relativistic hydrodynamics simulations, of a widely adopted `two-zone model' for approximating the dynamics of the early afterglow phase. Before the onset of the Blandford-McKee (BMK) self-similar solution, the outflow generally produces two emission components, associated with the forward-shocked circumburst medium and the reverse-shocked ejecta. The subsequent evolution depends on whether the reverse shock significantly decelerates the ejecta as it crosses the shell, separating the so-called relativistic and Newtonian reverse shock regimes. We show that when the reverse shock is Newtonian, it crosses the ejecta shell long before BMK self-similarity is established, leaving a prolonged interval that can span $\\sim$ hours in observer time in which the true hydrodynamic evolution is not captured by standard semi-analytic prescriptions. We demonstrate that this mismatch can, for representative afterglow parameters, substantially overpredict the reverse-shock emission from radio through ultraviolet frequencies, or overpredict the forward-shock emission at X-ray frequencies, depending on how the transition away from the two-zone model is prescribed.",
-   "institutes": [
-    {
-     "id": "037s24f05",
-     "name": "Clemson University",
-     "ror": "https://ror.org/037s24f05",
-     "country": "United States",
-     "city": "Clemson",
-     "lat": 34.68344,
-     "lng": -82.83737,
-     "homepage": "https://www.clemson.edu",
-     "logo": "https://www.google.com/s2/favicons?domain=clemson.edu&sz=64"
-    }
-   ],
-   "sources": [
-    "ads"
-   ],
-   "figures": [
-    {
-     "file": "figures/ads_2026arXiv260602691A_0.png",
-     "caption": "A schematic diagram of the fluid primitives in the `two-zone' model. The zones are: (4) unshocked ejecta, (3) shocked ejecta, (2) shocked circumburst medium, and (1) unshocked circumburst medium. The fluid primitives are spatially uniform within each zone, and the fluid states in zones 1 and 4 are known time-dependent boundary conditions.",
-     "matched": false
-    }
-   ],
-   "usage": "used"
   }
  ]
 }
