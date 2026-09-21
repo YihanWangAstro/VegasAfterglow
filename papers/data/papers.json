@@ -1,7 +1,15 @@
 {
- "generated": "2026-09-14",
+ "generated": "2026-09-21",
  "papers": [
   {
+   "figures": [
+    {
+     "file": "figures/W7212062512_0.png",
+     "caption": "Radio SED fits of \\ using top-hat jet models computed with VegasAfterglow. The upper and lower panels correspond to fixed launch times of $t_ 0=58803.5$ and $t_ 0^ =59335$, respectively. In each panel, the upper subpanel shows the observed flux densities and the corresponding best-fitting model SEDs, while the lower subpanel shows the residuals, defined as $(F_ ,\\, obs-F_ ,\\, mod)/ _F_ ,\\, obs$.",
+     "matched": true
+    }
+   ],
+   "usage": "used",
    "key": "W7212062512",
    "title": "Radio Emission with Dust: A Bow-Shock Interpretation for the TDE Candidate AT 2019avd",
    "year": 2026,
@@ -37,17 +45,11 @@
    "co_institutes": [],
    "sources": [
     "openalex:fulltext"
-   ],
-   "figures": [
-    {
-     "file": "figures/W7212062512_0.png",
-     "caption": "Radio SED fits of \\ using top-hat jet models computed with VegasAfterglow. The upper and lower panels correspond to fixed launch times of $t_ 0=58803.5$ and $t_ 0^ =59335$, respectively. In each panel, the upper subpanel shows the observed flux densities and the corresponding best-fitting model SEDs, while the lower subpanel shows the residuals, defined as $(F_ ,\\, obs-F_ ,\\, mod)/ _F_ ,\\, obs$.",
-     "matched": true
-    }
-   ],
-   "usage": "used"
+   ]
   },
   {
+   "figures": [],
+   "usage": "unverified",
    "key": "W7163340977",
    "title": "Systematic error in approximate models of the GRB early afterglow",
    "year": 2026,
@@ -100,9 +102,7 @@
    "co_institutes": [],
    "sources": [
     "openalex:cites"
-   ],
-   "figures": [],
-   "usage": "unverified"
+   ]
   },
   {
    "figures": [],
@@ -3506,6 +3506,8 @@
    ]
   },
   {
+   "figures": [],
+   "usage": "unverified",
    "key": "W7212320206",
    "title": "The need for speed : modelling fast transients.",
    "year": 2026,
@@ -3522,9 +3524,7 @@
    "co_institutes": [],
    "sources": [
     "openalex:fulltext"
-   ],
-   "figures": [],
-   "usage": "unverified"
+   ]
   },
   {
    "figures": [],
