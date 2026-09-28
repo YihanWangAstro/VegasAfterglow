@@ -2232,5 +2232,27 @@
   "lng": 116.39723,
   "homepage": "https://www.ucas.ac.cn",
   "logo": "https://www.google.com/s2/favicons?domain=ucas.ac.cn&sz=64"
+ },
+ "I130238516": {
+  "id": "I130238516",
+  "name": "University of Minnesota",
+  "ror": "https://ror.org/017zqws13",
+  "country": "United States",
+  "city": "Minneapolis",
+  "lat": 44.97997,
+  "lng": -93.26384,
+  "homepage": "https://twin-cities.umn.edu",
+  "logo": "https://www.google.com/s2/favicons?domain=twin-cities.umn.edu&sz=64"
+ },
+ "I183067930": {
+  "id": "I183067930",
+  "name": "Shanghai Jiao Tong University",
+  "ror": "https://ror.org/0220qvk04",
+  "country": "China",
+  "city": "Shanghai",
+  "lat": 31.22222,
+  "lng": 121.45806,
+  "homepage": "https://www.sjtu.edu.cn",
+  "logo": "https://www.google.com/s2/favicons?domain=sjtu.edu.cn&sz=64"
  }
 }
