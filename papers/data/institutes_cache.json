@@ -2738,5 +2738,181 @@
   "lng": 12.503780364990234,
   "homepage": "https://www.space.dtu.dk",
   "logo": "https://www.google.com/s2/favicons?domain=space.dtu.dk&sz=64"
+ },
+ "I152031979": {
+  "id": "I152031979",
+  "name": "Nanjing Normal University",
+  "ror": "https://ror.org/036trcv74",
+  "country": "China",
+  "city": "Nanjing",
+  "lat": 32.06167,
+  "lng": 118.77778,
+  "homepage": "https://www.njnu.edu.cn",
+  "logo": "https://www.google.com/s2/favicons?domain=njnu.edu.cn&sz=64"
+ },
+ "I4210140564": {
+  "id": "I4210140564",
+  "name": "Istituto Nazionale di Fisica Nucleare, Sezione di Milano Bicocca",
+  "ror": "https://ror.org/03xejxm22",
+  "country": "Italy",
+  "city": "Milan",
+  "lat": 45.464271545410156,
+  "lng": 9.189510345458984,
+  "homepage": "https://www.mib.infn.it",
+  "logo": "https://www.google.com/s2/favicons?domain=mib.infn.it&sz=64"
+ },
+ "I80584463": {
+  "id": "I80584463",
+  "name": "Joint Institute for VLBI ERIC",
+  "ror": "https://ror.org/006dmc180",
+  "country": "The Netherlands",
+  "city": "Dwingeloo",
+  "lat": 52.83417,
+  "lng": 6.36944,
+  "homepage": "https://jive.eu",
+  "logo": "https://www.google.com/s2/favicons?domain=jive.eu&sz=64"
+ },
+ "I922237871": {
+  "id": "I922237871",
+  "name": "Netherlands Institute for Radio Astronomy",
+  "ror": "https://ror.org/000k1q888",
+  "country": "The Netherlands",
+  "city": "Dwingeloo",
+  "lat": 52.83417,
+  "lng": 6.36944,
+  "homepage": "https://www.astron.nl",
+  "logo": "https://www.google.com/s2/favicons?domain=astron.nl&sz=64"
+ },
+ "I5023651": {
+  "id": "I5023651",
+  "name": "McGill University",
+  "ror": "https://ror.org/01pxwe438",
+  "country": "Canada",
+  "city": "Montreal",
+  "lat": 45.50884,
+  "lng": -73.58781,
+  "homepage": "https://www.mcgill.ca",
+  "logo": "https://www.google.com/s2/favicons?domain=mcgill.ca&sz=64"
+ },
+ "I21491767": {
+  "id": "I21491767",
+  "name": "Aix-Marseille Universit\u00e9",
+  "ror": "https://ror.org/035xkbk20",
+  "country": "France",
+  "city": "Marseille",
+  "lat": 43.29695,
+  "lng": 5.38107,
+  "homepage": "https://www.univ-amu.fr/",
+  "logo": "https://www.google.com/s2/favicons?domain=univ-amu.fr&sz=64"
+ },
+ "I17866349": {
+  "id": "I17866349",
+  "name": "Universit\u00e9 F\u00e9d\u00e9rale de Toulouse Midi-Pyr\u00e9n\u00e9es",
+  "ror": "https://ror.org/004raaa70",
+  "country": "France",
+  "city": "Toulouse",
+  "lat": 43.60426,
+  "lng": 1.44367,
+  "homepage": "https://www.univ-toulouse.fr",
+  "logo": "https://www.google.com/s2/favicons?domain=univ-toulouse.fr&sz=64"
+ },
+ "I4210128565": {
+  "id": "I4210128565",
+  "name": "CEA Paris-Saclay",
+  "ror": "https://ror.org/03n15ch10",
+  "country": "France",
+  "city": "Gif-sur-Yvette",
+  "lat": 48.68333,
+  "lng": 2.13333,
+  "homepage": "https://www.cea.fr/paris-saclay",
+  "logo": "https://www.google.com/s2/favicons?domain=cea.fr&sz=64"
+ },
+ "I4210165232": {
+  "id": "I4210165232",
+  "name": "Institut de Recherche sur les Lois Fondamentales de l'Univers",
+  "ror": "https://ror.org/05k705z76",
+  "country": "France",
+  "city": "Gif-sur-Yvette",
+  "lat": 48.68333,
+  "lng": 2.13333,
+  "homepage": "https://irfu.cea.fr",
+  "logo": "https://www.google.com/s2/favicons?domain=irfu.cea.fr&sz=64"
+ },
+ "I185839726": {
+  "id": "I185839726",
+  "name": "Institut Universitaire de France",
+  "ror": "https://ror.org/055khg266",
+  "country": "France",
+  "city": "Paris",
+  "lat": 48.847469329833984,
+  "lng": 2.348695993423462,
+  "homepage": "http://iuf.amue.fr/",
+  "logo": "https://www.google.com/s2/favicons?domain=iuf.amue.fr&sz=64"
+ },
+ "I2802362320": {
+  "id": "I2802362320",
+  "name": "Evgeni Kharadze Georgian National Astrophysical Observatory",
+  "ror": "https://ror.org/02gkgrd84",
+  "country": "Georgia",
+  "city": "Tbilisi",
+  "lat": 41.69411,
+  "lng": 44.83368,
+  "homepage": "https://www.abao.ge",
+  "logo": "https://www.google.com/s2/favicons?domain=abao.ge&sz=64"
+ },
+ "I134113660": {
+  "id": "I134113660",
+  "name": "University of Nevada, Reno",
+  "ror": "https://ror.org/01keh0577",
+  "country": "United States",
+  "city": "Reno",
+  "lat": 39.52963,
+  "lng": -119.8138,
+  "homepage": "https://www.unr.edu",
+  "logo": "https://www.google.com/s2/favicons?domain=unr.edu&sz=64"
+ },
+ "I115752224": {
+  "id": "I115752224",
+  "name": "University of Insubria",
+  "ror": "https://ror.org/00s409261",
+  "country": "Italy",
+  "city": "Varese",
+  "lat": 45.82058,
+  "lng": 8.82511,
+  "homepage": "https://www.uninsubria.eu/",
+  "logo": "https://www.google.com/s2/favicons?domain=uninsubria.eu&sz=64"
+ },
+ "I2800530175": {
+  "id": "I2800530175",
+  "name": "Agenzia Spaziale Italiana",
+  "ror": "https://ror.org/034zgem50",
+  "country": "Italy",
+  "city": "Rome",
+  "lat": 41.89193,
+  "lng": 12.51133,
+  "homepage": "https://www.asi.it/",
+  "logo": "https://www.google.com/s2/favicons?domain=asi.it&sz=64"
+ },
+ "I4405283751": {
+  "id": "I4405283751",
+  "name": "Deep Space Exploration Laboratory",
+  "ror": "https://ror.org/026z4ds93",
+  "country": "China",
+  "city": "Hefei",
+  "lat": 31.86389,
+  "lng": 117.28083,
+  "homepage": null,
+  "logo": null
+ },
+ "aff:joint institute for vlbi eric (jive), oude hoogeveensedijk 4, 7991pd dwingeloo, the netherlands": {
+  "id": "006dmc180",
+  "name": "Joint Institute for VLBI ERIC",
+  "ror": "https://ror.org/006dmc180",
+  "country": "The Netherlands",
+  "city": "Dwingeloo",
+  "lat": 52.83417,
+  "lng": 6.36944,
+  "homepage": "https://jive.eu",
+  "logo": "https://www.google.com/s2/favicons?domain=jive.eu&sz=64"
  }
 }
