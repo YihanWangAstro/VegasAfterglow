@@ -1,6 +1,81 @@
 {
- "generated": "2026-10-12",
+ "generated": "2026-10-19",
  "papers": [
+  {
+   "key": "W7222461819",
+   "title": "A Shell Collision Scenario for EP251222b/GRB 251222A: Connecting Prompt Emission and Double-Peaked Afterglow",
+   "year": 2026,
+   "date": "2026-10-15",
+   "type": "preprint",
+   "authors": [
+    "Run Shi",
+    "Di Xiao",
+    "Brajesh Kumar",
+    "Yifang Liang",
+    "Guowang Du",
+    "GENG JinJun",
+    "WenLong Zhang",
+    "Yuan Fang",
+    "Chenlei Guo",
+    "Dingfang Hu",
+    "Jie Hu",
+    "QiuJu Huang",
+    "Yanlong Hua",
+    "Yongfeng Huang",
+    "HongGuang Li",
+    "Xiangkun Liu",
+    "Xiaowei Liu",
+    "Yuan Liu",
+    "Jirong Mao",
+    "Xuan Mao",
+    "Bao Wang",
+    "Yuanpei Yang",
+    "Shiyan Zhong",
+    "Dan Zhu",
+    "X. -F. Wu",
+    "Weimin Yuan"
+   ],
+   "journal": "arXiv (Cornell University)",
+   "doi": "10.48550/arxiv.2610.21583",
+   "arxiv": "2610.21583",
+   "abstract": "GRB 251222A is a long-duration gamma-ray burst at a spectroscopic redshift of $z=3.171$. It was detected by the EP as the soft X-ray transient EP251222b before and during the gamma-ray emission. We performed a multi-wavelength (EP/WXT, fermi/GBM, swift/XRT and optical/NIR) investigation of this event. Its prompt soft X-ray and gamma-ray features, together with two afterglow rebrightenings, allow us to examine a possible connection between the prompt ejecta and the afterglow. We consider a multiple-shell scenario in which a faster, narrower shell catches up with a slower, wider shell. We assume that the selected pulse groups trace different ejecta and that the late X-ray flare marks their collision. Under these assumptions, we represent the post-collision outflow by an effective merged core and an outer annular component. A joint fit to the multi-band afterglow gives a Lorentz factor of $\u0393_c\\approx293$ for the merged core and $\u0393_{1,w}\\approx228$ for the outer component. The sample-wise collision mapping gives an energy release of $E_{\\rm diss}=(1.6^{+2.1}_{-0.9})\\times10^{52}$ erg and a dynamical dissipation efficiency of $0.37^{+0.07}_{-0.14}\\%$. EP251222b can therefore be used to test a prompt--afterglow connection through shell collisions, although it does not uniquely establish this interpretation.",
+   "institutes": [
+    {
+     "id": "02eb4t121",
+     "name": "Purple Mountain Observatory",
+     "ror": "https://ror.org/02eb4t121",
+     "country": "China",
+     "city": "Nanjing",
+     "lat": 32.06167,
+     "lng": 118.77778,
+     "homepage": "http://english.pmo.cas.cn/",
+     "logo": "https://www.google.com/s2/favicons?domain=english.pmo.cas.cn&sz=64"
+    },
+    {
+     "id": "04c4dkn09",
+     "name": "University of Science and Technology of China",
+     "ror": "https://ror.org/04c4dkn09",
+     "country": "China",
+     "city": "Hefei",
+     "lat": 31.86389,
+     "lng": 117.28083,
+     "homepage": "https://ustc.edu.cn",
+     "logo": "https://www.google.com/s2/favicons?domain=ustc.edu.cn&sz=64"
+    }
+   ],
+   "co_institutes": [],
+   "sources": [
+    "ads"
+   ],
+   "figures": [
+    {
+     "file": "figures/W7222461819_0.png",
+     "caption": "Location of EP251222b/GRB 251222A (green star) in the $E_ p,z$--$E_ , iso$ plane. The background population of typical Type II GRBs (massive star GRBs) is shown as purple points, while Type I GRBs (compact star GRBs) are shown as yellow points . The shaded regions indicate the $1 $ confidence intervals. The green-star error bars show the conditional 90\\% confidence intervals from the CPL fit to data from three \u2026",
+     "matched": false
+    }
+   ],
+   "usage": "used"
+  },
   {
    "figures": [
     {
@@ -115,6 +190,14 @@
    ]
   },
   {
+   "figures": [
+    {
+     "file": "figures/W7220380531_0.png",
+     "caption": "Comparison between the observed size evolution of GRB\\,221009A and the prediction of the afterglow models proposed in the literature. The blue squares show the VLBI observations at 5\\,GHz, while the predicted angular sizes of the models derived with VegasAfterglow are displayed with colours and styles that follow the legend of Fig.\\,.",
+     "matched": true
+    }
+   ],
+   "usage": "used",
    "key": "W7220380531",
    "title": "Comparing the size evolution of GRB 221009A with afterglow models",
    "year": 2026,
@@ -122,13 +205,13 @@
    "type": "preprint",
    "authors": [
     "S. Giarratana",
-    "O. S. Salafia",
+    "Om Sharan Salafia",
     "B. Marcote",
     "Z. Paragi",
     "M. Giroletti",
-    "G. Ghirlanda",
+    "Giancarlo Ghirlanda",
     "Lara Nava",
-    "A. van der Horst",
+    "Alexander J. van der Horst",
     "J. K. Leung",
     "L. Rhodes",
     "P. G. Edwards",
@@ -233,15 +316,7 @@
    ],
    "sources": [
     "openalex:fulltext"
-   ],
-   "figures": [
-    {
-     "file": "figures/W7220380531_0.png",
-     "caption": "Comparison between the observed size evolution of GRB\\,221009A and the prediction of the afterglow models proposed in the literature. The blue squares show the VLBI observations at 5\\,GHz, while the predicted angular sizes of the models derived with VegasAfterglow are displayed with colours and styles that follow the legend of Fig.\\,.",
-     "matched": true
-    }
-   ],
-   "usage": "used"
+   ]
   },
   {
    "figures": [
@@ -265,7 +340,7 @@
     "Collin T. Christy",
     "Anders Jerkstrand",
     "K. Azalee Bostroem",
-    "J. E. Andrews",
+    "Jennifer E. Andrews",
     "K. D. Alexander",
     "Yize Dong",
     "Carl Fields",
@@ -834,6 +909,8 @@
    ]
   },
   {
+   "figures": [],
+   "usage": "unverified",
    "key": "W7201850279",
    "title": "XRF 241001A/SN 2024aiiq: A faint soft X-ray transient detected by SVOM with a broad-line type Ic supernova revealed by JWST",
    "year": 2026,
@@ -848,7 +925,7 @@
     "Olivier Godet",
     "A. J. Levan",
     "Fr\u00e9d\u00e9ric Daigne",
-    "N. Sarin",
+    "Nikhil Sarin",
     "N.A. Rakotondrainibe",
     "Antonio Martin-Carrillo",
     "J. T. Palmerio",
@@ -858,10 +935,10 @@
     "A. de Ugarte Postigo",
     "S. Antier",
     "V. Buat",
-    "D. \u030c D urov \u030c c \u00edkov\u00e1",
+    "Dominika \u010eurov\u010d\u00edkov\u00e1",
     "Luca Izzo",
     "J. K. Leung",
-    "G. Mo",
+    "Geoffrey Mo",
     "Y.-L. Qiu",
     "Susanna Diana Vergani",
     "J. Wang",
@@ -878,19 +955,19 @@
     "Valerio D'Elia",
     "Y. W. Dong",
     "Diego G\u00f6tz",
-    "S. Guillot",
+    "S\u00e9bastien Guillot",
     "X. H. Han",
     "Dieter H. Hartmann",
     "L. Huang",
     "Y. F. Huang",
-    "P. Jakobsson",
+    "P\u00e1ll Jakobsson",
     "Alain Klotz",
     "Cyril Lachaud",
     "Emeric Le Floc'h",
     "X. M. Lu",
     "P. Maggi",
-    "M De Pasquale",
-    "F. Piron",
+    "M. de Pasquale",
+    "Frederic Piron",
     "R Salvaterra",
     "S. Schanne",
     "J. Sollerman",
@@ -907,7 +984,7 @@
    ],
    "journal": "Astronomy and Astrophysics",
    "doi": "10.1051/0004-6361/202660544",
-   "arxiv": null,
+   "arxiv": "2604.20346",
    "abstract": "Context. X-ray flashes (XRFs) are a type of gamma-ray burst (GRB) with prompt emission predominantly below \u223c30 keV and have been poorly detected by previous missions monitoring the high-energy sky. The advent of the Space-based multiband astronomical Variable Objects Monitor (SVOM), with its wide-field instrument ECLAIRs, provides a new way to detect soft X-ray transients such as XRFs, complemented by rapid onboard multiwavelength follow-up. Aims. We present photometric and spectroscopic observations of XRF 241001A detected by SVOM, a soft, subluminous, and low-energetic burst located in a poorly populated region of the Amati relation. We investigated the origin of its faint, soft high-energy emission to assess its connection to the long GRB population. Methods. We analyzed the SVOM/ECLAIRs prompt emission and modeled its afterglow emission from X-ray-to-radio. We present JWST /NIRSpec and SVOM/VT observations of the associated supernova (SN 2024aiiq), which we modeled with an Arnett radioactive decay component, and we compared its properties with previously detected GRB/SNe. Results. The event XRF 241001A is located at z = 0.573 and has a prompt emission dominated by photons below 20 keV, with a duration of T 90 = 3.14 seconds. Its spectrum is consistent with both thermal and nonthermal models, each implying a low E peak < 10 keV and E iso \u223c 8 \u00d7 10 49 erg. The X-ray-to-radio afterglow modeling favors an origin from a relativistic jet viewed on-axis and supports a nonthermal origin of the prompt emission. In the optical, XRF 241001A exhibits an early blue emission, similar to that detected in some extragalactic fast X-ray transients (eFXTs) and inconsistent with the expected synchrotron emission from a relativistic jet. The JWST /NIRSpec observations firmly established its collapsar origin by revealing an SN Type Ic with broad lines, comparable to SN 1998bw and SN 2025kg-like events near maximum light and with similar properties. Conclusions. The event XRF 241001A is a soft low-luminosity collapsar event produced by a weak relativistic jet observed on-axis, supporting the view that at least part of the XRF population forms the low-energy soft tail of the long GRB population. Its observation demonstrates the potential of SVOM/ECLAIRs to probe the soft regime of the high-energy transient population that remains largely unexplored.",
    "institutes": [
     {
@@ -1378,9 +1455,7 @@
    "sources": [
     "ads",
     "openalex:cites"
-   ],
-   "figures": [],
-   "usage": "unverified"
+   ]
   },
   {
    "figures": [
@@ -1848,7 +1923,7 @@
     "Xander J. Hall",
     "Malte Busmann",
     "Daniel Gruen",
-    "Alberto Floris",
+    "A. Floris",
     "Tom\u00e1s Cabrera",
     "Ziyuan Zhu",
     "A. Palmese",
@@ -2205,6 +2280,8 @@
    ]
   },
   {
+   "figures": [],
+   "usage": "unverified",
    "key": "W7166832318",
    "title": "Development progress and science drivers of the 4.2m ground-based astrometric telescope",
    "year": 2026,
@@ -2238,9 +2315,7 @@
    "co_institutes": [],
    "sources": [
     "ads"
-   ],
-   "figures": [],
-   "usage": "unverified"
+   ]
   },
   {
    "figures": [
@@ -2597,7 +2672,7 @@
    ],
    "journal": "The Astrophysical Journal",
    "doi": "10.3847/1538-4357/ae6b83",
-   "arxiv": null,
+   "arxiv": "2605.10557",
    "abstract": "Abstract Relativistic jets launched from stellar-mass compact objects embedded in the accretion disk of an active galactic nucleus (AGN) can produce nonthermal emission upon successfully breaking out of the disk. In this paper, we present a comprehensive study of the long-term propagation dynamics and broadband nonthermal radiation signatures of such jets in a realistic AGN environment, explicitly modeled as wind outflows. Our modeling reveals two distinct features imprinted by the high-density AGN medium: rapid deceleration of the jet ejecta, accompanied by a prompt downshift of the emission spectral energy distribution, and persistently strong synchrotron self-absorption, giving rise to a prominent quasi-thermal hump in the emission spectrum. Crucially, both gamma-ray burst jets and jets powered by accreting binary black hole merger remnants can produce detectable multiwavelength emissions that substantially outshine the AGN background. Moreover, the short time delays between gravitational-wave triggers and these electromagnetic counterparts\u2014typically less than 10 6 s\u2014greatly facilitate secure multimessenger associations. Besides, our findings highlight that the interaction-induced radiation from AGN-embedded jet systems offers a powerful diagnostic probe of the spatial distribution, density structure, and physical properties of the AGN medium.",
    "institutes": [
     {
@@ -2699,9 +2774,9 @@
     "Alberto J. Castro-Tirado",
     "Hendrik van Eerten",
     "Simone Dichiara",
-    "Vincenzo Galluzzi",
-    "Narjes Shahamat Dehsorkh",
-    "Ivan Agudo",
+    "V. Galluzzi",
+    "Narjes Shahamat",
+    "I. Agudo",
     "Jes\u00fas Aceituno",
     "Malte Busmann",
     "M. D. Caballero\u2010Garc\u00eda",
@@ -2714,7 +2789,7 @@
     "Martin Jel\u00ednek",
     "Alexander Kutyrev",
     "Al\u017eb\u011bta Male\u0148\u00e0kov\u00e0",
-    "Filip Novotny",
+    "Filip Novotn\u00fd",
     "Ignacio P\u00e9rez-Garc\u00eda",
     "Shashi B. Pandey",
     "Jorma Ryske",
@@ -3459,10 +3534,10 @@
     "Z. G. Dai",
     "Maria Edvige Ravasio",
     "L. Piro",
-    "P. T. O\u2019Brien",
+    "Paul Thomas O'Brien",
     "D. Stern",
     "H. -M. Zhang",
-    "Y Yang",
+    "Yang, Y. -P.",
     "T. An",
     "Y.-L. Qiu",
     "L. P. Xin",
@@ -3485,7 +3560,7 @@
     "J. A. Chacon Chavez",
     "Y. Chen",
     "G. W. Du",
-    "J. N. D. van Dalen",
+    "Joyce N. D. van Dalen",
     "A. Esamdin",
     "Y. -Z. Fan",
     "X. Gao",
@@ -3498,18 +3573,18 @@
     "D. -Y. Li",
     "En\u2010Wei Liang",
     "S. P. Littlefair",
-    "X. -W. Liu",
+    "X.-W. Liu",
     "Z. -Y. Liu",
     "Z. -X. Ling",
     "Daniele Bj\u00f8rn Malesani",
     "H. -W. Pan",
     "A. Rodriguez",
     "A. Rossi",
-    "D. Mata S\u00e1nchez",
+    "Daniel Mata S\u00e1nchez",
     "J. S\u00e1nchez-Sierras",
     "X. -J. Sun",
     "M. A. P. Torres",
-    "A. P. C. van Hoof",
+    "Agnes P. C. van Hoof",
     "X. -F. Wang",
     "Q. -Y. Wu",
     "X. -P. Xu",
@@ -4271,9 +4346,9 @@
     "Pavel V. Balanutsa",
     "David Buckley",
     "M. D. Caballero\u2010Garc\u00eda",
-    "I. M. Carrasco-Garc\u00eda",
+    "Irene M. Carrasco",
     "A. Castell\u00f3n",
-    "Sebasti\u00e1n Castillo",
+    "S. Castillo-Carri\u00f3n",
     "Chen-Zhou Cui",
     "Yu-Feng Fan",
     "Emilio Fern\u00e1ndez-Garc\u00eda",
@@ -4715,7 +4790,7 @@
     "Cheng-Kui Li",
     "Yihan Wang",
     "Jiarui Niu",
-    "Tianrui Sun",
+    "Tian-Rui Sun",
     "Zhu-Heng Yao",
     "Jin-Jun Geng",
     "Chichuan Jin",
@@ -4728,7 +4803,7 @@
     "Jin-Huang Cao",
     "Yong Chen",
     "Huaqing Cheng",
-    "Wei Cui",
+    "Wei-Wei Cui",
     "Hua Feng",
     "P\u00e9ter Friedrich",
     "Dawei Han",
@@ -4784,7 +4859,7 @@
    ],
    "journal": "The Astrophysical Journal",
    "doi": "10.3847/1538-4357/ae1463",
-   "arxiv": null,
+   "arxiv": "2508.13999",
    "abstract": "Abstract The physical origin of fast radio bursts (FRBs) remains uncertain. Although multiwavelength observations have been widely conducted, only Galactic FRB 20200428D is associated with an X-ray burst from the magnetar SGR J1935+2154. Here we present multiwavelength follow-up observations of the nearby bright FRB 20250316A, including the Five-hundred-meter Aperture Spherical radio Telescope (FAST), Einstein Probe (EP) X-ray mission, Chandra X-ray Observatory, Wide Field Survey Telescope (WFST), and Space Variable Objects Monitor/Visible Telescope (SVOM/VT). The 13.08 hr FAST follow-up campaign without pulse detection requires an energy distribution flatter than those of well-known repeating FRBs, suggesting that this burst is likely a one-off event. A prompt EP follow-up and multiepoch observational campaign totaling >100 ks led to the detection of an X-ray source within the angular resolution of its Follow-up X-ray Telescope (FXT; 10\u2033). A subsequent Chandra observation revealed this source to be offset by 7\u2033 from the FRB position and established a 0.5\u201310 keV flux upper limit of 7.6 \u00d7 10 \u221215 erg cm \u22122 s \u22121 at the FRB position, corresponding to \u223c10 39 erg s \u22121 at the 40 Mpc distance of the host galaxy NGC 4141. These results set one of the most stringent limits on X-ray emission from a nonrepeating FRB, disfavoring ultraluminous X-ray sources as counterparts of apparently one-off FRBs and offering critical insights into afterglow models. Our study suggests that an arcsecond localization of both the FRB and its potential X-ray counterpart is essential for exploring the X-ray counterpart of an FRB.",
    "institutes": [
     {
@@ -5203,7 +5278,7 @@
    ],
    "journal": "The Astrophysical Journal Letters",
    "doi": "10.3847/2041-8213/ae1d67",
-   "arxiv": null,
+   "arxiv": "2509.22784",
    "abstract": "Abstract GRB 250702B was the longest gamma-ray burst ever detected, with a duration that challenges standard collapsar models and suggests an exotic progenitor. We collected a rich set of optical and infrared follow-up observations of its rapidly fading afterglow using a suite of telescopes including the W. M. Keck Observatory, the Gemini telescopes, the Magellan Baade Telescope, the Victor M. Blanco 4 m telescope, and the Fraunhofer Telescope at Wendelstein Observatory. Our analysis reveals that the afterglow emission is well described by forward shock emission from a highly obscured relativistic jet. Deep photometric observations of the host galaxy reveal a massive (10 10.66 M \u2299 ), dusty, and extremely asymmetric system that is consistent with two galaxies undergoing a major merger. The galactocentric offset, host galaxy properties, and jet characteristics disfavor a jetted tidal disruption event (TDE) around a supermassive black hole but do not definitively distinguish between competing progenitor scenarios. We find that the afterglow and host are consistent with a range of progenitors, including an atypical collapsar, a merger between a helium star and a stellar-mass black hole, the disruption of a star by a stellar-mass compact object (micro-TDE), and the tidal disruption of a star by an off-nuclear intermediate-mass black hole.",
    "institutes": [
     {
@@ -5416,7 +5491,7 @@
    ],
    "journal": "Monthly Notices of the Royal Astronomical Society",
    "doi": "10.1093/mnras/staf1923",
-   "arxiv": null,
+   "arxiv": "2508.13066",
    "abstract": "ABSTRACT Gamma-ray burst early afterglows are important tracers for determining the radial structure and magnetization of the ejecta. In this paper, we focus on GRB 110213A that shows double-peaked optical afterglow light curves and the shallow decay feature of the X-ray afterglow. We adopt a semi-analytical model for the dynamics of forward and reverse shocks generated through an interaction between an arbitrary magnetized ejecta with a finite thickness and a stratified circumstellar medium. Multiwavelength radiation from forward and reverse shocks seen from an arbitrary viewing angle is calculated under a thin-shell approximation. Our analysis with multimodal nested sampling methods for GRB 110213A suggests that the thick shell ejecta naturally explains the shallow decay feature of the X-ray afterglow. The combination of the reverse shock emission in the strongly magnetized jet and forward shock emission in the weakly magnetized circumstellar medium makes the double peak feature of the optical afterglows. The estimated low radiative efficiency in the prompt phase may be a consequence of the high magnetization of the jet in this case. A multimessenger emission simulator based on the magnetic bullet afterglow model is publicly available as the open-source Julia package \u2018Magglow\u2019.",
    "institutes": [
     {

@@ -2914,5 +2914,27 @@
   "lng": 6.36944,
   "homepage": "https://jive.eu",
   "logo": "https://www.google.com/s2/favicons?domain=jive.eu&sz=64"
+ },
+ "aff:purple mountain observatory, chinese academy of sciences, nanjing 210008, china": {
+  "id": "02eb4t121",
+  "name": "Purple Mountain Observatory",
+  "ror": "https://ror.org/02eb4t121",
+  "country": "China",
+  "city": "Nanjing",
+  "lat": 32.06167,
+  "lng": 118.77778,
+  "homepage": "http://english.pmo.cas.cn/",
+  "logo": "https://www.google.com/s2/favicons?domain=english.pmo.cas.cn&sz=64"
+ },
+ "aff:state key laboratory of radio astronomy and technology, purple mountain observatory, chinese academy of sciences, 10 yua": {
+  "id": "02eb4t121",
+  "name": "Purple Mountain Observatory",
+  "ror": "https://ror.org/02eb4t121",
+  "country": "China",
+  "city": "Nanjing",
+  "lat": 32.06167,
+  "lng": 118.77778,
+  "homepage": "http://english.pmo.cas.cn/",
+  "logo": "https://www.google.com/s2/favicons?domain=english.pmo.cas.cn&sz=64"
  }
 }
