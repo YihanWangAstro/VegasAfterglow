@@ -7,6 +7,7 @@ method delegates to.
 """
 
 import logging
+from types import SimpleNamespace
 from typing import Literal, Optional, Tuple
 
 import numpy as np
@@ -52,6 +53,21 @@ def _classify_point_data(point_t, point_nu, point_flux, point_err, point_labels=
                 mask = nu == nu0
                 lc_list.append((float(nu0), t[mask], f[mask], e[mask], lbl))
     return lc_list, spectrum_count
+
+
+def _classify_limit_data(limit_t, limit_nu, limit_value, limit_labels):
+    """One ``(nu_hz, t_arr, limit_arr, label_or_None)`` entry per unique frequency of each
+    ``add_*_limits`` call (spectrum-type calls split into one entry per frequency)."""
+    out = []
+    for t, nu, u, lbl in zip(limit_t, limit_nu, limit_value, limit_labels):
+        t, nu, u = np.asarray(t), np.asarray(nu), np.asarray(u)
+        for nu0 in np.unique(nu):
+            mask = nu == nu0
+            out.append((float(nu0), t[mask], u[mask], lbl))
+    return out
+
+
+_LIMIT_STYLE = dict(fmt="v", ms=4, lw=1, capsize=0, uplims=True)
 
 
 def _flux_log10_range(flux, err):
@@ -295,14 +311,43 @@ def draw_fit(
             spectrum_count,
         )
 
-    if not lc_list and not fitter._band_obs:
+    # Upper limits: frequencies/bands without detections get a pseudo entry
+    # (flux = limit, err = 0) so they take part in shifting, colouring and
+    # the model curves; their data are drawn as arrows instead of error bars.
+    lim_list = _classify_limit_data(
+        fitter._limit_t, fitter._limit_nu, fitter._limit_value, fitter._limit_labels
+    )
+    lim_only_nus = set()
+    for nu, t_l, u_l, lbl in lim_list:
+        if nu not in {entry[0] for entry in lc_list}:
+            lc_list.append((nu, t_l, u_l, np.zeros_like(u_l), lbl))
+            lim_only_nus.add(nu)
+    band_items = list(fitter._band_obs)
+    band_lim_only_keys = set()
+    for bl in fitter._band_limits:
+        key = (bl.nu_min, bl.nu_max)
+        if key not in {(b.nu_min, b.nu_max) for b in band_items}:
+            band_items.append(
+                SimpleNamespace(
+                    nu_min=bl.nu_min,
+                    nu_max=bl.nu_max,
+                    num_points=bl.num_points,
+                    t=bl.t,
+                    flux=bl.limit,
+                    err=np.zeros_like(bl.limit),
+                    name=bl.name,
+                )
+            )
+            band_lim_only_keys.add(key)
+
+    if not lc_list and not band_items:
         raise ValueError(
             "draw_fit: no observation data — "
             "call add_flux_density(...) or add_flux(...) first."
         )
 
     has_lc = bool(lc_list)
-    has_band = bool(fitter._band_obs)
+    has_band = bool(band_items)
     dual = has_lc and has_band
 
     # Figure setup: top panel grows with the number of stacked bands so
@@ -312,7 +357,7 @@ def draw_fit(
         if fig is None:
             fig = ax_top.figure
     else:
-        n_bands = len(lc_list) + len(fitter._band_obs)
+        n_bands = len(lc_list) + len(band_items)
         top_inches = max(3.0, 0.25 * n_bands + 2.2)
         bot_inches = 2.16
         fig_width = 4.8
@@ -334,9 +379,12 @@ def draw_fit(
 
     # Observed data extent: drives both the visible x-limits and the model
     # grid (the grid extends past on each side so the curves reach the edges).
-    all_t = [t_arr for _, t_arr, _, _, _ in lc_list] + [
-        np.asarray(b.t) for b in fitter._band_obs
-    ]
+    all_t = (
+        [t_arr for _, t_arr, _, _, _ in lc_list]
+        + [np.asarray(b.t) for b in band_items]
+        + [t_l for _, t_l, _, _ in lim_list]
+        + [np.asarray(bl.t) for bl in fitter._band_limits]
+    )
     all_t_concat = np.concatenate(all_t) if all_t else np.array([1e2, 1e7])
     t_data_min = float(all_t_concat.min())
     t_data_max = float(all_t_concat.max())
@@ -349,7 +397,7 @@ def draw_fit(
 
     # Auto-shift: rank-based uniform spacing along frequency. Keeps shifts
     # bounded by (n-1)/2 * auto_shift_gap so legend labels stay readable.
-    shift_map = _auto_shifts_by_frequency(lc_list, fitter._band_obs, auto_shift_gap)
+    shift_map = _auto_shifts_by_frequency(lc_list, band_items, auto_shift_gap)
     if shifts:
         shift_map.update(shifts)
 
@@ -362,7 +410,7 @@ def draw_fit(
         (b.nu_min, b.nu_max): (
             b.name or _auto_filter_name(float(np.sqrt(b.nu_min * b.nu_max)))
         )
-        for b in fitter._band_obs
+        for b in band_items
     }
 
     # Colors via the canonical-filter registry; same-color filters at
@@ -378,13 +426,12 @@ def draw_fit(
             ),
             float(np.sqrt(b.nu_min * b.nu_max)),
         )
-        for b in fitter._band_obs
+        for b in band_items
     ]
     colors = _disambiguate_filter_colors(color_items)
     lc_color_map = {nu: colors[("lc", nu)] for nu, *_ in lc_list}
     band_color_map = {
-        (b.nu_min, b.nu_max): colors[("band", (b.nu_min, b.nu_max))]
-        for b in fitter._band_obs
+        (b.nu_min, b.nu_max): colors[("band", (b.nu_min, b.nu_max))] for b in band_items
     }
 
     def _shifted_label(base, shift):
@@ -416,6 +463,8 @@ def draw_fit(
         if obs_noise == "none":
             return None
         err = np.asarray(err)
+        if err.size == 0 or not np.any(err > 0):
+            return None
         if obs_noise == "abs":
             return float(np.median(err))
         flux = np.asarray(flux)
@@ -451,14 +500,15 @@ def draw_fit(
                 scale = 10.0**shift
                 color = lc_color_map[nu]
                 label = _shifted_label(lc_names[nu] or _broad_band(nu), shift)
-                ax_top.errorbar(
-                    t_data,
-                    f_data * scale,
-                    yerr=e_data * scale,
-                    color=color,
-                    ecolor=color,
-                    **_ERRBAR_STYLE,
-                )
+                if nu not in lim_only_nus:
+                    ax_top.errorbar(
+                        t_data,
+                        f_data * scale,
+                        yerr=e_data * scale,
+                        color=color,
+                        ecolor=color,
+                        **_ERRBAR_STYLE,
+                    )
                 ax_top.plot(
                     t_grid, lc_central[i] * scale, "-", color=color, label=label, lw=1
                 )
@@ -480,7 +530,7 @@ def draw_fit(
 
         # ---- Band-integrated on the right axis (or the left, if no LC data) ----
         band_ax = ax_top_R if dual else ax_top
-        for b in fitter._band_obs:
+        for b in band_items:
             key = (b.nu_min, b.nu_max)
             shift = float(shift_map.get(("band", key), 0.0))
             scale = 10.0**shift
@@ -497,14 +547,15 @@ def draw_fit(
                 lower = upper = None
             nu_center = float(np.sqrt(b.nu_min * b.nu_max))
             label = _shifted_label(band_names[key] or _broad_band(nu_center), shift)
-            band_ax.errorbar(
-                np.asarray(b.t),
-                np.asarray(b.flux) * scale,
-                yerr=np.asarray(b.err) * scale,
-                color=color,
-                ecolor=color,
-                **_ERRBAR_STYLE,
-            )
+            if key not in band_lim_only_keys:
+                band_ax.errorbar(
+                    np.asarray(b.t),
+                    np.asarray(b.flux) * scale,
+                    yerr=np.asarray(b.err) * scale,
+                    color=color,
+                    ecolor=color,
+                    **_ERRBAR_STYLE,
+                )
             band_ax.plot(t_grid, central * scale, "--", color=color, label=label, lw=1)
             if lower is not None:
                 sigma = _obs_sigma(central, b.flux, b.err)
@@ -518,6 +569,32 @@ def draw_fit(
                     alpha=0.2,
                     lw=0,
                 )
+
+    # Upper limits as downward arrows, in the colour and shift of their band.
+    for nu, t_l, u_l, _lbl in lim_list:
+        scale = 10.0 ** float(shift_map.get(("lc", nu), 0.0))
+        color = lc_color_map[nu]
+        ax_top.errorbar(
+            t_l,
+            u_l * scale,
+            yerr=0.35 * u_l * scale,
+            color=color,
+            ecolor=color,
+            **_LIMIT_STYLE,
+        )
+    for bl in fitter._band_limits:
+        key = (bl.nu_min, bl.nu_max)
+        scale = 10.0 ** float(shift_map.get(("band", key), 0.0))
+        color = band_color_map[key]
+        band_ax = ax_top_R if dual else ax_top
+        band_ax.errorbar(
+            np.asarray(bl.t),
+            np.asarray(bl.limit) * scale,
+            yerr=0.35 * np.asarray(bl.limit) * scale,
+            color=color,
+            ecolor=color,
+            **_LIMIT_STYLE,
+        )
 
     ax_top.set_xscale("log")
     ax_top.set_yscale("log")
@@ -556,7 +633,7 @@ def draw_fit(
             fitter.z,
             lc_color_map,
             band_color_map,
-            fitter._band_obs,
+            band_items,
         )
         ax_bot.set_xscale("log")
         ax_bot.set_xlabel(r"$t_{\rm obs}$ [s]")

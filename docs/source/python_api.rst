@@ -104,7 +104,7 @@ Fitter
    :undoc-members:
    :show-inheritance:
 
-The `Fitter` class provides a high-level interface for MCMC fitting of GRB afterglow models to observational data. All model configuration is passed as keyword arguments to the constructor. Data is added directly to the fitter via ``add_flux_density()``, ``add_spectrum()``, and ``add_flux()`` methods.
+The `Fitter` class provides a high-level interface for MCMC fitting of GRB afterglow models to observational data. All model configuration is passed as keyword arguments to the constructor. Data is added directly to the fitter via ``add_flux_density()``, ``add_spectrum()``, and ``add_flux()`` methods, each optionally with a per-dataset calibration uncertainty ``sys_err``; upper limits go through the matching ``add_flux_density_limits()``, ``add_spectrum_limits()`` and ``add_flux_limits()`` methods.
 
 Example:
 

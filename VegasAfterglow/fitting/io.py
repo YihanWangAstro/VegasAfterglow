@@ -15,7 +15,7 @@ import json
 import numpy as np
 
 from ..types import FitResult, ParamDef, Scale
-from .config import _BandObs
+from .config import _BandLimits, _BandObs
 from .utils import _build_transformer
 
 
@@ -62,6 +62,10 @@ def save_fitter(fitter, path) -> None:
         # tolerate the missing key.
         "n_data": r.n_data,
         "n_free_params": r.n_free_params,
+        "n_limits": r.n_limits,
+        "calibration_offsets_json": (
+            json.dumps(r.calibration_offsets) if r.calibration_offsets else None
+        ),
     }
 
     if r.bilby_result is not None:
@@ -108,7 +112,7 @@ def _snapshot_config(fitter) -> dict:
         return np.asarray(x).tolist()
 
     return {
-        "version": 1,
+        "version": 2,
         "constructor": {
             "z": float(fitter.z),
             "lumi_dist": float(fitter.lumi_dist),
@@ -132,15 +136,45 @@ def _snapshot_config(fitter) -> dict:
                 "err": _arr(err),
                 "weights": _arr(w),
                 "label": lbl,
+                "sys_err": float(sys_err),
             }
-            for t, nu, flux, err, w, lbl in zip(
+            for t, nu, flux, err, w, lbl, sys_err in zip(
                 fitter._point_t,
                 fitter._point_nu,
                 fitter._point_flux,
                 fitter._point_err,
                 fitter._point_weights,
                 fitter._point_labels,
+                fitter._point_sys,
             )
+        ],
+        "limit_data": [
+            {
+                "t": _arr(t),
+                "nu": _arr(nu),
+                "limit": _arr(limit),
+                "sigma": _arr(sigma),
+                "label": lbl,
+            }
+            for t, nu, limit, sigma, lbl in zip(
+                fitter._limit_t,
+                fitter._limit_nu,
+                fitter._limit_value,
+                fitter._limit_sigma,
+                fitter._limit_labels,
+            )
+        ],
+        "band_limit_data": [
+            {
+                "nu_min": float(b.nu_min),
+                "nu_max": float(b.nu_max),
+                "num_points": int(b.num_points),
+                "t": _arr(b.t),
+                "limit": _arr(b.limit),
+                "sigma": _arr(b.sigma),
+                "name": b.name,
+            }
+            for b in fitter._band_limits
         ],
         "band_data": [
             {
@@ -152,6 +186,7 @@ def _snapshot_config(fitter) -> dict:
                 "err": _arr(b.err),
                 "weights": _arr(b.weights),
                 "name": b.name,
+                "sys_err": float(b.sys_err),
             }
             for b in fitter._band_obs
         ],
@@ -218,6 +253,7 @@ def load_fitter(path, *, jet=None, medium=None, extinction=None):
         fitter._point_err.append(np.asarray(pt["err"], dtype=np.float64))
         fitter._point_weights.append(np.asarray(pt["weights"], dtype=np.float64))
         fitter._point_labels.append(pt.get("label"))
+        fitter._point_sys.append(float(pt.get("sys_err", 0.0)))
     for bd in cfg.get("band_data", []):
         fitter._band_obs.append(
             _BandObs(
@@ -229,6 +265,25 @@ def load_fitter(path, *, jet=None, medium=None, extinction=None):
                 err=np.asarray(bd["err"], dtype=np.float64),
                 weights=np.asarray(bd["weights"], dtype=np.float64),
                 name=bd.get("name"),
+                sys_err=float(bd.get("sys_err", 0.0)),
+            )
+        )
+    for lm in cfg.get("limit_data", []):
+        fitter._limit_t.append(np.asarray(lm["t"], dtype=np.float64))
+        fitter._limit_nu.append(np.asarray(lm["nu"], dtype=np.float64))
+        fitter._limit_value.append(np.asarray(lm["limit"], dtype=np.float64))
+        fitter._limit_sigma.append(np.asarray(lm["sigma"], dtype=np.float64))
+        fitter._limit_labels.append(lm.get("label"))
+    for bl in cfg.get("band_limit_data", []):
+        fitter._band_limits.append(
+            _BandLimits(
+                nu_min=bl["nu_min"],
+                nu_max=bl["nu_max"],
+                num_points=bl["num_points"],
+                t=np.asarray(bl["t"], dtype=np.float64),
+                limit=np.asarray(bl["limit"], dtype=np.float64),
+                sigma=np.asarray(bl["sigma"], dtype=np.float64),
+                name=bl.get("name"),
             )
         )
 
@@ -275,5 +330,11 @@ def load_fitter(path, *, jet=None, medium=None, extinction=None):
         bilby_result=br,
         n_data=vg.get("n_data"),
         n_free_params=vg.get("n_free_params"),
+        n_limits=vg.get("n_limits"),
+        calibration_offsets=(
+            json.loads(vg["calibration_offsets_json"])
+            if vg.get("calibration_offsets_json")
+            else None
+        ),
     )
     return fitter

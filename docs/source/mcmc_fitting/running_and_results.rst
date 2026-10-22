@@ -236,6 +236,10 @@ The method returns a ``FitResult`` object with the following attributes:
     - Use for advanced analysis and plotting
     - Access via: ``result.bilby_result.plot_corner()``
 
+- ``n_data``, ``n_free_params``, ``n_limits``: observation count (upper limits included), sampled-parameter count, and the number of upper limits among the observations; they feed the ``summary()`` header.
+
+- ``calibration_offsets``: for every dataset given with ``sys_err``, a dict with its ``label``, its best-fit level relative to the model (``offset = data / model - 1``) and the prior width ``sys_err``; ``None`` when no dataset has ``sys_err``.
+
 ``FitResult`` also exposes two convenience methods:
 
 - ``summary(top_k=None)``: returns a formatted top-K best-fit table (rank, chi-squared, parameter values), renders cleanly in both ``print()`` and Jupyter last-line auto-display.
@@ -312,7 +316,7 @@ Example output::
        2       43.05         53.3984             2.5031           0.0598          2.2255
        3       44.71         53.4276             2.4798           0.0625          2.2079
 
-The returned object renders identically under ``print(result.summary())`` and a bare ``result.summary()`` in a Jupyter cell, so you can paste either pattern into a notebook.
+The returned object renders identically under ``print(result.summary())`` and a bare ``result.summary()`` in a Jupyter cell, so you can paste either pattern into a notebook. When upper limits are present the header notes how many are counted in the DOF, and datasets given with ``sys_err`` get a block listing their fitted calibration offsets.
 
 Model Predictions
 ------------------
@@ -351,7 +355,7 @@ Diagnostic Plot
 
 The figure layout:
 
-- **Top panel** — observed data with errorbars plus the model curves. Each band's central line is the **best-fit model** (``best_params``, defaulting to ``result.top_k_params[0]`` — the same model whose chi-squared the ``summary()`` header quotes). When posterior samples are available, the line is surrounded by the shaded **joint chi-squared confidence envelope** (default 68%): curves from samples with ``chi2 <= chi2_min + dchi2(ci, n_free)``, which is likelihood-consistent with the best-fit line and contains it by construction. By default (``obs_noise='none'``) the band is the pure model-curve envelope — it pinches at the observed data points and widens where data does not constrain the model. Switch to ``obs_noise='frac'`` to broaden into a *posterior predictive* envelope with σ scaling as ``central * median(err/flux)`` (so a well-calibrated fit lands ~``ci`` of the data points inside the band — goodness-of-fit visual — and the band stays visually well-behaved on log-y plots across many decades). Use ``obs_noise='abs'`` for constant absolute σ instead (detector-noise-limited regime). Single-frequency light curves (added via ``add_flux_density``) appear on the left y-axis as ``F_nu``; band-integrated fluxes (added via ``add_flux``) appear on the right y-axis as ``F``. When both kinds are present the two log y-axes are matched to span the same number of decades so a power-law slope alpha has identical visual slope on both sides. Multiple bands are auto-shifted vertically (rank-based, relaxed to avoid overlap) and the legend reports the shift factors.
+- **Top panel** — observed data with errorbars plus the model curves. Each band's central line is the **best-fit model** (``best_params``, defaulting to ``result.top_k_params[0]`` — the same model whose chi-squared the ``summary()`` header quotes). When posterior samples are available, the line is surrounded by the shaded **joint chi-squared confidence envelope** (default 68%): curves from samples with ``chi2 <= chi2_min + dchi2(ci, n_free)``, which is likelihood-consistent with the best-fit line and contains it by construction. By default (``obs_noise='none'``) the band is the pure model-curve envelope — it pinches at the observed data points and widens where data does not constrain the model. Switch to ``obs_noise='frac'`` to broaden into a *posterior predictive* envelope with σ scaling as ``central * median(err/flux)`` (so a well-calibrated fit lands ~``ci`` of the data points inside the band — goodness-of-fit visual — and the band stays visually well-behaved on log-y plots across many decades). Use ``obs_noise='abs'`` for constant absolute σ instead (detector-noise-limited regime). Single-frequency light curves (added via ``add_flux_density``) appear on the left y-axis as ``F_nu``; band-integrated fluxes (added via ``add_flux``) appear on the right y-axis as ``F``. When both kinds are present the two log y-axes are matched to span the same number of decades so a power-law slope alpha has identical visual slope on both sides. Multiple bands are auto-shifted vertically (rank-based, relaxed to avoid overlap) and the legend reports the shift factors. Upper limits are drawn as downward arrows in the colour of their band; a frequency or band that has only limits still gets its model curve.
 - **Bottom panel** — observer-frame evolution of the synchrotron break frequencies ``nu_a``, ``nu_m``, ``nu_c``. Observed light-curve frequencies are overlaid as horizontal dashed lines; observed bands appear as shaded ``axhspan`` regions. Circles mark where each break-frequency curve crosses an observed line; squares mark crossings with the band edges -- useful for reading off when the model transitions through each observed band.
 
 The break frequencies are evaluated at the jet ``theta`` column closest to the line of sight (``theta_v``), so the Doppler boost reflects what the off-axis observer sees (this collapses to the jet axis for ``theta_v == 0``).

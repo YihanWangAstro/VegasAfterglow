@@ -176,3 +176,17 @@ class _BandObs:
     err: np.ndarray
     weights: np.ndarray
     name: "str | None" = None
+    sys_err: float = 0.0  # fractional calibration uncertainty shared by the dataset
+
+
+@dataclass
+class _BandLimits:
+    """Band-integrated upper-limit group (non-detections)."""
+
+    nu_min: float
+    nu_max: float
+    num_points: int
+    t: np.ndarray
+    limit: np.ndarray
+    sigma: np.ndarray  # noise level behind each limit
+    name: "str | None" = None

@@ -8,10 +8,11 @@ from types import SimpleNamespace
 from typing import Callable, List, Literal, Optional, Sequence, Tuple
 
 import numpy as np
+from scipy.special import log_ndtr
 
 from ..types import FitResult, ModelParams, ParamDef, Scale
 from ..VegasAfterglowC import Model, Observer, Radiation
-from .config import _BandObs
+from .config import _BandLimits, _BandObs
 from .utils import _build_transformer, _default_jet_factory, _default_medium_factory
 
 logger = logging.getLogger(__name__)
@@ -44,8 +45,15 @@ class Fitter:
     ``chi2 = sum(((ln F_obs - ln F_model) / sigma_ln)**2)`` with
     ``sigma_ln = err / F_obs`` propagated from the linear errors passed to the
     ``add_*`` methods. Scale-invariant, so bright points do not dominate data
-    spanning decades; fluxes and errors must be strictly positive. For a
-    different likelihood, pass ``log_likelihood_fn`` to :meth:`fit`.
+    spanning decades; fluxes and errors must be strictly positive.
+
+    Each ``add_*`` call is one dataset. A dataset given with ``sys_err`` shares
+    one multiplicative calibration factor with a Gaussian prior of that width
+    in ln-flux, marginalised analytically: its shape keeps the full precision
+    of the statistical errors while its level may shift by about ``sys_err``.
+    Upper limits added with the ``add_*_limits`` methods contribute
+    ``-2 ln Phi((U - F_model) / sigma)`` in linear flux. ``log_likelihood_fn``
+    (see :meth:`fit`) receives the total of all these terms as one chi-squared.
 
     Thread safety
     -------------
@@ -152,7 +160,16 @@ class Fitter:
         self._point_weights = []
         # Per-entry optional filter/band name for draw_fit legends.
         self._point_labels: List[Optional[str]] = []
+        # Per-entry fractional calibration uncertainty (0 = none).
+        self._point_sys: List[float] = []
         self._band_obs: List[_BandObs] = []
+        # Upper limits (non-detections): limit value and the noise level behind it.
+        self._limit_t = []
+        self._limit_nu = []
+        self._limit_value = []
+        self._limit_sigma = []
+        self._limit_labels: List[Optional[str]] = []
+        self._band_limits: List[_BandLimits] = []
 
         # Consolidated arrays built lazily by _consolidate_data().
         self._all_t = None
@@ -162,6 +179,21 @@ class Fitter:
         self._all_weights = None
         self._all_log_flux = None
         self._all_log_err = None
+        # Calibration-systematics bookkeeping: dataset id per point, per-dataset
+        # inverse prior variance (inf when sys_err = 0) and total precision.
+        self._all_prec = None
+        self._all_dataset = None
+        self._dataset_inv_sys2 = None
+        self._dataset_prec_sum = None
+        # Model-evaluation arrays: detections and limits merged, sorted by time,
+        # with the position of each detection / limit in that order.
+        self._eval_t = None
+        self._eval_nu = None
+        self._det_pos = None
+        self._lim_pos = None
+        self._lim_t = None
+        self._lim_value = None
+        self._lim_sigma = None
 
     def __repr__(self) -> str:
         """One-line summary of model selection, physics flags, and loaded data."""
@@ -187,12 +219,13 @@ class Fitter:
 
     # ── Observation data input ─────────────────────────────────────────────────────────
 
-    def _add_point_data(self, t, nu, f_nu, err, weights, label=None):
+    def _add_point_data(self, t, nu, f_nu, err, weights, label=None, sys_err=0.0):
         """Append point observation arrays to internal lists.
 
         ``label`` is an optional filter/band name used by ``draw_fit`` for
         legend display (e.g., ``'r'``, ``'WXT'``, ``'VT_R'``). Not used for
-        chi-squared evaluation.
+        chi-squared evaluation. ``sys_err`` is the dataset's fractional
+        calibration uncertainty (see :meth:`add_flux_density`).
         """
         f_nu = np.asarray(f_nu, dtype=np.float64)
         err = np.asarray(err, dtype=np.float64)
@@ -207,7 +240,18 @@ class Fitter:
         self._point_err.append(err)
         self._point_weights.append(w)
         self._point_labels.append(label)
+        self._point_sys.append(sys_err)
         self._all_t = None
+
+    @staticmethod
+    def _validate_sys_err(sys_err, context: str) -> float:
+        sys_err = float(sys_err)
+        if not np.isfinite(sys_err) or sys_err < 0:
+            raise ValueError(
+                f"{context}: sys_err must be finite and >= 0 (fractional calibration "
+                f"uncertainty of the dataset), got {sys_err}"
+            )
+        return sys_err
 
     @staticmethod
     def _validate_observation_arrays(*, t, f_nu, err, weights, context: str):
@@ -260,6 +304,7 @@ class Fitter:
         err: np.ndarray,
         weights: Optional[np.ndarray] = None,
         label: Optional[str] = None,
+        sys_err: float = 0.0,
     ) -> None:
         """Add light curve data at a single frequency.
 
@@ -267,19 +312,30 @@ class Fitter:
             nu: Observing frequency [Hz]
             t: Observation times [seconds]
             f_nu: Observed flux densities [erg/cm^2/s/Hz]
-            err: Observational uncertainties [erg/cm^2/s/Hz]
+            err: Observational (statistical) uncertainties [erg/cm^2/s/Hz]
             weights: Optional statistical weights
             label: Optional filter/band name (e.g., ``'r'``, ``'VT_R'``, ``'WXT'``)
                 used by ``draw_fit`` for legend display. Not used for
                 chi-squared evaluation. If omitted, the broad-band name
                 (Radio / IR / Optical / X-ray / ...) is used as a fallback.
+            sys_err: Fractional calibration uncertainty of this dataset
+                (e.g. ``0.1`` for a 10% flux-scale uncertainty). All points of
+                the call share one multiplicative calibration factor with a
+                Gaussian prior of this width in ln-flux; the likelihood
+                marginalises it analytically, so the dataset's shape keeps its
+                full precision while its overall level may shift by about
+                ``sys_err``. Default ``0`` (no calibration freedom). The
+                best-fit shift is reported by :meth:`calibration_offsets`.
         """
         if not np.isfinite(nu) or nu <= 0:
             raise ValueError(f"add_flux_density: nu must be finite and > 0, got {nu}")
+        sys_err = self._validate_sys_err(sys_err, "add_flux_density")
         t, f_nu, err, weights = self._validate_observation_arrays(
             t=t, f_nu=f_nu, err=err, weights=weights, context="add_flux_density"
         )
-        self._add_point_data(t, np.full_like(t, nu), f_nu, err, weights, label=label)
+        self._add_point_data(
+            t, np.full_like(t, nu), f_nu, err, weights, label=label, sys_err=sys_err
+        )
 
     def add_spectrum(
         self,
@@ -288,6 +344,8 @@ class Fitter:
         f_nu: np.ndarray,
         err: np.ndarray,
         weights: Optional[np.ndarray] = None,
+        label: Optional[str] = None,
+        sys_err: float = 0.0,
     ) -> None:
         """Add a broadband spectrum at a specific time.
 
@@ -295,11 +353,15 @@ class Fitter:
             t: Observation time [seconds]
             nu: Observing frequencies [Hz]
             f_nu: Observed flux densities [erg/cm^2/s/Hz]
-            err: Observational uncertainties [erg/cm^2/s/Hz]
+            err: Observational (statistical) uncertainties [erg/cm^2/s/Hz]
             weights: Optional statistical weights
+            label: Optional instrument name used in reports.
+            sys_err: Fractional calibration uncertainty shared by the whole
+                spectrum (one instrument per call); see :meth:`add_flux_density`.
         """
         if not np.isfinite(t) or t <= 0:
             raise ValueError(f"add_spectrum: t must be finite and > 0, got {t}")
+        sys_err = self._validate_sys_err(sys_err, "add_spectrum")
         nu = np.asarray(nu, dtype=np.float64)
         if not np.isfinite(nu).all() or (nu <= 0).any():
             raise ValueError(
@@ -311,7 +373,9 @@ class Fitter:
         nu, f_nu, err, weights = self._validate_observation_arrays(
             t=nu, f_nu=f_nu, err=err, weights=weights, context="add_spectrum"
         )
-        self._add_point_data(np.full_like(nu, t), nu, f_nu, err, weights, label=None)
+        self._add_point_data(
+            np.full_like(nu, t), nu, f_nu, err, weights, label=label, sys_err=sys_err
+        )
 
     def add_flux(
         self,
@@ -322,6 +386,7 @@ class Fitter:
         num_points: int = 5,
         weights: Optional[np.ndarray] = None,
         label: Optional[str] = None,
+        sys_err: float = 0.0,
     ) -> None:
         """Add band-integrated flux measurements.
 
@@ -338,7 +403,10 @@ class Fitter:
             weights: Optional statistical weights
             label: Optional instrument/band name (e.g., ``'WXT'``, ``'XRT'``)
                 used by ``draw_fit`` for legend display.
+            sys_err: Fractional calibration uncertainty shared by this
+                dataset; see :meth:`add_flux_density`.
         """
+        sys_err = self._validate_sys_err(sys_err, "add_flux")
         try:
             nu_min, nu_max = band
         except (TypeError, ValueError):
@@ -371,8 +439,177 @@ class Fitter:
                 err=err[order],
                 weights=w[order],
                 name=label,
+                sys_err=sys_err,
             )
         )
+
+    # ── Upper limits ─────────────────────────────────────────────────────────
+
+    @staticmethod
+    def _validate_axis(axis, name: str, context: str) -> np.ndarray:
+        axis = np.atleast_1d(np.asarray(axis, dtype=np.float64))
+        if not np.isfinite(axis).all() or (axis <= 0).any():
+            raise ValueError(f"{context}: {name} must be finite and > 0 at every point")
+        return axis
+
+    @staticmethod
+    def _validate_limit_arrays(*, axis, limit, sigma, n_sigma, context: str):
+        limit = np.atleast_1d(np.asarray(limit, dtype=np.float64))
+        if limit.shape != axis.shape:
+            raise ValueError(
+                f"{context}: limit must have the same shape as the time/frequency "
+                f"array {axis.shape}, got {limit.shape}"
+            )
+        if not np.isfinite(limit).all() or (limit <= 0).any():
+            raise ValueError(f"{context}: limit values must be finite and > 0")
+        if sigma is None:
+            n_sigma = float(n_sigma)
+            if not np.isfinite(n_sigma) or n_sigma <= 0:
+                raise ValueError(
+                    f"{context}: n_sigma must be finite and > 0, got {n_sigma}"
+                )
+            sigma = limit / n_sigma
+        else:
+            sigma = np.atleast_1d(np.asarray(sigma, dtype=np.float64))
+            if sigma.shape != limit.shape:
+                raise ValueError(
+                    f"{context}: sigma must have the same shape as limit {limit.shape}, "
+                    f"got {sigma.shape}"
+                )
+            if not np.isfinite(sigma).all() or (sigma <= 0).any():
+                raise ValueError(f"{context}: sigma values must be finite and > 0")
+        return limit, sigma
+
+    def _add_limit_data(self, t, nu, limit, sigma, label):
+        self._limit_t.append(t)
+        self._limit_nu.append(nu)
+        self._limit_value.append(limit)
+        self._limit_sigma.append(sigma)
+        self._limit_labels.append(label)
+        self._all_t = None
+
+    def add_flux_density_limits(
+        self,
+        nu: float,
+        t: np.ndarray,
+        limit: np.ndarray,
+        n_sigma: float = 3.0,
+        sigma: Optional[np.ndarray] = None,
+        label: Optional[str] = None,
+    ) -> None:
+        """Add flux-density upper limits (non-detections) at a single frequency.
+
+        A limit ``U`` quoted at ``n_sigma`` has noise ``sigma = U / n_sigma``
+        behind it. Its likelihood is the probability that a measurement would
+        have come out below ``U`` given the model, ``Phi((U - F_model) / sigma)``:
+        no penalty while the model sits well below the limit, ``2 ln 2`` in
+        chi2 units when it touches it, and ``((F_model - U) / sigma)^2`` beyond.
+
+        Args:
+            nu: Observing frequency [Hz]
+            t: Observation times [seconds]
+            limit: Upper-limit flux densities [erg/cm^2/s/Hz]
+            n_sigma: Significance level the limits are quoted at (default 3).
+                Ignored when ``sigma`` is given.
+            sigma: Optional noise level behind each limit [erg/cm^2/s/Hz]
+                (same shape as ``limit``); overrides ``n_sigma``.
+            label: Optional filter/band name for reports and ``draw_fit``.
+        """
+        if not np.isfinite(nu) or nu <= 0:
+            raise ValueError(
+                f"add_flux_density_limits: nu must be finite and > 0, got {nu}"
+            )
+        t = self._validate_axis(t, "t", "add_flux_density_limits")
+        limit, sigma = self._validate_limit_arrays(
+            axis=t,
+            limit=limit,
+            sigma=sigma,
+            n_sigma=n_sigma,
+            context="add_flux_density_limits",
+        )
+        self._add_limit_data(t, np.full_like(t, nu), limit, sigma, label)
+
+    def add_spectrum_limits(
+        self,
+        t: float,
+        nu: np.ndarray,
+        limit: np.ndarray,
+        n_sigma: float = 3.0,
+        sigma: Optional[np.ndarray] = None,
+        label: Optional[str] = None,
+    ) -> None:
+        """Add flux-density upper limits at one time across frequencies.
+
+        See :meth:`add_flux_density_limits` for the likelihood and arguments.
+        """
+        if not np.isfinite(t) or t <= 0:
+            raise ValueError(f"add_spectrum_limits: t must be finite and > 0, got {t}")
+        nu = self._validate_axis(nu, "nu", "add_spectrum_limits")
+        limit, sigma = self._validate_limit_arrays(
+            axis=nu,
+            limit=limit,
+            sigma=sigma,
+            n_sigma=n_sigma,
+            context="add_spectrum_limits",
+        )
+        self._add_limit_data(np.full_like(nu, t), nu, limit, sigma, label)
+
+    def add_flux_limits(
+        self,
+        band,
+        t: np.ndarray,
+        limit: np.ndarray,
+        n_sigma: float = 3.0,
+        sigma: Optional[np.ndarray] = None,
+        num_points: int = 5,
+        label: Optional[str] = None,
+    ) -> None:
+        """Add band-integrated flux upper limits [erg/cm^2/s].
+
+        ``band`` and ``num_points`` are as in :meth:`add_flux`; the limit
+        likelihood is as in :meth:`add_flux_density_limits`.
+        """
+        try:
+            nu_min, nu_max = band
+        except (TypeError, ValueError):
+            raise ValueError(
+                f"add_flux_limits: band must be a (nu_min, nu_max) tuple in Hz, got {band!r}"
+            ) from None
+        if not (np.isfinite(nu_min) and np.isfinite(nu_max) and 0 < nu_min < nu_max):
+            raise ValueError(
+                f"add_flux_limits: band must satisfy 0 < nu_min < nu_max with both finite; "
+                f"got nu_min={nu_min}, nu_max={nu_max}"
+            )
+        if num_points < 2:
+            raise ValueError(
+                f"add_flux_limits: num_points must be >= 2 for band integration, got {num_points}"
+            )
+        t = self._validate_axis(t, "t", "add_flux_limits")
+        limit, sigma = self._validate_limit_arrays(
+            axis=t, limit=limit, sigma=sigma, n_sigma=n_sigma, context="add_flux_limits"
+        )
+        order = np.argsort(t)
+        self._band_limits.append(
+            _BandLimits(
+                nu_min=nu_min,
+                nu_max=nu_max,
+                num_points=num_points,
+                t=t[order],
+                limit=limit[order],
+                sigma=sigma[order],
+                name=label,
+            )
+        )
+
+    def _data_counts(self) -> Tuple[int, int]:
+        """``(n_data, n_limits)``: all observations including limits, and limits alone."""
+        n_det = sum(len(a) for a in self._point_t) + sum(
+            len(b.t) for b in self._band_obs
+        )
+        n_lim = sum(len(a) for a in self._limit_t) + sum(
+            len(b.t) for b in self._band_limits
+        )
+        return n_det + n_lim, n_lim
 
     # ── Extinction & data consolidation ─────────────────────────────────────────────────────────
 
@@ -418,6 +655,9 @@ class Fitter:
             self._all_flux = np.concatenate(self._point_flux)
             self._all_err = np.concatenate(self._point_err)
             self._all_weights = np.concatenate(self._point_weights)
+            self._all_dataset = np.concatenate(
+                [np.full(len(t), i, dtype=np.intp) for i, t in enumerate(self._point_t)]
+            )
 
             # Sort by time (flux_density requires ascending time order)
             order = np.argsort(self._all_t)
@@ -426,6 +666,7 @@ class Fitter:
             self._all_flux = self._all_flux[order]
             self._all_err = self._all_err[order]
             self._all_weights = self._all_weights[order]
+            self._all_dataset = self._all_dataset[order]
 
             # Normalize weights so they sum to N
             w_sum = self._all_weights.sum()
@@ -435,20 +676,54 @@ class Fitter:
             self._require_positive_flux(self._all_flux, self._all_err)
             self._all_log_flux = np.log(self._all_flux)
             self._all_log_err = self._all_err / self._all_flux
-
-            # Precompute extinction kernel from rest-frame wavelengths.
-            # Built-in laws collapse k(lambda) and the 0.4*ln(10) factor into
-            # one cached array (one np.exp + one in-place multiply per step).
-            # Custom laws may depend on params, so we only cache the wavelengths.
-            if self._ext_law is not None:
-                lam_rest_cm = (_C_CGS / self._all_nu) / (1.0 + self.z)
-                if self._custom_extinction:
-                    self._lam_rest_cm = lam_rest_cm
-                else:
-                    k = self._ext_law(lam_rest_cm, None)
-                    self._ext_kernel = _LN10_OVER_2P5 * k
+            self._all_prec = self._all_weights / self._all_log_err**2
+            self._dataset_inv_sys2 = self._inv_sys2(self._point_sys)
+            self._dataset_prec_sum = np.bincount(
+                self._all_dataset, weights=self._all_prec, minlength=len(self._point_t)
+            )
         else:
             self._all_t = np.array([])
+            self._all_nu = np.array([])
+
+        # Upper limits, sorted by time.
+        if self._limit_t:
+            self._lim_t = np.concatenate(self._limit_t)
+            lim_nu = np.concatenate(self._limit_nu)
+            self._lim_value = np.concatenate(self._limit_value)
+            self._lim_sigma = np.concatenate(self._limit_sigma)
+            order = np.argsort(self._lim_t)
+            self._lim_t = self._lim_t[order]
+            lim_nu = lim_nu[order]
+            self._lim_value = self._lim_value[order]
+            self._lim_sigma = self._lim_sigma[order]
+        else:
+            self._lim_t = np.array([])
+            lim_nu = np.array([])
+
+        # One model evaluation serves detections and limits: merge, sort by
+        # time, and remember where each group landed.
+        eval_t = np.concatenate([self._all_t, self._lim_t])
+        eval_nu = np.concatenate([self._all_nu, lim_nu])
+        order = np.argsort(eval_t, kind="stable")
+        self._eval_t = eval_t[order]
+        self._eval_nu = eval_nu[order]
+        position = np.empty_like(order)
+        position[order] = np.arange(len(order))
+        n_det = len(self._all_t)
+        self._det_pos = position[:n_det]
+        self._lim_pos = position[n_det:]
+
+        # Precompute extinction kernel from rest-frame wavelengths.
+        # Built-in laws collapse k(lambda) and the 0.4*ln(10) factor into
+        # one cached array (one np.exp + one in-place multiply per step).
+        # Custom laws may depend on params, so we only cache the wavelengths.
+        if self._ext_law is not None and len(self._eval_t) > 0:
+            lam_rest_cm = (_C_CGS / self._eval_nu) / (1.0 + self.z)
+            if self._custom_extinction:
+                self._lam_rest_cm = lam_rest_cm
+            else:
+                k = self._ext_law(lam_rest_cm, None)
+                self._ext_kernel = _LN10_OVER_2P5 * k
 
     # ── Model evaluation (hot path) ─────────────────────────────────────────────────────────
 
@@ -495,10 +770,41 @@ class Fitter:
         )
 
     @staticmethod
+    def _inv_sys2(sys_errs) -> np.ndarray:
+        """Inverse prior variance of each dataset's ln-calibration factor (inf for none)."""
+        s = np.asarray(sys_errs, dtype=np.float64)
+        with np.errstate(divide="ignore"):
+            return np.where(s > 0, 1.0 / np.maximum(s, 1e-300) ** 2, np.inf)
+
+    @staticmethod
     def _chi2_sum(log_obs, log_err, model_flux, weights) -> float:
         """Weighted chi-squared sum in ln-flux space."""
         diff = log_obs - np.log(np.maximum(model_flux, 1e-300))
         return float(np.sum(weights * (diff / log_err) ** 2))
+
+    @staticmethod
+    def _chi2_marginal(log_obs, prec, model_flux, dataset, inv_sys2, prec_sum) -> float:
+        """ln-flux chi-squared with each dataset's calibration factor marginalised.
+
+        A shared factor c per dataset with prior N(0, sys_err^2) in ln-flux
+        integrates out exactly: chi2 = sum(p r^2) - S1^2 / (1/sys_err^2 + S0),
+        with S0 = sum(p), S1 = sum(p r) over the dataset. sys_err = 0 gives
+        1/sys_err^2 = inf and the plain sum.
+        """
+        r = log_obs - np.log(np.maximum(model_flux, 1e-300))
+        chi2 = float(np.sum(prec * r * r))
+        s1 = np.bincount(dataset, weights=prec * r, minlength=len(inv_sys2))
+        return chi2 - float(np.sum(s1 * s1 / (inv_sys2 + prec_sum)))
+
+    @staticmethod
+    def _band_dataset_chi2(bd, model_flux) -> float:
+        prec = bd.weights / (bd.err / bd.flux) ** 2
+        r = np.log(bd.flux) - np.log(np.maximum(model_flux, 1e-300))
+        chi2 = float(np.sum(prec * r * r))
+        if bd.sys_err > 0:
+            s1 = float(np.sum(prec * r))
+            chi2 -= s1 * s1 / (1.0 / bd.sys_err**2 + float(np.sum(prec)))
+        return chi2
 
     def _evaluate(self, params: ModelParams) -> float:
         """Compute chi-squared for given parameters using Model directly."""
@@ -508,29 +814,109 @@ class Fitter:
 
         chi2 = 0.0
 
-        if len(self._all_t) > 0:
-            flux_result = model.flux_density(self._all_t, self._all_nu)
-            model_flux = np.asarray(flux_result.total)
-            if self._ext_law is not None and params.A_V != 0.0:
-                if self._ext_kernel is not None:
-                    model_flux = model_flux * np.exp(-params.A_V * self._ext_kernel)
-                else:
-                    k = self._ext_law(self._lam_rest_cm, params)
-                    model_flux = model_flux * np.exp((-params.A_V * _LN10_OVER_2P5) * k)
-            chi2 += self._chi2_sum(
-                self._all_log_flux, self._all_log_err, model_flux, self._all_weights
-            )
+        if len(self._eval_t) > 0:
+            eval_flux = self._point_model_flux(model, params)
+            if len(self._all_t) > 0:
+                chi2 += self._chi2_marginal(
+                    self._all_log_flux,
+                    self._all_prec,
+                    eval_flux[self._det_pos],
+                    self._all_dataset,
+                    self._dataset_inv_sys2,
+                    self._dataset_prec_sum,
+                )
+            if len(self._lim_t) > 0:
+                chi2 += self._limits_chi2(
+                    self._lim_value, self._lim_sigma, eval_flux[self._lim_pos]
+                )
 
         # Band-integrated flux
         for bd in self._band_obs:
             model_flux = np.asarray(
                 model.flux(bd.t, bd.nu_min, bd.nu_max, bd.num_points).total
             )
-            chi2 += self._chi2_sum(
-                np.log(bd.flux), bd.err / bd.flux, model_flux, bd.weights
+            chi2 += self._band_dataset_chi2(bd, model_flux)
+        for bl in self._band_limits:
+            model_flux = np.asarray(
+                model.flux(bl.t, bl.nu_min, bl.nu_max, bl.num_points).total
             )
+            chi2 += self._limits_chi2(bl.limit, bl.sigma, model_flux)
 
         return chi2
+
+    @staticmethod
+    def _limits_chi2(limit, sigma, model_flux) -> float:
+        """-2 ln Phi((U - F_model) / sigma) summed over limits (linear flux)."""
+        return float(-2.0 * np.sum(log_ndtr((limit - model_flux) / sigma)))
+
+    def _point_model_flux(self, model, params: ModelParams) -> np.ndarray:
+        """Model flux density at every evaluation point (detections and limits), extinction applied."""
+        model_flux = np.asarray(model.flux_density(self._eval_t, self._eval_nu).total)
+        if self._ext_law is not None and params.A_V != 0.0:
+            if self._ext_kernel is not None:
+                model_flux = model_flux * np.exp(-params.A_V * self._ext_kernel)
+            else:
+                k = self._ext_law(self._lam_rest_cm, params)
+                model_flux = model_flux * np.exp((-params.A_V * _LN10_OVER_2P5) * k)
+        return model_flux
+
+    def _dataset_label(self, i: int) -> str:
+        lbl = self._point_labels[i]
+        if lbl:
+            return lbl
+        nu = np.unique(self._point_nu[i])
+        if nu.size == 1:
+            return f"{float(nu[0]):.3g} Hz"
+        return f"spectrum at {float(self._point_t[i][0]):.3g} s"
+
+    def calibration_offsets(self, params: ModelParams) -> List[SimpleNamespace]:
+        """Best-fit calibration shift of every dataset given with ``sys_err > 0``.
+
+        Returns one entry per such dataset (in the order the data were
+        added, point datasets first, then band datasets) with
+        ``label``, ``offset`` = data level relative to the model minus one
+        (``+0.03`` means the data sit 3% above the model, i.e. the fit
+        prefers scaling that dataset down by 3%), and ``sys_err``.
+        """
+        self._consolidate_data()
+        model = self._build_model(params)
+        out: List[SimpleNamespace] = []
+        if len(self._all_t) > 0 and np.any(np.isfinite(self._dataset_inv_sys2)):
+            model_flux = self._point_model_flux(model, params)[self._det_pos]
+            r = self._all_log_flux - np.log(np.maximum(model_flux, 1e-300))
+            s1 = np.bincount(
+                self._all_dataset,
+                weights=self._all_prec * r,
+                minlength=len(self._point_t),
+            )
+            c_hat = s1 / (self._dataset_inv_sys2 + self._dataset_prec_sum)
+            for i, sys_err in enumerate(self._point_sys):
+                if sys_err > 0:
+                    out.append(
+                        SimpleNamespace(
+                            label=self._dataset_label(i),
+                            offset=float(np.expm1(c_hat[i])),
+                            sys_err=float(sys_err),
+                        )
+                    )
+        for j, bd in enumerate(self._band_obs):
+            if bd.sys_err > 0:
+                model_flux = np.asarray(
+                    model.flux(bd.t, bd.nu_min, bd.nu_max, bd.num_points).total
+                )
+                prec = bd.weights / (bd.err / bd.flux) ** 2
+                r = np.log(bd.flux) - np.log(np.maximum(model_flux, 1e-300))
+                c_hat = float(np.sum(prec * r)) / (
+                    1.0 / bd.sys_err**2 + float(np.sum(prec))
+                )
+                out.append(
+                    SimpleNamespace(
+                        label=bd.name or f"band {bd.nu_min:.3g}-{bd.nu_max:.3g} Hz",
+                        offset=float(np.expm1(c_hat)),
+                        sys_err=float(bd.sys_err),
+                    )
+                )
+        return out
 
     # ── Parameter validation & sampler setup ─────────────────────────────────────────────────────────
 
@@ -596,7 +982,7 @@ class Fitter:
         # threads read are stable.
         self._consolidate_data()
 
-        if len(self._all_t) == 0 and not self._band_obs:
+        if len(self._eval_t) == 0 and not self._band_obs and not self._band_limits:
             raise ValueError(
                 "No observation data. Use add_flux_density(), add_spectrum(), or add_flux()."
             )
@@ -643,10 +1029,17 @@ class Fitter:
             )
         # Populate fit-quality bookkeeping so FitResult.summary() can surface
         # reduced χ² / BIC / AIC without the user counting data points.
-        result.n_data = sum(len(arr) for arr in self._point_t) + sum(
-            len(b.t) for b in self._band_obs
-        )
+        result.n_data, result.n_limits = self._data_counts()
         result.n_free_params = sum(1 for d in defs if d.scale is not Scale.fixed)
+        if any(s > 0 for s in self._point_sys) or any(
+            b.sys_err > 0 for b in self._band_obs
+        ):
+            result.calibration_offsets = [
+                vars(o)
+                for o in self.calibration_offsets(
+                    self._to_params(result.top_k_params[0])
+                )
+            ]
 
         # Cache for convenience: matches Fitter.load(...) post-condition.
         self.result = result

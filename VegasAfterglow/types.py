@@ -169,6 +169,10 @@ class FitResult:
     # Fit-quality bookkeeping (None for results loaded from older files).
     n_data: Optional[int] = None  # Total observation count across point + band data
     n_free_params: Optional[int] = None  # Sampled (non-fixed) parameter count
+    n_limits: Optional[int] = None  # Upper limits included in n_data
+    # Best-fit calibration shift per dataset given with sys_err > 0:
+    # [{"label", "offset" (data/model - 1), "sys_err"}, ...]
+    calibration_offsets: Optional[list] = None
 
     def __repr__(self) -> str:
         """One-line summary; deliberately avoids dumping the (potentially 100k-row)
@@ -285,7 +289,22 @@ class FitResult:
             lines.append(
                 f"χ²_min / DOF = {chi2_min:.2f} / {dof} = {chi2_min / dof:.3g}"
                 f"    BIC = {bic:.3g}    AIC = {aic:.3g}"
+                + (
+                    f"    ({self.n_limits} upper limits counted in DOF)"
+                    if self.n_limits
+                    else ""
+                )
             )
+            lines.append("")
+
+        if self.calibration_offsets:
+            lines.append(
+                "Calibration offsets (data / model - 1 at the best fit; prior width):"
+            )
+            for item in self.calibration_offsets:
+                lines.append(
+                    f"  {item['label']}: {item['offset']:+.1%}  (±{item['sys_err']:.0%})"
+                )
             lines.append("")
 
         lines.append(_row("Rank", "chi^2", list(self.labels)))

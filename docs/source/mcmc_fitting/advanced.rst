@@ -82,23 +82,9 @@ The default likelihood is Gaussian: :math:`\ln\mathcal{L} = -\chi^2/2`. Override
         log_likelihood_fn=student_t_likelihood,
     )
 
-**Upper Limits**
+**Upper Limits and Calibration Terms**
 
-For non-detections, a common approach is to weight the likelihood so data points
-above the upper limit are penalized:
-
-.. code-block:: python
-
-    def likelihood_with_upper_limits(chi2):
-        """Standard Gaussian likelihood; upper limits encoded in data weights."""
-        return -0.5 * chi2
-
-    # Upper limits: set flux to 0 and error to the upper limit value,
-    # so chi2 = (0 - model)^2 / upper_limit^2, which penalizes models above the limit
-    fitter.add_flux_density(
-        nu=1e10, t=[1e5], f_nu=[0.0], err=[3e-29],
-        weights=[1.0],
-    )
+Upper limits and per-dataset calibration systematics are part of the default likelihood (see :doc:`basic_setup`): the ``chi2`` passed to ``log_likelihood_fn`` already includes :math:`-2\ln\Phi((U - F_{\rm model})/\sigma)` for every limit and the analytically marginalised calibration factor of every dataset given with ``sys_err``. A custom ``log_likelihood_fn`` therefore keeps working with both.
 
 Custom Jet Profiles
 --------------------

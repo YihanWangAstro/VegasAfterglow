@@ -60,7 +60,8 @@ The ``Fitter`` class handles both model configuration and observational data. Ad
     fitter.add_flux_density(nu=4.84e14, t=t_data,
                             f_nu=flux_data, err=flux_err)  # All quantities in CGS units
 
-    # Optional: Add weights for systematic uncertainties, normalization handled internally
+    # Optional statistical weights (normalised internally). For the calibration
+    # uncertainty of a whole dataset use sys_err instead, see below.
     weights = np.ones_like(t_data)  # Equal weights
     fitter.add_flux_density(nu=2.4e17, t=t_data,
                             f_nu=flux_data, err=flux_err,
@@ -95,6 +96,33 @@ The ``Fitter`` class handles both model configuration and observational data. Ad
         df = pd.read_csv(fname)
         fitter.add_spectrum(t=t, nu=df["nu"],
                             f_nu=df["Fv_obs"], err=df["Fv_err"])  # All quantities in CGS units
+
+Calibration Systematics
+^^^^^^^^^^^^^^^^^^^^^^^^
+
+Each ``add_*`` call is one dataset, typically one instrument or filter. Pass ``sys_err`` to give that dataset a fractional calibration uncertainty:
+
+.. code-block:: python
+
+    fitter.add_flux_density(nu=2.4e17, t=t_xrt, f_nu=f_xrt, err=e_xrt, sys_err=0.10, label="XRT")
+    fitter.add_flux(band=band("XRT"), t=t_xrt, flux=F_xrt, err=E_xrt, sys_err=0.10)
+
+The points of the call share one unknown multiplicative calibration factor with a Gaussian prior of width ``sys_err`` in ln-flux. The likelihood marginalises that factor analytically, so the dataset's shape keeps the full precision of its statistical errors while its overall level can shift by about ``sys_err``; no sampler dimension is added. This replaces the habit of inflating every point's error to some percentage, which lets the points float independently and throws away the relative precision within the dataset. ``sys_err`` is a known property of the instrument (flux scale, zero point) that you supply; it is not fitted. After the fit, ``result.calibration_offsets`` and the ``summary()`` header report each dataset's best-fit level relative to the model.
+
+Upper Limits
+^^^^^^^^^^^^
+
+Non-detections go in through ``add_flux_density_limits``, ``add_spectrum_limits`` and ``add_flux_limits``, mirroring the detection methods:
+
+.. code-block:: python
+
+    # 3-sigma limits (default n_sigma=3): the noise behind each limit is limit / 3
+    fitter.add_flux_density_limits(nu=1.4e9, t=[1e5, 3e5], limit=[2e-28, 1.5e-28], label="VLA")
+    # or give the noise level behind the limit directly
+    fitter.add_flux_density_limits(nu=1.4e9, t=[1e6], limit=[1e-28], sigma=[4e-29])
+    fitter.add_flux_limits(band=band("XRT"), t=[5e6], limit=[1e-14])
+
+A limit ``U`` with noise ``sigma`` contributes the probability that a measurement would have come out below ``U`` given the model, :math:`\ln \Phi((U - F_{\rm model}) / \sigma)`, evaluated in linear flux. In chi-squared units that is essentially zero while the model sits well below the limit, ``2 ln 2`` when the model touches it, and ``((F_model - U) / sigma)^2`` beyond, so a model two sigma above a limit pays about 7.5. There is no hard wall: a non-detection is a noisy measurement and can only exclude a model as strongly as its noise allows. Limits are counted in ``n_data`` and reported separately as ``result.n_limits``; ``draw_fit`` draws them as downward arrows.
 
 Unit Conversion
 ----------------
