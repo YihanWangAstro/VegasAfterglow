@@ -355,7 +355,7 @@ Grid Resolution
      - Units
      - Description
    * - ``resolution`` (``resolutions`` on ``Model``)
-     - (0.06, 0.15, 6); (0.06, 0.2, 10) with reverse shock
+     - (0.06, 0.15, 5); (0.06, 0.2, 10) with reverse shock
      - (points/degree, points/degree, points/decade)
      - Grid resolution tuple (phi, theta, t): azimuthal, polar, and logarithmic temporal spacing. Leave unset to use the mode-aware defaults
 

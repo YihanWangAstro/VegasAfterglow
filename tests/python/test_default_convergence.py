@@ -12,9 +12,9 @@ the families that pin the calibrated defaults:
 - powerlaw + reverse shock on-axis: the theta-worst family (wing rows drive
   both shocks' theta convergence).
 
-Calibrated 2026-07-05 at the (0.06, 0.15, 6)/(0.06, 0.2, 10) per-mode
-defaults; the asserted gates and masking are the validation suite's own
-(imported from validation.common).
+Gates the shipped (0.06, 0.15, 5)/(0.06, 0.2, 10) per-mode defaults; the
+asserted gates and masking are the validation suite's own (imported from
+validation.common).
 """
 import importlib.util
 import os
@@ -71,7 +71,7 @@ FAMILIES = {
         "fwd_rad": RAD,
         "rvs_rad": RAD,
     },
-    # --- forward-shock-only mode: pins (0.06, 0.15, 6) ---
+    # --- forward-shock-only mode: pins (0.06, 0.15, 5) ---
     "fs_two_component": {
         "jet": {"type": "TwoComponentJet", "theta_c": 0.05, "E_iso": 1e52, "Gamma0": 300,
                 "theta_w": 0.3, "E_iso_w": 1e50, "Gamma0_w": 50},

@@ -68,7 +68,7 @@ class Fitter:
         radiative_fireball: Radiative losses decelerate the blast wave (default True).
             Set False for the adiabatic approximation used by most afterglow codes.
         rtol: Numerical tolerance
-        resolution: Grid resolution tuple (phi, theta, t). Defaults to (0.06, 0.15, 6),
+        resolution: Grid resolution tuple (phi, theta, t). Defaults to (0.06, 0.15, 5),
             or (0.06, 0.2, 10) when the reverse shock is enabled. Can be overridden per-fit.
         extinction: Host-galaxy dust extinction. ``None`` (default) disables it;
             a string ``"smc" | "lmc" | "mw"`` selects a built-in Pei (1992) law;

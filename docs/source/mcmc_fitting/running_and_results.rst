@@ -88,7 +88,7 @@ The ``Fitter.fit()`` method provides a unified interface for parameter estimatio
 
 - ``resolution``: Optional tuple of (phi_res, theta_res, t_res)
     - Overrides the resolution set in the ``Fitter`` constructor for this run
-    - If ``None``, uses the constructor value (default: ``(0.06, 0.15, 6)``, or ``(0.06, 0.2, 10)`` with the reverse shock enabled)
+    - If ``None``, uses the constructor value (default: ``(0.06, 0.15, 5)``, or ``(0.06, 0.2, 10)`` with the reverse shock enabled)
     - Example: ``(0.1, 1, 15)`` for higher accuracy
 
 - ``sampler``: Sampling algorithm to use

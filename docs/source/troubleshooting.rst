@@ -252,7 +252,7 @@ The ``resolutions`` parameter in ``Model()`` controls computational accuracy vs 
      - Very Fast
      - Low
    * - Standard calculations
-     - ``(0.06, 0.15, 6)``; ``(0.06, 0.2, 10)`` with reverse shock
+     - ``(0.06, 0.15, 5)``; ``(0.06, 0.2, 10)`` with reverse shock
      - Fast
      - Good
    * - MCMC fitting
