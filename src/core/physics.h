@@ -33,10 +33,12 @@ namespace physics {
  * @return Velocity fraction (beta = v/c)
  * <!-- ************************************************************************************** -->
  */
-        inline Real gamma_to_beta(Real gamma) noexcept {
+        template <typename Value = Real>
+        inline Value gamma_to_beta(Value const& gamma) noexcept {
+            using std::sqrt;
             // (gamma - 1) * (gamma + 1) rather than gamma * gamma - 1: exact for
             // gamma -> 1 regardless of FMA contraction (platform-independent).
-            return std::sqrt((gamma - 1) * (gamma + 1)) / gamma;
+            return sqrt((gamma - 1) * (gamma + 1)) / gamma;
         }
 
     } // namespace relativistic
@@ -56,7 +58,8 @@ namespace physics {
  * @return Adiabatic index
  * <!-- ************************************************************************************** -->
  */
-        inline constexpr Real adiabatic_idx(Real gamma) noexcept {
+        template <typename Value = Real>
+        inline constexpr Value adiabatic_idx(Value const& gamma) noexcept {
             return 4.0 / 3.0 + 1 / (3 * gamma);
         }
 

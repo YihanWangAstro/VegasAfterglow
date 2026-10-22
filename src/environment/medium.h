@@ -66,7 +66,13 @@ class ISM {
      * @return Constant density value
      * <!-- ************************************************************************************** -->
      */
-    [[nodiscard]] inline Real rho(Real /*phi*/, Real /*theta*/, Real /*r*/) const noexcept { return rho_; }
+    template <typename Value>
+    [[nodiscard]] inline Value rho(Real /*phi*/, Value const& /*theta*/, Value const& /*r*/) const noexcept {
+        return Value(rho_);
+    }
+
+    /// Scalar entry point (also catches mixed int/Real literals the template can't deduce).
+    [[nodiscard]] inline Real rho(Real phi, Real theta, Real r) const noexcept { return rho<Real>(phi, theta, r); }
 
     /// Enclosed mass per solid angle up to radius r.
     [[nodiscard]] inline Real mass(Real r) const noexcept { return rho_ * r * r * r / 3.0; }
@@ -108,9 +114,13 @@ class Wind {
      * <!-- ************************************************************************************** -->
      */
 
-    [[nodiscard]] inline Real rho(Real /*phi*/, Real /*theta*/, Real r) const noexcept {
+    template <typename Value>
+    [[nodiscard]] inline Value rho(Real /*phi*/, Value const& /*theta*/, Value const& r) const noexcept {
         return A / (r02 + r * r) + rho_ism;
     }
+
+    /// Scalar entry point (also catches mixed int/Real literals the template can't deduce).
+    [[nodiscard]] inline Real rho(Real phi, Real theta, Real r) const noexcept { return rho<Real>(phi, theta, r); }
 
     /// Enclosed mass per solid angle up to radius r.
     [[nodiscard]] inline Real mass(Real r) const noexcept {

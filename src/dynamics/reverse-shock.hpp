@@ -8,38 +8,37 @@
 #pragma once
 
 #include "../util/macros.h"
+#include "lanes.h"
 #include "shock-physics.h"
+
 /**
  * <!-- ************************************************************************************** -->
  * @struct ReverseState
- * @brief Represents the state variables for the reverse shock simulation.
- * @details It defines a state vector containing properties like shell width, mass, radius, time, and energy.
- *          The struct dynamically adapts its size based on template parameters to include mass/energy
- *          injection capabilities.
+ * @brief State vector for the coupled forward/reverse shock system, one shock pair per lane.
  * <!-- ************************************************************************************** -->
  */
-template <typename Ejecta>
+template <typename Ejecta, typename Value = Real>
 struct ReverseState {
     static constexpr bool mass_inject = HasDmdt<Ejecta>;   ///< Whether ejecta has mass injection
     static constexpr bool energy_inject = HasDedt<Ejecta>; ///< Whether ejecta has energy injection
     static constexpr size_t array_size = 12;
 
-    MAKE_THIS_ODEINT_STATE(ReverseState, data, array_size)
+    MAKE_THIS_ODEINT_STATE_T(ReverseState, data, array_size, Value)
 
     union {
         struct {
-            Real Gamma;  ///< Lorentz factor of the shocked region
-            Real x4;     ///< Comoving frame width of region 4
-            Real x3;     ///< Comoving frame width of region 3
-            Real m2;     ///< Shocked medium mass per solid angle
-            Real m3;     ///< Shocked ejecta mass per solid angle
-            Real U2_th;  ///< internal energy per solid angle in region 3
-            Real U3_th;  ///< internal energy per solid angle in region 2
-            Real r;      ///< Radius
-            Real t_comv; ///< Comoving time
-            Real theta;  ///< Angular coordinate theta
-            Real eps4;   ///< energy  per solid angle in region 4
-            Real m4;     ///< mass per solid angle in region 4
+            Value Gamma;  ///< Lorentz factor of the shocked region
+            Value x4;     ///< Comoving frame width of region 4
+            Value x3;     ///< Comoving frame width of region 3
+            Value m2;     ///< Shocked medium mass per solid angle
+            Value m3;     ///< Shocked ejecta mass per solid angle
+            Value U2_th;  ///< internal energy per solid angle in region 2
+            Value U3_th;  ///< internal energy per solid angle in region 3
+            Value r;      ///< Radius
+            Value t_comv; ///< Comoving time
+            Value theta;  ///< Angular coordinate theta
+            Value eps4;   ///< energy  per solid angle in region 4
+            Value m4;     ///< mass per solid angle in region 4
         };
         array_type data;
     };
@@ -48,113 +47,96 @@ struct ReverseState {
 /**
  * <!-- ************************************************************************************** -->
  * @class FRShockEqn
- * @brief Represents the reverse shock (or forward-reverse shock) equation for a given Jet and medium.
- * @details It defines a state vector (an array of 8 Reals) and overloads operator() to compute the
- *          derivatives of the state with respect to radius r.
+ * @brief The forward/reverse shock pair equation for a given jet and medium; integrates
+ *        `lanes` theta rows in lockstep when Value is a lane batch.
  * <!-- ************************************************************************************** -->
  */
-template <typename Ejecta, typename Medium>
+template <typename Ejecta, typename Medium, typename Value = Real>
 class FRShockEqn {
   public:
-    using State = ReverseState<Ejecta>;
+    using State = ReverseState<Ejecta, Value>;
+    using ScalarState = ReverseState<Ejecta, Real>;
+    static constexpr size_t lanes = lane::width_of<Value>; ///< theta rows integrated in lockstep
 
-    /**
-     * <!-- ************************************************************************************** -->
-     * @brief Constructor for the FRShockEqn class.
-     * @details Initializes the forward-reverse shock equation with the given medium, ejecta, and parameters.
-     * @param medium The medium through which the shock propagates
-     * @param ejecta The ejecta driving the shock
-     * @param phi Azimuthal angle
-     * @param theta Polar angle
-     * @param rad_fwd Radiation params for forward shock
-     * @param rad_rvs Radiation params for reverse shock
-     * <!-- ************************************************************************************** -->
-     */
+    FRShockEqn(Medium const& medium, Ejecta const& ejecta, Real phi, std::array<Real, lanes> const& thetas,
+               RadParams const& rad_fwd, RadParams const& rad_rvs); // rad_rvs reserved (reverse Shock carries its own)
+
+    /// Scalar convenience constructor (single theta row).
     FRShockEqn(Medium const& medium, Ejecta const& ejecta, Real phi, Real theta, RadParams const& rad_fwd,
-               RadParams const& rad_rvs);
+               RadParams const& rad_rvs)
+        requires(lanes == 1)
+        : FRShockEqn(medium, ejecta, phi, std::array<Real, 1>{theta}, rad_fwd, rad_rvs) {}
 
-    Medium const& medium;    ///< Reference to the medium properties
-    Ejecta const& ejecta;    ///< Reference to the jet properties
-    RadParams const rad_fwd; ///< Radiation parameters for forward shock
-    RadParams const rad_rvs; ///< Radiation parameters for reverse shock
-    Real const phi{0};       ///< Angular coordinate phi
-    Real const theta0{0};    ///< Angular coordinate theta
-    Real Gamma4{1};          ///< Initial Lorentz factor of the jet
-    Real u_x{0};             ///< Reverse shock crossed four-velocity
-    Real r_x{0};             ///< Reverse shock crossed radius
-    Real B3_ordered_x{0};    ///< Ordered magnetic field in region 3 at crossing
-    Real V3_comv_x{0};       ///< Comoving Volume in region 3 at crossing
-    Real rho3_x{0};          ///< Density in region 3 at crossing
+    Medium const& medium;                       ///< Reference to the medium properties
+    Ejecta const& ejecta;                       ///< Reference to the jet properties
+    RadParams const rad_fwd;                    ///< Radiation parameters for forward shock
+    Real const phi{0};                          ///< Angular coordinate phi
+    std::array<Real, lanes> const theta0_lanes; ///< Initial theta of each lane's row
+    Value Gamma4{1};                            ///< Initial Lorentz factor of the jet (per lane)
 
-    /**
-     * <!-- ************************************************************************************** -->
-     * @brief Implements the reverse shock ODE system.
-     * @details Computes the derivatives of state variables with respect to time.
-     * @param state Current state of the system
-     * @param diff Output derivatives to be populated
-     * @param t Current time
-     * <!-- ************************************************************************************** -->
-     */
-    void operator()(State const& state, State& diff, Real t) noexcept;
+    // Crossing snapshots, written per lane at that lane's crossing time.
+    std::array<Real, lanes> B3_ordered_x{}; ///< Ordered magnetic field in region 3 at crossing
+    std::array<Real, lanes> V3_comv_x{};    ///< Comoving volume in region 3 at crossing
+    std::array<Real, lanes> rho3_x{};       ///< Density in region 3 at crossing
 
-    /**
-     * <!-- ************************************************************************************** -->
-     * @brief Set the initial conditions for the reverse shock ODE.
-     * @details Sets up initial state values and determines if the shock has already crossed.
-     * @param state State vector to initialize
-     * @param t0 Initial time
-     * <!-- ************************************************************************************** -->
-     */
+    /// The reverse shock ODE system (all lanes at once).
+    void operator()(State const& state, State& diff, Real t) const noexcept;
+
+    /// Initial conditions for all lanes at engine time t0.
     void set_init_state(State& state, Real t0) const noexcept;
 
-    /**
-     * <!-- ************************************************************************************** -->
-     * @brief Calculates the magnetization parameter of the shell.
-     * @details Sigma is defined as (ε/Γmc²) - 1, where ε is the energy per solid angle.
-     * @param state Current state of the system
-     * @return The magnetization parameter of the shell
-     * <!-- ************************************************************************************** -->
-     */
-    Real compute_shell_sigma(State const& state) const noexcept;
+    /// Shell magnetization sigma = eps / (Gamma m c^2) - 1, per lane.
+    Value compute_shell_sigma(State const& state) const noexcept;
 
-    /**
-     * <!-- ************************************************************************************** -->
-     * @brief Saves the state of the system at the crossing point.
-     * @param state Current state of the system
-     * <!-- ************************************************************************************** -->
-     */
-    void save_cross_state(State const& state);
+    /// Shell magnetization of one lane's scalar state.
+    Real compute_shell_sigma(ScalarState const& state, size_t w) const noexcept;
 
-    /// Fraction of injection still active: 0 after injection, 1 during full injection
-    inline Real injection_efficiency(State const& diff) const noexcept;
+    /// Saves lane w's crossing snapshot.
+    void save_cross_state(ScalarState const& state, size_t w);
 
-    /// Whether reverse shock has finished crossing the ejecta
-    inline bool crossing_complete(State const& state, Real t) const noexcept;
+    /// Fraction of injection still active per lane: 0 after injection, 1 during full injection.
+    inline Value injection_efficiency(State const& diff) const noexcept;
+
+    /// Smooth injection shutdown window over 50% of T0 (t is shared: lane-uniform).
+    Real injection_window(Real t) const noexcept { return smoothstep(ejecta.T0 * 1.5, ejecta.T0 * 0.5, t); }
+
+    /// Whether lane w's reverse shock has finished crossing the ejecta.
+    inline bool crossing_complete(Real m3, Real m4, Real t, size_t w) const noexcept;
 
   private:
-    inline Real compute_dGamma_dt(State const& state, State const& diff, Real t, Real Gamma34) const noexcept;
+    /// Initial conditions of a single lane (the scalar body assembled by set_init_state).
+    void set_init_state_lane(ScalarState& state, Real t0, size_t w) const noexcept;
 
-    inline Real compute_dU2_dt(State const& state, State const& diff, Real t) const noexcept;
+    /// Evaluates a scalar profile at each row's initial theta: lane w of the result is f(theta0_lanes[w]).
+    /// (theta is frozen in the pair solve — diff.theta = 0 — so this is also the current angle.)
+    template <typename F>
+    Value at_theta0(F&& f) const noexcept {
+        return lane::from_lanes<Value>([&](size_t w) { return f(theta0_lanes[w]); });
+    }
 
-    inline Real compute_dU3_dt(State const& state, State const& diff, Real t, Real Gamma34) const noexcept;
+    inline Value compute_dGamma_dt(State const& state, State const& diff, Real t, Value const& Gamma34) const noexcept;
 
-    inline Real compute_dx3_dt(State const& state, State const& diff, Real t, Real Gamma34, Real sigma,
-                               Real comp_ratio) const noexcept;
+    inline Value compute_dU2_dt(State const& state, State const& diff, Value const& rho) const noexcept;
 
-    inline Real compute_dx4_dt(State const& state, State const& diff, Real t) const noexcept;
+    inline Value compute_dU3_dt(State const& state, State const& diff, Value const& Gamma34) const noexcept;
 
-    inline Real compute_dm2_dt(State const& state, State const& diff, Real t) const noexcept;
+    inline Value compute_dx3_dt(State const& state, State const& diff, Value const& f, Value const& Gamma34,
+                                Value const& sigma, Value const& comp_ratio) const noexcept;
 
-    inline Real compute_dm3_dt(State const& state, State const& diff, Real t, Real Gamma34, Real sigma,
-                               Real comp_ratio) const noexcept;
+    inline Value compute_dx4_dt(State const& state, State const& diff, Value const& f) const noexcept;
 
-    inline Real compute_deps4_dt(State const& state, State const& diff, Real t) const noexcept;
+    inline Value compute_dm3_dt(State const& state, State const& diff, Value const& f,
+                                Value const& comp_ratio) const noexcept;
 
-    inline Real compute_dm4_dt(State const& state, State const& diff, Real t) const noexcept;
+    inline Value compute_deps4_dt(State const& state, State const& diff, Real t) const noexcept;
 
-    Real deps0_dt_{0};                ///< Ejecta energy injection rate
-    Real dm0_dt_{0};                  ///< Ejecta mass injection rate
-    Real u4_{0};                      ///< Four-velocity of the unshocked ejecta
+    inline Value compute_dm4_dt(State const& state, State const& diff, Real t) const noexcept;
+
+    Value deps0_dt_{0};               ///< Ejecta energy injection rate (per lane)
+    Value dm0_dt_{0};                 ///< Ejecta mass injection rate (per lane)
+    Value u4_{0};                     ///< Four-velocity of the unshocked ejecta (per lane)
+    Value beta4_{0};                  ///< Velocity fraction of the unshocked ejecta (per lane)
+    Value cs4_{0};                    ///< Sound speed of the unshocked ejecta (per lane)
     RadiativeEfficiency eps_rad_fwd_; ///< Radiative efficiency evaluator for the forward component
 };
 

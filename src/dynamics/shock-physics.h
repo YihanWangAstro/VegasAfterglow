@@ -7,6 +7,7 @@
 
 #pragma once
 
+#include "lanes.h"
 #include "shock.h"
 #include "util/macros.h"
 
@@ -72,9 +73,11 @@ inline Real compute_4vel_jump(Real gamma_rel, Real sigma_upstr) noexcept {
  * @return The sound speed as a fraction of light speed
  * <!-- ************************************************************************************** -->
  */
-inline Real compute_sound_speed(Real Gamma_rel) noexcept {
-    const Real ad_idx = physics::thermo::adiabatic_idx(Gamma_rel);
-    return std::sqrt(std::max(ad_idx * (ad_idx - 1) * (Gamma_rel - 1) / (1 + (Gamma_rel - 1) * ad_idx), 0.0)) * con::c;
+template <typename Value = Real>
+inline Value compute_sound_speed(Value const& Gamma_rel) noexcept {
+    using std::max, std::sqrt;
+    const Value ad_idx = physics::thermo::adiabatic_idx(Gamma_rel);
+    return sqrt(max(ad_idx * (ad_idx - 1) * (Gamma_rel - 1) / (1 + (Gamma_rel - 1) * ad_idx), Value(0))) * con::c;
 }
 
 /**
@@ -85,7 +88,8 @@ inline Real compute_sound_speed(Real Gamma_rel) noexcept {
  * @return The effective Lorentz factor
  * <!-- ************************************************************************************** -->
  */
-inline constexpr Real compute_effective_Gamma(Real adx, Real Gamma) noexcept {
+template <typename Value = Real>
+inline constexpr Value compute_effective_Gamma(Value const& adx, Value const& Gamma) noexcept {
     return (adx * Gamma * Gamma - adx + 1) / Gamma;
 }
 
@@ -97,8 +101,9 @@ inline constexpr Real compute_effective_Gamma(Real adx, Real Gamma) noexcept {
  * @return The derivative of the effective Lorentz factor
  * <!-- ************************************************************************************** -->
  */
-inline constexpr Real compute_effective_Gamma_dGamma(Real adx, Real Gamma) noexcept {
-    const Real Gamma2 = Gamma * Gamma;
+template <typename Value = Real>
+inline constexpr Value compute_effective_Gamma_dGamma(Value const& adx, Value const& Gamma) noexcept {
+    const Value Gamma2 = Gamma * Gamma;
     return (adx * Gamma2 + adx - 1) / Gamma2;
 }
 
@@ -127,7 +132,8 @@ inline constexpr Real compute_dr_dt(Real beta) noexcept {
 
 /// Overload using four-velocity u and Lorentz factor Gamma directly.
 /// dr/dt = βc/(1-β) = uc(Γ+u), exploiting Γ²-u²=1 to avoid divisions and 1-β cancellation.
-inline constexpr Real compute_dr_dt(Real Gamma, Real u) noexcept {
+template <typename Value = Real>
+inline constexpr Value compute_dr_dt(Value const& Gamma, Value const& u) noexcept {
     return u * (Gamma + u) * con::c;
 }
 
@@ -151,10 +157,13 @@ inline Real compute_dtheta_dt(Real theta_s, Real /*theta*/, Real drdt, Real r, R
 }
 
 /// Overload using precomputed four-velocity terms to avoid redundant sqrt in hot loops.
-inline Real compute_dtheta_dt(Real theta_s, Real /*theta*/, Real drdt, Real r, Real Gamma, Real u, Real u2) noexcept {
+template <typename Value = Real>
+inline Value compute_dtheta_dt(Real theta_s, Value const& /*theta*/, Value const& drdt, Value const& r,
+                               Value const& Gamma, Value const& u, Value const& u2) noexcept {
+    using std::sqrt;
     constexpr Real Q = 7;
-    const Real f = 1 / (1 + u * theta_s * Q);
-    return drdt / (2 * Gamma * r) * std::sqrt((2 * u2 + 3) / (4 * u2 + 3)) * f;
+    const Value f = 1 / (1 + u * theta_s * Q);
+    return drdt / (2 * Gamma * r) * sqrt((2 * u2 + 3) / (4 * u2 + 3)) * f;
 }
 
 /**
@@ -189,18 +198,17 @@ inline Real compute_upstr_B(Real rho_up, Real sigma) noexcept {
  * @return The relative Lorentz factor between the two frames
  * <!-- ************************************************************************************** -->
  */
-inline Real compute_rel_Gamma(Real gamma1, Real gamma2) noexcept {
+template <typename Value = Real>
+inline Value compute_rel_Gamma(Value const& gamma1, Value const& gamma2) noexcept {
+    using std::max, std::sqrt;
     // Cancellation-free form. The naive gamma1*gamma2 - u1*u2 subtracts two
     // O(gamma^2) numbers to produce 1 + O(1e-6) near equal velocities; the
     // exact identity Gamma_rel - 1 = (gamma1 - gamma2)^2 / (gamma1*gamma2 - 1
     // + u1*u2) keeps full precision there (both denominator terms positive).
-    const Real u1u2 = std::sqrt(std::max((gamma1 - 1) * (gamma1 + 1) * (gamma2 - 1) * (gamma2 + 1), 0.0));
-    const Real d = gamma1 - gamma2;
-    const Real denom = gamma1 * gamma2 - 1 + u1u2;
-    if (denom <= 0) {
-        return 1;
-    }
-    return 1 + d * d / denom;
+    const Value u1u2 = sqrt(max((gamma1 - 1) * (gamma1 + 1) * (gamma2 - 1) * (gamma2 + 1), Value(0)));
+    const Value d = gamma1 - gamma2;
+    const Value denom = gamma1 * gamma2 - 1 + u1u2;
+    return where(denom <= 0, 1., 1 + d * d / denom);
 }
 
 /**
@@ -211,16 +219,36 @@ inline Real compute_rel_Gamma(Real gamma1, Real gamma2) noexcept {
  * @return The shock heating rate
  * <!-- ************************************************************************************** -->
  */
-inline constexpr Real compute_shock_heating_rate(Real Gamma_rel, Real mdot) noexcept {
+template <typename Value = Real>
+inline constexpr Value compute_shock_heating_rate(Value const& Gamma_rel, Value const& mdot) noexcept {
     return mdot * (Gamma_rel - 1) * con::c2;
 }
 
-inline Real compute_adiabatic_cooling_rate2(Real ad_idx, Real r, Real x, Real u, Real drdt, Real dxdt) noexcept {
-    Real dlnvdt = 2 * drdt / r;
-    if (x > 0) {
-        dlnvdt += dxdt / x;
+/// Medium density with compile-time lane dispatch: the native lane overload when the
+/// medium provides one, else per-lane scalar evaluation (std::function / python media).
+template <typename Value, typename Medium>
+inline Value lane_rho(Medium const& medium, Real phi, Value const& theta, Value const& r) noexcept {
+    if constexpr (requires { medium.rho(phi, theta, r); }) {
+        return medium.rho(phi, theta, r);
+    } else {
+        return lane::from_lanes<Value>([&](size_t w) { return medium.rho(phi, lane::get(theta, w), lane::get(r, w)); });
     }
-    return -(ad_idx - 1) * dlnvdt * u;
+}
+
+/// Clamp-form smoothstep (identical values to the branch form for every input).
+template <typename Value>
+inline Value smoothstep(Real edge0, Real edge1, Value const& x) noexcept {
+    using std::clamp;
+    const Value t = clamp((x - edge0) / (edge1 - edge0), Value(0), Value(1));
+    return t * t * (3.0 - 2.0 * t);
+}
+
+template <typename Value = Real>
+inline Value compute_adiabatic_cooling_rate2(Value const& ad_idx, Value const& r, Value const& x, Value const& u,
+                                             Value const& drdt, Value const& dxdt) noexcept {
+    const Value dlnvdt = 2 * drdt / r;
+    const Value with_shell = where(x > 0, dlnvdt + dxdt / x, dlnvdt);
+    return -(ad_idx - 1) * with_shell * u;
 }
 /**
  * <!-- ************************************************************************************** -->
@@ -232,9 +260,9 @@ inline Real compute_adiabatic_cooling_rate2(Real ad_idx, Real r, Real x, Real u,
  * @return The sound-speed expansion rate of the comoving shell width
  * <!-- ************************************************************************************** -->
  */
-inline Real compute_shell_sound_expansion_rate(Real Gamma_rel, Real dtdt_comv) noexcept {
-    const Real cs = compute_sound_speed(Gamma_rel);
-    return cs * dtdt_comv;
+template <typename Value = Real>
+inline Value compute_shell_sound_expansion_rate(Value const& Gamma_rel, Value const& dtdt_comv) noexcept {
+    return compute_sound_speed(Gamma_rel) * dtdt_comv;
 }
 
 /**
@@ -264,18 +292,23 @@ class RadiativeEfficiency {
      * @param e_th Internal energy density
      * @return The radiative efficiency
      */
-    Real operator()(Real t_comv, Real Gamma_th, Real e_th) const noexcept {
+    template <typename Value>
+    Value operator()(Value const& t_comv, Value const& Gamma_th, Value const& e_th) const noexcept {
+        using std::sqrt;
         if (eps_e_ == 0) { // adiabatic fireball (radiative = false) or no accelerated electrons
-            return 0;
+            return 0.;
         }
-        const Real gamma_m = gamma_m_coeff_ * (Gamma_th - 1) + 1;
-        const Real gamma_bar = gamma_c_coeff_ / (e_th * t_comv);
+        const Value gamma_m = gamma_m_coeff_ * (Gamma_th - 1) + 1;
+        const Value gamma_bar = gamma_c_coeff_ / (e_th * t_comv);
         // Trans-relativistic correction (same as compute_gamma_c): cooling rate ∝ γ²β², so
         // gamma_c -> 1 smoothly as gamma_bar -> 0 instead of a hard clamp.
-        const Real gamma_c = 0.5 * (gamma_bar + std::sqrt(gamma_bar * gamma_bar + 4));
-        const Real ratio = gamma_m / gamma_c;
-        if (ratio < 1 && p_ > 2) { // slow cooling
-            return eps_e_ * fast_pow(ratio, p_ - 2);
+        const Value gamma_c = 0.5 * (gamma_bar + sqrt(gamma_bar * gamma_bar + 4));
+        const Value ratio = gamma_m / gamma_c;
+        if (p_ > 2) { // slow cooling where gamma_m < gamma_c, per lane
+            return lane::from_lanes<Value>([&](size_t w) {
+                const Real r = lane::get(ratio, w);
+                return r < 1 ? eps_e_ * fast_pow(r, p_ - 2) : eps_e_;
+            });
         }
         return eps_e_; // fast cooling or p<=2
     }
@@ -396,6 +429,78 @@ inline void set_stopping_shock(size_t i, size_t j, Shock& shock, State const& st
     xt::view(shock.N_p, i, j, xt::all()) = 0;
 }
 
+/// @brief Runs `body(js, thetas, n_live)` once per lockstep batch of theta rows at phi index i.
+/// @details Owns the batch-formation policy: lone rows get width-1 arrays (so the scalar
+///          Value = Real instantiation skips the padding overhead), and trailing lanes of a
+///          partial batch pad with the last live row.
+template <typename F>
+void for_each_theta_batch(Coord const& coord, F&& body) {
+    constexpr size_t lanes = lane::width;
+    auto const& reps = coord.theta_reps;
+    for (size_t g = 0; g < reps.size(); g += lanes) {
+        const size_t n_live = std::min(lanes, reps.size() - g);
+        if (n_live == 1) {
+            body(std::array<size_t, 1>{reps[g]}, std::array<Real, 1>{coord.theta(reps[g])}, size_t{1});
+        } else {
+            std::array<size_t, lanes> js;
+            std::array<Real, lanes> thetas;
+            for (size_t w = 0; w < lanes; ++w) {
+                js[w] = reps[g + std::min(w, n_live - 1)];
+                thetas[w] = coord.theta(js[w]);
+            }
+            body(js, thetas, n_live);
+        }
+    }
+}
+
+/// @brief Time span one lockstep batch must integrate: start below every live row's first
+///        output time (and a fraction of its deceleration time), end at the last output.
+template <size_t K, typename Eqn>
+auto batch_time_span(Coord const& coord, size_t i, std::array<size_t, K> const& js, size_t n_live, Eqn const& eqn,
+                     Real t_floor) {
+    struct Span {
+        std::array<Real const*, K> t_row; ///< each lane's output-time row
+        Real t0;                          ///< integration start
+        Real t_end;                       ///< integration end
+    } span;
+
+    const size_t t_size = coord.t.shape()[2];
+    for (size_t w = 0; w < K; ++w) {
+        span.t_row[w] = &coord.t(i, js[w], 0);
+    }
+    span.t0 = con::inf;
+    span.t_end = 0;
+    for (size_t w = 0; w < n_live; ++w) {
+        const Real t_dec = estimate_t_dec(eqn.ejecta, eqn.medium, eqn.phi, eqn.theta0_lanes[w]);
+        span.t0 = std::min({span.t0, span.t_row[w][0], t_floor, 0.1 * t_dec});
+        span.t_end = std::max(span.t_end, span.t_row[w][t_size - 1]);
+    }
+    return span;
+}
+
+/// @brief Marks lanes whose initial Lorentz factor is at/below `Gamma_stop` as dead, invoking
+///        `on_stopped(w)` for each, and parks dead/padding lanes on the first live lane.
+/// @return Per-lane liveness; all-false means no lane is live and the batch can be skipped.
+template <size_t K, typename State, typename F>
+std::array<bool, K> mark_live_lanes(State& state, size_t n_live, Real Gamma_stop, F&& on_stopped) {
+    std::array<bool, K> live{};
+    size_t first_live = K;
+    for (size_t w = 0; w < n_live; ++w) {
+        if (lane::get(state.Gamma, w) <= Gamma_stop) {
+            on_stopped(w);
+        } else {
+            live[w] = true;
+            if (first_live == K) {
+                first_live = w;
+            }
+        }
+    }
+    if (first_live < K) {
+        park_dead_lanes(state, live, first_live);
+    }
+    return live;
+}
+
 /// @brief Simpson's rule integration in log-space: ∫ f(r') dr' via u = ln(r').
 /// Integrates from r * e^{-18} to r with N=32 panels.
 template <typename Func>
@@ -425,18 +530,23 @@ Real enclosed_mass(Func const& rho, Real r) {
         r);
 }
 
+/// @brief Swept mass weighted by adiabatic cooling: ∫ ρ(r') r'² (r'/r)^{3(ad-1)} dr'.
+template <typename Func>
+Real enclosed_thermal_integral(Func const& rho, Real r, Real ad_idx) {
+    const Real cooling_exp = 3 * (ad_idx - 1);
+    return simpson_logspace(
+        [&](Real u) {
+            const Real ri = std::exp(u);
+            return rho(ri) * ri * ri * ri * std::pow(ri / r, cooling_exp);
+        },
+        r);
+}
+
 /// @brief Compute enclosed thermal energy per solid angle,
 /// accounting for adiabatic cooling and radiative losses of material swept at earlier radii.
 template <typename Func>
 Real enclosed_thermal_energy(Func const& rho, Real r, Real Gamma, Real ad_idx, Real eps_e) {
-    const Real cooling_exp = 3 * (ad_idx - 1);
-    return (1 - eps_e) * (Gamma - 1) * con::c2 *
-           simpson_logspace(
-               [&](Real u) {
-                   const Real ri = std::exp(u);
-                   return rho(ri) * ri * ri * ri * std::pow(ri / r, cooling_exp);
-               },
-               r);
+    return (1 - eps_e) * (Gamma - 1) * con::c2 * enclosed_thermal_integral(rho, r, ad_idx);
 }
 
 /// @brief Fast path for enclosed mass with compile-time medium detection.
@@ -449,10 +559,9 @@ Real enclosed_mass_medium(Medium const& medium, Real phi, Real theta, Real r) {
     }
 }
 
-/// @brief Fast path for enclosed thermal energy with compile-time medium detection.
+/// @brief Fast path for the cooling-weighted swept mass with compile-time medium detection.
 template <typename Medium>
-Real enclosed_thermal_energy_medium(Medium const& medium, Real phi, Real theta, Real r, Real Gamma, Real ad_idx,
-                                    Real eps_e) {
+Real enclosed_thermal_integral_medium(Medium const& medium, Real phi, Real theta, Real r, Real ad_idx) {
     using MediumT = std::remove_cvref_t<Medium>;
 
     if constexpr (std::is_same_v<MediumT, ISM>) {
@@ -461,15 +570,50 @@ Real enclosed_thermal_energy_medium(Medium const& medium, Real phi, Real theta, 
         const Real pow_exp = 3 + cooling_exp;
         const Real x0 = std::exp(-18.0);
         const Real attenuation = 1 - std::pow(x0, pow_exp);
-        const Real integral = rho * r * r * r * attenuation / pow_exp;
-        return (1 - eps_e) * (Gamma - 1) * con::c2 * integral;
+        return rho * r * r * r * attenuation / pow_exp;
     } else {
-        return enclosed_thermal_energy([&](Real r_) { return medium.rho(phi, theta, r_); }, r, Gamma, ad_idx, eps_e);
+        return enclosed_thermal_integral([&](Real r_) { return medium.rho(phi, theta, r_); }, r, ad_idx);
     }
 }
 
-/// @brief Finds the deceleration engine-frame time by delegating to estimate_t_dec.
-template <typename Eqn>
-Real compute_dec_time(Eqn const& eqn) {
-    return estimate_t_dec(eqn.ejecta, eqn.medium, eqn.phi, eqn.theta0);
+/// @brief Fast path for enclosed thermal energy with compile-time medium detection.
+template <typename Medium>
+Real enclosed_thermal_energy_medium(Medium const& medium, Real phi, Real theta, Real r, Real Gamma, Real ad_idx,
+                                    Real eps_e) {
+    return (1 - eps_e) * (Gamma - 1) * con::c2 * enclosed_thermal_integral_medium(medium, phi, theta, r, ad_idx);
+}
+
+/// Start-radius state that conserves the blast-wave energy with the mass already swept there.
+struct InitEnergyState {
+    Real Gamma; ///< Lorentz factor (Gamma0 would overcount the swept energy by ~Gamma0 m2/m_jet: 10% in winds)
+    Real U_th;  ///< thermal energy per solid angle at the start radius
+};
+
+/// @brief Solves Gamma (m_jet + m2) + Gamma_eff U/c² + E_rad/c² = Gamma0 m_jet + m2 for the start state.
+/// @param thermal_integral Cooling-weighted swept mass at the adiabatic index of Gamma0 (its Gamma dependence
+///        is second order, so one evaluation serves every Newton step: 33 density calls per row, not per step).
+/// @details The pre-start history (thermal and radiated shares) is evaluated at the mean of Gamma0 and Gamma.
+inline InitEnergyState initial_state_energy_conserving(Real Gamma0, Real m_jet, Real m2, Real eps_e,
+                                                       Real thermal_integral) noexcept {
+    Real Gamma = Gamma0;
+    Real U = 0; // per c²
+    const Real integral = thermal_integral;
+    for (int it = 0; it < 16; ++it) {
+        const Real Gamma_h = 0.5 * (Gamma0 + Gamma);
+        const Real Gamma_eff_h = compute_effective_Gamma(physics::thermo::adiabatic_idx(Gamma_h), Gamma_h);
+        U = (1 - eps_e) * (Gamma_h - 1) * integral;
+        const Real E_rad = eps_e * Gamma_eff_h * (Gamma_h - 1) * m2; // per c²
+
+        const Real ad_idx = physics::thermo::adiabatic_idx(Gamma);
+        const Real Gamma_eff = compute_effective_Gamma(ad_idx, Gamma);
+        const Real g = Gamma * (m_jet + m2) + Gamma_eff * U + E_rad - Gamma0 * m_jet - m2;
+        const Real dg = (m_jet + m2) + compute_effective_Gamma_dGamma(ad_idx, Gamma) * U +
+                        0.5 * (Gamma_eff * (1 - eps_e) * integral + eps_e * Gamma_eff_h * m2);
+        const Real step = g / dg;
+        Gamma = std::max(Gamma - step, 1.0);
+        if (std::abs(step) <= 1e-12 * Gamma) {
+            break;
+        }
+    }
+    return {Gamma, U * con::c2};
 }

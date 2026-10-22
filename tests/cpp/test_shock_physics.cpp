@@ -169,6 +169,40 @@ BOOST_AUTO_TEST_CASE(compute_dr_dt_overloads_agree) {
 }
 
 // ---------------------------------------------------------------------------
+// The Real and Lanes instantiations of each physics template must agree
+// exactly: lone theta rows run Real, batched rows Lanes (whose MSVC loop path
+// and clang/gcc vector path must both match scalar IEEE arithmetic).
+// ---------------------------------------------------------------------------
+BOOST_AUTO_TEST_CASE(scalar_and_lane_overloads_agree) {
+    const std::array<Real, 4> Gammas{1.0001, 2.5, 30.0, 400.0};
+    Lanes<4> G;
+    for (size_t w = 0; w < 4; ++w) {
+        lane::set(G, w, Gammas[w]);
+    }
+
+    const Lanes<4> beta_l = physics::relativistic::gamma_to_beta(G);
+    const Lanes<4> adx_l = physics::thermo::adiabatic_idx(G);
+    const Lanes<4> geff_l = compute_effective_Gamma(adx_l, G);
+    const Lanes<4> dgeff_l = compute_effective_Gamma_dGamma(adx_l, G);
+    const Lanes<4> heat_l = compute_shock_heating_rate(G, Lanes<4>(1e20));
+    const Lanes<4> cool_l = compute_adiabatic_cooling_rate2(adx_l, Lanes<4>(1e16), Lanes<4>(1e12), Lanes<4>(1e40),
+                                                            Lanes<4>(1e10), Lanes<4>(1e6));
+    const Lanes<4> smooth_l = smoothstep(0.0, 1.0, Lanes<4>(0.3));
+
+    for (size_t w = 0; w < 4; ++w) {
+        const Real Gamma = Gammas[w];
+        const Real adx = physics::thermo::adiabatic_idx(Gamma);
+        BOOST_CHECK_EQUAL(beta_l[w], physics::relativistic::gamma_to_beta(Gamma));
+        BOOST_CHECK_EQUAL(adx_l[w], adx);
+        BOOST_CHECK_EQUAL(geff_l[w], compute_effective_Gamma(adx, Gamma));
+        BOOST_CHECK_EQUAL(dgeff_l[w], compute_effective_Gamma_dGamma(adx, Gamma));
+        BOOST_CHECK_EQUAL(heat_l[w], compute_shock_heating_rate(Gamma, 1e20));
+        BOOST_CHECK_EQUAL(cool_l[w], compute_adiabatic_cooling_rate2(adx, 1e16, 1e12, 1e40, 1e10, 1e6));
+        BOOST_CHECK_EQUAL(smooth_l[w], smoothstep(0.0, 1.0, 0.3));
+    }
+}
+
+// ---------------------------------------------------------------------------
 // 14. compute_dtheta_dt: positive spreading rate
 // ---------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE(compute_dtheta_dt_positive) {

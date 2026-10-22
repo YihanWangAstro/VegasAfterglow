@@ -35,8 +35,11 @@ concept HasMass = requires(T t) {
     { t.mass(0.0) };
 };
 
-#define MAKE_THIS_ODEINT_STATE(classname, data, array_size)                                                            \
-    using array_type = std::array<Real, array_size>;                                                                   \
+#define MAKE_THIS_ODEINT_STATE(classname, data, array_size) MAKE_THIS_ODEINT_STATE_T(classname, data, array_size, Real)
+
+/// Variant with an explicit element type, for states carrying one lane batch per variable.
+#define MAKE_THIS_ODEINT_STATE_T(classname, data, array_size, value_t)                                                 \
+    using array_type = std::array<value_t, array_size>;                                                                \
     using value_type = typename array_type::value_type;                                                                \
     using iterator = typename array_type::iterator;                                                                    \
     using const_iterator = typename array_type::const_iterator;                                                        \
