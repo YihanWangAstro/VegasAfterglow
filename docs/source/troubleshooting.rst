@@ -110,7 +110,7 @@ A: This often indicates data selection problems:
   - **Apply logscale_screen**: Use ``logscale_screen(times, data_density)`` for manual screening
   - **Balance frequency bands**: Target 10-30 points per band, avoid >100 points in any single band
   - **Use weights**: De-emphasize over-sampled regions with the ``weights`` parameter
-  - **Consider systematic floors**: Add systematic uncertainty floors for highly precise data
+  - **Give calibration uncertainties as** ``sys_err``: one value per dataset lets its level shift without loosening every point; reserve error floors for genuinely underestimated point scatter
 
 .. code-block:: python
 

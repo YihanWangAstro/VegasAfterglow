@@ -6,7 +6,7 @@ Advanced Fitting
 VegasAfterglow's ``Fitter`` is built directly on the ``Model`` class, giving you full control over the fitting process. You can customize:
 
 - **Priors**: Use informative or custom prior distributions
-- **Likelihood**: Implement non-standard likelihood functions (e.g., upper limits, systematic uncertainties)
+- **Likelihood**: Implement non-standard likelihood functions (e.g., Student-t for outlier-robust fits); upper limits and per-dataset calibration uncertainties are built into the default likelihood
 - **Jet profiles**: Define arbitrary angular energy and Lorentz factor distributions
 - **Medium profiles**: Define custom circumburst density structures
 

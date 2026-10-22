@@ -97,6 +97,8 @@ The ``Fitter`` class handles both model configuration and observational data. Ad
         fitter.add_spectrum(t=t, nu=df["nu"],
                             f_nu=df["Fv_obs"], err=df["Fv_err"])  # All quantities in CGS units
 
+.. _calibration-systematics:
+
 Calibration Systematics
 ^^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -227,7 +229,7 @@ For large datasets or densely sampled observations, using all available data poi
 - **Target 10-30 points per frequency band** for balanced constraints
 - **Avoid >100 points in any single band** unless scientifically justified
 - **Maintain temporal coverage** across all evolutionary phases
-- **Weight systematic uncertainties** appropriately using the weights parameter
+- **Give each dataset its calibration uncertainty** with ``sys_err``; use ``weights`` only to balance over-sampled bands
 
 .. warning::
     **Common Data Selection Pitfalls:**
@@ -244,13 +246,13 @@ Error bars strongly influence MCMC fitting. Improperly characterized uncertainti
 
 **The Problem with Small Error Bars**
 
-Data points with very small uncertainties dominate the chi-squared calculation:
+Data points with very small uncertainties dominate the chi-squared calculation, which is evaluated in log-flux with the fractional error :math:`\sigma_{\ln,i} = \sigma_i / F_{\rm obs,i}`:
 
 .. math::
 
-    \chi^2 = \sum_i \frac{(F_{\rm obs,i} - F_{\rm model,i})^2}{\sigma_i^2}
+    \chi^2 = \sum_i \frac{(\ln F_{\rm obs,i} - \ln F_{\rm model,i})^2}{\sigma_{\ln,i}^2}
 
-A single point with sigma = 0.01 mJy contributes 100x more to chi-squared than a point with sigma = 0.1 mJy. This causes the MCMC to:
+A single point with a 1% error contributes 100x more to chi-squared than a point with a 10% error. This causes the MCMC to:
 
 - Heavily weight high-precision data at the expense of other observations
 - Potentially fit noise or systematic effects in the "precise" data
@@ -264,19 +266,29 @@ A single point with sigma = 0.01 mJy contributes 100x more to chi-squared than a
 
 **Solutions:**
 
-1. **Add systematic error floors**
+1. **Give each dataset its calibration uncertainty with** ``sys_err``
 
-   For data where quoted errors seem unrealistically small:
+   This is the right tool for scenarios 1 and 3. The dataset's level is free to shift by about ``sys_err`` while the relative precision between its points is kept, so a precisely measured light curve still constrains the shape:
 
    .. code-block:: python
 
-       # Add 10% systematic floor to error bars
-       systematic_floor = 0.1  # 10% of flux
-       err_with_floor = np.sqrt(err**2 + (systematic_floor * flux)**2)
+       # 10% flux-scale uncertainty shared by the whole dataset
+       fitter.add_flux_density(nu=nu, t=t, f_nu=flux, err=err, sys_err=0.10, label="XRT")
+
+   See :ref:`Calibration Systematics <calibration-systematics>` above. Do not add a calibration uncertainty to every point's error bar instead: that lets the points float independently and throws away the precision within the dataset.
+
+2. **Add an error floor only for genuinely underestimated scatter**
+
+   When the quoted statistical errors are smaller than the point-to-point scatter actually present (scenario 2), widen the per-point errors:
+
+   .. code-block:: python
+
+       # 5% floor on each point's own error
+       err_with_floor = np.sqrt(err**2 + (0.05 * flux)**2)
 
        fitter.add_flux_density(nu=nu, t=t, f_nu=flux, err=err_with_floor)
 
-2. **Use weights to balance bands**
+3. **Use weights to balance bands**
 
    Down-weight bands with suspiciously small errors:
 
@@ -287,9 +299,9 @@ A single point with sigma = 0.01 mJy contributes 100x more to chi-squared than a
        fitter.add_flux_density(nu=5e14, t=t_optical, f_nu=flux_optical,
                               err=err_optical, weights=optical_weight * np.ones_like(t_optical))
 
-3. **Inspect residuals by band**
+4. **Inspect residuals by band**
 
-   After fitting, check if residuals are consistent across bands. If one band shows systematic deviations while others don't, the errors for that band may be mischaracterized.
+   After fitting, check if residuals are consistent across bands. If one band shows systematic deviations while others don't, the errors for that band may be mischaracterized. For datasets given with ``sys_err``, compare the fitted shift in ``result.calibration_offsets`` with the uncertainty you assumed: a shift much larger than ``sys_err`` points to a calibration problem or a model that cannot reproduce that band.
 
 .. tip::
     **Rule of thumb**: If your best-fit chi-squared/dof >> 1, either the model is inadequate OR the error bars are underestimated. If chi-squared/dof << 1, the errors may be overestimated.

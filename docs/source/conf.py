@@ -22,10 +22,17 @@ class BetterMock(MagicMock):
         return mock
 
 # Create fake module structure
-systems_mock = type('VegasAfterglowC', (), {'__all__': []})
-
-sys.modules['VegasAfterglow.VegasAfterglowC'] = systems_mock
-sys.path.insert(0, os.path.abspath('../../'))
+# Only when the compiled extension is unavailable (docs-only environments); an
+# installed build (Read the Docs installs the package) must be imported for real
+# or autodoc cannot see Fitter, ModelParams, FitResult.
+try:
+    import VegasAfterglow.VegasAfterglowC  # noqa: F401
+except ImportError:
+    systems_mock = type('VegasAfterglowC', (), {'__all__': []})
+    sys.modules['VegasAfterglow.VegasAfterglowC'] = systems_mock
+# The installed package (with its compiled extension) must win over the source
+# tree, which cannot be imported on its own; the repo root is only a fallback.
+sys.path.append(os.path.abspath('../../'))
 
 project = 'VegasAfterglow'
 copyright = '2024, VegasAfterglow Team'
