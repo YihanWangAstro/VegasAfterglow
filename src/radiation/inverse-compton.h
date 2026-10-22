@@ -512,17 +512,24 @@ void ICPhoton<Electrons, Photons>::accumulate_IC(Real dN_e_boost, long n_off, Ar
         I_buf(k) += plateau;
     }
 
-    for (; k < spec_size && n < ns_top; ++k, n += static_cast<long>(ic_mult)) {
-        const size_t j = static_cast<size_t>(n) / nu_mult;
-        const size_t fi = static_cast<size_t>(n) % nu_mult;
-        const Real nu_lo = nu_seed(j);
-        const Real dnu = dnu_seed(j);
-        const Real f_lo = fv_buf(j);
-        const Real f_hi = fv_buf(j + 1);
-        const Real frac = (nu_lo * expq[fi] - nu_lo) / dnu;
-        const Real rem = 1.0 - frac;
-        const Real f_seed = f_lo * rem + f_hi * frac;
-        I_buf(k) += dN_e_boost * (cdf_buf(j + 1) + 0.5 * (f_seed + f_hi) * rem * dnu * ratio_buf(j));
+    // n >= 0 here and advances by ic_mult == nu_mult: the containing bin j advances by
+    // exactly one per k and the in-bin offset n % nu_mult stays fixed, so the walk is
+    // unit-stride with a constant sub-bin factor (vectorizable, no div/mod).
+    static_assert(ic_mult == nu_mult, "unit-stride walk assumes matched lattice steps");
+    if (k < spec_size && n < ns_top) {
+        size_t j = static_cast<size_t>(n) / nu_mult;
+        const size_t j_top = nu_seed.size() - 1;
+        const Real cexp = expq[static_cast<size_t>(n) % nu_mult];
+        for (; k < spec_size && j < j_top; ++k, ++j) {
+            const Real nu_lo = nu_seed(j);
+            const Real dnu = dnu_seed(j);
+            const Real f_lo = fv_buf(j);
+            const Real f_hi = fv_buf(j + 1);
+            const Real frac = (nu_lo * cexp - nu_lo) / dnu;
+            const Real rem = 1.0 - frac;
+            const Real f_seed = f_lo * rem + f_hi * frac;
+            I_buf(k) += dN_e_boost * (cdf_buf(j + 1) + 0.5 * (f_seed + f_hi) * rem * dnu * ratio_buf(j));
+        }
     }
 }
 
