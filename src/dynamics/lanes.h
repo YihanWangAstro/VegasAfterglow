@@ -22,6 +22,15 @@
     #define LANES_LOOP_OPS 1
 #endif
 
+#ifndef LANES_LOOP_OPS
+/// GCC honours a vector_size whose byte count depends on a template parameter only through
+/// a dependent member typedef; written directly in the class body it parses as the scalar.
+template <typename T, std::size_t Bytes>
+struct VectorOf {
+    typedef T type __attribute__((vector_size(Bytes)));
+};
+#endif
+
 /// Per-lane boolean result of comparing Lanes packs. Combine with &&/||/! (eager,
 /// no short-circuit); consume with where() / all_of() / any_of(). For Value = Real
 /// the same generic code produces a plain bool instead.
@@ -43,7 +52,7 @@ struct LaneMask {
     LANES_MASK_OP(operator||, ||)
     #undef LANES_MASK_OP
 #else
-    typedef long long storage __attribute__((vector_size(K * sizeof(long long))));
+    using storage = typename VectorOf<long long, K * sizeof(long long)>::type;
     storage m;
     bool operator[](std::size_t w) const noexcept { return m[w] != 0; }
 
@@ -86,7 +95,7 @@ struct Lanes {
 #ifdef LANES_LOOP_OPS
     std::array<Real, K> v;
 #else
-    typedef Real storage __attribute__((vector_size(K * sizeof(Real))));
+    using storage = typename VectorOf<Real, K * sizeof(Real)>::type;
     storage v;
 #endif
 
