@@ -407,9 +407,13 @@ inline SegmentGeometry make_segment_geometry(Real const* t_row, size_t k, size_t
     return g;
 }
 
-/// Node slopes are the interval-weighted mean of adjacent secants, recovering bracketed
-/// extrema. Missing neighbors (NaN) degrade to the chord; non-finite endpoints yield the
-/// -inf sentinel, so callers evaluate unconditionally.
+/// Node slopes are the interval-weighted mean of adjacent secants, then passed through a
+/// Fritsch--Carlson monotonicity limiter (sign-matched to the interval chord, magnitude
+/// capped at 3|chord|), so a segment can never overshoot its nodes. Unlimited slopes ring
+/// around sharp per-cell features (e.g. the Doppler edge as 1/Gamma sweeps a theta ring)
+/// and imprint ring-count oscillations on summed light curves. Missing neighbors (NaN)
+/// degrade to the chord; non-finite endpoints yield the -inf sentinel, so callers evaluate
+/// unconditionally.
 inline HermiteSegment make_hermite_segment(SegmentGeometry const& g, Real lo_prev, Real lo, Real hi,
                                            Real hi_next) noexcept {
     const Real chord = (hi - lo) * g.inv_dt;
@@ -422,8 +426,15 @@ inline HermiteSegment make_hermite_segment(SegmentGeometry const& g, Real lo_pre
     const Real chord_prev = (lo - lo_prev) * g.inv_dt_prev;
     const Real chord_next = (hi_next - hi) * g.inv_dt_next;
 
-    const Real slope_lo = (g.dt_prev * chord + g.dt * chord_prev) * g.inv_span_prev;
-    const Real slope_hi = (g.dt * chord_next + g.dt_next * chord) * g.inv_span_next;
+    const auto limit = [chord](Real s) noexcept -> Real {
+        if (s * chord <= 0.0) {
+            return 0.0; // node is a local extremum of the data: flatten
+        }
+        const Real cap = 3.0 * chord;
+        return std::abs(s) <= std::abs(cap) ? s : cap;
+    };
+    const Real slope_lo = limit((g.dt_prev * chord + g.dt * chord_prev) * g.inv_span_prev);
+    const Real slope_hi = limit((g.dt * chord_next + g.dt_next * chord) * g.inv_span_next);
     const Real c2 = (3 * chord - 2 * slope_lo - slope_hi) * g.inv_dt;
     const Real c3 = (slope_lo + slope_hi - 2 * chord) * g.inv_dt * g.inv_dt;
     return {g.t_lo, lo, slope_lo, c2, c3};
