@@ -1,7 +1,319 @@
 {
- "generated": "2026-10-19",
+ "generated": "2026-10-26",
  "papers": [
   {
+   "key": "W7223417190",
+   "title": "An intertwined short and long \u03b3-ray burst with a 4-minute separation",
+   "year": 2026,
+   "date": "2026-10-23",
+   "type": "article",
+   "authors": [
+    "Liang Li",
+    "Yu Wang",
+    "Bing Zhang",
+    "Ye Li",
+    "Shu-Rui Zhang",
+    "J. Greiner",
+    "Zhi-Ping Jin",
+    "Jin-Jun Geng",
+    "Hou-Jun L\u00fc",
+    "Asaf Pe\u2019er",
+    "Maria Giovanna Dainotti",
+    "Tong Liu",
+    "Yi-Zhong Fan",
+    "Yong-Feng Huang",
+    "Zi-Gao Dai",
+    "Melin Kole",
+    "Wei\u2010Hua Lei",
+    "Ye\u2010Fei Yuan",
+    "Shuang\u2010Nan Zhang",
+    "F. Ryde",
+    "She-Sheng Xue",
+    "Rong-Gen Cai"
+   ],
+   "journal": "Nature Astronomy",
+   "doi": "10.1038/s41550-026-03007-0",
+   "arxiv": null,
+   "abstract": "",
+   "institutes": [
+    {
+     "id": "I109935558",
+     "name": "Ningbo University",
+     "ror": "https://ror.org/03et85d35",
+     "country": "China",
+     "city": "Ningbo",
+     "lat": 29.87819,
+     "lng": 121.54945,
+     "homepage": "https://www.nbu.edu.cn",
+     "logo": "https://www.google.com/s2/favicons?domain=nbu.edu.cn&sz=64"
+    },
+    {
+     "id": "I4210122452",
+     "name": "International Center for Relativistic Astrophysics",
+     "ror": "https://ror.org/02jktn113",
+     "country": "Italy",
+     "city": "Pescara",
+     "lat": 42.470123291015625,
+     "lng": 14.205587387084961,
+     "homepage": "http://www.icranet.org/",
+     "logo": "https://www.google.com/s2/favicons?domain=icranet.org&sz=64"
+    },
+    {
+     "id": "I4210124420",
+     "name": "Collurania Teramo Observatory",
+     "ror": "https://ror.org/02ttb5s67",
+     "country": "Italy",
+     "city": "Teramo",
+     "lat": 42.66122817993164,
+     "lng": 13.699009895324707,
+     "homepage": "http://www.oa-teramo.inaf.it/",
+     "logo": "https://www.google.com/s2/favicons?domain=oa-teramo.inaf.it&sz=64"
+    },
+    {
+     "id": "I861853513",
+     "name": "Sapienza University of Rome",
+     "ror": "https://ror.org/02be6w209",
+     "country": "Italy",
+     "city": "Rome",
+     "lat": 41.89193,
+     "lng": 12.51133,
+     "homepage": "https://www.uniroma1.it",
+     "logo": "https://www.google.com/s2/favicons?domain=uniroma1.it&sz=64"
+    },
+    {
+     "id": "I889458895",
+     "name": "University of Hong Kong",
+     "ror": "https://ror.org/02zhqgq86",
+     "country": "Hong Kong",
+     "city": "Pok Fu Lam",
+     "lat": 22.26861,
+     "lng": 114.12924,
+     "homepage": "https://www.hku.hk",
+     "logo": "https://www.google.com/s2/favicons?domain=hku.hk&sz=64"
+    }
+   ],
+   "co_institutes": [
+    {
+     "id": "I19820366",
+     "name": "Chinese Academy of Sciences",
+     "ror": "https://ror.org/034t30j35",
+     "country": "China",
+     "city": "Beijing",
+     "lat": 39.9075,
+     "lng": 116.39723,
+     "homepage": "https://www.cas.cn",
+     "logo": "https://www.google.com/s2/favicons?domain=cas.cn&sz=64"
+    },
+    {
+     "id": "I2802340896",
+     "name": "Purple Mountain Observatory",
+     "ror": "https://ror.org/02eb4t121",
+     "country": "China",
+     "city": "Nanjing",
+     "lat": 32.06598663330078,
+     "lng": 118.82951354980469,
+     "homepage": "http://english.pmo.cas.cn/",
+     "logo": "https://www.google.com/s2/favicons?domain=english.pmo.cas.cn&sz=64"
+    },
+    {
+     "id": "I4210137180",
+     "name": "Institute of High Energy Physics",
+     "ror": "https://ror.org/03v8tnc06",
+     "country": "China",
+     "city": "Beijing",
+     "lat": 39.907501220703125,
+     "lng": 116.39723205566406,
+     "homepage": "http://english.ihep.cas.cn/",
+     "logo": "https://www.google.com/s2/favicons?domain=english.ihep.cas.cn&sz=64"
+    },
+    {
+     "id": "I4210091772",
+     "name": "Max Planck Institute for Extraterrestrial Physics",
+     "ror": "https://ror.org/00e4bwe12",
+     "country": "Germany",
+     "city": "Garching bei M\u00fcnchen",
+     "lat": 48.26166534423828,
+     "lng": 11.671667098999023,
+     "homepage": "http://www.mpe.mpg.de/2169/en",
+     "logo": "https://www.google.com/s2/favicons?domain=mpe.mpg.de&sz=64"
+    },
+    {
+     "id": "I150807315",
+     "name": "Guangxi University",
+     "ror": "https://ror.org/02c9qn167",
+     "country": "China",
+     "city": "Nanning",
+     "lat": 22.816669464111328,
+     "lng": 108.3166732788086,
+     "homepage": "https://www.gxu.edu.cn",
+     "logo": "https://www.google.com/s2/favicons?domain=gxu.edu.cn&sz=64"
+    },
+    {
+     "id": "I13955877",
+     "name": "Bar-Ilan University",
+     "ror": "https://ror.org/03kgsv495",
+     "country": "Israel",
+     "city": "Ramat Gan",
+     "lat": 32.08227,
+     "lng": 34.81065,
+     "homepage": "http://www1.biu.ac.il/indexE.php",
+     "logo": "https://www.google.com/s2/favicons?domain=www1.biu.ac.il&sz=64"
+    },
+    {
+     "id": "I4210159940",
+     "name": "National Astronomical Observatory of Japan",
+     "ror": "https://ror.org/052rrw050",
+     "country": "Japan",
+     "city": "Mitaka-shi",
+     "lat": 35.68351,
+     "lng": 139.55963,
+     "homepage": "https://www.nao.ac.jp",
+     "logo": "https://www.google.com/s2/favicons?domain=nao.ac.jp&sz=64"
+    },
+    {
+     "id": "I191208505",
+     "name": "Xiamen University",
+     "ror": "https://ror.org/00mcjh785",
+     "country": "China",
+     "city": "Xiamen",
+     "lat": 24.47979,
+     "lng": 118.08187,
+     "homepage": "https://www.xmu.edu.cn",
+     "logo": "https://www.google.com/s2/favicons?domain=xmu.edu.cn&sz=64"
+    },
+    {
+     "id": "I881766915",
+     "name": "Nanjing University",
+     "ror": "https://ror.org/01rxvg760",
+     "country": "China",
+     "city": "Nanjing",
+     "lat": 32.061668395996094,
+     "lng": 118.77777862548828,
+     "homepage": "http://www.nju.edu.cn/english/",
+     "logo": "https://www.google.com/s2/favicons?domain=nju.edu.cn&sz=64"
+    },
+    {
+     "id": "I126520041",
+     "name": "University of Science and Technology of China",
+     "ror": "https://ror.org/04c4dkn09",
+     "country": "China",
+     "city": "Hefei",
+     "lat": 31.86389,
+     "lng": 117.28083,
+     "homepage": "https://ustc.edu.cn",
+     "logo": "https://www.google.com/s2/favicons?domain=ustc.edu.cn&sz=64"
+    },
+    {
+     "id": "I114457229",
+     "name": "University of Geneva",
+     "ror": "https://ror.org/01swzsf04",
+     "country": "Switzerland",
+     "city": "Geneva",
+     "lat": 46.20222,
+     "lng": 6.14569,
+     "homepage": "https://www.unige.ch/",
+     "logo": "https://www.google.com/s2/favicons?domain=unige.ch&sz=64"
+    },
+    {
+     "id": "I161057412",
+     "name": "University of New Hampshire",
+     "ror": "https://ror.org/01rmh9n78",
+     "country": "United States",
+     "city": "Durham",
+     "lat": 43.13397,
+     "lng": -70.92645,
+     "homepage": "https://www.unh.edu/",
+     "logo": "https://www.google.com/s2/favicons?domain=unh.edu&sz=64"
+    },
+    {
+     "id": "I47720641",
+     "name": "Huazhong University of Science and Technology",
+     "ror": "https://ror.org/00p991c53",
+     "country": "China",
+     "city": "Wuhan",
+     "lat": 30.58333,
+     "lng": 114.26667,
+     "homepage": "http://english.hust.edu.cn/",
+     "logo": "https://www.google.com/s2/favicons?domain=english.hust.edu.cn&sz=64"
+    },
+    {
+     "id": "I86987016",
+     "name": "KTH Royal Institute of Technology",
+     "ror": "https://ror.org/026vcq606",
+     "country": "Sweden",
+     "city": "Stockholm",
+     "lat": 59.32938,
+     "lng": 18.06871,
+     "homepage": "https://www.kth.se",
+     "logo": "https://www.google.com/s2/favicons?domain=kth.se&sz=64"
+    }
+   ],
+   "sources": [
+    "openalex:cites"
+   ],
+   "figures": [],
+   "usage": "unverified"
+  },
+  {
+   "key": "W7223384388",
+   "title": "GRB 180620A: Detected Signatures of Precessing Magnetars in the Optical Afterglows of Gamma-Ray Bursts",
+   "year": 2026,
+   "date": "2026-10-23",
+   "type": "article",
+   "authors": [
+    "Hao Lou",
+    "Xianggao Wang",
+    "Liang-Jun Chen",
+    "Weikang Zheng",
+    "Xiao-Li Huang",
+    "En\u2010Wei Liang",
+    "A. V. Filippenko"
+   ],
+   "journal": "Research in Astronomy and Astrophysics",
+   "doi": "10.1088/1674-4527/aeb8c0",
+   "arxiv": null,
+   "abstract": "Abstract Gamma-ray bursts (GRBs) powered by precessing magnetars have been extensively studied in the X-ray band, whereas clear signatures of such effects in the optical band have not yet been identified. In this work, we present multiwavelength optical observations of the afterglow of GRB 180620A and investigate the physical origin of its unusual optical behavior. The optical light curve exhibits two bumps: the first peaks at ~ 250 s, and the second extends from ~ 10 3 s to ~ 10 4 s. These features are difficult to explain using the standard external shock afterglow model. By analyzing the temporal and spectral properties of GRB 180620A, we find that the second bump likely shares the same physical origin as the contemporaneous X-ray emission, whereas the first bump does not. Based on this interpretation, we perform modeling and show that the first bump can be explained by forward-shock emission with energy injection, while the second bump can be attributed to emission through spin-down of a magnetar with precession which is analogous to the physical mechanism proposed for the X-ray afterglow. Our results suggest that the effects of magnetar precession can also manifest in the optical afterglow, thereby extending investigations for the influence of magnetar precession on GRB radiation to the optical band.",
+   "institutes": [
+    {
+     "id": "I150807315",
+     "name": "Guangxi University",
+     "ror": "https://ror.org/02c9qn167",
+     "country": "China",
+     "city": "Nanning",
+     "lat": 22.816669464111328,
+     "lng": 108.3166732788086,
+     "homepage": "https://www.gxu.edu.cn",
+     "logo": "https://www.google.com/s2/favicons?domain=gxu.edu.cn&sz=64"
+    }
+   ],
+   "co_institutes": [
+    {
+     "id": "I95457486",
+     "name": "University of California, Berkeley",
+     "ror": "https://ror.org/01an7q238",
+     "country": "United States",
+     "city": "Berkeley",
+     "lat": 37.87159,
+     "lng": -122.27275,
+     "homepage": "https://www.berkeley.edu",
+     "logo": "https://www.google.com/s2/favicons?domain=berkeley.edu&sz=64"
+    }
+   ],
+   "sources": [
+    "openalex:fulltext"
+   ],
+   "figures": [],
+   "usage": "unverified"
+  },
+  {
+   "figures": [
+    {
+     "file": "figures/W7222461819_0.png",
+     "caption": "Location of EP251222b/GRB 251222A (green star) in the $E_ p,z$--$E_ , iso$ plane. The background population of typical Type II GRBs (massive star GRBs) is shown as purple points, while Type I GRBs (compact star GRBs) are shown as yellow points . The shaded regions indicate the $1 $ confidence intervals. The green-star error bars show the conditional 90\\% confidence intervals from the CPL fit to data from three \u2026",
+     "matched": false
+    }
+   ],
+   "usage": "used",
    "key": "W7222461819",
    "title": "A Shell Collision Scenario for EP251222b/GRB 251222A: Connecting Prompt Emission and Double-Peaked Afterglow",
    "year": 2026,
@@ -63,18 +375,44 @@
      "logo": "https://www.google.com/s2/favicons?domain=ustc.edu.cn&sz=64"
     }
    ],
-   "co_institutes": [],
-   "sources": [
-    "ads"
-   ],
-   "figures": [
+   "co_institutes": [
     {
-     "file": "figures/W7222461819_0.png",
-     "caption": "Location of EP251222b/GRB 251222A (green star) in the $E_ p,z$--$E_ , iso$ plane. The background population of typical Type II GRBs (massive star GRBs) is shown as purple points, while Type I GRBs (compact star GRBs) are shown as yellow points . The shaded regions indicate the $1 $ confidence intervals. The green-star error bars show the conditional 90\\% confidence intervals from the CPL fit to data from three \u2026",
-     "matched": false
+     "id": "I189210763",
+     "name": "Yunnan University",
+     "ror": "https://ror.org/0040axw97",
+     "country": "China",
+     "city": "Kunming",
+     "lat": 25.038890838623047,
+     "lng": 102.71833038330078,
+     "homepage": "https://www.ynu.edu.cn",
+     "logo": "https://www.google.com/s2/favicons?domain=ynu.edu.cn&sz=64"
+    },
+    {
+     "id": "I4210164580",
+     "name": "National Astronomical Observatories",
+     "ror": "https://ror.org/058pyyv44",
+     "country": "China",
+     "city": "Beijing",
+     "lat": 40.00466537475586,
+     "lng": 116.38436889648438,
+     "homepage": "http://english.nao.cas.cn/",
+     "logo": "https://www.google.com/s2/favicons?domain=english.nao.cas.cn&sz=64"
+    },
+    {
+     "id": "I2801168720",
+     "name": "Yunnan Observatories",
+     "ror": "https://ror.org/02f42pw58",
+     "country": "China",
+     "city": "Kunming",
+     "lat": 24.88498306274414,
+     "lng": 102.83253479003906,
+     "homepage": "http://english.ynao.cas.cn/",
+     "logo": "https://www.google.com/s2/favicons?domain=english.ynao.cas.cn&sz=64"
     }
    ],
-   "usage": "used"
+   "sources": [
+    "openalex:fulltext"
+   ]
   },
   {
    "figures": [

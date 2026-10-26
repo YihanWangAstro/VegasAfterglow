@@ -2936,5 +2936,115 @@
   "lng": 118.77778,
   "homepage": "http://english.pmo.cas.cn/",
   "logo": "https://www.google.com/s2/favicons?domain=english.pmo.cas.cn&sz=64"
+ },
+ "I109935558": {
+  "id": "I109935558",
+  "name": "Ningbo University",
+  "ror": "https://ror.org/03et85d35",
+  "country": "China",
+  "city": "Ningbo",
+  "lat": 29.87819,
+  "lng": 121.54945,
+  "homepage": "https://www.nbu.edu.cn",
+  "logo": "https://www.google.com/s2/favicons?domain=nbu.edu.cn&sz=64"
+ },
+ "I4210122452": {
+  "id": "I4210122452",
+  "name": "International Center for Relativistic Astrophysics",
+  "ror": "https://ror.org/02jktn113",
+  "country": "Italy",
+  "city": "Pescara",
+  "lat": 42.470123291015625,
+  "lng": 14.205587387084961,
+  "homepage": "http://www.icranet.org/",
+  "logo": "https://www.google.com/s2/favicons?domain=icranet.org&sz=64"
+ },
+ "I13955877": {
+  "id": "I13955877",
+  "name": "Bar-Ilan University",
+  "ror": "https://ror.org/03kgsv495",
+  "country": "Israel",
+  "city": "Ramat Gan",
+  "lat": 32.08227,
+  "lng": 34.81065,
+  "homepage": "http://www1.biu.ac.il/indexE.php",
+  "logo": "https://www.google.com/s2/favicons?domain=www1.biu.ac.il&sz=64"
+ },
+ "I191208505": {
+  "id": "I191208505",
+  "name": "Xiamen University",
+  "ror": "https://ror.org/00mcjh785",
+  "country": "China",
+  "city": "Xiamen",
+  "lat": 24.47979,
+  "lng": 118.08187,
+  "homepage": "https://www.xmu.edu.cn",
+  "logo": "https://www.google.com/s2/favicons?domain=xmu.edu.cn&sz=64"
+ },
+ "I114457229": {
+  "id": "I114457229",
+  "name": "University of Geneva",
+  "ror": "https://ror.org/01swzsf04",
+  "country": "Switzerland",
+  "city": "Geneva",
+  "lat": 46.20222,
+  "lng": 6.14569,
+  "homepage": "https://www.unige.ch/",
+  "logo": "https://www.google.com/s2/favicons?domain=unige.ch&sz=64"
+ },
+ "I161057412": {
+  "id": "I161057412",
+  "name": "University of New Hampshire",
+  "ror": "https://ror.org/01rmh9n78",
+  "country": "United States",
+  "city": "Durham",
+  "lat": 43.13397,
+  "lng": -70.92645,
+  "homepage": "https://www.unh.edu/",
+  "logo": "https://www.google.com/s2/favicons?domain=unh.edu&sz=64"
+ },
+ "I86987016": {
+  "id": "I86987016",
+  "name": "KTH Royal Institute of Technology",
+  "ror": "https://ror.org/026vcq606",
+  "country": "Sweden",
+  "city": "Stockholm",
+  "lat": 59.32938,
+  "lng": 18.06871,
+  "homepage": "https://www.kth.se",
+  "logo": "https://www.google.com/s2/favicons?domain=kth.se&sz=64"
+ },
+ "I4405269957": {
+  "id": "I4405269957",
+  "name": "Trottier Space Institute at McGill",
+  "ror": "https://ror.org/05qpt6q22",
+  "country": "Canada",
+  "city": "Montreal",
+  "lat": 45.50884,
+  "lng": -73.58781,
+  "homepage": "https://tsi.mcgill.ca",
+  "logo": "https://www.google.com/s2/favicons?domain=tsi.mcgill.ca&sz=64"
+ },
+ "I2801360556": {
+  "id": "I2801360556",
+  "name": "CEA Paris-Saclay - Etablissement de Saclay",
+  "ror": "https://ror.org/01fv25t22",
+  "country": "France",
+  "city": "Saclay",
+  "lat": 48.7326,
+  "lng": 2.16923,
+  "homepage": "https://www.cea.fr/Pages/le-cea/les-centres-cea/paris-saclay.aspx",
+  "logo": "https://www.google.com/s2/favicons?domain=cea.fr&sz=64"
+ },
+ "I4405287467": {
+  "id": "I4405287467",
+  "name": "Institute of Laser Engineering, The University of Osaka",
+  "ror": "https://ror.org/058adca49",
+  "country": "Japan",
+  "city": "Suita",
+  "lat": 34.76143,
+  "lng": 135.51567,
+  "homepage": "https://www.ile.osaka-u.ac.jp",
+  "logo": "https://www.google.com/s2/favicons?domain=ile.osaka-u.ac.jp&sz=64"
  }
 }
