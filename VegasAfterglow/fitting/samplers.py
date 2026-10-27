@@ -23,6 +23,7 @@ from .utils import (
     AfterglowLikelihood,
     ThreadPoolWithClose,
     _get_latex_label,
+    _report_failed_evaluation,
     get_optimal_nwalkers,
     get_optimal_queue_size,
 )
@@ -66,7 +67,8 @@ def fit_emcee(
             if not np.isfinite(chi2):
                 return -np.inf
             return log_likelihood_fn(chi2)
-        except Exception:
+        except Exception as exc:
+            _report_failed_evaluation(exc)
             return -np.inf
 
     def log_prob_batch(samples: np.ndarray) -> np.ndarray:

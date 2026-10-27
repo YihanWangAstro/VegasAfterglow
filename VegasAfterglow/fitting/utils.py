@@ -1,5 +1,6 @@
 """Utility functions and classes for afterglow model fitting."""
 
+import logging
 import math
 import os
 import types
@@ -14,6 +15,8 @@ from ..types import ModelParams, ParamDef, Scale
 from ..VegasAfterglowC import Magnetar
 from .config import JETS, LATEX_LABELS, MEDIA
 
+logger = logging.getLogger(__name__)
+
 # Patch bilby to accept 'moves' kwarg for emcee sampler
 _BilbyEmcee.default_kwargs["moves"] = None
 
@@ -24,6 +27,36 @@ class ThreadPoolWithClose(ThreadPoolExecutor):
 
     def join(self):
         pass
+
+
+# --- Argument validation and failure reporting ---
+
+
+def _check_choice(value, registry, kind: str) -> None:
+    """Accept a registered name or a callable factory; reject anything else up front."""
+    if callable(value):
+        return
+    if not isinstance(value, str):
+        raise TypeError(
+            f"{kind} must be a name {sorted(registry)} or a callable factory "
+            f"(ModelParams -> {kind} object), got {type(value).__name__}."
+        )
+    if value not in registry:
+        raise ValueError(
+            f"Unknown {kind} type {value!r}; choose from {sorted(registry)} "
+            f"or pass a callable factory."
+        )
+
+
+_reported_failures: set = set()
+
+
+def _report_failed_evaluation(exc: Exception) -> None:
+    """Log the first few distinct evaluation errors; the sampler itself sees -inf."""
+    key = f"{type(exc).__name__}: {exc}"
+    if key not in _reported_failures and len(_reported_failures) < 5:
+        _reported_failures.add(key)
+        logger.warning("Likelihood evaluation failed (treated as -inf): %s", key)
 
 
 # --- Default Jet/Medium Factories ---
@@ -41,7 +74,7 @@ def _default_jet_factory(fitter):
         kwargs = {name: getattr(params, name) for name in spec.params}
         kwargs.update(spec.fixed_kwargs)
 
-        kwargs["spreading"] = False
+        kwargs["spreading"] = fitter.spreading
         kwargs["duration"] = params.tau if hasattr(params, "tau") else 1.0
 
         if spec.supports_magnetar:
@@ -186,5 +219,6 @@ class AfterglowLikelihood(bilby.Likelihood):
             if not np.isfinite(chi2):
                 return -np.inf
             return self._log_likelihood_fn(chi2)
-        except Exception:
+        except Exception as exc:
+            _report_failed_evaluation(exc)
             return -np.inf

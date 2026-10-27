@@ -143,7 +143,7 @@ The ``Ejecta`` constructor supports these optional keyword arguments:
 - ``sigma0``: Magnetization profile ``sigma0(phi, theta)`` (default: 0)
 - ``E_dot``: Energy injection rate ``E_dot(phi, theta, t)`` in erg/s (default: 0)
 - ``M_dot``: Mass injection rate ``M_dot(phi, theta, t)`` in g/s (default: 0)
-- ``spreading``: Enable lateral spreading (default: False)
+- ``spreading``: Enable lateral spreading (default: False, experimental)
 - ``duration``: Jet duration in seconds, for reverse shock (default: 1)
 
 .. note::

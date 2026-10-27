@@ -25,12 +25,16 @@ The ``Fitter`` constructor accepts keyword arguments for source properties, mode
         magnetar=True,            # Magnetar energy injection
         radiative_fireball=True,  # Radiative losses decelerate the blast wave
                                   # (False = adiabatic, the convention of most codes)
+        spreading=False,          # Lateral jet spreading (experimental)
         extinction="smc",         # Host-galaxy dust extinction (None | "smc"/"lmc"/"mw" | callable)
 
         # Numerical parameters
         rtol=1e-6,                # Numerical tolerance (the default)
         resolution=None,          # None -> mode-aware defaults; or an explicit (phi, theta, t) tuple
     )
+
+.. note::
+    ``spreading=True`` is experimental. It is intended for the top-hat, Gaussian and power-law jets with a core, and may not work for arbitrary jet structures. It applies to the built-in jet names only; a custom jet factory sets ``spreading`` on its own jet object, and combining it with ``Fitter(spreading=True)`` raises an error.
 
 Setting up Data and the Fitter
 -------------------------------
@@ -102,29 +106,63 @@ The ``Fitter`` class handles both model configuration and observational data. Ad
 Calibration Systematics
 ^^^^^^^^^^^^^^^^^^^^^^^^
 
-Each ``add_*`` call is one dataset, typically one instrument or filter. Pass ``sys_err`` to give that dataset a fractional calibration uncertainty:
+Every instrument carries a flux-scale uncertainty that its error bars do not show: a few percent for optical zero points, around 10% for an X-ray flux calibration, 5-10% for a radio flux scale. Unlike the statistical error, this uncertainty is shared by every point the instrument took. If its calibration is off by 5%, the whole light curve is 5% off, in the same direction, while the shape of the light curve is exactly as precise as the error bars say.
+
+The common workaround, adding 10% to every error bar, gets this wrong in both directions. It lets each point wander on its own, so the shape information that the data really carry is thrown away, and it still does not describe a shift of the dataset as a whole.
+
+``sys_err`` describes the situation as it is. Give it once per ``add_*`` call, which is to say once per instrument:
 
 .. code-block:: python
 
     fitter.add_flux_density(nu=2.4e17, t=t_xrt, f_nu=f_xrt, err=e_xrt, sys_err=0.10, label="XRT")
+    fitter.add_flux_density(nu=filter("r"), t=t_r, f_nu=f_r, err=e_r, sys_err=0.03, label="r")
     fitter.add_flux(band=band("XRT"), t=t_xrt, flux=F_xrt, err=E_xrt, sys_err=0.10)
 
-The points of the call share one unknown multiplicative calibration factor with a Gaussian prior of width ``sys_err`` in ln-flux. The likelihood marginalises that factor analytically, so the dataset's shape keeps the full precision of its statistical errors while its overall level can shift by about ``sys_err``; no sampler dimension is added. This replaces the habit of inflating every point's error to some percentage, which lets the points float independently and throws away the relative precision within the dataset. ``sys_err`` is a known property of the instrument (flux scale, zero point) that you supply; it is not fitted. After the fit, ``result.calibration_offsets`` and the ``summary()`` header report each dataset's best-fit level relative to the model.
+During the fit, each such dataset is allowed one unknown calibration factor, the same for all of its points, with a prior that keeps it within about ``sys_err`` of unity. The fitter integrates that factor out analytically, so nothing new is sampled and the run is no slower. The effect is that the dataset may slide up or down as a whole by roughly ``sys_err``, whichever direction the data prefer, while its shape constrains the model at the full precision of the statistical errors.
+
+Two things to keep in mind. ``sys_err`` is a number you know about the instrument, not something the fit learns; a single dataset shows one realisation of its calibration offset and cannot tell you how large such offsets tend to be. And one call should be one instrument: if a spectrum combines several instruments, add it as one call per instrument, each with its own ``sys_err``.
+
+After the fit, ``summary()`` reports how far each dataset moved, and the same numbers are available as ``result.calibration_offsets``. An offset of ``+0.03`` means the data sit 3% above the model, so the fit preferred scaling that dataset down by 3%. Offsets much larger than the ``sys_err`` you gave point to a calibration problem, or to a model that cannot reproduce that band.
 
 Upper Limits
 ^^^^^^^^^^^^
 
-Non-detections go in through ``add_flux_density_limits``, ``add_spectrum_limits`` and ``add_flux_limits``, mirroring the detection methods:
+A non-detection is information: whatever the model is, it must not predict a flux that the observation would have seen. Such a point cannot be entered as a flux with an error bar, and entering a zero flux with the limit as its error does not work with the log-flux likelihood. Instead, add limits with the three methods that mirror the detection methods:
 
 .. code-block:: python
 
-    # 3-sigma limits (default n_sigma=3): the noise behind each limit is limit / 3
+    # 3-sigma limits (the default n_sigma=3): the noise behind each limit is limit / 3
     fitter.add_flux_density_limits(nu=1.4e9, t=[1e5, 3e5], limit=[2e-28, 1.5e-28], label="VLA")
-    # or give the noise level behind the limit directly
+    # if you know the noise level behind the limit, give it directly
     fitter.add_flux_density_limits(nu=1.4e9, t=[1e6], limit=[1e-28], sigma=[4e-29])
+    # band-integrated limits
     fitter.add_flux_limits(band=band("XRT"), t=[5e6], limit=[1e-14])
 
-A limit ``U`` with noise ``sigma`` contributes the probability that a measurement would have come out below ``U`` given the model, :math:`\ln \Phi((U - F_{\rm model}) / \sigma)`, evaluated in linear flux. In chi-squared units that is essentially zero while the model sits well below the limit, ``2 ln 2`` when the model touches it, and ``((F_model - U) / sigma)^2`` beyond, so a model two sigma above a limit pays about 7.5. There is no hard wall: a non-detection is a noisy measurement and can only exclude a model as strongly as its noise allows. Limits are counted in ``n_data`` and reported separately as ``result.n_limits``; ``draw_fit`` draws them as downward arrows.
+A quoted n-sigma limit ``U`` tells the fitter two things: the detection threshold ``U`` and the noise behind it, ``sigma = U / n_sigma``. The fit then asks, for every model it tries, how likely it is that a measurement with that noise would have come out below ``U``. That probability is essentially one while the model sits well below the limit, one half when the model touches it, and it falls off like a Gaussian tail above. In chi-squared units:
+
+.. list-table::
+   :header-rows: 1
+   :widths: 30 30 40
+
+   * - model flux
+     - sigma above the limit
+     - chi-squared penalty
+   * - ``U / 10``
+     - below the limit
+     - about 0
+   * - ``U``
+     - 0
+     - 1.4
+   * - ``2 U``
+     - 3
+     - 11
+   * - ``3 U``
+     - 6
+     - 40
+
+There is deliberately no hard wall at the limit. A non-detection is a noisy measurement and can rule out a model only as strongly as its noise allows; a model a little above a 3-sigma limit is disfavoured, a model several times above it is excluded as decisively as a detection the model misses by many sigma. A hard wall would claim infinite certainty from a noisy measurement and would also leave the sampler stuck against it.
+
+Limits count toward ``n_data`` in the fit summary, their number is reported separately as ``result.n_limits``, and ``draw_fit`` draws them as downward arrows in the colour of their band.
 
 Unit Conversion
 ----------------

@@ -12,8 +12,13 @@ from scipy.special import log_ndtr
 
 from ..types import FitResult, ModelParams, ParamDef, Scale
 from ..VegasAfterglowC import Model, Observer, Radiation
-from .config import _BandLimits, _BandObs
-from .utils import _build_transformer, _default_jet_factory, _default_medium_factory
+from .config import JETS, MEDIA, _BandLimits, _BandObs
+from .utils import (
+    _build_transformer,
+    _check_choice,
+    _default_jet_factory,
+    _default_medium_factory,
+)
 
 logger = logging.getLogger(__name__)
 # Library convention: attach a NullHandler so the package stays silent unless the
@@ -75,6 +80,10 @@ class Fitter:
         magnetar: Enable magnetar energy injection
         radiative_fireball: Radiative losses decelerate the blast wave (default True).
             Set False for the adiabatic approximation used by most afterglow codes.
+        spreading: Enable lateral jet spreading in the built-in jets (default False).
+            Experimental: intended for the top-hat, Gaussian and power-law jets with a
+            core. A custom jet factory sets its own ``spreading`` and cannot be combined
+            with this option.
         rtol: Numerical tolerance
         resolution: Grid resolution tuple (phi, theta, t). Defaults to (0.06, 0.15, 5),
             or (0.06, 0.2, 10) when the reverse shock is enabled. Can be overridden per-fit.
@@ -96,6 +105,7 @@ class Fitter:
         "kn": False,
         "magnetar": False,
         "radiative_fireball": True,
+        "spreading": False,
     }
 
     # ── Construction & configuration ─────────────────────────────────────────────────────────
@@ -113,6 +123,7 @@ class Fitter:
         kn: bool = False,
         magnetar: bool = False,
         radiative_fireball: bool = True,
+        spreading: bool = False,
         rtol: float = 1e-6,
         resolution: Optional[Tuple[float, float, float]] = None,
         extinction=None,
@@ -125,13 +136,22 @@ class Fitter:
         self.kn = kn
         self.magnetar = magnetar
         self.radiative_fireball = radiative_fireball
+        self.spreading = spreading
         self.rtol = rtol
         # None forwards to Model, which resolves the mode-aware default
         # (defaults::grid in the C++ core is the single source of truth).
         self.resolution = tuple(resolution) if resolution is not None else None
 
+        _check_choice(jet, JETS, "jet")
+        _check_choice(medium, MEDIA, "medium")
+
         self.jet = jet
         self._custom_jet = callable(jet)
+        if self._custom_jet and spreading:
+            raise ValueError(
+                "spreading=True applies to the built-in jets only; "
+                "set spreading=True inside your custom jet factory instead."
+            )
         self.jet_factory = jet if self._custom_jet else _default_jet_factory(self)
 
         self.medium = medium
