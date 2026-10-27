@@ -18,7 +18,7 @@ Have a feature request? [Open an issue](https://github.com/YihanWangAstro/VegasA
 
 ---
 
-## [Unreleased]
+## [v2.0.7] - 2026-10-28
 
 ### Fixed
 
