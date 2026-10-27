@@ -453,14 +453,24 @@ void for_each_theta_batch(Coord const& coord, F&& body) {
     }
 }
 
-/// @brief Time span one lockstep batch must integrate: start below every live row's first
-///        output time (and a fraction of its deceleration time), end at the last output.
-template <size_t K, typename Eqn>
-auto batch_time_span(Coord const& coord, size_t i, std::array<size_t, K> const& js, size_t n_live, Eqn const& eqn,
-                     Real t_floor) {
+/// @brief Integration start shared by every theta row at phi index i: below each row's first
+///        output time and a fraction of its deceleration time. One value per phi keeps a row's
+///        solution independent of which rows share its lockstep batch.
+template <typename Ejecta, typename Medium>
+Real shock_start_time(Coord const& coord, size_t i, Ejecta const& jet, Medium const& medium, Real t_floor) {
+    Real t0 = t_floor;
+    for (size_t j : coord.theta_reps) {
+        const Real t_dec = estimate_t_dec(jet, medium, coord.phi(i), coord.theta(j));
+        t0 = std::min({t0, coord.t(i, j, 0), 0.1 * t_dec});
+    }
+    return t0;
+}
+
+/// @brief Output-time rows of one lockstep batch and the last output time of its live rows.
+template <size_t K>
+auto batch_time_span(Coord const& coord, size_t i, std::array<size_t, K> const& js, size_t n_live) {
     struct Span {
         std::array<Real const*, K> t_row; ///< each lane's output-time row
-        Real t0;                          ///< integration start
         Real t_end;                       ///< integration end
     } span;
 
@@ -468,11 +478,8 @@ auto batch_time_span(Coord const& coord, size_t i, std::array<size_t, K> const& 
     for (size_t w = 0; w < K; ++w) {
         span.t_row[w] = &coord.t(i, js[w], 0);
     }
-    span.t0 = con::inf;
     span.t_end = 0;
     for (size_t w = 0; w < n_live; ++w) {
-        const Real t_dec = estimate_t_dec(eqn.ejecta, eqn.medium, eqn.phi, eqn.theta0_lanes[w]);
-        span.t0 = std::min({span.t0, span.t_row[w][0], t_floor, 0.1 * t_dec});
         span.t_end = std::max(span.t_end, span.t_row[w][t_size - 1]);
     }
     return span;

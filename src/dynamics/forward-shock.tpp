@@ -196,13 +196,13 @@ void save_fwd_shock_state(size_t i, size_t j, size_t k, Eqn const& eqn, State co
 
 template <typename FwdEqn>
 void grid_solve_fwd_shock(size_t i, std::array<size_t, FwdEqn::lanes> const& js, size_t n_live, Coord const& coord,
-                          Shock& shock, FwdEqn const& eqn, Real rtol) {
+                          Shock& shock, FwdEqn const& eqn, Real rtol, Real t0) {
     using namespace boost::numeric::odeint;
     using State = typename FwdEqn::State;
     constexpr size_t lanes = FwdEqn::lanes;
 
     const size_t t_size = coord.t.shape()[2];
-    const auto [t_row, t0, t_end] = batch_time_span(coord, i, js, n_live, eqn, 0.1 * unit::sec);
+    const auto [t_row, t_end] = batch_time_span(coord, i, js, n_live);
 
     State state;
     eqn.set_init_state(state, t0);
@@ -252,11 +252,12 @@ Shock generate_fwd_shock(Coord const& coord, Medium const& medium, Ejecta const&
                 jet_spreading_edge(jet, medium, coord.phi(i), coord.theta.front(), coord.theta.back(), coord.t.front());
         }
 
+        const Real t0 = shock_start_time(coord, i, jet, medium, 0.1 * unit::sec);
         for_each_theta_batch(coord, [&](auto const& js, auto const& thetas, size_t n_live) {
             constexpr size_t width = std::tuple_size_v<std::remove_cvref_t<decltype(js)>>;
             using Value = std::conditional_t<width == 1, Real, lane::Batch>;
             ForwardShockEqn<Ejecta, Medium, Value> eqn(medium, jet, coord.phi(i), thetas, rad_params, theta_s);
-            grid_solve_fwd_shock(i, js, n_live, coord, shock, eqn, rtol);
+            grid_solve_fwd_shock(i, js, n_live, coord, shock, eqn, rtol, t0);
         });
 
         if (coord.symmetry >= Symmetry::phi_symmetric) {

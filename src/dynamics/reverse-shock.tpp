@@ -468,19 +468,20 @@ Real locate_crossing_time(Stepper& stepper, Eqn const& eqn, typename Eqn::State&
 /**
  * <!-- ************************************************************************************** -->
  * @internal
- * @brief Integrates a batch of shock-pair rows in lockstep, storing both shocks on each row's
- *        t grid and handling each lane's reverse-shock crossing at its own time.
+ * @brief Integrates a batch of shock-pair rows in lockstep from the phi-wide start `t0`, storing
+ *        both shocks on each row's t grid and handling each lane's reverse-shock crossing at its
+ *        own time.
  * <!-- ************************************************************************************** -->
  */
 template <typename Eqn>
 void grid_solve_shock_pair(size_t i, std::array<size_t, Eqn::lanes> const& js, size_t n_live, Coord const& coord,
-                           Shock& shock_fwd, Shock& shock_rvs, Eqn& eqn, Real rtol) {
+                           Shock& shock_fwd, Shock& shock_rvs, Eqn& eqn, Real rtol, Real t0) {
     using namespace boost::numeric::odeint;
     using State = typename Eqn::State;
     constexpr size_t lanes = Eqn::lanes;
 
     const size_t t_size = coord.t.shape()[2];
-    const auto [t_row, t0, t_end] = batch_time_span(coord, i, js, n_live, eqn, 0.01 * unit::sec);
+    const auto [t_row, t_end] = batch_time_span(coord, i, js, n_live);
 
     State state;
     eqn.set_init_state(state, t0);
@@ -573,11 +574,12 @@ ShockPair generate_shock_pair(Coord const& coord, Medium const& medium, Ejecta c
     Shock r_shock(phi_size_needed, theta_size, t_size, rad_rvs);
 
     for (size_t i = 0; i < phi_size_needed; ++i) {
+        const Real t0 = shock_start_time(coord, i, jet, medium, 0.01 * unit::sec);
         for_each_theta_batch(coord, [&](auto const& js, auto const& thetas, size_t n_live) {
             constexpr size_t width = std::tuple_size_v<std::remove_cvref_t<decltype(js)>>;
             using Value = std::conditional_t<width == 1, Real, lane::Batch>;
             FRShockEqn<Ejecta, Medium, Value> eqn(medium, jet, coord.phi(i), thetas, rad_fwd, rad_rvs);
-            grid_solve_shock_pair(i, js, n_live, coord, f_shock, r_shock, eqn, rtol);
+            grid_solve_shock_pair(i, js, n_live, coord, f_shock, r_shock, eqn, rtol, t0);
         });
 
         if (coord.symmetry >= Symmetry::phi_symmetric) {

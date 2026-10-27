@@ -175,7 +175,8 @@ void save_fwd_shock_state(size_t i, size_t j, size_t k, Eqn const& eqn, State co
 
 /**
  * <!-- ************************************************************************************** -->
- * @brief Integrates a batch of theta rows in lockstep and stores states on each row's t grid.
+ * @brief Integrates a batch of theta rows in lockstep from the phi-wide start `t0` and stores
+ *        states on each row's t grid.
  * @details Lanes [0, n_live) map to rows js[0..n_live); trailing lanes are padding (duplicates
  *          of the last live row) and never save output. A lane whose initial Lorentz factor is
  *          below the cutoff is recorded via set_stopping_shock and parked on a live lane.
@@ -183,7 +184,7 @@ void save_fwd_shock_state(size_t i, size_t j, size_t k, Eqn const& eqn, State co
  */
 template <typename FwdEqn>
 void grid_solve_fwd_shock(size_t i, std::array<size_t, FwdEqn::lanes> const& js, size_t n_live, Coord const& coord,
-                          Shock& shock, FwdEqn const& eqn, Real rtol);
+                          Shock& shock, FwdEqn const& eqn, Real rtol, Real t0);
 
 /**
  * <!-- ************************************************************************************** -->
