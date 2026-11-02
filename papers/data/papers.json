@@ -1,7 +1,280 @@
 {
- "generated": "2026-10-26",
+ "generated": "2026-11-02",
  "papers": [
   {
+   "figures": [
+    {
+     "file": "figures/W7162287227_0.png",
+     "caption": "Prompt emission properties of GRB\\,260310A. a. Fermi/GBM count-rate light curves from NaI detectors na and nb in the $50-300$ keV energy band. The black lines and gray lines represent the net counts and errors with a bin size of 2 s. b. Accumulated counts. The blue horizontal solid (dashed) lines are drawn at 0\\%--100\\% (5\\%--95\\%) of the total accumulated counts. The vertical lines in a and b represent the $T_90$ \u2026",
+     "matched": false
+    }
+   ],
+   "usage": "used",
+   "key": "W7162287227",
+   "title": "An Extremely Bright Slow-rising Afterglow from an Off-axis Jet in GRB 260310A",
+   "year": 2026,
+   "date": "2026-10-28",
+   "type": "article",
+   "authors": [
+    "Yu-Han Yang",
+    "Roberto Ricci",
+    "Eleonora Troja",
+    "Muskan Yadav",
+    "Yi-Han Iris Yin",
+    "Rub\u00e9n S\u00e1nchez-Ram\u00edrez",
+    "Brendan O\u2019Connor",
+    "Niccol\u00f2 Passaleva",
+    "Alberto J. Castro-Tirado",
+    "Hendrik van Eerten",
+    "Simone Dichiara",
+    "Vincenzo Galluzzi",
+    "Narjes Shahamat",
+    "Ivan Agudo",
+    "Jes\u00fas Aceituno",
+    "Malte Busmann",
+    "M. D. Caballero\u2010Garc\u00eda",
+    "Emilio Fern\u00e1ndez-Garc\u00eda",
+    "Daniel Gruen",
+    "Maria I. Gritsevich",
+    "Sergiy Guziy",
+    "D. Hiriart",
+    "Y. D. Hu",
+    "Martin Jel\u00ednek",
+    "Alexander Kutyrev",
+    "Al\u017eb\u011bta Male\u0148\u00e0kov\u00e0",
+    "Filip Novotn\u00fd",
+    "Ignacio P\u00e9rez-Garc\u00eda",
+    "Shashi B. Pandey",
+    "Jorma Ryske",
+    "A. Sota",
+    "J. \u0160trobl",
+    "Hira Waseem",
+    "Siyu Wu"
+   ],
+   "journal": "The Astrophysical Journal Letters",
+   "doi": "10.3847/2041-8213/aea990",
+   "arxiv": "2605.23818",
+   "abstract": "Abstract We present a multiwavelength study of GRB 260310A, a nearby long-duration gamma-ray burst (GRB) at z \u2243 0.153 associated with a broad-lined Type Ic supernova. Despite its modest prompt gamma-ray output, E \u03b3 ,iso \u2243 3.5 \u00d7 10 50 erg, GRB 260310A exhibits one of the brightest afterglows ever observed in the X-ray, optical, and radio bands. Its apparent brightness is not its only remarkable feature. The optical afterglow displays a delayed onset, characterized by a slow rising phase, with slope \u03b1 \u2248 \u22121, and a late peak at \u223c0.1 day. We argue that the combination of weak prompt emission, hard peak energy, and late afterglow onset is naturally explained by a GRB jet viewed off-axis. The radio spectral energy distributions are consistent with synchrotron radiation and indicate the presence of both reverse- shock (RS) and forward-shock (FS) components, thus providing a first test of RS models in an off-axis geometry. The X-ray afterglow displays a prominent rebrightening, monitored for up to \u223c68 days with no evidence of spectral evolution. A low level of linear polarization, \u03a0 \u2248 1.7%, is measured at 15 GHz at T 0 + 55 days and suggests that, at these late times, the FS is the dominant emission component from radio to X-rays. This late-time rebrightening represents a critical test for the two-component jet model. If interpreted as the emergence of a narrow jet core viewed further off-axis, it would imply extreme luminosities and energetics for an on-axis observer.",
+   "institutes": [
+    {
+     "id": "02p77k626",
+     "name": "University of Rome Tor Vergata",
+     "ror": "https://ror.org/02p77k626",
+     "country": "Italy",
+     "city": "Rome",
+     "lat": 41.89193,
+     "lng": 12.51133,
+     "homepage": "https://web.uniroma2.it",
+     "logo": "https://www.google.com/s2/favicons?domain=web.uniroma2.it&sz=64"
+    }
+   ],
+   "co_institutes": [
+    {
+     "id": "I4210115661",
+     "name": "Istituto di Radioastronomia di Bologna",
+     "ror": "https://ror.org/029st3z03",
+     "country": "Italy",
+     "city": "Bologna",
+     "lat": 44.49380874633789,
+     "lng": 11.338749885559082,
+     "homepage": "http://www.ira.inaf.it/Home-ita.html",
+     "logo": "https://www.google.com/s2/favicons?domain=ira.inaf.it&sz=64"
+    },
+    {
+     "id": "I875825670",
+     "name": "National Institute for Astrophysics",
+     "ror": "https://ror.org/02gh4kt33",
+     "country": "Italy",
+     "city": "Rome",
+     "lat": 41.891929626464844,
+     "lng": 12.511329650878906,
+     "homepage": "http://www.inaf.it/en",
+     "logo": "https://www.google.com/s2/favicons?domain=inaf.it&sz=64"
+    },
+    {
+     "id": "I889458895",
+     "name": "University of Hong Kong",
+     "ror": "https://ror.org/02zhqgq86",
+     "country": "Hong Kong",
+     "city": "Pok Fu Lam",
+     "lat": 22.26861,
+     "lng": 114.12924,
+     "homepage": "https://www.hku.hk",
+     "logo": "https://www.google.com/s2/favicons?domain=hku.hk&sz=64"
+    },
+    {
+     "id": "I4210159146",
+     "name": "Instituto de Astrof\u00edsica de Andaluc\u00eda",
+     "ror": "https://ror.org/04ka0vh05",
+     "country": "Spain",
+     "city": "Granada",
+     "lat": 37.18817138671875,
+     "lng": -3.6066699028015137,
+     "homepage": "https://www.iaa.csic.es",
+     "logo": "https://www.google.com/s2/favicons?domain=iaa.csic.es&sz=64"
+    },
+    {
+     "id": "I74973139",
+     "name": "Carnegie Mellon University",
+     "ror": "https://ror.org/05x2bcf33",
+     "country": "United States",
+     "city": "Pittsburgh",
+     "lat": 40.44062,
+     "lng": -79.99589,
+     "homepage": "https://www.cmu.edu",
+     "logo": "https://www.google.com/s2/favicons?domain=cmu.edu&sz=64"
+    },
+    {
+     "id": "I861853513",
+     "name": "Sapienza University of Rome",
+     "ror": "https://ror.org/02be6w209",
+     "country": "Italy",
+     "city": "Rome",
+     "lat": 41.89193,
+     "lng": 12.51133,
+     "homepage": "https://www.uniroma1.it",
+     "logo": "https://www.google.com/s2/favicons?domain=uniroma1.it&sz=64"
+    },
+    {
+     "id": "I82767444",
+     "name": "Universidad de M\u00e1laga",
+     "ror": "https://ror.org/036b2ww28",
+     "country": "Spain",
+     "city": "M\u00e1laga",
+     "lat": 36.72016,
+     "lng": -4.42034,
+     "homepage": "https://www.uma.es",
+     "logo": "https://www.google.com/s2/favicons?domain=uma.es&sz=64"
+    },
+    {
+     "id": "I51601045",
+     "name": "University of Bath",
+     "ror": "https://ror.org/002h8g185",
+     "country": "United Kingdom",
+     "city": "Bath",
+     "lat": 51.3751,
+     "lng": -2.36172,
+     "homepage": "http://www.bath.ac.uk/",
+     "logo": "https://www.google.com/s2/favicons?domain=bath.ac.uk&sz=64"
+    },
+    {
+     "id": "I4210099156",
+     "name": "Excellence Cluster Origins",
+     "ror": "https://ror.org/010wkny21",
+     "country": "Germany",
+     "city": "Garching",
+     "lat": 48.248958587646484,
+     "lng": 11.651009559631348,
+     "homepage": "https://www.origins-cluster.de",
+     "logo": "https://www.google.com/s2/favicons?domain=origins-cluster.de&sz=64"
+    },
+    {
+     "id": "I8204097",
+     "name": "Ludwig-Maximilians-Universit\u00e4t M\u00fcnchen",
+     "ror": "https://ror.org/05591te55",
+     "country": "Germany",
+     "city": "Munich",
+     "lat": 48.13743,
+     "lng": 11.57549,
+     "homepage": "https://www.lmu.de",
+     "logo": "https://www.google.com/s2/favicons?domain=lmu.de&sz=64"
+    },
+    {
+     "id": "I103402955",
+     "name": "Petro Mohyla Black Sea National University",
+     "ror": "https://ror.org/00vk44673",
+     "country": "Ukraine",
+     "city": "Mykolayiv",
+     "lat": 46.97184753417969,
+     "lng": 32.015113830566406,
+     "homepage": "https://chmnu.edu.ua/",
+     "logo": "https://www.google.com/s2/favicons?domain=chmnu.edu.ua&sz=64"
+    },
+    {
+     "id": "I150807315",
+     "name": "Guangxi University",
+     "ror": "https://ror.org/02c9qn167",
+     "country": "China",
+     "city": "Nanning",
+     "lat": 22.816669464111328,
+     "lng": 108.3166732788086,
+     "homepage": "https://www.gxu.edu.cn",
+     "logo": "https://www.google.com/s2/favicons?domain=gxu.edu.cn&sz=64"
+    },
+    {
+     "id": "I202391551",
+     "name": "Czech Academy of Sciences",
+     "ror": "https://ror.org/053avzc18",
+     "country": "Czechia",
+     "city": "Prague",
+     "lat": 50.08804,
+     "lng": 14.42076,
+     "homepage": "http://www.avcr.cz/",
+     "logo": "https://www.google.com/s2/favicons?domain=avcr.cz&sz=64"
+    },
+    {
+     "id": "I2800512976",
+     "name": "Czech Academy of Sciences, Astronomical Institute",
+     "ror": "https://ror.org/03tp8z347",
+     "country": "Czechia",
+     "city": "Ond\u0159ejov",
+     "lat": 49.90461,
+     "lng": 14.7842,
+     "homepage": "https://www.asu.cas.cz",
+     "logo": "https://www.google.com/s2/favicons?domain=asu.cas.cz&sz=64"
+    },
+    {
+     "id": "I1306266525",
+     "name": "Goddard Space Flight Center",
+     "ror": "https://ror.org/0171mag52",
+     "country": "United States",
+     "city": "Greenbelt",
+     "lat": 39.00455,
+     "lng": -76.87553,
+     "homepage": "https://www.nasa.gov/centers/goddard/home/index.html",
+     "logo": "https://www.google.com/s2/favicons?domain=nasa.gov&sz=64"
+    },
+    {
+     "id": "I66946132",
+     "name": "University of Maryland, College Park",
+     "ror": "https://ror.org/047s2c258",
+     "country": "United States",
+     "city": "College Park",
+     "lat": 38.98067,
+     "lng": -76.93692,
+     "homepage": "https://umd.edu",
+     "logo": "https://www.google.com/s2/favicons?domain=umd.edu&sz=64"
+    },
+    {
+     "id": "I21449261",
+     "name": "Masaryk University",
+     "ror": "https://ror.org/02j46qs45",
+     "country": "Czechia",
+     "city": "Brno",
+     "lat": 49.19522,
+     "lng": 16.60796,
+     "homepage": "https://www.muni.cz",
+     "logo": "https://www.google.com/s2/favicons?domain=muni.cz&sz=64"
+    },
+    {
+     "id": "I4210149503",
+     "name": "Ursa Astronomical Association",
+     "ror": "https://ror.org/05r2yk395",
+     "country": "Finland",
+     "city": "Helsinki",
+     "lat": 60.16202926635742,
+     "lng": 24.951765060424805,
+     "homepage": "https://www.ursa.fi/english.html",
+     "logo": "https://www.google.com/s2/favicons?domain=ursa.fi&sz=64"
+    }
+   ],
+   "sources": [
+    "openalex:fulltext"
+   ]
+  },
+  {
+   "figures": [],
+   "usage": "unverified",
    "key": "W7223417190",
    "title": "An intertwined short and long \u03b3-ray burst with a 4-minute separation",
    "year": 2026,
@@ -250,11 +523,11 @@
    ],
    "sources": [
     "openalex:cites"
-   ],
-   "figures": [],
-   "usage": "unverified"
+   ]
   },
   {
+   "figures": [],
+   "usage": "unverified",
    "key": "W7223384388",
    "title": "GRB 180620A: Detected Signatures of Precessing Magnetars in the Optical Afterglows of Gamma-Ray Bursts",
    "year": 2026,
@@ -301,9 +574,7 @@
    ],
    "sources": [
     "openalex:fulltext"
-   ],
-   "figures": [],
-   "usage": "unverified"
+   ]
   },
   {
    "figures": [
@@ -655,6 +926,41 @@
    "sources": [
     "openalex:fulltext"
    ]
+  },
+  {
+   "key": "W7223700083",
+   "title": "AMPy: A Flexible Framework for Modeling Gamma-Ray Burst Afterglows",
+   "year": 2026,
+   "date": "2026-10-01",
+   "type": "article",
+   "authors": [
+    "Dylan A. Dutton",
+    "Daniel Reichart"
+   ],
+   "journal": "Publications of the Astronomical Society of the Pacific",
+   "doi": "10.1088/1538-3873/aead21",
+   "arxiv": null,
+   "abstract": "Abstract The most powerful and energetic explosions in the known universe\u2014gamma-ray bursts (GRBs)\u2014originate from the collapse of massive stars or the merger of compact objects. Often marking the birth of a black hole, GRBs produce broadband emission via synchrotron radiation as the resulting ultra-relativistic jet interacts with the surrounding medium. This emission, known as the afterglow, carries rich information about the nature of the burst and its environment. Yet, despite strong theoretical motivation, and mounting observational evidence, for diverse density structures, many existing modeling tools remain tied to fixed environmental prescriptions (e.g., constant-density or idealized stellar-wind profiles) and lack flexible, unified approaches for statistical inference and model comparison. To address these limitations, we present AMPy (Afterglow Modeling in Python), a modular framework for Bayesian inference that combines a highly optimized, analytic forward-shock model that supports arbitrary power-law density profiles with a statistical framework that consistently incorporates systematic and statistical uncertainties across heterogeneous and multi-wavelength datasets. AMPy also supports seamless integration of user-defined models through a plugin architecture, allowing competing physical prescriptions to be evaluated and compared within an identical inference pipeline. We demonstrate the modeling capabilities on the multi-wavelength dataset of GRB 221009A and show that AMPy serves as an end-to-end toolkit for parameter estimation, model testing, and interpreting the environments and physics of GRBs.",
+   "institutes": [
+    {
+     "id": "I114027177",
+     "name": "University of North Carolina at Chapel Hill",
+     "ror": "https://ror.org/0130frc33",
+     "country": "United States",
+     "city": "Chapel Hill",
+     "lat": 35.9132,
+     "lng": -79.05584,
+     "homepage": "https://www.unc.edu",
+     "logo": "https://www.google.com/s2/favicons?domain=unc.edu&sz=64"
+    }
+   ],
+   "co_institutes": [],
+   "sources": [
+    "openalex:cites",
+    "openalex:fulltext"
+   ],
+   "figures": [],
+   "usage": "unverified"
   },
   {
    "figures": [
@@ -2633,7 +2939,7 @@
     "Han Qu",
     "Haibin Zhao"
    ],
-   "journal": "",
+   "journal": "Ground-based and Airborne Telescopes IX",
    "doi": "10.1117/12.3103341",
    "arxiv": null,
    "abstract": "Purple Mountain Observatory is building a new 4.2-meter telescope at the Lenghu B+ site in Qinghai Province, China. The 4.2m ground-based astrometric telescope is intended to carry out follow-up observations of gamma-ray bursts and gravitational-wave events, obtain spectra of supernovae, and perform astrometric measurements of selected Solar System targets. The telescope has one Cassegrain focus and two Nasmyth foci. The Cassegrain focus hosts the main imaging camera, which includes multiple filters and provides a field of view of approximately 10\u2032 \u00d7 10\u2032. The two Nasmyth ports will be equipped with a medium- to low-resolution spectrograph and an adaptive-optics camera. This presentation will report on the development progress of the telescope and describe the range of scientific programs it is designed to support.",
@@ -2676,7 +2982,7 @@
    "type": "article",
    "authors": [
     "Itai Sfaradi",
-    "Raffaella Margutti",
+    "R. Margutti",
     "R. Chornock",
     "A. J. Nayana",
     "Eli Wiston",
@@ -2686,13 +2992,13 @@
     "Paz Beniamini",
     "Wenbin Lu",
     "Rodolfo Barniol Duran",
-    "M. Bietenholz",
+    "M. F. Bietenholz",
     "Collin T. Christy",
     "D. L. Coppejans",
     "M. R. Drout",
     "Dina Ibrahimzade",
     "Micha\u0142 Jerzy Micha\u0142owski",
-    "Danny Milisavljevic",
+    "Dan Milisavljevic",
     "Conor M. B. Omand",
     "Yihan Wang",
     "K. D. Alexander",
@@ -2700,12 +3006,12 @@
     "Joe Bright",
     "Jonathan Granot",
     "Erica Hammerstein",
-    "Wynn Jacobson-Galan",
+    "W. V. Jacobson-Gal\u00e1n",
     "Natalie LeBaron",
     "Kohta Murase",
     "Gitika Rameshan",
     "Huei Sears",
-    "Michael Stroh",
+    "M. C. Stroh",
     "G. Terreran"
    ],
    "journal": "The Astrophysical Journal Letters",
@@ -3087,277 +3393,6 @@
    ]
   },
   {
-   "figures": [
-    {
-     "file": "figures/W7162287227_0.png",
-     "caption": "Prompt emission properties of GRB\\,260310A. a. Fermi/GBM count-rate light curves from NaI detectors na and nb in the $50-300$ keV energy band. The black lines and gray lines represent the net counts and errors with a bin size of 2 s. b. Accumulated counts. The blue horizontal solid (dashed) lines are drawn at 0\\%--100\\% (5\\%--95\\%) of the total accumulated counts. The vertical lines in a and b represent the $T_90$ \u2026",
-     "matched": false
-    }
-   ],
-   "usage": "used",
-   "key": "W7162287227",
-   "title": "An extremely bright slow-rising afterglow from an off-axis jet in GRB 260310A",
-   "year": 2026,
-   "date": "2026-05-22",
-   "type": "preprint",
-   "authors": [
-    "Yu-Han Yang",
-    "Roberto Ricci",
-    "Eleonora Troja",
-    "Muskan Yadav",
-    "Yi-Han Iris Yin",
-    "Rub\u00e9n S\u00e1nchez-Ram\u00edrez",
-    "Brendan O\u2019Connor",
-    "Niccol\u00f2 Passaleva",
-    "Alberto J. Castro-Tirado",
-    "Hendrik van Eerten",
-    "Simone Dichiara",
-    "V. Galluzzi",
-    "Narjes Shahamat",
-    "I. Agudo",
-    "Jes\u00fas Aceituno",
-    "Malte Busmann",
-    "M. D. Caballero\u2010Garc\u00eda",
-    "Emilio Fern\u00e1ndez-Garc\u00eda",
-    "Daniel Gruen",
-    "Maria I. Gritsevich",
-    "Sergiy Guziy",
-    "D. Hiriart",
-    "Y. D. Hu",
-    "Martin Jel\u00ednek",
-    "Alexander Kutyrev",
-    "Al\u017eb\u011bta Male\u0148\u00e0kov\u00e0",
-    "Filip Novotn\u00fd",
-    "Ignacio P\u00e9rez-Garc\u00eda",
-    "Shashi B. Pandey",
-    "Jorma Ryske",
-    "A. Sota",
-    "J. \u0160trobl",
-    "Hira Waseem",
-    "Siyu Wu"
-   ],
-   "journal": "arXiv (Cornell University)",
-   "doi": "10.48550/arxiv.2605.23818",
-   "arxiv": "2605.23818",
-   "abstract": "We present a multi-wavelength study of GRB 260310A, a nearby long-duration gamma-ray burst at $z\\simeq0.153$ associated with a broad-lined Type Ic supernova. Despite its modest prompt gamma-ray output, $E_{\u03b3,\\rm iso}\\simeq3.5\\times10^{50}$ erg, GRB 260310A exhibits one of the brightest afterglows ever observed in the X-ray, optical, and radio bands. Its apparent brightness is not its only remarkable feature. The optical afterglow displays a delayed onset, characterized by a slow rising phase, with slope $\u03b1\\approx-1$, and a late peak at $\\approx$0.1 d. We argue that the combination of weak prompt emission, hard peak energy, and late afterglow onset is naturally explained by a GRB jet viewed off-axis. The radio spectral energy distributions are consistent with synchrotron radiation and indicate the presence of both reverse- and forward-shock components, thus providing a first test of reverse-shock models in an off-axis geometry. The X-ray afterglow displays a prominent rebrightening, monitored for up to $\\approx$68 d with no evidence of spectral evolution. A low level of linear polarization, $\u03a0\\approx1.7\\%$, is measured at 15 GHz at $T_0+55$ d and suggests that, at these late times, the forward-shock is the dominant emission component from radio to X-rays. This late-time rebrightening represents a critical test for the two-component jet model. If interpreted as the emergence of a narrow jet core viewed further off-axis, it would imply extreme luminosities and energetics for an on-axis observer.",
-   "institutes": [
-    {
-     "id": "02p77k626",
-     "name": "University of Rome Tor Vergata",
-     "ror": "https://ror.org/02p77k626",
-     "country": "Italy",
-     "city": "Rome",
-     "lat": 41.89193,
-     "lng": 12.51133,
-     "homepage": "https://web.uniroma2.it",
-     "logo": "https://www.google.com/s2/favicons?domain=web.uniroma2.it&sz=64"
-    }
-   ],
-   "co_institutes": [
-    {
-     "id": "I4210115661",
-     "name": "Istituto di Radioastronomia di Bologna",
-     "ror": "https://ror.org/029st3z03",
-     "country": "Italy",
-     "city": "Bologna",
-     "lat": 44.49380874633789,
-     "lng": 11.338749885559082,
-     "homepage": "http://www.ira.inaf.it/Home-ita.html",
-     "logo": "https://www.google.com/s2/favicons?domain=ira.inaf.it&sz=64"
-    },
-    {
-     "id": "I875825670",
-     "name": "National Institute for Astrophysics",
-     "ror": "https://ror.org/02gh4kt33",
-     "country": "Italy",
-     "city": "Rome",
-     "lat": 41.891929626464844,
-     "lng": 12.511329650878906,
-     "homepage": "http://www.inaf.it/en",
-     "logo": "https://www.google.com/s2/favicons?domain=inaf.it&sz=64"
-    },
-    {
-     "id": "I889458895",
-     "name": "University of Hong Kong",
-     "ror": "https://ror.org/02zhqgq86",
-     "country": "Hong Kong",
-     "city": "Pok Fu Lam",
-     "lat": 22.26861,
-     "lng": 114.12924,
-     "homepage": "https://www.hku.hk",
-     "logo": "https://www.google.com/s2/favicons?domain=hku.hk&sz=64"
-    },
-    {
-     "id": "I4210159146",
-     "name": "Instituto de Astrof\u00edsica de Andaluc\u00eda",
-     "ror": "https://ror.org/04ka0vh05",
-     "country": "Spain",
-     "city": "Granada",
-     "lat": 37.18817138671875,
-     "lng": -3.6066699028015137,
-     "homepage": "https://www.iaa.csic.es",
-     "logo": "https://www.google.com/s2/favicons?domain=iaa.csic.es&sz=64"
-    },
-    {
-     "id": "I74973139",
-     "name": "Carnegie Mellon University",
-     "ror": "https://ror.org/05x2bcf33",
-     "country": "United States",
-     "city": "Pittsburgh",
-     "lat": 40.44062,
-     "lng": -79.99589,
-     "homepage": "https://www.cmu.edu",
-     "logo": "https://www.google.com/s2/favicons?domain=cmu.edu&sz=64"
-    },
-    {
-     "id": "I861853513",
-     "name": "Sapienza University of Rome",
-     "ror": "https://ror.org/02be6w209",
-     "country": "Italy",
-     "city": "Rome",
-     "lat": 41.89193,
-     "lng": 12.51133,
-     "homepage": "https://www.uniroma1.it",
-     "logo": "https://www.google.com/s2/favicons?domain=uniroma1.it&sz=64"
-    },
-    {
-     "id": "I82767444",
-     "name": "Universidad de M\u00e1laga",
-     "ror": "https://ror.org/036b2ww28",
-     "country": "Spain",
-     "city": "M\u00e1laga",
-     "lat": 36.72016,
-     "lng": -4.42034,
-     "homepage": "https://www.uma.es",
-     "logo": "https://www.google.com/s2/favicons?domain=uma.es&sz=64"
-    },
-    {
-     "id": "I51601045",
-     "name": "University of Bath",
-     "ror": "https://ror.org/002h8g185",
-     "country": "United Kingdom",
-     "city": "Bath",
-     "lat": 51.3751,
-     "lng": -2.36172,
-     "homepage": "http://www.bath.ac.uk/",
-     "logo": "https://www.google.com/s2/favicons?domain=bath.ac.uk&sz=64"
-    },
-    {
-     "id": "I4210099156",
-     "name": "Excellence Cluster Origins",
-     "ror": "https://ror.org/010wkny21",
-     "country": "Germany",
-     "city": "Garching",
-     "lat": 48.248958587646484,
-     "lng": 11.651009559631348,
-     "homepage": "https://www.origins-cluster.de",
-     "logo": "https://www.google.com/s2/favicons?domain=origins-cluster.de&sz=64"
-    },
-    {
-     "id": "I8204097",
-     "name": "Ludwig-Maximilians-Universit\u00e4t M\u00fcnchen",
-     "ror": "https://ror.org/05591te55",
-     "country": "Germany",
-     "city": "Munich",
-     "lat": 48.13743,
-     "lng": 11.57549,
-     "homepage": "https://www.lmu.de",
-     "logo": "https://www.google.com/s2/favicons?domain=lmu.de&sz=64"
-    },
-    {
-     "id": "I103402955",
-     "name": "Petro Mohyla Black Sea National University",
-     "ror": "https://ror.org/00vk44673",
-     "country": "Ukraine",
-     "city": "Mykolayiv",
-     "lat": 46.97184753417969,
-     "lng": 32.015113830566406,
-     "homepage": "https://chmnu.edu.ua/",
-     "logo": "https://www.google.com/s2/favicons?domain=chmnu.edu.ua&sz=64"
-    },
-    {
-     "id": "I150807315",
-     "name": "Guangxi University",
-     "ror": "https://ror.org/02c9qn167",
-     "country": "China",
-     "city": "Nanning",
-     "lat": 22.816669464111328,
-     "lng": 108.3166732788086,
-     "homepage": "https://www.gxu.edu.cn",
-     "logo": "https://www.google.com/s2/favicons?domain=gxu.edu.cn&sz=64"
-    },
-    {
-     "id": "I202391551",
-     "name": "Czech Academy of Sciences",
-     "ror": "https://ror.org/053avzc18",
-     "country": "Czechia",
-     "city": "Prague",
-     "lat": 50.08804,
-     "lng": 14.42076,
-     "homepage": "http://www.avcr.cz/",
-     "logo": "https://www.google.com/s2/favicons?domain=avcr.cz&sz=64"
-    },
-    {
-     "id": "I2800512976",
-     "name": "Czech Academy of Sciences, Astronomical Institute",
-     "ror": "https://ror.org/03tp8z347",
-     "country": "Czechia",
-     "city": "Ond\u0159ejov",
-     "lat": 49.90461,
-     "lng": 14.7842,
-     "homepage": "https://www.asu.cas.cz",
-     "logo": "https://www.google.com/s2/favicons?domain=asu.cas.cz&sz=64"
-    },
-    {
-     "id": "I1306266525",
-     "name": "Goddard Space Flight Center",
-     "ror": "https://ror.org/0171mag52",
-     "country": "United States",
-     "city": "Greenbelt",
-     "lat": 39.00455,
-     "lng": -76.87553,
-     "homepage": "https://www.nasa.gov/centers/goddard/home/index.html",
-     "logo": "https://www.google.com/s2/favicons?domain=nasa.gov&sz=64"
-    },
-    {
-     "id": "I66946132",
-     "name": "University of Maryland, College Park",
-     "ror": "https://ror.org/047s2c258",
-     "country": "United States",
-     "city": "College Park",
-     "lat": 38.98067,
-     "lng": -76.93692,
-     "homepage": "https://umd.edu",
-     "logo": "https://www.google.com/s2/favicons?domain=umd.edu&sz=64"
-    },
-    {
-     "id": "I21449261",
-     "name": "Masaryk University",
-     "ror": "https://ror.org/02j46qs45",
-     "country": "Czechia",
-     "city": "Brno",
-     "lat": 49.19522,
-     "lng": 16.60796,
-     "homepage": "https://www.muni.cz",
-     "logo": "https://www.google.com/s2/favicons?domain=muni.cz&sz=64"
-    },
-    {
-     "id": "I4210149503",
-     "name": "Ursa Astronomical Association",
-     "ror": "https://ror.org/05r2yk395",
-     "country": "Finland",
-     "city": "Helsinki",
-     "lat": 60.16202926635742,
-     "lng": 24.951765060424805,
-     "homepage": "https://www.ursa.fi/english.html",
-     "logo": "https://www.google.com/s2/favicons?domain=ursa.fi&sz=64"
-    }
-   ],
-   "sources": [
-    "openalex:fulltext"
-   ]
-  },
-  {
    "figures": [],
    "usage": "unverified",
    "key": "W7204613324",
@@ -3423,7 +3458,7 @@
    "journal": "Research Square",
    "doi": "10.21203/rs.3.rs-9506415/v1",
    "arxiv": null,
-   "abstract": "",
+   "abstract": "Abstract Gamma-ray bursts (GRBs) and superluminous supernovae (SLSNe) are the most energetic explosions known in nature. Both arise from the collapse of massive stars in low metallicity environments [1\u20134], and are likely driven to their extreme energetics by a black hole [5] or neutron star central engine [6, 7]. Their excep- tional brightness has enabled us to probe stellar death from the nearby to very distant Universe [8, 9]. However, the relationship, if any, between these two extreme populations has been unclear. Here we report observations with the James Webb Space Telescope (JWST) and Hubble Space Telescope (HST) that uncover a superluminous supernova (SLSN) following a GRB (GRB 230818A) at z = 2.375. The supernova (SN) reaches a peak of MB \u223c \u221221 at around 50 rest-frame days and decays slowly. These observations clearly demonstrate that, at least in some cases, the same stellar collapse can drive both of the most extreme explosions in nature. A magnetar model cannot simultaneously explain both the GRB and supernova properties with consistent parameters for standard spin-down assumptions, but reasonable fits to the SN are found for both the radioactive power and circumstellar interaction. Phenomenologically, the SN is similar to SN 2007bi, suggested to be radioactively powered [10]. If GRB 230818A is radioactively powered, then massive core collapse can produce both a black hole and a very high ejecta and nickel mass. This would have substantial implica- tions for the study of SN and GRBs from first-generation stars, as well as for the production of the binary black hole population observed in gravitational waves.",
    "institutes": [
     {
      "id": "I145872427",
@@ -3875,7 +3910,7 @@
     "Paul Thomas O'Brien",
     "D. Stern",
     "H. -M. Zhang",
-    "Yang, Y. -P.",
+    "Y. -P. Yang",
     "T. An",
     "Y.-L. Qiu",
     "L. P. Xin",
@@ -5100,7 +5135,7 @@
    "authors": [
     "Clarinda Montilla"
    ],
-   "journal": "University of Canterbury Research Repository (University of Canterbury)",
+   "journal": "UC Research Repository  (University of Canterbury)",
    "doi": "10.26021/16642",
    "arxiv": null,
    "abstract": "Fast astrophysical transients evolve on timescales of milliseconds to hours, making them among the most difficult phenomena to observe and model. Our understanding is limited by existing models that have not been tested against high-cadence data, and the still-unknown physical mechanisms behind some transient populations. This thesis studies two distinct, yet related challenges to modelling the fastest transients known. The first project evaluates the reliability and self-consistency of two well-known gamma-ray burst (GRB) afterglow modelling packages, afterglowpy and VegasAfterglow. Using dynamic nested sampling with dynesty, I simulate data under idealised conditions to test the self-consistency. I then simulate data that is representative of TESS and LSST observations, demonstrating that to recover parameters reliably, high-cadence data is needed. This same pipeline is applied to two known GRB afterglows, AT 2021buv (GRB 210204A), and AT 2024zuk (GRB 241030A), where I find that we cannot recover physical afterglow parameters when using TESS data with the spectroscopically defined redshift for either afterglow. Through the tests in this thesis parameter recovery is only possible with high-cadence, multi-band, noiseless data. In this thesis I also demonstrate that afterglowpy exhibits numerical instability that reduces its functionality when being used to fit to data. I also identified a fundamental error in the Redback modelling front-end that affects all band-pass calculations done prior to April 2025. Furthermore, I demonstrate that it is necessary to account for the integration time of high cadence telescopes such as TESS when modelling the peak brightness of fast transients, which significantly helps to improve fitting of the texp parameter for GRB afterglows. In the second project, I create a simulation framework to determine if the bimodal energy distributions (BEDs) seen in some hyperactive repeating fast radio bursts (FRBs) can be produced by relativistic beaming. Using six beam shape models and three intrinsic energy distributions across a large sample of simulated bursts, I find that only the combination of a relativistic beam with an isotropic plateau paired with a log-normal intrinsic energy distribution produced a BED consistent with observations. This framework provides a physically motivated beaming origin for the bimodality. Together these results demonstrate that high-cadence imaging of fast transients is essential to constrain their models. GRB afterglow packages require significant improvements before reliable parameters can be acquired by general users. Additionally, the FRB BEDs may be explained by geometric beaming effects, similar to those of GRB afterglows. With new upcoming time-domain instruments, such as the Argus Array, we need to look at the theory behind these fascinating phenomena to prepare for the influx of faster, fainter events we will discover in the coming decades.",
