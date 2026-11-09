@@ -3101,5 +3101,16 @@
   "lng": 1.44367,
   "homepage": "https://www.univ-tlse3.fr",
   "logo": "https://www.google.com/s2/favicons?domain=univ-tlse3.fr&sz=64"
+ },
+ "I4387152681": {
+  "id": "I4387152681",
+  "name": "Osservatorio di Astrofisica e Scienza dello Spazio",
+  "ror": "https://ror.org/00gqsp710",
+  "country": "Italy",
+  "city": "Bologna",
+  "lat": 44.49380874633789,
+  "lng": 11.338749885559082,
+  "homepage": "https://www.oas.inaf.it",
+  "logo": "https://www.google.com/s2/favicons?domain=oas.inaf.it&sz=64"
  }
 }

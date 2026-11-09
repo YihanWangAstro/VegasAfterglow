@@ -1,6 +1,90 @@
 {
- "generated": "2026-11-02",
+ "generated": "2026-11-09",
  "papers": [
+  {
+   "key": "W7225110354",
+   "title": "GRB 241113B: the first SVOM and EP gamma-ray burst A soft GRB likely seen on-axis, from soft X-rays to gamma-rays",
+   "year": 2026,
+   "date": "2026-10-29",
+   "type": "preprint",
+   "authors": [
+    "D. Adrien",
+    "Damien Turpin",
+    "T. Maiolino",
+    "F. Daigne",
+    "F. Piron",
+    "Z-H Yao",
+    "Q. Wu",
+    "C. -Y. Dai",
+    "A. V. Filippenko",
+    "B. Schneider",
+    "B. Kumar",
+    "B. Cordier",
+    "F. Cangemi",
+    "A. Coleiro",
+    "M. G. Bernardini",
+    "N. Dagoneau",
+    "Y. -L. Qiu",
+    "L. -P. Xin",
+    "H. -L. Li",
+    "H. Sun",
+    "X. -P. Xu",
+    "Z. -Y. Liu",
+    "M. -Q. Huang",
+    "M. -H. Zhang",
+    "W. Yuan",
+    "W. -K. Zheng",
+    "G. Mo",
+    "X. Liu",
+    "Y. Fang",
+    "G. W. Du",
+    "S. Guillot",
+    "X. -W. Yu",
+    "R. Leticia Becerra",
+    "J.-Y. Wei",
+    "S. Basa",
+    "J. Wang",
+    "L. Bouchet",
+    "Han X-H",
+    "M. Brunet",
+    "C. Wu",
+    "S. Crepaldi",
+    "H-B Cai",
+    "Olivier Godet",
+    "Y. Xu",
+    "Diego G\u00f6tz",
+    "P-P Zhang",
+    "A. Saccardi",
+    "Y. -J. Xiao",
+    "S. Vergani",
+    "S. -N. Zhang",
+    "S.-L. Xiong",
+    "Y. -W. Dong",
+    "Liu Jt"
+   ],
+   "journal": "arXiv (Cornell University)",
+   "doi": "10.48550/arxiv.2610.41005",
+   "arxiv": "2610.41005",
+   "abstract": "In 2024, two new missions were launched to detect high-energy transients. EP and SVOM aim to observe soft transients from X-ray rich gamma-ray bursts (XRR), X-ray flashes (XRF), to fast X-ray transients (FXT). GRB 241113B, the first soft gamma-ray burst (GRB) jointly detected by EP and SVOM from soft X-rays to gamma-rays (0.5--1000~keV). GRB 241113B has an $E^{obs}_{peak} \\approx 35$ keV and a redshift (z) likely between 0.5 and 3.5, with $T_{90,\u03b3} \\approx 42$~s (4--30~keV). This burst can be classified as either an XRR or XRF, depending on the fluence ratio used. The afterglow is achromatic and featureless with a normal decay ($\u03b1\\approx -1.40$). The prompt emission does not satisfy the shock-breakout relation, and thus a geometry comprised of a jet is preferred. However, the afterglow fitting favors a jet viewed on-axis dominated by synchrotron emission due to electrons in a slow cooling regime, interacting with a wind medium. The bulk Lorentz factor ($\u0393$) indicates that the motion of the jet is ultrarelativistic ($\u0393_{0}>100$), which discards the dirty fireball model. Hence, the jet baryon loading should be compatible with that of classical GRBs (C-GRBs). The prompt spectral properties of GRB 241113B ($\u03b1$, $E^{\\mathrm{obs}}_{\\mathrm{peak}}$, $E_{\u03b3,iso}$) are comparable to those of XRFs/XRRs and are in the continuity of the C-GRB distributions, setting it apart from the extragalatic FXT population solely detected by EP. Hence, the SVOM mission, with the benefit brought by the instrument ECLAIRs with its high sensitivity and low energy threshold (at 4keV), is able to detect the potential $\u03b3$-ray counterpart of soft transients also observed by EP and help to differentiate them from FXTs. The latter show the interest of the joint operation of both missions to better study the landscape of soft transients.",
+   "institutes": [],
+   "co_institutes": [],
+   "sources": [
+    "openalex:fulltext"
+   ],
+   "figures": [
+    {
+     "file": "figures/W7225110354_0.png",
+     "caption": "GRB 241113B afterglow fit with the VegasAfterglow code using a simple top-hat jet propagating into a constant-density ISM and at $z = 0.5$.",
+     "matched": true
+    },
+    {
+     "file": "figures/W7225110354_1.png",
+     "caption": "GRB 241113B afterglow fit with the VegasAfterglow code using a simple top-hat jet propagating into a constant-density ISM at $z = 3.5$.",
+     "matched": true
+    }
+   ],
+   "usage": "used"
+  },
   {
    "figures": [
     {
@@ -269,6 +353,7 @@
     }
    ],
    "sources": [
+    "openalex:cites",
     "openalex:fulltext"
    ]
   },
@@ -682,6 +767,7 @@
     }
    ],
    "sources": [
+    "openalex:cites",
     "openalex:fulltext"
    ]
   },
@@ -795,6 +881,7 @@
     }
    ],
    "sources": [
+    "openalex:cites",
     "openalex:fulltext"
    ]
   },
@@ -928,6 +1015,8 @@
    ]
   },
   {
+   "figures": [],
+   "usage": "unverified",
    "key": "W7223700083",
    "title": "AMPy: A Flexible Framework for Modeling Gamma-Ray Burst Afterglows",
    "year": 2026,
@@ -958,9 +1047,7 @@
    "sources": [
     "openalex:cites",
     "openalex:fulltext"
-   ],
-   "figures": [],
-   "usage": "unverified"
+   ]
   },
   {
    "figures": [
@@ -1549,6 +1636,7 @@
     }
    ],
    "sources": [
+    "openalex:cites",
     "openalex:fulltext"
    ]
   },
@@ -2097,7 +2185,6 @@
     }
    ],
    "sources": [
-    "ads",
     "openalex:cites"
    ]
   },
@@ -3422,6 +3509,7 @@
    ],
    "co_institutes": [],
    "sources": [
+    "openalex:cites",
     "openalex:fulltext"
    ]
   },
@@ -3831,6 +3919,7 @@
    ],
    "co_institutes": [],
    "sources": [
+    "openalex:cites",
     "openalex:fulltext"
    ]
   },
@@ -3872,6 +3961,7 @@
    ],
    "co_institutes": [],
    "sources": [
+    "openalex:cites",
     "openalex:fulltext"
    ]
   },
@@ -5845,7 +5935,8 @@
     }
    ],
    "sources": [
-    "openalex:cites"
+    "openalex:cites",
+    "openalex:fulltext"
    ]
   },
   {
