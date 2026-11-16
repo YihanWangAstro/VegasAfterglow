@@ -1,7 +1,20 @@
 {
- "generated": "2026-11-09",
+ "generated": "2026-11-16",
  "papers": [
   {
+   "figures": [
+    {
+     "file": "figures/W7225110354_0.png",
+     "caption": "GRB 241113B afterglow fit with the VegasAfterglow code using a simple top-hat jet propagating into a constant-density ISM and at $z = 0.5$.",
+     "matched": true
+    },
+    {
+     "file": "figures/W7225110354_1.png",
+     "caption": "GRB 241113B afterglow fit with the VegasAfterglow code using a simple top-hat jet propagating into a constant-density ISM at $z = 3.5$.",
+     "matched": true
+    }
+   ],
+   "usage": "used",
    "key": "W7225110354",
    "title": "GRB 241113B: the first SVOM and EP gamma-ray burst A soft GRB likely seen on-axis, from soft X-rays to gamma-rays",
    "year": 2026,
@@ -70,20 +83,7 @@
    "co_institutes": [],
    "sources": [
     "openalex:fulltext"
-   ],
-   "figures": [
-    {
-     "file": "figures/W7225110354_0.png",
-     "caption": "GRB 241113B afterglow fit with the VegasAfterglow code using a simple top-hat jet propagating into a constant-density ISM and at $z = 0.5$.",
-     "matched": true
-    },
-    {
-     "file": "figures/W7225110354_1.png",
-     "caption": "GRB 241113B afterglow fit with the VegasAfterglow code using a simple top-hat jet propagating into a constant-density ISM at $z = 3.5$.",
-     "matched": true
-    }
-   ],
-   "usage": "used"
+   ]
   },
   {
    "figures": [
@@ -3017,7 +3017,7 @@
    "title": "Development progress and science drivers of the 4.2m ground-based astrometric telescope",
    "year": 2026,
    "date": "2026-07-01",
-   "type": "conference-abstract",
+   "type": "conference-paper",
    "authors": [
     "T. R. Sun",
     "\u5e73\u4e00\u9f0e",
@@ -3045,7 +3045,7 @@
    ],
    "co_institutes": [],
    "sources": [
-    "ads"
+    "openalex:cites"
    ]
   },
   {
