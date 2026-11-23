@@ -3112,5 +3112,38 @@
   "lng": 11.338749885559082,
   "homepage": "https://www.oas.inaf.it",
   "logo": "https://www.google.com/s2/favicons?domain=oas.inaf.it&sz=64"
+ },
+ "I4405287868": {
+  "id": "I4405287868",
+  "name": "Dunlap Institute for Astronomy & Astrophysics",
+  "ror": "https://ror.org/005k7sw35",
+  "country": "Canada",
+  "city": "Toronto",
+  "lat": 43.70643,
+  "lng": -79.39864,
+  "homepage": "https://www.dunlap.utoronto.ca",
+  "logo": "https://www.google.com/s2/favicons?domain=dunlap.utoronto.ca&sz=64"
+ },
+ "I4405253179": {
+  "id": "I4405253179",
+  "name": "Laboratoire d'\u00c9tude de l'Univers et des Ph\u00e9nom\u00e8nes Extr\u00eames",
+  "ror": "https://ror.org/00cpdar66",
+  "country": "France",
+  "city": "Paris",
+  "lat": 48.85341,
+  "lng": 2.3488,
+  "homepage": "https://lux.observatoiredeparis.psl.eu",
+  "logo": "https://www.google.com/s2/favicons?domain=lux.observatoiredeparis.psl.eu&sz=64"
+ },
+ "aff:national astronomical observatories, chinese academy of sciences, 20a datun road, beijing 100101, china": {
+  "id": "034t30j35",
+  "name": "Chinese Academy of Sciences",
+  "ror": "https://ror.org/034t30j35",
+  "country": "China",
+  "city": "Beijing",
+  "lat": 39.9075,
+  "lng": 116.39723,
+  "homepage": "https://www.cas.cn",
+  "logo": "https://www.google.com/s2/favicons?domain=cas.cn&sz=64"
  }
 }
