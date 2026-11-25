@@ -410,4 +410,22 @@ BOOST_AUTO_TEST_CASE(jump_refinement_grid_near_jump) {
     }
 }
 
+// ---------------------------------------------------------------------------
+// logspace_with_band_refinement
+// ---------------------------------------------------------------------------
+
+// A band edge just above the start leaves no room for a lead-in point; the
+// grid must still span [ts, t_end] (it used to start at the band edge, 5% late).
+BOOST_AUTO_TEST_CASE(band_refinement_spans_start_to_end) {
+    const Real ts = 3.2313;
+    const Real t_end = 6.733e6;
+    const Real t_dec = 10.228;
+    const Array grid = logspace_with_band_refinement(ts, t_end, t_dec / 3, 3 * t_dec, 99, 3.0);
+    BOOST_CHECK_CLOSE(grid(0), ts, 1e-10);
+    BOOST_CHECK_CLOSE(grid(98), t_end, 1e-10);
+    for (size_t i = 1; i < grid.size(); ++i) {
+        BOOST_CHECK_LT(grid(i - 1), grid(i));
+    }
+}
+
 BOOST_AUTO_TEST_SUITE_END()

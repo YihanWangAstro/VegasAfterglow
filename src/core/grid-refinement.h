@@ -478,10 +478,11 @@ TimeScanResult scan_time_bounds(Coord const& coord, Ejecta const& jet, Medium co
     auto early_t_cache = xt::xtensor<Real, 2>::from_shape({phi_size, theta_size});
 
     for (size_t i = 0; i < phi_size; ++i) {
+        // A row shared by every azimuth starts for the one farthest from the line of sight.
+        const Real cos_phi = phi_size < coord.phi.size() ? -1.0 : std::cos(coord.phi(i));
         for (size_t j = 0; j < theta_size; ++j) {
             const Real b = physics::relativistic::gamma_to_beta(jet.Gamma0(coord.phi(i), coord.theta(j)));
-            const Real cos_a =
-                std::cos(coord.theta(j)) * cos_tv + std::sin(coord.theta(j)) * sin_tv * std::cos(coord.phi(i));
+            const Real cos_a = std::cos(coord.theta(j)) * cos_tv + std::sin(coord.theta(j)) * sin_tv * cos_phi;
             const Real ts = 0.99 * t_min * (1 - b) / (1 - cos_a * b) / (1 + z);
 
             const Real td = estimate_t_dec(jet, medium, coord.phi(i), coord.theta(j));
@@ -546,6 +547,7 @@ inline Array logspace_with_band_refinement(Real ts, Real t_end, Real b_lo, Real 
     n1 = std::min(n1, segs - 2);
     n3 = std::min(n3, segs - 1 - n1 - 1);
     const size_t n2 = segs - n1 - n3;
+    const Real band_lo = n1 > 0 ? l1 : l0; // no lead-in segment: the band starts at ts
 
     Array grid = Array::from_shape({n});
     size_t idx = 0;
@@ -553,7 +555,7 @@ inline Array logspace_with_band_refinement(Real ts, Real t_end, Real b_lo, Real 
         grid(idx++) = l0 + (l1 - l0) * static_cast<Real>(k) / static_cast<Real>(n1);
     }
     for (size_t k = 0; k < n2; ++k) {
-        grid(idx++) = l1 + (l2 - l1) * static_cast<Real>(k) / static_cast<Real>(n2);
+        grid(idx++) = band_lo + (l2 - band_lo) * static_cast<Real>(k) / static_cast<Real>(n2);
     }
     for (size_t k = 0; k <= n3; ++k) {
         // n3 == 0 when the band clips t_end: the general expression would be

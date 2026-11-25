@@ -18,6 +18,13 @@ Have a feature request? [Open an issue](https://github.com/YihanWangAstro/VegasA
 
 ---
 
+## [Unreleased]
+
+### Fixed
+
+- **Early-time flux for off-axis observers.** With `theta_obs > 0`, the flux at the earliest requested times could come out too low, and the answer changed when an earlier time was added to the same call. The loss was 10-40% at the first requested time for spreading jets and for custom media declared non-isotropic, larger for the reverse shock, and up to ~25% for the built-in media when the observer sits far outside the jet; it faded over the following decade in time. If you fitted off-axis data with one of these setups since v2.0.0, re-check the earliest points. On-axis results are unchanged. Thanks to Ethan Nipper and Jonathan Keohane for reporting and diagnosing this.
+  - Each theta row of an axisymmetric jet is solved once and reused at every azimuth, but its time grid started where the azimuth nearest the observer needed it, so cells further round the jet had no grid node before the earliest requested time and contributed nothing there. This was introduced by a performance optimization in v2.0.0 that replaced one conservative start time for the whole jet with a start per cell. Each row now starts for its farthest azimuth, at angle `theta + theta_obs` from the line of sight. The grid could also begin up to ~10% after its intended start when the deceleration refinement band opened just above it; it now always begins at the start.
+
 ## [v2.0.7] - 2026-10-28
 
 ### Fixed
