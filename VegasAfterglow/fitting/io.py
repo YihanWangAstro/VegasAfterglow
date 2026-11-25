@@ -111,6 +111,10 @@ def _snapshot_config(fitter) -> dict:
     def _arr(x):
         return np.asarray(x).tolist()
 
+    def _sys_json(sys_err):
+        # One number when the whole dataset shares it, else one per point.
+        return float(sys_err[0]) if np.ptp(sys_err) == 0 else _arr(sys_err)
+
     return {
         "version": 2,
         "constructor": {
@@ -136,7 +140,7 @@ def _snapshot_config(fitter) -> dict:
                 "err": _arr(err),
                 "weights": _arr(w),
                 "label": lbl,
-                "sys_err": float(sys_err),
+                "sys_err": _sys_json(sys_err),
             }
             for t, nu, flux, err, w, lbl, sys_err in zip(
                 fitter._point_t,
@@ -186,7 +190,7 @@ def _snapshot_config(fitter) -> dict:
                 "err": _arr(b.err),
                 "weights": _arr(b.weights),
                 "name": b.name,
-                "sys_err": float(b.sys_err),
+                "sys_err": _sys_json(b.sys_err),
             }
             for b in fitter._band_obs
         ],
@@ -253,7 +257,12 @@ def load_fitter(path, *, jet=None, medium=None, extinction=None):
         fitter._point_err.append(np.asarray(pt["err"], dtype=np.float64))
         fitter._point_weights.append(np.asarray(pt["weights"], dtype=np.float64))
         fitter._point_labels.append(pt.get("label"))
-        fitter._point_sys.append(float(pt.get("sys_err", 0.0)))
+        fitter._point_sys.append(
+            np.broadcast_to(
+                np.asarray(pt.get("sys_err", 0.0), dtype=np.float64),
+                fitter._point_t[-1].shape,
+            ).copy()
+        )
     for bd in cfg.get("band_data", []):
         fitter._band_obs.append(
             _BandObs(
@@ -265,7 +274,7 @@ def load_fitter(path, *, jet=None, medium=None, extinction=None):
                 err=np.asarray(bd["err"], dtype=np.float64),
                 weights=np.asarray(bd["weights"], dtype=np.float64),
                 name=bd.get("name"),
-                sys_err=float(bd.get("sys_err", 0.0)),
+                sys_err=bd.get("sys_err", 0.0),
             )
         )
     for lm in cfg.get("limit_data", []):

@@ -678,7 +678,7 @@ for nu, fname in zip(bands, lc_files):
 # Add spectra at specific times
 fitter.add_spectrum(t=3000, nu=nu_data, f_nu=spectrum_data, err=spectrum_err)
 
-# Calibration uncertainty of a whole dataset (one instrument per call), and upper limits
+# Calibration uncertainty of a dataset (one value, or one per point for mixed instruments), and upper limits
 fitter.add_flux_density(nu=2.4e17, t=t_xrt, f_nu=f_xrt, err=e_xrt, sys_err=0.1, label="XRT")
 fitter.add_flux_density_limits(nu=1.4e9, t=[1e5, 3e5], limit=[2e-28, 1.5e-28])  # 3-sigma limits
 

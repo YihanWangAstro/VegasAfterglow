@@ -164,6 +164,19 @@ SAMPLER_DEFAULTS = {
 }
 
 
+def _sys_groups(sys_err: np.ndarray) -> Tuple[np.ndarray, np.ndarray]:
+    """Calibration groups of one dataset: points with equal ``sys_err`` share one factor.
+
+    Returns ``(sys_err per group, group index per point)``, groups in order of
+    first appearance.
+    """
+    widths, first, inverse = np.unique(sys_err, return_index=True, return_inverse=True)
+    order = np.argsort(first)
+    rank = np.empty_like(order)
+    rank[order] = np.arange(len(order))
+    return widths[order], rank[inverse]
+
+
 @dataclass
 class _BandObs:
     """Band-integrated flux observation group."""
@@ -176,7 +189,16 @@ class _BandObs:
     err: np.ndarray
     weights: np.ndarray
     name: "str | None" = None
-    sys_err: float = 0.0  # fractional calibration uncertainty shared by the dataset
+    # Fractional calibration uncertainty: scalar or per point, stored per point.
+    sys_err: "float | np.ndarray" = 0.0
+    sys_width: np.ndarray = field(init=False, repr=False)  # sys_err of each group
+    sys_group: np.ndarray = field(init=False, repr=False)  # group of each point
+
+    def __post_init__(self):
+        self.sys_err = np.broadcast_to(
+            np.asarray(self.sys_err, dtype=np.float64), np.shape(self.t)
+        ).copy()
+        self.sys_width, self.sys_group = _sys_groups(self.sys_err)
 
 
 @dataclass

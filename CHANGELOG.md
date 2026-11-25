@@ -25,6 +25,16 @@ Have a feature request? [Open an issue](https://github.com/YihanWangAstro/VegasA
 - **Early-time flux for off-axis observers.** With `theta_obs > 0`, the flux at the earliest requested times could come out too low, and the answer changed when an earlier time was added to the same call. The loss was 10-40% at the first requested time for spreading jets and for custom media declared non-isotropic, larger for the reverse shock, and up to ~25% for the built-in media when the observer sits far outside the jet; it faded over the following decade in time. If you fitted off-axis data with one of these setups since v2.0.0, re-check the earliest points. On-axis results are unchanged. Thanks to Ethan Nipper and Jonathan Keohane for reporting and diagnosing this.
   - Each theta row of an axisymmetric jet is solved once and reused at every azimuth, but its time grid started where the azimuth nearest the observer needed it, so cells further round the jet had no grid node before the earliest requested time and contributed nothing there. This was introduced by a performance optimization in v2.0.0 that replaced one conservative start time for the whole jet with a start per cell. Each row now starts for its farthest azimuth, at angle `theta + theta_obs` from the line of sight. The grid could also begin up to ~10% after its intended start when the deceleration refinement band opened just above it; it now always begins at the start.
 
+### Added
+
+- **Per-point `sys_err`.** `add_flux_density`, `add_spectrum` and `add_flux` accept `sys_err` as an array with one value per point as well as a scalar, for data that combine several instruments in one call, such as a broadband spectrum. Points given the same value share one calibration factor and different values get independent factors, so a value carried by a single point acts as that fraction of its flux added in quadrature to its error. A scalar keeps its meaning: one factor for the whole call.
+  - `summary()` and `calibration_offsets` report one offset per distinct value of a call.
+
+### Changed
+
+- **`draw_fit` with calibration systematics.** The curves are always the physical model. Data given with `sys_err` are now drawn with their best-fit calibration factor divided out, so a dataset whose level the fit shifted sits on the model it was fitted with. The legend states the factor applied (`data ×0.95`) and a hollow marker stays where each point was measured. Previously the data were drawn as measured, so a dataset with a sizeable fitted offset looked mis-fit even when the fit was good.
+  - A point that is alone with its `sys_err` value is not moved, because its offset cannot be told apart from its residual. It gets a wide pale bar for its statistical and systematic errors combined.
+
 ## [v2.0.7] - 2026-10-28
 
 ### Fixed

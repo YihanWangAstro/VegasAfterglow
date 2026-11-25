@@ -5,14 +5,14 @@ import os
 from concurrent.futures import ThreadPoolExecutor
 from contextlib import contextmanager
 from types import SimpleNamespace
-from typing import Callable, List, Literal, Optional, Sequence, Tuple
+from typing import Callable, List, Literal, Optional, Sequence, Tuple, Union
 
 import numpy as np
 from scipy.special import log_ndtr
 
 from ..types import FitResult, ModelParams, ParamDef, Scale
 from ..VegasAfterglowC import Model, Observer, Radiation
-from .config import JETS, MEDIA, _BandLimits, _BandObs
+from .config import JETS, MEDIA, _BandLimits, _BandObs, _sys_groups
 from .utils import (
     _build_transformer,
     _check_choice,
@@ -56,6 +56,9 @@ class Fitter:
     one multiplicative calibration factor with a Gaussian prior of that width
     in ln-flux, marginalised analytically: its shape keeps the full precision
     of the statistical errors while its level may shift by about ``sys_err``.
+    ``sys_err`` may also be an array with one value per point: points of the
+    call given the same value share one factor, different values get
+    independent factors.
     Upper limits added with the ``add_*_limits`` methods contribute
     ``-2 ln Phi((U - F_model) / sigma)`` in linear flux. ``log_likelihood_fn``
     (see :meth:`fit`) receives the total of all these terms as one chi-squared.
@@ -180,8 +183,8 @@ class Fitter:
         self._point_weights = []
         # Per-entry optional filter/band name for draw_fit legends.
         self._point_labels: List[Optional[str]] = []
-        # Per-entry fractional calibration uncertainty (0 = none).
-        self._point_sys: List[float] = []
+        # Per-entry fractional calibration uncertainty of each point (0 = none).
+        self._point_sys: List[np.ndarray] = []
         self._band_obs: List[_BandObs] = []
         # Upper limits (non-detections): limit value and the noise level behind it.
         self._limit_t = []
@@ -199,12 +202,15 @@ class Fitter:
         self._all_weights = None
         self._all_log_flux = None
         self._all_log_err = None
-        # Calibration-systematics bookkeeping: dataset id per point, per-dataset
-        # inverse prior variance (inf when sys_err = 0) and total precision.
+        # Calibration-systematics bookkeeping. A group is the set of points of
+        # one add_* call given the same sys_err; they share one factor.
         self._all_prec = None
-        self._all_dataset = None
-        self._dataset_inv_sys2 = None
-        self._dataset_prec_sum = None
+        self._all_group = None  # group of each consolidated point
+        self._point_group = None  # same, per add_* call in its own point order
+        self._group_sys = None  # sys_err of each group
+        self._group_call = None  # add_* call each group belongs to
+        self._group_inv_sys2 = None  # inverse prior variance (inf when sys_err = 0)
+        self._group_prec_sum = None  # total precision of each group
         # Model-evaluation arrays: detections and limits merged, sorted by time,
         # with the position of each detection / limit in that order.
         self._eval_t = None
@@ -239,13 +245,13 @@ class Fitter:
 
     # ── Observation data input ─────────────────────────────────────────────────────────
 
-    def _add_point_data(self, t, nu, f_nu, err, weights, label=None, sys_err=0.0):
+    def _add_point_data(self, t, nu, f_nu, err, weights, sys_err, label=None):
         """Append point observation arrays to internal lists.
 
         ``label`` is an optional filter/band name used by ``draw_fit`` for
         legend display (e.g., ``'r'``, ``'WXT'``, ``'VT_R'``). Not used for
-        chi-squared evaluation. ``sys_err`` is the dataset's fractional
-        calibration uncertainty (see :meth:`add_flux_density`).
+        chi-squared evaluation. ``sys_err`` is the fractional calibration
+        uncertainty of each point (see :meth:`add_flux_density`).
         """
         f_nu = np.asarray(f_nu, dtype=np.float64)
         err = np.asarray(err, dtype=np.float64)
@@ -264,14 +270,20 @@ class Fitter:
         self._all_t = None
 
     @staticmethod
-    def _validate_sys_err(sys_err, context: str) -> float:
-        sys_err = float(sys_err)
-        if not np.isfinite(sys_err) or sys_err < 0:
+    def _validate_sys_err(sys_err, shape, context: str) -> np.ndarray:
+        """Return ``sys_err`` as one value per point; a scalar applies to every point."""
+        sys_err = np.asarray(sys_err, dtype=np.float64)
+        if sys_err.ndim > 0 and sys_err.shape != shape:
+            raise ValueError(
+                f"{context}: sys_err must be a scalar or one value per point "
+                f"(shape {shape}), got shape {sys_err.shape}"
+            )
+        if not np.isfinite(sys_err).all() or (sys_err < 0).any():
             raise ValueError(
                 f"{context}: sys_err must be finite and >= 0 (fractional calibration "
-                f"uncertainty of the dataset), got {sys_err}"
+                f"uncertainty), got {sys_err}"
             )
-        return sys_err
+        return np.broadcast_to(sys_err, shape).copy()
 
     @staticmethod
     def _validate_observation_arrays(*, t, f_nu, err, weights, context: str):
@@ -324,7 +336,7 @@ class Fitter:
         err: np.ndarray,
         weights: Optional[np.ndarray] = None,
         label: Optional[str] = None,
-        sys_err: float = 0.0,
+        sys_err: Union[float, np.ndarray] = 0.0,
     ) -> None:
         """Add light curve data at a single frequency.
 
@@ -346,15 +358,24 @@ class Fitter:
                 full precision while its overall level may shift by about
                 ``sys_err``. Default ``0`` (no calibration freedom). The
                 best-fit shift is reported by :meth:`calibration_offsets`.
+
+                An array with one value per point is also accepted, for data
+                that combine several instruments in one call: points given
+                the same value share one calibration factor, and different
+                values get independent factors. A value carried by a single
+                point therefore acts as that fraction of its flux added in
+                quadrature to its error. Two instruments that happen to have
+                the same ``sys_err`` are only kept independent by adding
+                them in separate calls.
         """
         if not np.isfinite(nu) or nu <= 0:
             raise ValueError(f"add_flux_density: nu must be finite and > 0, got {nu}")
-        sys_err = self._validate_sys_err(sys_err, "add_flux_density")
         t, f_nu, err, weights = self._validate_observation_arrays(
             t=t, f_nu=f_nu, err=err, weights=weights, context="add_flux_density"
         )
+        sys_err = self._validate_sys_err(sys_err, t.shape, "add_flux_density")
         self._add_point_data(
-            t, np.full_like(t, nu), f_nu, err, weights, label=label, sys_err=sys_err
+            t, np.full_like(t, nu), f_nu, err, weights, sys_err, label=label
         )
 
     def add_spectrum(
@@ -365,7 +386,7 @@ class Fitter:
         err: np.ndarray,
         weights: Optional[np.ndarray] = None,
         label: Optional[str] = None,
-        sys_err: float = 0.0,
+        sys_err: Union[float, np.ndarray] = 0.0,
     ) -> None:
         """Add a broadband spectrum at a specific time.
 
@@ -376,12 +397,14 @@ class Fitter:
             err: Observational (statistical) uncertainties [erg/cm^2/s/Hz]
             weights: Optional statistical weights
             label: Optional instrument name used in reports.
-            sys_err: Fractional calibration uncertainty shared by the whole
-                spectrum (one instrument per call); see :meth:`add_flux_density`.
+            sys_err: Fractional calibration uncertainty. A scalar is shared by
+                the whole spectrum (one instrument). For a spectrum built from
+                several instruments give one value per point: points with the
+                same value share one calibration factor, different values get
+                independent factors. See :meth:`add_flux_density`.
         """
         if not np.isfinite(t) or t <= 0:
             raise ValueError(f"add_spectrum: t must be finite and > 0, got {t}")
-        sys_err = self._validate_sys_err(sys_err, "add_spectrum")
         nu = np.asarray(nu, dtype=np.float64)
         if not np.isfinite(nu).all() or (nu <= 0).any():
             raise ValueError(
@@ -393,8 +416,9 @@ class Fitter:
         nu, f_nu, err, weights = self._validate_observation_arrays(
             t=nu, f_nu=f_nu, err=err, weights=weights, context="add_spectrum"
         )
+        sys_err = self._validate_sys_err(sys_err, nu.shape, "add_spectrum")
         self._add_point_data(
-            np.full_like(nu, t), nu, f_nu, err, weights, label=label, sys_err=sys_err
+            np.full_like(nu, t), nu, f_nu, err, weights, sys_err, label=label
         )
 
     def add_flux(
@@ -406,7 +430,7 @@ class Fitter:
         num_points: int = 5,
         weights: Optional[np.ndarray] = None,
         label: Optional[str] = None,
-        sys_err: float = 0.0,
+        sys_err: Union[float, np.ndarray] = 0.0,
     ) -> None:
         """Add band-integrated flux measurements.
 
@@ -424,9 +448,8 @@ class Fitter:
             label: Optional instrument/band name (e.g., ``'WXT'``, ``'XRT'``)
                 used by ``draw_fit`` for legend display.
             sys_err: Fractional calibration uncertainty shared by this
-                dataset; see :meth:`add_flux_density`.
+                dataset, or one value per point; see :meth:`add_flux_density`.
         """
-        sys_err = self._validate_sys_err(sys_err, "add_flux")
         try:
             nu_min, nu_max = band
         except (TypeError, ValueError):
@@ -447,6 +470,7 @@ class Fitter:
         )
         if w is None:
             w = np.ones_like(t)
+        sys_err = self._validate_sys_err(sys_err, t.shape, "add_flux")
 
         order = np.argsort(t)
         self._band_obs.append(
@@ -459,7 +483,7 @@ class Fitter:
                 err=err[order],
                 weights=w[order],
                 name=label,
-                sys_err=sys_err,
+                sys_err=sys_err[order],
             )
         )
 
@@ -675,9 +699,19 @@ class Fitter:
             self._all_flux = np.concatenate(self._point_flux)
             self._all_err = np.concatenate(self._point_err)
             self._all_weights = np.concatenate(self._point_weights)
-            self._all_dataset = np.concatenate(
-                [np.full(len(t), i, dtype=np.intp) for i, t in enumerate(self._point_t)]
+            # Calibration groups, numbered across calls in the order added.
+            widths, self._point_group = [], []
+            n_groups = 0
+            for sys_err in self._point_sys:
+                width, group = _sys_groups(sys_err)
+                widths.append(width)
+                self._point_group.append(group + n_groups)
+                n_groups += len(width)
+            self._group_sys = np.concatenate(widths)
+            self._group_call = np.repeat(
+                np.arange(len(widths)), [len(w) for w in widths]
             )
+            self._all_group = np.concatenate(self._point_group)
 
             # Sort by time (flux_density requires ascending time order)
             order = np.argsort(self._all_t)
@@ -686,7 +720,7 @@ class Fitter:
             self._all_flux = self._all_flux[order]
             self._all_err = self._all_err[order]
             self._all_weights = self._all_weights[order]
-            self._all_dataset = self._all_dataset[order]
+            self._all_group = self._all_group[order]
 
             # Normalize weights so they sum to N
             w_sum = self._all_weights.sum()
@@ -697,13 +731,16 @@ class Fitter:
             self._all_log_flux = np.log(self._all_flux)
             self._all_log_err = self._all_err / self._all_flux
             self._all_prec = self._all_weights / self._all_log_err**2
-            self._dataset_inv_sys2 = self._inv_sys2(self._point_sys)
-            self._dataset_prec_sum = np.bincount(
-                self._all_dataset, weights=self._all_prec, minlength=len(self._point_t)
+            self._group_inv_sys2 = self._inv_sys2(self._group_sys)
+            self._group_prec_sum = np.bincount(
+                self._all_group, weights=self._all_prec, minlength=n_groups
             )
         else:
             self._all_t = np.array([])
             self._all_nu = np.array([])
+            self._point_group = []
+            self._group_sys = np.array([])
+            self._group_call = np.array([], dtype=np.intp)
 
         # Upper limits, sorted by time.
         if self._limit_t:
@@ -791,7 +828,7 @@ class Fitter:
 
     @staticmethod
     def _inv_sys2(sys_errs) -> np.ndarray:
-        """Inverse prior variance of each dataset's ln-calibration factor (inf for none)."""
+        """Inverse prior variance of each group's ln-calibration factor (inf for none)."""
         s = np.asarray(sys_errs, dtype=np.float64)
         with np.errstate(divide="ignore"):
             return np.where(s > 0, 1.0 / np.maximum(s, 1e-300) ** 2, np.inf)
@@ -803,28 +840,50 @@ class Fitter:
         return float(np.sum(weights * (diff / log_err) ** 2))
 
     @staticmethod
-    def _chi2_marginal(log_obs, prec, model_flux, dataset, inv_sys2, prec_sum) -> float:
-        """ln-flux chi-squared with each dataset's calibration factor marginalised.
+    def _chi2_marginal(model_flux, log_obs, prec, group, inv_sys2, prec_sum) -> float:
+        """ln-flux chi-squared with each group's calibration factor marginalised.
 
-        A shared factor c per dataset with prior N(0, sys_err^2) in ln-flux
+        A shared factor c per group with prior N(0, sys_err^2) in ln-flux
         integrates out exactly: chi2 = sum(p r^2) - S1^2 / (1/sys_err^2 + S0),
-        with S0 = sum(p), S1 = sum(p r) over the dataset. sys_err = 0 gives
+        with S0 = sum(p), S1 = sum(p r) over the group. sys_err = 0 gives
         1/sys_err^2 = inf and the plain sum.
         """
         r = log_obs - np.log(np.maximum(model_flux, 1e-300))
         chi2 = float(np.sum(prec * r * r))
-        s1 = np.bincount(dataset, weights=prec * r, minlength=len(inv_sys2))
+        s1 = np.bincount(group, weights=prec * r, minlength=len(inv_sys2))
         return chi2 - float(np.sum(s1 * s1 / (inv_sys2 + prec_sum)))
 
     @staticmethod
-    def _band_dataset_chi2(bd, model_flux) -> float:
+    def _best_factors(
+        model_flux, log_obs, prec, group, inv_sys2, prec_sum
+    ) -> np.ndarray:
+        """Best-fit calibration factor of each group (1 where sys_err = 0)."""
+        r = log_obs - np.log(np.maximum(model_flux, 1e-300))
+        s1 = np.bincount(group, weights=prec * r, minlength=len(inv_sys2))
+        return np.exp(s1 / (inv_sys2 + prec_sum))
+
+    def _point_terms(self):
+        """Data-side arguments of ``_chi2_marginal`` for the point data."""
+        return (
+            self._all_log_flux,
+            self._all_prec,
+            self._all_group,
+            self._group_inv_sys2,
+            self._group_prec_sum,
+        )
+
+    @staticmethod
+    def _band_terms(bd):
+        """Data-side arguments of ``_chi2_marginal`` for one band dataset."""
         prec = bd.weights / (bd.err / bd.flux) ** 2
-        r = np.log(bd.flux) - np.log(np.maximum(model_flux, 1e-300))
-        chi2 = float(np.sum(prec * r * r))
-        if bd.sys_err > 0:
-            s1 = float(np.sum(prec * r))
-            chi2 -= s1 * s1 / (1.0 / bd.sys_err**2 + float(np.sum(prec)))
-        return chi2
+        prec_sum = np.bincount(bd.sys_group, weights=prec, minlength=len(bd.sys_width))
+        return (
+            np.log(bd.flux),
+            prec,
+            bd.sys_group,
+            Fitter._inv_sys2(bd.sys_width),
+            prec_sum,
+        )
 
     def _evaluate(self, params: ModelParams) -> float:
         """Compute chi-squared for given parameters using Model directly."""
@@ -838,12 +897,7 @@ class Fitter:
             eval_flux = self._point_model_flux(model, params)
             if len(self._all_t) > 0:
                 chi2 += self._chi2_marginal(
-                    self._all_log_flux,
-                    self._all_prec,
-                    eval_flux[self._det_pos],
-                    self._all_dataset,
-                    self._dataset_inv_sys2,
-                    self._dataset_prec_sum,
+                    eval_flux[self._det_pos], *self._point_terms()
                 )
             if len(self._lim_t) > 0:
                 chi2 += self._limits_chi2(
@@ -855,7 +909,7 @@ class Fitter:
             model_flux = np.asarray(
                 model.flux(bd.t, bd.nu_min, bd.nu_max, bd.num_points).total
             )
-            chi2 += self._band_dataset_chi2(bd, model_flux)
+            chi2 += self._chi2_marginal(model_flux, *self._band_terms(bd))
         for bl in self._band_limits:
             model_flux = np.asarray(
                 model.flux(bl.t, bl.nu_min, bl.nu_max, bl.num_points).total
@@ -889,53 +943,92 @@ class Fitter:
             return f"{float(nu[0]):.3g} Hz"
         return f"spectrum at {float(self._point_t[i][0]):.3g} s"
 
-    def calibration_offsets(self, params: ModelParams) -> List[SimpleNamespace]:
-        """Best-fit calibration shift of every dataset given with ``sys_err > 0``.
+    def _has_sys_err(self) -> bool:
+        return any(np.any(s > 0) for s in self._point_sys) or any(
+            np.any(b.sys_err > 0) for b in self._band_obs
+        )
 
-        Returns one entry per such dataset (in the order the data were
-        added, point datasets first, then band datasets) with
-        ``label``, ``offset`` = data level relative to the model minus one
-        (``+0.03`` means the data sit 3% above the model, i.e. the fit
-        prefers scaling that dataset down by 3%), and ``sys_err``.
+    def _group_factors(self, params: ModelParams):
+        """Best-fit multiplicative factor the model is scaled by to match each calibration group.
+
+        Returns ``(point, band)``: one array over the groups of the point
+        data and one array per ``_band_obs`` entry over its groups; ``1.0``
+        where ``sys_err == 0``.
         """
         self._consolidate_data()
         model = self._build_model(params)
-        out: List[SimpleNamespace] = []
-        if len(self._all_t) > 0 and np.any(np.isfinite(self._dataset_inv_sys2)):
+        point = np.ones(len(self._group_sys))
+        if np.any(self._group_sys > 0):
             model_flux = self._point_model_flux(model, params)[self._det_pos]
-            r = self._all_log_flux - np.log(np.maximum(model_flux, 1e-300))
-            s1 = np.bincount(
-                self._all_dataset,
-                weights=self._all_prec * r,
-                minlength=len(self._point_t),
-            )
-            c_hat = s1 / (self._dataset_inv_sys2 + self._dataset_prec_sum)
-            for i, sys_err in enumerate(self._point_sys):
-                if sys_err > 0:
-                    out.append(
-                        SimpleNamespace(
-                            label=self._dataset_label(i),
-                            offset=float(np.expm1(c_hat[i])),
-                            sys_err=float(sys_err),
-                        )
-                    )
-        for j, bd in enumerate(self._band_obs):
-            if bd.sys_err > 0:
+            point = self._best_factors(model_flux, *self._point_terms())
+        band = []
+        for bd in self._band_obs:
+            factors = np.ones(len(bd.sys_width))
+            if np.any(bd.sys_width > 0):
                 model_flux = np.asarray(
                     model.flux(bd.t, bd.nu_min, bd.nu_max, bd.num_points).total
                 )
-                prec = bd.weights / (bd.err / bd.flux) ** 2
-                r = np.log(bd.flux) - np.log(np.maximum(model_flux, 1e-300))
-                c_hat = float(np.sum(prec * r)) / (
-                    1.0 / bd.sys_err**2 + float(np.sum(prec))
-                )
-                out.append(
-                    SimpleNamespace(
-                        label=bd.name or f"band {bd.nu_min:.3g}-{bd.nu_max:.3g} Hz",
-                        offset=float(np.expm1(c_hat)),
-                        sys_err=float(bd.sys_err),
+                factors = self._best_factors(model_flux, *self._band_terms(bd))
+            band.append(factors)
+        return point, band
+
+    def _calibration_view(self, params: ModelParams):
+        """Per-point calibration as ``draw_fit`` shows it.
+
+        Returns ``(point, band)``: for each ``add_*`` point dataset and each
+        ``_band_obs`` entry, a pair of per-point arrays ``(factor, lone_sys)``.
+        Points sharing a calibration factor are drawn divided by ``factor``.
+        A point alone with its ``sys_err`` is not moved (``factor`` 1) and
+        carries that ``sys_err`` in ``lone_sys``.
+        """
+        point, band = self._group_factors(params)
+
+        def _view(factors, sys_errs, group):
+            lone = np.bincount(group, minlength=len(sys_errs)) == 1
+            return (
+                np.where(lone, 1.0, factors)[group],
+                np.where(lone, sys_errs, 0.0)[group],
+            )
+
+        return (
+            [_view(point, self._group_sys, group) for group in self._point_group],
+            [
+                _view(f, bd.sys_width, bd.sys_group)
+                for f, bd in zip(band, self._band_obs)
+            ],
+        )
+
+    def calibration_offsets(self, params: ModelParams) -> List[SimpleNamespace]:
+        """Best-fit calibration shift of every group of points sharing a ``sys_err > 0``.
+
+        Returns one entry per calibration factor (in the order the data were
+        added, point datasets first, then band datasets) with
+        ``label``, ``offset`` = data level relative to the model minus one
+        (``+0.03`` means the data sit 3% above the model, i.e. the fit
+        prefers scaling those points down by 3%), and ``sys_err``. A dataset
+        given a scalar ``sys_err`` has one entry; one given an array has an
+        entry per distinct value, all under the dataset's label.
+        """
+        point, band = self._group_factors(params)
+        out: List[SimpleNamespace] = []
+
+        def _report(label, factors, sys_errs):
+            for factor, sys_err in zip(factors, sys_errs):
+                if sys_err > 0:
+                    out.append(
+                        SimpleNamespace(
+                            label=label,
+                            offset=float(factor - 1.0),
+                            sys_err=float(sys_err),
+                        )
                     )
-                )
+
+        for i in range(len(self._point_t)):
+            in_call = self._group_call == i
+            _report(self._dataset_label(i), point[in_call], self._group_sys[in_call])
+        for bd, factors in zip(self._band_obs, band):
+            label = bd.name or f"band {bd.nu_min:.3g}-{bd.nu_max:.3g} Hz"
+            _report(label, factors, bd.sys_width)
         return out
 
     # ── Parameter validation & sampler setup ─────────────────────────────────────────────────────────
@@ -1051,9 +1144,7 @@ class Fitter:
         # reduced χ² / BIC / AIC without the user counting data points.
         result.n_data, result.n_limits = self._data_counts()
         result.n_free_params = sum(1 for d in defs if d.scale is not Scale.fixed)
-        if any(s > 0 for s in self._point_sys) or any(
-            b.sys_err > 0 for b in self._band_obs
-        ):
+        if self._has_sys_err():
             result.calibration_offsets = [
                 vars(o)
                 for o in self.calibration_offsets(
@@ -1553,6 +1644,13 @@ class Fitter:
           if both kinds are present: left is ``F_nu`` in erg/cm^2/s/Hz,
           right is ``F`` in erg/cm^2/s. Multiple bands are shifted vertically
           (in log) so they don't overlap; the legend reports the shift factors.
+          The curves are always the physical model. Data given with
+          ``sys_err`` are drawn with their best-fit calibration factor
+          divided out, so they can be compared with it directly; the legend
+          states the factor applied and a hollow marker stays where each
+          point was measured. A point that is alone with its ``sys_err``
+          value is not moved: it gets a wide pale bar for its statistical and
+          systematic errors combined.
 
         * **Bottom panel** (optional, ``show_nu_panel=True``) -- evolution of
           the characteristic synchrotron break frequencies

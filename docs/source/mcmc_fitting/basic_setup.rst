@@ -110,7 +110,7 @@ Every instrument carries a flux-scale uncertainty that its error bars do not sho
 
 The common workaround, adding 10% to every error bar, gets this wrong in both directions. It lets each point wander on its own, so the shape information that the data really carry is thrown away, and it still does not describe a shift of the dataset as a whole.
 
-``sys_err`` describes the situation as it is. Give it once per ``add_*`` call, which is to say once per instrument:
+``sys_err`` describes the situation as it is. In the usual case of one instrument per ``add_*`` call, give it once per call:
 
 .. code-block:: python
 
@@ -120,9 +120,21 @@ The common workaround, adding 10% to every error bar, gets this wrong in both di
 
 During the fit, each such dataset is allowed one unknown calibration factor, the same for all of its points, with a prior that keeps it within about ``sys_err`` of unity. The fitter integrates that factor out analytically, so nothing new is sampled and the run is no slower. The effect is that the dataset may slide up or down as a whole by roughly ``sys_err``, whichever direction the data prefer, while its shape constrains the model at the full precision of the statistical errors.
 
-Two things to keep in mind. ``sys_err`` is a number you know about the instrument, not something the fit learns; a single dataset shows one realisation of its calibration offset and cannot tell you how large such offsets tend to be. And one call should be one instrument: if a spectrum combines several instruments, add it as one call per instrument, each with its own ``sys_err``.
+``sys_err`` is a number you know about the instrument, not something the fit learns; a single dataset shows one realisation of its calibration offset and cannot tell you how large such offsets tend to be.
 
-After the fit, ``summary()`` reports how far each dataset moved, and the same numbers are available as ``result.calibration_offsets``. An offset of ``+0.03`` means the data sit 3% above the model, so the fit preferred scaling that dataset down by 3%. Offsets much larger than the ``sys_err`` you gave point to a calibration problem, or to a model that cannot reproduce that band.
+A scalar ``sys_err`` treats the whole call as one instrument. When one call combines several, as a broadband spectrum usually does, give ``sys_err`` as an array with one value per point:
+
+.. code-block:: python
+
+    # One epoch: three XRT bins, two filters of one optical camera, one VLA point
+    fitter.add_spectrum(t=t_sed, nu=nu, f_nu=f_nu, err=err,
+                        sys_err=[0.10, 0.10, 0.10, 0.03, 0.03, 0.05])
+
+Points given the same value share one calibration factor, and different values get independent factors. Here the three XRT bins move together, the two optical points move together, and the VLA point moves on its own. A value carried by a single point is equivalent to adding that fraction of its flux in quadrature to its error bar. Because the grouping goes by value, two unrelated instruments that happen to have the same ``sys_err`` would be tied together inside one call; add those in separate calls to keep them independent. ``add_flux_density`` and ``add_flux`` take the array form as well, for a light curve compiled from several telescopes.
+
+After the fit, ``summary()`` reports how far each dataset moved (one line per distinct value for a call given an array), and the same numbers are available as ``result.calibration_offsets``. An offset of ``+0.03`` means the data sit 3% above the model, so the fit preferred scaling that dataset down by 3%. Offsets much larger than the ``sys_err`` you gave point to a calibration problem, or to a model that cannot reproduce that band.
+
+``draw_fit`` always draws the physical model. Data given with ``sys_err`` are drawn with their best-fit calibration factor divided out, so they can be compared with that curve directly; the legend shows the factor applied (``data ×0.93``, or a range when one call has several) and a hollow marker stays where each point was measured. A point that is alone with its ``sys_err`` value is not moved, because its offset cannot be told apart from its residual; it gets a wide pale bar for its statistical and systematic errors combined.
 
 Upper Limits
 ^^^^^^^^^^^^

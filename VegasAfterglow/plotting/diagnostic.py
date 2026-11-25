@@ -31,13 +31,15 @@ def _classify_point_data(point_t, point_nu, point_flux, point_err, point_labels=
     (multiple frequencies). Mixed entries (rare) are split by unique nu.
 
     Returns ``(lc_list, spectrum_count)`` where ``lc_list`` is a list of
-    ``(nu_hz, t_arr, f_arr, e_arr, label_or_None)`` tuples.
+    ``(nu_hz, t_arr, f_arr, e_arr, label_or_None, dataset_index)`` tuples.
     """
     if point_labels is None:
         point_labels = [None] * len(point_t)
     lc_list = []
     spectrum_count = 0
-    for t, nu, f, e, lbl in zip(point_t, point_nu, point_flux, point_err, point_labels):
+    for idx, (t, nu, f, e, lbl) in enumerate(
+        zip(point_t, point_nu, point_flux, point_err, point_labels)
+    ):
         t = np.asarray(t)
         nu = np.asarray(nu)
         f = np.asarray(f)
@@ -45,13 +47,13 @@ def _classify_point_data(point_t, point_nu, point_flux, point_err, point_labels=
         nu_unique = np.unique(nu)
         t_unique = np.unique(t)
         if nu_unique.size == 1 and t_unique.size >= 1:
-            lc_list.append((float(nu_unique[0]), t, f, e, lbl))
+            lc_list.append((float(nu_unique[0]), t, f, e, lbl, idx))
         elif t_unique.size == 1 and nu_unique.size > 1:
             spectrum_count += 1
         else:
             for nu0 in nu_unique:
                 mask = nu == nu0
-                lc_list.append((float(nu0), t[mask], f[mask], e[mask], lbl))
+                lc_list.append((float(nu0), t[mask], f[mask], e[mask], lbl, idx))
     return lc_list, spectrum_count
 
 
@@ -68,6 +70,59 @@ def _classify_limit_data(limit_t, limit_nu, limit_value, limit_labels):
 
 
 _LIMIT_STYLE = dict(fmt="v", ms=4, lw=1, capsize=0, uplims=True)
+
+
+_MEASURED_STYLE = dict(
+    linestyle="none",
+    marker="o",
+    markerfacecolor="none",
+    markersize=4,
+    markeredgewidth=0.5,
+    alpha=0.5,
+)
+_TOTAL_ERR_STYLE = dict(fmt="none", elinewidth=2.5, capsize=0, alpha=0.3)
+
+
+def _moved(factor):
+    """Points whose calibration factor differs from one."""
+    return np.abs(np.log(factor)) > 1e-9
+
+
+def _draw_data(ax, t, flux, err, factor, lone_sys, scale, color):
+    """Draw one dataset's points with their calibration factor divided out.
+
+    A hollow marker stays where each shifted point was measured. A point alone
+    with its ``sys_err`` is not shifted: it gets a wide pale bar for the
+    statistical and systematic errors combined, behind the statistical one.
+    """
+    t, flux, err = np.asarray(t), np.asarray(flux), np.asarray(err)
+    moved = _moved(factor)
+    if moved.any():
+        ax.plot(
+            t[moved],
+            flux[moved] * scale,
+            color=color,
+            markeredgecolor=color,
+            **_MEASURED_STYLE,
+        )
+    lone = lone_sys > 0
+    if lone.any():
+        total = np.hypot(err[lone], lone_sys[lone] * flux[lone])
+        ax.errorbar(
+            t[lone],
+            flux[lone] * scale,
+            yerr=total * scale,
+            ecolor=color,
+            **_TOTAL_ERR_STYLE,
+        )
+    ax.errorbar(
+        t,
+        flux / factor * scale,
+        yerr=err / factor * scale,
+        color=color,
+        ecolor=color,
+        **_ERRBAR_STYLE,
+    )
 
 
 def _flux_log10_range(flux, err):
@@ -131,7 +186,7 @@ def _auto_shifts_by_frequency(lc_list, band_list, gap_decades):
     """
     lc_entries = [
         (float(nu), ("lc", float(nu)), *_flux_log10_range(f, e))
-        for nu, _t, f, e, _lbl in lc_list
+        for nu, _t, f, e, _lbl, _idx in lc_list
     ]
     band_entries = [
         (
@@ -320,7 +375,7 @@ def draw_fit(
     lim_only_nus = set()
     for nu, t_l, u_l, lbl in lim_list:
         if nu not in {entry[0] for entry in lc_list}:
-            lc_list.append((nu, t_l, u_l, np.zeros_like(u_l), lbl))
+            lc_list.append((nu, t_l, u_l, np.zeros_like(u_l), lbl, None))
             lim_only_nus.add(nu)
     band_items = list(fitter._band_obs)
     band_lim_only_keys = set()
@@ -380,7 +435,7 @@ def draw_fit(
     # Observed data extent: drives both the visible x-limits and the model
     # grid (the grid extends past on each side so the curves reach the edges).
     all_t = (
-        [t_arr for _, t_arr, _, _, _ in lc_list]
+        [t_arr for _, t_arr, _, _, _, _ in lc_list]
         + [np.asarray(b.t) for b in band_items]
         + [t_l for _, t_l, _, _ in lim_list]
         + [np.asarray(bl.t) for bl in fitter._band_limits]
@@ -405,7 +460,9 @@ def draw_fit(
     # otherwise auto-match the frequency against the canonical filter table
     # (covers the common ``nu=filter('r')`` pattern). May still be None, in
     # which case downstream code falls back to a broad-band name.
-    lc_names = {nu: (lbl or _auto_filter_name(nu)) for nu, *_, lbl in lc_list}
+    lc_names = {
+        nu: (lbl or _auto_filter_name(nu)) for nu, _t, _f, _e, lbl, _i in lc_list
+    }
     band_names = {
         (b.nu_min, b.nu_max): (
             b.name or _auto_filter_name(float(np.sqrt(b.nu_min * b.nu_max)))
@@ -434,8 +491,15 @@ def draw_fit(
         (b.nu_min, b.nu_max): colors[("band", (b.nu_min, b.nu_max))] for b in band_items
     }
 
-    def _shifted_label(base, shift):
-        return f"{base} $\\times 10^{{{shift:.0f}}}$" if abs(shift) > 1e-9 else base
+    def _shifted_label(base, shift, factor=None):
+        """Legend text: the display shift, then the calibration factor(s) applied to the data."""
+        if abs(shift) > 1e-9:
+            base = f"{base} $\\times 10^{{{shift:.0f}}}$"
+        if factor is None or not _moved(factor).any():
+            return base
+        applied = 1.0 / factor[_moved(factor)]
+        lo, hi = f"{applied.min():.3g}", f"{applied.max():.3g}"
+        return f"{base} (data $\\times${lo if lo == hi else f'{lo}–{hi}'})"
 
     if obs_noise not in ("frac", "abs", "none"):
         raise ValueError(
@@ -481,6 +545,16 @@ def draw_fit(
     use_band = n_samples > 0 and fitter._has_posterior_samples()
 
     with fitter._override_resolution(resolution):
+        # The curves are the physical model; data given with sys_err are
+        # drawn with their best-fit calibration factor divided out.
+        if fitter._has_sys_err():
+            point_view, band_view = fitter._calibration_view(params)
+        else:
+            point_view = [(np.ones(len(t)), np.zeros(len(t))) for t in fitter._point_t]
+            band_view = [
+                (np.ones(len(b.t)), np.zeros(len(b.t))) for b in fitter._band_obs
+            ]
+
         # ---- Light curves on the left axis ----
         if lc_list:
             lc_nus = np.array([nu for nu, *_ in lc_list], dtype=float)
@@ -495,19 +569,18 @@ def draw_fit(
             else:
                 lc_lower = lc_upper = None
 
-            for i, (nu, t_data, f_data, e_data, _user_label) in enumerate(lc_list):
+            for i, (nu, t_data, f_data, e_data, _user_label, idx) in enumerate(lc_list):
                 shift = float(shift_map.get(("lc", nu), 0.0))
                 scale = 10.0**shift
                 color = lc_color_map[nu]
-                label = _shifted_label(lc_names[nu] or _broad_band(nu), shift)
+                factor = lone_sys = None
+                if idx is not None:
+                    at_nu = np.asarray(fitter._point_nu[idx]) == nu
+                    factor, lone_sys = (view[at_nu] for view in point_view[idx])
+                label = _shifted_label(lc_names[nu] or _broad_band(nu), shift, factor)
                 if nu not in lim_only_nus:
-                    ax_top.errorbar(
-                        t_data,
-                        f_data * scale,
-                        yerr=e_data * scale,
-                        color=color,
-                        ecolor=color,
-                        **_ERRBAR_STYLE,
+                    _draw_data(
+                        ax_top, t_data, f_data, e_data, factor, lone_sys, scale, color
                     )
                 ax_top.plot(
                     t_grid, lc_central[i] * scale, "-", color=color, label=label, lw=1
@@ -530,11 +603,12 @@ def draw_fit(
 
         # ---- Band-integrated on the right axis (or the left, if no LC data) ----
         band_ax = ax_top_R if dual else ax_top
-        for b in band_items:
+        for j, b in enumerate(band_items):
             key = (b.nu_min, b.nu_max)
             shift = float(shift_map.get(("band", key), 0.0))
             scale = 10.0**shift
             color = band_color_map[key]
+            factor, lone_sys = band_view[j] if j < len(band_view) else (None, None)
             central = np.asarray(
                 fitter.flux(best_params, t_grid, key, num_points=b.num_points).total
             )
@@ -546,16 +620,11 @@ def draw_fit(
             else:
                 lower = upper = None
             nu_center = float(np.sqrt(b.nu_min * b.nu_max))
-            label = _shifted_label(band_names[key] or _broad_band(nu_center), shift)
+            label = _shifted_label(
+                band_names[key] or _broad_band(nu_center), shift, factor
+            )
             if key not in band_lim_only_keys:
-                band_ax.errorbar(
-                    np.asarray(b.t),
-                    np.asarray(b.flux) * scale,
-                    yerr=np.asarray(b.err) * scale,
-                    color=color,
-                    ecolor=color,
-                    **_ERRBAR_STYLE,
-                )
+                _draw_data(band_ax, b.t, b.flux, b.err, factor, lone_sys, scale, color)
             band_ax.plot(t_grid, central * scale, "--", color=color, label=label, lw=1)
             if lower is not None:
                 sigma = _obs_sigma(central, b.flux, b.err)
